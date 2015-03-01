@@ -1,0 +1,60 @@
+/*Фид*/
+.lk-sidebar .count_users_feed,
+.lk-sidebar .all-users-feed{
+	cursor:pointer;
+}
+#feed-button .get-feed{
+	opacity:0.6;
+}
+#feed-button .get-feed.active{
+	opacity:1;
+}
+#feed-control {
+    margin-bottom: 20px;
+	clear: both;
+	float: none;
+}
+.wprecallblock #feed-control {
+    display:block;
+}
+#block_author-rcl #feed-control {
+    margin: 0 0 0 0;
+}
+.users-feed .avatar {
+    border: 1px solid #CCCCCC;
+    margin: 5px;
+    padding: 2px;
+}
+#feedlist{
+	clear:both;
+}
+#feedlist .feed-post, #feedlist .feedcomment {
+    border-bottom: 1px solid #DFDFDF;
+    margin-bottom: 10px;
+}
+#feedlist img {
+    box-shadow: 3px 3px 2px #CCCCCC;
+}
+#feedlist .feed-author-avatar {
+    float: left;
+    margin: 0 15px 0 0;
+}
+#feedlist .feed-title {
+    clear: none;
+    margin: 0;
+}
+#feedlist .feed-content {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+#feedlist .feed-comment {
+    color: #21759B;
+    text-align: right;
+}
+#feedlist .comment-child {
+    margin: 0 0 0 30px;
+}
+.lk-footer #fd-footer{
+    border:none!important;
+    background:none!important;
+}
