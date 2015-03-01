@@ -58,6 +58,11 @@ function short_user_list_rcl($atts, $content = null){
     if((isset($_GET['search-user'])&&$search=='yes')||$include){
 	
         if($_GET['search-user']){
+            
+            if($orderby!='action'&&$orderby!='rayting'){
+                $orderby = 'action';
+                $order_by = 'time_action';
+            }
 
             $args = apply_filters('search_filter_rcl',$args);
 
