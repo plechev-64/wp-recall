@@ -1,29 +1,15 @@
 <?php
 /*
-Plugin Name: WP-Recall
-Plugin URI: http://wppost.ru
-Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-Version: 11.0.0
-Author: Plechev Andrey
-Author URI: http://vk.com/device64
+    Plugin Name: WP-Recall
+    Plugin URI: http://wppost.ru
+    Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
+    Version: 11.0.2
+    Author: Plechev Andrey
+    GitHub Plugin URI: https://github.com/plechev-64/recall
+    License:     GPLv2 or later (license.txt)
 */
 
-/*  Copyright 2012  Plechev Andrey  (email : plechev.a {at} yandex.ru)
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+/*  Copyright 2012  Plechev Andrey  (email : support {at} wppost.ru)  */
 
 //определяем глобальные переменные
 $path_parts = pathinfo(__FILE__);
@@ -40,7 +26,7 @@ function init_global_rcl(){
         
         //$rcl_options = update_options_data_rcl($rcl_options);
 
-	define('VER_RCL', '11.0.0');
+	define('VER_RCL', '11.0.2');
 	
 	$upload_dir = get_wp_uploads_dir();
 	
