@@ -1,0 +1,1 @@
+Name: All User Comments (Все комментарии пользователя);Version: 1.0.0;Description: Выводим в профиле пользователя все его комментарии;Author: Плечев Андрей;Url: http://wppost.ru;

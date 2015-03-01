@@ -1,0 +1,1 @@
+Name: Private Message Wp-Recall (Личные сообщения);Version: 3.0.0;Description: Функционал приватных сообщений для wp-recall;Author: Плечев Андрей;Url: http://wppost.ru;

@@ -1,0 +1,1 @@
+Name: Rayting System Wp-Recall (Система рейтинга);Version: 1.5.0;Description: Рейтинговая система для wp-recall;Author: Плечев Андрей;Url: http://wppost.ru;

@@ -1,0 +1,1 @@
+Name: User Profile (Профиль пользователя);Version: 1.3.0;Description: Расширение настроек профиля пользователя для wp-recall;Author: Плечев Андрей;Url: http://wppost.ru;

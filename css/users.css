@@ -1,0 +1,94 @@
+/*Список пользователей*/
+.userlist{
+	overflow:hidden;
+        clear:both;
+}
+.userlist a {
+    text-decoration: none;
+}
+.userlist .ballun-status{
+	clear:none;
+}
+.userlist .user-single {
+    overflow: hidden;
+}
+.userlist .user-single {
+    border: 1px solid #CCCCCC;
+    margin: 5px 3px;
+    padding: 5px;
+}
+.userlist .user-single .thumb-user {
+    float: left;
+    margin: 0;
+    position:relative;
+}
+.userlist .user-single .thumb-user .status_user {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.userlist .user-single .user-content-rcl {
+    margin: 0 0 0 100px;
+}
+.userlist .user-single .action-user-rcl {
+    float: right;
+    height: 70px;
+    width: 70px;
+}
+.userlist .user-single .user-name {
+    padding: 5px 0;
+    line-height: 1;
+    margin: 0 0 15px 0;
+	font-size: 18px;
+	clear:none;
+}
+.userlist .user-single .user-name .filter-data{
+    font-size: 13px;
+	color: #333;
+    font-weight: normal;
+}
+.userlist #social-link-rcl {
+    clear: none;
+}
+.userlist .status_author_mess {
+}
+.status_author_mess.online {
+    float: right;
+    color:rgb(0, 237, 0);
+}
+.single_correspond .status_author_mess.offline{
+    color:red;
+}
+.userlist .status_author_mess.offline {
+    float: right;
+}
+.user-single .action-user {
+    min-width: 150px;
+    text-align: center;
+    vertical-align: middle;
+}
+.user-single .action-user .status_author_mess {
+    height: 16px;
+    margin: 0 auto;
+    width: 16px;
+}
+.userlist.rows-list .user-single {
+    clear: both;
+	border: 1px solid #ccc;
+	margin: 5px 0;
+	padding: 5px;
+}
+.userlist.avatars-list .user-single{
+    float:left;
+	padding: 5px 0;
+}
+.userlist.mini-list .user-single{
+	border:none;
+	padding:0;
+	float:left;
+	margin: 0;
+}
+.userlist.mini-list .user-single .avatar{
+    height:50px;
+	width:50px;
+}

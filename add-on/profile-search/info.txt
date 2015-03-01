@@ -1,0 +1,1 @@
+Name: Profile Search;Version: 1.0.0;Description: Продвинутый поиск пользователей по произвольным полям профиля;Author: Плечев Андрей;Url: http://wppost.ru;

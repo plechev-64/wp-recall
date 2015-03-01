@@ -1,0 +1,204 @@
+/*Публикация*/
+.author-desc {
+    border: medium none;
+    font-size: 16px;
+    margin: 0 0 20px;
+    vertical-align: middle;
+    width: 100%;
+}
+.author-desc p {
+    margin: 5px 0;
+}
+.box-green {
+    border: 1px solid #008000;
+    color: #008000;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+.author-desc td {
+    border: medium none;
+    padding: 5px;
+    vertical-align: middle;
+}
+.author-desc .user-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+.author-desc img {
+    border: 1px solid #CCCCCC;
+    margin: 10px;
+    padding: 5px;
+}
+.author-desc .user-desc {
+    font-style: italic;
+    padding: 5px;
+}
+.post-edit-button {
+    float: right;
+    margin: 0 5px;
+}
+.post-status {
+    float: right;
+    font-size: 25px;
+}
+.public_block {
+    border: 1px solid #3F7BAA;
+	margin-bottom: 20px;
+	padding: 10px;
+}
+.public_block #thumbblock-post{
+    margin: 20px 0;
+}
+.public_block label {
+    display: block;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0px 0 7px;
+}
+.public_block input[type="text"],
+.public_block input[type="number"],
+.public_block input[type="date"],
+.public_block select {
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    padding: 5px;
+    width: 200px;
+}
+.public_block textarea{
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    padding: 5px;
+}
+.public_block input[type="button"] {
+    margin: 3px;
+    width: auto;
+}
+.public_block input[type="checkbox"] {
+    margin: 0 3px;
+}
+.public_block textarea {
+    width: 90%;
+}
+.close-button {
+    background: url("/wp-content/plugins/recall/img/close.png") repeat scroll 0 0 #FFFFFF;
+    border: 2px solid #FFFFFF;
+    border-radius: 50px;
+    box-shadow: -3px 3px 3px #333333;
+    cursor: pointer;
+    height: 30px;
+    padding-top: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+}
+.redactor {
+    background: url("/wp-content/plugins/recall/img/redactor.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    margin-right: 20px;
+    padding-left: 20px;
+}
+#temp-files {
+    list-style: none outside none;
+    margin: 10px 0;
+    overflow: hidden;
+    padding: 0;
+}
+#temp-files li {
+    float: left;
+    margin: 5px;
+    width: 100px;
+	list-style: none;
+}
+#temp-files li img {
+    border: 1px solid #008000;
+    width: 100px;
+	margin-bottom:5px;
+	cursor: pointer;
+}
+#thumbnail_rcl .delete,
+#temp-files li .delete {
+    background: url("/wp-content/plugins/recall/img/delete.png") no-repeat scroll center center #FFFFFF;
+    cursor: pointer;
+    display: block;
+    height: 20px;
+    margin: 0px 0 0 85px;
+    position: absolute;
+    width: 20px;
+}
+#temp-files .thumb-foto {
+    clear: both;
+}
+#temp-files span{
+	display:block;
+	text-align:center;
+}
+#temp-files label span{
+    display: inline-flex;
+}
+#block_author-rcl {
+    clear: both;
+    margin: 20px 0;
+	border: 3px solid #CFE9FF;
+	padding:5px;
+	overflow:hidden;
+}
+#block_author-rcl .avatar-author{
+	margin:0 10px 0 0;
+	float:left;
+}
+#block_author-rcl  .content-author-block .footer-author{
+	overflow:hidden;
+	clear:both;
+}
+#block_author-rcl  .content-author-block .footer-author .recall-button{
+	margin:0 3px 0 0;
+	display:block;
+	float:left;
+	line-height: 1;
+	color:#fff;
+}
+#block_author-rcl  .content-author-block p {
+    margin: 5px 0;
+}
+#block_author-rcl  .content-author-block h3 {
+    margin: 0 3px 3px 0;
+    padding: 0;
+	clear:none;
+	float: left;
+}
+#block_author-rcl .status_author_mess.online {
+	float: left;
+	height: 30px;
+	width: 30px;
+}
+#block_author-rcl  .content-author-block #social-link-rcl {
+    
+}
+#block_author-rcl .content-author-block{
+	overflow:hidden;
+}
+#rcl-popup #custom-image-url{
+    padding:10px;
+    float:left;
+}
+#rcl-popup #custom-image-url input[type="text"]{
+    width:300px;
+}
+#rcl-popup #user-medias{
+    padding:10px;
+}
+#rcl-popup #user-medias .media-list{
+	list-style:none;
+	overflow:hidden;
+}
+#rcl-popup #user-medias .media-list li{
+	float:left;
+	border:1px solid #ccc;
+	margin:5px;
+}
+#rcl-popup #user-medias .media-list img{
+	width:99px;
+	height:99px;
+}

@@ -1,0 +1,1 @@
+Name: Groups Wp-Recall (Группы);Version: 1.7.0;Description: Расширение групп для wp-recall;Author: Плечев Андрей;Url: http://wppost.ru;

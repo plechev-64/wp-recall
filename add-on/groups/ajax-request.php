@@ -1,0 +1,1 @@
+<?phprequire_once( '../../load-rcl.php' );require_once( 'class_ajax.php' );$ajax = new RCL_Ajax_Group();$ajax->$action();

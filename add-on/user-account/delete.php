@@ -1,0 +1,1 @@
+<?phpremove_role('reg-nopay');?>

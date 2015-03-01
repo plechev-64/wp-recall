@@ -1,0 +1,122 @@
+/*Вход и регистрация*/
+.panel_lk_recall {
+    margin: 0 auto;
+    max-width: 300px;
+    width: 100%;
+	overflow:hidden;
+	color:#333;
+}
+.panel_lk_recall.floatform{
+	display:none;
+	z-index: 9999;
+	position: absolute;
+	left: 50%;
+	margin-left: -150px;
+}
+.panel_lk_recall.floatform .close-popup{
+	font-size: 24px;
+	position: absolute;
+	right: 0;
+	margin: 5px 0px 0 0;
+	color: #FD7777;
+}
+.panel_lk_recall a {
+    text-decoration: none;
+}
+.panel_lk_recall .recall-button,
+.widget .panel_lk_recall .recall-button {
+	color:#fff;
+        margin-right: 5px;
+}
+.panel_lk_recall .buttons{	
+    overflow: hidden;
+}
+.panel_lk_recall .username{
+	margin: 0 0 10px 0;
+}
+.panel_lk_recall .author-avatar{
+	margin:0 5px 0 0;
+	float: left;
+}
+.panel_lk_recall .buttons > a input{
+	display:block;
+	width:130px;
+	text-align:center;
+	margin:0 0 5px 0;
+}
+.panel_lk_recall .buttons p{
+	margin: 3px 0;
+	padding: 5px 0;
+	overflow:hidden;
+}
+.panel_lk_recall .form-tab-rcl {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    box-shadow: 1px 1px 5px #CCCCCC;
+    display: none;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 10px;
+}
+.panel_lk_recall .form-tab-rcl a {
+    display: block;
+    min-width: 100px;
+    padding: 3px;
+	color: #777;
+	clear: both;
+}
+.panel_lk_recall .form-tab-rcl .error {
+    display: block;
+    font-size: 12px;
+    padding: 5px;
+    text-align: center;
+}
+.panel_lk_recall .form-tab-rcl .success {
+    border: 2px solid #008000;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+}
+.panel_lk_recall .form-tab-rcl .form-title {
+    margin: 5px;
+    text-align: center;
+}
+.panel_lk_recall .form-tab-rcl .form-block-rcl {
+    margin: 7px 0;
+    overflow: hidden;
+}
+.panel_lk_recall .form-tab-rcl .form-block-rcl input[type="text"], 
+.panel_lk_recall .form-tab-rcl .form-block-rcl input[type="password"], 
+.panel_lk_recall .form-tab-rcl .form-block-rcl input[type="email"],
+.panel_lk_recall .form-tab-rcl .form-block-rcl select,
+.panel_lk_recall .form-tab-rcl .form-block-rcl textarea{
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    padding: 5px;
+    width: 95%;
+	color:#333;
+}
+.panel_lk_recall .form-tab-rcl .form-block-rcl label {
+    display: block;
+}
+.panel_lk_recall .form-tab-rcl input[type="submit"] {
+    float: right;
+}
+.panel_lk_recall #uLogin_form {
+    margin-top: 10px;
+}
+.authorize-form-rcl {
+    margin: 0 auto;
+    max-width: 250px;
+}
+.panel_lk_recall .parent-recbutton{text-align:center;}
+.panel_lk_recall .parent-recbutton > a{display:block;width:130px;margin:0 auto;}
+#notice-chek-password{
+    margin-top: 10px;
+}
+#notice-chek-password span{
+    padding: 0px;
+}

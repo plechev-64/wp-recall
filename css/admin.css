@@ -1,0 +1,102 @@
+#recall{
+    position: relative;
+}
+
+#recall h2 {
+    border: 1px solid #AAAAAA;
+    box-shadow: 0 0 50px #CCCCCC inset;
+    cursor: pointer;
+    margin: 5px 0 0;
+    padding: 5px 15px;
+    width: 600px;
+}
+#recall.left-sidebar h2{
+    width: 200px;
+    font-size: 16px;
+    line-height: 1;
+}
+#recall.left-sidebar .active{
+    background: #2ea2cc;
+    color: #fff;
+    font-weight: bold;
+    box-shadow:none;
+}
+.wrap-recall-options {
+    border: 1px solid #AAAAAA;
+    box-shadow: 0 0 50px #F0F0F0 inset;
+    display: none;
+    margin: 0 0 5px;
+    padding: 15px;
+    /* width: 600px; */   
+}
+.left-sidebar .wrap-recall-options{
+    position: absolute;
+    left: 250px;
+    top: 0;
+    max-height: 800px;
+    overflow-y: scroll;
+}
+.wrap-recall-options .option-block {
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px 15px;
+    width: 500px;
+    /* float: left; */
+}
+.wrap-recall-options .option-block h3 {
+    text-transform: uppercase;
+	
+    margin: 10px 0;
+}
+.wrap-recall-options .option-block label {
+    display: block;
+    font-weight: bold;
+    margin-top: 5px;
+}
+.wrap-recall-options .option-block small {
+    display: block;
+}
+.wrap-recall-options .option-block select, 
+.wrap-recall-options .option-block input[type="text"],
+.wrap-recall-options .option-block input[type="number"]{
+    height: 28px;
+    padding: 5px;
+    width: 300px;
+    height: 30px;
+}
+.wrap-recall-options .option-block input[type="number"]{
+    width: 100px;
+}
+.wrap-recall-options .option-block textarea{
+	height:60px;
+	width: 500px;
+}
+.wrap-recall-options p {
+    overflow: hidden;
+}
+.child-select{
+	display:none;
+}
+.column-thumb .thumbnail{
+    box-shadow: inset 0 0 8px 2px rgba(0,0,0,.1);
+    width:70px;
+    height:70px;
+}
+.wrap .submit-block{
+    width: 600px;
+}
+.left-sidebar .submit-block{
+    width: 200px;
+    margin-top:50px;
+}
+#tabs-list-rcl{
+    
+}
+#tabs-list-rcl li{
+    border: solid 1px #ccc;
+    padding: 1px 10px;
+    background: #ddd;
+    cursor: move;
+    margin: 3px 5px;
+}

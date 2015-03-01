@@ -1,0 +1,1 @@
+Name: Review (Отзывы);Version: 1.4.1;Description: Расширение отзывов для wp-recall;Author: Плечев Андрей;Url: http://wppost.ru;

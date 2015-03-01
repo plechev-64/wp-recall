@@ -1,0 +1,32 @@
+/*Отзывы*/
+.recall1 {
+    background: #E7FFE8;
+}
+.recall-1 {
+    background: #ffeae8;
+}
+.recall0 {
+    background: #fff;
+}
+.recall_block > div{
+	overflow:hidden;
+}
+.recall_block > div .avatar{
+	margin:5px 10px 5px 5px;
+	float:left;
+}
+.content-recall{
+
+}
+.content-recall .status{
+    display: block;
+    float: right;
+    font-size: 30px;  
+    margin: 5px;
+}
+.content-recall .status.plus{
+    color:green;
+}
+.content-recall .status.minus{
+    color: red;	
+}

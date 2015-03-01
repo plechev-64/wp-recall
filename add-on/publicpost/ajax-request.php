@@ -1,0 +1,1 @@
+<?phprequire_once( '../../load-rcl.php' );require_once( 'class_public.php' );$public = new RCL_public();switch($action){		case 'step_two_redactor_post':		$public->step_two_redactor_post();	break;	case 'step_one_redactor_post':		$public->step_one_redactor_post();	break;	case 'get_media':		$public->get_media();	break;}?>

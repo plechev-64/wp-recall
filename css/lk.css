@@ -1,0 +1,231 @@
+/*Личный кабинет*/
+.wprecallblock{
+    padding: 5px;
+    border: 3px solid #CFE9FF;
+	overflow: hidden;
+}
+.wprecallblock h2{
+    margin: 0 0  20px 0;
+    font-size: 26px;
+	line-height: 1;
+}
+.wprecallblock h3{
+    margin: 15px 0;
+    font-size: 18px;
+	line-height: 1;
+}
+.wprecallblock p{
+    margin: 5px 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+.wprecallblock a{
+    text-decoration: none;
+}
+.wprecallblock .author-avatar{
+	margin-top:0;
+}
+.wprecallblock .notice{
+	color: #3F7BAA;
+	font-size:10px;
+}
+.wprecallblock .success{
+	padding: 10px;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	width: 300px;
+	margin: 100px 0 0 183px;
+}
+.wprecallblock .box-green{
+	border: 1px solid #008000;
+	color: #008000;
+	font-weight: bold;
+	padding: 5px 0;
+	text-align: center;
+	width: 100%;
+}
+.wprecallblock input[type="text"],
+.wprecallblock input[type="password"],
+.wprecallblock input[type="url"],
+.wprecallblock input[type="email"],
+.wprecallblock input[type="number"],
+.wprecallblock input[type="date"],
+.wprecallblock textarea{
+	border:1px solid #ccc;
+	border-radius:none;
+	padding:5px 10px;
+}
+.wprecallblock #lk-conteyner{
+    background: #fff;
+
+    padding: 10px;
+    overflow: hidden;
+}
+.wprecallblock #lk-conteyner .lk-header{
+
+}
+.wprecallblock #lk-conteyner .lk-sidebar{
+    width: 125px;
+    float: left;
+    text-align: center;
+}
+.wprecallblock #lk-conteyner .lk-sidebar .avatar{
+	float: none!important;
+}
+.wprecallblock #lk-conteyner .lk-sidebar .recall-button{
+	margin:3px 0;
+	white-space: nowrap;
+}
+.wprecallblock #lk-conteyner .lk-content{
+    width: 60%;
+
+    float: left;
+    margin:  0 0 0 30px;
+}
+.wprecallblock h2{
+    margin: 0 0  20px 0;
+    font-size: 26px;
+    float: left;
+}
+.wprecallblock #lk-conteyner .lk-content .status{
+    overflow: hidden;
+	font-size: 12px;
+	color: #888;
+}
+.wprecallblock #lk-conteyner .lk-content .status .status_user{
+    float: left;
+    margin: 0 5px 0 5px;
+    font-size:16px;
+    
+    -webkit-animation: pulsate 1.2s linear infinite;
+    animation: pulsate 1.2s linear infinite;
+}
+.wprecallblock #lk-conteyner .lk-content .lk-footer{
+
+}
+.wprecallblock #lk-conteyner .lk-footer{
+    clear: both;
+
+}
+.wprecallblock #lk-conteyner .lk-footer .footer-block-rcl{
+    border: 1px solid #ccc; 
+    padding: 10px;
+    margin: 5px 0;
+}
+.wprecallblock #lk-conteyner .lk-footer .footer-block-rcl h4{
+    margin: 0 0 5px 0;
+}
+.wprecallblock #lk-conteyner .lk-footer .footer-block-rcl ul{
+    margin: 0;   
+    list-style: none;
+    overflow: hidden;
+}
+.wprecallblock #lk-conteyner .lk-footer .footer-block-rcl ul li{  
+    float: left;
+	list-style: none;
+	margin: 3px;
+}
+.wprecallblock #lk-conteyner .lk-footer .footer-block-rcl ul li .avatar{
+	margin:0;
+}
+.wprecallblock #lk-menu{
+   
+}
+.wprecallblock .rcl-menu{
+	overflow: hidden;
+    
+	margin: 0 0 10px 0;
+}
+.wprecallblock #lk-menu a,
+.wprecallblock #lk-content .sec_block_button,
+.wprecallblock #lk-content .child_block_button{
+    padding: 8px 10px 8px 5px;
+    border: 1px solid #3F7BAA;
+    color: #3F7BAA;
+    background: #F0FBFF;
+    display: block;
+    float: left;
+    margin: 5px 5px 0px 0;
+	font-size: 12px;
+	line-height:1;
+}
+.wprecallblock #lk-menu a.active,
+.wprecallblock #lk-content .sec_block_button.active,
+.wprecallblock #lk-content .child_block_button.active{
+    box-shadow: none;
+    cursor: default;
+    background: #3F7BAA;
+    color: #fff;
+}
+.wprecallblock #lk-menu.left-buttons{
+    float: left;
+}
+.wprecallblock #lk-menu.left-buttons a{
+    float: none;
+    width: 110px;
+}
+.wprecallblock #lk-menu.left-buttons a.active{
+
+}
+.wprecallblock #lk-content{
+
+}
+.wprecallblock #lk-content > div{
+	background:#FFFFFF;
+}
+.wprecallblock #lk-content > div,
+.wprecallblock #lk-content > div > .recall_child_content_block{
+    border: 1px solid #3F7BAA;
+    padding: 10px;
+	overflow:hidden;
+	display: none;
+	position:relative;
+}
+.wprecallblock #lk-content > div > .recall_child_content_block{
+	clear: both;
+}
+.wprecallblock #lk-content > div.active,
+.wprecallblock #lk-content > div > .recall_child_content_block.active{
+	display:block;
+}
+.wprecallblock #lk-content table{
+	clear:both;
+	width: 100%;
+        margin:5px 0;
+}
+.wprecallblock #lk-content th,
+.wprecallblock #lk-content td{
+	border: 1px solid #ededed;
+	padding: 5px;
+	vertical-align: middle;
+        text-align:left;
+}
+.wprecallblock .blacklist-notice{
+	text-align:center;
+	float:right;
+	font-weight:bold;
+	padding:5px;
+	border:1px solid #aaa;
+}
+.wprecallblock .show-profile-fields{
+	clear:both;
+	margin:10px 0;
+}
+.wprecallblock .notify-lk{
+    text-align: center;   
+    color: #000;
+    margin: 0px 0 15px;
+    background:#F8F7A4;
+}
+.wprecallblock .notify-lk div{
+    padding: 10px;
+    width: auto;
+    margin: 0;
+}
+.wprecallblock .notify-lk .error{
+    background: #FFBCBC;
+}
+.wprecallblock .notify-lk .success{
+    background: none repeat scroll 0% 0% #8CDD89;    
+}

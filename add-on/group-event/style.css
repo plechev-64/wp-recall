@@ -1,0 +1,55 @@
+/*EventGroup*/
+#countbox{
+	color: #fff;
+	font-family: Arial;
+	font-size: 35px;
+	width: 300px;
+	height: 100px;
+	margin-left:auto;
+	margin-right: auto;
+}
+#countbox > div{
+	float: left;
+	text-align: center;
+	background-image: url('/wp-content/plugins/recall/add-on/group-event/img/flip.png');
+	background-repeat: no-repeat;
+	margin: 0 7px 0 7px;
+	background-position: center;
+	height: 50px;
+	width: 53px;
+	z-index: 1;
+	position: relative;
+	padding: 15px 0 0 0;
+	line-height: 1;
+}
+#countbox > div > div{
+	background-position: center;
+	background-repeat: no-repeat;
+	position: absolute;
+	height: 26px;
+	width: 56px;
+	bottom: -25px;
+}
+		#days_text{
+			background-image:url('/wp-content/plugins/recall/add-on/group-event/img/days_text.jpg');			
+		}
+		#hours_text{
+			background-image:url('/wp-content/plugins/recall/add-on/group-event/img/hours_text.jpg');			
+		}
+		#mins_text{
+			background-image:url('/wp-content/plugins/recall/add-on/group-event/img/mins_text.jpg');			
+		}
+		#secs_text{
+			background-image:url('/wp-content/plugins/recall/add-on/group-event/img/secs_text.jpg');			
+		}
+
+#days span, #hours span, #mins span , #secs span {
+	background: url(/wp-content/plugins/recall/add-on/group-event/img/flip_gradient.png);
+	background-repeat:no-repeat;
+	background-position: center -16px;
+	position: absolute;
+	display: block;
+	height: 57px;
+	width: 52px;
+	bottom: 0;
+}

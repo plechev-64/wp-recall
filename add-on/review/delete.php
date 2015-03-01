@@ -1,0 +1,1 @@
+<?phpglobal $wpdb;$wpdb->query("DROP TABLE ".RCL_PREF."profile_otziv");?>
