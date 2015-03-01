@@ -1,8 +1,11 @@
 # Плагин Wp-Recall
-Плагин WordPress для создания личного кабинета пользователя.
-Плагин расширяет свои возможности за счет подключения различных дополнений.
-Плагин позволяет закрыть административную часть от пользователей сайта и предложить им функциональный личный кабинет для настройки своего профиля, публикации записей, формированию своей новостной ленты, обмену личными сообщениями и тд.
-# Базовая версия
+
+Плагин WordPress для создания личного кабинета пользователя. Плагин расширяет свои возможности за счет подключения различных дополнений. Плагин позволяет закрыть административную часть от пользователей сайта и предложить им функциональный личный кабинет для настройки своего профиля, публикации записей, формированию своей новостной ленты, обмену личными сообщениями и тд.
+
+---
+
+## Базовая версия плагина
+
 Базовая версия плагина распространяется с набором базовых дополнений:
 - Личный счет пользователя
 - Интернет-магазин
@@ -12,4 +15,29 @@
 - Отзывы о пользователе
 - Feed пользователя
 - Настройки профиля
-- Фронт-энд публикация
+- Пользовательская публикация
+
+---
+
+## MIT LICENSE
+Copyright 2012 Plechev Andrey <support@wppost.ru>
+http://wppost.ru/
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
