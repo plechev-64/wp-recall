@@ -64,7 +64,8 @@ global $post,$rmag_options;
 function shortcode_mini_basket() {
     global $rmag_options;
     $sumprice = 0;
-    if(isset($_SESSION['cart']['summ'])) $sumprice = $_SESSION['cart']['summ'];
+
+    if(isset($_SESSION['cartdata']['summ'])) $sumprice = $_SESSION['cartdata']['summ'];
     
     $all = 0;
     if(isset($_SESSION['cart'])){
