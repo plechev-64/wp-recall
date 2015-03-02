@@ -164,7 +164,7 @@ class Rcl_Custom_Fields{
                 if($chek_field)
                     $show = $chek_field;
         }					
-        if($field['type']=='textarea'&&get_the_author_meta($slug,$author_lk))
+        if($field['type']=='textarea'&&$value)
                 $show = '<p>'.nl2br(esc_textarea($value));
         
         if($show) $show = '<p><b>'.$field['title'].':</b>'.$show.'</p>';
