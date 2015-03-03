@@ -167,7 +167,7 @@ class Rcl_Custom_Fields{
         if($field['type']=='textarea'&&$value)
                 $show = '<p>'.nl2br(esc_textarea($value));
         
-        if($show) $show = '<p><b>'.$field['title'].':</b>'.$show.'</p>';
+        if($show) $show = '<p><b>'.$field['title'].':</b> '.$show.'</p>';
         
         return $show;
     }
