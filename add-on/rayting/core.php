@@ -141,7 +141,7 @@ function post_update_user_rayting($public_id,$user_id,$point){
     global $rcl_options;
     $post_type = get_post_type($public_id);
     $rcl_options['rayt_products'] = 1;       
-    if($rcl_options['rayt_'.$post_type]==1) update_user_rayting($public_id,$user_id,$point);
+    if($rcl_options['rayt_'.$post_type]==1) update_user_rayting($user_id,$point,$public_id);
 }
 //Определяем изменять ли рейтинг пользователю
 add_action('update_comment_total_rayting','comment_update_user_rayting',10,3);
@@ -149,10 +149,10 @@ add_action('delete_rayting_with_comment','comment_update_user_rayting',10,3);
 //add_action('delete_comment_rayting','comment_update_user_rayting',10,3);
 function comment_update_user_rayting($public_id,$user_id,$point){
     global $rcl_options;     
-    if($rcl_options['rayt_comment']==1) update_user_rayting($public_id,$user_id,$point);
+    if($rcl_options['rayt_comment']==1) update_user_rayting($user_id,$point,$public_id);
 }
 //Обновляем общий рейтинг пользователя
-function update_user_rayting($public_id,$user_id,$point){
+function update_user_rayting($user_id,$point,$public_id=false){
     global $wpdb;
 
     $total = get_user_rayting($user_id);
@@ -168,7 +168,7 @@ function update_user_rayting($public_id,$user_id,$point){
         insert_user_rayting($user_id,$point);		
     }
     
-    do_action('update_user_rayting',$user_id,$point); 
+    do_action('update_user_rayting',$user_id,$point,$public_id); 
     
 }
 
