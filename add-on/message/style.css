@@ -51,10 +51,30 @@
 #message-list{
     clear: both;
     padding-top: 20px;
-    max-height: 400px;
-    overflow-y: auto;
+    
+    
     padding-right: 5px;
     min-height: 100px;
+}
+#privat_block .prmess{
+    margin-bottom:10px;
+}
+#privat_block #resize-content{
+    height:400px;
+    overflow-y: auto;
+}
+#privat_block #resize.ui-resizable {
+    z-index: 999;
+    width: 100%;
+    position: absolute;
+}
+#privat_block #resize .ui-resizable-s {
+    background: none repeat scroll 0 0 #E5E5E5;
+    height: 10px;
+    width: 50px;
+    margin: 0 auto;
+    cursor: s-resize;
+    position: static;
 }
 .privat_block .private-buttons{
 	overflow: hidden;
