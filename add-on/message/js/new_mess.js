@@ -23,7 +23,7 @@ jQuery(document).ready( function() {
 						jQuery('#rcl-new-mess').html(data['message_block']);
 						jQuery("#privatemess").delay('500').animate({
 							bottom: "10px"
-						 }, 3000 );
+						 }, 2000 );
                                                 
 						jQuery.ionSound.play('e-oh');
 					}

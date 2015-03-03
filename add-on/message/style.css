@@ -241,13 +241,12 @@ max-width: 80%;
 }
 #privatemess {
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
-    border-radius: 7px;
     bottom: -250px;
-    box-shadow: 4px 4px 5px #444444;
+    box-shadow: 4px 4px 5px #777777;
     color: #FFFFFF;
     margin: 10px;
     opacity: 0.9;
-    padding: 10px 20px;
+    padding: 10px 10px 40px 10px;
     position: fixed;
     right: 0;
     width: 300px;
@@ -267,14 +266,45 @@ max-width: 80%;
 #privatemess .title-new-mess {
     color: #FF0000;
     font-weight: bold;
-    margin-bottom: 5px;
     text-align: center;
     text-decoration: blink;
+    line-height: 1;
+    margin: 0;
 }
 #privatemess .name-author-mess {
     font-weight: bold;
     margin: 0 0 5px !important;
     text-decoration: underline;
+}
+#privatemess .mini_status_user{
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+}
+#privatemess .content-notice{
+    clear:both;
+}
+#privatemess .form_new_message{
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+}
+#privatemess .view-form{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+#privatemess .notice-ava{
+    float:left;
+    margin:0 10px 0 0;
+    position:relative;
+}
+#privatemess .miniaddmess{
+    float:right;
+}
+#privatemess .notice{
+    font-size:10px;
+    float:right;
 }
 .correspond .redline {
     background: none repeat scroll 0 0 #FFFAFA !important;
