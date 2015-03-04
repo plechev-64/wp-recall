@@ -222,26 +222,7 @@ function get_authorize_form_rcl($type=false,$form=false){
 	return $html;
 }
 
-add_filter('regform_fields_rcl','get_secondary_password_field',1);
-function get_secondary_password_field($fields){
-    $fields .= '<div class="form-block-rcl">
-                <label>'.__('Повторите пароль','rcl').' <span class="required">*</span></label>
-                <input required id="secondary-pass-user" type="password" value="" name="secondary-email-user">
-                <div id="notice-chek-password"></div>
-            </div>
-            <script>jQuery(function(){
-            jQuery("#secondary-pass-user").live("keyup", function(){ 
-                var pr = jQuery("#primary-pass-user").val();
-                var sc = jQuery(this).val();
-                var notice;
-                if(pr!=sc) notice = "<span class=error>Пароли не совпадают!</span>";
-                else notice = "<span class=success>Пароли совпадают</span>";
-                jQuery("#notice-chek-password").html(notice);
-            });});
-        </script>';
-    return $fields;
-}
-
+//Формируем массив сервисных сообщений формы регистрации и входа
 function notice_form_rcl($type='login'){
     
 
@@ -296,4 +277,46 @@ function notice_form_rcl($type='login'){
     $text = '<span class="'.$get.'">'.$notice.'</span>';
 
     return $text;      
+}
+
+//Добавляем поле повтора пароля в форму регистрации
+add_filter('regform_fields_rcl','get_secondary_password_field',1);
+function get_secondary_password_field($fields){
+    $rcl_options;
+    if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return $fields;
+    
+    $fields .= '<div class="form-block-rcl">
+                <label>'.__('Повторите пароль','rcl').' <span class="required">*</span></label>
+                <input required id="secondary-pass-user" type="password" value="" name="secondary-email-user">
+                <div id="notice-chek-password"></div>
+            </div>
+            <script>jQuery(function(){
+            jQuery("#secondary-pass-user").live("keyup", function(){ 
+                var pr = jQuery("#primary-pass-user").val();
+                var sc = jQuery(this).val();
+                var notice;
+                if(pr!=sc) notice = "<span class=error>Пароли не совпадают!</span>";
+                else notice = "<span class=success>Пароли совпадают</span>";
+                jQuery("#notice-chek-password").html(notice);
+            });});
+        </script>';
+    
+    return $fields;
+}
+//Добавляем сообщение о неверном заполнении поле повтора пароля
+add_filter('notice_form_rcl','add_notice_chek_register_pass');
+function add_notice_chek_register_pass($notices){
+    global $rcl_options;
+    if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return $notices;
+    $notices['register']['error']['repeat-pass'] = 'Повтор пароля не верен!';
+    return $notices;
+}
+//Проверяем заполненность поля повтора пароля
+add_action('pre_register_user_rcl','chek_repeat_register_pass');
+function chek_repeat_register_pass($ref){
+    global $rcl_options;
+    if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return false;
+    if($_POST['secondary-email-user']!=$_POST['pass-user']){
+        wp_redirect(get_redirect_url_rcl($ref).'action-rcl=register&error=repeat-pass');exit;
+    }
 }

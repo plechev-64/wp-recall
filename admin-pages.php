@@ -233,6 +233,11 @@ function global_recall_options(){
                                 $fields->notice('Впишите свой URL ниже, если выбран произвольный URL после авторизации')
                             )
                         ),
+                        $fields->label('Поле повтора пароля'),                       
+                        $fields->option('select',array(
+                            'name'=>'repeat_pass',
+                            'options'=>array('Отключено','Отображается')
+                        )),
                         $fields->label('Индикатор сложности пароля'),                       
                         $fields->option('select',array(
                             'name'=>'difficulty_parole',

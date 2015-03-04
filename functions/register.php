@@ -1,32 +1,32 @@
 <?php
 function confirm_user_registration(){
 global $wpdb;
-	$reglogin = $_GET['rglogin'];
-	$regpass = $_GET['rgpass'];
-	$regcode = md5($reglogin);
-	if($regcode==$_GET['rgcode']){
-		if ( $user = get_user_by('login', $reglogin) ){
-			wp_update_user( array ('ID' => $user->ID, 'role' => get_option('default_role')) ) ;
-			$time_action = date("Y-m-d H:i:s");
-                        $action = $wpdb->get_var("SELECT time_action FROM ".RCL_PREF."user_action WHERE user = '$user->ID'");
-			if(!$action)$wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => $time_action ) );
-			
-			$creds = array();
-			$creds['user_login'] = $reglogin;
-			$creds['user_password'] = $regpass;
-			$creds['remember'] = true;			
-			$sign = wp_signon( $creds, false );
-			
-			if ( is_wp_error($sign) ){
-				wp_redirect( get_bloginfo('wpurl').'?getconfirm=needed' ); exit;
-			}else{				
-				rcl_update_timeaction_user();					
-				wp_redirect(get_authorize_url_rcl($user->ID) ); exit;
-			}
-		}			
-	}else{
-		wp_redirect( get_bloginfo('wpurl').'?getconfirm=needed' ); exit;
-	}	
+    $reglogin = $_GET['rglogin'];
+    $regpass = $_GET['rgpass'];
+    $regcode = md5($reglogin);
+    if($regcode==$_GET['rgcode']){
+        if ( $user = get_user_by('login', $reglogin) ){
+            wp_update_user( array ('ID' => $user->ID, 'role' => get_option('default_role')) ) ;
+            $time_action = date("Y-m-d H:i:s");
+            $action = $wpdb->get_var("SELECT time_action FROM ".RCL_PREF."user_action WHERE user = '$user->ID'");
+            if(!$action)$wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => $time_action ) );
+
+            $creds = array();
+            $creds['user_login'] = $reglogin;
+            $creds['user_password'] = $regpass;
+            $creds['remember'] = true;			
+            $sign = wp_signon( $creds, false );
+
+            if ( is_wp_error($sign) ){
+                    wp_redirect( get_bloginfo('wpurl').'?getconfirm=needed' ); exit;
+            }else{				
+                    rcl_update_timeaction_user();					
+                    wp_redirect(get_authorize_url_rcl($user->ID) ); exit;
+            }
+        }			
+    }else{
+        wp_redirect( get_bloginfo('wpurl').'?getconfirm=needed' ); exit;
+    }	
 }
 add_action('init', 'confirm_user_resistration_activate');
 function confirm_user_resistration_activate(){
@@ -95,7 +95,8 @@ function get_register_user_rcl(){
 		}		
 		if(!$correctemail){			
 			wp_redirect(get_redirect_url_rcl($ref).'action-rcl=register&error=email');exit;
-		}						
+		}
+                
 	}else{	
             
             do_action('pre_register_user_rcl',$ref);
