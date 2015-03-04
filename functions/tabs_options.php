@@ -15,8 +15,10 @@ function get_tablist_options($content){
 
     $tabs = '<p>Сортируйте вкладки перетаскивая их на нужную позицию</p>'
             . '<ul id="tabs-list-rcl" class="sortable">';
+    
     if(isset($rcl_options['tabs']['order'])){
-        foreach($rcl_options['tabs']['order'] as $order=>$key){       
+        foreach($rcl_options['tabs']['order'] as $order=>$key){
+            if(!isset($tabs_rcl[$key])) continue;
             $tabs .= get_tab_option($key);
             $keys[$key] = 1;
         }
