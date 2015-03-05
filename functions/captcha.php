@@ -28,7 +28,7 @@ function get_captcha_field_rcl($fields){
       <div class="form-block-rcl">
         <label>'.__('Введите символы','rcl').' <span class="required">*</span></label>
         <img src="'.$rcl_captcha_image_src.'" alt="captcha" width="'.$rcl_captcha_image_width.'" height="'.$rcl_captcha_image_height.'" />
-        <input id="rcl_captcha_code" required name="rcl_captcha_code" style="width: 190px;" size="'.$rcl_captcha_field_size.'" type="text" />
+        <input id="rcl_captcha_code" required name="rcl_captcha_code" style="width: 160px;" size="'.$rcl_captcha_field_size.'" type="text" />
         <input id="rcl_captcha_prefix" name="rcl_captcha_prefix" type="hidden" value="'.$rcl_captcha_prefix.'" />
      </div>';
 
