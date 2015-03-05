@@ -97,7 +97,7 @@ function global_recall_options(){
         <div id="recall" class="left-sidebar wrap">
 	<form method="post" action="">
 	'.wp_nonce_field('update-options-rcl','_wpnonce',true,false).'
-	<h2 class="active">'.__('Общие настройки','rcl').'</h2>	
+	<span class="title-option active">'.__('Общие настройки','rcl').'</span>	
 	<div class="wrap-recall-options" style="display:block;">';
     
                 $args = array(    

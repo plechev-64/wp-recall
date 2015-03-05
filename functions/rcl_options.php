@@ -7,7 +7,7 @@ class Rcl_Options {
     }
     
     function options($title,$conts){
-        $return = '<h2>'.$title.'</h2>		
+        $return = '<span class="title-option">'.$title.'</span>		
 	<div ';
         if($this->key) $return .= 'id="options-'.$this->key.'" ';
         $return .= 'class="wrap-recall-options">';

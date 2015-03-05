@@ -2,15 +2,19 @@
     position: relative;
 }
 
-#recall h2 {
+#recall .title-option {
     border: 1px solid #AAAAAA;
     box-shadow: 0 0 50px #CCCCCC inset;
     cursor: pointer;
     margin: 5px 0 0;
     padding: 5px 15px;
     width: 600px;
+    display:block;
 }
-#recall.left-sidebar h2{
+#recall.left-sidebar form{
+    height:870px;
+}
+#recall.left-sidebar .title-option{
     width: 200px;
     font-size: 16px;
     line-height: 1;

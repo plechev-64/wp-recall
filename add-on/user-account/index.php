@@ -71,7 +71,7 @@ add_filter('admin_options_rmag','user_account_wpm_options',10);
 function user_account_wpm_options($content){
 	$style = 'style="display:block;"';
 	$options = get_option('primary-rmag-options');
-	$content .= '<h2>Платежные системы</h2>
+	$content .= '<span class="title-option">Платежные системы</span>
 	<div id="options-'.get_key_addon_rcl(pathinfo(__FILE__)).'" '.$style.' class="wrap-recall-options">
             
                 <div class="option-block">

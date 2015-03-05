@@ -65,10 +65,10 @@ jQuery(document).ready( function() {
         return false;
     });
 	
-	jQuery('#recall h2').click(function(){  
+	jQuery('#recall .title-option').click(function(){  
                 if(jQuery(this).hasClass('active')) return false;
 		jQuery('.wrap-recall-options').hide();
-                jQuery('#recall h2').removeClass('active');
+                jQuery('#recall .title-option').removeClass('active');
                 jQuery(this).addClass('active');
 		jQuery(this).next('.wrap-recall-options').show();
 		return false;
