@@ -180,6 +180,7 @@ function init_user_lk(){
             if(isset($_GET['author'])) $user_LK = $_GET['author'];
             else{
                 $url = (isset($_SERVER['SCRIPT_URL']))? $_SERVER['SCRIPT_URL']: $_SERVER['REQUEST_URI'];
+                $url = preg_replace('/\?.*/', '', $url);
                 $url_ar = explode('/',$url);
                 foreach($url_ar as $key=>$u){
                     if($u!='author') continue;
