@@ -101,7 +101,7 @@
 	opacity:0;
 	right:0;
 	top:50%;
-	background:url(/wp-content/plugins/recall/img/star.png) no-repeat;
+	background:url(img/star.png) no-repeat;
 }
 .privat_block .message-block:hover > .important{
 	opacity:0.5;
@@ -141,7 +141,7 @@ max-width: 80%;
 	margin:0;
 }
 .privat_block .message-block .content-mess .privat-balloon {
-    background: url("/wp-content/plugins/recall/img/ballun-left.png") no-repeat scroll 0 0 #008000;
+    background: url("img/ballun-left.png") no-repeat scroll 0 0 #008000;
     display: block;
     height: 13px;
     margin: 7px 0 0 60px;
@@ -156,7 +156,7 @@ max-width: 80%;
 	word-wrap: break-word;
 }
 .privat_block .you .content-mess .privat-balloon {
-    background: url("/wp-content/plugins/recall/img/ballun-right.png") no-repeat scroll 0 0 #3F7BAA;
+    background: url("img/ballun-right.png") no-repeat scroll 0 0 #3F7BAA;
     display: block;
     height: 13px;
     margin: 7px 0 0 70px;
