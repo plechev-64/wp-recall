@@ -358,10 +358,21 @@ class Rcl_PublicForm {
 				
             $public_fields = ($formfields['custom_fields'])? $this->get_custom_fields($this->post_id): false;
 
-            $form = '<div class="public_block">
-                <form id="form-'.$this->post_type.'-';
-                $form .= ($this->post_id)? $this->post_id : '0';
-                $form .= '" class="';
+            $form = '<div class="public_block">';
+                
+                $id_form = ($this->post_id)? $this->post_id : 0;
+                
+                if(!$id_form){
+                    if (!session_id()) { session_start(); }
+                    if(!isset($_SESSION['new-'.$this->post_type])){ 
+                        $_SESSION['new-'.$this->post_type] = 1;
+                        $form .= '<script>localStorage.clear();</script>';
+                    }
+                }
+                
+                $id_form = 'form-'.$this->post_type.'-'.$id_form;
+            
+                $form .= '<form id="'.$id_form.'" class="';
                 $form .= ($this->post_id)? 'edit-form' : 'public-form';
                 $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\'Идет отправка, пожалуйста, подождите..\';"  action="" method="post" enctype="multipart/form-data">
                 '.wp_nonce_field('edit-post-rcl','_wpnonce',true,false);

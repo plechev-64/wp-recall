@@ -202,6 +202,7 @@ class Rcl_EditPost {
         
         if(!$this->post_id){ 
             $this->post_id = wp_insert_post( $postdata );
+            if($this->post_id) session_destroy();
             if($id_form>1) add_post_meta($this->post_id, 'publicform-id', $id_form);
         }else{ 
             wp_update_post( $postdata );
