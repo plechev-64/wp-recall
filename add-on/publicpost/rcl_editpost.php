@@ -39,7 +39,8 @@ class Rcl_EditPost {
             $this->update = true;
         }else{
             if (!session_id()) { session_start(); }
-            session_destroy();
+            unset($_SESSION['new-'.$this->post_type]);
+            //session_destroy();
         }
         
         if($_POST['posttype']){

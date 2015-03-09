@@ -366,7 +366,12 @@ class Rcl_PublicForm {
                     if (!session_id()) { session_start(); }
                     if(!isset($_SESSION['new-'.$this->post_type])){ 
                         $_SESSION['new-'.$this->post_type] = 1;
-                        $form .= '<script>localStorage.clear();</script>';
+                        $form .= '<script>Object.keys(localStorage)
+                                .forEach(function(key){
+                                     if (/^form-'.$this->post_type.'-0/.test(key)) {
+                                         localStorage.removeItem(key);
+                                     }
+                             });</script>';
                     }
                 }
                 
