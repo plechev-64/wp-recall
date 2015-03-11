@@ -362,8 +362,7 @@ class Rcl_PublicForm {
                 
                 $id_form = ($this->post_id)? $this->post_id : 0;
                 
-                if(!$id_form){
-                    if (!session_id()) { session_start(); }
+                if(!$id_form){                   
                     if(!isset($_SESSION['new-'.$this->post_type])){ 
                         $_SESSION['new-'.$this->post_type] = 1;
                         $form .= '<script>Object.keys(localStorage)
