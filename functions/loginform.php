@@ -223,10 +223,10 @@ function get_authorize_form_rcl($type=false,$form=false){
 }
 
 //Формируем массив сервисных сообщений формы регистрации и входа
-function notice_form_rcl($type='login'){
+function notice_form_rcl($form='login'){
     
 
-    if(!isset($_GET['action-rcl'])||$_GET['action-rcl']!=$type) return false; 
+    if(!isset($_GET['action-rcl'])||$_GET['action-rcl']!=$form) return false; 
         
     $vls = array(
         'register'=> array(
@@ -261,12 +261,20 @@ function notice_form_rcl($type='login'){
     );
     
     $vls = apply_filters('notice_form_rcl',$vls);
-        
-    $act = $_GET['action-rcl'];
-    $get = (isset($_GET['success']))? 'success': 'error';
-    $notice = (isset($vls[$act][$get][$_GET[$get]]))? $vls[$act][$get][$_GET[$get]]:'Ошибка заполнения!';
+
+    $gets = explode('&',$_SERVER['QUERY_STRING']);
+    foreach($gets as $gt){
+        $pars = explode('=',$gt);
+        $get[$pars[0]] = $pars[1];
+    }
     
-    if($type=='login'){
+    $act = $get['action-rcl'];
+    
+    $type = (isset($get['success']))? 'success': 'error';
+
+    $notice = (isset($vls[$act][$type][$get[$type]]))? $vls[$act][$type][$get[$type]]:'Ошибка заполнения!';
+    
+    if($form=='login'){
         $errors = '';
         $errors = apply_filters('login_errors', $errors);
         if($errors) $notice .= '<br>'.$errors;
@@ -274,7 +282,7 @@ function notice_form_rcl($type='login'){
     
     if(!$notice) return false;
     
-    $text = '<span class="'.$get.'">'.$notice.'</span>';
+    $text = '<span class="'.$type.'">'.$notice.'</span>';
 
     return $text;      
 }
@@ -282,7 +290,7 @@ function notice_form_rcl($type='login'){
 //Добавляем поле повтора пароля в форму регистрации
 add_filter('regform_fields_rcl','get_secondary_password_field',1);
 function get_secondary_password_field($fields){
-    $rcl_options;
+    global $rcl_options;
     if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return $fields;
     
     $fields .= '<div class="form-block-rcl">
