@@ -111,21 +111,7 @@ class Rcl_EditFields {
                                     </label>
                                 </p>
                                 <p class="description description-thin">
-                                    <label>'.$this->option('select',array(
-                                        'label'=>'Тип поля<br>',       
-                                        'name'=>'type',
-                                        'class'=>'typefield',
-                                        'value'=>array(
-                                            'text'=>'Однострочное поле',
-                                            'number'=>'Числовое поле',
-                                            'date'=>'Дата',
-                                            'time'=>'Время',
-                                            'textarea'=>'Многострочное поле',
-                                            'select'=>'Выпадающий список',
-                                            'checkbox'=>'Чекбокс',
-                                            'radio'=>'Радиокнопки',
-                                        )
-                                    )).'</label>
+                                    <label>'.$this->get_types().'</label>
                                 </p>
                         </div>					
                         <p class="place-sel link-to-original">
@@ -137,6 +123,25 @@ class Rcl_EditFields {
 
         return $field;
         
+    }
+    
+    function get_types(){
+        return $this->option('select',array(
+            'label'=>'Тип поля',       
+            'name'=>'type',
+            'class'=>'typefield',
+            'value'=>array(
+                'text'=>'Однострочное поле',               
+                'textarea'=>'Многострочное поле',
+                'select'=>'Выпадающий список',
+                'checkbox'=>'Чекбокс',
+                'radio'=>'Радиокнопки',
+                'number'=>'Числовое поле',
+                'date'=>'Дата',
+                'time'=>'Время',
+                'url'=>'Ссылка'
+            )
+        ));
     }
     
     function get_options(){
@@ -173,21 +178,7 @@ class Rcl_EditFields {
                             </span>
                             <span class="item-controls">
                                 <span class="item-type">
-                                    '.$this->option('select',array(
-                                        'label'=>'Тип',
-                                        'class'=>'typefield',
-                                        'name'=>'type',
-                                        'value'=>array(
-                                            'text'=>'Однострочное поле',
-                                            'number'=>'Числовое поле',
-                                            'date'=>'Дата',
-                                            'time'=>'Время',
-                                            'textarea'=>'Многострочное поле',
-                                            'select'=>'Выпадающий список',
-                                            'checkbox'=>'Чекбокс',
-                                            'radio'=>'Радиокнопки',
-                                        )
-                                    )).'
+                                    '.$this->get_types().'
                                 </span>
                             </span>
                         </dt>
@@ -296,6 +287,7 @@ class Rcl_EditFields {
                 }
         }
         $fs = 0;
+        $tps = array('select'=>1,'radio'=>1,'checkbox'=>1);
         foreach($_POST['field'] as $key=>$data){
             if($key=='field_select') continue;
             foreach($data as $a=>$value){
@@ -309,7 +301,7 @@ class Rcl_EditFields {
                     $value = str_replace('-','_',sanitize_title($_POST['field']['title'][$a]).'-'.rand(10,100));
                 }
                 if($key=='type'){
-                    if($_POST['field']['type'][$a]!='text'&&$_POST['field']['type'][$a]!='textarea'&&$_POST['field']['type'][$a]!='number'&&$_POST['field']['type'][$a]!='date'&&$_POST['field']['type'][$a]!='time'){
+                    if(isset($tps[$_POST['field']['type'][$a]])){
                         $fields[$a]['field_select'] = $_POST['field']['field_select'][$fs++];
                     }
                 }                       

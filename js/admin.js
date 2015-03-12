@@ -47,7 +47,7 @@ jQuery(document).ready( function() {
     jQuery('body').on('change','.typefield', function (){
         var val = jQuery(this).val();
         var id = jQuery(this).parent().parent().parent().parent().attr('id');
-        if(val=='text'||val=='textarea'||val=='number'||val=='date'||val=='time'){
+        if(val!='select'&&val!='radio'&&val!='checkbox'){
                 jQuery('#'+id+' .field-select').attr('disabled',true);
         }else{ 
             if(jQuery('#'+id+' .field-select').size()){

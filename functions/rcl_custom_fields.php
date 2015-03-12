@@ -26,19 +26,10 @@ function get_custom_post_meta_recall($post_id){
 
     if($get_fields){
 
-        foreach((array)$get_fields as $custom_field){				
-            $slug = $custom_field['slug'];
-            if(($custom_field['type']=='text'||$custom_field['type']=='number'||$custom_field['type']=='date'||$custom_field['type']=='time')&&get_post_meta($post_id,$slug,1))
-                    $show_custom_field .= '<p><b>'.$custom_field['title'].':</b> <span>'.get_post_meta($post_id,$slug,true).'</span></p>';
-            if($custom_field['type']=='select'&&get_post_meta($post_id,$slug,true)||$custom_field['type']=='radio'&&get_post_meta($post_id,$slug,1))
-                    $show_custom_field .= '<p><b>'.$custom_field['title'].':</b> <span>'.get_post_meta($post_id,$slug,true).'</span></p>';
-            if($custom_field['type']=='checkbox'){
-                    $cheks = get_post_meta($post_id,$slug,true);
-                    $chek_field = implode(', ',$cheks);					
-                    $show_custom_field .= '<p><b>'.$custom_field['title'].': </b>'.$chek_field.'</p>';
-            }					
-            if($custom_field['type']=='textarea'&&get_post_meta($post_id,$slug,true))
-                    $show_custom_field .= '<p><b>'.$custom_field['title'].':</b></p><p>'.get_post_meta($post_id,$slug,true).'</p>';
+        $cf = new Rcl_Custom_Fields();
+        foreach((array)$get_fields as $custom_field){
+            $p_meta = get_post_meta($post_id,$custom_field['slug'],true);           
+            $show_custom_field .= $cf->get_field_value($custom_field,$p_meta);
         }
 
         return $show_custom_field;
@@ -84,6 +75,10 @@ class Rcl_Custom_Fields{
     
     function get_type_text($field){
         return '<input type="text" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+    }
+    
+    function get_type_url($field){
+        return '<input type="url" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
     }
     
     function get_type_date($field){       
@@ -150,6 +145,8 @@ class Rcl_Custom_Fields{
         $show = '';
         if($field['type']=='text'&&$value)
                 $show = ' <span>'.esc_textarea($value).'</span>';
+        if($field['type']=='url'&&$value)
+                $show = ' <span><a rel="nofolow" target="_blank" href="'.$value.'">'.esc_textarea($value).'</a></span>';
         if($field['type']=='time'&&$value)
                 $show = ' <span>'.esc_textarea($value).'</span>';
         if($field['type']=='date'&&$value)
