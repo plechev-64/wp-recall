@@ -82,11 +82,14 @@ class Rcl_Postlist {
                             else $status = '<span class="publish">опубл.</span>';
                             $posts_block .= '<tr>
                             <td width="50">'.mysql2date('d.m.y', $post->post_date).'</td>'
-                                    . '<td><a target="_blank" href="'.$post->guid.'">'.$post->post_title.'</a>';
+                                    . '<td>';
+                            $content = '<a target="_blank" href="'.$post->guid.'">'.$post->post_title.'</a>';
                             if($rayting) {
                                 $rtng = (isset($rayt[$post->ID]))? $rayt[$post->ID]: 0;
-                                $posts_block .= ' '.get_rayting_block_rcl($rtng);
+                                $content .= ' '.get_rayting_block_rcl($rtng);                              
                             }
+                            $content = apply_filters('content_postslist',$content);
+                            $posts_block .= $content;
                             $posts_block .= '</td>'
                                     . '<td>'.$status.'</td>';
                             //if($user_ID==$author_lk) $posts_block .= '<td><a target="_blank" href="'.get_permalink($rcl_options['public_form_page_rcl']).'?rcl-post-edit='.$post->ID.'">Ред.</a></td>';
