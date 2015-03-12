@@ -51,7 +51,7 @@ function add_datepicker_scripts(){
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-core');
     wp_enqueue_script('jquery-ui-datepicker');
-    wp_enqueue_script( 'init_datepicker', RCL_URL.'js/datepicker/datepicker-init.js' );
+    wp_enqueue_script( 'init_datepicker', RCL_URL.'js/datepicker/datepicker-init.js', array('jquery-ui-datepicker') );
 }
 	
 function output_style_scripts_recall(){
