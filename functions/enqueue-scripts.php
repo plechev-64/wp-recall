@@ -1,5 +1,5 @@
 <?php
-add_action('init','get_init_filters_actions_rcl');
+add_action('wp','get_init_filters_actions_rcl');
 function get_init_filters_actions_rcl(){
     global $rcl_options,$user_ID;
 
