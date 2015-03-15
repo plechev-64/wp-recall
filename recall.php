@@ -262,7 +262,7 @@ function rcl_status_desc(){
     $desc = get_the_author_meta('description',$user_LK);
     if($desc) echo '<div class="ballun-status">'
         . '<span class="ballun"></span>'
-        . '<p class="status-user-rcl">'.esc_textarea($desc).'</p>'
+        . '<p class="status-user-rcl">'.nl2br(esc_textarea($desc)).'</p>'
         . '</div>';
 }
 

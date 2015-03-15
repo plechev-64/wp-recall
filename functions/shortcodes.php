@@ -283,7 +283,7 @@ function short_user_list_rcl($atts, $content = null){
                     if($order_by == 'user_registered') $userlist .='<br><span class="filter-data">Регистрация: '.mysql2date('d-m-Y', $data['register']).'</span>';
                     $userlist .='</h3></a>';
 
-                    if($desc[$id])$userlist .='<div class="ballun-status"><span class="ballun"></span><p class="status-user-rcl">'.esc_textarea($desc[$id]).'</p></div>';
+                    if($desc[$id])$userlist .='<div class="ballun-status"><span class="ballun"></span><p class="status-user-rcl">'.nl2br(esc_textarea($desc[$id])).'</p></div>';
                     $cont = '';
                     $cont = apply_filters('rcl_description_user',$cont,$id);		
                     $userlist .= $cont;
