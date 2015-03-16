@@ -17,15 +17,15 @@ function get_init_filters_actions_rcl(){
     if (is_admin()):
         add_action('save_post', 'recall_postmeta_update', 0);
     endif;
-        add_action('wp_head','rcl_update_timeaction_user');
-        add_filter('get_avatar','custom_avatar_recall', 1, 5);	
+        add_action('wp_head','rcl_update_timeaction_user');       
         add_action('before_delete_post', 'delete_attachments_with_post_rcl');
 
 }
 
+add_filter('get_avatar','custom_avatar_recall', 1, 5);
 if(is_admin()):
-    add_action('admin_head','output_script_style_admin_recall');
-    add_action('admin_menu', 'wp_recall_options_panel',19);
+        add_action('admin_head','output_script_style_admin_recall');
+        add_action('admin_menu', 'wp_recall_options_panel',19);
 endif;
 
 function script_page_form_recall(){
