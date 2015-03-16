@@ -138,7 +138,7 @@ function get_scripts_magazine_rcl($script){
 			});
 		/* Увеличиваем количество товара в корзине */
 			jQuery('.add-product').live('click',function(){
-				var id_post = jQuery(this).attr('id');		
+				var id_post = jQuery(this).data('product');		
 				var number = jQuery('#number-product-'+id_post).val();
 				var dataString = 'action=add_in_basket_recall&id_post='+ id_post+'&number='+ number;
 				jQuery.ajax({
@@ -200,7 +200,7 @@ function get_scripts_magazine_rcl($script){
 			});			
 		/* Кладем товар в корзину */	
 			jQuery('.add_basket').live('click',function(){
-				var id_post = jQuery(this).attr('id');
+				var id_post = jQuery(this).data('product');
 				var id_custom_prod = jQuery(this).attr('name');
 				if(id_custom_prod){
 					var number = jQuery('#number-custom-product-'+id_custom_prod).val();

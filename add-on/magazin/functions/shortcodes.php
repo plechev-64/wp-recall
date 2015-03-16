@@ -23,17 +23,17 @@ global $post,$rmag_options;
             if($metas['availability_product']=='empty'){ //если товар цифровой
                 if($price) $content .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">';
                 else $content .= 'Бесплатно ';
-                $content .= get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','id'=>$post->ID));	
+                $content .= get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));	
             }else{
                 if($rmag_options['products_warehouse_recall']==1){ 
                     $amount = get_post_meta($post->ID, 'amount_product', 1);
                     if($amount>0||$amount==false){
                         $content .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">'
-                                . get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','id'=>$post->ID));								
+                                . get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));								
                     }
                 }else{
                     $content .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">'
-                            . get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','id'=>$post->ID));		
+                            . get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));		
                 }
             }
         }
