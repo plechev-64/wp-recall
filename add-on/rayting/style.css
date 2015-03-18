@@ -19,7 +19,7 @@
     font-weight: bold;
 }
 .post-rayt-title {
-   
+    margin: 0.5em 0;
 }
 #comments .votes-comment li, .votes-post ul, .votes-post li {
     clear: both;
