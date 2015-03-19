@@ -270,7 +270,15 @@ function notice_form_rcl($form='login'){
     
     $act = $get['action-rcl'];
     
-    $type = (isset($get['success']))? 'success': 'error';
+    if((isset($get['success']))){
+        $type = 'success';
+    }else if(isset($get['error'])){
+        $type = 'error';
+    }else{
+        $type = false;
+    }
+    
+    if(!$type) return false;
 
     $notice = (isset($vls[$act][$type][$get[$type]]))? $vls[$act][$type][$get[$type]]:'Ошибка заполнения!';
     
