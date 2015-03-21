@@ -77,6 +77,14 @@ class Rcl_Custom_Fields{
         return '<input type="text" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
     }
     
+    function get_type_tel($field){
+        return '<input type="tel" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+    }
+    
+    function get_type_email($field){
+        return '<input type="email" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+    }
+    
     function get_type_url($field){
         return '<input type="url" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
     }
@@ -145,6 +153,10 @@ class Rcl_Custom_Fields{
         $show = '';
         if($field['type']=='text'&&$value)
                 $show = ' <span>'.esc_textarea($value).'</span>';
+        if($field['type']=='tel'&&$value)
+                $show = ' <span>'.esc_textarea($value).'</span>';
+        if($field['type']=='email'&&$value)
+                $show = ' <span><a rel="nofolow" target="_blank" href="mailto:'.$value.'">'.esc_textarea($value).'</a></span>';
         if($field['type']=='url'&&$value)
                 $show = ' <span><a rel="nofolow" target="_blank" href="'.$value.'">'.esc_textarea($value).'</a></span>';
         if($field['type']=='time'&&$value)

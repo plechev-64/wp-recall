@@ -136,6 +136,8 @@ class Rcl_EditFields {
                 'select'=>'Выпадающий список',
                 'checkbox'=>'Чекбокс',
                 'radio'=>'Радиокнопки',
+                'email'=>'E-mail',
+                'tel'=>'Телефон',
                 'number'=>'Числовое поле',
                 'date'=>'Дата',
                 'time'=>'Время',
