@@ -229,3 +229,6 @@
 .wprecallblock .notify-lk .success{
     background: none repeat scroll 0% 0% #8CDD89;    
 }
+.lk-sidebar .sidebar-block-rcl a {
+  display: inline-block;
+}
