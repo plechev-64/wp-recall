@@ -46,11 +46,6 @@ jQuery(function(){
         return false;
     });
 
-	jQuery('.rcl-gallery').bxSlider({
-		pagerCustom: '#bx-pager'
-	});
-
-    
 	jQuery('.close-popup,#rcl-overlay').live('click',function(){
 		jQuery('#rcl-overlay').fadeOut();
 		jQuery('.floatform').fadeOut();

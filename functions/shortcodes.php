@@ -349,7 +349,8 @@ function get_wp_recall_shortcode(){
 
 add_shortcode('slider-rcl','slider_rcl');
 function slider_rcl($atts, $content = null){
-	
+    add_bxslider_scripts();
+    
     extract(shortcode_atts(array(
 	'num' => 5,
 	'term' => '',

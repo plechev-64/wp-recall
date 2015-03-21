@@ -116,11 +116,7 @@ function get_scripts_magazine_rcl($script){
 	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";				
 
 	$script .= "
-                
-		jQuery('.slider-products').bxSlider({
-			auto:true,
-			pause:10000
-		});
+
 		/* Удаляем заказ пользователя в корзину */
 			jQuery('.remove_order').live('click',function(){
 				var idorder = jQuery(this).attr('name');
