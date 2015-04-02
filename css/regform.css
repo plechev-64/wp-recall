@@ -3,7 +3,7 @@
     margin: 0 auto;
     max-width: 300px;
     width: 100%;
-	overflow:hidden;
+	/*overflow:hidden;*/
 	color:#333;
 }
 .panel_lk_recall.floatform{
@@ -56,7 +56,7 @@
     box-shadow: 1px 1px 5px #CCCCCC;
     display: none;
     font-size: 14px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     padding: 10px;
 }
 .panel_lk_recall .form-tab-rcl a {
@@ -86,7 +86,7 @@
 }
 .panel_lk_recall .form-tab-rcl .form-block-rcl {
     margin: 7px 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 .panel_lk_recall .form-tab-rcl .form-block-rcl input[type="text"], 
 .panel_lk_recall .form-tab-rcl .form-block-rcl input[type="password"], 
