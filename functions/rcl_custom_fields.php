@@ -110,7 +110,7 @@ class Rcl_Custom_Fields{
         $count_field = count($fields);
         $field_select = '';
         for($a=0;$a<$count_field;$a++){
-                $field_select .='<option '.selected($this->value,$fields[$a],false).' value="'.$fields[$a].'">'.$fields[$a].'</option>';
+                $field_select .='<option '.selected($this->value,$fields[$a],false).' value="'.trim($fields[$a]).'">'.$fields[$a].'</option>';
         }
         return '<select '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'">
         '.$field_select.'
@@ -131,7 +131,7 @@ class Rcl_Custom_Fields{
                     break;
                 }
             }
-            $input .='<input '.$this->required.' '.$sl.' type="checkbox" '.$class.' name="'.$this->slug.'[]" value="'.$chek[$a].'"> ';
+            $input .='<input '.$this->required.' '.$sl.' type="checkbox" '.$class.' name="'.$this->slug.'[]" value="'.trim($chek[$a]).'"> ';
             $input .= (!isset($field['before']))? '': $field['before'];
             $input .= $chek[$a];
             $input .= (!isset($field['after']))? '<br />': $field['after'];
@@ -144,7 +144,7 @@ class Rcl_Custom_Fields{
         $count_field = count($radio);
         $input = '';
         for($a=0;$a<$count_field;$a++){            
-            $input .='<input '.$this->required.' '.checked($this->value,$radio[$a],false).' type="radio" '.checked($a,0,false).' name="'.$this->slug.'" value="'.$radio[$a].'"> '.$radio[$a].'<br />';
+            $input .='<input '.$this->required.' '.checked($this->value,$radio[$a],false).' type="radio" '.checked($a,0,false).' name="'.$this->slug.'" value="'.trim($radio[$a]).'"> '.$radio[$a].'<br />';
         }
         return $input;
     }
@@ -195,7 +195,7 @@ class Rcl_Custom_Fields{
                 if(isset($_POST[$slug])){
                     foreach($_POST[$slug] as $val){
                         for($a=0;$a<$count_field;$a++){
-                            if($select[$a]==$val){
+                            if(trim($select[$a])==$val){
                                 $vals[] = $val;
                             }
                         }
