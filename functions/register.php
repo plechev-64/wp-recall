@@ -123,12 +123,14 @@ function get_register_user_rcl(){
             <p>Вы или кто то другой зарегистрировались на сайте "'.get_bloginfo('name').'" со следующими данными:</p>
             <p>Логин: '.$login.'</p>
             <p>Пароль: '.$pass.'</p>';
+            
+            $url = get_bloginfo('wpurl').'/?rglogin='.$login.'&rgpass='.$pass.'&rgcode='.$regcode;
 
             if($rcl_options['confirm_register_recall']==1){				
                     wp_update_user( array ('ID' => $user_id, 'role' => 'need-confirm') ) ;
                     $res['recall']='<p style="text-align:center;color:green;">Регистрация завершена!<br />Для подтверждения регистрации перейдите по ссылке в письме, высланном на указанную вами почту.</p>';
                     $textmail .= '<p>Если это были вы, то подтвердите свою регистрацию перейдя по ссылке ниже:</p>
-                    <p>'.get_bloginfo('wpurl').'/?rglogin='.$login.'&rgpass='.$pass.'&rgcode='.$regcode.'</p>
+                    <p><a href="'.$url.'">'.$url.'</a></p>
                     <p>Не получается активировать аккаунт?</p>
                     <p>Скопируйте текст ссылки ниже, вставьте его в адресную строку вашего браузера и нажмите Enter</p>';
             }else{
