@@ -43,7 +43,8 @@ class Rcl_PublicForm {
             
             if($this->post_type=='post-group'){
                 
-                if(!user_can_edit_post_group($this->post_id)) return false;
+                if(!user_can_edit_post_group($this->post_id)&&!current_user_can('edit_post', $this->post_id)) return false;
+                
                 $group_id = get_group_id_by_post($this->post_id);
                 
             }else if(!current_user_can('edit_post', $this->post_id)) return false; 
