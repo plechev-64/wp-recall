@@ -33,7 +33,7 @@ function init_global_rcl(){
 	define('TEMP_PATH', $upload_dir['basedir'].'/temp-rcl/');
 	define('TEMP_URL', $upload_dir['baseurl'].'/temp-rcl/');	
 	
-	define('RCL_URL', plugins_url().'/recall/');
+	define('RCL_URL', plugin_dir_url( __FILE__ ));
 	define('RCL_PREF', $wpdb->base_prefix.'rcl_');
         
         if(!is_dir($upload_dir['basedir'])){

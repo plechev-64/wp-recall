@@ -45,6 +45,7 @@ function minify_style_rcl(){
     );
 
     $csses = apply_filters('csspath_array_rcl',$css_ar);
+    //print_r($csses);exit;
     $path = TEMP_PATH.'css/';
     if(!is_dir($path)){
             mkdir($path);
@@ -67,17 +68,18 @@ function minify_style_rcl(){
         if($k!==0) $fullcss .= "\n\n";
         $fullcss .= '/*'.$string_value[0][0].'*/'."\r\n";	
         $string = file_get_contents($css_path);
-        if(addon_path($css_path)){           
-            preg_match_all('/(?<=url\()[A-zА-я0-9\-\_\/\"\'\.\?\s]*(?=\))/iu', $string, $url);
-            if($url[0]){
-                foreach($url[0] as $u){  
-                    $imgs[] = addon_url(trim($u,'\',\"'),$css_path);
-                    $us[] = $u;
-                }
-                
-                $string = str_replace($us, $imgs, $string);
+        preg_match_all('/(?<=url\()[A-zА-я0-9\-\_\/\"\'\.\?\s]*(?=\))/iu', $string, $url);
+        $addon = (addon_path($css_path))? true: false;
+
+        if($url[0]){
+            foreach($url[0] as $u){  
+                $imgs[] = ($addon)? addon_url(trim($u,'\',\"'),$css_path): RCL_URL.'css/'.trim($u,'\',\"');
+                $us[] = $u;
             }
+
+            $string = str_replace($us, $imgs, $string);
         }
+
         $fullcss .= $string;
     }
     if(isset($fullcss)){
