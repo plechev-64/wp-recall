@@ -28,13 +28,7 @@ class Rcl_EditPost {
                 
                 if(!user_can_edit_post_group($post_id)) return false;
                 
-            }else if(!current_user_can('edit_post', $post_id)) return false;           
-
-            if($pst->post_type=='task'){
-                if(get_post_meta($this->post_id,'step_order',1)!=1){
-                    wp_redirect('/');exit;
-                }
-            }
+            }else if(!current_user_can('edit_post', $post_id)) return false;
 
             $this->update = true;
         }else{
