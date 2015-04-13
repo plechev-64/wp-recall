@@ -30,7 +30,7 @@ jQuery(function(){
 			type: 'POST',
 			data: dataString_reg,
 			dataType: 'json',
-			url: '/wp-admin/admin-ajax.php',
+			url: ajaxurl,
 			success: function(data){
 				if(data['otvet']==100){
 					jQuery('#row-'+data['idorder']).remove();
@@ -55,7 +55,7 @@ jQuery('.select_status').live('click',function(){
 		type: 'POST',
 		data: dataString,
 		dataType: 'json',
-		url: '/wp-admin/admin-ajax.php',
+		url: ajaxurl,
 			success: function(data){
 				if(data['otvet']==100){
 					jQuery('.change-'+data['order']).empty().html(data['status']);				
@@ -76,7 +76,7 @@ jQuery('.edit-price-product').live('click',function(){
 				type: 'POST',
 				data: dataString_count,
 				dataType: 'json',
-				url: '/wp-admin/admin-ajax.php',
+				url: ajaxurl,
 				success: function(data){
 					if(data['otvet']==100){
 						alert('Данные сохранены!');

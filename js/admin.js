@@ -94,7 +94,7 @@ jQuery(document).ready( function() {
 			type: 'POST',
 			data: dataString,
 			dataType: 'json',
-			url: "/wp-admin/admin-ajax.php",
+			url: ajaxurl,
 			success: function(data){
 				if(data['result']===100){					
 					jQuery('#content-'+slug+' .first-chek').before(data['content']);				

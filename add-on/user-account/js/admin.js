@@ -12,7 +12,7 @@ jQuery(function(){
 				type: 'POST',
 				data: dataString_count,
 				dataType: 'json',
-				url: '/wp-admin/admin-ajax.php',
+				url: ajaxurl,
 				success: function(data){
 					if(data['otvet']==100){
 						//jQuery('.balance-'+data['user']).html(data['balance']);	
