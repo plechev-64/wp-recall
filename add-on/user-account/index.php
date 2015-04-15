@@ -280,11 +280,21 @@ function statistic_add_cashe_wpm_recall(){
         
         $n=0;
         $table_tr = '';
+        
+        $chart = get_chart_payments($statistic);
+        
 	foreach((array)$statistic as $add){
 		$n++;
 		$time = substr($add->time_action, -9);
 		$date = substr($add->time_action, 0, 10);
-		$table_tr .= '<tr><th class="check-column" scope="row"><input id="delete-addcashe-'.$add->ID.'" type="checkbox" value="'.$add->ID.'" name="addcashe[]"></th><td>'.$n.'</td><td><a href="/wp-admin/admin.php?page=manage-wpm-cashe&user='.$add->user.'">'.get_the_author_meta('user_login',$add->user).'</a></td><td>'.$add->inv_id.'</td><td>'.$add->count.'</td><td><a href="/wp-admin/admin.php?page=manage-wpm-cashe&date='.$date.'">'.$date.'</a>'.$time.'</td></tr>';
+		$table_tr .= '<tr>'
+                            . '<th class="check-column" scope="row"><input id="delete-addcashe-'.$add->ID.'" type="checkbox" value="'.$add->ID.'" name="addcashe[]"></th>'
+                            . '<td>'.$n.'</td>'
+                            . '<td><a href="/wp-admin/admin.php?page=manage-wpm-cashe&user='.$add->user.'">'.get_the_author_meta('user_login',$add->user).'</a></td>'
+                            . '<td>'.$add->inv_id.'</td>'
+                            . '<td>'.$add->count.'</td>'
+                            . '<td><a href="/wp-admin/admin.php?page=manage-wpm-cashe&date='.$date.'">'.$date.'</a>'.$time.'</td>'
+                        . '</tr>';
 	}
         
         if(!isset($_GET['date'])&&!isset($_GET['user'])){
@@ -300,6 +310,9 @@ function statistic_add_cashe_wpm_recall(){
         <h3>Статистика</h3>
 	<p>Всего переводов: '.$count_adds.$all_pr.'</p>';       
         if($day_pay) $table .= '<p>Средняя выручка за сутки: '.$day_pay.'р.</p>';
+        
+        $table .= $chart;
+        
 	$table .= '<form action="" method="post" class="alignright">';
 	$table .= '<select name="month"><option value="">За все время</option>';
 	for($a=1;$a<=12;$a++){
@@ -556,5 +569,79 @@ function get_scripts_user_account_rcl($script){
 	return $script;
 }
 
+function get_chart_payments($pays){
+    
+    if(!$pays) return false;
+    
+    $arr = array();
+    
+    foreach($pays as $pay){
+        $day = date("j", strtotime($pay->time_action));
+        $price = $pay->count/1000;
+        $month = date("n", strtotime($pay->time_action));
+        $arr[$month][$day]['summ'] += $price;
+        $arr[$month]['summ'] += $price;
+        $arr[$month][$day]['cnt'] += 1;
+        $arr[$month]['cnt'] += 1;
+        if(!isset($arr[$month]['days'])) $arr[$month]['days'] = date("t", strtotime($pay->time_action));
+    }
+    
+    if(!$arr) return false;
+    
+    if(count($arr)==1){
+        foreach($arr as $month=>$data){
+            for($a=0;$a<=$data['days'];$a++){
+                if(!$a){
+                    $chrts[] = array('"Дни"', '"Платежи (шт.)"', '"Доход (тыс.)"');
+                    continue;
+                }
+                $cnt = (isset($data[$a]['cnt']))?$data[$a]['cnt']:0;
+                $summ = (isset($data[$a]['summ']))?$data[$a]['summ']:0;
+                $chrts[] = array($a, $cnt,$summ);
+            }
+        }
+    }else{
+        for($a=0;$a<=12;$a++){
+            if(!$a){
+                $chrts[] = array('"Месяцы"', '"Платежи (шт.)"', '"Доход (тыс.)"');
+                continue;
+            }
+            $cnt = (isset($arr[$a]['cnt']))?$arr[$a]['cnt']:0;
+            $summ = (isset($arr[$a]['summ']))?$arr[$a]['summ']:0;
+            $chrts[] = array($a, $cnt,$summ);
+        }
+    }
+    
+    if(!$chrts) return false;
+  
+    foreach($chrts as $chrt){
+        $strings[] = '['.implode(',',$chrt).']';
+    }
+    
+    $strings = implode(',',$strings);
+    
+    $chart = '<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              '.$strings.'
+            ]);
+
+            var options = {
+              title: "Динамика доходов",
+              hAxis: {title: "Период времени",  titleTextStyle: {color: "#333"}},
+              vAxis: {minValue: 0}
+            };
+
+            var chart = new google.visualization.AreaChart(document.getElementById("chart_div"));
+            chart.draw(data, options);
+      }
+    </script>
+    <div id="chart_div" style="margin:15px 0; width: 100%; height: 300px;"></div>';
+    
+    return $chart; 
+}
+
 require_once("rcl_payment.php");
-?>
