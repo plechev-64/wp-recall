@@ -116,7 +116,7 @@ function get_scripts_magazine_rcl($script){
 								jQuery('#product-'+data['id_prod']+' .number-product').text(data['num_product']);								
 							}else{
 								var numberproduct = 0;
-								jQuery('#product-'+data['id_prod']+', .confirm').remove();
+								jQuery('#product-'+data['id_prod']).remove();
 							}
 							if(data['allprod']==0) jQuery('.confirm').remove();
 							
