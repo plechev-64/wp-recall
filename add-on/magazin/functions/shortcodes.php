@@ -81,7 +81,7 @@ function shortcode_mini_basket() {
 		'cart'=> $_SESSION['cart']
 	);
 
-    $minibasket = get_include_template_rcl('cart-mini.php',__FILE__);;
+    $minibasket = get_include_template_rcl('cart-mini.php',__FILE__);
 
     return $minibasket;
 }

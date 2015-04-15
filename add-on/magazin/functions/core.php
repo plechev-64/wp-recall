@@ -279,11 +279,14 @@ function get_not_null_price_block($price){
 }
 
 function get_chart_orders($orders){
-    global $order;
+    global $order,$chartData;
     
     if(!$orders) return false;
     
     $arr = array();
+    $chartData = array(
+        array('"Дни"', '"Заказы (шт.)"', '"Доход (тыс.)"')
+    );
     
     foreach($orders as $order_id => $order){ setup_orderdata($order);
         $day = date("j", strtotime($order->order_date));
@@ -300,56 +303,23 @@ function get_chart_orders($orders){
     
     if(count($arr)==1){
         foreach($arr as $month=>$data){
-            for($a=0;$a<=$data['days'];$a++){
-                if(!$a){
-                    $chrts[] = array('"Дни"', '"Заказы (шт.)"', '"Доход (тыс.)"');
-                    continue;
-                }
+            for($a=1;$a<=$data['days'];$a++){
                 $cnt = (isset($data[$a]['cnt']))?$data[$a]['cnt']:0;
                 $summ = (isset($data[$a]['summ']))?$data[$a]['summ']:0;
-                $chrts[] = array($a, $cnt,$summ);
+                $chartData[] = array($a, $cnt,$summ);
             }
         }
     }else{
-        for($a=0;$a<=12;$a++){
-            if(!$a){
-                $chrts[] = array('"Месяцы"', '"Заказы (шт.)"', '"Доход (тыс.)"');
-                continue;
-            }
+        for($a=1;$a<=12;$a++){           
             $cnt = (isset($arr[$a]['cnt']))?$arr[$a]['cnt']:0;
             $summ = (isset($arr[$a]['summ']))?$arr[$a]['summ']:0;
-            $chrts[] = array($a, $cnt,$summ);
+            $chartData[] = array($a, $cnt,$summ);
         }
     }
     
-    if(!$chrts) return false;
-  
-    foreach($chrts as $chrt){
-        $strings[] = '['.implode(',',$chrt).']';
-    }
-    
-    $strings = implode(',',$strings);
-    
-    $chart = '<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-              '.$strings.'
-            ]);
+    if(!$chartData) return false;
 
-            var options = {
-              title: "Динамика доходов",
-              hAxis: {title: "Период времени",  titleTextStyle: {color: "#333"}},
-              vAxis: {minValue: 0}
-            };
-
-            var chart = new google.visualization.AreaChart(document.getElementById("chart_div"));
-            chart.draw(data, options);
-      }
-    </script>
-    <div id="chart_div" style="width: 100%; height: 300px;"></div>';
+    $chart = get_include_template_rcl('chart.php');
     
     return $chart; 
 }
