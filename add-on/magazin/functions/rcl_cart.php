@@ -172,7 +172,7 @@ class Rcl_Cart {
                             type: 'POST',
                             data: dataString_count,
                             dataType: 'json',
-                            url: '/wp-admin/admin-ajax.php',
+                            url: ajaxurl,
                             success: function(data){
                                     if(data['otvet']==100){
                                             jQuery('.redirectform').html(data['redirectform']);
@@ -233,7 +233,7 @@ class Rcl_Cart {
                                             type: 'POST',
                                             data: dataString,
                                             dataType: 'json',
-                                            url: '".get_bloginfo('wpurl')."/wp-admin/admin-ajax.php',
+                                            url: ajaxurl,
                                             success: function(data){
                                                     if(data['int']==100){				
                                                             jQuery('#regnewuser').html(data['recall']);
