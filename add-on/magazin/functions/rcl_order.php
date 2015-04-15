@@ -10,29 +10,33 @@ class Rcl_Order {
     function chek_requared_fields($get_fields,$key=false){
         $requared = true;
         if($get_fields){
-                foreach((array)$get_fields as $custom_field){
-                    
-                    if($key=='profile'&&$custom_field['order']!=1) continue;
-                    
-                    $slug = $custom_field['slug'];
-                    if($custom_field['requared']==1){
-                            if($custom_field['type']=='checkbox'){
-                                    $chek = explode('#',$custom_field['field_select']);
-                                    $count_field = count($chek);
-                                    for($a=0;$a<$count_field;$a++){
-                                            $slug_chek = $slug.'_'.$a;
-                                            if($_POST[$slug_chek]=='undefined'){
-                                                    $requared = false;
-                                            }else{
-                                                    $requared = true;
-                                                    break;
-                                            }
-                                    }
-                            }else{
-                                    if(!$_POST[$slug]) $requared = false;	
-                            }
+            //print_r($_POST);		
+            foreach($get_fields as $custom_field){
+
+                if($key=='profile'&&$custom_field['order']!=1) continue;
+
+                $slug = $custom_field['slug'];
+                if($custom_field['requared']==1){
+                    if($custom_field['type']=='checkbox'){
+                        $chek = explode('#',$custom_field['field_select']);
+                        $count_field = count($chek);
+                        for($a=0;$a<$count_field;$a++){
+                                $slug_chek = $slug.'_'.$a;
+                                if($_POST[$slug_chek]=='undefined'){
+                                        $requared = false;
+                                }else{
+                                        $requared = true;
+                                        break;
+                                }
+                        }
+                    }else{
+                        if($_POST[$slug]=='undefined'||!$_POST[$slug]){
+                            $requared = false;
+                            break;
+                        }
                     }
                 }
+            }
         }
         return $requared;
     }
@@ -171,6 +175,8 @@ class Rcl_Order {
         global $user_ID,$rmag_options;
         
         if(!$user_id) $user_id = $user_ID;
+		
+		$reg_user = ($rmag_options['noreg_order'])? false: true;
 
         $subject = 'Данные заказа №'.$this->order_id;
 
@@ -196,7 +202,7 @@ class Rcl_Order {
                     $email = $userdata->user_email;									
                     rcl_mail($email, $subject, $textmail);
             }
-        }		
+        }
 
         $email = get_the_author_meta('user_email',$user_id);			
         $textmail = '
@@ -207,7 +213,7 @@ class Rcl_Order {
         <p>Заказ №'.$this->order_id.' получил статус "Не оплачено".</p>
         <h3>Детали заказа:</h3>
         '.$table_order;	
-        if($args){
+        if($args&&$reg_user){
             $subject = 'Данные вашего аккаунта и заказа №'.$this->order_id;
             $textmail .= '<p>Для вас был создан личный кабинет покупателя, где вы сможете следить за сменой статусов ваших заказов, формировать новые заказы и оплачивать их доступными способами</p>					
             <p>Ваши данные для авторизации в вашем личном кабинете:</p>									

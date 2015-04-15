@@ -1,10 +1,4 @@
 jQuery(function(){
-	var i = jQuery('#inputs_order_fields .field').size();
-    jQuery('#add_order_field').click(function(){
-        jQuery('<li class="menu-item menu-item-edit-active"><dl class="menu-item-bar"><dt class="menu-item-handle"><span class="item-title"><input type="text" name="order_fields_title[]" class="field" value=""/></span><span class="item-controls"><span class="item-type">Тип: <select name="type_field_'+i+'"><option value="text">Однострочное поле</option><option value="textarea">Многострочное поле</option><option value="select">Выпадающий список</option><option value="checkbox">Чекбокс</option><option value="radio">Радиокнопки</option></select></span></span></dt></dl><div class="menu-item-settings" style="display: block;"><p><input type="checkbox" name="requared_field_'+i+'" value="1"/> обязательное поле</p></div></li>').fadeIn('slow').appendTo('.order_fields');
-		i++;
-		return false;
-    });
 	
     jQuery('#add-custom-price').click(function(){
         jQuery('<p>Заголовок: <input type="text" class="title-custom-price" name="title-custom-price[]" value=""> Цена: <input type="text" class="custom-price" name="custom-price[]" value=""></p>').fadeIn('slow').appendTo('#custom-price-list');

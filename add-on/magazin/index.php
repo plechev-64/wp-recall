@@ -10,10 +10,11 @@ add_action('init','get_rmag_global_unit',10);
 
 if (!session_id()) { session_start(); }
 
-require_once("admin-pages.php");
 require_once("functions.php");
+require_once("admin-pages.php");
 require_once("functions/shortcodes.php");
 require_once("functions/ajax-func.php");
+
 
 function add_tab_order_rcl($array_tabs){
     $array_tabs['order']='wp_recall_magazin';
@@ -27,87 +28,31 @@ function add_tab_magazin(){
 }
 
 function wp_recall_magazin($author_lk){
-    global $wpdb,$user_ID,$rmag_options,$rcl_options;
+    global $wpdb,$user_ID,$rmag_options,$rcl_options,$order;
 
 	if($user_ID!=$author_lk) return false;
-			
-	$orders = $wpdb->get_results("SELECT * FROM ".RMAG_PREF ."orders_history WHERE user='$user_ID' ORDER BY ID DESC");
-                
-	if($orders){
+	
+	if(isset($_GET['order-id'])){
             
-            foreach($orders as $rd){
-                $rdrs[$rd->inv_id][] = $rd;
-            } 
+                $block = '<a class="recall-button view-orders" href="'.get_redirect_url_rcl(get_author_posts_url($author_lk),'order').'">Смотреть все заказы</a>';
+				
+		$order = get_order($_GET['order-id']);
 
-            $magazine_block='';
-
-            foreach($rdrs as $order_id=>$products){
-                $sumprise = 0;
-                $status = 6;
-                foreach($products as $product){                
-                    $sumprise += $product->price*$product->count;
-                    if($product->status<$status) $status = $product->status;
-                }
-
-                $magazine_block .= '<div class="order-'.$order_id.'">';
-                $magazine_block .= '<h3 style="margin-bottom:5px;">Заказ ID: '.$order_id.'</h3>';      
-                $magazine_block .= '<h4 style="margin-bottom:5px;">Статус заказа: '.get_status_name($status).'</h4>';
-                
-                $magazine_block = apply_filters('content_order',$magazine_block,$order_id);
-
-                if($status == 1||$status == 5) $magazine_block .= '<input  style="margin:0 10px 10px 0;" class="remove_order recall-button" type="button" name="'.$order_id.'" value="Удалить">';
-                if($status==1&&function_exists('rcl_payform')){
-                    $type_order_payment = $rmag_options['type_order_payment'];
-                    if($type_order_payment==1||$type_order_payment==2){
-                        $magazine_block .= rcl_payform(array('id_pay'=>$order_id,'summ'=>$sumprise,'type'=>2));
-                    }else{
-                        $magazine_block .= '<input class="pay_order  recall-button" type="button" name="'.$order_id.'" value="Оплатить">';
-                    }
-                }
-                
-                $magazine_block .= '<div class="redirectform-'.$order_id.'"></div>';
-                
-                $magazine_block .= '<table><tr>'
-                        . '<td>№ п/п</td>'
-                        . '<td>Наименование</td>'
-                        . '<td>Цена</td>'
-                        . '<td>Количество</td>'
-                        . '<td>Сумма</td>'
-                        . '</tr>';
-                
-                $tr = 1;
-                foreach($products as $product){
-                    $magazine_block .= '<tr>'
-                        . '<td>'.$tr++.'</td>'
-                        . '<td>'.get_the_title($product->product).'</td>'
-                        . '<td>'.$product->price.'</td>'
-                        . '<td>'.$product->count.'</td>'
-                        . '<td>'.$product->price*$product->count.'</td>'
-                        . '</tr>';               
-                }
-                
-                $magazine_block .= '<tr style="font-weight:bold;">'
-                        . '<td colspan="4">Сумма заказа</td>'
-                        . '<td>'.$sumprise.'</td>'
-                        . '</tr>';
-                
-                $magazine_block .= '</table>';
-                $magazine_block .= '</div>';
-            }
-
-            $magazine_block .= "<script type='text/javascript'>
-                jQuery(function(){
-                        jQuery('.value_count_user').click(function(){
-                                jQuery('.redirectform').empty();
-                        });
-                });
-            </script>";
-            
+		$block .= get_include_template_rcl('order.php',__FILE__);
+		
 	}else{
-		$magazine_block = 'У вас пока не оформлено ни одного заказа.';
+		
+		global $orders;
+		
+		$orders = get_orders(array('user_id'=>$user_ID,'status_not_in'=>6));
+					
+		if(!$orders) return '<p>У вас пока не оформлено ни одного заказа.</p>';
+		
+		$block = get_include_template_rcl('history.php',__FILE__);
+				
 	}
 	
-	return $magazine_block;
+	return $block;
 }
 
 add_filter('file_scripts_rcl','get_scripts_magazine_rcl');
@@ -132,22 +77,19 @@ function get_scripts_magazine_rcl($script){
 				});	  	
 				return false;
 			});
-		/* Увеличиваем количество товара в корзине */
+		/* Увеличиваем количество товара в большой корзине */
 			jQuery('.add-product').live('click',function(){
-				var id_post = jQuery(this).data('product');		
-				var number = jQuery('#number-product-'+id_post).val();
+				var id_post = jQuery(this).parent().data('product');		
+				var number = 1;
 				var dataString = 'action=add_in_basket_recall&id_post='+ id_post+'&number='+ number;
 				jQuery.ajax({
 				".$ajaxdata."
 				success: function(data){
 					if(data['recall']==100){
-						jQuery('.sumprice').empty().html(data['data_sumprice']);
-						jQuery('.value_count_user').attr('value', data['data_sumprice']);
-						jQuery('.sumprod-'+data['id_prod']).empty().html(data['sumproduct']);
-						jQuery('.numprod-'+data['id_prod']).empty().html(data['num_product']);
-						jQuery('.numhidden-'+data['id_prod']).attr('value', data['num_product']);
-						jQuery('.allprod').empty().html(data['allprod']);
-						
+						jQuery('.cart-summa').text(data['data_sumprice']);						
+						jQuery('#product-'+data['id_prod']+' .sumprice-product').text(data['sumproduct']);
+						jQuery('#product-'+data['id_prod']+' .number-product').text(data['num_product']);
+						jQuery('.cart-numbers').text(data['allprod']);
 					}
 					if(data['recall']==200){
 						alert('Отрицательное значение!');
@@ -156,32 +98,29 @@ function get_scripts_magazine_rcl($script){
 				});	  	
 				return false;
 			});
-		/* Уменьшаем товар количество товара в корзине */
+		/* Уменьшаем товар количество товара в большой корзине */
 			jQuery('.remove-product').live('click',function(){
-				var id_post = jQuery(this).attr('id');
-				var number = jQuery('#number-product-'+id_post).val();
-				var num = parseInt(jQuery('.numprod-'+id_post).html());
-				if(num>0){
+				var id_post = jQuery(this).parent().data('product');
+				var number = 1;
+				if(number>0){
 					var dataString = 'action=remove_out_basket_recall&id_post='+ id_post+'&number='+ number;
 					jQuery.ajax({
 					".$ajaxdata."
 					success: function(data){
 						if(data['recall']==100){
-							jQuery('.sumprice').empty().html(data['data_sumprice']);
-							jQuery('.sumprod-'+data['id_prod']).empty().html(data['sumproduct']);
+							jQuery('.cart-summa').text(data['data_sumprice']);						
+							jQuery('#product-'+data['id_prod']+' .sumprice-product').text(data['sumproduct']);
+							
 							var numprod = data['num_product'];
 							if(numprod>0){
-								jQuery('.numprod-'+data['id_prod']).empty().html(numprod);
-								jQuery('.numhidden-'+data['id_prod']).attr('value', numprod);
+								jQuery('#product-'+data['id_prod']+' .number-product').text(data['num_product']);								
 							}else{
 								var numberproduct = 0;
-								jQuery('.prodrow-'+data['id_prod']).remove();
-								jQuery('.basket-table').find('.number').each(function() {	
-									numberproduct ++;
-									jQuery(this).html(numberproduct);
-								});
-							}					
-							jQuery('.allprod').empty().html(data['allprod']);
+								jQuery('#product-'+data['id_prod']+', .confirm').remove();
+							}
+							if(data['allprod']==0) jQuery('.confirm').remove();
+							
+							jQuery('.cart-numbers').text(data['allprod']);
 						}
 						if(data['recall']==200){
 							alert('Отрицательное значение!');
@@ -194,7 +133,7 @@ function get_scripts_magazine_rcl($script){
 				}
 				return false;
 			});			
-		/* Кладем товар в корзину */	
+		/* Кладем товар в малую корзину */	
 			jQuery('.add_basket').live('click',function(){
 				var id_post = jQuery(this).data('product');
 				var id_custom_prod = jQuery(this).attr('name');
@@ -209,8 +148,8 @@ function get_scripts_magazine_rcl($script){
 				success: function(data){
 					if(data['recall']==100){
 						jQuery('.empty-basket').replaceWith(data['empty-content']);
-						jQuery('.sumprice').html(data['data_sumprice']);
-						jQuery('.allprod').html(data['allprod']);
+						jQuery('.cart-summa').html(data['data_sumprice']);
+						jQuery('.cart-numbers').html(data['allprod']);
 						alert('Добавлено в корзину!');
 					}
 					if(data['recall']==200){

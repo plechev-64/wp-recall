@@ -4,7 +4,7 @@ function get_short_basket_rmag(){
 	if($rmag_options['add_basket_button_recall']==1) add_shortcode('add-basket','add_basket_button_product');
 	else add_filter('the_content','add_basket_button_product');
 }
-add_action('init','get_short_basket_rmag');
+add_action('wp','get_short_basket_rmag');
 
 //кнопку добавления заказа на странице товара
 function add_basket_button_product($content){
@@ -62,7 +62,7 @@ global $post,$rmag_options;
 }
 
 function shortcode_mini_basket() {
-    global $rmag_options;
+    global $rmag_options,$CartData;
     $sumprice = 0;
 
     if(isset($_SESSION['cartdata']['summ'])) $sumprice = $_SESSION['cartdata']['summ'];
@@ -73,16 +73,16 @@ function shortcode_mini_basket() {
             $all += $val['number'];
         }
     }
+	
+	$CartData = (object)array(
+		'numberproducts'=>$all,
+		'cart_price'=>$sumprice,
+		'cart_url'=>$rmag_options['basket_page_rmag'],
+		'cart'=> $_SESSION['cart']
+	);
 
-    $minibasket = '<div class="cart-icon"><i class="fa fa-shopping-cart"></i></div>'
-            . '<div>В вашей корзине:</div>';	
-    if($all){
-	$minibasket .= '<div>Всего товаров: <span class="allprod">'.$all.'</span> шт.</div>
-	<div>Общая сумма: <span class="sumprice">'.$sumprice.'</span> руб.</div>
-	<a href="'.get_permalink($rmag_options['basket_page_rmag']).'">Перейти в корзину</a>';
-    }else{
-        $minibasket .= '<div class="empty-basket" style="text-align:center;">Пока пусто</div>';
-    }
+    $minibasket = get_include_template_rcl('cart-mini.php',__FILE__);;
+
     return $minibasket;
 }
 add_shortcode('minibasket', 'shortcode_mini_basket');
@@ -208,81 +208,30 @@ function short_product_list($atts, $content = null){
 		);
 
 	$products = get_posts($args);
+	
+	if(!$products) return false;
 
 	$n=0;
 	
-	if($type=='slab'||$type=='list') $prodlist ='<div class="prodlist">';
-            else  $prodlist .='<table class="prodlist">';
+	$block = ($type=='rows')? 'table': 'div';
 	
-		foreach((array)$products as $product){
-			$n++;
-			$thumbnail_id = get_post_thumbnail_id($product->ID);
-			$large_image_url = wp_get_attachment_image_src( $thumbnail_id, 'thumbnail');
-			$price = get_post_meta($product->ID, 'price-products', 1);
-                  
-			$post_content = strip_tags($product->post_content);
-			$catlist = get_the_term_list( $product->ID, 'prodcat', 'Категория: ', ', ', '' );
-			if(strlen($post_content) > $desc){
-				$post_content = substr($post_content, 0, $desc);
-				$post_content = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ...', $post_content);
-			}
-			if($type=='slab'){	
-				$prodlist .='<div class="prod-single slab-list">';
-				$prodlist .='<a href="'.get_permalink($product->ID).'"><h3 class="title-prod">'.$product->post_title.'</h3></a>';
-				$prodlist .='<div class="thumb-prod"><img src="'.$large_image_url[0].'"></div>';				
-				$prodlist .='<p class="desc-prod">'.$post_content.'</p>';
-                                
-                                
-                                if($price) $prodlist .='<h4 class="price-prod">Цена: '.$price.' руб.</h4>';
-                                else $prodlist .='<h4 style="color:red;text-transform: uppercase;" class="price-prod">Бесплатно!</h4>';
-                                    
-                                $prodlist .= get_button_cart_rcl($product->ID);
-                                
-				$prodlist .='</div>';
-				$cnt = $n%$inline;
-				if($cnt==0) $prodlist .='<div class="clear"></div>';
-			}
-			
-			if($type=='list'){	
-				$prodlist .='<div class="prod-single list-list">'
-                                        . '<div class="thumb-prod" width="110">'
-                                            . '<img width="100" src="'.$large_image_url[0].'">'
-                                        . '</div>'
-                                        . '<div class="product-content">';
-                                
-                                if($price) $prodlist .='<span class="price-prod">'.$price.' руб.</span>';
-				else $prodlist .='<span class="price-prod no-price">Бесплатно!</span>';
-                                
-                                            $prodlist .= '<a href="'.get_permalink($product->ID).'">'
-                                                . '<h3 class="title-prod">'.$product->post_title.'</h3>'
-                                            . '</a>'
-                                            . '<p class="desc-prod">'.$post_content.'</p>';
-                                            if($catlist) $prodlist .='<p class="product-category">'.$catlist.'</p>';
-                                            
-                                            $prodlist .= get_button_cart_rcl($product->ID);
-
-				$prodlist .='</div>'
-                                        . '</div>';
-			}
-			if($type=='rows'){
-				 if($n%2) $prodlist .='<tr class="prod-single rows-list parne">';
-                                    else  $prodlist .='<tr class="prod-single rows-list">';	
-				$prodlist .='<td><a href="'.get_permalink($product->ID).'"><h3 class="title-prod">'.$product->post_title.'</h3></a></td>';								
-				$prodlist .='<td><h4 class="price-prod">Цена: '.$price.' руб.</h4></td>';
-                                $prodlist .= '<td>'.get_button_cart_rcl($product->ID).'</td>';
-				$prodlist .='</tr>';
-			}			
-		}
-			
-		if($type=='slab'||$type=='list') $prodlist .='</div>'; 
-		else $prodlist .='</table>';
+	$prodlist .='<'.$block.' class="prodlist">';
+	
+	foreach($products as $post){ setup_postdata($post);
+		$n++;
+		$prodlist .= get_include_template_rcl('list-'.$type.'.php',__FILE__);
+		if($type=='slab'){
+			$cnt = $n%$inline;
+			if($cnt==0) $prodlist .='<div class="clear"></div>';
+		}			
+	}
+	wp_reset_query();
 		
-		
+	$prodlist .='</'.$block.'>';
+				
 	if(!$num) $prodlist .= $rclnavi->navi();
 	
 	return $prodlist;
-	
-	wp_reset_query();
 }
 
 add_shortcode('pricelist', 'shortcode_pricelist_recall');

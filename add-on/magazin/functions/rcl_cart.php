@@ -9,9 +9,10 @@ class Rcl_Cart {
     public $request;
     
     function __construct() {
+		global $CartData,$rmag_options;
+		
         $this->summ = $_SESSION['cartdata']['summ'];
-        //$this->price = $_SESSION[$prod_id];
-        
+
         $all = 0;
         if(isset($_SESSION['cart'])){
             foreach($_SESSION['cart'] as $prod_id=>$val){
@@ -21,128 +22,59 @@ class Rcl_Cart {
         $this->cnt_products = $all;
         $this->values = array();
         $this->request = '';
+		
+		$CartData = (object)array(
+			'numberproducts'=>$all,
+			'cart_price'=>$this->summ,
+			'cart_url'=>$rmag_options['basket_page_rmag'],
+			'cart'=> $_SESSION['cart']
+		);
     }
-    
-    function loop(){
-        //print_r($_SESSION['cart']);
-        $n=0;
-        $basket = '';
-        //unset($_SESSION['cart']);
-        if(isset($_SESSION['cart'])){
-            foreach($_SESSION['cart'] as $id_prod=>$val){
-                $ids[] = $id_prod;
-            }
-            $ids = implode(',',$ids);
 
-            $products = get_posts(array('numberposts' => -1,'order' => 'ASC','post_type' => 'products','include' => $ids));
-
-        }else{
-            return $basket;
-        }
-        
-        foreach((array)$products as $product){
-            if(isset($_SESSION['cart'][$product->ID])){
-            $n++;
-            
-            $price = $_SESSION['cart'][$product->ID]['price'];
-            $numprod = $_SESSION['cart'][$product->ID]['number'];
-            $product_price = $price * $numprod;
-
-                $basket .= '<tr class="prodrow-'.$product->ID.'">'
-                        . '<td class="number">'.$n.'</td>'
-                        . '<td>'.get_the_post_thumbnail( $product->ID, array(50,50) ).'</td>'
-                        . '<td><a href="'.get_permalink($product->ID).'">'.get_the_title($product->ID).'</a></td>'
-                        . '<td>'.$price.'</td>'
-                        . '<td class="numprod-'.$product->ID.'">'.$numprod.'</td>'
-                        . '<td class="sumprod-'.$product->ID.'">'.$product_price.'</td>'
-                        . '<td class="add_remove">';
-                if($price) {
-                        $basket .= '<input type="text" size="2" name="number_product" class="number_product" id="number-product-'.$product->ID.'" value="1">'
-                        . '<a class="add-product" id="'.$product->ID.'" href="#"><i class="fa fa-plus-square-o"></i></a>'
-                        . '<a class="remove-product" id="'.$product->ID.'" href="#"><i class="fa fa-minus-square-o"></i></a>';
-                }else{
-                    $basket .= '<a class="remove-product" id="'.$product->ID.'" href="#"><i class="fa fa-minus-square-o"></i></a>';
-                }
-                $basket .= '<input class="idhidden" name="idhidden" type="hidden" value="'.$product->ID.'">
-                <input class="numhidden-'.$product->ID.'" name="productnum" type="hidden" value="'.$numprod.'">
-                </td>
-                </tr>';
-            }
-        }
-
-        return $basket;
-    }
-    
     function cart_fields($get_fields_order,$key){
         
         $order_field = '';
-        
+		
+        $cf = new Rcl_Custom_Fields();
+		
         foreach((array)$get_fields_order as $custom_field){
             
             $custom_field = apply_filters('custom_field_cart_form',$custom_field);
             
             if($key=='profile'&&$custom_field['order']!=1) continue;
+			
+			$slug = $custom_field['slug'];
+			
+			$this->values[$key][$number_field]['other'] = $slug;
+			if($custom_field['type']=='checkbox'){
+				$chek = explode('#',$custom_field['field_select']);
+				$count_field = count($chek);
+				for($a=0;$a<$count_field;$a++){
+                                    $number_field++;
+                                    $slug_chek = $slug.'_'.$a;
+                                    $this->values[$key][$number_field]['chek'] = $slug_chek;
+				}
+			}
+			if($custom_field['type']=='radio'){
+				$radio = explode('#',$custom_field['field_select']);
+				$count_field = count($radio);
+				for($a=0;$a<$count_field;$a++){
+					$number_field++;
+					$slug_chek = $slug.'_'.$a;
+					$this->values[$key][$number_field]['radio']['name'] .= $slug;
+					$this->values[$key][$number_field]['radio']['id'] .= $slug_chek;
+				}
+			}
 
-                $slug = $custom_field['slug'];
-                
-                $req = ($custom_field['requared']==1)? 'required': '';
-                $requared = ($custom_field['requared']==1)? '<span class="required">*</span>': '';
-                $val = (isset($custom_field['value']))? $custom_field['value']: '';
-                
-                $order_field .= '<tr><td><label>'.$custom_field['title'].$requared.':</label></th>';
-                if($custom_field['type']=='text')
-                        $order_field .= '<td><input '.$req.' type="text" name="'.$slug.'" id="'.$slug.'" maxlength="50" value="'.$val.'" /><br/></td>';
-                if($custom_field['type']=='number')
-                        $order_field .= '<td><input '.$req.' type="number" name="'.$slug.'" id="'.$slug.'" maxlength="50" value="'.$val.'" /><br/></td>';
-                if($custom_field['type']=='date')
-                        $order_field .= '<td><input '.$req.' type="text" name="'.$slug.'" class="datepicker" id="'.$slug.'" maxlength="50" value="'.$val.'" /><br/></td>';
-                if($custom_field['type']=='time')
-                        $order_field .= '<td><input '.$req.' type="time" name="'.$slug.'" id="'.$slug.'" maxlength="50" value="'.$val.'" /><br/></td>';
-                if($custom_field['type']=='textarea')
-                        $order_field .= '<td><textarea '.$req.' name="'.$slug.'" id="'.$slug.'" rows="5" cols="50">'.$val.'</textarea></td>';
-                if($custom_field['type']=='select'){
-                        $field_select = '';
-                        $fields = explode('#',$custom_field['field_select']);
-                        $count_field = count($fields);
-                        for($a=0;$a<$count_field;$a++){
-                                $field_select .='<option value="'.$fields[$a].'">'.$fields[$a].'</option>';
-                        }
-                        $order_field .= '<td><select '.$req.' name="'.$slug.'" class="regular-text" id="'.$slug.'">
-                        '.$field_select.'
-                        </select></td>';
-                }
-                if($custom_field['type']=='file') 
-                        $order_field .='<td><input type="file" name="'.$slug.'" id="'.$slug.'"></td>';
-                $this->values[$key][$number_field]['other'] .= $slug;
-                if($custom_field['type']=='checkbox'){
-                        $chek = explode('#',$custom_field['field_select']);
-                        $count_field = count($chek);
-                        $order_field .='<td>';
-                        for($a=0;$a<$count_field;$a++){
-                                $number_field++;
-                                $slug_chek = $slug.'_'.$a;
-                                $order_field .='<input type="checkbox" id="'.$slug_chek.'" name="'.$slug_chek.'" value="'.$chek[$a].'"> '.$chek[$a].'<br />';
-                                $this->values[$key][$number_field]['chek'] .= $slug_chek;
-                        }
-                        $order_field .='</td>';
-                }
-                if($custom_field['type']=='radio'){
-                        $radio = explode('#',$custom_field['field_select']);
-                        $count_field = count($radio);
-                        $order_field .='<td>';
-                        for($a=0;$a<$count_field;$a++){
-                                $number_field++;
-                                $slug_chek = $slug.'_'.$a;
-                                $order_field .='<input type="radio" '.checked($a,0,false).' name="'.$slug.'" id="'.$slug_chek.'" value="'.$radio[$a].'"> '.$radio[$a].'<br />';
-                                $this->values[$key][$number_field]['radio']['name'] .= $slug;
-                                $this->values[$key][$number_field]['radio']['id'] .= $slug_chek;
-                        }
-
-                        $order_field .='</td>';
-                }
-
-                $order_field .= '</tr>';
-                $number_field++;
+			$requared = ($custom_field['requared']==1)? '<span class="required">*</span>': '';
+			$val = (isset($custom_field['value']))? $custom_field['value']: '';
+			
+			$order_field .= '<tr>'
+			.'<td><label>'.$custom_field['title'].$requared.':</label></td>'
+			.'<td>'.$cf->get_input($custom_field,$val).'</td>'
+			.'</tr>';
+			
+			$number_field++;
 
         }
         
@@ -172,37 +104,46 @@ class Rcl_Cart {
         $this->request .=  $reg_request.$reg_radio;      
         return $basket;
     }
+	
+	function get_products(){
+		global $post;
+        //print_r($_SESSION);
+        $basket = '';
+        //unset($_SESSION['cart']);
+        if(isset($_SESSION['cart'])&&$_SESSION['cart']){
+            foreach($_SESSION['cart'] as $id_prod=>$val){
+                $ids[] = $id_prod;
+            }
+            $ids = implode(',',$ids);
+
+            $products = get_posts(array('numberposts' => -1,'order' => 'ASC','post_type' => 'products','include' => $ids));
+
+        }else{
+            return $basket;
+        }
+		
+		if(!$products) return false;
+
+        return $products;
+    }
     
     function cart() {
 
-        global $user_ID;
-
-        $basket .= '<table class="basket-table">'
-            . '<tr class="head-table">'
-                . '<td>№п/п</td>'
-                . '<td></td>'
-                . '<td>Наименование товара</td>'
-                . '<td>Цена</td>'
-                . '<td>Кол-во</td>'
-                . '<td>Сумма</td>'
-                . '<td></td>'
-            . '</tr>';
-
-        $basket .= $this->loop();
-
-        $basket .= '<tr>'
-                . '<td colspan="4">Итого:</td>'
-                . '<td class="allprod">'.$this->cnt_products.'</td>'
-                . '<td class="sumprice" colspan="2">'.$this->summ.'</td>'
-            . '</tr>'
-        . '</table>';
+        global $user_ID,$products;
+		
+		$products = $this->get_products();
+		
+		if(!$products) return '<p>В вашей корзине пусто.</p>';
+		
+		if(!$user_ID) $basket .= '<h3 class="title-data">Корзина <span class="weight-normal">(цены указаны в рублях)</span></h3>';
+		
+        $basket .= get_include_template_rcl('cart.php',__FILE__);
         
         $basket = apply_filters('cart_rcl',$basket);
 
             if($this->cnt_products){
-                
-                    $basket .= '<div class="confirm" style="text-align:left;">
-                            <h3 align="center">Для оформления заказа заполните форму ниже:</h3>';
+
+                    $basket .= '<div class="confirm">';
 
                     $get_fields_order = get_option( 'custom_orders_field' );
 
@@ -210,11 +151,12 @@ class Rcl_Cart {
 
                     if($user_ID){
                             
-                            if($order_field) $basket .= '<div id="regnewuser"  style="display:none;"></div>
+                            if($order_field) $basket .= '<h3 align="center">Для оформления заказа заполните форму ниже:</h3>
+							<div id="regnewuser"  style="display:none;"></div>
                             <table class="form-table">'.$order_field.'</table>';
                             
-                            $basket .= '<div align="center">'.get_button_rcl('Подтвердить заказ','#',array('icon'=>false,'class'=>'confirm_order','id'=>false)).'</div>
-                            </div>
+                            $basket .= get_button_rcl('Оформить заказ','#',array('icon'=>false,'class'=>'confirm_order'))
+							.'</div>
                             <div class="redirectform" style="text-align:center;"></div>';
                             
                             $basket .= "<script>
@@ -240,7 +182,7 @@ class Rcl_Cart {
                                        jQuery('.redirectform').html(data['amount']);
                                     } else if(data['otvet']==5){
                                             jQuery('#regnewuser').html(data['recall']);
-                                            jQuery('#regnewuser').slideDown(1500).delay(5000).slideUp(1500);
+                                            jQuery('#regnewuser').slideDown(500).delay(5000).slideUp(500);
                                     }else {
                                        alert('Ошибка проверки данных.');
                                     }
@@ -257,19 +199,20 @@ class Rcl_Cart {
 
                         if($get_fields) $order_field .= $this->cart_fields($get_fields,'profile');
 
-                        $basket .= '<div id="regnewuser"  style="display:none;"></div>
+                        $basket .= '<h3 align="center">Для оформления заказа заполните форму ниже:</h3>
+						<div id="regnewuser"  style="display:none;"></div>
                         <table class="form-table">
                             <tr>
                                 <td><label>Укажите ваш E-mail <span class="required">*</span>:</label></td>
                                 <td><input required type="text" class="email_new_user" name="email_new_user" value=""></td>
                             </tr>
                              <tr>
-                                <td><label>Отображаемое Имя</label></td>
+                                <td><label>Ваше Имя</label></td>
                                 <td><input type="text" class="fio_new_user" name="fio_new_user" value=""></td>
                             </tr>
                             '.$order_field.'
                         </table>
-                        <p align="center">'.get_button_rcl('Оформить заказ','#',array('icon'=>false,'class'=>'add_new_user_in_order','id'=>false)).'</p>
+                        <p align="right">'.get_button_rcl('Оформить заказ','#',array('icon'=>false,'class'=>'add_new_user_in_order','id'=>false)).'</p>
 
                         </div>';
                         $basket .= "<script>
@@ -294,7 +237,7 @@ class Rcl_Cart {
                                             success: function(data){
                                                     if(data['int']==100){				
                                                             jQuery('#regnewuser').html(data['recall']);
-                                                            jQuery('#regnewuser').slideDown(1500);
+                                                            jQuery('#regnewuser').slideDown(500);
                                                             if(data['redirect']!=0){
                                                                     location.replace(data['redirect']);
                                                             }else{
@@ -303,7 +246,7 @@ class Rcl_Cart {
                                                             }
                                                     } else {
                                                             jQuery('#regnewuser').html(data['recall']);
-                                                            jQuery('#regnewuser').slideDown(1500).delay(5000).slideUp(1500);
+                                                            jQuery('#regnewuser').slideDown(500).delay(5000).slideUp(500);
                                                     }
                                             } 
                                     });	  	
