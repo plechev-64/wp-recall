@@ -29,7 +29,7 @@ class Rcl_Payform {
         }
         
         $type_p = $rmag_options['type_order_payment']; 
-        if($type_p==2&&$this->type==2) $form .= '<input style="margin-left: 10px;" class="pay_order recall-button" type="button" name="'.$this->id_pay.'" value="Оплатa c личного счета">';
+        if($type_p==2&&$this->type==2) $form .= '<input class="pay_order recall-button" type="button" name="pay_order" data-order="'.$this->id_pay.'" value="Оплатa c личного счета">';
         
         return $form;
     }

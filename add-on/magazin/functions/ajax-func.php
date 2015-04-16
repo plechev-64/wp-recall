@@ -286,32 +286,31 @@ add_action('wp_ajax_select_status_order_recall', 'select_status_order_recall');
 Удаление заказа в корзину
 *************************************************/
 function delete_order_in_trash_recall(){
-	global $user_ID;
-	global $wpdb;
-	global $rmag_options;
-	$idorder = $_POST['idorder'];
+    global $user_ID;
+    global $wpdb;
+    global $rmag_options;
+    $idorder = $_POST['idorder'];
 
-	if($idorder){
-	
-            remove_reserve_product($idorder,1);
+    if($idorder){
 
-            //убираем заказ в корзину
-            $res = update_status_order($idorder,6,$user_ID);
+        remove_reserve_product($idorder,1);
 
-            if($res){
-                    $log['otvet']=100;
-                    $log['idorder']=$idorder;
-                    //$log['otvet']=100;
-            }
-            
-	} else {
-		$log['otvet']=1;
-	}
-	echo json_encode($log);		
-	exit;
+        //убираем заказ в корзину
+        $res = update_status_order($idorder,6,$user_ID);
+
+        if($res){
+            $log['otvet']=100;
+            $log['idorder']=$idorder;
+            $log['content']='<h3>Заказ №'.$idorder.' был удален.</h3>';
+        }
+
+    } else {
+            $log['otvet']=1;
+    }
+    echo json_encode($log);		
+    exit;
 }
-add_action('wp_ajax_delete_order_in_trash_recall', 'delete_order_in_trash_recall');
-add_action('wp_ajax_nopriv_delete_order_in_trash_recall', 'delete_order_in_trash_recall');	
+add_action('wp_ajax_delete_order_in_trash_recall', 'delete_order_in_trash_recall');	
 /*************************************************
 Полное удаление заказа
 *************************************************/
@@ -613,7 +612,7 @@ function pay_order_in_count_recall(){
         
     do_action('payment_rcl',$user_ID,$order->order_price,$inv_id,2);
 		
-	$log['recall'] = "<p style='color:green;font-weight:bold;padding:10px; border:2px solid green;'>Ваш заказ успешно оплачен! Соответствующее уведомление было выслано администрации сервиса.</p>";
+	$log['recall'] = "<p style='clear: both;color:green;font-weight:bold;padding:10px; border:2px solid green;'>Ваш заказ успешно оплачен! Соответствующее уведомление было выслано администрации сервиса.</p>";
 	$log['count'] = $newusercount;
 	$log['idorder']=$inv_id;
 	$log['otvet']=100;

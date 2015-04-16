@@ -538,7 +538,7 @@ function get_scripts_user_account_rcl($script){
 				});	
 		/* Оплачиваем заказ средствами из личного счета */
 			jQuery('.pay_order').live('click',function(){
-				var idorder = jQuery(this).attr('name');
+				var idorder = jQuery(this).data('order');
 				var dataString = 'action=pay_order_in_count_recall&idorder='+ idorder;
 
 				jQuery.ajax({
@@ -549,11 +549,9 @@ function get_scripts_user_account_rcl($script){
 							if(jQuery(this).attr('name')==data['idorder']) jQuery(this).remove();
 						});
 						jQuery('.redirectform').html(data['recall']);
-						jQuery('.redirectform-'+data['idorder']).html(data['recall']);
 						jQuery('.usercount').html(data['count']+' рублей');
 						jQuery('.order-'+data['idorder']+' .remove_order').remove();
-						jQuery('#form-payment-'+data['idorder']).remove();
-						jQuery('.order-'+data['idorder']+' h4').remove();
+						jQuery('#manage-order').remove();
 					}else{
 						alert('Недостаточно средств на счету! Сумма заказа: '+data['recall']);
 					}

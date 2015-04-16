@@ -34,9 +34,29 @@ function wp_recall_magazin($author_lk){
 	
 	if(isset($_GET['order-id'])){
             
+                $order = get_order($_GET['order-id']);
+                
+                $status = $order->order_status;
+                $order_id = $order->order_id;
+                $price = $order->order_price;
+                
                 $block = '<a class="recall-button view-orders" href="'.get_redirect_url_rcl(get_author_posts_url($author_lk),'order').'">Смотреть все заказы</a>';
-				
-		$order = get_order($_GET['order-id']);
+                
+                $block .= '<h3>Заказ №'.$order_id.'</h3>';
+
+                $block .= '<div id="manage-order">';
+                if($status == 1||$status == 5) $block .= '<input class="remove_order recall-button" type="button" name="remove_order" data-order="'.$order_id.'" value="Удалить">';
+                if($status==1&&function_exists('rcl_payform')){
+                    $type_pay = $rmag_options['type_order_payment'];
+                    if($type_pay==1||$type_pay==2){
+                        $block .= rcl_payform(array('id_pay'=>$order_id,'summ'=>$price,'type'=>2));
+                    }else{
+                        $block .= '<input class="pay_order recall-button" type="button" name="pay_order" data-order="'.$order_id.'" value="Оплатить">';
+                    }
+                }
+                $block .= '</div>';
+                
+                $block .= '<div class="redirectform"></div>';
 
 		$block .= get_include_template_rcl('order.php',__FILE__);
 		
@@ -64,14 +84,15 @@ function get_scripts_magazine_rcl($script){
 
 		/* Удаляем заказ пользователя в корзину */
 			jQuery('.remove_order').live('click',function(){
-				var idorder = jQuery(this).attr('name');
+				var idorder = jQuery(this).data('order');
 				var dataString = 'action=delete_order_in_trash_recall&idorder='+ idorder;
 
 				jQuery.ajax({
 				".$ajaxdata."
 				success: function(data){
 					if(data['otvet']==100){
-						jQuery('.order-'+data['idorder']).remove();
+                                            jQuery('#manage-order, table.order-data').remove();
+                                            jQuery('.redirectform').html(data['content']);
 					}
 				} 
 				});	  	
@@ -162,4 +183,3 @@ function get_scripts_magazine_rcl($script){
 	";
 	return $script;
 }
-?>
