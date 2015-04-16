@@ -500,43 +500,37 @@ function pay_order_in_count_recall(){
 	global $user_ID;
 	global $wpdb;
 	global $rmag_options;
-	$inv_id = $_POST['idorder'];
+	$order_id = $_POST['idorder'];
 
-	if(!$inv_id||!$user_ID){
+	if(!$order_id||!$user_ID){
 		$log['otvet']=1;
 		echo json_encode($log);
 		exit;	
 	}
 	
-	$order_data = get_order($inv_id);
-
-	$summa_order = 0;
-	foreach((array)$order_data as $sumproduct){
-		$summa_product = "$sumproduct->count"*$sumproduct->price;
-		$summa_order = $summa_order + $summa_product; 
-	}
+	$order = get_order($order_id);
 	
 	$oldusercount = get_user_money();
 
 	if(!$oldusercount){
 		$log['otvet']=1;
-		$log['recall'] = $summa_order;
+		$log['recall'] = $order->order_price;
 		echo json_encode($log);
 		exit;		
 	}
 			
-	$newusercount = $oldusercount - $summa_order;
+	$newusercount = $oldusercount - $order->order_price;
 				
 	if($newusercount<0){
 		$log['otvet']=1;
-		$log['recall'] = $summa_order;
+		$log['recall'] = $order->order_price;
 		echo json_encode($log);
 		exit;				
 	}
 		
 	update_user_money($newusercount);
 		
-	$result = update_status_order($inv_id,2);
+	$result = update_status_order($order_id,2);
 								
 	if(!$result){
 		$log['otvet']=1;
@@ -544,14 +538,12 @@ function pay_order_in_count_recall(){
 		echo json_encode($log);
 		exit;
 	}
-        
-    $order = get_order($inv_id);
 	
-	remove_reserve_product($inv_id);							
+	remove_reserve_product($order_id);							
 		
 	//Если работает реферальная система и партнеру начисляются проценты с покупок его реферала
 	if(function_exists('add_referall_incentive_order')) 
-		add_referall_incentive_order($user_ID,$summa_order);
+		add_referall_incentive_order($user_ID,$order->order_price);
 					
 	$get_fields = get_option( 'custom_profile_field' );
         
@@ -580,11 +572,11 @@ function pay_order_in_count_recall(){
         <p><b>Имя</b>: '.get_the_author_meta('display_name',$user_ID).'</p>
         <p><b>Email</b>: '.get_the_author_meta('user_email',$user_ID).'</p>
         '.$show_custom_field.'
-        <p>Заказ №'.$inv_id.' получил статус "Оплачено".</p>
+        <p>Заказ №'.$order_id.' получил статус "Оплачено".</p>
         <h3>Детали заказа:</h3>
         '.$table_order.'
         <p>Ссылка для управления заказом в админке:</p>  
-        <p>'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-rmag&order='.$inv_id.'</p>';
+        <p>'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-rmag&order='.$order_id.'</p>';
             
         if($admin_email){
             rcl_mail($admin_email, $subject, $textmail);
@@ -602,19 +594,19 @@ function pay_order_in_count_recall(){
 	<p><b>Имя</b>: '.get_the_author_meta('display_name',$user_ID).'</p>
 	<p><b>Email</b>: '.get_the_author_meta('user_email',$user_ID).'</p>
 	'.$show_custom_field.'
-	<p>Заказ №'.$inv_id.' получил статус "Оплачено".</p>
+	<p>Заказ №'.$order_id.' получил статус "Оплачено".</p>
 	<h3>Детали заказа:</h3>
 	'.$table_order.'
 	<p>Ваш заказ оплачен и поступил в обработку. Вы можете следить за сменой его статуса из своего личного кабинета</p>';				
 	rcl_mail($email, $subject, $textmail);
 
-	do_action('payorder_user_count_rcl',$user_ID,$order->order_price,'Оплата заказа №'.$inv_id.' средствами с личного счета',1);
+	do_action('payorder_user_count_rcl',$user_ID,$order->order_price,'Оплата заказа №'.$order_id.' средствами с личного счета',1);
         
-    do_action('payment_rcl',$user_ID,$order->order_price,$inv_id,2);
+        do_action('payment_rcl',$user_ID,$order->order_price,$order_id,2);
 		
 	$log['recall'] = "<p style='clear: both;color:green;font-weight:bold;padding:10px; border:2px solid green;'>Ваш заказ успешно оплачен! Соответствующее уведомление было выслано администрации сервиса.</p>";
 	$log['count'] = $newusercount;
-	$log['idorder']=$inv_id;
+	$log['idorder']=$order_id;
 	$log['otvet']=100;
 	echo json_encode($log);
 	exit;	
