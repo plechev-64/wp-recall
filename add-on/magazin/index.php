@@ -68,7 +68,7 @@ function wp_recall_magazin($author_lk){
 					
 		if(!$orders) return '<p>У вас пока не оформлено ни одного заказа.</p>';
 		
-		$block = get_include_template_rcl('history.php',__FILE__);
+		$block = get_include_template_rcl('orders-history.php',__FILE__);
 				
 	}
 	
