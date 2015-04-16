@@ -80,7 +80,7 @@ require_once( $string_value[0][0].'/wp-load.php' );
 		
 		if ($result) {
 
-				$url_file = wp_nonce_url(get_bloginfo('wpurl').'/wp-content/plugins/recall/add-on/message/download.php?fileid='.$result, 'user-'.$user_ID );
+			$url_file = wp_nonce_url(get_bloginfo('wpurl').'/wp-content/plugins/recall/add-on/message/download.php?fileid='.$result, 'user-'.$user_ID );
 				
 			$log['recall']=100;
 			$log['time'] = $time;
