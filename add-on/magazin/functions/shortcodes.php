@@ -219,7 +219,7 @@ function short_product_list($atts, $content = null){
 	
 	foreach($products as $post){ setup_postdata($post);
 		$n++;
-		$prodlist .= get_include_template_rcl('type-'.$type.'.php',__FILE__);
+		$prodlist .= get_include_template_rcl('product-'.$type.'.php',__FILE__);
 		if($type=='slab'){
 			$cnt = $n%$inline;
 			if($cnt==0) $prodlist .='<div class="clear"></div>';
