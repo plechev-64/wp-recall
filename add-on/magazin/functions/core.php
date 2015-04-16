@@ -150,21 +150,36 @@ function get_product_excerpt($desc){
 
     $excerpt = $post->post_excerpt;
 
-    if($excerpt) return $excerpt;
+    if(!$excerpt){
+        $excerpt = $post->post_content;
 
-    $content = $post->post_content;
-
-    if(strlen($post->post_content) > $desc){
-        $post_content = substr($post->post_content, 0, $desc);
-        $post_content = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ...', $post_content);
+        if(strlen($excerpt) > $desc){
+            $excerpt = substr($excerpt, 0, $desc);
+            $excerpt = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ...', $excerpt);
+        }
     }
-    return $post_content;
+    
+    $excerpt = apply_filters('get_product_excerpt',$excerpt);
+    
+    return $excerpt;
 }
 
 function the_product_excerpt(){
     global $post,$desc;
     echo get_product_excerpt($desc);
 }
+
+function get_product_category($prod_id){
+	$product_cat = get_the_term_list( $prod_id, 'prodcat', '<p class="fa fa-tag product-cat"><b>Категория товара:</b> ', ', ', '</p>' );
+	return $product_cat;
+}
+
+function add_product_category_excerpt($excerpt){
+    global $post;
+    $excerpt .= get_product_category($post->ID);
+    return $excerpt;
+}
+//add_filter('get_product_excerpt','add_product_category_excerpt',10);
 
 function get_currency($cur=false,$type=0){
 	$curs = get_currency_list();

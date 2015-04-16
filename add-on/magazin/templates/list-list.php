@@ -23,7 +23,8 @@
             <div class="product-excerpt">
                     <?php the_product_excerpt(); ?>
             </div>
-
+            
+            <?php echo get_product_category($post->ID); ?>
 
             <?php echo get_button_cart_rcl($post->ID); ?>
 
