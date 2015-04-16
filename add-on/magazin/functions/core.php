@@ -148,11 +148,9 @@ function get_product_excerpt($desc){
     global $post;
     if(!$desc) return false;
 
-    $excerpt = $post->post_excerpt;
+    $excerpt = strip_tags($post->post_content);
 
-    if(!$excerpt){
-        $excerpt = $post->post_content;
-
+    if(!$excerpt){       
         if(strlen($excerpt) > $desc){
             $excerpt = substr($excerpt, 0, $desc);
             $excerpt = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ...', $excerpt);
