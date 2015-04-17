@@ -7,7 +7,7 @@
   function drawChart() {
         var data = google.visualization.arrayToDataTable([
           <?php
-            foreach($chartData as $chrt){
+            foreach($chartData['data'] as $chrt){
                 $strings[] = '['.implode(',',$chrt).']';
             }
             echo implode(',',$strings);
@@ -15,8 +15,8 @@
         ]);
 
         var options = {
-          title: "Динамика доходов",
-          hAxis: {title: "Период времени",  titleTextStyle: {color: "#333"}},
+          title: "<?php echo $chartData['title']; ?>",
+          hAxis: {title: "<?php echo $chartData['title-x']; ?>",  titleTextStyle: {color: "#333"}},
           vAxis: {minValue: 0}
         };
 

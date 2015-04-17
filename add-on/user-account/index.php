@@ -568,49 +568,24 @@ function get_scripts_user_account_rcl($script){
 }
 
 function get_chart_payments($pays){
-    global $chartData;
+    global $chartData,$chartArgs;
     
     if(!$pays) return false;
     
-    $arr = array();
+    $chartArgs = array();
     $chartData = array(
-        array('"Месяцы"', '"Платежи (шт.)"', '"Доход (тыс.)"')
+        'title' => 'Динамика доходов',
+        'title-x' => 'Период времени',
+        'data'=>array(
+            array('"Дни/Месяцы"', '"Платежи (шт.)"', '"Доход (тыс.)"')
+        )
     );
     
     foreach($pays as $pay){
-        $day = date("j", strtotime($pay->time_action));
-        $price = $pay->count/1000;
-        $month = date("n", strtotime($pay->time_action));
-        $arr[$month][$day]['summ'] += $price;
-        $arr[$month]['summ'] += $price;
-        $arr[$month][$day]['cnt'] += 1;
-        $arr[$month]['cnt'] += 1;
-        if(!isset($arr[$month]['days'])) $arr[$month]['days'] = date("t", strtotime($pay->time_action));
+        setup_chartdata($pay->time_action,$pay->count);       
     }
-    
-    if(!$arr) return false;
-    
-    if(count($arr)==1){
-        foreach($arr as $month=>$data){
-            for($a=1;$a<=$data['days'];$a++){
-                $cnt = (isset($data[$a]['cnt']))?$data[$a]['cnt']:0;
-                $summ = (isset($data[$a]['summ']))?$data[$a]['summ']:0;
-                $chartData[] = array($a, $cnt,$summ);
-            }
-        }
-    }else{
-        for($a=1;$a<=12;$a++){           
-            $cnt = (isset($arr[$a]['cnt']))?$arr[$a]['cnt']:0;
-            $summ = (isset($arr[$a]['summ']))?$arr[$a]['summ']:0;
-            $chartData[] = array($a, $cnt,$summ);
-        }
-    }
-    
-    if(!$chartData) return false;
-    
-    $chart = get_include_template_rcl('chart.php');
-    
-    return $chart; 
+
+    return get_chart_rcl($chartArgs); 
 }
 
 require_once("rcl_payment.php");

@@ -292,49 +292,25 @@ function get_not_null_price_block($price){
 }
 
 function get_chart_orders($orders){
-    global $order,$chartData;
+    global $order,$chartData,$chartArgs;
     
     if(!$orders) return false;
     
-    $arr = array();
+    $chartArgs = array();
     $chartData = array(
-        array('"Дни"', '"Заказы (шт.)"', '"Доход (тыс.)"')
+        'title' => 'Динамика доходов',
+        'title-x' => 'Период времени',
+        'data'=>array(
+            array('"Дни/Месяцы"', '"Платежи (шт.)"', '"Доход (тыс.)"')
+        )
     );
     
-    foreach($orders as $order_id => $order){ setup_orderdata($order);
-        $day = date("j", strtotime($order->order_date));
-        $price = $order->order_price/1000;
-        $month = date("n", strtotime($order->order_date));
-        $arr[$month][$day]['summ'] += $price;
-        $arr[$month]['summ'] += $price;
-        $arr[$month][$day]['cnt'] += 1;
-        $arr[$month]['cnt'] += 1;
-        if(!isset($arr[$month]['days'])) $arr[$month]['days'] = date("t", strtotime($order->order_date));
+    foreach($orders as $order){ 
+        setup_orderdata($order);
+        setup_chartdata($order->order_date,$order->order_price);
     }
     
-    if(!$arr) return false;
-    
-    if(count($arr)==1){
-        foreach($arr as $month=>$data){
-            for($a=1;$a<=$data['days'];$a++){
-                $cnt = (isset($data[$a]['cnt']))?$data[$a]['cnt']:0;
-                $summ = (isset($data[$a]['summ']))?$data[$a]['summ']:0;
-                $chartData[] = array($a, $cnt,$summ);
-            }
-        }
-    }else{
-        for($a=1;$a<=12;$a++){           
-            $cnt = (isset($arr[$a]['cnt']))?$arr[$a]['cnt']:0;
-            $summ = (isset($arr[$a]['summ']))?$arr[$a]['summ']:0;
-            $chartData[] = array($a, $cnt,$summ);
-        }
-    }
-    
-    if(!$chartData) return false;
-
-    $chart = get_include_template_rcl('chart.php');
-    
-    return $chart; 
+    return get_chart_rcl($chartArgs);
 }
 
 //Формирование массива данных заказа
