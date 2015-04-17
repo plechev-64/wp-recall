@@ -55,7 +55,7 @@
     display: block;
     font-weight: bold;
     line-height: 1;
-    margin: 0px 0 7px;
+    margin: 10px 0;
 }
 .public_block input[type="text"],
 .public_block input[type="number"],
