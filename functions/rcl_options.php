@@ -86,6 +86,28 @@ class Rcl_Options {
         return $content;
     }
     
+    function checkbox($args){
+        global $rcl_options;
+        
+        $a = 0;
+        foreach($args['options'] as $val=>$name){
+           $a++;
+           if(isset($rcl_options[$args['name']])){
+                foreach($rcl_options[$args['name']] as $v){
+                    if($val!=$v) continue;
+                        $key = $v;
+                        break;
+                }
+           }
+
+           $content .= '<label for="'.$args['name'].'_'.$a.'">';
+           $content .= '<input '.$sl.' id="'.$args['name'].'_'.$a.'" type="checkbox" name="'.$args['name'].'[]" value="'.trim($val).'" '.checked($key,$val,false).'> '.$name;
+           $content .= '</label>';
+        }
+        
+        return $content;
+    }
+    
     function text($args){
         global $rcl_options;
         $val = (isset($rcl_options[$args['name']]))?$rcl_options[$args['name']]:'';
@@ -115,6 +137,7 @@ class Rcl_Options {
         $val = (isset($rcl_options[$args['name']]))?$rcl_options[$args['name']]:'';
         return '<textarea name="'.$args['name'].'">'.$val.'</textarea>';
     }
+    
 }
 
 function get_name_tab_rcl($name,$key){
