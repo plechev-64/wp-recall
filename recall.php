@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://wppost.ru
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 12.0.b
+    Version: 11.2.0
     Author: Plechev Andrey
     GitHub Plugin URI: https://github.com/plechev-64/recall
     License:     GPLv2 or later (license.txt)
@@ -26,7 +26,7 @@ function init_global_rcl(){
         
         //$rcl_options = update_options_data_rcl($rcl_options);
 
-	define('VER_RCL', '12.0.b');
+	define('VER_RCL', '11.2.0');
 	
 	$upload_dir = get_wp_uploads_dir();
 	
