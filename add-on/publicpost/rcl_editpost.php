@@ -215,7 +215,7 @@ class Rcl_EditPost {
         do_action('update_post_rcl',$this->post_id,$postdata,$this->update);
 
         if($postdata['post_status'] == 'pending'){
-            wp_redirect('/?p='.$this->post_id.'&preview=true');  exit;	
+            wp_redirect(get_bloginfo('wpurl').'/?p='.$this->post_id.'&preview=true');  exit;	
         }else{
             wp_redirect( get_permalink($this->post_id) );  exit;		
         }					
