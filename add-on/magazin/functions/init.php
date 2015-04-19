@@ -3,8 +3,6 @@ if (is_admin()):
 	add_action('admin_head','output_script_admin_recall');	
 endif;
 
-rcl_enqueue_style('rmag',__FILE__);
-
 function output_script_admin_recall(){
 	wp_enqueue_script( 'jquery' );		
 	wp_enqueue_script( 'ajax_admin_magazine_recall', addon_url('js/admin.js', __FILE__) );		

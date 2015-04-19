@@ -1,4 +1,6 @@
 <?php
+rcl_enqueue_style('rmag',__FILE__);
+
 function get_rmag_global_unit(){
     if(defined('RMAG_PREF')) return false;
     global $wpdb,$rmag_options,$user_ID;
