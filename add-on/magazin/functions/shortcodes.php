@@ -345,7 +345,8 @@ function slider_products_rcl($atts, $content = null){
 	'orderby'=> 'post_date',
 	'title'=> true,
 	'desc'=> 280,
-        'order'=> 'DESC'
+        'order'=> 'DESC',
+        'size'=> array(9999,300)
 	),
     $atts));
 	
@@ -357,7 +358,8 @@ function slider_products_rcl($atts, $content = null){
         'title'=>$title,
         'exclude'=>$exclude,
         'order'=>$order,
-        'orderby'=>$orderby
+        'orderby'=>$orderby,
+        'size'=> $size
     ));
     
 }

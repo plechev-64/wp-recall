@@ -361,7 +361,8 @@ function slider_rcl($atts, $content = null){
 	'orderby'=> 'post_date',
 	'title'=> true,
 	'desc'=> 280,
-        'order'=> 'DESC'
+        'order'=> 'DESC',
+        'size'=> array(9999,300)
 	),
     $atts));
 	
@@ -392,6 +393,7 @@ function slider_rcl($atts, $content = null){
             
             $thumb_id = get_post_thumbnail_id($post->ID);
             $large_url = wp_get_attachment_image_src( $thumb_id, 'full');
+            $thumb_url = wp_get_attachment_image_src( $thumb_id, $size);
             $plslider .= '<li><a href="'.get_permalink($post->ID).'">';
             if($type='products'){
                 $price = get_post_meta($post->ID,'price-products',1);
@@ -404,7 +406,7 @@ function slider_rcl($atts, $content = null){
                 }
                 $plslider .= '<span class="'.$class.'">'.$price.'</span>';
             }
-            $plslider .= '<img src='.$large_url[0].'>';
+            $plslider .= '<img src='.$thumb_url[0].'>';
             $post_content = $post->post_content;
             if($post->post_excerpt) $post_content = $post->post_excerpt;
             if($desc > 0 && strlen($post_content) > $desc){
