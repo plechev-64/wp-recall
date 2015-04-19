@@ -373,3 +373,83 @@ function setup_cartdata($productdata){
 
 	return $product;
 }
+
+add_action('insert_pay_rcl','add_payment_order_rcl');
+function add_payment_order_rcl($pay){
+    global $user_ID;
+    if($pay->user!=$user_ID||$pay->type!=2) return false;
+    payment_order($pay->id_pay);
+}
+
+function payment_order($order_id,$user_id=false){
+    global $order;
+    
+    if(!$order) $order = get_order($order_id);
+    
+    if(!$user_id) $user_id = $order->user_id;
+    
+    remove_reserve_product($order_id);							
+		
+    //Если работает реферальная система и партнеру начисляются проценты с покупок его реферала
+    if(function_exists('add_referall_incentive_order')) 
+            add_referall_incentive_order($user_id,$order->order_price);
+
+    $get_fields = get_option( 'custom_profile_field' );
+
+    $cf = new Rcl_Custom_Fields();
+
+    foreach((array)$get_fields as $custom_field){				
+            $slug = $custom_field['slug'];
+            $meta = get_the_author_meta($slug,$user_id);
+            $show_custom_field .= $cf->get_field_value($custom_field,$meta);
+    }	
+
+    $table_order = get_include_template_rcl('order.php',__FILE__);	
+
+    $args = array(
+            'role' => 'administrator'
+    );
+    $users = get_users( $args );
+
+    $subject = 'Заказ оплачен!';
+
+    $admin_email = $rmag_options['admin_email_magazin_recall'];
+
+    $textmail = '
+    <p>Пользователь оплатил заказ в магазине "'.get_bloginfo('name').'".</p>
+    <h3>Информация о пользователе:</h3>
+    <p><b>Имя</b>: '.get_the_author_meta('display_name',$user_id).'</p>
+    <p><b>Email</b>: '.get_the_author_meta('user_email',$user_id).'</p>
+    '.$show_custom_field.'
+    <p>Заказ №'.$order_id.' получил статус "Оплачено".</p>
+    <h3>Детали заказа:</h3>
+    '.$table_order.'
+    <p>Ссылка для управления заказом в админке:</p>  
+    <p>'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-rmag&order='.$order_id.'</p>';
+
+    if($admin_email){
+        rcl_mail($admin_email, $subject, $textmail);
+    }else{
+        foreach((array)$users as $userdata){
+                $email = $userdata->user_email;									
+                rcl_mail($email, $subject, $textmail);
+        }
+    }
+
+    $email = get_the_author_meta('user_email',$user_id);				
+    $textmail = '
+    <p>Вы оплатили заказ в магазине "'.get_bloginfo('name').'" средствами со своего личного счета.</p>
+    <h3>Информация о покупателе:</h3>
+    <p><b>Имя</b>: '.get_the_author_meta('display_name',$user_id).'</p>
+    <p><b>Email</b>: '.get_the_author_meta('user_email',$user_id).'</p>
+    '.$show_custom_field.'
+    <p>Заказ №'.$order_id.' получил статус "Оплачено".</p>
+    <h3>Детали заказа:</h3>
+    '.$table_order.'
+    <p>Ваш заказ оплачен и поступил в обработку. Вы можете следить за сменой его статуса из своего личного кабинета</p>';				
+    rcl_mail($email, $subject, $textmail);
+
+    do_action('payorder_user_count_rcl',$user_id,$order->order_price,'Оплата заказа №'.$order_id,1);
+
+    do_action('payment_rcl',$user_id,$order->order_price,$order_id,2);
+}
