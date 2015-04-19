@@ -80,9 +80,9 @@ function add_primary_currency_price($price){
 //Получаем данные заказа
 function get_order($order_id){
     global $wpdb,$order,$product;
-	$orderdata = $wpdb->get_results("SELECT * FROM ".RMAG_PREF."orders_history WHERE order_id='$order_id'");
-	if(!$orderdata) return false;	
-	return setup_orderdata($orderdata);
+    $orderdata = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."rmag_orders_history WHERE order_id='$order_id'");
+    if(!$orderdata) return false;	
+    return setup_orderdata($orderdata);
 }
 
 //Получаем детали заказа
@@ -376,19 +376,21 @@ function setup_cartdata($productdata){
 
 add_action('insert_pay_rcl','add_payment_order_rcl');
 function add_payment_order_rcl($pay){
-    global $user_ID;
-    if($pay->user!=$user_ID||$pay->type!=2) return false;
+    if($pay->type!=2) return false;
     payment_order($pay->id_pay);
 }
 
 function payment_order($order_id,$user_id=false){
-    global $order;
+    global $wpdb,$order,$rmag_options;
+
+    $order = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."rmag_orders_history WHERE order_id='$order_id'");
+    setup_orderdata($order);
     
-    if(!$order) $order = get_order($order_id);
+    if(!$user_id) $user_id = $order->order_author;
     
-    if(!$user_id) $user_id = $order->user_id;
+    remove_reserve_product($order_id);
     
-    remove_reserve_product($order_id);							
+    update_status_order($order_id,2);
 		
     //Если работает реферальная система и партнеру начисляются проценты с покупок его реферала
     if(function_exists('add_referall_incentive_order')) 
@@ -396,14 +398,16 @@ function payment_order($order_id,$user_id=false){
 
     $get_fields = get_option( 'custom_profile_field' );
 
-    $cf = new Rcl_Custom_Fields();
+    if($get_fields){
+        $cf = new Rcl_Custom_Fields();
 
-    foreach((array)$get_fields as $custom_field){				
+        foreach((array)$get_fields as $custom_field){				
             $slug = $custom_field['slug'];
             $meta = get_the_author_meta($slug,$user_id);
             $show_custom_field .= $cf->get_field_value($custom_field,$meta);
-    }	
-
+        }
+    }
+    
     $table_order = get_include_template_rcl('order.php',__FILE__);	
 
     $args = array(
@@ -411,7 +415,7 @@ function payment_order($order_id,$user_id=false){
     );
     $users = get_users( $args );
 
-    $subject = 'Заказ оплачен!';
+    $subject = 'Заказ №'.$order->order_id.' оплачен!';
 
     $admin_email = $rmag_options['admin_email_magazin_recall'];
 
