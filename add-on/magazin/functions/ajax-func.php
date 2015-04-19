@@ -245,7 +245,7 @@ function select_status_order_recall(){
 
 	if($_POST['order']){
             
-		$oldstatus = $wpdb->get_var("SELECT status FROM ".RMAG_PREF."orders_history WHERE inv_id='$order'");
+		$oldstatus = $wpdb->get_var("SELECT order_status FROM ".RMAG_PREF."orders_history WHERE order_id='$order'");
 		
 		$res = update_status_order($order,$status);
                 

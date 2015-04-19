@@ -167,7 +167,7 @@ function global_wpm_orders(){
 			<div style="width:1050px">';//начало блока настроек профиля
 	$n=0;
 	$s=0;
-	if($_GET['remove-trash']==101&&wp_verify_nonce( $_GET['_wpnonce'], 'delete-trash-rmag')) $wpdb->query("DELETE FROM ".RMAG_PREF ."orders_history WHERE status = '6'");
+	if($_GET['remove-trash']==101&&wp_verify_nonce( $_GET['_wpnonce'], 'delete-trash-rmag')) $wpdb->query("DELETE FROM ".RMAG_PREF ."orders_history WHERE order_status = '6'");
 
 if($_GET['order-id']){
 	
@@ -279,7 +279,6 @@ if($_GET['order-id']){
 }else{
 	
 	global $order,$product;
-	$inv_id =0;
 	$all_pr =0;
 	
 	list( $year, $month, $day, $hour, $minute, $second ) = preg_split( '([^0-9])', current_time('mysql') );
@@ -364,10 +363,6 @@ if($_GET['order-id']){
             $table .= '<th>'.$col.'</th>';
 	}
 	$table .= '</tr>';
-
-	$inv_id = 0;
-
-
 
     foreach($orders as $order_id=>$order){ setup_orderdata($order);
         $radioform .= '<select id="status-'.$order_id.'" name="status-'.$order_id.'">';

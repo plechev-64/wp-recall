@@ -69,7 +69,7 @@ class Rcl_Order {
     
     function get_order_id(){
         global $wpdb;
-        $num_max = $wpdb->get_var("SELECT MAX(inv_id) FROM ".RMAG_PREF ."orders_history");
+        $num_max = $wpdb->get_var("SELECT MAX(order_id) FROM ".RMAG_PREF ."orders_history");
         if($num_max) $this->order_id = $num_max+1;
         else $this->order_id = rand(0,100);
         return $this->order_id;
@@ -109,13 +109,13 @@ class Rcl_Order {
             }
             $res = $wpdb->insert( RMAG_PREF ."orders_history", 
                 array( 
-                    'inv_id' => $order_id,
-                    'user' => $user_id, 
-                    'product' => $prod_id,
-                    'price' => $price, 
-                    'count' => $val['number'], 
-                    'time_action' => date("Y-m-d H:i:s"),
-                    'status' => $status
+                    'order_id' => $order_id,
+                    'user_id' => $user_id, 
+                    'product_id' => $prod_id,
+                    'product_price' => $price, 
+                    'numberproduct' => $val['number'], 
+                    'order_date' => date("Y-m-d H:i:s"),
+                    'order_status' => $status
                     )
                 );
             

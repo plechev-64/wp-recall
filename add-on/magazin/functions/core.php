@@ -80,7 +80,7 @@ function add_primary_currency_price($price){
 //Получаем данные заказа
 function get_order($order_id){
     global $wpdb,$order,$product;
-	$orderdata = $wpdb->get_results("SELECT * FROM ".RMAG_PREF."orders_history WHERE inv_id='$order_id'");
+	$orderdata = $wpdb->get_results("SELECT * FROM ".RMAG_PREF."orders_history WHERE order_id='$order_id'");
 	if(!$orderdata) return false;	
 	return setup_orderdata($orderdata);
 }
@@ -100,17 +100,17 @@ function get_orders($args){
 	$orderby = (isset($args['orderby']))? "ORDER BY ".$args['orderby']:"ORDER BY ID";
 	$order = (isset($args['order']))? $args['order']:"DESC";
 	
-	if(isset($args['order_id'])) $wheres[] = "inv_id IN ('".$args['order_id']."')";
-	if(isset($args['user_id'])) $wheres[] = "user='".$args['user_id']."'";
-	if(isset($args['order_status'])) $wheres[] = "status='".$args['order_status']."'";
-	if(isset($args['status_not_in'])) $wheres[] = "status NOT IN ('".$args['status_not_in']."')";
-	if(isset($args['product_id'])) $wheres[] = "product IN ('".$args['product_id']."')";
+	if(isset($args['order_id'])) $wheres[] = "order_id IN ('".$args['order_id']."')";
+	if(isset($args['user_id'])) $wheres[] = "user_id='".$args['user_id']."'";
+	if(isset($args['order_status'])) $wheres[] = "order_status='".$args['order_status']."'";
+	if(isset($args['status_not_in'])) $wheres[] = "order_status NOT IN ('".$args['status_not_in']."')";
+	if(isset($args['product_id'])) $wheres[] = "product_id IN ('".$args['product_id']."')";
 	if(isset($args['year'])) $date[] = $args['year'];
 	if(isset($args['month'])) $date[] = $args['month'];
 	
 	if($date){
 		$date = implode('-',$date);
-		$wheres[] = "time_action  LIKE '%$date%'";
+		$wheres[] = "order_date  LIKE '%$date%'";
 	}
 	
 	if($wheres) $where = implode(' AND ',$wheres);
@@ -122,7 +122,7 @@ function get_orders($args){
 	if(!$rdrs) return false;
 			
 	foreach($rdrs as $rd){
-		$orders[$rd->inv_id][] = $rd;
+		$orders[$rd->order_id][] = $rd;
 	} 
 	
 	return $orders;
@@ -132,16 +132,16 @@ function get_orders($args){
 function delete_order($order_id){
     global $wpdb;
     do_action('delete_order',$order_id);
-    return $wpdb->query("DELETE FROM ". RMAG_PREF ."orders_history WHERE inv_id = '$order_id'");
+    return $wpdb->query("DELETE FROM ". RMAG_PREF ."orders_history WHERE order_id = '$order_id'");
 }
 
 //Обновляем статус заказа
 function update_status_order($order_id,$status,$user_id=false){
     global $wpdb;
-    $args = array('inv_id' => $order_id);
-    if($user_id) $args['user'] = $user_id;
+    $args = array('order_id' => $order_id);
+    if($user_id) $args['user_id'] = $user_id;
     do_action('update_status_order',$order_id,$status);
-    return $wpdb->update( RMAG_PREF ."orders_history", array( 'status' => $status), $args );
+    return $wpdb->update( RMAG_PREF ."orders_history", array( 'order_status' => $status), $args );
 }
 //Вывод краткого описания товара
 function get_product_excerpt($desc){
@@ -344,14 +344,14 @@ function setup_productdata($productdata){
 	global $product;
 	
 	$product = (object)array(
-		'product_id'=>$productdata->product,
-		'product_price'=>$productdata->price,
-		'summ_price'=>$productdata->price*$productdata->count,
-		'numberproduct'=>$productdata->count,
-		'user_id'=>$productdata->user,
-		'order_id'=>$productdata->inv_id,
-		'order_date'=>$productdata->time_action,
-		'order_status'=>$productdata->status
+		'product_id'=>$productdata->product_id,
+		'product_price'=>$productdata->product_price,
+		'summ_price'=>$productdata->product_price*$productdata->numberproduct,
+		'numberproduct'=>$productdata->numberproduct,
+		'user_id'=>$productdata->user_id,
+		'order_id'=>$productdata->order_id,
+		'order_date'=>$productdata->order_date,
+		'order_status'=>$productdata->order_status
 	);
 
 	return $product;
