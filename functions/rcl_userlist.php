@@ -212,3 +212,85 @@ class Rcl_Userlist{
             return false;
         }
 }
+
+function setup_datauser($userdata){
+    global $user;
+    $user = (object)array(
+        'user_id'=>$userdata['user_id'],
+        'user_action'=>$userdata['action'],
+        'user_rayting'=>$userdata['rayting'],
+        'display_name'=>$userdata['display_name'],
+        'user_comments'=>$userdata['comments'],
+        'user_posts'=>$userdata['posts'],
+        'user_register'=>$userdata['register'],
+        'description'=>$userdata['description']
+    );
+    return $user;
+}
+
+function the_user_name(){
+    global $user;
+    echo $user->display_name;
+}
+
+function the_user_url(){
+    global $user;
+    echo get_author_posts_url($user->user_id);
+}
+
+function the_user_avatar($size=50){
+    global $user;
+    echo get_avatar($user->user_id,$size);
+}
+
+function the_user_rayting(){
+    global $user;
+    if(!function_exists('get_rayting_block_rcl')) return false;
+    $rtng = ($user->user_rayting)? $user->user_rayting: 0;
+    echo get_rayting_block_rcl($rtng);
+}
+
+function the_user_action($type=1){
+    global $user;
+    switch($type){
+        case 1: $last_action = last_user_action_recall($user->user_action);
+                if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
+                else echo '<span class="status_user offline" title="не в сети '.$last_action.'"><i class="fa fa-circle"></i></span>';
+        break;
+        case 2: echo get_miniaction_user_rcl($user->user_action); break;
+    }
+}
+
+function the_user_description(){
+    global $user;
+    if(!$user->description) return false;
+    echo '<div class="ballun-status">
+        <span class="ballun"></span>
+        <p class="status-user-rcl">'.nl2br(esc_textarea($user->description)).'</p>
+    </div>';
+}
+
+function the_user_comments(){
+    global $user;
+    if(!$user->user_comments) return false;
+    echo '<span class="filter-data">Комментариев: '.$user->user_comments.'</span>';
+}
+
+function the_user_posts(){
+    global $user;
+    if(!$user->user_posts) return false;
+    echo '<span class="filter-data">Публикаций: '.$user->user_posts.'</span>';
+}
+
+function the_user_register(){
+    global $user;
+    if(!$user->user_register) return false;
+    echo '<span class="filter-data">Регистрация: '.$user->user_register.'</span>';
+}
+
+add_action('user_description','add_filter_user_description');
+function add_filter_user_description(){
+    global $user;
+    $cont = '';
+    echo $cont = apply_filters('rcl_description_user',$cont,$user->user_id);
+}

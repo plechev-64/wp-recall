@@ -204,13 +204,10 @@ function short_user_list_rcl($atts, $content = null){
             }
        }
     }
-    
-	
-    if($type=='rows'){
-        $users_desc = $wpdb->get_results("SELECT user_id,meta_value FROM ".$wpdb->prefix."usermeta WHERE user_id IN ($us_lst) AND meta_key = 'description'");	
-        foreach($users_desc as $us_desc){
-            $us_data[$us_desc->user_id]['description'] = $us_desc->meta_value;
-        }
+
+    $users_desc = $wpdb->get_results("SELECT user_id,meta_value FROM ".$wpdb->prefix."usermeta WHERE user_id IN ($us_lst) AND meta_key = 'description'");	
+    foreach($users_desc as $us_desc){
+        $us_data[$us_desc->user_id]['description'] = $us_desc->meta_value;
     }
 
     $display_names = $wpdb->get_results("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN ($us_lst)");
@@ -249,54 +246,6 @@ function short_user_list_rcl($atts, $content = null){
                         if(last_user_action_recall($user->user_action)) continue;
                 }
                 $userlist .= get_include_template_rcl('user-'.$type.'.php');
-                /*if($onlyaction){
-                        if(last_user_action_recall($data['action'])) continue;
-                }
-
-                
-
-                if(function_exists('get_rayting_block_rcl')) {
-                    $rtng = (isset($data['rayting']))? $data['rayting']: 0;
-                    $rayt_user = get_rayting_block_rcl($rtng);
-                }
-
-                $url = get_author_posts_url($id);
-               
-
-                $userlist .='<div class="user-single">
-                        <div class="thumb-user"><a title="'.$names[$id].'" href="'.$url.'">'.get_avatar($id,70).'</a>';
-                
-                if($type=='avatars'){
-                    $last_action = last_user_action_recall($data['action']);
-                    if(!$last_action) $userlist .= '<span class="status_user online"><i class="fa fa-circle"></i></span>';
-                    else $userlist .= '<span class="status_user offline" title="не в сети '.$last_action.'"><i class="fa fa-circle"></i></span>';
-                }
-
-                if($type!='mini'){
-                    
-                    $userlist .= $rayt_user;
-                }
-
-                $userlist .= '</div>';
-
-                if($type=='rows'){
-                    $action = get_miniaction_user_rcl($data['action']);
-                    $userlist .='<div class="user-content-rcl">'.$action.'<a href="'.$url.'"><h3 class="user-name">'.$names[$id];
-                    if($order_by == 'comments_count') $userlist .='<br><span class="filter-data">Комментариев: '.$data['comments'].'</span>';
-                    if($order_by == 'post_count') $userlist .='<br><span class="filter-data">Публикаций: '.$data['posts'].'</span>';
-                    if($order_by == 'user_registered') $userlist .='<br><span class="filter-data">Регистрация: '.mysql2date('d-m-Y', $data['register']).'</span>';
-                    $userlist .='</h3></a>';
-
-                    if($desc[$id])$userlist .='<div class="ballun-status"><span class="ballun"></span><p class="status-user-rcl">'.nl2br(esc_textarea($desc[$id])).'</p></div>';
-                    $cont = '';
-                    $cont = apply_filters('rcl_description_user',$cont,$id);		
-                    $userlist .= $cont;
-                    if($user_ID&&$group&&$group_admin==$user_ID&&$id!=$user_ID) $userlist .='<p class="alignright"><a href="#" id="usergroup-'.$id.'" user-data="'.$id.'" group-data="'.$group.'" class="ban-group recall-button">Удалить из группы</a></p>';
-                    $userlist .='</div>';
-                    $cont = '';
-                }
-
-                $userlist .='</div>';*/
                 if($a==$inpage) break;
             }
 	}
@@ -310,88 +259,6 @@ function short_user_list_rcl($atts, $content = null){
     if(!$limit) $userlist .= $rclnavi->navi();
            
     return $userlist;
-}
-
-function setup_datauser($userdata){
-    global $user;
-    $user = (object)array(
-        'user_id'=>$userdata['user_id'],
-        'user_action'=>$userdata['action'],
-        'user_rayting'=>$userdata['rayting'],
-        'display_name'=>$userdata['display_name'],
-        'user_comments'=>$userdata['comments'],
-        'user_posts'=>$userdata['posts'],
-        'user_register'=>$userdata['register'],
-        'description'=>$userdata['description']
-    );
-    return $user;
-}
-
-function the_user_name(){
-    global $user;
-    echo $user->display_name;
-}
-
-function the_user_url(){
-    global $user;
-    echo get_author_posts_url($user->user_id);
-}
-
-function the_user_avatar($size=50){
-    global $user;
-    echo get_avatar($user->user_id,$size);
-}
-
-function the_user_rayting(){
-    global $user;
-    if(!function_exists('get_rayting_block_rcl')) return false;
-    $rtng = ($user->user_rayting)? $user->user_rayting: 0;
-    echo get_rayting_block_rcl($rtng);
-}
-
-function the_user_action($type=1){
-    global $user;
-    switch($type){
-        case 1: $last_action = last_user_action_recall($user->user_action);
-                if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
-                else echo '<span class="status_user offline" title="не в сети '.$last_action.'"><i class="fa fa-circle"></i></span>';
-        break;
-        case 2: echo get_miniaction_user_rcl($user->user_action); break;
-    }
-}
-
-function the_user_description(){
-    global $user;
-    if(!$user->description) return false;
-    echo '<div class="ballun-status">
-        <span class="ballun"></span>
-        <p class="status-user-rcl">'.nl2br(esc_textarea($user->description)).'</p>
-    </div>';
-}
-
-function the_user_comments(){
-    global $user;
-    if(!$user->user_comments) return false;
-    echo '<span class="filter-data">Комментариев: '.$user->user_comments.'</span>';
-}
-
-function the_user_posts(){
-    global $user;
-    if(!$user->user_posts) return false;
-    echo '<span class="filter-data">Публикаций: '.$user->user_posts.'</span>';
-}
-
-function the_user_register(){
-    global $user;
-    if(!$user->user_register) return false;
-    echo '<span class="filter-data">Регистрация: '.$user->user_register.'</span>';
-}
-
-add_action('user_description','add_filter_user_description');
-function add_filter_user_description(){
-    global $user;
-    $cont = '';
-    echo $cont = apply_filters('rcl_description_user',$cont,$user->user_id);
 }
 
 add_filter('users_search_form_rcl','default_search_form_rcl');
