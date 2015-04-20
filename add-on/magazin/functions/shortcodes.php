@@ -17,46 +17,32 @@ global $post,$rmag_options;
         $price = $metas['price-products'];
         $outsale = $metas['outsale'];
         
-        $content .= '<div class="price-basket-product">';
+        $button = '<div class="price-basket-product">';
         
         if(!$outsale){
             if($metas['availability_product']=='empty'){ //если товар цифровой
-                if($price) $content .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">';
-                else $content .= 'Бесплатно ';
-                $content .= get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));	
+                if($price) $button .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">';
+                else $button .= 'Бесплатно ';
+                $button .= get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));	
             }else{
                 if($rmag_options['products_warehouse_recall']==1){ 
                     $amount = get_post_meta($post->ID, 'amount_product', 1);
                     if($amount>0||$amount==false){
-                        $content .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">'
+                        $button .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">'
                                 . get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));								
                     }
                 }else{
-                    $content .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">'
+                    $button .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">'
                             . get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));		
                 }
             }
         }
-	//if(get_post_meta($post->ID,'price-products',1)!==''){ 
-		
-		/*if($rmag_options['products_warehouse_recall']!=1||get_post_meta($post->ID, 'availability_product', 1)!='empty'){ 
-                if($rmag_options['products_warehouse_recall']!=1){ 
-			$amount = get_post_meta($post->ID, 'amount_product', 1);
-			if($amount>0||$amount==false){
-				$price .= '<input type="text" size="2" name="number_product" id="number_product" value="1">'
-                                        . get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','id'=>$post->ID));								
-			}
-		}*/
-		$content .= '</div>';
-	//}
-	
-	/*$customprice = unserialize(get_post_meta($post->ID, 'custom-price', 1));
-	if($customprice){
-		$cnt = count($customprice);
-		for($a=0;$a<$cnt;$a++){												
-			$price .= '<div class="price-basket-product">'.$customprice[$a]['title'].' - '.$customprice[$a]['price'].'р. <input type="text" size="2" name="number_custom_product" id="number-custom-product-'.$a.'" value="1"><input type="button" name="'.$a.'" class="recall-button add_basket" id="'.$post->ID.'" value="Добавить в корзину"></div>';
-		}
-	}*/
+
+        $button .= '</div>';
+        
+        $button = apply_filters('cart_button_product_page',$button);
+        
+        $content .= $button;
 	
 	return $content;
 }

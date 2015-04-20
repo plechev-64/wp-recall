@@ -167,10 +167,10 @@ function confirm_order_recall(){
                     $ord->send_mail($order_custom_field,$table_order);	
                     
                     if(!$order->order_price){ //Если заказ бесплатный
-                        $log['redirectform'] = "<p class='res_confirm' style='border:1px solid #ccc;font-weight:bold;padding:10px;'>Ваш заказ был создан!<br />"
+                            $notify = "Ваш заказ был создан!<br />"
                                 . "Заказ содержал только бесплатные товары<br>"
                                 . "Заказу присвоен статус - \"Оплачено\"<br>"
-                                . "Заказ поступил в обработку. В своем личном кабинете вы можете узнать статус вашего заказа.</p>";
+                                . "Заказ поступил в обработку. Ссылки на заказанные файлы будут высланы письмом на вашу почту.";
                         
                     }else{
                         if(function_exists('rcl_payform')){
@@ -380,7 +380,8 @@ function add_new_user_in_order(){
                 }
                 if($res_login||$res_email){
                     $res['int']=1;
-                    $res['recall'] .= '<p style="text-align:center;color:red;">Этот email уже используется!</p>';
+                    $res['recall'] .= '<p style="text-align:center;color:red;">Этот email уже используется!<br>'
+                            . 'Если это ваш email, то авторизуйтесь и продолжите оформление заказа.</p>';
                 }		
 							
             }else{
