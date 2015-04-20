@@ -2,7 +2,7 @@
 
 add_shortcode('userlist','short_user_list_rcl');
 function short_user_list_rcl($atts, $content = null){
-    global $post,$wpdb,$user_ID;
+    global $post,$wpdb,$user_ID,$user;
 
 	extract(shortcode_atts(array(
             'inpage' => 10,        
@@ -210,13 +210,14 @@ function short_user_list_rcl($atts, $content = null){
     if($type=='rows'){
         $users_desc = $wpdb->get_results("SELECT user_id,meta_value FROM ".$wpdb->prefix."usermeta WHERE user_id IN ($us_lst) AND meta_key = 'description'");	
         foreach($users_desc as $us_desc){
-            $desc[$us_desc->user_id] = $us_desc->meta_value;
+            $us_data[$us_desc->user_id]['description'] = $us_desc->meta_value;
         }
     }
 
     $display_names = $wpdb->get_results("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN ($us_lst)");
     foreach((array)$display_names as $name){
-        $names[$name->ID] = $name->display_name;
+        $us_data[$name->ID]['display_name'] = $name->display_name;
+        $us_data[$name->ID]['user_id'] = $name->ID;
     }
 
 //Форма поиска
@@ -243,13 +244,17 @@ function short_user_list_rcl($atts, $content = null){
 
 	$a=0;
 	if($us_data){
-            foreach((array)$us_data as $id=>$data){
-                if(!$us_data[$id]['action'])continue;
+            foreach((array)$us_data as $id=>$user){ setup_datauser($user); $a++;
+                if(!$user->user_action)continue;
                 if($onlyaction){
+                        if(last_user_action_recall($user->user_action)) continue;
+                }
+                $userlist .= get_include_template_rcl('user-'.$type.'.php');
+                /*if($onlyaction){
                         if(last_user_action_recall($data['action'])) continue;
                 }
 
-                $a++;
+                
 
                 if(function_exists('get_rayting_block_rcl')) {
                     $rtng = (isset($data['rayting']))? $data['rayting']: 0;
@@ -292,7 +297,7 @@ function short_user_list_rcl($atts, $content = null){
                     $cont = '';
                 }
 
-                $userlist .='</div>';
+                $userlist .='</div>';*/
                 if($a==$inpage) break;
             }
 	}
@@ -306,6 +311,99 @@ function short_user_list_rcl($atts, $content = null){
     if(!$limit) $userlist .= $rclnavi->navi();
            
     return $userlist;
+}
+
+function setup_datauser($userdata){
+    global $user;
+    $user = (object)array(
+        'user_id'=>$userdata['user_id'],
+        'user_action'=>$userdata['action'],
+        'user_rayting'=>$userdata['rayting'],
+        'display_name'=>$userdata['display_name'],
+        'user_comments'=>$userdata['comments'],
+        'user_posts'=>$userdata['posts'],
+        'user_register'=>$userdata['register'],
+        'description'=>$userdata['description']
+    );
+    return $user;
+}
+
+function the_user_name(){
+    global $user;
+    echo $user->display_name;
+}
+
+function the_user_url(){
+    global $user;
+    echo get_author_posts_url($user->user_id);
+}
+
+function the_user_avatar($size=50){
+    global $user;
+    echo get_avatar($user->user_id,$size);
+}
+
+function the_user_rayting(){
+    global $user;
+    if(!function_exists('get_rayting_block_rcl')) return false;
+    $rtng = ($user->user_rayting)? $user->user_rayting: 0;
+    echo get_rayting_block_rcl($rtng);
+}
+
+function the_user_action($type=1){
+    global $user;
+    switch($type){
+        case 1: $last_action = last_user_action_recall($user->user_action);
+                if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
+                else echo '<span class="status_user offline" title="не в сети '.$last_action.'"><i class="fa fa-circle"></i></span>';
+        break;
+        case 2: echo get_miniaction_user_rcl($user->user_action); break;
+    }
+}
+
+function the_user_description(){
+    global $user;
+    if(!$user->description) return false;
+    echo '<div class="ballun-status">
+        <span class="ballun"></span>
+        <p class="status-user-rcl">'.nl2br(esc_textarea($user->description)).'</p>
+    </div>';
+}
+
+function the_user_comments(){
+    global $user;
+    if(!$user->user_comments) return false;
+    echo '<span class="filter-data">Комментариев: '.$user->user_comments.'</span>';
+}
+
+function the_user_posts(){
+    global $user;
+    if(!$user->user_posts) return false;
+    echo '<span class="filter-data">Публикаций: '.$user->user_posts.'</span>';
+}
+
+function the_user_register(){
+    global $user;
+    if(!$user->user_register) return false;
+    echo '<span class="filter-data">Регистрация: '.$user->user_register.'</span>';
+}
+
+add_action('user_description','add_filter_user_description');
+function add_filter_user_description(){
+    global $user;
+    $cont = '';
+    echo $cont = apply_filters('rcl_description_user',$cont,$user->user_id);
+}
+
+add_action('user_description','add_group_manage_users_button',100);
+function add_group_manage_users_button(){
+    global $user_ID,$group,$group_admin,$user;
+    if(!$user_ID||$user_ID!=$group_admin||$user->user_id==$user_ID) return false;
+    echo '<p class="alignright">'
+        . '<a href="#" id="usergroup-'.$user->user_id.'" user-data="'.$user->user_id.'" group-data="'.$group.'" class="ban-group recall-button">'
+            . 'Удалить из группы'
+        . '</a>'
+    . '</p>';                   
 }
 
 add_filter('users_search_form_rcl','default_search_form_rcl');
