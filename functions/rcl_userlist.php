@@ -123,14 +123,14 @@ class Rcl_Userlist{
 	
 	function get_usdata_actions($us_data,$us_lst=false){
 		$rcl_action_users = $this->get_actions($us_lst);
-		$us_data = $this->get_usersdata($us_data,$rcl_action_users,'user','action','time_action');               
+		$us_data = $this->get_usersdata($us_data,$rcl_action_users,'user','user_action','time_action');               
 		return $us_data;
 	}
 	
 	function get_usdata_rayts($us_data,$us_lst=false){
 		$rayt_users = $this->get_rayts($us_lst);
                 //print_r($rayt_users);
-		$us_data = $this->get_usersdata($us_data,$rayt_users,'user_id','rayting','total');               
+		$us_data = $this->get_usersdata($us_data,$rayt_users,'user_id','user_rayting','total');               
 		return $us_data;
 	}
         
@@ -156,7 +156,7 @@ class Rcl_Userlist{
         function get_user_registered_data(){
             global $wpdb;
             $users = $wpdb->get_results("SELECT ID,display_name,user_registered FROM ".$wpdb->prefix ."users WHERE ID NOT IN ($this->exclude) $this->where ORDER BY $this->orderby $this->order LIMIT $this->limit");
-            return $this->get_usersdata(false,$users,'ID','register','user_registered');
+            return $this->get_usersdata(false,$users,'ID','user_register','user_registered');
         }
         
         function get_total_data($us_data,$us_lst){
@@ -183,7 +183,7 @@ class Rcl_Userlist{
                 WHERE comment_approved = 1 $us_lst GROUP BY user_id ORDER BY $this->orderby $this->order LIMIT $this->limit"
             );
 
-            return $this->get_usersdata($us_data,$users,'user_id','comments','comments_count');
+            return $this->get_usersdata($us_data,$users,'user_id','user_comments','comments_count');
         }
         
         function get_post_count_data($us_data,$us_lst){
@@ -195,7 +195,7 @@ class Rcl_Userlist{
                 WHERE post_status = 'publish' $us_lst GROUP BY post_author ORDER BY $this->orderby $this->order LIMIT $this->limit"
             );
 
-            return $this->get_usersdata($us_data,$users,'post_author','posts','post_count');
+            return $this->get_usersdata($us_data,$users,'post_author','user_posts','post_count');
         }
         
         function get_feeds_data(){
@@ -215,16 +215,7 @@ class Rcl_Userlist{
 
 function setup_datauser($userdata){
     global $user;
-    $user = (object)array(
-        'user_id'=>$userdata['user_id'],
-        'user_action'=>$userdata['action'],
-        'user_rayting'=>$userdata['rayting'],
-        'display_name'=>$userdata['display_name'],
-        'user_comments'=>$userdata['comments'],
-        'user_posts'=>$userdata['posts'],
-        'user_register'=>$userdata['register'],
-        'description'=>$userdata['description']
-    );
+    $user = (object)$userdata;
     return $user;
 }
 
@@ -270,22 +261,24 @@ function the_user_description(){
     </div>';
 }
 
+add_action('user_description','the_user_comments');
 function the_user_comments(){
     global $user;
     if(!$user->user_comments) return false;
     echo '<span class="filter-data">Комментариев: '.$user->user_comments.'</span>';
 }
-
+add_action('user_description','the_user_posts');
 function the_user_posts(){
     global $user;
     if(!$user->user_posts) return false;
     echo '<span class="filter-data">Публикаций: '.$user->user_posts.'</span>';
 }
 
+add_action('user_description','the_user_register');
 function the_user_register(){
     global $user;
     if(!$user->user_register) return false;
-    echo '<span class="filter-data">Регистрация: '.$user->user_register.'</span>';
+    echo '<span class="filter-data">Регистрация: '.mysql2date('d-m-Y', $user->user_register).'</span>';
 }
 
 add_action('user_description','add_filter_user_description');

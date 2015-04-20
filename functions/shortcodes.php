@@ -238,20 +238,23 @@ function short_user_list_rcl($atts, $content = null){
 
     $userlist .='<div class="userlist '.$type.'-list">';	
 
-	$a=0;
-	if($us_data){
-            foreach((array)$us_data as $id=>$user){ setup_datauser($user); $a++;
-                if(!$user->user_action)continue;
-                if($onlyaction){
-                        if(last_user_action_recall($user->user_action)) continue;
-                }
-                $userlist .= get_include_template_rcl('user-'.$type.'.php');
-                if($a==$inpage) break;
+    $us_data = apply_filters('data_userslist',$us_data);
+    
+    $a=0;
+    if($us_data){
+        foreach((array)$us_data as $id=>$user){ setup_datauser($user); $a++;
+            if(!$user->user_action)continue;
+            if($onlyaction){
+                    if(last_user_action_recall($user->user_action)) continue;
             }
-	}
-	if($a==0){
-		if(isset($_GET['search-user'])) $userlist .= '<h4 align="center">'.__('Пользователи не найдены','rcl').'</h4>';
-		else $userlist .= '<p align="center">'.__('Никого нет','rcl').'</p>';
+            $userlist .= get_include_template_rcl('user-'.$type.'.php');
+            if($a==$inpage) break;
+        }
+    }
+    
+    if($a==0){
+        if(isset($_GET['search-user'])) $userlist .= '<h4 align="center">'.__('Пользователи не найдены','rcl').'</h4>';
+        else $userlist .= '<p align="center">'.__('Никого нет','rcl').'</p>';
     }                      
     $userlist .='</div>';
          

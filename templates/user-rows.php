@@ -12,15 +12,9 @@
         <h3 class="user-name">
             <a href="<?php the_user_url(); ?>"><?php the_user_name(); ?></a>
         </h3>
-
-        <?php the_user_register(); ?>
-
-        <?php the_user_comments(); ?>
-
-        <?php the_user_posts(); ?>
-
+        
         <?php the_user_description(); ?>
-
+        
         <?php do_action('user_description'); ?>
 
     </div>
