@@ -2,7 +2,7 @@
 
 add_shortcode('userlist','short_user_list_rcl');
 function short_user_list_rcl($atts, $content = null){
-    global $post,$wpdb,$user_ID,$user;
+    global $post,$wpdb,$user_ID,$user,$group_id,$group_admin;
 
 	extract(shortcode_atts(array(
             'inpage' => 10,        
@@ -111,7 +111,7 @@ function short_user_list_rcl($atts, $content = null){
     }else{
         
         if($group){
-
+            $group_id = $group;
             $gr = new Rcl_Group($group);	
             $count_user = $gr->users_count;
             
@@ -154,7 +154,6 @@ function short_user_list_rcl($atts, $content = null){
         $UserList->inpage = $inpage;
         
         if($group){
-            
             $users = $wpdb->get_results("SELECT user_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'user_group_$group'");
             $us_lst = $UserList->get_users_lst((object)$users,'user_id');
             $group_admin = $wpdb->get_var("SELECT user_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'admin_group_$group'");
@@ -393,17 +392,6 @@ function add_filter_user_description(){
     global $user;
     $cont = '';
     echo $cont = apply_filters('rcl_description_user',$cont,$user->user_id);
-}
-
-add_action('user_description','add_group_manage_users_button',100);
-function add_group_manage_users_button(){
-    global $user_ID,$group,$group_admin,$user;
-    if(!$user_ID||$user_ID!=$group_admin||$user->user_id==$user_ID) return false;
-    echo '<p class="alignright">'
-        . '<a href="#" id="usergroup-'.$user->user_id.'" user-data="'.$user->user_id.'" group-data="'.$group.'" class="ban-group recall-button">'
-            . 'Удалить из группы'
-        . '</a>'
-    . '</p>';                   
 }
 
 add_filter('users_search_form_rcl','default_search_form_rcl');

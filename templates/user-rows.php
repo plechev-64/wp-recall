@@ -21,7 +21,7 @@
 
         <?php the_user_description(); ?>
 
-        <?php do_action('user_description',$user); ?>
+        <?php do_action('user_description'); ?>
 
     </div>
 
