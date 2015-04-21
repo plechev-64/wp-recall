@@ -7,6 +7,6 @@
 	Всего товаров: <span class="cart-numbers"><?php echo $CartData->numberproducts; ?></span> шт.
 </div>
 <div>
-	Общая сумма: <span class="cart-summa"><?php echo $CartData->cart_price; ?></span> руб.
+	Общая сумма: <span class="cart-summa"><?php echo add_primary_currency_price($CartData->cart_price); ?></span>
 </div>
 <a href="<?php echo get_permalink($CartData->cart_url); ?>">Перейти в корзину</a>
