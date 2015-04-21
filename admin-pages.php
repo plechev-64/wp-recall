@@ -134,7 +134,7 @@ function global_recall_options(){
                         'options'=>array('Загружаются все','На отдельной странице','Ajax-загрузка')
                     )),
                     $fields->label('Таймаут активности'),
-                    $fields->option('text',array('name'=>'timeout')),			
+                    $fields->option('number',array('name'=>'timeout')),			
                     $fields->notice('Укажите время в минутах, по истечении которого, пользователь будет считаться offline, если не проявлял активности на сайте. По-умолчанию 10 минут.')
                 )); 
                 
@@ -166,7 +166,7 @@ function global_recall_options(){
 			get_theme_list(),
                         
                         $fields->label('Пауза Слайдера'),
-                        $fields->option('text',array('name'=>'slide-pause')),
+                        $fields->option('number',array('name'=>'slide-pause')),
                         $fields->notice('Значение паузы между сменой слайдов в секундах. По-умолчанию 0 - смены слайдов не производится'),                       
                         
                         $fields->label('Минимизация стилевых файлов'),				

@@ -34,7 +34,7 @@ function get_admin_rayt_sistem_content($content){
                 )),
 
                 $opt->label('Баллы за рейтинг публикаций'),
-                $opt->option('text',array('name'=>'count_rayt_post')),
+                $opt->option('number',array('name'=>'count_rayt_post')),
                 $opt->notice('установите сколько баллов к рейтингу будет начисляться за положительный голос или сколько баллов будет отниматься от рейтинга за отрицательный голос'),
                 
                 $opt->label('Влияние рейтинга постов на общий рейтинг'),
@@ -54,7 +54,7 @@ function get_admin_rayt_sistem_content($content){
                 )),
 
                 $opt->label('Баллы за рейтинг комментария'),
-                $opt->option('text',array('name'=>'count_rayt_comment')),
+                $opt->option('number',array('name'=>'count_rayt_comment')),
                 $opt->notice('установите сколько баллов к рейтингу будет начисляться за положительный голос или сколько баллов будет отниматься от рейтинга за отрицательный голос'),
                 
                 $opt->label('Влияние рейтинга комментариев на общий рейтинг'),
@@ -67,7 +67,7 @@ function get_admin_rayt_sistem_content($content){
         $opt->option_block(
             array(
                 $opt->label('Позволять обходить модерацию публикаций при достижении рейтинга'),
-                $opt->option('text',array('name'=>'nomoder_rayt')),
+                $opt->option('number',array('name'=>'nomoder_rayt')),
                 $opt->notice('укажите уровень рейтинга при котором пользователь получит возможность делать публикации без модерации')
             )
         )

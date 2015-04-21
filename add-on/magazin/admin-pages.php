@@ -33,7 +33,7 @@ function user_primary_wpm_options($content){
                     $opt->title('Общие настройки'),
 
                     $opt->label('Email для уведомлений'),
-                    $opt->option('text',array('name'=>'admin_email_magazin_recall')),
+                    $opt->option('email',array('name'=>'admin_email_magazin_recall')),
                     $opt->notice('Если email не указан, то уведомления будут рассылаться всем пользователям сайта с правами "Администратор"'),
 					
 					$opt->label('Наценка на товары (%)'),
@@ -96,7 +96,7 @@ function user_primary_wpm_options($content){
                     $opt->option('text',array('name'=>'title_related_products_recall')),
 
                     $opt->label('Количество рекомендуемых товаров'),
-                    $opt->option('text',array('name'=>'size_related_products'))
+                    $opt->option('number',array('name'=>'size_related_products'))
                 )
             ),
              $opt->option_block(
