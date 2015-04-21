@@ -317,7 +317,7 @@ if($_GET['order-id']){
             foreach($orders as $rdr){
                 $n++;
                 foreach($rdr as $prods){	
-                        $all_pr += $prods->price*$prods->count;
+                    $all_pr += $prods->product_price*$prods->numberproduct;
                 }
             }
         }
