@@ -29,18 +29,18 @@ add_action( 'init', 'register_terms_rec_products' );
 function register_terms_rec_products(){
 
     $labels = array( 
-        'name' => _x( 'Каталог товаров', 'products' ),
-        'singular_name' => _x( 'Каталог товаров', 'products' ),
-        'add_new' => _x( 'Добавить товар', 'products' ),
-        'add_new_item' => _x( 'Добавить новый товар', 'products' ),
-        'edit_item' => _x( 'Редактировать', 'products' ),
-        'new_item' => _x( 'Новое', 'products' ),
-        'view_item' => _x( 'Просмотр', 'products' ),
-        'search_items' => _x( 'Поиск', 'products' ),
-        'not_found' => _x( 'Не найдено', 'products' ),
-        'not_found_in_trash' => _x( 'Корзина пуста', 'products' ),
-        'parent_item_colon' => _x( 'Родительский товар', 'products' ),
-        'menu_name' => _x( 'Товары', 'products' )
+        'name' => 'Каталог товаров',
+        'singular_name' => 'Каталог товаров',
+        'add_new' => 'Добавить товар',
+        'add_new_item' => 'Добавить новый товар',
+        'edit_item' => 'Редактировать',
+        'new_item' => 'Новое',
+        'view_item' => 'Просмотр',
+        'search_items' => 'Поиск',
+        'not_found' => 'Не найдено',
+        'not_found_in_trash' => 'Корзина пуста',
+        'parent_item_colon' => 'Родительский товар',
+        'menu_name' => 'Товары'
     );
 
     $args = array( 
@@ -71,21 +71,21 @@ add_action( 'init', 'register_taxonomy_prodcat' );
 function register_taxonomy_prodcat() {
 
     $labels = array( 
-          'name' => _x( 'Категории', 'prodcat' ),
-        'singular_name' => _x( 'Категории', 'prodcat' ),
-        'search_items' => _x( 'Поиск', 'prodcat' ),
-        'popular_items' => _x( 'Популярные категории', 'prodcat' ),
-        'all_items' => _x( 'Все категории', 'prodcat' ),
-        'parent_item' => _x( 'Родительская категория', 'prodcat' ),
-        'parent_item_colon' => _x( 'Родительская категория:', 'prodcat' ),
-        'edit_item' => _x( 'Редактировать категорию', 'prodcat' ),
-        'update_item' => _x( 'Обновить категорию', 'prodcat' ),
-        'add_new_item' => _x( 'Добавить новую категорию', 'prodcat' ),
-        'new_item_name' => _x( 'Новая категория', 'prodcat' ),
-        'separate_items_with_commas' => _x( 'Separate страна with commas', 'prodcat' ),
-        'add_or_remove_items' => _x( 'Добавить или удалить категорию', 'prodcat' ),
-        'choose_from_most_used' => _x( 'Выберите для использования', 'prodcat' ),
-        'menu_name' => _x( 'Категории', 'prodcat' )
+          'name' => 'Категории',
+        'singular_name' => 'Категории',
+        'search_items' => 'Поиск',
+        'popular_items' => 'Популярные категории',
+        'all_items' => 'Все категории',
+        'parent_item' => 'Родительская категория',
+        'parent_item_colon' => 'Родительская категория:',
+        'edit_item' => 'Редактировать категорию',
+        'update_item' => 'Обновить категорию',
+        'add_new_item' => 'Добавить новую категорию',
+        'new_item_name' => 'Новая категория',
+        'separate_items_with_commas' => 'Separate страна with commas',
+        'add_or_remove_items' => 'Добавить или удалить категорию',
+        'choose_from_most_used' => 'Выберите для использования',
+        'menu_name' => 'Категории'
     );
 
     $args = array( 
@@ -115,7 +115,7 @@ function fill_prodcat_column($column_name, $post_id) {
     if( $column_name != 'prodcat' )  
         return;  
   
-    $cur_terms = get_the_terms( $post_id, 'prodcat' );  
+    $cur_terms = get_the_terms( $post_id;  
 		foreach((array)$cur_terms as $cur_term){  
 			echo '<a href="./edit.php?post_type=products&prodcat='. $cur_term->slug .'">'. $cur_term->name .'</a><br />'  ;
 		}   
