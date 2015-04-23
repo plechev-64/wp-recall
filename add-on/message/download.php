@@ -12,13 +12,13 @@ global $user_ID,$wpdb;
 	
 	$file = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix."rcl_private_message WHERE ID = '".$_GET['fileid']."' AND adressat_mess = '$user_ID' AND status_mess = '5'");
 	
-	if(!$file) wp_die('Файла нет на сервере или он уже был загружен!');
+	if(!$file) wp_die(__('Файла нет на сервере или он уже был загружен!'));
 	
 	$name = explode('/',$file->content_mess);
 	$cnt = count($name);
 	$f_name = $name[--$cnt];
 	
-	$wpdb->update( RCL_PREF.'private_message',array( 'status_mess' => 6,'content_mess' => 'Файл был загружен.' ),array( 'ID' => $file->ID ));
+	$wpdb->update( RCL_PREF.'private_message',array( 'status_mess' => 6,'content_mess' => __('Файл был загружен.') ),array( 'ID' => $file->ID ));
 	
 	header('Content-Description: File Transfer');
 	header('Content-Disposition: attachment; filename="'.$f_name.'"');

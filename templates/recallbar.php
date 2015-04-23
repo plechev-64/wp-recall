@@ -5,7 +5,7 @@
     </ul>
     <?php if(is_user_logged_in()){ ?>
         <ul class="left-recall-menu">               
-                <li><a href="<?php echo $rcl_user_URL ?>"><i class="fa fa-user"></i>Личный кабинет</a></li>
+                <li><a href="<?php echo $rcl_user_URL ?>"><i class="fa fa-user"></i><?php _e('Личный кабинет'); ?></a></li>
                 <li><?php echo wp_loginout('', 0); ?></li>
         </ul>
     <?php }else{ ?>
@@ -14,8 +14,8 @@
 
         <?php $redirect_url = get_redirect_url_rcl(get_permalink($rcl_options['page_login_form_recall'])); ?>
 
-        <li><a href="<?php echo $redirect_url; ?>form=register"><i class="fa fa-book"></i>Регистрация</a></li>
-        <li><a href="<?php echo $redirect_url; ?>form=sign"><i class="fa fa-signin"></i>Войти</a></li>
+        <li><a href="<?php echo $redirect_url; ?>form=register"><i class="fa fa-book"></i><?php _e('Регистрация'); ?></a></li>
+        <li><a href="<?php echo $redirect_url; ?>form=sign"><i class="fa fa-signin"></i><?php _e('Войти'); ?></a></li>
 
     <?php }else if($rcl_options['login_form_recall']==2){ ?>
 
@@ -24,12 +24,12 @@
 
     <?php }else if($rcl_options['login_form_recall']==3){ ?>
         
-        <li><a href="/">Главная</a></li>
+        <li><a href="/"><?php _e('Главная'); ?></a></li>
         
     <?php }else if(!$rcl_options['login_form_recall']){ ?>
         
-        <li><a href="#" class="reglink"><i class="fa fa-book"></i>Регистрация</a></li>
-        <li><a href="#" class="sign-button"><i class="fa fa-signin"></i>Войти</a></li>
+        <li><a href="#" class="reglink"><i class="fa fa-book"></i><?php _e('Регистрация'); ?></a></li>
+        <li><a href="#" class="sign-button"><i class="fa fa-signin"></i><?php _e('Войти'); ?></a></li>
         
     <?php } ?>
         </ul>

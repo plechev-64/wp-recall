@@ -67,19 +67,19 @@ class Rcl_Postlist {
                     }
                
                     $posts_block .= '
-                    <h3>Опубликованные '.$this->name.'</h3>';
+                    <h3>'.__('Опубликованные').' '.$this->name.'</h3>';
                     $posts_block .= get_pagenavi_ajax_rcl($author_lk,$this->posttype);
                     $posts_block .= '<table class="publics-table-rcl">
                     <tr>
-                        <td>Дата</td>
-                        <td>Заголовок</td>
-                        <td>Статус</td>';
+                        <td>'.__('Дата').'</td>
+                        <td>'.__('Заголовок').'</td>
+                        <td>'.__('Статус').'</td>';
                             //if($user_ID==$author_lk) $posts_block .= '<td>Ред.</td>';
                             $posts_block .= '</tr>';
                     foreach($posts as $post){
-                            if($post->post_status=='pending') $status = '<span class="pending">на утв.</span>';
-                            elseif($post->post_status=='trash') $status = '<span class="pending">удален</span>';
-                            else $status = '<span class="publish">опубл.</span>';
+                            if($post->post_status=='pending') $status = '<span class="pending">'.__('на утв.').'</span>';
+                            elseif($post->post_status=='trash') $status = '<span class="pending">'.__('удален').'</span>';
+                            else $status = '<span class="publish">'.__('опубл.').'</span>';
                             $posts_block .= '<tr>
                             <td width="50">'.mysql2date('d.m.y', $post->post_date).'</td>'
                                     . '<td>';
@@ -97,7 +97,7 @@ class Rcl_Postlist {
                     }
                     $posts_block .= '</table>';
             }else{
-                    $posts_block .= '<h3>'.$this->name.' еще не публиковались</h3>';
+                    $posts_block .= '<h3>'.$this->name.' '.__('еще не публиковались').'</h3>';
             }
 
             return $posts_block;

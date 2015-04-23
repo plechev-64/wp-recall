@@ -42,8 +42,7 @@ class Rcl_Payform {
 
         $formaction = 'https://money.yandex.ru/eshop.xml';
         
-        if($this->type==1) $submit = 'Подтвердить операцию';
-        else $submit = 'Оплатить через платежные системы';
+        $submit = ($this->type==1)? __('Подтвердить операцию'): __('Оплатить через платежные системы');
         
         $hidden = $this->hidden(
                 array(
@@ -75,8 +74,7 @@ class Rcl_Payform {
         if($rmag_options['robotest']==1) $formaction = 'http://test.robokassa.ru/Index.aspx';
         else $formaction = 'https://merchant.roboxchange.com/Index.aspx';
         
-        if($this->type==1) $submit = 'Подтвердить операцию';
-        else $submit = 'Оплатить через платежные системы';
+        $submit = ($this->type==1)? __('Подтвердить операцию'): __('Оплатить через платежные системы');
         
         $hidden = $this->hidden(
                 array(
@@ -106,12 +104,11 @@ class Rcl_Payform {
         $test = $rmag_options['interkassatest'];
         $key = $rmag_options['intersecretkey'];
 
-        if($this->type==1) $data['ik_desc'] = 'Пополнение личного счета';
-        else if($this->type==2) $data['ik_desc'] = 'Оплата заказа на сайте';
-        else $data['ik_desc'] = 'Прочие платежи';
+        if($this->type==1) $data['ik_desc'] = __('Пополнение личного счета');
+        else if($this->type==2) $data['ik_desc'] = __('Оплата заказа на сайте');
+        else $data['ik_desc'] = __('Прочие платежи');
         
-        if($this->type==1) $submit = 'Подтвердить операцию';
-        else $submit = 'Оплатить через платежные системы';
+        $submit = ($this->type==1)? __('Подтвердить операцию'): __('Оплатить через платежные системы');
 
         if($test==1){				
             $ik_pw_via = 'test_interkassa_test_xts';

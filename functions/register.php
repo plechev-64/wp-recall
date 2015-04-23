@@ -118,11 +118,11 @@ function get_register_user_rcl(){
         if($user_id){
             
             $regcode = md5($login);	
-            $subject = 'Подтвердите регистрацию!';														
+            $subject = __('Подтвердите регистрацию!');														
             $textmail = '
-            <p>Вы или кто то другой зарегистрировались на сайте "'.get_bloginfo('name').'" со следующими данными:</p>
-            <p>Логин: '.$login.'</p>
-            <p>Пароль: '.$pass.'</p>';
+            <p>'.__('Вы или кто то другой зарегистрировались на сайте').' "'.get_bloginfo('name').'" '.__('со следующими данными:').'</p>
+            <p>'.__('Логин:').' '.$login.'</p>
+            <p>'.__('Пароль:').' '.$pass.'</p>';
             
             $url = get_bloginfo('wpurl').'/?rglogin='.$login.'&rgpass='.$pass.'&rgcode='.$regcode;
 

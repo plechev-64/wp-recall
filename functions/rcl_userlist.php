@@ -246,7 +246,7 @@ function the_user_action($type=1){
     switch($type){
         case 1: $last_action = last_user_action_recall($user->user_action);
                 if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
-                else echo '<span class="status_user offline" title="не в сети '.$last_action.'"><i class="fa fa-circle"></i></span>';
+                else echo '<span class="status_user offline" title="'.__('не в сети').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
         break;
         case 2: echo get_miniaction_user_rcl($user->user_action); break;
     }
@@ -265,20 +265,20 @@ add_action('user_description','the_user_comments');
 function the_user_comments(){
     global $user;
     if(!$user->user_comments) return false;
-    echo '<span class="filter-data">Комментариев: '.$user->user_comments.'</span>';
+    echo '<span class="filter-data">'.__('Комментариев:').' '.$user->user_comments.'</span>';
 }
 add_action('user_description','the_user_posts');
 function the_user_posts(){
     global $user;
     if(!$user->user_posts) return false;
-    echo '<span class="filter-data">Публикаций: '.$user->user_posts.'</span>';
+    echo '<span class="filter-data">'.__('Публикаций:').' '.$user->user_posts.'</span>';
 }
 
 add_action('user_description','the_user_register');
 function the_user_register(){
     global $user;
     if(!$user->user_register) return false;
-    echo '<span class="filter-data">Регистрация: '.mysql2date('d-m-Y', $user->user_register).'</span>';
+    echo '<span class="filter-data">'.__('Регистрация:').' '.mysql2date('d-m-Y', $user->user_register).'</span>';
 }
 
 add_action('user_description','add_filter_user_description');

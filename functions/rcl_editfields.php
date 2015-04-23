@@ -44,16 +44,16 @@ class Rcl_EditFields {
             if($this->primary['terms']) 
                 $form .= $this->option('options',array(
                     'name'=>'terms',
-                    'label'=>'Перечень рубрик к выбору',
-                    'placeholder'=>'ID через запятую'
+                    'label'=>__('Перечень рубрик к выбору'),
+                    'placeholder'=>__('ID через запятую')
                 ));
             
                 $form .= '<ul id="sortable">
                     '.$this->loop().'
                 </ul>	
             </div>	 
-            <p style="width:550px;"><input type="button" id="add_public_field"  class="button-secondary right" value="+ Добавить поле"></p>
-            <input id="save_menu_footer" class="button button-primary menu-save" type="submit" value="Сохранить" name="add_field_public">
+            <p style="width:550px;"><input type="button" id="add_public_field"  class="button-secondary right" value="'.__('+ Добавить поле').'"></p>
+            <input id="save_menu_footer" class="button button-primary menu-save" type="submit" value="'.__('Сохранить').'" name="add_field_public">
             <input type="hidden" id="deleted-fields" name="deleted" value="">
         </form>
         <script>jQuery(function(){jQuery("#sortable").sortable();return false;});</script>';
