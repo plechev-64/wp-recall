@@ -6,69 +6,69 @@ function get_admin_rayt_sistem_content($content){
     $opt = new Rcl_Options(__FILE__);
         
     $content .= $opt->options(
-        __('Настройки рейтинга'),array(
+        __('Rating settings','rcl'),array(
         $opt->option_block(
             array(
-                $opt->title(__('Общие настройки')),
+                $opt->title(__('General settings','rcl')),
                 
-                $opt->label(__('Вид рейтинга для записей')),
+                $opt->label(__('Type of rating for records','rcl')),
                 $opt->option('select',array(
                     'name'=>'type_rayt_post',
-                    'options'=>array(__('Плюс/минус'),__('Мне нравится'))
+                    'options'=>array(__('Plus/minus','rcl'),__('I like','rcl'))
                 )),
 
-                $opt->label(__('Вид рейтинга для комментариев')),
+                $opt->label(__('Type of rating comments','rcl')),
                 $opt->option('select',array(
                     'name'=>'type_rayt_comment',
-                    'options'=>array(__('Плюс/минус'),__('Мне нравится'))
+                    'options'=>array(__('Plus/minus','rcl'),__('I like','rcl'))
                 ))
             )
         ),
         $opt->option_block(
             array(
-                $opt->title(__('Рейтинг публикаций')),
+                $opt->title(__('The rating publications','rcl')),
                 
                 $opt->option('select',array(
                     'name'=>'rayt_post_recall',
-                    'options'=>array(__('Отключено'),__('Включено'))
+                    'options'=>array(__('Disabled','rcl'),__('Included','rcl'))
                 )),
 
-                $opt->label(__('Баллы за рейтинг публикаций')),
+                $opt->label(__('Points for ranking publications','rcl')),
                 $opt->option('number',array('name'=>'count_rayt_post')),
-                $opt->notice(__('установите сколько баллов к рейтингу будет начисляться за положительный голос или сколько баллов будет отниматься от рейтинга за отрицательный голос')),
+                $opt->notice(__('set how many points the ranking will be awarded for a positive vote or how many points will be subtracted from the rating for a negative vote','rcl')),
                 
-                $opt->label(__('Влияние рейтинга постов на общий рейтинг')),
+                $opt->label(__('The influence of rating posts on the overall rating','rcl')),
                 $opt->option('select',array(
                     'name'=>'rayt_post',
-                    'options'=>array(__('Нет'),__('Да'))
+                    'options'=>array(__('No','rcl'),__('Yes','rcl'))
                 ))
             )
         ),
         $opt->option_block(
             array(
-                $opt->title(__('Рейтинг комментариев')),
+                $opt->title(__('Rating review','rcl')),
                 
                 $opt->option('select',array(
                     'name'=>'rayt_comment_recall',
-                    'options'=>array(__('Отключено'),__('Включено'))
+                    'options'=>array(__('Disabled','rcl'),__('Included','rcl'))
                 )),
 
-                $opt->label(__('Баллы за рейтинг комментария')),
+                $opt->label(__('Points for comment rating','rcl')),
                 $opt->option('number',array('name'=>'count_rayt_comment')),
-                $opt->notice(__('установите сколько баллов к рейтингу будет начисляться за положительный голос или сколько баллов будет отниматься от рейтинга за отрицательный голос')),
+                $opt->notice(__('set how many points the ranking will be awarded for a positive vote or how many points will be subtracted from the rating for a negative vote','rcl')),
                 
-                $opt->label(__('Влияние рейтинга комментариев на общий рейтинг')),
+                $opt->label(__('The influence of the rating review on the overall rating','rcl')),
                 $opt->option('select',array(
                     'name'=>'rayt_comment',
-                    'options'=>array(__('Нет'),__('Да'))
+                    'options'=>array(__('No','rcl'),__('Yes','rcl'))
                 ))
             )
         ),
         $opt->option_block(
             array(
-                $opt->label(__('Позволять обходить модерацию публикаций при достижении рейтинга')),
+                $opt->label(__('Allow to bypass the moderation of publications at achievement rating','rcl')),
                 $opt->option('number',array('name'=>'nomoder_rayt')),
-                $opt->notice(__('укажите уровень рейтинга при котором пользователь получит возможность делать публикации без модерации'))
+                $opt->notice(__('specify the rating level at which the user will get the ability to post without moderation','rcl'))
             )
         )
     ));

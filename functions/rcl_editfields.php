@@ -44,16 +44,16 @@ class Rcl_EditFields {
             if($this->primary['terms']) 
                 $form .= $this->option('options',array(
                     'name'=>'terms',
-                    'label'=>__('Перечень рубрик к выбору'),
-                    'placeholder'=>__('ID через запятую')
+                    'label'=>__('List of columns to select','rcl'),
+                    'placeholder'=>__('ID separated by comma','rcl')
                 ));
             
                 $form .= '<ul id="sortable">
                     '.$this->loop().'
                 </ul>	
             </div>	 
-            <p style="width:550px;"><input type="button" id="add_public_field"  class="button-secondary right" value="'.__('+ Добавить поле').'"></p>
-            <input id="save_menu_footer" class="button button-primary menu-save" type="submit" value="'.__('Сохранить').'" name="add_field_public">
+            <p style="width:550px;"><input type="button" id="add_public_field"  class="button-secondary right" value="+ '.__('Add field','rcl').'"></p>
+            <input id="save_menu_footer" class="button button-primary menu-save" type="submit" value="'.__('Save','rcl').'" name="add_field_public">
             <input type="hidden" id="deleted-fields" name="deleted" value="">
         </form>
         <script>jQuery(function(){jQuery("#sortable").sortable();return false;});</script>';
@@ -86,7 +86,7 @@ class Rcl_EditFields {
         );
         
         $textarea_select = (isset($types[$this->vals['type']]))?				
-            $textarea_select = 'перечень вариантов разделять знаком #<br>'
+            $textarea_select = __('the list of options to share the " # " sign','rcl').'<br>'
                         . '<textarea rows="1" class="field-select" style="height:50px" name="field[field_select][]">'.$this->vals['field_select'].'</textarea>'
         : '';
         
@@ -96,9 +96,9 @@ class Rcl_EditFields {
                         <p class="link-to-original" style="clear:both;">
                             '.$this->option('text',array(
                                 'name'=>'slug',
-                                'label'=>'MetaKey:',
-                                'notice'=>'не обязательно<br>если необходимо прикрепить свое произвольное поле, то пропишите meta_key в это поле',
-                                'placeholder'=>'латиница и цифры'
+                                'label'=>__('MetaKey','rcl').':',
+                                'notice'=>__('not necessarily<br>if you want to enlist their arbitrary field, we list the meta_key in this field','rcl'),
+                                'placeholder'=>__('Latin and numbers','rcl')
                             ),false).'
                         </p>
                         <div class="link-to-original" style="overflow:hidden;">
@@ -106,7 +106,7 @@ class Rcl_EditFields {
                                     <label>
                                         '.$this->option('text',array(
                                             'name'=>'title',
-                                            'label'=>'Заголовок<br>'
+                                            'label'=>__('Title','rcl').'<br>'
                                         )).'
                                     </label>
                                 </p>
@@ -117,7 +117,7 @@ class Rcl_EditFields {
                         <p class="place-sel link-to-original">
                         '.$textarea_select.'
                         '.$this->get_options().'</p>
-                        <p align="right"><a id="'.$this->vals['slug'].'" class="item-delete field-delete deletion" href="#">Удалить</a></p>				
+                        <p align="right"><a id="'.$this->vals['slug'].'" class="item-delete field-delete deletion" href="#">'.__('Delete','rcl').'</a></p>				
                 </div>					
         </li>';
 
@@ -127,21 +127,21 @@ class Rcl_EditFields {
     
     function get_types(){
         return $this->option('select',array(
-            'label'=>'Тип поля',       
+            'label'=>__('The field type','rcl'),       
             'name'=>'type',
             'class'=>'typefield',
             'value'=>array(
-                'text'=>'Однострочное поле',               
-                'textarea'=>'Многострочное поле',
-                'select'=>'Выпадающий список',
-                'checkbox'=>'Чекбокс',
-                'radio'=>'Радиокнопки',
-                'email'=>'E-mail',
-                'tel'=>'Телефон',
-                'number'=>'Числовое поле',
-                'date'=>'Дата',
-                'time'=>'Время',
-                'url'=>'Ссылка'
+                'text'=>__('Text','rcl'),               
+                'textarea'=>__('Textarea','rcl'),
+                'select'=>__('Select','rcl'),
+                'checkbox'=>__('Checkbox','rcl'),
+                'radio'=>__('Radiobutton','rcl'),
+                'email'=>__('E-mail','rcl'),
+                'tel'=>__('Phone','rcl'),
+                'number'=>__('Number','rcl'),
+                'date'=>__('Date','rcl'),
+                'time'=>__('Time','rcl'),
+                'url'=>__('Url','rcl')
             )
         ));
     }
@@ -163,7 +163,7 @@ class Rcl_EditFields {
                         <span class="item-title">'.$this->vals['title'].'</span>						
                         <span class="item-controls">
                         <span class="item-type">'.$this->vals['type'].'</span>						
-                        <a id="edit-'.$this->vals['slug'].'" class="profilefield-item-edit item-edit" href="#" title="Изменить">Изменить</a>
+                        <a id="edit-'.$this->vals['slug'].'" class="profilefield-item-edit item-edit" href="#" title="'.__('Change','rcl').'">'.__('Change','rcl').'</a>
                         </span>
                     </dt>
                 </dl>';
@@ -192,9 +192,9 @@ class Rcl_EditFields {
                             
                             $field .= $this->option('text',array(
                                 'name'=>'slug',
-                                'label'=>'MetaKey',
-                                'notice'=>'не обязательно<br>если необходимо прикрепить свое произвольное поле, то пропишите meta_key в это поле',
-                                'placeholder'=>'латиница и цифры'
+                                'label'=>__('MetaKey','rcl'),
+                                'notice'=>__('not necessarily<br>if you want to enlist their arbitrary field, we list the meta_key in this field','rcl'),
+                                'placeholder'=>__('Latin and numbers','rcl')
                             ),
                             $edit);
 
@@ -275,7 +275,7 @@ class Rcl_EditFields {
     function delete($slug,$table){
         global $wpdb;
         if($slug) $res = $wpdb->query("DELETE FROM ".$wpdb->prefix."$table WHERE meta_key = '$slug' OR meta_key LIKE '$slug%'");
-        if($res) echo 'Все значения произвольного поля с meta_key "'.$slug.'" были удалены из Базы Данных.<br/>';
+        if($res) echo __('All values of a custom field with meta_key','rcl').' "'.$slug.'" '.__('were removed from the Database','rcl').'<br/>';
     }
     
     function update_fields($table='postmeta'){

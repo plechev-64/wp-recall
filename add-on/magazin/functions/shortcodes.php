@@ -81,9 +81,9 @@ function widget_minibasket() {
 class Widget_minibasket extends WP_Widget {
 
 	function Widget_minibasket() {
-		$widget_ops = array( 'classname' => 'widget-minibasket', 'description' => __('Корзина','rcl') );		
+		$widget_ops = array( 'classname' => 'widget-minibasket', 'description' => __('Cart','rcl') );		
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-minibasket' );		
-		$this->WP_Widget( 'widget-minibasket', __('Корзина','rcl'), $widget_ops, $control_ops );
+		$this->WP_Widget( 'widget-minibasket', __('Cart','rcl'), $widget_ops, $control_ops );
 	}
 	
 	function widget( $args, $instance ) {
@@ -110,10 +110,10 @@ class Widget_minibasket extends WP_Widget {
 	}
 	
 	function form( $instance ) {
-		$defaults = array( 'title' => __('Корзина','rcl'));
+		$defaults = array( 'title' => __('Cart','rcl'));
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Заголовок','rcl'); ?>:</label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','rcl'); ?>:</label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 	<?php

@@ -1,7 +1,7 @@
 <?php global $formFields,$editpost; ?>
 
 <?php if($formFields['title']): ?>
-    <label><?php _e('Заголовок'); ?> <span class="required">*</span>:</label>
+    <label><?php _e('Title','rcl'); ?> <span class="required">*</span>:</label>
     <input type="text" maxlength="150" required value="<?php the_public_title(); ?>" name="post_title" id="post_title_input">
 <?php endif; ?>
 
@@ -10,12 +10,12 @@
 <?php endif; ?>
 
 <?php if($formFields['editor']): ?>
-    <label><?php _e('Содержимое публикации'); ?></label>
+    <label><?php _e('The content of the post','rcl'); ?></label>
     <?php the_public_editor(); ?>
 <?php endif; ?>
 
 <?php if($formFields['upload']): ?>
-    <b><?php _e('Нажмите на прикреленное изображение, чтобы добавить его в контент публикации'); ?></b>
+    <b><?php _e('Click on Priceline the image to add it to the content of the publication','rcl'); ?></b>
     <?php the_public_upload(); ?>
 <?php endif; ?>
 

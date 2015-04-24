@@ -5,7 +5,7 @@ function get_tablist_options($content){
     global $tabs_rcl,$rcl_options;
     
     if(!$tabs_rcl) {
-        $content .= '<h3>'.__('Ни одной вкладки личного кабинета не найдено').'</h3>';
+        $content .= '<h3>'.__('Neither one tab personal account not found','rcl').'</h3>';
         return $content;
     }
     
@@ -13,7 +13,7 @@ function get_tablist_options($content){
 
     $opt = new Rcl_Options('tabs');
 
-    $tabs = '<p>'.__('Сортируйте вкладки перетаскивая их на нужную позицию').'</p>'
+    $tabs = '<p>'.__('Sort your tabs by dragging them to the desired position','rcl').'</p>'
             . '<ul id="tabs-list-rcl" class="sortable">';
     
     if(isset($rcl_options['tabs']['order'])){
@@ -62,7 +62,7 @@ function get_tablist_options($content){
     
     $tabs .= '<script>jQuery(function(){jQuery(".sortable").sortable();return false;});</script>';
         
-    $content .= $opt->options(__('Настройка вкладок'),$opt->option_block(array($tabs)));
+    $content .= $opt->options(__('Setting tabs','rcl'),$opt->option_block(array($tabs)));
 	
     return $content;
 }
@@ -71,7 +71,7 @@ function get_tab_option($key,$tab=false){
     global $rcl_options;
     $name = (isset($rcl_options['tabs']['name'][$key])) ?$rcl_options['tabs']['name'][$key] :  $tab['name'];
     return '<li>'
-            . __('Имя вкладки:').' <input type="text" name="tabs[name]['.$key.']" value="'.$name.'">'
+            . __('Name tab','rcl').': <input type="text" name="tabs[name]['.$key.']" value="'.$name.'">'
             . '<input type="hidden" name="tabs[order][]" value="'.$key.'">'
             . '</li>';
 }

@@ -14,8 +14,8 @@ function attachments_products( $attachments ){
 		'post_type' => array( 'products' ),
 		'filetype' => null,
 		'note' => null,
-		'button_text' => __( 'Прикрепить изображение или загрузить его', 'attachments' ),
-		'modal_text' => __( 'Прикрепить изображение или загрузить его', 'attachments' ),
+		'button_text' => __( 'Attach image or download it', 'rcl' ),
+		'modal_text' => __( 'Attach image or download it', 'rcl' ),
 		'fields' => array(
 		) 
 	);
@@ -115,7 +115,7 @@ function fill_prodcat_column($column_name, $post_id) {
     if( $column_name != 'prodcat' )  
         return;  
   
-    $cur_terms = get_the_terms( $post_id;  
+    $cur_terms = get_the_terms( $post_id);  
 		foreach((array)$cur_terms as $cur_term){  
 			echo '<a href="./edit.php?post_type=products&prodcat='. $cur_term->slug .'">'. $cur_term->name .'</a><br />'  ;
 		}   
@@ -221,7 +221,7 @@ function add_thumb_column( $columns ){
 
 if (is_admin()) add_action('admin_init', 'recall_postmeta_products');
 function recall_postmeta_products() {
-    add_meta_box( 'recall_meta', __('Настройки Wp-Recall','rcl'), 'options_box_rcl', 'products', 'normal', 'high'  );
+    add_meta_box( 'recall_meta', __('Settings Wp-Recall','rcl'), 'options_box_rcl', 'products', 'normal', 'high'  );
 }
   
 // заполняем колонку миниатюр  

@@ -118,11 +118,11 @@ function get_register_user_rcl(){
         if($user_id){
             
             $regcode = md5($login);	
-            $subject = __('Подтвердите регистрацию!');														
+            $subject = __('Confirm your registration!','rcl');														
             $textmail = '
-            <p>'.__('Вы или кто то другой зарегистрировались на сайте').' "'.get_bloginfo('name').'" '.__('со следующими данными:').'</p>
-            <p>'.__('Логин:').' '.$login.'</p>
-            <p>'.__('Пароль:').' '.$pass.'</p>';
+            <p>'.__('You or someone else signed up on the website','rcl').' "'.get_bloginfo('name').'" '.__('with the following data:','rcl').'</p>
+            <p>'.__('Nickname','rcl').': '.$login.'</p>
+            <p>'.__('Password','rcl').': '.$pass.'</p>';
             
             $url = get_bloginfo('wpurl').'/?rglogin='.$login.'&rgpass='.$pass.'&rgcode='.$regcode;
 
@@ -138,7 +138,7 @@ function get_register_user_rcl(){
                     $wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user_id, 'time_action' => '' ));
             }
 
-            $textmail .= '<p>Если это были не вы, то просто проигнорируйте это письмо</p>';				
+            $textmail .= '<p>'.__('If it wasnt you, then just ignore this email','rcl').'</p>';				
             rcl_mail($email, $subject, $textmail);	
 
             wp_redirect(get_redirect_url_rcl($ref).'action-rcl=login&success=true');exit;

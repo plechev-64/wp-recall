@@ -41,7 +41,7 @@ class Rcl_EditPost {
             
             $post_type = base64_decode($_POST['posttype']);
 
-            if(!get_post_types(array('name'=>$post_type))) wp_die(__('Ошибка публикации!'));
+            if(!get_post_types(array('name'=>$post_type))) wp_die(__('Error publishing!','rcl'));
                 
             $this->post_type = $post_type;
             $this->update = false;

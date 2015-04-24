@@ -36,7 +36,7 @@ function add_parole_register_form($content){
     global $rcl_options;
     
     $content .= '<div class="form-block-rcl">'
-            . '<label>'.__('Пароль').' <span class="required">*</span></label>';
+            . '<label>'.__('Password','rcl').' <span class="required">*</span></label>';
     if($rcl_options['difficulty_parole']==1){
         $content .= '<input required id="primary-pass-user" type="password" onkeyup="passwordStrength(this.value)" value="" name="pass-user">';
     }else{
@@ -46,9 +46,9 @@ function add_parole_register_form($content){
 
     if($rcl_options['difficulty_parole']==1){
         $content .= '<div class="form-block-rcl">
-                <label>'.__('Индикатор надёжности пароля:').'</label>
+                <label>'.__('The password strength indicator','rcl').':</label>
                 <div id="passwordStrength" class="strength0">
-                    <div id="passwordDescription">'.__('Пароль не введён').'</div>
+                    <div id="passwordDescription">'.__('A password is not entered','rcl').'</div>
                 </div>
             </div>';
     }
@@ -63,7 +63,7 @@ function get_secondary_password_field($fields){
     if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return $fields;
     
     $fields .= '<div class="form-block-rcl">
-                <label>'.__('Повторите пароль').' <span class="required">*</span></label>
+                <label>'.__('Repeat the password','rcl').' <span class="required">*</span></label>
                 <input required id="secondary-pass-user" type="password" value="" name="secondary-email-user">
                 <div id="notice-chek-password"></div>
             </div>
@@ -72,8 +72,8 @@ function get_secondary_password_field($fields){
                 var pr = jQuery("#primary-pass-user").val();
                 var sc = jQuery(this).val();
                 var notice;
-                if(pr!=sc) notice = "<span class=error>'.__('Пароли не совпадают!').'</span>";
-                else notice = "<span class=success>'.__('Пароли совпадают').'</span>";
+                if(pr!=sc) notice = "<span class=error>'.__('The passwords do not match!','rcl').'</span>";
+                else notice = "<span class=success>'.__('The passwords match','rcl').'</span>";
                 jQuery("#notice-chek-password").html(notice);
             });});
         </script>';
@@ -130,9 +130,9 @@ function get_authorize_form_rcl($type=false,$form=false){
 		if($type=='floatform') echo '<a href="#" class="close-popup"><i class="fa fa-times-circle"></i></a>';
 		if($user_ID){
 		
-                    echo '<div class="username"><b>'.__('Привет,').' '.get_the_author_meta('display_name', $user_ID).'!</b></div>
+                    echo '<div class="username"><b>'.__('Hi','rcl').', '.get_the_author_meta('display_name', $user_ID).'!</b></div>
                     <div class="author-avatar">';
-                    echo '<a href="'.$rcl_user_URL.'" title="'.__('В личный кабинет').'">'.get_avatar($user_ID, 60).'</a>';
+                    echo '<a href="'.$rcl_user_URL.'" title="'.__('In personal account','rcl').'">'.get_avatar($user_ID, 60).'</a>';
                     if(function_exists('get_rayting_block_rcl')):
 
                         $karma = apply_filters('get_all_rayt_user_rcl',0,$user_ID);
@@ -142,8 +142,8 @@ function get_authorize_form_rcl($type=false,$form=false){
                     echo '</div>';				
                     echo '<div class="buttons">';
 
-                            $buttons = '<p>'.get_button_rcl(__('Личный кабинет'),$rcl_user_URL,array('icon'=>'fa-home')).'</p>
-                            <p>'.get_button_rcl(__('Выход'),wp_logout_url( home_url() ),array('icon'=>'fa-external-link')).'</p>';
+                            $buttons = '<p>'.get_button_rcl(__('Personal account','rcl'),$rcl_user_URL,array('icon'=>'fa-home')).'</p>
+                            <p>'.get_button_rcl(__('Exit','rcl'),wp_logout_url( home_url() ),array('icon'=>'fa-external-link')).'</p>';
                             echo apply_filters('buttons_widget_rcl',$buttons);
 
                     echo '</div>';
@@ -158,8 +158,8 @@ function get_authorize_form_rcl($type=false,$form=false){
 
                         echo '<div class="buttons">';
 
-                            $buttons = '<p>'.get_button_rcl(__('Войти'),$redirect_url.'action-rcl=login',array('icon'=>'fa-sign-in')).'</p>
-                            <p>'.get_button_rcl(__('Регистрация'),$redirect_url.'action-rcl=register',array('icon'=>'fa-book')).'</p>';
+                            $buttons = '<p>'.get_button_rcl(__('Login','rcl'),$redirect_url.'action-rcl=login',array('icon'=>'fa-sign-in')).'</p>
+                            <p>'.get_button_rcl(__('Registration','rcl'),$redirect_url.'action-rcl=register',array('icon'=>'fa-book')).'</p>';
                             echo apply_filters('buttons_widget_rcl',$buttons);
 
                         echo '</div>';
@@ -182,8 +182,8 @@ function get_authorize_form_rcl($type=false,$form=false){
                         }
                     }else if(!$login_form){
                         echo '<div class="buttons">';
-                                $buttons .= '<p>'.get_button_rcl(__('Войти'),'#',array('icon'=>'fa-sign-in','class'=>'sign-button')).'</p>
-                                <p>'.get_button_rcl(__('Регистрация'),'#',array('icon'=>'fa-book','class'=>'reglink')).'</p>';
+                                $buttons .= '<p>'.get_button_rcl(__('Login','rcl'),'#',array('icon'=>'fa-sign-in','class'=>'sign-button')).'</p>
+                                <p>'.get_button_rcl(__('Registration','rcl'),'#',array('icon'=>'fa-book','class'=>'reglink')).'</p>';
                                 echo apply_filters('buttons_widget_rcl',$buttons);
                         echo '</div>';
                     }
@@ -205,31 +205,31 @@ function notice_form_rcl($form='login'){
     $vls = array(
         'register'=> array(
             'error'=>array(
-                'login'=>__('В логине недопустимые символы!'),
-                'empty'=>__('Заполните поля!'),
-                'captcha'=>__('Не верно заполнено поле CAPTCHA!'),
-                'login-us'=>__('Логин уже используется!'),
-                'email-us'=>__('Е-mail уже используется!'),
-                'email'=>__('Некорректный E-mail!')
+                'login'=>__('Login invalid characters!','rcl'),
+                'empty'=>__('Fill in the fields!','rcl'),
+                'captcha'=>__('Field filled not right CAPTCHA!','rcl'),
+                'login-us'=>__('Username already in use!','rcl'),
+                'email-us'=>__('E-mail is already in use!','rcl'),
+                'email'=>__('Invalid E-mail!','rcl')
             ),
             'success'=>array(
-                'true'=>__('Регистрация завершена! Проверьте свою почту.')
+                'true'=>__('Registration is completed! Check your email.','rcl')
             )
         ),
         'login'=> array(
             'error'=>array(
-                'confirm'=>__('Ваш email не подтвержден!'),
-                'empty'=>__('Заполните поля!'),
-                'failed'=>__('Логин или пароль не верны!')
+                'confirm'=>__('Your email is not confirmed!','rcl'),
+                'empty'=>__('Fill in the fields!','rcl'),
+                'failed'=>__('Username or password are not correct!','rcl')
             ),
             'success'=>array(
-                'true'=>__('Регистрация завершена! Проверьте свою почту')
+                'true'=>__('Registration is completed! Check your email','rcl')
             )
         ),
         'remember'=> array(
             'error'=>array(),
             'success'=>array(
-                'true'=>__('Пароль был выслан!<br>Проверьте свою почту.')
+                'true'=>__('Your password has been sent!<br>Check your email.','rcl')
             )
         )
     );
@@ -254,7 +254,7 @@ function notice_form_rcl($form='login'){
     
     if(!$type) return false;
 
-    $notice = (isset($vls[$act][$type][$get[$type]]))? $vls[$act][$type][$get[$type]]:__('Ошибка заполнения!');
+    $notice = (isset($vls[$act][$type][$get[$type]]))? $vls[$act][$type][$get[$type]]:__('Error filling!','rcl');
     
     if($form=='login'){
         $errors = '';
@@ -274,7 +274,7 @@ add_filter('notice_form_rcl','add_notice_chek_register_pass');
 function add_notice_chek_register_pass($notices){
     global $rcl_options;
     if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return $notices;
-    $notices['register']['error']['repeat-pass'] = __('Повтор пароля не верен!');
+    $notices['register']['error']['repeat-pass'] = __('Repeat password is not correct!','rcl');
     return $notices;
 }
 //Проверяем заполненность поля повтора пароля

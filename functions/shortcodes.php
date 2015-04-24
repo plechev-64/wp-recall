@@ -222,17 +222,17 @@ function short_user_list_rcl($atts, $content = null){
         $searchform = '';
         $userlist .= apply_filters('users_search_form_rcl',$searchform);
 
-        $userlist .='<h3>'.__('Всего пользователей:').' '.$count_user.'</h3>';
+        $userlist .='<h3>'.__('Total users').': '.$count_user.'</h3>';
 
         $rqst = $UserList->search_request();
         $perm = get_redirect_url_rcl(get_permalink($post->ID).'?'.$rqst);
 
-        $userlist .= '<p class="alignleft">'.__('Фильтровать по:').' ';
-        $userlist .= '<a '.a_active($orderby,'action').' href="'.$perm.'filter=action">'.__('Активности').'</a> ';
-        $userlist .= '<a '.a_active($orderby,'rayting').' href="'.$perm.'filter=rayting">'.__('Рейтингу').'</a> ';
-        if(!isset($_GET['search-user'])) $userlist .= '<a '.a_active($orderby,'posts').' href="'.$perm.'filter=posts">'.__('Публикациям').'</a> ';
-        if(!isset($_GET['search-user'])) $userlist .= '<a '.a_active($orderby,'comments').' href="'.$perm.'filter=comments">'.__('Комментариям').'</a> ';
-        if(!isset($_GET['search-user'])) $userlist .= '<a '.a_active($orderby,'registered').' href="'.$perm.'filter=registered">'.__('Регистрации').'</a>';
+        $userlist .= '<p class="alignleft">'.__('Filter by','rcl').': ';
+        $userlist .= '<a '.a_active($orderby,'action').' href="'.$perm.'filter=action">'.__('Activity','rcl').'</a> ';
+        $userlist .= '<a '.a_active($orderby,'rayting').' href="'.$perm.'filter=rayting">'.__('Rated','rcl').'</a> ';
+        if(!isset($_GET['search-user'])) $userlist .= '<a '.a_active($orderby,'posts').' href="'.$perm.'filter=posts">'.__('Publications','rcl').'</a> ';
+        if(!isset($_GET['search-user'])) $userlist .= '<a '.a_active($orderby,'comments').' href="'.$perm.'filter=comments">'.__('Comments','rcl').'</a> ';
+        if(!isset($_GET['search-user'])) $userlist .= '<a '.a_active($orderby,'registered').' href="'.$perm.'filter=registered">'.__('Registration','rcl').'</a>';
         $userlist .= '</p>';
     }
 
@@ -253,8 +253,8 @@ function short_user_list_rcl($atts, $content = null){
     }
     
     if($a==0){
-        if(isset($_GET['search-user'])) $userlist .= '<h4 align="center">'.__('Пользователи не найдены').'</h4>';
-        else $userlist .= '<p align="center">'.__('Никого нет').'</p>';
+        if(isset($_GET['search-user'])) $userlist .= '<h4 align="center">'.__('Users not found','rcl').'</h4>';
+        else $userlist .= '<p align="center">'.__('No one','rcl').'</p>';
     }                      
     $userlist .='</div>';
          
@@ -272,12 +272,12 @@ function default_search_form_rcl($form){
         if(isset($_GET['orderuser'])) $orderuser = $_GET['orderuser'];
 	$form .='
         <form method="get" action="">
-        <p class="alignright">'.__('Поиск пользователей:').' <input type="text" name="name-user" value="'.$name.'">
+        <p class="alignright">'.__('Search users','rcl').': <input type="text" name="name-user" value="'.$name.'">
         <select name="orderuser">
-            <option '.selected($orderuser,1,false).' value="1">'.__('по имени').'</option>
-            <option '.selected($orderuser,2,false).' value="2">'.__('по логину').'</option>
+            <option '.selected($orderuser,1,false).' value="1">'.__('by name','rcl').'</option>
+            <option '.selected($orderuser,2,false).' value="2">'.__('by login','rcl').'</option>
         </select>
-        <input type="submit" class="recall-button" name="search-user" value="'.__('Найти').'"><br>
+        <input type="submit" class="recall-button" name="search-user" value="'.__('Search','rcl').'"><br>
         </p>
 		<input type="hidden" name="default-search" value="1">
         </form>';
@@ -289,7 +289,7 @@ function get_wp_recall_shortcode(){
 	global $user_LK;	
 	
 	if(!$user_LK){		
-		return '<h4>'.__('Чтобы начать пользоваться возможностями своего личного кабинета, авторизуйтесь или зарегистрируйтесь на этом сайте').'</h4>
+		return '<h4>'.__('To begin to use the capabilities of your personal account, please log in or register on this site','rcl').'</h4>
 		<div class="authorize-form-rcl">'.get_authorize_form_rcl().'</div>';
 	}
         
@@ -355,18 +355,18 @@ function slider_rcl($atts, $content = null){
                 $price = get_post_meta($post->ID,'price-products',1);
                 $class = 'price-prod';
                 if(!$price){
-                    $price = __('Бесплатно');
+                    $price = __('Free','rcl');
                     $class .= ' no-price';
                 }else{
-                    $price .= __('руб');
+                    $price .= get_primary_currency(1);
                 }
                 $plslider .= '<span class="'.$class.'"> '.$price.'</span>';
             }
             $plslider .= '<img src='.$thumb_url[0].'>';
-            $post_content = $post->post_content;
-            if($post->post_excerpt) $post_content = $post->post_excerpt;
+            $post_content = strip_tags($post->post_content);
+            if($post->post_excerpt) $post_content = strip_tags($post->post_excerpt);
             if($desc > 0 && strlen($post_content) > $desc){
-                    $post_content = strip_tags(substr($post_content, 0, $desc));
+                    $post_content = substr($post_content, 0, $desc);
                     $post_content = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ...', $post_content);
             }
             $plslider .= '<div class="content-slide">';

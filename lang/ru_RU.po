@@ -5,15 +5,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Blank Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-04-25 00:26+0400\n"
+"POT-Creation-Date: 2015-04-25 00:15+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: Your Team <translations@example.com>\n"
-"Language: en_US\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
@@ -27,121 +28,121 @@ msgstr ""
 #: add-on/partners-system/admin-pages.php:125
 #: add-on/users-market/index.php:698 admin-pages.php:299
 msgid "Save settings"
-msgstr ""
+msgstr "Сохранить настройки"
 
 #: add-on/groups/class_ajax.php:1
 msgid "Deleted user!"
-msgstr ""
+msgstr "Пользователь удален!"
 
 #: add-on/groups/class_ajax.php:1
 msgid "To delete all publications"
-msgstr ""
+msgstr "Для удаления всех публикаций"
 
 #: add-on/groups/group_private.php:78
 msgid "To be able to post comments you must be a member of this group"
-msgstr ""
+msgstr "Для комментирования вы должны быть участником группы"
 
 #: add-on/groups/group_private.php:81
 msgid "Access to content is closed privacy settings"
-msgstr ""
+msgstr "Контент закрыт настройками приватности"
 
 #: add-on/groups/group_private.php:84
 msgid "(Comment hidden privacy settings)"
-msgstr ""
+msgstr "(комментарий скрыт настройками приватности)"
 
 #: add-on/groups/index.php:1
 msgid "Record groups"
-msgstr ""
+msgstr "Публикации групп"
 
 #: add-on/groups/index.php:1
 msgid "Add entry"
-msgstr ""
+msgstr "Добавить"
 
 #: add-on/groups/index.php:1
 msgid "Edit"
-msgstr ""
+msgstr "Редактировать"
 
 #: add-on/groups/index.php:1
 msgid "New"
-msgstr ""
+msgstr "Новый"
 
 #: add-on/groups/index.php:1
 msgid "View"
-msgstr ""
+msgstr "Смотреть"
 
 #: add-on/groups/index.php:1 functions/shortcodes.php:280
 msgid "Search"
-msgstr ""
+msgstr "Поиск"
 
 #: add-on/groups/index.php:1
 msgid "Not found"
-msgstr ""
+msgstr "Не найдено"
 
 #: add-on/groups/index.php:1
 msgid "Cart is empty"
-msgstr ""
+msgstr "Корзина пуста"
 
 #: add-on/groups/index.php:1
 msgid "Parent record"
-msgstr ""
+msgstr "Родительская запись"
 
 #: add-on/groups/index.php:1
 msgid "Groups"
-msgstr ""
+msgstr "Группы"
 
 #: add-on/groups/index.php:1
 msgid "Popular Groups"
-msgstr ""
+msgstr "Популярные группы"
 
 #: add-on/groups/index.php:1
 msgid "All categories"
-msgstr ""
+msgstr "Все категории"
 
 #: add-on/groups/index.php:1
 msgid "Parent group"
-msgstr ""
+msgstr "Родительская группа"
 
 #: add-on/groups/index.php:1 add-on/publicpost/class_public.php:1
 msgid "Update"
-msgstr ""
+msgstr "Обновить"
 
 #: add-on/groups/index.php:1
 msgid "To add a new"
-msgstr ""
+msgstr "Добавить новый"
 
 #: add-on/groups/index.php:1
 msgid "Separate with commas"
-msgstr ""
+msgstr "Разделять запятой"
 
 #: add-on/groups/index.php:1
 msgid "To add or remove"
-msgstr ""
+msgstr "Добавить или удалить"
 
 #: add-on/groups/index.php:1
 msgid "Click to use"
-msgstr ""
+msgstr "Нажать для использования"
 
 #: add-on/groups/templates/group.php:1
 msgid "Creator"
-msgstr ""
+msgstr "Создатель"
 
 #: add-on/groups/templates/group.php:1
 msgid "Participants"
-msgstr ""
+msgstr "Участники"
 
 #: add-on/magazin/functions/init.php:17 add-on/magazin/functions/init.php:18
 msgid "Attach image or download it"
-msgstr ""
+msgstr "Выбрать изображение или загрузить"
 
 #: add-on/magazin/functions/init.php:224 admin-pages.php:30 admin-pages.php:31
 msgid "Settings Wp-Recall"
-msgstr ""
+msgstr "Настройки Wp-Recall"
 
 #: add-on/magazin/functions/shortcodes.php:84
 #: add-on/magazin/functions/shortcodes.php:86
 #: add-on/magazin/functions/shortcodes.php:113
 msgid "Cart"
-msgstr ""
+msgstr "Корзина"
 
 #: add-on/magazin/functions/shortcodes.php:116
 #: add-on/publicpost/rcl_postlist.php:75
@@ -149,100 +150,102 @@ msgstr ""
 #: add-on/user-account/index.php:508 functions/rcl_editfields.php:109
 #: widget.php:1
 msgid "Title"
-msgstr ""
+msgstr "Заголовок"
 
 #: add-on/message/download.php:15
 msgid "File does not exist on the server or it has already been loaded!"
-msgstr ""
+msgstr "Файла нет на сервере или он был удален!"
 
 #: add-on/message/download.php:21
 msgid "The file was loaded."
-msgstr ""
+msgstr "Файл был загружен"
 
 #: add-on/message/index.php:1
 msgid "Private chat"
-msgstr ""
+msgstr "Приватный чат"
 
 #: add-on/profile/index.php:1
 msgid "Profile fields"
-msgstr ""
+msgstr "Поля профиля"
 
 #: add-on/profile/index.php:1
 msgid "Your profile was updated"
-msgstr ""
+msgstr "Ваш профиль был обновлен"
 
 #: add-on/publicpost/class_public.php:1
 msgid "The URL to the image"
-msgstr ""
+msgstr "URL к изображению"
 
 #: add-on/publicpost/class_public.php:1
 msgid "Insert image"
-msgstr ""
+msgstr "Добавить изображение"
 
 #: add-on/publicpost/class_public.php:1
 msgid "Media library user"
-msgstr ""
+msgstr "Медиабиблиотека пользователя"
 
 #: add-on/publicpost/class_public.php:1
 msgid "Images in the media library is not found!"
-msgstr ""
+msgstr "Изображения в медиабиблиотеке не найдены!"
 
 #: add-on/publicpost/class_public.php:1
 msgid ""
 "Upload to your image and you will be able to use them in future from your "
 "media library."
 msgstr ""
+"Загрузите изображения, чтобы в будущем вы могли использовать их из своей "
+"медиабиблиотеке."
 
 #: add-on/publicpost/class_public.php:1
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: add-on/publicpost/class_public.php:1
 msgid "Description"
-msgstr ""
+msgstr "Описание"
 
 #: add-on/publicpost/index.php:1
 msgid "Form of publication"
-msgstr ""
+msgstr "Форма публикации"
 
 #: add-on/publicpost/index.php:1 add-on/user-account/index.php:163
 #: add-on/user-account/index.php:174 add-on/user-account/index.php:184
 #: admin-pages.php:105 widget.php:1
 msgid "Not selected"
-msgstr ""
+msgstr "Не выбрано"
 
 #: add-on/publicpost/index.php:1 admin-pages.php:147
 msgid "only Administrators"
-msgstr ""
+msgstr "Только администраторам"
 
 #: add-on/publicpost/index.php:1 admin-pages.php:148
 msgid "Editors and older"
-msgstr ""
+msgstr "Редакторам и старше"
 
 #: add-on/publicpost/index.php:1 admin-pages.php:149
 msgid "Authors and older"
-msgstr ""
+msgstr "Авторам и старше"
 
 #: add-on/publicpost/index.php:1 admin-pages.php:150
 msgid "Participants and older"
-msgstr ""
+msgstr "Участникам и старше"
 
 #: add-on/publicpost/index.php:1 admin-pages.php:151 widget.php:1
 msgid "All users"
-msgstr ""
+msgstr "Всем пользователям"
 
 #: add-on/publicpost/index.php:1
 msgid "The publish settings"
-msgstr ""
+msgstr "Настройки публикации"
 
 #: add-on/publicpost/index.php:1 add-on/rayting/addon-options.php:12
 #: admin-pages.php:99
 msgid "General settings"
-msgstr ""
+msgstr "Общие настройки"
 
 #: add-on/publicpost/index.php:1
 msgid "Page publishing and editing records"
-msgstr ""
+msgstr "Страница публикации и редактирования"
 
 #: add-on/publicpost/index.php:1
 msgid ""
@@ -259,28 +262,28 @@ msgstr ""
 #: add-on/rayting/addon-options.php:53 admin-pages.php:189 admin-pages.php:262
 #: admin-pages.php:267 admin-pages.php:278
 msgid "Disabled"
-msgstr ""
+msgstr "Отключено"
 
 #: add-on/publicpost/index.php:1 add-on/rayting/addon-options.php:33
 #: add-on/rayting/addon-options.php:53 admin-pages.php:190 admin-pages.php:278
 msgid "Included"
-msgstr ""
+msgstr "Подключено"
 
 #: add-on/publicpost/index.php:1
 msgid "Tab list of publications"
-msgstr ""
+msgstr "Вкладка списка публикаций"
 
 #: add-on/publicpost/index.php:1
 msgid "List of publications of the user"
-msgstr ""
+msgstr "Список публикаций пользователя"
 
 #: add-on/publicpost/index.php:1
 msgid "Only the owner of the account"
-msgstr ""
+msgstr "Только хозяину личного кабинета"
 
 #: add-on/publicpost/index.php:1
 msgid "Category"
-msgstr ""
+msgstr "Категории"
 
 #: add-on/publicpost/index.php:1
 msgid "Authorized headings"
@@ -303,11 +306,11 @@ msgstr ""
 
 #: add-on/publicpost/index.php:1
 msgid "Number of columns to select"
-msgstr ""
+msgstr "Количество к выбору"
 
 #: add-on/publicpost/index.php:1
 msgid "Media"
-msgstr ""
+msgstr "Медиабиблиотека"
 
 #: add-on/publicpost/index.php:1
 msgid "Load the media files to the publications"
@@ -315,11 +318,11 @@ msgstr ""
 
 #: add-on/publicpost/index.php:1
 msgid "Download Wp-Recall"
-msgstr ""
+msgstr "Загрузка Wp-Recall"
 
 #: add-on/publicpost/index.php:1
 msgid "The Wordpress Media Library"
-msgstr ""
+msgstr "Медиабиблиотека Wordpress "
 
 #: add-on/publicpost/index.php:1
 msgid ""
@@ -330,11 +333,11 @@ msgstr ""
 
 #: add-on/publicpost/index.php:1
 msgid "Number of images in the gallery Wp-Recall"
-msgstr ""
+msgstr "Кол-во изображений в галерее Wp-Recall"
 
 #: add-on/publicpost/index.php:1
 msgid "The maximum image size, Mb"
-msgstr ""
+msgstr "Максимальный размер изображений, Mb"
 
 #: add-on/publicpost/index.php:1
 msgid ""
@@ -343,74 +346,78 @@ msgstr ""
 
 #: add-on/publicpost/index.php:1
 msgid "The size in the editor by default"
-msgstr ""
+msgstr "Размер изображений в редакторе по-умолчанию"
 
 #: add-on/publicpost/index.php:1
 msgid ""
 "Select the picture size in the silence of their use in the visual editor "
 "during the publishing process"
 msgstr ""
+"Выберите размер изображений при их размещении в контенте визуального "
+"редактора"
 
 #: add-on/publicpost/index.php:1
 msgid "Text editor"
-msgstr ""
+msgstr "Тектовый редактор"
 
 #: add-on/publicpost/index.php:1
 msgid "Simple TEXTAREA"
-msgstr ""
+msgstr "Только TEXTAREA"
 
 #: add-on/publicpost/index.php:1
 msgid "Download TinyMCE editor"
-msgstr ""
+msgstr "Загружать TinyMCE редактор"
 
 #: add-on/publicpost/index.php:1
 msgid "Download HTML editor"
-msgstr ""
+msgstr "Загружать HTML редактор"
 
 #: add-on/publicpost/index.php:1
 msgid "TinyMCE and HTML editors"
-msgstr ""
+msgstr "TinyMCE и HTML редакторы"
 
 #: add-on/publicpost/index.php:1
 msgid "The output form of publication"
-msgstr ""
+msgstr "Вывод формы публикации в личном кабинете"
 
 #: add-on/publicpost/index.php:1
 msgid "Do not display"
-msgstr ""
+msgstr "Не выводить"
 
 #: add-on/publicpost/index.php:1
 msgid "Output"
-msgstr ""
+msgstr "Выводить"
 
 #: add-on/publicpost/index.php:1
 msgid "The form ID"
-msgstr ""
+msgstr "Идентификатор формы"
 
 #: add-on/publicpost/index.php:1
 msgid ""
 "Enter the form ID to the conclusion in the personal Cabinet. The default is 1"
 msgstr ""
+"Введите идентификатор формы публикации выводимой в личном кабинете. По-"
+"умолчанию 1"
 
 #: add-on/publicpost/index.php:1
 msgid "Publication of records"
-msgstr ""
+msgstr "Публикация записей"
 
 #: add-on/publicpost/index.php:1
 msgid "Republishing is allowed"
-msgstr ""
+msgstr "Публикация разрешена"
 
 #: add-on/publicpost/index.php:1
 msgid "Moderation of publications"
-msgstr ""
+msgstr "Модерация публикаций"
 
 #: add-on/publicpost/index.php:1
 msgid "To publish immediately"
-msgstr ""
+msgstr "Публиковать сразу"
 
 #: add-on/publicpost/index.php:1
 msgid "Send for moderation"
-msgstr ""
+msgstr "Отправлять на модерацию"
 
 #: add-on/publicpost/index.php:1
 msgid ""
@@ -418,10 +425,12 @@ msgid ""
 "before it is moderated, it is necessary to have on the website right below "
 "the Author"
 msgstr ""
+"<b>Если используется модерация:</b> Для отображения контента публикации "
+"пользователь должен иметь роль не ниже Автора"
 
 #: add-on/publicpost/index.php:1
 msgid "Custom fields"
-msgstr ""
+msgstr "Произвольные поля"
 
 #: add-on/publicpost/index.php:1
 msgid ""
@@ -435,149 +444,150 @@ msgstr ""
 #: add-on/publicpost/index.php:1 add-on/rayting/addon-options.php:43
 #: add-on/rayting/addon-options.php:63 admin-pages.php:38 admin-pages.php:289
 msgid "No"
-msgstr ""
+msgstr "Нет"
 
 #: add-on/publicpost/index.php:1 add-on/rayting/addon-options.php:43
 #: add-on/rayting/addon-options.php:63 admin-pages.php:39 admin-pages.php:289
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: add-on/publicpost/index.php:1
 msgid "Place output fields"
-msgstr ""
+msgstr "Место вывода полей"
 
 #: add-on/publicpost/index.php:1
 msgid "After the content recording"
-msgstr ""
+msgstr "После контента публикации"
 
 #: add-on/publicpost/index.php:1
 msgid "On content recording"
-msgstr ""
+msgstr "Над контентом публикации"
 
 #: add-on/publicpost/index.php:1
 msgid "Records"
-msgstr ""
+msgstr "Записи"
 
 #: add-on/publicpost/index.php:1
 msgid "Posts"
-msgstr ""
+msgstr "Публикации"
 
 #: add-on/publicpost/index.php:1
 msgid "Publication"
-msgstr ""
+msgstr "Публикация"
 
 #: add-on/publicpost/rcl_editpost.php:44
 msgid "Error publishing!"
-msgstr ""
+msgstr "Ошибка публикации!"
 
 #: add-on/publicpost/rcl_postlist.php:70
 msgid "Published"
-msgstr ""
+msgstr "Опубликован"
 
 #: add-on/publicpost/rcl_postlist.php:74 functions/rcl_editfields.php:142
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: add-on/publicpost/rcl_postlist.php:76
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 #: add-on/publicpost/rcl_postlist.php:80
 msgid "on approval"
-msgstr ""
+msgstr "на утверждении"
 
 #: add-on/publicpost/rcl_postlist.php:81
 msgid "deleted"
-msgstr ""
+msgstr "удален"
 
 #: add-on/publicpost/rcl_postlist.php:82
 msgid "publish"
-msgstr ""
+msgstr "опубликован"
 
 #: add-on/publicpost/rcl_postlist.php:100
 msgid "has not yet been published"
-msgstr ""
+msgstr "пока не было опубликовано"
 
 #: add-on/publicpost/rcl_publicform.php:112
 msgid "Tags"
-msgstr ""
+msgstr "Метки"
 
 #: add-on/publicpost/rcl_publicform.php:114
 msgid "(the labels fit with a comma)"
-msgstr ""
+msgstr "(разделять запятой)"
 
 #: add-on/publicpost/rcl_publicform.php:139 functions/rcl_editfields.php:166
 msgid "Change"
-msgstr ""
+msgstr "Выбрать"
 
 #: add-on/publicpost/rcl_publicform.php:144
 msgid "To publish"
-msgstr ""
+msgstr "Публиковать"
 
 #: add-on/publicpost/rcl_publicform.php:167
 msgid "Are you sure? Then restore never work!"
-msgstr ""
+msgstr "Вы серьезно? Потом не получиться восстановить!"
 
 #: add-on/publicpost/rcl_publicform.php:167 functions/rcl_editfields.php:120
 msgid "Delete"
-msgstr ""
+msgstr "Удалить"
 
 #: add-on/publicpost/rcl_publicform.php:176
 msgid "You must be logged in to post. Login or register"
 msgstr ""
+"Вы должны быть авторизованы для публикации. Войдите или зарегистрируйтесь."
 
 #: add-on/publicpost/rcl_publicform.php:180
 msgid "Sorry, but you have no rights to publish within groups :("
-msgstr ""
+msgstr "Извините, но вы не можете публиковать в этой группе :("
 
 #: add-on/publicpost/rcl_publicform.php:183
 msgid "Sorry, but you have no right<br>to publish the records on this site :("
-msgstr ""
+msgstr "Извините, но вы не можете публиковать на этом сайте :("
 
 #: add-on/publicpost/rcl_publicform.php:217
 msgid "Being sent, please wait..."
-msgstr ""
+msgstr "Идет отправка, подождите..."
 
 #: add-on/publicpost/rcl_publicform.php:350
 msgid "To add a media file"
-msgstr ""
+msgstr "Добавить медиафайл"
 
 #: add-on/publicpost/templates/public-form.php:13
 msgid "The content of the post"
-msgstr ""
+msgstr "Контент публикации"
 
 #: add-on/publicpost/templates/public-form.php:18
 msgid ""
 "Click on Priceline the image to add it to the content of the publication"
-msgstr ""
+msgstr "Нажмите на загруженное изображение, чтобы добавить его в контент"
 
 #: add-on/rayting/addon-options.php:9
 msgid "Rating settings"
-msgstr ""
+msgstr "Настройки рейтинга"
 
 #: add-on/rayting/addon-options.php:14
 msgid "Type of rating for records"
-msgstr ""
+msgstr "Тип рейтинга для публикаций"
 
 #: add-on/rayting/addon-options.php:17 add-on/rayting/addon-options.php:23
 msgid "Plus/minus"
-msgstr ""
+msgstr "Плюс/Минус"
 
 #: add-on/rayting/addon-options.php:17 add-on/rayting/addon-options.php:23
 msgid "I like"
-msgstr ""
+msgstr "Мне нравиться"
 
 #: add-on/rayting/addon-options.php:20
 msgid "Type of rating comments"
-msgstr ""
+msgstr "Тип рейтинга для комментариев"
 
 #: add-on/rayting/addon-options.php:29
 msgid "The rating publications"
-msgstr ""
+msgstr "Рейтинг публикаций"
 
 #: add-on/rayting/addon-options.php:36
 msgid "Points for ranking publications"
-msgstr ""
+msgstr "Баллы для рейтинга публикаций"
 
 #: add-on/rayting/addon-options.php:38 add-on/rayting/addon-options.php:58
 msgid ""
@@ -587,19 +597,19 @@ msgstr ""
 
 #: add-on/rayting/addon-options.php:40
 msgid "The influence of rating posts on the overall rating"
-msgstr ""
+msgstr "Влияние рейтинга публикаций на общий рейтинг"
 
 #: add-on/rayting/addon-options.php:49
 msgid "Rating review"
-msgstr ""
+msgstr "Рейтинг отзывов"
 
 #: add-on/rayting/addon-options.php:56
 msgid "Points for comment rating"
-msgstr ""
+msgstr "Баллы для рейтинга комментариев"
 
 #: add-on/rayting/addon-options.php:60
 msgid "The influence of the rating review on the overall rating"
-msgstr ""
+msgstr "Влияние рейтинга отзывов на общий рейтинг"
 
 #: add-on/rayting/addon-options.php:69
 msgid "Allow to bypass the moderation of publications at achievement rating"
@@ -617,35 +627,35 @@ msgstr ""
 
 #: add-on/review/index.php:1
 msgid "Reviews"
-msgstr ""
+msgstr "Отзывы"
 
 #: add-on/user-account/index.php:63 add-on/user-account/index.php:74
 msgid "Payment systems"
-msgstr ""
+msgstr "Платежные системы"
 
 #: add-on/user-account/index.php:66
 msgid "Payments"
-msgstr ""
+msgstr "Платежи"
 
 #: add-on/user-account/index.php:78
 msgid "Payment"
-msgstr ""
+msgstr "Оплата заказа"
 
 #: add-on/user-account/index.php:79
 msgid "Type of payment"
-msgstr ""
+msgstr "Тип платежа"
 
 #: add-on/user-account/index.php:82
 msgid "Funds from the personal account of the user"
-msgstr ""
+msgstr "Средства личного счета"
 
 #: add-on/user-account/index.php:83
 msgid "Directly through the payment system"
-msgstr ""
+msgstr "Оплата через платежные системы"
 
 #: add-on/user-account/index.php:84
 msgid "To offer both options"
-msgstr ""
+msgstr "Предложить оба варианта"
 
 #: add-on/user-account/index.php:86
 msgid ""
@@ -655,79 +665,79 @@ msgstr ""
 
 #: add-on/user-account/index.php:90
 msgid "The connection to payment aggregator"
-msgstr ""
+msgstr "Подключение к платежному агрегатору"
 
 #: add-on/user-account/index.php:91
 msgid "Used type of connection"
-msgstr ""
+msgstr "Используемый тип подключения"
 
 #: add-on/user-account/index.php:94 admin-pages.php:236
 msgid "Not used"
-msgstr ""
+msgstr "Не используется"
 
 #: add-on/user-account/index.php:102
 msgid "Connection settings ROBOKASSA"
-msgstr ""
+msgstr "Настройки подключения Робокассы"
 
 #: add-on/user-account/index.php:103 add-on/user-account/index.php:124
 msgid "The ID of the store"
-msgstr ""
+msgstr "Идентификатор магазина"
 
 #: add-on/user-account/index.php:105
 msgid "1 Password"
-msgstr ""
+msgstr "Первый пароль"
 
 #: add-on/user-account/index.php:107
 msgid "2 Password"
-msgstr ""
+msgstr "Второй пароль"
 
 #: add-on/user-account/index.php:109
 msgid "The status of the account ROBOKASSA"
-msgstr ""
+msgstr "Статус аккаунта Робокассы"
 
 #: add-on/user-account/index.php:112 add-on/user-account/index.php:129
 msgid "Test"
-msgstr ""
+msgstr "Тестовый"
 
 #: add-on/user-account/index.php:113 add-on/user-account/index.php:130
 msgid "Work"
-msgstr ""
+msgstr "Рабочий"
 
 #: add-on/user-account/index.php:119
 msgid "Connection settings Interkassa"
-msgstr ""
+msgstr "Настройки подключения Интеркассы"
 
 #: add-on/user-account/index.php:120
 msgid "Secret Key"
-msgstr ""
+msgstr "Секретный ключ"
 
 #: add-on/user-account/index.php:122
 msgid "Test Key"
-msgstr ""
+msgstr "Тестовый ключ"
 
 #: add-on/user-account/index.php:126
 msgid "The status of the account Interkassa"
-msgstr ""
+msgstr "Статус аккаунта Интеркассы"
 
 #: add-on/user-account/index.php:137
 msgid "Connection settings Yandex.Kassa"
-msgstr ""
+msgstr "Настройки подключения Яндекс.Кассы"
 
 #: add-on/user-account/index.php:138
 msgid "ID cash"
-msgstr ""
+msgstr "Идентификатор кошелька"
 
 #: add-on/user-account/index.php:140
 msgid "The room showcases"
-msgstr ""
+msgstr "Витрина"
 
 #: add-on/user-account/index.php:142
 msgid "The secret word"
-msgstr ""
+msgstr "Секретное слово"
 
 #: add-on/user-account/index.php:148
 msgid "Service page payment systems"
-msgstr ""
+msgstr "Сервисные страницы платежных систем"
 
 #: add-on/user-account/index.php:159
 msgid "Страница RESULT"
@@ -735,35 +745,35 @@ msgstr ""
 
 #: add-on/user-account/index.php:167
 msgid "For Interkassa: URL of interaction"
-msgstr ""
+msgstr "Для Интеркассы: URL взаимодействия"
 
 #: add-on/user-account/index.php:168
 msgid "For Yandex.Cash: checkURL and avisoURL"
-msgstr ""
+msgstr "Для Яндекс.Кассы: checkURL and avisoURL"
 
 #: add-on/user-account/index.php:170
 msgid "Page SUCCESS"
-msgstr ""
+msgstr "Страница SUCCESS"
 
 #: add-on/user-account/index.php:178
 msgid "For Interkassa: successful payment URL"
-msgstr ""
+msgstr "Для Интеркассы: URL успешного платежа"
 
 #: add-on/user-account/index.php:180
 msgid "The successful payment page"
-msgstr ""
+msgstr "Страница успешного платежа"
 
 #: add-on/user-account/index.php:198
 msgid "Balance"
-msgstr ""
+msgstr "Баланс"
 
 #: add-on/user-account/index.php:406
 msgid "The change in the balance"
-msgstr ""
+msgstr "Изменить баланс"
 
 #: add-on/user-account/index.php:428 add-on/user-account/index.php:475
 msgid "Personal account of the user"
-msgstr ""
+msgstr "Личный счет пользователя"
 
 #: add-on/user-account/index.php:445
 msgid "RUB"
@@ -771,74 +781,74 @@ msgstr ""
 
 #: add-on/user-account/index.php:450
 msgid "Deposit"
-msgstr ""
+msgstr "Пополнить"
 
 #: add-on/user-account/index.php:452
 msgid "To recharge your account"
-msgstr ""
+msgstr "Для пополнения своего личного счета"
 
 #: add-on/user-account/index.php:454
 msgid "Enter the amount required"
-msgstr ""
+msgstr "Введите требуемую сумму"
 
 #: add-on/user-account/index.php:456 templates/form-register.php:20
 #: templates/form-remember.php:13
 msgid "Send"
-msgstr ""
+msgstr "Отправить"
 
 #: add-on/user-account/index.php:477 add-on/user-account/index.php:505
 #: admin-pages.php:110 functions/loginform.php:145 recall.php:85
 #: templates/recallbar.php:8
 msgid "Personal account"
-msgstr ""
+msgstr "Личный счет"
 
 #: add-on/user-account/index.php:577
 msgid "Income dynamics"
-msgstr ""
+msgstr "Динамика платежей"
 
 #: add-on/user-account/index.php:578
 msgid "The time period"
-msgstr ""
+msgstr "Период времени"
 
 #: add-on/user-account/index.php:580
 msgid "\"Days/Months\""
-msgstr ""
+msgstr "\"Дни/Месяцы\""
 
 #: add-on/user-account/index.php:580
 msgid "\"Payments (PCs.)\""
-msgstr ""
+msgstr "\"Платежи (шт.)\""
 
 #: add-on/user-account/index.php:580
 msgid "\"Income (thousands)\""
-msgstr ""
+msgstr "\"Доход (тыс.)\""
 
 #: add-on/user-account/rcl_payform.php:32
 msgid "Pay personal account"
-msgstr ""
+msgstr "Оплатить с личного счета"
 
 #: add-on/user-account/rcl_payform.php:45
 #: add-on/user-account/rcl_payform.php:77
 #: add-on/user-account/rcl_payform.php:111
 msgid "Confirm the operation"
-msgstr ""
+msgstr "Подтвердить операцию"
 
 #: add-on/user-account/rcl_payform.php:45
 #: add-on/user-account/rcl_payform.php:77
 #: add-on/user-account/rcl_payform.php:111
 msgid "Pay through payment system"
-msgstr ""
+msgstr "Оплатить через платежные системы"
 
 #: add-on/user-account/rcl_payform.php:107
 msgid "Top up personal account"
-msgstr ""
+msgstr "Пополнить личный счет"
 
 #: add-on/user-account/rcl_payform.php:108
 msgid "Payment for the order on the website"
-msgstr ""
+msgstr "Оплата заказа на сайте"
 
 #: add-on/user-account/rcl_payform.php:109
 msgid "Other payments"
-msgstr ""
+msgstr "Другие платежи"
 
 #: admin-pages.php:3
 msgid "WP-RECALL"
@@ -846,67 +856,67 @@ msgstr ""
 
 #: admin-pages.php:4
 msgid "SETTINGS"
-msgstr ""
+msgstr "НАСТРОЙКИ"
 
 #: admin-pages.php:5
 msgid "Documentation"
-msgstr ""
+msgstr "Документация"
 
 #: admin-pages.php:9
 msgid "Documentation for the plugin WP-RECALL"
-msgstr ""
+msgstr "Документация к плагину WP-RECALL"
 
 #: admin-pages.php:11
 msgid "Plugin installation"
-msgstr ""
+msgstr "Установка плагина"
 
 #: admin-pages.php:12
 msgid "Update the plugin and its extensions"
-msgstr ""
+msgstr "Обновление плагина и его дополнений"
 
 #: admin-pages.php:13
 msgid "The plugin settings"
-msgstr ""
+msgstr "Настройки плагина"
 
 #: admin-pages.php:14
 msgid "Used shortcodes Wp-Recall"
-msgstr ""
+msgstr "Шорткоды WP-RECALL"
 
 #: admin-pages.php:15
 msgid "General information about plugins Wp-Recall"
-msgstr ""
+msgstr "Общая информация о дополнениях WP-RECALL"
 
 #: admin-pages.php:16
 msgid "Basic add-ons Wp-Recall"
-msgstr ""
+msgstr "Базовые дополнения WP-RECALL"
 
 #: admin-pages.php:17
 msgid "Paid add-ons Wp-Recall"
-msgstr ""
+msgstr "Дополнения расширенной версии"
 
 #: admin-pages.php:18
 msgid "Custom fields profile Wp-Recall"
-msgstr ""
+msgstr "Произвольные поля профиля WP-RECALL"
 
 #: admin-pages.php:19
 msgid "Custom fields form publishing Wp-Recall"
-msgstr ""
+msgstr "Произвольные поля публикации WP-RECALL"
 
 #: admin-pages.php:20
 msgid "An example of additions Wp-Recall"
-msgstr ""
+msgstr "Пример создания дополнения WP-RECALL"
 
 #: admin-pages.php:21
 msgid "Functions and hooks Wp-Recall for the development"
-msgstr ""
+msgstr "Функции и хуки WP-RECALL"
 
 #: admin-pages.php:22
 msgid "Update history Wp-Recall"
-msgstr ""
+msgstr "История обновлений WP-RECALL"
 
 #: admin-pages.php:23
 msgid "Used libraries and resources"
-msgstr ""
+msgstr "Используемые библиотеки и ресурсы"
 
 #: admin-pages.php:24
 msgid "FAQ"
@@ -914,67 +924,69 @@ msgstr ""
 
 #: admin-pages.php:37
 msgid "Pictures record the withdrawal in the gallery Wp-Recall?"
-msgstr ""
+msgstr "Использовать вывод изображений публикации через галерею Wp-Recall?"
 
 #: admin-pages.php:95
 msgid "Configure the plugin Wp-Recall and additions"
-msgstr ""
+msgstr "Настройка плагина Wp-Recall и его дополнений"
 
 #: admin-pages.php:111
 msgid "The order of withdrawal of the personal Cabinet"
-msgstr ""
+msgstr "Порядок вывода личного кабинета"
 
 #: admin-pages.php:116
 msgid "On the archive page of the author"
-msgstr ""
+msgstr "На странице архива автора"
 
 #: admin-pages.php:117
 msgid "Using the shortcode [wp-recall]"
-msgstr ""
+msgstr "Через шорткод [wp-recall]"
 
 #: admin-pages.php:125
 msgid "The host page the shortcode"
-msgstr ""
+msgstr "Страница размещения шорткода"
 
 #: admin-pages.php:127
 msgid "The formation of links to personal account"
-msgstr ""
+msgstr "Формат ссылки на личный кабинет"
 
 #: admin-pages.php:129
 msgid ""
 "The link is formed by a principle \"/slug_page/?get=ID\". The parameter \"get"
 "\" can be set here. By default user"
 msgstr ""
+"Ссылка формируется по принципу \"/slug_page/?get=ID\". Параметр \"get\" "
+"можно указать здесь. По-умолчанию user"
 
 #: admin-pages.php:132
 msgid "Download tabs"
-msgstr ""
+msgstr "Загрузка вкладок"
 
 #: admin-pages.php:136
 msgid "Downloads all"
-msgstr ""
+msgstr "Загружать все"
 
 #: admin-pages.php:137 admin-pages.php:217
 msgid "On a separate page"
-msgstr ""
+msgstr "Каждая загружается отдельно"
 
 #: admin-pages.php:138
 msgid "Ajax loading"
-msgstr ""
+msgstr "Ajax-загрузка"
 
 #: admin-pages.php:140
 msgid "Inactivity timeout"
-msgstr ""
+msgstr "Таймаут активности"
 
 #: admin-pages.php:142
 msgid ""
 "Specify the time in minutes after which the user will be considered offline "
 "if you did not show activity on the website. The default is 10 minutes."
-msgstr ""
+msgstr "По-умолчанию 10 минут."
 
 #: admin-pages.php:154
 msgid "Access to the console"
-msgstr ""
+msgstr "Доступ в консоль сайта"
 
 #: admin-pages.php:155
 msgid "Access to the site is permitted console"
@@ -985,30 +997,32 @@ msgid ""
 "If the selected archive page of the author, in the right place template "
 "author.php paste the code if(function_exists('wp_recall')) wp_recall();"
 msgstr ""
+"Если выбрана страница архива автора, то внутри шаблона archive.php "
+"необходимо разместить функцию if(function_exists('wp_recall')) wp_recall();"
 
 #: admin-pages.php:165
 msgid "Download the current style file for editing"
-msgstr ""
+msgstr "Загрузить текущий стилевой файл"
 
 #: admin-pages.php:168
 msgid "Making"
-msgstr ""
+msgstr "Оформление"
 
 #: admin-pages.php:170
 msgid "The placement of the buttons sections"
-msgstr ""
+msgstr "Размещение кнопок вывода вкладок"
 
 #: admin-pages.php:174
 msgid "Top"
-msgstr ""
+msgstr "Сверху"
 
 #: admin-pages.php:175
 msgid "Left"
-msgstr ""
+msgstr "Слева"
 
 #: admin-pages.php:180
 msgid "Pause Slider"
-msgstr ""
+msgstr "Пауза слайдера"
 
 #: admin-pages.php:182
 msgid ""
@@ -1018,7 +1032,7 @@ msgstr ""
 
 #: admin-pages.php:184
 msgid "Minimization of style files"
-msgstr ""
+msgstr "Минимизация стилевых файлов"
 
 #: admin-pages.php:192
 msgid ""
@@ -1028,35 +1042,37 @@ msgstr ""
 
 #: admin-pages.php:199
 msgid "Your stylesheet(CSS)"
-msgstr ""
+msgstr "Ваш стилевой файл (CSS)"
 
 #: admin-pages.php:201
 msgid "File replaces the minified stylesheet, if enabled minimization"
 msgstr ""
+"Файл заменить текущий минимизированный стилевой файл, если включена "
+"минимизация"
 
 #: admin-pages.php:210
 msgid "Login and register"
-msgstr ""
+msgstr "Вход и регистрация"
 
 #: admin-pages.php:211
 msgid "The order"
-msgstr ""
+msgstr "На странице"
 
 #: admin-pages.php:216
 msgid "Floating form"
-msgstr ""
+msgstr "Всплывающая форма"
 
 #: admin-pages.php:218
 msgid "Form Wordpress"
-msgstr ""
+msgstr "Формы Wordpress"
 
 #: admin-pages.php:219
 msgid "The form in the widget"
-msgstr ""
+msgstr "Форма в виджете"
 
 #: admin-pages.php:227
 msgid "ID of the page with the shortcode [loginform]"
-msgstr ""
+msgstr "Идентификатор страницы с шорткодом [loginform]"
 
 #: admin-pages.php:229
 msgid ""
@@ -1067,27 +1083,27 @@ msgstr ""
 
 #: admin-pages.php:232
 msgid "A registration confirmation by the user"
-msgstr ""
+msgstr "Подтверждение регистрации пользователя"
 
 #: admin-pages.php:237
 msgid "Used"
-msgstr ""
+msgstr "Используется"
 
 #: admin-pages.php:239
 msgid "Redirect user after login"
-msgstr ""
+msgstr "Перенаправление после авторизации"
 
 #: admin-pages.php:244
 msgid "The user profile"
-msgstr ""
+msgstr "Профиль пользователя"
 
 #: admin-pages.php:245
 msgid "Current page"
-msgstr ""
+msgstr "Текущая страница"
 
 #: admin-pages.php:246
 msgid "Arbitrary URL"
-msgstr ""
+msgstr "Произвольный URL"
 
 #: admin-pages.php:254
 msgid "URL"
@@ -1095,19 +1111,19 @@ msgstr ""
 
 #: admin-pages.php:256
 msgid "Enter your URL below, if you select an arbitrary URL after login"
-msgstr ""
+msgstr "Введите URL, если выбран произвольный URL после авторизации"
 
 #: admin-pages.php:259
 msgid "Field repeat password"
-msgstr ""
+msgstr "Поле повтора пароля"
 
 #: admin-pages.php:262 admin-pages.php:267
 msgid "Displayed"
-msgstr ""
+msgstr "Отображать"
 
 #: admin-pages.php:264
 msgid "Indicator password complexity"
-msgstr ""
+msgstr "Индикатор сложности пароля"
 
 #: admin-pages.php:274 functions/recallbar.php:6
 msgid "Recallbar"
@@ -1115,123 +1131,126 @@ msgstr ""
 
 #: admin-pages.php:275
 msgid "Conclusion the panel recallbar"
-msgstr ""
+msgstr "Вывод панели recallbar"
 
 #: admin-pages.php:285
 msgid "Your gratitude"
-msgstr ""
+msgstr "Ваша благодарность"
 
 #: admin-pages.php:286
 msgid ""
 "To display a link to the developer`s site (Thank you, if you decide to show)"
 msgstr ""
+"Отображение ссылки на сайт разработчика плагина (Спасибо, если решили "
+"показать)"
 
 #: admin-pages.php:324
 msgid "Used template"
-msgstr ""
+msgstr "Используемый шаблон"
 
 #: admin-pages.php:326
 msgid "Not connected"
-msgstr ""
+msgstr "Не подключен"
 
 #: functions/captcha.php:29
 msgid "Enter characters"
-msgstr ""
+msgstr "Введите символы"
 
 #: functions/core.php:38
 msgid "The plugin is activated"
-msgstr ""
+msgstr "Плагин активирован"
 
 #: functions/core.php:42 functions/core.php:43
 msgid "Transmitted invalid data"
-msgstr ""
+msgstr "Переданы неверные данные"
 
 #: functions/core.php:44
 msgid "For your domain, other key"
-msgstr ""
+msgstr "Для вашего домена создан другой ключ"
 
 #: functions/core.php:44
 msgid "Lost the key?"
-msgstr ""
+msgstr "Потеряли ключ?"
 
 #: functions/core.php:47
 msgid "The plugin is not activated!"
-msgstr ""
+msgstr "Плагин не активирован!"
 
 #: functions/core.php:49
 msgid "Enter the key"
-msgstr ""
+msgstr "Введите ключ"
 
 #: functions/core.php:53
 msgid "Send for review"
-msgstr ""
+msgstr "Отправить на проверку"
 
 #: functions/includes.php:1
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
+"Это сообщение было сформировано автоматически, не надо отвечать на него."
 
 #: functions/includes.php:1
 msgid "long ago"
-msgstr ""
+msgstr "давно"
 
 #: functions/includes.php:1
 msgid "already"
-msgstr ""
+msgstr "уже"
 
 #: functions/includes.php:1
 msgid "min."
-msgstr ""
+msgstr "мин."
 
 #: functions/includes.php:1
 msgid "h."
-msgstr ""
+msgstr "ч."
 
 #: functions/includes.php:1
 msgid "days"
-msgstr ""
+msgstr "дн."
 
 #: functions/loginform.php:39 functions/register.php:125
 #: templates/form-sign.php:14
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: functions/loginform.php:49
 msgid "The password strength indicator"
-msgstr ""
+msgstr "Индикатор сложности пароля"
 
 #: functions/loginform.php:51
 msgid "A password is not entered"
-msgstr ""
+msgstr "Пароль не введен"
 
 #: functions/loginform.php:66
 msgid "Repeat the password"
-msgstr ""
+msgstr "Повтор пароля"
 
 #: functions/loginform.php:75
 msgid "The passwords do not match!"
-msgstr ""
+msgstr "Пароли не совпадают!"
 
 #: functions/loginform.php:76
 msgid "The passwords match"
-msgstr ""
+msgstr "Пароли совпадают"
 
 #: functions/loginform.php:133
 msgid "Hi"
-msgstr ""
+msgstr "Привет"
 
 #: functions/loginform.php:135
 msgid "In personal account"
-msgstr ""
+msgstr "В личный кабинет"
 
 #: functions/loginform.php:146
 msgid "Exit"
-msgstr ""
+msgstr "Выход"
 
 #: functions/loginform.php:161 functions/loginform.php:185
 #: templates/form-remember.php:14 templates/form-sign.php:23
 #: templates/recallbar.php:18 templates/recallbar.php:32
 msgid "Login"
-msgstr ""
+msgstr "Вход"
 
 #: functions/loginform.php:162 functions/loginform.php:186
 #: functions/rcl_userlist.php:281 functions/shortcodes.php:235
@@ -1239,67 +1258,67 @@ msgstr ""
 #: templates/form-sign.php:25 templates/recallbar.php:17
 #: templates/recallbar.php:31
 msgid "Registration"
-msgstr ""
+msgstr "Регистрация"
 
 #: functions/loginform.php:208
 msgid "Login invalid characters!"
-msgstr ""
+msgstr "В логине недопустимые символы!"
 
 #: functions/loginform.php:209 functions/loginform.php:222
 msgid "Fill in the fields!"
-msgstr ""
+msgstr "Заполните поля!"
 
 #: functions/loginform.php:210
 msgid "Field filled not right CAPTCHA!"
-msgstr ""
+msgstr "Не верно заполнено поле CAPTCHA!"
 
 #: functions/loginform.php:211
 msgid "Username already in use!"
-msgstr ""
+msgstr "Логин уже используется!"
 
 #: functions/loginform.php:212
 msgid "E-mail is already in use!"
-msgstr ""
+msgstr "E-mail уже используется!"
 
 #: functions/loginform.php:213
 msgid "Invalid E-mail!"
-msgstr ""
+msgstr "Некорректный E-mail!"
 
 #: functions/loginform.php:216
 msgid "Registration is completed! Check your email."
-msgstr ""
+msgstr "Регистрация завершена! Проверьте свой E-mail."
 
 #: functions/loginform.php:221
 msgid "Your email is not confirmed!"
-msgstr ""
+msgstr "Ваш E-mail не подтвержден!"
 
 #: functions/loginform.php:223
 msgid "Username or password are not correct!"
-msgstr ""
+msgstr "Логин или пароль не верны!"
 
 #: functions/loginform.php:226
 msgid "Registration is completed! Check your email"
-msgstr ""
+msgstr "Регистрация завершена! Проверьте свой E-mail"
 
 #: functions/loginform.php:232
 msgid "Your password has been sent!<br>Check your email."
-msgstr ""
+msgstr "Новый пароль был сформирован! Проверьте свою почту."
 
 #: functions/loginform.php:257
 msgid "Error filling!"
-msgstr ""
+msgstr "Ошибка заполнения!"
 
 #: functions/loginform.php:277
 msgid "Repeat password is not correct!"
-msgstr ""
+msgstr "Повтор пароля не верный!"
 
 #: functions/posts-list.php:1
 msgid "rating"
-msgstr ""
+msgstr "рейтинг"
 
 #: functions/rcl_addons.php:1
 msgid "Add-on manager"
-msgstr ""
+msgstr "Add-on менеджер"
 
 #: functions/rcl_editfields.php:47
 msgid "List of columns to select"
@@ -1307,19 +1326,19 @@ msgstr ""
 
 #: functions/rcl_editfields.php:48
 msgid "ID separated by comma"
-msgstr ""
+msgstr "Идентификаторы разделяются запятой"
 
 #: functions/rcl_editfields.php:55
 msgid "Add field"
-msgstr ""
+msgstr "Добавить поле"
 
 #: functions/rcl_editfields.php:56
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #: functions/rcl_editfields.php:89
 msgid "the list of options to share the \" # \" sign"
-msgstr ""
+msgstr "множественные значения разделяются знаком решетки \" # \""
 
 #: functions/rcl_editfields.php:99 functions/rcl_editfields.php:195
 msgid "MetaKey"
@@ -1330,34 +1349,36 @@ msgid ""
 "not necessarily<br>if you want to enlist their arbitrary field, we list the "
 "meta_key in this field"
 msgstr ""
+"не обязательно<br>если необходимо, то можно прописать свое значение meta_key "
+"для поля"
 
 #: functions/rcl_editfields.php:101 functions/rcl_editfields.php:197
 msgid "Latin and numbers"
-msgstr ""
+msgstr "латиница и числа"
 
 #: functions/rcl_editfields.php:130
 msgid "The field type"
-msgstr ""
+msgstr "Тип поля"
 
 #: functions/rcl_editfields.php:134
 msgid "Text"
-msgstr ""
+msgstr "Текстовое поле"
 
 #: functions/rcl_editfields.php:135
 msgid "Textarea"
-msgstr ""
+msgstr "Многострочное поле"
 
 #: functions/rcl_editfields.php:136
 msgid "Select"
-msgstr ""
+msgstr "Выпадающий список"
 
 #: functions/rcl_editfields.php:137
 msgid "Checkbox"
-msgstr ""
+msgstr "Чекбоксы"
 
 #: functions/rcl_editfields.php:138
 msgid "Radiobutton"
-msgstr ""
+msgstr "Радиокнопки"
 
 #: functions/rcl_editfields.php:139 templates/form-register.php:14
 msgid "E-mail"
@@ -1365,27 +1386,27 @@ msgstr ""
 
 #: functions/rcl_editfields.php:140
 msgid "Phone"
-msgstr ""
+msgstr "Телефон"
 
 #: functions/rcl_editfields.php:141
 msgid "Number"
-msgstr ""
+msgstr "Число"
 
 #: functions/rcl_editfields.php:143
 msgid "Time"
-msgstr ""
+msgstr "Время"
 
 #: functions/rcl_editfields.php:144
 msgid "Url"
-msgstr ""
+msgstr "Ссылка"
 
 #: functions/rcl_editfields.php:278
 msgid "All values of a custom field with meta_key"
-msgstr ""
+msgstr "Все значения произвольных полей с этим meta_key"
 
 #: functions/rcl_editfields.php:278
 msgid "were removed from the Database"
-msgstr ""
+msgstr "были удалены из базы данных"
 
 #: functions/rcl_options.php:47
 msgid "The name of the tab in the personal Cabinet"
@@ -1397,118 +1418,120 @@ msgstr ""
 
 #: functions/rcl_options.php:147
 msgid "The name of the tab"
-msgstr ""
+msgstr "Имя вкладки"
 
 #: functions/rcl_userlist.php:249 recall.php:250
 msgid "not online"
-msgstr ""
+msgstr "не в сети"
 
 #: functions/rcl_userlist.php:268 functions/shortcodes.php:234
 msgid "Comments"
-msgstr ""
+msgstr "Комментарии"
 
 #: functions/rcl_userlist.php:274
 msgid "Publics"
-msgstr ""
+msgstr "Публикации"
 
 #: functions/recallbar.php:21
 msgid "In bookmarks"
-msgstr ""
+msgstr "В закладки"
 
 #: functions/recallbar.php:24
 msgid "My bookmarks"
-msgstr ""
+msgstr "Мои закладки"
 
 #: functions/register.php:121
 msgid "Confirm your registration!"
-msgstr ""
+msgstr "Подтвердите свою регистрацию!"
 
 #: functions/register.php:123
 msgid "You or someone else signed up on the website"
-msgstr ""
+msgstr "Вы или кто то другой зарегистрировались на сайте"
 
 #: functions/register.php:123
 msgid "with the following data:"
-msgstr ""
+msgstr "со следующими данными:"
 
 #: functions/register.php:124 templates/form-register.php:10
 #: templates/form-sign.php:10
 msgid "Nickname"
-msgstr ""
+msgstr "Логин"
 
 #: functions/register.php:141
 msgid "If it wasnt you, then just ignore this email"
-msgstr ""
+msgstr "Если это были не вы, то просто проигнорируйте это письмо"
 
 #: functions/shortcodes.php:225
 msgid "Total users"
-msgstr ""
+msgstr "Всего пользователей"
 
 #: functions/shortcodes.php:230
 msgid "Filter by"
-msgstr ""
+msgstr "Фильтр по"
 
 #: functions/shortcodes.php:231
 msgid "Activity"
-msgstr ""
+msgstr "Активности"
 
 #: functions/shortcodes.php:232
 msgid "Rated"
-msgstr ""
+msgstr "Рейтингу"
 
 #: functions/shortcodes.php:233
 msgid "Publications"
-msgstr ""
+msgstr "Публикациям"
 
 #: functions/shortcodes.php:256
 msgid "Users not found"
-msgstr ""
+msgstr "Пользователи не найдены"
 
 #: functions/shortcodes.php:257
 msgid "No one"
-msgstr ""
+msgstr "Никого нет"
 
 #: functions/shortcodes.php:275
 msgid "Search users"
-msgstr ""
+msgstr "Поиск пользователей"
 
 #: functions/shortcodes.php:277
 msgid "by name"
-msgstr ""
+msgstr "по имени"
 
 #: functions/shortcodes.php:278
 msgid "by login"
-msgstr ""
+msgstr "по логину"
 
 #: functions/shortcodes.php:292
 msgid ""
 "To begin to use the capabilities of your personal account, please log in or "
 "register on this site"
 msgstr ""
+"Начните пользоваться возможностями своего личного кабинета, войдите или "
+"зарегистрируйтесь на сайте"
 
 #: functions/shortcodes.php:358
 msgid "Free"
-msgstr ""
+msgstr "Бесплатно"
 
 #: functions/tabs_options.php:8
 msgid "Neither one tab personal account not found"
-msgstr ""
+msgstr "Ни одной вкладки личного кабинета не найдено"
 
 #: functions/tabs_options.php:16
 msgid "Sort your tabs by dragging them to the desired position"
-msgstr ""
+msgstr "Сортируйте вкладки перетаскиванием"
 
 #: functions/tabs_options.php:65
 msgid "Setting tabs"
-msgstr ""
+msgstr "Настройки вкладок"
 
 #: functions/tabs_options.php:74
 msgid "Name tab"
-msgstr ""
+msgstr "Имя вкладки"
 
 #: recall.php:87
 msgid "Users"
-msgstr ""
+msgstr "Пользователи"
 
 #: recall.php:89
 msgid "FEED"
@@ -1516,76 +1539,76 @@ msgstr ""
 
 #: recall.php:128
 msgid "Unconfirmed"
-msgstr ""
+msgstr "Неподтвержденные"
 
 #: recall.php:132
 msgid "Ban"
-msgstr ""
+msgstr "Бан"
 
 #: templates/form-register.php:22
 msgid "Login "
-msgstr ""
+msgstr "Логин"
 
 #: templates/form-remember.php:3
 msgid "Generation password"
-msgstr ""
+msgstr "Генерация пароля"
 
 #: templates/form-remember.php:10
 msgid "Username or e-mail"
-msgstr ""
+msgstr "Логин или E-mail"
 
 #: templates/form-sign.php:4
 msgid "Authorization"
-msgstr ""
+msgstr "Авторизация"
 
 #: templates/form-sign.php:21
 msgid "Remember"
-msgstr ""
+msgstr "Запомнить"
 
 #: templates/form-sign.php:27
 msgid "Forgot your password"
-msgstr ""
+msgstr "Повторите пароль"
 
 #: templates/recallbar.php:27
 msgid "Home"
-msgstr ""
+msgstr "Домой"
 
 #: widget.php:1
 msgid "New users on the website"
-msgstr ""
+msgstr "Новые пользователи на сайте"
 
 #: widget.php:1
 msgid "New users"
-msgstr ""
+msgstr "Новые пользователи"
 
 #: widget.php:1
 msgid "The number of displayed users"
-msgstr ""
+msgstr "Количество отображаемых пользователей"
 
 #: widget.php:1
 msgid "Page all users"
-msgstr ""
+msgstr "Страница всех пользователей"
 
 #: widget.php:1
 msgid "Conclusion the users in the network"
-msgstr ""
+msgstr "Вывод пользователей в сети"
 
 #: widget.php:1
 msgid "Users on the network"
-msgstr ""
+msgstr "Пользователи в сети"
 
 #: widget.php:1
 msgid "Right now"
-msgstr ""
+msgstr "Сейчас в сети"
 
 #: widget.php:1
 msgid "The block with the main profile information"
-msgstr ""
+msgstr "Блок с основной информацией профиля"
 
 #: widget.php:1
 msgid "User profile"
-msgstr ""
+msgstr "Профиль пользователя"
 
 #: widget.php:1
 msgid "Control panel"
-msgstr ""
+msgstr "Панель управления"

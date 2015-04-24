@@ -18,10 +18,10 @@ function recallbar_right_side(){
 add_filter('recallbar_right_content','get_default_bookmarks',10);
 function get_default_bookmarks($links){
     $links .= '<li><a onclick="addfav()" href="javascript://">
-                <i class="fa fa-plus"></i>'.__('В закладки').'</a>
+                <i class="fa fa-plus"></i>'.__('In bookmarks','rcl').'</a>
             </li>
             <li><a onclick="jQuery(\'#favs\').slideToggle();return false;" href="javascript://">
-                <i class="fa fa-bookmark"></i>'.__('Мои закладки').'</a>
+                <i class="fa fa-bookmark"></i>'.__('My bookmarks','rcl').'</a>
             </li>';
     return $links;
 }

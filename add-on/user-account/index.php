@@ -60,10 +60,10 @@ function statistic_user_pay_page_rcl(){
 	if(!function_exists('wpmagazin_options_panel')){
 		$prim = 'manage-wpm-options';
 		add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', $prim, 'global_recall_wpm_options');
-		add_submenu_page( $prim, __('Платежные системы'), __('Платежные системы'), 'manage_options', $prim, 'global_recall_wpm_options');
+		add_submenu_page( $prim, __('Payment systems','rcl'), __('Payment systems','rcl'), 'manage_options', $prim, 'global_recall_wpm_options');
 	}
 	
-	add_submenu_page( $prim, __('Платежи'), __('Платежи'), 'manage_options', 'manage-wpm-cashe', 'statistic_add_cashe_wpm_recall');	
+	add_submenu_page( $prim, __('Payments','rcl'), __('Payments','rcl'), 'manage_options', 'manage-wpm-cashe', 'statistic_add_cashe_wpm_recall');	
 }
 add_action('admin_menu', 'statistic_user_pay_page_rcl',25);
 
@@ -71,81 +71,81 @@ add_filter('admin_options_rmag','user_account_wpm_options',10);
 function user_account_wpm_options($content){
 	$style = 'style="display:block;"';
 	$options = get_option('primary-rmag-options');
-	$content .= '<span class="title-option">'.__('Платежные системы').'</span>
+	$content .= '<span class="title-option">'.__('Payment systems','rcl').'</span>
 	<div id="options-'.get_key_addon_rcl(pathinfo(__FILE__)).'" '.$style.' class="wrap-recall-options">
             
                 <div class="option-block">
-			<h3>'.__('Оплата заказа').'</h3>
-			<label>'.__('Тип оплаты').'</label>
+			<h3>'.__('Payment','rcl').'</h3>
+			<label>'.__('Type of payment','rcl').'</label>
 			<select name="type_order_payment" size="1">';
 				$type_order = $options['type_order_payment'];
-				$content .= '<option value="">'.__('Средствами с личного счета пользователя').'</option>	
-				<option value="1" '.selected($type_order,1,false).'>'.__('Напрямую через платежную систему').'</option>
-				<option value="2" '.selected($type_order,2,false).'>'.__('Предложить оба варианта').'</option>
+				$content .= '<option value="">'.__('Funds from the personal account of the user','rcl').'</option>	
+				<option value="1" '.selected($type_order,1,false).'>'.__('Directly through the payment system','rcl').'</option>
+				<option value="2" '.selected($type_order,2,false).'>'.__('To offer both options','rcl').'</option>
 			</select>
-			<small>'.__('Если подключение к платежному агрегатору не используется, то выставлять только "Средствами с личного счета пользователя"!').'</small>
+			<small>'.__('If the connection to the payment aggregator not in use, it is possible to set only "Funds from the personal account user"!','rcl').'</small>
 		</div>
 
 		<div class="option-block">
-			<h3>'.__('Подключение к платежному агрегатору').'</h3>
-			<label>'.__('Используемый тип подключение').'</label>
+			<h3>'.__('The connection to payment aggregator','rcl').'</h3>
+			<label>'.__('Used type of connection','rcl').'</label>
 			<select class="parent-select" name="connect_sale" size="1">';
 				$connect_sale = $options['connect_sale'];
-				$content .= '<option value="">'.__('Не используется').'</option>	
+				$content .= '<option value="">'.__('Not used','rcl').'</option>	
 				<option value="1" '.selected($connect_sale,1,false).'>Robokassa</option>
-				<option value="2" '.selected($connect_sale,2,false).'>Интеркасса</option>
-                                <option value="3" '.selected($connect_sale,3,false).'>Яндекс.Касса</option>
+				<option value="2" '.selected($connect_sale,2,false).'>Interkassa</option>
+                                <option value="3" '.selected($connect_sale,3,false).'>Yandex.Kassa</option>
 			</select>			
 		</div>
 		<div class="child-select connect_sale" id="connect_sale-1">
                     <div class="option-block">
-                            <h3>'.__('Настройки подключения Робокасса').'</h3>
-                            <label>'.__('Идентификатор магазина').'</label>
+                            <h3>'.__('Connection settings ROBOKASSA','rcl').'</h3>
+                            <label>'.__('The ID of the store','rcl').'</label>
                             <input type="text" name="robologin" value="'.$options['robologin'].'" size="60">
-                            <label>'.__('1 Пароль').'</label>
+                            <label>'.__('1 Password','rcl').'</label>
                             <input type="password" name="onerobopass" value="'.$options['onerobopass'].'" size="60">
-                            <label>'.__('2 Пароль').'</label>
+                            <label>'.__('2 Password','rcl').'</label>
                             <input type="password" name="tworobopass" value="'.$options['tworobopass'].'" size="60">
-                            <label>'.__('Статус аккаунта Робокассы').'</label>
+                            <label>'.__('The status of the account ROBOKASSA','rcl').'</label>
                             <select name="robotest" size="1">';
                                     $robotest = $options['robotest'];
-                                    $content .= '<option value="1" '.selected($robotest,1,false).'>'.__('Тестовый').'</option>
-                                    <option value="0" '.selected($robotest,0,false).'>'.__('Рабочий').'</option>
+                                    $content .= '<option value="1" '.selected($robotest,1,false).'>'.__('Test').'</option>
+                                    <option value="0" '.selected($robotest,0,false).'>'.__('Work').'</option>
                             </select>
                     </div>
 		</div>
                 <div class="child-select connect_sale" id="connect_sale-2">
                     <div class="option-block">
-                            <h3>'.__('Настройки подключения Интеркасса').'</h3>
-                            <label>'.__('Secret Key').'</label>
+                            <h3>'.__('Connection settings Interkassa','rcl').'</h3>
+                            <label>'.__('Secret Key','rcl').'</label>
                             <input type="password" name="intersecretkey" value="'.$options['intersecretkey'].'" size="60">
-                            <label>'.__('Test Key').'</label>
+                            <label>'.__('Test Key','rcl').'</label>
                             <input type="password" name="intertestkey" value="'.$options['intertestkey'].'" size="60">
-                            <label>'.__('Идентификатор магазина').'</label>
+                            <label>'.__('The ID of the store','rcl').'</label>
                             <input type="text" name="interidshop" value="'.$options['interidshop'].'" size="60">
-                            <label>'.__('Статус аккаунта Интеркассы').'</label>
+                            <label>'.__('The status of the account Interkassa','rcl').'</label>
                             <select name="interkassatest" size="1">';
                                     $interkassatest = $options['interkassatest'];
-                                    $content .= '<option value="1" '.selected($interkassatest,1,false).'>'.__('Тестовый').'</option>
-                                    <option value="0" '.selected($interkassatest,0,false).'>'.__('Рабочий').'</option>
+                                    $content .= '<option value="1" '.selected($interkassatest,1,false).'>'.__('Test','rcl').'</option>
+                                    <option value="0" '.selected($interkassatest,0,false).'>'.__('Work','rcl').'</option>
                             </select>
                     </div>
 		</div>
                 
                 <div class="child-select connect_sale" id="connect_sale-3">
                     <div class="option-block">
-                            <h3>'.__('Настройки подключения Яндекс.Касса').'</h3>
-                            <label>'.__('Индентификатор кассы').'</label>
+                            <h3>'.__('Connection settings Yandex.Kassa').'</h3>
+                            <label>'.__('ID cash','rcl').'</label>
                             <input type="text" name="shopid" value="'.$options['shopid'].'" size="60">
-                            <label>'.__('Номер витрины').'</label>
+                            <label>'.__('The room showcases','rcl').'</label>
                             <input type="text" name="scid" value="'.$options['scid'].'" size="60">
-                            <label>'.__('Секретное слово').'</label>
+                            <label>'.__('The secret word','rcl').'</label>
                             <input type="password" name="secret_word" value="'.$options['secret_word'].'" size="60">        
                     </div>
 		</div>
 
 		<div class="option-block">
-			<h3>'.__('Сервисные страницы платежных систем').'</h3>
+			<h3>'.__('Service page payment systems','rcl').'</h3>
 			
 			<p>1. Создайте на своем сайте четыре страницы:</p>
 			- пустую для success<br>
@@ -156,32 +156,32 @@ function user_account_wpm_options($content){
 			<p>2. Укажите здесь какие страницы и для чего вы создали. </p>
 			<p>3. В настройках своего аккаунта платежной системы укажите URL страницы для fail, success и result</p>
 			
-			<label>'.__('Страница RESULT').'</label>';
+			<label>'.__('Страница RESULT','rcl').'</label>';
 			$args = array(    
 				'selected'   => $options['page_result_pay'],   
 				'name'       => 'page_result_pay',
-				'show_option_none' => '<span style="color:red">'.__('Не выбрано').'</span>',
+				'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
 				'echo'             => 0  
 			);  
 			$content .= wp_dropdown_pages( $args );
-			$content .= '<small>'.__('Для Интеркассы: URL взаимодействия').'</small>';
-                        $content .= '<small>'.__('Для Яндекс.Кассы: checkURL и avisoURL').'</small>';
+			$content .= '<small>'.__('For Interkassa: URL of interaction','rcl').'</small>';
+                        $content .= '<small>'.__('For Yandex.Cash: checkURL and avisoURL','rcl').'</small>';
 			
-			$content .= '<label>'.__('Страница SUCCESS').'</label>';
+			$content .= '<label>'.__('Page SUCCESS','rcl').'</label>';
 			$args = array(    
 				'selected'   => $options['page_success_pay'],   
 				'name'       => 'page_success_pay',
-				'show_option_none' => '<span style="color:red">'.__('Не выбрано').'</span>',
+				'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
 				'echo'             => 0  
 			);  
 			$content .= wp_dropdown_pages( $args );
-			$content .= '<small>'.__('Для Интеркассы: URL успешной оплаты').'</small>';
+			$content .= '<small>'.__('For Interkassa: successful payment URL','rcl').'</small>';
 			
-			$content .= '<label>'.__('Страница удачной оплаты').'</label>';
+			$content .= '<label>'.__('The successful payment page','rcl').'</label>';
 			$args = array(    
 				'selected'   => $options['page_successfully_pay'],   
 				'name'       => 'page_successfully_pay',
-				'show_option_none' => '<span style="color:red">'.__('Не выбрано').'</span>',
+				'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
 				'echo'             => 0  
 			);  
 			$content .= wp_dropdown_pages( $args );
@@ -195,7 +195,7 @@ function user_account_wpm_options($content){
 function balance_user_recall_admin_column( $columns ){
  
   return array_merge( $columns,
-    array( 'balance_user_recall' => __("Баланс") )
+    array( 'balance_user_recall' => __("Balance",'rcl') )
   );
  
 }
@@ -403,7 +403,7 @@ function edit_balance_user_recall(){
             update_user_money($balance,$user_id);
 
             $new_cnt = abs((int)$new_cnt);
-            do_action('admin_edit_user_count_rcl',$user_id,$new_cnt,__('Изменение баланса'),$type);
+            do_action('admin_edit_user_count_rcl',$user_id,$new_cnt,__('The change in the balance','rcl'),$type);
 
             $log['otvet']=100;
             $log['user']=$user_id;
@@ -425,7 +425,7 @@ function active_add_wallet_count_rcl(){
 }
 
 function add_wallet_count_rcl($content){   
-    $content .= '<h3>'.__('Личный счет пользователя').':</h3>'.get_html_usercount_rcl();                    
+    $content .= '<h3>'.__('Personal account of the user','rcl').':</h3>'.get_html_usercount_rcl();                    
     return $content;
 }
 
@@ -442,18 +442,18 @@ function get_html_usercount_rcl(){
     $user_count = get_user_money();
     if(!$user_count) $user_count = 0;
 
-    $usercount .= '<div class="usercount" style="text-align:center;">'.$user_count.' рублей</div>';
+    $usercount .= '<div class="usercount" style="text-align:center;">'.$user_count.' '.__('RUB','rcl').'</div>';
    
 
     $usercount = apply_filters('count_widget_rcl',$usercount);
 
-    if($rmag_options['connect_sale']!='') $usercount .= "<p align='right'><a class='go_to_add_count' href='#'>".__("Пополнить")."</a></p>
+    if($rmag_options['connect_sale']!='') $usercount .= "<p align='right'><a class='go_to_add_count' href='#'>".__("Deposit",'rcl')."</a></p>
     <div class='count_user'>
-    <h3>".__("Пополнить личный счет")."</h3>
+    <h3>".__("To recharge your account",'rcl')."</h3>
     <div>
-    <p style='margin-bottom: 10px;'><label>".__("Введите требуемую сумму в рублях")."</label></p>
+    <p style='margin-bottom: 10px;'><label>".__("Enter the amount required",'rcl')."</label></p>
         <input class='value_count_user' size='4' type='text' value=''>
-        <input class='add_count_user recall-button' type='button' value='".__("Отправить")."'>
+        <input class='add_count_user recall-button' type='button' value='".__("Send",'rcl')."'>
     </div>
     <div class='redirectform' style='margin:10px 0;text-align:center;'></div>
     </div>";
@@ -472,9 +472,9 @@ function widget_user_count() {
 class Widget_user_count extends WP_Widget {
 
 	function Widget_user_count() {
-		$widget_ops = array( 'classname' => 'widget-user-count', 'description' => __('Личный счёт пользователя') );		
+		$widget_ops = array( 'classname' => 'widget-user-count', 'description' => __('Personal account of the user','rcl') );		
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-user-count' );		
-		$this->WP_Widget( 'widget-user-count', __('Личный счёт'), $widget_ops, $control_ops );
+		$this->WP_Widget( 'widget-user-count', __('Personal account','rcl'), $widget_ops, $control_ops );
 	}
 	
 	function widget( $args, $instance ) {
@@ -502,10 +502,10 @@ class Widget_user_count extends WP_Widget {
 	
 	function form( $instance ) {
 		//Set up some default widget settings.
-		$defaults = array( 'title' => __('Личный счёт:'));
+		$defaults = array( 'title' => __('Personal account','rcl'));
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Заголовок:'); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','rcl'); ?></label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 	<?php
@@ -574,10 +574,10 @@ function get_chart_payments($pays){
     
     $chartArgs = array();
     $chartData = array(
-        'title' => __('Динамика доходов'),
-        'title-x' => __('Период времени'),
+        'title' => __('Income dynamics','rcl'),
+        'title-x' => __('The time period','rcl'),
         'data'=>array(
-            array(__('"Дни/Месяцы"'), __('"Платежи (шт.)"'), __('"Доход (тыс.)"'))
+            array(__('"Days/Months"','rcl'), __('"Payments (PCs.)"','rcl'), __('"Income (thousands)"','rcl'))
         )
     );
     

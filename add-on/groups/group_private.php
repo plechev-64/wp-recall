@@ -75,12 +75,12 @@ class Group_Private{
     }
     function close_commentform(){
             return '<style>.form-submit input[type="submit"]{display:none;}</style>
-            <h3 align="center" style="color:red;">'.__('Для возможности комментирования вы должны стать членом этой группы').'</h3>';
+            <h3 align="center" style="color:red;">'.__('To be able to post comments you must be a member of this group','rcl').'</h3>';
     }
     function close_content(){
-            return '<h3 align="center" style="color:red;">'.__('Доступ к контенту закрыт настройками приватности').'</h3>';
+            return '<h3 align="center" style="color:red;">'.__('Access to content is closed privacy settings','rcl').'</h3>';
     }
     function close_comment(){
-            return '<p>'.__('(комментарий скрыт настройками приватности)').'</p>';
+            return '<p>'.__('(Comment hidden privacy settings)','rcl').'</p>';
     }
 }

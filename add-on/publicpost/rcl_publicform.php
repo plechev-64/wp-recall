@@ -109,9 +109,9 @@ class Rcl_PublicForm {
                 <tr>
                     <td>
                     <label>
-                        '.__('Метки').': 
+                        '.__('Tags','rcl').': 
                         <small>
-                            '.__('(метки вписываются через запятую)').'
+                            '.__('(the labels fit with a comma)','rcl').'
                         </small>
                     </label>
                     </td><td>
@@ -136,12 +136,12 @@ class Rcl_PublicForm {
 
             if($this->post_id){	
 
-                $fls .= '<input class="recall-button" type="submit" id="edit-post-rcl" value="'.__('Изменить').'">
+                $fls .= '<input class="recall-button" type="submit" id="edit-post-rcl" value="'.__('Change','rcl').'">
                 <input type="hidden" name="post-rcl" value="'.$this->post_id.'">';
 
             }else{
 
-                $fls .= '<input class="recall-button" id="edit-post-rcl" type="submit" value="'.__('Опубликовать').'">'
+                $fls .= '<input class="recall-button" id="edit-post-rcl" type="submit" value="'.__('To publish','rcl').'">'
                         . '<input type="hidden" name="posttype" value="'.base64_encode($this->post_type).'">';
 
                 if(isset($hiddens[$this->post_type])){
@@ -164,7 +164,7 @@ class Rcl_PublicForm {
         if($this->post_id){
             $cnt .= '<form method="post" action="">
             '.wp_nonce_field('delete-post-rcl','_wpnonce',true,false).'
-            <input class="alignleft recall-button" type="submit" style="width:120px;" onsubmit="return confirm(\''.__('Вы уверены? Потом восстановить не получиться!').'\');" name="delete-post-rcl" value="'.__('Удалить').'">				
+            <input class="alignleft recall-button" type="submit" style="width:120px;" onsubmit="return confirm(\''.__('Are you sure? Then restore never work!','rcl').'\');" name="delete-post-rcl" value="'.__('Delete','rcl').'">				
             <input type="hidden" name="post-rcl" value="'.$this->post_id.'"></form>';
         }
         return $cnt;
@@ -173,14 +173,14 @@ class Rcl_PublicForm {
     function public_form(){
         global $user_ID,$formFields;
 
-            if(!$user_ID) return '<p align="center">'.__('Вы должны быть авторизованы для возможности делать публикации.<br>Войдите или зарегистрируйтесь').'</p>';
+            if(!$user_ID) return '<p align="center">'.__('You must be logged in to post. Login or register','rcl').'</p>';
             
             if(!$this->user_can()){
                 if($this->post_type=='post-group') return '<div class="public-post-group">'
-                    . '<h3 >'.__('Сожалеем, но у вас нет прав для публикации внутри групп :(').'</h3>'
+                    . '<h3 >'.__('Sorry, but you have no rights to publish within groups :(','rcl').'</h3>'
                         . '</div>';
                 else return '<h3 class="aligncenter">'
-                    . __('Сожалеем, но у вас нет прав<br>для публикации записей на этом сайте :(')
+                    . __('Sorry, but you have no right<br>to publish the records on this site :(','rcl')
                         . '</h3>';
             }
             
@@ -214,7 +214,7 @@ class Rcl_PublicForm {
             
                 $form .= '<form id="'.$id_form.'" class="';
                 $form .= ($this->post_id)? 'edit-form' : 'public-form';
-                $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Идет отправка, пожалуйста, подождите..').'\';"  action="" method="post" enctype="multipart/form-data">
+                $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','rcl').'\';"  action="" method="post" enctype="multipart/form-data">
                 '.wp_nonce_field('edit-post-rcl','_wpnonce',true,false);
                     
                     if(get_template_rcl($this->post_type.'-form.php',__FILE__)) $form .= get_include_template_rcl($this->post_type.'-form.php',__FILE__);
@@ -347,7 +347,7 @@ function the_public_editor(){
     );
 
     if($rcl_options['media_downloader_recall']!=1)
-        echo get_button_rcl(__('Добавить медиафайл'),'#',array('icon'=>'fa-folder-open','id'=>'get-media-rcl'));
+        echo get_button_rcl(__('To add a media file','rcl'),'#',array('icon'=>'fa-folder-open','id'=>'get-media-rcl'));
 
     $content = (isset($editpost->post_content))? $editpost->post_content: '';
 

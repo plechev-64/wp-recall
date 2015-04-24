@@ -1,43 +1,42 @@
 <?php
 function wp_recall_options_panel(){
-	add_menu_page(__('WP-RECALL'), __('WP-RECALL'), 'manage_options', 'manage-wprecall', 'global_recall_options');
-		add_submenu_page( 'manage-wprecall', __('НАСТРОЙКИ'), __('НАСТРОЙКИ'), 'manage_options', 'manage-wprecall', 'global_recall_options');
-		add_submenu_page( 'manage-wprecall', __('Документация'), __('Документация'), 'manage_options', 'manage-doc-recall', 'recall_doc_manage');
+	add_menu_page(__('WP-RECALL','rcl'), __('WP-RECALL','rcl'), 'manage_options', 'manage-wprecall', 'global_recall_options');
+		add_submenu_page( 'manage-wprecall', __('SETTINGS','rcl'), __('SETTINGS','rcl'), 'manage_options', 'manage-wprecall', 'global_recall_options');
+		add_submenu_page( 'manage-wprecall', __('Documentation','rcl'), __('Documentation','rcl'), 'manage_options', 'manage-doc-recall', 'recall_doc_manage');
 }
 
 function recall_doc_manage(){
-	echo '<h2>'.__('Документация по плагину WP-RECALL').'</h2>
+	echo '<h2>'.__('Documentation for the plugin WP-RECALL').'</h2>
 		<ol>
-                    <li><a href="http://wppost.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank">'.__('Установка плагина').'</a></li>
-                    <li><a href="http://wppost.ru/obnovlenie-plagina-wp-recall-i-ego-dopolnenij/" target="_blank">'.__('Обновление плагина и его дополнений').'</a></li>
-                    <li><a href="http://wppost.ru/nastrojki-plagina-wp-recall/" target="_blank">'.__('Настройки плагина').'</a></li>
-                    <li><a href="http://wppost.ru/shortkody-wp-recall/" target="_blank">'.__('Используемые шорткоды Wp-Recall').'</a></li>
-                    <li><a href="http://wppost.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/" target="_blank">'.__('Общие сведения о дополнениях Wp-Recall').'</a></li>
-                    <li><a href="http://wppost.ru/dopolneniya-wp-recall/" target="_blank">'.__('Базовые дополнения Wp-Recall').'</a></li>
-                    <li><a href="http://wppost.ru/downloads-files/" target="_blank">'.__('Платные дополнения Wp-Recall').'</a></li>
-                    <li><a title="Произвольные поля Wp-Recall" href="http://wppost.ru/proizvolnye-polya-wp-recall/" target="_blank">'.__('Произвольные поля профиля Wp-Recall').'</a></li>
-                    <li><a title="Произвольные поля формы публикации Wp-Recall" href="http://wppost.ru/proizvolnye-polya-formy-publikacii-wp-recall/" target="_blank">'.__('Произвольные поля формы публикации Wp-Recall').'</a></li>
-                    <li><a href="http://wppost.ru/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/" target="_blank">'.__('Пример создания своего дополнения Wp-Recall').'</a></li>
-                    <li><a href="http://wppost.ru/xuki-i-filtry-wp-recall/" target="_blank">'.__('Функции и хуки Wp-Recall для разработки').'</a></li>
-                    <li><a href="http://wppost.ru/category/novosti/obnovleniya/" target="_blank">'.__('История обновлений Wp-Recall').'</a></li>
-                    <li><a title="Используемые библиотеки и ресурсы" href="http://wppost.ru/ispolzuemye-biblioteki-i-resursy/">'.__('Используемые библиотеки и ресурсы').'</a></li>
-                    <li><a href="http://wppost.ru/forum/problemi-i-reshenia-na-localnom-servere/">'.__('Проблемы и решения на локальном сервере').'</a></li>
-                    <li><a href="http://wppost.ru/faq/" target="_blank">'.__('FAQ').'</a></li>
+                    <li><a href="http://wppost.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank">'.__('Plugin installation','rcl').'</a></li>
+                    <li><a href="http://wppost.ru/obnovlenie-plagina-wp-recall-i-ego-dopolnenij/" target="_blank">'.__('Update the plugin and its extensions','rcl').'</a></li>
+                    <li><a href="http://wppost.ru/nastrojki-plagina-wp-recall/" target="_blank">'.__('The plugin settings','rcl').'</a></li>
+                    <li><a href="http://wppost.ru/shortkody-wp-recall/" target="_blank">'.__('Used shortcodes Wp-Recall','rcl').'</a></li>
+                    <li><a href="http://wppost.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/" target="_blank">'.__('General information about plugins Wp-Recall','rcl').'</a></li>
+                    <li><a href="http://wppost.ru/dopolneniya-wp-recall/" target="_blank">'.__('Basic add-ons Wp-Recall','rcl').'</a></li>
+                    <li><a href="http://wppost.ru/downloads-files/" target="_blank">'.__('Paid add-ons Wp-Recall','rcl').'</a></li>
+                    <li><a title="Произвольные поля Wp-Recall" href="http://wppost.ru/proizvolnye-polya-wp-recall/" target="_blank">'.__('Custom fields profile Wp-Recall','rcl').'</a></li>
+                    <li><a title="Произвольные поля формы публикации Wp-Recall" href="http://wppost.ru/proizvolnye-polya-formy-publikacii-wp-recall/" target="_blank">'.__('Custom fields form publishing Wp-Recall','rcl').'</a></li>
+                    <li><a href="http://wppost.ru/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/" target="_blank">'.__('An example of additions Wp-Recall','rcl').'</a></li>
+                    <li><a href="http://wppost.ru/xuki-i-filtry-wp-recall/" target="_blank">'.__('Functions and hooks Wp-Recall for the development','rcl').'</a></li>
+                    <li><a href="http://wppost.ru/category/novosti/obnovleniya/" target="_blank">'.__('Update history Wp-Recall','rcl').'</a></li>
+                    <li><a title="Используемые библиотеки и ресурсы" href="http://wppost.ru/ispolzuemye-biblioteki-i-resursy/">'.__('Used libraries and resources','rcl').'</a></li>
+                    <li><a href="http://wppost.ru/faq/" target="_blank">'.__('FAQ','rcl').'</a></li>
             </ol>';
 }
 
 if (is_admin()) add_action('admin_init', 'recall_postmeta_post');
 function recall_postmeta_post() {
-    add_meta_box( 'recall_meta', __('Настройки Wp-Recall'), 'options_box_rcl', 'post', 'normal', 'high'  );
-    add_meta_box( 'recall_meta', __('Настройки Wp-Recall'), 'options_box_rcl', 'page', 'normal', 'high'  );
+    add_meta_box( 'recall_meta', __('Settings Wp-Recall','rcl'), 'options_box_rcl', 'post', 'normal', 'high'  );
+    add_meta_box( 'recall_meta', __('Settings Wp-Recall','rcl'), 'options_box_rcl', 'page', 'normal', 'high'  );
 }
 
 add_filter('post_options_rcl','post_gallery_options',10,2);
 function post_gallery_options($options,$post){
     $mark_v = get_post_meta($post->ID, 'recall_slider', 1);
-    $options .= '<p>'.__('Использовать для изображений записи вывод в галерее Wp-Recall?').':
-        <label><input type="radio" name="wprecall[recall_slider]" value="" '.checked( $mark_v, '',false ).' />'.__('Нет').'</label>
-        <label><input type="radio" name="wprecall[recall_slider]" value="1" '.checked( $mark_v, '1',false ).' />'.__('Да').'</label>
+    $options .= '<p>'.__('Pictures record the withdrawal in the gallery Wp-Recall?').':
+        <label><input type="radio" name="wprecall[recall_slider]" value="" '.checked( $mark_v, '',false ).' />'.__('No','rcl').'</label>
+        <label><input type="radio" name="wprecall[recall_slider]" value="1" '.checked( $mark_v, '1',false ).' />'.__('Yes','rcl').'</label>
     </p>';
     return $options;
 }
@@ -93,27 +92,29 @@ function global_recall_options(){
         
     $rcl_options = get_option('primary-rcl-options');
 
-    $content = '<h2>'.__('Настройки плагина Wp-Recall и его дополнений').'</h2>
+    $content = '<h2>'.__('Configure the plugin Wp-Recall and additions','rcl').'</h2>
         <div id="recall" class="left-sidebar wrap">
 	<form method="post" action="">
 	'.wp_nonce_field('update-options-rcl','_wpnonce',true,false).'
-	<span class="title-option active">'.__('Общие настройки').'</span>	
+	<span class="title-option active">'.__('General settings','rcl').'</span>	
 	<div class="wrap-recall-options" style="display:block;">';
     
                 $args = array(    
                     'selected'   => $rcl_options['lk_page_rcl'],   
                     'name'       => 'lk_page_rcl',
-                    'show_option_none' => '<span style="color:red">'.__('Не выбрано').'</span>',
+                    'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
                     'echo'       => 0  
                 );
                 
                 $content .= $fields->option_block(array(
-                    $fields->title(__('Личный кабинет')),
-                    $fields->label(__('Порядок вывода личного кабинета пользователя')),
+                    $fields->title(__('Personal account','rcl')),
+                    $fields->label(__('The order of withdrawal of the personal Cabinet','rcl')),
                     $fields->option('select',array(
                             'name'=>'view_user_lk_rcl',
                             'parent'=>true,
-                            'options'=>array(__('На странице архива автора','Через шорткод [wp-recall]'))
+                            'options'=>array(
+                                __('On the archive page of the author','rcl'),
+                                __('Using the shortcode [wp-recall]','rcl'))
                         )),
                     $fields->child(
                         array(
@@ -121,70 +122,83 @@ function global_recall_options(){
                             'value'=>1
                         ),
                         array( 
-                            $fields->label(__('Страница размещения шорткода ЛК')),
+                            $fields->label(__('The host page the shortcode','rcl')),
                             wp_dropdown_pages( $args ),
-                            $fields->label(__('Формирование ссылки на личный кабинет')),
+                            $fields->label(__('The formation of links to personal account','rcl')),
                             $fields->option('text',array('name'=>'link_user_lk_rcl')),
-                            $fields->notice(__('Ссылка формируется по принципу "/slug_page/?get=ID". Параметр "get" можно задать тут. По-умолчанию user'))
+                            $fields->notice(__('The link is formed by a principle "/slug_page/?get=ID". The parameter "get" can be set here. By default user','rcl'))
                         )
                     ),
-                    $fields->label(__('Загрузка вкладок ЛК')),
+                    $fields->label(__('Download tabs','rcl')),
                     $fields->option('select',array(
                         'name'=>'tab_newpage',
-                        'options'=>array(__('Загружаются все'),__('На отдельной странице'),__('Ajax-загрузка'))
+                        'options'=>array(
+                            __('Downloads all','rcl'),
+                            __('On a separate page','rcl'),
+                            __('Ajax loading','rcl'))
                     )),
-                    $fields->label(__('Таймаут активности')),
+                    $fields->label(__('Inactivity timeout','rcl')),
                     $fields->option('number',array('name'=>'timeout')),			
-                    $fields->notice(__('Укажите время в минутах, по истечении которого, пользователь будет считаться offline, если не проявлял активности на сайте. По-умолчанию 10 минут.'))
+                    $fields->notice(__('Specify the time in minutes after which the user will be considered offline if you did not show activity on the website. The default is 10 minutes.','rcl'))
                 )); 
                 
                 
-                $roles = array(10=>__('только Администраторам'),7=>__('Редакторам и старше'),2=>__('Авторам и старше'),1=>__('Участникам и старше'),0=>__('Всем пользователям'));
+                $roles = array(
+                    10=>__('only Administrators','rcl'),
+                    7=>__('Editors and older','rcl'),
+                    2=>__('Authors and older','rcl'),
+                    1=>__('Participants and older','rcl'),
+                    0=>__('All users','rcl'));
+                
                 $content .= $fields->option_block(array(
-                    $fields->title(__('Доступ в консоль')),
-                    $fields->label(__('Доступ в консоль сайт разрешена')),
+                    $fields->title(__('Access to the console','rcl')),
+                    $fields->label(__('Access to the site is permitted console','rcl')),
                     $fields->option('select',array(
                             'default'=>7,
                             'name'=>'consol_access_rcl',
                             'options'=>$roles
                     )),
-                    $fields->notice(__('Если выбрана страница архива автора, то в нужном месте шаблона author.php вставить код if(function_exists(\'wp_recall\')) wp_recall();')),
+                    $fields->notice(__('If the selected archive page of the author, in the right place template author.php paste the code if(function_exists(\'wp_recall\')) wp_recall();','rcl')),
 
                 ));               
                 
-		$filecss = (file_exists(TEMP_PATH.'css/minify.css'))? '<a href="'.RCL_URL.'css/getcss.php">'.__('Скачать текущий стилевой файл для правки').'</a>':'';
+		$filecss = (file_exists(TEMP_PATH.'css/minify.css'))? '<a href="'.RCL_URL.'css/getcss.php">'.__('Download the current style file for editing','rcl').'</a>':'';
                 $content .= $fields->option_block(
                     array(
-			$fields->title(__('Оформление')),	
+			$fields->title(__('Making','rcl')),	
                         
-			$fields->label(__('Размещение кнопок разделов в ЛК')),						
+			$fields->label(__('The placement of the buttons sections','rcl')),						
                         $fields->option('select',array(
                             'name'=>'buttons_place',
-                            'options'=>array(__('Сверху'),__('Слева'))
+                            'options'=>array(
+                                __('Top','rcl'),
+                                __('Left','rcl'))
                         )),
 
 			get_theme_list(),
                         
-                        $fields->label(__('Пауза Слайдера')),
+                        $fields->label(__('Pause Slider','rcl')),
                         $fields->option('number',array('name'=>'slide-pause')),
-                        $fields->notice(__('Значение паузы между сменой слайдов в секундах. По-умолчанию 0 - смены слайдов не производится')),                       
+                        $fields->notice(__('The value of the pause between slide transitions in seconds. Default value is 0 - the slide show is not made','rcl')),                       
                         
-                        $fields->label(__('Минимизация стилевых файлов')),				
+                        $fields->label(__('Minimization of style files','rcl')),				
                         $fields->option('select',array(
                             'name'=>'minify_css',
                             'parent'=>true,
-                            'options'=>array(__('Отключено'),__('Включено'))
+                            'options'=>array(
+                                __('Disabled','rcl'),
+                                __('Included','rcl'))
                         )),
-                        $fields->notice(__('Минимизация стилевых файлов работает только по отношению к стилевым файлам Wp-Recall и его дополнений, которые поддерживают эту функцию')),
+                        $fields->notice(__('Minimization of style files only works against the style files Wp-Recall and additions that support this feature','rcl')),
 			$fields->child(
                              array(
                                  'name'=>'minify_css',
                                  'value'=>1
                              ),
                              array(
-                                 $fields->label(__('Cвой файл стилей(CSS)')),
+                                 $fields->label(__('Your stylesheet(CSS)','rcl')),
                                  $fields->option('text',array('name'=>'custom_scc_file_recall')),
-                                 $fields->notice(__('Файл заменяет минимизированный файл стилей, если включена минимизация')),
+                                 $fields->notice(__('File replaces the minified stylesheet, if enabled minimization','rcl')),
                                  $filecss
                              )
                         )
@@ -193,12 +207,16 @@ function global_recall_options(){
 
                 $content .= $fields->option_block(
                     array(
-                        $fields->title(__('Вход и регистрация')),
-                        $fields->label(__('Порядок вывода')), 
+                        $fields->title(__('Login and register','rcl')),
+                        $fields->label(__('The order','rcl')), 
                         $fields->option('select',array(
                             'name'=>'login_form_recall',
                             'parent'=>true,
-                            'options'=>array(__('Плавающая форма'),__('На отдельной странице'),__('Форма Wordpress'),__('Форма в виджете'))
+                            'options'=>array(
+                                __('Floating form','rcl'),
+                                __('On a separate page','rcl'),
+                                __('Form Wordpress','rcl'),
+                                __('The form in the widget','rcl'))
                         )),
                         $fields->child(
                             array(
@@ -206,21 +224,26 @@ function global_recall_options(){
                               'value' => 1
                             ),
                             array(
-                                $fields->label(__('ID страницы с шорткодом [loginform]')),
-                                $fields->option('text',array('name'=>'page_login_form_recall')),
-                                $fields->notice(__('<b>Примечание:</b> Если выбран порядок вывода формы входа и регистрации на отдельной странице, то необходимо создать страницу, расположить в ее содержимом шорткод [loginform] и указать ID этой страницы в поле выше.'))
+                                $fields->label(__('ID of the page with the shortcode [loginform]','rcl')),
+                                $fields->option('text',array('name'=>'page_login_form_recall','rcl')),
+                                $fields->notice(__('<b>note:</b> If selected, the order of the login form and registration on a separate page, create the page, to arrange its contents shortcode [loginform] and specify the ID of this page in the box above.','rcl'))
                             )
                         ),
-                        $fields->label(__('Подтверждение регистрации пользователем')),
+                        $fields->label(__('A registration confirmation by the user','rcl')),
                         $fields->option('select',array(
                             'name'=>'confirm_register_recall',
-                            'options'=>array(__('Не используется'),__('Используется'))
+                            'options'=>array(
+                                __('Not used','rcl'),
+                                __('Used','rcl'))
                         )),
-                        $fields->label(__('Перенаправление пользователя после авторизации')),
+                        $fields->label(__('Redirect user after login','rcl')),
                         $fields->option('select',array(
                             'name'=>'authorize_page',
                             'parent'=>1,
-                            'options'=>array(__('Профиль пользователя'),__('Текущая страница'),__('Произвольный URL'))
+                            'options'=>array(
+                                __('The user profile','rcl'),
+                                __('Current page','rcl'),
+                                __('Arbitrary URL','rcl'))
                         )),
                         $fields->child(
                             array(
@@ -228,42 +251,42 @@ function global_recall_options(){
                               'value' => 2
                             ),
                             array(
-                                $fields->label(__('URL')),
+                                $fields->label(__('URL','rcl')),
                                 $fields->option('text',array('name'=>'custom_authorize_page')),
-                                $fields->notice(__('Впишите свой URL ниже, если выбран произвольный URL после авторизации'))
+                                $fields->notice(__('Enter your URL below, if you select an arbitrary URL after login','rcl'))
                             )
                         ),
-                        $fields->label(__('Поле повтора пароля')),                       
+                        $fields->label(__('Field repeat password','rcl')),                       
                         $fields->option('select',array(
                             'name'=>'repeat_pass',
-                            'options'=>array(__('Отключено'),__('Отображается'))
+                            'options'=>array(__('Disabled','rcl'),__('Displayed','rcl'))
                         )),
-                        $fields->label(__('Индикатор сложности пароля')),                       
+                        $fields->label(__('Indicator password complexity','rcl')),                       
                         $fields->option('select',array(
                             'name'=>'difficulty_parole',
-                            'options'=>array(__('Отключен'),__('Отображается'))
+                            'options'=>array(__('Disabled','rcl'),__('Displayed','rcl'))
                         ))
                     )
                 );   
 
                 $content .= $fields->option_block(
                     array(
-                        $fields->title(__('Recallbar')),
-                        $fields->label(__('Вывод панели recallbar')), 
+                        $fields->title(__('Recallbar','rcl')),
+                        $fields->label(__('Conclusion the panel recallbar','rcl')), 
                         $fields->option('select',array(
                             'name'=>'view_recallbar',
-                            'options'=>array(__('Отключено'),__('Включено'))
+                            'options'=>array(__('Disabled','rcl'),__('Included','rcl'))
                         ))
                     )
                 );
 
                 $content .= $fields->option_block(
                     array(
-                        $fields->title(__('Ваша благодарность')),
-                        $fields->label(__('Отображать ссылку на сайт разработчика (Спасибо, если решили показать)')), 
+                        $fields->title(__('Your gratitude','rcl')),
+                        $fields->label(__('To display a link to the developer`s site (Thank you, if you decide to show)','rcl')), 
                         $fields->option('select',array(
                                'name'=>'footer_url_recall',
-                               'options'=>array(__('Нет'),__('Да'))
+                               'options'=>array(__('No','rcl'),__('Yes','rcl'))
                         ))
                     )
                 );  
@@ -273,7 +296,7 @@ function global_recall_options(){
     $content = apply_filters('admin_options_wprecall',$content);
 
     $content .= '<div class="submit-block">
-    <p><input type="submit" class="button button-primary button-large right" name="primary-rcl-options" value="'.__('Сохранить настройки').'" /></p>
+    <p><input type="submit" class="button button-primary button-large right" name="primary-rcl-options" value="'.__('Save settings','rcl').'" /></p>
     </div></form></div>';
 
     echo $content;
@@ -298,9 +321,9 @@ function get_theme_list(){
         }
     }
     if($t_list){
-            $content = '<label>'.__('Используемый шаблон').'</label>';
+            $content = '<label>'.__('Used template','rcl').'</label>';
             $content .= '<select name="color_theme" size="1">
-                <option value="">'.__('Не подключен').'</option>
+                <option value="">'.__('Not connected','rcl').'</option>
                     '.$t_list.'				
             </select>';
             

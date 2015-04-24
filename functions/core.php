@@ -35,22 +35,22 @@ if (!class_exists('reg_core')){
     
     function reg_form_wpp($id,$path=false){
         if(get_option(WP_PREFIX.$id)==WP_HOST){
-            $form = '<div class="updated"><p>'.__('Плагин активирован.').'</p></div>';              
+            $form = '<div class="updated"><p>'.__('The plugin is activated','rcl').'</p></div>';              
         }else{
             if($_GET['id_access_'.$id]){
                 switch($_GET['id_access_'.$id]){
-                    case 7: echo '<div class="error"><p>'.__('Переданы неверные данные').'</p></div>'; break;
-                    case 8: echo '<div class="error"><p>'.__('Переданы неверные данные').'</p></div>'; break;
-                    case 9: echo '<div class="error"><p>'.__('Для вашего домена действует другой ключ').' <a href="http://wppost.ru/activate-plugins/findkey/?plug='.$id.'">'.__('Потеряли ключ?').'</a></p></div>'; break;
+                    case 7: echo '<div class="error"><p>'.__('Transmitted invalid data','rcl').'</p></div>'; break;
+                    case 8: echo '<div class="error"><p>'.__('Transmitted invalid data','rcl').'</p></div>'; break;
+                    case 9: echo '<div class="error"><p>'.__('For your domain, other key','rcl').' <a href="http://wppost.ru/activate-plugins/findkey/?plug='.$id.'">'.__('Lost the key?','rcl').'</a></p></div>'; break;
                 }
             }
-            $form = '<div class="error"><p>'.__('Плагин не активирован!').'</p></div>'
+            $form = '<div class="error"><p>'.__('The plugin is not activated!').'</p></div>'
             . '<style>.error{padding:10px!important;color:red;border:1px solid red;text-align:center;width:500px;margin-top:20px;}</style>
-                    <h3>'.__('Введите ключ:').'</h3>
+                    <h3>'.__('Enter the key').':</h3>
                     <form action="http://wppost.ru/activate-plugins/access/?plug='.$id.'" method="post">
                     <input type="text" value="" size="90" name="pass">
                     <input type="hidden" value="'.$_SERVER['HTTP_HOST'].'" name="domen">
-                    <input type="submit" value="'.__('Отправить на проверку').'">
+                    <input type="submit" value="'.__('Send for review','rcl').'">
                     </form>';
 
             }

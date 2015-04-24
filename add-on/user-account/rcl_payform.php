@@ -29,7 +29,7 @@ class Rcl_Payform {
         }
         
         $type_p = $rmag_options['type_order_payment']; 
-        if($type_p==2&&$this->type==2) $form .= '<input class="pay_order recall-button" type="button" name="pay_order" data-order="'.$this->id_pay.'" value="Оплатa c личного счета">';
+        if($type_p==2&&$this->type==2) $form .= '<input class="pay_order recall-button" type="button" name="pay_order" data-order="'.$this->id_pay.'" value="'.__('Pay personal account','rcl').'">';
         
         return $form;
     }
@@ -42,7 +42,7 @@ class Rcl_Payform {
 
         $formaction = 'https://money.yandex.ru/eshop.xml';
         
-        $submit = ($this->type==1)? __('Подтвердить операцию'): __('Оплатить через платежные системы');
+        $submit = ($this->type==1)? __('Confirm the operation','rcl'): __('Pay through payment system','rcl');
         
         $hidden = $this->hidden(
                 array(
@@ -74,7 +74,7 @@ class Rcl_Payform {
         if($rmag_options['robotest']==1) $formaction = 'http://test.robokassa.ru/Index.aspx';
         else $formaction = 'https://merchant.roboxchange.com/Index.aspx';
         
-        $submit = ($this->type==1)? __('Подтвердить операцию'): __('Оплатить через платежные системы');
+        $submit = ($this->type==1)? __('Confirm the operation','rcl'): __('Pay through payment system','rcl');
         
         $hidden = $this->hidden(
                 array(
@@ -104,11 +104,11 @@ class Rcl_Payform {
         $test = $rmag_options['interkassatest'];
         $key = $rmag_options['intersecretkey'];
 
-        if($this->type==1) $data['ik_desc'] = __('Пополнение личного счета');
-        else if($this->type==2) $data['ik_desc'] = __('Оплата заказа на сайте');
-        else $data['ik_desc'] = __('Прочие платежи');
+        if($this->type==1) $data['ik_desc'] = __('Top up personal account','rcl');
+        else if($this->type==2) $data['ik_desc'] = __('Payment for the order on the website','rcl');
+        else $data['ik_desc'] = __('Other payments','rcl');
         
-        $submit = ($this->type==1)? __('Подтвердить операцию'): __('Оплатить через платежные системы');
+        $submit = ($this->type==1)? __('Confirm the operation','rcl'): __('Pay through payment system','rcl');
 
         if($test==1){				
             $ik_pw_via = 'test_interkassa_test_xts';

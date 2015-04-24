@@ -82,11 +82,11 @@ function recall_install(){
 	if(!isset($rcl_options['view_user_lk_rcl'])){
 		$rcl_options['view_user_lk_rcl'] = 1;
 		$rcl_options['color_theme'] = 'blue';
-		$rcl_options['lk_page_rcl'] = wp_insert_post(array('post_title'=>__('Личный кабинет'),'post_content'=>'[wp-recall]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'rcl-lk'));
+		$rcl_options['lk_page_rcl'] = wp_insert_post(array('post_title'=>__('Personal account','rcl'),'post_content'=>'[wp-recall]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'account'));
 		
-		wp_insert_post(array('post_title'=>__('Пользователи'),'post_content'=>'[userlist]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'users'));
+		wp_insert_post(array('post_title'=>__('Users','rcl'),'post_content'=>'[userlist]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'users'));
 		
-		wp_insert_post(array('post_title'=>__('FEED'),'post_content'=>'[feed]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'rcl-feed'));
+		wp_insert_post(array('post_title'=>__('FEED','rcl'),'post_content'=>'[feed]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'user-feed'));
 		
 		$active_addons = get_site_option('active_addons_recall');
 		$def_addons = array('review','profile','feed','publicpost','message','rayting');
@@ -125,11 +125,11 @@ function recall_install(){
 
 	$roledata = array(
 		'need-confirm' => array(
-			'name'=>__('Неподтвержденные'),
+			'name'=>__('Unconfirmed','rcl'),
 			'cap'=>array('read' => false, 'edit_posts' => false, 'delete_posts' => false, 'upload_files' => false)
 		),
                 'banned' => array(
-			'name'=>__('Бан'),
+			'name'=>__('Ban','rcl'),
 			'cap'=>array('read' => false, 'edit_posts' => false, 'delete_posts' => false, 'upload_files' => false)
 		)
 	);
@@ -247,7 +247,7 @@ function rcl_action(){
     $last_action = last_user_action_recall($rcl_userlk_action);	
     $class = (!$last_action)? 'online': 'offline';
     $status = '<div class="status_user '.$class.'"><i class="fa fa-circle"></i></div>';
-    if($last_action) $status .= __('не в сети').' '.$last_action;
+    if($last_action) $status .= __('not online','rcl').' '.$last_action;
     echo $status;
 }
 
