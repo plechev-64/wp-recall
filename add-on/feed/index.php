@@ -69,7 +69,7 @@ class Rcl_Feed{
 		global $user_ID;
 
 		if(!$user_ID){
-			$feedlist = '<p class="aligncenter">'.__('Login or register<br />to view the latest publications and comments<br />from users on which you will<br />you subscribed.','rcl').'</p>';
+			$feedlist = '<p class="aligncenter">'.__('Login or register to view the latest publications and comments from users on which you will you subscribed.','rcl').'</p>';
 			return $feedlist;
 		}
 

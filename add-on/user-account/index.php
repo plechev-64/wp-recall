@@ -156,7 +156,7 @@ function user_account_wpm_options($content){
 			<p>2. Укажите здесь какие страницы и для чего вы создали. </p>
 			<p>3. В настройках своего аккаунта платежной системы укажите URL страницы для fail, success и result</p>
 
-			<label>'.__('Страница RESULT','rcl').'</label>';
+			<label>'.__('Page RESULT','rcl').'</label>';
 			$args = array(
 				'selected'   => $options['page_result_pay'],
 				'name'       => 'page_result_pay',

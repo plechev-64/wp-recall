@@ -210,7 +210,7 @@ function get_admin_public_page_content($content){
                     'name'=>'moderation_public_post',
                     'options'=>array(__('To publish immediately','rcl'),__('Send for moderation','rcl'))
                 )),
-                $opt->notice(__('<b>If used in moderation:</b> To allow the user to see their publication before it is moderated, it is necessary to have on the website right below the Author','rcl'))
+                $opt->notice(__('If used in moderation: To allow the user to see their publication before it is moderated, it is necessary to have on the website right below the Author','rcl'))
             )
         ),
         $opt->option_block(

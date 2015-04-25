@@ -275,7 +275,7 @@ function get_admin_groups_page_content($content){
                             __('To publish immediately','rcl'),
                             __('Send for moderation','rcl'))
                     )),
-                    $opt->notice(__('If used in moderation:</b> To allow the user to see their publication before it is moderated, it is necessary to have on the website right below the Author','rcl')),
+                    $opt->notice(__('If used in moderation: To allow the user to see their publication before it is moderated, it is necessary to have on the website right below the Author','rcl')),
 
                     $opt->label(__('Rating value publications','rcl')),
                     $opt->option('text',array('name'=>'count_rayt_post-group')),

@@ -410,7 +410,7 @@ function recall_block_edit_user_profile($author_lk){
 	</script>";
 
 		$profile_block .= '<tr>
-		<th><label for="email">'.__('Email','rcl').':</label></th>
+		<th><label for="email">'.__('E-mail','rcl').':</label></th>
 		<td><input type="text" name="email" class="regular-text" id="email" required value="'.esc_attr($userdata->user_email).'" maxlength="100" /></td>
 		</tr>';
 
