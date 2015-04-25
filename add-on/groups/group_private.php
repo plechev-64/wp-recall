@@ -5,10 +5,10 @@ class Group_Private{
     function __construct($query){
         return $this->chek_access($query);
     }
-    
+
     function chek_access($query){
 	global $wpdb,$user_ID,$post; $groups = false;
-	if($query->is_search){	
+	if($query->is_search){
 		/*foreach((array)$wp_query->posts as $k=>$p){
 			if($p->post_type=='post-group'){
 				//$wp_query->posts[$k]->post_content = close_content_closed_group();
@@ -29,7 +29,7 @@ class Group_Private{
 	if($query->is_single&&$query->query['post_type']=='post-group'&&$query->query['name']){
 		if(!$post) $post_id = $wpdb->get_var("SELECT ID FROM ".$wpdb->prefix."posts WHERE post_name='".$query->query['name']."'");
 		else $post_id = $post->ID;
-		$cur_terms = get_the_terms( $post_id, 'groups' );		
+		$cur_terms = get_the_terms( $post_id, 'groups' );
 		foreach((array)$cur_terms as $cur_term){
 			if($cur_term->parent!=0) continue;
 			$term_id = $cur_term->term_id; break;
@@ -37,37 +37,37 @@ class Group_Private{
 		$groups = true;
 	}
 	if($groups){
-		
+
 		if(isset($_GET['group-tag'])&&$_GET['group-tag']!=''){
-			if(!$_GET['search-p']){ 
+			if(!$_GET['search-p']){
 				$query->set( 'groups', $_GET['group-tag'] );
 			}else{
 				wp_redirect(get_term_link( (int)$_GET['search-p'], 'groups' ).'/?group-tag='.$_GET['group-tag']);exit;
 			}
-			
+
 		}
 		if(isset($_GET['group-page'])&&$_GET['group-page']!=''){
 			 $query->set( 'posts_per_page', 1 );
 		}
-		
+
 		$options_gr = unserialize($wpdb->get_var("SELECT option_value FROM ".RCL_PREF."groups_options WHERE group_id='".$term_id."'"));
-		
+
 		if(isset($options_gr['private'])&&$options_gr['private']==1){
-			
+
 			if($user_ID) $in_group = get_the_author_meta('user_group_'.$term_id,$user_ID);
-			if(!$in_group&&$options_gr['admin']!=$user_ID){					
+			if(!$in_group&&$options_gr['admin']!=$user_ID){
 				if($query->is_single){
 					add_filter('the_content',array(&$this,'close_content'),999);
 					add_filter('comment_text',array(&$this,'close_comment'),999);
 					add_filter('comment_form_default_fields',array(&$this,'close_comment_fields'),999);
 					add_filter('comment_form_field_comment',array(&$this,'close_commentform'),999);
-				}else{ 
+				}else{
 					$query->set('post_type', 'groups');
 				}
 			}
 		}
 	}
-	return $query;	
+	return $query;
     }
 
     function close_comment_fields(){

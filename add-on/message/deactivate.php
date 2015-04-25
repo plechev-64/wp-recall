@@ -1,1 +1,2 @@
-<?phpwp_clear_scheduled_hook('hourly_notify_new_message');
+<?php
+wp_clear_scheduled_hook('hourly_notify_new_message');
