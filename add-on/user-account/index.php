@@ -69,125 +69,150 @@ add_action('admin_menu', 'statistic_user_pay_page_rcl',25);
 
 add_filter('admin_options_rmag','user_account_wpm_options',10);
 function user_account_wpm_options($content){
-	$style = 'style="display:block;"';
-	$options = get_option('primary-rmag-options');
-	$content .= '<span class="title-option">'.__('Payment systems','rcl').'</span>
-	<div id="options-'.get_key_addon_rcl(pathinfo(__FILE__)).'" '.$style.' class="wrap-recall-options">
 
-                <div class="option-block">
-			<h3>'.__('Payment','rcl').'</h3>
-			<label>'.__('Type of payment','rcl').'</label>
-			<select name="type_order_payment" size="1">';
-				$type_order = $options['type_order_payment'];
-				$content .= '<option value="">'.__('Funds from the personal account of the user','rcl').'</option>
-				<option value="1" '.selected($type_order,1,false).'>'.__('Directly through the payment system','rcl').'</option>
-				<option value="2" '.selected($type_order,2,false).'>'.__('To offer both options','rcl').'</option>
-			</select>
-			<small>'.__('If the connection to the payment aggregator not in use, it is possible to set only "Funds from the personal account user"!','rcl').'</small>
-		</div>
+        global $rcl_options;
+	$rcl_options = get_option('primary-rmag-options');
 
-		<div class="option-block">
-			<h3>'.__('The connection to payment aggregator','rcl').'</h3>
-			<label>'.__('Used type of connection','rcl').'</label>
-			<select class="parent-select" name="connect_sale" size="1">';
-				$connect_sale = $options['connect_sale'];
-				$content .= '<option value="">'.__('Not used','rcl').'</option>
-				<option value="1" '.selected($connect_sale,1,false).'>Robokassa</option>
-				<option value="2" '.selected($connect_sale,2,false).'>Interkassa</option>
-                                <option value="3" '.selected($connect_sale,3,false).'>Yandex.Kassa</option>
-			</select>
-		</div>
-		<div class="child-select connect_sale" id="connect_sale-1">
-                    <div class="option-block">
-                            <h3>'.__('Connection settings ROBOKASSA','rcl').'</h3>
-                            <label>'.__('The ID of the store','rcl').'</label>
-                            <input type="text" name="robologin" value="'.$options['robologin'].'" size="60">
-                            <label>'.__('1 Password','rcl').'</label>
-                            <input type="password" name="onerobopass" value="'.$options['onerobopass'].'" size="60">
-                            <label>'.__('2 Password','rcl').'</label>
-                            <input type="password" name="tworobopass" value="'.$options['tworobopass'].'" size="60">
-                            <label>'.__('The status of the account ROBOKASSA','rcl').'</label>
-                            <select name="robotest" size="1">';
-                                    $robotest = $options['robotest'];
-                                    $content .= '<option value="1" '.selected($robotest,1,false).'>'.__('Test','rcl').'</option>
-                                    <option value="0" '.selected($robotest,0,false).'>'.__('Work','rcl').'</option>
-                            </select>
-                    </div>
-		</div>
-                <div class="child-select connect_sale" id="connect_sale-2">
-                    <div class="option-block">
-                            <h3>'.__('Connection settings Interkassa','rcl').'</h3>
-                            <label>'.__('Secret Key','rcl').'</label>
-                            <input type="password" name="intersecretkey" value="'.$options['intersecretkey'].'" size="60">
-                            <label>'.__('Test Key','rcl').'</label>
-                            <input type="password" name="intertestkey" value="'.$options['intertestkey'].'" size="60">
-                            <label>'.__('The ID of the store','rcl').'</label>
-                            <input type="text" name="interidshop" value="'.$options['interidshop'].'" size="60">
-                            <label>'.__('The status of the account Interkassa','rcl').'</label>
-                            <select name="interkassatest" size="1">';
-                                    $interkassatest = $options['interkassatest'];
-                                    $content .= '<option value="1" '.selected($interkassatest,1,false).'>'.__('Test','rcl').'</option>
-                                    <option value="0" '.selected($interkassatest,0,false).'>'.__('Work','rcl').'</option>
-                            </select>
-                    </div>
-		</div>
+        include_once RCL_PATH.'functions/rcl_options.php';
 
-                <div class="child-select connect_sale" id="connect_sale-3">
-                    <div class="option-block">
-                            <h3>'.__('Connection settings Yandex.Kassa').'</h3>
-                            <label>'.__('ID cash','rcl').'</label>
-                            <input type="text" name="shopid" value="'.$options['shopid'].'" size="60">
-                            <label>'.__('The room showcases','rcl').'</label>
-                            <input type="text" name="scid" value="'.$options['scid'].'" size="60">
-                            <label>'.__('The secret word','rcl').'</label>
-                            <input type="password" name="secret_word" value="'.$options['secret_word'].'" size="60">
-                    </div>
-		</div>
+        $opt = new Rcl_Options(get_key_addon_rcl(pathinfo(__FILE__)));
 
-		<div class="option-block">
-			<h3>'.__('Service page payment systems','rcl').'</h3>
+        $content .= '<span class="title-option active">'.__('Payment systems','rcl').'</span>
+	<div id="options-'.get_key_addon_rcl(pathinfo(__FILE__)).'" style="display:block" class="wrap-recall-options">';
 
-			<p>1. Создайте на своем сайте четыре страницы:</p>
-			- пустую для success<br>
-			- пустую для result<br>
-			- одну с текстом о неудачной оплате (fail)<br>
-			- одну с текстом об удачной оплате<br>
-			Название и URL созданных страниц могут быть произвольными.<br>
-			<p>2. Укажите здесь какие страницы и для чего вы создали. </p>
-			<p>3. В настройках своего аккаунта платежной системы укажите URL страницы для fail, success и result</p>
+        $content .= $opt->option_block(
+            array(
+                $opt->title(__('Payment','rcl')),
 
-			<label>'.__('Page RESULT','rcl').'</label>';
-			$args = array(
-				'selected'   => $options['page_result_pay'],
-				'name'       => 'page_result_pay',
-				'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
-				'echo'             => 0
-			);
-			$content .= wp_dropdown_pages( $args );
-			$content .= '<small>'.__('For Interkassa: URL of interaction','rcl').'</small>';
-                        $content .= '<small>'.__('For Yandex.Cash: checkURL and avisoURL','rcl').'</small>';
+                $opt->label(__('Type of payment','rcl')),
+                $opt->option('select',array(
+                    'name'=>'type_order_payment',
+                    'options'=>array(
+                        1=>__('Directly through the payment system','rcl'),
+                        2=>__('To offer both options','rcl')
+                    )
+                )),
+                $opt->notice(__('If the connection to the payment aggregator not in use, it is possible to set only "Funds from the personal account user"!','rcl')),
 
-			$content .= '<label>'.__('Page SUCCESS','rcl').'</label>';
-			$args = array(
-				'selected'   => $options['page_success_pay'],
-				'name'       => 'page_success_pay',
-				'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
-				'echo'             => 0
-			);
-			$content .= wp_dropdown_pages( $args );
-			$content .= '<small>'.__('For Interkassa: successful payment URL','rcl').'</small>';
+                $opt->title(__('The connection to payment aggregator','rcl')),
+                $opt->label(__('Used type of connection','rcl')),
+                $opt->option('select',array(
+                    'name'=>'connect_sale',
+                    'parent'=>true,
+                    'options'=>array(
+                        __('Not used','rcl'),
+                        __('Robokassa','rcl'),
+                        __('Interkassa','rcl'),
+                        __('Yandex.Kassa','rcl')
+                    )
+                )),
+                $opt->child(
+                    array(
+                        'name'=>'connect_sale',
+                        'value'=>1
+                    ),
+                    array(
+                        $opt->title(__('Connection settings ROBOKASSA','rcl')),
+                        $opt->label(__('The ID of the store','rcl')),
+                        $opt->option('text',array('name'=>'robologin')),
+                        $opt->label(__('1 Password','rcl')),
+                        $opt->option('password',array('name'=>'onerobopass')),
+                        $opt->label(__('2 Password','rcl')),
+                        $opt->option('password',array('name'=>'tworobopass')),
+                        $opt->label(__('The status of the account ROBOKASSA','rcl')),
+                        $opt->option('select',array(
+                            'name'=>'robotest',
+                            'options'=>array(
+                                __('Work','rcl'),
+                                __('Test','rcl')
+                            )
+                        )),
+                    )
+                ),
+                $opt->child(
+                    array(
+                        'name'=>'connect_sale',
+                        'value'=>2
+                    ),
+                    array(
+                        $opt->title(__('Connection settings Interkassa','rcl')),
+                        $opt->label(__('Secret Key','rcl')),
+                        $opt->option('password',array('name'=>'intersecretkey')),
+                        $opt->label(__('Test Key','rcl')),
+                        $opt->option('password',array('name'=>'intersecretkey')),
+                        $opt->label(__('The ID of the store','rcl')),
+                        $opt->option('text',array('name'=>'interidshop')),
+                        $opt->label(__('The status of the account Interkassa','rcl')),
+                        $opt->option('select',array(
+                            'name'=>'interkassatest',
+                            'options'=>array(
+                                __('Work','rcl'),
+                                __('Test','rcl')
+                            )
+                        )),
+                    )
+                ),
+                $opt->child(
+                    array(
+                        'name'=>'connect_sale',
+                        'value'=>3
+                    ),
+                    array(
+                        $opt->title(__('Connection settings Yandex.Kassa','rcl')),
+                        $opt->label(__('ID cash','rcl')),
+                        $opt->option('text',array('name'=>'shopid')),
+                        $opt->label(__('The room showcases','rcl')),
+                        $opt->option('text',array('name'=>'scid')),
+                        $opt->label(__('The secret word','rcl')),
+                        $opt->option('password',array('name'=>'secret_word')),
+                    )
+                )
+            )
+        );
 
-			$content .= '<label>'.__('The successful payment page','rcl').'</label>';
-			$args = array(
-				'selected'   => $options['page_successfully_pay'],
-				'name'       => 'page_successfully_pay',
-				'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
-				'echo'             => 0
-			);
-			$content .= wp_dropdown_pages( $args );
+        $content .= $opt->option_block(
+            array(
+                $opt->title(__('Service page payment systems','rcl')),
+                $opt->notice('<p>1. Создайте на своем сайте четыре страницы:</p>
+                - пустую для success<br>
+                - пустую для result<br>
+                - одну с текстом о неудачной оплате (fail)<br>
+                - одну с текстом об удачной оплате<br>
+                Название и URL созданных страниц могут быть произвольными.<br>
+                <p>2. Укажите здесь какие страницы и для чего вы создали. </p>
+                <p>3. В настройках своего аккаунта платежной системы укажите URL страницы для fail, success и result</p>'),
 
-			$content .= '</div>
-	</div>';
+                $opt->label(__('Page RESULT','rcl')),
+                wp_dropdown_pages( array(
+                        'selected'   => $rcl_options['page_result_pay'],
+                        'name'       => 'page_result_pay',
+                        'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
+                        'echo'             => 0 )
+                ),
+                $opt->notice(__('For Interkassa: URL of interaction','rcl')),
+                $opt->notice(__('For Yandex.Cash: checkURL and avisoURL','rcl')),
+
+                $opt->label(__('Page SUCCESS','rcl')),
+                wp_dropdown_pages( array(
+                        'selected'   => $rcl_options['page_success_pay'],
+                        'name'       => 'page_success_pay',
+                        'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
+                        'echo'             => 0)
+                ),
+                $opt->notice(__('For Interkassa: successful payment URL','rcl')),
+
+                $opt->label(__('The successful payment page','rcl')),
+                wp_dropdown_pages( array(
+                        'selected'   => $rcl_options['page_successfully_pay'],
+                        'name'       => 'page_successfully_pay',
+                        'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
+                        'echo'             => 0)
+                )
+            )
+        );
+
+        $content .= '</div>';
+
 	return $content;
 }
 
