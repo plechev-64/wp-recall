@@ -456,7 +456,7 @@ class Rcl_Feed{
 					if(jQuery(this).hasClass('active')) return false;
 					jQuery('.get-feed').removeClass('active');
 					jQuery(this).addClass('active');
-					jQuery('.loader').html('<img src=\''+rcl_url+'img/loader.gif\'>');
+					jQuery('.loader').html('<img src=\''+rcl_url+'css/img/loader.gif\'>');
 					jQuery('#feedlist').slideUp();
 					var dataString = 'action=get_comments_feed_recall&user_ID='+user_ID;
 					jQuery.ajax({
@@ -478,7 +478,7 @@ class Rcl_Feed{
 					if(jQuery(this).hasClass('active')) return false;
 					jQuery('.get-feed').removeClass('active');
 					jQuery(this).addClass('active');
-					jQuery('.loader').html('<img src=\''+rcl_url+'img/loader.gif\'>');
+					jQuery('.loader').html('<img src=\''+rcl_url+'css/img/loader.gif\'>');
 					jQuery('#feedlist').slideUp();
 					var dataString = 'action=get_posts_feed_recall&user_ID='+user_ID;
 					jQuery.ajax({

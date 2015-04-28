@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-04-25 19:23+0400\n"
+"POT-Creation-Date: 2015-04-28 17:45+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -23,6 +23,95 @@ msgstr ""
 "X-Poedit-Basepath: ../\n"
 "X-Generator: Poedit 1.7.6\n"
 "X-Poedit-SearchPath-0: .\n"
+
+#: add-on/bookmarks/class_bookmark.php:58
+msgid "delete"
+msgstr "удалить"
+
+#: add-on/bookmarks/class_bookmark.php:59
+msgid "edit"
+msgstr "изменить"
+
+#: add-on/bookmarks/class_bookmark.php:64
+msgid "In this group don`t have bookmarks"
+msgstr "В этой группе нет закладок"
+
+#: add-on/bookmarks/class_bookmark.php:147 add-on/groups/index.php:730
+msgid "Close"
+msgstr "Закрыть"
+
+#: add-on/bookmarks/class_bookmark.php:149
+msgid "Group bookmarks"
+msgstr "Группы закладок"
+
+#: add-on/bookmarks/class_bookmark.php:155
+msgid "Without group"
+msgstr "Без группы"
+
+#: add-on/bookmarks/class_bookmark.php:171 functions/recallbar.php:24
+msgid "My bookmarks"
+msgstr "Мои закладки"
+
+#: add-on/bookmarks/class_bookmark.php:172
+msgid "To filter the bookmarks, click on the desired group"
+msgstr "Фильтруйте закладки нажав на нужную группу"
+
+#: add-on/bookmarks/class_bookmark.php:178
+msgid "Manage bookmarks"
+msgstr "Управление закладками"
+
+#: add-on/bookmarks/class_bookmark.php:180
+msgid "Bookmarks don`t have"
+msgstr "Закладки не найдены"
+
+#: add-on/bookmarks/index.php:1
+msgid "Settings bookmarks"
+msgstr "Настройки закладок"
+
+#: add-on/bookmarks/index.php:1
+msgid "Bookmarks"
+msgstr "Закладки"
+
+#: add-on/bookmarks/index.php:1
+msgid "The order buttons"
+msgstr "Порядок вывода кнопки \"В закладки\""
+
+#: add-on/bookmarks/index.php:1
+msgid "Automatically"
+msgstr "Автоматически"
+
+#: add-on/bookmarks/index.php:1
+msgid "Manually"
+msgstr "Вручную"
+
+#: add-on/bookmarks/index.php:1
+msgid ""
+"Manually the button \"add To bookmarks\" is output via shortcode [add-"
+"bookmark]"
+msgstr ""
+"При ручном выводе кнопки, необходимо использовать шорткод [add-bookmark]"
+
+#: add-on/bookmarks/index.php:1
+msgid "Place output on the page (if the automatic withdrawal)"
+msgstr "Место вывода на странице (если автоматический вывод)"
+
+#: add-on/bookmarks/index.php:1 admin-pages.php:174
+msgid "Top"
+msgstr "Сверху"
+
+#: add-on/bookmarks/index.php:1
+msgid "Below"
+msgstr "Снизу"
+
+#: add-on/bookmarks/index.php:1
+msgid "The caption on the button"
+msgstr "Надпись на кнопке"
+
+#: add-on/bookmarks/index.php:1
+msgid ""
+"the inscription is the default, you can override it in shortcode by adding "
+"shortcode in the value attribute"
+msgstr "Вы можете изменить текст кнопки тут"
 
 #: add-on/feed/index.php:37 add-on/feed/index.php:300
 msgid "Subscribe"
@@ -111,6 +200,148 @@ msgstr ""
 "Перейдите в профиль пользователя, нажмите кнопку \"Подписаться\" и вы "
 "сможете отслеживать его последние публикации здесь."
 
+#: add-on/gallery-recall/class_gallery.php:1
+msgid "This photo does not exist!"
+msgstr "Это изображение не найдено!"
+
+#: add-on/gallery-recall/class_gallery.php:1
+#: add-on/gallery-recall/index.php:66
+msgid "Gallery user"
+msgstr "Галерея пользователя"
+
+#: add-on/gallery-recall/class_gallery.php:1
+msgid "Link"
+msgstr "Ссылка"
+
+#: add-on/gallery-recall/class_gallery.php:1
+msgid "Added comments"
+msgstr "Добавленные комментарии"
+
+#: add-on/gallery-recall/index.php:63
+msgid "Gallery settings-user"
+msgstr "Настройки галереи пользователя"
+
+#: add-on/gallery-recall/index.php:68
+msgid "Fancybox"
+msgstr ""
+
+#: add-on/gallery-recall/index.php:71
+msgid "Do not use"
+msgstr "Не использовать"
+
+#: add-on/gallery-recall/index.php:71
+msgid "Use"
+msgstr "Использовать"
+
+#: add-on/gallery-recall/index.php:74
+msgid "The maximum size of images, Mb"
+msgstr "Максимальный размер изображения, МБ"
+
+#: add-on/gallery-recall/index.php:76 add-on/publicpost/index.php:154
+msgid ""
+"To limit image uploads to publish this value in megabytes. By default, 2MB"
+msgstr "Ограничение размера загружаемого изображения, по-умолчанию 2МБ"
+
+#: add-on/gallery-recall/index.php:77
+msgid "The authorized number of images"
+msgstr "Разрешенное кол-во изображений"
+
+#: add-on/gallery-recall/index.php:80 add-on/groups/index.php:280
+msgid "Rating value publications"
+msgstr "Значение рейтинга публикаций"
+
+#: add-on/gallery-recall/index.php:82
+msgid ""
+"Specify a value of negative and positive evaluations for publishing images. "
+"The default is 1"
+msgstr ""
+"Укажите значение положительного и отрицательного голоса за публикацию "
+"изображения, по-умолчанию 1"
+
+#: add-on/gallery-recall/index.php:84
+msgid "The influence of the rating of the images to the rating of the author"
+msgstr "Влияние рейтинга изображений в галерее на общий рейтинг автора"
+
+#: add-on/gallery-recall/index.php:87 add-on/groups/index.php:287
+#: add-on/money-wallet/index.php:58 add-on/profile/index.php:210
+#: add-on/profile/index.php:607 add-on/profile/index.php:612
+#: add-on/profile/index.php:617 add-on/profile/index.php:622
+#: add-on/profile/index.php:627 add-on/publicpost/index.php:226
+#: add-on/publicpost/index.php:397 add-on/rayting/addon-options.php:43
+#: add-on/rayting/addon-options.php:63 add-on/rayting/index.php:50
+#: add-on/review/index.php:163 admin-pages.php:38 admin-pages.php:289
+msgid "No"
+msgstr "Нет"
+
+#: add-on/gallery-recall/index.php:87 add-on/groups/index.php:287
+#: add-on/money-wallet/index.php:58 add-on/profile/index.php:210
+#: add-on/profile/index.php:607 add-on/profile/index.php:612
+#: add-on/profile/index.php:617 add-on/profile/index.php:622
+#: add-on/profile/index.php:627 add-on/publicpost/index.php:226
+#: add-on/publicpost/index.php:397 add-on/rayting/addon-options.php:43
+#: add-on/rayting/addon-options.php:63 add-on/rayting/index.php:51
+#: add-on/review/index.php:163 admin-pages.php:39 admin-pages.php:289
+msgid "Yes"
+msgstr "Да"
+
+#: add-on/gallery-recall/index.php:125
+msgid "Gallery"
+msgstr "Галерея"
+
+#: add-on/gallery-recall/index.php:152
+msgid "Add images to your download queue"
+msgstr "Добавить изображение в очередь загрузки"
+
+#: add-on/gallery-recall/index.php:168 add-on/publicpost/classes.php:254
+msgid "Add"
+msgstr "Добавить"
+
+#: add-on/gallery-recall/index.php:172
+msgid "Load"
+msgstr "Загрузка"
+
+#: add-on/gallery-recall/index.php:182
+msgid "Save order"
+msgstr "Сохранить порядок"
+
+#: add-on/gallery-recall/index.php:263
+msgid "The user`s photo"
+msgstr "Пользовательские фото"
+
+#: add-on/gallery-recall/index.php:395 add-on/gallery-recall/index.php:406
+#: add-on/message/index.php:1228
+msgid "Reply"
+msgstr "Ответить"
+
+#: add-on/gallery-recall/index.php:400
+msgid "Cancel reply"
+msgstr "отмена ответа"
+
+#: add-on/gallery-recall/index.php:429
+msgid "The material is updated"
+msgstr "Материал обновлен"
+
+#: add-on/gallery-recall/index.php:434
+msgid "No data"
+msgstr "Данных нет"
+
+#: add-on/gallery-recall/index.php:452 add-on/gallery-recall/index.php:491
+#: add-on/gallery-recall/index.php:583
+msgid "Error"
+msgstr "Ошибка"
+
+#: add-on/gallery-recall/index.php:591
+msgid "Do you want to delete?"
+msgstr "Действительно удалить?"
+
+#: add-on/gallery-recall/index.php:665 add-on/gallery-recall/index.php:677
+msgid "You have reached the limit of downloads"
+msgstr "Вы достигли лимита загрузки"
+
+#: add-on/gallery-recall/upload-file.php:18
+msgid "File size exceeded!"
+msgstr "Размер файла превышен!"
+
 #: add-on/getresponse-manager/index.php:1 add-on/groups/class_group.php:203
 #: add-on/justclick-manager/index.php:1
 #: add-on/partners-system/admin-pages.php:125
@@ -180,7 +411,9 @@ msgstr "Закрыть настройки"
 msgid "Delete group"
 msgstr "Удалить группу"
 
-#: add-on/groups/class_group.php:234
+#: add-on/groups/class_group.php:234 add-on/money-wallet/index.php:550
+#: add-on/money-wallet/index.php:573 add-on/money-wallet/index.php:591
+#: add-on/presents/index.php:119 add-on/presents/index.php:159
 msgid "Are you sure?"
 msgstr "Вы серьезно?"
 
@@ -192,7 +425,7 @@ msgstr "Запросы на доступ к группе"
 msgid "Take"
 msgstr "Одобрить"
 
-#: add-on/groups/class_group.php:248
+#: add-on/groups/class_group.php:248 add-on/money-wallet/index.php:510
 msgid "Reject"
 msgstr "Отклонить"
 
@@ -392,10 +625,6 @@ msgid ""
 "is moderated, it is necessary to have on the website right below the Author"
 msgstr ""
 
-#: add-on/groups/index.php:280
-msgid "Rating value publications"
-msgstr "Значение рейтинга публикаций"
-
 #: add-on/groups/index.php:282
 msgid ""
 "Specify a value of negative and positive evaluations for publishing in the "
@@ -409,26 +638,6 @@ msgid ""
 "The influence of the rating of the publications in the group on the rating "
 "of the author"
 msgstr "Влияние рейтинга публикации группы на общий рейтинг автора"
-
-#: add-on/groups/index.php:287 add-on/profile/index.php:210
-#: add-on/profile/index.php:607 add-on/profile/index.php:612
-#: add-on/profile/index.php:617 add-on/profile/index.php:622
-#: add-on/profile/index.php:627 add-on/publicpost/index.php:226
-#: add-on/publicpost/index.php:397 add-on/rayting/addon-options.php:43
-#: add-on/rayting/addon-options.php:63 add-on/rayting/index.php:50
-#: add-on/review/index.php:163 admin-pages.php:38 admin-pages.php:289
-msgid "No"
-msgstr "Нет"
-
-#: add-on/groups/index.php:287 add-on/profile/index.php:210
-#: add-on/profile/index.php:607 add-on/profile/index.php:612
-#: add-on/profile/index.php:617 add-on/profile/index.php:622
-#: add-on/profile/index.php:627 add-on/publicpost/index.php:226
-#: add-on/publicpost/index.php:397 add-on/rayting/addon-options.php:43
-#: add-on/rayting/addon-options.php:63 add-on/rayting/index.php:51
-#: add-on/review/index.php:163 admin-pages.php:39 admin-pages.php:289
-msgid "Yes"
-msgstr "Да"
 
 #: add-on/groups/index.php:414 add-on/groups/index.php:416
 msgid "To create a group"
@@ -479,10 +688,6 @@ msgstr "Категории группы"
 msgid "Published in the group"
 msgstr "Публикация в группе"
 
-#: add-on/groups/index.php:730
-msgid "Close"
-msgstr "Закрыть"
-
 #: add-on/groups/index.php:752
 msgid "Request access to the group approved!"
 msgstr "Запрос на доступ к группе одобрен!"
@@ -527,6 +732,38 @@ msgstr "Участники"
 msgid "Remove from group"
 msgstr "Удалить из группы"
 
+#: add-on/last-visitor/index.php:8
+msgid "Last visitors"
+msgstr "Последние посетители"
+
+#: add-on/last-visitor/index.php:11
+msgid "Display"
+msgstr "Отображать"
+
+#: add-on/last-visitor/index.php:13 admin-pages.php:211
+msgid "The order"
+msgstr "На странице"
+
+#: add-on/last-visitor/index.php:16
+msgid "Only the owner"
+msgstr "Только хозяину личного кабинета"
+
+#: add-on/last-visitor/index.php:16
+msgid "Всем"
+msgstr ""
+
+#: add-on/last-visitor/index.php:19
+msgid "The number of visitors"
+msgstr "Кол-во посетителей"
+
+#: add-on/last-visitor/index.php:21
+msgid "the default is 10"
+msgstr "по-умолчанию 10"
+
+#: add-on/last-visitor/index.php:29
+msgid "Последние посетители"
+msgstr ""
+
 #: add-on/magazin/functions/init.php:17 add-on/magazin/functions/init.php:18
 msgid "Attach image or download it"
 msgstr "Выбрать изображение или загрузить"
@@ -540,7 +777,7 @@ msgstr "Корзина"
 #: add-on/magazin/functions/shortcodes.php:116 add-on/publicpost/index.php:311
 #: add-on/publicpost/rcl_postlist.php:75
 #: add-on/publicpost/templates/public-form.php:4
-#: add-on/user-account/index.php:508 functions/posts-list.php:37
+#: add-on/user-account/index.php:533 functions/posts-list.php:37
 #: functions/rcl_editfields.php:109 widget.php:47 widget.php:109
 #: widget.php:162
 msgid "Title"
@@ -651,7 +888,8 @@ msgstr "Пересылка файлов"
 msgid "Prohibited"
 msgstr "Запрещено"
 
-#: add-on/message/index.php:189
+#: add-on/message/index.php:189 add-on/money-wallet/index.php:36
+#: add-on/money-wallet/index.php:69
 msgid "Allowed"
 msgstr "Разрешено"
 
@@ -735,7 +973,7 @@ msgstr "Пользователь получит уведомление на по
 msgid "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 msgstr "<b>Enter</b> - перенос строки, <b>Ctrl+Enter</b> - отправить"
 
-#: add-on/message/index.php:424 add-on/user-account/index.php:456
+#: add-on/message/index.php:424 add-on/user-account/index.php:481
 #: templates/form-register.php:20 templates/form-remember.php:13
 msgid "Send"
 msgstr "Отправить"
@@ -821,10 +1059,6 @@ msgstr "Вам новое сообщение!"
 msgid "Go to the correspondence"
 msgstr "Перейти к переписке"
 
-#: add-on/message/index.php:1228
-msgid "Reply"
-msgstr "Ответить"
-
 #: add-on/message/index.php:1281
 msgid "Show more recent posts"
 msgstr "Показать больше последних сообщений"
@@ -890,6 +1124,322 @@ msgstr "новое сообщение"
 #: add-on/message/notify.php:39
 msgid "new messages"
 msgstr "новых сообщений"
+
+#: add-on/money-wallet/index.php:8 add-on/money-wallet/index.php:30
+#: add-on/money-wallet/index.php:439
+msgid "Withdrawal"
+msgstr "Запрос на вывод"
+
+#: add-on/money-wallet/index.php:27
+msgid "Settings personal account"
+msgstr "Настройки личного счета"
+
+#: add-on/money-wallet/index.php:32
+msgid "Allow withdrawals?"
+msgstr "Одобрить запрос на вывод?"
+
+#: add-on/money-wallet/index.php:36 add-on/money-wallet/index.php:69
+msgid "Not allowed"
+msgstr "Отклонить"
+
+#: add-on/money-wallet/index.php:45
+msgid "Payment system which permitted withdrawal"
+msgstr "Платежные системы доступные для запросов на вывод"
+
+#: add-on/money-wallet/index.php:47
+msgid ""
+"Specify comma-separated names of payment systems which the user can choose "
+"to withdraw funds"
+msgstr ""
+"Укажите наименования платежных систем доступных к выбору при формировании "
+"запроса на вывода, разделяя их запятой"
+
+#: add-on/money-wallet/index.php:49
+msgid "The percentage of Commission for withdrawal of funds"
+msgstr "Процент комиссии при выводе средств"
+
+#: add-on/money-wallet/index.php:51
+msgid "If nothing is specified, the withdrawal Commission is not charged"
+msgstr "Если ничего не указано, то комиссия не удерживается"
+
+#: add-on/money-wallet/index.php:54
+msgid "Bring personal account in the advanced tab"
+msgstr "Выводить личный счет пользователя во вкладке личного кабинета"
+
+#: add-on/money-wallet/index.php:64
+msgid "The transfer of funds"
+msgstr "Перевод средств"
+
+#: add-on/money-wallet/index.php:66
+msgid "Transfer of funds between users"
+msgstr "Перевод средств между пользователями"
+
+#: add-on/money-wallet/index.php:106 add-on/user-account/index.php:223
+msgid "Balance"
+msgstr "Баланс"
+
+#: add-on/money-wallet/index.php:123
+msgid "The withdrawal request"
+msgstr "Запрос на вывод средств"
+
+#: add-on/money-wallet/index.php:141
+msgid "Date of request"
+msgstr "Дата запроса"
+
+#: add-on/money-wallet/index.php:142
+msgid "The amount of the request"
+msgstr "Сумма запроса"
+
+#: add-on/money-wallet/index.php:143 add-on/money-wallet/index.php:354
+msgid "The Commission"
+msgstr "Комиссия"
+
+#: add-on/money-wallet/index.php:144 add-on/money-wallet/index.php:355
+#: add-on/money-wallet/index.php:478
+msgid "Withdrawal amount"
+msgstr "Сумму на вывод"
+
+#: add-on/money-wallet/index.php:145 add-on/money-wallet/index.php:200
+#: add-on/money-wallet/index.php:356 add-on/money-wallet/index.php:479
+msgid "Comment"
+msgstr "Комментарий"
+
+#: add-on/money-wallet/index.php:146 add-on/money-wallet/index.php:357
+#: add-on/money-wallet/index.php:481 add-on/profile/index.php:448
+#: add-on/profile/index.php:753 add-on/publicpost/index.php:311
+#: add-on/publicpost/rcl_postlist.php:76 functions/posts-list.php:37
+msgid "Status"
+msgstr "Статус"
+
+#: add-on/money-wallet/index.php:155 add-on/money-wallet/index.php:491
+msgid "Consideration"
+msgstr "на рассмотрении"
+
+#: add-on/money-wallet/index.php:156 add-on/money-wallet/index.php:367
+msgid "cancel"
+msgstr "отмена"
+
+#: add-on/money-wallet/index.php:166
+msgid "Payment system"
+msgstr "Платежные системы"
+
+#: add-on/money-wallet/index.php:167
+msgid "The number of purse"
+msgstr "Номер кошелька"
+
+#: add-on/money-wallet/index.php:168
+msgid "Withdrawal amount (Commission for withdrawal %s %)"
+msgstr "Сумма на вывод (Комиссия при выводе %s %)"
+
+#: add-on/money-wallet/index.php:169
+msgid "Send enquiry"
+msgstr "Отправить запрос"
+
+#: add-on/money-wallet/index.php:192
+msgid "The history of balance changes"
+msgstr "История изменения баланса"
+
+#: add-on/money-wallet/index.php:193
+msgid "The account balance"
+msgstr "Остаток на счету"
+
+#: add-on/money-wallet/index.php:197
+msgid "Parish"
+msgstr "Приход"
+
+#: add-on/money-wallet/index.php:198
+msgid "Consumption"
+msgstr "Расход"
+
+#: add-on/money-wallet/index.php:199 add-on/money-wallet/index.php:352
+#: add-on/money-wallet/index.php:480 add-on/publicpost/index.php:311
+#: add-on/publicpost/rcl_postlist.php:74 functions/posts-list.php:37
+#: functions/rcl_editfields.php:142
+msgid "Date"
+msgstr "Дата"
+
+#: add-on/money-wallet/index.php:217
+msgid "You haven`t had the movements of funds on the personal account"
+msgstr "У вас еще не было движений средств на личном счету"
+
+#: add-on/money-wallet/index.php:243
+msgid "Make transfer"
+msgstr "Сделать перевод"
+
+#: add-on/money-wallet/index.php:245 add-on/money-wallet/index.php:353
+msgid "Sum"
+msgstr "Сумма"
+
+#: add-on/money-wallet/index.php:246
+msgid "ОК"
+msgstr "Ок"
+
+#: add-on/money-wallet/index.php:283
+msgid "The transfer of funds to the user"
+msgstr "Перевод средств пользователю"
+
+#: add-on/money-wallet/index.php:284
+msgid "The funds coming from the user"
+msgstr "Перевод средств от пользователя"
+
+#: add-on/money-wallet/index.php:286
+msgid "Money transfer"
+msgstr "Денежный перевод"
+
+#: add-on/money-wallet/index.php:295
+msgid "The funds were successfully transferred to the account of that user"
+msgstr "Перевод денежных средств был успешно совершен"
+
+#: add-on/money-wallet/index.php:349
+msgid "The withdrawal request is well formed"
+msgstr "Запрос на вывод средств сформирован"
+
+#: add-on/money-wallet/index.php:366
+msgid "Processing"
+msgstr "Обработка"
+
+#: add-on/money-wallet/index.php:403
+msgid "The withdrawal request was cancelled"
+msgstr "Запрос на вывод отменен"
+
+#: add-on/money-wallet/index.php:425
+msgid "For a withdrawal to"
+msgstr "Для вывода средств на счет"
+
+#: add-on/money-wallet/index.php:429
+msgid "The request for withdrawal is made"
+msgstr "Запрос на вывод средств произведен"
+
+#: add-on/money-wallet/index.php:454
+msgid "Management of withdrawal requests"
+msgstr "Управление запросами на вывод средств"
+
+#: add-on/money-wallet/index.php:466 functions/rcl_addons.php:118
+msgid "Action"
+msgstr "Действие"
+
+#: add-on/money-wallet/index.php:467 add-on/publicpost/rcl_publicform.php:167
+#: add-on/review/index.php:202 functions/rcl_addons.php:167
+#: functions/rcl_editfields.php:120
+msgid "Delete"
+msgstr "Удалить"
+
+#: add-on/money-wallet/index.php:469 functions/rcl_addons.php:122
+msgid "Apply"
+msgstr "Принять"
+
+#: add-on/money-wallet/index.php:476
+msgid "User"
+msgstr "Пользователь"
+
+#: add-on/money-wallet/index.php:477
+msgid "Amount request"
+msgstr "Сумма запроса"
+
+#: add-on/money-wallet/index.php:496
+msgid "Made"
+msgstr "Произведен"
+
+#: add-on/money-wallet/index.php:502
+msgid "To balance user"
+msgstr "Баланс пользователя"
+
+#: add-on/money-wallet/index.php:511
+msgid "Approve"
+msgstr "Одобрен"
+
+#: add-on/money-wallet/index.php:518
+msgid "At the moment, the query is no"
+msgstr "На данный момент, запросов нет"
+
+#: add-on/money-wallet/index.php:531
+msgid "History"
+msgstr "История"
+
+#: add-on/money-wallet/index.php:549 add-on/money-wallet/index.php:569
+msgid "Specify the amount of transfer!"
+msgstr "Укажите сумму к переводу!"
+
+#: add-on/money-wallet/index.php:560 add-on/money-wallet/index.php:583
+msgid "Your account has insufficient funds!"
+msgstr "На вашем счету недостаточно средств!"
+
+#: add-on/money-wallet/index.php:572
+msgid "Specify the number of purse!"
+msgstr "Укажите номер кошелька!"
+
+#: add-on/presents/class_presents.php:1
+msgid "Affordable gifts"
+msgstr "Доступные подарки"
+
+#: add-on/presents/class_presents.php:1 functions/shortcodes.php:358
+msgid "Free"
+msgstr "Бесплатно"
+
+#: add-on/presents/class_presents.php:1
+msgid "A gift from the user"
+msgstr "Подарок от пользователя"
+
+#: add-on/presents/class_presents.php:1 add-on/presents/index.php:112
+#: add-on/presents/index.php:152
+msgid "Gifts not found!"
+msgstr "Подарки не найдены!"
+
+#: add-on/presents/class_presents.php:1
+msgid "You already gave this gift!"
+msgstr "Вы уже дарили этот подарок!"
+
+#: add-on/presents/class_presents.php:1
+msgid "You have insufficient funds!"
+msgstr "У вас недостаточно средств!"
+
+#: add-on/presents/class_presents.php:1
+msgid "Purchase a gift for"
+msgstr "Приобретение подарка для"
+
+#: add-on/presents/index.php:8
+msgid "To make a gift"
+msgstr "Сделать подарок"
+
+#: add-on/presents/index.php:18
+msgid "Gifts"
+msgstr "Подарки"
+
+#: add-on/presents/index.php:21
+msgid "The received gifts"
+msgstr "Полученные подарки"
+
+#: add-on/presents/index.php:28
+msgid "A gift from"
+msgstr "Подарок от"
+
+#: add-on/presents/index.php:55
+msgid "File gift"
+msgstr "Файл подарка"
+
+#: add-on/presents/index.php:57 functions/rcl_addons.php:142
+msgid "Choose"
+msgstr "Изменить"
+
+#: add-on/presents/index.php:58
+msgid "Price"
+msgstr "Цена"
+
+#: add-on/presents/index.php:59
+msgid "More"
+msgstr "Еще"
+
+#: add-on/presents/index.php:71
+msgid "Manage gifts Wp-Recall"
+msgstr "Управление подарками Wp-Recall"
+
+#: add-on/presents/index.php:85 functions/rcl_editfields.php:56
+msgid "Save"
+msgstr "Сохранить"
+
+#: add-on/presents/index.php:130
+msgid "A gift is not found!"
+msgstr "Подарок не найден!"
 
 #: add-on/profile/index.php:5
 msgid "Profile fields"
@@ -1011,12 +1561,6 @@ msgstr "Замечание"
 msgid "The password must be at least 7 characters"
 msgstr "Пароль должен содержать не менее 7 символов"
 
-#: add-on/profile/index.php:448 add-on/profile/index.php:753
-#: add-on/publicpost/index.php:311 add-on/publicpost/rcl_postlist.php:76
-#: functions/posts-list.php:37
-msgid "Status"
-msgstr "Статус"
-
 #: add-on/profile/index.php:517
 msgid "Update profile"
 msgstr "Обновить профиль"
@@ -1131,8 +1675,8 @@ msgid "Description"
 msgstr "Описание"
 
 #: add-on/publicpost/classes.php:46 add-on/publicpost/index.php:54
-#: add-on/user-account/index.php:163 add-on/user-account/index.php:174
-#: add-on/user-account/index.php:184 admin-pages.php:105 widget.php:58
+#: add-on/user-account/index.php:189 add-on/user-account/index.php:199
+#: add-on/user-account/index.php:208 admin-pages.php:105 widget.php:58
 #: widget.php:116
 msgid "Not selected"
 msgstr "Не выбрано"
@@ -1144,10 +1688,6 @@ msgstr "Отображать прикрепленные изображения �
 #: add-on/publicpost/classes.php:238
 msgid "To add files to the download queue"
 msgstr "Добавить файлы в очередь загрузки"
-
-#: add-on/publicpost/classes.php:254
-msgid "Add"
-msgstr "Добавить"
 
 #: add-on/publicpost/classes.php:281
 msgid "To assign a thumbnail"
@@ -1274,11 +1814,6 @@ msgstr "Кол-во изображений в галерее Wp-Recall"
 msgid "The maximum image size, Mb"
 msgstr "Максимальный размер изображений, Mb"
 
-#: add-on/publicpost/index.php:154
-msgid ""
-"To limit image uploads to publish this value in megabytes. By default, 2MB"
-msgstr "Ограничение размера загружаемого изображения, по-умолчанию 2МБ"
-
 #: add-on/publicpost/index.php:156
 msgid "The size in the editor by default"
 msgstr "Размер изображений в редакторе по-умолчанию"
@@ -1379,11 +1914,6 @@ msgstr "Записи"
 msgid "Posts"
 msgstr "Публикации"
 
-#: add-on/publicpost/index.php:311 add-on/publicpost/rcl_postlist.php:74
-#: functions/posts-list.php:37 functions/rcl_editfields.php:142
-msgid "Date"
-msgstr "Дата"
-
 #: add-on/publicpost/index.php:315 add-on/publicpost/rcl_postlist.php:80
 #: functions/posts-list.php:42
 msgid "on approval"
@@ -1458,11 +1988,6 @@ msgstr "Публиковать"
 #: add-on/publicpost/rcl_publicform.php:167
 msgid "Are you sure? Then restore never work!"
 msgstr "Вы серьезно? Потом не получиться восстановить!"
-
-#: add-on/publicpost/rcl_publicform.php:167 add-on/review/index.php:202
-#: functions/rcl_addons.php:167 functions/rcl_editfields.php:120
-msgid "Delete"
-msgstr "Удалить"
 
 #: add-on/publicpost/rcl_publicform.php:176
 msgid "You must be logged in to post. Login or register"
@@ -1725,7 +2250,7 @@ msgstr "Отрицательно"
 msgid "Add a review"
 msgstr "Добавить отзыв"
 
-#: add-on/user-account/index.php:63 add-on/user-account/index.php:74
+#: add-on/user-account/index.php:63 add-on/user-account/index.php:80
 msgid "Payment systems"
 msgstr "Платежные системы"
 
@@ -1733,27 +2258,23 @@ msgstr "Платежные системы"
 msgid "Payments"
 msgstr "Платежи"
 
-#: add-on/user-account/index.php:78
+#: add-on/user-account/index.php:85
 msgid "Payment"
 msgstr "Оплата заказа"
 
-#: add-on/user-account/index.php:79
+#: add-on/user-account/index.php:87
 msgid "Type of payment"
 msgstr "Тип платежа"
 
-#: add-on/user-account/index.php:82
-msgid "Funds from the personal account of the user"
-msgstr "Средства личного счета"
-
-#: add-on/user-account/index.php:83
+#: add-on/user-account/index.php:91
 msgid "Directly through the payment system"
 msgstr "Оплата через платежные системы"
 
-#: add-on/user-account/index.php:84
+#: add-on/user-account/index.php:92
 msgid "To offer both options"
 msgstr "Предложить оба варианта"
 
-#: add-on/user-account/index.php:86
+#: add-on/user-account/index.php:95
 msgid ""
 "If the connection to the payment aggregator not in use, it is possible to "
 "set only \"Funds from the personal account user\"!"
@@ -1761,157 +2282,165 @@ msgstr ""
 "Если подключение к платежному агрегатору не используется, то используйте "
 "оплату <b>только с личного счета пользователя!</b>"
 
-#: add-on/user-account/index.php:90
+#: add-on/user-account/index.php:97
 msgid "The connection to payment aggregator"
 msgstr "Подключение к платежному агрегатору"
 
-#: add-on/user-account/index.php:91
+#: add-on/user-account/index.php:98
 msgid "Used type of connection"
 msgstr "Используемый тип подключения"
 
-#: add-on/user-account/index.php:94 admin-pages.php:236
+#: add-on/user-account/index.php:103 admin-pages.php:236
 msgid "Not used"
 msgstr "Не используется"
 
-#: add-on/user-account/index.php:102
+#: add-on/user-account/index.php:104
+msgid "Robokassa"
+msgstr ""
+
+#: add-on/user-account/index.php:105
+msgid "Interkassa"
+msgstr ""
+
+#: add-on/user-account/index.php:106
+msgid "Yandex.Kassa"
+msgstr ""
+
+#: add-on/user-account/index.php:115
 msgid "Connection settings ROBOKASSA"
 msgstr "Настройки подключения Робокассы"
 
-#: add-on/user-account/index.php:103 add-on/user-account/index.php:124
+#: add-on/user-account/index.php:116 add-on/user-account/index.php:143
 msgid "The ID of the store"
 msgstr "Идентификатор магазина"
 
-#: add-on/user-account/index.php:105
+#: add-on/user-account/index.php:118
 msgid "1 Password"
 msgstr "Первый пароль"
 
-#: add-on/user-account/index.php:107
+#: add-on/user-account/index.php:120
 msgid "2 Password"
 msgstr "Второй пароль"
 
-#: add-on/user-account/index.php:109
+#: add-on/user-account/index.php:122
 msgid "The status of the account ROBOKASSA"
 msgstr "Статус аккаунта Робокассы"
 
-#: add-on/user-account/index.php:112 add-on/user-account/index.php:129
-msgid "Test"
-msgstr "Тестовый"
-
-#: add-on/user-account/index.php:113 add-on/user-account/index.php:130
+#: add-on/user-account/index.php:126 add-on/user-account/index.php:149
 msgid "Work"
 msgstr "Рабочий"
 
-#: add-on/user-account/index.php:119
+#: add-on/user-account/index.php:127 add-on/user-account/index.php:150
+msgid "Test"
+msgstr "Тестовый"
+
+#: add-on/user-account/index.php:138
 msgid "Connection settings Interkassa"
 msgstr "Настройки подключения Интеркассы"
 
-#: add-on/user-account/index.php:120
+#: add-on/user-account/index.php:139
 msgid "Secret Key"
 msgstr "Секретный ключ"
 
-#: add-on/user-account/index.php:122
+#: add-on/user-account/index.php:141
 msgid "Test Key"
 msgstr "Тестовый ключ"
 
-#: add-on/user-account/index.php:126
+#: add-on/user-account/index.php:145
 msgid "The status of the account Interkassa"
 msgstr "Статус аккаунта Интеркассы"
 
-#: add-on/user-account/index.php:137
+#: add-on/user-account/index.php:161
 msgid "Connection settings Yandex.Kassa"
 msgstr "Настройки подключения Яндекс.Кассы"
 
-#: add-on/user-account/index.php:138
+#: add-on/user-account/index.php:162
 msgid "ID cash"
 msgstr "Идентификатор кошелька"
 
-#: add-on/user-account/index.php:140
+#: add-on/user-account/index.php:164
 msgid "The room showcases"
 msgstr "Витрина"
 
-#: add-on/user-account/index.php:142
+#: add-on/user-account/index.php:166
 msgid "The secret word"
 msgstr "Секретное слово"
 
-#: add-on/user-account/index.php:148
+#: add-on/user-account/index.php:175
 msgid "Service page payment systems"
 msgstr "Сервисные страницы платежных систем"
 
-#: add-on/user-account/index.php:159
+#: add-on/user-account/index.php:185
 msgid "Page RESULT"
-msgstr ""
+msgstr "Страница RESULT"
 
-#: add-on/user-account/index.php:167
+#: add-on/user-account/index.php:192
 msgid "For Interkassa: URL of interaction"
 msgstr "Для Интеркассы: URL взаимодействия"
 
-#: add-on/user-account/index.php:168
+#: add-on/user-account/index.php:193
 msgid "For Yandex.Cash: checkURL and avisoURL"
 msgstr "Для Яндекс.Кассы: checkURL and avisoURL"
 
-#: add-on/user-account/index.php:170
+#: add-on/user-account/index.php:195
 msgid "Page SUCCESS"
 msgstr "Страница SUCCESS"
 
-#: add-on/user-account/index.php:178
+#: add-on/user-account/index.php:202
 msgid "For Interkassa: successful payment URL"
 msgstr "Для Интеркассы: URL успешного платежа"
 
-#: add-on/user-account/index.php:180
+#: add-on/user-account/index.php:204
 msgid "The successful payment page"
 msgstr "Страница успешного платежа"
 
-#: add-on/user-account/index.php:198
-msgid "Balance"
-msgstr "Баланс"
-
-#: add-on/user-account/index.php:406
+#: add-on/user-account/index.php:431
 msgid "The change in the balance"
 msgstr "Изменить баланс"
 
-#: add-on/user-account/index.php:428 add-on/user-account/index.php:475
+#: add-on/user-account/index.php:453 add-on/user-account/index.php:500
 msgid "Personal account of the user"
 msgstr "Личный счет пользователя"
 
-#: add-on/user-account/index.php:445
+#: add-on/user-account/index.php:470
 msgid "RUB"
 msgstr ""
 
-#: add-on/user-account/index.php:450
+#: add-on/user-account/index.php:475
 msgid "Deposit"
 msgstr "Пополнить"
 
-#: add-on/user-account/index.php:452
+#: add-on/user-account/index.php:477
 msgid "To recharge your account"
 msgstr "Для пополнения своего личного счета"
 
-#: add-on/user-account/index.php:454
+#: add-on/user-account/index.php:479
 msgid "Enter the amount required"
 msgstr "Введите требуемую сумму"
 
-#: add-on/user-account/index.php:477 add-on/user-account/index.php:505
+#: add-on/user-account/index.php:502 add-on/user-account/index.php:530
 #: admin-pages.php:110 functions/loginform.php:145 recall.php:85
 #: templates/recallbar.php:8
 msgid "Personal account"
 msgstr "Личный счет"
 
-#: add-on/user-account/index.php:577
+#: add-on/user-account/index.php:602
 msgid "Income dynamics"
 msgstr "Динамика платежей"
 
-#: add-on/user-account/index.php:578
+#: add-on/user-account/index.php:603
 msgid "The time period"
 msgstr "Период времени"
 
-#: add-on/user-account/index.php:580
+#: add-on/user-account/index.php:605
 msgid "\"Days/Months\""
 msgstr "\"Дни/Месяцы\""
 
-#: add-on/user-account/index.php:580
+#: add-on/user-account/index.php:605
 msgid "\"Payments (PCs.)\""
 msgstr "\"Платежи (шт.)\""
 
-#: add-on/user-account/index.php:580
+#: add-on/user-account/index.php:605
 msgid "\"Income (thousands)\""
 msgstr "\"Доход (тыс.)\""
 
@@ -2110,10 +2639,6 @@ msgstr "Оформление"
 msgid "The placement of the buttons sections"
 msgstr "Размещение кнопок вывода вкладок"
 
-#: admin-pages.php:174
-msgid "Top"
-msgstr "Сверху"
-
 #: admin-pages.php:175
 msgid "Left"
 msgstr "Слева"
@@ -2155,10 +2680,6 @@ msgstr ""
 msgid "Login and register"
 msgstr "Вход и регистрация"
 
-#: admin-pages.php:211
-msgid "The order"
-msgstr "На странице"
-
 #: admin-pages.php:216
 msgid "Floating form"
 msgstr "Всплывающая форма"
@@ -2181,6 +2702,8 @@ msgid ""
 "separate page, create the page, to arrange its contents shortcode "
 "[loginform] and specify the ID of this page in the box above."
 msgstr ""
+"Примечание: Если вывод формы на отдельной странице, то создайте страницу с "
+"шорткодом [loginform] и укажите ее идентификатор тут."
 
 #: admin-pages.php:232
 msgid "A registration confirmation by the user"
@@ -2468,10 +2991,6 @@ msgstr "Активно"
 msgid "Inactive"
 msgstr "Неактивно"
 
-#: functions/rcl_addons.php:118
-msgid "Action"
-msgstr "Действие"
-
 #: functions/rcl_addons.php:119 functions/rcl_addons.php:150
 msgid "Deactivate"
 msgstr "Деактивировать"
@@ -2480,10 +2999,6 @@ msgstr "Деактивировать"
 msgid "To activate"
 msgstr "Активировать"
 
-#: functions/rcl_addons.php:122
-msgid "Apply"
-msgstr "Принять"
-
 #: functions/rcl_addons.php:129
 msgid "Select all"
 msgstr "Выбрать все"
@@ -2491,10 +3006,6 @@ msgstr "Выбрать все"
 #: functions/rcl_addons.php:132
 msgid "Additions"
 msgstr "Дополнения"
-
-#: functions/rcl_addons.php:142
-msgid "Choose"
-msgstr "Изменить"
 
 #: functions/rcl_addons.php:155 functions/rcl_addons.php:159
 msgid "Settings"
@@ -2539,10 +3050,6 @@ msgstr "Идентификаторы разделяются запятой"
 #: functions/rcl_editfields.php:55
 msgid "Add field"
 msgstr "Добавить поле"
-
-#: functions/rcl_editfields.php:56
-msgid "Save"
-msgstr "Сохранить"
 
 #: functions/rcl_editfields.php:89
 msgid "the list of options to share the \" # \" sign"
@@ -2616,11 +3123,11 @@ msgstr "были удалены из базы данных"
 msgid "The name of the tab in the personal Cabinet"
 msgstr ""
 
-#: functions/rcl_options.php:51 functions/rcl_options.php:150
+#: functions/rcl_options.php:51 functions/rcl_options.php:156
 msgid "Enter your inscription on the toggle button tab in the personal Cabinet"
 msgstr ""
 
-#: functions/rcl_options.php:147
+#: functions/rcl_options.php:153
 msgid "The name of the tab"
 msgstr "Имя вкладки"
 
@@ -2635,10 +3142,6 @@ msgstr "Публикации"
 #: functions/recallbar.php:21
 msgid "In bookmarks"
 msgstr "В закладки"
-
-#: functions/recallbar.php:24
-msgid "My bookmarks"
-msgstr "Мои закладки"
 
 #: functions/register.php:121
 msgid "Confirm your registration!"
@@ -2699,10 +3202,6 @@ msgid ""
 msgstr ""
 "Начните пользоваться возможностями своего личного кабинета, войдите или "
 "зарегистрируйтесь на сайте"
-
-#: functions/shortcodes.php:358
-msgid "Free"
-msgstr "Бесплатно"
 
 #: functions/tabs_options.php:8
 msgid "Neither one tab personal account not found"
@@ -2799,6 +3298,9 @@ msgstr "Блок с основной информацией профиля"
 #: widget.php:159
 msgid "Control panel"
 msgstr "Панель управления"
+
+#~ msgid "Funds from the personal account of the user"
+#~ msgstr "Средства личного счета"
 
 #~ msgid ""
 #~ "Login or register<br />to view the latest publications and comments<br /"
