@@ -422,7 +422,7 @@ global $wpdb;
 	'.wp_nonce_field('get-csv-file','_wpnonce',true,false).'
 	<p><input type="checkbox" name="post_title" checked value="1"> Добавить заголовок</p>
 	<p><input type="checkbox" name="post_content" checked value="1"> Добавить описание</p>
-	<h3>Произвольные поля:</h3><table><tr>';
+	<h3>Произвольные поля товаров:</h3><table><tr>';
 
 	$fields = array(
 		'price-products'=>'Цена товара в основной валюте',
@@ -435,12 +435,15 @@ global $wpdb;
 		'related_products_recall'=>'ID товарной категории выводимой в блоке рекомендуемых или похожих товаров',
 	);
 
+	$fields = apply_filters('products_field_list',$fields);
+
 	foreach($fields as $key=>$name){
 		$table_price .= '<b>'.$key.'</b> - '.$name.'<br />';
 	}
 
 	$n=1;
 	foreach ($postmeta as $key){
+		if(!isset($fields[$key->meta_key])) continue;
 		if (strpos($key->meta_key, "goods_id") === FALSE && strpos($key->meta_key , "_") !== 0){
 			$n++;
 			$check = (isset($fields[$key->meta_key]))?1:0;
