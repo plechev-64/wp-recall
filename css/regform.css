@@ -105,6 +105,10 @@
 .panel_lk_recall .form-tab-rcl input[type="submit"] {
     float: right;
 }
+.panel_lk_recall .form-tab-rcl .input-container {
+    clear:both;
+    overflow:hidden;
+}
 .panel_lk_recall #uLogin_form {
     margin-top: 10px;
 }

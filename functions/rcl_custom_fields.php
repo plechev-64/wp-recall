@@ -1,51 +1,5 @@
 <?php
 
-function get_custom_fields_rcl($post_id,$posttype=false,$id_form=false){
-    
-    if($post_id){
-            $post = get_post($post_id);
-            $posttype = $post->post_type;
-        }
-        
-    switch($posttype){
-        case 'post': 
-                if(isset($post)) $id_form = get_post_meta($post->ID,'publicform-id',1);
-                if(!$id_form) $id_form = 1;
-                $id_field = 'custom_public_fields_'.$id_form; 
-        break;
-        case 'products': $id_field = 'custom_saleform_fields'; break;
-        default: $id_field = 'custom_fields_'.$posttype;
-    }
-
-    return get_option($id_field);
-}
-
-function get_custom_post_meta_recall($post_id){
-        
-    $get_fields = get_custom_fields_rcl($post_id);
-
-    if($get_fields){
-
-        $cf = new Rcl_Custom_Fields();
-        foreach((array)$get_fields as $custom_field){
-            $p_meta = get_post_meta($post_id,$custom_field['slug'],true);           
-            $show_custom_field .= $cf->get_field_value($custom_field,$p_meta);
-        }
-
-        return $show_custom_field;
-    }	
-}
-
-function get_post_meta_recall($content){
-    global $post,$rcl_options;
-    if(!isset($rcl_options['pm_rcl'])||!$rcl_options['pm_rcl'])return $content;
-    $pm = get_custom_post_meta_recall($post->ID);
-    if(!$rcl_options['pm_place']) $content .= $pm;
-    else $content = $pm.$content;
-    return $content;
-}
-if(!is_admin()) add_filter('the_content','get_post_meta_recall');
-
 class Rcl_Custom_Fields{
     
     public $value;
@@ -65,7 +19,7 @@ class Rcl_Custom_Fields{
         
         if(!$field['type']) return false;
         
-        if($field['type']=='date') add_datepicker_scripts();
+        if($field['type']=='date') rcl_datepicker_scripts();
         
         $callback = 'get_type_'.$field['type'];
         
@@ -191,6 +145,8 @@ class Rcl_Custom_Fields{
         $get_fields = get_option( 'custom_profile_field' );
         
         if(!$get_fields) return false;
+		
+		$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 			
         foreach((array)$get_fields as $custom_field){				
             $slug = $custom_field['slug'];
@@ -217,4 +173,50 @@ class Rcl_Custom_Fields{
     }
     
 }
+
+function rcl_get_custom_fields($post_id,$posttype=false,$id_form=false){
+    
+    if($post_id){
+            $post = get_post($post_id);
+            $posttype = $post->post_type;
+        }
+        
+    switch($posttype){
+        case 'post': 
+                if(isset($post)) $id_form = get_post_meta($post->ID,'publicform-id',1);
+                if(!$id_form) $id_form = 1;
+                $id_field = 'custom_public_fields_'.$id_form; 
+        break;
+        case 'products': $id_field = 'custom_saleform_fields'; break;
+        default: $id_field = 'custom_fields_'.$posttype;
+    }
+
+    return get_option($id_field);
+}
+
+function rcl_get_custom_post_meta($post_id){
+        
+    $get_fields = rcl_get_custom_fields($post_id);
+
+    if($get_fields){
+
+        $cf = new Rcl_Custom_Fields();
+        foreach((array)$get_fields as $custom_field){
+            $p_meta = get_post_meta($post_id,$custom_field['slug'],true);           
+            $show_custom_field .= $cf->get_field_value($custom_field,$p_meta);
+        }
+
+        return $show_custom_field;
+    }	
+}
+
+function rcl_get_post_meta($content){
+    global $post,$rcl_options;
+    if(!isset($rcl_options['pm_rcl'])||!$rcl_options['pm_rcl'])return $content;
+    $pm = rcl_get_custom_post_meta($post->ID);
+    if(!$rcl_options['pm_place']) $content .= $pm;
+    else $content = $pm.$content;
+    return $content;
+}
+if(!is_admin()) add_filter('the_content','rcl_get_post_meta');
 

@@ -1,40 +1,40 @@
 <?php
 
-function referer_url($typeform=false){
-    $url = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];				
-				
+function rcl_referer_url($typeform=false){
+    $url = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+
     if ( false !== strpos($url, '?action-rcl') ){
             $matches = '';
-            preg_match_all('/(?<=http\:\/\/)[A-zА-я0-9\/\.\-\s\ё]*(?=\?action\-rcl)/iu',$url, $matches); 
+            preg_match_all('/(?<=http\:\/\/)[A-zА-я0-9\/\.\-\s\ё]*(?=\?action\-rcl)/iu',$url, $matches);
             $host = $matches[0][0];
     }
     if ( false !== strpos($url, '&action-rcl') ){
-            preg_match_all('/(?<=http\:\/\/)[A-zА-я0-9\/\.\_\-\s\ё]*(&=\&action\-rcl)/iu',$url, $matches); 
+            preg_match_all('/(?<=http\:\/\/)[A-zА-я0-9\/\.\_\-\s\ё]*(&=\&action\-rcl)/iu',$url, $matches);
             $host = $matches[0][0];
     }
     if(!$host) $host = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
     $host = 'http://'.$host;
-    if($typeform=='remember') $host = get_redirect_url_rcl($host).'action-rcl=remember&success=true';
+    if($typeform=='remember') $host = rcl_format_url($host).'action-rcl=remember&success=true';
     echo $host;
 }
 
 //Добавляем фильтр для формы авторизации
-add_action('login_form','add_filters_signform_form',1);
-function add_filters_signform_form(){
+add_action('login_form','rcl_filters_signform',1);
+function rcl_filters_signform(){
     $signfields = '';
     echo apply_filters('signform_fields_rcl',$signfields);
 }
 //Добавляем фильтр для формы регистрации
-add_action('register_form','add_filters_register_form',1);
-function add_filters_register_form(){
+add_action('register_form','rcl_filters_regform',1);
+function rcl_filters_regform(){
     $regfields = '';
     echo apply_filters('regform_fields_rcl',$regfields);
 }
 
-add_filter('regform_fields_rcl','add_parole_register_form',5);
-function add_parole_register_form($content){
+add_filter('regform_fields_rcl','rcl_password_regform',5);
+function rcl_password_regform($content){
     global $rcl_options;
-    
+
     $content .= '<div class="form-block-rcl">'
             . '<label>'.__('Password','rcl').' <span class="required">*</span></label>';
     if($rcl_options['difficulty_parole']==1){
@@ -52,23 +52,23 @@ function add_parole_register_form($content){
                 </div>
             </div>';
     }
-    
+
     return $content;
 }
 
 //Добавляем поле повтора пароля в форму регистрации
-add_filter('regform_fields_rcl','get_secondary_password_field',10);
-function get_secondary_password_field($fields){
+add_filter('regform_fields_rcl','rcl_secondary_password',10);
+function rcl_secondary_password($fields){
     global $rcl_options;
     if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return $fields;
-    
+
     $fields .= '<div class="form-block-rcl">
                 <label>'.__('Repeat the password','rcl').' <span class="required">*</span></label>
                 <input required id="secondary-pass-user" type="password" value="" name="secondary-email-user">
                 <div id="notice-chek-password"></div>
             </div>
             <script>jQuery(function(){
-            jQuery("#secondary-pass-user").live("keyup", function(){ 
+            jQuery("#secondary-pass-user").live("keyup", function(){
                 var pr = jQuery("#primary-pass-user").val();
                 var sc = jQuery(this).val();
                 var notice;
@@ -77,20 +77,20 @@ function get_secondary_password_field($fields){
                 jQuery("#notice-chek-password").html(notice);
             });});
         </script>';
-    
+
     return $fields;
 }
 //Вывод произвольных полей профиля в форме регистрации
-add_filter('regform_fields_rcl','get_custom_fields_regform_rcl',20);
-function get_custom_fields_regform_rcl($field){
+add_filter('regform_fields_rcl','rcl_custom_fields_regform',20);
+function rcl_custom_fields_regform($field){
 	$get_fields = get_option( 'custom_profile_field' );
-		
+
 	if($get_fields){
             $get_fields = stripslashes_deep($get_fields);
 
             $cf = new Rcl_Custom_Fields();
 
-            foreach((array)$get_fields as $custom_field){				
+            foreach((array)$get_fields as $custom_field){
                 if($custom_field['register']!=1) continue;
 
                 $custom_field = apply_filters('custom_field_regform',$custom_field);
@@ -108,100 +108,102 @@ function get_custom_fields_regform_rcl($field){
                 $field .= $cf->get_input($custom_field);
                 $field .= '</div>';
 
-            }			
+            }
 	}
 	return $field;
 }
 
-function login_form_rcl(){
-	echo get_authorize_form_rcl('floatform');
+function rcl_login_form(){
+	echo rcl_get_authorize_form('floatform');
 }
-function get_login_form_rcl($atts){
+
+add_shortcode('loginform','rcl_get_login_form');
+function rcl_get_login_form($atts){
 	extract(shortcode_atts(array( 'form' => false ),$atts));
-	return get_authorize_form_rcl('pageform',$form);
+	return rcl_get_authorize_form('pageform',$form);
 }
-add_shortcode('loginform','get_login_form_rcl');
-function get_authorize_form_rcl($type=false,$form=false){
-	global $user_ID,$rcl_user_URL,$rcl_options,$form;
-	
-	ob_start();	
+
+function rcl_get_authorize_form($type=false,$form=false){
+	global $user_ID,$rcl_user_URL,$rcl_options,$typeform;
+        $typeform = $form;
+	ob_start();
         echo '<div class="panel_lk_recall '.$type.'">';
-        
+
 		if($type=='floatform') echo '<a href="#" class="close-popup"><i class="fa fa-times-circle"></i></a>';
 		if($user_ID){
-		
+
                     echo '<div class="username"><b>'.__('Hi','rcl').', '.get_the_author_meta('display_name', $user_ID).'!</b></div>
                     <div class="author-avatar">';
                     echo '<a href="'.$rcl_user_URL.'" title="'.__('In personal account','rcl').'">'.get_avatar($user_ID, 60).'</a>';
-                    if(function_exists('get_rayting_block_rcl')):
+                    if(function_exists('rcl_get_rating_block')):
 
-                        $karma = apply_filters('get_all_rayt_user_rcl',0,$user_ID);
-                        echo get_rayting_block_rcl($karma);
+                        $karma = apply_filters('rcl_get_all_rating_user_rcl',0,$user_ID);
+                        echo rcl_get_rating_block($karma);
 
                     endif;
-                    echo '</div>';				
+                    echo '</div>';
                     echo '<div class="buttons">';
 
-                            $buttons = '<p>'.get_button_rcl(__('Personal account','rcl'),$rcl_user_URL,array('icon'=>'fa-home')).'</p>
-                            <p>'.get_button_rcl(__('Exit','rcl'),wp_logout_url( home_url() ),array('icon'=>'fa-external-link')).'</p>';
+                            $buttons = '<p>'.rcl_get_button(__('In personal account','rcl'),$rcl_user_URL,array('icon'=>'fa-home')).'</p>
+                            <p>'.rcl_get_button(__('Exit','rcl'),wp_logout_url( home_url() ),array('icon'=>'fa-external-link')).'</p>';
                             echo apply_filters('buttons_widget_rcl',$buttons);
 
                     echo '</div>';
-				
+
 		}else{
-				
+
                     $login_form = $rcl_options['login_form_recall'];
 
                     if($login_form==1&&$type!='pageform'){
 
-                        $redirect_url = get_redirect_url_rcl(get_permalink($rcl_options['page_login_form_recall']));
+                        $redirect_url = rcl_format_url(get_permalink($rcl_options['page_login_form_recall']));
 
                         echo '<div class="buttons">';
 
-                            $buttons = '<p>'.get_button_rcl(__('Login','rcl'),$redirect_url.'action-rcl=login',array('icon'=>'fa-sign-in')).'</p>
-                            <p>'.get_button_rcl(__('Registration','rcl'),$redirect_url.'action-rcl=register',array('icon'=>'fa-book')).'</p>';
+                            $buttons = '<p>'.rcl_get_button(__('Login','rcl'),$redirect_url.'action-rcl=login',array('icon'=>'fa-sign-in')).'</p>
+                            <p>'.rcl_get_button(__('Registration','rcl'),$redirect_url.'action-rcl=register',array('icon'=>'fa-book')).'</p>';
                             echo apply_filters('buttons_widget_rcl',$buttons);
 
                         echo '</div>';
 
-                    }else if($login_form==2){											
+                    }else if($login_form==2){
                         echo '<div class="buttons">';
                             $buttons = '<p class="parent-recbutton">'.wp_register('', '', 0).'</p>
                             <p class="parent-recbutton">'.wp_loginout('/', 0).'</p>';
                             echo apply_filters('buttons_widget_rcl',$buttons);
                         echo '</div>';
                     }else if($login_form==3||$type){
-                        if($form!='register'){
-                                include_template_rcl('form-sign.php');
+                        if($typeform!='register'){
+                                rcl_include_template('form-sign.php');
                         }
-                        if($form!='sign'){
-                                include_template_rcl('form-register.php');
+                        if($typeform!='sign'){
+                                rcl_include_template('form-register.php');
                         }
-                        if(!$form||$form=='sign'){
-                                include_template_rcl('form-remember.php');
+                        if(!$typeform||$typeform=='sign'){
+                                rcl_include_template('form-remember.php');
                         }
                     }else if(!$login_form){
                         echo '<div class="buttons">';
-                                $buttons .= '<p>'.get_button_rcl(__('Login','rcl'),'#',array('icon'=>'fa-sign-in','class'=>'sign-button')).'</p>
-                                <p>'.get_button_rcl(__('Registration','rcl'),'#',array('icon'=>'fa-book','class'=>'reglink')).'</p>';
+                                $buttons .= '<p>'.rcl_get_button(__('Login','rcl'),'#',array('icon'=>'fa-sign-in','class'=>'sign-button')).'</p>
+                                <p>'.rcl_get_button(__('Registration','rcl'),'#',array('icon'=>'fa-book','class'=>'reglink')).'</p>';
                                 echo apply_filters('buttons_widget_rcl',$buttons);
                         echo '</div>';
                     }
-				
+
 		}
-		
+
 	echo '</div>';
 	$html = ob_get_contents();
 	ob_end_clean();
-	
+
 	return $html;
 }
 
 //Формируем массив сервисных сообщений формы регистрации и входа
-function notice_form_rcl($form='login'){
+function rcl_notice_form($form='login'){
 
-    if(!isset($_GET['action-rcl'])||$_GET['action-rcl']!=$form) return false; 
-        
+    if(!isset($_GET['action-rcl'])||$_GET['action-rcl']!=$form) return false;
+
     $vls = array(
         'register'=> array(
             'error'=>array(
@@ -233,17 +235,17 @@ function notice_form_rcl($form='login'){
             )
         )
     );
-    
-    $vls = apply_filters('notice_form_rcl',$vls);
+
+    $vls = apply_filters('rcl_notice_form',$vls);
 
     $gets = explode('&',$_SERVER['QUERY_STRING']);
     foreach($gets as $gt){
         $pars = explode('=',$gt);
         $get[$pars[0]] = $pars[1];
     }
-    
+
     $act = $get['action-rcl'];
-    
+
     if((isset($get['success']))){
         $type = 'success';
     }else if(isset($get['error'])){
@@ -251,38 +253,38 @@ function notice_form_rcl($form='login'){
     }else{
         $type = false;
     }
-    
+
     if(!$type) return false;
 
     $notice = (isset($vls[$act][$type][$get[$type]]))? $vls[$act][$type][$get[$type]]:__('Error filling!','rcl');
-    
+
     if($form=='login'){
         $errors = '';
         $errors = apply_filters('login_errors', $errors);
         if($errors) $notice .= '<br>'.$errors;
     }
-    
+
     if(!$notice) return false;
-    
+
     $text = '<span class="'.$type.'">'.$notice.'</span>';
 
-    echo $text;      
+    echo $text;
 }
 
 //Добавляем сообщение о неверном заполнении поле повтора пароля
-add_filter('notice_form_rcl','add_notice_chek_register_pass');
-function add_notice_chek_register_pass($notices){
+add_filter('rcl_notice_form','rcl_notice_chek_register_pass');
+function rcl_notice_chek_register_pass($notices){
     global $rcl_options;
     if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return $notices;
     $notices['register']['error']['repeat-pass'] = __('Repeat password is not correct!','rcl');
     return $notices;
 }
 //Проверяем заполненность поля повтора пароля
-add_action('pre_register_user_rcl','chek_repeat_register_pass');
-function chek_repeat_register_pass($ref){
+add_action('pre_register_user_rcl','rcl_chek_repeat_pass');
+function rcl_chek_repeat_pass($ref){
     global $rcl_options;
     if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return false;
     if($_POST['secondary-email-user']!=$_POST['pass-user']){
-        wp_redirect(get_redirect_url_rcl($ref).'action-rcl=register&error=repeat-pass');exit;
+        wp_redirect(rcl_format_url($ref).'action-rcl=register&error=repeat-pass');exit;
     }
 }

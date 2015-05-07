@@ -1,15 +1,14 @@
 <?php
-/*В файле храняться функции используемые не только при нормальном режиме работы,
- * но и в режиме SHORTINIT */
 
-require_once("core.php");
+include_once 'rcl_activate.php';
 
-function addon_url($file,$path){
+function rcl_addon_url($file,$path){
     if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
     $array = explode('/',$path);
     $url = '';
+	$content_dir = basename(content_url());
     foreach($array as $key=>$ar){
-        if($array[$key]=='wp-content'){
+        if($array[$key]==$content_dir){
             $url = get_bloginfo('wpurl').'/'.$array[$key].'/';
             continue;
         }
@@ -22,7 +21,7 @@ function addon_url($file,$path){
     return $url;
 }
 
-function addon_path($path){
+function rcl_addon_path($path){
     if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
     $array = explode('/',$path);
     $addon_path = '';
@@ -35,13 +34,14 @@ function addon_path($path){
     return false;
 }
 
-function path_to_url_rcl($path){
+function rcl_path_to_url($path){
     if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
     $array = explode('/',$path);
     $cnt = count($array);
     $url = '';
+	$content_dir = basename(content_url());
     foreach($array as $key=>$ar){
-        if($array[$key]=='wp-content'){
+        if($array[$key]==$content_dir){
             $url = get_bloginfo('wpurl').'/'.$array[$key].'/';
             continue;
         }
@@ -63,29 +63,25 @@ function rcl_mail($email, $title, $text){
     wp_mail($email, $title, $text, $headers);
 }
 
-function array_multisort_key_rcl($array, $key, $type = SORT_ASC, $cmp_func = 'strcmp'){
+function rcl_multisort_array($array, $key, $type = SORT_ASC, $cmp_func = 'strcmp'){
     $GLOBALS['ARRAY_MULTISORT_KEY_SORT_KEY']  = $key;
     usort($array, create_function('$a, $b', '$k = &$GLOBALS["ARRAY_MULTISORT_KEY_SORT_KEY"];
         return ' . $cmp_func . '($a[$k], $b[$k]) * ' . ($type == SORT_ASC ? 1 : -1) . ';'));
     return $array;
 }
 
-function a_active($param1,$param2){
+function rcl_a_active($param1,$param2){
 	if($param1==$param2) return 'class=active';
 }
 
-function get_names_array_rcl($objects,$name_data){
+function rcl_get_usernames($objects,$name_data){
 	global $wpdb;
 
 	if(!$objects||!$name_data) return false;
-	$a=0;
-        $userslst = '';
-	foreach((array)$objects as $object){
-            if(++$a>1)$userslst .= ',';
-            $userslst .= $object->$name_data;
-        }
 
-	$display_names = $wpdb->get_results("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN ($userslst)");
+	foreach((array)$objects as $object){ $userslst[] = $object->$name_data; }
+
+	$display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($userslst).")",$userslst));
 
 	foreach((array)$display_names as $name){
 		$names[$name->ID] = $name->display_name;
@@ -93,7 +89,7 @@ function get_names_array_rcl($objects,$name_data){
 	return $names;
 }
 
-function get_redirect_url_rcl($url,$id_tab=null){
+function rcl_format_url($url,$id_tab=null){
 	$ar_perm = explode('?',$url);
 	$cnt = count($ar_perm);
 	if($cnt>1) $a = '&';
@@ -103,7 +99,7 @@ function get_redirect_url_rcl($url,$id_tab=null){
 	return $url;
 }
 
-function last_user_action_recall($user_action=false){
+function rcl_get_useraction($user_action=false){
 	global $rcl_options,$rcl_userlk_action;
 
         if(!$user_action) $user_action = $rcl_userlk_action;
@@ -148,9 +144,9 @@ function rcl_update_timeaction_user(){
 
         if(!$user_ID) return false;
 
-	$rcl_current_action = $wpdb->get_var("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='$user_ID'");
+	$rcl_current_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_ID));
 
-	$last_action = last_user_action_recall($rcl_current_action);
+	$last_action = rcl_get_useraction($rcl_current_action);
 	$time = current_time('mysql');
 	if($last_action){
 		$res = $wpdb->update(
@@ -160,7 +156,7 @@ function rcl_update_timeaction_user(){
 				);
 
 		if(!isset($res)||$res==0){
-			$act_user = $wpdb->get_var("SELECT COUNT(time_action) FROM ".RCL_PREF."user_action WHERE user ='$user_ID'");
+			$act_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(time_action) FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
 			if($act_user==0){
 				$wpdb->insert(
 					RCL_PREF.'user_action',
@@ -169,14 +165,14 @@ function rcl_update_timeaction_user(){
 				);
 			}
 			if($act_user>1){
-				$wpdb->query("DELETE FROM ".RCL_PREF."user_action WHERE user ='$user_ID'");
+				$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
 			}
 		}
 	}
 	do_action('rcl_update_timeaction_user',$user_ID,$time);
 }
 
-function get_sort_gallery_rcl($attaches,$key,$user_id=false){
+function rcl_sort_gallery($attaches,$key,$user_id=false){
 	global $user_ID;
 
 	if(!$attaches) return false;
@@ -204,7 +200,7 @@ function get_sort_gallery_rcl($attaches,$key,$user_id=false){
 	return $news;
 }
 
-function get_insert_image_rcl($image_id,$mime='image'){
+function rcl_get_insert_image($image_id,$mime='image'){
 	global $rcl_options;
 	if($mime=='image'){
 		$small_url = wp_get_attachment_image_src( $image_id, 'thumbnail' );
@@ -218,7 +214,7 @@ function get_insert_image_rcl($image_id,$mime='image'){
 	}
 }
 
-function get_button_rcl($ancor,$url,$args=false){
+function rcl_get_button($ancor,$url,$args=false){
 	$button = '<a href="'.$url.'" ';
 	if(isset($args['attr'])) $button .= $args['attr'].' ';
 	if(isset($args['id'])) $button .= 'id="'.$args['id'].'" ';

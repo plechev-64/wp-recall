@@ -17,24 +17,25 @@ class Rcl_Userlist{
 	}
 	
 	function get_args(){
+		if(isset($_POST['name-user'])) $username = sanitize_user($_POST['name-user']);
 		if($_POST['orderuser']==1){ //по имени
                     $args = array(
                         'meta_query'   => array(
                             'relation' => 'OR',
                             array(  
                                     'key' => 'first_name',  
-                                    'value' => $_POST['name-user'],  
+                                    'value' => $username,  
                                     'compare' => 'LIKE',  
                             ),
                             array(  
                                     'key' => 'last_name',  
-                                    'value' => $_POST['name-user'],  
+                                    'value' => $username,  
                                     'compare' => 'LIKE',  
                             )
                         )
                     );
 		}else{ //по логину			
-			$args = array( 'search'=>'*'.$_POST['name-user'].'*');
+			$args = array( 'search'=>'*'.$username.'*');
 		}
 		return $args;
 	}
@@ -200,11 +201,11 @@ class Rcl_Userlist{
         
         function get_feeds_data(){
             global $wpdb,$user_ID;
-            
-            $users = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE 'feed_user_%' AND user_id = '$user_ID' ORDER BY umeta_id $this->order LIMIT $this->limit");
+            $sql = $wpdb->prepare("SELECT * FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'feed_user_%',$user_ID);
+            $users = $wpdb->get_results($sql." ORDER BY umeta_id $this->order LIMIT $this->limit");
 
             if(!$limit){
-                    $rclnavi->cnt_data = $wpdb->get_var("SELECT COUNT(*) FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE 'feed_user_%' AND user_id = '$user_ID'");
+                    $rclnavi->cnt_data = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'feed_user_%',$user_ID));
                     $rclnavi->num_page = ceil($rclnavi->cnt_data/$this->inpage);
             }
 
@@ -213,46 +214,46 @@ class Rcl_Userlist{
         }
 }
 
-function setup_datauser($userdata){
+function rcl_setup_datauser($userdata){
     global $user;
     $user = (object)$userdata;
     return $user;
 }
 
-function the_user_name(){
+function rcl_user_name(){
     global $user;
     echo $user->display_name;
 }
 
-function the_user_url(){
+function rcl_user_url(){
     global $user;
     echo get_author_posts_url($user->user_id);
 }
 
-function the_user_avatar($size=50){
+function rcl_user_avatar($size=50){
     global $user;
     echo get_avatar($user->user_id,$size);
 }
 
-function the_user_rayting(){
+function rcl_user_rayting(){
     global $user;
-    if(!function_exists('get_rayting_block_rcl')) return false;
+    if(!function_exists('rcl_get_rating_block')) return false;
     $rtng = ($user->user_rayting)? $user->user_rayting: 0;
-    echo get_rayting_block_rcl($rtng);
+    echo rcl_get_rating_block($rtng);
 }
 
-function the_user_action($type=1){
+function rcl_user_action($type=1){
     global $user;
     switch($type){
-        case 1: $last_action = last_user_action_recall($user->user_action);
+        case 1: $last_action = rcl_get_useraction($user->user_action);
                 if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
                 else echo '<span class="status_user offline" title="'.__('not online','rcl').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
         break;
-        case 2: echo get_miniaction_user_rcl($user->user_action); break;
+        case 2: echo rcl_get_miniaction($user->user_action); break;
     }
 }
 
-function the_user_description(){
+function rcl_user_description(){
     global $user;
     if(!$user->description) return false;
     echo '<div class="ballun-status">
@@ -261,28 +262,28 @@ function the_user_description(){
     </div>';
 }
 
-add_action('user_description','the_user_comments');
-function the_user_comments(){
+add_action('user_description','rcl_user_comments');
+function rcl_user_comments(){
     global $user;
     if(!$user->user_comments) return false;
     echo '<span class="filter-data">'.__('Comments','rcl').': '.$user->user_comments.'</span>';
 }
-add_action('user_description','the_user_posts');
-function the_user_posts(){
+add_action('user_description','rcl_user_posts');
+function rcl_user_posts(){
     global $user;
     if(!$user->user_posts) return false;
     echo '<span class="filter-data">'.__('Publics','rcl').': '.$user->user_posts.'</span>';
 }
 
-add_action('user_description','the_user_register');
-function the_user_register(){
+add_action('user_description','rcl_user_register');
+function rcl_user_register(){
     global $user;
     if(!$user->user_register) return false;
     echo '<span class="filter-data">'.__('Registration','rcl').': '.mysql2date('d-m-Y', $user->user_register).'</span>';
 }
 
-add_action('user_description','add_filter_user_description');
-function add_filter_user_description(){
+add_action('user_description','rcl_filter_user_description');
+function rcl_filter_user_description(){
     global $user;
     $cont = '';
     echo $cont = apply_filters('rcl_description_user',$cont,$user->user_id);

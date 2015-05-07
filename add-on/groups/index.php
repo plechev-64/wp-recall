@@ -1,6 +1,76 @@
 <?php
 rcl_enqueue_style('groups',__FILE__);
 
+function rcl_class_group(){
+	global $gr_data;
+	echo $gr_data->class_gr();
+}
+
+function rcl_images_group(){
+	global $gr_data;
+	echo $gr_data->get_images();
+}
+
+function rcl_group_name(){
+	global $gr_data;
+	echo $gr_data->get_name();
+}
+
+function rcl_admin_group($txt=false){
+	global $gr_data;
+	echo $gr_data->get_admin($txt);
+}
+
+function rcl_desc_group(){
+	global $gr_data;
+	echo $gr_data->get_desc();
+}
+
+function rcl_options_group(){
+	global $gr_data;
+	echo $gr_data->get_options();
+}
+
+function rcl_after_header_group(){
+	global $gr_data;
+	echo $gr_data->get_after_header();
+}
+
+function rcl_buttons_group(){
+	global $gr_data;
+	echo $gr_data->get_buttons();
+}
+
+function rcl_userlist_group(){
+	global $gr_data;
+	echo $gr_data->get_userlist();
+}
+
+function rcl_imagelist_group(){
+	global $gr_data;
+	echo $gr_data->get_imagelist();
+}
+
+function rcl_content_group(){
+	global $gr_data;
+	echo $gr_data->get_content();
+}
+
+function rcl_form_group(){
+	global $gr_data;
+	echo $gr_data->get_form();
+}
+
+function rcl_footer_group(){
+	global $gr_data;
+	echo $gr_data->get_footer();
+}
+
+function rcl_group(){
+	add_post_in_group();
+}
+
+/*deprecated*/
 function add_post_in_group(){
 	global $user_ID,$gr_data;
 
@@ -10,76 +80,7 @@ function add_post_in_group(){
 	$gr_data->init_variables();
 	$gr_data->get_post_request();
 
-	include_template_rcl('group.php',__FILE__);
-}
-
-function class_group(){
-	global $gr_data;
-	echo $gr_data->class_gr();
-}
-
-function images_group(){
-	global $gr_data;
-	echo $gr_data->get_images();
-}
-
-function group_name(){
-	global $gr_data;
-	echo $gr_data->get_name();
-}
-
-function admin_group($txt=false){
-	global $gr_data;
-	echo $gr_data->get_admin($txt);
-}
-
-function desc_group(){
-	global $gr_data;
-	echo $gr_data->get_desc();
-}
-
-function options_group(){
-	global $gr_data;
-	echo $gr_data->get_options();
-}
-
-function after_header_group(){
-	global $gr_data;
-	echo $gr_data->get_after_header();
-}
-
-function buttons_group(){
-	global $gr_data;
-	echo $gr_data->get_buttons();
-}
-
-function userlist_group(){
-	global $gr_data;
-	echo $gr_data->get_userlist();
-}
-
-function imagelist_group(){
-	global $gr_data;
-	echo $gr_data->get_imagelist();
-}
-
-function content_group(){
-	global $gr_data;
-	echo $gr_data->get_content();
-}
-
-function form_group(){
-	global $gr_data;
-	echo $gr_data->get_form();
-}
-
-function footer_group(){
-	global $gr_data;
-	echo $gr_data->get_footer();
-}
-
-function group_rcl(){
-	add_post_in_group();
+	rcl_include_template('group.php',__FILE__);
 }
 
 add_action( 'init', 'register_terms_rec_post_group' );
@@ -158,25 +159,25 @@ function register_taxonomy_groups() {
 	register_taxonomy( 'groups', array('post-group'), $args );
 }
 
-add_filter('taxonomy_public_form_rcl','add_taxonomy_public_groups');
-function add_taxonomy_public_groups($tax){
+add_filter('taxonomy_public_form_rcl','rcl_add_taxonomy_public_groups');
+function rcl_add_taxonomy_public_groups($tax){
     if (!isset($tax['post-group'])) $tax['post-group'] = 'groups';
     return $tax;
 }
 
-if(function_exists('add_postlist_rcl')){
-    add_postlist_rcl('group','post-group',__('Record groups'),array('order'=>40));
+if(function_exists('rcl_postlist')){
+    rcl_postlist('group','post-group',__('Record groups'),array('order'=>40));
 }
 
-add_filter('tag_link','add_post_type_link_tags');
-function add_post_type_link_tags($link){
+add_filter('tag_link','rcl_post_type_link_tags');
+function rcl_post_type_link_tags($link){
     global $post;
     if($post->post_type=='group-post') return $link.'?post_type='.$post->post_type;
     return $link;
 }
 
 //Получаем ИД группы которой принадлежит публикация
-function get_group_id_by_post($post_id){
+function rcl_get_group_id_by_post($post_id){
     $groups = get_the_terms( $post_id, 'groups' );
     if(!$groups) return false;
     foreach($groups as $group){
@@ -188,39 +189,39 @@ function get_group_id_by_post($post_id){
 }
 
 //Получаем настройки и данные группы
-function get_options_group($group_id){
+function rcl_get_options_group($group_id){
     global $wpdb;
-    return unserialize($wpdb->get_var("SELECT option_value FROM ".RCL_PREF."groups_options WHERE group_id='$group_id'"));
+    return unserialize($wpdb->get_var($wpdb->prepare("SELECT option_value FROM ".RCL_PREF."groups_options WHERE group_id='%d'",$group_id)));
 }
 
 //Проверяем возможность пользователя редактировать публикации группы
-function user_can_edit_post_group($post_id){
+function rcl_can_user_edit_post_group($post_id){
     global $user_ID;
-    $group_id = get_group_id_by_post($post_id);
+    $group_id = rcl_get_group_id_by_post($post_id);
     if(!$group_id) return false;
-    $options_gr = get_options_group($group_id);
+    $options_gr = rcl_get_options_group($group_id);
     if(!isset($options_gr['admin'])||$options_gr['admin']!=$user_ID) return false;
     return true;
 }
 
 //получаем кол-во участников группы
-function get_userscount_group($group_id){
+function rcl_get_userscount_group($group_id){
     global $wpdb;
-    return $wpdb->get_var("SELECT COUNT(user_id) FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'user_group_$group_id'");
+    return $wpdb->get_var($wpdb->prepare("SELECT COUNT(user_id) FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'user_group_%d'",$group_id));
 }
 
 //Ищем идентификатор админа группы по метаполям пользователей
-function get_admin_group_by_meta($group_id){
+function rcl_get_admin_group_by_meta($group_id){
     global $wpdb;
-    return $wpdb->get_var("SELECT user_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'admin_group_$group_id'");
+    return $wpdb->get_var($wpdb->prepare("SELECT user_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'admin_group_%d'",$group_id));
 }
 
-function add_post_group_edit_button_rcl($content){
+function rcl_post_group_edit_button($content){
 	global $post,$user_ID,$gr_data,$rcl_options;
 	if(!is_tax('groups')) return $content;
 
 	if($gr_data->group_id&&$gr_data->admin_id==$user_ID){
-            $edit_url = get_redirect_url_rcl(get_permalink($rcl_options['public_form_page_rcl']));
+            $edit_url = rcl_format_url(get_permalink($rcl_options['public_form_page_rcl']));
             $content = '<p class="post-edit-button">'
                 . '<a title="'.__('Edit','rcl').'" object-id="none" href="'. $edit_url.'rcl-post-edit='.$post->ID .'">'
                     . '<i class="fa fa-pencil-square-o"></i>'
@@ -229,16 +230,16 @@ function add_post_group_edit_button_rcl($content){
 	}
 	return $content;
 }
-add_filter('the_content','add_post_group_edit_button_rcl',999);
-add_filter('the_excerpt','add_post_group_edit_button_rcl',999);
+add_filter('the_content','rcl_post_group_edit_button',999);
+add_filter('the_excerpt','rcl_post_group_edit_button',999);
 
-if (is_admin()) add_action('admin_init', 'recall_postmeta_pgroups');
-function recall_postmeta_pgroups() {
+if (is_admin()) add_action('admin_init', 'rcl_postmeta_post_groups');
+function rcl_postmeta_post_groups() {
     add_meta_box( 'recall_meta', __('Settings Wp-Recall','rcl'), 'options_box_rcl', 'post-group', 'normal', 'high'  );
 }
 
-add_filter('admin_options_wprecall','get_admin_groups_page_content');
-function get_admin_groups_page_content($content){
+add_filter('admin_options_wprecall','rcl_admin_groups_page_content');
+function rcl_admin_groups_page_content($content){
 
         $opt = new Rcl_Options(__FILE__);
 
@@ -292,8 +293,8 @@ function get_admin_groups_page_content($content){
 	return $content;
 }
 
-add_filter('pre_update_postdata_rcl','add_publicdata_group_rcl',10,2);
-function add_publicdata_group_rcl($postdata,$data){
+add_filter('pre_update_postdata_rcl','rcl_publicdata_group',10,2);
+function rcl_publicdata_group($postdata,$data){
     global $rcl_options,$user_ID;
     if($data->post_type!='post-group') return $postdata;
 
@@ -301,7 +302,7 @@ function add_publicdata_group_rcl($postdata,$data){
     else $post_status = 'publish';
 
     if($rcl_options['nomoder_rayt']){
-            $all_r = get_all_rayt_user(0,$user_ID);
+            $all_r = rcl_get_all_rating_user(0,$user_ID);
             if($all_r >= $rcl_options['nomoder_rayt']) $post_status = 'publish';
     }
     $postdata['post_status'] = $post_status;
@@ -310,16 +311,16 @@ function add_publicdata_group_rcl($postdata,$data){
 
 }
 
-add_action('update_post_rcl','update_grouppost_meta_rcl',10,3);
-function update_grouppost_meta_rcl($post_id,$postdata,$action){
+add_action('update_post_rcl','rcl_update_grouppost_meta',10,3);
+function rcl_update_grouppost_meta($post_id,$postdata,$action){
 
     if($postdata['post_type']!='post-group') return false;
 
-    if(isset($_POST['term_id'])) $term_id = base64_decode($_POST['term_id']);
+    if(isset($_POST['term_id'])) $term_id = intval(base64_decode($_POST['term_id']));
 
     if(isset($term_id)) wp_set_object_terms( $post_id, (int)$term_id, 'groups' );
 
-    $gr_tag = $_POST['group-tag'];
+    $gr_tag = sanitize_text_field($_POST['group-tag']);
     if($gr_tag){
 
             if(!$term_id){
@@ -346,32 +347,32 @@ function update_grouppost_meta_rcl($post_id,$postdata,$action){
 
 }
 
-add_filter('array_rayt_chek','add_rayt_array_postgroup');
-function add_rayt_array_postgroup($array){
+add_filter('array_rayt_chek','rcl_rayt_array_postgroup');
+function rcl_rayt_array_postgroup($array){
 	global $rcl_options;
 	$array['rayt_post-group'] = $rcl_options['rayt_post-group'];
 	return $array;
 }
 
-function add_tab_groups_rcl($array_tabs){
-    $array_tabs['groups']='recall_groups_block';
+add_filter('ajax_tabs_rcl','rcl_tab_ajax_groups');
+function rcl_tab_ajax_groups($array_tabs){
+    $array_tabs['groups']='rcl_groups_block';
     return $array_tabs;
 }
-add_filter('ajax_tabs_rcl','add_tab_groups_rcl');
 
-add_action('init','add_tab_groups');
-function add_tab_groups(){
-    add_tab_rcl('groups','recall_groups_block','Группы',array('public'=>1,'class'=>'fa-group','order'=>15,'path'=>__FILE__));
+add_action('init','rcl_tab_groups');
+function rcl_tab_groups(){
+    rcl_tab('groups','rcl_groups_block','Группы',array('public'=>1,'class'=>'fa-group','order'=>15,'path'=>__FILE__));
 }
 
-function recall_groups_block($author_lk){
+function rcl_groups_block($author_lk){
 
 	global $wpdb;
 	global $user_ID;
 	global $rcl_options;
 
-	$admin_groups = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE 'admin_group_%' AND user_id = '$author_lk'");
-	$user_groups = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE 'user_group_%' AND user_id = '$author_lk'");//print_r($admin_groups);
+	$admin_groups = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'admin_group_%',$author_lk));
+	$user_groups = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'user_group_%',$author_lk));//print_r($admin_groups);
 	if($admin_groups){
 		$ad_groups = '<ul class="group-list">';
 		foreach((array)$admin_groups as $ad_group){
@@ -420,7 +421,7 @@ function recall_groups_block($author_lk){
 	<p>'.__('Group description','rcl').'</p>
 	<textarea required name="group_desc" id="group_desc" rows="2" style="width:90%;"></textarea>
 	<p>'.__('The status of the group','rcl').'</p>
-	<input type="checkbox" class="status_groups" name="status_groups" value="1"> - '.__('Back to the group. The access group just approved the request of the user.','rcl').'
+	<input type="checkbox" class="status_groups" name="status_groups" value="1"> - '.__('Private group. The access group just approved the request of the user.','rcl').'
 	<p>'.__('Group avatar','rcl').' <input required type="file" name="image_group" class="field"/></p>
 	<p align="right"><input type="submit" class="recall-button" name="addgroups" value="'.__('Сreate','rcl').'"></p>
 	</form></div>';
@@ -434,36 +435,19 @@ function recall_groups_block($author_lk){
 }
 
 //Удаляем всех пользователей и админа группы и ее аватарку при ее удалении из БД
-add_action('delete_term', 'delete_users_group_rcl',10,3);
-function delete_users_group_rcl($term, $tt_id=null, $taxonomy=null){
+add_action('delete_term', 'rcl_delete_users_group',10,3);
+function rcl_delete_users_group($term, $tt_id=null, $taxonomy=null){
 	if(!$taxonomy||$taxonomy!='groups') return false;
 	global  $wpdb;
 	$imade_id = get_option('image_group_'.$term);
 	delete_option('image_group_'.$term);
 	wp_delete_attachment($imade_id,true);
-	$wpdb->query("DELETE FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'admin_group_".$term."'");
-	$wpdb->query("DELETE FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'user_group_".$term."'");
-	$wpdb->query("DELETE FROM ".RCL_PREF."groups_options WHERE group_id = '".$term."'");
+	$wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'admin_group_%d'",$term));
+	$wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'user_group_%d'",$term));
+	$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."groups_options WHERE group_id = '%d'",$term));
 }
 
-//add_action('wp_head','delete_remove_groups');
-function delete_remove_groups(){
-	global $wpdb,$user_ID;
-	if($user_ID!=1) return false;
-	$datas = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key LIKE 'admin_group_%'");
-	//print_r($datas);
-	foreach($datas as $data){
-		$term = term_exists((int)$data->meta_value,'groups');
-		if(!$term){
-			//echo 'Delete: '.$data->meta_value.'<br>';
-                        delete_users_group_rcl($data->meta_value, false, 'groups');
-		}else{
-			//echo 'Groups: '.$data->meta_value.'<br>';
-		}
-	}
-}
-
-function get_link_group_tag_rcl($content){
+function rcl_get_link_group_tag($content){
 	global $post;
 	if($post->post_type!='post-group') return $content;
 
@@ -480,28 +464,28 @@ function get_link_group_tag_rcl($content){
 
 	return $cat.$content;
 }
-function init_get_link_group_tag(){
-	if(is_single()) add_filter('the_content','get_link_group_tag_rcl',80);
-	else add_filter('the_excerpt','get_link_group_tag_rcl',80);
+function rcl_init_get_link_group_tag(){
+	if(is_single()) add_filter('the_content','rcl_get_link_group_tag',80);
+	else add_filter('the_excerpt','rcl_get_link_group_tag',80);
 }
-add_action('wp','init_get_link_group_tag');
+add_action('wp','rcl_init_get_link_group_tag');
 
 //Создаем новую группу
-function add_new_group_recall(){
+function rcl_add_new_group(){
 
 	global $user_ID,$wpdb;
 	$option = array();
 
-	if($_POST['status_groups']) $option['private'] = 1;
+	if(intval($_POST['status_groups'])) $option['private'] = 1;
 
 	$args = array(
 		'alias_of'=>''
-		,'description'=>$_POST['group_desc']
+		,'description'=>sanitize_text_field($_POST['group_desc'])
 		,'parent'=>0
 		,'slug'=>''
 	);
 
-	$ret = wp_insert_term( $_POST['title_groups'], 'groups', $args );
+	$ret = wp_insert_term( sanitize_text_field($_POST['title_groups']), 'groups', $args );
 
 	foreach((array)$ret as $r){
 		if ($ret && !is_wp_error($ret)){
@@ -517,7 +501,7 @@ function add_new_group_recall(){
 
 	$image = wp_handle_upload( $_FILES['image_group'], array('test_form' => FALSE) );
 	if($image['file']){
-		$option['avatar'] = update_image_group($r,$image);;
+		$option['avatar'] = rcl_update_image_group($r,$image);;
 	}
 
 	$option = serialize($option);
@@ -530,12 +514,12 @@ function add_new_group_recall(){
 
 }
 
-function add_new_group_recall_activate ( ) {
+function rcl_add_new_group_activate ( ) {
   if ( isset($_POST['addgroups']) ) {
-    add_action( 'wp', 'add_new_group_recall' );
+    add_action( 'wp', 'rcl_add_new_group' );
   }
 }
-add_action('init', 'add_new_group_recall_activate');
+add_action('init', 'rcl_add_new_group_activate');
 
 function chek_access_private_group_posts($query){
     if (!class_exists('Group_Private')) include_once plugin_dir_path( __FILE__ ).'group_private.php';
@@ -543,18 +527,18 @@ function chek_access_private_group_posts($query){
 }
 add_action('pre_get_posts','chek_access_private_group_posts');
 
-function get_group_globals_rcl(){
+function rcl_get_group_globals(){
 	global $wp_query,$wpdb,$group_id,$options_gr;
         if(!isset($wp_query->query_vars['groups'])) return false;
 	$curent_term = get_term_by('slug', $wp_query->query_vars['groups'], 'groups');
 
 	if($curent_term->parent!=0) $group_id = $curent_term->parent;
 	else $group_id = $curent_term->term_id;
-	$options_gr = get_options_group($group_id);
+	$options_gr = rcl_get_options_group($group_id);
 }
-add_action('wp','get_group_globals_rcl',1);
+add_action('wp','rcl_get_group_globals',1);
 
-function login_group_request_rcl(){
+function rcl_login_group_request(){
 	global $group_id,$options_gr,$user_ID;
 	if(isset($_POST['login_group'])&&$user_ID){
 		if( !wp_verify_nonce( $_POST['_wpnonce'], 'login-group-request-rcl' ) ) return false;
@@ -593,9 +577,9 @@ function login_group_request_rcl(){
 		wp_redirect(get_term_link((int)$group_id,'groups')); exit;
 	}
 }
-add_action('wp','login_group_request_rcl',20);
+add_action('wp','rcl_login_group_request',20);
 
-function update_image_group($group_id,$image){
+function rcl_update_image_group($group_id,$image){
 	global $options_gr;
 
 	$opt_image = get_option('image_group_'.$group_id);
@@ -619,7 +603,7 @@ function update_image_group($group_id,$image){
 	return $imade_id;
 }
 
-function upload_image_group_rcl(){
+function rcl_upload_image_group(){
 	global $wpdb,$group_id,$options_gr,$user_ID;
 	if(isset($_FILES['image_group'])&&$user_ID){
 		$file_name = $_FILES['image_group']['name'];
@@ -632,7 +616,7 @@ function upload_image_group_rcl(){
 			$image = wp_handle_upload( $_FILES['image_group'], array('test_form' => FALSE) );
 			if($image['file']){
 
-				$options_gr['avatar'] = update_image_group($group_id,$image);
+				$options_gr['avatar'] = rcl_update_image_group($group_id,$image);
 
 				$options_ser = serialize($options_gr);
 
@@ -653,14 +637,27 @@ function upload_image_group_rcl(){
 		wp_redirect(get_term_link((int)$group_id,'groups')); exit;
 	}
 }
-add_action('wp','upload_image_group_rcl',30);
+add_action('wp','rcl_upload_image_group',30);
 
-function init_get_name_group(){
-	if(is_single()) add_filter('the_content','add_name_rcl_groups',80);
+function rcl_init_namegroup(){
+	if(is_single()) add_filter('the_content','rcl_add_namegroup',80);
 }
-add_action('wp','init_get_name_group');
+add_action('wp','rcl_init_namegroup');
 
-function get_tags_list_group_rcl($tags,$post_id=null,$first=null){
+function rcl_add_namegroup($content){
+	global $post;
+	if(get_post_type( $post->ID )!='post-group') return $content;
+
+	$groups = get_the_terms( $post->ID, 'groups' );
+	foreach((array)$groups as $group){
+		if($group->parent) continue;
+		$group_link = '<p><i class="fa fa-users"></i>'.__('Published in the group','rcl').': <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
+	}
+	$content = $group_link.$content;
+	return $content;
+}
+
+function rcl_get_tags_list_group($tags,$post_id=null,$first=null){
 	if(isset($tags)){
                 $name = '';
 		if($post_id){
@@ -705,30 +702,18 @@ function get_tags_list_group_rcl($tags,$post_id=null,$first=null){
 	return $tg_lst;
 }
 
-function add_name_rcl_groups($content){
-	global $post;
-	if(get_post_type( $post->ID )!='post-group') return $content;
-
-	$groups = get_the_terms( $post->ID, 'groups' );
-	foreach((array)$groups as $group){
-		if($group->parent) continue;
-		$group_link = '<p><i class="fa fa-users"></i>'.__('Published in the group','rcl').': <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
-	}
-	$content = $group_link.$content;
-	return $content;
-}
-
 /*************************************************
 Смотрим всех пользователей группы
 *************************************************/
-function all_users_group_recall(){
-	$page = $_POST['page'];
-	if(!$_POST['page']) $page = 1;
+function rcl_get_users_group(){
+	$page = inval($_POST['page']);
+	$id_group = intval($_POST['id_group']);
+	if(!$page) $page = 1;
 	include('class_group.php');
-	$group = new Rcl_Group($_POST['id_group']);
+	$group = new Rcl_Group($id_group);
 	$block_users = '<div class="backform" style="display: block;"></div>
-	<div class="float-window-recall" style="display:block;"><p align="right">'.get_button_rcl(__('Close','rcl'),'#',array('icon'=>false,'class'=>'close_edit','id'=>false)).'</p><div>';
-	$block_users .= $group->all_users_group($page);
+	<div class="float-window-recall" style="display:block;"><p align="right">'.rcl_get_button(__('Close','rcl'),'#',array('icon'=>false,'class'=>'close_edit','id'=>false)).'</p><div>';
+	$block_users .= $group->rcl_get_users_group($page);
 	$block_users .= '</div></div>
 	<script type="text/javascript"> jQuery(function(){ jQuery(".close_edit").click(function(){ jQuery(".group_content").empty(); }); }); </script>';
 	$log['recall']=100;
@@ -736,14 +721,14 @@ function all_users_group_recall(){
 	echo json_encode($log);
 	exit;
 }
-add_action('wp_ajax_all_users_group_recall', 'all_users_group_recall');
-add_action('wp_ajax_nopriv_all_users_group_recall', 'all_users_group_recall');
+add_action('wp_ajax_rcl_get_users_group', 'rcl_get_users_group');
+add_action('wp_ajax_nopriv_rcl_get_users_group', 'rcl_get_users_group');
 
-function request_users_group_access_rcl(){
+function rcl_request_users_group_access(){
 
-	$id_group = $_POST['id_group'];
-	$id_user = $_POST['id_user'];
-	$req = $_POST['req'];
+	$id_group = inval($_POST['id_group']);
+	$id_user = inval($_POST['id_user']);
+	$req = inval($_POST['req']);
 
 	$all_request = unserialize(get_option('request_group_access_'.$id_group));
 	$curent_term = get_term_by('id', $id_group, 'groups');
@@ -776,12 +761,12 @@ function request_users_group_access_rcl(){
 	echo json_encode($log);
 	exit;
 }
-add_action('wp_ajax_request_users_group_access_rcl', 'request_users_group_access_rcl');
+add_action('wp_ajax_rcl_request_users_group_access', 'rcl_request_users_group_access');
 
-function get_group_by_event($status){
+function rcl_get_group_by_event($status){
 	global $wpdb;
 
-	$group_ids = $wpdb->results("SELECT * FROM ".RCL_PREF."groups_options WHERE option_value LIKE '%active%'");
+	$group_ids = $wpdb->results($wpdb->prepare("SELECT * FROM ".RCL_PREF."groups_options WHERE option_value LIKE '%s'",'%active%'));
 
     $a=0;
 	foreach($group_ids as $data){
@@ -789,12 +774,12 @@ function get_group_by_event($status){
 		$lst .= $data->group_id;
 	}
 
-	$group_data = $wpdb->results("SELECT * FROM ".$wpdb->prefix."terms WHERE term_id ON ($lst)");
+	$group_data = $wpdb->results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."terms WHERE term_id ON (%s)",$lst));
 	return $group_data;
 }
 
-add_shortcode('grouplist','shortcode_grouplist');
-function shortcode_grouplist($atts, $content = null){
+add_shortcode('grouplist','rcl_shortcode_grouplist');
+function rcl_shortcode_grouplist($atts, $content = null){
 global $wpdb,$post;
 
 	if(isset($_GET['navi'])) $navi = $_GET['navi'];
@@ -833,7 +818,7 @@ global $wpdb,$post;
 		$groups = get_terms('groups', $args);
 
 	}else{
-		$groups = get_group_by_event($_GET['event']);
+		$groups = rcl_get_group_by_event($_GET['event']);
 	}
 
 	if($inpage){
@@ -844,16 +829,11 @@ global $wpdb,$post;
 
 	$n=0;
 
-	$users_groups = $wpdb->get_results("SELECT user_id,meta_key FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE 'user_group_%' OR meta_key LIKE 'admin_group_%'");
+	$users_groups = $wpdb->get_results($wpdb->prepare("SELECT user_id,meta_key FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE '%s' OR meta_key LIKE '%s'",'user_group_%','admin_group_%'));
 
-	$a = 0;
-        $userslst = '';
-	foreach((array)$users_groups as $user_gr){
-		if(++$a>1) $userslst .= ',';
-		$userslst .= $user_gr->user_id;
-	}
+	foreach((array)$users_groups as $user_gr){ $userslst[] = $user_gr->user_id; }
 
-	$display_names = $wpdb->get_results("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN ($userslst)");
+	$display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($userslst).")",$userslst));
 
 	foreach((array)$display_names as $name){
 		$names[$name->ID] = $name->display_name;
@@ -869,20 +849,20 @@ global $wpdb,$post;
         else $flt = false;
 
 	$grouplist .= '<p class="alignleft">'.__('Filter by','rcl').':
-		<a '.a_active($flt,'id').' href="'.get_permalink($post->ID).'?filter=id">'.__('Created date','rcl').'</a>
-		<a '.a_active($flt,'name').' href="'.get_permalink($post->ID).'?filter=name">'.__('By name','rcl').'</a>
-		<a '.a_active($flt,'count').' href="'.get_permalink($post->ID).'?filter=count">'.__('The number of records','rcl').'</a>
+		<a '.rcl_a_active($flt,'id').' href="'.get_permalink($post->ID).'?filter=id">'.__('Created date','rcl').'</a>
+		<a '.rcl_a_active($flt,'name').' href="'.get_permalink($post->ID).'?filter=name">'.__('By name','rcl').'</a>
+		<a '.rcl_a_active($flt,'count').' href="'.get_permalink($post->ID).'?filter=count">'.__('The number of records','rcl').'</a>
 	</p>';
 	$grouplist .= '<div class="group-list">';
 
 	/*старые аватарки*/
-	$images_gr = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."options WHERE option_name LIKE 'image_group_%'");
+	$images_gr = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."options WHERE option_name LIKE '%s'",'image_group_%'));
 	foreach((array)$images_gr as $imag){
 		$old_ava[$imag->option_name] = $imag->option_value;
 	}
 	/**/
 
-	$option_gr = $wpdb->get_results("SELECT * FROM ".RCL_PREF."groups_options");
+	$option_gr = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."groups_options"));
 
 	foreach((array)$option_gr as $option){
 		$opt_groups[$option->group_id] = $option->option_value;
@@ -947,14 +927,14 @@ global $wpdb,$post;
 	}
 	$grouplist .= '</div>';
 
-	$page_navi = navi_rcl($inpage,$count_group,$num_page,'','&filter='.$orderby);
+	$page_navi = rcl_navi($inpage,$count_group,$num_page,'','&filter='.$orderby);
 
 	return $grouplist.$page_navi;
 
 }
 //Добавляем кнопку на удаление из группы при выводе пользователей группы
-add_action('user_description','add_group_manage_users_button',100);
-function add_group_manage_users_button(){
+add_action('user_description','rcl_group_manage_users_button',100);
+function rcl_group_manage_users_button(){
     global $user_ID,$group_id,$group_admin,$user;
 
     if(!$user_ID||$user_ID!=$group_admin||$user->user_id==$user_ID) return false;
@@ -965,11 +945,11 @@ function add_group_manage_users_button(){
     . '</p>';
 }
 
-add_filter('file_scripts_rcl','get_scripts_group_rcl');
-function get_scripts_group_rcl($script){
+add_filter('file_scripts_rcl','rcl_scripts_group');
+function rcl_scripts_group($script){
 
 	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
-	$ajaxfile = "type: 'POST', data: dataString, dataType: 'json', url: rcl_url+'add-on/groups/ajax-request.php',";
+	//$ajaxfile = "type: 'POST', data: dataString, dataType: 'json', url: rcl_url+'add-on/groups/ajax-request.php',";
 
 	$script .= "
 		jQuery('.edit .groupname').live('click',function(){
@@ -1011,7 +991,7 @@ function get_scripts_group_rcl($script){
 			var idgroup = jQuery('.group-info').attr('id');
 			var page = parseInt(jQuery(this).text().replace(/\D+/g,''));
 			var id_group = parseInt(idgroup.replace(/\D+/g,''));
-			var dataString = 'action=all_users_group_recall&id_group='+ id_group;
+			var dataString = 'action=rcl_get_users_group&id_group='+ id_group;
 			if(page) dataString += '&page='+ page;
 
 			jQuery.ajax({
@@ -1036,7 +1016,7 @@ function get_scripts_group_rcl($script){
 			var type_req = 0;
 			if(idbutt == 'add-user-req-'+id_group) type_req = 1;
 			if(idbutt == 'del-user-req-'+id_group) type_req = 2;
-			var dataString = 'action=request_users_group_access_rcl&id_group='+id_group+'&req='+type_req+'&id_user='+id_user;
+			var dataString = 'action=request_users_group_access&id_group='+id_group+'&req='+type_req+'&id_user='+id_user;
 			jQuery.ajax({
 				".$ajaxdata."
 				success: function(data){
@@ -1054,9 +1034,9 @@ function get_scripts_group_rcl($script){
 			var idgroup = jQuery('.group-info').attr('id');
 			var id_group = parseInt(idgroup.replace(/\D+/g,''));
 			var new_name_group = jQuery('#name-group').attr('value');
-			var dataString = 'action=edit_group_wp_recall&new_name_group='+new_name_group+'&id_group='+id_group+'&user_ID='+user_ID;
+			var dataString = 'action=edit_group&new_name_group='+new_name_group+'&id_group='+id_group+'&user_ID='+user_ID;
 			jQuery.ajax({
-			".$ajaxfile."
+			".$ajaxdata."
 			success: function(data){
 				if(data['int']==100){
 						jQuery('.groupname_edit').html(new_name_group);
@@ -1071,9 +1051,9 @@ function get_scripts_group_rcl($script){
 		jQuery('.ban-group').live('click',function(){
 			var user_id = jQuery(this).attr('user-data');
 			var group_id = jQuery(this).attr('group-data');
-			var dataString = 'action=group_ban_user_rcl&user_id='+user_id+'&group_id='+group_id+'&user_ID='+user_ID;
+			var dataString = 'action=group_ban_user&user_id='+user_id+'&group_id='+group_id+'&user_ID='+user_ID;
 			jQuery.ajax({
-			".$ajaxfile."
+			".$ajaxdata."
 			success: function(data){
 				if(data['int']==100){
 					jQuery('#usergroup-'+user_id).replaceWith(data['content']);
@@ -1087,9 +1067,9 @@ function get_scripts_group_rcl($script){
 		jQuery('.remove-public-group').live('click',function(){
 			var user_id = jQuery(this).attr('user-data');
 			var group_id = jQuery(this).attr('group-data');
-			var dataString = 'action=remove_user_publics_group_rcl&user_id='+user_id+'&group_id='+group_id+'&user_ID='+user_ID;
+			var dataString = 'action=remove_user_publics_group&user_id='+user_id+'&group_id='+group_id+'&user_ID='+user_ID;
 			jQuery.ajax({
-			".$ajaxfile."
+			".$ajaxdata."
 			success: function(data){
 				if(data['int']==100){
 					jQuery('#usergroup-'+user_id).replaceWith(data['content']);
@@ -1104,9 +1084,9 @@ function get_scripts_group_rcl($script){
 			var idgroup = jQuery('.group-info').attr('id');
 			var id_group = parseInt(idgroup.replace(/\D+/g,''));
 			var new_desc_group = jQuery('#group_desc').attr('value');
-			var dataString = 'action=edit_group_wp_recall&new_desc_group='+new_desc_group+'&id_group='+id_group+'&user_ID='+user_ID;
+			var dataString = 'action=edit_group&new_desc_group='+new_desc_group+'&id_group='+id_group+'&user_ID='+user_ID;
 			jQuery.ajax({
-			".$ajaxfile."
+			".$ajaxdata."
 			success: function(data){
 				if(data['int']==100){
 					jQuery('.text_desc_group').html('<p>'+new_desc_group+'</p>');
@@ -1127,7 +1107,7 @@ function get_scripts_group_rcl($script){
 	return $script;
 }
 
-function get_footer_scripts_groups_rcl($script){
+function rcl_footer_scripts_group($script){
 	global $rcl_options;
 	if($rcl_options['public_gallery_weight']) $weight = $rcl_options['public_gallery_weight'];
 	else $weight = '2';
@@ -1138,7 +1118,8 @@ function get_footer_scripts_groups_rcl($script){
 	$script .= "
 	var term_id_group = jQuery('input[name=\"term_id\"]').val();
 	jQuery('#postgroupupload').fileapi({
-		   url: rcl_url+'add-on/groups/upload-file.php?id_group='+term_id_group,
+		   url: wpurl+'wp-admin/admin-ajax.php',
+		   data:{action:'rcl_postgroup_upload',id_group:term_id_group},
 		   multiple: true,
 		   maxSize: ".$weight." * FileAPI.MB,
 		   maxFiles:".$cnt.",
@@ -1200,5 +1181,7 @@ function get_footer_scripts_groups_rcl($script){
 	});";
 	return $script;
 }
-add_filter('file_footer_scripts_rcl','get_footer_scripts_groups_rcl');
-?>
+add_filter('file_footer_scripts_rcl','rcl_footer_scripts_group');
+
+include_once 'class_ajax.php';
+include_once 'upload-file.php';

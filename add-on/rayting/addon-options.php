@@ -1,7 +1,7 @@
 <?php
 
-add_filter('admin_options_wprecall','get_admin_rayt_sistem_content');
-function get_admin_rayt_sistem_content($content){
+add_filter('admin_options_wprecall','rcl_admin_page_rating');
+function rcl_admin_page_rating($content){
 
     $opt = new Rcl_Options(__FILE__);
         

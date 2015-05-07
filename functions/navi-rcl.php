@@ -36,7 +36,7 @@ class RCL_navi{
             
             if($group_id){
                     $prm = get_term_link((int)$group_id,'groups' );
-                    if($_GET['group-page']) $prm = get_redirect_url_rcl($prm).'group-page='.$_GET['group-page'];
+                    if($_GET['group-page']) $prm = rcl_format_url($prm).'group-page='.$_GET['group-page'];
             }else if($user_LK){
                 $prm = get_author_posts_url($user_LK);
             }else{ 
@@ -45,7 +45,7 @@ class RCL_navi{
 
             if($this->inpage&&$this->cnt_data>$this->inpage){
 
-                if(isset($prm))$redirect_url = get_redirect_url_rcl($prm);
+                if(isset($prm))$redirect_url = rcl_format_url($prm);
                 else $redirect_url = '#';
 
                 if($redirect_url=='#'||$group_id) $class .= ' ajax-navi';
@@ -70,7 +70,7 @@ class RCL_navi{
 	}
 }
 
-function navi_rcl($inpage,$cnt_data,$num_page,$page=false,$get=false){
+function rcl_navi($inpage,$cnt_data,$num_page,$page=false,$get=false){
 		
 		global $post,$group_id;
 		if(isset($_GET['navi'])) $navi = $_GET['navi'];
@@ -79,12 +79,12 @@ function navi_rcl($inpage,$cnt_data,$num_page,$page=false,$get=false){
 		
 		if($group_id){
 			$prm = get_term_link((int)$group_id,'groups' );
-			if($_GET['group-page']) $prm = get_redirect_url_rcl($prm).'group-page='.$_GET['group-page'];
+			if($_GET['group-page']) $prm = rcl_format_url($prm).'group-page='.$_GET['group-page'];
 		}else{ $prm = get_permalink($post->ID);}
 
 		if($inpage&&$cnt_data>$inpage){
 			
-			$redirect_url = get_redirect_url_rcl($prm);
+			$redirect_url = rcl_format_url($prm);
 
             $page_navi = '<div class="rcl-navi">';
             $next = $navi + 3;
@@ -105,10 +105,10 @@ function navi_rcl($inpage,$cnt_data,$num_page,$page=false,$get=false){
         return $page_navi;
 }
 
-function get_pagenavi_ajax_rcl($userid,$post_type){
+function rcl_get_ajax_pagenavi($userid,$post_type){
 	global $wpdb;
 
-	$count = $wpdb->get_var("SELECT COUNT(ID) FROM ".$wpdb->prefix."posts WHERE post_author='$userid' AND post_type='$post_type' AND post_status NOT IN ('draft','auto-draft')");
+	$count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft')",$userid,$post_type));
 	if(!$count) return false;
 	$in_page = 20;
         $page = 0;
@@ -124,7 +124,7 @@ function get_pagenavi_ajax_rcl($userid,$post_type){
 	return $navi;
 }
 
-function admin_navi_rcl($inpage,$cnt_data,$page,$page_id,$get_data){
+function rcl_navi_admin($inpage,$cnt_data,$page,$page_id,$get_data){
 
 	if($_GET['paged']) $page = $_GET['paged'];
 	else $page=1;
@@ -137,13 +137,13 @@ function admin_navi_rcl($inpage,$cnt_data,$page,$page_id,$get_data){
 		<div class="tablenav-pages">
 			<span class="pagination-links">';
 				
-			if($page!=1)$pagination .= '<a class="first-page" href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page='.$page_id.''.$get_data.'" title="Перейти на первую страницу">«</a>
-			<a class="prev-page" href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page='.$page_id.''.$get_data.'&paged='.$prev.'" title="Перейти на предыдущую страницу">‹</a>';
+			if($page!=1)$pagination .= '<a class="first-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data).'" title="Перейти на первую страницу">«</a>
+			<a class="prev-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data.'&paged='.$prev).'" title="Перейти на предыдущую страницу">‹</a>';
 			$pagination .= '<span class="paging-input">
 				'.$page.' из <span class="total-pages">'.$num_page.'</span>
 			</span>';
-			if($page!=$num_page)$pagination .= '<a class="next-page" href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page='.$page_id.''.$get_data.'&paged='.$next.'" title="Перейти на следующую страницу">›</a>
-			<a class="last-page" href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page='.$page_id.''.$get_data.'&paged='.$num_page.'" title="Перейти на последнюю страницу">»</a>
+			if($page!=$num_page)$pagination .= '<a class="next-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data.'&paged='.$next).'" title="Перейти на следующую страницу">›</a>
+			<a class="last-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data.'&paged='.$num_page).'" title="Перейти на последнюю страницу">»</a>
 			
 			</span>
 		</div>

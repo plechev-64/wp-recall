@@ -1,18 +1,18 @@
 <?php
-function get_short_basket_rmag(){
+function rcl_get_shortcode_cart(){
 	global $rmag_options;
-	if($rmag_options['add_basket_button_recall']==1) add_shortcode('add-basket','add_basket_button_product');
-	else add_filter('the_content','add_basket_button_product');
+	if($rmag_options['add_basket_button_recall']==1) add_shortcode('add-basket','rcl_add_cart_button');
+	else add_filter('the_content','rcl_add_cart_button');
 }
-add_action('wp','get_short_basket_rmag');
+add_action('wp','rcl_get_shortcode_cart');
 
 //кнопку добавления заказа на странице товара
-function add_basket_button_product($content){
+function rcl_add_cart_button($content){
 global $post,$rmag_options;
 
 	if($post->post_type!=='products') return $content; 
         
-        $metas = get_postmetas($post->ID);
+        $metas = rcl_get_postmeta_array($post->ID);
         
         $price = $metas['price-products'];
         $outsale = $metas['outsale'];
@@ -23,17 +23,17 @@ global $post,$rmag_options;
             if($metas['availability_product']=='empty'){ //если товар цифровой
                 if($price) $button .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">';
                 else $button .= 'Бесплатно ';
-                $button .= get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));	
+                $button .= rcl_get_button('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));	
             }else{
                 if($rmag_options['products_warehouse_recall']==1){ 
                     $amount = get_post_meta($post->ID, 'amount_product', 1);
                     if($amount>0||$amount==false){
                         $button .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">'
-                                . get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));								
+                                . rcl_get_button('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));								
                     }
                 }else{
                     $button .= 'Цена: '.$price.' руб. <input type="text" size="2" name="number_product" id="number_product" value="1">'
-                            . get_button_rcl('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));		
+                            . rcl_get_button('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'data-product='.$post->ID));		
                 }
             }
         }
@@ -47,7 +47,7 @@ global $post,$rmag_options;
 	return $content;
 }
 
-function shortcode_mini_basket() {
+function rcl_shortcode_minicart() {
     global $rmag_options,$CartData;
     $sumprice = 0;
 
@@ -67,14 +67,14 @@ function shortcode_mini_basket() {
 		'cart'=> $_SESSION['cart']
 	);
 
-    $minibasket = get_include_template_rcl('cart-mini.php',__FILE__);
+    $minibasket = rcl_get_include_template('cart-mini.php',__FILE__);
 
     return $minibasket;
 }
-add_shortcode('minibasket', 'shortcode_mini_basket');
+add_shortcode('minibasket', 'rcl_shortcode_minicart');
 
-add_action( 'widgets_init', 'widget_minibasket' );
-function widget_minibasket() {
+add_action( 'widgets_init', 'rcl_widget_minicart' );
+function rcl_widget_minicart() {
 	register_widget( 'Widget_minibasket' );
 }
 
@@ -120,16 +120,15 @@ class Widget_minibasket extends WP_Widget {
 	}
 }
 
-function shortcode_page_basket() {
+add_shortcode('basket', 'rcl_shortcode_cart');
+function rcl_shortcode_cart() {
     include_once 'rcl_cart.php';
     $form = new Rcl_Cart();
     return $form->cart();
 }
-add_shortcode('basket', 'shortcode_page_basket');
 
-add_shortcode('productlist','short_product_list');
-
-function short_product_list($atts, $content = null){
+add_shortcode('productlist','rcl_shortcode_productlist');
+function rcl_shortcode_productlist($atts, $content = null){
 	global $post,$wpdb,$rmag_options;
 			
 	extract(shortcode_atts(array(
@@ -148,7 +147,7 @@ function short_product_list($atts, $content = null){
 	$atts));
         
 	if(!$num){ 
-		$count_prod = $wpdb->get_var("SELECT COUNT(ID) FROM ".$wpdb->prefix."posts WHERE post_type='products' AND post_status='publish'");	
+		$count_prod = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->prefix."posts WHERE post_type='%s' AND post_status='%s'",'products','publish'));	
 	}else{
                 $count_prod = false;
 		$inpage = $num;
@@ -205,7 +204,7 @@ function short_product_list($atts, $content = null){
 	
 	foreach($products as $post){ setup_postdata($post);
 		$n++;
-		$prodlist .= get_include_template_rcl('product-'.$type.'.php',__FILE__);
+		$prodlist .= rcl_get_include_template('product-'.$type.'.php',__FILE__);
 		if($type=='slab'){
 			$cnt = $n%$inline;
 			if($cnt==0) $prodlist .='<div class="clear"></div>';
@@ -220,8 +219,8 @@ function short_product_list($atts, $content = null){
 	return $prodlist;
 }
 
-add_shortcode('pricelist', 'shortcode_pricelist_recall');
-function shortcode_pricelist_recall($atts, $content = null){
+add_shortcode('pricelist', 'rcl_shortcode_pricelist');
+function rcl_shortcode_pricelist($atts, $content = null){
 	global $post;
 	
 	extract(shortcode_atts(array(
@@ -321,8 +320,8 @@ function shortcode_pricelist_recall($atts, $content = null){
 	
 }
 
-add_shortcode('slider-products','slider_products_rcl');
-function slider_products_rcl($atts, $content = null){
+add_shortcode('slider-products','rcl_slider_products');
+function rcl_slider_products($atts, $content = null){
 	
     extract(shortcode_atts(array(
 	'num' => 5,
@@ -336,7 +335,7 @@ function slider_products_rcl($atts, $content = null){
 	),
     $atts));
 	
-    return slider_rcl(array(
+    return rcl_slider(array(
         'type'=>'products',
         'tax'=>'prodcat',
         'term'=>$cat,

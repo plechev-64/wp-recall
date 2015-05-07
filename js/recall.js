@@ -215,7 +215,7 @@ jQuery.fn.extend({
     var FileAPI = {
             debug: true
             , media: true
-            , staticPath: '/wp-content/plugins/recall/js/fileapi/FileAPI/'
+            , staticPath: rcl_url+'js/fileapi/FileAPI/'
     };
     var examples = [];
 

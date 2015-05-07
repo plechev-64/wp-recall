@@ -40,9 +40,9 @@ class Rcl_PublicForm {
             
             if($this->post_type=='post-group'){
                 
-                if(!user_can_edit_post_group($this->post_id)&&!current_user_can('edit_post', $this->post_id)) return false;
+                if(!rcl_can_user_edit_post_group($this->post_id)&&!current_user_can('edit_post', $this->post_id)) return false;
                 
-                $group_id = get_group_id_by_post($this->post_id);
+                $group_id = rcl_get_group_id_by_post($this->post_id);
                 
             }else if(!current_user_can('edit_post', $this->post_id)) return false; 
             
@@ -67,7 +67,7 @@ class Rcl_PublicForm {
             'taxonomy' =>$taxs
         );
         
-        fileapi_footer_scripts();
+        rcl_fileapi_scripts();
         add_filter('public_form_rcl',array(&$this,'add_tags_input'),10);
         add_filter('after_public_form_rcl',array(&$this,'delete_button'),10,2);
         
@@ -217,8 +217,8 @@ class Rcl_PublicForm {
                 $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','rcl').'\';"  action="" method="post" enctype="multipart/form-data">
                 '.wp_nonce_field('edit-post-rcl','_wpnonce',true,false);
                     
-                    if(get_template_rcl($this->post_type.'-form.php',__FILE__)) $form .= get_include_template_rcl($this->post_type.'-form.php',__FILE__);
-                        else $form .= get_include_template_rcl('public-form.php',__FILE__);
+                    if(rcl_get_template_path($this->post_type.'-form.php',__FILE__)) $form .= rcl_get_include_template($this->post_type.'-form.php',__FILE__);
+                        else $form .= rcl_get_include_template('public-form.php',__FILE__);
 
                     $form .= $this->submit_and_hidden()
 
@@ -233,13 +233,13 @@ class Rcl_PublicForm {
     }
 }
 
-function the_public_title(){
+function rcl_publication_title(){
     global $editpost;
     $title = (isset($editpost->post_title))? $editpost->post_title: false;
     echo $title;
 }
 
-function the_public_termlist($tax=false){
+function rcl_publication_termlist($tax=false){
     global $group_id,$rcl_options,$options_gr,$formData;
     if($tax) $formData->taxonomy[$formData->post_type] = $tax;  
     if(!isset($formData->taxonomy[$formData->post_type])&&$formData->post_id) return false;
@@ -247,19 +247,19 @@ function the_public_termlist($tax=false){
     $ctg = ($formData->terms)? $formData->terms: 0;
 
     if($formData->post_type=='post'){
-        $cf = get_custom_fields_rcl($formData->post_id,$formData->post_type,$formData->form_id);
+        $cf = rcl_get_custom_fields($formData->post_id,$formData->post_type,$formData->form_id);
         if(!$ctg) $ctg = (isset($cf['options']['terms']))? $cf['options']['terms']: $ctg = $rcl_options['id_parent_category'];
         $cnt = (isset($rcl_options['count_category_post']))? $rcl_options['count_category_post']:0;
     }
 
     if($formData->post_type=='post-group'){
-        $options_gr = get_options_group($group_id);
-        $catlist = get_tags_list_group_rcl($options_gr['tags'],$formData->post_id);
+        $options_gr = rcl_get_options_group($group_id);
+        $catlist = rcl_get_tags_list_group($options_gr['tags'],$formData->post_id);
 
     }else{
         $cnt = (!$cnt)? 1: $cnt;
         $cat_list = ($formData->post_id)? get_public_catlist(): '';
-        $sel = new List_Terms_rcl();
+        $sel = new Rcl_List_Terms();
         $catlist = $sel->get_select_list(get_public_allterms(),$cat_list,$cnt,$ctg);
 
     }
@@ -278,7 +278,7 @@ function get_public_catlist(){
     }else{
         $post_cat = get_the_terms( $formData->post_id, $formData->taxonomy[$formData->post_type] );
 
-        $Child_Terms = new Get_Child_Terms_Rcl();
+        $Child_Terms = new Rcl_Child_Terms();
         $cat_list = $Child_Terms->get_terms_post($post_cat);           
     }
     
@@ -326,7 +326,7 @@ function get_public_allterms(){
     return $allcats;
 }
 
-function the_public_editor(){
+function rcl_publication_editor(){
     global $rcl_options,$editpost,$formData;
         
     $media_buttons = ($rcl_options['media_downloader_recall']==1)? $media_buttons = 1: 0;
@@ -347,26 +347,26 @@ function the_public_editor(){
     );
 
     if($rcl_options['media_downloader_recall']!=1)
-        echo get_button_rcl(__('To add a media file','rcl'),'#',array('icon'=>'fa-folder-open','id'=>'get-media-rcl'));
+        echo rcl_get_button(__('To add a media file','rcl'),'#',array('icon'=>'fa-folder-open','id'=>'get-media-rcl'));
 
     $content = (isset($editpost->post_content))? $editpost->post_content: '';
 
     wp_editor( $content, 'contentarea', $args );
 }
 
-function the_public_upload(){
+function rcl_publication_upload(){
     global $formData;
     new Rcl_Thumb_Form($formData->post_id,$formData->id_upload);
 }
 
-add_action('public_form','add_filter_public_form');
-function add_filter_public_form(){
+add_action('public_form','rcl_filter_public_form');
+function rcl_filter_public_form(){
     global $formData;
     $fields = '';
     echo apply_filters('public_form_rcl',$fields,$formData);
 }
 
-function the_public_custom_fields(){
+function rcl_publication_custom_fields(){
     global $formData;
-    echo get_custom_fields_list_rcl($formData->post_id,$formData->post_type,$formData->form_id);
+    echo rcl_get_list_custom_fields($formData->post_id,$formData->post_type,$formData->form_id);
 }

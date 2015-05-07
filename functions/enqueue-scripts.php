@@ -5,56 +5,56 @@ function rcl_load_plugin_textdomain() {
     load_theme_textdomain('rcl', RCL_PATH.'languages/');
 }
 
-add_action('wp','get_init_filters_actions_rcl');
-function get_init_filters_actions_rcl(){
+add_action('wp','rcl_init_scripts');
+function rcl_init_scripts(){
     global $rcl_options,$user_ID,$user_LK;
 
     if (!is_admin()):
-        add_action('wp_enqueue_scripts', 'output_style_scripts_recall');
-        add_filter('get_comment_author_url', 'add_link_author_in_page');
-        add_action('wp_head','hidden_admin_panel');
+        add_action('wp_enqueue_scripts', 'rcl_frontend_scripts');
+        add_filter('get_comment_author_url', 'rcl_get_link_author_comment');
+        add_action('wp_head','rcl_hidden_admin_panel');
 
         if(!$user_ID){
-            if(!$rcl_options['login_form_recall']) add_filter('wp_footer', 'login_form_rcl',99);
-            if($rcl_options['login_form_recall']==1) add_filter('wp_enqueue_scripts', 'script_page_form_recall');
-            else if(!$rcl_options['login_form_recall']) add_filter('wp_enqueue_scripts', 'script_float_form_recall');
+            if(!$rcl_options['login_form_recall']) add_filter('wp_footer', 'rcl_login_form',99);
+            if($rcl_options['login_form_recall']==1) add_filter('wp_enqueue_scripts', 'rcl_pageform_scripts');
+            else if(!$rcl_options['login_form_recall']) add_filter('wp_enqueue_scripts', 'rcl_floatform_scripts');
         }
 
-        if($user_LK) add_bxslider_scripts();
+        if($user_LK) rcl_bxslider_scripts();
 
     endif;
 
     add_action('wp_head','rcl_update_timeaction_user');
-    add_action('before_delete_post', 'delete_attachments_with_post_rcl');
+    add_action('before_delete_post', 'rcl_delete_attachments_with_post');
 
 }
 
-add_filter('get_avatar','custom_avatar_recall', 1, 5);
+add_filter('get_avatar','rcl_avatar_replacement', 1, 5);
 if(is_admin()):
-    add_action('save_post', 'recall_postmeta_update', 0);
-    add_action('admin_head','output_script_style_admin_recall');
-    add_action('admin_menu', 'wp_recall_options_panel',19);
+    add_action('save_post', 'rcl_postmeta_update', 0);
+    add_action('admin_head','rcl_admin_scrips');
+    add_action('admin_menu', 'rcl_options_panel',19);
 endif;
 
-function script_page_form_recall(){
+function rcl_pageform_scripts(){
     wp_enqueue_script( 'page_form_recall', RCL_URL.'js/page_form.js' );
 }
 
-function script_float_form_recall(){
+function rcl_floatform_scripts(){
     wp_enqueue_script( 'float_form_recall', RCL_URL.'js/float_form.js' );
 }
 
-function add_sortable_scripts(){
+function rcl_sortable_scripts(){
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-sortable');
 }
 
-function add_resizable_scripts(){
+function rcl_resizable_scripts(){
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-resizable');
 }
 
-function add_datepicker_scripts(){
+function rcl_datepicker_scripts(){
     wp_enqueue_style( 'datepicker', RCL_URL.'js/datepicker/style.css' );
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-core');
@@ -62,14 +62,14 @@ function add_datepicker_scripts(){
     wp_enqueue_script( 'custom-datepicker', RCL_URL.'js/datepicker/datepicker-init.js', array('jquery-ui-datepicker') );
 }
 
-function add_bxslider_scripts(){
+function rcl_bxslider_scripts(){
     wp_enqueue_style( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.css' );
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.min.js' );
     wp_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js', array('bx-slider'));
 }
 
-function output_style_scripts_recall(){
+function rcl_frontend_scripts(){
 	global $rcl_options,$user_LK,$user_ID;
 	if(!isset($rcl_options['font_icons']))  $rcl_options['font_icons']=1;
 	wp_enqueue_style( 'fileapi_static', RCL_URL.'js/fileapi/statics/main.css' );
@@ -89,10 +89,10 @@ function output_style_scripts_recall(){
             foreach($css_ar as $name){wp_enqueue_style( 'style_'.$name, RCL_URL.'css/'.$name.'.css' );}
 	}
 	if($rcl_options['color_theme']){
-            $dirs   = array(RCL_PATH.'css/themes',TEMPLATEPATH.'/recall/themes');
+            $dirs   = array(RCL_PATH.'css/themes',TEMPLATEPATH.'/wp-recall/themes');
             foreach($dirs as $dir){
                 if(!file_exists($dir.'/'.$rcl_options['color_theme'].'.css')) continue;
-                wp_enqueue_style( 'theme_rcl', path_to_url_rcl($dir.'/'.$rcl_options['color_theme'].'.css') );
+                wp_enqueue_style( 'theme_rcl', rcl_path_to_url($dir.'/'.$rcl_options['color_theme'].'.css') );
             }
         }
 
@@ -108,13 +108,13 @@ function output_style_scripts_recall(){
 	wp_enqueue_script( 'temp-scripts-recall', TEMP_URL.'scripts/header-scripts.js', array(), VER_RCL );
 }
 
-function output_script_style_admin_recall(){
+function rcl_admin_scrips(){
     wp_enqueue_style( 'admin_recall', RCL_URL.'css/admin.css' );
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'primary_script_admin_recall', RCL_URL.'js/admin.js', array(), VER_RCL );
 }
 
-function fileapi_footer_scripts() {
+function rcl_fileapi_scripts() {
     global $user_ID;
     if(!$user_ID) return false;
     if(file_exists(TEMP_PATH.'scripts/footer-scripts.js')){

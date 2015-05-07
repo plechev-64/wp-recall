@@ -47,7 +47,7 @@ class Rcl_Postlist {
             $table = $wpdb->prefix . 'posts';
             $rayt = array();
             
-            $posts = $wpdb->get_results("SELECT * FROM $table WHERE post_author='$author_lk' AND post_type='$this->posttype' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT 20");
+            $posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT 20",$author_lk,$this->posttype));
             //print_r($posts);
             
             $posts_block = '';
@@ -55,10 +55,10 @@ class Rcl_Postlist {
             if($posts){
                 $p_list = '';
                     $rayting = false;
-                    if(function_exists('get_rayting_block_rcl')){
+                    if(function_exists('rcl_get_rating_block')){
                             $b=0;
-                            foreach((array)$posts as $p){if(++$b>1) $p_list .= ',';$p_list .= $p->ID;}	
-                            $rayt_p = $wpdb->get_results("SELECT * FROM ".RCL_PREF."total_rayting_posts WHERE post_id IN ($p_list)");		
+                            foreach((array)$posts as $p){ $p_list[] = $p->ID; }	
+                            $rayt_p = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."total_rayting_posts WHERE post_id IN (".rcl_format_in($p_list).")",$p_list));		
                             foreach((array)$rayt_p as $r){
                                 if(!isset($r->post_id)) continue;
                                 $rayt[$r->post_id] = $r->total;                               
@@ -68,7 +68,7 @@ class Rcl_Postlist {
                
                     $posts_block .= '
                     <h3>'.__('Published','rcl').' '.$this->name.'</h3>';
-                    $posts_block .= get_pagenavi_ajax_rcl($author_lk,$this->posttype);
+                    $posts_block .= rcl_get_ajax_pagenavi($author_lk,$this->posttype);
                     $posts_block .= '<table class="publics-table-rcl">
                     <tr>
                         <td>'.__('Date','rcl').'</td>
@@ -86,7 +86,7 @@ class Rcl_Postlist {
                             $content = '<a target="_blank" href="'.$post->guid.'">'.$post->post_title.'</a>';
                             if($rayting) {
                                 $rtng = (isset($rayt[$post->ID]))? $rayt[$post->ID]: 0;
-                                $content .= ' '.get_rayting_block_rcl($rtng);                              
+                                $content .= ' '.rcl_get_rating_block($rtng);                              
                             }
                             $content = apply_filters('content_postslist',$content);
                             $posts_block .= $content;

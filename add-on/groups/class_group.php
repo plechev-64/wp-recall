@@ -19,11 +19,11 @@ class Rcl_Group{
 		$this->group_id = $group_id;
 		$this->term_id = $this->group_id;
 		$this->options_gr = $options_gr;
-		$this->users_count = get_userscount_group($this->term_id);
+		$this->users_count = rcl_get_userscount_group($this->term_id);
 		add_filter('options_group_rcl',array(&$this,'get_primary_options'));
 		add_filter('content_group_rcl',array(&$this,'private_title'));
 		add_filter('after_header_group_rcl',array(&$this,'edit_notify'));
-		if(isset($_GET['group-page'])&&$_GET['group-page']=='users') add_filter('footer_group_rcl',array(&$this,'all_users_group'));
+		if(isset($_GET['group-page'])&&$_GET['group-page']=='users') add_filter('footer_group_rcl',array(&$this,'rcl_get_users_group'));
     }
 
 	function init_variables(){
@@ -41,18 +41,19 @@ class Rcl_Group{
 			if( !wp_verify_nonce( $_POST['_wpnonce'], 'delete-group-rcl' ) ) return false;
 				wp_delete_term( $this->term_id, 'groups');
 				$this->imade_id = get_option('image_group_'.$this->term_id);
-				delete_users_group_rcl($this->term_id, $this->term_id, 'groups');
+				rcl_delete_users_group($this->term_id, $this->term_id, 'groups');
 				echo '<h2 class="aligncenter" style="color:red;">'.__('Your group has been removed!','rcl').'</h2>';
+				$this->group_id = false;
 				return false;
 		}
 
 		$this->imade_id = $this->options_gr['avatar'];
 		$this->admin_id = $this->options_gr['admin'];
 
-		if(!$this->admin_id) $this->admin_id = get_admin_group_by_meta($this->term_id);
+		if(!$this->admin_id) $this->admin_id = rcl_get_admin_group_by_meta($this->term_id);
 		if(!$this->imade_id) $this->imade_id = get_option('image_group_'.$this->term_id);
 
-		$this->users_group = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'user_group_$this->term_id' ORDER BY RAND() LIMIT 10");
+		$this->users_group = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'user_group_%d' ORDER BY RAND() LIMIT 10",$this->term_id));
 
 		$args = array(
 			'post_type'=>'post-group',
@@ -67,25 +68,28 @@ class Rcl_Group{
 			)
 		);
 
-		$p_list = implode(',',get_posts( $args ));
+		$p_list = explode(',',implode(',',get_posts( $args )));
 
-		$this->gallery_group = $wpdb->get_results("SELECT ID,post_parent FROM ".$wpdb->prefix ."posts WHERE post_type = 'attachment' AND post_parent IN ($p_list) ORDER BY ID DESC LIMIT 12");
+		$this->gallery_group = $wpdb->get_results($wpdb->prepare("SELECT ID,post_parent FROM ".$wpdb->prefix ."posts WHERE post_type = 'attachment' AND post_parent IN (".rcl_format_in($p_list).") ORDER BY ID DESC LIMIT 12",$p_list));
 	}
 
 	function get_post_request(){
 		global $user_ID,$wpdb,$options_gr;
 
 		if ( isset($_POST['update-group-rcl'])&&$user_ID ){
+
 			if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-group-rcl' ) ) return false;
 
 			if($this->options_gr) $opt = true;
+			
+			$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 			if(!$_POST['private']&&$this->options_gr['private']) unset($this->options_gr['private']);
 			if(!$_POST['images']&&$this->options_gr['images']) unset($this->options_gr['images']);
 			if(!$_POST['users']&&$this->options_gr['users']) unset($this->options_gr['users']);
 			if(!$_POST['no-post']&&$this->options_gr['no-post']) unset($this->options_gr['no-post']);
 
-			foreach($_POST as $p => $data ){
+			foreach($_POST as $p => $data ){				
 				if($data){
 					if($p=='event'){
 						if(!$_POST['event']['active']) $_POST['event']['active'] = 0;
@@ -139,7 +143,7 @@ class Rcl_Group{
 	}
 
 	function get_admin($text = ''){
-		$text .= '<a href="'.get_author_posts_url($this->admin_id).'">'.get_the_author_meta('display_name',$this->admin_id).'</a>';
+		$text .= ': <a href="'.get_author_posts_url($this->admin_id).'">'.get_the_author_meta('display_name',$this->admin_id).'</a>';
 		return $text;
 	}
 
@@ -244,8 +248,8 @@ class Rcl_Group{
 				foreach((array)$this->requests as $user=>$name){
 					$rqst .= '<tr id="user-req-'.$user.'">
 						<td>'.get_avatar($user,50).'</td><td><a class="name-candidats" href="'.get_author_posts_url($user).'"> '.$name.'</a></td>
-						<td>'.get_button_rcl(__('Take','rcl'),'#',array('icon'=>'fa-check','class'=>'request-access','id'=>'add-user-req-'.$this->term_id)).'</td>
-						<td>'.get_button_rcl(__('Reject','rcl'),'#',array('icon'=>'fa-times','class'=>'request-access','id'=>'del-user-req-'.$this->term_id)).'</td>
+						<td>'.rcl_get_button(__('Take','rcl'),'#',array('icon'=>'fa-check','class'=>'request-access','id'=>'add-user-req-'.$this->term_id)).'</td>
+						<td>'.rcl_get_button(__('Reject','rcl'),'#',array('icon'=>'fa-times','class'=>'request-access','id'=>'del-user-req-'.$this->term_id)).'</td>
 					</tr>';
 				}
 			$rqst .= '</table>';
@@ -306,7 +310,7 @@ class Rcl_Group{
 		if($this->users_group&&$this->options_gr['users']==1){
 			$block_users = '<h3>'. __('Group members','rcl').':</h3>';
 			$a=0;
-			$names = get_names_array_rcl($this->users_group,'user_id');
+			$names = rcl_get_usernames($this->users_group,'user_id');
 			foreach((array)$this->users_group as $single_user){
 				$a++;
 				$block_users .= '<a title="'.$names[$single_user->user_id].'" href="'.get_author_posts_url($single_user->user_id).'">'.get_avatar($single_user->user_id,50).'</a>';
@@ -390,14 +394,14 @@ class Rcl_Group{
 
 		if($tags) return '<div class="search-form-rcl">
 				<form method="get">
-					'.get_tags_list_group_rcl((object)$tags,'',__('Display all records','rcl')).'
+					'.rcl_get_tags_list_group((object)$tags,'',__('Display all records','rcl')).'
 					<input type="hidden" name="search-p" value="'.$this->group_id.'">
 					<input type="submit" class="recall-button" value="'.__('Show','rcl').'">
 				</form>
 			</div>';
 	}
 
-	function all_users_group($page){
+	function rcl_get_users_group($page){
 		return do_shortcode('[userlist page="'.$page.'" orderby="action" group="'.$this->group_id.'" search="no"]');
 	}
 

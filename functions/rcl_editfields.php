@@ -274,7 +274,7 @@ class Rcl_EditFields {
 
     function delete($slug,$table){
         global $wpdb;
-        if($slug) $res = $wpdb->query("DELETE FROM ".$wpdb->prefix."$table WHERE meta_key = '$slug' OR meta_key LIKE '$slug%'");
+        if($slug) $res = $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."$table WHERE meta_key = '%d' OR meta_key LIKE %s'",$slug,$slug.'%'));
         if($res) echo __('All values of a custom field with meta_key','rcl').' "'.$slug.'" '.__('were removed from the Database','rcl').'<br/>';
     }
 
@@ -282,6 +282,8 @@ class Rcl_EditFields {
         global $Option_Value;
 
         $fields = array();
+		
+		$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         if(isset($_POST['options'])){
                 foreach($_POST['options'] as $key=>$val){

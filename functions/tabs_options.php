@@ -1,7 +1,7 @@
 <?php
 
-add_filter('admin_options_wprecall','get_tablist_options');
-function get_tablist_options($content){
+add_filter('admin_options_wprecall','rcl_get_tablist_options');
+function rcl_get_tablist_options($content){
     global $tabs_rcl,$rcl_options;
     
     if(!$tabs_rcl) {
@@ -9,7 +9,7 @@ function get_tablist_options($content){
         return $content;
     }
     
-    add_sortable_scripts();
+    rcl_sortable_scripts();
 
     $opt = new Rcl_Options('tabs');
 
@@ -19,12 +19,12 @@ function get_tablist_options($content){
     if(isset($rcl_options['tabs']['order'])){
         foreach($rcl_options['tabs']['order'] as $order=>$key){
             if(!isset($tabs_rcl[$key])) continue;
-            $tabs .= get_tab_option($key);
+            $tabs .= rcl_get_tab_option($key);
             $keys[$key] = 1;
         }
         foreach($tabs_rcl as $key=>$tab){
             if(isset($keys[$key])) continue;
-            $tabs .= get_tab_option($key,$tab);
+            $tabs .= rcl_get_tab_option($key,$tab);
         }
     }else{     
 
@@ -54,7 +54,7 @@ function get_tablist_options($content){
 
         foreach($otabs as $order=>$vals){  
             foreach($vals as $key=>$val){
-                $tabs .= get_tab_option($key,$val);               
+                $tabs .= rcl_get_tab_option($key,$val);               
             }
         }
     }
@@ -67,7 +67,7 @@ function get_tablist_options($content){
     return $content;
 }
 
-function get_tab_option($key,$tab=false){
+function rcl_get_tab_option($key,$tab=false){
     global $rcl_options;
     $name = (isset($rcl_options['tabs']['name'][$key])) ?$rcl_options['tabs']['name'][$key] :  $tab['name'];
     return '<li>'
@@ -76,11 +76,11 @@ function get_tab_option($key,$tab=false){
             . '</li>';
 }
 
-add_filter('tab_data_rcl','edit_options_tab_rcl');
-function edit_options_tab_rcl($tab){
+add_filter('tab_data_rcl','rcl_edit_options_tab');
+function rcl_edit_options_tab($tab){
     global $rcl_options;
     if(isset($rcl_options['tabs']['name'][$tab['id']])) $tab['name'] = $rcl_options['tabs']['name'][$tab['id']];
-
+	//print_r($rcl_options);
     if(isset($rcl_options['tabs']['order'])){
         foreach($rcl_options['tabs']['order'] as $order=>$key){
             if($key!=$tab['id']) continue;

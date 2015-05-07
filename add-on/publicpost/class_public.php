@@ -1,13 +1,17 @@
 <?php
-class RCL_public{
-
+class Rcl_Public{
+	function __construct() {
+		add_action('wp_ajax_get_media', array(&$this, 'get_media'));
+		add_action('wp_ajax_step_one_redactor_post', array(&$this, 'step_one_redactor_post'));
+		add_action('wp_ajax_step_two_redactor_post', array(&$this, 'step_two_redactor_post'));		
+	}
 	function get_media(){
 		global $user_ID,$wpdb;
                 $page = 1;
-		if(isset($_POST['page'])) $page = esc_sql($_POST['page']);
+		if(isset($_POST['page'])) $page = intval($_POST['page']);
 		if($user_ID){
 			include_once('../../functions/navi-rcl.php');
-			$where = "WHERE post_author='$user_ID' AND post_type='attachment' AND post_mime_type LIKE 'image%'";
+			$where = $wpdb->prepare("WHERE post_author='%d' AND post_type='attachment' AND post_mime_type LIKE '%s'",$user_ID,'image%');
 			$cnt = $wpdb->get_var("SELECT COUNT(ID) FROM ".$wpdb->prefix."posts $where");
 			$rclnavi = new RCL_navi(20,$cnt,false,$page);
 			$limit_us = $rclnavi->limit();
@@ -38,7 +42,7 @@ class RCL_public{
                                         <h3>'.__('Media library user','rcl').':</h3>
 					<ul class="media-list">';
 				foreach($medias as $m){
-					$fls .= '<li>'.get_insert_image_rcl($m->ID).'</li>';
+					$fls .= '<li>'.rcl_get_insert_image($m->ID).'</li>';
 				}
 				$fls .= '</ul>'
                                     . '</div>';
@@ -57,8 +61,8 @@ class RCL_public{
 
 	function step_one_redactor_post(){
 		global $user_ID,$wpdb;
-		$post_id = esc_sql($_POST['post_id']);
-		$post_array = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix."posts WHERE ID='$post_id'");
+		$post_id = intval($_POST['post_id']);
+		$post_array = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."posts WHERE ID='%d'",$post_id));
 		$title = $post_array->post_title;
 		$content = $post_array->post_content;
 
@@ -82,9 +86,9 @@ class RCL_public{
 		global $user_ID,$wpdb;
 		if(!$user_ID) exit;
 
-		$post_id = esc_sql($_POST['post_id']);
-		$post_title = esc_sql($_POST['post_title']);
-		$post_content = esc_sql($_POST['post_content']);
+		$post_id = intval($_POST['post_id']);
+		$post_title = sanitize_text_field($_POST['post_title']);
+		$post_content = esc_textarea($_POST['post_content']);
 
 		$post_array = array();
 		$post_array['post_title'] = $post_title;
@@ -108,4 +112,4 @@ class RCL_public{
 		exit;
 	}
 }
-?>
+$Rcl_Public = new Rcl_Public();

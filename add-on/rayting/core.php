@@ -1,6 +1,6 @@
 <?php
 //Вносим общий рейтинг публикации в БД
-function insert_post_total_rayting($post_id,$user_id,$point=0){
+function rcl_insert_total_post_rating($post_id,$user_id,$point=0){
     global $wpdb;
     $wpdb->insert(  
         RCL_PREF.'total_rayting_posts',  
@@ -8,7 +8,7 @@ function insert_post_total_rayting($post_id,$user_id,$point=0){
     );
 }
 //Вносим общий рейтинг комментария в БД
-function insert_comment_total_rayting($comment_id,$user_id,$point=0){
+function rcl_insert_total_comment_rating($comment_id,$user_id,$point=0){
     global $wpdb;
     $wpdb->insert(  
         RCL_PREF.'total_rayting_comments',  
@@ -16,8 +16,8 @@ function insert_comment_total_rayting($comment_id,$user_id,$point=0){
     );
 }
 //Вносим общий рейтинг пользователя в БД
-add_action('user_register','insert_user_rayting');
-function insert_user_rayting($user_id,$point=0){
+add_action('user_register','rcl_insert_user_rating');
+function rcl_insert_user_rating($user_id,$point=0){
     global $wpdb;
     $wpdb->insert(  
         RCL_PREF.'total_rayting_users',  
@@ -25,7 +25,7 @@ function insert_user_rayting($user_id,$point=0){
     );
 }
 //добавляем голос пользователя к публикации
-function insert_post_rayting($post_id,$user_id,$point){
+function rcl_insert_post_rating($post_id,$user_id,$point){
     global $wpdb;
     $post = get_post($post_id);
 
@@ -34,10 +34,10 @@ function insert_post_rayting($post_id,$user_id,$point){
 	array( 'user' => $user_id, 'post' => $post->ID, 'author_post' => $post->post_author, 'status' => $point )
     );
     
-    do_action('insert_post_rayting',$post_id,$point);
+    do_action('rcl_insert_post_rating',$post_id,$point);
 }
 //добавляем голос пользователя к комментарию
-function insert_comment_rayting($comment_id,$user_id,$point){
+function rcl_insert_comment_rating($comment_id,$user_id,$point){
     global $wpdb;
     $comment = get_comment($comment_id);
 
@@ -52,40 +52,40 @@ function insert_comment_rayting($comment_id,$user_id,$point){
         )
     );
     
-    do_action('insert_comment_rayting',$comment_id,$point);
+    do_action('rcl_insert_comment_rating',$comment_id,$point);
 }
 //Получаем значение голоса пользователя к публикации
-function get_post_rayting($post_id,$user_id){
+function rcl_get_post_rating($post_id,$user_id){
     global $wpdb;
-    return $wpdb->get_var("SELECT status FROM ".RCL_PREF."rayting_post WHERE post = '$post_id' AND user = '$user_id'");
+    return $wpdb->get_var($wpdb->prepare("SELECT status FROM ".RCL_PREF."rayting_post WHERE post = '%d' AND user = '%d'",$post_id,$user_id));
 }
-function get_comment_rayting($comment_id,$user_id){
+function rcl_get_comment_rating($comment_id,$user_id){
     global $wpdb;
-    return $wpdb->get_var("SELECT rayting FROM ".RCL_PREF. "rayting_comments WHERE comment_id = '$comment_id' AND user = '$user_id'");
+    return $wpdb->get_var($wpdb->prepare("SELECT rayting FROM ".RCL_PREF. "rayting_comments WHERE comment_id = '%d' AND user = '%d'",$comment_id,$user_id));
 }
 //Получаем значение рейтинга пользователя
-function get_user_rayting($user_id){
+function rcl_get_user_rating($user_id){
     global $wpdb;
     return $wpdb->get_var("SELECT total FROM ".RCL_PREF."total_rayting_users WHERE user_id = '$user_id'");
 }
 //Получаем значение рейтинга комментария
-function get_comment_total_rayting($comment_id){
+function rcl_get_total_comment_rating($comment_id){
     global $wpdb;   
-    return $wpdb->get_var("SELECT total FROM ".RCL_PREF."total_rayting_comments WHERE comment_id = '".$comment_id."'");
+    return $wpdb->get_var($wpdb->prepare("SELECT total FROM ".RCL_PREF."total_rayting_comments WHERE comment_id = '%d'",$comment_id));
 }
 //Получаем значение рейтинга публикации
-function get_post_total_rayting($id_post){
+function rcl_get_total_post_rating($id_post){
     global $wpdb;
-    return $wpdb->get_var("SELECT total FROM ".RCL_PREF."total_rayting_posts WHERE post_id = '$id_post'");
+    return $wpdb->get_var($wpdb->prepare("SELECT total FROM ".RCL_PREF."total_rayting_posts WHERE post_id = '%d'",$id_post));
 }
 
 //Обновляем общий рейтинг публикации
-add_action('delete_post_rayting','update_post_total_rayting',10,2);
-add_action('insert_post_rayting','update_post_total_rayting',10,2);
-function update_post_total_rayting($post_id,$point){
+add_action('rcl_delete_post_rating','rcl_update_total_post_rating',10,2);
+add_action('rcl_insert_post_rating','rcl_update_total_post_rating',10,2);
+function rcl_update_total_post_rating($post_id,$point){
     global $wpdb,$rcl_options;
 
-    $total = get_post_total_rayting($post_id);
+    $total = rcl_get_total_post_rating($post_id);
     $post = get_post($post_id);
 
     if(isset($total)){
@@ -97,23 +97,23 @@ function update_post_total_rayting($post_id,$point){
         );
 
     }else{
-        insert_post_total_rayting($post_id,$post->post_author,$point);
+        rcl_insert_total_post_rating($post_id,$post->post_author,$point);
         $total = $point;
     }
 
-    do_action('update_post_total_rayting',$post_id,$post->post_author,$point); 
+    do_action('rcl_update_total_post_rating',$post_id,$post->post_author,$point); 
     
     return $total;
 }
 //Обновляем общий рейтинг комментария
 //comment_id - идентификатор комментария
 //user_id - автор комментария
-add_action('delete_comment_rayting','update_comment_total_rayting',10,2);
-add_action('insert_comment_rayting','update_comment_total_rayting',10,2);
-function update_comment_total_rayting($comment_id,$point){
+add_action('rcl_delete_comment_rating','rcl_update_total_comment_rating',10,2);
+add_action('rcl_insert_comment_rating','rcl_update_total_comment_rating',10,2);
+function rcl_update_total_comment_rating($comment_id,$point){
     global $wpdb,$rcl_options;
 
-    $total = get_comment_total_rayting($comment_id);
+    $total = rcl_get_total_comment_rating($comment_id);
     $comment = get_comment($comment_id);
 
     if(isset($total)){
@@ -125,37 +125,37 @@ function update_comment_total_rayting($comment_id,$point){
         );
 
     }else{
-        insert_comment_total_rayting($comment_id,$comment->user_id,$point);
+        rcl_insert_total_comment_rating($comment_id,$comment->user_id,$point);
         $total = $point;
     }
     
-    do_action('update_comment_total_rayting',$comment_id,$comment->user_id,$point);  
+    do_action('rcl_update_total_comment_rating',$comment_id,$comment->user_id,$point);  
     
     return $total;
 
 }
 //Определяем изменять ли рейтинг пользователю
-add_action('update_post_total_rayting','post_update_user_rayting',10,3);
-add_action('delete_rayting_with_post','post_update_user_rayting',10,3);
-function post_update_user_rayting($public_id,$user_id,$point){
+add_action('rcl_update_total_post_rating','rcl_post_update_user_rating',10,3);
+add_action('rcl_delete_rating_with_post','rcl_post_update_user_rating',10,3);
+function rcl_post_update_user_rating($public_id,$user_id,$point){
     global $rcl_options;
     $post_type = get_post_type($public_id);
     $rcl_options['rayt_products'] = 1;       
-    if($rcl_options['rayt_'.$post_type]==1) update_user_rayting($user_id,$point,$public_id);
+    if($rcl_options['rayt_'.$post_type]==1) rcl_update_user_rating($user_id,$point,$public_id);
 }
 //Определяем изменять ли рейтинг пользователю
-add_action('update_comment_total_rayting','comment_update_user_rayting',10,3);
-add_action('delete_rayting_with_comment','comment_update_user_rayting',10,3);
-//add_action('delete_comment_rayting','comment_update_user_rayting',10,3);
-function comment_update_user_rayting($public_id,$user_id,$point){
+add_action('rcl_update_total_comment_rating','rcl_comment_update_user_rating',10,3);
+add_action('rcl_delete_rating_with_comment','rcl_comment_update_user_rating',10,3);
+//add_action('rcl_delete_comment_rating','rcl_comment_update_user_rating',10,3);
+function rcl_comment_update_user_rating($public_id,$user_id,$point){
     global $rcl_options;     
-    if($rcl_options['rayt_comment']==1) update_user_rayting($user_id,$point,$public_id);
+    if($rcl_options['rayt_comment']==1) rcl_update_user_rating($user_id,$point,$public_id);
 }
 //Обновляем общий рейтинг пользователя
-function update_user_rayting($user_id,$point,$public_id=false){
+function rcl_update_user_rating($user_id,$point,$public_id=false){
     global $wpdb;
 
-    $total = get_user_rayting($user_id);
+    $total = rcl_get_user_rating($user_id);
 
     if(isset($total)){
         $total += (int)$point;
@@ -165,20 +165,20 @@ function update_user_rayting($user_id,$point,$public_id=false){
                 array('user_id' => $user_id)
         );	
     }else{
-        insert_user_rayting($user_id,$point);		
+        rcl_insert_user_rating($user_id,$point);		
     }
     
-    do_action('update_user_rayting',$user_id,$point,$public_id); 
+    do_action('rcl_update_user_rating',$user_id,$point,$public_id); 
     
 }
 
 //Удаляем из БД всю информацию об активности пользователя на сайте
 //Корректируем рейтинг других пользователей
-function delete_all_rayt_user_rcl($user){
+function rcl_delete_ratingdata_user($user){
 	global  $wpdb;
         $datas = array();
         
-        $r_comments = $wpdb->get_results("SELECT * FROM ".RCL_PREF."rayting_comments WHERE user = '$user'" );
+        $r_comments = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."rayting_comments WHERE user = '%d'",$user));
 
         if($r_comments){
             foreach($r_comments as $r_comment){
@@ -187,7 +187,7 @@ function delete_all_rayt_user_rcl($user){
             }
         }
         
-        $r_posts = $wpdb->get_results("SELECT * FROM ".RCL_PREF."rayting_post WHERE user = '$user'" );
+        $r_posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."rayting_post WHERE user = '%d'",$user));
         
         if($r_posts){
             foreach($r_posts as $r_post){
@@ -202,10 +202,10 @@ function delete_all_rayt_user_rcl($user){
                     foreach($data as $id=>$rayt){
                         $rayt = -1*$rayt;
                         if($type=='comment'){ 
-                            update_comment_total_rayting($id,$user_id,$rayt);
+                            rcl_update_total_comment_rating($id,$user_id,$rayt);
                         }
                         if($type=='post'){ 
-                            update_post_total_rayting($id,$user_id,$rayt);
+                            rcl_update_total_post_rating($id,$user_id,$rayt);
                         }
                         /*if($type=='user'){ 
                             update_raytuser_rcl($user_id,$rayt);
@@ -215,56 +215,56 @@ function delete_all_rayt_user_rcl($user){
             }
         }
 
-        $wpdb->query("DELETE FROM ".RCL_PREF."rayting_comments WHERE user = '$user'");
-        $wpdb->query("DELETE FROM ".RCL_PREF."rayting_post WHERE user = '$user'");
+        $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rayting_comments WHERE user = '%d'",$user));
+        $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rayting_post WHERE user = '%d'",$user));
         
-	$wpdb->query("DELETE FROM ".RCL_PREF."rayting_comments WHERE author_com = '$user'");
-	$wpdb->query("DELETE FROM ".RCL_PREF."rayting_post WHERE author_post = '$user'");
-	$wpdb->query("DELETE FROM ".RCL_PREF."total_rayting_comments WHERE author_id = '$user'");
-	$wpdb->query("DELETE FROM ".RCL_PREF."total_rayting_posts WHERE author_id = '$user'");
-	$wpdb->query("DELETE FROM ".RCL_PREF."total_rayting_users WHERE user_id = '$user'");
+	$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rayting_comments WHERE author_com = '%d'",$user));
+	$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rayting_post WHERE author_post = '%d'",$user));
+	$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."total_rayting_comments WHERE author_id = '%d'",$user));
+	$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."total_rayting_posts WHERE author_id = '%d'",$user));
+	$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."total_rayting_users WHERE user_id = '%d'",$user));
 }
-add_action('delete_user','delete_all_rayt_user_rcl');
+add_action('delete_user','rcl_delete_ratingdata_user');
 
 //Удаляем голос пользователя у комментария
-function delete_comment_rayting($comment_id,$user_id,$point){
+function rcl_delete_comment_rating($comment_id,$user_id,$point){
     global $wpdb;
-    $wpdb->query("DELETE FROM ".RCL_PREF."rayting_comments WHERE comment_id = '$comment_id' AND user='$user_id'");
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rayting_comments WHERE comment_id = '%d' AND user='%d'",$comment_id,$user_id));
     $point = -1*$point;
-    do_action('delete_comment_rayting',$comment_id,$point);
+    do_action('rcl_delete_comment_rating',$comment_id,$point);
 }
 //Удаляем голос пользователя за публикацию
-function delete_post_rayting($post_id,$user_id,$point){
+function rcl_delete_post_rating($post_id,$user_id,$point){
     global $wpdb;
-    $wpdb->query("DELETE FROM ".RCL_PREF."rayting_post WHERE post = '$post_id' AND user='$user_id'");	
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rayting_post WHERE post = '%d' AND user='%d'",$post_id,$user_id));	
     $point = -1*$point;
-    do_action('delete_post_rayting',$post_id,$point);
+    do_action('rcl_delete_post_rating',$post_id,$point);
 }
 //Удаляем данные рейтинга публикации
-add_action('delete_post', 'delete_rayting_with_post');
-function delete_rayting_with_post($postid){ 
+add_action('delete_post', 'rcl_delete_rating_with_post');
+function rcl_delete_rating_with_post($postid){ 
     global  $wpdb;
     $data_p = get_post($postid);
-    $point = get_post_total_rayting($postid);
+    $point = rcl_get_total_post_rating($postid);
 
-    $wpdb->query("DELETE FROM ".RCL_PREF."rayting_post WHERE post = '$postid'");
-    $wpdb->query("DELETE FROM ".RCL_PREF."total_rayting_posts WHERE post_id = '$postid'");
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rayting_post WHERE post = '%d'",$postid));
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."total_rayting_posts WHERE post_id = '%d'",$postid));
 
     $point = -1*$point;
 
-    do_action('delete_rayting_with_post',$postid,$data_p->post_author,$point);
+    do_action('rcl_delete_rating_with_post',$postid,$data_p->post_author,$point);
 } 
 //Удаляем данные рейтинга комментария
-add_action('delete_comment', 'delete_rayting_with_comment');
-function delete_rayting_with_comment($comment_id){
+add_action('delete_comment', 'rcl_delete_rating_with_comment');
+function rcl_delete_rating_with_comment($comment_id){
     global  $wpdb;
     $data_c = get_comment($comment_id);
-    $point = get_comment_total_rayting($comment_id);
+    $point = rcl_get_total_comment_rating($comment_id);
 
-    $wpdb->query("DELETE FROM ".RCL_PREF."rayting_comments WHERE comment_id = '$comment_id'");
-    $wpdb->query("DELETE FROM ".RCL_PREF."total_rayting_comments WHERE comment_id = '$comment_id'");
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rayting_comments WHERE comment_id = '%d'",$comment_id));
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."total_rayting_comments WHERE comment_id = '%d'",$comment_id));
 
     $point = -1*$point;
 
-    do_action('delete_rayting_with_comment',$comment_id,$data_c->user_id,$point);
+    do_action('rcl_delete_rating_with_comment',$comment_id,$data_c->user_id,$point);
 } 

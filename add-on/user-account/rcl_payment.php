@@ -52,7 +52,7 @@ class Rcl_Payment{
 
     function get_pay(){
         global $wpdb;
-         return $wpdb->get_row("SELECT * FROM ".RMAG_PREF ."pay_results WHERE inv_id = '$this->id_pay' AND user = '$this->user'");
+         return $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RMAG_PREF ."pay_results WHERE inv_id = '%s' AND user = '%d'",$this->id_pay,$this->user));
     }
 
     function insert_pay(){
@@ -78,12 +78,12 @@ class Rcl_Payment{
 
         if($data->type!=1) return false;
 
-        $oldcount = get_user_money($this->user);
+        $oldcount = rcl_get_user_money($this->user);
 
         if($oldcount) $newcount = $oldcount + $this->summ;
         else $newcount = $this->summ;
 
-        update_user_money($newcount,$this->user);
+        rcl_update_user_money($newcount,$this->user);
 
         do_action('payment_payservice_rcl',$this->user,$this->summ,__('Top up personal account','rcl'),2);
     }
@@ -225,7 +225,7 @@ class Rcl_Payment{
     }
 }
 
-function payments_rcl(){
+function rcl_payments(){
     global $rmag_options;
     $reqs = array(0,'InvId','ik_co_id','shopId');
     if(!$rmag_options['connect_sale']) return false;
@@ -233,4 +233,4 @@ function payments_rcl(){
         $payment = new Rcl_Payment();
     }
 }
-add_action('wp', 'payments_rcl');
+add_action('wp', 'rcl_payments');

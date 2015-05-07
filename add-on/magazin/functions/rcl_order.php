@@ -87,7 +87,7 @@ class Rcl_Order {
         foreach($cart as $prod_id=>$val){
 
             $status = 1;
-            $metas = get_postmetas($prod_id);
+            $metas = rcl_get_postmeta_array($prod_id);
             
             $price = $val['price'];
 
@@ -191,7 +191,7 @@ class Rcl_Order {
         <h3>Детали заказа:</h3>
         '.$table_order.'
         <p>Ссылка для управления заказом в админке:</p>  
-        <p>'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-rmag&order='.$this->order_id.'</p>';
+        <p>'.admin_url('admin.php?page=manage-rmag&order='.$this->order_id).'</p>';
 
         $admin_email = $rmag_options['admin_email_magazin_recall'];
         if($admin_email){
@@ -221,7 +221,7 @@ class Rcl_Order {
             <p>Пароль: '.$args['user_password'].'</p>					
             <p>В дальнейшем используйте свой личный кабинет для новых заказов на нашем сайте.</p>';
         }
-        $link = get_redirect_url_rcl(get_author_posts_url($user_id),'order');
+        $link = rcl_format_url(get_author_posts_url($user_id),'order');
         $textmail .= '<p>Ссылка для управления заказами: <a href="'.$link.'">'.$link.'</a></p>';
         
         $mail = array(

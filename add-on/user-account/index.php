@@ -7,7 +7,7 @@ function rcl_payform($args){
     return $form->payform();
 }
 
-function get_rmag_global_unit_wallet(){
+function rmag_get_global_unit_wallet(){
 	if (!defined('RMAG_PREF')){
 		global $wpdb;
 		global $rmag_options;
@@ -15,70 +15,70 @@ function get_rmag_global_unit_wallet(){
 		define('RMAG_PREF', $wpdb->prefix."rmag_");
 	}
 }
-add_action('init','get_rmag_global_unit_wallet',10);
+add_action('init','rmag_get_global_unit_wallet',10);
 
 if (is_admin()):
-	add_action('admin_head','output_script_admin_acc_recall');
+	add_action('admin_head','rcl_admin_user_account_scripts');
 endif;
 
-function output_script_admin_acc_recall(){
+function rcl_admin_user_account_scripts(){
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'ajax_admin_account_recall', plugins_url('js/admin.js', __FILE__) );
+	wp_enqueue_script( 'rcl_admin_user_account_scripts', plugins_url('js/admin.js', __FILE__) );
 }
 
-function get_user_money($user_id=false){
+function rcl_get_user_money($user_id=false){
     global $wpdb,$user_ID;
     if(!$user_id) $user_id = $user_ID;
-    return $wpdb->get_var("SELECT count FROM ".RMAG_PREF."user_count WHERE user='$user_id'");
+    return $wpdb->get_var($wpdb->prepare("SELECT count FROM ".RMAG_PREF."user_count WHERE user='%d'",$user_id));
 }
 
-function update_user_money($newmoney,$user_id=false){
+function rcl_update_user_money($newmoney,$user_id=false){
     global $user_ID,$wpdb;
     if(!$user_id) $user_id = $user_ID;
 
-    $money = get_user_money($user_id);
+    $money = rcl_get_user_money($user_id);
 
     if(isset($money)) return $wpdb->update(RMAG_PREF .'user_count',
                         array( 'count' => $newmoney ),
                         array( 'user' => $user_id )
                     );
 
-    return add_user_money($newmoney,$user_id);
+    return rcl_add_user_money($newmoney,$user_id);
 
 
 }
 
-function add_user_money($money,$user_id=false){
+function rcl_add_user_money($money,$user_id=false){
     global $wpdb,$user_ID;
     if(!$user_id) $user_id = $user_ID;
     return $wpdb->insert( RMAG_PREF .'user_count',
 	array( 'user' => $user_id, 'count' => $money ));
 }
 
-function statistic_user_pay_page_rcl(){
+function rcl_statistic_user_pay_page(){
 	$prim = 'manage-rmag';
 	if(!function_exists('wpmagazin_options_panel')){
 		$prim = 'manage-wpm-options';
-		add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', $prim, 'global_recall_wpm_options');
-		add_submenu_page( $prim, __('Payment systems','rcl'), __('Payment systems','rcl'), 'manage_options', $prim, 'global_recall_wpm_options');
+		add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', $prim, 'rmag_global_options');
+		add_submenu_page( $prim, __('Payment systems','rcl'), __('Payment systems','rcl'), 'manage_options', $prim, 'rmag_global_options');
 	}
 
-	add_submenu_page( $prim, __('Payments','rcl'), __('Payments','rcl'), 'manage_options', 'manage-wpm-cashe', 'statistic_add_cashe_wpm_recall');
+	add_submenu_page( $prim, __('Payments','rcl'), __('Payments','rcl'), 'manage_options', 'manage-wpm-cashe', 'rcl_admin_statistic_cashe');
 }
-add_action('admin_menu', 'statistic_user_pay_page_rcl',25);
+add_action('admin_menu', 'rcl_statistic_user_pay_page',25);
 
-add_filter('admin_options_rmag','user_account_wpm_options',10);
-function user_account_wpm_options($content){
+add_filter('admin_options_rmag','rcl_user_account_options',10);
+function rcl_user_account_options($content){
 
         global $rcl_options;
 	$rcl_options = get_option('primary-rmag-options');
 
         include_once RCL_PATH.'functions/rcl_options.php';
 
-        $opt = new Rcl_Options(get_key_addon_rcl(pathinfo(__FILE__)));
+        $opt = new Rcl_Options(rcl_key_addon(pathinfo(__FILE__)));
 
         $content .= '<span class="title-option active">'.__('Payment systems','rcl').'</span>
-	<div id="options-'.get_key_addon_rcl(pathinfo(__FILE__)).'" style="display:block" class="wrap-recall-options">';
+	<div id="options-'.rcl_key_addon(pathinfo(__FILE__)).'" style="display:block" class="wrap-recall-options">';
 
         $content .= $opt->option_block(
             array(
@@ -186,7 +186,7 @@ function user_account_wpm_options($content){
                 wp_dropdown_pages( array(
                         'selected'   => $rcl_options['page_result_pay'],
                         'name'       => 'page_result_pay',
-                        'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
+                        'show_option_none' => __('Not selected','rcl'),
                         'echo'             => 0 )
                 ),
                 $opt->notice(__('For Interkassa: URL of interaction','rcl')),
@@ -196,8 +196,8 @@ function user_account_wpm_options($content){
                 wp_dropdown_pages( array(
                         'selected'   => $rcl_options['page_success_pay'],
                         'name'       => 'page_success_pay',
-                        'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
-                        'echo'             => 0)
+                        'show_option_none' => __('Not selected','rcl'),
+                        'echo'             => 0 )
                 ),
                 $opt->notice(__('For Interkassa: successful payment URL','rcl')),
 
@@ -205,8 +205,8 @@ function user_account_wpm_options($content){
                 wp_dropdown_pages( array(
                         'selected'   => $rcl_options['page_successfully_pay'],
                         'name'       => 'page_successfully_pay',
-                        'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
-                        'echo'             => 0)
+                        'show_option_none' => __('Not selected','rcl'),
+                        'echo'             => 0 )
                 )
             )
         );
@@ -217,21 +217,21 @@ function user_account_wpm_options($content){
 }
 
 // создаем допколонку для вывода баланса пользователя
-function balance_user_recall_admin_column( $columns ){
+function rcl_balance_user_admin_column( $columns ){
 
   return array_merge( $columns,
     array( 'balance_user_recall' => __("Balance",'rcl') )
   );
 
 }
-add_filter( 'manage_users_columns', 'balance_user_recall_admin_column' );
+add_filter( 'manage_users_columns', 'rcl_balance_user_admin_column' );
 
-function balance_user_recall_content( $custom_column, $column_name, $user_id ){
+function rcl_balance_user_admin_content( $custom_column, $column_name, $user_id ){
 global $wpdb;
 
   switch( $column_name ){
     case 'balance_user_recall':
-          $user_count = get_user_money($user_id);
+          $user_count = rcl_get_user_money($user_id);
 	  $custom_column = '<input type="text" class="balanceuser-'.$user_id.'" size="4" value="'.$user_count.'"><input type="button" class="recall-button edit_balance" id="user-'.$user_id.'" value="Ок">';
           $custom_column = apply_filters('balans_column_rcl',$custom_column,$user_id);
           break;
@@ -239,15 +239,15 @@ global $wpdb;
   return $custom_column;
 
 }
-add_filter( 'manage_users_custom_column', 'balance_user_recall_content', 10, 3 );
+add_filter( 'manage_users_custom_column', 'rcl_balance_user_admin_content', 10, 3 );
 
-function statistic_add_cashe_wpm_recall(){
+function rcl_admin_statistic_cashe(){
     global $wpdb;
 	if($_POST['action']=='trash'){
 		$cnt = count($_POST['addcashe']);
 		for($a=0;$a<$cnt;$a++){
-			$id = $_POST['addcashe'][$a];
-			if($id) $wpdb->query("DELETE FROM ".RMAG_PREF ."pay_results WHERE ID = '$id'");
+			$id = intval($_POST['addcashe'][$a]);
+			if($id) $wpdb->query($wpdb->prepare("DELETE FROM ".RMAG_PREF ."pay_results WHERE ID = '%d'",$id));
 		}
 	}
 
@@ -262,8 +262,8 @@ function statistic_add_cashe_wpm_recall(){
 	if($_POST['filter-date']){
 
 		if($_POST['year']){
-			$like = $_POST['year'];
-			if($_POST['month']) $like .= '-'.$_POST['month'];
+			$like = intval($_POST['year']);
+			if($_POST['month']) $like .= '-'.esc_sql($_POST['month']);
 			$like .= '%';
 			$get = 'WHERE time_action  LIKE "'.$like.'"';
 		}
@@ -276,13 +276,13 @@ function statistic_add_cashe_wpm_recall(){
 		if($_GET['user']){
 			$get = $_GET['user'];
 			$get_data = '&user='.$get;
-			$statistic = $wpdb->get_results("SELECT * FROM ".RMAG_PREF ."pay_results WHERE user = '$get' ORDER BY ID DESC LIMIT $start,$inpage");
-			$count_adds = $wpdb->get_var("SELECT COUNT(ID) FROM ".RMAG_PREF ."pay_results WHERE user = '$get'");
+			$statistic = $wpdb->get_results($wpdb->prefix("SELECT * FROM ".RMAG_PREF ."pay_results WHERE user = '%d' ORDER BY ID DESC LIMIT %d,%d",$get,$start,$inpage));
+			$count_adds = $wpdb->get_var($wpdb->prefix("SELECT COUNT(ID) FROM ".RMAG_PREF ."pay_results WHERE user = '$get'"));
 		}elseif($_GET['date']){
 			$get = $_GET['date'];
 			$get_data = '&date='.$get;
-			$statistic = $wpdb->get_results("SELECT * FROM ".RMAG_PREF ."pay_results WHERE time_action LIKE '$get%' ORDER BY ID DESC LIMIT $start,$inpage");
-			$count_adds = $wpdb->get_var("SELECT COUNT(ID) FROM ".RMAG_PREF ."pay_results WHERE time_action LIKE '$get%'");
+			$statistic = $wpdb->get_results($wpdb->prefix("SELECT * FROM ".RMAG_PREF ."pay_results WHERE time_action LIKE '%s' ORDER BY ID DESC LIMIT %d,%d",$get.'%',$start,$inpage));
+			$count_adds = $wpdb->get_var($wpdb->prefix("SELECT COUNT(ID) FROM ".RMAG_PREF ."pay_results WHERE time_action LIKE '%s'",$get.'%'));
 		}else{
 
 			$_POST['year']=$year;$_POST['month']=$month;
@@ -306,7 +306,7 @@ function statistic_add_cashe_wpm_recall(){
         $n=0;
         $table_tr = '';
 
-        $chart = get_chart_payments($statistic);
+        $chart = rcl_get_chart_payments($statistic);
 
 	foreach((array)$statistic as $add){
 		$n++;
@@ -315,10 +315,10 @@ function statistic_add_cashe_wpm_recall(){
 		$table_tr .= '<tr>'
                             . '<th class="check-column" scope="row"><input id="delete-addcashe-'.$add->ID.'" type="checkbox" value="'.$add->ID.'" name="addcashe[]"></th>'
                             . '<td>'.$n.'</td>'
-                            . '<td><a href="/wp-admin/admin.php?page=manage-wpm-cashe&user='.$add->user.'">'.get_the_author_meta('user_login',$add->user).'</a></td>'
+                            . '<td><a href="'.admin_url('admin.php?page=manage-wpm-cashe&user='.$add->user).'">'.get_the_author_meta('user_login',$add->user).'</a></td>'
                             . '<td>'.$add->inv_id.'</td>'
                             . '<td>'.$add->count.'</td>'
-                            . '<td><a href="/wp-admin/admin.php?page=manage-wpm-cashe&date='.$date.'">'.$date.'</a>'.$time.'</td>'
+                            . '<td><a href="'.admin_url('admin.php?page=manage-wpm-cashe&date='.$date).'">'.$date.'</a>'.$time.'</td>'
                         . '</tr>';
 	}
 
@@ -382,7 +382,7 @@ function statistic_add_cashe_wpm_recall(){
 
 	$table .= '</table></form>';
 
-	$table .= admin_navi_rcl($inpage,$count_adds,$page,'manage-wpm-cashe',$get_data);
+	$table .= rcl_navi_admin($inpage,$count_adds,$page,'manage-wpm-cashe',$get_data);
 
 	$table .= '</div>';
 
@@ -392,10 +392,12 @@ function statistic_add_cashe_wpm_recall(){
 /*************************************************
 Пополнение личного счета пользователя
 *************************************************/
-function add_count_user_recall(){
-	if($_POST['count']){
+function rcl_add_count_user(){
+	global $user_ID;
+	
+	if($user_ID&&$_POST['count']){
 
-            $log['redirectform'] = rcl_payform(array('id_pay'=>rand(0,100000000),'summ'=>esc_sql($_POST['count']),'type'=>1));
+            $log['redirectform'] = rcl_payform(array('id_pay'=>rand(0,100000000),'summ'=>intval($_POST['count']),'type'=>1));
             $log['otvet']=100;
 
 	} else {
@@ -404,67 +406,62 @@ function add_count_user_recall(){
 	echo json_encode($log);
 	exit;
 }
-add_action('wp_ajax_add_count_user_recall', 'add_count_user_recall');
+if(is_admin()) add_action('wp_ajax_rcl_add_count_user', 'rcl_add_count_user');
 
 /*************************************************
 Меняем баланс пользователя из админки
 *************************************************/
-function edit_balance_user_recall(){
-	global $wpdb;
-	$user_id = esc_sql($_POST['user']);
-	$balance = esc_sql($_POST['balance']);
+function rcl_edit_balance_user(){
+	$user_id = intval($_POST['user']);
+	$balance = intval($_POST['balance']);
 
-	if($_POST['balance']!==''){
+	$oldusercount = rcl_get_user_money($user_id);
 
-            $oldusercount = get_user_money($user_id);
+	$new_cnt = $balance - $oldusercount;
 
-            $new_cnt = $balance - $oldusercount;
+	if(!$new_cnt) return false;
 
-            if(!$new_cnt) return false;
+	if($new_cnt<0) $type = 1;
+	else $type = 2;
 
-            if($new_cnt<0) $type = 1;
-            else $type = 2;
+	rcl_update_user_money($balance,$user_id);
 
-            update_user_money($balance,$user_id);
+	$new_cnt = abs((int)$new_cnt);
+	do_action('admin_edit_user_count_rcl',$user_id,$new_cnt,__('The change in the balance','rcl'),$type);
 
-            $new_cnt = abs((int)$new_cnt);
-            do_action('admin_edit_user_count_rcl',$user_id,$new_cnt,__('The change in the balance','rcl'),$type);
+	$log['otvet']=100;
+	$log['user']=$user_id;
+	$log['balance']=$balance;
 
-            $log['otvet']=100;
-            $log['user']=$user_id;
-            $log['balance']=$balance;
-
-	} else {
-		$log['otvet']=1;
-	}
 	echo json_encode($log);
     exit;
 }
-add_action('wp_ajax_edit_balance_user_recall', 'edit_balance_user_recall');
+if(is_admin()) add_action('wp_ajax_rcl_edit_balance_user', 'rcl_edit_balance_user');
 
-add_action('wp','active_add_wallet_count_rcl');
-function active_add_wallet_count_rcl(){
+add_action('wp','rcl_active_add_wallet_count');
+function rcl_active_add_wallet_count(){
     global $rcl_options;
     if(!isset($rcl_options['wallet_usercount'])) return false;
-    if($rcl_options['wallet_usercount']==1) add_filter('wallet_tabs_rcl','add_wallet_count_rcl',5);
+    if($rcl_options['wallet_usercount']==1) add_filter('wallet_tabs_rcl','rcl_add_wallet_count',5);
 }
 
-function add_wallet_count_rcl($content){
-    $content .= '<h3>'.__('Personal account of the user','rcl').':</h3>'.get_html_usercount_rcl();
+function rcl_add_wallet_count($content){
+    $content .= '<h3>'.__('Personal account of the user','rcl').':</h3>'.rcl_get_html_usercount();
     return $content;
 }
 
-function get_usercount_rcl($user_id){
+/*not found*/
+function rcl_get_usercount($user_id){
     global $wpdb;
-    return $wpdb->get_var("SELECT count FROM ".RMAG_PREF ."user_count WHERE user = '$user_id'");
+    return $wpdb->get_var($wpdb->prepare("SELECT count FROM ".RMAG_PREF ."user_count WHERE user = '%d'",$user_id));
 }
 
-function get_html_usercount_rcl(){
-    global $wpdb,$user_ID,$rmag_options;
+function rcl_get_html_usercount(){
+    global $user_ID,$rmag_options;
 
     $usercount = '<div id="user-count-rcl">';
 
-    $user_count = get_user_money();
+    $user_count = rcl_get_user_money();
     if(!$user_count) $user_count = 0;
 
     $usercount .= '<div class="usercount" style="text-align:center;">'.$user_count.' '.__('RUB','rcl').'</div>';
@@ -488,9 +485,8 @@ function get_html_usercount_rcl(){
     return $usercount;
 }
 
-add_action( 'widgets_init', 'widget_user_count' );
-
-function widget_user_count() {
+add_action( 'widgets_init', 'rcl_widget_usercount' );
+function rcl_widget_usercount() {
 	register_widget( 'Widget_user_count' );
 }
 
@@ -511,7 +507,7 @@ class Widget_user_count extends WP_Widget {
             if ($user_ID){
                 echo $before_widget;
                 if ( $title ) echo $before_title . $title . $after_title;
-                echo get_html_usercount_rcl();
+                echo rcl_get_html_usercount();
                 echo $after_widget;
             }
 
@@ -537,8 +533,8 @@ class Widget_user_count extends WP_Widget {
 	}
 }
 
-add_filter('file_scripts_rcl','get_scripts_user_account_rcl');
-function get_scripts_user_account_rcl($script){
+add_filter('file_scripts_rcl','rcl_get_useraccount_scripts');
+function rcl_get_useraccount_scripts($script){
 
 	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
 
@@ -547,7 +543,7 @@ function get_scripts_user_account_rcl($script){
 			jQuery('.add_count_user').live('click',function(){
 					var count = jQuery('.value_count_user');
 					var addcount = count.val();
-					var dataString = 'action=add_count_user_recall&count='+addcount;
+					var dataString = 'action=rcl_add_count_user&count='+addcount;
 
 					jQuery.ajax({
 						".$ajaxdata."
@@ -564,7 +560,7 @@ function get_scripts_user_account_rcl($script){
 		/* Оплачиваем заказ средствами из личного счета */
 			jQuery('.pay_order').live('click',function(){
 				var idorder = jQuery(this).data('order');
-				var dataString = 'action=pay_order_in_count_recall&idorder='+ idorder;
+				var dataString = 'action=rcl_pay_order_private_account&idorder='+ idorder;
 
 				jQuery.ajax({
 				".$ajaxdata."
@@ -592,7 +588,7 @@ function get_scripts_user_account_rcl($script){
 	return $script;
 }
 
-function get_chart_payments($pays){
+function rcl_get_chart_payments($pays){
     global $chartData,$chartArgs;
 
     if(!$pays) return false;
@@ -607,10 +603,10 @@ function get_chart_payments($pays){
     );
 
     foreach($pays as $pay){
-        setup_chartdata($pay->time_action,$pay->count);
+        rcl_setup_chartdata($pay->time_action,$pay->count);
     }
 
-    return get_chart_rcl($chartArgs);
+    return rcl_get_chart($chartArgs);
 }
 
 require_once("rcl_payment.php");

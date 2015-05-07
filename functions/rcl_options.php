@@ -3,7 +3,7 @@ class Rcl_Options {
     public $key;
 
     function __construct($key=false){
-        $this->key=get_key_addon_rcl(pathinfo($key));
+        $this->key=rcl_key_addon(pathinfo($key));
     }
 
     function options($title,$conts){
@@ -41,7 +41,7 @@ class Rcl_Options {
     }
 
     /*depricated*/
-    function tab_name($name,$id=false){
+    /*function tab_name($name,$id=false){
         global $rcl_options;
         if(!$this->key) return false;
 	$content = $this->label(__('The name of the tab in the personal Cabinet','rcl'));
@@ -50,7 +50,7 @@ class Rcl_Options {
         $content .= $this->option('text',array('name'=>'tab_'.$this->key));
         $content .= $this->notice(__('Enter your inscription on the toggle button tab in the personal Cabinet','rcl'));
 	return $content;
-    }
+    }*/
 
     function title($title){
         return '<h3>'.$title.'</h3>';
@@ -148,11 +148,11 @@ class Rcl_Options {
 }
 
 /*depricated*/
-function get_name_tab_rcl($name,$key){
+/*function get_name_tab_rcl($name,$key){
 	global $rcl_options;
 	$content = '<label>'.__('The name of the tab','rcl').'</label>';
 	if(!$rcl_options['tab_'.$key]) $rcl_options['tab_'.$key] = $name;
 	$content .= '<input type="text" name="tab_'.$key.'" value="'.$rcl_options['tab_'.$key].'" size="10">
 	<small>'.__('Enter your inscription on the toggle button tab in the personal Cabinet','rcl').'</small>';
 	return $content;
-}
+}*/

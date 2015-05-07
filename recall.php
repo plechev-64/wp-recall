@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://wppost.ru
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 11.2.1
+    Version: 12.0.3
     Author: Plechev Andrey
     GitHub Plugin URI: https://github.com/plechev-64/recall
     License:     GPLv2 or later (license.txt)
@@ -21,28 +21,26 @@ function init_global_rcl(){
 	global $rcl_current_action;
 	global $rcl_user_URL;
 	global $rcl_options;
-	if(defined( 'DISALLOW_FILE_EDIT' )&&DISALLOW_FILE_EDIT==true) define( 'DISALLOW_FILE_EDIT', false );
-	$rcl_options = get_option('primary-rcl-options');
-        
-        //$rcl_options = update_options_data_rcl($rcl_options);
 
-	define('VER_RCL', '11.2.1');
-	
-	$upload_dir = get_wp_uploads_dir();
-	
+	$rcl_options = get_option('primary-rcl-options');
+
+	define('VER_RCL', '12.0.3');
+
+	$upload_dir = rcl_get_wp_upload_dir();
+
 	define('TEMP_PATH', $upload_dir['basedir'].'/temp-rcl/');
-	define('TEMP_URL', $upload_dir['baseurl'].'/temp-rcl/');	
-	
+	define('TEMP_URL', $upload_dir['baseurl'].'/temp-rcl/');
+
 	define('RCL_URL', plugin_dir_url( __FILE__ ));
 	define('RCL_PREF', $wpdb->base_prefix.'rcl_');
-        
+
         if(!is_dir($upload_dir['basedir'])){
             mkdir($upload_dir['basedir']);
             chmod($upload_dir['basedir'], 0755);
         }
-        
+
 	$rcl_user_URL = get_author_posts_url($user_ID);
-	$rcl_current_action = $wpdb->get_var("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='$user_ID'");	
+	$rcl_current_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_ID));
 }
 add_action('init','init_global_rcl',1);
 
@@ -54,19 +52,19 @@ function recall_install(){
     init_global_rcl();
 
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-    
-    $upload_dir = get_wp_uploads_dir();
-    
+
+    $upload_dir = rcl_get_wp_upload_dir();
+
     if(!is_dir($upload_dir['basedir'])){
         mkdir($upload_dir['basedir']);
         chmod($upload_dir['basedir'], 0755);
     }
-	 	
+
     $table4 = RCL_PREF."user_action";
     if($wpdb->get_var("show tables like '". $table4 . "'") != $table4) {
 	   $wpdb->query("CREATE TABLE IF NOT EXISTS `". $table4 . "` (
 		  ID bigint (20) NOT NULL AUTO_INCREMENT,
-		  user INT(20) NOT NULL,	  
+		  user INT(20) NOT NULL,
 		  time_action DATETIME NOT NULL,
 		  UNIQUE KEY id (id)
 		) DEFAULT CHARSET=utf8;");
@@ -76,18 +74,16 @@ function recall_install(){
             mkdir(TEMP_PATH);
             chmod(TEMP_PATH, 0755);
 	}
-        
-	$rcl_options = update_options_data_rcl($rcl_options);
-	
+
 	if(!isset($rcl_options['view_user_lk_rcl'])){
 		$rcl_options['view_user_lk_rcl'] = 1;
 		$rcl_options['color_theme'] = 'blue';
 		$rcl_options['lk_page_rcl'] = wp_insert_post(array('post_title'=>__('Personal account','rcl'),'post_content'=>'[wp-recall]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'account'));
-		
+
 		wp_insert_post(array('post_title'=>__('Users','rcl'),'post_content'=>'[userlist]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'users'));
-		
+
 		wp_insert_post(array('post_title'=>__('FEED','rcl'),'post_content'=>'[feed]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'user-feed'));
-		
+
 		$active_addons = get_site_option('active_addons_recall');
 		$def_addons = array('review','profile','feed','publicpost','message','rayting');
 		foreach($def_addons as $addon){
@@ -98,28 +94,28 @@ function recall_install(){
 			$index_src = RCL_PATH.'add-on/'.$addon.'/index.php';
 			if(file_exists($install_src)) include($install_src);
 			if(file_exists($index_src)) include($index_src);
-		}				
+		}
 		update_site_option('active_addons_recall',$active_addons);
-                
+
 		$no_action_users = $wpdb->get_results("SELECT COUNT(us.ID) FROM ".$wpdb->prefix."users AS us WHERE us.ID NOT IN (SELECT ua.user FROM ".RCL_PREF."user_action AS ua)");
 
 		if($no_action_users){
 				$wpdb->query("
-					INSERT INTO ".RCL_PREF."user_action( user, time_action ) 
+					INSERT INTO ".RCL_PREF."user_action( user, time_action )
 					SELECT us.ID, us.user_registered
 					FROM ".$wpdb->prefix."users AS us
 					WHERE us.ID NOT IN ( SELECT user FROM ".RCL_PREF."user_action )
 				");
 		}
-		
+
 		$wpdb->update(
 			$wpdb->prefix.'usermeta',
 			array('meta_value'=>'false'),
 			array('meta_key'=>'show_admin_bar_front')
 		);
-                
+
 	}
-	
+
 	update_option('default_role','author');
 	update_option('show_avatars',1);
 
@@ -133,16 +129,16 @@ function recall_install(){
 			'cap'=>array('read' => false, 'edit_posts' => false, 'delete_posts' => false, 'upload_files' => false)
 		)
 	);
-			
+
 	foreach($roledata as $key=>$role){
 		remove_role($key);
 		add_role($key, $role['name'], $role['cap']);
 	}
-			
+
 	$rcl_options['footer_url_recall']=1;
 	update_option('primary-rcl-options',$rcl_options);
 
-    //update_dinamic_files_rcl();
+    //rcl_update_dinamic_files();
 }
 register_activation_hook(__FILE__,'recall_install');
 
@@ -159,7 +155,7 @@ function recall_uninstall() {
 register_uninstall_hook(__FILE__, 'recall_uninstall');
 
 function wp_recall(){
-    include_template_rcl('cabinet.php');
+    rcl_include_template('cabinet.php');
 }
 
 function init_user_lk(){
@@ -168,8 +164,8 @@ function init_user_lk(){
     $user_LK = false;
     $userLK = false;
     $get='user';
-    
-    if(isset($rcl_options['link_user_lk_rcl'])&&$rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];	
+
+    if(isset($rcl_options['link_user_lk_rcl'])&&$rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];
     if(isset($_GET[$get])) $userLK = $_GET[$get];
 
     if(!$userLK){
@@ -188,7 +184,7 @@ function init_user_lk(){
                     break;
                 }
                 if(!$nicename) return false;
-                $user_LK = $wpdb->get_var("SELECT ID FROM ".$wpdb->prefix."users WHERE user_nicename='$nicename'");
+                $user_LK = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."users WHERE user_nicename='%s'",$nicename));
             }
         }
     }else{
@@ -196,20 +192,20 @@ function init_user_lk(){
     }
 
     if($user_LK){
-        $rcl_userlk_action = $wpdb->get_var("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='$user_LK'");
-        fileapi_footer_scripts();
+        $rcl_userlk_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_LK));
+        rcl_fileapi_scripts();
     }
 }
 if(!is_admin()) add_action('init','init_user_lk',2);
 
 function rcl_buttons(){
     global $user_LK; $content = '';
-    echo apply_filters( 'the_button_wprecall', $content, $user_LK );	
+    echo apply_filters( 'the_button_wprecall', $content, $user_LK );
 }
 
 function rcl_tabs(){
     global $user_LK; $content = '';
-    echo apply_filters( 'the_block_wprecall', $content, $user_LK);	
+    echo apply_filters( 'the_block_wprecall', $content, $user_LK);
 }
 
 function rcl_before(){
@@ -244,7 +240,7 @@ function rcl_footer(){
 
 function rcl_action(){
     global $rcl_userlk_action;
-    $last_action = last_user_action_recall($rcl_userlk_action);	
+    $last_action = rcl_get_useraction($rcl_userlk_action);
     $class = (!$last_action)? 'online': 'offline';
     $status = '<div class="status_user '.$class.'"><i class="fa fa-circle"></i></div>';
     if($last_action) $status .= __('not online','rcl').' '.$last_action;
@@ -269,4 +265,10 @@ function rcl_status_desc(){
 function rcl_username(){
     global $user_LK;
     echo get_the_author_meta('display_name',$user_LK);
+}
+
+function rcl_notice(){
+    $notify = '';
+    $notify = apply_filters('notify_lk',$notify);
+    if($notify) echo '<div class="notify-lk">'.$notify.'</div>';
 }

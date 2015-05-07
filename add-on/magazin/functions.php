@@ -2,29 +2,29 @@
 include_once 'functions/core.php';
 include_once 'functions/init.php';
 
-function get_button_cart_rcl($product_id){
+function rcl_get_cart_button($product_id){
     if(get_post_meta($product_id, 'outsale', 1)) return false;
 
     if(get_post_meta($product_id, 'availability_product', 1)=='empty'){ //если товар цифровой
-        $button = '<div class="cart-button">'.get_button_rcl('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'data-product='.$product_id)).'</div>';
+        $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'data-product='.$product_id)).'</div>';
     }else{
         if($rmag_options['products_warehouse_recall']==1){
             $amount = get_post_meta($product_id, 'amount_product', 1);
             if($amount>0||$amount==false){
-                $button = '<div class="cart-button">'.get_button_rcl('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'data-product='.$product_id)).'</div>';
+                $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'data-product='.$product_id)).'</div>';
             }
         }else{
-            $button = '<div class="cart-button">'.get_button_rcl('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'data-product='.$product_id)).'</div>';
+            $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'data-product='.$product_id)).'</div>';
         }
     }
 
-    $button = apply_filters('cart_button_rcl',$button,$product_id);
+    $button = apply_filters('rcl_cart_button',$button,$product_id);
 
     return $button;
 }
 
-add_filter('the_content','add_block_related_products',70);
-function add_block_related_products($content){
+add_filter('the_content','rcl_related_products',70);
+function rcl_related_products($content){
 	global $rmag_options,$post;
 	if($rmag_options['sistem_related_products']!=1) return $content;
 	if($post->post_type!='products')return $content;
@@ -53,7 +53,7 @@ function add_block_related_products($content){
 	if($title_related) $content .= '<h3>'.$title_related.'</h3>';
 
 	foreach($related_products as $post){ setup_postdata($post);
-		$content .= get_include_template_rcl('product-slab.php',__FILE__);
+		$content .= rcl_get_include_template('product-slab.php',__FILE__);
 	}
         wp_reset_query();
 
@@ -62,8 +62,8 @@ function add_block_related_products($content){
 	return $content;
 }
 
-add_filter('the_content','add_gallery_product_recall',1);
-function add_gallery_product_recall($content){
+add_filter('the_content','rcl_gallery_product',1);
+function rcl_gallery_product($content){
 global $post;
 	if(get_post_type($post->ID)=='products'){
 		if(get_post_meta($post->ID, 'recall_slider', 1)!=1||!is_single()) return $content;
@@ -72,7 +72,7 @@ global $post;
 		$postmeta = get_post_meta($post->ID, 'children_prodimage', 1);
 
 			if($postmeta){
-                            add_bxslider_scripts();
+                            rcl_bxslider_scripts();
 				$values = explode(',',$postmeta);
 
 				$gallery = '<ul class="rcl-gallery">';
@@ -95,7 +95,7 @@ global $post;
 			$attachments = new Attachments( 'attachments_products' );
 
 			if( $attachments->exist() ) :
-                            add_bxslider_scripts();
+                            rcl_bxslider_scripts();
 				$num=0;
 				$gallery = '<ul class="rcl-gallery">';
 			while( $attachments->get() ) :
@@ -123,28 +123,28 @@ global $post;
 }
 
 //Выводим кнопку корзины в кратком содержании
-add_filter('the_excerpt', 'excerpt_product_basket');
-function excerpt_product_basket($excerpt){
+add_filter('the_excerpt', 'rcl_excerpt_cart');
+function rcl_excerpt_cart($excerpt){
     global $post;
-    if($post->post_type=='products') $excerpt .= get_button_cart_rcl($post->ID);
+    if($post->post_type=='products') $excerpt .= rcl_get_cart_button($post->ID);
     return $excerpt;
 }
 
 //Выводим категорию товара
-function add_wpm_product_meta($content){
+add_filter('the_content','rcl_product_meta',10);
+function rcl_product_meta($content){
 	global $post;
 	if($post->post_type!='products') return $content;
-	$product_cat = get_product_category($post->ID);
+	$product_cat = rcl_get_product_category($post->ID);
 	return $product_cat.$content;
 }
-add_filter('the_content','add_wpm_product_meta',10);
 
 //снимаем товар заказа с резерва
-function remove_reserve_product($order_id,$st=0){
+function rcl_remove_reserve($order_id,$st=0){
 	global $rmag_options,$wpdb;
 	if($rmag_options['products_warehouse_recall']!=1) return false;
 
-	$orders = get_order($order_id);
+	$orders = rcl_get_order($order_id);
         foreach((array)$orders as $sumproduct){
                 $reserve = get_post_meta($sumproduct->product,'reserve_product',1);
                 if($reserve){ //если резев имеется
@@ -159,41 +159,3 @@ function remove_reserve_product($order_id,$st=0){
         }
 
 }
-
-//формируем таблицу содержимого заказа для письма
-/*function get_email_table_order_rcl($order_data,$inv_id,$sumprise){
-
-        $n = 1;
-
-        $header = array('№ п/п','Наименование товара','Цена','Количество','Сумма','Статус');
-
-	$table_order .= '<table class="order-form">'
-                . '<tr>';
-                foreach($header as $name){
-                    $table_order .= '<td><b>'.$name.'</b></td>';
-                }
-        $table_order .= '</tr>';
-
-	foreach((array)$order_data as $order){
-            if($order->inv_id==$inv_id){
-
-				$price = apply_filters('cart_price_product',$order->price,$order->product);
-
-                $table_order .= '<tr align="center">'
-                        . '<td>'.$n++.'</td>'
-                        . '<td>'.get_the_title($order->product).'</td>'
-                        . '<td>'.$price.'</td>'
-                        . '<td>'.$order->count.'</td>'
-                        . '<td>'.$order->price*$order->count.'</td>'
-                        . '<td>'.get_status_name($order->status).'</td>'
-                    . '</tr>';
-            }
-	}
-	$table_order .= '<tr>'
-                    . '<td colspan="4">Сумма заказа</td>'
-                    . '<td colspan="2">'.$sumprise.'</td>'
-                . '</tr>'
-                . '</table>';
-
-	return $table_order;
-}*/

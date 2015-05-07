@@ -145,7 +145,7 @@ class Widget_author_profil extends WP_Widget {
 
 		echo $before_widget;
 		if ( $title ) echo $before_title . $title . $after_title;
-		echo get_authorize_form_rcl();
+		echo rcl_get_authorize_form();
 		echo $after_widget;
 	}
 

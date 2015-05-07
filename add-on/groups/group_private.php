@@ -27,7 +27,7 @@ class Group_Private{
 		$term_id = $term->term_id; $groups = true;
 	}
 	if($query->is_single&&$query->query['post_type']=='post-group'&&$query->query['name']){
-		if(!$post) $post_id = $wpdb->get_var("SELECT ID FROM ".$wpdb->prefix."posts WHERE post_name='".$query->query['name']."'");
+		if(!$post) $post_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."posts WHERE post_name='%s'",$query->query['name']));
 		else $post_id = $post->ID;
 		$cur_terms = get_the_terms( $post_id, 'groups' );
 		foreach((array)$cur_terms as $cur_term){
@@ -50,7 +50,7 @@ class Group_Private{
 			 $query->set( 'posts_per_page', 1 );
 		}
 
-		$options_gr = unserialize($wpdb->get_var("SELECT option_value FROM ".RCL_PREF."groups_options WHERE group_id='".$term_id."'"));
+		$options_gr = unserialize($wpdb->get_var($wpdb->prepare("SELECT option_value FROM ".RCL_PREF."groups_options WHERE group_id='%d'",$term_id)));
 
 		if(isset($options_gr['private'])&&$options_gr['private']==1){
 

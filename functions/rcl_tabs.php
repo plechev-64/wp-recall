@@ -23,7 +23,7 @@ class Rcl_Tabs{
         if(!$this->class) $this->class = 'fa-cog'; 
         $this->public = (!isset($args['public'])) ? 0 : $args['public'];
         //print_r($args);
-        if(isset($args['path'])) $this->key = get_key_addon_rcl(pathinfo($args['path']));
+        if(isset($args['path'])) $this->key = rcl_key_addon(pathinfo($args['path']));
         
         add_filter('the_block_wprecall',array(&$this, 'add_tab'),$ord,2); 
         if($name)add_filter('the_button_wprecall',array(&$this, 'add_button'),$ord,2);
@@ -35,11 +35,11 @@ class Rcl_Tabs{
             case -1: if(!$user_ID||$user_ID==$author_lk) return $block_wprecall; break;
             case -2: if($user_ID&&$user_ID==$author_lk) return $block_wprecall; break;
         }
-        if(!chek_view_tab($block_wprecall,$this->id)) return $block_wprecall;
+        if(!rcl_chek_view_tab($block_wprecall,$this->id)) return $block_wprecall;
 
         $status = (!$block_wprecall) ? 'active':'';
         
-        $cl_content = callback_user_func_rcl($this->callback,$author_lk);
+        $cl_content = rcl_callback_tab_func($this->callback,$author_lk);
         if(!$cl_content) return $content;
         
         $block_wprecall .= '<div id="'.$this->id.'_block" class="'.$this->id.'_block recall_content_block '.$status.'">'
@@ -61,23 +61,23 @@ class Rcl_Tabs{
             'class' => $this->class
         );
         if(isset($this->key)) $args['key'] = $this->key;
-        return get_button_tab_rcl($button,$author_lk,$args);
+        return rcl_get_button_tab($args,$button);
     }
    
 }
 
-function get_button_tab_rcl($button,$author_lk,$args){
-	global $rcl_options;
-	$link = get_redirect_url_rcl(get_author_posts_url($author_lk),$args['id_tab']);
-	if(!$button) $status = 'active';
-        else $status = '';
-	
-	$button .= get_button_rcl($args['name'],$link,array('class'=>$status.' '.get_class_button_tab($button,$args['id_tab']),'icon'=>$args['class'],'id'=>$args['id_tab']));
+function rcl_get_button_tab($args,$button=false){
+	global $rcl_options,$user_LK;
+	$link = rcl_format_url(get_author_posts_url($user_LK),$args['id_tab']);
+	/*if(!$button) $status = 'active';
+        else $status = '';*/
+
+	$button .= apply_filters('rcl_get_button_tab',rcl_get_button($args['name'],$link,array('class'=>rcl_get_class_button_tab($button,$args['id_tab']),'icon'=>$args['class'],'id'=>$args['id_tab'])),$args);
                 
 	return $button;
 }
 
-function chek_view_tab($block_wprecall,$idtab){
+function rcl_chek_view_tab($block_wprecall,$idtab){
 	global $rcl_options;
         $tb = (isset($rcl_options['tab_newpage']))? $rcl_options['tab_newpage']:false;
 	if($tb){
@@ -86,17 +86,18 @@ function chek_view_tab($block_wprecall,$idtab){
 	return true;
 }
 
-function get_class_button_tab($button='',$id_tab){
+function rcl_get_class_button_tab($button='',$id_tab){
 	global $rcl_options,$array_tabs;
+	//print_r($rcl_options);
         $class = false;
         $tb = (isset($rcl_options['tab_newpage']))? $rcl_options['tab_newpage']:false;
 	if(!$tb) $class = 'block_button';
 	if($tb==2&&isset($array_tabs[$id_tab])) $class = 'ajax_button';		
-	if(!$button) $class .= ' active';
+	if($button='') $class .= ' active';
 	return $class;
 }
 
-function callback_user_func_rcl($function,$author_lk){
+function rcl_callback_tab_func($function,$author_lk){
     if(is_array($function)){
         $obj = new $function[0];
         return $obj->$function[1]($author_lk);

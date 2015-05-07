@@ -13,7 +13,7 @@ class Rcl_Minify {
     function output_style(){
             global $rcl_options;	
             if(isset($rcl_options['minify_css'])&&$rcl_options['minify_css']==1) return;
-            wp_enqueue_style( $this->id, addon_url('style.css', $this->path) );	
+            wp_enqueue_style( $this->id, rcl_addon_url('style.css', $this->path) );	
     }
     
     function minify_css($array){
@@ -30,7 +30,7 @@ function rcl_enqueue_style($id,$path){
     $tab = new Rcl_Minify($id,$path);  
 }
 
-function minify_style_rcl(){
+function rcl_minify_style(){
     global $rcl_options;	
     if(!isset($rcl_options['minify_css'])||$rcl_options['minify_css']!=1) return false;
 
@@ -69,11 +69,11 @@ function minify_style_rcl(){
         $fullcss .= '/*'.$string_value[0][0].'*/'."\r\n";	
         $string = file_get_contents($css_path);
         preg_match_all('/(?<=url\()[A-zА-я0-9\-\_\/\"\'\.\?\s]*(?=\))/iu', $string, $url);
-        $addon = (addon_path($css_path))? true: false;
+        $addon = (rcl_addon_path($css_path))? true: false;
 
         if($url[0]){
             foreach($url[0] as $u){  
-                $imgs[] = ($addon)? addon_url(trim($u,'\',\"'),$css_path): RCL_URL.'css/'.trim($u,'\',\"');
+                $imgs[] = ($addon)? rcl_addon_url(trim($u,'\',\"'),$css_path): RCL_URL.'css/'.trim($u,'\',\"');
                 $us[] = $u;
             }
 
@@ -88,7 +88,8 @@ function minify_style_rcl(){
     }
 }
 
-function get_tail_addon_url($url){
+/*not found*/
+function rcl_get_tail_addon_url($url){
     $array = explode('/',$url);
     $tail = false;
     foreach($array as $key=>$ar){

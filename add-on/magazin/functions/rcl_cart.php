@@ -137,7 +137,7 @@ class Rcl_Cart {
 		
 		if(!$user_ID) $basket .= '<h3 class="title-data">Корзина <span class="weight-normal">(цены указаны в рублях)</span></h3>';
 		
-        $basket .= get_include_template_rcl('cart.php',__FILE__);
+        $basket .= rcl_get_include_template('cart.php',__FILE__);
         
         $basket = apply_filters('cart_rcl',$basket);
 
@@ -155,7 +155,7 @@ class Rcl_Cart {
 							<div id="regnewuser"  style="display:none;"></div>
                             <table class="form-table">'.$order_field.'</table>';
                             
-                            $basket .= get_button_rcl('Оформить заказ','#',array('icon'=>false,'class'=>'confirm_order'))
+                            $basket .= rcl_get_button('Оформить заказ','#',array('icon'=>false,'class'=>'confirm_order'))
 							.'</div>
                             <div class="redirectform" style="text-align:center;"></div>';
                             
@@ -167,7 +167,7 @@ class Rcl_Cart {
                     
                     $basket .= "
                             
-                            var dataString_count = 'action=confirm_order_recall'".$this->request.";
+                            var dataString_count = 'action=rcl_confirm_order'".$this->request.";
                             jQuery.ajax({
                             type: 'POST',
                             data: dataString_count,
@@ -212,12 +212,12 @@ class Rcl_Cart {
                             </tr>
                             '.$order_field.'
                         </table>
-                        <p align="right">'.get_button_rcl('Оформить заказ','#',array('icon'=>false,'class'=>'add_new_user_in_order','id'=>false)).'</p>
+                        <p align="right">'.rcl_get_button('Оформить заказ','#',array('icon'=>false,'class'=>'rcl_register_user_order','id'=>false)).'</p>
 
                         </div>';
                         $basket .= "<script>
                         jQuery(function(){
-                                jQuery('.add_new_user_in_order').live('click',function(){";
+                                jQuery('.rcl_register_user_order').live('click',function(){";
 
                                     $basket .= $this->script_request('order');
 
@@ -227,7 +227,7 @@ class Rcl_Cart {
                                     var fio = jQuery('.confirm .fio_new_user').attr('value');
                                     var email = jQuery('.confirm .email_new_user').attr('value');
 
-                                    var dataString = 'action=confirm_order_recall&action=add_new_user_in_order&fio_new_user='+fio+'&email_new_user='+email".$this->request.";
+                                    var dataString = 'action=rcl_confirm_order&action=rcl_register_user_order&fio_new_user='+fio+'&email_new_user='+email".$this->request.";
 
                                     jQuery.ajax({
                                             type: 'POST',
@@ -242,7 +242,7 @@ class Rcl_Cart {
                                                                     location.replace(data['redirect']);
                                                             }else{
                                                                     jQuery('.form-table').remove();
-                                                                    jQuery('.add_new_user_in_order').remove();
+                                                                    jQuery('.rcl_register_user_order').remove();
                                                             }
                                                     } else {
                                                             jQuery('#regnewuser').html(data['recall']);

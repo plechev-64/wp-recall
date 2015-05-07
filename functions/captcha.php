@@ -1,7 +1,7 @@
 <?php
 
-add_filter('regform_fields_rcl','get_captcha_field_rcl',999);
-function get_captcha_field_rcl($fields){
+add_filter('regform_fields_rcl','rcl_get_captcha_field',999);
+function rcl_get_captcha_field($fields){
 
     $rcl_captcha = new ReallySimpleCaptcha();
 
@@ -18,7 +18,7 @@ function get_captcha_field_rcl($fields){
     $rcl_captcha_word = $rcl_captcha->generate_random_word();
     $rcl_captcha_prefix = mt_rand();
     $rcl_captcha_image_name = $rcl_captcha->generate_image($rcl_captcha_prefix, $rcl_captcha_word);
-    $rcl_captcha_image_url =  get_bloginfo('wpurl') . '/wp-content/plugins/really-simple-captcha/tmp/';
+    $rcl_captcha_image_url =  plugins_url('really-simple-captcha/tmp/');
     $rcl_captcha_image_src = $rcl_captcha_image_url . $rcl_captcha_image_name;
     $rcl_captcha_image_width = $rcl_captcha->img_size[0];
     $rcl_captcha_image_height = $rcl_captcha->img_size[1];
@@ -36,18 +36,18 @@ function get_captcha_field_rcl($fields){
 
 }
 
-add_action('pre_register_user_rcl','check_register_captcha_rcl');
-function check_register_captcha_rcl($ref) {
+add_action('pre_register_user_rcl','rcl_check_register_captcha');
+function rcl_check_register_captcha($ref) {
     $rcl_captcha = new ReallySimpleCaptcha();
-    $rcl_captcha_prefix = $_POST['rcl_captcha_prefix'];
-    $rcl_captcha_code = $_POST['rcl_captcha_code'];
+    $rcl_captcha_prefix = sanitize_text_field($_POST['rcl_captcha_prefix']);
+    $rcl_captcha_code = sanitize_text_field($_POST['rcl_captcha_code']);
     $rcl_captcha_correct = false;
     $rcl_captcha_check = $rcl_captcha->check( $rcl_captcha_prefix, $rcl_captcha_code );
     $rcl_captcha_correct = $rcl_captcha_check;
     $rcl_captcha->remove($rcl_captcha_prefix);
     $rcl_captcha->cleanup();
     if ( ! $rcl_captcha_correct ) {
-        wp_redirect(get_redirect_url_rcl($ref).'action-rcl=register&error=captcha');exit;
+        wp_redirect(rcl_format_url($ref).'action-rcl=register&error=captcha');exit;
         exit;
     }
 

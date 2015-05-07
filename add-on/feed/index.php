@@ -7,17 +7,20 @@ class Rcl_Feed{
         global $user_ID;
 
         add_action('wp_ajax_get_posts_feed_recall', array(&$this, 'get_posts_feed_recall'));
+		add_action('wp_ajax_get_all_users_feed_recall', array(&$this, 'get_all_users_feed_recall'));
+		add_action('wp_ajax_get_all_your_feed_users', array(&$this, 'get_all_your_feed_users'));
+		add_action('wp_ajax_get_comments_feed_recall', array(&$this, 'get_comments_feed_recall'));
         if($user_ID) add_action('wp_ajax_add_feed_user_recall', array(&$this, 'add_feed_user_recall'));
 
         add_filter('file_scripts_rcl',array(&$this, 'get_scripts_feed_rcl'));
-        //if(function_exists('add_rayting_comment'))
-            add_filter('feed_comment_text_rcl','add_rayting_comment',10,2);
+        if(function_exists('rcl_comment_rating'))
+            add_filter('feed_comment_text_rcl','rcl_comment_rating',10,2);
 
         if (!is_admin()):
                 if(function_exists('add_shortcode')) add_shortcode('feed',array(&$this, 'last_post_and_comments_feed'));
-                if(function_exists('add_block_rcl')){
-                    add_block_rcl('sidebar',array(&$this, 'add_feed_button_user_lk'),array('id'=>'fd-block','order'=>5));
-                    add_block_rcl('footer',array(&$this, 'get_feed_button'),array('id'=>'fd-footer','order'=>5,'public'=>-1));
+                if(function_exists('rcl_block')){
+                    rcl_block('sidebar',array(&$this, 'add_feed_button_user_lk'),array('id'=>'fd-block','order'=>5));
+                    rcl_block('footer',array(&$this, 'get_feed_button'),array('id'=>'fd-footer','order'=>5,'public'=>-1));
                 }
         endif;
 
@@ -26,7 +29,7 @@ class Rcl_Feed{
 	function get_users_feed($user_id=false){
 		global $wpdb,$user_ID;
 		if(!$user_id) $user_id = $user_ID;
-		return $wpdb->get_results("SELECT * FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE 'feed_user_%' AND user_id = '$user_id'");
+		return $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'feed_user_%',$user_id));
 	}
 
 	function get_feed_button($author_lk){
@@ -39,22 +42,22 @@ class Rcl_Feed{
                 $footer_lk = '<span id="feed-control"';
                 if(!is_single()) $footer_lk .= ' class="alignright"';
                 $footer_lk .= '>'
-                        .get_button_rcl($feed_status,'#',array('icon'=>'fa-twitter','class'=>'feed-user','id'=>'feed-'.$author_lk,'attr'=>'title='.$feed_status));
+                        .rcl_get_button($feed_status,'#',array('icon'=>'fa-twitter','class'=>'feed-user','id'=>'feed-'.$author_lk,'attr'=>'title='.$feed_status));
 
 		return $footer_lk;
 	}
 
 	function get_feedout_button($user_id){
-		return '<div id="feed-control" class="alignright">'.get_button_rcl(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-twitter','class'=>'feed-user','id'=>'feed-'.$user_id,'attr'=>'title='.__('Unsubscribe','rcl'))).'</div>';
+		return '<div id="feed-control" class="alignright">'.rcl_get_button(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-twitter','class'=>'feed-user','id'=>'feed-'.$user_id,'attr'=>'title='.__('Unsubscribe','rcl'))).'</div>';
 	}
 
 
 	function add_feed_button_user_lk($author_lk){
 		global $wpdb,$user_ID;
 		$yours_feed = '';
-                $feed_count = $wpdb->get_var("SELECT count(umeta_id) FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'feed_user_$author_lk'");
+                $feed_count = $wpdb->get_var($wpdb->prepare("SELECT count(umeta_id) FROM $wpdb->usermeta WHERE meta_key = '%s'",'feed_user_'.$author_lk));
                 if($user_ID==$author_lk){
-                        $users_group = $wpdb->get_var("SELECT umeta_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE 'feed_user_%' AND user_id = '$user_ID'");
+                        $users_group = $wpdb->get_var($wpdb->prepare("SELECT umeta_id FROM $wpdb->usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'feed_user_%',$user_ID));
                         if($users_group) $yours_feed = '<p><a class="all-users-feed">'.__('My subscriptions','rcl').'</a></p>';
                 }
                 if($feed_count==0) $feed_info = '<p><b>'.__('Subscribers','rcl').': <span id="feed-count">'.$feed_count.'</span></b></p>'.$yours_feed;
@@ -76,8 +79,8 @@ class Rcl_Feed{
 		$comments_feed = $this->get_comments_feed();
 
 		$feedlist = '<p class="alignright" id="feed-button">
-		'.get_button_rcl(__('Comments','rcl'),'#',array('icon'=>false,'class'=>'get-feed active','id'=>'commentfeed')).'
-		'.get_button_rcl(__('Publication','rcl'),'#',array('icon'=>false,'class'=>'get-feed ','id'=>'postfeed')).'
+		'.rcl_get_button(__('Comments','rcl'),'#',array('icon'=>false,'class'=>'get-feed active','id'=>'commentfeed')).'
+		'.rcl_get_button(__('Publication','rcl'),'#',array('icon'=>false,'class'=>'get-feed ','id'=>'postfeed')).'
 		</p>
 		<span class="loader"></span>
 		<div id="feedlist">';
@@ -102,23 +105,17 @@ class Rcl_Feed{
 
 		global $user_ID,$wpdb;
 
-
-                //$comments_children = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix ."comments WHERE comment_parent > 0 ORDER BY comment_date DESC LIMIT 40");
-		$comments_children=$wpdb->get_results("
-                        SELECT      com2.comment_ID,com2.comment_parent,com2.user_id,com2.comment_post_ID,com2.comment_content,com2.comment_date
+		$comments_children=$wpdb->get_results(
+			$wpdb->prepare("SELECT      com2.comment_ID,com2.comment_parent,com2.user_id,com2.comment_post_ID,com2.comment_content,com2.comment_date
                         FROM        $wpdb->comments com1
                         INNER JOIN  $wpdb->comments com2
 			on com2.comment_parent = com1.comment_ID
-                        where com1.user_id = '$user_ID'
-			ORDER BY com2.comment_date DESC limit 40");
-                //print_r($comments_children);
-                $a=0;
-		foreach((array)$comments_feed as $c){
-			if(++$a>1) $postsids .= ',';
-			$postsids .= $c->comment_post_ID;
-		}
+                        where com1.user_id = '%d'
+			ORDER BY com2.comment_date DESC limit %d",$user_ID,40));
 
-		$posts_title = $wpdb->get_results("SELECT ID,post_title FROM ".$wpdb->prefix ."posts WHERE ID IN ($postsids)");
+		foreach((array)$comments_feed as $c){ $postsids[] = $c->comment_post_ID; }
+
+		$posts_title = $wpdb->get_results($wpdb->prepare("SELECT ID,post_title FROM $wpdb->posts WHERE ID IN (".rcl_format_in($postsids).")",$postsids));
 
 		foreach((array)$posts_title as $p){
 			$titles[$p->ID] = $p->post_title;
@@ -148,7 +145,7 @@ class Rcl_Feed{
 
 				}else{ //если автор комментария не я
 					if($comment->comment_parent!=0){ //то проверяю, есть ли является ли он дочерним комментарием
-						$parent = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix ."comments WHERE comment_ID = '$comment->comment_parent' ");
+						$parent = $wpdb->get_row($wpdb->prepare("SELECT * FROM $wpdb->comments WHERE comment_ID = '%d'",$comment->comment_parent));
 						if($parent->user_id!=$user_ID){ //если автор родительского комментария не я, то вывожу
 							$feedlist .= $this->get_feed_comment($comment,$titles);
 						}
@@ -194,8 +191,9 @@ class Rcl_Feed{
 		global $user_ID;
 		if($user_ID){
 			//require_once('../../ajax-data/avatar.php');
-			$userid = $_POST['userid'];
-                        $page = $_POST['page'];
+			$userid = intval($_POST['userid']);
+			if(!$userid) return false;
+                        $page = intval($_POST['page']);
                         if(!$page) $page = 1;
 
                         $inpage = 36;
@@ -203,14 +201,14 @@ class Rcl_Feed{
                         $limit = $start.','.$inpage;
                         $next = $page+1;
 
-                        $cnt = $wpdb->get_var("SELECT COUNT(umeta_id) FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'feed_user_".$userid."'");
+                        $cnt = $wpdb->get_var($wpdb->prepare("SELECT COUNT(umeta_id) FROM $wpdb->usermeta WHERE meta_key = '%s'",'feed_user_'.$userid));
 
 			if($cnt){
 
-                            $users_feed = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'feed_user_".$userid."' ORDER BY umeta_id DESC LIMIT $limit");
+                            $users_feed = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix ."usermeta WHERE meta_key = '%s' ORDER BY umeta_id DESC LIMIT %d,%d",'feed_user_'.$userid,$start,$inpage));
                             $now = count($users_feed);
 
-                            $names = get_names_array_rcl($users_feed,'user_id');
+                            $names = rcl_get_usernames($users_feed,'user_id');
 
                             $feed_list = '';
                             if($page==1){
@@ -223,7 +221,7 @@ class Rcl_Feed{
                                     $feed_list .= '<a href="'.get_author_posts_url($user->user_id).'" title="'.$names[$user->user_id].'">'.get_avatar($user->user_id,50).'</a>';
                             }
 
-                            if($now==$inpage) $feed_list .= get_button_rcl('Еще','#',array('class'=>'horizontal-more-button','id'=>'more-users-feed','attr'=>'data-page='.$next));
+                            if($now==$inpage) $feed_list .= rcl_get_button('Еще','#',array('class'=>'horizontal-more-button','id'=>'more-users-feed','attr'=>'data-page='.$next));
 
                             if($page==1){
                                 $feed_list .= '</div>';
@@ -247,13 +245,14 @@ class Rcl_Feed{
 	function get_all_users_feed_recall(){
 		global $user_ID;
 		$users_feed = $this->get_users_feed();
+
 		if(!$users_feed){
 			$log['recall']=1;
 			echo json_encode($log);
 			exit;
 		}
 
-		$names = get_names_array_rcl($users_feed,'meta_value');
+		$names = rcl_get_usernames($users_feed,'meta_value');
 
 		$feed_list = '<div id="users-feed-'.$user_ID.'" class="float-window-recall">
 			 <div id="close-votes-'.$user_ID.'" class="close alignright"><i class="fa fa-times-circle"></i></div>
@@ -276,8 +275,9 @@ class Rcl_Feed{
 	function add_feed_user_recall(){
 		global $user_ID;
 
-		$id_user = $_POST['id_user'];
-
+		$id_user = intval($_POST['id_user']);
+		if(!$id_user) return false;
+		
 		if($user_ID){
 			$feed = get_usermeta($user_ID,'feed_user_'.$id_user);
 			if(!$feed){
@@ -288,7 +288,7 @@ class Rcl_Feed{
 
 					$log['int']=100;
 					$log['count']=1;
-					$log['recall'] = get_button_rcl(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-twitter','class'=>'feed-user ','id'=>'feed-'.$id_user));
+					$log['recall'] = rcl_get_button(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-twitter','class'=>'feed-user ','id'=>'feed-'.$id_user));
 				}
 			}else{
 				delete_usermeta($user_ID,'feed_user_'.$id_user);
@@ -297,7 +297,7 @@ class Rcl_Feed{
 
 				$log['int']=100;
 				$log['count']=-1;
-				$log['recall'] = get_button_rcl(__('Subscribe','rcl'),'#',array('icon'=>'fa-twitter','class'=>'feed-user ','id'=>'feed-'.$id_user));
+				$log['recall'] = rcl_get_button(__('Subscribe','rcl'),'#',array('icon'=>'fa-twitter','class'=>'feed-user ','id'=>'feed-'.$id_user));
 			}
 		}
 		echo json_encode($log);
@@ -342,25 +342,22 @@ class Rcl_Feed{
 		global $wpdb,$user_ID;
 
 		$feed_users = $this->get_users_feed();
-                $feeds = '';
 
-		foreach((array)$feed_users as $user){
-				$feeds .= $user->meta_value.',';
-		}
+		foreach((array)$feed_users as $user){ $feeds[] = $user->meta_value; }
 
 		if($feeds){
-			$feeds .= $user_ID;
-			$comments_feed = $wpdb->get_results(" SELECT cts.comment_ID,cts.comment_parent,cts.user_id,cts.comment_post_ID,cts.comment_content,cts.comment_date FROM ".$wpdb->prefix."comments as cts WHERE cts.user_id IN($feeds) && cts.comment_approved = '1' GROUP BY cts.comment_ID ORDER BY cts.comment_date DESC LIMIT 40");
+			$feeds[] = $user_ID;
+			$comments_feed = $wpdb->get_results($wpdb->prepare("SELECT cts.comment_ID,cts.comment_parent,cts.user_id,cts.comment_post_ID,cts.comment_content,cts.comment_date FROM ".$wpdb->prefix."comments as cts WHERE cts.user_id IN(".rcl_format_in($feeds).") && cts.comment_approved = '%d' GROUP BY cts.comment_ID ORDER BY cts.comment_date DESC LIMIT %d",$feeds,1,40));
 
-			if(!$comments_feed) $comments_feed = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."comments WHERE user_id IN ($feeds) && comment_approved = '1' ORDER BY comment_date DESC LIMIT 40");
+			if(!$comments_feed) $comments_feed = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."comments WHERE user_id IN (".rcl_format_in($feeds).") && comment_approved = '%d' ORDER BY comment_date DESC LIMIT %d",$feeds,1,40));
                 }else{
-                       $comments_feed=$wpdb->get_results("
+                       $comments_feed=$wpdb->get_results($wpdb->prepare("
                         SELECT      com1.comment_ID,com1.comment_parent,com1.user_id,com1.comment_post_ID,com1.comment_content,com1.comment_date
                         FROM        $wpdb->comments com1
                         INNER JOIN  $wpdb->comments com2
 			on com2.comment_parent = com1.comment_ID
-                        where com1.user_id = '$user_ID'
-			GROUP BY com1.comment_ID ORDER BY com1.comment_date DESC limit 40");
+                        where com1.user_id = '%d'
+			GROUP BY com1.comment_ID ORDER BY com1.comment_date DESC limit %d",$user_ID,40));
                        //print_r($comments_feed);
                 }
 		return $comments_feed;
@@ -374,7 +371,7 @@ class Rcl_Feed{
 
 		if($user_ID){
                     $res['int'] = 100;
-                    $res['recall'] = get_public_feed_rcl($user_ID);
+                    $res['recall'] = rcl_get_public_feed($user_ID);
 		}
 		echo json_encode($res);
 		exit;
@@ -382,7 +379,7 @@ class Rcl_Feed{
 
 	function get_scripts_feed_rcl($script){
 
-		$ajaxfile = "type: 'POST', data: dataString, dataType: 'json', url: rcl_url+'add-on/feed/ajax-request.php',";
+		//$ajaxfile = "type: 'POST', data: dataString, dataType: 'json', url: rcl_url+'add-on/feed/ajax-request.php',";
                 $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
 
 		$script .= "
@@ -390,7 +387,7 @@ class Rcl_Feed{
 				jQuery('.all-users-feed').live('click',function(){
 					var dataString = 'action=get_all_users_feed_recall&user_ID='+user_ID;
 					jQuery.ajax({
-						".$ajaxfile."
+						".$ajaxdata."
 						success: function(data){
 							if(data['recall']==100){
 								jQuery('.all-users-feed').after(data['feed-list']);
@@ -417,7 +414,7 @@ class Rcl_Feed{
                                     var userid = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
                                     var dataString = 'action=get_all_your_feed_users&userid='+userid+'&page='+page+'&user_ID='+user_ID;
                                     jQuery.ajax({
-                                            ".$ajaxfile."
+                                            ".$ajaxdata."
                                             success: function(data){
                                                     if(data['otvet']==100){
                                                         if(page==1){
@@ -460,7 +457,7 @@ class Rcl_Feed{
 					jQuery('#feedlist').slideUp();
 					var dataString = 'action=get_comments_feed_recall&user_ID='+user_ID;
 					jQuery.ajax({
-						".$ajaxfile."
+						".$ajaxdata."
 						success: function(data){
 							if(data['int']==100){
 								jQuery('#feedlist').delay(1000).queue(function () {jQuery('#feedlist').html(data['recall']);jQuery('#feedlist').dequeue();});
@@ -498,38 +495,32 @@ class Rcl_Feed{
 		return $script;
 	}
 }
-$rcl_feed = new Rcl_Feed();
+$Rcl_Feed = new Rcl_Feed();
 
-function get_public_feed_rcl($user_id=false){
-    global $user_ID,$wpdb,$active_addons;
+function rcl_get_public_feed($user_id=false){
+    global $user_ID,$wpdb,$active_addons,$post;
 
     if(!$user_id) $user_id = $user_ID;
 
-    $rcl_feed = new Rcl_Feed();
-    $feed_users = $rcl_feed->get_users_feed($user_id);
+    $Rcl_Feed = new Rcl_Feed();
+    $feed_users = $Rcl_Feed->get_users_feed($user_id);
 
     if($feed_users){
-            $n=0;
-            foreach((array)$feed_users as $user){
-            $n++;
-                    if($n>1)
-                            $feeds .= ','.$user->meta_value;
-                            else
-                                    $feeds .= $user->meta_value;
-            }
+
+            foreach((array)$feed_users as $user){ $feeds[] = $user->meta_value; }
 
             $post_types = "'post','post-group'";
             if($active_addons['video-gallery']) $post_types .= ",'video'";
             if($active_addons['notes']) $post_types .= ",'notes'";
             if($active_addons['gallery-recall']){
                 //$post_types .= ",'attachment'";
-                $where = "OR post_type='attachment' AND post_author IN ($feeds) AND post_excerpt LIKE 'gallery-%'";
+                $where = $wpdb->prepare("OR post_type='attachment' AND post_author IN (".rcl_format_in($feeds).") AND post_excerpt LIKE '%s'",$feeds,'gallery-%');
             }
             $posts_users = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix ."posts WHERE
-            post_author IN ($feeds) AND post_type IN ($post_types) AND post_status = 'publish' $where ORDER BY post_date DESC LIMIT 15");
+				post_author IN (".implode(',',$feeds).") AND post_type IN ($post_types) AND post_status = 'publish' $where ORDER BY post_date DESC LIMIT 15");
 
-            $admin_groups = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE 'admin_group_%' AND user_id = '$user_id'");
-            $user_groups = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE 'user_group_%' AND user_id = '$user_id'");
+            $admin_groups = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'admin_group_%',$user_id));
+            $user_groups = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'user_group_%',$user_id));
 
             foreach($admin_groups as $ad){
                     $group_ar[$ad->meta_value] = $ad->meta_value;
@@ -556,7 +547,7 @@ function get_public_feed_rcl($user_id=false){
                 );
             }
 
-            if($active_addons['video-gallery']) include($active_addons['video-gallery']['src'].'class_video.php');
+            //if($active_addons['video-gallery']) include($active_addons['video-gallery']['src'].'class_video.php');
 
             foreach($posts_users as $posts_us){
                     $posts_list[$posts_us->ID] = (array)$posts_us;
@@ -569,47 +560,53 @@ function get_public_feed_rcl($user_id=false){
                     return '<h3>'.__('Publications yet','rcl').'</h3><p>'.__('Maybe later, someone will post the news.','rcl').'</p>';
             }
 
-            $posts_list = array_multisort_key_rcl($posts_list, 'post_date', SORT_DESC);
+            $posts_list = rcl_multisort_array($posts_list, 'post_date', SORT_DESC);
 
             $feedlist .= '<h2>'.__('Publication','rcl').'</h2>';
-            foreach((array)$posts_list as $post){
-                    $feedlist .= '<div id="feed-post-'.$post['ID'].'" class="feed-post">';
+			
+            foreach($posts_list as $post){ 
+			
+					$post = (object)$post;
+					setup_postdata($post);
 
-                    $post_content = $post['post_content'];
+                    $feedlist .= '<div id="feed-post-'.$post->ID.'" class="feed-post">';
+
+                    $post_content = strip_tags($post->post_content);
 
                     if(strlen($post_content) > 400){
                             $post_content = substr($post_content, 0, 400);
-                            $post_content = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ... <a href="'.get_bloginfo('wpurl').'/?p='.$post['ID'].'">далее</a>', $post_content);
+                            $post_content = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ... <a href="'.get_permalink($post->ID).'">далее</a>', $post_content);
                     }
 
-                    $post_content = apply_filters('the_content',$post_content);
+                    $post_content = apply_filters('the_excerpt',$post_content);
 
-                    $feedlist .= '<div class="feed-author-avatar"><a href="'.get_author_posts_url($post['post_author']).'">'.get_avatar($post['post_author'],50).'</a></div>';
-                    $feedlist .= '<h3 class="feed-title"><a href="'.get_bloginfo('wpurl').'/?p='.$post['ID'].'">'.$post['post_title'].'</a></h3><small>'.date('d.m.Y H:i', strtotime($post['post_date'])).'</small>';
+                    $feedlist .= '<div class="feed-author-avatar"><a href="'.get_author_posts_url($post->post_author).'">'.get_avatar($post->post_author,50).'</a></div>';
+                    $feedlist .= '<h3 class="feed-title"><a href="'.get_permalink($post->ID).'">'.$post->post_title.'</a></h3><small>'.date('d.m.Y H:i', strtotime($post->post_date)).'</small>';
 
-                    if( has_post_thumbnail($post['ID']) ) {
-                            $feedlist .= get_the_post_thumbnail( $post['ID'], 'medium', 'class=aligncenter' );
+                    if( has_post_thumbnail($post->ID) ) {
+                            $feedlist .= get_the_post_thumbnail( $post->ID, 'medium', 'class=aligncenter' );
                     }
 
-                    if($active_addons['gallery-recall']&&$post['post_type']=='attachment'){
-                        $src = wp_get_attachment_image_src($post['ID'],'medium');
-                        $feedlist .= '<a href="'.get_bloginfo('wpurl').'/?p='.$post['ID'].'"><img class="aligncenter" src="' . $src[0] . '" alt="" /></a>';
+                    if($active_addons['gallery-recall']&&$post->post_type=='attachment'){
+                        $src = wp_get_attachment_image_src($post->ID,'medium');
+                        $feedlist .= '<a href="'.get_permalink($post->ID).'"><img class="aligncenter" src="' . $src[0] . '" alt="" /></a>';
                     }
 
-                    if($post['post_type']=='video'&&$active_addons['video-gallery']){
-                            $data = explode(':',$post['post_excerpt']);
-                            $video = new VD_rcl();
+                    if($post->post_type=='video'&&$active_addons['video-gallery']){
+                            $data = explode(':',$post->post_excerpt);
+                            $video = new Rcl_Video();
                             $video->service = $data[0];
                             $video->video_id = $data[1];
                             $video->height = 300;
                             $video->width = 450;
-                            $feedlist .= '<div class="video-iframe aligncenter">'.$video->get_video_window().'</div>';
+                            $feedlist .= '<div class="video-iframe aligncenter">'.$video->rcl_get_video_window().'</div>';
                     }
                     $feedlist .= '<div class="feed-content">'.$post_content.'</div>';
                     //$feedlist .= $this->get_feedout_button($post['post_author']);
-                    $feedlist .= '<div class="feed-comment">'.__('Comments','rcl').' ('.get_comments_number( $post['ID'] ).')</div>';
+                    $feedlist .= '<div class="feed-comment">'.__('Comments','rcl').' ('.get_comments_number( $post->ID ).')</div>';
                     $feedlist .= '</div>';
             }
+			wp_reset_query();
 
             return $feedlist;
 

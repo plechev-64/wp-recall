@@ -88,7 +88,7 @@ jQuery(document).ready( function() {
 			return false;
 		}
 		if(jQuery('#content-'+slug+' textarea').attr('name')) return false;				
-		var dataString = 'action=get_data_type_profile_field_recall&type='+type+'&slug='+slug;
+		var dataString = 'action=rcl_data_type_profile_field&type='+type+'&slug='+slug;
 
 		jQuery.ajax({
 			type: 'POST',

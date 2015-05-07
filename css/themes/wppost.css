@@ -238,13 +238,13 @@ border-radius: 2px;
     height: auto;
 }*/
 .ballun-status .ballun {
-    background: url("/wp-content/plugins/recall/css/img/ballun-left.png") no-repeat scroll 0 0 #3F7DB6;
+    background: url("../img/ballun-left.png") no-repeat scroll 0 0 #3F7DB6;
 }
 #lk-content .privat_block .message-block .content-mess .privat-balloon {
-    background: url("/wp-content/plugins/recall/css/img/ballun-left.png") no-repeat scroll 0 0 #C4F5C4;
+    background: url("../img/ballun-left.png") no-repeat scroll 0 0 #C4F5C4;
 }
 #lk-content .privat_block .you .content-mess .privat-balloon {
-    background: url("/wp-content/plugins/recall/css/img/ballun-right.png") no-repeat scroll 0 0 rgb(181, 220, 255);
+    background: url("../img/ballun-right.png") no-repeat scroll 0 0 rgb(181, 220, 255);
 }
 #last-visitors > li {
     height: 47px !important;

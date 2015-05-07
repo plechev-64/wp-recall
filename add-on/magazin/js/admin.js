@@ -18,7 +18,7 @@ jQuery(function(){
 	jQuery('.delete-order').live('click',function(){
 		if(confirm('Уверены?')){
 			var idorder = jQuery(this).attr('id');
-			var dataString_reg = 'action=all_delete_order_recall&idorder='+ idorder;
+			var dataString_reg = 'action=rcl_all_delete_order&idorder='+ idorder;
 
 			jQuery.ajax({
 			type: 'POST',
@@ -44,7 +44,7 @@ jQuery('.select_status').live('click',function(){
 		//var id_user = parseInt(id_attr.replace(/\D+/g,''));	
 		var status = jQuery('#status-'+order).val();
 		//alert(order+' + '+status);
-		var dataString = 'action=select_status_order_recall&order='+order+'&status='+status;	
+		var dataString = 'action=rcl_edit_order_status&order='+order+'&status='+status;	
 		jQuery.ajax({
 		type: 'POST',
 		data: dataString,
@@ -64,7 +64,7 @@ jQuery('.select_status').live('click',function(){
 jQuery('.edit-price-product').live('click',function(){
 			var id_post = jQuery(this).attr('product');	
 			var price = jQuery('#price-product-'+id_post).attr('value');
-			var dataString_count = 'action=edit_price_product_rcl&id_post='+id_post+'&price='+price;
+			var dataString_count = 'action=rcl_edit_price_product&id_post='+id_post+'&price='+price;
 
 			jQuery.ajax({
 				type: 'POST',

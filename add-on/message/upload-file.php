@@ -1,11 +1,10 @@
 <?php
-$path_parts = pathinfo(__FILE__);
-preg_match_all("/(?<=)[A-z0-9\-\/\.\_\s\�]*(?=wp\-content)/i", $path_parts['dirname'], $string_value);
-require_once( $string_value[0][0].'/wp-load.php' );
-
+add_action('wp_ajax_rcl_message_upload', 'rcl_message_upload');
+function rcl_message_upload(){
 	global $user_ID,$wpdb,$rcl_options;
-	$adressat_mess = $_POST['talker'];
-	$online = $_POST['online'];
+	
+	$adressat_mess = intval($_POST['talker']);
+	$online = intval($_POST['online']);
 
 	//print_r($_POST);
 	//print_r($_FILES); exit;
@@ -13,7 +12,7 @@ require_once( $string_value[0][0].'/wp-load.php' );
 	if(!$user_ID) exit;
 
 		if($rcl_options['file_limit']){
-			$file_num = $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."private_message WHERE author_mess = '$user_ID' AND status_mess = '4'");
+			$file_num = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".RCL_PREF."private_message WHERE author_mess = '%d' AND status_mess = '4'",$user_ID));
 			if($file_num>$rcl_options['file_limit']){
 				$log['recall']=150;
 				echo json_encode($log);
@@ -48,7 +47,7 @@ require_once( $string_value[0][0].'/wp-load.php' );
 
 			$arch_name = $t_name.'.zip';
 			$url_arhive = $path_temp.$arch_name;
-			$url_file = get_bloginfo('wpurl').'/wp-content/uploads/temp-files/'.$arch_name;
+			$url_file = TEMP_URL.$arch_name;
 
 			$zip = new ZipArchive;
 			if ($zip -> open($url_arhive, ZipArchive::CREATE) === TRUE){
@@ -62,7 +61,7 @@ require_once( $string_value[0][0].'/wp-load.php' );
 			$filename = $t_name.'.'.$type;
                         if($type=='php'||$type=='html') exit;
 			move_uploaded_file($_FILES['filedata']['tmp_name'], $path_temp.$filename);
-			$url_file = get_bloginfo('wpurl').'/wp-content/uploads/temp-files/'.$filename;
+			$url_file = TEMP_URL.$filename;
 		}
 
 		$wpdb->insert(
@@ -76,11 +75,11 @@ require_once( $string_value[0][0].'/wp-load.php' );
 			)
 		);
 
-		$result = $wpdb->get_var("SELECT ID FROM ".RCL_PREF."private_message WHERE author_mess = '$user_ID' AND content_mess = '$url_file'");
+		$result = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."private_message WHERE author_mess = '%d' AND content_mess = '%s'",$user_ID,$url_file));
 
 		if ($result) {
 
-			$url_file = wp_nonce_url(get_bloginfo('wpurl').'/wp-content/plugins/recall/add-on/message/download.php?fileid='.$result, 'user-'.$user_ID );
+			$url_file = wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-id='.base64_encode($result), 'user-'.$user_ID );
 
 			$log['recall']=100;
 			$log['time'] = $time;
@@ -91,5 +90,5 @@ require_once( $string_value[0][0].'/wp-load.php' );
 
 		echo json_encode($log);
 		exit;
-
+}
 ?>

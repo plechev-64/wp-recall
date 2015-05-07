@@ -1,5 +1,5 @@
 <?php
-class rcl_addons{
+class Rcl_Addons{
 
     public function __construct() {
 
@@ -19,7 +19,7 @@ class rcl_addons{
 		global $active_addons;
 		$active_addons = get_site_option('active_addons_recall');
                 $path_addon_rcl = RCL_PATH.'add-on/';
-                $path_addon_theme = TEMPLATEPATH.'/recall/add-on/';
+                $path_addon_theme = TEMPLATEPATH.'/wp-recall/add-on/';
 		foreach((array)$active_addons as $key=>$addon){
                     if(!$addon) continue;
                     if(file_exists($path_addon_theme.$key.'/index.php')){
@@ -50,7 +50,7 @@ class rcl_addons{
 		global $active_addons;
 		//$dir   = RCL_PATH.'add-on';
 
-                $paths = array(RCL_PATH.'add-on',TEMPLATEPATH.'/recall/add-on') ;
+                $paths = array(RCL_PATH.'add-on',TEMPLATEPATH.'/wp-recall/add-on') ;
 
                 foreach($paths as $path){
                     if(file_exists($path)){
@@ -89,7 +89,7 @@ class rcl_addons{
 				}
 				$this->get_update_scripts_file_rcl();
 				$this->get_update_scripts_footer_rcl();
-				minify_style_rcl();
+				rcl_minify_style();
 				$table .='<div id="message" class="'.$type.'"><p>'.$text_notice.'</p></div>';
 			}
 
@@ -152,19 +152,19 @@ class rcl_addons{
 
 								if($key=='magazin'){
 									$table .= '|<span class="options">
-									<a title="'.__('Settings','rcl').'" href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-wpm-options&options='.$key.'">'.__('Settings','rcl').'</a>
+									<a title="'.__('Settings','rcl').'" href="'.admin_url('admin.php?page=manage-wpm-options&options='.$key).'">'.__('Settings','rcl').'</a>
 									</span>';
 								}else{
 									$table .= '|<span class="options">
-									<a title="'.__('Settings','rcl').'" href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-wprecall&options='.$key.'">'.__('Settings','rcl').'</a>
+									<a title="'.__('Settings','rcl').'" href="'.admin_url('admin.php?page=manage-wprecall&options='.$key).'">'.__('Settings','rcl').'</a>
 									</span>';
 								}
 							}else{
 								$table .= '<span class="inactivate">
-								<a title="'.__('Activate','rcl').'" href="'.wp_nonce_url( get_bloginfo('wpurl').'/wp-admin/admin.php?action-addon=update&status=activate&addon='.$key, 'action_addon' ).'">'.__('Activate','rcl').'</a>
+								<a title="'.__('Activate','rcl').'" href="'.wp_nonce_url( admin_url('admin.php?action-addon=update&status=activate&addon='.$key), 'action_addon' ).'">'.__('Activate','rcl').'</a>
 								</span>|
 								<span class="inactivate">
-								<a title="'.__('Delete','rcl').'" href="'.wp_nonce_url( get_bloginfo('wpurl').'/wp-admin/admin.php?action-addon=update&status=delete&addon='.$key, 'action_addon' ).'">'.__('Delete','rcl').'</a>
+								<a title="'.__('Delete','rcl').'" href="'.wp_nonce_url( admin_url('admin.php?action-addon=update&status=delete&addon='.$key), 'action_addon' ).'">'.__('Delete','rcl').'</a>
 								</span>';
 							}
 							$table .= '</div>
@@ -213,7 +213,7 @@ class rcl_addons{
                 global $wpdb, $user_ID, $active_addons;
 		if ( ! current_user_can('activate_plugins') ) wp_die(__('You cant control polucheniya plugins on this site.','rcl'));
 
-                $paths = array(TEMPLATEPATH.'/recall/add-on',RCL_PATH.'add-on');
+                $paths = array(TEMPLATEPATH.'/wp-recall/add-on',RCL_PATH.'add-on');
 
 		if($_GET['status']=='activate'){
                     foreach($paths as $path){
@@ -224,7 +224,7 @@ class rcl_addons{
                         }
                     }
                     update_site_option('active_addons_recall',$active_addons);
-                    wp_redirect( get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-addon-recall&update-addon=activate' );exit;
+                    wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
 		}
 		if($_GET['status']=='deactivate'){
                     foreach((array)$active_addons as $key=>$src){
@@ -240,7 +240,7 @@ class rcl_addons{
                         }
                     }
                     update_site_option('active_addons_recall',$new_active_list);
-                    wp_redirect( get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-addon-recall&update-addon=deactivate' );exit;
+                    wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
 		}
 		if($_GET['status']=='delete'){
                     foreach($paths as $path){
@@ -250,7 +250,7 @@ class rcl_addons{
                             break;
                         }
                     }
-                    wp_redirect( get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-addon-recall&update-addon=delete' );exit;
+                    wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=delete') );exit;
 		}
 	  }
 	}
@@ -316,10 +316,10 @@ class rcl_addons{
 		global $active_addons;
                 //print_r($_POST);exit;
 		if(!$_POST['checked']|| !wp_verify_nonce($_POST['_wpnonce'],'action-addons') ){
-			wp_redirect( get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-addon-recall' );exit;
+			wp_redirect( admin_url('admin.php?page=manage-addon-recall') );exit;
 		}
 
-                $paths = array(TEMPLATEPATH.'/recall/add-on',RCL_PATH.'add-on');
+                $paths = array(TEMPLATEPATH.'/wp-recall/add-on',RCL_PATH.'add-on');
 
 		if($_POST['group-addon-action']=='activate'){
 			foreach((array)$_POST['checked'] as $key){
@@ -332,7 +332,7 @@ class rcl_addons{
                             }
 			}
 			update_site_option('active_addons_recall',$active_addons);
-			wp_redirect( get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-addon-recall&update-addon=activate' );exit;
+			wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
 		}
 		if($_POST['group-addon-action']=='deactivate'){
 			foreach((array)$_POST['checked'] as $key){
@@ -354,7 +354,7 @@ class rcl_addons{
 				$new_active_list = '';
 			}
 			update_site_option('active_addons_recall',$active_addons);
-			wp_redirect( get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-addon-recall&update-addon=deactivate' );exit;
+			wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
 		}
 	  }
 	}
@@ -363,7 +363,7 @@ class rcl_addons{
 
 		//$dir_src = RCL_PATH.'add-on/';
 
-            $paths = array(TEMPLATEPATH.'/recall/add-on',RCL_PATH.'add-on');
+            $paths = array(TEMPLATEPATH.'/wp-recall/add-on',RCL_PATH.'add-on');
 
             $filename = $_FILES['addonzip']['tmp_name'];
             $f1 = current(wp_upload_dir()) . "/" . basename($filename);
@@ -383,7 +383,7 @@ class rcl_addons{
                 }
                 if(!$info){
                       $zip->close();
-                      wp_redirect( get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-addon-recall&update-addon=error-info' );exit;
+                      wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=error-info') );exit;
                 }
 
                 foreach($paths as $path){
@@ -396,7 +396,7 @@ class rcl_addons{
                 $zip->close();
                 unlink($f1);
                 if($rs){
-                      wp_redirect( get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-addon-recall&update-addon=upload' );exit;
+                      wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=upload') );exit;
                 }else{
                       wp_die(__('Unpacking of archive failed.','rcl'));
                 }
@@ -453,13 +453,15 @@ class rcl_addons{
 	  if ( isset( $_POST['primary-rcl-options'] ) ) {
 		if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rcl' ) ) return false;
 
+		$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
 		if($_POST['login_form_recall']==1&&!isset($_POST['page_login_form_recall'])){
 			$_POST['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','rcl'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
 		}
 
 		foreach((array)$_POST as $key => $value){
 			if($key=='primary-rcl-options') continue;
-			$options[$key]=$value;
+			$options[$key] = $value;
 		}
 
 		update_option('primary-rcl-options',$options);
@@ -467,14 +469,14 @@ class rcl_addons{
 		$rcl_options = $options;
 
 		if( current_user_can('edit_plugins') ){
-                        $this->get_update_scripts_file_rcl();
+            $this->get_update_scripts_file_rcl();
 			$this->get_update_scripts_footer_rcl();
-			minify_style_rcl();
+			rcl_minify_style();
 		}
 
-		wp_redirect(get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-wprecall');
+		wp_redirect(admin_url('admin.php?page=manage-wprecall'));
 		exit;
 	  }
 	}
 }
-$rcl_addons = new rcl_addons();
+$rcl_addons = new Rcl_Addons();

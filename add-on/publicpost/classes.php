@@ -1,5 +1,5 @@
 <?php
-class Get_Child_Terms_Rcl{
+class Rcl_Child_Terms{
 
 	function get_terms_post( $post_cat = array() ){
 
@@ -24,7 +24,7 @@ class Get_Child_Terms_Rcl{
 	}
 }
 
-class List_Terms_rcl{
+class Rcl_List_Terms{
 
 	public $a;
 	public $ctg;
@@ -140,7 +140,7 @@ class List_Terms_rcl{
 
 }
 
-class Edit_Terms_List_rcl{
+class Rcl_Edit_Terms_List{
 
 	public $cats;
 	public $new_cat = array();
@@ -262,7 +262,7 @@ class Rcl_Thumb_Form{
 		$attachlist = '';
 		foreach((array)$temp_gal as $attach){
 			$mime_type = get_post_mime_type( $attach['ID'] );
-			$attachlist .= get_html_post_attach_rcl($attach['ID'],$mime_type);
+			$attachlist .= rcl_get_html_attachment($attach['ID'],$mime_type);
 		}
 		return $attachlist;
 	}
@@ -278,7 +278,7 @@ class Rcl_Thumb_Form{
 			<h3>Миниатюра записи</h3>
 
 				<div>
-					'.get_button_rcl(__('To assign a thumbnail','rcl'),'#',array('id'=>'add_thumbnail_rcl')).'
+					'.rcl_get_button(__('To assign a thumbnail','rcl'),'#',array('id'=>'add_thumbnail_rcl')).'
 				</div>
 
 		</div>';

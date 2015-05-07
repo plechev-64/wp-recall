@@ -6,7 +6,7 @@ jQuery(function(){
 			var id_attr = jQuery(this).attr('id');
 			var id_user = parseInt(id_attr.replace(/\D+/g,''));	
 			var rayting = jQuery('.raytinguser-'+id_user).attr('value');
-			var dataString_count = 'action=edit_rayting_user_recall&user='+id_user+'&rayting='+rayting;
+			var dataString_count = 'action=rcl_edit_rating_user&user='+id_user+'&rayting='+rayting;
 
 			jQuery.ajax({
 				type: 'POST',

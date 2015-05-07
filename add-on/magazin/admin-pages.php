@@ -1,23 +1,21 @@
 <?php
 function wpmagazin_options_panel(){
-  add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', 'manage-rmag', 'global_wpm_orders');
-	add_submenu_page( 'manage-rmag', 'Заказы', 'Заказы', 'manage_options', 'manage-rmag', 'global_wpm_orders');
-	add_submenu_page( 'manage-rmag', 'Экспорт/импорт', 'Экспорт/импорт', 'manage_options', 'manage-wpm-price', 'price_and_products');
-	add_submenu_page( 'manage-rmag', 'Форма заказа', 'Форма заказа', 'manage_options', 'manage-custom-fields', 'custom_fields_orders_recall');
-	add_submenu_page( 'manage-rmag', 'Настройки магазина', 'Настройки магазина', 'manage_options', 'manage-wpm-options', 'global_recall_wpm_options');
-	if(function_exists('global_plslider_options')) add_submenu_page('manage-rmag', 'Слайдер', 'Слайдер', 'manage_options', 'plslider_options','global_plslider_options');
-
+  add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', 'manage-rmag', 'rmag_manage_orders');
+	add_submenu_page( 'manage-rmag', 'Заказы', 'Заказы', 'manage_options', 'manage-rmag', 'rmag_manage_orders');
+	add_submenu_page( 'manage-rmag', 'Экспорт/импорт', 'Экспорт/импорт', 'manage_options', 'manage-wpm-price', 'rmag_export');
+	add_submenu_page( 'manage-rmag', 'Форма заказа', 'Форма заказа', 'manage_options', 'manage-custom-fields', 'rmag_custom_fields');
+	add_submenu_page( 'manage-rmag', 'Настройки магазина', 'Настройки магазина', 'manage_options', 'manage-wpm-options', 'rmag_global_options');
 }
 add_action('admin_menu', 'wpmagazin_options_panel',20);
 
-add_filter('admin_options_rmag','user_primary_wpm_options',5);
-function user_primary_wpm_options($content){
+add_filter('admin_options_rmag','rmag_primary_options',5);
+function rmag_primary_options($content){
         global $rcl_options;
 	$rcl_options = get_option('primary-rmag-options');
 
         include_once RCL_PATH.'functions/rcl_options.php';
 
-        $opt = new Rcl_Options(get_key_addon_rcl(pathinfo(__FILE__)));
+        $opt = new Rcl_Options(rcl_key_addon(pathinfo(__FILE__)));
 
         $args = array(
                 'selected'   => $rcl_options['basket_page_rmag'],
@@ -105,7 +103,7 @@ function user_primary_wpm_options($content){
 			$opt->label('Основная валюта'),
 			$opt->option('select',array(
                         'name'=>'primary_cur',
-                        'options'=>get_currency()
+                        'options'=>rcl_get_currency()
                     )),
                     $opt->label('Второстепенная валюта'),
                     $opt->option('select',array(
@@ -123,7 +121,7 @@ function user_primary_wpm_options($content){
                             $opt->label('Выберите валюту'),
                             $opt->option('select',array(
                                     'name'=>'secondary_cur',
-                                    'options'=>get_currency()
+                                    'options'=>rcl_get_currency()
                             )),
                             $opt->label('Курс'),
                             $opt->option('text',array('name'=>'curse_currency')),
@@ -136,10 +134,10 @@ function user_primary_wpm_options($content){
 	return $content;
 }
 
-function custom_fields_orders_recall(){
+function rmag_custom_fields(){
 	global $wpdb;
 
-    add_sortable_scripts();
+    rcl_sortable_scripts();
 
 	include_once RCL_PATH.'functions/rcl_editfields.php';
         $f_edit = new Rcl_EditFields('orderform');
@@ -159,7 +157,7 @@ function custom_fields_orders_recall(){
 	echo $content;
 }
 
-function global_wpm_orders(){
+function rmag_manage_orders(){
 
 	global $wpdb;
 
@@ -167,19 +165,19 @@ function global_wpm_orders(){
 			<div style="width:1050px">';//начало блока настроек профиля
 	$n=0;
 	$s=0;
-	if($_GET['remove-trash']==101&&wp_verify_nonce( $_GET['_wpnonce'], 'delete-trash-rmag')) $wpdb->query("DELETE FROM ".RMAG_PREF ."orders_history WHERE order_status = '6'");
+	if($_GET['remove-trash']==101&&wp_verify_nonce( $_GET['_wpnonce'], 'delete-trash-rmag')) $wpdb->query($wpdb->prepare("DELETE FROM ".RMAG_PREF ."orders_history WHERE order_status = '%d'",6));
 
 if($_GET['order-id']){
 
 	global $order,$product;
 
-	$order = get_order($_GET['order-id']);
+	$order = rcl_get_order($_GET['order-id']);
 
 	if($_POST['submit_message']){
-		if($_POST['email_author']) $email_author = $_POST['email_author'];
+		if($_POST['email_author']) $email_author = sanitize_email($_POST['email_author']);
 		else $email_author = 'noreply@'.$_SERVER['HTTP_HOST'];
-		$user_email = get_the_author_meta('user_email',$_POST['address_message']);
-		$result_mess = rcl_mail($user_email, $_POST['title_message'], $_POST['text_message']);
+		$user_email = get_the_author_meta('user_email',intval($_POST['address_message']));
+		$result_mess = rcl_mail($user_email, sanitize_text_field($_POST['title_message']), force_balance_tags($_POST['text_message']));
 	}
 
 	$header_tb = array(
@@ -210,7 +208,7 @@ if($_GET['order-id']){
 			. '<td>'.$product->product_price.'</td>'
 			. '<td>'.$product->numberproduct.'</td>'
 			. '<td>'.$product->product_price.'</td>'
-			. '<td>'.get_status_name($product->order_status).'</td>'
+			. '<td>'.rcl_get_status_name_order($product->order_status).'</td>'
 		. '</tr>';
 
 	}
@@ -229,10 +227,10 @@ if($_GET['order-id']){
 		$show_custom_field .= $cf->get_field_value($custom_field,$meta);
 	}
 
-	$details_order = get_order_details($order->order_id);
+	$details_order = rcl_get_order_details($order->order_id);
 
-	echo '<form><input type="button" value="Назад" onClick="history.back()"></form><div style="text-align:right;"><a href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-rmag">Показать все заказы</a></div>
-	<h3>Все заказы пользователя: <a href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-rmag&user='.$order->order_author.'">'.$user_login.'</a></h3>
+	echo '<form><input type="button" value="Назад" onClick="history.back()"></form><div style="text-align:right;"><a href="'.admin_url('admin.php?page=manage-rmag').'">Показать все заказы</a></div>
+	<h3>Все заказы пользователя: <a href="'.admin_url('admin.php?page=manage-rmag&user='.$order->order_author).'">'.$user_login.'</a></h3>
 	<h3>Информация о пользователе:</h3><p><b>Имя</b>: '.get_the_author_meta('display_name',$order->order_author).'</p><p><b>Email</b>: '.get_the_author_meta('user_email',$order->order_author).'</p>'.$show_custom_field;
 	if($details_order) echo '<h3>Детали заказа:</h3>'.$details_order;
 	if($result_mess) echo '<h3 style="color:green;">Сообщение было отправлено!</h3>';
@@ -240,20 +238,20 @@ if($_GET['order-id']){
 	<h3>Написать пользователю сообщение на почту '.get_the_author_meta('user_email',$order->order_author).'</h3>
 	<form method="post" action="" class="form_message" >
 	<p><b>Почта отправителя</b> (по-умолчанию "noreply@'.$_SERVER['HTTP_HOST'].'")</p>
-	<input type="text" name="email_author" value="'.$_POST['email_author'].'">
+	<input type="text" name="email_author" value="'.sanitize_email($_POST['email_author']).'">
 	<p><b>Тема письма</b></p>
-	<input type="text" name="title_message" value="'.$_POST['title_message'].'">
+	<input type="text" name="title_message" value="'.sanitize_text_field($_POST['title_message']).'">
 	<p><b>Текст сообщения</b></p>';
 
 	$textmail = "<p>Добрый день!</p>
 	<p>Вы или кто то другой оформил заказ на сайте ".get_bloginfo('name')."</p>
 	<h3>Детали заказа:</h3>
-	".get_include_template_rcl('order.php',__FILE__)."
+	".rcl_get_include_template('order.php',__FILE__)."
 	<p>Ваш заказ ожидает оплаты. Вы можете произвести оплату своего заказа любым из предложенных способ из своего личного кабинета или просто пополнив свой личный счет на сайте <a href='".get_bloginfo('wpurl')."'>".get_bloginfo('wpurl')."<p>
 	____________________________________________________________________________
 	Это письмо было сформировано автоматически не надо отвечать на него";
 
-	if($_POST['text_message']) $textmail = $_POST['text_message'];
+	if($_POST['text_message']) $textmail = force_balance_tags($_POST['text_message']);
 
 	$args = array( 'wpautop' => 1
 		,'media_buttons' => 1
@@ -289,18 +287,18 @@ if($_GET['order-id']){
 
 		if($_POST['year']){
 			$args['year'] = $_POST['year'];
-			if($_POST['month']) $args['month'] = $_POST['month'];
+			if($_POST['month']) $args['month'] = sanitize_text_field($_POST['month']);
 		}
 
-		if($_POST['status']) $args['order_status'] = $_POST['status'];
+		if($_POST['status']) $args['order_status'] = intval($_POST['status']);
 
-		$orders = get_orders($args);
+		$orders = rcl_get_orders($args);
 
 	}else{
 		if($_GET['status']){
-			$args['order_status'] = $_GET['status'];
+			$args['order_status'] = intval($_GET['status']);
 		}elseif($_GET['user']){
-			$args['user_id'] = $_GET['user'];
+			$args['user_id'] = intval($_GET['user']);
 		}else{
 			$args['status_not_in'] = 6;
 			$args['year'] = $year;
@@ -311,7 +309,7 @@ if($_GET['order-id']){
         //$where = apply_filters('string_where_get_orders',$where);
 	}
 
-	$orders = get_orders($args);
+	$orders = rcl_get_orders($args);
 
         if($orders){
             foreach($orders as $rdr){
@@ -323,7 +321,7 @@ if($_GET['order-id']){
         }
 
         //if(!isset($_GET['status'])||$_GET['status']!=6)
-            $table .= get_chart_orders($orders);
+            $table .= rcl_get_chart_orders($orders);
 
 	$table .= '<h3>Всего заказов: '.$n.' на '.$all_pr.' рублей</h3>';
 
@@ -332,7 +330,7 @@ if($_GET['order-id']){
 	$table .= '<select name="status">';
 	$table .= '<option value="">Все заказы</option>';
 	for($a=1;$a<=6;$a++){
-		$table .= '<option value="'.$a.'" '.selected($a,$_POST['status'],false).'>'.get_status_name($a).'</option>';
+		$table .= '<option value="'.$a.'" '.selected($a,$_POST['status'],false).'>'.rcl_get_status_name_order($a).'</option>';
 	}
 	$table .= '</select>';
 
@@ -350,7 +348,7 @@ if($_GET['order-id']){
 	}
 	$table .= '</select>';
 	$table .= '<input type="submit" value="Фильтровать" name="filter-date" class="button-secondary">';
-	if($_GET['status']==6) $table .= '<a href="'.wp_nonce_url('/wp-admin/admin.php?page=manage-rmag&remove-trash=101','delete-trash-rmag').'">Очистить корзину</a>';
+	if($_GET['status']==6) $table .= '<a href="'.wp_nonce_url(admin_url('admin.php?page=manage-rmag&remove-trash=101'),'delete-trash-rmag').'">Очистить корзину</a>';
 	$table .= '</form>';
 
         if(!$orders){ echo $table; exit;}
@@ -364,10 +362,10 @@ if($_GET['order-id']){
 	}
 	$table .= '</tr>';
 
-    foreach($orders as $order_id=>$order){ setup_orderdata($order);
+    foreach($orders as $order_id=>$order){ rcl_setup_orderdata($order);
         $radioform .= '<select id="status-'.$order_id.'" name="status-'.$order_id.'">';
         for($a=1;$a<7;$a++){
-            $radioform .= '<option '.selected($a,$order->order_status,false).' value="'.$a.'">'.get_status_name($a).'</option>';
+            $radioform .= '<option '.selected($a,$order->order_status,false).' value="'.$a.'">'.rcl_get_status_name_order($a).'</option>';
         }
         $radioform .= '</select>';
 
@@ -375,14 +373,14 @@ if($_GET['order-id']){
         $button = '<input type="button" class="button-secondary select_status" id="'.$order_id.'" value="Изменить статус"> '.$delete;
         $user_id = $order->order_author;
 
-        $pagelink = get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-rmag';
+        $pagelink = admin_url('admin.php?page=manage-rmag');
 
         $cols_content = array(
                 '<a href="'.$pagelink.'&order-id='.$order_id.'">Заказ '.$order_id.'</a>',
                 '<a href="'.$pagelink.'&user='.$user_id.'">'.get_the_author_meta('user_login',$user_id).'</a>',
                 $order->order_price,
                 $order->order_date,
-                '<a href="'.$pagelink.'&status='.$order->order_status.'"><span class="change-'.$order_id.'">'.get_status_name($order->order_status).'</span></a>',
+                '<a href="'.$pagelink.'&status='.$order->order_status.'"><span class="change-'.$order_id.'">'.rcl_get_status_name_order($order->order_status).'</span></a>',
                 $radioform,
                 $button
         );
@@ -402,23 +400,96 @@ if($_GET['order-id']){
     }
 
     $cnt_cols = count($cols);
-    if($_GET['status']!=6) $table .= '<tr><td align="right" colspan="'.$cnt_cols.'"><a href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-rmag&status=6">Перейти в корзину</a></td></tr>';
+    if($_GET['status']!=6) $table .= '<tr><td align="right" colspan="'.$cnt_cols.'"><a href="'.admin_url('admin.php?page=manage-rmag&status=6').'">Перейти в корзину</a></td></tr>';
     $table .= '</table>';
 
     echo $table;
 
-if($_GET['user']||$_GET['status']||$_GET['date'])echo '<form><input type="button" value="Назад" onClick="history.back()"></form><div style="text-align:right;"><a href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=manage-rmag">Показать текущие заказы</a></div>';
+if($_GET['user']||$_GET['status']||$_GET['date'])echo '<form><input type="button" value="Назад" onClick="history.back()"></form><div style="text-align:right;"><a href="'.admin_url('admin.php?page=manage-rmag').'">Показать текущие заказы</a></div>';
 }
 
 echo '</div>';//конец блока заказов
 }
 
-function price_and_products(){
+add_action('wp','rcl_read_exportfile');
+function rcl_read_exportfile(){
+	global $wpdb;
+	
+	if(!wp_verify_nonce( $_POST['_wpnonce'], 'get-csv-file' )) return false;
+
+	$file_name = 'products.xml';
+	$file_src    = plugin_dir_path( __FILE__ ).'xml/'.$file_name;
+
+	$xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+
+	$sql_field = "ID";
+	if($_POST['post_title']==1) $sql_field .= ',post_title';
+	if($_POST['post_content']==1) $sql_field .= ',post_content';
+	$sql_field .= ',post_status';
+
+	$posts = $wpdb->get_results($wpdb->prepare("SELECT %s FROM ".$wpdb->prefix ."posts WHERE post_type = 'products' AND post_status!='draft'",$sql_field));
+	$postmeta = $wpdb->get_results($wpdb->prepare("SELECT meta_key FROM ".$wpdb->prefix ."postmeta GROUP BY meta_key ORDER BY meta_key"));
+
+	$sql_field = explode(',',$sql_field);
+	$cnt = count($sql_field);
+
+	if($posts){
+	$xml .= "<posts>\n";
+		foreach($posts as $post){
+			$trms = array();
+			$xml .= "<post>\n";
+			for($a=0;$a<$cnt;$a++){
+				$xml .= "<".$sql_field[$a].">";
+				if($a==0) $xml .= $post->$sql_field[$a];
+				else $xml .= "<![CDATA[".$post->$sql_field[$a]."]]>";
+				$xml .= "</".$sql_field[$a].">\n";
+			}
+			foreach ($postmeta as $key){
+				if (strpos($key->meta_key, "goods_id") === FALSE && strpos($key->meta_key , "_") !== 0){
+					if($_POST[$key->meta_key]==1){
+						$xml .= "<".$key->meta_key.">";
+						$xml .= "<![CDATA[".get_post_meta($post->ID, $key->meta_key, true)."]]>";
+						$xml .= "</".$key->meta_key.">\n";
+					}
+				}
+			}
+
+			$terms = get_the_terms( $post->ID, 'prodcat' );
+			$xml .= "<prodcat>";
+			if($terms){
+				foreach($terms as $term){
+					$trms[] = $term->term_id;
+				}
+				$xml .= "<![CDATA[".implode(',',$trms)."]]>";
+			}else{
+				$xml .= "<![CDATA[0]]>";
+			}
+			$xml .= "</prodcat>\n";
+
+			$xml .= "</post>\r";
+		}
+	$xml .= "</posts>";
+	}
+
+	$f = fopen($file_src, 'w');
+	if(!$f)exit;
+	fwrite($f, $xml);
+	fclose($f);
+
+	header('Content-Description: File Transfer');
+	header('Content-Disposition: attachment; filename="'.$file_name.'"');
+	header('Content-Type: text/xml; charset=utf-8');
+	readfile($file_src);
+	exit;
+	
+}
+
+function rmag_export(){
 global $wpdb;
 
 	$table_price .='<style>table{min-width:500px;width:50%;margin:20px 0;}table td{border:1px solid #ccc;padding:3px;}</style>';
-	$postmeta = $wpdb->get_results("SELECT meta_key FROM ".$wpdb->prefix ."postmeta GROUP BY meta_key ORDER BY meta_key");
-	$table_price .='<h2>Экспорт/импорт данных</h2><form method="post" action="'.plugins_url("impexp.php", __FILE__).'">
+	$postmeta = $wpdb->get_results($wpdb->prepare("SELECT meta_key FROM ".$wpdb->prefix ."postmeta GROUP BY meta_key ORDER BY meta_key"));
+	$table_price .='<h2>Экспорт/импорт данных</h2><form method="post" action="">
 	'.wp_nonce_field('get-csv-file','_wpnonce',true,false).'
 	<p><input type="checkbox" name="post_title" checked value="1"> Добавить заголовок</p>
 	<p><input type="checkbox" name="post_content" checked value="1"> Добавить описание</p>
@@ -464,6 +535,8 @@ global $wpdb;
 	</p>
 	</form>';
 	echo $table_price;
+	
+	
 
 	if($_FILES['file_csv']&&wp_verify_nonce( $_POST['_wpnonce'], 'add-file-csv' )){
 		$file_name = $_FILES['file_csv']['name'];
@@ -539,7 +612,7 @@ global $wpdb;
 						$action = 'создан и добавлен';
 					}else{
 						if (count($post)>0){
-							$wpdb->query("UPDATE {$wpdb->posts} SET ".implode(',',$post)." WHERE ID = {$ID}");
+							$wpdb->query($wpdb->prepare("UPDATE {$wpdb->posts} SET %s WHERE ID = '%d'",implode(',',$post),$ID));
 							$action = 'обновлен';
 						}
 					}
@@ -559,8 +632,7 @@ global $wpdb;
 
 				if($emptyFields){
 					foreach($emptyFields as $key=>$ids){
-						$ids = implode(',',$ids);
-						$wpdb->query("DELETE FROM ".$wpdb->prefix."postmeta WHERE meta_key='$key' AND post_id IN ($ids)");
+						$wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."postmeta WHERE meta_key='%s' AND post_id IN (".rcl_format_in($ids).")",$key,$ids));
 					}
 				}
 

@@ -1,14 +1,15 @@
 <?php
 if (is_admin()):
-	add_action('admin_head','output_script_admin_recall');	
+	add_action('admin_head','rmag_admin_scripts');	
 endif;
 
-function output_script_admin_recall(){
+function rmag_admin_scripts(){
 	wp_enqueue_script( 'jquery' );		
-	wp_enqueue_script( 'ajax_admin_magazine_recall', addon_url('js/admin.js', __FILE__) );		
+	wp_enqueue_script( 'rmag_admin_scripts', rcl_addon_url('js/admin.js', __FILE__) );		
 }
 
-function attachments_products( $attachments ){
+add_action( 'attachments_register', 'rcl_attachments_products' );
+function rcl_attachments_products( $attachments ){
 	$args = array(
 		'label' => 'Галлерея товара',
 		'post_type' => array( 'products' ),
@@ -22,11 +23,9 @@ function attachments_products( $attachments ){
 	 
 	$attachments->register( 'attachments_products', $args );
 }
- 
-add_action( 'attachments_register', 'attachments_products' );
 
-add_action( 'init', 'register_terms_rec_products' );
-function register_terms_rec_products(){
+add_action( 'init', 'rcl_register_posttype_products' );
+function rcl_register_posttype_products(){
 
     $labels = array( 
         'name' => 'Каталог товаров',
@@ -67,8 +66,8 @@ function register_terms_rec_products(){
     register_post_type( 'products', $args );
 }
 
-add_action( 'init', 'register_taxonomy_prodcat' );
-function register_taxonomy_prodcat() {
+add_action( 'init', 'rcl_register_taxonomy_prodcat' );
+function rcl_register_taxonomy_prodcat() {
 
     $labels = array( 
           'name' => 'Категории',
@@ -103,15 +102,15 @@ function register_taxonomy_prodcat() {
 }
 
 // создаем колонку товарных категорий
-add_filter('manage_edit-products_columns', 'add_prodcat_column', 10, 1);  
-function add_prodcat_column( $columns ){  
+add_filter('manage_edit-products_columns', 'rcl_prodcat_column', 10, 1);  
+function rcl_prodcat_column( $columns ){  
     $columns['prodcat'] = 'Категория'; 
     return $columns;  
 }  
   
 // заполняем колонку данными  
-add_filter('manage_products_posts_custom_column', 'fill_prodcat_column', 5, 2);
-function fill_prodcat_column($column_name, $post_id) {  
+add_filter('manage_products_posts_custom_column', 'rcl_fill_prodcat_column', 5, 2);
+function rcl_fill_prodcat_column($column_name, $post_id) {  
     if( $column_name != 'prodcat' )  
         return;  
   
@@ -121,16 +120,16 @@ function fill_prodcat_column($column_name, $post_id) {
 		}   
 }
 // добавляем возможность сортировать колонку  
-add_filter('manage_edit-products_sortable_columns', 'add_price_sortable_column');  
-function add_price_sortable_column($sortable_columns){  
+add_filter('manage_edit-products_sortable_columns', 'rcl_price_sortable_column');  
+function rcl_price_sortable_column($sortable_columns){  
         $sortable_columns['prodcat'] = 'prodcat_prodcat';  
       
         return $sortable_columns;  
 }
 
 // создаем колонку цены
-add_filter('manage_edit-products_columns', 'add_price_column', 10, 1);  
-function add_price_column( $columns ){   
+add_filter('manage_edit-products_columns', 'rcl_price_column', 10, 1);  
+function rcl_price_column( $columns ){   
 	$out = array();  
     foreach((array)$columns as $col=>$name){  
         if(++$i==3)  
@@ -142,26 +141,26 @@ function add_price_column( $columns ){
 }  
   
 // заполняем колонку цены  
-add_filter('manage_products_posts_custom_column', 'fill_price_column', 5, 2); // wp-admin/includes/class-wp-posts-list-table.php  
-function fill_price_column($column_name, $post_id) {  
+add_filter('manage_products_posts_custom_column', 'rcl_fill_price_column', 5, 2);
+function rcl_fill_price_column($column_name, $post_id) {  
     switch( $column_name ){
         case 'price':
-			echo '<input type="text" id="price-product-'.$post_id.'" name="price-product" size="4" value="'.get_post_meta($post_id,'price-products',1).'"> '.get_current_type_currency($post_id).'
+			echo '<input type="text" id="price-product-'.$post_id.'" name="price-product" size="4" value="'.get_post_meta($post_id,'price-products',1).'"> '.rcl_get_current_type_currency($post_id).'
                 <input type="button" class="recall-button edit-price-product" product="'.$post_id.'" id="product-'.$post_id.'" value="Ок">'; 
         break;
     }
 }
 
-add_filter('manage_products_posts_columns', 'delete_column_date_product', 10, 1);  
-function delete_column_date_product( $columns ){
+add_filter('manage_products_posts_columns', 'rcl_delete_column_date_product', 10, 1);  
+function rcl_delete_column_date_product( $columns ){
         unset($columns['date']);
         return $columns;   
 	  
 }  
 
 // создаем колонку наличия товара
-add_filter('manage_edit-products_columns', 'add_availability_column', 10, 1);  
-function add_availability_column( $columns ){
+add_filter('manage_edit-products_columns', 'rcl_availability_column', 10, 1);  
+function rcl_availability_column( $columns ){
 	global $rmag_options;
 	if($rmag_options['products_warehouse_recall']!=1) return $columns;
 		$out = array();  
@@ -175,8 +174,8 @@ function add_availability_column( $columns ){
 }  
 	  
 // заполняем колонку наличия товара  
-add_filter('manage_products_posts_custom_column', 'fill_availability_column', 5, 2); 
-function fill_availability_column($column_name, $post_id) {
+add_filter('manage_products_posts_custom_column', 'rcl_fill_availability_column', 5, 2); 
+function rcl_fill_availability_column($column_name, $post_id) {
 	global $rmag_options;
 	if($rmag_options['products_warehouse_recall']!=1) return $column_name;
         
@@ -207,8 +206,8 @@ function fill_availability_column($column_name, $post_id) {
 
 
 // создаем колонку миниатюр
-add_filter('manage_edit-products_columns', 'add_thumb_column', 10, 1);  
-function add_thumb_column( $columns ){   
+add_filter('manage_edit-products_columns', 'rcl_thumb_column', 10, 1);  
+function rcl_thumb_column( $columns ){   
 	$out = array();  
     foreach((array)$columns as $col=>$name){  
         if(++$i==2)  
@@ -219,14 +218,14 @@ function add_thumb_column( $columns ){
   
 }  
 
-if (is_admin()) add_action('admin_init', 'recall_postmeta_products');
-function recall_postmeta_products() {
+if (is_admin()) add_action('admin_init', 'rcl_options_products');
+function rcl_options_products() {
     add_meta_box( 'recall_meta', __('Settings Wp-Recall','rcl'), 'options_box_rcl', 'products', 'normal', 'high'  );
 }
   
 // заполняем колонку миниатюр  
-add_filter('manage_products_posts_custom_column', 'fill_thumb_column', 5, 2); // wp-admin/includes/class-wp-posts-list-table.php  
-function fill_thumb_column($column_name, $post_id) {  
+add_filter('manage_products_posts_custom_column', 'rcl_fill_thumb_column', 5, 2);
+function rcl_fill_thumb_column($column_name, $post_id) {  
     if( $column_name != 'thumb' )  
         return;     
     if(get_the_post_thumbnail($post_id,'thumbnail')) $img = get_the_post_thumbnail($post_id,array(70,70)) ;
@@ -235,17 +234,16 @@ function fill_thumb_column($column_name, $post_id) {
 }
  
 
-add_action('admin_init', 'recall_products_fields', 1);
-
-function recall_products_fields() {
-    add_meta_box( 'products_fields', 'Характеристики товара', 'recall_products_fields_box', 'products', 'normal', 'high'  );
+add_action('admin_init', 'rcl_products_fields', 1);
+function rcl_products_fields() {
+    add_meta_box( 'products_fields', 'Характеристики товара', 'rcl_metabox_products', 'products', 'normal', 'high'  );
 }
 
-function recall_products_fields_box( $post ){
+function rcl_metabox_products( $post ){
 	global $rmag_options; ?>
 	
 	<p>Цена товара:<br>
-	<label><input type="number" name="wprecall[price-products]" value="<?php echo get_post_meta($post->ID,'price-products',1); ?>" style="width:70px" /> <?php the_type_currency_list($post->ID); ?></label></p>
+	<label><input type="number" name="wprecall[price-products]" value="<?php echo get_post_meta($post->ID,'price-products',1); ?>" style="width:70px" /> <?php rcl_type_currency_list($post->ID); ?></label></p>
 	
 	<?php if($rmag_options['multi_cur']){ ?>	
 	<p>Курс доп.валюты для товара:<br>
@@ -385,8 +383,8 @@ function recall_products_fields_box( $post ){
 <?php
 }
 
-add_action('save_post', 'wpm_extra_fields_update');
-function wpm_extra_fields_update( $post_id ){
+add_action('save_post', 'rmag_extra_fields_update');
+function rmag_extra_fields_update( $post_id ){
     if(!isset($_POST['wpm_fields_nonce'])) return false;
     if ( !wp_verify_nonce($_POST['wpm_fields_nonce'], __FILE__) ) return false;
 	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE  ) return false;

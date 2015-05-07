@@ -1,13 +1,12 @@
 <?php
-$path_parts = pathinfo(__FILE__);
-preg_match_all("/(?<=)[A-z0-9\-\/\.\_\s\ё]*(?=wp\-content)/i", $path_parts['dirname'], $string_value);
-require_once( $string_value[0][0].'/wp-load.php' );
+add_action('wp_ajax_rcl_avatar_upload', 'rcl_avatar_upload');
+function rcl_avatar_upload(){
+	
+	require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
-require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-
-global $user_ID,$rcl_options;
+	global $user_ID,$rcl_options;
 
 	if(!$user_ID) return false;
 
@@ -85,4 +84,5 @@ global $user_ID,$rcl_options;
 
 	echo json_encode($res);
 	exit;
+}
 ?>

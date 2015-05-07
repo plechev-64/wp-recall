@@ -2,16 +2,16 @@
 /*************************************************
 Добавление товара в миникорзину
 *************************************************/
-function add_in_minibasket_recall(){
+function rcl_add_minicart(){
     global $rmag_options,$CartData;
-    $id_post = $_POST['id_post'];
-    $number = $_POST['number'];
+    $id_post = intval($_POST['id_post']);
+    $number = intval($_POST['number']);
     if(!$number||$number==''||$number==0) $number=1;
     if($number>=0){
         $cnt = (!isset($_SESSION['cart'][$id_post]))? $number : $_SESSION['cart'][$id_post]['number'] + $number;            
         $_SESSION['cart'][$id_post]['number'] = $cnt;
 
-        $price = get_number_price($id_post);
+        $price = rcl_get_number_price($id_post);
         $price = (!$price) ? 0 : $price;
         
         $_SESSION['cart'][$id_post]['price'] = $price;
@@ -35,7 +35,7 @@ function add_in_minibasket_recall(){
 
         $log['data_sumprice'] =  $summ;
         $log['allprod'] = $all;
-        $log['empty-content'] = get_include_template_rcl('cart-mini-content.php',__FILE__);
+        $log['empty-content'] = rcl_get_include_template('cart-mini-content.php',__FILE__);
 
         $log['recall'] = 100;
     }else{
@@ -45,21 +45,21 @@ function add_in_minibasket_recall(){
     echo json_encode($log);	
     exit;
 }
-add_action('wp_ajax_add_in_minibasket_recall', 'add_in_minibasket_recall');
-add_action('wp_ajax_nopriv_add_in_minibasket_recall', 'add_in_minibasket_recall');
+add_action('wp_ajax_rcl_add_minicart', 'rcl_add_minicart');
+add_action('wp_ajax_nopriv_rcl_add_minicart', 'rcl_add_minicart');
 /*************************************************
 Добавление товара в корзину
 *************************************************/
-function add_in_basket_recall(){
+function rcl_add_cart(){
 
-    $id_post = $_POST['id_post'];
-    $number = $_POST['number'];
+    $id_post = intval($_POST['id_post']);
+    $number = intval($_POST['number']);
     if(!$number||$number==''||$number==0) $number=1;
     if($number>=0){
         $cnt = (!isset($_SESSION['cart'][$id_post]))? $number : $_SESSION['cart'][$id_post]['number'] + $number;            
         $_SESSION['cart'][$id_post]['number'] = $cnt;
         
-        $price = get_number_price($id_post);
+        $price = rcl_get_number_price($id_post);
         $price = (!$price) ? 0 : $price;
         $_SESSION['cart'][$id_post]['price'] = $price;
         
@@ -88,15 +88,15 @@ function add_in_basket_recall(){
     echo json_encode($log);
     exit;
 }
-add_action('wp_ajax_add_in_basket_recall', 'add_in_basket_recall');
-add_action('wp_ajax_nopriv_add_in_basket_recall', 'add_in_basket_recall');	
+add_action('wp_ajax_rcl_add_cart', 'rcl_add_cart');
+add_action('wp_ajax_nopriv_rcl_add_cart', 'rcl_add_cart');	
 /*************************************************
 Уменьшаем товар в корзине
 *************************************************/
-function remove_out_basket_recall(){
+function rcl_remove_product_cart(){
 
-    $id_post = $_POST['id_post'];
-    $number = $_POST['number'];
+    $id_post = intval($_POST['id_post']);
+    $number = intval($_POST['number']);
     if(!$number||$number==''||$number==0) $number=1;
     if($number>=0){
         $price = $_SESSION['cart'][$id_post]['price'];
@@ -136,12 +136,12 @@ function remove_out_basket_recall(){
     echo json_encode($log);
     exit;
 }
-add_action('wp_ajax_remove_out_basket_recall', 'remove_out_basket_recall');
-add_action('wp_ajax_nopriv_remove_out_basket_recall', 'remove_out_basket_recall');
+add_action('wp_ajax_rcl_remove_product_cart', 'rcl_remove_product_cart');
+add_action('wp_ajax_nopriv_rcl_remove_product_cart', 'rcl_remove_product_cart');
 /*************************************************
 Подтверждение заказа
 *************************************************/
-function confirm_order_recall(){
+function rcl_confirm_order(){
 	 
 	global $user_ID,$rmag_options,$order;
 
@@ -162,8 +162,8 @@ function confirm_order_recall(){
                     $order_id = $ord->get_order_id();
                     $ord->insert_order($order_id);					
                     $order_custom_field = $ord->insert_detail_order($get_fields);			
-                    $order = get_order($order_id);     
-                    $table_order = get_include_template_rcl('order.php',__FILE__);
+                    $order = rcl_get_order($order_id);     
+                    $table_order = rcl_get_include_template('order.php',__FILE__);
                     $ord->send_mail($order_custom_field,$table_order);	
                     
                     if(!$order->order_price){ //Если заказ бесплатный
@@ -232,29 +232,29 @@ function confirm_order_recall(){
         echo json_encode($log);		
         exit;
     }
-add_action('wp_ajax_confirm_order_recall', 'confirm_order_recall');
-add_action('wp_ajax_nopriv_confirm_order_recall', 'confirm_order_recall');
+add_action('wp_ajax_rcl_confirm_order', 'rcl_confirm_order');
+add_action('wp_ajax_nopriv_rcl_confirm_order', 'rcl_confirm_order');
 /*************************************************
 Смена статуса заказа
 *************************************************/
-function select_status_order_recall(){
+function rcl_edit_order_status(){
 	global $user_ID,$rmag_options,$wpdb;
 	
-	$order = $_POST['order'];
-	$status = $_POST['status'];
+	$order = intval($_POST['order']);
+	$status = intval($_POST['status']);
 
-	if($_POST['order']){
+	if($order){
             
-		$oldstatus = $wpdb->get_var("SELECT order_status FROM ".RMAG_PREF."orders_history WHERE order_id='$order'");
+		$oldstatus = $wpdb->get_var($wpdb->prepare("SELECT order_status FROM ".RMAG_PREF."orders_history WHERE order_id='%d'",$order));
 		
-		$res = update_status_order($order,$status);
+		$res = rcl_update_status_order($order,$status);
                 
 		if($res){
 		
 			if($oldstatus==1&&$status==6){
-				remove_reserve_product($order,1);
+				rcl_remove_reserve($order,1);
 			}else{
-				remove_reserve_product($order);
+				rcl_remove_reserve($order);
 			}
 			
 			switch($status){
@@ -280,23 +280,23 @@ function select_status_order_recall(){
 	echo json_encode($log);	
     exit;
 }
-add_action('wp_ajax_select_status_order_recall', 'select_status_order_recall');
+add_action('wp_ajax_rcl_edit_order_status', 'rcl_edit_order_status');
 
 /*************************************************
 Удаление заказа в корзину
 *************************************************/
-function delete_order_in_trash_recall(){
+function rcl_delete_trash_order(){
     global $user_ID;
     global $wpdb;
     global $rmag_options;
-    $idorder = $_POST['idorder'];
+    $idorder = intval($_POST['idorder']);
 
-    if($idorder){
+    if($idorder&&$user_ID){
 
-        remove_reserve_product($idorder,1);
+        rcl_remove_reserve($idorder,1);
 
         //убираем заказ в корзину
-        $res = update_status_order($idorder,6,$user_ID);
+        $res = rcl_update_status_order($idorder,6,$user_ID);
 
         if($res){
             $log['otvet']=100;
@@ -310,17 +310,17 @@ function delete_order_in_trash_recall(){
     echo json_encode($log);		
     exit;
 }
-add_action('wp_ajax_delete_order_in_trash_recall', 'delete_order_in_trash_recall');	
+add_action('wp_ajax_rcl_delete_trash_order', 'rcl_delete_trash_order');	
 /*************************************************
 Полное удаление заказа
 *************************************************/
-function all_delete_order_recall(){
+function rcl_all_delete_order(){
 	global $user_ID;
 	global $wpdb;
-	$idorder = $_POST['idorder'];
+	$idorder = intval($_POST['idorder']);
 
-	if($idorder){
-            $res = delete_order($idorder);
+	if($idorder&&$user_ID){
+            $res = rcl_delete_order($idorder);
 
             if($res){
                     $log['otvet']=100;
@@ -332,19 +332,19 @@ function all_delete_order_recall(){
 	echo json_encode($log);		
 	exit;
 }
-add_action('wp_ajax_all_delete_order_recall', 'all_delete_order_recall');
-add_action('wp_ajax_nopriv_all_delete_order_recall', 'all_delete_order_recall');
+add_action('wp_ajax_rcl_all_delete_order', 'rcl_all_delete_order');
+add_action('wp_ajax_nopriv_rcl_all_delete_order', 'rcl_all_delete_order');
 
 /*************************************************
 Регистрация пользователя после оформления заказа
 *************************************************/
-function add_new_user_in_order(){
+function rcl_register_user_order(){
 	global $rmag_options,$wpdb,$order;
 	
 	$reg_user = ($rmag_options['noreg_order'])? false: true;
         
-	$fio_new_user = $_POST['fio_new_user'];	
-	$email_new_user = $_POST['email_new_user'];
+	$fio_new_user = sanitize_text_field($_POST['fio_new_user']);	
+	$email_new_user = sanitize_email($_POST['email_new_user']);
         
 	include_once 'rcl_order.php';
 	$ord = new Rcl_Order();
@@ -428,7 +428,7 @@ function add_new_user_in_order(){
 						$creds['remember'] = true;
 						$user = wp_signon( $creds, false );
 						
-						$redirect_url = get_redirect_url_rcl(get_author_posts_url($user_id),'order');
+						$redirect_url = rcl_format_url(get_author_posts_url($user_id),'order');
 					}else{
 						$redirect_url = false;
 					}
@@ -440,8 +440,8 @@ function add_new_user_in_order(){
                     $ord->insert_order($order_id,$user_id);
                     $order_custom_field = $ord->insert_detail_order($get_order_fields);
                     //$show_custom_field = $ord->detail_order($get_fields,$user_id);
-                    $order = get_order($order_id);
-                    $table_order = get_include_template_rcl('order.php',__FILE__);
+                    $order = rcl_get_order($order_id);
+                    $table_order = rcl_get_include_template('order.php',__FILE__);
                     $ord->send_mail($order_custom_field,$table_order,$user_id,$creds);
 
                     //}
@@ -490,18 +490,18 @@ function add_new_user_in_order(){
 	echo json_encode($res);
 	exit;
 }
-add_action('wp_ajax_add_new_user_in_order', 'add_new_user_in_order');
-add_action('wp_ajax_nopriv_add_new_user_in_order', 'add_new_user_in_order');
+add_action('wp_ajax_rcl_register_user_order', 'rcl_register_user_order');
+add_action('wp_ajax_nopriv_rcl_register_user_order', 'rcl_register_user_order');
 
 
 /*************************************************
 Оплата заказа средствами с личного счета
 *************************************************/
-function pay_order_in_count_recall(){
+function rcl_pay_order_private_account(){
 	global $user_ID;
 	global $wpdb;
 	global $rmag_options;
-	$order_id = $_POST['idorder'];
+	$order_id = intval($_POST['idorder']);
 
 	if(!$order_id||!$user_ID){
 		$log['otvet']=1;
@@ -509,9 +509,9 @@ function pay_order_in_count_recall(){
 		exit;	
 	}
 	
-	$order = get_order($order_id);
+	$order = rcl_get_order($order_id);
 	
-	$oldusercount = get_user_money();
+	$oldusercount = rcl_get_user_money();
 
 	if(!$oldusercount){
 		$log['otvet']=1;
@@ -529,9 +529,9 @@ function pay_order_in_count_recall(){
 		exit;				
 	}
 		
-	update_user_money($newusercount);
+	rcl_update_user_money($newusercount);
 		
-	$result = update_status_order($order_id,2);
+	$result = rcl_update_status_order($order_id,2);
 								
 	if(!$result){
 		$log['otvet']=1;
@@ -540,7 +540,7 @@ function pay_order_in_count_recall(){
 		exit;
 	}
 	
-	payment_order($order_id,$user_ID);
+	rcl_payment_order($order_id,$user_ID);
 		
 	$log['recall'] = "<p style='clear: both;color:green;font-weight:bold;padding:10px; border:2px solid green;'>Ваш заказ успешно оплачен! Соответствующее уведомление было выслано администрации сервиса.</p>";
 	$log['count'] = $newusercount;
@@ -549,11 +549,11 @@ function pay_order_in_count_recall(){
 	echo json_encode($log);
 	exit;	
 }
-add_action('wp_ajax_pay_order_in_count_recall', 'pay_order_in_count_recall');
+add_action('wp_ajax_rcl_pay_order_private_account', 'rcl_pay_order_private_account');
 
-function edit_price_product_rcl(){
-    $id_post = $_POST['id_post'];
-    $price = $_POST['price'];
+function rcl_edit_price_product(){
+    $id_post = intval($_POST['id_post']);
+    $price = intval($_POST['price']);
     if(isset($price)){		
             update_post_meta($id_post,'price-products',$price);
             $log['otvet']=100;	
@@ -563,5 +563,5 @@ function edit_price_product_rcl(){
     echo json_encode($log);	
     exit;
 }
-if(is_admin()) add_action('wp_ajax_edit_price_product_rcl', 'edit_price_product_rcl');
+if(is_admin()) add_action('wp_ajax_rcl_edit_price_product', 'rcl_edit_price_product');
 ?>

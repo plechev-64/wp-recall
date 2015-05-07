@@ -1,19 +1,19 @@
 <?php global $user; ?>
 <div class="user-single">
     <div class="thumb-user">
-        <a title="<?php the_user_name(); ?>" href="<?php the_user_url(); ?>">
-            <?php the_user_avatar(70); ?>
+        <a title="<?php rcl_user_name(); ?>" href="<?php rcl_user_url(); ?>">
+            <?php rcl_user_avatar(70); ?>
         </a>
-        <?php the_user_rayting(); ?>
+        <?php rcl_user_rayting(); ?>
     </div>
 
     <div class="user-content-rcl">
-        <?php the_user_action(2); ?>
+        <?php rcl_user_action(2); ?>
         <h3 class="user-name">
-            <a href="<?php the_user_url(); ?>"><?php the_user_name(); ?></a>
+            <a href="<?php rcl_user_url(); ?>"><?php rcl_user_name(); ?></a>
         </h3>
         
-        <?php the_user_description(); ?>
+        <?php rcl_user_description(); ?>
         
         <?php do_action('user_description'); ?>
 

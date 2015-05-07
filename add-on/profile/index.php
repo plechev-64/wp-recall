@@ -1,23 +1,23 @@
 <?php
 
-add_action('admin_menu', 'profile_options_page_rcl',30);
-function profile_options_page_rcl(){
-	add_submenu_page( 'manage-wprecall', __('Profile fields','rcl'), __('Profile fields','rcl'), 'manage_options', 'manage-userfield', 'recall_users_profile_edit');
+add_action('admin_menu', 'rcl_profile_options_page',30);
+function rcl_profile_options_page(){
+	add_submenu_page( 'manage-wprecall', __('Profile fields','rcl'), __('Profile fields','rcl'), 'manage_options', 'manage-userfield', 'rcl_manage_profile_fields');
 }
 
-add_block_rcl('content','get_show_profile_fields_lk_rcl',array('id'=>'pf-block','order'=>8,'public'=>1));
-function get_show_profile_fields_lk_rcl($author_lk){
+rcl_block('content','rcl_get_show_profile_fields',array('id'=>'pf-block','order'=>8,'public'=>1));
+function rcl_get_show_profile_fields($author_lk){
 	$profile_fields='';
 	return apply_filters('show_profile_fields_rcl',$profile_fields,$author_lk);
 }
 
-add_action('wp','add_notify_update_profile');
-function add_notify_update_profile(){
-    if (isset($_GET['updated'])) add_notify_rcl(__('Your profile was updated','rcl'),'success');
+add_action('wp','rcl_update_profile_notice');
+function rcl_update_profile_notice(){
+    if (isset($_GET['updated'])) rcl_notice_text(__('Your profile was updated','rcl'),'success');
 }
 
 //Обновляем профиль пользователя
-function edit_user_profil_recall(){
+function rcl_edit_profile(){
     global $user_ID;
     if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-profile_' . $user_ID ) ) return false;
 
@@ -28,12 +28,12 @@ function edit_user_profil_recall(){
 	}
 	//require_once( ABSPATH . WPINC . '/registration.php' );
 
-    $redirect_url = get_redirect_url_rcl(get_author_posts_url($user_ID),'profile').'&updated=true';
+    $redirect_url = rcl_format_url(get_author_posts_url($user_ID),'profile').'&updated=true';
 
     $args = array('hide_empty'=>false);
     $allterms = get_terms('category', $args );
 
-    update_custom_fields_rcl($user_ID);
+    rcl_update_profile_fields($user_ID);
 
     check_admin_referer( 'update-profile_' . $user_ID );
     $errors = edit_user( $user_ID );
@@ -46,7 +46,7 @@ function edit_user_profil_recall(){
     wp_redirect( $redirect_url );
 }
 
-function update_custom_fields_rcl($user_id){
+function rcl_update_profile_fields($user_id){
     //global $user_ID;
     $get_fields = get_option( 'custom_profile_field' );
 
@@ -55,6 +55,8 @@ function update_custom_fields_rcl($user_id){
             $custom_field = apply_filters('update_custom_field_profile',$custom_field);
             if(!$custom_field||!$custom_field['slug']) continue;
             if(!is_admin()&&$custom_field['admin']==1) continue;
+			
+			$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $slug = $custom_field['slug'];
             if($custom_field['type']=='checkbox'){
@@ -94,21 +96,21 @@ add_action('edit_user_profile_update', 'rcl_save_profile_fields');
 function rcl_save_profile_fields($user_id) {
     if ( !current_user_can( 'edit_user', $user_id ) ) return false;
 
-    update_custom_fields_rcl($user_id);
+    rcl_update_profile_fields($user_id);
 }
 
-function edit_user_profil_recall_activate ( ) {
+function rcl_edit_profile_activate ( ) {
   if ( isset( $_POST['submit_user_profil'] ) ) {
-    add_action( 'wp', 'edit_user_profil_recall' );
+    add_action( 'wp', 'rcl_edit_profile' );
   }
 }
-add_action('init', 'edit_user_profil_recall_activate');
+add_action('init', 'rcl_edit_profile_activate');
 
 //Удаляем аккаунт пользователя
-function delete_acc_user_recall(){
+function rcl_delete_user_account(){
 	global $user_ID,$wpdb;
 	if( !wp_verify_nonce( $_POST['_wpnonce'], 'delete-user-' . $user_ID ) ) return false;
-	$wpdb->query("DELETE FROM ".RCL_PREF."user_action WHERE user ='$user_ID'");
+	$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
 	$delete = wp_delete_account( $user_ID );
 	if($delete){
 		wp_die(__('Very sorry, but your account has been deleted!','rcl'));
@@ -118,83 +120,15 @@ function delete_acc_user_recall(){
 	}
 }
 
-//Удаление пользователя
-function wp_delete_account( $id, $reassign = 'novalue' ) {
-	global $wpdb;
-
-	$id = (int) $id;
-	$user = new WP_User( $id );
-
-	// allow for transaction statement
-	do_action('delete_user', $id);
-
-	if ( 'novalue' === $reassign || null === $reassign ) {
-		$post_types_to_delete = array();
-		foreach ( get_post_types( array(), 'objects' ) as $post_type ) {
-			if ( $post_type->delete_with_user ) {
-				$post_types_to_delete[] = $post_type->name;
-			} elseif ( null === $post_type->delete_with_user && post_type_supports( $post_type->name, 'author' ) ) {
-				$post_types_to_delete[] = $post_type->name;
-			}
-		}
-
-		$post_types_to_delete = apply_filters( 'post_types_to_delete_with_user', $post_types_to_delete, $id );
-		$post_types_to_delete = implode( "', '", $post_types_to_delete );
-		$post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_author = %d AND post_type IN ('$post_types_to_delete')", $id ) );
-		if ( $post_ids ) {
-			foreach ( $post_ids as $post_id ){
-				wp_delete_post( $post_id );
-                        }
-		}
-
-		$link_ids = $wpdb->get_col( $wpdb->prepare("SELECT link_id FROM $wpdb->links WHERE link_owner = %d", $id) );
-
-		if ( $link_ids ) {
-			foreach ( $link_ids as $link_id )
-				wp_delete_link($link_id);
-		}
-	} else {
-		$reassign = (int) $reassign;
-		$post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_author = %d", $id ) );
-		$wpdb->update( $wpdb->posts, array('post_author' => $reassign), array('post_author' => $id) );
-		if ( ! empty( $post_ids ) ) {
-			foreach ( $post_ids as $post_id )
-				clean_post_cache( $post_id );
-		}
-		$link_ids = $wpdb->get_col( $wpdb->prepare("SELECT link_id FROM $wpdb->links WHERE link_owner = %d", $id) );
-		$wpdb->update( $wpdb->links, array('link_owner' => $reassign), array('link_owner' => $id) );
-		if ( ! empty( $link_ids ) ) {
-			foreach ( $link_ids as $link_id )
-				clean_bookmark_cache( $link_id );
-		}
-	}
-
-	if ( is_multisite() ) {
-		remove_user_from_blog( $id, get_current_blog_id() );
-	} else {
-		$meta = $wpdb->get_col( $wpdb->prepare( "SELECT umeta_id FROM $wpdb->usermeta WHERE user_id = %d", $id ) );
-		foreach ( $meta as $mid )
-			delete_metadata_by_mid( 'user', $mid );
-
-		$wpdb->delete( $wpdb->users, array( 'ID' => $id ) );
-	}
-
-	clean_user_cache( $user );
-
-	do_action('deleted_user', $id);
-
-	return true;
-}
-
-function delete_acc_user_recall_activate ( ) {
-  if ( isset( $_POST['delete_acc_user_recall'] ) ) {
-    add_action( 'wp', 'delete_acc_user_recall' );
+function rcl_delete_user_account_activate ( ) {
+  if ( isset( $_POST['rcl_delete_user_account'] ) ) {
+    add_action( 'wp', 'rcl_delete_user_account' );
   }
 }
-add_action('init', 'delete_acc_user_recall_activate');
+add_action('init', 'rcl_delete_user_account_activate');
 
-add_filter('admin_options_wprecall','get_admin_profile_page_content');
-function get_admin_profile_page_content($content){
+add_filter('admin_options_wprecall','rcl_profile_options');
+function rcl_profile_options($content){
 
     $opt = new Rcl_Options(__FILE__);
 
@@ -220,8 +154,8 @@ function get_admin_profile_page_content($content){
     return $content;
 }
 
-add_filter('after-avatar-rcl','get_button_upload_avatar_rcl',2,2);
-function get_button_upload_avatar_rcl($content,$author_lk){
+add_filter('after-avatar-rcl','rcl_button_avatar_upload',2,2);
+function rcl_button_avatar_upload($content,$author_lk){
 	global $user_ID;
 	if($user_ID!=$author_lk) return $content;
 
@@ -263,18 +197,18 @@ function get_button_upload_avatar_rcl($content,$author_lk){
 	return $content;
 }
 
-function add_tab_profile_rcl($array_tabs){
-    $array_tabs['profile']='recall_block_edit_user_profile';
+function rcl_ajax_tab_profile($array_tabs){
+    $array_tabs['profile']='rcl_tab_profile_content';
     return $array_tabs;
 }
-add_filter('ajax_tabs_rcl','add_tab_profile_rcl');
+add_filter('ajax_tabs_rcl','rcl_ajax_tab_profile');
 
-add_action('init','add_tab_profile');
-function add_tab_profile(){
-    add_tab_rcl('profile','recall_block_edit_user_profile',__('Profile','rcl'),array('class'=>'fa-user','order'=>20,'path'=>__FILE__));
+add_action('init','rcl_tab_profile');
+function rcl_tab_profile(){
+    rcl_tab('profile','rcl_tab_profile_content',__('Profile','rcl'),array('class'=>'fa-user','order'=>20,'path'=>__FILE__));
 }
 
-function recall_block_edit_user_profile($author_lk){
+function rcl_tab_profile_content($author_lk){
 
 	global $userdata, $user_ID, $rcl_options;
 
@@ -520,7 +454,7 @@ function recall_block_edit_user_profile($author_lk){
             $profile_block .= '
             <form method="post" action="" name="delete_account" onsubmit="return confirm(\''.__('Are you sure? Then restore will not work!','rcl').'\');">
             '.wp_nonce_field('delete-user-'.$user_ID,'_wpnonce',true,false).'
-            <input type="submit" id="delete_acc" class="recall-button"  value="'.__('To delete your profile','rcl').'" name="delete_acc_user_recall"/>
+            <input type="submit" id="delete_acc" class="recall-button"  value="'.__('To delete your profile','rcl').'" name="rcl_delete_user_account"/>
             </form>';
 	}
 
@@ -528,16 +462,16 @@ function recall_block_edit_user_profile($author_lk){
 }
 
 //Редактируем произвольные поля профиля
-function recall_users_profile_edit(){
+function rcl_manage_profile_fields(){
 
-        add_sortable_scripts();
+        rcl_sortable_scripts();
 
 	if ( ! class_exists( 'Rcl_EditFields' ) ) include_once RCL_PATH.'functions/rcl_editfields.php';
 
 	$f_edit = new Rcl_EditFields('profile');
 
 	$default_form = '';
-	$profile_default_fields = get_profile_default_fields();
+	$profile_default_fields = rcl_get_default_fields_profile();
 
 	if ( $f_edit->verify() ) {
 
@@ -644,8 +578,8 @@ if(function_exists('ulogin_profile_personal_options')){
     add_filter('profile_options_rcl','get_ulogin_profile_options',10,2);
 }
 
-add_filter('show_profile_fields_rcl','get_show_custom_profile_fields',10,2);
-function get_show_custom_profile_fields($fields_content,$author_lk){
+add_filter('show_profile_fields_rcl','rcl_show_custom_fields_profile',10,2);
+function rcl_show_custom_fields_profile($fields_content,$author_lk){
 	$get_fields = get_option( 'custom_profile_field' );
 	//$get_fields = unserialize( $get_fields);
 
@@ -672,10 +606,10 @@ function get_show_custom_profile_fields($fields_content,$author_lk){
 
 //Выводим произвольные поля профиля на странице пользователя в админке
 if (is_admin()):
-	add_action('profile_personal_options', 'custom_profile_users_recall');
-	add_action('edit_user_profile', 'custom_profile_users_recall');
+	add_action('profile_personal_options', 'rcl_get_custom_fields_profile');
+	add_action('edit_user_profile', 'rcl_get_custom_fields_profile');
 endif;
-function custom_profile_users_recall($user){
+function rcl_get_custom_fields_profile($user){
 
     $get_fields = get_option( 'custom_profile_field' );
 
@@ -696,7 +630,7 @@ function custom_profile_users_recall($user){
     }
 }
 
-function get_profile_default_fields() {
+function rcl_get_default_fields_profile() {
 
 	$default_fields = array(
 		array(
@@ -760,14 +694,15 @@ function get_profile_default_fields() {
 	return apply_filters('rcl_profile_default_fields', $default_fields );
 }
 
-function get_footer_scripts_profile_rcl($script){
+function rcl_get_profile_scripts($script){
 	global $rcl_options;
 
 	$weight = (isset($rcl_options['avatar_weight'])&&$rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: $weight = '2';
 
 	$script .= "
 	jQuery('#userpic').fileapi({
-	   url: rcl_url+'add-on/profile/upload-avatar.php',
+	   url: wpurl+'wp-admin/admin-ajax.php',
+	   data:{action:'rcl_avatar_upload'},
 	   accept: 'image/*',
 	   imageSize: { minWidth: 100, minHeight: 100 },
 	   maxSize: ".$weight." * FileAPI.MB,
@@ -829,7 +764,8 @@ function get_footer_scripts_profile_rcl($script){
 	});
 
 	jQuery('#webcam-btn').fileapi({
-		   url: rcl_url+'add-on/profile/upload-avatar.php',
+		   url: wpurl+'wp-admin/admin-ajax.php',
+			data:{action:'rcl_avatar_upload'},
 		   autoUpload: true,
 		   elements: {
 			  active: { show: '#webcam-btn .js-upload', hide: '#webcam-btn .js-webcam' },
@@ -879,4 +815,6 @@ function get_footer_scripts_profile_rcl($script){
 	});";
 	return $script;
 }
-add_filter('file_footer_scripts_rcl','get_footer_scripts_profile_rcl');
+add_filter('file_footer_scripts_rcl','rcl_get_profile_scripts');
+
+include_once 'upload-avatar.php';

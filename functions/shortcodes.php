@@ -1,7 +1,7 @@
 <?php
 
-add_shortcode('userlist','short_user_list_rcl');
-function short_user_list_rcl($atts, $content = null){
+add_shortcode('userlist','rcl_short_user_list');
+function rcl_short_user_list($atts, $content = null){
     global $post,$wpdb,$user_ID,$user,$group_id,$group_admin;
 
 	extract(shortcode_atts(array(
@@ -73,7 +73,7 @@ function short_user_list_rcl($atts, $content = null){
             if(isset($_GET['default-search'])) $args = $UserList->get_args();
 
         }else if($include){
-            $args = array('include'=>$include,'exclude'=>$exclude);
+            $args = array('include'=>explode(',',$include),'exclude'=>explode(',',$exclude));
         }
                 
         $args['fields'] = 'ID';  
@@ -140,7 +140,9 @@ function short_user_list_rcl($atts, $content = null){
             $count_user = count($allusers);
             
         }else{
-            $count_user = $wpdb->get_var("SELECT COUNT(ID) FROM ".$wpdb->prefix ."users WHERE ID NOT IN ($exclude)");
+			
+            $count_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->prefix ."users WHERE ID NOT IN (".rcl_format_in(explode(',',$exclude)).")",explode(',',$exclude)));
+			
         }
 
         $rclnavi = new RCL_navi($inpage,$count_user,'&filter='.$orderby,$page);		
@@ -154,9 +156,9 @@ function short_user_list_rcl($atts, $content = null){
         $UserList->inpage = $inpage;
         
         if($group){
-            $users = $wpdb->get_results("SELECT user_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'user_group_$group'");
+            $users = $wpdb->get_results($wpdb->prepare("SELECT user_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'user_group_%s'",$group));
             $us_lst = $UserList->get_users_lst((object)$users,'user_id');
-            $group_admin = $wpdb->get_var("SELECT user_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'admin_group_$group'");
+            $group_admin = $wpdb->get_var($wpdb->prepare("SELECT user_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'admin_group_%s'",$group));
             $us_data = $UserList->get_usdata_actions($us_data,$us_lst);
             
         }else{
@@ -167,10 +169,10 @@ function short_user_list_rcl($atts, $content = null){
 
                 if($order_by=='comments_count'){
                     if(!$limit&&!$us_lst){
-                        $allusers = $wpdb->get_results("
+                        $allusers = $wpdb->get_results($wpdb->prepare("
                             SELECT COUNT(user_id) AS comments_count
                             FROM ".$wpdb->prefix."comments
-                            WHERE user_id != '' AND comment_approved = 1 GROUP BY user_id ORDER BY $order_by $order"
+                            WHERE user_id != '' AND comment_approved = 1 GROUP BY user_id ORDER BY %s %s",$order_by,$order)
                         );
 
                         $rclnavi->cnt_data = count($allusers);
@@ -180,10 +182,10 @@ function short_user_list_rcl($atts, $content = null){
 
                 if($order_by=='post_count'){
                     if(!$limit&&!$us_lst){
-                        $allusers = $wpdb->get_results("
+                        $allusers = $wpdb->get_results($wpdb->prepare("
                                 SELECT COUNT(post_author) AS post_count
                                 FROM ".$wpdb->prefix."posts
-                                WHERE post_status = 'publish' GROUP BY post_author ORDER BY $order_by $order"
+                                WHERE post_status = 'publish' GROUP BY post_author ORDER BY %s %s",$order_by,$order)
                         );
 
                         $rclnavi->cnt_data = count($allusers);
@@ -205,12 +207,14 @@ function short_user_list_rcl($atts, $content = null){
        }
     }
 
-    $users_desc = $wpdb->get_results("SELECT user_id,meta_value FROM ".$wpdb->prefix."usermeta WHERE user_id IN ($us_lst) AND meta_key = 'description'");	
+	$uslst_array = explode(',',$us_lst);
+	
+    $users_desc = $wpdb->get_results($wpdb->prepare("SELECT user_id,meta_value FROM ".$wpdb->prefix."usermeta WHERE user_id IN (".rcl_format_in($uslst_array).") AND meta_key = 'description'",$uslst_array));	
     foreach($users_desc as $us_desc){
         $us_data[$us_desc->user_id]['description'] = $us_desc->meta_value;
     }
 
-    $display_names = $wpdb->get_results("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN ($us_lst)");
+    $display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($uslst_array).")",$uslst_array));
     foreach((array)$display_names as $name){
         $us_data[$name->ID]['display_name'] = $name->display_name;
         $us_data[$name->ID]['user_id'] = $name->ID;
@@ -225,14 +229,14 @@ function short_user_list_rcl($atts, $content = null){
         $userlist .='<h3>'.__('Total users').': '.$count_user.'</h3>';
 
         $rqst = $UserList->search_request();
-        $perm = get_redirect_url_rcl(get_permalink($post->ID).'?'.$rqst);
+        $perm = rcl_format_url(get_permalink($post->ID).'?'.$rqst);
 
         $userlist .= '<p class="alignleft">'.__('Filter by','rcl').': ';
-        $userlist .= '<a '.a_active($orderby,'action').' href="'.$perm.'filter=action">'.__('Activity','rcl').'</a> ';
-        $userlist .= '<a '.a_active($orderby,'rayting').' href="'.$perm.'filter=rayting">'.__('Rated','rcl').'</a> ';
-        if(!isset($_GET['search-user'])) $userlist .= '<a '.a_active($orderby,'posts').' href="'.$perm.'filter=posts">'.__('Publications','rcl').'</a> ';
-        if(!isset($_GET['search-user'])) $userlist .= '<a '.a_active($orderby,'comments').' href="'.$perm.'filter=comments">'.__('Comments','rcl').'</a> ';
-        if(!isset($_GET['search-user'])) $userlist .= '<a '.a_active($orderby,'registered').' href="'.$perm.'filter=registered">'.__('Registration','rcl').'</a>';
+        $userlist .= '<a '.rcl_a_active($orderby,'action').' href="'.$perm.'filter=action">'.__('Activity','rcl').'</a> ';
+        $userlist .= '<a '.rcl_a_active($orderby,'rayting').' href="'.$perm.'filter=rayting">'.__('Rated','rcl').'</a> ';
+        if(!isset($_GET['search-user'])) $userlist .= '<a '.rcl_a_active($orderby,'posts').' href="'.$perm.'filter=posts">'.__('Publications','rcl').'</a> ';
+        if(!isset($_GET['search-user'])) $userlist .= '<a '.rcl_a_active($orderby,'comments').' href="'.$perm.'filter=comments">'.__('Comments','rcl').'</a> ';
+        if(!isset($_GET['search-user'])) $userlist .= '<a '.rcl_a_active($orderby,'registered').' href="'.$perm.'filter=registered">'.__('Registration','rcl').'</a>';
         $userlist .= '</p>';
     }
 
@@ -242,12 +246,12 @@ function short_user_list_rcl($atts, $content = null){
     
     $a=0;
     if($us_data){
-        foreach((array)$us_data as $id=>$user){ setup_datauser($user); $a++;
+        foreach((array)$us_data as $id=>$user){ rcl_setup_datauser($user); $a++;
             if(!$user->user_action)continue;
             if($onlyaction){
-                    if(last_user_action_recall($user->user_action)) continue;
+                    if(rcl_get_useraction($user->user_action)) continue;
             }
-            $userlist .= get_include_template_rcl('user-'.$type.'.php');
+            $userlist .= rcl_get_include_template('user-'.$type.'.php');
             if($a==$inpage) break;
         }
     }
@@ -264,8 +268,8 @@ function short_user_list_rcl($atts, $content = null){
     return $userlist;
 }
 
-add_filter('users_search_form_rcl','default_search_form_rcl');
-function default_search_form_rcl($form){
+add_filter('users_search_form_rcl','rcl_default_search_form');
+function rcl_default_search_form($form){
         $name = '';
         $orderuser = '';
         if(isset($_GET['name-user'])) $name = $_GET['name-user'];
@@ -284,13 +288,13 @@ function default_search_form_rcl($form){
 	return $form;
 } 
 
-add_shortcode('wp-recall','get_wp_recall_shortcode');
-function get_wp_recall_shortcode(){
+add_shortcode('wp-recall','rcl_get_shortcode_wp_recall');
+function rcl_get_shortcode_wp_recall(){
 	global $user_LK;	
 	
 	if(!$user_LK){		
 		return '<h4>'.__('To begin to use the capabilities of your personal account, please log in or register on this site','rcl').'</h4>
-		<div class="authorize-form-rcl">'.get_authorize_form_rcl().'</div>';
+		<div class="authorize-form-rcl">'.rcl_get_authorize_form().'</div>';
 	}
         
 	ob_start();
@@ -303,9 +307,9 @@ function get_wp_recall_shortcode(){
 	return $content;
 }
 
-add_shortcode('slider-rcl','slider_rcl');
-function slider_rcl($atts, $content = null){
-    add_bxslider_scripts();
+add_shortcode('slider-rcl','rcl_slider');
+function rcl_slider($atts, $content = null){
+    rcl_bxslider_scripts();
     
     extract(shortcode_atts(array(
 	'num' => 5,
@@ -358,7 +362,7 @@ function slider_rcl($atts, $content = null){
                     $price = __('Free','rcl');
                     $class .= ' no-price';
                 }else{
-                    $price .= get_primary_currency(1);
+                    $price .= rcl_get_primary_currency(1);
                 }
                 $plslider .= '<span class="'.$class.'"> '.$price.'</span>';
             }

@@ -19,14 +19,14 @@ class Rcl_EditPost {
         
         if($_POST['post-rcl']){
             
-            $post_id = $_POST['post-rcl'];
+            $post_id = intval($_POST['post-rcl']);
             $this->post_id = $post_id;        
             $pst = get_post($this->post_id);
             $this->post_type = $pst->post_type;
             
             if($this->post_type=='post-group'){
                 
-                if(!user_can_edit_post_group($post_id)) return false;
+                if(!rcl_can_user_edit_post_group($post_id)) return false;
                 
             }else if(!current_user_can('edit_post', $post_id)) return false;
 
@@ -39,7 +39,7 @@ class Rcl_EditPost {
         
         if($_POST['posttype']){
             
-            $post_type = base64_decode($_POST['posttype']);
+            $post_type = sanitize_text_field(base64_decode($_POST['posttype']));
 
             if(!get_post_types(array('name'=>$post_type))) wp_die(__('Error publishing!','rcl'));
                 
@@ -63,7 +63,7 @@ class Rcl_EditPost {
             if(isset($thumb)) update_post_meta($this->post_id, '_thumbnail_id', $thumb);
             else delete_post_meta($this->post_id, '_thumbnail_id');
         }else{
-            if(!$this->update) return $this->add_attachments_in_temps();
+            if(!$this->update) return $this->rcl_add_attachments_in_temps();
             if($thumb){
                 foreach((array)$thumb as $key=>$gal){ 
                         update_post_meta($this->post_id, '_thumbnail_id', $key);
@@ -88,7 +88,7 @@ class Rcl_EditPost {
         }
     }
     
-    function add_attachments_in_temps(){
+    function rcl_add_attachments_in_temps(){
         global $user_ID;
 
         $temp_gal = unserialize(get_the_author_meta('tempgallery',$user_ID));
@@ -124,7 +124,7 @@ class Rcl_EditPost {
             $attachment = array(
                     'post_mime_type' => $sale_file['type'],
                     'post_title' => 'salefile',
-                    'post_content' => $_POST['sale_price'].'/3/86400' ,		
+                    'post_content' => intval($_POST['sale_price']).'/3/86400' ,		
                     'guid' => $sale_file['url'],
                     'post_parent' => $this->post_id,
                     'post_author' => $user_ID,
@@ -148,7 +148,7 @@ class Rcl_EditPost {
         else $post_status = 'publish';
 
         if($rcl_options['nomoder_rayt']){
-                $all_r = get_all_rayt_user(0,$user_ID);
+                $all_r = rcl_get_all_rating_user(0,$user_ID);
                 if($all_r >= $rcl_options['nomoder_rayt']) $post_status = 'publish';
         }
         return $post_status;
@@ -167,7 +167,7 @@ class Rcl_EditPost {
         );				
         $cats = get_categories( $catargs );
         
-        $term_l = new Edit_Terms_List_rcl();
+        $term_l = new Rcl_Edit_Terms_List();
         $new_cat = $term_l->get_terms_list($cats,$_POST['cats']);
 
         $postdata['post_status'] = $this->get_status_post($rcl_options['moderation_public_post']);
@@ -182,12 +182,12 @@ class Rcl_EditPost {
 
         $postdata = array(
             'post_type'=>$this->post_type,
-            'post_title'=>$_POST['post_title'],
-            'post_content'=>$_POST['post_content'],
-            'tags_input'=>$_POST['post_tags']
+            'post_title'=>sanitize_text_field($_POST['post_title']),
+            'post_content'=>esc_textarea($_POST['post_content']),
+            'tags_input'=>sanitize_text_field($_POST['post_tags'])
         );
         
-        $id_form = base64_decode($_POST['id_form']);
+        $id_form = intval(base64_decode($_POST['id_form']));
         
         if($this->post_id) $postdata['ID'] = $this->post_id;
         else $postdata['post_author'] = $user_ID;
@@ -210,7 +210,7 @@ class Rcl_EditPost {
         if($_POST['add-gallery-rcl']==1) update_post_meta($this->post_id, 'recall_slider', 1);
 	else delete_post_meta($this->post_id, 'recall_slider');
 
-        edit_custom_fields_post_rcl($this->post_id,$id_form);
+        rcl_update_post_custom_fields($this->post_id,$id_form);
 
         do_action('update_post_rcl',$this->post_id,$postdata,$this->update);
 

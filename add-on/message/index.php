@@ -2,14 +2,45 @@
 
 if(function_exists('rcl_enqueue_style')) rcl_enqueue_style('private',__FILE__);
 
-add_action('wp_enqueue_scripts', 'output_scripts_new_private_mess');
-function output_scripts_new_private_mess(){
+add_action('wp','rcl_download_file_message');
+function rcl_download_file_message(){
+	global $user_ID,$wpdb;
+	
+	if ( !isset( $_GET['rcl-download-id'] ) ) return false;
+	$id_file = base64_decode($_GET['rcl-download-id']);
+	
+	if ( !$user_ID||!wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
+
+	$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."rcl_private_message WHERE ID = '%d' AND adressat_mess = '%d' AND status_mess = '5'",$id_file,$user_ID));
+
+	if(!$file) wp_die(__('File does not exist on the server or it has already been loaded!','rcl'));
+
+	$name = explode('/',$file->content_mess);
+	$cnt = count($name);
+	$f_name = $name[--$cnt];
+
+	$wpdb->update( RCL_PREF.'private_message',array( 'status_mess' => 6,'content_mess' => __('The file was loaded.','rcl') ),array( 'ID' => $file->ID ));
+
+	header('Content-Description: File Transfer');
+	header('Content-Disposition: attachment; filename="'.$f_name.'"');
+	header('Content-Type: application/octet-stream; charset=utf-8');
+	readfile($file->content_mess);
+
+	$upload_dir = wp_upload_dir();
+	$path_temp = $upload_dir['basedir'].'/temp-files/'.$f_name;
+	unlink($path_temp);
+
+	exit;
+}
+
+add_action('wp_enqueue_scripts', 'rcl_messages_scripts');
+function rcl_messages_scripts(){
 	global $user_ID,$rcl_options,$post,$wpdb;
 	if(isset($rcl_options['notify_message'])&&$rcl_options['notify_message']) 
             return false;
 	wp_enqueue_script( 'jquery' );
 	$glup = $rcl_options['global_update_private_message'];		
-	if(!$glup) $new_mess = $wpdb->get_row("SELECT ID FROM ".RCL_PREF."private_message WHERE adressat_mess = '$user_ID' AND status_mess = '0' OR adressat_mess = '$user_ID' AND status_mess = '4'");
+	if(!$glup) $new_mess = $wpdb->get_row($wpdb->prepare("SELECT ID FROM ".RCL_PREF."private_message WHERE adressat_mess = '%d' AND status_mess = '0' OR adressat_mess = '%d' AND status_mess = '4'",$user_ID,$user_ID));
 	else $new_mess = true;
 	if($new_mess){
 		$scr = false;
@@ -24,21 +55,21 @@ function output_scripts_new_private_mess(){
 	}
 }
 
-add_filter('rcl_postfooter_user','get_private_chat_button_rcl',20,2);
-function get_private_chat_button_rcl($content,$user_id){
+add_filter('rcl_postfooter_user','rcl_get_chat_button',20,2);
+function rcl_get_chat_button($content,$user_id){
 	global $rcl_options;
 	global $user_ID;
 	if(!$rcl_options['tab_private']) $rcl_options['tab_private'] = __('Private chat','rcl');
 	if($user_ID&&$user_ID!=$user_id){ 		
-		$content .= get_button_rcl($rcl_options['tab_private'],get_redirect_url_rcl(get_author_posts_url($user_id),'privat'),array('icon'=>'fa-comments','class'=>false,'attr'=>'title='.$rcl_options['tab_private'])) ;
+		$content .= rcl_get_button($rcl_options['tab_private'],rcl_format_url(get_author_posts_url($user_id),'privat'),array('icon'=>'fa-comments','class'=>false,'attr'=>'title='.$rcl_options['tab_private'])) ;
 	}
 	return $content;
 }
 
-if(function_exists('add_tab_rcl')){ 
+if(function_exists('rcl_tab')){ 
     add_action('init','add_tab_message');
     function add_tab_message(){
-        add_tab_rcl('privat',array('rcl_message','recall_user_private_message'),__('Private chat','rcl'),
+        rcl_tab('privat',array('Rcl_Messages','recall_user_private_message'),__('Private chat','rcl'),
                                 array(
                                     'public'=>1,
                                     'class'=>'fa-comments',
@@ -48,7 +79,7 @@ if(function_exists('add_tab_rcl')){
     }
 }
 
-class rcl_message{
+class Rcl_Messages{
 	
 	public $room;
 	public $user_lk;
@@ -59,7 +90,7 @@ class rcl_message{
     public function __construct() {
 	
 		if (!is_admin()):
-                        //if(function_exists('fileapi_footer_scripts')) fileapi_footer_scripts();
+                        //if(function_exists('rcl_fileapi_scripts')) rcl_fileapi_scripts();
 			add_action('wp_enqueue_scripts', array(&$this, 'output_style_scripts_private_mess'));
 			add_action('init', array(&$this, 'delete_blacklist_user_recall_activate'));
 			add_action('init', array(&$this, 'delete_private_message_recall'));
@@ -71,8 +102,8 @@ class rcl_message{
 			add_filter('wp_footer',array(&$this, 'add_rcl_new_mess_conteiner'));
                         add_filter('access_chat_rcl',array(&$this, 'get_chek_ban_user'),10,2);
 
-                        if(function_exists('add_block_rcl')) 
-                            add_block_rcl('header',array(&$this, 'get_header_black_list_button'),array('id'=>'bl-block','order'=>50,'public'=>1));
+                        if(function_exists('rcl_block')) 
+                            rcl_block('header',array(&$this, 'get_header_black_list_button'),array('id'=>'bl-block','order'=>50,'public'=>1));
                         
 			if(function_exists('add_shortcode')) 
                             add_shortcode('chat',array(&$this, 'get_shortcode_chat'));
@@ -88,7 +119,16 @@ class rcl_message{
 		add_action('wp_ajax_update_message_history_recall', array(&$this, 'update_message_history_recall'));
 		add_action('days_garbage_file_rcl', array(&$this, 'garbage_file_rcl')); 
 		add_action('wp', array(&$this, 'activation_days_garbage_file_rcl')); 
-		add_action('wp_ajax_add_private_message_recall', array(&$this, 'add_private_message_recall'));		
+		add_action('wp_ajax_add_private_message_recall', array(&$this, 'add_private_message_recall'));	
+		add_action('wp_ajax_close_new_message_recall', array(&$this, 'close_new_message_recall'));
+		add_action('wp_ajax_add_blacklist_recall', array(&$this, 'add_blacklist_recall'));
+		add_action('wp_ajax_delete_history_private_recall', array(&$this, 'delete_history_private_recall'));
+		add_action('wp_ajax_remove_ban_list_rcl', array(&$this, 'remove_ban_list_rcl'));
+		add_action('wp_ajax_get_old_private_message_recall', array(&$this, 'get_old_private_message_recall'));
+		add_action('wp_ajax_get_important_message_rcl', array(&$this, 'get_important_message_rcl'));
+		add_action('wp_ajax_get_interval_contacts_rcl', array(&$this, 'get_interval_contacts_rcl'));
+		add_action('wp_ajax_update_important_rcl', array(&$this, 'update_important_rcl'));
+		add_action('wp_ajax_get_new_outside_message', array(&$this, 'get_new_outside_message'));
     }
 
 	function add_rcl_new_mess_conteiner(){
@@ -122,7 +162,7 @@ class rcl_message{
 		if(!$rcl_options['savetime_file']) $savetime = 7*24*3600;
 		else $savetime = $rcl_options['savetime_file']*24*3600;
 		
-		$files = $wpdb->get_row("SELECT * FROM ".RCL_PREF."private_message WHERE status_mess = '4' AND status_mess = '5' AND time_mess < (NOW() - INTERVAL $savetime SECOND)");
+		$files = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."private_message WHERE status_mess = '4' AND status_mess = '5' AND time_mess < (NOW() - INTERVAL %d SECOND)",$savetime));
 		
 		if(!$files) return false;
 		
@@ -135,7 +175,7 @@ class rcl_message{
 			unlink($path_temp);
 		}
 		
-		$wpdb->query("DELETE FROM ".RCL_PREF."private_message WHERE status_mess = '4' AND status_mess = '5' AND time_mess < (NOW() - INTERVAL $savetime SECOND)");
+		$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."private_message WHERE status_mess = '4' AND status_mess = '5' AND time_mess < (NOW() - INTERVAL %d SECOND)",$savetime));
 		
 	}
 	
@@ -219,12 +259,12 @@ class rcl_message{
 		global $wpdb;	
 		if(!$user_ID||$user_ID==$author_lk) return false;
                 
-                $banlist = $wpdb->get_row("SELECT * FROM ".RCL_PREF."black_list_user WHERE user = '$user_ID' AND ban = '$author_lk'");
+                $banlist = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."black_list_user WHERE user = '%d' AND ban = '%d'",$user_ID,$author_lk));
                 if(!$banlist){
                         $header_lk = '<div id="add_black_list_button" class="floatright">
-										'.get_button_rcl(__('In the black list','rcl'),'#',array('icon'=>'fa-bug','attr'=>'name='.$author_lk,'id'=>'add_black_list')).'</div>';
+										'.rcl_get_button(__('In the black list','rcl'),'#',array('icon'=>'fa-bug','attr'=>'name='.$author_lk,'id'=>'add_black_list')).'</div>';
                 }else{
-                        $header_lk = '<div class="blacklist-notice"'.__('The user is blacklisted','rcl').'
+                        $header_lk = '<div class="blacklist-notice">'.__('The user is blacklisted','rcl').'
                                 <form method="post" action="">
                                 <input type="hidden" name="ban_user" value="'.$banlist->ban.'">
                                 <input id="remove_black_list" class="recall-button" name="remove_black_list" type="submit" value="'.__('Unblock','rcl').'">
@@ -258,7 +298,7 @@ class rcl_message{
 	}
 	
         function add_tab_privat_rcl($array_tabs){
-            $array_tabs['privat']=array('rcl_message','recall_user_private_message');
+            $array_tabs['privat']=array('Rcl_Messages','recall_user_private_message');
             return $array_tabs;
         }      
 
@@ -267,7 +307,7 @@ class rcl_message{
             global $user_ID,$wpdb;
             $ban = false;
             if($wpdb->get_var("show tables like '".RCL_PREF."black_list_user'"))
-		$ban = $wpdb->get_row("SELECT * FROM ".RCL_PREF."black_list_user WHERE user = '$author_lk' AND ban = '$user_ID'");
+		$ban = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."black_list_user WHERE user = '%d' AND ban = '%d'",$author_lk,$user_ID));
             if($ban){
 		$chat = '<p class="b-upload__dnd">'.__('The user is forbidden to write to him','rcl').'</p>';                
             }
@@ -277,7 +317,7 @@ class rcl_message{
 	function recall_user_private_message($author_lk){
 		global $user_ID,$rcl_options,$wpdb,$rcl_userlk_action;
 
-                $last_action = last_user_action_recall($rcl_userlk_action);		
+                $last_action = rcl_get_useraction($rcl_userlk_action);		
                 if(!$last_action) $online = 1;
                 else $online = 0;
 
@@ -295,11 +335,11 @@ class rcl_message{
 	function get_num_important(){
 		global $wpdb,$user_ID;
 		$st = $user_ID+100;
-		$cnt = $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."private_message 
+		$cnt = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".RCL_PREF."private_message 
 				WHERE 
-					author_mess = '$user_ID' AND adressat_mess = '$this->user_lk' AND status_mess IN (7,$st)
-				OR  author_mess = '$this->user_lk' AND adressat_mess = '$user_ID' AND status_mess IN (7,$st)
-				ORDER BY ID DESC");
+					author_mess = '$user_ID' AND adressat_mess = '%d' AND status_mess IN (7,%d)
+				OR  author_mess = '%d' AND adressat_mess = '$user_ID' AND status_mess IN (7,%d)
+				ORDER BY ID DESC",$this->user_lk,$st,$this->user_lk,$st));
 		return $cnt;
 	}
 	
@@ -326,7 +366,7 @@ class rcl_message{
 	
 	function get_chat($online=0){
             
-                add_resizable_scripts();
+                rcl_resizable_scripts();
             
 		global $user_ID,$rcl_options,$wpdb;
                 $access = '';
@@ -340,8 +380,9 @@ class rcl_message{
 			$user_lk = $this->user_lk;
 		}
 		
-		if(!$this->room) $where = "WHERE author_mess = '$user_ID' AND adressat_mess = '$this->user_lk' OR author_mess = '$this->user_lk' AND adressat_mess = '$user_ID'";
-		else $where = "WHERE author_mess = '$user_ID' OR adressat_mess = '$user_ID'";
+		if(!$this->room) $where = $wpdb->prepare("WHERE author_mess = '%d' AND adressat_mess = '%d' OR author_mess = '%d' AND adressat_mess = '%d'",
+		$user_ID,$this->user_lk,$this->user_lk,$user_ID);
+		else $where = $wpdb->prepare("WHERE author_mess = '%d' OR adressat_mess = '%d'",$user_ID,$user_ID);
 		
 		$private_messages = $wpdb->get_results("SELECT * FROM ".RCL_PREF."private_message $where ORDER BY id DESC LIMIT 10");			
 		$num_mess = $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."private_message $where");
@@ -355,7 +396,7 @@ class rcl_message{
 			$delete = $num_mess - $max_private_mess;
 			$st = $user_ID+100;
 			$us = $this->user_lk+100;
-			$delete_num = $wpdb->query("DELETE FROM ".RCL_PREF."private_message WHERE author_mess = '$user_ID' AND adressat_mess = '$this->user_lk' AND status_mess NOT IN (7,$st,$us) OR author_mess = '$this->user_lk' AND adressat_mess = '$user_ID' AND status_mess NOT IN (7,$st,$us) ORDER BY id ASC LIMIT $delete");
+			$delete_num = $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."private_message WHERE author_mess = '%d' AND adressat_mess = '%d' AND status_mess NOT IN (7,%d,%d) OR author_mess = '%d' AND adressat_mess = '%d' AND status_mess NOT IN (7,%d,%d) ORDER BY id ASC LIMIT %s",$user_ID,$this->user_lk,$st,$us,$this->user_lk,$user_ID,$st,$us,$st,$us));
 			$num_mess = $num_mess - $delete_num;
 		}
                 
@@ -371,7 +412,7 @@ class rcl_message{
 
 		if(!$access){
                     $textarea = '<div class="prmess">';
-                    if($this->room) $textarea .= '<span title="'.__('Interlocutor','rcl').'" id="opponent"></span> '.get_button_rcl(__('All contacts','rcl'),'#',array('icon'=>'fa-book','id'=>'get-all-contacts'));
+                    if($this->room) $textarea .= '<span title="'.__('Interlocutor','rcl').'" id="opponent"></span> '.rcl_get_button(__('All contacts','rcl'),'#',array('icon'=>'fa-book','id'=>'get-all-contacts'));
                     if($rcl_options['file_exchange']==1){
                             $textarea .= '<div id="simple-btn" class="fa fa-paperclip btn recall-button btn-success js-fileapi-wrapper">
                                <div class="js-browse">
@@ -421,8 +462,8 @@ class rcl_message{
                     <div class="fa fa-edit" id="count-word">400</div>';
 
                     $textarea .= '<div class="private-buttons">
-                            '.get_button_rcl(__('Send','rcl'),'#',array('icon'=>'fa-mail-forward','class'=>'addmess alignright','attr'=>false,'id'=>false));
-                            if($this->get_num_important()>0) $textarea .= get_button_rcl(__('Important messages','rcl'),'#',array('icon'=>'fa-star','class'=>'important alignleft','id'=>'get-important-rcl'));
+                            '.rcl_get_button(__('Send','rcl'),'#',array('icon'=>'fa-mail-forward','class'=>'addmess alignright','attr'=>false,'id'=>false));
+                            if($this->get_num_important()>0) $textarea .= rcl_get_button(__('Important messages','rcl'),'#',array('icon'=>'fa-star','class'=>'important alignleft','id'=>'get-important-rcl'));
                     $textarea .= '</div>'
                             . '<div id="resize"></div>'
                             . '</div>';
@@ -483,18 +524,7 @@ class rcl_message{
 			if($rcl_options['max_request_new_message']>0)$privat_block .= "
 			max_sec_update_rcl++; if(max_sec_update_rcl>".$rcl_options['max_request_new_message'].") return false;
 			";
-			$privat_block .= "jQuery.post('".RCL_URL."add-on/message/check-message.php?lk='+user_old_mess+'&user=".$user_ID."', function(check){
-			if (check) {
-				jQuery(function(){
-				
-					var ar_check = check;
-					ar_check.split('|');
-					if(ar_check[2]==0){
-						jQuery('.mess_status').remove();
-					}
-					//alert(ar_check[1]);
-					if(ar_check[0]==0) return false;
-												
+			$privat_block .= "jQuery(function(){						
 					var dataString_new_mess = 'action=update_message_history_recall&user='+user_old_mess;	
 					jQuery.ajax({
 					type: 'POST',
@@ -515,10 +545,7 @@ class rcl_message{
 					} 
 					});	  	
 					return false;		
-				});
-			}
-			});				
-			//update_mass_ID = setTimeout('update_mass()', ".$sec_update.");      
+				});    
 		}
 		setInterval(function(){update_mass();},".$sec_update.");
 		window.onload=function(){update_mass();}					
@@ -537,7 +564,7 @@ class rcl_message{
 
 			$privat_block = '<div class="correspond">';
 
-			$contacts = $wpdb->get_col("SELECT contact FROM ".RCL_PREF."private_contacts WHERE user = '$user_ID' AND status = '1'");
+			$contacts = $wpdb->get_col($wpdb->prepare("SELECT contact FROM ".RCL_PREF."private_contacts WHERE user = '%d' AND status = '1'",$user_ID));
 
 			if($contacts){
 			
@@ -547,7 +574,7 @@ class rcl_message{
 				<a data="30" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('month','rcl').'</a> 
 				<a data="0" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('all the time','rcl').'</a>';
 				
-				$ban = $wpdb->get_var("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user = '$user_ID'");			
+				$ban = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user = '%d'",$user_ID));			
 				if(isset($ban)) $privat_block .= '<a data="-1" class="sec_block_button" href="#"><i class="fa fa-bug"></i>'.__('Blacklist','rcl').'</a>';
 				
 				$privat_block .= '<a data="important" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('Important','rcl').'</a>';
@@ -583,9 +610,9 @@ class rcl_message{
 			$privat_block = $this->get_all_important_mess();
 		}else{
 			if($days<0){
-				$contacts = $wpdb->get_col("SELECT ban FROM ".RCL_PREF."black_list_user WHERE user = '$user_ID'");
+				$contacts = $wpdb->get_col($wpdb->prepare("SELECT ban FROM ".RCL_PREF."black_list_user WHERE user = '%d'",$user_ID));
 			}else{
-				$contacts = $wpdb->get_col("SELECT contact FROM ".RCL_PREF."private_contacts WHERE user = '$user_ID' AND status = '1'");					
+				$contacts = $wpdb->get_col($wpdb->prepare("SELECT contact FROM ".RCL_PREF."private_contacts WHERE user = '%d' AND status = '1'",$user_ID));					
 			}
 			
 			if(!$contacts) $privat_block = '<h3>'.__('Contacts not found!','rcl').'</h3>';
@@ -605,19 +632,13 @@ class rcl_message{
 		$interval = $days*24*3600;
 		$sql_int = '';
 		if($days>0) $sql_int = "AND time_mess > (NOW() - INTERVAL $interval SECOND)";
-                $a=0;
-                $cntctslist='';
-		foreach((array)$contacts as $contact){
-			if(++$a>1)$cntctslist .= ',';
-			$cntctslist .= $contact;
-		}
 		
-		if(!$cntctslist) return '<h3>'.__('Contacts not found!','rcl').'</h3>';
+		if(!$contacts) return '<h3>'.__('Contacts not found!','rcl').'</h3>';
 
-		$rcl_action_users = $wpdb->get_results("SELECT user,time_action FROM ".RCL_PREF."user_action WHERE user IN ($cntctslist)");
+		$rcl_action_users = $wpdb->get_results($wpdb->prepare("SELECT user,time_action FROM ".RCL_PREF."user_action WHERE user IN (".rcl_format_in($contacts).")",$contacts));
 
 		if($days>=0){
-
+			$cntctslist = implode(',',$contacts);
 			$su_list  = $wpdb->get_results("
 			SELECT author_mess,time_mess,adressat_mess,status_mess FROM (
 			SELECT * FROM ".RCL_PREF."private_message WHERE adressat_mess IN ($cntctslist) AND author_mess = '$user_ID' $sql_int 
@@ -625,7 +646,7 @@ class rcl_message{
 			) TBL GROUP BY author_mess,adressat_mess");
 			
 			foreach((array)$su_list as $s){$list[] = (array)$s;}
-			$list = array_multisort_key_rcl((array)$list, 'time_mess', SORT_ASC);
+			$list = rcl_multisort_array((array)$list, 'time_mess', SORT_ASC);
 			foreach((array)$list as $l){
 				if($l['author_mess']!=$user_ID) $s_contact=$l['author_mess'];
 				if($l['adressat_mess']!=$user_ID) $s_contact=$l['adressat_mess'];
@@ -633,7 +654,7 @@ class rcl_message{
 				$contact_list[$s_contact]['contact'] = $s_contact;
 				$contact_list[$s_contact]['status'] = $l['status_mess'];					
 			}
-			$contact_list = array_multisort_key_rcl((array)$contact_list, 'time', SORT_DESC);
+			$contact_list = rcl_multisort_array((array)$contact_list, 'time', SORT_DESC);
 		
 		}else{
 			
@@ -643,7 +664,7 @@ class rcl_message{
 			
 		}
 		
-		$name_users = $wpdb->get_results("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN ($cntctslist)");
+		$name_users = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($contacts).")",$contacts));
 			
 		foreach((array)$name_users as $name){				
 			$names[$name->ID] = $name->display_name;
@@ -657,7 +678,7 @@ class rcl_message{
 			foreach((array)$rcl_action_users as $action){
 				if($action->user==$data['contact']){$time_action = $action->time_action; break;}
 			}
-			$last_action = last_user_action_recall($time_action);
+			$last_action = rcl_get_useraction($time_action);
 			$privat_block .= '<div class="single_correspond history-'.$data['contact'];
 			if($data['status']==0) $privat_block .= ' redline';
 			$privat_block .= '">';
@@ -667,7 +688,7 @@ class rcl_message{
 			else
 				$privat_block .= '<div class="status_author_mess offline"><i class="fa fa-circle"></i></div>';
 
-			$redirect_url = get_redirect_url_rcl(get_author_posts_url($data['contact']),'privat');
+			$redirect_url = rcl_format_url(get_author_posts_url($data['contact']),'privat');
 					
 			$privat_block .= '<span user_id="'.$data['contact'].'" class="author-avatar"><a href="'.$redirect_url.'">'.get_avatar($data['contact'], 40).'</a></span><a href="#" class="recall-button ';
 			
@@ -772,10 +793,10 @@ class rcl_message{
 		global $wpdb;
 		global $user_ID;
 
-		$id_mess = esc_sql($_POST['id_mess']);
+		$id_mess = intval($_POST['id_mess']);
 		if(!$user_ID||!$id_mess)return false;
 		
-		$mess = $wpdb->get_row("SELECT * FROM ".RCL_PREF."private_message WHERE ID = '$id_mess'");
+		$mess = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."private_message WHERE ID = '%d'",$id_mess));
 		
 		if($mess->author_mess==$user_ID) $user = $mess->adressat_mess;
 		else $user = $mess->author_mess;
@@ -810,7 +831,7 @@ class rcl_message{
 		global $wpdb;
 		
 		$st = $user_ID+100;		
-		$private_messages = $wpdb->get_results("SELECT * FROM ".RCL_PREF."private_message WHERE author_mess = '$user_ID' AND status_mess IN (7,$st) OR adressat_mess = '$user_ID' AND status_mess IN (7,$st) ORDER BY ID DESC");
+		$private_messages = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."private_message WHERE author_mess = '%d' AND status_mess IN (7,%d) OR adressat_mess = '%d' AND status_mess IN (7,%d) ORDER BY ID DESC",$user_ID,$st,$user_ID,$st));
 		$message_block = '';
 		foreach((array)$private_messages as $message){
 			if($message->author_mess!=$user_ID) $this->user_lk = $message->author_mess;
@@ -820,6 +841,8 @@ class rcl_message{
 			$this->ava_user_ID = get_avatar($user_ID, 40);
 			$message_block = $this->get_private_message_block_rcl($message_block,(object)$message);
 		} 
+		
+		if(!$message_block) $message_block = '<h3>'.__('No posts found!','rcl').'</h3>';
 		
 		$log['message_block'] = $message_block;
 		$log['recall']=100;
@@ -834,24 +857,24 @@ class rcl_message{
 	function get_important_message_rcl(){
 		global $user_ID,$wpdb,$rcl_options;
 
-		$this->user_lk = esc_sql($_POST['user']);
-		$type = esc_sql($_POST['type']);
+		$this->user_lk = intval($_POST['user']);
+		$type = intval($_POST['type']);
 
 		if($user_ID){
 		
 			$num_mess = 0;
 			
 			if($type==1){
-				$where = "author_mess = '$user_ID' AND adressat_mess = '$this->user_lk' OR author_mess = '$this->user_lk' AND adressat_mess = '$user_ID'";
+				$where = $wpdb->prepare("author_mess = '%d' AND adressat_mess = '%d' OR author_mess = '%d' AND adressat_mess = '%d'",$user_ID,$this->user_lk,$this->user_lk,$user_ID);
 				$private_messages = $wpdb->get_results("SELECT * FROM ".RCL_PREF."private_message WHERE $where ORDER BY id DESC LIMIT 10");				
 				$num_mess = $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."private_message WHERE $where");
 			}else{
 				$st = $user_ID+100;
-				$private_messages = $wpdb->get_results("SELECT * FROM ".RCL_PREF."private_message 
+				$private_messages = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."private_message 
 				WHERE 
-					author_mess = '$user_ID' AND adressat_mess = '$this->user_lk' AND status_mess IN (7,$st)
-				OR  author_mess = '$this->user_lk' AND adressat_mess = '$user_ID' AND status_mess IN (7,$st)
-				ORDER BY ID DESC");
+					author_mess = '%d' AND adressat_mess = '%d' AND status_mess IN (7,%d)
+				OR  author_mess = '%d' AND adressat_mess = '%d' AND status_mess IN (7,%d)
+				ORDER BY ID DESC",$user_ID,$this->user_lk,$st,$this->user_lk,$user_ID,$st));
 			}
                         
                         if($num_mess>10) $getold = '<div class="old_mess_block"><a href="#" class="old_message">'.__('Show more recent messages','rcl').'</a></div>';
@@ -888,14 +911,14 @@ class rcl_message{
 		if(!$user_ID)return false;
 			
 		//$id_mess = $_POST['id_mess'];
-		$author_mess = esc_sql($_POST['author_mess']);
+		$author_mess = intval($_POST['author_mess']);
 			
 		$result = $wpdb->update( RCL_PREF.'private_message',
 			array( 'status_mess' => 1 ),
 			array( 'author_mess' => "$author_mess", 'adressat_mess' => $user_ID, 'status_mess'=>0)	
 		);
 			
-		wp_redirect( get_redirect_url_rcl(get_author_posts_url($author_mess),'privat')); exit;			
+		wp_redirect( rcl_format_url(get_author_posts_url($author_mess),'privat')); exit;			
 	}
 
 	function old_status_message_recall_activate ( ) {
@@ -909,9 +932,9 @@ class rcl_message{
 		if ( !isset( $_GET['delete_private_message_recall'] ) ) return false;
 		if( !wp_verify_nonce( $_GET['_wpnonce'], $user_ID ) ) wp_die('Error');
 		$user_id = $_GET['user_id']; $id_mess = $_GET['id_mess'];	
-		$result = $wpdb->query("DELETE FROM ".RCL_PREF."private_message WHERE ID = '$id_mess'");
+		$result = $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."private_message WHERE ID = '%d'",$id_mess));
 		if (!$result) wp_die('Error');			
-		wp_redirect( get_redirect_url_rcl(get_author_posts_url($user_id),'privat') );  exit;
+		wp_redirect( rcl_format_url(get_author_posts_url($user_id),'privat') );  exit;
 	}
 	
 
@@ -921,8 +944,8 @@ class rcl_message{
 		global $user_ID;
 		if($user_ID){
 			//$idbanlist = $_POST['idbanlist'];
-			$ban_user = esc_sql($_POST['ban_user']);
-			$result = $wpdb->query("DELETE FROM ".RCL_PREF."black_list_user WHERE user = '$user_ID' AND ban = '$ban_user'");
+			$ban_user = intval($_POST['ban_user']);
+			$result = $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."black_list_user WHERE user = '%d' AND ban = '%d'",$user_ID,$ban_user));
 			
 			do_action('rcl_delete_user_blacklist',$ban_user,$user_ID);
 
@@ -949,18 +972,18 @@ class rcl_message{
 		if(!$user_ID) exit;
 
 			$_POST = stripslashes_deep( $_POST );  
-			$this->user_lk = esc_sql($_POST['adressat_mess']);		
+			$this->user_lk = intval($_POST['adressat_mess']);		
 			$content_mess = esc_textarea($_POST['content_mess']);	
 			
 			$online = 0;	
 			$status_mess = 0;
 			$time = current_time('mysql');
 
-			$rcl_action_users = $wpdb->get_row("SELECT * FROM ".RCL_PREF."user_action WHERE user = '$this->user_lk'");
-			$last_action = last_user_action_recall($rcl_action_users->time_action);							
+			$rcl_action_users = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."user_action WHERE user = '%d'",$this->user_lk));
+			$last_action = rcl_get_useraction($rcl_action_users->time_action);							
 			if(!$last_action) $online = 1;
 			
-			$result = add_message_rcl(array('addressat'=>$this->user_lk,'content'=>$content_mess));
+			$result = rcl_add_message(array('addressat'=>$this->user_lk,'content'=>$content_mess));
 			
 			if ($result) {
 			
@@ -972,13 +995,13 @@ class rcl_message{
 					$wpdb->update( 
 						RCL_PREF.'private_message',
 						array( 'status_mess' => 1 ), 
-						array( 'ID' => $_POST['widget'] )
+						array( 'ID' => intval($_POST['widget']) )
 					);
 					$message_block = '<p class="success-mess">'.__('Your message has been sent!','rcl').'</p>';
 					$log['recall']=200;
 				}else{
 
-					$id_mess = $wpdb->get_var("SELECT ID FROM ".RCL_PREF."private_message WHERE author_mess = '$user_ID' AND time_mess = '$time'");		
+					$id_mess = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."private_message WHERE author_mess = '%d' AND time_mess = '%d'",$user_ID,$time));		
                                         $message_block = '';
 					$message = array('ID'=>$id_mess,'content_mess'=>$content_mess,'status_mess'=>0,'author_mess'=>$user_ID,'time_mess'=>$time);
 					$this->ava_user_lk = '';
@@ -1012,16 +1035,14 @@ class rcl_message{
 	function delete_history_private_recall(){
 		global $wpdb,$user_ID;
 		if($user_ID){
-			$this->user_lk = esc_sql($_POST['id_user']);		
-			$status = $wpdb->get_var("SELECT status FROM ".RCL_PREF."private_contacts WHERE user='$this->user_lk' AND contact='$user_ID'");
+			$this->user_lk = intval($_POST['id_user']);		
+			$status = $wpdb->get_var($wpdb->prepare("SELECT status FROM ".RCL_PREF."private_contacts WHERE user='%d' AND contact='%d'",$this->user_lk,$user_ID));
 			if($status==3){
 				//Если собеседник тоже удалил пользователя из контактов, то удаляем всю переписку между ними, тк она им не нужна
-				$wpdb->query("DELETE FROM ".RCL_PREF."private_contacts 
-				WHERE user='$user_ID' AND contact='$this->user_lk' 
-				OR user='$this->user_lk' AND contact='$user_ID'");
-				$wpdb->query("DELETE FROM ".RCL_PREF."private_message 
-				WHERE author_mess='$user_ID' AND adressat_mess='$this->user_lk' 
-				OR author_mess='$this->user_lk' AND adressat_mess='$user_ID'");
+				$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."private_contacts WHERE user='%d' AND contact='%d' 
+				OR user='%d' AND contact='%d'",$user_ID,$this->user_lk,$this->user_lk,$user_ID));
+				$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."private_message WHERE author_mess='%d' AND adressat_mess='%d' 
+				OR author_mess='%d' AND adressat_mess='%d'",$user_ID,$this->user_lk,$this->user_lk,$user_ID));
 			}else{
 				$wpdb->update( 
 					RCL_PREF.'private_contacts',
@@ -1044,10 +1065,10 @@ class rcl_message{
 	function remove_ban_list_rcl(){
 		global $wpdb,$user_ID;
 		if($user_ID){
-			$this->user_lk = esc_sql($_POST['id_user']);		
-			$id_ban = $wpdb->get_var("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user='$user_ID' AND ban='$this->user_lk'");
+			$this->user_lk = intval($_POST['id_user']);		
+			$id_ban = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user='%d' AND ban='%d'",$user_ID,$this->user_lk));
 			if($id_ban){			
-				$wpdb->query("DELETE FROM ".RCL_PREF."black_list_user WHERE ID='$id_ban'");			
+				$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."black_list_user WHERE ID='$d'",$id_ban));			
 			}
 			$log['id_user']=$this->user_lk;
 			$log['otvet']=100;
@@ -1069,7 +1090,7 @@ class rcl_message{
 			$wpdb->update( 
 				RCL_PREF.'private_message',
 				array( 'status_mess' => 1 ), 
-				array( 'ID' => esc_sql($_POST['id_mess']) )
+				array( 'ID' => intval($_POST['id_mess']) )
 			);
 			$log['message_block'] = '<p class="success-mess">'.__('The message is marked as read','rcl').'</p>';
 			$log['recall']=100;
@@ -1085,7 +1106,7 @@ class rcl_message{
 		global $wpdb,$user_ID;		
 		if(!$user_ID) exit;
 		
-		$this->user_lk = esc_sql($_POST['add_id_user']);		
+		$this->user_lk = intval($_POST['add_id_user']);		
 		$result = $wpdb->insert(RCL_PREF.'black_list_user',	
 			array( 'user' => "$user_ID", 'ban' => "$this->user_lk" )
 		);
@@ -1105,60 +1126,68 @@ class rcl_message{
 	function update_message_history_recall(){
 		global $user_ID,$wpdb,$rcl_options;
 		
-		$this->user_lk = esc_sql($_POST['user']);
+		$this->user_lk = intval($_POST['user']);
 
 		if($user_ID){
+		
+			if(!$this->user_lk){
+				$where = $wpdb->prepare("WHERE adressat_mess = '%d' AND status_mess = '0' OR adressat_mess = '%d' AND status_mess = '4'",$user_ID,$user_ID);
+			}else{
+				$where = $wpdb->prepare("WHERE author_mess = '%d' AND adressat_mess = '%d' AND status_mess = '0' OR author_mess = '%d' AND adressat_mess = '%d' AND status_mess = '4'",$this->user_lk,$user_ID,$this->user_lk,$user_ID);
+			}
+
+			$private_messages = $wpdb->get_results("SELECT * FROM ".RCL_PREF."private_message $where ORDER BY id DESC");
 			
-				if(!$this->user_lk){
-					$where = "WHERE adressat_mess = '$user_ID' AND status_mess = '0' OR adressat_mess = '$user_ID' AND status_mess = '4'";
-				}else{
-					$where = "WHERE author_mess = '$this->user_lk' AND adressat_mess = '$user_ID' AND status_mess = '0' OR author_mess = '$this->user_lk' AND adressat_mess = '$user_ID' AND status_mess = '4'";
-				}
+			if($private_messages){
 			
-				$private_messages = $wpdb->get_results("SELECT * FROM ".RCL_PREF."private_message $where ORDER BY id DESC");
-				
-				$message_block = '';	
-                                foreach((array)$private_messages as $message){
+			$message_block = '';	
+			foreach((array)$private_messages as $message){
 
-                                        if(!$this->user_lk){
-                                                if($message->author_mess!=$user_ID) $this->user_lk = $message->author_mess;
-                                                else $this->user_lk = $message->adressat_mess;
-                                        }
+					if(!$this->user_lk){
+							if($message->author_mess!=$user_ID) $this->user_lk = $message->author_mess;
+							else $this->user_lk = $message->adressat_mess;
+					}
 
-                                        //$content_message = $this->mess_preg_replace_rcl($message->content_mess);					
-                                        //$content_message = $this->str_nl2br_rcl($content_mess);						
-                                        $content_mess = apply_filters('rcl_get_new_private_message',$content_mess,$this->user_lk,$user_ID);						
-                                        $message_block .= $this->get_delete_private_mess_rcl($message);						
-                                        $this->ava_user_lk = get_avatar($message->author_mess, 40);
-                                        $this->ava_user_ID = $this->ava_user_lk;
-                                        $message_block = $this->get_content_private_message_rcl((object)$message,$message_block);
+					//$content_message = $this->mess_preg_replace_rcl($message->content_mess);					
+					//$content_message = $this->str_nl2br_rcl($content_mess);						
+					$content_mess = apply_filters('rcl_get_new_private_message',$content_mess,$this->user_lk,$user_ID);						
+					$message_block .= $this->get_delete_private_mess_rcl($message);						
+					$this->ava_user_lk = get_avatar($message->author_mess, 40);
+					$this->ava_user_ID = $this->ava_user_lk;
+					$message_block = $this->get_content_private_message_rcl((object)$message,$message_block);
 
-                                        if($message->author_mess==$this->user_lk){
-                                                if($message->status_mess==0) $new_st = 1;
-                                                if($message->status_mess==4) $new_st = 5;
-                                                if($new_st==1||$new_st==5) $wpdb->update( RCL_PREF.'private_message',array( 'status_mess' => $new_st ),array( 'ID' => $message->ID )	);
-                                                $log['delete']=200;
-                                        }
+					if($message->author_mess==$this->user_lk){
+							if($message->status_mess==0) $new_st = 1;
+							if($message->status_mess==4) $new_st = 5;
+							if($new_st==1||$new_st==5) $wpdb->update( RCL_PREF.'private_message',array( 'status_mess' => $new_st ),array( 'ID' => $message->ID )	);
+							$log['delete']=200;
+					}
 
-                                }
-                                
-                                $newmess = '<div class="new_mess"></div>';
-                                
-                                if(!$rcl_options['sort_mess']){
-                                    $message_block .= $newmess;
-                                }else{
-                                    $message_block = $newmess.$message_block;
-                                }
-	
-                                $log['recall']=100;				
-                                $log['message_block']=$message_block;
-
-			$no_read_mess = $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."private_message 
-			WHERE author_mess = '$user_ID' AND adressat_mess = '$this->user_lk' AND status_mess = '0' 
-			OR author_mess = '$user_ID' AND adressat_mess = '$this->user_lk' AND status_mess = '4'");
-				if($no_read_mess==0){
-					$log['read']=200;
-				}		
+			}
+			
+			$newmess = '<div class="new_mess"></div>';
+			
+			if(!$rcl_options['sort_mess']){
+				$message_block .= $newmess;
+			}else{
+				$message_block = $newmess.$message_block;
+			}
+			
+			$log['recall']=100;				
+			$log['message_block']=$message_block;
+			
+			}else{
+				$log['recall']=0;
+			}
+			
+			/*проверяем прочитаны ли отправленные собеседнику сообщения*/
+			$no_read_mess = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".RCL_PREF."private_message 
+			WHERE author_mess = '%d' AND adressat_mess = '%d' AND status_mess = '0' 
+			OR author_mess = '%d' AND adressat_mess = '%d' AND status_mess = '4'",$user_ID,$this->user_lk,$user_ID,$this->user_lk));
+			if($no_read_mess==0){
+				$log['read']=200;
+			}
+		
 		}
 		echo json_encode($log);	
 		exit;
@@ -1167,14 +1196,14 @@ class rcl_message{
 	/*************************************************
 	Запрос на получение новых сообщений на сайте
 	*************************************************/
-	function get_new_outside_message_recall(){
+	function get_new_outside_message(){
 
 		global $user_ID;
 		global $wpdb;
 
 		if(!$user_ID) return false;
 				
-		$mess = $wpdb->get_row("SELECT * FROM ".RCL_PREF."private_message WHERE adressat_mess = '$user_ID' AND status_mess ='0'");
+		$mess = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."private_message WHERE adressat_mess = '%d' AND status_mess ='0'",$user_ID));
 			
 		if(!$mess){
 			$log['recall']=0;					
@@ -1183,8 +1212,8 @@ class rcl_message{
 		}
 
 		$wpurl = get_wpurl();
-                $rcl_action_users = $wpdb->get_row("SELECT * FROM ".RCL_PREF."user_action WHERE user = '$mess->author_mess'");
-		$last_action = last_user_action_recall($rcl_action_users->time_action);	
+                $rcl_action_users = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."user_action WHERE user = '%d'",$mess->author_mess));
+		$last_action = rcl_get_useraction($rcl_action_users->time_action);	
                 $class = (!$last_action)?'online':'offline';
                 $online = (!$last_action)?1:0;
                 
@@ -1243,15 +1272,15 @@ class rcl_message{
 	function get_old_private_message_recall(){
 		global $user_ID,$wpdb,$rcl_options;
 
-		$old_num_mess = esc_sql($_POST['old_num_mess']);
-		$this->user_lk = esc_sql($_POST['user']);
-		$block_mess = esc_sql($_POST['block_mess']);
+		$old_num_mess = intval($_POST['old_num_mess']);
+		$this->user_lk = intval($_POST['user']);
+		$block_mess = intval($_POST['block_mess']);
 		$post_mess = 10;
 		$start_limit = ($block_mess-1)*$post_mess;
 		$mess_show = $block_mess*$post_mess;
 		
-		if($this->user_lk) $where = "WHERE author_mess = '$user_ID' AND adressat_mess = '$this->user_lk' OR author_mess = '$this->user_lk' AND adressat_mess = '$user_ID'";
-		else $where = "WHERE author_mess = '$user_ID' OR adressat_mess = '$user_ID'";
+		if($this->user_lk) $where = $wpdb->prepare("WHERE author_mess = '%d' AND adressat_mess = '%d' OR author_mess = '%d' AND adressat_mess = '%d'", $user_ID,$this->user_lk,$this->user_lk,$user_ID);
+		else $where = $wpdb->prepare("WHERE author_mess = '%d' OR adressat_mess = '%d'",$user_ID,$user_ID);
 			
 		$private_messages = $wpdb->get_results("SELECT * FROM ".RCL_PREF."private_message $where ORDER BY id DESC LIMIT $start_limit,10");			
 		$num_mess = $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."private_message $where");
@@ -1308,7 +1337,7 @@ class rcl_message{
 		if($mess->status_mess==4||$mess->status_mess==5){
 			if($mess->author_mess==$user_ID&&$mess->status_mess==5) return __('The file has been received, but not yet loaded.','rcl');
 			if($mess->author_mess==$user_ID&&$mess->status_mess==4) return __('The file was sent to the recipient.','rcl');
-			$content = wp_nonce_url(addon_url('download.php?fileid='.$mess->ID,__FILE__), 'user-'.$user_ID );
+			$content = wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-id='.base64_encode($mess->ID), 'user-'.$user_ID );
 			$short_url = substr($content, 0, 25)."...".substr($content, -15);
 			$content = __('Link to sent the file','rcl').': <br><a class="link-file-rcl" target="_blank" href="'.$content.'">'
                                 .$short_url.'</a><br> <small>'
@@ -1329,7 +1358,7 @@ class rcl_message{
 		global $rcl_options;
 		$weight = (isset($rcl_options['file_exchange_weight'])&&$rcl_options['file_exchange_weight'])? $rcl_options['file_exchange_weight']: $weight = '2';
 		
-		$url = "url: '".addon_url('upload-file.php',__FILE__)."',";
+	
                 
                 $replace = "<div class=\"public-post message-block file\"><div class=\"content-mess\"><p style=\"margin-bottom:0px;\" class=\"time-message\"><span class=\"time\">'+result['time']+'</span></p><p class=\"balloon-message\">'+text+'</p></div></div>";
                 $newmess = "<div class=\"new_mess\"></div>";
@@ -1357,10 +1386,10 @@ class rcl_message{
 		var talker = jQuery('input[name=\"adressat_mess\"]').val();
 		var online = jQuery('input[name=\"online\"]').val();
 		jQuery('#dnd').fileapi({
-		   ".$url."
+		   url: wpurl+'wp-admin/admin-ajax.php',
 		   paramName: 'filedata',
 		   maxSize: ".$weight." * FileAPI.MB,
-		   data:{talker:talker,online:online},
+		   data:{action:'rcl_message_upload',talker:talker,online:online},
 		   autoUpload: true,
 		   clearOnComplete:true,
 		   elements: {
@@ -1386,10 +1415,10 @@ class rcl_message{
 		});
 
 		jQuery('#simple-btn').fileapi({
-		   ".$url."
+		   url: wpurl+'wp-admin/admin-ajax.php',
 		   paramName: 'filedata',
 		   maxSize: ".$weight." * FileAPI.MB,
-		   data:{talker:talker,online:online},
+		   data:{action:'rcl_message_upload',talker:talker,online:online},
 		   autoUpload: true,
 		   elements: {
 			  size: '.js-size',
@@ -1467,7 +1496,7 @@ class rcl_message{
 			
 			jQuery.ionSound({
 				sounds: ['e-oh','water_droplet'],
-				path: '".addon_url('sounds/',__FILE__)."',
+				path: '".rcl_addon_url('sounds/',__FILE__)."',
 				multiPlay: false,
 				volume: '0.5'
 			});
@@ -1581,7 +1610,7 @@ class rcl_message{
 				var id_mess = parseInt(jQuery(this).attr('id').replace(/\D+/g,''));
 				var dataString = 'action=close_new_message_recall&id_mess='+id_mess+'&user_ID='+user_ID;
 				jQuery.ajax({
-					".$ajaxfile."
+					".$ajaxdata."
 					success: function(data){
 						if(data['recall']==100){
 							jQuery('#privatemess').html(data['message_block']).fadeOut(5000);
@@ -1599,7 +1628,7 @@ class rcl_message{
 				var add_list = add.attr('name');
 				var dataString = 'action=add_blacklist_recall&add_id_user='+add_list+'&user_ID='+user_ID;
 				jQuery.ajax({
-					".$ajaxfile."
+					".$ajaxdata."
 					success: function(data){
 						if(data['otvet']==100){
 							jQuery('#add_black_list_button>a').replaceWith('<p style=\'border:1px solid #ccc;padding:5px;text-align:center;\'>Пользователь<br />добавлен в<br />черный список</p>');
@@ -1615,7 +1644,7 @@ class rcl_message{
 				var id_user = jQuery(this).attr('id');
 				var dataString = 'action=delete_history_private_recall&id_user='+id_user+'&user_ID='+user_ID;
 				jQuery.ajax({
-					".$ajaxfile."
+					".$ajaxdata."
 					success: function(data){
 						if(data['otvet']==100){
 							 jQuery('.history-'+data['id_user']).remove();
@@ -1630,7 +1659,7 @@ class rcl_message{
 				var id_user = jQuery(this).attr('id');
 				var dataString = 'action=remove_ban_list_rcl&id_user='+id_user+'&user_ID='+user_ID;
 				jQuery.ajax({
-					".$ajaxfile."
+					".$ajaxdata."
 					success: function(data){
 						if(data['otvet']==100){
 							 jQuery('.history-'+data['id_user']).remove();
@@ -1647,7 +1676,7 @@ class rcl_message{
 				var dataString = 'action=get_old_private_message_recall&block_mess='+block_mess+'&old_num_mess='+old_num_mess+'&user='+user_old_mess+'&user_ID='+user_ID;
 
 				jQuery.ajax({
-					".$ajaxfile."
+					".$ajaxdata."
 					success: function(data){
 						if(data['recall']==100){
 							jQuery('.old_mess_block').replaceWith(data['message_block']);
@@ -1671,7 +1700,7 @@ class rcl_message{
 				var dataString = 'action=get_important_message_rcl&user='+userid+'&type='+type+'&user_ID='+user_ID;
 
 				jQuery.ajax({
-					".$ajaxfile."
+					".$ajaxdata."
 					success: function(data){
 						if(data['recall']==100){
 							jQuery('#message-list').html(data['content']);
@@ -1688,7 +1717,7 @@ class rcl_message{
 				jQuery(this).addClass('active');
 				var dataString = 'action=get_interval_contacts_rcl&days='+days+'&user_ID='+user_ID;
 				jQuery.ajax({
-					".$ajaxfile."
+					".$ajaxdata."
 					success: function(data){
 						if(data['recall']==100){
 							jQuery('.correspond #contact-lists').html(data['message_block']);						
@@ -1703,7 +1732,7 @@ class rcl_message{
 			var dataString = 'action=get_interval_contacts_rcl&days=0&user_ID='+user_ID;
 
 			jQuery.ajax({
-				".$ajaxfile."
+				".$ajaxdata."
 				success: function(data){
 					if(data['recall']==100){
 						jQuery('#rcl-overlay').fadeIn();
@@ -1727,7 +1756,7 @@ class rcl_message{
 		function update_important_rcl(id_mess){	
 			var dataString = 'action=update_important_rcl&id_mess='+id_mess+'&user_ID='+user_ID;
 			jQuery.ajax({
-				".$ajaxfile."
+				".$ajaxdata."
 				success: function(data){
 					if(data['res']==100) jQuery('#message-'+id_mess+' .important').addClass('active');
 					if(data['res']==200) jQuery('#message-'+id_mess+' .important').removeClass('active');	
@@ -1739,9 +1768,9 @@ class rcl_message{
 		return $script;
 	}
 }
-$rcl_message = new rcl_message();
+$Rcl_Messages = new Rcl_Messages();
 
-function add_message_rcl($args){
+function rcl_add_message($args){
 
 	global $user_ID,$wpdb;
 	
@@ -1769,7 +1798,7 @@ function add_message_rcl($args){
 		)
 	);
 
-	$status = $wpdb->get_var("SELECT status FROM ".RCL_PREF."private_contacts WHERE user = '$author' AND contact = '$addressat'");
+	$status = $wpdb->get_var($wpdb->prepare("SELECT status FROM ".RCL_PREF."private_contacts WHERE user = '%d' AND contact = '%d'",$author,$addressat));
 	if(!$status){
 		$wpdb->insert(
 			RCL_PREF.'private_contacts',
@@ -1806,3 +1835,4 @@ function add_message_rcl($args){
 }
 
 include_once 'notify.php';
+include_once 'upload-file.php';

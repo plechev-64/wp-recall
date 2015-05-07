@@ -1,10 +1,10 @@
 <?php global $user; ?>
 <div class="user-single">
     <div class="thumb-user">
-        <a title="<?php the_user_name(); ?>" href="<?php the_user_url(); ?>">
-            <?php the_user_avatar(70); ?>
-            <?php the_user_action(); ?>
+        <a title="<?php rcl_user_name(); ?>" href="<?php rcl_user_url(); ?>">
+            <?php rcl_user_avatar(70); ?>
+            <?php rcl_user_action(); ?>
         </a>
-        <?php the_user_rayting(); ?>
+        <?php rcl_user_rayting(); ?>
     </div>
 </div>

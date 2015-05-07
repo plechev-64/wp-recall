@@ -1,7 +1,7 @@
 <?php global $rcl_user_URL,$rcl_options; ?>
 <div id="recallbar">
     <ul class="right-recall-menu">           
-            <?php recallbar_right_side(); ?>
+            <?php rcl_recallbar_rightside(); ?>
     </ul>
     <?php if(is_user_logged_in()){ ?>
         <ul class="left-recall-menu">               
@@ -12,7 +12,7 @@
         <ul class="left-recall-menu">
     <?php if($rcl_options['login_form_recall']==1){	?>
 
-        <?php $redirect_url = get_redirect_url_rcl(get_permalink($rcl_options['page_login_form_recall'])); ?>
+        <?php $redirect_url = rcl_format_url(get_permalink($rcl_options['page_login_form_recall'])); ?>
 
         <li><a href="<?php echo $redirect_url; ?>form=register"><i class="fa fa-book"></i><?php _e('Registration','rcl'); ?></a></li>
         <li><a href="<?php echo $redirect_url; ?>form=sign"><i class="fa fa-signin"></i><?php _e('Login','rcl'); ?></a></li>
