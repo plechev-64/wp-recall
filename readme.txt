@@ -3,8 +3,8 @@ Contributors: wppost
 Donate link: http://wppost.ru/
 Tags: personal account, private message, groups, user profile
 Requires at least: 3.0.1
-Tested up to: 4.2
-Stable tag: 12.0.0
+Tested up to: 4.2.2
+Stable tag: 12.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,8 @@ WordPress plugin to create a personal user profile
 
 == Description ==
 
-Внимание! Обновление плагина через репозиторий WordPress обновит только базовую часть плагина, дополнения не входящие в базовую версию плагина будут удалены!
+WordPress плагин для создания личного кабинета пользователя. Кроме этого плагин добавляет личные сообщения, пользовательские группы, отзывы, систему рейтинга, подписок и многое другое.
+Плагин расширяет свой функционал за счет своих дополнений.
 
 WordPress plugin to create a personal user profile. The plugin creates a personal account of the user, user group, reviews. 
 The plugin allows you to exchange private messages and more. Plug-in extends its functionality through its supplements.
@@ -29,6 +30,8 @@ You can share your additions with other users or download new additions here:
 http://wppost.ru/nash-magazin/
 
 == Installation ==
+
+Внимание! Обновление плагина через репозиторий WordPress обновит только базовую часть плагина, дополнения не входящие в базовую версию плагина будут удалены!
 
 1. Upload dir `recall` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress

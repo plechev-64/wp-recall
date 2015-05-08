@@ -105,7 +105,7 @@ function rcl_get_publics_options_page($content){
                             $opt->label(__('List of publications of the user','rcl')),
                             $opt->option('select',array(
                                 'name'=>'view_publics_block_rcl',
-                                'options'=>array(__('Only the owner of the account','Show everyone including guests','rcl'))
+                                'options'=>array(__('Only the owner of the account','rcl'),__('Show everyone including guests','rcl'))
                             ))
                       )
                 )

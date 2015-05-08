@@ -235,7 +235,7 @@ add_filter('the_excerpt','rcl_post_group_edit_button',999);
 
 if (is_admin()) add_action('admin_init', 'rcl_postmeta_post_groups');
 function rcl_postmeta_post_groups() {
-    add_meta_box( 'recall_meta', __('Settings Wp-Recall','rcl'), 'options_box_rcl', 'post-group', 'normal', 'high'  );
+    add_meta_box( 'recall_meta', __('Settings Wp-Recall','rcl'), 'rcl_options_box', 'post-group', 'normal', 'high'  );
 }
 
 add_filter('admin_options_wprecall','rcl_admin_groups_page_content');
