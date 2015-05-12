@@ -1,1 +1,1 @@
-/*Личный счет*/.widget .count_user,.widget-user-count .count_user,#user-count-rcl .count_user{	display:none;}.widget-user-count .usercount{	margin:0 0 15px 0;}#user-count-rcl{    max-width:250px;}
+/*Личный счет*/#user-count-rcl{    max-width:250px;}#user-count-rcl .count_user{    display:none;}#user-count-rcl .count_user .value_count_user{    display:inline;    margin:0 0 15px 0;    width:80px;}

@@ -60,11 +60,14 @@
     padding: 10px;
 }
 .panel_lk_recall .form-tab-rcl a {
-    display: block;
+    
     min-width: 100px;
     padding: 3px;
 	color: #777;
 	clear: both;
+}
+.panel_lk_recall .link-tab-rcl {
+    display: block;
 }
 .panel_lk_recall .form-tab-rcl .error {
     display: block;
@@ -91,6 +94,7 @@
 .panel_lk_recall .form-tab-rcl .form-block-rcl input[type="text"], 
 .panel_lk_recall .form-tab-rcl .form-block-rcl input[type="password"], 
 .panel_lk_recall .form-tab-rcl .form-block-rcl input[type="email"],
+.panel_lk_recall .form-tab-rcl .form-block-rcl input[type="tel"],
 .panel_lk_recall .form-tab-rcl .form-block-rcl select,
 .panel_lk_recall .form-tab-rcl .form-block-rcl textarea{
     border: 1px solid #CCCCCC;

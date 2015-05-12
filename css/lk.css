@@ -52,6 +52,7 @@
 .wprecallblock input[type="number"],
 .wprecallblock input[type="date"],
 .wprecallblock input[type="tel"],
+.wprecallblock select,
 .wprecallblock textarea{
 	border:1px solid #ccc;
 	border-radius:none;

@@ -360,4 +360,5 @@ max-width: 80%;
 #private-smiles .smiles img{
 	cursor:pointer;
 	display:inline-block;
+    max-height: 25px;
 }
