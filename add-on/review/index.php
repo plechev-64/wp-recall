@@ -234,7 +234,7 @@ class Rcl_Review{
                     if($user_ID_true==0):
 
                         $addres_user = pow($user_LK, 2);
-                        $recall_block .= '<div class="otziv">
+                        $recall_form = '<div class="otziv">
                                 <form name="addrecall" method="post" action="">
                                 <p>'.__('Review text','rcl').':</p>
                                 <input type="radio" name="status" value="1" id="labeled_1" /><label for="labeled_1">'.__('Positively','rcl').'</label>
@@ -247,6 +247,8 @@ class Rcl_Review{
                                 <p style="text-align:right;"><input type="submit" name="add_review" class="recall-button" value="'.__('Add a review','rcl').'"></p>
                                 </form>
                                 </div>';
+								
+					$recall_block .= apply_filters('rcl_form_review',$recall_form);			
 
                     endif;
             }

@@ -277,7 +277,7 @@ class Rcl_Feed{
 
 		$id_user = intval($_POST['id_user']);
 		if(!$id_user) return false;
-		
+
 		if($user_ID){
 			$feed = get_usermeta($user_ID,'feed_user_'.$id_user);
 			if(!$feed){
@@ -347,9 +347,9 @@ class Rcl_Feed{
 
 		if($feeds){
 			$feeds[] = $user_ID;
-			$comments_feed = $wpdb->get_results($wpdb->prepare("SELECT cts.comment_ID,cts.comment_parent,cts.user_id,cts.comment_post_ID,cts.comment_content,cts.comment_date FROM ".$wpdb->prefix."comments as cts WHERE cts.user_id IN(".rcl_format_in($feeds).") && cts.comment_approved = '%d' GROUP BY cts.comment_ID ORDER BY cts.comment_date DESC LIMIT %d",$feeds,1,40));
+			$comments_feed = $wpdb->get_results($wpdb->prepare("SELECT cts.comment_ID,cts.comment_parent,cts.user_id,cts.comment_post_ID,cts.comment_content,cts.comment_date FROM $wpdb->comments as cts WHERE cts.user_id IN (".rcl_format_in($feeds).") && cts.comment_approved = '1' GROUP BY cts.comment_ID ORDER BY cts.comment_date DESC LIMIT 40",$feeds));
 
-			if(!$comments_feed) $comments_feed = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."comments WHERE user_id IN (".rcl_format_in($feeds).") && comment_approved = '%d' ORDER BY comment_date DESC LIMIT %d",$feeds,1,40));
+			if(!$comments_feed) $comments_feed = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->comments WHERE user_id IN (".rcl_format_in($feeds).") && comment_approved = '1' ORDER BY comment_date DESC LIMIT 40",$feeds));
                 }else{
                        $comments_feed=$wpdb->get_results($wpdb->prepare("
                         SELECT      com1.comment_ID,com1.comment_parent,com1.user_id,com1.comment_post_ID,com1.comment_content,com1.comment_date
@@ -563,9 +563,9 @@ function rcl_get_public_feed($user_id=false){
             $posts_list = rcl_multisort_array($posts_list, 'post_date', SORT_DESC);
 
             $feedlist .= '<h2>'.__('Publication','rcl').'</h2>';
-			
-            foreach($posts_list as $post){ 
-			
+
+            foreach($posts_list as $post){
+
 					$post = (object)$post;
 					setup_postdata($post);
 

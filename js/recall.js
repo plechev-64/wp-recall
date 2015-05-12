@@ -36,7 +36,7 @@ jQuery(function(){
         return base + '?' + res;
     } 
 
-    jQuery('#lk-menu .block_button').click(function() {      
+    jQuery('.rcl-menu .block_button').click(function() {      
         var url = setAttr_rcl('view',jQuery(this).attr('id'));
         if(url !== window.location){
             if ( history.pushState ){
@@ -105,7 +105,7 @@ jQuery(function(){
     jQuery('.block_button').click(function(){
         if(jQuery(this).hasClass('active'))return false;
         var id = jQuery(this).attr('id');		
-        jQuery("#lk-menu > a").removeClass("active");
+        jQuery(".rcl-menu .recall-button").removeClass("active");
         jQuery(".recall_content_block").removeClass("active").slideUp();
         jQuery(this).addClass("active");
         jQuery('.'+id+'_block').slideDown().addClass("active");
@@ -135,6 +135,15 @@ jQuery(function(){
         jQuery('body,html').animate({scrollTop:offsetTop -50}, 1000);
         view_recall_content_block(id_block);
     }
+	
+	function view_recall_content_block(id_block){
+            jQuery(".rcl-menu .recall-button").removeClass("active");
+            jQuery(".rcl-content .recall_content_block").removeClass("active");
+            //jQuery('.recall_content_block').slideUp();
+            jQuery('#'+id_block).addClass("active");
+            jQuery('.'+id_block+'_block').addClass("active");
+            return false;
+    }
 
     if(jQuery("#lk-menu.left-buttons").size()){
         var menu_start = jQuery("#lk-menu.left-buttons").offset().top;
@@ -154,14 +163,6 @@ jQuery(function(){
                     jQuery("#lk-menu.left-buttons").css('marginTop','0');              
             }
         });
-    }
-
-    function view_recall_content_block(id_block){
-            jQuery("#lk-menu > a").removeClass("active");
-            jQuery('.recall_content_block').slideUp();
-            jQuery('#'+id_block).addClass("active");
-            jQuery('.'+id_block+'_block').slideDown().addClass("active");
-            return false;
     }
 
     if(jQuery.cookie('favs')){		
