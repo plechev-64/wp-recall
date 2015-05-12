@@ -13,14 +13,14 @@
 
             <div class="input-container">
                 <input type="submit" class="recall-button link-tab-form" name="remember-login" value="<?php _e('Send','rcl'); ?>">
-                <a href="#" class="link-login-rcl link-tab-rcl "><?php _e('Login','rcl'); ?></a>
+                <a href="#" class="link-login-rcl link-tab-rcl "><?php _e('Authorization','rcl'); ?></a>
                 <?php if($typeform!='sign'){ ?>
                     <a href="#" class="link-register-rcl link-tab-rcl "><?php _e('Registration','rcl'); ?></a>
                 <?php } ?>
                 <?php echo wp_nonce_field('remember-key-rcl','_wpnonce',true,false); ?>
                 <input type="hidden" name="redirect_to" value="<?php rcl_referer_url('remember'); ?>">
             </div>
-            
+
         </form>
     <?php } ?>
 </div>

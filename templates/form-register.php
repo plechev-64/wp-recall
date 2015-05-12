@@ -20,7 +20,7 @@ if($typeform=='register') $f_reg = 'style="display:block;"'; ?>
         <div class="input-container">
             <input type="submit" class="recall-button" name="submit-register" value="<?php _e('Send','rcl'); ?>">
             <?php if(!$typeform){ ?>
-                <a href="#" class="link-login-rcl link-tab-rcl"><?php _e('Login ','rcl'); ?></a>
+                <a href="#" class="link-login-rcl link-tab-rcl"><?php _e('Authorization ','rcl'); ?></a>
             <?php } ?>
             <?php echo wp_nonce_field('register-key-rcl','_wpnonce',true,false); ?>
             <input type="hidden" name="referer_rcl" value="<?php rcl_referer_url(); ?>">
