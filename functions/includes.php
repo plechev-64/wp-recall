@@ -35,7 +35,7 @@ function rcl_addon_path($path){
 }
 
 function rcl_path_to_url($path,$dir=false){
-    if(!$dir) basename(content_url());
+    if(!$dir) $dir = basename(content_url());
     if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
     $array = explode('/',$path);
     $cnt = count($array);
