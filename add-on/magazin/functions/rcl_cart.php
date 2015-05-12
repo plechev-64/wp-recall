@@ -1,16 +1,16 @@
 <?php
 
 class Rcl_Cart {
-    
+
     public $summ;
     public $price;
     public $cnt_products;
     public $values;
     public $request;
-    
+
     function __construct() {
 		global $CartData,$rmag_options;
-		
+
         $this->summ = $_SESSION['cartdata']['summ'];
 
         $all = 0;
@@ -22,7 +22,7 @@ class Rcl_Cart {
         $this->cnt_products = $all;
         $this->values = array();
         $this->request = '';
-		
+
 		$CartData = (object)array(
 			'numberproducts'=>$all,
 			'cart_price'=>$this->summ,
@@ -32,19 +32,19 @@ class Rcl_Cart {
     }
 
     function cart_fields($get_fields_order,$key){
-        
+
         $order_field = '';
-		
+
         $cf = new Rcl_Custom_Fields();
-		
+
         foreach((array)$get_fields_order as $custom_field){
-            
+
             $custom_field = apply_filters('custom_field_cart_form',$custom_field);
-            
+
             if($key=='profile'&&$custom_field['order']!=1) continue;
-			
+
 			$slug = $custom_field['slug'];
-			
+
 			$this->values[$key][$number_field]['other'] = $slug;
 			if($custom_field['type']=='checkbox'){
 				$chek = explode('#',$custom_field['field_select']);
@@ -68,24 +68,24 @@ class Rcl_Cart {
 
 			$requared = ($custom_field['requared']==1)? '<span class="required">*</span>': '';
 			$val = (isset($custom_field['value']))? $custom_field['value']: '';
-			
+
 			$order_field .= '<tr>'
-			.'<td><label>'.$custom_field['title'].$requared.':</label></td>'
+			.'<td><label>'.$cf->get_title($custom_field).$requared.':</label></td>'
 			.'<td>'.$cf->get_input($custom_field,$val).'</td>'
 			.'</tr>';
-			
+
 			$number_field++;
 
         }
-        
+
         return $order_field;
-        
+
     }
-    
+
     function script_request($key){
-        
+
         $basket = '';
-        
+
         foreach((array)$this->values[$key] as $value){
             if($value['chek']){
                     $basket .=  "if(jQuery('#".$value['chek']."').attr('checked')=='checked') var ".$value['chek']." = jQuery('#".$value['chek']."').attr('value');";
@@ -100,11 +100,11 @@ class Rcl_Cart {
                     $reg_request .= "+'&".$value['other']."='+".$value['other'];
             }
         }
-                    
-        $this->request .=  $reg_request.$reg_radio;      
+
+        $this->request .=  $reg_request.$reg_radio;
         return $basket;
     }
-	
+
 	function get_products(){
 		global $post;
         //print_r($_SESSION);
@@ -121,24 +121,24 @@ class Rcl_Cart {
         }else{
             return $basket;
         }
-		
+
 		if(!$products) return false;
 
         return $products;
     }
-    
+
     function cart() {
 
         global $user_ID,$products;
-		
+
 		$products = $this->get_products();
-		
+
 		if(!$products) return '<p>В вашей корзине пусто.</p>';
-		
+
 		if(!$user_ID) $basket .= '<h3 class="title-data">Корзина <span class="weight-normal">(цены указаны в рублях)</span></h3>';
-		
+
         $basket .= rcl_get_include_template('cart.php',__FILE__);
-        
+
         $basket = apply_filters('cart_rcl',$basket);
 
             if($this->cnt_products){
@@ -147,26 +147,26 @@ class Rcl_Cart {
 
                     $get_fields_order = get_option( 'custom_orders_field' );
 
-                    if($get_fields_order) $order_field = $this->cart_fields($get_fields_order,'order');					
+                    if($get_fields_order) $order_field = $this->cart_fields($get_fields_order,'order');
 
                     if($user_ID){
-                            
+
                             if($order_field) $basket .= '<h3 align="center">Для оформления заказа заполните форму ниже:</h3>
 							<div id="regnewuser"  style="display:none;"></div>
                             <table class="form-table">'.$order_field.'</table>';
-                            
+
                             $basket .= rcl_get_button('Оформить заказ','#',array('icon'=>false,'class'=>'confirm_order'))
 							.'</div>
                             <div class="redirectform" style="text-align:center;"></div>';
-                            
+
                             $basket .= "<script>
                     jQuery(function(){
                     jQuery('.confirm_order').live('click',function(){";
-                            
+
                     $basket .= $this->script_request('order');
-                    
+
                     $basket .= "
-                            
+
                             var dataString_count = 'action=rcl_confirm_order'".$this->request.";
                             jQuery.ajax({
                             type: 'POST',
@@ -186,14 +186,14 @@ class Rcl_Cart {
                                     }else {
                                        alert('Ошибка проверки данных.');
                                     }
-                            } 
-                            });	
+                            }
+                            });
 
                             return false;
                     });
                 });
                 </script>";
-                    
+
                 }else{
                         $get_fields = get_option( 'custom_profile_field' );
 
@@ -235,7 +235,7 @@ class Rcl_Cart {
                                             dataType: 'json',
                                             url: wpurl+'wp-admin/admin-ajax.php',
                                             success: function(data){
-                                                    if(data['int']==100){				
+                                                    if(data['int']==100){
                                                             jQuery('#regnewuser').html(data['recall']);
                                                             jQuery('#regnewuser').slideDown(500);
                                                             if(data['redirect']!=0){
@@ -248,14 +248,14 @@ class Rcl_Cart {
                                                             jQuery('#regnewuser').html(data['recall']);
                                                             jQuery('#regnewuser').slideDown(500).delay(5000).slideUp(500);
                                                     }
-                                            } 
-                                    });	  	
+                                            }
+                                    });
                                     return false;
                             });
                     });
                     </script>";
                 }
-            } 
+            }
 
             return $basket;
     }

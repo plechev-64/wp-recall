@@ -394,7 +394,7 @@ function rcl_admin_statistic_cashe(){
 *************************************************/
 function rcl_add_count_user(){
 	global $user_ID;
-	
+
 	if($user_ID&&$_POST['count']){
 
             $log['redirectform'] = rcl_payform(array('id_pay'=>rand(0,100000000),'summ'=>intval($_POST['count']),'type'=>1));
@@ -437,18 +437,6 @@ function rcl_edit_balance_user(){
     exit;
 }
 if(is_admin()) add_action('wp_ajax_rcl_edit_balance_user', 'rcl_edit_balance_user');
-
-add_action('wp','rcl_active_add_wallet_count');
-function rcl_active_add_wallet_count(){
-    global $rcl_options;
-    if(!isset($rcl_options['wallet_usercount'])) return false;
-    if($rcl_options['wallet_usercount']==1) add_filter('wallet_tabs_rcl','rcl_add_wallet_count',5);
-}
-
-function rcl_add_wallet_count($content){
-    $content .= '<h3>'.__('Personal account of the user','rcl').':</h3>'.rcl_get_html_usercount();
-    return $content;
-}
 
 /*not found*/
 function rcl_get_usercount($user_id){
@@ -580,7 +568,7 @@ function rcl_get_useraccount_scripts($script){
 				});
 				return false;
 			});
-		jQuery('.go_to_add_count').click(function(){
+		jQuery('.go_to_add_count').live('click',function(){
 			jQuery('.count_user').slideToggle();
 			return false;
 		});

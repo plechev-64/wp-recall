@@ -3,15 +3,15 @@
 add_filter('admin_options_wprecall','rcl_get_tablist_options');
 function rcl_get_tablist_options($content){
     global $tabs_rcl,$rcl_options;
-    
-    if(!$tabs_rcl) {
-        $content .= '<h3>'.__('Neither one tab personal account not found','rcl').'</h3>';
-        return $content;
-    }
-    
+
     rcl_sortable_scripts();
 
     $opt = new Rcl_Options('tabs');
+	
+	if(!$tabs_rcl) {
+        $content .= $opt->options(__('Setting tabs','rcl'),__('Neither one tab personal account not found','rcl'));
+        return $content;
+    }
 
     $tabs = '<p>'.__('Sort your tabs by dragging them to the desired position','rcl').'</p>'
             . '<ul id="tabs-list-rcl" class="sortable">';

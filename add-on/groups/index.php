@@ -166,7 +166,7 @@ function rcl_add_taxonomy_public_groups($tax){
 }
 
 if(function_exists('rcl_postlist')){
-    rcl_postlist('group','post-group',__('Record groups'),array('order'=>40));
+    rcl_postlist('group','post-group',__('Record groups','rcl'),array('order'=>40));
 }
 
 add_filter('tag_link','rcl_post_type_link_tags');

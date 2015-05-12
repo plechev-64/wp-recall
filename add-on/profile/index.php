@@ -55,7 +55,7 @@ function rcl_update_profile_fields($user_id){
             $custom_field = apply_filters('update_custom_field_profile',$custom_field);
             if(!$custom_field||!$custom_field['slug']) continue;
             if(!is_admin()&&$custom_field['admin']==1) continue;
-			
+
 			$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $slug = $custom_field['slug'];
@@ -410,9 +410,9 @@ function rcl_tab_profile_content($author_lk){
 
                     $field .= '<tr class="form-block-rcl '.$class.'" '.$id.' '.$attr.'>';
 
-                    $star = (isset($field['requared'])&&$field['requared']==1)? ' <span class="required">*</span> ': '';
+                    $star = (isset($custom_field['requared'])&&$custom_field['requared']==1)? ' <span class="required">*</span> ': '';
                     $field .= '<th>'
-                            . '<label>'.$custom_field['title'].$star.'';
+                            . '<label>'.$cf->get_title($custom_field).$star.'';
                             if($custom_field['type']) $field .= ':';
                             $field .= '</label>'
                             . '</th>';
@@ -621,7 +621,7 @@ function rcl_get_custom_fields_profile($user){
         foreach((array)$get_fields as $custom_field){
             $slug = $custom_field['slug'];
             $meta = get_the_author_meta($slug,$user->ID);
-            $field .= '<tr><th><label>'.$custom_field['title'].':</label></th>';
+            $field .= '<tr><th><label>'.$cf->get_title($custom_field).':</label></th>';
             $field .= '<td>'.$cf->get_input($custom_field,$meta).'</td>';
             $field .= '</tr>';
         }

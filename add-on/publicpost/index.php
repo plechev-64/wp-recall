@@ -700,9 +700,9 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
 	$get_fields = get_option($id_field);
 
 	if($get_fields){
-		
+
 		$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-		
+
             foreach((array)$get_fields as $custom_field){
                 $slug = $custom_field['slug'];
                 if($custom_field['type']=='checkbox'){
@@ -758,7 +758,7 @@ function rcl_get_list_custom_fields($post_id,$posttype=false,$id_form=false){
                 $star = ($custom_field['requared']==1)? ' <span class="required">*</span> ': '';
 		$postmeta = ($post_id)? get_post_meta($post_id,$custom_field['slug'],1):'';
 
-		$public_fields .= '<tr><th><label>'.$custom_field['title'].$star.':</label></th>';
+		$public_fields .= '<tr><th><label>'.$cf->get_title($custom_field).$star.':</label></th>';
 		$public_fields .= '<td>'.$cf->get_input($custom_field,$postmeta).'</td>';
 		$public_fields .= '</tr>';
 	}

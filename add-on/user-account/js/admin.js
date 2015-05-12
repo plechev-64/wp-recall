@@ -6,7 +6,7 @@ jQuery(function(){
 			var id_attr = jQuery(this).attr('id');
 			var id_user = parseInt(id_attr.replace(/\D+/g,''));	
 			var balance = jQuery('.balanceuser-'+id_user).attr('value');
-			var dataString_count = 'action=edit_balance_user_recall&user='+id_user+'&balance='+balance;
+			var dataString_count = 'action=rcl_edit_balance_user&user='+id_user+'&balance='+balance;
 
 			jQuery.ajax({
 				type: 'POST',

@@ -34,12 +34,13 @@ function rcl_addon_path($path){
     return false;
 }
 
-function rcl_path_to_url($path){
+function rcl_path_to_url($path,$dir=false){
+    if(!$dir) basename(content_url());
     if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
     $array = explode('/',$path);
     $cnt = count($array);
     $url = '';
-	$content_dir = basename(content_url());
+	$content_dir = $dir;
     foreach($array as $key=>$ar){
         if($array[$key]==$content_dir){
             $url = get_bloginfo('wpurl').'/'.$array[$key].'/';

@@ -82,6 +82,7 @@ class Rcl_EditFields {
         $types = array(
             'select'=>1,
             'checkbox'=>1,
+            'agree'=>1,
             'radio'=>1
         );
 
@@ -141,7 +142,8 @@ class Rcl_EditFields {
                 'number'=>__('Number','rcl'),
                 'date'=>__('Date','rcl'),
                 'time'=>__('Time','rcl'),
-                'url'=>__('Url','rcl')
+                'url'=>__('Url','rcl'),
+                'agree'=>__('Agreement','rcl')
             )
         ));
     }
@@ -282,8 +284,8 @@ class Rcl_EditFields {
         global $Option_Value;
 
         $fields = array();
-		
-		$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+	$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         if(isset($_POST['options'])){
                 foreach($_POST['options'] as $key=>$val){
@@ -291,7 +293,7 @@ class Rcl_EditFields {
                 }
         }
         $fs = 0;
-        $tps = array('select'=>1,'radio'=>1,'checkbox'=>1);
+        $tps = array('select'=>1,'radio'=>1,'checkbox'=>1,'agree'=>1);
         foreach($_POST['field'] as $key=>$data){
             if($key=='field_select') continue;
             foreach($data as $a=>$value){
