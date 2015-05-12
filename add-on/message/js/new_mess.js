@@ -11,7 +11,7 @@ jQuery(document).ready( function() {
 		jQuery(function(){
 			var mess = jQuery("#rcl-new-mess").html();
 			if(mess) return false;
-			var dataString_new_mess = 'action=get_new_outside_message_recall'+'&user_ID='+user_ID;	
+			var dataString_new_mess = 'action=get_new_outside_message'+'&user_ID='+user_ID;	
 			jQuery.ajax({
 				type: 'POST',
 				data: dataString_new_mess,
