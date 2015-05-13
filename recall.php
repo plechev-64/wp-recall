@@ -1,11 +1,12 @@
 <?php
 /*
     Plugin Name: WP-Recall
-    Plugin URI: http://wppost.ru
+    Plugin URI: http://wppost.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 12.0.7
+    Version: 12.0.8
     Author: Plechev Andrey
-    GitHub Plugin URI: https://github.com/plechev-64/recall
+    Author URI: http://wppost.ru/
+    GitHub Plugin URI: https://github.com/plechev-64/wp-recall
     License:     GPLv2 or later (license.txt)
 */
 
@@ -24,7 +25,7 @@ function init_global_rcl(){
 
 	$rcl_options = get_option('primary-rcl-options');
 
-	define('VER_RCL', '12.0.7');
+	define('VER_RCL', '12.0.8');
 
 	$upload_dir = rcl_get_wp_upload_dir();
 
