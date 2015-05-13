@@ -3,14 +3,14 @@ class Rcl_Public{
 	function __construct() {
 		add_action('wp_ajax_get_media', array(&$this, 'get_media'));
 		add_action('wp_ajax_step_one_redactor_post', array(&$this, 'step_one_redactor_post'));
-		add_action('wp_ajax_step_two_redactor_post', array(&$this, 'step_two_redactor_post'));		
+		add_action('wp_ajax_step_two_redactor_post', array(&$this, 'step_two_redactor_post'));
 	}
 	function get_media(){
 		global $user_ID,$wpdb;
                 $page = 1;
 		if(isset($_POST['page'])) $page = intval($_POST['page']);
 		if($user_ID){
-			include_once('../../functions/navi-rcl.php');
+
 			$where = $wpdb->prepare("WHERE post_author='%d' AND post_type='attachment' AND post_mime_type LIKE '%s'",$user_ID,'image%');
 			$cnt = $wpdb->get_var("SELECT COUNT(ID) FROM ".$wpdb->prefix."posts $where");
 			$rclnavi = new RCL_navi(20,$cnt,false,$page);
