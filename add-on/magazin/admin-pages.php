@@ -411,10 +411,10 @@ if($_GET['user']||$_GET['status']||$_GET['date'])echo '<form><input type="button
 echo '</div>';//конец блока заказов
 }
 
-add_action('wp','rcl_read_exportfile');
+add_action('admin_init','rcl_read_exportfile');
 function rcl_read_exportfile(){
 	global $wpdb;
-	
+	//print_r($_POST);exit;
 	if(!wp_verify_nonce( $_POST['_wpnonce'], 'get-csv-file' )) return false;
 
 	$file_name = 'products.xml';
@@ -427,8 +427,8 @@ function rcl_read_exportfile(){
 	if($_POST['post_content']==1) $sql_field .= ',post_content';
 	$sql_field .= ',post_status';
 
-	$posts = $wpdb->get_results($wpdb->prepare("SELECT %s FROM ".$wpdb->prefix ."posts WHERE post_type = 'products' AND post_status!='draft'",$sql_field));
-	$postmeta = $wpdb->get_results($wpdb->prepare("SELECT meta_key FROM ".$wpdb->prefix ."postmeta GROUP BY meta_key ORDER BY meta_key"));
+	$posts = $wpdb->get_results("SELECT $sql_field FROM ".$wpdb->prefix ."posts WHERE post_type = 'products' AND post_status!='draft'");
+	$postmeta = $wpdb->get_results("SELECT meta_key FROM ".$wpdb->prefix ."postmeta GROUP BY meta_key ORDER BY meta_key");
 
 	$sql_field = explode(',',$sql_field);
 	$cnt = count($sql_field);
@@ -481,7 +481,7 @@ function rcl_read_exportfile(){
 	header('Content-Type: text/xml; charset=utf-8');
 	readfile($file_src);
 	exit;
-	
+
 }
 
 function rmag_export(){
@@ -523,7 +523,8 @@ global $wpdb;
 		}
 	}
 	$table_price .='</tr><tr><td colspan="2" align="right"><input type="submit" name="get_csv_file" value="Выгрузить товары в файл"></td></tr></table>
-	</form>';
+	'.wp_nonce_field('get-csv-file','_wpnonce',true,false).'
+        </form>';
 
 	$table_price .='<form method="post" action="" enctype="multipart/form-data">
 	'.wp_nonce_field('add-file-csv','_wpnonce',true,false).'
@@ -535,8 +536,8 @@ global $wpdb;
 	</p>
 	</form>';
 	echo $table_price;
-	
-	
+
+
 
 	if($_FILES['file_csv']&&wp_verify_nonce( $_POST['_wpnonce'], 'add-file-csv' )){
 		$file_name = $_FILES['file_csv']['name'];
@@ -624,6 +625,9 @@ global $wpdb;
 							else $emptyFields[$key][] = $ID;
 						}
 					}
+
+                                        do_action('rcl_upload_product_data',$ID,$data);
+
 					unset($data);
 					$updated++;
 					echo "{$updated}. Товар {$ID} был $action<br>";
