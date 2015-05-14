@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Blank Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-05-12 16:53+0400\n"
+"POT-Creation-Date: 2015-05-14 12:13+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -159,12 +159,12 @@ msgid "Name bookmark"
 msgstr ""
 
 #: add-on/bookmarks/index.php:170 add-on/bookmarks/index.php:270
-#: add-on/gallery-recall/index.php:167 add-on/publicpost/classes.php:254
+#: add-on/gallery-recall/index.php:167 add-on/publicpost/classes.php:245
 msgid "Add"
 msgstr ""
 
 #: add-on/bookmarks/index.php:180 add-on/bookmarks/index.php:280
-#: add-on/publicpost/rcl_publicform.php:139 functions/rcl_editfields.php:168
+#: functions/rcl_editfields.php:168
 msgid "Change"
 msgstr ""
 
@@ -1704,15 +1704,15 @@ msgstr ""
 msgid "Not selected"
 msgstr ""
 
-#: add-on/publicpost/classes.php:233
+#: add-on/publicpost/classes.php:224
 msgid "Display all attached images in the gallery."
 msgstr ""
 
-#: add-on/publicpost/classes.php:238
+#: add-on/publicpost/classes.php:229
 msgid "To add files to the download queue"
 msgstr ""
 
-#: add-on/publicpost/classes.php:281
+#: add-on/publicpost/classes.php:272
 msgid "To assign a thumbnail"
 msgstr ""
 
@@ -1990,7 +1990,7 @@ msgstr ""
 msgid "(the labels fit with a comma)"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:144
+#: add-on/publicpost/rcl_publicform.php:137
 msgid "To publish"
 msgstr ""
 
@@ -2014,7 +2014,7 @@ msgstr ""
 msgid "Being sent, please wait..."
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:350
+#: add-on/publicpost/rcl_publicform.php:359
 msgid "To add a media file"
 msgstr ""
 
@@ -2413,7 +2413,7 @@ msgid "Enter the amount required"
 msgstr ""
 
 #: add-on/user-account/index.php:486 add-on/user-account/index.php:514
-#: admin-pages.php:110 recall.php:81 templates/recallbar.php:8
+#: admin-pages.php:110 recall.php:82 templates/recallbar.php:8
 msgid "Personal account"
 msgstr ""
 
@@ -3068,7 +3068,7 @@ msgstr ""
 msgid "were removed from the Database"
 msgstr ""
 
-#: functions/rcl_userlist.php:250 recall.php:246
+#: functions/rcl_userlist.php:250 recall.php:247
 msgid "not online"
 msgstr ""
 
@@ -3150,19 +3150,19 @@ msgstr ""
 msgid "Name tab"
 msgstr ""
 
-#: recall.php:83
+#: recall.php:84
 msgid "Users"
 msgstr ""
 
-#: recall.php:85
+#: recall.php:86
 msgid "FEED"
 msgstr ""
 
-#: recall.php:124
+#: recall.php:125
 msgid "Unconfirmed"
 msgstr ""
 
-#: recall.php:128
+#: recall.php:129
 msgid "Ban"
 msgstr ""
 

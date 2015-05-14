@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-05-12 16:35+0400\n"
+"POT-Creation-Date: 2015-05-14 11:35+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -166,7 +166,7 @@ msgid "Add"
 msgstr "Добавить"
 
 #: add-on/bookmarks/index.php:180 add-on/bookmarks/index.php:280
-#: add-on/publicpost/rcl_publicform.php:139 functions/rcl_editfields.php:168
+#: functions/rcl_editfields.php:168
 msgid "Change"
 msgstr "Выбрать"
 
@@ -2044,7 +2044,7 @@ msgstr "Метки"
 msgid "(the labels fit with a comma)"
 msgstr "(разделять запятой)"
 
-#: add-on/publicpost/rcl_publicform.php:144
+#: add-on/publicpost/rcl_publicform.php:137
 msgid "To publish"
 msgstr "Публиковать"
 
@@ -2478,7 +2478,7 @@ msgid "Enter the amount required"
 msgstr "Введите требуемую сумму"
 
 #: add-on/user-account/index.php:486 add-on/user-account/index.php:514
-#: admin-pages.php:110 recall.php:81 templates/recallbar.php:8
+#: admin-pages.php:110 recall.php:82 templates/recallbar.php:8
 msgid "Personal account"
 msgstr "Личный счет"
 
@@ -3153,7 +3153,7 @@ msgstr "Все значения произвольных полей с этим 
 msgid "were removed from the Database"
 msgstr "были удалены из базы данных"
 
-#: functions/rcl_userlist.php:250 recall.php:246
+#: functions/rcl_userlist.php:250 recall.php:247
 msgid "not online"
 msgstr "не в сети"
 
@@ -3237,19 +3237,19 @@ msgstr "Сортируйте вкладки перетаскиванием"
 msgid "Name tab"
 msgstr "Имя вкладки"
 
-#: recall.php:83
+#: recall.php:84
 msgid "Users"
 msgstr "Пользователи"
 
-#: recall.php:85
+#: recall.php:86
 msgid "FEED"
 msgstr ""
 
-#: recall.php:124
+#: recall.php:125
 msgid "Unconfirmed"
 msgstr "Неподтвержденные"
 
-#: recall.php:128
+#: recall.php:129
 msgid "Ban"
 msgstr "Бан"
 
