@@ -196,7 +196,7 @@ class Rcl_Thumb_Form{
 		else $gal = 0;
 
 		/*echo '<small>Для вывода изображений в определенных местах своей публикации вы можете<br>использовать шорткоды [art id="123"], размещая их в том месте публикации, где желаете видеть изображение. Можно указать размер изображения thumbnail,medium или full, например: [art id="123" size="medium"]. Требуемый размер также можно указывать числовыми значениями через запятую (ширина, высота), например: [art id="123" size="450,300"]</small>';*/
-		echo '</p>';
+		//echo '</p>';
 
 		if($this->post_id){
 			$args = array(
@@ -212,15 +212,6 @@ class Rcl_Thumb_Form{
 		}else{
 			$temp_gal = unserialize(get_the_author_meta('tempgallery',$user_ID));
 		}
-
-		echo '<script type="text/javascript">
-			function addfile_content($file){
-                            var ifr = jQuery("#contentarea_ifr").contents().find("#tinymce").html();
-                            jQuery("#contentarea").insertAtCaret($file+"&nbsp;");
-                            jQuery("#contentarea_ifr").contents().find("#tinymce").html(ifr+$file+"&nbsp;");
-                            return false;
-			}
-		</script>';
 
                 $attachlist = '';
 		if($temp_gal){

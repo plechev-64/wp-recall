@@ -633,8 +633,8 @@ add_action('init', 'rcl_edit_post_activate');
 
 function rcl_delete_post(){
 	global $rcl_options;
-	$post = wp_update_post( array('ID'=>intval($_POST['post-rcl']),'post_status'=>'trash'));
-        do_action('after_delete_post_rcl',$post);
+	$post_id = wp_update_post( array('ID'=>intval($_POST['post-rcl']),'post_status'=>'trash'));
+        do_action('after_delete_post_rcl',$post_id);
 	wp_redirect(rcl_format_url(get_author_posts_url($user_ID)).'&public=deleted');
 	exit;
 }
