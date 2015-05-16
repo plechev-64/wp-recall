@@ -81,6 +81,7 @@ class Rcl_EditFields {
 
         $types = array(
             'select'=>1,
+            'multiselect'=>1,
             'checkbox'=>1,
             'agree'=>1,
             'radio'=>1
@@ -135,6 +136,7 @@ class Rcl_EditFields {
                 'text'=>__('Text','rcl'),
                 'textarea'=>__('Textarea','rcl'),
                 'select'=>__('Select','rcl'),
+                'multiselect'=>__('MultiSelect','rcl'),
                 'checkbox'=>__('Checkbox','rcl'),
                 'radio'=>__('Radiobutton','rcl'),
                 'email'=>__('E-mail','rcl'),
@@ -293,7 +295,7 @@ class Rcl_EditFields {
                 }
         }
         $fs = 0;
-        $tps = array('select'=>1,'radio'=>1,'checkbox'=>1,'agree'=>1);
+        $tps = array('select'=>1,'multiselect'=>1,'radio'=>1,'checkbox'=>1,'agree'=>1);
         foreach($_POST['field'] as $key=>$data){
             if($key=='field_select') continue;
             foreach($data as $a=>$value){

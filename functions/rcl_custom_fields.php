@@ -81,6 +81,27 @@ class Rcl_Custom_Fields{
         </select>';
     }
 
+    function get_type_multiselect($field){
+        $fields = explode('#',$field['field_select']);
+        $count_field = count($fields);
+        $field_select = '';
+
+        for($a=0;$a<$count_field;$a++){
+            if(!is_array($this->value)) $selected = selected($this->value,$fields[$a],false);
+            else {
+                    $arrValue = $this->value;
+                    for($ttt = 0; $ttt < count($arrValue); $ttt++) {
+                            $selected = selected($arrValue[$ttt],$fields[$a],false);
+                            if(strlen($selected) > 3) break;
+                    }
+            }
+            $field_select .='<option '.$selected.' value="'.trim($fields[$a]).'">'.$fields[$a].'</option>';
+        }
+        return '<select '.$this->required.' name="'.$this->slug.'[]" id="'.$this->slug.'" multiple>
+        '.$field_select.'
+        </select>';
+    }
+
     function get_type_checkbox($field){
         $chek = explode('#',$field['field_select']);
         $count_field = count($chek);
