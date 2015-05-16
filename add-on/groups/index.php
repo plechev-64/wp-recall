@@ -706,7 +706,7 @@ function rcl_get_tags_list_group($tags,$post_id=null,$first=null){
 Смотрим всех пользователей группы
 *************************************************/
 function rcl_get_users_group(){
-	$page = inval($_POST['page']);
+	$page = intval($_POST['page']);
 	$id_group = intval($_POST['id_group']);
 	if(!$page) $page = 1;
 	include('class_group.php');
