@@ -266,12 +266,8 @@ class Rcl_Thumb_Form{
 				echo '<span class="delete"></span><img width="100" height="100" src="'.$thumb_url[0].'"><input type="hidden" name="thumb" value="'.$this->thumb.'">';
 			}
 			echo '</div>
-			<h3>Миниатюра записи</h3>
-
-				<div>
-					'.rcl_get_button(__('To assign a thumbnail','rcl'),'#',array('id'=>'add_thumbnail_rcl')).'
-				</div>
-
+			<h3>'.__('Thumbnail','rcl').'</h3>
+			<div>'.rcl_get_button(__('To assign a thumbnail','rcl'),'#',array('id'=>'add_thumbnail_rcl')).'</div>
 		</div>';
 	}
 }

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-05-14 11:35+0400\n"
+"POT-Creation-Date: 2015-05-18 19:45+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -138,6 +138,8 @@ msgstr "Отключить закладки для публикации"
 #: add-on/profile/index.php:546 add-on/profile/index.php:551
 #: add-on/profile/index.php:556 add-on/profile/index.php:561
 #: add-on/publicpost/index.php:228 add-on/publicpost/index.php:398
+#: add-on/rating-system/addon-options.php:43
+#: add-on/rating-system/addon-options.php:63 add-on/rating-system/admin.php:16
 #: add-on/rayting/addon-options.php:43 add-on/rayting/addon-options.php:63
 #: add-on/rayting/index.php:51 add-on/review/index.php:166 admin-pages.php:38
 #: admin-pages.php:289
@@ -150,6 +152,8 @@ msgstr "Нет"
 #: add-on/profile/index.php:546 add-on/profile/index.php:551
 #: add-on/profile/index.php:556 add-on/profile/index.php:561
 #: add-on/publicpost/index.php:228 add-on/publicpost/index.php:398
+#: add-on/rating-system/addon-options.php:43
+#: add-on/rating-system/addon-options.php:63 add-on/rating-system/admin.php:17
 #: add-on/rayting/addon-options.php:43 add-on/rayting/addon-options.php:63
 #: add-on/rayting/index.php:52 add-on/review/index.php:166 admin-pages.php:39
 #: admin-pages.php:289
@@ -161,12 +165,12 @@ msgid "Name bookmark"
 msgstr "Имя закладки"
 
 #: add-on/bookmarks/index.php:170 add-on/bookmarks/index.php:270
-#: add-on/gallery-recall/index.php:167 add-on/publicpost/classes.php:254
+#: add-on/gallery-recall/index.php:167 add-on/publicpost/classes.php:245
 msgid "Add"
 msgstr "Добавить"
 
 #: add-on/bookmarks/index.php:180 add-on/bookmarks/index.php:280
-#: functions/rcl_editfields.php:168
+#: functions/rcl_editfields.php:170
 msgid "Change"
 msgstr "Выбрать"
 
@@ -229,7 +233,7 @@ msgstr ""
 
 #: add-on/feed/index.php:82 add-on/feed/index.php:94 add-on/feed/index.php:330
 #: add-on/feed/index.php:606 functions/rcl_userlist.php:269
-#: functions/shortcodes.php:238
+#: functions/shortcodes.php:237
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -568,7 +572,7 @@ msgid "View"
 msgstr "Смотреть"
 
 #: add-on/groups/index.php:97 add-on/groups/index.php:132
-#: functions/shortcodes.php:284
+#: functions/shortcodes.php:283
 msgid "Search"
 msgstr "Поиск"
 
@@ -758,7 +762,7 @@ msgstr "Поиск группы"
 msgid "Find"
 msgstr "Найти"
 
-#: add-on/groups/index.php:851 functions/shortcodes.php:234
+#: add-on/groups/index.php:851 functions/shortcodes.php:233
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -832,7 +836,7 @@ msgstr "Корзина"
 #: add-on/publicpost/rcl_postlist.php:75
 #: add-on/publicpost/templates/public-form.php:4
 #: add-on/user-account/index.php:517 functions/posts-list.php:26
-#: functions/rcl_editfields.php:110 widget.php:47 widget.php:109
+#: functions/rcl_editfields.php:111 widget.php:47 widget.php:109
 #: widget.php:162
 msgid "Title"
 msgstr "Заголовок"
@@ -1317,7 +1321,7 @@ msgstr "Расход"
 #: add-on/money-wallet/index.php:208 add-on/money-wallet/index.php:361
 #: add-on/money-wallet/index.php:489 add-on/publicpost/index.php:312
 #: add-on/publicpost/rcl_postlist.php:74 functions/posts-list.php:26
-#: functions/rcl_editfields.php:143
+#: functions/rcl_editfields.php:145
 msgid "Date"
 msgstr "Дата"
 
@@ -1383,7 +1387,7 @@ msgstr "Действие"
 
 #: add-on/money-wallet/index.php:476 add-on/publicpost/rcl_publicform.php:167
 #: add-on/review/index.php:205 functions/rcl_addons.php:167
-#: functions/rcl_editfields.php:121
+#: functions/rcl_editfields.php:122
 msgid "Delete"
 msgstr "Удалить"
 
@@ -1435,7 +1439,7 @@ msgstr "Укажите номер кошелька!"
 msgid "Affordable gifts"
 msgstr "Доступные подарки"
 
-#: add-on/presents/class_presents.php:1 functions/shortcodes.php:362
+#: add-on/presents/class_presents.php:1 functions/shortcodes.php:361
 msgid "Free"
 msgstr "Бесплатно"
 
@@ -1587,7 +1591,7 @@ msgstr "Логин"
 msgid "Display name"
 msgstr "Отображаемое имя"
 
-#: add-on/profile/index.php:347 functions/rcl_editfields.php:140
+#: add-on/profile/index.php:347 functions/rcl_editfields.php:142
 #: templates/form-register.php:14
 msgid "E-mail"
 msgstr ""
@@ -1744,15 +1748,19 @@ msgstr "Описание"
 msgid "Not selected"
 msgstr "Не выбрано"
 
-#: add-on/publicpost/classes.php:233
+#: add-on/publicpost/classes.php:224
 msgid "Display all attached images in the gallery."
 msgstr "Отображать прикрепленные изображения в галерее"
 
-#: add-on/publicpost/classes.php:238
+#: add-on/publicpost/classes.php:229
 msgid "To add files to the download queue"
 msgstr "Добавить файлы в очередь загрузки"
 
-#: add-on/publicpost/classes.php:281
+#: add-on/publicpost/classes.php:269
+msgid "Thumbnail"
+msgstr "Миниатюра"
+
+#: add-on/publicpost/classes.php:270
 msgid "To assign a thumbnail"
 msgstr "Назначить миниатюру"
 
@@ -1764,8 +1772,8 @@ msgstr "Форма публикации"
 msgid "The publish settings"
 msgstr "Настройки публикации"
 
-#: add-on/publicpost/index.php:84 add-on/rayting/addon-options.php:12
-#: admin-pages.php:99
+#: add-on/publicpost/index.php:84 add-on/rating-system/addon-options.php:12
+#: add-on/rayting/addon-options.php:12 admin-pages.php:99
 msgid "General settings"
 msgstr "Общие настройки"
 
@@ -1788,6 +1796,8 @@ msgid "Display information about the author"
 msgstr "Отображать информацию об авторе"
 
 #: add-on/publicpost/index.php:93 add-on/publicpost/index.php:100
+#: add-on/rating-system/addon-options.php:33
+#: add-on/rating-system/addon-options.php:53
 #: add-on/rayting/addon-options.php:33 add-on/rayting/addon-options.php:53
 #: admin-pages.php:189 admin-pages.php:262 admin-pages.php:267
 #: admin-pages.php:278
@@ -1795,6 +1805,8 @@ msgid "Disabled"
 msgstr "Отключено"
 
 #: add-on/publicpost/index.php:93 add-on/publicpost/index.php:100
+#: add-on/rating-system/addon-options.php:33
+#: add-on/rating-system/addon-options.php:53
 #: add-on/rayting/addon-options.php:33 add-on/rayting/addon-options.php:53
 #: admin-pages.php:190 admin-pages.php:278
 msgid "Included"
@@ -2069,7 +2081,7 @@ msgstr "Извините, но вы не можете публиковать н�
 msgid "Being sent, please wait..."
 msgstr "Идет отправка, подождите..."
 
-#: add-on/publicpost/rcl_publicform.php:350
+#: add-on/publicpost/rcl_publicform.php:359
 msgid "To add a media file"
 msgstr "Добавить медиафайл"
 
@@ -2082,35 +2094,45 @@ msgid ""
 "Click on Priceline the image to add it to the content of the publication"
 msgstr "Нажмите на загруженное изображение, чтобы добавить его в контент"
 
-#: add-on/rayting/addon-options.php:9
+#: add-on/rating-system/addon-options.php:9 add-on/rayting/addon-options.php:9
 msgid "Rating settings"
 msgstr "Настройки рейтинга"
 
+#: add-on/rating-system/addon-options.php:14
 #: add-on/rayting/addon-options.php:14
 msgid "Type of rating for records"
 msgstr "Тип рейтинга для публикаций"
 
+#: add-on/rating-system/addon-options.php:17
+#: add-on/rating-system/addon-options.php:23
 #: add-on/rayting/addon-options.php:17 add-on/rayting/addon-options.php:23
 msgid "Plus/minus"
 msgstr "Плюс/Минус"
 
+#: add-on/rating-system/addon-options.php:17
+#: add-on/rating-system/addon-options.php:23 add-on/rating-system/index.php:89
 #: add-on/rayting/addon-options.php:17 add-on/rayting/addon-options.php:23
 #: add-on/rayting/index.php:168 add-on/rayting/index.php:260
 msgid "I like"
-msgstr "Мне нравиться"
+msgstr "Мне нравится"
 
+#: add-on/rating-system/addon-options.php:20
 #: add-on/rayting/addon-options.php:20
 msgid "Type of rating comments"
 msgstr "Тип рейтинга для комментариев"
 
+#: add-on/rating-system/addon-options.php:29
 #: add-on/rayting/addon-options.php:29
 msgid "The rating publications"
 msgstr "Рейтинг публикаций"
 
+#: add-on/rating-system/addon-options.php:36
 #: add-on/rayting/addon-options.php:36
 msgid "Points for ranking publications"
 msgstr "Баллы для рейтинга публикаций"
 
+#: add-on/rating-system/addon-options.php:38
+#: add-on/rating-system/addon-options.php:58
 #: add-on/rayting/addon-options.php:38 add-on/rayting/addon-options.php:58
 msgid ""
 "set how many points the ranking will be awarded for a positive vote or how "
@@ -2119,26 +2141,32 @@ msgstr ""
 "укажите значение рейтинга для положительного или отрицательного голоса за "
 "публикацию"
 
+#: add-on/rating-system/addon-options.php:40
 #: add-on/rayting/addon-options.php:40
 msgid "The influence of rating posts on the overall rating"
 msgstr "Влияние рейтинга публикаций на общий рейтинг"
 
+#: add-on/rating-system/addon-options.php:49
 #: add-on/rayting/addon-options.php:49
 msgid "Rating review"
-msgstr "Рейтинг отзывов"
+msgstr "Рейтинг комментариев"
 
+#: add-on/rating-system/addon-options.php:56
 #: add-on/rayting/addon-options.php:56
 msgid "Points for comment rating"
 msgstr "Баллы для рейтинга комментариев"
 
+#: add-on/rating-system/addon-options.php:60
 #: add-on/rayting/addon-options.php:60
 msgid "The influence of the rating review on the overall rating"
 msgstr "Влияние рейтинга отзывов на общий рейтинг"
 
+#: add-on/rating-system/addon-options.php:69
 #: add-on/rayting/addon-options.php:69
 msgid "Allow to bypass the moderation of publications at achievement rating"
 msgstr "Влияние рейтинга на модерацию публикаций"
 
+#: add-on/rating-system/addon-options.php:71
 #: add-on/rayting/addon-options.php:71
 msgid ""
 "specify the rating level at which the user will get the ability to post "
@@ -2146,6 +2174,29 @@ msgid ""
 msgstr ""
 "пользователи с указанным уровнем рейтинга или превышающем его смогут "
 "публиковать без модерации"
+
+#: add-on/rating-system/admin.php:15 add-on/rayting/index.php:50
+msgid "To disable the rating for publication"
+msgstr "Отключить рейтинг для публикации"
+
+#: add-on/rating-system/admin.php:31 add-on/rayting/index.php:82
+msgid "OK"
+msgstr ""
+
+#: add-on/rating-system/index.php:82 add-on/rayting/index.php:158
+#: add-on/rayting/index.php:243
+msgid "To remove your vote"
+msgstr "Удалить голос"
+
+#: add-on/rating-system/index.php:91 add-on/rayting/index.php:169
+#: add-on/rayting/index.php:261
+msgid "minus"
+msgstr "минус"
+
+#: add-on/rating-system/index.php:92 add-on/rayting/index.php:170
+#: add-on/rayting/index.php:262
+msgid "plus"
+msgstr "плюс"
 
 #: add-on/rayting/class_rayting.php:46
 msgid "You cant change the rating of a product that was purchased personally!"
@@ -2186,34 +2237,14 @@ msgstr "За публикации и комментарии еще не голо
 msgid "rating"
 msgstr "рейтинг"
 
-#: add-on/rayting/index.php:50
-msgid "To disable the rating for publication"
-msgstr "Отключить рейтинг для публикации"
-
-#: add-on/rayting/index.php:82
-msgid "OK"
-msgstr ""
-
 #: add-on/rayting/index.php:153 add-on/rayting/index.php:236
 msgid "view messeges"
 msgstr "смотреть сообщения"
-
-#: add-on/rayting/index.php:158 add-on/rayting/index.php:243
-msgid "To remove your vote"
-msgstr "Удалить голос"
 
 #: add-on/rayting/index.php:161 add-on/rayting/index.php:202
 #: add-on/rayting/index.php:255 add-on/rayting/index.php:274
 msgid "Rating"
 msgstr "Рейтинг"
-
-#: add-on/rayting/index.php:169 add-on/rayting/index.php:261
-msgid "minus"
-msgstr "минус"
-
-#: add-on/rayting/index.php:170 add-on/rayting/index.php:262
-msgid "plus"
-msgstr "плюс"
 
 #: add-on/regpay/activate.php:1
 msgid "Unpaid access"
@@ -2478,7 +2509,7 @@ msgid "Enter the amount required"
 msgstr "Введите требуемую сумму"
 
 #: add-on/user-account/index.php:486 add-on/user-account/index.php:514
-#: admin-pages.php:110 recall.php:82 templates/recallbar.php:8
+#: admin-pages.php:110 recall.php:82
 msgid "Personal account"
 msgstr "Личный счет"
 
@@ -2906,7 +2937,7 @@ msgid "Exit"
 msgstr "Выход"
 
 #: functions/loginform.php:164 functions/loginform.php:188
-#: functions/rcl_userlist.php:282 functions/shortcodes.php:239
+#: functions/rcl_userlist.php:282 functions/shortcodes.php:238
 #: templates/form-register.php:4 templates/form-remember.php:18
 #: templates/form-sign.php:27 templates/recallbar.php:17
 #: templates/recallbar.php:31
@@ -3069,7 +3100,7 @@ msgstr "Распаковка дополнения не удалась."
 msgid "ZIP archive not found."
 msgstr "ZIP архив не найден."
 
-#: functions/rcl_custom_fields.php:14 functions/rcl_editfields.php:146
+#: functions/rcl_custom_fields.php:14 functions/rcl_editfields.php:148
 msgid "Agreement"
 msgstr "Соглашение"
 
@@ -3085,15 +3116,15 @@ msgstr "Идентификаторы разделяются запятой"
 msgid "Add field"
 msgstr "Добавить поле"
 
-#: functions/rcl_editfields.php:90
+#: functions/rcl_editfields.php:91
 msgid "the list of options to share the \" # \" sign"
 msgstr "множественные значения разделяются знаком решетки \" # \""
 
-#: functions/rcl_editfields.php:100 functions/rcl_editfields.php:197
+#: functions/rcl_editfields.php:101 functions/rcl_editfields.php:199
 msgid "MetaKey"
 msgstr ""
 
-#: functions/rcl_editfields.php:101 functions/rcl_editfields.php:198
+#: functions/rcl_editfields.php:102 functions/rcl_editfields.php:200
 msgid ""
 "not necessarily<br>if you want to enlist their arbitrary field, we list the "
 "meta_key in this field"
@@ -3101,55 +3132,59 @@ msgstr ""
 "не обязательно<br>если необходимо, то можно прописать свое значение meta_key "
 "для поля"
 
-#: functions/rcl_editfields.php:102 functions/rcl_editfields.php:199
+#: functions/rcl_editfields.php:103 functions/rcl_editfields.php:201
 msgid "Latin and numbers"
 msgstr "латиница и числа"
 
-#: functions/rcl_editfields.php:131
+#: functions/rcl_editfields.php:132
 msgid "The field type"
 msgstr "Тип поля"
 
-#: functions/rcl_editfields.php:135
+#: functions/rcl_editfields.php:136
 msgid "Text"
 msgstr "Текстовое поле"
 
-#: functions/rcl_editfields.php:136
+#: functions/rcl_editfields.php:137
 msgid "Textarea"
 msgstr "Многострочное поле"
 
-#: functions/rcl_editfields.php:137
+#: functions/rcl_editfields.php:138
 msgid "Select"
 msgstr "Выпадающий список"
 
-#: functions/rcl_editfields.php:138
+#: functions/rcl_editfields.php:139
+msgid "MultiSelect"
+msgstr "Множественный выбор"
+
+#: functions/rcl_editfields.php:140
 msgid "Checkbox"
 msgstr "Чекбоксы"
 
-#: functions/rcl_editfields.php:139
+#: functions/rcl_editfields.php:141
 msgid "Radiobutton"
 msgstr "Радиокнопки"
 
-#: functions/rcl_editfields.php:141
+#: functions/rcl_editfields.php:143
 msgid "Phone"
 msgstr "Телефон"
 
-#: functions/rcl_editfields.php:142
+#: functions/rcl_editfields.php:144
 msgid "Number"
 msgstr "Число"
 
-#: functions/rcl_editfields.php:144
+#: functions/rcl_editfields.php:146
 msgid "Time"
 msgstr "Время"
 
-#: functions/rcl_editfields.php:145
+#: functions/rcl_editfields.php:147
 msgid "Url"
 msgstr "Ссылка"
 
-#: functions/rcl_editfields.php:280
+#: functions/rcl_editfields.php:282
 msgid "All values of a custom field with meta_key"
 msgstr "Все значения произвольных полей с этим meta_key"
 
-#: functions/rcl_editfields.php:280
+#: functions/rcl_editfields.php:282
 msgid "were removed from the Database"
 msgstr "были удалены из базы данных"
 
@@ -3177,43 +3212,43 @@ msgstr "со следующими данными:"
 msgid "If it wasnt you, then just ignore this email"
 msgstr "Если это были не вы, то просто проигнорируйте это письмо"
 
-#: functions/shortcodes.php:229
+#: functions/shortcodes.php:228
 msgid "Total users"
 msgstr "Всего пользователей"
 
-#: functions/shortcodes.php:235
+#: functions/shortcodes.php:234
 msgid "Activity"
 msgstr "Активности"
 
-#: functions/shortcodes.php:236
+#: functions/shortcodes.php:235
 msgid "Rated"
 msgstr "Рейтингу"
 
-#: functions/shortcodes.php:237
+#: functions/shortcodes.php:236
 msgid "Publications"
 msgstr "Публикациям"
 
-#: functions/shortcodes.php:260
+#: functions/shortcodes.php:259
 msgid "Users not found"
 msgstr "Пользователи не найдены"
 
-#: functions/shortcodes.php:261
+#: functions/shortcodes.php:260
 msgid "No one"
 msgstr "Никого нет"
 
-#: functions/shortcodes.php:279
+#: functions/shortcodes.php:278
 msgid "Search users"
 msgstr "Поиск пользователей"
 
-#: functions/shortcodes.php:281
+#: functions/shortcodes.php:280
 msgid "by name"
 msgstr "по имени"
 
-#: functions/shortcodes.php:282
+#: functions/shortcodes.php:281
 msgid "by login"
 msgstr "по логину"
 
-#: functions/shortcodes.php:296
+#: functions/shortcodes.php:295
 msgid ""
 "To begin to use the capabilities of your personal account, please log in or "
 "register on this site"
@@ -3276,6 +3311,10 @@ msgstr "Запомнить"
 #: templates/form-sign.php:29
 msgid "Forgot your password"
 msgstr "Напомнить пароль"
+
+#: templates/recallbar.php:8
+msgid "Personal cabinet"
+msgstr "Личный кабинет"
 
 #: templates/recallbar.php:27
 msgid "Home"

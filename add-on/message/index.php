@@ -143,7 +143,7 @@ class Rcl_Messages{
 
 	function output_style_scripts_private_mess(){
 		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'sounds_recall', plugins_url('js/ion.sound.min.js', __FILE__) );
+		wp_enqueue_script( 'sounds_recall', rcl_addon_url('js/ion.sound.min.js', __FILE__) );
 	}
 
 
