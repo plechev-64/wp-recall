@@ -45,7 +45,6 @@ class Rcl_Cart {
 
 			$slug = $custom_field['slug'];
 
-			$this->values[$key][$number_field]['other'] = $slug;
 			if($custom_field['type']=='checkbox'){
 				$chek = explode('#',$custom_field['field_select']);
 				$count_field = count($chek);
@@ -54,8 +53,9 @@ class Rcl_Cart {
                                     $slug_chek = $slug.'_'.$a;
                                     $this->values[$key][$number_field]['chek'] = $slug_chek;
 				}
-			}
-			if($custom_field['type']=='radio'){
+			}else if($custom_field['type']=='agree'){
+                            $this->values[$key][$number_field]['chek'] = $slug;
+			}else if($custom_field['type']=='radio'){
 				$radio = explode('#',$custom_field['field_select']);
 				$count_field = count($radio);
 				for($a=0;$a<$count_field;$a++){
@@ -64,7 +64,9 @@ class Rcl_Cart {
 					$this->values[$key][$number_field]['radio']['name'] .= $slug;
 					$this->values[$key][$number_field]['radio']['id'] .= $slug_chek;
 				}
-			}
+                        }else{
+                            $this->values[$key][$number_field]['other'] = $slug;
+                        }
 
 			$requared = ($custom_field['requared']==1)? '<span class="required">*</span>': '';
 			$val = (isset($custom_field['value']))? $custom_field['value']: '';
