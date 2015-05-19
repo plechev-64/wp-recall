@@ -9,7 +9,7 @@ class Rcl_Rating{
 		add_action('wp_ajax_get_votes_usercomments', array(&$this, 'get_votes_usercomments'));
 		add_action('wp_ajax_get_votes_userposts', array(&$this, 'get_votes_userposts'));
 		add_action('wp_ajax_get_votes_user', array(&$this, 'get_votes_user'));
-		add_action('wp_ajax_cancel_rating', array(&$this, 'cancel_rating'));		
+		add_action('wp_ajax_cancel_rating', array(&$this, 'cancel_rating'));
 	}
 	function add_rating_post(){
 		global $wpdb,$rcl_options,$user_ID;
@@ -316,7 +316,7 @@ class Rcl_Rating{
                     }
                 }
                 $content .= '</ul>';
-                $recall_votes .= get_block_user_rayting($content,$id_user,'posts');
+                $recall_votes .= $this->block_user_rayting($content,$id_user,'posts');
             }
 
             if($n!=0){
@@ -357,20 +357,20 @@ class Rcl_Rating{
 		echo json_encode($log);
 	exit;
 	}
-	
+
 	function block_rayting($content,$id_block,$type){
-		return '<div id="votes-'.$type.'-'.$id_block.'" class="float-window-recall">			
+		return '<div id="votes-'.$type.'-'.$id_block.'" class="float-window-recall">
 		<div id="close-votes-'.$id_block.'" class="close"><i class="fa fa-times-circle"></i></div>'
 		.$content
 		.'</div>';
 	}
-	
+
 	function block_user_rayting($content,$id_user,$type='false'){
-    
+
 		$btns = array('posts'=>'Публикации','comments'=>'Комментарии');
-		$block = '<div id="votes-user-'.$id_user.'" class="float-window-recall">			
+		$block = '<div id="votes-user-'.$id_user.'" class="float-window-recall">
 		<div id="close-votes-'.$id_user.'" class="close"><i class="fa fa-times-circle"></i></div>';
-		
+
 		foreach($btns as $key=>$title){
 			$class = ($type==$key)? 'active' : '';
 			$block .= rcl_get_button($title,'#',array('class'=> $class.' view-rayt-'.$key,'id'=>'view-rayt-'.$key.'-'.$id_user)).' ';
@@ -379,8 +379,8 @@ class Rcl_Rating{
 		$block .= '<div class="content-rayting-block">'
 		.$content
 		. '</div>'
-		. '</div>'; 
-		
+		. '</div>';
+
 		return $block;
 	}
 }
