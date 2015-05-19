@@ -862,7 +862,7 @@ global $wpdb,$post;
 	}
 	/**/
 
-	$option_gr = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."groups_options"));
+	$option_gr = $wpdb->get_results("SELECT * FROM ".RCL_PREF."groups_options");
 
 	foreach((array)$option_gr as $option){
 		$opt_groups[$option->group_id] = $option->option_value;

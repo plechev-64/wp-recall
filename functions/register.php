@@ -7,53 +7,53 @@ global $wpdb;
     if($regcode==$_GET['rgcode']){
         if ( $user = get_user_by('login', $reglogin) ){
             wp_update_user( array ('ID' => $user->ID, 'role' => get_option('default_role')) ) ;
-            $time_action = date("Y-m-d H:i:s");
+            $time_action = current_time('mysql');
             $action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user = '%d'",$user->ID));
             if(!$action)$wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => $time_action ) );
 
             $creds = array();
             $creds['user_login'] = $reglogin;
             $creds['user_password'] = $regpass;
-            $creds['remember'] = true;			
+            $creds['remember'] = true;
             $sign = wp_signon( $creds, false );
 
             if ( is_wp_error($sign) ){
                     wp_redirect( get_bloginfo('wpurl').'?getconfirm=needed' ); exit;
-            }else{				
-                    rcl_update_timeaction_user();					
+            }else{
+                    rcl_update_timeaction_user();
                     wp_redirect(rcl_get_authorize_url($user->ID) ); exit;
             }
-        }			
+        }
     }else{
         wp_redirect( get_bloginfo('wpurl').'?getconfirm=needed' ); exit;
-    }	
+    }
 }
 add_action('init', 'rcl_confirm_user_resistration_activate');
 function rcl_confirm_user_resistration_activate(){
 global $rcl_options;
   if (isset($_GET['rgcode'])&&isset($_GET['rglogin'])){
-	if($rcl_options['confirm_register_recall']==1) add_action( 'wp', 'rcl_confirm_user_registration' ); 
+	if($rcl_options['confirm_register_recall']==1) add_action( 'wp', 'rcl_confirm_user_registration' );
   }
 }
 
 function rcl_get_register_user(){
 	global $wpdb,$rcl_options;
-	$pass = sanitize_text_field($_POST['pass-user']);	
-	$email = sanitize_email($_POST['email-user']);	
+	$pass = sanitize_text_field($_POST['pass-user']);
+	$email = sanitize_email($_POST['email-user']);
 	$login = sanitize_user($_POST['login-user']);
-        
+
         //print_r($_POST);exit;
-	
+
 	$ref = apply_filters('url_after_register_rcl',esc_url($_POST['referer-rcl']));
 
 	$get_fields = get_option( 'custom_profile_field' );
 	$requared = true;
-	if($get_fields){	
+	if($get_fields){
             foreach((array)$get_fields as $custom_field){
-                
+
                 $custom_field = apply_filters('chek_custom_field_regform',$custom_field);
                 if(!$custom_field) continue;
-                
+
                 $slug = $custom_field['slug'];
                 if($custom_field['requared']==1&&$custom_field['register']==1){
 
@@ -69,7 +69,7 @@ function rcl_get_register_user(){
                             }
                         }
                     }else{
-                        if(!$_POST[$slug]) $requared = false;	
+                        if(!$_POST[$slug]) $requared = false;
                     }
                 }
             }
@@ -90,17 +90,17 @@ function rcl_get_register_user(){
 		if($res_login){
 			wp_redirect(rcl_format_url($ref).'action-rcl=register&error=login-us');exit;
 		}
-		if($res_email){			
+		if($res_email){
 			wp_redirect(rcl_format_url($ref).'action-rcl=register&error=email-us');exit;
-		}		
-		if(!$correctemail){			
+		}
+		if(!$correctemail){
 			wp_redirect(rcl_format_url($ref).'action-rcl=register&error=email');exit;
 		}
-                
-	}else{	
-            
+
+	}else{
+
             do_action('pre_register_user_rcl',$ref);
-            
+
             $fio='';
             $userdata = array(
                     'user_pass' => $pass
@@ -112,21 +112,21 @@ function rcl_get_register_user(){
                     ,'first_name' => $fio
                     ,'rich_editing' => 'true'
             );
-            $user_id = wp_insert_user( $userdata );						
+            $user_id = wp_insert_user( $userdata );
 	}
-        
+
         if($user_id){
-            
-            $regcode = md5($login);	
-            $subject = __('Confirm your registration!','rcl');														
+
+            $regcode = md5($login);
+            $subject = __('Confirm your registration!','rcl');
             $textmail = '
             <p>'.__('You or someone else signed up on the website','rcl').' "'.get_bloginfo('name').'" '.__('with the following data:','rcl').'</p>
             <p>'.__('Nickname','rcl').': '.$login.'</p>
             <p>'.__('Password','rcl').': '.$pass.'</p>';
-            
+
             $url = get_bloginfo('wpurl').'/?rglogin='.$login.'&rgpass='.$pass.'&rgcode='.$regcode;
 
-            if($rcl_options['confirm_register_recall']==1){				
+            if($rcl_options['confirm_register_recall']==1){
                     wp_update_user( array ('ID' => $user_id, 'role' => 'need-confirm') ) ;
                     $res['recall']='<p style="text-align:center;color:green;">Регистрация завершена!<br />Для подтверждения регистрации перейдите по ссылке в письме, высланном на указанную вами почту.</p>';
                     $textmail .= '<p>Если это были вы, то подтвердите свою регистрацию перейдя по ссылке ниже:</p>
@@ -138,11 +138,11 @@ function rcl_get_register_user(){
                     $wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user_id, 'time_action' => '' ));
             }
 
-            $textmail .= '<p>'.__('If it wasnt you, then just ignore this email','rcl').'</p>';				
-            rcl_mail($email, $subject, $textmail);	
+            $textmail .= '<p>'.__('If it wasnt you, then just ignore this email','rcl').'</p>';
+            rcl_mail($email, $subject, $textmail);
 
             wp_redirect(rcl_format_url($ref).'action-rcl=login&success=true');exit;
-            
+
         }
 }
 
@@ -150,7 +150,7 @@ add_action('user_register','rcl_register_user_data',10);
 function rcl_register_user_data($user_id){
 
     update_user_meta($user_id, 'show_admin_bar_front', 'false');
-			
+
     $cf = new Rcl_Custom_Fields();
     $cf->register_user_metas($user_id);
 }
@@ -158,7 +158,7 @@ function rcl_register_user_data($user_id){
 add_action('init', 'rcl_get_register_user_activate');
 function rcl_get_register_user_activate ( ) {
   if ( isset( $_POST['submit-register'] ) ) {
-	if( !wp_verify_nonce( $_POST['_wpnonce'], 'register-key-rcl' ) ) return false;	
+	if( !wp_verify_nonce( $_POST['_wpnonce'], 'register-key-rcl' ) ) return false;
     add_action( 'wp', 'rcl_get_register_user' );
   }
 }

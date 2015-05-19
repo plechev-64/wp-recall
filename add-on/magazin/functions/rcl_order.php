@@ -1,16 +1,16 @@
 <?php
 class Rcl_Order {
-    
+
     public $order_id;
-    
+
     function __construct(){
-        
+
     }
-    
+
     function chek_requared_fields($get_fields,$key=false){
         $requared = true;
         if($get_fields){
-            //print_r($_POST);		
+            //print_r($_POST);
             foreach($get_fields as $custom_field){
 
                 if($key=='profile'&&$custom_field['order']!=1) continue;
@@ -40,7 +40,7 @@ class Rcl_Order {
         }
         return $requared;
     }
-    
+
     function chek_amount(){
         global $rmag_options;
         $false_amount = false;
@@ -63,10 +63,10 @@ class Rcl_Order {
                 }
             }
 
-        }       
+        }
         return $false_amount;
     }
-    
+
     function get_order_id(){
         global $wpdb;
         $num_max = $wpdb->get_var("SELECT MAX(order_id) FROM ".RMAG_PREF ."orders_history");
@@ -74,27 +74,27 @@ class Rcl_Order {
         else $this->order_id = rand(0,100);
         return $this->order_id;
     }
-    
+
     function insert_order($order_id,$user_id=false){
         global $wpdb,$user_ID,$rmag_options,$active_addons;
-        
+
         if(!$user_id) $user_id = $user_ID;
-        
+
         $cart = apply_filters('cart_values_rcl',$_SESSION['cart']);
-        
+
         //print_r($cart);exit;
 
         foreach($cart as $prod_id=>$val){
 
             $status = 1;
             $metas = rcl_get_postmeta_array($prod_id);
-            
+
             $price = $val['price'];
 
             if(isset($active_addons['users-market'])&&$metas['availability_product']=='empty'){ //если товар цифровой
-                if(!$price) $status = 3;	
+                if(!$price) $status = 3;
             }else{
-            
+
                 if(!$price) $status = 2;
                 $amount = $metas['amount_product'];
                 if($rmag_options['products_warehouse_recall']==1&&$amount){ //формируем резерв товара
@@ -105,46 +105,46 @@ class Rcl_Order {
                     update_post_meta($prod_id, 'amount_product', $amount);
                     update_post_meta($prod_id, 'reserve_product', $reserve);
                 }
-                
+
             }
-            $res = $wpdb->insert( RMAG_PREF ."orders_history", 
-                array( 
+            $res = $wpdb->insert( RMAG_PREF ."orders_history",
+                array(
                     'order_id' => $order_id,
-                    'user_id' => $user_id, 
+                    'user_id' => $user_id,
                     'product_id' => $prod_id,
-                    'product_price' => $price, 
-                    'numberproduct' => $val['number'], 
-                    'order_date' => date("Y-m-d H:i:s"),
+                    'product_price' => $price,
+                    'numberproduct' => $val['number'],
+                    'order_date' => current_time('mysql'),
                     'order_status' => $status
                     )
                 );
-            
+
         }
         do_action('insert_order_rcl',$user_id,$order_id);
-        
+
         session_destroy();
-        
+
         return $res;
     }
-    
+
     function detail_order($get_fields,$user_id=false){
-        
+
         $order_custom_field = '<p><b>IP-address:</b> '.$this->get_ip().'</p>';
         $cf = new Rcl_Custom_Fields();
 
-        foreach((array)$get_fields as $custom_field){				
+        foreach((array)$get_fields as $custom_field){
             $slug = $custom_field['slug'];
-            
+
             if($user_id&&$custom_field['order']!=1) continue;
-            
+
             if($user_id) $val = get_the_author_meta($slug,$user_id);
             $val = $_POST[$slug];
-            
+
             $order_custom_field .= $cf->get_field_value($custom_field,$val);
         }
         return $order_custom_field;
     }
-    
+
     function get_ip(){
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip=$_SERVER['HTTP_CLIENT_IP'];
@@ -155,7 +155,7 @@ class Rcl_Order {
         }
         return $ip;
     }
-    
+
     function insert_detail_order($get_fields){
         global $wpdb;
 
@@ -170,12 +170,12 @@ class Rcl_Order {
         );
         return $order_custom_field;
     }
-    
+
     function send_mail($order_custom_field,$table_order,$user_id=false,$args=false){
         global $user_ID,$rmag_options;
-        
+
         if(!$user_id) $user_id = $user_ID;
-		
+
 		$reg_user = ($rmag_options['noreg_order'])? false: true;
 
         $subject = 'Данные заказа №'.$this->order_id;
@@ -190,7 +190,7 @@ class Rcl_Order {
         <p>Заказ №'.$this->order_id.' получил статус "Не оплачено".</p>
         <h3>Детали заказа:</h3>
         '.$table_order.'
-        <p>Ссылка для управления заказом в админке:</p>  
+        <p>Ссылка для управления заказом в админке:</p>
         <p>'.admin_url('admin.php?page=manage-rmag&order='.$this->order_id).'</p>';
 
         $admin_email = $rmag_options['admin_email_magazin_recall'];
@@ -199,12 +199,12 @@ class Rcl_Order {
         }else{
             $users = get_users( array('role' => 'administrator') );
             foreach((array)$users as $userdata){
-                    $email = $userdata->user_email;									
+                    $email = $userdata->user_email;
                     rcl_mail($email, $subject, $textmail);
             }
         }
 
-        $email = get_the_author_meta('user_email',$user_id);			
+        $email = get_the_author_meta('user_email',$user_id);
         $textmail = '
         <p>Вы сформировали заказ в магазине "'.get_bloginfo('name').'".</p>
         <h3>Информация о пользователе:</h3>
@@ -212,30 +212,30 @@ class Rcl_Order {
         <p><b>Email</b>: '.$email.'</p>
         <p>Заказ №'.$this->order_id.' получил статус "Не оплачено".</p>
         <h3>Детали заказа:</h3>
-        '.$table_order;	
+        '.$table_order;
         if($args&&$reg_user){
             $subject = 'Данные вашего аккаунта и заказа №'.$this->order_id;
-            $textmail .= '<p>Для вас был создан личный кабинет покупателя, где вы сможете следить за сменой статусов ваших заказов, формировать новые заказы и оплачивать их доступными способами</p>					
-            <p>Ваши данные для авторизации в вашем личном кабинете:</p>									
+            $textmail .= '<p>Для вас был создан личный кабинет покупателя, где вы сможете следить за сменой статусов ваших заказов, формировать новые заказы и оплачивать их доступными способами</p>
+            <p>Ваши данные для авторизации в вашем личном кабинете:</p>
             <p>Логин: '.$args['user_login'].'</p>
-            <p>Пароль: '.$args['user_password'].'</p>					
+            <p>Пароль: '.$args['user_password'].'</p>
             <p>В дальнейшем используйте свой личный кабинет для новых заказов на нашем сайте.</p>';
         }
         $link = rcl_format_url(get_author_posts_url($user_id),'order');
         $textmail .= '<p>Ссылка для управления заказами: <a href="'.$link.'">'.$link.'</a></p>';
-        
+
         $mail = array(
             'email'=>$email,
             'user_id'=>$user_id,
             'content'=>$textmail,
             'subject'=>$subject
         );
-        
+
         $maildata = apply_filters('mail_insert_order_rcl',$mail,$this->order_id);
-        
+
         rcl_mail($maildata['email'], $maildata['subject'], $maildata['content']);
     }
-    
+
     function get_summ($order_data){
         foreach((array)$order_data as $sing_order){ $sumprise += "$sing_order->price"*"$sing_order->count"; }
         return $sumprise;
