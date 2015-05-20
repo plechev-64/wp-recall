@@ -192,6 +192,7 @@
 #rcl-popup #user-medias .media-list{
 	list-style:none;
 	overflow:hidden;
+        clear: both;
 }
 #rcl-popup #user-medias .media-list li{
 	float:left;

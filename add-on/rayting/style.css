@@ -82,7 +82,7 @@ span.rayting-rcl span {
     margin: 0 auto;
     padding: 1px 4px;
     text-align: center;
-    width: 50px;
+    min-width: 50px;
 	display:block;
 	line-height: 1.4;
 }
