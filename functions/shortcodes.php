@@ -355,15 +355,8 @@ function rcl_slider($atts, $content = null){
             $thumb_url = wp_get_attachment_image_src( $thumb_id, $size);
             $plslider .= '<li><a href="'.get_permalink($post->ID).'">';
             if($type='products'){
-                $price = get_post_meta($post->ID,'price-products',1);
-                $class = 'price-prod';
-                if(!$price){
-                    $price = __('Free','rcl');
-                    $class .= ' no-price';
-                }else{
-                    $price .= rcl_get_primary_currency(1);
-                }
-                $plslider .= '<span class="'.$class.'"> '.$price.'</span>';
+
+                $plslider .= rcl_get_price($post->ID);
             }
             $plslider .= '<img src='.$thumb_url[0].'>';
             $post_content = strip_tags($post->post_content);

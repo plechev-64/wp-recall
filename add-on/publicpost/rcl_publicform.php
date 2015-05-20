@@ -274,7 +274,7 @@ function rcl_publication_termlist($tax=false){
     }
     if(!$catlist) return false;
 
-    echo '<label>Категория:</label>'.$catlist;
+    echo '<label>'.__('Category','rcl').':</label>'.$catlist;
 }
 
 function get_public_catlist(){

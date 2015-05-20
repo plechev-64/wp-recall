@@ -1069,7 +1069,7 @@ class Rcl_Messages{
 			$this->user_lk = intval($_POST['id_user']);
 			$id_ban = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user='%d' AND ban='%d'",$user_ID,$this->user_lk));
 			if($id_ban){
-				$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."black_list_user WHERE ID='$d'",$id_ban));
+				$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."black_list_user WHERE ID='%d'",$id_ban));
 			}
 			$log['id_user']=$this->user_lk;
 			$log['otvet']=100;

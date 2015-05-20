@@ -11,8 +11,8 @@ function rcl_get_currency_list(){
 	return array(
 		'RUB' => array('рублей','руб.','р.'),
 		'UAH' => array('гривен','грн.','грн.'),
-		'USD' => array('долларов','долл.','долл.'),
-		'EUR' => array('евро','евр.','евр.'),
+		'USD' => array('$','$','$'),
+		'EUR' => array('€','€','€'),
 	);
 }
 
@@ -81,7 +81,7 @@ function rcl_add_primary_currency_price($price){
 function rcl_get_order($order_id){
     global $wpdb,$order,$product;
     $orderdata = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."rmag_orders_history WHERE order_id='%d'",$order_id));
-    if(!$orderdata) return false;	
+    if(!$orderdata) return false;
     return rcl_setup_orderdata($orderdata);
 }
 
@@ -94,12 +94,12 @@ function rcl_get_order_details($order_id){
 function rcl_get_orders($args){
 	global $wpdb;
 	$date = array();
-	
+
 	$sql = "SELECT * FROM ".RMAG_PREF ."orders_history";
-	
+
 	$orderby = (isset($args['orderby']))? "ORDER BY ".$args['orderby']:"ORDER BY ID";
 	$order = (isset($args['order']))? $args['order']:"DESC";
-	
+
 	if(isset($args['order_id'])) $wheres[] = "order_id IN ('".$args['order_id']."')";
 	if(isset($args['user_id'])) $wheres[] = "user_id='".$args['user_id']."'";
 	if(isset($args['order_status'])) $wheres[] = "order_status='".$args['order_status']."'";
@@ -107,24 +107,24 @@ function rcl_get_orders($args){
 	if(isset($args['product_id'])) $wheres[] = "product_id IN ('".$args['product_id']."')";
 	if(isset($args['year'])) $date[] = $args['year'];
 	if(isset($args['month'])) $date[] = $args['month'];
-	
+
 	if($date){
 		$date = implode('-',$date);
 		$wheres[] = "order_date  LIKE '%$date%'";
 	}
-	
+
 	if($wheres) $where = implode(' AND ',$wheres);
 	if($where) $sql .= " WHERE ".$where;
 	$sql .= " $orderby $order";
-	
+
 	$rdrs = $wpdb->get_results($sql);
-	//print_r($rdrs);		
+	//print_r($rdrs);
 	if(!$rdrs) return false;
-			
+
 	foreach($rdrs as $rd){
 		$orders[$rd->order_id][] = $rd;
-	} 
-	
+	}
+
 	return $orders;
 }
 
@@ -150,15 +150,15 @@ function rcl_get_product_excerpt($desc){
 
     $excerpt = strip_tags($post->post_content);
 
-    if(!$excerpt){       
+    if(!$excerpt){
         if(strlen($excerpt) > $desc){
             $excerpt = substr($excerpt, 0, $desc);
             $excerpt = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ...', $excerpt);
         }
     }
-    
+
     $excerpt = apply_filters('rcl_get_product_excerpt',$excerpt);
-    
+
     return $excerpt;
 }
 
@@ -187,13 +187,13 @@ function rcl_get_currency($cur=false,$type=0){
 			$crs[$cur] = $cur;
 		}
 		return $crs;
-	} 
+	}
 	if(!isset($curs[$cur][$type])) return false;
 	return $curs[$cur][$type];
 }
 
 function rcl_type_currency_list($post_id){
-	global $rmag_options;	
+	global $rmag_options;
 	if($rmag_options['multi_cur']){
 		$type = get_post_meta($post_id,'type_currency',1);
 		$curs = array($rmag_options['primary_cur'],$rmag_options['secondary_cur']);
@@ -208,10 +208,10 @@ function rcl_type_currency_list($post_id){
 	echo $conts;
 }
 function rcl_get_current_type_currency($post_id){
-	global $rmag_options;	
+	global $rmag_options;
 	if($rmag_options['multi_cur']){
 		$type = get_post_meta($post_id,'type_currency',1);
-		$curs = array($rmag_options['primary_cur'],$rmag_options['secondary_cur']);		
+		$curs = array($rmag_options['primary_cur'],$rmag_options['secondary_cur']);
 		if($type==$curs[0]||$type==$curs[1]) $current = $type;
 		else $current = $curs[0];
 	}else{
@@ -245,20 +245,20 @@ function rcl_secondary_currency($type=0){
 //Цена товара
 function rcl_get_number_price($prod_id){
 	$price = get_post_meta($prod_id,'price-products',1);
-    return apply_filters('rcl_get_number_price',$price,$prod_id); 
+    return apply_filters('rcl_get_number_price',$price,$prod_id);
 }
 
 add_filter('rcl_get_number_price','rcl_get_currency_price',10,2);
 function rcl_get_currency_price($price,$prod_id){
-	global $rmag_options;	
+	global $rmag_options;
 	if(!$rmag_options['multi_cur']) return $price;
-	
+
 	$currency = (get_post_meta($prod_id,'type_currency',1))?get_post_meta($prod_id,'type_currency',1):$rmag_options['primary_cur'];
 	if($currency==$rmag_options['primary_cur']) return $price;
 	$curse = (get_post_meta($prod_id,'curse_currency',1))?get_post_meta($prod_id,'curse_currency',1):$rmag_options['curse_currency'];
-	$price = ($curse)? $curse*$price: $price;		
-		
-	return $price;
+	$price = ($curse)? $curse*$price: $price;
+
+	return round($price);
 }
 
 add_filter('rcl_get_number_price','rcl_get_margin_product',20,2);
@@ -267,12 +267,12 @@ function rcl_get_margin_product($price,$prod_id){
 	$margin = (get_post_meta($prod_id,'margin_product',1))?get_post_meta($prod_id,'margin_product',1):$rmag_options['margin_product'];
 	if(!$margin) return $price;
 	$price = $price + ($price*$margin/100);
-	return $price;
+	return round($price);
 }
 
 function rcl_get_price($prod_id){
     $price = rcl_get_number_price($prod_id);
-	return apply_filters('rcl_get_price',$price,$prod_id); 
+	return apply_filters('rcl_get_price',$price,$prod_id);
 }
 
 add_filter('rcl_get_price','rcl_filters_price',10,2);
@@ -287,15 +287,15 @@ function rcl_get_null_price_content($price){
 }
 
 add_filter('not_null_price','rcl_get_not_null_price_content',20);
-function rcl_get_not_null_price_content($price){     
+function rcl_get_not_null_price_content($price){
     return '<span class="price-prod">'.$price.'</span>';
 }
 
 function rcl_get_chart_orders($orders){
     global $order,$chartData,$chartArgs;
-    
+
     if(!$orders) return false;
-    
+
     $chartArgs = array();
     $chartData = array(
         'title' => 'Динамика доходов',
@@ -304,19 +304,19 @@ function rcl_get_chart_orders($orders){
             array('"Дни/Месяцы"', '"Платежи (шт.)"', '"Доход (тыс.)"')
         )
     );
-    
-    foreach($orders as $order){ 
+
+    foreach($orders as $order){
         rcl_setup_orderdata($order);
         rcl_setup_chartdata($order->order_date,$order->order_price);
     }
-    
+
     return rcl_get_chart($chartArgs);
 }
 
 //Формирование массива данных заказа
 function rcl_setup_orderdata($orderdata){
 	global $order,$product;
-	
+
 	$order = (object)array(
 		'order_id'=>0,
 		'order_price'=>0,
@@ -337,12 +337,12 @@ function rcl_setup_orderdata($orderdata){
 		if($product->order_status<$order->order_status) $order->order_status = $product->order_status;
 		$order->products[] = $product;
 	}
-	
+
 	return $order;
 }
 function rcl_setup_productdata($productdata){
 	global $product;
-	
+
 	$product = (object)array(
 		'product_id'=>$productdata->product_id,
 		'product_price'=>$productdata->product_price,
@@ -358,12 +358,12 @@ function rcl_setup_productdata($productdata){
 }
 function rcl_setup_cartdata($productdata){
 	global $product,$CartData;
-	
+
 	$price = $CartData->cart[$productdata->ID]['price'];
 	$numprod = $CartData->cart[$productdata->ID]['number'];
 	$product_price = $price * $numprod;
 	$price = apply_filters('cart_price_product',$price,$productdata->ID);
-	
+
 	$product = (object)array(
 		'product_id'=>$productdata->ID,
 		'product_price'=>$CartData->cart[$productdata->ID]['price'],
@@ -385,15 +385,15 @@ function rcl_payment_order($order_id,$user_id=false){
 
     $order = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."rmag_orders_history WHERE order_id='%d'",$order_id));
     rcl_setup_orderdata($order);
-    
+
     if(!$user_id) $user_id = $order->order_author;
-    
+
     rcl_remove_reserve($order_id);
-    
+
     rcl_update_status_order($order_id,2);
-		
+
     //Если работает реферальная система и партнеру начисляются проценты с покупок его реферала
-    if(function_exists('add_referall_incentive_order')) 
+    if(function_exists('add_referall_incentive_order'))
             add_referall_incentive_order($user_id,$order->order_price);
 
     $get_fields = get_option( 'custom_profile_field' );
@@ -401,14 +401,14 @@ function rcl_payment_order($order_id,$user_id=false){
     if($get_fields){
         $cf = new Rcl_Custom_Fields();
 
-        foreach((array)$get_fields as $custom_field){				
+        foreach((array)$get_fields as $custom_field){
             $slug = $custom_field['slug'];
             $meta = get_the_author_meta($slug,$user_id);
             $show_custom_field .= $cf->get_field_value($custom_field,$meta);
         }
     }
-    
-    $table_order = rcl_get_include_template('order.php',__FILE__);	
+
+    $table_order = rcl_get_include_template('order.php',__FILE__);
 
     $args = array(
             'role' => 'administrator'
@@ -428,19 +428,19 @@ function rcl_payment_order($order_id,$user_id=false){
     <p>Заказ №'.$order_id.' получил статус "Оплачено".</p>
     <h3>Детали заказа:</h3>
     '.$table_order.'
-    <p>Ссылка для управления заказом в админке:</p>  
+    <p>Ссылка для управления заказом в админке:</p>
     <p>'.admin_url('admin.php?page=manage-rmag&order='.$order_id).'</p>';
 
     if($admin_email){
         rcl_mail($admin_email, $subject, $textmail);
     }else{
         foreach((array)$users as $userdata){
-                $email = $userdata->user_email;									
+                $email = $userdata->user_email;
                 rcl_mail($email, $subject, $textmail);
         }
     }
 
-    $email = get_the_author_meta('user_email',$user_id);				
+    $email = get_the_author_meta('user_email',$user_id);
     $textmail = '
     <p>Вы оплатили заказ в магазине "'.get_bloginfo('name').'" средствами со своего личного счета.</p>
     <h3>Информация о покупателе:</h3>
@@ -450,7 +450,7 @@ function rcl_payment_order($order_id,$user_id=false){
     <p>Заказ №'.$order_id.' получил статус "Оплачено".</p>
     <h3>Детали заказа:</h3>
     '.$table_order.'
-    <p>Ваш заказ оплачен и поступил в обработку. Вы можете следить за сменой его статуса из своего личного кабинета</p>';				
+    <p>Ваш заказ оплачен и поступил в обработку. Вы можете следить за сменой его статуса из своего личного кабинета</p>';
     rcl_mail($email, $subject, $textmail);
 
     do_action('payorder_user_count_rcl',$user_id,$order->order_price,'Оплата заказа №'.$order_id,1);

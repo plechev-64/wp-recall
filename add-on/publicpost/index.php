@@ -609,8 +609,7 @@ function rcl_get_html_attachment($attach_id,$mime_type){
 		<label>
 			".rcl_get_insert_image($attach_id,$mime[0]);
 			if($mime[0]=='image') $rt .= "<span>
-				<input type='checkbox' class='thumb-foto' ".checked(get_post_thumbnail_id( $editpost ),$attach_id,false)." id='thumb-".$attach_id."' name='thumb[".$attach_id."]' value='1'> - главное
-			</span>";
+				<input type='checkbox' class='thumb-foto' ".checked(get_post_thumbnail_id( $editpost ),$attach_id,false)." id='thumb-".$attach_id."' name='thumb[".$attach_id."]' value='1'> - ".__('featured','rcl')."</span>";
 		$rt .= "</label>
 	</li>";
 	return $rt;

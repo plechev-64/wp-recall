@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-05-18 19:45+0400\n"
+"POT-Creation-Date: 2015-05-20 16:47+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -132,7 +132,7 @@ msgstr ""
 msgid "Disable bookmarks for publication"
 msgstr "Отключить закладки для публикации"
 
-#: add-on/bookmarks/index.php:140 add-on/gallery-recall/index.php:86
+#: add-on/bookmarks/index.php:140 add-on/gallery-recall/index.php:50
 #: add-on/groups/index.php:288 add-on/money-wallet/index.php:58
 #: add-on/profile/index.php:144 add-on/profile/index.php:541
 #: add-on/profile/index.php:546 add-on/profile/index.php:551
@@ -146,7 +146,7 @@ msgstr "Отключить закладки для публикации"
 msgid "No"
 msgstr "Нет"
 
-#: add-on/bookmarks/index.php:141 add-on/gallery-recall/index.php:86
+#: add-on/bookmarks/index.php:141 add-on/gallery-recall/index.php:50
 #: add-on/groups/index.php:288 add-on/money-wallet/index.php:58
 #: add-on/profile/index.php:144 add-on/profile/index.php:541
 #: add-on/profile/index.php:546 add-on/profile/index.php:551
@@ -165,7 +165,7 @@ msgid "Name bookmark"
 msgstr "Имя закладки"
 
 #: add-on/bookmarks/index.php:170 add-on/bookmarks/index.php:270
-#: add-on/gallery-recall/index.php:167 add-on/publicpost/classes.php:245
+#: add-on/gallery-recall/index.php:131 add-on/publicpost/classes.php:245
 msgid "Add"
 msgstr "Добавить"
 
@@ -195,8 +195,8 @@ msgstr "Имя группы"
 #: add-on/bookmarks/index.php:344 add-on/bookmarks/index.php:363
 #: add-on/bookmarks/index.php:383 add-on/bookmarks/index.php:405
 #: add-on/bookmarks/index.php:430 add-on/bookmarks/index.php:461
-#: add-on/gallery-recall/index.php:451 add-on/gallery-recall/index.php:490
-#: add-on/gallery-recall/index.php:582
+#: add-on/gallery-recall/index.php:415 add-on/gallery-recall/index.php:454
+#: add-on/gallery-recall/index.php:546
 msgid "Error"
 msgstr "Ошибка"
 
@@ -298,7 +298,7 @@ msgid "This photo does not exist!"
 msgstr "Это изображение не найдено!"
 
 #: add-on/gallery-recall/class_gallery.php:1
-#: add-on/gallery-recall/index.php:65
+#: add-on/gallery-recall/index.php:29
 msgid "Gallery user"
 msgstr "Галерея пользователя"
 
@@ -310,40 +310,40 @@ msgstr "Ссылка"
 msgid "Added comments"
 msgstr "Добавленные комментарии"
 
-#: add-on/gallery-recall/index.php:62
+#: add-on/gallery-recall/index.php:26
 msgid "Gallery settings-user"
 msgstr "Настройки галереи пользователя"
 
-#: add-on/gallery-recall/index.php:67
+#: add-on/gallery-recall/index.php:31
 msgid "Fancybox"
 msgstr ""
 
-#: add-on/gallery-recall/index.php:70
+#: add-on/gallery-recall/index.php:34
 msgid "Do not use"
 msgstr "Не использовать"
 
-#: add-on/gallery-recall/index.php:70
+#: add-on/gallery-recall/index.php:34
 msgid "Use"
 msgstr "Использовать"
 
-#: add-on/gallery-recall/index.php:73
+#: add-on/gallery-recall/index.php:37
 msgid "The maximum size of images, Mb"
 msgstr "Максимальный размер изображения, МБ"
 
-#: add-on/gallery-recall/index.php:75 add-on/publicpost/index.php:156
+#: add-on/gallery-recall/index.php:39 add-on/publicpost/index.php:156
 msgid ""
 "To limit image uploads to publish this value in megabytes. By default, 2MB"
 msgstr "Ограничение размера загружаемого изображения, по-умолчанию 2МБ"
 
-#: add-on/gallery-recall/index.php:76
+#: add-on/gallery-recall/index.php:40
 msgid "The authorized number of images"
 msgstr "Разрешенное кол-во изображений"
 
-#: add-on/gallery-recall/index.php:79 add-on/groups/index.php:281
+#: add-on/gallery-recall/index.php:43 add-on/groups/index.php:281
 msgid "Rating value publications"
 msgstr "Значение рейтинга публикаций"
 
-#: add-on/gallery-recall/index.php:81
+#: add-on/gallery-recall/index.php:45
 msgid ""
 "Specify a value of negative and positive evaluations for publishing images. "
 "The default is 1"
@@ -351,52 +351,52 @@ msgstr ""
 "Укажите значение положительного и отрицательного голоса за публикацию "
 "изображения, по-умолчанию 1"
 
-#: add-on/gallery-recall/index.php:83
+#: add-on/gallery-recall/index.php:47
 msgid "The influence of the rating of the images to the rating of the author"
 msgstr "Влияние рейтинга изображений в галерее на общий рейтинг автора"
 
-#: add-on/gallery-recall/index.php:124
+#: add-on/gallery-recall/index.php:88
 msgid "Gallery"
 msgstr "Галерея"
 
-#: add-on/gallery-recall/index.php:151
+#: add-on/gallery-recall/index.php:115
 msgid "Add images to your download queue"
 msgstr "Добавить изображение в очередь загрузки"
 
-#: add-on/gallery-recall/index.php:171
+#: add-on/gallery-recall/index.php:135
 msgid "Load"
 msgstr "Загрузка"
 
-#: add-on/gallery-recall/index.php:181
+#: add-on/gallery-recall/index.php:145
 msgid "Save order"
 msgstr "Сохранить порядок"
 
-#: add-on/gallery-recall/index.php:262
+#: add-on/gallery-recall/index.php:226
 msgid "The user`s photo"
 msgstr "Пользовательские фото"
 
-#: add-on/gallery-recall/index.php:394 add-on/gallery-recall/index.php:405
+#: add-on/gallery-recall/index.php:358 add-on/gallery-recall/index.php:369
 #: add-on/message/index.php:1257
 msgid "Reply"
 msgstr "Ответить"
 
-#: add-on/gallery-recall/index.php:399
+#: add-on/gallery-recall/index.php:363
 msgid "Cancel reply"
 msgstr "отмена ответа"
 
-#: add-on/gallery-recall/index.php:428
+#: add-on/gallery-recall/index.php:392
 msgid "The material is updated"
 msgstr "Материал обновлен"
 
-#: add-on/gallery-recall/index.php:433
+#: add-on/gallery-recall/index.php:397
 msgid "No data"
 msgstr "Данных нет"
 
-#: add-on/gallery-recall/index.php:590
+#: add-on/gallery-recall/index.php:554
 msgid "Do you want to delete?"
 msgstr "Действительно удалить?"
 
-#: add-on/gallery-recall/index.php:665 add-on/gallery-recall/index.php:677
+#: add-on/gallery-recall/index.php:629 add-on/gallery-recall/index.php:641
 msgid "You have reached the limit of downloads"
 msgstr "Вы достигли лимита загрузки"
 
@@ -1828,7 +1828,7 @@ msgstr "Только хозяину личного кабинета"
 msgid "Show everyone including guests"
 msgstr "Показывать всем, включая гостей"
 
-#: add-on/publicpost/index.php:116
+#: add-on/publicpost/index.php:116 add-on/publicpost/rcl_publicform.php:277
 msgid "Category"
 msgstr "Категории"
 
@@ -2028,11 +2028,15 @@ msgstr "Удалить все поля"
 msgid "Вы уверены?"
 msgstr "Вы уверены?"
 
-#: add-on/publicpost/index.php:388 add-on/publicpost/index.php:663
+#: add-on/publicpost/index.php:388 add-on/publicpost/index.php:662
 msgid "Arbitrary form fields publishing"
 msgstr "Произвольные поля формы публикации"
 
-#: add-on/publicpost/index.php:651
+#: add-on/publicpost/index.php:612
+msgid "featured"
+msgstr "главное"
+
+#: add-on/publicpost/index.php:650
 msgid "The publication has been successfully removed!"
 msgstr "Публикация была успешно удалена!"
 
