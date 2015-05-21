@@ -391,6 +391,4 @@ function rcl_payment_order($order_id,$user_id=false){
     rcl_mail($email, $subject, $textmail);
 
     do_action('payorder_user_count_rcl',$user_id,$order->order_price,'Оплата заказа №'.$order_id,1);
-
-    do_action('payment_rcl',$user_id,$order->order_price,$order_id,2);
 }
