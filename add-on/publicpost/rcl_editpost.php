@@ -183,7 +183,7 @@ class Rcl_EditPost {
         $postdata = array(
             'post_type'=>$this->post_type,
             'post_title'=>sanitize_text_field($_POST['post_title']),
-            'post_content'=>wp_filter_post_kses( $_POST['post_content'] ),
+            'post_content'=> $_POST['post_content'],
             'tags_input'=>sanitize_text_field($_POST['post_tags'])
         );
 

@@ -13,7 +13,6 @@ require_once('functions/rcl_custom_fields.php');
 require_once('functions/register.php');
 require_once('functions/authorize.php');
 require_once('functions/loginform.php');
-require_once('functions/posts-list.php');
 
 if(class_exists('ReallySimpleCaptcha')){
     require_once('functions/captcha.php');
