@@ -225,7 +225,7 @@ function rcl_short_user_list($atts, $content = null){
         $searchform = '';
         $userlist .= apply_filters('users_search_form_rcl',$searchform);
 
-        $userlist .='<h3>'.__('Total users').': '.$count_user.'</h3>';
+        $userlist .='<h3>'.__('Total users','rcl').': '.$count_user.'</h3>';
 
         $rqst = $UserList->search_request();
         $perm = rcl_format_url(get_permalink($post->ID).'?'.$rqst);
