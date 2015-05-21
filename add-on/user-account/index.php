@@ -182,13 +182,13 @@ function rcl_admin_statistic_cashe(){
             else $cntday = 30;
             $day_pay = floor($all/$cntday);
         }
-	$all_pr = ' на сумму '.$all.' рублей (Средний чек: '.$sr.'р.)';
+	$all_pr = ' на сумму '.$all.' '.rcl_get_primary_currency(0).' (Средний чек: '.$sr.' '.rcl_get_primary_currency(1).')';
 
 	$table = '
 	<div class="wrap"><h2>Приход средств через платежные системы</h2>
         <h3>Статистика</h3>
 	<p>Всего переводов: '.$count_adds.$all_pr.'</p>';
-        if($day_pay) $table .= '<p>Средняя выручка за сутки: '.$day_pay.'р.</p>';
+        if($day_pay) $table .= '<p>Средняя выручка за сутки: '.$day_pay.' '.rcl_get_primary_currency(0).'</p>';
 
         $table .= $chart;
 
@@ -230,7 +230,15 @@ function rcl_admin_statistic_cashe(){
 		<input id="doaction" class="button action" type="submit" value="Применить" name="">
 		</div>
 	</div>
-	<table class="widefat"><tr><th class="check-column" scope="row"></th><th class="manage-column">№пп</th><th class="manage-column">Пользователь</th><th class="manage-column">ID платежа</th><th class="manage-column">Сумма платежа</th><th class="manage-column">Дата и время</th></tr>';
+	<table class="widefat">
+            <tr>
+                <th class="check-column" scope="row"></th>
+                <th class="manage-column">№пп</th>
+                <th class="manage-column">Пользователь</th>
+                <th class="manage-column">ID платежа</th>
+                <th class="manage-column">Сумма платежа</th>
+                <th class="manage-column">Дата и время</th>
+            </tr>';
 
 	$table .= $table_tr;
 
@@ -306,7 +314,7 @@ function rcl_get_html_usercount(){
     $user_count = rcl_get_user_money();
     if(!$user_count) $user_count = 0;
 
-    $usercount .= '<div class="usercount" style="text-align:center;">'.$user_count.' '.__('RUB','rcl').'</div>';
+    $usercount .= '<div class="usercount" style="text-align:center;">'.$user_count.' '.rcl_get_primary_currency(1).'</div>';
 
 
     $usercount = apply_filters('count_widget_rcl',$usercount);

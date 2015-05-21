@@ -835,12 +835,11 @@ class Rcl_Messages{
 		$private_messages = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."private_message WHERE author_mess = '%d' AND status_mess IN (7,%d) OR adressat_mess = '%d' AND status_mess IN (7,%d) ORDER BY ID DESC",$user_ID,$st,$user_ID,$st));
 		$message_block = '';
 		foreach((array)$private_messages as $message){
-			if($message->author_mess!=$user_ID) $this->user_lk = $message->author_mess;
-			if($message->adressat_mess!=$user_ID) $this->user_lk = $message->adressat_mess;
-			//$content_message = $this->mess_preg_replace_rcl($message->content_mess);
-			$this->ava_user_lk = '<a href="'.get_author_posts_url($this->user_lk).'">'.get_avatar($this->user_lk, 40).'</a>';
-			$this->ava_user_ID = get_avatar($user_ID, 40);
-			$message_block = $this->get_private_message_block_rcl($message_block,(object)$message);
+                    if($message->author_mess!=$user_ID) $this->user_lk = $message->author_mess;
+                    if($message->adressat_mess!=$user_ID) $this->user_lk = $message->adressat_mess;
+                    $this->ava_user_lk = '<a href="'.get_author_posts_url($this->user_lk).'">'.get_avatar($this->user_lk, 40).'</a>';
+                    $this->ava_user_ID = get_avatar($user_ID, 40);
+                    $message_block = $this->get_private_message_block_rcl($message_block,(object)$message);
 		}
 
 		if(!$message_block) $message_block = '<h3>'.__('No posts found!','rcl').'</h3>';

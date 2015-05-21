@@ -15,6 +15,18 @@ function rcl_user_account_options($content){
 
         $content .= $opt->option_block(
             array(
+                $opt->title('Валюта сайта'),
+                    $opt->label('Основная валюта'),
+                    $opt->option('select',array(
+                    'name'=>'primary_cur',
+                    'options'=>rcl_get_currency()
+                    )
+                )
+            )
+        );
+
+        $content .= $opt->option_block(
+            array(
                 $opt->title(__('Payment','rcl')),
 
                 $opt->label(__('Type of payment','rcl')),
@@ -111,7 +123,7 @@ function rcl_user_account_options($content){
                         $opt->label(__('Merchant ID','rcl')),
                         $opt->option('text',array('name'=>'WO_MERCHANT_ID')),
                         $opt->label(__('The secret key','rcl')),
-                        $opt->option('text',array('password'=>'WO_SECRET_KEY'))
+                        $opt->option('password',array('name'=>'WO_SECRET_KEY'))
                     )
                 )
             )

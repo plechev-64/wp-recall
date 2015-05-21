@@ -47,24 +47,20 @@ class Rcl_Payform {
 
         $submit = ($this->type==1)? __('Confirm the operation','rcl'): __('Pay through payment system','rcl');
 
-        /*
-        643 — Российские рубли
-        840 — Американские доллары
-        978 — Евро
-        980 — Украинские гривны
-        */
+        $curs = array( 'RUB' => 643, 'UAH' => 980, 'USD' => 840, 'EUR' => 978 );
+        $code_cur = (isset($curs[$rmag_options['primary_cur']]))? $curs[$rmag_options['primary_cur']]: 643;
 
         $fields = array(
-                'WMI_MERCHANT_ID'=>$merchant_id,
-                'WMI_PAYMENT_AMOUNT'=>$this->summ.'.00',
-                'WMI_CURRENCY_ID'=>643,
-                'WMI_PAYMENT_NO'=>$this->id_pay,
-                'WMI_SUCCESS_URL'=>$rmag_options['page_success_pay'],
-                'WMI_FAIL_URL'=>$rmag_options['page_fail_pay'],
-                'WMI_CUSTOMER_ID'=>$this->user,
-                'USER_ID'=>$this->user,
-                'TYPE_PAY'=>$this->type
-            );
+            'WMI_MERCHANT_ID'=>$merchant_id,
+            'WMI_PAYMENT_AMOUNT'=>$this->summ.'.00',
+            'WMI_CURRENCY_ID'=>$code_cur,
+            'WMI_PAYMENT_NO'=>$this->id_pay,
+            'WMI_SUCCESS_URL'=>$rmag_options['page_success_pay'],
+            'WMI_FAIL_URL'=>$rmag_options['page_fail_pay'],
+            'WMI_CUSTOMER_ID'=>$this->user,
+            'USER_ID'=>$this->user,
+            'TYPE_PAY'=>$this->type
+        );
 
         //Сортировка значений внутри полей
           foreach($fields as $name => $val)
