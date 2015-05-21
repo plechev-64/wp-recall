@@ -3,7 +3,7 @@
 //Перечень действующих валют
 function rcl_get_currency_list(){
     return array(
-        'RUB' => array('P','P','P'),
+        'RUB' => array('P','<span class="ruble-symbol">P<span>_</span></span>','P'),
         'UAH' => array('гривен','грн','грн'),
         'USD' => array('$','$','$'),
         'EUR' => array('€','€','€'),
