@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-05-21 18:49+0300\n"
+"POT-Creation-Date: 2015-05-21 20:16+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -376,7 +376,7 @@ msgid "The user`s photo"
 msgstr "Пользовательские фото"
 
 #: add-on/gallery-recall/index.php:358 add-on/gallery-recall/index.php:369
-#: add-on/message/index.php:1257
+#: add-on/message/index.php:1256
 msgid "Reply"
 msgstr "Ответить"
 
@@ -407,7 +407,7 @@ msgstr "Размер файла превышен!"
 #: add-on/getresponse-manager/index.php:1 add-on/groups/class_group.php:207
 #: add-on/justclick-manager/index.php:1
 #: add-on/partners-system/admin-pages.php:124
-#: add-on/users-market/index.php:719 admin-pages.php:299 functions-rcl.php:461
+#: add-on/users-market/index.php:719 admin-pages.php:299 functions-rcl.php:462
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
@@ -833,9 +833,9 @@ msgid "Cart"
 msgstr "Корзина"
 
 #: add-on/magazin/functions/shortcodes.php:116 add-on/publicpost/index.php:312
-#: add-on/publicpost/rcl_postlist.php:82
+#: add-on/publicpost/rcl_postlist.php:77
 #: add-on/publicpost/templates/public-form.php:4
-#: add-on/user-account/index.php:371 functions/rcl_editfields.php:111
+#: add-on/user-account/index.php:379 functions/rcl_editfields.php:111
 #: widget.php:47 widget.php:109 widget.php:162
 msgid "Title"
 msgstr "Заголовок"
@@ -844,7 +844,7 @@ msgstr "Заголовок"
 msgid "File does not exist on the server or it has already been loaded!"
 msgstr "Файла нет на сервере или он был удален!"
 
-#: add-on/message/index.php:22 add-on/message/index.php:1336
+#: add-on/message/index.php:22 add-on/message/index.php:1335
 msgid "The file was loaded."
 msgstr "Файл был загружен"
 
@@ -1030,7 +1030,7 @@ msgstr "Пользователь получит уведомление на по
 msgid "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 msgstr "<b>Enter</b> - перенос строки, <b>Ctrl+Enter</b> - отправить"
 
-#: add-on/message/index.php:466 add-on/user-account/index.php:320
+#: add-on/message/index.php:466 add-on/user-account/index.php:328
 #: templates/form-register.php:21 templates/form-remember.php:15
 msgid "Send"
 msgstr "Отправить"
@@ -1096,55 +1096,55 @@ msgstr "Снять"
 msgid "Mark as important"
 msgstr "Пометить как важное"
 
-#: add-on/message/index.php:846
+#: add-on/message/index.php:845
 msgid "No posts found!"
 msgstr "Сообщения не найдены!"
 
-#: add-on/message/index.php:881
+#: add-on/message/index.php:880
 msgid "Show more recent messages"
 msgstr "Показать больше последних сообщений"
 
-#: add-on/message/index.php:1001
+#: add-on/message/index.php:1000
 msgid "Your message has been sent!"
 msgstr "Ваше сообщение было доставлено!"
 
-#: add-on/message/index.php:1096
+#: add-on/message/index.php:1095
 msgid "The message is marked as read"
 msgstr "Сообщение помечено как прочтенное"
 
-#: add-on/message/index.php:1224
+#: add-on/message/index.php:1223
 msgid "You a new message!"
 msgstr "Вам новое сообщение!"
 
-#: add-on/message/index.php:1255
+#: add-on/message/index.php:1254
 msgid "Go to the correspondence"
 msgstr "Перейти к переписке"
 
-#: add-on/message/index.php:1310
+#: add-on/message/index.php:1309
 msgid "Show more recent posts"
 msgstr "Показать больше последних сообщений"
 
-#: add-on/message/index.php:1338
+#: add-on/message/index.php:1337
 msgid "The file has been received, but not yet loaded."
 msgstr "Файл был отправлен, но не был загружен."
 
-#: add-on/message/index.php:1339
+#: add-on/message/index.php:1338
 msgid "The file was sent to the recipient."
 msgstr "Файл был отправлен получателю,"
 
-#: add-on/message/index.php:1342
+#: add-on/message/index.php:1341
 msgid "Link to sent the file"
 msgstr "Ссылка на файл"
 
-#: add-on/message/index.php:1344
+#: add-on/message/index.php:1343
 msgid "(accept files only from trusted sources)"
 msgstr "(принимайте файлы только от доверенных источников)"
 
-#: add-on/message/index.php:1372
+#: add-on/message/index.php:1371
 msgid "The file was sent successfully."
 msgstr "Файл был успешно отправлен"
 
-#: add-on/message/index.php:1375
+#: add-on/message/index.php:1374
 msgid ""
 "You have exceeded the limit on the number of uploaded files. Wait until the "
 "files sent previously will be accepted."
@@ -1152,11 +1152,11 @@ msgstr ""
 "Вы достигли предела по кол-ву отправляемых файлов. Подождите пока файлы "
 "отправленные ранее будут приняты."
 
-#: add-on/message/index.php:1384
+#: add-on/message/index.php:1383
 msgid "Removes the file from the server"
 msgstr "Удаляю файл с сервера"
 
-#: add-on/message/index.php:1434
+#: add-on/message/index.php:1433
 msgid ""
 "Exceeded the allowable file size.\n"
 " hearths file"
@@ -1239,7 +1239,7 @@ msgstr "Перевод средств между пользователями"
 msgid "Balance"
 msgstr "Баланс"
 
-#: add-on/money-wallet/index.php:122 add-on/user-account/index.php:338
+#: add-on/money-wallet/index.php:122 add-on/user-account/index.php:346
 msgid "Personal account of the user"
 msgstr "Личный счет пользователя"
 
@@ -1272,7 +1272,7 @@ msgstr "Комментарий"
 #: add-on/money-wallet/index.php:155 add-on/money-wallet/index.php:366
 #: add-on/money-wallet/index.php:490 add-on/profile/index.php:382
 #: add-on/profile/index.php:687 add-on/publicpost/index.php:312
-#: add-on/publicpost/rcl_postlist.php:83
+#: add-on/publicpost/rcl_postlist.php:78
 msgid "Status"
 msgstr "Статус"
 
@@ -1319,7 +1319,7 @@ msgstr "Расход"
 
 #: add-on/money-wallet/index.php:208 add-on/money-wallet/index.php:361
 #: add-on/money-wallet/index.php:489 add-on/publicpost/index.php:312
-#: add-on/publicpost/rcl_postlist.php:81 functions/rcl_editfields.php:145
+#: add-on/publicpost/rcl_postlist.php:76 functions/rcl_editfields.php:145
 msgid "Date"
 msgstr "Дата"
 
@@ -1740,10 +1740,10 @@ msgid "Description"
 msgstr "Описание"
 
 #: add-on/publicpost/classes.php:46 add-on/publicpost/index.php:56
-#: add-on/user-account/addon-options.php:136
-#: add-on/user-account/addon-options.php:146
-#: add-on/user-account/addon-options.php:155
-#: add-on/user-account/addon-options.php:163 admin-pages.php:105 widget.php:58
+#: add-on/user-account/addon-options.php:148
+#: add-on/user-account/addon-options.php:158
+#: add-on/user-account/addon-options.php:167
+#: add-on/user-account/addon-options.php:175 admin-pages.php:105 widget.php:58
 #: widget.php:116
 msgid "Not selected"
 msgstr "Не выбрано"
@@ -1993,15 +1993,15 @@ msgstr "Записи"
 msgid "Posts"
 msgstr "Публикации"
 
-#: add-on/publicpost/index.php:316 add-on/publicpost/rcl_postlist.php:87
+#: add-on/publicpost/index.php:316 add-on/publicpost/rcl_postlist.php:82
 msgid "on approval"
 msgstr "на утверждении"
 
-#: add-on/publicpost/index.php:317 add-on/publicpost/rcl_postlist.php:88
+#: add-on/publicpost/index.php:317 add-on/publicpost/rcl_postlist.php:83
 msgid "deleted"
 msgstr "удален"
 
-#: add-on/publicpost/index.php:318 add-on/publicpost/rcl_postlist.php:89
+#: add-on/publicpost/index.php:318 add-on/publicpost/rcl_postlist.php:84
 msgid "publish"
 msgstr "опубликован"
 
@@ -2041,11 +2041,11 @@ msgstr "Публикация была успешно удалена!"
 msgid "Error publishing!"
 msgstr "Ошибка публикации!"
 
-#: add-on/publicpost/rcl_postlist.php:109
+#: add-on/publicpost/rcl_postlist.php:104
 msgid "has not yet been published"
 msgstr "пока не было опубликовано"
 
-#: add-on/publicpost/rcl_postlist.php:118
+#: add-on/publicpost/rcl_postlist.php:113
 msgid "Published"
 msgstr "Опубликованные"
 
@@ -2349,23 +2349,23 @@ msgstr "Добавить отзыв"
 msgid "Payment systems"
 msgstr "Платежные системы"
 
-#: add-on/user-account/addon-options.php:18
+#: add-on/user-account/addon-options.php:30
 msgid "Payment"
 msgstr "Оплата заказа"
 
-#: add-on/user-account/addon-options.php:20
+#: add-on/user-account/addon-options.php:32
 msgid "Type of payment"
 msgstr "Тип платежа"
 
-#: add-on/user-account/addon-options.php:24
+#: add-on/user-account/addon-options.php:36
 msgid "Directly through the payment system"
 msgstr "Оплата через платежные системы"
 
-#: add-on/user-account/addon-options.php:25
+#: add-on/user-account/addon-options.php:37
 msgid "To offer both options"
 msgstr "Предложить оба варианта"
 
-#: add-on/user-account/addon-options.php:28
+#: add-on/user-account/addon-options.php:40
 msgid ""
 "If the connection to the payment aggregator not in use, it is possible to "
 "set only \"Funds from the personal account user\"!"
@@ -2373,143 +2373,143 @@ msgstr ""
 "Если подключение к платежному агрегатору не используется, то используйте "
 "оплату <b>только с личного счета пользователя!</b>"
 
-#: add-on/user-account/addon-options.php:30
+#: add-on/user-account/addon-options.php:42
 msgid "The connection to payment aggregator"
 msgstr "Подключение к платежному агрегатору"
 
-#: add-on/user-account/addon-options.php:31
+#: add-on/user-account/addon-options.php:43
 msgid "Used type of connection"
 msgstr "Используемый тип подключения"
 
-#: add-on/user-account/addon-options.php:36 admin-pages.php:236
+#: add-on/user-account/addon-options.php:48 admin-pages.php:236
 msgid "Not used"
 msgstr "Не используется"
 
-#: add-on/user-account/addon-options.php:37
+#: add-on/user-account/addon-options.php:49
 msgid "Robokassa"
 msgstr "Робокасса"
 
-#: add-on/user-account/addon-options.php:38
+#: add-on/user-account/addon-options.php:50
 msgid "Interkassa"
 msgstr "Интеркасса"
 
-#: add-on/user-account/addon-options.php:39
+#: add-on/user-account/addon-options.php:51
 msgid "Yandex.Kassa"
 msgstr "Яндекс.Касса"
 
-#: add-on/user-account/addon-options.php:39
-#: add-on/user-account/addon-options.php:40
+#: add-on/user-account/addon-options.php:51
+#: add-on/user-account/addon-options.php:52
 msgid "not tested"
 msgstr "не тестировалось"
 
-#: add-on/user-account/addon-options.php:40
+#: add-on/user-account/addon-options.php:52
 msgid "WalletOne"
 msgstr "Единая касса"
 
-#: add-on/user-account/addon-options.php:49
+#: add-on/user-account/addon-options.php:61
 msgid "Connection settings ROBOKASSA"
 msgstr "Настройки подключения Робокассы"
 
-#: add-on/user-account/addon-options.php:50
-#: add-on/user-account/addon-options.php:77
+#: add-on/user-account/addon-options.php:62
+#: add-on/user-account/addon-options.php:89
 msgid "The ID of the store"
 msgstr "Идентификатор магазина"
 
-#: add-on/user-account/addon-options.php:52
+#: add-on/user-account/addon-options.php:64
 msgid "1 Password"
 msgstr "Первый пароль"
 
-#: add-on/user-account/addon-options.php:54
+#: add-on/user-account/addon-options.php:66
 msgid "2 Password"
 msgstr "Второй пароль"
 
-#: add-on/user-account/addon-options.php:56
+#: add-on/user-account/addon-options.php:68
 msgid "The status of the account ROBOKASSA"
 msgstr "Статус аккаунта Робокассы"
 
-#: add-on/user-account/addon-options.php:60
-#: add-on/user-account/addon-options.php:83
+#: add-on/user-account/addon-options.php:72
+#: add-on/user-account/addon-options.php:95
 msgid "Work"
 msgstr "Рабочий"
 
-#: add-on/user-account/addon-options.php:61
-#: add-on/user-account/addon-options.php:84
+#: add-on/user-account/addon-options.php:73
+#: add-on/user-account/addon-options.php:96
 msgid "Test"
 msgstr "Тестовый"
 
-#: add-on/user-account/addon-options.php:72
+#: add-on/user-account/addon-options.php:84
 msgid "Connection settings Interkassa"
 msgstr "Настройки подключения Интеркассы"
 
-#: add-on/user-account/addon-options.php:73
+#: add-on/user-account/addon-options.php:85
 msgid "Secret Key"
 msgstr "Секретный ключ"
 
-#: add-on/user-account/addon-options.php:75
+#: add-on/user-account/addon-options.php:87
 msgid "Test Key"
 msgstr "Тестовый ключ"
 
-#: add-on/user-account/addon-options.php:79
+#: add-on/user-account/addon-options.php:91
 msgid "The status of the account Interkassa"
 msgstr "Статус аккаунта Интеркассы"
 
-#: add-on/user-account/addon-options.php:95
+#: add-on/user-account/addon-options.php:107
 msgid "Connection settings Yandex.Kassa"
 msgstr "Настройки подключения Яндекс.Кассы"
 
-#: add-on/user-account/addon-options.php:96
+#: add-on/user-account/addon-options.php:108
 msgid "ID cash"
 msgstr "Идентификатор кошелька"
 
-#: add-on/user-account/addon-options.php:98
+#: add-on/user-account/addon-options.php:110
 msgid "The room showcases"
 msgstr "Витрина"
 
-#: add-on/user-account/addon-options.php:100
+#: add-on/user-account/addon-options.php:112
 msgid "The secret word"
 msgstr "Секретное слово"
 
-#: add-on/user-account/addon-options.php:110
+#: add-on/user-account/addon-options.php:122
 msgid "Connection settings WalletOne"
 msgstr "Настройки подключения Единой кассы"
 
-#: add-on/user-account/addon-options.php:111
+#: add-on/user-account/addon-options.php:123
 msgid "Merchant ID"
 msgstr "Идентификатор магазина"
 
-#: add-on/user-account/addon-options.php:113
+#: add-on/user-account/addon-options.php:125
 msgid "The secret key"
 msgstr "Секретный ключ"
 
-#: add-on/user-account/addon-options.php:122
+#: add-on/user-account/addon-options.php:134
 msgid "Service page payment systems"
 msgstr "Сервисные страницы платежных систем"
 
-#: add-on/user-account/addon-options.php:132
+#: add-on/user-account/addon-options.php:144
 msgid "Page RESULT"
 msgstr "Страница RESULT"
 
-#: add-on/user-account/addon-options.php:139
+#: add-on/user-account/addon-options.php:151
 msgid "For Interkassa: URL of interaction"
 msgstr "Для Интеркассы: URL взаимодействия"
 
-#: add-on/user-account/addon-options.php:140
+#: add-on/user-account/addon-options.php:152
 msgid "For Yandex.Cash: checkURL and avisoURL"
 msgstr "Для Яндекс.Кассы: checkURL and avisoURL"
 
-#: add-on/user-account/addon-options.php:142
+#: add-on/user-account/addon-options.php:154
 msgid "Page SUCCESS"
 msgstr "Страница SUCCESS"
 
-#: add-on/user-account/addon-options.php:149
+#: add-on/user-account/addon-options.php:161
 msgid "For Interkassa: successful payment URL"
 msgstr "Для Интеркассы: URL успешного платежа"
 
-#: add-on/user-account/addon-options.php:151
+#: add-on/user-account/addon-options.php:163
 msgid "Page FAIL"
 msgstr "Страница FAIL"
 
-#: add-on/user-account/addon-options.php:159
+#: add-on/user-account/addon-options.php:171
 msgid "The successful payment page"
 msgstr "Страница успешного платежа"
 
@@ -2517,48 +2517,44 @@ msgstr "Страница успешного платежа"
 msgid "Payments"
 msgstr "Платежи"
 
-#: add-on/user-account/index.php:284
+#: add-on/user-account/index.php:292
 msgid "The change in the balance"
 msgstr "Изменить баланс"
 
-#: add-on/user-account/index.php:309
-msgid "RUB"
-msgstr ""
-
-#: add-on/user-account/index.php:314
+#: add-on/user-account/index.php:322
 msgid "Deposit"
 msgstr "Пополнить"
 
-#: add-on/user-account/index.php:316
+#: add-on/user-account/index.php:324
 msgid "To recharge your account"
 msgstr "Для пополнения своего личного счета"
 
-#: add-on/user-account/index.php:318
+#: add-on/user-account/index.php:326
 msgid "Enter the amount required"
 msgstr "Введите требуемую сумму"
 
-#: add-on/user-account/index.php:340 add-on/user-account/index.php:368
+#: add-on/user-account/index.php:348 add-on/user-account/index.php:376
 #: admin-pages.php:110 recall.php:82
 msgid "Personal account"
 msgstr "Личный счет"
 
-#: add-on/user-account/index.php:440
+#: add-on/user-account/index.php:448
 msgid "Income dynamics"
 msgstr "Динамика платежей"
 
-#: add-on/user-account/index.php:441
+#: add-on/user-account/index.php:449
 msgid "The time period"
 msgstr "Период времени"
 
-#: add-on/user-account/index.php:443
+#: add-on/user-account/index.php:451
 msgid "\"Days/Months\""
 msgstr "\"Дни/Месяцы\""
 
-#: add-on/user-account/index.php:443
+#: add-on/user-account/index.php:451
 msgid "\"Payments (PCs.)\""
 msgstr "\"Платежи (шт.)\""
 
-#: add-on/user-account/index.php:443
+#: add-on/user-account/index.php:451
 msgid "\"Income (thousands)\""
 msgstr "\"Доход (тыс.)\""
 
@@ -2567,29 +2563,29 @@ msgid "Pay personal account"
 msgstr "Оплатить с личного счета"
 
 #: add-on/user-account/rcl_payform.php:48
-#: add-on/user-account/rcl_payform.php:131
-#: add-on/user-account/rcl_payform.php:163
-#: add-on/user-account/rcl_payform.php:197
+#: add-on/user-account/rcl_payform.php:127
+#: add-on/user-account/rcl_payform.php:159
+#: add-on/user-account/rcl_payform.php:193
 msgid "Confirm the operation"
 msgstr "Подтвердить операцию"
 
 #: add-on/user-account/rcl_payform.php:48
-#: add-on/user-account/rcl_payform.php:131
-#: add-on/user-account/rcl_payform.php:163
-#: add-on/user-account/rcl_payform.php:197
+#: add-on/user-account/rcl_payform.php:127
+#: add-on/user-account/rcl_payform.php:159
+#: add-on/user-account/rcl_payform.php:193
 msgid "Pay through payment system"
 msgstr "Оплатить через платежные системы"
 
-#: add-on/user-account/rcl_payform.php:193
+#: add-on/user-account/rcl_payform.php:189
 #: add-on/user-account/rcl_payment.php:89
 msgid "Top up personal account"
 msgstr "Пополнить личный счет"
 
-#: add-on/user-account/rcl_payform.php:194
+#: add-on/user-account/rcl_payform.php:190
 msgid "Payment for the order on the website"
 msgstr "Оплата заказа на сайте"
 
-#: add-on/user-account/rcl_payform.php:195
+#: add-on/user-account/rcl_payform.php:191
 msgid "Other payments"
 msgstr "Другие платежи"
 
@@ -2896,19 +2892,19 @@ msgstr "Используемый шаблон"
 msgid "Not connected"
 msgstr "Не подключен"
 
-#: functions-rcl.php:118
+#: functions-rcl.php:119
 msgid "Error! Perhaps this addition does not support ajax loading"
 msgstr "Ошибка! Данное дополнениене поддерживает ajax-загрузку"
 
-#: functions-rcl.php:183
+#: functions-rcl.php:184
 msgid "The site works using the functionality of the plugin"
 msgstr "Сайт использует функционал плагина"
 
-#: functions-rcl.php:299
+#: functions-rcl.php:300
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: functions-rcl.php:385
+#: functions-rcl.php:386
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
