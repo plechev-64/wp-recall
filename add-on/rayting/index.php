@@ -188,7 +188,7 @@ function rcl_rating_pow($id_post,$count_rayt=1){
 add_filter('the_excerpt', 'rcl_rating_excerpt');
 function rcl_rating_excerpt($excerpt){
 	global $rcl_options,$post;
-	if($rcl_options['rayt_post_recall']!=1) return $excerpt;
+	if($rcl_options['rayt_post_recall']!=1||$rcl_options['output_rating_archive']!=1) return $excerpt;
 
 	if($post->post_type=='products') return $excerpt;
 
@@ -290,7 +290,7 @@ function rcl_get_all_rating_user($karma,$user_id){
 function rcl_scripts_rating($script){
 
 	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
-	
+
 	$script .= "
 	var rcl_ray_comment;
 	var rcl_ray_post;
