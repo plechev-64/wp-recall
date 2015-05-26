@@ -303,7 +303,7 @@ class Rcl_EditFields {
         $fs = 0;
         $tps = array('select'=>1,'multiselect'=>1,'radio'=>1,'checkbox'=>1,'agree'=>1,'file'=>1);
         foreach($_POST['field'] as $key=>$data){
-            if($key=='field_select') continue;
+            if($key=='field_select'||$key=='sizefile') continue;
             foreach($data as $a=>$value){
                 if($table&&!$_POST['field']['title'][$a]){
                     if($_POST['field']['slug'][$a]){
@@ -315,6 +315,9 @@ class Rcl_EditFields {
                     $value = str_replace('-','_',sanitize_title($_POST['field']['title'][$a]).'-'.rand(10,100));
                 }
                 if($key=='type'){
+                    if($data[$a]=='file'){
+                        $fields[$a]['sizefile'] = $_POST['field']['sizefile'][$fs];
+                    }
                     if(isset($tps[$_POST['field']['type'][$a]])){
                         $fields[$a]['field_select'] = $_POST['field']['field_select'][$fs++];
                     }
