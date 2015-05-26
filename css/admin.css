@@ -104,3 +104,12 @@
     cursor: move;
     margin: 3px 5px;
 }
+span.ruble-symbol{
+    position: relative; 
+    line-height:1;
+}
+.ruble-symbol span{
+    position: absolute;
+    left: 0px;
+    bottom: 5px;
+}
