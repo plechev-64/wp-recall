@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-05-21 20:16+0300\n"
+"POT-Creation-Date: 2015-05-26 15:29+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -24,42 +24,42 @@ msgstr ""
 "X-Generator: Poedit 1.7.6\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: add-on/bookmarks/class_bookmark.php:65 add-on/bookmarks/index.php:109
-#: add-on/bookmarks/index.php:124
+#: add-on/bookmarks/class_bookmark.php:65 add-on/bookmarks/index.php:108
+#: add-on/bookmarks/index.php:123
 msgid "delete"
 msgstr "удалить"
 
-#: add-on/bookmarks/class_bookmark.php:66 add-on/bookmarks/index.php:108
-#: add-on/bookmarks/index.php:125
+#: add-on/bookmarks/class_bookmark.php:66 add-on/bookmarks/index.php:107
+#: add-on/bookmarks/index.php:124
 msgid "edit"
 msgstr "изменить"
 
-#: add-on/bookmarks/class_bookmark.php:71 add-on/bookmarks/index.php:130
+#: add-on/bookmarks/class_bookmark.php:71 add-on/bookmarks/index.php:129
 msgid "In this group don`t have bookmarks"
 msgstr "В этой группе нет закладок"
 
-#: add-on/bookmarks/class_bookmark.php:154 add-on/bookmarks/index.php:170
-#: add-on/bookmarks/index.php:180 add-on/bookmarks/index.php:270
-#: add-on/bookmarks/index.php:280 add-on/groups/index.php:715
+#: add-on/bookmarks/class_bookmark.php:154 add-on/bookmarks/index.php:169
+#: add-on/bookmarks/index.php:179 add-on/bookmarks/index.php:269
+#: add-on/bookmarks/index.php:279 add-on/groups/index.php:715
 msgid "Close"
 msgstr "Закрыть"
 
-#: add-on/bookmarks/class_bookmark.php:156 add-on/bookmarks/index.php:88
+#: add-on/bookmarks/class_bookmark.php:156 add-on/bookmarks/index.php:87
 msgid "Group bookmarks"
 msgstr "Группы закладок"
 
-#: add-on/bookmarks/class_bookmark.php:162 add-on/bookmarks/index.php:95
-#: add-on/bookmarks/index.php:170 add-on/bookmarks/index.php:180
-#: add-on/bookmarks/index.php:247
+#: add-on/bookmarks/class_bookmark.php:162 add-on/bookmarks/index.php:94
+#: add-on/bookmarks/index.php:169 add-on/bookmarks/index.php:179
+#: add-on/bookmarks/index.php:246
 msgid "Without group"
 msgstr "Без группы"
 
-#: add-on/bookmarks/class_bookmark.php:178 add-on/bookmarks/index.php:223
+#: add-on/bookmarks/class_bookmark.php:178 add-on/bookmarks/index.php:222
 #: functions/recallbar.php:24
 msgid "My bookmarks"
 msgstr "Мои закладки"
 
-#: add-on/bookmarks/class_bookmark.php:179 add-on/bookmarks/index.php:119
+#: add-on/bookmarks/class_bookmark.php:179 add-on/bookmarks/index.php:118
 msgid "To filter the bookmarks, click on the desired group"
 msgstr "Фильтруйте закладки нажав на нужную группу"
 
@@ -75,7 +75,7 @@ msgstr "Закладки не найдены"
 msgid "Settings bookmarks"
 msgstr "Настройки закладок"
 
-#: add-on/bookmarks/index.php:13 add-on/bookmarks/index.php:78
+#: add-on/bookmarks/index.php:13 add-on/bookmarks/index.php:77
 msgid "Bookmarks"
 msgstr "Закладки"
 
@@ -120,87 +120,87 @@ msgid ""
 "shortcode in the value attribute"
 msgstr "Вы можете изменить текст кнопки тут"
 
-#: add-on/bookmarks/index.php:116
+#: add-on/bookmarks/index.php:115
 msgid "Add group"
 msgstr "Добавить группу"
 
-#: add-on/bookmarks/index.php:119
+#: add-on/bookmarks/index.php:118
 msgid "Закладки"
 msgstr ""
 
-#: add-on/bookmarks/index.php:139
+#: add-on/bookmarks/index.php:138
 msgid "Disable bookmarks for publication"
 msgstr "Отключить закладки для публикации"
 
-#: add-on/bookmarks/index.php:140 add-on/gallery-recall/index.php:50
+#: add-on/bookmarks/index.php:139 add-on/gallery-recall/index.php:50
 #: add-on/groups/index.php:288 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:144 add-on/profile/index.php:541
-#: add-on/profile/index.php:546 add-on/profile/index.php:551
-#: add-on/profile/index.php:556 add-on/profile/index.php:561
+#: add-on/profile/index.php:153 add-on/profile/index.php:553
+#: add-on/profile/index.php:558 add-on/profile/index.php:563
+#: add-on/profile/index.php:568 add-on/profile/index.php:573
 #: add-on/publicpost/index.php:228 add-on/publicpost/index.php:398
 #: add-on/rating-system/addon-options.php:43
 #: add-on/rating-system/addon-options.php:63 add-on/rating-system/admin.php:16
-#: add-on/rayting/addon-options.php:43 add-on/rayting/addon-options.php:63
-#: add-on/rayting/index.php:51 add-on/review/index.php:166 admin-pages.php:38
-#: admin-pages.php:289
+#: add-on/rayting/addon-options.php:29 add-on/rayting/addon-options.php:49
+#: add-on/rayting/addon-options.php:69 add-on/rayting/index.php:51
+#: add-on/review/index.php:166 admin-pages.php:38 admin-pages.php:289
 msgid "No"
 msgstr "Нет"
 
-#: add-on/bookmarks/index.php:141 add-on/gallery-recall/index.php:50
+#: add-on/bookmarks/index.php:140 add-on/gallery-recall/index.php:50
 #: add-on/groups/index.php:288 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:144 add-on/profile/index.php:541
-#: add-on/profile/index.php:546 add-on/profile/index.php:551
-#: add-on/profile/index.php:556 add-on/profile/index.php:561
+#: add-on/profile/index.php:153 add-on/profile/index.php:553
+#: add-on/profile/index.php:558 add-on/profile/index.php:563
+#: add-on/profile/index.php:568 add-on/profile/index.php:573
 #: add-on/publicpost/index.php:228 add-on/publicpost/index.php:398
 #: add-on/rating-system/addon-options.php:43
 #: add-on/rating-system/addon-options.php:63 add-on/rating-system/admin.php:17
-#: add-on/rayting/addon-options.php:43 add-on/rayting/addon-options.php:63
-#: add-on/rayting/index.php:52 add-on/review/index.php:166 admin-pages.php:39
-#: admin-pages.php:289
+#: add-on/rayting/addon-options.php:29 add-on/rayting/addon-options.php:49
+#: add-on/rayting/addon-options.php:69 add-on/rayting/index.php:52
+#: add-on/review/index.php:166 admin-pages.php:39 admin-pages.php:289
 msgid "Yes"
 msgstr "Да"
 
-#: add-on/bookmarks/index.php:170 add-on/bookmarks/index.php:180
+#: add-on/bookmarks/index.php:169 add-on/bookmarks/index.php:179
 msgid "Name bookmark"
 msgstr "Имя закладки"
 
-#: add-on/bookmarks/index.php:170 add-on/bookmarks/index.php:270
+#: add-on/bookmarks/index.php:169 add-on/bookmarks/index.php:269
 #: add-on/gallery-recall/index.php:131 add-on/publicpost/classes.php:245
 msgid "Add"
 msgstr "Добавить"
 
-#: add-on/bookmarks/index.php:180 add-on/bookmarks/index.php:280
-#: functions/rcl_editfields.php:170
+#: add-on/bookmarks/index.php:179 add-on/bookmarks/index.php:279
+#: functions/rcl_editfields.php:176
 msgid "Change"
 msgstr "Выбрать"
 
-#: add-on/bookmarks/index.php:203 add-on/bookmarks/index.php:222
+#: add-on/bookmarks/index.php:202 add-on/bookmarks/index.php:221
 #: functions/recallbar.php:21
 msgid "In bookmarks"
 msgstr "В закладки"
 
-#: add-on/bookmarks/index.php:230
+#: add-on/bookmarks/index.php:229
 msgid "Added to bookmarks"
 msgstr "Добавлено в закладки"
 
-#: add-on/bookmarks/index.php:244
+#: add-on/bookmarks/index.php:243
 msgid "You`ve already added to the group of bookmarks"
 msgstr "Вы уже добавили в группу закладок"
 
-#: add-on/bookmarks/index.php:270 add-on/bookmarks/index.php:280
+#: add-on/bookmarks/index.php:269 add-on/bookmarks/index.php:279
 msgid "Name group"
 msgstr "Имя группы"
 
-#: add-on/bookmarks/index.php:299 add-on/bookmarks/index.php:324
-#: add-on/bookmarks/index.php:344 add-on/bookmarks/index.php:363
-#: add-on/bookmarks/index.php:383 add-on/bookmarks/index.php:405
-#: add-on/bookmarks/index.php:430 add-on/bookmarks/index.php:461
+#: add-on/bookmarks/index.php:298 add-on/bookmarks/index.php:323
+#: add-on/bookmarks/index.php:343 add-on/bookmarks/index.php:362
+#: add-on/bookmarks/index.php:382 add-on/bookmarks/index.php:404
+#: add-on/bookmarks/index.php:429 add-on/bookmarks/index.php:460
 #: add-on/gallery-recall/index.php:415 add-on/gallery-recall/index.php:454
 #: add-on/gallery-recall/index.php:546
 msgid "Error"
 msgstr "Ошибка"
 
-#: add-on/bookmarks/index.php:332 add-on/bookmarks/index.php:352
+#: add-on/bookmarks/index.php:331 add-on/bookmarks/index.php:351
 #: add-on/groups/class_group.php:238 add-on/money-wallet/index.php:559
 #: add-on/money-wallet/index.php:582 add-on/money-wallet/index.php:600
 #: add-on/presents/index.php:119 add-on/presents/index.php:159
@@ -283,7 +283,9 @@ msgstr "Возможно позже появятся новые публикац
 
 #: add-on/feed/index.php:614
 msgid "You havent signed up anyone elses publication."
-msgstr "Вам необходимо авторизоваться для публикации новых записей."
+msgstr ""
+"В вашей ленте пока нет новых публикаций. Подписывайтесь на пользователей "
+"сайта, чтобы видеть новые публикации."
 
 #: add-on/feed/index.php:615
 msgid ""
@@ -401,13 +403,14 @@ msgid "You have reached the limit of downloads"
 msgstr "Вы достигли лимита загрузки"
 
 #: add-on/gallery-recall/upload-file.php:17
+#: functions/rcl_custom_fields.php:264 functions/rcl_custom_fields.php:281
 msgid "File size exceeded!"
 msgstr "Размер файла превышен!"
 
 #: add-on/getresponse-manager/index.php:1 add-on/groups/class_group.php:207
 #: add-on/justclick-manager/index.php:1
 #: add-on/partners-system/admin-pages.php:124
-#: add-on/users-market/index.php:719 admin-pages.php:299 functions-rcl.php:462
+#: add-on/users-market/index.php:720 admin-pages.php:299 functions-rcl.php:462
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
@@ -835,7 +838,7 @@ msgstr "Корзина"
 #: add-on/magazin/functions/shortcodes.php:116 add-on/publicpost/index.php:312
 #: add-on/publicpost/rcl_postlist.php:77
 #: add-on/publicpost/templates/public-form.php:4
-#: add-on/user-account/index.php:379 functions/rcl_editfields.php:111
+#: add-on/user-account/index.php:379 functions/rcl_editfields.php:116
 #: widget.php:47 widget.php:109 widget.php:162
 msgid "Title"
 msgstr "Заголовок"
@@ -1270,8 +1273,8 @@ msgid "Comment"
 msgstr "Комментарий"
 
 #: add-on/money-wallet/index.php:155 add-on/money-wallet/index.php:366
-#: add-on/money-wallet/index.php:490 add-on/profile/index.php:382
-#: add-on/profile/index.php:687 add-on/publicpost/index.php:312
+#: add-on/money-wallet/index.php:490 add-on/profile/index.php:391
+#: add-on/profile/index.php:699 add-on/publicpost/index.php:312
 #: add-on/publicpost/rcl_postlist.php:78
 msgid "Status"
 msgstr "Статус"
@@ -1319,7 +1322,7 @@ msgstr "Расход"
 
 #: add-on/money-wallet/index.php:208 add-on/money-wallet/index.php:361
 #: add-on/money-wallet/index.php:489 add-on/publicpost/index.php:312
-#: add-on/publicpost/rcl_postlist.php:76 functions/rcl_editfields.php:145
+#: add-on/publicpost/rcl_postlist.php:76 functions/rcl_editfields.php:150
 msgid "Date"
 msgstr "Дата"
 
@@ -1385,7 +1388,7 @@ msgstr "Действие"
 
 #: add-on/money-wallet/index.php:476 add-on/publicpost/rcl_publicform.php:167
 #: add-on/review/index.php:205 functions/rcl_addons.php:167
-#: functions/rcl_editfields.php:122
+#: functions/rcl_editfields.php:127
 msgid "Delete"
 msgstr "Удалить"
 
@@ -1514,200 +1517,200 @@ msgstr "Поля профиля"
 msgid "Your profile was updated"
 msgstr "Ваш профиль был обновлен"
 
-#: add-on/profile/index.php:116
+#: add-on/profile/index.php:125
 msgid "Very sorry, but your account has been deleted!"
 msgstr "Мы сожалеем, но ваш аккаунт был удален!"
 
-#: add-on/profile/index.php:117
+#: add-on/profile/index.php:126
 msgid "Back to main"
 msgstr "Вернуться на главную"
 
-#: add-on/profile/index.php:119
+#: add-on/profile/index.php:128
 msgid "Delete account failed! Go back and try again."
 msgstr "Удаление аккаунта не удалось! Вернитесь назад и повторите попытку."
 
-#: add-on/profile/index.php:136
+#: add-on/profile/index.php:145
 msgid "Profile settings and account"
 msgstr "Настройки профиля и аккаунта"
 
-#: add-on/profile/index.php:139
+#: add-on/profile/index.php:148
 msgid "Profile and account"
 msgstr "Профиль и аккаунт"
 
-#: add-on/profile/index.php:141
+#: add-on/profile/index.php:150
 msgid "Allow to delete users from your account?"
 msgstr "Разрешить удалять пользователям свой аккаунт?"
 
-#: add-on/profile/index.php:147
+#: add-on/profile/index.php:156
 msgid "The maximum size of the avatar, Mb"
 msgstr "Максимальный размер аватара, МБ"
 
-#: add-on/profile/index.php:149
+#: add-on/profile/index.php:158
 msgid ""
 "To restrict the loading of images as avatars this value in megabytes. By "
 "default, 2MB"
 msgstr "Ограничьте размер загружаемого аватара в мегабайтах, по-умолчанию 2МБ"
 
-#: add-on/profile/index.php:208
+#: add-on/profile/index.php:217
 msgid "Profile"
 msgstr "Профиль"
 
-#: add-on/profile/index.php:234 widget.php:138
+#: add-on/profile/index.php:243 widget.php:138
 msgid "User profile"
 msgstr "Профиль пользователя"
 
-#: add-on/profile/index.php:248
+#: add-on/profile/index.php:257
 msgid "Admin toolbar"
 msgstr "Панель администратора"
 
-#: add-on/profile/index.php:253
+#: add-on/profile/index.php:262
 msgid "Show the admin bar when viewing site"
 msgstr "Отображать панель администратора на сайте"
 
-#: add-on/profile/index.php:261 add-on/profile/index.php:638
+#: add-on/profile/index.php:270 add-on/profile/index.php:650
 #: functions/loginform.php:163 functions/loginform.php:187
 #: templates/form-sign.php:25 templates/recallbar.php:18
 #: templates/recallbar.php:32
 msgid "Login"
 msgstr "Вход"
 
-#: add-on/profile/index.php:267 add-on/profile/index.php:645
+#: add-on/profile/index.php:276 add-on/profile/index.php:657
 msgid "Firstname"
 msgstr "Имя"
 
-#: add-on/profile/index.php:273 add-on/profile/index.php:652
+#: add-on/profile/index.php:282 add-on/profile/index.php:664
 msgid "Surname"
 msgstr "Фамилия"
 
-#: add-on/profile/index.php:279 add-on/profile/index.php:659
-#: functions/register.php:124 templates/form-register.php:10
+#: add-on/profile/index.php:288 add-on/profile/index.php:671
+#: functions/register.php:126 templates/form-register.php:10
 #: templates/form-sign.php:10
 msgid "Nickname"
 msgstr "Логин"
 
-#: add-on/profile/index.php:285 add-on/profile/index.php:666
+#: add-on/profile/index.php:294 add-on/profile/index.php:678
 msgid "Display name"
 msgstr "Отображаемое имя"
 
-#: add-on/profile/index.php:347 functions/rcl_editfields.php:142
+#: add-on/profile/index.php:356 functions/rcl_editfields.php:147
 #: templates/form-register.php:14
 msgid "E-mail"
 msgstr ""
 
-#: add-on/profile/index.php:353
+#: add-on/profile/index.php:362
 msgid "Your website"
 msgstr "Сайт"
 
-#: add-on/profile/index.php:359
+#: add-on/profile/index.php:368
 msgid "New password"
 msgstr "Новый пароль"
 
-#: add-on/profile/index.php:361
+#: add-on/profile/index.php:370
 msgid "If you want to change your password - enter new"
 msgstr "Если вы хотите сменить пароль - введите новый"
 
-#: add-on/profile/index.php:363
+#: add-on/profile/index.php:372
 msgid "Repeat the new password"
 msgstr "Повтор нового пароля"
 
-#: add-on/profile/index.php:367 functions/loginform.php:49
+#: add-on/profile/index.php:376 functions/loginform.php:49
 msgid "The password strength indicator"
 msgstr "Индикатор сложности пароля"
 
-#: add-on/profile/index.php:369 functions/loginform.php:51
+#: add-on/profile/index.php:378 functions/loginform.php:51
 msgid "A password is not entered"
 msgstr "Пароль не введен"
 
-#: add-on/profile/index.php:373
+#: add-on/profile/index.php:382
 msgid "Note"
 msgstr "Замечание"
 
-#: add-on/profile/index.php:373
+#: add-on/profile/index.php:382
 msgid "The password must be at least 7 characters"
 msgstr "Пароль должен содержать не менее 7 символов"
 
-#: add-on/profile/index.php:451
+#: add-on/profile/index.php:463
 msgid "Update profile"
 msgstr "Обновить профиль"
 
-#: add-on/profile/index.php:455
+#: add-on/profile/index.php:467
 msgid "Are you sure? Then restore will not work!"
 msgstr "Вы серьезно? Восстановить не получиться!"
 
-#: add-on/profile/index.php:457
+#: add-on/profile/index.php:469
 msgid "To delete your profile"
 msgstr "Удаление вашего профиля"
 
-#: add-on/profile/index.php:519
+#: add-on/profile/index.php:531
 msgid "Fields to display in the profile note ticks."
 msgstr "Поля отображаемые в профиле"
 
-#: add-on/profile/index.php:527
+#: add-on/profile/index.php:539
 #, php-format
 msgid "<td><input type=\"%s\" name=\"%s\" %s /></td><td>%s</td>"
 msgstr ""
 
-#: add-on/profile/index.php:535
+#: add-on/profile/index.php:547
 msgid "Manage profile fields"
 msgstr "Управление полями профиля"
 
-#: add-on/profile/index.php:540 add-on/publicpost/index.php:397
+#: add-on/profile/index.php:552 add-on/publicpost/index.php:397
 msgid "required field"
 msgstr "обязательное поле"
 
-#: add-on/profile/index.php:545
+#: add-on/profile/index.php:557
 msgid "to display the registration form"
 msgstr "отображать в форме регистрации"
 
-#: add-on/profile/index.php:550
+#: add-on/profile/index.php:562
 msgid "display at checkout for guests"
 msgstr "отображать при оформлении заказа для гостей"
 
-#: add-on/profile/index.php:555
+#: add-on/profile/index.php:567
 msgid "to show the content to other users"
 msgstr "отображать для других пользователей"
 
-#: add-on/profile/index.php:560
+#: add-on/profile/index.php:572
 msgid "it only changes the administration of the site"
 msgstr "редактируется только администрацией сайта"
 
-#: add-on/profile/index.php:641
+#: add-on/profile/index.php:653
 msgid "Login user"
 msgstr "логин пользователя"
 
-#: add-on/profile/index.php:648
+#: add-on/profile/index.php:660
 msgid "Username"
 msgstr "Логин"
 
-#: add-on/profile/index.php:655
+#: add-on/profile/index.php:667
 msgid "Surname user"
 msgstr "Имя пользователя"
 
-#: add-on/profile/index.php:662
+#: add-on/profile/index.php:674
 msgid "Nickname user"
 msgstr "Никнейм пользователя"
 
-#: add-on/profile/index.php:669
+#: add-on/profile/index.php:681
 msgid "Display name user"
 msgstr "Отображаемое имя"
 
-#: add-on/profile/index.php:673
+#: add-on/profile/index.php:685
 msgid "Емейл (be sure)"
 msgstr "E-mail (обязательно)"
 
-#: add-on/profile/index.php:676
+#: add-on/profile/index.php:688
 msgid "Емейл user"
 msgstr "E-mail пользователя"
 
-#: add-on/profile/index.php:680
+#: add-on/profile/index.php:692
 msgid "Website"
 msgstr "Вебсайт"
 
-#: add-on/profile/index.php:683
+#: add-on/profile/index.php:695
 msgid "Website user"
 msgstr "Сайт пользователя"
 
-#: add-on/profile/index.php:690
+#: add-on/profile/index.php:702
 msgid "User status"
 msgstr "Статус пользователя"
 
@@ -1798,7 +1801,7 @@ msgstr "Отображать информацию об авторе"
 #: add-on/publicpost/index.php:93 add-on/publicpost/index.php:100
 #: add-on/rating-system/addon-options.php:33
 #: add-on/rating-system/addon-options.php:53
-#: add-on/rayting/addon-options.php:33 add-on/rayting/addon-options.php:53
+#: add-on/rayting/addon-options.php:39 add-on/rayting/addon-options.php:59
 #: admin-pages.php:189 admin-pages.php:262 admin-pages.php:267
 #: admin-pages.php:278
 msgid "Disabled"
@@ -1807,7 +1810,7 @@ msgstr "Отключено"
 #: add-on/publicpost/index.php:93 add-on/publicpost/index.php:100
 #: add-on/rating-system/addon-options.php:33
 #: add-on/rating-system/addon-options.php:53
-#: add-on/rayting/addon-options.php:33 add-on/rayting/addon-options.php:53
+#: add-on/rayting/addon-options.php:39 add-on/rayting/addon-options.php:59
 #: admin-pages.php:190 admin-pages.php:278
 msgid "Included"
 msgstr "Подключено"
@@ -2058,6 +2061,7 @@ msgid "(the labels fit with a comma)"
 msgstr "(разделять запятой)"
 
 #: add-on/publicpost/rcl_publicform.php:137
+#: functions/rcl_custom_fields.php:257
 msgid "To publish"
 msgstr "Публиковать"
 
@@ -2123,18 +2127,18 @@ msgid "Type of rating comments"
 msgstr "Тип рейтинга для комментариев"
 
 #: add-on/rating-system/addon-options.php:29
-#: add-on/rayting/addon-options.php:29
+#: add-on/rayting/addon-options.php:35
 msgid "The rating publications"
 msgstr "Рейтинг публикаций"
 
 #: add-on/rating-system/addon-options.php:36
-#: add-on/rayting/addon-options.php:36
+#: add-on/rayting/addon-options.php:42
 msgid "Points for ranking publications"
 msgstr "Баллы для рейтинга публикаций"
 
 #: add-on/rating-system/addon-options.php:38
 #: add-on/rating-system/addon-options.php:58
-#: add-on/rayting/addon-options.php:38 add-on/rayting/addon-options.php:58
+#: add-on/rayting/addon-options.php:44 add-on/rayting/addon-options.php:64
 msgid ""
 "set how many points the ranking will be awarded for a positive vote or how "
 "many points will be subtracted from the rating for a negative vote"
@@ -2143,32 +2147,32 @@ msgstr ""
 "публикацию"
 
 #: add-on/rating-system/addon-options.php:40
-#: add-on/rayting/addon-options.php:40
+#: add-on/rayting/addon-options.php:46
 msgid "The influence of rating posts on the overall rating"
 msgstr "Влияние рейтинга публикаций на общий рейтинг"
 
 #: add-on/rating-system/addon-options.php:49
-#: add-on/rayting/addon-options.php:49
+#: add-on/rayting/addon-options.php:55
 msgid "Rating review"
 msgstr "Рейтинг комментариев"
 
 #: add-on/rating-system/addon-options.php:56
-#: add-on/rayting/addon-options.php:56
+#: add-on/rayting/addon-options.php:62
 msgid "Points for comment rating"
 msgstr "Баллы для рейтинга комментариев"
 
 #: add-on/rating-system/addon-options.php:60
-#: add-on/rayting/addon-options.php:60
+#: add-on/rayting/addon-options.php:66
 msgid "The influence of the rating review on the overall rating"
 msgstr "Влияние рейтинга отзывов на общий рейтинг"
 
 #: add-on/rating-system/addon-options.php:69
-#: add-on/rayting/addon-options.php:69
+#: add-on/rayting/addon-options.php:75
 msgid "Allow to bypass the moderation of publications at achievement rating"
 msgstr "Влияние рейтинга на модерацию публикаций"
 
 #: add-on/rating-system/addon-options.php:71
-#: add-on/rayting/addon-options.php:71
+#: add-on/rayting/addon-options.php:77
 msgid ""
 "specify the rating level at which the user will get the ability to post "
 "without moderation"
@@ -2198,6 +2202,10 @@ msgstr "минус"
 #: add-on/rayting/index.php:262
 msgid "plus"
 msgstr "плюс"
+
+#: add-on/rayting/addon-options.php:26
+msgid "Output rating to archive page"
+msgstr "Вывод рейтинга на архивных страницах"
 
 #: add-on/rayting/class_rayting.php:46
 msgid "You cant change the rating of a product that was purchased personally!"
@@ -2934,7 +2942,7 @@ msgstr "мин."
 msgid "h."
 msgstr "ч."
 
-#: functions/loginform.php:39 functions/register.php:125
+#: functions/loginform.php:39 functions/register.php:127
 #: templates/form-sign.php:14
 msgid "Password"
 msgstr "Пароль"
@@ -3127,9 +3135,25 @@ msgstr "Распаковка дополнения не удалась."
 msgid "ZIP archive not found."
 msgstr "ZIP архив не найден."
 
-#: functions/rcl_custom_fields.php:14 functions/rcl_editfields.php:148
+#: functions/rcl_custom_fields.php:15 functions/rcl_editfields.php:153
 msgid "Agreement"
 msgstr "Соглашение"
+
+#: functions/rcl_custom_fields.php:77
+msgid "Max size"
+msgstr "Макс. размер"
+
+#: functions/rcl_custom_fields.php:171
+msgid "Download file"
+msgstr "Загрузить файл"
+
+#: functions/rcl_custom_fields.php:379 functions/rcl_custom_fields.php:404
+msgid "File does not exist on the server!"
+msgstr "Файл не найден на сервере!"
+
+#: functions/rcl_custom_fields.php:421
+msgid "File has deleted"
+msgstr "Файл был удален"
 
 #: functions/rcl_editfields.php:47
 msgid "List of columns to select"
@@ -3144,14 +3168,25 @@ msgid "Add field"
 msgstr "Добавить поле"
 
 #: functions/rcl_editfields.php:91
+msgid ""
+"specify the types of files that are loaded by a comma, for example: image/*, "
+"video/*"
+msgstr ""
+"укажите типы загружаемого файла, разделяя запятой, например: image/*, video/*"
+
+#: functions/rcl_editfields.php:91
 msgid "the list of options to share the \" # \" sign"
 msgstr "множественные значения разделяются знаком решетки \" # \""
 
-#: functions/rcl_editfields.php:101 functions/rcl_editfields.php:199
+#: functions/rcl_editfields.php:98
+msgid "maximum size of uploaded file, MB (Default - 2)"
+msgstr "макс. размер загружаемого файла, МБ (по-умолчанию - 2)"
+
+#: functions/rcl_editfields.php:106 functions/rcl_editfields.php:205
 msgid "MetaKey"
 msgstr ""
 
-#: functions/rcl_editfields.php:102 functions/rcl_editfields.php:200
+#: functions/rcl_editfields.php:107 functions/rcl_editfields.php:206
 msgid ""
 "not necessarily<br>if you want to enlist their arbitrary field, we list the "
 "meta_key in this field"
@@ -3159,59 +3194,63 @@ msgstr ""
 "не обязательно<br>если необходимо, то можно прописать свое значение meta_key "
 "для поля"
 
-#: functions/rcl_editfields.php:103 functions/rcl_editfields.php:201
+#: functions/rcl_editfields.php:108 functions/rcl_editfields.php:207
 msgid "Latin and numbers"
 msgstr "латиница и числа"
 
-#: functions/rcl_editfields.php:132
+#: functions/rcl_editfields.php:137
 msgid "The field type"
 msgstr "Тип поля"
 
-#: functions/rcl_editfields.php:136
+#: functions/rcl_editfields.php:141
 msgid "Text"
 msgstr "Текстовое поле"
 
-#: functions/rcl_editfields.php:137
+#: functions/rcl_editfields.php:142
 msgid "Textarea"
 msgstr "Многострочное поле"
 
-#: functions/rcl_editfields.php:138
+#: functions/rcl_editfields.php:143
 msgid "Select"
 msgstr "Выпадающий список"
 
-#: functions/rcl_editfields.php:139
+#: functions/rcl_editfields.php:144
 msgid "MultiSelect"
 msgstr "Множественный выбор"
 
-#: functions/rcl_editfields.php:140
+#: functions/rcl_editfields.php:145
 msgid "Checkbox"
 msgstr "Чекбоксы"
 
-#: functions/rcl_editfields.php:141
+#: functions/rcl_editfields.php:146
 msgid "Radiobutton"
 msgstr "Радиокнопки"
 
-#: functions/rcl_editfields.php:143
+#: functions/rcl_editfields.php:148
 msgid "Phone"
 msgstr "Телефон"
 
-#: functions/rcl_editfields.php:144
+#: functions/rcl_editfields.php:149
 msgid "Number"
 msgstr "Число"
 
-#: functions/rcl_editfields.php:146
+#: functions/rcl_editfields.php:151
 msgid "Time"
 msgstr "Время"
 
-#: functions/rcl_editfields.php:147
+#: functions/rcl_editfields.php:152
 msgid "Url"
 msgstr "Ссылка"
 
-#: functions/rcl_editfields.php:282
+#: functions/rcl_editfields.php:154
+msgid "File"
+msgstr "Файл"
+
+#: functions/rcl_editfields.php:288
 msgid "All values of a custom field with meta_key"
 msgstr "Все значения произвольных полей с этим meta_key"
 
-#: functions/rcl_editfields.php:282
+#: functions/rcl_editfields.php:288
 msgid "were removed from the Database"
 msgstr "были удалены из базы данных"
 
@@ -3223,19 +3262,19 @@ msgstr "не в сети"
 msgid "Publics"
 msgstr "Публикации"
 
-#: functions/register.php:121
+#: functions/register.php:123
 msgid "Confirm your registration!"
 msgstr "Подтвердите свою регистрацию!"
 
-#: functions/register.php:123
+#: functions/register.php:125
 msgid "You or someone else signed up on the website"
 msgstr "Вы или кто то другой зарегистрировались на сайте"
 
-#: functions/register.php:123
+#: functions/register.php:125
 msgid "with the following data:"
 msgstr "со следующими данными:"
 
-#: functions/register.php:141
+#: functions/register.php:143
 msgid "If it wasnt you, then just ignore this email"
 msgstr "Если это были не вы, то просто проигнорируйте это письмо"
 
