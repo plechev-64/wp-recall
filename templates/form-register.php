@@ -5,7 +5,7 @@ if($typeform=='register') $f_reg = 'style="display:block;"'; ?>
 
     <?php rcl_notice_form('register'); ?>
 
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <div class="form-block-rcl">
             <label><?php _e('Nickname','rcl'); ?> <span class="required">*</span></label>
             <input required type="text" value="" name="login-user">

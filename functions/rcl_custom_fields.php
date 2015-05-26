@@ -5,9 +5,10 @@ class Rcl_Custom_Fields{
     public $value;
     public $slug;
     public $required;
+    public $files;
 
     function __construct(){
-
+        $this->files = array();
     }
 
     function get_title($field){
@@ -58,6 +59,28 @@ class Rcl_Custom_Fields{
 
     function get_type_number($field){
         return '<input type="number" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+    }
+
+    function get_type_file($field){
+        global $user_ID;
+        $input = '';
+        if($this->value) $input .= $this->get_field_value($field,$this->value,0);
+
+        if($this->value&&!$field['requared']) $input .= ' <a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value), 'user-'.$user_ID ).'"><i class="fa fa-times-circle-o"></i></a>';
+
+        $accept = ($field['field_select'])? 'accept="'.$field['field_select'].'"': '';
+        $required = (!$this->value)? $this->required: '';
+
+        if($this->value) $input .= '<br>';
+        $size = ($field['sizefile'])? $field['sizefile']: 2;
+
+        $input .= '<span id="'.$this->slug.'-content"><input class="meta-file" data-size="'.$size.'" type="file" '.$required.' '.$accept.' name="'.$this->slug.'" id="'.$this->slug.'" value=""/></span> ('.__('Max size','rcl').': '.$size.'MB)';
+
+        $input .= $this->get_files_scripts();
+
+        $this->files[$this->slug] = $size;
+
+        return $input;
     }
 
     function get_type_textarea($field){
@@ -139,10 +162,13 @@ class Rcl_Custom_Fields{
         return $input;
     }
 
-    function get_field_value($field,$value=false){
+    function get_field_value($field,$value=false,$title=true){
+        global $user_ID;
         $show = '';
         if($field['type']=='text'&&$value)
                 $show = ' <span>'.esc_textarea($value).'</span>';
+        if($field['type']=='file'&&$value)
+                $show = ' <span><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($value), 'user-'.$user_ID ).'">'.__('Download file','rcl').'</a></span>';
         if($field['type']=='tel'&&$value)
                 $show = ' <span>'.esc_textarea($value).'</span>';
         if($field['type']=='email'&&$value)
@@ -166,12 +192,16 @@ class Rcl_Custom_Fields{
         if($field['type']=='textarea'&&$value)
                 $show = '<p>'.nl2br(esc_textarea($value));
 
-        if($show) $show = '<p><b>'.$field['title'].':</b> '.$show.'</p>';
+        if($title&&$show) $show = '<p><b>'.$field['title'].':</b> '.$show.'</p>';
 
         return $show;
     }
 
     function register_user_metas($user_id){
+
+        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+        require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+        require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
         $get_fields = get_option( 'custom_profile_field' );
 
@@ -196,6 +226,12 @@ class Rcl_Custom_Fields{
                     if($vals) update_usermeta($user_id, $slug, $vals);
                 }
 
+            }else if($custom_field['type']=='file'){
+
+                $attach_id = rcl_upload_meta_file($custom_field,$user_id);
+                if($attach_id) update_user_meta($user_id, $slug, $attach_id);
+
+
             }else{
                 if($_POST[$slug]) update_usermeta($user_id, $slug, $_POST[$slug]);
             }
@@ -203,6 +239,84 @@ class Rcl_Custom_Fields{
 
     }
 
+    function get_files_scripts(){
+
+        if($this->files) return false;
+        return '<script type="text/javascript">
+            jQuery(function(){
+                jQuery("form").submit(function(event){
+                    var error = false;
+                    jQuery(this).find(".meta-file").each(function(){
+                        var maxsize = jQuery(this).data("size");
+                        var fileInput = jQuery(this)[0];
+                        var filesize = fileInput.files[0];
+                        if(!filesize) return;
+                        filesize = filesize.size/1024/1024;
+                        if(filesize>maxsize){
+                            jQuery(this).parent().css("border","1px solid red").css("padding","2px");
+                            jQuery("#edit-post-rcl").attr("disabled",false).attr("value","'.__('To publish','rcl').'");
+                            error = true;
+                        }else{
+                            jQuery(this).parent().removeAttr("style");
+                        }
+                    });
+                    if(error){
+                        alert("'.__('File size exceeded!','rcl').'");
+                        return false;
+                    }
+                });
+            });
+        </script>';
+    }
+
+}
+
+function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
+
+    $slug = $custom_field['slug'];
+
+    if(!isset($_FILES[$slug])) return false;
+
+    if ($_FILES[$slug]["size"] > $custom_field['sizefile']*1024*1024){
+        wp_die( __('File size exceeded!','rcl'));
+    }
+
+    $accept = array();
+    $attachment = array();
+    if($custom_field['field_select']){
+        $acps = explode(',',$custom_field['field_select']);
+        foreach($acps as $acp){
+            $acpt = explode('/',$acp);
+            $accept[$acpt[0]] = $acpt[1];
+        }
+    }
+
+    $file = wp_handle_upload( $_FILES[$slug], array('test_form' => FALSE) );
+
+    if($file['url']){
+
+        if($accept){
+            $mime = explode('/',$file['type']);
+            if(!isset($accept[$mime[0]])) return false;
+        }
+
+        $attachment = array(
+            'post_mime_type' => $file['type'],
+            'post_title' => preg_replace('/\.[^.]+$/', '', basename($file['file'])),
+            'post_content' => '',
+            'guid' => $file['url'],
+            'post_parent' => $post_id,
+            'post_author' => $user_id,
+            'post_status' => 'inherit'
+        );
+
+        $attach_id = wp_insert_attachment( $attachment, $file['file'], $post_id );
+        $attach_data = wp_generate_attachment_metadata( $attach_id, $file['file'] );
+        wp_update_attachment_metadata( $attach_id, $attach_data );
+
+        return $attach_id;
+
+    }
 }
 
 function rcl_get_custom_fields($post_id,$posttype=false,$id_form=false){
@@ -250,4 +364,60 @@ function rcl_get_post_meta($content){
     return $content;
 }
 if(!is_admin()) add_filter('the_content','rcl_get_post_meta');
+
+add_action('wp','rcl_download_file');
+function rcl_download_file(){
+    global $user_ID,$wpdb;
+
+    if ( !isset( $_GET['rcl-download-file'] ) ) return false;
+    $id_file = base64_decode($_GET['rcl-download-file']);
+
+    if ( !$user_ID||!wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
+
+    $file = get_post($id_file);
+
+    if(!$file) wp_die(__('File does not exist on the server!','rcl'));
+
+    $name = explode('/',$file->guid);
+    $cnt = count($name);
+    $f_name = $name[--$cnt];
+
+    header('Content-Description: File Transfer');
+    header('Content-Disposition: attachment; filename="'.$f_name.'"');
+    header('Content-Type: application/octet-stream; charset=utf-8');
+    readfile($file->guid);
+
+    exit;
+}
+
+add_action('wp','rcl_delete_file');
+function rcl_delete_file(){
+    global $user_ID,$rcl_options;
+
+    if ( !isset( $_GET['rcl-delete-file'] ) ) return false;
+    $id_file = base64_decode($_GET['rcl-delete-file']);
+
+    if ( !$user_ID||!wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
+
+    $file = get_post($id_file);
+
+    if(!$file) wp_die(__('File does not exist on the server!','rcl'));
+
+    wp_delete_post($file->ID);
+
+    if($file->post_parent){
+        delete_post_meta($file->post_parent,$_GET['meta']);
+        wp_redirect(rcl_format_url(get_permalink($rcl_options['public_form_page_rcl'])).'rcl-post-edit='.$file->post_parent);
+    }else{
+        delete_user_meta($file->post_author,$_GET['meta']);
+        wp_redirect(rcl_format_url(get_author_posts_url($user_ID),'profile').'&file=deleted');
+    }
+
+    exit;
+}
+
+add_action('wp','rcl_delete_file_notice');
+function rcl_delete_file_notice(){
+    if (isset($_GET['file'])&&$_GET['file']='deleted') rcl_notice_text(__('File has deleted','rcl'),'success');
+}
 

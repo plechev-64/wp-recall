@@ -48,6 +48,11 @@ function rcl_edit_profile(){
 
 function rcl_update_profile_fields($user_id){
     //global $user_ID;
+
+    require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+
     $get_fields = get_option( 'custom_profile_field' );
 
     if($get_fields){
@@ -56,7 +61,7 @@ function rcl_update_profile_fields($user_id){
             if(!$custom_field||!$custom_field['slug']) continue;
             if(!is_admin()&&$custom_field['admin']==1) continue;
 
-			$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             $slug = $custom_field['slug'];
             if($custom_field['type']=='checkbox'){
@@ -77,6 +82,10 @@ function rcl_update_profile_fields($user_id){
                 }else{
                     delete_user_meta($user_id, $slug);
                 }
+            }else if($custom_field['type']=='file'){
+
+                $attach_id = rcl_upload_meta_file($custom_field,$user_id);
+                if($attach_id) update_user_meta($user_id, $slug, $attach_id);
 
             }else{
 
@@ -232,7 +241,7 @@ function rcl_tab_profile_content($author_lk){
 	}
 
 	$profile_block = '<h3>'.__('User profile','rcl').' '.$userdata->user_login.'</h3>
-	<form name="profile" id="your-profile" action="" method="post">
+	<form name="profile" id="your-profile" action="" method="post" enctype="multipart/form-data">
 	'.wp_nonce_field( 'update-profile_' . $user_ID,'_wpnonce',true,false ).'
 	<input type="hidden" name="from" value="profile" />
 	<input type="hidden" name="checkuser_id" value="'.$user_ID.'" />
@@ -421,8 +430,11 @@ function rcl_tab_profile_content($author_lk){
 
 		$profile_block .= $field;
 
-                $profile_block .= '</table>'
-                        . "<script>
+                $profile_block .= '</table>';
+
+                //$profile_block .= $cf->get_footer();
+
+                $profile_block .= "<script>
                             jQuery(function(){
                                 jQuery('#your-profile').find('.requared-checkbox').each(function(){
                                     var name = jQuery(this).attr('name');

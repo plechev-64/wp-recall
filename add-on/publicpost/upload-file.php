@@ -13,7 +13,7 @@ function rcl_imagepost_upload(){
 
 	$image = wp_handle_upload( $_FILES['uploadfile'], array('test_form' => FALSE) );
 
-    $mime = explode('/',$image['type']);
+        $mime = explode('/',$image['type']);
 	if($mime[0]!='image') exit;
 
 	if($image['file']){

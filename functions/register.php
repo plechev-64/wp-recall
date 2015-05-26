@@ -68,6 +68,8 @@ function rcl_get_register_user(){
                                 break;
                             }
                         }
+                    }else if($custom_field['type']=='file'){
+                        if(!isset($_FILES[$slug])) $requared = false;
                     }else{
                         if(!$_POST[$slug]) $requared = false;
                     }

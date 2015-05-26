@@ -682,6 +682,10 @@ function rcl_custom_fields_update( $post_id ){
 
 function rcl_update_post_custom_fields($post_id,$id_form=false){
 
+        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+
 	$post = get_post($post_id);
 
 	switch($post->post_type){
@@ -700,7 +704,7 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
 
 	if($get_fields){
 
-		$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             foreach((array)$get_fields as $custom_field){
                 $slug = $custom_field['slug'];
@@ -719,6 +723,11 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
                     }else{
                         delete_post_meta($post_id, $slug);
                     }
+
+                }else if($custom_field['type']=='file'){
+
+                    $attach_id = rcl_upload_meta_file($custom_field,$post->post_author,$post_id);
+                    if($attach_id) update_post_meta($post_id, $slug, $attach_id);
 
                 }else{
 

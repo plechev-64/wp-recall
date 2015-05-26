@@ -352,12 +352,12 @@ class Rcl_Messages{
 		$dm_showsmiles = '';
 		$dm_smiled = array();
 		foreach ($wpsmiliestrans as $tag => $dm_smile) {
-			if (!in_array($dm_smile,$dm_smiled)) {
-				$dm_smiled[] = $dm_smile;
-				$tag = str_replace(' ', '', $tag);
-				if(file_exists(ABSPATH . WPINC.'/images/smilies/'.$dm_smile))
-				$dm_showsmiles .= '<img src="'.includes_url().'images/smilies/'.$dm_smile.'" alt="'.$tag.'" onclick="addsmile(\''.$tag.'\');"/> ';
-			}
+                    if (!in_array($dm_smile,$dm_smiled)) {
+                        $dm_smiled[] = $dm_smile;
+                        $tag = str_replace(' ', '', $tag);
+                        if(file_exists(ABSPATH . WPINC.'/images/smilies/'.$dm_smile))
+                        $dm_showsmiles .= '<img src="'.includes_url().'images/smilies/'.$dm_smile.'" alt="'.$tag.'" onclick="addsmile(\''.$tag.'\');"/> ';
+                    }
 		}
 
 		$smiles .= '<div id="private-smiles"><img src="'.get_bloginfo('wpurl').'/wp-includes/images/smilies/icon_smile.gif" id="get-private-smiles"><div class="smiles">'.$dm_showsmiles.'</div></div>';
