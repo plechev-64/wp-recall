@@ -171,7 +171,7 @@ function rcl_admin_statistic_cashe(){
                             . '<td>'.$n.'</td>'
                             . '<td><a href="'.admin_url('admin.php?page=manage-wpm-cashe&user='.$add->user).'">'.get_the_author_meta('user_login',$add->user).'</a></td>'
                             . '<td>'.$add->inv_id.'</td>'
-                            . '<td>'.$add->count.'</td>'
+                            . '<td>'.$add->count.' '.rcl_get_primary_currency(1).'</td>'
                             . '<td><a href="'.admin_url('admin.php?page=manage-wpm-cashe&date='.$date).'">'.$date.'</a>'.$time.'</td>'
                         . '</tr>';
 	}
@@ -182,13 +182,13 @@ function rcl_admin_statistic_cashe(){
             else $cntday = 30;
             $day_pay = floor($all/$cntday);
         }
-	$all_pr = ' на сумму '.$all.' '.rcl_get_primary_currency(0).' (Средний чек: '.$sr.' '.rcl_get_primary_currency(1).')';
+	$all_pr = ' на сумму '.$all.' '.rcl_get_primary_currency(1).' (Средний чек: '.$sr.' '.rcl_get_primary_currency(1).')';
 
 	$table = '
 	<div class="wrap"><h2>Приход средств через платежные системы</h2>
         <h3>Статистика</h3>
 	<p>Всего переводов: '.$count_adds.$all_pr.'</p>';
-        if($day_pay) $table .= '<p>Средняя выручка за сутки: '.$day_pay.' '.rcl_get_primary_currency(0).'</p>';
+        if($day_pay) $table .= '<p>Средняя выручка за сутки: '.$day_pay.' '.rcl_get_primary_currency(1).'</p>';
 
         $table .= $chart;
 
@@ -420,7 +420,7 @@ function rcl_get_useraccount_scripts($script){
 							if(jQuery(this).attr('name')==data['idorder']) jQuery(this).remove();
 						});
 						jQuery('.redirectform').html(data['recall']);
-						jQuery('.usercount').html(data['count']+' рублей');
+						jQuery('.usercount').html(data['count']);
 						jQuery('.order-'+data['idorder']+' .remove_order').remove();
 						jQuery('#manage-order').remove();
 					}else{
