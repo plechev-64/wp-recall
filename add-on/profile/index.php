@@ -432,8 +432,6 @@ function rcl_tab_profile_content($author_lk){
 
                 $profile_block .= '</table>';
 
-                //$profile_block .= $cf->get_footer();
-
                 $profile_block .= "<script>
                             jQuery(function(){
                                 jQuery('#your-profile').find('.requared-checkbox').each(function(){

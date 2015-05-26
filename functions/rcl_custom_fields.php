@@ -274,10 +274,11 @@ class Rcl_Custom_Fields{
 function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
 
     $slug = $custom_field['slug'];
+    $maxsize = ($custom_field['sizefile'])? $custom_field['sizefile']: 2;
 
     if(!isset($_FILES[$slug])) return false;
 
-    if ($_FILES[$slug]["size"] > $custom_field['sizefile']*1024*1024){
+    if ($_FILES[$slug]["size"] > $maxsize*1024*1024){
         wp_die( __('File size exceeded!','rcl'));
     }
 
@@ -303,6 +304,7 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
         $attachment = array(
             'post_mime_type' => $file['type'],
             'post_title' => preg_replace('/\.[^.]+$/', '', basename($file['file'])),
+            'post_name' => $slug.'-'.$user_id.'-'.$post_id,
             'post_content' => '',
             'guid' => $file['url'],
             'post_parent' => $post_id,
@@ -403,17 +405,25 @@ function rcl_delete_file(){
 
     if(!$file) wp_die(__('File does not exist on the server!','rcl'));
 
-    wp_delete_post($file->ID);
+    wp_delete_attachment($file->ID);
 
     if($file->post_parent){
-        delete_post_meta($file->post_parent,$_GET['meta']);
+        //delete_post_meta($file->post_parent,$_GET['meta']);
         wp_redirect(rcl_format_url(get_permalink($rcl_options['public_form_page_rcl'])).'rcl-post-edit='.$file->post_parent);
     }else{
-        delete_user_meta($file->post_author,$_GET['meta']);
+        //delete_user_meta($file->post_author,$_GET['meta']);
         wp_redirect(rcl_format_url(get_author_posts_url($user_ID),'profile').'&file=deleted');
     }
 
     exit;
+}
+
+add_action('delete_attachment','rcl_delete_file_meta');
+function rcl_delete_file_meta($post_id){
+    $post = get_post($post_id);
+    $slug = explode('-',$post->post_name);
+    if($post->post_parent) delete_post_meta($post->post_parent,$slug,$post_id);
+    else delete_user_meta($post->post_author,$slug,$post_id);
 }
 
 add_action('wp','rcl_delete_file_notice');
