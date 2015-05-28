@@ -410,7 +410,7 @@ function rcl_tab_profile_content($author_lk){
 
                     $custom_field = apply_filters('custom_field_profile',$custom_field);
 
-                    if($custom_field['admin']==1) continue;
+                    if($custom_field['admin']==1&&!$userdata->$custom_field['slug']) continue;
                     if(!$custom_field||!$custom_field['slug']) continue;
 
                     $class = (isset($custom_field['class']))? $custom_field['class']: '';
@@ -605,7 +605,7 @@ function rcl_show_custom_fields_profile($fields_content,$author_lk){
 			$slug = $custom_field['slug'];
 			if($custom_field['req']==1){
                             $meta = get_the_author_meta($slug,$author_lk);
-                            $show_custom_field .= $cf->get_field_value($custom_field,$meta);
+                            $show_custom_field .= $cf->get_field_value($custom_field,$meta,false);
 			}
 		}
 	}

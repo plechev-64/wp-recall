@@ -95,7 +95,7 @@ class Rcl_EditFields {
                         . '<textarea rows="1" class="field-select" style="height:50px" name="field[field_select][]">'.$this->vals['field_select'].'</textarea>'
         : '';
 
-        $textarea_select .= ($this->vals['type']=='file')? '<input type="number" name="field[sizefile][]" value="'.$this->vals['sizefile'].'"> '.__('maximum size of uploaded file, MB (Default - 2)','rcl').'<br>':'';
+        $textarea_select .= ($this->vals['type']=='file')? '<input type="number" name="field[sizefile]['.$this->vals['slug'].']" value="'.$this->vals['sizefile'].'"> '.__('maximum size of uploaded file, MB (Default - 2)','rcl').'<br>':'';
 
         $field = '<li id="item-'.$this->vals['slug'].'" class="menu-item menu-item-edit-active">
                 '.$this->header_field().'
@@ -315,12 +315,14 @@ class Rcl_EditFields {
                     $value = str_replace('-','_',sanitize_title($_POST['field']['title'][$a]).'-'.rand(10,100));
                 }
                 if($key=='type'){
-                    if($data[$a]=='file'){
-                        $fields[$a]['sizefile'] = $_POST['field']['sizefile'][$fs];
+
+                    if($_POST['field']['type'][$a]=='file'){
+                        $fields[$a]['sizefile'] = $_POST['field']['sizefile'][$_POST['field']['slug'][$a]];
                     }
                     if(isset($tps[$_POST['field']['type'][$a]])){
                         $fields[$a]['field_select'] = $_POST['field']['field_select'][$fs++];
                     }
+
                 }
                 $fields[$a][$key] = $value;
             }

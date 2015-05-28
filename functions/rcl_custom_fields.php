@@ -17,13 +17,19 @@ class Rcl_Custom_Fields{
     }
 
     function get_input($field,$value=false){
-
+        global $user_LK,$user_ID;
 
         $this->value = $value;
         $this->slug = $field['slug'];
         $this->required = ($field['requared']==1)? 'required': '';
 
         if(!$field['type']) return false;
+
+        if(!is_admin()&&$field['admin']==1&&$user_ID){
+            $value = get_user_meta($user_LK,$this->slug,1);
+            if($value) return $this->get_field_value($field,$value,false);
+            else return false;
+        }
 
         if($field['type']=='date') rcl_datepicker_scripts();
 
@@ -66,7 +72,12 @@ class Rcl_Custom_Fields{
         $input = '';
         if($this->value) $input .= $this->get_field_value($field,$this->value,0);
 
-        if($this->value&&!$field['requared']) $input .= ' <a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value), 'user-'.$user_ID ).'"><i class="fa fa-times-circle-o"></i></a>';
+        $user_id = (is_admin())? $_GET['user_id']: $user_ID;
+        if(!$user_id) $user_id = $user_ID;
+
+        $url = (is_admin())? admin_url('?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value).'&user_id='.$user_id): get_bloginfo('wpurl').'/?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value);
+
+        if($this->value&&!$field['requared']) $input .= ' <a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','rcl').'</a>';
 
         $accept = ($field['field_select'])? 'accept="'.$field['field_select'].'"': '';
         $required = (!$this->value)? $this->required: '';
@@ -244,6 +255,7 @@ class Rcl_Custom_Fields{
         if($this->files) return false;
         return '<script type="text/javascript">
             jQuery(function(){
+                jQuery("#profile-page form#your-profile").attr("enctype","multipart/form-data");
                 jQuery("form").submit(function(event){
                     var error = false;
                     jQuery(this).find(".meta-file").each(function(){
@@ -392,7 +404,7 @@ function rcl_download_file(){
     exit;
 }
 
-add_action('wp','rcl_delete_file');
+if(!is_admin()) add_action('wp','rcl_delete_file');
 function rcl_delete_file(){
     global $user_ID,$rcl_options;
 
@@ -408,12 +420,30 @@ function rcl_delete_file(){
     wp_delete_attachment($file->ID);
 
     if($file->post_parent){
-        //delete_post_meta($file->post_parent,$_GET['meta']);
         wp_redirect(rcl_format_url(get_permalink($rcl_options['public_form_page_rcl'])).'rcl-post-edit='.$file->post_parent);
     }else{
-        //delete_user_meta($file->post_author,$_GET['meta']);
         wp_redirect(rcl_format_url(get_author_posts_url($user_ID),'profile').'&file=deleted');
     }
+
+    exit;
+}
+
+if(is_admin()) add_action('admin_init','rcl_delete_file_admin');
+function rcl_delete_file_admin(){
+    global $user_ID,$rcl_options;
+
+    if ( !isset( $_GET['rcl-delete-file'] ) ) return false;
+    $id_file = base64_decode($_GET['rcl-delete-file']);
+
+    if ( !$user_ID||!wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
+
+    $file = get_post($id_file);
+
+    if(!$file) wp_die(__('File does not exist on the server!','rcl'));
+
+    wp_delete_attachment($file->ID);
+
+    wp_redirect(admin_url('user-edit.php?user_id='.$_GET['user_id']));
 
     exit;
 }
