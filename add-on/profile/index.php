@@ -605,7 +605,7 @@ function rcl_show_custom_fields_profile($fields_content,$author_lk){
 			$slug = $custom_field['slug'];
 			if($custom_field['req']==1){
                             $meta = get_the_author_meta($slug,$author_lk);
-                            $show_custom_field .= $cf->get_field_value($custom_field,$meta,false);
+                            $show_custom_field .= $cf->get_field_value($custom_field,$meta);
 			}
 		}
 	}
