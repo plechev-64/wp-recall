@@ -312,8 +312,8 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
             $mime = explode('/',$file['type']);
             if(!isset($accept[$mime[0]])) return false;
         }
-
-        if($post_id) $file_id = get_post_meta($post_id,$slug,1);
+		
+		if($post_id) $file_id = get_post_meta($post_id,$slug,1);
         else $file_id = get_user_meta($user_id,$slug,1);
         if($file_id) wp_delete_attachment($file_id);
 
