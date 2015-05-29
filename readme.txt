@@ -1,7 +1,7 @@
 === Wp-Recall ===
 Contributors: wppost
 Donate link: http://wppost.ru/
-Tags: personal account, private message, groups, user profile
+Tags: personal account, private message, groups, user profile, личный кабинет, личные сообщения, профиль пользователя
 Requires at least: 3.0.1
 Tested up to: 4.2.2
 Stable tag: 12.0.7
