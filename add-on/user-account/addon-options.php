@@ -85,7 +85,7 @@ function rcl_user_account_options($content){
                         $opt->label(__('Secret Key','rcl')),
                         $opt->option('password',array('name'=>'intersecretkey')),
                         $opt->label(__('Test Key','rcl')),
-                        $opt->option('password',array('name'=>'intersecretkey')),
+                        $opt->option('password',array('name'=>'intertestkey')),
                         $opt->label(__('The ID of the store','rcl')),
                         $opt->option('text',array('name'=>'interidshop')),
                         $opt->label(__('The status of the account Interkassa','rcl')),
