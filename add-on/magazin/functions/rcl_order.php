@@ -45,6 +45,7 @@ class Rcl_Order {
         global $rmag_options;
         $false_amount = false;
         if($rmag_options['products_warehouse_recall']==1){ //если включен учет наличия товара
+
             if(isset($_SESSION['cart'])){
                 foreach($_SESSION['cart'] as $prod_id=>$val){
                     if(get_post_meta($prod_id, 'availability_product', 1)=='empty'){ //если товар цифровой
@@ -58,6 +59,8 @@ class Rcl_Order {
                             }else{
                                     $false_amount[$prod_id] = $val['number'];
                             }
+                        }else{
+                            $false_amount[$prod_id] = $val['number'];
                         }
                     }
                 }
