@@ -77,7 +77,9 @@ function rcl_get_template_path($file_temp,$path=false){
 }
 
 function rcl_include_template($file_temp,$path=false){
-    include rcl_get_template_path($file_temp,$path);
+    $pathfile = rcl_get_template_path($file_temp,$path);
+    if(!$pathfile) return false;
+    include $pathfile;
 }
 
 function rcl_get_include_template($file_temp,$path=false){
@@ -142,14 +144,14 @@ function rcl_init_ajax_tabs(){
 }
 
 function rcl_get_wp_upload_dir(){
-    /*if(defined( 'MULTISITE' )){
+    if(defined( 'MULTISITE' )){
         $upload_dir = array(
-                'basedir' => WP_CONTENT_DIR.'/uploads',
-                'baseurl' => WP_CONTENT_URL.'/uploads'
+            'basedir' => WP_CONTENT_DIR.'/uploads',
+            'baseurl' => WP_CONTENT_URL.'/uploads'
         );
-    }else{*/
+    }else{
         $upload_dir = wp_upload_dir();
-    //}
+    }
     return $upload_dir;
 }
 
@@ -317,15 +319,33 @@ function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
             $user_id = $id_or_email->user_id;
     }
 
-    $avatar_id = get_option('avatar_user_'.$user_id);
-    if ( $avatar_id ){
-            $image_attributes = wp_get_attachment_image_src($avatar_id);
-            if($image_attributes) $avatar = "<img class='avatar' src='".$image_attributes[0]."' alt='".$alt."' height='".$size."' width='".$size."' />";
+    $avatar_data = get_user_meta($user_id,'rcl_avatar',1);
+    if($avatar_data){
+            if(is_numeric($avatar_data)){
+                    $image_attributes = wp_get_attachment_image_src($avatar_data);
+                    if($image_attributes) $avatar = "<img class='avatar' src='".$image_attributes[0]."' alt='".$alt."' height='".$size."' width='".$size."' />";
+            }else if(is_string($avatar_data)){
+                    $avatar = "<img class='avatar' src='".$avatar_data."' alt='".$alt."' height='".$size."' width='".$size."' />";
+            }
     }
 
     if ( !empty($id_or_email->user_id)) $avatar = '<a height="'.$size.'" width="'.$size.'" href="'.get_author_posts_url($id_or_email->user_id).'">'.$avatar.'</a>';
 
     return $avatar;
+}
+
+function rcl_update_avatar_data(){
+    global $wpdb;
+
+    $avatars = $wpdb->get_results("SELECT * FROM $wpdb->options WHERE option_name LIKE 'avatar_user_%'");
+
+    if(!$avatars) return false;
+
+    foreach($avatars as $avatar){
+        $user_id = str_replace('avatar_user_', '', $avatar->option_name);
+        update_user_meta($user_id,'rcl_avatar',$avatar->option_value);
+    }
+    $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'avatar_user_%'");
 }
 
 function rcl_sanitize_title_with_translit($title) {
