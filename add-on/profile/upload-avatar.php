@@ -1,7 +1,7 @@
 <?php
 add_action('wp_ajax_rcl_avatar_upload', 'rcl_avatar_upload');
 function rcl_avatar_upload(){
-	
+
 	require_once(ABSPATH . "wp-admin" . '/includes/image.php');
 	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
 	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
@@ -34,55 +34,52 @@ function rcl_avatar_upload(){
 	}
 
 	//print_r($_FILES['files']);
-	//print_r($upload['file']);
+	//print_r($upload['file']); exit;
+        /*Array (
+            [name] => Hydrangeas.jpg
+            [type] => image/jpeg
+            [tmp_name] => Z:\tmp\php7170.tmp
+            [error] => 0 [size] => 620542 )*/
 
-	$avatar = wp_handle_upload( $upload['file'], array('test_form' => FALSE) );
-
-        $mime = explode('/',$avatar['type']);
+        $ext = explode('.',$upload['file']['name']);
+        $mime = explode('/',$upload['file']['type']);
 	if($mime[0]!='image'){
-		$res['result'] = '<div class="error">Файл не является изображением!</div>';
-		echo json_encode($res);
-		exit;
+            //print_r($mime); exit;
+            $res['result'] = '<div class="error">Файл не является изображением!</div>';
+            echo json_encode($res);
+            exit;
 	}
 
         if(function_exists('ulogin_get_avatar')){
 		delete_user_meta($user_ID, 'ulogin_photo');
 	}
 
-	if(get_option('avatar_user_'.$user_ID)){
-		$attachment_id = get_option('avatar_user_'.$user_ID);
-		wp_delete_attachment( $attachment_id );
-	}
+        $dir_path = TEMP_PATH.'avatars/';
+        $dir_url = TEMP_URL.'avatars/';
+        if(!is_dir($dir_path)){
+            mkdir($dir_path);
+            chmod($dir_path, 0755);
+        }
 
-	$attachment = array(
-		'post_mime_type' => $avatar['type'],
-		'post_title' => 'avatar user'.$user_ID,
-		'post_content' => 'image',
-		'post_status' => 'inherit'
-	);
+        $filename = $user_ID.'.'.$ext[1];
+        $file_src = $dir_path.$filename;
 
-	$attach_id = wp_insert_attachment( $attachment, $avatar['file'], 0 );
-	if (is_wp_error($attach_id)) {
-		$error = "Error: $attach_id <br />";
-	}
-	if($error == ''){
-		if(function_exists('has_image_size')) $thumb_size = has_image_size('thumbnail');
-		if( !$thumb_size ) {
-			add_image_size( 'thumbnail', 150, 150, true );
-		}
+        require_once(RCL_PATH.'functions/rcl_crop.php');
+        $crop = new Rcl_Crop();
+        $rst = $crop->get_crop($upload['file']['tmp_name'],250,250,$file_src);
 
-		$attach_data = wp_generate_attachment_metadata( $attach_id, $avatar['file'] );
-		wp_update_attachment_metadata( $attach_id, $attach_data );
+        if (!$rst){
+            $res['result'] = '<div class="error">Ошибка!</div>';
+            echo json_encode($res);
+            exit;
+        }
 
-		if(function_exists('has_image_size')&&!$thumb_size) remove_image_size('thumbnail');
+        $result = update_user_meta( $user_ID,'rcl_avatar',$dir_url.$filename );
+        if($result){
+                $res['result'] = '<div class="success">Аватар загружен!</div>';
+        }
 
-		$result = update_option( 'avatar_user_'.$user_ID, $attach_id );
-		if($result){
-			$res['result'] = '<div class="success">Аватар загружен!</div>';
-		}
-	}
 
 	echo json_encode($res);
 	exit;
 }
-?>
