@@ -1,1 +1,258 @@
-/*Магазин*/.basket-table {    width: 100%;}.basket-table .head-table {    color: #000000;    font-size: 14px;    font-weight: bold;}.basket-table .add_remove a{    font-size: 18px;}.basket-table .add_remove .number_product {    margin-right: 5px;}.basket-table .add_remove .add-product {    color: #008000;    font-weight: bold;    text-decoration: none;}.basket-table .add_remove .remove-product {    color: #FF0000;    font-weight: bold;    text-decoration: none;}.basket-table td, .order_block table td {    border: 1px solid #CCCCCC !important;    padding: 3px;    text-align: center;    vertical-align: middle;}.order_block table {    margin: 10px 0;    width: 100%;}.order_block table td {    padding: 10px;}.form-table input, .form-table select {    margin-bottom: 5px;}.product-cat {    clear: both;}.prodlist .product-cat {    clear: none;}.pricelist, .prodlist, .userlist {    clear: both;    margin: 10px 0;    overflow: hidden;    width: 100%;}.prodlist .rows-list {    text-align: center;}.prodlist .prod-single, .userlist .user-single {    border: 1px solid #CCCCCC;    margin: 5px 3px;    padding: 5px;}.prodlist .slab-list {    border: 1px solid #CCCCCC;    float: left;    margin: 10px 4px;    min-width: 200px;    padding: 10px 5px;    width: 30%;    background: #fff;    position: relative;}.prodlist .slab-list .price-prod{    background: orange;    color: #fff;    font-size: 16px;    padding: 5px;    font-weight: bold;    margin: 5px 0 0 0;    display:block;    text-align:center;}.prodlist .slab-list h3 {    margin: 0;    text-align: center;    font-size: 18px;    position: absolute;    background: rgba(255,255,255,0.8);}.prodlist .prod-single img {    display: block;}.prodlist .slab-list .add_to_cart{    font-size:16px;}.prodlist .slab-list img, .prodlist .slab-list .add_to_cart {    display: block;    margin: 0 auto;    color: #fff;text-align: center;}.prodlist .list-list .thumb-prod, .userlist .list-list .thumb-user {    float: left;    margin: 0 15px 0 0;}.prodlist .list-list h3, .prodlist .list-list h4, .userlist .list-list h3, .userlist .list-list h4 {    clear: none;    margin: 0;}.prodlist .price-prod {    color: #008000;}.prodlist .prod-single a {    text-decoration: none;}.prodlist td h3, .prodlist td h4, .userlist td h3, .userlist td h4 {    margin: 0 5px;}.prodlist td, .userlist td {    padding: 3px 5px;    vertical-align: middle;}.prodlist td img {    margin: 5px;}.prodlist .parne {    background: none repeat scroll 0 0 #F0F0F8;}.prodlist .list-list{    overflow: hidden;    position: relative;}.prodlist .list-list .thumb-prod img{    border-radius:none;}.slider-rcl .price-prod,.prodlist .list-list .price-prod {    float: right;    padding: 5px 15px;    background: orange;    margin-left: 30px;    font-size: 14px;    font-weight: bold;    color: #fff;    min-width: 75px;    text-align: center;}.prodlist .list-list h3{    font-size: 18px;    font-weight: normal;}.prodlist .list-list .product-category{    margin:0;}.prodlist .list-list .cart-button{    text-align: right;    position: absolute;    right: 5px;    bottom: 10px;    min-width: 75px;    float: right;}.prodlist .list-list .cart-button a{    padding: 5px 22px;    font-weight: bold;    font-size: 14px;    border: none;    min-width: 100px;}.slider-rcl .no-price,.prodlist .prod-single .no-price {    background: #8CDD89;}.price-basket-product {    padding: 5px 0;    text-align: right;}.confirm {    text-align: center;}.cart-button a.add_basket{	text-decoration:none;}.price-basket-product .add_basket {    margin-left: 5px;	text-decoration: none;}.prodlist .clear{	clear:both;}.widget-user-count .count_user{	display:none;}.widget-user-count .usercount{	margin:0 0 15px 0;}.cart-icon{    font-size:40px;    color:#ccc;    float:left;}.confirm .confirm_order{	display: block;	float: right;	clear: both;	margin: 20px 0;	text-transform: uppercase;}.confirm h3{	font-size:16px;}.confirm .rcl_register_user_order{	text-decoration: none;	display: inline-block;	margin: 15px 0;}.order-data td .number-product{	display: block;	margin: 0 auto;	width: 20px;	text-align: center;}.order-data td .edit-num{    text-decoration: none;    color: #000;}.order-data td .edit-num > i{    margin: 0;}.order-data td .add-product{    float: left;    margin-left: 30px;}.order-data td .remove-product{    float: right;    margin-right: 30px;}.order-data .product-number{    min-width:130px;}#order_block .view-orders{    float: right;    margin: 15px 0;}#manage-order{   clear: both; }#manage-order input[type="button"]{    }
+/*Магазин*/
+.basket-table {
+    width: 100%;
+}
+.basket-table .head-table {
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+}
+.basket-table .add_remove a{
+    font-size: 18px;
+}
+.basket-table .add_remove .number_product {
+    margin-right: 5px;
+}
+.basket-table .add_remove .add-product {
+    color: #008000;
+    font-weight: bold;
+    text-decoration: none;
+}
+.basket-table .add_remove .remove-product {
+    color: #FF0000;
+    font-weight: bold;
+    text-decoration: none;
+}
+.basket-table td, .order_block table td {
+    border: 1px solid #CCCCCC !important;
+    padding: 3px;
+    text-align: center;
+    vertical-align: middle;
+}
+.order_block table {
+    margin: 10px 0;
+    width: 100%;
+}
+.order_block table td {
+    padding: 10px;
+}
+.form-table input, .form-table select {
+    margin-bottom: 5px;
+}
+.product-cat {
+    clear: both;
+}
+.prodlist .product-cat {
+    clear: none;
+}
+.pricelist, .prodlist, .userlist {
+    clear: both;
+    margin: 10px 0;
+    overflow: hidden;
+    width: 100%;
+}
+.prodlist .rows-list {
+    text-align: center;
+}
+.prodlist .prod-single, .userlist .user-single {
+    border: 1px solid #CCCCCC;
+    margin: 5px 3px;
+    padding: 5px;
+}
+.prodlist .slab-list {
+    border: 1px solid #CCCCCC;
+    float: left;
+    margin: 10px 4px;
+    min-width: 200px;
+    padding: 10px 5px;
+    width: 30%;
+    background: #fff;
+    position: relative;
+}
+.prodlist .slab-list .price-prod{
+    background: orange;
+    color: #fff;
+    font-size: 16px;
+    padding: 5px;
+    font-weight: bold;
+    margin: 5px 0 0 0;
+    display:block;
+    text-align:center;
+}
+.prodlist .slab-list h3 {
+    margin: 0;
+    text-align: center;
+    font-size: 18px;
+    position: absolute;
+    background: rgba(255,255,255,0.8);
+}
+.prodlist .prod-single img {
+    display: block;
+}
+.prodlist .slab-list .add_to_cart{
+    font-size:16px;
+}
+.prodlist .slab-list img, .prodlist .slab-list .add_to_cart {
+    display: block;
+    margin: 0 auto;
+    color: #fff;
+text-align: center;
+}
+.prodlist .list-list .thumb-prod, .userlist .list-list .thumb-user {
+    float: left;
+    margin: 0 15px 0 0;
+}
+.prodlist .list-list h3, .prodlist .list-list h4, .userlist .list-list h3, .userlist .list-list h4 {
+    clear: none;
+    margin: 0;
+}
+.prodlist .price-prod {
+    color: #008000;
+}
+.prodlist .prod-single a {
+    text-decoration: none;
+}
+.prodlist td h3, .prodlist td h4, .userlist td h3, .userlist td h4 {
+    margin: 0 5px;
+}
+.prodlist td, .userlist td {
+    padding: 3px 5px;
+    vertical-align: middle;
+}
+.prodlist td img {
+    margin: 5px;
+}
+.prodlist .parne {
+    background: none repeat scroll 0 0 #F0F0F8;
+}
+.prodlist .list-list{
+    overflow: hidden;
+    position: relative;
+}
+.prodlist .list-list .thumb-prod img{
+    border-radius:none;
+}
+.slider-rcl .price-prod,
+.prodlist .list-list .price-prod {
+    float: right;
+    padding: 5px 15px;
+    background: orange;
+    margin-left: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    min-width: 75px;
+    text-align: center;
+}
+.prodlist .list-list h3{
+    font-size: 18px;
+    font-weight: normal;
+}
+.prodlist .list-list .product-category{
+    margin:0;
+}
+.prodlist .list-list .cart-button{
+    text-align: right;
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+    min-width: 75px;
+    float: right;
+}
+.prodlist .list-list .cart-button a{
+    padding: 5px 22px;
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    min-width: 100px;
+}
+.slider-rcl .no-price,
+.prodlist .prod-single .no-price {
+    background: #8CDD89;
+}
+
+.price-basket-product {
+    padding: 5px 0;
+    text-align: right;
+}
+.confirm {
+    text-align: center;
+}
+.cart-button a.add_basket{
+	text-decoration:none;
+}
+.price-basket-product .add_basket {
+    margin-left: 5px;
+	text-decoration: none;
+}
+.prodlist .clear{
+	clear:both;
+}
+.widget-user-count .count_user{
+	display:none;
+}
+.widget-user-count .usercount{
+	margin:0 0 15px 0;
+}
+.cart-icon{
+    font-size:40px;
+    color:#ccc;
+    float:left;
+}
+.confirm .confirm_order{
+	display: block;
+	float: right;
+	clear: both;
+	margin: 20px 0;
+	text-transform: uppercase;
+}
+.confirm h3{
+	font-size:16px;
+}
+.confirm .rcl_register_user_order{
+	text-decoration: none;
+	display: inline-block;
+	margin: 15px 0;
+}
+.order-data td .number-product{
+	display: block;
+	margin: 0 auto;
+	width: 20px;
+	text-align: center;
+}
+.order-data td .edit-num{
+    text-decoration: none;
+
+    color: #000;
+}
+.order-data td .edit-num > i{
+    margin: 0;
+}
+.order-data td .add-product{
+    float: left;
+
+    margin-left: 30px;
+}
+.order-data td .remove-product{
+    float: right;
+
+    margin-right: 30px;
+}
+.order-data .product-number{
+    min-width:130px;
+}
+#order_block .view-orders{
+    float: right;
+    margin: 15px 0;
+}
+#manage-order{
+   clear: both; 
+}
+#manage-order input[type="button"]{
+    
+}
+.confirm .res_confirm{
+    border: 1px solid #ccc;
+    font-weight: bold;
+    padding: 10px;
+}

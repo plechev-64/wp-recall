@@ -105,11 +105,13 @@
     margin: 3px 5px;
 }
 span.ruble-symbol{
-    position: relative; 
-    line-height:1;
+    position: relative;
+	  font-weight: normal;
+	  font-family:Arial;
 }
 .ruble-symbol span{
     position: absolute;
-    left: 0px;
-    bottom: 5px;
+  line-height: 1px;
+  top: 55%;
+  left: 0;
 }
