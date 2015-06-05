@@ -130,13 +130,13 @@ function rcl_admin_statistic_cashe(){
 		if($_GET['user']){
 			$get = $_GET['user'];
 			$get_data = '&user='.$get;
-			$statistic = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RMAG_PREF ."pay_results WHERE user = '%d' ORDER BY ID DESC LIMIT %d,%d",$get,$start,$inpage));
-			$count_adds = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".RMAG_PREF ."pay_results WHERE user = '%d'",$get));
+			$statistic = $wpdb->get_results($wpdb->prefix("SELECT * FROM ".RMAG_PREF ."pay_results WHERE user = '%d' ORDER BY ID DESC LIMIT %d,%d",$get,$start,$inpage));
+			$count_adds = $wpdb->get_var($wpdb->prefix("SELECT COUNT(ID) FROM ".RMAG_PREF ."pay_results WHERE user = '$get'"));
 		}elseif($_GET['date']){
 			$get = $_GET['date'];
 			$get_data = '&date='.$get;
-			$statistic = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RMAG_PREF ."pay_results WHERE time_action LIKE '%s' ORDER BY ID DESC LIMIT %d,%d",$get.'%',$start,$inpage));
-			$count_adds = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".RMAG_PREF ."pay_results WHERE time_action LIKE '%s'",$get.'%'));
+			$statistic = $wpdb->get_results($wpdb->prefix("SELECT * FROM ".RMAG_PREF ."pay_results WHERE time_action LIKE '%s' ORDER BY ID DESC LIMIT %d,%d",$get.'%',$start,$inpage));
+			$count_adds = $wpdb->get_var($wpdb->prefix("SELECT COUNT(ID) FROM ".RMAG_PREF ."pay_results WHERE time_action LIKE '%s'",$get.'%'));
 		}else{
 
 			$_POST['year']=$year;$_POST['month']=$month;
