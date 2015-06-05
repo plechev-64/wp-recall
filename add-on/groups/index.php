@@ -199,6 +199,9 @@ function rcl_can_user_edit_post_group($post_id){
     global $user_ID;
     $group_id = rcl_get_group_id_by_post($post_id);
     if(!$group_id) return false;
+
+    if(current_user_can('edit_post', $post_id)) return true;
+
     $options_gr = rcl_get_options_group($group_id);
     if(!isset($options_gr['admin'])||$options_gr['admin']!=$user_ID) return false;
     return true;
@@ -207,13 +210,13 @@ function rcl_can_user_edit_post_group($post_id){
 //получаем кол-во участников группы
 function rcl_get_userscount_group($group_id){
     global $wpdb;
-    return $wpdb->get_var($wpdb->prepare("SELECT COUNT(user_id) FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'user_group_%d'",$group_id));
+    return $wpdb->get_var($wpdb->prepare("SELECT COUNT(user_id) FROM $wpdb->usermeta WHERE meta_key = 'user_group_%d'",$group_id));
 }
 
 //Ищем идентификатор админа группы по метаполям пользователей
 function rcl_get_admin_group_by_meta($group_id){
     global $wpdb;
-    return $wpdb->get_var($wpdb->prepare("SELECT user_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'admin_group_%d'",$group_id));
+    return $wpdb->get_var($wpdb->prepare("SELECT user_id FROM $wpdb->usermeta WHERE meta_key = 'admin_group_%d'",$group_id));
 }
 
 function rcl_post_group_edit_button($content){
@@ -367,71 +370,91 @@ function rcl_tab_groups(){
 
 function rcl_groups_block($author_lk){
 
-	global $wpdb;
-	global $user_ID;
-	global $rcl_options;
+    global $wpdb;
+    global $user_ID;
+    global $rcl_options;
 
-	$admin_groups = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'admin_group_%',$author_lk));
-	$user_groups = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'user_group_%',$author_lk));//print_r($admin_groups);
-	if($admin_groups){
-		$ad_groups = '<ul class="group-list">';
-		foreach((array)$admin_groups as $ad_group){
-			$ad_term = get_term($ad_group->meta_value, 'groups');
-			if($ad_term->term_id){
-				$ad_groups .= '<li id="list-'.$ad_term->term_id.'">';
-				$ad_groups .= '<a href="'.get_term_link((int)$ad_term->term_id,'groups' ).'"><i class="fa fa-group"></i>'.$ad_term->name. '</a>';
-				$ad_groups .= '</li>';
-			}
-		}
-		$ad_groups .= '</ul>';
-	}
+    $admin_groups = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM $wpdb->usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'admin_group_%',$author_lk));
+    $user_groups = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM $wpdb->usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'user_group_%',$author_lk));
 
+    if($admin_groups){
+            $ad_groups = rcl_group_list($admin_groups);
+    }
 
-	if($user_groups){
-		$us_groups = '<ul class="group-list">';
-		foreach((array)$user_groups as $group){
+    if($user_groups){
+            $us_groups .= rcl_group_list($user_groups);
+    }
 
-			$term = get_term($group->meta_value, 'groups');
-			if($term->term_id){
-			$us_groups .= '<li id="list-'.$term->term_id.'"><a href="'. get_term_link( (int)$term->term_id, 'groups' ) .'"><i class="fa fa-group"></i>'.$term->name.'</a></li>';
-			}
-		}
-		$us_groups .= '</ul>';
-	}
+    $group_can_public = $rcl_options['public_group_access_recall'];
+    if($group_can_public){
+            $userdata = get_userdata( $user_ID );
+            if($userdata->user_level>=$group_can_public){
+                    $public_groups = true;
+            }else{
+                    $public_groups = false;
+            }
+    }else{
+            $public_groups = true;
+    }
+    //echo $userdata->user_level.' - '.$group_can_public;
 
-	$group_can_public = $rcl_options['public_group_access_recall'];
-	if($group_can_public){
-		$userdata = get_userdata( $user_ID );
-		if($userdata->user_level>=$group_can_public){
-			$public_groups = true;
-		}else{
-			$public_groups = false;
-		}
-	}else{
-		$public_groups = true;
-	}
-        //echo $userdata->user_level.' - '.$group_can_public;
+    if($user_ID==$author_lk&&$public_groups) $groups_block = '<p align="right"><input type="button" class="show_form_add_group recall-button" value="'.__('To create a group','rcl').'">
+        </p><div class="add_new_group">
+        <h3>'.__('To create a group','rcl').'</h3>
+    <form action="" method="post" enctype="multipart/form-data">
+    <p>'.__('Name','rcl').'</p>
+    <input type="text" required maxlength="140" size="30" class="title_groups" name="title_groups" value="">
+    <p>'.__('Group description','rcl').'</p>
+    <textarea required name="group_desc" id="group_desc" rows="2" style="width:90%;"></textarea>
+    <p>'.__('The status of the group','rcl').'</p>
+    <input type="checkbox" class="status_groups" name="status_groups" value="1"> - '.__('Private group. The access group just approved the request of the user.','rcl').'
+    <p>'.__('Group avatar','rcl').' <input required type="file" name="image_group" class="field"/></p>
+    <p align="right"><input type="submit" class="recall-button" name="addgroups" value="'.__('Сreate','rcl').'"></p>
+    </form></div>';
+    else if(!$public_groups) $groups_block = '<h3>'.__('You are not allowed to create new groups.','rcl').'</h3>';
+    if($admin_groups) $groups_block .= '<h3>'.__('Created group','rcl').'</h3>'.$ad_groups;
+    if($user_groups) $groups_block .= '<h3>'.__('Joined the group','rcl').'</h3>'.$us_groups;
 
-	if($user_ID==$author_lk&&$public_groups) $groups_block = '<p align="right"><input type="button" class="show_form_add_group recall-button" value="'.__('To create a group','rcl').'">
-            </p><div class="add_new_group">
-            <h3>'.__('To create a group','rcl').'</h3>
-	<form action="" method="post" enctype="multipart/form-data">
-	<p>'.__('Name','rcl').'</p>
-	<input type="text" required maxlength="140" size="30" class="title_groups" name="title_groups" value="">
-	<p>'.__('Group description','rcl').'</p>
-	<textarea required name="group_desc" id="group_desc" rows="2" style="width:90%;"></textarea>
-	<p>'.__('The status of the group','rcl').'</p>
-	<input type="checkbox" class="status_groups" name="status_groups" value="1"> - '.__('Private group. The access group just approved the request of the user.','rcl').'
-	<p>'.__('Group avatar','rcl').' <input required type="file" name="image_group" class="field"/></p>
-	<p align="right"><input type="submit" class="recall-button" name="addgroups" value="'.__('Сreate','rcl').'"></p>
-	</form></div>';
-        else if(!$public_groups) $groups_block = '<h3>'.__('You are not allowed to create new groups.','rcl').'</h3>';
-	if($admin_groups) $groups_block .= '<h3>'.__('Created group','rcl').'</h3>'.$ad_groups;
-	if($user_groups) $groups_block .= '<h3>'.__('Joined the group','rcl').'</h3>'.$us_groups;
+    if($user_ID!=$author_lk&&!$admin_groups&&!$user_groups) $groups_block .= '<h3>'.__('The user is not in group','rcl').'</h3>';
 
-	if($user_ID!=$author_lk&&!$admin_groups&&!$user_groups) $groups_block .= '<h3>'.__('The user is not in group','rcl').'</h3>';
+    return $groups_block;
+}
 
-	return $groups_block;
+function rcl_group_list($admin_groups){
+    global $wpdb;
+
+    $ad_groups = '<ul class="group-list">';
+
+    if(is_multisite()){
+
+        $query = $wpdb->prepare("select blog_id from $wpdb->blogs");
+        $sites = $wpdb->get_results($query);
+
+        foreach ($sites as $site){
+            switch_to_blog($site->blog_id);
+            $ad_groups .= rcl_row_group_list($admin_groups);
+        }
+        restore_current_blog();
+    }else{
+        $ad_groups .= rcl_row_group_list($admin_groups);
+    }
+
+    $ad_groups .= '</ul>';
+
+    return $ad_groups;
+}
+
+function rcl_row_group_list($groups){
+    $ad_groups = '';
+    foreach($groups as $ad_group){
+        $ad_term = get_term($ad_group->meta_value, 'groups');
+        if($ad_term->term_id){
+            $ad_groups .= '<li id="list-'.$ad_term->term_id.'">';
+            $ad_groups .= '<a href="'.get_term_link((int)$ad_term->term_id,'groups' ).'"><i class="fa fa-group"></i>'.$ad_term->name. '</a>';
+            $ad_groups .= '</li>';
+        }
+    }
+    return $ad_groups;
 }
 
 //Удаляем всех пользователей и админа группы и ее аватарку при ее удалении из БД
@@ -442,8 +465,8 @@ function rcl_delete_users_group($term, $tt_id=null, $taxonomy=null){
 	$imade_id = get_option('image_group_'.$term);
 	delete_option('image_group_'.$term);
 	wp_delete_attachment($imade_id,true);
-	$wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'admin_group_%d'",$term));
-	$wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'user_group_%d'",$term));
+	$wpdb->query($wpdb->prepare("DELETE FROM $wpdb->usermeta WHERE meta_key = 'admin_group_%d'",$term));
+	$wpdb->query($wpdb->prepare("DELETE FROM $wpdb->usermeta WHERE meta_key = 'user_group_%d'",$term));
 	$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."groups_options WHERE group_id = '%d'",$term));
 }
 
@@ -829,11 +852,11 @@ global $wpdb,$post;
 
 	$n=0;
 
-	$users_groups = $wpdb->get_results($wpdb->prepare("SELECT user_id,meta_key FROM ".$wpdb->prefix ."usermeta WHERE meta_key LIKE '%s' OR meta_key LIKE '%s'",'user_group_%','admin_group_%'));
+	$users_groups = $wpdb->get_results($wpdb->prepare("SELECT user_id,meta_key FROM $wpdb->usermeta WHERE meta_key LIKE '%s' OR meta_key LIKE '%s'",'user_group_%','admin_group_%'));
 
 	foreach((array)$users_groups as $user_gr){ $userslst[] = $user_gr->user_id; }
 
-	$display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($userslst).")",$userslst));
+	$display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM $wpdb->users WHERE ID IN (".rcl_format_in($userslst).")",$userslst));
 
 	foreach((array)$display_names as $name){
 		$names[$name->ID] = $name->display_name;

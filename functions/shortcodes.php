@@ -141,7 +141,7 @@ function rcl_short_user_list($atts, $content = null){
 
         }else{
 
-            $count_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->prefix ."users WHERE ID NOT IN (".rcl_format_in(explode(',',$exclude)).")",explode(',',$exclude)));
+            $count_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM $wpdb->users WHERE ID NOT IN (".rcl_format_in(explode(',',$exclude)).")",explode(',',$exclude)));
 
         }
 
@@ -156,9 +156,9 @@ function rcl_short_user_list($atts, $content = null){
         $UserList->inpage = $inpage;
 
         if($group){
-            $users = $wpdb->get_results($wpdb->prepare("SELECT user_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key = '%s'",'user_group_'.$group));
+            $users = $wpdb->get_results($wpdb->prepare("SELECT user_id FROM $wpdb->usermeta WHERE meta_key = '%s'",'user_group_'.$group));
             $us_lst = $UserList->get_users_lst((object)$users,'user_id');
-            $group_admin = $wpdb->get_var($wpdb->prepare("SELECT user_id FROM ".$wpdb->prefix ."usermeta WHERE meta_key = '%s'",'admin_group_'.$group));
+            $group_admin = $wpdb->get_var($wpdb->prepare("SELECT user_id FROM $wpdb->usermeta WHERE meta_key = '%s'",'admin_group_'.$group));
             $us_data = $UserList->get_usdata_actions($us_data,$us_lst);
         }else{
 
@@ -208,12 +208,12 @@ function rcl_short_user_list($atts, $content = null){
 
 	$uslst_array = explode(',',$us_lst);
 
-    $users_desc = $wpdb->get_results($wpdb->prepare("SELECT user_id,meta_value FROM ".$wpdb->prefix."usermeta WHERE user_id IN (".rcl_format_in($uslst_array).") AND meta_key = 'description'",$uslst_array));
+    $users_desc = $wpdb->get_results($wpdb->prepare("SELECT user_id,meta_value FROM $wpdb->usermeta WHERE user_id IN (".rcl_format_in($uslst_array).") AND meta_key = 'description'",$uslst_array));
     foreach($users_desc as $us_desc){
         $us_data[$us_desc->user_id]['description'] = $us_desc->meta_value;
     }
 
-    $display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($uslst_array).")",$uslst_array));
+    $display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM $wpdb->users WHERE ID IN (".rcl_format_in($uslst_array).")",$uslst_array));
     foreach((array)$display_names as $name){
         $us_data[$name->ID]['display_name'] = $name->display_name;
         $us_data[$name->ID]['user_id'] = $name->ID;

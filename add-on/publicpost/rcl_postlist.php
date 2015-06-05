@@ -50,10 +50,22 @@ class Rcl_Postlist {
             global $wpdb;
 
             $rayt = array();
+            $posts = array();
 
             $start .= $this->start.',';
 
-            $posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $start 20",$author_lk,$this->posttype));
+            $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $start 20",$author_lk,$this->posttype));
+
+            if(is_multisite()){
+                $blog_list = get_blog_list( 0, 'all' );
+
+                foreach ($blog_list as $blog) {
+                        $pref = $wpdb->base_prefix.$blog['blog_id'].'_posts';
+                        $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$pref." WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $start 20",$author_lk,$this->posttype));
+                }
+            }
+
+            //print_r($posts);
 
             $posts_block = '';
 
@@ -78,7 +90,8 @@ class Rcl_Postlist {
                         <td>'.__('Status','rcl').'</td>';
                             //if($user_ID==$author_lk) $posts_block .= '<td>Ред.</td>';
                             $posts_block .= '</tr>';
-                    foreach($posts as $post){
+                    foreach($posts as $postdata){
+			foreach($postdata as $post){
                             if($post->post_status=='pending') $status = '<span class="pending">'.__('on approval','rcl').'</span>';
                             elseif($post->post_status=='trash') $status = '<span class="pending">'.__('deleted','rcl').'</span>';
                             else $status = '<span class="publish">'.__('publish','rcl').'</span>';
@@ -98,6 +111,7 @@ class Rcl_Postlist {
                                     . '<td>'.$status.'</td>';
                             //if($user_ID==$author_lk) $posts_block .= '<td><a target="_blank" href="'.get_permalink($rcl_options['public_form_page_rcl']).'?rcl-post-edit='.$post->ID.'">Ред.</a></td>';
                             $posts_block .= '</tr>';
+			}
                     }
                     $posts_block .= '</table>';
             }else{

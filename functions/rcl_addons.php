@@ -12,7 +12,7 @@ class Rcl_Addons{
     }
 
 	function wp_recall_addons_panel(){
-		add_submenu_page( 'manage-wprecall', __('Add-on manager','rcl'), __('Add-on manager','rcl'), 'edit_plugins', 'manage-addon-recall', array( $this, 'recall_addon_manage'));
+		add_submenu_page( 'manage-wprecall', __('Add-on manager','rcl'), __('Add-on manager','rcl'), 'manage_options', 'manage-addon-recall', array( $this, 'recall_addon_manage'));
 	}
 
 	function get_include_activate_addons_recall(){

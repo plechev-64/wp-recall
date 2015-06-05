@@ -665,7 +665,7 @@ class Rcl_Messages{
 
 		}
 
-		$name_users = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($contacts).")",$contacts));
+		$name_users = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM $wpdb->users WHERE ID IN (".rcl_format_in($contacts).")",$contacts));
 
 		foreach((array)$name_users as $name){
 			$names[$name->ID] = $name->display_name;

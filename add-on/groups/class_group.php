@@ -53,7 +53,7 @@ class Rcl_Group{
 		if(!$this->admin_id) $this->admin_id = rcl_get_admin_group_by_meta($this->term_id);
 		if(!$this->imade_id) $this->imade_id = get_option('image_group_'.$this->term_id);
 
-		$this->users_group = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix ."usermeta WHERE meta_key = 'user_group_%d' ORDER BY RAND() LIMIT 10",$this->term_id));
+		$this->users_group = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE meta_key = '%d' ORDER BY RAND() LIMIT 10",'user_group_'.$this->term_id));
 
 		$args = array(
 			'post_type'=>'post-group',
@@ -81,7 +81,7 @@ class Rcl_Group{
 			if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-group-rcl' ) ) return false;
 
 			if($this->options_gr) $opt = true;
-			
+
 			$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 			if(!$_POST['private']&&$this->options_gr['private']) unset($this->options_gr['private']);
@@ -89,7 +89,7 @@ class Rcl_Group{
 			if(!$_POST['users']&&$this->options_gr['users']) unset($this->options_gr['users']);
 			if(!$_POST['no-post']&&$this->options_gr['no-post']) unset($this->options_gr['no-post']);
 
-			foreach($_POST as $p => $data ){				
+			foreach($_POST as $p => $data ){
 				if($data){
 					if($p=='event'){
 						if(!$_POST['event']['active']) $_POST['event']['active'] = 0;
