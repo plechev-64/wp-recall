@@ -80,9 +80,11 @@ class Rcl_Order {
 
         if(!$user_id) $user_id = $user_ID;
 
-        $cart = apply_filters('cart_values_rcl',$_SESSION['cart']);
+        $cart = $_SESSION['cart'];
 
-        //print_r($cart);exit;
+        $cart = apply_filters('cart_values_rcl',$cart);
+
+        if(!$cart) return false;
 
         foreach($cart as $prod_id=>$val){
 
@@ -172,7 +174,7 @@ class Rcl_Order {
     }
 
     function send_mail($order_custom_field,$table_order,$user_id=false,$args=false){
-        global $user_ID,$rmag_options;
+        global $user_ID,$rmag_options,$rcl_options;
 
         if(!$user_id) $user_id = $user_ID;
 
@@ -205,22 +207,36 @@ class Rcl_Order {
         }
 
         $email = get_the_author_meta('user_email',$user_id);
-        $textmail = '
-        <p>Вы сформировали заказ в магазине "'.get_bloginfo('name').'".</p>
-        <h3>Информация о пользователе:</h3>
-        <p><b>Имя</b>: '.get_the_author_meta('display_name',$user_id).'</p>
-        <p><b>Email</b>: '.$email.'</p>
-        <p>Заказ №'.$this->order_id.' получил статус "Не оплачено".</p>
-        <h3>Детали заказа:</h3>
-        '.$table_order;
+
+        $textmail = '';
+
         if($args&&$reg_user){
             $subject = 'Данные вашего аккаунта и заказа №'.$this->order_id;
-            $textmail .= '<p>Для вас был создан личный кабинет покупателя, где вы сможете следить за сменой статусов ваших заказов, формировать новые заказы и оплачивать их доступными способами</p>
+
+            if($rcl_options['confirm_register_recall']==1){
+                $url = get_bloginfo('wpurl').'/?rglogin='.$args['user_login'].'&rgpass='.$args['user_password'].'&rgcode='.md5($args['user_login']);
+
+                $textmail .= '<h3>Вы были зарегистрированы</h3>
+                <p>Подтвердите свою электронную почту на сайте перейдя по ссылке ниже:</p>
+                <p><a href="'.$url.'">'.$url.'</a></p>
+                <p>Не получается активировать аккаунт?</p>
+                <p>Скопируйте текст ссылки ниже, вставьте его в адресную строку вашего браузера и нажмите Enter</p>';
+            }
+
+            $textmail .= '<h3>Данные аккаунта</h3>
+            <p>Для вас был создан личный кабинет покупателя, где вы сможете следить за сменой статусов ваших заказов, формировать новые заказы и оплачивать их доступными способами</p>
             <p>Ваши данные для авторизации в вашем личном кабинете:</p>
             <p>Логин: '.$args['user_login'].'</p>
             <p>Пароль: '.$args['user_password'].'</p>
             <p>В дальнейшем используйте свой личный кабинет для новых заказов на нашем сайте.</p>';
         }
+
+        $textmail .= '
+        <p>Вы сформировали заказ в магазине "'.get_bloginfo('name').'".</p>
+        <h3>Детали заказа</h3>
+        <p>Заказ №'.$this->order_id.' получил статус "Не оплачено".</p>
+        '.$table_order;
+
         $link = rcl_format_url(get_author_posts_url($user_id),'order');
         $textmail .= '<p>Ссылка для управления заказами: <a href="'.$link.'">'.$link.'</a></p>';
 

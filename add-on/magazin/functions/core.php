@@ -355,6 +355,12 @@ function rcl_payment_order($order_id,$user_id=false){
     $subject = 'Заказ №'.$order->order_id.' оплачен!';
 
     $admin_email = $rmag_options['admin_email_magazin_recall'];
+	
+	$text = '';
+	
+	$text = apply_filters('payment_mail_text',$text);
+	
+	//print_r($text);exit;
 
     $textmail = '
     <p>Пользователь оплатил заказ в магазине "'.get_bloginfo('name').'".</p>
@@ -365,6 +371,7 @@ function rcl_payment_order($order_id,$user_id=false){
     <p>Заказ №'.$order_id.' получил статус "Оплачено".</p>
     <h3>Детали заказа:</h3>
     '.$table_order.'
+	'.$text.'
     <p>Ссылка для управления заказом в админке:</p>
     <p>'.admin_url('admin.php?page=manage-rmag&order='.$order_id).'</p>';
 
@@ -387,6 +394,7 @@ function rcl_payment_order($order_id,$user_id=false){
     <p>Заказ №'.$order_id.' получил статус "Оплачено".</p>
     <h3>Детали заказа:</h3>
     '.$table_order.'
+	'.$text.'
     <p>Ваш заказ оплачен и поступил в обработку. Вы можете следить за сменой его статуса из своего личного кабинета</p>';
     rcl_mail($email, $subject, $textmail);
 
