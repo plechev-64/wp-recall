@@ -429,12 +429,14 @@ function rcl_group_list($admin_groups){
 
         $query = $wpdb->prepare("select blog_id from $wpdb->blogs");
         $sites = $wpdb->get_results($query);
+	$current_blog = get_current_blog_id();
 
         foreach ($sites as $site){
             switch_to_blog($site->blog_id);
             $ad_groups .= rcl_row_group_list($admin_groups);
         }
-        restore_current_blog();
+        switch_to_blog($current_blog);
+
     }else{
         $ad_groups .= rcl_row_group_list($admin_groups);
     }
