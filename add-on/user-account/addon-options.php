@@ -33,8 +33,9 @@ function rcl_user_account_options($content){
                 $opt->option('select',array(
                     'name'=>'type_order_payment',
                     'options'=>array(
-                        1=>__('Directly through the payment system','rcl'),
-                        2=>__('To offer both options','rcl')
+						__('Funds from the personal account user','rcl'),
+                        __('Directly through the payment system','rcl'),
+                        __('To offer both options','rcl')
                     )
                 )),
                 $opt->notice(__('If the connection to the payment aggregator not in use, it is possible to set only "Funds from the personal account user"!','rcl')),
