@@ -220,11 +220,8 @@ function rcl_confirm_order(){
 
                 } else { //если товар не весь в наличии, формируем сообщение об ошибке и отправляем пользователю
 
-                    for($i=1;$i<=$_POST['count'];$i++){
-                        if($false_amount[$i]){
-                                $error_amount .= '<p>Наименование товара: <b>'.get_the_title($_POST['idprod_'.$i]).' доступно '.get_post_meta($_POST['idprod_'.$i], 'amount_product', 1).' шт.</b></p>';
-                        }
-
+                    foreach($false_amount as $prod_id => $cnt){
+                            $error_amount .= 'Наименование товара: <b>'.get_the_title($prod_id).' доступно '.get_post_meta($prod_id, 'amount_product', 1).' шт.</b>';
                     }
 
                     $log['otvet']=10;
