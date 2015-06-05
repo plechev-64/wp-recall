@@ -312,7 +312,7 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
             $mime = explode('/',$file['type']);
             if(!isset($accept[$mime[0]])) return false;
         }
-		
+
 		if($post_id) $file_id = get_post_meta($post_id,$slug,1);
         else $file_id = get_user_meta($user_id,$slug,1);
         if($file_id) wp_delete_attachment($file_id);
@@ -365,6 +365,8 @@ function rcl_get_custom_post_meta($post_id){
 
         $cf = new Rcl_Custom_Fields();
         foreach((array)$get_fields as $custom_field){
+            $custom_field = apply_filters('rcl_custom_post_meta',$custom_field);
+            if(!$custom_field) continue;
             $p_meta = get_post_meta($post_id,$custom_field['slug'],true);
             $show_custom_field .= $cf->get_field_value($custom_field,$p_meta);
         }

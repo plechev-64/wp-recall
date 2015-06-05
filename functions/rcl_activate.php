@@ -3,7 +3,7 @@
 if (!class_exists('reg_core')){
     class reg_core {
         function __construct(){
-            add_action('init',array(&$this,'init_prefix'));
+            add_action('init',array(&$this,'init_prefix'),1);
             if(is_admin()) add_action('admin_init',array(&$this,'add_tbl'));
         }
 
