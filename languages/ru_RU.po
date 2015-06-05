@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-05-26 15:29+0300\n"
+"POT-Creation-Date: 2015-06-03 12:12+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -24,8 +24,26 @@ msgstr ""
 "X-Generator: Poedit 1.7.6\n"
 "X-Poedit-SearchPath-0: .\n"
 
+#: add-on/background-cabinet/index.php:1
+msgid "Настройки фона"
+msgstr ""
+
+#: add-on/background-cabinet/index.php:1
+msgid "Фон личного кабинета"
+msgstr ""
+
+#: add-on/background-cabinet/index.php:1
+msgid "Поле профиля для фона"
+msgstr ""
+
+#: add-on/background-cabinet/index.php:1
+msgid ""
+"Укажите поле профиля типа \"Файл\" чтобы через него могли устанавливать "
+"фоновое изображение для личного кабинета"
+msgstr ""
+
 #: add-on/bookmarks/class_bookmark.php:65 add-on/bookmarks/index.php:108
-#: add-on/bookmarks/index.php:123
+#: add-on/bookmarks/index.php:123 functions/rcl_custom_fields.php:80
 msgid "delete"
 msgstr "удалить"
 
@@ -40,7 +58,7 @@ msgstr "В этой группе нет закладок"
 
 #: add-on/bookmarks/class_bookmark.php:154 add-on/bookmarks/index.php:169
 #: add-on/bookmarks/index.php:179 add-on/bookmarks/index.php:269
-#: add-on/bookmarks/index.php:279 add-on/groups/index.php:715
+#: add-on/bookmarks/index.php:279 add-on/groups/index.php:734
 msgid "Close"
 msgstr "Закрыть"
 
@@ -134,9 +152,9 @@ msgstr "Отключить закладки для публикации"
 
 #: add-on/bookmarks/index.php:139 add-on/gallery-recall/index.php:50
 #: add-on/groups/index.php:288 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:153 add-on/profile/index.php:553
-#: add-on/profile/index.php:558 add-on/profile/index.php:563
-#: add-on/profile/index.php:568 add-on/profile/index.php:573
+#: add-on/profile/index.php:153 add-on/profile/index.php:551
+#: add-on/profile/index.php:556 add-on/profile/index.php:561
+#: add-on/profile/index.php:566 add-on/profile/index.php:571
 #: add-on/publicpost/index.php:228 add-on/publicpost/index.php:398
 #: add-on/rating-system/addon-options.php:43
 #: add-on/rating-system/addon-options.php:63 add-on/rating-system/admin.php:16
@@ -148,9 +166,9 @@ msgstr "Нет"
 
 #: add-on/bookmarks/index.php:140 add-on/gallery-recall/index.php:50
 #: add-on/groups/index.php:288 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:153 add-on/profile/index.php:553
-#: add-on/profile/index.php:558 add-on/profile/index.php:563
-#: add-on/profile/index.php:568 add-on/profile/index.php:573
+#: add-on/profile/index.php:153 add-on/profile/index.php:551
+#: add-on/profile/index.php:556 add-on/profile/index.php:561
+#: add-on/profile/index.php:566 add-on/profile/index.php:571
 #: add-on/publicpost/index.php:228 add-on/publicpost/index.php:398
 #: add-on/rating-system/addon-options.php:43
 #: add-on/rating-system/addon-options.php:63 add-on/rating-system/admin.php:17
@@ -403,16 +421,13 @@ msgid "You have reached the limit of downloads"
 msgstr "Вы достигли лимита загрузки"
 
 #: add-on/gallery-recall/upload-file.php:17
-#: functions/rcl_custom_fields.php:264 functions/rcl_custom_fields.php:281
+#: functions/rcl_custom_fields.php:276 functions/rcl_custom_fields.php:294
 msgid "File size exceeded!"
 msgstr "Размер файла превышен!"
 
-#: add-on/getresponse-manager/index.php:1 add-on/groups/class_group.php:207
-#: add-on/justclick-manager/index.php:1
-#: add-on/partners-system/admin-pages.php:124
-#: add-on/users-market/index.php:720 admin-pages.php:299 functions-rcl.php:462
-msgid "Save settings"
-msgstr "Сохранить настройки"
+#: add-on/getresponse-manager/index.php:1
+msgid "Сохранить настройки"
+msgstr ""
 
 #: add-on/groups/class_ajax.php:40 add-on/groups/class_ajax.php:41
 #: add-on/groups/class_ajax.php:58
@@ -439,7 +454,7 @@ msgstr ""
 msgid "Add a description of the group"
 msgstr "Добавьте описание группы"
 
-#: add-on/groups/class_group.php:178 add-on/groups/index.php:423
+#: add-on/groups/class_group.php:178 add-on/groups/index.php:406
 msgid "The status of the group"
 msgstr "Статус группы"
 
@@ -471,6 +486,12 @@ msgstr "Настройки группы"
 #: add-on/groups/class_group.php:200
 msgid "To close the settings"
 msgstr "Закрыть настройки"
+
+#: add-on/groups/class_group.php:207 add-on/justclick-manager/index.php:1
+#: add-on/partners-system/admin-pages.php:124
+#: add-on/users-market/index.php:747 admin-pages.php:299 functions-rcl.php:480
+msgid "Save settings"
+msgstr "Сохранить настройки"
 
 #: add-on/groups/class_group.php:238
 msgid "Delete group"
@@ -664,7 +685,7 @@ msgstr "Публикация группы"
 #: add-on/groups/index.php:269 add-on/publicpost/index.php:78
 #: admin-pages.php:151 widget.php:31 widget.php:94
 msgid "All users"
-msgstr "Всем пользователям"
+msgstr "Все пользователи"
 
 #: add-on/groups/index.php:272
 msgid "Moderation of publications in the group"
@@ -700,96 +721,96 @@ msgid ""
 "of the author"
 msgstr "Влияние рейтинга публикации группы на общий рейтинг автора"
 
-#: add-on/groups/index.php:415 add-on/groups/index.php:417
+#: add-on/groups/index.php:398 add-on/groups/index.php:400
 msgid "To create a group"
 msgstr "Создание группы"
 
-#: add-on/groups/index.php:419 add-on/publicpost/class_public.php:74
+#: add-on/groups/index.php:402 add-on/publicpost/class_public.php:74
 msgid "Name"
 msgstr "Имя"
 
-#: add-on/groups/index.php:421
+#: add-on/groups/index.php:404
 msgid "Group description"
 msgstr "Описание группы"
 
-#: add-on/groups/index.php:424
+#: add-on/groups/index.php:407
 msgid "Private group. The access group just approved the request of the user."
 msgstr ""
 "Приватная группа. Доступ в группу возможен только по одобренному запросу."
 
-#: add-on/groups/index.php:425
+#: add-on/groups/index.php:408
 msgid "Group avatar"
 msgstr "Аватар группы"
 
-#: add-on/groups/index.php:426
+#: add-on/groups/index.php:409
 msgid "Сreate"
 msgstr "Создать"
 
-#: add-on/groups/index.php:428
+#: add-on/groups/index.php:411
 msgid "You are not allowed to create new groups."
 msgstr "Вам не разрешено создавать новые группы."
 
-#: add-on/groups/index.php:429
+#: add-on/groups/index.php:412
 msgid "Created group"
 msgstr "Созданные группы"
 
-#: add-on/groups/index.php:430
+#: add-on/groups/index.php:413
 msgid "Joined the group"
 msgstr "Вступил в группы"
 
-#: add-on/groups/index.php:432
+#: add-on/groups/index.php:415
 msgid "The user is not in group"
 msgstr "Пользователь не состоит в группе"
 
-#: add-on/groups/index.php:463
+#: add-on/groups/index.php:482
 msgid "Category in the group"
 msgstr "Категории группы"
 
-#: add-on/groups/index.php:654
+#: add-on/groups/index.php:673
 msgid "Published in the group"
 msgstr "Публикация в группе"
 
-#: add-on/groups/index.php:737
+#: add-on/groups/index.php:756
 msgid "Request access to the group approved!"
 msgstr "Запрос на доступ к группе одобрен!"
 
-#: add-on/groups/index.php:748
+#: add-on/groups/index.php:767
 msgid "The request to access the group rejected."
 msgstr "Запрос на доступ к группе отклонен."
 
-#: add-on/groups/index.php:843
+#: add-on/groups/index.php:862
 msgid "Search group"
 msgstr "Поиск группы"
 
-#: add-on/groups/index.php:844
+#: add-on/groups/index.php:863
 msgid "Find"
 msgstr "Найти"
 
-#: add-on/groups/index.php:851 functions/shortcodes.php:233
+#: add-on/groups/index.php:870 functions/shortcodes.php:233
 msgid "Filter by"
 msgstr "Фильтр по"
 
-#: add-on/groups/index.php:852
+#: add-on/groups/index.php:871
 msgid "Created date"
 msgstr "Дата создания"
 
-#: add-on/groups/index.php:853
+#: add-on/groups/index.php:872
 msgid "By name"
 msgstr "По имени"
 
-#: add-on/groups/index.php:854
+#: add-on/groups/index.php:873
 msgid "The number of records"
 msgstr "Кол-во записей"
 
-#: add-on/groups/index.php:915 add-on/groups/templates/group.php:1
+#: add-on/groups/index.php:934 add-on/groups/templates/group.php:1
 msgid "Creator"
 msgstr "Создатель"
 
-#: add-on/groups/index.php:916 add-on/groups/templates/group.php:1
+#: add-on/groups/index.php:935 add-on/groups/templates/group.php:1
 msgid "Participants"
 msgstr "Участники"
 
-#: add-on/groups/index.php:943
+#: add-on/groups/index.php:962
 msgid "Remove from group"
 msgstr "Удалить из группы"
 
@@ -836,7 +857,7 @@ msgid "Cart"
 msgstr "Корзина"
 
 #: add-on/magazin/functions/shortcodes.php:116 add-on/publicpost/index.php:312
-#: add-on/publicpost/rcl_postlist.php:77
+#: add-on/publicpost/rcl_postlist.php:89
 #: add-on/publicpost/templates/public-form.php:4
 #: add-on/user-account/index.php:379 functions/rcl_editfields.php:116
 #: widget.php:47 widget.php:109 widget.php:162
@@ -1274,8 +1295,8 @@ msgstr "Комментарий"
 
 #: add-on/money-wallet/index.php:155 add-on/money-wallet/index.php:366
 #: add-on/money-wallet/index.php:490 add-on/profile/index.php:391
-#: add-on/profile/index.php:699 add-on/publicpost/index.php:312
-#: add-on/publicpost/rcl_postlist.php:78
+#: add-on/profile/index.php:697 add-on/publicpost/index.php:312
+#: add-on/publicpost/rcl_postlist.php:90
 msgid "Status"
 msgstr "Статус"
 
@@ -1322,7 +1343,7 @@ msgstr "Расход"
 
 #: add-on/money-wallet/index.php:208 add-on/money-wallet/index.php:361
 #: add-on/money-wallet/index.php:489 add-on/publicpost/index.php:312
-#: add-on/publicpost/rcl_postlist.php:76 functions/rcl_editfields.php:150
+#: add-on/publicpost/rcl_postlist.php:88 functions/rcl_editfields.php:150
 msgid "Date"
 msgstr "Дата"
 
@@ -1386,7 +1407,7 @@ msgstr "Управление запросами на вывод средств"
 msgid "Action"
 msgstr "Действие"
 
-#: add-on/money-wallet/index.php:476 add-on/publicpost/rcl_publicform.php:167
+#: add-on/money-wallet/index.php:476 add-on/publicpost/rcl_publicform.php:171
 #: add-on/review/index.php:205 functions/rcl_addons.php:167
 #: functions/rcl_editfields.php:127
 msgid "Delete"
@@ -1567,28 +1588,28 @@ msgstr "Панель администратора"
 msgid "Show the admin bar when viewing site"
 msgstr "Отображать панель администратора на сайте"
 
-#: add-on/profile/index.php:270 add-on/profile/index.php:650
+#: add-on/profile/index.php:270 add-on/profile/index.php:648
 #: functions/loginform.php:163 functions/loginform.php:187
 #: templates/form-sign.php:25 templates/recallbar.php:18
 #: templates/recallbar.php:32
 msgid "Login"
 msgstr "Вход"
 
-#: add-on/profile/index.php:276 add-on/profile/index.php:657
+#: add-on/profile/index.php:276 add-on/profile/index.php:655
 msgid "Firstname"
 msgstr "Имя"
 
-#: add-on/profile/index.php:282 add-on/profile/index.php:664
+#: add-on/profile/index.php:282 add-on/profile/index.php:662
 msgid "Surname"
 msgstr "Фамилия"
 
-#: add-on/profile/index.php:288 add-on/profile/index.php:671
+#: add-on/profile/index.php:288 add-on/profile/index.php:669
 #: functions/register.php:126 templates/form-register.php:10
 #: templates/form-sign.php:10
 msgid "Nickname"
 msgstr "Логин"
 
-#: add-on/profile/index.php:294 add-on/profile/index.php:678
+#: add-on/profile/index.php:294 add-on/profile/index.php:676
 msgid "Display name"
 msgstr "Отображаемое имя"
 
@@ -1629,88 +1650,88 @@ msgstr "Замечание"
 msgid "The password must be at least 7 characters"
 msgstr "Пароль должен содержать не менее 7 символов"
 
-#: add-on/profile/index.php:463
+#: add-on/profile/index.php:461
 msgid "Update profile"
 msgstr "Обновить профиль"
 
-#: add-on/profile/index.php:467
+#: add-on/profile/index.php:465
 msgid "Are you sure? Then restore will not work!"
 msgstr "Вы серьезно? Восстановить не получиться!"
 
-#: add-on/profile/index.php:469
+#: add-on/profile/index.php:467
 msgid "To delete your profile"
 msgstr "Удаление вашего профиля"
 
-#: add-on/profile/index.php:531
+#: add-on/profile/index.php:529
 msgid "Fields to display in the profile note ticks."
 msgstr "Поля отображаемые в профиле"
 
-#: add-on/profile/index.php:539
+#: add-on/profile/index.php:537
 #, php-format
 msgid "<td><input type=\"%s\" name=\"%s\" %s /></td><td>%s</td>"
 msgstr ""
 
-#: add-on/profile/index.php:547
+#: add-on/profile/index.php:545
 msgid "Manage profile fields"
 msgstr "Управление полями профиля"
 
-#: add-on/profile/index.php:552 add-on/publicpost/index.php:397
+#: add-on/profile/index.php:550 add-on/publicpost/index.php:397
 msgid "required field"
 msgstr "обязательное поле"
 
-#: add-on/profile/index.php:557
+#: add-on/profile/index.php:555
 msgid "to display the registration form"
 msgstr "отображать в форме регистрации"
 
-#: add-on/profile/index.php:562
+#: add-on/profile/index.php:560
 msgid "display at checkout for guests"
 msgstr "отображать при оформлении заказа для гостей"
 
-#: add-on/profile/index.php:567
+#: add-on/profile/index.php:565
 msgid "to show the content to other users"
 msgstr "отображать для других пользователей"
 
-#: add-on/profile/index.php:572
+#: add-on/profile/index.php:570
 msgid "it only changes the administration of the site"
 msgstr "редактируется только администрацией сайта"
 
-#: add-on/profile/index.php:653
+#: add-on/profile/index.php:651
 msgid "Login user"
 msgstr "логин пользователя"
 
-#: add-on/profile/index.php:660
+#: add-on/profile/index.php:658
 msgid "Username"
 msgstr "Логин"
 
-#: add-on/profile/index.php:667
+#: add-on/profile/index.php:665
 msgid "Surname user"
 msgstr "Имя пользователя"
 
-#: add-on/profile/index.php:674
+#: add-on/profile/index.php:672
 msgid "Nickname user"
 msgstr "Никнейм пользователя"
 
-#: add-on/profile/index.php:681
+#: add-on/profile/index.php:679
 msgid "Display name user"
 msgstr "Отображаемое имя"
 
-#: add-on/profile/index.php:685
+#: add-on/profile/index.php:683
 msgid "Емейл (be sure)"
 msgstr "E-mail (обязательно)"
 
-#: add-on/profile/index.php:688
+#: add-on/profile/index.php:686
 msgid "Емейл user"
 msgstr "E-mail пользователя"
 
-#: add-on/profile/index.php:692
+#: add-on/profile/index.php:690
 msgid "Website"
 msgstr "Вебсайт"
 
-#: add-on/profile/index.php:695
+#: add-on/profile/index.php:693
 msgid "Website user"
 msgstr "Сайт пользователя"
 
-#: add-on/profile/index.php:702
+#: add-on/profile/index.php:700
 msgid "User status"
 msgstr "Статус пользователя"
 
@@ -1743,10 +1764,10 @@ msgid "Description"
 msgstr "Описание"
 
 #: add-on/publicpost/classes.php:46 add-on/publicpost/index.php:56
-#: add-on/user-account/addon-options.php:148
-#: add-on/user-account/addon-options.php:158
-#: add-on/user-account/addon-options.php:167
-#: add-on/user-account/addon-options.php:175 admin-pages.php:105 widget.php:58
+#: add-on/user-account/addon-options.php:149
+#: add-on/user-account/addon-options.php:159
+#: add-on/user-account/addon-options.php:168
+#: add-on/user-account/addon-options.php:176 admin-pages.php:105 widget.php:58
 #: widget.php:116
 msgid "Not selected"
 msgstr "Не выбрано"
@@ -1831,7 +1852,7 @@ msgstr "Только хозяину личного кабинета"
 msgid "Show everyone including guests"
 msgstr "Показывать всем, включая гостей"
 
-#: add-on/publicpost/index.php:116 add-on/publicpost/rcl_publicform.php:277
+#: add-on/publicpost/index.php:116 add-on/publicpost/rcl_publicform.php:281
 msgid "Category"
 msgstr "Категории"
 
@@ -1996,15 +2017,15 @@ msgstr "Записи"
 msgid "Posts"
 msgstr "Публикации"
 
-#: add-on/publicpost/index.php:316 add-on/publicpost/rcl_postlist.php:82
+#: add-on/publicpost/index.php:316 add-on/publicpost/rcl_postlist.php:95
 msgid "on approval"
 msgstr "на утверждении"
 
-#: add-on/publicpost/index.php:317 add-on/publicpost/rcl_postlist.php:83
+#: add-on/publicpost/index.php:317 add-on/publicpost/rcl_postlist.php:96
 msgid "deleted"
 msgstr "удален"
 
-#: add-on/publicpost/index.php:318 add-on/publicpost/rcl_postlist.php:84
+#: add-on/publicpost/index.php:318 add-on/publicpost/rcl_postlist.php:97
 msgid "publish"
 msgstr "опубликован"
 
@@ -2044,49 +2065,49 @@ msgstr "Публикация была успешно удалена!"
 msgid "Error publishing!"
 msgstr "Ошибка публикации!"
 
-#: add-on/publicpost/rcl_postlist.php:104
+#: add-on/publicpost/rcl_postlist.php:118
 msgid "has not yet been published"
 msgstr "пока не было опубликовано"
 
-#: add-on/publicpost/rcl_postlist.php:113
+#: add-on/publicpost/rcl_postlist.php:127
 msgid "Published"
 msgstr "Опубликованные"
 
-#: add-on/publicpost/rcl_publicform.php:112
+#: add-on/publicpost/rcl_publicform.php:116
 msgid "Tags"
 msgstr "Метки"
 
-#: add-on/publicpost/rcl_publicform.php:114
+#: add-on/publicpost/rcl_publicform.php:118
 msgid "(the labels fit with a comma)"
 msgstr "(разделять запятой)"
 
-#: add-on/publicpost/rcl_publicform.php:137
-#: functions/rcl_custom_fields.php:257
+#: add-on/publicpost/rcl_publicform.php:141
+#: functions/rcl_custom_fields.php:269
 msgid "To publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/rcl_publicform.php:167
+#: add-on/publicpost/rcl_publicform.php:171
 msgid "Are you sure? Then restore never work!"
 msgstr "Вы серьезно? Потом не получиться восстановить!"
 
-#: add-on/publicpost/rcl_publicform.php:176
+#: add-on/publicpost/rcl_publicform.php:180
 msgid "You must be logged in to post. Login or register"
 msgstr ""
 "Вы должны быть авторизованы для публикации. Войдите или зарегистрируйтесь."
 
-#: add-on/publicpost/rcl_publicform.php:180
+#: add-on/publicpost/rcl_publicform.php:184
 msgid "Sorry, but you have no rights to publish within groups :("
 msgstr "Извините, но вы не можете публиковать в этой группе :("
 
-#: add-on/publicpost/rcl_publicform.php:183
+#: add-on/publicpost/rcl_publicform.php:187
 msgid "Sorry, but you have no right<br>to publish the records on this site :("
 msgstr "Извините, но вы не можете публиковать на этом сайте :("
 
-#: add-on/publicpost/rcl_publicform.php:217
+#: add-on/publicpost/rcl_publicform.php:221
 msgid "Being sent, please wait..."
 msgstr "Идет отправка, подождите..."
 
-#: add-on/publicpost/rcl_publicform.php:359
+#: add-on/publicpost/rcl_publicform.php:365
 msgid "To add a media file"
 msgstr "Добавить медиафайл"
 
@@ -2366,14 +2387,18 @@ msgid "Type of payment"
 msgstr "Тип платежа"
 
 #: add-on/user-account/addon-options.php:36
+msgid "Funds from the personal account user"
+msgstr "Оплата с личного счета пользователя"
+
+#: add-on/user-account/addon-options.php:37
 msgid "Directly through the payment system"
 msgstr "Оплата через платежные системы"
 
-#: add-on/user-account/addon-options.php:37
+#: add-on/user-account/addon-options.php:38
 msgid "To offer both options"
 msgstr "Предложить оба варианта"
 
-#: add-on/user-account/addon-options.php:40
+#: add-on/user-account/addon-options.php:41
 msgid ""
 "If the connection to the payment aggregator not in use, it is possible to "
 "set only \"Funds from the personal account user\"!"
@@ -2381,143 +2406,143 @@ msgstr ""
 "Если подключение к платежному агрегатору не используется, то используйте "
 "оплату <b>только с личного счета пользователя!</b>"
 
-#: add-on/user-account/addon-options.php:42
+#: add-on/user-account/addon-options.php:43
 msgid "The connection to payment aggregator"
 msgstr "Подключение к платежному агрегатору"
 
-#: add-on/user-account/addon-options.php:43
+#: add-on/user-account/addon-options.php:44
 msgid "Used type of connection"
 msgstr "Используемый тип подключения"
 
-#: add-on/user-account/addon-options.php:48 admin-pages.php:236
+#: add-on/user-account/addon-options.php:49 admin-pages.php:236
 msgid "Not used"
 msgstr "Не используется"
 
-#: add-on/user-account/addon-options.php:49
+#: add-on/user-account/addon-options.php:50
 msgid "Robokassa"
 msgstr "Робокасса"
 
-#: add-on/user-account/addon-options.php:50
+#: add-on/user-account/addon-options.php:51
 msgid "Interkassa"
 msgstr "Интеркасса"
 
-#: add-on/user-account/addon-options.php:51
+#: add-on/user-account/addon-options.php:52
 msgid "Yandex.Kassa"
 msgstr "Яндекс.Касса"
 
-#: add-on/user-account/addon-options.php:51
 #: add-on/user-account/addon-options.php:52
+#: add-on/user-account/addon-options.php:53
 msgid "not tested"
 msgstr "не тестировалось"
 
-#: add-on/user-account/addon-options.php:52
+#: add-on/user-account/addon-options.php:53
 msgid "WalletOne"
 msgstr "Единая касса"
 
-#: add-on/user-account/addon-options.php:61
+#: add-on/user-account/addon-options.php:62
 msgid "Connection settings ROBOKASSA"
 msgstr "Настройки подключения Робокассы"
 
-#: add-on/user-account/addon-options.php:62
-#: add-on/user-account/addon-options.php:89
+#: add-on/user-account/addon-options.php:63
+#: add-on/user-account/addon-options.php:90
 msgid "The ID of the store"
 msgstr "Идентификатор магазина"
 
-#: add-on/user-account/addon-options.php:64
+#: add-on/user-account/addon-options.php:65
 msgid "1 Password"
 msgstr "Первый пароль"
 
-#: add-on/user-account/addon-options.php:66
+#: add-on/user-account/addon-options.php:67
 msgid "2 Password"
 msgstr "Второй пароль"
 
-#: add-on/user-account/addon-options.php:68
+#: add-on/user-account/addon-options.php:69
 msgid "The status of the account ROBOKASSA"
 msgstr "Статус аккаунта Робокассы"
 
-#: add-on/user-account/addon-options.php:72
-#: add-on/user-account/addon-options.php:95
+#: add-on/user-account/addon-options.php:73
+#: add-on/user-account/addon-options.php:96
 msgid "Work"
 msgstr "Рабочий"
 
-#: add-on/user-account/addon-options.php:73
-#: add-on/user-account/addon-options.php:96
+#: add-on/user-account/addon-options.php:74
+#: add-on/user-account/addon-options.php:97
 msgid "Test"
 msgstr "Тестовый"
 
-#: add-on/user-account/addon-options.php:84
+#: add-on/user-account/addon-options.php:85
 msgid "Connection settings Interkassa"
 msgstr "Настройки подключения Интеркассы"
 
-#: add-on/user-account/addon-options.php:85
+#: add-on/user-account/addon-options.php:86
 msgid "Secret Key"
 msgstr "Секретный ключ"
 
-#: add-on/user-account/addon-options.php:87
+#: add-on/user-account/addon-options.php:88
 msgid "Test Key"
 msgstr "Тестовый ключ"
 
-#: add-on/user-account/addon-options.php:91
+#: add-on/user-account/addon-options.php:92
 msgid "The status of the account Interkassa"
 msgstr "Статус аккаунта Интеркассы"
 
-#: add-on/user-account/addon-options.php:107
+#: add-on/user-account/addon-options.php:108
 msgid "Connection settings Yandex.Kassa"
 msgstr "Настройки подключения Яндекс.Кассы"
 
-#: add-on/user-account/addon-options.php:108
+#: add-on/user-account/addon-options.php:109
 msgid "ID cash"
 msgstr "Идентификатор кошелька"
 
-#: add-on/user-account/addon-options.php:110
+#: add-on/user-account/addon-options.php:111
 msgid "The room showcases"
 msgstr "Витрина"
 
-#: add-on/user-account/addon-options.php:112
+#: add-on/user-account/addon-options.php:113
 msgid "The secret word"
 msgstr "Секретное слово"
 
-#: add-on/user-account/addon-options.php:122
+#: add-on/user-account/addon-options.php:123
 msgid "Connection settings WalletOne"
 msgstr "Настройки подключения Единой кассы"
 
-#: add-on/user-account/addon-options.php:123
+#: add-on/user-account/addon-options.php:124
 msgid "Merchant ID"
 msgstr "Идентификатор магазина"
 
-#: add-on/user-account/addon-options.php:125
+#: add-on/user-account/addon-options.php:126
 msgid "The secret key"
 msgstr "Секретный ключ"
 
-#: add-on/user-account/addon-options.php:134
+#: add-on/user-account/addon-options.php:135
 msgid "Service page payment systems"
 msgstr "Сервисные страницы платежных систем"
 
-#: add-on/user-account/addon-options.php:144
+#: add-on/user-account/addon-options.php:145
 msgid "Page RESULT"
 msgstr "Страница RESULT"
 
-#: add-on/user-account/addon-options.php:151
+#: add-on/user-account/addon-options.php:152
 msgid "For Interkassa: URL of interaction"
 msgstr "Для Интеркассы: URL взаимодействия"
 
-#: add-on/user-account/addon-options.php:152
+#: add-on/user-account/addon-options.php:153
 msgid "For Yandex.Cash: checkURL and avisoURL"
 msgstr "Для Яндекс.Кассы: checkURL and avisoURL"
 
-#: add-on/user-account/addon-options.php:154
+#: add-on/user-account/addon-options.php:155
 msgid "Page SUCCESS"
 msgstr "Страница SUCCESS"
 
-#: add-on/user-account/addon-options.php:161
+#: add-on/user-account/addon-options.php:162
 msgid "For Interkassa: successful payment URL"
 msgstr "Для Интеркассы: URL успешного платежа"
 
-#: add-on/user-account/addon-options.php:163
+#: add-on/user-account/addon-options.php:164
 msgid "Page FAIL"
 msgstr "Страница FAIL"
 
-#: add-on/user-account/addon-options.php:171
+#: add-on/user-account/addon-options.php:172
 msgid "The successful payment page"
 msgstr "Страница успешного платежа"
 
@@ -2912,7 +2937,7 @@ msgstr "Сайт использует функционал плагина"
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: functions-rcl.php:386
+#: functions-rcl.php:404
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
@@ -3139,19 +3164,20 @@ msgstr "ZIP архив не найден."
 msgid "Agreement"
 msgstr "Соглашение"
 
-#: functions/rcl_custom_fields.php:77
+#: functions/rcl_custom_fields.php:88
 msgid "Max size"
 msgstr "Макс. размер"
 
-#: functions/rcl_custom_fields.php:171
+#: functions/rcl_custom_fields.php:182
 msgid "Download file"
 msgstr "Загрузить файл"
 
-#: functions/rcl_custom_fields.php:379 functions/rcl_custom_fields.php:404
+#: functions/rcl_custom_fields.php:399 functions/rcl_custom_fields.php:424
+#: functions/rcl_custom_fields.php:448
 msgid "File does not exist on the server!"
 msgstr "Файл не найден на сервере!"
 
-#: functions/rcl_custom_fields.php:421
+#: functions/rcl_custom_fields.php:467
 msgid "File has deleted"
 msgstr "Файл был удален"
 
@@ -3254,7 +3280,7 @@ msgstr "Все значения произвольных полей с этим 
 msgid "were removed from the Database"
 msgstr "были удалены из базы данных"
 
-#: functions/rcl_userlist.php:250 recall.php:247
+#: functions/rcl_userlist.php:250 recall.php:249
 msgid "not online"
 msgstr "не в сети"
 
@@ -3346,11 +3372,11 @@ msgstr "Пользователи"
 msgid "FEED"
 msgstr ""
 
-#: recall.php:125
+#: recall.php:127
 msgid "Unconfirmed"
 msgstr "Неподтвержденные"
 
-#: recall.php:129
+#: recall.php:131
 msgid "Ban"
 msgstr "Бан"
 
