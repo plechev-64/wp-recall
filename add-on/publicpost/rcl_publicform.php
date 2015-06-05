@@ -98,8 +98,12 @@ class Rcl_PublicForm {
 
         $userinfo = get_userdata( $user_ID );
 
-        if($userinfo->user_level>=$user_can) return true;
-        else return false;
+        if($userinfo->user_level>=$user_can) $can = true;
+        else $can = false;
+
+        $can = apply_filters('rcl_user_can_public',$can,$this);
+
+        return $can;
     }
 
     function add_tags_input($fls){
@@ -335,8 +339,10 @@ function get_public_allterms(){
     return $allcats;
 }
 
-function rcl_publication_editor(){
+function rcl_publication_editor($args=false){
     global $rcl_options,$editpost,$formData;
+
+    $media = (isset($args['media']))? $args['media']: true;
 
     $media_buttons = ($rcl_options['media_downloader_recall']==1)? $media_buttons = 1: 0;
     $tinymce = ($formData->type_editor==1||$formData->type_editor==3)? $tinymce = 1: 0;
@@ -355,7 +361,7 @@ function rcl_publication_editor(){
         ,'quicktags' => $quicktags
     );
 
-    if($rcl_options['media_downloader_recall']!=1)
+    if($media&&$rcl_options['media_downloader_recall']!=1)
         echo rcl_get_button(__('To add a media file','rcl'),'#',array('icon'=>'fa-folder-open','id'=>'get-media-rcl'));
 
     $content = (isset($editpost->post_content))? $editpost->post_content: '';

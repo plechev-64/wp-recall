@@ -197,7 +197,7 @@ class Rcl_EditPost {
         if(!$postdata['post_status']) $postdata['post_status'] = 'publish';
 
         do_action('pre_update_post_rcl',$postdata);
-
+        
         if(!$this->post_id){
             $this->post_id = wp_insert_post( $postdata );
             if($id_form>1) add_post_meta($this->post_id, 'publicform-id', $id_form);
