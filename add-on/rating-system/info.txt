@@ -1,0 +1,1 @@
+Name: Rating System (Система рейтинга);Version: 2.0.0;Description: Рейтинговая система для wp-recall;Author: Плечев Андрей;Url: http://wppost.ru;
