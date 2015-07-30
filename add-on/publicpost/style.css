@@ -48,6 +48,12 @@
 	margin-bottom: 20px;
 	padding: 10px;
 }
+.public_block form{
+	position:relative;
+}
+.public_block form .rcl-form-field{
+	margin:5px 0;
+}
 .public_block #thumbblock-post{
     margin: 20px 0;
 }
@@ -56,6 +62,9 @@
     font-weight: bold;
     line-height: 1;
     margin: 10px 0;
+}
+.public_block small{
+	font-weight: normal;
 }
 .public_block input[type="text"],
 .public_block input[type="number"],
@@ -80,6 +89,14 @@
 }
 .public_block textarea {
     width: 90%;
+}
+.public_block .submit-public-form{
+	clear:both;
+	text-align:right;
+}
+h3.pending-message{
+	text-align:center;
+	color:red;
 }
 .close-button {
     background: url("img/close.png") repeat scroll 0 0 #FFFFFF;
@@ -110,6 +127,7 @@
     margin: 5px;
     width: 100px;
 	list-style: none;
+    position: relative;
 }
 #temp-files li img {
     border: 1px solid #008000;
@@ -117,15 +135,10 @@
 	margin-bottom:5px;
 	cursor: pointer;
 }
-#thumbnail_rcl .delete,
-#temp-files li .delete {
-    background: url("img/delete.png") no-repeat scroll center center #FFFFFF;
-    cursor: pointer;
-    display: block;
-    height: 20px;
-    margin: 0px 0 0 85px;
+#temp-files li .rcl-service-button{
     position: absolute;
-    width: 20px;
+
+    right: -15px;
 }
 #temp-files .thumb-foto {
     clear: both;
@@ -189,6 +202,9 @@
 #rcl-popup #user-medias{
     padding:10px;
 }
+#rcl-popup #user-medias h3{
+    clear: both;
+}
 #rcl-popup #user-medias .media-list{
 	list-style:none;
 	overflow:hidden;
@@ -202,4 +218,212 @@
 #rcl-popup #user-medias .media-list img{
 	width:99px;
 	height:99px;
+}
+#rcl-tags-list{
+	overflow:hidden;
+	clear:both;
+}
+#rcl-tags-list label{
+	float:left;
+	margin: 3px;
+	background-color: #F1F1F1;
+	border: 1px solid #d6d2da;
+	padding: 5px 9px 5px 3px;
+}
+body #rcl_post_tags.ms-ctn .ms-sel-ctn input{
+	clear:both;
+}
+#rcl_post_tags.ms-ctn{
+	border:none;
+	box-shadow:none;
+	padding:0;
+	margin-top: 20px;
+}
+#rcl_post_tags.ms-ctn .ms-trigger{
+	display:none;
+}
+#rcl_post_tags.ms-ctn input:focus{
+	border:1px solid #ccc;
+}
+#rcl_post_tags .ms-sel-ctn{
+	padding-right:0;
+}
+#rcl_post_tags.ms-ctn .ms-sel-ctn{
+	margin-left:0;
+}
+
+#rcl-delete-post{
+
+}
+#rcl-delete-post .delete-toggle{
+
+}
+#rcl-delete-post .delete-form-contayner{
+	display:none;
+}
+#rcl-delete-post .delete-form-contayner label{
+	font-weight: normal;
+}
+#rcl-delete-post .delete-form-contayner .reason-delete{
+	padding: 7px;
+	margin: 0 5px;
+}
+#rcl-delete-post .delete-form-contayner textarea{
+
+}
+.rcl-public-editor{
+    border: 1px solid #ccc;
+
+    padding: 5px;
+}
+.rcl-public-editor .rcl-tools-panel{
+
+    clear: both;
+    
+
+    font-size: 20px;
+
+    padding: 5px;
+
+    border: 1px solid #ccc;
+
+    margin: 5px 0;
+
+    background-color: #F9F9F9;
+
+}
+.rcl-public-editor .rcl-tools-panel ul{
+    overflow: hidden;
+
+    padding: 0;
+    margin: 0;
+}
+.rcl-public-editor .rcl-tools-panel li{
+    float: left;
+
+    list-style: none;
+}
+.rcl-public-editor .rcl-tools-panel a{
+
+}
+.rcl-public-editor .rcl-tools-panel i{
+    margin: 3px;
+
+}
+.rcl-public-editor .rcl-editor-content{
+
+}
+.rcl-public-editor .rcl-editor-content .rcl-content-box{
+    border: 2px dashed #ccc;
+	position: relative;
+    padding: 5px;
+    margin: 5px 0;
+	background:#fff;
+}
+.rcl-public-editor .rcl-editor-content .rcl-content-box .field-icons{
+	position: absolute;
+    right: 0;
+    top: 0;
+    
+    
+	font-size: 12px;
+}
+.rcl-public-editor .rcl-editor-content .rcl-content-box .field-icons a{
+    color: inherit;
+
+}
+.rcl-public-editor .rcl-editor-content .rcl-content-box .rcl-icon{
+    background-color: rgba(0,0,0,0.2);
+
+    padding: 2px 0 2px 4px;
+}
+.rcl-public-editor .rcl-editor-content .rcl-content-box .move-box{
+	cursor:move;
+}
+.rcl-public-editor .rcl-editor-content .rcl-content-box .rcl-icon i{
+
+}
+.rcl-public-editor .rcl-editor-content textarea{
+    min-height: 150px;
+    width: 100%;
+	border:none;
+	margin:0;
+}
+.rcl-public-editor .rcl-editor-content input{   
+    width: 100%;
+	border:none;
+	margin:0;
+	font-weight:bold;
+	font-size:18px;
+}
+.rcl-public-editor .rcl-editor-content .rcl-content-box .rcl-upload-box{
+	padding: 20px;
+}
+.rcl-public-editor .rcl-content-box .rcl-upload-box .rcl-icon-upload{
+    font-size: 70px;
+
+    text-align: center;
+    padding: 20px;
+    color: #aaa;
+}
+.rcl-public-editor .rcl-content-box .rcl-upload-box .rcl-icon-upload i{
+
+}
+.rcl-public-editor .rcl-content-box .rcl-upload-box .rcl-upload-button{
+    max-width: 200px;
+
+    text-align: center;
+    margin: 0 auto;
+}
+
+a.rcl-edit-post{
+	
+}
+a.rcl-edit-post i{
+
+}
+a.rcl-delete-post{
+
+}
+a.rcl-delete-post i{
+
+}
+
+#rcl-popup-content{
+
+}
+#rcl-popup-content input[type="text"],
+#rcl-popup-content textarea{
+	padding: 5px 0;
+    width: 100%;
+	margin: 5px 0;
+}
+#rcl-popup-content label{
+    font-weight: bold;
+
+}
+#rcl-preview{
+	position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    width: 100%;
+	min-height:100%;
+	z-index: 9;
+}
+#rcl-preview iframe,
+#rcl-preview img{
+	max-width:100%;
+}
+#rcl-preview .rcl-notice-preview{
+    padding: 10px;
+	margin: 15px 0;
+    background-color: #FFF2A7;
+}
+#rcl-preview .rcl-notice-preview .rcl-preview-buttons{
+    text-align: right;
+
+}
+#publics_block .bx-wrapper .bx-viewport{
+	height: 32px!important;
 }

@@ -66,7 +66,7 @@ class Rcl_Tabs{
    
 }
 
-function rcl_get_button_tab($args,$button=false){
+function rcl_get_button_tab($args,$button=''){
 	global $rcl_options,$user_LK;
 	$link = rcl_format_url(get_author_posts_url($user_LK),$args['id_tab']);
 	/*if(!$button) $status = 'active';
@@ -86,14 +86,14 @@ function rcl_chek_view_tab($block_wprecall,$idtab){
 	return true;
 }
 
-function rcl_get_class_button_tab($button='',$id_tab){
+function rcl_get_class_button_tab($button,$id_tab){
 	global $rcl_options,$array_tabs;
 	//print_r($rcl_options);
         $class = false;
         $tb = (isset($rcl_options['tab_newpage']))? $rcl_options['tab_newpage']:false;
 	if(!$tb) $class = 'block_button';
 	if($tb==2&&isset($array_tabs[$id_tab])) $class = 'ajax_button';		
-	if($button='') $class .= ' active';
+	if($button=='') $class .= ' active';
 	return $class;
 }
 

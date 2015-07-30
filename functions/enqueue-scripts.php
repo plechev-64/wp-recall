@@ -37,11 +37,11 @@ if(is_admin()):
 endif;
 
 function rcl_pageform_scripts(){
-    wp_enqueue_script( 'page_form_recall', RCL_URL.'js/page_form.js' );
+    wp_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js' );
 }
 
 function rcl_floatform_scripts(){
-    wp_enqueue_script( 'float_form_recall', RCL_URL.'js/float_form.js' );
+    wp_enqueue_script( 'rcl-float-form', RCL_URL.'js/float_form.js' );
 }
 
 function rcl_sortable_scripts(){
@@ -66,23 +66,47 @@ function rcl_bxslider_scripts(){
     wp_enqueue_style( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.css' );
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.min.js' );
-    wp_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js', array('bx-slider'));
+    wp_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js', array('bx-slider','rcl-header-scripts'));
+}
+
+function rcl_dialog_scripts(){
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'jquery-ui-dialog' );
+	wp_enqueue_style('wp-jquery-ui-dialog');
 }
 
 function rcl_frontend_scripts(){
-	global $rcl_options,$user_LK,$user_ID;
+	global $rcl_options,$user_LK,$user_ID,$post;
 	if(!isset($rcl_options['font_icons']))  $rcl_options['font_icons']=1;
-	wp_enqueue_style( 'fileapi_static', RCL_URL.'js/fileapi/statics/main.css' );
-	if($user_ID==$user_LK) wp_enqueue_style( 'fileapi_jcrop', RCL_URL.'js/fileapi/jcrop/jquery.Jcrop.min.css' );
+	
+	if($user_ID==$user_LK||$post->ID==$rcl_options['public_form_page_rcl']){
+		rcl_dialog_scripts();
+		wp_enqueue_style( 'jcrop-master-css', RCL_URL.'js/jcrop.master/css/jquery.Jcrop.min.css' );
+		wp_enqueue_script( 'jcrop-master', RCL_URL.'js/jcrop.master/js/jquery.Jcrop.min.js', array(), VER_RCL,true );
+		wp_enqueue_script( 'say-cheese', RCL_URL.'js/say-cheese/say-cheese.js', array(), VER_RCL,true );
+	}
+
+	if($user_ID){
+		wp_enqueue_script( 'jquery-ui-widget', RCL_URL.'js/fileupload/js/vendor/jquery.ui.widget.js', array(), VER_RCL,true );
+		
+		wp_enqueue_script( 'load-image', '//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js', array(), VER_RCL,true );
+		wp_enqueue_script( 'canvas-to-blob', '//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js', array(), VER_RCL,true );
+		
+		wp_enqueue_script( 'jquery-iframe-transport', RCL_URL.'js/fileupload/js/jquery.iframe-transport.js', array(), VER_RCL,true );
+		wp_enqueue_script( 'jquery-fileupload', RCL_URL.'js/fileupload/js/jquery.fileupload.js', array(), VER_RCL,true );
+		wp_enqueue_script( 'jquery-fileupload-process', RCL_URL.'js/fileupload/js/jquery.fileupload-process.js', array(), VER_RCL,true );
+		wp_enqueue_script( 'jquery-fileupload-image', RCL_URL.'js/fileupload/js/jquery.fileupload-image.js', array(), VER_RCL,true );
+	}	
+		
 
         if( wp_style_is( 'font-awesome' ) ) wp_deregister_style('font-awesome');
-        wp_enqueue_style( 'font-awesome', RCL_URL.'css/fonts/font-awesome.min.css', array(), '4.3.0' );
+        wp_enqueue_style( 'font-awesome', RCL_URL.'css/fonts/font-awesome.min.css', array(), '4.4.0' );
 
 	if(isset($rcl_options['minify_css'])&&$rcl_options['minify_css']==1){
 		if($rcl_options['custom_scc_file_recall']!=''){
 			wp_enqueue_style( 'style_custom_rcl', $rcl_options['custom_scc_file_recall'] );
 		}else{
-			wp_enqueue_style( 'style_recall', TEMP_URL.'css/minify.css' );
+			wp_enqueue_style( 'rcl-style', TEMP_URL.'css/minify.css' );
 		}
 	}else{
             $css_ar = array('lk','recbar','regform','slider','users','style');
@@ -92,39 +116,32 @@ function rcl_frontend_scripts(){
             $dirs   = array(RCL_PATH.'css/themes',TEMPLATEPATH.'/wp-recall/themes');
             foreach($dirs as $dir){
                 if(!file_exists($dir.'/'.$rcl_options['color_theme'].'.css')) continue;
-                wp_enqueue_style( 'theme_rcl', rcl_path_to_url($dir.'/'.$rcl_options['color_theme'].'.css') );
+                wp_enqueue_style( 'rcl-theme', rcl_path_to_url($dir.'/'.$rcl_options['color_theme'].'.css') );
             }
         }
 
-	wp_enqueue_script( 'jquery' );
-
 	if($user_ID) wp_enqueue_script( 'rangyinputs', RCL_URL.'js/rangyinputs.js' );
 
-	wp_enqueue_script( 'recall_recall', RCL_URL.'js/recall.js', array(), VER_RCL );
+	wp_enqueue_script( 'rcl-primary-scripts', RCL_URL.'js/recall.js', array(), VER_RCL );
 	if(!file_exists(TEMP_PATH.'scripts/header-scripts.js')){
 		$rcl_addons = new rcl_addons();
 		$rcl_addons->get_update_scripts_file_rcl();
 	}
-	wp_enqueue_script( 'temp-scripts-recall', TEMP_URL.'scripts/header-scripts.js', array(), VER_RCL );
+	wp_enqueue_script( 'rcl-header-scripts', TEMP_URL.'scripts/header-scripts.js', array(), VER_RCL );
 }
 
 function rcl_admin_scrips(){
-    wp_enqueue_style( 'admin_recall', RCL_URL.'css/admin.css' );
+    wp_enqueue_style( 'rcl-admin-style', RCL_URL.'css/admin.css' );
     wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'primary_script_admin_recall', RCL_URL.'js/admin.js', array(), VER_RCL );
+    wp_enqueue_script( 'rcl-admin-scripts', RCL_URL.'js/admin.js', array(), VER_RCL );
 }
 
 function rcl_fileapi_scripts() {
     global $user_ID;
     if(!$user_ID) return false;
     if(file_exists(TEMP_PATH.'scripts/footer-scripts.js')){
-        wp_enqueue_script( 'jquery' );
-        wp_enqueue_script( 'FileAPI-min', RCL_URL.'js/fileapi/FileAPI/FileAPI.min.js', array(), VER_RCL, true );
-        wp_enqueue_script( 'mousewheel-js', RCL_URL.'js/fileapi/FileAPI/FileAPI.exif.js', array(), VER_RCL, true );
-        wp_enqueue_script( 'fileapi-pack-js', RCL_URL.'js/fileapi/jquery.fileapi.js', array(), VER_RCL, true );
-        wp_enqueue_script( 'Jcrop-buttons-js', RCL_URL.'js/fileapi/jcrop/jquery.Jcrop.min.js', array(), VER_RCL, true );
-        wp_enqueue_script( 'modal-thumbs-js', RCL_URL.'js/fileapi/statics/jquery.modal.js', array(), VER_RCL, true );
-        wp_enqueue_script( 'footer-js-recall', TEMP_URL.'scripts/footer-scripts.js', array(), VER_RCL, true );
+        wp_enqueue_script( 'jquery' );		
+        wp_enqueue_script( 'rcl-footer-scripts', TEMP_URL.'scripts/footer-scripts.js', array(), VER_RCL, true );
     }
 }
 

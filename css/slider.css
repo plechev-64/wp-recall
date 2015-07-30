@@ -5,7 +5,6 @@
 }
 .bx-wrapper img {
 	margin: 0 auto;
-	height: 100%;
 }
 #bx-pager{
 	margin: 0 0 20px;
@@ -24,7 +23,7 @@
 }
 ul.rcl-gallery,
 ul.slider-rcl{
-	margin-left:0px!important;
+	margin:0px!important;
 }
 .rcl-gallery li,
 .slider-rcl li{

@@ -1,12 +1,9 @@
 <?php
-rcl_enqueue_style('review',__FILE__);
-
-add_filter('array_rayt_chek','rcl_add_rating_array_review');
-function rcl_add_rating_array_review($array){
-	global $rcl_options;
-	$array['rayt_recall'] = $rcl_options['rayt_recall_user_rayt'];
-	return $array;
+if(function_exists('rcl_register_rating_type')){
+	require_once 'rating-review.php';
 }
+
+rcl_enqueue_style('review',__FILE__);
 
 add_filter('ajax_tabs_rcl','rcl_ajax_tab_review');
 function rcl_ajax_tab_review($array_tabs){
@@ -17,11 +14,11 @@ function rcl_ajax_tab_review($array_tabs){
 add_action('init','rcl_tab_review');
 function rcl_tab_review(){
     rcl_tab('recall',array('Rcl_Review','get_content_review'),__('Reviews','rcl'),array(
-                            'public'=>1,
-                            'class'=>'fa-trophy',
-                            'order'=>50,
-                            'path'=>__FILE__
-                        ));
+		'public'=>1,
+		'class'=>'fa-trophy',
+		'order'=>50,
+		'path'=>__FILE__
+	));
 }
 
 class Rcl_Review{
@@ -40,7 +37,7 @@ class Rcl_Review{
 
 	//Оставляем пользователю отзыв
 	function add_review(){
-		global $user_ID,$wpdb,$rcl_options;
+		global $user_ID,$wpdb,$rcl_options,$rcl_rating_types;
 
 		if(!$user_ID) wp_die(__('You dont have that right!','rcl'));
 
@@ -48,10 +45,10 @@ class Rcl_Review{
 		$content_otziv = esc_textarea($_POST['content_otz']);
 		$status = intval($_POST['status']);
 		$online = intval($_POST['online']);
-		$count_rayt = $rcl_options['count_rayt_recall'];
+		$count_rayt = (isset($rcl_options['rating_point_rcl-review']))? $rcl_options['rating_point_rcl-review']: 1;
 		if($status<0) $count_rayt = $count_rayt*-1;
 		if($status==0)$count_rayt = 0;
-
+		
 		$otziv = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."profile_otziv WHERE user_id = '%d' AND author_id = '%d'",$adressat_id,$user_ID));
 
 		if(!$otziv){
@@ -60,16 +57,14 @@ class Rcl_Review{
 
 			$result = $wpdb->insert(
 				RCL_PREF.'profile_otziv',
-				array( 'author_id' => "$user_ID", 'content_otziv' => "$content_otziv", 'user_id' => "$adressat_id", 'status' => "$count_rayt" ),
-				array( '%d', '%s', '%d', '%d' )
+				array( 'author_id' => $user_ID, 'content_otziv' => $content_otziv, 'user_id' => $adressat_id, 'status' => $count_rayt )
 			);
-
-			if($rcl_options['rayt_recall_user_rayt']==1&&function_exists('rcl_update_user_rating')) rcl_update_user_rating($adressat_id,$count_rayt,'review');
+			
+			if (!$result) wp_die('Error');
+						
 		}
 
-		if (!$result) wp_die('Error');
-
-		do_action('rcl_add_recall',$user_ID,$adressat_id);
+		do_action('rcl_add_review',$user_ID,$adressat_id);
 
 		if($online != 0){
 			wp_redirect( rcl_format_url(get_author_posts_url($adressat_id),'recall'));  exit;
@@ -116,22 +111,20 @@ class Rcl_Review{
 			$recall_id = intval($_POST['recall_id']);
 			$user_id = intval($_POST['user_id']);
 
-			$rec = $wpdb->get_var($wpdb->prepare("SELECT status FROM ".RCL_PREF."profile_otziv WHERE ID = '%d'",$recall_id));
+			$review = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."profile_otziv WHERE ID = '%d'",$recall_id));
 
 			$result = $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."profile_otziv WHERE ID = '%d'",$recall_id));
 
-			if($rcl_options['rayt_recall_user_rayt']==1&&function_exists('rcl_update_user_rating')){
-				if($rec>0) $rec = $rec*(-1);
-				else if($rec<0) $rec = abs($rec);
-				rcl_update_user_rating($user_id,$rec,'review');
-			}
-
 			if ($result) {
+				
+				do_action('rcl_delete_review',$review);
 
 				wp_redirect( rcl_format_url(get_author_posts_url($user_id),'recall') );  exit;
 
-				} else {
-			  wp_die('Error');
+			} else {
+				
+				wp_die('Error');
+				
 			}
 		}
 	}
@@ -152,19 +145,14 @@ class Rcl_Review{
                 $opt->option_block(
                     array(
                         $opt->title(__('Reviews','rcl')),
-                        $opt->label(__('Scores for the tip','rcl')),
-                        $opt->option('text',array('name'=>'count_rayt_recall')),
-                        $opt->notice(__('set how many points the ranking will be awarded for a positive vote or how many points will be subtracted from the rating for a negative vote(default 1)','rcl')),
                         $opt->label(__('To accept and leave feedback can','rcl')),
                         $opt->option('select',array(
                             'name'=>'type_recall',
                             'options'=>array(__('All','rcl'),__('With published posts','rcl'))
                         )),
-                        $opt->label(__('The effect of feedback on overall rating','rcl')),
-                        $opt->option('select',array(
-                            'name'=>'rayt_recall_user_rayt',
-                            'options'=>array(__('No','rcl'),__('Yes','rcl'))
-                        ))
+						$opt->label(__('Restriction rated','rcl')),
+						$opt->option('number',array('name'=>'rw_limit_rating')),
+						$opt->notice(__('the default not limited','rcl'))
                     )
                 )
             );
@@ -215,6 +203,19 @@ class Rcl_Review{
             //получаем кол-во отзывов текущего пользователя об авторе
 
             if($user_ID!=$user_LK&&$user_ID) {
+				
+					$rt_limit = (isset($rcl_options['rw_limit_rating'])&&$rcl_options['rw_limit_rating'])? $rcl_options['rw_limit_rating']: 0;
+				
+					if($rt_limit){
+						if(function_exists('rcl_get_user_rating')){
+							$rating = rcl_get_user_rating($user_ID);
+							if($rating<$rt_limit){
+								$notice = '<div class="notify-lk"><div class="warning">'.__('Members with a value rating of less than '.$rt_limit.' can not leave a review.','rcl').'</div></div>';
+                                $notice .= $recall_block;
+                                return $notice;
+							}
+						}
+					}
 
                     if($rcl_options['type_recall']==1){
 
@@ -222,8 +223,8 @@ class Rcl_Review{
                         $count_post_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->prefix ."posts WHERE post_author = '%d' AND post_status = 'publish' LIMIT 1",$user_LK));
 
                         if(!$count_post_author||!$count_post_user){
-                                $recall_block .= __('Users without published records cannot accept and add reviews.','rcl');
-                                $block_wprecall .= $recall_block;
+                                $notice = '<div class="notify-lk"><div class="warning">'.__('Users without published records cannot accept and add reviews.','rcl').'</div></div>';
+                                $notice .= $recall_block;
                                 return $block_wprecall;
                         }
 
@@ -247,8 +248,8 @@ class Rcl_Review{
                                 <p style="text-align:right;"><input type="submit" name="add_review" class="recall-button" value="'.__('Add a review','rcl').'"></p>
                                 </form>
                                 </div>';
-								
-					$recall_block .= apply_filters('rcl_form_review',$recall_form);			
+
+					$recall_block .= apply_filters('rcl_form_review',$recall_form);
 
                     endif;
             }

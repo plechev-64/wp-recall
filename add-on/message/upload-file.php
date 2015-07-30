@@ -26,7 +26,7 @@ function rcl_message_upload(){
 
 		$mime = explode('/',$_FILES['filedata']['type']);
 
-		$name = explode('/',$_FILES['filedata']['tmp_name']);
+		$name = explode('/',str_replace('\\','/',untrailingslashit($_FILES['filedata']['tmp_name'])));
 		$cnt = count($name);
 		$t_name = $name[--$cnt];
 
@@ -42,6 +42,7 @@ function rcl_message_upload(){
 		}
 
 		$file_path = $path_temp.$t_name.'.'.$type;
+		//echo $file_path;exit;
 
 		if($mime[0]!='video'&&$mime[0]!='image'&&$mime[0]!='audio'){
 
@@ -59,7 +60,7 @@ function rcl_message_upload(){
 
 		}else{
 
-                        if($type=='php'||$type=='html') exit;
+			if($type=='php'||$type=='html') exit;
 			move_uploaded_file($_FILES['filedata']['tmp_name'], $file_path);
 			$file_url = rcl_path_to_url($file_path);
 		}

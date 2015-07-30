@@ -49,7 +49,7 @@ function rcl_short_user_list($atts, $content = null){
             case 'posts': $order_by = 'post_count'; break;
             case 'feeds': $order_by = 'feeds'; break;
             case 'comments': $order_by = 'comments_count'; break;
-            case 'rayting': $order_by = 'total'; break;
+            case 'rayting': $order_by = 'rating_total'; break;
             case 'action': $order_by = 'time_action'; break;
             case 'registered': $order_by = 'user_registered'; break;
             case 'display_name': $order_by = 'display_name'; break;
@@ -103,7 +103,7 @@ function rcl_short_user_list($atts, $content = null){
 
             $flt_sql = "IN ($us_lst)";
 
-            if($order_by == 'total') $us_data = $UserList->get_usdata($order_by,$us_data,$us_lst);
+            if($order_by == 'rating_total') $us_data = $UserList->get_usdata($order_by,$us_data,$us_lst);
             if($order_by == 'time_action')  $us_data = $UserList->get_usdata($order_by,$us_data,$us_lst);
 
 	}
@@ -232,7 +232,7 @@ function rcl_short_user_list($atts, $content = null){
 
         $userlist .= '<p class="alignleft">'.__('Filter by','rcl').': ';
         $userlist .= '<a '.rcl_a_active($orderby,'action').' href="'.$perm.'filter=action">'.__('Activity','rcl').'</a> ';
-        $userlist .= '<a '.rcl_a_active($orderby,'rayting').' href="'.$perm.'filter=rayting">'.__('Rated','rcl').'</a> ';
+        $userlist .= '<a '.rcl_a_active($orderby,'rating_total').' href="'.$perm.'filter=rayting">'.__('Rated','rcl').'</a> ';
         if(!isset($_GET['search-user'])) $userlist .= '<a '.rcl_a_active($orderby,'posts').' href="'.$perm.'filter=posts">'.__('Publications','rcl').'</a> ';
         if(!isset($_GET['search-user'])) $userlist .= '<a '.rcl_a_active($orderby,'comments').' href="'.$perm.'filter=comments">'.__('Comments','rcl').'</a> ';
         if(!isset($_GET['search-user'])) $userlist .= '<a '.rcl_a_active($orderby,'registered').' href="'.$perm.'filter=registered">'.__('Registration','rcl').'</a>';
@@ -274,16 +274,18 @@ function rcl_default_search_form($form){
         if(isset($_GET['name-user'])) $name = $_GET['name-user'];
         if(isset($_GET['orderuser'])) $orderuser = $_GET['orderuser'];
 	$form .='
-        <form method="get" action="">
-        <p class="alignright">'.__('Search users','rcl').': <input type="text" name="name-user" value="'.$name.'">
-        <select name="orderuser">
-            <option '.selected($orderuser,1,false).' value="1">'.__('by name','rcl').'</option>
-            <option '.selected($orderuser,2,false).' value="2">'.__('by login','rcl').'</option>
-        </select>
-        <input type="submit" class="recall-button" name="search-user" value="'.__('Search','rcl').'"><br>
-        </p>
-		<input type="hidden" name="default-search" value="1">
-        </form>';
+		<div class="rcl-search-users">
+			<form method="get" action="">
+			<p>'.__('Search users','rcl').'</p>
+			<input type="text" name="name-user" value="'.$name.'">
+			<select name="orderuser">
+				<option '.selected($orderuser,1,false).' value="1">'.__('by name','rcl').'</option>
+				<option '.selected($orderuser,2,false).' value="2">'.__('by login','rcl').'</option>
+			</select>
+			<input type="submit" class="recall-button" name="search-user" value="'.__('Search','rcl').'">
+			<input type="hidden" name="default-search" value="1">
+			</form>
+		</div>';
 	return $form;
 }
 
@@ -314,6 +316,8 @@ function rcl_slider($atts, $content = null){
 	'num' => 5,
 	'term' => '',
         'type' => 'post',
+		'post_meta' => false,
+		'meta_value' => false,
         'tax' => 'category',
 	'exclude' => false,
         'include' => false,
@@ -343,8 +347,18 @@ function rcl_slider($atts, $content = null){
                 'terms'=> array($term)
             )
 	);
+	
+	if($post_meta)
+		$args['meta_query'] = array(
+            array(
+                'key'=>$post_meta,
+                'value'=>$meta_value
+            )
+	);
 
 	$posts = get_posts($args);
+	
+	if(!$posts) return false;
 
 	$plslider = '<ul class="slider-rcl">';
 	foreach($posts as $post){

@@ -2,6 +2,12 @@
 
 if(function_exists('rcl_enqueue_style')) rcl_enqueue_style('private',__FILE__);
 
+function rcl_count_noread_messages($user_id){
+	global  $wpdb;
+	$where = "WHERE adressat_mess = '$user_id' AND status_mess='0'";		
+	return $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."private_message $where");
+}
+
 add_action('wp','rcl_download_file_message');
 function rcl_download_file_message(){
 	global $user_ID,$wpdb;
@@ -105,8 +111,8 @@ class Rcl_Messages{
                         if(function_exists('rcl_block'))
                             rcl_block('header',array(&$this, 'get_header_black_list_button'),array('id'=>'bl-block','order'=>50,'public'=>1));
 
-			if(function_exists('add_shortcode'))
-                            add_shortcode('chat',array(&$this, 'get_shortcode_chat'));
+			//if(function_exists('add_shortcode'))
+                            //add_shortcode('chat',array(&$this, 'get_shortcode_chat'));
 		endif;
 
 		if (is_admin()):
@@ -121,7 +127,7 @@ class Rcl_Messages{
 		add_action('wp', array(&$this, 'activation_days_garbage_file_rcl'));
 		add_action('wp_ajax_add_private_message_recall', array(&$this, 'add_private_message_recall'));
 		add_action('wp_ajax_close_new_message_recall', array(&$this, 'close_new_message_recall'));
-		add_action('wp_ajax_add_blacklist_recall', array(&$this, 'add_blacklist_recall'));
+		add_action('wp_ajax_manage_blacklist_recall', array(&$this, 'manage_blacklist_recall'));
 		add_action('wp_ajax_delete_history_private_recall', array(&$this, 'delete_history_private_recall'));
 		add_action('wp_ajax_remove_ban_list_rcl', array(&$this, 'remove_ban_list_rcl'));
 		add_action('wp_ajax_get_old_private_message_recall', array(&$this, 'get_old_private_message_recall'));
@@ -159,10 +165,9 @@ class Rcl_Messages{
 	function garbage_file_rcl(){
 		global $wpdb,$rcl_options;
 
-		if(!$rcl_options['savetime_file']) $savetime = 7*24*3600;
-		else $savetime = $rcl_options['savetime_file']*24*3600;
+		$savetime = ($rcl_options['savetime_file'])? $rcl_options['savetime_file']: 7;
 
-		$files = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."private_message WHERE status_mess = '4' AND status_mess = '5' AND time_mess < (NOW() - INTERVAL %d SECOND)",$savetime));
+		$files = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."private_message WHERE status_mess = '4' AND status_mess = '5' AND time_mess < (NOW() - INTERVAL %d DAY)",$savetime));
 
 		if(!$files) return false;
 
@@ -175,7 +180,7 @@ class Rcl_Messages{
 			unlink($path_temp);
 		}
 
-		$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."private_message WHERE status_mess = '4' AND status_mess = '5' AND time_mess < (NOW() - INTERVAL %d SECOND)",$savetime));
+		$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."private_message WHERE status_mess = '4' AND status_mess = '5' AND time_mess < (NOW() - INTERVAL %d DAY)",$savetime));
 
 	}
 
@@ -198,6 +203,11 @@ class Rcl_Messages{
                                 'name'=>'sort_mess',
                                 'options'=>array(__('Top-Down','rcl'),__('Bottom-Up','rcl'))
                             )),
+							
+							$opt->label(__('Limit words message','rcl')),
+                            $opt->option('number',array('name'=>'ms_limit_words')),
+                            $opt->notice(__('the default is 400','rcl')),
+							
                             $opt->label(__('The number of messages in the conversation','rcl')),
                             $opt->option('number',array('name'=>'max_private_message')),
                             $opt->notice(__('the default is 100 messages in the conversation (per correspondence user)','rcl')),
@@ -256,38 +266,42 @@ class Rcl_Messages{
 
 	function get_header_black_list_button($author_lk){
 		global $user_ID;
-		global $wpdb;
 		if(!$user_ID||$user_ID==$author_lk) return false;
-
-                $banlist = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."black_list_user WHERE user = '%d' AND ban = '%d'",$user_ID,$author_lk));
-                if(!$banlist){
-                        $header_lk = '<div id="add_black_list_button" class="floatright">
-										'.rcl_get_button(__('In the black list','rcl'),'#',array('icon'=>'fa-bug','attr'=>'name='.$author_lk,'id'=>'add_black_list')).'</div>';
-                }else{
-                        $header_lk = '<div class="blacklist-notice">'.__('The user is blacklisted','rcl').'
-                                <form method="post" action="">
-                                <input type="hidden" name="ban_user" value="'.$banlist->ban.'">
-                                <input id="remove_black_list" class="recall-button" name="remove_black_list" type="submit" value="'.__('Unblock','rcl').'">
-                                </form>
-                                </div>';
-                }
+		
+		$header_lk = $this->get_blacklist_html($author_lk);
 
 		return $header_lk;
+	}
+	
+	function get_blacklist_html($author_lk){
+		global $user_ID,$wpdb;
+		
+		$banlist = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."black_list_user WHERE user = '%d' AND ban = '%d'",$user_ID,$author_lk));
+		
+		$title = ($banlist)? __('Unblock','rcl'): __('In the black list','rcl');
+		$class = ($banlist)? 'remove_black_list': 'add_black_list';
+		
+		$button = '<div id="black_list_button" class="floatright">'.rcl_get_button($title,'#',array('class'=>$class,'id'=>'manage-blacklist','icon'=>'fa-bug','attr'=>'data-contact='.$author_lk)).'</div>';
+
+		return $button;
 	}
 
 	function mess_preg_replace_rcl($mess){
 		//$mess = $this->oembed_filter( $mess );
 		$mess = popuplinks(make_clickable($mess));
 		if(function_exists('wp_oembed_get')){
-                        $links='';
+			$links='';
 			preg_match_all('/href="([^"]+)"/', $mess, $links);
 			foreach( $links[1] as $link ){
-				$m_lnk = wp_oembed_get($link,array('width'=>250,'height'=>250));
-				if($m_lnk) $mess .= $m_lnk;
-			}
+				$m_lnk = wp_oembed_get($link,array('width'=>300,'height'=>250));
+				if($m_lnk){
+					$mess = str_replace('<a href="'.$link.'" rel="nofollow">'.$link.'</a>','',$mess);
+					$mess .= $m_lnk;
+				}
+			}			
 		}
 		//$mess = preg_replace("~(http|https|ftp|ftps)://(.*?)(\s|\n|[,.?!](\s|\n)|$)~", '<a target="_blank" href="$1://$2">$1://$2</a>$3', $mess);
-		if(function_exists('convert_smilies')) $mess = convert_smilies($mess);
+		if(function_exists('convert_smilies')) $mess = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $mess ) );
 		return $mess;
 	}
 
@@ -326,8 +340,7 @@ class Rcl_Messages{
 		}
 
 		$privat_block = $this->get_private_message_content($author_lk, $online);
-		if(isset($rcl_options['tab_newpage'])&&$rcl_options['tab_newpage']==2) $privat_block .= '<script type="text/javascript" src="'.TEMP_URL.'scripts/footer-scripts.js"></script>
-		<script>jQuery(function() {jQuery("#private-smiles").hover(function(){jQuery("#private-smiles .smiles").show();},function(){jQuery("#private-smiles .smiles").hide();});});</script>';
+		if(isset($rcl_options['tab_newpage'])&&$rcl_options['tab_newpage']==2) $privat_block .= '<script type="text/javascript" src="'.TEMP_URL.'scripts/footer-scripts.js"></script>';
 
 		return $privat_block;
 	}
@@ -343,34 +356,13 @@ class Rcl_Messages{
 		return $cnt;
 	}
 
-	function get_smiles(){
-		global $wpsmiliestrans;
-		if(!$wpsmiliestrans) return false;
-
-		$smiles = '<script type="text/javascript"> function addsmile($smile){ jQuery("#content_mess").insertAtCaret(" "+$smile+" "); } </script>';
-
-		$dm_showsmiles = '';
-		$dm_smiled = array();
-		foreach ($wpsmiliestrans as $tag => $dm_smile) {
-                    if (!in_array($dm_smile,$dm_smiled)) {
-                        $dm_smiled[] = $dm_smile;
-                        $tag = str_replace(' ', '', $tag);
-                        if(file_exists(ABSPATH . WPINC.'/images/smilies/'.$dm_smile))
-                        $dm_showsmiles .= '<img src="'.includes_url().'images/smilies/'.$dm_smile.'" alt="'.$tag.'" onclick="addsmile(\''.$tag.'\');"/> ';
-                    }
-		}
-
-		$smiles .= '<div id="private-smiles"><img src="'.get_bloginfo('wpurl').'/wp-includes/images/smilies/icon_smile.gif" id="get-private-smiles"><div class="smiles">'.$dm_showsmiles.'</div></div>';
-
-		return $smiles;
-	}
-
 	function get_chat($online=0){
 
-                rcl_resizable_scripts();
+        rcl_resizable_scripts();
 
 		global $user_ID,$rcl_options,$wpdb;
-                $access = '';
+		
+        $access = '';
 		$access = apply_filters('access_chat_rcl',$access,$this->user_lk);
 
 		if($this->room){
@@ -381,8 +373,7 @@ class Rcl_Messages{
 			$user_lk = $this->user_lk;
 		}
 
-		if(!$this->room) $where = $wpdb->prepare("WHERE author_mess = '%d' AND adressat_mess = '%d' OR author_mess = '%d' AND adressat_mess = '%d'",
-		$user_ID,$this->user_lk,$this->user_lk,$user_ID);
+		if(!$this->room) $where = $wpdb->prepare("WHERE author_mess = '%d' AND adressat_mess = '%d' OR author_mess = '%d' AND adressat_mess = '%d'", $user_ID,$this->user_lk,$this->user_lk,$user_ID);
 		else $where = $wpdb->prepare("WHERE author_mess = '%d' OR adressat_mess = '%d'",$user_ID,$user_ID);
 
 		$private_messages = $wpdb->get_results("SELECT * FROM ".RCL_PREF."private_message $where ORDER BY id DESC LIMIT 10");
@@ -401,66 +392,37 @@ class Rcl_Messages{
 			$num_mess = $num_mess - $delete_num;
 		}
 
-                $num=0;
+		$num=0;
 
-                if(!$rcl_options['sort_mess']) krsort($private_messages);
+		if(!$rcl_options['sort_mess']) krsort($private_messages);
 
 		foreach((array)$private_messages as $message){
-                    $num++;
-                    $messlist = $this->get_private_message_block_rcl($messlist,$message);
-                    if($num==10) break;
+			$num++;
+			$messlist = $this->get_private_message_block_rcl($messlist,$message);
+			if($num==10) break;
 		}
 
 		if(!$access){
                     $textarea = '<div class="prmess">';
                     if($this->room) $textarea .= '<span title="'.__('Interlocutor','rcl').'" id="opponent"></span> '.rcl_get_button(__('All contacts','rcl'),'#',array('icon'=>'fa-book','id'=>'get-all-contacts'));
                     if($rcl_options['file_exchange']==1){
-                            $textarea .= '<div id="simple-btn" class="fa fa-paperclip btn recall-button btn-success js-fileapi-wrapper">
-                               <div class="js-browse">
-                                      <span class="btn-txt">'.__('select the file','rcl').'</span>
-                                      <input name="filedata" type="file">
-                               </div>
-                               <div class="js-upload" style="display: none">
-                                      <div class="progress progress-success">
-                                             <div class="js-progress bar"></div>
-                                      </div>
-                                      <span class="btn-txt">'.__('load','rcl').' (<span class="js-size"></span>)</span>
-                               </div>
-                            </div>';
+                            $textarea .= '<div id="upload-box-message" class="fa fa-paperclip recall-button rcl-upload-button">
+											<span>Выбрать файл</span>
+											<span class="progress-bar"></span>
+											<input name="filedata" id="upload-private-message" type="file">
+										</div>';
                     }
-                    if($online == 0) $textarea .='<span class="fa fa-exclamation-triangle notice">'.__('The user will receive a notification by email','rcl').'</span>';
-                    if($rcl_options['file_exchange']==1){
-                            $textarea .= '<div id="upload-files-mess">
-                            <div id="dnd" class="b-upload b-upload_dnd">
-                                    <div class="b-upload__dnd"><textarea name="content_mess" id="content_mess" rows="3"></textarea></div>
-                               <div class="b-upload__dnd-not-supported">
-
-                                      <div class="btn btn-success js-fileapi-wrapper">
-
-                                             <input name="filedata" multiple="" type="file">
-                                      </div>
-                               </div>
-
-                               <div class="js-files b-upload__files">
-                                      <div class="js-file-tpl b-thumb" data-id="<%=uid%>" title="<%-name%>, <%-sizeText%>">
-
-                                             <div class="b-thumb__progress progress progress-small"><div class="bar"></div></div>
-                                             <div class="b-thumb__name"><%-name%></div>
-                                      </div>
-                               </div>
-                            </div>
-                            </div>';
-                    }else{
-                            $textarea .= '<textarea name="content_mess" id="content_mess" rows="3"></textarea>';
-                    }
+                    $textarea .='<span class="fa fa-exclamation-triangle notice">'.__('<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send','rcl').'</span>';
+                    $textarea .= '<textarea name="content_mess" id="content_mess" rows="3"></textarea>';
                     $textarea .= '
                     <input type="hidden" name="adressat_mess" id="adressat_mess" value="'.$user_lk.'">
                     <input type="hidden" name="online" id="online" value="'.$online.'">';
 
-                    $textarea .= $this->get_smiles();
+                    $textarea .= rcl_get_smiles('content_mess');
+					
+					$words = (isset($rcl_options['ms_limit_words'])&&$rcl_options['ms_limit_words'])? $rcl_options['ms_limit_words']: 400;
 
-                    $textarea .= '<p class="fa fa-exclamation-triangle floatright notice">'.__('<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send','rcl').'</p>
-                    <div class="fa fa-edit" id="count-word">400</div>';
+                    $textarea .= '<div class="fa fa-edit" id="count-word">'.$words.'</div>';
 
                     $textarea .= '<div class="private-buttons">
                             '.rcl_get_button(__('Send','rcl'),'#',array('icon'=>'fa-mail-forward','class'=>'addmess alignright','attr'=>false,'id'=>false));
@@ -567,25 +529,22 @@ class Rcl_Messages{
 
 			$contacts = $wpdb->get_col($wpdb->prepare("SELECT contact FROM ".RCL_PREF."private_contacts WHERE user = '%d' AND status = '1'",$user_ID));
 
+            $contacts = apply_filters('rcl_chat_contacts',$contacts);
+
 			if($contacts){
 
 				$days = 7;
+				$ban = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user = '%d'",$user_ID));
 
-				$privat_block .= '<div class="buttons-navi"><a data="'.$days.'" class="sec_block_button active" href="#"><i class="fa fa-clock-o"></i>'.$days.' '.__('days','rcl').'</a>
+				$privat_block .= '<div class="buttons-navi">				
+				<a data="'.$days.'" class="sec_block_button active" href="#"><i class="fa fa-clock-o"></i>'.$days.' '.__('days','rcl').'</a>
 				<a data="30" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('month','rcl').'</a>
 				<a data="0" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('all the time','rcl').'</a>';
-
-				$ban = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user = '%d'",$user_ID));
 				if(isset($ban)) $privat_block .= '<a data="-1" class="sec_block_button" href="#"><i class="fa fa-bug"></i>'.__('Blacklist','rcl').'</a>';
-
 				$privat_block .= '<a data="important" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('Important','rcl').'</a>';
-
-				$privat_block .= '</div>
-				<div id="contact-lists">';
-
-				$privat_block .= $this->get_loop_contacts_rcl($contacts,$days);
-
 				$privat_block .= '</div>';
+
+				$privat_block .= '<div id="contact-lists">'.$this->get_loop_contacts_rcl($contacts,$days).'</div>';
 
 			} else {
 				$privat_block .= '<div class="single_correspond"><p>'.__('You havent been in conversation with','rcl').'</p></div>';
@@ -614,6 +573,7 @@ class Rcl_Messages{
 				$contacts = $wpdb->get_col($wpdb->prepare("SELECT ban FROM ".RCL_PREF."black_list_user WHERE user = '%d'",$user_ID));
 			}else{
 				$contacts = $wpdb->get_col($wpdb->prepare("SELECT contact FROM ".RCL_PREF."private_contacts WHERE user = '%d' AND status = '1'",$user_ID));
+                                $contacts = apply_filters('rcl_chat_contacts',$contacts);
 			}
 
 			if(!$contacts) $privat_block = '<h3>'.__('Contacts not found!','rcl').'</h3>';
@@ -646,16 +606,28 @@ class Rcl_Messages{
 			OR author_mess IN ($cntctslist) AND adressat_mess = '$user_ID' $sql_int ORDER BY time_mess DESC
 			) TBL GROUP BY author_mess,adressat_mess");
 
-			foreach((array)$su_list as $s){$list[] = (array)$s;}
-			$list = rcl_multisort_array((array)$list, 'time_mess', SORT_ASC);
-			foreach((array)$list as $l){
-				if($l['author_mess']!=$user_ID) $s_contact=$l['author_mess'];
-				if($l['adressat_mess']!=$user_ID) $s_contact=$l['adressat_mess'];
-				$contact_list[$s_contact]['time'] = $l['time_mess'];
-				$contact_list[$s_contact]['contact'] = $s_contact;
-				$contact_list[$s_contact]['status'] = $l['status_mess'];
+			if($su_list){
+
+				foreach((array)$su_list as $s){$list[] = (array)$s;}
+				$list = rcl_multisort_array((array)$list, 'time_mess', SORT_ASC);
+				foreach((array)$list as $l){
+						if($l['author_mess']!=$user_ID) $s_contact=$l['author_mess'];
+						if($l['adressat_mess']!=$user_ID) $s_contact=$l['adressat_mess'];
+						$contact_list[$s_contact]['time'] = $l['time_mess'];
+						$contact_list[$s_contact]['contact'] = $s_contact;
+						$contact_list[$s_contact]['status'] = $l['status_mess'];
+				}
+				$contact_list = rcl_multisort_array((array)$contact_list, 'time', SORT_DESC);
+
+			}else{
+				$contacts = false;
+				$contacts = apply_filters('rcl_chat_contacts',$contacts);
+				if($contacts){
+					foreach($contacts as $c){
+						$contact_list[]['contact'] = $c;
+					}
+				}
 			}
-			$contact_list = rcl_multisort_array((array)$contact_list, 'time', SORT_DESC);
 
 		}else{
 
@@ -694,9 +666,9 @@ class Rcl_Messages{
 			$privat_block .= '<span user_id="'.$data['contact'].'" class="author-avatar"><a href="'.$redirect_url.'">'.get_avatar($data['contact'], 40).'</a></span><a href="#" class="recall-button ';
 
 			if($days>0) $privat_block .= 'del_history';
-			else $privat_block .= 'remove_ban_list';
+			else $privat_block .= 'remove_black_list';
 
-			$privat_block .='" id="'.$data['contact'].'"><i class="fa fa-remove"></i></a>
+			$privat_block .='" data-contact="'.$data['contact'].'"><i class="fa fa-remove"></i></a>
 			</div>
 			<p><a href="'.$redirect_url.'">'.$names[$data['contact']].'</a>';
 			if(isset($data['time'])) $privat_block .='<br/><small>'.__('Last message','rcl').': '.$data['time'].'</small>';
@@ -989,8 +961,6 @@ class Rcl_Messages{
 
 				rcl_update_timeaction_user();
 
-				do_action('rcl_new_private_message', $this->user_lk, $user_ID, $online);
-
 				if($_POST['widget']!='undefined'){
 					$wpdb->update(
 						RCL_PREF.'private_message',
@@ -1100,22 +1070,36 @@ class Rcl_Messages{
 	}
 
 	/*************************************************
-	Добавление в черный список
+	Черный список
 	*************************************************/
-	function add_blacklist_recall(){
+	function manage_blacklist_recall(){
 		global $wpdb,$user_ID;
 		if(!$user_ID) exit;
+		
+		$this->user_lk = intval($_POST['user_id']);
+		
+		$ban_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user = '%d' AND ban = '%d'",$user_ID,$this->user_lk));
+		
+		if($ban_id){
+			$result = $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."black_list_user WHERE ID='%d'",$ban_id));
+			
+			do_action('remove_user_blacklist',$this->user_lk);
+		}else{
+			$result = $wpdb->insert(RCL_PREF.'black_list_user',
+				array( 'user' => "$user_ID", 'ban' => "$this->user_lk" )
+			);
+			
+			do_action('add_user_blacklist',$this->user_lk);
+		}
+		
 
-		$this->user_lk = intval($_POST['add_id_user']);
-		$result = $wpdb->insert(RCL_PREF.'black_list_user',
-			array( 'user' => "$user_ID", 'ban' => "$this->user_lk" )
-		);
-
-		do_action('rcl_add_user_blacklist',$this->user_lk,$user_ID);
-
-		if ($result) $log['otvet']=100;
-		else $log['otvet']=1;
-
+		if ($result){
+			$log['content'] = $this->get_blacklist_html($this->user_lk);
+			$log['otvet']=100;
+		}else{
+			$log['otvet']=1;
+		}
+		
 		echo json_encode($log);
 		exit;
 	}
@@ -1198,8 +1182,7 @@ class Rcl_Messages{
 	*************************************************/
 	function get_new_outside_message(){
 
-		global $user_ID;
-		global $wpdb;
+		global $user_ID,$wpdb,$rcl_options;
 
 		if(!$user_ID) return false;
 
@@ -1215,6 +1198,8 @@ class Rcl_Messages{
 		$last_action = rcl_get_useraction($rcl_action_users->time_action);
                 $class = (!$last_action)?'online':'offline';
                 $online = (!$last_action)?1:0;
+				
+				$words = (isset($rcl_options['ms_limit_words'])&&$rcl_options['ms_limit_words'])? $rcl_options['ms_limit_words']: 400;
 
 		$message_block .= '<div id="privatemess">'
                             .'<div id="'.$mess->ID.'" class="close-mess-window">'
@@ -1238,7 +1223,7 @@ class Rcl_Messages{
 
                                 <div class="prmess">
                                     <textarea name="content_mess" id="minicontent_mess" rows="3" style="width:98%;padding:5px;"></textarea>
-                                    <div id="minicount-word">400</div>
+                                    <div id="minicount-word">'.$words.'</div>
 
                                     <input type="button" name="addmess" class="miniaddmess recall-button" value="Отправить">
                                     <input type="hidden" name="adressat_mess" id="miniadressat_mess" value="'.$mess->author_mess.'">
@@ -1355,86 +1340,56 @@ class Rcl_Messages{
 
 	function get_footer_scripts_privat_rcl($script){
 		global $rcl_options;
-		$weight = (isset($rcl_options['file_exchange_weight'])&&$rcl_options['file_exchange_weight'])? $rcl_options['file_exchange_weight']: $weight = '2';
+		
+		$maxsize_mb = (isset($rcl_options['file_exchange_weight'])&&$rcl_options['file_exchange_weight'])? $rcl_options['file_exchange_weight']: 2;
+		$maxsize = $maxsize_mb*1024*1024;
 
+		$replace = "<div class=\"public-post message-block file\"><div class=\"content-mess\"><p style=\"margin-bottom:0px;\" class=\"time-message\"><span class=\"time\">'+result['time']+'</span></p><p class=\"balloon-message\">'+text+'</p></div></div>";
+		$newmess = "<div class=\"new_mess\"></div>";
 
+		if(!$rcl_options['sort_mess']) $replace .= $newmess;
+		else $replace = $newmess.$replace;
 
-                $replace = "<div class=\"public-post message-block file\"><div class=\"content-mess\"><p style=\"margin-bottom:0px;\" class=\"time-message\"><span class=\"time\">'+result['time']+'</span></p><p class=\"balloon-message\">'+text+'</p></div></div>";
-                $newmess = "<div class=\"new_mess\"></div>";
-
-                if(!$rcl_options['sort_mess']) $replace .= $newmess;
-                else $replace = $newmess.$replace;
-
-		$OnComplete = "onComplete:function(evt, uiEvt){
-				var result = uiEvt.result;
-				if(result['recall']==100){
-					var text = '".__("The file was sent successfully.","rcl")."';
-				}
-				if(result['recall']==150){
-					var text = '".__("You have exceeded the limit on the number of uploaded files. Wait until the files sent previously will be accepted.","rcl")."';
-				}
-				jQuery('.new_mess').replaceWith('$replace');";
-                                if(!$rcl_options['sort_mess']) $OnComplete .= "var div = jQuery('#resize-content');
-                                div.scrollTop( div.get(0).scrollHeight );";
-			$OnComplete .= "}";
+		$done = "
+			var result = data.result;
+			if(result['recall']==100){
+				var text = '".__("The file was sent successfully.","rcl")."';
+			}
+			if(result['recall']==150){
+				var text = '".__("You have exceeded the limit on the number of uploaded files. Wait until the files sent previously will be accepted.","rcl")."';
+			}
+			$('.new_mess').replaceWith('$replace');
+			$('#upload-box-message .progress-bar').hide();";
+				
+		if(!$rcl_options['sort_mess']) $done .= "var div = $('#resize-content');
+			div.scrollTop( div.get(0).scrollHeight );";
 
 		$script .= "
-		jQuery('.link-file-rcl').live('click',function(){
-			jQuery(this).parent().text('".__("Removes the file from the server","rcl")."');
-		});
-		var talker = jQuery('input[name=\"adressat_mess\"]').val();
-		var online = jQuery('input[name=\"online\"]').val();
-		jQuery('#dnd').fileapi({
-		   url: wpurl+'wp-admin/admin-ajax.php',
-		   paramName: 'filedata',
-		   maxSize: ".$weight." * FileAPI.MB,
-		   data:{action:'rcl_message_upload',talker:talker,online:online},
-		   autoUpload: true,
-		   clearOnComplete:true,
-		   elements: {
-			  list: '.js-files',
-			  file: {
-				 tpl: '.js-file-tpl',
-				 preview: {
-					el: '.b-thumb__preview',
-					width: 80,
-					height: 80
-				 },
-				 upload: { show: '.progress' },
-				 complete: { hide: '.progress' },
-				 progress: '.progress .bar'
-			  },
-			  dnd: {
-				 el: '.b-upload__dnd',
-				 hover: 'b-upload__dnd_hover',
-				 fallback: '.b-upload__dnd-not-supported'
-			  }
-		   },
-			".$OnComplete."
-		});
-
-		jQuery('#simple-btn').fileapi({
-		   url: wpurl+'wp-admin/admin-ajax.php',
-		   paramName: 'filedata',
-		   maxSize: ".$weight." * FileAPI.MB,
-		   data:{action:'rcl_message_upload',talker:talker,online:online},
-		   autoUpload: true,
-		   elements: {
-			  size: '.js-size',
-			  active: { show: '.js-upload', hide: '.js-browse' },
-			  progress: '.js-progress'
-		   },
-		   onSelect: function (evt, data){
-				data.all;
-				data.files;
-				if( data.other.length ){
-					var errors = data.other[0].errors;
-					if( errors ){
-						if(errors.maxSize) alert('".__("Exceeded the allowable file size.\n hearths file","rcl")." ".$weight."MB');
-					}
+			$('.link-file-rcl').live('click',function(){
+				$(this).parent().text('".__("Removes the file from the server","rcl")."');
+			});
+			var talker = $('input[name=\"adressat_mess\"]').val();
+			var online = $('input[name=\"online\"]').val();
+			
+			
+			$('#upload-private-message').fileupload({
+			dataType: 'json',
+			type: 'POST',
+			url: wpurl+'wp-admin/admin-ajax.php',
+			formData:{action:'rcl_message_upload',talker:talker,online:online},
+			loadImageMaxFileSize: ".$maxsize.",
+			autoUpload:true,		
+			progressall: function (e, data) {
+				var progress = parseInt(data.loaded / data.total * 100, 10);
+				$('#upload-box-message .progress-bar').show().css('width',progress+'px');
+			},
+			change:function (e, data) {
+				if(data.files[0]['size']>".$maxsize."){
+					rcl_notice('Превышен максимальный размер для изображения! Макс. ".$maxsize_mb."MB','error');
+					return false;
 				}
 			},
-			".$OnComplete."
+			done: function (e, data) {".$done."}
 		});";
 		return $script;
 	}
@@ -1443,6 +1398,7 @@ class Rcl_Messages{
                 global $rcl_options;
 
 		$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
+		$words = (isset($rcl_options['ms_limit_words'])&&$rcl_options['ms_limit_words'])? $rcl_options['ms_limit_words']: 400;
 
 		$script .= "
 			jQuery('#private-smiles').hover(
@@ -1463,7 +1419,7 @@ class Rcl_Messages{
 			jQuery('.delete_old_message').delay(60000).fadeOut();
 
 			function count_word_in_message(word){
-				var count = 400 - word.val().length;
+				var count = $words - word.val().length;
 				return count;
 			}
 
@@ -1480,8 +1436,8 @@ class Rcl_Messages{
 				count = count_word_in_message(word);
 				color = get_color_count_word(count);
 				jQuery('#count-word').css('color', color).text(count);
-				if(word.val().length > 399)
-				word.val(word.val().substr(0, 399));
+				if(word.val().length > ".($words-1).")
+				word.val(word.val().substr(0, ".($words-1)."));
 			});
 
 			jQuery('#minicontent_mess').live('keyup', function(){
@@ -1489,8 +1445,8 @@ class Rcl_Messages{
 				count = count_word_in_message(word);
 				color = get_color_count_word(count);
 				jQuery('#minicount-word').css('color', color).text(count);
-				if(word.val().length > 399)
-				word.val(word.val().substr(0, 399));
+				if(word.val().length > ".($words-1).")
+				word.val(word.val().substr(0, ".($words-1)."));
 			});
 
 			jQuery.ionSound({
@@ -1506,7 +1462,7 @@ class Rcl_Messages{
 				var widget = jQuery('#widget-mess').attr('value');
 				var adressat_mess = jQuery('#adressat_mess').attr('value');
 				if(adressat_mess=='0'){
-					alert('Выберите собеседника!'); return false;
+					rcl_notice('Выберите собеседника!','error'); return false;
 				}
 				var online = jQuery('#online').attr('value');
 				max_sec_update_rcl = 0;
@@ -1615,47 +1571,30 @@ class Rcl_Messages{
 							jQuery('#privatemess').html(data['message_block']).fadeOut(5000);
 							jQuery('#rcl-new-mess').delay(2000).queue(function () {jQuery('#rcl-new-mess').empty();jQuery('#rcl-new-mess').dequeue();});
 						} else {
-							alert('Error');
+							rcl_notice('Ошибка!','error');
 						}
 					}
 				});
 				return false;
 			});
 		/* Добавление в черный список */
-			jQuery('#add_black_list').live('click',function(){
-				var add = jQuery(this);
-				var add_list = add.attr('name');
-				var dataString = 'action=add_blacklist_recall&add_id_user='+add_list+'&user_ID='+user_ID;
+			jQuery('#manage-blacklist').live('click',function(){
+				var user_id = jQuery(this).data('contact');
+				var dataString = 'action=manage_blacklist_recall&user_id='+user_id;
 				jQuery.ajax({
 					".$ajaxdata."
 					success: function(data){
 						if(data['otvet']==100){
-							jQuery('#add_black_list_button>a').replaceWith('<p style=\'border:1px solid #ccc;padding:5px;text-align:center;\'>Пользователь<br />добавлен в<br />черный список</p>');
+							jQuery('#manage-blacklist').replaceWith(data['content']);
 						} else {
-							alert('Error');
+							rcl_notice('Ошибка!','error');
 						}
 					}
 				});
 				return false;
 			});
-		/* Удаление истории переписки */
-			jQuery('.del_history').live('click',function(){
-				var id_user = jQuery(this).attr('id');
-				var dataString = 'action=delete_history_private_recall&id_user='+id_user+'&user_ID='+user_ID;
-				jQuery.ajax({
-					".$ajaxdata."
-					success: function(data){
-						if(data['otvet']==100){
-							 jQuery('.history-'+data['id_user']).remove();
-						} else {
-							alert('Ошибка удаления!');
-						}
-					}
-				});
-				return false;
-			});
-		jQuery('.remove_ban_list').live('click',function(){
-				var id_user = jQuery(this).attr('id');
+		jQuery('.remove_black_list').live('click',function(){
+				var id_user = jQuery(this).data('contact');
 				var dataString = 'action=remove_ban_list_rcl&id_user='+id_user+'&user_ID='+user_ID;
 				jQuery.ajax({
 					".$ajaxdata."
@@ -1663,14 +1602,32 @@ class Rcl_Messages{
 						if(data['otvet']==100){
 							 jQuery('.history-'+data['id_user']).remove();
 						} else {
-							alert('Ошибка удаления!');
+							rcl_notice('Ошибка!','error');
+						}
+					}
+				});
+				return false;
+			});	
+		/* Удаление истории переписки */
+			jQuery('.del_history').live('click',function(){
+				var id_user = jQuery(this).data('contact');
+				var dataString = 'action=delete_history_private_recall&id_user='+id_user+'&user_ID='+user_ID;
+				jQuery.ajax({
+					".$ajaxdata."
+					success: function(data){
+						if(data['otvet']==100){
+							 jQuery('.history-'+data['id_user']).remove();
+						} else {
+							rcl_notice('Ошибка!','error');
 						}
 					}
 				});
 				return false;
 			});
+		
 		/* Получаем старые сообщения в переписке */
 			jQuery('.old_message').live('click',function(){
+				rcl_preloader_show('#privat_block > div');
 				block_mess++;
 				var dataString = 'action=get_old_private_message_recall&block_mess='+block_mess+'&old_num_mess='+old_num_mess+'&user='+user_old_mess+'&user_ID='+user_ID;
 
@@ -1681,12 +1638,14 @@ class Rcl_Messages{
 							jQuery('.old_mess_block').replaceWith(data['message_block']);
 							old_num_mess = data['num_mess_now'];
 						}
-					}
+						rcl_preloader_hide();
+					}					
 				});
 				return false;
 			});
 
 		jQuery('#get-important-rcl').live('click',function(){
+			rcl_preloader_show('#privat_block > div');
 			if(jQuery(this).hasClass('important')){
 				jQuery(this).removeClass('important').text('Вся переписка');
 				var type = 0;
@@ -1704,6 +1663,7 @@ class Rcl_Messages{
 						if(data['recall']==100){
 							jQuery('#message-list').html(data['content']);
 						}
+						rcl_preloader_hide();
 					}
 				});
 				return false;
@@ -1721,8 +1681,8 @@ class Rcl_Messages{
 						if(data['recall']==100){
 							jQuery('.correspond #contact-lists').html(data['message_block']);
 						} else {
-							alert('Error');
-						}
+							rcl_notice('Ошибка!','error');
+						}						
 					}
 				});
 				return false;
@@ -1742,7 +1702,7 @@ class Rcl_Messages{
 						screen_top = screen_top + 60;
 						jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
 					}else{
-						alert('Ошибка!');
+						rcl_notice('Ошибка!','error');
 					}
 				}
 			});
@@ -1828,6 +1788,8 @@ function rcl_add_message($args){
 				array( 'user' => $addressat, 'contact' => $author )
 			);
 	}
+	
+	do_action('rcl_new_private_message', $addressat, $user_ID);
 
 	return $result;
 

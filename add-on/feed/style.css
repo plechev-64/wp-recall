@@ -9,16 +9,12 @@
 #feed-button .get-feed.active{
 	opacity:1;
 }
-#feed-control {
+#lk-conteyner .feed-control {
     margin-bottom: 20px;
 	clear: both;
 	float: none;
-}
-.wprecallblock #feed-control {
-    display:block;
-}
-#block_author-rcl #feed-control {
-    margin: 0 0 0 0;
+	display:block;
+	text-align: right;
 }
 .users-feed .avatar {
     border: 1px solid #CCCCCC;
@@ -31,6 +27,7 @@
 #feedlist .feed-post, #feedlist .feedcomment {
     border-bottom: 1px solid #DFDFDF;
     margin-bottom: 10px;
+	overflow: hidden;
 }
 #feedlist img {
     box-shadow: 3px 3px 2px #CCCCCC;

@@ -113,7 +113,7 @@ border: 0px;
 border-radius: 9px;
 box-shadow: none;
 color: black;
-margin: 20px 60px 10px;
+margin: 20px 0px 10px;
 padding: 5px 10px;
 word-wrap: break-word;
 }
@@ -246,16 +246,12 @@ border-radius: 2px;
 #lk-content .privat_block .you .content-mess .privat-balloon {
     background: url("../img/ballun-right.png") no-repeat scroll 0 0 rgb(181, 220, 255);
 }
-#last-visitors > li {
-    height: 47px !important;
-}
+
 .wprecallblock #lk-conteyner .lk-footer .footer-block-rcl ul li .avatar {
     height: 44px;
     margin: 0;
 }
-#lk-gallery > li {
-    height: 47px !important;
-}
+
 .lk-gallery li a img {
     height: 44px;
 }

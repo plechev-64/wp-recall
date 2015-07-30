@@ -1,6 +1,7 @@
 <?php
 if(is_admin()) require_once("admin-pages.php");
 require_once("functions/deprecated.php");
+require_once('functions/migration.php');
 require_once("functions/tabs_options.php");
 require_once("functions/minify-files/minify-css.php");
 require_once("widget.php");
@@ -31,9 +32,19 @@ function rcl_postlist($id,$posttype,$name='',$args=false){
 }
 //добавляем контентный блок в указанное место личного кабинета
 function rcl_block($place,$callback,$args=false){
+
+	$data = array(
+        'place'=>$place,
+        'callback'=>$callback,
+        'args'=>$args
+    );
+
+    $data = apply_filters('block_data_rcl',$data);
+
     if(is_admin())return false;
+
     if (!class_exists('Rcl_Blocks')) include_once plugin_dir_path( __FILE__ ).'functions/rcl_blocks.php';
-    $block = new Rcl_Blocks($place,$callback,$args);
+    $block = new Rcl_Blocks($data);
 }
 //добавляем уведомление в личном кабинете
 function rcl_notice_text($text,$type='warning'){
@@ -58,6 +69,14 @@ function rcl_tab($id,$callback,$name='',$args=false){
     if (!class_exists('Rcl_Tabs')) include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
 
     $tab = new Rcl_Tabs($data);
+}
+
+function rcl_crop($filesource,$width,$height,$file){
+    if (!class_exists('Rcl_Crop')){
+        require_once(RCL_PATH.'functions/rcl_crop.php');
+        $crop = new Rcl_Crop();
+    }
+    return $crop->get_crop($filesource,$width,$height,$file);
 }
 
 function rcl_get_template_path($file_temp,$path=false){
@@ -201,11 +220,9 @@ function rcl_get_author_block(){
     global $post;
     $author = $post->post_author;
 
-    $karma = apply_filters('rcl_get_all_rating_user_rcl',$karma,$author);
-
     $out = "<div id='block_author-rcl'>
         <div class='avatar-author'>".get_avatar($author,60);
-        if(function_exists('rcl_get_rating_block')) $out .= rcl_get_rating_block($karma);
+        if(function_exists('rcl_rating_block')) $out .= rcl_rating_block(array('ID'=>$author,'type'=>'user'));
         $out .= "</div>
         <div class='content-author-block'>";
                 $head = apply_filters('rcl_posthead_user',$head,$author);
@@ -311,8 +328,41 @@ function rcl_delete_attachments_with_post($postid){
         wp_delete_attachment( $attachment->ID, true ); }
 	}
 }
+
+add_action('init','rcl_init_avatar_sizes');
+function rcl_init_avatar_sizes(){
+	global $rcl_avatar_sizes;
+
+	$sizes = array(70,150,300);
+
+	$rcl_avatar_sizes = apply_filters('rcl_avatar_sizes',$sizes);
+	asort($rcl_avatar_sizes);
+
+}
+
+function rcl_get_url_avatar($url_image,$user_id,$size){
+	global $rcl_avatar_sizes;
+
+	$optimal_size = 150;
+	$optimal_path = false;
+	$name = explode('.',basename($url_image));
+	foreach($rcl_avatar_sizes as $rcl_size){
+		if($size>$rcl_size) continue;
+
+		$optimal_size = $rcl_size;
+		$optimal_url = TEMP_URL.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
+		$optimal_path = TEMP_PATH.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
+		break;
+	}
+
+	if($optimal_path&&file_exists($optimal_path)) $url_image = $optimal_url;
+
+	return $url_image;
+}
+
 //Функция вывода своего аватара
 function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
+
     if (is_numeric($id_or_email)){
             $user_id = $id_or_email;
     }elseif( is_object($id_or_email)){
@@ -325,6 +375,7 @@ function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
                     $image_attributes = wp_get_attachment_image_src($avatar_data);
                     if($image_attributes) $avatar = "<img class='avatar' src='".$image_attributes[0]."' alt='".$alt."' height='".$size."' width='".$size."' />";
             }else if(is_string($avatar_data)){
+					$avatar_data = rcl_get_url_avatar($avatar_data,$user_id,$size);
                     $avatar = "<img class='avatar' src='".$avatar_data."' alt='".$alt."' height='".$size."' width='".$size."' />";
             }
     }
@@ -332,20 +383,6 @@ function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
     if ( !empty($id_or_email->user_id)) $avatar = '<a height="'.$size.'" width="'.$size.'" href="'.get_author_posts_url($id_or_email->user_id).'">'.$avatar.'</a>';
 
     return $avatar;
-}
-
-function rcl_update_avatar_data(){
-    global $wpdb;
-
-    $avatars = $wpdb->get_results("SELECT * FROM $wpdb->options WHERE option_name LIKE 'avatar_user_%'");
-
-    if(!$avatars) return false;
-
-    foreach($avatars as $avatar){
-        $user_id = str_replace('avatar_user_', '', $avatar->option_name);
-        update_user_meta($user_id,'rcl_avatar',$avatar->option_value);
-    }
-    $wpdb->query("DELETE FROM $wpdb->options WHERE option_name LIKE 'avatar_user_%'");
 }
 
 function rcl_sanitize_title_with_translit($title) {
@@ -550,6 +587,151 @@ function rcl_get_chart($arr=false){
     return rcl_get_include_template('chart.php');
 }
 
+/*22-06-2015 Удаление папки с содержимым*/
+function rcl_remove_dir($dir){
+	$dir = untrailingslashit($dir);
+	if(!is_dir($dir)) return false;
+	if ($objs = glob($dir."/*")) {
+	   foreach($objs as $obj) {
+		 is_dir($obj) ? removeDirectory($obj) : unlink($obj);
+	   }
+	}
+	rmdir($dir);
+}
+
+class Rcl_Form_Fields{
+
+	public $type;
+	public $placeholder;
+	public $label;
+	public $name;
+	public $value;
+	public $maxlength;
+	public $checked;
+	public $required;
+
+	function get_field($args){
+		$this->type = (isset($args['type']))? $args['type']: 'text';
+		$this->id = (isset($args['id']))? 'id="'.$args['id'].'"': false;
+		$this->placeholder = (isset($args['placeholder']))? $args['placeholder']: false;
+		$this->label = (isset($args['label']))? $args['label']: false;
+		$this->name = (isset($args['name']))? $args['name']: false;
+		$this->value = (isset($args['value']))? $args['value']: false;
+		$this->maxlength = (isset($args['maxlength']))? $args['maxlength']: false;
+		$this->checked = (isset($args['checked']))? $args['checked']: false;
+		$this->required = (isset($args['required'])&&$args['required'])? true: false;
+
+		return $this->get_type_field();
+	}
+
+	function add_label($field){
+		switch($this->type){
+			case 'radio': return sprintf('<label>%s %s</label>',$field,$this->label); break;
+			case 'checkbox': return sprintf('<label>%s %s</label>',$field,$this->label); break;
+			default: return sprintf('<label>%s</label>%s',$this->label,$field);
+		}
+	}
+
+	function get_type_field(){
+
+		switch($this->type){
+			case 'textarea': $field = sprintf('<textarea name="%s" placeholder="%s" '.$this->required().' %s>%s</textarea>',$this->name,$this->placeholder,$this->id,$this->value); break;
+			default: $field = sprintf('<input type="%s" name="%s" value="%s" placeholder="%s" maxlength="%s" '.$this->selected().' '.$this->required().' %s>',$this->type,$this->name,$this->value,$this->placeholder,$this->maxlength,$this->id);
+		}
+
+		if($this->label) $field = $this->add_label($field);
+
+		return $field;
+
+	}
+
+	function selected(){
+		if(!$this->checked) return false;
+		switch($this->type){
+			case 'radio': return 'checked=checked'; break;
+			case 'checkbox': return 'checked=checked'; break;
+		}
+	}
+
+	function required(){
+		if(!$this->required) return false;
+		return 'required=required';
+	}
+}
+
+function rcl_form_field($args){
+	$field = new Rcl_Form_Fields();
+	return $field->get_field($args);
+}
+
+function rcl_get_smiles($id_area){
+	global $wpsmiliestrans,$rcl_smilies;
+
+	if(isset($rcl_smilies[1])&&is_array($rcl_smilies[1])){
+		foreach($rcl_smilies as $key=>$imgs){
+			foreach($imgs as $emo=>$img){
+				if(isset($rcl_smilies[$key][0])) $smilies_list[$key][0]=$rcl_smilies[$key][0];
+				else if(!isset($smilies_list[$key][0])) $smilies_list[$key][0]=$emo;
+				if($emo) $smilies_list[$key][$img]=$emo;
+			}
+		}
+	}else{
+		if(!$rcl_smilies) $rcl_smilies = $wpsmiliestrans;
+		foreach($rcl_smilies as $emo=>$img){
+			if(!isset($smilies_list[0][0])) $smilies_list[0][0]=$emo;
+			$smilies_list[0][$img]=$emo;
+		}
+	}
+
+	$smiles = '<div class="rcl-smiles" data-area="'.$id_area.'">';
+
+	foreach ( $smilies_list as $key=>$smils ) {
+		$smiles .= str_replace( 'style="height: 1em; max-height: 1em;"', 'data-dir="'.$key.'"', convert_smilies( $smils[0] ) );
+		$smiles .= '<div class="rcl-smiles-list">
+						<div class="smiles"></div>
+					</div>';
+	}
+
+	$smiles .= '</div>';
+
+	return $smiles;
+}
+
+function rcl_get_smiles_ajax(){
+	global $wpsmiliestrans,$rcl_smilies;
+
+	if(!$rcl_smilies){
+		foreach($wpsmiliestrans as $emo=>$smilie){
+			$rcl_smilies[$emo]=$smilie;
+		}
+	};
+
+	$namedir = $_POST['dir'];
+	$area = $_POST['area'];
+
+	$smiles = '';
+
+	$dir = (isset($rcl_smilies[$namedir]))? $rcl_smilies[$namedir]: $rcl_smilies;
+
+	foreach ( $dir as $emo=>$gif ) {
+		if(!$emo) continue;
+		//$b = array('','img alt="'.$emo.'" onclick="document.getElementById(\''.$area.'\').value=document.getElementById(\''.$area.'\').value+\' '.$emo.' \'"');
+		$smiles .= str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $emo ) );
+	}
+
+
+	if($smiles){
+		$log['result'] = 1;
+	}else{
+		$log['result'] = 0;
+	}
+
+	$log['content'] = $smiles;
+	echo json_encode($log);
+	exit;
+}
+add_action('wp_ajax_rcl_get_smiles_ajax','rcl_get_smiles_ajax');
+
 add_filter('file_scripts_rcl','rcl_get_scripts_ajaxload_tabs');
 function rcl_get_scripts_ajaxload_tabs($script){
 
@@ -584,13 +766,14 @@ function rcl_get_scripts_ajaxload_tabs($script){
 				} else {
 					alert('Error');
 				}
+				rcl_preloader_hide();
 			}
 		});
 		return false;
 	}
 	jQuery('.ajax_button').live('click',function(){
 		if(jQuery(this).hasClass('active'))return false;
-		jQuery('#lk-content').html('<img class=preloader src='+rcl_url+'css/img/loader.gif>');
+		rcl_preloader_show('#lk-content > div');
 		var id = jQuery(this).attr('id');
 		jQuery('.rcl-menu .recall-button').removeClass('active');
 		jQuery(this).addClass('active');

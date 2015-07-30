@@ -111,39 +111,46 @@ class Rcl_Options {
 
     function text($args){
         global $rcl_options;
-        $val = (isset($rcl_options[$args['name']]))?$rcl_options[$args['name']]:'';
+        $val = $this->get_value($args);
         return '<input type="text" name="'.$args['name'].'" value="'.$val.'" size="60">';
     }
 
     function password($args){
         global $rcl_options;
-        $val = (isset($rcl_options[$args['name']]))?$rcl_options[$args['name']]:'';
+        $val = $this->get_value($args);
         return '<input type="password" name="'.$args['name'].'" value="'.$val.'" size="60">';
     }
 
     function number($args){
         global $rcl_options;
-        $val = (isset($rcl_options[$args['name']]))?$rcl_options[$args['name']]:'';
+        $val = $this->get_value($args);
         return '<input type="number" name="'.$args['name'].'" value="'.$val.'" size="60">';
     }
 
     function email($args){
         global $rcl_options;
-        $val = (isset($rcl_options[$args['name']]))?$rcl_options[$args['name']]:'';
+        $val = $this->get_value($args);
         return '<input type="email" name="'.$args['name'].'" value="'.$val.'" size="60">';
     }
 
     function url($args){
         global $rcl_options;
-        $val = (isset($rcl_options[$args['name']]))?$rcl_options[$args['name']]:'';
+        $val = $this->get_value($args);
         return '<input type="url" name="'.$args['name'].'" value="'.$val.'" size="60">';
     }
 
     function textarea($args){
         global $rcl_options;
-        $val = (isset($rcl_options[$args['name']]))?$rcl_options[$args['name']]:'';
+        $val = $this->get_value($args);
         return '<textarea name="'.$args['name'].'">'.$val.'</textarea>';
     }
+	
+	function get_value($args){
+		global $rcl_options;
+		$val = (isset($rcl_options[$args['name']]))?$rcl_options[$args['name']]:'';
+		if(!$val&&isset($args['default'])) $val = $args['default'];
+		return $val;
+	}
 
 }
 

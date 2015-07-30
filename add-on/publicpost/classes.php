@@ -175,7 +175,7 @@ class Rcl_Thumb_Form{
 	public $thumb = 0;
 	public $id_upload;
 
-	public function __construct($p_id=false,$id_upload='postupload') {
+	public function __construct($p_id=false,$id_upload='upload-public-form') {
 		$this->post_id = $p_id;
 		$this->id_upload = $id_upload;
 		$this->gallery_init();
@@ -190,7 +190,7 @@ class Rcl_Thumb_Form{
 	}
 
 	function gallery_rcl(){
-		global $user_ID;
+		global $user_ID,$formData;
 
 		if($this->post_id) $gal = get_post_meta($this->post_id, 'recall_slider', 1);
 		else $gal = 0;
@@ -205,7 +205,7 @@ class Rcl_Thumb_Form{
 				'numberposts' => -1,
 				'post_status' => 'any'
 			);
-			if($this->id_upload=='postupload') $args['post_mime_type'] = 'image';
+			if($this->id_upload=='upload-public-form') $args['post_mime_type'] = 'image';
 			$child = get_children( $args );
 			if($child){ foreach($child as $ch){$temp_gal[]['ID']=$ch->ID;} }
 
@@ -223,29 +223,17 @@ class Rcl_Thumb_Form{
 		//if(!$this->post_id) echo 'checked="checked"';
 		echo 'type="checkbox" '.checked($gal,1,false).' name="add-gallery-rcl" value="1"> - '.__('Display all attached images in the gallery.','rcl').'</label>
 		<div id="status-temp"></div>
-		<div id="'.$this->id_upload.'">
-		<div class="b-upload__dnd">
-
-			  <div class="b-upload__hint">'.__('To add files to the download queue','rcl').'</div>
-			  <div class="js-files b-upload__files">
-				 <div class="js-file-tpl b-thumb" data-id="<%=uid%>" title="<%-name%>, <%-sizeText%>">
-					<div data-fileapi="file.remove" class="b-thumb__del">✖</div>
-					<div class="b-thumb__preview">
-					   <div class="b-thumb__preview__pic"></div>
-					</div>
-					<% if( /^image/.test(type) ){ %>
-					   <div data-fileapi="file.rotate.cw" class="b-thumb__rotate"></div>
-					<% } %>
-					<div class="b-thumb__progress progress progress-small"><div class="bar"></div></div>
-					<div class="b-thumb__name"><%-name%></div>
-				 </div>
-			  </div>
-			  <hr>
-			  <div class="btn recall-button btn-success btn-small js-fileapi-wrapper">
-				 <span>'.__('Add','rcl').'</span>
-				 <input name="filedata" type="file">
-			  </div>
-		   </div>
+		<div>
+			<div id="rcl-public-dropzone" class="rcl-dropzone mass-upload-box">
+				<div class="mass-upload-area">
+					'.__('To add files to the download queue','rcl').'
+				</div>
+				<hr>
+				<div class="recall-button rcl-upload-button">
+					<span>'.__('Add','rcl').'</span>
+					<input id="'.$this->id_upload.'" name="uploadfile" type="file" accept="'.$formData->accept.'" multiple>
+				</div>			
+			</div>
 		</div>';
 	}
 

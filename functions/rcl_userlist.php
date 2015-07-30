@@ -107,10 +107,10 @@ class Rcl_Userlist{
 			$exclude .= "user_id NOT IN ($this->exclude)";
 		}
 		if($exclude||$in) $where = "WHERE $in $exclude";
-		if($this->orderby) $orderby = "ORDER BY $this->orderby $this->order";
+		if($this->orderby) $orderby = "ORDER BY CAST($this->orderby AS DECIMAL) $this->order";
 		if($this->limit) $limit = "LIMIT $this->limit";
 
-		$rayt_users = $wpdb->get_results("SELECT user_id,total FROM ".RCL_PREF."total_rayting_users $where $orderby $limit");
+		$rayt_users = $wpdb->get_results("SELECT user_id,rating_total FROM ".RCL_PREF."rating_users $where $orderby $limit");
 
 		return $rayt_users;
 	}
@@ -131,7 +131,7 @@ class Rcl_Userlist{
 	function get_usdata_rayts($us_data,$us_lst=false){
 		$rayt_users = $this->get_rayts($us_lst);
                 //print_r($rayt_users);
-		$us_data = $this->get_usersdata($us_data,$rayt_users,'user_id','user_rayting','total');
+		$us_data = $this->get_usersdata($us_data,$rayt_users,'user_id','user_rayting','rating_total');
 		return $us_data;
 	}
 
@@ -160,7 +160,7 @@ class Rcl_Userlist{
             return $this->get_usersdata(false,$users,'ID','user_register','user_registered');
         }
 
-        function get_total_data($us_data,$us_lst){
+        function get_rating_total_data($us_data,$us_lst){
             $us_data = $this->get_usdata_rayts($us_data,$us_lst);
             $us_lst = $this->get_users_lst($us_data);
             $this->orderby = false;
@@ -201,15 +201,15 @@ class Rcl_Userlist{
 
         function get_feeds_data(){
             global $wpdb,$user_ID;
-            $sql = $wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'feed_user_%',$user_ID);
+            $sql = $wpdb->prepare("SELECT meta_value FROM $wpdb->usermeta WHERE meta_key = 'rcl_feed' AND user_id = '%d'",$user_ID);
             $users = $wpdb->get_results($sql." ORDER BY umeta_id $this->order LIMIT $this->limit");
 
             if(!$limit){
-                    $rclnavi->cnt_data = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $wpdb->usermeta WHERE meta_key LIKE '%s' AND user_id = '%d'",'feed_user_%',$user_ID));
-                    $rclnavi->num_page = ceil($rclnavi->cnt_data/$this->inpage);
+				$rclnavi->cnt_data = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $wpdb->usermeta WHERE meta_key = 'rcl_feed' AND user_id = '%d'",$user_ID));
+				$rclnavi->num_page = ceil($rclnavi->cnt_data/$this->inpage);
             }
 
-            if($users) return $UserList->get_usersdata($us_data,$users,'meta_value','feed','meta_value');
+            if($users) return $this->get_usersdata($us_data,$users,'meta_value','feed','meta_value');
             return false;
         }
 }
@@ -239,7 +239,7 @@ function rcl_user_rayting(){
     global $user;
     if(!function_exists('rcl_get_rating_block')) return false;
     $rtng = ($user->user_rayting)? $user->user_rayting: 0;
-    echo rcl_get_rating_block($rtng);
+    echo rcl_rating_block(array('value'=>$rtng));
 }
 
 function rcl_user_action($type=1){

@@ -488,7 +488,7 @@ function rmag_export(){
 global $wpdb;
 
 	$table_price .='<style>table{min-width:500px;width:50%;margin:20px 0;}table td{border:1px solid #ccc;padding:3px;}</style>';
-	$postmeta = $wpdb->get_results($wpdb->prepare("SELECT meta_key FROM ".$wpdb->prefix ."postmeta GROUP BY meta_key ORDER BY meta_key"));
+	$postmeta = $wpdb->get_results("SELECT meta_key FROM ".$wpdb->prefix ."postmeta GROUP BY meta_key ORDER BY meta_key");
 	$table_price .='<h2>Экспорт/импорт данных</h2><form method="post" action="">
 	'.wp_nonce_field('get-csv-file','_wpnonce',true,false).'
 	<p><input type="checkbox" name="post_title" checked value="1"> Добавить заголовок</p>
@@ -511,17 +511,20 @@ global $wpdb;
 	foreach($fields as $key=>$name){
 		$table_price .= '<b>'.$key.'</b> - '.$name.'<br />';
 	}
-
-	$n=1;
-	foreach ($postmeta as $key){
-		if(!isset($fields[$key->meta_key])) continue;
-		if (strpos($key->meta_key, "goods_id") === FALSE && strpos($key->meta_key , "_") !== 0){
-			$n++;
-			$check = (isset($fields[$key->meta_key]))?1:0;
-			$table_price .= '<td><input '.checked($check,1,false).' type="checkbox" name="'.$key->meta_key.'" value="1"> '.$key->meta_key.'</td>';
-			if($n%2) $table_price .= '</tr><tr>';
+	
+	if($postmeta){
+		$n=1;
+		foreach ($postmeta as $key){
+			if(!isset($fields[$key->meta_key])) continue;
+			if (strpos($key->meta_key, "goods_id") === FALSE && strpos($key->meta_key , "_") !== 0){
+				$n++;
+				$check = (isset($fields[$key->meta_key]))?1:0;
+				$table_price .= '<td><input '.checked($check,1,false).' type="checkbox" name="'.$key->meta_key.'" value="1"> '.$key->meta_key.'</td>';
+				if($n%2) $table_price .= '</tr><tr>';
+			}
 		}
 	}
+	
 	$table_price .='</tr><tr><td colspan="2" align="right"><input type="submit" name="get_csv_file" value="Выгрузить товары в файл"></td></tr></table>
 	'.wp_nonce_field('get-csv-file','_wpnonce',true,false).'
         </form>';

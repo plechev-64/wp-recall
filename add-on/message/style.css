@@ -6,6 +6,9 @@
 #lk-content .privat_block p {
 	margin:0px;
 }
+#lk-content .privat_block .content-mess p img{
+	margin:0px 3px;
+}
 #lk-content .message-block {
 	border-radius: 3px;
 	margin: 0 5px;
@@ -78,9 +81,11 @@
     border-top: 3px dotted #fff;
     border-bottom: 3px dotted #fff;
 }
+
 .privat_block .private-buttons{
 	overflow: hidden;
 	clear: both;
+	margin-top: 10px;
 }
 .privat_block .private-buttons .alignright{
 	float:right;
@@ -119,6 +124,7 @@
 }
 .privat_block .message-block .content-mess {
     max-width: 390px;
+	overflow: hidden;
 }
 .chatroom  .privat_block .message-block .content-mess {
 max-width: 80%;
@@ -133,9 +139,11 @@ max-width: 80%;
     border-radius: 3px;
     box-shadow: 3px 3px 3px #888888;
     color: #000000;
-    margin: 20px 60px 10px;
+    margin: 20px 0 10px;
+	float: left;
     padding: 2px 10px;
 	word-wrap: break-word;
+	max-width:300px;
 }
 .privat_block .message-block .content-mess p{
 	margin:0;
@@ -144,7 +152,7 @@ max-width: 80%;
     background: url("img/ballun-left.png") no-repeat scroll 0 0 #008000;
     display: block;
     height: 13px;
-    margin: 7px 0 0 60px;
+    margin: 7px 0 0 0px;
     position: absolute;
     width: 29px;
 }
@@ -250,7 +258,11 @@ max-width: 80%;
     position: fixed;
     right: 0;
     width: 300px;
-    z-index: 999;
+    z-index: 9999;
+}
+#privatemess textarea{
+	color:#333;
+	margin: 0;
 }
 #privatemess p {
     padding: 0;
@@ -300,7 +312,9 @@ max-width: 80%;
     position:relative;
 }
 #privatemess .miniaddmess{
-    float:right;
+    position: absolute;
+	right: 10px;
+	bottom: 10px;
 }
 #privatemess .notice{
     font-size:10px;
@@ -337,28 +351,9 @@ max-width: 80%;
     padding-right:0px;
 }
 .privat_block textarea{
-	width:96%;
+	width:100%;
 	padding:5px;
 }
-#private-smiles{
-	position: relative;
-	float: right;
-	margin-left: 20px;
-}
-#private-smiles .smiles{
-	text-align: right;
-	background: #fff;
-	border: 1px solid #ccc;
-	padding: 5px;
-	width: 198px;
-	position: absolute;
-	display: none;
-	left: -190px;
-	top: -35px;
-        z-index: 9;
-}
-#private-smiles .smiles img{
-	cursor:pointer;
-	display:inline-block;
-    max-height: 25px;
+#black_list_button .remove_black_list{
+	background-color:#ccc;
 }

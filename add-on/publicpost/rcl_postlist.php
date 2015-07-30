@@ -47,14 +47,14 @@ class Rcl_Postlist {
 
     function get_postslist_table( $author_lk ){
 
-            global $wpdb;
+            global $wpdb,$post,$posts,$ratings;
 
-            $rayt = array();
+            $ratings = array();
             $posts = array();
 
             $start .= $this->start.',';
 
-            $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $start 20",$author_lk,$this->posttype));
+            $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $start 20",$author_lk,$this->posttype));			
 
             if(is_multisite()){
                 $blog_list = get_blog_list( 0, 'all' );
@@ -65,57 +65,34 @@ class Rcl_Postlist {
                 }
             }
 
-            //print_r($posts);
+            if($posts[0]){
+				
+                $p_list = array();
+				
+				
+				if(function_exists('rcl_format_rating')){
+					
+					foreach($posts as $postdata){ 
+						foreach($postdata as $p){
+							$p_list[] = $p->ID; 
+						}
+					}
+					
+					$rayt_p = rcl_get_ratings(array('object_id'=>$p_list,'rating_type'=>array($this->posttype)));
 
-            $posts_block = '';
+					foreach((array)$rayt_p as $r){
+						if(!isset($r->object_id)) continue;
+						$ratings[$r->object_id] = $r->rating_total;
+					}
+					
+				}
 
-            if($posts){
-                $p_list = '';
-                    $rayting = false;
-                    if(function_exists('rcl_get_rating_block')){
-                            $b=0;
-                            foreach((array)$posts as $p){ $p_list[] = $p->ID; }
-                            $rayt_p = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."total_rayting_posts WHERE post_id IN (".rcl_format_in($p_list).")",$p_list));
-                            foreach((array)$rayt_p as $r){
-                                if(!isset($r->post_id)) continue;
-                                $rayt[$r->post_id] = $r->total;
-                            }
-                            $rayting = true;
-                    }
-
-                    $posts_block .= '<table class="publics-table-rcl">
-                    <tr>
-                        <td>'.__('Date','rcl').'</td>
-                        <td>'.__('Title','rcl').'</td>
-                        <td>'.__('Status','rcl').'</td>';
-                            //if($user_ID==$author_lk) $posts_block .= '<td>Ред.</td>';
-                            $posts_block .= '</tr>';
-                    foreach($posts as $postdata){
-			foreach($postdata as $post){
-                            if($post->post_status=='pending') $status = '<span class="pending">'.__('on approval','rcl').'</span>';
-                            elseif($post->post_status=='trash') $status = '<span class="pending">'.__('deleted','rcl').'</span>';
-                            else $status = '<span class="publish">'.__('publish','rcl').'</span>';
-                            $posts_block .= '<tr>
-                            <td width="50">'.mysql2date('d.m.y', $post->post_date).'</td>'
-                                    . '<td>';
-
-                            $content = ($post->post_status=='trash')? $post->post_title: '<a target="_blank" href="'.$post->guid.'">'.$post->post_title.'</a>';
-
-                            if($rayting) {
-                                $rtng = (isset($rayt[$post->ID]))? $rayt[$post->ID]: 0;
-                                $content .= ' '.rcl_get_rating_block($rtng);
-                            }
-                            $content = apply_filters('content_postslist',$content);
-                            $posts_block .= $content;
-                            $posts_block .= '</td>'
-                                    . '<td>'.$status.'</td>';
-                            //if($user_ID==$author_lk) $posts_block .= '<td><a target="_blank" href="'.get_permalink($rcl_options['public_form_page_rcl']).'?rcl-post-edit='.$post->ID.'">Ред.</a></td>';
-                            $posts_block .= '</tr>';
-			}
-                    }
-                    $posts_block .= '</table>';
+				$posts_block = rcl_get_include_template('posts-list.php',__FILE__);
+				
+				wp_reset_postdata();
+				
             }else{
-                    $posts_block .= '<h3>'.$this->name.' '.__('has not yet been published','rcl').'</h3>';
+                $posts_block = '<p>'.$this->name.' '.__('has not yet been published','rcl').'</p>';
             }
 
             return $posts_block;

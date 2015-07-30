@@ -54,6 +54,26 @@ function rcl_path_to_url($path,$dir=false){
     return $url;
 }
 
+function rcl_path_by_url($url,$dir=false){
+    if(!$dir) $dir = basename(content_url());
+    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
+    $array = explode('/',$url);
+    $cnt = count($array);
+    $path = '';
+	$content_dir = $dir;
+    foreach($array as $key=>$ar){
+        if($array[$key]==$content_dir){
+            $path = $_SERVER['DOCUMENT_ROOT'].'/'.$array[$key].'/';
+            continue;
+        }
+        if($path){
+            $path .= $ar;
+            if($cnt>$key+1) $path .= '/';
+        }
+    }
+    return $path;
+}
+
 function rcl_mail($email, $title, $text){
     add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
     $headers = 'From: '.get_bloginfo('name').' <noreply@'.$_SERVER['HTTP_HOST'].'>' . "\r\n";

@@ -32,16 +32,17 @@ function rcl_related_products($content){
 	if(!$related_prodcat) return $content;
 
 	$args = array(
-		'numberposts'     => $rmag_options['size_related_products'],
-		'orderby'         => 'rand',
-		'post_type'       => 'products',
-		'tax_query' 	  => array(
-			array(
-				'taxonomy'=>'prodcat',
-				'field'=>'id',
-				'terms'=> $related_prodcat
-				)
-			)
+            'numberposts' => $rmag_options['size_related_products'],
+            'orderby'     => 'rand',
+            'post_type'   => 'products',
+            'exclude'     => $post->ID,
+            'tax_query'   => array(
+                array(
+                    'taxonomy'=>'prodcat',
+                    'field'=>'id',
+                    'terms'=> $related_prodcat
+                    )
+                )
 	);
 
 	$related_products = get_posts($args);

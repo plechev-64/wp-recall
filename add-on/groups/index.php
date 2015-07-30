@@ -1,6 +1,14 @@
 <?php
 rcl_enqueue_style('groups',__FILE__);
 
+if(function_exists('rcl_register_rating_type')){
+	if(!is_admin()) add_action('init','rcl_register_rating_group_type');
+	if(is_admin()) add_action('admin_init','rcl_register_rating_group_type');
+	function rcl_register_rating_group_type(){
+		rcl_register_rating_type(array('post_type'=>'post-group','type_name'=>__('Record groups','rcl'),'style'=>true));
+	}
+}
+
 function rcl_class_group(){
 	global $gr_data;
 	echo $gr_data->class_gr();
@@ -280,16 +288,6 @@ function rcl_admin_groups_page_content($content){
                             __('Send for moderation','rcl'))
                     )),
                     $opt->notice(__('If used in moderation: To allow the user to see their publication before it is moderated, it is necessary to have on the website right below the Author','rcl')),
-
-                    $opt->label(__('Rating value publications','rcl')),
-                    $opt->option('text',array('name'=>'count_rayt_post-group')),
-                    $opt->notice(__('Specify a value of negative and positive evaluations for publishing in the group. The default is 1','rcl')),
-
-                    $opt->label(__('The influence of the rating of the publications in the group on the rating of the author','rcl')),
-                    $opt->option('select',array(
-                        'name'=>'rayt_post-group',
-                        'options'=>array(__('No','rcl'),__('Yes','rcl'))
-                    )),
                 )
             )
         );
@@ -1041,7 +1039,7 @@ function rcl_scripts_group($script){
 			var type_req = 0;
 			if(idbutt == 'add-user-req-'+id_group) type_req = 1;
 			if(idbutt == 'del-user-req-'+id_group) type_req = 2;
-			var dataString = 'action=request_users_group_access&id_group='+id_group+'&req='+type_req+'&id_user='+id_user;
+			var dataString = 'action=rcl_request_users_group_access&id_group='+id_group+'&req='+type_req+'&id_user='+id_user;
 			jQuery.ajax({
 				".$ajaxdata."
 				success: function(data){
@@ -1141,7 +1139,7 @@ function rcl_footer_scripts_group($script){
 	else $cnt = '3';
 
 	$script .= "
-	var term_id_group = jQuery('input[name=\"term_id\"]').val();
+	/*var term_id_group = jQuery('input[name=\"term_id\"]').val();
 	jQuery('#postgroupupload').fileapi({
 		   url: wpurl+'wp-admin/admin-ajax.php',
 		   data:{action:'rcl_postgroup_upload',id_group:term_id_group},
@@ -1203,7 +1201,7 @@ function rcl_footer_scripts_group($script){
 				var result = uiEvt.result;
 				jQuery('#postgroupupload .js-files').empty();
 			}
-	});";
+	});*/";
 	return $script;
 }
 add_filter('file_footer_scripts_rcl','rcl_footer_scripts_group');

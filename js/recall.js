@@ -1,20 +1,80 @@
-jQuery(function(){
+jQuery(window).load(function() {
+	jQuery(document.body).bind("drop", function(e){
+		e.preventDefault();
+	});
+});
+
+var get_param = new Array();
+
+function init_location_data(){
+	var rcl_tmp = new Array();
+	var rcl_tmp2 = new Array();	
+
+	var get = location.search;
+	if(get !== ''){
+	  rcl_tmp = (get.substr(1)).split('&');
+	  for(var i=0; i < rcl_tmp.length; i++) {
+	  rcl_tmp2 = rcl_tmp[i].split('=');
+	  get_param[rcl_tmp2[0]] = rcl_tmp2[1];
+	  }
+	}
+	return get_param;
+}
+
+jQuery(function($){
+	
+	init_location_data();
+	
+	$('a.close-notice').live('click',function(){	
+		$(this).parent().remove();
+		return false;
+	});
+	
+	$('.rcl-smiles > img').live('hover',function(){
+		var block = $(this).next().children();
+		if(block.html()) return false;
+		block.html('Загрузка...');
+		var dir = $(this).data('dir');
+		var area = $(this).parent().data('area');
+		var dataString = 'action=rcl_get_smiles_ajax&area='+area;
+		if(dir) dataString += '&dir='+dir;
+        $.ajax({
+			type: 'POST', 
+			data: dataString, 
+			dataType: 'json', 
+			url: wpurl+'wp-admin/admin-ajax.php',
+			success: function(data){				
+				if(data['result']==1){
+					block.html(data['content']);
+				}else{
+					rcl_notice('Ошибка!','error');
+				}					
+			}			
+		}); 
+		return false;
+	});
+	
+	$(".rcl-smiles-list img").live("click",function(){
+		var alt = $(this).attr("alt");
+		var area = $(this).parents(".rcl-smiles").data("area");
+		$("#"+area).val($("#"+area).val()+" "+alt+" ");
+	});
     
-    jQuery('form .requared-checkbox').live('click',function(){
-        var name = jQuery(this).attr('name');
-        var chekval = jQuery('form input[name="'+name+'"]:checked').val();
-        if(chekval) jQuery('form input[name="'+name+'"]').attr('required',false);
-        else jQuery('form input[name="'+name+'"]').attr('required',true);
+    $('form .requared-checkbox').live('click',function(){
+        var name = $(this).attr('name');
+        var chekval = $('form input[name="'+name+'"]:checked').val();
+        if(chekval) $('form input[name="'+name+'"]').attr('required',false);
+        else $('form input[name="'+name+'"]').attr('required',true);
     });
 
-    jQuery('#message-list .author-avatar, #rcl-popup .author-avatar').live('click',function(){
-            var userid = jQuery(this).attr("user_id");
+    $('#message-list .author-avatar, #rcl-popup .author-avatar').live('click',function(){
+            var userid = $(this).attr("user_id");
             if(!userid) return false;
-            var ava = jQuery(this).html();
-            jQuery(".author-avatar").children().removeAttr('style');
-            jQuery(this).children().css('opacity','0.4');
-            jQuery("#adressat_mess").val(userid);
-            jQuery("#opponent").html(ava);
+            var ava = $(this).html();
+            $(".author-avatar").children().removeAttr('style');
+            $(this).children().css('opacity','0.4');
+            $("#adressat_mess").val(userid);
+            $("#opponent").html(ava);
     //return false;
     });
 
@@ -36,8 +96,8 @@ jQuery(function(){
         return base + '?' + res;
     } 
 
-    jQuery('.rcl-menu .block_button').click(function() {      
-        var url = setAttr_rcl('view',jQuery(this).attr('id'));
+    $('.rcl-menu .block_button').click(function() {      
+        var url = setAttr_rcl('view',$(this).attr('id'));
         if(url !== window.location){
             if ( history.pushState ){
                 window.history.pushState(null, null, url);
@@ -46,212 +106,154 @@ jQuery(function(){
         return false;
     });
 
-    jQuery('.close-popup,#rcl-overlay').live('click',function(){
-            jQuery('#rcl-overlay').fadeOut();
-            jQuery('.floatform').fadeOut();
-            jQuery('#rcl-popup').empty();		
+    $('.close-popup,#rcl-overlay').live('click',function(){
+            $('#rcl-overlay').fadeOut();
+            $('.floatform').fadeOut();
+            $('#rcl-popup').empty();		
             return false;
     });
 
-    jQuery("#temp-files .thumb-foto").live('click',function(){		
-            jQuery("#temp-files .thumb-foto").removeAttr("checked");
-            jQuery(this).attr("checked",'checked');			
+    $("#temp-files .thumb-foto").live('click',function(){		
+            $("#temp-files .thumb-foto").removeAttr("checked");
+            $(this).attr("checked",'checked');			
     });
 
-    jQuery(".thumbs a").click(function(){	
-                    var largePath = jQuery(this).attr("href");
-                    var largeAlt = jQuery(this).attr("title");		
-                    jQuery("#largeImg").attr({ src: largePath, alt: largeAlt });
-                    jQuery(".largeImglink").attr({ href: largePath });		
-                    jQuery("h2 em").html(" (" + largeAlt + ")"); return false;
+    $(".thumbs a").click(function(){	
+                    var largePath = $(this).attr("href");
+                    var largeAlt = $(this).attr("title");		
+                    $("#largeImg").attr({ src: largePath, alt: largeAlt });
+                    $(".largeImglink").attr({ href: largePath });		
+                    $("h2 em").html(" (" + largeAlt + ")"); return false;
             });	
 	
-    var num_field_rcl = jQuery('input .field_thumb_rcl').size() + 1;
-    jQuery('#add-new-input-rcl').click(function() {
-        if(num_field_rcl<5) jQuery('<tr><td><input type="radio" name="image_thumb" value="'+num_field_rcl+'"/></td><td><input type="file" class="field_thumb_rcl" name="image_file_'+num_field_rcl+'" value="" /></td></tr>').fadeIn('slow').appendTo('.inputs');
-		else jQuery(this).remove();
+    var num_field_rcl = $('input .field_thumb_rcl').size() + 1;
+    $('#add-new-input-rcl').click(function() {
+        if(num_field_rcl<5) $('<tr><td><input type="radio" name="image_thumb" value="'+num_field_rcl+'"/></td><td><input type="file" class="field_thumb_rcl" name="image_file_'+num_field_rcl+'" value="" /></td></tr>').fadeIn('slow').appendTo('.inputs');
+		else $(this).remove();
         num_field_rcl++;
 		return false;
     });
 	
-    jQuery('.public-post-group').live('click',function(){				
-            jQuery(this).slideUp();
-            jQuery(this).next().slideDown();
+    $('.public-post-group').live('click',function(){				
+            $(this).slideUp();
+            $(this).next().slideDown();
             return false;
     });
-    jQuery('.close-public-form').live('click',function(){				
-            jQuery(this).parent().prev().slideDown();
-            jQuery(this).parent().slideUp();
+    $('.close-public-form').live('click',function(){				
+            $(this).parent().prev().slideDown();
+            $(this).parent().slideUp();
             return false;
     });
 
-    jQuery(".float-window-recall .close").live('click',function(){	
-            jQuery(".float-window-recall").remove();
+    $(".float-window-recall .close").live('click',function(){	
+            $(".float-window-recall").remove();
             return false; 
     });
 
-    jQuery('.close_edit').click(function(){
-        jQuery('.group_content').empty();
+    $('.close_edit').click(function(){
+        $('.group_content').empty();
     });
 
-    jQuery('.form-tab-rcl .link-tab-rcl').click(function(){
-        jQuery('.form-tab-rcl').slideUp();
-        if(jQuery(this).hasClass('link-login-rcl')) jQuery('#login-form-rcl').slideDown();
-        if(jQuery(this).hasClass('link-register-rcl')) jQuery('#register-form-rcl').slideDown();
-        if(jQuery(this).hasClass('link-remember-rcl')) jQuery('#remember-form-rcl').slideDown();
+    $('.form-tab-rcl .link-tab-rcl').click(function(){
+        $('.form-tab-rcl').hide();
+        if($(this).hasClass('link-login-rcl')) $('#login-form-rcl').show();
+        if($(this).hasClass('link-register-rcl')) $('#register-form-rcl').show();
+        if($(this).hasClass('link-remember-rcl')) $('#remember-form-rcl').show();
         return false; 
     });
 
-    jQuery('.block_button').click(function(){
-        if(jQuery(this).hasClass('active'))return false;
-        var id = jQuery(this).attr('id');		
-        jQuery(".rcl-menu .recall-button").removeClass("active");
-        jQuery(".recall_content_block").removeClass("active").slideUp();
-        jQuery(this).addClass("active");
-        jQuery('.'+id+'_block').slideDown().addClass("active");
+    $('.block_button').click(function(){
+        if($(this).hasClass('active'))return false;
+        var id = $(this).attr('id');		
+        $(".rcl-menu .recall-button").removeClass("active");
+        $(".recall_content_block").removeClass("active").slideUp();
+        $(this).addClass("active");
+        $('.'+id+'_block').slideDown().addClass("active");
         return false;
     });
 
-    jQuery('.child_block_button').live('click',function(){
-        if(jQuery(this).hasClass('active'))return false;
-        var id = jQuery(this).attr('id');
-        var parent_id = jQuery(this).parent().parent().attr('id');
-        jQuery("#"+parent_id+" .child_block_button").removeClass("active");
-        jQuery("#"+parent_id+" .recall_child_content_block").removeClass("active").slideUp();
-        jQuery(this).addClass("active");
-        jQuery('#'+parent_id+' .'+id+'_block').slideDown().addClass("active");
+    $('.child_block_button').live('click',function(){
+        if($(this).hasClass('active'))return false;
+        var id = $(this).attr('id');
+        var parent_id = $(this).parent().parent().attr('id');
+        $("#"+parent_id+" .child_block_button").removeClass("active");
+        $("#"+parent_id+" .recall_child_content_block").removeClass("active").slideUp();
+        $(this).addClass("active");
+        $('#'+parent_id+' .'+id+'_block').slideDown().addClass("active");
         return false;
     });			
 
     if(get_param['action-rcl']){
-        jQuery('.form-tab-rcl').slideUp();
-        jQuery('#'+get_param['action-rcl']+'-form-rcl').slideDown();		
+        $('.form-tab-rcl').slideUp();
+        $('#'+get_param['action-rcl']+'-form-rcl').slideDown();		
         return false; 
     }
 
     if(get_param['view']){		
         var id_block = get_param['view'];
-        var offsetTop = jQuery("#lk-content").offset().top;
-        jQuery('body,html').animate({scrollTop:offsetTop -50}, 1000);
+        var offsetTop = $("#lk-content").offset().top;
+        $('body,html').animate({scrollTop:offsetTop -50}, 1000);
         view_recall_content_block(id_block);
     }
 	
 	function view_recall_content_block(id_block){
-            jQuery(".rcl-menu .recall-button").removeClass("active");
-            jQuery(".rcl-content .recall_content_block").removeClass("active");
-            //jQuery('.recall_content_block').slideUp();
-            jQuery('#'+id_block).addClass("active");
-            jQuery('.'+id_block+'_block').addClass("active");
+            $(".rcl-menu .recall-button").removeClass("active");
+            $(".rcl-content .recall_content_block").removeClass("active");
+            //$('.recall_content_block').slideUp();
+            $('#'+id_block).addClass("active");
+            $('.'+id_block+'_block').addClass("active");
             return false;
     }
 
-    if(jQuery("#lk-menu.left-buttons").size()){
-        var menu_start = jQuery("#lk-menu.left-buttons").offset().top;
-        var w_start = jQuery('.wprecallblock').innerHeight();
+    if($("#lk-menu.left-buttons").size()){
+        var menu_start = $("#lk-menu.left-buttons").offset().top;
+        var w_start = $('.wprecallblock').innerHeight();
 
-        jQuery(window).scroll(function(){
-            var w_now = jQuery('.wprecallblock').innerHeight();
+        $(window).scroll(function(){
+            var w_now = $('.wprecallblock').innerHeight();
             if(!w_now) return false;
-            var menu_now = jQuery("#lk-menu.left-buttons").offset().top;
-            var th = jQuery(this).scrollTop();
-            var cont_top = jQuery("#lk-content").offset().top;
+            var menu_now = $("#lk-menu.left-buttons").offset().top;
+            var th = $(this).scrollTop();
+            var cont_top = $("#lk-content").offset().top;
             if ((th > menu_start+90&&w_start===w_now)||(th < menu_now&&w_now>w_start)) {
                     var h = th - menu_start;
-                    jQuery("#lk-menu.left-buttons").css('marginTop',h);
+                    $("#lk-menu.left-buttons").css('marginTop',h);
             }
             if(th < menu_start){
-                    jQuery("#lk-menu.left-buttons").css('marginTop','0');              
+                    $("#lk-menu.left-buttons").css('marginTop','0');              
             }
         });
     }
 
-    if(jQuery.cookie('favs')){		
-            favsr=jQuery.cookie('favs'); 
-            favsr=favsr.split('|');
-            jQuery("#favs").html('<p style="margin:0;" align="right"><a onclick="jQuery(\'#favs\').slideToggle();return false;" href="#">Закрыть</a></p>');
-            for(i=1;i<favsr.length;i++){
-                    favsl=favsr[i].split(',');
-                    if(favsl[1]){ 
-                            jQuery("#favs").append('<div><a href="'+favsl[0]+'">'+favsl[1]+'</a> [<a href="javascript://" onclick="delfav(\''+favsl[0]+'\')">x</a>]</div>');
-                    }else{
-                            delfav(favsl[0]);
-                    }
-            }
-            return false;
-    } else {
-            jQuery("#favs").html('<p style="margin:0;" align="right"><a onclick="jQuery(\'#favs\').slideToggle();return false;" href="#">Закрыть</a></p><p class="empty"><b>Формируйте свой список интересных страниц сайта с помощью закладок!</b><br />Закладки не добавляются в ваш браузер и действуют только на этом сайте.<br />Для добавления новой закладки,<br>на нужной странице нажмите <b>В закладки</b>.<br> Помните что если очистить Cookies, то закладки тоже исчезнут.<br>Управляйте временем сохранения закладок через настройки вашего браузера для Cookies.</p>');
-            return false;
-    }
-	
-});
+	$.fn.extend({
+		insertAtCaret: function(myValue){
+			return this.each(function(i) {
+				if (document.selection) {
+					// Для браузеров типа Internet Explorer
+					this.focus();
+					var sel = document.selection.createRange();
+					sel.text = myValue;
+					this.focus();
+				}
+				else if (this.selectionStart || this.selectionStart == '0') {
+					// Для браузеров типа Firefox и других Webkit-ов
+					var startPos = this.selectionStart;
+					var endPos = this.selectionEnd;
+					var scrollTop = this.scrollTop;
+					this.value = this.value.substring(0, startPos)+myValue+this.value.substring(endPos,this.value.length);
+					this.focus();
+					this.selectionStart = startPos + myValue.length;
+					this.selectionEnd = startPos + myValue.length;
+					this.scrollTop = scrollTop;
+				} else {
+					this.value += myValue;
+					this.focus();
+				}
+			})
+		}
+	});
 
-jQuery.fn.extend({
-    insertAtCaret: function(myValue){
-        return this.each(function(i) {
-            if (document.selection) {
-                // Для браузеров типа Internet Explorer
-                this.focus();
-                var sel = document.selection.createRange();
-                sel.text = myValue;
-                this.focus();
-            }
-            else if (this.selectionStart || this.selectionStart == '0') {
-                // Для браузеров типа Firefox и других Webkit-ов
-                var startPos = this.selectionStart;
-                var endPos = this.selectionEnd;
-                var scrollTop = this.scrollTop;
-                this.value = this.value.substring(0, startPos)+myValue+this.value.substring(endPos,this.value.length);
-                this.focus();
-                this.selectionStart = startPos + myValue.length;
-                this.selectionEnd = startPos + myValue.length;
-                this.scrollTop = scrollTop;
-            } else {
-                this.value += myValue;
-                this.focus();
-            }
-        })
-    }
-});
-
-    var FileAPI = {
-            debug: true
-            , media: true
-            , staticPath: rcl_url+'js/fileapi/FileAPI/'
-    };
-    var examples = [];
-
-    var rcl_tmp = new Array();
-    var rcl_tmp2 = new Array();
-    var get_param = new Array();
-
-    var get = location.search;
-    if(get !== ''){
-      rcl_tmp = (get.substr(1)).split('&');
-      for(var i=0; i < rcl_tmp.length; i++) {
-      rcl_tmp2 = rcl_tmp[i].split('=');
-      get_param[rcl_tmp2[0]] = rcl_tmp2[1];
-      }
-    }
-
-    function passwordStrength(password){
-        var desc = new Array();
-        desc[0] = "Очень слабый";
-        desc[1] = "Слабый";
-        desc[2] = "Лучше";
-        desc[3] = "Средний";
-        desc[4] = "Надёжный";
-        desc[5] = "Сильный";
-        var score   = 0;
-        if (password.length > 6) score++;   
-        if ( ( password.match(/[a-z]/) ) && ( password.match(/[A-Z]/) ) ) score++;
-        if (password.match(/\d+/)) score++;
-        if ( password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/) ) score++;
-        if (password.length > 12) score++;
-        document.getElementById("passwordDescription").innerHTML = desc[score];
-        document.getElementById("passwordStrength").className = "strength" + score;
-    }
-
-    jQuery.cookie = function(name, value, options) {
+	$.cookie = function(name, value, options) {
         if (typeof value !== 'undefined') { 
                 options = options || {};
                 if (value === null) {
@@ -278,7 +280,7 @@ jQuery.fn.extend({
                 if (document.cookie && document.cookie !== '') {
                         var cookies = document.cookie.split(';');
                         for (var i = 0; i < cookies.length; i++) {
-                                var cookie = jQuery.trim(cookies[i]);
+                                var cookie = $.trim(cookies[i]);
                                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
                                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                                         break;
@@ -288,6 +290,109 @@ jQuery.fn.extend({
                 return cookieValue;
         }
     };
+	
+	if($.cookie('favs')){		
+            favsr=$.cookie('favs'); 
+            favsr=favsr.split('|');
+            $("#favs").html('<p style="margin:0;" align="right"><a onclick="jQuery(\'#favs\').slideToggle();return false;" href="#">Закрыть</a></p>');
+            for(i=1;i<favsr.length;i++){
+                    favsl=favsr[i].split(',');
+                    if(favsl[1]){ 
+                            $("#favs").append('<div><a href="'+favsl[0]+'">'+favsl[1]+'</a> [<a href="javascript://" onclick="delfav(\''+favsl[0]+'\')">x</a>]</div>');
+                    }else{
+                            delfav(favsl[0]);
+                    }
+            }
+            return false;
+    } else {
+            $("#favs").html('<p style="margin:0;" align="right"><a onclick="jQuery(\'#favs\').slideToggle();return false;" href="#">Закрыть</a></p><p class="empty"><b>Формируйте свой список интересных страниц сайта с помощью закладок!</b><br />Закладки не добавляются в ваш браузер и действуют только на этом сайте.<br />Для добавления новой закладки,<br>на нужной странице нажмите <b>В закладки</b>.<br> Помните что если очистить Cookies, то закладки тоже исчезнут.<br>Управляйте временем сохранения закладок через настройки вашего браузера для Cookies.</p>');
+            return false;
+    }
+	
+	
+
+});
+
+function rcl_add_dropzone(idzone){
+
+	jQuery(document.body).bind("drop", function(e){
+		var dropZone = jQuery(idzone),
+		node = e.target, 
+		found = false;
+		
+		if(dropZone[0]){		
+			dropZone.removeClass('in hover');
+			
+			do {
+				if (node === dropZone[0]) {
+					found = true;
+					break;
+				}
+				node = node.parentNode;
+			} while (node != null);
+
+			if(found){
+				e.preventDefault();
+			}else{			
+				return false;
+			}
+		}
+		
+	});
+
+	jQuery(idzone).bind('dragover', function (e) {
+		var dropZone = jQuery(idzone),
+			timeout = window.dropZoneTimeout;
+			
+		if (!timeout) {
+			dropZone.addClass('in');
+		} else {
+			clearTimeout(timeout);
+		}
+		
+		var found = false,
+			node = e.target;
+			
+		do {
+			if (node === dropZone[0]) {
+				found = true;
+				break;
+			}
+			node = node.parentNode;
+		} while (node != null);
+		
+		if (found) {
+			dropZone.addClass('hover');
+		} else {
+			dropZone.removeClass('hover');
+		}
+		
+		window.dropZoneTimeout = setTimeout(function () {
+			window.dropZoneTimeout = null;
+			dropZone.removeClass('in hover');
+		}, 100);
+	});
+}
+
+    function passwordStrength(password){
+        var desc = new Array();
+        desc[0] = "Очень слабый";
+        desc[1] = "Слабый";
+        desc[2] = "Лучше";
+        desc[3] = "Средний";
+        desc[4] = "Надёжный";
+        desc[5] = "Сильный";
+        var score   = 0;
+        if (password.length > 6) score++;   
+        if ( ( password.match(/[a-z]/) ) && ( password.match(/[A-Z]/) ) ) score++;
+        if (password.match(/\d+/)) score++;
+        if ( password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/) ) score++;
+        if (password.length > 12) score++;
+        document.getElementById("passwordDescription").innerHTML = desc[score];
+        document.getElementById("passwordStrength").className = "strength" + score;
+    }
+
+    
 
     cookiepar={expires: 9999, path: '/'} // Все закладки общие
 
@@ -307,14 +412,15 @@ jQuery.fn.extend({
         jQuery("#add_bookmarks").html('Закладка добавлена!').slideDown().delay(2000).fadeOut(1000);
 
         if(jQuery("#favs").text()==='У вас пока нет закладок') {
-                jQuery("#favs").html(' ');
+               jQuery("#favs").html(' ');
         }
-        var empty = jQuery("#favs .empty");
+        var empty =jQuery("#favs .empty");
         if(empty) jQuery("#favs .empty").remove();
         title=title.split('|');
         jQuery("#favs").append('<div style="display:none" id="newbk"><a href="'+url+'">'+title[0]+'</a> [<a href="javascript://" onclick="delfav(\''+url+'\')">x</a>]</div>');
         jQuery("#newbk").fadeIn('slow').attr('id','');
     }
+	
     function delfav(url){
         jQuery("#favs a[href='"+url+"']").parent().fadeOut('slow',function(){
                 jQuery(this).empty().remove(); 
@@ -335,3 +441,26 @@ jQuery.fn.extend({
         }
         jQuery.cookie('favs',nfavs,cookiepar);
     }
+	
+	function rcl_notice(text,type){	
+		var html = '<div class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
+		if(!jQuery('#rcl-notice').size()){
+			jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
+		}else{
+			if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
+			else jQuery('#rcl-notice').html(html);
+		}
+		
+		/*var first = jQuery('#rcl-notice > div:first-child');
+		setTimeout(function() {
+			first.animate({height: 0}, 1000).remove();
+		}, 3000);*/
+	}
+	
+	function rcl_preloader_show(e){
+		jQuery(e).after('<div class="rcl_preloader"></div>');
+	}
+	
+	function rcl_preloader_hide(){
+		jQuery('.rcl_preloader').remove();
+	}

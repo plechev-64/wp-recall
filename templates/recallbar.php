@@ -28,8 +28,8 @@
 
     <?php }else if(!$rcl_options['login_form_recall']){ ?>
 
-        <li><a href="#" class="reglink"><i class="fa fa-book"></i><?php _e('Registration','rcl'); ?></a></li>
-        <li><a href="#" class="sign-button"><i class="fa fa-signin"></i><?php _e('Login','rcl'); ?></a></li>
+        <li><a href="#" class="rcl-register"><i class="fa fa-book"></i><?php _e('Registration','rcl'); ?></a></li>
+        <li><a href="#" class="rcl-login"><i class="fa fa-signin"></i><?php _e('Login','rcl'); ?></a></li>
 
     <?php } ?>
         </ul>

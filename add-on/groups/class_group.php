@@ -53,7 +53,7 @@ class Rcl_Group{
 		if(!$this->admin_id) $this->admin_id = rcl_get_admin_group_by_meta($this->term_id);
 		if(!$this->imade_id) $this->imade_id = get_option('image_group_'.$this->term_id);
 
-		$this->users_group = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE meta_key = '%d' ORDER BY RAND() LIMIT 10",'user_group_'.$this->term_id));
+		$this->users_group = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE meta_key = '%s' ORDER BY RAND() LIMIT 10",'user_group_'.$this->term_id));
 
 		$args = array(
 			'post_type'=>'post-group',
@@ -336,6 +336,7 @@ class Rcl_Group{
 
 	function get_imagelist(){
 		if($this->gallery_group&&$this->options_gr['images']==1){
+			rcl_bxslider_scripts();
 			$lst = '<h3>'. __('The last photo of the group','rcl').':</h3>
 			<div id="gallery-group">';
 			foreach((array)$this->gallery_group as $foto){
@@ -343,14 +344,15 @@ class Rcl_Group{
 				$lst .= '<a href="'. get_permalink($foto->post_parent) .'"><img src="'.$src_foto[0].'" width="75" align="left"></a>';
 			}
 			$lst .= '</div>
-			<script>
-			jQuery("#gallery-group").bxSlider({
-				pager:false,
-				minSlides: 1,
-				maxSlides: 10,
-				slideWidth: 75,
-				slideMargin: 5,
-				moveSlides:2
+			<script>jQuery(function($){
+				$("#gallery-group").bxSlider({
+					pager:false,
+					minSlides: 1,
+					maxSlides: 10,
+					slideWidth: 75,
+					slideMargin: 5,
+					moveSlides:2
+				});
 			});
 			</script>';
 			return $lst;

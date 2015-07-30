@@ -123,13 +123,27 @@ function rcl_get_ajax_pagenavi($userid,$post_type){
         $page = 0;
 	$pages = ceil($count/$in_page);
 
-	$navi = '<div class="pagenavi-rcl">';
+	$navi = '<ul id="'.$post_type.'-pagenavi" class="pagenavi-rcl">';
 	for($a=0;$a<$pages;$a++){
-		$navi .= '<a type="'.$post_type.'" data="'.$a*$in_page.'" class="sec_block_button';
+		$navi .= '<li><a type="'.$post_type.'" data="'.$a*$in_page.'" class="sec_block_button';
 		if($a==0)$navi .= ' active';
-		$navi .= '" href="#"><i class="fa fa-caret-right"></i>'.++$page.'</a>';
+		$navi .= '" href="#"><i class="fa fa-caret-right"></i>'.++$page.'</a></li>';
 	}
-	$navi .= '</div>';
+	$slider = str_replace('-','',$post_type);
+	$navi .= '</ul>
+	<script>
+	jQuery(function($){
+		$("#'.$post_type.'-pagenavi").bxSlider({
+            pager:false,
+            minSlides: 1,
+            maxSlides: 20,
+            slideWidth: 20,
+            infiniteLoop:false,
+            slideMargin: 0,
+            moveSlides:1
+		});	
+	});
+	</script>';
 	return $navi;
 }
 

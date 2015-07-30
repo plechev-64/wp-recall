@@ -28,8 +28,10 @@ class Rcl_EditPost {
 
                 if(!rcl_can_user_edit_post_group($post_id)) return false;
 
-            }else if(!current_user_can('edit_post', $post_id)) return false;
-
+            }else{				
+				if(!current_user_can('edit_post', $post_id)) return false;				
+				if(rcl_is_limit_editing($pst->post_date)) return false;				
+			}
             $this->update = true;
         }else{
             if (!session_id()) { session_start(); }
@@ -147,9 +149,9 @@ class Rcl_EditPost {
         if($moderation==1) $post_status = 'pending';
         else $post_status = 'publish';
 
-        if($rcl_options['nomoder_rayt']){
-                $all_r = rcl_get_all_rating_user(0,$user_ID);
-                if($all_r >= $rcl_options['nomoder_rayt']) $post_status = 'publish';
+        if($rcl_options['rating_no_moderation']){
+                $all_r = rcl_get_user_rating($user_ID);
+                if($all_r >= $rcl_options['rating_no_moderation']) $post_status = 'publish';
         }
         return $post_status;
     }
@@ -178,13 +180,17 @@ class Rcl_EditPost {
     }
 
     function update_post(){
-	global $rcl_options,$user_ID;
+		global $rcl_options,$user_ID;
+		
+		$post_content = '';
+
+		if(!is_array($_POST['post_content'])) $post_content = $_POST['post_content'];
 
         $postdata = array(
             'post_type'=>$this->post_type,
             'post_title'=>sanitize_text_field($_POST['post_title']),
-            'post_content'=> $_POST['post_content'],
-            'tags_input'=>sanitize_text_field($_POST['post_tags'])
+			'post_type'=>$_POST['post_excerpt'],
+            'post_content'=> $post_content
         );
 
         $id_form = intval(base64_decode($_POST['id_form']));
@@ -193,6 +199,8 @@ class Rcl_EditPost {
         else $postdata['post_author'] = $user_ID;
 
         $postdata = apply_filters('pre_update_postdata_rcl',$postdata,$this);
+		
+		if(!$postdata) return false;
 
         if(!$postdata['post_status']) $postdata['post_status'] = 'publish';
 
@@ -208,16 +216,75 @@ class Rcl_EditPost {
         $this->update_thumbnail();
 
         if($_POST['add-gallery-rcl']==1) update_post_meta($this->post_id, 'recall_slider', 1);
-	else delete_post_meta($this->post_id, 'recall_slider');
+		else delete_post_meta($this->post_id, 'recall_slider');
 
         rcl_update_post_custom_fields($this->post_id,$id_form);
 
         do_action('update_post_rcl',$this->post_id,$postdata,$this->update);
-
-        if($postdata['post_status'] == 'pending'){
-            wp_redirect(get_bloginfo('wpurl').'/?p='.$this->post_id.'&preview=true');  exit;
+		
+		if($postdata['post_status'] == 'pending'){
+            $redirect_url = get_bloginfo('wpurl').'/?p='.$this->post_id.'&preview=true';
         }else{
-            wp_redirect( get_permalink($this->post_id) );  exit;
+            $redirect_url = get_permalink($this->post_id);
         }
+		
+		if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+			echo json_encode(array('redirect'=>$redirect_url));
+			exit;
+		}
+
+        wp_redirect($redirect_url);  exit;
+        
     }
+}
+
+//Сохранение данных публикации в редакторе wp-recall
+add_action('update_post_rcl','rcl_add_box_content',10,3);
+function rcl_add_box_content($post_id,$postdata,$update){
+	
+	if(!isset($_POST['post_content'])||!is_array($_POST['post_content'])) return false;
+	
+	$post_content = '';
+	$thumbnail = false;
+	foreach($_POST['post_content'] as $k=>$contents){
+		foreach($contents as $type=>$content){
+			if($type=='text') $content = strip_tags($content);
+			if($type=='header') $content = sanitize_text_field($content);
+			if($type=='html') $content = str_replace('\'','"',$content);
+			
+			if($type=='image'){
+				$path_media = rcl_path_by_url($content);
+				$filename = basename($content);
+
+				$dir_path = TEMP_PATH.'post-media/';
+				$dir_url = TEMP_URL.'post-media/';
+				if(!is_dir($dir_path)){
+					mkdir($dir_path);
+					chmod($dir_path, 0755);
+				}
+				
+				$dir_path = TEMP_PATH.'post-media/'.$post_id.'/';
+				$dir_url = TEMP_URL.'post-media/'.$post_id.'/';
+				if(!is_dir($dir_path)){
+					mkdir($dir_path);
+					chmod($dir_path, 0755);
+				}
+				
+				if(copy($path_media, $dir_path.$filename)){
+					unlink($path_media);
+				}
+				
+				if(!$thumbnail) $thumbnail = $dir_path.$filename;
+				
+				$content = $dir_url.$filename;
+			}
+
+			$post_content .= "[rcl-box type='$type' content='$content']";
+		}
+	}
+	
+	if($thumbnail) rcl_add_thumbnail_post($post_id,$thumbnail);
+	
+	wp_update_post( array('ID'=> $post_id,'post_content'=> $post_content));
+	
 }

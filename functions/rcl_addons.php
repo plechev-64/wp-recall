@@ -298,7 +298,7 @@ class Rcl_Addons{
 		$scripts = '';
 		$scripts = apply_filters('file_footer_scripts_rcl',$scripts);
                 if(!isset($scripts)) return false;
-		if($scripts) $scripts = "jQuery(function(){".$scripts." FileAPI.each(examples, function (fn){ fn(); });});";
+		if($scripts) $scripts = "jQuery(function($){".$scripts." /*FileAPI.each(examples, function (fn){ fn(); });*/});";
 		//$scripts = apply_filters('javascripts_rcl',$scripts);
 		$scripts = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $scripts);
 		$scripts =  preg_replace('/ {2,}/',' ',$scripts);

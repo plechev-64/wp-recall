@@ -1,7 +1,8 @@
 <?php
 include_once('classes.php');
-include_once('class_public.php');
+include_once('fast-editor.php');
 include_once('upload-file.php');
+include_once 'addon-options.php';
 
 rcl_enqueue_style('publics',__FILE__);
 
@@ -13,9 +14,15 @@ endif;
 
 function rcl_publics_scripts(){
 	global $rcl_options;
-	if($rcl_options['media_downloader_recall']!=1) return false;
+	//if($rcl_options['media_downloader_recall']!=1) return false;
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'rcl_publics_scripts', plugins_url('js/scripts.js', __FILE__) );
+}
+
+function rcl_autocomplete_scripts(){
+	wp_enqueue_style( 'rcl_autocomplete_scripts', plugins_url('js/magicsuggest/magicsuggest-min.css', __FILE__) );
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'rcl_autocomplete_scripts', plugins_url('js/magicsuggest/magicsuggest-min.js', __FILE__) );
 }
 
 if (!is_admin()):
@@ -35,212 +42,12 @@ function rcl_taxonomy_public_post($tax){
     return $tax;
 }
 
-add_filter('after_public_form_rcl','rcl_saveform_data_script',10,2);
+//add_filter('after_public_form_rcl','rcl_saveform_data_script',10,2);
 function rcl_saveform_data_script($content,$data){
     $idform = 'form-'.$data->post_type.'-';
     $idform .= ($data->post_id)? $data->post_id : 0;
     $content .= '<script type="text/javascript" src="'.rcl_addon_url('js/sisyphus.min.js',__FILE__).'"></script>'
             . '<script>jQuery( function() { jQuery( "#'.$idform.'" ).sisyphus({timeout:10}) } );</script>';
-    return $content;
-}
-
-add_filter('admin_options_wprecall','rcl_get_publics_options_page');
-function rcl_get_publics_options_page($content){
-    global $rcl_options,$_wp_additional_image_sizes;
-
-    $opt = new Rcl_Options(__FILE__);
-
-    $args = array(
-        'selected'   => $rcl_options['public_form_page_rcl'],
-        'name'       => 'public_form_page_rcl',
-        'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
-        'echo'             => 0
-    );
-
-    for($a=1;$a<=20;$a++){
-	$count_img[$a] = $a;
-    }
-
-    $_wp_additional_image_sizes['thumbnail'] = 1;
-    $_wp_additional_image_sizes['medium'] = 1;
-    $_wp_additional_image_sizes['large'] = 1;
-    foreach($_wp_additional_image_sizes as $name=>$size){
-        $sh_name = $name;
-        if($size!=1) $sh_name .= ' ('.$size['width'].'*'.$size['height'].')';
-        $d_sizes[$name] = $sh_name;
-    }
-
-    $roles = array(
-        10=>__('only Administrators','rcl'),
-        7=>__('Editors and older','rcl'),
-        2=>__('Authors and older','rcl'),
-        1=>__('Participants and older','rcl'),
-        0=>__('All users','rcl'));
-
-    $content .= $opt->options(
-        __('The publish settings','rcl'),array(
-        $opt->option_block(
-            array(
-                $opt->title(__('General settings','rcl')),
-
-                $opt->label(__('Page publishing and editing records','rcl')),
-                wp_dropdown_pages( $args ),
-                $opt->notice(__('Required for proper formation of links to edit records, you must specify the page where the shortcode is [public-form] no matter where displayed the very form of publication this page will be used to edit the entry','rcl')),
-
-                $opt->label(__('Display information about the author','rcl')),
-                $opt->option('select',array(
-                    'name'=>'info_author_recall',
-                    'options'=>array(__('Disabled','rcl'),__('Included','rcl'))
-                )),
-
-                $opt->label(__('Tab list of publications','rcl')),
-                $opt->option('select',array(
-                    'name'=>'publics_block_rcl',
-                    'parent'=>true,
-                    'options'=>array(__('Disabled','rcl'),__('Included','rcl'))
-                )),
-                $opt->child(
-                      array('name'=>'publics_block_rcl','value'=>1),
-                      array(
-                            $opt->label(__('List of publications of the user','rcl')),
-                            $opt->option('select',array(
-                                'name'=>'view_publics_block_rcl',
-                                'options'=>array(__('Only the owner of the account','rcl'),__('Show everyone including guests','rcl'))
-                            ))
-                      )
-                )
-            )
-        ),
-        $opt->option_block(
-            array(
-                $opt->title(__('Category','rcl')),
-
-                $opt->label(__('Authorized headings','rcl')),
-                $opt->option('text',array('name'=>'id_parent_category')),
-                $opt->notice(__('ID columns in which permitted the publication should be separated by commas. '
-                        . 'This setting is common to all forms of publication, but it is possible '
-                        . 'to specify the desired category in shortcode forms, for example: [public-form cats="72,149"] '
-                        . 'or for each form separately on the page generate custom fields','rcl')),
-                $opt->notice(__('It is better to specify the parent category, then their child will be withdrawn automatically.','rcl')),
-
-                $opt->label(__('Number of columns to select','rcl')),
-                $opt->option('select',array(
-                    'name'=>'count_category_post',
-                    'default'=>1,
-                    'options'=>array(1=>1,2=>2,3=>3,4=>4,5=>5)
-                ))
-            )
-        ),
-        $opt->option_block(
-            array(
-                $opt->title(__('Media','rcl')),
-
-                $opt->label(__('Load the media files to the publications','rcl')),
-                $opt->option('select',array(
-                    'name'=>'media_downloader_recall',
-                    'parent'=>true,
-                    'options'=>array(__('Download Wp-Recall','rcl'),__('The Wordpress Media Library','rcl'))
-                )),
-                $opt->child(
-                    array('name'=>'media_downloader_recall','value'=>0),
-                    array(
-                        $opt->notice(__('<b>note:</b> Using the ability to upload media to Wp-Recall you disable the ability to use the media library site, the downloaded files will form the gallery of images above the content you publish.','rcl')),
-                        $opt->label(__('Number of images in the gallery Wp-Recall','rcl')),
-                        $opt->option('select',array(
-                            'name'=>'count_image_gallery',
-                            'options'=>$count_img
-                        )),
-
-                        $opt->label(__('The maximum image size, Mb','rcl')),
-                        $opt->option('number',array('name'=>'public_gallery_weight')),
-                        $opt->notice(__('To limit image uploads to publish this value in megabytes. By default, 2MB','rcl')),
-
-                        $opt->label(__('The size in the editor by default','rcl')),
-                        $opt->option('select',array(
-                            'name'=>'default_size_thumb',
-                            'options'=>$d_sizes
-                        )),
-                        $opt->notice(__('Select the picture size in the silence of their use in the visual editor during the publishing process','rcl'))
-                    )
-                )
-            )
-        ),
-        $opt->option_block(
-            array(
-                $opt->title(__('Form of publication','rcl')),
-
-                $opt->label(__('Text editor','rcl')),
-                $opt->option('select',array(
-                    'name'=>'type_text_editor',
-                    'options'=>array(
-                        __('Simple TEXTAREA','rcl'),
-                        __('Download TinyMCE editor','rcl'),
-                        __('Download HTML editor','rcl'),
-                        __('TinyMCE and HTML editors','rcl')
-                    )
-                )),
-
-                $opt->label(__('The output form of publication','rcl')),
-                $opt->option('select',array(
-                    'name'=>'output_public_form_rcl',
-                    'default'=>1,
-                    'parent'=>1,
-                    'options'=>array(__('Do not display','rcl'),__('Output','rcl'))
-                )),
-                $opt->child(
-                    array('name'=>'output_public_form_rcl','value'=>1),
-                    array(
-                        $opt->label(__('The form ID','rcl')),
-                        $opt->option('number',array('name'=>'form-lk')),
-                        $opt->notice(__('Enter the form ID to the conclusion in the personal Cabinet. The default is 1','rcl'))
-                    )
-                )
-            )
-        ),
-        $opt->option_block(
-            array(
-                $opt->title(__('Publication of records','rcl')),
-
-                $opt->label(__('Republishing is allowed','rcl')),
-                $opt->option('select',array(
-                    'name'=>'user_public_access_recall',
-                    'options'=>$roles
-                )),
-
-                $opt->label(__('Moderation of publications','rcl')),
-                $opt->option('select',array(
-                    'name'=>'moderation_public_post',
-                    'options'=>array(__('To publish immediately','rcl'),__('Send for moderation','rcl'))
-                )),
-                $opt->notice(__('If used in moderation: To allow the user to see their publication before it is moderated, it is necessary to have on the website right below the Author','rcl'))
-            )
-        ),
-        $opt->option_block(
-            array(
-                $opt->title(__('Custom fields','rcl')),
-                $opt->notice(__('Settings only for fields created using the form of the publication wp-recall','rcl')),
-
-                $opt->label(__('Automatic withdrawal','rcl')),
-
-                $opt->option('select',array(
-                    'name'=>'pm_rcl',
-                    'parent'=>true,
-                    'options'=>array(__('No','rcl'),__('Yes','rcl'))
-                )),
-                $opt->child(
-                      array('name'=>'pm_rcl','value'=>1),
-                      array(
-                            $opt->label(__('Place output fields','rcl')),
-                            $opt->option('select',array(
-                                'name'=>'pm_place',
-                                'options'=>array(__('After the content recording','rcl'),__('On content recording','rcl'))
-                            ))
-                      )
-                )
-            )
-        ))
-    );
-
     return $content;
 }
 
@@ -257,6 +64,35 @@ function rcl_init_publics_block(){
 	if($rcl_options['output_public_form_rcl']==1){
                 rcl_tab('postform','rcl_tab_postform',__('Publication','rcl'),array('class'=>'fa-pencil','order'=>60,'path'=>__FILE__));
 	}
+}
+
+add_filter('pre_update_postdata_rcl','rcl_update_postdata_excerpt');
+function rcl_update_postdata_excerpt($postdata){
+	if(!isset($_POST['post_excerpt'])) return $postdata;
+	$postdata['post_excerpt'] = sanitize_text_field($_POST['post_excerpt']);
+	return $postdata;
+}
+
+add_filter('pre_update_postdata_rcl','rcl_update_postdata_tags');
+function rcl_update_postdata_tags($postdata){
+
+	if(!isset($_POST['post_tags'])&&!isset($_POST['tags'])) return $postdata;
+
+	$tags = array();
+
+	if($_POST['post_tags']){
+		$posttags = $_POST['post_tags'];
+		$tags = explode(',',$posttags);
+		$tags = array_map('trim', $tags);
+	}
+
+	if($_POST['tags']){
+		$tags = array_merge ( $tags, $_POST['tags'] );
+	}
+
+	if($tags) $postdata['tags_input'] = $tags;
+
+	return $postdata;
 }
 
 function rcl_tab_postform($author_lk){
@@ -417,6 +253,28 @@ function rcl_post_gallery($content){
 	return $gallery.$content;
 }
 
+function rcl_get_like_tags(){
+	global $wpdb;
+
+	if(!$_POST['query']){
+		echo 1;
+		exit;
+	};
+	$query = $_POST['query'];
+
+	$terms = get_terms( 'post_tag', array('hide_empty'=>false,'name__like'=>$query) );
+
+	$tags = array();
+	foreach($terms as $key=>$term){
+		$tags[$key]['id'] = $term->name;
+		$tags[$key]['name'] = $term->name;
+	}
+
+	echo json_encode($tags);
+    exit;
+}
+add_action('wp_ajax_rcl_get_like_tags','rcl_get_like_tags');
+
 add_shortcode('gallery-rcl','rcl_shortcode_gallery');
 function rcl_shortcode_gallery($atts, $content = null){
     global $post;
@@ -478,33 +336,6 @@ function rcl_author_info($content){
         if($post->post_type=='task') return $out.$content;
 	return $content.$out;
 }
-
-/*************************************************
-Удаление поста
-*************************************************/
-function rcl_delete_post_editor(){
-	global $user_ID;
-
-	if($user_ID){
-		$log['result']=100;
-		wp_delete_post( intval($_POST['post_id']) );
-
-		$temp_gal = unserialize(get_the_author_meta('tempgallery',$user_ID));
-		if($temp_gal){
-			$cnt = count($temp_gal);
-			foreach((array)$temp_gal as $key=>$gal){ if($gal['ID']==$_POST['post_id']) unset($temp_gal[$key]); }
-			foreach((array)$temp_gal as $t){ $new_temp[] = $t; }
-			if($new_temp) update_usermeta($user_ID,'tempgallery',serialize($new_temp));
-			else delete_usermeta($user_ID,'tempgallery');
-		}
-	}else {
-		$log['result']=1;
-	}
-
-	echo json_encode($log);
-    exit;
-}
-add_action('wp_ajax_rcl_delete_post_editor', 'rcl_delete_post_editor');
 
 function rcl_get_basedir_image($path){
 	$dir = explode('/',$path);
@@ -600,12 +431,12 @@ function rcl_insert_attachment($attachment,$image,$id_post=false){
 
 function rcl_get_html_attachment($attach_id,$mime_type){
 
-        $editpost = $_GET['rcl-post-edit'];
+    $editpost = $_GET['rcl-post-edit'];
 
 	$mime = explode('/',$mime_type);
 
-	$rt = "<li id='li-".$attach_id."'>
-		<span title='".__("Delete?",'rcl')."' class='delete'></span>
+	$rt = "<li id='attachment-".$attach_id."'>
+		".rcl_button_fast_delete_post($attach_id)."
 		<label>
 			".rcl_get_insert_image($attach_id,$mime[0]);
 			if($mime[0]=='image') $rt .= "<span>
@@ -631,9 +462,9 @@ function rcl_edit_post_activate ( ) {
 add_action('init', 'rcl_edit_post_activate');
 
 function rcl_delete_post(){
-	global $rcl_options;
+	global $rcl_options,$user_ID;
 	$post_id = wp_update_post( array('ID'=>intval($_POST['post-rcl']),'post_status'=>'trash'));
-        do_action('after_delete_post_rcl',$post_id);
+    do_action('after_delete_post_rcl',$post_id);
 	wp_redirect(rcl_format_url(get_author_posts_url($user_ID)).'&public=deleted');
 	exit;
 }
@@ -648,6 +479,19 @@ add_action('init', 'rcl_delete_post_activate');
 add_action('wp','rcl_deleted_post_notice');
 function rcl_deleted_post_notice(){
     if (isset($_GET['public'])&&$_GET['public']=='deleted') rcl_notice_text(__('The publication has been successfully removed!','rcl'),'warning');
+}
+
+add_action('after_delete_post_rcl','rcl_delete_notice_author_post');
+function rcl_delete_notice_author_post($post_id){
+
+	if(!$_POST['reason_content']) return false;
+
+	$post = get_post($post_id);
+
+	$subject = 'Ваша публикация удалена.';
+	$textmail = '<h3>Публикация "'.$post->post_title.'" была удалена</h3>
+	<p>Примечание модератора: '.$_POST['reason_content'].'</p>';
+	rcl_mail(get_the_author_meta('user_email',$post->post_author),$subject,$textmail);
 }
 
 function rcl_publicform($atts, $content = null){
@@ -784,11 +628,13 @@ if(!is_admin()) add_filter('get_edit_post_link','rcl_edit_post_link',100,2);
 function rcl_edit_post_link($admin_url, $post_id){
 	global $user_ID,$rcl_options;
 	get_currentuserinfo();
-	$access = 7;
-	if(isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl']) $access = $rcl_options['consol_access_rcl'];
+
+	if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
+
+	$access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;
 	$user_info = get_userdata($user_ID);
-        //echo $user_info->user_level.' - '.$access;exit;
-	if ( $user_info->user_level < $access ){
+
+	if ( array_search($user_info->user_level, $rcl_options['front_editing'])!==false ||$user_info->user_level < $access ){
 		$edit_url = rcl_format_url(get_permalink($rcl_options['public_form_page_rcl']));
 		return $edit_url.'rcl-post-edit='.$post_id;
 	}else{
@@ -797,21 +643,47 @@ function rcl_edit_post_link($admin_url, $post_id){
 }
 
 function rcl_get_edit_post_button($content){
-	global $post,$user_ID;
+	global $post,$user_ID,$current_user,$rcl_options;
 	if(is_tax('groups')||$post->post_type=='page') return $content;
 
-	if( $post->post_author==$user_ID ) {
+	get_currentuserinfo();
+	$user_info = get_userdata($current_user->ID);
 
-            if($post->post_type=='task'){
-                if(get_post_meta($post->ID,'step_order',1)!=1) return $content;
-            }
+	if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
 
-            $content = rcl_edit_post_button_html($post->ID).$content;
+	$access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;
+
+	if($user_ID!=$post->post_author&&$user_info->user_level < $access) return $content;
+
+	if( array_search($user_info->user_level, $rcl_options['front_editing']) || $user_info->user_level >= $access ) {
+
+		if($post->post_type=='task'){
+			if(get_post_meta($post->ID,'step_order',1)!=1) return $content;
+		}
+
+		if(rcl_is_limit_editing($post->post_date)) return $content;
+
+		$content = rcl_edit_post_button_html($post->ID).$content;
 	}
 	return $content;
 }
 add_filter('the_content','rcl_get_edit_post_button',999);
 add_filter('the_excerpt','rcl_get_edit_post_button',999);
+
+function rcl_is_limit_editing($post_date){
+	global $rcl_options;
+
+	$timelimit = (isset($rcl_options['time_editing'])&&$rcl_options['time_editing'])? $rcl_options['time_editing']: false;
+
+	$timelimit = apply_filters('rcl_time_editing',$timelimit);
+
+	if($timelimit){
+		$hours = (strtotime(current_time('mysql')) - strtotime($post_date))/3600;
+		if($hours>$timelimit) return true;
+	}
+
+	return false;
+}
 
 function rcl_edit_post_button_html($post_id){
     return '<p class="post-edit-button">'
@@ -821,81 +693,334 @@ function rcl_edit_post_button_html($post_id){
     . '</p>';
 }
 
+function rcl_add_editor_box(){
+	global $rcl_box;
+	$rcl_box['id_box'] = (isset($_POST['idbox']))? $_POST['idbox']: rand(1,100000);
+	$type = $_POST['type'];
+	$log['content']=rcl_get_include_template("editor-$type-box.php",__FILE__);
+	echo json_encode($log);
+	exit;
+}
+add_action('wp_ajax_rcl_add_editor_box','rcl_add_editor_box');
+
+add_action('wp_ajax_rcl_preview_post','rcl_preview_post');
+function rcl_preview_post(){
+
+	$log = array();
+
+	//if(!$_POST['post_title']) $log['error'] = 'Заполните заголовок публикации';
+	if(!$_POST['post_content']) $log['error'] = 'Добавьте содержимое публикации!';
+
+	if($log['error']){
+		echo json_encode($log);
+		exit;
+	}
+
+	$post_content = '';
+
+	if(is_array($_POST['post_content'])){
+		foreach($_POST['post_content'] as $contents){
+			foreach($contents as $type=>$content){
+				if($type=='text') $content = strip_tags($content);
+				if($type=='header') $content = sanitize_text_field($content);
+				if($type=='html') $content = str_replace('\'','"',$content);
+				$post_content .= "[rcl-box type='$type' content='$content']";
+			}
+		}
+	}else{
+		$content = str_replace('\'','"',$_POST['post_content']);
+		$post_content = "[rcl-box type='html' content='$content']";
+	}
+
+	$post_content = rcl_get_editor_content($post_content,'preview');
+
+	$preview = '<div id="rcl-preview">';
+
+	$preview .= '<h2>Предварительный просмотр</h2>
+		<h3 class="title-post">'.$_POST['post_title'].'</h3>
+		'.$post_content;
+
+	$preview .= '<div class="rcl-notice-preview">
+			<p>Если все в порядке - публикуйте! Если нет, то вы можете вернуться в редактор.</p>
+			<div class="rcl-preview-buttons">
+				<input type="button" class="recall-button" onclick="rcl_preview_close(this);" value="Редактировать">
+				<input type="submit" class="recall-button" id="edit-post-rcl" value="'.__('To publish','rcl').'">
+			</div>
+		</div>';
+
+	$preview .= '</div>';
+
+	$log['content'] = $preview;
+	echo json_encode($log);
+	exit;
+}
+
+function rcl_get_editor_content($post_content,$type='editor'){
+	global $rcl_box,$formFields;
+
+	$formFields['upload'] = false;
+
+	if($post_content){
+		remove_filter('the_content','add_button_bmk_in_content',20);
+		remove_filter('the_content','get_notifi_bkms',20);
+		remove_filter('the_content','rcl_get_edit_post_button',999);
+		$content = apply_filters('the_content',$post_content);
+
+		if($type=='preview') return $content;
+
+		if(isset($rcl_box)){
+
+		}else{
+			//return '<style>.rcl-public-editor{display:none}</style>'
+			//.rcl_wp_editor(array('type_editor'=>3,'media_buttons'=>0),$post_content);
+			//return rcl_box_shortcode(array('type'=>'html', 'content'=>str_replace('\'','"',$post_content)));
+		}
+		return $content;
+	}else{
+		return rcl_get_include_template('editor-header-box.php',__FILE__)
+				.rcl_get_include_template('editor-text-box.php',__FILE__);
+	}
+}
+
+function rcl_wp_editor($args=false,$content=false){
+    global $rcl_options,$editpost,$formData;
+
+    $media = (isset($args['media']))? $args['media']: true;
+	$wp_editor = (isset($args['wp_editor']))? $args['wp_editor']: $formData->wp_editor;
+
+    $tinymce = ($wp_editor==1||$wp_editor==3)? $tinymce = 1: 0;
+    $quicktags = ($wp_editor==2||$wp_editor==3)? $quicktags = 1: 0;
+
+    $data = array( 'wpautop' => 1
+        ,'media_buttons' => 0
+        ,'textarea_name' => 'post_content'
+        ,'textarea_rows' => 20
+        ,'tabindex' => null
+        ,'editor_css' => ''
+        ,'editor_class' => 'autosave'
+        ,'teeny' => 0
+        ,'dfw' => 0
+        ,'tinymce' => $tinymce
+        ,'quicktags' => $quicktags
+    );
+
+    if($media)
+        echo rcl_get_button(__('To add a media file','rcl'),'#',array('icon'=>'fa-folder-open','id'=>'get-media-rcl'));
+
+	if(!$content) $content = (isset($editpost->post_content))? $editpost->post_content: '';
+
+    wp_editor( $content, 'contentarea', $data );
+}
+
+add_shortcode('rcl-box','rcl_box_shortcode');
+function rcl_box_shortcode($atts){
+	global $rcl_box;
+
+	$rcl_box = $atts;
+
+	extract(shortcode_atts(array(
+		'type' => 'text',
+		'content' => ''
+	),
+	$atts));
+
+	$html = '';
+
+	if(isset($_GET['rcl-post-edit'])){
+		$rcl_box['id_box'] = rand(1,100000);
+		$html = rcl_get_edit_box($type);
+	}else{
+
+		switch($type){
+			case 'text':
+				$html = '<p>'.strip_tags($content).'</p>';
+			break;
+			case 'header':
+				$html = '<h3>'.$content.'</h3>';
+			break;
+			case 'image':
+				$html = '<img class="aligncenter" src="'.$content.'">';
+			break;
+			case 'html':
+				$html = $content;
+			break;
+		}
+
+	}
+
+	$rcl_box = false;
+
+	return $html;
+}
+
+add_action('wp_ajax_rcl_upload_box','rcl_upload_box');
+function rcl_upload_box(){
+	global $rcl_options,$user_ID;
+
+	require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+
+	if(!$user_ID) return false;
+
+	$maxsize = (isset($rcl_options['max_sizes_attachment'])&&$rcl_options['max_sizes_attachment'])? explode(',',$rcl_options['max_sizes_attachment']): array(800,600);
+	$files = array();
+
+    //$valid_types = array("gif", "jpg", "png", "jpeg");
+
+	foreach($_FILES['editor_upload'] as $key=>$fls){
+		foreach($fls as $k=>$data){
+			$files[$k][$key] = $data;
+		}
+	}
+
+	$files = rcl_multisort_array($files, 'name', SORT_ASC);
+
+	foreach($files as $k=>$file){
+
+		$image = getimagesize($file['tmp_name']);
+
+		$mime = explode('/',$image['mime']);
+
+		/*if (!in_array($mime[1], $valid_types)){
+			$res['error'] = "Недозволенное расширение файла. Используйте только: .gif, .png, .jpg";
+			echo json_encode($res);
+			exit;
+		} */
+
+		$dir_path = TEMP_PATH.'users-temp/';
+		$dir_url = TEMP_URL.'users-temp/';
+		if(!is_dir($dir_path)){
+			mkdir($dir_path);
+			chmod($dir_path, 0755);
+		}
+
+		$dir_path = TEMP_PATH.'users-temp/'.$user_ID.'/';
+		$dir_url = TEMP_URL.'users-temp/'.$user_ID.'/';
+		if(!is_dir($dir_path)){
+			mkdir($dir_path);
+			chmod($dir_path, 0755);
+		}
+
+		$filename = str_replace(array('`',']','[','\'',' '),'',basename($file['name']));
+
+		$filepath = $dir_path.$filename;
+		$fileurl = $dir_url.$filename;
+
+		//if(stripos($mime[1],'gif')===false){
+			if($image[0]>$maxsize[0]||$image[1]>$maxsize[1]){
+				rcl_crop($file['tmp_name'],$maxsize[0],$maxsize[1],$filepath);
+			}else{
+				if(copy($file['tmp_name'], $dir_path.$filename)){
+					unlink($file['tmp_name']);
+				}
+			}
+			//$crop = 1;
+			$html = '<img class="aligncenter" src='.$fileurl.'>';
+		/*}else{
+			$name = explode('.',$filename);
+			$thumb_name = $name[0].'-thumb.'.$name[1];
+			$crop->get_crop($file['tmp_name'],$image[0],$image[1],$dir_path.$thumb_name);
+			if(copy($file['tmp_name'], $dir_path.$filename)){
+				unlink($file['tmp_name']);
+			}
+			$thumb_url = $dir_url.$thumb_name;
+			$crop = 0;
+			$html = get_html_gif_image($thumb_url);
+		}*/
+
+		//if($crop) $html .= '<input type="button" class="get-crop-image recall-button" value="Обрезать" onclick="return rcl_crop(this);"/>';
+		$html .= '<input type="hidden" name="post_content[][image]" value="'.$fileurl.'"/>';
+
+		$res[$k]['content'] = $html;
+		//$res[$k]['crop'] = $crop;
+
+	}
+
+	echo json_encode($res);
+	exit;
+}
+
+//Прикрепление новой миниатюры к публикации из произвольного места на сервере
+function rcl_add_thumbnail_post($post_id,$filepath){
+
+	require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+
+	$filename = basename($filepath);
+	$file = explode('.',$filename);
+	$thumbpath = $filepath;
+
+	if($file[0]=='image'){
+		$data = getimagesize($thumbpath);
+		$mime = $data['mime'];
+	}else $mime = mime_content_type($thumbpath);
+
+	$cont = file_get_contents($thumbpath);
+	$image = wp_upload_bits( $filename, null, $cont );
+
+	$attachment = array(
+		'post_mime_type' => $mime,
+		'post_title' => preg_replace('/\.[^.]+$/', '', basename($image['file'])),
+		'post_content' => '',
+		'guid' => $image['url'],
+		'post_parent' => $post_id,
+		'post_status' => 'inherit'
+	);
+
+	$attach_id = wp_insert_attachment( $attachment, $image['file'], $post_id );
+	$attach_data = wp_generate_attachment_metadata( $attach_id, $image['file'] );
+	wp_update_attachment_metadata( $attach_id, $attach_data );
+
+	$oldthumb = get_post_meta($post_id, '_thumbnail_id');
+	if($oldthumb) wp_delete_attachment($oldthumb);
+
+	update_post_meta($post_id, '_thumbnail_id', $attach_id);
+}
+
+//удаляем папку с изображениями при удалении поста
+add_action('delete_post','rcl_delete_tempdir_attachments');
+function rcl_delete_tempdir_attachments($postid){
+	$dir_path = TEMP_PATH.'post-media/'.$postid;
+	rcl_remove_dir($dir_path);
+}
+
 function rcl_footer_publics_scripts($script){
 	global $rcl_options;
-	$weight = (isset($rcl_options['public_gallery_weight'])&&$rcl_options['public_gallery_weight'])? $rcl_options['public_gallery_weight']: $weight = '2';
+	$maxsize_mb = (isset($rcl_options['public_gallery_weight'])&&$rcl_options['public_gallery_weight'])? $rcl_options['public_gallery_weight']: 2;
+	$maxsize = $maxsize_mb*1024*1024;
 	$cnt = (isset($rcl_options['count_image_gallery'])&&$rcl_options['count_image_gallery'])? $rcl_options['count_image_gallery']: 1;
 
 	$script .= "
-	var post_id_edit = jQuery('input[name=\"post-rcl\"]').val();
-	jQuery('#postupload').fileapi({
-		   url: wpurl+'wp-admin/admin-ajax.php',
-		   data:{action:'rcl_imagepost_upload',post_id:post_id_edit},
-		   multiple: true,
-		   maxSize: ".$weight." * FileAPI.MB,
-		   maxFiles:".$cnt.",
-		   clearOnComplete:true,
-		   autoUpload: true,
-		   paramName:'uploadfile',
-		   accept: 'image/*',
-		   elements: {
-			  ctrl: { upload: '.js-upload' },
-			  empty: { show: '.b-upload__hint' },
-			  emptyQueue: { hide: '.js-upload' },
-			  list: '.js-files',
-			  file: {
-				 tpl: '.js-file-tpl',
-				 preview: {
-					el: '.b-thumb__preview',
-					width: 100,
-					height: 100
-				 },
-				 upload: { show: '.progress', hide: '.b-thumb__rotate' },
-				 complete: { hide: '.progress' },
-				 progress: '.progress .bar'
-				},
-			  dnd: {
-				 el: '.b-upload__dnd',
-				 hover: 'b-upload__dnd_hover',
-				 fallback: '.b-upload__dnd-not-supported'
-			  }
-		   },
-		   onSelect: function (evt, data){
-				data.all;
-				data.files;
-				if( data.other.length ){
-					var errors = data.other[0].errors;
-					if( errors ){
-						if(errors.maxSize) alert('Превышен допустимый размер файла.\nОдин файл не более ".$weight."MB');
-					}
+	rcl_add_dropzone('#rcl-public-dropzone');
+	var post_id_edit = $('input[name=\"post-rcl\"]').val();
+	$('#upload-public-form').fileupload({
+		dataType: 'json',
+		type: 'POST',
+		url: wpurl+'wp-admin/admin-ajax.php',
+		formData:{action:'rcl_imagepost_upload',post_id:post_id_edit},
+		autoUpload:true,
+		progressall: function (e, data) {
+			/*var progress = parseInt(data.loaded / data.total * 100, 10);
+			$('#upload-box-message .progress-bar').show().css('width',progress+'px');*/
+		},
+		change:function (e, data) {
+			var error = 0;
+			$.each(data.files, function (index, file) {
+				if(file['size']>".$maxsize."){
+					rcl_notice('Превышен максимальный размер для файла '+file['name']+'! Макс. ".$maxsize_mb."MB','error');
+					error = 1;
 				}
-			},
-			onFilePrepare:function(evt, uiEvt){";
-			if($cnt){
-				$script .= "var num = jQuery('#temp-files li').size();
-				if(num>=".$cnt."){
-					jQuery('#status-temp').html('<span style=\"color:red;\">Вы уже достигли предела загрузок</span>');
-					jQuery('#postupload').fileapi('abort');
-				}";
+			});
+			if(error) return false;
+		},
+		done: function (e, data) {
+			var result = data.result;
+			if(result['string']){
+				jQuery('#temp-files').append(result['string']);
 			}
-			$script .= "},
-			onFileComplete:function(evt, uiEvt){
-				var result = uiEvt.result;
-				if(result['string']){
-					jQuery('#temp-files').append(result['string']);";
-				if($cnt){
-					$script .= "var num = jQuery('#temp-files li').size();
-					if(num>=".$cnt."){
-						jQuery('#status-temp').html('<span style=\"color:red;\">Вы уже достигли предела загрузок</span>');
-						jQuery('#postupload').fileapi('abort');
-					}";
-				}
-			$script .= "}
-			},
-			onComplete:function(evt, uiEvt){
-				var result = uiEvt.result;
-				jQuery('#postupload .js-files').empty();
-			}
+		}
 	});";
 	return $script;
 }
@@ -907,6 +1032,12 @@ function rcl_public_file_scripts($script){
 	//$ajaxfile = "type: 'POST', data: dataString, dataType: 'json', url: rcl_url+'add-on/publicpost/ajax-request.php',";
 
 	$script .= "
+
+		jQuery('#rcl-delete-post .delete-toggle').click(function() {
+			jQuery(this).next().toggle('fast');
+			return false;
+		});
+
 		jQuery('form[name=\'public_post\'] input[name=\'edit-post-rcl\'],form[name=\'public_post\'] input[name=\'add_new_task\']').click(function(){
 			var error=0;
 			jQuery('form[name=\'public_post\']').find(':input').each(function() {
@@ -967,80 +1098,7 @@ function rcl_public_file_scripts($script){
 			});
 			return false;
 		});
-	/* Первый шаг редактирования поста */
-		jQuery('.edit-post-button').live('click',function(){
-			var edit_post = jQuery(this).attr('data-post');
-			var dataString = 'action=step_one_redactor_post&post_id='+edit_post+'&user_ID='+user_ID;
 
-			jQuery.ajax({
-				".$ajaxdata."
-				success: function(data){
-					if(data['result']==100){
-						jQuery('#rcl-overlay').fadeIn();
-						jQuery('#rcl-popup').html(data['content']);
-						var screen_top = jQuery(window).scrollTop();
-						var popup_h = jQuery('#rcl-popup').height();
-						var window_h = jQuery(window).height();
-						screen_top = screen_top + 60;
-						jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
-					}else{
-						alert('Ошибка!');
-					}
-				}
-			});
-			return false;
-		});
-	/* Второй шаг редактирования поста */
-		jQuery('.updatesteptwo').live('click',function(){
-			var post_title = jQuery('#post_title_edit').attr('value');
-			var post_content = jQuery('#content_area_edit').attr('value');
-			var post_post_id = jQuery('#post_id_edit').attr('value');
-			var dataString = 'action=step_two_redactor_post&post_title='+post_title+'&post_content='+post_content+'&post_id='+post_post_id+'&user_ID='+user_ID;;
-
-			jQuery.ajax({
-			".$ajaxdata."
-			success: function(data){
-				if(data['otvet']==100){
-					jQuery('#rcl-popup').html('<div class=\'float-window-recall\' style=\'display:block;\'><p style=\'padding:5px;text-align:center;background:#fff\'>Материал обновлен</p></div>');
-					jQuery('#rcl-popup').delay(1000).fadeOut(1000);
-					jQuery('#rcl-overlay').delay(1500).fadeOut(1000);
-					jQuery('#post-title-'+data['post_id']).html(data['post_title']);
-				} else {
-				   alert('Нет данных.');
-				}
-			}
-			});
-			return false;
-		});
-	/* Удаление поста */
-		jQuery('.delete-post-button').live('click',function(){
-			if(confirm('Действительно удалить?')){
-				var del_post = jQuery(this).attr('data-post');
-				jQuery('#post-'+del_post).remove();
-				var dataString = 'action=rcl_delete_post_editor&post_id='+ del_post;
-				jQuery.ajax({
-					".$ajaxdata."
-				});
-			}
-			return false;
-		});
-		jQuery('ul#temp-files li .delete').live('click',function(){
-			var id_attach = parseInt(jQuery(this).parent().attr('id').replace(/\D+/g,''));
-			var dataString = 'action=rcl_delete_post_editor&post_id='+ id_attach;
-
-			jQuery.ajax({
-				".$ajaxdata."
-				success: function(data){
-					if(data['result']==100){
-						jQuery('#temp-files #li-'+id_attach).remove();
-						jQuery('#status-temp').empty();
-					}else{
-						alert('Ошибка!');
-					}
-				}
-			});
-			return false;
-		});
 		jQuery('.posts_rcl_block .sec_block_button').live('click',function(){
 			var btn = jQuery(this);
 			get_page_content_rcl(btn,'posts_rcl_block');
@@ -1048,6 +1106,7 @@ function rcl_public_file_scripts($script){
 		});
 	function get_page_content_rcl(btn,id_page_rcl){
 			if(btn.hasClass('active'))return false;
+			rcl_preloader_show('#publics_block');
 			var start = btn.attr('data');
 			var type = btn.attr('type');
 			var id_user = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
@@ -1062,6 +1121,7 @@ function rcl_public_file_scripts($script){
 					} else {
 						alert('Error');
 					}
+					rcl_preloader_hide();
 				}
 			});
 			return false;
