@@ -13,7 +13,7 @@ class Rcl_PublicForm {
 
     function __construct($atts){
         global $editpost,$group_id,$rcl_options,$user_ID,$formData;
-		
+
 		$editpost = false;
 
         extract(shortcode_atts(array(
@@ -66,11 +66,11 @@ class Rcl_PublicForm {
 
         $taxs = array();
         $taxs = apply_filters('taxonomy_public_form_rcl',$taxs);
-		
+
 		$this->type_editor = ($rcl_options['type_editor-'.$this->post_type])? $rcl_options['type_editor-'.$this->post_type]: $rcl_options['type_text_editor'];
 		if(!$this->type_editor) $this->type_editor = $type_editor;
-		
-		if($rcl_options['accept-'.$this->post_type]) $this->accept = $rcl_options['accept-'.$this->post_type];		
+
+		if($rcl_options['accept-'.$this->post_type]) $this->accept = $rcl_options['accept-'.$this->post_type];
 
         $formData = (object)array(
             'form_id' =>$this->form_id,
@@ -85,7 +85,7 @@ class Rcl_PublicForm {
         );
 
         rcl_fileapi_scripts();
-        
+
         if($this->post_id) add_filter('after_public_form_rcl',array(&$this,'delete_button'),10,2);
 
     }
@@ -119,24 +119,24 @@ class Rcl_PublicForm {
 			array('type'=>'hidden','value'=>1,'name'=>'edit-post-rcl'),
 			array('type'=>'hidden','value'=>base64_encode($this->form_id),'name'=>'id_form'),
 		);
-		
+
 		if($this->post_id) $inputs[] = array('type'=>'hidden','value'=>$this->post_id,'name'=>'post-rcl');
 		else $inputs[] = array('type'=>'hidden','value'=>base64_encode($this->post_type),'name'=>'posttype');
-		
+
 		$hiddens = array(
             'post-group' => array('term_id'=>base64_encode($group_id)),
             'products' => array('formpage'=>$post->ID),
             'task' => array('formpage'=>$post->ID)
         );
-		
+
 		if(isset($hiddens[$this->post_type])){
 			foreach($hiddens[$this->post_type] as $name=>$val){
 				$inputs[] = array('type'=>'hidden','value'=>$val,'name'=>$name);
 			}
 		}
-		
+
 		$inputs = apply_filters('rcl_submit_hiddens_form',$inputs);
-		
+
 		foreach($inputs as $input){
 			$attrs = array();
 			foreach($input as $attr=>$val){
@@ -151,7 +151,7 @@ class Rcl_PublicForm {
     function delete_button($cnt,$data){
 		global $user_ID,$editpost;
         if($editpost->post_author==$user_ID){
-            $cnt .= '<form method="post" action="" onsubmit="return confirm(\''.__('Вы серьезно?','rcl').'\');">
+            $cnt .= '<form method="post" action="" onsubmit="return confirm(\''.__('Are you seriously','rcl').'?\');">
             '.wp_nonce_field('delete-post-rcl','_wpnonce',true,false).'
             <input class="alignleft recall-button delete-post-submit" type="submit" name="delete-post-rcl" value="'.__('Delete post','rcl').'">
             <input type="hidden" name="post-rcl" value="'.$this->post_id.'"></form>';
@@ -161,10 +161,10 @@ class Rcl_PublicForm {
 				<div id="rcl-delete-post">
 					<a href="#" class="recall-button delete-toggle">'.__('Delete post','rcl').'</a>
 					<div class="delete-form-contayner">
-						<form action="" method="post"  onsubmit="return confirm(\''.__('Вы серьезно?','rcl').'\');">
+						<form action="" method="post"  onsubmit="return confirm(\''.__('Are you seriously','rcl').'?\');">
 						'.wp_nonce_field('delete-post-rcl','_wpnonce',true,false).'
 						'.$this->reasons_delete().'
-						<label>'.__('или введите свою причину','rcl').'</label>
+						<label>'.__('or enter its cause','rcl').'</label>
 						<textarea required id="reason_content" name="reason_content"></textarea>
 						<p><input type="checkbox" name="no-reason" onclick="(!document.getElementById(\'reason_content\').getAttribute(\'disabled\')) ? document.getElementById(\'reason_content\').setAttribute(\'disabled\', \'disabled\') : document.getElementById(\'reason_content\').removeAttribute(\'disabled\')" value="1"> '.__('Without notice','rcl').'</p>
 						<input class="floatright recall-button delete-post-submit" type="submit" name="delete-post-rcl" value="'.__('Delete post','rcl').'">
@@ -176,33 +176,33 @@ class Rcl_PublicForm {
 		}
         return $cnt;
     }
-	
+
 	function reasons_delete(){
-		
+
 		$reasons = array(
 			array(
-				'value'=>__('Н/с тематике сайта','rcl'),
-				'content'=>__('Публикация не соответствует тематике сайта','rcl'),
+				'value'=>__('Not correspond the subject','rcl'),
+				'content'=>__('The publication does not correspond to the subject site','rcl'),
 			),
 			array(
-				'value'=>__('Не оформлен','rcl'),
-				'content'=>__('Публикация не оформлена согласно правилам','rcl'),
+				'value'=>__('Not furnished','rcl'),
+				'content'=>__('Publication is not formalized under the rules','rcl'),
 			),
 			array(
-				'value'=>__('Реклама/Спам','rcl'),
-				'content'=>__('Публикация помечена как реклама или спам','rcl'),
+				'value'=>__('Advertising/Spam','rcl'),
+				'content'=>__('Publication labeled as advertising or spam','rcl'),
 			)
 		);
-		
+
 		$reasons = apply_filters('rcl_reasons_delete',$reasons);
-		
+
 		if(!$reasons) return false;
-		
-		$content = '<label>'.__('Воспользуйтесь заготовкой уведомления','rcl').':</label>';
+
+		$content = '<label>'.__('Use the blank notice','rcl').':</label>';
 		foreach($reasons as $reason){
 			$content .= '<input type="button" class="recall-button reason-delete" onclick="document.getElementById(\'reason_content\').value=\''.$reason['content'].'\'" value="'.$reason['value'].'">';
 		}
-		
+
 		return $content;
 	}
 
@@ -255,9 +255,9 @@ class Rcl_PublicForm {
 
                     if(rcl_get_template_path($this->post_type.'-form.php',__FILE__)) $form .= rcl_get_include_template($this->post_type.'-form.php',__FILE__);
                         else $form .= rcl_get_include_template('public-form.php',__FILE__);
-					
+
 					$fields = '';
-					
+
 					$form .= apply_filters('rcl_public_form',$fields,$this);
 
                     $form .= $this->submit_and_hidden()
@@ -401,26 +401,26 @@ function rcl_publication_custom_fields(){
 function rcl_get_tags($post_id){
 	$posttags = get_the_tags($post_id);
 	$tags = array();
-	if ($posttags) {		
-		foreach($posttags as $tag){ $tags[$tag->slug] = $tag; }		
-	}	
+	if ($posttags) {
+		foreach($posttags as $tag){ $tags[$tag->slug] = $tag; }
+	}
 	return $tags;
 }
 
 function rcl_get_tags_checklist($post_id=false){
 	global $rcl_options;
-	
+
 	$t_args = array('hide_empty'=>false);
-	
+
 	if($rcl_options['limit_tags']){
 		$include = explode(',',$rcl_options['limit_tags']);
 		$t_args['include'] = array_map('trim', $include);
 	}
-	
+
 	$tags = get_tags($t_args);
-	
+
 	$post_tags = ($post_id)? rcl_get_tags($post_id): array();
-	
+
 	$checks = '<label>Выберите тег из списка</label>
 	<div id="rcl-tags-list">';
 	foreach ($tags as $tag){
@@ -435,10 +435,10 @@ function rcl_get_tags_checklist($post_id=false){
 			'checked' => $checked,
 			'label' => $tag->name,
 			'value' => $tag->name
-		);		
-		$checks .= rcl_form_field($args);		
+		);
+		$checks .= rcl_form_field($args);
 	}
-	
+
 	if($post_tags){
 		foreach ($post_tags as $tag){
 			$args = array(
@@ -447,11 +447,11 @@ function rcl_get_tags_checklist($post_id=false){
 				'checked' => true,
 				'label' => $tag->name,
 				'value' => $tag->name
-			);		
-			$checks .= rcl_form_field($args);		
+			);
+			$checks .= rcl_form_field($args);
 		}
 	}
-	
+
 	$checks .= '</div>';
 	return $checks;
 }
@@ -460,9 +460,9 @@ function rcl_publication_editor(){
 	global $editpost,$rcl_options,$formfields,$formData;
 
 	if($formData->type_editor){
-		
+
 		rcl_wp_editor();
-		
+
 	}else{
 
 		if($editpost->post_content){
@@ -472,10 +472,10 @@ function rcl_publication_editor(){
 				return;
 			}
 		}
-		
+
 		$panel = '';
 		$buttons = array();
-		
+
 		if(isset($rcl_options['rcl_editor_buttons'])){
 			$icons = array(
 				'text'=>'fa-align-left',
@@ -493,7 +493,7 @@ function rcl_publication_editor(){
 			foreach($rcl_options['rcl_editor_buttons'] as $type){
 				$buttons[] = '<li><a href="#" title="'.$names[$type].'" class="get-'.$type.'-box" onclick="return rcl_add_editor_box(this,\''.$type.'\');"><i class="fa '.$icons[$type].'"></i></a></li>';
 			}
-			
+
 			if($buttons){
 				$panel = '<div class="rcl-tools-panel">
 						<ul>'
@@ -502,29 +502,29 @@ function rcl_publication_editor(){
 						</div>';
 			}
 		}
-		
+
 		echo '
 		<div class="rcl-public-editor">
 			'.$panel.'
 			<div class="rcl-editor-content">
-				'.rcl_get_editor_content($editpost->post_content).'				
+				'.rcl_get_editor_content($editpost->post_content).'
 			</div>
 			'.$panel.'
 		</div>';
-			
+
 	}
 
 }
 
 function rcl_get_tags_input($post_id=false){
 	global $rcl_options;
-	
+
 	rcl_autocomplete_scripts();
-	
+
 	$fields = '';
-	
+
 	if($rcl_options['display_tags']==1) $fields .= rcl_get_tags_checklist($post_id);
-	
+
 	$args = array(
 		'type' => 'text',
 		'id' => 'rcl_post_tags',
@@ -532,9 +532,9 @@ function rcl_get_tags_input($post_id=false){
 		'placeholder' => 'Введите свои теги',
 		'label' => 'Добавьте свои теги<br><small>каждый тег разделяется кнопкой Enter</small>'
 	);
-	
+
 	$fields .= rcl_form_field($args);
-	
+
 	$fields .= "<script>
 	jQuery(function($){
 		$('#rcl_post_tags').magicSuggest({
@@ -557,7 +557,7 @@ add_filter('public_form_rcl','rcl_add_tags_input',10,2);
 function rcl_add_tags_input($fields,$formData){
 
 	if($formData->post_type!='post') return $fields;
-	
+
 	$fields .= rcl_get_tags_input($formData->post_id);
 
 	return $fields;

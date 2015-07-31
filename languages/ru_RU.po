@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-07-29 18:13+0300\n"
+"POT-Creation-Date: 2015-07-31 15:13+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -24,234 +24,25 @@ msgstr ""
 "X-Generator: Poedit 1.7.6\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: add-on/---rayting/addon-options.php:9
-#: add-on/rating-system/addon-options.php:76
-msgid "Rating settings"
-msgstr "Настройки рейтинга"
-
-#: add-on/---rayting/addon-options.php:12
-#: add-on/publicpost/addon-options.php:35 admin-pages.php:99
-msgid "General settings"
-msgstr "Общие настройки"
-
-#: add-on/---rayting/addon-options.php:14
-msgid "Type of rating for records"
-msgstr "Тип рейтинга для публикаций"
-
-#: add-on/---rayting/addon-options.php:17
-#: add-on/---rayting/addon-options.php:23
-#: add-on/rating-system/addon-options.php:19
-msgid "Plus/minus"
-msgstr "Плюс/Минус"
-
-#: add-on/---rayting/addon-options.php:17
-#: add-on/---rayting/addon-options.php:23 add-on/---rayting/index.php:168
-#: add-on/---rayting/index.php:260 add-on/rating-system/addon-options.php:19
-#: add-on/rating-system/index.php:243
-msgid "I like"
-msgstr "Мне нравится"
-
-#: add-on/---rayting/addon-options.php:20
-msgid "Type of rating comments"
-msgstr "Тип рейтинга для комментариев"
-
-#: add-on/---rayting/addon-options.php:26
-msgid "Output rating to archive page"
-msgstr "Вывод рейтинга на архивных страницах"
-
-#: add-on/---rayting/addon-options.php:29
-#: add-on/---rayting/addon-options.php:49
-#: add-on/---rayting/addon-options.php:69 add-on/---rayting/index.php:51
-#: add-on/bookmarks/index.php:137 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:156 add-on/profile/index.php:527
-#: add-on/profile/index.php:532 add-on/profile/index.php:537
-#: add-on/profile/index.php:542 add-on/profile/index.php:547
-#: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
-#: add-on/rating-system/addon-options.php:59
-#: add-on/rating-system/addon-options.php:111
-#: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
-#: admin-pages.php:38 admin-pages.php:289
-msgid "No"
-msgstr "Нет"
-
-#: add-on/---rayting/addon-options.php:29
-#: add-on/---rayting/addon-options.php:49
-#: add-on/---rayting/addon-options.php:69 add-on/---rayting/index.php:52
-#: add-on/bookmarks/index.php:138 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:156 add-on/profile/index.php:527
-#: add-on/profile/index.php:532 add-on/profile/index.php:537
-#: add-on/profile/index.php:542 add-on/profile/index.php:547
-#: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
-#: add-on/rating-system/addon-options.php:59
-#: add-on/rating-system/addon-options.php:111
-#: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
-#: admin-pages.php:39 admin-pages.php:289
-msgid "Yes"
-msgstr "Да"
-
-#: add-on/---rayting/addon-options.php:35
-msgid "The rating publications"
-msgstr "Рейтинг публикаций"
-
-#: add-on/---rayting/addon-options.php:39
-#: add-on/---rayting/addon-options.php:59
-#: add-on/publicpost/addon-options.php:44
-#: add-on/publicpost/addon-options.php:51
-#: add-on/rating-system/addon-options.php:46 admin-pages.php:189
-#: admin-pages.php:262 admin-pages.php:267 admin-pages.php:278
-msgid "Disabled"
-msgstr "Отключено"
-
-#: add-on/---rayting/addon-options.php:39
-#: add-on/---rayting/addon-options.php:59
-#: add-on/publicpost/addon-options.php:44
-#: add-on/publicpost/addon-options.php:51
-#: add-on/rating-system/addon-options.php:46 admin-pages.php:190
-#: admin-pages.php:278
-msgid "Included"
-msgstr "Подключено"
-
-#: add-on/---rayting/addon-options.php:42
-msgid "Points for ranking publications"
-msgstr "Баллы для рейтинга публикаций"
-
-#: add-on/---rayting/addon-options.php:44
-#: add-on/---rayting/addon-options.php:64
-#: add-on/rating-system/addon-options.php:53
-msgid ""
-"set how many points the ranking will be awarded for a positive vote or how "
-"many points will be subtracted from the rating for a negative vote"
-msgstr ""
-"укажите значение рейтинга для положительного или отрицательного голоса за "
-"публикацию"
-
-#: add-on/---rayting/addon-options.php:46
-msgid "The influence of rating posts on the overall rating"
-msgstr "Влияние рейтинга публикаций на общий рейтинг"
-
-#: add-on/---rayting/addon-options.php:55
-msgid "Rating review"
-msgstr "Рейтинг комментариев"
-
-#: add-on/---rayting/addon-options.php:62
-msgid "Points for comment rating"
-msgstr "Баллы для рейтинга комментариев"
-
-#: add-on/---rayting/addon-options.php:66
-msgid "The influence of the rating review on the overall rating"
-msgstr "Влияние рейтинга отзывов на общий рейтинг"
-
-#: add-on/---rayting/addon-options.php:75
-#: add-on/rating-system/addon-options.php:82
-msgid "Allow to bypass the moderation of publications at achievement rating"
-msgstr "Влияние рейтинга на модерацию публикаций"
-
-#: add-on/---rayting/addon-options.php:77
-#: add-on/rating-system/addon-options.php:84
-msgid ""
-"specify the rating level at which the user will get the ability to post "
-"without moderation"
-msgstr ""
-"пользователи с указанным уровнем рейтинга или превышающем его смогут "
-"публиковать без модерации"
-
-#: add-on/---rayting/class_rayting.php:46
-msgid "You cant change the rating of a product that was purchased personally!"
-msgstr "Вы не можете влиять на рейтинг товара, который не приобретали лично!"
-
-#: add-on/---rayting/class_rayting.php:110
-#: add-on/---rayting/class_rayting.php:133
-#: add-on/---rayting/class_rayting.php:165
-#: add-on/---rayting/class_rayting.php:230
-#: add-on/---rayting/class_rayting.php:271
-#: add-on/---rayting/class_rayting.php:315
-msgid "vote"
-msgstr "голосовал"
-
-#: add-on/---rayting/class_rayting.php:165
-#: add-on/---rayting/class_rayting.php:272 add-on/rating-system/core.php:324
-msgid "comment"
-msgstr "комментарий"
-
-#: add-on/---rayting/class_rayting.php:165
-#: add-on/---rayting/class_rayting.php:230
-#: add-on/---rayting/class_rayting.php:315
-msgid "entry"
-msgstr "запись"
-
-#: add-on/---rayting/class_rayting.php:178
-msgid "For user comments no one voted"
-msgstr "За комментарии еще никто не голосовал"
-
-#: add-on/---rayting/class_rayting.php:199
-#: add-on/---rayting/class_rayting.php:243
-msgid "For publishing user nobody voted"
-msgstr "За публикации еще никто не голосовал"
-
-#: add-on/---rayting/class_rayting.php:272
-msgid "recording"
-msgstr "запись"
-
-#: add-on/---rayting/class_rayting.php:283
-msgid "For publications and user comments no one voted"
-msgstr "За публикации и комментарии еще не голосовали"
-
-#: add-on/---rayting/index.php:35 add-on/rating-system/index.php:140
-msgid "rating"
-msgstr "рейтинг"
-
-#: add-on/---rayting/index.php:50 add-on/rating-system/admin.php:15
-#: add-on/rating-system/index.php:43
-msgid "To disable the rating for publication"
-msgstr "Отключить рейтинг для публикации"
-
-#: add-on/---rayting/index.php:82 add-on/rating-system/admin.php:31
-#: add-on/rating-system/index.php:59
-msgid "OK"
-msgstr ""
-
-#: add-on/---rayting/index.php:153 add-on/---rayting/index.php:236
-msgid "view messeges"
-msgstr "смотреть сообщения"
-
-#: add-on/---rayting/index.php:158 add-on/---rayting/index.php:243
-#: add-on/rating-system/index.php:236
-msgid "To remove your vote"
-msgstr "Удалить голос"
-
-#: add-on/---rayting/index.php:161 add-on/---rayting/index.php:202
-#: add-on/---rayting/index.php:255 add-on/---rayting/index.php:274
-#: add-on/rating-system/index.php:51 add-on/rating-system/index.php:189
-msgid "Rating"
-msgstr "Рейтинг"
-
-#: add-on/---rayting/index.php:169 add-on/---rayting/index.php:261
-#: add-on/rating-system/index.php:245
-msgid "minus"
-msgstr "минус"
-
-#: add-on/---rayting/index.php:170 add-on/---rayting/index.php:262
-#: add-on/rating-system/index.php:246
-msgid "plus"
-msgstr "плюс"
+#: add-on/background-cabinet/index.php:1
+msgid "Settings background"
+msgstr "Настройки фона"
 
 #: add-on/background-cabinet/index.php:1
-msgid "Настройки фона"
-msgstr ""
+msgid "Background private account"
+msgstr "Фон личного кабинета"
 
 #: add-on/background-cabinet/index.php:1
-msgid "Фон личного кабинета"
-msgstr ""
-
-#: add-on/background-cabinet/index.php:1
-msgid "Поле профиля для фона"
-msgstr ""
+msgid "Profile field for background"
+msgstr "Поле профиля фона"
 
 #: add-on/background-cabinet/index.php:1
 msgid ""
-"Укажите поле профиля типа \"Файл\" чтобы через него могли устанавливать "
-"фоновое изображение для личного кабинета"
+"Specify the type of profile field \"File\" to through it could set the "
+"background image for your personal account"
 msgstr ""
+"Выберите поле профиля с типом \"Файл\" и укажите его в качестве фонового "
+"изображения"
 
 #: add-on/bookmarks/class_bookmark.php:68 add-on/bookmarks/index.php:127
 msgid "In this group don`t have bookmarks"
@@ -357,6 +148,30 @@ msgstr "Добавить группу"
 msgid "Disable bookmarks for publication"
 msgstr "Отключить закладки для публикации"
 
+#: add-on/bookmarks/index.php:137 add-on/money-wallet/index.php:58
+#: add-on/profile/index.php:156 add-on/profile/index.php:527
+#: add-on/profile/index.php:532 add-on/profile/index.php:537
+#: add-on/profile/index.php:542 add-on/profile/index.php:547
+#: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
+#: add-on/rating-system/addon-options.php:59
+#: add-on/rating-system/addon-options.php:111
+#: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
+#: admin-pages.php:38 admin-pages.php:289
+msgid "No"
+msgstr "Нет"
+
+#: add-on/bookmarks/index.php:138 add-on/money-wallet/index.php:58
+#: add-on/profile/index.php:156 add-on/profile/index.php:527
+#: add-on/profile/index.php:532 add-on/profile/index.php:537
+#: add-on/profile/index.php:542 add-on/profile/index.php:547
+#: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
+#: add-on/rating-system/addon-options.php:59
+#: add-on/rating-system/addon-options.php:111
+#: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
+#: admin-pages.php:39 admin-pages.php:289
+msgid "Yes"
+msgstr "Да"
+
 #: add-on/bookmarks/index.php:167 add-on/bookmarks/index.php:177
 #: add-on/groups/index.php:403 add-on/publicpost/class_public.php:74
 #: add-on/publicpost/fast-editor.php:102
@@ -395,7 +210,7 @@ msgstr "Имя группы"
 #: add-on/bookmarks/index.php:380 add-on/bookmarks/index.php:402
 #: add-on/bookmarks/index.php:427 add-on/bookmarks/index.php:458
 #: add-on/gallery-recall/index.php:405 add-on/gallery-recall/index.php:444
-#: add-on/rating-system/index.php:382 add-on/rating-system/index.php:404
+#: add-on/rating-system/index.php:383 add-on/rating-system/index.php:405
 msgid "Error"
 msgstr "Ошибка"
 
@@ -406,11 +221,11 @@ msgstr "Ошибка"
 msgid "Are you sure?"
 msgstr "Вы серьезно?"
 
-#: add-on/feed/index.php:32 add-on/feed/index.php:339
+#: add-on/feed/index.php:32 add-on/feed/index.php:377
 msgid "Subscribe"
 msgstr "Подписаться"
 
-#: add-on/feed/index.php:32 add-on/feed/index.php:75 add-on/feed/index.php:329
+#: add-on/feed/index.php:32 add-on/feed/index.php:75 add-on/feed/index.php:367
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
@@ -430,22 +245,11 @@ msgstr ""
 "Войдите или зарегистрируйтесь, чтобы видеть последние публикации и "
 "комментарии от пользователей на которых оформлена подписка"
 
-#: add-on/feed/index.php:114 add-on/feed/index.php:357
-#: add-on/feed/templates/feed-post.php:31 add-on/rating-system/index.php:32
-#: functions/rcl_userlist.php:269 functions/shortcodes.php:237
-msgid "Comments"
-msgstr "Комментарии"
-
-#: add-on/feed/index.php:115 add-on/feed/index.php:611
-#: add-on/publicpost/index.php:65 add-on/publicpost/index.php:325
-msgid "Publication"
-msgstr "Публикация"
-
-#: add-on/feed/index.php:361
+#: add-on/feed/index.php:399
 msgid "It seems that you have not left a single comment or not subscribed."
 msgstr "Похоже, что у вас еще нет комментариев."
 
-#: add-on/feed/index.php:362
+#: add-on/feed/index.php:400
 msgid ""
 "Comment you publish and subscribe to other users, then you can track "
 "responses to your comments and to see new comments from users.Comment you "
@@ -456,21 +260,25 @@ msgstr ""
 "получать новые комментарии ваших публикаций или пользователей на которых вы "
 "подписаны, а также ответы на ваши комментарии."
 
-#: add-on/feed/index.php:604
+#: add-on/feed/index.php:653
 msgid "Publications yet"
 msgstr "Публикаций пока нет"
 
-#: add-on/feed/index.php:604
+#: add-on/feed/index.php:653
 msgid "Maybe later, someone will post the news."
 msgstr "Возможно позже появятся новые публикации"
 
-#: add-on/feed/index.php:630
+#: add-on/feed/index.php:662
+msgid "Ваша новостная лента"
+msgstr ""
+
+#: add-on/feed/index.php:692
 msgid "You havent signed up anyone elses publication."
 msgstr ""
 "В вашей ленте пока нет новых публикаций. Подписывайтесь на пользователей "
 "сайта, чтобы видеть новые публикации."
 
-#: add-on/feed/index.php:631
+#: add-on/feed/index.php:693
 msgid ""
 "Go to the profile of the user and click the \"Subscribe\" button and you "
 "will be able to monitor his recent publications here."
@@ -479,12 +287,17 @@ msgstr ""
 "сможете отслеживать его последние публикации здесь."
 
 #: add-on/feed/templates/feed-comment.php:11
-msgid "for recording"
-msgstr "для записи"
+msgid "комментарий к публикации"
+msgstr ""
 
 #: add-on/feed/templates/feed-comment.php:15
 msgid "in reply to your comment"
 msgstr "в ответ на ваш комментарий"
+
+#: add-on/feed/templates/feed-post.php:43 add-on/rating-system/index.php:32
+#: functions/rcl_userlist.php:269 functions/shortcodes.php:237
+msgid "Comments"
+msgstr "Комментарии"
 
 #: add-on/gallery-recall/class_gallery.php:1
 msgid "This photo does not exist!"
@@ -574,9 +387,12 @@ msgstr "Действительно удалить?"
 msgid "File size exceeded!"
 msgstr "Размер файла превышен!"
 
-#: add-on/getresponse-manager/index.php:1
-msgid "Сохранить настройки"
-msgstr ""
+#: add-on/getresponse-manager/index.php:1 add-on/groups/class_group.php:207
+#: add-on/justclick-manager/index.php:1
+#: add-on/partners-system/admin-pages.php:124
+#: add-on/users-market/index.php:750 admin-pages.php:299 functions-rcl.php:519
+msgid "Save settings"
+msgstr "Сохранить настройки"
 
 #: add-on/groups/class_ajax.php:40 add-on/groups/class_ajax.php:41
 #: add-on/groups/class_ajax.php:58
@@ -635,12 +451,6 @@ msgstr "Настройки группы"
 #: add-on/groups/class_group.php:200
 msgid "To close the settings"
 msgstr "Закрыть настройки"
-
-#: add-on/groups/class_group.php:207 add-on/justclick-manager/index.php:1
-#: add-on/partners-system/admin-pages.php:124
-#: add-on/users-market/index.php:750 admin-pages.php:299 functions-rcl.php:511
-msgid "Save settings"
-msgstr "Сохранить настройки"
 
 #: add-on/groups/class_group.php:238
 msgid "Delete group"
@@ -967,9 +777,10 @@ msgstr "Порядок вывода"
 msgid "Only the owner"
 msgstr "Только хозяину личного кабинета"
 
-#: add-on/last-visitor/index.php:16
-msgid "Всем"
-msgstr ""
+#: add-on/last-visitor/index.php:16 add-on/review/index.php:151
+#: functions/rcl_addons.php:107
+msgid "All"
+msgstr "Все"
 
 #: add-on/last-visitor/index.php:19
 msgid "The number of visitors"
@@ -980,7 +791,7 @@ msgid "the default is 10"
 msgstr "по-умолчанию 10"
 
 #: add-on/last-visitor/index.php:29
-msgid "Последние посетители"
+msgid "Recent Visitors"
 msgstr ""
 
 #: add-on/magazin/functions/init.php:18 add-on/magazin/functions/init.php:19
@@ -996,7 +807,7 @@ msgstr "Корзина"
 #: add-on/magazin/functions/shortcodes.php:116 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:10
-#: add-on/user-account/index.php:379 functions/rcl_editfields.php:116
+#: add-on/user-account/index.php:382 functions/rcl_editfields.php:116
 #: widget.php:47 widget.php:109 widget.php:162
 msgid "Title"
 msgstr "Заголовок"
@@ -1183,7 +994,7 @@ msgstr "Все контакты"
 msgid "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 msgstr "<b>Enter</b> - перенос строки, <b>Ctrl+Enter</b> - отправить"
 
-#: add-on/message/index.php:428 add-on/user-account/index.php:328
+#: add-on/message/index.php:428 add-on/user-account/index.php:331
 #: templates/form-register.php:21 templates/form-remember.php:15
 msgid "Send"
 msgstr "Отправить"
@@ -1386,7 +1197,7 @@ msgstr "Перевод средств между пользователями"
 msgid "Balance"
 msgstr "Баланс"
 
-#: add-on/money-wallet/index.php:122 add-on/user-account/index.php:346
+#: add-on/money-wallet/index.php:122 add-on/user-account/index.php:349
 msgid "Personal account of the user"
 msgstr "Личный счет пользователя"
 
@@ -1582,7 +1393,7 @@ msgstr "Укажите номер кошелька!"
 
 #: add-on/notification/index.php:12
 msgid "Notifications"
-msgstr ""
+msgstr "Уведомления"
 
 #: add-on/presents/class_presents.php:1
 msgid "Affordable gifts"
@@ -1864,9 +1675,9 @@ msgstr "Статус пользователя"
 
 #: add-on/publicpost/addon-options.php:11 add-on/publicpost/classes.php:46
 #: add-on/user-account/addon-options.php:149
-#: add-on/user-account/addon-options.php:159
-#: add-on/user-account/addon-options.php:168
-#: add-on/user-account/addon-options.php:176 admin-pages.php:105 widget.php:58
+#: add-on/user-account/addon-options.php:160
+#: add-on/user-account/addon-options.php:170
+#: add-on/user-account/addon-options.php:178 admin-pages.php:105 widget.php:58
 #: widget.php:116
 msgid "Not selected"
 msgstr "Не выбрано"
@@ -1874,6 +1685,10 @@ msgstr "Не выбрано"
 #: add-on/publicpost/addon-options.php:32
 msgid "The publish settings"
 msgstr "Настройки публикации"
+
+#: add-on/publicpost/addon-options.php:35 admin-pages.php:99
+msgid "General settings"
+msgstr "Общие настройки"
 
 #: add-on/publicpost/addon-options.php:37
 msgid "Page publishing and editing records"
@@ -1893,6 +1708,20 @@ msgstr ""
 msgid "Display information about the author"
 msgstr "Отображать информацию об авторе"
 
+#: add-on/publicpost/addon-options.php:44
+#: add-on/publicpost/addon-options.php:51
+#: add-on/rating-system/addon-options.php:46 admin-pages.php:189
+#: admin-pages.php:262 admin-pages.php:267 admin-pages.php:278
+msgid "Disabled"
+msgstr "Отключено"
+
+#: add-on/publicpost/addon-options.php:44
+#: add-on/publicpost/addon-options.php:51
+#: add-on/rating-system/addon-options.php:46 admin-pages.php:190
+#: admin-pages.php:278
+msgid "Included"
+msgstr "Подключено"
+
 #: add-on/publicpost/addon-options.php:47
 msgid "Tab list of publications"
 msgstr "Вкладка списка публикаций"
@@ -1910,7 +1739,7 @@ msgid "Show everyone including guests"
 msgstr "Показывать всем, включая гостей"
 
 #: add-on/publicpost/addon-options.php:68
-#: add-on/publicpost/rcl_publicform.php:320
+#: add-on/publicpost/rcl_publicform.php:323
 msgid "Category"
 msgstr "Категории"
 
@@ -1959,20 +1788,32 @@ msgid "WordPress editor"
 msgstr "Редактор WordPress"
 
 #: add-on/publicpost/addon-options.php:136
-msgid "Размеры изображений"
-msgstr ""
+msgid "Images sizes"
+msgstr "Размеры изображений"
 
 #: add-on/publicpost/addon-options.php:141
 msgid "Default: 800,600"
 msgstr "По-умолчанию: 800,600"
 
 #: add-on/publicpost/addon-options.php:143
-msgid "Доступные кнопки редактора"
-msgstr ""
+msgid "Available buttons Editor"
+msgstr "Разрешенные кнопки редактора"
+
+#: add-on/publicpost/addon-options.php:146
+msgid "Upload images"
+msgstr "Загрузка изображений"
 
 #: add-on/publicpost/addon-options.php:153
-msgid "Вид редактора WP"
-msgstr ""
+msgid "View editor WP"
+msgstr "Вид редактора WP"
+
+#: add-on/publicpost/addon-options.php:156
+msgid "Visual Editor"
+msgstr "Визуальный редактор"
+
+#: add-on/publicpost/addon-options.php:156
+msgid "HTML-Editor"
+msgstr "HTML-Редактор"
 
 #: add-on/publicpost/addon-options.php:158
 msgid "Number of images in the gallery Wp-Recall"
@@ -2149,6 +1990,10 @@ msgstr "Записи"
 msgid "Posts"
 msgstr "Публикации"
 
+#: add-on/publicpost/index.php:65 add-on/publicpost/index.php:325
+msgid "Publication"
+msgstr "Публикация"
+
 #: add-on/publicpost/index.php:152
 #: add-on/publicpost/templates/posts-list.php:15
 msgid "on approval"
@@ -2216,71 +2061,71 @@ msgstr "пока не было опубликовано"
 msgid "Published"
 msgstr "Опубликованные"
 
-#: add-on/publicpost/rcl_publicform.php:115
+#: add-on/publicpost/rcl_publicform.php:118
 msgid "Preview"
 msgstr "Предпросмотр"
 
-#: add-on/publicpost/rcl_publicform.php:151
-#: add-on/publicpost/rcl_publicform.php:161
-msgid "Вы серьезно?"
-msgstr ""
+#: add-on/publicpost/rcl_publicform.php:154
+#: add-on/publicpost/rcl_publicform.php:164
+msgid "Are you seriously"
+msgstr "Вы серьезно"
 
-#: add-on/publicpost/rcl_publicform.php:153
-#: add-on/publicpost/rcl_publicform.php:159
-#: add-on/publicpost/rcl_publicform.php:167
+#: add-on/publicpost/rcl_publicform.php:156
+#: add-on/publicpost/rcl_publicform.php:162
+#: add-on/publicpost/rcl_publicform.php:170
 msgid "Delete post"
 msgstr "Удалить публикацию"
 
-#: add-on/publicpost/rcl_publicform.php:164
-msgid "или введите свою причину"
-msgstr ""
+#: add-on/publicpost/rcl_publicform.php:167
+msgid "or enter its cause"
+msgstr "или введите свое"
 
-#: add-on/publicpost/rcl_publicform.php:166
+#: add-on/publicpost/rcl_publicform.php:169
 msgid "Without notice"
 msgstr "Без уведомления"
 
-#: add-on/publicpost/rcl_publicform.php:181
-msgid "Н/с тематике сайта"
-msgstr ""
-
-#: add-on/publicpost/rcl_publicform.php:182
-msgid "Публикация не соответствует тематике сайта"
-msgstr ""
+#: add-on/publicpost/rcl_publicform.php:184
+msgid "Not correspond the subject"
+msgstr "Н/с тематике сайта"
 
 #: add-on/publicpost/rcl_publicform.php:185
-msgid "Не оформлен"
-msgstr ""
+msgid "The publication does not correspond to the subject site"
+msgstr "Публикация не соответствует тематике сайта"
 
-#: add-on/publicpost/rcl_publicform.php:186
-msgid "Публикация не оформлена согласно правилам"
-msgstr ""
+#: add-on/publicpost/rcl_publicform.php:188
+msgid "Not furnished"
+msgstr "Не оформлен"
 
 #: add-on/publicpost/rcl_publicform.php:189
-msgid "Реклама/Спам"
-msgstr ""
+msgid "Publication is not formalized under the rules"
+msgstr "Публикация не оформлена согласно правил"
 
-#: add-on/publicpost/rcl_publicform.php:190
-msgid "Публикация помечена как реклама или спам"
-msgstr ""
+#: add-on/publicpost/rcl_publicform.php:192
+msgid "Advertising/Spam"
+msgstr "Реклама/Спам"
 
-#: add-on/publicpost/rcl_publicform.php:198
-msgid "Воспользуйтесь заготовкой уведомления"
-msgstr ""
+#: add-on/publicpost/rcl_publicform.php:193
+msgid "Publication labeled as advertising or spam"
+msgstr "Публикация помечена как реклама или спам"
 
-#: add-on/publicpost/rcl_publicform.php:209
+#: add-on/publicpost/rcl_publicform.php:201
+msgid "Use the blank notice"
+msgstr "Используйте заготовку уведомления"
+
+#: add-on/publicpost/rcl_publicform.php:212
 msgid "You must be logged in to post. Login or register"
 msgstr ""
 "Вы должны быть авторизованы для публикации. Войдите или зарегистрируйтесь."
 
-#: add-on/publicpost/rcl_publicform.php:213
+#: add-on/publicpost/rcl_publicform.php:216
 msgid "Sorry, but you have no rights to publish within groups :("
 msgstr "Извините, но вы не можете публиковать в этой группе :("
 
-#: add-on/publicpost/rcl_publicform.php:216
+#: add-on/publicpost/rcl_publicform.php:219
 msgid "Sorry, but you have no right<br>to publish the records on this site :("
 msgstr "Извините, но вы не можете публиковать на этом сайте :("
 
-#: add-on/publicpost/rcl_publicform.php:250
+#: add-on/publicpost/rcl_publicform.php:253
 msgid "Being sent, please wait..."
 msgstr "Идет отправка, подождите..."
 
@@ -2296,6 +2141,15 @@ msgstr "Нажмите на загруженное изображение, чт�
 #: add-on/rating-system/addon-options.php:16
 msgid "Type of rating for"
 msgstr "Тип рейтинга для"
+
+#: add-on/rating-system/addon-options.php:19
+msgid "Plus/minus"
+msgstr "Плюс/Минус"
+
+#: add-on/rating-system/addon-options.php:19
+#: add-on/rating-system/index.php:244
+msgid "I like"
+msgstr "Мне нравится"
 
 #: add-on/rating-system/addon-options.php:24
 msgid "Overall rating "
@@ -2335,6 +2189,14 @@ msgstr "Рейтинг"
 msgid "Points for ranking"
 msgstr "Баллы рейтинга"
 
+#: add-on/rating-system/addon-options.php:53
+msgid ""
+"set how many points the ranking will be awarded for a positive vote or how "
+"many points will be subtracted from the rating for a negative vote"
+msgstr ""
+"укажите значение рейтинга для положительного или отрицательного голоса за "
+"публикацию"
+
 #: add-on/rating-system/addon-options.php:55
 #, php-format
 msgid "The influence of rating %s on the overall rating"
@@ -2345,7 +2207,7 @@ msgstr "Влияние рейтинга %s на общий рейтинг пол
 msgid "Template output %s stories in the overall ranking"
 msgstr "Шаблон вывода истории рейтинга %s в общем рейтинге"
 
-#: add-on/rating-system/addon-options.php:68 add-on/rating-system/core.php:302
+#: add-on/rating-system/addon-options.php:68 add-on/rating-system/core.php:306
 msgid "voted"
 msgstr "голосовал"
 
@@ -2356,6 +2218,22 @@ msgid ""
 msgstr ""
 "укажите шаблон вывода истории где %USER% - имя проголосовавшего ,%VALUE% - "
 "значение рейтинга, %DATE% - дата"
+
+#: add-on/rating-system/addon-options.php:76
+msgid "Rating settings"
+msgstr "Настройки рейтинга"
+
+#: add-on/rating-system/addon-options.php:82
+msgid "Allow to bypass the moderation of publications at achievement rating"
+msgstr "Влияние рейтинга на модерацию публикаций"
+
+#: add-on/rating-system/addon-options.php:84
+msgid ""
+"specify the rating level at which the user will get the ability to post "
+"without moderation"
+msgstr ""
+"пользователи с указанным уровнем рейтинга или превышающем его смогут "
+"публиковать без модерации"
 
 #: add-on/rating-system/addon-options.php:90
 msgid "View results"
@@ -2369,20 +2247,52 @@ msgstr "укажите группу пользователей имеющих д
 msgid "Deleting your voice"
 msgstr "Удаление своего голоса"
 
+#: add-on/rating-system/admin.php:15 add-on/rating-system/index.php:43
+msgid "To disable the rating for publication"
+msgstr "Отключить рейтинг для публикации"
+
+#: add-on/rating-system/admin.php:31 add-on/rating-system/index.php:59
+msgid "OK"
+msgstr ""
+
 #: add-on/rating-system/class_rayting.php:38
 #, php-format
 msgid "exceeded the limit of votes for the period - %d seconds"
 msgstr "превышение ограничения голосов в течении %d секунд"
 
-#: add-on/rating-system/core.php:222
+#: add-on/rating-system/core.php:226
 msgid "Correction"
 msgstr "Корректировка"
 
-#: add-on/rating-system/core.php:334
+#: add-on/rating-system/core.php:328
+msgid "comment"
+msgstr "комментарий"
+
+#: add-on/rating-system/core.php:338
 msgid "Rating changes not made"
 msgstr "Изменение рейтинга не производилось"
 
-#: add-on/rating-system/index.php:361
+#: add-on/rating-system/index.php:51 add-on/rating-system/index.php:189
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: add-on/rating-system/index.php:140
+msgid "rating"
+msgstr "рейтинг"
+
+#: add-on/rating-system/index.php:237
+msgid "To remove your vote"
+msgstr "Удалить голос"
+
+#: add-on/rating-system/index.php:246
+msgid "minus"
+msgstr "минус"
+
+#: add-on/rating-system/index.php:247
+msgid "plus"
+msgstr "плюс"
+
+#: add-on/rating-system/index.php:362
 msgid "You can not vote"
 msgstr "Вы не можете голосовать"
 
@@ -2421,10 +2331,6 @@ msgstr "Настройки отзывов"
 #: add-on/review/index.php:148
 msgid "To accept and leave feedback can"
 msgstr "Оставлять и принимать отзывы могут"
-
-#: add-on/review/index.php:151 functions/rcl_addons.php:107
-msgid "All"
-msgstr "Все"
 
 #: add-on/review/index.php:151
 msgid "With published posts"
@@ -2533,17 +2439,16 @@ msgid "Interkassa"
 msgstr "Интеркасса"
 
 #: add-on/user-account/addon-options.php:52
+msgid "WalletOne"
+msgstr "Единая касса"
+
+#: add-on/user-account/addon-options.php:53
 msgid "Yandex.Kassa"
 msgstr "Яндекс.Касса"
 
-#: add-on/user-account/addon-options.php:52
 #: add-on/user-account/addon-options.php:53
 msgid "not tested"
 msgstr "не тестировалось"
-
-#: add-on/user-account/addon-options.php:53
-msgid "WalletOne"
-msgstr "Единая касса"
 
 #: add-on/user-account/addon-options.php:62
 msgid "Connection settings ROBOKASSA"
@@ -2593,32 +2498,32 @@ msgid "The status of the account Interkassa"
 msgstr "Статус аккаунта Интеркассы"
 
 #: add-on/user-account/addon-options.php:108
-msgid "Connection settings Yandex.Kassa"
-msgstr "Настройки подключения Яндекс.Кассы"
-
-#: add-on/user-account/addon-options.php:109
-msgid "ID cash"
-msgstr "Идентификатор кошелька"
-
-#: add-on/user-account/addon-options.php:111
-msgid "The room showcases"
-msgstr "Витрина"
-
-#: add-on/user-account/addon-options.php:113
-msgid "The secret word"
-msgstr "Секретное слово"
-
-#: add-on/user-account/addon-options.php:123
 msgid "Connection settings WalletOne"
 msgstr "Настройки подключения Единой кассы"
 
-#: add-on/user-account/addon-options.php:124
+#: add-on/user-account/addon-options.php:109
 msgid "Merchant ID"
 msgstr "Идентификатор магазина"
 
-#: add-on/user-account/addon-options.php:126
+#: add-on/user-account/addon-options.php:111
 msgid "The secret key"
 msgstr "Секретный ключ"
+
+#: add-on/user-account/addon-options.php:121
+msgid "Connection settings Yandex.Kassa"
+msgstr "Настройки подключения Яндекс.Кассы"
+
+#: add-on/user-account/addon-options.php:122
+msgid "ID cash"
+msgstr "Идентификатор кошелька"
+
+#: add-on/user-account/addon-options.php:124
+msgid "The room showcases"
+msgstr "Витрина"
+
+#: add-on/user-account/addon-options.php:126
+msgid "The secret word"
+msgstr "Секретное слово"
 
 #: add-on/user-account/addon-options.php:135
 msgid "Service page payment systems"
@@ -2629,26 +2534,34 @@ msgid "Page RESULT"
 msgstr "Страница RESULT"
 
 #: add-on/user-account/addon-options.php:152
+msgid "For WalletOne: URL script"
+msgstr "Для Единой кассы: URL скрипта"
+
+#: add-on/user-account/addon-options.php:153
 msgid "For Interkassa: URL of interaction"
 msgstr "Для Интеркассы: URL взаимодействия"
 
-#: add-on/user-account/addon-options.php:153
+#: add-on/user-account/addon-options.php:154
 msgid "For Yandex.Cash: checkURL and avisoURL"
 msgstr "Для Яндекс.Кассы: checkURL and avisoURL"
 
-#: add-on/user-account/addon-options.php:155
+#: add-on/user-account/addon-options.php:156
 msgid "Page SUCCESS"
 msgstr "Страница SUCCESS"
 
-#: add-on/user-account/addon-options.php:162
+#: add-on/user-account/addon-options.php:163
+msgid "For WalletOne: not use"
+msgstr "Для Единой кассы: не используется"
+
+#: add-on/user-account/addon-options.php:164
 msgid "For Interkassa: successful payment URL"
 msgstr "Для Интеркассы: URL успешного платежа"
 
-#: add-on/user-account/addon-options.php:164
+#: add-on/user-account/addon-options.php:166
 msgid "Page FAIL"
 msgstr "Страница FAIL"
 
-#: add-on/user-account/addon-options.php:172
+#: add-on/user-account/addon-options.php:174
 msgid "The successful payment page"
 msgstr "Страница успешного платежа"
 
@@ -2656,44 +2569,44 @@ msgstr "Страница успешного платежа"
 msgid "Payments"
 msgstr "Платежи"
 
-#: add-on/user-account/index.php:292
+#: add-on/user-account/index.php:295
 msgid "The change in the balance"
 msgstr "Изменение баланса"
 
-#: add-on/user-account/index.php:322
+#: add-on/user-account/index.php:325
 msgid "Deposit"
 msgstr "Пополнить"
 
-#: add-on/user-account/index.php:324
+#: add-on/user-account/index.php:327
 msgid "To recharge your account"
 msgstr "Для пополнения своего личного счета"
 
-#: add-on/user-account/index.php:326
+#: add-on/user-account/index.php:329
 msgid "Enter the amount required"
 msgstr "Введите требуемую сумму"
 
-#: add-on/user-account/index.php:348 add-on/user-account/index.php:376
+#: add-on/user-account/index.php:351 add-on/user-account/index.php:379
 #: admin-pages.php:110 recall.php:84
 msgid "Personal account"
 msgstr "Личный кабинет"
 
-#: add-on/user-account/index.php:448
+#: add-on/user-account/index.php:451
 msgid "Income dynamics"
 msgstr "Динамика платежей"
 
-#: add-on/user-account/index.php:449
+#: add-on/user-account/index.php:452
 msgid "The time period"
 msgstr "Период времени"
 
-#: add-on/user-account/index.php:451
+#: add-on/user-account/index.php:454
 msgid "\"Days/Months\""
 msgstr "\"Дни/Месяцы\""
 
-#: add-on/user-account/index.php:451
+#: add-on/user-account/index.php:454
 msgid "\"Payments (PCs.)\""
 msgstr "\"Платежи (шт.)\""
 
-#: add-on/user-account/index.php:451
+#: add-on/user-account/index.php:454
 msgid "\"Income (thousands)\""
 msgstr "\"Доход (тыс.)\""
 
@@ -3035,19 +2948,19 @@ msgstr "Используемый шаблон"
 msgid "Not connected"
 msgstr "Не подключен"
 
-#: functions-rcl.php:132
+#: functions-rcl.php:140
 msgid "Error! Perhaps this addition does not support ajax loading"
 msgstr "Ошибка! Данное дополнениене поддерживает ajax-загрузку"
 
-#: functions-rcl.php:197
+#: functions-rcl.php:205
 msgid "The site works using the functionality of the plugin"
 msgstr "Сайт использует функционал плагина"
 
-#: functions-rcl.php:311
+#: functions-rcl.php:319
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: functions-rcl.php:435
+#: functions-rcl.php:443
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
@@ -3549,6 +3462,62 @@ msgstr "Блок с основной информацией профиля"
 #: widget.php:159
 msgid "Control panel"
 msgstr "Панель управления"
+
+#~ msgid "Type of rating for records"
+#~ msgstr "Тип рейтинга для публикаций"
+
+#~ msgid "Type of rating comments"
+#~ msgstr "Тип рейтинга для комментариев"
+
+#~ msgid "Output rating to archive page"
+#~ msgstr "Вывод рейтинга на архивных страницах"
+
+#~ msgid "The rating publications"
+#~ msgstr "Рейтинг публикаций"
+
+#~ msgid "Points for ranking publications"
+#~ msgstr "Баллы для рейтинга публикаций"
+
+#~ msgid "The influence of rating posts on the overall rating"
+#~ msgstr "Влияние рейтинга публикаций на общий рейтинг"
+
+#~ msgid "Rating review"
+#~ msgstr "Рейтинг комментариев"
+
+#~ msgid "Points for comment rating"
+#~ msgstr "Баллы для рейтинга комментариев"
+
+#~ msgid "The influence of the rating review on the overall rating"
+#~ msgstr "Влияние рейтинга отзывов на общий рейтинг"
+
+#~ msgid ""
+#~ "You cant change the rating of a product that was purchased personally!"
+#~ msgstr ""
+#~ "Вы не можете влиять на рейтинг товара, который не приобретали лично!"
+
+#~ msgid "vote"
+#~ msgstr "голосовал"
+
+#~ msgid "entry"
+#~ msgstr "запись"
+
+#~ msgid "For user comments no one voted"
+#~ msgstr "За комментарии еще никто не голосовал"
+
+#~ msgid "For publishing user nobody voted"
+#~ msgstr "За публикации еще никто не голосовал"
+
+#~ msgid "recording"
+#~ msgstr "запись"
+
+#~ msgid "For publications and user comments no one voted"
+#~ msgstr "За публикации и комментарии еще не голосовали"
+
+#~ msgid "view messeges"
+#~ msgstr "смотреть сообщения"
+
+#~ msgid "for recording"
+#~ msgstr "для записи"
 
 #~ msgid "Link"
 #~ msgstr "Ссылка"

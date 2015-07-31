@@ -62,7 +62,7 @@ function rcl_get_publics_options_page($content){
                 )
             )
         ),
-        
+
         $opt->option_block(
             array(
                 $opt->title(__('Category','rcl')),
@@ -133,28 +133,28 @@ function rcl_get_publics_options_page($content){
 				$opt->child(
                     array('name'=>'type_text_editor','value'=>0),
                     array(
-                        $opt->label(__('Размеры изображений','rcl')),
+                        $opt->label(__('Images sizes','rcl')),
                         $opt->option('text',array(
 							'name'=>'max_sizes_attachment',
 							'default'=>'800,600'
 						)),
                         $opt->notice(__('Default: 800,600','rcl')),
-						
-						$opt->label(__('Доступные кнопки редактора','rcl')),
+
+						$opt->label(__('Available buttons Editor','rcl')),
                         $opt->option('checkbox',array(
 							'name'=>'rcl_editor_buttons',
-							'options'=>array('header'=>'Подзаголовок','text'=>'Текст','image'=>'Загрузка изображений','html'=>'HTML')
-						))                       
+							'options'=>array('header'=>'Подзаголовок','text'=>'Текст','image'=>__('Upload images','rcl'),'html'=>'HTML')
+						))
                     )
                 ),
 				$opt->child(
                     array('name'=>'type_text_editor','value'=>1),
                     array(
-                        $opt->label(__('Вид редактора WP','rcl')),
+                        $opt->label(__('View editor WP','rcl')),
                         $opt->option('checkbox',array(
 							'name'=>'wp_editor',
-							'options'=>array(1=>'Визуальный редактор',2=>'HTML-редактор')
-						)),						
+							'options'=>array(1=>__('Visual Editor','rcl'),2=>__('HTML-Editor','rcl'))
+						)),
                         $opt->label(__('Number of images in the gallery Wp-Recall','rcl')),
                         $opt->option('number',array('name'=>'count_image_gallery','default'=>10)),
 
@@ -206,7 +206,7 @@ function rcl_get_publics_options_page($content){
                 $opt->notice(__('If used in moderation: To allow the user to see their publication before it is moderated, it is necessary to have on the website right below the Author','rcl'))
             )
         ),
-		
+
 		$opt->option_block(
             array(
                 $opt->title(__('Editing','rcl')),
@@ -225,7 +225,7 @@ function rcl_get_publics_options_page($content){
 				$opt->notice(__('Limit editing time of publication in hours, by default: unlimited','rcl'))
             )
         ),
-		
+
 		$opt->option_block(
             array(
                 $opt->title(__('Tags','rcl')),
