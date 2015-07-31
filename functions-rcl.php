@@ -72,10 +72,8 @@ function rcl_tab($id,$callback,$name='',$args=false){
 }
 
 function rcl_crop($filesource,$width,$height,$file){
-    if (!class_exists('Rcl_Crop')){
-        require_once(RCL_PATH.'functions/rcl_crop.php');
-        $crop = new Rcl_Crop();
-    }
+    if (!class_exists('Rcl_Crop')) require_once(RCL_PATH.'functions/rcl_crop.php');
+	$crop = new Rcl_Crop();
     return $crop->get_crop($filesource,$width,$height,$file);
 }
 
@@ -478,7 +476,7 @@ function rcl_get_postmeta($post_id){
             return $show_custom_field;
 	}
 }
-add_filter('author_link','rcl_author_link',99,2);
+add_filter('author_link','rcl_author_link',999,2);
 function rcl_author_link($link, $author_id){
 	global $rcl_options;
 	if($rcl_options['view_user_lk_rcl']!=1) return $link;

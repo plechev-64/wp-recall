@@ -17,8 +17,8 @@ class Rcl_Userlist{
 	}
 
 	function get_args(){
-		if(isset($_POST['name-user'])) $username = sanitize_user($_POST['name-user']);
-		if($_POST['orderuser']==1){ //по имени
+		if(isset($_GET['name-user'])) $username = sanitize_user($_GET['name-user']);
+		if($_GET['orderuser']==1){ //по имени
                     $args = array(
                         'meta_query'   => array(
                             'relation' => 'OR',

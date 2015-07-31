@@ -645,15 +645,20 @@ function rcl_edit_post_link($admin_url, $post_id){
 function rcl_get_edit_post_button($content){
 	global $post,$user_ID,$current_user,$rcl_options;
 	if(is_tax('groups')||$post->post_type=='page') return $content;
+	
+	if(!current_user_can('edit_post', $post->ID)) return $content;
 
 	get_currentuserinfo();
 	$user_info = get_userdata($current_user->ID);
 
+	if($post->post_author!=$user_ID){
+		$author_info = get_userdata($post->post_author);
+		if($user_info->user_level < $author_info->user_level) return $content;
+	}
+	
 	if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
 
 	$access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;
-
-	if($user_ID!=$post->post_author&&$user_info->user_level < $access) return $content;
 
 	if( array_search($user_info->user_level, $rcl_options['front_editing']) || $user_info->user_level >= $access ) {
 

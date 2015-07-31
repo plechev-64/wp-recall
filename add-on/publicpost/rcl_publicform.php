@@ -10,11 +10,13 @@ class Rcl_PublicForm {
 	public $accept;
 	public $type_editor;
 	public $wp_editor;
+	public $can_edit;
 
     function __construct($atts){
         global $editpost,$group_id,$rcl_options,$user_ID,$formData;
 
 		$editpost = false;
+		$this->can_edit = true;
 
         extract(shortcode_atts(array(
             'cats' => false,
@@ -54,11 +56,11 @@ class Rcl_PublicForm {
 
             if($this->post_type=='post-group'){
 
-                if(!rcl_can_user_edit_post_group($this->post_id)&&!current_user_can('edit_post', $this->post_id)) return false;
+                if(!rcl_can_user_edit_post_group($this->post_id)&&!current_user_can('edit_post', $this->post_id)) $this->can_edit = false;
 
                 $group_id = rcl_get_group_id_by_post($this->post_id);
 
-            }else if(!current_user_can('edit_post', $this->post_id)) return false;
+            }else if(!current_user_can('edit_post', $this->post_id)) $this->can_edit = false;
 
             $form_id = get_post_meta($this->post_id,'publicform-id',1);
             if($form_id) $this->form_id = $form_id;
@@ -210,6 +212,8 @@ class Rcl_PublicForm {
         global $user_ID,$formFields;
 
             if(!$user_ID) return '<p align="center">'.__('You must be logged in to post. Login or register','rcl').'</p>';
+			
+			if(!$this->can_edit) return '<p align="center">'.__('Вы не можете редактировать данную публикацию :(','rcl').'</p>';
 
             if(!$this->user_can()){
                 if($this->post_type=='post-group') return '<div class="public-post-group">'

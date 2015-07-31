@@ -725,6 +725,7 @@ function rcl_get_profile_scripts($script){
 				
 				image.Jcrop({	
 					aspectRatio: 1,
+					minSize:[150,150],
 					onSelect:function(c){								
 						image.attr('data-width',width).attr('data-height',height).attr('data-x',c.x).attr('data-y',c.y).attr('data-w',c.w).attr('data-h',c.h);
 					}

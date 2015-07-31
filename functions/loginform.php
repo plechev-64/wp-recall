@@ -1,7 +1,11 @@
 <?php
 
 function rcl_referer_url($typeform=false){
-	$protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
+	echo rcl_get_current_url($typeform);
+}
+
+function rcl_get_current_url($typeform=false){
+	$protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://':  'https://';
     $url = $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
     if ( false !== strpos($url, '?action-rcl') ){
@@ -16,7 +20,7 @@ function rcl_referer_url($typeform=false){
     if(!$host) $host = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
     $host = $protocol.$host;
     if($typeform=='remember') $host = rcl_format_url($host).'action-rcl=remember&success=true';
-    echo $host;
+    return $host;
 }
 
 //Добавляем фильтр для формы авторизации

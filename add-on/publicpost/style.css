@@ -403,7 +403,6 @@ a.rcl-delete-post i{
 
 }
 #rcl-preview{
-	position: absolute;
     top: 0;
     left: 0;
     background-color: #fff;
@@ -413,7 +412,7 @@ a.rcl-delete-post i{
 }
 #rcl-preview iframe,
 #rcl-preview img{
-	max-width:100%;
+	
 }
 #rcl-preview .rcl-notice-preview{
     padding: 10px;

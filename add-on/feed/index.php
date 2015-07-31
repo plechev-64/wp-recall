@@ -28,13 +28,17 @@ function rcl_get_feed_button($userid){
 	global $user_ID;
 
 	if(!$user_ID||$user_ID==$userid) return false;
+	
+	$feed = rcl_get_user_feed($user_ID, $userid);
+	
+	$feed_status = (!$feed)? __('Subscribe','rcl'): __('Unsubscribe','rcl');
+	$icon = (!$feed)? 'fa-bell': 'fa-bell-slash';
 
-	$feed_status = (!rcl_get_user_feed($user_ID, $userid))? __('Subscribe','rcl'): __('Unsubscribe','rcl');
-
-	$button = '<span id="feed-control-'.$userid.'" class="feed-control"';
+	$button = '<span class="feed-control feed-control-'.$userid.'"';
 	if(!is_single()) $button .= ' class="alignright"';
 	$button .= '>'
-			.rcl_get_button($feed_status,'#',array('icon'=>'fa-twitter','class'=>'feed-user','id'=>'feed-'.$userid,'attr'=>'title='.$feed_status));
+			.rcl_get_button($feed_status,'#',array('icon'=>$icon,'class'=>'feed-user','attr'=>'data-feed='.$userid.' title='.$feed_status));
+	$button .= '</span>';
 
 	return $button;
 }
@@ -63,7 +67,7 @@ class Rcl_Feed{
         endif;
 
     }
-	
+
 	//получаем пользователей которые подписаны на указанного юзера
 	function get_users_feed($user_id=false){
 		global $wpdb,$user_ID;
@@ -72,7 +76,7 @@ class Rcl_Feed{
 	}
 
 	function get_feedout_button($user_id){
-		return '<div id="feed-control-'.$userid.'" class="alignright feed-control">'.rcl_get_button(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-twitter','class'=>'feed-user','id'=>'feed-'.$user_id,'attr'=>'title='.__('Unsubscribe','rcl'))).'</div>';
+		return '<div class="alignright feed-control feed-control-'.$userid.'">'.rcl_get_button(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-bell-slash','class'=>'feed-user','attr'=>'data-feed='.$userid.' title='.__('Unsubscribe','rcl'))).'</div>';
 	}
 
 
@@ -80,19 +84,19 @@ class Rcl_Feed{
 		global $wpdb,$user_ID;
 
 		$feed_count = rcl_get_count_feed($author_lk);
-		
-		if(!$feed_count) $feed_info = __('Subscribers','rcl').': <span id="feed-count">'.$feed_count.'</span>';
-		else $feed_info = '<a class="count_users_feed" id="user-feed-'.$author_lk.'">'.__('Subscribers','rcl').': <span id="feed-count">'.$feed_count.'</span></a>';
-		
+
+		if(!$feed_count) $feed_info = __('Subscribers','rcl').': '.$feed_count;
+		else $feed_info = '<a class="count_users_feed" id="user-feed-'.$author_lk.'">'.__('Subscribers','rcl').': '.$feed_count.'</a>';
+
 		$feed_info = '<div class="feed-counter">'.$feed_info.'</div>';
-		
-		if($user_ID==$author_lk){ 
+
+		if($user_ID==$author_lk){
 			$cnt = rcl_count_user_feed($author_lk);
 			if($cnt){
-				$feed_info .= '<div class="feed-current"><a class="all-users-feed">'.__('My subscriptions','rcl').': '.$cnt.'</a></div>';
+				$feed_info .= '<div class="feed-current"><a class="all-users-feed">'.__('My subscriptions','rcl').': <span id="feed-count">'.$cnt.'</span></a></div>';
 			}
 		}
-		
+
 		return $feed_info;
 	}
 
@@ -106,20 +110,13 @@ class Rcl_Feed{
 			return $feedlist;
 		}
 
-		/*$comments = $this->get_comments_feed();
-		
-		if($comments) $loop = $this->feed_comment_loop($comments);*/
 
 		$feedlist = '<p class="alignright" id="feed-button">
 		'.rcl_get_button(__('Comments','rcl'),'#',array('icon'=>false,'class'=>'get-feed ','id'=>'commentfeed')).'
 		'.rcl_get_button(__('Publication','rcl'),'#',array('icon'=>false,'class'=>'get-feed active','id'=>'postfeed')).'
-		</p>		
-		<div id="feedlist">';
-		
-		/*$feedlist .= '<h2>'.__('Comments','rcl').'</h2>';
+		</p>';
 
-		if(!$loop) $feedlist .= '<h3 align="center">'.__('No comment from the users you follow, as well as any responses to your comments. More activity!','rcl').'</h3>';
-		else $feedlist .= $loop;*/
+		$feedlist .= '<div id="feedlist">';
 		$feedlist .= rcl_get_public_feed($user_ID);
 		$feedlist .= '</div>';
 
@@ -131,9 +128,9 @@ class Rcl_Feed{
 	function feed_comment_loop($comments_feed){
 
 		global $user_ID,$wpdb,$comment;
-		
+
 		$postsids = array();
-		
+
 		$comments_children=$wpdb->get_results(
 			$wpdb->prepare("SELECT      com2.comment_ID,com2.comment_parent,com2.user_id,com2.comment_post_ID,com2.comment_content,com2.comment_date
                         FROM        $wpdb->comments com1
@@ -143,62 +140,107 @@ class Rcl_Feed{
 			ORDER BY com2.comment_date DESC limit %d",$user_ID,40));
 
 		if($comments_feed)
-			foreach($comments_feed as $c){ 
-				$postsids[] = $c->comment_post_ID; 
+			foreach($comments_feed as $c){
+				$postsids[] = $c->comment_post_ID;
 			}
 
 		if($postsids)
 			$posts_title = $wpdb->get_results($wpdb->prepare("SELECT ID,post_title FROM $wpdb->posts WHERE ID IN (".rcl_format_in($postsids).")",$postsids));
-		
+
 		$titles = array();
 		if($posts_title){
 			foreach($posts_title as $p){
 				$titles[$p->ID] = $p->post_title;
 			}
 		}
-		
+
 		if($comments_feed){
-			foreach($comments_feed as $comment){
-				
-				if($comment->user_id==$user_ID){ //если автор комментария я сам, то проверяю на наличие дочерних комментариев
+                   foreach($comments_feed as $comment){
 
-                    if($comments_children){
-						
-						$childrens = false;
-						$a=0;
-						foreach((array)$comments_children as $child_com){
-							if($child_com->comment_parent==$comment->comment_ID){
-								$childrens[$a++] = $child_com;
-							}
-						}
+			if($comment->user_id==$user_ID){ //если автор комментария я сам, то проверяю на наличие дочерних комментариев
 
-						if($childrens){ //если есть, то вывожу свой и дочерний
+                            if($comments_children){
 
-							$feedlist .= $this->get_feed_comment($comment,$titles);
+                                $childrens = false;
+                                $a=0;
+                                foreach((array)$comments_children as $child_com){
+                                        if($child_com->comment_parent==$comment->comment_ID){
+                                                $childrens[$a++] = $child_com;
+                                        }
+                                }
 
-							$feedlist .= '<div class="comment-child">';
-							$feedlist .= $this->get_childrens($childrens);
-							$feedlist .='</div>';
-						}
-						
+                                if($childrens){ //если есть, то вывожу свой и дочерний
+
+                                        $comments .= $this->get_feed_comment($comment,$titles);
+
+                                        $comments .= '<div class="comment-child">';
+                                        $comments .= $this->get_childrens($childrens);
+                                        $comments .='</div>';
+                                }
+
+                            }
+
+			}else{ //если автор комментария не я
+                            if($comment->comment_parent!=0){ //то проверяю, есть ли является ли он дочерним комментарием
+                                    $parent = $wpdb->get_row($wpdb->prepare("SELECT * FROM $wpdb->comments WHERE comment_ID = '%d'",$comment->comment_parent));
+                                    if($parent->user_id!=$user_ID){ //если автор родительского комментария не я, то вывожу
+                                            $comments .= $this->get_feed_comment($comment,$titles);
+                                    }
+                            }else{ //если комментарий не дочерний, то вывожу
+                                    $comments .= $this->get_feed_comment($comment,$titles);
+                            }
+                        }
                     }
+                    /*foreach($comments_feed as $k=>$comment){
 
-				}else{ //если автор комментария не я
-					if($comment->comment_parent!=0){ //то проверяю, есть ли является ли он дочерним комментарием
-						$parent = $wpdb->get_row($wpdb->prepare("SELECT * FROM $wpdb->comments WHERE comment_ID = '%d'",$comment->comment_parent));
-						if($parent->user_id!=$user_ID){ //если автор родительского комментария не я, то вывожу
-							$feedlist .= $this->get_feed_comment($comment,$titles);
-						}
-					}else{ //если комментарий не дочерний, то вывожу
-						$feedlist .= $this->get_feed_comment($comment,$titles);
-					}
-				}
-			}
+			if($comment->user_id==$user_ID){ //если автор комментария я сам, то проверяю на наличие дочерних комментариев
+
+                            if($comments_children){
+
+                                $childrens = false;
+                                $a=0;
+                                foreach((array)$comments_children as $child_com){
+                                        if($child_com->comment_parent==$comment->comment_ID){
+                                            $a++;
+                                                $child_com->post_type = 'comment';
+                                                $childrens[$a] = $child_com;
+                                        }
+                                }
+
+                                if($childrens){ //если есть, то вывожу свой и дочерний
+                                    $comments[$k] = $comment;
+                                    $comments[$k]->post_date = $childrens[1]->comment_date;
+                                    $comments[$k]->post_type = 'comment';
+                                    $comments[$k]->childrens = $childrens;
+                                    $comments[$k]->parent_comment = $titles[$comment->comment_post_ID];
+                                }
+
+                            }
+
+			}else{ //если автор комментария не я
+                            if($comment->comment_parent!=0){ //то проверяю, есть ли является ли он дочерним комментарием
+                                    $parent = $wpdb->get_row($wpdb->prepare("SELECT * FROM $wpdb->comments WHERE comment_ID = '%d'",$comment->comment_parent));
+                                    if($parent->user_id!=$user_ID){ //если автор родительского комментария не я, то вывожу
+                                            $comments[$k] = $comment;
+                                            $comments[$k]->post_type = 'comment';
+                                            $comments[$k]->post_date = $comment->comment_date;
+                                            $comments[$k]->parent_comment = $titles[$comment->comment_post_ID];
+                                    }
+                            }else{ //если комментарий не дочерний, то вывожу
+                                    $comments[$k] = $comment;
+                                    $comments[$k]->post_type = 'comment';
+                                    $comments[$k]->post_date = $comment->comment_date;
+                                    $comments[$k]->parent_comment = $titles[$comment->comment_post_ID];
+                            }
+                        }
+
+                    }*/
+
 		}else{
-			return false;
+                    return false;
 		}
 
-		return $feedlist;
+		return $comments;
 	}
 
         function get_childrens($childrens){
@@ -225,7 +267,7 @@ class Rcl_Feed{
 
 			$userid = intval($_POST['userid']);
 			if(!$userid) return false;
-			
+
 				$page = intval($_POST['page']);
 				if(!$page) $page = 1;
 
@@ -239,7 +281,7 @@ class Rcl_Feed{
 			if($cnt){
 
 				$users_feed = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE meta_key = 'rcl_feed' AND meta_value='%d' ORDER BY umeta_id DESC LIMIT %d,%d",$userid,$start,$inpage));
-				
+
 				$now = count($users_feed);
 
 				$names = rcl_get_usernames($users_feed,'user_id');
@@ -290,9 +332,12 @@ class Rcl_Feed{
 
 		$feed_list = '<div id="users-feed-'.$user_ID.'" class="float-window-recall">
 			 <div id="close-votes-'.$user_ID.'" class="close alignright"><i class="fa fa-times-circle"></i></div>
-				<div>';
+				<div class="rcl-feedlist">';
 		foreach((array)$users_feed as $user){
-			$feed_list .= '<a href="'.get_author_posts_url($user->meta_value).'" title="'.$names[$user->meta_value].'">'.get_avatar($user->meta_value,50).'</a>';
+			$feed_list .= '<span>
+					<a href="'.get_author_posts_url($user->meta_value).'" title="'.$names[$user->meta_value].'">'.get_avatar($user->meta_value,50).'</a>'
+					.rcl_get_feed_button($user->meta_value)
+				.'</span>';
 		}
 		$feed_list .= '</div></div>';
 
@@ -313,30 +358,30 @@ class Rcl_Feed{
 		if(!$id_user) return false;
 
 		if($user_ID){
-			
+
 			$feed = get_user_meta($user_ID,'rcl_feed');
-			
+
 			if(!$feed||array_search($id_user,$feed)===false){
-				
+
 				$res = add_user_meta($user_ID, 'rcl_feed', $id_user);
 
 				if($res){
-					
+
 					do_action('rcl_add_user_feed',$id_user);
 
 					$log['int']=100;
 					$log['count']=1;
-					$log['recall'] = rcl_get_button(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-twitter','class'=>'feed-user ','id'=>'feed-'.$id_user));
+					$log['recall'] = rcl_get_button(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-bell-slash','class'=>'feed-user','attr'=>'data-feed='.$id_user));
 				}
 			}else{
-				
+
 				delete_user_meta($user_ID,'rcl_feed',$id_user);
 
 				do_action('rcl_remove_user_feed',$id_user);
 
 				$log['int']=100;
 				$log['count']=-1;
-				$log['recall'] = rcl_get_button(__('Subscribe','rcl'),'#',array('icon'=>'fa-twitter','class'=>'feed-user ','id'=>'feed-'.$id_user));
+				$log['recall'] = rcl_get_button(__('Subscribe','rcl'),'#',array('icon'=>'fa-bell','class'=>'feed-user','attr'=>'data-feed='.$id_user));
 			}
 		}
 		echo json_encode($log);
@@ -377,30 +422,30 @@ class Rcl_Feed{
 
 	function get_comments_feed(){
 		global $wpdb,$user_ID;
-		
+
 		$feeds = array();
 
 		$feed_users = get_user_feeds($user_ID);
 
 		foreach((array)$feed_users as $user){ $feeds[] = $user->meta_value; }
-		
+
 		if($feeds){
-			
+
 			$feeds[] = $user_ID;
 			$comments_feed = $wpdb->get_results($wpdb->prepare("SELECT cts.comment_ID,cts.comment_parent,cts.user_id,cts.comment_post_ID,cts.comment_content,cts.comment_date FROM $wpdb->comments as cts WHERE cts.user_id IN (".rcl_format_in($feeds).") && cts.comment_approved = '1' GROUP BY cts.comment_ID ORDER BY cts.comment_date DESC LIMIT 40",$feeds));
 
-			if(!$comments_feed)				
+			if(!$comments_feed)
 				$comments_feed = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->comments WHERE user_id IN (".rcl_format_in($feeds).") && comment_approved = '1' ORDER BY comment_date DESC LIMIT 40",$feeds));
-			
+
         }else{
-				
+
 			$comments_feed=$wpdb->get_results($wpdb->prepare("
 				SELECT      com1.comment_ID,com1.comment_parent,com1.user_id,com1.comment_post_ID,com1.comment_content,com1.comment_date
 				FROM        $wpdb->comments com1
 				INNER JOIN  $wpdb->comments com2
 				on com2.comment_parent = com1.comment_ID
 				where com1.user_id = '%d'
-				GROUP BY com1.comment_ID ORDER BY com1.comment_date DESC limit %d",$user_ID,40));                      
+				GROUP BY com1.comment_ID ORDER BY com1.comment_date DESC limit %d",$user_ID,40));
         }
 		return $comments_feed;
 	}
@@ -447,7 +492,7 @@ class Rcl_Feed{
 					get_page_users_feed(page);
 					return false;
 				});
-				jQuery('#more-users-feed').live('click',function(){									
+				jQuery('#more-users-feed').live('click',function(){
 					var page = jQuery(this).data('page');
 					get_page_users_feed(page);
 					return false;
@@ -475,13 +520,13 @@ class Rcl_Feed{
                 }
 			/* Подписываемся на пользователя */
 				jQuery('.feed-user').live('click',function(){
-					var id_user = parseInt(jQuery(this).attr('id').replace(/\D+/g,''));
+					var id_user = jQuery(this).data('feed');
 					var dataString = 'action=add_feed_user_recall&id_user='+id_user;
 					jQuery.ajax({
 						".$ajaxdata."
 						success: function(data){
 							if(data['int']==100){
-								 jQuery('#feed-control-'+id_user).empty().html(data['recall']);
+								 jQuery('.feed-control-'+id_user).empty().html(data['recall']);
 								 var feed_count = jQuery('#feed-count').html();
 								 feed_count = parseInt(feed_count) + parseInt(data['count']);
 								 jQuery('#feed-count').html(feed_count);
@@ -497,7 +542,7 @@ class Rcl_Feed{
 					if(jQuery(this).hasClass('active')) return false;
 					rcl_preloader_show('#feedlist');
 					jQuery('.get-feed').removeClass('active');
-					jQuery(this).addClass('active');				
+					jQuery(this).addClass('active');
 					jQuery('#feedlist').slideUp();
 					var dataString = 'action=get_comments_feed_recall';
 					jQuery.ajax({
@@ -505,7 +550,7 @@ class Rcl_Feed{
 						success: function(data){
 							if(data['int']==100){
 								jQuery('#feedlist').delay(1000).queue(function () {jQuery('#feedlist').html(data['recall']);jQuery('#feedlist').dequeue();});
-								jQuery('#feedlist').slideDown(1000);								
+								jQuery('#feedlist').slideDown(1000);
 							} else {
 								rcl_notice('Ошибка!','error');
 							}
@@ -519,7 +564,7 @@ class Rcl_Feed{
 					if(jQuery(this).hasClass('active')) return false;
 					rcl_preloader_show('#feedlist');
 					jQuery('.get-feed').removeClass('active');
-					jQuery(this).addClass('active');					
+					jQuery(this).addClass('active');
 					jQuery('#feedlist').slideUp();
 					var dataString = 'action=get_posts_feed_recall';
 					jQuery.ajax({
@@ -580,7 +625,7 @@ function rcl_get_public_feed($user_id=false){
 
             ));
 
-            if($group_ar){
+            /*if($group_ar){
                 $posts_groups['tax_query'] = array(
                     array(
                         'taxonomy' => 'groups',
@@ -589,7 +634,7 @@ function rcl_get_public_feed($user_id=false){
                         'operator' => 'IN',
                     )
                 );
-            }
+            }*/
 
             //if($active_addons['video-gallery']) include($active_addons['video-gallery']['src'].'class_video.php');
 
@@ -600,29 +645,53 @@ function rcl_get_public_feed($user_id=false){
                     $posts_list[$posts_gr->ID] = (array)$posts_gr;
             }
 
+            /*if(!$posts_list){
+                    return '<h3>'.__('Publications yet','rcl').'</h3><p>'.__('Maybe later, someone will post the news.','rcl').'</p>';
+            }*/
+
+            /*$feed_coms = $Rcl_Feed->get_comments_feed();
+            if($feed_coms) $comments = $Rcl_Feed->feed_comment_loop($feed_coms);
+
+            foreach($comments as $comment){
+                $posts_list[] = (array)$comment;
+            }*/
+
             if(!$posts_list){
                     return '<h3>'.__('Publications yet','rcl').'</h3><p>'.__('Maybe later, someone will post the news.','rcl').'</p>';
             }
 
             $posts_list = rcl_multisort_array($posts_list, 'post_date', SORT_DESC);
-			
-			$posts_list = apply_filters('feed_posts_array',$posts_list);
 
-            $feedlist .= '<h2>'.__('Publication','rcl').'</h2>';
+            //print_r($posts_list);
+
+            $posts_list = apply_filters('feed_posts_array',$posts_list);
+
+            $feedlist .= '<h2>'.__('Публикации','rcl').'</h2>';
 
             foreach($posts_list as $post){
 
-				$post = (object)$post;
-				setup_postdata($post);
-				if(!$post->ID) continue;
-				
-				if(rcl_get_template_path('feed-'.$post->post_type.'.php',__FILE__)) 
-					$feedlist .= rcl_get_include_template('feed-'.$post->post_type.'.php',__FILE__);
-				else 
-					$feedlist .= rcl_get_include_template('feed-post.php',__FILE__);
-                    
+                $post = (object)$post;
+
+                if(!$post->ID&&!$post->comment_ID) continue;
+
+                if($post->ID) setup_postdata($post);
+
+                if(rcl_get_template_path('feed-'.$post->post_type.'.php',__FILE__))
+                        $feedlist .= rcl_get_include_template('feed-'.$post->post_type.'.php',__FILE__);
+                else $feedlist .= rcl_get_include_template('feed-post.php',__FILE__);
+
+                if($post->childrens){
+                    $feedlist .= '<div class="comment-child">';
+                    foreach($post->childrens as $post){
+                        $post = (object)$post;
+                        $feedlist .= rcl_get_include_template('feed-'.$post->post_type.'.php',__FILE__);
+                    }
+                    $feedlist .= '</div>';
+                }
+
             }
-			wp_reset_query();
+
+            wp_reset_query();
 
             return $feedlist;
 

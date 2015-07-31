@@ -55,3 +55,32 @@
     border:none!important;
     background:none!important;
 }
+.float-window-recall .rcl-feedlist{
+
+}
+.float-window-recall .rcl-feedlist > span{
+    float: left;
+
+    position: relative;
+}
+.float-window-recall .rcl-feedlist .feed-control{
+    top: 0px;
+
+    right: 3px;
+    position: absolute;
+}
+.float-window-recall .rcl-feedlist .feed-control a{
+    display: block;
+
+    width: 18px;
+    overflow: hidden;
+    border-radius: 0px;
+    border: 0;
+    font-size: 13px;
+    background: rgba(255,255,255,0.8);
+    padding: 3px;
+}
+.float-window-recall .rcl-feedlist .feed-control a i{
+    margin: 0;
+
+}
