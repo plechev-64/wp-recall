@@ -140,8 +140,8 @@ function rcl_get_ajax_pagenavi($userid,$post_type){
             slideWidth: 20,
             infiniteLoop:false,
             slideMargin: 0,
-            moveSlides:1
-		});	
+            moveSlides:10
+		});
 	});
 	</script>';
 	return $navi;
