@@ -127,7 +127,7 @@ function rcl_get_ajax_pagenavi($userid,$post_type){
 	for($a=0;$a<$pages;$a++){
 		$navi .= '<li><a type="'.$post_type.'" data="'.$a*$in_page.'" class="sec_block_button';
 		if($a==0)$navi .= ' active';
-		$navi .= '" href="#"><i class="fa fa-caret-right"></i>'.++$page.'</a></li>';
+		$navi .= '" href="#">'.++$page.'</a></li>';
 	}
 	$slider = str_replace('-','',$post_type);
 	$navi .= '</ul>
@@ -137,7 +137,7 @@ function rcl_get_ajax_pagenavi($userid,$post_type){
             pager:false,
             minSlides: 1,
             maxSlides: 20,
-            slideWidth: 20,
+            slideWidth: 25,
             infiniteLoop:false,
             slideMargin: 0,
             moveSlides:10
