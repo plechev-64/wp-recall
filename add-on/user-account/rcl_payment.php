@@ -22,8 +22,8 @@ class Rcl_Payment{
         global $rmag_options;
         if($rmag_options['connect_sale']==1) $this->robokassa();
 	if($rmag_options['connect_sale']==2) $this->interkassa();
-        if($rmag_options['connect_sale']==3) $this->yandexkassa();
-        if($rmag_options['connect_sale']==4) $this->walletone();
+        if($rmag_options['connect_sale']==3) $this->walletone();
+        if($rmag_options['connect_sale']==4) $this->yandexkassa();
 
         if($this->pay) do_action('payment_rcl',$this->user,$this->summ,$this->id_pay,$this->type);
         echo 'OK';
@@ -129,7 +129,7 @@ class Rcl_Payment{
             }
         }
 
-        if($code) $this->mail_error($hash);
+        if($code) rcl_mail_payment_error($hash);
 
         return $code;
     }
@@ -147,6 +147,8 @@ class Rcl_Payment{
 
     function walletone(){
         global $rmag_options;
+
+        $secret_key = $rmag_options['WO_SECRET_KEY'];
 
         $this->summ = $_REQUEST["WMI_PAYMENT_AMOUNT"];
         $this->id_pay = $_REQUEST["WMI_PAYMENT_NO"];
@@ -178,20 +180,25 @@ class Rcl_Payment{
           {
             //Конвертация из текущей кодировки (UTF-8)
             //необходима только если кодировка магазина отлична от Windows-1251
-            $value = iconv("utf-8", "windows-1251", $value);
+            //$value = iconv("utf-8", "windows-1251", $value);
             $values .= $value;
           }
 
           // Формирование подписи для сравнения ее с параметром WMI_SIGNATURE
 
-          $signature = base64_encode(pack("H*", md5($values . $skey)));
+          $signature = base64_encode(pack("H*", md5($values . $secret_key)));
 
           //Сравнение полученной подписи с подписью W1
 
           if ($signature == $_REQUEST["WMI_SIGNATURE"]){
             if (strtoupper($_REQUEST["WMI_ORDER_STATE"]) == "ACCEPTED"){
               // TODO: Пометить заказ, как «Оплаченный» в системе учета магазина
-              if(!$this->get_pay()) $this->insert_pay();
+              if(!$this->get_pay()){
+                  //print_answer("Ok", "Заказ #" . $_POST["WMI_PAYMENT_NO"] . " оплачен!");
+                  print "WMI_RESULT=" . strtoupper("Ok") . "&";
+                  print "WMI_DESCRIPTION=" .urlencode("Заказ #" . $_POST["WMI_PAYMENT_NO"] . " оплачен!");
+                  $this->insert_pay();
+              }
             }else{
               // Случилось что-то странное, пришло неизвестное состояние заказа
               $this->print_answer("Retry", "Неверное состояние ". $_REQUEST["WMI_ORDER_STATE"]);
@@ -203,7 +210,7 @@ class Rcl_Payment{
     }
 
     function print_answer($result, $description,$signature=false){
-      $this->mail_error($signature);
+      rcl_mail_payment_error($signature);
       print "WMI_RESULT=" . strtoupper($result) . "&";
       print "WMI_DESCRIPTION=" .urlencode($description);
       exit();
@@ -227,7 +234,7 @@ class Rcl_Payment{
                 . "shpa=$this->user:"
                 . "shpb=$this->type"));
 
-        if ($my_crc !=$crc){ $this->mail_error($my_crc); die;}
+        if ($my_crc !=$crc){ rcl_mail_payment_error($my_crc); die;}
 
         if(!$this->get_pay()) $this->insert_pay();
 
@@ -260,12 +267,14 @@ class Rcl_Payment{
         $signStr = implode(':', $data);
         $sign = base64_encode(md5($signStr, true));
 
-        if ($sign !=$ikSign){ $this->mail_error($sign); die;}
+        if ($sign !=$ikSign){ rcl_mail_payment_error($sign); die;}
 
         if(!$this->get_pay()) $this->insert_pay();
     }
 
-    function mail_error($hash=false){
+}
+
+function rcl_mail_payment_error($hash=false){
 	global $rmag_options,$post;
 
 	foreach($_REQUEST as $key=>$R){
@@ -288,13 +297,13 @@ class Rcl_Payment{
 
 	rcl_mail($email, $title, $textmail);
     }
-}
 
 function rcl_payments(){
     global $rmag_options;
-    $reqs = array(0,'InvId','ik_co_id','shopId');
+    $reqs = array(0,'InvId','ik_co_id','WMI_PAYMENT_NO','shopId');
     if(!$rmag_options['connect_sale']) return false;
     if (isset($_REQUEST[$reqs[$rmag_options['connect_sale']]])){
+        //rcl_mail_payment_error();
         $payment = new Rcl_Payment();
     }
 }

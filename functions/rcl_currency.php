@@ -5,6 +5,7 @@ function rcl_get_currency_list(){
     return array(
         'RUB' => array('руб','<i class="fa fa-rub"></i>','<span class="ruble-symbol">P<span>–</span></span>'),
         'UAH' => array('гривен','грн','грн'),
+        'KZT' => array('тенге','тнг','тнг'),
         'USD' => array('dollars','<i class="fa fa-usd"></i>','$'),
         'EUR' => array('euro','<i class="fa fa-eur"></i>','€'),
     );

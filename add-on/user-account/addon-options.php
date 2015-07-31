@@ -49,8 +49,8 @@ function rcl_user_account_options($content){
                         __('Not used','rcl'),
                         __('Robokassa','rcl'),
                         __('Interkassa','rcl'),
-                        __('Yandex.Kassa','rcl').' ('.__('not tested','rcl').')',
-                        __('WalletOne','rcl').' ('.__('not tested','rcl').')'
+                        __('WalletOne','rcl'),
+                        __('Yandex.Kassa','rcl').' ('.__('not tested','rcl').')'
                     )
                 )),
                 $opt->child(
@@ -105,13 +105,11 @@ function rcl_user_account_options($content){
                         'value'=>3
                     ),
                     array(
-                        $opt->title(__('Connection settings Yandex.Kassa','rcl')),
-                        $opt->label(__('ID cash','rcl')),
-                        $opt->option('text',array('name'=>'shopid')),
-                        $opt->label(__('The room showcases','rcl')),
-                        $opt->option('text',array('name'=>'scid')),
-                        $opt->label(__('The secret word','rcl')),
-                        $opt->option('password',array('name'=>'secret_word')),
+                        $opt->title(__('Connection settings WalletOne','rcl')),
+                        $opt->label(__('Merchant ID','rcl')),
+                        $opt->option('text',array('name'=>'WO_MERCHANT_ID')),
+                        $opt->label(__('The secret key','rcl')),
+                        $opt->option('password',array('name'=>'WO_SECRET_KEY'))
                     )
                 ),
                 $opt->child(
@@ -120,11 +118,13 @@ function rcl_user_account_options($content){
                         'value'=>4
                     ),
                     array(
-                        $opt->title(__('Connection settings WalletOne','rcl')),
-                        $opt->label(__('Merchant ID','rcl')),
-                        $opt->option('text',array('name'=>'WO_MERCHANT_ID')),
-                        $opt->label(__('The secret key','rcl')),
-                        $opt->option('password',array('name'=>'WO_SECRET_KEY'))
+                        $opt->title(__('Connection settings Yandex.Kassa','rcl')),
+                        $opt->label(__('ID cash','rcl')),
+                        $opt->option('text',array('name'=>'shopid')),
+                        $opt->label(__('The room showcases','rcl')),
+                        $opt->option('text',array('name'=>'scid')),
+                        $opt->label(__('The secret word','rcl')),
+                        $opt->option('password',array('name'=>'secret_word')),
                     )
                 )
             )
@@ -149,6 +149,7 @@ function rcl_user_account_options($content){
                         'show_option_none' => __('Not selected','rcl'),
                         'echo'             => 0 )
                 ),
+                $opt->notice(__('For WalletOne: URL script','rcl')),
                 $opt->notice(__('For Interkassa: URL of interaction','rcl')),
                 $opt->notice(__('For Yandex.Cash: checkURL and avisoURL','rcl')),
 
@@ -159,6 +160,7 @@ function rcl_user_account_options($content){
                         'show_option_none' => __('Not selected','rcl'),
                         'echo'             => 0 )
                 ),
+                $opt->notice(__('For WalletOne: not use','rcl')),
                 $opt->notice(__('For Interkassa: successful payment URL','rcl')),
 
                 $opt->label(__('Page FAIL','rcl')),

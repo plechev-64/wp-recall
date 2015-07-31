@@ -24,11 +24,11 @@ class Rcl_Payform {
         if($rmag_options['connect_sale']==2){ //если используется интеркасса
             $form = $this->interkassa();
         }
-        if($rmag_options['connect_sale']==3){ //если используется интеркасса
-            $form = $this->yandexkassa();
-        }
-        if($rmag_options['connect_sale']==4){ //если используется единая касса
+        if($rmag_options['connect_sale']==3){ //если используется единая касса
             $form = $this->walletone();
+        }
+        if($rmag_options['connect_sale']==4){ //если используется интеркасса
+            $form = $this->yandexkassa();
         }
 
         $type_p = $rmag_options['type_order_payment'];
@@ -47,7 +47,7 @@ class Rcl_Payform {
 
         $submit = ($this->type==1)? __('Confirm the operation','rcl'): __('Pay through payment system','rcl');
 
-        $curs = array( 'RUB' => 643, 'UAH' => 980, 'USD' => 840, 'EUR' => 978 );
+        $curs = array( 'RUB' => 643, 'UAH' => 980, 'KZT' => 398, 'USD' => 840, 'EUR' => 978 );
         $code_cur = (isset($curs[$rmag_options['primary_cur']]))? $curs[$rmag_options['primary_cur']]: 643;
 
         $fields = array(
@@ -55,8 +55,8 @@ class Rcl_Payform {
             'WMI_PAYMENT_AMOUNT'=>$this->summ.'.00',
             'WMI_CURRENCY_ID'=>$code_cur,
             'WMI_PAYMENT_NO'=>$this->id_pay,
-            'WMI_SUCCESS_URL'=>$rmag_options['page_success_pay'],
-            'WMI_FAIL_URL'=>$rmag_options['page_fail_pay'],
+            'WMI_SUCCESS_URL'=>get_permalink($rmag_options['page_successfully_pay']),
+            'WMI_FAIL_URL'=>get_permalink($rmag_options['page_fail_pay']),
             'WMI_CUSTOMER_ID'=>$this->user,
             'USER_ID'=>$this->user,
             'TYPE_PAY'=>$this->type
