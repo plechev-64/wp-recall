@@ -5,6 +5,9 @@
     width: 100%;
     color:#333;
 }
+.widget .panel_lk_recall {
+    overflow:hidden;
+}
 .panel_lk_recall.floatform{
 	display:none;
 	z-index: 9999;
@@ -36,6 +39,7 @@
 .panel_lk_recall .author-avatar{
 	margin:0 5px 0 0;
 	float: left;
+        position: relative;
 }
 .panel_lk_recall .buttons > a input{
 	display:block;
