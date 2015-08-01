@@ -102,3 +102,7 @@
     height:50px;
 	width:50px;
 }
+.userlist.avatars-list .user-single {
+    margin: 5px 1px;
+    float: left;
+}
