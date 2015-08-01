@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-07-31 15:13+0300\n"
+"POT-Creation-Date: 2015-08-01 14:07+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -46,32 +46,32 @@ msgstr ""
 
 #: add-on/bookmarks/class_bookmark.php:68 add-on/bookmarks/index.php:127
 msgid "In this group don`t have bookmarks"
-msgstr "В этой группе нет закладок"
+msgstr "В этой группе пусто"
 
 #: add-on/bookmarks/class_bookmark.php:155 add-on/bookmarks/index.php:167
-#: add-on/bookmarks/index.php:177 add-on/bookmarks/index.php:267
-#: add-on/bookmarks/index.php:277 add-on/groups/index.php:738
+#: add-on/bookmarks/index.php:177 add-on/bookmarks/index.php:268
+#: add-on/bookmarks/index.php:278 add-on/groups/index.php:738
 msgid "Close"
 msgstr "Закрыть"
 
 #: add-on/bookmarks/class_bookmark.php:157 add-on/bookmarks/index.php:89
 msgid "Group bookmarks"
-msgstr "Группы закладок"
+msgstr "Группы избранного"
 
 #: add-on/bookmarks/class_bookmark.php:163 add-on/bookmarks/index.php:96
 #: add-on/bookmarks/index.php:167 add-on/bookmarks/index.php:177
-#: add-on/bookmarks/index.php:244
+#: add-on/bookmarks/index.php:245
 msgid "Without group"
 msgstr "Без группы"
 
-#: add-on/bookmarks/class_bookmark.php:179 add-on/bookmarks/index.php:220
+#: add-on/bookmarks/class_bookmark.php:179 add-on/bookmarks/index.php:221
 #: functions/recallbar.php:24
 msgid "My bookmarks"
-msgstr "Мои закладки"
+msgstr "Избранное"
 
 #: add-on/bookmarks/class_bookmark.php:180 add-on/bookmarks/index.php:122
 msgid "To filter the bookmarks, click on the desired group"
-msgstr "Фильтруйте закладки нажав на нужную группу"
+msgstr "Фильтруйте избранное нажав на нужную группу"
 
 #: add-on/bookmarks/class_bookmark.php:186
 msgid "Manage bookmarks"
@@ -79,7 +79,7 @@ msgstr "Управление закладками"
 
 #: add-on/bookmarks/class_bookmark.php:188
 msgid "Bookmarks don`t have"
-msgstr "Закладки не найдены"
+msgstr "Ничего не найдено"
 
 #: add-on/bookmarks/index.php:10
 msgid "Settings bookmarks"
@@ -88,11 +88,11 @@ msgstr "Настройки закладок"
 #: add-on/bookmarks/index.php:13 add-on/bookmarks/index.php:79
 #: add-on/bookmarks/index.php:121
 msgid "Bookmarks"
-msgstr "Закладки"
+msgstr "Избранное"
 
 #: add-on/bookmarks/index.php:14
 msgid "The order buttons"
-msgstr "Порядок вывода кнопки \"В закладки\""
+msgstr "Порядок вывода кнопки \"В избранное\""
 
 #: add-on/bookmarks/index.php:18
 msgid "Automatically"
@@ -149,9 +149,9 @@ msgid "Disable bookmarks for publication"
 msgstr "Отключить закладки для публикации"
 
 #: add-on/bookmarks/index.php:137 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:156 add-on/profile/index.php:527
-#: add-on/profile/index.php:532 add-on/profile/index.php:537
-#: add-on/profile/index.php:542 add-on/profile/index.php:547
+#: add-on/profile/index.php:156 add-on/profile/index.php:546
+#: add-on/profile/index.php:551 add-on/profile/index.php:556
+#: add-on/profile/index.php:561 add-on/profile/index.php:566
 #: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:59
 #: add-on/rating-system/addon-options.php:111
@@ -161,9 +161,9 @@ msgid "No"
 msgstr "Нет"
 
 #: add-on/bookmarks/index.php:138 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:156 add-on/profile/index.php:527
-#: add-on/profile/index.php:532 add-on/profile/index.php:537
-#: add-on/profile/index.php:542 add-on/profile/index.php:547
+#: add-on/profile/index.php:156 add-on/profile/index.php:546
+#: add-on/profile/index.php:551 add-on/profile/index.php:556
+#: add-on/profile/index.php:561 add-on/profile/index.php:566
 #: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:59
 #: add-on/rating-system/addon-options.php:111
@@ -178,66 +178,66 @@ msgstr "Да"
 msgid "Name"
 msgstr "Имя"
 
-#: add-on/bookmarks/index.php:167 add-on/bookmarks/index.php:267
+#: add-on/bookmarks/index.php:167 add-on/bookmarks/index.php:268
 #: add-on/gallery-recall/index.php:122 add-on/publicpost/classes.php:233
 msgid "Add"
 msgstr "Добавить"
 
-#: add-on/bookmarks/index.php:177 add-on/bookmarks/index.php:277
+#: add-on/bookmarks/index.php:177 add-on/bookmarks/index.php:278
 #: functions/rcl_editfields.php:176
 msgid "Change"
 msgstr "Выбрать"
 
-#: add-on/bookmarks/index.php:200 add-on/bookmarks/index.php:219
+#: add-on/bookmarks/index.php:198 add-on/bookmarks/index.php:220
 #: functions/recallbar.php:21
 msgid "In bookmarks"
-msgstr "В закладки"
+msgstr "В избранное"
 
-#: add-on/bookmarks/index.php:227
+#: add-on/bookmarks/index.php:228
 msgid "Added to bookmarks"
-msgstr "Добавлено в закладки"
+msgstr "Добавлено в избранное"
 
-#: add-on/bookmarks/index.php:241
+#: add-on/bookmarks/index.php:242
 msgid "You`ve already added to the group of bookmarks"
-msgstr "Вы уже добавили в группу закладок"
+msgstr "Вы уже добавили в избранное"
 
-#: add-on/bookmarks/index.php:267 add-on/bookmarks/index.php:277
+#: add-on/bookmarks/index.php:268 add-on/bookmarks/index.php:278
 msgid "Name group"
 msgstr "Имя группы"
 
-#: add-on/bookmarks/index.php:296 add-on/bookmarks/index.php:321
-#: add-on/bookmarks/index.php:341 add-on/bookmarks/index.php:360
-#: add-on/bookmarks/index.php:380 add-on/bookmarks/index.php:402
-#: add-on/bookmarks/index.php:427 add-on/bookmarks/index.php:458
+#: add-on/bookmarks/index.php:297 add-on/bookmarks/index.php:322
+#: add-on/bookmarks/index.php:342 add-on/bookmarks/index.php:361
+#: add-on/bookmarks/index.php:381 add-on/bookmarks/index.php:403
+#: add-on/bookmarks/index.php:428 add-on/bookmarks/index.php:459
 #: add-on/gallery-recall/index.php:405 add-on/gallery-recall/index.php:444
 #: add-on/rating-system/index.php:383 add-on/rating-system/index.php:405
 msgid "Error"
 msgstr "Ошибка"
 
-#: add-on/bookmarks/index.php:329 add-on/bookmarks/index.php:349
+#: add-on/bookmarks/index.php:330 add-on/bookmarks/index.php:350
 #: add-on/groups/class_group.php:238 add-on/money-wallet/index.php:559
 #: add-on/money-wallet/index.php:582 add-on/money-wallet/index.php:600
 #: add-on/presents/index.php:119 add-on/presents/index.php:159
 msgid "Are you sure?"
 msgstr "Вы серьезно?"
 
-#: add-on/feed/index.php:32 add-on/feed/index.php:377
+#: add-on/feed/index.php:34 add-on/feed/index.php:384
 msgid "Subscribe"
 msgstr "Подписаться"
 
-#: add-on/feed/index.php:32 add-on/feed/index.php:75 add-on/feed/index.php:367
+#: add-on/feed/index.php:34 add-on/feed/index.php:79 add-on/feed/index.php:374
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
-#: add-on/feed/index.php:84 add-on/feed/index.php:85
+#: add-on/feed/index.php:88 add-on/feed/index.php:89
 msgid "Subscribers"
 msgstr "Подписчики"
 
-#: add-on/feed/index.php:92
+#: add-on/feed/index.php:96
 msgid "My subscriptions"
 msgstr "Мои подписки"
 
-#: add-on/feed/index.php:105
+#: add-on/feed/index.php:109
 msgid ""
 "Login or register to view the latest publications and comments from users on "
 "which you will you subscribed."
@@ -245,11 +245,22 @@ msgstr ""
 "Войдите или зарегистрируйтесь, чтобы видеть последние публикации и "
 "комментарии от пользователей на которых оформлена подписка"
 
-#: add-on/feed/index.php:399
+#: add-on/feed/index.php:115 add-on/feed/index.php:402
+#: add-on/feed/templates/feed-post.php:43 add-on/rating-system/index.php:32
+#: functions/rcl_userlist.php:296 functions/shortcodes.php:241
+msgid "Comments"
+msgstr "Комментарии"
+
+#: add-on/feed/index.php:116 add-on/publicpost/index.php:65
+#: add-on/publicpost/index.php:325
+msgid "Publication"
+msgstr "Публикация"
+
+#: add-on/feed/index.php:406
 msgid "It seems that you have not left a single comment or not subscribed."
 msgstr "Похоже, что у вас еще нет комментариев."
 
-#: add-on/feed/index.php:400
+#: add-on/feed/index.php:407
 msgid ""
 "Comment you publish and subscribe to other users, then you can track "
 "responses to your comments and to see new comments from users.Comment you "
@@ -260,25 +271,25 @@ msgstr ""
 "получать новые комментарии ваших публикаций или пользователей на которых вы "
 "подписаны, а также ответы на ваши комментарии."
 
-#: add-on/feed/index.php:653
+#: add-on/feed/index.php:660
 msgid "Publications yet"
 msgstr "Публикаций пока нет"
 
-#: add-on/feed/index.php:653
+#: add-on/feed/index.php:660
 msgid "Maybe later, someone will post the news."
 msgstr "Возможно позже появятся новые публикации"
 
-#: add-on/feed/index.php:662
-msgid "Ваша новостная лента"
+#: add-on/feed/index.php:669
+msgid "Публикации"
 msgstr ""
 
-#: add-on/feed/index.php:692
+#: add-on/feed/index.php:699
 msgid "You havent signed up anyone elses publication."
 msgstr ""
 "В вашей ленте пока нет новых публикаций. Подписывайтесь на пользователей "
 "сайта, чтобы видеть новые публикации."
 
-#: add-on/feed/index.php:693
+#: add-on/feed/index.php:700
 msgid ""
 "Go to the profile of the user and click the \"Subscribe\" button and you "
 "will be able to monitor his recent publications here."
@@ -293,11 +304,6 @@ msgstr ""
 #: add-on/feed/templates/feed-comment.php:15
 msgid "in reply to your comment"
 msgstr "в ответ на ваш комментарий"
-
-#: add-on/feed/templates/feed-post.php:43 add-on/rating-system/index.php:32
-#: functions/rcl_userlist.php:269 functions/shortcodes.php:237
-msgid "Comments"
-msgstr "Комментарии"
 
 #: add-on/gallery-recall/class_gallery.php:1
 msgid "This photo does not exist!"
@@ -390,7 +396,7 @@ msgstr "Размер файла превышен!"
 #: add-on/getresponse-manager/index.php:1 add-on/groups/class_group.php:207
 #: add-on/justclick-manager/index.php:1
 #: add-on/partners-system/admin-pages.php:124
-#: add-on/users-market/index.php:750 admin-pages.php:299 functions-rcl.php:519
+#: add-on/users-market/index.php:750 admin-pages.php:299 functions-rcl.php:517
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
@@ -556,7 +562,7 @@ msgid "View"
 msgstr "Смотреть"
 
 #: add-on/groups/index.php:105 add-on/groups/index.php:140
-#: functions/shortcodes.php:285
+#: functions/shortcodes.php:289
 msgid "Search"
 msgstr "Поиск"
 
@@ -733,7 +739,7 @@ msgstr "Поиск группы"
 msgid "Find"
 msgstr "Найти"
 
-#: add-on/groups/index.php:874 functions/shortcodes.php:233
+#: add-on/groups/index.php:874 functions/shortcodes.php:237
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -792,7 +798,7 @@ msgstr "по-умолчанию 10"
 
 #: add-on/last-visitor/index.php:29
 msgid "Recent Visitors"
-msgstr ""
+msgstr "Последние посетители"
 
 #: add-on/magazin/functions/init.php:18 add-on/magazin/functions/init.php:19
 msgid "Attach image or download it"
@@ -1228,8 +1234,8 @@ msgid "Comment"
 msgstr "Комментарий"
 
 #: add-on/money-wallet/index.php:155 add-on/money-wallet/index.php:366
-#: add-on/money-wallet/index.php:490 add-on/profile/index.php:367
-#: add-on/profile/index.php:673 add-on/publicpost/index.php:148
+#: add-on/money-wallet/index.php:490 add-on/profile/index.php:386
+#: add-on/profile/index.php:692 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:8
 msgid "Status"
 msgstr "Статус"
@@ -1510,166 +1516,174 @@ msgid ""
 "default, 2MB"
 msgstr "Ограничьте размер загружаемого аватара в мегабайтах, по-умолчанию 2МБ"
 
-#: add-on/profile/index.php:193
+#: add-on/profile/index.php:175
+msgid "Delete avatar"
+msgstr ""
+
+#: add-on/profile/index.php:201
+msgid "Your avatar has been removed"
+msgstr ""
+
+#: add-on/profile/index.php:212
 msgid "Profile"
 msgstr "Профиль"
 
-#: add-on/profile/index.php:219 widget.php:138
+#: add-on/profile/index.php:238 widget.php:138
 msgid "User profile"
 msgstr "Профиль пользователя"
 
-#: add-on/profile/index.php:233
+#: add-on/profile/index.php:252
 msgid "Admin toolbar"
 msgstr "Панель администратора"
 
-#: add-on/profile/index.php:238
+#: add-on/profile/index.php:257
 msgid "Show the admin bar when viewing site"
 msgstr "Отображать панель администратора на сайте"
 
-#: add-on/profile/index.php:246 add-on/profile/index.php:624
-#: functions/loginform.php:163 functions/loginform.php:187
+#: add-on/profile/index.php:265 add-on/profile/index.php:643
+#: functions/loginform.php:167 functions/loginform.php:191
 #: templates/form-sign.php:25 templates/recallbar.php:18
 #: templates/recallbar.php:32
 msgid "Login"
 msgstr "Вход"
 
-#: add-on/profile/index.php:252 add-on/profile/index.php:631
+#: add-on/profile/index.php:271 add-on/profile/index.php:650
 msgid "Firstname"
 msgstr "Имя"
 
-#: add-on/profile/index.php:258 add-on/profile/index.php:638
+#: add-on/profile/index.php:277 add-on/profile/index.php:657
 msgid "Surname"
 msgstr "Фамилия"
 
-#: add-on/profile/index.php:264 add-on/profile/index.php:645
+#: add-on/profile/index.php:283 add-on/profile/index.php:664
 #: functions/register.php:125 templates/form-register.php:10
 #: templates/form-sign.php:10
 msgid "Nickname"
 msgstr "Логин"
 
-#: add-on/profile/index.php:270 add-on/profile/index.php:652
+#: add-on/profile/index.php:289 add-on/profile/index.php:671
 msgid "Display name"
 msgstr "Отображаемое имя"
 
-#: add-on/profile/index.php:332 functions/rcl_editfields.php:147
+#: add-on/profile/index.php:351 functions/rcl_editfields.php:147
 #: templates/form-register.php:14
 msgid "E-mail"
 msgstr ""
 
-#: add-on/profile/index.php:338
+#: add-on/profile/index.php:357
 msgid "Your website"
 msgstr "Сайт"
 
-#: add-on/profile/index.php:344
+#: add-on/profile/index.php:363
 msgid "New password"
 msgstr "Новый пароль"
 
-#: add-on/profile/index.php:346
+#: add-on/profile/index.php:365
 msgid "If you want to change your password - enter new"
 msgstr "Если вы хотите сменить пароль - введите новый"
 
-#: add-on/profile/index.php:348
+#: add-on/profile/index.php:367
 msgid "Repeat the new password"
 msgstr "Повтор нового пароля"
 
-#: add-on/profile/index.php:352 functions/loginform.php:50
+#: add-on/profile/index.php:371 functions/loginform.php:54
 msgid "The password strength indicator"
 msgstr "Индикатор сложности пароля"
 
-#: add-on/profile/index.php:354 functions/loginform.php:52
+#: add-on/profile/index.php:373 functions/loginform.php:56
 msgid "A password is not entered"
 msgstr "Пароль не введен"
 
-#: add-on/profile/index.php:358
+#: add-on/profile/index.php:377
 msgid "Note"
 msgstr "Замечание"
 
-#: add-on/profile/index.php:358
+#: add-on/profile/index.php:377
 msgid "The password must be at least 7 characters"
 msgstr "Пароль должен содержать не менее 7 символов"
 
-#: add-on/profile/index.php:437
+#: add-on/profile/index.php:456
 msgid "Update profile"
 msgstr "Обновить профиль"
 
-#: add-on/profile/index.php:441
+#: add-on/profile/index.php:460
 msgid "Are you sure? Then restore will not work!"
 msgstr "Вы серьезно? Восстановить не получиться!"
 
-#: add-on/profile/index.php:443
+#: add-on/profile/index.php:462
 msgid "To delete your profile"
 msgstr "Удаление вашего профиля"
 
-#: add-on/profile/index.php:505
+#: add-on/profile/index.php:524
 msgid "Fields to display in the profile note ticks."
 msgstr "Поля отображаемые в профиле"
 
-#: add-on/profile/index.php:513
+#: add-on/profile/index.php:532
 #, php-format
 msgid "<td><input type=\"%s\" name=\"%s\" %s /></td><td>%s</td>"
 msgstr ""
 
-#: add-on/profile/index.php:521
+#: add-on/profile/index.php:540
 msgid "Manage profile fields"
 msgstr "Управление полями профиля"
 
-#: add-on/profile/index.php:526 add-on/publicpost/index.php:233
+#: add-on/profile/index.php:545 add-on/publicpost/index.php:233
 msgid "required field"
 msgstr "обязательное поле"
 
-#: add-on/profile/index.php:531
+#: add-on/profile/index.php:550
 msgid "to display the registration form"
 msgstr "отображать в форме регистрации"
 
-#: add-on/profile/index.php:536
+#: add-on/profile/index.php:555
 msgid "display at checkout for guests"
 msgstr "отображать при оформлении заказа для гостей"
 
-#: add-on/profile/index.php:541
+#: add-on/profile/index.php:560
 msgid "to show the content to other users"
 msgstr "отображать для других пользователей"
 
-#: add-on/profile/index.php:546
+#: add-on/profile/index.php:565
 msgid "it only changes the administration of the site"
 msgstr "редактируется только администрацией сайта"
 
-#: add-on/profile/index.php:627
+#: add-on/profile/index.php:646
 msgid "Login user"
 msgstr "логин пользователя"
 
-#: add-on/profile/index.php:634
+#: add-on/profile/index.php:653
 msgid "Username"
 msgstr "Логин"
 
-#: add-on/profile/index.php:641
+#: add-on/profile/index.php:660
 msgid "Surname user"
 msgstr "Имя пользователя"
 
-#: add-on/profile/index.php:648
+#: add-on/profile/index.php:667
 msgid "Nickname user"
 msgstr "Никнейм пользователя"
 
-#: add-on/profile/index.php:655
+#: add-on/profile/index.php:674
 msgid "Display name user"
 msgstr "Отображаемое имя"
 
-#: add-on/profile/index.php:659
+#: add-on/profile/index.php:678
 msgid "Емейл (be sure)"
 msgstr "E-mail (обязательно)"
 
-#: add-on/profile/index.php:662
+#: add-on/profile/index.php:681
 msgid "Емейл user"
 msgstr "E-mail пользователя"
 
-#: add-on/profile/index.php:666
+#: add-on/profile/index.php:685
 msgid "Website"
 msgstr "Вебсайт"
 
-#: add-on/profile/index.php:669
+#: add-on/profile/index.php:688
 msgid "Website user"
 msgstr "Сайт пользователя"
 
-#: add-on/profile/index.php:676
+#: add-on/profile/index.php:695
 msgid "User status"
 msgstr "Статус пользователя"
 
@@ -1739,7 +1753,7 @@ msgid "Show everyone including guests"
 msgstr "Показывать всем, включая гостей"
 
 #: add-on/publicpost/addon-options.php:68
-#: add-on/publicpost/rcl_publicform.php:323
+#: add-on/publicpost/rcl_publicform.php:327
 msgid "Category"
 msgstr "Категории"
 
@@ -1990,10 +2004,6 @@ msgstr "Записи"
 msgid "Posts"
 msgstr "Публикации"
 
-#: add-on/publicpost/index.php:65 add-on/publicpost/index.php:325
-msgid "Publication"
-msgstr "Публикация"
-
 #: add-on/publicpost/index.php:152
 #: add-on/publicpost/templates/posts-list.php:15
 msgid "on approval"
@@ -2041,15 +2051,15 @@ msgstr "главное"
 msgid "The publication has been successfully removed!"
 msgstr "Публикация была успешно удалена!"
 
-#: add-on/publicpost/index.php:747 functions/rcl_custom_fields.php:271
+#: add-on/publicpost/index.php:752 functions/rcl_custom_fields.php:271
 msgid "To publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/index.php:808
+#: add-on/publicpost/index.php:813
 msgid "To add a media file"
 msgstr "Добавить медиафайл"
 
-#: add-on/publicpost/rcl_editpost.php:46
+#: add-on/publicpost/rcl_editpost.php:51
 msgid "Error publishing!"
 msgstr "Ошибка публикации!"
 
@@ -2061,71 +2071,75 @@ msgstr "пока не было опубликовано"
 msgid "Published"
 msgstr "Опубликованные"
 
-#: add-on/publicpost/rcl_publicform.php:118
+#: add-on/publicpost/rcl_publicform.php:120
 msgid "Preview"
 msgstr "Предпросмотр"
 
-#: add-on/publicpost/rcl_publicform.php:154
-#: add-on/publicpost/rcl_publicform.php:164
+#: add-on/publicpost/rcl_publicform.php:156
+#: add-on/publicpost/rcl_publicform.php:166
 msgid "Are you seriously"
 msgstr "Вы серьезно"
 
-#: add-on/publicpost/rcl_publicform.php:156
-#: add-on/publicpost/rcl_publicform.php:162
-#: add-on/publicpost/rcl_publicform.php:170
+#: add-on/publicpost/rcl_publicform.php:158
+#: add-on/publicpost/rcl_publicform.php:164
+#: add-on/publicpost/rcl_publicform.php:172
 msgid "Delete post"
 msgstr "Удалить публикацию"
 
-#: add-on/publicpost/rcl_publicform.php:167
+#: add-on/publicpost/rcl_publicform.php:169
 msgid "or enter its cause"
 msgstr "или введите свое"
 
-#: add-on/publicpost/rcl_publicform.php:169
+#: add-on/publicpost/rcl_publicform.php:171
 msgid "Without notice"
 msgstr "Без уведомления"
 
-#: add-on/publicpost/rcl_publicform.php:184
+#: add-on/publicpost/rcl_publicform.php:186
 msgid "Not correspond the subject"
 msgstr "Н/с тематике сайта"
 
-#: add-on/publicpost/rcl_publicform.php:185
+#: add-on/publicpost/rcl_publicform.php:187
 msgid "The publication does not correspond to the subject site"
 msgstr "Публикация не соответствует тематике сайта"
 
-#: add-on/publicpost/rcl_publicform.php:188
+#: add-on/publicpost/rcl_publicform.php:190
 msgid "Not furnished"
 msgstr "Не оформлен"
 
-#: add-on/publicpost/rcl_publicform.php:189
+#: add-on/publicpost/rcl_publicform.php:191
 msgid "Publication is not formalized under the rules"
 msgstr "Публикация не оформлена согласно правил"
 
-#: add-on/publicpost/rcl_publicform.php:192
+#: add-on/publicpost/rcl_publicform.php:194
 msgid "Advertising/Spam"
 msgstr "Реклама/Спам"
 
-#: add-on/publicpost/rcl_publicform.php:193
+#: add-on/publicpost/rcl_publicform.php:195
 msgid "Publication labeled as advertising or spam"
 msgstr "Публикация помечена как реклама или спам"
 
-#: add-on/publicpost/rcl_publicform.php:201
+#: add-on/publicpost/rcl_publicform.php:203
 msgid "Use the blank notice"
 msgstr "Используйте заготовку уведомления"
 
-#: add-on/publicpost/rcl_publicform.php:212
+#: add-on/publicpost/rcl_publicform.php:214
 msgid "You must be logged in to post. Login or register"
 msgstr ""
 "Вы должны быть авторизованы для публикации. Войдите или зарегистрируйтесь."
 
 #: add-on/publicpost/rcl_publicform.php:216
+msgid "Вы не можете редактировать данную публикацию :("
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:220
 msgid "Sorry, but you have no rights to publish within groups :("
 msgstr "Извините, но вы не можете публиковать в этой группе :("
 
-#: add-on/publicpost/rcl_publicform.php:219
+#: add-on/publicpost/rcl_publicform.php:223
 msgid "Sorry, but you have no right<br>to publish the records on this site :("
 msgstr "Извините, но вы не можете публиковать на этом сайте :("
 
-#: add-on/publicpost/rcl_publicform.php:253
+#: add-on/publicpost/rcl_publicform.php:257
 msgid "Being sent, please wait..."
 msgstr "Идет отправка, подождите..."
 
@@ -2137,6 +2151,20 @@ msgstr ""
 msgid ""
 "Click on Priceline the image to add it to the content of the publication"
 msgstr "Нажмите на загруженное изображение, чтобы добавить его в контент"
+
+#: add-on/rating-rank/addon-options.php:9
+msgid "Rank system"
+msgstr ""
+
+#: add-on/rating-rank/addon-options.php:13
+msgid "Перечень званий"
+msgstr ""
+
+#: add-on/rating-rank/addon-options.php:15
+msgid ""
+"Укажите перечень званий с требуемым значением рейтинга в формате "
+"\"rankname:100\". Каждое новое правило указывается с новой строки"
+msgstr ""
 
 #: add-on/rating-system/addon-options.php:16
 msgid "Type of rating for"
@@ -2948,19 +2976,19 @@ msgstr "Используемый шаблон"
 msgid "Not connected"
 msgstr "Не подключен"
 
-#: functions-rcl.php:140
+#: functions-rcl.php:138
 msgid "Error! Perhaps this addition does not support ajax loading"
 msgstr "Ошибка! Данное дополнениене поддерживает ajax-загрузку"
 
-#: functions-rcl.php:205
+#: functions-rcl.php:203
 msgid "The site works using the functionality of the plugin"
 msgstr "Сайт использует функционал плагина"
 
-#: functions-rcl.php:319
+#: functions-rcl.php:317
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: functions-rcl.php:443
+#: functions-rcl.php:441
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
@@ -2990,92 +3018,92 @@ msgstr "мин."
 msgid "h."
 msgstr "ч."
 
-#: functions/loginform.php:40 functions/register.php:126
+#: functions/loginform.php:44 functions/register.php:126
 #: templates/form-sign.php:14
 msgid "Password"
 msgstr "Пароль"
 
-#: functions/loginform.php:67
+#: functions/loginform.php:71
 msgid "Repeat the password"
 msgstr "Повтор пароля"
 
-#: functions/loginform.php:76
+#: functions/loginform.php:80
 msgid "The passwords do not match!"
 msgstr "Пароли не совпадают!"
 
-#: functions/loginform.php:77
+#: functions/loginform.php:81
 msgid "The passwords match"
 msgstr "Пароли совпадают"
 
-#: functions/loginform.php:136
+#: functions/loginform.php:140
 msgid "Hi"
 msgstr "Привет"
 
-#: functions/loginform.php:138 functions/loginform.php:147
+#: functions/loginform.php:142 functions/loginform.php:151
 msgid "In personal account"
 msgstr "В личный кабинет"
 
-#: functions/loginform.php:148
+#: functions/loginform.php:152
 msgid "Exit"
 msgstr "Выход"
 
-#: functions/loginform.php:164 functions/loginform.php:188
-#: functions/rcl_userlist.php:282 functions/shortcodes.php:238
+#: functions/loginform.php:168 functions/loginform.php:192
+#: functions/rcl_userlist.php:309 functions/shortcodes.php:242
 #: templates/form-register.php:4 templates/form-remember.php:18
 #: templates/form-sign.php:27 templates/recallbar.php:17
 #: templates/recallbar.php:31
 msgid "Registration"
 msgstr "Регистрация"
 
-#: functions/loginform.php:210
+#: functions/loginform.php:214
 msgid "Login invalid characters!"
 msgstr "В логине недопустимые символы!"
 
-#: functions/loginform.php:211 functions/loginform.php:224
+#: functions/loginform.php:215 functions/loginform.php:228
 msgid "Fill in the fields!"
 msgstr "Заполните поля!"
 
-#: functions/loginform.php:212
+#: functions/loginform.php:216
 msgid "Field filled not right CAPTCHA!"
 msgstr "Не верно заполнено поле CAPTCHA!"
 
-#: functions/loginform.php:213
+#: functions/loginform.php:217
 msgid "Username already in use!"
 msgstr "Логин уже используется!"
 
-#: functions/loginform.php:214
+#: functions/loginform.php:218
 msgid "E-mail is already in use!"
 msgstr "E-mail уже используется!"
 
-#: functions/loginform.php:215
+#: functions/loginform.php:219
 msgid "Invalid E-mail!"
 msgstr "Некорректный E-mail!"
 
-#: functions/loginform.php:218
+#: functions/loginform.php:222
 msgid "Registration is completed! Check your email."
 msgstr "Регистрация завершена! Проверьте свой E-mail."
 
-#: functions/loginform.php:223
+#: functions/loginform.php:227
 msgid "Your email is not confirmed!"
 msgstr "Ваш E-mail не подтвержден!"
 
-#: functions/loginform.php:225
+#: functions/loginform.php:229
 msgid "Username or password are not correct!"
 msgstr "Логин или пароль не верны!"
 
-#: functions/loginform.php:228
+#: functions/loginform.php:232
 msgid "Registration is completed! Check your email"
 msgstr "Регистрация завершена! Проверьте свой E-mail"
 
-#: functions/loginform.php:234
+#: functions/loginform.php:238
 msgid "Your password has been sent!<br>Check your email."
 msgstr "Новый пароль был сформирован! Проверьте свою почту."
 
-#: functions/loginform.php:259
+#: functions/loginform.php:263
 msgid "Error filling!"
 msgstr "Ошибка заполнения!"
 
-#: functions/loginform.php:279
+#: functions/loginform.php:283
 msgid "Repeat password is not correct!"
 msgstr "Повтор пароля не верный!"
 
@@ -3295,11 +3323,11 @@ msgstr "Все значения произвольных полей с этим 
 msgid "were removed from the Database"
 msgstr "были удалены из базы данных"
 
-#: functions/rcl_userlist.php:250 recall.php:251
+#: functions/rcl_userlist.php:277 recall.php:251
 msgid "not online"
 msgstr "не в сети"
 
-#: functions/rcl_userlist.php:275
+#: functions/rcl_userlist.php:302
 msgid "Publics"
 msgstr "Публикации"
 
@@ -3319,43 +3347,43 @@ msgstr "со следующими данными:"
 msgid "If it wasnt you, then just ignore this email"
 msgstr "Если это были не вы, то просто проигнорируйте это письмо"
 
-#: functions/shortcodes.php:228
+#: functions/shortcodes.php:232
 msgid "Total users"
 msgstr "Всего пользователей"
 
-#: functions/shortcodes.php:234
+#: functions/shortcodes.php:238
 msgid "Activity"
 msgstr "Активности"
 
-#: functions/shortcodes.php:235
+#: functions/shortcodes.php:239
 msgid "Rated"
 msgstr "Рейтингу"
 
-#: functions/shortcodes.php:236
+#: functions/shortcodes.php:240
 msgid "Publications"
 msgstr "Публикациям"
 
-#: functions/shortcodes.php:259
+#: functions/shortcodes.php:263
 msgid "Users not found"
 msgstr "Пользователи не найдены"
 
-#: functions/shortcodes.php:260
+#: functions/shortcodes.php:264
 msgid "No one"
 msgstr "Никого нет"
 
-#: functions/shortcodes.php:279
+#: functions/shortcodes.php:283
 msgid "Search users"
 msgstr "Поиск пользователей"
 
-#: functions/shortcodes.php:282
+#: functions/shortcodes.php:286
 msgid "by name"
 msgstr "по имени"
 
-#: functions/shortcodes.php:283
+#: functions/shortcodes.php:287
 msgid "by login"
 msgstr "по логину"
 
-#: functions/shortcodes.php:297
+#: functions/shortcodes.php:301
 msgid ""
 "To begin to use the capabilities of your personal account, please log in or "
 "register on this site"

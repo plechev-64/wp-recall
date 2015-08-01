@@ -189,12 +189,12 @@ class Rcl_Userlist{
 
         function get_post_count_data($us_data,$us_lst){
             global $wpdb;
-
-            $users = $wpdb->get_results("
-                SELECT COUNT(post_author) AS post_count, post_author
+			
+			$query = "SELECT COUNT(post_author) AS post_count, post_author
                 FROM (select * from $wpdb->posts order by ID desc) as pc
-                WHERE post_status = 'publish' $us_lst GROUP BY post_author ORDER BY $this->orderby $this->order LIMIT $this->limit"
-            );
+                WHERE post_status = 'publish' $us_lst GROUP BY post_author ORDER BY $this->orderby $this->order LIMIT $this->limit";
+
+            $users = $wpdb->get_results($query);
 
             return $this->get_usersdata($us_data,$users,'post_author','user_posts','post_count');
         }
@@ -211,6 +211,33 @@ class Rcl_Userlist{
 
             if($users) return $this->get_usersdata($us_data,$users,'meta_value','feed','meta_value');
             return false;
+        }
+		
+		function add_post_count_data($us_data,$us_lst){
+			global $wpdb,$user_ID;
+			$query = "SELECT COUNT(post_author) AS post_count, post_author
+                FROM $wpdb->posts
+                WHERE post_status = 'publish' AND post_author IN ($us_lst) GROUP BY post_author";
+			$postdata = $wpdb->get_results($query);
+			return $this->get_usersdata($us_data,$postdata,'post_author','user_posts','post_count');
+		}
+		
+		function add_comments_count_data($us_data,$us_lst){
+            global $wpdb;
+
+            $users = $wpdb->get_results("
+                SELECT COUNT(user_id) AS comments_count, user_id, comment_author
+                FROM ".$wpdb->prefix."comments
+                WHERE comment_approved = 1 AND user_id IN ($us_lst) GROUP BY user_id"
+            );
+
+            return $this->get_usersdata($us_data,$users,'user_id','user_comments','comments_count');
+        }
+		
+		function add_user_registered_data($us_data,$us_lst){
+            global $wpdb;
+            $users = $wpdb->get_results("SELECT ID,display_name,user_registered FROM $wpdb->users WHERE ID IN ($us_lst)");
+            return $this->get_usersdata($us_data,$users,'ID','user_register','user_registered');
         }
 }
 
@@ -266,20 +293,20 @@ add_action('user_description','rcl_user_comments');
 function rcl_user_comments(){
     global $user;
     if(!$user->user_comments) return false;
-    echo '<span class="filter-data">'.__('Comments','rcl').': '.$user->user_comments.'</span>';
+    echo '<span class="filter-data"><i class="fa fa-comment"></i>'.__('Comments','rcl').': '.$user->user_comments.'</span>';
 }
 add_action('user_description','rcl_user_posts');
 function rcl_user_posts(){
     global $user;
     if(!$user->user_posts) return false;
-    echo '<span class="filter-data">'.__('Publics','rcl').': '.$user->user_posts.'</span>';
+    echo '<span class="filter-data"><i class="fa fa-file-text-o"></i>'.__('Publics','rcl').': '.$user->user_posts.'</span>';
 }
 
 add_action('user_description','rcl_user_register');
 function rcl_user_register(){
     global $user;
     if(!$user->user_register) return false;
-    echo '<span class="filter-data">'.__('Registration','rcl').': '.mysql2date('d-m-Y', $user->user_register).'</span>';
+    echo '<span class="filter-data"><i class="fa fa-calendar-check-o"></i>'.__('Registration','rcl').': '.mysql2date('d-m-Y', $user->user_register).'</span>';
 }
 
 add_action('user_description','rcl_filter_user_description');

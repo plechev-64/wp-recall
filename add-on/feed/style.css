@@ -29,9 +29,6 @@
     margin-bottom: 10px;
 	overflow: hidden;
 }
-#feedlist img {
-    box-shadow: 3px 3px 2px #CCCCCC;
-}
 #feedlist .feed-author-avatar {
     float: left;
     margin: 0 15px 0 0;

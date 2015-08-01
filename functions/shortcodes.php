@@ -161,9 +161,7 @@ function rcl_short_user_list($atts, $content = null){
             $group_admin = $wpdb->get_var($wpdb->prepare("SELECT user_id FROM $wpdb->usermeta WHERE meta_key = '%s'",'admin_group_'.$group));
             $us_data = $UserList->get_usdata_actions($us_data,$us_lst);
         }else{
-
-
-
+			
             if($order_by){
 
                 if($order_by=='comments_count'){
@@ -205,6 +203,12 @@ function rcl_short_user_list($atts, $content = null){
             }
        }
     }
+	
+	if($type=='rows'){
+		if($order_by!='post_count') $us_data = $UserList->add_post_count_data($us_data,$us_lst);
+		if($order_by!='comments_count') $us_data = $UserList->add_comments_count_data($us_data,$us_lst);
+		if($order_by!='user_registered') $us_data = $UserList->add_user_registered_data($us_data,$us_lst);
+	}
 
 	$uslst_array = explode(',',$us_lst);
 

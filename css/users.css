@@ -79,9 +79,18 @@
 	margin: 5px 0;
 	padding: 5px;
 }
-.userlist.avatars-list .user-single{
-    float:left;
-	padding: 5px 0;
+.userlist.rows-list .user-single {
+    clear: both;
+	border: 1px solid #ccc;
+	margin: 5px 0;
+	padding: 5px;
+}
+.userlist.rows-list .user-single .filter-data{
+    background-color: #EAEAEA;
+    margin: 3px;
+    padding: 5px;
+    font-size: 12px;
+    color: #6F6F6F;
 }
 .userlist.mini-list .user-single{
 	border:none;

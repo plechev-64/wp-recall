@@ -170,6 +170,10 @@ add_filter('after-avatar-rcl','rcl_button_avatar_upload',2,2);
 function rcl_button_avatar_upload($content,$author_lk){
 	global $user_ID;
 	if($user_ID!=$author_lk) return $content;
+	
+	if(get_user_meta($user_ID,'rcl_avatar',1)){
+		$content .= '<a title="'.__('Delete avatar','rcl').'" class="rcl-avatar-delete" href="'.wp_nonce_url( rcl_format_url(rcl_get_current_url()).'rcl-action=delete_avatar', $user_ID ).'"><i class="fa fa-times"></i></a>';
+	}
 
 	$content .= '
 	<div id="userpic-upload">
@@ -180,6 +184,21 @@ function rcl_button_avatar_upload($content,$author_lk){
 	</div>
 	<span id="avatar-upload-progress"></span>';
 	return $content;
+}
+
+add_action('wp','rcl_delete_avatar_action');
+function rcl_delete_avatar_action(){
+	global $wpdb,$user_ID;
+	if ( !isset( $_GET['rcl-action'] )||$_GET['rcl-action']!='delete_avatar' ) return false;
+	if( !wp_verify_nonce( $_GET['_wpnonce'], $user_ID ) ) wp_die('Error');
+	$result = delete_user_meta($user_ID,'rcl_avatar');
+	if (!$result) wp_die('Error');
+	wp_redirect( rcl_format_url(get_author_posts_url($user_ID)).'rcl-avatar=deleted' );  exit;
+}
+
+add_action('wp','rcl_notice_avatar_deleted');
+function rcl_notice_avatar_deleted(){
+    if (isset($_GET['rcl-avatar'])&&$_GET['rcl-avatar']=='deleted') rcl_notice_text(__('Your avatar has been removed','rcl'),'success');
 }
 
 function rcl_ajax_tab_profile($array_tabs){
