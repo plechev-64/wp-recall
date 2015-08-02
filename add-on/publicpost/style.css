@@ -409,6 +409,7 @@ a.rcl-delete-post i{
     width: 100%;
 	min-height:100%;
 	z-index: 9;
+        position:absolute;
 }
 #rcl-preview iframe,
 #rcl-preview img{
