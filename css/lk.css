@@ -294,9 +294,9 @@
 }
 .lk-avatar .rcl-avatar-delete{
 	position: absolute;
-    top: 5px;
+    top: 10px;
     right: 5px;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.8);
     padding: 0 0 0 5px;
     color: #333;
     font-size: 12px;

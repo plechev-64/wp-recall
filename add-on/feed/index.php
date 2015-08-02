@@ -371,7 +371,7 @@ class Rcl_Feed{
 
 					$log['int']=100;
 					$log['count']=1;
-					$log['recall'] = rcl_get_button(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-bell-slash','class'=>'feed-user','attr'=>'data-feed='.$id_user));
+					$log['recall'] = rcl_get_button(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-bell-slash','class'=>'feed-user','attr'=>'data-feed='.$id_user.' title='.__('Unsubscribe','rcl')));
 				}
 			}else{
 
@@ -381,7 +381,7 @@ class Rcl_Feed{
 
 				$log['int']=100;
 				$log['count']=-1;
-				$log['recall'] = rcl_get_button(__('Subscribe','rcl'),'#',array('icon'=>'fa-bell','class'=>'feed-user','attr'=>'data-feed='.$id_user));
+				$log['recall'] = rcl_get_button(__('Subscribe','rcl'),'#',array('icon'=>'fa-bell','class'=>'feed-user','attr'=>'data-feed='.$id_user.' title='.__('Subscribe','rcl')));
 			}
 		}
 		echo json_encode($log);

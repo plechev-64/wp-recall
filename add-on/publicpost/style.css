@@ -424,6 +424,9 @@ a.rcl-delete-post i{
     text-align: right;
 
 }
+#publics_block  .bx-wrapper .bx-viewport{
+	height:32px;
+}
 #publics_block .bx-wrapper .bx-viewport .pagenavi-rcl{
     margin: 0;
 }

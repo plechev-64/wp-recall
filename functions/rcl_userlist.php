@@ -217,7 +217,7 @@ class Rcl_Userlist{
 			global $wpdb,$user_ID;
 			$query = "SELECT COUNT(post_author) AS post_count, post_author
                 FROM $wpdb->posts
-                WHERE post_status = 'publish' AND post_author IN ($us_lst) GROUP BY post_author";
+                WHERE post_status = 'publish' AND post_author IN ($us_lst) AND post_type NOT IN ('attachment') GROUP BY post_author";
 			$postdata = $wpdb->get_results($query);
 			return $this->get_usersdata($us_data,$postdata,'post_author','user_posts','post_count');
 		}
@@ -292,13 +292,13 @@ function rcl_user_description(){
 add_action('user_description','rcl_user_comments');
 function rcl_user_comments(){
     global $user;
-    if(!$user->user_comments) return false;
+    if(!$user->user_comments) $user->user_comments = 0;
     echo '<span class="filter-data"><i class="fa fa-comment"></i>'.__('Comments','rcl').': '.$user->user_comments.'</span>';
 }
 add_action('user_description','rcl_user_posts');
 function rcl_user_posts(){
     global $user;
-    if(!$user->user_posts) return false;
+    if(!$user->user_posts) $user->user_posts = 0;
     echo '<span class="filter-data"><i class="fa fa-file-text-o"></i>'.__('Publics','rcl').': '.$user->user_posts.'</span>';
 }
 
