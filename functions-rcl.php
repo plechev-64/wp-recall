@@ -675,6 +675,9 @@ function rcl_get_smiles($id_area){
 		}
 	}else{
 		if(!$rcl_smilies) $rcl_smilies = $wpsmiliestrans;
+
+                if(!$rcl_smilies) return false;
+
 		foreach($rcl_smilies as $emo=>$img){
 			if(!isset($smilies_list[0][0])) $smilies_list[0][0]=$emo;
 			$smilies_list[0][$img]=$emo;
