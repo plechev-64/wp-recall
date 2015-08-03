@@ -207,9 +207,8 @@ function rcl_preview(e){
 		return false;
 	}
 	
-	//var iframe = jQuery("#contentarea_ifr").contents().find("#tinymce").html();
-	//console.log(iframe);
-	//if(iframe) formblock.find('textarea[name="post_content"]').html(iframe);
+	var iframe = jQuery("#contentarea_ifr").contents().find("#tinymce").html();
+	if(iframe) formblock.find('textarea[name="post_content"]').html(iframe);
 	submit.attr('disabled',true).val('Идет отправка, подождите...');
 	var string   = formblock.serialize();
 	//if(iframe) string += '&post_content='+iframe;
