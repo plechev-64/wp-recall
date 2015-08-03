@@ -402,14 +402,16 @@ a.rcl-delete-post i{
     font-weight: bold;
 
 }
-#rcl-preview{
-    top: 0;
-    left: 0;
+#rcl-preview{    
     background-color: #fff;
     width: 100%;
-	min-height:100%;
-	z-index: 9;
-        position:absolute;
+	min-height:100%;	
+}
+form #rcl-preview{
+	top: 0;
+    left: 0;
+	z-index: 9;       
+	position:absolute;
 }
 #rcl-preview iframe,
 #rcl-preview img{
