@@ -4,7 +4,7 @@ if(function_exists('rcl_enqueue_style')) rcl_enqueue_style('private',__FILE__);
 
 function rcl_count_noread_messages($user_id){
 	global  $wpdb;
-	$where = "WHERE adressat_mess = '$user_id' AND status_mess='0'";		
+	$where = "WHERE adressat_mess = '$user_id' AND status_mess='0'";
 	return $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."private_message $where");
 }
 
@@ -59,17 +59,6 @@ function rcl_messages_scripts(){
 		}
 		if($scr) wp_enqueue_script( 'newmess_recall', plugins_url('js/new_mess.js', __FILE__) );
 	}
-}
-
-add_filter('rcl_postfooter_user','rcl_get_chat_button',20,2);
-function rcl_get_chat_button($content,$user_id){
-	global $rcl_options;
-	global $user_ID;
-	if(!$rcl_options['tab_private']) $rcl_options['tab_private'] = __('Private chat','rcl');
-	if($user_ID&&$user_ID!=$user_id){
-		$content .= rcl_get_button($rcl_options['tab_private'],rcl_format_url(get_author_posts_url($user_id),'privat'),array('icon'=>'fa-comments','class'=>false,'attr'=>'title='.$rcl_options['tab_private'])) ;
-	}
-	return $content;
 }
 
 if(function_exists('rcl_tab')){
@@ -203,11 +192,11 @@ class Rcl_Messages{
                                 'name'=>'sort_mess',
                                 'options'=>array(__('Top-Down','rcl'),__('Bottom-Up','rcl'))
                             )),
-							
+
 							$opt->label(__('Limit words message','rcl')),
                             $opt->option('number',array('name'=>'ms_limit_words')),
                             $opt->notice(__('the default is 400','rcl')),
-							
+
                             $opt->label(__('The number of messages in the conversation','rcl')),
                             $opt->option('number',array('name'=>'max_private_message')),
                             $opt->notice(__('the default is 100 messages in the conversation (per correspondence user)','rcl')),
@@ -267,20 +256,20 @@ class Rcl_Messages{
 	function get_header_black_list_button($author_lk){
 		global $user_ID;
 		if(!$user_ID||$user_ID==$author_lk) return false;
-		
+
 		$header_lk = $this->get_blacklist_html($author_lk);
 
 		return $header_lk;
 	}
-	
+
 	function get_blacklist_html($author_lk){
 		global $user_ID,$wpdb;
-		
+
 		$banlist = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."black_list_user WHERE user = '%d' AND ban = '%d'",$user_ID,$author_lk));
-		
+
 		$title = ($banlist)? __('Unblock','rcl'): __('In the black list','rcl');
 		$class = ($banlist)? 'remove_black_list': 'add_black_list';
-		
+
 		$button = '<div id="black_list_button" class="floatright">'.rcl_get_button($title,'#',array('class'=>$class,'id'=>'manage-blacklist','icon'=>'fa-bug','attr'=>'data-contact='.$author_lk)).'</div>';
 
 		return $button;
@@ -298,7 +287,7 @@ class Rcl_Messages{
 					$mess = str_replace('<a href="'.$link.'" rel="nofollow">'.$link.'</a>','',$mess);
 					$mess .= $m_lnk;
 				}
-			}			
+			}
 		}
 		//$mess = preg_replace("~(http|https|ftp|ftps)://(.*?)(\s|\n|[,.?!](\s|\n)|$)~", '<a target="_blank" href="$1://$2">$1://$2</a>$3', $mess);
 		if(function_exists('convert_smilies')) $mess = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $mess ) );
@@ -361,7 +350,7 @@ class Rcl_Messages{
         rcl_resizable_scripts();
 
 		global $user_ID,$rcl_options,$wpdb;
-		
+
         $access = '';
 		$access = apply_filters('access_chat_rcl',$access,$this->user_lk);
 
@@ -419,7 +408,7 @@ class Rcl_Messages{
                     <input type="hidden" name="online" id="online" value="'.$online.'">';
 
                     $textarea .= rcl_get_smiles('content_mess');
-					
+
 					$words = (isset($rcl_options['ms_limit_words'])&&$rcl_options['ms_limit_words'])? $rcl_options['ms_limit_words']: 400;
 
                     $textarea .= '<div class="fa fa-edit" id="count-word">'.$words.'</div>';
@@ -536,7 +525,7 @@ class Rcl_Messages{
 				$days = 7;
 				$ban = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user = '%d'",$user_ID));
 
-				$privat_block .= '<div class="buttons-navi">				
+				$privat_block .= '<div class="buttons-navi">
 				<a data="'.$days.'" class="sec_block_button active" href="#"><i class="fa fa-clock-o"></i>'.$days.' '.__('days','rcl').'</a>
 				<a data="30" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('month','rcl').'</a>
 				<a data="0" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('all the time','rcl').'</a>';
@@ -1075,23 +1064,23 @@ class Rcl_Messages{
 	function manage_blacklist_recall(){
 		global $wpdb,$user_ID;
 		if(!$user_ID) exit;
-		
+
 		$this->user_lk = intval($_POST['user_id']);
-		
+
 		$ban_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user = '%d' AND ban = '%d'",$user_ID,$this->user_lk));
-		
+
 		if($ban_id){
 			$result = $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."black_list_user WHERE ID='%d'",$ban_id));
-			
+
 			do_action('remove_user_blacklist',$this->user_lk);
 		}else{
 			$result = $wpdb->insert(RCL_PREF.'black_list_user',
 				array( 'user' => "$user_ID", 'ban' => "$this->user_lk" )
 			);
-			
+
 			do_action('add_user_blacklist',$this->user_lk);
 		}
-		
+
 
 		if ($result){
 			$log['content'] = $this->get_blacklist_html($this->user_lk);
@@ -1099,7 +1088,7 @@ class Rcl_Messages{
 		}else{
 			$log['otvet']=1;
 		}
-		
+
 		echo json_encode($log);
 		exit;
 	}
@@ -1198,7 +1187,7 @@ class Rcl_Messages{
 		$last_action = rcl_get_useraction($rcl_action_users->time_action);
                 $class = (!$last_action)?'online':'offline';
                 $online = (!$last_action)?1:0;
-				
+
 				$words = (isset($rcl_options['ms_limit_words'])&&$rcl_options['ms_limit_words'])? $rcl_options['ms_limit_words']: 400;
 
 		$message_block .= '<div id="privatemess">'
@@ -1340,7 +1329,7 @@ class Rcl_Messages{
 
 	function get_footer_scripts_privat_rcl($script){
 		global $rcl_options;
-		
+
 		$maxsize_mb = (isset($rcl_options['file_exchange_weight'])&&$rcl_options['file_exchange_weight'])? $rcl_options['file_exchange_weight']: 2;
 		$maxsize = $maxsize_mb*1024*1024;
 
@@ -1360,7 +1349,7 @@ class Rcl_Messages{
 			}
 			$('.new_mess').replaceWith('$replace');
 			$('#upload-box-message .progress-bar').hide();";
-				
+
 		if(!$rcl_options['sort_mess']) $done .= "var div = $('#resize-content');
 			div.scrollTop( div.get(0).scrollHeight );";
 
@@ -1370,15 +1359,15 @@ class Rcl_Messages{
 			});
 			var talker = $('input[name=\"adressat_mess\"]').val();
 			var online = $('input[name=\"online\"]').val();
-			
-			
+
+
 			$('#upload-private-message').fileupload({
 			dataType: 'json',
 			type: 'POST',
 			url: wpurl+'wp-admin/admin-ajax.php',
 			formData:{action:'rcl_message_upload',talker:talker,online:online},
 			loadImageMaxFileSize: ".$maxsize.",
-			autoUpload:true,		
+			autoUpload:true,
 			progressall: function (e, data) {
 				var progress = parseInt(data.loaded / data.total * 100, 10);
 				$('#upload-box-message .progress-bar').show().css('width',progress+'px');
@@ -1607,7 +1596,7 @@ class Rcl_Messages{
 					}
 				});
 				return false;
-			});	
+			});
 		/* Удаление истории переписки */
 			jQuery('.del_history').live('click',function(){
 				var id_user = jQuery(this).data('contact');
@@ -1624,7 +1613,7 @@ class Rcl_Messages{
 				});
 				return false;
 			});
-		
+
 		/* Получаем старые сообщения в переписке */
 			jQuery('.old_message').live('click',function(){
 				rcl_preloader_show('#privat_block > div');
@@ -1639,7 +1628,7 @@ class Rcl_Messages{
 							old_num_mess = data['num_mess_now'];
 						}
 						rcl_preloader_hide();
-					}					
+					}
 				});
 				return false;
 			});
@@ -1682,7 +1671,7 @@ class Rcl_Messages{
 							jQuery('.correspond #contact-lists').html(data['message_block']);
 						} else {
 							rcl_notice('Ошибка!','error');
-						}						
+						}
 					}
 				});
 				return false;
@@ -1788,7 +1777,7 @@ function rcl_add_message($args){
 				array( 'user' => $addressat, 'contact' => $author )
 			);
 	}
-	
+
 	do_action('rcl_new_private_message', $addressat, $user_ID);
 
 	return $result;

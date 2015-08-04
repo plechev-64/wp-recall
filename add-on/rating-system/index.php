@@ -177,20 +177,22 @@ function rcl_rating_block($args){
     return sprintf('<span title="%s" class="rating-rcl %s">%s</span>', __('rating','rcl'), $class, rcl_format_rating($value));
 }
 
-function rcl_get_html_post_rating($object_id,$type){
+function rcl_get_html_post_rating($object_id,$type,$object_author=false){
     global $post,$comment,$rcl_options,$user_ID;
 
     if(!$rcl_options['rating_'.$type]) return false;
 
     $block = '';
 
-    if($type=='comment'){
-		$object = ($comment)? $comment: get_comment($object_id);
-		$object_author = $object->user_id;
-    }else{
-		$object = ($post)? $post: get_post($object_id);
-		$object_author = $object->post_author;
-	}
+    if(!$object_author){
+        if($type=='comment'){
+            $object = ($comment)? $comment: get_comment($object_id);
+            $object_author = $object->user_id;
+        }else{
+            $object = ($post)? $post: get_post($object_id);
+            $object_author = $object->post_author;
+        }
+    }
 
     $args = array(
         'object_id'=>$object_id,

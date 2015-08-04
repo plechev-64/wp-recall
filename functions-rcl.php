@@ -216,22 +216,17 @@ function rcl_get_author_name($content,$user_id){
 }
 function rcl_get_author_block(){
     global $post;
-    $author = $post->post_author;
 
-    $out = "<div id='block_author-rcl'>
-        <div class='avatar-author'>".get_avatar($author,60);
-        if(function_exists('rcl_rating_block')) $out .= rcl_rating_block(array('ID'=>$author,'type'=>'user'));
-        $out .= "</div>
-        <div class='content-author-block'>";
-                $head = apply_filters('rcl_posthead_user',$head,$author);
-                $out .= $head;
-                $desc = apply_filters('rcl_postdesc_user',$desc,$author);
-                $out .= $desc;
-                $footer = apply_filters('rcl_postfooter_user',$footer,$author);
-                if($footer) $out .= '<div class="footer-author">'.$footer.'</div>';
-        $out .= "</div>
-        </div>";
-    return $out;
+    $content = "<div id=block_author-rcl>";
+    $content .= "<h3>".__('Author of publication','rcl')."</h3>";
+
+    add_filter('user_description','rcl_add_userlist_follow_button',90);
+    $content .= rcl_get_userlist(array('type' => 'rows','include' => $post->post_author ,'orderby'=>'action','search'=>'no'));
+    remove_filter('user_description','rcl_add_userlist_follow_button',90);
+
+    $content .= "</div>";
+
+    return $content;
 }
 
 function rcl_get_miniaction($action,$user_id=false){

@@ -1,32 +1,42 @@
 /*Отзывы*/
-.recall1 {
+#recall_block .recall1 {
     background: #E7FFE8;
 }
-.recall-1 {
+#recall_block .recall-1 {
     background: #ffeae8;
 }
-.recall0 {
+#recall_block .recall0 {
     background: #fff;
 }
-.recall_block > div{
-	overflow:hidden;
+#recall_block .public-post {
+    margin:5px 0;
+    padding:5px;
 }
-.recall_block > div .avatar{
-	margin:5px 10px 5px 5px;
-	float:left;
+#recall_block .recall_block > div{
+    overflow:hidden;
 }
-.content-recall{
+#recall_block .review-delete{
+    text-align: right; 
+}
+#recall_block .author-avatar{
+    float:left;
+    margin-right:10px;
+}
+#recall_block .author-avatar img{
 
 }
-.content-recall .status{
+#recall_block .content-recall{
+    
+}
+#recall_block .content-recall .status{
     display: block;
     float: right;
     font-size: 30px;  
     margin: 5px;
 }
-.content-recall .status.plus{
+#recall_block .content-recall .status.plus{
     color:green;
 }
-.content-recall .status.minus{
+#recall_block .content-recall .status.minus{
     color: red;	
 }

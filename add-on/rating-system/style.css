@@ -91,6 +91,9 @@
     overflow-y: auto;
     max-height: 350px;
 }
+#rating_block .get-list-votes{
+    margin:3px;
+}
 #rating_block .votes-list{
     margin: 10px;
 }

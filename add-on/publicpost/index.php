@@ -318,14 +318,6 @@ function rcl_shortcode_gallery($atts, $content = null){
     return $gallery;
 }
 
-add_filter('rcl_postfooter_user','rcl_allpost_button',30,2);
-function rcl_allpost_button($content,$user_id){
-	global $rcl_options;
-	if($rcl_options['view_publics_block_rcl']!=1) return $content;
-	$content .= rcl_get_button(__('Publication','rcl'),rcl_format_url(get_author_posts_url($user_id),'publics'),array('icon'=>'fa-list'));
-	return $content;
-}
-
 //Выводим инфу об авторе записи в конце поста
 function rcl_author_info($content){
 	global $post,$rcl_options;
@@ -645,7 +637,7 @@ function rcl_edit_post_link($admin_url, $post_id){
 function rcl_get_edit_post_button($content){
 	global $post,$user_ID,$current_user,$rcl_options;
 	if(is_tax('groups')||$post->post_type=='page') return $content;
-	
+
 	if(!current_user_can('edit_post', $post->ID)) return $content;
 
 	get_currentuserinfo();
@@ -655,7 +647,7 @@ function rcl_get_edit_post_button($content){
 		$author_info = get_userdata($post->post_author);
 		if($user_info->user_level < $author_info->user_level) return $content;
 	}
-	
+
 	if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
 
 	$access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;

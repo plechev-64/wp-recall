@@ -134,16 +134,7 @@ class Rcl_Feed{
 
 
 	function add_feed_button_user_lk($author_lk){
-		global $wpdb,$user_ID;
-
-		$feed_count = rcl_get_count_feed($author_lk);
-
-		if(!$feed_count) $feed_info = __('Followers','rcl').': '.$feed_count;
-		else $feed_info = '<i class="fa fa-twitter"></i>'.__('Followers','rcl').': '.$feed_count;
-
-		$feed_info = '<div class="feed-counter">'.$feed_info.'</div>';
-
-		return $feed_info;
+            return '<div class="feed-counter"><i class="fa fa-twitter"></i>'.__('Followers','rcl').': '.rcl_get_count_feed($author_lk).'</div>';
 	}
 
 

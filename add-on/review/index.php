@@ -48,7 +48,7 @@ class Rcl_Review{
 		$count_rayt = (isset($rcl_options['rating_point_rcl-review']))? $rcl_options['rating_point_rcl-review']: 1;
 		if($status<0) $count_rayt = $count_rayt*-1;
 		if($status==0)$count_rayt = 0;
-		
+
 		$otziv = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."profile_otziv WHERE user_id = '%d' AND author_id = '%d'",$adressat_id,$user_ID));
 
 		if(!$otziv){
@@ -59,9 +59,9 @@ class Rcl_Review{
 				RCL_PREF.'profile_otziv',
 				array( 'author_id' => $user_ID, 'content_otziv' => $content_otziv, 'user_id' => $adressat_id, 'status' => $count_rayt )
 			);
-			
+
 			if (!$result) wp_die('Error');
-						
+
 		}
 
 		do_action('rcl_add_review',$user_ID,$adressat_id);
@@ -116,15 +116,15 @@ class Rcl_Review{
 			$result = $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."profile_otziv WHERE ID = '%d'",$recall_id));
 
 			if ($result) {
-				
+
 				do_action('rcl_delete_review',$review);
 
 				wp_redirect( rcl_format_url(get_author_posts_url($user_id),'recall') );  exit;
 
 			} else {
-				
+
 				wp_die('Error');
-				
+
 			}
 		}
 	}
@@ -185,9 +185,11 @@ class Rcl_Review{
                     '.$this->get_status($otziv->status).'
                     <p>
                     <strong><a href="'.get_author_posts_url($otziv->author_id).'">'.get_the_author_meta('display_name', $otziv->author_id).'</a> '.__('leave a review','rcl').':</strong>
-                    </p>'.nl2br($otziv->content_otziv).'</div>';
+                    </p>'.nl2br($otziv->content_otziv)
+                            .rcl_get_html_post_rating($otziv->ID,'review-content',$otziv->author_id)
+                            .'</div>';
                     if($user_ID==$otziv->author_id){
-                            $recall_block .= '<form method="post" action="" style="text-align: right; padding-top: 10px;">
+                            $recall_block .= '<form method="post" action="" class="review-delete">
                             <input type="hidden" name="user_id" value="'.$otziv->user_id.'">
                             <input type="hidden" name="recall_id" value="'.$otziv->ID.'">
                             <input type="submit" class="recall-button" name="delete_review" value="'.__('Delete','rcl').'">
@@ -203,9 +205,9 @@ class Rcl_Review{
             //получаем кол-во отзывов текущего пользователя об авторе
 
             if($user_ID!=$user_LK&&$user_ID) {
-				
+
 					$rt_limit = (isset($rcl_options['rw_limit_rating'])&&$rcl_options['rw_limit_rating'])? $rcl_options['rw_limit_rating']: 0;
-				
+
 					if($rt_limit){
 						if(function_exists('rcl_get_user_rating')){
 							$rating = rcl_get_user_rating($user_ID);
