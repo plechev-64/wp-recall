@@ -155,7 +155,7 @@ function rcl_ajax_tab(){
 add_action('init','rcl_init_ajax_tabs');
 function rcl_init_ajax_tabs(){
         global $array_tabs;
-        $id_tabs = '';
+        $id_tabs = array();
 	$array_tabs = apply_filters( 'ajax_tabs_rcl', $id_tabs );
 	return $array_tabs;
 }

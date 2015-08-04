@@ -69,10 +69,10 @@ function rcl_get_content_rating($author_lk){
 
     $karma = rcl_get_user_rating($author_lk);
 
-    foreach($rcl_rating_types as $type=>$val){
-		
-		if(!isset($rcl_options['rating_user_'.$type])||!$rcl_options['rating_user_'.$type])continue;
-		
+    /*foreach($rcl_rating_types as $type=>$val){
+
+	if(!isset($rcl_options['rating_user_'.$type])||!$rcl_options['rating_user_'.$type])continue;
+
         $args = array(
             'object_author' => $author_lk,
             'rating_type'=>$type
@@ -85,22 +85,59 @@ function rcl_get_content_rating($author_lk){
         else return rcl_rating_block(array('value'=>$karma));
     } else {
         return rcl_rating_block(array('value'=>$karma));
+    }*/
+
+    return rcl_rating_block(array('value'=>$karma));
+}
+
+add_filter('ajax_tabs_rcl','rcl_ajax_rating_tab');
+function rcl_ajax_rating_tab($array_tabs){
+    return array_merge( $array_tabs,array( 'rating' => 'rcl_rating_tab' ));
+}
+
+add_action('init','rcl_add_rating_tab');
+function rcl_add_rating_tab(){
+    rcl_tab('rating','rcl_rating_tab',__('Rating','rcl'),array('public'=>1,'class'=>'fa-balance-scale'));
+}
+
+function rcl_rating_tab($author_lk){
+    global $rcl_rating_types,$rcl_options;
+
+    foreach($rcl_rating_types as $type=>$val){
+
+	if(!isset($rcl_options['rating_user_'.$type])||!$rcl_options['rating_user_'.$type])continue;
+
+        $args = array(
+            'object_author' => $author_lk,
+            'rating_type'=>$type
+        );
+        break;
     }
+
+    $args['rating_status'] = 'user';
+
+    $votes = rcl_get_rating_votes($args,array(0,100));
+
+    $content = rcl_rating_navi($args);
+
+    $content .= rcl_get_list_votes($args,$votes);
+
+    return $content;
 }
 
 function rcl_rating_class($value){
 	if($value>0){
-        return "rating-plus";       
+        return "rating-plus";
     }elseif($value<0){
         return "rating-minus";
     }else{
-        return "rating-null";        
+        return "rating-null";
     }
 }
 
 function rcl_format_value($value){
 	if(!$value) $value = 0;
-	
+
 	$cnt = strlen(round($value));
 	if($cnt>4){
 		$th = $cnt-3;
@@ -111,15 +148,15 @@ function rcl_format_value($value){
 		$value = number_format($value, $fl, ',', ' ');
 	}
 	/*if($value>0){
-        return "+".$value;       
+        return "+".$value;
     }elseif($value<0){
         return $value;
     }else{*/
-    return $value;        
+    return $value;
     //}
 }
 
-function rcl_format_rating($value){   
+function rcl_format_rating($value){
     return sprintf('<span class="rating-value %s">%s</span>',rcl_rating_class($value),rcl_format_value($value));
 }
 
@@ -154,13 +191,13 @@ function rcl_get_html_post_rating($object_id,$type){
 		$object = ($post)? $post: get_post($object_id);
 		$object_author = $object->post_author;
 	}
-	
+
     $args = array(
         'object_id'=>$object_id,
         'object_author'=>$object_author,
         'rating_type'=>$type,
     );
-	
+
 	$content = '';
 	$content = apply_filters('rating_block_content',$content,$args);
 
@@ -177,35 +214,35 @@ function rcl_add_rating_block($content,$args){
 
 function rcl_get_rating_block($args){
 	global $rcl_options,$comment,$user_ID;
-	
+
 	if($args['rating_type']=='comment'&&$args['object_id']==$comment->comment_ID){
 		if($rcl_options['rating_overall_comment']==1) $value = $comment->rating_votes;
 		else $value = $comment->rating_total;
 	}else{
 		$value = rcl_get_total_rating($args['object_id'],$args['rating_type']);
 	}
-	
+
     $block = '<div class="'.$args['rating_type'].'-value rating-value-block '.rcl_rating_class($value).'">'
             . __('Rating','rcl').': '.rcl_format_rating($value);
-			
-	$access = $rcl_options['rating_results_can'];		
-	
-	$can = true;	
-	
-	if($access){	
+
+	$access = $rcl_options['rating_results_can'];
+
+	$can = true;
+
+	if($access){
 		$user_info = get_userdata($user_ID);
-		if ( $user_info->user_level < $access )	$can = false;	
-	}	
-	
+		if ( $user_info->user_level < $access )	$can = false;
+	}
+
     if($value&&$can)$block .= '<a href="#" data-rating="'.rcl_encode_data_rating('view',$args).'" class="view-votes post-votes"><i class="fa fa-question-circle"></i></a>';
     $block .=  '</div>';
-	
+
     return $block;
 }
 
 add_filter('rating_block_content','rcl_add_buttons_rating',10,3);
 function rcl_add_buttons_rating($content,$args){
-	global $user_ID;	
+	global $user_ID;
 	if(doing_filter('the_excerpt')) return $content;
 	if(is_front_page()||$user_ID==$args['object_author']) return $content;
 	$content .= rcl_get_buttons_rating($args);
@@ -220,7 +257,7 @@ function rcl_get_buttons_rating($args){
     $args['user_id'] = $user_ID;
 
     $rating_value = rcl_get_vote_value($args);
-	
+
 	if($rating_value&&!$rcl_options['rating_delete_voice']) return false;
 
     $block = '<div class="buttons-rating">';
@@ -303,9 +340,9 @@ function rcl_edit_rating_user(){
 	if($new_rating){
 
 		$rating = rcl_get_user_rating($user_id);
-		
+
 		$val = $new_rating - $rating;
-		
+
 		$args = array(
 			'user_id' => $user_ID,
 			'object_id' => $user_id,
@@ -313,7 +350,7 @@ function rcl_edit_rating_user(){
 			'rating_value' => $val,
 			'rating_type' => 'edit-admin'
 		);
-		
+
 		rcl_insert_rating($args);
 
 		$log['otvet']=100;
@@ -354,7 +391,7 @@ function rcl_scripts_rating($script){
                         val.empty().text(data['rating']);
 						if(data['rating']<0){
 							val.parent().css('color','#FF0000');
-						}else{ 
+						}else{
 							val.parent().css('color','#008000');
 						}
                         block.parent().remove();
@@ -389,8 +426,8 @@ function rcl_scripts_rating($script){
 
         jQuery('a.get-list-votes').live('click',function(){
             if(jQuery(this).hasClass('active')) return false;
-			rcl_preloader_show('#rt-block .votes-window ul');
-            jQuery('.votes-window a.get-list-votes').removeClass('active');
+            rcl_preloader_show('#rating_block .votes-list');
+            jQuery('#rating_block a.get-list-votes').removeClass('active');
             jQuery(this).addClass('active');
             var rating = jQuery(this).data('rating');
 
@@ -400,7 +437,7 @@ function rcl_scripts_rating($script){
                 ".$ajaxdata."
                 success: function(data){
                     if(data['result']==100){
-                        jQuery('.votes-window .votes-list').replaceWith(data['window']);
+                        jQuery('#rating_block .votes-list').replaceWith(data['window']);
                     }else{
                         rcl_notice('".__('Error','rcl')."!','error');
                     }

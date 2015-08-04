@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-08-01 14:07+0300\n"
+"POT-Creation-Date: 2015-08-04 15:25+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -210,7 +210,7 @@ msgstr "Имя группы"
 #: add-on/bookmarks/index.php:381 add-on/bookmarks/index.php:403
 #: add-on/bookmarks/index.php:428 add-on/bookmarks/index.php:459
 #: add-on/gallery-recall/index.php:405 add-on/gallery-recall/index.php:444
-#: add-on/rating-system/index.php:383 add-on/rating-system/index.php:405
+#: add-on/rating-system/index.php:420 add-on/rating-system/index.php:442
 msgid "Error"
 msgstr "Ошибка"
 
@@ -221,23 +221,41 @@ msgstr "Ошибка"
 msgid "Are you sure?"
 msgstr "Вы серьезно?"
 
-#: add-on/feed/index.php:34 add-on/feed/index.php:384
+#: add-on/feed/index.php:34 add-on/feed/index.php:431
 msgid "Subscribe"
 msgstr "Подписаться"
 
-#: add-on/feed/index.php:34 add-on/feed/index.php:79 add-on/feed/index.php:374
+#: add-on/feed/index.php:34 add-on/feed/index.php:132
+#: add-on/feed/index.php:421
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
-#: add-on/feed/index.php:88 add-on/feed/index.php:89
-msgid "Subscribers"
+#: add-on/feed/index.php:58 add-on/feed/index.php:141
+#: add-on/feed/index.php:142
+msgid "Followers"
 msgstr "Подписчики"
 
-#: add-on/feed/index.php:96
-msgid "My subscriptions"
-msgstr "Мои подписки"
+#: add-on/feed/index.php:63
+msgid "List subscribers"
+msgstr "Список подписчиков"
 
-#: add-on/feed/index.php:109
+#: add-on/feed/index.php:71
+msgid "Following yet"
+msgstr "Подписчиков пока нет"
+
+#: add-on/feed/index.php:83
+msgid "Subscriptions"
+msgstr "Подписки"
+
+#: add-on/feed/index.php:88
+msgid "List subscriptions"
+msgstr "Список подписок"
+
+#: add-on/feed/index.php:94
+msgid "Subscriptions yet"
+msgstr "Подписок пока нет"
+
+#: add-on/feed/index.php:155
 msgid ""
 "Login or register to view the latest publications and comments from users on "
 "which you will you subscribed."
@@ -245,22 +263,22 @@ msgstr ""
 "Войдите или зарегистрируйтесь, чтобы видеть последние публикации и "
 "комментарии от пользователей на которых оформлена подписка"
 
-#: add-on/feed/index.php:115 add-on/feed/index.php:402
+#: add-on/feed/index.php:161 add-on/feed/index.php:449
 #: add-on/feed/templates/feed-post.php:43 add-on/rating-system/index.php:32
-#: functions/rcl_userlist.php:296 functions/shortcodes.php:241
+#: functions/rcl_userlist.php:294 functions/shortcodes.php:256
 msgid "Comments"
 msgstr "Комментарии"
 
-#: add-on/feed/index.php:116 add-on/publicpost/index.php:65
+#: add-on/feed/index.php:162 add-on/publicpost/index.php:65
 #: add-on/publicpost/index.php:325
 msgid "Publication"
 msgstr "Публикация"
 
-#: add-on/feed/index.php:406
+#: add-on/feed/index.php:453
 msgid "It seems that you have not left a single comment or not subscribed."
 msgstr "Похоже, что у вас еще нет комментариев."
 
-#: add-on/feed/index.php:407
+#: add-on/feed/index.php:454
 msgid ""
 "Comment you publish and subscribe to other users, then you can track "
 "responses to your comments and to see new comments from users.Comment you "
@@ -271,25 +289,25 @@ msgstr ""
 "получать новые комментарии ваших публикаций или пользователей на которых вы "
 "подписаны, а также ответы на ваши комментарии."
 
-#: add-on/feed/index.php:660
+#: add-on/feed/index.php:659
 msgid "Publications yet"
 msgstr "Публикаций пока нет"
 
-#: add-on/feed/index.php:660
+#: add-on/feed/index.php:659
 msgid "Maybe later, someone will post the news."
 msgstr "Возможно позже появятся новые публикации"
 
-#: add-on/feed/index.php:669
+#: add-on/feed/index.php:668
 msgid "Публикации"
 msgstr ""
 
-#: add-on/feed/index.php:699
+#: add-on/feed/index.php:698
 msgid "You havent signed up anyone elses publication."
 msgstr ""
 "В вашей ленте пока нет новых публикаций. Подписывайтесь на пользователей "
 "сайта, чтобы видеть новые публикации."
 
-#: add-on/feed/index.php:700
+#: add-on/feed/index.php:699
 msgid ""
 "Go to the profile of the user and click the \"Subscribe\" button and you "
 "will be able to monitor his recent publications here."
@@ -562,7 +580,7 @@ msgid "View"
 msgstr "Смотреть"
 
 #: add-on/groups/index.php:105 add-on/groups/index.php:140
-#: functions/shortcodes.php:289
+#: functions/shortcodes.php:307
 msgid "Search"
 msgstr "Поиск"
 
@@ -739,7 +757,7 @@ msgstr "Поиск группы"
 msgid "Find"
 msgstr "Найти"
 
-#: add-on/groups/index.php:874 functions/shortcodes.php:237
+#: add-on/groups/index.php:874 functions/shortcodes.php:252
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -2152,20 +2170,6 @@ msgid ""
 "Click on Priceline the image to add it to the content of the publication"
 msgstr "Нажмите на загруженное изображение, чтобы добавить его в контент"
 
-#: add-on/rating-rank/addon-options.php:9
-msgid "Rank system"
-msgstr ""
-
-#: add-on/rating-rank/addon-options.php:13
-msgid "Перечень званий"
-msgstr ""
-
-#: add-on/rating-rank/addon-options.php:15
-msgid ""
-"Укажите перечень званий с требуемым значением рейтинга в формате "
-"\"rankname:100\". Каждое новое правило указывается с новой строки"
-msgstr ""
-
 #: add-on/rating-system/addon-options.php:16
 msgid "Type of rating for"
 msgstr "Тип рейтинга для"
@@ -2175,7 +2179,7 @@ msgid "Plus/minus"
 msgstr "Плюс/Минус"
 
 #: add-on/rating-system/addon-options.php:19
-#: add-on/rating-system/index.php:244
+#: add-on/rating-system/index.php:281
 msgid "I like"
 msgstr "Мне нравится"
 
@@ -2300,27 +2304,28 @@ msgstr "комментарий"
 msgid "Rating changes not made"
 msgstr "Изменение рейтинга не производилось"
 
-#: add-on/rating-system/index.php:51 add-on/rating-system/index.php:189
+#: add-on/rating-system/index.php:51 add-on/rating-system/index.php:100
+#: add-on/rating-system/index.php:226
 msgid "Rating"
 msgstr "Рейтинг"
 
-#: add-on/rating-system/index.php:140
+#: add-on/rating-system/index.php:177
 msgid "rating"
 msgstr "рейтинг"
 
-#: add-on/rating-system/index.php:237
+#: add-on/rating-system/index.php:274
 msgid "To remove your vote"
 msgstr "Удалить голос"
 
-#: add-on/rating-system/index.php:246
+#: add-on/rating-system/index.php:283
 msgid "minus"
 msgstr "минус"
 
-#: add-on/rating-system/index.php:247
+#: add-on/rating-system/index.php:284
 msgid "plus"
 msgstr "плюс"
 
-#: add-on/rating-system/index.php:362
+#: add-on/rating-system/index.php:399
 msgid "You can not vote"
 msgstr "Вы не можете голосовать"
 
@@ -3048,7 +3053,7 @@ msgid "Exit"
 msgstr "Выход"
 
 #: functions/loginform.php:168 functions/loginform.php:192
-#: functions/rcl_userlist.php:309 functions/shortcodes.php:242
+#: functions/rcl_userlist.php:307 functions/shortcodes.php:257
 #: templates/form-register.php:4 templates/form-remember.php:18
 #: templates/form-sign.php:27 templates/recallbar.php:17
 #: templates/recallbar.php:31
@@ -3323,11 +3328,11 @@ msgstr "Все значения произвольных полей с этим 
 msgid "were removed from the Database"
 msgstr "были удалены из базы данных"
 
-#: functions/rcl_userlist.php:277 recall.php:251
+#: functions/rcl_userlist.php:275 recall.php:251
 msgid "not online"
 msgstr "не в сети"
 
-#: functions/rcl_userlist.php:302
+#: functions/rcl_userlist.php:300
 msgid "Publics"
 msgstr "Публикации"
 
@@ -3347,43 +3352,43 @@ msgstr "со следующими данными:"
 msgid "If it wasnt you, then just ignore this email"
 msgstr "Если это были не вы, то просто проигнорируйте это письмо"
 
-#: functions/shortcodes.php:232
+#: functions/shortcodes.php:247
 msgid "Total users"
 msgstr "Всего пользователей"
 
-#: functions/shortcodes.php:238
+#: functions/shortcodes.php:253
 msgid "Activity"
 msgstr "Активности"
 
-#: functions/shortcodes.php:239
+#: functions/shortcodes.php:254
 msgid "Rated"
 msgstr "Рейтингу"
 
-#: functions/shortcodes.php:240
+#: functions/shortcodes.php:255
 msgid "Publications"
 msgstr "Публикациям"
 
-#: functions/shortcodes.php:263
+#: functions/shortcodes.php:281
 msgid "Users not found"
 msgstr "Пользователи не найдены"
 
-#: functions/shortcodes.php:264
+#: functions/shortcodes.php:282
 msgid "No one"
 msgstr "Никого нет"
 
-#: functions/shortcodes.php:283
+#: functions/shortcodes.php:301
 msgid "Search users"
 msgstr "Поиск пользователей"
 
-#: functions/shortcodes.php:286
+#: functions/shortcodes.php:304
 msgid "by name"
 msgstr "по имени"
 
-#: functions/shortcodes.php:287
+#: functions/shortcodes.php:305
 msgid "by login"
 msgstr "по логину"
 
-#: functions/shortcodes.php:301
+#: functions/shortcodes.php:319
 msgid ""
 "To begin to use the capabilities of your personal account, please log in or "
 "register on this site"
@@ -3490,6 +3495,21 @@ msgstr "Блок с основной информацией профиля"
 #: widget.php:159
 msgid "Control panel"
 msgstr "Панель управления"
+
+#~ msgid "Your subscribers"
+#~ msgstr "Ваши подписчики"
+
+#~ msgid "Your subscriptions"
+#~ msgstr "Ваши подписки"
+
+#~ msgid "You have no one else signed"
+#~ msgstr "Вы еще ни на кого не подписаны"
+
+#~ msgid "Subscribers"
+#~ msgstr "Подписчики"
+
+#~ msgid "My subscriptions"
+#~ msgstr "Мои подписки"
 
 #~ msgid "Type of rating for records"
 #~ msgstr "Тип рейтинга для публикаций"

@@ -81,3 +81,7 @@
     margin: 0;
 
 }
+.userlist .follow-button{
+    margin: 15px 0 5px;
+    text-align: right;
+}

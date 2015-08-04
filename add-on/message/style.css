@@ -346,7 +346,7 @@ max-width: 80%;
 	font-size: 12px;
 	line-height: 1;
 }
-.privat_block .del_history, .privat_block .remove_ban_list{
+.privat_block .del_history, .privat_block .remove_ban_list, .privat_block .remove_black_list{
     float: right;
     padding-right:0px;
 }

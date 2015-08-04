@@ -137,12 +137,10 @@ class Rcl_Userlist{
 
         function search_request(){
             if(isset($_GET['search-user'])){
-                $a = 0;
-                $rqst = '';
-                foreach($_GET as $key=>$val){
-                    if($key=='navi'||$key=='filter') continue;
-                    if(++$a>1) $rqst .= '&';
-                    $rqst .= $key.'='.$val;
+                $rqst = array();
+                foreach($_GET as $k=>$v){
+                    if($k=='navi'||$k=='filter') continue;
+                    $rqst[] = $k.'='.$v;
                 }
                 return $rqst;
             }
@@ -189,7 +187,7 @@ class Rcl_Userlist{
 
         function get_post_count_data($us_data,$us_lst){
             global $wpdb;
-			
+
 			$query = "SELECT COUNT(post_author) AS post_count, post_author
                 FROM (select * from $wpdb->posts order by ID desc) as pc
                 WHERE post_status = 'publish' $us_lst GROUP BY post_author ORDER BY $this->orderby $this->order LIMIT $this->limit";
@@ -212,17 +210,17 @@ class Rcl_Userlist{
             if($users) return $this->get_usersdata($us_data,$users,'meta_value','feed','meta_value');
             return false;
         }
-		
-		function add_post_count_data($us_data,$us_lst){
+
+	function add_post_count_data($us_data,$us_lst){
 			global $wpdb,$user_ID;
 			$query = "SELECT COUNT(post_author) AS post_count, post_author
                 FROM $wpdb->posts
                 WHERE post_status = 'publish' AND post_author IN ($us_lst) AND post_type NOT IN ('attachment') GROUP BY post_author";
 			$postdata = $wpdb->get_results($query);
 			return $this->get_usersdata($us_data,$postdata,'post_author','user_posts','post_count');
-		}
-		
-		function add_comments_count_data($us_data,$us_lst){
+	}
+
+	function add_comments_count_data($us_data,$us_lst){
             global $wpdb;
 
             $users = $wpdb->get_results("
@@ -233,8 +231,8 @@ class Rcl_Userlist{
 
             return $this->get_usersdata($us_data,$users,'user_id','user_comments','comments_count');
         }
-		
-		function add_user_registered_data($us_data,$us_lst){
+
+	function add_user_registered_data($us_data,$us_lst){
             global $wpdb;
             $users = $wpdb->get_results("SELECT ID,display_name,user_registered FROM $wpdb->users WHERE ID IN ($us_lst)");
             return $this->get_usersdata($us_data,$users,'ID','user_register','user_registered');

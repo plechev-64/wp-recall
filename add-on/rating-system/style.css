@@ -91,6 +91,9 @@
     overflow-y: auto;
     max-height: 350px;
 }
+#rating_block .votes-list{
+    margin: 10px;
+}
 .votes-window .close{
     position: absolute;
     
@@ -98,15 +101,19 @@
     right: -10px;
     top: -10px;
 }
-.votes-window .votes-list li{
+.votes-window .votes-list li,
+#rating_block .votes-list li{
     list-style: none;
     
 }
-.lk-sidebar .votes-window ul li a{
+.lk-sidebar .votes-window ul li a,
+#rating_block .votes-list li a{
     display:inline;
 }
-.votes-window a.active{
+.votes-window a.active,
+#rating_block a.active{
     background-color: #ccc;
+    cursor:default;
 }
 .ratinglist{
     overflow: hidden;

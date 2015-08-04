@@ -19,7 +19,7 @@ function rcl_count_user_feed($user_id){
 }
 
 //получаем всех пользователей на которых подписан указанный юзер
-function get_user_feeds($user_id){
+function rcl_get_user_feeds($user_id){
 	global $wpdb;
 	return $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE meta_key = 'rcl_feed' AND user_id='%d' ORDER BY umeta_id DESC",$user_id));
 }
@@ -28,9 +28,9 @@ function rcl_get_feed_button($userid){
 	global $user_ID;
 
 	if(!$user_ID||$user_ID==$userid) return false;
-	
+
 	$feed = rcl_get_user_feed($user_ID, $userid);
-	
+
 	$feed_status = (!$feed)? __('Subscribe','rcl'): __('Unsubscribe','rcl');
 	$icon = (!$feed)? 'fa-bell': 'fa-bell-slash';
 
@@ -43,14 +43,67 @@ function rcl_get_feed_button($userid){
 	return $button;
 }
 
+function rcl_add_userlist_follow_button(){
+    global $user;
+    echo '<div class="follow-button">'.rcl_get_feed_button($user->user_id).'</div>';
+}
+
+add_filter('ajax_tabs_rcl','rcl_ajax_followers_tab');
+function rcl_ajax_followers_tab($array_tabs){
+    return array_merge( $array_tabs,array( 'followers' => 'rcl_followers_tab' ));
+}
+
+add_action('init','rcl_add_followers_tab');
+function rcl_add_followers_tab(){
+    rcl_tab('followers','rcl_followers_tab',__('Followers','rcl'),array('public'=>1,'class'=>'fa-twitter'));
+}
+
+function rcl_followers_tab($user_id){
+
+    $content = '<h3>'.__('List subscribers','rcl').'</h3>';
+
+    $cnt = rcl_get_count_feed($user_id);
+
+    if($cnt){
+        add_filter('user_description','rcl_add_userlist_follow_button',90);
+        $content .= rcl_get_userlist(array('type' => 'rows','usergroup' => 'rcl_feed:'.$user_id, 'inpage'=>20 ,'search'=>'no' ,'orderby'=>'action', 'add_uri'=>array('view'=>'followers')));
+    }else
+        $content .= '<p>'.__('Following yet','rcl').'</p>';
+
+    return $content;
+}
+
+add_filter('ajax_tabs_rcl','rcl_ajax_subscriptions_tab');
+function rcl_ajax_subscriptions_tab($array_tabs){
+    return array_merge( $array_tabs,array( 'subscriptions' => 'rcl_subscriptions_tab' ));
+}
+
+add_action('init','rcl_add_subscriptions_tab');
+function rcl_add_subscriptions_tab(){
+    rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','rcl'),array('public'=>1,'class'=>'fa-bell-o'));
+}
+
+function rcl_subscriptions_tab($user_id){
+    $feeds = rcl_get_user_feeds($user_id);
+    $content = '<h3>'.__('List subscriptions','rcl').'</h3>';
+    if($feeds){
+        add_filter('user_description','rcl_add_userlist_follow_button',90);
+        foreach($feeds as $feed){$users[] = $feed->meta_value;}
+        $content .= rcl_get_userlist(array('type' => 'rows','include' => implode(',',$users) ,'search'=>'no' ,'orderby'=>'action', 'add_uri'=>array('view'=>'subscriptions')));
+    } else{
+        $content .= '<p>'.__('Subscriptions yet','rcl').'</p>';
+    }
+    return $content;
+}
+
 class Rcl_Feed{
 
     public function __construct() {
         global $user_ID;
 
         add_action('wp_ajax_get_posts_feed_recall', array(&$this, 'get_posts_feed_recall'));
-		add_action('wp_ajax_get_all_users_feed_recall', array(&$this, 'get_all_users_feed_recall'));
-		add_action('wp_ajax_get_all_your_feed_users', array(&$this, 'get_all_your_feed_users'));
+		//add_action('wp_ajax_get_all_users_feed_recall', array(&$this, 'get_all_users_feed_recall'));
+		//add_action('wp_ajax_get_all_your_feed_users', array(&$this, 'get_all_your_feed_users'));
 		add_action('wp_ajax_get_comments_feed_recall', array(&$this, 'get_comments_feed_recall'));
         if($user_ID) add_action('wp_ajax_add_feed_user_recall', array(&$this, 'add_feed_user_recall'));
 
@@ -61,7 +114,7 @@ class Rcl_Feed{
         if (!is_admin()):
                 if(function_exists('add_shortcode')) add_shortcode('feed',array(&$this, 'last_post_and_comments_feed'));
                 if(function_exists('rcl_block')){
-                    rcl_block('sidebar',array(&$this, 'add_feed_button_user_lk'),array('id'=>'fd-block','order'=>5));
+                    rcl_block('content',array(&$this, 'add_feed_button_user_lk'),array('id'=>'fd-block','order'=>10));
                     rcl_block('footer','rcl_get_feed_button',array('id'=>'fd-footer','order'=>5,'public'=>-1));
                 }
         endif;
@@ -85,17 +138,10 @@ class Rcl_Feed{
 
 		$feed_count = rcl_get_count_feed($author_lk);
 
-		if(!$feed_count) $feed_info = __('Subscribers','rcl').': '.$feed_count;
-		else $feed_info = '<a class="count_users_feed" id="user-feed-'.$author_lk.'">'.__('Subscribers','rcl').': '.$feed_count.'</a>';
+		if(!$feed_count) $feed_info = __('Followers','rcl').': '.$feed_count;
+		else $feed_info = '<i class="fa fa-twitter"></i>'.__('Followers','rcl').': '.$feed_count;
 
 		$feed_info = '<div class="feed-counter">'.$feed_info.'</div>';
-
-		if($user_ID==$author_lk){
-			$cnt = rcl_count_user_feed($author_lk);
-			if($cnt){
-				$feed_info .= '<div class="feed-current"><a class="all-users-feed">'.__('My subscriptions','rcl').': <span id="feed-count">'.$cnt.'</span></a></div>';
-			}
-		}
 
 		return $feed_info;
 	}
@@ -260,67 +306,68 @@ class Rcl_Feed{
 	/*************************************************
 	Получаем всех своих подписчиков
 	*************************************************/
-	function get_all_your_feed_users(){
+	/*function get_all_your_feed_users(){
 		global $wpdb;
 		global $user_ID;
+
 		if($user_ID){
 
-			$userid = intval($_POST['userid']);
-			if(!$userid) return false;
+                    $userid = intval($_POST['userid']);
+                    if(!$userid) return false;
+                    $page = intval($_POST['page']);
+                    if(!$page) $page = 1;
 
-				$page = intval($_POST['page']);
-				if(!$page) $page = 1;
+                    $inpage = 36;
+                    $start = ($page-1)*$inpage;
+                    $limit = $start.','.$inpage;
+                    $next = $page+1;
 
-				$inpage = 36;
-				$start = ($page-1)*$inpage;
-				$limit = $start.','.$inpage;
-				$next = $page+1;
+                    $cnt = rcl_get_count_feed($userid);
 
-				$cnt = rcl_get_count_feed($userid);
+                    if($cnt){
 
-			if($cnt){
+                        $users_feed = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE meta_key = 'rcl_feed' AND meta_value='%d' ORDER BY umeta_id DESC LIMIT %d,%d",$userid,$start,$inpage));
 
-				$users_feed = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE meta_key = 'rcl_feed' AND meta_value='%d' ORDER BY umeta_id DESC LIMIT %d,%d",$userid,$start,$inpage));
+                        $now = count($users_feed);
 
-				$now = count($users_feed);
+                        $names = rcl_get_usernames($users_feed,'user_id');
 
-				$names = rcl_get_usernames($users_feed,'user_id');
+                        $feed_list = '';
+                        if($page==1){
+                                $feed_list = '<div id="users-feed-'.$userid.'" class="float-window-recall">
+                                <div id="close-votes-'.$userid.'" class="close"><i class="fa fa-times-circle"></i></div>';
+                                $feed_list .= '<div>';
+                        }
 
-				$feed_list = '';
-				if($page==1){
-					$feed_list = '<div id="users-feed-'.$userid.'" class="float-window-recall">
-					<div id="close-votes-'.$userid.'" class="close"><i class="fa fa-times-circle"></i></div>';
-					$feed_list .= '<div>';
-				}
+                        foreach((array)$users_feed as $user){
+                                        $feed_list .= '<a href="'.get_author_posts_url($user->user_id).'" title="'.$names[$user->user_id].'">'.get_avatar($user->user_id,50).'</a>';
+                        }
 
-				foreach((array)$users_feed as $user){
-						$feed_list .= '<a href="'.get_author_posts_url($user->user_id).'" title="'.$names[$user->user_id].'">'.get_avatar($user->user_id,50).'</a>';
-				}
+                        if($now==$inpage) $feed_list .= rcl_get_button('Еще','#',array('class'=>'horizontal-more-button','id'=>'more-users-feed','attr'=>'data-page='.$next));
 
-				if($now==$inpage) $feed_list .= rcl_get_button('Еще','#',array('class'=>'horizontal-more-button','id'=>'more-users-feed','attr'=>'data-page='.$next));
+                        if($page==1){
+                                $feed_list .= '</div>';
+                                $feed_list .= '</div>';
+                        }
 
-				if($page==1){
-					$feed_list .= '</div>';
-					$feed_list .= '</div>';
-				}
+                        $log['otvet']=100;
+                        $log['user_id']=$userid;
+                        $log['feed-list']=$feed_list;
 
-				$log['otvet']=100;
-				$log['user_id']=$userid;
-				$log['feed-list']=$feed_list;
-			}
+                    }
 		} else {
 			$log['otvet']=1;
 		}
 		echo json_encode($log);
 		exit;
-	}
+	}*/
 
 	/*************************************************
 	Смотрим всех пользователей в своей подписке
 	*************************************************/
-	function get_all_users_feed_recall(){
+	/*function get_all_users_feed_recall(){
 		global $user_ID;
-		$users_feed = get_user_feeds($user_ID);
+		$users_feed = rcl_get_user_feeds($user_ID);
 
 		if(!$users_feed){
 			$log['recall']=1;
@@ -346,7 +393,7 @@ class Rcl_Feed{
 		$log['feed-list']=$feed_list;
 		echo json_encode($log);
 		exit;
-	}
+	}*/
 
 	/*************************************************
 	Подписываемся на пользователя
@@ -425,7 +472,7 @@ class Rcl_Feed{
 
 		$feeds = array();
 
-		$feed_users = get_user_feeds($user_ID);
+		$feed_users = rcl_get_user_feeds($user_ID);
 
 		foreach((array)$feed_users as $user){ $feeds[] = $user->meta_value; }
 
@@ -470,54 +517,6 @@ class Rcl_Feed{
                 $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
 
 		$script .= "
-			/* Смотрим всех пользователей в своей подписке */
-				jQuery('.all-users-feed').live('click',function(){
-					var dataString = 'action=get_all_users_feed_recall';
-					jQuery.ajax({
-						".$ajaxdata."
-						success: function(data){
-							if(data['recall']==100){
-								jQuery('.all-users-feed').after(data['feed-list']);
-								jQuery('#users-feed-'+data['user_id']).slideDown(data['feed-list']);
-							} else {
-								rcl_notice('Ошибка!','error');
-							}
-						}
-					});
-				return false;
-				});
-			/* Получаем всех своих подписчиков */
-				jQuery('.count_users_feed').live('click',function(){
-					var page = 1;
-					get_page_users_feed(page);
-					return false;
-				});
-				jQuery('#more-users-feed').live('click',function(){
-					var page = jQuery(this).data('page');
-					get_page_users_feed(page);
-					return false;
-				});
-				function get_page_users_feed(page){
-					rcl_preloader_show('#fd-block .float-window-recall > div');
-					var userid = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
-					var dataString = 'action=get_all_your_feed_users&userid='+userid+'&page='+page;
-					jQuery.ajax({
-							".$ajaxdata."
-							success: function(data){
-									if(data['otvet']==100){
-										if(page==1){
-											jQuery('#user-feed-'+data['user_id']).after(data['feed-list']);
-											jQuery('#users-feed-'+data['user_id']).slideDown(data['feed-list']);
-										}else{
-											jQuery('#users-feed-'+data['user_id']+' #more-users-feed').replaceWith(data['feed-list']);
-										}
-									}else{
-										rcl_notice('Авторизуйтесь, чтобы смотреть подписчиков пользователя!','warning');
-									}
-									rcl_preloader_hide();
-							}
-					});
-                }
 			/* Подписываемся на пользователя */
 				jQuery('.feed-user').live('click',function(){
 					var id_user = jQuery(this).data('feed');
@@ -592,7 +591,7 @@ function rcl_get_public_feed($user_id=false){
     if(!$user_id) $user_id = $user_ID;
 
     $Rcl_Feed = new Rcl_Feed();
-    $feed_users = get_user_feeds($user_id);
+    $feed_users = rcl_get_user_feeds($user_id);
 
     if($feed_users){
 
