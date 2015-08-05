@@ -60,6 +60,7 @@
 .wprecallblock #lk-conteyner{
     background: #fff;
     padding: 10px;
+    overflow: hidden;
 }
 .wprecallblock #lk-conteyner .lk-header{
 
@@ -92,12 +93,12 @@
     font-size: 26px;
     float: left;
 }
-.wprecallblock #lk-conteyner .lk-content .status{
+.wprecallblock #lk-conteyner .lk-content .rcl-action{
     overflow: hidden;
 	font-size: 12px;
 	color: #888;
 }
-.wprecallblock #lk-conteyner .lk-content .status .status_user{
+.wprecallblock #lk-conteyner .lk-content .rcl-action .status_user{
     float: left;
     margin: 0 5px 0 5px;
     font-size:16px;

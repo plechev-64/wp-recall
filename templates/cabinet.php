@@ -17,14 +17,15 @@
         </div>
         <div class="lk-content">
             <h2><?php rcl_username(); ?></h2>
-            <div class="status">
+            <div class="rcl-action">
                 <?php rcl_action(); ?>
             </div>
-            <?php rcl_status_desc(); ?>
-            <?php rcl_content(); ?>
-        </div>
-        <div class="lk-footer">
-            <?php rcl_footer(); ?>
+            <div class="rcl-user-status">
+                <?php rcl_status_desc(); ?>
+            </div>
+            <div class="rcl-content">
+                <?php rcl_content(); ?>
+            </div>
         </div>
     </div>
 

@@ -103,7 +103,10 @@ function rcl_get_orders($args){
 		$wheres[] = "order_date  LIKE '%$date%'";
 	}
 
-	if($wheres) $where = implode(' AND ',$wheres);
+        if($wheres){
+            if($args['search']) $where = implode(' OR ',$wheres);
+            else $where = implode(' AND ',$wheres);
+        }
 	if($where) $sql .= " WHERE ".$where;
 	$sql .= " $orderby $order";
 
@@ -355,11 +358,11 @@ function rcl_payment_order($order_id,$user_id=false){
     $subject = 'Заказ №'.$order->order_id.' оплачен!';
 
     $admin_email = $rmag_options['admin_email_magazin_recall'];
-	
+
 	$text = '';
-	
+
 	$text = apply_filters('payment_mail_text',$text);
-	
+
 	//print_r($text);exit;
 
     $textmail = '

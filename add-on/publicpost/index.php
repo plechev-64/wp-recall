@@ -323,7 +323,7 @@ function rcl_author_info($content){
 	global $post,$rcl_options;
 	if($rcl_options['info_author_recall']!=1) return $content;
 	if(!is_single()) return $content;
-	if($post->post_type=='products'||$post->post_type=='page') return $content;
+	if($post->post_type=='page') return $content;
 	$out = rcl_get_author_block();
         if($post->post_type=='task') return $out.$content;
 	return $content.$out;

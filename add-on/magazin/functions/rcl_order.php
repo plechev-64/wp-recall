@@ -72,10 +72,12 @@ class Rcl_Order {
 
     function get_order_id(){
         global $wpdb;
-        $pay_max = $wpdb->get_var("SELECT MAX(inv_id) FROM ".RMAG_PREF ."pay_results");
-        if(!$pay_max) $pay_max = $wpdb->get_var("SELECT MAX(order_id) FROM ".RMAG_PREF ."orders_history");
+
+        $pay_max = $wpdb->get_var("SELECT MAX(order_id) FROM ".RMAG_PREF ."orders_history");
+
         if($pay_max) $this->order_id = $pay_max+1;
         else $this->order_id = rand(0,100);
+
         return $this->order_id;
     }
 

@@ -165,7 +165,8 @@ function rmag_manage_orders(){
 			<div style="width:1050px">';//начало блока настроек профиля
 	$n=0;
 	$s=0;
-	if($_GET['remove-trash']==101&&wp_verify_nonce( $_GET['_wpnonce'], 'delete-trash-rmag')) $wpdb->query($wpdb->prepare("DELETE FROM ".RMAG_PREF ."orders_history WHERE order_status = '%d'",6));
+	if($_GET['remove-trash']==101&&wp_verify_nonce( $_GET['_wpnonce'], 'delete-trash-rmag'))
+                $wpdb->query($wpdb->prepare("DELETE FROM ".RMAG_PREF ."orders_history WHERE order_status = '%d'",6));
 
 if($_GET['order-id']){
 
@@ -299,7 +300,11 @@ if($_GET['order-id']){
 			$args['order_status'] = intval($_GET['status']);
 		}elseif($_GET['user']){
 			$args['user_id'] = intval($_GET['user']);
-		}else{
+                }elseif($_GET['search_order']){
+                    $args['order_id'] = intval($_GET['search_order']);
+                    $args['user_id'] = intval($_GET['search_order']);
+                    $args['search'] = true;
+                }else{
 			$args['status_not_in'] = 6;
 			$args['year'] = $year;
 			$args['month'] = $month;
@@ -324,6 +329,13 @@ if($_GET['order-id']){
             $table .= rcl_get_chart_orders($orders);
 
 	$table .= '<h3>Всего заказов: '.$n.' на '.$all_pr.' рублей</h3>';
+
+        $table .= '<form method="get" action="'.admin_url('admin.php?page=manage-rmag').'"><p class="search-box">
+	<label class="screen-reader-text" for="order-search-input">Поиск заказов:</label>
+	<input type="search" id="order-search-input" name="search_order" value="">
+	<input type="submit" id="search-submit" class="button" value="Поиск заказов">
+        <input type="hidden" name="page" value="manage-rmag">
+        </p></form>';
 
 	$table .= '<form action="" method="post">';
 
@@ -511,7 +523,7 @@ global $wpdb;
 	foreach($fields as $key=>$name){
 		$table_price .= '<b>'.$key.'</b> - '.$name.'<br />';
 	}
-	
+
 	if($postmeta){
 		$n=1;
 		foreach ($postmeta as $key){
@@ -524,7 +536,7 @@ global $wpdb;
 			}
 		}
 	}
-	
+
 	$table_price .='</tr><tr><td colspan="2" align="right"><input type="submit" name="get_csv_file" value="Выгрузить товары в файл"></td></tr></table>
 	'.wp_nonce_field('get-csv-file','_wpnonce',true,false).'
         </form>';

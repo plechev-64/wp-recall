@@ -261,7 +261,7 @@ function rcl_add_count_user(){
             global $wpdb;
             $num_max = $wpdb->get_var("SELECT MAX(inv_id) FROM ".RMAG_PREF ."pay_results");
             if($num_max) $id_pay = $num_max+1;
-            else $id_pay = rand(100000,10000000);
+            else $id_pay = rand(100000,110000);
             $log['redirectform'] = rcl_payform(array('id_pay'=>$id_pay,'summ'=>intval($_POST['count']),'type'=>1));
             $log['otvet']=100;
 

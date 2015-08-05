@@ -78,7 +78,7 @@ function rcl_dialog_scripts(){
 function rcl_frontend_scripts(){
 	global $rcl_options,$user_LK,$user_ID,$post;
 	if(!isset($rcl_options['font_icons']))  $rcl_options['font_icons']=1;
-	
+
 	if($user_ID==$user_LK||$post->ID==$rcl_options['public_form_page_rcl']){
 		rcl_dialog_scripts();
 		wp_enqueue_style( 'jcrop-master-css', RCL_URL.'js/jcrop.master/css/jquery.Jcrop.min.css' );
@@ -88,16 +88,16 @@ function rcl_frontend_scripts(){
 
 	if($user_ID){
 		wp_enqueue_script( 'jquery-ui-widget', RCL_URL.'js/fileupload/js/vendor/jquery.ui.widget.js', array(), VER_RCL,true );
-		
+
 		wp_enqueue_script( 'load-image', '//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js', array(), VER_RCL,true );
 		wp_enqueue_script( 'canvas-to-blob', '//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js', array(), VER_RCL,true );
-		
+
 		wp_enqueue_script( 'jquery-iframe-transport', RCL_URL.'js/fileupload/js/jquery.iframe-transport.js', array(), VER_RCL,true );
 		wp_enqueue_script( 'jquery-fileupload', RCL_URL.'js/fileupload/js/jquery.fileupload.js', array(), VER_RCL,true );
 		wp_enqueue_script( 'jquery-fileupload-process', RCL_URL.'js/fileupload/js/jquery.fileupload-process.js', array(), VER_RCL,true );
 		wp_enqueue_script( 'jquery-fileupload-image', RCL_URL.'js/fileupload/js/jquery.fileupload-image.js', array(), VER_RCL,true );
-	}	
-		
+	}
+
 
         if( wp_style_is( 'font-awesome' ) ) wp_deregister_style('font-awesome');
         wp_enqueue_style( 'font-awesome', RCL_URL.'css/fonts/font-awesome.min.css', array(), '4.4.0' );
@@ -127,7 +127,8 @@ function rcl_frontend_scripts(){
 		$rcl_addons = new rcl_addons();
 		$rcl_addons->get_update_scripts_file_rcl();
 	}
-	wp_enqueue_script( 'rcl-header-scripts', TEMP_URL.'scripts/header-scripts.js', array(), VER_RCL );
+	wp_enqueue_script( 'rcl-header-scripts', TEMP_URL.'scripts/header-scripts.js', array('rcl-primary-scripts'), VER_RCL );
+
 }
 
 function rcl_admin_scrips(){
@@ -140,7 +141,7 @@ function rcl_fileapi_scripts() {
     global $user_ID;
     if(!$user_ID) return false;
     if(file_exists(TEMP_PATH.'scripts/footer-scripts.js')){
-        wp_enqueue_script( 'jquery' );		
+        wp_enqueue_script( 'jquery' );
         wp_enqueue_script( 'rcl-footer-scripts', TEMP_URL.'scripts/footer-scripts.js', array(), VER_RCL, true );
     }
 }
