@@ -771,7 +771,7 @@ function rcl_get_scripts_ajaxload_tabs($script){
 		if(jQuery(this).hasClass('active'))return false;
 		rcl_preloader_show('#lk-content > div');
 		var id = jQuery(this).attr('id');
-		jQuery('.rcl-menu .recall-button').removeClass('active');
+		jQuery('.rcl-menu .recall-button,#lk-conteyner .recall-button').removeClass('active');
 		jQuery(this).addClass('active');
 		var url = setAttr_rcl('view',id);
 		if(url != window.location){

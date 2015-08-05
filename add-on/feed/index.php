@@ -55,7 +55,7 @@ function rcl_ajax_followers_tab($array_tabs){
 
 add_action('init','rcl_add_followers_tab');
 function rcl_add_followers_tab(){
-    rcl_tab('followers','rcl_followers_tab',__('Followers','rcl').': '.$cnt,array('public'=>1,'public'=>1,'class'=>'fa-twitter'));
+    rcl_tab('followers','rcl_followers_tab',__('Followers','rcl'),array('public'=>1,'output'=>'sidebar','class'=>'fa-twitter'));
 }
 
 add_filter('tab_data_rcl','rcl_add_counter_followers',10);
@@ -87,9 +87,24 @@ function rcl_ajax_subscriptions_tab($array_tabs){
     return array_merge( $array_tabs,array( 'subscriptions' => 'rcl_subscriptions_tab' ));
 }
 
+/*add_action('init','rcl_add_subscriptions_tab');
+function rcl_add_subscriptions_tab(){
+    rcl_tab('subscriptions','rcl_subscriptions_tab');
+}
+
+add_filter('rcl_tab_rcl_subscriptions_tab','rcl_add_button_feed_tabs',10);
+add_filter('rcl_tab_rcl_followers_tab','rcl_add_button_feed_tabs',10);
+function rcl_add_button_feed_tabs($content){
+    global $user_ID,$user_LK;
+    $button = rcl_get_button_tab(array('name'=>__('Subscriptions','rcl'),'id_tab'=>'subscriptions','class'=>'fa-bell-o'));
+    if($user_ID==$user_LK) $button .= rcl_get_button_tab(array('name'=>__('Followers','rcl'),'id_tab'=>'followers','class'=>'fa-twitter'));
+    return '<div class="feed-buttons">'.$button.'</div>'.
+            $content;
+}*/
+
 add_action('init','rcl_add_subscriptions_tab');
 function rcl_add_subscriptions_tab(){
-    rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','rcl'),array('public'=>0,'class'=>'fa-bell-o'));
+    rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','rcl'),array('public'=>0,'output'=>'sidebar','class'=>'fa-bell-o'));
 }
 
 add_filter('tab_data_rcl','rcl_add_counter_subscriptions',10);
@@ -132,7 +147,7 @@ class Rcl_Feed{
         if (!is_admin()):
                 if(function_exists('add_shortcode')) add_shortcode('feed',array(&$this, 'last_post_and_comments_feed'));
                 if(function_exists('rcl_block')){
-                    rcl_block('content',array(&$this, 'add_feed_button_user_lk'),array('id'=>'fd-block','order'=>10));
+                    //rcl_block('content',array(&$this, 'add_feed_button_user_lk'),array('id'=>'fd-block','order'=>10));
                     rcl_block('footer','rcl_get_feed_button',array('id'=>'fd-footer','order'=>5,'public'=>-1));
                 }
         endif;

@@ -155,3 +155,11 @@
     color: orange;
 
 }
+#lk-conteyner .recall-button .rating-rcl{
+    display: inline;
+}
+#lk-conteyner .recall-button .rating-rcl .rating-value{
+    display: inline;
+    padding: 1px 5px;
+    line-height: 1;
+}

@@ -63,7 +63,7 @@ function rcl_get_rating_column_content( $custom_column, $column_name, $user_id )
 }
 add_filter( 'manage_users_custom_column', 'rcl_get_rating_column_content', 10, 3 );
 
-if(function_exists('rcl_block')) rcl_block('sidebar','rcl_get_content_rating',array('id'=>'rt-block','order'=>2));
+//if(function_exists('rcl_block')) rcl_block('sidebar','rcl_get_content_rating',array('id'=>'rt-block','order'=>2));
 function rcl_get_content_rating($author_lk){
     global $user_ID,$rcl_rating_types,$rcl_options;
 
@@ -97,7 +97,16 @@ function rcl_ajax_rating_tab($array_tabs){
 
 add_action('init','rcl_add_rating_tab');
 function rcl_add_rating_tab(){
-    rcl_tab('rating','rcl_rating_tab',__('Rating','rcl'),array('public'=>1,'class'=>'fa-balance-scale'));
+    rcl_tab('rating','rcl_rating_tab',__('Rating','rcl'),array('public'=>1,'output'=>'sidebar','class'=>'fa-balance-scale'));
+}
+
+add_filter('tab_data_rcl','rcl_add_counter_rating',10);
+function rcl_add_counter_rating($tab){
+     global $user_LK;
+    if($tab['id']!='rating') return $tab;
+    $cnt = rcl_rating_block(array('value'=>rcl_get_user_rating($user_LK)));
+    $tab['name'] .= ': '.$cnt;
+    return $tab;
 }
 
 function rcl_rating_tab($author_lk){
