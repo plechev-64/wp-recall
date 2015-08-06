@@ -399,7 +399,7 @@ form #rcl-preview{
 
 }
 #publics_block  .bx-wrapper .bx-viewport{
-	height:32px;
+	height:32px!important;
 }
 #publics_block .bx-wrapper .bx-viewport .pagenavi-rcl{
     margin: 0;

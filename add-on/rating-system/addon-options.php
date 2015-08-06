@@ -9,9 +9,9 @@ function rcl_admin_page_rating($content){
     $options = '';
 
     foreach($rcl_rating_types as $type=>$data){
-		
+
 		$more = false;
-		
+
 		if(isset($data['style'])){
 			$more .= $opt->label(__('Type of rating for','rcl').' '.$data['type_name']);
             $more .= $opt->option('select',array(
@@ -19,7 +19,7 @@ function rcl_admin_page_rating($content){
                     'options'=>array(__('Plus/minus','rcl'),__('I like','rcl'))
                 ));
 		}
-		
+
 		if(isset($data['data_type'])){
 			$more .= $opt->label(__('Overall rating '.$data['type_name'],'rcl'));
             $more .= $opt->option('select',array(
@@ -27,7 +27,7 @@ function rcl_admin_page_rating($content){
                     'options'=>array(__('Sum votes values','rcl'),__('Number of positive and negative votes','rcl'))
                 ));
 		}
-		
+
 		if(isset($data['limit_votes'])){
 			$more .= $opt->label(__('Limit positive votes','rcl').' '.$data['type_name']);
             $more .= __('Number','rcl').': '.$opt->option('number',array('name'=>'rating_plus_limit_'.$type));
@@ -45,7 +45,7 @@ function rcl_admin_page_rating($content){
                     'name'=>'rating_'.$type,
                     'options'=>array(__('Disabled','rcl'),__('Included','rcl'))
                 )),
-								
+
                 $more,
 
                 $opt->label(__('Points for ranking','rcl').' '.$data['type_name']),
@@ -66,7 +66,12 @@ function rcl_admin_page_rating($content){
 					array(
 					$opt->label(sprintf(__('Template output %s stories in the overall ranking','rcl'),$data['type_name'])),
 					$opt->option('text',array('name'=>'rating_temp_'.$type,'default'=>'%USER% '.__('voted','rcl').': %VALUE%')),
-					$opt->notice(__('select a template output stories where %USER% - name of the voted ,%VALUE% - rated value ,%DATE% - date of changing the rating','rcl'))
+					$opt->notice(__('select a template output stories where <br>'
+                                                . '%USER% - name of the voted, <br>'
+                                                . '%VALUE% - rated value, <br>'
+                                                . '%DATE% - date of changing the rating, <br>'
+                                                . '%COMMENT% - link to comment, <br>'
+                                                . '%POST% - link to publication','rcl'))
 				))
             )
         );
@@ -84,7 +89,7 @@ function rcl_admin_page_rating($content){
                 $opt->notice(__('specify the rating level at which the user will get the ability to post without moderation','rcl'))
             )
         ),
-		
+
 		$opt->option_block(
             array(
                 $opt->label(__('View results','rcl')),
@@ -102,7 +107,7 @@ function rcl_admin_page_rating($content){
                 $opt->notice(__('specify the user group which is allowed to view votes','rcl'))
             )
         ),
-		
+
 		$opt->option_block(
             array(
                 $opt->label(__('Deleting your voice','rcl')),
