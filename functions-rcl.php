@@ -196,12 +196,6 @@ function rcl_popup_contayner(){
 		  <div id="rcl-popup"></div>';
 }
 
-add_filter('rcl_content_lk','rcl_add_more_link_content',100);
-function rcl_add_more_link_content($content){
-    return '<a href="#" class="rcl-more-link" onclick="rcl_more_view(this); return false;">Подробная информация <i class="fa fa-plus-square-o"></i></a>'
-    .'<div class="more-content">'.$content.'</div>';
-}
-
 add_filter('wp_footer', 'rcl_footer_url');
 function rcl_footer_url(){
 	global $rcl_options;
@@ -215,11 +209,6 @@ function rcl_delete_user_action($user){
 }
 add_action('delete_user','rcl_delete_user_action');
 
-add_filter('rcl_posthead_user','rcl_get_author_name',10,2);
-function rcl_get_author_name($content,$user_id){
-	$content .= "<h3>Автор: <a href='".get_author_posts_url($user_id)."'>".get_the_author_meta( 'display_name', $user_id )."</a></h3>".rcl_get_miniaction(false,$user_id);
-	return $content;
-}
 function rcl_get_author_block(){
     global $post;
 

@@ -191,7 +191,7 @@ function rcl_delete_avatar_action(){
 	global $wpdb,$user_ID,$rcl_avatar_sizes;
 	if ( !isset( $_GET['rcl-action'] )||$_GET['rcl-action']!='delete_avatar' ) return false;
 	if( !wp_verify_nonce( $_GET['_wpnonce'], $user_ID ) ) wp_die('Error');
-        
+
 	$result = delete_user_meta($user_ID,'rcl_avatar');
 
 	if (!$result) wp_die('Error');
@@ -203,6 +203,13 @@ function rcl_delete_avatar_action(){
         unlink($dir_path.$user_ID.'.jpg');
 
 	wp_redirect( rcl_format_url(get_author_posts_url($user_ID)).'rcl-avatar=deleted' );  exit;
+}
+
+add_filter('rcl_content_lk','rcl_add_more_link_content',100);
+function rcl_add_more_link_content($content){
+    if(!$content) return $content;
+    return '<a href="#" class="rcl-more-link" onclick="rcl_more_view(this); return false;">Подробная информация <i class="fa fa-plus-square-o"></i></a>'
+    .'<div class="more-content">'.$content.'</div>';
 }
 
 add_action('wp','rcl_notice_avatar_deleted');
