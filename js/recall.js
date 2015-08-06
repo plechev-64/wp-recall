@@ -96,7 +96,7 @@ jQuery(function($){
         return base + '?' + res;
     } 
 
-    $('.rcl-menu .block_button').click(function() {      
+    $('.rcl-menu .block_button, #lk-conteyner .block_button').click(function() {      
         var url = setAttr_rcl('view',$(this).attr('id'));
         if(url !== window.location){
             if ( history.pushState ){
@@ -165,7 +165,7 @@ jQuery(function($){
     $('.block_button').click(function(){
         if($(this).hasClass('active'))return false;
         var id = $(this).attr('id');		
-        $(".rcl-menu .recall-button").removeClass("active");
+        $(".rcl-menu .recall-button, #lk-conteyner .block_button").removeClass("active");
         $(".recall_content_block").removeClass("active").slideUp();
         $(this).addClass("active");
         $('.'+id+'_block').slideDown().addClass("active");
