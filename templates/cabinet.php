@@ -26,7 +26,11 @@
             <div class="rcl-content">
                 <?php rcl_content(); ?>
             </div>
+            <div class="lk-footer">
+                <?php rcl_footer(); ?>
+            </div>
         </div>
+
     </div>
 
     <?php $class = (isset($rcl_options['buttons_place'])&&$rcl_options['buttons_place']==1)? "left-buttons":""; ?>

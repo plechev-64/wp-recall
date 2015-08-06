@@ -270,7 +270,7 @@ class Rcl_Messages{
 		$title = ($banlist)? __('Unblock','rcl'): __('In the black list','rcl');
 		$class = ($banlist)? 'remove_black_list': 'add_black_list';
 
-		$button = '<div id="black_list_button" class="floatright">'.rcl_get_button($title,'#',array('class'=>$class,'id'=>'manage-blacklist','icon'=>'fa-bug','attr'=>'data-contact='.$author_lk)).'</div>';
+		$button = rcl_get_button($title,'#',array('class'=>$class,'id'=>'manage-blacklist','icon'=>'fa-bug','attr'=>'data-contact='.$author_lk));
 
 		return $button;
 	}

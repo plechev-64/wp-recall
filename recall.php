@@ -235,7 +235,8 @@ function rcl_sidebar(){
 
 function rcl_content(){
     global $user_LK; $content = '';
-    echo apply_filters('rcl_content_lk',$content,$user_LK);
+    $content = apply_filters('rcl_content_lk',$content,$user_LK);
+    echo $morelink.$content;
 }
 
 function rcl_footer(){
@@ -265,7 +266,7 @@ function rcl_status_desc(){
     global $user_LK;
     $desc = get_the_author_meta('description',$user_LK);
     if($desc) echo '<div class="ballun-status">'
-        . '<span class="ballun"></span>'
+        //. '<span class="ballun"></span>'
         . '<p class="status-user-rcl">'.nl2br(esc_textarea($desc)).'</p>'
         . '</div>';
 }

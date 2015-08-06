@@ -196,6 +196,12 @@ function rcl_popup_contayner(){
 		  <div id="rcl-popup"></div>';
 }
 
+add_filter('rcl_content_lk','rcl_add_more_link_content',100);
+function rcl_add_more_link_content($content){
+    return '<a href="#" class="rcl-more-link" onclick="rcl_more_view(this); return false;">Подробная информация <i class="fa fa-plus-square-o"></i></a>'
+    .'<div class="more-content">'.$content.'</div>';
+}
+
 add_filter('wp_footer', 'rcl_footer_url');
 function rcl_footer_url(){
 	global $rcl_options;

@@ -188,11 +188,20 @@ function rcl_button_avatar_upload($content,$author_lk){
 
 add_action('wp','rcl_delete_avatar_action');
 function rcl_delete_avatar_action(){
-	global $wpdb,$user_ID;
+	global $wpdb,$user_ID,$rcl_avatar_sizes;
 	if ( !isset( $_GET['rcl-action'] )||$_GET['rcl-action']!='delete_avatar' ) return false;
 	if( !wp_verify_nonce( $_GET['_wpnonce'], $user_ID ) ) wp_die('Error');
+        
 	$result = delete_user_meta($user_ID,'rcl_avatar');
+
 	if (!$result) wp_die('Error');
+
+        $dir_path = TEMP_PATH.'avatars/';
+        foreach($rcl_avatar_sizes as $key=>$size){
+            unlink($dir_path.$user_ID.'-'.$size.'.jpg');
+	}
+        unlink($dir_path.$user_ID.'.jpg');
+
 	wp_redirect( rcl_format_url(get_author_posts_url($user_ID)).'rcl-avatar=deleted' );  exit;
 }
 
@@ -604,6 +613,8 @@ function rcl_show_custom_fields_profile($fields_content,$author_lk){
 			}
 		}
 	}
+
+        if(!$show_custom_field) return false;
 
 	if(isset($show_custom_field))$fields_content .= '<div class="show-profile-fields">'.$show_custom_field.'</div>';
 	return $fields_content;

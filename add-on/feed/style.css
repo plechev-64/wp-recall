@@ -10,11 +10,7 @@
 	opacity:1;
 }
 #lk-conteyner .feed-control {
-    margin-bottom: 20px;
-	clear: both;
-	float: none;
-	display:block;
-	text-align: right;
+
 }
 .users-feed .avatar {
     border: 1px solid #CCCCCC;

@@ -59,34 +59,40 @@
 }
 .wprecallblock #lk-conteyner{
     background: #fff;
-    padding: 10px;
+    padding: 5px;
     overflow: hidden;
 }
 .wprecallblock #lk-conteyner .lk-header{
-
+    overflow: hidden;
+}
+.lk-header .recall-button,
+.lk-footer .recall-button{
+    float:right;
+    margin: 5px;
 }
 .wprecallblock #lk-conteyner .lk-sidebar{
     width: 125px;
     float: left;
-    margin-bottom: 15px;
+    margin: 0 15px 15px 0;
 }
 .wprecallblock #lk-conteyner .lk-sidebar .avatar{
-	float: none!important;
+    float: none!important;
+    margin:0;  
+    width:100%;
 }
 .wprecallblock #lk-conteyner .lk-sidebar .recall-button{
 	margin:3px 0;
 	white-space: nowrap;
         display:block;
+        background: rgba(255,255,255,0.6);
+        color: #3F7DB6;
 }
 #lk-conteyner .recall-button.active{
     opacity: 0.6;
     cursor: default;
 }
 .wprecallblock #lk-conteyner .lk-content{
-    width: 60%;
-
-    float: left;
-    margin:  0 0 0 30px;
+    overflow: hidden;   
 }
 .wprecallblock h2{
     margin: 0 0  20px 0;
@@ -135,7 +141,7 @@
 	margin:0;
 }
 .wprecallblock #lk-menu{
-   
+   padding:0 10px 0 5px;
 }
 .wprecallblock .rcl-menu{
 	overflow: hidden;
@@ -310,4 +316,19 @@
 }
 .lk-avatar:hover .rcl-avatar-delete{
 	display:block;
+}
+#lk-conteyner .rcl-more-link{
+    float:right;
+    margin-bottom: 10px;
+}
+#lk-conteyner .rcl-content{
+    padding:10px;
+    overflow: hidden;
+    clear: both;
+}
+#lk-conteyner .rcl-content .more-content{
+    display:none;
+    clear: both;
+    background-color: rgba(255,255,255,0.5);
+    padding: 10px;
 }
