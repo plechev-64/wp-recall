@@ -53,7 +53,7 @@ function rcl_messages_scripts(){
 		if($rcl_options['view_user_lk_rcl']==1){
 			$get = 'user';
 			if($rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];
-			if($user_ID==$_GET[$get]||$rcl_options['lk_page_rcl']!=$post->ID) $scr = true;
+			if(isset($_GET[$get])&&$user_ID==$_GET[$get]||$rcl_options['lk_page_rcl']!=$post->ID) $scr = true;
 		}else{
 			if(!is_author()||is_author($user_ID)) $scr = true;
 		}
@@ -729,10 +729,11 @@ class Rcl_Messages{
 
 		$privat_block .= '<div id="message-'.$this->mess_id.'" class="public-post message-block '.$class.'">';
 		if($class!="file")$privat_block .= '<div '.$uslk.' class="author-avatar">'.$avatar_mess.'</div>';
-		$privat_block .= '<div class="content-mess">
-			<p class="time-message"><span class="time">'.$message->time_mess.'</span></p>';
+		$privat_block .= '<div class="content-mess">';
 		if($class!="file")$privat_block .= '<span class="privat-balloon"></span>';
-		$privat_block .= '<div class="balloon-message"><p>'.$content_message.'</p></div>
+		$privat_block .= '<div class="balloon-message">'
+                        . '<p class="time-message"><span class="time">'.$message->time_mess.'</span></p>'
+                        . '<p>'.$content_message.'</p></div>
 		</div>';
 
 		$st = $message->status_mess;

@@ -60,7 +60,7 @@ function rcl_get_userlist($atts, $content = null){
 
     if((isset($_GET['search-user'])&&$search=='yes')||$include){
 
-        if($_GET['search-user']){
+        if(isset($_GET['search-user'])){
 
             if($orderby!='action'&&$orderby!='rayting'){
                 $orderby = 'action';

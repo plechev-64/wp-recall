@@ -17,7 +17,7 @@ class Rcl_Tabs{
         $this->id = $idkey;
         $this->name = $name;
         $this->callback = $callback;
-        $this->output = $args['output'];
+        $this->output = (isset($args['output']))? $args['output']: null;
         //print_r($data);
         if(isset($args['class'])) $this->class = $args['class'];
         if(isset($args['order'])) $ord = $args['order'];

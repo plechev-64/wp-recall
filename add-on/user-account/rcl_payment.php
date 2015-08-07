@@ -300,10 +300,9 @@ function rcl_mail_payment_error($hash=false){
 
 function rcl_payments(){
     global $rmag_options;
+    if(!$rmag_options['connect_sale']||!isset($rmag_options['connect_sale'])) return false;
     $reqs = array(0,'InvId','ik_co_id','WMI_PAYMENT_NO','shopId');
-    if(!$rmag_options['connect_sale']) return false;
     if (isset($_REQUEST[$reqs[$rmag_options['connect_sale']]])){
-        //rcl_mail_payment_error();
         $payment = new Rcl_Payment();
     }
 }

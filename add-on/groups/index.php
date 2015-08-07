@@ -578,7 +578,7 @@ function rcl_login_group_request(){
 
 					$curent_term = get_term_by('ID', $group_id, 'groups');
 					$requests = unserialize(get_option('request_group_access_'.$group_id));
-					$requests[$user_ID] = get_usermeta($user_ID,'display_name');
+					$requests[$user_ID] = get_user_meta($user_ID,'display_name',1);
 					$requests = serialize($requests);
 					update_option('request_group_access_'.$group_id,$requests);
 

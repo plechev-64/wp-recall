@@ -8,7 +8,7 @@
 
     <?php if($comment->parent_comment): ?>
             <h3 class="feed-title">
-                    <?php _e('комментарий к публикации','rcl'); ?>:
+                    <?php _e('comment for publication','rcl'); ?>:
                     <a href="<?php echo get_comment_link( $comment->comment_ID ); ?>"><?php echo $comment->parent_comment; ?></a>
             </h3>
     <?php else: ?>

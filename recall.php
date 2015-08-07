@@ -236,7 +236,7 @@ function rcl_sidebar(){
 function rcl_content(){
     global $user_LK; $content = '';
     $content = apply_filters('rcl_content_lk',$content,$user_LK);
-    echo $morelink.$content;
+    echo $content;
 }
 
 function rcl_footer(){

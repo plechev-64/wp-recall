@@ -202,6 +202,7 @@ max-width: 80%;
     margin: 0;
     padding: 5px;
     text-align: center;
+    float: none;
 }
 #upload-files-mess .b-upload__files{
 	position: relative;

@@ -32,7 +32,7 @@ function rcl_get_ratings($args){
 
 	$where = array();
 
-	if($args['data_type']=='values'||$args['days']){
+	if(isset($args['data_type'])&&$args['data_type']=='values'||$args['days']){
 		$table = RCL_PREF."rating_values";
 	}
 
@@ -71,11 +71,11 @@ function rcl_get_ratings($args){
 		}
 	}
 
-	if($args['group_by']){
+	if(isset($args['group_by'])&&$args['group_by']){
 		$query .= " GROUP BY ".$args['group_by'];
 	}
 
-	if($args['limit']){
+	if(isset($args['limit'])&&$args['limit']){
 		$query .= " LIMIT ".implode(',',$args['limit']);
 	}
 

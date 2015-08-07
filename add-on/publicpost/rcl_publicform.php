@@ -212,8 +212,8 @@ class Rcl_PublicForm {
         global $user_ID,$formFields;
 
             if(!$user_ID) return '<p align="center">'.__('You must be logged in to post. Login or register','rcl').'</p>';
-			
-			if(!$this->can_edit) return '<p align="center">'.__('Вы не можете редактировать данную публикацию :(','rcl').'</p>';
+
+			if(!$this->can_edit) return '<p align="center">'.__('You can not edit this publication :(','rcl').'</p>';
 
             if(!$this->user_can()){
                 if($this->post_type=='post-group') return '<div class="public-post-group">'

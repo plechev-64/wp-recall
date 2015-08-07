@@ -263,7 +263,7 @@ function rcl_user_avatar($size=50){
 function rcl_user_rayting(){
     global $user;
     if(!function_exists('rcl_get_rating_block')) return false;
-    $rtng = ($user->user_rayting)? $user->user_rayting: 0;
+    $rtng = (isset($user->user_rayting)&&$user->user_rayting)? $user->user_rayting: 0;
     echo rcl_rating_block(array('value'=>$rtng));
 }
 
@@ -290,20 +290,20 @@ function rcl_user_description(){
 add_action('user_description','rcl_user_comments');
 function rcl_user_comments(){
     global $user;
-    if(!$user->user_comments) $user->user_comments = 0;
+    if(!isset($user->user_comments)||!$user->user_comments) $user->user_comments = 0;
     echo '<span class="filter-data"><i class="fa fa-comment"></i>'.__('Comments','rcl').': '.$user->user_comments.'</span>';
 }
 add_action('user_description','rcl_user_posts');
 function rcl_user_posts(){
     global $user;
-    if(!$user->user_posts) $user->user_posts = 0;
+    if(!isset($user->user_posts)||!$user->user_posts) $user->user_posts = 0;
     echo '<span class="filter-data"><i class="fa fa-file-text-o"></i>'.__('Publics','rcl').': '.$user->user_posts.'</span>';
 }
 
 add_action('user_description','rcl_user_register');
 function rcl_user_register(){
     global $user;
-    if(!$user->user_register) return false;
+    if(!isset($user->user_register)||!$user->user_register) return false;
     echo '<span class="filter-data"><i class="fa fa-calendar-check-o"></i>'.__('Registration','rcl').': '.mysql2date('d-m-Y', $user->user_register).'</span>';
 }
 

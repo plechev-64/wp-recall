@@ -60,11 +60,13 @@ function rcl_shortcode_minicart() {
         }
     }
 
+    $cart = (isset($_SESSION['cart']))? $_SESSION['cart']: false;
+
 	$CartData = (object)array(
 		'numberproducts'=>$all,
 		'cart_price'=>$sumprice,
 		'cart_url'=>$rmag_options['basket_page_rmag'],
-		'cart'=> $_SESSION['cart']
+		'cart'=> $cart
 	);
 
     $minibasket = rcl_get_include_template('cart-mini.php',__FILE__);

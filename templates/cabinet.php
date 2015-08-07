@@ -3,7 +3,7 @@
 <?php rcl_before(); ?>
 
 <div id="rcl-<?php echo $user_LK; ?>" class="wprecallblock">
-    <?php rcl_notify(); ?>
+    <?php rcl_notice(); ?>
 
     <div id="lk-conteyner">
         <div class="lk-header">

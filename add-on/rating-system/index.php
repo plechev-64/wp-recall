@@ -153,7 +153,7 @@ function rcl_format_value($value){
 		$value = substr($value, 0, $th).'k';//1452365 - 1452k
 	}else{
 		$val = explode('.',$value);
-		$fl = ($val[1])? strlen($val[1]): 0;
+		$fl = (isset($val[1])&&$val[1])? strlen($val[1]): 0;
 		$value = number_format($value, $fl, ',', ' ');
 	}
 	/*if($value>0){
@@ -189,7 +189,7 @@ function rcl_rating_block($args){
 function rcl_get_html_post_rating($object_id,$type,$object_author=false){
     global $post,$comment,$rcl_options,$user_ID;
 
-    if(!$rcl_options['rating_'.$type]) return false;
+    if(!isset($rcl_options['rating_'.$type])||!$rcl_options['rating_'.$type]) return false;
 
     $block = '';
 

@@ -689,7 +689,7 @@ function rcl_get_public_feed($user_id=false){
 
             $posts_list = apply_filters('feed_posts_array',$posts_list);
 
-            $feedlist .= '<h2>'.__('Публикации','rcl').'</h2>';
+            $feedlist .= '<h2>'.__('Publishing','rcl').'</h2>';
 
             foreach($posts_list as $post){
 

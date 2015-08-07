@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Blank Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-07-31 15:18+0300\n"
+"POT-Creation-Date: 2015-08-07 10:57+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -46,8 +46,8 @@ msgid "In this group don`t have bookmarks"
 msgstr ""
 
 #: add-on/bookmarks/class_bookmark.php:155 add-on/bookmarks/index.php:167
-#: add-on/bookmarks/index.php:177 add-on/bookmarks/index.php:267
-#: add-on/bookmarks/index.php:277 add-on/groups/index.php:738
+#: add-on/bookmarks/index.php:177 add-on/bookmarks/index.php:268
+#: add-on/bookmarks/index.php:278 add-on/groups/index.php:738
 msgid "Close"
 msgstr ""
 
@@ -57,11 +57,11 @@ msgstr ""
 
 #: add-on/bookmarks/class_bookmark.php:163 add-on/bookmarks/index.php:96
 #: add-on/bookmarks/index.php:167 add-on/bookmarks/index.php:177
-#: add-on/bookmarks/index.php:244
+#: add-on/bookmarks/index.php:245
 msgid "Without group"
 msgstr ""
 
-#: add-on/bookmarks/class_bookmark.php:179 add-on/bookmarks/index.php:220
+#: add-on/bookmarks/class_bookmark.php:179 add-on/bookmarks/index.php:221
 #: functions/recallbar.php:24
 msgid "My bookmarks"
 msgstr ""
@@ -145,24 +145,24 @@ msgid "Disable bookmarks for publication"
 msgstr ""
 
 #: add-on/bookmarks/index.php:137 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:156 add-on/profile/index.php:527
-#: add-on/profile/index.php:532 add-on/profile/index.php:537
-#: add-on/profile/index.php:542 add-on/profile/index.php:547
+#: add-on/profile/index.php:156 add-on/profile/index.php:562
+#: add-on/profile/index.php:567 add-on/profile/index.php:572
+#: add-on/profile/index.php:577 add-on/profile/index.php:582
 #: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:59
-#: add-on/rating-system/addon-options.php:111
+#: add-on/rating-system/addon-options.php:116
 #: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
 #: admin-pages.php:38 admin-pages.php:289
 msgid "No"
 msgstr ""
 
 #: add-on/bookmarks/index.php:138 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:156 add-on/profile/index.php:527
-#: add-on/profile/index.php:532 add-on/profile/index.php:537
-#: add-on/profile/index.php:542 add-on/profile/index.php:547
+#: add-on/profile/index.php:156 add-on/profile/index.php:562
+#: add-on/profile/index.php:567 add-on/profile/index.php:572
+#: add-on/profile/index.php:577 add-on/profile/index.php:582
 #: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:59
-#: add-on/rating-system/addon-options.php:111
+#: add-on/rating-system/addon-options.php:116
 #: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
 #: admin-pages.php:39 admin-pages.php:289
 msgid "Yes"
@@ -174,76 +174,103 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: add-on/bookmarks/index.php:167 add-on/bookmarks/index.php:267
-#: add-on/gallery-recall/index.php:122 add-on/publicpost/classes.php:233
+#: add-on/bookmarks/index.php:167 add-on/bookmarks/index.php:268
+#: add-on/gallery-recall/index.php:125 add-on/publicpost/classes.php:233
 msgid "Add"
 msgstr ""
 
-#: add-on/bookmarks/index.php:177 add-on/bookmarks/index.php:277
+#: add-on/bookmarks/index.php:177 add-on/bookmarks/index.php:278
 #: functions/rcl_editfields.php:176
 msgid "Change"
 msgstr ""
 
-#: add-on/bookmarks/index.php:200 add-on/bookmarks/index.php:219
+#: add-on/bookmarks/index.php:198 add-on/bookmarks/index.php:220
 #: functions/recallbar.php:21
 msgid "In bookmarks"
 msgstr ""
 
-#: add-on/bookmarks/index.php:227
+#: add-on/bookmarks/index.php:228
 msgid "Added to bookmarks"
 msgstr ""
 
-#: add-on/bookmarks/index.php:241
+#: add-on/bookmarks/index.php:242
 msgid "You`ve already added to the group of bookmarks"
 msgstr ""
 
-#: add-on/bookmarks/index.php:267 add-on/bookmarks/index.php:277
+#: add-on/bookmarks/index.php:268 add-on/bookmarks/index.php:278
 msgid "Name group"
 msgstr ""
 
-#: add-on/bookmarks/index.php:296 add-on/bookmarks/index.php:321
-#: add-on/bookmarks/index.php:341 add-on/bookmarks/index.php:360
-#: add-on/bookmarks/index.php:380 add-on/bookmarks/index.php:402
-#: add-on/bookmarks/index.php:427 add-on/bookmarks/index.php:458
-#: add-on/gallery-recall/index.php:405 add-on/gallery-recall/index.php:444
-#: add-on/rating-system/index.php:383 add-on/rating-system/index.php:405
+#: add-on/bookmarks/index.php:297 add-on/bookmarks/index.php:322
+#: add-on/bookmarks/index.php:342 add-on/bookmarks/index.php:361
+#: add-on/bookmarks/index.php:381 add-on/bookmarks/index.php:403
+#: add-on/bookmarks/index.php:428 add-on/bookmarks/index.php:459
+#: add-on/gallery-recall/index.php:423 add-on/gallery-recall/index.php:462
+#: add-on/rating-system/index.php:431 add-on/rating-system/index.php:453
 msgid "Error"
 msgstr ""
 
-#: add-on/bookmarks/index.php:329 add-on/bookmarks/index.php:349
+#: add-on/bookmarks/index.php:330 add-on/bookmarks/index.php:350
 #: add-on/groups/class_group.php:238 add-on/money-wallet/index.php:559
 #: add-on/money-wallet/index.php:582 add-on/money-wallet/index.php:600
 #: add-on/presents/index.php:119 add-on/presents/index.php:159
 msgid "Are you sure?"
 msgstr ""
 
-#: add-on/feed/index.php:32 add-on/feed/index.php:377
+#: add-on/feed/index.php:34 add-on/feed/index.php:455
 msgid "Subscribe"
 msgstr ""
 
-#: add-on/feed/index.php:32 add-on/feed/index.php:75 add-on/feed/index.php:367
+#: add-on/feed/index.php:34 add-on/feed/index.php:165
+#: add-on/feed/index.php:445
 msgid "Unsubscribe"
 msgstr ""
 
-#: add-on/feed/index.php:84 add-on/feed/index.php:85
-msgid "Subscribers"
+#: add-on/feed/index.php:58 add-on/feed/index.php:170
+msgid "Followers"
 msgstr ""
 
-#: add-on/feed/index.php:92
-msgid "My subscriptions"
+#: add-on/feed/index.php:72
+msgid "List subscribers"
 msgstr ""
 
-#: add-on/feed/index.php:105
+#: add-on/feed/index.php:80
+msgid "Following yet"
+msgstr ""
+
+#: add-on/feed/index.php:107
+msgid "Subscriptions"
+msgstr ""
+
+#: add-on/feed/index.php:121
+msgid "List subscriptions"
+msgstr ""
+
+#: add-on/feed/index.php:127
+msgid "Subscriptions yet"
+msgstr ""
+
+#: add-on/feed/index.php:179
 msgid ""
 "Login or register to view the latest publications and comments from users on "
 "which you will you subscribed."
 msgstr ""
 
-#: add-on/feed/index.php:399
+#: add-on/feed/index.php:185 add-on/feed/index.php:473
+#: add-on/feed/templates/feed-post.php:43 add-on/rating-system/index.php:32
+#: functions/rcl_userlist.php:294 functions/shortcodes.php:256
+msgid "Comments"
+msgstr ""
+
+#: add-on/feed/index.php:186 add-on/publicpost/index.php:65
+msgid "Publication"
+msgstr ""
+
+#: add-on/feed/index.php:477
 msgid "It seems that you have not left a single comment or not subscribed."
 msgstr ""
 
-#: add-on/feed/index.php:400
+#: add-on/feed/index.php:478
 msgid ""
 "Comment you publish and subscribe to other users, then you can track "
 "responses to your comments and to see new comments from users.Comment you "
@@ -251,39 +278,34 @@ msgid ""
 "comments and to see new comments from users."
 msgstr ""
 
-#: add-on/feed/index.php:653
+#: add-on/feed/index.php:683
 msgid "Publications yet"
 msgstr ""
 
-#: add-on/feed/index.php:653
+#: add-on/feed/index.php:683
 msgid "Maybe later, someone will post the news."
 msgstr ""
 
-#: add-on/feed/index.php:662
-msgid "Ваша новостная лента"
+#: add-on/feed/index.php:692
+msgid "Publishing"
 msgstr ""
 
-#: add-on/feed/index.php:692
+#: add-on/feed/index.php:722
 msgid "You havent signed up anyone elses publication."
 msgstr ""
 
-#: add-on/feed/index.php:693
+#: add-on/feed/index.php:723
 msgid ""
 "Go to the profile of the user and click the \"Subscribe\" button and you "
 "will be able to monitor his recent publications here."
 msgstr ""
 
 #: add-on/feed/templates/feed-comment.php:11
-msgid "комментарий к публикации"
+msgid "comment for publication"
 msgstr ""
 
 #: add-on/feed/templates/feed-comment.php:15
 msgid "in reply to your comment"
-msgstr ""
-
-#: add-on/feed/templates/feed-post.php:43 add-on/rating-system/index.php:32
-#: functions/rcl_userlist.php:269 functions/shortcodes.php:237
-msgid "Comments"
 msgstr ""
 
 #: add-on/gallery-recall/class_gallery.php:1
@@ -332,40 +354,40 @@ msgstr ""
 msgid "the default is 50"
 msgstr ""
 
-#: add-on/gallery-recall/index.php:91
+#: add-on/gallery-recall/index.php:90
 msgid "Gallery"
 msgstr ""
 
-#: add-on/gallery-recall/index.php:118 add-on/publicpost/classes.php:229
+#: add-on/gallery-recall/index.php:121 add-on/publicpost/classes.php:229
 msgid "To add files to the download queue"
 msgstr ""
 
-#: add-on/gallery-recall/index.php:133
+#: add-on/gallery-recall/index.php:136 add-on/video-gallery/index.php:127
 msgid "Save order"
 msgstr ""
 
-#: add-on/gallery-recall/index.php:215
+#: add-on/gallery-recall/index.php:218
 msgid "The user`s photo"
 msgstr ""
 
-#: add-on/gallery-recall/index.php:348 add-on/gallery-recall/index.php:359
-#: add-on/message/index.php:1241
+#: add-on/gallery-recall/index.php:366 add-on/gallery-recall/index.php:377
+#: add-on/message/index.php:1230
 msgid "Reply"
 msgstr ""
 
-#: add-on/gallery-recall/index.php:353
+#: add-on/gallery-recall/index.php:371
 msgid "Cancel reply"
 msgstr ""
 
-#: add-on/gallery-recall/index.php:382
+#: add-on/gallery-recall/index.php:400
 msgid "The material is updated"
 msgstr ""
 
-#: add-on/gallery-recall/index.php:387
+#: add-on/gallery-recall/index.php:405
 msgid "No data"
 msgstr ""
 
-#: add-on/gallery-recall/index.php:520
+#: add-on/gallery-recall/index.php:538
 msgid "Do you want to delete?"
 msgstr ""
 
@@ -377,7 +399,7 @@ msgstr ""
 #: add-on/getresponse-manager/index.php:1 add-on/groups/class_group.php:207
 #: add-on/justclick-manager/index.php:1
 #: add-on/partners-system/admin-pages.php:124
-#: add-on/users-market/index.php:750 admin-pages.php:299 functions-rcl.php:519
+#: add-on/users-market/index.php:750 admin-pages.php:299 functions-rcl.php:507
 msgid "Save settings"
 msgstr ""
 
@@ -541,7 +563,7 @@ msgid "View"
 msgstr ""
 
 #: add-on/groups/index.php:105 add-on/groups/index.php:140
-#: functions/shortcodes.php:285
+#: functions/shortcodes.php:307
 msgid "Search"
 msgstr ""
 
@@ -605,25 +627,25 @@ msgstr ""
 
 #: add-on/groups/index.php:266 add-on/groups/index.php:276
 #: add-on/publicpost/addon-options.php:25
-#: add-on/rating-system/addon-options.php:99 admin-pages.php:147
+#: add-on/rating-system/addon-options.php:104 admin-pages.php:147
 msgid "only Administrators"
 msgstr ""
 
 #: add-on/groups/index.php:267 add-on/groups/index.php:277
 #: add-on/publicpost/addon-options.php:26
-#: add-on/rating-system/addon-options.php:98 admin-pages.php:148
+#: add-on/rating-system/addon-options.php:103 admin-pages.php:148
 msgid "Editors and older"
 msgstr ""
 
 #: add-on/groups/index.php:268 add-on/groups/index.php:278
 #: add-on/publicpost/addon-options.php:27
-#: add-on/rating-system/addon-options.php:97 admin-pages.php:149
+#: add-on/rating-system/addon-options.php:102 admin-pages.php:149
 msgid "Authors and older"
 msgstr ""
 
 #: add-on/groups/index.php:269 add-on/groups/index.php:279
 #: add-on/publicpost/addon-options.php:28
-#: add-on/rating-system/addon-options.php:96 admin-pages.php:150
+#: add-on/rating-system/addon-options.php:101 admin-pages.php:150
 msgid "Participants and older"
 msgstr ""
 
@@ -632,8 +654,8 @@ msgid "Publishing group"
 msgstr ""
 
 #: add-on/groups/index.php:280 add-on/publicpost/addon-options.php:29
-#: add-on/rating-system/addon-options.php:95 admin-pages.php:151 widget.php:31
-#: widget.php:94
+#: add-on/rating-system/addon-options.php:100 admin-pages.php:151
+#: widget.php:31 widget.php:94
 msgid "All users"
 msgstr ""
 
@@ -715,7 +737,7 @@ msgstr ""
 msgid "Find"
 msgstr ""
 
-#: add-on/groups/index.php:874 functions/shortcodes.php:233
+#: add-on/groups/index.php:874 functions/shortcodes.php:252
 msgid "Filter by"
 msgstr ""
 
@@ -798,62 +820,62 @@ msgstr ""
 msgid "File does not exist on the server or it has already been loaded!"
 msgstr ""
 
-#: add-on/message/index.php:28 add-on/message/index.php:1320
+#: add-on/message/index.php:28 add-on/message/index.php:1309
 msgid "The file was loaded."
 msgstr ""
 
-#: add-on/message/index.php:68 add-on/message/index.php:78
+#: add-on/message/index.php:67
 msgid "Private chat"
 msgstr ""
 
-#: add-on/message/index.php:197
+#: add-on/message/index.php:186
 msgid "Settings private messages"
 msgstr ""
 
-#: add-on/message/index.php:200
+#: add-on/message/index.php:189
 msgid "Private messages"
 msgstr ""
 
-#: add-on/message/index.php:201
+#: add-on/message/index.php:190
 msgid "Displaying messages in the correspondence"
 msgstr ""
 
-#: add-on/message/index.php:204
+#: add-on/message/index.php:193
 msgid "Top-Down"
 msgstr ""
 
-#: add-on/message/index.php:204
+#: add-on/message/index.php:193
 msgid "Bottom-Up"
 msgstr ""
 
-#: add-on/message/index.php:207
+#: add-on/message/index.php:196
 msgid "Limit words message"
 msgstr ""
 
-#: add-on/message/index.php:209
+#: add-on/message/index.php:198
 msgid "the default is 400"
 msgstr ""
 
-#: add-on/message/index.php:211
+#: add-on/message/index.php:200
 msgid "The number of messages in the conversation"
 msgstr ""
 
-#: add-on/message/index.php:213
+#: add-on/message/index.php:202
 msgid ""
 "the default is 100 messages in the conversation (per correspondence user)"
 msgstr ""
 
-#: add-on/message/index.php:215
+#: add-on/message/index.php:204
 msgid ""
 "Pause between requests for new posts to show per page of correspondence with "
 "another user in seconds"
 msgstr ""
 
-#: add-on/message/index.php:217 add-on/message/index.php:219
+#: add-on/message/index.php:206 add-on/message/index.php:208
 msgid "The number of requests you receive a new message page correspondence"
 msgstr ""
 
-#: add-on/message/index.php:221
+#: add-on/message/index.php:210
 msgid ""
 "Specify the maximum number of requests to retrieve a new message from a "
 "friend on the page of correspondence.If the number of requests exceeds the "
@@ -861,228 +883,228 @@ msgid ""
 "specify zero, then there is no limit."
 msgstr ""
 
-#: add-on/message/index.php:224
+#: add-on/message/index.php:213
 msgid ""
 "The pause between requests for new messages on all other pages of the "
 "website in seconds"
 msgstr ""
 
-#: add-on/message/index.php:226
+#: add-on/message/index.php:215
 msgid ""
 "If null, then the receipt of new messages only when the page loads, without "
 "subsequent requests"
 msgstr ""
 
-#: add-on/message/index.php:228
+#: add-on/message/index.php:217
 msgid "Lock requests if the person offline"
 msgstr ""
 
-#: add-on/message/index.php:231
+#: add-on/message/index.php:220
 msgid "Do not block"
 msgstr ""
 
-#: add-on/message/index.php:231
+#: add-on/message/index.php:220
 msgid "To block requests"
 msgstr ""
 
-#: add-on/message/index.php:233
+#: add-on/message/index.php:222
 msgid ""
 "We mean a request to retrieve new messages from the user to the page which "
 "you are"
 msgstr ""
 
-#: add-on/message/index.php:235
+#: add-on/message/index.php:224
 msgid "File sharing"
 msgstr ""
 
-#: add-on/message/index.php:239
+#: add-on/message/index.php:228
 msgid "Prohibited"
 msgstr ""
 
-#: add-on/message/index.php:239 add-on/money-wallet/index.php:36
+#: add-on/message/index.php:228 add-on/money-wallet/index.php:36
 #: add-on/money-wallet/index.php:69
 msgid "Allowed"
 msgstr ""
 
-#: add-on/message/index.php:247
+#: add-on/message/index.php:236
 msgid "Maximum file size, Mb"
 msgstr ""
 
-#: add-on/message/index.php:249
+#: add-on/message/index.php:238
 msgid ""
 "To restrict downloading of files this value in megabytes. By default, 2MB"
 msgstr ""
 
-#: add-on/message/index.php:251
+#: add-on/message/index.php:240
 msgid "The retention time of the file"
 msgstr ""
 
-#: add-on/message/index.php:253
+#: add-on/message/index.php:242
 msgid ""
 "Specify the maximum number of unclaimed files in days. After this period, "
 "the file will be deleted. The default is 7 days."
 msgstr ""
 
-#: add-on/message/index.php:255
+#: add-on/message/index.php:244
 msgid "Limit unmatched files"
 msgstr ""
 
-#: add-on/message/index.php:257
+#: add-on/message/index.php:246
 msgid ""
 "Specify the number of files missed by the recipients in which the user loses "
 "the possibility of further transfer of files. Protection from spam. Default-"
 "without any restrictions."
 msgstr ""
 
-#: add-on/message/index.php:281
+#: add-on/message/index.php:270
 msgid "Unblock"
 msgstr ""
 
-#: add-on/message/index.php:281
+#: add-on/message/index.php:270
 msgid "In the black list"
 msgstr ""
 
-#: add-on/message/index.php:326
+#: add-on/message/index.php:315
 msgid "The user is forbidden to write to him"
 msgstr ""
 
-#: add-on/message/index.php:339
+#: add-on/message/index.php:328
 msgid "Sign in to start a conversation with the user."
 msgstr ""
 
-#: add-on/message/index.php:407
+#: add-on/message/index.php:396
 msgid "Interlocutor"
 msgstr ""
 
-#: add-on/message/index.php:407
+#: add-on/message/index.php:396
 msgid "All contacts"
 msgstr ""
 
-#: add-on/message/index.php:415
+#: add-on/message/index.php:404
 msgid "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 msgstr ""
 
-#: add-on/message/index.php:428 add-on/user-account/index.php:331
+#: add-on/message/index.php:417 add-on/user-account/index.php:331
 #: templates/form-register.php:21 templates/form-remember.php:15
 msgid "Send"
 msgstr ""
 
-#: add-on/message/index.php:429
+#: add-on/message/index.php:418
 msgid "Important messages"
 msgstr ""
 
-#: add-on/message/index.php:434
+#: add-on/message/index.php:423
 msgid "Here will display correspondence history"
 msgstr ""
 
-#: add-on/message/index.php:437
+#: add-on/message/index.php:426
 msgid "Show older messages"
 msgstr ""
 
-#: add-on/message/index.php:540 functions/includes.php:151
+#: add-on/message/index.php:529 functions/includes.php:151
 msgid "days"
 msgstr ""
 
-#: add-on/message/index.php:541
+#: add-on/message/index.php:530
 msgid "month"
 msgstr ""
 
-#: add-on/message/index.php:542
+#: add-on/message/index.php:531
 msgid "all the time"
 msgstr ""
 
-#: add-on/message/index.php:543
+#: add-on/message/index.php:532
 msgid "Blacklist"
 msgstr ""
 
-#: add-on/message/index.php:544
+#: add-on/message/index.php:533
 msgid "Important"
 msgstr ""
 
-#: add-on/message/index.php:550
+#: add-on/message/index.php:539
 msgid "You havent been in conversation with"
 msgstr ""
 
-#: add-on/message/index.php:579 add-on/message/index.php:597
-#: add-on/message/index.php:678
+#: add-on/message/index.php:568 add-on/message/index.php:586
+#: add-on/message/index.php:667
 msgid "Contacts not found!"
 msgstr ""
 
-#: add-on/message/index.php:674
+#: add-on/message/index.php:663
 msgid "Last message"
 msgstr ""
 
-#: add-on/message/index.php:675
+#: add-on/message/index.php:664
 msgid "The chat history is missing"
 msgstr ""
 
-#: add-on/message/index.php:687
+#: add-on/message/index.php:676
 msgid "Delete?"
 msgstr ""
 
-#: add-on/message/index.php:752
+#: add-on/message/index.php:741
 msgid "Uncheck"
 msgstr ""
 
-#: add-on/message/index.php:752
+#: add-on/message/index.php:741
 msgid "Mark as important"
 msgstr ""
 
-#: add-on/message/index.php:817
+#: add-on/message/index.php:806
 msgid "No posts found!"
 msgstr ""
 
-#: add-on/message/index.php:852
+#: add-on/message/index.php:841
 msgid "Show more recent messages"
 msgstr ""
 
-#: add-on/message/index.php:970
+#: add-on/message/index.php:959
 msgid "Your message has been sent!"
 msgstr ""
 
-#: add-on/message/index.php:1065
+#: add-on/message/index.php:1054
 msgid "The message is marked as read"
 msgstr ""
 
-#: add-on/message/index.php:1208
+#: add-on/message/index.php:1197
 msgid "You a new message!"
 msgstr ""
 
-#: add-on/message/index.php:1239
+#: add-on/message/index.php:1228
 msgid "Go to the correspondence"
 msgstr ""
 
-#: add-on/message/index.php:1294
+#: add-on/message/index.php:1283
 msgid "Show more recent posts"
 msgstr ""
 
-#: add-on/message/index.php:1322
+#: add-on/message/index.php:1311
 msgid "The file has been received, but not yet loaded."
 msgstr ""
 
-#: add-on/message/index.php:1323
+#: add-on/message/index.php:1312
 msgid "The file was sent to the recipient."
 msgstr ""
 
-#: add-on/message/index.php:1326
+#: add-on/message/index.php:1315
 msgid "Link to sent the file"
 msgstr ""
 
-#: add-on/message/index.php:1328
+#: add-on/message/index.php:1317
 msgid "(accept files only from trusted sources)"
 msgstr ""
 
-#: add-on/message/index.php:1356
+#: add-on/message/index.php:1345
 msgid "The file was sent successfully."
 msgstr ""
 
-#: add-on/message/index.php:1359
+#: add-on/message/index.php:1348
 msgid ""
 "You have exceeded the limit on the number of uploaded files. Wait until the "
 "files sent previously will be accepted."
 msgstr ""
 
-#: add-on/message/index.php:1369
+#: add-on/message/index.php:1358
 msgid "Removes the file from the server"
 msgstr ""
 
@@ -1192,8 +1214,8 @@ msgid "Comment"
 msgstr ""
 
 #: add-on/money-wallet/index.php:155 add-on/money-wallet/index.php:366
-#: add-on/money-wallet/index.php:490 add-on/profile/index.php:367
-#: add-on/profile/index.php:673 add-on/publicpost/index.php:148
+#: add-on/money-wallet/index.php:490 add-on/profile/index.php:402
+#: add-on/profile/index.php:710 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:8
 msgid "Status"
 msgstr ""
@@ -1306,7 +1328,7 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: add-on/money-wallet/index.php:476 add-on/review/index.php:193
+#: add-on/money-wallet/index.php:476 add-on/review/index.php:195
 #: functions/rcl_addons.php:167 functions/rcl_editfields.php:127
 msgid "Delete"
 msgstr ""
@@ -1474,166 +1496,174 @@ msgid ""
 "default, 2MB"
 msgstr ""
 
-#: add-on/profile/index.php:193
+#: add-on/profile/index.php:175
+msgid "Delete avatar"
+msgstr ""
+
+#: add-on/profile/index.php:217
+msgid "Your avatar has been removed"
+msgstr ""
+
+#: add-on/profile/index.php:228
 msgid "Profile"
 msgstr ""
 
-#: add-on/profile/index.php:219 widget.php:138
+#: add-on/profile/index.php:254 widget.php:138
 msgid "User profile"
 msgstr ""
 
-#: add-on/profile/index.php:233
+#: add-on/profile/index.php:268
 msgid "Admin toolbar"
 msgstr ""
 
-#: add-on/profile/index.php:238
+#: add-on/profile/index.php:273
 msgid "Show the admin bar when viewing site"
 msgstr ""
 
-#: add-on/profile/index.php:246 add-on/profile/index.php:624
-#: functions/loginform.php:163 functions/loginform.php:187
+#: add-on/profile/index.php:281 add-on/profile/index.php:661
+#: functions/loginform.php:167 functions/loginform.php:191
 #: templates/form-sign.php:25 templates/recallbar.php:18
 #: templates/recallbar.php:32
 msgid "Login"
 msgstr ""
 
-#: add-on/profile/index.php:252 add-on/profile/index.php:631
+#: add-on/profile/index.php:287 add-on/profile/index.php:668
 msgid "Firstname"
 msgstr ""
 
-#: add-on/profile/index.php:258 add-on/profile/index.php:638
+#: add-on/profile/index.php:293 add-on/profile/index.php:675
 msgid "Surname"
 msgstr ""
 
-#: add-on/profile/index.php:264 add-on/profile/index.php:645
+#: add-on/profile/index.php:299 add-on/profile/index.php:682
 #: functions/register.php:125 templates/form-register.php:10
 #: templates/form-sign.php:10
 msgid "Nickname"
 msgstr ""
 
-#: add-on/profile/index.php:270 add-on/profile/index.php:652
+#: add-on/profile/index.php:305 add-on/profile/index.php:689
 msgid "Display name"
 msgstr ""
 
-#: add-on/profile/index.php:332 functions/rcl_editfields.php:147
+#: add-on/profile/index.php:367 functions/rcl_editfields.php:147
 #: templates/form-register.php:14
 msgid "E-mail"
 msgstr ""
 
-#: add-on/profile/index.php:338
+#: add-on/profile/index.php:373
 msgid "Your website"
 msgstr ""
 
-#: add-on/profile/index.php:344
+#: add-on/profile/index.php:379
 msgid "New password"
 msgstr ""
 
-#: add-on/profile/index.php:346
+#: add-on/profile/index.php:381
 msgid "If you want to change your password - enter new"
 msgstr ""
 
-#: add-on/profile/index.php:348
+#: add-on/profile/index.php:383
 msgid "Repeat the new password"
 msgstr ""
 
-#: add-on/profile/index.php:352 functions/loginform.php:50
+#: add-on/profile/index.php:387 functions/loginform.php:54
 msgid "The password strength indicator"
 msgstr ""
 
-#: add-on/profile/index.php:354 functions/loginform.php:52
+#: add-on/profile/index.php:389 functions/loginform.php:56
 msgid "A password is not entered"
 msgstr ""
 
-#: add-on/profile/index.php:358
+#: add-on/profile/index.php:393
 msgid "Note"
 msgstr ""
 
-#: add-on/profile/index.php:358
+#: add-on/profile/index.php:393
 msgid "The password must be at least 7 characters"
 msgstr ""
 
-#: add-on/profile/index.php:437
+#: add-on/profile/index.php:472
 msgid "Update profile"
 msgstr ""
 
-#: add-on/profile/index.php:441
+#: add-on/profile/index.php:476
 msgid "Are you sure? Then restore will not work!"
 msgstr ""
 
-#: add-on/profile/index.php:443
+#: add-on/profile/index.php:478
 msgid "To delete your profile"
 msgstr ""
 
-#: add-on/profile/index.php:505
+#: add-on/profile/index.php:540
 msgid "Fields to display in the profile note ticks."
 msgstr ""
 
-#: add-on/profile/index.php:513
+#: add-on/profile/index.php:548
 #, php-format
 msgid "<td><input type=\"%s\" name=\"%s\" %s /></td><td>%s</td>"
 msgstr ""
 
-#: add-on/profile/index.php:521
+#: add-on/profile/index.php:556
 msgid "Manage profile fields"
 msgstr ""
 
-#: add-on/profile/index.php:526 add-on/publicpost/index.php:233
+#: add-on/profile/index.php:561 add-on/publicpost/index.php:233
 msgid "required field"
 msgstr ""
 
-#: add-on/profile/index.php:531
+#: add-on/profile/index.php:566
 msgid "to display the registration form"
 msgstr ""
 
-#: add-on/profile/index.php:536
+#: add-on/profile/index.php:571
 msgid "display at checkout for guests"
 msgstr ""
 
-#: add-on/profile/index.php:541
+#: add-on/profile/index.php:576
 msgid "to show the content to other users"
 msgstr ""
 
-#: add-on/profile/index.php:546
+#: add-on/profile/index.php:581
 msgid "it only changes the administration of the site"
 msgstr ""
 
-#: add-on/profile/index.php:627
+#: add-on/profile/index.php:664
 msgid "Login user"
 msgstr ""
 
-#: add-on/profile/index.php:634
+#: add-on/profile/index.php:671
 msgid "Username"
 msgstr ""
 
-#: add-on/profile/index.php:641
+#: add-on/profile/index.php:678
 msgid "Surname user"
 msgstr ""
 
-#: add-on/profile/index.php:648
+#: add-on/profile/index.php:685
 msgid "Nickname user"
 msgstr ""
 
-#: add-on/profile/index.php:655
+#: add-on/profile/index.php:692
 msgid "Display name user"
 msgstr ""
 
-#: add-on/profile/index.php:659
+#: add-on/profile/index.php:696
 msgid "Емейл (be sure)"
 msgstr ""
 
-#: add-on/profile/index.php:662
+#: add-on/profile/index.php:699
 msgid "Емейл user"
 msgstr ""
 
-#: add-on/profile/index.php:666
+#: add-on/profile/index.php:703
 msgid "Website"
 msgstr ""
 
-#: add-on/profile/index.php:669
+#: add-on/profile/index.php:706
 msgid "Website user"
 msgstr ""
 
-#: add-on/profile/index.php:676
+#: add-on/profile/index.php:713
 msgid "User status"
 msgstr ""
 
@@ -1700,7 +1730,7 @@ msgid "Show everyone including guests"
 msgstr ""
 
 #: add-on/publicpost/addon-options.php:68
-#: add-on/publicpost/rcl_publicform.php:323
+#: add-on/publicpost/rcl_publicform.php:327
 msgid "Category"
 msgstr ""
 
@@ -1940,10 +1970,6 @@ msgstr ""
 msgid "Posts"
 msgstr ""
 
-#: add-on/publicpost/index.php:65 add-on/publicpost/index.php:325
-msgid "Publication"
-msgstr ""
-
 #: add-on/publicpost/index.php:152
 #: add-on/publicpost/templates/posts-list.php:15
 msgid "on approval"
@@ -1979,27 +2005,27 @@ msgstr ""
 msgid "Вы уверены?"
 msgstr ""
 
-#: add-on/publicpost/index.php:224 add-on/publicpost/index.php:506
+#: add-on/publicpost/index.php:224 add-on/publicpost/index.php:498
 msgid "Arbitrary form fields publishing"
 msgstr ""
 
-#: add-on/publicpost/index.php:443
+#: add-on/publicpost/index.php:435
 msgid "featured"
 msgstr ""
 
-#: add-on/publicpost/index.php:481
+#: add-on/publicpost/index.php:473
 msgid "The publication has been successfully removed!"
 msgstr ""
 
-#: add-on/publicpost/index.php:747 functions/rcl_custom_fields.php:271
+#: add-on/publicpost/index.php:744 functions/rcl_custom_fields.php:271
 msgid "To publish"
 msgstr ""
 
-#: add-on/publicpost/index.php:808
+#: add-on/publicpost/index.php:805
 msgid "To add a media file"
 msgstr ""
 
-#: add-on/publicpost/rcl_editpost.php:46
+#: add-on/publicpost/rcl_editpost.php:51
 msgid "Error publishing!"
 msgstr ""
 
@@ -2011,75 +2037,79 @@ msgstr ""
 msgid "Published"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:118
+#: add-on/publicpost/rcl_publicform.php:120
 msgid "Preview"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:154
-#: add-on/publicpost/rcl_publicform.php:164
+#: add-on/publicpost/rcl_publicform.php:156
+#: add-on/publicpost/rcl_publicform.php:166
 msgid "Are you seriously"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:156
-#: add-on/publicpost/rcl_publicform.php:162
-#: add-on/publicpost/rcl_publicform.php:170
+#: add-on/publicpost/rcl_publicform.php:158
+#: add-on/publicpost/rcl_publicform.php:164
+#: add-on/publicpost/rcl_publicform.php:172
 msgid "Delete post"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:167
+#: add-on/publicpost/rcl_publicform.php:169
 msgid "or enter its cause"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:169
+#: add-on/publicpost/rcl_publicform.php:171
 msgid "Without notice"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:184
+#: add-on/publicpost/rcl_publicform.php:186
 msgid "Not correspond the subject"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:185
+#: add-on/publicpost/rcl_publicform.php:187
 msgid "The publication does not correspond to the subject site"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:188
+#: add-on/publicpost/rcl_publicform.php:190
 msgid "Not furnished"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:189
+#: add-on/publicpost/rcl_publicform.php:191
 msgid "Publication is not formalized under the rules"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:192
+#: add-on/publicpost/rcl_publicform.php:194
 msgid "Advertising/Spam"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:193
+#: add-on/publicpost/rcl_publicform.php:195
 msgid "Publication labeled as advertising or spam"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:201
+#: add-on/publicpost/rcl_publicform.php:203
 msgid "Use the blank notice"
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:212
+#: add-on/publicpost/rcl_publicform.php:214
 msgid "You must be logged in to post. Login or register"
 msgstr ""
 
 #: add-on/publicpost/rcl_publicform.php:216
+msgid "You can not edit this publication :("
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:220
 msgid "Sorry, but you have no rights to publish within groups :("
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:219
+#: add-on/publicpost/rcl_publicform.php:223
 msgid "Sorry, but you have no right<br>to publish the records on this site :("
 msgstr ""
 
-#: add-on/publicpost/rcl_publicform.php:253
+#: add-on/publicpost/rcl_publicform.php:257
 msgid "Being sent, please wait..."
 msgstr ""
 
 #: add-on/publicpost/templates/editor-image-box.php:14
-msgid "Выберите изображение"
+msgid "Select an image"
 msgstr ""
 
 #: add-on/publicpost/templates/public-form.php:34
@@ -2096,7 +2126,7 @@ msgid "Plus/minus"
 msgstr ""
 
 #: add-on/rating-system/addon-options.php:19
-#: add-on/rating-system/index.php:244
+#: add-on/rating-system/index.php:292
 msgid "I like"
 msgstr ""
 
@@ -2154,39 +2184,40 @@ msgstr ""
 msgid "Template output %s stories in the overall ranking"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:68 add-on/rating-system/core.php:306
+#: add-on/rating-system/addon-options.php:68 add-on/rating-system/core.php:312
 msgid "voted"
 msgstr ""
 
 #: add-on/rating-system/addon-options.php:69
 msgid ""
-"select a template output stories where %USER% - name of the voted ,%VALUE% - "
-"rated value ,%DATE% - date of changing the rating"
+"select a template output stories where <br>%USER% - name of the voted, <br>"
+"%VALUE% - rated value, <br>%DATE% - date of changing the rating, <br>%COMMENT"
+"% - link to comment, <br>%POST% - link to publication"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:76
+#: add-on/rating-system/addon-options.php:81
 msgid "Rating settings"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:82
+#: add-on/rating-system/addon-options.php:87
 msgid "Allow to bypass the moderation of publications at achievement rating"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:84
+#: add-on/rating-system/addon-options.php:89
 msgid ""
 "specify the rating level at which the user will get the ability to post "
 "without moderation"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:90
+#: add-on/rating-system/addon-options.php:95
 msgid "View results"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:102
+#: add-on/rating-system/addon-options.php:107
 msgid "specify the user group which is allowed to view votes"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:108
+#: add-on/rating-system/addon-options.php:113
 msgid "Deleting your voice"
 msgstr ""
 
@@ -2207,35 +2238,36 @@ msgstr ""
 msgid "Correction"
 msgstr ""
 
-#: add-on/rating-system/core.php:328
+#: add-on/rating-system/core.php:334
 msgid "comment"
 msgstr ""
 
-#: add-on/rating-system/core.php:338
+#: add-on/rating-system/core.php:344
 msgid "Rating changes not made"
 msgstr ""
 
-#: add-on/rating-system/index.php:51 add-on/rating-system/index.php:189
+#: add-on/rating-system/index.php:51 add-on/rating-system/index.php:100
+#: add-on/rating-system/index.php:237
 msgid "Rating"
 msgstr ""
 
-#: add-on/rating-system/index.php:140
+#: add-on/rating-system/index.php:186
 msgid "rating"
 msgstr ""
 
-#: add-on/rating-system/index.php:237
+#: add-on/rating-system/index.php:285
 msgid "To remove your vote"
 msgstr ""
 
-#: add-on/rating-system/index.php:246
+#: add-on/rating-system/index.php:294
 msgid "minus"
 msgstr ""
 
-#: add-on/rating-system/index.php:247
+#: add-on/rating-system/index.php:295
 msgid "plus"
 msgstr ""
 
-#: add-on/rating-system/index.php:362
+#: add-on/rating-system/index.php:410
 msgid "You can not vote"
 msgstr ""
 
@@ -2291,39 +2323,39 @@ msgstr ""
 msgid "leave a review"
 msgstr ""
 
-#: add-on/review/index.php:199
+#: add-on/review/index.php:201
 msgid "You have not left any reviews"
 msgstr ""
 
-#: add-on/review/index.php:201
+#: add-on/review/index.php:203
 msgid "The user has no reviews yet"
 msgstr ""
 
-#: add-on/review/index.php:213
+#: add-on/review/index.php:215
 msgid "Members with a value rating of less than "
 msgstr ""
 
-#: add-on/review/index.php:226
+#: add-on/review/index.php:228
 msgid "Users without published records cannot accept and add reviews."
 msgstr ""
 
-#: add-on/review/index.php:240
+#: add-on/review/index.php:242
 msgid "Review text"
 msgstr ""
 
-#: add-on/review/index.php:241
+#: add-on/review/index.php:243
 msgid "Positively"
 msgstr ""
 
-#: add-on/review/index.php:242
+#: add-on/review/index.php:244
 msgid "Neutral"
 msgstr ""
 
-#: add-on/review/index.php:243
+#: add-on/review/index.php:245
 msgid "Negatively"
 msgstr ""
 
-#: add-on/review/index.php:248
+#: add-on/review/index.php:250
 msgid "Add a review"
 msgstr ""
 
@@ -2874,19 +2906,23 @@ msgstr ""
 msgid "Not connected"
 msgstr ""
 
-#: functions-rcl.php:140
+#: functions-rcl.php:138
 msgid "Error! Perhaps this addition does not support ajax loading"
 msgstr ""
 
-#: functions-rcl.php:205
+#: functions-rcl.php:203
 msgid "The site works using the functionality of the plugin"
 msgstr ""
 
-#: functions-rcl.php:319
+#: functions-rcl.php:216
+msgid "Author of publication"
+msgstr ""
+
+#: functions-rcl.php:307
 msgid "Congratulations! You have been banned."
 msgstr ""
 
-#: functions-rcl.php:443
+#: functions-rcl.php:431
 msgid "Publication pending approval!"
 msgstr ""
 
@@ -2915,92 +2951,92 @@ msgstr ""
 msgid "h."
 msgstr ""
 
-#: functions/loginform.php:40 functions/register.php:126
+#: functions/loginform.php:44 functions/register.php:126
 #: templates/form-sign.php:14
 msgid "Password"
 msgstr ""
 
-#: functions/loginform.php:67
+#: functions/loginform.php:71
 msgid "Repeat the password"
 msgstr ""
 
-#: functions/loginform.php:76
+#: functions/loginform.php:80
 msgid "The passwords do not match!"
 msgstr ""
 
-#: functions/loginform.php:77
+#: functions/loginform.php:81
 msgid "The passwords match"
 msgstr ""
 
-#: functions/loginform.php:136
+#: functions/loginform.php:140
 msgid "Hi"
 msgstr ""
 
-#: functions/loginform.php:138 functions/loginform.php:147
+#: functions/loginform.php:142 functions/loginform.php:151
 msgid "In personal account"
 msgstr ""
 
-#: functions/loginform.php:148
+#: functions/loginform.php:152
 msgid "Exit"
 msgstr ""
 
-#: functions/loginform.php:164 functions/loginform.php:188
-#: functions/rcl_userlist.php:282 functions/shortcodes.php:238
+#: functions/loginform.php:168 functions/loginform.php:192
+#: functions/rcl_userlist.php:307 functions/shortcodes.php:257
 #: templates/form-register.php:4 templates/form-remember.php:18
 #: templates/form-sign.php:27 templates/recallbar.php:17
 #: templates/recallbar.php:31
 msgid "Registration"
 msgstr ""
 
-#: functions/loginform.php:210
+#: functions/loginform.php:214
 msgid "Login invalid characters!"
 msgstr ""
 
-#: functions/loginform.php:211 functions/loginform.php:224
+#: functions/loginform.php:215 functions/loginform.php:228
 msgid "Fill in the fields!"
 msgstr ""
 
-#: functions/loginform.php:212
+#: functions/loginform.php:216
 msgid "Field filled not right CAPTCHA!"
 msgstr ""
 
-#: functions/loginform.php:213
+#: functions/loginform.php:217
 msgid "Username already in use!"
 msgstr ""
 
-#: functions/loginform.php:214
+#: functions/loginform.php:218
 msgid "E-mail is already in use!"
 msgstr ""
 
-#: functions/loginform.php:215
+#: functions/loginform.php:219
 msgid "Invalid E-mail!"
 msgstr ""
 
-#: functions/loginform.php:218
+#: functions/loginform.php:222
 msgid "Registration is completed! Check your email."
 msgstr ""
 
-#: functions/loginform.php:223
+#: functions/loginform.php:227
 msgid "Your email is not confirmed!"
 msgstr ""
 
-#: functions/loginform.php:225
+#: functions/loginform.php:229
 msgid "Username or password are not correct!"
 msgstr ""
 
-#: functions/loginform.php:228
+#: functions/loginform.php:232
 msgid "Registration is completed! Check your email"
 msgstr ""
 
-#: functions/loginform.php:234
+#: functions/loginform.php:238
 msgid "Your password has been sent!<br>Check your email."
 msgstr ""
 
-#: functions/loginform.php:259
+#: functions/loginform.php:263
 msgid "Error filling!"
 msgstr ""
 
-#: functions/loginform.php:279
+#: functions/loginform.php:283
 msgid "Repeat password is not correct!"
 msgstr ""
 
@@ -3213,11 +3249,11 @@ msgstr ""
 msgid "were removed from the Database"
 msgstr ""
 
-#: functions/rcl_userlist.php:250 recall.php:251
+#: functions/rcl_userlist.php:275 recall.php:252
 msgid "not online"
 msgstr ""
 
-#: functions/rcl_userlist.php:275
+#: functions/rcl_userlist.php:300
 msgid "Publics"
 msgstr ""
 
@@ -3237,43 +3273,43 @@ msgstr ""
 msgid "If it wasnt you, then just ignore this email"
 msgstr ""
 
-#: functions/shortcodes.php:228
+#: functions/shortcodes.php:247
 msgid "Total users"
 msgstr ""
 
-#: functions/shortcodes.php:234
+#: functions/shortcodes.php:253
 msgid "Activity"
 msgstr ""
 
-#: functions/shortcodes.php:235
+#: functions/shortcodes.php:254
 msgid "Rated"
 msgstr ""
 
-#: functions/shortcodes.php:236
+#: functions/shortcodes.php:255
 msgid "Publications"
 msgstr ""
 
-#: functions/shortcodes.php:259
+#: functions/shortcodes.php:281
 msgid "Users not found"
 msgstr ""
 
-#: functions/shortcodes.php:260
+#: functions/shortcodes.php:282
 msgid "No one"
 msgstr ""
 
-#: functions/shortcodes.php:279
+#: functions/shortcodes.php:301
 msgid "Search users"
 msgstr ""
 
-#: functions/shortcodes.php:282
+#: functions/shortcodes.php:304
 msgid "by name"
 msgstr ""
 
-#: functions/shortcodes.php:283
+#: functions/shortcodes.php:305
 msgid "by login"
 msgstr ""
 
-#: functions/shortcodes.php:297
+#: functions/shortcodes.php:319
 msgid ""
 "To begin to use the capabilities of your personal account, please log in or "
 "register on this site"

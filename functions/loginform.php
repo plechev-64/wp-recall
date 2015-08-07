@@ -17,7 +17,7 @@ function rcl_get_current_url($typeform=false){
             preg_match_all('/(?<=http\:\/\/)[A-zА-я0-9\/\.\_\-\s\ё]*(&=\&action\-rcl)/iu',$url, $matches);
             $host = $matches[0][0];
     }
-    if(!$host) $host = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+    if(!isset($host)||!$host) $host = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
     $host = $protocol.$host;
     if($typeform=='remember') $host = rcl_format_url($host).'action-rcl=remember&success=true';
     return $host;
