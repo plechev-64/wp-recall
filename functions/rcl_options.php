@@ -92,7 +92,8 @@ class Rcl_Options {
 
         $a = 0;
         $key = false;
-        
+        $content = '';
+
         foreach($args['options'] as $val=>$name){
            $a++;
            if(isset($rcl_options[$args['name']])){
@@ -103,7 +104,7 @@ class Rcl_Options {
                 }
            }
 
-           $content = '<label for="'.$args['name'].'_'.$a.'">';
+           $content .= '<label for="'.$args['name'].'_'.$a.'">';
            $content .= '<input id="'.$args['name'].'_'.$a.'" type="checkbox" name="'.$args['name'].'[]" value="'.trim($val).'" '.checked($key,$val,false).'> '.$name;
            $content .= '</label>';
         }
