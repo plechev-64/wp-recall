@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-08-07 10:51+0300\n"
+"POT-Creation-Date: 2015-08-09 13:39+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -153,8 +153,8 @@ msgstr "Отключить закладки для публикации"
 #: add-on/profile/index.php:567 add-on/profile/index.php:572
 #: add-on/profile/index.php:577 add-on/profile/index.php:582
 #: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
-#: add-on/rating-system/addon-options.php:59
-#: add-on/rating-system/addon-options.php:116
+#: add-on/rating-system/addon-options.php:68
+#: add-on/rating-system/addon-options.php:120
 #: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
 #: admin-pages.php:38 admin-pages.php:289
 msgid "No"
@@ -165,8 +165,8 @@ msgstr "Нет"
 #: add-on/profile/index.php:567 add-on/profile/index.php:572
 #: add-on/profile/index.php:577 add-on/profile/index.php:582
 #: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
-#: add-on/rating-system/addon-options.php:59
-#: add-on/rating-system/addon-options.php:116
+#: add-on/rating-system/addon-options.php:68
+#: add-on/rating-system/addon-options.php:120
 #: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
 #: admin-pages.php:39 admin-pages.php:289
 msgid "Yes"
@@ -384,7 +384,7 @@ msgid "The user`s photo"
 msgstr "Пользовательские фото"
 
 #: add-on/gallery-recall/index.php:366 add-on/gallery-recall/index.php:377
-#: add-on/message/index.php:1230
+#: add-on/message/index.php:1231
 msgid "Reply"
 msgstr "Ответить"
 
@@ -642,25 +642,25 @@ msgstr "Создание групп разрешено"
 
 #: add-on/groups/index.php:266 add-on/groups/index.php:276
 #: add-on/publicpost/addon-options.php:25
-#: add-on/rating-system/addon-options.php:104 admin-pages.php:147
+#: add-on/rating-system/addon-options.php:108 admin-pages.php:147
 msgid "only Administrators"
 msgstr "Только администраторам"
 
 #: add-on/groups/index.php:267 add-on/groups/index.php:277
 #: add-on/publicpost/addon-options.php:26
-#: add-on/rating-system/addon-options.php:103 admin-pages.php:148
+#: add-on/rating-system/addon-options.php:107 admin-pages.php:148
 msgid "Editors and older"
 msgstr "Редакторам и старше"
 
 #: add-on/groups/index.php:268 add-on/groups/index.php:278
 #: add-on/publicpost/addon-options.php:27
-#: add-on/rating-system/addon-options.php:102 admin-pages.php:149
+#: add-on/rating-system/addon-options.php:106 admin-pages.php:149
 msgid "Authors and older"
 msgstr "Авторам и старше"
 
 #: add-on/groups/index.php:269 add-on/groups/index.php:279
 #: add-on/publicpost/addon-options.php:28
-#: add-on/rating-system/addon-options.php:101 admin-pages.php:150
+#: add-on/rating-system/addon-options.php:105 admin-pages.php:150
 msgid "Participants and older"
 msgstr "Участникам и старше"
 
@@ -669,7 +669,7 @@ msgid "Publishing group"
 msgstr "Публикация группы"
 
 #: add-on/groups/index.php:280 add-on/publicpost/addon-options.php:29
-#: add-on/rating-system/addon-options.php:100 admin-pages.php:151
+#: add-on/rating-system/addon-options.php:104 admin-pages.php:151
 #: widget.php:31 widget.php:94
 msgid "All users"
 msgstr "Все пользователи"
@@ -820,13 +820,13 @@ msgstr "Последние посетители"
 msgid "Attach image or download it"
 msgstr "Выбрать изображение или загрузить"
 
-#: add-on/magazin/functions/shortcodes.php:84
 #: add-on/magazin/functions/shortcodes.php:86
-#: add-on/magazin/functions/shortcodes.php:113
+#: add-on/magazin/functions/shortcodes.php:88
+#: add-on/magazin/functions/shortcodes.php:115
 msgid "Cart"
 msgstr "Корзина"
 
-#: add-on/magazin/functions/shortcodes.php:116 add-on/publicpost/index.php:148
+#: add-on/magazin/functions/shortcodes.php:118 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:10
 #: add-on/user-account/index.php:382 functions/rcl_editfields.php:116
@@ -838,7 +838,7 @@ msgstr "Заголовок"
 msgid "File does not exist on the server or it has already been loaded!"
 msgstr "Файла нет на сервере или он был удален!"
 
-#: add-on/message/index.php:28 add-on/message/index.php:1309
+#: add-on/message/index.php:28 add-on/message/index.php:1310
 msgid "The file was loaded."
 msgstr "Файл был загружен"
 
@@ -1074,63 +1074,63 @@ msgstr "История переписки не найдена"
 msgid "Delete?"
 msgstr "Удалить?"
 
-#: add-on/message/index.php:741
+#: add-on/message/index.php:742
 msgid "Uncheck"
 msgstr "Снять"
 
-#: add-on/message/index.php:741
+#: add-on/message/index.php:742
 msgid "Mark as important"
 msgstr "Пометить как важное"
 
-#: add-on/message/index.php:806
+#: add-on/message/index.php:807
 msgid "No posts found!"
 msgstr "Сообщения не найдены!"
 
-#: add-on/message/index.php:841
+#: add-on/message/index.php:842
 msgid "Show more recent messages"
 msgstr "Показать больше последних сообщений"
 
-#: add-on/message/index.php:959
+#: add-on/message/index.php:960
 msgid "Your message has been sent!"
 msgstr "Ваше сообщение было доставлено!"
 
-#: add-on/message/index.php:1054
+#: add-on/message/index.php:1055
 msgid "The message is marked as read"
 msgstr "Сообщение помечено как прочтенное"
 
-#: add-on/message/index.php:1197
+#: add-on/message/index.php:1198
 msgid "You a new message!"
 msgstr "Вам новое сообщение!"
 
-#: add-on/message/index.php:1228
+#: add-on/message/index.php:1229
 msgid "Go to the correspondence"
 msgstr "Перейти к переписке"
 
-#: add-on/message/index.php:1283
+#: add-on/message/index.php:1284
 msgid "Show more recent posts"
 msgstr "Показать больше последних сообщений"
 
-#: add-on/message/index.php:1311
+#: add-on/message/index.php:1312
 msgid "The file has been received, but not yet loaded."
 msgstr "Файл был отправлен, но не был загружен."
 
-#: add-on/message/index.php:1312
+#: add-on/message/index.php:1313
 msgid "The file was sent to the recipient."
 msgstr "Файл был отправлен получателю,"
 
-#: add-on/message/index.php:1315
+#: add-on/message/index.php:1316
 msgid "Link to sent the file"
 msgstr "Ссылка на файл"
 
-#: add-on/message/index.php:1317
+#: add-on/message/index.php:1318
 msgid "(accept files only from trusted sources)"
 msgstr "(принимайте файлы только от доверенных источников)"
 
-#: add-on/message/index.php:1345
+#: add-on/message/index.php:1346
 msgid "The file was sent successfully."
 msgstr "Файл был успешно отправлен"
 
-#: add-on/message/index.php:1348
+#: add-on/message/index.php:1349
 msgid ""
 "You have exceeded the limit on the number of uploaded files. Wait until the "
 "files sent previously will be accepted."
@@ -1138,7 +1138,7 @@ msgstr ""
 "Вы достигли предела по кол-ву отправляемых файлов. Подождите пока файлы "
 "отправленные ранее будут приняты."
 
-#: add-on/message/index.php:1358
+#: add-on/message/index.php:1359
 msgid "Removes the file from the server"
 msgstr "Удаляю файл с сервера"
 
@@ -1740,14 +1740,14 @@ msgstr "Отображать информацию об авторе"
 
 #: add-on/publicpost/addon-options.php:44
 #: add-on/publicpost/addon-options.php:51
-#: add-on/rating-system/addon-options.php:46 admin-pages.php:189
+#: add-on/rating-system/addon-options.php:55 admin-pages.php:189
 #: admin-pages.php:262 admin-pages.php:267 admin-pages.php:278
 msgid "Disabled"
 msgstr "Отключено"
 
 #: add-on/publicpost/addon-options.php:44
 #: add-on/publicpost/addon-options.php:51
-#: add-on/rating-system/addon-options.php:46 admin-pages.php:190
+#: add-on/rating-system/addon-options.php:55 admin-pages.php:190
 #: admin-pages.php:278
 msgid "Included"
 msgstr "Подключено"
@@ -2168,58 +2168,90 @@ msgid ""
 "Click on Priceline the image to add it to the content of the publication"
 msgstr "Нажмите на загруженное изображение, чтобы добавить его в контент"
 
+#: add-on/rating-system/addon-options.php:15
+msgid "select a template output stories where"
+msgstr "Выберите шаблон для вывода в истории, где"
+
 #: add-on/rating-system/addon-options.php:16
+msgid "%USER% - name of the voted"
+msgstr "%USER% - имя голосовавшего"
+
+#: add-on/rating-system/addon-options.php:17
+msgid "%VALUE% - rated value"
+msgstr "%VALUE% - значение голоса"
+
+#: add-on/rating-system/addon-options.php:18
+msgid "%DATE% - date of changing the rating"
+msgstr "%DATE% - дата голоса"
+
+#: add-on/rating-system/addon-options.php:19
+msgid "%COMMENT% - link to comment"
+msgstr "%COMMENT% - ссылка на комментарий"
+
+#: add-on/rating-system/addon-options.php:20
+msgid "%POST% - link to publication"
+msgstr "%POST% - ссылка на публикацию"
+
+#: add-on/rating-system/addon-options.php:23
 msgid "Type of rating for"
 msgstr "Тип рейтинга для"
 
-#: add-on/rating-system/addon-options.php:19
+#: add-on/rating-system/addon-options.php:26
 msgid "Plus/minus"
 msgstr "Плюс/Минус"
 
-#: add-on/rating-system/addon-options.php:19
+#: add-on/rating-system/addon-options.php:26
 #: add-on/rating-system/index.php:292
 msgid "I like"
 msgstr "Мне нравится"
 
-#: add-on/rating-system/addon-options.php:24
+#: add-on/rating-system/addon-options.php:31
 msgid "Overall rating "
 msgstr "Общий рейтинг"
 
-#: add-on/rating-system/addon-options.php:27
+#: add-on/rating-system/addon-options.php:34
 msgid "Sum votes values"
 msgstr "Сумма значений голосов"
 
-#: add-on/rating-system/addon-options.php:27
+#: add-on/rating-system/addon-options.php:34
 msgid "Number of positive and negative votes"
 msgstr "Кол-во положительных и отрицательных голосов"
 
-#: add-on/rating-system/addon-options.php:32
-msgid "Limit positive votes"
-msgstr "Ограничение положительных голосов"
+#: add-on/rating-system/addon-options.php:39
+msgid "Limit of one vote per user"
+msgstr "Ограничение голосов за одного пользователя"
 
-#: add-on/rating-system/addon-options.php:33
-#: add-on/rating-system/addon-options.php:36 functions/rcl_editfields.php:149
+#: add-on/rating-system/addon-options.php:40
+msgid "Positive votes"
+msgstr "Положительные голоса"
+
+#: add-on/rating-system/addon-options.php:41
+#: add-on/rating-system/addon-options.php:44 functions/rcl_editfields.php:149
 msgid "Number"
 msgstr "Кол-во"
 
-#: add-on/rating-system/addon-options.php:34
-#: add-on/rating-system/addon-options.php:37 functions/rcl_editfields.php:151
+#: add-on/rating-system/addon-options.php:42
+#: add-on/rating-system/addon-options.php:45 functions/rcl_editfields.php:151
 msgid "Time"
 msgstr "Время"
 
-#: add-on/rating-system/addon-options.php:35
-msgid "Limit negative votes"
-msgstr "Ограничение отрицательных голосов"
+#: add-on/rating-system/addon-options.php:43
+msgid "Negative votes"
+msgstr "Отрицательные голоса"
 
-#: add-on/rating-system/addon-options.php:42
+#: add-on/rating-system/addon-options.php:46
+msgid "Note: Time in seconds"
+msgstr "Примечание: Время в секундах"
+
+#: add-on/rating-system/addon-options.php:51
 msgid "The rating"
 msgstr "Рейтинг"
 
-#: add-on/rating-system/addon-options.php:51
+#: add-on/rating-system/addon-options.php:60
 msgid "Points for ranking"
 msgstr "Баллы рейтинга"
 
-#: add-on/rating-system/addon-options.php:53
+#: add-on/rating-system/addon-options.php:62
 msgid ""
 "set how many points the ranking will be awarded for a positive vote or how "
 "many points will be subtracted from the rating for a negative vote"
@@ -2227,40 +2259,28 @@ msgstr ""
 "укажите значение рейтинга для положительного или отрицательного голоса за "
 "публикацию"
 
-#: add-on/rating-system/addon-options.php:55
+#: add-on/rating-system/addon-options.php:64
 #, php-format
 msgid "The influence of rating %s on the overall rating"
 msgstr "Влияние рейтинга %s на общий рейтинг пользователя"
 
-#: add-on/rating-system/addon-options.php:67
-#, php-format
-msgid "Template output %s stories in the overall ranking"
-msgstr "Шаблон вывода истории рейтинга %s в общем рейтинге"
+#: add-on/rating-system/addon-options.php:76
+msgid "Template output stories in the overall ranking"
+msgstr "Шаблон вывода истории в общем рейтинге пользователя"
 
-#: add-on/rating-system/addon-options.php:68 add-on/rating-system/core.php:312
+#: add-on/rating-system/addon-options.php:77 add-on/rating-system/core.php:312
 msgid "voted"
 msgstr "голосовал"
 
-#: add-on/rating-system/addon-options.php:69
-msgid ""
-"select a template output stories where <br>%USER% - name of the voted, <br>"
-"%VALUE% - rated value, <br>%DATE% - date of changing the rating, <br>%COMMENT"
-"% - link to comment, <br>%POST% - link to publication"
-msgstr ""
-"сформируйте свой шаблон для вывода в истории изменения рейтинга, где <br>"
-"%USER% - имя проголосовавшего, <br>%VALUE% - значение голоса, <br>%DATE% - "
-"дата голоса, <br>%COMMENT% - ссылка на комментарий, <br>%POST% - ссылка на "
-"публикацию"
-
-#: add-on/rating-system/addon-options.php:81
+#: add-on/rating-system/addon-options.php:85
 msgid "Rating settings"
 msgstr "Настройки рейтинга"
 
-#: add-on/rating-system/addon-options.php:87
+#: add-on/rating-system/addon-options.php:91
 msgid "Allow to bypass the moderation of publications at achievement rating"
 msgstr "Влияние рейтинга на модерацию публикаций"
 
-#: add-on/rating-system/addon-options.php:89
+#: add-on/rating-system/addon-options.php:93
 msgid ""
 "specify the rating level at which the user will get the ability to post "
 "without moderation"
@@ -2268,15 +2288,15 @@ msgstr ""
 "пользователи с указанным уровнем рейтинга или превышающем его смогут "
 "публиковать без модерации"
 
-#: add-on/rating-system/addon-options.php:95
+#: add-on/rating-system/addon-options.php:99
 msgid "View results"
 msgstr "Просмотр результатов"
 
-#: add-on/rating-system/addon-options.php:107
+#: add-on/rating-system/addon-options.php:111
 msgid "specify the user group which is allowed to view votes"
 msgstr "укажите группу пользователей имеющих доступ к просмотру голосов"
 
-#: add-on/rating-system/addon-options.php:113
+#: add-on/rating-system/addon-options.php:117
 msgid "Deleting your voice"
 msgstr "Удаление своего голоса"
 
@@ -3500,6 +3520,25 @@ msgstr "Блок с основной информацией профиля"
 #: widget.php:159
 msgid "Control panel"
 msgstr "Панель управления"
+
+#~ msgid "Template output %s stories in the overall ranking"
+#~ msgstr "Шаблон вывода истории рейтинга %s в общем рейтинге"
+
+#~ msgid "Limit positive votes"
+#~ msgstr "Ограничение положительных голосов"
+
+#~ msgid "Limit negative votes"
+#~ msgstr "Ограничение отрицательных голосов"
+
+#~ msgid ""
+#~ "select a template output stories where <br>%USER% - name of the voted, "
+#~ "<br>%VALUE% - rated value, <br>%DATE% - date of changing the rating, <br>"
+#~ "%COMMENT% - link to comment, <br>%POST% - link to publication"
+#~ msgstr ""
+#~ "сформируйте свой шаблон для вывода в истории изменения рейтинга, где <br>"
+#~ "%USER% - имя проголосовавшего, <br>%VALUE% - значение голоса, <br>%DATE% "
+#~ "- дата голоса, <br>%COMMENT% - ссылка на комментарий, <br>%POST% - ссылка "
+#~ "на публикацию"
 
 #~ msgid ""
 #~ "select a template output stories where %USER% - name of the voted ,%VALUE"

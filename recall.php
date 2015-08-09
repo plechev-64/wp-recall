@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://wppost.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 13.0.beta2
+    Version: 13.0.0
     Author: Plechev Andrey
     Author URI: http://wppost.ru/
     GitHub Plugin URI: https://github.com/plechev-64/wp-recall
@@ -25,7 +25,7 @@ function init_global_rcl(){
 
 	$rcl_options = get_option('primary-rcl-options');
 
-	define('VER_RCL', '13.0.beta2');
+	define('VER_RCL', '13.0.0');
 
 	$upload_dir = rcl_get_wp_upload_dir();
 
@@ -88,7 +88,7 @@ function recall_install(){
 		wp_insert_post(array('post_title'=>__('FEED','rcl'),'post_content'=>'[feed]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'user-feed'));
 
 		$active_addons = get_site_option('active_addons_recall');
-		$def_addons = array('review','profile','feed','publicpost','message','rating-system');
+		$def_addons = array('rating-system','review','profile','feed','publicpost','message');
 		foreach($def_addons as $addon){
 			$path = RCL_PATH.'add-on/'.$addon.'/index.php';
 			if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
@@ -133,10 +133,11 @@ function recall_install(){
 			add_role($key, $role['name'], $role['cap']);
 		}
 
+                update_option('default_role','author');
+
 	}else{
 		rcl_update_avatar_data();
 		rcl_update_old_feeds();
-		update_option('default_role','author');
 		update_option('show_avatars',1);
 	}
 

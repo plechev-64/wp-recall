@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Blank Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-08-07 10:57+0300\n"
+"POT-Creation-Date: 2015-08-09 16:57+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -149,8 +149,8 @@ msgstr ""
 #: add-on/profile/index.php:567 add-on/profile/index.php:572
 #: add-on/profile/index.php:577 add-on/profile/index.php:582
 #: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
-#: add-on/rating-system/addon-options.php:59
-#: add-on/rating-system/addon-options.php:116
+#: add-on/rating-system/addon-options.php:68
+#: add-on/rating-system/addon-options.php:120
 #: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
 #: admin-pages.php:38 admin-pages.php:289
 msgid "No"
@@ -161,8 +161,8 @@ msgstr ""
 #: add-on/profile/index.php:567 add-on/profile/index.php:572
 #: add-on/profile/index.php:577 add-on/profile/index.php:582
 #: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
-#: add-on/rating-system/addon-options.php:59
-#: add-on/rating-system/addon-options.php:116
+#: add-on/rating-system/addon-options.php:68
+#: add-on/rating-system/addon-options.php:120
 #: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
 #: admin-pages.php:39 admin-pages.php:289
 msgid "Yes"
@@ -371,7 +371,7 @@ msgid "The user`s photo"
 msgstr ""
 
 #: add-on/gallery-recall/index.php:366 add-on/gallery-recall/index.php:377
-#: add-on/message/index.php:1230
+#: add-on/message/index.php:1231
 msgid "Reply"
 msgstr ""
 
@@ -627,25 +627,25 @@ msgstr ""
 
 #: add-on/groups/index.php:266 add-on/groups/index.php:276
 #: add-on/publicpost/addon-options.php:25
-#: add-on/rating-system/addon-options.php:104 admin-pages.php:147
+#: add-on/rating-system/addon-options.php:108 admin-pages.php:147
 msgid "only Administrators"
 msgstr ""
 
 #: add-on/groups/index.php:267 add-on/groups/index.php:277
 #: add-on/publicpost/addon-options.php:26
-#: add-on/rating-system/addon-options.php:103 admin-pages.php:148
+#: add-on/rating-system/addon-options.php:107 admin-pages.php:148
 msgid "Editors and older"
 msgstr ""
 
 #: add-on/groups/index.php:268 add-on/groups/index.php:278
 #: add-on/publicpost/addon-options.php:27
-#: add-on/rating-system/addon-options.php:102 admin-pages.php:149
+#: add-on/rating-system/addon-options.php:106 admin-pages.php:149
 msgid "Authors and older"
 msgstr ""
 
 #: add-on/groups/index.php:269 add-on/groups/index.php:279
 #: add-on/publicpost/addon-options.php:28
-#: add-on/rating-system/addon-options.php:101 admin-pages.php:150
+#: add-on/rating-system/addon-options.php:105 admin-pages.php:150
 msgid "Participants and older"
 msgstr ""
 
@@ -654,7 +654,7 @@ msgid "Publishing group"
 msgstr ""
 
 #: add-on/groups/index.php:280 add-on/publicpost/addon-options.php:29
-#: add-on/rating-system/addon-options.php:100 admin-pages.php:151
+#: add-on/rating-system/addon-options.php:104 admin-pages.php:151
 #: widget.php:31 widget.php:94
 msgid "All users"
 msgstr ""
@@ -802,13 +802,13 @@ msgstr ""
 msgid "Attach image or download it"
 msgstr ""
 
-#: add-on/magazin/functions/shortcodes.php:84
 #: add-on/magazin/functions/shortcodes.php:86
-#: add-on/magazin/functions/shortcodes.php:113
+#: add-on/magazin/functions/shortcodes.php:88
+#: add-on/magazin/functions/shortcodes.php:115
 msgid "Cart"
 msgstr ""
 
-#: add-on/magazin/functions/shortcodes.php:116 add-on/publicpost/index.php:148
+#: add-on/magazin/functions/shortcodes.php:118 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:10
 #: add-on/user-account/index.php:382 functions/rcl_editfields.php:116
@@ -820,7 +820,7 @@ msgstr ""
 msgid "File does not exist on the server or it has already been loaded!"
 msgstr ""
 
-#: add-on/message/index.php:28 add-on/message/index.php:1309
+#: add-on/message/index.php:28 add-on/message/index.php:1310
 msgid "The file was loaded."
 msgstr ""
 
@@ -1042,69 +1042,69 @@ msgstr ""
 msgid "Delete?"
 msgstr ""
 
-#: add-on/message/index.php:741
+#: add-on/message/index.php:742
 msgid "Uncheck"
 msgstr ""
 
-#: add-on/message/index.php:741
+#: add-on/message/index.php:742
 msgid "Mark as important"
 msgstr ""
 
-#: add-on/message/index.php:806
+#: add-on/message/index.php:807
 msgid "No posts found!"
 msgstr ""
 
-#: add-on/message/index.php:841
+#: add-on/message/index.php:842
 msgid "Show more recent messages"
 msgstr ""
 
-#: add-on/message/index.php:959
+#: add-on/message/index.php:960
 msgid "Your message has been sent!"
 msgstr ""
 
-#: add-on/message/index.php:1054
+#: add-on/message/index.php:1055
 msgid "The message is marked as read"
 msgstr ""
 
-#: add-on/message/index.php:1197
+#: add-on/message/index.php:1198
 msgid "You a new message!"
 msgstr ""
 
-#: add-on/message/index.php:1228
+#: add-on/message/index.php:1229
 msgid "Go to the correspondence"
 msgstr ""
 
-#: add-on/message/index.php:1283
+#: add-on/message/index.php:1284
 msgid "Show more recent posts"
 msgstr ""
 
-#: add-on/message/index.php:1311
+#: add-on/message/index.php:1312
 msgid "The file has been received, but not yet loaded."
 msgstr ""
 
-#: add-on/message/index.php:1312
+#: add-on/message/index.php:1313
 msgid "The file was sent to the recipient."
 msgstr ""
 
-#: add-on/message/index.php:1315
+#: add-on/message/index.php:1316
 msgid "Link to sent the file"
 msgstr ""
 
-#: add-on/message/index.php:1317
+#: add-on/message/index.php:1318
 msgid "(accept files only from trusted sources)"
 msgstr ""
 
-#: add-on/message/index.php:1345
+#: add-on/message/index.php:1346
 msgid "The file was sent successfully."
 msgstr ""
 
-#: add-on/message/index.php:1348
+#: add-on/message/index.php:1349
 msgid ""
 "You have exceeded the limit on the number of uploaded files. Wait until the "
 "files sent previously will be accepted."
 msgstr ""
 
-#: add-on/message/index.php:1358
+#: add-on/message/index.php:1359
 msgid "Removes the file from the server"
 msgstr ""
 
@@ -1701,14 +1701,14 @@ msgstr ""
 
 #: add-on/publicpost/addon-options.php:44
 #: add-on/publicpost/addon-options.php:51
-#: add-on/rating-system/addon-options.php:46 admin-pages.php:189
+#: add-on/rating-system/addon-options.php:55 admin-pages.php:189
 #: admin-pages.php:262 admin-pages.php:267 admin-pages.php:278
 msgid "Disabled"
 msgstr ""
 
 #: add-on/publicpost/addon-options.php:44
 #: add-on/publicpost/addon-options.php:51
-#: add-on/rating-system/addon-options.php:46 admin-pages.php:190
+#: add-on/rating-system/addon-options.php:55 admin-pages.php:190
 #: admin-pages.php:278
 msgid "Included"
 msgstr ""
@@ -2117,107 +2117,131 @@ msgid ""
 "Click on Priceline the image to add it to the content of the publication"
 msgstr ""
 
+#: add-on/rating-system/addon-options.php:15
+msgid "select a template output stories where"
+msgstr ""
+
 #: add-on/rating-system/addon-options.php:16
+msgid "%USER% - name of the voted"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:17
+msgid "%VALUE% - rated value"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:18
+msgid "%DATE% - date of changing the rating"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:19
+msgid "%COMMENT% - link to comment"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:20
+msgid "%POST% - link to publication"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:23
 msgid "Type of rating for"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:19
+#: add-on/rating-system/addon-options.php:26
 msgid "Plus/minus"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:19
+#: add-on/rating-system/addon-options.php:26
 #: add-on/rating-system/index.php:292
 msgid "I like"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:24
+#: add-on/rating-system/addon-options.php:31
 msgid "Overall rating "
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:27
+#: add-on/rating-system/addon-options.php:34
 msgid "Sum votes values"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:27
+#: add-on/rating-system/addon-options.php:34
 msgid "Number of positive and negative votes"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:32
-msgid "Limit positive votes"
+#: add-on/rating-system/addon-options.php:39
+msgid "Limit of one vote per user"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:33
-#: add-on/rating-system/addon-options.php:36 functions/rcl_editfields.php:149
+#: add-on/rating-system/addon-options.php:40
+msgid "Positive votes"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:41
+#: add-on/rating-system/addon-options.php:44 functions/rcl_editfields.php:149
 msgid "Number"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:34
-#: add-on/rating-system/addon-options.php:37 functions/rcl_editfields.php:151
+#: add-on/rating-system/addon-options.php:42
+#: add-on/rating-system/addon-options.php:45 functions/rcl_editfields.php:151
 msgid "Time"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:35
-msgid "Limit negative votes"
+#: add-on/rating-system/addon-options.php:43
+msgid "Negative votes"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:42
-msgid "The rating"
+#: add-on/rating-system/addon-options.php:46
+msgid "Note: Time in seconds"
 msgstr ""
 
 #: add-on/rating-system/addon-options.php:51
+msgid "The rating"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:60
 msgid "Points for ranking"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:53
+#: add-on/rating-system/addon-options.php:62
 msgid ""
 "set how many points the ranking will be awarded for a positive vote or how "
 "many points will be subtracted from the rating for a negative vote"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:55
+#: add-on/rating-system/addon-options.php:64
 #, php-format
 msgid "The influence of rating %s on the overall rating"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:67
-#, php-format
-msgid "Template output %s stories in the overall ranking"
+#: add-on/rating-system/addon-options.php:76
+msgid "Template output stories in the overall ranking"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:68 add-on/rating-system/core.php:312
+#: add-on/rating-system/addon-options.php:77 add-on/rating-system/core.php:312
 msgid "voted"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:69
-msgid ""
-"select a template output stories where <br>%USER% - name of the voted, <br>"
-"%VALUE% - rated value, <br>%DATE% - date of changing the rating, <br>%COMMENT"
-"% - link to comment, <br>%POST% - link to publication"
-msgstr ""
-
-#: add-on/rating-system/addon-options.php:81
+#: add-on/rating-system/addon-options.php:85
 msgid "Rating settings"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:87
+#: add-on/rating-system/addon-options.php:91
 msgid "Allow to bypass the moderation of publications at achievement rating"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:89
+#: add-on/rating-system/addon-options.php:93
 msgid ""
 "specify the rating level at which the user will get the ability to post "
 "without moderation"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:95
+#: add-on/rating-system/addon-options.php:99
 msgid "View results"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:107
+#: add-on/rating-system/addon-options.php:111
 msgid "specify the user group which is allowed to view votes"
 msgstr ""
 
-#: add-on/rating-system/addon-options.php:113
+#: add-on/rating-system/addon-options.php:117
 msgid "Deleting your voice"
 msgstr ""
 
@@ -3249,7 +3273,7 @@ msgstr ""
 msgid "were removed from the Database"
 msgstr ""
 
-#: functions/rcl_userlist.php:275 recall.php:252
+#: functions/rcl_userlist.php:275 recall.php:253
 msgid "not online"
 msgstr ""
 

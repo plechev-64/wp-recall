@@ -10,7 +10,14 @@ function rcl_admin_page_rating($content){
 
     foreach($rcl_rating_types as $type=>$data){
 
-		$more = false;
+            $more = false;
+
+            $notice_temp = __('select a template output stories where','rcl').' <br>'
+                . __('%USER% - name of the voted','rcl').', <br>'
+                . __('%VALUE% - rated value','rcl').', <br>'
+                . __('%DATE% - date of changing the rating','rcl').', <br>';
+                if($type=='comment') $notice_temp .= __('%COMMENT% - link to comment','rcl').', <br>';
+                if(isset($data['post_type'])) $notice_temp .= __('%POST% - link to publication','rcl');
 
 		if(isset($data['style'])){
 			$more .= $opt->label(__('Type of rating for','rcl').' '.$data['type_name']);
@@ -29,12 +36,14 @@ function rcl_admin_page_rating($content){
 		}
 
 		if(isset($data['limit_votes'])){
-			$more .= $opt->label(__('Limit positive votes','rcl').' '.$data['type_name']);
+                        $more .= $opt->label(__('Limit of one vote per user','rcl'));
+			$more .= $opt->label(__('Positive votes','rcl'));
             $more .= __('Number','rcl').': '.$opt->option('number',array('name'=>'rating_plus_limit_'.$type));
 			$more .= ' '.__('Time','rcl').': '.$opt->option('number',array('name'=>'rating_plus_time_'.$type));
-			$more .= $opt->label(__('Limit negative votes','rcl').' '.$data['type_name']);
+			$more .= $opt->label(__('Negative votes','rcl'));
             $more .= __('Number','rcl').': '.$opt->option('number',array('name'=>'rating_minus_limit_'.$type));
 			$more .= ' '.__('Time','rcl').': '.$opt->option('number',array('name'=>'rating_minus_time_'.$type));
+                        $more .= $opt->notice(__('Note: Time in seconds','rcl'));
 		}
 
         $options .= $opt->option_block(
@@ -58,21 +67,16 @@ function rcl_admin_page_rating($content){
 					'parent'=>true,
                     'options'=>array(__('No','rcl'),__('Yes','rcl'))
                 )),
-				$opt->child(
-					array(
-						'name'=>'rating_user_'.$type,
-						'value'=>1
-					),
-					array(
-					$opt->label(sprintf(__('Template output %s stories in the overall ranking','rcl'),$data['type_name'])),
-					$opt->option('text',array('name'=>'rating_temp_'.$type,'default'=>'%USER% '.__('voted','rcl').': %VALUE%')),
-					$opt->notice(__('select a template output stories where <br>'
-                                                . '%USER% - name of the voted, <br>'
-                                                . '%VALUE% - rated value, <br>'
-                                                . '%DATE% - date of changing the rating, <br>'
-                                                . '%COMMENT% - link to comment, <br>'
-                                                . '%POST% - link to publication','rcl'))
-				))
+                $opt->child(
+                    array(
+                        'name'=>'rating_user_'.$type,
+                        'value'=>1
+                    ),
+                    array(
+                    $opt->label(__('Template output stories in the overall ranking','rcl')),
+                    $opt->option('text',array('name'=>'rating_temp_'.$type,'default'=>'%USER% '.__('voted','rcl').': %VALUE%')),
+                    $opt->notice($notice_temp)
+                ))
             )
         );
     }

@@ -753,38 +753,46 @@ function rcl_get_profile_scripts($script){
 				var canvas = data.files[0].preview;
 				var dataURL = canvas.toDataURL();
 
+                                $( '#rcl-preview' ).remove();
+
 				$('body > div').last().after('<div id=\'rcl-preview\' title=\'Загружаемое изображение\'><img src=\''+dataURL+'\'></div>');
 
 				var image = $('#rcl-preview img');
-				var height = image.height();
-				var width = image.width();
-				var jcrop_api;
 
-				image.Jcrop({
-					aspectRatio: 1,
-					minSize:[150,150],
-					onSelect:function(c){
-						image.attr('data-width',width).attr('data-height',height).attr('data-x',c.x).attr('data-y',c.y).attr('data-w',c.w).attr('data-h',c.h);
-					}
-				},function(){
-					jcrop_api = this;
-				});
+                                image.load(function() {
+                                    var img = $(this);
+                                    var height = img.height();
+                                    var width = img.width();
+                                    var jcrop_api;
 
-				$( '#rcl-preview' ).dialog({
-				  modal: true,
-				  imageQuality: 1,
-				  width: width+32,
-				  resizable: false,
-				  close: function (e, data) {
-					  jcrop_api.destroy();
-				  },
-				  buttons: {
-					Ok: function() {
-					  $( this ).dialog( 'close' );
-					  data.submit();
-					}
-				  }
-				});
+                                    img.Jcrop({
+                                            aspectRatio: 1,
+                                            minSize:[150,150],
+                                            onSelect:function(c){
+                                                    img.attr('data-width',width).attr('data-height',height).attr('data-x',c.x).attr('data-y',c.y).attr('data-w',c.w).attr('data-h',c.h);
+                                            }
+                                    },function(){
+                                            jcrop_api = this;
+                                    });
+
+                                    $( '#rcl-preview' ).dialog({
+                                      modal: true,
+                                      imageQuality: 1,
+                                      width: width+32,
+                                      resizable: false,
+                                      close: function (e, data) {
+                                              jcrop_api.destroy();
+                                              $( '#rcl-preview' ).remove();
+                                      },
+                                      buttons: {
+                                            Ok: function() {
+                                              data.submit();
+                                              $( this ).dialog( 'close' );
+                                            }
+                                      }
+                                    });
+
+                                });
 
 			});
 		},
@@ -822,8 +830,30 @@ function rcl_get_profile_scripts($script){
 
 	$('#webcamupload').live('click',function(){
 
+                $( '#rcl-preview' ).remove();
 		$('body > div').last().after('<div id=\'rcl-preview\' title=\'Снимок с камеры\'></div>');
-		var webCam = new SayCheese('#rcl-preview', { audio: true });
+
+                var webCam = new SayCheese('#rcl-preview', { audio: true });
+
+                $( '#rcl-preview' ).dialog({
+                    modal: true,
+                    imageQuality: 1,
+                    resizable: false,
+                    width:355,
+                    close: function (e, data) {
+                        webCam.stop();
+                        $( this ).dialog( 'close' );
+                        $( '#rcl-preview' ).remove();
+                    },
+                    open: function (e, data) {
+                        webCam.start();
+                    },
+                    buttons: {
+                        Снимок: function() {
+                                webCam.takeSnapshot(320, 240);
+                        }
+                    }
+		});
 
 		webCam.on('snapshot', function(snapshot) {
 
@@ -856,25 +886,6 @@ function rcl_get_profile_scripts($script){
 
 		});
 
-		$( '#rcl-preview' ).dialog({
-			modal: true,
-			imageQuality: 1,
-			resizable: false,
-			width:355,
-			close: function (e, data) {
-				webCam.stop();
-				$( this ).dialog( 'close' );
-				$( '#rcl-preview' ).remove();
-			},
-			open: function (e, data) {
-				webCam.start();
-			},
-			buttons: {
-				Снимок: function() {
-					webCam.takeSnapshot(320, 240);
-				}
-			}
-		});
 	});";
 	return $script;
 }

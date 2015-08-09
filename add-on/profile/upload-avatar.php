@@ -43,6 +43,7 @@ function rcl_avatar_upload(){
 		$upload['file']['name'] = $tmpname;
 		$upload['file']['tmp_name'] = $tmp_path.$tmpname;
 		$upload['file']['size'] = file_put_contents($upload['file']['tmp_name'], $data);
+                $mime = explode('/',$upload['file']['type']);
 	}else{
 		if($_FILES['uploadfile']){
 			foreach($_FILES['uploadfile'] as $key => $data){
@@ -55,6 +56,8 @@ function rcl_avatar_upload(){
 			list($coord['x'],$coord['y'],$coord['w'],$coord['h']) =  explode(',',$_POST['coord']);
 			list($viewimg['width'],$viewimg['height']) =  explode(',',$_POST['image']);
 		}
+
+                $mime = explode('/',$upload['file']['type']);
 
 		$tps = explode('.',$upload['file']['name']);
 		$cnt = count($tps);
@@ -75,16 +78,11 @@ function rcl_avatar_upload(){
 	}
 
     $ext = explode('.',$filename);
-    $mime = explode('/',$upload['file']['type']);
 
 	if($mime[0]!='image'){
 		$res['error'] = 'Файл не является изображением!';
 		echo json_encode($res);
 		exit;
-	}
-
-    if(function_exists('ulogin_get_avatar')){
-		delete_user_meta($user_ID, 'ulogin_photo');
 	}
 
 	list($width,$height) = getimagesize($upload['file']['tmp_name']);
@@ -113,8 +111,19 @@ function rcl_avatar_upload(){
 			$image = imageCreateFromGif($upload['file']['tmp_name']);
 			imagecopy($thumb, $image, 0, 0, $left, $top, $width, $height);
 		}else{
-			$image = imagecreatefromjpeg($upload['file']['tmp_name']);
-			imagecopy($thumb, $image, 0, 0, $left, $top, $width, $height);
+                    if($mime[1]=='png'){
+                        $image = imageCreateFromPng($upload['file']['tmp_name']);
+                    }else{
+                        $jpg = rcl_check_jpeg($upload['file']['tmp_name'], true );
+                        if(!$jpg){
+                                $res['error'] = 'Загруженое изображение некорректно!';
+                                echo json_encode($res);
+                                exit;
+                        }
+                        $image = imagecreatefromjpeg($upload['file']['tmp_name']);
+                    }
+
+                    imagecopy($thumb, $image, 0, 0, $left, $top, $width, $height);
 		}
 		imagejpeg($thumb, $tmp_path.$tmpname, 100);
 
@@ -152,6 +161,10 @@ function rcl_avatar_upload(){
 
 	if($rst){
 
+                if(function_exists('ulogin_get_avatar')){
+                    delete_user_meta($user_ID, 'ulogin_photo');
+                }
+
 		update_user_meta( $user_ID,'rcl_avatar',$srcfile_url );
 
 		if(!$coord) copy($file_src,$tmp_path.$tmpname);
@@ -162,4 +175,24 @@ function rcl_avatar_upload(){
 
 	echo json_encode($res);
 	exit;
+}
+
+function rcl_check_jpeg($f, $fix=false ){
+# [070203]
+# check for jpeg file header and footer - also try to fix it
+    if ( false !== (@$fd = fopen($f, 'r+b' )) ){
+        if ( fread($fd,2)==chr(255).chr(216) ){
+            fseek ( $fd, -2, SEEK_END );
+            if ( fread($fd,2)==chr(255).chr(217) ){
+                fclose($fd);
+                return true;
+            }else{
+                if ( $fix && fwrite($fd,chr(255).chr(217)) ){return true;}
+                fclose($fd);
+                return false;
+            }
+        }else{fclose($fd); return false;}
+    }else{
+        return false;
+    }
 }

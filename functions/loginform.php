@@ -188,7 +188,7 @@ function rcl_get_authorize_form($type=false,$form=false){
                         }
                     }else if(!$login_form){
                         echo '<div class="buttons">';
-                                $buttons .= '<p>'.rcl_get_button(__('Login','rcl'),'#',array('icon'=>'fa-sign-in','class'=>'rcl-login')).'</p>
+                                $buttons = '<p>'.rcl_get_button(__('Login','rcl'),'#',array('icon'=>'fa-sign-in','class'=>'rcl-login')).'</p>
                                 <p>'.rcl_get_button(__('Registration','rcl'),'#',array('icon'=>'fa-book','class'=>'rcl-register')).'</p>';
                                 echo apply_filters('buttons_widget_rcl',$buttons);
                         echo '</div>';
