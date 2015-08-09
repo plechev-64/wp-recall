@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-08-09 13:39+0300\n"
+"POT-Creation-Date: 2015-08-09 19:06+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -152,7 +152,7 @@ msgstr "Отключить закладки для публикации"
 #: add-on/profile/index.php:156 add-on/profile/index.php:562
 #: add-on/profile/index.php:567 add-on/profile/index.php:572
 #: add-on/profile/index.php:577 add-on/profile/index.php:582
-#: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
+#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120
 #: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
@@ -164,7 +164,7 @@ msgstr "Нет"
 #: add-on/profile/index.php:156 add-on/profile/index.php:562
 #: add-on/profile/index.php:567 add-on/profile/index.php:572
 #: add-on/profile/index.php:577 add-on/profile/index.php:582
-#: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
+#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120
 #: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
@@ -350,7 +350,7 @@ msgstr "Использовать"
 msgid "The maximum size of images, Mb"
 msgstr "Максимальный размер изображения, МБ"
 
-#: add-on/gallery-recall/index.php:47 add-on/publicpost/addon-options.php:163
+#: add-on/gallery-recall/index.php:47 add-on/publicpost/addon-options.php:168
 msgid ""
 "To limit image uploads to publish this value in megabytes. By default, 2MB"
 msgstr "Ограничение размера загружаемого изображения, по-умолчанию 2МБ"
@@ -582,7 +582,7 @@ msgstr "Смотреть"
 msgid "Search"
 msgstr "Поиск"
 
-#: add-on/groups/index.php:106
+#: add-on/groups/index.php:106 add-on/publicpost/rcl_publicform.php:549
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -678,15 +678,15 @@ msgstr "Все пользователи"
 msgid "Moderation of publications in the group"
 msgstr "Модерация публикаций группы"
 
-#: add-on/groups/index.php:287 add-on/publicpost/addon-options.php:204
+#: add-on/groups/index.php:287 add-on/publicpost/addon-options.php:209
 msgid "To publish immediately"
 msgstr "Публиковать сразу"
 
-#: add-on/groups/index.php:288 add-on/publicpost/addon-options.php:204
+#: add-on/groups/index.php:288 add-on/publicpost/addon-options.php:209
 msgid "Send for moderation"
 msgstr "Отправлять на модерацию"
 
-#: add-on/groups/index.php:290 add-on/publicpost/addon-options.php:206
+#: add-on/groups/index.php:290 add-on/publicpost/addon-options.php:211
 msgid ""
 "If used in moderation: To allow the user to see their publication before it "
 "is moderated, it is necessary to have on the website right below the Author"
@@ -1829,35 +1829,47 @@ msgstr "По-умолчанию: 800,600"
 msgid "Available buttons Editor"
 msgstr "Разрешенные кнопки редактора"
 
-#: add-on/publicpost/addon-options.php:146
+#: add-on/publicpost/addon-options.php:147
+msgid "Подзаголовок"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:148
+msgid "Текст"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:149
 msgid "Upload images"
 msgstr "Загрузка изображений"
 
-#: add-on/publicpost/addon-options.php:153
+#: add-on/publicpost/addon-options.php:150
+msgid "HTML"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:158
 msgid "View editor WP"
 msgstr "Вид редактора WP"
 
-#: add-on/publicpost/addon-options.php:156
+#: add-on/publicpost/addon-options.php:161
 msgid "Visual Editor"
 msgstr "Визуальный редактор"
 
-#: add-on/publicpost/addon-options.php:156
+#: add-on/publicpost/addon-options.php:161
 msgid "HTML-Editor"
 msgstr "HTML-Редактор"
 
-#: add-on/publicpost/addon-options.php:158
+#: add-on/publicpost/addon-options.php:163
 msgid "Number of images in the gallery Wp-Recall"
 msgstr "Кол-во изображений в галерее Wp-Recall"
 
-#: add-on/publicpost/addon-options.php:161
+#: add-on/publicpost/addon-options.php:166
 msgid "The maximum image size, Mb"
 msgstr "Максимальный размер изображений, Mb"
 
-#: add-on/publicpost/addon-options.php:165
+#: add-on/publicpost/addon-options.php:170
 msgid "The size in the editor by default"
 msgstr "Размер изображений в редакторе по-умолчанию"
 
-#: add-on/publicpost/addon-options.php:170
+#: add-on/publicpost/addon-options.php:175
 msgid ""
 "Select the picture size in the silence of their use in the visual editor "
 "during the publishing process"
@@ -1865,109 +1877,109 @@ msgstr ""
 "Выберите размер изображений при их размещении в контенте визуального "
 "редактора"
 
-#: add-on/publicpost/addon-options.php:174
+#: add-on/publicpost/addon-options.php:179
 msgid "The output form of publication"
 msgstr "Вывод формы публикации в личном кабинете"
 
-#: add-on/publicpost/addon-options.php:179
-#: add-on/publicpost/addon-options.php:237
+#: add-on/publicpost/addon-options.php:184
+#: add-on/publicpost/addon-options.php:242
 msgid "Do not display"
 msgstr "Не выводить"
 
-#: add-on/publicpost/addon-options.php:179
-#: add-on/publicpost/addon-options.php:237
+#: add-on/publicpost/addon-options.php:184
+#: add-on/publicpost/addon-options.php:242
 msgid "Output"
 msgstr "Выводить"
 
-#: add-on/publicpost/addon-options.php:184
+#: add-on/publicpost/addon-options.php:189
 msgid "The form ID"
 msgstr "Идентификатор формы"
 
-#: add-on/publicpost/addon-options.php:186
+#: add-on/publicpost/addon-options.php:191
 msgid ""
 "Enter the form ID to the conclusion in the personal Cabinet. The default is 1"
 msgstr ""
 "Введите идентификатор формы публикации выводимой в личном кабинете. По-"
 "умолчанию 1"
 
-#: add-on/publicpost/addon-options.php:193
+#: add-on/publicpost/addon-options.php:198
 msgid "Publication of records"
 msgstr "Публикация записей"
 
-#: add-on/publicpost/addon-options.php:195
+#: add-on/publicpost/addon-options.php:200
 msgid "Republishing is allowed"
 msgstr "Публикация разрешена"
 
-#: add-on/publicpost/addon-options.php:201
+#: add-on/publicpost/addon-options.php:206
 msgid "Moderation of publications"
 msgstr "Модерация публикаций"
 
-#: add-on/publicpost/addon-options.php:212
+#: add-on/publicpost/addon-options.php:217
 msgid "Editing"
 msgstr "Редактирование"
 
-#: add-on/publicpost/addon-options.php:214
+#: add-on/publicpost/addon-options.php:219
 msgid "Frontend editing"
 msgstr "Фронтэнд редактирование"
 
-#: add-on/publicpost/addon-options.php:218
+#: add-on/publicpost/addon-options.php:223
 msgid "Administrators"
 msgstr "Администраторы"
 
-#: add-on/publicpost/addon-options.php:219
+#: add-on/publicpost/addon-options.php:224
 msgid "Editors"
 msgstr "Редакторы"
 
-#: add-on/publicpost/addon-options.php:220
+#: add-on/publicpost/addon-options.php:225
 msgid "Authors"
 msgstr "Авторы"
 
-#: add-on/publicpost/addon-options.php:223
+#: add-on/publicpost/addon-options.php:228
 msgid "Time limit editing"
 msgstr "Ограничение времени редактирования"
 
-#: add-on/publicpost/addon-options.php:225
+#: add-on/publicpost/addon-options.php:230
 msgid "Limit editing time of publication in hours, by default: unlimited"
 msgstr "Ограничение времени публикации в часах, по-умолчанию: без ограничений"
 
-#: add-on/publicpost/addon-options.php:231
+#: add-on/publicpost/addon-options.php:236
 msgid "Tags"
 msgstr "Метки"
 
-#: add-on/publicpost/addon-options.php:233
+#: add-on/publicpost/addon-options.php:238
 msgid "Displaying a list of tags"
 msgstr "Вывод списка меток"
 
-#: add-on/publicpost/addon-options.php:242
+#: add-on/publicpost/addon-options.php:247
 msgid "Limit the output"
 msgstr "Ограничение вывода"
 
-#: add-on/publicpost/addon-options.php:244
+#: add-on/publicpost/addon-options.php:249
 msgid "IDs of tags separated by commas, default displays all"
 msgstr "Идентификаторы меток через запятую, по-умолчанию выводятся все"
 
-#: add-on/publicpost/addon-options.php:251
+#: add-on/publicpost/addon-options.php:256
 msgid "Custom fields"
 msgstr "Произвольные поля"
 
-#: add-on/publicpost/addon-options.php:252
+#: add-on/publicpost/addon-options.php:257
 msgid ""
 "Settings only for fields created using the form of the publication wp-recall"
 msgstr "Настройки только для полей созданных для формы публикации Wp-Recall"
 
-#: add-on/publicpost/addon-options.php:254
+#: add-on/publicpost/addon-options.php:259
 msgid "Automatic withdrawal"
 msgstr "Автоматический вывод"
 
-#: add-on/publicpost/addon-options.php:264
+#: add-on/publicpost/addon-options.php:269
 msgid "Place output fields"
 msgstr "Место вывода полей"
 
-#: add-on/publicpost/addon-options.php:267
+#: add-on/publicpost/addon-options.php:272
 msgid "After the content recording"
 msgstr "После контента публикации"
 
-#: add-on/publicpost/addon-options.php:267
+#: add-on/publicpost/addon-options.php:272
 msgid "On content recording"
 msgstr "Над контентом публикации"
 
@@ -2158,6 +2170,38 @@ msgstr "Извините, но вы не можете публиковать н�
 #: add-on/publicpost/rcl_publicform.php:257
 msgid "Being sent, please wait..."
 msgstr "Идет отправка, подождите..."
+
+#: add-on/publicpost/rcl_publicform.php:428
+msgid "Select a tag from the list"
+msgstr "Выберите метку из списка"
+
+#: add-on/publicpost/rcl_publicform.php:493
+msgid "Text Box"
+msgstr "Текстовый блок"
+
+#: add-on/publicpost/rcl_publicform.php:494
+msgid "Subtitle"
+msgstr "Подзаголовок"
+
+#: add-on/publicpost/rcl_publicform.php:495
+msgid "Image"
+msgstr "Изображение"
+
+#: add-on/publicpost/rcl_publicform.php:496
+msgid "HTML- code"
+msgstr "HTML- код"
+
+#: add-on/publicpost/rcl_publicform.php:538
+msgid "Enter your tags"
+msgstr "Введите свои теги"
+
+#: add-on/publicpost/rcl_publicform.php:539
+msgid "Add your tags"
+msgstr "Добавьте свои теги"
+
+#: add-on/publicpost/rcl_publicform.php:539
+msgid "Each tag is separated with Enter"
+msgstr "каждый тег разделяется нажатием на кнопку Enter"
 
 #: add-on/publicpost/templates/editor-image-box.php:14
 msgid "Select an image"
@@ -3353,7 +3397,7 @@ msgstr "Все значения произвольных полей с этим 
 msgid "were removed from the Database"
 msgstr "были удалены из базы данных"
 
-#: functions/rcl_userlist.php:275 recall.php:252
+#: functions/rcl_userlist.php:275 recall.php:253
 msgid "not online"
 msgstr "не в сети"
 

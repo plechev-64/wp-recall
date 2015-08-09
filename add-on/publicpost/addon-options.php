@@ -135,16 +135,21 @@ function rcl_get_publics_options_page($content){
                     array(
                         $opt->label(__('Images sizes','rcl')),
                         $opt->option('text',array(
-							'name'=>'max_sizes_attachment',
-							'default'=>'800,600'
-						)),
+                                'name'=>'max_sizes_attachment',
+                                'default'=>'800,600'
+                        )),
                         $opt->notice(__('Default: 800,600','rcl')),
 
-						$opt->label(__('Available buttons Editor','rcl')),
+			$opt->label(__('Available buttons Editor','rcl')),
                         $opt->option('checkbox',array(
-							'name'=>'rcl_editor_buttons',
-							'options'=>array('header'=>'Подзаголовок','text'=>'Текст','image'=>__('Upload images','rcl'),'html'=>'HTML')
-						))
+                            'name'=>'rcl_editor_buttons',
+                            'options'=>array(
+                                'header'=>__('Подзаголовок','rcl'),
+                                'text'=>__('Текст','rcl'),
+                                'image'=>__('Upload images','rcl'),
+                                'html'=>__('HTML','rcl')
+                               )
+                        ))
                     )
                 ),
 				$opt->child(

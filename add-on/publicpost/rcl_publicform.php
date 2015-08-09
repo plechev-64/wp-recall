@@ -425,7 +425,7 @@ function rcl_get_tags_checklist($post_id=false){
 
 	$post_tags = ($post_id)? rcl_get_tags($post_id): array();
 
-	$checks = '<label>Выберите тег из списка</label>
+	$checks = '<label>'.__('Select a tag from the list','rcl').'</label>
 	<div id="rcl-tags-list">';
 	foreach ($tags as $tag){
 		$checked = false;
@@ -454,7 +454,9 @@ function rcl_get_tags_checklist($post_id=false){
 			);
 			$checks .= rcl_form_field($args);
 		}
-	}
+        }else{
+            return false;
+        }
 
 	$checks .= '</div>';
 	return $checks;
@@ -488,10 +490,10 @@ function rcl_publication_editor(){
 				'html'=>'fa-code',
 			);
 			$names = array(
-				'text'=>'Текстовый блок',
-				'header'=>'Подзаголовок',
-				'image'=>'Изображение',
-				'html'=>'HTML-код',
+				'text'=>__('Text Box','rcl'),
+				'header'=>__('Subtitle','rcl'),
+				'image'=>__('Image','rcl'),
+				'html'=>__('HTML- code','rcl'),
 			);
 
 			foreach($rcl_options['rcl_editor_buttons'] as $type){
@@ -533,8 +535,8 @@ function rcl_get_tags_input($post_id=false){
 		'type' => 'text',
 		'id' => 'rcl_post_tags',
 		'name' => 'tags',
-		'placeholder' => 'Введите свои теги',
-		'label' => 'Добавьте свои теги<br><small>каждый тег разделяется кнопкой Enter</small>'
+		'placeholder' => __('Enter your tags','rcl'),
+		'label' => __('Add your tags','rcl').'<br><small>'.__('Each tag is separated with Enter','rcl').'</small>'
 	);
 
 	$fields .= rcl_form_field($args);
@@ -544,7 +546,7 @@ function rcl_get_tags_input($post_id=false){
 		$('#rcl_post_tags').magicSuggest({
 		  data: wpurl+'wp-admin/admin-ajax.php',
 		  dataUrlParams: { action: 'rcl_get_like_tags' },
-		  noSuggestionText: 'Не найдено',
+		  noSuggestionText: '".__("Not found","rcl")."',
 		  ajaxConfig: {
 			xhrFields: {
 			  withCredentials: true,

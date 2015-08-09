@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Blank Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-08-09 16:57+0300\n"
+"POT-Creation-Date: 2015-08-09 19:08+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -148,7 +148,7 @@ msgstr ""
 #: add-on/profile/index.php:156 add-on/profile/index.php:562
 #: add-on/profile/index.php:567 add-on/profile/index.php:572
 #: add-on/profile/index.php:577 add-on/profile/index.php:582
-#: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
+#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120
 #: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
@@ -160,7 +160,7 @@ msgstr ""
 #: add-on/profile/index.php:156 add-on/profile/index.php:562
 #: add-on/profile/index.php:567 add-on/profile/index.php:572
 #: add-on/profile/index.php:577 add-on/profile/index.php:582
-#: add-on/publicpost/addon-options.php:259 add-on/publicpost/index.php:234
+#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120
 #: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
@@ -337,7 +337,7 @@ msgstr ""
 msgid "The maximum size of images, Mb"
 msgstr ""
 
-#: add-on/gallery-recall/index.php:47 add-on/publicpost/addon-options.php:163
+#: add-on/gallery-recall/index.php:47 add-on/publicpost/addon-options.php:168
 msgid ""
 "To limit image uploads to publish this value in megabytes. By default, 2MB"
 msgstr ""
@@ -567,7 +567,7 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: add-on/groups/index.php:106
+#: add-on/groups/index.php:106 add-on/publicpost/rcl_publicform.php:549
 msgid "Not found"
 msgstr ""
 
@@ -663,15 +663,15 @@ msgstr ""
 msgid "Moderation of publications in the group"
 msgstr ""
 
-#: add-on/groups/index.php:287 add-on/publicpost/addon-options.php:204
+#: add-on/groups/index.php:287 add-on/publicpost/addon-options.php:209
 msgid "To publish immediately"
 msgstr ""
 
-#: add-on/groups/index.php:288 add-on/publicpost/addon-options.php:204
+#: add-on/groups/index.php:288 add-on/publicpost/addon-options.php:209
 msgid "Send for moderation"
 msgstr ""
 
-#: add-on/groups/index.php:290 add-on/publicpost/addon-options.php:206
+#: add-on/groups/index.php:290 add-on/publicpost/addon-options.php:211
 msgid ""
 "If used in moderation: To allow the user to see their publication before it "
 "is moderated, it is necessary to have on the website right below the Author"
@@ -1785,141 +1785,153 @@ msgstr ""
 msgid "Available buttons Editor"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:146
+#: add-on/publicpost/addon-options.php:147
+msgid "Подзаголовок"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:148
+msgid "Текст"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:149
 msgid "Upload images"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:153
-msgid "View editor WP"
-msgstr ""
-
-#: add-on/publicpost/addon-options.php:156
-msgid "Visual Editor"
-msgstr ""
-
-#: add-on/publicpost/addon-options.php:156
-msgid "HTML-Editor"
+#: add-on/publicpost/addon-options.php:150
+msgid "HTML"
 msgstr ""
 
 #: add-on/publicpost/addon-options.php:158
-msgid "Number of images in the gallery Wp-Recall"
+msgid "View editor WP"
 msgstr ""
 
 #: add-on/publicpost/addon-options.php:161
+msgid "Visual Editor"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:161
+msgid "HTML-Editor"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:163
+msgid "Number of images in the gallery Wp-Recall"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:166
 msgid "The maximum image size, Mb"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:165
+#: add-on/publicpost/addon-options.php:170
 msgid "The size in the editor by default"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:170
+#: add-on/publicpost/addon-options.php:175
 msgid ""
 "Select the picture size in the silence of their use in the visual editor "
 "during the publishing process"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:174
+#: add-on/publicpost/addon-options.php:179
 msgid "The output form of publication"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:179
-#: add-on/publicpost/addon-options.php:237
+#: add-on/publicpost/addon-options.php:184
+#: add-on/publicpost/addon-options.php:242
 msgid "Do not display"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:179
-#: add-on/publicpost/addon-options.php:237
+#: add-on/publicpost/addon-options.php:184
+#: add-on/publicpost/addon-options.php:242
 msgid "Output"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:184
+#: add-on/publicpost/addon-options.php:189
 msgid "The form ID"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:186
+#: add-on/publicpost/addon-options.php:191
 msgid ""
 "Enter the form ID to the conclusion in the personal Cabinet. The default is 1"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:193
+#: add-on/publicpost/addon-options.php:198
 msgid "Publication of records"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:195
+#: add-on/publicpost/addon-options.php:200
 msgid "Republishing is allowed"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:201
+#: add-on/publicpost/addon-options.php:206
 msgid "Moderation of publications"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:212
+#: add-on/publicpost/addon-options.php:217
 msgid "Editing"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:214
+#: add-on/publicpost/addon-options.php:219
 msgid "Frontend editing"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:218
+#: add-on/publicpost/addon-options.php:223
 msgid "Administrators"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:219
+#: add-on/publicpost/addon-options.php:224
 msgid "Editors"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:220
+#: add-on/publicpost/addon-options.php:225
 msgid "Authors"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:223
+#: add-on/publicpost/addon-options.php:228
 msgid "Time limit editing"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:225
+#: add-on/publicpost/addon-options.php:230
 msgid "Limit editing time of publication in hours, by default: unlimited"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:231
+#: add-on/publicpost/addon-options.php:236
 msgid "Tags"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:233
+#: add-on/publicpost/addon-options.php:238
 msgid "Displaying a list of tags"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:242
+#: add-on/publicpost/addon-options.php:247
 msgid "Limit the output"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:244
+#: add-on/publicpost/addon-options.php:249
 msgid "IDs of tags separated by commas, default displays all"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:251
+#: add-on/publicpost/addon-options.php:256
 msgid "Custom fields"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:252
+#: add-on/publicpost/addon-options.php:257
 msgid ""
 "Settings only for fields created using the form of the publication wp-recall"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:254
+#: add-on/publicpost/addon-options.php:259
 msgid "Automatic withdrawal"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:264
+#: add-on/publicpost/addon-options.php:269
 msgid "Place output fields"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:267
+#: add-on/publicpost/addon-options.php:272
 msgid "After the content recording"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:267
+#: add-on/publicpost/addon-options.php:272
 msgid "On content recording"
 msgstr ""
 
@@ -2106,6 +2118,38 @@ msgstr ""
 
 #: add-on/publicpost/rcl_publicform.php:257
 msgid "Being sent, please wait..."
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:428
+msgid "Select a tag from the list"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:493
+msgid "Text Box"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:494
+msgid "Subtitle"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:495
+msgid "Image"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:496
+msgid "HTML- code"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:538
+msgid "Enter your tags"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:539
+msgid "Add your tags"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:539
+msgid "Each tag is separated with Enter"
 msgstr ""
 
 #: add-on/publicpost/templates/editor-image-box.php:14
