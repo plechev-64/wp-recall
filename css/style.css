@@ -527,6 +527,9 @@ span.ruble-symbol{
 	.wprecallblock .rcl-menu.left-buttons {
 		float: none!important;
 	}
+        body #back-overlay-lk{
+            background-size: inherit;
+        }
 }
 @media only screen and (min-width: 240px) and (max-width: 420px){
 	.wprecallblock #lk-conteyner{
