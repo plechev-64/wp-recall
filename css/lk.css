@@ -222,6 +222,7 @@
 .wprecallblock .show-profile-fields{
 	clear:both;
 	margin:10px 0;
+        text-align:left;
 }
 .wprecallblock .notify-lk{
     text-align: center;   

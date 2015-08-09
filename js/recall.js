@@ -30,28 +30,28 @@ jQuery(function($){
 		return false;
 	});
 	
-	$('.rcl-smiles > img').live('hover',function(){
-		var block = $(this).next().children();
-		if(block.html()) return false;
-		block.html('Загрузка...');
-		var dir = $(this).data('dir');
-		var area = $(this).parent().data('area');
-		var dataString = 'action=rcl_get_smiles_ajax&area='+area;
-		if(dir) dataString += '&dir='+dir;
-        $.ajax({
-			type: 'POST', 
-			data: dataString, 
-			dataType: 'json', 
-			url: wpurl+'wp-admin/admin-ajax.php',
-			success: function(data){				
-				if(data['result']==1){
-					block.html(data['content']);
-				}else{
-					rcl_notice('Ошибка!','error');
-				}					
-			}			
-		}); 
-		return false;
+	$('.rcl-smiles > img').live('click hover',function(){
+            var block = $(this).next().children();
+            if(block.html()) return false;
+            block.html('Загрузка...');
+            var dir = $(this).data('dir');
+            var area = $(this).parent().data('area');
+            var dataString = 'action=rcl_get_smiles_ajax&area='+area;
+            if(dir) dataString += '&dir='+dir;
+            $.ajax({
+                type: 'POST', 
+                data: dataString, 
+                dataType: 'json', 
+                url: wpurl+'wp-admin/admin-ajax.php',
+                success: function(data){				
+                        if(data['result']==1){
+                                block.html(data['content']);
+                        }else{
+                                rcl_notice('Ошибка!','error');
+                        }					
+                }			
+            }); 
+            return false;
 	});
 	
 	$(".rcl-smiles-list img").live("click",function(){

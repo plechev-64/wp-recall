@@ -519,8 +519,7 @@ span.ruble-symbol{
 }
 
 @media only screen and (min-width: 240px) and (max-width: 720px) {
-	.wprecallblock .left-buttons .block_button,
-        .wprecallblock .left-buttons .ajax_button{
+	.wprecallblock .left-buttons .recall-button{
 		display: inline-block!important;
 		line-height: 1;
 		width: auto!important;
@@ -556,15 +555,11 @@ span.ruble-symbol{
 	.wprecallblock input[type="text"], .wprecallblock input[type="url"], .wprecallblock textarea{
 		padding: 2px;
 	}
-	.userpic{
-		height: 100px;
-		width: 100px;
-	}
-	.userpic .btn {
-		margin: 0 0 10px 120px;
-		font-size: 12px!important;
-		padding: 4px!important;
-	}
+        .wprecallblock #lk-conteyner .lk-sidebar .recall-button{
+            display:inline;
+        }
+
+        
 }
 @media only screen and (min-width: 420px) and (max-width: 650px){
 
