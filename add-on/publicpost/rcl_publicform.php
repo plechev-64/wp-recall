@@ -454,8 +454,6 @@ function rcl_get_tags_checklist($post_id=false){
 			);
 			$checks .= rcl_form_field($args);
 		}
-        }else{
-            return false;
         }
 
 	$checks .= '</div>';
