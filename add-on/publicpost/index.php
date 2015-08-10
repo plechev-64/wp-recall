@@ -652,7 +652,7 @@ function rcl_get_edit_post_button($content){
 
 	$access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;
 
-	if( array_search($user_info->user_level, $rcl_options['front_editing']) || $user_info->user_level >= $access ) {
+	if( false!==array_search($user_info->user_level, $rcl_options['front_editing']) || $user_info->user_level >= $access ) {
 
 		if($post->post_type=='task'){
 			if(get_post_meta($post->ID,'step_order',1)!=1) return $content;

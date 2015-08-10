@@ -395,8 +395,10 @@ function rcl_slider($atts, $content = null){
                 $plslider .= rcl_get_price($post->ID);
             }
             $plslider .= '<img src='.$thumb_url[0].'>';
-            $post_content = strip_tags($post->post_content);
+
             if($post->post_excerpt) $post_content = strip_tags($post->post_excerpt);
+            else $post_content = apply_filters('the_content',strip_tags($post->post_content));
+
             if($desc > 0 && strlen($post_content) > $desc){
                     $post_content = substr($post_content, 0, $desc);
                     $post_content = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ...', $post_content);
