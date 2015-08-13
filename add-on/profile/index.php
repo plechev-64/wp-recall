@@ -21,12 +21,15 @@ function rcl_edit_profile(){
     global $user_ID;
     if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-profile_' . $user_ID ) ) return false;
 
+    //if(isset($_POST['pass1']))  $_POST['pass1'] = str_replace('\\\\','\\',$_POST['pass1']);
+
     if ( defined('ABSPATH') ) {
 			require_once(ABSPATH . 'wp-admin/includes/user.php');
 	} else {
 			require_once('../wp-admin/includes/user.php');
 	}
 	//require_once( ABSPATH . WPINC . '/registration.php' );
+    //echo $_POST['pass1'];exit;
 
     $redirect_url = rcl_format_url(get_author_posts_url($user_ID),'profile').'&updated=true';
 

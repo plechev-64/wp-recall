@@ -581,7 +581,7 @@ function rcl_remove_dir($dir){
 	if(!is_dir($dir)) return false;
 	if ($objs = glob($dir."/*")) {
 	   foreach($objs as $obj) {
-		 is_dir($obj) ? removeDirectory($obj) : unlink($obj);
+		 is_dir($obj) ? rcl_remove_dir($obj) : unlink($obj);
 	   }
 	}
 	rmdir($dir);

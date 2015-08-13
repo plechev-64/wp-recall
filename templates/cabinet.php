@@ -34,11 +34,13 @@
     </div>
 
     <?php $class = (isset($rcl_options['buttons_place'])&&$rcl_options['buttons_place']==1)? "left-buttons":""; ?>
-    <div id="lk-menu" class="rcl-menu <?php echo $class; ?>">
-        <?php rcl_buttons(); ?>
-    </div>
-    <div id="lk-content" class="rcl-content">
-        <?php rcl_tabs(); ?>
+    <div id="rcl-tabs">
+        <div id="lk-menu" class="rcl-menu <?php echo $class; ?>">
+            <?php rcl_buttons(); ?>
+        </div>
+        <div id="lk-content" class="rcl-content">
+            <?php rcl_tabs(); ?>
+        </div>
     </div>
 </div>
 

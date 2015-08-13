@@ -255,3 +255,90 @@ border-radius: 2px;
     background: #3F7BAA;
     color: #fff;
 }
+
+#commentlist {
+    border: 0px;
+    margin: 0px;
+    text-align: left;
+    padding: 0px;
+}
+
+#commentlist .comm-attach p {
+    margin: 3px 90px 3px 55px;
+}
+
+#commentlist .comm-attach {
+    clear: both;
+    overflow: hidden;
+    padding: 5px 10px 10px 10px;
+    margin: 0px;
+    text-align: justify;
+    border: 0px;
+    border-bottom: 1px solid #eee;
+}
+.ui-sortable-handle {
+    height: 155px;
+    overflow: hidden;
+}
+#lk-content .galrcl_block ul#files li img {
+    float: left;
+}
+
+.wprecallblock #lk-content {
+    background-color: white;
+    padding: 0;
+}
+
+
+#back-overlay-lk {
+    background-size: 100%;
+    height: 97%!important;
+    opacity: 0.6!important;
+}
+
+#lk-conteyner .rcl-more-link {
+    float: none;
+    margin: 0px;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    display: inherit;
+    padding: 5px 0;
+    background-color: rgba(63, 125, 182, 0.39);
+    color: white;
+}
+#lk-conteyner .rcl-content .more-content {
+    display: none;
+    clear: both;
+    background-color: rgba(255, 255, 255, 0.59);
+    padding: 10px;
+    text-align: left;
+}
+
+.wprecallblock #lk-conteyner {
+    background: #FFF;
+    padding: 12px 20px;
+    overflow: hidden;
+}
+
+.wprecallblock #lk-menu {
+    padding: 0 10px 0 15px;
+        background:white;
+}
+.show-profile-fields p b {
+    width: 110px;
+    float: left;
+}
+
+.wprecallblock #lk-conteyner .lk-sidebar .avatar {
+    margin: 0px;
+    border-radius: 0px;
+        float: none!important;
+    margin: 0;
+    width: 100%;
+}
+
+#rcl-tabs {
+    padding: 15px 0;
+    background-color: white;
+}

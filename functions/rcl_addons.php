@@ -50,6 +50,8 @@ class Rcl_Addons{
 		global $active_addons;
 		//$dir   = RCL_PATH.'add-on';
 
+                $need_update = get_option('rcl_addons_need_update');
+
                 $paths = array(RCL_PATH.'add-on',TEMPLATEPATH.'/wp-recall/add-on') ;
 
                 foreach($paths as $path){
@@ -63,7 +65,7 @@ class Rcl_Addons{
                                 $info_src = $addon_dir.'/info.txt';
                                 if(file_exists($info_src)){
                                         $info = file($info_src);
-                                        $addons_data[$namedir] = $this->get_parse_addon_info($info);
+                                        $addons_data[$namedir] = $this->get_parse_addon_info($info[0]);
                                         $addons_data[$namedir]['src'] = $index_src;
                                         $a++;
                                         flush();
@@ -137,7 +139,12 @@ class Rcl_Addons{
 				foreach((array)$addons_data as $key=>$addon){
 					if($active_addons&&isset($active_addons[$key])) $status = 1;
 					else $status = 0;
-					$table .= '<tr id="better-wp-security" class="'.($status ? "active" : "inactive" ).'">
+
+                                        $ver = (isset($need_update[$key]))? version_compare($need_update[$key]['new-version'],$addon['version']): 0;
+
+                                        $update = ($ver>0)? 'update': '';
+
+					$table .= '<tr id="better-wp-security" class="'.($status ? "active" : "inactive" ).' '.$update.'">
 						<th class="check-column" scope="row">';
 							$table .= '<label class="screen-reader-text" for="checkbox_'.$key.'">'.__('Choose','rcl').' '.$addon['name'].'</label>
 							<input id="checkbox_'.$key.'" type="checkbox" value="'.$key.'" name="checked[]">';
@@ -174,10 +181,23 @@ class Rcl_Addons{
 							<p>'.$addon['description'].'</p>
 							</div>
 							<div class="active second plugin-version-author-uri">
-							'.__('Version','rcl').' '.$addon['version'].' | '.__('Author','rcl').': <a title="'.__('Visit the page of the author','rcl').'" href="'.$addon['url'].'">'.$addon['author'].'</a>
-							</div>
+							'.__('Version','rcl').' '.$addon['version']
+                                                                .' | '.__('Author','rcl').': <a title="'.__('Visit the page of the author','rcl').'" href="'.$addon['author-uri'].'" target="_blank">'.$addon['author'].'</a>';
+                                                                if($addon['add-on-uri']) $table .= ' | <a title="'.__('Visit the page of the add-on','rcl').'" href="'.$addon['add-on-uri'].'" target="_blank">'.__('Page Add-on','rcl').'</a>';
+							$table .= '</div>
 						</td>
 					</tr>';
+
+                                        if($ver){
+                                            $table .= '<tr class="plugin-update-tr active" id="'.$key.'-update" data-slug="'.$key.'">'
+                                                        . '<td colspan="3" class="plugin-update colspanchange">'
+                                                            . '<div class="update-message">'
+                                                                . 'Доступна свежая версия '.$addon['name'].'. ';
+                                                                if($addon['add-on-uri']) $table .= 'Можно <a href="'.$addon['add-on-uri'].'"  title="'.$addon['name'].'">посмотреть информацию о версии '.$xml->version.'</a>';
+                                                            $table .= '</div>'
+                                                        . '</td>'
+                                                    . '</tr>';
+                                        }
 				}
 				$table .= '</table>
 			</form>
@@ -185,6 +205,20 @@ class Rcl_Addons{
 
 		echo $table;
 	}
+
+        function get_actual_version($key){
+            $url = "http://wppost.ru/wp-content/datas/".$key."/info.xml";
+            $url_headers = @get_headers($url);
+
+            $ver = 0;
+            if($url_headers[0] !== 'HTTP/1.1 500 OK') {
+                $xml = simplexml_load_file($url);
+                //print_r($xml);
+                $ver = (version_compare($xml->version,$addon['version']));
+                if($ver>0) return $xml->version;
+            }
+            return $ver;
+        }
 
 	function rcl_removeDir( $path ){
             if ( $content_del_cat = glob( $path.'/*') ){
@@ -416,35 +450,50 @@ class Rcl_Addons{
 	function get_parse_addon_info($info){
 		$addon_data = array();
 		$cnt = count($info);
-		if($cnt==1)$info = explode(';',$info[0]);
+
+		if($cnt==1)$info = explode(';',$info);
+
 		foreach((array)$info as $string){
+
 			if($cnt>1) $string = str_replace(';','',$string);
+
 			if ( false !== strpos($string, 'Name:') ){
 				preg_match_all('/(?<=Name\:)[A-zА-я0-9\-\_\:\/\.\,\?\=\&\@\s\(\)]*/iu', $string, $string_value);
-				$addon_data['name'] = $string_value[0][0];
+				$addon_data['name'] = trim($string_value[0][0]);
 				continue;
 			}
 			if ( false !== strpos($string, 'Version:') ){
 				preg_match_all('/(?<=Version\:)[A-zА-я0-9\-\_\:\/\.\,\?\=\&\@\s]*/iu', $string, $version_value);
-				$addon_data['version'] = $version_value[0][0];
+				$addon_data['version'] = trim($version_value[0][0]);
 				continue;
 			}
 			if ( false !== strpos($string, 'Description:') ){
 				preg_match_all('/(?<=Description\:)[A-zА-я0-9\-\_\:\/\.\,\?\=\&\@\s\(\)]*/iu', $string, $desc_value);
-				$addon_data['description'] = $desc_value[0][0];
+				$addon_data['description'] = trim($desc_value[0][0]);
 				continue;
 			}
 			if ( false !== strpos($string, 'Author:') ){
 				preg_match_all('/(?<=Author\:)[A-zА-я0-9\-\_\:\/\.\,\?\=\&\@\s]*/iu', $string, $author_value);
-				$addon_data['author'] = $author_value[0][0];
+				$addon_data['author'] = trim($author_value[0][0]);
 				continue;
 			}
 			if ( false !== strpos($string, 'Url:') ){
 				preg_match_all('/(?<=Url\:)[A-zА-я0-9\-\_\:\/\.\?\=\&\@\s]*/iu', $string, $url_value);
-				$addon_data['url'] = $url_value[0][0];
+				$addon_data['url'] = trim($url_value[0][0]);
+				continue;
+			}
+                        if ( false !== strpos($string, 'Add-on URI:') ){
+				preg_match_all('/(?<=Add-on URI\:)[A-zА-я0-9\-\_\:\/\.\?\=\&\@\s]*/iu', $string, $url_value);
+				$addon_data['add-on-uri'] = trim($url_value[0][0]);
+				continue;
+			}
+                        if ( false !== strpos($string, 'Author URI:') ){
+				preg_match_all('/(?<=Author URI\:)[A-zА-я0-9\-\_\:\/\.\?\=\&\@\s]*/iu', $string, $url_value);
+				$addon_data['author-uri'] = trim($url_value[0][0]);
 				continue;
 			}
 		}
+
 		return $addon_data;
 	}
 
@@ -480,3 +529,4 @@ class Rcl_Addons{
 	}
 }
 $rcl_addons = new Rcl_Addons();
+require_once("rcl_update.php");
