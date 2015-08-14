@@ -1,1 +1,6 @@
-Name: Recall Magazine (Магазин);Version: 5.0.1;Description: Расширение превращающее ваш сайт в интернет-магазин, а личный кабинет пользователя в личный кабинет покупателя. Может использовать дополнение личного счета пользователя;Author: Плечев Андрей;Author URI: http://wppost.ru/;Add-on URI: http://wppost.ru/products/magazine-recall-organizaciya-internet-magazina-s-pomoshhyu-plagina-wp-recall/;
+Name: Recall Magazine (Магазин);
+Version: 5.0.1;
+Description: Расширение превращающее ваш сайт в интернет-магазин, а личный кабинет пользователя в личный кабинет покупателя. Может использовать дополнение личного счета пользователя;
+Author: Плечев Андрей;
+Author URI: http://wppost.ru/;
+Add-on URI: http://wppost.ru/products/magazine-recall-organizaciya-internet-magazina-s-pomoshhyu-plagina-wp-recall/;

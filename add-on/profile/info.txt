@@ -1,1 +1,6 @@
-Name: User Profile (Профиль пользователя);Version: 1.3.1;Description: Расширение настроек профиля пользователя для wp-recall;Author: Плечев Андрей;Author URI: http://wppost.ru/;Add-on URI: http://wppost.ru/products/profile-recall-upravlenie-profilem-polzovatelya-na-sajte-s-pomoshhyu-wp-recall/;
+Name: User Profile (Профиль пользователя);
+Version: 1.3.1;
+Description: Расширение настроек профиля пользователя для wp-recall;
+Author: Плечев Андрей;
+Author URI: http://wppost.ru/;
+Add-on URI: http://wppost.ru/products/profile-recall-upravlenie-profilem-polzovatelya-na-sajte-s-pomoshhyu-wp-recall/;

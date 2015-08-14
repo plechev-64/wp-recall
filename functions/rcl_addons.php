@@ -65,7 +65,7 @@ class Rcl_Addons{
                                 $info_src = $addon_dir.'/info.txt';
                                 if(file_exists($info_src)){
                                         $info = file($info_src);
-                                        $addons_data[$namedir] = $this->get_parse_addon_info($info[0]);
+                                        $addons_data[$namedir] = $this->get_parse_addon_info($info);
                                         $addons_data[$namedir]['src'] = $index_src;
                                         $a++;
                                         flush();
@@ -452,8 +452,8 @@ class Rcl_Addons{
 	function get_parse_addon_info($info){
 		$addon_data = array();
 		$cnt = count($info);
-
-		if($cnt==1)$info = explode(';',$info);
+                print_r($info);
+		if($cnt==1) $info = explode(';',$info);
 
 		foreach((array)$info as $string){
 

@@ -1,1 +1,6 @@
-Name: Public Wp-Recall (Публикация);Version: 2.2.0;Description: Дайте возможность посетителям вашего сайта публиковать свои записи с помощью плагина wp-recall;Author: Плечев Андрей;Author URI: http://wppost.ru/;Add-on URI: http://wppost.ru/products/public-recall-publikaciya-zapisej-na-sajte-s-pomoshhyu-wp-recall/;
+Name: Public Wp-Recall (Публикация);
+Version: 2.2.0;
+Description: Дайте возможность посетителям вашего сайта публиковать свои записи с помощью плагина wp-recall;
+Author: Плечев Андрей;
+Author URI: http://wppost.ru/;
+Add-on URI: http://wppost.ru/products/public-recall-publikaciya-zapisej-na-sajte-s-pomoshhyu-wp-recall/;

@@ -1,1 +1,6 @@
-Name: Review (Отзывы);Version: 1.4.1;Description: Расширение отзывов для wp-recall;Author: Плечев Андрей;Author URI: http://wppost.ru/;Add-on URI: http://wppost.ru;
+Name: Review (Отзывы);
+Version: 1.4.1;
+Description: Расширение отзывов для wp-recall;
+Author: Плечев Андрей;
+Author URI: http://wppost.ru/;
+Add-on URI: http://wppost.ru;
