@@ -452,7 +452,7 @@ class Rcl_Addons{
 	function get_parse_addon_info($info){
 		$addon_data = array();
 		$cnt = count($info);
-                print_r($info);
+
 		if($cnt==1) $info = explode(';',$info);
 
 		foreach((array)$info as $string){
