@@ -206,15 +206,17 @@ class Rcl_Addons{
 		echo $table;
 	}
 
-        function get_actual_version($key){
+        function get_actual_version($key,$version){
             $url = "http://wppost.ru/wp-content/datas/".$key."/info.xml";
             $url_headers = @get_headers($url);
+            
+            if(!$url_headers) return false;
 
             $ver = 0;
             if($url_headers[0] !== 'HTTP/1.1 500 OK') {
                 $xml = simplexml_load_file($url);
                 //print_r($xml);
-                $ver = (version_compare($xml->version,$addon['version']));
+                $ver = (version_compare($xml->version,$version));
                 if($ver>0) return $xml->version;
             }
             return $ver;

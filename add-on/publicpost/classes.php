@@ -205,7 +205,8 @@ class Rcl_Thumb_Form{
 				'numberposts' => -1,
 				'post_status' => 'any'
 			);
-			if($this->id_upload=='upload-public-form') $args['post_mime_type'] = 'image';
+			/*if($formData->opst_type!='task') $args['post_mime_type'] = 'image';
+			print_r($args);*/
 			$child = get_children( $args );
 			if($child){ foreach($child as $ch){$temp_gal[]['ID']=$ch->ID;} }
 

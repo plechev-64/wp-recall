@@ -37,7 +37,7 @@ function rcl_daily_addon_update(){
 
     $need_update = array();
     foreach((array)$addons_data as $key=>$addon){
-        $ver = $this->get_actual_version($key);
+        $ver = $rcl_addons->get_actual_version($key,$addon['version']);
         if($ver){
             $addon['new-version'] = $ver;
             $need_update[$key] = $addon;
