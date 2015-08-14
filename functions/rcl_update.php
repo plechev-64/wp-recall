@@ -8,7 +8,7 @@ function rcl_activation_daily_addon_update() {
 		wp_schedule_event( $start_date, 'daily', 'rcl_daily_addon_update');
 	}
 }
-
+rcl_daily_addon_update();
 add_action('rcl_daily_addon_update','rcl_daily_addon_update');
 function rcl_daily_addon_update(){
     $paths = array(RCL_PATH.'add-on',TEMPLATEPATH.'/wp-recall/add-on') ;
