@@ -26,7 +26,7 @@ function rcl_daily_addon_update(){
                     $info_src = $addon_dir.'/info.txt';
                     if(file_exists($info_src)){
                             $info = file($info_src);
-                            $addons_data[$namedir] = $rcl_addons->get_parse_addon_info($info);
+                            $addons_data[$namedir] = $rcl_addons->get_parse_addon_info($info[0]);
                             $addons_data[$namedir]['src'] = $index_src;
                             $a++;
                             flush();
