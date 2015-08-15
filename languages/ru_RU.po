@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-08-09 19:06+0300\n"
+"POT-Creation-Date: 2015-08-14 23:01+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -149,9 +149,9 @@ msgid "Disable bookmarks for publication"
 msgstr "Отключить закладки для публикации"
 
 #: add-on/bookmarks/index.php:137 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:156 add-on/profile/index.php:562
-#: add-on/profile/index.php:567 add-on/profile/index.php:572
-#: add-on/profile/index.php:577 add-on/profile/index.php:582
+#: add-on/profile/index.php:159 add-on/profile/index.php:565
+#: add-on/profile/index.php:570 add-on/profile/index.php:575
+#: add-on/profile/index.php:580 add-on/profile/index.php:585
 #: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120
@@ -161,9 +161,9 @@ msgid "No"
 msgstr "Нет"
 
 #: add-on/bookmarks/index.php:138 add-on/money-wallet/index.php:58
-#: add-on/profile/index.php:156 add-on/profile/index.php:562
-#: add-on/profile/index.php:567 add-on/profile/index.php:572
-#: add-on/profile/index.php:577 add-on/profile/index.php:582
+#: add-on/profile/index.php:159 add-on/profile/index.php:565
+#: add-on/profile/index.php:570 add-on/profile/index.php:575
+#: add-on/profile/index.php:580 add-on/profile/index.php:585
 #: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120
@@ -179,7 +179,7 @@ msgid "Name"
 msgstr "Имя"
 
 #: add-on/bookmarks/index.php:167 add-on/bookmarks/index.php:268
-#: add-on/gallery-recall/index.php:125 add-on/publicpost/classes.php:233
+#: add-on/gallery-recall/index.php:125 add-on/publicpost/classes.php:234
 msgid "Add"
 msgstr "Добавить"
 
@@ -371,7 +371,7 @@ msgstr "по-умолчанию 50"
 msgid "Gallery"
 msgstr "Галерея"
 
-#: add-on/gallery-recall/index.php:121 add-on/publicpost/classes.php:229
+#: add-on/gallery-recall/index.php:121 add-on/publicpost/classes.php:230
 msgid "To add files to the download queue"
 msgstr "Добавить файлы в очередь загрузки"
 
@@ -412,7 +412,7 @@ msgstr "Размер файла превышен!"
 #: add-on/getresponse-manager/index.php:1 add-on/groups/class_group.php:207
 #: add-on/justclick-manager/index.php:1
 #: add-on/partners-system/admin-pages.php:124
-#: add-on/users-market/index.php:750 admin-pages.php:299 functions-rcl.php:507
+#: add-on/users-market/index.php:758 admin-pages.php:299 functions-rcl.php:507
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
@@ -500,7 +500,7 @@ msgstr "Ваш запрос на доступ к группе одобрен"
 
 #: add-on/groups/class_group.php:276
 msgid "To apply for membership"
-msgstr "Разрешено группам пользователей"
+msgstr "Вступить в группу"
 
 #: add-on/groups/class_group.php:288
 msgid "Join"
@@ -582,7 +582,7 @@ msgstr "Смотреть"
 msgid "Search"
 msgstr "Поиск"
 
-#: add-on/groups/index.php:106 add-on/publicpost/rcl_publicform.php:549
+#: add-on/groups/index.php:106 add-on/publicpost/rcl_publicform.php:547
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -800,7 +800,7 @@ msgid "Only the owner"
 msgstr "Только хозяину личного кабинета"
 
 #: add-on/last-visitor/index.php:16 add-on/review/index.php:151
-#: functions/rcl_addons.php:107
+#: functions/rcl_addons.php:109
 msgid "All"
 msgstr "Все"
 
@@ -1250,8 +1250,8 @@ msgid "Comment"
 msgstr "Комментарий"
 
 #: add-on/money-wallet/index.php:155 add-on/money-wallet/index.php:366
-#: add-on/money-wallet/index.php:490 add-on/profile/index.php:402
-#: add-on/profile/index.php:710 add-on/publicpost/index.php:148
+#: add-on/money-wallet/index.php:490 add-on/profile/index.php:405
+#: add-on/profile/index.php:713 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:8
 msgid "Status"
 msgstr "Статус"
@@ -1360,16 +1360,16 @@ msgstr "Запрос на вывод средств произведен"
 msgid "Management of withdrawal requests"
 msgstr "Управление запросами на вывод средств"
 
-#: add-on/money-wallet/index.php:475 functions/rcl_addons.php:118
+#: add-on/money-wallet/index.php:475 functions/rcl_addons.php:120
 msgid "Action"
 msgstr "Действие"
 
 #: add-on/money-wallet/index.php:476 add-on/review/index.php:195
-#: functions/rcl_addons.php:167 functions/rcl_editfields.php:127
+#: functions/rcl_addons.php:174 functions/rcl_editfields.php:127
 msgid "Delete"
 msgstr "Удалить"
 
-#: add-on/money-wallet/index.php:478 functions/rcl_addons.php:122
+#: add-on/money-wallet/index.php:478 functions/rcl_addons.php:124
 msgid "Apply"
 msgstr "Принять"
 
@@ -1466,7 +1466,7 @@ msgstr "Подарок от"
 msgid "File gift"
 msgstr "Файл подарка"
 
-#: add-on/presents/index.php:57 functions/rcl_addons.php:142
+#: add-on/presents/index.php:57 functions/rcl_addons.php:149
 msgid "Choose"
 msgstr "Изменить"
 
@@ -1498,208 +1498,208 @@ msgstr "Поля профиля"
 msgid "Your profile was updated"
 msgstr "Ваш профиль был обновлен"
 
-#: add-on/profile/index.php:128
+#: add-on/profile/index.php:131
 msgid "Very sorry, but your account has been deleted!"
 msgstr "Мы сожалеем, но ваш аккаунт был удален!"
 
-#: add-on/profile/index.php:129
+#: add-on/profile/index.php:132
 msgid "Back to main"
 msgstr "Вернуться на главную"
 
-#: add-on/profile/index.php:131
+#: add-on/profile/index.php:134
 msgid "Delete account failed! Go back and try again."
 msgstr "Удаление аккаунта не удалось! Вернитесь назад и повторите попытку."
 
-#: add-on/profile/index.php:148
+#: add-on/profile/index.php:151
 msgid "Profile settings and account"
 msgstr "Настройки профиля и аккаунта"
 
-#: add-on/profile/index.php:151
+#: add-on/profile/index.php:154
 msgid "Profile and account"
 msgstr "Профиль и аккаунт"
 
-#: add-on/profile/index.php:153
+#: add-on/profile/index.php:156
 msgid "Allow to delete users from your account?"
 msgstr "Разрешить удалять пользователям свой аккаунт?"
 
-#: add-on/profile/index.php:159
+#: add-on/profile/index.php:162
 msgid "The maximum size of the avatar, Mb"
 msgstr "Максимальный размер аватара, МБ"
 
-#: add-on/profile/index.php:161
+#: add-on/profile/index.php:164
 msgid ""
 "To restrict the loading of images as avatars this value in megabytes. By "
 "default, 2MB"
 msgstr "Ограничьте размер загружаемого аватара в мегабайтах, по-умолчанию 2МБ"
 
-#: add-on/profile/index.php:175
+#: add-on/profile/index.php:178
 msgid "Delete avatar"
 msgstr "Удалить аватар"
 
-#: add-on/profile/index.php:217
+#: add-on/profile/index.php:220
 msgid "Your avatar has been removed"
 msgstr "Ваш аватар был удален!"
 
-#: add-on/profile/index.php:228
+#: add-on/profile/index.php:231
 msgid "Profile"
 msgstr "Профиль"
 
-#: add-on/profile/index.php:254 widget.php:138
+#: add-on/profile/index.php:257 widget.php:138
 msgid "User profile"
 msgstr "Профиль пользователя"
 
-#: add-on/profile/index.php:268
+#: add-on/profile/index.php:271
 msgid "Admin toolbar"
 msgstr "Панель администратора"
 
-#: add-on/profile/index.php:273
+#: add-on/profile/index.php:276
 msgid "Show the admin bar when viewing site"
 msgstr "Отображать панель администратора на сайте"
 
-#: add-on/profile/index.php:281 add-on/profile/index.php:661
+#: add-on/profile/index.php:284 add-on/profile/index.php:664
 #: functions/loginform.php:167 functions/loginform.php:191
 #: templates/form-sign.php:25 templates/recallbar.php:18
 #: templates/recallbar.php:32
 msgid "Login"
 msgstr "Вход"
 
-#: add-on/profile/index.php:287 add-on/profile/index.php:668
+#: add-on/profile/index.php:290 add-on/profile/index.php:671
 msgid "Firstname"
 msgstr "Имя"
 
-#: add-on/profile/index.php:293 add-on/profile/index.php:675
+#: add-on/profile/index.php:296 add-on/profile/index.php:678
 msgid "Surname"
 msgstr "Фамилия"
 
-#: add-on/profile/index.php:299 add-on/profile/index.php:682
+#: add-on/profile/index.php:302 add-on/profile/index.php:685
 #: functions/register.php:125 templates/form-register.php:10
 #: templates/form-sign.php:10
 msgid "Nickname"
 msgstr "Логин"
 
-#: add-on/profile/index.php:305 add-on/profile/index.php:689
+#: add-on/profile/index.php:308 add-on/profile/index.php:692
 msgid "Display name"
 msgstr "Отображаемое имя"
 
-#: add-on/profile/index.php:367 functions/rcl_editfields.php:147
+#: add-on/profile/index.php:370 functions/rcl_editfields.php:147
 #: templates/form-register.php:14
 msgid "E-mail"
 msgstr ""
 
-#: add-on/profile/index.php:373
+#: add-on/profile/index.php:376
 msgid "Your website"
 msgstr "Сайт"
 
-#: add-on/profile/index.php:379
+#: add-on/profile/index.php:382
 msgid "New password"
 msgstr "Новый пароль"
 
-#: add-on/profile/index.php:381
+#: add-on/profile/index.php:384
 msgid "If you want to change your password - enter new"
 msgstr "Если вы хотите сменить пароль - введите новый"
 
-#: add-on/profile/index.php:383
+#: add-on/profile/index.php:386
 msgid "Repeat the new password"
 msgstr "Повтор нового пароля"
 
-#: add-on/profile/index.php:387 functions/loginform.php:54
+#: add-on/profile/index.php:390 functions/loginform.php:54
 msgid "The password strength indicator"
 msgstr "Индикатор сложности пароля"
 
-#: add-on/profile/index.php:389 functions/loginform.php:56
+#: add-on/profile/index.php:392 functions/loginform.php:56
 msgid "A password is not entered"
 msgstr "Пароль не введен"
 
-#: add-on/profile/index.php:393
+#: add-on/profile/index.php:396
 msgid "Note"
 msgstr "Замечание"
 
-#: add-on/profile/index.php:393
+#: add-on/profile/index.php:396
 msgid "The password must be at least 7 characters"
 msgstr "Пароль должен содержать не менее 7 символов"
 
-#: add-on/profile/index.php:472
+#: add-on/profile/index.php:475
 msgid "Update profile"
 msgstr "Обновить профиль"
 
-#: add-on/profile/index.php:476
+#: add-on/profile/index.php:479
 msgid "Are you sure? Then restore will not work!"
 msgstr "Вы серьезно? Восстановить не получиться!"
 
-#: add-on/profile/index.php:478
+#: add-on/profile/index.php:481
 msgid "To delete your profile"
 msgstr "Удаление вашего профиля"
 
-#: add-on/profile/index.php:540
+#: add-on/profile/index.php:543
 msgid "Fields to display in the profile note ticks."
 msgstr "Поля отображаемые в профиле"
 
-#: add-on/profile/index.php:548
+#: add-on/profile/index.php:551
 #, php-format
 msgid "<td><input type=\"%s\" name=\"%s\" %s /></td><td>%s</td>"
 msgstr ""
 
-#: add-on/profile/index.php:556
+#: add-on/profile/index.php:559
 msgid "Manage profile fields"
 msgstr "Управление полями профиля"
 
-#: add-on/profile/index.php:561 add-on/publicpost/index.php:233
+#: add-on/profile/index.php:564 add-on/publicpost/index.php:233
 msgid "required field"
 msgstr "обязательное поле"
 
-#: add-on/profile/index.php:566
+#: add-on/profile/index.php:569
 msgid "to display the registration form"
 msgstr "отображать в форме регистрации"
 
-#: add-on/profile/index.php:571
+#: add-on/profile/index.php:574
 msgid "display at checkout for guests"
 msgstr "отображать при оформлении заказа для гостей"
 
-#: add-on/profile/index.php:576
+#: add-on/profile/index.php:579
 msgid "to show the content to other users"
 msgstr "отображать для других пользователей"
 
-#: add-on/profile/index.php:581
+#: add-on/profile/index.php:584
 msgid "it only changes the administration of the site"
 msgstr "редактируется только администрацией сайта"
 
-#: add-on/profile/index.php:664
+#: add-on/profile/index.php:667
 msgid "Login user"
 msgstr "логин пользователя"
 
-#: add-on/profile/index.php:671
+#: add-on/profile/index.php:674
 msgid "Username"
 msgstr "Логин"
 
-#: add-on/profile/index.php:678
+#: add-on/profile/index.php:681
 msgid "Surname user"
 msgstr "Имя пользователя"
 
-#: add-on/profile/index.php:685
+#: add-on/profile/index.php:688
 msgid "Nickname user"
 msgstr "Никнейм пользователя"
 
-#: add-on/profile/index.php:692
+#: add-on/profile/index.php:695
 msgid "Display name user"
 msgstr "Отображаемое имя"
 
-#: add-on/profile/index.php:696
+#: add-on/profile/index.php:699
 msgid "Емейл (be sure)"
 msgstr "E-mail (обязательно)"
 
-#: add-on/profile/index.php:699
+#: add-on/profile/index.php:702
 msgid "Емейл user"
 msgstr "E-mail пользователя"
 
-#: add-on/profile/index.php:703
+#: add-on/profile/index.php:706
 msgid "Website"
 msgstr "Вебсайт"
 
-#: add-on/profile/index.php:706
+#: add-on/profile/index.php:709
 msgid "Website user"
 msgstr "Сайт пользователя"
 
-#: add-on/profile/index.php:713
+#: add-on/profile/index.php:716
 msgid "User status"
 msgstr "Статус пользователя"
 
@@ -2008,19 +2008,19 @@ msgstr ""
 "медиабиблиотеке."
 
 #: add-on/publicpost/class_public.php:76 add-on/publicpost/fast-editor.php:104
-#: functions/rcl_addons.php:133
+#: functions/rcl_addons.php:135
 msgid "Description"
 msgstr "Описание"
 
-#: add-on/publicpost/classes.php:224
+#: add-on/publicpost/classes.php:225
 msgid "Display all attached images in the gallery."
 msgstr "Отображать прикрепленные изображения в галерее"
 
-#: add-on/publicpost/classes.php:257
+#: add-on/publicpost/classes.php:258
 msgid "Thumbnail"
 msgstr "Миниатюра"
 
-#: add-on/publicpost/classes.php:258
+#: add-on/publicpost/classes.php:259
 msgid "To assign a thumbnail"
 msgstr "Назначить миниатюру"
 
@@ -2175,31 +2175,31 @@ msgstr "Идет отправка, подождите..."
 msgid "Select a tag from the list"
 msgstr "Выберите метку из списка"
 
-#: add-on/publicpost/rcl_publicform.php:493
+#: add-on/publicpost/rcl_publicform.php:491
 msgid "Text Box"
 msgstr "Текстовый блок"
 
-#: add-on/publicpost/rcl_publicform.php:494
+#: add-on/publicpost/rcl_publicform.php:492
 msgid "Subtitle"
 msgstr "Подзаголовок"
 
-#: add-on/publicpost/rcl_publicform.php:495
+#: add-on/publicpost/rcl_publicform.php:493
 msgid "Image"
 msgstr "Изображение"
 
-#: add-on/publicpost/rcl_publicform.php:496
+#: add-on/publicpost/rcl_publicform.php:494
 msgid "HTML- code"
 msgstr "HTML- код"
 
-#: add-on/publicpost/rcl_publicform.php:538
+#: add-on/publicpost/rcl_publicform.php:536
 msgid "Enter your tags"
 msgstr "Введите свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:539
+#: add-on/publicpost/rcl_publicform.php:537
 msgid "Add your tags"
 msgstr "Добавьте свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:539
+#: add-on/publicpost/rcl_publicform.php:537
 msgid "Each tag is separated with Enter"
 msgstr "каждый тег разделяется нажатием на кнопку Enter"
 
@@ -2211,6 +2211,20 @@ msgstr "Выберите изображение"
 msgid ""
 "Click on Priceline the image to add it to the content of the publication"
 msgstr "Нажмите на загруженное изображение, чтобы добавить его в контент"
+
+#: add-on/rating-rank/addon-options.php:9
+msgid "Rank system"
+msgstr ""
+
+#: add-on/rating-rank/addon-options.php:13
+msgid "Перечень званий"
+msgstr ""
+
+#: add-on/rating-rank/addon-options.php:15
+msgid ""
+"Укажите перечень званий с требуемым значением рейтинга в формате "
+"\"rankname:100\". Каждое новое правило указывается с новой строки"
+msgstr ""
 
 #: add-on/rating-system/addon-options.php:15
 msgid "select a template output stories where"
@@ -2455,8 +2469,9 @@ msgid "The user has no reviews yet"
 msgstr "У пользователя пока нет отзывов"
 
 #: add-on/review/index.php:215
-msgid "Members with a value rating of less than "
-msgstr "Пользователи со значением рейтинга меньше чем"
+#, php-format
+msgid "Members with a value rating of less than %d can not leave a review."
+msgstr "Пользователи со значение рейтинга ниже %d не могут оставлять отзывы."
 
 #: add-on/review/index.php:228
 msgid "Users without published records cannot accept and add reviews."
@@ -2946,7 +2961,7 @@ msgstr ""
 "Файл заменить текущий минимизированный стилевой файл, если включена "
 "минимизация"
 
-#: admin-pages.php:210 functions/rcl_addons.php:459
+#: admin-pages.php:210 functions/rcl_addons.php:510
 msgid "Login and register"
 msgstr "Вход и регистрация"
 
@@ -3185,11 +3200,11 @@ msgstr "Повтор пароля не верный!"
 msgid "Add-on manager"
 msgstr "Add-on менеджер"
 
-#: functions/rcl_addons.php:82
+#: functions/rcl_addons.php:84
 msgid "Add-ons Wp-Recall"
 msgstr "Дополнения Wp-Recall"
 
-#: functions/rcl_addons.php:85
+#: functions/rcl_addons.php:87
 msgid ""
 "Addition <strong>activated</strong>. It is possible that on the settings "
 "page of Wp-Recall new settings"
@@ -3197,23 +3212,23 @@ msgstr ""
 "Дополнение <strong>активировано</strong>. Возможно на странице настроек Wp-"
 "Recall появились новые настройки"
 
-#: functions/rcl_addons.php:86
+#: functions/rcl_addons.php:88
 msgid "Addition <strong>deactivated</strong>."
 msgstr "Дополнение <strong>деактивировано</strong>."
 
-#: functions/rcl_addons.php:87
+#: functions/rcl_addons.php:89
 msgid "Files and data additions have been <strong>removed</strong>."
 msgstr "Файлы и данные дополнения были <strong>удалены</strong>"
 
-#: functions/rcl_addons.php:88
+#: functions/rcl_addons.php:90
 msgid "The Supplement has not been loaded. Add missing the correct header."
 msgstr "Дополнение не было загружено. Не найдены корректные заголовки."
 
-#: functions/rcl_addons.php:97
+#: functions/rcl_addons.php:99
 msgid "To install the add-on to Wp-Recall format .zip"
 msgstr "Загрузить дополнение для Wp-Recall в формате .zip"
 
-#: functions/rcl_addons.php:98
+#: functions/rcl_addons.php:100
 msgid ""
 "If you have the archive add-on for wp-recall format .zip, here you can "
 "download and install it."
@@ -3221,67 +3236,75 @@ msgstr ""
 "Если у вас есь архив дополнения к Wp-Recall в формате ZIP, то вы можете "
 "загрузить и установить его здесь."
 
-#: functions/rcl_addons.php:100
+#: functions/rcl_addons.php:102
 msgid "Plugin archive"
 msgstr "Архив дополнения"
 
-#: functions/rcl_addons.php:102
+#: functions/rcl_addons.php:104
 msgid "To install"
 msgstr "Установить"
 
-#: functions/rcl_addons.php:108
+#: functions/rcl_addons.php:110
 msgid "Active"
 msgstr "Активно"
 
-#: functions/rcl_addons.php:109
+#: functions/rcl_addons.php:111
 msgid "Inactive"
 msgstr "Неактивно"
 
-#: functions/rcl_addons.php:119 functions/rcl_addons.php:150
+#: functions/rcl_addons.php:121 functions/rcl_addons.php:157
 msgid "Deactivate"
 msgstr "Деактивировать"
 
-#: functions/rcl_addons.php:120
+#: functions/rcl_addons.php:122
 msgid "To activate"
 msgstr "Активировать"
 
-#: functions/rcl_addons.php:129
+#: functions/rcl_addons.php:131
 msgid "Select all"
 msgstr "Выбрать все"
 
-#: functions/rcl_addons.php:132
+#: functions/rcl_addons.php:134
 msgid "Additions"
 msgstr "Дополнения"
 
-#: functions/rcl_addons.php:155 functions/rcl_addons.php:159
+#: functions/rcl_addons.php:162 functions/rcl_addons.php:166
 msgid "Settings"
 msgstr "Настройки"
 
-#: functions/rcl_addons.php:164
+#: functions/rcl_addons.php:171
 msgid "Activate"
 msgstr "Активировать"
 
-#: functions/rcl_addons.php:177
+#: functions/rcl_addons.php:184
 msgid "Version"
 msgstr "Версия"
 
-#: functions/rcl_addons.php:177
+#: functions/rcl_addons.php:185
 msgid "Author"
 msgstr "Автор"
 
-#: functions/rcl_addons.php:177
+#: functions/rcl_addons.php:185
 msgid "Visit the page of the author"
 msgstr "Посетить страницу автора"
 
-#: functions/rcl_addons.php:214
+#: functions/rcl_addons.php:186
+msgid "Visit the page of the add-on"
+msgstr "Посетить страницу дополнения"
+
+#: functions/rcl_addons.php:186
+msgid "Page Add-on"
+msgstr "Страница дополнения"
+
+#: functions/rcl_addons.php:250
 msgid "You cant control polucheniya plugins on this site."
 msgstr "Вы не можете управлять загрузкой плагинов на этом сайте."
 
-#: functions/rcl_addons.php:401
+#: functions/rcl_addons.php:437
 msgid "Unpacking of archive failed."
 msgstr "Распаковка дополнения не удалась."
 
-#: functions/rcl_addons.php:404
+#: functions/rcl_addons.php:440
 msgid "ZIP archive not found."
 msgstr "ZIP архив не найден."
 
@@ -3564,6 +3587,9 @@ msgstr "Блок с основной информацией профиля"
 #: widget.php:159
 msgid "Control panel"
 msgstr "Панель управления"
+
+#~ msgid "Members with a value rating of less than "
+#~ msgstr "Пользователи со значением рейтинга меньше чем"
 
 #~ msgid "Template output %s stories in the overall ranking"
 #~ msgstr "Шаблон вывода истории рейтинга %s в общем рейтинге"

@@ -566,12 +566,12 @@ function rcl_login_group_request(){
 	if(isset($_POST['login_group'])&&$user_ID){
 		if( !wp_verify_nonce( $_POST['_wpnonce'], 'login-group-request-rcl' ) ) return false;
 
-		if($user_ID) $in_group = get_the_author_meta('user_group_'.$group_id,$user_ID);
+		if($user_ID) $in_group = get_user_meta($user_ID,'user_group_'.$group_id,1);
 
 		$admin_id = $options_gr['admin'];
 
 		if($in_group){
-				delete_usermeta( $user_ID, 'user_group_'.$group_id );
+				delete_user_meta( $user_ID, 'user_group_'.$group_id );
 				$in_group = false;
 			}else{
 				if($options_gr['private']==1){
@@ -593,7 +593,7 @@ function rcl_login_group_request(){
 					rcl_mail($admin_email, $subject, $textmail);
 
 				}else{
-					update_usermeta($user_ID,'user_group_'.$group_id, $group_id);
+					update_user_meta($user_ID,'user_group_'.$group_id, $group_id);
 					$in_group = true;
 				}
 			}
@@ -749,9 +749,9 @@ add_action('wp_ajax_nopriv_rcl_get_users_group', 'rcl_get_users_group');
 
 function rcl_request_users_group_access(){
 
-	$id_group = inval($_POST['id_group']);
-	$id_user = inval($_POST['id_user']);
-	$req = inval($_POST['req']);
+	$id_group = intval($_POST['id_group']);
+	$id_user = intval($_POST['id_user']);
+	$req = intval($_POST['req']);
 
 	$all_request = unserialize(get_option('request_group_access_'.$id_group));
 	$curent_term = get_term_by('id', $id_group, 'groups');

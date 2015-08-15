@@ -77,7 +77,7 @@ element.style {
 }
 
 .ballun-status p.status-user-rcl {
-background: none repeat scroll 0 0 #3F7DB6;
+background:none repeat scroll 0 0 rgba(90, 171, 243, 0.72);
 border: 0px;
 border-radius: 5px;
 color: #FFFFFF;
@@ -234,7 +234,8 @@ border-radius: 2px;
     height: auto;
 }*/
 .ballun-status .ballun {
-    background: url("../img/ballun-left.png") no-repeat scroll 0 0 #3F7DB6;
+    background: url("../img/ballun-left.png") no-repeat scroll 0 0;
+    background-color: rgba(90, 171, 243, 0.72);
 }
 #lk-content .privat_block .message-block .content-mess .privat-balloon {
     background: url("../img/ballun-left.png") no-repeat scroll 0 0 #C4F5C4;
@@ -282,6 +283,7 @@ border-radius: 2px;
 }
 #lk-content .galrcl_block ul#files li img {
     float: left;
+    max-width:300px;
 }
 
 .wprecallblock #lk-content {
@@ -341,4 +343,27 @@ border-radius: 2px;
 #rcl-tabs {
     padding: 15px 0;
     background-color: white;
+}
+
+.userlist.rows-list .user-single {
+    clear: both;
+    border: 0px;
+    border-bottom: 1px solid #eee;
+    margin: 5px 0 0 0;
+    padding: 0 0 10px 0;
+}
+
+
+#block_author-rcl {
+    clear: both;
+    margin: 20px 0;
+    border: 0px solid #CFE9FF;
+    padding: 15px;
+    overflow: hidden;
+    background-color: rgba(247, 247, 249, 0.76);
+}
+.wprecallblock #lk-conteyner .lk-header {
+    position: absolute;
+    right: 10px;
+    width: 250px;
 }

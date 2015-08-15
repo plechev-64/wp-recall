@@ -212,7 +212,7 @@ class Rcl_Review{
 						if(function_exists('rcl_get_user_rating')){
 							$rating = rcl_get_user_rating($user_ID);
 							if($rating<$rt_limit){
-								$notice = '<div class="notify-lk"><div class="warning">'.__('Members with a value rating of less than '.$rt_limit.' can not leave a review.','rcl').'</div></div>';
+								$notice = '<div class="notify-lk"><div class="warning">'.sprintf(__('Members with a value rating of less than %d can not leave a review.','rcl'),$rt_limit).'</div></div>';
                                 $notice .= $recall_block;
                                 return $notice;
 							}

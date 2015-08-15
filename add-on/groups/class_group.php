@@ -35,7 +35,7 @@ class Rcl_Group{
 
 		if($req = get_option('request_group_access_'.$this->term_id)) $this->requests = unserialize($req);
 
-		if($user_ID) $this->in_group = get_the_author_meta('user_group_'.$this->term_id,$user_ID);
+		if($user_ID) $this->in_group = get_user_meta($user_ID,'user_group_'.$this->term_id,1);
 
 		if ( isset($_POST['delete-group-rcl'])&&$user_ID ){
 			if( !wp_verify_nonce( $_POST['_wpnonce'], 'delete-group-rcl' ) ) return false;
@@ -269,7 +269,7 @@ class Rcl_Group{
 	function private_button(){
 		global $user_ID;
 		if(!$this->in_group&&$user_ID!=$this->admin_id&&$this->options_gr['private']==1){
-			if($this->requests[$user_ID]) return '<p style="clear:both;text-align:right;color:green;">'. __('Your application for membership is accepted','rcl').'</p>';
+			if(isset($this->requests[$user_ID])) return '<p style="clear:both;text-align:right;color:green;">'. __('Your application for membership is accepted','rcl').'</p>';
 			else return '<div class="add-user-group">
 				<form action="" method="post">
 					'.wp_nonce_field('login-group-request-rcl','_wpnonce',true,false).'
