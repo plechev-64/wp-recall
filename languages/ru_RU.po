@@ -496,11 +496,11 @@ msgstr "Выйти из группы"
 
 #: add-on/groups/class_group.php:272
 msgid "Your application for membership is accepted"
-msgstr "Ваш запрос на доступ к группе одобрен"
+msgstr "Ваш запрос на доступ принят"
 
 #: add-on/groups/class_group.php:276
 msgid "To apply for membership"
-msgstr "Вступить в группу"
+msgstr "Послать запрос на доступ"
 
 #: add-on/groups/class_group.php:288
 msgid "Join"
