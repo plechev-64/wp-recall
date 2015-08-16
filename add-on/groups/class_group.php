@@ -198,9 +198,9 @@ class Rcl_Group{
 			</div>
 			<div class="options-group-rcl public_block" style="clear:both;display:none;">
 				<a class="close-public-form" href="#">'. __('To close the settings','rcl'). '</a>
+                                <h3>'. __('Group settings','rcl'). ':</h3>
 				<form action="" method="post">
-					<input type="hidden" name="group_id" value="'.$this->term_id.'">
-					<h3>'. __('Group settings','rcl'). ':</h3>'
+					<input type="hidden" name="group_id" value="'.$this->term_id.'">'
 					. apply_filters('options_group_rcl',$opt)
 					. wp_nonce_field('update-options-group-rcl','_wpnonce',true,false).'
 					<p style="text-align:right;">

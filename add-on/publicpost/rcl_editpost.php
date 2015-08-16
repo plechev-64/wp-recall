@@ -185,16 +185,16 @@ class Rcl_EditPost {
     }
 
     function update_post(){
-		global $rcl_options,$user_ID;
+        global $rcl_options,$user_ID;
 
-		$post_content = '';
+        $post_content = '';
 
-		if(!is_array($_POST['post_content'])) $post_content = $_POST['post_content'];
+        if(!is_array($_POST['post_content'])) $post_content = $_POST['post_content'];
 
         $postdata = array(
             'post_type'=>$this->post_type,
             'post_title'=>sanitize_text_field($_POST['post_title']),
-			'post_excerpt'=>$_POST['post_excerpt'],
+            'post_excerpt'=>$_POST['post_excerpt'],
             'post_content'=> $post_content
         );
 
@@ -205,7 +205,7 @@ class Rcl_EditPost {
 
         $postdata = apply_filters('pre_update_postdata_rcl',$postdata,$this);
 
-		if(!$postdata) return false;
+	if(!$postdata) return false;
 
         if(!$postdata['post_status']) $postdata['post_status'] = 'publish';
 
