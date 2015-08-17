@@ -658,7 +658,7 @@ function rcl_get_edit_post_button($content){
 			if(get_post_meta($post->ID,'step_order',1)!=1) return $content;
 		}
 
-		if(rcl_is_limit_editing($post->post_date)) return $content;
+		if($user_info->user_level<10&&rcl_is_limit_editing($post->post_date)) return $content;
 
 		$content = rcl_edit_post_button_html($post->ID).$content;
 	}

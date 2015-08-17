@@ -146,7 +146,7 @@ function rcl_rating_class($value){
 
 function rcl_format_value($value){
 	if(!$value) $value = 0;
-
+	
 	$cnt = strlen(round($value));
 	if($cnt>4){
 		$th = $cnt-3;
@@ -154,7 +154,9 @@ function rcl_format_value($value){
 	}else{
 		$val = explode('.',$value);
 		$fl = (isset($val[1])&&$val[1])? strlen($val[1]): 0;
+		$fl = ($fl>2)?2:$fl;
 		$value = number_format($value, $fl, ',', ' ');
+		
 	}
 	/*if($value>0){
         return "+".$value;
@@ -301,7 +303,7 @@ if(!is_admin()):
 endif;
 function rcl_post_content_rating($content){
     global $post;
-	if(doing_filter('get_the_excerpt')) return $content;
+    if(doing_filter('get_the_excerpt')) return $content;
     $content .= rcl_get_html_post_rating($post->ID,$post->post_type);
     return $content;
 }
@@ -374,6 +376,76 @@ function rcl_edit_rating_user(){
 }
 if(is_admin()) add_action('wp_ajax_rcl_edit_rating_user', 'rcl_edit_rating_user');
 
+
+add_action('wp_ajax_rcl_view_rating_votes', 'rcl_view_rating_votes');
+add_action('wp_ajax_nopriv_rcl_view_rating_votes', 'rcl_view_rating_votes');
+function rcl_view_rating_votes(){
+
+		$args = rcl_decode_data_rating(sanitize_text_field($_POST['rating']));
+
+		$navi = false;
+
+		if($args['rating_status']=='user') $navi = rcl_rating_navi($args);
+
+		$votes = rcl_get_rating_votes($args,array(0,100));
+
+		$window = rcl_get_votes_window($args,$votes,$navi);
+
+		$log['result']=100;
+		$log['window']=$window;
+		echo json_encode($log);
+		exit;
+}
+
+add_action('wp_ajax_rcl_edit_rating_post', 'rcl_edit_rating_post');
+function rcl_edit_rating_post(){
+		global $rcl_options,$rcl_rating_types;
+
+		$args = rcl_decode_data_rating(sanitize_text_field($_POST['rating']));
+		
+		if($rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
+			$timelimit = ($rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']])? $rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']]: 3600;
+			$votes = rcl_count_votes_time($args,$timelimit);
+			if($votes>=$rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
+				$log['error']=sprintf(__('exceeded the limit of votes for the period - %d seconds','rcl'),$timelimit);
+				echo json_encode($log);
+				exit;
+			}
+		}
+
+		$value = rcl_get_vote_value($args);
+
+		if($value){
+
+			if($args['rating_status']=='cancel'){
+
+				$rating = rcl_delete_rating($args);
+
+			}else{
+				$log['result']=110;
+				echo json_encode($log);
+				exit;
+			}
+
+		}else{
+
+			$args['rating_value'] = rcl_get_rating_value($args['rating_type']);
+
+			$rating = rcl_insert_rating($args);
+
+		}
+
+		$total = rcl_get_total_rating($args['object_id'],$args['rating_type']);
+
+		$log['result']=100;
+		$log['object_id']=$args['object_id'];
+		$log['rating_type']=$args['rating_type'];
+		$log['rating']=$total;
+
+		echo json_encode($log);
+		exit;
+}
+
 function rcl_scripts_rating($script){
 
 	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
@@ -388,7 +460,7 @@ function rcl_scripts_rating($script){
             var block = jQuery(this);
             var rating = block.data('rating');
 
-            var dataString = 'action=edit_rating_post&rating='+rating;
+            var dataString = 'action=rcl_edit_rating_post&rating='+rating;
 
             jQuery.ajax({
                 ".$ajaxdata."
@@ -419,7 +491,7 @@ function rcl_scripts_rating($script){
             var block = jQuery(this);
             var rating = block.data('rating');
 
-            var dataString = 'action=view_rating_votes&rating='+rating;
+            var dataString = 'action=rcl_view_rating_votes&rating='+rating;
 
             jQuery.ajax({
                 ".$ajaxdata."
@@ -442,7 +514,7 @@ function rcl_scripts_rating($script){
             jQuery(this).addClass('active');
             var rating = jQuery(this).data('rating');
 
-            var dataString = 'action=view_rating_votes&rating='+rating+'&content=list-votes';
+            var dataString = 'action=rcl_view_rating_votes&rating='+rating+'&content=list-votes';
 
             jQuery.ajax({
                 ".$ajaxdata."

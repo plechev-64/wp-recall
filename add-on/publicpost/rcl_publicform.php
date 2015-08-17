@@ -22,10 +22,10 @@ class Rcl_PublicForm {
             'cats' => false,
             'id' => 1,
             'id_upload' => 'upload-public-form',
-			'accept' => 'image/*',
+            'accept' => 'image/*',
             'post_type'=> 'post',
             'type_editor'=> null,
-			'wp_editor'=> null,
+            'wp_editor'=> null,
             'group_id'=>$group_id
             ),
         $atts));
@@ -82,7 +82,7 @@ class Rcl_PublicForm {
             'terms' =>$this->terms,
             'accept' =>$this->accept,
             'type_editor' =>$this->type_editor,
-			'wp_editor' =>$this->wp_editor,
+            'wp_editor' =>$this->wp_editor,
             'taxonomy' =>$taxs
         );
 

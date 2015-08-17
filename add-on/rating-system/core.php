@@ -206,9 +206,7 @@ function rcl_get_total_rating($object_id,$rating_type){
 
 //Получаем значение рейтинга пользователя
 function rcl_get_user_rating($user_id){
-    $value = rcl_get_user_rating_value($user_id);
-    if(!$value) $value = 0;
-    return $value;
+    return rcl_format_rating(rcl_get_user_rating_value($user_id));
 }
 
 function rcl_get_user_rating_value($user_id){
@@ -596,84 +594,25 @@ function rcl_rating_shortcode($atts){
 	global $rating;
 
 	extract(shortcode_atts(array(
-		'object_type' => 'users',
-		'list_type' => 'avatars',
-		'rating_type_in' => false,
-		'object_id'=>false,
-		'order'=>'rating_total',
-		'order_by'=>'DESC',
-		'number' => 10,
-		'offset' => 0,
-		'days'=>false
+		'rating_type'=>false,
+		'days'=>false,
+		'number'=>10,
+		'offset'=>0,
+		'order'=>'ID',
+		'list_type' => 'row',
+		'group_by' => ''
 	),
 	$atts));
-
-	$args = array();
-
-	if($object_type=='users'){
-		if($rating_type_in) $args['rating_type'] = explode(',',$rating_type_in);
-		$args['group_by'] = 'object_author';
-		$args['fields'] = array('object_author');
-	}else{
-		$args['order'] = $order;
-		$args['order_by'] = $order_by;
-		$args['rating_type'] = explode(',',$object_type);
-	}
-
-	if($number) $args['limit'] = array($offset,$number);
-
-	if($days){
-		//сначала находим все объекты за указанный период
-		$args['days'] = $days;
-		$args['limit'] = false;
-	}
-
-	$ratings = rcl_get_ratings($args);
-
-	if(!$ratings) return false;
-
-	if($object_type=='users'){
-
-		$users = array();
-		foreach($ratings as $data){
-			$users[] = $data->object_author;
-		}
-
-		$args['group_by'] = null;
-		$args['fields'] = null;
-		$args['object_id'] = $users;
-		$args['rating_type'] = 'users';
-		$args['order'] = 'rating_total';
-		$args['order_by'] = 'DESC';
-		$ratings = rcl_get_ratings($args);
-	}
-
-	if($days){
-		$objs = array();
-		$objects = array();
-		$a = 0;
-		foreach($ratings as $data){
-			if(!isset($objs[$data->object_id])) $objs[$data->object_id] = $data->rating_value;
-			else $objs[$data->object_id] += $data->rating_value;
-		}
-		arsort($objs); //сортируем полученные объекты по популярности за указанный период
-		foreach($objs as $id=>$data){
-			$a++;
-			$objects[]=$id;
-			if($number&&$number==$a) break;
-		}
-
-		//if($number) $args['limit'] = array($offset,$number);
-		$args['days'] = false;
-		$args['object_id'] = $objects;
-		$args['order'] = 'rating_total';
-		$args['order_by'] = 'DESC';
-		$ratings = rcl_get_ratings($args);
-	}
+	
+	$rcl_rating = new Rcl_Rating();
+	
+	$ratings = $rcl_rating->get_values($atts);
+	
+	//print_r($ratings);
 
 	$userlist ='<div class="ratinglist '.$list_type.'-list">';
-	//print_r($ratings);
 	foreach($ratings as $rating){
+		$rating = (object)$rating;
 		$userlist .= rcl_get_include_template('rating-'.$list_type.'.php',__FILE__);
 	}
 

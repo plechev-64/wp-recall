@@ -29,14 +29,14 @@ class Rcl_EditPost {
                 if(!rcl_can_user_edit_post_group($post_id)) return false;
 
             }else{
-				if(!current_user_can('edit_post', $post_id)) return false;
-				if($pst->post_author!=$user_ID){
-					$author_info = get_userdata($pst->post_author);
-					$user_info = get_userdata($current_user->ID);
-					if($user_info->user_level < $author_info->user_level) return false;
-				}
-				if(rcl_is_limit_editing($pst->post_date)) return false;
-			}
+                if(!current_user_can('edit_post', $post_id)) return false;
+                if($pst->post_author!=$user_ID){
+                        $author_info = get_userdata($pst->post_author);
+                        $user_info = get_userdata($current_user->ID);
+                        if($user_info->user_level < $author_info->user_level) return false;
+                }
+                if($user_info->user_level<10&&rcl_is_limit_editing($post->post_date)) return false;
+            }
             $this->update = true;
         }else{
             if (!session_id()) { session_start(); }

@@ -267,13 +267,13 @@ function rcl_get_userlist($atts, $content = null){
 
         foreach((array)$us_data as $id=>$user){ rcl_setup_datauser($user);
             $a++;
-            //if(!$user->user_action)continue;
+            if(!$user->user_action)continue;
             if($onlyaction){
                     if(rcl_get_useraction($user->user_action)) continue;
             }
 
             $userlist .= rcl_get_include_template('user-'.$type.'.php');
-            //if($a==$inpage) break;
+            if($a==$inpage) break;
         }
     }
 
