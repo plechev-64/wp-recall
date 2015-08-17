@@ -206,7 +206,9 @@ function rcl_get_total_rating($object_id,$rating_type){
 
 //Получаем значение рейтинга пользователя
 function rcl_get_user_rating($user_id){
-    return rcl_format_rating(rcl_get_user_rating_value($user_id));
+    $value = rcl_get_user_rating_value($user_id);
+    if(!$value) $value = 0;
+    return $value;
 }
 
 function rcl_get_user_rating_value($user_id){
@@ -603,11 +605,11 @@ function rcl_rating_shortcode($atts){
 		'group_by' => ''
 	),
 	$atts));
-	
+
 	$rcl_rating = new Rcl_Rating();
-	
+
 	$ratings = $rcl_rating->get_values($atts);
-	
+
 	//print_r($ratings);
 
 	$userlist ='<div class="ratinglist '.$list_type.'-list">';

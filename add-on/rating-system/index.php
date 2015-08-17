@@ -146,7 +146,7 @@ function rcl_rating_class($value){
 
 function rcl_format_value($value){
 	if(!$value) $value = 0;
-	
+
 	$cnt = strlen(round($value));
 	if($cnt>4){
 		$th = $cnt-3;
@@ -156,7 +156,7 @@ function rcl_format_value($value){
 		$fl = (isset($val[1])&&$val[1])? strlen($val[1]): 0;
 		$fl = ($fl>2)?2:$fl;
 		$value = number_format($value, $fl, ',', ' ');
-		
+
 	}
 	/*if($value>0){
         return "+".$value;
@@ -402,7 +402,7 @@ function rcl_edit_rating_post(){
 		global $rcl_options,$rcl_rating_types;
 
 		$args = rcl_decode_data_rating(sanitize_text_field($_POST['rating']));
-		
+
 		if($rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
 			$timelimit = ($rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']])? $rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']]: 3600;
 			$votes = rcl_count_votes_time($args,$timelimit);
