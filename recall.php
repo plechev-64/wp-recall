@@ -32,6 +32,8 @@ function init_global_rcl(){
 	define('TEMP_PATH', $upload_dir['basedir'].'/temp-rcl/');
 	define('TEMP_URL', $upload_dir['baseurl'].'/temp-rcl/');
 
+        define('RCL_TAKEPATH', $upload_dir['basedir'].'/wp-recall/');
+
 	define('RCL_URL', plugin_dir_url( __FILE__ ));
 	define('RCL_PREF', $wpdb->base_prefix.'rcl_');
 
@@ -61,6 +63,18 @@ function recall_install(){
     if(!is_dir($upload_dir['basedir'])){
         mkdir($upload_dir['basedir']);
         chmod($upload_dir['basedir'], 0755);
+    }
+
+    if(!is_dir(RCL_TAKEPATH)){
+        mkdir(RCL_TAKEPATH);
+        chmod(RCL_TAKEPATH, 0755);
+
+        $dirs = array('add-on','themes','templates');
+        
+        foreach($dirs as $dir){
+            mkdir(RCL_TAKEPATH.$dir);
+            chmod(RCL_TAKEPATH, 0755);
+        }
     }
 
     $table4 = RCL_PREF."user_action";

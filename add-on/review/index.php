@@ -185,9 +185,12 @@ class Rcl_Review{
                     '.$this->get_status($otziv->status).'
                     <p>
                     <strong><a href="'.get_author_posts_url($otziv->author_id).'">'.get_the_author_meta('display_name', $otziv->author_id).'</a> '.__('leave a review','rcl').':</strong>
-                    </p>'.nl2br($otziv->content_otziv)
-                            .rcl_get_html_post_rating($otziv->ID,'review-content',$otziv->author_id)
-                            .'</div>';
+                    </p>'.nl2br($otziv->content_otziv);
+
+                        if(function_exists('rcl_get_html_post_rating')) $recall_block .= rcl_get_html_post_rating($otziv->ID,'review-content',$otziv->author_id);
+
+                        $recall_block .= '</div>';
+
                     if($user_ID==$otziv->author_id){
                             $recall_block .= '<form method="post" action="" class="review-delete">
                             <input type="hidden" name="user_id" value="'.$otziv->user_id.'">
@@ -195,6 +198,7 @@ class Rcl_Review{
                             <input type="submit" class="recall-button" name="delete_review" value="'.__('Delete','rcl').'">
                             </form>';
                     }
+                    
                     $recall_block .= '</div>';
                 }
             }else if($user_ID==$user_LK){

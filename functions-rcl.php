@@ -78,10 +78,8 @@ function rcl_crop($filesource,$width,$height,$file){
 }
 
 function rcl_get_template_path($file_temp,$path=false){
-    $dirs   = array(
-        TEMPLATEPATH.'/wp-recall/templates/',
-        RCL_PATH.'templates/'
-    );
+
+    $dirs   = array(RCL_TAKEPATH.'templates/', RCL_PATH.'templates/');
 
     if($path) $dirs[1] = rcl_addon_path($path).'templates/';
 

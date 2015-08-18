@@ -332,7 +332,7 @@ if($_GET['order-id']){
 
         $table .= '<form method="get" action="'.admin_url('admin.php?page=manage-rmag').'"><p class="search-box">
 	<label class="screen-reader-text" for="order-search-input">Поиск заказов:</label>
-	<input type="search" id="order-search-input" name="search_order" value="">
+	<input type="search" id="order-search-input" name="search_order" placeholder="ID заказа или покупателя" value="">
 	<input type="submit" id="search-submit" class="button" value="Поиск заказов">
         <input type="hidden" name="page" value="manage-rmag">
         </p></form>';

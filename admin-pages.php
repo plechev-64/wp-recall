@@ -307,7 +307,7 @@ function rcl_theme_list(){
 
     if(!isset($rcl_options['color_theme'])) $color_theme = 1;
     else $color_theme = $rcl_options['color_theme'];
-    $dirs   = array(RCL_PATH.'css/themes',TEMPLATEPATH.'/wp-recall/themes');
+    $dirs   = array(RCL_PATH.'css/themes',RCL_TAKEPATH.'themes');
     $t_list = '';
     foreach($dirs as $dir){
         //echo $dir;
@@ -333,7 +333,7 @@ function rcl_theme_list(){
 }
 /*no found*/
 function rcl_url_theme(){
-    $dirs   = array(TEMPLATEPATH.'/wp-recall/themes',RCL_PATH.'css/themes');
+    $dirs   = array(RCL_TAKEPATH.'themes',RCL_PATH.'css/themes');
     foreach($dirs as $dir){
         if(!file_exists($dir.'/'.$rcl_options['color_theme'].'.css')) continue;
         wp_enqueue_theme_rcl(rcl_path_to_url($dir.'/'.$rcl_options['color_theme'].'.css'));

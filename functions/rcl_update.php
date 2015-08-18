@@ -5,13 +5,13 @@ function rcl_activation_daily_addon_update() {
 	//wp_clear_scheduled_hook('rcl_daily_addon_update');
 	if ( !wp_next_scheduled( 'rcl_daily_addon_update' ) ) {
 		$start_date = strtotime(current_time('mysql'));
-		wp_schedule_event( $start_date, 'daily', 'rcl_daily_addon_update');
+		wp_schedule_event( $start_date, 'twicedaily', 'rcl_daily_addon_update');
 	}
 }
 
 add_action('rcl_daily_addon_update','rcl_daily_addon_update');
 function rcl_daily_addon_update(){
-    $paths = array(RCL_PATH.'add-on',TEMPLATEPATH.'/wp-recall/add-on') ;
+    $paths = array(RCL_PATH.'add-on',RCL_TAKEPATH.'add-on') ;
 
     $rcl_addons = new Rcl_Addons();
 

@@ -19,7 +19,7 @@ class Rcl_Addons{
 		global $active_addons;
 		$active_addons = get_site_option('active_addons_recall');
                 $path_addon_rcl = RCL_PATH.'add-on/';
-                $path_addon_theme = TEMPLATEPATH.'/wp-recall/add-on/';
+                $path_addon_theme = RCL_TAKEPATH.'add-on/';
 		foreach((array)$active_addons as $key=>$addon){
                     if(!$addon) continue;
                     if(file_exists($path_addon_theme.$key.'/index.php')){
@@ -52,7 +52,7 @@ class Rcl_Addons{
 
                 $need_update = get_option('rcl_addons_need_update');
 
-                $paths = array(RCL_PATH.'add-on',TEMPLATEPATH.'/wp-recall/add-on') ;
+                $paths = array(RCL_PATH.'add-on',RCL_TAKEPATH.'add-on') ;
 
                 foreach($paths as $path){
                     if(file_exists($path)){
@@ -249,7 +249,7 @@ class Rcl_Addons{
                 global $wpdb, $user_ID, $active_addons;
 		if ( ! current_user_can('activate_plugins') ) wp_die(__('You cant control polucheniya plugins on this site.','rcl'));
 
-                $paths = array(TEMPLATEPATH.'/wp-recall/add-on',RCL_PATH.'add-on');
+                $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
 		if($_GET['status']=='activate'){
                     foreach($paths as $path){
@@ -355,7 +355,7 @@ class Rcl_Addons{
 			wp_redirect( admin_url('admin.php?page=manage-addon-recall') );exit;
 		}
 
-                $paths = array(TEMPLATEPATH.'/wp-recall/add-on',RCL_PATH.'add-on');
+                $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
 		if($_POST['group-addon-action']=='activate'){
 			foreach((array)$_POST['checked'] as $key){
@@ -399,7 +399,7 @@ class Rcl_Addons{
 
 		//$dir_src = RCL_PATH.'add-on/';
 
-            $paths = array(TEMPLATEPATH.'/wp-recall/add-on',RCL_PATH.'add-on');
+            $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
             $filename = $_FILES['addonzip']['tmp_name'];
             $f1 = current(wp_upload_dir()) . "/" . basename($filename);
@@ -408,6 +408,7 @@ class Rcl_Addons{
             $zip = new ZipArchive;
 
             $res = $zip->open($f1);
+
             if($res === TRUE){
 
                 for ($i = 0; $i < $zip->numFiles; $i++) {
