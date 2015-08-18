@@ -65,12 +65,12 @@ function recall_install(){
         chmod($upload_dir['basedir'], 0755);
     }
 
-    if(!is_dir(RCL_TAKEPATH)){
+    if(!file_exists(RCL_TAKEPATH)){
         mkdir(RCL_TAKEPATH);
         chmod(RCL_TAKEPATH, 0755);
 
         $dirs = array('add-on','themes','templates');
-        
+
         foreach($dirs as $dir){
             mkdir(RCL_TAKEPATH.$dir);
             chmod(RCL_TAKEPATH, 0755);

@@ -310,6 +310,8 @@ function rcl_metabox_products( $post ){
 	echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - выберите товарную категорию</div>';
 	}
 
+        echo apply_filters('rcl_products_custom_fields','',$post);
+
 	if(!class_exists( 'Attachments' )){
 	$args = array(
     'numberposts' => -1,
