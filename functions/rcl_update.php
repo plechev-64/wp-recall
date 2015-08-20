@@ -9,9 +9,15 @@ function rcl_activation_daily_addon_update() {
 	}
 }
 
+add_action('wp','rcl_hand_addon_update');
+function rcl_hand_addon_update(){
+    if(!isset($_GET['rcl-addon-update'])||$_GET['rcl-addon-update']!='now') return false;
+    rcl_daily_addon_update();
+}
+
 add_action('rcl_daily_addon_update','rcl_daily_addon_update');
 function rcl_daily_addon_update(){
-    $paths = array(RCL_PATH.'add-on',RCL_TAKEPATH.'add-on') ;
+    $paths = array(RCL_TAKEPATH.'add-on') ;
 
     $rcl_addons = new Rcl_Addons();
 
@@ -34,6 +40,8 @@ function rcl_daily_addon_update(){
             }
         }
     }
+
+    //print_r($addons_data);exit;
 
     $need_update = array();
     foreach((array)$addons_data as $key=>$addon){

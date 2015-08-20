@@ -208,17 +208,17 @@ class Rcl_Addons{
 
         function get_actual_version($key,$version){
             $url = "http://wppost.ru/products-files/info/".$key."/info.xml";
-            $url_headers = @get_headers($url);
-
-            if(!$url_headers) return false;
 
             $ver = 0;
-            if($url_headers[0] !== 'HTTP/1.1 500 OK') {
-                $xml = simplexml_load_file($url);
-                $act_version = (string)$xml->version;
-                $ver = (version_compare($act_version,$version));
-                if($ver>0) return $act_version;
-            }
+
+            $xml = @simplexml_load_file($url);
+
+            if(!$xml) return false;
+
+            $act_version = (string)$xml->version;
+            $ver = (version_compare($act_version,$version));
+            if($ver>0) return $act_version;
+
             return $ver;
         }
 
