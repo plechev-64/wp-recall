@@ -143,7 +143,7 @@ function rcl_get_product_excerpt($desc){
 
     $excerpt = strip_tags($post->post_content);
 
-    if(!$excerpt){
+    if($excerpt){
         if(strlen($excerpt) > $desc){
             $excerpt = substr($excerpt, 0, $desc);
             $excerpt = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ...', $excerpt);

@@ -57,7 +57,6 @@ class Rcl_EditPost {
         do_action('init_update_post_rcl',$this);
 
         add_filter('pre_update_postdata_rcl',array(&$this,'add_data_post'),10,2);
-        add_action('update_post_rcl',array(&$this,'update_product_meta'),10,2);
 
         $this->update_post();
     }
@@ -121,32 +120,6 @@ class Rcl_EditPost {
             }
         }
         return $temp_gal;
-    }
-
-    function upload_file(){
-        global $user_ID,$sale_file;
-
-        if($sale_file['file']){
-
-            $attachment = array(
-                    'post_mime_type' => $sale_file['type'],
-                    'post_title' => 'salefile',
-                    'post_content' => intval($_POST['sale_price']).'/3/86400' ,
-                    'guid' => $sale_file['url'],
-                    'post_parent' => $this->post_id,
-                    'post_author' => $user_ID,
-                    'post_status' => 'inherit'
-            );
-
-            $attach_id = wp_insert_attachment( $attachment, $sale_file['file'], $this->post_id );
-            $attach_data = wp_generate_attachment_metadata( $attach_id, $sale_file['file'] );
-            wp_update_attachment_metadata( $attach_id, $attach_data );
-        }
-    }
-
-    function update_product_meta($post_id,$postdata){
-        if($postdata['post_type']!='products') return false;
-        if(!$this->update) $this->upload_file();
     }
 
     function get_status_post($moderation){

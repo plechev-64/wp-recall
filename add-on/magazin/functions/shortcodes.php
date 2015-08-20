@@ -131,7 +131,7 @@ function rcl_shortcode_cart() {
 
 add_shortcode('productlist','rcl_shortcode_productlist');
 function rcl_shortcode_productlist($atts, $content = null){
-	global $post,$wpdb,$rmag_options;
+	global $post,$wpdb,$rmag_options,$desc;
 
 	extract(shortcode_atts(array(
             'num' => false,

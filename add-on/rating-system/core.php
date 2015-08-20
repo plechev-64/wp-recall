@@ -306,36 +306,38 @@ function rcl_get_list_votes($args,$votes){
         $names = rcl_get_usernames($votes,'user_id');
         foreach($votes as $vote){
 
-			if(isset($rcl_options['rating_temp_'.$vote->rating_type])&&$args['rating_status']=='user'){
-				$row = $rcl_options['rating_temp_'.$vote->rating_type];
-			}else{
-				$row = '%USER% '.__('voted','rcl').': %VALUE%';
-			}
+            if(isset($rcl_options['rating_temp_'.$vote->rating_type])&&$args['rating_status']=='user'){
+                    $row = $rcl_options['rating_temp_'.$vote->rating_type];
+            }else{
+                    $row = '%USER% '.__('voted','rcl').': %VALUE%';
+            }
 
-			$temps = array(
-				'%USER%',
-				'%VALUE%'
-			);
-			$reps = array(
-				'<a class="" target="_blank" href="'.get_author_posts_url($vote->user_id).'">'.$names[$vote->user_id].'</a>',
-				rcl_format_rating($vote->rating_value)
-			);
+            $temps = array(
+                    '%USER%',
+                    '%VALUE%'
+            );
+            $reps = array(
+                    '<a class="" target="_blank" href="'.get_author_posts_url($vote->user_id).'">'.$names[$vote->user_id].'</a>',
+                    rcl_format_rating($vote->rating_value)
+            );
 
-			$row = str_replace($temps,$reps,$row);
+            $row = str_replace($temps,$reps,$row);
 
-			if($args['rating_status']=='user'){
-				$temps = array(
-					'%DATE%',
-					'%COMMENT%',
-					'%POST%'
-				);
-				$reps = array(
-					mysql2date('d F Y',$vote->rating_date),
-					'<a href="'.get_comment_link( $vote->object_id ).'">'.__('comment','rcl').'</a>',
-					'<a href="'.get_permalink($vote->object_id).'">'.get_the_title( $vote->object_id ).'</a>'
-				);
-				$row = str_replace($temps,$reps,$row);
-			}
+            if($args['rating_status']=='user'){
+                    $temps = array(
+                            '%DATE%',
+                            '%COMMENT%',
+                            '%POST%'
+                    );
+                    $reps = array(
+                            mysql2date('d F Y',$vote->rating_date),
+                            '<a href="'.get_comment_link( $vote->object_id ).'">'.__('comment','rcl').'</a>',
+                            '<a href="'.get_permalink($vote->object_id).'">'.get_the_title( $vote->object_id ).'</a>'
+                    );
+                    $row = str_replace($temps,$reps,$row);
+            }
+
+            $row = apply_filters('rcl_list_votes',$row,$vote);
 
             $class = ( $vote->rating_value > 0 ) ? 'fa-thumbs-o-up' : 'fa-thumbs-o-down';
             $list .= '<li><i class="fa '.$class.'"></i> '.$row.'</li>';

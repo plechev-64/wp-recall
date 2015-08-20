@@ -188,13 +188,13 @@ class Rcl_Addons{
 						</td>
 					</tr>';
 
-                                        if($ver){
+                                        if($ver>0){
                                             $table .= '<tr class="plugin-update-tr active" id="'.$key.'-update" data-slug="'.$key.'">'
                                                         . '<td colspan="3" class="plugin-update colspanchange">'
                                                             . '<div class="update-message">'
-                                                                . 'Доступна свежая версия '.$addon['name'].'. ';
+                                                                . 'Доступна свежая версия '.$addon['name'].' '.$need_update[$key]['new-version'].'. ';
                                                                 if($addon['add-on-uri']) $table .= 'Можно <a href="'.$addon['add-on-uri'].'"  title="'.$addon['name'].'">посмотреть информацию о версии '.$xml->version.'</a>';
-                                                            $table .= '</div>'
+                                                            $table .= 'или <a class="update-add-on" data-addon="'.$key.'" href="#">Обновить автоматически</a></div>'
                                                         . '</td>'
                                                     . '</tr>';
                                         }
@@ -207,7 +207,7 @@ class Rcl_Addons{
 	}
 
         function get_actual_version($key,$version){
-            $url = "http://wppost.ru/wp-content/datas/".$key."/info.xml";
+            $url = "http://wppost.ru/products-files/info/".$key."/info.xml";
             $url_headers = @get_headers($url);
 
             if(!$url_headers) return false;
@@ -395,29 +395,33 @@ class Rcl_Addons{
 	  }
 	}
 
-	function upload_addon_recall(){
+	function upload_addon_recall($arch=false){
 
 		//$dir_src = RCL_PATH.'add-on/';
 
             $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
-            $filename = $_FILES['addonzip']['tmp_name'];
-            $f1 = current(wp_upload_dir()) . "/" . basename($filename);
-            copy($filename,$f1);
+            if(!$arch){
+                $filename = $_FILES['addonzip']['tmp_name'];
+                $arch = current(wp_upload_dir()) . "/" . basename($filename);
+                copy($filename,$arch);
+            }
 
             $zip = new ZipArchive;
 
-            $res = $zip->open($f1);
+            $res = $zip->open($arch);
 
             if($res === TRUE){
 
                 for ($i = 0; $i < $zip->numFiles; $i++) {
                     //echo $zip->getNameIndex($i).'<br>';
                     if($i==0) $dirzip = $zip->getNameIndex($i);
+
                     if($zip->getNameIndex($i)==$dirzip.'info.txt'){
                             $info = true;
                     }
                 }
+
                 if(!$info){
                       $zip->close();
                       wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=error-info') );exit;
@@ -431,7 +435,7 @@ class Rcl_Addons{
                 }
 
                 $zip->close();
-                unlink($f1);
+                unlink($arch);
                 if($rs){
                       wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=upload') );exit;
                 }else{
@@ -454,7 +458,7 @@ class Rcl_Addons{
 		$addon_data = array();
 		$cnt = count($info);
 
-		if($cnt==1) $info = explode(';',$info);
+		if($cnt==1) $info = explode(';',$info[0]);
 
 		foreach((array)$info as $string){
 
@@ -468,6 +472,11 @@ class Rcl_Addons{
 			if ( false !== strpos($string, 'Version:') ){
 				preg_match_all('/(?<=Version\:)[A-zА-я0-9\-\_\:\/\.\,\?\=\&\@\s]*/iu', $string, $version_value);
 				$addon_data['version'] = trim($version_value[0][0]);
+				continue;
+			}
+                        if ( false !== strpos($string, 'Support Core:') ){
+				preg_match_all('/(?<=Support Core\:)[A-zА-я0-9\-\_\:\/\.\,\?\=\&\@\s]*/iu', $string, $version_value);
+				$addon_data['support-core'] = trim($version_value[0][0]);
 				continue;
 			}
 			if ( false !== strpos($string, 'Description:') ){

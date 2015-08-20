@@ -174,7 +174,7 @@ function rcl_magazine_scripts($script){
 						jQuery('.empty-basket').replaceWith(data['empty-content']);
 						jQuery('.cart-summa').html(data['data_sumprice']);
 						jQuery('.cart-numbers').html(data['allprod']);
-						alert('Добавлено в корзину!');
+						rcl_notice('Добавлено в корзину!','success');
 					}
 					if(data['recall']==200){
 						alert('Отрицательное значение!');

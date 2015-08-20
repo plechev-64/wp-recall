@@ -105,7 +105,27 @@ jQuery(function($){
 		});	  	
 		return false;
 	});
-	
+        
+	$('.update-message .update-add-on').click(function(){
+            var addon = $(this).data('addon');				
+            var dataString = 'action=rcl_update_addon&addon='+addon;
+
+            $.ajax({
+                type: 'POST',
+                data: dataString,
+                dataType: 'json',
+                url: ajaxurl,
+                success: function(data){
+                    if(data['success']==addon){					
+                            $('#'+addon+'-update .update-message').html('Успешно обновлено!');				
+                    }
+                    if(data['error']){
+                        alert(data['error']);
+                    }
+                } 
+            });	  	
+            return false;
+	});
 	
 	function str_replace(search, replace, subject) {
 		return subject.split(search).join(replace);

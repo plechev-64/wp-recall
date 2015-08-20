@@ -48,3 +48,71 @@ function rcl_daily_addon_update(){
 
 }
 
+add_action('wp_ajax_rcl_update_addon','rcl_update_addon');
+function rcl_update_addon(){
+    $addon = $_POST['addon'];
+    $need_update = get_option('rcl_addons_need_update');
+    if(!isset($need_update[$addon])) return false;
+
+    $url = 'http://wppost.ru/?remote-request=update-addon';
+    $data = array('addon' => $addon, 'action' => 'rcl_get_addon');
+
+    $pathdir = RCL_TAKEPATH.'update/';
+    $new_addon = $pathdir.$addon.'.zip';
+
+    if(!file_exists($pathdir)){
+        mkdir($pathdir);
+        chmod($pathdir, 0755);
+    }
+
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data),
+        ),
+    );
+    $context  = stream_context_create($options);
+    $archive = file_get_contents($url, false, $context);
+    file_put_contents($new_addon, $archive);
+
+    $zip = new ZipArchive;
+
+    $res = $zip->open($new_addon);
+
+    if($res === TRUE){
+
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            if($i==0) $dirzip = $zip->getNameIndex($i);
+            if($zip->getNameIndex($i)==$dirzip.'info.txt'){
+                    $info = true; break;
+            }
+        }
+
+        if(!$info){
+            $zip->close();
+            $log['error'] = 'Дополнение не имеет корректного заголовка!';
+            echo json_encode($log);
+            exit;
+        }
+
+        $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+
+        if(file_exists(RCL_TAKEPATH.'add-on'.'/')){
+            $rs = $zip->extractTo(RCL_TAKEPATH.'add-on'.'/');
+        }
+
+        $zip->close();
+        unlink($new_addon);
+
+        $log['success'] = $addon;
+        echo json_encode($log);
+        exit;
+
+    }else{
+        $log['error'] = 'Не удалось открыть архив!';
+        echo json_encode($log);
+        exit;
+    }
+}
+

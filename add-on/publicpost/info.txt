@@ -1,5 +1,6 @@
 Name: Public Wp-Recall (Публикация);
 Version: 2.2.0;
+Support Core: 13.0.3;
 Description: Дайте возможность посетителям вашего сайта публиковать свои записи с помощью плагина wp-recall;
 Author: Плечев Андрей;
 Author URI: http://wppost.ru/;
