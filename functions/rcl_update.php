@@ -82,6 +82,13 @@ function rcl_update_addon(){
     );
     $context  = stream_context_create($options);
     $archive = file_get_contents($url, false, $context);
+
+    if(!$archive){
+        $log['error'] = 'Не удалось получить файл с сервера!';
+        echo json_encode($log);
+        exit;
+    }
+
     file_put_contents($new_addon, $archive);
 
     $zip = new ZipArchive;
@@ -104,10 +111,10 @@ function rcl_update_addon(){
             exit;
         }
 
-        $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
-
         if(file_exists(RCL_TAKEPATH.'add-on'.'/')){
+            rcl_deactivate_addon($addon);
             $rs = $zip->extractTo(RCL_TAKEPATH.'add-on'.'/');
+            rcl_activate_addon($addon);
         }
 
         $zip->close();
