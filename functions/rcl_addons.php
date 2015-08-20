@@ -395,17 +395,13 @@ class Rcl_Addons{
 	  }
 	}
 
-	function upload_addon_recall($arch=false){
-
-		//$dir_src = RCL_PATH.'add-on/';
+	function upload_addon_recall(){
 
             $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
-            if(!$arch){
-                $filename = $_FILES['addonzip']['tmp_name'];
-                $arch = current(wp_upload_dir()) . "/" . basename($filename);
-                copy($filename,$arch);
-            }
+            $filename = $_FILES['addonzip']['tmp_name'];
+            $arch = current(wp_upload_dir()) . "/" . basename($filename);
+            copy($filename,$arch);
 
             $zip = new ZipArchive;
 
