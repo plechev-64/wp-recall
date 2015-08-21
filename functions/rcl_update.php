@@ -84,7 +84,7 @@ function rcl_update_addon(){
     $archive = file_get_contents($url, false, $context);
 
     if(!$archive){
-        $log['error'] = 'Не удалось получить файл с сервера!';
+        $log['error'] = __('Unable to retrieve the file from the server!','rcl');
         echo json_encode($log);
         exit;
     }
@@ -106,7 +106,7 @@ function rcl_update_addon(){
 
         if(!$info){
             $zip->close();
-            $log['error'] = 'Дополнение не имеет корректного заголовка!';
+            $log['error'] = __('Update does not have the correct title!','rcl');
             echo json_encode($log);
             exit;
         }
@@ -125,7 +125,7 @@ function rcl_update_addon(){
         exit;
 
     }else{
-        $log['error'] = 'Не удалось открыть архив!';
+        $log['error'] = __('Unable to open archive!','rcl');
         echo json_encode($log);
         exit;
     }

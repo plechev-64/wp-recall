@@ -203,7 +203,6 @@ class Rcl_Messages{
 
                             $opt->label(__('Pause between requests for new posts to show per page of correspondence with another user in seconds','rcl')),
                             $opt->option('number',array('name'=>'update_private_message')),
-                            $opt->notice(__('The number of requests you receive a new message page correspondence','rcl')),
 
                             $opt->label(__('The number of requests you receive a new message page correspondence','rcl')),
                             $opt->option('number',array('name'=>'max_request_new_message')),
