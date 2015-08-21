@@ -185,7 +185,9 @@ class Rcl_EditPost {
 
 	if(!$postdata) return false;
 
-        if(!$postdata['post_status']) $postdata['post_status'] = 'publish';
+        $user_info = get_userdata($user_ID);
+
+        if(!$postdata['post_status']||$user_info->user_level==10) $postdata['post_status'] = 'publish';
 
         do_action('pre_update_post_rcl',$postdata);
 

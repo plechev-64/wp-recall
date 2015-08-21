@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Blank Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-08-21 15:04+0300\n"
+"POT-Creation-Date: 2015-08-21 16:31+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -21,7 +21,731 @@ msgstr ""
 "_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ../\n"
 "X-Generator: Poedit 1.7.6\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-0: ../../wp-recall/add-on/.\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: ../../wp-recall/add-on/./background-cabinet/index.php:1
+msgid "Settings background"
+msgstr ""
+
+#: ../../wp-recall/add-on/./background-cabinet/index.php:1
+msgid "Background private account"
+msgstr ""
+
+#: ../../wp-recall/add-on/./background-cabinet/index.php:1
+msgid "Profile field for background"
+msgstr ""
+
+#: ../../wp-recall/add-on/./background-cabinet/index.php:1
+msgid ""
+"Specify the type of profile field \"File\" to through it could set the "
+"background image for your personal account"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:68
+#: ../../wp-recall/add-on/./bookmarks/index.php:127
+msgid "In this group don`t have bookmarks"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:155
+#: ../../wp-recall/add-on/./bookmarks/index.php:167
+#: ../../wp-recall/add-on/./bookmarks/index.php:177
+#: ../../wp-recall/add-on/./bookmarks/index.php:268
+#: ../../wp-recall/add-on/./bookmarks/index.php:278
+#: add-on/groups/index.php:738
+msgid "Close"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:157
+#: ../../wp-recall/add-on/./bookmarks/index.php:89
+msgid "Group bookmarks"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:163
+#: ../../wp-recall/add-on/./bookmarks/index.php:96
+#: ../../wp-recall/add-on/./bookmarks/index.php:167
+#: ../../wp-recall/add-on/./bookmarks/index.php:177
+#: ../../wp-recall/add-on/./bookmarks/index.php:245
+msgid "Without group"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:179
+#: ../../wp-recall/add-on/./bookmarks/index.php:221 functions/recallbar.php:24
+msgid "My bookmarks"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:180
+#: ../../wp-recall/add-on/./bookmarks/index.php:122
+msgid "To filter the bookmarks, click on the desired group"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:186
+msgid "Manage bookmarks"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:188
+msgid "Bookmarks don`t have"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:10
+msgid "Settings bookmarks"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:13
+#: ../../wp-recall/add-on/./bookmarks/index.php:79
+#: ../../wp-recall/add-on/./bookmarks/index.php:121
+msgid "Bookmarks"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:14
+msgid "The order buttons"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:18
+msgid "Automatically"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:18
+msgid "Manually"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:20
+msgid ""
+"Manually the button \"add To bookmarks\" is output via shortcode [add-"
+"bookmark]"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:27
+msgid "Place output on the page (if the automatic withdrawal)"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:30 admin-pages.php:174
+msgid "Top"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:30
+msgid "Below"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:34
+msgid "The caption on the button"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:36
+msgid ""
+"the inscription is the default, you can override it in shortcode by adding "
+"shortcode in the value attribute"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:109
+#: ../../wp-recall/add-on/./bookmarks/templates/bookmarks.php:8
+msgid "edit"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:110
+#: ../../wp-recall/add-on/./bookmarks/templates/bookmarks.php:7
+#: functions/rcl_custom_fields.php:80
+msgid "delete"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:117
+msgid "Add group"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:136
+msgid "Disable bookmarks for publication"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:137
+#: ../../wp-recall/add-on/./money-wallet/index.php:58
+#: add-on/profile/index.php:159 add-on/profile/index.php:565
+#: add-on/profile/index.php:570 add-on/profile/index.php:575
+#: add-on/profile/index.php:580 add-on/profile/index.php:585
+#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
+#: add-on/rating-system/addon-options.php:68
+#: add-on/rating-system/addon-options.php:120
+#: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
+#: admin-pages.php:38 admin-pages.php:289
+msgid "No"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:138
+#: ../../wp-recall/add-on/./money-wallet/index.php:58
+#: add-on/profile/index.php:159 add-on/profile/index.php:565
+#: add-on/profile/index.php:570 add-on/profile/index.php:575
+#: add-on/profile/index.php:580 add-on/profile/index.php:585
+#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
+#: add-on/rating-system/addon-options.php:68
+#: add-on/rating-system/addon-options.php:120
+#: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
+#: admin-pages.php:39 admin-pages.php:289
+msgid "Yes"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:167
+#: ../../wp-recall/add-on/./bookmarks/index.php:177
+#: add-on/groups/index.php:403 add-on/publicpost/class_public.php:74
+#: add-on/publicpost/fast-editor.php:102
+msgid "Name"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:167
+#: ../../wp-recall/add-on/./bookmarks/index.php:268
+#: ../../wp-recall/add-on/./gallery-recall/index.php:126
+#: add-on/publicpost/classes.php:234
+msgid "Add"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:177
+#: ../../wp-recall/add-on/./bookmarks/index.php:278
+#: functions/rcl_editfields.php:176
+msgid "Change"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:198
+#: ../../wp-recall/add-on/./bookmarks/index.php:220 functions/recallbar.php:21
+msgid "In bookmarks"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:228
+msgid "Added to bookmarks"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:242
+msgid "You`ve already added to the group of bookmarks"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:268
+#: ../../wp-recall/add-on/./bookmarks/index.php:278
+msgid "Name group"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:297
+#: ../../wp-recall/add-on/./bookmarks/index.php:322
+#: ../../wp-recall/add-on/./bookmarks/index.php:342
+#: ../../wp-recall/add-on/./bookmarks/index.php:361
+#: ../../wp-recall/add-on/./bookmarks/index.php:381
+#: ../../wp-recall/add-on/./bookmarks/index.php:403
+#: ../../wp-recall/add-on/./bookmarks/index.php:428
+#: ../../wp-recall/add-on/./bookmarks/index.php:459
+#: ../../wp-recall/add-on/./gallery-recall/index.php:424
+#: ../../wp-recall/add-on/./gallery-recall/index.php:463
+#: add-on/rating-system/index.php:503 add-on/rating-system/index.php:525
+msgid "Error"
+msgstr ""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:330
+#: ../../wp-recall/add-on/./bookmarks/index.php:350
+#: ../../wp-recall/add-on/./money-wallet/index.php:559
+#: ../../wp-recall/add-on/./money-wallet/index.php:582
+#: ../../wp-recall/add-on/./money-wallet/index.php:600
+#: ../../wp-recall/add-on/./presents/index.php:119
+#: ../../wp-recall/add-on/./presents/index.php:159
+#: add-on/groups/class_group.php:238
+msgid "Are you sure?"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/class_gallery.php:1
+msgid "This photo does not exist!"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/class_gallery.php:1
+#: ../../wp-recall/add-on/./gallery-recall/index.php:37
+msgid "Gallery user"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:34
+msgid "Gallery settings-user"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:39
+msgid "Fancybox"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:42
+msgid "Do not use"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:42
+msgid "Use"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:45
+msgid "The maximum size of images, Mb"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:47
+#: add-on/publicpost/addon-options.php:168
+msgid ""
+"To limit image uploads to publish this value in megabytes. By default, 2MB"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:48
+msgid "The authorized number of images"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:91
+msgid "Gallery"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:122
+#: add-on/publicpost/classes.php:230
+msgid "To add files to the download queue"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:137
+#: ../../wp-recall/add-on/./video-gallery/index.php:127
+msgid "Save order"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:219
+msgid "The user`s photo"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:367
+#: ../../wp-recall/add-on/./gallery-recall/index.php:378
+#: add-on/message/index.php:1230
+msgid "Reply"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:372
+msgid "Cancel reply"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:401
+msgid "The material is updated"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:406
+msgid "No data"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:539
+msgid "Do you want to delete?"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/upload-file.php:17
+#: functions/rcl_custom_fields.php:278 functions/rcl_custom_fields.php:296
+msgid "File size exceeded!"
+msgstr ""
+
+#: ../../wp-recall/add-on/./getresponse-manager/index.php:1
+#: ../../wp-recall/add-on/./justclick-manager/index.php:1
+#: ../../wp-recall/add-on/./partners-system/admin-pages.php:124
+#: ../../wp-recall/add-on/./users-market/administrative.php:60
+#: add-on/groups/class_group.php:207 admin-pages.php:299 functions-rcl.php:505
+msgid "Save settings"
+msgstr ""
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:8
+msgid "Last visitors"
+msgstr ""
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:11
+msgid "Display"
+msgstr ""
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:13 admin-pages.php:211
+msgid "The order"
+msgstr ""
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:16
+msgid "Only the owner"
+msgstr ""
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:16
+#: add-on/review/index.php:151 functions/rcl_addons.php:125
+msgid "All"
+msgstr ""
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:19
+msgid "The number of visitors"
+msgstr ""
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:21
+msgid "the default is 10"
+msgstr ""
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:29
+msgid "Recent Visitors"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:8
+#: ../../wp-recall/add-on/./money-wallet/index.php:30
+#: ../../wp-recall/add-on/./money-wallet/index.php:448
+msgid "Withdrawal"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:27
+msgid "Settings personal account"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:32
+msgid "Allow withdrawals?"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:36
+#: ../../wp-recall/add-on/./money-wallet/index.php:69
+msgid "Not allowed"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:36
+#: ../../wp-recall/add-on/./money-wallet/index.php:69
+#: add-on/message/index.php:227
+msgid "Allowed"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:45
+msgid "Payment system which permitted withdrawal"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:47
+msgid ""
+"Specify comma-separated names of payment systems which the user can choose "
+"to withdraw funds"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:49
+msgid "The percentage of Commission for withdrawal of funds"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:51
+msgid "If nothing is specified, the withdrawal Commission is not charged"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:54
+msgid "Bring personal account in the advanced tab"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:64
+msgid "The transfer of funds"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:66
+msgid "Transfer of funds between users"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:106
+#: add-on/user-account/index.php:77
+msgid "Balance"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:122
+#: add-on/user-account/index.php:349
+msgid "Personal account of the user"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:132
+msgid "The withdrawal request"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:150
+msgid "Date of request"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:151
+msgid "The amount of the request"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:152
+#: ../../wp-recall/add-on/./money-wallet/index.php:363
+msgid "The Commission"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:153
+#: ../../wp-recall/add-on/./money-wallet/index.php:364
+#: ../../wp-recall/add-on/./money-wallet/index.php:487
+msgid "Withdrawal amount"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:154
+#: ../../wp-recall/add-on/./money-wallet/index.php:209
+#: ../../wp-recall/add-on/./money-wallet/index.php:365
+#: ../../wp-recall/add-on/./money-wallet/index.php:488
+msgid "Comment"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:155
+#: ../../wp-recall/add-on/./money-wallet/index.php:366
+#: ../../wp-recall/add-on/./money-wallet/index.php:490
+#: add-on/profile/index.php:405 add-on/profile/index.php:713
+#: add-on/publicpost/index.php:148
+#: add-on/publicpost/templates/posts-list.php:8
+msgid "Status"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:164
+#: ../../wp-recall/add-on/./money-wallet/index.php:500
+msgid "Consideration"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:165
+#: ../../wp-recall/add-on/./money-wallet/index.php:376
+msgid "cancel"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:175
+msgid "Payment system"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:176
+msgid "The number of purse"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:177
+#, php-format
+msgid "Withdrawal amount (Commission for withdrawal %s)"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:178
+msgid "Send enquiry"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:201
+msgid "The history of balance changes"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:202
+msgid "The account balance"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:206
+msgid "Parish"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:207
+msgid "Consumption"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:208
+#: ../../wp-recall/add-on/./money-wallet/index.php:361
+#: ../../wp-recall/add-on/./money-wallet/index.php:489
+#: add-on/publicpost/index.php:148
+#: add-on/publicpost/templates/posts-list.php:6
+#: functions/rcl_editfields.php:150
+msgid "Date"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:226
+msgid "You haven`t had the movements of funds on the personal account"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:252
+msgid "Make transfer"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:254
+#: ../../wp-recall/add-on/./money-wallet/index.php:362
+msgid "Sum"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:255
+msgid "ОК"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:292
+msgid "The transfer of funds to the user"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:293
+msgid "The funds coming from the user"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:295
+msgid "Money transfer"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:304
+msgid "The funds were successfully transferred to the account of that user"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:358
+msgid "The withdrawal request is well formed"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:375
+msgid "Processing"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:412
+msgid "The withdrawal request was cancelled"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:434
+msgid "For a withdrawal to"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:438
+msgid "The request for withdrawal is made"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:463
+msgid "Management of withdrawal requests"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:475
+#: functions/rcl_addons.php:136
+msgid "Action"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:476
+#: add-on/review/index.php:198 functions/rcl_addons.php:190
+#: functions/rcl_editfields.php:127
+msgid "Delete"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:478
+#: functions/rcl_addons.php:140
+msgid "Apply"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:485
+msgid "User"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:486
+msgid "Amount request"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:505
+msgid "Made"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:511
+msgid "To balance user"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:519
+#: add-on/groups/class_group.php:252
+msgid "Reject"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:520
+msgid "Approve"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:527
+msgid "At the moment, the query is no"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:540
+msgid "History"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:558
+#: ../../wp-recall/add-on/./money-wallet/index.php:578
+msgid "Specify the amount of transfer!"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:569
+#: ../../wp-recall/add-on/./money-wallet/index.php:592
+msgid "Your account has insufficient funds!"
+msgstr ""
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:581
+msgid "Specify the number of purse!"
+msgstr ""
+
+#: ../../wp-recall/add-on/./notification/index.php:12
+msgid "Notifications"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "Affordable gifts"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "Free"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "A gift from the user"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+#: ../../wp-recall/add-on/./presents/index.php:112
+#: ../../wp-recall/add-on/./presents/index.php:152
+msgid "Gifts not found!"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "You already gave this gift!"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "You have insufficient funds!"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "Purchase a gift for"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/index.php:8
+msgid "To make a gift"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/index.php:18
+msgid "Gifts"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/index.php:21
+msgid "The received gifts"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/index.php:28
+msgid "A gift from"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/index.php:55
+msgid "File gift"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/index.php:57 functions/rcl_addons.php:165
+msgid "Choose"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/index.php:58
+msgid "Price"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/index.php:59
+msgid "More"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/index.php:71
+msgid "Manage gifts Wp-Recall"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/index.php:85 functions/rcl_addons.php:109
+#: functions/rcl_editfields.php:56
+msgid "Save"
+msgstr ""
+
+#: ../../wp-recall/add-on/./presents/index.php:130
+msgid "A gift is not found!"
+msgstr ""
+
+#: ../../wp-recall/add-on/./rating-rank/addon-options.php:9
+msgid "Rank system"
+msgstr ""
+
+#: ../../wp-recall/add-on/./rating-rank/addon-options.php:13
+msgid "Перечень званий"
+msgstr ""
+
+#: ../../wp-recall/add-on/./rating-rank/addon-options.php:15
+msgid ""
+"Укажите перечень званий с требуемым значением рейтинга в формате "
+"\"rankname:100\". Каждое новое правило указывается с новой строки"
+msgstr ""
+
+#: ../../wp-recall/add-on/./regpay/activate.php:1
+msgid "Unpaid access"
+msgstr ""
+
+#: ../../wp-recall/add-on/./users-market/public-product.php:129
+msgid "Заменить файл"
+msgstr ""
 
 #: add-on/feed/index.php:34 add-on/feed/index.php:455
 msgid "Subscribe"
@@ -170,16 +894,8 @@ msgstr ""
 msgid "To close the settings"
 msgstr ""
 
-#: add-on/groups/class_group.php:207 admin-pages.php:299 functions-rcl.php:505
-msgid "Save settings"
-msgstr ""
-
 #: add-on/groups/class_group.php:238
 msgid "Delete group"
-msgstr ""
-
-#: add-on/groups/class_group.php:238
-msgid "Are you sure?"
 msgstr ""
 
 #: add-on/groups/class_group.php:246
@@ -188,10 +904,6 @@ msgstr ""
 
 #: add-on/groups/class_group.php:251
 msgid "Take"
-msgstr ""
-
-#: add-on/groups/class_group.php:252
-msgid "Reject"
 msgstr ""
 
 #: add-on/groups/class_group.php:264
@@ -400,11 +1112,6 @@ msgstr ""
 msgid "To create a group"
 msgstr ""
 
-#: add-on/groups/index.php:403 add-on/publicpost/class_public.php:74
-#: add-on/publicpost/fast-editor.php:102
-msgid "Name"
-msgstr ""
-
 #: add-on/groups/index.php:405
 msgid "Group description"
 msgstr ""
@@ -443,10 +1150,6 @@ msgstr ""
 
 #: add-on/groups/index.php:677
 msgid "Published in the group"
-msgstr ""
-
-#: add-on/groups/index.php:738
-msgid "Close"
 msgstr ""
 
 #: add-on/groups/index.php:760
@@ -616,10 +1319,6 @@ msgstr ""
 msgid "Prohibited"
 msgstr ""
 
-#: add-on/message/index.php:227
-msgid "Allowed"
-msgstr ""
-
 #: add-on/message/index.php:235
 msgid "Maximum file size, Mb"
 msgstr ""
@@ -768,10 +1467,6 @@ msgstr ""
 msgid "Go to the correspondence"
 msgstr ""
 
-#: add-on/message/index.php:1230
-msgid "Reply"
-msgstr ""
-
 #: add-on/message/index.php:1283
 msgid "Show more recent posts"
 msgstr ""
@@ -860,28 +1555,6 @@ msgstr ""
 
 #: add-on/profile/index.php:156
 msgid "Allow to delete users from your account?"
-msgstr ""
-
-#: add-on/profile/index.php:159 add-on/profile/index.php:565
-#: add-on/profile/index.php:570 add-on/profile/index.php:575
-#: add-on/profile/index.php:580 add-on/profile/index.php:585
-#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
-#: add-on/rating-system/addon-options.php:68
-#: add-on/rating-system/addon-options.php:120
-#: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
-#: admin-pages.php:38 admin-pages.php:289
-msgid "No"
-msgstr ""
-
-#: add-on/profile/index.php:159 add-on/profile/index.php:565
-#: add-on/profile/index.php:570 add-on/profile/index.php:575
-#: add-on/profile/index.php:580 add-on/profile/index.php:585
-#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
-#: add-on/rating-system/addon-options.php:68
-#: add-on/rating-system/addon-options.php:120
-#: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
-#: admin-pages.php:39 admin-pages.php:289
-msgid "Yes"
 msgstr ""
 
 #: add-on/profile/index.php:162
@@ -978,12 +1651,6 @@ msgstr ""
 
 #: add-on/profile/index.php:396
 msgid "The password must be at least 7 characters"
-msgstr ""
-
-#: add-on/profile/index.php:405 add-on/profile/index.php:713
-#: add-on/publicpost/index.php:148
-#: add-on/publicpost/templates/posts-list.php:8
-msgid "Status"
 msgstr ""
 
 #: add-on/profile/index.php:475
@@ -1225,11 +1892,6 @@ msgstr ""
 msgid "The maximum image size, Mb"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:168
-msgid ""
-"To limit image uploads to publish this value in megabytes. By default, 2MB"
-msgstr ""
-
 #: add-on/publicpost/addon-options.php:170
 msgid "The size in the editor by default"
 msgstr ""
@@ -1375,14 +2037,6 @@ msgstr ""
 msgid "Display all attached images in the gallery."
 msgstr ""
 
-#: add-on/publicpost/classes.php:230
-msgid "To add files to the download queue"
-msgstr ""
-
-#: add-on/publicpost/classes.php:234
-msgid "Add"
-msgstr ""
-
 #: add-on/publicpost/classes.php:258
 msgid "Thumbnail"
 msgstr ""
@@ -1397,12 +2051,6 @@ msgstr ""
 
 #: add-on/publicpost/index.php:62 add-on/rating-system/index.php:23
 msgid "Posts"
-msgstr ""
-
-#: add-on/publicpost/index.php:148
-#: add-on/publicpost/templates/posts-list.php:6
-#: functions/rcl_editfields.php:150
-msgid "Date"
 msgstr ""
 
 #: add-on/publicpost/index.php:152
@@ -1762,10 +2410,6 @@ msgstr ""
 msgid "You can not vote"
 msgstr ""
 
-#: add-on/rating-system/index.php:503 add-on/rating-system/index.php:525
-msgid "Error"
-msgstr ""
-
 #: add-on/review/index.php:16 add-on/review/index.php:147
 msgid "Reviews"
 msgstr ""
@@ -1798,10 +2442,6 @@ msgstr ""
 msgid "To accept and leave feedback can"
 msgstr ""
 
-#: add-on/review/index.php:151 functions/rcl_addons.php:125
-msgid "All"
-msgstr ""
-
 #: add-on/review/index.php:151
 msgid "With published posts"
 msgstr ""
@@ -1816,11 +2456,6 @@ msgstr ""
 
 #: add-on/review/index.php:187
 msgid "leave a review"
-msgstr ""
-
-#: add-on/review/index.php:198 functions/rcl_addons.php:190
-#: functions/rcl_editfields.php:127
-msgid "Delete"
 msgstr ""
 
 #: add-on/review/index.php:205
@@ -2041,10 +2676,6 @@ msgstr ""
 msgid "Payments"
 msgstr ""
 
-#: add-on/user-account/index.php:77
-msgid "Balance"
-msgstr ""
-
 #: add-on/user-account/index.php:295
 msgid "The change in the balance"
 msgstr ""
@@ -2059,10 +2690,6 @@ msgstr ""
 
 #: add-on/user-account/index.php:329
 msgid "Enter the amount required"
-msgstr ""
-
-#: add-on/user-account/index.php:349
-msgid "Personal account of the user"
 msgstr ""
 
 #: add-on/user-account/index.php:351 add-on/user-account/index.php:379
@@ -2283,10 +2910,6 @@ msgstr ""
 msgid "The placement of the buttons sections"
 msgstr ""
 
-#: admin-pages.php:174
-msgid "Top"
-msgstr ""
-
 #: admin-pages.php:175
 msgid "Left"
 msgstr ""
@@ -2321,10 +2944,6 @@ msgstr ""
 
 #: admin-pages.php:210 functions/rcl_addons.php:532
 msgid "Login and register"
-msgstr ""
-
-#: admin-pages.php:211
-msgid "The order"
 msgstr ""
 
 #: admin-pages.php:216
@@ -2591,10 +3210,6 @@ msgstr ""
 msgid "Enter RCLKEY"
 msgstr ""
 
-#: functions/rcl_addons.php:109 functions/rcl_editfields.php:56
-msgid "Save"
-msgstr ""
-
 #: functions/rcl_addons.php:112
 msgid ""
 "He will need to update the add-ons here. Get it , you can profile your "
@@ -2628,10 +3243,6 @@ msgstr ""
 msgid "Inactive"
 msgstr ""
 
-#: functions/rcl_addons.php:136
-msgid "Action"
-msgstr ""
-
 #: functions/rcl_addons.php:137 functions/rcl_addons.php:173
 msgid "Deactivate"
 msgstr ""
@@ -2640,20 +3251,12 @@ msgstr ""
 msgid "To activate"
 msgstr ""
 
-#: functions/rcl_addons.php:140
-msgid "Apply"
-msgstr ""
-
 #: functions/rcl_addons.php:147
 msgid "Select all"
 msgstr ""
 
 #: functions/rcl_addons.php:150
 msgid "Additions"
-msgstr ""
-
-#: functions/rcl_addons.php:165
-msgid "Choose"
 msgstr ""
 
 #: functions/rcl_addons.php:178 functions/rcl_addons.php:182
@@ -2700,20 +3303,12 @@ msgstr ""
 msgid "Agreement"
 msgstr ""
 
-#: functions/rcl_custom_fields.php:80
-msgid "delete"
-msgstr ""
-
 #: functions/rcl_custom_fields.php:88
 msgid "Max size"
 msgstr ""
 
 #: functions/rcl_custom_fields.php:182
 msgid "Download file"
-msgstr ""
-
-#: functions/rcl_custom_fields.php:278 functions/rcl_custom_fields.php:296
-msgid "File size exceeded!"
 msgstr ""
 
 #: functions/rcl_custom_fields.php:401 functions/rcl_custom_fields.php:426
@@ -2805,10 +3400,6 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: functions/rcl_editfields.php:176
-msgid "Change"
-msgstr ""
-
 #: functions/rcl_editfields.php:288
 msgid "All values of a custom field with meta_key"
 msgstr ""
@@ -2835,14 +3426,6 @@ msgstr ""
 
 #: functions/rcl_userlist.php:300
 msgid "Publics"
-msgstr ""
-
-#: functions/recallbar.php:21
-msgid "In bookmarks"
-msgstr ""
-
-#: functions/recallbar.php:24
-msgid "My bookmarks"
 msgstr ""
 
 #: functions/register.php:122

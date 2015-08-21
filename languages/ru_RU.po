@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-08-21 15:01+0300\n"
+"POT-Creation-Date: 2015-08-21 16:26+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -22,7 +22,736 @@ msgstr ""
 "_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ../\n"
 "X-Generator: Poedit 1.7.6\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-0: ../../wp-recall/add-on/.\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: ../../wp-recall/add-on/./background-cabinet/index.php:1
+msgid "Settings background"
+msgstr "Настройки фона"
+
+#: ../../wp-recall/add-on/./background-cabinet/index.php:1
+msgid "Background private account"
+msgstr "Фон личного кабинета"
+
+#: ../../wp-recall/add-on/./background-cabinet/index.php:1
+msgid "Profile field for background"
+msgstr "Поле профиля фона"
+
+#: ../../wp-recall/add-on/./background-cabinet/index.php:1
+msgid ""
+"Specify the type of profile field \"File\" to through it could set the "
+"background image for your personal account"
+msgstr ""
+"Выберите поле профиля с типом \"Файл\" и укажите его в качестве фонового "
+"изображения"
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:68
+#: ../../wp-recall/add-on/./bookmarks/index.php:127
+msgid "In this group don`t have bookmarks"
+msgstr "В этой группе пусто"
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:155
+#: ../../wp-recall/add-on/./bookmarks/index.php:167
+#: ../../wp-recall/add-on/./bookmarks/index.php:177
+#: ../../wp-recall/add-on/./bookmarks/index.php:268
+#: ../../wp-recall/add-on/./bookmarks/index.php:278
+#: add-on/groups/index.php:738
+msgid "Close"
+msgstr "Закрыть"
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:157
+#: ../../wp-recall/add-on/./bookmarks/index.php:89
+msgid "Group bookmarks"
+msgstr "Группы избранного"
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:163
+#: ../../wp-recall/add-on/./bookmarks/index.php:96
+#: ../../wp-recall/add-on/./bookmarks/index.php:167
+#: ../../wp-recall/add-on/./bookmarks/index.php:177
+#: ../../wp-recall/add-on/./bookmarks/index.php:245
+msgid "Without group"
+msgstr "Без группы"
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:179
+#: ../../wp-recall/add-on/./bookmarks/index.php:221 functions/recallbar.php:24
+msgid "My bookmarks"
+msgstr "Избранное"
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:180
+#: ../../wp-recall/add-on/./bookmarks/index.php:122
+msgid "To filter the bookmarks, click on the desired group"
+msgstr "Фильтруйте избранное нажав на нужную группу"
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:186
+msgid "Manage bookmarks"
+msgstr "Управление закладками"
+
+#: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:188
+msgid "Bookmarks don`t have"
+msgstr "Ничего не найдено"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:10
+msgid "Settings bookmarks"
+msgstr "Настройки закладок"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:13
+#: ../../wp-recall/add-on/./bookmarks/index.php:79
+#: ../../wp-recall/add-on/./bookmarks/index.php:121
+msgid "Bookmarks"
+msgstr "Избранное"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:14
+msgid "The order buttons"
+msgstr "Порядок вывода кнопки \"В избранное\""
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:18
+msgid "Automatically"
+msgstr "Автоматически"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:18
+msgid "Manually"
+msgstr "Вручную"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:20
+msgid ""
+"Manually the button \"add To bookmarks\" is output via shortcode [add-"
+"bookmark]"
+msgstr ""
+"При ручном выводе кнопки, необходимо использовать шорткод [add-bookmark]"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:27
+msgid "Place output on the page (if the automatic withdrawal)"
+msgstr "Место вывода на странице (если автоматический вывод)"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:30 admin-pages.php:174
+msgid "Top"
+msgstr "Сверху"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:30
+msgid "Below"
+msgstr "Снизу"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:34
+msgid "The caption on the button"
+msgstr "Надпись на кнопке"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:36
+msgid ""
+"the inscription is the default, you can override it in shortcode by adding "
+"shortcode in the value attribute"
+msgstr "Вы можете изменить текст кнопки тут"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:109
+#: ../../wp-recall/add-on/./bookmarks/templates/bookmarks.php:8
+msgid "edit"
+msgstr "изменить"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:110
+#: ../../wp-recall/add-on/./bookmarks/templates/bookmarks.php:7
+#: functions/rcl_custom_fields.php:80
+msgid "delete"
+msgstr "удалить"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:117
+msgid "Add group"
+msgstr "Добавить группу"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:136
+msgid "Disable bookmarks for publication"
+msgstr "Отключить закладки для публикации"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:137
+#: ../../wp-recall/add-on/./money-wallet/index.php:58
+#: add-on/profile/index.php:159 add-on/profile/index.php:565
+#: add-on/profile/index.php:570 add-on/profile/index.php:575
+#: add-on/profile/index.php:580 add-on/profile/index.php:585
+#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
+#: add-on/rating-system/addon-options.php:68
+#: add-on/rating-system/addon-options.php:120
+#: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
+#: admin-pages.php:38 admin-pages.php:289
+msgid "No"
+msgstr "Нет"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:138
+#: ../../wp-recall/add-on/./money-wallet/index.php:58
+#: add-on/profile/index.php:159 add-on/profile/index.php:565
+#: add-on/profile/index.php:570 add-on/profile/index.php:575
+#: add-on/profile/index.php:580 add-on/profile/index.php:585
+#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
+#: add-on/rating-system/addon-options.php:68
+#: add-on/rating-system/addon-options.php:120
+#: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
+#: admin-pages.php:39 admin-pages.php:289
+msgid "Yes"
+msgstr "Да"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:167
+#: ../../wp-recall/add-on/./bookmarks/index.php:177
+#: add-on/groups/index.php:403 add-on/publicpost/class_public.php:74
+#: add-on/publicpost/fast-editor.php:102
+msgid "Name"
+msgstr "Имя"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:167
+#: ../../wp-recall/add-on/./bookmarks/index.php:268
+#: ../../wp-recall/add-on/./gallery-recall/index.php:126
+#: add-on/publicpost/classes.php:234
+msgid "Add"
+msgstr "Добавить"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:177
+#: ../../wp-recall/add-on/./bookmarks/index.php:278
+#: functions/rcl_editfields.php:176
+msgid "Change"
+msgstr "Выбрать"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:198
+#: ../../wp-recall/add-on/./bookmarks/index.php:220 functions/recallbar.php:21
+msgid "In bookmarks"
+msgstr "В избранное"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:228
+msgid "Added to bookmarks"
+msgstr "Добавлено в избранное"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:242
+msgid "You`ve already added to the group of bookmarks"
+msgstr "Вы уже добавили в избранное"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:268
+#: ../../wp-recall/add-on/./bookmarks/index.php:278
+msgid "Name group"
+msgstr "Имя группы"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:297
+#: ../../wp-recall/add-on/./bookmarks/index.php:322
+#: ../../wp-recall/add-on/./bookmarks/index.php:342
+#: ../../wp-recall/add-on/./bookmarks/index.php:361
+#: ../../wp-recall/add-on/./bookmarks/index.php:381
+#: ../../wp-recall/add-on/./bookmarks/index.php:403
+#: ../../wp-recall/add-on/./bookmarks/index.php:428
+#: ../../wp-recall/add-on/./bookmarks/index.php:459
+#: ../../wp-recall/add-on/./gallery-recall/index.php:424
+#: ../../wp-recall/add-on/./gallery-recall/index.php:463
+#: add-on/rating-system/index.php:503 add-on/rating-system/index.php:525
+msgid "Error"
+msgstr "Ошибка"
+
+#: ../../wp-recall/add-on/./bookmarks/index.php:330
+#: ../../wp-recall/add-on/./bookmarks/index.php:350
+#: ../../wp-recall/add-on/./money-wallet/index.php:559
+#: ../../wp-recall/add-on/./money-wallet/index.php:582
+#: ../../wp-recall/add-on/./money-wallet/index.php:600
+#: ../../wp-recall/add-on/./presents/index.php:119
+#: ../../wp-recall/add-on/./presents/index.php:159
+#: add-on/groups/class_group.php:238
+msgid "Are you sure?"
+msgstr "Вы серьезно?"
+
+#: ../../wp-recall/add-on/./gallery-recall/class_gallery.php:1
+msgid "This photo does not exist!"
+msgstr "Это изображение не найдено!"
+
+#: ../../wp-recall/add-on/./gallery-recall/class_gallery.php:1
+#: ../../wp-recall/add-on/./gallery-recall/index.php:37
+msgid "Gallery user"
+msgstr "Галерея пользователя"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:34
+msgid "Gallery settings-user"
+msgstr "Настройки галереи пользователя"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:39
+msgid "Fancybox"
+msgstr ""
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:42
+msgid "Do not use"
+msgstr "Не использовать"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:42
+msgid "Use"
+msgstr "Использовать"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:45
+msgid "The maximum size of images, Mb"
+msgstr "Максимальный размер изображения, МБ"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:47
+#: add-on/publicpost/addon-options.php:168
+msgid ""
+"To limit image uploads to publish this value in megabytes. By default, 2MB"
+msgstr "Ограничение размера загружаемого изображения, по-умолчанию 2МБ"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:48
+msgid "The authorized number of images"
+msgstr "Разрешенное кол-во изображений"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:91
+msgid "Gallery"
+msgstr "Галерея"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:122
+#: add-on/publicpost/classes.php:230
+msgid "To add files to the download queue"
+msgstr "Добавить файлы в очередь загрузки"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:137
+#: ../../wp-recall/add-on/./video-gallery/index.php:127
+msgid "Save order"
+msgstr "Сохранить порядок"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:219
+msgid "The user`s photo"
+msgstr "Пользовательские фото"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:367
+#: ../../wp-recall/add-on/./gallery-recall/index.php:378
+#: add-on/message/index.php:1230
+msgid "Reply"
+msgstr "Ответить"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:372
+msgid "Cancel reply"
+msgstr "отмена ответа"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:401
+msgid "The material is updated"
+msgstr "Материал обновлен"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:406
+msgid "No data"
+msgstr "Данных нет"
+
+#: ../../wp-recall/add-on/./gallery-recall/index.php:539
+msgid "Do you want to delete?"
+msgstr "Действительно удалить?"
+
+#: ../../wp-recall/add-on/./gallery-recall/upload-file.php:17
+#: functions/rcl_custom_fields.php:278 functions/rcl_custom_fields.php:296
+msgid "File size exceeded!"
+msgstr "Размер файла превышен!"
+
+#: ../../wp-recall/add-on/./getresponse-manager/index.php:1
+#: ../../wp-recall/add-on/./justclick-manager/index.php:1
+#: ../../wp-recall/add-on/./partners-system/admin-pages.php:124
+#: ../../wp-recall/add-on/./users-market/administrative.php:60
+#: add-on/groups/class_group.php:207 admin-pages.php:299 functions-rcl.php:505
+msgid "Save settings"
+msgstr "Сохранить настройки"
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:8
+msgid "Last visitors"
+msgstr "Последние посетители"
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:11
+msgid "Display"
+msgstr "Отображать"
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:13 admin-pages.php:211
+msgid "The order"
+msgstr "Порядок вывода"
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:16
+msgid "Only the owner"
+msgstr "Только хозяину личного кабинета"
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:16
+#: add-on/review/index.php:151 functions/rcl_addons.php:125
+msgid "All"
+msgstr "Все"
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:19
+msgid "The number of visitors"
+msgstr "Кол-во посетителей"
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:21
+msgid "the default is 10"
+msgstr "по-умолчанию 10"
+
+#: ../../wp-recall/add-on/./last-visitor/index.php:29
+msgid "Recent Visitors"
+msgstr "Последние посетители"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:8
+#: ../../wp-recall/add-on/./money-wallet/index.php:30
+#: ../../wp-recall/add-on/./money-wallet/index.php:448
+msgid "Withdrawal"
+msgstr "Запрос на вывод"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:27
+msgid "Settings personal account"
+msgstr "Настройки личного счета"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:32
+msgid "Allow withdrawals?"
+msgstr "Одобрить запрос на вывод?"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:36
+#: ../../wp-recall/add-on/./money-wallet/index.php:69
+msgid "Not allowed"
+msgstr "Отклонить"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:36
+#: ../../wp-recall/add-on/./money-wallet/index.php:69
+#: add-on/message/index.php:227
+msgid "Allowed"
+msgstr "Разрешено"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:45
+msgid "Payment system which permitted withdrawal"
+msgstr "Платежные системы доступные для запросов на вывод"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:47
+msgid ""
+"Specify comma-separated names of payment systems which the user can choose "
+"to withdraw funds"
+msgstr ""
+"Укажите наименования платежных систем доступных к выбору при формировании "
+"запроса на вывода, разделяя их запятой"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:49
+msgid "The percentage of Commission for withdrawal of funds"
+msgstr "Процент комиссии при выводе средств"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:51
+msgid "If nothing is specified, the withdrawal Commission is not charged"
+msgstr "Если ничего не указано, то комиссия не удерживается"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:54
+msgid "Bring personal account in the advanced tab"
+msgstr "Выводить личный счет пользователя во вкладке личного кабинета"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:64
+msgid "The transfer of funds"
+msgstr "Перевод средств"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:66
+msgid "Transfer of funds between users"
+msgstr "Перевод средств между пользователями"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:106
+#: add-on/user-account/index.php:77
+msgid "Balance"
+msgstr "Баланс"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:122
+#: add-on/user-account/index.php:349
+msgid "Personal account of the user"
+msgstr "Личный счет пользователя"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:132
+msgid "The withdrawal request"
+msgstr "Запрос на вывод средств"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:150
+msgid "Date of request"
+msgstr "Дата запроса"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:151
+msgid "The amount of the request"
+msgstr "Сумма запроса"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:152
+#: ../../wp-recall/add-on/./money-wallet/index.php:363
+msgid "The Commission"
+msgstr "Комиссия"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:153
+#: ../../wp-recall/add-on/./money-wallet/index.php:364
+#: ../../wp-recall/add-on/./money-wallet/index.php:487
+msgid "Withdrawal amount"
+msgstr "Сумму на вывод"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:154
+#: ../../wp-recall/add-on/./money-wallet/index.php:209
+#: ../../wp-recall/add-on/./money-wallet/index.php:365
+#: ../../wp-recall/add-on/./money-wallet/index.php:488
+msgid "Comment"
+msgstr "Комментарий"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:155
+#: ../../wp-recall/add-on/./money-wallet/index.php:366
+#: ../../wp-recall/add-on/./money-wallet/index.php:490
+#: add-on/profile/index.php:405 add-on/profile/index.php:713
+#: add-on/publicpost/index.php:148
+#: add-on/publicpost/templates/posts-list.php:8
+msgid "Status"
+msgstr "Статус"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:164
+#: ../../wp-recall/add-on/./money-wallet/index.php:500
+msgid "Consideration"
+msgstr "на рассмотрении"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:165
+#: ../../wp-recall/add-on/./money-wallet/index.php:376
+msgid "cancel"
+msgstr "отмена"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:175
+msgid "Payment system"
+msgstr "Платежные системы"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:176
+msgid "The number of purse"
+msgstr "Номер кошелька"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:177
+#, php-format
+msgid "Withdrawal amount (Commission for withdrawal %s)"
+msgstr "Сумма на вывод (Комиссия при выводе %s)"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:178
+msgid "Send enquiry"
+msgstr "Отправить запрос"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:201
+msgid "The history of balance changes"
+msgstr "История изменения баланса"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:202
+msgid "The account balance"
+msgstr "Остаток на счету"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:206
+msgid "Parish"
+msgstr "Приход"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:207
+msgid "Consumption"
+msgstr "Расход"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:208
+#: ../../wp-recall/add-on/./money-wallet/index.php:361
+#: ../../wp-recall/add-on/./money-wallet/index.php:489
+#: add-on/publicpost/index.php:148
+#: add-on/publicpost/templates/posts-list.php:6
+#: functions/rcl_editfields.php:150
+msgid "Date"
+msgstr "Дата"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:226
+msgid "You haven`t had the movements of funds on the personal account"
+msgstr "У вас еще не было движений средств на личном счету"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:252
+msgid "Make transfer"
+msgstr "Сделать перевод"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:254
+#: ../../wp-recall/add-on/./money-wallet/index.php:362
+msgid "Sum"
+msgstr "Сумма"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:255
+msgid "ОК"
+msgstr "Ок"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:292
+msgid "The transfer of funds to the user"
+msgstr "Перевод средств пользователю"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:293
+msgid "The funds coming from the user"
+msgstr "Перевод средств от пользователя"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:295
+msgid "Money transfer"
+msgstr "Денежный перевод"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:304
+msgid "The funds were successfully transferred to the account of that user"
+msgstr "Перевод денежных средств был успешно совершен"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:358
+msgid "The withdrawal request is well formed"
+msgstr "Запрос на вывод средств сформирован"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:375
+msgid "Processing"
+msgstr "Обработка"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:412
+msgid "The withdrawal request was cancelled"
+msgstr "Запрос на вывод отменен"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:434
+msgid "For a withdrawal to"
+msgstr "Для вывода средств на счет"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:438
+msgid "The request for withdrawal is made"
+msgstr "Запрос на вывод средств произведен"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:463
+msgid "Management of withdrawal requests"
+msgstr "Управление запросами на вывод средств"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:475
+#: functions/rcl_addons.php:136
+msgid "Action"
+msgstr "Действие"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:476
+#: add-on/review/index.php:198 functions/rcl_addons.php:190
+#: functions/rcl_editfields.php:127
+msgid "Delete"
+msgstr "Удалить"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:478
+#: functions/rcl_addons.php:140
+msgid "Apply"
+msgstr "Принять"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:485
+msgid "User"
+msgstr "Пользователь"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:486
+msgid "Amount request"
+msgstr "Сумма запроса"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:505
+msgid "Made"
+msgstr "Произведен"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:511
+msgid "To balance user"
+msgstr "Баланс пользователя"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:519
+#: add-on/groups/class_group.php:252
+msgid "Reject"
+msgstr "Отклонить"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:520
+msgid "Approve"
+msgstr "Одобрен"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:527
+msgid "At the moment, the query is no"
+msgstr "На данный момент, запросов нет"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:540
+msgid "History"
+msgstr "История"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:558
+#: ../../wp-recall/add-on/./money-wallet/index.php:578
+msgid "Specify the amount of transfer!"
+msgstr "Укажите сумму к переводу!"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:569
+#: ../../wp-recall/add-on/./money-wallet/index.php:592
+msgid "Your account has insufficient funds!"
+msgstr "На вашем счету недостаточно средств!"
+
+#: ../../wp-recall/add-on/./money-wallet/index.php:581
+msgid "Specify the number of purse!"
+msgstr "Укажите номер кошелька!"
+
+#: ../../wp-recall/add-on/./notification/index.php:12
+msgid "Notifications"
+msgstr "Уведомления"
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "Affordable gifts"
+msgstr "Доступные подарки"
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "Free"
+msgstr "Бесплатно"
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "A gift from the user"
+msgstr "Подарок от пользователя"
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+#: ../../wp-recall/add-on/./presents/index.php:112
+#: ../../wp-recall/add-on/./presents/index.php:152
+msgid "Gifts not found!"
+msgstr "Подарки не найдены!"
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "You already gave this gift!"
+msgstr "Вы уже дарили этот подарок!"
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "You have insufficient funds!"
+msgstr "У вас недостаточно средств!"
+
+#: ../../wp-recall/add-on/./presents/class_presents.php:1
+msgid "Purchase a gift for"
+msgstr "Приобретение подарка для"
+
+#: ../../wp-recall/add-on/./presents/index.php:8
+msgid "To make a gift"
+msgstr "Сделать подарок"
+
+#: ../../wp-recall/add-on/./presents/index.php:18
+msgid "Gifts"
+msgstr "Подарки"
+
+#: ../../wp-recall/add-on/./presents/index.php:21
+msgid "The received gifts"
+msgstr "Полученные подарки"
+
+#: ../../wp-recall/add-on/./presents/index.php:28
+msgid "A gift from"
+msgstr "Подарок от"
+
+#: ../../wp-recall/add-on/./presents/index.php:55
+msgid "File gift"
+msgstr "Файл подарка"
+
+#: ../../wp-recall/add-on/./presents/index.php:57 functions/rcl_addons.php:165
+msgid "Choose"
+msgstr "Изменить"
+
+#: ../../wp-recall/add-on/./presents/index.php:58
+msgid "Price"
+msgstr "Цена"
+
+#: ../../wp-recall/add-on/./presents/index.php:59
+msgid "More"
+msgstr "Еще"
+
+#: ../../wp-recall/add-on/./presents/index.php:71
+msgid "Manage gifts Wp-Recall"
+msgstr "Управление подарками Wp-Recall"
+
+#: ../../wp-recall/add-on/./presents/index.php:85 functions/rcl_addons.php:109
+#: functions/rcl_editfields.php:56
+msgid "Save"
+msgstr "Сохранить"
+
+#: ../../wp-recall/add-on/./presents/index.php:130
+msgid "A gift is not found!"
+msgstr "Подарок не найден!"
+
+#: ../../wp-recall/add-on/./rating-rank/addon-options.php:9
+msgid "Rank system"
+msgstr ""
+
+#: ../../wp-recall/add-on/./rating-rank/addon-options.php:13
+msgid "Перечень званий"
+msgstr ""
+
+#: ../../wp-recall/add-on/./rating-rank/addon-options.php:15
+msgid ""
+"Укажите перечень званий с требуемым значением рейтинга в формате "
+"\"rankname:100\". Каждое новое правило указывается с новой строки"
+msgstr ""
+
+#: ../../wp-recall/add-on/./regpay/activate.php:1
+msgid "Unpaid access"
+msgstr "Неоплаченный доступ"
+
+#: ../../wp-recall/add-on/./users-market/public-product.php:129
+msgid "Заменить файл"
+msgstr ""
 
 #: add-on/feed/index.php:34 add-on/feed/index.php:455
 msgid "Subscribe"
@@ -182,17 +911,9 @@ msgstr "Настройки группы"
 msgid "To close the settings"
 msgstr "Закрыть настройки"
 
-#: add-on/groups/class_group.php:207 admin-pages.php:299 functions-rcl.php:505
-msgid "Save settings"
-msgstr "Сохранить настройки"
-
 #: add-on/groups/class_group.php:238
 msgid "Delete group"
 msgstr "Удалить группу"
-
-#: add-on/groups/class_group.php:238
-msgid "Are you sure?"
-msgstr "Вы серьезно?"
 
 #: add-on/groups/class_group.php:246
 msgid "Requests to join the group"
@@ -202,21 +923,17 @@ msgstr "Запросы на доступ к группе"
 msgid "Take"
 msgstr "Одобрить"
 
-#: add-on/groups/class_group.php:252
-msgid "Reject"
-msgstr "Отклонить"
-
 #: add-on/groups/class_group.php:264
 msgid "To leave the group"
 msgstr "Выйти из группы"
 
 #: add-on/groups/class_group.php:272
 msgid "Your application for membership is accepted"
-msgstr "Ваш запрос на доступ принят"
+msgstr "Ваш запрос на доступ к группе одобрен"
 
 #: add-on/groups/class_group.php:276
 msgid "To apply for membership"
-msgstr "Послать запрос на доступ"
+msgstr "Разрешено группам пользователей"
 
 #: add-on/groups/class_group.php:288
 msgid "Join"
@@ -414,11 +1131,6 @@ msgstr ""
 msgid "To create a group"
 msgstr "Создание группы"
 
-#: add-on/groups/index.php:403 add-on/publicpost/class_public.php:74
-#: add-on/publicpost/fast-editor.php:102
-msgid "Name"
-msgstr "Имя"
-
 #: add-on/groups/index.php:405
 msgid "Group description"
 msgstr "Описание группы"
@@ -459,10 +1171,6 @@ msgstr "Категории группы"
 #: add-on/groups/index.php:677
 msgid "Published in the group"
 msgstr "Публикация в группе"
-
-#: add-on/groups/index.php:738
-msgid "Close"
-msgstr "Закрыть"
 
 #: add-on/groups/index.php:760
 msgid "Request access to the group approved!"
@@ -639,10 +1347,6 @@ msgstr "Пересылка файлов"
 msgid "Prohibited"
 msgstr "Запрещено"
 
-#: add-on/message/index.php:227
-msgid "Allowed"
-msgstr "Разрешено"
-
 #: add-on/message/index.php:235
 msgid "Maximum file size, Mb"
 msgstr "Максимальный размер файлов, МБ"
@@ -797,10 +1501,6 @@ msgstr "Вам новое сообщение!"
 msgid "Go to the correspondence"
 msgstr "Перейти к переписке"
 
-#: add-on/message/index.php:1230
-msgid "Reply"
-msgstr "Ответить"
-
 #: add-on/message/index.php:1283
 msgid "Show more recent posts"
 msgstr "Показать больше последних сообщений"
@@ -892,28 +1592,6 @@ msgstr "Профиль и аккаунт"
 #: add-on/profile/index.php:156
 msgid "Allow to delete users from your account?"
 msgstr "Разрешить удалять пользователям свой аккаунт?"
-
-#: add-on/profile/index.php:159 add-on/profile/index.php:565
-#: add-on/profile/index.php:570 add-on/profile/index.php:575
-#: add-on/profile/index.php:580 add-on/profile/index.php:585
-#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
-#: add-on/rating-system/addon-options.php:68
-#: add-on/rating-system/addon-options.php:120
-#: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
-#: admin-pages.php:38 admin-pages.php:289
-msgid "No"
-msgstr "Нет"
-
-#: add-on/profile/index.php:159 add-on/profile/index.php:565
-#: add-on/profile/index.php:570 add-on/profile/index.php:575
-#: add-on/profile/index.php:580 add-on/profile/index.php:585
-#: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:234
-#: add-on/rating-system/addon-options.php:68
-#: add-on/rating-system/addon-options.php:120
-#: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
-#: admin-pages.php:39 admin-pages.php:289
-msgid "Yes"
-msgstr "Да"
 
 #: add-on/profile/index.php:162
 msgid "The maximum size of the avatar, Mb"
@@ -1010,12 +1688,6 @@ msgstr "Замечание"
 #: add-on/profile/index.php:396
 msgid "The password must be at least 7 characters"
 msgstr "Пароль должен содержать не менее 7 символов"
-
-#: add-on/profile/index.php:405 add-on/profile/index.php:713
-#: add-on/publicpost/index.php:148
-#: add-on/publicpost/templates/posts-list.php:8
-msgid "Status"
-msgstr "Статус"
 
 #: add-on/profile/index.php:475
 msgid "Update profile"
@@ -1264,11 +1936,6 @@ msgstr "Кол-во изображений в галерее Wp-Recall"
 msgid "The maximum image size, Mb"
 msgstr "Максимальный размер изображений, Mb"
 
-#: add-on/publicpost/addon-options.php:168
-msgid ""
-"To limit image uploads to publish this value in megabytes. By default, 2MB"
-msgstr "Ограничение размера загружаемого изображения, по-умолчанию 2МБ"
-
 #: add-on/publicpost/addon-options.php:170
 msgid "The size in the editor by default"
 msgstr "Размер изображений в редакторе по-умолчанию"
@@ -1420,14 +2087,6 @@ msgstr "Описание"
 msgid "Display all attached images in the gallery."
 msgstr "Отображать прикрепленные изображения в галерее"
 
-#: add-on/publicpost/classes.php:230
-msgid "To add files to the download queue"
-msgstr "Добавить файлы в очередь загрузки"
-
-#: add-on/publicpost/classes.php:234
-msgid "Add"
-msgstr "Добавить"
-
 #: add-on/publicpost/classes.php:258
 msgid "Thumbnail"
 msgstr "Миниатюра"
@@ -1443,12 +2102,6 @@ msgstr "Записи"
 #: add-on/publicpost/index.php:62 add-on/rating-system/index.php:23
 msgid "Posts"
 msgstr "Публикации"
-
-#: add-on/publicpost/index.php:148
-#: add-on/publicpost/templates/posts-list.php:6
-#: functions/rcl_editfields.php:150
-msgid "Date"
-msgstr "Дата"
 
 #: add-on/publicpost/index.php:152
 #: add-on/publicpost/templates/posts-list.php:15
@@ -1812,10 +2465,6 @@ msgstr "превышение ограничения голосов в течен
 msgid "You can not vote"
 msgstr "Вы не можете голосовать"
 
-#: add-on/rating-system/index.php:503 add-on/rating-system/index.php:525
-msgid "Error"
-msgstr "Ошибка"
-
 #: add-on/review/index.php:16 add-on/review/index.php:147
 msgid "Reviews"
 msgstr "Отзывы"
@@ -1848,10 +2497,6 @@ msgstr "Настройки отзывов"
 msgid "To accept and leave feedback can"
 msgstr "Оставлять и принимать отзывы могут"
 
-#: add-on/review/index.php:151 functions/rcl_addons.php:125
-msgid "All"
-msgstr "Все"
-
 #: add-on/review/index.php:151
 msgid "With published posts"
 msgstr "Только с опубликованными записями"
@@ -1868,11 +2513,6 @@ msgstr "по-умолчанию без ограничений"
 msgid "leave a review"
 msgstr "оставил отзыв"
 
-#: add-on/review/index.php:198 functions/rcl_addons.php:190
-#: functions/rcl_editfields.php:127
-msgid "Delete"
-msgstr "Удалить"
-
 #: add-on/review/index.php:205
 msgid "You have not left any reviews"
 msgstr "Вам еще не оставляли отзывы"
@@ -1884,7 +2524,7 @@ msgstr "У пользователя пока нет отзывов"
 #: add-on/review/index.php:219
 #, php-format
 msgid "Members with a value rating of less than %d can not leave a review."
-msgstr "Пользователи со значение рейтинга ниже %d не могут оставлять отзывы."
+msgstr "Пользователи со значением рейтинга ниже %d не могут оставлять отзывы"
 
 #: add-on/review/index.php:232
 msgid "Users without published records cannot accept and add reviews."
@@ -2095,10 +2735,6 @@ msgstr "Страница успешного платежа"
 msgid "Payments"
 msgstr "Платежи"
 
-#: add-on/user-account/index.php:77
-msgid "Balance"
-msgstr "Баланс"
-
 #: add-on/user-account/index.php:295
 msgid "The change in the balance"
 msgstr "Изменение баланса"
@@ -2114,10 +2750,6 @@ msgstr "Для пополнения своего личного счета"
 #: add-on/user-account/index.php:329
 msgid "Enter the amount required"
 msgstr "Введите требуемую сумму"
-
-#: add-on/user-account/index.php:349
-msgid "Personal account of the user"
-msgstr "Личный счет пользователя"
 
 #: add-on/user-account/index.php:351 add-on/user-account/index.php:379
 #: admin-pages.php:110 recall.php:102
@@ -2341,10 +2973,6 @@ msgstr "Оформление"
 msgid "The placement of the buttons sections"
 msgstr "Размещение кнопок вывода вкладок"
 
-#: admin-pages.php:174
-msgid "Top"
-msgstr "Сверху"
-
 #: admin-pages.php:175
 msgid "Left"
 msgstr "Слева"
@@ -2385,10 +3013,6 @@ msgstr ""
 #: admin-pages.php:210 functions/rcl_addons.php:532
 msgid "Login and register"
 msgstr "Вход и регистрация"
-
-#: admin-pages.php:211
-msgid "The order"
-msgstr "Порядок вывода"
 
 #: admin-pages.php:216
 msgid "Floating form"
@@ -2661,18 +3285,14 @@ msgstr ""
 msgid "Enter RCLKEY"
 msgstr "Введите RCLKEY"
 
-#: functions/rcl_addons.php:109 functions/rcl_editfields.php:56
-msgid "Save"
-msgstr "Сохранить"
-
 #: functions/rcl_addons.php:112
 msgid ""
 "He will need to update the add-ons here. Get it , you can profile your "
 "account online <a href=\"http://wppost.ru/\" target=\"_blank\">http://wppost."
 "ru</a>"
 msgstr ""
-"Он потребуется для обновления дополнений на этой странице. Вы можете "
-"получить свой ключ на странице профиля своего аккаунта на сайте <a href="
+"Ключ понадобится для обновления дополнений на этой странице. Свой ключ вы "
+"можете получить на странице профиля своего аккаунта на сайте <a href="
 "\"http://wppost.ru/\" target=\"_blank\">http://wppost.ru</a>"
 
 #: functions/rcl_addons.php:115
@@ -2703,10 +3323,6 @@ msgstr "Активно"
 msgid "Inactive"
 msgstr "Неактивно"
 
-#: functions/rcl_addons.php:136
-msgid "Action"
-msgstr "Действие"
-
 #: functions/rcl_addons.php:137 functions/rcl_addons.php:173
 msgid "Deactivate"
 msgstr "Деактивировать"
@@ -2715,10 +3331,6 @@ msgstr "Деактивировать"
 msgid "To activate"
 msgstr "Активировать"
 
-#: functions/rcl_addons.php:140
-msgid "Apply"
-msgstr "Принять"
-
 #: functions/rcl_addons.php:147
 msgid "Select all"
 msgstr "Выбрать все"
@@ -2726,10 +3338,6 @@ msgstr "Выбрать все"
 #: functions/rcl_addons.php:150
 msgid "Additions"
 msgstr "Дополнения"
-
-#: functions/rcl_addons.php:165
-msgid "Choose"
-msgstr "Изменить"
 
 #: functions/rcl_addons.php:178 functions/rcl_addons.php:182
 msgid "Settings"
@@ -2775,10 +3383,6 @@ msgstr "ZIP архив не найден."
 msgid "Agreement"
 msgstr "Соглашение"
 
-#: functions/rcl_custom_fields.php:80
-msgid "delete"
-msgstr "удалить"
-
 #: functions/rcl_custom_fields.php:88
 msgid "Max size"
 msgstr "Макс. размер"
@@ -2786,10 +3390,6 @@ msgstr "Макс. размер"
 #: functions/rcl_custom_fields.php:182
 msgid "Download file"
 msgstr "Загрузить файл"
-
-#: functions/rcl_custom_fields.php:278 functions/rcl_custom_fields.php:296
-msgid "File size exceeded!"
-msgstr "Размер файла превышен!"
 
 #: functions/rcl_custom_fields.php:401 functions/rcl_custom_fields.php:426
 #: functions/rcl_custom_fields.php:450
@@ -2883,10 +3483,6 @@ msgstr "Ссылка"
 msgid "File"
 msgstr "Файл"
 
-#: functions/rcl_editfields.php:176
-msgid "Change"
-msgstr "Выбрать"
-
 #: functions/rcl_editfields.php:288
 msgid "All values of a custom field with meta_key"
 msgstr "Все значения произвольных полей с этим meta_key"
@@ -2897,15 +3493,15 @@ msgstr "были удалены из базы данных"
 
 #: functions/rcl_update.php:87
 msgid "Unable to retrieve the file from the server!"
-msgstr "Не удалось получить обновление дополнения с сервера!"
+msgstr "Не удалось получить файл обновления!"
 
 #: functions/rcl_update.php:109
 msgid "Update does not have the correct title!"
-msgstr "Дополнение не имеет корректного заголовка!"
+msgstr "Полученное дополнение не имеет корректного заголовка!"
 
 #: functions/rcl_update.php:128
 msgid "Unable to open archive!"
-msgstr "Не удалось открыть полученный архив!"
+msgstr "Не удалось открыть полученный архив обновления!"
 
 #: functions/rcl_userlist.php:275 recall.php:281
 msgid "not online"
@@ -2914,14 +3510,6 @@ msgstr "не в сети"
 #: functions/rcl_userlist.php:300
 msgid "Publics"
 msgstr "Публикации"
-
-#: functions/recallbar.php:21
-msgid "In bookmarks"
-msgstr "В избранное"
-
-#: functions/recallbar.php:24
-msgid "My bookmarks"
-msgstr "Избранное"
 
 #: functions/register.php:122
 msgid "Confirm your registration!"
@@ -3083,369 +3671,11 @@ msgstr "Блок с основной информацией профиля"
 msgid "Control panel"
 msgstr "Панель управления"
 
-#~ msgid "Settings background"
-#~ msgstr "Настройки фона"
-
-#~ msgid "Background private account"
-#~ msgstr "Фон личного кабинета"
-
-#~ msgid "Profile field for background"
-#~ msgstr "Поле профиля фона"
-
-#~ msgid ""
-#~ "Specify the type of profile field \"File\" to through it could set the "
-#~ "background image for your personal account"
-#~ msgstr ""
-#~ "Выберите поле профиля с типом \"Файл\" и укажите его в качестве фонового "
-#~ "изображения"
-
-#~ msgid "In this group don`t have bookmarks"
-#~ msgstr "В этой группе пусто"
-
-#~ msgid "Group bookmarks"
-#~ msgstr "Группы избранного"
-
-#~ msgid "Without group"
-#~ msgstr "Без группы"
-
-#~ msgid "To filter the bookmarks, click on the desired group"
-#~ msgstr "Фильтруйте избранное нажав на нужную группу"
-
-#~ msgid "Manage bookmarks"
-#~ msgstr "Управление закладками"
-
-#~ msgid "Bookmarks don`t have"
-#~ msgstr "Ничего не найдено"
-
-#~ msgid "Settings bookmarks"
-#~ msgstr "Настройки закладок"
-
-#~ msgid "Bookmarks"
-#~ msgstr "Избранное"
-
-#~ msgid "The order buttons"
-#~ msgstr "Порядок вывода кнопки \"В избранное\""
-
-#~ msgid "Automatically"
-#~ msgstr "Автоматически"
-
-#~ msgid "Manually"
-#~ msgstr "Вручную"
-
-#~ msgid ""
-#~ "Manually the button \"add To bookmarks\" is output via shortcode [add-"
-#~ "bookmark]"
-#~ msgstr ""
-#~ "При ручном выводе кнопки, необходимо использовать шорткод [add-bookmark]"
-
-#~ msgid "Place output on the page (if the automatic withdrawal)"
-#~ msgstr "Место вывода на странице (если автоматический вывод)"
-
-#~ msgid "Below"
-#~ msgstr "Снизу"
-
-#~ msgid "The caption on the button"
-#~ msgstr "Надпись на кнопке"
-
-#~ msgid ""
-#~ "the inscription is the default, you can override it in shortcode by "
-#~ "adding shortcode in the value attribute"
-#~ msgstr "Вы можете изменить текст кнопки тут"
-
-#~ msgid "edit"
-#~ msgstr "изменить"
-
-#~ msgid "Add group"
-#~ msgstr "Добавить группу"
-
-#~ msgid "Disable bookmarks for publication"
-#~ msgstr "Отключить закладки для публикации"
-
-#~ msgid "Added to bookmarks"
-#~ msgstr "Добавлено в избранное"
-
-#~ msgid "You`ve already added to the group of bookmarks"
-#~ msgstr "Вы уже добавили в избранное"
-
-#~ msgid "Name group"
-#~ msgstr "Имя группы"
-
-#~ msgid "This photo does not exist!"
-#~ msgstr "Это изображение не найдено!"
-
-#~ msgid "Gallery user"
-#~ msgstr "Галерея пользователя"
-
-#~ msgid "Gallery settings-user"
-#~ msgstr "Настройки галереи пользователя"
-
-#~ msgid "Do not use"
-#~ msgstr "Не использовать"
-
-#~ msgid "Use"
-#~ msgstr "Использовать"
-
-#~ msgid "The maximum size of images, Mb"
-#~ msgstr "Максимальный размер изображения, МБ"
-
-#~ msgid "The authorized number of images"
-#~ msgstr "Разрешенное кол-во изображений"
-
 #~ msgid "Size gallery images"
 #~ msgstr "Размер изображений галереи"
 
 #~ msgid "the default is 50"
 #~ msgstr "по-умолчанию 50"
-
-#~ msgid "Gallery"
-#~ msgstr "Галерея"
-
-#~ msgid "Save order"
-#~ msgstr "Сохранить порядок"
-
-#~ msgid "The user`s photo"
-#~ msgstr "Пользовательские фото"
-
-#~ msgid "Cancel reply"
-#~ msgstr "отмена ответа"
-
-#~ msgid "The material is updated"
-#~ msgstr "Материал обновлен"
-
-#~ msgid "No data"
-#~ msgstr "Данных нет"
-
-#~ msgid "Do you want to delete?"
-#~ msgstr "Действительно удалить?"
-
-#~ msgid "Last visitors"
-#~ msgstr "Последние посетители"
-
-#~ msgid "Display"
-#~ msgstr "Отображать"
-
-#~ msgid "Only the owner"
-#~ msgstr "Только хозяину личного кабинета"
-
-#~ msgid "The number of visitors"
-#~ msgstr "Кол-во посетителей"
-
-#~ msgid "the default is 10"
-#~ msgstr "по-умолчанию 10"
-
-#~ msgid "Recent Visitors"
-#~ msgstr "Последние посетители"
-
-#~ msgid "Withdrawal"
-#~ msgstr "Запрос на вывод"
-
-#~ msgid "Settings personal account"
-#~ msgstr "Настройки личного счета"
-
-#~ msgid "Allow withdrawals?"
-#~ msgstr "Одобрить запрос на вывод?"
-
-#~ msgid "Not allowed"
-#~ msgstr "Отклонить"
-
-#~ msgid "Payment system which permitted withdrawal"
-#~ msgstr "Платежные системы доступные для запросов на вывод"
-
-#~ msgid ""
-#~ "Specify comma-separated names of payment systems which the user can "
-#~ "choose to withdraw funds"
-#~ msgstr ""
-#~ "Укажите наименования платежных систем доступных к выбору при формировании "
-#~ "запроса на вывода, разделяя их запятой"
-
-#~ msgid "The percentage of Commission for withdrawal of funds"
-#~ msgstr "Процент комиссии при выводе средств"
-
-#~ msgid "If nothing is specified, the withdrawal Commission is not charged"
-#~ msgstr "Если ничего не указано, то комиссия не удерживается"
-
-#~ msgid "Bring personal account in the advanced tab"
-#~ msgstr "Выводить личный счет пользователя во вкладке личного кабинета"
-
-#~ msgid "The transfer of funds"
-#~ msgstr "Перевод средств"
-
-#~ msgid "Transfer of funds between users"
-#~ msgstr "Перевод средств между пользователями"
-
-#~ msgid "The withdrawal request"
-#~ msgstr "Запрос на вывод средств"
-
-#~ msgid "Date of request"
-#~ msgstr "Дата запроса"
-
-#~ msgid "The amount of the request"
-#~ msgstr "Сумма запроса"
-
-#~ msgid "The Commission"
-#~ msgstr "Комиссия"
-
-#~ msgid "Withdrawal amount"
-#~ msgstr "Сумму на вывод"
-
-#~ msgid "Comment"
-#~ msgstr "Комментарий"
-
-#~ msgid "Consideration"
-#~ msgstr "на рассмотрении"
-
-#~ msgid "cancel"
-#~ msgstr "отмена"
-
-#~ msgid "Payment system"
-#~ msgstr "Платежные системы"
-
-#~ msgid "The number of purse"
-#~ msgstr "Номер кошелька"
-
-#~ msgid "Withdrawal amount (Commission for withdrawal %s)"
-#~ msgstr "Сумма на вывод (Комиссия при выводе %s)"
-
-#~ msgid "Send enquiry"
-#~ msgstr "Отправить запрос"
-
-#~ msgid "The history of balance changes"
-#~ msgstr "История изменения баланса"
-
-#~ msgid "The account balance"
-#~ msgstr "Остаток на счету"
-
-#~ msgid "Parish"
-#~ msgstr "Приход"
-
-#~ msgid "Consumption"
-#~ msgstr "Расход"
-
-#~ msgid "You haven`t had the movements of funds on the personal account"
-#~ msgstr "У вас еще не было движений средств на личном счету"
-
-#~ msgid "Make transfer"
-#~ msgstr "Сделать перевод"
-
-#~ msgid "Sum"
-#~ msgstr "Сумма"
-
-#~ msgid "ОК"
-#~ msgstr "Ок"
-
-#~ msgid "The transfer of funds to the user"
-#~ msgstr "Перевод средств пользователю"
-
-#~ msgid "The funds coming from the user"
-#~ msgstr "Перевод средств от пользователя"
-
-#~ msgid "Money transfer"
-#~ msgstr "Денежный перевод"
-
-#~ msgid "The funds were successfully transferred to the account of that user"
-#~ msgstr "Перевод денежных средств был успешно совершен"
-
-#~ msgid "The withdrawal request is well formed"
-#~ msgstr "Запрос на вывод средств сформирован"
-
-#~ msgid "Processing"
-#~ msgstr "Обработка"
-
-#~ msgid "The withdrawal request was cancelled"
-#~ msgstr "Запрос на вывод отменен"
-
-#~ msgid "For a withdrawal to"
-#~ msgstr "Для вывода средств на счет"
-
-#~ msgid "The request for withdrawal is made"
-#~ msgstr "Запрос на вывод средств произведен"
-
-#~ msgid "Management of withdrawal requests"
-#~ msgstr "Управление запросами на вывод средств"
-
-#~ msgid "User"
-#~ msgstr "Пользователь"
-
-#~ msgid "Amount request"
-#~ msgstr "Сумма запроса"
-
-#~ msgid "Made"
-#~ msgstr "Произведен"
-
-#~ msgid "To balance user"
-#~ msgstr "Баланс пользователя"
-
-#~ msgid "Approve"
-#~ msgstr "Одобрен"
-
-#~ msgid "At the moment, the query is no"
-#~ msgstr "На данный момент, запросов нет"
-
-#~ msgid "History"
-#~ msgstr "История"
-
-#~ msgid "Specify the amount of transfer!"
-#~ msgstr "Укажите сумму к переводу!"
-
-#~ msgid "Your account has insufficient funds!"
-#~ msgstr "На вашем счету недостаточно средств!"
-
-#~ msgid "Specify the number of purse!"
-#~ msgstr "Укажите номер кошелька!"
-
-#~ msgid "Notifications"
-#~ msgstr "Уведомления"
-
-#~ msgid "Affordable gifts"
-#~ msgstr "Доступные подарки"
-
-#~ msgid "Free"
-#~ msgstr "Бесплатно"
-
-#~ msgid "A gift from the user"
-#~ msgstr "Подарок от пользователя"
-
-#~ msgid "Gifts not found!"
-#~ msgstr "Подарки не найдены!"
-
-#~ msgid "You already gave this gift!"
-#~ msgstr "Вы уже дарили этот подарок!"
-
-#~ msgid "You have insufficient funds!"
-#~ msgstr "У вас недостаточно средств!"
-
-#~ msgid "Purchase a gift for"
-#~ msgstr "Приобретение подарка для"
-
-#~ msgid "To make a gift"
-#~ msgstr "Сделать подарок"
-
-#~ msgid "Gifts"
-#~ msgstr "Подарки"
-
-#~ msgid "The received gifts"
-#~ msgstr "Полученные подарки"
-
-#~ msgid "A gift from"
-#~ msgstr "Подарок от"
-
-#~ msgid "File gift"
-#~ msgstr "Файл подарка"
-
-#~ msgid "Price"
-#~ msgstr "Цена"
-
-#~ msgid "More"
-#~ msgstr "Еще"
-
-#~ msgid "Manage gifts Wp-Recall"
-#~ msgstr "Управление подарками Wp-Recall"
-
-#~ msgid "A gift is not found!"
-#~ msgstr "Подарок не найден!"
-
-#~ msgid "Unpaid access"
-#~ msgstr "Неоплаченный доступ"
 
 #~ msgid "Members with a value rating of less than "
 #~ msgstr "Пользователи со значением рейтинга меньше чем"
