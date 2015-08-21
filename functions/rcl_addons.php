@@ -82,6 +82,7 @@ class Rcl_Addons{
 		$table = '<div class="wrap">
 			<div id="icon-plugins" class="icon32"><br></div>
 			<h2>'.__('Add-ons Wp-Recall','rcl').'</h2>';
+
 			if(isset($_GET['update-addon'])){
 				switch($_GET['update-addon']){
 					case 'activate': $text_notice = __('Addition <strong>activated</strong>. It is possible that on the settings page of Wp-Recall new settings','rcl'); $type='updated'; break;
@@ -94,6 +95,21 @@ class Rcl_Addons{
 				rcl_minify_style();
 				$table .='<div id="message" class="'.$type.'"><p>'.$text_notice.'</p></div>';
 			}
+
+                        if(isset($_POST['save-rcl-key'])){
+                            if( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ){
+                                update_option('rcl-key',$_POST['rcl-key']);
+                                $table .='<div id="message" class="'.$type.'"><p>'.__('Key is stored','rcl').'!</p></div>';
+                            }
+			}
+
+                        $table .= '<h4>'.__('RCLKEY','rcl').'</h4>
+			<form action="" method="post">
+				'.__('Enter RCLKEY','rcl').' <input type="text" name="rcl-key" value="'.get_option('rcl-key').'">
+				<input class="button" type="submit" value="'.__('Save','rcl').'" name="save-rcl-key">
+				'.wp_nonce_field('add-rcl-key','_wpnonce',true,false).'
+			</form>
+                        <p class="install-help">'.__('He will need to update the add-ons here. Get it , you can profile your account online <a href="http://wppost.ru/" target="_blank">http://wppost.ru</a>','rcl').'</p>';
 
 			$table .= '
 			<h4>'.__('To install the add-on to Wp-Recall format .zip','rcl').'</h4>
@@ -526,9 +542,9 @@ class Rcl_Addons{
 		$rcl_options = $options;
 
 		if( current_user_can('edit_plugins') ){
-            $this->get_update_scripts_file_rcl();
-			$this->get_update_scripts_footer_rcl();
-			rcl_minify_style();
+                    $this->get_update_scripts_file_rcl();
+                    $this->get_update_scripts_footer_rcl();
+                    rcl_minify_style();
 		}
 
 		wp_redirect(admin_url('admin.php?page=manage-wprecall'));

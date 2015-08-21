@@ -63,7 +63,7 @@ function rcl_update_addon(){
     if(!isset($need_update[$addon])) return false;
 
     $url = 'http://wppost.ru/?remote-request=update-addon';
-    $data = array('addon' => $addon, 'action' => 'rcl_get_addon');
+    $data = array('addon' => $addon, 'rcl-key' => get_option('rcl-key'));
 
     $pathdir = RCL_TAKEPATH.'update/';
     $new_addon = $pathdir.$addon.'.zip';
