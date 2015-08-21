@@ -329,7 +329,7 @@ class Rcl_Messages{
 		}
 
 		$privat_block = $this->get_private_message_content($author_lk, $online);
-		if(isset($rcl_options['tab_newpage'])&&$rcl_options['tab_newpage']==2) $privat_block .= '<script type="text/javascript" src="'.TEMP_URL.'scripts/footer-scripts.js"></script>';
+		if(isset($rcl_options['tab_newpage'])&&$rcl_options['tab_newpage']==2) $privat_block .= '<script type="text/javascript" src="'.RCL_UPLOAD_URL.'scripts/footer-scripts.js"></script>';
 
 		return $privat_block;
 	}

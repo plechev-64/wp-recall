@@ -885,15 +885,15 @@ function rcl_upload_box(){
 			exit;
 		} */
 
-		$dir_path = TEMP_PATH.'users-temp/';
-		$dir_url = TEMP_URL.'users-temp/';
+		$dir_path = RCL_UPLOAD_PATH.'users-temp/';
+		$dir_url = RCL_UPLOAD_URL.'users-temp/';
 		if(!is_dir($dir_path)){
 			mkdir($dir_path);
 			chmod($dir_path, 0755);
 		}
 
-		$dir_path = TEMP_PATH.'users-temp/'.$user_ID.'/';
-		$dir_url = TEMP_URL.'users-temp/'.$user_ID.'/';
+		$dir_path = RCL_UPLOAD_PATH.'users-temp/'.$user_ID.'/';
+		$dir_url = RCL_UPLOAD_URL.'users-temp/'.$user_ID.'/';
 		if(!is_dir($dir_path)){
 			mkdir($dir_path);
 			chmod($dir_path, 0755);
@@ -970,7 +970,7 @@ function rcl_add_thumbnail_post($post_id,$filepath){
 	$attach_data = wp_generate_attachment_metadata( $attach_id, $image['file'] );
 	wp_update_attachment_metadata( $attach_id, $attach_data );
 
-	$oldthumb = get_post_meta($post_id, '_thumbnail_id');
+	$oldthumb = get_post_meta($post_id, '_thumbnail_id',1);
 	if($oldthumb) wp_delete_attachment($oldthumb);
 
 	update_post_meta($post_id, '_thumbnail_id', $attach_id);
@@ -979,7 +979,7 @@ function rcl_add_thumbnail_post($post_id,$filepath){
 //удаляем папку с изображениями при удалении поста
 add_action('delete_post','rcl_delete_tempdir_attachments');
 function rcl_delete_tempdir_attachments($postid){
-	$dir_path = TEMP_PATH.'post-media/'.$postid;
+	$dir_path = RCL_UPLOAD_PATH.'post-media/'.$postid;
 	rcl_remove_dir($dir_path);
 }
 

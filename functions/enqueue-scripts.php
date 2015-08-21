@@ -106,7 +106,7 @@ function rcl_frontend_scripts(){
 		if($rcl_options['custom_scc_file_recall']!=''){
 			wp_enqueue_style( 'style_custom_rcl', $rcl_options['custom_scc_file_recall'] );
 		}else{
-			wp_enqueue_style( 'rcl-style', TEMP_URL.'css/minify.css' );
+			wp_enqueue_style( 'rcl-style', RCL_UPLOAD_URL.'css/minify.css' );
 		}
 	}else{
             $css_ar = array('lk','recbar','regform','slider','users','style');
@@ -123,11 +123,11 @@ function rcl_frontend_scripts(){
 	if($user_ID) wp_enqueue_script( 'rangyinputs', RCL_URL.'js/rangyinputs.js' );
 
 	wp_enqueue_script( 'rcl-primary-scripts', RCL_URL.'js/recall.js', array(), VER_RCL );
-	if(!file_exists(TEMP_PATH.'scripts/header-scripts.js')){
+	if(!file_exists(RCL_UPLOAD_PATH.'scripts/header-scripts.js')){
 		$rcl_addons = new rcl_addons();
 		$rcl_addons->get_update_scripts_file_rcl();
 	}
-	wp_enqueue_script( 'rcl-header-scripts', TEMP_URL.'scripts/header-scripts.js', array('rcl-primary-scripts'), VER_RCL );
+	wp_enqueue_script( 'rcl-header-scripts', RCL_UPLOAD_URL.'scripts/header-scripts.js', array('rcl-primary-scripts'), VER_RCL );
 
 }
 
@@ -140,9 +140,9 @@ function rcl_admin_scrips(){
 function rcl_fileapi_scripts() {
     global $user_ID;
     if(!$user_ID) return false;
-    if(file_exists(TEMP_PATH.'scripts/footer-scripts.js')){
+    if(file_exists(RCL_UPLOAD_PATH.'scripts/footer-scripts.js')){
         wp_enqueue_script( 'jquery' );
-        wp_enqueue_script( 'rcl-footer-scripts', TEMP_URL.'scripts/footer-scripts.js', array(), VER_RCL, true );
+        wp_enqueue_script( 'rcl-footer-scripts', RCL_UPLOAD_URL.'scripts/footer-scripts.js', array(), VER_RCL, true );
     }
 }
 

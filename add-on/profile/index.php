@@ -199,7 +199,7 @@ function rcl_delete_avatar_action(){
 
 	if (!$result) wp_die('Error');
 
-        $dir_path = TEMP_PATH.'avatars/';
+        $dir_path = RCL_UPLOAD_PATH.'avatars/';
         foreach($rcl_avatar_sizes as $key=>$size){
             unlink($dir_path.$user_ID.'-'.$size.'.jpg');
 	}

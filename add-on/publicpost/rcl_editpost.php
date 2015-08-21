@@ -24,6 +24,8 @@ class Rcl_EditPost {
             $pst = get_post($this->post_id);
             $this->post_type = $pst->post_type;
 
+
+
             if($this->post_type=='post-group'){
 
                 if(!rcl_can_user_edit_post_group($post_id)) return false;
@@ -31,10 +33,13 @@ class Rcl_EditPost {
             }else{
                 if(!current_user_can('edit_post', $post_id)) return false;
                 if($pst->post_author!=$user_ID){
-                        $author_info = get_userdata($pst->post_author);
-                        $user_info = get_userdata($current_user->ID);
-                        if($user_info->user_level < $author_info->user_level) return false;
+                    $author_info = get_userdata($pst->post_author);
+                    $user_info = get_userdata($user_ID);
+
+                    if($user_info->user_level < $author_info->user_level) return false;
+
                 }
+
                 if($user_info->user_level<10&&rcl_is_limit_editing($post->post_date)) return false;
             }
             $this->update = true;
@@ -200,7 +205,7 @@ class Rcl_EditPost {
 
         do_action('update_post_rcl',$this->post_id,$postdata,$this->update);
 
-		if($postdata['post_status'] == 'pending'){
+        if($postdata['post_status'] == 'pending'){
             $redirect_url = get_bloginfo('wpurl').'/?p='.$this->post_id.'&preview=true';
         }else{
             $redirect_url = get_permalink($this->post_id);
@@ -234,15 +239,15 @@ function rcl_add_box_content($post_id,$postdata,$update){
 				$path_media = rcl_path_by_url($content);
 				$filename = basename($content);
 
-				$dir_path = TEMP_PATH.'post-media/';
-				$dir_url = TEMP_URL.'post-media/';
+				$dir_path = RCL_UPLOAD_PATH.'post-media/';
+				$dir_url = RCL_UPLOAD_URL.'post-media/';
 				if(!is_dir($dir_path)){
 					mkdir($dir_path);
 					chmod($dir_path, 0755);
 				}
 
-				$dir_path = TEMP_PATH.'post-media/'.$post_id.'/';
-				$dir_url = TEMP_URL.'post-media/'.$post_id.'/';
+				$dir_path = RCL_UPLOAD_PATH.'post-media/'.$post_id.'/';
+				$dir_url = RCL_UPLOAD_URL.'post-media/'.$post_id.'/';
 				if(!is_dir($dir_path)){
 					mkdir($dir_path);
 					chmod($dir_path, 0755);

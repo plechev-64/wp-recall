@@ -16,8 +16,8 @@ function rcl_avatar_upload(){
 	$maxsize = ($rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: $maxsize = 2;
 	$tmpname = current_time('timestamp').'.jpg';
 
-	$dir_path = TEMP_PATH.'avatars/';
-	$dir_url = TEMP_URL.'avatars/';
+	$dir_path = RCL_UPLOAD_PATH.'avatars/';
+	$dir_url = RCL_UPLOAD_URL.'avatars/';
 	if(!is_dir($dir_path)){
 		mkdir($dir_path);
 		chmod($dir_path, 0755);

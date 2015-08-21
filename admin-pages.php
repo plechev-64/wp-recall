@@ -162,7 +162,7 @@ function rcl_global_options(){
 
                 ));
 
-		$filecss = (file_exists(TEMP_PATH.'css/minify.css'))? '<a href="'.RCL_URL.'css/getcss.php">'.__('Download the current style file for editing','rcl').'</a>':'';
+		$filecss = (file_exists(RCL_UPLOAD_PATH.'css/minify.css'))? '<a href="'.RCL_URL.'css/getcss.php">'.__('Download the current style file for editing','rcl').'</a>':'';
                 $content .= $fields->option_block(
                     array(
 			$fields->title(__('Making','rcl')),

@@ -336,8 +336,8 @@ function rcl_get_url_avatar($url_image,$user_id,$size){
 		if($size>$rcl_size) continue;
 
 		$optimal_size = $rcl_size;
-		$optimal_url = TEMP_URL.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
-		$optimal_path = TEMP_PATH.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
+		$optimal_url = RCL_UPLOAD_URL.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
+		$optimal_path = RCL_UPLOAD_PATH.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
 		break;
 	}
 

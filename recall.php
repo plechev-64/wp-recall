@@ -32,7 +32,10 @@ function init_global_rcl(){
 	define('TEMP_PATH', $upload_dir['basedir'].'/temp-rcl/');
 	define('TEMP_URL', $upload_dir['baseurl'].'/temp-rcl/');
 
-        define('RCL_TAKEPATH', $upload_dir['basedir'].'/wp-recall/');
+        define('RCL_UPLOAD_PATH', $upload_dir['basedir'].'/rcl-uploads/');
+	define('RCL_UPLOAD_URL', $upload_dir['baseurl'].'/rcl-uploads/');
+
+        define('RCL_TAKEPATH', WP_CONTENT_DIR.'/wp-recall/');
 
 	define('RCL_URL', plugin_dir_url( __FILE__ ));
 	define('RCL_PREF', $wpdb->base_prefix.'rcl_');
@@ -60,7 +63,7 @@ function recall_install(){
 
     $upload_dir = rcl_get_wp_upload_dir();
 
-    if(!is_dir($upload_dir['basedir'])){
+    if(!file_exists($upload_dir['basedir'])){
         mkdir($upload_dir['basedir']);
         chmod($upload_dir['basedir'], 0755);
     }
@@ -87,72 +90,83 @@ function recall_install(){
 		) DEFAULT CHARSET=utf8;");
 	}
 
-	if(!is_dir(TEMP_PATH)){
-            mkdir(TEMP_PATH);
-            chmod(TEMP_PATH, 0755);
-	}
-
 	if(!isset($rcl_options['view_user_lk_rcl'])){
-		$rcl_options['view_user_lk_rcl'] = 1;
-		$rcl_options['color_theme'] = 'blue';
-		$rcl_options['lk_page_rcl'] = wp_insert_post(array('post_title'=>__('Personal account','rcl'),'post_content'=>'[wp-recall]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'account'));
 
-		wp_insert_post(array('post_title'=>__('Users','rcl'),'post_content'=>'[userlist]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'users'));
+            if(!file_exists(RCL_UPLOAD_PATH)){
+                mkdir(RCL_UPLOAD_PATH);
+                chmod(RCL_UPLOAD_PATH, 0755);
+            }
 
-		wp_insert_post(array('post_title'=>__('FEED','rcl'),'post_content'=>'[feed]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'user-feed'));
+            $rcl_options['view_user_lk_rcl'] = 1;
+            $rcl_options['color_theme'] = 'blue';
+            $rcl_options['lk_page_rcl'] = wp_insert_post(array('post_title'=>__('Personal account','rcl'),'post_content'=>'[wp-recall]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'account'));
 
-		$active_addons = get_site_option('active_addons_recall');
-		$def_addons = array('rating-system','review','profile','feed','publicpost','message');
-		foreach($def_addons as $addon){
-			$path = RCL_PATH.'add-on/'.$addon.'/index.php';
-			if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
-			$active_addons[$addon]['src'] = $path;
-			$install_src = RCL_PATH.'add-on/'.$addon.'/activate.php';
-			$index_src = RCL_PATH.'add-on/'.$addon.'/index.php';
-			if(file_exists($install_src)) include($install_src);
-			if(file_exists($index_src)) include($index_src);
-		}
-		update_site_option('active_addons_recall',$active_addons);
+            wp_insert_post(array('post_title'=>__('Users','rcl'),'post_content'=>'[userlist]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'users'));
 
-		$no_action_users = $wpdb->get_results("SELECT COUNT(us.ID) FROM ".$wpdb->prefix."users AS us WHERE us.ID NOT IN (SELECT ua.user FROM ".RCL_PREF."user_action AS ua)");
+            wp_insert_post(array('post_title'=>__('FEED','rcl'),'post_content'=>'[feed]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'user-feed'));
 
-		if($no_action_users){
-				$wpdb->query("
-					INSERT INTO ".RCL_PREF."user_action( user, time_action )
-					SELECT us.ID, us.user_registered
-					FROM ".$wpdb->prefix."users AS us
-					WHERE us.ID NOT IN ( SELECT user FROM ".RCL_PREF."user_action )
-				");
-		}
+            $active_addons = get_site_option('active_addons_recall');
+            $def_addons = array('rating-system','review','profile','feed','publicpost','message');
+            foreach($def_addons as $addon){
+                    $path = RCL_PATH.'add-on/'.$addon.'/index.php';
+                    if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
+                    $active_addons[$addon]['src'] = $path;
+                    $install_src = RCL_PATH.'add-on/'.$addon.'/activate.php';
+                    $index_src = RCL_PATH.'add-on/'.$addon.'/index.php';
+                    if(file_exists($install_src)) include($install_src);
+                    if(file_exists($index_src)) include($index_src);
+            }
+            update_site_option('active_addons_recall',$active_addons);
 
-		$wpdb->update(
-			$wpdb->prefix.'usermeta',
-			array('meta_value'=>'false'),
-			array('meta_key'=>'show_admin_bar_front')
-		);
+            $no_action_users = $wpdb->get_results("SELECT COUNT(us.ID) FROM ".$wpdb->prefix."users AS us WHERE us.ID NOT IN (SELECT ua.user FROM ".RCL_PREF."user_action AS ua)");
 
-		$roledata = array(
-			'need-confirm' => array(
-				'name'=>__('Unconfirmed','rcl'),
-				'cap'=>array('read' => false, 'edit_posts' => false, 'delete_posts' => false, 'upload_files' => false)
-			),
-			'banned' => array(
-				'name'=>__('Ban','rcl'),
-				'cap'=>array('read' => false, 'edit_posts' => false, 'delete_posts' => false, 'upload_files' => false)
-			)
-		);
+            if($no_action_users){
+                            $wpdb->query("
+                                    INSERT INTO ".RCL_PREF."user_action( user, time_action )
+                                    SELECT us.ID, us.user_registered
+                                    FROM ".$wpdb->prefix."users AS us
+                                    WHERE us.ID NOT IN ( SELECT user FROM ".RCL_PREF."user_action )
+                            ");
+            }
 
-		foreach($roledata as $key=>$role){
-			remove_role($key);
-			add_role($key, $role['name'], $role['cap']);
-		}
+            $wpdb->update(
+                    $wpdb->prefix.'usermeta',
+                    array('meta_value'=>'false'),
+                    array('meta_key'=>'show_admin_bar_front')
+            );
 
-                update_option('default_role','author');
+            $roledata = array(
+                    'need-confirm' => array(
+                            'name'=>__('Unconfirmed','rcl'),
+                            'cap'=>array('read' => false, 'edit_posts' => false, 'delete_posts' => false, 'upload_files' => false)
+                    ),
+                    'banned' => array(
+                            'name'=>__('Ban','rcl'),
+                            'cap'=>array('read' => false, 'edit_posts' => false, 'delete_posts' => false, 'upload_files' => false)
+                    )
+            );
+
+            foreach($roledata as $key=>$role){
+                    remove_role($key);
+                    add_role($key, $role['name'], $role['cap']);
+            }
+
+            update_option('default_role','author');
 
 	}else{
-		rcl_update_avatar_data();
-		rcl_update_old_feeds();
-		update_option('show_avatars',1);
+
+            if(file_exists(TEMP_PATH)){
+                rename(TEMP_PATH,RCL_UPLOAD_PATH);
+            }else{
+                if(!file_exists(RCL_UPLOAD_PATH)){
+                    mkdir(RCL_UPLOAD_PATH);
+                    chmod(RCL_UPLOAD_PATH, 0755);
+                }
+            }
+
+            rcl_update_avatar_data();
+            rcl_update_old_feeds();
+            update_option('show_avatars',1);
 	}
 
 	$rcl_options['footer_url_recall']=1;
