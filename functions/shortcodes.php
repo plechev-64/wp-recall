@@ -249,12 +249,12 @@ function rcl_get_userlist($atts, $content = null){
         $rqst = $UserList->search_request();
         $perm = rcl_format_url(get_permalink($post->ID).'?'.$rqst);
 
-        $userlist .= '<p class="alignleft">'.__('Filter by','rcl').': ';
-        $userlist .= '<a '.rcl_a_active($orderby,'action').' href="'.$perm.'filter=action">'.__('Activity','rcl').'</a> ';
-        $userlist .= '<a '.rcl_a_active($orderby,'rating_total').' href="'.$perm.'filter=rayting">'.__('Rated','rcl').'</a> ';
-        if(!isset($_GET['search-user'])) $userlist .= '<a '.rcl_a_active($orderby,'posts').' href="'.$perm.'filter=posts">'.__('Publications','rcl').'</a> ';
-        if(!isset($_GET['search-user'])) $userlist .= '<a '.rcl_a_active($orderby,'comments').' href="'.$perm.'filter=comments">'.__('Comments','rcl').'</a> ';
-        if(!isset($_GET['search-user'])) $userlist .= '<a '.rcl_a_active($orderby,'registered').' href="'.$perm.'filter=registered">'.__('Registration','rcl').'</a>';
+        $userlist .= '<div class="rcl-user-filters">'.__('Filter by','rcl').': ';
+        $userlist .= '<a class="user-filter" '.rcl_a_active($orderby,'action').' href="'.$perm.'filter=action">'.__('Activity','rcl').'</a> ';
+        $userlist .= '<a class="user-filter" '.rcl_a_active($orderby,'rating_total').' href="'.$perm.'filter=rayting">'.__('Rated','rcl').'</a> ';
+        if(!isset($_GET['search-user'])) $userlist .= '<a class="user-filter" '.rcl_a_active($orderby,'posts').' href="'.$perm.'filter=posts">'.__('Publications','rcl').'</a> ';
+        if(!isset($_GET['search-user'])) $userlist .= '<a class="user-filter" '.rcl_a_active($orderby,'comments').' href="'.$perm.'filter=comments">'.__('Comments','rcl').'</a> ';
+        if(!isset($_GET['search-user'])) $userlist .= '<a class="user-filter" '.rcl_a_active($orderby,'registered').' href="'.$perm.'filter=registered">'.__('Registration','rcl').'</a>';
         $userlist .= '</p>';
     }
 

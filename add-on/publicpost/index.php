@@ -16,13 +16,13 @@ function rcl_publics_scripts(){
 	global $rcl_options;
 	//if($rcl_options['media_downloader_recall']!=1) return false;
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl_publics_scripts', plugins_url('js/scripts.js', __FILE__) );
+	wp_enqueue_script( 'rcl_publics_scripts', rcl_addon_url('js/scripts.js', __FILE__) );
 }
 
 function rcl_autocomplete_scripts(){
-	wp_enqueue_style( 'rcl_autocomplete_scripts', plugins_url('js/magicsuggest/magicsuggest-min.css', __FILE__) );
+	wp_enqueue_style( 'rcl_autocomplete_scripts', rcl_addon_url('js/magicsuggest/magicsuggest-min.css', __FILE__) );
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl_autocomplete_scripts', plugins_url('js/magicsuggest/magicsuggest-min.js', __FILE__) );
+	wp_enqueue_script( 'rcl_autocomplete_scripts', rcl_addon_url('js/magicsuggest/magicsuggest-min.js', __FILE__) );
 }
 
 if (!is_admin()):
