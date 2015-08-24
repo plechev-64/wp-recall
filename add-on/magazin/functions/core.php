@@ -37,7 +37,7 @@ function rcl_product_permalink(){
 }
 function rcl_product_title(){
 	global $product;
-	echo get_the_title($product->product_id);
+        echo apply_filters('rcl_product_title',get_the_title($product->product_id));
 }
 function rcl_product_price(){
 	global $product;
