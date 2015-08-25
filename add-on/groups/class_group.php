@@ -303,7 +303,8 @@ class Rcl_Group{
 	function get_buttons(){
 		global $user_ID;
 		if($user_ID&&$user_ID==$this->admin_id) return $this->admin_block();
-		else return $this->users_block();
+		else if($user_ID) return $this->users_block();
+                else return false;
 	}
 
 	function get_userlist(){
