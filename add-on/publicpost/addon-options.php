@@ -2,7 +2,7 @@
 add_filter('admin_options_wprecall','rcl_get_publics_options_page');
 function rcl_get_publics_options_page($content){
     global $rcl_options,$_wp_additional_image_sizes;
-    //print_r($rcl_options);
+
     $opt = new Rcl_Options(__FILE__);
 
     $args = array(
