@@ -59,7 +59,7 @@ jQuery(function($){
         }
     });    
     
-    $('#add_public_field').on('click',function() {
+    $('#add_public_field').live('click',function() {
         var html = $(".public_fields ul li").last().html();
         $(".public_fields ul").append('<li class="menu-item menu-item-edit-active">'+html+'</li>');
         return false;
@@ -80,7 +80,7 @@ jQuery(function($){
 		return false;
 	}
 	
-	$('.type_field').on('change',function(){
+	$('.type_field').live('change',function(){
 		var type = $(this).val();
 		var slug = $(this).attr('id');
 		if(type==='text'||type==='textarea'){

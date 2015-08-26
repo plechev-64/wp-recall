@@ -1052,7 +1052,7 @@ function rcl_public_file_scripts($script){
 			if(error==0) return true;
 			else return false;
 		});
-		jQuery('#rcl-popup .rcl-navi a').on('click',function(){
+		jQuery('#rcl-popup .rcl-navi a').live('click',function(){
 			var page = jQuery(this).text();
 			var dataString = 'action=get_media&user_ID='+user_ID+'&page='+page;
 
@@ -1074,7 +1074,7 @@ function rcl_public_file_scripts($script){
 			});
 			return false;
 		});
-		jQuery('#get-media-rcl').on('click',function(){
+		jQuery('#get-media-rcl').live('click',function(){
 			var dataString = 'action=get_media&user_ID='+user_ID;
 
 			jQuery.ajax({
@@ -1096,7 +1096,7 @@ function rcl_public_file_scripts($script){
 			return false;
 		});
 
-		jQuery('.posts_rcl_block .sec_block_button').on('click',function(){
+		jQuery('.posts_rcl_block .sec_block_button').live('click',function(){
 			var btn = jQuery(this);
 			get_page_content_rcl(btn,'posts_rcl_block');
 			return false;

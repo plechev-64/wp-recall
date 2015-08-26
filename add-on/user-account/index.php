@@ -393,7 +393,7 @@ function rcl_get_useraccount_scripts($script){
 
 	$script .= "
 		/* Пополняем личный счет пользователя */
-			jQuery('.add_count_user').on('click',function(){
+			jQuery('.add_count_user').live('click',function(){
 					var count = jQuery('.value_count_user');
 					var addcount = count.val();
 					var dataString = 'action=rcl_add_count_user&count='+addcount;
@@ -411,7 +411,7 @@ function rcl_get_useraccount_scripts($script){
 					return false;
 				});
 		/* Оплачиваем заказ средствами из личного счета */
-			jQuery('.pay_order').on('click',function(){
+			jQuery('.pay_order').live('click',function(){
 				var idorder = jQuery(this).data('order');
 				var dataString = 'action=rcl_pay_order_private_account&idorder='+ idorder;
 
@@ -433,7 +433,7 @@ function rcl_get_useraccount_scripts($script){
 				});
 				return false;
 			});
-		jQuery('.go_to_add_count').on('click',function(){
+		jQuery('.go_to_add_count').live('click',function(){
 			jQuery('.count_user').slideToggle();
 			return false;
 		});

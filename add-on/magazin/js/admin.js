@@ -15,7 +15,7 @@ jQuery(function(){
 /*************************************************
 Удаляем заказ пользователя воопще)
 *************************************************/
-	jQuery('.delete-order').on('click',function(){
+	jQuery('.delete-order').live('click',function(){
 		if(confirm('Уверены?')){
 			var idorder = jQuery(this).attr('id');
 			var dataString_reg = 'action=rcl_all_delete_order&idorder='+ idorder;
@@ -39,7 +39,7 @@ jQuery(function(){
 /*************************************************
 Меняем статус заказа в админке
 *************************************************/	
-jQuery('.select_status').on('click',function(){
+jQuery('.select_status').live('click',function(){
 		var order = jQuery(this).attr('id');
 		//var id_user = parseInt(id_attr.replace(/\D+/g,''));	
 		var status = jQuery('#status-'+order).val();
@@ -61,7 +61,7 @@ jQuery('.select_status').on('click',function(){
 	return false;
 });
 
-jQuery('.edit-price-product').on('click',function(){
+jQuery('.edit-price-product').live('click',function(){
 			var id_post = jQuery(this).attr('product');	
 			var price = jQuery('#price-product-'+id_post).attr('value');
 			var dataString_count = 'action=rcl_edit_price_product&id_post='+id_post+'&price='+price;

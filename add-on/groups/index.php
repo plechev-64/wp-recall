@@ -975,42 +975,42 @@ function rcl_scripts_group($script){
 	//$ajaxfile = "type: 'POST', data: dataString, dataType: 'json', url: rcl_url+'add-on/groups/ajax-request.php',";
 
 	$script .= "
-		jQuery('.edit .groupname').on('click',function(){
+		jQuery('.edit .groupname').live('click',function(){
 			var group_name = jQuery(this).text();
 			var idgroup = jQuery('.group-info').attr('id');
 			var id_group = parseInt(idgroup.replace(/\D+/g,''));
 			jQuery(this).attr('class','groupname_edit');
 			jQuery(this).html('<input class=\"new-name-group\" type=\"text\" id=\"name-group\" value=\"'+group_name+'\"><input id=\"edit-group-'+id_group+'\" class=\"edit_name_group\" type=\"button\" value=\"Обновить\"><input class=\"cancel_title\" type=\"button\" value=\"Отмена\">');
 		});
-		jQuery('.edit .avatar_gallery_group').on('click',function(){
+		jQuery('.edit .avatar_gallery_group').live('click',function(){
 			jQuery('.edit-avatar').html('<form action=\"\" method=\"post\" enctype=\"multipart/form-data\"><input type=\"file\" name=\"image_group\" class=\"field\"/><input type=\"submit\" name=\"addava\" value=\"Загрузить\"><input class=\"cancel_avatar\" type=\"button\" value=\"Отмена\"></form>');
 		});
-		jQuery('.edit .desc_group').on('click',function(){
+		jQuery('.edit .desc_group').live('click',function(){
 			var desc_group = jQuery(this).text();
 			jQuery(this).attr('class','text_desc_group');
 			jQuery(this).html('<textarea name=\"group_desc\" id=\"group_desc\" rows=\"3\" style=\"width:70%;height:150px;\">'+desc_group+'</textarea><input  class=\"edit_desc_group\" type=\"button\" value=\"Обновить\" style=\"float: right; margin-bottom: 15px;\"><input class=\"cancel_desc\" type=\"button\" value=\"Отмена\">');
 		});
-		jQuery('.cancel_title').on('click',function(){
+		jQuery('.cancel_title').live('click',function(){
 			var group_name = jQuery('#name-group').attr('value');
 			jQuery('.groupname_edit').html(group_name);
 			jQuery('.groupname_edit').attr('class','groupname');
 		});
-		jQuery('.cancel_avatar').on('click',function(){
+		jQuery('.cancel_avatar').live('click',function(){
 			jQuery('.edit-avatar').empty();
 		});
-		jQuery('.cancel_desc').on('click',function(){
+		jQuery('.cancel_desc').live('click',function(){
 			var desc_group = jQuery('#group_desc').attr('value');
 			jQuery('.text_desc_group').html('<p>'+desc_group+'</p>');
 			jQuery('.text_desc_group').attr('class','desc_group');
 		});
 
-		jQuery('.show_form_add_group').on('click',function(){
+		jQuery('.show_form_add_group').live('click',function(){
 			jQuery('.add_new_group').slideToggle();
 		return false;
 		});
 
 	/* Смотрим всех пользователей группы */
-		jQuery('.all-users-group, .float-window-recall .rcl-navi a').on('click',function(){
+		jQuery('.all-users-group, .float-window-recall .rcl-navi a').live('click',function(){
 			var idgroup = jQuery('.group-info').attr('id');
 			var page = parseInt(jQuery(this).text().replace(/\D+/g,''));
 			var id_group = parseInt(idgroup.replace(/\D+/g,''));
@@ -1053,7 +1053,7 @@ function rcl_scripts_group($script){
 		return false;
 		});
 	/* Редактируем название и описание группы */
-		jQuery('.edit_name_group').on('click',function(){
+		jQuery('.edit_name_group').live('click',function(){
 			var idgroup = jQuery('.group-info').attr('id');
 			var id_group = parseInt(idgroup.replace(/\D+/g,''));
 			var new_name_group = jQuery('#name-group').attr('value');
@@ -1071,7 +1071,7 @@ function rcl_scripts_group($script){
 			});
 			return false;
 		});
-		jQuery('.ban-group').on('click',function(){
+		jQuery('.ban-group').live('click',function(){
 			var user_id = jQuery(this).attr('user-data');
 			var group_id = jQuery(this).attr('group-data');
 			var dataString = 'action=group_ban_user&user_id='+user_id+'&group_id='+group_id+'&user_ID='+user_ID;
@@ -1087,7 +1087,7 @@ function rcl_scripts_group($script){
 			});
 			return false;
 		});
-		jQuery('.remove-public-group').on('click',function(){
+		jQuery('.remove-public-group').live('click',function(){
 			var user_id = jQuery(this).attr('user-data');
 			var group_id = jQuery(this).attr('group-data');
 			var dataString = 'action=remove_user_publics_group&user_id='+user_id+'&group_id='+group_id+'&user_ID='+user_ID;
@@ -1103,7 +1103,7 @@ function rcl_scripts_group($script){
 			});
 			return false;
 		});
-		jQuery('.edit_desc_group').on('click',function(){
+		jQuery('.edit_desc_group').live('click',function(){
 			var idgroup = jQuery('.group-info').attr('id');
 			var id_group = parseInt(idgroup.replace(/\D+/g,''));
 			var new_desc_group = jQuery('#group_desc').attr('value');
@@ -1121,7 +1121,7 @@ function rcl_scripts_group($script){
 			});
 				return false;
 		});
-		jQuery('.posts_group_block .sec_block_button').on('click',function(){
+		jQuery('.posts_group_block .sec_block_button').live('click',function(){
 			var btn = jQuery(this);
 			get_page_content_rcl(btn,'posts_group_block');
 			return false;

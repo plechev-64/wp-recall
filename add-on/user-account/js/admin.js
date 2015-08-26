@@ -2,7 +2,7 @@ jQuery(function(){
 /*************************************************
 Пополняем личный счет пользователя в админке
 *************************************************/
-	jQuery('.edit_balance').on('click',function(){
+	jQuery('.edit_balance').live('click',function(){
 			var id_attr = jQuery(this).attr('id');
 			var id_user = parseInt(id_attr.replace(/\D+/g,''));	
 			var balance = jQuery('.balanceuser-'+id_user).attr('value');

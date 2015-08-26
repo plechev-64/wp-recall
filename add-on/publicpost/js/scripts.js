@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
     /*var tbframe;
 	var wpds_orig_send_to_editor = window.send_to_editor;
-    jQuery('#add_thumbnail_rcl').on('click',function() {
+    jQuery('#add_thumbnail_rcl').live('click',function() {
 		send_to = true;
         tb_show('', '/wp-admin/media-upload.php?type=image&amp;TB_iframe=true');
         tbframe = setInterval(function() {jQuery('#TB_iframeContent').contents().find('.savesend .button').val('Использовать как миниатюру');}, 2000);
@@ -20,7 +20,7 @@ jQuery(document).ready(function($) {
         return false;
     });
 
-    jQuery('#thumbnail_rcl .delete').on('click',function() {		
+    jQuery('#thumbnail_rcl .delete').live('click',function() {		
 		jQuery('#thumbnail_rcl').empty();
 		return false;
     });*/

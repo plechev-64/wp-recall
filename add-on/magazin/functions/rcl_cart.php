@@ -163,7 +163,7 @@ class Rcl_Cart {
 
                             $basket .= "<script>
                     jQuery(function(){
-                    jQuery('.confirm_order').on('click',function(){";
+                    jQuery('.confirm_order').live('click',function(){";
 
                     $basket .= $this->script_request('order');
 
@@ -219,7 +219,7 @@ class Rcl_Cart {
                         </div>';
                         $basket .= "<script>
                         jQuery(function(){
-                                jQuery('.rcl_register_user_order').on('click',function(){";
+                                jQuery('.rcl_register_user_order').live('click',function(){";
 
                                     $basket .= $this->script_request('order');
 
