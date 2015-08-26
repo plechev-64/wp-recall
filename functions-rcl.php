@@ -760,7 +760,7 @@ function rcl_get_scripts_ajaxload_tabs($script){
 		});
 		return false;
 	}
-	jQuery('.ajax_button').live('click',function(){
+	jQuery('.ajax_button').on('click',function(){
 		if(jQuery(this).hasClass('active'))return false;
 		rcl_preloader_show('#lk-content > div');
 		var id = jQuery(this).attr('id');

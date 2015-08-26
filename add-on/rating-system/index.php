@@ -451,12 +451,12 @@ function rcl_scripts_rating($script){
 	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
 
 	$script .= "
-        jQuery('.votes-window .close').live('click',function(){
+        jQuery('.votes-window .close').on('click',function(){
             jQuery(this).parent().remove();
             return false;
         });
 
-        jQuery('.buttons-rating .edit-rating').live('click',function(){
+        jQuery('.buttons-rating .edit-rating').on('click',function(){
             var block = jQuery(this);
             var rating = block.data('rating');
 
@@ -486,7 +486,7 @@ function rcl_scripts_rating($script){
             return false;
         });
 
-        jQuery('a.view-votes').live('click',function(){
+        jQuery('a.view-votes').on('click',function(){
             jQuery('.rating-value-block .votes-window').remove();
             var block = jQuery(this);
             var rating = block.data('rating');
@@ -507,7 +507,7 @@ function rcl_scripts_rating($script){
             return false;
         });
 
-        jQuery('a.get-list-votes').live('click',function(){
+        jQuery('a.get-list-votes').on('click',function(){
             if(jQuery(this).hasClass('active')) return false;
             rcl_preloader_show('#rating_block .votes-list');
             jQuery('#rating_block a.get-list-votes').removeClass('active');

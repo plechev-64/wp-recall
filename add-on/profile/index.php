@@ -831,7 +831,7 @@ function rcl_get_profile_scripts($script){
 		}
 	});
 
-	$('#webcamupload').live('click',function(){
+	$('#webcamupload').on('click',function(){
 
                 $( '#rcl-preview' ).remove();
 		$('body > div').last().after('<div id=\'rcl-preview\' title=\'Снимок с камеры\'></div>');

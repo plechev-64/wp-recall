@@ -2,7 +2,7 @@ jQuery(function(){
 /*************************************************
 Пополняем личный счет пользователя в админке
 *************************************************/
-	jQuery('.edit_rayting').live('click',function(){
+	jQuery('.edit_rayting').on('click',function(){
 			var id_attr = jQuery(this).attr('id');
 			var id_user = parseInt(id_attr.replace(/\D+/g,''));	
 			var rayting = jQuery('.raytinguser-'+id_user).attr('value');

@@ -1354,7 +1354,7 @@ class Rcl_Messages{
 			div.scrollTop( div.get(0).scrollHeight );";
 
 		$script .= "
-			$('.link-file-rcl').live('click',function(){
+			$('.link-file-rcl').on('click',function(){
 				$(this).parent().text('".__("Removes the file from the server","rcl")."');
 			});
 			var talker = $('input[name=\"adressat_mess\"]').val();
@@ -1399,7 +1399,7 @@ class Rcl_Messages{
 				}
 			);
 
-			jQuery('.view-form').live('click',function(){
+			jQuery('.view-form').on('click',function(){
 				jQuery('#privatemess .prmess').slideDown();
 				jQuery('.view-form').slideUp();
 				return false;
@@ -1420,7 +1420,7 @@ class Rcl_Messages{
 				return color;
 			}
 
-			jQuery('#content_mess').live('keyup', function(){
+			jQuery('#content_mess').on('keyup', function(){
 				var word = jQuery(this);
 				count = count_word_in_message(word);
 				color = get_color_count_word(count);
@@ -1429,7 +1429,7 @@ class Rcl_Messages{
 				word.val(word.val().substr(0, ".($words-1)."));
 			});
 
-			jQuery('#minicontent_mess').live('keyup', function(){
+			jQuery('#minicontent_mess').on('keyup', function(){
 				var word = jQuery(this);
 				count = count_word_in_message(word);
 				color = get_color_count_word(count);
@@ -1475,7 +1475,7 @@ class Rcl_Messages{
 				});
 				return false;
 			}
-			jQuery('.addmess').live('click',function(){
+			jQuery('.addmess').on('click',function(){
 			var content_text = jQuery('#content_mess').val();
 			if(content_text) add_private_message_recall();
 			return false;
@@ -1529,7 +1529,7 @@ class Rcl_Messages{
 				});
 				return false;
 			}
-			jQuery('.miniaddmess').live('click',function(){
+			jQuery('.miniaddmess').on('click',function(){
 			var content_text = jQuery('#minicontent_mess').val();
 			if(content_text)
 				add_private_minimessage_recall();
@@ -1550,7 +1550,7 @@ class Rcl_Messages{
 			});
 
 		/* Отмечаем сообщение как прочтенное */
-			jQuery('.close-mess-window').live('click',function(){
+			jQuery('.close-mess-window').on('click',function(){
 				var id_mess = parseInt(jQuery(this).attr('id').replace(/\D+/g,''));
 				var dataString = 'action=close_new_message_recall&id_mess='+id_mess+'&user_ID='+user_ID;
 				jQuery.ajax({
@@ -1567,7 +1567,7 @@ class Rcl_Messages{
 				return false;
 			});
 		/* Добавление в черный список */
-			jQuery('#manage-blacklist').live('click',function(){
+			jQuery('#manage-blacklist').on('click',function(){
 				var user_id = jQuery(this).data('contact');
 				var dataString = 'action=manage_blacklist_recall&user_id='+user_id;
 				jQuery.ajax({
@@ -1582,7 +1582,7 @@ class Rcl_Messages{
 				});
 				return false;
 			});
-		jQuery('.remove_black_list').live('click',function(){
+		jQuery('.remove_black_list').on('click',function(){
 				var id_user = jQuery(this).data('contact');
 				var dataString = 'action=remove_ban_list_rcl&id_user='+id_user+'&user_ID='+user_ID;
 				jQuery.ajax({
@@ -1598,7 +1598,7 @@ class Rcl_Messages{
 				return false;
 			});
 		/* Удаление истории переписки */
-			jQuery('.del_history').live('click',function(){
+			jQuery('.del_history').on('click',function(){
 				var id_user = jQuery(this).data('contact');
 				var dataString = 'action=delete_history_private_recall&id_user='+id_user+'&user_ID='+user_ID;
 				jQuery.ajax({
@@ -1615,7 +1615,7 @@ class Rcl_Messages{
 			});
 
 		/* Получаем старые сообщения в переписке */
-			jQuery('.old_message').live('click',function(){
+			jQuery('.old_message').on('click',function(){
 				rcl_preloader_show('#privat_block > div');
 				block_mess++;
 				var dataString = 'action=get_old_private_message_recall&block_mess='+block_mess+'&old_num_mess='+old_num_mess+'&user='+user_old_mess+'&user_ID='+user_ID;
@@ -1633,7 +1633,7 @@ class Rcl_Messages{
 				return false;
 			});
 
-		jQuery('#get-important-rcl').live('click',function(){
+		jQuery('#get-important-rcl').on('click',function(){
 			rcl_preloader_show('#privat_block > div');
 			if(jQuery(this).hasClass('important')){
 				jQuery(this).removeClass('important').text('Вся переписка');
@@ -1658,7 +1658,7 @@ class Rcl_Messages{
 				return false;
 			});
 
-		jQuery('.correspond .sec_block_button').live('click',function(){
+		jQuery('.correspond .sec_block_button').on('click',function(){
 				if(jQuery(this).hasClass('active'))return false;
 				var days = jQuery(this).attr('data');
 				jQuery('.correspond .sec_block_button').removeClass('active');
@@ -1676,7 +1676,7 @@ class Rcl_Messages{
 				});
 				return false;
 			});
-		jQuery('#get-all-contacts').live('click',function(){
+		jQuery('#get-all-contacts').on('click',function(){
 			var dataString = 'action=get_interval_contacts_rcl&days=0&user_ID='+user_ID;
 
 			jQuery.ajax({
@@ -1697,7 +1697,7 @@ class Rcl_Messages{
 			});
 			return false;
 		});
-		jQuery('.message-block .important').live('click',function(){
+		jQuery('.message-block .important').on('click',function(){
 			update_important_rcl(jQuery(this).attr('idmess'));
 			return false;
 		});

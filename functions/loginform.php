@@ -73,7 +73,7 @@ function rcl_secondary_password($fields){
                 <div id="notice-chek-password"></div>
             </div>
             <script>jQuery(function(){
-            jQuery("#secondary-pass-user").live("keyup", function(){
+            jQuery("#secondary-pass-user").on("keyup", function(){
                 var pr = jQuery("#primary-pass-user").val();
                 var sc = jQuery(this).val();
                 var notice;
