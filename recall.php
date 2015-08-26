@@ -37,6 +37,7 @@ function init_global_rcl(){
 
         if(file_exists(TEMP_PATH)){
             rename(TEMP_PATH,RCL_UPLOAD_PATH);
+            rcl_rename_media_dir();
         }
 
         define('RCL_TAKEPATH', WP_CONTENT_DIR.'/wp-recall/');
@@ -162,11 +163,7 @@ function recall_install(){
             if(file_exists(TEMP_PATH)){
                 rename(TEMP_PATH,RCL_UPLOAD_PATH);
 
-                /*проблема перехода на версию 13.1.0*/
-                $urls = $wpdb->get_results("SELECT meta_value,user_id FROM $wpdb->usermeta WHERE meta_key='rcl_avatar' AND meta_value LIKE '%temp-rcl%'");
-                foreach($urls as $url){
-                    update_user_meta($url->user_id,'rcl_avatar',str_replace('temp-rcl','rcl-uploads',$url->meta_value));
-                }
+                rcl_rename_media_dir();
 
             }else{
                 if(!file_exists(RCL_UPLOAD_PATH)){
