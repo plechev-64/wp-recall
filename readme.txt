@@ -3,7 +3,7 @@ Contributors: wppost
 Donate link: http://wppost.ru/
 Tags: personal account, private message, groups, user profile, личный кабинет, личные сообщения, профиль пользователя
 Requires at least: 3.0.1
-Tested up to: 4.2.4
+Tested up to: 4.3.0
 Stable tag: 12.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,7 +16,7 @@ WordPress plugin to create a personal user profile. The plugin creates a persona
 The plugin allows you to exchange private messages and more. Plug-in extends its functionality through its supplements.
 
 WordPress плагин для создания личного кабинета пользователя. Кроме этого плагин добавляет личные сообщения, пользовательские группы, отзывы, систему рейтинга, подписок и многое другое.
-Плагин расширяет свой функционал за счет своих дополнений.
+Плагин расширяет свой функционал за счет своих дополнений. Дополнения плагина имеют функционал автоматического обновления.
 
 To expand its functional plugin uses supplements.
 General information about the plug-ons:
@@ -43,8 +43,6 @@ http://wppost.ru/nash-magazin/
 http://wppost.ru/dokumentaciya-wp-recall/
 
 == Installation ==
-
-Внимание! Обновление плагина через репозиторий WordPress обновит только базовую часть плагина, дополнения не входящие в базовую версию плагина будут удалены!
 
 1. Upload dir `wp-recall` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
