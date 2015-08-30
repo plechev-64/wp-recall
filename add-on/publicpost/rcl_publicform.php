@@ -235,7 +235,7 @@ class Rcl_PublicForm {
             	'termlist'=>true,
             	'editor'=>true,
             	'custom_fields'=>true,
-				'upload'=>true,
+                'upload'=>true,
                 'tags'=>true
             );
 
@@ -266,34 +266,34 @@ class Rcl_PublicForm {
                 $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','rcl').'\';"  action="" method="post" enctype="multipart/form-data">
                 '.wp_nonce_field('edit-post-rcl','_wpnonce',true,false);
 
-					if(!$user_ID) $form .= '<div class="rcl-form-field">
-						<label>'.__('Your Name','rcl').' <span class="required">*</span></label>
-						<input required type="text" value="" name="name-user">
-					</div>
-					<div class="rcl-form-field">
-						<label>'.__('Your E-mail','rcl').' <span class="required">*</span></label>
-						<input required type="text" value="" name="email-user">
-					</div>';
+                    if(!$user_ID) $form .= '<div class="rcl-form-field">
+                            <label>'.__('Your Name','rcl').' <span class="required">*</span></label>
+                            <input required type="text" value="" name="name-user">
+                    </div>
+                    <div class="rcl-form-field">
+                            <label>'.__('Your E-mail','rcl').' <span class="required">*</span></label>
+                            <input required type="text" value="" name="email-user">
+                    </div>';
 
                     if(rcl_get_template_path($this->post_type.'-form.php',__FILE__)) $form .= rcl_get_include_template($this->post_type.'-form.php',__FILE__);
                         else $form .= rcl_get_include_template('public-form.php',__FILE__);
 
-					$fields = '';
+                    $fields = '';
 
-					$form .= apply_filters('rcl_public_form',$fields,$this);
+                    $form .= apply_filters('rcl_public_form',$fields,$this);
 
                     $form .= $this->submit_and_hidden()
 
                . '</form>';
 
                $form .= '<script type="text/javascript">
-					function addfile_content($file){
-						var ifr = jQuery("#contentarea_ifr").contents().find("#tinymce").html();
-						jQuery("#contentarea").insertAtCaret($file+"&nbsp;");
-						jQuery("#contentarea_ifr").contents().find("#tinymce").html(ifr+$file+"&nbsp;");
-						return false;
-					}
-				</script>';
+                    function addfile_content($file){
+                        var ifr = jQuery("#contentarea_ifr").contents().find("#tinymce").html();
+                        jQuery("#contentarea").insertAtCaret($file+"&nbsp;");
+                        jQuery("#contentarea_ifr").contents().find("#tinymce").html(ifr+$file+"&nbsp;");
+                        return false;
+                    }
+                </script>';
 
                $after = '';
                $form .= apply_filters('after_public_form_rcl',$after,$this);
