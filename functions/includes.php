@@ -92,7 +92,7 @@ function rcl_multisort_array($array, $key, $type = SORT_ASC, $cmp_func = 'strcmp
 }
 
 function rcl_a_active($param1,$param2){
-	if($param1==$param2) return 'class=filter-active';
+	if($param1==$param2) return 'filter-active';
 }
 
 function rcl_get_usernames($objects,$name_data){
