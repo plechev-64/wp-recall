@@ -91,10 +91,10 @@
     overflow-y: auto;
     max-height: 350px;
 }
-#rating_block .get-list-votes{
+#tab-rating .get-list-votes{
     margin:3px;
 }
-#rating_block .votes-list{
+#tab-rating .votes-list{
     margin: 10px;
 }
 .votes-window .close{
@@ -105,16 +105,16 @@
     top: -10px;
 }
 .votes-window .votes-list li,
-#rating_block .votes-list li{
+#tab-rating .votes-list li{
     list-style: none;
     
 }
 .lk-sidebar .votes-window ul li a,
-#rating_block .votes-list li a{
+#tab-rating .votes-list li a{
     display:inline;
 }
 .votes-window a.active,
-#rating_block a.active{
+#tab-rating a.active{
     background-color: #ccc;
     cursor:default;
 }
