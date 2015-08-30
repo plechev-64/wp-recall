@@ -398,15 +398,15 @@ form #rcl-preview{
     text-align: right;
 
 }
-#publics_block  .bx-wrapper .bx-viewport{
-	height:32px!important;
+#tab-publics  .bx-wrapper .bx-viewport{
+    height:32px!important;
 }
-#publics_block .bx-wrapper .bx-viewport .pagenavi-rcl{
+#tab-publics .bx-wrapper .bx-viewport .pagenavi-rcl{
     margin: 0;
 }
-#publics_block .bx-wrapper .bx-controls-direction .bx-prev{
+#tab-publics .bx-wrapper .bx-controls-direction .bx-prev{
     left: -30px;
 }
-#publics_block .bx-wrapper .bx-controls-direction .bx-next{
+#tab-publics .bx-wrapper .bx-controls-direction .bx-next{
     right: -20px;
 }

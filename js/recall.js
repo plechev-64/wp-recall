@@ -23,59 +23,60 @@ function init_location_data(){
 
 jQuery(function($){
 	
-	init_location_data();
-	
-	$('a.close-notice').live('click',function(){	
-		$(this).parent().remove();
-		return false;
-	});
-	
-	$('.rcl-smiles > img').live('click hover',function(){
-            var block = $(this).next().children();
-            if(block.html()) return false;
-            block.html('Загрузка...');
-            var dir = $(this).data('dir');
-            var area = $(this).parent().data('area');
-            var dataString = 'action=rcl_get_smiles_ajax&area='+area;
-            if(dir) dataString += '&dir='+dir;
-            $.ajax({
-                type: 'POST', 
-                data: dataString, 
-                dataType: 'json', 
-                url: wpurl+'wp-admin/admin-ajax.php',
-                success: function(data){				
-                        if(data['result']==1){
-                                block.html(data['content']);
-                        }else{
-                                rcl_notice('Ошибка!','error');
-                        }					
-                }			
-            }); 
+    init_location_data();
+
+    $('#rcl-notice,body').on('click','a.close-notice',function(){	
+            $(this).parent().remove();
             return false;
-	});
-	
-	$(".rcl-smiles-list img").live("click",function(){
-		var alt = $(this).attr("alt");
-		var area = $(this).parents(".rcl-smiles").data("area");
-		$("#"+area).val($("#"+area).val()+" "+alt+" ");
-	});
+    });
+
+    $('.rcl-smiles > img').on('hover',function(){
+        var block = $(this).next().children();
+        if(block.html()) return false;
+        block.html('Загрузка...');
+        var dir = $(this).data('dir');
+        var area = $(this).parent().data('area');
+        var dataString = 'action=rcl_get_smiles_ajax&area='+area;
+        if(dir) dataString += '&dir='+dir;
+        $.ajax({
+            type: 'POST', 
+            data: dataString, 
+            dataType: 'json', 
+            url: wpurl+'wp-admin/admin-ajax.php',
+            success: function(data){				
+                    if(data['result']==1){
+                            block.html(data['content']);
+                    }else{
+                            rcl_notice('Ошибка!','error');
+                    }					
+            }			
+        }); 
+        return false;
+    });
+
+    $(".rcl-smiles-list").on("click",'img',function(){
+            var alt = $(this).attr("alt");
+            var area = $(this).parents(".rcl-smiles").data("area");
+            $("#"+area).val($("#"+area).val()+" "+alt+" ");
+    });
     
-    $('form .requared-checkbox').live('click',function(){
+    $('body').on('click','.requared-checkbox',function(){
         var name = $(this).attr('name');
         var chekval = $('form input[name="'+name+'"]:checked').val();
         if(chekval) $('form input[name="'+name+'"]').attr('required',false);
         else $('form input[name="'+name+'"]').attr('required',true);
     });
-
-    $('#message-list .author-avatar, #rcl-popup .author-avatar').live('click',function(){
-            var userid = $(this).attr("user_id");
-            if(!userid) return false;
-            var ava = $(this).html();
-            $(".author-avatar").children().removeAttr('style');
-            $(this).children().css('opacity','0.4');
-            $("#adressat_mess").val(userid);
-            $("#opponent").html(ava);
-    //return false;
+    
+    //общий чат
+    $('#lk-content, #rcl-popup').on('click','.author-avatar',function(){
+        var userid = $(this).attr("user_id");
+        if(!userid) return false;
+        var ava = $(this).html();
+        $(".author-avatar").children().removeAttr('style');
+        $(this).children().css('opacity','0.4');
+        $("#adressat_mess").val(userid);
+        $("#opponent").html(ava);
+        //return false;
     });
 
     function setAttr_rcl(prmName,val){
@@ -106,48 +107,56 @@ jQuery(function($){
         return false;
     });
 
-    $('.close-popup,#rcl-overlay').live('click',function(){
-            $('#rcl-overlay').fadeOut();
-            $('.floatform').fadeOut();
-            $('#rcl-popup').empty();		
-            return false;
+    $('#rcl-popup,.floatform').on('click','.close-popup',function(){
+        $('#rcl-overlay').fadeOut();
+        $('.floatform').fadeOut();
+        $('#rcl-popup').empty();		
+        return false;
+    });
+    
+    $('#rcl-overlay').click(function(){
+        $('#rcl-overlay').fadeOut();
+        $('.floatform').fadeOut();
+        $('#rcl-popup').empty();		
+        return false;
     });
 
-    $("#temp-files .thumb-foto").live('click',function(){		
-            $("#temp-files .thumb-foto").removeAttr("checked");
-            $(this).attr("checked",'checked');			
+    $("#temp-files").on('click','.thumb-foto',function(){		
+        $("#temp-files .thumb-foto").removeAttr("checked");
+        $(this).attr("checked",'checked');			
     });
 
     $(".thumbs a").click(function(){	
-                    var largePath = $(this).attr("href");
-                    var largeAlt = $(this).attr("title");		
-                    $("#largeImg").attr({ src: largePath, alt: largeAlt });
-                    $(".largeImglink").attr({ href: largePath });		
-                    $("h2 em").html(" (" + largeAlt + ")"); return false;
-            });	
+        var largePath = $(this).attr("href");
+        var largeAlt = $(this).attr("title");		
+        $("#largeImg").attr({ src: largePath, alt: largeAlt });
+        $(".largeImglink").attr({ href: largePath });		
+        $("h2 em").html(" (" + largeAlt + ")"); return false;
+    });	
 	
-    var num_field_rcl = $('input .field_thumb_rcl').size() + 1;
+    /*var num_field_rcl = $('input .field_thumb_rcl').size() + 1;
     $('#add-new-input-rcl').click(function() {
         if(num_field_rcl<5) $('<tr><td><input type="radio" name="image_thumb" value="'+num_field_rcl+'"/></td><td><input type="file" class="field_thumb_rcl" name="image_file_'+num_field_rcl+'" value="" /></td></tr>').fadeIn('slow').appendTo('.inputs');
 		else $(this).remove();
         num_field_rcl++;
 		return false;
-    });
+    });*/
 	
-    $('.public-post-group').live('click',function(){				
-            $(this).slideUp();
-            $(this).next().slideDown();
-            return false;
+    $('.public-post-group').click(function(){				
+        $(this).slideUp();
+        $(this).next().slideDown();
+        return false;
     });
-    $('.close-public-form').live('click',function(){				
-            $(this).parent().prev().slideDown();
-            $(this).parent().slideUp();
-            return false;
+    
+    $('.close-public-form').click(function(){				
+        $(this).parent().prev().slideDown();
+        $(this).parent().slideUp();
+        return false;
     });
 
-    $(".float-window-recall .close").live('click',function(){	
-            $(".float-window-recall").remove();
-            return false; 
+    $(".float-window-recall").on('click','.close',function(){	
+        $(".float-window-recall").remove();
+        return false; 
     });
 
     $('.close_edit').click(function(){
@@ -172,7 +181,7 @@ jQuery(function($){
         return false;
     });
 
-    $('.child_block_button').live('click',function(){
+    $('#lk-content').on('click','.child_block_button',function(){
         if($(this).hasClass('active'))return false;
         var id = $(this).attr('id');
         var parent_id = $(this).parent().parent().attr('id');
@@ -189,20 +198,20 @@ jQuery(function($){
         return false; 
     }
 
-    if(get_param['view']){		
-        var id_block = get_param['view'];
+    if(get_param['tab']){		
+        var id_block = get_param['tab'];
         var offsetTop = $("#lk-content").offset().top;
         $('body,html').animate({scrollTop:offsetTop -50}, 1000);
         view_recall_content_block(id_block);
     }
 	
-	function view_recall_content_block(id_block){
-            $(".rcl-menu .recall-button").removeClass("active");
-            $(".rcl-content .recall_content_block").removeClass("active");
-            //$('.recall_content_block').slideUp();
-            $('#'+id_block).addClass("active");
-            $('.'+id_block+'_block').addClass("active");
-            return false;
+    function view_recall_content_block(id_block){
+        $(".rcl-tab-button .recall-button").removeClass("active");
+        $("#lk-content .recall_content_block").removeClass("active");
+        //$('.recall_content_block').slideUp();
+        $('#tab-button-'+id_block).children('.recall-button').addClass("active");
+        $('#lk-content .'+id_block+'_block').addClass("active");
+        return false;
     }
 
     if($("#lk-menu.left-buttons").size()){
@@ -322,63 +331,62 @@ function rcl_more_view(e){
 
 function rcl_add_dropzone(idzone){
 
-	jQuery(document.body).bind("drop", function(e){
-		var dropZone = jQuery(idzone),
-		node = e.target, 
-		found = false;
-		
-		if(dropZone[0]){		
-			dropZone.removeClass('in hover');
-			
-			do {
-				if (node === dropZone[0]) {
-					found = true;
-					break;
-				}
-				node = node.parentNode;
-			} while (node != null);
+    jQuery(document.body).bind("drop", function(e){
+        var dropZone = jQuery(idzone),
+        node = e.target, 
+        found = false;
 
-			if(found){
-				e.preventDefault();
-			}else{			
-				return false;
-			}
-		}
-		
-	});
+        if(dropZone[0]){		
+            dropZone.removeClass('in hover');
 
-	jQuery(idzone).bind('dragover', function (e) {
-		var dropZone = jQuery(idzone),
-			timeout = window.dropZoneTimeout;
-			
-		if (!timeout) {
-			dropZone.addClass('in');
-		} else {
-			clearTimeout(timeout);
-		}
-		
-		var found = false,
-			node = e.target;
-			
-		do {
-			if (node === dropZone[0]) {
-				found = true;
-				break;
-			}
-			node = node.parentNode;
-		} while (node != null);
-		
-		if (found) {
-			dropZone.addClass('hover');
-		} else {
-			dropZone.removeClass('hover');
-		}
-		
-		window.dropZoneTimeout = setTimeout(function () {
-			window.dropZoneTimeout = null;
-			dropZone.removeClass('in hover');
-		}, 100);
-	});
+            do {
+                    if (node === dropZone[0]) {
+                            found = true;
+                            break;
+                    }
+                    node = node.parentNode;
+            } while (node != null);
+
+            if(found){
+                    e.preventDefault();
+            }else{			
+                    return false;
+            }
+        }
+    });
+
+    jQuery(idzone).bind('dragover', function (e) {
+        var dropZone = jQuery(idzone),
+                timeout = window.dropZoneTimeout;
+
+        if (!timeout) {
+                dropZone.addClass('in');
+        } else {
+                clearTimeout(timeout);
+        }
+
+        var found = false,
+                node = e.target;
+
+        do {
+                if (node === dropZone[0]) {
+                        found = true;
+                        break;
+                }
+                node = node.parentNode;
+        } while (node != null);
+
+        if (found) {
+                dropZone.addClass('hover');
+        } else {
+                dropZone.removeClass('hover');
+        }
+
+        window.dropZoneTimeout = setTimeout(function () {
+                window.dropZoneTimeout = null;
+                dropZone.removeClass('in hover');
+        }, 100);
+    });
 }
 
     function passwordStrength(password){
@@ -398,8 +406,6 @@ function rcl_add_dropzone(idzone){
         document.getElementById("passwordDescription").innerHTML = desc[score];
         document.getElementById("passwordStrength").className = "strength" + score;
     }
-
-    
 
     cookiepar={expires: 9999, path: '/'} // Все закладки общие
 
@@ -430,44 +436,44 @@ function rcl_add_dropzone(idzone){
 	
     function delfav(url){
         jQuery("#favs a[href='"+url+"']").parent().fadeOut('slow',function(){
-                jQuery(this).empty().remove(); 
-                if(jQuery("#favs").html().length<2){
-                        jQuery("#favs").html('У вас нет закладок');
-                }
+            jQuery(this).empty().remove(); 
+            if(jQuery("#favs").html().length<2){
+                    jQuery("#favs").html('У вас нет закладок');
+            }
         });
         nfavs=''; 
         dfavs=jQuery.cookie('favs');
         dfavs=dfavs.split('|');
         for(i=0;i<dfavs.length;i++){
-                if(dfavs[i].split(',')[0]===url){
-                        dfavs[i]='';
-                }
-                if(dfavs[i]!==''){
-                        nfavs+='|'+dfavs[i];
-                }
+            if(dfavs[i].split(',')[0]===url){
+                    dfavs[i]='';
+            }
+            if(dfavs[i]!==''){
+                    nfavs+='|'+dfavs[i];
+            }
         }
         jQuery.cookie('favs',nfavs,cookiepar);
     }
 	
-	function rcl_notice(text,type){	
-		var html = '<div class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
-		if(!jQuery('#rcl-notice').size()){
-			jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
-		}else{
-			if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
-			else jQuery('#rcl-notice').html(html);
-		}
-		
-		/*var first = jQuery('#rcl-notice > div:first-child');
-		setTimeout(function() {
-			first.animate({height: 0}, 1000).remove();
-		}, 3000);*/
-	}
-	
-	function rcl_preloader_show(e){
-		jQuery(e).after('<div class="rcl_preloader"></div>');
-	}
-	
-	function rcl_preloader_hide(){
-		jQuery('.rcl_preloader').remove();
-	}
+    function rcl_notice(text,type){	
+            var html = '<div class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
+            if(!jQuery('#rcl-notice').size()){
+                    jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
+            }else{
+                    if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
+                    else jQuery('#rcl-notice').html(html);
+            }
+
+            /*var first = jQuery('#rcl-notice > div:first-child');
+            setTimeout(function() {
+                    first.animate({height: 0}, 1000).remove();
+            }, 3000);*/
+    }
+
+    function rcl_preloader_show(e){
+            jQuery(e).after('<div class="rcl_preloader"></div>');
+    }
+
+    function rcl_preloader_hide(){
+            jQuery('.rcl_preloader').remove();
+    }

@@ -451,12 +451,12 @@ function rcl_scripts_rating($script){
 	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
 
 	$script .= "
-        jQuery('.votes-window .close').live('click',function(){
+        jQuery('body').on('click','.votes-window .close',function(){
             jQuery(this).parent().remove();
             return false;
         });
 
-        jQuery('.buttons-rating .edit-rating').live('click',function(){
+        jQuery('body').on('click','.buttons-rating .edit-rating',function(){
             var block = jQuery(this);
             var rating = block.data('rating');
 
@@ -486,7 +486,7 @@ function rcl_scripts_rating($script){
             return false;
         });
 
-        jQuery('a.view-votes').live('click',function(){
+        jQuery('body').on('click','a.view-votes',function(){
             jQuery('.rating-value-block .votes-window').remove();
             var block = jQuery(this);
             var rating = block.data('rating');
@@ -507,10 +507,10 @@ function rcl_scripts_rating($script){
             return false;
         });
 
-        jQuery('a.get-list-votes').live('click',function(){
+        jQuery('#lk-content').on('click','a.get-list-votes',function(){
             if(jQuery(this).hasClass('active')) return false;
-            rcl_preloader_show('#rating_block .votes-list');
-            jQuery('#rating_block a.get-list-votes').removeClass('active');
+            rcl_preloader_show('#tab-rating .votes-list');
+            jQuery('#tab-rating a.get-list-votes').removeClass('active');
             jQuery(this).addClass('active');
             var rating = jQuery(this).data('rating');
 
@@ -520,7 +520,7 @@ function rcl_scripts_rating($script){
                 ".$ajaxdata."
                 success: function(data){
                     if(data['result']==100){
-                        jQuery('#rating_block .votes-list').replaceWith(data['window']);
+                        jQuery('#tab-rating .votes-list').replaceWith(data['window']);
                     }else{
                         rcl_notice('".__('Error','rcl')."!','error');
                     }

@@ -7,9 +7,11 @@ class Rcl_EditPost {
     public $update; //действие
 
     function __construct(){
-        global $user_ID;
+        global $user_ID,$rcl_options;
 
-        if(!$user_ID) return false;
+		$user_can = $rcl_options['user_public_access_recall'];
+
+        if($user_can&&!$user_ID) return false;
 
         if(isset($_FILES)){
             require_once(ABSPATH . "wp-admin" . '/includes/image.php');
@@ -24,13 +26,10 @@ class Rcl_EditPost {
             $pst = get_post($this->post_id);
             $this->post_type = $pst->post_type;
 
-
-
             if($this->post_type=='post-group'){
-
                 if(!rcl_can_user_edit_post_group($post_id)) return false;
-
             }else{
+
                 if(!current_user_can('edit_post', $post_id)) return false;
                 if($pst->post_author!=$user_ID){
                     $author_info = get_userdata($pst->post_author);
@@ -183,7 +182,7 @@ class Rcl_EditPost {
 
         $postdata = apply_filters('pre_update_postdata_rcl',$postdata,$this);
 
-	if(!$postdata) return false;
+		if(!$postdata) return false;
 
         $user_info = get_userdata($user_ID);
 
@@ -201,26 +200,85 @@ class Rcl_EditPost {
         $this->update_thumbnail();
 
         if($_POST['add-gallery-rcl']==1) update_post_meta($this->post_id, 'recall_slider', 1);
-		else delete_post_meta($this->post_id, 'recall_slider');
+        else delete_post_meta($this->post_id, 'recall_slider');
 
         rcl_update_post_custom_fields($this->post_id,$id_form);
 
         do_action('update_post_rcl',$this->post_id,$postdata,$this->update);
 
         if($postdata['post_status'] == 'pending'){
-            $redirect_url = get_bloginfo('wpurl').'/?p='.$this->post_id.'&preview=true';
+            if($user_ID) $redirect_url = get_bloginfo('wpurl').'/?p='.$this->post_id.'&preview=true';
+            else $redirect_url = get_permalink($rcl_options['guest_post_redirect']);
         }else{
             $redirect_url = get_permalink($this->post_id);
         }
 
-		if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-			echo json_encode(array('redirect'=>$redirect_url));
-			exit;
-		}
+        if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+            echo json_encode(array('redirect'=>$redirect_url));
+            exit;
+        }
 
         wp_redirect($redirect_url);  exit;
 
     }
+}
+
+add_filter('pre_update_postdata_rcl','rcl_register_author_post',10);
+function rcl_register_author_post($postdata){
+	global $user_ID,$rcl_options,$wpdb;
+	$user_can = $rcl_options['user_public_access_recall'];
+	if($user_can||$user_ID) return $postdata;
+
+	if(!$postdata['post_author']){
+
+		$email_new_user = sanitize_email($_POST['email-user']);
+
+		if($email_new_user){
+
+			$user_id = false;
+
+			$random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+
+			$userdata = array(
+				'user_pass' => $random_password //обязательно
+				,'user_login' => $email_new_user //обязательно
+				,'user_nicename' => ''
+				,'user_email' => $email_new_user
+				,'display_name' => $_POST['name-user']
+				,'nickname' => $email_new_user
+				,'first_name' => $_POST['name-user']
+				,'rich_editing' => 'true'  // false - выключить визуальный редактор для пользователя.
+			);
+
+			$user_id = wp_insert_user( $userdata );
+
+			$wpdb->insert( $wpdb->prefix .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
+
+			if($user_id){
+
+				$creds = array();
+				$creds['user_login'] = $email_new_user;
+				$creds['user_password'] = $random_password;
+
+				rcl_register_mail(array('user_id'=>$user_id,'password'=>$random_password,'login'=>$email_new_user));
+
+				//Сразу авторизуем пользователя
+				if($rcl_options['confirm_register_recall']){
+					wp_update_user( array ('ID' => $user_id, 'role' => 'need-confirm') ) ;
+				}else{
+					$creds['remember'] = true;
+					$user = wp_signon( $creds, false );
+					$user_ID = $user_id;
+				}
+
+				$postdata['post_author'] = $user_id;
+				$postdata['post_status'] = 'pending';
+
+			}
+		}
+	}
+
+	return $postdata;
 }
 
 //Сохранение данных публикации в редакторе wp-recall

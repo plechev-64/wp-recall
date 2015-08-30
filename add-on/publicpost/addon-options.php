@@ -25,8 +25,7 @@ function rcl_get_publics_options_page($content){
         10=>__('only Administrators','rcl'),
         7=>__('Editors and older','rcl'),
         2=>__('Authors and older','rcl'),
-        1=>__('Participants and older','rcl'),
-        0=>__('All users','rcl'));
+        0=>__('Guests and users','rcl'));
 
     $content .= $opt->options(
         __('The publish settings','rcl'),array(
@@ -200,8 +199,22 @@ function rcl_get_publics_options_page($content){
                 $opt->label(__('Republishing is allowed','rcl')),
                 $opt->option('select',array(
                     'name'=>'user_public_access_recall',
+					'parent'=>1,
                     'options'=>$roles
                 )),
+                $opt->child(
+                    array('name'=>'user_public_access_recall','value'=>0),
+                    array(
+                        $opt->label(__('Redirect page','rcl')),
+                        wp_dropdown_pages( array(
+							'selected'   => $rcl_options['guest_post_redirect'],
+							'name'       => 'guest_post_redirect',
+							'show_option_none' => __('Not selected','rcl'),
+							'echo'             => 0 )
+						),
+                        $opt->notice(__('Выберите страницу на которую гости будут перенаправляться после удачной публикации, если на сайте включено подтверждение email при регистрации','rcl'))
+                    )
+                ),
 
                 $opt->label(__('Moderation of publications','rcl')),
                 $opt->option('select',array(

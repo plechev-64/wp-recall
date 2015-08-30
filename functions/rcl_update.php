@@ -63,7 +63,14 @@ function rcl_update_addon(){
     if(!isset($need_update[$addon])) return false;
 
     $url = 'http://wppost.ru/?remote-request=update-addon';
-    $data = array('addon' => $addon, 'rcl-key' => get_option('rcl-key'));
+
+    $data = array(
+        'addon' => $addon,
+        'rcl-key' => get_option('rcl-key'),
+        'rcl-version' => VER_RCL,
+        'addon-version' => $need_update[$addon]['version'],
+        'host' => $_SERVER['SERVER_NAME']
+    );
 
     $pathdir = RCL_TAKEPATH.'update/';
     $new_addon = $pathdir.$addon.'.zip';
@@ -82,11 +89,16 @@ function rcl_update_addon(){
     );
     $context  = stream_context_create($options);
     $archive = file_get_contents($url, false, $context);
-    //print_r($archive);exit;
+
     if(!$archive){
         $log['error'] = __('Unable to retrieve the file from the server!','rcl');
-        echo json_encode($log);
-        exit;
+        echo json_encode($log); exit;
+    }
+
+    $result = json_decode($archive, true);
+
+    if(is_array($result)&&isset($result['error'])){
+        echo json_encode($result); exit;
     }
 
     file_put_contents($new_addon, $archive);

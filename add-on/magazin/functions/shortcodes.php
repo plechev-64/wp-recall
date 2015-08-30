@@ -83,9 +83,9 @@ function rcl_widget_minicart() {
 class Widget_minibasket extends WP_Widget {
 
 	function Widget_minibasket() {
-		$widget_ops = array( 'classname' => 'widget-minibasket', 'description' => __('Cart','rcl') );
-		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-minibasket' );
-		$this->WP_Widget( 'widget-minibasket', __('Cart','rcl'), $widget_ops, $control_ops );
+            $widget_ops = array( 'classname' => 'widget-minibasket', 'description' => __('Cart','rcl') );
+            $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-minibasket' );
+            parent::__construct( 'widget-minibasket', __('Cart','rcl'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {

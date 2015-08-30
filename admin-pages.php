@@ -67,7 +67,7 @@ function rcl_postmeta_update( $post_id ){
 /*************************************************
 Добавляем textarea в поле профиля для внесения настроек
 *************************************************/
-function rcl_data_type_profile_field(){
+/*function rcl_data_type_profile_field(){
 
 	//$type = $_POST['type'];
 	$slug = sanitize_title($_POST['slug']);
@@ -80,7 +80,7 @@ function rcl_data_type_profile_field(){
 
     exit;
 }
-add_action('wp_ajax_rcl_data_type_profile_field', 'rcl_data_type_profile_field');
+add_action('wp_ajax_rcl_data_type_profile_field', 'rcl_data_type_profile_field');*/
 //add_action('wp_ajax_nopriv_rcl_data_type_profile_field', 'rcl_data_type_profile_field');
 
 //Настройки плагина в админке

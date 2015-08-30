@@ -140,6 +140,9 @@
 .wprecallblock #lk-conteyner .lk-footer .footer-block-rcl ul li .avatar{
 	margin:0;
 }
+.wprecallblock #rcl-tabs{
+	overflow: hidden;
+}
 .wprecallblock #lk-menu{
    padding:0 10px 0 5px;
 }

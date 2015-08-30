@@ -52,7 +52,7 @@ class Rcl_EditFields {
                     '.$this->loop().'
                 </ul>
             </div>
-            <p style="width:550px;"><input type="button" id="add_public_field"  class="button-secondary right" value="+ '.__('Add field','rcl').'"></p>
+            <p style="width:550px;" id="add_public_field"><input type="button" class="button-secondary right" value="+ '.__('Add field','rcl').'"></p>
             <input id="save_menu_footer" class="button button-primary menu-save" type="submit" value="'.__('Save','rcl').'" name="add_field_public">
             <input type="hidden" id="deleted-fields" name="deleted" value="">
         </form>

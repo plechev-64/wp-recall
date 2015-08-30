@@ -11,7 +11,7 @@ class Widget_new_author extends WP_Widget {
 	function Widget_new_author() {
 		$widget_ops = array( 'classname' => 'widget-new-author', 'description' => __('New users on the website','rcl') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-new-author' );
-		$this->WP_Widget( 'widget-new-author', __('New users','rcl'), $widget_ops, $control_ops );
+		parent::__construct( 'widget-new-author', __('New users','rcl'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -77,7 +77,7 @@ class Widget_online_users extends WP_Widget {
 	function Widget_online_users() {
 		$widget_ops = array( 'classname' => 'widget_online_users', 'description' => __('Conclusion the users in the network','rcl') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'online-users-widget' );
-		$this->WP_Widget( 'online-users-widget', __('Users on the network','rcl'), $widget_ops, $control_ops );
+		parent::__construct( 'online-users-widget', __('Users on the network','rcl'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -135,7 +135,7 @@ class Widget_author_profil extends WP_Widget {
 	function Widget_author_profil() {
 		$widget_ops = array( 'classname' => 'widget_author_profil', 'description' => __('The block with the main profile information','rcl') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-author-profil' );
-		$this->WP_Widget( 'widget-author-profil', __('User profile','rcl'), $widget_ops, $control_ops );
+		parent::__construct( 'widget-author-profil', __('User profile','rcl'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {

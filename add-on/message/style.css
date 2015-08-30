@@ -1,12 +1,12 @@
 /*Личные сообщения*/
-#lk-content .privat_block .avatar {
+#lk-content #tab-privat .avatar {
     border-radius: 3px;
 	margin:0 10px;
 }
-#lk-content .privat_block p {
+#lk-content #tab-privat p {
 	margin:0px;
 }
-#lk-content .privat_block .content-mess p img{
+#lk-content #tab-privat .content-mess p img{
 	margin:0px 3px;
 }
 #lk-content .message-block {
@@ -33,14 +33,14 @@
 #privatemess .private-message .content-mess {
     min-height: 45px;
 }
-.privat_block .old_mess_block {
+#tab-privat .old_mess_block {
     background: none repeat scroll 0 0 #FFFFFF;
     border: 3px solid #1DACD6;
     margin-bottom: 15px;
     padding: 5px 10px;
     text-align: center;
 }
-.privat_block .old_mess_block a {
+#tab-privat .old_mess_block a {
     color: #1DACD6;
     font-weight: bold;
     text-decoration: none;
@@ -59,19 +59,19 @@
     padding-right: 5px;
     min-height: 100px;
 }
-#privat_block .prmess{
+#tab-privat .prmess{
     margin-bottom:10px;
 }
-#privat_block #resize-content{
+#tab-privat #resize-content{
     height:300px;
     overflow-y: auto;
 }
-#privat_block #resize.ui-resizable {
+#tab-privat #resize.ui-resizable {
     z-index: 999;
     width: 100%;
     position: absolute;
 }
-#privat_block #resize .ui-resizable-s {
+#tab-privat #resize .ui-resizable-s {
     background: none repeat scroll 0 0 #E5E5E5;
     height: 3px;
     width: 50px;
@@ -81,24 +81,23 @@
     border-top: 3px dotted #fff;
     border-bottom: 3px dotted #fff;
 }
-
-.privat_block .private-buttons{
+#tab-privat .private-buttons{
 	overflow: hidden;
 	clear: both;
 	margin-top: 10px;
 }
-.privat_block .private-buttons .alignright{
+#tab-privat .private-buttons .alignright{
 	float:right;
 }
-.privat_block .private-buttons .alignleft{
+#tab-privat .private-buttons .alignleft{
 	float:left;
 }
-.privat_block .message-block {
+#tab-privat .message-block {
     border: medium none;
 	position:relative;
 	overflow:hidden;
 }
-.privat_block .message-block .important{
+#tab-privat .message-block .important{
     display:block;
 	position:absolute;
 	height:13px;
@@ -108,32 +107,32 @@
 	top:50%;
 	background:url(img/star.png) no-repeat;
 }
-.privat_block .message-block:hover > .important{
+#tab-privat .message-block:hover > .important{
 	opacity:0.5;
 }
-.privat_block .message-block .important:hover,
-.privat_block .message-block .important.active{
+#tab-privat .message-block .important:hover,
+#tab-privat .message-block .important.active{
 	opacity:1;
 	cursor:pointer;
 }
-.privat_block .message-block .author-avatar {
+#tab-privat .message-block .author-avatar {
 	float:left
 }
-.privat_block .message-block.you .author-avatar {
+#tab-privat .message-block.you .author-avatar {
 	float:right;
 }
-.privat_block .message-block .content-mess {
+#tab-privat .message-block .content-mess {
     max-width: 390px;
 	overflow: hidden;
 }
-.chatroom  .privat_block .message-block .content-mess {
+.chatroom  #tab-privat .message-block .content-mess {
 max-width: 80%;
 }
-.privat_block .message-block .content-mess .time-message {
+#tab-privat .message-block .content-mess .time-message {
     font-size: 9px;
     font-weight: normal;
 }
-.privat_block .message-block .content-mess .balloon-message {
+#tab-privat .message-block .content-mess .balloon-message {
     background: none repeat scroll 0 0 #E7FFE8;
     border: 1px solid #008000;
     border-radius: 3px;
@@ -145,10 +144,10 @@ max-width: 80%;
 	word-wrap: break-word;
 	max-width:300px;
 }
-.privat_block .message-block .content-mess p{
+#tab-privat .message-block .content-mess p{
 	margin:0;
 }
-.privat_block .message-block .content-mess .privat-balloon {
+#tab-privat .message-block .content-mess .privat-balloon {
     background: url("img/ballun-left.png") no-repeat scroll 0 0 #008000;
     display: block;
     height: 13px;
@@ -156,14 +155,14 @@ max-width: 80%;
     position: absolute;
     width: 29px;
 }
-.privat_block .message-block.you .balloon-message {
+#tab-privat .message-block.you .balloon-message {
     background: none repeat scroll 0 0 #F0FBFF;
 	border-color: #3F7BAA;
 	margin-right: 0;
 	min-width: 25px;
 	word-wrap: break-word;
 }
-.privat_block .you .content-mess .privat-balloon {
+#tab-privat .you .content-mess .privat-balloon {
     background: url("img/ballun-right.png") no-repeat scroll 0 0 #3F7BAA;
     display: block;
     height: 13px;
@@ -172,30 +171,30 @@ max-width: 80%;
     right: 0;
     width: 29px;
 }
-.privat_block .you .content-mess {
+#tab-privat .you .content-mess {
     float: right;
     position: relative;
 }
-.privat_block .you .author-avatar {
+#tab-privat .you .author-avatar {
     float: right;
     margin-top: 0 !important;
 }
-.privat_block .you .time-message {
+#tab-privat .you .time-message {
     text-align: right;
 }
-.privat_block .mess_status {
+#tab-privat .mess_status {
     color: #FF0000;
     float: right;
 	font-size: 18px;
 }
 
-.privat_block .message-block.file .content-mess{
+#tab-privat .message-block.file .content-mess{
 	max-width: 100%;
 }
-.privat_block .message-block.file .time-message{
+#tab-privat .message-block.file .time-message{
 	margin-bottom: 0;
 }
-.privat_block .message-block.file .balloon-message{
+#tab-privat .message-block.file .balloon-message{
 	background: none repeat scroll 0 0 #FFFF99;
     border: medium none;
     box-shadow: none;
@@ -223,22 +222,22 @@ max-width: 80%;
 	float: right; 
 	margin-top: -17px;
 }
-.privat_block .b-upload__dnd{
+#tab-privat .b-upload__dnd{
 	padding: 15px;
 }
 #upload-files-mess{
 	margin-top: 10px;
 	clear: both;
 }
-.privat_block #simple-btn{
+#tab-privat #simple-btn{
 	font-size: 12px;
     padding: 3px 5px;
     float: right;
 }
-.privat_block #simple-btn .js-browse{
+#tab-privat #simple-btn .js-browse{
 	display: inline-block;
 }
-.privat_block .recall-button.btn{
+#tab-privat .recall-button.btn{
 	width:auto;
 }
 .pending-message {
@@ -347,11 +346,11 @@ max-width: 80%;
 	font-size: 12px;
 	line-height: 1;
 }
-.privat_block .del_history, .privat_block .remove_ban_list, .privat_block .remove_black_list{
+#tab-privat .del_history, #tab-privat .remove_ban_list, #tab-privat .remove_black_list{
     float: right;
     padding-right:0px;
 }
-.privat_block textarea{
+#tab-privat textarea{
 	width:100%;
 	padding:5px;
 }

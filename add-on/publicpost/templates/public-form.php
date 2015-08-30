@@ -1,10 +1,5 @@
-<?php global $formFields,$editpost,$user_ID;
-	if($user_ID) rcl_sortable_scripts(); ?>
-<script>
-jQuery(function(){
-	jQuery('.rcl-editor-content').sortable({ axis: 'y', containment: 'parent', handle: '.move-box', cursor: 'move' });
-});
-</script>
+<?php global $formFields,$editpost; ?>
+
 <?php if($formFields['title']): ?>
 	<div class="rcl-form-field">
 		<label><?php _e('Title','rcl'); ?> <span class="required">*</span>:</label>
@@ -31,7 +26,6 @@ jQuery(function(){
 <?php endif; ?>
 <?php //print_r($formFields); ?>
 <?php if($formFields['upload']): ?>
-    <b><?php _e('Click on Priceline the image to add it to the content of the publication','rcl'); ?></b>
     <?php rcl_publication_upload(); ?>
 <?php endif; ?>
 
@@ -39,10 +33,9 @@ jQuery(function(){
 	<?php do_action('public_form'); ?>
 </div>
 
-<?php if($formFields['custom_fields']): ?> 
+<?php if($formFields['custom_fields']): ?>
 	<div class="rcl-form-field">
 		<?php rcl_publication_custom_fields(); ?>
 	</div>
 <?php endif; ?>
 
-               

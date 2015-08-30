@@ -176,9 +176,13 @@ class Rcl_Thumb_Form{
 	public $id_upload;
 
 	public function __construct($p_id=false,$id_upload='upload-public-form') {
-		$this->post_id = $p_id;
-		$this->id_upload = $id_upload;
-		$this->gallery_init();
+            global $user_ID;
+
+            if(!$user_ID) return false;
+
+            $this->post_id = $p_id;
+            $this->id_upload = $id_upload;
+            $this->gallery_init();
     }
 
 	function gallery_init(){
@@ -199,16 +203,16 @@ class Rcl_Thumb_Form{
 		//echo '</p>';
 
 		if($this->post_id){
-			$args = array(
-				'post_parent' => $this->post_id,
-				'post_type'   => 'attachment',
-				'numberposts' => -1,
-				'post_status' => 'any'
-			);
-			/*if($formData->opst_type!='task') $args['post_mime_type'] = 'image';
-			print_r($args);*/
-			$child = get_children( $args );
-			if($child){ foreach($child as $ch){$temp_gal[]['ID']=$ch->ID;} }
+                    $args = array(
+                            'post_parent' => $this->post_id,
+                            'post_type'   => 'attachment',
+                            'numberposts' => -1,
+                            'post_status' => 'any'
+                    );
+                    /*if($formData->opst_type!='task') $args['post_mime_type'] = 'image';
+                    print_r($args);*/
+                    $child = get_children( $args );
+                    if($child){ foreach($child as $ch){$temp_gal[]['ID']=$ch->ID;} }
 
 		}else{
 			$temp_gal = unserialize(get_the_author_meta('tempgallery',$user_ID));
@@ -218,6 +222,8 @@ class Rcl_Thumb_Form{
 		if($temp_gal){
                     $attachlist = $this->get_gallery_list($temp_gal);
 		}
+
+                echo '<small class="notice-upload">'.__('Click on Priceline the image to add it to the content of the publication','rcl').'</small>';
 
 		echo '<ul id="temp-files">'.$attachlist.'</ul>';
 		echo '<p><label><input ';
@@ -233,7 +239,7 @@ class Rcl_Thumb_Form{
 				<div class="recall-button rcl-upload-button">
 					<span>'.__('Add','rcl').'</span>
 					<input id="'.$this->id_upload.'" name="uploadfile" type="file" accept="'.$formData->accept.'" multiple>
-				</div>			
+				</div>
 			</div>
 		</div>';
 	}

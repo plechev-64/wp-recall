@@ -47,7 +47,7 @@ padding: 10px 5px;
 vertical-align: middle;
 border-bottom: 1px solid rgb(230, 243, 255);
 }
-.privat_block .del_history, .privat_block .remove_ban_list, .privat_block .remove_black_list {
+#tab-privat .del_history, #tab-privat .remove_ban_list, #tab-privat .remove_black_list {
 float: right;
 padding-right: 0px;
 border: none;
@@ -103,7 +103,7 @@ line-height: 1.4;
 .fa-caret-right:before {
 content: none;
 }
-.privat_block .message-block .content-mess .balloon-message {
+#tab-privat .message-block .content-mess .balloon-message {
 background: none repeat scroll 0 0 #C4F5C4;
 border: 0px;
 border-radius: 9px;
@@ -113,7 +113,7 @@ margin: 20px 0px 10px;
 padding: 5px 10px;
 word-wrap: break-word;
 }
-.privat_block .message-block.you .balloon-message {
+#tab-privat .message-block.you .balloon-message {
 background: none repeat scroll 0 0 rgb(181, 220, 255);
 border-color: #3F7BAA;
 margin-right: 0;
@@ -124,7 +124,7 @@ word-wrap: break-word;
 border: 0px;
 }
 
-.privat_block .old_mess_block {
+#tab-privat .old_mess_block {
 background: none repeat scroll 0 0 #1DACD6;
 border: 0px;
 margin-top: 15px;
@@ -133,7 +133,7 @@ text-align: center;
 border-radius: 3px;
 }
 
-.privat_block .old_mess_block a {
+#tab-privat .old_mess_block a {
 background: none repeat scroll 0 0 #1DACD6;
 color:white;
 }
@@ -237,10 +237,10 @@ border-radius: 2px;
     background: url("../img/ballun-left.png") no-repeat scroll 0 0;
     background-color: rgba(90, 171, 243, 0.72);
 }
-#lk-content .privat_block .message-block .content-mess .privat-balloon {
+#lk-content #tab-privat .message-block .content-mess .privat-balloon {
     background: url("../img/ballun-left.png") no-repeat scroll 0 0 #C4F5C4;
 }
-#lk-content .privat_block .you .content-mess .privat-balloon {
+#lk-content #tab-privat .you .content-mess .privat-balloon {
     background: url("../img/ballun-right.png") no-repeat scroll 0 0 rgb(181, 220, 255);
 }
 

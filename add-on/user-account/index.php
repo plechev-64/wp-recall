@@ -2,6 +2,11 @@
 
 rcl_enqueue_style('user_account',__FILE__);
 
+add_shortcode('rcl-usercount','rcl_shortcode_usercount');
+function rcl_shortcode_usercount(){
+	return rcl_get_html_usercount();
+}
+
 add_action( 'widgets_init', 'rcl_widget_usercount' );
 function rcl_widget_usercount() {
 	register_widget( 'Rcl_Widget_user_count' );
@@ -12,7 +17,7 @@ class Rcl_Widget_user_count extends WP_Widget {
 	function Rcl_Widget_user_count() {
 		$widget_ops = array( 'classname' => 'widget-user-count', 'description' => __('Personal account of the user','rcl') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-user-count' );
-		$this->WP_Widget( 'widget-user-count', __('Personal account','rcl'), $widget_ops, $control_ops );
+		parent::__construct( 'widget-user-count', __('Personal account','rcl'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -393,7 +398,7 @@ function rcl_get_useraccount_scripts($script){
 
 	$script .= "
 		/* Пополняем личный счет пользователя */
-			jQuery('.add_count_user').live('click',function(){
+			jQuery('body').on('click','.add_count_user',function(){
 					var count = jQuery('.value_count_user');
 					var addcount = count.val();
 					var dataString = 'action=rcl_add_count_user&count='+addcount;
@@ -411,7 +416,7 @@ function rcl_get_useraccount_scripts($script){
 					return false;
 				});
 		/* Оплачиваем заказ средствами из личного счета */
-			jQuery('.pay_order').live('click',function(){
+			jQuery('body').on('click','.pay_order',function(){
 				var idorder = jQuery(this).data('order');
 				var dataString = 'action=rcl_pay_order_private_account&idorder='+ idorder;
 
@@ -433,9 +438,9 @@ function rcl_get_useraccount_scripts($script){
 				});
 				return false;
 			});
-		jQuery('.go_to_add_count').live('click',function(){
-			jQuery('.count_user').slideToggle();
-			return false;
+		jQuery('body').on('click','.go_to_add_count',function(){
+                    jQuery('.count_user').slideToggle();
+                    return false;
 		});
 	";
 	return $script;

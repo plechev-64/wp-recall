@@ -49,7 +49,7 @@ class Rcl_Tabs{
 
         //$cl_content = apply_filters('rcl_'.$this->callback.'_lk',$cl_content);
 
-        $block_wprecall .= '<div id="'.$this->id.'_block" class="'.$this->id.'_block recall_content_block '.$status.'">'
+        $block_wprecall .= '<div id="tab-'.$this->id.'" class="'.$this->id.'_block recall_content_block '.$status.'">'
         . $cl_content
         . '</div>';
 
@@ -79,17 +79,22 @@ function rcl_get_button_tab($args,$button=false){
 	$link = rcl_format_url(get_author_posts_url($user_LK),$args['id_tab']);
 	/*if(!$button) $status = 'active';
         else $status = '';*/
-
-	$button .= apply_filters('rcl_get_button_tab',rcl_get_button($args['name'],$link,array('class'=>rcl_get_class_button_tab($button,$args['id_tab']),'icon'=>$args['class'],'id'=>$args['id_tab'])),$args);
+        $html_button = rcl_get_button($args['name'],$link,array('class'=>rcl_get_class_button_tab($button,$args['id_tab']),'icon'=>$args['class']));
+	$button .= apply_filters('rcl_get_button_tab',$html_button,$args);
 
 	return $button;
+}
+
+add_filter('rcl_get_button_tab','rcl_add_parent_tags_tab_button',10,2);
+function rcl_add_parent_tags_tab_button($button,$args){
+    return sprintf('<span class="rcl-tab-button" data-tab="%s" id="tab-button-%s">%s</span>',$args['id_tab'],$args['id_tab'],$button);
 }
 
 function rcl_chek_view_tab($block_wprecall,$idtab){
 	global $rcl_options;
         $tb = (isset($rcl_options['tab_newpage']))? $rcl_options['tab_newpage']:false;
 	if($tb){
-		if((!isset($_GET['view'])&&$block_wprecall)||(isset($_GET['view'])&&$_GET['view']!=$idtab)) return false;
+		if((!isset($_GET['tab'])&&$block_wprecall)||(isset($_GET['tab'])&&$_GET['tab']!=$idtab)) return false;
 	}
 	return true;
 }

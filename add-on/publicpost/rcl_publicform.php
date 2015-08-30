@@ -37,16 +37,16 @@ class Rcl_PublicForm {
 		$this->accept = $accept;
 
         if(!isset($wp_editor)){
-			if(isset($rcl_options['wp_editor'])){
-				$cnt = count($rcl_options['wp_editor']);
-				if($cnt==1){
-					$type = $rcl_options['wp_editor'][0];
-				}else{
-					$type=3;
-				}
-			}
-			$this->wp_editor = ($type)? $type: 0;
-		}else $this->wp_editor = $wp_editor;
+            if(isset($rcl_options['wp_editor'])){
+                $cnt = count($rcl_options['wp_editor']);
+                if($cnt==1){
+                        $type = $rcl_options['wp_editor'][0];
+                }else{
+                        $type=3;
+                }
+            }
+            $this->wp_editor = ($type)? $type: 0;
+        }else $this->wp_editor = $wp_editor;
 
         if(isset($_GET['rcl-post-edit'])){
 
@@ -69,10 +69,10 @@ class Rcl_PublicForm {
         $taxs = array();
         $taxs = apply_filters('taxonomy_public_form_rcl',$taxs);
 
-		$this->type_editor = ($rcl_options['type_editor-'.$this->post_type])? $rcl_options['type_editor-'.$this->post_type]: $rcl_options['type_text_editor'];
-		if(!$this->type_editor) $this->type_editor = $type_editor;
+        $this->type_editor = ($rcl_options['type_editor-'.$this->post_type])? $rcl_options['type_editor-'.$this->post_type]: $rcl_options['type_text_editor'];
+        if(!$this->type_editor) $this->type_editor = $type_editor;
 
-		if($rcl_options['accept-'.$this->post_type]) $this->accept = $rcl_options['accept-'.$this->post_type];
+        if($rcl_options['accept-'.$this->post_type]) $this->accept = $rcl_options['accept-'.$this->post_type];
 
         $formData = (object)array(
             'form_id' =>$this->form_id,
@@ -86,7 +86,10 @@ class Rcl_PublicForm {
             'taxonomy' =>$taxs
         );
 
-        rcl_fileapi_scripts();
+        if($this->user_can()){
+			rcl_fileapi_scripts();
+            rcl_fileupload_scripts();
+        }
 
         if($this->post_id) add_filter('after_public_form_rcl',array(&$this,'delete_button'),10,2);
 
@@ -95,12 +98,12 @@ class Rcl_PublicForm {
     function user_can(){
         global $rcl_options,$user_ID;
 
-        if(!$user_ID) return false;
-
         if($this->post_type=='post-group') $user_can = $rcl_options['user_public_access_group'];
         else $user_can = $rcl_options['user_public_access_recall'];
 
         if(!$user_can) return true;
+
+		if(!$user_ID) return false;
 
         $userinfo = get_userdata( $user_ID );
 
@@ -211,17 +214,20 @@ class Rcl_PublicForm {
     function public_form(){
         global $user_ID,$formFields;
 
-            if(!$user_ID) return '<p align="center">'.__('You must be logged in to post. Login or register','rcl').'</p>';
-
 			if(!$this->can_edit) return '<p align="center">'.__('You can not edit this publication :(','rcl').'</p>';
 
             if(!$this->user_can()){
                 if($this->post_type=='post-group') return '<div class="public-post-group">'
                     . '<h3 >'.__('Sorry, but you have no rights to publish within groups :(','rcl').'</h3>'
                         . '</div>';
-                else return '<h3 class="aligncenter">'
+                else{
+
+					if(!$user_ID) return '<p align="center">'.__('You must be logged in to post. Login or register','rcl').'</p>';
+
+					return '<h3 class="aligncenter">'
                     . __('Sorry, but you have no right<br>to publish the records on this site :(','rcl')
                         . '</h3>';
+				}
             }
 
             $formfields = array(
@@ -229,10 +235,13 @@ class Rcl_PublicForm {
             	'termlist'=>true,
             	'editor'=>true,
             	'custom_fields'=>true,
-				'upload'=>true
+				'upload'=>true,
+                'tags'=>true
             );
 
             $formFields = apply_filters('fields_public_form_rcl',$formfields,$this);
+
+            if(!$formFields['tags']) remove_filter('public_form_rcl','rcl_add_tags_input',10);
 
             $form = '<div class="public_block">';
 
@@ -256,6 +265,15 @@ class Rcl_PublicForm {
                 $form .= ($this->post_id)? 'edit-form' : 'public-form';
                 $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','rcl').'\';"  action="" method="post" enctype="multipart/form-data">
                 '.wp_nonce_field('edit-post-rcl','_wpnonce',true,false);
+
+					if(!$user_ID) $form .= '<div class="rcl-form-field">
+						<label>'.__('Your Name','rcl').' <span class="required">*</span></label>
+						<input required type="text" value="" name="name-user">
+					</div>
+					<div class="rcl-form-field">
+						<label>'.__('Your E-mail','rcl').' <span class="required">*</span></label>
+						<input required type="text" value="" name="email-user">
+					</div>';
 
                     if(rcl_get_template_path($this->post_type.'-form.php',__FILE__)) $form .= rcl_get_include_template($this->post_type.'-form.php',__FILE__);
                         else $form .= rcl_get_include_template('public-form.php',__FILE__);
@@ -468,6 +486,14 @@ function rcl_publication_editor(){
 		rcl_wp_editor();
 
 	}else{
+
+		rcl_sortable_scripts();
+
+		echo '<script>
+		jQuery(function(){
+			jQuery(".rcl-editor-content").sortable({ axis: "y", containment: "parent", handle: ".move-box", cursor: "move" });
+		});
+		</script>';
 
 		if($editpost->post_content){
 			$rcl_box = strpos($editpost->post_content, '[rcl-box');

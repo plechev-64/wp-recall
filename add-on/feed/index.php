@@ -542,7 +542,7 @@ class Rcl_Feed{
 
 		$script .= "
 			/* Подписываемся на пользователя */
-				jQuery('.feed-user').live('click',function(){
+				jQuery('body').on('click','.feed-user',function(){
 					var id_user = jQuery(this).data('feed');
 					var dataString = 'action=add_feed_user_recall&id_user='+id_user;
 					jQuery.ajax({
@@ -561,7 +561,7 @@ class Rcl_Feed{
 					return false;
 				});
 			/* Получаем комментарии из фида */
-				jQuery('#commentfeed').live('click',function(){
+				jQuery('#commentfeed').click(function(){
 					if(jQuery(this).hasClass('active')) return false;
 					rcl_preloader_show('#feedlist');
 					jQuery('.get-feed').removeClass('active');
@@ -583,7 +583,7 @@ class Rcl_Feed{
 					return false;
 				});
 			/* Получаем публикации из фида */
-				jQuery('#postfeed').live('click',function(){
+				jQuery('#postfeed').click(function(){
 					if(jQuery(this).hasClass('active')) return false;
 					rcl_preloader_show('#feedlist');
 					jQuery('.get-feed').removeClass('active');

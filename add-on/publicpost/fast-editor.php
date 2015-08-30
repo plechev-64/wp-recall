@@ -1,7 +1,7 @@
 <?php
 class Rcl_Public{
 	function __construct() {
-		add_action('wp_ajax_get_media', array(&$this, 'get_media'));		
+		add_action('wp_ajax_get_media', array(&$this, 'get_media'));
 	}
 	function get_media(){
 		global $user_ID,$wpdb;
@@ -34,6 +34,7 @@ class Rcl_Public{
                                     </div>';
 
 			if($medias){
+                            $fls .= '<div id="user-media-list">';
 				$fls = '<span class="close-popup"></span>
                                     '.$custom_url.'
                                     <div id="user-medias" style="padding: 10px;">
@@ -45,6 +46,7 @@ class Rcl_Public{
 				$fls .= '</ul>'
                                     . '</div>';
 				$fls .= $rclnavi->navi();
+                                $fls .= '</div>';
 				$log['result']=100;
 				$log['content']= $fls;
 			}else{
@@ -65,10 +67,10 @@ function rcl_ajax_delete_post(){
 	global $user_ID;
 
 	if(!$user_ID) return false;
-	
-	$post = get_post(intval($_POST['post_id']));		
+
+	$post = get_post(intval($_POST['post_id']));
 	$res = wp_delete_post( $post->ID );
-	
+
 	if($res){
 		$temp_gal = unserialize(get_the_author_meta('tempgallery',$user_ID));
 		if($temp_gal){
@@ -78,7 +80,7 @@ function rcl_ajax_delete_post(){
 			if($new_temp) update_usermeta($user_ID,'tempgallery',serialize($new_temp));
 			else delete_usermeta($user_ID,'tempgallery');
 		}
-		
+
 		$log['result']=100;
 		$log['post_type']=$post->post_type;
 	}else {

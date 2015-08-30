@@ -133,11 +133,11 @@ class Rcl_Cart {
 
         global $user_ID,$products;
 
-		$products = $this->get_products();
+        $products = $this->get_products();
 
-		if(!$products) return '<p>В вашей корзине пусто.</p>';
+        if(!$products) return '<p>В вашей корзине пусто.</p>';
 
-		if(!$user_ID) $basket .= '<h3 class="title-data">Корзина <span class="weight-normal">(цены указаны в рублях)</span></h3>';
+        if(!$user_ID) $basket .= '<h3 class="title-data">Корзина <span class="weight-normal">(цены указаны в рублях)</span></h3>';
 
         $basket .= rcl_get_include_template('cart.php',__FILE__);
 
@@ -153,17 +153,17 @@ class Rcl_Cart {
 
                     if($user_ID){
 
-                            if($order_field) $basket .= '<h3 align="center">Для оформления заказа заполните форму ниже:</h3>
-							<div id="regnewuser"  style="display:none;"></div>
-                            <table class="form-table">'.$order_field.'</table>';
+                    if($order_field) $basket .= '<h3 align="center">Для оформления заказа заполните форму ниже:</h3>
+                                                <div id="regnewuser"  style="display:none;"></div>
+                    <table class="form-table">'.$order_field.'</table>';
 
-                            $basket .= rcl_get_button('Оформить заказ','#',array('icon'=>false,'class'=>'confirm_order'))
-							.'</div>
-                            <div class="redirectform" style="text-align:center;"></div>';
+                    $basket .= rcl_get_button('Оформить заказ','#',array('icon'=>false,'class'=>'confirm_order'))
+                                                .'</div>
+                    <div class="redirectform" style="text-align:center;"></div>';
 
-                            $basket .= "<script>
+                    $basket .= "<script>
                     jQuery(function(){
-                    jQuery('.confirm_order').live('click',function(){";
+                    jQuery('#rcl-cart').on('click','.confirm_order',function(){";
 
                     $basket .= $this->script_request('order');
 
@@ -219,7 +219,7 @@ class Rcl_Cart {
                         </div>';
                         $basket .= "<script>
                         jQuery(function(){
-                                jQuery('.rcl_register_user_order').live('click',function(){";
+                                jQuery('#rcl-cart').on('click','.rcl_register_user_order',function(){";
 
                                     $basket .= $this->script_request('order');
 
@@ -259,6 +259,6 @@ class Rcl_Cart {
                 }
             }
 
-            return $basket;
+            return '<form id="rcl-cart" method="post">'.$basket.'</form>';
     }
 }

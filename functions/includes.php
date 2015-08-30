@@ -92,7 +92,7 @@ function rcl_multisort_array($array, $key, $type = SORT_ASC, $cmp_func = 'strcmp
 }
 
 function rcl_a_active($param1,$param2){
-	if($param1==$param2) return 'class=active';
+	if($param1==$param2) return 'class=filter-active';
 }
 
 function rcl_get_usernames($objects,$name_data){
@@ -116,7 +116,7 @@ function rcl_format_url($url,$id_tab=null){
 	if($cnt>1) $a = '&';
 	else $a = '?';
 	$url = $url.$a;
-	if($id_tab) $url = $url.'view='.$id_tab;
+	if($id_tab) $url = $url.'tab='.$id_tab;
 	return $url;
 }
 

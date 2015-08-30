@@ -15,7 +15,7 @@ jQuery(function(){
 /*************************************************
 Удаляем заказ пользователя воопще)
 *************************************************/
-	jQuery('.delete-order').live('click',function(){
+	jQuery('.delete-order').click(function(){
 		if(confirm('Уверены?')){
 			var idorder = jQuery(this).attr('id');
 			var dataString_reg = 'action=rcl_all_delete_order&idorder='+ idorder;
@@ -39,45 +39,45 @@ jQuery(function(){
 /*************************************************
 Меняем статус заказа в админке
 *************************************************/	
-jQuery('.select_status').live('click',function(){
-		var order = jQuery(this).attr('id');
-		//var id_user = parseInt(id_attr.replace(/\D+/g,''));	
-		var status = jQuery('#status-'+order).val();
-		//alert(order+' + '+status);
-		var dataString = 'action=rcl_edit_order_status&order='+order+'&status='+status;	
-		jQuery.ajax({
-		type: 'POST',
-		data: dataString,
-		dataType: 'json',
-		url: ajaxurl,
-			success: function(data){
-				if(data['otvet']==100){
-					jQuery('.change-'+data['order']).empty().html(data['status']);				
-				} else {
-				   alert('Смена статуса не удалась.');
-				}
-			} 
-		});	  	
-	return false;
+jQuery('.select_status').click(function(){
+    var order = jQuery(this).attr('id');
+    //var id_user = parseInt(id_attr.replace(/\D+/g,''));	
+    var status = jQuery('#status-'+order).val();
+    //alert(order+' + '+status);
+    var dataString = 'action=rcl_edit_order_status&order='+order+'&status='+status;	
+    jQuery.ajax({
+    type: 'POST',
+    data: dataString,
+    dataType: 'json',
+    url: ajaxurl,
+        success: function(data){
+            if(data['otvet']==100){
+                    jQuery('.change-'+data['order']).empty().html(data['status']);				
+            } else {
+               alert('Смена статуса не удалась.');
+            }
+        } 
+    });	  	
+    return false;
 });
 
-jQuery('.edit-price-product').live('click',function(){
-			var id_post = jQuery(this).attr('product');	
-			var price = jQuery('#price-product-'+id_post).attr('value');
-			var dataString_count = 'action=rcl_edit_price_product&id_post='+id_post+'&price='+price;
+jQuery('.edit-price-product').click(function(){
+    var id_post = jQuery(this).attr('product');	
+    var price = jQuery('#price-product-'+id_post).attr('value');
+    var dataString_count = 'action=rcl_edit_price_product&id_post='+id_post+'&price='+price;
 
-			jQuery.ajax({
-				type: 'POST',
-				data: dataString_count,
-				dataType: 'json',
-				url: ajaxurl,
-				success: function(data){
-					if(data['otvet']==100){
-						alert('Данные сохранены!');
-					} else {
-					   alert('Ошибка!');
-					}
-				} 
-			});				
-			return false;
-	});
+    jQuery.ajax({
+        type: 'POST',
+        data: dataString_count,
+        dataType: 'json',
+        url: ajaxurl,
+        success: function(data){
+            if(data['otvet']==100){
+                    alert('Данные сохранены!');
+            } else {
+               alert('Ошибка!');
+            }
+        } 
+    });				
+    return false;
+});

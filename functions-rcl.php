@@ -760,20 +760,20 @@ function rcl_get_scripts_ajaxload_tabs($script){
 		});
 		return false;
 	}
-	jQuery('.ajax_button').live('click',function(){
-		if(jQuery(this).hasClass('active'))return false;
-		rcl_preloader_show('#lk-content > div');
-		var id = jQuery(this).attr('id');
-		jQuery('.rcl-menu .recall-button,#lk-conteyner .recall-button').removeClass('active');
-		jQuery(this).addClass('active');
-		var url = setAttr_rcl('view',id);
-		if(url != window.location){
-			if ( history.pushState ){
-				window.history.pushState(null, null, url);
-			}
-		}
-		get_ajax_content_tab(id);
-		return false;
+	jQuery('.rcl-tab-button').on('click','.ajax_button',function(){
+            if(jQuery(this).hasClass('active'))return false;
+            rcl_preloader_show('#lk-content > div');
+            var id = jQuery(this).parent().data('tab');
+            jQuery('.rcl-tab-button .recall-button').removeClass('active');
+            jQuery(this).addClass('active');
+            var url = setAttr_rcl('tab',id);
+            if(url != window.location){
+                if ( history.pushState ){
+                    window.history.pushState(null, null, url);
+                }
+            }
+            get_ajax_content_tab(id);
+            return false;
 	});
 	";
 	return $script;

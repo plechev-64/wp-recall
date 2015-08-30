@@ -173,7 +173,7 @@ add_action('wp_ajax_nopriv_rcl_get_postlist_page', 'rcl_get_postlist_page');
 function rcl_manage_publicform(){
 	global $wpdb;
 
-        rcl_sortable_scripts();
+    rcl_sortable_scripts();
 
 	$form = (isset($_GET['form'])) ? $_GET['form']: false;
 
@@ -274,6 +274,7 @@ function rcl_get_like_tags(){
     exit;
 }
 add_action('wp_ajax_rcl_get_like_tags','rcl_get_like_tags');
+add_action('wp_ajax_nopriv_rcl_get_like_tags','rcl_get_like_tags');
 
 add_shortcode('gallery-rcl','rcl_shortcode_gallery');
 function rcl_shortcode_gallery($atts, $content = null){
@@ -439,9 +440,6 @@ function rcl_get_html_attachment($attach_id,$mime_type){
 }
 
 function rcl_edit_post(){
-    global $user_ID;
-    if(!$user_ID) return false;
-
     include_once 'rcl_editpost.php';
     $edit = new Rcl_EditPost();
 }
@@ -699,11 +697,45 @@ function rcl_add_editor_box(){
 	exit;
 }
 add_action('wp_ajax_rcl_add_editor_box','rcl_add_editor_box');
+add_action('wp_ajax_nopriv_rcl_add_editor_box','rcl_add_editor_box');
 
 add_action('wp_ajax_rcl_preview_post','rcl_preview_post');
+add_action('wp_ajax_nopriv_rcl_preview_post','rcl_preview_post');
 function rcl_preview_post(){
+	global $user_ID,$rcl_options;
 
 	$log = array();
+
+	$user_can = $rcl_options['user_public_access_recall'];
+
+	if(!$user_can&&!$user_ID){
+
+		$email_new_user = sanitize_email($_POST['email-user']);
+		$name_new_user = $_POST['name-user'];
+
+		if(!$email_new_user){
+			$log['error'] = 'Введите свой e-mail!';
+		}
+		if(!$name_new_user){
+			$log['error'] = 'Введите свое имя!';
+		}
+
+		$res_email = email_exists( $email_new_user );
+		$res_login = username_exists($email_new_user);
+		$correctemail = is_email($email_new_user);
+		$valid = validate_username($email_new_user);
+
+		if($res_login||$res_email||!$correctemail||!$valid){
+
+			if(!$valid||!$correctemail){
+				$log['error'] .= 'Вы ввели некорректный email!';
+			}
+			if($res_login||$res_email){
+				$log['error'] .= 'Этот email уже используется!<br>'
+						. 'Если это ваш email, то авторизуйтесь и опубликуйте свою запись';
+			}
+		}
+	}
 
 	//if(!$_POST['post_title']) $log['error'] = 'Заполните заголовок публикации';
 	if(!$_POST['post_content']) $log['error'] = 'Добавьте содержимое публикации!';
@@ -774,13 +806,12 @@ function rcl_get_editor_content($post_content,$type='editor'){
 		}
 		return $content;
 	}else{
-		return rcl_get_include_template('editor-header-box.php',__FILE__)
-				.rcl_get_include_template('editor-text-box.php',__FILE__);
+		return rcl_get_include_template('editor-text-box.php',__FILE__);
 	}
 }
 
 function rcl_wp_editor($args=false,$content=false){
-    global $rcl_options,$editpost,$formData;
+    global $rcl_options,$editpost,$formData,$user_ID;
 
     $media = (isset($args['media']))? $args['media']: true;
 	$wp_editor = (isset($args['wp_editor']))? $args['wp_editor']: $formData->wp_editor;
@@ -802,7 +833,7 @@ function rcl_wp_editor($args=false,$content=false){
     );
 
     if($media)
-        echo rcl_get_button(__('To add a media file','rcl'),'#',array('icon'=>'fa-folder-open','id'=>'get-media-rcl'));
+        if($user_ID) echo rcl_get_button(__('To add a media file','rcl'),'#',array('icon'=>'fa-folder-open','id'=>'get-media-rcl'));
 
 	if(!$content) $content = (isset($editpost->post_content))? $editpost->post_content: '';
 
@@ -850,7 +881,20 @@ function rcl_box_shortcode($atts){
 	return $html;
 }
 
+add_filter('the_excerpt','rcl_box_excerpt',10);
+function rcl_box_excerpt($excerpt){
+	global $post;
+	if($post->post_content&&!$post->post_excerpt){
+		$rcl_box = strpos($post->post_content, '[rcl-box');
+		if($rcl_box!==false){
+			$excerpt = '<p>'.strip_tags(apply_filters('the_content',$post->post_content)).'</p>';
+		}
+	}
+	return $excerpt;
+}
+
 add_action('wp_ajax_rcl_upload_box','rcl_upload_box');
+add_action('wp_ajax_nopriv_rcl_upload_box','rcl_upload_box');
 function rcl_upload_box(){
 	global $rcl_options,$user_ID;
 
@@ -858,7 +902,7 @@ function rcl_upload_box(){
 	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
 	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
-	if(!$user_ID) return false;
+	if($rcl_options['user_public_access_recall']&&!$user_ID) return false;
 
 	$maxsize = (isset($rcl_options['max_sizes_attachment'])&&$rcl_options['max_sizes_attachment'])? explode(',',$rcl_options['max_sizes_attachment']): array(800,600);
 	$files = array();
@@ -872,6 +916,8 @@ function rcl_upload_box(){
 	}
 
 	$files = rcl_multisort_array($files, 'name', SORT_ASC);
+
+	$user_dir = ($uiser_ID)? $user_ID: $_COOKIE['PHPSESSID'];
 
 	foreach($files as $k=>$file){
 
@@ -892,8 +938,8 @@ function rcl_upload_box(){
 			chmod($dir_path, 0755);
 		}
 
-		$dir_path = RCL_UPLOAD_PATH.'users-temp/'.$user_ID.'/';
-		$dir_url = RCL_UPLOAD_URL.'users-temp/'.$user_ID.'/';
+		$dir_path = RCL_UPLOAD_PATH.'users-temp/'.$user_dir.'/';
+		$dir_url = RCL_UPLOAD_URL.'users-temp/'.$user_dir.'/';
 		if(!is_dir($dir_path)){
 			mkdir($dir_path);
 			chmod($dir_path, 0755);
@@ -949,10 +995,10 @@ function rcl_add_thumbnail_post($post_id,$filepath){
 	$file = explode('.',$filename);
 	$thumbpath = $filepath;
 
-	if($file[0]=='image'){
+	//if($file[0]=='image'){
 		$data = getimagesize($thumbpath);
 		$mime = $data['mime'];
-	}else $mime = mime_content_type($thumbpath);
+	//}else $mime = mime_content_type($thumbpath);
 
 	$cont = file_get_contents($thumbpath);
 	$image = wp_upload_bits( $filename, null, $cont );
@@ -1052,7 +1098,7 @@ function rcl_public_file_scripts($script){
 			if(error==0) return true;
 			else return false;
 		});
-		jQuery('#rcl-popup .rcl-navi a').live('click',function(){
+		jQuery('#rcl-popup').on('click','#user-media-list .rcl-navi a',function(){
 			var page = jQuery(this).text();
 			var dataString = 'action=get_media&user_ID='+user_ID+'&page='+page;
 
@@ -1074,7 +1120,7 @@ function rcl_public_file_scripts($script){
 			});
 			return false;
 		});
-		jQuery('#get-media-rcl').live('click',function(){
+		jQuery('form.public-form #get-media-rcl').click(function(){
 			var dataString = 'action=get_media&user_ID='+user_ID;
 
 			jQuery.ajax({
@@ -1096,11 +1142,12 @@ function rcl_public_file_scripts($script){
 			return false;
 		});
 
-		jQuery('.posts_rcl_block .sec_block_button').live('click',function(){
+		jQuery('#lk-content').on('click','.posts_rcl_block .sec_block_button',function(){
 			var btn = jQuery(this);
 			get_page_content_rcl(btn,'posts_rcl_block');
 			return false;
 		});
+
 	function get_page_content_rcl(btn,id_page_rcl){
 			if(btn.hasClass('active'))return false;
 			rcl_preloader_show('#publics_block');
