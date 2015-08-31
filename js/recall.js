@@ -97,8 +97,8 @@ jQuery(function($){
         return base + '?' + res;
     } 
 
-    $('.rcl-menu .block_button, #lk-conteyner .block_button').click(function() {      
-        var url = setAttr_rcl('view',$(this).attr('id'));
+    $('.rcl-tab-button .block_button').click(function() {      
+        var url = setAttr_rcl('tab',$(this).attr('id'));
         if(url !== window.location){
             if ( history.pushState ){
                 window.history.pushState(null, null, url);

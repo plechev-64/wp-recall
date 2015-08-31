@@ -75,7 +75,7 @@ function rcl_followers_tab($user_id){
 
     if($cnt){
         add_filter('user_description','rcl_add_userlist_follow_button',90);
-        $content .= rcl_get_userlist(array('type' => 'rows','usergroup' => 'rcl_feed:'.$user_id, 'inpage'=>20 ,'search'=>'no' ,'orderby'=>'action', 'add_uri'=>array('view'=>'followers')));
+        $content .= rcl_get_userlist(array('type' => 'rows','usergroup' => 'rcl_feed:'.$user_id, 'inpage'=>20 ,'search'=>'no' ,'orderby'=>'action', 'add_uri'=>array('tab'=>'followers')));
     }else
         $content .= '<p>'.__('Following yet','rcl').'</p>';
 
@@ -122,7 +122,7 @@ function rcl_subscriptions_tab($user_id){
     if($feeds){
         add_filter('user_description','rcl_add_userlist_follow_button',90);
         foreach($feeds as $feed){$users[] = $feed->meta_value;}
-        $content .= rcl_get_userlist(array('type' => 'rows','include' => implode(',',$users) ,'search'=>'no' ,'orderby'=>'action', 'add_uri'=>array('view'=>'subscriptions')));
+        $content .= rcl_get_userlist(array('type' => 'rows','include' => implode(',',$users) ,'search'=>'no' ,'orderby'=>'action', 'add_uri'=>array('tab'=>'subscriptions')));
     } else{
         $content .= '<p>'.__('Subscriptions yet','rcl').'</p>';
     }
