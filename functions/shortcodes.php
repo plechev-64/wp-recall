@@ -251,7 +251,7 @@ function rcl_get_userlist($atts, $content = null){
 
         $userlist .= '<div class="rcl-user-filters">'.__('Filter by','rcl').': ';
         $userlist .= '<a class="user-filter '.rcl_a_active($orderby,'action').'" href="'.$perm.'filter=action">'.__('Activity','rcl').'</a> ';
-        if(isset($active_addons['rating-system'])) $userlist .= '<a class="user-filter '.rcl_a_active($orderby,'rating_total').'" href="'.$perm.'filter=rayting">'.__('Rated','rcl').'</a> ';
+        if(isset($active_addons['rating-system'])) $userlist .= '<a class="user-filter '.rcl_a_active($orderby,'rayting').'" href="'.$perm.'filter=rayting">'.__('Rated','rcl').'</a> ';
         if(!isset($_GET['search-user'])&&isset($active_addons['publicpost'])) $userlist .= '<a class="user-filter '.rcl_a_active($orderby,'posts').'" href="'.$perm.'filter=posts">'.__('Publications','rcl').'</a> ';
         if(!isset($_GET['search-user'])) $userlist .= '<a class="user-filter '.rcl_a_active($orderby,'comments').'" href="'.$perm.'filter=comments">'.__('Comments','rcl').'</a> ';
         if(!isset($_GET['search-user'])) $userlist .= '<a class="user-filter '.rcl_a_active($orderby,'registered').'" href="'.$perm.'filter=registered">'.__('Registration','rcl').'</a>';
