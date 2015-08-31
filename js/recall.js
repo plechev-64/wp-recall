@@ -97,15 +97,7 @@ jQuery(function($){
         return base + '?' + res;
     } 
 
-    $('.rcl-tab-button .block_button').click(function() {      
-        var url = setAttr_rcl('tab',$(this).attr('id'));
-        if(url !== window.location){
-            if ( history.pushState ){
-                window.history.pushState(null, null, url);
-            }
-        }
-        return false;
-    });
+    
 
     $('#rcl-popup,.floatform').on('click','.close-popup',function(){
         $('#rcl-overlay').fadeOut();
@@ -170,14 +162,24 @@ jQuery(function($){
         if($(this).hasClass('link-remember-rcl')) $('#remember-form-rcl').show();
         return false; 
     });
+    
+    $('.rcl-tab-button .block_button').click(function() {      
+        var url = setAttr_rcl('tab',$(this).parent().data('tab'));
+        if(url !== window.location){
+            if ( history.pushState ){
+                window.history.pushState(null, null, url);
+            }
+        }
+        return false;
+    });
 
-    $('.block_button').click(function(){
+    $('.rcl-tab-button .block_button').click(function(){
         if($(this).hasClass('active'))return false;
-        var id = $(this).attr('id');		
-        $(".rcl-menu .recall-button, #lk-conteyner .block_button").removeClass("active");
+        var id = $(this).parent().data('tab');		
+        $(".rcl-tab-button .block_button").removeClass("active");
         $(".recall_content_block").removeClass("active").slideUp();
         $(this).addClass("active");
-        $('.'+id+'_block').slideDown().addClass("active");
+        $('#tab-'+id).slideDown().addClass("active");
         return false;
     });
 
