@@ -89,7 +89,7 @@ function rcl_update_addon(){
     );
     $context  = stream_context_create($options);
     $archive = file_get_contents($url, false, $context);
-
+    //print_r($archive);exit;
     if(!$archive){
         $log['error'] = __('Unable to retrieve the file from the server!','rcl');
         echo json_encode($log); exit;
