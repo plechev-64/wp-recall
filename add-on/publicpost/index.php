@@ -881,13 +881,15 @@ function rcl_box_shortcode($atts){
 	return $html;
 }
 
-add_filter('the_excerpt','rcl_box_excerpt',10);
+add_filter('get_the_excerpt','rcl_box_excerpt',10);
 function rcl_box_excerpt($excerpt){
 	global $post;
 	if($post->post_content&&!$post->post_excerpt){
 		$rcl_box = strpos($post->post_content, '[rcl-box');
 		if($rcl_box!==false){
-			$excerpt = '<p>'.strip_tags(apply_filters('the_content',$post->post_content)).'</p>';
+                    $excerpt = '<p>'.strip_tags(apply_filters('the_content',$post->post_content)).'</p>';
+                    $excerpt = substr($excerpt, 0, 500);
+                    $excerpt = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ...', $excerpt);
 		}
 	}
 	return $excerpt;
