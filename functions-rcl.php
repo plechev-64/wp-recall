@@ -285,11 +285,15 @@ function rcl_admin_access(){
 	}
 }
 function rcl_hidden_admin_panel(){
-	global $current_user,$rcl_options;
-	get_currentuserinfo();
+	global $rcl_options,$user_ID;
+
+        if(!$user_ID){
+            return show_admin_bar(false);
+        }
+
 	$access = 7;
 	if(isset($rcl_options['consol_access_rcl'])) $access = $rcl_options['consol_access_rcl'];
-	$user_info = get_userdata($current_user->ID);
+	$user_info = get_userdata($user_ID);
 	if ( $user_info->user_level < $access ){
 		show_admin_bar(false);
 	}else{
