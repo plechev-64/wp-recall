@@ -118,10 +118,10 @@ function rcl_get_register_user(){
 	}
 
         if($user_id){
-			
+
 			$wpdb->insert( $wpdb->prefix .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
-			
-			rcl_register_mail(array('user_id'=>$user_id,'password'=>$pass,'login'=>$login));
+
+			rcl_register_mail(array('user_id'=>$user_id,'password'=>$pass,'login'=>$login,'email'=>$email));
 
             wp_redirect(rcl_format_url($ref).'action-rcl=login&success=true');exit;
 
@@ -129,27 +129,27 @@ function rcl_get_register_user(){
 }
 
 function rcl_register_mail($userdata){
-	global $rcl_options;
-	
-	$subject = __('Confirm your registration!','rcl');
-	$textmail = '
-	<p>'.__('You or someone else signed up on the website','rcl').' "'.get_bloginfo('name').'" '.__('with the following data:','rcl').'</p>
-	<p>'.__('Nickname','rcl').': '.$userdata['login'].'</p>
-	<p>'.__('Password','rcl').': '.$userdata['password'].'</p>';
+    global $rcl_options;
 
-	if($rcl_options['confirm_register_recall']==1){
-		$url = get_bloginfo('wpurl').'/?rglogin='.$userdata['login'].'&rgpass='.$userdata['password'].'&rgcode='.md5($userdata['login']);
-		wp_update_user( array ('ID' => $userdata['user_id'], 'role' => 'need-confirm') ) ;
-		$res['recall']='<p style="text-align:center;color:green;">Регистрация завершена!<br />Для подтверждения регистрации перейдите по ссылке в письме, высланном на указанную вами почту.</p>';
-		$textmail .= '<p>Если это были вы, то подтвердите свою регистрацию перейдя по ссылке ниже:</p>
-		<p><a href="'.$url.'">'.$url.'</a></p>
-		<p>Не получается активировать аккаунт?</p>
-		<p>Скопируйте текст ссылки ниже, вставьте его в адресную строку вашего браузера и нажмите Enter</p>';
-	}
+    $subject = __('Confirm your registration!','rcl');
+    $textmail = '
+    <p>'.__('You or someone else signed up on the website','rcl').' "'.get_bloginfo('name').'" '.__('with the following data:','rcl').'</p>
+    <p>'.__('Nickname','rcl').': '.$userdata['login'].'</p>
+    <p>'.__('Password','rcl').': '.$userdata['password'].'</p>';
 
-	$textmail .= '<p>'.__('If it wasnt you, then just ignore this email','rcl').'</p>';
-	rcl_mail($email, $subject, $textmail);
-	
+    if($rcl_options['confirm_register_recall']==1){
+            $url = get_bloginfo('wpurl').'/?rglogin='.$userdata['login'].'&rgpass='.$userdata['password'].'&rgcode='.md5($userdata['login']);
+            wp_update_user( array ('ID' => $userdata['user_id'], 'role' => 'need-confirm') ) ;
+            $res['recall']='<p style="text-align:center;color:green;">Регистрация завершена!<br />Для подтверждения регистрации перейдите по ссылке в письме, высланном на указанную вами почту.</p>';
+            $textmail .= '<p>Если это были вы, то подтвердите свою регистрацию перейдя по ссылке ниже:</p>
+            <p><a href="'.$url.'">'.$url.'</a></p>
+            <p>Не получается активировать аккаунт?</p>
+            <p>Скопируйте текст ссылки ниже, вставьте его в адресную строку вашего браузера и нажмите Enter</p>';
+    }
+
+    $textmail .= '<p>'.__('If it wasnt you, then just ignore this email','rcl').'</p>';
+    rcl_mail($userdata['email'], $subject, $textmail);
+
 }
 
 add_action('user_register','rcl_register_user_data',10);

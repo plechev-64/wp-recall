@@ -6,14 +6,16 @@
     <?php rcl_notice(); ?>
 
     <div id="lk-conteyner">
-        <div class="lk-header">
+        <div class="lk-header rcl-node">
             <?php rcl_header(); ?>
         </div>
         <div class="lk-sidebar">
             <div class="lk-avatar">
                 <?php rcl_avatar(120); ?>
             </div>
-            <?php rcl_sidebar(); ?>
+            <div class="rcl-node">
+                <?php rcl_sidebar(); ?>
+            </div>
         </div>
         <div class="lk-content">
             <h2><?php rcl_username(); ?></h2>
@@ -26,7 +28,7 @@
             <div class="rcl-content">
                 <?php rcl_content(); ?>
             </div>
-            <div class="lk-footer">
+            <div class="lk-footer rcl-node">
                 <?php rcl_footer(); ?>
             </div>
         </div>
@@ -35,7 +37,7 @@
 
     <?php $class = (isset($rcl_options['buttons_place'])&&$rcl_options['buttons_place']==1)? "left-buttons":""; ?>
     <div id="rcl-tabs">
-        <div id="lk-menu" class="rcl-menu <?php echo $class; ?>">
+        <div id="lk-menu" class="rcl-menu <?php echo $class; ?> rcl-node">
             <?php rcl_buttons(); ?>
         </div>
         <div id="lk-content" class="rcl-content">

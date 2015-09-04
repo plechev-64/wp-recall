@@ -277,10 +277,6 @@ border-radius: 2px;
     border: 0px;
     border-bottom: 1px solid #eee;
 }
-.ui-sortable-handle {
-    height: 155px;
-    overflow: hidden;
-}
 #lk-content .galrcl_block ul#files li img {
     float: left;
     max-width:300px;

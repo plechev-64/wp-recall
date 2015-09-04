@@ -8,11 +8,11 @@ if($typeform=='register') $f_reg = 'style="display:block;"'; ?>
     <form action="" method="post" enctype="multipart/form-data">
         <div class="form-block-rcl">
             <label><?php _e('Nickname','rcl'); ?> <span class="required">*</span></label>
-            <input required type="text" value="" name="login-user">
+            <input required type="text" value="" name="login-user" id="login-user">
         </div>
         <div class="form-block-rcl">
             <label><?php _e('E-mail','rcl'); ?> <span class="required">*</span></label>
-            <input required type="email" value="" name="email-user">
+            <input required type="email" value="" name="email-user" id="email-user">
         </div>
 
         <?php do_action( 'register_form' ); ?>
