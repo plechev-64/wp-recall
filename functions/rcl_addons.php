@@ -223,7 +223,15 @@ class Rcl_Addons{
 	}
 
         function get_actual_version($key,$version){
-            $url = "http://wppost.ru/products-files/info/".$key."/info.xml";
+            global $active_addons;
+
+            $status = (isset($active_addons[$key]))?1:0;
+
+            $url = "http://wppost.ru/products-files/api/update.php"
+                    . "?rcl-addon-action=version-check"
+                    . "&host=".$_SERVER['SERVER_NAME']
+                    . "&addon=".$key
+                    . "&status=".$status;
 
             $ver = 0;
 
@@ -252,11 +260,6 @@ class Rcl_Addons{
             @chmod( $object, 0777 );
             rmdir( $path );
 	}
-
-	/*function update_status_addon_recall(){
-
-
-	}*/
 
 	function update_status_addon_recall_activate ( ) {
 	  if ( isset( $_GET['action-addon'] ) ) {
@@ -571,6 +574,8 @@ function rcl_activate_addon($addon){
     }
 
     update_site_option('active_addons_recall',$active_addons);
+
+    do_action('rcl_activate_'.$addon,$active_addons[$addon]);
 }
 
 function rcl_deactivate_addon($addon){
@@ -586,6 +591,8 @@ function rcl_deactivate_addon($addon){
     }
 
     update_site_option('active_addons_recall',$active_addons);
+
+    do_action('rcl_deactivate_'.$addon);
 }
 
 function rcl_delete_addon($addon){
@@ -601,4 +608,6 @@ function rcl_delete_addon($addon){
     }
 
     update_site_option('active_addons_recall',$active_addons);
+
+    do_action('rcl_delete_'.$addon);
 }

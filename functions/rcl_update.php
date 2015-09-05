@@ -62,7 +62,8 @@ function rcl_update_addon(){
     $need_update = get_option('rcl_addons_need_update');
     if(!isset($need_update[$addon])) return false;
 
-    $url = 'http://wppost.ru/?remote-request=update-addon';
+    $url = 'http://wppost.ru/products-files/api/update.php'
+            . '?rcl-addon-action=update';
 
     $data = array(
         'addon' => $addon,
