@@ -231,6 +231,7 @@ class Rcl_Addons{
                     . "?rcl-addon-action=version-check"
                     . "&host=".$_SERVER['SERVER_NAME']
                     . "&addon=".$key
+                    . "&version=".$version
                     . "&status=".$status;
 
             $ver = 0;
