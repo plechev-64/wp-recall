@@ -854,14 +854,32 @@ function rcl_box_shortcode($atts){
 
 	$html = '';
 
+        $content = nl2br(strip_tags($content));
+
 	if(isset($_GET['rcl-post-edit'])){
-		$rcl_box['id_box'] = rand(1,100000);
-		$html = rcl_get_edit_box($type);
+
+            switch($type){
+                case 'text':
+                        $rcl_box['content'] = strip_tags($content);
+                break;
+                /*case 'header':
+
+                break;
+                case 'image':
+
+                break;
+                case 'html':
+
+                break;*/
+            }
+
+            $rcl_box['id_box'] = rand(1,100000);
+            $html = rcl_get_edit_box($type);
 	}else{
 
 		switch($type){
 			case 'text':
-				$html = '<p>'.strip_tags($content).'</p>';
+				$html = '<p>'.$content.'</p>';
 			break;
 			case 'header':
 				$html = '<h3>'.$content.'</h3>';
@@ -911,15 +929,39 @@ function rcl_upload_box(){
 
     //$valid_types = array("gif", "jpg", "png", "jpeg");
 
-	foreach($_FILES['editor_upload'] as $key=>$fls){
-		foreach($fls as $k=>$data){
-			$files[$k][$key] = $data;
+        if(isset($_POST['url_image'])){
+
+		$url_image = $_POST['url_image'];
+		$filename = basename($url_image);
+
+		if($url_image){
+			$img = file_get_contents($url_image);
+			if($img) file_put_contents($dir_path.$filename, $img);
+			else{
+                            $res['error'] = "Загрузка изображения не удалась!";
+                            echo json_encode($res);
+                            exit;
+			}
 		}
-	}
 
-	$files = rcl_multisort_array($files, 'name', SORT_ASC);
+		$files[] = array(
+			'tmp_name'=>$dir_path.$filename,
+			'name' => $filename
+		);
 
-	$user_dir = ($uiser_ID)? $user_ID: $_COOKIE['PHPSESSID'];
+	}else{
+
+            foreach($_FILES['editor_upload'] as $key=>$fls){
+                    foreach($fls as $k=>$data){
+                            $files[$k][$key] = $data;
+                    }
+            }
+
+            $files = rcl_multisort_array($files, 'name', SORT_ASC);
+
+        }
+
+	$user_dir = ($user_ID)? $user_ID: $_COOKIE['PHPSESSID'];
 
 	foreach($files as $k=>$file){
 

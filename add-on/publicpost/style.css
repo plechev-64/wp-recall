@@ -329,7 +329,10 @@ body #rcl_post_tags.ms-ctn .ms-sel-ctn input{
 	font-size:18px;
 }
 .rcl-public-editor .rcl-editor-content .rcl-content-box .rcl-upload-box{
-	padding: 20px;
+    padding: 20px;
+}
+.rcl-content-box .rcl-upload-box input[type="url"]{
+    border:1px solid #ccc;
 }
 .rcl-public-editor .rcl-content-box .rcl-upload-box .rcl-icon-upload{
     font-size: 70px;

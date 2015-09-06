@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Recall\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-21 16:33+0300\n"
-"PO-Revision-Date: 2015-08-21 16:33+0300\n"
+"POT-Creation-Date: 2015-09-06 20:33+0300\n"
+"PO-Revision-Date: 2015-09-06 20:33+0300\n"
 "Last-Translator: bloria <allmedkaplan@med.allmed.co.il>\n"
 "Language-Team: \n"
 "Language: he\n"
@@ -208,7 +208,7 @@ msgstr "סגור הגדרות"
 
 #: ../../wp-recall/add-on/./groups/class_group.php:207
 #: ../add-on/groups/class_group.php:207 ../admin-pages.php:299
-#: ../functions-rcl.php:505
+#: ../functions-rcl.php:509
 msgid "Save settings"
 msgstr "שמור הגדרות"
 
@@ -257,48 +257,48 @@ msgstr "להגיש בקשה לחברות"
 msgid "Join"
 msgstr "לְהִצְטַרֵף"
 
-#: ../../wp-recall/add-on/./groups/class_group.php:311
-#: ../add-on/groups/class_group.php:311
+#: ../../wp-recall/add-on/./groups/class_group.php:312
+#: ../add-on/groups/class_group.php:312
 msgid "Group members"
 msgstr "חברי קבוצה"
 
-#: ../../wp-recall/add-on/./groups/class_group.php:320
-#: ../add-on/groups/class_group.php:320
+#: ../../wp-recall/add-on/./groups/class_group.php:321
+#: ../add-on/groups/class_group.php:321
 msgid "All members"
 msgstr "כל החברים"
 
-#: ../../wp-recall/add-on/./groups/class_group.php:330
-#: ../add-on/groups/class_group.php:330
+#: ../../wp-recall/add-on/./groups/class_group.php:331
+#: ../add-on/groups/class_group.php:331
 msgid "Access to the closed group privacy settings."
 msgstr "גישה להגדרות הפרטיות של קבוצה הסגורות."
 
-#: ../../wp-recall/add-on/./groups/class_group.php:340
-#: ../add-on/groups/class_group.php:340
+#: ../../wp-recall/add-on/./groups/class_group.php:341
+#: ../add-on/groups/class_group.php:341
 msgid "The last photo of the group"
 msgstr "התמונה האחרונה של הקבוצה"
 
-#: ../../wp-recall/add-on/./groups/class_group.php:376
-#: ../add-on/groups/class_group.php:376
+#: ../../wp-recall/add-on/./groups/class_group.php:377
+#: ../add-on/groups/class_group.php:377
 msgid "To publish a new entry in the group"
 msgstr "לפרסם רשומה חדשה בקבוצה"
 
-#: ../../wp-recall/add-on/./groups/class_group.php:378
-#: ../add-on/groups/class_group.php:378
+#: ../../wp-recall/add-on/./groups/class_group.php:379
+#: ../add-on/groups/class_group.php:379
 msgid "Close form"
 msgstr "סגור טופס"
 
-#: ../../wp-recall/add-on/./groups/class_group.php:378
-#: ../add-on/groups/class_group.php:378
+#: ../../wp-recall/add-on/./groups/class_group.php:379
+#: ../add-on/groups/class_group.php:379
 msgid "Record publishing"
 msgstr "Record publishing"
 
-#: ../../wp-recall/add-on/./groups/class_group.php:399
-#: ../add-on/groups/class_group.php:399
+#: ../../wp-recall/add-on/./groups/class_group.php:400
+#: ../add-on/groups/class_group.php:400
 msgid "Display all records"
 msgstr "Display all records"
 
-#: ../../wp-recall/add-on/./groups/class_group.php:401
-#: ../add-on/groups/class_group.php:401
+#: ../../wp-recall/add-on/./groups/class_group.php:402
+#: ../add-on/groups/class_group.php:402
 msgid "Show"
 msgstr "הצג"
 
@@ -360,8 +360,8 @@ msgid "Search"
 msgstr "חפש"
 
 #: ../../wp-recall/add-on/./groups/index.php:106
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:547
-#: ../add-on/groups/index.php:106 ../add-on/publicpost/rcl_publicform.php:547
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:573
+#: ../add-on/groups/index.php:106 ../add-on/publicpost/rcl_publicform.php:573
 msgid "Not found"
 msgstr "לא נמצא"
 
@@ -470,10 +470,8 @@ msgstr "מחברים ואישורים"
 
 #: ../../wp-recall/add-on/./groups/index.php:269
 #: ../../wp-recall/add-on/./groups/index.php:279
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:28
 #: ../../wp-recall/add-on/./rating-system/addon-options.php:105
 #: ../add-on/groups/index.php:269 ../add-on/groups/index.php:279
-#: ../add-on/publicpost/addon-options.php:28
 #: ../add-on/rating-system/addon-options.php:105 ../admin-pages.php:150
 msgid "Participants and older"
 msgstr "משתתפים ואישורים"
@@ -484,9 +482,8 @@ msgid "Publishing group"
 msgstr "Publishing group"
 
 #: ../../wp-recall/add-on/./groups/index.php:280
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:29
 #: ../../wp-recall/add-on/./rating-system/addon-options.php:104
-#: ../add-on/groups/index.php:280 ../add-on/publicpost/addon-options.php:29
+#: ../add-on/groups/index.php:280
 #: ../add-on/rating-system/addon-options.php:104 ../admin-pages.php:151
 #: ../widget.php:31 ../widget.php:94
 msgid "All users"
@@ -498,20 +495,20 @@ msgid "Moderation of publications in the group"
 msgstr "Moderation of publications in the group"
 
 #: ../../wp-recall/add-on/./groups/index.php:287
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:209
-#: ../add-on/groups/index.php:287 ../add-on/publicpost/addon-options.php:209
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:222
+#: ../add-on/groups/index.php:287 ../add-on/publicpost/addon-options.php:222
 msgid "To publish immediately"
 msgstr "לפרסום מיידי"
 
 #: ../../wp-recall/add-on/./groups/index.php:288
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:209
-#: ../add-on/groups/index.php:288 ../add-on/publicpost/addon-options.php:209
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:222
+#: ../add-on/groups/index.php:288 ../add-on/publicpost/addon-options.php:222
 msgid "Send for moderation"
 msgstr "לשלוח לאישור לפי הפרשום"
 
 #: ../../wp-recall/add-on/./groups/index.php:290
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:211
-#: ../add-on/groups/index.php:290 ../add-on/publicpost/addon-options.php:211
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:224
+#: ../add-on/groups/index.php:290 ../add-on/publicpost/addon-options.php:224
 msgid ""
 "If used in moderation: To allow the user to see their publication before it "
 "is moderated, it is necessary to have on the website right below the Author"
@@ -527,9 +524,9 @@ msgstr "To create a group"
 
 #: ../../wp-recall/add-on/./groups/index.php:403
 #: ../../wp-recall/add-on/./publicpost/class_public.php:74
-#: ../../wp-recall/add-on/./publicpost/fast-editor.php:102
+#: ../../wp-recall/add-on/./publicpost/fast-editor.php:104
 #: ../add-on/groups/index.php:403 ../add-on/publicpost/class_public.php:74
-#: ../add-on/publicpost/fast-editor.php:102
+#: ../add-on/publicpost/fast-editor.php:104
 msgid "Name"
 msgstr "שם"
 
@@ -588,60 +585,60 @@ msgstr "פורסם בקבוצה"
 msgid "Close"
 msgstr "סגור"
 
-#: ../../wp-recall/add-on/./groups/index.php:760
-#: ../add-on/groups/index.php:760
+#: ../../wp-recall/add-on/./groups/index.php:762
+#: ../add-on/groups/index.php:762
 msgid "Request access to the group approved!"
 msgstr "בקשת גישה לקבוצה אושרה!"
 
-#: ../../wp-recall/add-on/./groups/index.php:771
-#: ../add-on/groups/index.php:771
+#: ../../wp-recall/add-on/./groups/index.php:773
+#: ../add-on/groups/index.php:773
 msgid "The request to access the group rejected."
 msgstr "בקשת גישה לקבוצה נדחה."
 
-#: ../../wp-recall/add-on/./groups/index.php:866
-#: ../add-on/groups/index.php:866
+#: ../../wp-recall/add-on/./groups/index.php:868
+#: ../add-on/groups/index.php:868
 msgid "Search group"
 msgstr "חפש קבוצה"
 
-#: ../../wp-recall/add-on/./groups/index.php:867
-#: ../add-on/groups/index.php:867
+#: ../../wp-recall/add-on/./groups/index.php:869
+#: ../add-on/groups/index.php:869
 msgid "Find"
 msgstr "מצא"
 
-#: ../../wp-recall/add-on/./groups/index.php:874
-#: ../add-on/groups/index.php:874 ../functions/shortcodes.php:252
+#: ../../wp-recall/add-on/./groups/index.php:876
+#: ../add-on/groups/index.php:876 ../functions/shortcodes.php:252
 msgid "Filter by"
 msgstr "לסנן לפי"
 
-#: ../../wp-recall/add-on/./groups/index.php:875
-#: ../add-on/groups/index.php:875
+#: ../../wp-recall/add-on/./groups/index.php:877
+#: ../add-on/groups/index.php:877
 msgid "Created date"
 msgstr "נוצר בתאריך"
 
-#: ../../wp-recall/add-on/./groups/index.php:876
-#: ../add-on/groups/index.php:876
+#: ../../wp-recall/add-on/./groups/index.php:878
+#: ../add-on/groups/index.php:878
 msgid "By name"
 msgstr "לפי שם"
 
-#: ../../wp-recall/add-on/./groups/index.php:877
-#: ../add-on/groups/index.php:877
+#: ../../wp-recall/add-on/./groups/index.php:879
+#: ../add-on/groups/index.php:879
 msgid "The number of records"
 msgstr "מספר רשומות"
 
-#: ../../wp-recall/add-on/./groups/index.php:938
+#: ../../wp-recall/add-on/./groups/index.php:940
 #: ../../wp-recall/add-on/./groups/templates/group.php:1
-#: ../add-on/groups/index.php:938 ../add-on/groups/templates/group.php:1
+#: ../add-on/groups/index.php:940 ../add-on/groups/templates/group.php:1
 msgid "Creator"
 msgstr "מחבר"
 
-#: ../../wp-recall/add-on/./groups/index.php:939
+#: ../../wp-recall/add-on/./groups/index.php:941
 #: ../../wp-recall/add-on/./groups/templates/group.php:1
-#: ../add-on/groups/index.php:939 ../add-on/groups/templates/group.php:1
+#: ../add-on/groups/index.php:941 ../add-on/groups/templates/group.php:1
 msgid "Participants"
 msgstr "משתתפים"
 
-#: ../../wp-recall/add-on/./groups/index.php:966
-#: ../add-on/groups/index.php:966
+#: ../../wp-recall/add-on/./groups/index.php:968
+#: ../add-on/groups/index.php:968
 msgid "Remove from group"
 msgstr "הסר מקבוצה"
 
@@ -664,13 +661,13 @@ msgstr "עגלה"
 #: ../../wp-recall/add-on/./magazin/functions/shortcodes.php:118
 #: ../../wp-recall/add-on/./publicpost/index.php:148
 #: ../../wp-recall/add-on/./publicpost/templates/posts-list.php:7
-#: ../../wp-recall/add-on/./publicpost/templates/public-form.php:10
-#: ../../wp-recall/add-on/./user-account/index.php:382
+#: ../../wp-recall/add-on/./publicpost/templates/public-form.php:5
+#: ../../wp-recall/add-on/./user-account/index.php:51
 #: ../add-on/magazin/functions/shortcodes.php:118
 #: ../add-on/publicpost/index.php:148
 #: ../add-on/publicpost/templates/posts-list.php:7
-#: ../add-on/publicpost/templates/public-form.php:10
-#: ../add-on/user-account/index.php:382 ../functions/rcl_editfields.php:116
+#: ../add-on/publicpost/templates/public-form.php:5
+#: ../add-on/user-account/index.php:51 ../functions/rcl_editfields.php:116
 #: ../widget.php:47 ../widget.php:109 ../widget.php:162
 msgid "Title"
 msgstr "כותרת"
@@ -894,8 +891,8 @@ msgid "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 msgstr "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 
 #: ../../wp-recall/add-on/./message/index.php:416
-#: ../../wp-recall/add-on/./user-account/index.php:331
-#: ../add-on/message/index.php:416 ../add-on/user-account/index.php:331
+#: ../../wp-recall/add-on/./user-account/index.php:384
+#: ../add-on/message/index.php:416 ../add-on/user-account/index.php:384
 #: ../templates/form-register.php:21 ../templates/form-remember.php:15
 msgid "Send"
 msgstr "שלח"
@@ -1133,7 +1130,7 @@ msgstr "Allow to delete users from your account?"
 #: ../../wp-recall/add-on/./profile/index.php:575
 #: ../../wp-recall/add-on/./profile/index.php:580
 #: ../../wp-recall/add-on/./profile/index.php:585
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:264
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:277
 #: ../../wp-recall/add-on/./publicpost/index.php:234
 #: ../../wp-recall/add-on/./rating-system/addon-options.php:68
 #: ../../wp-recall/add-on/./rating-system/addon-options.php:120
@@ -1142,7 +1139,7 @@ msgstr "Allow to delete users from your account?"
 #: ../add-on/profile/index.php:159 ../add-on/profile/index.php:565
 #: ../add-on/profile/index.php:570 ../add-on/profile/index.php:575
 #: ../add-on/profile/index.php:580 ../add-on/profile/index.php:585
-#: ../add-on/publicpost/addon-options.php:264
+#: ../add-on/publicpost/addon-options.php:277
 #: ../add-on/publicpost/index.php:234
 #: ../add-on/rating-system/addon-options.php:68
 #: ../add-on/rating-system/addon-options.php:120
@@ -1157,7 +1154,7 @@ msgstr "לא"
 #: ../../wp-recall/add-on/./profile/index.php:575
 #: ../../wp-recall/add-on/./profile/index.php:580
 #: ../../wp-recall/add-on/./profile/index.php:585
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:264
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:277
 #: ../../wp-recall/add-on/./publicpost/index.php:234
 #: ../../wp-recall/add-on/./rating-system/addon-options.php:68
 #: ../../wp-recall/add-on/./rating-system/addon-options.php:120
@@ -1166,7 +1163,7 @@ msgstr "לא"
 #: ../add-on/profile/index.php:159 ../add-on/profile/index.php:565
 #: ../add-on/profile/index.php:570 ../add-on/profile/index.php:575
 #: ../add-on/profile/index.php:580 ../add-on/profile/index.php:585
-#: ../add-on/publicpost/addon-options.php:264
+#: ../add-on/publicpost/addon-options.php:277
 #: ../add-on/publicpost/index.php:234
 #: ../add-on/rating-system/addon-options.php:68
 #: ../add-on/rating-system/addon-options.php:120
@@ -1243,7 +1240,7 @@ msgstr "שם משפחה"
 #: ../../wp-recall/add-on/./profile/index.php:302
 #: ../../wp-recall/add-on/./profile/index.php:685
 #: ../add-on/profile/index.php:302 ../add-on/profile/index.php:685
-#: ../functions/register.php:125 ../templates/form-register.php:10
+#: ../functions/register.php:137 ../templates/form-register.php:10
 #: ../templates/form-sign.php:10
 msgid "Nickname"
 msgstr "שם משתמש"
@@ -1420,12 +1417,14 @@ msgid "User status"
 msgstr "מצב המשתמש"
 
 #: ../../wp-recall/add-on/./publicpost/addon-options.php:11
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:212
 #: ../../wp-recall/add-on/./publicpost/classes.php:46
 #: ../../wp-recall/add-on/./user-account/addon-options.php:149
 #: ../../wp-recall/add-on/./user-account/addon-options.php:160
 #: ../../wp-recall/add-on/./user-account/addon-options.php:170
 #: ../../wp-recall/add-on/./user-account/addon-options.php:178
 #: ../add-on/publicpost/addon-options.php:11
+#: ../add-on/publicpost/addon-options.php:212
 #: ../add-on/publicpost/classes.php:46
 #: ../add-on/user-account/addon-options.php:149
 #: ../add-on/user-account/addon-options.php:160
@@ -1435,23 +1434,28 @@ msgstr "מצב המשתמש"
 msgid "Not selected"
 msgstr "פריט לא נבכר"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:32
-#: ../add-on/publicpost/addon-options.php:32
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:28
+#: ../add-on/publicpost/addon-options.php:28
+msgid "Guests and users"
+msgstr ""
+
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:31
+#: ../add-on/publicpost/addon-options.php:31
 msgid "The publish settings"
 msgstr "הגדרות לפרסום"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:35
-#: ../add-on/publicpost/addon-options.php:35 ../admin-pages.php:99
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:34
+#: ../add-on/publicpost/addon-options.php:34 ../admin-pages.php:99
 msgid "General settings"
 msgstr "הגדרות ראשי"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:37
-#: ../add-on/publicpost/addon-options.php:37
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:36
+#: ../add-on/publicpost/addon-options.php:36
 msgid "Page publishing and editing records"
 msgstr "Page publishing and editing records"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:39
-#: ../add-on/publicpost/addon-options.php:39
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:38
+#: ../add-on/publicpost/addon-options.php:38
 msgid ""
 "Required for proper formation of links to edit records, you must specify the "
 "page where the shortcode is [public-form] no matter where displayed the very "
@@ -1461,65 +1465,65 @@ msgstr ""
 "page where the shortcode is [public-form] no matter where displayed the very "
 "form of publication this page will be used to edit the entry"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:41
-#: ../add-on/publicpost/addon-options.php:41
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:40
+#: ../add-on/publicpost/addon-options.php:40
 msgid "Display information about the author"
 msgstr "הצג מידע על המחבר"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:44
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:51
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:43
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:50
 #: ../../wp-recall/add-on/./rating-system/addon-options.php:55
-#: ../add-on/publicpost/addon-options.php:44
-#: ../add-on/publicpost/addon-options.php:51
+#: ../add-on/publicpost/addon-options.php:43
+#: ../add-on/publicpost/addon-options.php:50
 #: ../add-on/rating-system/addon-options.php:55 ../admin-pages.php:189
 #: ../admin-pages.php:262 ../admin-pages.php:267 ../admin-pages.php:278
 msgid "Disabled"
 msgstr "נכובה"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:44
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:51
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:43
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:50
 #: ../../wp-recall/add-on/./rating-system/addon-options.php:55
-#: ../add-on/publicpost/addon-options.php:44
-#: ../add-on/publicpost/addon-options.php:51
+#: ../add-on/publicpost/addon-options.php:43
+#: ../add-on/publicpost/addon-options.php:50
 #: ../add-on/rating-system/addon-options.php:55 ../admin-pages.php:190
 #: ../admin-pages.php:278
 msgid "Included"
 msgstr "כולל"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:47
-#: ../add-on/publicpost/addon-options.php:47
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:46
+#: ../add-on/publicpost/addon-options.php:46
 msgid "Tab list of publications"
 msgstr "רשימת המאמרים"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:56
-#: ../add-on/publicpost/addon-options.php:56
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:55
+#: ../add-on/publicpost/addon-options.php:55
 msgid "List of publications of the user"
 msgstr "רשימת מאמרים של המחבר"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:59
-#: ../add-on/publicpost/addon-options.php:59
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:58
+#: ../add-on/publicpost/addon-options.php:58
 msgid "Only the owner of the account"
 msgstr "רק הבעלים של החשבון"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:59
-#: ../add-on/publicpost/addon-options.php:59
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:58
+#: ../add-on/publicpost/addon-options.php:58
 msgid "Show everyone including guests"
 msgstr "הצג כל האורחים"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:68
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:327
-#: ../add-on/publicpost/addon-options.php:68
-#: ../add-on/publicpost/rcl_publicform.php:327
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:67
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:345
+#: ../add-on/publicpost/addon-options.php:67
+#: ../add-on/publicpost/rcl_publicform.php:345
 msgid "Category"
 msgstr "קטגוריה"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:70
-#: ../add-on/publicpost/addon-options.php:70
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:69
+#: ../add-on/publicpost/addon-options.php:69
 msgid "Authorized headings"
 msgstr "Authorized headings"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:72
-#: ../add-on/publicpost/addon-options.php:72
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:71
+#: ../add-on/publicpost/addon-options.php:71
 msgid ""
 "ID columns in which permitted the publication should be separated by commas. "
 "This setting is common to all forms of publication, but it is possible to "
@@ -1528,8 +1532,8 @@ msgid ""
 "fields"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:76
-#: ../add-on/publicpost/addon-options.php:76
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:75
+#: ../add-on/publicpost/addon-options.php:75
 msgid ""
 "It is better to specify the parent category, then their child will be "
 "withdrawn automatically."
@@ -1537,107 +1541,108 @@ msgstr ""
 "It is better to specify the parent category, then their child will be "
 "withdrawn automatically."
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:78
-#: ../add-on/publicpost/addon-options.php:78
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:77
+#: ../add-on/publicpost/addon-options.php:77
 msgid "Number of columns to select"
 msgstr "Number of columns to select"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:122
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:121
 #: ../../wp-recall/add-on/./publicpost/index.php:36
-#: ../add-on/publicpost/addon-options.php:122
+#: ../add-on/publicpost/addon-options.php:121
 #: ../add-on/publicpost/index.php:36
 msgid "Form of publication"
 msgstr "צורת הפרסום"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:124
-#: ../add-on/publicpost/addon-options.php:124
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:123
+#: ../add-on/publicpost/addon-options.php:123
 msgid "Text editor"
 msgstr "Text editor"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:129
-#: ../add-on/publicpost/addon-options.php:129
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:128
+#: ../add-on/publicpost/addon-options.php:128
 msgid "WP-RECALL editor"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:130
-#: ../add-on/publicpost/addon-options.php:130
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:129
+#: ../add-on/publicpost/addon-options.php:129
 msgid "WordPress editor"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:136
-#: ../add-on/publicpost/addon-options.php:136
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:135
+#: ../add-on/publicpost/addon-options.php:135
 msgid "Images sizes"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:141
-#: ../add-on/publicpost/addon-options.php:141
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:140
+#: ../add-on/publicpost/addon-options.php:140
 msgid "Default: 800,600"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:143
-#: ../add-on/publicpost/addon-options.php:143
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:142
+#: ../add-on/publicpost/addon-options.php:142
 msgid "Available buttons Editor"
+msgstr ""
+
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:146
+#: ../add-on/publicpost/addon-options.php:146
+msgid "Subheader"
 msgstr ""
 
 #: ../../wp-recall/add-on/./publicpost/addon-options.php:147
 #: ../add-on/publicpost/addon-options.php:147
-msgid "Подзаголовок"
-msgstr ""
+#: ../functions/rcl_editfields.php:141
+msgid "Text"
+msgstr "טקסט"
 
 #: ../../wp-recall/add-on/./publicpost/addon-options.php:148
 #: ../add-on/publicpost/addon-options.php:148
-msgid "Текст"
+msgid "Upload images"
 msgstr ""
 
 #: ../../wp-recall/add-on/./publicpost/addon-options.php:149
 #: ../add-on/publicpost/addon-options.php:149
-msgid "Upload images"
-msgstr ""
-
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:150
-#: ../add-on/publicpost/addon-options.php:150
 msgid "HTML"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:158
-#: ../add-on/publicpost/addon-options.php:158
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:157
+#: ../add-on/publicpost/addon-options.php:157
 msgid "View editor WP"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:161
-#: ../add-on/publicpost/addon-options.php:161
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:160
+#: ../add-on/publicpost/addon-options.php:160
 msgid "Visual Editor"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:161
-#: ../add-on/publicpost/addon-options.php:161
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:160
+#: ../add-on/publicpost/addon-options.php:160
 msgid "HTML-Editor"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:163
-#: ../add-on/publicpost/addon-options.php:163
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:162
+#: ../add-on/publicpost/addon-options.php:162
 msgid "Number of images in the gallery Wp-Recall"
 msgstr "Number of images in the gallery Wp-Recall"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:166
-#: ../add-on/publicpost/addon-options.php:166
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:165
+#: ../add-on/publicpost/addon-options.php:165
 msgid "The maximum image size, Mb"
 msgstr "The maximum image size, Mb"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:168
-#: ../add-on/publicpost/addon-options.php:168
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:167
+#: ../add-on/publicpost/addon-options.php:167
 msgid ""
 "To limit image uploads to publish this value in megabytes. By default, 2MB"
 msgstr ""
 "To limit image uploads to publish this value in megabytes. By default, 2MB"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:170
-#: ../add-on/publicpost/addon-options.php:170
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:169
+#: ../add-on/publicpost/addon-options.php:169
 msgid "The size in the editor by default"
 msgstr "The size in the editor by default"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:175
-#: ../add-on/publicpost/addon-options.php:175
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:174
+#: ../add-on/publicpost/addon-options.php:174
 msgid ""
 "Select the picture size in the silence of their use in the visual editor "
 "during the publishing process"
@@ -1645,136 +1650,148 @@ msgstr ""
 "Select the picture size in the silence of their use in the visual editor "
 "during the publishing process"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:179
-#: ../add-on/publicpost/addon-options.php:179
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:178
+#: ../add-on/publicpost/addon-options.php:178
 msgid "The output form of publication"
 msgstr "The output form of publication"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:184
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:242
-#: ../add-on/publicpost/addon-options.php:184
-#: ../add-on/publicpost/addon-options.php:242
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:183
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:255
+#: ../add-on/publicpost/addon-options.php:183
+#: ../add-on/publicpost/addon-options.php:255
 msgid "Do not display"
 msgstr "אל תציג"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:184
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:242
-#: ../add-on/publicpost/addon-options.php:184
-#: ../add-on/publicpost/addon-options.php:242
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:183
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:255
+#: ../add-on/publicpost/addon-options.php:183
+#: ../add-on/publicpost/addon-options.php:255
 msgid "Output"
 msgstr "Output"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:189
-#: ../add-on/publicpost/addon-options.php:189
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:188
+#: ../add-on/publicpost/addon-options.php:188
 msgid "The form ID"
 msgstr "The form ID"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:191
-#: ../add-on/publicpost/addon-options.php:191
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:190
+#: ../add-on/publicpost/addon-options.php:190
 msgid ""
 "Enter the form ID to the conclusion in the personal Cabinet. The default is 1"
 msgstr ""
 "Enter the form ID to the conclusion in the personal Cabinet. The default is 1"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:198
-#: ../add-on/publicpost/addon-options.php:198
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:197
+#: ../add-on/publicpost/addon-options.php:197
 msgid "Publication of records"
 msgstr "Publication of records"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:200
-#: ../add-on/publicpost/addon-options.php:200
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:199
+#: ../add-on/publicpost/addon-options.php:199
 msgid "Republishing is allowed"
 msgstr "אפשר לפרסם מחדש"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:206
-#: ../add-on/publicpost/addon-options.php:206
-msgid "Moderation of publications"
-msgstr "Moderation of publications"
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:208
+#: ../add-on/publicpost/addon-options.php:208
+msgid "Redirect page"
+msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:217
-#: ../add-on/publicpost/addon-options.php:217
-msgid "Editing"
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:215
+#: ../add-on/publicpost/addon-options.php:215
+msgid ""
+"Select the page to which visitors will be redirected after a successful "
+"publication , if the site is included in the registration confirmation email"
 msgstr ""
 
 #: ../../wp-recall/add-on/./publicpost/addon-options.php:219
 #: ../add-on/publicpost/addon-options.php:219
-msgid "Frontend editing"
-msgstr ""
-
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:223
-#: ../add-on/publicpost/addon-options.php:223
-msgid "Administrators"
-msgstr ""
-
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:224
-#: ../add-on/publicpost/addon-options.php:224
-msgid "Editors"
-msgstr ""
-
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:225
-#: ../add-on/publicpost/addon-options.php:225
-msgid "Authors"
-msgstr ""
-
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:228
-#: ../add-on/publicpost/addon-options.php:228
-msgid "Time limit editing"
-msgstr ""
+msgid "Moderation of publications"
+msgstr "Moderation of publications"
 
 #: ../../wp-recall/add-on/./publicpost/addon-options.php:230
 #: ../add-on/publicpost/addon-options.php:230
-msgid "Limit editing time of publication in hours, by default: unlimited"
+msgid "Editing"
+msgstr ""
+
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:232
+#: ../add-on/publicpost/addon-options.php:232
+msgid "Frontend editing"
 msgstr ""
 
 #: ../../wp-recall/add-on/./publicpost/addon-options.php:236
 #: ../add-on/publicpost/addon-options.php:236
-msgid "Tags"
-msgstr "תגיות"
+msgid "Administrators"
+msgstr ""
+
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:237
+#: ../add-on/publicpost/addon-options.php:237
+msgid "Editors"
+msgstr ""
 
 #: ../../wp-recall/add-on/./publicpost/addon-options.php:238
 #: ../add-on/publicpost/addon-options.php:238
-msgid "Displaying a list of tags"
+msgid "Authors"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:247
-#: ../add-on/publicpost/addon-options.php:247
-msgid "Limit the output"
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:241
+#: ../add-on/publicpost/addon-options.php:241
+msgid "Time limit editing"
+msgstr ""
+
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:243
+#: ../add-on/publicpost/addon-options.php:243
+msgid "Limit editing time of publication in hours, by default: unlimited"
 msgstr ""
 
 #: ../../wp-recall/add-on/./publicpost/addon-options.php:249
 #: ../add-on/publicpost/addon-options.php:249
+msgid "Tags"
+msgstr "תגיות"
+
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:251
+#: ../add-on/publicpost/addon-options.php:251
+msgid "Displaying a list of tags"
+msgstr ""
+
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:260
+#: ../add-on/publicpost/addon-options.php:260
+msgid "Limit the output"
+msgstr ""
+
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:262
+#: ../add-on/publicpost/addon-options.php:262
 msgid "IDs of tags separated by commas, default displays all"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:256
-#: ../add-on/publicpost/addon-options.php:256
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:269
+#: ../add-on/publicpost/addon-options.php:269
 msgid "Custom fields"
 msgstr "שדות מותאמים אישית"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:257
-#: ../add-on/publicpost/addon-options.php:257
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:270
+#: ../add-on/publicpost/addon-options.php:270
 msgid ""
 "Settings only for fields created using the form of the publication wp-recall"
 msgstr ""
 "Settings only for fields created using the form of the publication wp-recall"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:259
-#: ../add-on/publicpost/addon-options.php:259
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:272
+#: ../add-on/publicpost/addon-options.php:272
 msgid "Automatic withdrawal"
 msgstr "Automatic withdrawal"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:269
-#: ../add-on/publicpost/addon-options.php:269
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:282
+#: ../add-on/publicpost/addon-options.php:282
 msgid "Place output fields"
 msgstr "Place output fields"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:272
-#: ../add-on/publicpost/addon-options.php:272
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:285
+#: ../add-on/publicpost/addon-options.php:285
 msgid "After the content recording"
 msgstr "לאחר הקלטת התוכן"
 
-#: ../../wp-recall/add-on/./publicpost/addon-options.php:272
-#: ../add-on/publicpost/addon-options.php:272
+#: ../../wp-recall/add-on/./publicpost/addon-options.php:285
+#: ../add-on/publicpost/addon-options.php:285
 msgid "On content recording"
 msgstr "בהקלטת תוכן"
 
@@ -1793,57 +1810,63 @@ msgid "Insert image"
 msgstr "הכנס תמונה"
 
 #: ../../wp-recall/add-on/./publicpost/class_public.php:42
-#: ../../wp-recall/add-on/./publicpost/fast-editor.php:40
+#: ../../wp-recall/add-on/./publicpost/fast-editor.php:41
 #: ../add-on/publicpost/class_public.php:42
-#: ../add-on/publicpost/fast-editor.php:40
+#: ../add-on/publicpost/fast-editor.php:41
 msgid "Media library user"
 msgstr "ספריית מדיה של משתמש"
 
 #: ../../wp-recall/add-on/./publicpost/class_public.php:54
-#: ../../wp-recall/add-on/./publicpost/fast-editor.php:52
+#: ../../wp-recall/add-on/./publicpost/fast-editor.php:54
 #: ../add-on/publicpost/class_public.php:54
-#: ../add-on/publicpost/fast-editor.php:52
+#: ../add-on/publicpost/fast-editor.php:54
 msgid "Images in the media library is not found!"
 msgstr "לא נמצאו תמונות בקטגוריה!"
 
 #: ../../wp-recall/add-on/./publicpost/class_public.php:55
-#: ../../wp-recall/add-on/./publicpost/fast-editor.php:53
+#: ../../wp-recall/add-on/./publicpost/fast-editor.php:55
 #: ../add-on/publicpost/class_public.php:55
-#: ../add-on/publicpost/fast-editor.php:53
+#: ../add-on/publicpost/fast-editor.php:55
 msgid ""
 "Upload to your image and you will be able to use them in future from your "
 "media library."
 msgstr "העלה את התמונה שלך ותוכל להשתמש בם בעתיד מספריית המדיה שלך."
 
 #: ../../wp-recall/add-on/./publicpost/class_public.php:76
-#: ../../wp-recall/add-on/./publicpost/fast-editor.php:104
+#: ../../wp-recall/add-on/./publicpost/fast-editor.php:106
 #: ../add-on/publicpost/class_public.php:76
-#: ../add-on/publicpost/fast-editor.php:104 ../functions/rcl_addons.php:151
+#: ../add-on/publicpost/fast-editor.php:106 ../functions/rcl_addons.php:151
 msgid "Description"
 msgstr "Description"
 
-#: ../../wp-recall/add-on/./publicpost/classes.php:225
-#: ../add-on/publicpost/classes.php:225
+#: ../../wp-recall/add-on/./publicpost/classes.php:226
+#: ../add-on/publicpost/classes.php:226
+msgid ""
+"Click on Priceline the image to add it to the content of the publication"
+msgstr "לחץ על התמונה כדי להוסיף אותו לתוכן הפרסום"
+
+#: ../../wp-recall/add-on/./publicpost/classes.php:231
+#: ../add-on/publicpost/classes.php:231
 msgid "Display all attached images in the gallery."
 msgstr "להציג את כל התמונות המצורפות בגלריה."
 
-#: ../../wp-recall/add-on/./publicpost/classes.php:230
-#: ../add-on/publicpost/classes.php:230
+#: ../../wp-recall/add-on/./publicpost/classes.php:236
+#: ../add-on/publicpost/classes.php:236
 msgid "To add files to the download queue"
 msgstr "To add files to the download queue"
 
-#: ../../wp-recall/add-on/./publicpost/classes.php:234
-#: ../add-on/publicpost/classes.php:234
+#: ../../wp-recall/add-on/./publicpost/classes.php:240
+#: ../add-on/publicpost/classes.php:240
 msgid "Add"
 msgstr "להוסיף"
 
-#: ../../wp-recall/add-on/./publicpost/classes.php:258
-#: ../add-on/publicpost/classes.php:258
+#: ../../wp-recall/add-on/./publicpost/classes.php:264
+#: ../add-on/publicpost/classes.php:264
 msgid "Thumbnail"
 msgstr "תמונה ממוזערת"
 
-#: ../../wp-recall/add-on/./publicpost/classes.php:259
-#: ../add-on/publicpost/classes.php:259
+#: ../../wp-recall/add-on/./publicpost/classes.php:265
+#: ../add-on/publicpost/classes.php:265
 msgid "To assign a thumbnail"
 msgstr "להקצות תמונה ממוזערת"
 
@@ -1914,33 +1937,33 @@ msgid "Вы уверены?"
 msgstr "אתה בטוח?"
 
 #: ../../wp-recall/add-on/./publicpost/index.php:224
-#: ../../wp-recall/add-on/./publicpost/index.php:498
-#: ../add-on/publicpost/index.php:224 ../add-on/publicpost/index.php:498
+#: ../../wp-recall/add-on/./publicpost/index.php:496
+#: ../add-on/publicpost/index.php:224 ../add-on/publicpost/index.php:496
 msgid "Arbitrary form fields publishing"
 msgstr "Arbitrary form fields publishing"
 
-#: ../../wp-recall/add-on/./publicpost/index.php:435
-#: ../add-on/publicpost/index.php:435
+#: ../../wp-recall/add-on/./publicpost/index.php:436
+#: ../add-on/publicpost/index.php:436
 msgid "featured"
 msgstr "מומלצים"
 
-#: ../../wp-recall/add-on/./publicpost/index.php:473
-#: ../add-on/publicpost/index.php:473
+#: ../../wp-recall/add-on/./publicpost/index.php:471
+#: ../add-on/publicpost/index.php:471
 msgid "The publication has been successfully removed!"
 msgstr "הפרסום הוסר בהצלחה!"
 
-#: ../../wp-recall/add-on/./publicpost/index.php:744
-#: ../add-on/publicpost/index.php:744 ../functions/rcl_custom_fields.php:271
+#: ../../wp-recall/add-on/./publicpost/index.php:776
+#: ../add-on/publicpost/index.php:776 ../functions/rcl_custom_fields.php:271
 msgid "To publish"
 msgstr "לפרסם"
 
-#: ../../wp-recall/add-on/./publicpost/index.php:805
-#: ../add-on/publicpost/index.php:805
+#: ../../wp-recall/add-on/./publicpost/index.php:836
+#: ../add-on/publicpost/index.php:836
 msgid "To add a media file"
 msgstr "להוסיף קובץ מדיה"
 
-#: ../../wp-recall/add-on/./publicpost/rcl_editpost.php:56
-#: ../add-on/publicpost/rcl_editpost.php:56
+#: ../../wp-recall/add-on/./publicpost/rcl_editpost.php:55
+#: ../add-on/publicpost/rcl_editpost.php:55
 msgid "Error publishing!"
 msgstr "Error publishing!"
 
@@ -1954,134 +1977,144 @@ msgstr "טרם פורסם"
 msgid "Published"
 msgstr "פורסם"
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:120
-#: ../add-on/publicpost/rcl_publicform.php:120
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:123
+#: ../add-on/publicpost/rcl_publicform.php:123
 msgid "Preview"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:156
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:166
-#: ../add-on/publicpost/rcl_publicform.php:156
-#: ../add-on/publicpost/rcl_publicform.php:166
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:159
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:169
+#: ../add-on/publicpost/rcl_publicform.php:159
+#: ../add-on/publicpost/rcl_publicform.php:169
 msgid "Are you seriously"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:158
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:164
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:172
-#: ../add-on/publicpost/rcl_publicform.php:158
-#: ../add-on/publicpost/rcl_publicform.php:164
-#: ../add-on/publicpost/rcl_publicform.php:172
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:161
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:167
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:175
+#: ../add-on/publicpost/rcl_publicform.php:161
+#: ../add-on/publicpost/rcl_publicform.php:167
+#: ../add-on/publicpost/rcl_publicform.php:175
 msgid "Delete post"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:169
-#: ../add-on/publicpost/rcl_publicform.php:169
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:172
+#: ../add-on/publicpost/rcl_publicform.php:172
 msgid "or enter its cause"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:171
-#: ../add-on/publicpost/rcl_publicform.php:171
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:174
+#: ../add-on/publicpost/rcl_publicform.php:174
 msgid "Without notice"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:186
-#: ../add-on/publicpost/rcl_publicform.php:186
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:189
+#: ../add-on/publicpost/rcl_publicform.php:189
 msgid "Not correspond the subject"
-msgstr ""
-
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:187
-#: ../add-on/publicpost/rcl_publicform.php:187
-msgid "The publication does not correspond to the subject site"
 msgstr ""
 
 #: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:190
 #: ../add-on/publicpost/rcl_publicform.php:190
-msgid "Not furnished"
+msgid "The publication does not correspond to the subject site"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:191
-#: ../add-on/publicpost/rcl_publicform.php:191
-msgid "Publication is not formalized under the rules"
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:193
+#: ../add-on/publicpost/rcl_publicform.php:193
+msgid "Not furnished"
 msgstr ""
 
 #: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:194
 #: ../add-on/publicpost/rcl_publicform.php:194
+msgid "Publication is not formalized under the rules"
+msgstr ""
+
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:197
+#: ../add-on/publicpost/rcl_publicform.php:197
 msgid "Advertising/Spam"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:195
-#: ../add-on/publicpost/rcl_publicform.php:195
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:198
+#: ../add-on/publicpost/rcl_publicform.php:198
 msgid "Publication labeled as advertising or spam"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:203
-#: ../add-on/publicpost/rcl_publicform.php:203
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:206
+#: ../add-on/publicpost/rcl_publicform.php:206
 msgid "Use the blank notice"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:214
-#: ../add-on/publicpost/rcl_publicform.php:214
-msgid "You must be logged in to post. Login or register"
-msgstr "אתה חייב להיות מחובר כדי לכתוב. התחבר או הירשם"
-
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:216
-#: ../add-on/publicpost/rcl_publicform.php:216
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:217
+#: ../add-on/publicpost/rcl_publicform.php:217
 msgid "You can not edit this publication :("
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:220
-#: ../add-on/publicpost/rcl_publicform.php:220
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:221
+#: ../add-on/publicpost/rcl_publicform.php:221
 msgid "Sorry, but you have no rights to publish within groups :("
 msgstr "מצטער, אבל אין לך זכויות לפרסם בתוך קבוצות :("
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:223
-#: ../add-on/publicpost/rcl_publicform.php:223
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:225
+#: ../add-on/publicpost/rcl_publicform.php:225
+msgid "You must be logged in to post. Login or register"
+msgstr "אתה חייב להיות מחובר כדי לכתוב. התחבר או הירשם"
+
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:228
+#: ../add-on/publicpost/rcl_publicform.php:228
 msgid "Sorry, but you have no right<br>to publish the records on this site :("
 msgstr "מצטער, אבל אין לך <br> זכות לפרסם הרשומות באתר זה :("
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:257
-#: ../add-on/publicpost/rcl_publicform.php:257
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:266
+#: ../add-on/publicpost/rcl_publicform.php:266
 msgid "Being sent, please wait..."
 msgstr "נשלח, אנא המתן ..."
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:428
-#: ../add-on/publicpost/rcl_publicform.php:428
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:270
+#: ../add-on/publicpost/rcl_publicform.php:270
+msgid "Your Name"
+msgstr ""
+
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:274
+#: ../add-on/publicpost/rcl_publicform.php:274
+msgid "Your E-mail"
+msgstr ""
+
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:446
+#: ../add-on/publicpost/rcl_publicform.php:446
 msgid "Select a tag from the list"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:491
-#: ../add-on/publicpost/rcl_publicform.php:491
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:517
+#: ../add-on/publicpost/rcl_publicform.php:517
 msgid "Text Box"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:492
-#: ../add-on/publicpost/rcl_publicform.php:492
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:518
+#: ../add-on/publicpost/rcl_publicform.php:518
 msgid "Subtitle"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:493
-#: ../add-on/publicpost/rcl_publicform.php:493
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:519
+#: ../add-on/publicpost/rcl_publicform.php:519
 msgid "Image"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:494
-#: ../add-on/publicpost/rcl_publicform.php:494
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:520
+#: ../add-on/publicpost/rcl_publicform.php:520
 msgid "HTML- code"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:536
-#: ../add-on/publicpost/rcl_publicform.php:536
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:562
+#: ../add-on/publicpost/rcl_publicform.php:562
 msgid "Enter your tags"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:537
-#: ../add-on/publicpost/rcl_publicform.php:537
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:563
+#: ../add-on/publicpost/rcl_publicform.php:563
 msgid "Add your tags"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:537
-#: ../add-on/publicpost/rcl_publicform.php:537
+#: ../../wp-recall/add-on/./publicpost/rcl_publicform.php:563
+#: ../add-on/publicpost/rcl_publicform.php:563
 msgid "Each tag is separated with Enter"
 msgstr ""
 
@@ -2090,11 +2123,10 @@ msgstr ""
 msgid "Select an image"
 msgstr ""
 
-#: ../../wp-recall/add-on/./publicpost/templates/public-form.php:34
-#: ../add-on/publicpost/templates/public-form.php:34
-msgid ""
-"Click on Priceline the image to add it to the content of the publication"
-msgstr "לחץ על התמונה כדי להוסיף אותו לתוכן הפרסום"
+#: ../../wp-recall/add-on/./publicpost/templates/editor-image-box.php:17
+#: ../add-on/publicpost/templates/editor-image-box.php:17
+msgid "or enter url image"
+msgstr ""
 
 #: ../../wp-recall/add-on/./rating-system/addon-options.php:15
 #: ../add-on/rating-system/addon-options.php:15
@@ -2449,9 +2481,9 @@ msgid "Add a review"
 msgstr "הוסף ביקורת"
 
 #: ../../wp-recall/add-on/./user-account/addon-options.php:13
-#: ../../wp-recall/add-on/./user-account/index.php:66
+#: ../../wp-recall/add-on/./user-account/index.php:119
 #: ../add-on/user-account/addon-options.php:13
-#: ../add-on/user-account/index.php:66
+#: ../add-on/user-account/index.php:119
 msgid "Payment systems"
 msgstr "שיטת תשלום"
 
@@ -2675,70 +2707,70 @@ msgstr "Page FAIL"
 msgid "The successful payment page"
 msgstr "The successful payment page"
 
-#: ../../wp-recall/add-on/./user-account/index.php:69
-#: ../add-on/user-account/index.php:69
-msgid "Payments"
-msgstr "תשלומים"
-
-#: ../../wp-recall/add-on/./user-account/index.php:77
-#: ../add-on/user-account/index.php:77
-msgid "Balance"
-msgstr "מאזן"
-
-#: ../../wp-recall/add-on/./user-account/index.php:295
-#: ../add-on/user-account/index.php:295
-msgid "The change in the balance"
-msgstr "שינוי במאזן"
-
-#: ../../wp-recall/add-on/./user-account/index.php:325
-#: ../add-on/user-account/index.php:325
-msgid "Deposit"
-msgstr "הפקדה"
-
-#: ../../wp-recall/add-on/./user-account/index.php:327
-#: ../add-on/user-account/index.php:327
-msgid "To recharge your account"
-msgstr "להטענת החשבון שלך"
-
-#: ../../wp-recall/add-on/./user-account/index.php:329
-#: ../add-on/user-account/index.php:329
-msgid "Enter the amount required"
-msgstr "הזן את הסכום הנדרש"
-
-#: ../../wp-recall/add-on/./user-account/index.php:349
-#: ../add-on/user-account/index.php:349
+#: ../../wp-recall/add-on/./user-account/index.php:18
+#: ../add-on/user-account/index.php:18
 msgid "Personal account of the user"
 msgstr "חשבון אישי של המשתמש"
 
-#: ../../wp-recall/add-on/./user-account/index.php:351
-#: ../../wp-recall/add-on/./user-account/index.php:379
-#: ../add-on/user-account/index.php:351 ../add-on/user-account/index.php:379
-#: ../admin-pages.php:110 ../recall.php:102
+#: ../../wp-recall/add-on/./user-account/index.php:20
+#: ../../wp-recall/add-on/./user-account/index.php:48
+#: ../add-on/user-account/index.php:20 ../add-on/user-account/index.php:48
+#: ../admin-pages.php:110 ../recall.php:107
 msgid "Personal account"
 msgstr "חשבון אישי"
 
-#: ../../wp-recall/add-on/./user-account/index.php:451
-#: ../add-on/user-account/index.php:451
+#: ../../wp-recall/add-on/./user-account/index.php:122
+#: ../add-on/user-account/index.php:122
+msgid "Payments"
+msgstr "תשלומים"
+
+#: ../../wp-recall/add-on/./user-account/index.php:130
+#: ../add-on/user-account/index.php:130
+msgid "Balance"
+msgstr "מאזן"
+
+#: ../../wp-recall/add-on/./user-account/index.php:348
+#: ../add-on/user-account/index.php:348
+msgid "The change in the balance"
+msgstr "שינוי במאזן"
+
+#: ../../wp-recall/add-on/./user-account/index.php:378
+#: ../add-on/user-account/index.php:378
+msgid "Deposit"
+msgstr "הפקדה"
+
+#: ../../wp-recall/add-on/./user-account/index.php:380
+#: ../add-on/user-account/index.php:380
+msgid "To recharge your account"
+msgstr "להטענת החשבון שלך"
+
+#: ../../wp-recall/add-on/./user-account/index.php:382
+#: ../add-on/user-account/index.php:382
+msgid "Enter the amount required"
+msgstr "הזן את הסכום הנדרש"
+
+#: ../../wp-recall/add-on/./user-account/index.php:456
+#: ../add-on/user-account/index.php:456
 msgid "Income dynamics"
 msgstr "דינמיקת הכנסות"
 
-#: ../../wp-recall/add-on/./user-account/index.php:452
-#: ../add-on/user-account/index.php:452
+#: ../../wp-recall/add-on/./user-account/index.php:457
+#: ../add-on/user-account/index.php:457
 msgid "The time period"
 msgstr "The time period"
 
-#: ../../wp-recall/add-on/./user-account/index.php:454
-#: ../add-on/user-account/index.php:454
+#: ../../wp-recall/add-on/./user-account/index.php:459
+#: ../add-on/user-account/index.php:459
 msgid "\"Days/Months\""
 msgstr "\"Days/Months\""
 
-#: ../../wp-recall/add-on/./user-account/index.php:454
-#: ../add-on/user-account/index.php:454
+#: ../../wp-recall/add-on/./user-account/index.php:459
+#: ../add-on/user-account/index.php:459
 msgid "\"Payments (PCs.)\""
 msgstr "\"Payments (PCs.)\""
 
-#: ../../wp-recall/add-on/./user-account/index.php:454
-#: ../add-on/user-account/index.php:454
+#: ../../wp-recall/add-on/./user-account/index.php:459
+#: ../add-on/user-account/index.php:459
 msgid "\"Income (thousands)\""
 msgstr "\"Income (thousands)\""
 
@@ -2997,7 +3029,7 @@ msgstr "Your stylesheet(CSS)"
 msgid "File replaces the minified stylesheet, if enabled minimization"
 msgstr "File replaces the minified stylesheet, if enabled minimization"
 
-#: ../admin-pages.php:210 ../functions/rcl_addons.php:532
+#: ../admin-pages.php:210 ../functions/rcl_addons.php:536
 msgid "Login and register"
 msgstr "התחברות והרשמה"
 
@@ -3113,11 +3145,11 @@ msgstr "The site works using the functionality of the plugin"
 msgid "Author of publication"
 msgstr ""
 
-#: ../functions-rcl.php:305
+#: ../functions-rcl.php:309
 msgid "Congratulations! You have been banned."
 msgstr "Congratulations! You have been banned."
 
-#: ../functions-rcl.php:429
+#: ../functions-rcl.php:433
 msgid "Publication pending approval!"
 msgstr "פרסום ממתין לאישור!"
 
@@ -3146,7 +3178,7 @@ msgstr "דקות"
 msgid "h."
 msgstr "שעות"
 
-#: ../functions/loginform.php:44 ../functions/register.php:126
+#: ../functions/loginform.php:44 ../functions/register.php:138
 #: ../templates/form-sign.php:14
 msgid "Password"
 msgstr "סיסמה"
@@ -3370,15 +3402,15 @@ msgstr ""
 msgid "Page Add-on"
 msgstr ""
 
-#: ../functions/rcl_addons.php:266
+#: ../functions/rcl_addons.php:270
 msgid "You cant control polucheniya plugins on this site."
 msgstr "אתה לא יכול לשלוט בתוספי באתר זה."
 
-#: ../functions/rcl_addons.php:454
+#: ../functions/rcl_addons.php:458
 msgid "Unpacking of archive failed."
 msgstr "Unpacking of archive failed."
 
-#: ../functions/rcl_addons.php:457
+#: ../functions/rcl_addons.php:461
 msgid "ZIP archive not found."
 msgstr "ZIP archive not found."
 
@@ -3461,10 +3493,6 @@ msgstr "אנגלית או/ו מספרים"
 msgid "The field type"
 msgstr "סוג השדה"
 
-#: ../functions/rcl_editfields.php:141
-msgid "Text"
-msgstr "טקסט"
-
 #: ../functions/rcl_editfields.php:142
 msgid "Textarea"
 msgstr "Textarea"
@@ -3509,19 +3537,19 @@ msgstr "All values of a custom field with meta_key"
 msgid "were removed from the Database"
 msgstr "נמחק מהמאגר"
 
-#: ../functions/rcl_update.php:87
+#: ../functions/rcl_update.php:95
 msgid "Unable to retrieve the file from the server!"
 msgstr ""
 
-#: ../functions/rcl_update.php:109
+#: ../functions/rcl_update.php:122
 msgid "Update does not have the correct title!"
 msgstr ""
 
-#: ../functions/rcl_update.php:128
+#: ../functions/rcl_update.php:141
 msgid "Unable to open archive!"
 msgstr ""
 
-#: ../functions/rcl_userlist.php:275 ../recall.php:281
+#: ../functions/rcl_userlist.php:275 ../recall.php:289
 msgid "not online"
 msgstr "לא מחובר"
 
@@ -3537,19 +3565,19 @@ msgstr "לסמניות"
 msgid "My bookmarks"
 msgstr "סמניות שלי"
 
-#: ../functions/register.php:122
+#: ../functions/register.php:134
 msgid "Confirm your registration!"
 msgstr "נרשמת בהצלחה!"
 
-#: ../functions/register.php:124
+#: ../functions/register.php:136
 msgid "You or someone else signed up on the website"
 msgstr "אתה או מישהו אחר נרשם באתר"
 
-#: ../functions/register.php:124
+#: ../functions/register.php:136
 msgid "with the following data:"
 msgstr "עם הנתונים הבאים:"
 
-#: ../functions/register.php:141
+#: ../functions/register.php:150
 msgid "If it wasnt you, then just ignore this email"
 msgstr "אם זה לא אתה, אז פשוט להתעלם מדוא\"ל זה"
 
@@ -3614,19 +3642,19 @@ msgstr "מיין הכרטיסיות שלך על ידי גרירתם למיקום
 msgid "Name tab"
 msgstr "שם הכרטיסייה"
 
-#: ../recall.php:104
+#: ../recall.php:109
 msgid "Users"
 msgstr "משתמשים"
 
-#: ../recall.php:106
+#: ../recall.php:111
 msgid "FEED"
 msgstr "FEED"
 
-#: ../recall.php:140
+#: ../recall.php:145
 msgid "Unconfirmed"
 msgstr "לא מאושר"
 
-#: ../recall.php:144
+#: ../recall.php:149
 msgid "Ban"
 msgstr "Ban"
 

@@ -24,10 +24,47 @@ jQuery(document).ready(function($) {
 		jQuery('#thumbnail_rcl').empty();
 		return false;
     });*/
+    
+    jQuery('.rcl-public-editor .rcl-upload-box .upload-image-url').live('keyup',function(){
+        
+        var content = jQuery(this).val();
+        console.log(content);
+        var idbox = jQuery(this).parents('.rcl-upload-box').attr('id');
+        var res = rcl_is_valid_url(content);
+        if(!res) return false;
+
+        rcl_preloader_show('#'+idbox);
+        var parent = jQuery(this).parent();
+        var dataString = 'action=rcl_upload_box&url_image='+content;
+        jQuery.ajax({
+                type: 'POST', 
+                data: dataString, 
+                dataType: 'json', 
+                url: wpurl+'wp-admin/admin-ajax.php',
+                success: function(data){
+
+                    if(data['error']){
+                        rcl_notice(data['error'],'error');
+                        rcl_preloader_hide();
+                        return false;
+                    }
+
+                    jQuery('#'+idbox).html(data[0]['content']);
+                    rcl_preloader_hide();
+
+                }			
+        });
+        return false;
+    });
 	
 	
 
 });
+
+function rcl_is_valid_url(url){
+  var objRE = /http(s?):\/\/[-\w\.]{3,}\.[A-Za-z]{2,3}/;
+  return objRE.test(url);
+}
 
 function rcl_add_editor_box(e,type,idbox,content){
 	rcl_preloader_show(e);

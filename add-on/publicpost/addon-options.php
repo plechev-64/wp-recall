@@ -143,8 +143,8 @@ function rcl_get_publics_options_page($content){
                         $opt->option('checkbox',array(
                             'name'=>'rcl_editor_buttons',
                             'options'=>array(
-                                'header'=>__('Подзаголовок','rcl'),
-                                'text'=>__('Текст','rcl'),
+                                'header'=>__('Subheader','rcl'),
+                                'text'=>__('Text','rcl'),
                                 'image'=>__('Upload images','rcl'),
                                 'html'=>__('HTML','rcl')
                                )
@@ -212,7 +212,7 @@ function rcl_get_publics_options_page($content){
 							'show_option_none' => __('Not selected','rcl'),
 							'echo'             => 0 )
 						),
-                        $opt->notice(__('Выберите страницу на которую гости будут перенаправляться после удачной публикации, если на сайте включено подтверждение email при регистрации','rcl'))
+                        $opt->notice(__('Select the page to which visitors will be redirected after a successful publication , if the site is included in the registration confirmation email','rcl'))
                     )
                 ),
 
