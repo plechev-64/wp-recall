@@ -1658,7 +1658,7 @@ class Rcl_Messages{
 				return false;
 			});
 
-		jQuery('#lk-content').on('click','.sec_block_button',function(){
+		jQuery('#lk-content').on('click','#tab-privat .sec_block_button',function(){
 				if(jQuery(this).hasClass('active'))return false;
                                 rcl_preloader_show('#tab-privat > div');
 				var days = jQuery(this).attr('data');

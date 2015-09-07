@@ -1186,7 +1186,7 @@ function rcl_public_file_scripts($script){
 			return false;
 		});
 
-		jQuery('#lk-content').on('click','.posts_rcl_block .sec_block_button',function(){
+		jQuery('#lk-content').on('click','#tab-publics .sec_block_button',function(){
 			var btn = jQuery(this);
 			get_page_content_rcl(btn,'posts_rcl_block');
 			return false;
@@ -1194,7 +1194,7 @@ function rcl_public_file_scripts($script){
 
 	function get_page_content_rcl(btn,id_page_rcl){
 			if(btn.hasClass('active'))return false;
-			rcl_preloader_show('#publics_block');
+			rcl_preloader_show('#tab-publics');
 			var start = btn.attr('data');
 			var type = btn.attr('type');
 			var id_user = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
