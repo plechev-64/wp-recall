@@ -28,7 +28,7 @@ jQuery(document).ready(function($) {
     jQuery('.rcl-public-editor .rcl-upload-box .upload-image-url').live('keyup',function(){
         
         var content = jQuery(this).val();
-        console.log(content);
+        //console.log(content);
         var idbox = jQuery(this).parents('.rcl-upload-box').attr('id');
         var res = rcl_is_valid_url(content);
         if(!res) return false;

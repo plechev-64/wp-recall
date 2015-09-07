@@ -935,7 +935,7 @@ function rcl_upload_box(){
 		$filename = basename($url_image);
 
 		if($url_image){
-			$img = file_get_contents($url_image);
+			$img = @file_get_contents($url_image);
 			if($img) file_put_contents($dir_path.$filename, $img);
 			else{
                             $res['error'] = "Загрузка изображения не удалась!";
