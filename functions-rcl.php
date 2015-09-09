@@ -471,7 +471,7 @@ function rcl_get_postmeta($post_id){
 add_filter('author_link','rcl_author_link',999,2);
 function rcl_author_link($link, $author_id){
 	global $rcl_options;
-	if($rcl_options['view_user_lk_rcl']!=1) return $link;
+	if(!isset($rcl_options['view_user_lk_rcl'])||$rcl_options['view_user_lk_rcl']!=1) return $link;
 	$get = ! empty( $rcl_options['link_user_lk_rcl'] ) ? $rcl_options['link_user_lk_rcl'] : 'user';
 	return add_query_arg( array( $get => $author_id ), get_permalink( $rcl_options['lk_page_rcl'] ) );
 	//return rcl_format_url( get_permalink( $rcl_options['lk_page_rcl'] ) ).$get.'='.$author_id;

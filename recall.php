@@ -102,9 +102,11 @@ function recall_install(){
                 chmod(RCL_UPLOAD_PATH, 0755);
             }
 
-            $rcl_options['view_user_lk_rcl'] = 1;
-            $rcl_options['color_theme'] = 'blue';
-            $rcl_options['lk_page_rcl'] = wp_insert_post(array('post_title'=>__('Personal account','rcl'),'post_content'=>'[wp-recall]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'account'));
+            $rcl_options = array(
+                'view_user_lk_rcl' => 1,
+                'color_theme' => 'blue',
+                'lk_page_rcl' => wp_insert_post(array('post_title'=>__('Personal account','rcl'),'post_content'=>'[wp-recall]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'account'))
+            );
 
             wp_insert_post(array('post_title'=>__('Users','rcl'),'post_content'=>'[userlist]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'users'));
 
