@@ -228,7 +228,7 @@ function rcl_add_rating_block($content,$args){
 function rcl_get_rating_block($args){
 	global $rcl_options,$comment,$user_ID;
 
-	if($args['rating_type']=='comment'&&$args['object_id']==$comment->comment_ID){
+	if(is_object($comment)&&$args['rating_type']=='comment'&&$args['object_id']==$comment->comment_ID){
 		if($rcl_options['rating_overall_comment']==1) $value = $comment->rating_votes;
 		else $value = $comment->rating_total;
 	}else{

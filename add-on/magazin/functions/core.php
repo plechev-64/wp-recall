@@ -104,7 +104,7 @@ function rcl_get_orders($args){
 	}
 
         if($wheres){
-            if($args['search']) $where = implode(' OR ',$wheres);
+            if(isset($args['search'])&&$args['search']) $where = implode(' OR ',$wheres);
             else $where = implode(' AND ',$wheres);
         }
 	if($where) $sql .= " WHERE ".$where;

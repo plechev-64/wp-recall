@@ -380,7 +380,7 @@ function rcl_groups_block($author_lk){
     }
 
     if($user_groups){
-            $us_groups .= rcl_group_list($user_groups);
+            $us_groups = rcl_group_list($user_groups);
     }
 
     $group_can_public = $rcl_options['public_group_access_recall'];

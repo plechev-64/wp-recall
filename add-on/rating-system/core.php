@@ -37,7 +37,7 @@ function rcl_get_ratings($args){
 
 	$where = array();
 
-	if(isset($args['data_type'])&&$args['data_type']=='values'||$args['days']){
+	if(isset($args['data_type'])&&$args['data_type']=='values'||isset($args['days'])){
 		$table = RCL_PREF."rating_values";
 	}
 
@@ -56,7 +56,7 @@ function rcl_get_ratings($args){
 		$where[] = "object_author IN (".implode(",",$args['object_author']).")";
 	}
 
-	if($args['days']){
+	if(isset($args['days'])){
 		$where[] = "rating_date > '".current_time('mysql')."' - INTERVAL ".$args['days']." DAY";
 	}
 

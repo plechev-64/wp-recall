@@ -7,7 +7,7 @@
 	</div>
 <?php endif; ?>
 
-<?php if($formFields['excerpt']): ?>
+<?php if(isset($formFields['excerpt'])&&$formFields['excerpt']): ?>
 	<div class="rcl-form-field">
 		<textarea name="post_excerpt" placeholder="Введите описание поста" ><?php rcl_publication_excerpt(); ?></textarea>
 	</div>

@@ -69,10 +69,10 @@ class Rcl_PublicForm {
         $taxs = array();
         $taxs = apply_filters('taxonomy_public_form_rcl',$taxs);
 
-        $this->type_editor = ($rcl_options['type_editor-'.$this->post_type])? $rcl_options['type_editor-'.$this->post_type]: $rcl_options['type_text_editor'];
+        $this->type_editor = (isset($rcl_options['type_editor-'.$this->post_type]))? $rcl_options['type_editor-'.$this->post_type]: $rcl_options['type_text_editor'];
         if(!$this->type_editor) $this->type_editor = $type_editor;
 
-        if($rcl_options['accept-'.$this->post_type]) $this->accept = $rcl_options['accept-'.$this->post_type];
+        if(isset($rcl_options['accept-'.$this->post_type])) $this->accept = $rcl_options['accept-'.$this->post_type];
 
         $formData = (object)array(
             'form_id' =>$this->form_id,
@@ -234,6 +234,7 @@ class Rcl_PublicForm {
             	'title'=>true,
             	'termlist'=>true,
             	'editor'=>true,
+                'excerpt'=>true,
             	'custom_fields'=>true,
                 'upload'=>true,
                 'tags'=>true
@@ -487,6 +488,8 @@ function rcl_publication_editor(){
 
 	}else{
 
+                $content = (is_object($editpost)&&$editpost->post_content)? $editpost->post_content: '';
+
 		rcl_sortable_scripts();
 
 		echo '<script>
@@ -495,10 +498,10 @@ function rcl_publication_editor(){
 		});
 		</script>';
 
-		if($editpost->post_content){
-			$rcl_box = strpos($editpost->post_content, '[rcl-box');
+		if($content){
+			$rcl_box = strpos($content, '[rcl-box');
 			if($rcl_box===false){
-				rcl_wp_editor(array('type_editor'=>1,'wp_editor'=>3),$editpost->post_content);
+				rcl_wp_editor(array('type_editor'=>1,'wp_editor'=>3),$content);
 				return;
 			}
 		}
@@ -537,7 +540,7 @@ function rcl_publication_editor(){
 		<div class="rcl-public-editor">
 			'.$panel.'
 			<div class="rcl-editor-content">
-				'.rcl_get_editor_content($editpost->post_content).'
+				'.rcl_get_editor_content($content).'
 			</div>
 			'.$panel.'
 		</div>';

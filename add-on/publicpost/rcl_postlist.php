@@ -37,7 +37,7 @@ class Rcl_Postlist {
     }
 
     function add_postlist_block($posts_block,$author_lk){
-            if(!$posts_block) $status = 'active';
+            if(!isset($posts_block)||!$posts_block) $status = 'active';
             else $status = '';
             $posts_block .= '<div class="posts_'.$this->id.'_block recall_child_content_block '.$status.'">';
             $posts_block .= $this->get_postslist($author_lk);
@@ -52,9 +52,9 @@ class Rcl_Postlist {
             $ratings = array();
             $posts = array();
 
-            $start .= $this->start.',';
+            $start = $this->start.',';
 
-            $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $start 20",$author_lk,$this->posttype));			
+            $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $start 20",$author_lk,$this->posttype));
 
             if(is_multisite()){
                 $blog_list = get_blog_list( 0, 'all' );
@@ -66,31 +66,31 @@ class Rcl_Postlist {
             }
 
             if($posts[0]){
-				
+
                 $p_list = array();
-				
-				
+
+
 				if(function_exists('rcl_format_rating')){
-					
-					foreach($posts as $postdata){ 
+
+					foreach($posts as $postdata){
 						foreach($postdata as $p){
-							$p_list[] = $p->ID; 
+							$p_list[] = $p->ID;
 						}
 					}
-					
+
 					$rayt_p = rcl_get_ratings(array('object_id'=>$p_list,'rating_type'=>array($this->posttype)));
 
 					foreach((array)$rayt_p as $r){
 						if(!isset($r->object_id)) continue;
 						$ratings[$r->object_id] = $r->rating_total;
 					}
-					
+
 				}
 
 				$posts_block = rcl_get_include_template('posts-list.php',__FILE__);
-				
+
 				wp_reset_postdata();
-				
+
             }else{
                 $posts_block = '<p>'.$this->name.' '.__('has not yet been published','rcl').'</p>';
             }

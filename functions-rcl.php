@@ -499,7 +499,7 @@ function rcl_format_in($array){
 }
 
 function rmag_global_options(){
-	$content .= ' <div id="recall" class="left-sidebar wrap">
+	$content = ' <div id="recall" class="left-sidebar wrap">
 	<form method="post" action="">
 		'.wp_nonce_field('update-options-rmag','_wpnonce',true,false);
 

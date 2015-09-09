@@ -197,9 +197,9 @@ class Rcl_Addons{
 							<p>'.$addon['description'].'</p>
 							</div>
 							<div class="active second plugin-version-author-uri">
-							'.__('Version','rcl').' '.$addon['version']
-                                                                .' | '.__('Author','rcl').': <a title="'.__('Visit the page of the author','rcl').'" href="'.$addon['author-uri'].'" target="_blank">'.$addon['author'].'</a>';
-                                                                if($addon['add-on-uri']) $table .= ' | <a title="'.__('Visit the page of the add-on','rcl').'" href="'.$addon['add-on-uri'].'" target="_blank">'.__('Page Add-on','rcl').'</a>';
+							'.__('Version','rcl').' '.$addon['version'];
+                                                                if(isset($addon['author-uri'])) $table .= ' | '.__('Author','rcl').': <a title="'.__('Visit the page of the author','rcl').'" href="'.$addon['author-uri'].'" target="_blank">'.$addon['author'].'</a>';
+                                                                if(isset($addon['add-on-uri'])) $table .= ' | <a title="'.__('Visit the page of the add-on','rcl').'" href="'.$addon['add-on-uri'].'" target="_blank">'.__('Page Add-on','rcl').'</a>';
 							$table .= '</div>
 						</td>
 					</tr>';
@@ -209,7 +209,7 @@ class Rcl_Addons{
                                                         . '<td colspan="3" class="plugin-update colspanchange">'
                                                             . '<div class="update-message">'
                                                                 . 'Доступна свежая версия '.$addon['name'].' '.$need_update[$key]['new-version'].'. ';
-                                                                if($addon['add-on-uri']) $table .= 'Можно <a href="'.$addon['add-on-uri'].'"  title="'.$addon['name'].'">посмотреть информацию о версии '.$xml->version.'</a>';
+                                                                if(isset($addon['add-on-uri'])) $table .= 'Можно <a href="'.$addon['add-on-uri'].'"  title="'.$addon['name'].'">посмотреть информацию о версии '.$xml->version.'</a>';
                                                             $table .= 'или <a class="update-add-on" data-addon="'.$key.'" href="#">Обновить автоматически</a></div>'
                                                         . '</td>'
                                                     . '</tr>';

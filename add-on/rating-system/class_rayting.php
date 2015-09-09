@@ -1,37 +1,37 @@
 <?php
 class Rcl_Rating{
-	
+
 	function __construct(){
-		
+
 	}
-	
+
 	function get_values($args){
 		global $wpdb;
-		
+
 		$table = RCL_PREF."rating_values";
-		
+
 		$fields = "*";
 
 		if(isset($args['fields'])){
 			$fields = implode(',',$args['fields']);
 		}
-		
-		if($args['rating_type']){
+
+		if(isset($args['rating_type'])){
 			$types = explode(',',$args['rating_type']);
 			$where[] = "rating_type IN ('".implode("','",$types)."')";
 		}
-		
-		if($args['days']){
+
+		if(isset($args['days'])){
 			$where[] = "rating_date > '".current_time('mysql')."' - INTERVAL ".$args['days']." DAY";
 		}
-		
+
 		if($where) $query = "WHERE ".implode(' AND ',$where);
 
 		if(isset($args['group_by'])&&$args['group_by']){
 			$query .= " GROUP BY ".$args['group_by'];
 			$fields = $args['group_by'].",SUM(rating_value) as rating_total";
 		}
-		
+
 		if(isset($args['order'])){
 
 			$query .= " ORDER BY";
@@ -52,7 +52,7 @@ class Rcl_Rating{
 		}
 
 		$query = "SELECT $fields FROM $table $query";
-		
+
 		return $wpdb->get_results($query);
 	}
 

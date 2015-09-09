@@ -212,7 +212,7 @@ function rcl_sort_gallery($attaches,$key,$user_id=false){
 	$b=0;
 	$cnt = count($gallerylist);
 	for($a=0;$b<$cnt;$a++){
-		if(!$gallerylist[$a]) continue;
+		if(!isset($gallerylist[$a])) continue;
 		$new[$b] = $gallerylist[$a];
 		$b++;
 	}

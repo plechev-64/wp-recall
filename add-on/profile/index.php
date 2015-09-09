@@ -612,10 +612,11 @@ if(function_exists('ulogin_profile_personal_options')){
 add_filter('show_profile_fields_rcl','rcl_show_custom_fields_profile',10,2);
 function rcl_show_custom_fields_profile($fields_content,$author_lk){
 	$get_fields = get_option( 'custom_profile_field' );
-	//$get_fields = unserialize( $get_fields);
+
+        $show_custom_field = '';
 
 	if($get_fields){
-		$show_custom_field = '';
+
 		$get_fields = stripslashes_deep($get_fields);
 
                 $cf = new Rcl_Custom_Fields();

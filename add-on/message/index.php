@@ -580,6 +580,8 @@ class Rcl_Messages{
 
 		$interval = $days*24*3600;
 		$sql_int = '';
+                $contact_list = array();
+                
 		if($days>0) $sql_int = "AND time_mess > (NOW() - INTERVAL $interval SECOND)";
 
 		if(!$contacts) return '<h3>'.__('Contacts not found!','rcl').'</h3>';
@@ -632,37 +634,39 @@ class Rcl_Messages{
 		}
 
 		$privat_block = '';
-		foreach((array)$contact_list as $data){
+                if($contact_list){
+                    foreach($contact_list as $data){
 
-			if(!$names[$data['contact']]) continue;
+                            if(!$names[$data['contact']]) continue;
 
-			foreach((array)$rcl_action_users as $action){
-				if($action->user==$data['contact']){$time_action = $action->time_action; break;}
-			}
-			$last_action = rcl_get_useraction($time_action);
-			$privat_block .= '<div class="single_correspond history-'.$data['contact'];
-			if($data['status']==0) $privat_block .= ' redline';
-			$privat_block .= '">';
-			$privat_block .= '<div class="floatright">';
-			if(!$last_action)
-				$privat_block .= '<div class="status_author_mess online"><i class="fa fa-circle"></i></div>';
-			else
-				$privat_block .= '<div class="status_author_mess offline"><i class="fa fa-circle"></i></div>';
+                            foreach((array)$rcl_action_users as $action){
+                                    if($action->user==$data['contact']){$time_action = $action->time_action; break;}
+                            }
+                            $last_action = rcl_get_useraction($time_action);
+                            $privat_block .= '<div class="single_correspond history-'.$data['contact'];
+                            if($data['status']==0) $privat_block .= ' redline';
+                            $privat_block .= '">';
+                            $privat_block .= '<div class="floatright">';
+                            if(!$last_action)
+                                    $privat_block .= '<div class="status_author_mess online"><i class="fa fa-circle"></i></div>';
+                            else
+                                    $privat_block .= '<div class="status_author_mess offline"><i class="fa fa-circle"></i></div>';
 
-			$redirect_url = rcl_format_url(get_author_posts_url($data['contact']),'privat');
+                            $redirect_url = rcl_format_url(get_author_posts_url($data['contact']),'privat');
 
-			$privat_block .= '<span user_id="'.$data['contact'].'" class="author-avatar"><a href="'.$redirect_url.'">'.get_avatar($data['contact'], 40).'</a></span><a href="#" class="recall-button ';
+                            $privat_block .= '<span user_id="'.$data['contact'].'" class="author-avatar"><a href="'.$redirect_url.'">'.get_avatar($data['contact'], 40).'</a></span><a href="#" class="recall-button ';
 
-			if($days>0) $privat_block .= 'del_history';
-			else $privat_block .= 'remove_black_list';
+                            if($days>0) $privat_block .= 'del_history';
+                            else $privat_block .= 'remove_black_list';
 
-			$privat_block .='" data-contact="'.$data['contact'].'"><i class="fa fa-remove"></i></a>
-			</div>
-			<p><a href="'.$redirect_url.'">'.$names[$data['contact']].'</a>';
-			if(isset($data['time'])) $privat_block .='<br/><small>'.__('Last message','rcl').': '.$data['time'].'</small>';
-			else $privat_block .='<br/><small>'.__('The chat history is missing','rcl').'</small>';
-			$privat_block .='</p></div>';
-		}
+                            $privat_block .='" data-contact="'.$data['contact'].'"><i class="fa fa-remove"></i></a>
+                            </div>
+                            <p><a href="'.$redirect_url.'">'.$names[$data['contact']].'</a>';
+                            if(isset($data['time'])) $privat_block .='<br/><small>'.__('Last message','rcl').': '.$data['time'].'</small>';
+                            else $privat_block .='<br/><small>'.__('The chat history is missing','rcl').'</small>';
+                            $privat_block .='</p></div>';
+                    }
+                }
 		if(!$privat_block) $privat_block = '<h3>'.__('Contacts not found!','rcl').'</h3>';
 		return $privat_block;
 	}
