@@ -12,6 +12,11 @@ function rcl_count_votes_time($args,$second){
 	);
 }
 
+function rcl_get_rating_by_id($rating_id){
+	global $wpdb;
+	return $wpdb->get_row("SELECT * FROM ".RCL_PREF."rating_values WHERE ID='$rating_id'");
+}
+
 function rcl_get_ratings($args){
 	global $wpdb;
 
@@ -129,9 +134,11 @@ function rcl_insert_rating($args){
 
     $wpdb->insert( RCL_PREF.'rating_values',  $data );
 
+    $value_id = $wpdb->insert_id;
+
     do_action('rcl_insert_rating',$args);
 
-    return $args['rating_value'];
+    return $value_id;
 }
 
 //Вносим значение общего рейтинга публикации в БД
@@ -454,16 +461,34 @@ add_action('delete_user','rcl_delete_ratingdata_user');
 function rcl_delete_rating($args){
     global $wpdb;
 
-	$rating = rcl_get_vote_value($args);
+	if(isset($args['ID'])){
 
-	if(!isset($rating)) return false;
+		$data = rcl_get_rating_by_id($args['ID']);
+		$query = $wpdb->prepare(
+			"DELETE FROM ".RCL_PREF."rating_values WHERE ID = '%d'",
+			$args['ID']
+		);
+		$args = array(
+			'object_id'=>$data->object_id,
+			'object_author'=>$data->object_author,
+			'rating_type'=>$data->rating_type,
+			'rating_value'=>$data->rating_value,
+		);
 
-    $args['rating_value'] = (isset($args['rating_value']))? $args['rating_value']: $rating;
+	}else{
 
-    $query = $wpdb->prepare(
-        "DELETE FROM ".RCL_PREF."rating_values WHERE object_id = '%d' AND rating_type='%s' AND user_id='%s'",
-        $args['object_id'],$args['rating_type'],$args['user_id']
-    );
+		$rating = rcl_get_vote_value($args);
+
+		if(!isset($rating)) return false;
+
+		$args['rating_value'] = (isset($args['rating_value']))? $args['rating_value']: $rating;
+
+		$query = $wpdb->prepare(
+			"DELETE FROM ".RCL_PREF."rating_values WHERE object_id = '%d' AND rating_type='%s' AND user_id='%s'",
+			$args['object_id'],$args['rating_type'],$args['user_id']
+		);
+
+	}
 
     $res = $wpdb->query($query);
 

@@ -376,7 +376,7 @@ add_shortcode('art','rcl_get_image_gallery');
 function rcl_add_attachments_in_temps($id_post){
     global $user_ID;
 
-    $temp_gal = unserialize(get_the_author_meta('tempgallery',$user_ID));
+    $temp_gal = get_user_meta($user_ID,'tempgallery',1);
     if($temp_gal){
             //$cnt = count($temp_gal);
             foreach((array)$temp_gal as $key=>$gal){
@@ -384,7 +384,7 @@ function rcl_add_attachments_in_temps($id_post){
                     wp_update_post( array('ID'=>$gal['ID'],'post_parent'=>$id_post) );
             }
             if($_POST['add-gallery-rcl']==1) add_post_meta($id_post, 'recall_slider', 1);
-            delete_usermeta($user_ID,'tempgallery');
+            delete_user_meta($user_ID,'tempgallery');
 
             if(!$thumb){
                 $args = array(
@@ -403,12 +403,11 @@ function rcl_add_attachments_in_temps($id_post){
 
 function rcl_update_tempgallery($attach_id,$attach_url){
 	global $user_ID;
-	$temp_gal = unserialize(get_the_author_meta('tempgallery',$user_ID));
-	if(!$temp_gal) $temp_gal = array();
-	$cnt = count($temp_gal);
-	$temp_gal[$cnt]['ID'] = $attach_id;
-	$temp_gal[$cnt]['url'] = $attach_url;
-	update_usermeta($user_ID,'tempgallery',serialize($temp_gal));
+	$temp_gal = get_user_meta($user_ID,'tempgallery',1);
+	if(!$temp_gal||!is_array($temp_gal)) $temp_gal = array();
+	$temp_gal[$attach_id]['ID'] = $attach_id;
+	$temp_gal[$attach_id]['url'] = $attach_url;
+	update_user_meta($user_ID,'tempgallery',$temp_gal);
 	return $temp_gal;
 }
 
@@ -1087,6 +1086,7 @@ function rcl_footer_publics_scripts($script){
 		type: 'POST',
 		url: wpurl+'wp-admin/admin-ajax.php',
 		formData:{action:'rcl_imagepost_upload',post_id:post_id_edit},
+		singleFileUploads:false,
 		autoUpload:true,
 		progressall: function (e, data) {
 			/*var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -1103,10 +1103,11 @@ function rcl_footer_publics_scripts($script){
 			if(error) return false;
 		},
 		done: function (e, data) {
-			var result = data.result;
-			if(result['string']){
-				jQuery('#temp-files').append(result['string']);
-			}
+			$.each(data.result, function (index, file) {
+				if(file['string']){
+					$('#temp-files').append(file['string']);
+				}
+			});
 		}
 	});";
 	return $script;

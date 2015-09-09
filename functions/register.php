@@ -119,7 +119,7 @@ function rcl_get_register_user(){
 
         if($user_id){
 
-			$wpdb->insert( $wpdb->prefix .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
+			$wpdb->insert( RCL_PREF .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
 
 			rcl_register_mail(array('user_id'=>$user_id,'password'=>$pass,'login'=>$login,'email'=>$email));
 

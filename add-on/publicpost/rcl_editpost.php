@@ -101,7 +101,7 @@ class Rcl_EditPost {
     function rcl_add_attachments_in_temps(){
         global $user_ID;
 
-        $temp_gal = unserialize(get_the_author_meta('tempgallery',$user_ID));
+        $temp_gal = get_user_meta($user_ID,'tempgallery',1);
         if($temp_gal){
             $thumb = $_POST['thumb'];
             foreach((array)$temp_gal as $key=>$gal){
@@ -109,7 +109,7 @@ class Rcl_EditPost {
                     wp_update_post( array('ID'=>$gal['ID'],'post_parent'=>$this->post_id) );
             }
             if($_POST['add-gallery-rcl']==1) add_post_meta($this->post_id, 'recall_slider', 1);
-            delete_usermeta($user_ID,'tempgallery');
+            delete_user_meta($user_ID,'tempgallery');
 
             if(!$thumb){
                 $args = array(

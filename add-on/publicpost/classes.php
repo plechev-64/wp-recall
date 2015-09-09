@@ -215,7 +215,7 @@ class Rcl_Thumb_Form{
                     if($child){ foreach($child as $ch){$temp_gal[]['ID']=$ch->ID;} }
 
 		}else{
-			$temp_gal = unserialize(get_the_author_meta('tempgallery',$user_ID));
+			$temp_gal = get_user_meta($user_ID,'tempgallery',1);
 		}
 
                 $attachlist = '';
@@ -238,13 +238,14 @@ class Rcl_Thumb_Form{
 				<hr>
 				<div class="recall-button rcl-upload-button">
 					<span>'.__('Add','rcl').'</span>
-					<input id="'.$this->id_upload.'" name="uploadfile" type="file" accept="'.$formData->accept.'" multiple>
+					<input id="'.$this->id_upload.'" name="uploadfile[]" type="file" accept="'.$formData->accept.'" multiple>
 				</div>
 			</div>
 		</div>';
 	}
 
 	function get_gallery_list($temp_gal){
+
 		$attachlist = '';
 		foreach((array)$temp_gal as $attach){
 			$mime_type = get_post_mime_type( $attach['ID'] );

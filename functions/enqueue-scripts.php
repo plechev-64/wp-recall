@@ -100,10 +100,11 @@ function rcl_frontend_scripts(){
 	global $rcl_options,$user_LK,$user_ID,$post;
 	if(!isset($rcl_options['font_icons']))  $rcl_options['font_icons']=1;
 
+        if($user_LK) rcl_dialog_scripts();
+
 	if($user_ID==$user_LK||(isset($rcl_options['public_form_page_rcl'])&&$post->ID==$rcl_options['public_form_page_rcl'])){
-		rcl_dialog_scripts();
-		rcl_crop_scripts();
-		rcl_webcam_scripts();
+            rcl_crop_scripts();
+            rcl_webcam_scripts();
 	}
 
 	if($user_ID){

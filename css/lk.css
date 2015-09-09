@@ -322,6 +322,18 @@
 .lk-avatar:hover .rcl-avatar-delete{
 	display:block;
 }
+.lk-avatar .rcl-avatar-zoom{
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    font-size: 35px;
+    color: rgba(255,255,255,0.5);
+    display:none;
+    z-index: 9;
+}
+.lk-avatar:hover .rcl-avatar-zoom{
+    display:block;
+}
 #lk-conteyner .rcl-more-link{
     float:right;
     margin-bottom: 10px;

@@ -172,10 +172,17 @@ function rcl_profile_options($content){
 add_filter('after-avatar-rcl','rcl_button_avatar_upload',2,2);
 function rcl_button_avatar_upload($content,$author_lk){
 	global $user_ID;
+
+        $avatar = get_user_meta($author_lk,'rcl_avatar',1);
+
+        if($avatar){
+            $content .= '<a title="'.__('Zoom avatar','rcl').'" data-zoom="'.RCL_UPLOAD_URL.'avatars/'.$author_lk.'.jpg" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="fa fa-search-plus"></i></a>';
+        }
+
 	if($user_ID!=$author_lk) return $content;
 
-	if(get_user_meta($user_ID,'rcl_avatar',1)){
-		$content .= '<a title="'.__('Delete avatar','rcl').'" class="rcl-avatar-delete" href="'.wp_nonce_url( rcl_format_url(rcl_get_current_url()).'rcl-action=delete_avatar', $user_ID ).'"><i class="fa fa-times"></i></a>';
+	if($avatar){
+            $content .= '<a title="'.__('Delete avatar','rcl').'" class="rcl-avatar-delete" href="'.wp_nonce_url( rcl_format_url(rcl_get_current_url()).'rcl-action=delete_avatar', $user_ID ).'"><i class="fa fa-times"></i></a>';
 	}
 
 	$content .= '

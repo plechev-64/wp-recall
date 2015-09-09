@@ -72,13 +72,13 @@ function rcl_ajax_delete_post(){
 	$res = wp_delete_post( $post->ID );
 
 	if($res){
-		$temp_gal = unserialize(get_the_author_meta('tempgallery',$user_ID));
+		$temp_gal = get_user_meta($user_ID,'tempgallery',1);
 		if($temp_gal){
 			$cnt = count($temp_gal);
 			foreach((array)$temp_gal as $key=>$gal){ if($gal['ID']==$_POST['post_id']) unset($temp_gal[$key]); }
 			foreach((array)$temp_gal as $t){ $new_temp[] = $t; }
-			if($new_temp) update_usermeta($user_ID,'tempgallery',serialize($new_temp));
-			else delete_usermeta($user_ID,'tempgallery');
+			if($new_temp) update_user_meta($user_ID,'tempgallery',$new_temp);
+			else delete_user_meta($user_ID,'tempgallery');
 		}
 
 		$log['result']=100;
