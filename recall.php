@@ -35,7 +35,7 @@ function init_global_rcl(){
         define('RCL_UPLOAD_PATH', $upload_dir['basedir'].'/rcl-uploads/');
 	define('RCL_UPLOAD_URL', $upload_dir['baseurl'].'/rcl-uploads/');
 
-        if(file_exists(TEMP_PATH)){
+        if(!file_exists(RCL_UPLOAD_PATH)&&file_exists(TEMP_PATH)){
             rename(TEMP_PATH,RCL_UPLOAD_PATH);
             rcl_rename_media_dir();
         }
