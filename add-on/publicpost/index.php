@@ -6,7 +6,7 @@ include_once 'addon-options.php';
 
 rcl_enqueue_style('publics',__FILE__);
 
-if (!session_id()) { session_start(); }
+//if (!session_id()) { session_start(); }
 
 if (!is_admin()):
 	add_action('wp_enqueue_scripts','rcl_publics_scripts');

@@ -20,8 +20,11 @@ global $wpdb;
             if ( is_wp_error($sign) ){
                     wp_redirect( get_bloginfo('wpurl').'?getconfirm=needed' ); exit;
             }else{
-                    rcl_update_timeaction_user();
-                    wp_redirect(rcl_get_authorize_url($user->ID) ); exit;
+                rcl_update_timeaction_user();
+
+                do_action('rcl_confirm_registration',$user->ID);
+
+                wp_redirect(rcl_get_authorize_url($user->ID) ); exit;
             }
         }
     }else{
@@ -105,23 +108,23 @@ function rcl_get_register_user(){
 
             $fio='';
             $userdata = array(
-                    'user_pass' => $pass
-                    ,'user_login' => $login
-                    ,'user_nicename' => ''
-                    ,'user_email' => $email
-                    ,'display_name' => $fio
-                    ,'nickname' => $login
-                    ,'first_name' => $fio
-                    ,'rich_editing' => 'true'
+                'user_pass' => $pass
+                ,'user_login' => $login
+                ,'user_nicename' => ''
+                ,'user_email' => $email
+                ,'display_name' => $fio
+                ,'nickname' => $login
+                ,'first_name' => $fio
+                ,'rich_editing' => 'true'
             );
             $user_id = wp_insert_user( $userdata );
 	}
 
         if($user_id){
 
-			$wpdb->insert( RCL_PREF .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
+            $wpdb->insert( RCL_PREF .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
 
-			rcl_register_mail(array('user_id'=>$user_id,'password'=>$pass,'login'=>$login,'email'=>$email));
+            rcl_register_mail(array('user_id'=>$user_id,'password'=>$pass,'login'=>$login,'email'=>$email));
 
             wp_redirect(rcl_format_url($ref).'action-rcl=login&success=true');exit;
 

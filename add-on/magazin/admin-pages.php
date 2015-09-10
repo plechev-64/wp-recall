@@ -137,7 +137,7 @@ function rmag_primary_options($content){
 function rmag_custom_fields(){
 	global $wpdb;
 
-    rcl_sortable_scripts();
+        rcl_sortable_scripts();
 
 	include_once RCL_PATH.'functions/rcl_editfields.php';
         $f_edit = new Rcl_EditFields('orderform');

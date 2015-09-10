@@ -6,10 +6,12 @@ class Rcl_Payform {
     public $summ;
     public $type;
     public $user;
+	public $callback;
 
     function __construct($args){
         global $user_ID;
         $this->id_pay = $args['id_pay'];
+	$this->callback = (isset($args['callback']))? $args['callback']: 'rcl_pay_order_private_account';
         $this->summ = $args['summ'];
         $this->type = $args['type'];
         if(!$args['user_id']) $this->user = $user_ID;
@@ -32,7 +34,8 @@ class Rcl_Payform {
         }
 
         $type_p = $rmag_options['type_order_payment'];
-        if($type_p==2&&$this->type==2) $form .= '<input class="pay_order recall-button" type="button" name="pay_order" data-order="'.$this->id_pay.'" value="'.__('Pay personal account','rcl').'">';
+        if($type_p==2&&$this->type==2)
+			$form .= '<input class="recall-button" type="button" name="pay_order" onclick="'.$this->callback.'(this);return false;" data-order="'.$this->id_pay.'" value="'.__('Pay personal account','rcl').'">';
 
         return $form;
     }

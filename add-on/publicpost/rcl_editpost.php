@@ -260,7 +260,7 @@ function rcl_register_author_post($postdata){
 				$creds['user_login'] = $email_new_user;
 				$creds['user_password'] = $random_password;
 
-				rcl_register_mail(array('user_id'=>$user_id,'password'=>$random_password,'login'=>$email_new_user));
+				rcl_register_mail(array('user_id'=>$user_id,'password'=>$random_password,'login'=>$email_new_user,'email'=>$email_new_user));
 
 				//Сразу авторизуем пользователя
 				if($rcl_options['confirm_register_recall']){

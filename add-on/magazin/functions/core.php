@@ -376,7 +376,7 @@ function rcl_payment_order($order_id,$user_id=false){
     '.$table_order.'
 	'.$text.'
     <p>Ссылка для управления заказом в админке:</p>
-    <p>'.admin_url('admin.php?page=manage-rmag&order='.$order_id).'</p>';
+    <p>'.admin_url('admin.php?page=manage-rmag&order-id='.$order_id).'</p>';
 
     if($admin_email){
         rcl_mail($admin_email, $subject, $textmail);

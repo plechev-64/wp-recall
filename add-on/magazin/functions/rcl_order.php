@@ -199,7 +199,7 @@ class Rcl_Order {
         <h3>Детали заказа:</h3>
         '.$table_order.'
         <p>Ссылка для управления заказом в админке:</p>
-        <p>'.admin_url('admin.php?page=manage-rmag&order='.$this->order_id).'</p>';
+        <p>'.admin_url('admin.php?page=manage-rmag&order-id='.$this->order_id).'</p>';
 
         $admin_email = $rmag_options['admin_email_magazin_recall'];
         if($admin_email){

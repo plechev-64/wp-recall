@@ -333,7 +333,7 @@ class Rcl_Addons{
                         . "jQuery(function(){";
 		$scripts = apply_filters('file_scripts_rcl',$scripts);
 		$scripts .= "});";
-		$scripts = apply_filters('javascripts_rcl',$scripts);
+		$scripts = apply_filters('rcl_functions_js',$scripts);
 		$scripts = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $scripts);
 		$scripts =  preg_replace('/ {2,}/',' ',$scripts);
 		fwrite($f, $scripts);

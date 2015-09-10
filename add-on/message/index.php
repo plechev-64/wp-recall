@@ -581,7 +581,7 @@ class Rcl_Messages{
 		$interval = $days*24*3600;
 		$sql_int = '';
                 $contact_list = array();
-                
+
 		if($days>0) $sql_int = "AND time_mess > (NOW() - INTERVAL $interval SECOND)";
 
 		if(!$contacts) return '<h3>'.__('Contacts not found!','rcl').'</h3>';
@@ -1742,47 +1742,58 @@ function rcl_add_message($args){
 	$content_mess = apply_filters('rcl_pre_save_private_message',$content);
 
 	$result = $wpdb->insert(
-		RCL_PREF.'private_message',
-			array(
-			'author_mess' => $author,
-			'content_mess' => $content_mess,
-			'adressat_mess' => $addressat,
-			'time_mess' => $time,
-			'status_mess' => $status_mess
-		)
+            RCL_PREF.'private_message',
+            array(
+                'author_mess' => $author,
+                'content_mess' => $content_mess,
+                'adressat_mess' => $addressat,
+                'time_mess' => $time,
+                'status_mess' => $status_mess
+            )
 	);
 
-	$status = $wpdb->get_var($wpdb->prepare("SELECT status FROM ".RCL_PREF."private_contacts WHERE user = '%d' AND contact = '%d'",$author,$addressat));
-	if(!$status){
-		$wpdb->insert(
-			RCL_PREF.'private_contacts',
-				array(
-				'user' => $author,
-				'contact' => $addressat,
-				'status' => 1
-			)
-		);
-		$wpdb->insert(
-			RCL_PREF.'private_contacts',
-				array(
-				'user' => $addressat,
-				'contact' => $author,
-				'status' => 1
-			)
-		);
-	}
-	if($status==3){
-		$wpdb->update(
-			RCL_PREF.'private_contacts',
-				array( 'status' => 1 ),
-				array( 'user' => "$user_ID", 'contact' => $addressat )
-			);
-		$wpdb->update(
-			RCL_PREF.'private_contacts',
-				array( 'status' => 1 ),
-				array( 'user' => $addressat, 'contact' => $author )
-			);
-	}
+        $users = array(
+            (object)array(
+                'ID'=>$author,
+                'addressat_id'=>$addressat,
+            ),
+            (object)array(
+                'ID'=>$addressat,
+                'addressat_id'=>$author,
+            ),
+        );
+
+	$statuses = $wpdb->get_results($wpdb->prepare("SELECT user,contact,status FROM ".RCL_PREF."private_contacts "
+                . "WHERE user = '%d' AND contact = '%d' OR user = '%d' AND contact = '%d'"
+                ,$author,$addressat,$addressat,$author));
+
+        $contacts = array();
+
+        foreach($statuses as $status){
+            $contacts[$status->user]['contact'] = $status->contact;
+            $contacts[$status->user]['status'] = $status->status;
+        }
+
+        foreach($users as $user){
+            if(isset($contacts[$user->ID])){
+                if($contacts[$user->ID]['status']!=3) continue;
+
+                $wpdb->update(
+                RCL_PREF.'private_contacts',
+                        array( 'status' => 1 ),
+                        array( 'user' => $user->ID, 'contact' => $contacts[$user->ID]['contact'] )
+                );
+                continue;
+            }
+            $wpdb->insert(
+                RCL_PREF.'private_contacts',
+                        array(
+                        'user' => $user->ID,
+                        'contact' => $user->addressat_id,
+                        'status' => 1
+                )
+            );
+        }
 
 	do_action('rcl_new_private_message', $addressat, $user_ID);
 

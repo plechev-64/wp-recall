@@ -7,15 +7,15 @@
 	</div>
 <?php endif; ?>
 
-<?php if(isset($formFields['excerpt'])&&$formFields['excerpt']): ?>
-	<div class="rcl-form-field">
-		<textarea name="post_excerpt" placeholder="Введите описание поста" ><?php rcl_publication_excerpt(); ?></textarea>
-	</div>
-<?php endif; ?>
-
 <?php if($formFields['termlist']): ?>
 	<div class="rcl-form-field">
 		<?php rcl_publication_termlist(); ?>
+	</div>
+<?php endif; ?>
+
+<?php if(isset($formFields['excerpt'])&&$formFields['excerpt']): ?>
+	<div class="rcl-form-field">
+		<textarea name="post_excerpt" placeholder="Введите краткое описание поста" ><?php rcl_publication_excerpt(); ?></textarea>
 	</div>
 <?php endif; ?>
 

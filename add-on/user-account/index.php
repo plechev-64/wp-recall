@@ -377,7 +377,7 @@ function rcl_get_html_usercount(){
 
     if($rmag_options['connect_sale']!='') $usercount .= "<p align='right'><a class='go_to_add_count' href='#'>".__("Deposit",'rcl')."</a></p>
     <div class='count_user'>
-    <h3>".__("To recharge your account",'rcl')."</h3>
+    <p>".__("To recharge your account",'rcl')."</p>
     <div>
     <p style='margin-bottom: 10px;'><label>".__("Enter the amount required",'rcl')."</label></p>
         <input class='value_count_user' size='4' type='text' value=''>
@@ -415,35 +415,42 @@ function rcl_get_useraccount_scripts($script){
 					});
 					return false;
 				});
-		/* Оплачиваем заказ средствами из личного счета */
-			jQuery('body').on('click','.pay_order',function(){
-				var idorder = jQuery(this).data('order');
-				var dataString = 'action=rcl_pay_order_private_account&idorder='+ idorder;
 
-				jQuery.ajax({
-				".$ajaxdata."
-				success: function(data){
-					if(data['otvet']==100){
-						jQuery('.order_block').find('.pay_order').each(function() {
-							if(jQuery(this).attr('name')==data['idorder']) jQuery(this).remove();
-						});
-						jQuery('.redirectform').html(data['recall']);
-						jQuery('.usercount').html(data['count']);
-						jQuery('.order-'+data['idorder']+' .remove_order').remove();
-						jQuery('#manage-order').remove();
-					}else{
-						alert('Недостаточно средств на счету! Сумма заказа: '+data['recall']);
-					}
-				}
-				});
-				return false;
-			});
 		jQuery('body').on('click','.go_to_add_count',function(){
                     jQuery('.count_user').slideToggle();
                     return false;
 		});
 	";
 	return $script;
+}
+
+add_filter('rcl_functions_js','rcl_add_user_count_functions');
+function rcl_add_user_count_functions($string){
+    $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
+    $string .= "/* Оплачиваем заказ средствами из личного счета */
+    function rcl_pay_order_private_account(e){
+        var idorder = jQuery(e).data('order');
+        var dataString = 'action=rcl_pay_order_private_account&idorder='+ idorder;
+
+        jQuery.ajax({
+        ".$ajaxdata."
+        success: function(data){
+                if(data['otvet']==100){
+                    jQuery('.order_block').find('.pay_order').each(function() {
+                            if(jQuery(e).attr('name')==data['idorder']) jQuery(e).remove();
+                    });
+                    jQuery('.redirectform').html(data['recall']);
+                    jQuery('.usercount').html(data['count']);
+                    jQuery('.order-'+data['idorder']+' .remove_order').remove();
+                    jQuery('#manage-order').remove();
+                }else{
+                    rcl_notice('Недостаточно средств на счету! Сумма заказа: '+data['recall'],'error');
+                }
+        }
+        });
+        return false;
+    }";
+    return $string;
 }
 
 function rcl_get_chart_payments($pays){

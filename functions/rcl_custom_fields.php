@@ -201,7 +201,7 @@ class Rcl_Custom_Fields{
                     $show = $chek_field;
         }
         if($field['type']=='textarea'&&$value)
-                $show = '<p>'.nl2br(esc_textarea($value));
+                $show = '<p>'.nl2br(esc_textarea($value)).'</p>';
 
         if(isset($field['after'])) $show .= ' '.$field['after'];
 

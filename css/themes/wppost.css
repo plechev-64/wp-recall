@@ -321,10 +321,13 @@ border-radius: 2px;
 
 .wprecallblock #lk-menu {
     padding: 0 10px 0 15px;
-        background:white;
+    background:white;
 }
-.show-profile-fields p b {
-    width: 110px;
+#rcl-content .show-profile-fields p{
+    clear: both;
+}
+#rcl-content .show-profile-fields p b{
+    width: 150px;
     float: left;
 }
 
