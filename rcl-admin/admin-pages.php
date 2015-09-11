@@ -1,28 +1,29 @@
 <?php
 function rcl_options_panel(){
-	add_menu_page(__('WP-RECALL','rcl'), __('WP-RECALL','rcl'), 'manage_options', 'manage-wprecall', 'rcl_global_options');
-		add_submenu_page( 'manage-wprecall', __('SETTINGS','rcl'), __('SETTINGS','rcl'), 'manage_options', 'manage-wprecall', 'rcl_global_options');
-		add_submenu_page( 'manage-wprecall', __('Documentation','rcl'), __('Documentation','rcl'), 'manage_options', 'manage-doc-recall', 'rcl_doc_manage');
+    add_menu_page(__('WP-RECALL','rcl'), __('WP-RECALL','rcl'), 'manage_options', 'manage-wprecall', 'rcl_global_options');
+    add_submenu_page( 'manage-wprecall', __('SETTINGS','rcl'), __('SETTINGS','rcl'), 'manage_options', 'manage-wprecall', 'rcl_global_options');
+    add_submenu_page( 'manage-wprecall', __('Documentation','rcl'), __('Documentation','rcl'), 'manage_options', 'manage-doc-recall', 'rcl_doc_manage');
+    add_submenu_page( 'manage-wprecall', __('Repository','rcl'), __('Repository','rcl'), 'manage_options', 'rcl-repository', 'rcl_repository_page');
 }
 
 function rcl_doc_manage(){
-	echo '<h2>'.__('Documentation for the plugin WP-RECALL').'</h2>
-		<ol>
-                    <li><a href="http://wppost.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank">'.__('Plugin installation','rcl').'</a></li>
-                    <li><a href="http://wppost.ru/obnovlenie-plagina-wp-recall-i-ego-dopolnenij/" target="_blank">'.__('Update the plugin and its extensions','rcl').'</a></li>
-                    <li><a href="http://wppost.ru/nastrojki-plagina-wp-recall/" target="_blank">'.__('The plugin settings','rcl').'</a></li>
-                    <li><a href="http://wppost.ru/shortkody-wp-recall/" target="_blank">'.__('Used shortcodes Wp-Recall','rcl').'</a></li>
-                    <li><a href="http://wppost.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/" target="_blank">'.__('General information about plugins Wp-Recall','rcl').'</a></li>
-                    <li><a href="http://wppost.ru/dopolneniya-wp-recall/" target="_blank">'.__('Basic add-ons Wp-Recall','rcl').'</a></li>
-                    <li><a href="http://wppost.ru/downloads-files/" target="_blank">'.__('Paid add-ons Wp-Recall','rcl').'</a></li>
-                    <li><a title="Произвольные поля Wp-Recall" href="http://wppost.ru/proizvolnye-polya-wp-recall/" target="_blank">'.__('Custom fields profile Wp-Recall','rcl').'</a></li>
-                    <li><a title="Произвольные поля формы публикации Wp-Recall" href="http://wppost.ru/proizvolnye-polya-formy-publikacii-wp-recall/" target="_blank">'.__('Custom fields form publishing Wp-Recall','rcl').'</a></li>
-                    <li><a href="http://wppost.ru/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/" target="_blank">'.__('An example of additions Wp-Recall','rcl').'</a></li>
-                    <li><a href="http://wppost.ru/xuki-i-filtry-wp-recall/" target="_blank">'.__('Functions and hooks Wp-Recall for the development','rcl').'</a></li>
-                    <li><a href="http://wppost.ru/category/novosti/obnovleniya/" target="_blank">'.__('Update history Wp-Recall','rcl').'</a></li>
-                    <li><a title="Используемые библиотеки и ресурсы" href="http://wppost.ru/ispolzuemye-biblioteki-i-resursy/">'.__('Used libraries and resources','rcl').'</a></li>
-                    <li><a href="http://wppost.ru/faq/" target="_blank">'.__('FAQ','rcl').'</a></li>
-            </ol>';
+    echo '<h2>'.__('Documentation for the plugin WP-RECALL').'</h2>
+    <ol>
+        <li><a href="http://wppost.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank">'.__('Plugin installation','rcl').'</a></li>
+        <li><a href="http://wppost.ru/obnovlenie-plagina-wp-recall-i-ego-dopolnenij/" target="_blank">'.__('Update the plugin and its extensions','rcl').'</a></li>
+        <li><a href="http://wppost.ru/nastrojki-plagina-wp-recall/" target="_blank">'.__('The plugin settings','rcl').'</a></li>
+        <li><a href="http://wppost.ru/shortkody-wp-recall/" target="_blank">'.__('Used shortcodes Wp-Recall','rcl').'</a></li>
+        <li><a href="http://wppost.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/" target="_blank">'.__('General information about plugins Wp-Recall','rcl').'</a></li>
+        <li><a href="http://wppost.ru/dopolneniya-wp-recall/" target="_blank">'.__('Basic add-ons Wp-Recall','rcl').'</a></li>
+        <li><a href="http://wppost.ru/downloads-files/" target="_blank">'.__('Paid add-ons Wp-Recall','rcl').'</a></li>
+        <li><a title="Произвольные поля Wp-Recall" href="http://wppost.ru/proizvolnye-polya-wp-recall/" target="_blank">'.__('Custom fields profile Wp-Recall','rcl').'</a></li>
+        <li><a title="Произвольные поля формы публикации Wp-Recall" href="http://wppost.ru/proizvolnye-polya-formy-publikacii-wp-recall/" target="_blank">'.__('Custom fields form publishing Wp-Recall','rcl').'</a></li>
+        <li><a href="http://wppost.ru/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/" target="_blank">'.__('An example of additions Wp-Recall','rcl').'</a></li>
+        <li><a href="http://wppost.ru/xuki-i-filtry-wp-recall/" target="_blank">'.__('Functions and hooks Wp-Recall for the development','rcl').'</a></li>
+        <li><a href="http://wppost.ru/category/novosti/obnovleniya/" target="_blank">'.__('Update history Wp-Recall','rcl').'</a></li>
+        <li><a title="Используемые библиотеки и ресурсы" href="http://wppost.ru/ispolzuemye-biblioteki-i-resursy/">'.__('Used libraries and resources','rcl').'</a></li>
+        <li><a href="http://wppost.ru/faq/" target="_blank">'.__('FAQ','rcl').'</a></li>
+    </ol>';
 }
 
 if (is_admin()) add_action('admin_init', 'rcl_postmeta_post');
@@ -63,25 +64,6 @@ function rcl_postmeta_update( $post_id ){
     }
     return $post_id;
 }
-
-/*************************************************
-Добавляем textarea в поле профиля для внесения настроек
-*************************************************/
-/*function rcl_data_type_profile_field(){
-
-	//$type = $_POST['type'];
-	$slug = sanitize_title($_POST['slug']);
-
-	$content = '<textarea rows="1" name="field_select_'.$slug.'"></textarea>';
-
-	$data['result']=100;
-	$data['content']= $content;
-	echo json_encode($data);
-
-    exit;
-}
-add_action('wp_ajax_rcl_data_type_profile_field', 'rcl_data_type_profile_field');*/
-//add_action('wp_ajax_nopriv_rcl_data_type_profile_field', 'rcl_data_type_profile_field');
 
 //Настройки плагина в админке
 function rcl_global_options(){
@@ -343,3 +325,5 @@ function rcl_url_theme(){
 function wp_enqueue_theme_rcl($url){
     wp_enqueue_style( 'theme_rcl', $url );
 }
+
+include 'repository.php';

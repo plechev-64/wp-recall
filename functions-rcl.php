@@ -1,5 +1,5 @@
 <?php
-if(is_admin()) require_once("admin-pages.php");
+if(is_admin()) require_once("rcl-admin/admin-pages.php");
 require_once("functions/deprecated.php");
 require_once('functions/migration.php');
 require_once("functions/tabs_options.php");

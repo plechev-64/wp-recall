@@ -144,9 +144,9 @@ function rcl_frontend_scripts(){
 }
 
 function rcl_admin_scrips(){
-    wp_enqueue_style( 'rcl-admin-style', RCL_URL.'css/admin.css' );
+    wp_enqueue_style( 'rcl-admin-style', RCL_URL.'rcl-admin/admin.css' );
     wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'rcl-admin-scripts', RCL_URL.'js/admin.js', array(), VER_RCL );
+    wp_enqueue_script( 'rcl-admin-scripts', RCL_URL.'rcl-admin/admin.js', array(), VER_RCL );
 }
 
 function rcl_fileapi_scripts() {

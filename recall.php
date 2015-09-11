@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://wppost.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 13.3.1
+    Version: 13.4.0
     Author: Plechev Andrey
     Author URI: http://wppost.ru/
     GitHub Plugin URI: https://github.com/plechev-64/wp-recall
@@ -25,7 +25,7 @@ function init_global_rcl(){
 
 	$rcl_options = get_option('primary-rcl-options');
 
-	define('VER_RCL', '13.3.1');
+	define('VER_RCL', '13.4.0');
 
 	$upload_dir = rcl_get_wp_upload_dir();
 
@@ -194,6 +194,7 @@ function recall_uninstall() {
             delete_option('custom_saleform_fields');
             delete_option('primary-rcl-options');
             delete_option('active_addons_recall');*/
+    wp_clear_scheduled_hook('rcl_daily_addon_update');
     wp_clear_scheduled_hook('days_garbage_file_rcl');
 }
 register_uninstall_hook(__FILE__, 'recall_uninstall');
