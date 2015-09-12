@@ -34,8 +34,12 @@ function rcl_repository_page(){
 
     $context  = stream_context_create($options);
     $result = file_get_contents($url, false, $context);
-
     $result =  json_decode($result);
+    //print_r($result);exit;
+
+    if(!$result){
+        echo '<h2>Не удалось получить данные.</h2>'; exit;
+    }
 
     if(is_array($result)&&isset($result['error'])){
         echo '<h2>Ошибка! '.$result['error'].'</h2>'; exit;

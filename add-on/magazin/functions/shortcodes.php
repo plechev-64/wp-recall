@@ -333,13 +333,14 @@ function rcl_slider_products($atts, $content = null){
 	'title'=> true,
 	'desc'=> 280,
         'order'=> 'DESC',
-        'size'=> array(9999,300)
+        'size'=> '9999,300'
 	),
     $atts));
 
     return rcl_slider(array(
         'type'=>'products',
         'tax'=>'prodcat',
+        'num' => $num,
         'term'=>$cat,
         'desc'=>$desc,
         'title'=>$title,

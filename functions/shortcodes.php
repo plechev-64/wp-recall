@@ -338,8 +338,8 @@ function rcl_slider($atts, $content = null){
 	'num' => 5,
 	'term' => '',
         'type' => 'post',
-		'post_meta' => false,
-		'meta_value' => false,
+        'post_meta' => false,
+        'meta_value' => false,
         'tax' => 'category',
 	'exclude' => false,
         'include' => false,
@@ -347,7 +347,7 @@ function rcl_slider($atts, $content = null){
 	'title'=> true,
 	'desc'=> 280,
         'order'=> 'DESC',
-        'size'=> array(9999,300)
+        'size'=> '9999,300'
 	),
     $atts));
 
@@ -366,7 +366,7 @@ function rcl_slider($atts, $content = null){
             array(
                 'taxonomy'=>$tax,
                 'field'=>'id',
-                'terms'=> array($term)
+                'terms'=> explode(',',$term)
             )
 	);
 
@@ -377,10 +377,13 @@ function rcl_slider($atts, $content = null){
                 'value'=>$meta_value
             )
 	);
-
+        //print_r($args);
 	$posts = get_posts($args);
 
 	if(!$posts) return false;
+
+        $size = explode(',',$size);
+        $size = (isset($size[1]))? $size: $size[0];
 
 	$plslider = '<ul class="slider-rcl">';
 	foreach($posts as $post){
@@ -391,7 +394,6 @@ function rcl_slider($atts, $content = null){
             $thumb_url = wp_get_attachment_image_src( $thumb_id, $size);
             $plslider .= '<li><a href="'.get_permalink($post->ID).'">';
             if($type='products'){
-
                 $plslider .= rcl_get_price($post->ID);
             }
             $plslider .= '<img src='.$thumb_url[0].'>';

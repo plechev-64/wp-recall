@@ -167,6 +167,9 @@ function rcl_get_wp_upload_dir(){
     }else{
         $upload_dir = wp_upload_dir();
     }
+
+    if (is_ssl()) $upload_dir['baseurl'] = str_replace( 'http://', 'https://', $upload_dir['baseurl'] );
+
     return $upload_dir;
 }
 
