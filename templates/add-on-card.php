@@ -36,7 +36,7 @@
         </div>-->
         <div class="column-updated">
             <strong>Обновление:</strong> <span title="<?php echo $addon->update; ?>">
-                <?php echo human_time_diff(strtotime($addon->update),time() ); ?>
+                <?php echo human_time_diff(strtotime($addon->update),time() ).' назад'; ?>
             </span>
         </div>
         <div class="column-downloaded"><?php echo $addon->downloads; ?> загрузок</div>
