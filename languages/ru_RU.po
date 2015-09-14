@@ -3133,7 +3133,7 @@ msgstr "Вход и регистрация"
 
 #: functions/rcl_custom_fields.php:15 functions/rcl_editfields.php:153
 msgid "Agreement"
-msgstr "Соглашение"
+msgstr "Пользовательское соглашение"
 
 #: functions/rcl_custom_fields.php:88
 msgid "Max size"

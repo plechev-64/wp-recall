@@ -483,9 +483,10 @@ function rcl_add_dropzone(idzone){
     function rcl_zoom_avatar(e){
         var link = jQuery(e);
         var src = link.data('zoom');
-        jQuery('body > div').last().after('<div id=\'rcl-preview\' title=\'Аватар пользователя\'><img class=aligncenter src=\''+src+'\'></div>');
+        jQuery('body > div').last().after('<div id=\'rcl-preview\'><img class=aligncenter src=\''+src+'\'></div>');
         jQuery( '#rcl-preview' ).dialog({
             modal: true,
+            draggable: false,
             imageQuality: 1,
             resizable: false,
             width:355,

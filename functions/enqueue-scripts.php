@@ -129,6 +129,7 @@ function rcl_frontend_scripts(){
             foreach($dirs as $dir){
                 if(!file_exists($dir.'/'.$rcl_options['color_theme'].'.css')) continue;
                 wp_enqueue_style( 'rcl-theme', rcl_path_to_url($dir.'/'.$rcl_options['color_theme'].'.css') );
+                break;
             }
         }
 

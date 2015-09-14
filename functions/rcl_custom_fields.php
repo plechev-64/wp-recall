@@ -12,7 +12,7 @@ class Rcl_Custom_Fields{
     }
 
     function get_title($field){
-        if($field['type']=='agree') return __('Agreement','rcl');
+        if($field['type']=='agree'&&$field['url-agreement']) return '<a href="'.$field['url-agreement'].'">'.$field['title'].'</a>';
         return $field['title'];
     }
 
@@ -100,7 +100,7 @@ class Rcl_Custom_Fields{
 
     function get_type_agree($field){
         return '<input type="checkbox" '.checked($this->value,1,false).' '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" value="1"/> '
-                . '<a href="'.$field['field_select'].'">'.$field['title'].'</a>';
+                . $field['field_select'];
     }
 
     function get_type_select($field){

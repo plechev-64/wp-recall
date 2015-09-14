@@ -58,6 +58,8 @@ function rcl_update_profile_fields($user_id){
 
     $get_fields = get_option( 'custom_profile_field' );
 
+    $get_fields = apply_filters('rcl_profile_fields',$get_fields);
+
     if($get_fields){
         foreach((array)$get_fields as $custom_field){
             $custom_field = apply_filters('update_custom_field_profile',$custom_field);
@@ -417,7 +419,8 @@ function rcl_tab_profile_content($author_lk){
         $profile_block .= '</table>';
 
 	$get_fields = get_option( 'custom_profile_field' );
-	//$get_fields = unserialize( $get_fields);
+
+        $get_fields = apply_filters('rcl_profile_fields',$get_fields);
 
 	if($get_fields){
 

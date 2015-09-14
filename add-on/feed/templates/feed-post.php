@@ -31,13 +31,14 @@
 	<div class="feed-content">
             <?php if($post->post_type=='video'||$post->post_type=='attachment') echo $post->post_content;
                 else{
-                    $post_content = strip_tags($post->post_content);
+                    /*$post_content = strip_tags($post->post_content);
                     if($post->post_excerpt) $post_content = strip_tags($post->post_excerpt);
                     if(strlen($post_content) > 300){
                             $post_content = substr($post_content, 0, 300);
                             $post_content = preg_replace('@(.*)\s[^\s]*$@s', '\\1 ...', $post_content);
                     }
-                    echo apply_filters('the_excerpt',$post_content);
+                    echo apply_filters('the_excerpt',$post_content);*/
+                    the_excerpt();
                 }  ?>
         </div>
 	<div class="feed-comment"><?php  _e('Comments','rcl'); ?> (<?php echo $post->comment_count; ?>)</div>

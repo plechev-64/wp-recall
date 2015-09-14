@@ -96,6 +96,7 @@ class Rcl_EditFields {
         : '';
 
         $textarea_select .= ($this->vals['type']=='file')? '<input type="number" name="field[sizefile]['.$this->vals['slug'].']" value="'.$this->vals['sizefile'].'"> '.__('maximum size of uploaded file, MB (Default - 2)','rcl').'<br>':'';
+        $textarea_select .= ($this->vals['type']=='agree')? '<input type="url" name="field[url-agreement]['.$this->vals['slug'].']" value="'.$this->vals['url-agreement'].'"> '.__('URL Agreement','rcl').'<br>':'';
 
         $field = '<li id="item-'.$this->vals['slug'].'" class="menu-item menu-item-edit-active">
                 '.$this->header_field().'
@@ -318,6 +319,9 @@ class Rcl_EditFields {
 
                     if($_POST['field']['type'][$a]=='file'){
                         $fields[$a]['sizefile'] = $_POST['field']['sizefile'][$_POST['field']['slug'][$a]];
+                    }
+                    if($_POST['field']['type'][$a]=='agree'){
+                        $fields[$a]['url-agreement'] = $_POST['field']['url-agreement'][$_POST['field']['slug'][$a]];
                     }
                     if(isset($tps[$_POST['field']['type'][$a]])){
                         $fields[$a]['field_select'] = $_POST['field']['field_select'][$fs++];
