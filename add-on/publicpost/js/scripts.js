@@ -229,7 +229,9 @@ function rcl_preview(e){
 	var submit = jQuery(e);
 	var formblock = submit.parents('form');
 	var required = true;
-	
+        
+        //jQuery('#contentarea').tinymce().save();
+
 	formblock.find(':required').each(function(){
 		if(!jQuery(this).val()){
 			jQuery(this).css('box-shadow','0px 0px 1px 1px red');
@@ -243,12 +245,17 @@ function rcl_preview(e){
 		rcl_notice('Заполните все обязательные поля!','error');
 		return false;
 	}
+        
+        submit.attr('disabled',true).val('Идет отправка, подождите...');
 	
 	var iframe = jQuery("#contentarea_ifr").contents().find("#tinymce").html();
-	if(iframe) formblock.find('textarea[name="post_content"]').html(iframe);
-	submit.attr('disabled',true).val('Идет отправка, подождите...');
-	var string   = formblock.serialize();
-	//if(iframe) string += '&post_content='+iframe;
+	if(iframe){
+            tinyMCE.triggerSave();
+            formblock.find('textarea[name="post_content"]').html(iframe);
+        }
+	
+        var string   = formblock.serialize();
+
 	var dataString = 'action=rcl_preview_post&'+string;
 	jQuery.ajax({
 		type: 'POST', 
@@ -280,6 +287,11 @@ function rcl_preview(e){
 	}); 
 	return false;
 
+}
+
+function rcl_get_prefiew_content(formblock,iframe){
+    formblock.find('textarea[name="post_content"]').html(iframe);
+    return formblock.serialize();
 }
 
 function rcl_preview_close(e){

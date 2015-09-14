@@ -747,17 +747,18 @@ function rcl_preview_post(){
 	$post_content = '';
 
 	if(is_array($_POST['post_content'])){
-		foreach($_POST['post_content'] as $contents){
-			foreach($contents as $type=>$content){
-				if($type=='text') $content = strip_tags($content);
-				if($type=='header') $content = sanitize_text_field($content);
-				if($type=='html') $content = str_replace('\'','"',$content);
-				$post_content .= "[rcl-box type='$type' content='$content']";
-			}
-		}
+            foreach($_POST['post_content'] as $contents){
+                foreach($contents as $type=>$content){
+                    if($type=='text') $content = strip_tags($content);
+                    if($type=='header') $content = sanitize_text_field($content);
+                    if($type=='html') $content = str_replace('\'','"',$content);
+                    $post_content .= "[rcl-box type='$type' content='$content']";
+                }
+            }
 	}else{
-		$content = str_replace('\'','"',$_POST['post_content']);
-		$post_content = "[rcl-box type='html' content='$content']";
+		//$content = str_replace('\\"','',$_POST['post_content']);
+		//$post_content = "[rcl-box type='html' content='$content']";
+                $post_content = stripslashes_deep($_POST['post_content']);
 	}
 
 	$post_content = rcl_get_editor_content($post_content,'preview');
@@ -1165,7 +1166,7 @@ function rcl_public_file_scripts($script){
 			});
 			return false;
 		});
-		jQuery('form.public-form #get-media-rcl').click(function(){
+		jQuery('form #get-media-rcl').click(function(){
 			var dataString = 'action=get_media&user_ID='+user_ID;
 
 			jQuery.ajax({
