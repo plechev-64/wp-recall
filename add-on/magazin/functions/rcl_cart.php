@@ -158,8 +158,7 @@ class Rcl_Cart {
                     <table class="form-table">'.$order_field.'</table>';
 
                     $basket .= rcl_get_button('Оформить заказ','#',array('icon'=>false,'class'=>'confirm_order'))
-                                                .'</div>
-                    <div class="redirectform" style="text-align:center;"></div>';
+                                                .'</div>';
 
                     $basket .= "<script>
                     jQuery(function(){
@@ -259,6 +258,7 @@ class Rcl_Cart {
                 }
             }
 
-            return '<form id="rcl-cart" method="post">'.$basket.'</form>';
+            return '<form id="rcl-cart" method="post">'.$basket.'</form>'
+                    . '<div class="redirectform" style="text-align:center;"></div>';
     }
 }

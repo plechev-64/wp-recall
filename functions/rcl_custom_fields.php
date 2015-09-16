@@ -19,7 +19,7 @@ class Rcl_Custom_Fields{
     function get_input($field,$value=false){
         global $user_LK,$user_ID;
 
-        $this->value = $value;
+        $this->value = (isset($field['default'])&&!$value)? $field['default']: $value;
         $this->slug = $field['slug'];
         $this->required = ($field['requared']==1)? 'required': '';
 
