@@ -219,6 +219,12 @@ class Rcl_Payment{
     function robokassa(){
         global $rmag_options;
 
+        if($rmag_options['robotest']==1){
+            $pass2 = $rmag_options['test_tworobopass'];
+        }else{
+            $pass2 = $rmag_options['tworobopass'];
+        }
+
         $this->summ = $_REQUEST["OutSum"];
         $this->id_pay = $_REQUEST["InvId"];
         $this->user = $_REQUEST["shpa"];
@@ -229,7 +235,7 @@ class Rcl_Payment{
         $my_crc = strtoupper(md5
                 ("$this->summ:"
                 . "$this->id_pay:"
-                . "".$rmag_options['tworobopass'].":"
+                . "".$pass2.":"
                 . "Shp_item=".$_REQUEST['Shp_item'].":"
                 . "shpa=$this->user:"
                 . "shpb=$this->type"));

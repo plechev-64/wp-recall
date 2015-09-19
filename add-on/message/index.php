@@ -96,10 +96,7 @@ class Rcl_Messages{
 			add_filter('wp_head',array(&$this, 'add_global_update_new_mess_script'));
 			add_filter('wp_footer',array(&$this, 'add_rcl_new_mess_conteiner'));
                         add_filter('access_chat_rcl',array(&$this, 'get_chek_ban_user'),10,2);
-
-                        if(function_exists('rcl_block'))
-                            rcl_block('header',array(&$this, 'get_header_black_list_button'),array('id'=>'bl-block','order'=>50,'public'=>1));
-
+                        add_action('init',array(&$this, 'rcl_add_block_black_list_button'));
 			//if(function_exists('add_shortcode'))
                             //add_shortcode('chat',array(&$this, 'get_shortcode_chat'));
 		endif;
@@ -129,6 +126,10 @@ class Rcl_Messages{
 	function add_rcl_new_mess_conteiner(){
 		echo '<div id="rcl-new-mess"></div>';
 	}
+
+        function rcl_add_block_black_list_button(){
+            rcl_block('header',array(&$this, 'get_header_black_list_button'),array('id'=>'bl-block','order'=>50,'public'=>1));
+        }
 
 	function add_global_update_new_mess_script(){
 		global $rcl_options;

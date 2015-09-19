@@ -129,6 +129,11 @@ function rcl_subscriptions_tab($user_id){
     return $content;
 }
 
+add_action('init','rcl_add_block_feed_button');
+function rcl_add_block_feed_button(){
+    rcl_block('header','rcl_get_feed_button',array('id'=>'fd-footer','order'=>5,'public'=>-1));
+}
+
 class Rcl_Feed{
 
     public function __construct() {
@@ -146,10 +151,6 @@ class Rcl_Feed{
 
         if (!is_admin()):
                 if(function_exists('add_shortcode')) add_shortcode('feed',array(&$this, 'last_post_and_comments_feed'));
-                if(function_exists('rcl_block')){
-                    //rcl_block('content',array(&$this, 'add_feed_button_user_lk'),array('id'=>'fd-block','order'=>10));
-                    rcl_block('header','rcl_get_feed_button',array('id'=>'fd-footer','order'=>5,'public'=>-1));
-                }
         endif;
 
     }

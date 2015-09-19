@@ -151,13 +151,17 @@ class Rcl_Payform {
     function robokassa(){
         global $rmag_options;
 
+        if($rmag_options['robotest']==1){
+            $formaction = 'http://test.robokassa.ru/Index.aspx';
+            $pass1 = $rmag_options['test_onerobopass'];
+        }else{
+            $formaction = 'https://merchant.roboxchange.com/Index.aspx';
+            $pass1 = $rmag_options['onerobopass'];
+        }
+
         $login = $rmag_options['robologin'];
-        $pass1 = $rmag_options['onerobopass'];
 
         $crc = md5("$login:$this->summ:$this->id_pay:$pass1:Shp_item=2:shpa=$this->user:shpb=$this->type");
-
-        if($rmag_options['robotest']==1) $formaction = 'http://test.robokassa.ru/Index.aspx';
-        else $formaction = 'https://merchant.roboxchange.com/Index.aspx';
 
         $submit = ($this->type==1)? __('Confirm the operation','rcl'): __('Pay through payment system','rcl');
 

@@ -5,7 +5,11 @@ function rcl_profile_options_page(){
 	add_submenu_page( 'manage-wprecall', __('Profile fields','rcl'), __('Profile fields','rcl'), 'manage_options', 'manage-userfield', 'rcl_manage_profile_fields');
 }
 
-rcl_block('content','rcl_get_show_profile_fields',array('id'=>'pf-block','order'=>20,'public'=>1));
+add_action('init','rcl_add_block_show_profile_fields');
+function rcl_add_block_show_profile_fields(){
+    rcl_block('content','rcl_get_show_profile_fields',array('id'=>'pf-block','order'=>20,'public'=>1));
+}
+
 function rcl_get_show_profile_fields($author_lk){
 	$profile_fields='';
 	return apply_filters('show_profile_fields_rcl',$profile_fields,$author_lk);

@@ -62,18 +62,39 @@ function rcl_user_account_options($content){
                         $opt->title(__('Connection settings ROBOKASSA','rcl')),
                         $opt->label(__('The ID of the store','rcl')),
                         $opt->option('text',array('name'=>'robologin')),
-                        $opt->label(__('1 Password','rcl')),
-                        $opt->option('password',array('name'=>'onerobopass')),
-                        $opt->label(__('2 Password','rcl')),
-                        $opt->option('password',array('name'=>'tworobopass')),
                         $opt->label(__('The status of the account ROBOKASSA','rcl')),
                         $opt->option('select',array(
                             'name'=>'robotest',
+                            'parent'=>true,
                             'options'=>array(
                                 __('Work','rcl'),
                                 __('Test','rcl')
                             )
                         )),
+                        $opt->child(
+                            array(
+                                'name'=>'robotest',
+                                'value'=>0
+                            ),
+                            array(
+                                $opt->label(__('1 Password','rcl')),
+                                $opt->option('password',array('name'=>'onerobopass')),
+                                $opt->label(__('2 Password','rcl')),
+                                $opt->option('password',array('name'=>'tworobopass'))
+                            )
+                        ),
+                        $opt->child(
+                            array(
+                                'name'=>'robotest',
+                                'value'=>1
+                            ),
+                            array(
+                                $opt->label(__('1 Password','rcl')),
+                                $opt->option('password',array('name'=>'test_onerobopass')),
+                                $opt->label(__('2 Password','rcl')),
+                                $opt->option('password',array('name'=>'test_tworobopass'))
+                            )
+                        )
                     )
                 ),
                 $opt->child(
