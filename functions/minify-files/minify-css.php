@@ -89,7 +89,7 @@ function rcl_minify_style(){
 }
 
 /*not found*/
-function rcl_get_tail_addon_url($url){
+/*function rcl_get_tail_addon_url($url){
     $array = explode('/',$url);
     $tail = false;
     foreach($array as $key=>$ar){
@@ -99,4 +99,4 @@ function rcl_get_tail_addon_url($url){
         }
     }
     return $tail;
-}
+}*/

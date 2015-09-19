@@ -19,7 +19,7 @@ class Rcl_Payform {
     }
 
     function payform(){
-        global $rmag_options;
+        global $rmag_options,$user_ID;
         if($rmag_options['connect_sale']==1){ //если используется робокасса
             $form = $this->robokassa();
         }
@@ -34,7 +34,7 @@ class Rcl_Payform {
         }
 
         $type_p = $rmag_options['type_order_payment'];
-        if($type_p==2&&$this->type==2)
+        if($user_ID&&$type_p==2&&$this->type==2)
 			$form .= '<input class="recall-button" type="button" name="pay_order" onclick="'.$this->callback.'(this);return false;" data-order="'.$this->id_pay.'" value="'.__('Pay personal account','rcl').'">';
 
         return $form;

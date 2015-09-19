@@ -178,7 +178,13 @@ function rcl_button_avatar_upload($content,$author_lk){
         $avatar = get_user_meta($author_lk,'rcl_avatar',1);
 
         if($avatar){
-            $content .= '<a title="'.__('Zoom avatar','rcl').'" data-zoom="'.RCL_UPLOAD_URL.'avatars/'.$author_lk.'.jpg" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="fa fa-search-plus"></i></a>';
+            if(is_numeric($avatar)){
+                $image_attributes = wp_get_attachment_image_src($avatar);
+                $url_avatar = $image_attributes[0];
+            }else{
+                $url_avatar = $avatar;
+            }
+            $content .= '<a title="'.__('Zoom avatar','rcl').'" data-zoom="'.$url_avatar.'" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="fa fa-search-plus"></i></a>';
         }
 
 	if($user_ID!=$author_lk) return $content;
@@ -904,5 +910,39 @@ function rcl_get_profile_scripts($script){
 	return $script;
 }
 add_filter('file_footer_scripts_rcl','rcl_get_profile_scripts');
+
+add_filter('rcl_functions_js','rcl_profile_functions_js');
+function rcl_profile_functions_js($string){
+    $string .= "function rcl_zoom_avatar(e){
+        var link = jQuery(e);
+        var src = link.data('zoom');
+        jQuery('body > div').last().after('<div id=\'rcl-preview\'><img class=aligncenter src=\''+src+'\'></div>');
+        jQuery( '#rcl-preview img' ).load(function() {
+            jQuery( '#rcl-preview' ).dialog({
+                modal: true,
+                draggable: false,
+                imageQuality: 1,
+                resizable: false,
+                width:355,
+                close: function (e, data) {
+                    jQuery( this ).dialog( 'close' );
+                    jQuery( '#rcl-preview' ).remove();
+                },
+                buttons: {
+                    Ок: function() {
+                        jQuery( this ).dialog( 'close' );
+                    }
+                }
+            });
+        });
+    }
+    function rcl_more_view(e){
+        var link = jQuery(e);
+        var icon = link.children('i');
+        link.parent().children('div').slideToggle();
+        icon.toggleClass('fa-plus-square-o fa-minus-square-o');
+    }";
+    return $string;
+}
 
 include_once 'upload-avatar.php';

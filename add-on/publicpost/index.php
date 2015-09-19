@@ -51,7 +51,10 @@ function rcl_saveform_data_script($content,$data){
     return $content;
 }
 
-rcl_postlist('rcl','post',__('Records','rcl'),array('order'=>30));
+add_action('init','rcl_add_postlist_posts');
+function rcl_add_postlist_posts(){
+    rcl_postlist('rcl','post',__('Records','rcl'),array('order'=>30));
+}
 
 add_action('init','rcl_init_publics_block');
 function rcl_init_publics_block(){

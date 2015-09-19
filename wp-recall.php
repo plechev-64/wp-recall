@@ -12,52 +12,40 @@
 
 /*  Copyright 2012  Plechev Andrey  (email : support {at} wppost.ru)  */
 
-//определяем глобальные переменные
 $path_parts = pathinfo(__FILE__);
+
+if(defined( 'MULTISITE' )){
+    $upload_dir = array(
+        'basedir' => WP_CONTENT_DIR.'/uploads',
+        'baseurl' => WP_CONTENT_URL.'/uploads'
+    );
+}else{
+    $upload_dir = wp_upload_dir();
+}
+
+if (is_ssl()) $upload_dir['baseurl'] = str_replace( 'http://', 'https://', $upload_dir['baseurl'] );
+
+define('VER_RCL', '13.4.4');
+
+define('RCL_URL', plugin_dir_url( __FILE__ ));
+define('RCL_PREF', $wpdb->base_prefix.'rcl_');
+
 define('RCL_PATH', $path_parts['dirname'].'/');
 
-function init_global_rcl(){
-	global $wpdb;
-	global $user_ID;
-	global $rcl_current_action;
-	global $rcl_user_URL;
-	global $rcl_options;
+define('TEMP_PATH', $upload_dir['basedir'].'/temp-rcl/');
+define('TEMP_URL', $upload_dir['baseurl'].'/temp-rcl/');
 
-	$rcl_options = get_option('primary-rcl-options');
+define('RCL_UPLOAD_PATH', $upload_dir['basedir'].'/rcl-uploads/');
+define('RCL_UPLOAD_URL', $upload_dir['baseurl'].'/rcl-uploads/');
 
-	define('VER_RCL', '13.4.4');
+define('RCL_TAKEPATH', WP_CONTENT_DIR.'/wp-recall/');
 
-	$upload_dir = rcl_get_wp_upload_dir();
-
-	define('TEMP_PATH', $upload_dir['basedir'].'/temp-rcl/');
-	define('TEMP_URL', $upload_dir['baseurl'].'/temp-rcl/');
-
-        define('RCL_UPLOAD_PATH', $upload_dir['basedir'].'/rcl-uploads/');
-	define('RCL_UPLOAD_URL', $upload_dir['baseurl'].'/rcl-uploads/');
-
-        if(!file_exists(RCL_UPLOAD_PATH)&&file_exists(TEMP_PATH)){
-            rename(TEMP_PATH,RCL_UPLOAD_PATH);
-            rcl_rename_media_dir();
-        }
-
-        define('RCL_TAKEPATH', WP_CONTENT_DIR.'/wp-recall/');
-
-	define('RCL_URL', plugin_dir_url( __FILE__ ));
-	define('RCL_PREF', $wpdb->base_prefix.'rcl_');
-
-        if(!is_dir($upload_dir['basedir'])){
-            mkdir($upload_dir['basedir']);
-            chmod($upload_dir['basedir'], 0755);
-        }
-
-	$rcl_user_URL = get_author_posts_url($user_ID);
-	$rcl_current_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_ID));
+add_action( 'plugins_loaded', 'rcl_load_plugin_textdomain' );
+function rcl_load_plugin_textdomain() {
+    load_theme_textdomain('rcl', RCL_PATH.'languages/');
 }
-add_action('init','init_global_rcl',1);
 
-require_once("functions-rcl.php");
-
-function recall_install(){
+function rcl_activate(){
     global $wpdb,$rcl_options;
 
     init_global_rcl();
@@ -184,9 +172,9 @@ function recall_install(){
 
     //rcl_update_dinamic_files();
 }
-register_activation_hook(__FILE__,'recall_install');
+register_activation_hook(__FILE__,'rcl_activate');
 
-function recall_uninstall() {
+function rcl_uninstall() {
     /*delete_option('custom_orders_field');
             delete_option('custom_profile_field');
             delete_option('custom_profile_search_form');
@@ -197,11 +185,34 @@ function recall_uninstall() {
     wp_clear_scheduled_hook('rcl_daily_addon_update');
     wp_clear_scheduled_hook('days_garbage_file_rcl');
 }
-register_uninstall_hook(__FILE__, 'recall_uninstall');
+register_uninstall_hook(__FILE__, 'rcl_uninstall');
 
-function wp_recall(){
-    rcl_include_template('cabinet.php');
+//определяем глобальные переменные
+function init_global_rcl(){
+	global $wpdb;
+	global $user_ID;
+	global $rcl_current_action;
+	global $rcl_user_URL;
+	global $rcl_options;
+
+	$rcl_options = get_option('primary-rcl-options');
+
+	$upload_dir = rcl_get_wp_upload_dir();
+
+        if(!file_exists(RCL_UPLOAD_PATH)&&file_exists(TEMP_PATH)){
+            rename(TEMP_PATH,RCL_UPLOAD_PATH);
+            rcl_rename_media_dir();
+        }
+
+        if(!is_dir($upload_dir['basedir'])){
+            mkdir($upload_dir['basedir']);
+            chmod($upload_dir['basedir'], 0755);
+        }
+
+	$rcl_user_URL = get_author_posts_url($user_ID);
+	$rcl_current_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_ID));
 }
+add_action('init','init_global_rcl',1);
 
 function init_user_lk(){
     global $wpdb,$user_LK,$rcl_userlk_action,$rcl_options,$user_ID;
@@ -242,6 +253,10 @@ function init_user_lk(){
     }
 }
 if(!is_admin()) add_action('init','init_user_lk',2);
+
+function wp_recall(){
+    rcl_include_template('cabinet.php');
+}
 
 function rcl_buttons(){
     global $user_LK; $content = '';
@@ -321,3 +336,5 @@ function rcl_notice(){
     $notify = apply_filters('notify_lk',$notify);
     if($notify) echo '<div class="notify-lk">'.$notify.'</div>';
 }
+
+require_once("rcl-functions.php");

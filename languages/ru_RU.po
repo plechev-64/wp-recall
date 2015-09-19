@@ -2816,7 +2816,7 @@ msgstr "Страница успешного платежа"
 #: add-on/user-account/index.php:20 add-on/user-account/index.php:48
 #: rcl-admin/admin-pages.php:92 recall.php:108
 msgid "Personal account"
-msgstr "Личный кабинет"
+msgstr "Личный счет"
 
 #: add-on/user-account/index.php:122
 msgid "Payments"

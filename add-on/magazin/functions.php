@@ -6,15 +6,15 @@ function rcl_get_cart_button($product_id){
     if(get_post_meta($product_id, 'outsale', 1)) return false;
 
     if(get_post_meta($product_id, 'availability_product', 1)=='empty'){ //если товар цифровой
-        $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'data-product='.$product_id)).'</div>';
+        $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'onclick="rcl_add_cart(this);return false;" data-product='.$product_id)).'</div>';
     }else{
         if($rmag_options['products_warehouse_recall']==1){
             $amount = get_post_meta($product_id, 'amount_product', 1);
             if($amount>0||$amount==false){
-                $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'data-product='.$product_id)).'</div>';
+                $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'onclick="rcl_add_cart(this);return false;" data-product='.$product_id)).'</div>';
             }
         }else{
-            $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'data-product='.$product_id)).'</div>';
+            $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'onclick="rcl_add_cart(this):return false;" data-product='.$product_id)).'</div>';
         }
     }
 

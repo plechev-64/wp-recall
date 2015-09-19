@@ -243,7 +243,7 @@ class Rcl_Order {
         <p>Заказ №'.$this->order_id.' получил статус "Не оплачено".</p>
         '.$table_order;
 
-        $link = rcl_format_url(get_author_posts_url($user_id),'order');
+        $link = rcl_format_url(get_author_posts_url($user_id),'orders');
         $textmail .= '<p>Ссылка для управления заказами: <a href="'.$link.'">'.$link.'</a></p>';
 
         $mail = array(

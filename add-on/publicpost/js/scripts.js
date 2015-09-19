@@ -123,9 +123,9 @@ function rcl_delete_post(element){
 }
 
 function rcl_edit_post(element){
-	var id_contayner = 'rcl-popup-content';
-	var contayner = jQuery( '#'+id_contayner );
+	var id_contayner = 'rcl-popup-content';	
 	jQuery('body > div').last().after('<div id=\''+id_contayner+'\' title=\'Быстрое редактирование\'></div>');
+        var contayner = jQuery( '#'+id_contayner );
 	contayner.dialog({
 		modal: true,
 		resizable: false,

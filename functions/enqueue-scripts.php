@@ -1,10 +1,4 @@
 <?php
-
-add_action( 'plugins_loaded', 'rcl_load_plugin_textdomain' );
-function rcl_load_plugin_textdomain() {
-    load_theme_textdomain('rcl', RCL_PATH.'languages/');
-}
-
 add_action('wp','rcl_init_scripts');
 function rcl_init_scripts(){
     global $rcl_options,$user_ID,$user_LK;

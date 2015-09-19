@@ -7,9 +7,11 @@ function rcl_shortcode_usercount(){
 	return rcl_get_html_usercount();
 }
 
+require_once 'addon-options.php';
+
 add_action( 'widgets_init', 'rcl_widget_usercount' );
 function rcl_widget_usercount() {
-	register_widget( 'Rcl_Widget_user_count' );
+    register_widget( 'Rcl_Widget_user_count' );
 }
 
 class Rcl_Widget_user_count extends WP_Widget {
@@ -54,8 +56,6 @@ class Rcl_Widget_user_count extends WP_Widget {
 	<?php
 	}
 }
-
-require_once 'addon-options.php';
 
 function rcl_payform($args){
     if (!class_exists('Rcl_Payform')) include_once plugin_dir_path( __FILE__ ).'rcl_payform.php';

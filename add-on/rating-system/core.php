@@ -240,7 +240,7 @@ function rcl_rating_navi($args){
         $args['rating_type'] = $type['rating_type'];
         $active = (!$navi)? 'active' : '';
 		$icon = (isset($type['icon']))? $type['icon']: 'fa-list-ul';
-        $navi .= rcl_get_button($type['type_name'],'#',array('class'=> 'fa '.$icon.' get-list-votes '.$active,'attr'=>'data-rating="'.rcl_encode_data_rating('user',$args).'"')).' ';
+        $navi .= rcl_get_button($type['type_name'],'#',array('class'=> 'fa '.$icon.' get-list-votes '.$active,'attr'=>'onclick="rcl_get_list_votes(this);return false;" data-rating="'.rcl_encode_data_rating('user',$args).'"')).' ';
     }
 
     return $navi;
@@ -293,7 +293,7 @@ function rcl_get_votes_window($args,$votes,$navi=false){
 
     if($navi) $window .= $navi;
 
-            $window .= '<a href="#" class="close">'
+            $window .= '<a href="#" onclick="rcl_close_votes_window(this);return false;" class="close">'
                 . '<i class="fa fa-times-circle"></i>'
             . '</a>';
 

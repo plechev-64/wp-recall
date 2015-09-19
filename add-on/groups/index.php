@@ -173,7 +173,8 @@ function rcl_add_taxonomy_public_groups($tax){
     return $tax;
 }
 
-if(function_exists('rcl_postlist')){
+add_action('init','rcl_add_postlist_group');
+function rcl_add_postlist_group(){
     rcl_postlist('group','post-group',__('Record groups','rcl'),array('order'=>40));
 }
 

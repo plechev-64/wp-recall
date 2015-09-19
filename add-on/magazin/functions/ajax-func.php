@@ -443,7 +443,7 @@ function rcl_register_user_order(){
                         $creds['remember'] = true;
                         $user = wp_signon( $creds, false );
 
-                        $redirect_url = rcl_format_url(get_author_posts_url($user_id),'order');
+                        $redirect_url = rcl_format_url(get_author_posts_url($user_id),'orders');
 
                     }else{
 

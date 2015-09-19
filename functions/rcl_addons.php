@@ -1,35 +1,98 @@
 <?php
+
+rcl_include_addons();
+
+function rcl_include_addons(){
+    global $active_addons;
+
+    $active_addons = get_site_option('active_addons_recall');
+    $path_addon_rcl = RCL_PATH.'add-on/';
+    $path_addon_theme = RCL_TAKEPATH.'add-on/';
+    foreach((array)$active_addons as $key=>$addon){
+        if(!$addon) continue;
+        if(file_exists($path_addon_theme.$key.'/index.php')){
+            include_once($path_addon_theme.$key.'/index.php');
+        }else if(file_exists($path_addon_rcl.$key.'/index.php')){
+            include_once($path_addon_rcl.$key.'/index.php');
+        }else{
+            unset($active_addons[$key]);
+        }
+    }
+
+    $rcl_addons = new Rcl_Addons();
+
+}
+
+function rcl_activate_addon($addon){
+    $active_addons = get_site_option('active_addons_recall');
+    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+
+    foreach($paths as $path){
+        if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
+        $index_src = $path.'/'.$addon.'/index.php';
+        if(!file_exists($index_src)) continue;
+
+        $active_addons[$addon]['src'] = $path.'/'.$addon;
+        $install_src = $path.'/'.$addon.'/activate.php';
+
+        if(file_exists($install_src)){
+            include($install_src);
+            break;
+        }
+    }
+
+    update_site_option('active_addons_recall',$active_addons);
+
+    do_action('rcl_activate_'.$addon,$active_addons[$addon]);
+}
+
+function rcl_deactivate_addon($addon){
+    $active_addons = get_site_option('active_addons_recall');
+    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+
+    foreach($paths as $path){
+        if(file_exists($path.'/'.$addon.'/deactivate.php')){
+            include($path.'/'.$addon.'/deactivate.php');
+            break;
+        }
+    }
+
+    unset($active_addons[$addon]);
+
+    update_site_option('active_addons_recall',$active_addons);
+
+    do_action('rcl_deactivate_'.$addon);
+}
+
+function rcl_delete_addon($addon){
+    $active_addons = get_site_option('active_addons_recall');
+    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+
+    foreach($paths as $path){
+        if(file_exists($path.'/'.$addon.'/delete.php')) include($path.'/'.$addon.'/deactivate.php');
+        rcl_remove_dir($path.'/'.$addon);
+    }
+
+    unset($active_addons[$addon]);
+
+    update_site_option('active_addons_recall',$active_addons);
+
+    do_action('rcl_delete_'.$addon);
+}
+
 class Rcl_Addons{
 
     public function __construct() {
-
-		add_action('init', array(&$this, 'update_status_addon_recall_activate'));
-		add_action('init', array(&$this, 'update_options_rcl_activate'));
-		add_action('init', array(&$this, 'upload_addon_recall_activate'));
-		add_action('admin_init', array(&$this, 'update_group_addon_recall_activate'));
-		add_action('admin_menu', array(&$this, 'wp_recall_addons_panel'),20);
-		add_action('init', array(&$this, 'get_include_activate_addons_recall'),1);
+        add_action('init', array(&$this, 'update_status_addon_recall_activate'));
+        add_action('init', array(&$this, 'update_options_rcl_activate'));
+        add_action('init', array(&$this, 'upload_addon_recall_activate'));
+        add_action('admin_init', array(&$this, 'update_group_addon_recall_activate'));
+        add_action('admin_menu', array(&$this, 'wp_recall_addons_panel'),20);
+        //add_action('init', array(&$this, 'get_include_activate_addons_recall'),1);
     }
 
 	function wp_recall_addons_panel(){
 		add_submenu_page( 'manage-wprecall', __('Add-on manager','rcl'), __('Add-on manager','rcl'), 'manage_options', 'manage-addon-recall', array( $this, 'recall_addon_manage'));
-	}
-
-	function get_include_activate_addons_recall(){
-		global $active_addons;
-		$active_addons = get_site_option('active_addons_recall');
-                $path_addon_rcl = RCL_PATH.'add-on/';
-                $path_addon_theme = RCL_TAKEPATH.'add-on/';
-		foreach((array)$active_addons as $key=>$addon){
-                    if(!$addon) continue;
-                    if(file_exists($path_addon_theme.$key.'/index.php')){
-                        include_once($path_addon_theme.$key.'/index.php');
-                    }else if(file_exists($path_addon_rcl.$key.'/index.php')){
-                        include_once($path_addon_rcl.$key.'/index.php');
-                    }else{
-                        unset($active_addons[$key]);
-                    }
-		}
 	}
 
 	function actual_url_rcl(){
@@ -271,42 +334,19 @@ class Rcl_Addons{
 
                 $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
+                $addon = $_GET['addon'];
+
 		if($_GET['status']=='activate'){
-                    foreach($paths as $path){
-                        if(file_exists($path.'/'.$_GET['addon'].'/index.php')){
-                            $active_addons[$_GET['addon']]['src'] = $path.'/'.$_GET['addon'].'/';
-                            if(file_exists($path.'/'.$_GET['addon'].'/activate.php')) include($path.'/'.$_GET['addon'].'/activate.php');
-                            break;
-                        }
-                    }
-                    update_site_option('active_addons_recall',$active_addons);
+                    rcl_activate_addon($addon);
                     wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
 		}
 		if($_GET['status']=='deactivate'){
-                    foreach((array)$active_addons as $key=>$src){
-                        if($_GET['addon']!=$key){
-                            $new_active_list[$key] = $src;
-                        }else{
-                            foreach($paths as $path){
-                                if(file_exists($path.'/'.$_GET['addon'].'/deactivate.php')){
-                                    include($path.'/'.$_GET['addon'].'/deactivate.php');
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    update_site_option('active_addons_recall',$new_active_list);
+                    rcl_deactivate_addon($addon);
                     wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
 		}
 		if($_GET['status']=='delete'){
-                    foreach($paths as $path){
-                        if(file_exists($path.'/'.$_GET['addon'])){
-                            if(file_exists($path.'/'.$_GET['addon'].'/delete.php')) include($path.'/'.$_GET['addon'].'/delete.php');
-                            $this->rcl_removeDir( $path.'/'.$_GET['addon'] );
-                            break;
-                        }
-                    }
-                    wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=delete') );exit;
+                   rcl_delete_addon($addon);
+                   wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=delete') );exit;
 		}
 	  }
 	}
@@ -354,8 +394,7 @@ class Rcl_Addons{
 		$scripts = '';
 		$scripts = apply_filters('file_footer_scripts_rcl',$scripts);
                 if(!isset($scripts)) return false;
-		if($scripts) $scripts = "jQuery(function($){".$scripts." /*FileAPI.each(examples, function (fn){ fn(); });*/});";
-		//$scripts = apply_filters('javascripts_rcl',$scripts);
+		if($scripts) $scripts = "jQuery(function($){".$scripts."});";
 		$scripts = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $scripts);
 		$scripts =  preg_replace('/ {2,}/',' ',$scripts);
 		fwrite($f, $scripts);
@@ -365,12 +404,8 @@ class Rcl_Addons{
 	function update_group_addon_recall_activate ( ) {
 
 	  if ( isset( $_POST['group-addon-action'] ) ) {
+              global $wpdb,$user_ID,$active_addons;
 
-		//add_action( 'wp', array(&$this, 'update_group_addon_recall') );
-              global $wpdb;
-		global $user_ID;
-		global $active_addons;
-                //print_r($_POST);exit;
 		if(!$_POST['checked']|| !wp_verify_nonce($_POST['_wpnonce'],'action-addons') ){
 			wp_redirect( admin_url('admin.php?page=manage-addon-recall') );exit;
 		}
@@ -556,59 +591,5 @@ class Rcl_Addons{
 	  }
 	}
 }
-$rcl_addons = new Rcl_Addons();
+
 require_once("rcl_update.php");
-
-function rcl_activate_addon($addon){
-    $active_addons = get_site_option('active_addons_recall');
-    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
-
-    foreach($paths as $path){
-        if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
-        $active_addons[$addon]['src'] = $path;
-        $install_src = RCL_PATH.'add-on/'.$addon.'/activate.php';
-        $index_src = RCL_PATH.'add-on/'.$addon.'/index.php';
-        if(file_exists($install_src)){
-            include($install_src);
-            break;
-        }
-    }
-
-    update_site_option('active_addons_recall',$active_addons);
-
-    do_action('rcl_activate_'.$addon,$active_addons[$addon]);
-}
-
-function rcl_deactivate_addon($addon){
-    $active_addons = get_site_option('active_addons_recall');
-    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
-
-    foreach($paths as $path){
-        if(file_exists($path.'/'.$addon.'/deactivate.php')){
-            include($path.'/'.$addon.'/deactivate.php');
-            unset($active_addons[$addon]);
-            break;
-        }
-    }
-
-    update_site_option('active_addons_recall',$active_addons);
-
-    do_action('rcl_deactivate_'.$addon);
-}
-
-function rcl_delete_addon($addon){
-    $active_addons = get_site_option('active_addons_recall');
-    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
-
-    foreach($paths as $path){
-        if(file_exists($path.'/'.$addon.'/delete.php')){
-            include($path.'/'.$addon.'/delete.php');
-            unset($active_addons[$addon]);
-            break;
-        }
-    }
-
-    update_site_option('active_addons_recall',$active_addons);
-
-    do_action('rcl_delete_'.$addon);
-}

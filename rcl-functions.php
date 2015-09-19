@@ -1,12 +1,13 @@
 <?php
+require_once("functions/minify-files/minify-css.php");
+require_once("functions/rcl_addons.php");
+require_once('functions/enqueue-scripts.php');
 if(is_admin()) require_once("rcl-admin/admin-pages.php");
 require_once("functions/deprecated.php");
 require_once('functions/migration.php');
 require_once("functions/tabs_options.php");
-require_once("functions/minify-files/minify-css.php");
-require_once("widget.php");
+require_once("rcl-widgets.php");
 require_once("functions/shortcodes.php");
-require_once("functions/rcl_addons.php");
 require_once('functions/includes.php');
 require_once('functions/navi-rcl.php');
 require_once('functions/recallbar.php');
@@ -19,8 +20,6 @@ require_once('functions/rcl_currency.php');
 if(class_exists('ReallySimpleCaptcha')){
     require_once('functions/captcha.php');
 }
-
-require_once('functions/enqueue-scripts.php');
 
 //добавляем вкладку со списком публикаций хозяина ЛК указанного типа записей в личный кабинет
 function rcl_postlist($id,$posttype,$name='',$args=false){

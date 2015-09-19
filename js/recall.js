@@ -324,13 +324,6 @@ jQuery(function($){
 
 });
 
-function rcl_more_view(e){
-    var link = jQuery(e);
-    var icon = link.children('i');
-    link.parent().children('div').slideToggle();
-    icon.toggleClass('fa-plus-square-o fa-minus-square-o');   
-}
-
 function rcl_add_dropzone(idzone){
 
     jQuery(document.body).bind("drop", function(e){
@@ -478,26 +471,4 @@ function rcl_add_dropzone(idzone){
 
     function rcl_preloader_hide(){
             jQuery('.rcl_preloader').remove();
-    }
-    
-    function rcl_zoom_avatar(e){
-        var link = jQuery(e);
-        var src = link.data('zoom');
-        jQuery('body > div').last().after('<div id=\'rcl-preview\'><img class=aligncenter src=\''+src+'\'></div>');
-        jQuery( '#rcl-preview' ).dialog({
-            modal: true,
-            draggable: false,
-            imageQuality: 1,
-            resizable: false,
-            width:355,
-            close: function (e, data) {
-                jQuery( this ).dialog( 'close' );
-                jQuery( '#rcl-preview' ).remove();
-            },
-            buttons: {
-                Ок: function() {
-                    jQuery( this ).dialog( 'close' );
-                }
-            }
-        });
     }

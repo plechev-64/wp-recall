@@ -182,7 +182,7 @@ class Rcl_EditPost {
 
         $postdata = apply_filters('pre_update_postdata_rcl',$postdata,$this);
 
-		if(!$postdata) return false;
+        if(!$postdata) return false;
 
         $user_info = get_userdata($user_ID);
 
