@@ -1098,9 +1098,11 @@ function rcl_footer_publics_scripts($script){
 		},
 		change:function (e, data) {
 			var error = 0;
+                        rcl_preloader_show('#tab-postform');
 			$.each(data.files, function (index, file) {
 				if(file['size']>".$maxsize."){
 					rcl_notice('Превышен максимальный размер для файла '+file['name']+'! Макс. ".$maxsize_mb."MB','error');
+                                        rcl_preloader_hide();
 					error = 1;
 				}
 			});
@@ -1112,6 +1114,7 @@ function rcl_footer_publics_scripts($script){
 					$('#temp-files').append(file['string']);
 				}
 			});
+                        rcl_preloader_hide();
 		}
 	});";
 	return $script;

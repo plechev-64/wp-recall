@@ -1,6 +1,5 @@
 <?php
 require_once("functions/minify-files/minify-css.php");
-require_once("functions/rcl_addons.php");
 require_once('functions/enqueue-scripts.php');
 if(is_admin()) require_once("rcl-admin/admin-pages.php");
 require_once("functions/deprecated.php");
@@ -784,3 +783,5 @@ function rcl_get_scripts_ajaxload_tabs($script){
 	";
 	return $script;
 }
+
+require_once("functions/rcl_addons.php");

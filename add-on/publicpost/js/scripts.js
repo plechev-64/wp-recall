@@ -104,22 +104,22 @@ function rcl_delete_editor_box(e){
 }
 
 function rcl_delete_post(element){
-	if(confirm('Действительно удалить?')){
-		var post_id = jQuery(element).data('post');
-		var dataString = 'action=rcl_ajax_delete_post&post_id='+post_id;
-		jQuery.ajax({
-			type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',
-			success: function(data){
-				if(data['result']==100){
-					jQuery('#'+data['post_type']+'-'+post_id).remove();
-					rcl_notice('Материал успешно удален!','success');
-				}else{
-					rcl_notice('Удаление не удалось!','error');
-					return false;
-				}
-			}
-		});
-	}
+    if(confirm('Действительно удалить?')){
+        var post_id = jQuery(element).data('post');
+        var dataString = 'action=rcl_ajax_delete_post&post_id='+post_id;
+        jQuery.ajax({
+            type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',
+            success: function(data){
+                if(data['result']==100){
+                        jQuery('#'+data['post_type']+'-'+post_id).remove();
+                        rcl_notice('Материал успешно удален!','success');
+                }else{
+                        rcl_notice('Удаление не удалось!','error');
+                        return false;
+                }
+            }
+        });
+    }
 }
 
 function rcl_edit_post(element){

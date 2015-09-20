@@ -222,9 +222,9 @@ class Rcl_PublicForm {
                         . '</div>';
                 else{
 
-					if(!$user_ID) return '<p align="center">'.__('You must be logged in to post. Login or register','rcl').'</p>';
+		if(!$user_ID) return '<p align="center">'.__('You must be logged in to post. Login or register','rcl').'</p>';
 
-					return '<h3 class="aligncenter">'
+		return '<h3 class="aligncenter">'
                     . __('Sorry, but you have no right<br>to publish the records on this site :(','rcl')
                         . '</h3>';
 				}
@@ -234,7 +234,7 @@ class Rcl_PublicForm {
             	'title'=>true,
             	'termlist'=>true,
             	'editor'=>true,
-                'excerpt'=>true,
+                'excerpt'=>false,
             	'custom_fields'=>true,
                 'upload'=>true,
                 'tags'=>true
