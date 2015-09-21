@@ -137,13 +137,10 @@ function rcl_add_block_feed_button(){
 class Rcl_Feed{
 
     public function __construct() {
-        global $user_ID;
 
         add_action('wp_ajax_get_posts_feed_recall', array(&$this, 'get_posts_feed_recall'));
-		//add_action('wp_ajax_get_all_users_feed_recall', array(&$this, 'get_all_users_feed_recall'));
-		//add_action('wp_ajax_get_all_your_feed_users', array(&$this, 'get_all_your_feed_users'));
-		add_action('wp_ajax_get_comments_feed_recall', array(&$this, 'get_comments_feed_recall'));
-        if($user_ID) add_action('wp_ajax_add_feed_user_recall', array(&$this, 'add_feed_user_recall'));
+        add_action('wp_ajax_get_comments_feed_recall', array(&$this, 'get_comments_feed_recall'));
+        add_action('wp_ajax_add_feed_user_recall', array(&$this, 'add_feed_user_recall'));
 
         add_filter('file_scripts_rcl',array(&$this, 'get_scripts_feed_rcl'));
         if(function_exists('rcl_comment_rating'))
@@ -516,6 +513,7 @@ class Rcl_Feed{
 		return $script;
 	}
 }
+
 $Rcl_Feed = new Rcl_Feed();
 
 function rcl_get_public_feed($user_id=false){
