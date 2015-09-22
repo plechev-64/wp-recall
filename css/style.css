@@ -524,6 +524,12 @@ span.ruble-symbol{
 #rcl-dialog input[type="text"]{
     min-width: 310px;
 }
+.rcl-tab-button .rcl-menu-notice{
+    background-color: #3F7BAA;
+    color: #fff;
+    border-radius: 999px;
+    padding: 2px 7px;
+}
 
 @media only screen and (min-width: 240px) and (max-width: 720px) {
 	.wprecallblock .left-buttons .recall-button{

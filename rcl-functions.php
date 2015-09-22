@@ -121,6 +121,12 @@ function rcl_get_data_tab($data){
     return $data;
 }
 
+function rcl_add_balloon_menu($data,$args){
+    if($data['id']!=$args['tab_id']||!$args['ballon_value']) return $data;
+    $data['name'] = sprintf('%s <span class="rcl-menu-notice">%s</span>',$data['name'],$args['ballon_value']);
+    return $data;
+}
+
 add_action('wp_ajax_rcl_ajax_tab', 'rcl_ajax_tab');
 add_action('wp_ajax_nopriv_rcl_ajax_tab', 'rcl_ajax_tab');
 function rcl_ajax_tab(){

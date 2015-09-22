@@ -58,13 +58,22 @@ function rcl_add_followers_tab(){
     rcl_tab('followers','rcl_followers_tab',__('Followers','rcl'),array('public'=>1,'output'=>'sidebar','class'=>'fa-twitter'));
 }
 
-add_filter('tab_data_rcl','rcl_add_counter_followers',10);
-function rcl_add_counter_followers($tab){
-     global $user_LK;
-    if($tab['id']!='followers') return $tab;
-    $cnt = rcl_get_count_feed($user_LK);
-    $tab['name'] .= ': '.$cnt;
-    return $tab;
+add_filter('tab_data_rcl','rcl_add_count_notice_tab',10);
+function rcl_add_count_notice_tab($data){
+    global $user_LK;
+    return rcl_add_balloon_menu($data,array(
+        'tab_id'=>'followers',
+        'ballon_value'=>rcl_get_count_feed($user_LK))
+    );
+}
+
+add_filter('tab_data_rcl','rcl_add_counter_subscriptions',10);
+function rcl_add_counter_subscriptions($data){
+    global $user_LK;
+    return rcl_add_balloon_menu($data,array(
+        'tab_id'=>'subscriptions',
+        'ballon_value'=>rcl_count_user_feed($user_LK))
+    );
 }
 
 function rcl_followers_tab($user_id){
@@ -105,15 +114,6 @@ function rcl_add_button_feed_tabs($content){
 add_action('init','rcl_add_subscriptions_tab');
 function rcl_add_subscriptions_tab(){
     rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','rcl'),array('public'=>0,'output'=>'sidebar','class'=>'fa-bell-o'));
-}
-
-add_filter('tab_data_rcl','rcl_add_counter_subscriptions',10);
-function rcl_add_counter_subscriptions($tab){
-     global $user_LK;
-    if($tab['id']!='subscriptions') return $tab;
-    $cnt = rcl_count_user_feed($user_LK);
-    $tab['name'] .= ': '.$cnt;
-    return $tab;
 }
 
 function rcl_subscriptions_tab($user_id){
