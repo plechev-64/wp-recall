@@ -58,8 +58,8 @@ function rcl_add_followers_tab(){
     rcl_tab('followers','rcl_followers_tab',__('Followers','rcl'),array('public'=>1,'output'=>'sidebar','class'=>'fa-twitter'));
 }
 
-add_filter('tab_data_rcl','rcl_add_count_notice_tab',10);
-function rcl_add_count_notice_tab($data){
+add_filter('tab_data_rcl','rcl_add_counter_followers_tab',10);
+function rcl_add_counter_followers_tab($data){
     global $user_LK;
     return rcl_add_balloon_menu($data,array(
         'tab_id'=>'followers',
