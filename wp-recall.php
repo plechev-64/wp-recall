@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://wppost.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 13.5.2
+    Version: 13.5.3
     Author: Plechev Andrey
     Author URI: http://wppost.ru/
     GitHub Plugin URI: https://github.com/plechev-64/wp-recall
@@ -26,7 +26,7 @@ if(defined( 'MULTISITE' )){
 
 if (is_ssl()) $upload_dir['baseurl'] = str_replace( 'http://', 'https://', $upload_dir['baseurl'] );
 
-define('VER_RCL', '13.5.2');
+define('VER_RCL', '13.5.3');
 
 define('RCL_URL', plugin_dir_url( __FILE__ ));
 define('RCL_PREF', $wpdb->base_prefix.'rcl_');
@@ -94,7 +94,7 @@ function rcl_activate(){
             $rcl_options = array(
                 'view_user_lk_rcl' => 1,
                 'color_theme' => 'blue',
-                'lk_page_rcl' => wp_insert_post(array('post_title'=>__('Personal account','rcl'),'post_content'=>'[wp-recall]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'account'))
+                'lk_page_rcl' => wp_insert_post(array('post_title'=>__('Personal office','rcl'),'post_content'=>'[wp-recall]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'account'))
             );
 
             wp_insert_post(array('post_title'=>__('Users','rcl'),'post_content'=>'[userlist]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'users'));

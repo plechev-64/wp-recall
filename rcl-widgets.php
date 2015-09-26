@@ -135,7 +135,7 @@ class Widget_author_profil extends WP_Widget {
 	function Widget_author_profil() {
 		$widget_ops = array( 'classname' => 'widget_author_profil', 'description' => __('The block with the main profile information','rcl') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-author-profil' );
-		parent::__construct( 'widget-author-profil', __('User profile','rcl'), $widget_ops, $control_ops );
+		parent::__construct( 'widget-author-profil', __('Control panel','rcl'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {

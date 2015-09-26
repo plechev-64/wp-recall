@@ -40,6 +40,8 @@ function rcl_orders($author_lk){
 
                 $order = rcl_get_order($_GET['order-id']);
 
+                if($order->order_author!=$user_ID) return false;
+
                 $status = $order->order_status;
                 $order_id = $order->order_id;
                 $price = $order->order_price;

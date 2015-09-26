@@ -219,7 +219,8 @@ function rcl_notice_form($form='login'){
                 'email'=>__('Invalid E-mail!','rcl')
             ),
             'success'=>array(
-                'true'=>__('Registration is completed! Check your email.','rcl')
+                'true'=>__('Registration is completed!','rcl'),
+                'confirm-email'=>__('Registration is completed! Check your email.','rcl')
             )
         ),
         'login'=> array(

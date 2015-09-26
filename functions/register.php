@@ -126,7 +126,10 @@ function rcl_get_register_user(){
 
             rcl_register_mail(array('user_id'=>$user_id,'password'=>$pass,'login'=>$login,'email'=>$email));
 
-            wp_redirect(rcl_format_url($ref).'action-rcl=login&success=true');exit;
+            if($rcl_options['confirm_register_recall']==1) wp_redirect(rcl_format_url($ref).'action-rcl=register&success=confirm-email');
+            else wp_redirect(rcl_format_url($ref).'action-rcl=register&success=true');
+
+            exit;
 
         }
 }
