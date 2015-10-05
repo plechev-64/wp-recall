@@ -1098,7 +1098,8 @@ function rcl_footer_publics_scripts($script){
 		},
 		change:function (e, data) {
 			var error = 0;
-                        rcl_preloader_show('#tab-postform');
+                        /*rcl_preloader_show('#tab-postform');*/
+                        rcl_preloader_show('.public_block form');
 			$.each(data.files, function (index, file) {
 				if(file['size']>".$maxsize."){
 					rcl_notice('Превышен максимальный размер для файла '+file['name']+'! Макс. ".$maxsize_mb."MB','error');
@@ -1150,7 +1151,7 @@ function rcl_public_file_scripts($script){
 			if(error==0) return true;
 			else return false;
 		});
-		jQuery('#rcl-popup').on('click','#user-media-list .rcl-navi a',function(){
+		jQuery('#rcl-popup').on('click','.rcl-navi.ajax-navi a',function(){
 			var page = jQuery(this).text();
 			var dataString = 'action=get_media&user_ID='+user_ID+'&page='+page;
 

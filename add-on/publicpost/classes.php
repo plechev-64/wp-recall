@@ -31,21 +31,31 @@ class Rcl_List_Terms{
 	public $sel;
 	public $cat_list;
 	public $allcats;
-        public $selected;
+    public $selected;
+	public $taxonomy;
+
+	function __construct($taxonomy=false){
+		$this->taxonomy = $taxonomy;
+	}
 
 	function get_select_list($allcats,$cat_list,$cnt,$ctg){
                 if(!$allcats) return false;
 		$catlist = '';
-                //print_r($cat_list);
+
 		if($ctg) $this->ctg = $ctg;
 		$this->allcats = $allcats;
+
+		if($cat_list&&is_array($cat_list)&&$this->taxonomy){
+			$cat_list = get_terms( $this->taxonomy, array('include'=>$cat_list) );
+		}
+
 		$this->cat_list = $cat_list;
 		for($this->sel=0;$this->sel<$cnt;$this->sel++){
                         $this->selected = false;
-			$catlist .= '<p><select class="postform" name="cats[]">';
+			$catlist .= '<select class="postform" name="cats[]">';
 			if($this->sel>0) $catlist .= '<option value="">'.__('Not selected','rcl').'</option>';
 			$catlist .= $this->get_option_list();
-			$catlist .= '</select></p>';
+			$catlist .= '</select>';
 		}
 		return $catlist;
 	}
@@ -78,7 +88,7 @@ class Rcl_List_Terms{
 	}
 
 	function get_loop_child($cat){
-                $catlist = false;
+        $catlist = false;
 		$child = $this->get_child_option($cat->term_id,$this->a);
 		if($child){
                     $catlist = '<optgroup label="'.$cat->name.'">'.$child.'</optgroup>';
@@ -103,17 +113,20 @@ class Rcl_List_Terms{
 	}
 
 	function get_child_option($term_id,$a){
-                $catlist = false;
+        $catlist = false;
 		foreach($this->allcats as $cat){
 			if($cat->parent!=$term_id) continue;
 			$child = '';
 			$b = '-'.$a;
 			$child = $this->get_child_option($cat->term_id,$b);
+
 			if($child){
                             $catlist .= '<optgroup label=" '.$b.' '.$cat->name.'">'.$child.'</optgroup>';
                         }else{
+
                             $selected = '';
                             if(!$this->selected&&$this->cat_list){
+
                                 foreach($this->cat_list as $key=>$sel){
                                     if($sel->term_id==$cat->term_id){
                                         $selected = selected($sel->term_id,$cat->term_id,false);

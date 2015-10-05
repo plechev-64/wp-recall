@@ -10,6 +10,8 @@ function rcl_user_account_options($content){
 
         $opt = new Rcl_Options(rcl_key_addon(pathinfo(__FILE__)));
 
+        $pay_options = array( __('Not used','rcl') );
+
         $content .= '<span class="title-option active">'.__('Payment systems','rcl').'</span>
 	<div id="options-'.rcl_key_addon(pathinfo(__FILE__)).'" style="display:block" class="wrap-recall-options">';
 
@@ -45,109 +47,11 @@ function rcl_user_account_options($content){
                 $opt->option('select',array(
                     'name'=>'connect_sale',
                     'parent'=>true,
-                    'options'=>array(
-                        __('Not used','rcl'),
-                        __('Robokassa','rcl'),
-                        __('Interkassa','rcl'),
-                        __('WalletOne','rcl'),
-                        __('Yandex.Kassa','rcl').' ('.__('not tested','rcl').')'
-                    )
+                    'options'=>apply_filters('rcl_pay_option',$pay_options)
                 )),
-                $opt->child(
-                    array(
-                        'name'=>'connect_sale',
-                        'value'=>1
-                    ),
-                    array(
-                        $opt->title(__('Connection settings ROBOKASSA','rcl')),
-                        $opt->label(__('The ID of the store','rcl')),
-                        $opt->option('text',array('name'=>'robologin')),
-                        $opt->label(__('The status of the account ROBOKASSA','rcl')),
-                        $opt->option('select',array(
-                            'name'=>'robotest',
-                            'parent'=>true,
-                            'options'=>array(
-                                __('Work','rcl'),
-                                __('Test','rcl')
-                            )
-                        )),
-                        $opt->child(
-                            array(
-                                'name'=>'robotest',
-                                'value'=>0
-                            ),
-                            array(
-                                $opt->label(__('1 Password','rcl')),
-                                $opt->option('password',array('name'=>'onerobopass')),
-                                $opt->label(__('2 Password','rcl')),
-                                $opt->option('password',array('name'=>'tworobopass'))
-                            )
-                        ),
-                        $opt->child(
-                            array(
-                                'name'=>'robotest',
-                                'value'=>1
-                            ),
-                            array(
-                                $opt->label(__('1 Password','rcl')),
-                                $opt->option('password',array('name'=>'test_onerobopass')),
-                                $opt->label(__('2 Password','rcl')),
-                                $opt->option('password',array('name'=>'test_tworobopass'))
-                            )
-                        )
-                    )
-                ),
-                $opt->child(
-                    array(
-                        'name'=>'connect_sale',
-                        'value'=>2
-                    ),
-                    array(
-                        $opt->title(__('Connection settings Interkassa','rcl')),
-                        $opt->label(__('Secret Key','rcl')),
-                        $opt->option('password',array('name'=>'intersecretkey')),
-                        $opt->label(__('Test Key','rcl')),
-                        $opt->option('password',array('name'=>'intertestkey')),
-                        $opt->label(__('The ID of the store','rcl')),
-                        $opt->option('text',array('name'=>'interidshop')),
-                        $opt->label(__('The status of the account Interkassa','rcl')),
-                        $opt->option('select',array(
-                            'name'=>'interkassatest',
-                            'options'=>array(
-                                __('Work','rcl'),
-                                __('Test','rcl')
-                            )
-                        )),
-                    )
-                ),
-                $opt->child(
-                    array(
-                        'name'=>'connect_sale',
-                        'value'=>3
-                    ),
-                    array(
-                        $opt->title(__('Connection settings WalletOne','rcl')),
-                        $opt->label(__('Merchant ID','rcl')),
-                        $opt->option('text',array('name'=>'WO_MERCHANT_ID')),
-                        $opt->label(__('The secret key','rcl')),
-                        $opt->option('password',array('name'=>'WO_SECRET_KEY'))
-                    )
-                ),
-                $opt->child(
-                    array(
-                        'name'=>'connect_sale',
-                        'value'=>4
-                    ),
-                    array(
-                        $opt->title(__('Connection settings Yandex.Kassa','rcl')),
-                        $opt->label(__('ID cash','rcl')),
-                        $opt->option('text',array('name'=>'shopid')),
-                        $opt->label(__('The room showcases','rcl')),
-                        $opt->option('text',array('name'=>'scid')),
-                        $opt->label(__('The secret word','rcl')),
-                        $opt->option('password',array('name'=>'secret_word')),
-                    )
-                )
+
+                apply_filters('rcl_pay_child_option',$pay_options_child)
+                
             )
         );
 

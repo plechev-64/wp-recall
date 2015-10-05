@@ -243,7 +243,7 @@ function rcl_get_button($ancor,$url,$args=false){
 	if(isset($args['class'])) $button .= $args['class'];
 	$button .= '">';
 	if(isset($args['icon'])) $button .= '<i class="fa '.$args['icon'].'"></i>';
-	$button .= $ancor;
+	$button .= '<span>'.$ancor.'</span>';
 	$button .= '</a>';
 	return $button;
 }

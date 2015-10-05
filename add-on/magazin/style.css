@@ -266,3 +266,9 @@ text-align: center;
     min-width: 200px;
     display: block;
 }
+#product-gallery{
+    margin:30px 0;
+}
+#product-gallery .bx-wrapper{
+    margin-bottom:20px;
+}

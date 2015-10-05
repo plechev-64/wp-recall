@@ -89,6 +89,7 @@
 .panel_lk_recall .form-tab-rcl .form-title {
     margin: 5px;
     text-align: center;
+    font-size: 20px;
 }
 .panel_lk_recall .form-tab-rcl .form-block-rcl {
     margin: 7px 0;
@@ -104,13 +105,50 @@
     border-radius: 3px;
     padding: 5px;
     width: 95%;
-	color:#333;
+    color:#333;
+}
+.panel_lk_recall .form-tab-rcl .form-block-rcl select{
+    width: 98%;
+}
+.panel_lk_recall .form-block-rcl .default-field{
+    position: relative;
+    margin: 5px 0;
+}
+.panel_lk_recall .form-tab-rcl .form-block-rcl .default-field input{
+    
+padding-left: 25px;
+    
+margin-left: 15px;
+    
+width: 82%;
+}
+.panel_lk_recall .form-block-rcl .default-field .field-icon{
+    position: absolute;
+    background-color: #DEDEDE;
+    border-radius: 999px;
+    font-size: 20px;
+    padding: 7px;
+    display: inline-block;
+    height: 22px;
+    width: 22px;
+    text-align: center;
+    top: -2px;
+    left: 0px;
+    color: #909090;
+}
+.panel_lk_recall .form-block-rcl .default-field .field-icon [class^="fa fa-"]:before, 
+.panel_lk_recall .form-block-rcl .default-field .field-icon [class*=" fa fa-"]:before{
+    
+padding: 0;
 }
 .panel_lk_recall .form-tab-rcl .form-block-rcl label {
     display: block;
 }
 .panel_lk_recall .form-tab-rcl input[type="submit"] {
     float: right;
+    border: none;
+    font-size: 16px;
+    padding: 5px 15px;
 }
 .panel_lk_recall .form-tab-rcl .input-container {
     clear:both;

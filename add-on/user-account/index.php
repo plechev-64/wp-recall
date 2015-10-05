@@ -2,74 +2,24 @@
 
 rcl_enqueue_style('user_account',__FILE__);
 
-add_shortcode('rcl-usercount','rcl_shortcode_usercount');
-function rcl_shortcode_usercount(){
-	return rcl_get_html_usercount();
-}
-
-require_once 'addon-options.php';
-
-add_action( 'widgets_init', 'rcl_widget_usercount' );
-function rcl_widget_usercount() {
-    register_widget( 'Rcl_Widget_user_count' );
-}
-
-class Rcl_Widget_user_count extends WP_Widget {
-
-	function Rcl_Widget_user_count() {
-		$widget_ops = array( 'classname' => 'widget-user-count', 'description' => __('Personal account of the user','rcl') );
-		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-user-count' );
-		parent::__construct( 'widget-user-count', __('Personal account','rcl'), $widget_ops, $control_ops );
-	}
-
-	function widget( $args, $instance ) {
-            extract( $args );
-
-            $title = apply_filters('widget_title', $instance['title'] );
-            global $user_ID;
-
-            if ($user_ID){
-                echo $before_widget;
-                if ( $title ) echo $before_title . $title . $after_title;
-                echo rcl_get_html_usercount();
-                echo $after_widget;
-            }
-
-	}
-
-	//Update the widget
-	function update( $new_instance, $old_instance ) {
-		$instance = $old_instance;
-		//Strip tags from title and name to remove HTML
-		$instance['title'] = strip_tags( $new_instance['title'] );
-		return $instance;
-	}
-
-	function form( $instance ) {
-		//Set up some default widget settings.
-		$defaults = array( 'title' => __('Personal account','rcl'));
-		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','rcl'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
-		</p>
-	<?php
-	}
-}
+include_once "rcl_payment.php";
+include_once 'gateways/robokassa.php';
+include_once 'gateways/interkassa.php';
+include_once 'gateways/walletone.php';
+//include_once 'gateways/yandexkassa.php';
 
 function rcl_payform($args){
-    if (!class_exists('Rcl_Payform')) include_once plugin_dir_path( __FILE__ ).'rcl_payform.php';
-    $form = new Rcl_Payform($args);
-    return $form->payform();
+    $payment = new Rcl_Payment();
+    return $payment->get_form($args);
 }
 
 function rmag_get_global_unit_wallet(){
-	if (!defined('RMAG_PREF')){
-		global $wpdb;
-		global $rmag_options;
-		$rmag_options = get_option('primary-rmag-options');
-		define('RMAG_PREF', $wpdb->prefix."rmag_");
-	}
+    if (!defined('RMAG_PREF')){
+            global $wpdb;
+            global $rmag_options;
+            $rmag_options = get_option('primary-rmag-options');
+            define('RMAG_PREF', $wpdb->prefix."rmag_");
+    }
 }
 add_action('init','rmag_get_global_unit_wallet',10);
 
@@ -100,8 +50,6 @@ function rcl_update_user_money($newmoney,$user_id=false){
                     );
 
     return rcl_add_user_money($newmoney,$user_id);
-
-
 }
 
 function rcl_add_user_money($money,$user_id=false){
@@ -474,4 +422,57 @@ function rcl_get_chart_payments($pays){
     return rcl_get_chart($chartArgs);
 }
 
-require_once("rcl_payment.php");
+add_shortcode('rcl-usercount','rcl_shortcode_usercount');
+function rcl_shortcode_usercount(){
+	return rcl_get_html_usercount();
+}
+
+add_action( 'widgets_init', 'rcl_widget_usercount' );
+function rcl_widget_usercount() {
+    register_widget( 'Rcl_Widget_user_count' );
+}
+
+class Rcl_Widget_user_count extends WP_Widget {
+
+	function Rcl_Widget_user_count() {
+		$widget_ops = array( 'classname' => 'widget-user-count', 'description' => __('Personal account of the user','rcl') );
+		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-user-count' );
+		parent::__construct( 'widget-user-count', __('Personal account','rcl'), $widget_ops, $control_ops );
+	}
+
+	function widget( $args, $instance ) {
+            extract( $args );
+
+            $title = apply_filters('widget_title', $instance['title'] );
+            global $user_ID;
+
+            if ($user_ID){
+                echo $before_widget;
+                if ( $title ) echo $before_title . $title . $after_title;
+                echo rcl_get_html_usercount();
+                echo $after_widget;
+            }
+
+	}
+
+	//Update the widget
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+		//Strip tags from title and name to remove HTML
+		$instance['title'] = strip_tags( $new_instance['title'] );
+		return $instance;
+	}
+
+	function form( $instance ) {
+		//Set up some default widget settings.
+		$defaults = array( 'title' => __('Personal account','rcl'));
+		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','rcl'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+		</p>
+	<?php
+	}
+}
+
+require_once 'addon-options.php';

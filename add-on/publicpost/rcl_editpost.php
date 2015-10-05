@@ -31,9 +31,11 @@ class Rcl_EditPost {
             }else{
 
                 if(!current_user_can('edit_post', $post_id)) return false;
+
+                $user_info = get_userdata($user_ID);
+
                 if($pst->post_author!=$user_ID){
                     $author_info = get_userdata($pst->post_author);
-                    $user_info = get_userdata($user_ID);
 
                     if($user_info->user_level < $author_info->user_level) return false;
 

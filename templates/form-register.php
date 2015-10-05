@@ -8,11 +8,17 @@ if($typeform=='register') $f_reg = 'style="display:block;"'; ?>
     <form action="" method="post" enctype="multipart/form-data">
         <div class="form-block-rcl">
             <label><?php _e('Nickname','rcl'); ?> <span class="required">*</span></label>
-            <input required type="text" value="" name="login-user" id="login-user">
+            <div class="default-field">
+                <span class="field-icon"><i class="fa fa-user"></i></span>
+                <input required type="text" value="" name="login-user" id="login-user">
+            </div>
         </div>
         <div class="form-block-rcl">
             <label><?php _e('E-mail','rcl'); ?> <span class="required">*</span></label>
-            <input required type="email" value="" name="email-user" id="email-user">
+            <div class="default-field">
+                <span class="field-icon"><i class="fa fa-at"></i></span>
+                <input required type="email" value="" name="email-user" id="email-user">
+            </div>
         </div>
 
         <?php do_action( 'register_form' ); ?>
@@ -20,7 +26,7 @@ if($typeform=='register') $f_reg = 'style="display:block;"'; ?>
         <div class="input-container">
             <input type="submit" class="recall-button" name="submit-register" value="<?php _e('Send','rcl'); ?>">
             <?php if(!$typeform){ ?>
-                <a href="#" class="link-login-rcl link-tab-rcl"><?php _e('Authorization ','rcl'); ?></a>
+                <a href="#" class="link-login-rcl link-tab-rcl"><i class="fa fa-reply-all"></i><?php _e('Authorization ','rcl'); ?></a>
             <?php } ?>
             <?php echo wp_nonce_field('register-key-rcl','_wpnonce',true,false); ?>
             <input type="hidden" name="referer_rcl" value="<?php rcl_referer_url(); ?>">

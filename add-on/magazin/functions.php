@@ -14,7 +14,7 @@ function rcl_get_cart_button($product_id){
                 $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'onclick="rcl_add_cart(this);return false;" data-product='.$product_id)).'</div>';
             }
         }else{
-            $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'onclick="rcl_add_cart(this):return false;" data-product='.$product_id)).'</div>';
+            $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'onclick="rcl_add_cart(this);return false;" data-product='.$product_id)).'</div>';
         }
     }
 
@@ -76,7 +76,8 @@ global $post;
                             rcl_bxslider_scripts();
 				$values = explode(',',$postmeta);
 
-				$gallery = '<ul class="rcl-gallery">';
+				$gallery = '<div id="product-gallery">'
+                                        . '<ul class="rcl-gallery">';
 				foreach((array) $values as $children ){
 					$large = wp_get_attachment_image_src( $children, 'large' );
 					$gallery .= '<li><a class="fancybox" href="'.$large[0].'"><img src="'.$large[0].'"></a></li>';
@@ -90,6 +91,7 @@ global $post;
 						}
 					$gallery .= '</div>';
 				}
+                                $gallery .= '</div>';
 			}
 			return $gallery.$content;
 		}else{
@@ -98,7 +100,8 @@ global $post;
 			if( $attachments->exist() ) :
                             rcl_bxslider_scripts();
 				$num=0;
-				$gallery = '<ul class="rcl-gallery">';
+				$gallery = '<div id="product-gallery">'
+                                        . '<ul class="rcl-gallery">';
 			while( $attachments->get() ) :
 				$num++;
 
@@ -115,6 +118,8 @@ global $post;
 					}
 				$gallery .= '</div>';
 			endif;
+
+                        $gallery .= '</div>';
 
 			return $gallery.$content;
 		}

@@ -41,13 +41,16 @@ function rcl_password_regform($content){
     global $rcl_options;
 
     $content .= '<div class="form-block-rcl">'
-            . '<label>'.__('Password','rcl').' <span class="required">*</span></label>';
+            . '<label>'.__('Password','rcl').' <span class="required">*</span></label>'
+            . '<div class="default-field">
+                <span class="field-icon"><i class="fa fa-lock"></i></span>';
     if($rcl_options['difficulty_parole']==1){
         $content .= '<input required id="primary-pass-user" type="password" onkeyup="passwordStrength(this.value)" value="" name="pass-user">';
     }else{
         $content .= '<input required type="password" value="" id="primary-pass-user" name="pass-user">';
     }
-    $content .= '</div>';
+    $content .= '</div>'
+            . '</div>';
 
     if($rcl_options['difficulty_parole']==1){
         $content .= '<div class="form-block-rcl">
@@ -69,7 +72,10 @@ function rcl_secondary_password($fields){
 
     $fields .= '<div class="form-block-rcl">
                 <label>'.__('Repeat the password','rcl').' <span class="required">*</span></label>
-                <input required id="secondary-pass-user" type="password" value="" name="secondary-email-user">
+                <div class="default-field">
+                    <span class="field-icon"><i class="fa fa-lock"></i></span>
+                    <input required id="secondary-pass-user" type="password" value="" name="secondary-email-user">
+                </div>
                 <div id="notice-chek-password"></div>
             </div>
             <script>jQuery(function(){

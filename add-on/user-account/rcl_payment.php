@@ -1,46 +1,54 @@
 <?php
 class Rcl_Payment{
 
-    public $id_pay; //идентификатор платежа
-    public $summ; //сумма платежа
-    public $type; //тип платежа. 1 - пополнение личного счета, 2 - оплата заказа
-    public $time; //время платежа
-    public $user; //идентификатор пользователя
-    public $pay; //статус платежа
+    public $pay_id; //идентификатор платежа
+    public $pay_summ; //сумма платежа
+    public $pay_type; //тип платежа. 1 - пополнение личного счета, 2 - оплата заказа
+    public $pay_date; //время платежа
+    public $user_id; //идентификатор пользователя
+    public $pay_status; //статус платежа
+    public $pay_callback;
 
     function __construct(){
+
+    }
+
+    function add_payment($type,$data){
+        global $rcl_payments;
+        $rcl_payments[$type] = (object)$data;
+    }
+
+    function payment_process(){
         global $post,$rmag_options;
 
         add_action('insert_pay_rcl',array($this,'pay_account'));
 
-        $this->time = current_time('mysql');
-        if($post->ID==$rmag_options['page_result_pay']) $this->result();
-        if($post->ID==$rmag_options['page_success_pay']) $this->success();
+        $this->pay_date = current_time('mysql');
+        if($post->ID==$rmag_options['page_result_pay']) $this->get_result();
+        if($post->ID==$rmag_options['page_success_pay']) $this->get_success();
     }
 
-    function result(){
-        global $rmag_options;
-        if($rmag_options['connect_sale']==1) $this->robokassa();
-	if($rmag_options['connect_sale']==2) $this->interkassa();
-        if($rmag_options['connect_sale']==3) $this->walletone();
-        if($rmag_options['connect_sale']==4) $this->yandexkassa();
+    function get_result(){
+        global $rmag_options,$rcl_payments;
 
-        if($this->pay) do_action('payment_rcl',$this->user,$this->summ,$this->id_pay,$this->type);
-        echo 'OK';
-        exit;
-    }
-
-    function success(){
-        global $rmag_options;
-
-        if($rmag_options['connect_sale']==1){ //если используется робокасса
-                $this->id_pay = $_REQUEST["InvId"];
-                $this->user = $_REQUEST["shpa"];
+        if(isset($rcl_payments[$rmag_options['connect_sale']])){
+            $obj = new $rcl_payments[$rmag_options['connect_sale']]->class;
+            $method = 'result';
+            $obj->$method($this);
+        }else{
+            return false;
         }
+    }
 
-        if($rmag_options['connect_sale']==2){ //если используется Интеркасса
-                $this->id_pay = $_REQUEST["ik_pm_no"];
-                $this->user = $_REQUEST["ik_x_user_id"];
+    function get_success(){
+        global $rmag_options,$rcl_payments;
+
+        if(isset($rcl_payments[$rmag_options['connect_sale']])){
+            $obj = new $rcl_payments[$rmag_options['connect_sale']]->class;
+            $method = 'success';
+            $obj->$method();
+        }else{
+            return false;
         }
 
         if($this->get_pay()){
@@ -48,268 +56,125 @@ class Rcl_Payment{
         } else {
                 wp_die(__('A record of the payment in the database was not found','rcl'));
         }
-
     }
 
-    function get_pay(){
+    function get_pay($data){
         global $wpdb;
-         return $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RMAG_PREF ."pay_results WHERE inv_id = '%s' AND user = '%d'",$this->id_pay,$this->user));
+        return $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RMAG_PREF ."pay_results WHERE inv_id = '%s' AND user = '%d'",$data->pay_id,$data->user_id));
     }
 
-    function insert_pay(){
+    function insert_pay($data){
         global $wpdb;
 
-        $this->pay = $wpdb->insert( RMAG_PREF .'pay_results',
+        $data->pay_status = $wpdb->insert( RMAG_PREF .'pay_results',
             array(
-                'inv_id' => $this->id_pay,
-                'user' => $this->user,
-                'count' => $this->summ,
-                'time_action' => $this->time
+                'inv_id' => $data->pay_id,
+                'user' => $data->user_id,
+                'count' => $data->pay_summ,
+                'time_action' => $data->pay_date
             )
         );
 
-        if(!$this->pay) exit;
+        if(!$data->pay_status) exit;
 
-        do_action('insert_pay_rcl',$this);
+        do_action('insert_pay_rcl',$data);
 
+        if($data->pay_status)
+            do_action('payment_rcl',$data->user_id,$data->pay_summ,$data->pay_id,$data->pay_type);
+
+        echo 'OK'; exit;
     }
 
     function pay_account($data){
-        global $wpdb;
 
-        if($data->type!=1) return false;
+        if($data->pay_type!=1) return false;
 
-        $oldcount = rcl_get_user_money($this->user);
+        $oldcount = rcl_get_user_money($data->user_id);
 
-        if($oldcount) $newcount = $oldcount + $this->summ;
-        else $newcount = $this->summ;
+        if($oldcount) $newcount = $oldcount + $data->pay_summ;
+        else $newcount = $data->pay_summ;
 
-        rcl_update_user_money($newcount,$this->user);
+        rcl_update_user_money($newcount,$data->user_id);
 
-        do_action('payment_payservice_rcl',$this->user,$this->summ,__('Top up personal account','rcl'),2);
+        do_action('payment_payservice_rcl',$data->user_id,$data->pay_summ,__('Top up personal account','rcl'),2);
     }
 
-    function yandexkassa(){
+    function get_form($args){
 
-        $this->summ = $_REQUEST["orderSumAmount"];
-        $this->id_pay = $_REQUEST["orderNumber"];
-        $this->user = $_REQUEST["customerNumber"];
-        $this->type = $_REQUEST["typePay"];
+        global $rmag_options,$rcl_payments,$user_ID;
 
-        if($_REQUEST['checkOrder']) $this->check_pay();
+        $this->pay_callback = (isset($args['callback']))? $args['callback']: 'rcl_pay_order_private_account';
+        $this->pay_id = $args['id_pay'];
+        $this->pay_summ = $args['summ'];
+        $this->pay_type = $args['type'];
+        if(!$args['user_id']) $this->user_id = $user_ID;
+        else $this->user_id = $args['user_id'];
 
-        $code = $this->check_hash();
-        if(!$code) $this->insert_pay();
-
-        $this->ya_response($code);
-    }
-
-    function check_hash(){
-        global $rmag_options;
-
-        $hash = md5(
-                $_POST['action']
-                .';'.$this->summ
-                .';'.$_POST['orderSumCurrencyPaycash']
-                .';'.$_POST['orderSumBankPaycash']
-                .';'.$_POST['shopId']
-                .';'.$_POST['invoiceId']
-                .';'.$this->user
-                .';'.$rmag_options['secret_word']
-        );
-
-        if (strtolower($hash) != strtolower($_POST['md5'])) {
-                $code = 1;
-        } else {
-            //if (!$this->get_pay()) $code = 200; //Если данного заказа нет
-            if ($this->summ != $_POST['orderSumAmount']) {
-                $code = 100;
-            } else {
-                $code = 0;
-            }
+       if(isset($rcl_payments[$rmag_options['connect_sale']])){
+            $obj = new $rcl_payments[$rmag_options['connect_sale']]->class;
+            $method = 'pay_form';
+            return $obj->$method($this);
         }
-
-        if($code) rcl_mail_payment_error($hash);
-
-        return $code;
     }
 
-    function check_pay(){
-        $code = $this->check_hash();
-        $this->ya_response($code);
+    function form($fields,$data,$formaction){
+        global $rmag_options,$user_ID;
+
+        $submit = ($data->pay_type==1)? __('Confirm the operation','rcl'): __('Pay through payment system','rcl');
+
+        $form = "<form id='form-payment-".$data->pay_id."' style='display: inline;' action='".$formaction."' method=POST>"
+                .$this->get_hiddens( $fields )
+                ."<input class='recall-button' type=submit value='$submit'>"
+                ."</form>";
+
+        $type_p = $rmag_options['type_order_payment'];
+        if($user_ID&&$type_p==2&&$data->pay_type==2)
+            $form .= '<input class="recall-button" type="button" name="pay_order" onclick="'.$data->pay_callback.'(this);return false;" data-order="'.$data->pay_id.'" value="'.__('Pay personal account','rcl').'">';
+
+        return $form;
     }
 
-    function ya_response($code){
-        echo '<?xml version="1.0" encoding="UTF-8"?>
-        <'.$_POST['action'].'Response performedDatetime="'.date('c').'" code="'.$code.'" invoiceId="'.$_POST['invoiceId'].'" shopId="'.$_POST['shopId'].'" />';
-        die();
-    }
-
-    function walletone(){
-        global $rmag_options;
-
-        $secret_key = $rmag_options['WO_SECRET_KEY'];
-
-        $this->summ = $_REQUEST["WMI_PAYMENT_AMOUNT"];
-        $this->id_pay = $_REQUEST["WMI_PAYMENT_NO"];
-        $this->user = $_REQUEST["USER_ID"];
-        $this->type = $_REQUEST["TYPE_PAY"];
-
-        if (!isset($_REQUEST["WMI_SIGNATURE"]))
-            $this->print_answer("Retry", "Отсутствует параметр WMI_SIGNATURE");
-
-          if (!isset($_REQUEST["WMI_PAYMENT_NO"]))
-            $this->print_answer("Retry", "Отсутствует параметр WMI_PAYMENT_NO");
-
-          if (!isset($_REQUEST["WMI_ORDER_STATE"]))
-            $this->print_answer("Retry", "Отсутствует параметр WMI_ORDER_STATE");
-
-          // Извлечение всех параметров POST-запроса, кроме WMI_SIGNATURE
-
-          foreach($_REQUEST as $name => $value)
-          {
-            if ($name !== "WMI_SIGNATURE") $params[$name] = $value;
-          }
-
-          // Сортировка массива по именам ключей в порядке возрастания
-          // и формирование сообщения, путем объединения значений формы
-
-          uksort($params, "strcasecmp"); $values = "";
-
-          foreach($params as $name => $value)
-          {
-            //Конвертация из текущей кодировки (UTF-8)
-            //необходима только если кодировка магазина отлична от Windows-1251
-            //$value = iconv("utf-8", "windows-1251", $value);
-            $values .= $value;
-          }
-
-          // Формирование подписи для сравнения ее с параметром WMI_SIGNATURE
-
-          $signature = base64_encode(pack("H*", md5($values . $secret_key)));
-
-          //Сравнение полученной подписи с подписью W1
-
-          if ($signature == $_REQUEST["WMI_SIGNATURE"]){
-            if (strtoupper($_REQUEST["WMI_ORDER_STATE"]) == "ACCEPTED"){
-              // TODO: Пометить заказ, как «Оплаченный» в системе учета магазина
-              if(!$this->get_pay()){
-                  //print_answer("Ok", "Заказ #" . $_POST["WMI_PAYMENT_NO"] . " оплачен!");
-                  print "WMI_RESULT=" . strtoupper("Ok") . "&";
-                  print "WMI_DESCRIPTION=" .urlencode("Заказ #" . $_POST["WMI_PAYMENT_NO"] . " оплачен!");
-                  $this->insert_pay();
-              }
-            }else{
-              // Случилось что-то странное, пришло неизвестное состояние заказа
-              $this->print_answer("Retry", "Неверное состояние ". $_REQUEST["WMI_ORDER_STATE"]);
-            }
-          }else{
-            // Подпись не совпадает, возможно вы поменяли настройки интернет-магазина
-            $this->print_answer("Retry", "Неверная подпись " . $_REQUEST["WMI_SIGNATURE"],$signature);
-          }
-    }
-
-    function print_answer($result, $description,$signature=false){
-      rcl_mail_payment_error($signature);
-      print "WMI_RESULT=" . strtoupper($result) . "&";
-      print "WMI_DESCRIPTION=" .urlencode($description);
-      exit();
-    }
-
-    function robokassa(){
-        global $rmag_options;
-
-        if($rmag_options['robotest']==1){
-            $pass2 = $rmag_options['test_tworobopass'];
-        }else{
-            $pass2 = $rmag_options['tworobopass'];
+    function get_hiddens($args){
+        foreach($args as $key=>$val){
+            $form .= "<input type=hidden name=$key value='$val'>";
         }
-
-        $this->summ = $_REQUEST["OutSum"];
-        $this->id_pay = $_REQUEST["InvId"];
-        $this->user = $_REQUEST["shpa"];
-        $this->type = $_REQUEST["shpb"];
-
-        $crc = strtoupper($_REQUEST["SignatureValue"]);
-
-        $my_crc = strtoupper(md5
-                ("$this->summ:"
-                . "$this->id_pay:"
-                . "".$pass2.":"
-                . "Shp_item=".$_REQUEST['Shp_item'].":"
-                . "shpa=$this->user:"
-                . "shpb=$this->type"));
-
-        if ($my_crc !=$crc){ rcl_mail_payment_error($my_crc); die;}
-
-        if(!$this->get_pay()) $this->insert_pay();
-
-    }
-
-    function interkassa(){
-        global $rmag_options;
-
-        $this->summ = $_REQUEST["ik_am"];
-        $this->id_pay = $_REQUEST["ik_pm_no"];
-        $this->user = $_REQUEST["ik_x_user_id"];
-        $this->type = $_REQUEST["ik_x_type"];
-
-        foreach ($_POST as $key => $value) {
-            if (!preg_match('/ik_/', $key)) continue;
-            $data[$key] = $value;
-        }
-
-        $ikSign = $data['ik_sign'];
-        unset($data['ik_sign']);
-
-        if ($data['ik_pw_via'] == 'test_interkassa_test_xts') {
-            $secret_key = $rmag_options['intertestkey'];
-        } else {
-            $secret_key = $rmag_options['intersecretkey'];
-        }
-
-        ksort ($data, SORT_STRING);
-        array_push($data, $secret_key);
-        $signStr = implode(':', $data);
-        $sign = base64_encode(md5($signStr, true));
-
-        if ($sign !=$ikSign){ rcl_mail_payment_error($sign); die;}
-
-        if(!$this->get_pay()) $this->insert_pay();
+        return $form;
     }
 
 }
 
 function rcl_mail_payment_error($hash=false){
-	global $rmag_options,$post;
+    global $rmag_options,$post;
 
-	foreach($_REQUEST as $key=>$R){
-            $textmail .= $key.' - '.$R.'<br>';
-	}
-
-	if($hash){
-            $textmail .= 'Cформированный хеш - '.$hash.'<br>';
-            $title = 'Неудачная оплата';
-	}else{
-            $title = 'Данные платежа';
-	}
-
-	$textmail .= 'Текущий пост - '.$post->ID.'<br>';
-	$textmail .= 'RESULT - '.$rmag_options['page_result_pay'].'<br>';
-	$textmail .= 'SUCCESS - '.$rmag_options['page_success_pay'].'<br>';
-
-	$email = $rmag_options['admin_email_magazin_recall'];
-	if(!$email) $email = get_user_meta( 1, 'user_email', true );
-
-	rcl_mail($email, $title, $textmail);
+    foreach($_REQUEST as $key=>$R){
+        $textmail .= $key.' - '.$R.'<br>';
     }
 
+    if($hash){
+        $textmail .= 'Cформированный хеш - '.$hash.'<br>';
+        $title = 'Неудачная оплата';
+    }else{
+        $title = 'Данные платежа';
+    }
+
+    $textmail .= 'Текущий пост - '.$post->ID.'<br>';
+    $textmail .= 'RESULT - '.$rmag_options['page_result_pay'].'<br>';
+    $textmail .= 'SUCCESS - '.$rmag_options['page_success_pay'].'<br>';
+
+    $email = $rmag_options['admin_email_magazin_recall'];
+    if(!$email) $email = get_user_meta( 1, 'user_email', true );
+
+    rcl_mail($email, $title, $textmail);
+}
+
 function rcl_payments(){
-    global $rmag_options;
-    if(!$rmag_options['connect_sale']||!isset($rmag_options['connect_sale'])) return false;
-    $reqs = array(0,'InvId','ik_co_id','WMI_PAYMENT_NO','shopId');
-    if (isset($_REQUEST[$reqs[$rmag_options['connect_sale']]])){
+    global $rmag_options,$rcl_payments;
+
+    if(!$rmag_options['connect_sale']) return false;
+
+    if (isset($_REQUEST[$rcl_payments[$rmag_options['connect_sale']]->request])){
         $payment = new Rcl_Payment();
+        $payment->payment_process();
     }
 }
 add_action('wp', 'rcl_payments');
