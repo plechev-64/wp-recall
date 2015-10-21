@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://wppost.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 13.5.5
+    Version: 13.6.0
     Author: Plechev Andrey
     Author URI: http://wppost.ru/
     GitHub Plugin URI: https://github.com/plechev-64/wp-recall
@@ -12,330 +12,251 @@
 
 /*  Copyright 2012  Plechev Andrey  (email : support {at} wppost.ru)  */
 
-global $wpdb;
-$path_parts = pathinfo(__FILE__);
+final class WP_Recall {
 
-if(defined( 'MULTISITE' )){
-    $upload_dir = array(
-        'basedir' => WP_CONTENT_DIR.'/uploads',
-        'baseurl' => WP_CONTENT_URL.'/uploads'
-    );
-}else{
-    $upload_dir = wp_upload_dir();
-}
+	public $version = '13.6.0';
 
-if (is_ssl()) $upload_dir['baseurl'] = str_replace( 'http://', 'https://', $upload_dir['baseurl'] );
+	protected static $_instance = null;
 
-define('VER_RCL', '13.5.5');
+	public $session = null; //На данный момент не используется, нужно будет все сессии сюда пихать
 
-define('RCL_URL', plugin_dir_url( __FILE__ ));
-define('RCL_PREF', $wpdb->base_prefix.'rcl_');
+	public $query = null; //На данный момент не используется. В дальнейшем можно будет использовать для кастомных запросов
 
-define('RCL_PATH', $path_parts['dirname'].'/');
+	public $customer = null; //Тут будет хранится вся информация о пользователях (авторезированых и не авторезированных)
 
-define('TEMP_PATH', $upload_dir['basedir'].'/temp-rcl/');
-define('TEMP_URL', $upload_dir['baseurl'].'/temp-rcl/');
-
-define('RCL_UPLOAD_PATH', $upload_dir['basedir'].'/rcl-uploads/');
-define('RCL_UPLOAD_URL', $upload_dir['baseurl'].'/rcl-uploads/');
-
-define('RCL_TAKEPATH', WP_CONTENT_DIR.'/wp-recall/');
-
-add_action( 'plugins_loaded', 'rcl_load_plugin_textdomain' );
-function rcl_load_plugin_textdomain() {
-    load_theme_textdomain('rcl', RCL_PATH.'languages/');
-}
-
-function rcl_activate(){
-    global $wpdb,$rcl_options;
-
-    init_global_rcl();
-
-    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-    load_theme_textdomain('rcl', RCL_PATH.'languages/');
-
-    $upload_dir = rcl_get_wp_upload_dir();
-
-    if(!file_exists($upload_dir['basedir'])){
-        mkdir($upload_dir['basedir']);
-        chmod($upload_dir['basedir'], 0755);
-    }
-
-    if(!file_exists(RCL_TAKEPATH)){
-        mkdir(RCL_TAKEPATH);
-        chmod(RCL_TAKEPATH, 0755);
-
-        $dirs = array('add-on','themes','templates');
-
-        foreach($dirs as $dir){
-            mkdir(RCL_TAKEPATH.$dir);
-            chmod(RCL_TAKEPATH, 0755);
-        }
-    }
-
-    $table4 = RCL_PREF."user_action";
-    if($wpdb->get_var("show tables like '". $table4 . "'") != $table4) {
-	   $wpdb->query("CREATE TABLE IF NOT EXISTS `". $table4 . "` (
-		  ID bigint (20) NOT NULL AUTO_INCREMENT,
-		  user INT(20) NOT NULL,
-		  time_action DATETIME NOT NULL,
-		  UNIQUE KEY id (id)
-		) DEFAULT CHARSET=utf8;");
+	/*
+	 * Основной экземпляр класса WP_Recall
+	 */
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self();
+		}
+		return self::$_instance;
 	}
 
-	if(!isset($rcl_options['view_user_lk_rcl'])){
-
-            if(!file_exists(RCL_UPLOAD_PATH)){
-                mkdir(RCL_UPLOAD_PATH);
-                chmod(RCL_UPLOAD_PATH, 0755);
-            }
-
-            $rcl_options = array(
-                'view_user_lk_rcl' => 1,
-                'color_theme' => 'blue',
-                'lk_page_rcl' => wp_insert_post(array('post_title'=>__('Personal office','rcl'),'post_content'=>'[wp-recall]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'account'))
-            );
-
-            wp_insert_post(array('post_title'=>__('Users','rcl'),'post_content'=>'[userlist]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'users'));
-
-            wp_insert_post(array('post_title'=>__('FEED','rcl'),'post_content'=>'[feed]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'user-feed'));
-
-            $active_addons = get_site_option('active_addons_recall');
-            $def_addons = array('rating-system','review','profile','feed','publicpost','message');
-            foreach($def_addons as $addon){
-                    $path = RCL_PATH.'add-on/'.$addon.'/index.php';
-                    if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
-                    $active_addons[$addon]['src'] = $path;
-                    $install_src = RCL_PATH.'add-on/'.$addon.'/activate.php';
-                    $index_src = RCL_PATH.'add-on/'.$addon.'/index.php';
-                    if(file_exists($install_src)) include($install_src);
-                    if(file_exists($index_src)) include($index_src);
-            }
-            update_site_option('active_addons_recall',$active_addons);
-
-            $no_action_users = $wpdb->get_results("SELECT COUNT(us.ID) FROM ".$wpdb->prefix."users AS us WHERE us.ID NOT IN (SELECT ua.user FROM ".RCL_PREF."user_action AS ua)");
-
-            if($no_action_users){
-                            $wpdb->query("
-                                    INSERT INTO ".RCL_PREF."user_action( user, time_action )
-                                    SELECT us.ID, us.user_registered
-                                    FROM ".$wpdb->prefix."users AS us
-                                    WHERE us.ID NOT IN ( SELECT user FROM ".RCL_PREF."user_action )
-                            ");
-            }
-
-            $wpdb->update(
-                    $wpdb->prefix.'usermeta',
-                    array('meta_value'=>'false'),
-                    array('meta_key'=>'show_admin_bar_front')
-            );
-
-            $roledata = array(
-                    'need-confirm' => array(
-                            'name'=>__('Unconfirmed','rcl'),
-                            'cap'=>array('read' => false, 'edit_posts' => false, 'delete_posts' => false, 'upload_files' => false)
-                    ),
-                    'banned' => array(
-                            'name'=>__('Ban','rcl'),
-                            'cap'=>array('read' => false, 'edit_posts' => false, 'delete_posts' => false, 'upload_files' => false)
-                    )
-            );
-
-            foreach($roledata as $key=>$role){
-                    remove_role($key);
-                    add_role($key, $role['name'], $role['cap']);
-            }
-
-            update_option('default_role','author');
-
-	}else{
-
-            if(file_exists(TEMP_PATH)){
-                rename(TEMP_PATH,RCL_UPLOAD_PATH);
-
-                rcl_rename_media_dir();
-
-            }else{
-                if(!file_exists(RCL_UPLOAD_PATH)){
-                    mkdir(RCL_UPLOAD_PATH);
-                    chmod(RCL_UPLOAD_PATH, 0755);
-                }
-            }
-
-            rcl_update_avatar_data();
-            rcl_update_old_feeds();
-            update_option('show_avatars',1);
+	public function __clone() {
+		_doing_it_wrong( __FUNCTION__, __( 'Читеришь, гадёныш?' ), $this->version );
 	}
 
-	$rcl_options['footer_url_recall']=1;
-	update_option('primary-rcl-options',$rcl_options);
+	public function __wakeup() {
+		_doing_it_wrong( __FUNCTION__, __( 'Читеришь, гадёныш?' ), $this->version );
+	}
 
-    //rcl_update_dinamic_files();
-}
-register_activation_hook(__FILE__,'rcl_activate');
+	/*
+	 * Тут происходит магия
+	 * Будем возвращать методы класса WP_Recall через переменные класса.
+	 */
+	public function __get( $key ) {
 
-function rcl_uninstall() {
-    /*delete_option('custom_orders_field');
-            delete_option('custom_profile_field');
-            delete_option('custom_profile_search_form');
-            delete_option('custom_public_fields_1');
-            delete_option('custom_saleform_fields');
-            delete_option('primary-rcl-options');
-            delete_option('active_addons_recall');*/
-    wp_clear_scheduled_hook('rcl_daily_addon_update');
-    wp_clear_scheduled_hook('days_garbage_file_rcl');
-}
-register_uninstall_hook(__FILE__, 'rcl_uninstall');
+		/*
+		 * Пока что только метод для отправки писем
+		 */
+		if ( in_array( $key, array( 'mailer' ) ) ) {
+			return $this->$key();
+		}
+	}
 
-//определяем глобальные переменные
-function init_global_rcl(){
-	global $wpdb;
-	global $user_ID;
-	global $rcl_current_action;
-	global $rcl_user_URL;
-	global $rcl_options;
+	/*
+	 * Конструктор нашего WP_Recall
+	 */
+	public function __construct() {
 
-	$rcl_options = get_option('primary-rcl-options');
+		$this->define_constants(); //Определяем константы.
+		$this->includes(); //Подключаем все нужные файлы с функциями и классами
+		$this->init_hooks(); //Тут все наши хуки
 
-	$upload_dir = rcl_get_wp_upload_dir();
+		do_action( 'wprecall_loaded' ); //Оставляем кручёк
+	}
 
-        if(!file_exists(RCL_UPLOAD_PATH)&&file_exists(TEMP_PATH)){
-            rename(TEMP_PATH,RCL_UPLOAD_PATH);
-            rcl_rename_media_dir();
-        }
+	private function init_hooks() {
+		register_activation_hook( __FILE__, array( 'RCL_Install', 'install' ) );
 
-        if(!is_dir($upload_dir['basedir'])){
-            mkdir($upload_dir['basedir']);
-            chmod($upload_dir['basedir'], 0755);
-        }
+		add_action( 'init', array( $this, 'init' ), 0 );
+	}
 
-	$rcl_user_URL = get_author_posts_url($user_ID);
-	$rcl_current_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_ID));
-}
-add_action('init','init_global_rcl',1);
+	private function define_constants() {
+		global $wpdb;
 
-function init_user_lk(){
-    global $wpdb,$user_LK,$rcl_userlk_action,$rcl_options,$user_ID;
+            $upload_dir = $this->upload_dir();
 
-    $user_LK = false;
-    $userLK = false;
-    $get='user';
+            $this->define('VER_RCL', $this->version );
 
-    if(isset($rcl_options['link_user_lk_rcl'])&&$rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];
-    if(isset($_GET[$get])) $userLK = $_GET[$get];
+            $this->define('RCL_URL', $this->plugin_url().'/' );
+            $this->define('RCL_PREF', $wpdb->base_prefix . 'rcl_' );
 
-    if(!$userLK){
-        if($rcl_options['view_user_lk_rcl']==1){
-                $post_id = url_to_postid($_SERVER['REQUEST_URI']);
-                if($rcl_options['lk_page_rcl']==$post_id) $user_LK = $user_ID;
-        }else {
-            if(isset($_GET['author'])) $user_LK = $_GET['author'];
-            else{
-                $url = (isset($_SERVER['SCRIPT_URL']))? $_SERVER['SCRIPT_URL']: $_SERVER['REQUEST_URI'];
-                $url = preg_replace('/\?.*/', '', $url);
-                $url_ar = explode('/',$url);
-                foreach($url_ar as $key=>$u){
-                    if($u!='author') continue;
-                    $nicename = $url_ar[$key+1];
-                    break;
-                }
-                if(!$nicename) return false;
-                $user_LK = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."users WHERE user_nicename='%s'",$nicename));
+            $this->define('RCL_PATH', trailingslashit( $this->plugin_path() ) );
+
+            $this->define('TEMP_PATH', $upload_dir['basedir'] . '/temp-rcl/');
+            $this->define('TEMP_URL', $upload_dir['baseurl'] . '/temp-rcl/' );
+
+            $this->define('RCL_UPLOAD_PATH', $upload_dir['basedir'] . '/rcl-uploads/' );
+            $this->define('RCL_UPLOAD_URL', $upload_dir['baseurl'] . '/rcl-uploads/' );
+
+            $this->define('RCL_TAKEPATH', WP_CONTENT_DIR . '/wp-recall/' );
+	}
+
+	private function define( $name, $value ) {
+		if ( ! defined( $name ) ) {
+			define( $name, $value );
+		}
+	}
+
+	/*
+	 * Узнаём тип запроса
+	 */
+	private function is_request( $type ) {
+            switch ( $type ) {
+                case 'admin' :
+                        return is_admin();
+                case 'ajax' :
+                        return defined( 'DOING_AJAX' );
+                case 'cron' :
+                        return defined( 'DOING_CRON' );
+                case 'frontend' :
+                        return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
             }
-        }
-    }else{
-	$user_LK = $userLK;
-    }
+	}
 
-    if($user_LK){
-        $rcl_userlk_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_LK));
-        rcl_fileapi_scripts();
+	public function includes() {
+            /*
+             * Здесь подключим те фалы которые нужны глобально для плагина
+             * Остальные распихаем по соответсвующим функциям
+             */
+
+            include_once('class-rcl-install.php');
+
+            if ( $this->is_request( 'admin' ) ) {
+                    $this->admin_includes();
+            }
+
+            if ( $this->is_request( 'ajax' ) ) {
+                    $this->ajax_includes();
+            }
+
+            if ( $this->is_request( 'frontend' ) ) {
+                    $this->frontend_includes();
+            }
+	}
+
+	/*
+	 * Сюда складываем все файлы для админки
+	 */
+	public function admin_includes() {
+
+	}
+
+	/*
+	 * Сюда складываем все файлы AJAX
+	 */
+	public function ajax_includes() {
+
+	}
+
+	/*
+	 * Сюда складываем все файлы для фронт-энда
+	 */
+	public function frontend_includes() {
+
+	}
+
+	public function init() {
+            global $wpdb,$rcl_options,$user_ID,$rcl_current_action,$rcl_user_URL;
+
+            do_action( 'wprecall_before_init' );
+
+            $rcl_options = get_option('primary-rcl-options');
+
+            $this->load_plugin_textdomain();
+
+            if ( $this->is_request( 'frontend' ) ) {
+                /*
+                 * RCL_Session_Handler и RCL_Customer название классов которые нужно будет подключить в $this->frontend_includes()
+                             * ap: пока закомментил
+                 */
+                /*$session_handler = apply_filters( 'wprecall_session_handler', 'RCL_Session_Handler' );
+                $customer_handler = apply_filters( 'wprecall_customer_handler', 'RCL_Customer' );
+
+                $this->session = new $session_handler();
+                $this->customer = new $customer_handler();*/
+                
+                $rcl_user_URL = get_author_posts_url($user_ID);
+                $rcl_current_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_ID));
+
+            }
+
+            do_action( 'wprecall_init' );
+	}
+
+	public function load_plugin_textdomain() {
+
+		$locale = apply_filters( 'plugin_locale', get_locale() );
+
+		/*
+		 * Тут файлы перевода для админки
+		 */
+		if ( $this->is_request( 'admin' ) ) {
+			load_textdomain( 'rcl', RCL_PATH . 'languages/rcl-admin-' . $locale . '.mo' );
+		}
+
+		/*
+		 * Тут для фронт-энда
+		 */
+		load_textdomain( 'rcl', RCL_PATH . 'languages/rcl-' . $locale . '.mo' );
+	}
+
+	public function plugin_url() {
+		return untrailingslashit( plugins_url( '/', __FILE__ ) );
+	}
+
+	public function plugin_path() {
+		return untrailingslashit( plugin_dir_path( __FILE__ ) );
+	}
+
+	public function ajax_url() {
+		return admin_url( 'admin-ajax.php', 'relative' );
+	}
+
+	public function mailer() {
+		/*
+		 * TODO: Сюда добавить подключение класса отправки сообщений
+		 */
+	}
+
+    public function upload_dir() {
+
+        if( defined( 'MULTISITE' ) ) {
+            $upload_dir = array(
+                'basedir' => WP_CONTENT_DIR.'/uploads',
+                'baseurl' => WP_CONTENT_URL.'/uploads'
+            );
+        } else {
+            $upload_dir = wp_upload_dir();
+        }
+
+        if ( is_ssl() )
+            $upload_dir['baseurl'] = str_replace( 'http://', 'https://', $upload_dir['baseurl'] );
+
+        return apply_filters( 'wp_recall_upload_dir', $upload_dir, $this );
     }
 }
-if(!is_admin()) add_action('init','init_user_lk',2);
+
+/*
+ * Возвращает класс WP_Recall
+ * @return WP_Recall
+ */
+function RCL() {
+	return WP_Recall::instance();
+}
+
+/*
+ * Теперь у нас есть глобальная переменная $wprecall
+ * Которая содержит в себе основной класс WP_Recall
+ * $
+ */
+$GLOBALS['wprecall'] = RCL();
+
+require_once("rcl-functions.php");
 
 function wp_recall(){
     rcl_include_template('cabinet.php');
 }
-
-function rcl_buttons(){
-    global $user_LK; $content = '';
-    echo apply_filters( 'the_button_wprecall', $content, $user_LK );
-}
-
-function rcl_tabs(){
-    global $user_LK; $content = '';
-    echo apply_filters( 'the_block_wprecall', $content, $user_LK);
-}
-
-function rcl_before(){
-    global $user_LK; $content = '';
-    echo apply_filters( 'rcl_before_lk', $content, $user_LK );
-}
-
-function rcl_after(){
-    global $user_LK; $content = '';
-    echo apply_filters( 'rcl_after_lk', $content, $user_LK );
-}
-
-function rcl_header(){
-    global $user_LK; $content = '';
-    echo apply_filters('rcl_header_lk',$content,$user_LK);
-}
-
-function rcl_sidebar(){
-    global $user_LK; $content = '';
-    echo apply_filters('rcl_sidebar_lk',$content,$user_LK);
-}
-
-function rcl_content(){
-    global $user_LK; $content = '';
-    $content = apply_filters('rcl_content_lk',$content,$user_LK);
-    echo $content;
-}
-
-function rcl_footer(){
-    global $user_LK; $content = '';
-    echo apply_filters('rcl_footer_lk',$content,$user_LK);
-}
-
-function rcl_action(){
-    global $rcl_userlk_action;
-    $last_action = rcl_get_useraction($rcl_userlk_action);
-    $class = (!$last_action)? 'online': 'offline';
-    $status = '<div class="status_user '.$class.'"><i class="fa fa-circle"></i></div>';
-    if($last_action) $status .= __('not online','rcl').' '.$last_action;
-    echo $status;
-}
-
-function rcl_avatar($size=120){
-    global $user_LK; $after='';
-    echo '<div id="rcl-contayner-avatar">';
-	echo '<span class="rcl-user-avatar">'.get_avatar($user_LK,$size).'</span>';
-	echo apply_filters('after-avatar-rcl',$after,$user_LK);
-	echo '</div>';
-
-}
-
-function rcl_status_desc(){
-    global $user_LK;
-    $desc = get_the_author_meta('description',$user_LK);
-    if($desc) echo '<div class="ballun-status">'
-        //. '<span class="ballun"></span>'
-        . '<p class="status-user-rcl">'.nl2br(esc_textarea($desc)).'</p>'
-        . '</div>';
-}
-
-function rcl_username(){
-    global $user_LK;
-    echo get_the_author_meta('display_name',$user_LK);
-}
-
-function rcl_notice(){
-    $notify = '';
-    $notify = apply_filters('notify_lk',$notify);
-    if($notify) echo '<div class="notify-lk">'.$notify.'</div>';
-}
-
-require_once("rcl-functions.php");

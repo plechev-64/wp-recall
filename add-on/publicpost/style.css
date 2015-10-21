@@ -99,7 +99,7 @@ h3.pending-message{
 	color:red;
 }
 .close-button {
-    background: url("img/close.png") repeat scroll 0 0 #FFFFFF;
+    
     border: 2px solid #FFFFFF;
     border-radius: 50px;
     box-shadow: -3px 3px 3px #333333;
@@ -112,7 +112,7 @@ h3.pending-message{
     width: 30px;
 }
 .redactor {
-    background: url("img/redactor.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    
     margin-right: 20px;
     padding-left: 20px;
 }

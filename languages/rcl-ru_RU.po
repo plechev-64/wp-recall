@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-09-26 09:23+0300\n"
+"POT-Creation-Date: 2015-10-21 19:22+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -73,7 +73,7 @@ msgid "Without group"
 msgstr "Без группы"
 
 #: ../../wp-recall/add-on/./bookmarks/class_bookmark.php:179
-#: ../../wp-recall/add-on/./bookmarks/index.php:220 functions/recallbar.php:24
+#: ../../wp-recall/add-on/./bookmarks/index.php:220 functions/recallbar.php:25
 msgid "My bookmarks"
 msgstr "Избранное"
 
@@ -163,9 +163,9 @@ msgstr "Отключить закладки для публикации"
 
 #: ../../wp-recall/add-on/./bookmarks/index.php:137
 #: ../../wp-recall/add-on/./money-wallet/index.php:58
-#: add-on/profile/index.php:165 add-on/profile/index.php:585
-#: add-on/profile/index.php:590 add-on/profile/index.php:595
-#: add-on/profile/index.php:600 add-on/profile/index.php:605
+#: add-on/profile/index.php:168 add-on/profile/index.php:588
+#: add-on/profile/index.php:593 add-on/profile/index.php:598
+#: add-on/profile/index.php:603 add-on/profile/index.php:608
 #: add-on/publicpost/addon-options.php:277 add-on/publicpost/index.php:237
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120
@@ -176,9 +176,9 @@ msgstr "Нет"
 
 #: ../../wp-recall/add-on/./bookmarks/index.php:138
 #: ../../wp-recall/add-on/./money-wallet/index.php:58
-#: add-on/profile/index.php:165 add-on/profile/index.php:585
-#: add-on/profile/index.php:590 add-on/profile/index.php:595
-#: add-on/profile/index.php:600 add-on/profile/index.php:605
+#: add-on/profile/index.php:168 add-on/profile/index.php:588
+#: add-on/profile/index.php:593 add-on/profile/index.php:598
+#: add-on/profile/index.php:603 add-on/profile/index.php:608
 #: add-on/publicpost/addon-options.php:277 add-on/publicpost/index.php:237
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120
@@ -198,8 +198,8 @@ msgstr "Имя"
 #: ../../wp-recall/add-on/./bookmarks/index.php:167
 #: ../../wp-recall/add-on/./bookmarks/index.php:267
 #: ../../wp-recall/add-on/./gallery-recall/index.php:129
-#: ../../wp-recall/add-on/./soundplay/index.php:1
-#: add-on/publicpost/classes.php:240
+#: ../../wp-recall/add-on/./soundplay/index.php:54
+#: add-on/publicpost/classes.php:253
 msgid "Add"
 msgstr "Добавить"
 
@@ -210,7 +210,7 @@ msgid "Change"
 msgstr "Выбрать"
 
 #: ../../wp-recall/add-on/./bookmarks/index.php:198
-#: ../../wp-recall/add-on/./bookmarks/index.php:219 functions/recallbar.php:21
+#: ../../wp-recall/add-on/./bookmarks/index.php:219 functions/recallbar.php:22
 msgid "In bookmarks"
 msgstr "В избранное"
 
@@ -235,8 +235,8 @@ msgstr "Имя группы"
 #: ../../wp-recall/add-on/./bookmarks/index.php:402
 #: ../../wp-recall/add-on/./bookmarks/index.php:427
 #: ../../wp-recall/add-on/./bookmarks/index.php:458
-#: ../../wp-recall/add-on/./gallery-recall/index.php:432
-#: ../../wp-recall/add-on/./gallery-recall/index.php:471
+#: ../../wp-recall/add-on/./gallery-recall/index.php:434
+#: ../../wp-recall/add-on/./gallery-recall/index.php:473
 #: add-on/rating-system/index.php:503 add-on/rating-system/index.php:524
 msgid "Error"
 msgstr "Ошибка"
@@ -246,8 +246,8 @@ msgstr "Ошибка"
 #: ../../wp-recall/add-on/./money-wallet/index.php:562
 #: ../../wp-recall/add-on/./money-wallet/index.php:585
 #: ../../wp-recall/add-on/./money-wallet/index.php:603
-#: ../../wp-recall/add-on/./presents/index.php:133
-#: ../../wp-recall/add-on/./presents/index.php:173
+#: ../../wp-recall/add-on/./presents/index.php:155
+#: ../../wp-recall/add-on/./presents/index.php:195
 #: add-on/groups/class_group.php:238
 msgid "Are you sure?"
 msgstr "Вы серьезно?"
@@ -286,15 +286,15 @@ msgid "To comment, you must login"
 msgstr "Для комментирования  вы должны авторизоваться"
 
 #: ../../wp-recall/add-on/./gallery-recall/class_gallery.php:122
-#: ../../wp-recall/add-on/./gallery-recall/index.php:375
-#: ../../wp-recall/add-on/./gallery-recall/index.php:386
+#: ../../wp-recall/add-on/./gallery-recall/index.php:377
+#: ../../wp-recall/add-on/./gallery-recall/index.php:388
 #: add-on/message/index.php:1235
 msgid "Reply"
 msgstr "Ответить"
 
 #: ../../wp-recall/add-on/./gallery-recall/class_gallery.php:144
 #: add-on/publicpost/class_public.php:76 add-on/publicpost/fast-editor.php:106
-#: functions/rcl_addons.php:214
+#: functions/rcl_addons.php:219
 msgid "Description"
 msgstr "Описание"
 
@@ -348,8 +348,8 @@ msgid "Gallery"
 msgstr "Галерея"
 
 #: ../../wp-recall/add-on/./gallery-recall/index.php:125
-#: ../../wp-recall/add-on/./soundplay/index.php:1
-#: add-on/publicpost/classes.php:236
+#: ../../wp-recall/add-on/./soundplay/index.php:50
+#: add-on/publicpost/classes.php:249
 msgid "To add files to the download queue"
 msgstr "Добавить файлы в очередь загрузки"
 
@@ -357,19 +357,19 @@ msgstr "Добавить файлы в очередь загрузки"
 msgid "The user`s photo"
 msgstr "Пользовательские фото"
 
-#: ../../wp-recall/add-on/./gallery-recall/index.php:380
+#: ../../wp-recall/add-on/./gallery-recall/index.php:382
 msgid "Cancel reply"
 msgstr "отмена ответа"
 
-#: ../../wp-recall/add-on/./gallery-recall/index.php:409
+#: ../../wp-recall/add-on/./gallery-recall/index.php:411
 msgid "The material is updated"
 msgstr "Материал обновлен"
 
-#: ../../wp-recall/add-on/./gallery-recall/index.php:414
+#: ../../wp-recall/add-on/./gallery-recall/index.php:416
 msgid "No data"
 msgstr "Данных нет"
 
-#: ../../wp-recall/add-on/./gallery-recall/index.php:547
+#: ../../wp-recall/add-on/./gallery-recall/index.php:549
 msgid "Do you want to delete?"
 msgstr "Действительно удалить?"
 
@@ -383,7 +383,7 @@ msgstr "Размер файла превышен!"
 #: ../../wp-recall/add-on/./partners-system/admin-pages.php:124
 #: ../../wp-recall/add-on/./users-market/administrative.php:60
 #: add-on/groups/class_group.php:207 rcl-admin/admin-pages.php:281
-#: rcl-functions.php:516
+#: rcl-functions.php:566
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
@@ -405,7 +405,7 @@ msgid "Only the owner"
 msgstr "Только хозяину личного кабинета"
 
 #: ../../wp-recall/add-on/./last-visitor/index.php:16
-#: add-on/review/index.php:151 functions/rcl_addons.php:188
+#: add-on/review/index.php:151 functions/rcl_addons.php:193
 msgid "All"
 msgstr "Все"
 
@@ -479,12 +479,12 @@ msgid "Transfer of funds between users"
 msgstr "Перевод средств между пользователями"
 
 #: ../../wp-recall/add-on/./money-wallet/index.php:106
-#: add-on/user-account/index.php:130
+#: add-on/user-account/index.php:78
 msgid "Balance"
 msgstr "Баланс"
 
 #: ../../wp-recall/add-on/./money-wallet/index.php:122
-#: add-on/user-account/index.php:20
+#: add-on/user-account/index.php:438
 msgid "Personal account of the user"
 msgstr "Личный счет пользователя"
 
@@ -521,7 +521,7 @@ msgstr "Комментарий"
 #: ../../wp-recall/add-on/./money-wallet/index.php:155
 #: ../../wp-recall/add-on/./money-wallet/index.php:369
 #: ../../wp-recall/add-on/./money-wallet/index.php:493
-#: add-on/profile/index.php:424 add-on/profile/index.php:734
+#: add-on/profile/index.php:427 add-on/profile/index.php:737
 #: add-on/publicpost/index.php:151
 #: add-on/publicpost/templates/posts-list.php:8
 msgid "Status"
@@ -637,18 +637,18 @@ msgid "Management of withdrawal requests"
 msgstr "Управление запросами на вывод средств"
 
 #: ../../wp-recall/add-on/./money-wallet/index.php:478
-#: functions/rcl_addons.php:199
+#: functions/rcl_addons.php:204
 msgid "Action"
 msgstr "Действие"
 
 #: ../../wp-recall/add-on/./money-wallet/index.php:479
-#: add-on/review/index.php:198 functions/rcl_addons.php:253
+#: add-on/review/index.php:198 functions/rcl_addons.php:258
 #: functions/rcl_editfields.php:128
 msgid "Delete"
 msgstr "Удалить"
 
 #: ../../wp-recall/add-on/./money-wallet/index.php:481
-#: functions/rcl_addons.php:203
+#: functions/rcl_addons.php:208
 msgid "Apply"
 msgstr "Принять"
 
@@ -716,8 +716,8 @@ msgid "A gift from the user"
 msgstr "Подарок от пользователя"
 
 #: ../../wp-recall/add-on/./presents/class_presents.php:1
-#: ../../wp-recall/add-on/./presents/index.php:126
-#: ../../wp-recall/add-on/./presents/index.php:166
+#: ../../wp-recall/add-on/./presents/index.php:148
+#: ../../wp-recall/add-on/./presents/index.php:188
 msgid "Gifts not found!"
 msgstr "Подарки не найдены!"
 
@@ -745,36 +745,36 @@ msgstr "Подарки"
 msgid "The received gifts"
 msgstr "Полученные подарки"
 
-#: ../../wp-recall/add-on/./presents/index.php:36
+#: ../../wp-recall/add-on/./presents/index.php:43
 msgid "A gift from"
 msgstr "Подарок от"
 
-#: ../../wp-recall/add-on/./presents/index.php:69
+#: ../../wp-recall/add-on/./presents/index.php:91
 msgid "File gift"
 msgstr "Файл подарка"
 
-#: ../../wp-recall/add-on/./presents/index.php:71 functions/rcl_addons.php:228
+#: ../../wp-recall/add-on/./presents/index.php:93 functions/rcl_addons.php:233
 msgid "Choose"
 msgstr "Изменить"
 
-#: ../../wp-recall/add-on/./presents/index.php:72
+#: ../../wp-recall/add-on/./presents/index.php:94
 msgid "Price"
 msgstr "Цена"
 
-#: ../../wp-recall/add-on/./presents/index.php:73
+#: ../../wp-recall/add-on/./presents/index.php:95
 msgid "More"
 msgstr "Еще"
 
-#: ../../wp-recall/add-on/./presents/index.php:85
+#: ../../wp-recall/add-on/./presents/index.php:107
 msgid "Manage gifts Wp-Recall"
 msgstr "Управление подарками Wp-Recall"
 
-#: ../../wp-recall/add-on/./presents/index.php:99 functions/rcl_addons.php:172
-#: functions/rcl_editfields.php:56
+#: ../../wp-recall/add-on/./presents/index.php:121
+#: functions/rcl_addons.php:177 functions/rcl_editfields.php:56
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../../wp-recall/add-on/./presents/index.php:144
+#: ../../wp-recall/add-on/./presents/index.php:166
 msgid "A gift is not found!"
 msgstr "Подарок не найден!"
 
@@ -799,6 +799,15 @@ msgstr ""
 #: ../../wp-recall/add-on/./regpay/activate.php:1
 msgid "Unpaid access"
 msgstr "Неоплаченный доступ"
+
+#: ../../wp-recall/add-on/./unitpay-gateway/index.php:141
+#: ../../wp-recall/add-on/./webmoney-gateway/index.php:132
+#: add-on/user-account/gateways/interkassa.php:159
+#: add-on/user-account/gateways/robokassa.php:161
+#: add-on/user-account/gateways/yandexkassa.php:147
+#: add-on/user-account/rcl_payment.php:57
+msgid "A record of the payment in the database was not found"
+msgstr "Платеж не найден в базе данных"
 
 #: ../../wp-recall/add-on/./users-market/public-product.php:129
 msgid "Заменить файл"
@@ -1274,7 +1283,7 @@ msgstr "Корзина"
 #: add-on/magazin/functions/shortcodes.php:118 add-on/publicpost/index.php:151
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
-#: add-on/user-account/index.php:53 functions/rcl_editfields.php:117
+#: add-on/user-account/index.php:471 functions/rcl_editfields.php:117
 #: rcl-widgets.php:47 rcl-widgets.php:109 rcl-widgets.php:162
 msgid "Title"
 msgstr "Заголовок"
@@ -1456,8 +1465,8 @@ msgstr "Все контакты"
 msgid "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 msgstr "<b>Enter</b> - перенос строки, <b>Ctrl+Enter</b> - отправить"
 
-#: add-on/message/index.php:417 add-on/user-account/index.php:384
-#: templates/form-register.php:21 templates/form-remember.php:15
+#: add-on/message/index.php:417 add-on/user-account/index.php:332
+#: templates/form-register.php:27 templates/form-remember.php:18
 msgid "Send"
 msgstr "Отправить"
 
@@ -1473,7 +1482,7 @@ msgstr "Здесь будет отображаться история переп
 msgid "Show older messages"
 msgstr "Показать более поздние сообщения"
 
-#: add-on/message/index.php:529 functions/includes.php:151
+#: add-on/message/index.php:529 functions/includes.php:230
 msgid "days"
 msgstr "дн."
 
@@ -1614,221 +1623,222 @@ msgstr "Поля профиля"
 msgid "Your profile was updated"
 msgstr "Ваш профиль был обновлен"
 
-#: add-on/profile/index.php:137
+#: add-on/profile/index.php:140
 msgid "Very sorry, but your account has been deleted!"
 msgstr "Мы сожалеем, но ваш аккаунт был удален!"
 
-#: add-on/profile/index.php:138
+#: add-on/profile/index.php:141
 msgid "Back to main"
 msgstr "Вернуться на главную"
 
-#: add-on/profile/index.php:140
+#: add-on/profile/index.php:143
 msgid "Delete account failed! Go back and try again."
 msgstr "Удаление аккаунта не удалось! Вернитесь назад и повторите попытку."
 
-#: add-on/profile/index.php:157
+#: add-on/profile/index.php:160
 msgid "Profile settings and account"
 msgstr "Настройки профиля и аккаунта"
 
-#: add-on/profile/index.php:160
+#: add-on/profile/index.php:163
 msgid "Profile and account"
 msgstr "Профиль и аккаунт"
 
-#: add-on/profile/index.php:162
+#: add-on/profile/index.php:165
 msgid "Allow to delete users from your account?"
 msgstr "Разрешить удалять пользователям свой аккаунт?"
 
-#: add-on/profile/index.php:168
+#: add-on/profile/index.php:171
 msgid "The maximum size of the avatar, Mb"
 msgstr "Максимальный размер аватара, МБ"
 
-#: add-on/profile/index.php:170
+#: add-on/profile/index.php:173
 msgid ""
 "To restrict the loading of images as avatars this value in megabytes. By "
 "default, 2MB"
 msgstr "Ограничьте размер загружаемого аватара в мегабайтах, по-умолчанию 2МБ"
 
-#: add-on/profile/index.php:191
+#: add-on/profile/index.php:194
 msgid "Zoom avatar"
 msgstr "Увеличить аватар"
 
-#: add-on/profile/index.php:197
+#: add-on/profile/index.php:200
 msgid "Delete avatar"
 msgstr "Удалить аватар"
 
-#: add-on/profile/index.php:239
+#: add-on/profile/index.php:242
 msgid "Your avatar has been removed"
 msgstr "Ваш аватар был удален!"
 
-#: add-on/profile/index.php:250
+#: add-on/profile/index.php:253
 msgid "Profile"
 msgstr "Профиль"
 
-#: add-on/profile/index.php:276
+#: add-on/profile/index.php:279
 msgid "User profile"
 msgstr "Профиль пользователя"
 
-#: add-on/profile/index.php:290
+#: add-on/profile/index.php:293
 msgid "Admin toolbar"
 msgstr "Панель администратора"
 
-#: add-on/profile/index.php:295
+#: add-on/profile/index.php:298
 msgid "Show the admin bar when viewing site"
 msgstr "Отображать панель администратора на сайте"
 
-#: add-on/profile/index.php:303 add-on/profile/index.php:685
-#: functions/loginform.php:167 functions/loginform.php:191
-#: templates/form-sign.php:25 templates/recallbar.php:18
-#: templates/recallbar.php:32
+#: add-on/profile/index.php:306 add-on/profile/index.php:688
+#: functions/loginform.php:180 functions/loginform.php:188
+#: functions/loginform.php:204 templates/form-sign.php:31
+#: templates/recallbar.php:30 templates/recallbar.php:38
+#: templates/recallbar.php:46
 msgid "Login"
 msgstr "Вход"
 
-#: add-on/profile/index.php:309 add-on/profile/index.php:692
+#: add-on/profile/index.php:312 add-on/profile/index.php:695
 msgid "Firstname"
 msgstr "Имя"
 
-#: add-on/profile/index.php:315 add-on/profile/index.php:699
+#: add-on/profile/index.php:318 add-on/profile/index.php:702
 msgid "Surname"
 msgstr "Фамилия"
 
-#: add-on/profile/index.php:321 add-on/profile/index.php:706
-#: functions/register.php:143 templates/form-register.php:10
+#: add-on/profile/index.php:324 add-on/profile/index.php:709
+#: functions/register.php:194 templates/form-register.php:10
 #: templates/form-sign.php:10
 msgid "Nickname"
 msgstr "Логин"
 
-#: add-on/profile/index.php:327 add-on/profile/index.php:713
+#: add-on/profile/index.php:330 add-on/profile/index.php:716
 msgid "Display name"
 msgstr "Отображаемое имя"
 
-#: add-on/profile/index.php:389 functions/rcl_editfields.php:148
-#: templates/form-register.php:14
+#: add-on/profile/index.php:392 functions/rcl_editfields.php:148
+#: templates/form-register.php:17
 msgid "E-mail"
 msgstr ""
 
-#: add-on/profile/index.php:395
+#: add-on/profile/index.php:398
 msgid "Your website"
 msgstr "Сайт"
 
-#: add-on/profile/index.php:401
+#: add-on/profile/index.php:404
 msgid "New password"
 msgstr "Новый пароль"
 
-#: add-on/profile/index.php:403
+#: add-on/profile/index.php:406
 msgid "If you want to change your password - enter new"
 msgstr "Если вы хотите сменить пароль - введите новый"
 
-#: add-on/profile/index.php:405
+#: add-on/profile/index.php:408
 msgid "Repeat the new password"
 msgstr "Повтор нового пароля"
 
-#: add-on/profile/index.php:409 functions/loginform.php:54
+#: add-on/profile/index.php:412 functions/loginform.php:64
 msgid "The password strength indicator"
 msgstr "Индикатор сложности пароля"
 
-#: add-on/profile/index.php:411 functions/loginform.php:56
+#: add-on/profile/index.php:414 functions/loginform.php:66
 msgid "A password is not entered"
 msgstr "Пароль не введен"
 
-#: add-on/profile/index.php:415
+#: add-on/profile/index.php:418
 msgid "Note"
 msgstr "Замечание"
 
-#: add-on/profile/index.php:415
+#: add-on/profile/index.php:418
 msgid "The password must be at least 7 characters"
 msgstr "Пароль должен содержать не менее 7 символов"
 
-#: add-on/profile/index.php:495
+#: add-on/profile/index.php:498
 msgid "Update profile"
 msgstr "Обновить профиль"
 
-#: add-on/profile/index.php:499
+#: add-on/profile/index.php:502
 msgid "Are you sure? Then restore will not work!"
 msgstr "Вы серьезно? Восстановить не получиться!"
 
-#: add-on/profile/index.php:501
+#: add-on/profile/index.php:504
 msgid "To delete your profile"
 msgstr "Удаление вашего профиля"
 
-#: add-on/profile/index.php:563
+#: add-on/profile/index.php:566
 msgid "Fields to display in the profile note ticks."
 msgstr "Поля отображаемые в профиле"
 
-#: add-on/profile/index.php:571
+#: add-on/profile/index.php:574
 #, php-format
 msgid "<td><input type=\"%s\" name=\"%s\" %s /></td><td>%s</td>"
 msgstr ""
 
-#: add-on/profile/index.php:579
+#: add-on/profile/index.php:582
 msgid "Manage profile fields"
 msgstr "Управление полями профиля"
 
-#: add-on/profile/index.php:584 add-on/publicpost/index.php:236
+#: add-on/profile/index.php:587 add-on/publicpost/index.php:236
 msgid "required field"
 msgstr "обязательное поле"
 
-#: add-on/profile/index.php:589
+#: add-on/profile/index.php:592
 msgid "to display the registration form"
 msgstr "отображать в форме регистрации"
 
-#: add-on/profile/index.php:594
+#: add-on/profile/index.php:597
 msgid "display at checkout for guests"
 msgstr "отображать при оформлении заказа для гостей"
 
-#: add-on/profile/index.php:599
+#: add-on/profile/index.php:602
 msgid "to show the content to other users"
 msgstr "отображать для других пользователей"
 
-#: add-on/profile/index.php:604
+#: add-on/profile/index.php:607
 msgid "it only changes the administration of the site"
 msgstr "редактируется только администрацией сайта"
 
-#: add-on/profile/index.php:688
+#: add-on/profile/index.php:691
 msgid "Login user"
 msgstr "логин пользователя"
 
-#: add-on/profile/index.php:695
+#: add-on/profile/index.php:698
 msgid "Username"
 msgstr "Логин"
 
-#: add-on/profile/index.php:702
+#: add-on/profile/index.php:705
 msgid "Surname user"
 msgstr "Имя пользователя"
 
-#: add-on/profile/index.php:709
+#: add-on/profile/index.php:712
 msgid "Nickname user"
 msgstr "Никнейм пользователя"
 
-#: add-on/profile/index.php:716
+#: add-on/profile/index.php:719
 msgid "Display name user"
 msgstr "Отображаемое имя"
 
-#: add-on/profile/index.php:720
+#: add-on/profile/index.php:723
 msgid "Емейл (be sure)"
 msgstr "E-mail (обязательно)"
 
-#: add-on/profile/index.php:723
+#: add-on/profile/index.php:726
 msgid "Емейл user"
 msgstr "E-mail пользователя"
 
-#: add-on/profile/index.php:727
+#: add-on/profile/index.php:730
 msgid "Website"
 msgstr "Вебсайт"
 
-#: add-on/profile/index.php:730
+#: add-on/profile/index.php:733
 msgid "Website user"
 msgstr "Сайт пользователя"
 
-#: add-on/profile/index.php:737
+#: add-on/profile/index.php:740
 msgid "User status"
 msgstr "Статус пользователя"
 
 #: add-on/publicpost/addon-options.php:11
-#: add-on/publicpost/addon-options.php:212 add-on/publicpost/classes.php:46
-#: add-on/user-account/addon-options.php:170
-#: add-on/user-account/addon-options.php:181
-#: add-on/user-account/addon-options.php:191
-#: add-on/user-account/addon-options.php:199 rcl-admin/admin-pages.php:87
+#: add-on/publicpost/addon-options.php:212 add-on/publicpost/classes.php:56
+#: add-on/user-account/addon-options.php:74
+#: add-on/user-account/addon-options.php:85
+#: add-on/user-account/addon-options.php:95
+#: add-on/user-account/addon-options.php:103 rcl-admin/admin-pages.php:87
 #: rcl-widgets.php:58 rcl-widgets.php:116
 msgid "Not selected"
 msgstr "Не выбрано"
@@ -2145,20 +2155,20 @@ msgstr ""
 "Загрузите изображения, чтобы в будущем вы могли использовать их из своей "
 "медиабиблиотеке."
 
-#: add-on/publicpost/classes.php:226
+#: add-on/publicpost/classes.php:239
 msgid ""
 "Click on Priceline the image to add it to the content of the publication"
 msgstr "Нажмите на загруженное изображение, чтобы добавить его в контент"
 
-#: add-on/publicpost/classes.php:231
+#: add-on/publicpost/classes.php:244
 msgid "Display all attached images in the gallery."
 msgstr "Отображать прикрепленные изображения в галерее"
 
-#: add-on/publicpost/classes.php:265
+#: add-on/publicpost/classes.php:278
 msgid "Thumbnail"
 msgstr "Миниатюра"
 
-#: add-on/publicpost/classes.php:266
+#: add-on/publicpost/classes.php:279
 msgid "To assign a thumbnail"
 msgstr "Назначить миниатюру"
 
@@ -2225,7 +2235,7 @@ msgstr "Публиковать"
 msgid "To add a media file"
 msgstr "Добавить медиафайл"
 
-#: add-on/publicpost/rcl_editpost.php:55
+#: add-on/publicpost/rcl_editpost.php:57
 msgid "Error publishing!"
 msgstr "Ошибка публикации!"
 
@@ -2626,31 +2636,35 @@ msgstr "Отрицательно"
 msgid "Add a review"
 msgstr "Добавить отзыв"
 
-#: add-on/user-account/addon-options.php:13 add-on/user-account/index.php:119
+#: add-on/user-account/addon-options.php:13 rcl-admin/admin-pages.php:218
+msgid "Not used"
+msgstr "Не используется"
+
+#: add-on/user-account/addon-options.php:15 add-on/user-account/index.php:67
 msgid "Payment systems"
 msgstr "Платежные системы"
 
-#: add-on/user-account/addon-options.php:30
+#: add-on/user-account/addon-options.php:32
 msgid "Payment"
 msgstr "Оплата заказа"
 
-#: add-on/user-account/addon-options.php:32
+#: add-on/user-account/addon-options.php:34
 msgid "Type of payment"
 msgstr "Тип платежа"
 
-#: add-on/user-account/addon-options.php:36
+#: add-on/user-account/addon-options.php:38
 msgid "Funds from the personal account user"
 msgstr "Оплата с личного счета пользователя"
 
-#: add-on/user-account/addon-options.php:37
+#: add-on/user-account/addon-options.php:39
 msgid "Directly through the payment system"
 msgstr "Оплата через платежные системы"
 
-#: add-on/user-account/addon-options.php:38
+#: add-on/user-account/addon-options.php:40
 msgid "To offer both options"
 msgstr "Предложить оба варианта"
 
-#: add-on/user-account/addon-options.php:41
+#: add-on/user-account/addon-options.php:43
 msgid ""
 "If the connection to the payment aggregator not in use, it is possible to "
 "set only \"Funds from the personal account user\"!"
@@ -2658,363 +2672,357 @@ msgstr ""
 "Если подключение к платежному агрегатору не используется, то используйте "
 "оплату <b>только с личного счета пользователя!</b>"
 
-#: add-on/user-account/addon-options.php:43
+#: add-on/user-account/addon-options.php:45
 msgid "The connection to payment aggregator"
 msgstr "Подключение к платежному агрегатору"
 
-#: add-on/user-account/addon-options.php:44
+#: add-on/user-account/addon-options.php:46
 msgid "Used type of connection"
 msgstr "Используемый тип подключения"
 
-#: add-on/user-account/addon-options.php:49 rcl-admin/admin-pages.php:218
-msgid "Not used"
-msgstr "Не используется"
-
-#: add-on/user-account/addon-options.php:50
-msgid "Robokassa"
-msgstr "Робокасса"
-
-#: add-on/user-account/addon-options.php:51
-msgid "Interkassa"
-msgstr "Интеркасса"
-
-#: add-on/user-account/addon-options.php:52
-msgid "WalletOne"
-msgstr "Единая касса"
-
-#: add-on/user-account/addon-options.php:53
-msgid "Yandex.Kassa"
-msgstr "Яндекс.Касса"
-
-#: add-on/user-account/addon-options.php:53
-msgid "not tested"
-msgstr "не тестировалось"
-
-#: add-on/user-account/addon-options.php:62
-msgid "Connection settings ROBOKASSA"
-msgstr "Настройки подключения Робокассы"
-
-#: add-on/user-account/addon-options.php:63
-#: add-on/user-account/addon-options.php:111
-msgid "The ID of the store"
-msgstr "Идентификатор магазина"
-
-#: add-on/user-account/addon-options.php:65
-msgid "The status of the account ROBOKASSA"
-msgstr "Статус аккаунта Робокассы"
-
-#: add-on/user-account/addon-options.php:70
-#: add-on/user-account/addon-options.php:117
-msgid "Work"
-msgstr "Рабочий"
-
-#: add-on/user-account/addon-options.php:71
-#: add-on/user-account/addon-options.php:118
-msgid "Test"
-msgstr "Тестовый"
-
-#: add-on/user-account/addon-options.php:80
-#: add-on/user-account/addon-options.php:92
-msgid "1 Password"
-msgstr "Первый пароль"
-
-#: add-on/user-account/addon-options.php:82
-#: add-on/user-account/addon-options.php:94
-msgid "2 Password"
-msgstr "Второй пароль"
-
-#: add-on/user-account/addon-options.php:106
-msgid "Connection settings Interkassa"
-msgstr "Настройки подключения Интеркассы"
-
-#: add-on/user-account/addon-options.php:107
-msgid "Secret Key"
-msgstr "Секретный ключ"
-
-#: add-on/user-account/addon-options.php:109
-msgid "Test Key"
-msgstr "Тестовый ключ"
-
-#: add-on/user-account/addon-options.php:113
-msgid "The status of the account Interkassa"
-msgstr "Статус аккаунта Интеркассы"
-
-#: add-on/user-account/addon-options.php:129
-msgid "Connection settings WalletOne"
-msgstr "Настройки подключения Единой кассы"
-
-#: add-on/user-account/addon-options.php:130
-msgid "Merchant ID"
-msgstr "Идентификатор магазина"
-
-#: add-on/user-account/addon-options.php:132
-msgid "The secret key"
-msgstr "Секретный ключ"
-
-#: add-on/user-account/addon-options.php:142
-msgid "Connection settings Yandex.Kassa"
-msgstr "Настройки подключения Яндекс.Кассы"
-
-#: add-on/user-account/addon-options.php:143
-msgid "ID cash"
-msgstr "Идентификатор кошелька"
-
-#: add-on/user-account/addon-options.php:145
-msgid "The room showcases"
-msgstr "Витрина"
-
-#: add-on/user-account/addon-options.php:147
-msgid "The secret word"
-msgstr "Секретное слово"
-
-#: add-on/user-account/addon-options.php:156
+#: add-on/user-account/addon-options.php:60
 msgid "Service page payment systems"
 msgstr "Сервисные страницы платежных систем"
 
-#: add-on/user-account/addon-options.php:166
+#: add-on/user-account/addon-options.php:70
 msgid "Page RESULT"
 msgstr "Страница RESULT"
 
-#: add-on/user-account/addon-options.php:173
+#: add-on/user-account/addon-options.php:77
 msgid "For WalletOne: URL script"
 msgstr "Для Единой кассы: URL скрипта"
 
-#: add-on/user-account/addon-options.php:174
+#: add-on/user-account/addon-options.php:78
 msgid "For Interkassa: URL of interaction"
 msgstr "Для Интеркассы: URL взаимодействия"
 
-#: add-on/user-account/addon-options.php:175
+#: add-on/user-account/addon-options.php:79
 msgid "For Yandex.Cash: checkURL and avisoURL"
 msgstr "Для Яндекс.Кассы: checkURL and avisoURL"
 
-#: add-on/user-account/addon-options.php:177
+#: add-on/user-account/addon-options.php:81
 msgid "Page SUCCESS"
 msgstr "Страница SUCCESS"
 
-#: add-on/user-account/addon-options.php:184
+#: add-on/user-account/addon-options.php:88
 msgid "For WalletOne: not use"
 msgstr "Для Единой кассы: не используется"
 
-#: add-on/user-account/addon-options.php:185
-msgid "For Interkassa: successful payment URL"
-msgstr "Для Интеркассы: URL успешного платежа"
+#: add-on/user-account/addon-options.php:89
+msgid "For Interkassa: not use"
+msgstr "Для Интеркассы: не используется"
 
-#: add-on/user-account/addon-options.php:187
+#: add-on/user-account/addon-options.php:91
 msgid "Page FAIL"
 msgstr "Страница FAIL"
 
-#: add-on/user-account/addon-options.php:195
+#: add-on/user-account/addon-options.php:99
 msgid "The successful payment page"
 msgstr "Страница успешного платежа"
 
-#: add-on/user-account/index.php:22 add-on/user-account/index.php:50
-#: rcl-admin/admin-pages.php:92
-msgid "Personal account"
-msgstr "Личный счет"
+#: add-on/user-account/gateways/interkassa.php:36
+msgid "Interkassa"
+msgstr "Интеркасса"
 
-#: add-on/user-account/index.php:122
-msgid "Payments"
-msgstr "Платежи"
+#: add-on/user-account/gateways/interkassa.php:50
+msgid "Connection settings Interkassa"
+msgstr "Настройки подключения Интеркассы"
 
-#: add-on/user-account/index.php:348
-msgid "The change in the balance"
-msgstr "Изменение баланса"
+#: add-on/user-account/gateways/interkassa.php:51
+msgid "Secret Key"
+msgstr "Секретный ключ"
 
-#: add-on/user-account/index.php:378
-msgid "Deposit"
-msgstr "Пополнить"
+#: add-on/user-account/gateways/interkassa.php:53
+msgid "Test Key"
+msgstr "Тестовый ключ"
 
-#: add-on/user-account/index.php:380
-msgid "To recharge your account"
-msgstr "Для пополнения своего личного счета"
+#: add-on/user-account/gateways/interkassa.php:55
+#: add-on/user-account/gateways/robokassa.php:52
+msgid "The ID of the store"
+msgstr "Идентификатор магазина"
 
-#: add-on/user-account/index.php:382
-msgid "Enter the amount required"
-msgstr "Введите требуемую сумму"
+#: add-on/user-account/gateways/interkassa.php:57
+msgid "The status of the account Interkassa"
+msgstr "Статус аккаунта Интеркассы"
 
-#: add-on/user-account/index.php:463
-msgid "Income dynamics"
-msgstr "Динамика платежей"
+#: add-on/user-account/gateways/interkassa.php:61
+#: add-on/user-account/gateways/robokassa.php:59
+msgid "Work"
+msgstr "Рабочий"
 
-#: add-on/user-account/index.php:464
-msgid "The time period"
-msgstr "Период времени"
+#: add-on/user-account/gateways/interkassa.php:62
+#: add-on/user-account/gateways/robokassa.php:60
+msgid "Test"
+msgstr "Тестовый"
 
-#: add-on/user-account/index.php:466
-msgid "\"Days/Months\""
-msgstr "\"Дни/Месяцы\""
-
-#: add-on/user-account/index.php:466
-msgid "\"Payments (PCs.)\""
-msgstr "\"Платежи (шт.)\""
-
-#: add-on/user-account/index.php:466
-msgid "\"Income (thousands)\""
-msgstr "\"Доход (тыс.)\""
-
-#: add-on/user-account/rcl_payform.php:38
-msgid "Pay personal account"
-msgstr "Оплатить с личного счета"
-
-#: add-on/user-account/rcl_payform.php:51
-#: add-on/user-account/rcl_payform.php:130
-#: add-on/user-account/rcl_payform.php:166
-#: add-on/user-account/rcl_payform.php:200
-msgid "Confirm the operation"
-msgstr "Подтвердить операцию"
-
-#: add-on/user-account/rcl_payform.php:51
-#: add-on/user-account/rcl_payform.php:130
-#: add-on/user-account/rcl_payform.php:166
-#: add-on/user-account/rcl_payform.php:200
-msgid "Pay through payment system"
-msgstr "Оплатить через платежные системы"
-
-#: add-on/user-account/rcl_payform.php:196
-#: add-on/user-account/rcl_payment.php:89
+#: add-on/user-account/gateways/interkassa.php:78
+#: add-on/user-account/rcl_payment.php:99
 msgid "Top up personal account"
 msgstr "Пополнить личный счет"
 
-#: add-on/user-account/rcl_payform.php:197
+#: add-on/user-account/gateways/interkassa.php:79
 msgid "Payment for the order on the website"
 msgstr "Оплата заказа на сайте"
 
-#: add-on/user-account/rcl_payform.php:198
+#: add-on/user-account/gateways/interkassa.php:80
 msgid "Other payments"
 msgstr "Другие платежи"
 
-#: add-on/user-account/rcl_payment.php:49
-msgid "A record of the payment in the database was not found"
-msgstr "Платеж не найден в базе данных"
+#: add-on/user-account/gateways/interkassa.php:82
+#: add-on/user-account/gateways/robokassa.php:108
+#: add-on/user-account/gateways/yandexkassa.php:60
+#: add-on/user-account/rcl_payment.php:123
+msgid "Confirm the operation"
+msgstr "Подтвердить операцию"
+
+#: add-on/user-account/gateways/interkassa.php:82
+#: add-on/user-account/gateways/robokassa.php:108
+#: add-on/user-account/gateways/yandexkassa.php:60
+#: add-on/user-account/rcl_payment.php:123
+msgid "Pay through payment system"
+msgstr "Оплатить через платежные системы"
+
+#: add-on/user-account/gateways/robokassa.php:37
+msgid "Robokassa"
+msgstr "Робокасса"
+
+#: add-on/user-account/gateways/robokassa.php:51
+msgid "Connection settings ROBOKASSA"
+msgstr "Настройки подключения Робокассы"
+
+#: add-on/user-account/gateways/robokassa.php:54
+msgid "The status of the account ROBOKASSA"
+msgstr "Статус аккаунта Робокассы"
+
+#: add-on/user-account/gateways/robokassa.php:69
+#: add-on/user-account/gateways/robokassa.php:81
+msgid "1 Password"
+msgstr "Первый пароль"
+
+#: add-on/user-account/gateways/robokassa.php:71
+#: add-on/user-account/gateways/robokassa.php:83
+msgid "2 Password"
+msgstr "Второй пароль"
+
+#: add-on/user-account/gateways/walletone.php:25
+msgid "WalletOne"
+msgstr "Единая касса"
+
+#: add-on/user-account/gateways/walletone.php:39
+msgid "Connection settings WalletOne"
+msgstr "Настройки подключения Единой кассы"
+
+#: add-on/user-account/gateways/walletone.php:40
+msgid "Merchant ID"
+msgstr "Идентификатор магазина"
+
+#: add-on/user-account/gateways/walletone.php:42
+msgid "The secret key"
+msgstr "Секретный ключ"
+
+#: add-on/user-account/gateways/yandexkassa.php:25
+msgid "Yandex.Kassa"
+msgstr "Яндекс.Касса"
+
+#: add-on/user-account/gateways/yandexkassa.php:25
+msgid "not tested"
+msgstr "не тестировалось"
+
+#: add-on/user-account/gateways/yandexkassa.php:39
+msgid "Connection settings Yandex.Kassa"
+msgstr "Настройки подключения Яндекс.Кассы"
+
+#: add-on/user-account/gateways/yandexkassa.php:40
+msgid "ID cash"
+msgstr "Идентификатор кошелька"
+
+#: add-on/user-account/gateways/yandexkassa.php:42
+msgid "The room showcases"
+msgstr "Витрина"
+
+#: add-on/user-account/gateways/yandexkassa.php:44
+msgid "The secret word"
+msgstr "Секретное слово"
+
+#: add-on/user-account/index.php:70
+msgid "Payments"
+msgstr "Платежи"
+
+#: add-on/user-account/index.php:296
+msgid "The change in the balance"
+msgstr "Изменение баланса"
+
+#: add-on/user-account/index.php:326
+msgid "Deposit"
+msgstr "Пополнить"
+
+#: add-on/user-account/index.php:328
+msgid "To recharge your account"
+msgstr "Для пополнения своего личного счета"
+
+#: add-on/user-account/index.php:330
+msgid "Enter the amount required"
+msgstr "Введите требуемую сумму"
+
+#: add-on/user-account/index.php:411
+msgid "Income dynamics"
+msgstr "Динамика платежей"
+
+#: add-on/user-account/index.php:412
+msgid "The time period"
+msgstr "Период времени"
+
+#: add-on/user-account/index.php:414
+msgid "\"Days/Months\""
+msgstr "\"Дни/Месяцы\""
+
+#: add-on/user-account/index.php:414
+msgid "\"Payments (PCs.)\""
+msgstr "\"Платежи (шт.)\""
+
+#: add-on/user-account/index.php:414
+msgid "\"Income (thousands)\""
+msgstr "\"Доход (тыс.)\""
+
+#: add-on/user-account/index.php:440 add-on/user-account/index.php:468
+msgid "Personal account"
+msgstr "Личный счет"
+
+#: add-on/user-account/rcl_payment.php:132
+msgid "Pay personal account"
+msgstr "Оплатить с личного счета"
+
+#: class-rcl-install.php:97 rcl-admin/admin-pages.php:92
+msgid "Personal office"
+msgstr "Личный кабинет"
+
+#: class-rcl-install.php:102
+msgid "FEED"
+msgstr ""
+
+#: class-rcl-install.php:107
+msgid "Users"
+msgstr "Пользователи"
+
+#: class-rcl-install.php:245
+msgid "Unconfirmed"
+msgstr "Неподтвержденные"
+
+#: class-rcl-install.php:253
+msgid "Ban"
+msgstr "Бан"
+
+#: functions/authorize.php:35 functions/register.php:104
+msgid "Заполните обязательные поля!"
+msgstr ""
+
+#: functions/authorize.php:44 functions/loginform.php:278
+msgid "Your email is not confirmed!"
+msgstr "Ваш E-mail не подтвержден!"
 
 #: functions/captcha.php:29
 msgid "Enter characters"
 msgstr "Введите символы"
 
-#: functions/includes.php:82
+#: functions/captcha.php:51
+msgid "Field filled not right CAPTCHA!"
+msgstr "Не верно заполнено поле CAPTCHA!"
+
+#: functions/includes.php:51 functions/rcl_userlist.php:275
+msgid "not online"
+msgstr "не в сети"
+
+#: functions/includes.php:161
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Это сообщение было сформировано автоматически, не надо отвечать на него."
 
-#: functions/includes.php:135 functions/includes.php:153
+#: functions/includes.php:214 functions/includes.php:232
 msgid "long ago"
 msgstr "давно"
 
-#: functions/includes.php:145 functions/includes.php:147
-#: functions/includes.php:151
+#: functions/includes.php:224 functions/includes.php:226
+#: functions/includes.php:230
 msgid "already"
 msgstr "уже"
 
-#: functions/includes.php:145
+#: functions/includes.php:224
 msgid "min."
 msgstr "мин."
 
-#: functions/includes.php:147
+#: functions/includes.php:226
 msgid "h."
 msgstr "ч."
 
-#: functions/loginform.php:44 functions/register.php:144
-#: templates/form-sign.php:14
+#: functions/loginform.php:51 functions/register.php:195
+#: templates/form-sign.php:17
 msgid "Password"
 msgstr "Пароль"
 
-#: functions/loginform.php:71
+#: functions/loginform.php:81
 msgid "Repeat the password"
 msgstr "Повтор пароля"
 
-#: functions/loginform.php:80
+#: functions/loginform.php:93
 msgid "The passwords do not match!"
 msgstr "Пароли не совпадают!"
 
-#: functions/loginform.php:81
+#: functions/loginform.php:94
 msgid "The passwords match"
 msgstr "Пароли совпадают"
 
-#: functions/loginform.php:140
+#: functions/loginform.php:153
 msgid "Hi"
 msgstr "Привет"
 
-#: functions/loginform.php:142 functions/loginform.php:151
+#: functions/loginform.php:155 functions/loginform.php:164
 msgid "In personal account"
 msgstr "В личный кабинет"
 
-#: functions/loginform.php:152
+#: functions/loginform.php:165
 msgid "Exit"
 msgstr "Выход"
 
-#: functions/loginform.php:168 functions/loginform.php:192
-#: functions/rcl_userlist.php:307 functions/shortcodes.php:257
-#: templates/form-register.php:4 templates/form-remember.php:18
-#: templates/form-sign.php:27 templates/recallbar.php:17
-#: templates/recallbar.php:31
+#: functions/loginform.php:181 functions/loginform.php:189
+#: functions/loginform.php:205 functions/rcl_userlist.php:307
+#: functions/shortcodes.php:257 templates/form-register.php:4
+#: templates/form-remember.php:21 templates/form-sign.php:33
 msgid "Registration"
 msgstr "Регистрация"
 
-#: functions/loginform.php:214
-msgid "Login invalid characters!"
-msgstr "В логине недопустимые символы!"
-
-#: functions/loginform.php:215 functions/loginform.php:229
-msgid "Fill in the fields!"
-msgstr "Заполните поля!"
-
-#: functions/loginform.php:216
-msgid "Field filled not right CAPTCHA!"
-msgstr "Не верно заполнено поле CAPTCHA!"
-
-#: functions/loginform.php:217
-msgid "Username already in use!"
-msgstr "Логин уже используется!"
-
-#: functions/loginform.php:218
-msgid "E-mail is already in use!"
-msgstr "E-mail уже используется!"
-
-#: functions/loginform.php:219
-msgid "Invalid E-mail!"
-msgstr "Некорректный E-mail!"
-
-#: functions/loginform.php:222
+#: functions/loginform.php:272
 msgid "Registration is completed!"
 msgstr "Регистрация успешно завершена!"
 
-#: functions/loginform.php:223
+#: functions/loginform.php:273
 msgid "Registration is completed! Check your email."
 msgstr "Регистрация завершена! Проверьте свой E-mail."
 
-#: functions/loginform.php:228
-msgid "Your email is not confirmed!"
-msgstr "Ваш E-mail не подтвержден!"
-
-#: functions/loginform.php:230
-msgid "Username or password are not correct!"
-msgstr "Логин или пароль не верны!"
-
-#: functions/loginform.php:233
+#: functions/loginform.php:283
 msgid "Registration is completed! Check your email"
 msgstr "Регистрация завершена! Проверьте свой E-mail"
 
-#: functions/loginform.php:239
+#: functions/loginform.php:289
 msgid "Your password has been sent!<br>Check your email."
 msgstr "Новый пароль был сформирован! Проверьте свою почту."
 
-#: functions/loginform.php:264
+#: functions/loginform.php:314
 msgid "Error filling!"
 msgstr "Ошибка заполнения!"
 
-#: functions/loginform.php:284
+#: functions/loginform.php:344
 msgid "Repeat password is not correct!"
 msgstr "Повтор пароля не верный!"
 
-#: functions/rcl_addons.php:95
+#: functions/rcl_addons.php:100
 msgid "Add-on manager"
 msgstr "Add-on менеджер"
 
-#: functions/rcl_addons.php:147
+#: functions/rcl_addons.php:152
 msgid "Add-ons Wp-Recall"
 msgstr "Дополнения Wp-Recall"
 
-#: functions/rcl_addons.php:151
+#: functions/rcl_addons.php:156
 msgid ""
 "Addition <strong>activated</strong>. It is possible that on the settings "
 "page of Wp-Recall new settings"
@@ -3022,31 +3030,31 @@ msgstr ""
 "Дополнение <strong>активировано</strong>. Возможно на странице настроек Wp-"
 "Recall появились новые настройки"
 
-#: functions/rcl_addons.php:152
+#: functions/rcl_addons.php:157
 msgid "Addition <strong>deactivated</strong>."
 msgstr "Дополнение <strong>деактивировано</strong>."
 
-#: functions/rcl_addons.php:153
+#: functions/rcl_addons.php:158
 msgid "Files and data additions have been <strong>removed</strong>."
 msgstr "Файлы и данные дополнения были <strong>удалены</strong>"
 
-#: functions/rcl_addons.php:154
+#: functions/rcl_addons.php:159
 msgid "The Supplement has not been loaded. Add missing the correct header."
 msgstr "Дополнение не было загружено. Не найдены корректные заголовки."
 
-#: functions/rcl_addons.php:165
+#: functions/rcl_addons.php:170
 msgid "Key is stored"
 msgstr "Ключ сохранен"
 
-#: functions/rcl_addons.php:169
+#: functions/rcl_addons.php:174
 msgid "RCLKEY"
 msgstr ""
 
-#: functions/rcl_addons.php:171
+#: functions/rcl_addons.php:176
 msgid "Enter RCLKEY"
 msgstr "Введите RCLKEY"
 
-#: functions/rcl_addons.php:175
+#: functions/rcl_addons.php:180
 msgid ""
 "He will need to update the add-ons here. Get it , you can profile your "
 "account online <a href=\"http://wppost.ru/\" target=\"_blank\">http://wppost."
@@ -3056,11 +3064,11 @@ msgstr ""
 "можете получить на странице профиля своего аккаунта на сайте <a href="
 "\"http://wppost.ru/\" target=\"_blank\">http://wppost.ru</a>"
 
-#: functions/rcl_addons.php:178
+#: functions/rcl_addons.php:183
 msgid "To install the add-on to Wp-Recall format .zip"
 msgstr "Загрузить дополнение для Wp-Recall в формате .zip"
 
-#: functions/rcl_addons.php:179
+#: functions/rcl_addons.php:184
 msgid ""
 "If you have the archive add-on for wp-recall format .zip, here you can "
 "download and install it."
@@ -3068,79 +3076,79 @@ msgstr ""
 "Если у вас есь архив дополнения к Wp-Recall в формате ZIP, то вы можете "
 "загрузить и установить его здесь."
 
-#: functions/rcl_addons.php:181
+#: functions/rcl_addons.php:186
 msgid "Plugin archive"
 msgstr "Архив дополнения"
 
-#: functions/rcl_addons.php:183
+#: functions/rcl_addons.php:188
 msgid "To install"
 msgstr "Установить"
 
-#: functions/rcl_addons.php:189
+#: functions/rcl_addons.php:194
 msgid "Active"
 msgstr "Активно"
 
-#: functions/rcl_addons.php:190
+#: functions/rcl_addons.php:195
 msgid "Inactive"
 msgstr "Неактивно"
 
-#: functions/rcl_addons.php:200 functions/rcl_addons.php:236
+#: functions/rcl_addons.php:205 functions/rcl_addons.php:241
 msgid "Deactivate"
 msgstr "Деактивировать"
 
-#: functions/rcl_addons.php:201
+#: functions/rcl_addons.php:206
 msgid "To activate"
 msgstr "Активировать"
 
-#: functions/rcl_addons.php:210
+#: functions/rcl_addons.php:215
 msgid "Select all"
 msgstr "Выбрать все"
 
-#: functions/rcl_addons.php:213
+#: functions/rcl_addons.php:218
 msgid "Additions"
 msgstr "Дополнения"
 
-#: functions/rcl_addons.php:241 functions/rcl_addons.php:245
+#: functions/rcl_addons.php:246 functions/rcl_addons.php:250
 msgid "Settings"
 msgstr "Настройки"
 
-#: functions/rcl_addons.php:250
+#: functions/rcl_addons.php:255
 msgid "Activate"
 msgstr "Активировать"
 
-#: functions/rcl_addons.php:263
+#: functions/rcl_addons.php:268
 msgid "Version"
 msgstr "Версия"
 
-#: functions/rcl_addons.php:264
+#: functions/rcl_addons.php:269
 msgid "Author"
 msgstr "Автор"
 
-#: functions/rcl_addons.php:264
+#: functions/rcl_addons.php:269
 msgid "Visit the page of the author"
 msgstr "Посетить страницу автора"
 
-#: functions/rcl_addons.php:265
+#: functions/rcl_addons.php:270
 msgid "Visit the page of the add-on"
 msgstr "Посетить страницу дополнения"
 
-#: functions/rcl_addons.php:265
+#: functions/rcl_addons.php:270
 msgid "Page Add-on"
 msgstr "Страница дополнения"
 
-#: functions/rcl_addons.php:333
+#: functions/rcl_addons.php:338
 msgid "You cant control polucheniya plugins on this site."
 msgstr "Вы не можете управлять загрузкой плагинов на этом сайте."
 
-#: functions/rcl_addons.php:493
+#: functions/rcl_addons.php:498
 msgid "Unpacking of archive failed."
 msgstr "Распаковка дополнения не удалась."
 
-#: functions/rcl_addons.php:496
+#: functions/rcl_addons.php:501
 msgid "ZIP archive not found."
 msgstr "ZIP архив не найден."
 
-#: functions/rcl_addons.php:571 rcl-admin/admin-pages.php:192
+#: functions/rcl_addons.php:576 rcl-admin/admin-pages.php:192
 msgid "Login and register"
 msgstr "Вход и регистрация"
 
@@ -3268,10 +3276,6 @@ msgstr "Полученное дополнение не имеет коррект
 msgid "Unable to open archive!"
 msgstr "Не удалось открыть полученный архив обновления!"
 
-#: functions/rcl_userlist.php:275 wp-recall.php:308
-msgid "not online"
-msgstr "не в сети"
-
 #: functions/rcl_userlist.php:300
 msgid "Publics"
 msgstr "Публикации"
@@ -3280,19 +3284,35 @@ msgstr "Публикации"
 msgid "Recallbar"
 msgstr ""
 
-#: functions/register.php:140
+#: functions/register.php:115
+msgid "Login invalid characters!"
+msgstr "В логине недопустимые символы!"
+
+#: functions/register.php:118
+msgid "Invalid E-mail!"
+msgstr "Некорректный E-mail!"
+
+#: functions/register.php:121
+msgid "Username already in use!"
+msgstr "Логин уже используется!"
+
+#: functions/register.php:124
+msgid "E-mail is already in use!"
+msgstr "E-mail уже используется!"
+
+#: functions/register.php:191
 msgid "Confirm your registration!"
 msgstr "Подтвердите свою регистрацию!"
 
-#: functions/register.php:142
+#: functions/register.php:193
 msgid "You or someone else signed up on the website"
 msgstr "Вы или кто то другой зарегистрировались на сайте"
 
-#: functions/register.php:142
+#: functions/register.php:193
 msgid "with the following data:"
 msgstr "со следующими данными:"
 
-#: functions/register.php:156
+#: functions/register.php:207
 msgid "If it wasnt you, then just ignore this email"
 msgstr "Если это были не вы, то просто проигнорируйте это письмо"
 
@@ -3651,23 +3671,23 @@ msgstr "Используемый шаблон"
 msgid "Not connected"
 msgstr "Не подключен"
 
-#: rcl-functions.php:140
+#: rcl-functions.php:180
 msgid "Error! Perhaps this addition does not support ajax loading"
 msgstr "Ошибка! Данное дополнениене поддерживает ajax-загрузку"
 
-#: rcl-functions.php:208
+#: rcl-functions.php:248
 msgid "The site works using the functionality of the plugin"
 msgstr "Сайт использует функционал плагина"
 
-#: rcl-functions.php:221
+#: rcl-functions.php:261
 msgid "Author of publication"
 msgstr "Автор публикации"
 
-#: rcl-functions.php:316
+#: rcl-functions.php:356
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: rcl-functions.php:440
+#: rcl-functions.php:490
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
@@ -3707,7 +3727,7 @@ msgstr "Блок с основной информацией профиля"
 msgid "Control panel"
 msgstr "Панель управления"
 
-#: templates/form-register.php:23
+#: templates/form-register.php:29
 msgid "Authorization "
 msgstr "Авторизация"
 
@@ -3719,45 +3739,53 @@ msgstr "Генерация пароля"
 msgid "Username or e-mail"
 msgstr "Логин или E-mail"
 
-#: templates/form-remember.php:16 templates/form-sign.php:4
+#: templates/form-remember.php:19 templates/form-sign.php:4
 msgid "Authorization"
 msgstr "Авторизация"
 
-#: templates/form-sign.php:21
+#: templates/form-sign.php:27
 msgid "Remember"
 msgstr "Запомнить"
 
-#: templates/form-sign.php:29
+#: templates/form-sign.php:35
 msgid "Forgot your password"
 msgstr "Напомнить пароль"
 
-#: templates/recallbar.php:8
-msgid "Personal cabinet"
-msgstr "Личный кабинет"
-
-#: templates/recallbar.php:27
+#: templates/recallbar.php:10 templates/recallbar.php:18
+#: templates/recallbar.php:28 templates/recallbar.php:34
+#: templates/recallbar.php:41 templates/recallbar.php:44
 msgid "Home"
 msgstr "Домой"
 
-#: wp-recall.php:97
-msgid "Personal office"
-msgstr "Личный кабинет"
-
-#: wp-recall.php:100
-msgid "Users"
-msgstr "Пользователи"
-
-#: wp-recall.php:102
-msgid "FEED"
+#: templates/recallbar.php:11
+msgid "Dashboard"
 msgstr ""
 
-#: wp-recall.php:136
-msgid "Unconfirmed"
-msgstr "Неподтвержденные"
+#: templates/recallbar.php:12 templates/recallbar.php:19
+msgid "Personal cabinet"
+msgstr "Личный кабинет"
 
-#: wp-recall.php:140
-msgid "Ban"
-msgstr "Бан"
+#: templates/recallbar.php:13 templates/recallbar.php:20
+msgid "Log Out"
+msgstr "Выйти"
+
+#: templates/recallbar.php:29 templates/recallbar.php:36
+#: templates/recallbar.php:45
+msgid "Register"
+msgstr "Регистрация"
+
+#: wp-recall.php:38 wp-recall.php:42
+msgid "Читеришь, гадёныш?"
+msgstr ""
+
+#~ msgid "For Interkassa: successful payment URL"
+#~ msgstr "Для Интеркассы: URL успешного платежа"
+
+#~ msgid "Fill in the fields!"
+#~ msgstr "Заполните поля!"
+
+#~ msgid "Username or password are not correct!"
+#~ msgstr "Логин или пароль не верны!"
 
 #~ msgid "Size gallery images"
 #~ msgstr "Размер изображений галереи"

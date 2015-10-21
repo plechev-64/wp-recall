@@ -171,6 +171,7 @@ class Rcl_Walletone_Payment extends Rcl_Payment{
                   print "WMI_RESULT=" . strtoupper("Ok") . "&";
                   print "WMI_DESCRIPTION=" .urlencode("Заказ #" . $_POST["WMI_PAYMENT_NO"] . " оплачен!");
                   parent::insert_pay($data);
+                  exit;
               }
             }else{
               // Случилось что-то странное, пришло неизвестное состояние заказа

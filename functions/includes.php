@@ -2,6 +2,85 @@
 
 include_once 'rcl_activate.php';
 
+function rcl_buttons(){
+    global $user_LK; $content = '';
+    echo apply_filters( 'the_button_wprecall', $content, $user_LK );
+}
+
+function rcl_tabs(){
+    global $user_LK; $content = '';
+    echo apply_filters( 'the_block_wprecall', $content, $user_LK);
+}
+
+function rcl_before(){
+    global $user_LK; $content = '';
+    echo apply_filters( 'rcl_before_lk', $content, $user_LK );
+}
+
+function rcl_after(){
+    global $user_LK; $content = '';
+    echo apply_filters( 'rcl_after_lk', $content, $user_LK );
+}
+
+function rcl_header(){
+    global $user_LK; $content = '';
+    echo apply_filters('rcl_header_lk',$content,$user_LK);
+}
+
+function rcl_sidebar(){
+    global $user_LK; $content = '';
+    echo apply_filters('rcl_sidebar_lk',$content,$user_LK);
+}
+
+function rcl_content(){
+    global $user_LK; $content = '';
+    $content = apply_filters('rcl_content_lk',$content,$user_LK);
+    echo $content;
+}
+
+function rcl_footer(){
+    global $user_LK; $content = '';
+    echo apply_filters('rcl_footer_lk',$content,$user_LK);
+}
+
+function rcl_action(){
+    global $rcl_userlk_action;
+    $last_action = rcl_get_useraction($rcl_userlk_action);
+    $class = (!$last_action)? 'online': 'offline';
+    $status = '<div class="status_user '.$class.'"><i class="fa fa-circle"></i></div>';
+    if($last_action) $status .= __('not online','rcl').' '.$last_action;
+    echo $status;
+}
+
+function rcl_avatar($size=120){
+    global $user_LK; $after='';
+    echo '<div id="rcl-contayner-avatar">';
+	echo '<span class="rcl-user-avatar">'.get_avatar($user_LK,$size).'</span>';
+	echo apply_filters('after-avatar-rcl',$after,$user_LK);
+	echo '</div>';
+
+}
+
+function rcl_status_desc(){
+    global $user_LK;
+    $desc = get_the_author_meta('description',$user_LK);
+    if($desc) echo '<div class="ballun-status">'
+        //. '<span class="ballun"></span>'
+        . '<p class="status-user-rcl">'.nl2br(esc_textarea($desc)).'</p>'
+        . '</div>';
+}
+
+function rcl_username(){
+    global $user_LK;
+    echo get_the_author_meta('display_name',$user_LK);
+}
+
+function rcl_notice(){
+    $notify = '';
+    $notify = apply_filters('notify_lk',$notify);
+    if($notify) echo '<div class="notify-lk">'.$notify.'</div>';
+}
+
 function rcl_addon_url($file,$path){
     if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
     $array = explode('/',$path);

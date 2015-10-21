@@ -89,7 +89,7 @@ function rcl_global_options(){
                 );
 
                 $content .= $fields->option_block(array(
-                    $fields->title(__('Personal account','rcl')),
+                    $fields->title(__('Personal office','rcl')),
                     $fields->label(__('The order of withdrawal of the personal Cabinet','rcl')),
                     $fields->option('select',array(
                             'name'=>'view_user_lk_rcl',

@@ -51,7 +51,7 @@ function rcl_user_account_options($content){
                 )),
 
                 apply_filters('rcl_pay_child_option',$pay_options_child)
-                
+
             )
         );
 
@@ -86,7 +86,7 @@ function rcl_user_account_options($content){
                         'echo'             => 0 )
                 ),
                 $opt->notice(__('For WalletOne: not use','rcl')),
-                $opt->notice(__('For Interkassa: successful payment URL','rcl')),
+                $opt->notice(__('For Interkassa: not use','rcl')),
 
                 $opt->label(__('Page FAIL','rcl')),
                 wp_dropdown_pages( array(

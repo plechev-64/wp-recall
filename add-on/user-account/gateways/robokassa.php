@@ -145,6 +145,8 @@ class Rcl_Robokassa_Payment extends Rcl_Payment{
 
         if(!parent::get_pay($data)) parent::insert_pay($data);
 
+        echo 'OK'; exit;
+
     }
 
     function success(){

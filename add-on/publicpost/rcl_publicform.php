@@ -538,7 +538,7 @@ function rcl_publication_editor(){
 
 		echo '
 		<div class="rcl-public-editor">
-			'.$panel.'
+			
 			<div class="rcl-editor-content">
 				'.rcl_get_editor_content($content).'
 			</div>

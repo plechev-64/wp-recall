@@ -144,6 +144,7 @@ class Rcl_Interkassa_Payment extends Rcl_Payment{
 
         if(!parent::get_pay($data)) parent::insert_pay($data);
 
+        exit;
     }
 
     function success(){

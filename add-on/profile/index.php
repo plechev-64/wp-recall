@@ -131,8 +131,11 @@ add_action('init', 'rcl_edit_profile_activate');
 function rcl_delete_user_account(){
 	global $user_ID,$wpdb;
 	if( !wp_verify_nonce( $_POST['_wpnonce'], 'delete-user-' . $user_ID ) ) return false;
+
+        require_once(ABSPATH.'wp-admin/includes/user.php' );
+
 	$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
-	$delete = wp_delete_account( $user_ID );
+	$delete = wp_delete_user( $user_ID );
 	if($delete){
 		wp_die(__('Very sorry, but your account has been deleted!','rcl'));
 		echo '<a href="/">'.__('Back to main','rcl').'</a>';

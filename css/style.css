@@ -139,7 +139,7 @@ a.rcl-service-button{
 	display: block;
 	height: 31px;
 	width: 31px;
-	background: url("img/close.png") no-repeat scroll center center;
+	
 }
 #rcl-popup .delete{
 	float: left;
@@ -147,7 +147,7 @@ a.rcl-service-button{
 	display: block;
 	height: 31px;
 	width: 31px;
-	background: url("img/delete.png") no-repeat scroll center center;
+	
 }
 #rcl-popup .popup-body{
     padding:10px;

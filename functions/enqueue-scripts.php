@@ -23,7 +23,7 @@ function rcl_init_scripts(){
 
 }
 
-add_filter('get_avatar','rcl_avatar_replacement', 1, 5);
+add_filter('get_avatar','rcl_avatar_replacement', 20, 5);
 if(is_admin()):
     add_action('save_post', 'rcl_postmeta_update', 0);
     add_action('admin_head','rcl_admin_scrips');
@@ -88,6 +88,14 @@ function rcl_fileupload_scripts(){
 function rcl_crop_scripts(){
 	wp_enqueue_style( 'jcrop-master-css', RCL_URL.'js/jcrop.master/css/jquery.Jcrop.min.css' );
 	wp_enqueue_script( 'jcrop-master', RCL_URL.'js/jcrop.master/js/jquery.Jcrop.min.js', array(), VER_RCL,true );
+}
+
+add_action('login_enqueue_scripts','rcl_enqueue_wp_form_scripts',1);
+function rcl_enqueue_wp_form_scripts(){
+    wp_enqueue_script( 'jquery' );
+    //wp_enqueue_style( 'rcl-form', RCL_URL.'css/regform.css' );
+    echo '<link rel="stylesheet" id="rcl-form-css" href="'.RCL_URL.'css/regform.css" type="text/css" media="all">'
+            . '<script type="text/javascript" src="'.RCL_URL.'js/recall.js?ver=13.6.0"></script>';
 }
 
 function rcl_frontend_scripts(){

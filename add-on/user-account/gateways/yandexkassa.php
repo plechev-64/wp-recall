@@ -91,6 +91,7 @@ class Rcl_Yandexkassa_Payment extends Rcl_Payment{
 
         $this->ya_response($code);
 
+        exit;
     }
 
     function check_pay($data){

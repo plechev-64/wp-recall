@@ -20,6 +20,46 @@ if(class_exists('ReallySimpleCaptcha')){
     require_once('functions/captcha.php');
 }
 
+if(!is_admin()) add_action('wprecall_init','init_user_lk',2);
+function init_user_lk(){
+    global $wpdb,$user_LK,$rcl_userlk_action,$rcl_options,$user_ID;
+
+    $user_LK = false;
+    $userLK = false;
+    $get='user';
+
+    if(isset($rcl_options['link_user_lk_rcl'])&&$rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];
+    if(isset($_GET[$get])) $userLK = $_GET[$get];
+
+    if(!$userLK){
+        if($rcl_options['view_user_lk_rcl']==1){
+                $post_id = url_to_postid($_SERVER['REQUEST_URI']);
+                if($rcl_options['lk_page_rcl']==$post_id) $user_LK = $user_ID;
+        }else {
+            if(isset($_GET['author'])) $user_LK = $_GET['author'];
+            else{
+                $url = (isset($_SERVER['SCRIPT_URL']))? $_SERVER['SCRIPT_URL']: $_SERVER['REQUEST_URI'];
+                $url = preg_replace('/\?.*/', '', $url);
+                $url_ar = explode('/',$url);
+                foreach($url_ar as $key=>$u){
+                    if($u!='author') continue;
+                    $nicename = $url_ar[$key+1];
+                    break;
+                }
+                if(!$nicename) return false;
+                $user_LK = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."users WHERE user_nicename='%s'",$nicename));
+            }
+        }
+    }else{
+	$user_LK = $userLK;
+    }
+
+    if($user_LK){
+        $rcl_userlk_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_LK));
+        rcl_fileapi_scripts();
+    }
+}
+
 //добавляем вкладку со списком публикаций хозяина ЛК указанного типа записей в личный кабинет
 function rcl_postlist($id,$posttype,$name='',$args=false){
     global $rcl_options;
@@ -360,21 +400,31 @@ function rcl_get_url_avatar($url_image,$user_id,$size){
 //Функция вывода своего аватара
 function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
 
+    $user_id = 0;
+
     if (is_numeric($id_or_email)){
-            $user_id = $id_or_email;
+        $user_id = $id_or_email;
     }elseif( is_object($id_or_email)){
-            $user_id = $id_or_email->user_id;
+        $user_id = $id_or_email->user_id;
+    }elseif(is_email($id_or_email)){
+        if ( $user = get_user_by('email', $id_or_email) ) $user_id = $user->ID;
     }
 
-    $avatar_data = get_user_meta($user_id,'rcl_avatar',1);
-    if($avatar_data){
+    if($user_id){
+
+        $avatar_data = get_user_meta($user_id,'rcl_avatar',1);
+
+        if($avatar_data){
+
             if(is_numeric($avatar_data)){
                     $image_attributes = wp_get_attachment_image_src($avatar_data);
                     if($image_attributes) $avatar = "<img class='avatar' src='".$image_attributes[0]."' alt='".$alt."' height='".$size."' width='".$size."' />";
             }else if(is_string($avatar_data)){
-					$avatar_data = rcl_get_url_avatar($avatar_data,$user_id,$size);
+                    $avatar_data = rcl_get_url_avatar($avatar_data,$user_id,$size);
                     $avatar = "<img class='avatar' src='".$avatar_data."' alt='".$alt."' height='".$size."' width='".$size."' />";
             }
+
+        }
     }
 
     if ( !empty($id_or_email->user_id)) $avatar = '<a height="'.$size.'" width="'.$size.'" href="'.get_author_posts_url($id_or_email->user_id).'">'.$avatar.'</a>';

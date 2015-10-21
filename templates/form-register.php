@@ -5,19 +5,19 @@ if($typeform=='register') $f_reg = 'style="display:block;"'; ?>
 
     <?php rcl_notice_form('register'); ?>
 
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="<?php rcl_form_action('register'); ?>" method="post" enctype="multipart/form-data">
         <div class="form-block-rcl">
             <label><?php _e('Nickname','rcl'); ?> <span class="required">*</span></label>
             <div class="default-field">
                 <span class="field-icon"><i class="fa fa-user"></i></span>
-                <input required type="text" value="" name="login-user" id="login-user">
+                <input required type="text" value="" name="user_login" id="login-user">
             </div>
         </div>
         <div class="form-block-rcl">
             <label><?php _e('E-mail','rcl'); ?> <span class="required">*</span></label>
             <div class="default-field">
                 <span class="field-icon"><i class="fa fa-at"></i></span>
-                <input required type="email" value="" name="email-user" id="email-user">
+                <input required type="email" value="" name="user_email" id="email-user">
             </div>
         </div>
 
@@ -29,7 +29,7 @@ if($typeform=='register') $f_reg = 'style="display:block;"'; ?>
                 <a href="#" class="link-login-rcl link-tab-rcl"><i class="fa fa-reply-all"></i><?php _e('Authorization ','rcl'); ?></a>
             <?php } ?>
             <?php echo wp_nonce_field('register-key-rcl','_wpnonce',true,false); ?>
-            <input type="hidden" name="referer_rcl" value="<?php rcl_referer_url(); ?>">
+            <input type="hidden" name="redirect_to" value="<?php rcl_referer_url('register'); ?>">
         </div>
     </form>
 </div>

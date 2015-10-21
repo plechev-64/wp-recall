@@ -8,15 +8,20 @@ function rcl_include_addons(){
     $active_addons = get_site_option('active_addons_recall');
     $path_addon_rcl = RCL_PATH.'add-on/';
     $path_addon_theme = RCL_TAKEPATH.'add-on/';
-    foreach((array)$active_addons as $key=>$addon){
-        if(!$addon) continue;
-        if(file_exists($path_addon_theme.$key.'/index.php')){
-            include_once($path_addon_theme.$key.'/index.php');
-        }else if(file_exists($path_addon_rcl.$key.'/index.php')){
-            include_once($path_addon_rcl.$key.'/index.php');
-        }else{
-            unset($active_addons[$key]);
+
+    if($active_addons){
+
+        foreach($active_addons as $addon=>$src_dir){
+            if(!$addon) continue;
+            if(file_exists($path_addon_theme.$addon.'/index.php')){
+                include_once($path_addon_theme.$addon.'/index.php');
+            }else if(file_exists($path_addon_rcl.$addon.'/index.php')){
+                include_once($path_addon_rcl.$addon.'/index.php');
+            }else{
+                unset($active_addons[$addon]);
+            }
         }
+
     }
 
     $rcl_addons = new Rcl_Addons();

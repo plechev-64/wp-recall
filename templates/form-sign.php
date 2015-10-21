@@ -5,26 +5,26 @@
 
     <?php rcl_notice_form('login'); ?>
 
-    <form action="" method="post">
+    <form action="<?php rcl_form_action('login'); ?>" method="post">
         <div class="form-block-rcl">
             <label><?php _e('Nickname','rcl'); ?> <span class="required">*</span></label>
             <div class="default-field">
                 <span class="field-icon"><i class="fa fa-user"></i></span>
-                <input required type="text" value="" name="login-user">
+                <input required type="text" value="" name="user_login">
             </div>
         </div>
         <div class="form-block-rcl">
             <label><?php _e('Password','rcl'); ?> <span class="required">*</span></label>
             <div class="default-field">
                 <span class="field-icon"><i class="fa fa-lock"></i></span>
-                <input required type="password" value="" name="pass-user">
+                <input required type="password" value="" name="user_pass">
             </div>
         </div>
 
         <?php do_action( 'login_form' ); ?>
 
         <div class="form-block-rcl">
-            <label><input type="checkbox" value="1" name="member-user"> <?php _e('Remember','rcl'); ?></label>
+            <label><input type="checkbox" value="1" name="rememberme"> <?php _e('Remember','rcl'); ?></label>
         </div>
 
         <div class="input-container">
@@ -35,7 +35,7 @@
             <a href="#" class="link-remember-rcl link-tab-rcl "><i class="fa fa-reply-all"></i><?php _e('Forgot your password','rcl'); ?></a>
 
             <?php echo wp_nonce_field('login-key-rcl','_wpnonce',true,false); ?>
-            <input type="hidden" name="referer_rcl" value="<?php rcl_referer_url(); ?>">
+            <input type="hidden" name="redirect_to" value="<?php rcl_referer_url('login'); ?>">
         </div>
 
     </form>

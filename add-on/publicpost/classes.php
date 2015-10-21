@@ -115,7 +115,7 @@ class Rcl_List_Terms{
 	function get_child_option($term_id,$a){
         $catlist = false;
 		foreach($this->allcats as $cat){
-			if($cat->parent!=$term_id) continue;
+			if($cat->parent!==$term_id) continue;
 			$child = '';
 			$b = '-'.$a;
 			$child = $this->get_child_option($cat->term_id,$b);

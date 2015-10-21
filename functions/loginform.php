@@ -4,7 +4,7 @@ function rcl_referer_url($typeform=false){
 	echo rcl_get_current_url($typeform);
 }
 
-function rcl_get_current_url($typeform=false){
+function rcl_get_current_url($typeform=false,$urlform = 0){
 	$protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://':  'https://';
     $url = $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
@@ -19,8 +19,15 @@ function rcl_get_current_url($typeform=false){
     }
     if(!isset($host)||!$host) $host = $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
     $host = $protocol.$host;
+
+    if($urlform) $host = rcl_format_url($host).'action-rcl='.$typeform;
+
     if($typeform=='remember') $host = rcl_format_url($host).'action-rcl=remember&success=true';
     return $host;
+}
+
+function rcl_form_action($typeform){
+    echo rcl_get_current_url($typeform,1);
 }
 
 //Добавляем фильтр для формы авторизации
@@ -45,9 +52,9 @@ function rcl_password_regform($content){
             . '<div class="default-field">
                 <span class="field-icon"><i class="fa fa-lock"></i></span>';
     if($rcl_options['difficulty_parole']==1){
-        $content .= '<input required id="primary-pass-user" type="password" onkeyup="passwordStrength(this.value)" value="" name="pass-user">';
+        $content .= '<input required id="primary-pass-user" type="password" onkeyup="passwordStrength(this.value)" value="" name="user_pass">';
     }else{
-        $content .= '<input required type="password" value="" id="primary-pass-user" name="pass-user">';
+        $content .= '<input required type="password" value="" id="primary-pass-user" name="user_pass">';
     }
     $content .= '</div>'
             . '</div>';
@@ -74,7 +81,7 @@ function rcl_secondary_password($fields){
                 <label>'.__('Repeat the password','rcl').' <span class="required">*</span></label>
                 <div class="default-field">
                     <span class="field-icon"><i class="fa fa-lock"></i></span>
-                    <input required id="secondary-pass-user" type="password" value="" name="secondary-email-user">
+                    <input required id="secondary-pass-user" type="password" value="" name="user_secondary_pass">
                 </div>
                 <div id="notice-chek-password"></div>
             </div>
@@ -116,7 +123,7 @@ function rcl_custom_fields_regform($field){
                 if($custom_field['type']) $field .= ':';
                 $field .= '</label>';
 
-                $field .= $cf->get_input($custom_field);
+                $field .= $cf->get_input($custom_field,$_POST[$custom_field['slug']]);
                 $field .= '</div>';
 
             }
@@ -178,8 +185,8 @@ function rcl_get_authorize_form($type=false,$form=false){
 
                     }else if($login_form==2){
                         echo '<div class="buttons">';
-                            $buttons = '<p class="parent-recbutton">'.wp_register('', '', 0).'</p>
-                            <p class="parent-recbutton">'.wp_loginout('/', 0).'</p>';
+                            $buttons = '<p>'.rcl_get_button(__('Login','rcl'),esc_url(wp_login_url('/')),array('icon'=>'fa-sign-in')).'</p>
+                            <p>'.rcl_get_button(__('Registration','rcl'),esc_url(wp_registration_url()),array('icon'=>'fa-book')).'</p>';
                             echo apply_filters('buttons_widget_rcl',$buttons);
                         echo '</div>';
                     }else if($login_form==3||$type){
@@ -211,19 +218,32 @@ function rcl_get_authorize_form($type=false,$form=false){
 
 //Формируем массив сервисных сообщений формы регистрации и входа
 function rcl_notice_form($form='login'){
+    global $wp_errors;
 
-    if(!isset($_GET['action-rcl'])||$_GET['action-rcl']!=$form) return false;
+    if ( $wp_errors->errors ) {
+            $errors = '';
+            $messages = '';
+            foreach ( $wp_errors->errors as $code ) {
+                    $severity = true;
+                    foreach ( $code as $error_message ) {
+                            if ( 'message' == $severity )
+                                    $messages .= '	' . $error_message . "<br />\n";
+                            else
+                                    $errors .= '<span class="error">' . $error_message . "</span>\n";
+                    }
+            }
+            if ( ! empty( $errors ) ) {
+                    echo '<div id="login_error">' . apply_filters( 'login_errors', $errors ) . "</div>\n";
+            }
+            if ( ! empty( $messages ) ) {
+                    echo '<span class="error">' . apply_filters( 'login_messages', $messages ) . "</span>\n";
+            }
+    }
+
+    if(!isset($_GET['action-rcl'])||$_GET['action-rcl']!=$form) return;
 
     $vls = array(
         'register'=> array(
-            'error'=>array(
-                'login'=>__('Login invalid characters!','rcl'),
-                'empty'=>__('Fill in the fields!','rcl'),
-                'captcha'=>__('Field filled not right CAPTCHA!','rcl'),
-                'login-us'=>__('Username already in use!','rcl'),
-                'email-us'=>__('E-mail is already in use!','rcl'),
-                'email'=>__('Invalid E-mail!','rcl')
-            ),
             'success'=>array(
                 'true'=>__('Registration is completed!','rcl'),
                 'confirm-email'=>__('Registration is completed! Check your email.','rcl')
@@ -231,9 +251,7 @@ function rcl_notice_form($form='login'){
         ),
         'login'=> array(
             'error'=>array(
-                'confirm'=>__('Your email is not confirmed!','rcl'),
-                'empty'=>__('Fill in the fields!','rcl'),
-                'failed'=>__('Username or password are not correct!','rcl')
+                'confirm'=>__('Your email is not confirmed!','rcl')
             ),
             'success'=>array(
                 'true'=>__('Registration is completed! Check your email','rcl')
@@ -282,20 +300,14 @@ function rcl_notice_form($form='login'){
     echo $text;
 }
 
-//Добавляем сообщение о неверном заполнении поле повтора пароля
-add_filter('rcl_notice_form','rcl_notice_chek_register_pass');
-function rcl_notice_chek_register_pass($notices){
-    global $rcl_options;
-    if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return $notices;
-    $notices['register']['error']['repeat-pass'] = __('Repeat password is not correct!','rcl');
-    return $notices;
-}
 //Проверяем заполненность поля повтора пароля
-add_action('pre_register_user_rcl','rcl_chek_repeat_pass');
-function rcl_chek_repeat_pass($ref){
+add_filter('rcl_registration_errors','rcl_chek_repeat_pass');
+function rcl_chek_repeat_pass($errors){
     global $rcl_options;
     if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return false;
-    if($_POST['secondary-email-user']!=$_POST['pass-user']){
-        wp_redirect(rcl_format_url($ref).'action-rcl=register&error=repeat-pass');exit;
+    if($_POST['user_secondary_pass']!=$_POST['user_pass']){
+        $errors = new WP_Error();
+        $errors->add( 'rcl_register_repeat_pass', __('Repeat password is not correct!','rcl') );
     }
+    return $errors;
 }

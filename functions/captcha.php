@@ -36,8 +36,8 @@ function rcl_get_captcha_field($fields){
 
 }
 
-add_action('pre_register_user_rcl','rcl_check_register_captcha');
-function rcl_check_register_captcha($ref) {
+add_action('rcl_registration_errors','rcl_check_register_captcha');
+function rcl_check_register_captcha($errors){
     $rcl_captcha = new ReallySimpleCaptcha();
     $rcl_captcha_prefix = sanitize_text_field($_POST['rcl_captcha_prefix']);
     $rcl_captcha_code = sanitize_text_field($_POST['rcl_captcha_code']);
@@ -47,8 +47,8 @@ function rcl_check_register_captcha($ref) {
     $rcl_captcha->remove($rcl_captcha_prefix);
     $rcl_captcha->cleanup();
     if ( ! $rcl_captcha_correct ) {
-        wp_redirect(rcl_format_url($ref).'action-rcl=register&error=captcha');exit;
-        exit;
+        $errors = new WP_Error();
+        $errors->add( 'rcl_register_captcha', __('Field filled not right CAPTCHA!','rcl') );
     }
-
+    return $errors;
 }
