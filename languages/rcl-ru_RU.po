@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-10-21 19:22+0300\n"
+"POT-Creation-Date: 2015-10-25 18:31+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -237,7 +237,7 @@ msgstr "Имя группы"
 #: ../../wp-recall/add-on/./bookmarks/index.php:458
 #: ../../wp-recall/add-on/./gallery-recall/index.php:434
 #: ../../wp-recall/add-on/./gallery-recall/index.php:473
-#: add-on/rating-system/index.php:503 add-on/rating-system/index.php:524
+#: add-on/rating-system/index.php:508 add-on/rating-system/index.php:529
 msgid "Error"
 msgstr "Ошибка"
 
@@ -288,7 +288,7 @@ msgstr "Для комментирования  вы должны авториз�
 #: ../../wp-recall/add-on/./gallery-recall/class_gallery.php:122
 #: ../../wp-recall/add-on/./gallery-recall/index.php:377
 #: ../../wp-recall/add-on/./gallery-recall/index.php:388
-#: add-on/message/index.php:1235
+#: add-on/message/index.php:1237
 msgid "Reply"
 msgstr "Ответить"
 
@@ -813,16 +813,16 @@ msgstr "Платеж не найден в базе данных"
 msgid "Заменить файл"
 msgstr ""
 
-#: add-on/feed/index.php:34 add-on/feed/index.php:361
+#: add-on/feed/index.php:34 add-on/feed/index.php:378
 msgid "Subscribe"
 msgstr "Подписаться"
 
-#: add-on/feed/index.php:34 add-on/feed/index.php:163
-#: add-on/feed/index.php:351
+#: add-on/feed/index.php:34 add-on/feed/index.php:180
+#: add-on/feed/index.php:368
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
-#: add-on/feed/index.php:58 add-on/feed/index.php:168
+#: add-on/feed/index.php:58 add-on/feed/index.php:185
 msgid "Followers"
 msgstr "Подписчики"
 
@@ -830,23 +830,23 @@ msgstr "Подписчики"
 msgid "List subscribers"
 msgstr "Список подписчиков"
 
-#: add-on/feed/index.php:89
+#: add-on/feed/index.php:98
 msgid "Following yet"
 msgstr "Подписчиков пока нет"
 
-#: add-on/feed/index.php:116
+#: add-on/feed/index.php:125
 msgid "Subscriptions"
 msgstr "Подписки"
 
-#: add-on/feed/index.php:121
+#: add-on/feed/index.php:130
 msgid "List subscriptions"
 msgstr "Список подписок"
 
-#: add-on/feed/index.php:127
+#: add-on/feed/index.php:144
 msgid "Subscriptions yet"
 msgstr "Подписок пока нет"
 
-#: add-on/feed/index.php:177
+#: add-on/feed/index.php:194
 msgid ""
 "Login or register to view the latest publications and comments from users on "
 "which you will you subscribed."
@@ -854,21 +854,21 @@ msgstr ""
 "Войдите или зарегистрируйтесь, чтобы видеть последние публикации и "
 "комментарии от пользователей на которых оформлена подписка"
 
-#: add-on/feed/index.php:183 add-on/feed/index.php:379
+#: add-on/feed/index.php:200 add-on/feed/index.php:396
 #: add-on/feed/templates/feed-post.php:44 add-on/rating-system/index.php:32
-#: functions/rcl_userlist.php:294 functions/shortcodes.php:256
+#: functions/class-rcl-users.php:451 functions/shortcodes.php:103
 msgid "Comments"
 msgstr "Комментарии"
 
-#: add-on/feed/index.php:184 add-on/publicpost/index.php:68
+#: add-on/feed/index.php:201 add-on/publicpost/index.php:68
 msgid "Publication"
 msgstr "Публикация"
 
-#: add-on/feed/index.php:383
+#: add-on/feed/index.php:400
 msgid "It seems that you have not left a single comment or not subscribed."
 msgstr "Похоже, что у вас еще нет комментариев."
 
-#: add-on/feed/index.php:384
+#: add-on/feed/index.php:401
 msgid ""
 "Comment you publish and subscribe to other users, then you can track "
 "responses to your comments and to see new comments from users.Comment you "
@@ -879,25 +879,25 @@ msgstr ""
 "получать новые комментарии ваших публикаций или пользователей на которых вы "
 "подписаны, а также ответы на ваши комментарии."
 
-#: add-on/feed/index.php:590
+#: add-on/feed/index.php:607
 msgid "Publications yet"
 msgstr "Публикаций пока нет"
 
-#: add-on/feed/index.php:590
+#: add-on/feed/index.php:607
 msgid "Maybe later, someone will post the news."
 msgstr "Возможно позже появятся новые публикации"
 
-#: add-on/feed/index.php:599
+#: add-on/feed/index.php:616
 msgid "Publishing"
 msgstr "Публикации"
 
-#: add-on/feed/index.php:629
+#: add-on/feed/index.php:646
 msgid "You havent signed up anyone elses publication."
 msgstr ""
 "В вашей ленте пока нет новых публикаций. Подписывайтесь на пользователей "
 "сайта, чтобы видеть новые публикации."
 
-#: add-on/feed/index.php:630
+#: add-on/feed/index.php:647
 msgid ""
 "Go to the profile of the user and click the \"Subscribe\" button and you "
 "will be able to monitor his recent publications here."
@@ -1071,7 +1071,7 @@ msgid "View"
 msgstr "Смотреть"
 
 #: add-on/groups/index.php:105 add-on/groups/index.php:140
-#: functions/shortcodes.php:307
+#: functions/shortcodes.php:140
 msgid "Search"
 msgstr "Поиск"
 
@@ -1157,7 +1157,7 @@ msgid "Publishing group"
 msgstr "Публикация группы"
 
 #: add-on/groups/index.php:281 add-on/rating-system/addon-options.php:104
-#: rcl-admin/admin-pages.php:133 rcl-widgets.php:31 rcl-widgets.php:94
+#: rcl-admin/admin-pages.php:133 rcl-widgets.php:32 rcl-widgets.php:96
 msgid "All users"
 msgstr "Все пользователи"
 
@@ -1242,7 +1242,7 @@ msgstr "Поиск группы"
 msgid "Find"
 msgstr "Найти"
 
-#: add-on/groups/index.php:877 functions/shortcodes.php:252
+#: add-on/groups/index.php:877 functions/class-rcl-users.php:446
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -1284,7 +1284,7 @@ msgstr "Корзина"
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
 #: add-on/user-account/index.php:471 functions/rcl_editfields.php:117
-#: rcl-widgets.php:47 rcl-widgets.php:109 rcl-widgets.php:162
+#: rcl-widgets.php:48 rcl-widgets.php:111 rcl-widgets.php:164
 msgid "Title"
 msgstr "Заголовок"
 
@@ -1292,7 +1292,7 @@ msgstr "Заголовок"
 msgid "File does not exist on the server or it has already been loaded!"
 msgstr "Файла нет на сервере или он был удален!"
 
-#: add-on/message/index.php:28 add-on/message/index.php:1314
+#: add-on/message/index.php:28 add-on/message/index.php:1316
 msgid "The file was loaded."
 msgstr "Файл был загружен"
 
@@ -1474,112 +1474,112 @@ msgstr "Отправить"
 msgid "Important messages"
 msgstr "Важные сообщения"
 
-#: add-on/message/index.php:423
+#: add-on/message/index.php:430
 msgid "Here will display correspondence history"
 msgstr "Здесь будет отображаться история переписки"
 
-#: add-on/message/index.php:426
+#: add-on/message/index.php:433
 msgid "Show older messages"
 msgstr "Показать более поздние сообщения"
 
-#: add-on/message/index.php:529 functions/includes.php:230
+#: add-on/message/index.php:531 functions/includes.php:230
 msgid "days"
 msgstr "дн."
 
-#: add-on/message/index.php:530
+#: add-on/message/index.php:532
 msgid "month"
 msgstr "месяц"
 
-#: add-on/message/index.php:531
+#: add-on/message/index.php:533
 msgid "all the time"
 msgstr "все время"
 
-#: add-on/message/index.php:532
+#: add-on/message/index.php:534
 msgid "Blacklist"
 msgstr "Черный список"
 
-#: add-on/message/index.php:533
+#: add-on/message/index.php:535
 msgid "Important"
 msgstr "Важное"
 
-#: add-on/message/index.php:539
+#: add-on/message/index.php:541
 msgid "You havent been in conversation with"
 msgstr "Вы еще ни с кем не вели переписку"
 
-#: add-on/message/index.php:568 add-on/message/index.php:588
-#: add-on/message/index.php:671
+#: add-on/message/index.php:570 add-on/message/index.php:590
+#: add-on/message/index.php:673
 msgid "Contacts not found!"
 msgstr "Контакты не найдены!"
 
-#: add-on/message/index.php:666
+#: add-on/message/index.php:668
 msgid "Last message"
 msgstr "Последнее сообщение"
 
-#: add-on/message/index.php:667
+#: add-on/message/index.php:669
 msgid "The chat history is missing"
 msgstr "История переписки не найдена"
 
-#: add-on/message/index.php:680
+#: add-on/message/index.php:682
 msgid "Delete?"
 msgstr "Удалить?"
 
-#: add-on/message/index.php:746
+#: add-on/message/index.php:748
 msgid "Uncheck"
 msgstr "Снять"
 
-#: add-on/message/index.php:746
+#: add-on/message/index.php:748
 msgid "Mark as important"
 msgstr "Пометить как важное"
 
-#: add-on/message/index.php:811
+#: add-on/message/index.php:813
 msgid "No posts found!"
 msgstr "Сообщения не найдены!"
 
-#: add-on/message/index.php:846
+#: add-on/message/index.php:848
 msgid "Show more recent messages"
 msgstr "Показать больше последних сообщений"
 
-#: add-on/message/index.php:964
+#: add-on/message/index.php:966
 msgid "Your message has been sent!"
 msgstr "Ваше сообщение было доставлено!"
 
-#: add-on/message/index.php:1059
+#: add-on/message/index.php:1061
 msgid "The message is marked as read"
 msgstr "Сообщение помечено как прочтенное"
 
-#: add-on/message/index.php:1202
+#: add-on/message/index.php:1204
 msgid "You a new message!"
 msgstr "Вам новое сообщение!"
 
-#: add-on/message/index.php:1233
+#: add-on/message/index.php:1235
 msgid "Go to the correspondence"
 msgstr "Перейти к переписке"
 
-#: add-on/message/index.php:1288
+#: add-on/message/index.php:1290
 msgid "Show more recent posts"
 msgstr "Показать больше последних сообщений"
 
-#: add-on/message/index.php:1316
+#: add-on/message/index.php:1318
 msgid "The file has been received, but not yet loaded."
 msgstr "Файл был отправлен, но не был загружен."
 
-#: add-on/message/index.php:1317
+#: add-on/message/index.php:1319
 msgid "The file was sent to the recipient."
 msgstr "Файл был отправлен получателю,"
 
-#: add-on/message/index.php:1320
+#: add-on/message/index.php:1322
 msgid "Link to sent the file"
 msgstr "Ссылка на файл"
 
-#: add-on/message/index.php:1322
+#: add-on/message/index.php:1324
 msgid "(accept files only from trusted sources)"
 msgstr "(принимайте файлы только от доверенных источников)"
 
-#: add-on/message/index.php:1350
+#: add-on/message/index.php:1352
 msgid "The file was sent successfully."
 msgstr "Файл был успешно отправлен"
 
-#: add-on/message/index.php:1353
+#: add-on/message/index.php:1355
 msgid ""
 "You have exceeded the limit on the number of uploaded files. Wait until the "
 "files sent previously will be accepted."
@@ -1587,7 +1587,7 @@ msgstr ""
 "Вы достигли предела по кол-ву отправляемых файлов. Подождите пока файлы "
 "отправленные ранее будут приняты."
 
-#: add-on/message/index.php:1363
+#: add-on/message/index.php:1365
 msgid "Removes the file from the server"
 msgstr "Удаляю файл с сервера"
 
@@ -1839,7 +1839,7 @@ msgstr "Статус пользователя"
 #: add-on/user-account/addon-options.php:85
 #: add-on/user-account/addon-options.php:95
 #: add-on/user-account/addon-options.php:103 rcl-admin/admin-pages.php:87
-#: rcl-widgets.php:58 rcl-widgets.php:116
+#: rcl-widgets.php:59 rcl-widgets.php:118
 msgid "Not selected"
 msgstr "Не выбрано"
 
@@ -2400,7 +2400,7 @@ msgid "Plus/minus"
 msgstr "Плюс/Минус"
 
 #: add-on/rating-system/addon-options.php:26
-#: add-on/rating-system/index.php:294
+#: add-on/rating-system/index.php:299
 msgid "I like"
 msgstr "Мне нравится"
 
@@ -2520,7 +2520,7 @@ msgid "Rating changes not made"
 msgstr "Изменение рейтинга не производилось"
 
 #: add-on/rating-system/index.php:51 add-on/rating-system/index.php:100
-#: add-on/rating-system/index.php:239
+#: add-on/rating-system/index.php:244
 msgid "Rating"
 msgstr "Рейтинг"
 
@@ -2528,24 +2528,24 @@ msgstr "Рейтинг"
 msgid "rating"
 msgstr "рейтинг"
 
-#: add-on/rating-system/index.php:287
+#: add-on/rating-system/index.php:292
 msgid "To remove your vote"
 msgstr "Удалить голос"
 
-#: add-on/rating-system/index.php:296
+#: add-on/rating-system/index.php:301
 msgid "minus"
 msgstr "минус"
 
-#: add-on/rating-system/index.php:297
+#: add-on/rating-system/index.php:302
 msgid "plus"
 msgstr "плюс"
 
-#: add-on/rating-system/index.php:410
+#: add-on/rating-system/index.php:415
 #, php-format
 msgid "exceeded the limit of votes for the period - %d seconds"
 msgstr "превышение ограничения голосов в течении %d секунд"
 
-#: add-on/rating-system/index.php:482
+#: add-on/rating-system/index.php:487
 msgid "You can not vote"
 msgstr "Вы не можете голосовать"
 
@@ -2913,10 +2913,10 @@ msgid "Ban"
 msgstr "Бан"
 
 #: functions/authorize.php:35 functions/register.php:104
-msgid "Заполните обязательные поля!"
-msgstr ""
+msgid "Fill in the required fields!"
+msgstr "Заполните обязательные поля!"
 
-#: functions/authorize.php:44 functions/loginform.php:278
+#: functions/authorize.php:44 functions/loginform.php:254
 msgid "Your email is not confirmed!"
 msgstr "Ваш E-mail не подтвержден!"
 
@@ -2928,7 +2928,30 @@ msgstr "Введите символы"
 msgid "Field filled not right CAPTCHA!"
 msgstr "Не верно заполнено поле CAPTCHA!"
 
-#: functions/includes.php:51 functions/rcl_userlist.php:275
+#: functions/class-rcl-users.php:434
+msgid "Total users"
+msgstr "Всего пользователей"
+
+#: functions/class-rcl-users.php:448
+msgid "Activity"
+msgstr "Активности"
+
+#: functions/class-rcl-users.php:449
+msgid "Rated"
+msgstr "Рейтингу"
+
+#: functions/class-rcl-users.php:450
+msgid "Publications"
+msgstr "Публикациям"
+
+#: functions/class-rcl-users.php:452 functions/loginform.php:181
+#: functions/loginform.php:189 functions/loginform.php:205
+#: functions/shortcodes.php:116 templates/form-register.php:4
+#: templates/form-remember.php:21 templates/form-sign.php:33
+msgid "Registration"
+msgstr "Регистрация"
+
+#: functions/includes.php:51 functions/shortcodes.php:84
 msgid "not online"
 msgstr "не в сети"
 
@@ -2983,34 +3006,27 @@ msgstr "В личный кабинет"
 msgid "Exit"
 msgstr "Выход"
 
-#: functions/loginform.php:181 functions/loginform.php:189
-#: functions/loginform.php:205 functions/rcl_userlist.php:307
-#: functions/shortcodes.php:257 templates/form-register.php:4
-#: templates/form-remember.php:21 templates/form-sign.php:33
-msgid "Registration"
-msgstr "Регистрация"
-
-#: functions/loginform.php:272
+#: functions/loginform.php:248
 msgid "Registration is completed!"
 msgstr "Регистрация успешно завершена!"
 
-#: functions/loginform.php:273
+#: functions/loginform.php:249
 msgid "Registration is completed! Check your email."
 msgstr "Регистрация завершена! Проверьте свой E-mail."
 
-#: functions/loginform.php:283
+#: functions/loginform.php:257
 msgid "Registration is completed! Check your email"
 msgstr "Регистрация завершена! Проверьте свой E-mail"
 
-#: functions/loginform.php:289
+#: functions/loginform.php:263
 msgid "Your password has been sent!<br>Check your email."
 msgstr "Новый пароль был сформирован! Проверьте свою почту."
 
-#: functions/loginform.php:314
+#: functions/loginform.php:288
 msgid "Error filling!"
 msgstr "Ошибка заполнения!"
 
-#: functions/loginform.php:344
+#: functions/loginform.php:310
 msgid "Repeat password is not correct!"
 msgstr "Повтор пароля не верный!"
 
@@ -3140,15 +3156,15 @@ msgstr "Страница дополнения"
 msgid "You cant control polucheniya plugins on this site."
 msgstr "Вы не можете управлять загрузкой плагинов на этом сайте."
 
-#: functions/rcl_addons.php:498
+#: functions/rcl_addons.php:500
 msgid "Unpacking of archive failed."
 msgstr "Распаковка дополнения не удалась."
 
-#: functions/rcl_addons.php:501
+#: functions/rcl_addons.php:503
 msgid "ZIP archive not found."
 msgstr "ZIP архив не найден."
 
-#: functions/rcl_addons.php:576 rcl-admin/admin-pages.php:192
+#: functions/rcl_addons.php:578 rcl-admin/admin-pages.php:192
 msgid "Login and register"
 msgstr "Вход и регистрация"
 
@@ -3276,10 +3292,6 @@ msgstr "Полученное дополнение не имеет коррект
 msgid "Unable to open archive!"
 msgstr "Не удалось открыть полученный архив обновления!"
 
-#: functions/rcl_userlist.php:300
-msgid "Publics"
-msgstr "Публикации"
-
 #: functions/recallbar.php:6 rcl-admin/admin-pages.php:256
 msgid "Recallbar"
 msgstr ""
@@ -3316,43 +3328,27 @@ msgstr "со следующими данными:"
 msgid "If it wasnt you, then just ignore this email"
 msgstr "Если это были не вы, то просто проигнорируйте это письмо"
 
-#: functions/shortcodes.php:247
-msgid "Total users"
-msgstr "Всего пользователей"
-
-#: functions/shortcodes.php:253
-msgid "Activity"
-msgstr "Активности"
-
-#: functions/shortcodes.php:254
-msgid "Rated"
-msgstr "Рейтингу"
-
-#: functions/shortcodes.php:255
-msgid "Publications"
-msgstr "Публикациям"
-
-#: functions/shortcodes.php:281
+#: functions/shortcodes.php:31
 msgid "Users not found"
 msgstr "Пользователи не найдены"
 
-#: functions/shortcodes.php:282
-msgid "No one"
-msgstr "Никого нет"
+#: functions/shortcodes.php:109
+msgid "Publics"
+msgstr "Публикации"
 
-#: functions/shortcodes.php:301
+#: functions/shortcodes.php:134
 msgid "Search users"
 msgstr "Поиск пользователей"
 
-#: functions/shortcodes.php:304
+#: functions/shortcodes.php:137
 msgid "by name"
 msgstr "по имени"
 
-#: functions/shortcodes.php:305
+#: functions/shortcodes.php:138
 msgid "by login"
 msgstr "по логину"
 
-#: functions/shortcodes.php:319
+#: functions/shortcodes.php:152
 msgid ""
 "To begin to use the capabilities of your personal account, please log in or "
 "register on this site"
@@ -3695,35 +3691,35 @@ msgstr "Публикация ожидает утверждения!"
 msgid "New users on the website"
 msgstr "Новые пользователи на сайте"
 
-#: rcl-widgets.php:14 rcl-widgets.php:44
+#: rcl-widgets.php:14 rcl-widgets.php:45
 msgid "New users"
 msgstr "Новые пользователи"
 
-#: rcl-widgets.php:51
+#: rcl-widgets.php:52
 msgid "The number of displayed users"
 msgstr "Количество отображаемых пользователей"
 
-#: rcl-widgets.php:63 rcl-widgets.php:121
+#: rcl-widgets.php:64 rcl-widgets.php:123
 msgid "Page all users"
 msgstr "Страница всех пользователей"
 
-#: rcl-widgets.php:78
+#: rcl-widgets.php:79
 msgid "Conclusion the users in the network"
 msgstr "Вывод пользователей в сети"
 
-#: rcl-widgets.php:80
+#: rcl-widgets.php:81
 msgid "Users on the network"
 msgstr "Пользователи в сети"
 
-#: rcl-widgets.php:106
+#: rcl-widgets.php:108
 msgid "Right now"
 msgstr "Сейчас в сети"
 
-#: rcl-widgets.php:136
+#: rcl-widgets.php:138
 msgid "The block with the main profile information"
 msgstr "Блок с основной информацией профиля"
 
-#: rcl-widgets.php:138 rcl-widgets.php:159
+#: rcl-widgets.php:140 rcl-widgets.php:161
 msgid "Control panel"
 msgstr "Панель управления"
 
@@ -3777,6 +3773,9 @@ msgstr "Регистрация"
 #: wp-recall.php:38 wp-recall.php:42
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "No one"
+#~ msgstr "Никого нет"
 
 #~ msgid "For Interkassa: successful payment URL"
 #~ msgstr "Для Интеркассы: URL успешного платежа"

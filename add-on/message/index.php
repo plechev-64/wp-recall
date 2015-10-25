@@ -420,6 +420,13 @@ class Rcl_Messages{
                             . '<div id="resize"></div>'
                             . '</div>';
 
+                }else{
+                    $textarea = '<div class="prmess">';
+                    $textarea .= '<div class="ban-notice">'.$access.'</div>';
+                    $textarea .= '<div id="resize"></div>'
+                            . '</div>';
+                }
+
                     if(!$private_messages) $newblock = '<div class="new_mess" align="center">'.__('Here will display correspondence history','rcl').'</div>';
                     else $newblock = '<div class="new_mess"></div>';
 
@@ -454,11 +461,6 @@ class Rcl_Messages{
                         $messlist .= $getold;
                         $privat_block .= '<div id="message-list">'.$messlist.'</div>';
                     }
-
-
-		} else {
-                    $privat_block .= $access;
-		}
 
 
 

@@ -105,7 +105,7 @@ class RCL_Install {
             'users_page_rcl' => array(
                 'name'    => 'users',
                 'title'   => __('Users','rcl'),
-                'content' => '[userlist]'
+                'content' => '[userlist search="1"]'
             ),
         ) );
 

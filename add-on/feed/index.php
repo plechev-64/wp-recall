@@ -45,7 +45,7 @@ function rcl_get_feed_button($userid){
 
 function rcl_add_userlist_follow_button(){
     global $user;
-    echo '<div class="follow-button">'.rcl_get_feed_button($user->user_id).'</div>';
+    echo '<div class="follow-button">'.rcl_get_feed_button($user->ID).'</div>';
 }
 
 add_filter('ajax_tabs_rcl','rcl_ajax_followers_tab');
@@ -84,7 +84,16 @@ function rcl_followers_tab($user_id){
 
     if($cnt){
         add_filter('user_description','rcl_add_userlist_follow_button',90);
-        $content .= rcl_get_userlist(array('type' => 'rows','usergroup' => 'rcl_feed:'.$user_id, 'inpage'=>20 ,'search'=>'no' ,'orderby'=>'action', 'add_uri'=>array('tab'=>'followers')));
+        $content .= rcl_get_userlist(array(
+            'templates' => 'rows',
+            'usergroup' => 'rcl_feed:'.$user_id,
+            'inpage'=>20,
+            'orderby'=>'time_action',
+            'filters'=>1,
+            'search_form'=>0,
+            'data'=>'rating_total,description,posts_count,comments_count',
+            'add_uri'=>array('tab'=>'followers')
+            ));
     }else
         $content .= '<p>'.__('Following yet','rcl').'</p>';
 
@@ -122,7 +131,15 @@ function rcl_subscriptions_tab($user_id){
     if($feeds){
         add_filter('user_description','rcl_add_userlist_follow_button',90);
         foreach($feeds as $feed){$users[] = $feed->meta_value;}
-        $content .= rcl_get_userlist(array('type' => 'rows','include' => implode(',',$users) ,'search'=>'no' ,'orderby'=>'action', 'add_uri'=>array('tab'=>'subscriptions')));
+        $content .= rcl_get_userlist(array(
+            'template' => 'rows',
+            'include' => implode(',',$users),
+            'orderby'=>'time_action',
+            'filters'=>1,
+            'search_form'=>0,
+            'data'=>'rating_total,description,posts_count,comments_count',
+            'add_uri'=>array('tab'=>'subscriptions')
+            ));
     } else{
         $content .= '<p>'.__('Subscriptions yet','rcl').'</p>';
     }
@@ -160,7 +177,7 @@ class Rcl_Feed{
 	}
 
 	function get_feedout_button($user_id){
-		return '<div class="alignright feed-control feed-control-'.$userid.'">'.rcl_get_button(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-bell-slash','class'=>'feed-user','attr'=>'data-feed='.$userid.' title='.__('Unsubscribe','rcl'))).'</div>';
+		return '<div class="alignright feed-control feed-control-'.$user_id.'">'.rcl_get_button(__('Unsubscribe','rcl'),'#',array('icon'=>'fa-bell-slash','class'=>'feed-user','attr'=>'data-feed='.$user_id.' title='.__('Unsubscribe','rcl'))).'</div>';
 	}
 
 

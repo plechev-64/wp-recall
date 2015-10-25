@@ -62,6 +62,11 @@
 #tab-privat .prmess{
     margin-bottom:10px;
 }
+#tab-privat .prmess .ban-notice{
+    text-align: center;
+    background: #FFE99B;
+    margin: 10px 0;
+}
 #tab-privat #resize-content{
     height:300px;
     overflow-y: auto;

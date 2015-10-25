@@ -27,7 +27,8 @@ class Widget_new_author extends WP_Widget {
 
 		if ( $title ) echo $before_title . $title . $after_title;
 
-		echo do_shortcode('[userlist type="mini" filter="0"  widget="1" limit="'.$count_user.'" search="no"]');
+                echo rcl_get_userlist(array('template' => 'mini', 'number'=>$count_user, 'filter'=>false));
+
 		if($all) echo '<p class="clear alignright"><a href="'.get_permalink($all).'">'.__('All users','rcl').'</a></p>';
 		echo $after_widget;
 	}
@@ -90,7 +91,8 @@ class Widget_online_users extends WP_Widget {
 
 		if ( $title ) echo $before_title . $title . $after_title;
 
-		echo do_shortcode('[userlist type="mini" limit="10" onlyaction="1" widget="1" orderby="action" search="no"]');
+                echo rcl_get_userlist(array('template' => 'mini', 'number'=>10, 'orderby'=>'time_action', 'only'=>'action', 'filter'=>false ));
+
 		if($all) echo '<p class="clear alignright"><a href="'.get_permalink($all).'">'.__('All users','rcl').'</a></p>';
 		echo $after_widget;
 	}

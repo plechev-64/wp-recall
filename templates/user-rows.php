@@ -12,9 +12,9 @@
         <h3 class="user-name">
             <a href="<?php rcl_user_url(); ?>"><?php rcl_user_name(); ?></a>
         </h3>
-        
+
         <?php rcl_user_description(); ?>
-        
+
         <?php do_action('user_description'); ?>
 
     </div>

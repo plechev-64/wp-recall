@@ -2,312 +2,145 @@
 
 add_shortcode('userlist','rcl_get_userlist');
 function rcl_get_userlist($atts, $content = null){
-    global $post,$wpdb,$user_ID,$user,$group_id,$group_admin,$active_addons;
+    global $user;
 
-	extract(shortcode_atts(array(
-            'inpage' => 10,
-            'orderby' => 'registered',
-            'exclude' => 0,
-            'include' => false,
-            'order' => 'DESC',
-            'type' => 'rows',
-            'usergroup' => false,
-            'usergroup_compare'=>'=',
-            'limit' => 0,
-            'onlyaction' => false,
-            'group' => 0,
-            'search' => 'yes',
-            'widget' => false,
-            'page' => ''
-	),
-	$atts));
+    require_once 'class-rcl-users.php';
 
-        $us_data = '';
-        $flt = '';
-        $us_lst = false;
+    $users = new Rcl_Users($atts);
 
-        if(isset($_GET['usergroup'])){
-            $usergroup = $_GET['usergroup'];
-        }
-        if(isset($_GET['order'])){
-            $order = $_GET['order'];
-        }
-        if(isset($_GET['type'])){
-            $type = $_GET['type'];
-        }
-        if(isset($_GET['inpage'])){
-            $inpage = $_GET['inpage'];
-        }
+    $count_users = false;
 
-        if (!class_exists('Rcl_Userlist')) include_once plugin_dir_path( __FILE__ ).'rcl_userlist.php';
-	$UserList = new Rcl_Userlist();
+    if(!$users->number){
 
-        if($page) $navi = $page;
+        $rqst = $users->search_request();
 
-        if(isset($_GET['filter'])&&!$widget) $orderby = $_GET['filter'];
+        $search_string = ($rqst)? '&'.implode('&',$rqst): '';
 
-        switch($orderby){
-            case 'posts': $order_by = 'post_count'; break;
-            case 'feeds': $order_by = 'feeds'; break;
-            case 'comments': $order_by = 'comments_count'; break;
-            case 'rayting': $order_by = 'rating_total'; break;
-            case 'action': $order_by = 'time_action'; break;
-            case 'registered': $order_by = 'user_registered'; break;
-            case 'display_name': $order_by = 'display_name'; break;
-        }
+        $count_users = $users->count_users();
 
-        $atts['add_uri']['filter']=$orderby;
-
-    if((isset($_GET['search-user'])&&$search=='yes')||$include){
-
-        if(isset($_GET['search-user'])){
-
-            if($orderby!='action'&&$orderby!='rayting'){
-                $orderby = 'action';
-                $order_by = 'time_action';
-            }
-
-            $args = apply_filters('search_filter_rcl',$args);
-
-            $exclude= 0;
-            $type='rows';
-            $search='yes';
-
-            if(isset($_GET['default-search'])) $args = $UserList->get_args();
-
-        }else if($include){
-            $args = array('include'=>explode(',',$include),'exclude'=>explode(',',$exclude));
-        }
-
-        $args['fields'] = 'ID';
-        $allusers = get_users($args);
-	$count_user = count($allusers);
-
-        $rqst = $UserList->search_request();
-
-        if(isset($atts['add_uri'])){
-            foreach($atts['add_uri'] as $k=>$v){
-                $rqst[] = $k.'='.$v;
-            }
-        }
-
-        $rclnavi = new RCL_navi($inpage,$count_user,'&'.implode('&',$rqst),$page);
-        if(!$limit) $limit_us = $rclnavi->limit();
-        else $limit_us = $limit;
-
-        /*unset($args['fields']);
-        $args['number'] = $inpage;
-        $args['offset'] = $rclnavi->offset;
-        $users = get_users($args);*/
-
-        $us_lst = $UserList->get_users_lst($allusers,'data');
-
-        if($us_lst){
-
-            $UserList->exclude = $exclude;
-            $UserList->orderby = $order_by;
-            $UserList->order = $order;
-            $UserList->limit = $limit_us;
-            $UserList->inpage = $inpage;
-
-            $flt_sql = "IN ($us_lst)";
-
-            if($order_by == 'rating_total') $us_data = $UserList->get_usdata($order_by,$us_data,$us_lst);
-            if($order_by == 'time_action')  $us_data = $UserList->get_usdata($order_by,$us_data,$us_lst);
-
-	}
-
-    }else{
-
-        if($group){
-            $group_id = $group;
-            $gr = new Rcl_Group($group);
-            $count_user = $gr->users_count;
-
-        }else if($usergroup){
-            if($limit) $inpage = $limit;
-
-            $usergroup = explode('|',$usergroup);
-            foreach($usergroup as $k=>$filt){
-                    $f = explode(':',$filt);
-                    $args['meta_query'][] = array(
-                        'key' => $f[0],
-                        'value' => $f[1],
-                        'compare' => $usergroup_compare,
-                    );
-            }
-            $args['meta_query']['relation'] = 'AND';
-            $args['fields'] = 'ID';
-            $allusers = get_users($args);
-
-            //unset($args['fields']);
-            //$args['number'] = $inpage;
-            //$args['offset'] = $rclnavi->offset;
-            //$users = get_users($args);
-
-            $us_lst = $UserList->get_users_lst($allusers,'data');
-            $count_user = count($allusers);
-
-        }else{
-
-            $count_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM $wpdb->users WHERE ID NOT IN (".rcl_format_in(explode(',',$exclude)).")",explode(',',$exclude)));
-
-        }
-
-        if(isset($atts['add_uri'])){
-            foreach($atts['add_uri'] as $k=>$v){
-                $rqst[] = $k.'='.$v;
-            }
-        }
-
-        $rclnavi = new RCL_navi($inpage,$count_user,'&'.implode('&',$rqst),$page);
-        if(!$limit) $limit_us = $rclnavi->limit();
-        else $limit_us = $limit;
-
-        $UserList->exclude = $exclude;
-        $UserList->orderby = $order_by;
-        $UserList->order = $order;
-        $UserList->limit = $limit_us;
-        $UserList->inpage = $inpage;
-
-        if($group){
-            $users = $wpdb->get_results($wpdb->prepare("SELECT user_id FROM $wpdb->usermeta WHERE meta_key = '%s'",'user_group_'.$group));
-            $us_lst = $UserList->get_users_lst((object)$users,'user_id');
-            $group_admin = $wpdb->get_var($wpdb->prepare("SELECT user_id FROM $wpdb->usermeta WHERE meta_key = '%s'",'admin_group_'.$group));
-            $us_data = $UserList->get_usdata_actions($us_data,$us_lst);
-        }else{
-
-            if($order_by){
-
-                if($order_by=='comments_count'){
-                    if(!$limit&&!$us_lst){
-                        $allusers = $wpdb->get_results($wpdb->prepare("
-                            SELECT COUNT(user_id) AS comments_count
-                            FROM ".$wpdb->prefix."comments
-                            WHERE user_id != '' AND comment_approved = 1 GROUP BY user_id ORDER BY %s %s",$order_by,$order)
-                        );
-
-                        $rclnavi->cnt_data = count($allusers);
-                        $rclnavi->num_page = ceil($rclnavi->cnt_data/$inpage);
-                    }
-                }
-
-                if($order_by=='post_count'){
-                    if(!$limit&&!$us_lst){
-                        $allusers = $wpdb->get_results($wpdb->prepare("
-                                SELECT COUNT(post_author) AS post_count
-                                FROM ".$wpdb->prefix."posts
-                                WHERE post_status = 'publish' GROUP BY post_author ORDER BY %s %s",$order_by,$order)
-                        );
-
-                        $rclnavi->cnt_data = count($allusers);
-                        $rclnavi->num_page = ceil($rclnavi->cnt_data/$inpage);
-                    }
-                }
-
-                $us_data = $UserList->get_usdata($order_by,$us_data,$us_lst);
-            }
-
-            if($us_data){
-                $us_lst = $UserList->get_users_lst($us_data);
-                $UserList->orderby = false;
-                $UserList->order = false;
-                $UserList->limit = false;
-                $us_data = $UserList->get_usdata_actions($us_data,$us_lst);
-                $us_data = $UserList->get_usdata_rayts($us_data,$us_lst);
-            }
-       }
+        $rclnavi = new RCL_navi($users->inpage,$count_users,$search_string,$users->paged);
+        $users->offset = $rclnavi->offset;
+        $users->number = $rclnavi->inpage;
     }
 
-    if($type=='rows'){
-            if($order_by!='post_count') $us_data = $UserList->add_post_count_data($us_data,$us_lst);
-            if($order_by!='comments_count') $us_data = $UserList->add_comments_count_data($us_data,$us_lst);
-            if($order_by!='user_registered') $us_data = $UserList->add_user_registered_data($us_data,$us_lst);
+    $usersdata = $users->get_users();
+
+    $userlist = $users->get_filters($count_users);
+
+    if(!$usersdata){
+        $userlist .= '<h4 align="center">'.__('Users not found','rcl').'</h4>';
+        return $userlist;
     }
 
-    $uslst_array = explode(',',$us_lst);
+    $userlist .= '<div class="userlist '.$users->template.'-list">';
 
-    $users_desc = $wpdb->get_results($wpdb->prepare("SELECT user_id,meta_value FROM $wpdb->usermeta WHERE user_id IN (".rcl_format_in($uslst_array).") AND meta_key = 'description'",$uslst_array));
-    foreach($users_desc as $us_desc){
-        $us_data[$us_desc->user_id]['description'] = $us_desc->meta_value;
+    foreach($usersdata as $user){ $users->setup_userdata($user);
+        $userlist .= rcl_get_include_template('user-'.$users->template.'.php');
     }
 
-    $display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM $wpdb->users WHERE ID IN (".rcl_format_in($uslst_array).")",$uslst_array));
-    foreach((array)$display_names as $name){
-        $us_data[$name->ID]['display_name'] = $name->display_name;
-        $us_data[$name->ID]['user_id'] = $name->ID;
-    }
+    $userlist .= '</div>';
 
-//Форма поиска
-    $userlist = '';
-    if($search == 'yes'){
-        $searchform = '';
-        $userlist .= apply_filters('users_search_form_rcl',$searchform);
+    if($rclnavi->inpage)
+        $userlist .= $rclnavi->navi();
 
-        $userlist .='<h3>'.__('Total users','rcl').': '.$count_user.'</h3>';
-
-        $rqst = $UserList->search_request();
-        $perm = rcl_format_url(get_permalink($post->ID).'?'.$rqst);
-
-        $userlist .= '<div class="rcl-user-filters">'.__('Filter by','rcl').': ';
-        $userlist .= '<a class="user-filter '.rcl_a_active($orderby,'action').'" href="'.$perm.'filter=action">'.__('Activity','rcl').'</a> ';
-        if(isset($active_addons['rating-system'])) $userlist .= '<a class="user-filter '.rcl_a_active($orderby,'rayting').'" href="'.$perm.'filter=rayting">'.__('Rated','rcl').'</a> ';
-        if(!isset($_GET['search-user'])&&isset($active_addons['publicpost'])) $userlist .= '<a class="user-filter '.rcl_a_active($orderby,'posts').'" href="'.$perm.'filter=posts">'.__('Publications','rcl').'</a> ';
-        if(!isset($_GET['search-user'])) $userlist .= '<a class="user-filter '.rcl_a_active($orderby,'comments').'" href="'.$perm.'filter=comments">'.__('Comments','rcl').'</a> ';
-        if(!isset($_GET['search-user'])) $userlist .= '<a class="user-filter '.rcl_a_active($orderby,'registered').'" href="'.$perm.'filter=registered">'.__('Registration','rcl').'</a>';
-        $userlist .= '</p>';
-    }
-
-    $userlist .='<div class="userlist '.$type.'-list">';
-
-    $us_data = apply_filters('data_userslist',$us_data);
-
-    $a=0;
-    if($us_data){
-
-        foreach((array)$us_data as $id=>$user){ rcl_setup_datauser($user);
-            $a++;
-            if(!$user->user_action)continue;
-            if($onlyaction){
-                    if(rcl_get_useraction($user->user_action)) continue;
-            }
-
-            $userlist .= rcl_get_include_template('user-'.$type.'.php');
-            if($a==$inpage) break;
-        }
-    }
-
-    if($a==0){
-        if(isset($_GET['search-user'])) $userlist .= '<h4 align="center">'.__('Users not found','rcl').'</h4>';
-        else $userlist .= '<p align="center">'.__('No one','rcl').'</p>';
-    }
-    $userlist .='</div>';
-
-    //вывод постраничной навигации
-    if(!$limit) $userlist .= $rclnavi->navi();
+    $users->remove_userdata();
 
     return $userlist;
 }
 
+function rcl_setup_datauser($userdata){
+    global $user;
+    $user = (object)$userdata;
+    return $user;
+}
+
+function rcl_user_name(){
+    global $user;
+    echo $user->display_name;
+}
+
+function rcl_user_url(){
+    global $user;
+    echo get_author_posts_url($user->ID);
+}
+
+function rcl_user_avatar($size=50){
+    global $user;
+    echo get_avatar($user->ID,$size);
+}
+
+function rcl_user_rayting(){
+    global $user;
+    if(!function_exists('rcl_get_rating_block')) return false;
+    if(!isset($user->rating_total)) return false;
+    echo rcl_rating_block(array('value'=>$user->rating_total));
+}
+
+function rcl_user_action($type=1){
+    global $user;
+    switch($type){
+        case 1: $last_action = rcl_get_useraction($user->time_action);
+                if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
+                else echo '<span class="status_user offline" title="'.__('not online','rcl').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
+        break;
+        case 2: echo rcl_get_miniaction($user->time_action); break;
+    }
+}
+
+function rcl_user_description(){
+    global $user;
+    if(!$user->description) return false;
+    echo '<div class="ballun-status">
+        <span class="ballun"></span>
+        <p class="status-user-rcl">'.nl2br(esc_textarea($user->description)).'</p>
+    </div>';
+}
+
+add_action('user_description','rcl_user_comments');
+function rcl_user_comments(){
+    global $user;
+    if(!isset($user->comments_count)) $user->comments_count = 0;
+    echo '<span class="filter-data"><i class="fa fa-comment"></i>'.__('Comments','rcl').': '.$user->comments_count.'</span>';
+}
+add_action('user_description','rcl_user_posts');
+function rcl_user_posts(){
+    global $user;
+    if(!isset($user->posts_count))$user->posts_count = 0;
+    echo '<span class="filter-data"><i class="fa fa-file-text-o"></i>'.__('Publics','rcl').': '.$user->posts_count.'</span>';
+}
+
+add_action('user_description','rcl_user_register');
+function rcl_user_register(){
+    global $user;
+    if(!isset($user->user_registered)) return false;
+    echo '<span class="filter-data"><i class="fa fa-calendar-check-o"></i>'.__('Registration','rcl').': '.mysql2date('d-m-Y', $user->user_registered).'</span>';
+}
+
+add_action('user_description','rcl_filter_user_description');
+function rcl_filter_user_description(){
+    global $user;
+    $cont = '';
+    echo $cont = apply_filters('rcl_description_user',$cont,$user->ID);
+}
+
 add_filter('users_search_form_rcl','rcl_default_search_form');
 function rcl_default_search_form($form){
-        $name = '';
-        $orderuser = '';
-        if(isset($_GET['name-user'])) $name = $_GET['name-user'];
-        if(isset($_GET['orderuser'])) $orderuser = $_GET['orderuser'];
-	$form .='
-		<div class="rcl-search-users">
-			<form method="get" action="">
-			<p>'.__('Search users','rcl').'</p>
-			<input type="text" name="name-user" value="'.$name.'">
-			<select name="orderuser">
-				<option '.selected($orderuser,1,false).' value="1">'.__('by name','rcl').'</option>
-				<option '.selected($orderuser,2,false).' value="2">'.__('by login','rcl').'</option>
-			</select>
-			<input type="submit" class="recall-button" name="search-user" value="'.__('Search','rcl').'">
-			<input type="hidden" name="default-search" value="1">
-			</form>
-		</div>';
+
+        $search_text = ((isset($_GET['search_text'])))? $_GET['search_text']: '';
+        $search_field = (isset($_GET['search_field']))? $_GET['search_field']: '';
+
+	$form .='<div class="rcl-search-users">
+                <form method="get" action="">
+                    <p>'.__('Search users','rcl').'</p>
+                    <input type="text" name="search_text" value="'.$search_text.'">
+                    <select name="search_field">
+                        <option '.selected($search_field,'display_name',false).' value="display_name">'.__('by name','rcl').'</option>
+                        <option '.selected($search_field,'user_login',false).' value="user_login">'.__('by login','rcl').'</option>
+                    </select>
+                    <input type="submit" class="recall-button" name="search-user" value="'.__('Search','rcl').'">
+                    <input type="hidden" name="default-search" value="1">
+                </form>
+            </div>';
 	return $form;
 }
 

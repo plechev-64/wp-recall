@@ -193,6 +193,11 @@ function rcl_get_html_post_rating($object_id,$type,$object_author=false){
 
     if(!isset($rcl_options['rating_'.$type])||!$rcl_options['rating_'.$type]) return false;
 
+    if($post&&!$comment){
+        $rayting_none = get_post_meta($post->ID, 'rayting-none', 1);
+        if($rayting_none) return false;
+    }
+
     $block = '';
 
     if(!$object_author){

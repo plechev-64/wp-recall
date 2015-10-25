@@ -405,7 +405,12 @@ class Rcl_Group{
 	}
 
 	function rcl_get_users_group($page){
-		return do_shortcode('[userlist page="'.$page.'" orderby="action" group="'.$this->group_id.'" search="no"]');
+            return rcl_get_userlist(array(
+                'usergroup' => 'user_group_'.$this->group_id.':'.$this->group_id,
+                'orderby'=>'time_action',
+                'filters'=>0,
+                'paged'=>$page
+            ));
 	}
 
 	function get_footer(){

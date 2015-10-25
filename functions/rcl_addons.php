@@ -423,6 +423,7 @@ class Rcl_Addons{
                                 if(file_exists($path.'/'.$key.'/index.php')){
                                     $active_addons[$key]['src'] = $path.'/'.$key.'/';
                                     if(file_exists($path.'/'.$key.'/activate.php')) include($path.'/'.$key.'/activate.php');
+                                    do_action('rcl_activate_'.$key,$active_addons[$key]);
                                     break;
                                 }
                             }
@@ -442,6 +443,7 @@ class Rcl_Addons{
                                                 break;
                                             }
                                         }
+                                        do_action('rcl_deactivate_'.$key,$active_addons[$key]);
                                     }
 				}
 

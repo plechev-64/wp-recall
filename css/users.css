@@ -92,6 +92,20 @@
     padding: 5px;
     font-size: 12px;
     color: #6F6F6F;
+    white-space: nowrap;
+}
+.rcl-user-filters .user-filter {
+    background-color: #EAEAEA;
+    margin: 3px;
+    padding: 5px;
+    font-size: 12px;
+    color: #6F6F6F;
+    white-space: nowrap;
+}
+.rcl-user-filters .user-filter.filter-active,
+.rcl-user-filters .user-filter:hover{
+    background-color: #6F6F6F;
+    color: #EAEAEA;
 }
 .userlist.mini-list .user-single{
 	border:none;
