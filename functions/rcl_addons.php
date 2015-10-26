@@ -13,9 +13,9 @@ function rcl_include_addons(){
 
         foreach($active_addons as $addon=>$src_dir){
             if(!$addon) continue;
-            if(file_exists($path_addon_theme.$addon.'/index.php')){
+            if(is_readable($path_addon_theme.$addon.'/index.php')){
                 include_once($path_addon_theme.$addon.'/index.php');
-            }else if(file_exists($path_addon_rcl.$addon.'/index.php')){
+            }else if(is_readable($path_addon_rcl.$addon.'/index.php')){
                 include_once($path_addon_rcl.$addon.'/index.php');
             }else{
                 unset($active_addons[$addon]);
@@ -35,7 +35,7 @@ function rcl_activate_addon($addon){
     foreach($paths as $path){
         if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
         $index_src = $path.'/'.$addon.'/index.php';
-        if(!file_exists($index_src)) continue;
+        if(!is_readable($index_src)) continue;
 
         $active_addons[$addon]['src'] = $path.'/'.$addon;
         $install_src = $path.'/'.$addon.'/activate.php';
@@ -56,7 +56,7 @@ function rcl_deactivate_addon($addon){
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
     foreach($paths as $path){
-        if(file_exists($path.'/'.$addon.'/deactivate.php')){
+        if(is_readable($path.'/'.$addon.'/deactivate.php')){
             include($path.'/'.$addon.'/deactivate.php');
             break;
         }
@@ -74,7 +74,7 @@ function rcl_delete_addon($addon){
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
     foreach($paths as $path){
-        if(file_exists($path.'/'.$addon.'/delete.php')) include($path.'/'.$addon.'/deactivate.php');
+        if(is_readable($path.'/'.$addon.'/delete.php')) include($path.'/'.$addon.'/deactivate.php');
         rcl_remove_dir($path.'/'.$addon);
     }
 

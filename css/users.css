@@ -94,6 +94,9 @@
     color: #6F6F6F;
     white-space: nowrap;
 }
+.rcl-user-filters{
+    margin:10px 0;
+}
 .rcl-user-filters .user-filter {
     background-color: #EAEAEA;
     margin: 3px;

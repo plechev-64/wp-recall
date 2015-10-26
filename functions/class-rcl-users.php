@@ -18,7 +18,7 @@ class Rcl_Users{
     public $search_form = 1;
     public $query_count = false;
     public $users_count = 0;
-    public $data = '';
+    public $data;
     public $add_uri;
 
     function __construct($args){
@@ -29,7 +29,7 @@ class Rcl_Users{
 
         $this->add_uri['users-filter'] = $this->orderby;
 
-        $this->data = ($this->data)? array_map('trim', explode(',',$this->data)): '';
+        $this->data = ($this->data)? array_map('trim', explode(',',$this->data)): array();
 
         //print_r($this);
 
@@ -113,9 +113,9 @@ class Rcl_Users{
     }
 
     function setup_userdata($userdata){
-        global $user;
-        $user = (object)$userdata;
-        return $user;
+        global $rcl_user;
+        $rcl_user = (object)$userdata;
+        return $rcl_user;
     }
 
     function search_request(){
@@ -161,7 +161,6 @@ class Rcl_Users{
             $query['select'] = array(
                 "COUNT(users.ID)"
             );
-            if($this->number) $query['limit'] = $this->number;
 
         }else{
 
@@ -190,12 +189,13 @@ class Rcl_Users{
             . implode(" ",$query['join'])." ";
 
         if($query['where']) $query_string .= "WHERE ".implode(' AND ',$query['where'])." ";
-
         if($query['group']) $query_string .= "GROUP BY ".$query['group']." ";
-        if($query['limit']) $query_string .= "LIMIT ".$query['limit']." ";
 
-
-        if(!$count) $query_string .= $this->order_by().$this->limit();
+        if(!$this->query_count){
+            if(!$query['orderby']) $query['orderby'] = "users.".$this->orderby;
+            $query_string .= "ORDER BY ".$query['orderby']." $this->order ";
+            $query_string .= "LIMIT $this->offset,$this->number";
+        }
         //if(!$count) echo $query_string;
 
         if($this->query_count)
@@ -224,8 +224,10 @@ class Rcl_Users{
     function add_query_time_action($query){
         global $wpdb;
 
-        if(!$this->query_count)
+        if(!$this->query_count){
             $query['select'][] = "actions.time_action";
+            $query['orderby'] = "(CASE WHEN actions.$this->orderby IS NULL then users.user_registered ELSE actions.$this->orderby END)";
+        }
 
         $query['join'][] = "INNER JOIN ".RCL_PREF."user_action AS actions ON users.ID=actions.user";
         return $query;
@@ -255,6 +257,7 @@ class Rcl_Users{
 
         if(!$this->query_count){
             $query['select'][] = "posts.posts_count";
+            $query['orderby'] = "posts.posts_count";
             //$query['select'][] = "COUNT(posts.post_author) AS posts_count";
             //$query['group'] = "posts.post_author";
         }
@@ -295,6 +298,7 @@ class Rcl_Users{
 
         if(!$this->query_count){
             $query['select'][] = "comments.comments_count";
+            $query['orderby'] = "comments.comments_count";
             //$query['select'][] = "COUNT(comments.user_id) AS comments_count";
             //$query['group'] = "comments.user_id";
         }
@@ -348,8 +352,10 @@ class Rcl_Users{
     //добавляем выборку данных рейтинга в основной запрос
     function add_query_rating_total($query){
 
-        if(!$this->query_count)
+        if(!$this->query_count){
             $query['select'][] = "ratings.rating_total";
+            $query['orderby'] = "(CASE WHEN CAST(ratings.$this->orderby AS DECIMAL) IS NULL then 0 ELSE CAST(ratings.$this->orderby AS DECIMAL) END)";
+        }
 
         $query['join'][] = "LEFT JOIN ".RCL_PREF."rating_users AS ratings ON users.ID=ratings.user_id";
 
@@ -394,28 +400,8 @@ class Rcl_Users{
         return $users;
     }
 
-    function limit(){
-        return "LIMIT $this->offset,$this->number ";
-    }
-
-    function order_by(){
-
-        switch($this->orderby){
-            case 'time_action': $orderby = "(CASE WHEN actions.$this->orderby IS NULL then users.user_registered ELSE actions.$this->orderby END)"; break;
-            case 'rating_total': $orderby = "(CASE WHEN CAST(ratings.$this->orderby AS DECIMAL) IS NULL then 0 ELSE CAST(ratings.$this->orderby AS DECIMAL) END)"; break;
-            case 'posts_count': $orderby = "posts.posts_count"; break;
-            case 'comments_count': $orderby = "comments.comments_count"; break;
-            default: $orderby = "users.".$this->orderby;
-                //default: $orderby = "";
-        }
-
-        if($orderby) $order_by = "ORDER BY $orderby $this->order ";
-
-        return $order_by;
-    }
-
     function get_filters($query_count = false){
-        global $post,$user_LK;
+        global $post,$user_LK,$active_addons;
 
         if(!$this->filters) return false;
 
@@ -440,7 +426,8 @@ class Rcl_Users{
         $content .= '<div class="rcl-user-filters">'.__('Filter by','rcl').': ';
 
             $content .= $this->get_filter('time_action',__('Activity','rcl'),$perm);
-            $content .= $this->get_filter('rating_total',__('Rated','rcl'),$perm);
+            if(isset($active_addons['rating-system']))
+                $content .= $this->get_filter('rating_total',__('Rated','rcl'),$perm);
             $content .= $this->get_filter('posts_count',__('Publications','rcl'),$perm);
             $content .= $this->get_filter('comments_count',__('Comments','rcl'),$perm);
             $content .= $this->get_filter('user_registered',__('Registration','rcl'),$perm);

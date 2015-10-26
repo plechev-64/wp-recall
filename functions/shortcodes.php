@@ -2,7 +2,7 @@
 
 add_shortcode('userlist','rcl_get_userlist');
 function rcl_get_userlist($atts, $content = null){
-    global $user;
+    global $rcl_user,$rcl_users_set;
 
     require_once 'class-rcl-users.php';
 
@@ -34,7 +34,9 @@ function rcl_get_userlist($atts, $content = null){
 
     $userlist .= '<div class="userlist '.$users->template.'-list">';
 
-    foreach($usersdata as $user){ $users->setup_userdata($user);
+    $rcl_users_set = $users;
+
+    foreach($usersdata as $rcl_user){ $users->setup_userdata($rcl_user);
         $userlist .= rcl_get_include_template('user-'.$users->template.'.php');
     }
 
@@ -48,79 +50,79 @@ function rcl_get_userlist($atts, $content = null){
     return $userlist;
 }
 
-function rcl_setup_datauser($userdata){
-    global $user;
-    $user = (object)$userdata;
-    return $user;
-}
-
 function rcl_user_name(){
-    global $user;
-    echo $user->display_name;
+    global $rcl_user;
+    echo $rcl_user->display_name;
 }
 
 function rcl_user_url(){
-    global $user;
-    echo get_author_posts_url($user->ID);
+    global $rcl_user;
+    echo get_author_posts_url($rcl_user->ID);
 }
 
 function rcl_user_avatar($size=50){
-    global $user;
-    echo get_avatar($user->ID,$size);
+    global $rcl_user;
+    echo get_avatar($rcl_user->ID,$size);
 }
 
 function rcl_user_rayting(){
-    global $user;
+    global $rcl_user,$rcl_users_set;
     if(!function_exists('rcl_get_rating_block')) return false;
-    if(!isset($user->rating_total)) return false;
-    echo rcl_rating_block(array('value'=>$user->rating_total));
-}
-
-function rcl_user_action($type=1){
-    global $user;
-    switch($type){
-        case 1: $last_action = rcl_get_useraction($user->time_action);
-                if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
-                else echo '<span class="status_user offline" title="'.__('not online','rcl').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
-        break;
-        case 2: echo rcl_get_miniaction($user->time_action); break;
+    if(false!==array_search('rating_total', $rcl_users_set->data)||isset($rcl_user->rating_total)){
+        if(!isset($rcl_user->rating_total)) $rcl_user->rating_total = 0;
+        echo rcl_rating_block(array('value'=>$rcl_user->rating_total));
     }
-}
-
-function rcl_user_description(){
-    global $user;
-    if(!$user->description) return false;
-    echo '<div class="ballun-status">
-        <span class="ballun"></span>
-        <p class="status-user-rcl">'.nl2br(esc_textarea($user->description)).'</p>
-    </div>';
 }
 
 add_action('user_description','rcl_user_comments');
 function rcl_user_comments(){
-    global $user;
-    if(!isset($user->comments_count)) $user->comments_count = 0;
-    echo '<span class="filter-data"><i class="fa fa-comment"></i>'.__('Comments','rcl').': '.$user->comments_count.'</span>';
+    global $rcl_user,$rcl_users_set;
+    if(false!==array_search('comments_count', $rcl_users_set->data)||isset($rcl_user->comments_count)){
+        if(!isset($rcl_user->comments_count)) $rcl_user->comments_count = 0;
+        echo '<span class="filter-data"><i class="fa fa-comment"></i>'.__('Comments','rcl').': '.$rcl_user->comments_count.'</span>';
+    }
 }
 add_action('user_description','rcl_user_posts');
 function rcl_user_posts(){
-    global $user;
-    if(!isset($user->posts_count))$user->posts_count = 0;
-    echo '<span class="filter-data"><i class="fa fa-file-text-o"></i>'.__('Publics','rcl').': '.$user->posts_count.'</span>';
+    global $rcl_user,$rcl_users_set;
+    if(false!==array_search('posts_count', $rcl_users_set->data)||isset($rcl_user->posts_count)){
+        if(!isset($rcl_user->posts_count)) $rcl_user->posts_count = 0;
+        echo '<span class="filter-data"><i class="fa fa-file-text-o"></i>'.__('Publics','rcl').': '.$rcl_user->posts_count.'</span>';
+    }
+}
+
+function rcl_user_action($type=1){
+    global $rcl_user;
+    switch($type){
+        case 1: $last_action = rcl_get_useraction($rcl_user->time_action);
+                if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
+                else echo '<span class="status_user offline" title="'.__('not online','rcl').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
+        break;
+        case 2: echo rcl_get_miniaction($rcl_user->time_action); break;
+    }
+}
+
+function rcl_user_description(){
+    global $rcl_user;
+    if(!$rcl_user->description) return false;
+    echo '<div class="ballun-status">
+        <span class="ballun"></span>
+        <p class="status-user-rcl">'.nl2br(esc_textarea($rcl_user->description)).'</p>
+    </div>';
 }
 
 add_action('user_description','rcl_user_register');
 function rcl_user_register(){
-    global $user;
-    if(!isset($user->user_registered)) return false;
-    echo '<span class="filter-data"><i class="fa fa-calendar-check-o"></i>'.__('Registration','rcl').': '.mysql2date('d-m-Y', $user->user_registered).'</span>';
+    global $rcl_user;
+    if(!isset($rcl_user->user_registered)) return false;
+    echo '<span class="filter-data"><i class="fa fa-calendar-check-o"></i>'.__('Registration','rcl').': '.mysql2date('d-m-Y', $rcl_user->user_registered).'</span>';
 }
 
 add_action('user_description','rcl_filter_user_description');
 function rcl_filter_user_description(){
-    global $user;
+    global $rcl_user;
     $cont = '';
-    echo $cont = apply_filters('rcl_description_user',$cont,$user->ID);
+    echo $cont = apply_filters('rcl_description_user',$cont,$rcl_user->ID);
 }
 
 add_filter('users_search_form_rcl','rcl_default_search_form');

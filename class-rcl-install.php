@@ -23,6 +23,8 @@ class RCL_Install {
             define( 'RCL_INSTALLING', true );
         }
 
+        RCL()->init();
+
         //FIXME: Разобратся с этими глобальными. Нужны ли они тут вообще, пока не понятно.
         self::init_global();
 
@@ -105,7 +107,7 @@ class RCL_Install {
             'users_page_rcl' => array(
                 'name'    => 'users',
                 'title'   => __('Users','rcl'),
-                'content' => '[userlist search="1"]'
+                'content' => '[userlist inpage="30" orderby="time_action" template="rows" data="rating_total,comments_count,posts_count,description" filters="1" order="DESC"]'
             ),
         ) );
 
@@ -129,7 +131,7 @@ class RCL_Install {
 
     private static function add_addons() {
 
-        $active_addons = get_site_option('active_addons_recall');
+        //$active_addons = get_site_option('active_addons_recall');
         $def_addons = apply_filters( 'default_wprecall_addons', array(
             'rating-system',
             'review',
@@ -140,24 +142,8 @@ class RCL_Install {
         ));
 
         foreach( $def_addons as $addon ) {
-
-            $path = RCL()->plugin_path() . "/add-on/{$addon}/index.php";
-
-            if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
-
-            $active_addons[$addon]['src'] = $path;
-
-            $install_src = RCL()->plugin_path() . "/add-on/{$addon}/activate.php";
-            $index_src = RCL()->plugin_path() . "/add-on/{$addon}/index.php";
-
-            /*
-             * Поменяли file_exists на is_readable что загружать файлы не только если они существуют, но и доступны для чтения.
-             */
-            if( is_readable( $install_src ) ) include( $install_src );
-            if( is_readable( $index_src) ) include($index_src);
+            rcl_activate_addon($addon);
         }
-
-        update_site_option('active_addons_recall',$active_addons);
     }
 
     private static function create_files() {
@@ -287,16 +273,8 @@ class RCL_Install {
 
         if(!isset($rcl_options['view_user_lk_rcl'])){
 
-            //проверяем данные об активности пользователя на сайте, если данных нет, то устанавливаем последнюю активность юзера на момент регистрации
-            $no_action_users = $wpdb->get_results("SELECT COUNT(us.ID) FROM ".$wpdb->prefix."users AS us WHERE us.ID NOT IN (SELECT ua.user FROM ".RCL_PREF."user_action AS ua)");
-            if($no_action_users){
-                $wpdb->query("
-                                    INSERT INTO ".RCL_PREF."user_action( user, time_action )
-                                    SELECT us.ID, us.user_registered
-                                    FROM ".$wpdb->prefix."users AS us
-                                    WHERE us.ID NOT IN ( SELECT user FROM ".RCL_PREF."user_action )
-                            ");
-            }
+            $rcl_options['view_user_lk_rcl'] = 1;
+            $rcl_options['color_theme'] = 'blue';
 
             //отключаем все пользователям сайта показ админ панели, если включена
             $wpdb->update(
@@ -312,10 +290,6 @@ class RCL_Install {
             //устанавливаем показ аватарок на сайте
             update_option('show_avatars', 1 );
 
-            //устанавливаем показ ссылки на сайт автора плагина
-            $rcl_options['footer_url_recall'] = 1;
-            update_option('primary-rcl-options', $rcl_options );
-
             /*Ниже функции модифицикации данных плагина при обновлении плагина с более ранних версий*/
 
             //переименование temp-rcl на rcl-upload и данных юзеров использующих эту папку
@@ -326,6 +300,10 @@ class RCL_Install {
             rcl_update_old_feeds();
 
         }
+
+		//устанавливаем показ ссылки на сайт автора плагина
+            $rcl_options['footer_url_recall'] = 1;
+            update_option('primary-rcl-options', $rcl_options );
 
     }
 

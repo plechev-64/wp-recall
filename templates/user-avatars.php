@@ -1,4 +1,4 @@
-<?php global $user; ?>
+<?php global $rcl_user,$rcl_users_set; ?>
 <div class="user-single">
     <div class="thumb-user">
         <a title="<?php rcl_user_name(); ?>" href="<?php rcl_user_url(); ?>">
