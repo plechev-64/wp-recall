@@ -317,7 +317,7 @@ body #rcl_post_tags.ms-ctn .ms-sel-ctn input{
 }
 .rcl-public-editor .rcl-editor-content textarea{
     min-height: 150px;
-    width: 100%;
+    width: 96%;
 	border:none;
 	margin:0;
 }

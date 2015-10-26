@@ -266,7 +266,7 @@ function rcl_get_author_block(){
             'template' => 'rows',
             'include' => $post->post_author,
             'filter' => 0,
-            'data'=>'rating_total,description,posts_count_comments_count',
+            'data'=>'rating_total,description,posts_count,comments_count',
             'orderby'=>'time_action'
         ));
 

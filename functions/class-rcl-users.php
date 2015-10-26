@@ -167,9 +167,13 @@ class Rcl_Users{
             $query['select'] = array(
                 "users.ID"
               , "users.user_login"
-              , "users.user_registered"
               , "users.display_name"
             );
+
+            if(
+            $this->data('user_registered')||
+            $this->orderby=='user_registered'
+            ) $query['select'][] = "users.user_registered";
 
         }
 

@@ -260,7 +260,7 @@ function rcl_get_like_tags(){
 	global $wpdb;
 
 	if(!$_POST['query']){
-		echo 1;
+		echo json_encode(array(array('id'=>'')));
 		exit;
 	};
 	$query = $_POST['query'];

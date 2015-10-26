@@ -113,9 +113,11 @@ function rcl_user_description(){
 
 add_action('user_description','rcl_user_register');
 function rcl_user_register(){
-    global $rcl_user;
-    if(!isset($rcl_user->user_registered)) return false;
-    echo '<span class="filter-data"><i class="fa fa-calendar-check-o"></i>'.__('Registration','rcl').': '.mysql2date('d-m-Y', $rcl_user->user_registered).'</span>';
+    global $rcl_user,$rcl_users_set;
+    if(false!==array_search('user_registered', $rcl_users_set->data)||isset($rcl_user->user_registered)){
+        if(!isset($rcl_user->user_registered)) return false;
+        echo '<span class="filter-data"><i class="fa fa-calendar-check-o"></i>'.__('Registration','rcl').': '.mysql2date('d-m-Y', $rcl_user->user_registered).'</span>';
+    }
 }
 
 add_action('user_description','rcl_filter_user_description');
