@@ -153,7 +153,7 @@ class Rcl_Users{
             'join'      => array(),
             'where'     => array(),
             'group'     => '',
-            'limit'     => ''
+            'orderby'     => ''
         );
 
         if($count){
@@ -166,12 +166,10 @@ class Rcl_Users{
 
             $query['select'] = array(
                 "users.ID"
-              , "users.user_login"
               , "users.display_name"
             );
 
-            if(
-            $this->data('user_registered')||
+            if($this->data('user_registered')||
             $this->orderby=='user_registered'
             ) $query['select'][] = "users.user_registered";
 

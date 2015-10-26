@@ -44,8 +44,8 @@ function rcl_get_feed_button($userid){
 }
 
 function rcl_add_userlist_follow_button(){
-    global $user;
-    echo '<div class="follow-button">'.rcl_get_feed_button($user->ID).'</div>';
+    global $rcl_user;
+    echo '<div class="follow-button">'.rcl_get_feed_button($rcl_user->ID).'</div>';
 }
 
 add_filter('ajax_tabs_rcl','rcl_ajax_followers_tab');
