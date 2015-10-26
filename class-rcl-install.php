@@ -301,9 +301,11 @@ class RCL_Install {
 
         }
 
-		//устанавливаем показ ссылки на сайт автора плагина
-            $rcl_options['footer_url_recall'] = 1;
-            update_option('primary-rcl-options', $rcl_options );
+	//устанавливаем показ ссылки на сайт автора плагина
+        $rcl_options['footer_url_recall'] = 1;
+        update_option('primary-rcl-options', $rcl_options );
+
+        rcl_update_dinamic_files();
 
     }
 

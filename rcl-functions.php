@@ -218,8 +218,8 @@ function rcl_get_wp_upload_dir(){
 }
 
 function rcl_update_dinamic_files(){
-    //include('class_addons.php');
-    $rcl_addons = new rcl_addons();
+    include_once 'rcl_addons.php';
+    $rcl_addons = new Rcl_Addons();
     $rcl_addons->get_update_scripts_file_rcl();
     $rcl_addons->get_update_scripts_footer_rcl();
     rcl_minify_style();
@@ -269,7 +269,7 @@ function rcl_get_author_block(){
             'data'=>'rating_total,description,posts_count_comments_count',
             'orderby'=>'time_action'
         ));
-    
+
     if(function_exists('rcl_add_userlist_follow_button')) remove_filter('user_description','rcl_add_userlist_follow_button',90);
 
     $content .= "</div>";
