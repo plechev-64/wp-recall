@@ -229,7 +229,7 @@ class Rcl_Users{
             $query['orderby'] = "(CASE WHEN actions.$this->orderby IS NULL then users.user_registered ELSE actions.$this->orderby END)";
         }
 
-        $query['join'][] = "LEFT JOIN ".RCL_PREF."user_action AS actions ON users.ID=actions.user";
+        $query['join'][] = "RIGHT JOIN ".RCL_PREF."user_action AS actions ON users.ID=actions.user";
         return $query;
     }
 
