@@ -26,6 +26,7 @@ class Rcl_Users{
         $this->init_properties($args);
 
         if(isset($_GET['users-filter'])&&$this->filters) $this->orderby = $_GET['users-filter'];
+        if(isset($_GET['users-order'])&&$this->filters) $this->order = $_GET['users-order'];
 
         $this->add_uri['users-filter'] = $this->orderby;
 
@@ -425,14 +426,23 @@ class Rcl_Users{
 
         $perm = rcl_format_url($url).$rqst;
 
+        $filters = array(
+            'time_action'       =>__('Activity','rcl'),
+            'posts_count'       =>__('Publications','rcl'),
+            'comments_count'    =>__('Comments','rcl'),
+            'user_registered'   =>__('Registration','rcl'),
+        );
+
+        if(isset($active_addons['rating-system']))
+                $filters['rating_total'] = __('Rated','rcl');
+
+        $filters = apply_filters('rcl_users_filter',$filters);
+
         $content .= '<div class="rcl-user-filters">'.__('Filter by','rcl').': ';
 
-            $content .= $this->get_filter('time_action',__('Activity','rcl'),$perm);
-            if(isset($active_addons['rating-system']))
-                $content .= $this->get_filter('rating_total',__('Rated','rcl'),$perm);
-            $content .= $this->get_filter('posts_count',__('Publications','rcl'),$perm);
-            $content .= $this->get_filter('comments_count',__('Comments','rcl'),$perm);
-            $content .= $this->get_filter('user_registered',__('Registration','rcl'),$perm);
+        foreach($filters as $key=>$name){
+            $content .= $this->get_filter($key,$name,$perm);
+        }
 
         $content .= '</div>';
 

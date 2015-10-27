@@ -326,4 +326,15 @@ function wp_enqueue_theme_rcl($url){
     wp_enqueue_style( 'theme_rcl', $url );
 }
 
+add_action('admin_notices', 'my_plugin_admin_notices');
+function my_plugin_admin_notices() {
+    if(isset($_GET['page'])&&(
+            $_GET['page']=='manage-wprecall'||
+            $_GET['page']=='rcl-repository'||
+            $_GET['page']=='manage-doc-recall'||
+            $_GET['page']=='manage-addon-recall'
+    ))
+      echo "<div class='updated is-dismissible notice'><p>Понравился плагин WP-Recall? Поддержите развитие плагина, оставив положительный отзыв на его странице в <a target='_blank' href='https://wordpress.org/plugins/wp-recall/'>репозитории</a>!</p></div>";
+}
+
 include 'repository.php';

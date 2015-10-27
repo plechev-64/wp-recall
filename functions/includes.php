@@ -204,35 +204,16 @@ function rcl_get_useraction($user_action=false){
 
         if(!$user_action) $user_action = $rcl_userlk_action;
 
-	$timeout = 600;
-	if(isset($rcl_options['timeout'])&&$rcl_options['timeout']) $timeout = $rcl_options['timeout']*60;
-	$time_action = current_time('mysql');
-	$unix_time_action = strtotime($time_action);
+	$timeout = (isset($rcl_options['timeout']))? $rcl_options['timeout']*60: 600;
+
+	$unix_time_action = strtotime(current_time('mysql'));
 	$unix_time_user = strtotime($user_action);
 
 	if(!$user_action)
 		return $last_go = __('long ago','rcl');
 
 	if($unix_time_action > $unix_time_user+$timeout){
-		$sec = $unix_time_action - $unix_time_user;
-		$day = $sec/86400;
-		$time = floor($day);
-		if($time == 0){
-			$time = floor($sec/3600);
-				if($time == 0){
-					$time = floor($sec/60);
-					$last_go = __('already','rcl').' '.$time.' '.__('min.','rcl');
-				} else {
-					$last_go = __('already','rcl').' '.$time.' '.__('h.','rcl');
-				}
-			} else {
-				if($time<30){
-					$last_go = __('already','rcl').' '.$time.' '.__('days','rcl');
-				}else{
-					$last_go = __('long ago','rcl');
-				}
-			}
-			return 	$last_go;
+                return human_time_diff($unix_time_user,$unix_time_action );
 	} else {
 		return false;
 	}
