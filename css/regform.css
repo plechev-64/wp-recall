@@ -138,9 +138,10 @@
     height: 20px;
     width: 20px;
     text-align: center;
-    top: -1px;
+    top: 50%;
     left: 0px;
     color: #909090;
+    margin-top: -17px;
 }
 .panel_lk_recall .form-block-rcl .default-field .field-icon i{
 	display: block;

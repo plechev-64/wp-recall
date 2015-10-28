@@ -204,7 +204,7 @@ function rcl_get_useraction($user_action=false){
 
         if(!$user_action) $user_action = $rcl_userlk_action;
 
-	$timeout = (isset($rcl_options['timeout']))? $rcl_options['timeout']*60: 600;
+	$timeout = (isset($rcl_options['timeout'])&&$rcl_options['timeout'])? $rcl_options['timeout']*60: 600;
 
 	$unix_time_action = strtotime(current_time('mysql'));
 	$unix_time_user = strtotime($user_action);
@@ -220,37 +220,41 @@ function rcl_get_useraction($user_action=false){
 }
 
 function rcl_update_timeaction_user(){
-	global $user_ID;
-	global $wpdb;
+	global $user_ID,$wpdb;
 
         if(!$user_ID) return false;
 
 	$rcl_current_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_ID));
 
 	$last_action = rcl_get_useraction($rcl_current_action);
-	$time = current_time('mysql');
-	if($last_action){
-		$res = $wpdb->update(
-					RCL_PREF.'user_action',
-					array( 'time_action' => $time ),
-					array( 'user' => $user_ID )
-				);
 
-		if(!isset($res)||$res==0){
-			$act_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(time_action) FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
-			if($act_user==0){
-				$wpdb->insert(
-					RCL_PREF.'user_action',
-					array( 'user' => $user_ID,
-					'time_action'=> $time )
-				);
-			}
-			if($act_user>1){
-				$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
-			}
-		}
+	if($last_action){
+
+            $time = current_time('mysql');
+
+            $res = $wpdb->update(
+                                    RCL_PREF.'user_action',
+                                    array( 'time_action' => $time ),
+                                    array( 'user' => $user_ID )
+                            );
+
+            if(!isset($res)||$res==0){
+                    $act_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(time_action) FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
+                    if($act_user==0){
+                            $wpdb->insert(
+                                    RCL_PREF.'user_action',
+                                    array( 'user' => $user_ID,
+                                    'time_action'=> $time )
+                            );
+                    }
+                    if($act_user>1){
+                            $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
+                    }
+            }
 	}
-	do_action('rcl_update_timeaction_user',$user_ID,$time);
+
+	do_action('rcl_update_timeaction_user');
+
 }
 
 function rcl_sort_gallery($attaches,$key,$user_id=false){

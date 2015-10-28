@@ -181,7 +181,7 @@ class Rcl_Users{
 
         if($this->only=='action'){
             $timeout = ($rcl_options['timeout'])? $rcl_options['timeout']: 10;
-            $query['where'][] = "actions.time_action > date_sub(now(), interval $timeout minute)";
+            $query['where'][] = "actions.time_action > date_sub('".current_time('mysql')."', interval $timeout minute)";
         }
 
         $query = apply_filters('rcl_users_query',$query);
