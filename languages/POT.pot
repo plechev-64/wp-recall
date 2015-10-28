@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Blank Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-10-21 19:27+0300\n"
+"POT-Creation-Date: 2015-10-27 20:56+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -233,7 +233,7 @@ msgstr ""
 #: ../../wp-recall/add-on/./bookmarks/index.php:458
 #: ../../wp-recall/add-on/./gallery-recall/index.php:434
 #: ../../wp-recall/add-on/./gallery-recall/index.php:473
-#: add-on/rating-system/index.php:503 add-on/rating-system/index.php:524
+#: add-on/rating-system/index.php:508 add-on/rating-system/index.php:529
 msgid "Error"
 msgstr ""
 
@@ -284,7 +284,7 @@ msgstr ""
 #: ../../wp-recall/add-on/./gallery-recall/class_gallery.php:122
 #: ../../wp-recall/add-on/./gallery-recall/index.php:377
 #: ../../wp-recall/add-on/./gallery-recall/index.php:388
-#: add-on/message/index.php:1235
+#: add-on/message/index.php:1237
 msgid "Reply"
 msgstr ""
 
@@ -379,7 +379,7 @@ msgstr ""
 #: ../../wp-recall/add-on/./partners-system/admin-pages.php:124
 #: ../../wp-recall/add-on/./users-market/administrative.php:60
 #: add-on/groups/class_group.php:207 rcl-admin/admin-pages.php:281
-#: rcl-functions.php:566
+#: rcl-functions.php:574
 msgid "Save settings"
 msgstr ""
 
@@ -807,16 +807,16 @@ msgstr ""
 msgid "Заменить файл"
 msgstr ""
 
-#: add-on/feed/index.php:34 add-on/feed/index.php:361
+#: add-on/feed/index.php:34 add-on/feed/index.php:378
 msgid "Subscribe"
 msgstr ""
 
-#: add-on/feed/index.php:34 add-on/feed/index.php:163
-#: add-on/feed/index.php:351
+#: add-on/feed/index.php:34 add-on/feed/index.php:180
+#: add-on/feed/index.php:368
 msgid "Unsubscribe"
 msgstr ""
 
-#: add-on/feed/index.php:58 add-on/feed/index.php:168
+#: add-on/feed/index.php:58 add-on/feed/index.php:185
 msgid "Followers"
 msgstr ""
 
@@ -824,43 +824,43 @@ msgstr ""
 msgid "List subscribers"
 msgstr ""
 
-#: add-on/feed/index.php:89
+#: add-on/feed/index.php:98
 msgid "Following yet"
 msgstr ""
 
-#: add-on/feed/index.php:116
+#: add-on/feed/index.php:125
 msgid "Subscriptions"
 msgstr ""
 
-#: add-on/feed/index.php:121
+#: add-on/feed/index.php:130
 msgid "List subscriptions"
 msgstr ""
 
-#: add-on/feed/index.php:127
+#: add-on/feed/index.php:144
 msgid "Subscriptions yet"
 msgstr ""
 
-#: add-on/feed/index.php:177
+#: add-on/feed/index.php:194
 msgid ""
 "Login or register to view the latest publications and comments from users on "
 "which you will you subscribed."
 msgstr ""
 
-#: add-on/feed/index.php:183 add-on/feed/index.php:379
+#: add-on/feed/index.php:200 add-on/feed/index.php:396
 #: add-on/feed/templates/feed-post.php:44 add-on/rating-system/index.php:32
-#: functions/rcl_userlist.php:294 functions/shortcodes.php:256
+#: functions/class-rcl-users.php:432 functions/shortcodes.php:82
 msgid "Comments"
 msgstr ""
 
-#: add-on/feed/index.php:184 add-on/publicpost/index.php:68
+#: add-on/feed/index.php:201 add-on/publicpost/index.php:68
 msgid "Publication"
 msgstr ""
 
-#: add-on/feed/index.php:383
+#: add-on/feed/index.php:400
 msgid "It seems that you have not left a single comment or not subscribed."
 msgstr ""
 
-#: add-on/feed/index.php:384
+#: add-on/feed/index.php:401
 msgid ""
 "Comment you publish and subscribe to other users, then you can track "
 "responses to your comments and to see new comments from users.Comment you "
@@ -868,23 +868,23 @@ msgid ""
 "comments and to see new comments from users."
 msgstr ""
 
-#: add-on/feed/index.php:590
+#: add-on/feed/index.php:607
 msgid "Publications yet"
 msgstr ""
 
-#: add-on/feed/index.php:590
+#: add-on/feed/index.php:607
 msgid "Maybe later, someone will post the news."
 msgstr ""
 
-#: add-on/feed/index.php:599
+#: add-on/feed/index.php:616
 msgid "Publishing"
 msgstr ""
 
-#: add-on/feed/index.php:629
+#: add-on/feed/index.php:646
 msgid "You havent signed up anyone elses publication."
 msgstr ""
 
-#: add-on/feed/index.php:630
+#: add-on/feed/index.php:647
 msgid ""
 "Go to the profile of the user and click the \"Subscribe\" button and you "
 "will be able to monitor his recent publications here."
@@ -1054,7 +1054,7 @@ msgid "View"
 msgstr ""
 
 #: add-on/groups/index.php:105 add-on/groups/index.php:140
-#: functions/shortcodes.php:307
+#: functions/shortcodes.php:144
 msgid "Search"
 msgstr ""
 
@@ -1140,7 +1140,7 @@ msgid "Publishing group"
 msgstr ""
 
 #: add-on/groups/index.php:281 add-on/rating-system/addon-options.php:104
-#: rcl-admin/admin-pages.php:133 rcl-widgets.php:31 rcl-widgets.php:94
+#: rcl-admin/admin-pages.php:133 rcl-widgets.php:32 rcl-widgets.php:96
 msgid "All users"
 msgstr ""
 
@@ -1222,7 +1222,7 @@ msgstr ""
 msgid "Find"
 msgstr ""
 
-#: add-on/groups/index.php:877 functions/shortcodes.php:252
+#: add-on/groups/index.php:877 functions/class-rcl-users.php:441
 msgid "Filter by"
 msgstr ""
 
@@ -1264,7 +1264,7 @@ msgstr ""
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
 #: add-on/user-account/index.php:471 functions/rcl_editfields.php:117
-#: rcl-widgets.php:47 rcl-widgets.php:109 rcl-widgets.php:162
+#: rcl-widgets.php:48 rcl-widgets.php:111 rcl-widgets.php:164
 msgid "Title"
 msgstr ""
 
@@ -1272,7 +1272,7 @@ msgstr ""
 msgid "File does not exist on the server or it has already been loaded!"
 msgstr ""
 
-#: add-on/message/index.php:28 add-on/message/index.php:1314
+#: add-on/message/index.php:28 add-on/message/index.php:1316
 msgid "The file was loaded."
 msgstr ""
 
@@ -1440,118 +1440,118 @@ msgstr ""
 msgid "Important messages"
 msgstr ""
 
-#: add-on/message/index.php:423
+#: add-on/message/index.php:430
 msgid "Here will display correspondence history"
 msgstr ""
 
-#: add-on/message/index.php:426
+#: add-on/message/index.php:433
 msgid "Show older messages"
 msgstr ""
 
-#: add-on/message/index.php:529 functions/includes.php:230
+#: add-on/message/index.php:531
 msgid "days"
 msgstr ""
 
-#: add-on/message/index.php:530
+#: add-on/message/index.php:532
 msgid "month"
 msgstr ""
 
-#: add-on/message/index.php:531
+#: add-on/message/index.php:533
 msgid "all the time"
 msgstr ""
 
-#: add-on/message/index.php:532
+#: add-on/message/index.php:534
 msgid "Blacklist"
 msgstr ""
 
-#: add-on/message/index.php:533
+#: add-on/message/index.php:535
 msgid "Important"
 msgstr ""
 
-#: add-on/message/index.php:539
+#: add-on/message/index.php:541
 msgid "You havent been in conversation with"
 msgstr ""
 
-#: add-on/message/index.php:568 add-on/message/index.php:588
-#: add-on/message/index.php:671
+#: add-on/message/index.php:570 add-on/message/index.php:590
+#: add-on/message/index.php:673
 msgid "Contacts not found!"
 msgstr ""
 
-#: add-on/message/index.php:666
+#: add-on/message/index.php:668
 msgid "Last message"
 msgstr ""
 
-#: add-on/message/index.php:667
+#: add-on/message/index.php:669
 msgid "The chat history is missing"
 msgstr ""
 
-#: add-on/message/index.php:680
+#: add-on/message/index.php:682
 msgid "Delete?"
 msgstr ""
 
-#: add-on/message/index.php:746
+#: add-on/message/index.php:748
 msgid "Uncheck"
 msgstr ""
 
-#: add-on/message/index.php:746
+#: add-on/message/index.php:748
 msgid "Mark as important"
 msgstr ""
 
-#: add-on/message/index.php:811
+#: add-on/message/index.php:813
 msgid "No posts found!"
 msgstr ""
 
-#: add-on/message/index.php:846
+#: add-on/message/index.php:848
 msgid "Show more recent messages"
 msgstr ""
 
-#: add-on/message/index.php:964
+#: add-on/message/index.php:966
 msgid "Your message has been sent!"
 msgstr ""
 
-#: add-on/message/index.php:1059
+#: add-on/message/index.php:1061
 msgid "The message is marked as read"
 msgstr ""
 
-#: add-on/message/index.php:1202
+#: add-on/message/index.php:1204
 msgid "You a new message!"
 msgstr ""
 
-#: add-on/message/index.php:1233
+#: add-on/message/index.php:1235
 msgid "Go to the correspondence"
 msgstr ""
 
-#: add-on/message/index.php:1288
+#: add-on/message/index.php:1290
 msgid "Show more recent posts"
 msgstr ""
 
-#: add-on/message/index.php:1316
+#: add-on/message/index.php:1318
 msgid "The file has been received, but not yet loaded."
 msgstr ""
 
-#: add-on/message/index.php:1317
+#: add-on/message/index.php:1319
 msgid "The file was sent to the recipient."
 msgstr ""
 
-#: add-on/message/index.php:1320
+#: add-on/message/index.php:1322
 msgid "Link to sent the file"
 msgstr ""
 
-#: add-on/message/index.php:1322
+#: add-on/message/index.php:1324
 msgid "(accept files only from trusted sources)"
 msgstr ""
 
-#: add-on/message/index.php:1350
+#: add-on/message/index.php:1352
 msgid "The file was sent successfully."
 msgstr ""
 
-#: add-on/message/index.php:1353
+#: add-on/message/index.php:1355
 msgid ""
 "You have exceeded the limit on the number of uploaded files. Wait until the "
 "files sent previously will be accepted."
 msgstr ""
 
-#: add-on/message/index.php:1363
+#: add-on/message/index.php:1365
 msgid "Removes the file from the server"
 msgstr ""
 
@@ -1803,7 +1803,7 @@ msgstr ""
 #: add-on/user-account/addon-options.php:85
 #: add-on/user-account/addon-options.php:95
 #: add-on/user-account/addon-options.php:103 rcl-admin/admin-pages.php:87
-#: rcl-widgets.php:58 rcl-widgets.php:116
+#: rcl-widgets.php:59 rcl-widgets.php:118
 msgid "Not selected"
 msgstr ""
 
@@ -2347,7 +2347,7 @@ msgid "Plus/minus"
 msgstr ""
 
 #: add-on/rating-system/addon-options.php:26
-#: add-on/rating-system/index.php:294
+#: add-on/rating-system/index.php:299
 msgid "I like"
 msgstr ""
 
@@ -2463,7 +2463,7 @@ msgid "Rating changes not made"
 msgstr ""
 
 #: add-on/rating-system/index.php:51 add-on/rating-system/index.php:100
-#: add-on/rating-system/index.php:239
+#: add-on/rating-system/index.php:244
 msgid "Rating"
 msgstr ""
 
@@ -2471,24 +2471,24 @@ msgstr ""
 msgid "rating"
 msgstr ""
 
-#: add-on/rating-system/index.php:287
+#: add-on/rating-system/index.php:292
 msgid "To remove your vote"
 msgstr ""
 
-#: add-on/rating-system/index.php:296
+#: add-on/rating-system/index.php:301
 msgid "minus"
 msgstr ""
 
-#: add-on/rating-system/index.php:297
+#: add-on/rating-system/index.php:302
 msgid "plus"
 msgstr ""
 
-#: add-on/rating-system/index.php:410
+#: add-on/rating-system/index.php:415
 #, php-format
 msgid "exceeded the limit of votes for the period - %d seconds"
 msgstr ""
 
-#: add-on/rating-system/index.php:482
+#: add-on/rating-system/index.php:487
 msgid "You can not vote"
 msgstr ""
 
@@ -2831,23 +2831,23 @@ msgstr ""
 msgid "Pay personal account"
 msgstr ""
 
-#: class-rcl-install.php:97 rcl-admin/admin-pages.php:92
+#: class-rcl-install.php:99 rcl-admin/admin-pages.php:92
 msgid "Personal office"
 msgstr ""
 
-#: class-rcl-install.php:102
+#: class-rcl-install.php:104
 msgid "FEED"
 msgstr ""
 
-#: class-rcl-install.php:107
+#: class-rcl-install.php:109
 msgid "Users"
 msgstr ""
 
-#: class-rcl-install.php:245
+#: class-rcl-install.php:231
 msgid "Unconfirmed"
 msgstr ""
 
-#: class-rcl-install.php:253
+#: class-rcl-install.php:239
 msgid "Ban"
 msgstr ""
 
@@ -2867,7 +2867,30 @@ msgstr ""
 msgid "Field filled not right CAPTCHA!"
 msgstr ""
 
-#: functions/includes.php:51 functions/rcl_userlist.php:275
+#: functions/class-rcl-users.php:417
+msgid "Total users"
+msgstr ""
+
+#: functions/class-rcl-users.php:430
+msgid "Activity"
+msgstr ""
+
+#: functions/class-rcl-users.php:431
+msgid "Publications"
+msgstr ""
+
+#: functions/class-rcl-users.php:433 functions/loginform.php:181
+#: functions/loginform.php:189 functions/loginform.php:205
+#: functions/shortcodes.php:119 templates/form-register.php:4
+#: templates/form-remember.php:21 templates/form-sign.php:33
+msgid "Registration"
+msgstr ""
+
+#: functions/class-rcl-users.php:437
+msgid "Rated"
+msgstr ""
+
+#: functions/includes.php:51 functions/shortcodes.php:99
 msgid "not online"
 msgstr ""
 
@@ -2875,21 +2898,8 @@ msgstr ""
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 
-#: functions/includes.php:214 functions/includes.php:232
+#: functions/includes.php:213
 msgid "long ago"
-msgstr ""
-
-#: functions/includes.php:224 functions/includes.php:226
-#: functions/includes.php:230
-msgid "already"
-msgstr ""
-
-#: functions/includes.php:224
-msgid "min."
-msgstr ""
-
-#: functions/includes.php:226
-msgid "h."
 msgstr ""
 
 #: functions/loginform.php:51 functions/register.php:195
@@ -2919,13 +2929,6 @@ msgstr ""
 
 #: functions/loginform.php:165
 msgid "Exit"
-msgstr ""
-
-#: functions/loginform.php:181 functions/loginform.php:189
-#: functions/loginform.php:205 functions/rcl_userlist.php:307
-#: functions/shortcodes.php:257 templates/form-register.php:4
-#: templates/form-remember.php:21 templates/form-sign.php:33
-msgid "Registration"
 msgstr ""
 
 #: functions/loginform.php:248
@@ -3071,15 +3074,15 @@ msgstr ""
 msgid "You cant control polucheniya plugins on this site."
 msgstr ""
 
-#: functions/rcl_addons.php:498
+#: functions/rcl_addons.php:500
 msgid "Unpacking of archive failed."
 msgstr ""
 
-#: functions/rcl_addons.php:501
+#: functions/rcl_addons.php:503
 msgid "ZIP archive not found."
 msgstr ""
 
-#: functions/rcl_addons.php:576 rcl-admin/admin-pages.php:192
+#: functions/rcl_addons.php:578 rcl-admin/admin-pages.php:192
 msgid "Login and register"
 msgstr ""
 
@@ -3204,10 +3207,6 @@ msgstr ""
 msgid "Unable to open archive!"
 msgstr ""
 
-#: functions/rcl_userlist.php:300
-msgid "Publics"
-msgstr ""
-
 #: functions/recallbar.php:6 rcl-admin/admin-pages.php:256
 msgid "Recallbar"
 msgstr ""
@@ -3244,43 +3243,27 @@ msgstr ""
 msgid "If it wasnt you, then just ignore this email"
 msgstr ""
 
-#: functions/shortcodes.php:247
-msgid "Total users"
-msgstr ""
-
-#: functions/shortcodes.php:253
-msgid "Activity"
-msgstr ""
-
-#: functions/shortcodes.php:254
-msgid "Rated"
-msgstr ""
-
-#: functions/shortcodes.php:255
-msgid "Publications"
-msgstr ""
-
-#: functions/shortcodes.php:281
+#: functions/shortcodes.php:31
 msgid "Users not found"
 msgstr ""
 
-#: functions/shortcodes.php:282
-msgid "No one"
+#: functions/shortcodes.php:90
+msgid "Publics"
 msgstr ""
 
-#: functions/shortcodes.php:301
+#: functions/shortcodes.php:138
 msgid "Search users"
 msgstr ""
 
-#: functions/shortcodes.php:304
+#: functions/shortcodes.php:141
 msgid "by name"
 msgstr ""
 
-#: functions/shortcodes.php:305
+#: functions/shortcodes.php:142
 msgid "by login"
 msgstr ""
 
-#: functions/shortcodes.php:319
+#: functions/shortcodes.php:156
 msgid ""
 "To begin to use the capabilities of your personal account, please log in or "
 "register on this site"
@@ -3596,11 +3579,11 @@ msgstr ""
 msgid "Author of publication"
 msgstr ""
 
-#: rcl-functions.php:356
+#: rcl-functions.php:364
 msgid "Congratulations! You have been banned."
 msgstr ""
 
-#: rcl-functions.php:490
+#: rcl-functions.php:498
 msgid "Publication pending approval!"
 msgstr ""
 
@@ -3608,35 +3591,35 @@ msgstr ""
 msgid "New users on the website"
 msgstr ""
 
-#: rcl-widgets.php:14 rcl-widgets.php:44
+#: rcl-widgets.php:14 rcl-widgets.php:45
 msgid "New users"
 msgstr ""
 
-#: rcl-widgets.php:51
+#: rcl-widgets.php:52
 msgid "The number of displayed users"
 msgstr ""
 
-#: rcl-widgets.php:63 rcl-widgets.php:121
+#: rcl-widgets.php:64 rcl-widgets.php:123
 msgid "Page all users"
 msgstr ""
 
-#: rcl-widgets.php:78
+#: rcl-widgets.php:79
 msgid "Conclusion the users in the network"
 msgstr ""
 
-#: rcl-widgets.php:80
+#: rcl-widgets.php:81
 msgid "Users on the network"
 msgstr ""
 
-#: rcl-widgets.php:106
+#: rcl-widgets.php:108
 msgid "Right now"
 msgstr ""
 
-#: rcl-widgets.php:136
+#: rcl-widgets.php:138
 msgid "The block with the main profile information"
 msgstr ""
 
-#: rcl-widgets.php:138 rcl-widgets.php:159
+#: rcl-widgets.php:140 rcl-widgets.php:161
 msgid "Control panel"
 msgstr ""
 

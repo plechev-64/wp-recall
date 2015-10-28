@@ -218,7 +218,7 @@ function rcl_get_wp_upload_dir(){
 }
 
 function rcl_update_dinamic_files(){
-    include_once 'rcl_addons.php';
+    include_once 'functions/rcl_addons.php';
     $rcl_addons = new Rcl_Addons();
     $rcl_addons->get_update_scripts_file_rcl();
     $rcl_addons->get_update_scripts_footer_rcl();

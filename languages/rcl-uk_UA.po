@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Blank Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-10-21 19:27+0300\n"
+"POT-Creation-Date: 2015-10-27 20:55+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -236,7 +236,7 @@ msgstr "Імя групи"
 #: ../../wp-recall/add-on/./bookmarks/index.php:458
 #: ../../wp-recall/add-on/./gallery-recall/index.php:434
 #: ../../wp-recall/add-on/./gallery-recall/index.php:473
-#: add-on/rating-system/index.php:503 add-on/rating-system/index.php:524
+#: add-on/rating-system/index.php:508 add-on/rating-system/index.php:529
 msgid "Error"
 msgstr "Помилка"
 
@@ -287,7 +287,7 @@ msgstr ""
 #: ../../wp-recall/add-on/./gallery-recall/class_gallery.php:122
 #: ../../wp-recall/add-on/./gallery-recall/index.php:377
 #: ../../wp-recall/add-on/./gallery-recall/index.php:388
-#: add-on/message/index.php:1235
+#: add-on/message/index.php:1237
 msgid "Reply"
 msgstr "Відповісти"
 
@@ -382,7 +382,7 @@ msgstr "Розмір файлу перевищено!"
 #: ../../wp-recall/add-on/./partners-system/admin-pages.php:124
 #: ../../wp-recall/add-on/./users-market/administrative.php:60
 #: add-on/groups/class_group.php:207 rcl-admin/admin-pages.php:281
-#: rcl-functions.php:566
+#: rcl-functions.php:574
 msgid "Save settings"
 msgstr "Зберегти налаштування"
 
@@ -816,16 +816,16 @@ msgstr "Платіж не знайдений в базі данних"
 msgid "Заменить файл"
 msgstr "Замінити файл"
 
-#: add-on/feed/index.php:34 add-on/feed/index.php:361
+#: add-on/feed/index.php:34 add-on/feed/index.php:378
 msgid "Subscribe"
 msgstr "Підписатись"
 
-#: add-on/feed/index.php:34 add-on/feed/index.php:163
-#: add-on/feed/index.php:351
+#: add-on/feed/index.php:34 add-on/feed/index.php:180
+#: add-on/feed/index.php:368
 msgid "Unsubscribe"
 msgstr "Відписатись"
 
-#: add-on/feed/index.php:58 add-on/feed/index.php:168
+#: add-on/feed/index.php:58 add-on/feed/index.php:185
 msgid "Followers"
 msgstr "Підписники"
 
@@ -833,23 +833,23 @@ msgstr "Підписники"
 msgid "List subscribers"
 msgstr "Список підписників"
 
-#: add-on/feed/index.php:89
+#: add-on/feed/index.php:98
 msgid "Following yet"
 msgstr "Підписникі поки немає"
 
-#: add-on/feed/index.php:116
+#: add-on/feed/index.php:125
 msgid "Subscriptions"
 msgstr "Підписки"
 
-#: add-on/feed/index.php:121
+#: add-on/feed/index.php:130
 msgid "List subscriptions"
 msgstr "Список підписок"
 
-#: add-on/feed/index.php:127
+#: add-on/feed/index.php:144
 msgid "Subscriptions yet"
 msgstr "Підписок поки немає"
 
-#: add-on/feed/index.php:177
+#: add-on/feed/index.php:194
 msgid ""
 "Login or register to view the latest publications and comments from users on "
 "which you will you subscribed."
@@ -857,21 +857,21 @@ msgstr ""
 "Війдіть або зараєструйтесь щоб бачити останні публікації і\n"
 "коментарі від користувачів,на яких оформлена підписка"
 
-#: add-on/feed/index.php:183 add-on/feed/index.php:379
+#: add-on/feed/index.php:200 add-on/feed/index.php:396
 #: add-on/feed/templates/feed-post.php:44 add-on/rating-system/index.php:32
-#: functions/rcl_userlist.php:294 functions/shortcodes.php:256
+#: functions/class-rcl-users.php:432 functions/shortcodes.php:82
 msgid "Comments"
 msgstr "Коментарі"
 
-#: add-on/feed/index.php:184 add-on/publicpost/index.php:68
+#: add-on/feed/index.php:201 add-on/publicpost/index.php:68
 msgid "Publication"
 msgstr "Публікація"
 
-#: add-on/feed/index.php:383
+#: add-on/feed/index.php:400
 msgid "It seems that you have not left a single comment or not subscribed."
 msgstr "У вас ще немає коментарів."
 
-#: add-on/feed/index.php:384
+#: add-on/feed/index.php:401
 msgid ""
 "Comment you publish and subscribe to other users, then you can track "
 "responses to your comments and to see new comments from users.Comment you "
@@ -882,25 +882,25 @@ msgstr ""
 "отримувати нові коментарі ваших публікацій або користувачів на яких ви \n"
 "підписані, а також відповіді на ваші коментарі."
 
-#: add-on/feed/index.php:590
+#: add-on/feed/index.php:607
 msgid "Publications yet"
 msgstr "Публікацій поки немає"
 
-#: add-on/feed/index.php:590
+#: add-on/feed/index.php:607
 msgid "Maybe later, someone will post the news."
 msgstr "Можливо, пізніше зявляться нові публікації"
 
-#: add-on/feed/index.php:599
+#: add-on/feed/index.php:616
 msgid "Publishing"
 msgstr "Публікації"
 
-#: add-on/feed/index.php:629
+#: add-on/feed/index.php:646
 msgid "You havent signed up anyone elses publication."
 msgstr ""
 "В вашій стрічці поки немає нових публікацій. Підписуйтесь на користувачів\n"
 "сайту,щоб бачити нові публікації"
 
-#: add-on/feed/index.php:630
+#: add-on/feed/index.php:647
 msgid ""
 "Go to the profile of the user and click the \"Subscribe\" button and you "
 "will be able to monitor his recent publications here."
@@ -1074,7 +1074,7 @@ msgid "View"
 msgstr "Дивитись"
 
 #: add-on/groups/index.php:105 add-on/groups/index.php:140
-#: functions/shortcodes.php:307
+#: functions/shortcodes.php:144
 msgid "Search"
 msgstr "Пошук"
 
@@ -1160,7 +1160,7 @@ msgid "Publishing group"
 msgstr "Публікації групи"
 
 #: add-on/groups/index.php:281 add-on/rating-system/addon-options.php:104
-#: rcl-admin/admin-pages.php:133 rcl-widgets.php:31 rcl-widgets.php:94
+#: rcl-admin/admin-pages.php:133 rcl-widgets.php:32 rcl-widgets.php:96
 msgid "All users"
 msgstr "Всі користувачі"
 
@@ -1244,7 +1244,7 @@ msgstr "Пошук групи"
 msgid "Find"
 msgstr "Знайти"
 
-#: add-on/groups/index.php:877 functions/shortcodes.php:252
+#: add-on/groups/index.php:877 functions/class-rcl-users.php:441
 msgid "Filter by"
 msgstr "Фільтрувати по"
 
@@ -1286,7 +1286,7 @@ msgstr "Корзина"
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
 #: add-on/user-account/index.php:471 functions/rcl_editfields.php:117
-#: rcl-widgets.php:47 rcl-widgets.php:109 rcl-widgets.php:162
+#: rcl-widgets.php:48 rcl-widgets.php:111 rcl-widgets.php:164
 msgid "Title"
 msgstr "Заголовок"
 
@@ -1294,7 +1294,7 @@ msgstr "Заголовок"
 msgid "File does not exist on the server or it has already been loaded!"
 msgstr "Файла немає на сервері або він був видалений"
 
-#: add-on/message/index.php:28 add-on/message/index.php:1314
+#: add-on/message/index.php:28 add-on/message/index.php:1316
 msgid "The file was loaded."
 msgstr "Файл завантажений"
 
@@ -1477,112 +1477,112 @@ msgstr "Надіслати"
 msgid "Important messages"
 msgstr "Важливі повідомлення"
 
-#: add-on/message/index.php:423
+#: add-on/message/index.php:430
 msgid "Here will display correspondence history"
 msgstr "Тут буде відображатись історія переписки"
 
-#: add-on/message/index.php:426
+#: add-on/message/index.php:433
 msgid "Show older messages"
 msgstr "Показати більш пізні повідомлення"
 
-#: add-on/message/index.php:529 functions/includes.php:230
+#: add-on/message/index.php:531
 msgid "days"
 msgstr "дн."
 
-#: add-on/message/index.php:530
+#: add-on/message/index.php:532
 msgid "month"
 msgstr "місяць"
 
-#: add-on/message/index.php:531
+#: add-on/message/index.php:533
 msgid "all the time"
 msgstr "весь час"
 
-#: add-on/message/index.php:532
+#: add-on/message/index.php:534
 msgid "Blacklist"
 msgstr "Чорний список"
 
-#: add-on/message/index.php:533
+#: add-on/message/index.php:535
 msgid "Important"
 msgstr "Важливе"
 
-#: add-on/message/index.php:539
+#: add-on/message/index.php:541
 msgid "You havent been in conversation with"
 msgstr "Ви ще ні з ким не вели переписку"
 
-#: add-on/message/index.php:568 add-on/message/index.php:588
-#: add-on/message/index.php:671
+#: add-on/message/index.php:570 add-on/message/index.php:590
+#: add-on/message/index.php:673
 msgid "Contacts not found!"
 msgstr "Контакти не знайдені!"
 
-#: add-on/message/index.php:666
+#: add-on/message/index.php:668
 msgid "Last message"
 msgstr "Останнє повідомлення"
 
-#: add-on/message/index.php:667
+#: add-on/message/index.php:669
 msgid "The chat history is missing"
 msgstr "Історія переписки не знайдена"
 
-#: add-on/message/index.php:680
+#: add-on/message/index.php:682
 msgid "Delete?"
 msgstr "Видалити?"
 
-#: add-on/message/index.php:746
+#: add-on/message/index.php:748
 msgid "Uncheck"
 msgstr "Зняти"
 
-#: add-on/message/index.php:746
+#: add-on/message/index.php:748
 msgid "Mark as important"
 msgstr "Позначити важливим"
 
-#: add-on/message/index.php:811
+#: add-on/message/index.php:813
 msgid "No posts found!"
 msgstr "Повідомлення не знайдені!"
 
-#: add-on/message/index.php:846
+#: add-on/message/index.php:848
 msgid "Show more recent messages"
 msgstr "Показати більше останніх повідомлень"
 
-#: add-on/message/index.php:964
+#: add-on/message/index.php:966
 msgid "Your message has been sent!"
 msgstr "Ваше повідомлення було доставлено!"
 
-#: add-on/message/index.php:1059
+#: add-on/message/index.php:1061
 msgid "The message is marked as read"
 msgstr "Повідомлення помічено як прочитане"
 
-#: add-on/message/index.php:1202
+#: add-on/message/index.php:1204
 msgid "You a new message!"
 msgstr "Нове повідомлення!"
 
-#: add-on/message/index.php:1233
+#: add-on/message/index.php:1235
 msgid "Go to the correspondence"
 msgstr "Перейти до переписки"
 
-#: add-on/message/index.php:1288
+#: add-on/message/index.php:1290
 msgid "Show more recent posts"
 msgstr "Показати більше останніх повідомлень"
 
-#: add-on/message/index.php:1316
+#: add-on/message/index.php:1318
 msgid "The file has been received, but not yet loaded."
 msgstr "Файл був відправлений,но не був завантажений."
 
-#: add-on/message/index.php:1317
+#: add-on/message/index.php:1319
 msgid "The file was sent to the recipient."
 msgstr "Файл був відправлений отримувачу."
 
-#: add-on/message/index.php:1320
+#: add-on/message/index.php:1322
 msgid "Link to sent the file"
 msgstr "Посилання на файл"
 
-#: add-on/message/index.php:1322
+#: add-on/message/index.php:1324
 msgid "(accept files only from trusted sources)"
 msgstr "(приймайте файли тільки від довіренних осіб)"
 
-#: add-on/message/index.php:1350
+#: add-on/message/index.php:1352
 msgid "The file was sent successfully."
 msgstr "Файл був успішно надісланий"
 
-#: add-on/message/index.php:1353
+#: add-on/message/index.php:1355
 msgid ""
 "You have exceeded the limit on the number of uploaded files. Wait until the "
 "files sent previously will be accepted."
@@ -1590,7 +1590,7 @@ msgstr ""
 "Ви досягнути ліміту по к-сті файлів,що відправляються. Зачекайте поки файли\n"
 ",відправлені раніше, будуть прийняті."
 
-#: add-on/message/index.php:1363
+#: add-on/message/index.php:1365
 msgid "Removes the file from the server"
 msgstr "Видаляю файл з серверу"
 
@@ -1842,7 +1842,7 @@ msgstr "Статус користувача"
 #: add-on/user-account/addon-options.php:85
 #: add-on/user-account/addon-options.php:95
 #: add-on/user-account/addon-options.php:103 rcl-admin/admin-pages.php:87
-#: rcl-widgets.php:58 rcl-widgets.php:116
+#: rcl-widgets.php:59 rcl-widgets.php:118
 msgid "Not selected"
 msgstr "Не обрано"
 
@@ -2404,7 +2404,7 @@ msgid "Plus/minus"
 msgstr "Плюс/Мінус"
 
 #: add-on/rating-system/addon-options.php:26
-#: add-on/rating-system/index.php:294
+#: add-on/rating-system/index.php:299
 msgid "I like"
 msgstr "Мені подобається"
 
@@ -2524,7 +2524,7 @@ msgid "Rating changes not made"
 msgstr "Змін в рейтингу не знайдено"
 
 #: add-on/rating-system/index.php:51 add-on/rating-system/index.php:100
-#: add-on/rating-system/index.php:239
+#: add-on/rating-system/index.php:244
 msgid "Rating"
 msgstr "Рейтинг"
 
@@ -2532,24 +2532,24 @@ msgstr "Рейтинг"
 msgid "rating"
 msgstr "рейтинг"
 
-#: add-on/rating-system/index.php:287
+#: add-on/rating-system/index.php:292
 msgid "To remove your vote"
 msgstr "Видалити голос"
 
-#: add-on/rating-system/index.php:296
+#: add-on/rating-system/index.php:301
 msgid "minus"
 msgstr "мінус"
 
-#: add-on/rating-system/index.php:297
+#: add-on/rating-system/index.php:302
 msgid "plus"
 msgstr "плюс"
 
-#: add-on/rating-system/index.php:410
+#: add-on/rating-system/index.php:415
 #, php-format
 msgid "exceeded the limit of votes for the period - %d seconds"
 msgstr "перевищення обмеження голосів протягом %d секунд"
 
-#: add-on/rating-system/index.php:482
+#: add-on/rating-system/index.php:487
 msgid "You can not vote"
 msgstr "Ви не можете голосувати"
 
@@ -2898,23 +2898,23 @@ msgstr "Особистий кабінет"
 msgid "Pay personal account"
 msgstr "Оплатити з особистого рахунку"
 
-#: class-rcl-install.php:97 rcl-admin/admin-pages.php:92
+#: class-rcl-install.php:99 rcl-admin/admin-pages.php:92
 msgid "Personal office"
 msgstr ""
 
-#: class-rcl-install.php:102
+#: class-rcl-install.php:104
 msgid "FEED"
 msgstr ""
 
-#: class-rcl-install.php:107
+#: class-rcl-install.php:109
 msgid "Users"
 msgstr "Користувачі"
 
-#: class-rcl-install.php:245
+#: class-rcl-install.php:231
 msgid "Unconfirmed"
 msgstr "Непідтвердежні"
 
-#: class-rcl-install.php:253
+#: class-rcl-install.php:239
 msgid "Ban"
 msgstr "Заблоковані"
 
@@ -2934,7 +2934,30 @@ msgstr "Введіть символи"
 msgid "Field filled not right CAPTCHA!"
 msgstr "Не вірно заповнено поле CAPTCHA!"
 
-#: functions/includes.php:51 functions/rcl_userlist.php:275
+#: functions/class-rcl-users.php:417
+msgid "Total users"
+msgstr "Всього користувачів"
+
+#: functions/class-rcl-users.php:430
+msgid "Activity"
+msgstr "Активності"
+
+#: functions/class-rcl-users.php:431
+msgid "Publications"
+msgstr "Публікаціям"
+
+#: functions/class-rcl-users.php:433 functions/loginform.php:181
+#: functions/loginform.php:189 functions/loginform.php:205
+#: functions/shortcodes.php:119 templates/form-register.php:4
+#: templates/form-remember.php:21 templates/form-sign.php:33
+msgid "Registration"
+msgstr "Реєстрація"
+
+#: functions/class-rcl-users.php:437
+msgid "Rated"
+msgstr "Рейтингу"
+
+#: functions/includes.php:51 functions/shortcodes.php:99
 msgid "not online"
 msgstr "не в мережі"
 
@@ -2943,22 +2966,9 @@ msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Цей повідомлення було сформовано автоматично, не відповідайте на нього."
 
-#: functions/includes.php:214 functions/includes.php:232
+#: functions/includes.php:213
 msgid "long ago"
 msgstr "давно"
-
-#: functions/includes.php:224 functions/includes.php:226
-#: functions/includes.php:230
-msgid "already"
-msgstr "вже"
-
-#: functions/includes.php:224
-msgid "min."
-msgstr "хв."
-
-#: functions/includes.php:226
-msgid "h."
-msgstr "год."
 
 #: functions/loginform.php:51 functions/register.php:195
 #: templates/form-sign.php:17
@@ -2988,13 +2998,6 @@ msgstr "В особистий кабінет"
 #: functions/loginform.php:165
 msgid "Exit"
 msgstr "Вихід"
-
-#: functions/loginform.php:181 functions/loginform.php:189
-#: functions/loginform.php:205 functions/rcl_userlist.php:307
-#: functions/shortcodes.php:257 templates/form-register.php:4
-#: templates/form-remember.php:21 templates/form-sign.php:33
-msgid "Registration"
-msgstr "Реєстрація"
 
 #: functions/loginform.php:248
 msgid "Registration is completed!"
@@ -3145,15 +3148,15 @@ msgstr "Сторінка доповнення"
 msgid "You cant control polucheniya plugins on this site."
 msgstr "Ви не можете керувати загрузкою плагінів на цьому сайті."
 
-#: functions/rcl_addons.php:498
+#: functions/rcl_addons.php:500
 msgid "Unpacking of archive failed."
 msgstr "Розпакування архіву не вдалось."
 
-#: functions/rcl_addons.php:501
+#: functions/rcl_addons.php:503
 msgid "ZIP archive not found."
 msgstr "ZIP архів не знайдений."
 
-#: functions/rcl_addons.php:576 rcl-admin/admin-pages.php:192
+#: functions/rcl_addons.php:578 rcl-admin/admin-pages.php:192
 msgid "Login and register"
 msgstr "Вхід і реєстрація"
 
@@ -3282,10 +3285,6 @@ msgstr "Оновлення має невірний заголовок!"
 msgid "Unable to open archive!"
 msgstr "Неможливо відкрити архів!"
 
-#: functions/rcl_userlist.php:300
-msgid "Publics"
-msgstr "Публікації"
-
 #: functions/recallbar.php:6 rcl-admin/admin-pages.php:256
 msgid "Recallbar"
 msgstr ""
@@ -3322,43 +3321,27 @@ msgstr "з наступними данними:"
 msgid "If it wasnt you, then just ignore this email"
 msgstr "Якщо це були не ви,то просто проігноруйте цей лист"
 
-#: functions/shortcodes.php:247
-msgid "Total users"
-msgstr "Всього користувачів"
-
-#: functions/shortcodes.php:253
-msgid "Activity"
-msgstr "Активності"
-
-#: functions/shortcodes.php:254
-msgid "Rated"
-msgstr "Рейтингу"
-
-#: functions/shortcodes.php:255
-msgid "Publications"
-msgstr "Публікаціям"
-
-#: functions/shortcodes.php:281
+#: functions/shortcodes.php:31
 msgid "Users not found"
 msgstr "Користувачі не знайдені"
 
-#: functions/shortcodes.php:282
-msgid "No one"
-msgstr "Нікого немає"
+#: functions/shortcodes.php:90
+msgid "Publics"
+msgstr "Публікації"
 
-#: functions/shortcodes.php:301
+#: functions/shortcodes.php:138
 msgid "Search users"
 msgstr "Пошук користувачів"
 
-#: functions/shortcodes.php:304
+#: functions/shortcodes.php:141
 msgid "by name"
 msgstr "по імені"
 
-#: functions/shortcodes.php:305
+#: functions/shortcodes.php:142
 msgid "by login"
 msgstr "по логіну"
 
-#: functions/shortcodes.php:319
+#: functions/shortcodes.php:156
 msgid ""
 "To begin to use the capabilities of your personal account, please log in or "
 "register on this site"
@@ -3691,11 +3674,11 @@ msgstr "Сайт використовує функціонал плагіну"
 msgid "Author of publication"
 msgstr "Автор публікації"
 
-#: rcl-functions.php:356
+#: rcl-functions.php:364
 msgid "Congratulations! You have been banned."
 msgstr "Ви були заблоковані на цьому сайті."
 
-#: rcl-functions.php:490
+#: rcl-functions.php:498
 msgid "Publication pending approval!"
 msgstr "Публікація очікує одобрення!"
 
@@ -3703,35 +3686,35 @@ msgstr "Публікація очікує одобрення!"
 msgid "New users on the website"
 msgstr "Нові користувачі на сайті"
 
-#: rcl-widgets.php:14 rcl-widgets.php:44
+#: rcl-widgets.php:14 rcl-widgets.php:45
 msgid "New users"
 msgstr "Нові користувачі"
 
-#: rcl-widgets.php:51
+#: rcl-widgets.php:52
 msgid "The number of displayed users"
 msgstr "Кількісті,що відображається"
 
-#: rcl-widgets.php:63 rcl-widgets.php:121
+#: rcl-widgets.php:64 rcl-widgets.php:123
 msgid "Page all users"
 msgstr "Сторінка всіх користувачів"
 
-#: rcl-widgets.php:78
+#: rcl-widgets.php:79
 msgid "Conclusion the users in the network"
 msgstr "Вивід користувачів в мережі"
 
-#: rcl-widgets.php:80
+#: rcl-widgets.php:81
 msgid "Users on the network"
 msgstr "Користувачі в мережі"
 
-#: rcl-widgets.php:106
+#: rcl-widgets.php:108
 msgid "Right now"
 msgstr "Зараз в мережі"
 
-#: rcl-widgets.php:136
+#: rcl-widgets.php:138
 msgid "The block with the main profile information"
 msgstr "Блок з основною інформацією профіля"
 
-#: rcl-widgets.php:138 rcl-widgets.php:159
+#: rcl-widgets.php:140 rcl-widgets.php:161
 msgid "Control panel"
 msgstr "Панель управління"
 
@@ -3785,6 +3768,18 @@ msgstr ""
 #: wp-recall.php:38 wp-recall.php:42
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "already"
+#~ msgstr "вже"
+
+#~ msgid "min."
+#~ msgstr "хв."
+
+#~ msgid "h."
+#~ msgstr "год."
+
+#~ msgid "No one"
+#~ msgstr "Нікого немає"
 
 #~ msgid "For Interkassa: successful payment URL"
 #~ msgstr "Для Интеркассы: URL успішного платежу"

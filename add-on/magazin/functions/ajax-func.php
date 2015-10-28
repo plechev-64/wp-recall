@@ -408,22 +408,17 @@ function rcl_register_user_order(){
 
                 if(!$user_id){
 
-                        $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+                    $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
 
-                        $userdata = array(
-                            'user_pass' => $random_password //обязательно
-                            ,'user_login' => $email_new_user //обязательно
-                            ,'user_nicename' => ''
-                            ,'user_email' => $email_new_user
-                            ,'display_name' => $fio_new_user
-                            ,'nickname' => $email_new_user
-                            ,'first_name' => $fio_new_user
-                            ,'rich_editing' => 'true'  // false - выключить визуальный редактор для пользователя.
-                        );
+                    $userdata = array(
+                        'user_pass'=>$random_password,
+                        'user_login'=>$email_new_user,
+                        'user_email'=>$email_new_user,
+                        'display_name'=>$fio_new_user
+                    );
 
-                        $user_id = wp_insert_user( $userdata );
+                    $user_id = rcl_insert_user($userdata);
 
-                        $wpdb->insert( $wpdb->prefix .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
                 }
 
 		if($user_id){
@@ -433,21 +428,18 @@ function rcl_register_user_order(){
                         $cf->register_user_metas($user_id);
                     }
 
-                    $creds = array();
-                    $creds['user_login'] = $email_new_user;
-                    $creds['user_password'] = $random_password;
-
                     //Сразу авторизуем пользователя
                     if($reg_user&&!$rcl_options['confirm_register_recall']){
 
+                        $creds = array();
+                        $creds['user_login'] = $email_new_user;
+                        $creds['user_password'] = $random_password;
                         $creds['remember'] = true;
                         $user = wp_signon( $creds, false );
-
                         $redirect_url = rcl_format_url(get_author_posts_url($user_id),'orders');
 
                     }else{
 
-                        if($rcl_options['confirm_register_recall']==1) wp_update_user( array ('ID' => $user_id, 'role' => 'need-confirm') ) ;
                         $redirect_url = false;
 
                     }

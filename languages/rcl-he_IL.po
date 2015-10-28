@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Recall\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-21 19:27+0300\n"
-"PO-Revision-Date: 2015-10-21 19:27+0300\n"
+"POT-Creation-Date: 2015-10-27 20:56+0300\n"
+"PO-Revision-Date: 2015-10-27 20:56+0300\n"
 "Last-Translator: bloria <allmedkaplan@med.allmed.co.il>\n"
 "Language-Team: \n"
 "Language: he\n"
@@ -20,21 +20,21 @@ msgstr ""
 "X-Poedit-SearchPath-1: ..\n"
 
 #: ../../wp-recall/add-on/./feed/index.php:34
-#: ../../wp-recall/add-on/./feed/index.php:361 ../add-on/feed/index.php:34
-#: ../add-on/feed/index.php:361
+#: ../../wp-recall/add-on/./feed/index.php:378 ../add-on/feed/index.php:34
+#: ../add-on/feed/index.php:378
 msgid "Subscribe"
 msgstr "הירשם"
 
 #: ../../wp-recall/add-on/./feed/index.php:34
-#: ../../wp-recall/add-on/./feed/index.php:163
-#: ../../wp-recall/add-on/./feed/index.php:351 ../add-on/feed/index.php:34
-#: ../add-on/feed/index.php:163 ../add-on/feed/index.php:351
+#: ../../wp-recall/add-on/./feed/index.php:180
+#: ../../wp-recall/add-on/./feed/index.php:368 ../add-on/feed/index.php:34
+#: ../add-on/feed/index.php:180 ../add-on/feed/index.php:368
 msgid "Unsubscribe"
 msgstr "ביטול מנוי"
 
 #: ../../wp-recall/add-on/./feed/index.php:58
-#: ../../wp-recall/add-on/./feed/index.php:168 ../add-on/feed/index.php:58
-#: ../add-on/feed/index.php:168
+#: ../../wp-recall/add-on/./feed/index.php:185 ../add-on/feed/index.php:58
+#: ../add-on/feed/index.php:185
 msgid "Followers"
 msgstr ""
 
@@ -42,51 +42,51 @@ msgstr ""
 msgid "List subscribers"
 msgstr ""
 
-#: ../../wp-recall/add-on/./feed/index.php:89 ../add-on/feed/index.php:89
+#: ../../wp-recall/add-on/./feed/index.php:98 ../add-on/feed/index.php:98
 msgid "Following yet"
 msgstr ""
 
-#: ../../wp-recall/add-on/./feed/index.php:116 ../add-on/feed/index.php:116
+#: ../../wp-recall/add-on/./feed/index.php:125 ../add-on/feed/index.php:125
 msgid "Subscriptions"
 msgstr ""
 
-#: ../../wp-recall/add-on/./feed/index.php:121 ../add-on/feed/index.php:121
+#: ../../wp-recall/add-on/./feed/index.php:130 ../add-on/feed/index.php:130
 msgid "List subscriptions"
 msgstr ""
 
-#: ../../wp-recall/add-on/./feed/index.php:127 ../add-on/feed/index.php:127
+#: ../../wp-recall/add-on/./feed/index.php:144 ../add-on/feed/index.php:144
 msgid "Subscriptions yet"
 msgstr ""
 
-#: ../../wp-recall/add-on/./feed/index.php:177 ../add-on/feed/index.php:177
+#: ../../wp-recall/add-on/./feed/index.php:194 ../add-on/feed/index.php:194
 msgid ""
 "Login or register to view the latest publications and comments from users on "
 "which you will you subscribed."
 msgstr ""
 "התחבר או הירשם כדי להציג את הפרסומים והערות האחרונים ממשתמשים שבהם אתה מנוי."
 
-#: ../../wp-recall/add-on/./feed/index.php:183
-#: ../../wp-recall/add-on/./feed/index.php:379
+#: ../../wp-recall/add-on/./feed/index.php:200
+#: ../../wp-recall/add-on/./feed/index.php:396
 #: ../../wp-recall/add-on/./feed/templates/feed-post.php:44
 #: ../../wp-recall/add-on/./rating-system/index.php:32
-#: ../add-on/feed/index.php:183 ../add-on/feed/index.php:379
+#: ../add-on/feed/index.php:200 ../add-on/feed/index.php:396
 #: ../add-on/feed/templates/feed-post.php:44
-#: ../add-on/rating-system/index.php:32 ../functions/rcl_userlist.php:294
-#: ../functions/shortcodes.php:256
+#: ../add-on/rating-system/index.php:32 ../functions/class-rcl-users.php:432
+#: ../functions/shortcodes.php:82
 msgid "Comments"
 msgstr "תגובות"
 
-#: ../../wp-recall/add-on/./feed/index.php:184
+#: ../../wp-recall/add-on/./feed/index.php:201
 #: ../../wp-recall/add-on/./publicpost/index.php:68
-#: ../add-on/feed/index.php:184 ../add-on/publicpost/index.php:68
+#: ../add-on/feed/index.php:201 ../add-on/publicpost/index.php:68
 msgid "Publication"
 msgstr "מאמרים"
 
-#: ../../wp-recall/add-on/./feed/index.php:383 ../add-on/feed/index.php:383
+#: ../../wp-recall/add-on/./feed/index.php:400 ../add-on/feed/index.php:400
 msgid "It seems that you have not left a single comment or not subscribed."
 msgstr "נראה שלא קיימות תגובות או אינך מנוי."
 
-#: ../../wp-recall/add-on/./feed/index.php:384 ../add-on/feed/index.php:384
+#: ../../wp-recall/add-on/./feed/index.php:401 ../add-on/feed/index.php:401
 msgid ""
 "Comment you publish and subscribe to other users, then you can track "
 "responses to your comments and to see new comments from users.Comment you "
@@ -98,23 +98,23 @@ msgstr ""
 "של משתמשים\n"
 "אחרים וגם אתה יכול לעקוב אחר תגובות להערות שלך ולראות תגובות חדשות"
 
-#: ../../wp-recall/add-on/./feed/index.php:590 ../add-on/feed/index.php:590
+#: ../../wp-recall/add-on/./feed/index.php:607 ../add-on/feed/index.php:607
 msgid "Publications yet"
 msgstr "קבר פורסם"
 
-#: ../../wp-recall/add-on/./feed/index.php:590 ../add-on/feed/index.php:590
+#: ../../wp-recall/add-on/./feed/index.php:607 ../add-on/feed/index.php:607
 msgid "Maybe later, someone will post the news."
 msgstr "אולי מאוחר יותר, מישהו יפרסם את החדשות."
 
-#: ../../wp-recall/add-on/./feed/index.php:599 ../add-on/feed/index.php:599
+#: ../../wp-recall/add-on/./feed/index.php:616 ../add-on/feed/index.php:616
 msgid "Publishing"
 msgstr ""
 
-#: ../../wp-recall/add-on/./feed/index.php:629 ../add-on/feed/index.php:629
+#: ../../wp-recall/add-on/./feed/index.php:646 ../add-on/feed/index.php:646
 msgid "You havent signed up anyone elses publication."
 msgstr "אתה עדיין לא נרשמת כדי לפרסום."
 
-#: ../../wp-recall/add-on/./feed/index.php:630 ../add-on/feed/index.php:630
+#: ../../wp-recall/add-on/./feed/index.php:647 ../add-on/feed/index.php:647
 msgid ""
 "Go to the profile of the user and click the \"Subscribe\" button and you "
 "will be able to monitor his recent publications here."
@@ -208,7 +208,7 @@ msgstr "סגור הגדרות"
 
 #: ../../wp-recall/add-on/./groups/class_group.php:207
 #: ../add-on/groups/class_group.php:207 ../rcl-admin/admin-pages.php:281
-#: ../rcl-functions.php:566
+#: ../rcl-functions.php:574
 msgid "Save settings"
 msgstr "שמור הגדרות"
 
@@ -355,7 +355,7 @@ msgstr "לראות"
 #: ../../wp-recall/add-on/./groups/index.php:105
 #: ../../wp-recall/add-on/./groups/index.php:140
 #: ../add-on/groups/index.php:105 ../add-on/groups/index.php:140
-#: ../functions/shortcodes.php:307
+#: ../functions/shortcodes.php:144
 msgid "Search"
 msgstr "חפש"
 
@@ -489,8 +489,8 @@ msgstr "Publishing group"
 #: ../../wp-recall/add-on/./rating-system/addon-options.php:104
 #: ../add-on/groups/index.php:281
 #: ../add-on/rating-system/addon-options.php:104
-#: ../rcl-admin/admin-pages.php:133 ../rcl-widgets.php:31
-#: ../rcl-widgets.php:94
+#: ../rcl-admin/admin-pages.php:133 ../rcl-widgets.php:32
+#: ../rcl-widgets.php:96
 msgid "All users"
 msgstr "כל המשתמשים"
 
@@ -611,7 +611,7 @@ msgid "Find"
 msgstr "מצא"
 
 #: ../../wp-recall/add-on/./groups/index.php:877
-#: ../add-on/groups/index.php:877 ../functions/shortcodes.php:252
+#: ../add-on/groups/index.php:877 ../functions/class-rcl-users.php:441
 msgid "Filter by"
 msgstr "לסנן לפי"
 
@@ -673,7 +673,7 @@ msgstr "עגלה"
 #: ../add-on/publicpost/templates/posts-list.php:7
 #: ../add-on/publicpost/templates/public-form.php:5
 #: ../add-on/user-account/index.php:471 ../functions/rcl_editfields.php:117
-#: ../rcl-widgets.php:47 ../rcl-widgets.php:109 ../rcl-widgets.php:162
+#: ../rcl-widgets.php:48 ../rcl-widgets.php:111 ../rcl-widgets.php:164
 msgid "Title"
 msgstr "כותרת"
 
@@ -683,8 +683,8 @@ msgid "File does not exist on the server or it has already been loaded!"
 msgstr "קובץ לא קיים בשרת או שהוא כבר טעון!"
 
 #: ../../wp-recall/add-on/./message/index.php:28
-#: ../../wp-recall/add-on/./message/index.php:1314
-#: ../add-on/message/index.php:28 ../add-on/message/index.php:1314
+#: ../../wp-recall/add-on/./message/index.php:1316
+#: ../add-on/message/index.php:28 ../add-on/message/index.php:1316
 msgid "The file was loaded."
 msgstr "הקובץ נטען."
 
@@ -907,154 +907,154 @@ msgstr "שלח"
 msgid "Important messages"
 msgstr "הודעות חשובות"
 
-#: ../../wp-recall/add-on/./message/index.php:423
-#: ../add-on/message/index.php:423
+#: ../../wp-recall/add-on/./message/index.php:430
+#: ../add-on/message/index.php:430
 msgid "Here will display correspondence history"
 msgstr "כאן יציג את ההיסטוריה התכתבות"
 
-#: ../../wp-recall/add-on/./message/index.php:426
-#: ../add-on/message/index.php:426
+#: ../../wp-recall/add-on/./message/index.php:433
+#: ../add-on/message/index.php:433
 msgid "Show older messages"
 msgstr "הצג הודעות ישנות יותר"
 
-#: ../../wp-recall/add-on/./message/index.php:529
-#: ../add-on/message/index.php:529 ../functions/includes.php:230
+#: ../../wp-recall/add-on/./message/index.php:531
+#: ../add-on/message/index.php:531
 msgid "days"
 msgstr "ימים"
 
-#: ../../wp-recall/add-on/./message/index.php:530
-#: ../add-on/message/index.php:530
+#: ../../wp-recall/add-on/./message/index.php:532
+#: ../add-on/message/index.php:532
 msgid "month"
 msgstr "חודש"
 
-#: ../../wp-recall/add-on/./message/index.php:531
-#: ../add-on/message/index.php:531
+#: ../../wp-recall/add-on/./message/index.php:533
+#: ../add-on/message/index.php:533
 msgid "all the time"
 msgstr "כל הזמנים"
 
-#: ../../wp-recall/add-on/./message/index.php:532
-#: ../add-on/message/index.php:532
+#: ../../wp-recall/add-on/./message/index.php:534
+#: ../add-on/message/index.php:534
 msgid "Blacklist"
 msgstr "רשימה שחורה"
 
-#: ../../wp-recall/add-on/./message/index.php:533
-#: ../add-on/message/index.php:533
+#: ../../wp-recall/add-on/./message/index.php:535
+#: ../add-on/message/index.php:535
 msgid "Important"
 msgstr "Important"
 
-#: ../../wp-recall/add-on/./message/index.php:539
-#: ../add-on/message/index.php:539
+#: ../../wp-recall/add-on/./message/index.php:541
+#: ../add-on/message/index.php:541
 msgid "You havent been in conversation with"
 msgstr "You havent been in conversation with"
 
-#: ../../wp-recall/add-on/./message/index.php:568
-#: ../../wp-recall/add-on/./message/index.php:588
-#: ../../wp-recall/add-on/./message/index.php:671
-#: ../add-on/message/index.php:568 ../add-on/message/index.php:588
-#: ../add-on/message/index.php:671
+#: ../../wp-recall/add-on/./message/index.php:570
+#: ../../wp-recall/add-on/./message/index.php:590
+#: ../../wp-recall/add-on/./message/index.php:673
+#: ../add-on/message/index.php:570 ../add-on/message/index.php:590
+#: ../add-on/message/index.php:673
 msgid "Contacts not found!"
 msgstr "איש קשר אינו נמצאה!"
 
-#: ../../wp-recall/add-on/./message/index.php:666
-#: ../add-on/message/index.php:666
+#: ../../wp-recall/add-on/./message/index.php:668
+#: ../add-on/message/index.php:668
 msgid "Last message"
 msgstr "הודעה הבא"
 
-#: ../../wp-recall/add-on/./message/index.php:667
-#: ../add-on/message/index.php:667
+#: ../../wp-recall/add-on/./message/index.php:669
+#: ../add-on/message/index.php:669
 msgid "The chat history is missing"
 msgstr "היסטוריית הצ'אט חסרה"
 
-#: ../../wp-recall/add-on/./message/index.php:680
-#: ../add-on/message/index.php:680
+#: ../../wp-recall/add-on/./message/index.php:682
+#: ../add-on/message/index.php:682
 msgid "Delete?"
 msgstr "למחוק?"
 
-#: ../../wp-recall/add-on/./message/index.php:746
-#: ../add-on/message/index.php:746
+#: ../../wp-recall/add-on/./message/index.php:748
+#: ../add-on/message/index.php:748
 msgid "Uncheck"
 msgstr "בטל"
 
-#: ../../wp-recall/add-on/./message/index.php:746
-#: ../add-on/message/index.php:746
+#: ../../wp-recall/add-on/./message/index.php:748
+#: ../add-on/message/index.php:748
 msgid "Mark as important"
 msgstr "סמן כחשוב"
 
-#: ../../wp-recall/add-on/./message/index.php:811
-#: ../add-on/message/index.php:811
+#: ../../wp-recall/add-on/./message/index.php:813
+#: ../add-on/message/index.php:813
 msgid "No posts found!"
 msgstr "לא נמצאו מאמרים!"
 
-#: ../../wp-recall/add-on/./message/index.php:846
-#: ../add-on/message/index.php:846
+#: ../../wp-recall/add-on/./message/index.php:848
+#: ../add-on/message/index.php:848
 msgid "Show more recent messages"
 msgstr "הצג הודעות ישנות יותר"
 
-#: ../../wp-recall/add-on/./message/index.php:964
-#: ../add-on/message/index.php:964
+#: ../../wp-recall/add-on/./message/index.php:966
+#: ../add-on/message/index.php:966
 msgid "Your message has been sent!"
 msgstr "הודעתך נשלחה!"
 
-#: ../../wp-recall/add-on/./message/index.php:1059
-#: ../add-on/message/index.php:1059
+#: ../../wp-recall/add-on/./message/index.php:1061
+#: ../add-on/message/index.php:1061
 msgid "The message is marked as read"
 msgstr "הודעה סומנה כי נקראה"
 
-#: ../../wp-recall/add-on/./message/index.php:1202
-#: ../add-on/message/index.php:1202
+#: ../../wp-recall/add-on/./message/index.php:1204
+#: ../add-on/message/index.php:1204
 msgid "You a new message!"
 msgstr "יש לך הודעה חדשה!"
 
-#: ../../wp-recall/add-on/./message/index.php:1233
-#: ../add-on/message/index.php:1233
+#: ../../wp-recall/add-on/./message/index.php:1235
+#: ../add-on/message/index.php:1235
 msgid "Go to the correspondence"
 msgstr "עבור להתכתבות"
 
-#: ../../wp-recall/add-on/./message/index.php:1235
-#: ../add-on/message/index.php:1235
+#: ../../wp-recall/add-on/./message/index.php:1237
+#: ../add-on/message/index.php:1237
 msgid "Reply"
 msgstr "להשיב"
 
-#: ../../wp-recall/add-on/./message/index.php:1288
-#: ../add-on/message/index.php:1288
+#: ../../wp-recall/add-on/./message/index.php:1290
+#: ../add-on/message/index.php:1290
 msgid "Show more recent posts"
 msgstr "הצג הודעות ישנות יותר"
 
-#: ../../wp-recall/add-on/./message/index.php:1316
-#: ../add-on/message/index.php:1316
+#: ../../wp-recall/add-on/./message/index.php:1318
+#: ../add-on/message/index.php:1318
 msgid "The file has been received, but not yet loaded."
 msgstr "The file has been received, but not yet loaded."
 
-#: ../../wp-recall/add-on/./message/index.php:1317
-#: ../add-on/message/index.php:1317
+#: ../../wp-recall/add-on/./message/index.php:1319
+#: ../add-on/message/index.php:1319
 msgid "The file was sent to the recipient."
 msgstr "The file was sent to the recipient."
 
-#: ../../wp-recall/add-on/./message/index.php:1320
-#: ../add-on/message/index.php:1320
+#: ../../wp-recall/add-on/./message/index.php:1322
+#: ../add-on/message/index.php:1322
 msgid "Link to sent the file"
 msgstr "קישור לקובץ שנשלח"
 
-#: ../../wp-recall/add-on/./message/index.php:1322
-#: ../add-on/message/index.php:1322
+#: ../../wp-recall/add-on/./message/index.php:1324
+#: ../add-on/message/index.php:1324
 msgid "(accept files only from trusted sources)"
 msgstr "(accept files only from trusted sources)"
 
-#: ../../wp-recall/add-on/./message/index.php:1350
-#: ../add-on/message/index.php:1350
+#: ../../wp-recall/add-on/./message/index.php:1352
+#: ../add-on/message/index.php:1352
 msgid "The file was sent successfully."
 msgstr "הקובץ נשלח בהצלחהn"
 
-#: ../../wp-recall/add-on/./message/index.php:1353
-#: ../add-on/message/index.php:1353
+#: ../../wp-recall/add-on/./message/index.php:1355
+#: ../add-on/message/index.php:1355
 msgid ""
 "You have exceeded the limit on the number of uploaded files. Wait until the "
 "files sent previously will be accepted."
 msgstr ""
 "חרגתם ממגבלה על מספר הקבצים שהועלו. המתן עד שהקבצים שנשלחו בעבר יתקבלו."
 
-#: ../../wp-recall/add-on/./message/index.php:1363
-#: ../add-on/message/index.php:1363
+#: ../../wp-recall/add-on/./message/index.php:1365
+#: ../add-on/message/index.php:1365
 msgid "Removes the file from the server"
 msgstr "מסיר את הקובץ מהשרת"
 
@@ -1441,8 +1441,8 @@ msgstr "מצב המשתמש"
 #: ../add-on/user-account/addon-options.php:85
 #: ../add-on/user-account/addon-options.php:95
 #: ../add-on/user-account/addon-options.php:103
-#: ../rcl-admin/admin-pages.php:87 ../rcl-widgets.php:58
-#: ../rcl-widgets.php:116
+#: ../rcl-admin/admin-pages.php:87 ../rcl-widgets.php:59
+#: ../rcl-widgets.php:118
 msgid "Not selected"
 msgstr "פריט לא נבכר"
 
@@ -2182,9 +2182,9 @@ msgid "Plus/minus"
 msgstr "Plus/minus"
 
 #: ../../wp-recall/add-on/./rating-system/addon-options.php:26
-#: ../../wp-recall/add-on/./rating-system/index.php:294
+#: ../../wp-recall/add-on/./rating-system/index.php:299
 #: ../add-on/rating-system/addon-options.php:26
-#: ../add-on/rating-system/index.php:294
+#: ../add-on/rating-system/index.php:299
 msgid "I like"
 msgstr "האבתי"
 
@@ -2337,9 +2337,9 @@ msgstr ""
 
 #: ../../wp-recall/add-on/./rating-system/index.php:51
 #: ../../wp-recall/add-on/./rating-system/index.php:100
-#: ../../wp-recall/add-on/./rating-system/index.php:239
+#: ../../wp-recall/add-on/./rating-system/index.php:244
 #: ../add-on/rating-system/index.php:51 ../add-on/rating-system/index.php:100
-#: ../add-on/rating-system/index.php:239
+#: ../add-on/rating-system/index.php:244
 msgid "Rating"
 msgstr "דירוג"
 
@@ -2348,35 +2348,35 @@ msgstr "דירוג"
 msgid "rating"
 msgstr "דירוג"
 
-#: ../../wp-recall/add-on/./rating-system/index.php:287
-#: ../add-on/rating-system/index.php:287
+#: ../../wp-recall/add-on/./rating-system/index.php:292
+#: ../add-on/rating-system/index.php:292
 msgid "To remove your vote"
 msgstr "להסיר את הצבעה"
 
-#: ../../wp-recall/add-on/./rating-system/index.php:296
-#: ../add-on/rating-system/index.php:296
+#: ../../wp-recall/add-on/./rating-system/index.php:301
+#: ../add-on/rating-system/index.php:301
 msgid "minus"
 msgstr "פחות"
 
-#: ../../wp-recall/add-on/./rating-system/index.php:297
-#: ../add-on/rating-system/index.php:297
+#: ../../wp-recall/add-on/./rating-system/index.php:302
+#: ../add-on/rating-system/index.php:302
 msgid "plus"
 msgstr "יותר"
 
-#: ../../wp-recall/add-on/./rating-system/index.php:410
-#: ../add-on/rating-system/index.php:410
+#: ../../wp-recall/add-on/./rating-system/index.php:415
+#: ../add-on/rating-system/index.php:415
 #, php-format
 msgid "exceeded the limit of votes for the period - %d seconds"
 msgstr ""
 
-#: ../../wp-recall/add-on/./rating-system/index.php:482
-#: ../add-on/rating-system/index.php:482
+#: ../../wp-recall/add-on/./rating-system/index.php:487
+#: ../add-on/rating-system/index.php:487
 msgid "You can not vote"
 msgstr ""
 
-#: ../../wp-recall/add-on/./rating-system/index.php:503
-#: ../../wp-recall/add-on/./rating-system/index.php:524
-#: ../add-on/rating-system/index.php:503 ../add-on/rating-system/index.php:524
+#: ../../wp-recall/add-on/./rating-system/index.php:508
+#: ../../wp-recall/add-on/./rating-system/index.php:529
+#: ../add-on/rating-system/index.php:508 ../add-on/rating-system/index.php:529
 msgid "Error"
 msgstr ""
 
@@ -2846,23 +2846,23 @@ msgstr "חשבון אישי"
 msgid "Pay personal account"
 msgstr "Pay personal account"
 
-#: ../class-rcl-install.php:97 ../rcl-admin/admin-pages.php:92
+#: ../class-rcl-install.php:99 ../rcl-admin/admin-pages.php:92
 msgid "Personal office"
 msgstr ""
 
-#: ../class-rcl-install.php:102
+#: ../class-rcl-install.php:104
 msgid "FEED"
 msgstr "FEED"
 
-#: ../class-rcl-install.php:107
+#: ../class-rcl-install.php:109
 msgid "Users"
 msgstr "משתמשים"
 
-#: ../class-rcl-install.php:245
+#: ../class-rcl-install.php:231
 msgid "Unconfirmed"
 msgstr "לא מאושר"
 
-#: ../class-rcl-install.php:253
+#: ../class-rcl-install.php:239
 msgid "Ban"
 msgstr "Ban"
 
@@ -2882,7 +2882,30 @@ msgstr "הזן את התווים"
 msgid "Field filled not right CAPTCHA!"
 msgstr "שדה CAPTCHA לא נכון!"
 
-#: ../functions/includes.php:51 ../functions/rcl_userlist.php:275
+#: ../functions/class-rcl-users.php:417
+msgid "Total users"
+msgstr "סה\"כ משתמשים"
+
+#: ../functions/class-rcl-users.php:430
+msgid "Activity"
+msgstr "פעילות"
+
+#: ../functions/class-rcl-users.php:431
+msgid "Publications"
+msgstr "מאמרים"
+
+#: ../functions/class-rcl-users.php:433 ../functions/loginform.php:181
+#: ../functions/loginform.php:189 ../functions/loginform.php:205
+#: ../functions/shortcodes.php:119 ../templates/form-register.php:4
+#: ../templates/form-remember.php:21 ../templates/form-sign.php:33
+msgid "Registration"
+msgstr "הרשמה"
+
+#: ../functions/class-rcl-users.php:437
+msgid "Rated"
+msgstr "דירוג"
+
+#: ../functions/includes.php:51 ../functions/shortcodes.php:99
 msgid "not online"
 msgstr "לא מחובר"
 
@@ -2890,22 +2913,9 @@ msgstr "לא מחובר"
 msgid "This letter was created automatically, no need to answer it."
 msgstr "מכתב זה נוצר באופן אוטומטי, אין צורך לענות עליו."
 
-#: ../functions/includes.php:214 ../functions/includes.php:232
+#: ../functions/includes.php:213
 msgid "long ago"
 msgstr "לפני זמן רב"
-
-#: ../functions/includes.php:224 ../functions/includes.php:226
-#: ../functions/includes.php:230
-msgid "already"
-msgstr "מוכן"
-
-#: ../functions/includes.php:224
-msgid "min."
-msgstr "דקות"
-
-#: ../functions/includes.php:226
-msgid "h."
-msgstr "שעות"
 
 #: ../functions/loginform.php:51 ../functions/register.php:195
 #: ../templates/form-sign.php:17
@@ -2935,13 +2945,6 @@ msgstr "לאזור האישי"
 #: ../functions/loginform.php:165
 msgid "Exit"
 msgstr "יציאה"
-
-#: ../functions/loginform.php:181 ../functions/loginform.php:189
-#: ../functions/loginform.php:205 ../functions/rcl_userlist.php:307
-#: ../functions/shortcodes.php:257 ../templates/form-register.php:4
-#: ../templates/form-remember.php:21 ../templates/form-sign.php:33
-msgid "Registration"
-msgstr "הרשמה"
 
 #: ../functions/loginform.php:248
 msgid "Registration is completed!"
@@ -3106,15 +3109,15 @@ msgstr ""
 msgid "You cant control polucheniya plugins on this site."
 msgstr "אתה לא יכול לשלוט בתוספי באתר זה."
 
-#: ../functions/rcl_addons.php:498
+#: ../functions/rcl_addons.php:500
 msgid "Unpacking of archive failed."
 msgstr "Unpacking of archive failed."
 
-#: ../functions/rcl_addons.php:501
+#: ../functions/rcl_addons.php:503
 msgid "ZIP archive not found."
 msgstr "ZIP archive not found."
 
-#: ../functions/rcl_addons.php:576 ../rcl-admin/admin-pages.php:192
+#: ../functions/rcl_addons.php:578 ../rcl-admin/admin-pages.php:192
 msgid "Login and register"
 msgstr "התחברות והרשמה"
 
@@ -3257,10 +3260,6 @@ msgstr ""
 msgid "Unable to open archive!"
 msgstr ""
 
-#: ../functions/rcl_userlist.php:300
-msgid "Publics"
-msgstr "ציבורי"
-
 #: ../functions/recallbar.php:6 ../rcl-admin/admin-pages.php:256
 msgid "Recallbar"
 msgstr "Recallbar"
@@ -3305,43 +3304,27 @@ msgstr "עם הנתונים הבאים:"
 msgid "If it wasnt you, then just ignore this email"
 msgstr "אם זה לא אתה, אז פשוט להתעלם מדוא\"ל זה"
 
-#: ../functions/shortcodes.php:247
-msgid "Total users"
-msgstr "סה\"כ משתמשים"
-
-#: ../functions/shortcodes.php:253
-msgid "Activity"
-msgstr "פעילות"
-
-#: ../functions/shortcodes.php:254
-msgid "Rated"
-msgstr "דירוג"
-
-#: ../functions/shortcodes.php:255
-msgid "Publications"
-msgstr "מאמרים"
-
-#: ../functions/shortcodes.php:281
+#: ../functions/shortcodes.php:31
 msgid "Users not found"
 msgstr "משתמשים לא נמצאו"
 
-#: ../functions/shortcodes.php:282
-msgid "No one"
-msgstr "אף אחד"
+#: ../functions/shortcodes.php:90
+msgid "Publics"
+msgstr "ציבורי"
 
-#: ../functions/shortcodes.php:301
+#: ../functions/shortcodes.php:138
 msgid "Search users"
 msgstr "חיפוש משתמשים"
 
-#: ../functions/shortcodes.php:304
+#: ../functions/shortcodes.php:141
 msgid "by name"
 msgstr "לפי שם"
 
-#: ../functions/shortcodes.php:305
+#: ../functions/shortcodes.php:142
 msgid "by login"
 msgstr "לפי משתמש"
 
-#: ../functions/shortcodes.php:319
+#: ../functions/shortcodes.php:156
 msgid ""
 "To begin to use the capabilities of your personal account, please log in or "
 "register on this site"
@@ -3684,11 +3667,11 @@ msgstr "The site works using the functionality of the plugin"
 msgid "Author of publication"
 msgstr ""
 
-#: ../rcl-functions.php:356
+#: ../rcl-functions.php:364
 msgid "Congratulations! You have been banned."
 msgstr "Congratulations! You have been banned."
 
-#: ../rcl-functions.php:490
+#: ../rcl-functions.php:498
 msgid "Publication pending approval!"
 msgstr "פרסום ממתין לאישור!"
 
@@ -3696,35 +3679,35 @@ msgstr "פרסום ממתין לאישור!"
 msgid "New users on the website"
 msgstr "משתמשים חדשים באתר"
 
-#: ../rcl-widgets.php:14 ../rcl-widgets.php:44
+#: ../rcl-widgets.php:14 ../rcl-widgets.php:45
 msgid "New users"
 msgstr "משתמשים חדשים"
 
-#: ../rcl-widgets.php:51
+#: ../rcl-widgets.php:52
 msgid "The number of displayed users"
 msgstr "The number of displayed users"
 
-#: ../rcl-widgets.php:63 ../rcl-widgets.php:121
+#: ../rcl-widgets.php:64 ../rcl-widgets.php:123
 msgid "Page all users"
 msgstr "דף של כל המשתמשים"
 
-#: ../rcl-widgets.php:78
+#: ../rcl-widgets.php:79
 msgid "Conclusion the users in the network"
 msgstr "משתמשים מחוברים"
 
-#: ../rcl-widgets.php:80
+#: ../rcl-widgets.php:81
 msgid "Users on the network"
 msgstr "משתמשים מחוברים"
 
-#: ../rcl-widgets.php:106
+#: ../rcl-widgets.php:108
 msgid "Right now"
 msgstr "עכשיו"
 
-#: ../rcl-widgets.php:136
+#: ../rcl-widgets.php:138
 msgid "The block with the main profile information"
 msgstr "חסם את פרטים אישיים"
 
-#: ../rcl-widgets.php:138 ../rcl-widgets.php:159
+#: ../rcl-widgets.php:140 ../rcl-widgets.php:161
 msgid "Control panel"
 msgstr "לוח בקרה"
 
@@ -3778,6 +3761,18 @@ msgstr ""
 #: ../wp-recall.php:38 ../wp-recall.php:42
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "already"
+#~ msgstr "מוכן"
+
+#~ msgid "min."
+#~ msgstr "דקות"
+
+#~ msgid "h."
+#~ msgstr "שעות"
+
+#~ msgid "No one"
+#~ msgstr "אף אחד"
 
 #~ msgid "For Interkassa: successful payment URL"
 #~ msgstr "For Interkassa: successful payment URL"

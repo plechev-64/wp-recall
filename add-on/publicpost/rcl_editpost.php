@@ -227,60 +227,49 @@ class Rcl_EditPost {
 
 add_filter('pre_update_postdata_rcl','rcl_register_author_post',10);
 function rcl_register_author_post($postdata){
-	global $user_ID,$rcl_options,$wpdb;
-	$user_can = $rcl_options['user_public_access_recall'];
-	if($user_can||$user_ID) return $postdata;
+    global $user_ID,$rcl_options,$wpdb;
+    $user_can = $rcl_options['user_public_access_recall'];
+    if($user_can||$user_ID) return $postdata;
 
-	if(!$postdata['post_author']){
+    if(!$postdata['post_author']){
 
-		$email_new_user = sanitize_email($_POST['email-user']);
+        $email_new_user = sanitize_email($_POST['email-user']);
 
-		if($email_new_user){
+        if($email_new_user){
 
-			$user_id = false;
+            $user_id = false;
 
-			$random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+            $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
 
-			$userdata = array(
-				'user_pass' => $random_password //обязательно
-				,'user_login' => $email_new_user //обязательно
-				,'user_nicename' => ''
-				,'user_email' => $email_new_user
-				,'display_name' => $_POST['name-user']
-				,'nickname' => $email_new_user
-				,'first_name' => $_POST['name-user']
-				,'rich_editing' => 'true'  // false - выключить визуальный редактор для пользователя.
-			);
+            $userdata = array(
+                'user_pass'=>$random_password,
+                'user_login'=>$email_new_user,
+                'user_email'=>$email_new_user,
+                'display_name'=>$_POST['name-user']
+            );
 
-			$user_id = wp_insert_user( $userdata );
+            $user_id = rcl_insert_user($userdata);
 
-			$wpdb->insert( $wpdb->prefix .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
+            if($user_id){
 
-			if($user_id){
+                //Сразу авторизуем пользователя
+                if(!$rcl_options['confirm_register_recall']){
+                    $creds = array();
+                    $creds['user_login'] = $email_new_user;
+                    $creds['user_password'] = $random_password;
+                    $creds['remember'] = true;
+                    $user = wp_signon( $creds, false );
+                    $user_ID = $user_id;
+                }
 
-				$creds = array();
-				$creds['user_login'] = $email_new_user;
-				$creds['user_password'] = $random_password;
+                $postdata['post_author'] = $user_id;
+                $postdata['post_status'] = 'pending';
 
-				rcl_register_mail(array('user_id'=>$user_id,'password'=>$random_password,'login'=>$email_new_user,'email'=>$email_new_user));
+            }
+        }
+    }
 
-				//Сразу авторизуем пользователя
-				if($rcl_options['confirm_register_recall']){
-					wp_update_user( array ('ID' => $user_id, 'role' => 'need-confirm') ) ;
-				}else{
-					$creds['remember'] = true;
-					$user = wp_signon( $creds, false );
-					$user_ID = $user_id;
-				}
-
-				$postdata['post_author'] = $user_id;
-				$postdata['post_status'] = 'pending';
-
-			}
-		}
-	}
-
-	return $postdata;
+    return $postdata;
 }
 
 //Сохранение данных публикации в редакторе wp-recall

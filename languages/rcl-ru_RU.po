@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-10-25 18:31+0300\n"
+"POT-Creation-Date: 2015-10-27 20:38+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -383,7 +383,7 @@ msgstr "Размер файла превышен!"
 #: ../../wp-recall/add-on/./partners-system/admin-pages.php:124
 #: ../../wp-recall/add-on/./users-market/administrative.php:60
 #: add-on/groups/class_group.php:207 rcl-admin/admin-pages.php:281
-#: rcl-functions.php:566
+#: rcl-functions.php:574
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
@@ -856,7 +856,7 @@ msgstr ""
 
 #: add-on/feed/index.php:200 add-on/feed/index.php:396
 #: add-on/feed/templates/feed-post.php:44 add-on/rating-system/index.php:32
-#: functions/class-rcl-users.php:451 functions/shortcodes.php:103
+#: functions/class-rcl-users.php:432 functions/shortcodes.php:82
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -1071,7 +1071,7 @@ msgid "View"
 msgstr "Смотреть"
 
 #: add-on/groups/index.php:105 add-on/groups/index.php:140
-#: functions/shortcodes.php:140
+#: functions/shortcodes.php:144
 msgid "Search"
 msgstr "Поиск"
 
@@ -1242,7 +1242,7 @@ msgstr "Поиск группы"
 msgid "Find"
 msgstr "Найти"
 
-#: add-on/groups/index.php:877 functions/class-rcl-users.php:446
+#: add-on/groups/index.php:877 functions/class-rcl-users.php:441
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -1482,7 +1482,7 @@ msgstr "Здесь будет отображаться история переп
 msgid "Show older messages"
 msgstr "Показать более поздние сообщения"
 
-#: add-on/message/index.php:531 functions/includes.php:230
+#: add-on/message/index.php:531
 msgid "days"
 msgstr "дн."
 
@@ -2892,23 +2892,23 @@ msgstr "Личный счет"
 msgid "Pay personal account"
 msgstr "Оплатить с личного счета"
 
-#: class-rcl-install.php:97 rcl-admin/admin-pages.php:92
+#: class-rcl-install.php:99 rcl-admin/admin-pages.php:92
 msgid "Personal office"
 msgstr "Личный кабинет"
 
-#: class-rcl-install.php:102
+#: class-rcl-install.php:104
 msgid "FEED"
 msgstr ""
 
-#: class-rcl-install.php:107
+#: class-rcl-install.php:109
 msgid "Users"
 msgstr "Пользователи"
 
-#: class-rcl-install.php:245
+#: class-rcl-install.php:231
 msgid "Unconfirmed"
 msgstr "Неподтвержденные"
 
-#: class-rcl-install.php:253
+#: class-rcl-install.php:239
 msgid "Ban"
 msgstr "Бан"
 
@@ -2928,30 +2928,30 @@ msgstr "Введите символы"
 msgid "Field filled not right CAPTCHA!"
 msgstr "Не верно заполнено поле CAPTCHA!"
 
-#: functions/class-rcl-users.php:434
+#: functions/class-rcl-users.php:417
 msgid "Total users"
 msgstr "Всего пользователей"
 
-#: functions/class-rcl-users.php:448
+#: functions/class-rcl-users.php:430
 msgid "Activity"
 msgstr "Активности"
 
-#: functions/class-rcl-users.php:449
-msgid "Rated"
-msgstr "Рейтингу"
-
-#: functions/class-rcl-users.php:450
+#: functions/class-rcl-users.php:431
 msgid "Publications"
 msgstr "Публикациям"
 
-#: functions/class-rcl-users.php:452 functions/loginform.php:181
+#: functions/class-rcl-users.php:433 functions/loginform.php:181
 #: functions/loginform.php:189 functions/loginform.php:205
-#: functions/shortcodes.php:116 templates/form-register.php:4
+#: functions/shortcodes.php:119 templates/form-register.php:4
 #: templates/form-remember.php:21 templates/form-sign.php:33
 msgid "Registration"
 msgstr "Регистрация"
 
-#: functions/includes.php:51 functions/shortcodes.php:84
+#: functions/class-rcl-users.php:437
+msgid "Rated"
+msgstr "Рейтингу"
+
+#: functions/includes.php:51 functions/shortcodes.php:99
 msgid "not online"
 msgstr "не в сети"
 
@@ -2960,22 +2960,9 @@ msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Это сообщение было сформировано автоматически, не надо отвечать на него."
 
-#: functions/includes.php:214 functions/includes.php:232
+#: functions/includes.php:213
 msgid "long ago"
 msgstr "давно"
-
-#: functions/includes.php:224 functions/includes.php:226
-#: functions/includes.php:230
-msgid "already"
-msgstr "уже"
-
-#: functions/includes.php:224
-msgid "min."
-msgstr "мин."
-
-#: functions/includes.php:226
-msgid "h."
-msgstr "ч."
 
 #: functions/loginform.php:51 functions/register.php:195
 #: templates/form-sign.php:17
@@ -3332,23 +3319,23 @@ msgstr "Если это были не вы, то просто проигнори
 msgid "Users not found"
 msgstr "Пользователи не найдены"
 
-#: functions/shortcodes.php:109
+#: functions/shortcodes.php:90
 msgid "Publics"
 msgstr "Публикации"
 
-#: functions/shortcodes.php:134
+#: functions/shortcodes.php:138
 msgid "Search users"
 msgstr "Поиск пользователей"
 
-#: functions/shortcodes.php:137
+#: functions/shortcodes.php:141
 msgid "by name"
 msgstr "по имени"
 
-#: functions/shortcodes.php:138
+#: functions/shortcodes.php:142
 msgid "by login"
 msgstr "по логину"
 
-#: functions/shortcodes.php:152
+#: functions/shortcodes.php:156
 msgid ""
 "To begin to use the capabilities of your personal account, please log in or "
 "register on this site"
@@ -3679,11 +3666,11 @@ msgstr "Сайт использует функционал плагина"
 msgid "Author of publication"
 msgstr "Автор публикации"
 
-#: rcl-functions.php:356
+#: rcl-functions.php:364
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: rcl-functions.php:490
+#: rcl-functions.php:498
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
@@ -3755,7 +3742,7 @@ msgstr "Домой"
 
 #: templates/recallbar.php:11
 msgid "Dashboard"
-msgstr ""
+msgstr "Консоль"
 
 #: templates/recallbar.php:12 templates/recallbar.php:19
 msgid "Personal cabinet"
@@ -3773,6 +3760,15 @@ msgstr "Регистрация"
 #: wp-recall.php:38 wp-recall.php:42
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "already"
+#~ msgstr "уже"
+
+#~ msgid "min."
+#~ msgstr "мин."
+
+#~ msgid "h."
+#~ msgstr "ч."
 
 #~ msgid "No one"
 #~ msgstr "Никого нет"

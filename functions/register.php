@@ -1,4 +1,33 @@
 <?php
+function rcl_insert_user($data){
+    global $wpdb,$rcl_options;
+
+    $data2 = array(
+        'user_nicename' => ''
+        ,'nickname' => $data['user_email']
+        ,'first_name' => $data['display_name']
+        ,'rich_editing' => 'true'  // false - выключить визуальный редактор для пользователя.
+    );
+
+    $userdata = array_merge($data,$data2);
+
+    $user_id = wp_insert_user( $userdata );
+
+    $wpdb->insert( $wpdb->prefix .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
+
+    if($rcl_options['confirm_register_recall']==1)
+        wp_update_user( array ('ID' => $user_id, 'role' => 'need-confirm') ) ;
+
+    rcl_register_mail(array(
+        'user_id'=>$user_id,
+        'user_pass'=>$userdata['user_pass'],
+        'user_login'=>$userdata['user_login'],
+        'user_email'=>$userdata['user_email']
+    ));
+
+    return $user_id;
+}
+
 //подтверждаем регистрацию пользователя по ссылке
 function rcl_confirm_user_registration(){
 global $wpdb,$rcl_options;
@@ -132,24 +161,17 @@ function rcl_get_register_user($wp_errors){
         do_action('pre_register_user_rcl',$ref);
 
         //регистрируем юзера с указанными данными
-        $fio='';
+
         $userdata = array(
-            'user_pass' => $pass
-            ,'user_login' => $login
-            ,'user_nicename' => ''
-            ,'user_email' => $email
-            ,'display_name' => $fio
-            ,'nickname' => $login
-            ,'first_name' => $fio
-            ,'rich_editing' => 'true'
+            'user_pass'=>$pass,
+            'user_login'=>$login,
+            'user_email'=>$email,
+            'display_name'=>$fio
         );
-        $user_id = wp_insert_user( $userdata );
+
+        $user_id = rcl_insert_user($userdata);
 
         if($user_id){
-
-            $wpdb->insert( RCL_PREF .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
-
-            rcl_register_mail(array('user_id'=>$user_id,'password'=>$pass,'login'=>$login,'email'=>$email));
 
             if($rcl_options['login_form_recall']==2){
                 //если форма ВП, то возвращаем на login с нужными GET-параметрами
@@ -191,17 +213,17 @@ function rcl_register_mail($userdata){
     $subject = __('Confirm your registration!','rcl');
     $textmail = '
     <p>'.__('You or someone else signed up on the website','rcl').' "'.get_bloginfo('name').'" '.__('with the following data:','rcl').'</p>
-    <p>'.__('Nickname','rcl').': '.$userdata['login'].'</p>
-    <p>'.__('Password','rcl').': '.$userdata['password'].'</p>';
+    <p>'.__('Nickname','rcl').': '.$userdata['user_login'].'</p>
+    <p>'.__('Password','rcl').': '.$userdata['user_pass'].'</p>';
 
     if($rcl_options['confirm_register_recall']==1){
-            $url = get_bloginfo('wpurl').'/?rglogin='.$userdata['login'].'&rgpass='.$userdata['password'].'&rgcode='.md5($userdata['login']);
-            wp_update_user( array ('ID' => $userdata['user_id'], 'role' => 'need-confirm') ) ;
-            $res['recall']='<p style="text-align:center;color:green;">Регистрация завершена!<br />Для подтверждения регистрации перейдите по ссылке в письме, высланном на указанную вами почту.</p>';
-            $textmail .= '<p>Если это были вы, то подтвердите свою регистрацию перейдя по ссылке ниже:</p>
-            <p><a href="'.$url.'">'.$url.'</a></p>
-            <p>Не получается активировать аккаунт?</p>
-            <p>Скопируйте текст ссылки ниже, вставьте его в адресную строку вашего браузера и нажмите Enter</p>';
+
+        $url = get_bloginfo('wpurl').'/?rglogin='.$userdata['user_login'].'&rgpass='.$userdata['user_pass'].'&rgcode='.md5($userdata['user_login']);
+
+        $textmail .= '<p>Если это были вы, то подтвердите свою регистрацию перейдя по ссылке ниже:</p>
+        <p><a href="'.$url.'">'.$url.'</a></p>
+        <p>Не получается активировать аккаунт?</p>
+        <p>Скопируйте текст ссылки ниже, вставьте его в адресную строку вашего браузера и нажмите Enter</p>';
     }
 
     $textmail .= '<p>'.__('If it wasnt you, then just ignore this email','rcl').'</p>';
