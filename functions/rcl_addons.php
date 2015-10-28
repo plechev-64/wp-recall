@@ -365,13 +365,12 @@ class Rcl_Addons{
                     $opt_slider = "{auto:true,pause:$pause}";
                 }
 
-		$path = RCL_UPLOAD_PATH.'scripts/';
-		if(!is_dir($path)){
-			mkdir($path);
-			chmod($path, 0755);
-		}
+		$path = RCL_UPLOAD_PATH.'scripts';
+
+                wp_mkdir_p($path);
+
 		$filename = 'header-scripts.js';
-		$file_src = $path.$filename;
+		$file_src = $path.'/'.$filename;
 		$f = fopen($file_src, 'w');
 
 		$scripts = "var SliderOptions = ".$opt_slider.";"
@@ -387,13 +386,12 @@ class Rcl_Addons{
 
 	function get_update_scripts_footer_rcl(){
 		//$upload_dir = wp_upload_dir();
-		$path = RCL_UPLOAD_PATH.'scripts/';
-		if(!is_dir($path)){
-			mkdir($path);
-			chmod($path, 0755);
-		}
+		$path = RCL_UPLOAD_PATH.'scripts';
+
+                wp_mkdir_p($path);
+
 		$filename = 'footer-scripts.js';
-		$file_src = $path.$filename;
+		$file_src = $path.'/'.$filename;
 		$f = fopen($file_src, 'w');
 
 		$scripts = '';

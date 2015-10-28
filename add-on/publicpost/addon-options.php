@@ -12,6 +12,8 @@ function rcl_get_publics_options_page($content){
         'echo'             => 0
     );
 
+    if(!$rcl_options['guest_post_redirect']) $rcl_options['guest_post_redirect'] = false;
+
     $_wp_additional_image_sizes['thumbnail'] = 1;
     $_wp_additional_image_sizes['medium'] = 1;
     $_wp_additional_image_sizes['large'] = 1;

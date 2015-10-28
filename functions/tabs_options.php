@@ -29,6 +29,7 @@ function rcl_get_tablist_options($content){
     }else{
 
         foreach($tabs_rcl as $key=>$tab){
+            if(!isset($tab['args']['order'])) continue;
             $order = $tab['args']['order'];
             if (isset($order)) {
                 if (!isset($otabs[$order])) {

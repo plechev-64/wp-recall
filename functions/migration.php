@@ -10,8 +10,9 @@ function rcl_update_rating_data(){
 
     $objs = $wpdb->get_results("SELECT * FROM ".RCL_PREF."rayting_comments ORDER BY time_action DESC");
 
+    $totals = array();
+
     if($objs){
-        $totals = array();
         $values = array();
         foreach($objs as $obj){
             $values[] = "(".$obj->user.",".$obj->comment_id.",".$obj->author_com.",".$obj->rayting.",'".$obj->time_action."','comment')";
