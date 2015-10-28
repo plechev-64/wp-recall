@@ -38,8 +38,9 @@ if($wpdb->get_var("show tables like '". $table3 . "'") != $table3) {
 
 update_option('use_smilies',1);
 global $rcl_options;
-$rcl_options['max_private_message']=100;
-$rcl_options['update_private_message']=20;
-$rcl_options['global_update_private_message']=0;
+if(!isset($rcl_options['max_private_message'])) $rcl_options['max_private_message']=100;
+if(!isset($rcl_options['sort_mess'])) $rcl_options['sort_mess']=0;
+if(!isset($rcl_options['update_private_message'])) $rcl_options['update_private_message']=20;
+if(!isset($rcl_options['global_update_private_message'])) $rcl_options['global_update_private_message']=0;
 update_option('primary-rcl-options',$rcl_options);
 ?>
