@@ -403,7 +403,7 @@ class Rcl_Users{
         return $users;
     }
 
-    function get_filters($query_count = false){
+    function get_filters($count_users = false){
         global $post,$user_LK,$active_addons;
 
         if(!$this->filters) return false;
@@ -412,9 +412,9 @@ class Rcl_Users{
 
         if($this->search_form) $content = apply_filters('users_search_form_rcl',$content);
 
-        $query_count = (false!==$query_count)? $query_count: $this->query_count();
+        $count_users = (false!==$count_users)? $count_users: $this->count_users();
 
-        $content .='<h3>'.__('Total users','rcl').': '.$query_count.'</h3>';
+        $content .='<h3>'.__('Total users','rcl').': '.$count_users.'</h3>';
 
         if(isset($this->add_uri['users-filter'])) unset($this->add_uri['users-filter']);
 
