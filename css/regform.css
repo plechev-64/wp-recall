@@ -122,10 +122,10 @@
     box-sizing: initial;
 }
 .panel_lk_recall .form-tab-rcl .form-block-rcl .default-field input{   
-	padding-left: 25px;
+	padding: 0 0 0 25px;
 	line-height: 1;
     font-size: 14px;
-	margin-left: 15px;  
+	margin: 0 0 0 15px;  
 	width: 82%;
 }
 .panel_lk_recall .form-block-rcl .default-field .field-icon{

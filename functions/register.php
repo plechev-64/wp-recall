@@ -227,7 +227,7 @@ function rcl_register_mail($userdata){
     }
 
     $textmail .= '<p>'.__('If it wasnt you, then just ignore this email','rcl').'</p>';
-    rcl_mail($userdata['email'], $subject, $textmail);
+    rcl_mail($userdata['user_email'], $subject, $textmail);
 
 }
 
