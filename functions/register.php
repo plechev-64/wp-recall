@@ -13,7 +13,7 @@ function rcl_insert_user($data){
 
     $user_id = wp_insert_user( $userdata );
 
-    $wpdb->insert( $wpdb->prefix .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
+    $wpdb->insert( RCL_PREF .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
 
     if($rcl_options['confirm_register_recall']==1)
         wp_update_user( array ('ID' => $user_id, 'role' => 'need-confirm') ) ;

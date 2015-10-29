@@ -248,12 +248,6 @@ function rcl_footer_url(){
 	if(is_front_page()&&!is_user_logged_in()) echo '<p class="plugin-info">'.__('The site works using the functionality of the plugin').'  <a target="_blank" href="http://wppost.ru/">Wp-Recall</a></p>';
 }
 
-function rcl_delete_user_action($user){
-	global  $wpdb;
-	$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user = '%d'",$user));
-}
-add_action('delete_user','rcl_delete_user_action');
-
 function rcl_get_author_block(){
     global $post;
 

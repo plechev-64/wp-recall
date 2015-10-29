@@ -248,13 +248,20 @@ function rcl_update_timeaction_user(){
                             );
                     }
                     if($act_user>1){
-                            $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
+                            rcl_delete_user_action($user_ID);
                     }
             }
 	}
 
 	do_action('rcl_update_timeaction_user');
 
+}
+
+//удаляем данные об активности юзера при удалении
+add_action('delete_user','rcl_delete_user_action');
+function rcl_delete_user_action($user_id){
+    global $wpdb;
+    return $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_id));
 }
 
 function rcl_sort_gallery($attaches,$key,$user_id=false){

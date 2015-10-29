@@ -28,7 +28,7 @@ function rcl_get_userlist($atts, $content = null){
     $userlist = $users->get_filters($count_users);
 
     if(!$usersdata){
-        $userlist .= '<h4 align="center">'.__('Users not found','rcl').'</h4>';
+        $userlist .= '<p align="center">'.__('Users not found','rcl').'</p>';
         return $userlist;
     }
 
