@@ -154,6 +154,7 @@ class Rcl_Users{
             'select'    => array(),
             'join'      => array(),
             'where'     => array(),
+            'relation'     => $this->relation,
             'group'     => '',
             'orderby'   => ''
         );
@@ -192,7 +193,7 @@ class Rcl_Users{
             . "FROM $wpdb->users AS users "
             . implode(" ",$query['join'])." ";
 
-        if($query['where']) $query_string .= "WHERE ".implode(' '.$this->relation.' ',$query['where'])." ";
+        if($query['where']) $query_string .= "WHERE ".implode(' '.$query['relation'].' ',$query['where'])." ";
         if($query['group']) $query_string .= "GROUP BY ".$query['group']." ";
 
         if(!$this->query_count){
