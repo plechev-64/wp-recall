@@ -20,6 +20,7 @@ class Rcl_Users{
     public $users_count = 0;
     public $data;
     public $add_uri;
+    public $relation = 'AND';
 
     function __construct($args){
 
@@ -154,7 +155,7 @@ class Rcl_Users{
             'join'      => array(),
             'where'     => array(),
             'group'     => '',
-            'orderby'     => ''
+            'orderby'   => ''
         );
 
         if($count){
@@ -191,7 +192,7 @@ class Rcl_Users{
             . "FROM $wpdb->users AS users "
             . implode(" ",$query['join'])." ";
 
-        if($query['where']) $query_string .= "WHERE ".implode(' AND ',$query['where'])." ";
+        if($query['where']) $query_string .= "WHERE ".implode(' '.$this->relation.' ',$query['where'])." ";
         if($query['group']) $query_string .= "GROUP BY ".$query['group']." ";
 
         if(!$this->query_count){
@@ -261,12 +262,8 @@ class Rcl_Users{
         if(!$this->query_count){
             $query['select'][] = "posts.posts_count";
             $query['orderby'] = "posts.posts_count";
-            //$query['select'][] = "COUNT(posts.post_author) AS posts_count";
-            //$query['group'] = "posts.post_author";
         }
 
-        //$query['where'][] = "posts.post_status = 'publish'";
-        //$query['join'][] = "INNER JOIN $wpdb->posts AS posts ON users.ID=posts.post_author";
         $query['join'][] = "INNER JOIN (SELECT COUNT(post_author) AS posts_count, post_author "
                 . "FROM $wpdb->posts "
                 . "WHERE post_status='publish' "
@@ -302,11 +299,8 @@ class Rcl_Users{
         if(!$this->query_count){
             $query['select'][] = "comments.comments_count";
             $query['orderby'] = "comments.comments_count";
-            //$query['select'][] = "COUNT(comments.user_id) AS comments_count";
-            //$query['group'] = "comments.user_id";
         }
 
-        //$query['join'][] = "LEFT JOIN $wpdb->comments AS comments ON users.ID=comments.user_id";
         $query['join'][] = "INNER JOIN (SELECT COUNT(user_id) AS comments_count, user_id "
                 . "FROM $wpdb->comments "
                 . "GROUP BY user_id) comments "
