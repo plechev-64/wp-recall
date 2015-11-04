@@ -129,7 +129,7 @@ class Rcl_Addons{
                         foreach((array)$addons as $namedir){
                                 $addon_dir = $path.'/'.$namedir;
                                 $index_src = $addon_dir.'/index.php';
-                                if(!file_exists($index_src)) continue;
+                                if(!is_dir($addon_dir)||!file_exists($index_src)) continue;
                                 $info_src = $addon_dir.'/info.txt';
                                 if(file_exists($info_src)){
                                         $info = file($info_src);

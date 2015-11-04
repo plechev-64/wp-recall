@@ -352,6 +352,7 @@ class Rcl_Users{
 
         if(!$this->query_count){
             $query['select'][] = "ratings.rating_total";
+            $query['group'] = "ratings.user_id";
             $query['orderby'] = "(CASE WHEN CAST(ratings.$this->orderby AS DECIMAL) IS NULL then 0 ELSE CAST(ratings.$this->orderby AS DECIMAL) END)";
         }
 

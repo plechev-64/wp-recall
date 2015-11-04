@@ -2,6 +2,12 @@
 function rcl_insert_user($data){
     global $wpdb,$rcl_options;
 
+    if ( get_user_by('email', $userdata['user_email']) )
+        return false;
+
+    if ( get_user_by('login', $userdata['user_login']) )
+        return false;
+
     $data2 = array(
         'user_nicename' => ''
         ,'nickname' => $data['user_email']
@@ -12,6 +18,8 @@ function rcl_insert_user($data){
     $userdata = array_merge($data,$data2);
 
     $user_id = wp_insert_user( $userdata );
+
+    if(!$user_id) return false;
 
     $wpdb->insert( RCL_PREF .'user_action', array( 'user' => $user_id, 'time_action' => '' ));
 
@@ -86,8 +94,16 @@ function rcl_add_shake_error_codes($codes){
 }
 
 //регистрация пользователя на сайте
-function rcl_get_register_user($wp_errors){
+function rcl_get_register_user($errors){
 	global $wpdb,$rcl_options,$wp_errors;
+
+        $wp_errors = new WP_Error();
+
+        if( count( $errors->errors ) ) {
+            $wp_errors = $errors;
+            return $wp_errors;
+	}
+
 	$pass = sanitize_text_field($_POST['user_pass']);
         $email = $_POST['user_email'];
 	$login = sanitize_user($_POST['user_login']);
@@ -127,14 +143,12 @@ function rcl_get_register_user($wp_errors){
             }
 	}
 
-        $wp_errors = new WP_Error();
-
 	if(!$pass||!$email||!$login||!$requared){
             $wp_errors->add( 'rcl_register_empty', __('Fill in the required fields!','rcl') );
             return $wp_errors;
 	}
 
-	$res_email = email_exists( $email );
+	/*$res_email = email_exists( $email );
 	$res_login = username_exists($login);
 	$correctemail = is_email($email);
 	$valid = validate_username($login);
@@ -142,17 +156,21 @@ function rcl_get_register_user($wp_errors){
 	if($res_login||$res_email||!$correctemail||!$valid){
             if(!$valid){
                 $wp_errors->add( 'rcl_register_login', __('Login invalid characters!','rcl') );
+                return $wp_errors;
             }
             if(!$correctemail){
                 $wp_errors->add( 'rcl_register_email', __('Invalid E-mail!','rcl') );
+                return $wp_errors;
             }
             if($res_login){
                 $wp_errors->add( 'rcl_register_login_us', __('Username already in use!','rcl') );
+                return $wp_errors;
             }
             if($res_email){
                 $wp_errors->add( 'rcl_register_email_us', __('E-mail is already in use!','rcl') );
+                return $wp_errors;
             }
-	}
+	}*/
 
         $wp_errors = apply_filters( 'rcl_registration_errors', $wp_errors, $login, $email );
 
@@ -173,7 +191,7 @@ function rcl_get_register_user($wp_errors){
 
         if($user_id){
 
-            if($rcl_options['login_form_recall']==2){
+            if($rcl_options['login_form_recall']==2||false !== strpos($ref, 'wp-login.php')){
                 //если форма ВП, то возвращаем на login с нужными GET-параметрами
                 if($rcl_options['confirm_register_recall']==1)
                     wp_safe_redirect( 'wp-login.php?checkemail=confirm' );
@@ -181,6 +199,7 @@ function rcl_get_register_user($wp_errors){
                     wp_safe_redirect( 'wp-login.php?checkemail=registered' );
 
             }else{
+
                 //иначе возвращаем на ту же страницу
                 if($rcl_options['confirm_register_recall']==1)
                     wp_redirect(rcl_format_url($ref).'action-rcl=register&success=confirm-email');
@@ -193,17 +212,22 @@ function rcl_get_register_user($wp_errors){
         }
 }
 
+add_filter('registration_errors','rcl_get_register_user',90);
+
 //принимаем данные с формы регистрации
-add_action('init', 'rcl_get_register_user_activate');
+add_action('wp', 'rcl_get_register_user_activate');
 function rcl_get_register_user_activate ( ) {
-  if ( isset( $_POST['submit-register'] ) ) { //если данные пришли со страницы wp-login.php
+  if ( isset( $_POST['submit-register'] ) ) { //если данные пришли с формы wp-recall
 	if( !wp_verify_nonce( $_POST['_wpnonce'], 'register-key-rcl' ) ) return false;
-        add_action( 'wp', 'rcl_get_register_user' );
+        $email = $_POST['user_email'];
+	$login = sanitize_user($_POST['user_login']);
+        register_new_user($login,$email);
+        //add_action( 'wp', 'rcl_get_register_user',999 );
   }
 
-  if(isset($_POST['wp-submit'])&&$_GET['action']=='register'){ //если данные пришли с формы wp-recall
-      add_filter('registration_errors','rcl_get_register_user');
-  }
+  /*if(isset($_POST['wp-submit'])&&$_GET['action']=='register'){ //если данные пришли со страницы wp-login.php
+      add_filter('registration_errors','rcl_get_register_user',999);
+  }*/
 }
 
 //письмо высылаемое при регистрации

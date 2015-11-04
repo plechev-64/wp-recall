@@ -231,7 +231,7 @@ function rcl_head_js_data(){
 	var user_ID = $user_ID;
 	var wpurl = '".preg_quote(trailingslashit(get_bloginfo('wpurl')),'/:')."';
 	var rcl_url = '".preg_quote(RCL_URL,'/:')."';
-	</script>";
+	</script>\n";
     echo $data;
 }
 
@@ -260,8 +260,8 @@ function rcl_get_author_block(){
             'template' => 'rows',
             'include' => $post->post_author,
             'filter' => 0,
-            'data'=>'rating_total,description,posts_count,user_registered,comments_count',
-            'orderby'=>'time_action'
+            'data'=>'rating_total,description,posts_count,user_registered,comments_count'
+            //'orderby'=>'time_action'
         ));
 
     if(function_exists('rcl_add_userlist_follow_button')) remove_filter('user_description','rcl_add_userlist_follow_button',90);

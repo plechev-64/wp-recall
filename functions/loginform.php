@@ -219,7 +219,7 @@ function rcl_get_authorize_form($type=false,$form=false){
 //Формируем массив сервисных сообщений формы регистрации и входа
 function rcl_notice_form($form='login'){
     global $wp_errors;
-
+    //print_r($wp_errors);
     if ( $wp_errors->errors ) {
             $errors = '';
             $messages = '';
