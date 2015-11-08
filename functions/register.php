@@ -148,30 +148,6 @@ function rcl_get_register_user($errors){
             return $wp_errors;
 	}
 
-	/*$res_email = email_exists( $email );
-	$res_login = username_exists($login);
-	$correctemail = is_email($email);
-	$valid = validate_username($login);
-
-	if($res_login||$res_email||!$correctemail||!$valid){
-            if(!$valid){
-                $wp_errors->add( 'rcl_register_login', __('Login invalid characters!','rcl') );
-                return $wp_errors;
-            }
-            if(!$correctemail){
-                $wp_errors->add( 'rcl_register_email', __('Invalid E-mail!','rcl') );
-                return $wp_errors;
-            }
-            if($res_login){
-                $wp_errors->add( 'rcl_register_login_us', __('Username already in use!','rcl') );
-                return $wp_errors;
-            }
-            if($res_email){
-                $wp_errors->add( 'rcl_register_email_us', __('E-mail is already in use!','rcl') );
-                return $wp_errors;
-            }
-	}*/
-
         $wp_errors = apply_filters( 'rcl_registration_errors', $wp_errors, $login, $email );
 
         if ( $wp_errors->errors ) return $wp_errors;

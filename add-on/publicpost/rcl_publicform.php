@@ -326,7 +326,7 @@ function rcl_publication_termlist($tax=false){
 
     if($formData->post_type=='post'){
         $cf = rcl_get_custom_fields($formData->post_id,$formData->post_type,$formData->form_id);
-        if(!$ctg) $ctg = (isset($cf['options']['terms']))? $cf['options']['terms']: $ctg = $rcl_options['id_parent_category'];
+        if(!$ctg) $ctg = (isset($cf['options']['terms'])&&$cf['options']['terms'])? $cf['options']['terms']: $rcl_options['id_parent_category'];
         $cnt = (isset($rcl_options['count_category_post']))? $rcl_options['count_category_post']:0;
     }
 
@@ -538,7 +538,7 @@ function rcl_publication_editor(){
 
 		echo '
 		<div class="rcl-public-editor">
-			
+
 			<div class="rcl-editor-content">
 				'.rcl_get_editor_content($content).'
 			</div>

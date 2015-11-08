@@ -241,7 +241,7 @@ class Rcl_Thumb_Form{
 		echo '<ul id="temp-files">'.$attachlist.'</ul>';
 		echo '<p><label><input ';
 		//if(!$this->post_id) echo 'checked="checked"';
-		echo 'type="checkbox" '.checked($gal,1,false).' name="add-gallery-rcl" value="1"> - '.__('Display all attached images in the gallery.','rcl').'</label>
+		echo 'type="checkbox" '.checked($gal,1,false).' name="add-gallery-rcl" value="1"> - '.__('Display all attached images in the gallery.','rcl').'</label></p>
 		<div id="status-temp"></div>
 		<div>
 			<div id="rcl-public-dropzone" class="rcl-dropzone mass-upload-box">
