@@ -825,7 +825,7 @@ function rcl_wp_editor($args=false,$content=false){
     $data = array( 'wpautop' => 1
         ,'media_buttons' => 0
         ,'textarea_name' => 'post_content'
-        ,'textarea_rows' => 20
+        ,'textarea_rows' => 10
         ,'tabindex' => null
         ,'editor_css' => ''
         ,'editor_class' => 'autosave'

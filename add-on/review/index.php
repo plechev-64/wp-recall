@@ -42,7 +42,7 @@ class Rcl_Review{
 		if(!$user_ID) wp_die(__('You dont have that right!','rcl'));
 
 		$adressat_id = intval(pow($_POST['user_id'], 0.5));
-		$content_otziv = esc_textarea($_POST['content_otz']);
+		$content_otziv = esc_html($_POST['content_otz']);
 		$status = intval($_POST['status']);
 		$online = intval($_POST['online']);
 		$count_rayt = (isset($rcl_options['rating_point_rcl-review']))? $rcl_options['rating_point_rcl-review']: 1;
@@ -179,13 +179,15 @@ class Rcl_Review{
                     else if($otziv->status<0) $status = '-1';
                     else $status = 0;
 
+                    $content = stripslashes_deep(esc_html($otziv->content_otziv));
+
                     $recall_block .= '<div class="public-post recall'.$status.'">
                     <div class="author-avatar">'.get_avatar($otziv->author_id, 60).'</div>
                     <div class="content-recall">
                     '.$this->get_status($otziv->status).'
                     <p>
                     <strong><a href="'.get_author_posts_url($otziv->author_id).'">'.get_the_author_meta('display_name', $otziv->author_id).'</a> '.__('leave a review','rcl').':</strong>
-                    </p>'.nl2br($otziv->content_otziv);
+                    </p>'.nl2br($content);
 
                         if(function_exists('rcl_get_html_post_rating')) $recall_block .= rcl_get_html_post_rating($otziv->ID,'review-content',$otziv->author_id);
 
@@ -198,7 +200,7 @@ class Rcl_Review{
                             <input type="submit" class="recall-button" name="delete_review" value="'.__('Delete','rcl').'">
                             </form>';
                     }
-                    
+
                     $recall_block .= '</div>';
                 }
             }else if($user_ID==$user_LK){

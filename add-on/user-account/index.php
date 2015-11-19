@@ -32,6 +32,8 @@ function rcl_admin_user_account_scripts(){
 	wp_enqueue_script( 'rcl_admin_user_account_scripts', plugins_url('js/admin.js', __FILE__) );
 }
 
+
+
 function rcl_get_user_money($user_id=false){
     global $wpdb,$user_ID;
     if(!$user_id) $user_id = $user_ID;
@@ -252,6 +254,42 @@ function rcl_admin_statistic_cashe(){
 	echo $table;
 }
 
+/*function rcl_invoice_generation($user_id,$amount,$order_id=0){
+    global $wpdb;
+
+    $wpdb->insert(
+        RCL_PREF.'payments_history',
+        array(
+            'user_id'=>$user_id,
+            'order_id'=>$order_id,
+            'payment_amount'=>$amount,
+            'payment_date'=>current_date('mysql'),
+            'payment_status'=>0
+        )
+    );
+
+    return $wpdg->insert_id;
+}
+
+function rcl_get_invoice($payment_id,$user_id){
+    global $wpdb;
+    return $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."payments_history WHERE payment_id = '%s' AND user_id = '%d'",$payment_id,$user_id));
+}
+
+function rcl_update_status_invoice($payment_id,$new_status){
+    global $wpdb;
+
+    return $wpdb->update(
+        RCL_PREF.'payments_history',
+        array(
+            'payment_status'=>$new_status
+        ),
+        array(
+            'payment_id'=>$payment_id
+        )
+    );
+}*/
+
 /*************************************************
 Пополнение личного счета пользователя
 *************************************************/
@@ -259,11 +297,11 @@ function rcl_add_count_user(){
 	global $user_ID;
 
 	if($user_ID&&$_POST['count']){
-            global $wpdb;
-            $num_max = $wpdb->get_var("SELECT MAX(inv_id) FROM ".RMAG_PREF ."pay_results");
-            if($num_max) $id_pay = $num_max+1;
-            else $id_pay = rand(100000,110000);
-            $log['redirectform'] = rcl_payform(array('id_pay'=>$id_pay,'summ'=>intval($_POST['count']),'type'=>1));
+
+            $amount = intval($_POST['count']);
+            $id_pay = current_time('timestamp');
+
+            $log['redirectform'] = rcl_payform(array('id_pay'=>$id_pay,'summ'=>$amount,'type'=>1));
             $log['otvet']=100;
 
 	} else {

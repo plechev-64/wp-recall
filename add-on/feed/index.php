@@ -565,23 +565,23 @@ function rcl_get_public_feed($user_id=false){
                     $group_ar[$us->meta_value] = $us->meta_value;
             }
 
-            $posts_groups = get_posts(array(
-                'post_type'=>'post-group',
-                'numberposts'=>15,
-                'author'=>-$user_id
+            if($group_ar){
 
-            ));
-
-            /*if($group_ar){
-                $posts_groups['tax_query'] = array(
-                    array(
-                        'taxonomy' => 'groups',
-                        'field' => 'id',
-                        'terms' => $group_ar,
-                        'operator' => 'IN',
+                $posts_groups = get_posts(array(
+                    'post_type'=>'post-group',
+                    'numberposts'=>15,
+                    'author'=>-$user_id,
+                    'tax_query'=>array(
+                        array(
+                            'taxonomy' => 'groups',
+                            'field' => 'id',
+                            'terms' => $group_ar,
+                            'operator' => 'IN',
+                        )
                     )
-                );
-            }*/
+                ));
+
+            }
 
             //if($active_addons['video-gallery']) include($active_addons['video-gallery']['src'].'class_video.php');
 

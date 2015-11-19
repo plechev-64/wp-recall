@@ -57,7 +57,7 @@ function rcl_orders($author_lk){
                     if($type_pay==1||$type_pay==2){
                         $block .= rcl_payform(array('id_pay'=>$order_id,'summ'=>$price,'type'=>2));
                     }else{
-                        $block .= '<input class="pay_order recall-button" type="button" name="pay_order" data-order="'.$order_id.'" value="Оплатить">';
+                        $block .= '<input class="pay_order recall-button" onclick="rcl_pay_order_private_account(this);return false;" type="button" name="pay_order" data-order="'.$order_id.'" value="Оплатить">';
                     }
                 }
                 $block .= '</div>';

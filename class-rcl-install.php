@@ -163,38 +163,38 @@ class RCL_Install {
             array(
                 'base'  => RCL_TAKEPATH,
                 'file' 		=> '.htaccess',
-                'content' 	=> 'deny from all'
+                'content' 	=> 'Options -indexes'
             ),
             array(
                 'base'  => RCL_TAKEPATH,
                 'file' 		=> 'index.html',
                 'content' 	=> ''
             ),
-            array(
+            /*array(
                 'base'  => RCL_TAKEPATH . 'add-on',
                 'file' 		=> '.htaccess',
                 'content' 	=> 'deny from all'
-            ),
+            ),*/
             array(
                 'base'  => RCL_TAKEPATH . 'add-on',
                 'file' 		=> 'index.html',
                 'content' 	=> ''
             ),
-            array(
+            /*array(
                 'base'  => RCL_TAKEPATH . 'themes',
                 'file' 		=> '.htaccess',
                 'content' 	=> 'deny from all'
-            ),
+            ),*/
             array(
                 'base'  => RCL_TAKEPATH . 'themes',
                 'file' 		=> 'index.html',
                 'content' 	=> ''
             ),
-            array(
+            /*array(
                 'base'  => RCL_TAKEPATH . 'templates',
                 'file' 		=> '.htaccess',
                 'content' 	=> 'deny from all'
-            ),
+            ),*/
             array(
                 'base'  => RCL_TAKEPATH . 'templates',
                 'file' 		=> 'index.html',

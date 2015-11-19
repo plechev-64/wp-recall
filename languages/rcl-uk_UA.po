@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Blank Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-10-27 20:55+0300\n"
+"POT-Creation-Date: 2015-11-17 17:43+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -55,7 +55,6 @@ msgstr "В цій групі немає закладок"
 #: ../../wp-recall/add-on/./bookmarks/index.php:177
 #: ../../wp-recall/add-on/./bookmarks/index.php:267
 #: ../../wp-recall/add-on/./bookmarks/index.php:277
-#: add-on/groups/index.php:739
 msgid "Close"
 msgstr "Закрити"
 
@@ -165,7 +164,7 @@ msgstr "Відключити закладки для публікації"
 #: add-on/profile/index.php:168 add-on/profile/index.php:588
 #: add-on/profile/index.php:593 add-on/profile/index.php:598
 #: add-on/profile/index.php:603 add-on/profile/index.php:608
-#: add-on/publicpost/addon-options.php:277 add-on/publicpost/index.php:237
+#: add-on/publicpost/addon-options.php:279 add-on/publicpost/index.php:237
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120
 #: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
@@ -178,7 +177,7 @@ msgstr "Ні"
 #: add-on/profile/index.php:168 add-on/profile/index.php:588
 #: add-on/profile/index.php:593 add-on/profile/index.php:598
 #: add-on/profile/index.php:603 add-on/profile/index.php:608
-#: add-on/publicpost/addon-options.php:277 add-on/publicpost/index.php:237
+#: add-on/publicpost/addon-options.php:279 add-on/publicpost/index.php:237
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120
 #: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
@@ -189,8 +188,8 @@ msgstr "Так"
 #: ../../wp-recall/add-on/./bookmarks/index.php:167
 #: ../../wp-recall/add-on/./bookmarks/index.php:177
 #: ../../wp-recall/add-on/./gallery-recall/class_gallery.php:142
-#: add-on/groups/index.php:404 add-on/publicpost/class_public.php:74
-#: add-on/publicpost/fast-editor.php:104
+#: add-on/groups/classes/rcl-groups.php:240
+#: add-on/publicpost/class_public.php:74 add-on/publicpost/fast-editor.php:104
 msgid "Name"
 msgstr "Імя"
 
@@ -247,7 +246,6 @@ msgstr "Помилка"
 #: ../../wp-recall/add-on/./money-wallet/index.php:603
 #: ../../wp-recall/add-on/./presents/index.php:155
 #: ../../wp-recall/add-on/./presents/index.php:195
-#: add-on/groups/class_group.php:238
 msgid "Are you sure?"
 msgstr "Ви впевнені?"
 
@@ -298,7 +296,7 @@ msgid "Description"
 msgstr "Опис"
 
 #: ../../wp-recall/add-on/./gallery-recall/class_gallery.php:147
-#: add-on/groups/index.php:146 add-on/publicpost/class_public.php:79
+#: add-on/groups/groups-init.php:55 add-on/publicpost/class_public.php:79
 msgid "Update"
 msgstr "Оновити"
 
@@ -333,7 +331,7 @@ msgid "The maximum size of images, Mb"
 msgstr "Максимальний розмір зображень, МБ"
 
 #: ../../wp-recall/add-on/./gallery-recall/index.php:47
-#: add-on/publicpost/addon-options.php:167
+#: add-on/publicpost/addon-options.php:169
 msgid ""
 "To limit image uploads to publish this value in megabytes. By default, 2MB"
 msgstr "Обмежіть розмір завантажуваного зображення, за замовченням 2МБ"
@@ -381,8 +379,7 @@ msgstr "Розмір файлу перевищено!"
 #: ../../wp-recall/add-on/./justclick-manager/index.php:1
 #: ../../wp-recall/add-on/./partners-system/admin-pages.php:124
 #: ../../wp-recall/add-on/./users-market/administrative.php:60
-#: add-on/groups/class_group.php:207 rcl-admin/admin-pages.php:281
-#: rcl-functions.php:574
+#: rcl-admin/admin-pages.php:281 rcl-functions.php:568
 msgid "Save settings"
 msgstr "Зберегти налаштування"
 
@@ -573,7 +570,7 @@ msgstr "Витрати"
 #: ../../wp-recall/add-on/./money-wallet/index.php:208
 #: ../../wp-recall/add-on/./money-wallet/index.php:364
 #: ../../wp-recall/add-on/./money-wallet/index.php:492
-#: add-on/publicpost/index.php:151
+#: add-on/groups/classes/rcl-groups.php:241 add-on/publicpost/index.php:151
 #: add-on/publicpost/templates/posts-list.php:6
 #: functions/rcl_editfields.php:151
 msgid "Date"
@@ -642,7 +639,7 @@ msgid "Action"
 msgstr "Дія"
 
 #: ../../wp-recall/add-on/./money-wallet/index.php:479
-#: add-on/review/index.php:198 functions/rcl_addons.php:258
+#: add-on/review/index.php:200 functions/rcl_addons.php:258
 #: functions/rcl_editfields.php:128
 msgid "Delete"
 msgstr "Видалити"
@@ -669,7 +666,6 @@ msgid "To balance user"
 msgstr "Баланс користувача"
 
 #: ../../wp-recall/add-on/./money-wallet/index.php:522
-#: add-on/groups/class_group.php:252
 msgid "Reject"
 msgstr "Відхилено"
 
@@ -702,6 +698,32 @@ msgstr "Вкажіть номер гаманця!"
 #: ../../wp-recall/add-on/./notification/index.php:12
 msgid "Notifications"
 msgstr "Оповіщення"
+
+#: ../../wp-recall/add-on/./payeer-gateway/index.php:66
+#: add-on/user-account/gateways/interkassa.php:78
+#: add-on/user-account/rcl_payment.php:99
+msgid "Top up personal account"
+msgstr "Поповнити особистий рахунок"
+
+#: ../../wp-recall/add-on/./payeer-gateway/index.php:68
+#: add-on/user-account/gateways/interkassa.php:79
+msgid "Payment for the order on the website"
+msgstr "Оплата замовлення на сайиі"
+
+#: ../../wp-recall/add-on/./payeer-gateway/index.php:70
+#: add-on/user-account/gateways/interkassa.php:80
+msgid "Other payments"
+msgstr "Інші платежі"
+
+#: ../../wp-recall/add-on/./payeer-gateway/index.php:149
+#: ../../wp-recall/add-on/./unitpay-gateway/index.php:141
+#: ../../wp-recall/add-on/./webmoney-gateway/index.php:132
+#: add-on/user-account/gateways/interkassa.php:159
+#: add-on/user-account/gateways/robokassa.php:161
+#: add-on/user-account/gateways/yandexkassa.php:147
+#: add-on/user-account/rcl_payment.php:57
+msgid "A record of the payment in the database was not found"
+msgstr "Платіж не знайдений в базі данних"
 
 #: ../../wp-recall/add-on/./presents/class_presents.php:1
 msgid "Affordable gifts"
@@ -803,15 +825,6 @@ msgstr ""
 msgid "Unpaid access"
 msgstr "Безкоштовний доступ"
 
-#: ../../wp-recall/add-on/./unitpay-gateway/index.php:141
-#: ../../wp-recall/add-on/./webmoney-gateway/index.php:132
-#: add-on/user-account/gateways/interkassa.php:159
-#: add-on/user-account/gateways/robokassa.php:161
-#: add-on/user-account/gateways/yandexkassa.php:147
-#: add-on/user-account/rcl_payment.php:57
-msgid "A record of the payment in the database was not found"
-msgstr "Платіж не знайдений в базі данних"
-
 #: ../../wp-recall/add-on/./users-market/public-product.php:129
 msgid "Заменить файл"
 msgstr "Замінити файл"
@@ -859,7 +872,7 @@ msgstr ""
 
 #: add-on/feed/index.php:200 add-on/feed/index.php:396
 #: add-on/feed/templates/feed-post.php:44 add-on/rating-system/index.php:32
-#: functions/class-rcl-users.php:432 functions/shortcodes.php:82
+#: functions/class-rcl-users.php:436 functions/shortcodes.php:82
 msgid "Comments"
 msgstr "Коментарі"
 
@@ -916,267 +929,216 @@ msgstr "коментарі к публікації"
 msgid "in reply to your comment"
 msgstr "в відповідь на ваш коментар"
 
-#: add-on/groups/class_ajax.php:40 add-on/groups/class_ajax.php:41
-#: add-on/groups/class_ajax.php:58
-msgid "Deleted user!"
-msgstr "Сторінка користувача видалена"
-
-#: add-on/groups/class_ajax.php:40
-msgid "To delete all publications"
-msgstr "Для видалення всіх публікацій"
-
-#: add-on/groups/class_group.php:45
-msgid "Your group has been removed!"
-msgstr "Ваша група була видалена!"
-
-#: add-on/groups/class_group.php:154
-msgid ""
-"To edit the title, description or pictures of a group just click on this "
-"element"
+#: add-on/groups/classes/rcl-group-widget.php:42
+msgid "Show completely"
 msgstr ""
-"Для редагування заголовку, опису чи зображення групи натисність \n"
-"на потрібний елемент"
 
-#: add-on/groups/class_group.php:163
-msgid "Add a description of the group"
-msgstr "Додайте опис групи"
+#: add-on/groups/classes/rcl-group-widget.php:101
+msgid "Save changes"
+msgstr ""
 
-#: add-on/groups/class_group.php:178 add-on/groups/index.php:408
-msgid "The status of the group"
-msgstr "Статус групи"
+#: add-on/groups/classes/rcl-group-widget.php:106
+#: add-on/groups/classes/rcl-group-widget.php:203
+msgid "Unused"
+msgstr ""
 
-#: add-on/groups/class_group.php:178
-msgid "Private group"
-msgstr "Приватна група"
+#: add-on/groups/classes/rcl-groups.php:227
+msgid "Total groups"
+msgstr ""
 
-#: add-on/groups/class_group.php:180
-msgid "ban the publication team members"
-msgstr "Заборонити публікації учасникам групи"
+#: add-on/groups/classes/rcl-groups.php:242 functions/class-rcl-users.php:435
+msgid "Publications"
+msgstr "Публікаціям"
 
-#: add-on/groups/class_group.php:182
-msgid "show group members"
-msgstr "Відображати учасників"
+#: add-on/groups/classes/rcl-groups.php:243
+#: add-on/groups/groups-widgets.php:87
+#: add-on/groups/templates/group-list.php:11 class-rcl-install.php:109
+msgid "Users"
+msgstr "Користувачі"
 
-#: add-on/groups/class_group.php:184
-msgid "to show the last image of the group"
-msgstr "Відображати останні зображення в групі"
+#: add-on/groups/classes/rcl-groups.php:248 functions/class-rcl-users.php:445
+msgid "Filter by"
+msgstr "Фільтрувати по"
 
-#: add-on/groups/class_group.php:186
-msgid "Category group (split by comma)"
-msgstr "Категорії групи (розділяти комою)"
+#: add-on/groups/groups-core.php:161
+msgid "Opened group"
+msgstr ""
 
-#: add-on/groups/class_group.php:197 add-on/groups/class_group.php:201
-#: add-on/groups/index.php:259
-msgid "Group settings"
-msgstr "Налаштування групи"
+#: add-on/groups/groups-core.php:162
+msgid "Closed group"
+msgstr ""
 
-#: add-on/groups/class_group.php:200
-msgid "To close the settings"
-msgstr "Закрити налаштування"
-
-#: add-on/groups/class_group.php:238
-msgid "Delete group"
-msgstr "Видалити групу"
-
-#: add-on/groups/class_group.php:246
-msgid "Requests to join the group"
-msgstr "Запити на доступ в групу"
-
-#: add-on/groups/class_group.php:251
-msgid "Take"
-msgstr "Одобрити"
-
-#: add-on/groups/class_group.php:264
-msgid "To leave the group"
-msgstr "Вийти з групи"
-
-#: add-on/groups/class_group.php:272
-msgid "Your application for membership is accepted"
-msgstr "Ваш запит на доступ в групу одобрений"
-
-#: add-on/groups/class_group.php:276
-msgid "To apply for membership"
-msgstr "Дозволено групам користувачів"
-
-#: add-on/groups/class_group.php:288
-msgid "Join"
-msgstr "Приєднатись"
-
-#: add-on/groups/class_group.php:312
+#: add-on/groups/groups-core.php:244
 msgid "Group members"
 msgstr "Учасники групи"
 
-#: add-on/groups/class_group.php:321
-msgid "All members"
-msgstr "Всі учасники"
+#: add-on/groups/groups-core.php:356
+msgid "Request for access to the group"
+msgstr ""
 
-#: add-on/groups/class_group.php:331
-msgid "Access to the closed group privacy settings."
-msgstr "Доступ закритий налаштуваннями приватності."
+#: add-on/groups/groups-core.php:436
+msgid "Return to the group"
+msgstr ""
 
-#: add-on/groups/class_group.php:341
-msgid "The last photo of the group"
-msgstr "Останні фото в групі"
-
-#: add-on/groups/class_group.php:377
-msgid "To publish a new entry in the group"
-msgstr "Публікація нового поста в групі"
-
-#: add-on/groups/class_group.php:379
-msgid "Close form"
-msgstr "Закрити форму"
-
-#: add-on/groups/class_group.php:379
-msgid "Record publishing"
-msgstr "Публікація запису"
-
-#: add-on/groups/class_group.php:400
+#: add-on/groups/groups-core.php:460
 msgid "Display all records"
 msgstr "Показати всі записи"
 
-#: add-on/groups/class_group.php:402
+#: add-on/groups/groups-core.php:462
 msgid "Show"
 msgstr "Показати"
 
-#: add-on/groups/group_private.php:78
-msgid "To be able to post comments you must be a member of this group"
-msgstr "Для коментування ви повинні бути учасником групи"
+#: add-on/groups/groups-core.php:473
+msgid "Primary options"
+msgstr ""
 
-#: add-on/groups/group_private.php:81
+#: add-on/groups/groups-core.php:477
+msgid "Widgets manage"
+msgstr ""
+
+#: add-on/groups/groups-core.php:488
+msgid "Requests for access"
+msgstr ""
+
+#: add-on/groups/groups-core.php:500
+msgid "Administration"
+msgstr ""
+
+#: add-on/groups/groups-core.php:584
 msgid "Access to content is closed privacy settings"
 msgstr "Контент закритий налаштуваннями приватності"
 
-#: add-on/groups/group_private.php:84
+#: add-on/groups/groups-core.php:590
 msgid "(Comment hidden privacy settings)"
 msgstr "(контент прихований налаштуваннями приватності)"
 
-#: add-on/groups/index.php:8 add-on/groups/index.php:98
-#: add-on/groups/index.php:99 add-on/groups/index.php:109
-#: add-on/groups/index.php:178
+#: add-on/groups/groups-init.php:7 add-on/groups/groups-init.php:8
+#: add-on/groups/groups-init.php:18 add-on/groups/index.php:17
+#: add-on/groups/index.php:29
 msgid "Record groups"
 msgstr "Публікації груп"
 
-#: add-on/groups/index.php:100 add-on/groups/index.php:101
+#: add-on/groups/groups-init.php:9 add-on/groups/groups-init.php:10
 msgid "Add entry"
 msgstr "Додати"
 
-#: add-on/groups/index.php:102 add-on/groups/index.php:145
-#: add-on/groups/index.php:238
+#: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
 msgid "Edit"
 msgstr "Редагувати"
 
-#: add-on/groups/index.php:103 add-on/groups/index.php:148
+#: add-on/groups/groups-init.php:12 add-on/groups/groups-init.php:57
 msgid "New"
 msgstr "Новий"
 
-#: add-on/groups/index.php:104
+#: add-on/groups/groups-init.php:13
 msgid "View"
 msgstr "Дивитись"
 
-#: add-on/groups/index.php:105 add-on/groups/index.php:140
+#: add-on/groups/groups-init.php:14 add-on/groups/groups-init.php:49
 #: functions/shortcodes.php:144
 msgid "Search"
 msgstr "Пошук"
 
-#: add-on/groups/index.php:106 add-on/publicpost/rcl_publicform.php:576
+#: add-on/groups/groups-init.php:15 add-on/publicpost/rcl_publicform.php:576
 msgid "Not found"
 msgstr "Не знайдено"
 
-#: add-on/groups/index.php:107
+#: add-on/groups/groups-init.php:16
 msgid "Cart is empty"
 msgstr "Корзина порожня"
 
-#: add-on/groups/index.php:108
+#: add-on/groups/groups-init.php:17
 msgid "Parent record"
 msgstr "Батьківський запис"
 
-#: add-on/groups/index.php:138 add-on/groups/index.php:139
-#: add-on/groups/index.php:152 add-on/groups/index.php:262
+#: add-on/groups/groups-init.php:47 add-on/groups/groups-init.php:48
+#: add-on/groups/groups-init.php:61 add-on/groups/groups-options.php:11
+#: add-on/groups/index.php:34
 msgid "Groups"
 msgstr "Групи"
 
-#: add-on/groups/index.php:141
+#: add-on/groups/groups-init.php:50
 msgid "Popular Groups"
 msgstr "Популярні групи"
 
-#: add-on/groups/index.php:142
+#: add-on/groups/groups-init.php:51
 msgid "All categories"
 msgstr "Всі категорії"
 
-#: add-on/groups/index.php:143 add-on/groups/index.php:144
+#: add-on/groups/groups-init.php:52 add-on/groups/groups-init.php:53
 msgid "Parent group"
 msgstr "Батькіська група"
 
-#: add-on/groups/index.php:147
+#: add-on/groups/groups-init.php:56
 msgid "To add a new"
 msgstr "Додати новий"
 
-#: add-on/groups/index.php:149
+#: add-on/groups/groups-init.php:58
 msgid "Separate with commas"
 msgstr "Розділяти комою"
 
-#: add-on/groups/index.php:150
+#: add-on/groups/groups-init.php:59
 msgid "To add or remove"
 msgstr "Додати або видалити"
 
-#: add-on/groups/index.php:151
+#: add-on/groups/groups-init.php:60
 msgid "Click to use"
 msgstr "Натиснути для використання"
 
-#: add-on/groups/index.php:250 add-on/magazin/functions/init.php:223
-#: rcl-admin/admin-pages.php:31 rcl-admin/admin-pages.php:32
-msgid "Settings Wp-Recall"
-msgstr "Налаштування  Wp-Recall"
+#: add-on/groups/groups-options.php:8
+msgid "Group settings"
+msgstr "Налаштування групи"
 
-#: add-on/groups/index.php:263
+#: add-on/groups/groups-options.php:12
 msgid "Creating groups is allowed"
 msgstr "Створення груп дозволено"
 
-#: add-on/groups/index.php:267 add-on/groups/index.php:277
-#: add-on/publicpost/addon-options.php:25
+#: add-on/groups/groups-options.php:16 add-on/groups/groups-options.php:26
+#: add-on/publicpost/addon-options.php:27
 #: add-on/rating-system/addon-options.php:108 rcl-admin/admin-pages.php:129
 msgid "only Administrators"
 msgstr "Тільки адміністраторам"
 
-#: add-on/groups/index.php:268 add-on/groups/index.php:278
-#: add-on/publicpost/addon-options.php:26
+#: add-on/groups/groups-options.php:17 add-on/groups/groups-options.php:27
+#: add-on/publicpost/addon-options.php:28
 #: add-on/rating-system/addon-options.php:107 rcl-admin/admin-pages.php:130
 msgid "Editors and older"
 msgstr "Редакторам і старше"
 
-#: add-on/groups/index.php:269 add-on/groups/index.php:279
-#: add-on/publicpost/addon-options.php:27
+#: add-on/groups/groups-options.php:18 add-on/groups/groups-options.php:28
+#: add-on/publicpost/addon-options.php:29
 #: add-on/rating-system/addon-options.php:106 rcl-admin/admin-pages.php:131
 msgid "Authors and older"
 msgstr "Авторам і старше"
 
-#: add-on/groups/index.php:270 add-on/groups/index.php:280
+#: add-on/groups/groups-options.php:19 add-on/groups/groups-options.php:29
 #: add-on/rating-system/addon-options.php:105 rcl-admin/admin-pages.php:132
 msgid "Participants and older"
 msgstr "Учасникам і старше"
 
-#: add-on/groups/index.php:273
+#: add-on/groups/groups-options.php:22
 msgid "Publishing group"
 msgstr "Публікації групи"
 
-#: add-on/groups/index.php:281 add-on/rating-system/addon-options.php:104
-#: rcl-admin/admin-pages.php:133 rcl-widgets.php:32 rcl-widgets.php:96
+#: add-on/groups/groups-options.php:30 add-on/groups/groups-widgets.php:100
+#: add-on/rating-system/addon-options.php:104 rcl-admin/admin-pages.php:133
+#: rcl-widgets.php:32 rcl-widgets.php:96
 msgid "All users"
 msgstr "Всі користувачі"
 
-#: add-on/groups/index.php:284
+#: add-on/groups/groups-options.php:33
 msgid "Moderation of publications in the group"
 msgstr "Модерація публікацій групи"
 
-#: add-on/groups/index.php:288 add-on/publicpost/addon-options.php:222
+#: add-on/groups/groups-options.php:37 add-on/publicpost/addon-options.php:224
 msgid "To publish immediately"
 msgstr "Публікувати зразу"
 
-#: add-on/groups/index.php:289 add-on/publicpost/addon-options.php:222
+#: add-on/groups/groups-options.php:38 add-on/publicpost/addon-options.php:224
 msgid "Send for moderation"
 msgstr "Відправити на модерацію"
 
-#: add-on/groups/index.php:291 add-on/publicpost/addon-options.php:224
+#: add-on/groups/groups-options.php:40 add-on/publicpost/addon-options.php:226
 msgid ""
 "If used in moderation: To allow the user to see their publication before it "
 "is moderated, it is necessary to have on the website right below the Author"
@@ -1184,97 +1146,126 @@ msgstr ""
 "Якщо використовується модерація: для перегляду контенту публікації \"\n"
 "\"на модерації користувач повинен мати права не нижче Автора"
 
-#: add-on/groups/index.php:400 add-on/groups/index.php:402
-msgid "To create a group"
-msgstr "Створення групи"
+#: add-on/groups/groups-widgets.php:15 rcl-widgets.php:140 rcl-widgets.php:161
+msgid "Control panel"
+msgstr "Панель управління"
 
-#: add-on/groups/index.php:406
-msgid "Group description"
-msgstr "Опис"
+#: add-on/groups/groups-widgets.php:32
+msgid "Leave group"
+msgstr ""
 
-#: add-on/groups/index.php:409
-msgid "Private group. The access group just approved the request of the user."
-msgstr "Приватная група. Доступ в групу можливий тільки по схваленому запиту"
+#: add-on/groups/groups-widgets.php:43
+msgid "Join group"
+msgstr ""
 
-#: add-on/groups/index.php:410
-msgid "Group avatar"
-msgstr "Аватар групи"
+#: add-on/groups/groups-widgets.php:55
+msgid "The request for access sent"
+msgstr ""
 
-#: add-on/groups/index.php:411
+#: add-on/groups/groups-widgets.php:60
+msgid "Apply for membership"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:101
+msgid "Administrator"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:117
+msgid "Form of the publication"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:151
+msgid "Categories Content Group"
+msgstr ""
+
+#: add-on/groups/index.php:45
+msgid "Sidebar"
+msgstr ""
+
+#: add-on/groups/index.php:52
+msgid "Main"
+msgstr ""
+
+#: add-on/groups/index.php:59
+msgid "Footer"
+msgstr ""
+
+#: add-on/groups/index.php:93
+msgid "Enter the name of the new group"
+msgstr ""
+
+#: add-on/groups/index.php:94
 msgid "Сreate"
 msgstr "Створити"
 
-#: add-on/groups/index.php:413
-msgid "You are not allowed to create new groups."
-msgstr "Вам не дозволено створювати нові групи."
-
-#: add-on/groups/index.php:414
-msgid "Created group"
-msgstr "Створені групи"
-
-#: add-on/groups/index.php:415
-msgid "Joined the group"
-msgstr "Вступив в групи"
-
-#: add-on/groups/index.php:417
-msgid "The user is not in group"
-msgstr "Користувач не перебуває в групі"
-
-#: add-on/groups/index.php:487
+#: add-on/groups/index.php:131
 msgid "Category in the group"
 msgstr "Категорії групи"
 
-#: add-on/groups/index.php:678
+#: add-on/groups/index.php:155
 msgid "Published in the group"
 msgstr "Публікація в групі"
 
-#: add-on/groups/index.php:763
+#: add-on/groups/index.php:170
+msgid "Create a group failed"
+msgstr ""
+
+#: add-on/groups/index.php:298
+msgid "Requests for access to the group"
+msgstr ""
+
+#: add-on/groups/index.php:301
+msgid "No queries"
+msgstr ""
+
+#: add-on/groups/index.php:315
+msgid "Approve request"
+msgstr ""
+
+#: add-on/groups/index.php:316
+msgid "Reject request"
+msgstr ""
+
+#: add-on/groups/index.php:341
 msgid "Request access to the group approved!"
 msgstr "Запит на доступ в групу схвалений!"
 
-#: add-on/groups/index.php:774
+#: add-on/groups/index.php:351
+msgid "The request was accepted"
+msgstr ""
+
+#: add-on/groups/index.php:355
+msgid "Request rejected"
+msgstr ""
+
+#: add-on/groups/index.php:356
 msgid "The request to access the group rejected."
 msgstr "Запит на доступ в групу відхилений."
 
-#: add-on/groups/index.php:869
-msgid "Search group"
-msgstr "Пошук групи"
+#: add-on/groups/shortcodes.php:28
+msgid "Groups not found"
+msgstr ""
 
-#: add-on/groups/index.php:870
-msgid "Find"
-msgstr "Знайти"
+#: add-on/groups/upload-avatar.php:43
+msgid "Size over"
+msgstr ""
 
-#: add-on/groups/index.php:877 functions/class-rcl-users.php:441
-msgid "Filter by"
-msgstr "Фільтрувати по"
+#: add-on/groups/upload-avatar.php:51
+msgid "The file is not an image"
+msgstr ""
 
-#: add-on/groups/index.php:878
-msgid "Created date"
-msgstr "Дата створення"
-
-#: add-on/groups/index.php:879
-msgid "By name"
-msgstr "По імені"
-
-#: add-on/groups/index.php:880
-msgid "The number of records"
-msgstr "По к-сті записів"
-
-#: add-on/groups/index.php:941 add-on/groups/templates/group.php:1
-msgid "Creator"
-msgstr "Засновник"
-
-#: add-on/groups/index.php:942 add-on/groups/templates/group.php:1
-msgid "Participants"
-msgstr "Учасники"
-
-#: add-on/groups/index.php:969
-msgid "Remove from group"
-msgstr "Видалити з групи"
+#: add-on/groups/upload-avatar.php:82
+msgid "Avatar has successfully loaded"
+msgstr ""
 
 #: add-on/magazin/functions/init.php:18 add-on/magazin/functions/init.php:19
 msgid "Attach image or download it"
 msgstr "Вибрати зображення або завантажити"
+
+#: add-on/magazin/functions/init.php:223 rcl-admin/admin-pages.php:31
+#: rcl-admin/admin-pages.php:32
+msgid "Settings Wp-Recall"
+msgstr "Налаштування  Wp-Recall"
 
 #: add-on/magazin/functions/shortcodes.php:86
 #: add-on/magazin/functions/shortcodes.php:88
@@ -1578,11 +1569,11 @@ msgstr "Посилання на файл"
 msgid "(accept files only from trusted sources)"
 msgstr "(приймайте файли тільки від довіренних осіб)"
 
-#: add-on/message/index.php:1352
+#: add-on/message/index.php:1349
 msgid "The file was sent successfully."
 msgstr "Файл був успішно надісланий"
 
-#: add-on/message/index.php:1355
+#: add-on/message/index.php:1352
 msgid ""
 "You have exceeded the limit on the number of uploaded files. Wait until the "
 "files sent previously will be accepted."
@@ -1590,7 +1581,7 @@ msgstr ""
 "Ви досягнути ліміту по к-сті файлів,що відправляються. Зачекайте поки файли\n"
 ",відправлені раніше, будуть прийняті."
 
-#: add-on/message/index.php:1365
+#: add-on/message/index.php:1362
 msgid "Removes the file from the server"
 msgstr "Видаляю файл з серверу"
 
@@ -1705,7 +1696,7 @@ msgid "Surname"
 msgstr "Прізвище"
 
 #: add-on/profile/index.php:324 add-on/profile/index.php:709
-#: functions/register.php:194 templates/form-register.php:10
+#: functions/register.php:216 templates/form-register.php:10
 #: templates/form-sign.php:10
 msgid "Nickname"
 msgstr "Нікнейм"
@@ -1837,7 +1828,7 @@ msgid "User status"
 msgstr "Статус користувача"
 
 #: add-on/publicpost/addon-options.php:11
-#: add-on/publicpost/addon-options.php:212 add-on/publicpost/classes.php:56
+#: add-on/publicpost/addon-options.php:214 add-on/publicpost/classes.php:56
 #: add-on/user-account/addon-options.php:74
 #: add-on/user-account/addon-options.php:85
 #: add-on/user-account/addon-options.php:95
@@ -1846,23 +1837,23 @@ msgstr "Статус користувача"
 msgid "Not selected"
 msgstr "Не обрано"
 
-#: add-on/publicpost/addon-options.php:28
+#: add-on/publicpost/addon-options.php:30
 msgid "Guests and users"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:31
+#: add-on/publicpost/addon-options.php:33
 msgid "The publish settings"
 msgstr "Налаштування публікації"
 
-#: add-on/publicpost/addon-options.php:34 rcl-admin/admin-pages.php:81
+#: add-on/publicpost/addon-options.php:36 rcl-admin/admin-pages.php:81
 msgid "General settings"
 msgstr "Загальні налаштування"
 
-#: add-on/publicpost/addon-options.php:36
+#: add-on/publicpost/addon-options.php:38
 msgid "Page publishing and editing records"
 msgstr "Сторінка публікації і редагування"
 
-#: add-on/publicpost/addon-options.php:38
+#: add-on/publicpost/addon-options.php:40
 msgid ""
 "Required for proper formation of links to edit records, you must specify the "
 "page where the shortcode is [public-form] no matter where displayed the very "
@@ -1873,51 +1864,51 @@ msgstr ""
 "публікації,\n"
 "але й для її редагування"
 
-#: add-on/publicpost/addon-options.php:40
+#: add-on/publicpost/addon-options.php:42
 msgid "Display information about the author"
 msgstr "Відображати інформацію про автора"
 
-#: add-on/publicpost/addon-options.php:43
-#: add-on/publicpost/addon-options.php:50
+#: add-on/publicpost/addon-options.php:45
+#: add-on/publicpost/addon-options.php:52
 #: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:171
 #: rcl-admin/admin-pages.php:244 rcl-admin/admin-pages.php:249
 #: rcl-admin/admin-pages.php:260
 msgid "Disabled"
 msgstr "Відключено"
 
-#: add-on/publicpost/addon-options.php:43
-#: add-on/publicpost/addon-options.php:50
+#: add-on/publicpost/addon-options.php:45
+#: add-on/publicpost/addon-options.php:52
 #: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:172
 #: rcl-admin/admin-pages.php:260
 msgid "Included"
 msgstr "Підключено"
 
-#: add-on/publicpost/addon-options.php:46
+#: add-on/publicpost/addon-options.php:48
 msgid "Tab list of publications"
 msgstr "Вкладка публікацій користувача"
 
-#: add-on/publicpost/addon-options.php:55
+#: add-on/publicpost/addon-options.php:57
 msgid "List of publications of the user"
 msgstr "Список публікацій користувача"
 
-#: add-on/publicpost/addon-options.php:58
+#: add-on/publicpost/addon-options.php:60
 msgid "Only the owner of the account"
 msgstr "Тільки господарю кабінета"
 
-#: add-on/publicpost/addon-options.php:58
+#: add-on/publicpost/addon-options.php:60
 msgid "Show everyone including guests"
 msgstr "Показувати всім,включаючи гостей"
 
-#: add-on/publicpost/addon-options.php:67
+#: add-on/publicpost/addon-options.php:69
 #: add-on/publicpost/rcl_publicform.php:346
 msgid "Category"
 msgstr "Категорія"
 
-#: add-on/publicpost/addon-options.php:69
+#: add-on/publicpost/addon-options.php:71
 msgid "Authorized headings"
 msgstr "Категорії для вибору"
 
-#: add-on/publicpost/addon-options.php:71
+#: add-on/publicpost/addon-options.php:73
 msgid ""
 "ID columns in which permitted the publication should be separated by commas. "
 "This setting is common to all forms of publication, but it is possible to "
@@ -1930,7 +1921,7 @@ msgstr ""
 "діє для всіх форм публікації типу post,але можна вказувати\n"
 "категорії безпосередньо к шорткоді  [public-form cats=\"72,149\"]"
 
-#: add-on/publicpost/addon-options.php:75
+#: add-on/publicpost/addon-options.php:77
 msgid ""
 "It is better to specify the parent category, then their child will be "
 "withdrawn automatically."
@@ -1938,79 +1929,79 @@ msgstr ""
 "Рекомендується вказувати батьківські категорії, тоді дочірні категорії\n"
 "будуть виведені автоматично"
 
-#: add-on/publicpost/addon-options.php:77
+#: add-on/publicpost/addon-options.php:79
 msgid "Number of columns to select"
 msgstr "К-сть для вибору"
 
-#: add-on/publicpost/addon-options.php:121 add-on/publicpost/index.php:36
+#: add-on/publicpost/addon-options.php:123 add-on/publicpost/index.php:36
 msgid "Form of publication"
 msgstr "Форма публікації"
 
-#: add-on/publicpost/addon-options.php:123
+#: add-on/publicpost/addon-options.php:125
 msgid "Text editor"
 msgstr "Текстовий редактор"
 
-#: add-on/publicpost/addon-options.php:128
+#: add-on/publicpost/addon-options.php:130
 msgid "WP-RECALL editor"
 msgstr "Редактор WP-RECALL"
 
-#: add-on/publicpost/addon-options.php:129
+#: add-on/publicpost/addon-options.php:131
 msgid "WordPress editor"
 msgstr "Редактор WordPress"
 
-#: add-on/publicpost/addon-options.php:135
+#: add-on/publicpost/addon-options.php:137
 msgid "Images sizes"
 msgstr "Розміри зображень"
 
-#: add-on/publicpost/addon-options.php:140
+#: add-on/publicpost/addon-options.php:142
 msgid "Default: 800,600"
 msgstr "За замовченням: 800,600"
 
-#: add-on/publicpost/addon-options.php:142
+#: add-on/publicpost/addon-options.php:144
 msgid "Available buttons Editor"
 msgstr "Дозволені кнопки в редакторі"
 
-#: add-on/publicpost/addon-options.php:146
+#: add-on/publicpost/addon-options.php:148
 msgid "Subheader"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:147 functions/rcl_editfields.php:142
+#: add-on/publicpost/addon-options.php:149 functions/rcl_editfields.php:142
 msgid "Text"
 msgstr "Текст"
 
-#: add-on/publicpost/addon-options.php:148
+#: add-on/publicpost/addon-options.php:150
 msgid "Upload images"
 msgstr "Завантаження зображень"
 
-#: add-on/publicpost/addon-options.php:149
+#: add-on/publicpost/addon-options.php:151
 msgid "HTML"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:157
+#: add-on/publicpost/addon-options.php:159
 msgid "View editor WP"
 msgstr "Вид редактора WP"
 
-#: add-on/publicpost/addon-options.php:160
+#: add-on/publicpost/addon-options.php:162
 msgid "Visual Editor"
 msgstr "Візуальний редактор"
 
-#: add-on/publicpost/addon-options.php:160
+#: add-on/publicpost/addon-options.php:162
 msgid "HTML-Editor"
 msgstr "HTML-Редактор"
 
-#: add-on/publicpost/addon-options.php:162
+#: add-on/publicpost/addon-options.php:164
 msgid "Number of images in the gallery Wp-Recall"
 msgstr "К-сть зображень в галереї Wp-Recall"
 
-#: add-on/publicpost/addon-options.php:165
+#: add-on/publicpost/addon-options.php:167
 msgid "The maximum image size, Mb"
 msgstr "Максимальний розмір зображень, МБ"
 
-#: add-on/publicpost/addon-options.php:169
+#: add-on/publicpost/addon-options.php:171
 msgid "The size in the editor by default"
 msgstr "Розмір зображень в редакторі за замовченням"
 
-#: add-on/publicpost/addon-options.php:174
+#: add-on/publicpost/addon-options.php:176
 msgid ""
 "Select the picture size in the silence of their use in the visual editor "
 "during the publishing process"
@@ -2018,120 +2009,120 @@ msgstr ""
 "Виберіть розмір зображень при їх розміщенні в контенті візуального\n"
 "редактора"
 
-#: add-on/publicpost/addon-options.php:178
+#: add-on/publicpost/addon-options.php:180
 msgid "The output form of publication"
 msgstr "Вивід форми публікації в особистому кабінеті"
 
-#: add-on/publicpost/addon-options.php:183
-#: add-on/publicpost/addon-options.php:255
+#: add-on/publicpost/addon-options.php:185
+#: add-on/publicpost/addon-options.php:257
 msgid "Do not display"
 msgstr "Не виводити"
 
-#: add-on/publicpost/addon-options.php:183
-#: add-on/publicpost/addon-options.php:255
+#: add-on/publicpost/addon-options.php:185
+#: add-on/publicpost/addon-options.php:257
 msgid "Output"
 msgstr "Виводити"
 
-#: add-on/publicpost/addon-options.php:188
+#: add-on/publicpost/addon-options.php:190
 msgid "The form ID"
 msgstr "Ідентифікатор форми"
 
-#: add-on/publicpost/addon-options.php:190
+#: add-on/publicpost/addon-options.php:192
 msgid ""
 "Enter the form ID to the conclusion in the personal Cabinet. The default is 1"
 msgstr ""
 "Введіть ідентифікатор форми публікації в особистому кабінеті. \n"
 "За замовченням 1"
 
-#: add-on/publicpost/addon-options.php:197
+#: add-on/publicpost/addon-options.php:199
 msgid "Publication of records"
 msgstr "Публікація записів"
 
-#: add-on/publicpost/addon-options.php:199
+#: add-on/publicpost/addon-options.php:201
 msgid "Republishing is allowed"
 msgstr "Публікація дозволена"
 
-#: add-on/publicpost/addon-options.php:208
+#: add-on/publicpost/addon-options.php:210
 msgid "Redirect page"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:215
+#: add-on/publicpost/addon-options.php:217
 msgid ""
 "Select the page to which visitors will be redirected after a successful "
 "publication , if the site is included in the registration confirmation email"
 msgstr ""
 
-#: add-on/publicpost/addon-options.php:219
+#: add-on/publicpost/addon-options.php:221
 msgid "Moderation of publications"
 msgstr "Модерацій публікацій"
 
-#: add-on/publicpost/addon-options.php:230
+#: add-on/publicpost/addon-options.php:232
 msgid "Editing"
 msgstr "Редагування"
 
-#: add-on/publicpost/addon-options.php:232
+#: add-on/publicpost/addon-options.php:234
 msgid "Frontend editing"
 msgstr "Фронтенд редагування"
 
-#: add-on/publicpost/addon-options.php:236
+#: add-on/publicpost/addon-options.php:238
 msgid "Administrators"
 msgstr "Адміністратори"
 
-#: add-on/publicpost/addon-options.php:237
+#: add-on/publicpost/addon-options.php:239
 msgid "Editors"
 msgstr "Редактори"
 
-#: add-on/publicpost/addon-options.php:238
+#: add-on/publicpost/addon-options.php:240
 msgid "Authors"
 msgstr "Автори"
 
-#: add-on/publicpost/addon-options.php:241
+#: add-on/publicpost/addon-options.php:243
 msgid "Time limit editing"
 msgstr "Обмеження часу редагування"
 
-#: add-on/publicpost/addon-options.php:243
+#: add-on/publicpost/addon-options.php:245
 msgid "Limit editing time of publication in hours, by default: unlimited"
 msgstr "Обмежте час редагування публікації, за замовченням: без обмежень"
 
-#: add-on/publicpost/addon-options.php:249
+#: add-on/publicpost/addon-options.php:251
 msgid "Tags"
 msgstr "Теги"
 
-#: add-on/publicpost/addon-options.php:251
+#: add-on/publicpost/addon-options.php:253
 msgid "Displaying a list of tags"
 msgstr "Вивід списка тегів"
 
-#: add-on/publicpost/addon-options.php:260
+#: add-on/publicpost/addon-options.php:262
 msgid "Limit the output"
 msgstr "Обмеження виводу"
 
-#: add-on/publicpost/addon-options.php:262
+#: add-on/publicpost/addon-options.php:264
 msgid "IDs of tags separated by commas, default displays all"
 msgstr "Індетифікатори тегів через кому, за замовченням виводяться всі"
 
-#: add-on/publicpost/addon-options.php:269
+#: add-on/publicpost/addon-options.php:271
 msgid "Custom fields"
 msgstr "Довільні поля"
 
-#: add-on/publicpost/addon-options.php:270
+#: add-on/publicpost/addon-options.php:272
 msgid ""
 "Settings only for fields created using the form of the publication wp-recall"
 msgstr ""
 "Налаштування тільки для полів, створених для форми публікації WP-Recall"
 
-#: add-on/publicpost/addon-options.php:272
+#: add-on/publicpost/addon-options.php:274
 msgid "Automatic withdrawal"
 msgstr "Автоматичне відображення"
 
-#: add-on/publicpost/addon-options.php:282
+#: add-on/publicpost/addon-options.php:284
 msgid "Place output fields"
 msgstr "Місце відображення полів"
 
-#: add-on/publicpost/addon-options.php:285
+#: add-on/publicpost/addon-options.php:287
 msgid "After the content recording"
 msgstr "Після контенту публікації"
 
-#: add-on/publicpost/addon-options.php:285
+#: add-on/publicpost/addon-options.php:287
 msgid "On content recording"
 msgstr "Над контентом публікації"
 
@@ -2597,48 +2588,48 @@ msgstr "Обмеження по рейтингу"
 msgid "the default not limited"
 msgstr "за замовченням без обмежень"
 
-#: add-on/review/index.php:187
+#: add-on/review/index.php:189
 msgid "leave a review"
 msgstr "залишив відгук"
 
-#: add-on/review/index.php:205
+#: add-on/review/index.php:207
 msgid "You have not left any reviews"
 msgstr "Вам ще не залишали відгуків"
 
-#: add-on/review/index.php:207
+#: add-on/review/index.php:209
 msgid "The user has no reviews yet"
 msgstr "У користувача поки немає відгуків"
 
-#: add-on/review/index.php:219
+#: add-on/review/index.php:221
 #, php-format
 msgid "Members with a value rating of less than %d can not leave a review."
 msgstr ""
 "Користувачі зі значенням рейтингу менше ніж %d\n"
 "не можутб залишати відгук"
 
-#: add-on/review/index.php:232
+#: add-on/review/index.php:234
 msgid "Users without published records cannot accept and add reviews."
 msgstr ""
 "Користувачі без опублікованих записів не можуть приймати або залишати\n"
 "відгуки."
 
-#: add-on/review/index.php:246
+#: add-on/review/index.php:248
 msgid "Review text"
 msgstr "Текст відгуку"
 
-#: add-on/review/index.php:247
+#: add-on/review/index.php:249
 msgid "Positively"
 msgstr "Позитивно"
 
-#: add-on/review/index.php:248
+#: add-on/review/index.php:250
 msgid "Neutral"
 msgstr "Нейтрально"
 
-#: add-on/review/index.php:249
+#: add-on/review/index.php:251
 msgid "Negatively"
 msgstr "Негативно"
 
-#: add-on/review/index.php:254
+#: add-on/review/index.php:256
 msgid "Add a review"
 msgstr "Додати відгук"
 
@@ -2760,19 +2751,6 @@ msgstr "Працюючий"
 #: add-on/user-account/gateways/robokassa.php:60
 msgid "Test"
 msgstr "Тестовий"
-
-#: add-on/user-account/gateways/interkassa.php:78
-#: add-on/user-account/rcl_payment.php:99
-msgid "Top up personal account"
-msgstr "Поповнити особистий рахунок"
-
-#: add-on/user-account/gateways/interkassa.php:79
-msgid "Payment for the order on the website"
-msgstr "Оплата замовлення на сайиі"
-
-#: add-on/user-account/gateways/interkassa.php:80
-msgid "Other payments"
-msgstr "Інші платежі"
 
 #: add-on/user-account/gateways/interkassa.php:82
 #: add-on/user-account/gateways/robokassa.php:108
@@ -2906,10 +2884,6 @@ msgstr ""
 msgid "FEED"
 msgstr ""
 
-#: class-rcl-install.php:109
-msgid "Users"
-msgstr "Користувачі"
-
 #: class-rcl-install.php:231
 msgid "Unconfirmed"
 msgstr "Непідтвердежні"
@@ -2918,7 +2892,7 @@ msgstr "Непідтвердежні"
 msgid "Ban"
 msgstr "Заблоковані"
 
-#: functions/authorize.php:35 functions/register.php:104
+#: functions/authorize.php:35 functions/register.php:147
 msgid "Fill in the required fields!"
 msgstr ""
 
@@ -2934,26 +2908,22 @@ msgstr "Введіть символи"
 msgid "Field filled not right CAPTCHA!"
 msgstr "Не вірно заповнено поле CAPTCHA!"
 
-#: functions/class-rcl-users.php:417
+#: functions/class-rcl-users.php:421
 msgid "Total users"
 msgstr "Всього користувачів"
 
-#: functions/class-rcl-users.php:430
+#: functions/class-rcl-users.php:434
 msgid "Activity"
 msgstr "Активності"
 
-#: functions/class-rcl-users.php:431
-msgid "Publications"
-msgstr "Публікаціям"
-
-#: functions/class-rcl-users.php:433 functions/loginform.php:181
+#: functions/class-rcl-users.php:437 functions/loginform.php:181
 #: functions/loginform.php:189 functions/loginform.php:205
 #: functions/shortcodes.php:119 templates/form-register.php:4
 #: templates/form-remember.php:21 templates/form-sign.php:33
 msgid "Registration"
 msgstr "Реєстрація"
 
-#: functions/class-rcl-users.php:437
+#: functions/class-rcl-users.php:441
 msgid "Rated"
 msgstr "Рейтингу"
 
@@ -2970,7 +2940,7 @@ msgstr ""
 msgid "long ago"
 msgstr "давно"
 
-#: functions/loginform.php:51 functions/register.php:195
+#: functions/loginform.php:51 functions/register.php:217
 #: templates/form-sign.php:17
 msgid "Password"
 msgstr "Пароль"
@@ -3148,15 +3118,15 @@ msgstr "Сторінка доповнення"
 msgid "You cant control polucheniya plugins on this site."
 msgstr "Ви не можете керувати загрузкою плагінів на цьому сайті."
 
-#: functions/rcl_addons.php:500
+#: functions/rcl_addons.php:498
 msgid "Unpacking of archive failed."
 msgstr "Розпакування архіву не вдалось."
 
-#: functions/rcl_addons.php:503
+#: functions/rcl_addons.php:501
 msgid "ZIP archive not found."
 msgstr "ZIP архів не знайдений."
 
-#: functions/rcl_addons.php:578 rcl-admin/admin-pages.php:192
+#: functions/rcl_addons.php:576 rcl-admin/admin-pages.php:192
 msgid "Login and register"
 msgstr "Вхід і реєстрація"
 
@@ -3289,35 +3259,19 @@ msgstr "Неможливо відкрити архів!"
 msgid "Recallbar"
 msgstr ""
 
-#: functions/register.php:115
-msgid "Login invalid characters!"
-msgstr "В логіні недопустимі символи!"
-
-#: functions/register.php:118
-msgid "Invalid E-mail!"
-msgstr "Неправильний E-mail!"
-
-#: functions/register.php:121
-msgid "Username already in use!"
-msgstr "Логін вже використовується!"
-
-#: functions/register.php:124
-msgid "E-mail is already in use!"
-msgstr "E-mail вже використовується!"
-
-#: functions/register.php:191
+#: functions/register.php:213
 msgid "Confirm your registration!"
 msgstr "Підтвердіть свою реєстрацію!"
 
-#: functions/register.php:193
+#: functions/register.php:215
 msgid "You or someone else signed up on the website"
 msgstr "Ви або хтось інший зареєструвався на сайті"
 
-#: functions/register.php:193
+#: functions/register.php:215
 msgid "with the following data:"
 msgstr "з наступними данними:"
 
-#: functions/register.php:207
+#: functions/register.php:229
 msgid "If it wasnt you, then just ignore this email"
 msgstr "Якщо це були не ви,то просто проігноруйте цей лист"
 
@@ -3349,7 +3303,7 @@ msgstr ""
 "Почніть покристуватись всіма можливостями, війдіть або\n"
 "зареєструйтесь на сайті"
 
-#: functions/tabs_options.php:12 functions/tabs_options.php:65
+#: functions/tabs_options.php:12 functions/tabs_options.php:66
 msgid "Setting tabs"
 msgstr "Налаштування вкладок"
 
@@ -3361,7 +3315,7 @@ msgstr "Ні жодної вкладки особистого кабінету �
 msgid "Sort your tabs by dragging them to the desired position"
 msgstr "Сортуйте вкладки перетаскуванням"
 
-#: functions/tabs_options.php:74
+#: functions/tabs_options.php:75
 msgid "Name tab"
 msgstr "Імя вкладки"
 
@@ -3670,15 +3624,15 @@ msgstr "Помилка! Дане доповнення підтримує ajax-з
 msgid "The site works using the functionality of the plugin"
 msgstr "Сайт використовує функціонал плагіну"
 
-#: rcl-functions.php:261
+#: rcl-functions.php:255
 msgid "Author of publication"
 msgstr "Автор публікації"
 
-#: rcl-functions.php:364
+#: rcl-functions.php:358
 msgid "Congratulations! You have been banned."
 msgstr "Ви були заблоковані на цьому сайті."
 
-#: rcl-functions.php:498
+#: rcl-functions.php:492
 msgid "Publication pending approval!"
 msgstr "Публікація очікує одобрення!"
 
@@ -3713,10 +3667,6 @@ msgstr "Зараз в мережі"
 #: rcl-widgets.php:138
 msgid "The block with the main profile information"
 msgstr "Блок з основною інформацією профіля"
-
-#: rcl-widgets.php:140 rcl-widgets.php:161
-msgid "Control panel"
-msgstr "Панель управління"
 
 #: templates/form-register.php:29
 msgid "Authorization "
@@ -3768,6 +3718,150 @@ msgstr ""
 #: wp-recall.php:38 wp-recall.php:42
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "Deleted user!"
+#~ msgstr "Сторінка користувача видалена"
+
+#~ msgid "To delete all publications"
+#~ msgstr "Для видалення всіх публікацій"
+
+#~ msgid "Your group has been removed!"
+#~ msgstr "Ваша група була видалена!"
+
+#~ msgid ""
+#~ "To edit the title, description or pictures of a group just click on this "
+#~ "element"
+#~ msgstr ""
+#~ "Для редагування заголовку, опису чи зображення групи натисність \n"
+#~ "на потрібний елемент"
+
+#~ msgid "Add a description of the group"
+#~ msgstr "Додайте опис групи"
+
+#~ msgid "The status of the group"
+#~ msgstr "Статус групи"
+
+#~ msgid "Private group"
+#~ msgstr "Приватна група"
+
+#~ msgid "ban the publication team members"
+#~ msgstr "Заборонити публікації учасникам групи"
+
+#~ msgid "show group members"
+#~ msgstr "Відображати учасників"
+
+#~ msgid "to show the last image of the group"
+#~ msgstr "Відображати останні зображення в групі"
+
+#~ msgid "Category group (split by comma)"
+#~ msgstr "Категорії групи (розділяти комою)"
+
+#~ msgid "To close the settings"
+#~ msgstr "Закрити налаштування"
+
+#~ msgid "Delete group"
+#~ msgstr "Видалити групу"
+
+#~ msgid "Requests to join the group"
+#~ msgstr "Запити на доступ в групу"
+
+#~ msgid "Take"
+#~ msgstr "Одобрити"
+
+#~ msgid "To leave the group"
+#~ msgstr "Вийти з групи"
+
+#~ msgid "Your application for membership is accepted"
+#~ msgstr "Ваш запит на доступ в групу одобрений"
+
+#~ msgid "To apply for membership"
+#~ msgstr "Дозволено групам користувачів"
+
+#~ msgid "Join"
+#~ msgstr "Приєднатись"
+
+#~ msgid "All members"
+#~ msgstr "Всі учасники"
+
+#~ msgid "Access to the closed group privacy settings."
+#~ msgstr "Доступ закритий налаштуваннями приватності."
+
+#~ msgid "The last photo of the group"
+#~ msgstr "Останні фото в групі"
+
+#~ msgid "To publish a new entry in the group"
+#~ msgstr "Публікація нового поста в групі"
+
+#~ msgid "Close form"
+#~ msgstr "Закрити форму"
+
+#~ msgid "Record publishing"
+#~ msgstr "Публікація запису"
+
+#~ msgid "To be able to post comments you must be a member of this group"
+#~ msgstr "Для коментування ви повинні бути учасником групи"
+
+#~ msgid "To create a group"
+#~ msgstr "Створення групи"
+
+#~ msgid "Group description"
+#~ msgstr "Опис"
+
+#~ msgid ""
+#~ "Private group. The access group just approved the request of the user."
+#~ msgstr ""
+#~ "Приватная група. Доступ в групу можливий тільки по схваленому запиту"
+
+#~ msgid "Group avatar"
+#~ msgstr "Аватар групи"
+
+#~ msgid "You are not allowed to create new groups."
+#~ msgstr "Вам не дозволено створювати нові групи."
+
+#~ msgid "Created group"
+#~ msgstr "Створені групи"
+
+#~ msgid "Joined the group"
+#~ msgstr "Вступив в групи"
+
+#~ msgid "The user is not in group"
+#~ msgstr "Користувач не перебуває в групі"
+
+#~ msgid "Search group"
+#~ msgstr "Пошук групи"
+
+#~ msgid "Find"
+#~ msgstr "Знайти"
+
+#~ msgid "Created date"
+#~ msgstr "Дата створення"
+
+#~ msgid "By name"
+#~ msgstr "По імені"
+
+#~ msgid "The number of records"
+#~ msgstr "По к-сті записів"
+
+#~ msgid "Creator"
+#~ msgstr "Засновник"
+
+#~ msgid "Participants"
+#~ msgstr "Учасники"
+
+#~ msgid "Remove from group"
+#~ msgstr "Видалити з групи"
+
+#~ msgid "Login invalid characters!"
+#~ msgstr "В логіні недопустимі символи!"
+
+#~ msgid "Invalid E-mail!"
+#~ msgstr "Неправильний E-mail!"
+
+#~ msgid "Username already in use!"
+#~ msgstr "Логін вже використовується!"
+
+#~ msgid "E-mail is already in use!"
+#~ msgstr "E-mail вже використовується!"
 
 #~ msgid "already"
 #~ msgstr "вже"

@@ -358,6 +358,7 @@ max-width: 80%;
 #tab-privat textarea{
 	width:100%;
 	padding:5px;
+        box-sizing: border-box;
 }
 #lk-conteyner .remove_black_list{
 	background-color:#ccc;

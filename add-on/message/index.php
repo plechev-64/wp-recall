@@ -1328,10 +1328,7 @@ class Rcl_Messages{
 	}
 
 	function str_nl2br_rcl($content){
-		$content_message = str_replace("\'","'",$content);
-		$content_message = str_replace('\"','"',$content_message);
-		$content_message = nl2br($content_message);
-		return $content_message;
+		return nl2br(str_replace(array("\'",'\"'),array("'",'"'),$content));
 	}
 
 	function get_footer_scripts_privat_rcl($script){

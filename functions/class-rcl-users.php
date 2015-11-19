@@ -5,7 +5,7 @@ class Rcl_Users{
     public $number = false;
     public $inpage = 10;
     public $offset = 0;
-    public $paged = 0;
+    public $paged = false;
     public $orderby = 'user_registered';
     public $order = 'DESC';
     public $template = 'rows';
@@ -26,12 +26,20 @@ class Rcl_Users{
 
         $this->init_properties($args);
 
+        if($this->include){
+            $this->number = count(explode(',',$this->include));
+        }
+
         if(isset($_GET['users-filter'])&&$this->filters) $this->orderby = $_GET['users-filter'];
         if(isset($_GET['users-order'])&&$this->filters) $this->order = $_GET['users-order'];
 
         $this->add_uri['users-filter'] = $this->orderby;
 
         $this->data = ($this->data)? array_map('trim', explode(',',$this->data)): array();
+
+        if($this->paged){
+            $this->offset = $this->paged*$this->inpage - $this->inpage;
+        }
 
         //print_r($this);
 
@@ -70,7 +78,7 @@ class Rcl_Users{
             add_filter('rcl_users_query',array($this,'add_query_search'));
     }
 
-    function remove_userdata(){
+    function remove_data(){
         remove_all_filters('rcl_users_query');
         remove_all_filters('rcl_users');
     }
@@ -98,7 +106,7 @@ class Rcl_Users{
         $users = $wpdb->get_results( $this->query() );
 
         //if($this->number) $this->users_count = count($users);
-
+        //print_r($users);
         $users = apply_filters('rcl_users',$users);
 
         return $users;
@@ -434,7 +442,7 @@ class Rcl_Users{
 
         $filters = apply_filters('rcl_users_filter',$filters);
 
-        $content .= '<div class="rcl-user-filters">'.__('Filter by','rcl').': ';
+        $content .= '<div class="rcl-data-filters">'.__('Filter by','rcl').': ';
 
         foreach($filters as $key=>$name){
             $content .= $this->get_filter($key,$name,$perm);
@@ -447,7 +455,7 @@ class Rcl_Users{
     }
 
     function get_filter($key,$name,$perm){
-        return '<a class="user-filter '.rcl_a_active($this->orderby,$key).'" href="'.$perm.'users-filter='.$key.'">'.$name.'</a> ';
+        return '<a class="data-filter '.rcl_a_active($this->orderby,$key).'" href="'.$perm.'users-filter='.$key.'">'.$name.'</a> ';
     }
 
     function add_query_search($query){

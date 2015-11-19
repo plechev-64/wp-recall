@@ -29,6 +29,8 @@ function rcl_get_userlist($atts, $content = null){
 
     if(!$usersdata){
         $userlist .= '<p align="center">'.__('Users not found','rcl').'</p>';
+        $users->remove_data();
+        
         return $userlist;
     }
 
@@ -45,7 +47,7 @@ function rcl_get_userlist($atts, $content = null){
     if($rclnavi->inpage)
         $userlist .= $rclnavi->navi();
 
-    $users->remove_userdata();
+    $users->remove_data();
 
     return $userlist;
 }

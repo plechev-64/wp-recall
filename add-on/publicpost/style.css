@@ -88,7 +88,8 @@
     margin: 0 3px;
 }
 .public_block textarea {
-    width: 90%;
+    width: 100%;
+    box-sizing: border-box;
 }
 .public_block .submit-public-form{
 	clear:both;
@@ -317,16 +318,16 @@ body #rcl_post_tags.ms-ctn .ms-sel-ctn input{
 }
 .rcl-public-editor .rcl-editor-content textarea{
     min-height: 150px;
-    width: 96%;
 	border:none;
 	margin:0;
 }
 .rcl-public-editor .rcl-editor-content input{   
     width: 100%;
-	border:none;
-	margin:0;
-	font-weight:bold;
-	font-size:18px;
+    border:none;
+    margin:0;
+    font-weight:bold;
+    font-size:18px;
+    box-sizing: border-box;
 }
 .rcl-public-editor .rcl-editor-content .rcl-content-box .rcl-upload-box{
     padding: 20px;

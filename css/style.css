@@ -41,6 +41,7 @@ body .rcl_preloader{
     top: 0!important;
     left: 0!important;
     display: block!important;
+    z-index: 99;
 }
 label.block-label{
     font-weight:normal;
@@ -65,6 +66,7 @@ a.rcl-service-button{
 	height: auto;
 	text-decoration: none;
 	white-space: nowrap;
+        box-sizing: border-box;
 }
 .recall-button.btn{
 	position: relative;
@@ -529,6 +531,23 @@ span.ruble-symbol{
     color: #fff;
     border-radius: 999px;
     padding: 2px 7px;
+}
+
+.rcl-data-filters{
+    margin:10px 0;
+}
+.rcl-data-filters a {
+    background-color: #EAEAEA;
+    margin: 3px;
+    padding: 5px;
+    font-size: 12px;
+    color: #6F6F6F;
+    white-space: nowrap;
+}
+.rcl-data-filters a.filter-active,
+.rcl-data-filters a:hover{
+    background-color: #6F6F6F;
+    color: #EAEAEA;
 }
 
 @media only screen and (min-width: 240px) and (max-width: 720px) {
