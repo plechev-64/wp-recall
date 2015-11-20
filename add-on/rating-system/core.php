@@ -578,11 +578,11 @@ function rcl_add_data_rating_comments($comments){
 	return $comments;
 }
 
-/*add_action( 'wp', 'rcl_add_data_rating_posts');
+add_action( 'wp', 'rcl_add_data_rating_posts');
 function rcl_add_data_rating_posts(){
-	global $wp_query;
+	global $wp_query,$wpdb;
 
-	if(!is_admin()){
+	if(!is_admin()&&$wp_query->is_tax){
 
 		$users = array();
 		$posts = array();
@@ -593,6 +593,12 @@ function rcl_add_data_rating_posts(){
 			$posttypes[$post->post_type] = $post->post_type;
 			$posts[] = $post->ID;
 		}
+
+                $ratingsnone = $wpdb->get_results("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='rayting-none' AND post_id IN (".implode(',',$posts).")");
+
+                foreach($ratingsnone as $val){
+                    $none[$val->post_id] = $val->meta_value;
+                }
 
 		$rating_authors = rcl_get_ratings(array('rating_type'=>'users','object_id'=>$users));
 		$rating_posts = rcl_get_ratings(array('rating_type'=>$posttypes,'object_id'=>$posts));
@@ -611,12 +617,13 @@ function rcl_add_data_rating_posts(){
 		foreach($wp_query->posts as $post){
 			$post->rating_author = (isset($rt_authors[$post->post_author]))? $rt_authors[$post->post_author]: 0;
 			$post->rating_total = (isset($rt_posts[$post->ID]))? $rt_posts[$post->ID]: 0;
+                        $post->rating_none = (isset($none[$post->ID]))? $none[$post->ID]: 0;
 		}
 
-		print_r($wp_query->posts);
+		//print_r($wp_query);
 
 	}
-}*/
+}
 
 add_shortcode('rcl-rating','rcl_rating_shortcode');
 function rcl_rating_shortcode($atts){

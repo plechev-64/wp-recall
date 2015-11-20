@@ -371,6 +371,10 @@
     border: 1px solid #ccc;
 }
 
+#widgets-options .widget-name i{
+    cursor:pointer;
+}
+
 #group-admin-panel{
     margin-bottom: 15px;
     background: #E2E2E2;

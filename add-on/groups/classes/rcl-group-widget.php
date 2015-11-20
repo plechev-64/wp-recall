@@ -184,7 +184,7 @@ class Rcl_Group_Widget {
                     distance: 3,
                     cursor: "move",
                     forceHelperSize: true
-                  }).disableSelection();
+                  });
                 });
                 </script>';
 

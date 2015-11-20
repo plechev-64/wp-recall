@@ -194,7 +194,7 @@ function rcl_get_html_post_rating($object_id,$type,$object_author=false){
     if(!isset($rcl_options['rating_'.$type])||!$rcl_options['rating_'.$type]) return false;
 
     if($post&&!$comment){
-        $rayting_none = get_post_meta($post->ID, 'rayting-none', 1);
+        $rayting_none = (isset($post->rating_none))? $post->rating_none: get_post_meta($post->ID, 'rayting-none', 1);
         if($rayting_none) return false;
     }
 
@@ -231,13 +231,18 @@ function rcl_add_rating_block($content,$args){
 }
 
 function rcl_get_rating_block($args){
-	global $rcl_options,$comment,$user_ID;
+	global $rcl_options,$comment,$post,$user_ID;
 
 	if(is_object($comment)&&$args['rating_type']=='comment'&&$args['object_id']==$comment->comment_ID){
-		if($rcl_options['rating_overall_comment']==1) $value = $comment->rating_votes;
-		else $value = $comment->rating_total;
+		if($rcl_options['rating_overall_comment']==1)
+                    $value = $comment->rating_votes;
+		else
+                    $value = $comment->rating_total;
 	}else{
-		$value = rcl_get_total_rating($args['object_id'],$args['rating_type']);
+            if(is_object($post)&&$args['object_id']==$post->ID&&$post->rating_total)
+                $value = $post->rating_total;
+            else
+                $value = rcl_get_total_rating($args['object_id'],$args['rating_type']);
 	}
 
     $block = '<div class="'.$args['rating_type'].'-value rating-value-block '.rcl_rating_class($value).'">'

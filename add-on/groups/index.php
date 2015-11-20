@@ -119,7 +119,7 @@ function rcl_tab_groups($author_lk){
 }
 
 function rcl_get_link_group_tag($content){
-	global $post,$user_ID;
+	global $post,$user_ID,$rcl_group;
 	if($post->post_type!='post-group') return $content;
 
 	$group_data = get_the_terms( $post->ID, 'groups' );
@@ -132,14 +132,17 @@ function rcl_get_link_group_tag($content){
 	if(!$tag) return $content;
 
         if( doing_filter('the_excerpt') ){
-            $rcl_group = rcl_get_group($group_id);
 
-            if($rcl_group->admin_id!=$user_ID){
+            if(!$rcl_group) $rcl_group = rcl_get_group($group_id);
 
-                $user_status = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
+            if($rcl_group->group_status=='closed'){
+                if($rcl_group->admin_id!=$user_ID){
 
-                if(!$user_status) $content = rcl_close_group_post_content();
+                    $user_status = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
 
+                    if(!$user_status) $content = rcl_close_group_post_content();
+
+                }
             }
         }
 
@@ -336,9 +339,10 @@ function rcl_add_group_access_button(){
 }
 
 function rcl_add_group_user_options(){
-    global $rcl_user,$user_ID;
+    global $rcl_user,$rcl_group,$user_ID;
 
     if($user_ID==$rcl_user->ID) return false;
+    if($rcl_user->ID==$rcl_group->admin_id) return false;
 
     $group_roles = rcl_get_group_roles();
 

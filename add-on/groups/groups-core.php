@@ -68,7 +68,7 @@ function rcl_update_group($args){
      }
      if(isset($args['description'])){
         $res = $wpdb->update(  $wpdb->prefix.'term_taxonomy',
-            array( 'description' => esc_html($args['description'])),
+            array( 'description' => esc_html(stripslashes_deep($args['description']))),
             array( 'term_id' => $args['group_id'] )
          );
      }
@@ -278,7 +278,7 @@ function rcl_get_group_users($group_id){
 
     add_filter('rcl_users_query','rcl_group_add_users_query');
 
-    if(rcl_is_group_can('admin'))
+    if(rcl_is_group_can('moderator')||current_user_can('edit_others_posts'))
         add_action('user_description','rcl_add_group_user_options');
 
     $page = (isset($_POST['page']))? $_POST['page']: false;
@@ -719,7 +719,7 @@ function rcl_edit_group_pre_get_posts($query){
             if($rcl_group->admin_id==$user_ID) return $query;
 
             if($rcl_group->group_status=='closed'){
-                //print_r($rcl_group);
+
                 if(!$rcl_group->current_user&&$user_ID) $in_group = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
                 else $in_group = $rcl_group->current_user;
 
