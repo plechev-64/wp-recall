@@ -124,7 +124,7 @@ class Group_Users_Widget extends Rcl_Group_Widget {
 
     function options($instance){
 
-        $defaults = array('title' => __('Пользователи','rcl'),'count' => 12);
+        $defaults = array('title' => __('Users','rcl'),'count' => 12);
         $instance = wp_parse_args( (array) $instance, $defaults );
 
         echo '<label>'.__('Title','rcl').'</label>'
@@ -152,17 +152,7 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
         );
     }
 
-    function options($instance){
-
-        $defaults = array('title' => __('Form of the publication','rcl'));
-        $instance = wp_parse_args( (array) $instance, $defaults );
-
-        echo '<label>'.__('Title','rcl').'</label>'
-                . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
-
-    }
-
-    function widget($args) {
+    function widget($args,$instance) {
 
        if(!rcl_is_group_can('author')) return false;
 
@@ -170,11 +160,28 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 
         global $rcl_group;
 
+        $typeform = (isset($instance['type_form']))? $instance['type_form']: 0;
+
         echo $before;
 
-        echo do_shortcode('[public-form post_type="post-group" group_id="'.$rcl_group->term_id.'"]');
+        echo do_shortcode('[public-form post_type="post-group" type_editor="'.$typeform.'" group_id="'.$rcl_group->term_id.'"]');
 
         echo $after;
+    }
+
+    function options($instance){
+
+        $defaults = array('title' => __('Form of the publication','rcl'));
+        $instance = wp_parse_args( (array) $instance, $defaults );
+
+        echo '<label>'.__('Title','rcl').'</label>'
+                . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
+        echo '<label>'.__('Type form','rcl').'</label>'
+                . '<select name="'.$this->field_name('type_form').'">'
+                . '<option value="0" '.selected(0,$instance['type_form'],false).'>WP-Recall</option>'
+                . '<option value="1" '.selected(1,$instance['type_form'],false).'>WordPress</option>'
+                . '</select>';
+
     }
 
 }
@@ -253,7 +260,7 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 
     function add_admins_query($query){
         global $rcl_group;
-        $query['join'][] = "INNER JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
+        $query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
         $query['where'][] = "(groups_users.user_role IN ('admin','moderator') AND groups_users.group_id='$rcl_group->term_id') OR (users.ID='$rcl_group->admin_id')";
         $query['group'] = "users.ID";
 
@@ -264,7 +271,7 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
         global $rcl_group;
         if(!$rcl_group) return false;
         add_filter('rcl_users_query',array($this,'add_admins_query'));
-        return rcl_get_userlist(array('number'=>$number,'template'=>'mini','orderby'=>'time_action'));
+        return rcl_get_userlist(array('number'=>$number,'template'=>'mini'));
     }
 
     function options($instance){
@@ -289,7 +296,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
     function Group_Posts_Widget() {
         parent::__construct( array(
             'widget_id'=>'group-posts-widget',
-            'widget_place'=>'content',
+            'widget_place'=>'unuses',
             'widget_title'=>__('Group posts','rcl')
             )
         );

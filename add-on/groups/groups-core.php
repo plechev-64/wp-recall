@@ -14,7 +14,8 @@ function rcl_group_init(){
 
     $rcl_group->single_group = 1;
 
-    if(rcl_is_group_can('admin')) rcl_sortable_scripts();
+    if(rcl_is_group_can('admin')||current_user_can('edit_others_posts'))
+        rcl_sortable_scripts();
 
     return $rcl_group;
 
@@ -126,7 +127,7 @@ function rcl_get_group_roles(){
         ),
         'reader'=>array(
             'user_level'=>1,
-            'role_name'=>__('Подписчик','rcl')
+            'role_name'=>__('Читатель','rcl')
         ),
         'author'=>array(
             'user_level'=>5,
@@ -734,7 +735,7 @@ function rcl_edit_group_pre_get_posts($query){
                             add_filter( 'comments_open', 'rcl_close_group_comments', 10 );
                             remove_filter('rating_block_content','rcl_add_buttons_rating',10);
                         }else{
-                            $query->set('post_type', 'groups');
+                            add_filter('the_content','rcl_close_group_post_content');
                         }
                 }else{
                     if($in_group=='banned'){

@@ -269,7 +269,7 @@ class RCL_Install {
      * В дальнейшем нужно переопределить зависимости и переписать тут всё
      */
     private static function any_functions() {
-        global $wpdb, $rcl_options;
+        global $wpdb, $rcl_options,$active_addons;
 
         if(!isset($rcl_options['view_user_lk_rcl'])){
 
@@ -290,14 +290,21 @@ class RCL_Install {
             //устанавливаем показ аватарок на сайте
             update_option('show_avatars', 1 );
 
+            //производим повторную активацию всех активных дополнений плагина
+            if($active_addons){
+                foreach($active_addons as $addon=>$src_dir){
+                    rcl_activate_addon($addon);
+                }
+            }
+
             /*Ниже функции модифицикации данных плагина при обновлении плагина с более ранних версий*/
 
             //переименование temp-rcl на rcl-upload и данных юзеров использующих эту папку
-            rcl_rename_media_dir();
+            //rcl_rename_media_dir();
             //изменение путей до загруженных в качестве аватарок изображений
-            rcl_update_avatar_data();
+            //rcl_update_avatar_data();
             //обновление данных фида пользователей
-            rcl_update_old_feeds();
+            //rcl_update_old_feeds();
 
         }
 

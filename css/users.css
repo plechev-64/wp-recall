@@ -39,9 +39,9 @@
 .userlist .user-single .user-name {
     padding: 5px 0;
     line-height: 1;
-    margin: 0 0 15px 0;
-	font-size: 18px;
-	clear:none;
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    clear:none;
 }
 .userlist .user-single .user-name .filter-data{
     font-size: 13px;

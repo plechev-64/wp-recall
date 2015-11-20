@@ -69,8 +69,13 @@ class Rcl_PublicForm {
         $taxs = array();
         $taxs = apply_filters('taxonomy_public_form_rcl',$taxs);
 
-        $this->type_editor = (isset($rcl_options['type_editor-'.$this->post_type]))? $rcl_options['type_editor-'.$this->post_type]: $rcl_options['type_text_editor'];
-        if(!$this->type_editor) $this->type_editor = $type_editor;
+        $this->type_editor = $type_editor;
+
+        if(!isset($this->type_editor))
+            $this->type_editor = (isset($rcl_options['type_editor-'.$this->post_type]))?
+                $rcl_options['type_editor-'.$this->post_type]:
+                $rcl_options['type_text_editor'];
+
 
         if(isset($rcl_options['accept-'.$this->post_type])) $this->accept = $rcl_options['accept-'.$this->post_type];
 
@@ -116,14 +121,18 @@ class Rcl_PublicForm {
     }
 
     function submit_and_hidden(){
-        global $group_id,$post;
+        global $group_id,$post,$rcl_options;
 
 		$inputs = array(
-			//array('type'=>'submit','value'=>__('To publish','rcl'),'id'=>'edit-post-rcl','class'=>'recall-button'),
-			array('type'=>'button','value'=>__('Preview','rcl'),'onclick'=>'rcl_preview(this);','class'=>'rcl-preview-post recall-button'),
 			array('type'=>'hidden','value'=>1,'name'=>'edit-post-rcl'),
 			array('type'=>'hidden','value'=>base64_encode($this->form_id),'name'=>'id_form'),
 		);
+
+                if(isset($rcl_options['public_preview'])&&$rcl_options['public_preview']==1){
+                    $inputs[] = array('type'=>'submit','value'=>__('To publish','rcl'),'id'=>'edit-post-rcl','class'=>'recall-button');
+                }else{
+                    $inputs[] = array('type'=>'button','value'=>__('Preview','rcl'),'onclick'=>'rcl_preview(this);','class'=>'rcl-preview-post recall-button');
+                }
 
 		if($this->post_id) $inputs[] = array('type'=>'hidden','value'=>$this->post_id,'name'=>'post-rcl');
 		else $inputs[] = array('type'=>'hidden','value'=>base64_encode($this->post_type),'name'=>'posttype');

@@ -158,23 +158,20 @@
 }
 
 #group-popup{
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 99;
-    background: #fff;
+    
 }
 
 #group-link-content{
-    padding: 10px;
-    /* position: absolute; */
-    /* top: 0; */
-    width: 100%;
-    /* min-height: 500px; */
-    /* background: #fff; */
+    background: #fff none repeat scroll 0 0;
     box-sizing: border-box;
-    /* z-index: 9; */
-    height: 100%;
+    padding: 10px 10px 50px;
+    position: absolute;
+    width: 100%;
+    z-index: 9;
+}
+
+#rcl-group.admin-view #group-link-content{
+    top:35px;
 }
 
 #group-link-content h3{
@@ -253,7 +250,6 @@
 
 #group-avatar-upload .userpic-upload{
     
-
 }
 
 #group-avatar-upload .fa input{

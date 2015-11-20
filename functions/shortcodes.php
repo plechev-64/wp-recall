@@ -30,7 +30,7 @@ function rcl_get_userlist($atts, $content = null){
     if(!$usersdata){
         $userlist .= '<p align="center">'.__('Users not found','rcl').'</p>';
         $users->remove_data();
-        
+
         return $userlist;
     }
 
@@ -107,9 +107,9 @@ function rcl_user_action($type=1){
 function rcl_user_description(){
     global $rcl_user;
     if(!$rcl_user->description) return false;
-    echo '<div class="ballun-status">
-        <span class="ballun"></span>
-        <p class="status-user-rcl">'.nl2br(esc_textarea($rcl_user->description)).'</p>
+    echo '<div class="ballun-status">';
+        //'<span class="ballun"></span>'
+        echo '<p class="status-user-rcl">'.nl2br(esc_textarea($rcl_user->description)).'</p>
     </div>';
 }
 

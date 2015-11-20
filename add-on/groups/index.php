@@ -64,14 +64,18 @@ rcl_register_group_content(
 function rcl_group(){
     global $rcl_group;
 
-    echo '<div id="rcl-group" data-group="'.$rcl_group->term_id.'">';
+    $admin = (rcl_is_group_can('admin')||current_user_can('edit_others_posts'))? 1: 0;
 
-    if(rcl_is_group_can('admin'))
+    $class = ($admin)? 'class="admin-view"': '';
+
+    echo '<div id="rcl-group" data-group="'.$rcl_group->term_id.'" '.$class.'>';
+
+    if($admin)
         echo rcl_group_admin_panel();
 
-    rcl_include_template('single-group.php',__FILE__);
-
     echo '<div id="group-popup"></div>';
+
+    rcl_include_template('single-group.php',__FILE__);
 
     echo '</div>';
 
@@ -437,14 +441,14 @@ function rcl_get_scripts_groups($script){
                     if(data){
                         jQuery('#group-popup').html(data);
 
-                        var height_content = jQuery('#group-link-content').height();
-                        var height_group = jQuery('#rcl-group').height();
+                        var height = jQuery('#group-link-content').height();
+                        /*var height_group = jQuery('#rcl-group').height();*/
 
-                        if(height_group>height_content) var height = height_group;
-                        else var height = height_content;
+                        /*if(height_group>height_content) var height = height_group;
+                        else var height = height_content;*/
 
-                        height = height+300;
-                        jQuery('#group-link-content').parent().height(height);
+                        /*height = height+300;*/
+                        jQuery('#group-popup').height(height);
                         var offsetTop = jQuery('#group-link-content').offset().top;
                         jQuery('body,html').animate({scrollTop:offsetTop -70}, 500);
 

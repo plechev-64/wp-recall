@@ -45,6 +45,12 @@ function rcl_get_publics_options_page($content){
                     'options'=>array(__('Disabled','rcl'),__('Included','rcl'))
                 )),
 
+                $opt->label(__('Use preview','rcl')),
+                $opt->option('select',array(
+                    'name'=>'public_preview',
+                    'options'=>array(__('Yes','rcl'),__('No','rcl'))
+                )),
+
                 $opt->label(__('Tab list of publications','rcl')),
                 $opt->option('select',array(
                     'name'=>'publics_block_rcl',
