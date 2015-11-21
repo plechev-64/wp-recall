@@ -9,11 +9,17 @@ function rcl_group_migrate_old_data(){
             . "WHERE term_taxonomy.taxonomy = 'groups' AND term_taxonomy.parent = '0' ");
 
     $group_users = $wpdb->get_results("SELECT user_id,meta_value FROM $wpdb->usermeta WHERE meta_key LIKE 'user_group_%'");
+    $admin_users = $wpdb->get_results("SELECT user_id,meta_value FROM $wpdb->usermeta WHERE meta_key LIKE 'admin_group_%'");
     $group_options = $wpdb->get_results("SELECT group_id,option_value FROM ".RCL_PREF."groups_options");
 
     $options = array();
     foreach($group_options as $option){
         $options[$option->group_id] = unserialize($option->option_value);
+    }
+
+    $admins = array();
+    foreach($admin_users as $admin){
+        $admins[$admin->meta_value] = $admin->user_id;
     }
 
     $users = array();
@@ -31,7 +37,7 @@ function rcl_group_migrate_old_data(){
 
     if($options){
         foreach($groups as $group){
-            $grdata[$group->term_id]['admin_id'] = (isset($options[$group->term_id]['admin']))? $options[$group->term_id]['admin']: '';
+            $grdata[$group->term_id]['admin_id'] = (isset($options[$group->term_id]['admin']))? $options[$group->term_id]['admin']: $admins[$group->term_id];
             $grdata[$group->term_id]['avatar_id'] = (isset($options[$group->term_id]['avatar']))? $options[$group->term_id]['avatar']: '';
             $grdata[$group->term_id]['category'] = (isset($options[$group->term_id]['tags']))? $options[$group->term_id]['tags']: '';
             $grdata[$group->term_id]['status'] = (isset($options[$group->term_id]['private']))? 'closed': 'open';
