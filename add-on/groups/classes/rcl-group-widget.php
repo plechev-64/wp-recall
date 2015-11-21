@@ -24,8 +24,10 @@ class Rcl_Group_Widget {
 
     function register($widget_class){
         global $rcl_group_widgets;
-        $object = new $widget_class();
-        $rcl_group_widgets[] = (object)$object->widget;
+        if(class_exists($widget_class)){
+            $object = new $widget_class();
+            $rcl_group_widgets[] = (object)$object->widget;
+        }
     }
 
     function before($object){

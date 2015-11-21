@@ -40,26 +40,31 @@ function rcl_ajax_tab_groups($array_tabs){
 }
 add_filter('ajax_tabs_rcl','rcl_ajax_tab_groups');
 
-rcl_register_group_content(
-    array(
-        'name'=>__('Sidebar','rcl'),
-        'id'=>'sidebar'
-    )
-);
+add_action('init','rcl_register_default_group_sidebars',10);
+function rcl_register_default_group_sidebars(){
 
-rcl_register_group_content(
-    array(
-        'name'=>__('Main','rcl'),
-        'id'=>'content'
-    )
-);
+    rcl_register_group_content(
+        array(
+            'name'=>__('Sidebar','rcl'),
+            'id'=>'sidebar'
+        )
+    );
 
-rcl_register_group_content(
-    array(
-        'name'=>__('Footer','rcl'),
-        'id'=>'footer'
-    )
-);
+    rcl_register_group_content(
+        array(
+            'name'=>__('Main','rcl'),
+            'id'=>'content'
+        )
+    );
+
+    rcl_register_group_content(
+        array(
+            'name'=>__('Footer','rcl'),
+            'id'=>'footer'
+        )
+    );
+
+}
 
 function rcl_group(){
     global $rcl_group;
