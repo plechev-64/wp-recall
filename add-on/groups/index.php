@@ -92,7 +92,7 @@ function rcl_tab_groups($author_lk){
 
     if($author_lk==$user_ID){
 
-        $group_can_public = $rcl_options['public_group_access_recall'];
+        $group_can_public = (isset($rcl_options['public_group_access_recall']))? $rcl_options['public_group_access_recall']: false;
         if($group_can_public){
                 $userdata = get_userdata( $user_ID );
                 if($userdata->user_level>=$group_can_public){

@@ -1,7 +1,11 @@
 #rcl-group{
     clear: both;
     position: relative;
-    /*overflow: hidden;*/
+    overflow: hidden;
+}
+
+#rcl-group a{
+    text-decoration:none;
 }
 
 #rcl-group input[type="text"],
@@ -19,6 +23,10 @@
 #rcl-group .title-widget{
     background: #D9F1FF;
     padding: 5px;
+}
+
+#rcl-group .widget-content p{
+    margin: 5px 0;
 }
 
 #rcl-group .sidebar-widget{
@@ -83,7 +91,7 @@
 }
 
 #rcl-group .group-content p{
-    
+    margin: 5px 0;
 }
 
 #rcl-group .group-content a{
@@ -167,6 +175,7 @@
     padding: 10px 10px 50px;
     position: absolute;
     width: 100%;
+	height: 100%;
     z-index: 9;
 }
 
@@ -323,6 +332,7 @@
 }
 #widgets-options .widgets-zone ul{
     padding: 10px 0 0 0;
+    list-tyle:none;
 }
 #widgets-options .widgets-zone .zone-name{
     font-size: 20px;

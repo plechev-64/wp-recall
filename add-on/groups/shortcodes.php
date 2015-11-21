@@ -15,7 +15,7 @@ function rcl_get_grouplist($atts){
 
         $count = $list->count_groups();
 
-        $rclnavi = new RCL_navi($list->inpage,$count,$search_string,$users->paged);
+        $rclnavi = new RCL_navi($list->inpage,$count,$search_string,$list->paged);
         $list->offset = $rclnavi->offset;
         $list->number = $rclnavi->inpage;
     }

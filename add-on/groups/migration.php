@@ -16,24 +16,30 @@ function rcl_group_migrate_old_data(){
         $options[$option->group_id] = unserialize($option->option_value);
     }
 
-    //print_r($options);exit;
-
     $users = array();
     foreach($group_users as $user){
         $users[$user->meta_value][] = $user->user_id;
     }
 
     $grdata = array();
-    foreach($groups as $group){
 
-        $grdata[$group->term_id]['users'] = ($users[$group->term_id])? $users[$group->term_id]: 0;
-        $grdata[$group->term_id]['admin_id'] = ($options[$group->term_id]['admin'])? $options[$group->term_id]['admin']: '';
-        $grdata[$group->term_id]['avatar_id'] = ($options[$group->term_id]['avatar'])? $options[$group->term_id]['avatar']: '';
-        $grdata[$group->term_id]['category'] = ($options[$group->term_id]['tags'])? $options[$group->term_id]['tags']: '';
-        $grdata[$group->term_id]['status'] = ($options[$group->term_id]['private'])? 'closed': 'open';
+    if($users){
+        foreach($groups as $group){
+            $grdata[$group->term_id]['users'] = (isset($users[$group->term_id]))? $users[$group->term_id]: 0;
+        }
     }
 
-    //print_r($grdata);exit;
+    if($options){
+        foreach($groups as $group){
+            $grdata[$group->term_id]['admin_id'] = (isset($options[$group->term_id]['admin']))? $options[$group->term_id]['admin']: '';
+            $grdata[$group->term_id]['avatar_id'] = (isset($options[$group->term_id]['avatar']))? $options[$group->term_id]['avatar']: '';
+            $grdata[$group->term_id]['category'] = (isset($options[$group->term_id]['tags']))? $options[$group->term_id]['tags']: '';
+            $grdata[$group->term_id]['status'] = (isset($options[$group->term_id]['private']))? 'closed': 'open';
+        }
+    }
+
+
+    if(!$grdata) return false;
 
     $date = current_time('mysql');
 

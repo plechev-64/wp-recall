@@ -44,7 +44,7 @@ function rcl_get_userlist($atts, $content = null){
 
     $userlist .= '</div>';
 
-    if($rclnavi->inpage)
+    if(isset($rclnavi->inpage)&&$rclnavi->inpage)
         $userlist .= $rclnavi->navi();
 
     $users->remove_data();

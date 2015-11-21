@@ -285,6 +285,8 @@ class Rcl_Users{
     //добавление данных публикаций после основного запроса
     function add_posts_count($users){
         global $wpdb;
+		
+		if(!$users) return $users;
 
         $ids = $this->get_users_ids($users);
 
@@ -321,6 +323,8 @@ class Rcl_Users{
     //добавление данных комментариев после основного запроса
     function add_comments_count($users){
         global $wpdb;
+		
+		if(!$users) return $users;
 
         $ids = $this->get_users_ids($users);
 
@@ -340,6 +344,8 @@ class Rcl_Users{
     //добавление данных статуса после основного запроса
     function add_descriptions($users){
         global $wpdb;
+		
+		if(!$users) return $users;
 
         $ids = $this->get_users_ids($users);
 
@@ -372,6 +378,8 @@ class Rcl_Users{
     //добавление данных рейтинга после основного запроса
     function add_rating_total($users){
         global $wpdb;
+		
+		if(!$users) return $users;
 
         $ids = $this->get_users_ids($users);
 
@@ -388,6 +396,9 @@ class Rcl_Users{
     }
 
     function get_users_ids($users){
+		
+		if(!$users) return $users;
+		
         $ids = array();
 
         foreach($users as $user){

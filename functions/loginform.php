@@ -46,12 +46,14 @@ function rcl_filters_regform(){
 add_filter('regform_fields_rcl','rcl_password_regform',5);
 function rcl_password_regform($content){
     global $rcl_options;
+	
+	$difficulty = (isset($rcl_options['difficulty_parole']))? isset($rcl_options['difficulty_parole']): false;
 
     $content .= '<div class="form-block-rcl">'
             . '<label>'.__('Password','rcl').' <span class="required">*</span></label>'
             . '<div class="default-field">
                 <span class="field-icon"><i class="fa fa-lock"></i></span>';
-    if($rcl_options['difficulty_parole']==1){
+    if($difficulty==1){
         $content .= '<input required id="primary-pass-user" type="password" onkeyup="passwordStrength(this.value)" value="" name="user_pass">';
     }else{
         $content .= '<input required type="password" value="" id="primary-pass-user" name="user_pass">';
@@ -59,7 +61,7 @@ function rcl_password_regform($content){
     $content .= '</div>'
             . '</div>';
 
-    if($rcl_options['difficulty_parole']==1){
+    if($difficulty==1){
         $content .= '<div class="form-block-rcl">
                 <label>'.__('The password strength indicator','rcl').':</label>
                 <div id="passwordStrength" class="strength0">
@@ -169,7 +171,7 @@ function rcl_get_authorize_form($type=false,$form=false){
 
 		}else{
 
-                    $login_form = $rcl_options['login_form_recall'];
+                    $login_form = (isset($rcl_options['login_form_recall']))? $rcl_options['login_form_recall']: 0;
 
                     if($login_form==1&&$type!='pageform'){
 
@@ -220,7 +222,7 @@ function rcl_get_authorize_form($type=false,$form=false){
 function rcl_notice_form($form='login'){
     global $wp_errors;
     //print_r($wp_errors);
-    if ( $wp_errors->errors ) {
+    if ( isset($wp_errors->errors)&&$wp_errors->errors ) {
             $errors = '';
             $messages = '';
             foreach ( $wp_errors->errors as $code ) {

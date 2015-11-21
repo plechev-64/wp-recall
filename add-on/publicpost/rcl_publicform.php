@@ -45,7 +45,7 @@ class Rcl_PublicForm {
                         $type=3;
                 }
             }
-            $this->wp_editor = ($type)? $type: 0;
+            $this->wp_editor = (isset($type))? $type: 0;
         }else $this->wp_editor = $wp_editor;
 
         if(isset($_GET['rcl-post-edit'])){
@@ -103,8 +103,7 @@ class Rcl_PublicForm {
     function user_can(){
         global $rcl_options,$user_ID;
 
-        if($this->post_type=='post-group') $user_can = $rcl_options['user_public_access_group'];
-        else $user_can = $rcl_options['user_public_access_recall'];
+        $user_can = $rcl_options['user_public_access_recall'];
 
         if(!$user_can) return true;
 
@@ -136,11 +135,13 @@ class Rcl_PublicForm {
 
 		if($this->post_id) $inputs[] = array('type'=>'hidden','value'=>$this->post_id,'name'=>'post-rcl');
 		else $inputs[] = array('type'=>'hidden','value'=>base64_encode($this->post_type),'name'=>'posttype');
+		
+		$post_id = (isset($post))? $post->ID: 0;
 
 		$hiddens = array(
             'post-group' => array('term_id'=>base64_encode($group_id)),
-            'products' => array('formpage'=>$post->ID),
-            'task' => array('formpage'=>$post->ID)
+            'products' => array('formpage'=>$post_id),
+            'task' => array('formpage'=>$post_id)
         );
 
 		if(isset($hiddens[$this->post_type])){
@@ -565,7 +566,8 @@ function rcl_get_tags_input($post_id=false){
 
 	$fields = '';
 
-	if($rcl_options['display_tags']==1) $fields .= rcl_get_tags_checklist($post_id);
+	if(isset($rcl_options['display_tags'])&&$rcl_options['display_tags']==1)
+		$fields .= rcl_get_tags_checklist($post_id);
 
 	$args = array(
 		'type' => 'text',

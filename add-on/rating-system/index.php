@@ -248,7 +248,7 @@ function rcl_get_rating_block($args){
     $block = '<div class="'.$args['rating_type'].'-value rating-value-block '.rcl_rating_class($value).'">'
             . __('Rating','rcl').': '.rcl_format_rating($value);
 
-	$access = $rcl_options['rating_results_can'];
+	$access = (isset($rcl_options['rating_results_can']))? $rcl_options['rating_results_can']: false;
 
 	$can = true;
 

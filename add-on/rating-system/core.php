@@ -28,6 +28,7 @@ function rcl_get_ratings($args){
 
 	$fields = "*";
 	$object_id = 'object_id';
+	$query = '';
 
 	if(isset($args['fields'])){
 		$fields = implode(',',$args['fields']);
@@ -49,7 +50,7 @@ function rcl_get_ratings($args){
 			$where[] = "rating_type IN ('".implode("','",$args['rating_type'])."')";
 		}
 	}
-	if(isset($args['object_id'])){
+	if(isset($args['object_id'])&&$args['object_id']){
 		$where[] = "$object_id IN (".implode(",",$args['object_id']).")";
 	}
 	if(isset($args['object_author'])){
@@ -83,6 +84,8 @@ function rcl_get_ratings($args){
 	if(isset($args['limit'])&&$args['limit']){
 		$query .= " LIMIT ".implode(',',$args['limit']);
 	}
+	
+	if(!$query) return false;
 
 	$query = "SELECT $fields FROM $table $query";
 	//echo $query;
@@ -185,7 +188,7 @@ function rcl_get_total_rating($object_id,$rating_type){
     global $wpdb,$rcl_options;
 	$total = 0;
 
-	if(!$rcl_options['rating_overall_'.$rating_type]){
+	if(!isset($rcl_options['rating_overall_'.$rating_type])||!$rcl_options['rating_overall_'.$rating_type]){
 		$total =  $wpdb->get_var(
             $wpdb->prepare(
                     "SELECT rating_total FROM ".RCL_PREF."rating_totals "
@@ -587,18 +590,21 @@ function rcl_add_data_rating_posts(){
 		$users = array();
 		$posts = array();
 		$posttypes = array();
+		$ratingsnone = array();
 
 		foreach($wp_query->posts as $post){
 			$users[$post->post_author] = $post->post_author;
 			$posttypes[$post->post_type] = $post->post_type;
 			$posts[] = $post->ID;
 		}
+		
+		if($posts){
+			$ratingsnone = $wpdb->get_results("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='rayting-none' AND post_id IN (".implode(',',$posts).")");
 
-                $ratingsnone = $wpdb->get_results("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='rayting-none' AND post_id IN (".implode(',',$posts).")");
-
-                foreach($ratingsnone as $val){
-                    $none[$val->post_id] = $val->meta_value;
-                }
+			foreach($ratingsnone as $val){
+				$none[$val->post_id] = $val->meta_value;
+			}
+		}
 
 		$rating_authors = rcl_get_ratings(array('rating_type'=>'users','object_id'=>$users));
 		$rating_posts = rcl_get_ratings(array('rating_type'=>$posttypes,'object_id'=>$posts));

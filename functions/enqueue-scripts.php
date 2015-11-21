@@ -9,9 +9,12 @@ function rcl_init_scripts(){
         add_action('wp_head','rcl_hidden_admin_panel');
 
         if(!$user_ID){
-            if(!$rcl_options['login_form_recall']) add_filter('wp_footer', 'rcl_login_form',99);
-            if($rcl_options['login_form_recall']==1) add_filter('wp_enqueue_scripts', 'rcl_pageform_scripts');
-            else if(!$rcl_options['login_form_recall']) add_filter('wp_enqueue_scripts', 'rcl_floatform_scripts');
+            if(!isset($rcl_options['login_form_recall'])||!$rcl_options['login_form_recall']){
+				add_filter('wp_footer', 'rcl_login_form',99);				
+				add_filter('wp_enqueue_scripts', 'rcl_floatform_scripts');
+			}else{
+				add_filter('wp_enqueue_scripts', 'rcl_pageform_scripts');
+			}
         }
 
         if($user_LK) rcl_bxslider_scripts();
@@ -104,7 +107,10 @@ function rcl_frontend_scripts(){
 
         if($user_LK) rcl_dialog_scripts();
 
-	if($user_ID==$user_LK||(isset($rcl_options['public_form_page_rcl'])&&$post->ID==$rcl_options['public_form_page_rcl'])){
+	if($user_ID==$user_LK
+		||($post&&isset($rcl_options['public_form_page_rcl'])
+		&&$post->ID==$rcl_options['public_form_page_rcl']
+	)){
             rcl_crop_scripts();
             rcl_webcam_scripts();
 	}

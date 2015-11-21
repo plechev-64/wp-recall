@@ -157,10 +157,12 @@ function rcl_is_group_can($role){
 
     $group_roles = rcl_get_group_roles();
 
-    if(!$rcl_group->current_user)
+    if(!isset($rcl_group->current_user))
         $rcl_group->current_user = rcl_group_current_user_status();
 
     $user_role = $rcl_group->current_user;
+	
+	if(!$user_role) return false;
 
     if($group_roles[$user_role]['user_level']>=$group_roles[$role]['user_level']) return true;
     else return false;
@@ -250,9 +252,9 @@ function rcl_get_group_user_status($user_id,$group_id){
 function rcl_group_add_users_query($query){
     global $rcl_group;
 
-    $role = $_POST['value'];
+    $role = (isset($_POST['value']))? $_POST['value']: false;
 
-    $role_query = (isset($role)&&$role!='all')? "='".$role."'": "NOT IN ('admin','moderator')";
+    $role_query = ($role&&$role!='all')? "='".$role."'": "NOT IN ('admin','moderator')";
 
     $query['join'][] = "INNER JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
     $query['select'][] = "groups_users.user_role";
@@ -475,6 +477,7 @@ function rcl_get_options_group($group_id){
 }
 
 function rcl_get_tags_list_group($tags,$post_id=null,$first=null){
+	$tg_lst = '';
     if(isset($tags)){
         $name = '';
         if($post_id){

@@ -171,7 +171,7 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 
     function options($instance){
 
-        $defaults = array('title' => __('Form of the publication','rcl'));
+        $defaults = array('title' => __('Form of the publication','rcl'), 'type_form' => 0);
         $instance = wp_parse_args( (array) $instance, $defaults );
 
         echo '<label>'.__('Title','rcl').'</label>'

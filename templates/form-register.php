@@ -1,5 +1,5 @@
 <?php global $typeform;
-if($typeform=='register') $f_reg = 'style="display:block;"'; ?>
+$f_reg = ($typeform=='register')? 'style="display:block;"': ''; ?>
 <div class="form-tab-rcl" id="register-form-rcl" <?php echo $f_reg; ?>>
     <h4 class="form-title"><?php _e('Registration','rcl'); ?></h4>
 

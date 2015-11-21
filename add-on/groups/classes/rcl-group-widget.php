@@ -30,7 +30,7 @@ class Rcl_Group_Widget {
 
     function before($object){
 
-        if(!$object->widget_type) $object->widget_type = 'normal';
+        if(!isset($object->widget_type)||!$object->widget_type) $object->widget_type = 'normal';
 
         $before = sprintf('<div %s class="sidebar-widget '.$object->widget_type.'-widget">','id="'.$object->widget_id.'"');
 
