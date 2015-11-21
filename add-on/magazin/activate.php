@@ -59,18 +59,20 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	}
 
 $rmag_options = get_option('primary-rmag-options');
-//$rmag_options['admin_email_magazin_recall']='';
-$rmag_options['products_warehouse_recall']=0;
-//$rmag_options['add_basket_button_recall']='';
-$rmag_options['sistem_related_products']=1;
-$rmag_options['title_related_products_recall']='Рекомендуем';
-$rmag_options['size_related_products']=3;
-//$rmag_options['connect_sale']='';
-//$rmag_options['type_order_payment']='';
-//$rmag_options['page_result_pay']='';
-//$rmag_options['page_success_pay']='';
-//$rmag_options['page_successfully_pay']='';
+
+if(!isset($rmag_options['products_warehouse_recall'])) $rmag_options['products_warehouse_recall']=0;
+if(!isset($rmag_options['sistem_related_products'])) $rmag_options['sistem_related_products']=1;
+if(!isset($rmag_options['title_related_products_recall'])) $rmag_options['title_related_products_recall']='Рекомендуем';
+if(!isset($rmag_options['size_related_products'])) $rmag_options['size_related_products']=3;
 if(!isset($rmag_options['basket_page_rmag'])){
-		$rmag_options['basket_page_rmag'] = wp_insert_post(array('post_title'=>'Корзина','post_content'=>'[basket]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'rcl-cart'));
-	}
-?>
+    $rmag_options['basket_page_rmag'] = wp_insert_post(array(
+        'post_title'=>'Корзина',
+        'post_content'=>'[basket]',
+        'post_status'=>'publish',
+        'post_author'=>1,
+        'post_type'=>'page',
+        'post_name'=>'rcl-cart'
+    ));
+}
+
+update_option('primary-rmag-options',$rmag_options);

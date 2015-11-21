@@ -44,14 +44,13 @@ if($wpdb->get_var("show tables like '". $table . "'") == $table) {
 
 global $rcl_options;
 if(!isset($rcl_options['rating_post'])){
-	$rcl_options['rating_post'] = 1;
-	$rcl_options['rating_comment'] = 1;
-	$rcl_options['rating_type_post'] = 0;
-	$rcl_options['rating_type_comment'] = 0;
-	$rcl_options['rating_point_post'] = 1;
-	$rcl_options['rating_point_comment'] = 1;
-	$rcl_options['rating_user_post'] = 1;
-	$rcl_options['rating_user_comment'] = 1;
-
+    $rcl_options['rating_post'] = 1;
+    $rcl_options['rating_comment'] = 1;
+    $rcl_options['rating_type_post'] = 0;
+    $rcl_options['rating_type_comment'] = 0;
+    $rcl_options['rating_point_post'] = 1;
+    $rcl_options['rating_point_comment'] = 1;
+    $rcl_options['rating_user_post'] = 1;
+    $rcl_options['rating_user_comment'] = 1;
+    update_option('primary-rcl-options',$rcl_options);
 }
-update_option('primary-rcl-options',$rcl_options);

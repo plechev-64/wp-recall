@@ -13,7 +13,7 @@ if($wpdb->get_var("show tables like '". $table_name . "'") != $table_name) {
 }
 
 global $rcl_options;
-$rcl_options['rating_rcl-review'] = 1;
-$rcl_options['rating_user_rcl-review'] = 10;
-$rcl_options['rating_point_rcl-review'] = 10;
+if(!isset($rcl_options['rating_rcl-review'])) $rcl_options['rating_rcl-review'] = 1;
+if(!isset($rcl_options['rating_user_rcl-review'])) $rcl_options['rating_user_rcl-review'] = 10;
+if(!isset($rcl_options['rating_point_rcl-review'])) $rcl_options['rating_point_rcl-review'] = 10;
 update_option('primary-rcl-options',$rcl_options);
