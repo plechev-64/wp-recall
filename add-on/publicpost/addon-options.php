@@ -12,8 +12,7 @@ function rcl_get_publics_options_page($content){
         'echo'             => 0
     );
 
-    if(!isset($rcl_options['guest_post_redirect'])||!$rcl_options['guest_post_redirect'])
-        $rcl_options['guest_post_redirect'] = false;
+    $guest_redirect = (isset($rcl_options['guest_post_redirect']))? $rcl_options['guest_post_redirect']: false;
 
     $_wp_additional_image_sizes['thumbnail'] = 1;
     $_wp_additional_image_sizes['medium'] = 1;
@@ -216,7 +215,7 @@ function rcl_get_publics_options_page($content){
                     array(
                         $opt->label(__('Redirect page','rcl')),
                         wp_dropdown_pages( array(
-							'selected'   => $rcl_options['guest_post_redirect'],
+							'selected'   => $guest_redirect,
 							'name'       => 'guest_post_redirect',
 							'show_option_none' => __('Not selected','rcl'),
 							'echo'             => 0 )
