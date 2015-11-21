@@ -3,10 +3,15 @@ function rcl_group_init(){
     global $wp_query,$wpdb,$rcl_group,$user_ID;
 
     if(!isset($wp_query->query_vars['groups'])) return false;
+
+    $group_id = 0;
+
     $curent_term = get_term_by('slug', $wp_query->query_vars['groups'], 'groups');
 
     if($curent_term->parent!=0) $group_id = $curent_term->parent;
     else $group_id = $curent_term->term_id;
+
+    if(!$group_id) return false;
 
     $rcl_group = rcl_get_group($group_id);
 
@@ -161,7 +166,7 @@ function rcl_is_group_can($role){
         $rcl_group->current_user = rcl_group_current_user_status();
 
     $user_role = $rcl_group->current_user;
-	
+
 	if(!$user_role) return false;
 
     if($group_roles[$user_role]['user_level']>=$group_roles[$role]['user_level']) return true;
@@ -269,11 +274,16 @@ function rcl_group_add_users_query($query){
     return $query;
 }
 
-function rcl_group_users($number){
+function rcl_group_users($number,$template='mini'){
     global $rcl_group;
     if(!$rcl_group) return false;
     add_filter('rcl_users_query','rcl_group_add_users_query');
-    echo rcl_get_userlist(array('number'=>$number,'template'=>'mini','orderby'=>'time_action'));
+    switch($template){
+        case 'rows': $data = 'descriptions,rating_total,posts_count,comments_count,user_registered'; break;
+        case 'avatars': $data = 'rating_total'; break;
+        default: $data = '';
+     }
+    echo rcl_get_userlist(array('number'=>$number,'template'=>$template,'orderby'=>'time_action','data'=>$data));
 }
 
 function rcl_get_group_users($group_id){
@@ -727,7 +737,7 @@ function rcl_edit_group_pre_get_posts($query){
                 if(!$rcl_group->current_user&&$user_ID) $in_group = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
                 else $in_group = $rcl_group->current_user;
 
-                if(!$in_group){
+                if(!$in_group||$in_group=='banned'){
                         if($query->is_single){
                             global $comments_array;
                             //print_r($comments_array);
@@ -741,10 +751,7 @@ function rcl_edit_group_pre_get_posts($query){
                             add_filter('the_content','rcl_close_group_post_content');
                         }
                 }else{
-                    if($in_group=='banned'){
-                        remove_filter('rating_block_content','rcl_add_buttons_rating',10);
-                        add_filter( 'comments_open', 'rcl_close_group_comments', 10 );
-                    }
+
                 }
             }
 	}

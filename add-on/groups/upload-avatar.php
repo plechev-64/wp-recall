@@ -25,6 +25,8 @@ function rcl_group_avatar_upload(){
                 }
         }
 
+        $filename = $upload['file']['name'];
+
         $mime = explode('/',$upload['file']['type']);
 
         $tps = explode('.',$upload['file']['name']);

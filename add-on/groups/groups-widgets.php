@@ -114,9 +114,10 @@ class Group_Users_Widget extends Rcl_Group_Widget {
         extract( $args );
 
         $user_count = (isset($instance['count']))? $instance['count']: 12;
+        $template = (isset($instance['template']))? $instance['template']: 'mini';
 
         echo $before;
-        echo rcl_group_users($user_count);
+        echo rcl_group_users($user_count,$template);
         echo rcl_get_group_link('rcl_get_group_users',__('All users','rcl'));
 
         echo $after;
@@ -124,13 +125,19 @@ class Group_Users_Widget extends Rcl_Group_Widget {
 
     function options($instance){
 
-        $defaults = array('title' => __('Users','rcl'),'count' => 12);
+        $defaults = array('title' => __('Users','rcl'),'count' => 12,'template' => 'mini');
         $instance = wp_parse_args( (array) $instance, $defaults );
 
         echo '<label>'.__('Title','rcl').'</label>'
                 . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
         echo '<label>'.__('Amount','rcl').'</label>'
                 . '<input type="number" name="'.$this->field_name('count').'" value="'.$instance['count'].'">';
+        echo '<label>'.__('Шаблон вывода','rcl').'</label>'
+                . '<select name="'.$this->field_name('template').'">'
+                . '<option value="mini" '.selected('mini',$instance['template'],false).'>Mini</option>'
+                . '<option value="avatars" '.selected('avatars',$instance['template'],false).'>Avatars</option>'
+                . '<option value="rows" '.selected('rows',$instance['template'],false).'>Rows</option>'
+                . '</select>';
     }
 
 }
@@ -252,9 +259,10 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
         extract( $args );
 
         $user_count = (isset($instance['count']))? $instance['count']: 12;
+        $template = (isset($instance['template']))? $instance['template']: 'mini';
 
         echo $before;
-        echo $this->get_group_administrators($user_count);
+        echo $this->get_group_administrators($user_count,$template);
         echo $after;
     }
 
@@ -267,20 +275,33 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
         return $query;
     }
 
-    function get_group_administrators($number){
+    function get_group_administrators($number,$template='mini'){
         global $rcl_group;
         if(!$rcl_group) return false;
+
+        switch($template){
+           case 'rows': $data = 'descriptions,rating_total,posts_count,comments_count,user_registered'; break;
+           case 'avatars': $data = 'rating_total'; break;
+           default: $data = '';
+        }
+
         add_filter('rcl_users_query',array($this,'add_admins_query'));
-        return rcl_get_userlist(array('number'=>$number,'template'=>'mini'));
+        return rcl_get_userlist(array('number'=>$number,'template'=>$template,'data'=>$data));
     }
 
     function options($instance){
 
-        $defaults = array('title' => __('Management','rcl'),'count' => 12);
+        $defaults = array('title' => __('Management','rcl'),'count' => 12,'template' => 'mini');
         $instance = wp_parse_args( (array) $instance, $defaults );
 
         echo '<label>'.__('Title','rcl').'</label>'
                 . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
+        echo '<label>'.__('Шаблон вывода','rcl').'</label>'
+                . '<select name="'.$this->field_name('template').'">'
+                . '<option value="mini" '.selected('mini',$instance['template'],false).'>Mini</option>'
+                . '<option value="avatars" '.selected('avatars',$instance['template'],false).'>Avatars</option>'
+                . '<option value="rows" '.selected('rows',$instance['template'],false).'>Rows</option>'
+                . '</select>';
 
     }
 

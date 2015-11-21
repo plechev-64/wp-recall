@@ -52,6 +52,7 @@
   width: 50px;
   display: block;
   line-height: 1.4;
+  clear: both;
 }
 .publics-table-rcl .rating-rcl span{
 	display:inline-block;

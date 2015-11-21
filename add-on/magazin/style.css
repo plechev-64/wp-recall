@@ -45,7 +45,7 @@
 .prodlist .product-cat {
     clear: none;
 }
-.pricelist, .prodlist, .userlist {
+.pricelist, .prodlist {
     clear: both;
     margin: 10px 0;
     overflow: hidden;
@@ -54,7 +54,7 @@
 .prodlist .rows-list {
     text-align: center;
 }
-.prodlist .prod-single, .userlist .user-single {
+.prodlist .prod-single {
     border: 1px solid #CCCCCC;
     margin: 5px 3px;
     padding: 5px;

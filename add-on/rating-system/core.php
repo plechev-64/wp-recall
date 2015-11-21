@@ -84,7 +84,7 @@ function rcl_get_ratings($args){
 	if(isset($args['limit'])&&$args['limit']){
 		$query .= " LIMIT ".implode(',',$args['limit']);
 	}
-	
+
 	if(!$query) return false;
 
 	$query = "SELECT $fields FROM $table $query";
@@ -392,7 +392,7 @@ add_action('rcl_update_total_rating','rcl_post_update_user_rating');
 add_action('rcl_delete_rating_with_post','rcl_post_update_user_rating');
 function rcl_post_update_user_rating($args){
     global $rcl_options;
-	if(!$args['object_author']) return false;
+    if(!isset($args['object_author'])||!$args['object_author']) return false;
     if($rcl_options['rating_user_'.$args['rating_type']]==1||$args['rating_type']=='edit-admin'||isset($args['user_overall']))
 		rcl_update_user_rating($args);
 }
@@ -597,7 +597,7 @@ function rcl_add_data_rating_posts(){
 			$posttypes[$post->post_type] = $post->post_type;
 			$posts[] = $post->ID;
 		}
-		
+
 		if($posts){
 			$ratingsnone = $wpdb->get_results("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='rayting-none' AND post_id IN (".implode(',',$posts).")");
 

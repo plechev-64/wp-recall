@@ -3,9 +3,14 @@
     position: relative;
     overflow: hidden;
 }
-
 #rcl-group a{
     text-decoration:none;
+}
+#rcl-group ul{
+    margin: 0 0 0 10px;
+}
+#rcl-group h3{
+	font-size: 16px;
 }
 
 #rcl-group input[type="text"],
@@ -81,7 +86,7 @@
     margin: 0;
 }
 
-#rcl-group .widget-content .userlist .avatar{
+#rcl-group .group-sidebar .widget-content .mini-list .avatar{
     height: 40px;
     width: 40px;
 }
@@ -332,7 +337,8 @@
 }
 #widgets-options .widgets-zone ul{
     padding: 10px 0 0 0;
-    list-tyle:none;
+    list-tyle:none; 
+    margin:0 0 0 0;
 }
 #widgets-options .widgets-zone .zone-name{
     font-size: 20px;
@@ -433,4 +439,8 @@ text-align: right;}
 }
 #group-posts-widget .post-group a{
     
+}
+
+#group-users-widget .rcl-group-link{
+    float:right;
 }

@@ -10,13 +10,15 @@
     clear:none;
     margin-bottom: 10px;
 }
+
 .userlist .user-single {
     overflow: hidden;
-}
-.userlist .user-single {
     border: 1px solid #CCCCCC;
     margin: 5px 3px;
     padding: 5px;
+}
+.userlist.avatars-list .user-single{
+    border: 0px solid #CCCCCC;
 }
 .userlist .user-single .thumb-user {
     float: left;
