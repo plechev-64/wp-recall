@@ -58,9 +58,12 @@ function rcl_daily_addon_update(){
 
 add_action('wp_ajax_rcl_update_addon','rcl_update_addon');
 function rcl_update_addon(){
+
     $addon = $_POST['addon'];
     $need_update = get_option('rcl_addons_need_update');
     if(!isset($need_update[$addon])) return false;
+
+    $activeaddons = get_site_option('active_addons_recall');
 
     $url = 'http://wppost.ru/products-files/api/update.php'
             . '?rcl-addon-action=update';
@@ -125,9 +128,15 @@ function rcl_update_addon(){
         }
 
         if(file_exists(RCL_TAKEPATH.'add-on'.'/')){
-            rcl_deactivate_addon($addon);
+
+            if(isset($activeaddons[$addon]))
+                rcl_deactivate_addon($addon);
+
             $rs = $zip->extractTo(RCL_TAKEPATH.'add-on'.'/');
-            rcl_activate_addon($addon);
+
+            if(isset($activeaddons[$addon]))
+                rcl_activate_addon($addon);
+
         }
 
         $zip->close();

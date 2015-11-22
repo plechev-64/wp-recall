@@ -4,8 +4,8 @@ function rcl_group_migrate_old_data(){
     global $wpdb;
 
     $groups = $wpdb->get_results("SELECT terms.term_id "
-            . "FROM wp_terms AS terms "
-            . "INNER JOIN wp_term_taxonomy AS term_taxonomy ON terms.term_id=term_taxonomy.term_id "
+            . "FROM $wpdb->terms AS terms "
+            . "INNER JOIN $wpdb->term_taxonomy AS term_taxonomy ON terms.term_id=term_taxonomy.term_id "
             . "WHERE term_taxonomy.taxonomy = 'groups' AND term_taxonomy.parent = '0' ");
 
     $group_users = $wpdb->get_results("SELECT user_id,meta_value FROM $wpdb->usermeta WHERE meta_key LIKE 'user_group_%'");
