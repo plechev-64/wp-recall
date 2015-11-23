@@ -857,13 +857,13 @@ function rcl_box_shortcode($atts){
 
 	$html = '';
 
-        $content = nl2br(strip_tags($content));
+        $clear_content = nl2br(strip_tags($content));
 
 	if(isset($_GET['rcl-post-edit'])){
 
             switch($type){
                 case 'text':
-                        $rcl_box['content'] = strip_tags($content);
+                        $rcl_box['content'] = strip_tags($clear_content);
                 break;
                 /*case 'header':
 
@@ -882,13 +882,13 @@ function rcl_box_shortcode($atts){
 
 		switch($type){
 			case 'text':
-				$html = '<p>'.$content.'</p>';
+				$html = '<p>'.$clear_content.'</p>';
 			break;
 			case 'header':
-				$html = '<h3>'.$content.'</h3>';
+				$html = '<h3>'.$clear_content.'</h3>';
 			break;
 			case 'image':
-				$html = '<img class="aligncenter" src="'.$content.'">';
+				$html = '<img class="aligncenter" src="'.$clear_content.'">';
 			break;
 			case 'html':
 				$html = $content;

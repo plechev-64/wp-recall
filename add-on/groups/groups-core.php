@@ -394,7 +394,11 @@ function rcl_update_group_user_role($user_id,$group_id,$new_role){
         )
     );
 
-    do_action('rcl_update_group_user_role');
+    do_action('rcl_update_group_user_role',array(
+            'user_id'=>$user_id,
+            'group_id'=>$group_id,
+            'user_role'=>$new_role
+        ));
 
     return $result;
 }
