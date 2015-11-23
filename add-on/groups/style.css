@@ -428,9 +428,11 @@ text-align: right;}
     
 }
 #group-posts-widget .post-group{
-    background: #FBFBFB;
-    padding: 5px 10px;
+    background: #fbfbfb none repeat scroll 0 0;
+    clear: both;
     margin: 10px 0;
+    overflow: hidden;
+    padding: 5px 10px;
 }
 #group-posts-widget .post-group h3{
     font-size: 16px;
@@ -439,6 +441,18 @@ text-align: right;}
 }
 #group-posts-widget .post-group a{
     
+}
+
+#group-posts-widget .post-group .post-group-thumb{
+    float:left;
+}
+
+#group-posts-widget .post-group .post-group-thumb img{   
+    margin:10px 10px 0 0;
+}
+
+#group-posts-widget .post-group .post-group-content{
+    overflow: hidden;
 }
 
 #group-users-widget .rcl-group-link{

@@ -54,28 +54,33 @@ class Rcl_PublicForm {
             $editpost = get_post($this->post_id);
             $this->post_type = $editpost->post_type;
 
+            $this->type_editor = $type_editor;
+
+            if(!isset($this->type_editor))
+                $this->type_editor = (isset($rcl_options['type_editor-'.$this->post_type]))?
+                    $rcl_options['type_editor-'.$this->post_type]:
+                    $rcl_options['type_text_editor'];
+
             if($this->post_type=='post-group'){
 
                 if(!rcl_can_user_edit_post_group($this->post_id)&&!current_user_can('edit_post', $this->post_id)) $this->can_edit = false;
 
                 $group_id = rcl_get_group_id_by_post($this->post_id);
 
-            }else if(!current_user_can('edit_post', $this->post_id)) $this->can_edit = false;
+                $widget_options  = rcl_get_group_option($group_id, 'widgets_options');
+                if(isset($widget_options['group-public-form-widget'])) $this->type_editor = $widget_options['group-public-form-widget']['type_form'];
+
+            }else if(!current_user_can('edit_post', $this->post_id))
+
+                    $this->can_edit = false;
 
             $form_id = get_post_meta($this->post_id,'publicform-id',1);
+
             if($form_id) $this->form_id = $form_id;
         }
 
         $taxs = array();
         $taxs = apply_filters('taxonomy_public_form_rcl',$taxs);
-
-        $this->type_editor = $type_editor;
-
-        if(!isset($this->type_editor))
-            $this->type_editor = (isset($rcl_options['type_editor-'.$this->post_type]))?
-                $rcl_options['type_editor-'.$this->post_type]:
-                $rcl_options['type_text_editor'];
-
 
         if(isset($rcl_options['accept-'.$this->post_type])) $this->accept = $rcl_options['accept-'.$this->post_type];
 
@@ -135,7 +140,7 @@ class Rcl_PublicForm {
 
 		if($this->post_id) $inputs[] = array('type'=>'hidden','value'=>$this->post_id,'name'=>'post-rcl');
 		else $inputs[] = array('type'=>'hidden','value'=>base64_encode($this->post_type),'name'=>'posttype');
-		
+
 		$post_id = (isset($post))? $post->ID: 0;
 
 		$hiddens = array(
@@ -491,6 +496,8 @@ function rcl_get_tags_checklist($post_id=false){
 
 function rcl_publication_editor(){
 	global $editpost,$rcl_options,$formfields,$formData;
+
+        //print_r($formData);
 
 	if($formData->type_editor){
 

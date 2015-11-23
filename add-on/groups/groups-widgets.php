@@ -329,6 +329,15 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
         extract( $args );
 
+        $defaults = array(
+            'title' => __('Group posts','rcl'),
+            'count' => 12,
+            'excerpt' => 1,
+            'thumbnail' => 1
+        );
+
+        $instance = wp_parse_args( (array) $instance, $defaults );
+
         echo $before;
 
         if(have_posts()){ ?>
@@ -336,7 +345,12 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
             <?php while ( have_posts() ): the_post(); ?>
                 <div class="post-group">
                     <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                    <?php if(!$instance['excerpt']) the_excerpt(); ?>
+                    <?php if($instance['thumbnail']&&has_post_thumbnail()){ ?>
+                        <div class="post-group-thumb"><?php the_post_thumbnail('thumbnail'); ?></div>
+                    <?php } ?>
+                    <div class="post-group-content">
+                        <?php if($instance['excerpt']) the_excerpt(); ?>
+                    </div>
                 </div>
             <?php endwhile; ?>
 
@@ -360,15 +374,25 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
     function options($instance){
 
-        $defaults = array('title' => __('Group posts','rcl'),'count' => 12);
+        $defaults = array(
+            'title' => __('Group posts','rcl'),
+            'count' => 12,
+            'excerpt' => 1,
+            'thumbnail' => 1
+        );
         $instance = wp_parse_args( (array) $instance, $defaults );
 
         echo '<label>'.__('Title','rcl').'</label>'
                 . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
         echo '<label>'.__('Краткое содержимое','rcl').'</label>'
                 . '<select name="'.$this->field_name('excerpt').'">'
-                . '<option value="0" '.selected(0,$instance['excerpt'],false).'>Выводить</option>'
-                . '<option value="1" '.selected(1,$instance['excerpt'],false).'>Не выводить</option>'
+                . '<option value="0" '.selected(0,$instance['excerpt'],false).'>Не выводить</option>'
+                . '<option value="1" '.selected(1,$instance['excerpt'],false).'>Выводить</option>'
+                . '</select>';
+        echo '<label>'.__('Миниатюра','rcl').'</label>'
+                . '<select name="'.$this->field_name('thumbnail').'">'
+                . '<option value="0" '.selected(0,$instance['thumbnail'],false).'>Не выводить</option>'
+                . '<option value="1" '.selected(1,$instance['thumbnail'],false).'>Выводить</option>'
                 . '</select>';
 
     }

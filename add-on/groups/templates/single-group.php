@@ -1,7 +1,7 @@
 <?php global $rcl_group,$rcl_group_widgets; ?>
 <div class="group-sidebar">
     <div class="group-avatar">
-        <?php rcl_group_thumbnail(array(200,200)); ?>
+        <?php rcl_group_thumbnail('medium'); ?>
     </div>
     <div class="sidebar-content">
         <?php rcl_group_content('sidebar'); ?>
