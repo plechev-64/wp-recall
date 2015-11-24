@@ -10,7 +10,7 @@ function rcl_init_scripts(){
 
         if(!$user_ID){
             if(!isset($rcl_options['login_form_recall'])||!$rcl_options['login_form_recall']){
-				add_filter('wp_footer', 'rcl_login_form',99);				
+				add_filter('wp_footer', 'rcl_login_form',99);
 				add_filter('wp_enqueue_scripts', 'rcl_floatform_scripts');
 			}else{
 				add_filter('wp_enqueue_scripts', 'rcl_pageform_scripts');
@@ -120,7 +120,7 @@ function rcl_frontend_scripts(){
 	}
 
 	if( wp_style_is( 'font-awesome' ) ) wp_deregister_style('font-awesome');
-	wp_enqueue_style( 'font-awesome', RCL_URL.'css/fonts/font-awesome.min.css', array(), '4.4.0' );
+	wp_enqueue_style( 'font-awesome', RCL_URL.'css/font-awesome/css/font-awesome.min.css', array(), '4.5.0' );
 
 	if(isset($rcl_options['minify_css'])&&$rcl_options['minify_css']==1){
 		if($rcl_options['custom_scc_file_recall']!=''){

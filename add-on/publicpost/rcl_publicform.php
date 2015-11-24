@@ -48,18 +48,20 @@ class Rcl_PublicForm {
             $this->wp_editor = (isset($type))? $type: 0;
         }else $this->wp_editor = $wp_editor;
 
+        $this->type_editor = $type_editor;
+
+        if(!isset($this->type_editor))
+            $this->type_editor = (isset($rcl_options['type_editor-'.$this->post_type]))?
+                $rcl_options['type_editor-'.$this->post_type]:
+                $rcl_options['type_text_editor'];
+
         if(isset($_GET['rcl-post-edit'])){
 
             $this->post_id = $_GET['rcl-post-edit'];
             $editpost = get_post($this->post_id);
             $this->post_type = $editpost->post_type;
 
-            $this->type_editor = $type_editor;
 
-            if(!isset($this->type_editor))
-                $this->type_editor = (isset($rcl_options['type_editor-'.$this->post_type]))?
-                    $rcl_options['type_editor-'.$this->post_type]:
-                    $rcl_options['type_text_editor'];
 
             if($this->post_type=='post-group'){
 

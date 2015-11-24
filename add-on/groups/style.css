@@ -458,3 +458,12 @@ text-align: right;}
 #group-users-widget .rcl-group-link{
     float:right;
 }
+#group-posts-widget .post-group .post-date{
+    float: right;
+    font-size: 12px;
+    font-weight: normal;
+    color: #6d6d6e;
+}
+#group-posts-widget .post-group .post-edit-button{
+    clear:both;
+}

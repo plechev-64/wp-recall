@@ -344,13 +344,16 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
             <?php while ( have_posts() ): the_post(); ?>
                 <div class="post-group">
-                    <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                    <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a> <span class="post-date"><i class="fa fa-clock-o"></i><?php the_date(); ?></span></h3>
                     <?php if($instance['thumbnail']&&has_post_thumbnail()){ ?>
                         <div class="post-group-thumb"><?php the_post_thumbnail('thumbnail'); ?></div>
                     <?php } ?>
+                    <?php if($instance['excerpt']){ ?>
                     <div class="post-group-content">
-                        <?php if($instance['excerpt']) the_excerpt(); ?>
+
+                        <?php the_excerpt(); ?>
                     </div>
+                    <?php } ?>
                 </div>
             <?php endwhile; ?>
 
