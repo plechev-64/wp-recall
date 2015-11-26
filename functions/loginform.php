@@ -46,7 +46,7 @@ function rcl_filters_regform(){
 add_filter('regform_fields_rcl','rcl_password_regform',5);
 function rcl_password_regform($content){
     global $rcl_options;
-	
+
 	$difficulty = (isset($rcl_options['difficulty_parole']))? isset($rcl_options['difficulty_parole']): false;
 
     $content .= '<div class="form-block-rcl">'

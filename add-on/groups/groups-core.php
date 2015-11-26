@@ -39,7 +39,19 @@ function rcl_create_group($groupdata){
 
     $data = wp_insert_term( $groupdata['name'], 'groups', $args );
 
-    if(!$data) return false;
+    if(isset($data->error_data)){
+
+        $term = get_term((int)$data->error_data['term_exists'], 'groups');
+
+        for($a=2;$a<10;$a++){
+            $args['slug'] = $term->slug.'-'.$a;
+            $data = wp_insert_term( $groupdata['name'], 'groups', $args );
+            if(!isset($data->error_data)) break;
+        }
+
+    }
+
+    if(!$data||isset($data->errors)) return false;
 
     $group_id = $data['term_id'];
 
@@ -254,6 +266,8 @@ function rcl_get_group_user_status($user_id,$group_id){
     return $wpdb->get_var("SELECT user_role FROM ".RCL_PREF."groups_users WHERE group_id='$group_id' AND user_id='$user_id'");
 }
 
+//вносим изменения в запрос вывода пользователей
+//при получении юзеров через фильтры группы
 function rcl_group_add_users_query($query){
     global $rcl_group;
 
@@ -261,13 +275,15 @@ function rcl_group_add_users_query($query){
 
     $role_query = ($role&&$role!='all')? "='".$role."'": "NOT IN ('admin','moderator')";
 
-    $query['join'][] = "INNER JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
+
     $query['select'][] = "groups_users.user_role";
 
     if($role=='admin'){
+        $query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
         $query['where'][] = "(groups_users.user_role = 'admin' AND groups_users.group_id='$rcl_group->term_id') OR (users.ID='$rcl_group->admin_id')";
         $query['group'] = "users.ID";
     }else{
+        $query['join'][] = "INNER JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
         $query['where'][] = "groups_users.group_id = '$rcl_group->term_id' AND groups_users.user_role $role_query";
     }
 

@@ -162,7 +162,7 @@ function rcl_mail_payment_error($hash=false){
     $textmail .= 'SUCCESS - '.$rmag_options['page_success_pay'].'<br>';
 
     $email = $rmag_options['admin_email_magazin_recall'];
-    if(!$email) $email = get_user_meta( 1, 'user_email', true );
+    if(!$email) $email = get_the_author_meta( 'user_email',1 );
 
     rcl_mail($email, $title, $textmail);
 }
