@@ -11,7 +11,6 @@ class RCL_Install {
 
     public static function init() {
         add_action( 'init', array( __CLASS__, 'init_global' ) );
-
         add_filter( 'wpmu_drop_tables', array( __CLASS__, 'wpmu_drop_tables' ) );
     }
 
@@ -93,20 +92,21 @@ class RCL_Install {
 
     private static function create_pages() {
         global $rcl_options;
+
         $pages = apply_filters( 'wp_recall_pages', array(
             'lk_page_rcl' => array(
                 'name'    => 'account',
-                'title'   => __('Personal office','rcl'),
+                'title'   => __('Personal office','wp-recall'),
                 'content' => '[wp-recall]'
             ),
             'feed_page_rcl' => array(
                 'name'    => 'user-feed',
-                'title'   => __('FEED','rcl'),
+                'title'   => __('FEED','wp-recall'),
                 'content' => '[feed]'
             ),
             'users_page_rcl' => array(
                 'name'    => 'users',
-                'title'   => __('Users','rcl'),
+                'title'   => __('Users','wp-recall'),
                 'content' => '[userlist inpage="30" orderby="time_action" template="rows" data="rating_total,comments_count,posts_count,description" filters="1" order="DESC"]'
             ),
         ) );
@@ -228,7 +228,7 @@ class RCL_Install {
             return;
         }
 
-        add_role( 'need-confirm', __('Unconfirmed','rcl'), array(
+        add_role( 'need-confirm', __('Unconfirmed','wp-recall'), array(
             'read'          => false,
             'edit_posts'    => false,
             'delete_posts'  => false,
@@ -236,7 +236,7 @@ class RCL_Install {
             )
         );
 
-        add_role( 'banned', __('Ban','rcl'), array(
+        add_role( 'banned', __('Ban','wp-recall'), array(
                 'read'          => false,
                 'edit_posts'    => false,
                 'delete_posts'  => false,
@@ -298,7 +298,7 @@ class RCL_Install {
             }
 
             /*Ниже функции модифицикации данных плагина при обновлении плагина с более ранних версий*/
-
+            //require_once('functions/migration.php');
             //переименование temp-rcl на rcl-upload и данных юзеров использующих эту папку
             //rcl_rename_media_dir();
             //изменение путей до загруженных в качестве аватарок изображений

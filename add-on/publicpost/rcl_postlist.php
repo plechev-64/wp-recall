@@ -95,7 +95,7 @@ class Rcl_Postlist {
 				wp_reset_postdata();
 
             }else{
-                $posts_block = '<p>'.$this->name.' '.__('has not yet been published','rcl').'</p>';
+                $posts_block = '<p>'.$this->name.' '.__('has not yet been published','wp-recall').'</p>';
             }
 
             return $posts_block;
@@ -104,7 +104,7 @@ class Rcl_Postlist {
     function get_postslist($author_lk){
 
         $posts_list = $this->get_postslist_table( $author_lk );
-        $posts_block = '<h3>'.__('Published','rcl').' '.$this->name.'</h3>';
+        $posts_block = '<h3>'.__('Published','wp-recall').' '.$this->name.'</h3>';
         $posts_block .= rcl_get_ajax_pagenavi($author_lk,$this->posttype);
         $posts_block .= $posts_list;
 

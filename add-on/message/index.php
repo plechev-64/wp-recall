@@ -19,13 +19,13 @@ function rcl_download_file_message(){
 
 	$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."rcl_private_message WHERE ID = '%d' AND adressat_mess = '%d' AND status_mess = '5'",$id_file,$user_ID));
 
-	if(!$file) wp_die(__('File does not exist on the server or it has already been loaded!','rcl'));
+	if(!$file) wp_die(__('File does not exist on the server or it has already been loaded!','wp-recall'));
 
 	$name = explode('/',$file->content_mess);
 	$cnt = count($name);
 	$f_name = $name[--$cnt];
 
-	$wpdb->update( RCL_PREF.'private_message',array( 'status_mess' => 6,'content_mess' => __('The file was loaded.','rcl') ),array( 'ID' => $file->ID ));
+	$wpdb->update( RCL_PREF.'private_message',array( 'status_mess' => 6,'content_mess' => __('The file was loaded.','wp-recall') ),array( 'ID' => $file->ID ));
 
 	header('Content-Description: File Transfer');
 	header('Content-Disposition: attachment; filename="'.$f_name.'"');
@@ -64,7 +64,7 @@ function rcl_messages_scripts(){
 if(function_exists('rcl_tab')){
     add_action('init','add_tab_message');
     function add_tab_message(){
-        rcl_tab('privat',array('Rcl_Messages','recall_user_private_message'),__('Private chat','rcl'),
+        rcl_tab('privat',array('Rcl_Messages','recall_user_private_message'),__('Private chat','wp-recall'),
                                 array(
                                     'public'=>1,
                                     'class'=>'fa-comments',
@@ -184,48 +184,48 @@ class Rcl_Messages{
                 $opt = new Rcl_Options(__FILE__);
 
                 $content .= $opt->options(
-                    __('Settings private messages','rcl'),
+                    __('Settings private messages','wp-recall'),
                     $opt->option_block(
                         array(
-                            $opt->title(__('Private messages','rcl')),
-                            $opt->label(__('Displaying messages in the correspondence','rcl')),
+                            $opt->title(__('Private messages','wp-recall')),
+                            $opt->label(__('Displaying messages in the correspondence','wp-recall')),
                             $opt->option('select',array(
                                 'name'=>'sort_mess',
-                                'options'=>array(__('Top-Down','rcl'),__('Bottom-Up','rcl'))
+                                'options'=>array(__('Top-Down','wp-recall'),__('Bottom-Up','wp-recall'))
                             )),
 
-							$opt->label(__('Limit words message','rcl')),
+							$opt->label(__('Limit words message','wp-recall')),
                             $opt->option('number',array('name'=>'ms_limit_words')),
-                            $opt->notice(__('the default is 400','rcl')),
+                            $opt->notice(__('the default is 400','wp-recall')),
 
-                            $opt->label(__('The number of messages in the conversation','rcl')),
+                            $opt->label(__('The number of messages in the conversation','wp-recall')),
                             $opt->option('number',array('name'=>'max_private_message')),
-                            $opt->notice(__('the default is 100 messages in the conversation (per correspondence user)','rcl')),
+                            $opt->notice(__('the default is 100 messages in the conversation (per correspondence user)','wp-recall')),
 
-                            $opt->label(__('Pause between requests for new posts to show per page of correspondence with another user in seconds','rcl')),
+                            $opt->label(__('Pause between requests for new posts to show per page of correspondence with another user in seconds','wp-recall')),
                             $opt->option('number',array('name'=>'update_private_message')),
 
-                            $opt->label(__('The number of requests you receive a new message page correspondence','rcl')),
+                            $opt->label(__('The number of requests you receive a new message page correspondence','wp-recall')),
                             $opt->option('number',array('name'=>'max_request_new_message')),
                             $opt->notice(__('Specify the maximum number of requests to retrieve a new message from a friend on the page of correspondence.'
-                                    . 'If the number of requests exceeds the specified value, then the requests will stop. If nothing is specified or you specify zero, then there is no limit.','rcl')),
+                                    . 'If the number of requests exceeds the specified value, then the requests will stop. If nothing is specified or you specify zero, then there is no limit.','wp-recall')),
 
-                            $opt->label(__('The pause between requests for new messages on all other pages of the website in seconds','rcl')),
+                            $opt->label(__('The pause between requests for new messages on all other pages of the website in seconds','wp-recall')),
                             $opt->option('number',array('name'=>'global_update_private_message')),
-                            $opt->notice(__('If null, then the receipt of new messages only when the page loads, without subsequent requests','rcl')),
+                            $opt->notice(__('If null, then the receipt of new messages only when the page loads, without subsequent requests','wp-recall')),
 
-                            $opt->label(__('Lock requests if the person offline','rcl')),
+                            $opt->label(__('Lock requests if the person offline','wp-recall')),
                             $opt->option('select',array(
                                 'name'=>'block_offrequest',
-                                'options'=>array(__('Do not block','rcl'),__('To block requests','rcl'))
+                                'options'=>array(__('Do not block','wp-recall'),__('To block requests','wp-recall'))
                             )),
-                            $opt->notice(__('We mean a request to retrieve new messages from the user to the page which you are','rcl')),
+                            $opt->notice(__('We mean a request to retrieve new messages from the user to the page which you are','wp-recall')),
 
-                            $opt->label(__('File sharing','rcl')),
+                            $opt->label(__('File sharing','wp-recall')),
                             $opt->option('select',array(
                                 'name'=>'file_exchange',
                                 'parent'=>true,
-                                'options'=>array(__('Prohibited','rcl'),__('Allowed','rcl'))
+                                'options'=>array(__('Prohibited','wp-recall'),__('Allowed','wp-recall'))
                             )),
                             $opt->child(
                                 array(
@@ -233,17 +233,17 @@ class Rcl_Messages{
                                     'value'=>1
                                 ),
                                 array(
-                                    $opt->label(__('Maximum file size, Mb','rcl')),
+                                    $opt->label(__('Maximum file size, Mb','wp-recall')),
                                     $opt->option('number',array('name'=>'file_exchange_weight')),
-                                    $opt->notice(__('To restrict downloading of files this value in megabytes. By default, 2MB','rcl')),
+                                    $opt->notice(__('To restrict downloading of files this value in megabytes. By default, 2MB','wp-recall')),
 
-                                    $opt->label(__('The retention time of the file','rcl')),
+                                    $opt->label(__('The retention time of the file','wp-recall')),
                                     $opt->option('number',array('name'=>'savetime_file')),
-                                    $opt->notice(__('Specify the maximum number of unclaimed files in days. After this period, the file will be deleted. The default is 7 days.','rcl')),
+                                    $opt->notice(__('Specify the maximum number of unclaimed files in days. After this period, the file will be deleted. The default is 7 days.','wp-recall')),
 
                                     $opt->label(__('Limit unmatched files')),
                                     $opt->option('number',array('name'=>'file_limit')),
-                                    $opt->notice(__('Specify the number of files missed by the recipients in which the user loses the possibility of further transfer of files. Protection from spam. Default-without any restrictions.','rcl'))
+                                    $opt->notice(__('Specify the number of files missed by the recipients in which the user loses the possibility of further transfer of files. Protection from spam. Default-without any restrictions.','wp-recall'))
                                 )
                             )
                         )
@@ -267,7 +267,7 @@ class Rcl_Messages{
 
 		$banlist = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."black_list_user WHERE user = '%d' AND ban = '%d'",$user_ID,$author_lk));
 
-		$title = ($banlist)? __('Unblock','rcl'): __('In the black list','rcl');
+		$title = ($banlist)? __('Unblock','wp-recall'): __('In the black list','wp-recall');
 		$class = ($banlist)? 'remove_black_list': 'add_black_list';
 
 		$button = rcl_get_button($title,'#',array('class'=>$class,'id'=>'manage-blacklist','icon'=>'fa-bug','attr'=>'data-contact='.$author_lk));
@@ -312,7 +312,7 @@ class Rcl_Messages{
             if($wpdb->get_var("show tables like '".RCL_PREF."black_list_user'"))
 		$ban = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."black_list_user WHERE user = '%d' AND ban = '%d'",$author_lk,$user_ID));
             if($ban){
-		$chat = '<p class="b-upload__dnd">'.__('The user is forbidden to write to him','rcl').'</p>';
+		$chat = '<p class="b-upload__dnd">'.__('The user is forbidden to write to him','wp-recall').'</p>';
             }
             return $chat;
         }
@@ -325,7 +325,7 @@ class Rcl_Messages{
                 else $online = 0;
 
 		if(!$user_ID){
-			return __('Sign in to start a conversation with the user.','rcl');
+			return __('Sign in to start a conversation with the user.','wp-recall');
 		}
 
 		$privat_block = $this->get_private_message_content($author_lk, $online);
@@ -393,7 +393,7 @@ class Rcl_Messages{
 
 		if(!$access){
                     $textarea = '<div class="prmess">';
-                    if($this->room) $textarea .= '<span title="'.__('Interlocutor','rcl').'" id="opponent"></span> '.rcl_get_button(__('All contacts','rcl'),'#',array('icon'=>'fa-book','id'=>'get-all-contacts'));
+                    if($this->room) $textarea .= '<span title="'.__('Interlocutor','wp-recall').'" id="opponent"></span> '.rcl_get_button(__('All contacts','wp-recall'),'#',array('icon'=>'fa-book','id'=>'get-all-contacts'));
                     if($rcl_options['file_exchange']==1){
                             $textarea .= '<div id="upload-box-message" class="fa fa-paperclip recall-button rcl-upload-button">
 											<span>Выбрать файл</span>
@@ -401,7 +401,7 @@ class Rcl_Messages{
 											<input name="filedata" id="upload-private-message" type="file">
 										</div>';
                     }
-                    $textarea .='<span class="fa fa-exclamation-triangle notice">'.__('<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send','rcl').'</span>';
+                    $textarea .='<span class="fa fa-exclamation-triangle notice">'.__('<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send','wp-recall').'</span>';
                     $textarea .= '<textarea name="content_mess" id="content_mess" rows="3"></textarea>';
                     $textarea .= '
                     <input type="hidden" name="adressat_mess" id="adressat_mess" value="'.$user_lk.'">
@@ -414,8 +414,8 @@ class Rcl_Messages{
                     $textarea .= '<div class="fa fa-edit" id="count-word">'.$words.'</div>';
 
                     $textarea .= '<div class="private-buttons">
-                            '.rcl_get_button(__('Send','rcl'),'#',array('icon'=>'fa-mail-forward','class'=>'addmess alignright','attr'=>false,'id'=>false));
-                            if($this->get_num_important()>0) $textarea .= rcl_get_button(__('Important messages','rcl'),'#',array('icon'=>'fa-star','class'=>'important alignleft','id'=>'get-important-rcl'));
+                            '.rcl_get_button(__('Send','wp-recall'),'#',array('icon'=>'fa-mail-forward','class'=>'addmess alignright','attr'=>false,'id'=>false));
+                            if($this->get_num_important()>0) $textarea .= rcl_get_button(__('Important messages','wp-recall'),'#',array('icon'=>'fa-star','class'=>'important alignleft','id'=>'get-important-rcl'));
                     $textarea .= '</div>'
                             . '<div id="resize"></div>'
                             . '</div>';
@@ -427,10 +427,10 @@ class Rcl_Messages{
                             . '</div>';
                 }
 
-                    if(!$private_messages) $newblock = '<div class="new_mess" align="center">'.__('Here will display correspondence history','rcl').'</div>';
+                    if(!$private_messages) $newblock = '<div class="new_mess" align="center">'.__('Here will display correspondence history','wp-recall').'</div>';
                     else $newblock = '<div class="new_mess"></div>';
 
-                    if($num_mess>10) $getold = '<div class="old_mess_block"><a href="#" class="old_message">'.__('Show older messages','rcl').'</a></div>';
+                    if($num_mess>10) $getold = '<div class="old_mess_block"><a href="#" class="old_message">'.__('Show older messages','wp-recall').'</a></div>';
 
                     if(!$rcl_options['sort_mess']){
                         $messlist = $getold.$messlist;
@@ -528,17 +528,17 @@ class Rcl_Messages{
 				$ban = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user = '%d'",$user_ID));
 
 				$privat_block .= '<div class="buttons-navi">
-				<a data="'.$days.'" class="sec_block_button active" href="#"><i class="fa fa-clock-o"></i>'.$days.' '.__('days','rcl').'</a>
-				<a data="30" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('month','rcl').'</a>
-				<a data="0" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('all the time','rcl').'</a>';
-				if(isset($ban)) $privat_block .= '<a data="-1" class="sec_block_button" href="#"><i class="fa fa-bug"></i>'.__('Blacklist','rcl').'</a>';
-				$privat_block .= '<a data="important" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('Important','rcl').'</a>';
+				<a data="'.$days.'" class="sec_block_button active" href="#"><i class="fa fa-clock-o"></i>'.$days.' '.__('days','wp-recall').'</a>
+				<a data="30" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('month','wp-recall').'</a>
+				<a data="0" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('all the time','wp-recall').'</a>';
+				if(isset($ban)) $privat_block .= '<a data="-1" class="sec_block_button" href="#"><i class="fa fa-bug"></i>'.__('Blacklist','wp-recall').'</a>';
+				$privat_block .= '<a data="important" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('Important','wp-recall').'</a>';
 				$privat_block .= '</div>';
 
 				$privat_block .= '<div id="contact-lists">'.$this->get_loop_contacts_rcl($contacts,$days).'</div>';
 
 			} else {
-				$privat_block .= '<div class="single_correspond"><p>'.__('You havent been in conversation with','rcl').'</p></div>';
+				$privat_block .= '<div class="single_correspond"><p>'.__('You havent been in conversation with','wp-recall').'</p></div>';
 			}
 			$privat_block .= '</div>';
 		} else {
@@ -567,7 +567,7 @@ class Rcl_Messages{
                                 $contacts = apply_filters('rcl_chat_contacts',$contacts);
 			}
 
-			if(!$contacts) $privat_block = '<h3>'.__('Contacts not found!','rcl').'</h3>';
+			if(!$contacts) $privat_block = '<h3>'.__('Contacts not found!','wp-recall').'</h3>';
 			else $privat_block = $this->get_loop_contacts_rcl($contacts,$days);
 		}
 		$log['message_block'] = $privat_block;
@@ -587,7 +587,7 @@ class Rcl_Messages{
 
 		if($days>0) $sql_int = "AND time_mess > (NOW() - INTERVAL $interval SECOND)";
 
-		if(!$contacts) return '<h3>'.__('Contacts not found!','rcl').'</h3>';
+		if(!$contacts) return '<h3>'.__('Contacts not found!','wp-recall').'</h3>';
 
 		$rcl_action_users = $wpdb->get_results($wpdb->prepare("SELECT user,time_action FROM ".RCL_PREF."user_action WHERE user IN (".rcl_format_in($contacts).")",$contacts));
 
@@ -665,12 +665,12 @@ class Rcl_Messages{
                             $privat_block .='" data-contact="'.$data['contact'].'"><i class="fa fa-remove"></i></a>
                             </div>
                             <p><a href="'.$redirect_url.'">'.$names[$data['contact']].'</a>';
-                            if(isset($data['time'])) $privat_block .='<br/><small>'.__('Last message','rcl').': '.$data['time'].'</small>';
-                            else $privat_block .='<br/><small>'.__('The chat history is missing','rcl').'</small>';
+                            if(isset($data['time'])) $privat_block .='<br/><small>'.__('Last message','wp-recall').': '.$data['time'].'</small>';
+                            else $privat_block .='<br/><small>'.__('The chat history is missing','wp-recall').'</small>';
                             $privat_block .='</p></div>';
                     }
                 }
-		if(!$privat_block) $privat_block = '<h3>'.__('Contacts not found!','rcl').'</h3>';
+		if(!$privat_block) $privat_block = '<h3>'.__('Contacts not found!','wp-recall').'</h3>';
 		return $privat_block;
 	}
 
@@ -679,7 +679,7 @@ class Rcl_Messages{
 		if(!function_exists('get_bloginfo')) return false;
                 $button = false;
 		if($message->status_mess==0&&$message->author_mess==$user_ID){
-			$button = '<a title="'.__('Delete?','rcl').'" class="fa fa-trash mess_status" href="'.wp_nonce_url( get_bloginfo('wpurl').'/?id_mess='.$message->ID.'&user_id='.$this->user_lk.'&delete_private_message_recall=true', $user_ID ).'"></a>';
+			$button = '<a title="'.__('Delete?','wp-recall').'" class="fa fa-trash mess_status" href="'.wp_nonce_url( get_bloginfo('wpurl').'/?id_mess='.$message->ID.'&user_id='.$this->user_lk.'&delete_private_message_recall=true', $user_ID ).'"></a>';
 		}
 		return $button;
 	}
@@ -745,7 +745,7 @@ class Rcl_Messages{
 		$st = $message->status_mess;
 		if($st!=0&&$st!=4&&$st!=5&&$st!=6){
 			$cl = $this->class_important($message->status_mess);
-			$ttl = ($cl)?  __('Uncheck','rcl'): __('Mark as important','rcl');
+			$ttl = ($cl)?  __('Uncheck','wp-recall'): __('Mark as important','wp-recall');
 			$privat_block .= '<a href="#" idmess="'.$this->mess_id.'" title="'.$ttl.'" class="important '.$cl.'"></a>';
 		}
 		$privat_block .= '</div>';
@@ -810,7 +810,7 @@ class Rcl_Messages{
                     $message_block = $this->get_private_message_block_rcl($message_block,(object)$message);
 		}
 
-		if(!$message_block) $message_block = '<h3>'.__('No posts found!','rcl').'</h3>';
+		if(!$message_block) $message_block = '<h3>'.__('No posts found!','wp-recall').'</h3>';
 
 		$log['message_block'] = $message_block;
 		$log['recall']=100;
@@ -845,7 +845,7 @@ class Rcl_Messages{
 				ORDER BY ID DESC",$user_ID,$this->user_lk,$st,$this->user_lk,$user_ID,$st));
 			}
 
-                        if($num_mess>10) $getold = '<div class="old_mess_block"><a href="#" class="old_message">'.__('Show more recent messages','rcl').'</a></div>';
+                        if($num_mess>10) $getold = '<div class="old_mess_block"><a href="#" class="old_message">'.__('Show more recent messages','wp-recall').'</a></div>';
                         $message_block = '';
                         $newmess = '<div class="new_mess"></div>';
 
@@ -963,7 +963,7 @@ class Rcl_Messages{
 						array( 'status_mess' => 1 ),
 						array( 'ID' => intval($_POST['widget']) )
 					);
-					$message_block = '<p class="success-mess">'.__('Your message has been sent!','rcl').'</p>';
+					$message_block = '<p class="success-mess">'.__('Your message has been sent!','wp-recall').'</p>';
 					$log['recall']=200;
 				}else{
 
@@ -1058,7 +1058,7 @@ class Rcl_Messages{
 				array( 'status_mess' => 1 ),
 				array( 'ID' => intval($_POST['id_mess']) )
 			);
-			$log['message_block'] = '<p class="success-mess">'.__('The message is marked as read','rcl').'</p>';
+			$log['message_block'] = '<p class="success-mess">'.__('The message is marked as read','wp-recall').'</p>';
 			$log['recall']=100;
 		}
 		echo json_encode($log);
@@ -1201,7 +1201,7 @@ class Rcl_Messages{
                             .'<div id="'.$mess->ID.'" class="close-mess-window">'
                             . '<i class="fa fa-times-circle"></i>'
                         . '</div>'
-			.'<p class="title-new-mess">'.__('You a new message!','rcl').'</p>'
+			.'<p class="title-new-mess">'.__('You a new message!','wp-recall').'</p>'
 
                         . '<div class="private-message">'
 
@@ -1232,9 +1232,9 @@ class Rcl_Messages{
                             <form class="form_new_message" action="" method="post">
                                 <input type="hidden" name="id_mess" value="'.$mess->ID.'">
                                 <input type="hidden" name="author_mess" value="'.$mess->author_mess.'">
-                                <input class="reading_mess  recall-button" type="submit" name="old_status_message_recall" value="'.__('Go to the correspondence','rcl').'">
+                                <input class="reading_mess  recall-button" type="submit" name="old_status_message_recall" value="'.__('Go to the correspondence','wp-recall').'">
                             </form>
-                            <input type="button" name="view-form" class="recall-button view-form" value="'.__('Reply','rcl').'">
+                            <input type="button" name="view-form" class="recall-button view-form" value="'.__('Reply','wp-recall').'">
 
                             </div>
                         </div>';
@@ -1287,7 +1287,7 @@ class Rcl_Messages{
 
 			}
 
-                        if($old_num_mess>$mess_show) $getold = '<div class="old_mess_block"><a href="#" class="old_message">'.__('Show more recent posts','rcl').'</a></div>';
+                        if($old_num_mess>$mess_show) $getold = '<div class="old_mess_block"><a href="#" class="old_message">'.__('Show more recent posts','wp-recall').'</a></div>';
 
                         if(!$rcl_options['sort_mess']) $message_block = $getold.$message_block;
                         else $message_block .= $getold;
@@ -1313,15 +1313,15 @@ class Rcl_Messages{
 
 	function get_url_file_message($mess,$content){
 		global $user_ID;
-		if($mess->status_mess==6) return __('The file was loaded.','rcl');
+		if($mess->status_mess==6) return __('The file was loaded.','wp-recall');
 		if($mess->status_mess==4||$mess->status_mess==5){
-			if($mess->author_mess==$user_ID&&$mess->status_mess==5) return __('The file has been received, but not yet loaded.','rcl');
-			if($mess->author_mess==$user_ID&&$mess->status_mess==4) return __('The file was sent to the recipient.','rcl');
+			if($mess->author_mess==$user_ID&&$mess->status_mess==5) return __('The file has been received, but not yet loaded.','wp-recall');
+			if($mess->author_mess==$user_ID&&$mess->status_mess==4) return __('The file was sent to the recipient.','wp-recall');
 			$content = wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-id='.base64_encode($mess->ID), 'user-'.$user_ID );
 			$short_url = substr($content, 0, 25)."...".substr($content, -15);
-			$content = __('Link to sent the file','rcl').': <br><a class="link-file-rcl" target="_blank" href="'.$content.'">'
+			$content = __('Link to sent the file','wp-recall').': <br><a class="link-file-rcl" target="_blank" href="'.$content.'">'
                                 .$short_url.'</a><br> <small>'
-                                .__('(accept files only from trusted sources)','rcl')
+                                .__('(accept files only from trusted sources)','wp-recall')
                                 .'</small>';
 		}
 		return $content;

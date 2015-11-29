@@ -22,7 +22,7 @@ class Rcl_Yandexkassa_Payment extends Rcl_Payment{
     }
 
     function options($options){
-        $options[$this->form_pay_id] = __('Yandex.Kassa','rcl').' ('.__('not tested','rcl').')';
+        $options[$this->form_pay_id] = __('Yandex.Kassa','wp-recall').' ('.__('not tested','wp-recall').')';
         return $options;
     }
 
@@ -36,12 +36,12 @@ class Rcl_Yandexkassa_Payment extends Rcl_Payment{
                 'value'=>$this->form_pay_id
             ),
             array(
-                $opt->title(__('Connection settings Yandex.Kassa','rcl')),
-                $opt->label(__('ID cash','rcl')),
+                $opt->title(__('Connection settings Yandex.Kassa','wp-recall')),
+                $opt->label(__('ID cash','wp-recall')),
                 $opt->option('text',array('name'=>'shopid')),
-                $opt->label(__('The room showcases','rcl')),
+                $opt->label(__('The room showcases','wp-recall')),
                 $opt->option('text',array('name'=>'scid')),
-                $opt->label(__('The secret word','rcl')),
+                $opt->label(__('The secret word','wp-recall')),
                 $opt->option('password',array('name'=>'secret_word')),
             )
         );
@@ -57,7 +57,7 @@ class Rcl_Yandexkassa_Payment extends Rcl_Payment{
 
         $formaction = 'https://money.yandex.ru/eshop.xml';
 
-        $submit = ($this->pay_type==1)? __('Confirm the operation','rcl'): __('Pay through payment system','rcl');
+        $submit = ($this->pay_type==1)? __('Confirm the operation','wp-recall'): __('Pay through payment system','wp-recall');
 
         $hidden = $this->hidden(
                 array(
@@ -144,7 +144,7 @@ class Rcl_Yandexkassa_Payment extends Rcl_Payment{
         if(parent::get_pay((object)$data)){
             wp_redirect(get_permalink($rmag_options['page_successfully_pay'])); exit;
         } else {
-            wp_die(__('A record of the payment in the database was not found','rcl'));
+            wp_die(__('A record of the payment in the database was not found','wp-recall'));
         }
 
     }

@@ -89,7 +89,7 @@ function rcl_post_group_edit_button($content){
 	if(rcl_is_group_can('moderator')){
             $edit_url = rcl_format_url(get_permalink($rcl_options['public_form_page_rcl']));
             $content = '<p class="post-edit-button">'
-                . '<a title="'.__('Edit','rcl').'" object-id="none" href="'. $edit_url.'rcl-post-edit='.$post->ID .'">'
+                . '<a title="'.__('Edit','wp-recall').'" object-id="none" href="'. $edit_url.'rcl-post-edit='.$post->ID .'">'
                     . '<i class="fa fa-pencil-square-o"></i>'
                 . '</a>'
             . '</p>'.$content;

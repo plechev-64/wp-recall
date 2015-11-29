@@ -1,37 +1,4 @@
 <?php
-add_action('wp','rcl_init_scripts');
-function rcl_init_scripts(){
-    global $rcl_options,$user_ID,$user_LK;
-
-    if (!is_admin()):
-        add_action('wp_enqueue_scripts', 'rcl_frontend_scripts');
-        add_filter('get_comment_author_url', 'rcl_get_link_author_comment');
-        add_action('wp_head','rcl_hidden_admin_panel');
-
-        if(!$user_ID){
-            if(!isset($rcl_options['login_form_recall'])||!$rcl_options['login_form_recall']){
-				add_filter('wp_footer', 'rcl_login_form',99);
-				add_filter('wp_enqueue_scripts', 'rcl_floatform_scripts');
-			}else{
-				add_filter('wp_enqueue_scripts', 'rcl_pageform_scripts');
-			}
-        }
-
-        if($user_LK) rcl_bxslider_scripts();
-
-    endif;
-
-    add_action('wp_head','rcl_update_timeaction_user');
-    add_action('before_delete_post', 'rcl_delete_attachments_with_post');
-
-}
-
-add_filter('get_avatar','rcl_avatar_replacement', 20, 5);
-if(is_admin()):
-    add_action('save_post', 'rcl_postmeta_update', 0);
-    add_action('admin_head','rcl_admin_scrips');
-    add_action('admin_menu', 'rcl_options_panel',19);
-endif;
 
 function rcl_pageform_scripts(){
     wp_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js' );
@@ -67,25 +34,25 @@ function rcl_bxslider_scripts(){
 }
 
 function rcl_dialog_scripts(){
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'jquery-ui-dialog' );
-	wp_enqueue_style('wp-jquery-ui-dialog');
+    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script( 'jquery-ui-dialog' );
+    wp_enqueue_style('wp-jquery-ui-dialog');
 }
 
 function rcl_webcam_scripts(){
-	wp_enqueue_script( 'say-cheese', RCL_URL.'js/say-cheese/say-cheese.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'say-cheese', RCL_URL.'js/say-cheese/say-cheese.js', array(), VER_RCL,true );
 }
 
 function rcl_fileupload_scripts(){
-	wp_enqueue_script( 'jquery-ui-widget', RCL_URL.'js/fileupload/js/vendor/jquery.ui.widget.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'jquery-ui-widget', RCL_URL.'js/fileupload/js/vendor/jquery.ui.widget.js', array(), VER_RCL,true );
 
-	wp_enqueue_script( 'load-image', '//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js', array(), VER_RCL,true );
-	wp_enqueue_script( 'canvas-to-blob', '//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'load-image', '//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'canvas-to-blob', '//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js', array(), VER_RCL,true );
 
-	wp_enqueue_script( 'jquery-iframe-transport', RCL_URL.'js/fileupload/js/jquery.iframe-transport.js', array(), VER_RCL,true );
-	wp_enqueue_script( 'jquery-fileupload', RCL_URL.'js/fileupload/js/jquery.fileupload.js', array(), VER_RCL,true );
-	wp_enqueue_script( 'jquery-fileupload-process', RCL_URL.'js/fileupload/js/jquery.fileupload-process.js', array(), VER_RCL,true );
-	wp_enqueue_script( 'jquery-fileupload-image', RCL_URL.'js/fileupload/js/jquery.fileupload-image.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'jquery-iframe-transport', RCL_URL.'js/fileupload/js/jquery.iframe-transport.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'jquery-fileupload', RCL_URL.'js/fileupload/js/jquery.fileupload.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'jquery-fileupload-process', RCL_URL.'js/fileupload/js/jquery.fileupload-process.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'jquery-fileupload-image', RCL_URL.'js/fileupload/js/jquery.fileupload-image.js', array(), VER_RCL,true );
 }
 
 function rcl_crop_scripts(){

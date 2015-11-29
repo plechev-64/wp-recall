@@ -2,7 +2,7 @@
 
 <?php if($formFields['title']): ?>
 	<div class="rcl-form-field">
-		<label><?php _e('Title','rcl'); ?> <span class="required">*</span>:</label>
+		<label><?php _e('Title','wp-recall'); ?> <span class="required">*</span>:</label>
 		<input type="text" maxlength="150" required value="<?php rcl_publication_title(); ?>" name="post_title" id="post_title_input">
 	</div>
 <?php endif; ?>

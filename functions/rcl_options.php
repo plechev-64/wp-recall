@@ -44,11 +44,11 @@ class Rcl_Options {
     /*function tab_name($name,$id=false){
         global $rcl_options;
         if(!$this->key) return false;
-	$content = $this->label(__('The name of the tab in the personal Cabinet','rcl'));
+	$content = $this->label(__('The name of the tab in the personal Cabinet','wp-recall'));
         if($rcl_options[$id]['tab_'.$this->key]) $rcl_options['tab_'.$this->key] = $rcl_options[$id]['tab_'.$this->key];
 	elseif(!$rcl_options['tab_'.$this->key]) $rcl_options['tab_'.$this->key] = $name;
         $content .= $this->option('text',array('name'=>'tab_'.$this->key));
-        $content .= $this->notice(__('Enter your inscription on the toggle button tab in the personal Cabinet','rcl'));
+        $content .= $this->notice(__('Enter your inscription on the toggle button tab in the personal Cabinet','wp-recall'));
 	return $content;
     }*/
 
@@ -160,9 +160,9 @@ class Rcl_Options {
 /*depricated*/
 /*function get_name_tab_rcl($name,$key){
 	global $rcl_options;
-	$content = '<label>'.__('The name of the tab','rcl').'</label>';
+	$content = '<label>'.__('The name of the tab','wp-recall').'</label>';
 	if(!$rcl_options['tab_'.$key]) $rcl_options['tab_'.$key] = $name;
 	$content .= '<input type="text" name="tab_'.$key.'" value="'.$rcl_options['tab_'.$key].'" size="10">
-	<small>'.__('Enter your inscription on the toggle button tab in the personal Cabinet','rcl').'</small>';
+	<small>'.__('Enter your inscription on the toggle button tab in the personal Cabinet','wp-recall').'</small>';
 	return $content;
 }*/

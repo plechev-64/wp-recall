@@ -95,7 +95,7 @@ function rcl_update_addon(){
     $archive = file_get_contents($url, false, $context);
     //print_r($archive);exit;
     if(!$archive){
-        $log['error'] = __('Unable to retrieve the file from the server!','rcl');
+        $log['error'] = __('Unable to retrieve the file from the server!','wp-recall');
         echo json_encode($log); exit;
     }
 
@@ -122,7 +122,7 @@ function rcl_update_addon(){
 
         if(!$info){
             $zip->close();
-            $log['error'] = __('Update does not have the correct title!','rcl');
+            $log['error'] = __('Update does not have the correct title!','wp-recall');
             echo json_encode($log);
             exit;
         }
@@ -147,7 +147,7 @@ function rcl_update_addon(){
         exit;
 
     }else{
-        $log['error'] = __('Unable to open archive!','rcl');
+        $log['error'] = __('Unable to open archive!','wp-recall');
         echo json_encode($log);
         exit;
     }

@@ -26,7 +26,7 @@ function rcl_get_captcha_field($fields){
 
     $fields .= '
       <div class="form-block-rcl">
-        <label>'.__('Enter characters','rcl').' <span class="required">*</span></label>
+        <label>'.__('Enter characters','wp-recall').' <span class="required">*</span></label>
         <img src="'.$rcl_captcha_image_src.'" alt="captcha" width="'.$rcl_captcha_image_width.'" height="'.$rcl_captcha_image_height.'" />
         <input id="rcl_captcha_code" required name="rcl_captcha_code" style="width: 160px;" size="'.$rcl_captcha_field_size.'" type="text" />
         <input id="rcl_captcha_prefix" name="rcl_captcha_prefix" type="hidden" value="'.$rcl_captcha_prefix.'" />
@@ -48,7 +48,7 @@ function rcl_check_register_captcha($errors){
     $rcl_captcha->cleanup();
     if ( ! $rcl_captcha_correct ) {
         $errors = new WP_Error();
-        $errors->add( 'rcl_register_captcha', __('Field filled not right CAPTCHA!','rcl') );
+        $errors->add( 'rcl_register_captcha', __('Field filled not right CAPTCHA!','wp-recall') );
     }
     return $errors;
 }

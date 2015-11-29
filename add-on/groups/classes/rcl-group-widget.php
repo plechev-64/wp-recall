@@ -45,7 +45,7 @@ class Rcl_Group_Widget {
 
         if($object->widget_type=='hidden')
             $before .= '<a href="#" onclick="rcl_more_view(this); return false;" class="manage-hidden-widget">'
-                . '<i class="fa fa-plus-square-o"></i>'.__('Show completely','rcl')
+                . '<i class="fa fa-plus-square-o"></i>'.__('Show completely','wp-recall')
                 . '</a>';
 
         $before .= '<div class="widget-content">';
@@ -117,12 +117,12 @@ class Rcl_Group_Widget {
 
         $content = '<div id="widgets-options">';
         $content .= '<form method="post">'
-        . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Save changes','rcl').'">';
+        . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Save changes','wp-recall').'">';
 
         $zones = array();
 
         if($rcl_group_content[0]['id']!='unuses')
-            array_unshift($rcl_group_content,array('id'=>'unuses','name'=>__('Unused','rcl')));
+            array_unshift($rcl_group_content,array('id'=>'unuses','name'=>__('Unused','wp-recall')));
 
         //print_r($rcl_group_content);exit;
         $widgets_options = rcl_get_group_option($group_id,'widgets_options');
@@ -274,7 +274,7 @@ function rcl_edit_group_widgets($widgets){
 
     //print_r($group_widgets);exit;
 
-    array_unshift($rcl_group_content,array('id'=>'unuses','name'=>__('Unused','rcl')));
+    array_unshift($rcl_group_content,array('id'=>'unuses','name'=>__('Unused','wp-recall')));
 
     foreach($rcl_group_content as $zone){
 

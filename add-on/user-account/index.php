@@ -66,10 +66,10 @@ function rcl_statistic_user_pay_page(){
 	if(!function_exists('wpmagazin_options_panel')){
 		$prim = 'manage-wpm-options';
 		add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', $prim, 'rmag_global_options');
-		add_submenu_page( $prim, __('Payment systems','rcl'), __('Payment systems','rcl'), 'manage_options', $prim, 'rmag_global_options');
+		add_submenu_page( $prim, __('Payment systems','wp-recall'), __('Payment systems','wp-recall'), 'manage_options', $prim, 'rmag_global_options');
 	}
 
-	add_submenu_page( $prim, __('Payments','rcl'), __('Payments','rcl'), 'manage_options', 'manage-wpm-cashe', 'rcl_admin_statistic_cashe');
+	add_submenu_page( $prim, __('Payments','wp-recall'), __('Payments','wp-recall'), 'manage_options', 'manage-wpm-cashe', 'rcl_admin_statistic_cashe');
 }
 add_action('admin_menu', 'rcl_statistic_user_pay_page',25);
 
@@ -77,7 +77,7 @@ add_action('admin_menu', 'rcl_statistic_user_pay_page',25);
 function rcl_balance_user_admin_column( $columns ){
 
   return array_merge( $columns,
-    array( 'balance_user_recall' => __("Balance",'rcl') )
+    array( 'balance_user_recall' => __("Balance",'wp-recall') )
   );
 
 }
@@ -331,7 +331,7 @@ function rcl_edit_balance_user(){
 	rcl_update_user_money($balance,$user_id);
 
 	$new_cnt = abs((int)$new_cnt);
-	do_action('admin_edit_user_count_rcl',$user_id,$new_cnt,__('The change in the balance','rcl'),$type);
+	do_action('admin_edit_user_count_rcl',$user_id,$new_cnt,__('The change in the balance','wp-recall'),$type);
 
 	$log['otvet']=100;
 	$log['user']=$user_id;
@@ -361,13 +361,13 @@ function rcl_get_html_usercount(){
 
     $usercount = apply_filters('count_widget_rcl',$usercount);
 
-    if($rmag_options['connect_sale']!='') $usercount .= "<p align='right'><a class='go_to_add_count' href='#'>".__("Deposit",'rcl')."</a></p>
+    if($rmag_options['connect_sale']!='') $usercount .= "<p align='right'><a class='go_to_add_count' href='#'>".__("Deposit",'wp-recall')."</a></p>
     <div class='count_user'>
-    <p>".__("To recharge your account",'rcl')."</p>
+    <p>".__("To recharge your account",'wp-recall')."</p>
     <div>
-    <p style='margin-bottom: 10px;'><label>".__("Enter the amount required",'rcl')."</label></p>
+    <p style='margin-bottom: 10px;'><label>".__("Enter the amount required",'wp-recall')."</label></p>
         <input class='value_count_user' size='4' type='text' value=''>
-        <input class='add_count_user recall-button' type='button' value='".__("Send",'rcl')."'>
+        <input class='add_count_user recall-button' type='button' value='".__("Send",'wp-recall')."'>
     </div>
     <div class='redirectform' style='margin:10px 0;text-align:center;'></div>
     </div>";
@@ -446,10 +446,10 @@ function rcl_get_chart_payments($pays){
 
     $chartArgs = array();
     $chartData = array(
-        'title' => __('Income dynamics','rcl'),
-        'title-x' => __('The time period','rcl'),
+        'title' => __('Income dynamics','wp-recall'),
+        'title-x' => __('The time period','wp-recall'),
         'data'=>array(
-            array(__('"Days/Months"','rcl'), __('"Payments (PCs.)"','rcl'), __('"Income (thousands)"','rcl'))
+            array(__('"Days/Months"','wp-recall'), __('"Payments (PCs.)"','wp-recall'), __('"Income (thousands)"','wp-recall'))
         )
     );
 
@@ -473,9 +473,9 @@ function rcl_widget_usercount() {
 class Rcl_Widget_user_count extends WP_Widget {
 
 	function Rcl_Widget_user_count() {
-		$widget_ops = array( 'classname' => 'widget-user-count', 'description' => __('Personal account of the user','rcl') );
+		$widget_ops = array( 'classname' => 'widget-user-count', 'description' => __('Personal account of the user','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-user-count' );
-		parent::__construct( 'widget-user-count', __('Personal account','rcl'), $widget_ops, $control_ops );
+		parent::__construct( 'widget-user-count', __('Personal account','wp-recall'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -503,10 +503,10 @@ class Rcl_Widget_user_count extends WP_Widget {
 
 	function form( $instance ) {
 		//Set up some default widget settings.
-		$defaults = array( 'title' => __('Personal account','rcl'));
+		$defaults = array( 'title' => __('Personal account','wp-recall'));
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','rcl'); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','wp-recall'); ?></label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 	<?php

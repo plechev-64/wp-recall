@@ -20,7 +20,7 @@ function rcl_register_rating_base_type(){
     rcl_register_rating_type(
 		array(
 		'post_type'=>'post',
-		'type_name'=>__('Posts','rcl'),
+		'type_name'=>__('Posts','wp-recall'),
 		'style'=>true,
 		'data_type'=>true,
 		'limit_votes'=>true,
@@ -29,7 +29,7 @@ function rcl_register_rating_base_type(){
     rcl_register_rating_type(
 		array(
 		'rating_type'=>'comment',
-		'type_name'=>__('Comments','rcl'),
+		'type_name'=>__('Comments','wp-recall'),
 		'style'=>true,
 		'data_type'=>true,
 		'limit_votes'=>true,
@@ -40,15 +40,15 @@ function rcl_register_rating_base_type(){
 add_filter('rcl_post_options','rcl_get_post_rating_options',10,2);
 function rcl_get_post_rating_options($options,$post){
     $mark_v = get_post_meta($post->ID, 'rayting-none', 1);
-    $options .= '<p>'.__('To disable the rating for publication','rcl').':
-        <label><input type="radio" name="wprecall[rayting-none]" value="" '.checked( $mark_v, '',false ).' />'.__('No','rcl').'</label>
-        <label><input type="radio" name="wprecall[rayting-none]" value="1" '.checked( $mark_v, '1',false ).' />'.__('Yes','rcl').'</label>
+    $options .= '<p>'.__('To disable the rating for publication','wp-recall').':
+        <label><input type="radio" name="wprecall[rayting-none]" value="" '.checked( $mark_v, '',false ).' />'.__('No','wp-recall').'</label>
+        <label><input type="radio" name="wprecall[rayting-none]" value="1" '.checked( $mark_v, '1',false ).' />'.__('Yes','wp-recall').'</label>
     </p>';
     return $options;
 }
 
 function rcl_get_rating_admin_column( $columns ){
-	return array_merge( $columns,array( 'user_rating_admin' => __('Rating','rcl') ));
+	return array_merge( $columns,array( 'user_rating_admin' => __('Rating','wp-recall') ));
 }
 add_filter( 'manage_users_columns', 'rcl_get_rating_admin_column' );
 
@@ -56,7 +56,7 @@ function rcl_get_rating_column_content( $custom_column, $column_name, $user_id )
 	  switch( $column_name ){
 		case 'user_rating_admin':
 			$custom_column = '<input type="text" class="raytinguser-'.$user_id.'" size="4" value="'.rcl_get_user_rating($user_id).'">
-			<input type="button" class="recall-button edit_rayting" id="user-'.$user_id.'" value="'.__('OK','rcl').'">';
+			<input type="button" class="recall-button edit_rayting" id="user-'.$user_id.'" value="'.__('OK','wp-recall').'">';
 		break;
 	  }
 	  return $custom_column;
@@ -97,7 +97,7 @@ function rcl_ajax_rating_tab($array_tabs){
 
 add_action('init','rcl_add_rating_tab');
 function rcl_add_rating_tab(){
-    rcl_tab('rating','rcl_rating_tab',__('Rating','rcl'),array('public'=>1,'output'=>'sidebar','class'=>'fa-balance-scale'));
+    rcl_tab('rating','rcl_rating_tab',__('Rating','wp-recall'),array('public'=>1,'output'=>'sidebar','class'=>'fa-balance-scale'));
 }
 
 add_filter('tab_data_rcl','rcl_add_counter_rating',10);
@@ -185,7 +185,7 @@ function rcl_rating_block($args){
 
     $class = (isset($args['type']))? 'rating-type-'.$args['type']: '';
 
-    return sprintf('<span title="%s" class="rating-rcl %s">%s</span>', __('rating','rcl'), $class, rcl_format_rating($value));
+    return sprintf('<span title="%s" class="rating-rcl %s">%s</span>', __('rating','wp-recall'), $class, rcl_format_rating($value));
 }
 
 function rcl_get_html_post_rating($object_id,$type,$object_author=false){
@@ -246,7 +246,7 @@ function rcl_get_rating_block($args){
 	}
 
     $block = '<div class="'.$args['rating_type'].'-value rating-value-block '.rcl_rating_class($value).'">'
-            . __('Rating','rcl').': '.rcl_format_rating($value);
+            . __('Rating','wp-recall').': '.rcl_format_rating($value);
 
 	$access = (isset($rcl_options['rating_results_can']))? $rcl_options['rating_results_can']: false;
 
@@ -294,17 +294,17 @@ function rcl_get_buttons_rating($args){
 }
 
 function rcl_get_button_cancel_rating($args){
-    return '<a data-rating="'.rcl_encode_data_rating('cancel',$args).'" onclick="rcl_edit_rating(this);return false;" class="rating-cancel edit-rating" href="#">'.__('To remove your vote','rcl').'</a>';
+    return '<a data-rating="'.rcl_encode_data_rating('cancel',$args).'" onclick="rcl_edit_rating(this);return false;" class="rating-cancel edit-rating" href="#">'.__('To remove your vote','wp-recall').'</a>';
 }
 
 function rcl_get_button_add_rating($args){
     global $rcl_options;
 
     if($rcl_options['rating_type_'.$args['rating_type']]==1)
-            return '<a href="#" data-rating="'.rcl_encode_data_rating('plus',$args).'" onclick="rcl_edit_rating(this);return false;" class="rating-like edit-rating" title="'.__('I like','rcl').'"><i class="fa fa-thumbs-o-up"></i></a>';
+            return '<a href="#" data-rating="'.rcl_encode_data_rating('plus',$args).'" onclick="rcl_edit_rating(this);return false;" class="rating-like edit-rating" title="'.__('I like','wp-recall').'"><i class="fa fa-thumbs-o-up"></i></a>';
     else
-        return '<a href="#" data-rating="'.rcl_encode_data_rating('minus',$args).'" onclick="rcl_edit_rating(this);return false;" class="rating-minus edit-rating" title="'.__('minus','rcl').'"><i class="fa fa-minus-square-o"></i></a>'
-            . '<a href="#" data-rating="'.rcl_encode_data_rating('plus',$args).'" onclick="rcl_edit_rating(this);return false;" class="rating-plus edit-rating" title="'.__('plus','rcl').'"><i class="fa fa-plus-square-o"></i></a>';
+        return '<a href="#" data-rating="'.rcl_encode_data_rating('minus',$args).'" onclick="rcl_edit_rating(this);return false;" class="rating-minus edit-rating" title="'.__('minus','wp-recall').'"><i class="fa fa-minus-square-o"></i></a>'
+            . '<a href="#" data-rating="'.rcl_encode_data_rating('plus',$args).'" onclick="rcl_edit_rating(this);return false;" class="rating-plus edit-rating" title="'.__('plus','wp-recall').'"><i class="fa fa-plus-square-o"></i></a>';
 }
 
 if(!is_admin()):
@@ -417,7 +417,7 @@ function rcl_edit_rating_post(){
 			$timelimit = ($rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']])? $rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']]: 3600;
 			$votes = rcl_count_votes_time($args,$timelimit);
 			if($votes>=$rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
-				$log['error']=sprintf(__('exceeded the limit of votes for the period - %d seconds','rcl'),$timelimit);
+				$log['error']=sprintf(__('exceeded the limit of votes for the period - %d seconds','wp-recall'),$timelimit);
 				echo json_encode($log);
 				exit;
 			}
@@ -489,7 +489,7 @@ function rcl_rating_functions_js($string){
                         }
                         block.parent().remove();
                     }else{
-                        rcl_notice('".__('You can not vote','rcl')."!','error');
+                        rcl_notice('".__('You can not vote','wp-recall')."!','error');
                     }
                 }
             });
@@ -510,7 +510,7 @@ function rcl_rating_functions_js($string){
                     if(data['result']==100){
                         jQuery('#tab-rating .votes-list').replaceWith(data['window']);
                     }else{
-                        rcl_notice('".__('Error','rcl')."!','error');
+                        rcl_notice('".__('Error','wp-recall')."!','error');
                     }
                     rcl_preloader_hide();
                 }
@@ -531,7 +531,7 @@ function rcl_rating_functions_js($string){
                         block.after(data['window']);
                         block.next().slideDown();
                     }else{
-                        rcl_notice('".__('Error','rcl')."!','error');
+                        rcl_notice('".__('Error','wp-recall')."!','error');
                     }
                 }
             });

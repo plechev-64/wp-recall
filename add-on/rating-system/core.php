@@ -233,7 +233,7 @@ function rcl_rating_navi($args){
 	$rcl_rating_types['edit-admin'] = array(
 		'rating_type'=>'edit-admin',
 		'icon'=>'fa-cogs',
-		'type_name'=>__('Correction','rcl')
+		'type_name'=>__('Correction','wp-recall')
 	);
 
     foreach($rcl_rating_types as $type){
@@ -243,7 +243,7 @@ function rcl_rating_navi($args){
         $args['rating_type'] = $type['rating_type'];
         $active = (!$navi)? 'active' : '';
 		$icon = (isset($type['icon']))? $type['icon']: 'fa-list-ul';
-        $navi .= rcl_get_button($type['type_name'],'#',array('class'=> 'fa '.$icon.' get-list-votes '.$active,'attr'=>'onclick="rcl_get_list_votes(this);return false;" data-rating="'.rcl_encode_data_rating('user',$args).'"')).' ';
+        $navi .= rcl_get_button($type['type_name'],'#',array('icon'=>'fa '.$icon,'class'=> 'get-list-votes '.$active,'attr'=>'onclick="rcl_get_list_votes(this);return false;" data-rating="'.rcl_encode_data_rating('user',$args).'"')).' ';
     }
 
     return $navi;
@@ -319,7 +319,7 @@ function rcl_get_list_votes($args,$votes){
             if(isset($rcl_options['rating_temp_'.$vote->rating_type])&&$args['rating_status']=='user'){
                     $row = $rcl_options['rating_temp_'.$vote->rating_type];
             }else{
-                    $row = '%USER% '.__('voted','rcl').': %VALUE%';
+                    $row = '%USER% '.__('voted','wp-recall').': %VALUE%';
             }
 
             $temps = array(
@@ -341,7 +341,7 @@ function rcl_get_list_votes($args,$votes){
                     );
                     $reps = array(
                             mysql2date('d F Y',$vote->rating_date),
-                            '<a href="'.get_comment_link( $vote->object_id ).'">'.__('comment','rcl').'</a>',
+                            '<a href="'.get_comment_link( $vote->object_id ).'">'.__('comment','wp-recall').'</a>',
                             '<a href="'.get_permalink($vote->object_id).'">'.get_the_title( $vote->object_id ).'</a>'
                     );
                     $row = str_replace($temps,$reps,$row);
@@ -353,7 +353,7 @@ function rcl_get_list_votes($args,$votes){
             $list .= '<li><i class="fa '.$class.'"></i> '.$row.'</li>';
         }
     }else{
-		$list .= '<li><b>'.$rcl_rating_types[$args['rating_type']]['type_name'].'</b>: '.__('Rating changes not made','rcl').'</li>';
+		$list .= '<li><b>'.$rcl_rating_types[$args['rating_type']]['type_name'].'</b>: '.__('Rating changes not made','wp-recall').'</li>';
     }
 
     $list .= '</ul>';

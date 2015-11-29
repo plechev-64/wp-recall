@@ -77,7 +77,7 @@ class Rcl_Custom_Fields{
 
         $url = (is_admin())? admin_url('?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value).'&user_id='.$user_id): get_bloginfo('wpurl').'/?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value);
 
-        if($this->value&&!$field['requared']) $input .= ' <a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','rcl').'</a>';
+        if($this->value&&!$field['requared']) $input .= ' <a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a>';
 
         $accept = ($field['field_select'])? 'accept="'.$field['field_select'].'"': '';
         $required = (!$this->value)? $this->required: '';
@@ -85,7 +85,7 @@ class Rcl_Custom_Fields{
         if($this->value) $input .= '<br>';
         $size = ($field['sizefile'])? $field['sizefile']: 2;
 
-        $input .= '<span id="'.$this->slug.'-content"><input class="meta-file" data-size="'.$size.'" type="file" '.$required.' '.$accept.' name="'.$this->slug.'" id="'.$this->slug.'" value=""/></span> ('.__('Max size','rcl').': '.$size.'MB)';
+        $input .= '<span id="'.$this->slug.'-content"><input class="meta-file" data-size="'.$size.'" type="file" '.$required.' '.$accept.' name="'.$this->slug.'" id="'.$this->slug.'" value=""/></span> ('.__('Max size','wp-recall').': '.$size.'MB)';
 
         $input .= $this->get_files_scripts();
 
@@ -179,7 +179,7 @@ class Rcl_Custom_Fields{
         if($field['type']=='text'&&$value)
                 $show = ' <span>'.esc_textarea($value).'</span>';
         if($field['type']=='file'&&$value)
-                $show = ' <span><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($value), 'user-'.$user_ID ).'">'.__('Download file','rcl').'</a></span>';
+                $show = ' <span><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($value), 'user-'.$user_ID ).'">'.__('Download file','wp-recall').'</a></span>';
         if($field['type']=='tel'&&$value)
                 $show = ' <span>'.esc_textarea($value).'</span>';
         if($field['type']=='email'&&$value)
@@ -268,14 +268,14 @@ class Rcl_Custom_Fields{
                         filesize = filesize.size/1024/1024;
                         if(filesize>maxsize){
                             jQuery(this).parent().css("border","1px solid red").css("padding","2px");
-                            jQuery("#edit-post-rcl").attr("disabled",false).attr("value","'.__('To publish','rcl').'");
+                            jQuery("#edit-post-rcl").attr("disabled",false).attr("value","'.__('To publish','wp-recall').'");
                             error = true;
                         }else{
                             jQuery(this).parent().removeAttr("style");
                         }
                     });
                     if(error){
-                        alert("'.__('File size exceeded!','rcl').'");
+                        alert("'.__('File size exceeded!','wp-recall').'");
                         return false;
                     }
                 });
@@ -293,7 +293,7 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
     if(!isset($_FILES[$slug])) return false;
 
     if ($_FILES[$slug]["size"] > $maxsize*1024*1024){
-        wp_die( __('File size exceeded!','rcl'));
+        wp_die( __('File size exceeded!','wp-recall'));
     }
 
     $accept = array();
@@ -398,7 +398,7 @@ function rcl_download_file(){
 
     $file = get_post($id_file);
 
-    if(!$file) wp_die(__('File does not exist on the server!','rcl'));
+    if(!$file) wp_die(__('File does not exist on the server!','wp-recall'));
 
     $name = explode('/',$file->guid);
     $cnt = count($name);
@@ -423,7 +423,7 @@ function rcl_delete_file(){
 
     $file = get_post($id_file);
 
-    if(!$file) wp_die(__('File does not exist on the server!','rcl'));
+    if(!$file) wp_die(__('File does not exist on the server!','wp-recall'));
 
     wp_delete_attachment($file->ID);
 
@@ -447,7 +447,7 @@ function rcl_delete_file_admin(){
 
     $file = get_post($id_file);
 
-    if(!$file) wp_die(__('File does not exist on the server!','rcl'));
+    if(!$file) wp_die(__('File does not exist on the server!','wp-recall'));
 
     wp_delete_attachment($file->ID);
 
@@ -466,6 +466,6 @@ function rcl_delete_file_meta($post_id){
 
 add_action('wp','rcl_delete_file_notice');
 function rcl_delete_file_notice(){
-    if (isset($_GET['file'])&&$_GET['file']='deleted') rcl_notice_text(__('File has deleted','rcl'),'success');
+    if (isset($_GET['file'])&&$_GET['file']='deleted') rcl_notice_text(__('File has deleted','wp-recall'),'success');
 }
 

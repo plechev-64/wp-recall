@@ -87,16 +87,3 @@ function rcl_minify_style(){
         fclose($f);
     }
 }
-
-/*not found*/
-/*function rcl_get_tail_addon_url($url){
-    $array = explode('/',$url);
-    $tail = false;
-    foreach($array as $key=>$ar){
-        if($tail) $tail .= '/'.$ar;
-        if($array[$key-2]=='add-on'){
-            $tail = $ar;
-        }
-    }
-    return $tail;
-}*/

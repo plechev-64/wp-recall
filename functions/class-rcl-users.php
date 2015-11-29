@@ -285,7 +285,7 @@ class Rcl_Users{
     //добавление данных публикаций после основного запроса
     function add_posts_count($users){
         global $wpdb;
-		
+
 		if(!$users) return $users;
 
         $ids = $this->get_users_ids($users);
@@ -323,7 +323,7 @@ class Rcl_Users{
     //добавление данных комментариев после основного запроса
     function add_comments_count($users){
         global $wpdb;
-		
+
 		if(!$users) return $users;
 
         $ids = $this->get_users_ids($users);
@@ -344,7 +344,7 @@ class Rcl_Users{
     //добавление данных статуса после основного запроса
     function add_descriptions($users){
         global $wpdb;
-		
+
 		if(!$users) return $users;
 
         $ids = $this->get_users_ids($users);
@@ -378,7 +378,7 @@ class Rcl_Users{
     //добавление данных рейтинга после основного запроса
     function add_rating_total($users){
         global $wpdb;
-		
+
 		if(!$users) return $users;
 
         $ids = $this->get_users_ids($users);
@@ -396,9 +396,9 @@ class Rcl_Users{
     }
 
     function get_users_ids($users){
-		
+
 		if(!$users) return $users;
-		
+
         $ids = array();
 
         foreach($users as $user){
@@ -429,7 +429,7 @@ class Rcl_Users{
 
         $count_users = (false!==$count_users)? $count_users: $this->count_users();
 
-        $content .='<h3>'.__('Total users','rcl').': '.$count_users.'</h3>';
+        $content .='<h3>'.__('Total users','wp-recall').': '.$count_users.'</h3>';
 
         if(isset($this->add_uri['users-filter'])) unset($this->add_uri['users-filter']);
 
@@ -442,18 +442,18 @@ class Rcl_Users{
         $perm = rcl_format_url($url).$rqst;
 
         $filters = array(
-            'time_action'       =>__('Activity','rcl'),
-            'posts_count'       =>__('Publications','rcl'),
-            'comments_count'    =>__('Comments','rcl'),
-            'user_registered'   =>__('Registration','rcl'),
+            'time_action'       =>__('Activity','wp-recall'),
+            'posts_count'       =>__('Publications','wp-recall'),
+            'comments_count'    =>__('Comments','wp-recall'),
+            'user_registered'   =>__('Registration','wp-recall'),
         );
 
         if(isset($active_addons['rating-system']))
-                $filters['rating_total'] = __('Rated','rcl');
+                $filters['rating_total'] = __('Rated','wp-recall');
 
         $filters = apply_filters('rcl_users_filter',$filters);
 
-        $content .= '<div class="rcl-data-filters">'.__('Filter by','rcl').': ';
+        $content .= '<div class="rcl-data-filters">'.__('Filter by','wp-recall').': ';
 
         foreach($filters as $key=>$name){
             $content .= $this->get_filter($key,$name,$perm);
@@ -470,7 +470,6 @@ class Rcl_Users{
     }
 
     function add_query_search($query){
-            if(!$search_field)
             $search_text = (isset($_GET['search_text']))? sanitize_user($_GET['search_text']): '';
             $search_field = (isset($_GET['search_field']))? $_GET['search_field']: '';
             if(!$search_text||!$search_field) return $query;

@@ -54,7 +54,7 @@ class Rcl_EditPost {
 
             $post_type = sanitize_text_field(base64_decode($_POST['posttype']));
 
-            if(!get_post_types(array('name'=>$post_type))) wp_die(__('Error publishing!','rcl'));
+            if(!get_post_types(array('name'=>$post_type))) wp_die(__('Error publishing!','wp-recall'));
 
             $this->post_type = $post_type;
             $this->update = false;

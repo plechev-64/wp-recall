@@ -79,6 +79,7 @@ function rcl_get_button_tab($args,$button=false){
 	$link = rcl_format_url(get_author_posts_url($user_LK),$args['id_tab']);
 	/*if(!$button) $status = 'active';
         else $status = '';*/
+        //var_dump($button);
         $html_button = rcl_get_button($args['name'],$link,array('class'=>rcl_get_class_button_tab($button,$args['id_tab']),'icon'=>$args['class']));
 	$button .= apply_filters('rcl_get_button_tab',$html_button,$args);
 

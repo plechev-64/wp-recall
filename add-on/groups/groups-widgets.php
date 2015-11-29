@@ -12,17 +12,17 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
         parent::__construct( array(
             'widget_id'=>'group-primary-widget',
             'widget_place'=>'sidebar',
-            'widget_title'=>__('Control panel','rcl')
+            'widget_title'=>__('Control panel','wp-recall')
             )
         );
     }
 
     function options($instance){
 
-        $defaults = array('title' => __('Control panel','rcl'));
+        $defaults = array('title' => __('Control panel','wp-recall'));
         $instance = wp_parse_args( (array) $instance, $defaults );
 
-        echo '<label>'.__('Title','rcl').'</label>'
+        echo '<label>'.__('Title','wp-recall').'</label>'
                 . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
 
     }
@@ -41,7 +41,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
             echo $before;
 
                 echo '<form method="post">'
-                   . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Leave group','rcl').'">'
+                   . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Leave group','wp-recall').'">'
                     . '<input type="hidden" name="group-action" value="leave">'
                     . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false )
                . '</form>';
@@ -56,7 +56,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 
                 if($rcl_group->group_status=='open'){
                     echo '<form method="post">'
-                        . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Join group','rcl').'">'
+                        . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Join group','wp-recall').'">'
                         . '<input type="hidden" name="group-action" value="join">'
                         . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false )
                     . '</form>';
@@ -68,12 +68,12 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 
                     if($requests&&false!==array_search($user_ID, $requests)){
 
-                        echo '<h3 class="title-widget">'.__('The request for access sent','rcl').'</h3>';
+                        echo '<h3 class="title-widget">'.__('The request for access sent','wp-recall').'</h3>';
 
                     }else{
 
                         echo '<form method="post">'
-                            . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Apply for membership','rcl').'">'
+                            . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Apply for membership','wp-recall').'">'
                             . '<input type="hidden" name="group-action" value="ask">'
                             . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false )
                         . '</form>';
@@ -102,7 +102,7 @@ class Group_Users_Widget extends Rcl_Group_Widget {
         parent::__construct( array(
             'widget_id'=>'group-users-widget',
             'widget_place'=>'sidebar',
-            'widget_title'=>__('Users','rcl')
+            'widget_title'=>__('Users','wp-recall')
             )
         );
     }
@@ -118,21 +118,21 @@ class Group_Users_Widget extends Rcl_Group_Widget {
 
         echo $before;
         echo rcl_group_users($user_count,$template);
-        echo rcl_get_group_link('rcl_get_group_users',__('All users','rcl'));
+        echo rcl_get_group_link('rcl_get_group_users',__('All users','wp-recall'));
 
         echo $after;
     }
 
     function options($instance){
 
-        $defaults = array('title' => __('Users','rcl'),'count' => 12,'template' => 'mini');
+        $defaults = array('title' => __('Users','wp-recall'),'count' => 12,'template' => 'mini');
         $instance = wp_parse_args( (array) $instance, $defaults );
 
-        echo '<label>'.__('Title','rcl').'</label>'
+        echo '<label>'.__('Title','wp-recall').'</label>'
                 . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
-        echo '<label>'.__('Amount','rcl').'</label>'
+        echo '<label>'.__('Amount','wp-recall').'</label>'
                 . '<input type="number" name="'.$this->field_name('count').'" value="'.$instance['count'].'">';
-        echo '<label>'.__('Шаблон вывода','rcl').'</label>'
+        echo '<label>'.__('Template','wp-recall').'</label>'
                 . '<select name="'.$this->field_name('template').'">'
                 . '<option value="mini" '.selected('mini',$instance['template'],false).'>Mini</option>'
                 . '<option value="avatars" '.selected('avatars',$instance['template'],false).'>Avatars</option>'
@@ -152,7 +152,7 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
     function Group_PublicForm_Widget() {
         parent::__construct( array(
             'widget_id'=>'group-public-form-widget',
-            'widget_title'=>__('Form of the publication','rcl'),
+            'widget_title'=>__('Form of the publication','wp-recall'),
             'widget_place'=>'content',
             'widget_type'=>'hidden'
             )
@@ -178,12 +178,12 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 
     function options($instance){
 
-        $defaults = array('title' => __('Form of the publication','rcl'), 'type_form' => 0);
+        $defaults = array('title' => __('Form of the publication','wp-recall'), 'type_form' => 0);
         $instance = wp_parse_args( (array) $instance, $defaults );
 
-        echo '<label>'.__('Title','rcl').'</label>'
+        echo '<label>'.__('Title','wp-recall').'</label>'
                 . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
-        echo '<label>'.__('Type form','rcl').'</label>'
+        echo '<label>'.__('Type form','wp-recall').'</label>'
                 . '<select name="'.$this->field_name('type_form').'">'
                 . '<option value="0" '.selected(0,$instance['type_form'],false).'>WP-Recall</option>'
                 . '<option value="1" '.selected(1,$instance['type_form'],false).'>WordPress</option>'
@@ -203,7 +203,7 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
     function Group_CategoryList_Widget() {
         parent::__construct( array(
             'widget_id'=>'group-category-list-widget',
-            'widget_title'=>__('Categories Content Group','rcl'),
+            'widget_title'=>__('Categories Content Group','wp-recall'),
             'widget_place'=>'unuses'
             )
         );
@@ -211,10 +211,10 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
 
     function options($instance){
 
-        $defaults = array('title' => __('Categories Content Group','rcl'));
+        $defaults = array('title' => __('Categories Content Group','wp-recall'));
         $instance = wp_parse_args( (array) $instance, $defaults );
 
-        echo '<label>'.__('Title','rcl').'</label>'
+        echo '<label>'.__('Title','wp-recall').'</label>'
                 . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
 
     }
@@ -247,7 +247,7 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
         parent::__construct( array(
             'widget_id'=>'group-admins-widget',
             'widget_place'=>'sidebar',
-            'widget_title'=>__('Management','rcl')
+            'widget_title'=>__('Management','wp-recall')
             )
         );
     }
@@ -291,12 +291,12 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 
     function options($instance){
 
-        $defaults = array('title' => __('Management','rcl'),'count' => 12,'template' => 'mini');
+        $defaults = array('title' => __('Management','wp-recall'),'count' => 12,'template' => 'mini');
         $instance = wp_parse_args( (array) $instance, $defaults );
 
-        echo '<label>'.__('Title','rcl').'</label>'
+        echo '<label>'.__('Title','wp-recall').'</label>'
                 . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
-        echo '<label>'.__('Шаблон вывода','rcl').'</label>'
+        echo '<label>'.__('Template','wp-recall').'</label>'
                 . '<select name="'.$this->field_name('template').'">'
                 . '<option value="mini" '.selected('mini',$instance['template'],false).'>Mini</option>'
                 . '<option value="avatars" '.selected('avatars',$instance['template'],false).'>Avatars</option>'
@@ -318,7 +318,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
         parent::__construct( array(
             'widget_id'=>'group-posts-widget',
             'widget_place'=>'unuses',
-            'widget_title'=>__('Group posts','rcl')
+            'widget_title'=>__('Group posts','wp-recall')
             )
         );
     }
@@ -330,7 +330,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
         extract( $args );
 
         $defaults = array(
-            'title' => __('Group posts','rcl'),
+            'title' => __('Group posts','wp-recall'),
             'count' => 12,
             'excerpt' => 1,
             'thumbnail' => 1
@@ -378,24 +378,24 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
     function options($instance){
 
         $defaults = array(
-            'title' => __('Group posts','rcl'),
+            'title' => __('Group posts','wp-recall'),
             'count' => 12,
             'excerpt' => 1,
             'thumbnail' => 1
         );
         $instance = wp_parse_args( (array) $instance, $defaults );
 
-        echo '<label>'.__('Title','rcl').'</label>'
+        echo '<label>'.__('Title','wp-recall').'</label>'
                 . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
-        echo '<label>'.__('Краткое содержимое','rcl').'</label>'
+        echo '<label>'.__('The excerpt','wp-recall').'</label>'
                 . '<select name="'.$this->field_name('excerpt').'">'
-                . '<option value="0" '.selected(0,$instance['excerpt'],false).'>Не выводить</option>'
-                . '<option value="1" '.selected(1,$instance['excerpt'],false).'>Выводить</option>'
+                . '<option value="0" '.selected(0,$instance['excerpt'],false).'>'.__('Do not display','wp-recall').'</option>'
+                . '<option value="1" '.selected(1,$instance['excerpt'],false).'>'.__('Display','wp-recall').'</option>'
                 . '</select>';
-        echo '<label>'.__('Миниатюра','rcl').'</label>'
+        echo '<label>'.__('Thumbnail','wp-recall').'</label>'
                 . '<select name="'.$this->field_name('thumbnail').'">'
-                . '<option value="0" '.selected(0,$instance['thumbnail'],false).'>Не выводить</option>'
-                . '<option value="1" '.selected(1,$instance['thumbnail'],false).'>Выводить</option>'
+                . '<option value="0" '.selected(0,$instance['thumbnail'],false).'>'.__('Do not display','wp-recall').'</option>'
+                . '<option value="1" '.selected(1,$instance['thumbnail'],false).'>'.__('Display','wp-recall').'</option>'
                 . '</select>';
 
     }

@@ -42,7 +42,7 @@ function rcl_group_avatar_upload(){
 	$mb = $upload['file']['size']/1024/1024;
 
 	if($mb>$maxsize){
-            $res['error'] = __('Size over','rcl');
+            $res['error'] = __('Size over','wp-recall');
             echo json_encode($res);
             exit;
 	}
@@ -50,7 +50,7 @@ function rcl_group_avatar_upload(){
         $ext = explode('.',$filename);
 
 	if($mime[0]!='image'){
-            $res['error'] = __('The file is not an image','rcl');
+            $res['error'] = __('The file is not an image','wp-recall');
             echo json_encode($res);
             exit;
 	}
@@ -81,7 +81,7 @@ function rcl_group_avatar_upload(){
 	}
 
         $res['avatar_url'] = $image['url'];
-        $res['success'] = __('Avatar has successfully loaded','rcl');
+        $res['success'] = __('Avatar has successfully loaded','wp-recall');
 
 	echo json_encode($res);
 	exit;

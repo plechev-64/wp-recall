@@ -9,9 +9,9 @@ function widget_new_author() {
 class Widget_new_author extends WP_Widget {
 
 	function Widget_new_author() {
-		$widget_ops = array( 'classname' => 'widget-new-author', 'description' => __('New users on the website','rcl') );
+		$widget_ops = array( 'classname' => 'widget-new-author', 'description' => __('New users on the website','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-new-author' );
-		parent::__construct( 'widget-new-author', __('New users','rcl'), $widget_ops, $control_ops );
+		parent::__construct( 'widget-new-author', __('New users','wp-recall'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -29,7 +29,7 @@ class Widget_new_author extends WP_Widget {
 
                 echo rcl_get_userlist(array('template' => 'mini', 'number'=>$count_user, 'filter'=>false));
 
-		if($all) echo '<p class="clear alignright"><a href="'.get_permalink($all).'">'.__('All users','rcl').'</a></p>';
+		if($all) echo '<p class="clear alignright"><a href="'.get_permalink($all).'">'.__('All users','wp-recall').'</a></p>';
 		echo $after_widget;
 	}
 
@@ -42,26 +42,26 @@ class Widget_new_author extends WP_Widget {
 	}
 
 	function form( $instance ) {
-		$defaults = array( 'title' => __('New users','rcl'), 'count_user' => '12');
+		$defaults = array( 'title' => __('New users','wp-recall'), 'count_user' => '12');
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','rcl'); ?>:</label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','wp-recall'); ?>:</label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('The number of displayed users','rcl'); ?>:</label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('The number of displayed users','wp-recall'); ?>:</label>
 			<input id="<?php echo $this->get_field_id( 'count_user' ); ?>" name="<?php echo $this->get_field_name( 'count_user' ); ?>" value="<?php echo $instance['count_user']; ?>" style="width:100%;" />
 		</p>
 		<?php
 			$args = array(
 				'selected'   => $instance['page_all_users'],
 				'name'       => $this->get_field_name( 'page_all_users' ),
-				'show_option_none' => __('Not selected','rcl'),
+				'show_option_none' => __('Not selected','wp-recall'),
 				'echo'       => 0
 			);
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'page_all_users' ); ?>"><?php _e('Page all users','rcl'); ?>:</label>
+			<label for="<?php echo $this->get_field_id( 'page_all_users' ); ?>"><?php _e('Page all users','wp-recall'); ?>:</label>
 			<?php echo wp_dropdown_pages( $args ); ?>
 		</p>
 	<?php
@@ -76,9 +76,9 @@ function widget_online_users() {
 class Widget_online_users extends WP_Widget {
 
 	function Widget_online_users() {
-		$widget_ops = array( 'classname' => 'widget_online_users', 'description' => __('Conclusion the users in the network','rcl') );
+		$widget_ops = array( 'classname' => 'widget_online_users', 'description' => __('Conclusion the users in the network','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'online-users-widget' );
-		parent::__construct( 'online-users-widget', __('Users on the network','rcl'), $widget_ops, $control_ops );
+		parent::__construct( 'online-users-widget', __('Users on the network','wp-recall'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -93,7 +93,7 @@ class Widget_online_users extends WP_Widget {
 
                 echo rcl_get_userlist(array('template' => 'mini', 'number'=>10, 'orderby'=>'time_action', 'only'=>'action', 'filter'=>false ));
 
-		if($all) echo '<p class="clear alignright"><a href="'.get_permalink($all).'">'.__('All users','rcl').'</a></p>';
+		if($all) echo '<p class="clear alignright"><a href="'.get_permalink($all).'">'.__('All users','wp-recall').'</a></p>';
 		echo $after_widget;
 	}
 
@@ -105,22 +105,22 @@ class Widget_online_users extends WP_Widget {
 	}
 
 	function form( $instance ) {
-		$defaults = array( 'title' => __('Right now','rcl'));
+		$defaults = array( 'title' => __('Right now','wp-recall'));
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','rcl'); ?>:</label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','wp-recall'); ?>:</label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 		<?php
 			$args = array(
 				'selected'   => $instance['page_all_users'],
 				'name'       => $this->get_field_name( 'page_all_users' ),
-				'show_option_none' => __('Not selected','rcl'),
+				'show_option_none' => __('Not selected','wp-recall'),
 				'echo'       => 0
 			);
 		?>
 		<p>
-			<label for="<?php echo $instance['page_all_users']; ?>"><?php _e('Page all users','rcl'); ?>:</label>
+			<label for="<?php echo $instance['page_all_users']; ?>"><?php _e('Page all users','wp-recall'); ?>:</label>
 			<?php echo wp_dropdown_pages( $args ); ?>
 		</p>
 	<?php
@@ -135,9 +135,9 @@ function widget_author_profil() {
 class Widget_author_profil extends WP_Widget {
 
 	function Widget_author_profil() {
-		$widget_ops = array( 'classname' => 'widget_author_profil', 'description' => __('The block with the main profile information','rcl') );
+		$widget_ops = array( 'classname' => 'widget_author_profil', 'description' => __('The block with the main profile information','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-author-profil' );
-		parent::__construct( 'widget-author-profil', __('Control panel','rcl'), $widget_ops, $control_ops );
+		parent::__construct( 'widget-author-profil', __('Control panel','wp-recall'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -158,10 +158,10 @@ class Widget_author_profil extends WP_Widget {
 	}
 
 	function form( $instance ) {
-		$defaults = array( 'title' => __('Control panel','rcl'));
+		$defaults = array( 'title' => __('Control panel','wp-recall'));
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','rcl'); ?>:</label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','wp-recall'); ?>:</label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 	<?php

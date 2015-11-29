@@ -1,8 +1,10 @@
 <?php
 function rcl_get_shortcode_cart(){
 	global $rmag_options;
-	if($rmag_options['add_basket_button_recall']==1) add_shortcode('add-basket','rcl_add_cart_button');
-	else add_filter('the_content','rcl_add_cart_button');
+	if(isset($rmag_options['add_basket_button_recall'])&&$rmag_options['add_basket_button_recall']==1)
+            add_shortcode('add-basket','rcl_add_cart_button');
+	else
+            add_filter('the_content','rcl_add_cart_button');
 }
 add_action('wp','rcl_get_shortcode_cart');
 
@@ -83,9 +85,9 @@ function rcl_widget_minicart() {
 class Widget_minibasket extends WP_Widget {
 
 	function Widget_minibasket() {
-            $widget_ops = array( 'classname' => 'widget-minibasket', 'description' => __('Cart','rcl') );
+            $widget_ops = array( 'classname' => 'widget-minibasket', 'description' => __('Cart','wp-recall') );
             $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-minibasket' );
-            parent::__construct( 'widget-minibasket', __('Cart','rcl'), $widget_ops, $control_ops );
+            parent::__construct( 'widget-minibasket', __('Cart','wp-recall'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -112,10 +114,10 @@ class Widget_minibasket extends WP_Widget {
 	}
 
 	function form( $instance ) {
-		$defaults = array( 'title' => __('Cart','rcl'));
+		$defaults = array( 'title' => __('Cart','wp-recall'));
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','rcl'); ?>:</label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','wp-recall'); ?>:</label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 	<?php

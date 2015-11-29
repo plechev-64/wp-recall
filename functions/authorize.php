@@ -33,7 +33,7 @@ function rcl_get_login_user(){
         $wp_errors = new WP_Error();
 
 	if(!$pass||!$login){
-            $wp_errors->add( 'rcl_login_empty', __('Fill in the required fields!','rcl') );
+            $wp_errors->add( 'rcl_login_empty', __('Fill in the required fields!','wp-recall') );
             return $wp_errors;
         }
 
@@ -42,7 +42,7 @@ function rcl_get_login_user(){
                 $roles = $user_data->roles;
                 $role = array_shift($roles);
                 if($role=='need-confirm'){
-                    $wp_errors->add( 'rcl_login_confirm', __('Your email is not confirmed!','rcl') );
+                    $wp_errors->add( 'rcl_login_confirm', __('Your email is not confirmed!','wp-recall') );
                     return $wp_errors;
                 }
         }

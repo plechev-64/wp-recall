@@ -1,4 +1,8 @@
 /*Общие стили*/
+i.fa, a.fa, p.fa,span.fa,div.fa{
+    width:auto;
+    text-align: left;
+}
 .floatright{
 	float:right;
 }

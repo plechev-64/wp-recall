@@ -1,43 +1,43 @@
 <?php
 function rcl_options_panel(){
-    add_menu_page(__('WP-RECALL','rcl'), __('WP-RECALL','rcl'), 'manage_options', 'manage-wprecall', 'rcl_global_options');
-    add_submenu_page( 'manage-wprecall', __('SETTINGS','rcl'), __('SETTINGS','rcl'), 'manage_options', 'manage-wprecall', 'rcl_global_options');
-    add_submenu_page( 'manage-wprecall', __('Documentation','rcl'), __('Documentation','rcl'), 'manage_options', 'manage-doc-recall', 'rcl_doc_manage');
-    add_submenu_page( 'manage-wprecall', __('Repository','rcl'), __('Repository','rcl'), 'manage_options', 'rcl-repository', 'rcl_repository_page');
+    add_menu_page(__('WP-RECALL','wp-recall'), __('WP-RECALL','wp-recall'), 'manage_options', 'manage-wprecall', 'rcl_global_options');
+    add_submenu_page( 'manage-wprecall', __('SETTINGS','wp-recall'), __('SETTINGS','wp-recall'), 'manage_options', 'manage-wprecall', 'rcl_global_options');
+    add_submenu_page( 'manage-wprecall', __('Documentation','wp-recall'), __('Documentation','wp-recall'), 'manage_options', 'manage-doc-recall', 'rcl_doc_manage');
+    add_submenu_page( 'manage-wprecall', __('Repository','wp-recall'), __('Repository','wp-recall'), 'manage_options', 'rcl-repository', 'rcl_repository_page');
 }
 
 function rcl_doc_manage(){
     echo '<h2>'.__('Documentation for the plugin WP-RECALL').'</h2>
     <ol>
-        <li><a href="http://wppost.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank">'.__('Plugin installation','rcl').'</a></li>
-        <li><a href="http://wppost.ru/obnovlenie-plagina-wp-recall-i-ego-dopolnenij/" target="_blank">'.__('Update the plugin and its extensions','rcl').'</a></li>
-        <li><a href="http://wppost.ru/nastrojki-plagina-wp-recall/" target="_blank">'.__('The plugin settings','rcl').'</a></li>
-        <li><a href="http://wppost.ru/shortkody-wp-recall/" target="_blank">'.__('Used shortcodes Wp-Recall','rcl').'</a></li>
-        <li><a href="http://wppost.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/" target="_blank">'.__('General information about plugins Wp-Recall','rcl').'</a></li>
-        <li><a href="http://wppost.ru/dopolneniya-wp-recall/" target="_blank">'.__('Basic add-ons Wp-Recall','rcl').'</a></li>
-        <li><a href="http://wppost.ru/downloads-files/" target="_blank">'.__('Paid add-ons Wp-Recall','rcl').'</a></li>
-        <li><a title="Произвольные поля Wp-Recall" href="http://wppost.ru/proizvolnye-polya-wp-recall/" target="_blank">'.__('Custom fields profile Wp-Recall','rcl').'</a></li>
-        <li><a title="Произвольные поля формы публикации Wp-Recall" href="http://wppost.ru/proizvolnye-polya-formy-publikacii-wp-recall/" target="_blank">'.__('Custom fields form publishing Wp-Recall','rcl').'</a></li>
-        <li><a href="http://wppost.ru/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/" target="_blank">'.__('An example of additions Wp-Recall','rcl').'</a></li>
-        <li><a href="http://wppost.ru/xuki-i-filtry-wp-recall/" target="_blank">'.__('Functions and hooks Wp-Recall for the development','rcl').'</a></li>
-        <li><a href="http://wppost.ru/category/novosti/obnovleniya/" target="_blank">'.__('Update history Wp-Recall','rcl').'</a></li>
-        <li><a title="Используемые библиотеки и ресурсы" href="http://wppost.ru/ispolzuemye-biblioteki-i-resursy/">'.__('Used libraries and resources','rcl').'</a></li>
-        <li><a href="http://wppost.ru/faq/" target="_blank">'.__('FAQ','rcl').'</a></li>
+        <li><a href="http://wppost.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank">'.__('Plugin installation','wp-recall').'</a></li>
+        <li><a href="http://wppost.ru/obnovlenie-plagina-wp-recall-i-ego-dopolnenij/" target="_blank">'.__('Update the plugin and its extensions','wp-recall').'</a></li>
+        <li><a href="http://wppost.ru/nastrojki-plagina-wp-recall/" target="_blank">'.__('The plugin settings','wp-recall').'</a></li>
+        <li><a href="http://wppost.ru/shortkody-wp-recall/" target="_blank">'.__('Used shortcodes Wp-Recall','wp-recall').'</a></li>
+        <li><a href="http://wppost.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/" target="_blank">'.__('General information about plugins Wp-Recall','wp-recall').'</a></li>
+        <li><a href="http://wppost.ru/dopolneniya-wp-recall/" target="_blank">'.__('Basic add-ons Wp-Recall','wp-recall').'</a></li>
+        <li><a href="http://wppost.ru/downloads-files/" target="_blank">'.__('Paid add-ons Wp-Recall','wp-recall').'</a></li>
+        <li><a title="Произвольные поля Wp-Recall" href="http://wppost.ru/proizvolnye-polya-wp-recall/" target="_blank">'.__('Custom fields profile Wp-Recall','wp-recall').'</a></li>
+        <li><a title="Произвольные поля формы публикации Wp-Recall" href="http://wppost.ru/proizvolnye-polya-formy-publikacii-wp-recall/" target="_blank">'.__('Custom fields form publishing Wp-Recall','wp-recall').'</a></li>
+        <li><a href="http://wppost.ru/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/" target="_blank">'.__('An example of additions Wp-Recall','wp-recall').'</a></li>
+        <li><a href="http://wppost.ru/xuki-i-filtry-wp-recall/" target="_blank">'.__('Functions and hooks Wp-Recall for the development','wp-recall').'</a></li>
+        <li><a href="http://wppost.ru/category/novosti/obnovleniya/" target="_blank">'.__('Update history Wp-Recall','wp-recall').'</a></li>
+        <li><a title="Используемые библиотеки и ресурсы" href="http://wppost.ru/ispolzuemye-biblioteki-i-resursy/">'.__('Used libraries and resources','wp-recall').'</a></li>
+        <li><a href="http://wppost.ru/faq/" target="_blank">'.__('FAQ','wp-recall').'</a></li>
     </ol>';
 }
 
 if (is_admin()) add_action('admin_init', 'rcl_postmeta_post');
 function rcl_postmeta_post() {
-    add_meta_box( 'recall_meta', __('Settings Wp-Recall','rcl'), 'rcl_options_box', 'post', 'normal', 'high'  );
-    add_meta_box( 'recall_meta', __('Settings Wp-Recall','rcl'), 'rcl_options_box', 'page', 'normal', 'high'  );
+    add_meta_box( 'recall_meta', __('Settings Wp-Recall','wp-recall'), 'rcl_options_box', 'post', 'normal', 'high'  );
+    add_meta_box( 'recall_meta', __('Settings Wp-Recall','wp-recall'), 'rcl_options_box', 'page', 'normal', 'high'  );
 }
 
 add_filter('rcl_post_options','rcl_gallery_options',10,2);
 function rcl_gallery_options($options,$post){
     $mark_v = get_post_meta($post->ID, 'recall_slider', 1);
     $options .= '<p>'.__('Pictures record the withdrawal in the gallery Wp-Recall?').':
-        <label><input type="radio" name="wprecall[recall_slider]" value="" '.checked( $mark_v, '',false ).' />'.__('No','rcl').'</label>
-        <label><input type="radio" name="wprecall[recall_slider]" value="1" '.checked( $mark_v, '1',false ).' />'.__('Yes','rcl').'</label>
+        <label><input type="radio" name="wprecall[recall_slider]" value="" '.checked( $mark_v, '',false ).' />'.__('No','wp-recall').'</label>
+        <label><input type="radio" name="wprecall[recall_slider]" value="1" '.checked( $mark_v, '1',false ).' />'.__('Yes','wp-recall').'</label>
     </p>';
     return $options;
 }
@@ -74,29 +74,29 @@ function rcl_global_options(){
 
     $rcl_options = get_option('primary-rcl-options');
 
-    $content = '<h2>'.__('Configure the plugin Wp-Recall and additions','rcl').'</h2>
+    $content = '<h2>'.__('Configure the plugin Wp-Recall and additions','wp-recall').'</h2>
         <div id="recall" class="left-sidebar wrap">
 	<form method="post" action="">
 	'.wp_nonce_field('update-options-rcl','_wpnonce',true,false).'
-	<span class="title-option active">'.__('General settings','rcl').'</span>
+	<span class="title-option active">'.__('General settings','wp-recall').'</span>
 	<div class="wrap-recall-options" style="display:block;">';
 
                 $args = array(
                     'selected'   => $rcl_options['lk_page_rcl'],
                     'name'       => 'lk_page_rcl',
-                    'show_option_none' => '<span style="color:red">'.__('Not selected','rcl').'</span>',
+                    'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
                     'echo'       => 0
                 );
 
                 $content .= $fields->option_block(array(
-                    $fields->title(__('Personal office','rcl')),
-                    $fields->label(__('The order of withdrawal of the personal Cabinet','rcl')),
+                    $fields->title(__('Personal office','wp-recall')),
+                    $fields->label(__('The order of withdrawal of the personal Cabinet','wp-recall')),
                     $fields->option('select',array(
                             'name'=>'view_user_lk_rcl',
                             'parent'=>true,
                             'options'=>array(
-                                __('On the archive page of the author','rcl'),
-                                __('Using the shortcode [wp-recall]','rcl'))
+                                __('On the archive page of the author','wp-recall'),
+                                __('Using the shortcode [wp-recall]','wp-recall'))
                         )),
                     $fields->child(
                         array(
@@ -104,83 +104,83 @@ function rcl_global_options(){
                             'value'=>1
                         ),
                         array(
-                            $fields->label(__('The host page the shortcode','rcl')),
+                            $fields->label(__('The host page the shortcode','wp-recall')),
                             wp_dropdown_pages( $args ),
-                            $fields->label(__('The formation of links to personal account','rcl')),
+                            $fields->label(__('The formation of links to personal account','wp-recall')),
                             $fields->option('text',array('name'=>'link_user_lk_rcl')),
-                            $fields->notice(__('The link is formed by a principle "/slug_page/?get=ID". The parameter "get" can be set here. By default user','rcl'))
+                            $fields->notice(__('The link is formed by a principle "/slug_page/?get=ID". The parameter "get" can be set here. By default user','wp-recall'))
                         )
                     ),
-                    $fields->label(__('Download tabs','rcl')),
+                    $fields->label(__('Download tabs','wp-recall')),
                     $fields->option('select',array(
                         'name'=>'tab_newpage',
                         'options'=>array(
-                            __('Downloads all','rcl'),
-                            __('On a separate page','rcl'),
-                            __('Ajax loading','rcl'))
+                            __('Downloads all','wp-recall'),
+                            __('On a separate page','wp-recall'),
+                            __('Ajax loading','wp-recall'))
                     )),
-                    $fields->label(__('Inactivity timeout','rcl')),
+                    $fields->label(__('Inactivity timeout','wp-recall')),
                     $fields->option('number',array('name'=>'timeout')),
-                    $fields->notice(__('Specify the time in minutes after which the user will be considered offline if you did not show activity on the website. The default is 10 minutes.','rcl'))
+                    $fields->notice(__('Specify the time in minutes after which the user will be considered offline if you did not show activity on the website. The default is 10 minutes.','wp-recall'))
                 ));
 
 
                 $roles = array(
-                    10=>__('only Administrators','rcl'),
-                    7=>__('Editors and older','rcl'),
-                    2=>__('Authors and older','rcl'),
-                    1=>__('Participants and older','rcl'),
-                    0=>__('All users','rcl'));
+                    10=>__('only Administrators','wp-recall'),
+                    7=>__('Editors and older','wp-recall'),
+                    2=>__('Authors and older','wp-recall'),
+                    1=>__('Participants and older','wp-recall'),
+                    0=>__('All users','wp-recall'));
 
                 $content .= $fields->option_block(array(
-                    $fields->title(__('Access to the console','rcl')),
-                    $fields->label(__('Access to the site is permitted console','rcl')),
+                    $fields->title(__('Access to the console','wp-recall')),
+                    $fields->label(__('Access to the site is permitted console','wp-recall')),
                     $fields->option('select',array(
                             'default'=>7,
                             'name'=>'consol_access_rcl',
                             'options'=>$roles
                     )),
-                    $fields->notice(__('If the selected archive page of the author, in the right place template author.php paste the code if(function_exists(\'wp_recall\')) wp_recall();','rcl')),
+                    $fields->notice(__('If the selected archive page of the author, in the right place template author.php paste the code if(function_exists(\'wp_recall\')) wp_recall();','wp-recall')),
 
                 ));
 
-		$filecss = (file_exists(RCL_UPLOAD_PATH.'css/minify.css'))? '<a href="'.RCL_URL.'css/getcss.php">'.__('Download the current style file for editing','rcl').'</a>':'';
+		$filecss = (file_exists(RCL_UPLOAD_PATH.'css/minify.css'))? '<a href="'.RCL_URL.'css/getcss.php">'.__('Download the current style file for editing','wp-recall').'</a>':'';
                 $content .= $fields->option_block(
                     array(
-			$fields->title(__('Making','rcl')),
+			$fields->title(__('Making','wp-recall')),
 
-			$fields->label(__('The placement of the buttons sections','rcl')),
+			$fields->label(__('The placement of the buttons sections','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'buttons_place',
                             'options'=>array(
-                                __('Top','rcl'),
-                                __('Left','rcl'))
+                                __('Top','wp-recall'),
+                                __('Left','wp-recall'))
                         )),
 
 			rcl_theme_list(),
 
-                        $fields->label(__('Pause Slider','rcl')),
+                        $fields->label(__('Pause Slider','wp-recall')),
                         $fields->option('number',array('name'=>'slide-pause')),
-                        $fields->notice(__('The value of the pause between slide transitions in seconds. Default value is 0 - the slide show is not made','rcl')),
+                        $fields->notice(__('The value of the pause between slide transitions in seconds. Default value is 0 - the slide show is not made','wp-recall')),
 
-                        $fields->label(__('Minimization of style files','rcl')),
+                        $fields->label(__('Minimization of style files','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'minify_css',
                             'parent'=>true,
                             'options'=>array(
-                                __('Disabled','rcl'),
-                                __('Included','rcl'))
+                                __('Disabled','wp-recall'),
+                                __('Included','wp-recall'))
                         )),
-                        $fields->notice(__('Minimization of style files only works against the style files Wp-Recall and additions that support this feature','rcl')),
+                        $fields->notice(__('Minimization of style files only works against the style files Wp-Recall and additions that support this feature','wp-recall')),
 			$fields->child(
                              array(
                                  'name'=>'minify_css',
                                  'value'=>1
                              ),
                              array(
-                                 $fields->label(__('Your stylesheet(CSS)','rcl')),
+                                 $fields->label(__('Your stylesheet(CSS)','wp-recall')),
                                  $fields->option('text',array('name'=>'custom_scc_file_recall')),
-                                 $fields->notice(__('File replaces the minified stylesheet, if enabled minimization','rcl')),
+                                 $fields->notice(__('File replaces the minified stylesheet, if enabled minimization','wp-recall')),
                                  $filecss
                              )
                         )
@@ -189,16 +189,16 @@ function rcl_global_options(){
 
                 $content .= $fields->option_block(
                     array(
-                        $fields->title(__('Login and register','rcl')),
-                        $fields->label(__('The order','rcl')),
+                        $fields->title(__('Login and register','wp-recall')),
+                        $fields->label(__('The order','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'login_form_recall',
                             'parent'=>true,
                             'options'=>array(
-                                __('Floating form','rcl'),
-                                __('On a separate page','rcl'),
-                                __('Form Wordpress','rcl'),
-                                __('The form in the widget','rcl'))
+                                __('Floating form','wp-recall'),
+                                __('On a separate page','wp-recall'),
+                                __('Form Wordpress','wp-recall'),
+                                __('The form in the widget','wp-recall'))
                         )),
                         $fields->child(
                             array(
@@ -206,26 +206,26 @@ function rcl_global_options(){
                               'value' => 1
                             ),
                             array(
-                                $fields->label(__('ID of the page with the shortcode [loginform]','rcl')),
-                                $fields->option('text',array('name'=>'page_login_form_recall','rcl')),
-                                $fields->notice(__('<b>note:</b> If selected, the order of the login form and registration on a separate page, create the page, to arrange its contents shortcode [loginform] and specify the ID of this page in the box above.','rcl'))
+                                $fields->label(__('ID of the page with the shortcode [loginform]','wp-recall')),
+                                $fields->option('text',array('name'=>'page_login_form_recall','wp-recall')),
+                                $fields->notice(__('<b>note:</b> If selected, the order of the login form and registration on a separate page, create the page, to arrange its contents shortcode [loginform] and specify the ID of this page in the box above.','wp-recall'))
                             )
                         ),
-                        $fields->label(__('A registration confirmation by the user','rcl')),
+                        $fields->label(__('A registration confirmation by the user','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'confirm_register_recall',
                             'options'=>array(
-                                __('Not used','rcl'),
-                                __('Used','rcl'))
+                                __('Not used','wp-recall'),
+                                __('Used','wp-recall'))
                         )),
-                        $fields->label(__('Redirect user after login','rcl')),
+                        $fields->label(__('Redirect user after login','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'authorize_page',
                             'parent'=>1,
                             'options'=>array(
-                                __('The user profile','rcl'),
-                                __('Current page','rcl'),
-                                __('Arbitrary URL','rcl'))
+                                __('The user profile','wp-recall'),
+                                __('Current page','wp-recall'),
+                                __('Arbitrary URL','wp-recall'))
                         )),
                         $fields->child(
                             array(
@@ -233,42 +233,42 @@ function rcl_global_options(){
                               'value' => 2
                             ),
                             array(
-                                $fields->label(__('URL','rcl')),
+                                $fields->label(__('URL','wp-recall')),
                                 $fields->option('text',array('name'=>'custom_authorize_page')),
-                                $fields->notice(__('Enter your URL below, if you select an arbitrary URL after login','rcl'))
+                                $fields->notice(__('Enter your URL below, if you select an arbitrary URL after login','wp-recall'))
                             )
                         ),
-                        $fields->label(__('Field repeat password','rcl')),
+                        $fields->label(__('Field repeat password','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'repeat_pass',
-                            'options'=>array(__('Disabled','rcl'),__('Displayed','rcl'))
+                            'options'=>array(__('Disabled','wp-recall'),__('Displayed','wp-recall'))
                         )),
-                        $fields->label(__('Indicator password complexity','rcl')),
+                        $fields->label(__('Indicator password complexity','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'difficulty_parole',
-                            'options'=>array(__('Disabled','rcl'),__('Displayed','rcl'))
+                            'options'=>array(__('Disabled','wp-recall'),__('Displayed','wp-recall'))
                         ))
                     )
                 );
 
                 $content .= $fields->option_block(
                     array(
-                        $fields->title(__('Recallbar','rcl')),
-                        $fields->label(__('Conclusion the panel recallbar','rcl')),
+                        $fields->title(__('Recallbar','wp-recall')),
+                        $fields->label(__('Conclusion the panel recallbar','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'view_recallbar',
-                            'options'=>array(__('Disabled','rcl'),__('Included','rcl'))
+                            'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
                         ))
                     )
                 );
 
                 $content .= $fields->option_block(
                     array(
-                        $fields->title(__('Your gratitude','rcl')),
-                        $fields->label(__('To display a link to the developer`s site (Thank you, if you decide to show)','rcl')),
+                        $fields->title(__('Your gratitude','wp-recall')),
+                        $fields->label(__('To display a link to the developer`s site (Thank you, if you decide to show)','wp-recall')),
                         $fields->option('select',array(
                                'name'=>'footer_url_recall',
-                               'options'=>array(__('No','rcl'),__('Yes','rcl'))
+                               'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
                         ))
                     )
                 );
@@ -278,7 +278,7 @@ function rcl_global_options(){
     $content = apply_filters('admin_options_wprecall',$content);
 
     $content .= '<div class="submit-block">
-    <p><input type="submit" class="button button-primary button-large right" name="primary-rcl-options" value="'.__('Save settings','rcl').'" /></p>
+    <p><input type="submit" class="button button-primary button-large right" name="primary-rcl-options" value="'.__('Save settings','wp-recall').'" /></p>
     </div></form></div>';
 
     echo $content;
@@ -303,9 +303,9 @@ function rcl_theme_list(){
         }
     }
     if($t_list){
-            $content = '<label>'.__('Used template','rcl').'</label>';
+            $content = '<label>'.__('Used template','wp-recall').'</label>';
             $content .= '<select name="color_theme" size="1">
-                <option value="">'.__('Not connected','rcl').'</option>
+                <option value="">'.__('Not connected','wp-recall').'</option>
                     '.$t_list.'
             </select>';
 

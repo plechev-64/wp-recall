@@ -224,7 +224,7 @@ class Rcl_Groups {
 
         $count_groups = (false!==$count_groups)? $count_groups: $this->count_groups();
 
-        $content .='<h3>'.__('Total groups','rcl').': '.$count_groups.'</h3>';
+        $content .='<h3>'.__('Total groups','wp-recall').': '.$count_groups.'</h3>';
 
         if(isset($this->add_uri['groups-filter'])) unset($this->add_uri['groups-filter']);
 
@@ -237,15 +237,15 @@ class Rcl_Groups {
         $perm = rcl_format_url($url).$rqst;
 
         $filters = array(
-            'name'       => __('Name','rcl'),
-            'term_id'    => __('Date','rcl'),
-            'count'      => __('Publications','rcl'),
-            'group_users'      => __('Users','rcl'),
+            'name'       => __('Name','wp-recall'),
+            'term_id'    => __('Date','wp-recall'),
+            'count'      => __('Publications','wp-recall'),
+            'group_users'      => __('Users','wp-recall'),
         );
 
         $filters = apply_filters('rcl_groups_filter',$filters);
 
-        $content .= '<div class="rcl-data-filters">'.__('Filter by','rcl').': ';
+        $content .= '<div class="rcl-data-filters">'.__('Filter by','wp-recall').': ';
 
         foreach($filters as $key=>$name){
             $content .= $this->get_filter($key,$name,$perm);

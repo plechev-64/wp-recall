@@ -15,8 +15,8 @@ function rcl_attachments_products( $attachments ){
 		'post_type' => array( 'products' ),
 		'filetype' => null,
 		'note' => null,
-		'button_text' => __( 'Attach image or download it', 'rcl' ),
-		'modal_text' => __( 'Attach image or download it', 'rcl' ),
+		'button_text' => __( 'Attach image or download it', 'wp-recall' ),
+		'modal_text' => __( 'Attach image or download it', 'wp-recall' ),
 		'fields' => array(
 		)
 	);
@@ -220,7 +220,7 @@ function rcl_thumb_column( $columns ){
 
 if (is_admin()) add_action('admin_init', 'rcl_options_products');
 function rcl_options_products() {
-    add_meta_box( 'recall_meta', __('Settings Wp-Recall','rcl'), 'rcl_options_box', 'products', 'normal', 'high'  );
+    add_meta_box( 'recall_meta', __('Settings Wp-Recall','wp-recall'), 'rcl_options_box', 'products', 'normal', 'high'  );
 }
 
 // заполняем колонку миниатюр

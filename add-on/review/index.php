@@ -13,7 +13,7 @@ function rcl_ajax_tab_review($array_tabs){
 
 add_action('init','rcl_tab_review');
 function rcl_tab_review(){
-    rcl_tab('recall',array('Rcl_Review','get_content_review'),__('Reviews','rcl'),array(
+    rcl_tab('recall',array('Rcl_Review','get_content_review'),__('Reviews','wp-recall'),array(
 		'public'=>1,
 		'class'=>'fa-trophy',
 		'order'=>50,
@@ -39,7 +39,7 @@ class Rcl_Review{
 	function add_review(){
 		global $user_ID,$wpdb,$rcl_options,$rcl_rating_types;
 
-		if(!$user_ID) wp_die(__('You dont have that right!','rcl'));
+		if(!$user_ID) wp_die(__('You dont have that right!','wp-recall'));
 
 		$adressat_id = intval(pow($_POST['user_id'], 0.5));
 		$content_otziv = esc_html($_POST['content_otz']);
@@ -70,12 +70,12 @@ class Rcl_Review{
 			wp_redirect( rcl_format_url(get_author_posts_url($adressat_id),'recall'));  exit;
 		}
 
-		$title = __('You left a review','rcl');
+		$title = __('You left a review','wp-recall');
 		$to = get_the_author_meta('user_email',$adressat_id);
 		$mess = '
-		<h3>'.__('You have been leaving feedback','rcl').'</h3>
-		<p>'.__('from the user','rcl').' '.get_the_author_meta('display_name',$user_ID).'</p>
-		<p>'.__('You can read the message by clicking on','rcl').' <a href="'.rcl_format_url(get_author_posts_url($adressat_id),'recall').'">'.__('the link','rcl').'</a></p>';
+		<h3>'.__('You have been leaving feedback','wp-recall').'</h3>
+		<p>'.__('from the user','wp-recall').' '.get_the_author_meta('display_name',$user_ID).'</p>
+		<p>'.__('You can read the message by clicking on','wp-recall').' <a href="'.rcl_format_url(get_author_posts_url($adressat_id),'recall').'">'.__('the link','wp-recall').'</a></p>';
 
 		rcl_mail($to, $title, $mess);
 
@@ -141,18 +141,18 @@ class Rcl_Review{
             $opt = new Rcl_Options(__FILE__);
 
             $content .= $opt->options(
-                __('Settings reviews','rcl'),
+                __('Settings reviews','wp-recall'),
                 $opt->option_block(
                     array(
-                        $opt->title(__('Reviews','rcl')),
-                        $opt->label(__('To accept and leave feedback can','rcl')),
+                        $opt->title(__('Reviews','wp-recall')),
+                        $opt->label(__('To accept and leave feedback can','wp-recall')),
                         $opt->option('select',array(
                             'name'=>'type_recall',
-                            'options'=>array(__('All','rcl'),__('With published posts','rcl'))
+                            'options'=>array(__('All','wp-recall'),__('With published posts','wp-recall'))
                         )),
-						$opt->label(__('Restriction rated','rcl')),
+						$opt->label(__('Restriction rated','wp-recall')),
 						$opt->option('number',array('name'=>'rw_limit_rating')),
-						$opt->notice(__('the default not limited','rcl'))
+						$opt->notice(__('the default not limited','wp-recall'))
                     )
                 )
             );
@@ -186,7 +186,7 @@ class Rcl_Review{
                     <div class="content-recall">
                     '.$this->get_status($otziv->status).'
                     <p>
-                    <strong><a href="'.get_author_posts_url($otziv->author_id).'">'.get_the_author_meta('display_name', $otziv->author_id).'</a> '.__('leave a review','rcl').':</strong>
+                    <strong><a href="'.get_author_posts_url($otziv->author_id).'">'.get_the_author_meta('display_name', $otziv->author_id).'</a> '.__('leave a review','wp-recall').':</strong>
                     </p>'.nl2br($content);
 
                         if(function_exists('rcl_get_html_post_rating')) $recall_block .= rcl_get_html_post_rating($otziv->ID,'review-content',$otziv->author_id);
@@ -197,16 +197,16 @@ class Rcl_Review{
                             $recall_block .= '<form method="post" action="" class="review-delete">
                             <input type="hidden" name="user_id" value="'.$otziv->user_id.'">
                             <input type="hidden" name="recall_id" value="'.$otziv->ID.'">
-                            <input type="submit" class="recall-button" name="delete_review" value="'.__('Delete','rcl').'">
+                            <input type="submit" class="recall-button" name="delete_review" value="'.__('Delete','wp-recall').'">
                             </form>';
                     }
 
                     $recall_block .= '</div>';
                 }
             }else if($user_ID==$user_LK){
-                    $recall_block = '<p>'.__('You have not left any reviews','rcl').'</p>';
+                    $recall_block = '<p>'.__('You have not left any reviews','wp-recall').'</p>';
             }else if($user_ID!=$user_LK){
-                    $recall_block = '<h3>'.__('The user has no reviews yet','rcl').'</h3>';
+                    $recall_block = '<h3>'.__('The user has no reviews yet','wp-recall').'</h3>';
             }
             //получаем кол-во отзывов текущего пользователя об авторе
 
@@ -218,7 +218,7 @@ class Rcl_Review{
 						if(function_exists('rcl_get_user_rating')){
 							$rating = rcl_get_user_rating($user_ID);
 							if($rating<$rt_limit){
-								$notice = '<div class="notify-lk"><div class="warning">'.sprintf(__('Members with a value rating of less than %d can not leave a review.','rcl'),$rt_limit).'</div></div>';
+								$notice = '<div class="notify-lk"><div class="warning">'.sprintf(__('Members with a value rating of less than %d can not leave a review.','wp-recall'),$rt_limit).'</div></div>';
                                 $notice .= $recall_block;
                                 return $notice;
 							}
@@ -231,7 +231,7 @@ class Rcl_Review{
                         $count_post_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->prefix ."posts WHERE post_author = '%d' AND post_status = 'publish' LIMIT 1",$user_LK));
 
                         if(!$count_post_author||!$count_post_user){
-                                $notice = '<div class="notify-lk"><div class="warning">'.__('Users without published records cannot accept and add reviews.','rcl').'</div></div>';
+                                $notice = '<div class="notify-lk"><div class="warning">'.__('Users without published records cannot accept and add reviews.','wp-recall').'</div></div>';
                                 $notice .= $recall_block;
                                 return $block_wprecall;
                         }
@@ -245,15 +245,15 @@ class Rcl_Review{
                         $addres_user = pow($user_LK, 2);
                         $recall_form = '<div class="otziv">
                                 <form name="addrecall" method="post" action="">
-                                <p>'.__('Review text','rcl').':</p>
-                                <input type="radio" name="status" value="1" id="labeled_1" /><label for="labeled_1">'.__('Positively','rcl').'</label>
-                                <input type="radio" name="status" value="0" id="labeled_2" checked="checked"/><label for="labeled_2">'.__('Neutral','rcl').'</label>
-                                <input type="radio" name="status" value="-1" id="labeled_3" /><label for="labeled_3">'.__('Negatively','rcl').'</label><br />
+                                <p>'.__('Review text','wp-recall').':</p>
+                                <input type="radio" name="status" value="1" id="labeled_1" /><label for="labeled_1">'.__('Positively','wp-recall').'</label>
+                                <input type="radio" name="status" value="0" id="labeled_2" checked="checked"/><label for="labeled_2">'.__('Neutral','wp-recall').'</label>
+                                <input type="radio" name="status" value="-1" id="labeled_3" /><label for="labeled_3">'.__('Negatively','wp-recall').'</label><br />
                                 <label for="content_otz"></label>
                                 <textarea required name="content_otz" id="content_otz" rows="5" style="width:100%;padding:0;"></textarea>
                                 <input type="hidden" name="online" value="'.$online.'">
                                 <input type="hidden" name="user_id" value="'.$addres_user.'">
-                                <p style="text-align:right;"><input type="submit" name="add_review" class="recall-button" value="'.__('Add a review','rcl').'"></p>
+                                <p style="text-align:right;"><input type="submit" name="add_review" class="recall-button" value="'.__('Add a review','wp-recall').'"></p>
                                 </form>
                                 </div>';
 

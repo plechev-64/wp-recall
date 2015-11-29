@@ -22,7 +22,7 @@ class Rcl_Walletone_Payment extends Rcl_Payment{
     }
 
     function options($options){
-        $options[$this->form_pay_id] = __('WalletOne','rcl');
+        $options[$this->form_pay_id] = __('WalletOne','wp-recall');
         return $options;
     }
 
@@ -36,10 +36,10 @@ class Rcl_Walletone_Payment extends Rcl_Payment{
                 'value'=>$this->form_pay_id
             ),
             array(
-                $opt->title(__('Connection settings WalletOne','rcl')),
-                $opt->label(__('Merchant ID','rcl')),
+                $opt->title(__('Connection settings WalletOne','wp-recall')),
+                $opt->label(__('Merchant ID','wp-recall')),
                 $opt->option('text',array('name'=>'WO_MERCHANT_ID')),
-                $opt->label(__('The secret key','rcl')),
+                $opt->label(__('The secret key','wp-recall')),
                 $opt->option('password',array('name'=>'WO_SECRET_KEY'))
             )
         );

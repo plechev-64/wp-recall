@@ -34,7 +34,7 @@ class Rcl_Robokassa_Payment extends Rcl_Payment{
     }
 
     function options($options){
-        $options[$this->form_pay_id] = __('Robokassa','rcl');
+        $options[$this->form_pay_id] = __('Robokassa','wp-recall');
         return $options;
     }
 
@@ -48,16 +48,16 @@ class Rcl_Robokassa_Payment extends Rcl_Payment{
                 'value'=>$this->form_pay_id
             ),
             array(
-                $opt->title(__('Connection settings ROBOKASSA','rcl')),
-                $opt->label(__('The ID of the store','rcl')),
+                $opt->title(__('Connection settings ROBOKASSA','wp-recall')),
+                $opt->label(__('The ID of the store','wp-recall')),
                 $opt->option('text',array('name'=>'robologin')),
-                $opt->label(__('The status of the account ROBOKASSA','rcl')),
+                $opt->label(__('The status of the account ROBOKASSA','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'robotest',
                     'parent'=>true,
                     'options'=>array(
-                        __('Work','rcl'),
-                        __('Test','rcl')
+                        __('Work','wp-recall'),
+                        __('Test','wp-recall')
                     )
                 )),
                 $opt->child(
@@ -66,9 +66,9 @@ class Rcl_Robokassa_Payment extends Rcl_Payment{
                         'value'=>0
                     ),
                     array(
-                        $opt->label(__('1 Password','rcl')),
+                        $opt->label(__('1 Password','wp-recall')),
                         $opt->option('password',array('name'=>'onerobopass')),
-                        $opt->label(__('2 Password','rcl')),
+                        $opt->label(__('2 Password','wp-recall')),
                         $opt->option('password',array('name'=>'tworobopass'))
                     )
                 ),
@@ -78,9 +78,9 @@ class Rcl_Robokassa_Payment extends Rcl_Payment{
                         'value'=>1
                     ),
                     array(
-                        $opt->label(__('1 Password','rcl')),
+                        $opt->label(__('1 Password','wp-recall')),
                         $opt->option('password',array('name'=>'test_onerobopass')),
-                        $opt->label(__('2 Password','rcl')),
+                        $opt->label(__('2 Password','wp-recall')),
                         $opt->option('password',array('name'=>'test_tworobopass'))
                     )
                 )
@@ -105,7 +105,7 @@ class Rcl_Robokassa_Payment extends Rcl_Payment{
 
         $crc = md5("$login:$data->pay_summ:$data->pay_id:$pass1:Shp_item=2:shpa=$data->user_id:shpb=$data->pay_type");
 
-        $submit = ($data->pay_type==1)? __('Confirm the operation','rcl'): __('Pay through payment system','rcl');
+        $submit = ($data->pay_type==1)? __('Confirm the operation','wp-recall'): __('Pay through payment system','wp-recall');
 
         $fields = array(
             'MrchLogin'=>$login,
@@ -158,7 +158,7 @@ class Rcl_Robokassa_Payment extends Rcl_Payment{
         if(parent::get_pay($data)){
             wp_redirect(get_permalink($rmag_options['page_successfully_pay'])); exit;
         } else {
-            wp_die(__('A record of the payment in the database was not found','rcl'));
+            wp_die(__('A record of the payment in the database was not found','wp-recall'));
         }
 
     }

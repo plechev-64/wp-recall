@@ -53,7 +53,7 @@ class Rcl_List_Terms{
 		for($this->sel=0;$this->sel<$cnt;$this->sel++){
                         $this->selected = false;
 			$catlist .= '<select class="postform" name="cats[]">';
-			if($this->sel>0) $catlist .= '<option value="">'.__('Not selected','rcl').'</option>';
+			if($this->sel>0) $catlist .= '<option value="">'.__('Not selected','wp-recall').'</option>';
 			$catlist .= $this->get_option_list();
 			$catlist .= '</select>';
 		}
@@ -236,21 +236,21 @@ class Rcl_Thumb_Form{
                     $attachlist = $this->get_gallery_list($temp_gal);
 		}
 
-                echo '<small class="notice-upload">'.__('Click on Priceline the image to add it to the content of the publication','rcl').'</small>';
+                echo '<small class="notice-upload">'.__('Click on Priceline the image to add it to the content of the publication','wp-recall').'</small>';
 
 		echo '<ul id="temp-files">'.$attachlist.'</ul>';
 		echo '<p><label><input ';
 		//if(!$this->post_id) echo 'checked="checked"';
-		echo 'type="checkbox" '.checked($gal,1,false).' name="add-gallery-rcl" value="1"> - '.__('Display all attached images in the gallery.','rcl').'</label></p>
+		echo 'type="checkbox" '.checked($gal,1,false).' name="add-gallery-rcl" value="1"> - '.__('Display all attached images in the gallery.','wp-recall').'</label></p>
 		<div id="status-temp"></div>
 		<div>
 			<div id="rcl-public-dropzone" class="rcl-dropzone mass-upload-box">
 				<div class="mass-upload-area">
-					'.__('To add files to the download queue','rcl').'
+					'.__('To add files to the download queue','wp-recall').'
 				</div>
 				<hr>
 				<div class="recall-button rcl-upload-button">
-					<span>'.__('Add','rcl').'</span>
+					<span>'.__('Add','wp-recall').'</span>
 					<input id="'.$this->id_upload.'" name="uploadfile[]" type="file" accept="'.$formData->accept.'" multiple>
 				</div>
 			</div>
@@ -275,8 +275,8 @@ class Rcl_Thumb_Form{
 				echo '<span class="delete"></span><img width="100" height="100" src="'.$thumb_url[0].'"><input type="hidden" name="thumb" value="'.$this->thumb.'">';
 			}
 			echo '</div>
-			<h3>'.__('Thumbnail','rcl').'</h3>
-			<div>'.rcl_get_button(__('To assign a thumbnail','rcl'),'#',array('id'=>'add_thumbnail_rcl')).'</div>
+			<h3>'.__('Thumbnail','wp-recall').'</h3>
+			<div>'.rcl_get_button(__('To assign a thumbnail','wp-recall'),'#',array('id'=>'add_thumbnail_rcl')).'</div>
 		</div>';
 	}
 }

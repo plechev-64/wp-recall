@@ -3,18 +3,18 @@
 <table class="publics-table-rcl">
 
 	<tr>
-		<td><?php _e('Date','rcl'); ?></td>
-		<td><?php _e('Title','rcl'); ?></td>
-		<td><?php _e('Status','rcl'); ?></td>
+		<td><?php _e('Date','wp-recall'); ?></td>
+		<td><?php _e('Title','wp-recall'); ?></td>
+		<td><?php _e('Status','wp-recall'); ?></td>
 	</tr>
 
 	<?php foreach($posts as $postdata){ ?>
 
 		<?php foreach($postdata as $post){ setup_postdata($post); ?>
 
-			<?php if($post->post_status=='pending') $status = '<span class="pending">'.__('on approval','rcl').'</span>';
-			elseif($post->post_status=='trash') $status = '<span class="pending">'.__('deleted','rcl').'</span>';
-			else $status = '<span class="publish">'.__('publish','rcl').'</span>'; ?>
+			<?php if($post->post_status=='pending') $status = '<span class="pending">'.__('on approval','wp-recall').'</span>';
+			elseif($post->post_status=='trash') $status = '<span class="pending">'.__('deleted','wp-recall').'</span>';
+			else $status = '<span class="publish">'.__('publish','wp-recall').'</span>'; ?>
 
 			<tr>
 

@@ -9,11 +9,11 @@ function rcl_get_tablist_options($content){
     $opt = new Rcl_Options('tabs');
 
 	if(!$tabs_rcl) {
-        $content .= $opt->options(__('Setting tabs','rcl'),__('Neither one tab personal account not found','rcl'));
+        $content .= $opt->options(__('Setting tabs','wp-recall'),__('Neither one tab personal account not found','wp-recall'));
         return $content;
     }
 
-    $tabs = '<p>'.__('Sort your tabs by dragging them to the desired position','rcl').'</p>'
+    $tabs = '<p>'.__('Sort your tabs by dragging them to the desired position','wp-recall').'</p>'
             . '<ul id="tabs-list-rcl" class="sortable">';
 
     if(isset($rcl_options['tabs']['order'])){
@@ -63,7 +63,7 @@ function rcl_get_tablist_options($content){
 
     $tabs .= '<script>jQuery(function(){jQuery(".sortable").sortable();return false;});</script>';
 
-    $content .= $opt->options(__('Setting tabs','rcl'),$opt->option_block(array($tabs)));
+    $content .= $opt->options(__('Setting tabs','wp-recall'),$opt->option_block(array($tabs)));
 
     return $content;
 }
@@ -72,22 +72,7 @@ function rcl_get_tab_option($key,$tab=false){
     global $rcl_options;
     $name = (isset($rcl_options['tabs']['name'][$key])) ?$rcl_options['tabs']['name'][$key] :  $tab['name'];
     return '<li>'
-            . __('Name tab','rcl').': <input type="text" name="tabs[name]['.$key.']" value="'.$name.'">'
+            . __('Name tab','wp-recall').': <input type="text" name="tabs[name]['.$key.']" value="'.$name.'">'
             . '<input type="hidden" name="tabs[order][]" value="'.$key.'">'
             . '</li>';
-}
-
-add_filter('tab_data_rcl','rcl_edit_options_tab',5);
-function rcl_edit_options_tab($tab){
-    global $rcl_options;
-    if(isset($rcl_options['tabs']['name'][$tab['id']])) $tab['name'] = $rcl_options['tabs']['name'][$tab['id']];
-	//print_r($rcl_options);
-    if(isset($rcl_options['tabs']['order'])){
-        foreach($rcl_options['tabs']['order'] as $order=>$key){
-            if($key!=$tab['id']) continue;
-                $tab['args']['order'] = $order+10;
-        }
-    }
-
-    return $tab;
 }

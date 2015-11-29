@@ -140,23 +140,23 @@ function rcl_get_group_roles(){
     $group_roles = array(
         'banned'=>array(
             'user_level'=>0,
-            'role_name'=>__('Бан','rcl')
+            'role_name'=>__('Ban','wp-recall')
         ),
         'reader'=>array(
             'user_level'=>1,
-            'role_name'=>__('Читатель','rcl')
+            'role_name'=>__('Reader','wp-recall')
         ),
         'author'=>array(
             'user_level'=>5,
-            'role_name'=>__('Автор','rcl')
+            'role_name'=>__('Author','wp-recall')
         ),
         'moderator'=>array(
             'user_level'=>7,
-            'role_name'=>__('Модератор','rcl')
+            'role_name'=>__('Moderator','wp-recall')
         ),
         'admin'=>array(
             'user_level'=>10,
-            'role_name'=>__('Администратор','rcl')
+            'role_name'=>__('Administrator','wp-recall')
         )
     );
 
@@ -206,8 +206,8 @@ function rcl_group_status(){
     if(!$rcl_group) return false;
 
     switch($rcl_group->group_status){
-        case 'open': echo __('Opened group','rcl'); break;
-        case 'closed': echo __('Closed group','rcl'); break;
+        case 'open': echo __('Opened group','wp-recall'); break;
+        case 'closed': echo __('Closed group','wp-recall'); break;
     }
 }
 
@@ -326,7 +326,7 @@ function rcl_get_group_users($group_id){
     }
     $content .= '</div>';
 
-    $content .= '<h3>'.__('Group members','rcl').'</h3>';
+    $content .= '<h3>'.__('Group members','wp-recall').'</h3>';
     $content .= rcl_get_userlist(array('paged'=>$page,'filters'=>0,'orderby'=>'time_action','data'=>'rating_total,posts_count,comments_count,description,user_registered','add_uri'=>array('value'=>$users_role)));
     $content .= '</div>';
 
@@ -488,7 +488,7 @@ function rcl_group_add_request_for_membership($user_id,$group_id){
     $requests[] = $user_id;
     rcl_update_group_option($group_id,'requests_group_access',$requests);
 
-    $subject = __('Request for access to the group','rcl');
+    $subject = __('Request for access to the group','wp-recall');
     $textmail = '
     <p>Вы получили новый запрос на доступ к администрируемой вами группе "'.$rcl_group->name.'" на сайте "'.get_bloginfo('name').'".</p>
     <h3>Информация о пользователе:</h3>
@@ -587,7 +587,7 @@ function rcl_get_group_link_content(){
     $rcl_group = rcl_get_group($group_id);
 
     $content = '<div id="group-link-content">';
-    $content .= '<a href="#" class="close-content" onclick="jQuery(\'#group-link-content\').remove();jQuery(\'#group-popup\').removeAttr(\'style\');return false;"><i class="fa fa-reply"></i>'.__('Return to the group','rcl').'</a>';
+    $content .= '<a href="#" class="close-content" onclick="jQuery(\'#group-link-content\').remove();jQuery(\'#group-popup\').removeAttr(\'style\');return false;"><i class="fa fa-reply"></i>'.__('Return to the group','wp-recall').'</a>';
     $content .= $callback($group_id);
     $content .= '</div>';
 
@@ -611,10 +611,10 @@ function rcl_group_callback(){
 function rcl_group_ajax_delete_user($group_id,$user_id){
     $result = rcl_group_remove_user($user_id,$group_id);
     if($result){
-        $log['success'] = __('User removed','rcl');
+        $log['success'] = __('User removed','wp-recall');
         $log['place'] = 'buttons';
     }else{
-        $log['error'] = __('Error','rcl');
+        $log['error'] = __('Error','wp-recall');
         $log['place'] = 'notice';
     }
     return $log;
@@ -628,9 +628,9 @@ function rcl_group_ajax_update_role($group_id,$user_id){
     $new_role = $_POST['user_role'];
     $result = rcl_update_group_user_role($user_id,$group_id,$new_role);
     if($result){
-        $log['success'] = __('User Status updated','rcl');
+        $log['success'] = __('User Status updated','wp-recall');
     }else{
-        $log['error'] = __('Error','rcl');
+        $log['error'] = __('Error','wp-recall');
     }
     $log['place'] = 'notice';
     return $log;
@@ -653,9 +653,9 @@ function rcl_get_group_category_list(){
 
     if($tags) return '<div class="search-form-rcl">
             <form method="get">
-                    '.rcl_get_tags_list_group((object)$tags,'',__('Display all records','rcl')).'
+                    '.rcl_get_tags_list_group((object)$tags,'',__('Display all records','wp-recall')).'
                     <input type="hidden" name="search-p" value="'.$rcl_group->term_id.'">
-                    <input type="submit" class="recall-button" value="'.__('Show','rcl').'">
+                    <input type="submit" class="recall-button" value="'.__('Show','wp-recall').'">
             </form>
     </div>';
 }
@@ -666,11 +666,11 @@ function rcl_group_admin_panel(){
     $admins_buttons = array(
         array(
             'callback' => 'rcl_get_group_options',
-            'name' => __('Primary options','rcl')
+            'name' => __('Primary options','wp-recall')
         ),
         array(
             'callback' => 'rcl_get_group_widgets',
-            'name' => __('Widgets manage','rcl')
+            'name' => __('Widgets manage','wp-recall')
         )
     );
 
@@ -681,7 +681,7 @@ function rcl_group_admin_panel(){
         //if($requests)
             $admins_buttons[] = array(
                     'callback' => 'rcl_get_group_requests_content',
-                    'name' => __('Requests for access','rcl').' - '.count($requests)
+                    'name' => __('Requests for access','wp-recall').' - '.count($requests)
                 );
 
     }
@@ -693,7 +693,7 @@ function rcl_group_admin_panel(){
     }
 
     $panel = '<div id="group-admin-panel">'
-            . '<span class="title-panel"><i class="fa fa-cogs"></i>'.__('Administration','rcl').'</span>'
+            . '<span class="title-panel"><i class="fa fa-cogs"></i>'.__('Administration','wp-recall').'</span>'
             . '<ul>'.implode('',$buttons).'</ul>'
             . '</div>';
 
@@ -780,13 +780,13 @@ function rcl_edit_group_pre_get_posts($query){
     }
 
 function rcl_close_group_post_content(){
-    return '<p align="center" style="color:red;">'.__('Access to content is closed privacy settings','rcl').'</p>';
+    return '<p align="center" style="color:red;">'.__('Access to content is closed privacy settings','wp-recall').'</p>';
 }
 
 
 function rcl_close_group_comments_content($comments){
     foreach($comments as $comment){
-        $comment->comment_content = '<p>'.__('(Comment hidden privacy settings)','rcl').'</p>';
+        $comment->comment_content = '<p>'.__('(Comment hidden privacy settings)','wp-recall').'</p>';
     }
     return $comments;
 }

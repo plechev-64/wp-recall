@@ -1,33 +1,5 @@
 <?php
 
-rcl_include_addons();
-
-function rcl_include_addons(){
-    global $active_addons;
-
-    $active_addons = get_site_option('active_addons_recall');
-    $path_addon_rcl = RCL_PATH.'add-on/';
-    $path_addon_theme = RCL_TAKEPATH.'add-on/';
-
-    if($active_addons){
-
-        foreach($active_addons as $addon=>$src_dir){
-            if(!$addon) continue;
-            if(is_readable($path_addon_theme.$addon.'/index.php')){
-                include_once($path_addon_theme.$addon.'/index.php');
-            }else if(is_readable($path_addon_rcl.$addon.'/index.php')){
-                include_once($path_addon_rcl.$addon.'/index.php');
-            }else{
-                unset($active_addons[$addon]);
-            }
-        }
-
-    }
-
-    $rcl_addons = new Rcl_Addons();
-
-}
-
 function rcl_activate_addon($addon){
     $active_addons = get_site_option('active_addons_recall');
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
@@ -97,7 +69,7 @@ class Rcl_Addons{
     }
 
 	function wp_recall_addons_panel(){
-		add_submenu_page( 'manage-wprecall', __('Add-on manager','rcl'), __('Add-on manager','rcl'), 'manage_options', 'manage-addon-recall', array( $this, 'recall_addon_manage'));
+		add_submenu_page( 'manage-wprecall', __('Add-on manager','wp-recall'), __('Add-on manager','wp-recall'), 'manage_options', 'manage-addon-recall', array( $this, 'recall_addon_manage'));
 	}
 
 	function actual_url_rcl(){
@@ -149,14 +121,14 @@ class Rcl_Addons{
 
 		$table = '<div class="wrap">
 			<div id="icon-plugins" class="icon32"><br></div>
-			<h2>'.__('Add-ons Wp-Recall','rcl').'</h2>';
+			<h2>'.__('Add-ons Wp-Recall','wp-recall').'</h2>';
 
 			if(isset($_GET['update-addon'])){
 				switch($_GET['update-addon']){
-					case 'activate': $text_notice = __('Addition <strong>activated</strong>. It is possible that on the settings page of Wp-Recall new settings','rcl'); $type='updated'; break;
-					case 'deactivate': $text_notice = __('Addition <strong>deactivated</strong>.','rcl'); $type='updated'; break;
-					case 'delete': $text_notice = __('Files and data additions have been <strong>removed</strong>.','rcl'); $type='updated'; break;
-					case 'error-info': $text_notice = __('The Supplement has not been loaded. Add missing the correct header.','rcl'); $type='error'; break;
+					case 'activate': $text_notice = __('Addition <strong>activated</strong>. It is possible that on the settings page of Wp-Recall new settings','wp-recall'); $type='updated'; break;
+					case 'deactivate': $text_notice = __('Addition <strong>deactivated</strong>.','wp-recall'); $type='updated'; break;
+					case 'delete': $text_notice = __('Files and data additions have been <strong>removed</strong>.','wp-recall'); $type='updated'; break;
+					case 'error-info': $text_notice = __('The Supplement has not been loaded. Add missing the correct header.','wp-recall'); $type='error'; break;
 				}
 				$this->get_update_scripts_file_rcl();
 				$this->get_update_scripts_footer_rcl();
@@ -167,32 +139,32 @@ class Rcl_Addons{
                         if(isset($_POST['save-rcl-key'])){
                             if( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ){
                                 update_option('rcl-key',$_POST['rcl-key']);
-                                $table .='<div id="message" class="'.$type.'"><p>'.__('Key is stored','rcl').'!</p></div>';
+                                $table .='<div id="message" class="'.$type.'"><p>'.__('Key is stored','wp-recall').'!</p></div>';
                             }
 			}
 
-                        $table .= '<h4>'.__('RCLKEY','rcl').'</h4>
+                        $table .= '<h4>'.__('RCLKEY','wp-recall').'</h4>
 			<form action="" method="post">
-				'.__('Enter RCLKEY','rcl').' <input type="text" name="rcl-key" value="'.get_option('rcl-key').'">
-				<input class="button" type="submit" value="'.__('Save','rcl').'" name="save-rcl-key">
+				'.__('Enter RCLKEY','wp-recall').' <input type="text" name="rcl-key" value="'.get_option('rcl-key').'">
+				<input class="button" type="submit" value="'.__('Save','wp-recall').'" name="save-rcl-key">
 				'.wp_nonce_field('add-rcl-key','_wpnonce',true,false).'
 			</form>
-                        <p class="install-help">'.__('He will need to update the add-ons here. Get it , you can profile your account online <a href="http://wppost.ru/" target="_blank">http://wppost.ru</a>','rcl').'</p>';
+                        <p class="install-help">'.__('He will need to update the add-ons here. Get it , you can profile your account online <a href="http://wppost.ru/" target="_blank">http://wppost.ru</a>','wp-recall').'</p>';
 
 			$table .= '
-			<h4>'.__('To install the add-on to Wp-Recall format .zip','rcl').'</h4>
-			<p class="install-help">'.__('If you have the archive add-on for wp-recall format .zip, here you can download and install it.','rcl').'</p>
+			<h4>'.__('To install the add-on to Wp-Recall format .zip','wp-recall').'</h4>
+			<p class="install-help">'.__('If you have the archive add-on for wp-recall format .zip, here you can download and install it.','wp-recall').'</p>
 			<form class="wp-upload-form" action="/" enctype="multipart/form-data" method="post">
-				<label class="screen-reader-text" for="addonzip">'.__('Plugin archive','rcl').'</label>
+				<label class="screen-reader-text" for="addonzip">'.__('Plugin archive','wp-recall').'</label>
 				<input id="addonzip" type="file" name="addonzip">
-				<input id="install-plugin-submit" class="button" type="submit" value="'.__('To install','rcl').'" name="install-addon-submit">
+				<input id="install-plugin-submit" class="button" type="submit" value="'.__('To install','wp-recall').'" name="install-addon-submit">
 				'.wp_nonce_field('install-addons-rcl','_wpnonce',true,false).'
 			</form>
 
 			<ul class="subsubsub">
-				<li class="all"><b>'.__('All','rcl').'<span class="count">('.$cnt_all.')</span></b>|</li>
-				<li class="active"><b>'.__('Active','rcl').'<span class="count">('.$cnt_act.')</span></b>|</li>
-				<li class="inactive"><b>'.__('Inactive','rcl').'<span class="count">('.$cnt_inact.')</span></b></li>
+				<li class="all"><b>'.__('All','wp-recall').'<span class="count">('.$cnt_all.')</span></b>|</li>
+				<li class="active"><b>'.__('Active','wp-recall').'<span class="count">('.$cnt_act.')</span></b>|</li>
+				<li class="inactive"><b>'.__('Inactive','wp-recall').'<span class="count">('.$cnt_inact.')</span></b></li>
 			</ul>
 			<form action="" method="post">
 				'.wp_nonce_field('action-addons','_wpnonce',true,false).'
@@ -201,22 +173,22 @@ class Rcl_Addons{
 				<div class="tablenav top">';
 					$table .= '<div class="alignleft actions bulkactions">
 						<select name="group-addon-action">
-							<option selected="selected" value="">'.__('Action','rcl').'</option>
-							<option value="deactivate">'.__('Deactivate','rcl').'</option>
-							<option value="activate">'.__('To activate','rcl').'</option>
+							<option selected="selected" value="">'.__('Action','wp-recall').'</option>
+							<option value="deactivate">'.__('Deactivate','wp-recall').'</option>
+							<option value="activate">'.__('To activate','wp-recall').'</option>
 						</select>
-						<input id="doaction" class="button action" type="submit" value="'.__('Apply','rcl').'" name="">
+						<input id="doaction" class="button action" type="submit" value="'.__('Apply','wp-recall').'" name="">
 					</div>';
 				$table .= '</div>
 				<table class="wp-list-table widefat plugins" cellspacing="0">
 				<thead>
 					<tr>
 						<th id="cb" class="manage-column column-cb check-column" style="" scope="col">';
-						$table .= '<label class="screen-reader-text" for="cb-select-all-1">'.__('Select all','rcl').'</label>
+						$table .= '<label class="screen-reader-text" for="cb-select-all-1">'.__('Select all','wp-recall').'</label>
 						<input id="cb-select-all-1" type="checkbox">';
 						$table .= '</th>
-						<th id="name" class="manage-column column-name" style="" scope="col">'.__('Additions','rcl').'</th>
-						<th id="description" class="manage-column column-description" style="" scope="col">'.__('Description','rcl').'</th>
+						<th id="name" class="manage-column column-name" style="" scope="col">'.__('Additions','wp-recall').'</th>
+						<th id="description" class="manage-column column-description" style="" scope="col">'.__('Description','wp-recall').'</th>
 					</tr>
 				</thead>';
 
@@ -230,7 +202,7 @@ class Rcl_Addons{
 
 					$table .= '<tr id="better-wp-security" class="'.($status ? "active" : "inactive" ).' '.$update.'">
 						<th class="check-column" scope="row">';
-							$table .= '<label class="screen-reader-text" for="checkbox_'.$key.'">'.__('Choose','rcl').' '.$addon['name'].'</label>
+							$table .= '<label class="screen-reader-text" for="checkbox_'.$key.'">'.__('Choose','wp-recall').' '.$addon['name'].'</label>
 							<input id="checkbox_'.$key.'" type="checkbox" value="'.$key.'" name="checked[]">';
 						$table .= '</th>
 						<td class="plugin-title">
@@ -238,24 +210,24 @@ class Rcl_Addons{
 							<div class="row-actions visible">';
 							if($active_addons&&isset($active_addons[$key])){
 								$table .= '<span class="inactivate">
-								<a title="'.__('Deactivate','rcl').'" href="'.wp_nonce_url( get_bloginfo('wpurl').'/?action-addon=update&status=deactivate&addon='.$key, 'action_addon' ).'">'.__('Deactivate','rcl').'</a>
+								<a title="'.__('Deactivate','wp-recall').'" href="'.wp_nonce_url( get_bloginfo('wpurl').'/?action-addon=update&status=deactivate&addon='.$key, 'action_addon' ).'">'.__('Deactivate','wp-recall').'</a>
 								</span>';
 
 								if($key=='magazin'){
 									$table .= '|<span class="options">
-									<a title="'.__('Settings','rcl').'" href="'.admin_url('admin.php?page=manage-wpm-options&options='.$key).'">'.__('Settings','rcl').'</a>
+									<a title="'.__('Settings','wp-recall').'" href="'.admin_url('admin.php?page=manage-wpm-options&options='.$key).'">'.__('Settings','wp-recall').'</a>
 									</span>';
 								}else{
 									$table .= '|<span class="options">
-									<a title="'.__('Settings','rcl').'" href="'.admin_url('admin.php?page=manage-wprecall&options='.$key).'">'.__('Settings','rcl').'</a>
+									<a title="'.__('Settings','wp-recall').'" href="'.admin_url('admin.php?page=manage-wprecall&options='.$key).'">'.__('Settings','wp-recall').'</a>
 									</span>';
 								}
 							}else{
 								$table .= '<span class="inactivate">
-								<a title="'.__('Activate','rcl').'" href="'.wp_nonce_url( admin_url('admin.php?action-addon=update&status=activate&addon='.$key), 'action_addon' ).'">'.__('Activate','rcl').'</a>
+								<a title="'.__('Activate','wp-recall').'" href="'.wp_nonce_url( admin_url('admin.php?action-addon=update&status=activate&addon='.$key), 'action_addon' ).'">'.__('Activate','wp-recall').'</a>
 								</span>|
 								<span class="inactivate">
-								<a title="'.__('Delete','rcl').'" href="'.wp_nonce_url( admin_url('admin.php?action-addon=update&status=delete&addon='.$key), 'action_addon' ).'">'.__('Delete','rcl').'</a>
+								<a title="'.__('Delete','wp-recall').'" href="'.wp_nonce_url( admin_url('admin.php?action-addon=update&status=delete&addon='.$key), 'action_addon' ).'">'.__('Delete','wp-recall').'</a>
 								</span>';
 							}
 							$table .= '</div>
@@ -265,9 +237,9 @@ class Rcl_Addons{
 							<p>'.$addon['description'].'</p>
 							</div>
 							<div class="active second plugin-version-author-uri">
-							'.__('Version','rcl').' '.$addon['version'];
-                                                                if(isset($addon['author-uri'])) $table .= ' | '.__('Author','rcl').': <a title="'.__('Visit the page of the author','rcl').'" href="'.$addon['author-uri'].'" target="_blank">'.$addon['author'].'</a>';
-                                                                if(isset($addon['add-on-uri'])) $table .= ' | <a title="'.__('Visit the page of the add-on','rcl').'" href="'.$addon['add-on-uri'].'" target="_blank">'.__('Page Add-on','rcl').'</a>';
+							'.__('Version','wp-recall').' '.$addon['version'];
+                                                                if(isset($addon['author-uri'])) $table .= ' | '.__('Author','wp-recall').': <a title="'.__('Visit the page of the author','wp-recall').'" href="'.$addon['author-uri'].'" target="_blank">'.$addon['author'].'</a>';
+                                                                if(isset($addon['add-on-uri'])) $table .= ' | <a title="'.__('Visit the page of the add-on','wp-recall').'" href="'.$addon['add-on-uri'].'" target="_blank">'.__('Page Add-on','wp-recall').'</a>';
 							$table .= '</div>
 						</td>
 					</tr>';
@@ -335,7 +307,7 @@ class Rcl_Addons{
 		if( !wp_verify_nonce( $_GET['_wpnonce'], 'action_addon' ) ) return false;
 
                 global $wpdb, $user_ID, $active_addons;
-		if ( ! current_user_can('activate_plugins') ) wp_die(__('You cant control polucheniya plugins on this site.','rcl'));
+		if ( ! current_user_can('activate_plugins') ) wp_die(__('You cant control polucheniya plugins on this site.','wp-recall'));
 
                 $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
@@ -495,10 +467,10 @@ class Rcl_Addons{
                 if($rs){
                       wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=upload') );exit;
                 }else{
-                      wp_die(__('Unpacking of archive failed.','rcl'));
+                      wp_die(__('Unpacking of archive failed.','wp-recall'));
                 }
             } else {
-                    wp_die(__('ZIP archive not found.','rcl'));
+                    wp_die(__('ZIP archive not found.','wp-recall'));
             }
 
 	}
@@ -573,7 +545,7 @@ class Rcl_Addons{
 		$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 		if($_POST['login_form_recall']==1&&!isset($_POST['page_login_form_recall'])){
-			$_POST['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','rcl'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
+			$_POST['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
 		}
 
 		foreach((array)$_POST as $key => $value){

@@ -3,10 +3,10 @@
     Plugin Name: WP-Recall
     Plugin URI: http://wppost.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 13.7.6
+    Version: 13.8.0
     Author: Plechev Andrey
     Author URI: http://wppost.ru/
-    Text Domain: rcl
+    Text Domain: wp-recall
     Domain Path: /languages
     GitHub Plugin URI: https://github.com/plechev-64/wp-recall
     License:     GPLv2 or later (license.txt)
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '13.7.6';
+	public $version = '13.8.0';
 
 	protected static $_instance = null;
 
@@ -63,6 +63,8 @@ final class WP_Recall {
 	 */
 	public function __construct() {
 
+                add_action('plugins_loaded', array( $this, 'load_plugin_textdomain'),10);
+
 		$this->define_constants(); //Определяем константы.
 		$this->includes(); //Подключаем все нужные файлы с функциями и классами
 		$this->init_hooks(); //Тут все наши хуки
@@ -71,9 +73,32 @@ final class WP_Recall {
 	}
 
 	private function init_hooks() {
-		register_activation_hook( __FILE__, array( 'RCL_Install', 'install' ) );
+            global $user_ID,$user_LK,$rcl_options;
 
-		add_action( 'init', array( $this, 'init' ), 0 );
+            register_activation_hook( __FILE__, array( 'RCL_Install', 'install' ) );
+
+            add_action( 'init', array( $this, 'init' ), 0 );
+
+            if(is_admin()){
+                add_action('save_post', 'rcl_postmeta_update', 0);
+                add_action('admin_head','rcl_admin_scrips');
+                add_action('admin_menu', 'rcl_options_panel',19);
+            }else{
+                 add_action('wp_enqueue_scripts', 'rcl_frontend_scripts');
+                 add_action('wp_head','rcl_update_timeaction_user');
+
+                if(!$user_ID){
+                    if(!isset($rcl_options['login_form_recall'])||!$rcl_options['login_form_recall']){
+                        add_filter('wp_footer', 'rcl_login_form',99);
+                        add_filter('wp_enqueue_scripts', 'rcl_floatform_scripts');
+                    }else{
+                        add_filter('wp_enqueue_scripts', 'rcl_pageform_scripts');
+                    }
+                }
+
+                if($user_LK) rcl_bxslider_scripts();
+
+            }
 	}
 
 	private function define_constants() {
@@ -125,6 +150,19 @@ final class WP_Recall {
              * Остальные распихаем по соответсвующим функциям
              */
 
+            include_once 'functions/rcl_activate.php';
+            require_once("functions/minify-files/minify-css.php");
+            require_once('functions/enqueue-scripts.php');
+            require_once('functions/rcl_custom_fields.php');
+            require_once('functions/loginform.php');
+            require_once('functions/rcl_currency.php');
+            require_once('functions/navi-rcl.php');
+            require_once("rcl-functions.php");
+            require_once("functions/shortcodes.php");
+            require_once("rcl-widgets.php");
+
+            $this->rcl_include_addons();
+
             include_once('class-rcl-install.php');
 
             if ( $this->is_request( 'admin' ) ) {
@@ -144,7 +182,9 @@ final class WP_Recall {
 	 * Сюда складываем все файлы для админки
 	 */
 	public function admin_includes() {
-
+            require_once("rcl-admin/admin-pages.php");
+            require_once("rcl-admin/tabs_options.php");
+            require_once("rcl-admin/rcl-admin.php");
 	}
 
 	/*
@@ -158,6 +198,20 @@ final class WP_Recall {
 	 * Сюда складываем все файлы для фронт-энда
 	 */
 	public function frontend_includes() {
+            global $user_ID;
+
+            require_once('functions/recallbar.php');
+            require_once("functions/rcl-frontend.php");
+
+            if($user_ID){
+
+            }else{
+                require_once('functions/register.php');
+                require_once('functions/authorize.php');
+                if(class_exists('ReallySimpleCaptcha')){
+                    require_once('functions/captcha.php');
+                }
+            }
 
 	}
 
@@ -168,7 +222,7 @@ final class WP_Recall {
 
             $rcl_options = get_option('primary-rcl-options');
 
-            $this->load_plugin_textdomain();
+            //$this->load_plugin_textdomain();
 
             if ( $this->is_request( 'frontend' ) ) {
                 /*
@@ -189,21 +243,49 @@ final class WP_Recall {
             do_action( 'wprecall_init' );
 	}
 
+        function rcl_include_addons(){
+            global $active_addons;
+
+            $active_addons = get_site_option('active_addons_recall');
+            $path_addon_rcl = RCL_PATH.'add-on/';
+            $path_addon_theme = RCL_TAKEPATH.'add-on/';
+
+            if($active_addons){
+
+                foreach($active_addons as $addon=>$src_dir){
+                    if(!$addon) continue;
+                    if(is_readable($path_addon_theme.$addon.'/index.php')){
+                        include_once($path_addon_theme.$addon.'/index.php');
+                    }else if(is_readable($path_addon_rcl.$addon.'/index.php')){
+                        include_once($path_addon_rcl.$addon.'/index.php');
+                    }else{
+                        unset($active_addons[$addon]);
+                    }
+                }
+
+            }
+
+            require_once("functions/rcl_addons.php");
+            $rcl_addons = new Rcl_Addons();
+
+        }
+
 	public function load_plugin_textdomain() {
 
-		$locale = apply_filters( 'plugin_locale', get_locale() );
+		//$locale = apply_filters( 'plugin_locale', get_locale() );
 
 		/*
 		 * Тут файлы перевода для админки
 		 */
-		if ( $this->is_request( 'admin' ) ) {
-			load_textdomain( 'rcl', RCL_PATH . 'languages/rcl-admin-' . $locale . '.mo' );
-		}
+		/*if ( $this->is_request( 'admin' ) ) {
+			//load_textdomain( 'wp-recall', RCL_PATH . 'languages/rcl-admin-' . $locale . '.mo' );
+		}*/
 
 		/*
 		 * Тут для фронт-энда
 		 */
-		load_textdomain( 'rcl', RCL_PATH . 'languages/rcl-' . $locale . '.mo' );
+		//load_textdomain( 'wp-recall', RCL_PATH . 'languages/rcl-' . $locale . '.mo' );
+                load_plugin_textdomain( 'wp-recall', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	public function plugin_url() {
@@ -257,7 +339,7 @@ function RCL() {
  */
 $GLOBALS['wprecall'] = RCL();
 
-require_once("rcl-functions.php");
+
 
 function wp_recall(){
     rcl_include_template('cabinet.php');

@@ -33,7 +33,7 @@ class Rcl_Interkassa_Payment extends Rcl_Payment{
     }
 
     function options($options){
-        $options[$this->form_pay_id] = __('Interkassa','rcl');
+        $options[$this->form_pay_id] = __('Interkassa','wp-recall');
         return $options;
     }
 
@@ -47,19 +47,19 @@ class Rcl_Interkassa_Payment extends Rcl_Payment{
                 'value'=>$this->form_pay_id
             ),
             array(
-                $opt->title(__('Connection settings Interkassa','rcl')),
-                $opt->label(__('Secret Key','rcl')),
+                $opt->title(__('Connection settings Interkassa','wp-recall')),
+                $opt->label(__('Secret Key','wp-recall')),
                 $opt->option('password',array('name'=>'intersecretkey')),
-                $opt->label(__('Test Key','rcl')),
+                $opt->label(__('Test Key','wp-recall')),
                 $opt->option('password',array('name'=>'intertestkey')),
-                $opt->label(__('The ID of the store','rcl')),
+                $opt->label(__('The ID of the store','wp-recall')),
                 $opt->option('text',array('name'=>'interidshop')),
-                $opt->label(__('The status of the account Interkassa','rcl')),
+                $opt->label(__('The status of the account Interkassa','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'interkassatest',
                     'options'=>array(
-                        __('Work','rcl'),
-                        __('Test','rcl')
+                        __('Work','wp-recall'),
+                        __('Test','wp-recall')
                     )
                 )),
             )
@@ -75,11 +75,11 @@ class Rcl_Interkassa_Payment extends Rcl_Payment{
         $test = $rmag_options['interkassatest'];
         $key = $rmag_options['intersecretkey'];
 
-        if($this->pay_type==1) $arr['ik_desc'] = __('Top up personal account','rcl');
-        else if($this->pay_type==2) $arr['ik_desc'] = __('Payment for the order on the website','rcl');
-        else $arr['ik_desc'] = __('Other payments','rcl');
+        if($this->pay_type==1) $arr['ik_desc'] = __('Top up personal account','wp-recall');
+        else if($this->pay_type==2) $arr['ik_desc'] = __('Payment for the order on the website','wp-recall');
+        else $arr['ik_desc'] = __('Other payments','wp-recall');
 
-        $submit = ($data->pay_type==1)? __('Confirm the operation','rcl'): __('Pay through payment system','rcl');
+        $submit = ($data->pay_type==1)? __('Confirm the operation','wp-recall'): __('Pay through payment system','wp-recall');
 
         if($test==1){
             $ik_pw_via = 'test_interkassa_test_xts';
@@ -156,7 +156,7 @@ class Rcl_Interkassa_Payment extends Rcl_Payment{
         if(parent::get_pay((object)$data)){
             wp_redirect(get_permalink($rmag_options['page_successfully_pay'])); exit;
         } else {
-            wp_die(__('A record of the payment in the database was not found','rcl'));
+            wp_die(__('A record of the payment in the database was not found','wp-recall'));
         }
 
     }

@@ -14,7 +14,7 @@ if(function_exists('rcl_register_rating_type')){
     if(!is_admin()) add_action('init','rcl_register_rating_group_type');
     if(is_admin()) add_action('admin_init','rcl_register_rating_group_type');
     function rcl_register_rating_group_type(){
-        rcl_register_rating_type(array('post_type'=>'post-group','type_name'=>__('Record groups','rcl'),'style'=>true));
+        rcl_register_rating_type(array('post_type'=>'post-group','type_name'=>__('Record groups','wp-recall'),'style'=>true));
     }
 }
 
@@ -24,14 +24,14 @@ function rcl_add_taxonomy_public_groups($tax){
     return $tax;
 }
 
-add_action('init','rcl_add_postlist_group');
+if(!is_admin()) add_action('init','rcl_add_postlist_group');
 function rcl_add_postlist_group(){
-    rcl_postlist('group','post-group',__('Record groups','rcl'),array('order'=>40));
+    rcl_postlist('group','post-group',__('Record groups','wp-recall'),array('order'=>40));
 }
 
 add_action('init','rcl_add_tab_groups');
 function rcl_add_tab_groups(){
-    rcl_tab('groups','rcl_tab_groups',__('Groups','rcl'),array('public'=>1,'class'=>'fa-group'));
+    rcl_tab('groups','rcl_tab_groups',__('Groups','wp-recall'),array('public'=>1,'class'=>'fa-group'));
 }
 
 function rcl_ajax_tab_groups($array_tabs){
@@ -45,21 +45,21 @@ function rcl_register_default_group_sidebars(){
 
     rcl_register_group_content(
         array(
-            'name'=>__('Sidebar','rcl'),
+            'name'=>__('Sidebar','wp-recall'),
             'id'=>'sidebar'
         )
     );
 
     rcl_register_group_content(
         array(
-            'name'=>__('Main','rcl'),
+            'name'=>__('Main','wp-recall'),
             'id'=>'content'
         )
     );
 
     rcl_register_group_content(
         array(
-            'name'=>__('Footer','rcl'),
+            'name'=>__('Footer','wp-recall'),
             'id'=>'footer'
         )
     );
@@ -113,8 +113,8 @@ function rcl_tab_groups($author_lk){
             $content = '<div id="create-group">'
                 . '<form method="post">'
                     . '<div class="form-field">'
-                        . '<input type="text" required placeholder="'.__('Enter the name of the new group','rcl').'" name="rcl_group[name]">'
-                        . '<input type="submit" class="recall-button" name="rcl_group[create]" value="'.__('Сreate','rcl').'">'
+                        . '<input type="text" required placeholder="'.__('Enter the name of the new group','wp-recall').'" name="rcl_group[name]">'
+                        . '<input type="submit" class="recall-button" name="rcl_group[create]" value="'.__('Сreate','wp-recall').'">'
                     . '</div>'
                     . wp_nonce_field('rcl-group-create','_wpnonce',true,false)
                 . '</form>'
@@ -155,7 +155,7 @@ function rcl_get_link_group_tag($content){
             }
         }
 
-	$cat = '<p><i class="fa fa-folder"></i>'.__('Category in the group','rcl').': <a href="'. get_term_link( (int)$group_id, 'groups' ) .'?group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
+	$cat = '<p><i class="fa fa-folder"></i>'.__('Category in the group','wp-recall').': <a href="'. get_term_link( (int)$group_id, 'groups' ) .'?group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
 
 	return $cat.$content;
 }
@@ -179,7 +179,7 @@ function rcl_add_namegroup($content){
 	$groups = get_the_terms( $post->ID, 'groups' );
 	foreach((array)$groups as $group){
 		if($group->parent) continue;
-		$group_link = '<p><i class="fa fa-users"></i>'.__('Published in the group','rcl').': <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
+		$group_link = '<p><i class="fa fa-users"></i>'.__('Published in the group','wp-recall').': <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
 	}
 	$content = $group_link.$content;
 	return $content;
@@ -194,7 +194,7 @@ function rcl_new_group(){
     $group_id = rcl_create_group(array('name'=>$name_group,'admin_id'=>$user_ID));
 
     if(!$group_id){
-        rcl_notice_text(__('Create a group failed','rcl'),'error');
+        rcl_notice_text(__('Create a group failed','wp-recall'),'error');
     }else{
         wp_redirect(get_term_link( (int)$group_id, 'groups' ));
         exit;
@@ -325,10 +325,10 @@ function rcl_get_group_requests_content($group_id){
 
     $requests = rcl_get_group_option($group_id,'requests_group_access');
 
-    $content = '<h3>'.__('Requests for access to the group','rcl').'</h3>';
+    $content = '<h3>'.__('Requests for access to the group','wp-recall').'</h3>';
 
     if(!$requests){
-        $content .= '<p>'.__('No queries','rcl').'</p>';
+        $content .= '<p>'.__('No queries','wp-recall').'</p>';
         return $content;
     }
 
@@ -342,8 +342,8 @@ function rcl_get_group_requests_content($group_id){
 function rcl_add_group_access_button(){
     global $rcl_user;
     echo '<div class="group-request" data-user="'.$rcl_user->ID.'">';
-    echo rcl_get_button(__('Approve request','rcl'),'#',array('icon'=>'fa-thumbs-up','class'=>'apply-request','attr'=>'data-request=1'));
-    echo rcl_get_button(__('Reject request','rcl'),'#',array('icon'=>'fa-thumbs-down','class'=>'apply-request','attr'=>'data-request=0'));
+    echo rcl_get_button(__('Approve request','wp-recall'),'#',array('icon'=>'fa-thumbs-up','class'=>'apply-request','attr'=>'data-request=1'));
+    echo rcl_get_button(__('Reject request','wp-recall'),'#',array('icon'=>'fa-thumbs-down','class'=>'apply-request','attr'=>'data-request=0'));
     echo '</div>';
 }
 
@@ -358,16 +358,16 @@ function rcl_add_group_user_options(){
     echo '<div id="options-user-'.$rcl_user->ID.'" class="group-request" data-user="'.$rcl_user->ID.'">';
 
         echo '<div class="group-user-option">';
-            echo rcl_get_group_callback('rcl_group_ajax_delete_user',__('Delete','rcl'));
+            echo rcl_get_group_callback('rcl_group_ajax_delete_user',__('Delete','wp-recall'));
         echo '</div>';
 
         echo '<div class="group-user-option">';
-            echo __('User status','rcl').' <select name="user_role">';
+            echo __('User status','wp-recall').' <select name="user_role">';
             foreach($group_roles as $role=>$data){
                 echo '<option value="'.$role.'" '.selected($rcl_user->user_role,$role,false).'>'.$data['role_name'].'</option>';
             }
             echo '</select>';
-            echo rcl_get_group_callback('rcl_group_ajax_update_role',__('Save','rcl'),array('user_role'));
+            echo rcl_get_group_callback('rcl_group_ajax_update_role',__('Save','wp-recall'),array('user_role'));
         echo '</div>';
 
     echo '</div>';
@@ -394,7 +394,7 @@ function rcl_apply_group_request(){
 
     if($apply){
 
-        $subject = __('Request access to the group approved!','rcl');
+        $subject = __('Request access to the group approved!','wp-recall');
         $textmail = '
         <h3>Добро пожаловать в группу "'.$rcl_group->name.'"!</h3>
         <p>Поздравляем, ваш запрос на доступ к приватной группе на сайте "'.get_bloginfo('name').'" был одобрен.</p>
@@ -404,12 +404,12 @@ function rcl_apply_group_request(){
 
         rcl_group_add_user($user_id,$group_id);
 
-        $log['result']='<span class="success">'.__('The request was accepted','rcl').'</span>';
+        $log['result']='<span class="success">'.__('The request was accepted','wp-recall').'</span>';
 
     }else{
 
-        $log['result']='<span class="error">'.__('Request rejected','rcl').'</span>';
-        $subject = __('The request to access the group rejected.','rcl');
+        $log['result']='<span class="error">'.__('Request rejected','wp-recall').'</span>';
+        $subject = __('The request to access the group rejected.','wp-recall');
         $textmail = '
         <p>Сожалеем, но ваш запрос на доступ к приватной группе "'.$rcl_group->name.'" на сайте "'.get_bloginfo('name').'" был отклонен ее админом.</p>';
 
@@ -424,6 +424,30 @@ function rcl_apply_group_request(){
     $log['user_id']=$user_id;
     echo json_encode($log);
     exit;
+}
+
+add_filter('rcl_feed_posts_array','rcl_add_feed_group_posts',10);
+function rcl_add_feed_group_posts($posts){
+    global $wpdb,$user_ID;
+
+    $groups = $wpdb->get_col("SELECT groups_users.group_id, groups.ID AS group_id "
+            . "FROM ".RCL_PREF."groups_users AS groups_users "
+            . "INNER JOIN ".RCL_PREF."groups AS groups ON groups_users.user_id=groups.admin_id "
+            . "WHERE (groups_users.user_id='$user_ID' OR groups.admin_id='$user_ID') "
+            . "GROUP BY groups_users.group_id, groups.ID");
+
+    if($groups){
+
+        $objects = $wpdb->get_col("SELECT term_relationships.object_id "
+            . "FROM $wpdb->term_relationships AS term_relationships "
+            . "INNER JOIN $wpdb->term_taxonomy AS term_taxonomy ON term_relationships.term_taxonomy_id=term_taxonomy.term_taxonomy_id "
+            . "WHERE term_taxonomy.term_id IN (".implode(',',$groups).")");
+
+        if($objects) $posts = array_unique(array_merge($posts,$objects));
+
+    }
+
+    return $posts;
 }
 
 add_filter('file_scripts_rcl','rcl_get_scripts_groups');

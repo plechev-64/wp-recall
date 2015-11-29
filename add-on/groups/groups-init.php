@@ -4,18 +4,18 @@ add_action( 'init', 'register_terms_rec_post_group' );
 function register_terms_rec_post_group() {
 
 	$labels = array(
-            'name' => __('Record groups','rcl'),
-            'singular_name' => __('Record groups','rcl'),
-            'add_new' => __('Add entry','rcl'),
-            'add_new_item' => __('Add entry','rcl'),
-            'edit_item' => __('Edit','rcl'),
-            'new_item' => __('New','rcl'),
-            'view_item' => __('View','rcl'),
-            'search_items' => __('Search','rcl'),
-            'not_found' => __('Not found','rcl'),
-            'not_found_in_trash' => __('Cart is empty','rcl'),
-            'parent_item_colon' => __('Parent record','rcl'),
-            'menu_name' => __('Record groups','rcl'),
+            'name' => __('Record groups','wp-recall'),
+            'singular_name' => __('Record groups','wp-recall'),
+            'add_new' => __('Add entry','wp-recall'),
+            'add_new_item' => __('Add entry','wp-recall'),
+            'edit_item' => __('Edit','wp-recall'),
+            'new_item' => __('New','wp-recall'),
+            'view_item' => __('View','wp-recall'),
+            'search_items' => __('Search','wp-recall'),
+            'not_found' => __('Not found','wp-recall'),
+            'not_found_in_trash' => __('Cart is empty','wp-recall'),
+            'parent_item_colon' => __('Parent record','wp-recall'),
+            'menu_name' => __('Record groups','wp-recall'),
 	);
 
 	$args = array(
@@ -44,21 +44,21 @@ add_action( 'init', 'register_taxonomy_groups' );
 function register_taxonomy_groups() {
 
 	$labels = array(
-            'name' => __('Groups','rcl'),
-            'singular_name' => __('Groups','rcl'),
-            'search_items' => __('Search','rcl'),
-            'popular_items' => __('Popular Groups','rcl'),
-            'all_items' => __('All categories','rcl'),
-            'parent_item' => __('Parent group','rcl'),
-            'parent_item_colon' => __('Parent group','rcl'),
-            'edit_item' => __('Edit','rcl'),
-            'update_item' => __('Update','rcl'),
-            'add_new_item' => __('To add a new','rcl'),
-            'new_item_name' => __('New','rcl'),
-            'separate_items_with_commas' => __('Separate with commas','rcl'),
-            'add_or_remove_items' => __('To add or remove','rcl'),
-            'choose_from_most_used' => __('Click to use','rcl'),
-            'menu_name' => __('Groups','rcl')
+            'name' => __('Groups','wp-recall'),
+            'singular_name' => __('Groups','wp-recall'),
+            'search_items' => __('Search','wp-recall'),
+            'popular_items' => __('Popular Groups','wp-recall'),
+            'all_items' => __('All categories','wp-recall'),
+            'parent_item' => __('Parent group','wp-recall'),
+            'parent_item_colon' => __('Parent group','wp-recall'),
+            'edit_item' => __('Edit','wp-recall'),
+            'update_item' => __('Update','wp-recall'),
+            'add_new_item' => __('To add a new','wp-recall'),
+            'new_item_name' => __('New','wp-recall'),
+            'separate_items_with_commas' => __('Separate with commas','wp-recall'),
+            'add_or_remove_items' => __('To add or remove','wp-recall'),
+            'choose_from_most_used' => __('Click to use','wp-recall'),
+            'menu_name' => __('Groups','wp-recall')
 	);
 
 	$args = array(

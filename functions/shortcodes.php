@@ -28,7 +28,7 @@ function rcl_get_userlist($atts, $content = null){
     $userlist = $users->get_filters($count_users);
 
     if(!$usersdata){
-        $userlist .= '<p align="center">'.__('Users not found','rcl').'</p>';
+        $userlist .= '<p align="center">'.__('Users not found','wp-recall').'</p>';
         $users->remove_data();
 
         return $userlist;
@@ -81,7 +81,7 @@ function rcl_user_comments(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('comments_count', $rcl_users_set->data)||isset($rcl_user->comments_count)){
         if(!isset($rcl_user->comments_count)) $rcl_user->comments_count = 0;
-        echo '<span class="filter-data"><i class="fa fa-comment"></i>'.__('Comments','rcl').': '.$rcl_user->comments_count.'</span>';
+        echo '<span class="filter-data"><i class="fa fa-comment"></i>'.__('Comments','wp-recall').': '.$rcl_user->comments_count.'</span>';
     }
 }
 add_action('user_description','rcl_user_posts');
@@ -89,7 +89,7 @@ function rcl_user_posts(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('posts_count', $rcl_users_set->data)||isset($rcl_user->posts_count)){
         if(!isset($rcl_user->posts_count)) $rcl_user->posts_count = 0;
-        echo '<span class="filter-data"><i class="fa fa-file-text-o"></i>'.__('Publics','rcl').': '.$rcl_user->posts_count.'</span>';
+        echo '<span class="filter-data"><i class="fa fa-file-text-o"></i>'.__('Publics','wp-recall').': '.$rcl_user->posts_count.'</span>';
     }
 }
 
@@ -98,7 +98,7 @@ function rcl_user_action($type=1){
     switch($type){
         case 1: $last_action = rcl_get_useraction($rcl_user->time_action);
                 if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
-                else echo '<span class="status_user offline" title="'.__('not online','rcl').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
+                else echo '<span class="status_user offline" title="'.__('not online','wp-recall').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
         break;
         case 2: echo rcl_get_miniaction($rcl_user->time_action); break;
     }
@@ -118,7 +118,7 @@ function rcl_user_register(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('user_registered', $rcl_users_set->data)||isset($rcl_user->user_registered)){
         if(!isset($rcl_user->user_registered)) return false;
-        echo '<span class="filter-data"><i class="fa fa-calendar-check-o"></i>'.__('Registration','rcl').': '.mysql2date('d-m-Y', $rcl_user->user_registered).'</span>';
+        echo '<span class="filter-data"><i class="fa fa-calendar-check-o"></i>'.__('Registration','wp-recall').': '.mysql2date('d-m-Y', $rcl_user->user_registered).'</span>';
     }
 }
 
@@ -137,13 +137,13 @@ function rcl_default_search_form($form){
 
 	$form .='<div class="rcl-search-users">
                 <form method="get" action="">
-                    <p>'.__('Search users','rcl').'</p>
+                    <p>'.__('Search users','wp-recall').'</p>
                     <input type="text" name="search_text" value="'.$search_text.'">
                     <select name="search_field">
-                        <option '.selected($search_field,'display_name',false).' value="display_name">'.__('by name','rcl').'</option>
-                        <option '.selected($search_field,'user_login',false).' value="user_login">'.__('by login','rcl').'</option>
+                        <option '.selected($search_field,'display_name',false).' value="display_name">'.__('by name','wp-recall').'</option>
+                        <option '.selected($search_field,'user_login',false).' value="user_login">'.__('by login','wp-recall').'</option>
                     </select>
-                    <input type="submit" class="recall-button" name="search-user" value="'.__('Search','rcl').'">
+                    <input type="submit" class="recall-button" name="search-user" value="'.__('Search','wp-recall').'">
                     <input type="hidden" name="default-search" value="1">
                 </form>
             </div>';
@@ -155,7 +155,7 @@ function rcl_get_shortcode_wp_recall(){
 	global $user_LK;
 
 	if(!$user_LK){
-		return '<h4>'.__('To begin to use the capabilities of your personal account, please log in or register on this site','rcl').'</h4>
+		return '<h4>'.__('To begin to use the capabilities of your personal account, please log in or register on this site','wp-recall').'</h4>
 		<div class="authorize-form-rcl">'.rcl_get_authorize_form().'</div>';
 	}
 

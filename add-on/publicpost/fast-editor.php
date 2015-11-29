@@ -17,10 +17,10 @@ class Rcl_Public{
 			$medias = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts $where ORDER BY ID DESC LIMIT $limit_us");
 
                         $custom_url = '<div id="custom-image-url" style="padding: 10px;">
-                                        <h3>'.__('The URL to the image','rcl').':</h3>
+                                        <h3>'.__('The URL to the image','wp-recall').':</h3>
                                         <input type="text" id="custom-url" name="custom-url" value="">
 
-                                        <input type="button" onclick="add_custom_image_url();return false;" class="recall-button" value="'.__('Insert image','rcl').'">
+                                        <input type="button" onclick="add_custom_image_url();return false;" class="recall-button" value="'.__('Insert image','wp-recall').'">
                                         <script type="text/javascript">
                                             function add_custom_image_url(){
                                                 var url = jQuery("#custom-url").val();
@@ -38,7 +38,7 @@ class Rcl_Public{
 				$fls = '<span class="close-popup"></span>
                                     '.$custom_url.'
                                     <div id="user-medias" style="padding: 10px;">
-                                        <h3>'.__('Media library user','rcl').':</h3>
+                                        <h3>'.__('Media library user','wp-recall').':</h3>
 					<ul class="media-list">';
 				foreach($medias as $m){
 					$fls .= '<li>'.rcl_get_insert_image($m->ID).'</li>';
@@ -51,8 +51,8 @@ class Rcl_Public{
 				$log['content']= $fls;
 			}else{
 				$log['result']=100;
-				$log['content']= $custom_url.'<div class="clear"><h3 align="center">'.__('Images in the media library is not found!','rcl').'</h3>
-				<p class="aligncenter">'.__('Upload to your image and you will be able to use them in future from your media library.','rcl').'</p></div>';
+				$log['content']= $custom_url.'<div class="clear"><h3 align="center">'.__('Images in the media library is not found!','wp-recall').'</h3>
+				<p class="aligncenter">'.__('Upload to your image and you will be able to use them in future from your media library.','wp-recall').'</p></div>';
 			}
 		}
 		echo json_encode($log);
@@ -101,9 +101,9 @@ function rcl_get_edit_postdata(){
 		$log['result']=100;
 		$log['content']= "
 		<form id='rcl-edit-form' method='post'>
-			<label>".__("Name",'rcl').":</label>
+			<label>".__("Name",'wp-recall').":</label>
 			 <input type='text' name='post_title' value='$post->post_title'>
-			 <label>".__("Description",'rcl').":</label>
+			 <label>".__("Description",'wp-recall').":</label>
 			 <textarea name='post_content' rows='10'>$post->post_content</textarea>
 			 <input type='hidden' name='post_id' value='$post_id'>
 		</form>";

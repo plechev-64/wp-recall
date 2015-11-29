@@ -29,14 +29,14 @@ function rcl_send_notify_messages(){
         foreach($vals as $auth_id=>$time){
             $url = rcl_format_url(get_author_posts_url($auth_id),'privat');
             $mess .= '<div style="overflow:hidden;clear:both;">
-                <p>'.__('You were sent a private message','rcl').'</p>
+                <p>'.__('You were sent a private message','wp-recall').'</p>
                 <div style="float:left;margin-right:15px;">'.get_avatar($auth_id,60).'</div>'
-                . '<p>'.__('from the user','rcl').' '.get_the_author_meta('display_name',$auth_id).'</p>'
-                . '<p>'.__('You can read the message by clicking on the link:','rcl').' <a href="'.$url.'">'.$url.'</a></p>'
+                . '<p>'.__('from the user','wp-recall').' '.get_the_author_meta('display_name',$auth_id).'</p>'
+                . '<p>'.__('You can read the message by clicking on the link:','wp-recall').' <a href="'.$url.'">'.$url.'</a></p>'
                 . '</div>';
         }
-        if($cnt==1) $title = __('For you','rcl').' '.$cnt.' '.__('new message','rcl');
-        else $title = __('For you','rcl').' '.$cnt.' '.__('new messages','rcl');
+        if($cnt==1) $title = __('For you','wp-recall').' '.$cnt.' '.__('new message','wp-recall');
+        else $title = __('For you','wp-recall').' '.$cnt.' '.__('new messages','wp-recall');
         rcl_mail($to, $title, $mess);
     }
 

@@ -135,9 +135,9 @@ class Rcl_PublicForm {
 		);
 
                 if(isset($rcl_options['public_preview'])&&$rcl_options['public_preview']==1){
-                    $inputs[] = array('type'=>'submit','value'=>__('To publish','rcl'),'id'=>'edit-post-rcl','class'=>'recall-button');
+                    $inputs[] = array('type'=>'submit','value'=>__('To publish','wp-recall'),'id'=>'edit-post-rcl','class'=>'recall-button');
                 }else{
-                    $inputs[] = array('type'=>'button','value'=>__('Preview','rcl'),'onclick'=>'rcl_preview(this);','class'=>'rcl-preview-post recall-button');
+                    $inputs[] = array('type'=>'button','value'=>__('Preview','wp-recall'),'onclick'=>'rcl_preview(this);','class'=>'rcl-preview-post recall-button');
                 }
 
 		if($this->post_id) $inputs[] = array('type'=>'hidden','value'=>$this->post_id,'name'=>'post-rcl');
@@ -173,23 +173,23 @@ class Rcl_PublicForm {
     function delete_button($cnt,$data){
 		global $user_ID,$editpost;
         if($editpost->post_author==$user_ID){
-            $cnt .= '<form method="post" action="" onsubmit="return confirm(\''.__('Are you seriously','rcl').'?\');">
+            $cnt .= '<form method="post" action="" onsubmit="return confirm(\''.__('Are you seriously','wp-recall').'?\');">
             '.wp_nonce_field('delete-post-rcl','_wpnonce',true,false).'
-            <input class="alignleft recall-button delete-post-submit" type="submit" name="delete-post-rcl" value="'.__('Delete post','rcl').'">
+            <input class="alignleft recall-button delete-post-submit" type="submit" name="delete-post-rcl" value="'.__('Delete post','wp-recall').'">
             <input type="hidden" name="post-rcl" value="'.$this->post_id.'"></form>';
         }else{
 
 			$cnt .= '
 				<div id="rcl-delete-post">
-					<a href="#" class="recall-button delete-toggle">'.__('Delete post','rcl').'</a>
+					<a href="#" class="recall-button delete-toggle">'.__('Delete post','wp-recall').'</a>
 					<div class="delete-form-contayner">
-						<form action="" method="post"  onsubmit="return confirm(\''.__('Are you seriously','rcl').'?\');">
+						<form action="" method="post"  onsubmit="return confirm(\''.__('Are you seriously','wp-recall').'?\');">
 						'.wp_nonce_field('delete-post-rcl','_wpnonce',true,false).'
 						'.$this->reasons_delete().'
-						<label>'.__('or enter its cause','rcl').'</label>
+						<label>'.__('or enter its cause','wp-recall').'</label>
 						<textarea required id="reason_content" name="reason_content"></textarea>
-						<p><input type="checkbox" name="no-reason" onclick="(!document.getElementById(\'reason_content\').getAttribute(\'disabled\')) ? document.getElementById(\'reason_content\').setAttribute(\'disabled\', \'disabled\') : document.getElementById(\'reason_content\').removeAttribute(\'disabled\')" value="1"> '.__('Without notice','rcl').'</p>
-						<input class="floatright recall-button delete-post-submit" type="submit" name="delete-post-rcl" value="'.__('Delete post','rcl').'">
+						<p><input type="checkbox" name="no-reason" onclick="(!document.getElementById(\'reason_content\').getAttribute(\'disabled\')) ? document.getElementById(\'reason_content\').setAttribute(\'disabled\', \'disabled\') : document.getElementById(\'reason_content\').removeAttribute(\'disabled\')" value="1"> '.__('Without notice','wp-recall').'</p>
+						<input class="floatright recall-button delete-post-submit" type="submit" name="delete-post-rcl" value="'.__('Delete post','wp-recall').'">
 						<input type="hidden" name="post-rcl" value="'.$this->post_id.'">
 						</form>
 					</div>
@@ -203,16 +203,16 @@ class Rcl_PublicForm {
 
 		$reasons = array(
 			array(
-				'value'=>__('Not correspond the subject','rcl'),
-				'content'=>__('The publication does not correspond to the subject site','rcl'),
+				'value'=>__('Not correspond the subject','wp-recall'),
+				'content'=>__('The publication does not correspond to the subject site','wp-recall'),
 			),
 			array(
-				'value'=>__('Not furnished','rcl'),
-				'content'=>__('Publication is not formalized under the rules','rcl'),
+				'value'=>__('Not furnished','wp-recall'),
+				'content'=>__('Publication is not formalized under the rules','wp-recall'),
 			),
 			array(
-				'value'=>__('Advertising/Spam','rcl'),
-				'content'=>__('Publication labeled as advertising or spam','rcl'),
+				'value'=>__('Advertising/Spam','wp-recall'),
+				'content'=>__('Publication labeled as advertising or spam','wp-recall'),
 			)
 		);
 
@@ -220,7 +220,7 @@ class Rcl_PublicForm {
 
 		if(!$reasons) return false;
 
-		$content = '<label>'.__('Use the blank notice','rcl').':</label>';
+		$content = '<label>'.__('Use the blank notice','wp-recall').':</label>';
 		foreach($reasons as $reason){
 			$content .= '<input type="button" class="recall-button reason-delete" onclick="document.getElementById(\'reason_content\').value=\''.$reason['content'].'\'" value="'.$reason['value'].'">';
 		}
@@ -231,18 +231,18 @@ class Rcl_PublicForm {
     function public_form(){
         global $user_ID,$formFields;
 
-			if(!$this->can_edit) return '<p align="center">'.__('You can not edit this publication :(','rcl').'</p>';
+			if(!$this->can_edit) return '<p align="center">'.__('You can not edit this publication :(','wp-recall').'</p>';
 
             if(!$this->user_can()){
                 if($this->post_type=='post-group') return '<div class="public-post-group">'
-                    . '<h3 >'.__('Sorry, but you have no rights to publish within groups :(','rcl').'</h3>'
+                    . '<h3 >'.__('Sorry, but you have no rights to publish within groups :(','wp-recall').'</h3>'
                         . '</div>';
                 else{
 
-		if(!$user_ID) return '<p align="center">'.__('You must be logged in to post. Login or register','rcl').'</p>';
+		if(!$user_ID) return '<p align="center">'.__('You must be logged in to post. Login or register','wp-recall').'</p>';
 
 		return '<h3 class="aligncenter">'
-                    . __('Sorry, but you have no right<br>to publish the records on this site :(','rcl')
+                    . __('Sorry, but you have no right<br>to publish the records on this site :(','wp-recall')
                         . '</h3>';
 				}
             }
@@ -281,15 +281,15 @@ class Rcl_PublicForm {
 
                 $form .= '<form id="'.$id_form.'" class="';
                 $form .= ($this->post_id)? 'edit-form' : 'public-form';
-                $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','rcl').'\';"  action="" method="post" enctype="multipart/form-data">
+                $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','wp-recall').'\';"  action="" method="post" enctype="multipart/form-data">
                 '.wp_nonce_field('edit-post-rcl','_wpnonce',true,false);
 
                     if(!$user_ID) $form .= '<div class="rcl-form-field">
-                            <label>'.__('Your Name','rcl').' <span class="required">*</span></label>
+                            <label>'.__('Your Name','wp-recall').' <span class="required">*</span></label>
                             <input required type="text" value="" name="name-user">
                     </div>
                     <div class="rcl-form-field">
-                            <label>'.__('Your E-mail','rcl').' <span class="required">*</span></label>
+                            <label>'.__('Your E-mail','wp-recall').' <span class="required">*</span></label>
                             <input required type="text" value="" name="email-user">
                     </div>';
 
@@ -360,7 +360,7 @@ function rcl_publication_termlist($tax=false){
     }
     if(!$catlist) return false;
 
-    echo '<label>'.__('Category','rcl').':</label>'.$catlist;
+    echo '<label>'.__('Category','wp-recall').':</label>'.$catlist;
 }
 
 function get_public_catlist(){
@@ -461,7 +461,7 @@ function rcl_get_tags_checklist($post_id=false){
 
 	$post_tags = ($post_id)? rcl_get_tags($post_id): array();
 
-	$checks = '<label>'.__('Select a tag from the list','rcl').'</label>
+	$checks = '<label>'.__('Select a tag from the list','wp-recall').'</label>
 	<div id="rcl-tags-list">';
 	foreach ($tags as $tag){
 		$checked = false;
@@ -536,10 +536,10 @@ function rcl_publication_editor(){
 				'html'=>'fa-code',
 			);
 			$names = array(
-				'text'=>__('Text Box','rcl'),
-				'header'=>__('Subtitle','rcl'),
-				'image'=>__('Image','rcl'),
-				'html'=>__('HTML- code','rcl'),
+				'text'=>__('Text Box','wp-recall'),
+				'header'=>__('Subtitle','wp-recall'),
+				'image'=>__('Image','wp-recall'),
+				'html'=>__('HTML- code','wp-recall'),
 			);
 
 			foreach($rcl_options['rcl_editor_buttons'] as $type){
@@ -582,8 +582,8 @@ function rcl_get_tags_input($post_id=false){
 		'type' => 'text',
 		'id' => 'rcl_post_tags',
 		'name' => 'tags',
-		'placeholder' => __('Enter your tags','rcl'),
-		'label' => __('Add your tags','rcl').'<br><small>'.__('Each tag is separated with Enter','rcl').'</small>'
+		'placeholder' => __('Enter your tags','wp-recall'),
+		'label' => __('Add your tags','wp-recall').'<br><small>'.__('Each tag is separated with Enter','wp-recall').'</small>'
 	);
 
 	$fields .= rcl_form_field($args);

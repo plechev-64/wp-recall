@@ -1,63 +1,19 @@
 <?php
-require_once("functions/minify-files/minify-css.php");
-require_once('functions/enqueue-scripts.php');
-if(is_admin()) require_once("rcl-admin/admin-pages.php");
-require_once("functions/deprecated.php");
-require_once('functions/migration.php');
-require_once("functions/tabs_options.php");
-require_once("rcl-widgets.php");
-require_once("functions/shortcodes.php");
-require_once('functions/includes.php');
-require_once('functions/navi-rcl.php');
-require_once('functions/recallbar.php');
-require_once('functions/rcl_custom_fields.php');
-require_once('functions/register.php');
-require_once('functions/authorize.php');
-require_once('functions/loginform.php');
-require_once('functions/rcl_currency.php');
-
-if(class_exists('ReallySimpleCaptcha')){
-    require_once('functions/captcha.php');
+add_action('init','rcl_register_recallbar');
+function rcl_register_recallbar(){
+	global $rcl_options;
+	if( isset( $rcl_options['view_recallbar'] ) && $rcl_options['view_recallbar'] != 1 ) return false;
+	register_nav_menus(array( 'recallbar' => __('Recallbar','wp-recall') ));
 }
 
-if(!is_admin()) add_action('wprecall_init','init_user_lk',2);
-function init_user_lk(){
-    global $wpdb,$user_LK,$rcl_userlk_action,$rcl_options,$user_ID;
-
-    $user_LK = false;
-    $userLK = false;
-    $get='user';
-
-    if(isset($rcl_options['link_user_lk_rcl'])&&$rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];
-    if(isset($_GET[$get])) $userLK = $_GET[$get];
-
-    if(!$userLK){
-        if($rcl_options['view_user_lk_rcl']==1){
-                $post_id = url_to_postid($_SERVER['REQUEST_URI']);
-                if($rcl_options['lk_page_rcl']==$post_id) $user_LK = $user_ID;
-        }else {
-            if(isset($_GET['author'])) $user_LK = $_GET['author'];
-            else{
-                $url = (isset($_SERVER['SCRIPT_URL']))? $_SERVER['SCRIPT_URL']: $_SERVER['REQUEST_URI'];
-                $url = preg_replace('/\?.*/', '', $url);
-                $url_ar = explode('/',$url);
-                foreach($url_ar as $key=>$u){
-                    if($u!='author') continue;
-                    $nicename = $url_ar[$key+1];
-                    break;
-                }
-                if(!$nicename) return false;
-                $user_LK = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."users WHERE user_nicename='%s'",$nicename));
-            }
-        }
-    }else{
-	$user_LK = $userLK;
-    }
-
-    if($user_LK){
-        $rcl_userlk_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_LK));
-        rcl_fileapi_scripts();
-    }
+function rcl_key_addon($path_parts){
+    if(!isset($path_parts['dirname'])) return false;
+    $key = false;
+    $ar_dir = explode('/',$path_parts['dirname']);
+    if(!isset($ar_dir[1])) $ar_dir = explode('\\',$path_parts['dirname']);
+    $cnt = count($ar_dir)-1;
+    for($a=$cnt;$a>=0;$a--){if($ar_dir[$a]=='add-on'){$key=$ar_dir[$a+1];break;}}
+    return $key;
 }
 
 //добавляем вкладку со списком публикаций хозяина ЛК указанного типа записей в личный кабинет
@@ -65,9 +21,10 @@ function rcl_postlist($id,$posttype,$name='',$args=false){
     global $rcl_options;
     if(!$rcl_options) $rcl_options = get_option('primary-rcl-options');
     if($rcl_options['publics_block_rcl']!=1) return false;
-    if (!class_exists('Rcl_Postlist')) include_once plugin_dir_path( __FILE__ ).'add-on/publicpost/rcl_postlist.php';
+    if (!class_exists('Rcl_Postlist')) include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
     $plist = new Rcl_Postlist($id,$posttype,$name,$args);
 }
+
 //добавляем контентный блок в указанное место личного кабинета
 function rcl_block($place,$callback,$args=false){
 
@@ -84,12 +41,7 @@ function rcl_block($place,$callback,$args=false){
     if (!class_exists('Rcl_Blocks')) include_once plugin_dir_path( __FILE__ ).'functions/rcl_blocks.php';
     $block = new Rcl_Blocks($data);
 }
-//добавляем уведомление в личном кабинете
-function rcl_notice_text($text,$type='warning'){
-    if(is_admin())return false;
-    if (!class_exists('Rcl_Notify')) include_once plugin_dir_path( __FILE__ ).'functions/rcl_notify.php';
-    $block = new Rcl_Notify($text,$type);
-}
+
 //добавляем вкладку в личный кабинет
 function rcl_tab($id,$callback,$name='',$args=false){
 
@@ -110,8 +62,10 @@ function rcl_tab($id,$callback,$name='',$args=false){
 }
 
 function rcl_crop($filesource,$width,$height,$file){
-    if (!class_exists('Rcl_Crop')) require_once(RCL_PATH.'functions/rcl_crop.php');
-	$crop = new Rcl_Crop();
+    if (!class_exists('Rcl_Crop'))
+        require_once(RCL_PATH.'functions/rcl_crop.php');
+
+    $crop = new Rcl_Crop();
     return $crop->get_crop($filesource,$width,$height,$file);
 }
 
@@ -143,28 +97,86 @@ function rcl_get_include_template($file_temp,$path=false){
     return $content;
 }
 
-function rcl_key_addon($path_parts){
-    if(!isset($path_parts['dirname'])) return false;
-    $key = false;
-    $ar_dir = explode('/',$path_parts['dirname']);
-    if(!isset($ar_dir[1])) $ar_dir = explode('\\',$path_parts['dirname']);
-    $cnt = count($ar_dir)-1;
-    for($a=$cnt;$a>=0;$a--){if($ar_dir[$a]=='add-on'){$key=$ar_dir[$a+1];break;}}
-    return $key;
+function rcl_addon_url($file,$path){
+    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
+    $array = explode('/',$path);
+    $url = '';
+	$content_dir = basename(content_url());
+    foreach($array as $key=>$ar){
+        if($array[$key]==$content_dir){
+            $url = get_bloginfo('wpurl').'/'.$array[$key].'/';
+            continue;
+        }
+        if($url){
+            $url .= $ar.'/';
+            if($array[$key-1]=='add-on') break;
+        }
+    }
+    $url .= $file;
+    return $url;
 }
 
-//формируем массив данных о вкладках личного кабинета
-if(is_admin()) add_filter('tab_data_rcl','rcl_get_data_tab',10);
-function rcl_get_data_tab($data){
-    global $tabs_rcl;
-    $tabs_rcl[$data['id']] = $data;
-    return $data;
+function rcl_addon_path($path){
+    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
+    $array = explode('/',$path);
+    $addon_path = '';
+    foreach($array as $key=>$ar){
+        $addon_path .= $ar.'/';
+        if(!$key) continue;
+        if($array[$key-1]=='add-on')
+           return $addon_path;
+    }
+    return false;
 }
 
-function rcl_add_balloon_menu($data,$args){
-    if($data['id']!=$args['tab_id']||!$args['ballon_value']) return $data;
-    $data['name'] = sprintf('%s <span class="rcl-menu-notice">%s</span>',$data['name'],$args['ballon_value']);
-    return $data;
+function rcl_path_to_url($path,$dir=false){
+    if(!$dir) $dir = basename(content_url());
+    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
+    $array = explode('/',$path);
+    $cnt = count($array);
+    $url = '';
+	$content_dir = $dir;
+    foreach($array as $key=>$ar){
+        if($array[$key]==$content_dir){
+            $url = get_bloginfo('wpurl').'/'.$array[$key].'/';
+            continue;
+        }
+        if($url){
+            $url .= $ar;
+            if($cnt>$key+1) $url .= '/';
+        }
+    }
+    return $url;
+}
+
+function rcl_path_by_url($url,$dir=false){
+    if(!$dir) $dir = basename(content_url());
+    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
+    $array = explode('/',$url);
+    $cnt = count($array);
+    $path = '';
+	$content_dir = $dir;
+    foreach($array as $key=>$ar){
+        if($array[$key]==$content_dir){
+            $path = $_SERVER['DOCUMENT_ROOT'].'/'.$array[$key].'/';
+            continue;
+        }
+        if($path){
+            $path .= $ar;
+            if($cnt>$key+1) $path .= '/';
+        }
+    }
+    return $path;
+}
+
+function rcl_format_url($url,$id_tab=null){
+	$ar_perm = explode('?',$url);
+	$cnt = count($ar_perm);
+	if($cnt>1) $a = '&';
+	else $a = '?';
+	$url = $url.$a;
+	if($id_tab) $url = $url.'tab='.$id_tab;
+	return $url;
 }
 
 add_action('wp_ajax_rcl_ajax_tab', 'rcl_ajax_tab');
@@ -177,7 +189,7 @@ function rcl_ajax_tab(){
     if(!$rcl_userlk_action) $rcl_userlk_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_LK));
     if (!class_exists('Rcl_Tabs')) include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
     if(!$array_tabs[$id_tab]){
-        $log['content']=__('Error! Perhaps this addition does not support ajax loading','rcl');
+        $log['content']=__('Error! Perhaps this addition does not support ajax loading','wp-recall');
     }else{
         $data = array(
             'id'=>$id_tab,
@@ -224,142 +236,34 @@ function rcl_update_dinamic_files(){
     $rcl_addons->get_update_scripts_footer_rcl();
     rcl_minify_style();
 }
-add_action('wp_head','rcl_head_js_data',1);
-function rcl_head_js_data(){
-    global $user_ID;
-    $data = "<script>
-	var user_ID = $user_ID;
-	var wpurl = '".preg_quote(trailingslashit(get_bloginfo('wpurl')),'/:')."';
-	var rcl_url = '".preg_quote(RCL_URL,'/:')."';
-	</script>\n";
-    echo $data;
-}
 
-add_action('wp_footer','rcl_popup_contayner');
-function rcl_popup_contayner(){
-    echo '<div id="rcl-overlay"></div>
-		  <div id="rcl-popup"></div>';
-}
-
-add_filter('wp_footer', 'rcl_footer_url');
-function rcl_footer_url(){
-	global $rcl_options;
-	if($rcl_options['footer_url_recall']!=1) return false;
-	if(is_front_page()&&!is_user_logged_in()) echo '<p class="plugin-info">'.__('The site works using the functionality of the plugin').'  <a target="_blank" href="http://wppost.ru/">Wp-Recall</a></p>';
-}
-
-function rcl_get_author_block(){
-    global $post;
-
-    $content = "<div id=block_author-rcl>";
-    $content .= "<h3>".__('Author of publication','rcl')."</h3>";
-
-    if(function_exists('rcl_add_userlist_follow_button')) add_filter('user_description','rcl_add_userlist_follow_button',90);
-
-    $content .= rcl_get_userlist(array(
-            'template' => 'rows',
-            'include' => $post->post_author,
-            'filter' => 0,
-            'data'=>'rating_total,description,posts_count,user_registered,comments_count'
-            //'orderby'=>'time_action'
-        ));
-
-    if(function_exists('rcl_add_userlist_follow_button')) remove_filter('user_description','rcl_add_userlist_follow_button',90);
-
-    $content .= "</div>";
-
-    return $content;
-}
-
-function rcl_get_miniaction($action,$user_id=false){
-    global $wpdb;
-    if(!$action) $action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_id));
-    $last_action = rcl_get_useraction($action);
-    $class = (!$last_action&&$action)?'online':'offline';
-
-    $content = '<div class="status_author_mess '.$class.'">';
-    if(!$last_action&&$action) $content .= '<i class="fa fa-circle"></i>';
-    else $content .= 'не в сети '.$last_action;
-    $content .= '</div>';
-
-    return $content;
-}
-
-//заменяем ссылку автора комментария на ссылку его ЛК
-function rcl_get_link_author_comment($href){
-	global $comment;
-	if($comment->user_id==0) return $href;
-	$href = get_author_posts_url($comment->user_id);
-	return $href;
-}
-function rcl_add_edit_post_button($excerpt,$post=null){
-if(!isset($post)) global $post;
-global $user_ID;
-	if($user_ID){
-		if($user_ID==$post->post_author){
-			$form_button = "<div class='post-edit-button'>
-				<input id='delete-post' type='image' name='delete_post' src='".RCL_URL."img/delete.png' value='".$post->ID."'></div>
-				<div class='post-edit-button'>
-				<input type='image' id='edit-post' name='update_post' src='".RCL_URL."img/redactor.png' value='".$post->ID."'></div>";
-		}
-
-		$form_button = apply_filters('buttons_edit_post_rcl',$form_button,$post);
-
-		if($form_button) $excerpt .= $form_button;
-	}
-	return $excerpt;
-}
 //запрещаем доступ в админку
 add_action('init','rcl_admin_access',1);
 function rcl_admin_access(){
-	global $current_user,$rcl_options;
-	if(defined( 'DOING_AJAX' ) && DOING_AJAX) return;
-	if(defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST) return;
-	if(is_admin()){
-		$rcl_options = get_option('primary-rcl-options');
-		get_currentuserinfo();
-		$access = 7;
-		if(isset($rcl_options['consol_access_rcl'])) $access = $rcl_options['consol_access_rcl'];
-		$user_info = get_userdata($current_user->ID);
-		if ( $user_info->user_level < $access ){
-			if(intval($_POST['short'])==1||intval($_POST['fetch'])==1){
-				return true;
-			}else{
-				if(!$current_user->ID) return true;
-				wp_redirect('/'); exit;
-			}
-		}else {
-			return true;
-		}
-	}
-}
-function rcl_hidden_admin_panel(){
-	global $rcl_options,$user_ID;
-
-        if(!$user_ID){
-            return show_admin_bar(false);
+    global $current_user,$rcl_options;
+    if(defined( 'DOING_AJAX' ) && DOING_AJAX) return;
+    if(defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST) return;
+    if(is_admin()){
+        $rcl_options = get_option('primary-rcl-options');
+        get_currentuserinfo();
+        $access = 7;
+        if(isset($rcl_options['consol_access_rcl'])) $access = $rcl_options['consol_access_rcl'];
+        $user_info = get_userdata($current_user->ID);
+        if ( $user_info->user_level < $access ){
+            if(intval($_POST['short'])==1||intval($_POST['fetch'])==1){
+                    return true;
+            }else{
+                    if(!$current_user->ID) return true;
+                    wp_redirect('/'); exit;
+            }
+        }else {
+            return true;
         }
-
-	$access = 7;
-	if(isset($rcl_options['consol_access_rcl'])) $access = $rcl_options['consol_access_rcl'];
-	$user_info = get_userdata($user_ID);
-	if ( $user_info->user_level < $access ){
-		show_admin_bar(false);
-	}else{
-		return true;
-	}
+    }
 }
-function rcl_banned_user_redirect(){
-    global $user_ID;
-    if(!$user_ID) return false;
-    $user_data = get_userdata( $user_ID );
-    $roles = $user_data->roles;
-    $role = array_shift($roles);
-    if($role=='banned') wp_die(__('Congratulations! You have been banned.','rcl'));
-}
-add_action('init','rcl_banned_user_redirect');
 
 /* Удаление поста вместе с его вложениями*/
+add_action('before_delete_post', 'rcl_delete_attachments_with_post');
 function rcl_delete_attachments_with_post($postid){
     $attachments = get_posts( array( 'post_type' => 'attachment', 'posts_per_page' => -1, 'post_status' => null, 'post_parent' => $postid ) );
     if($attachments){
@@ -370,36 +274,17 @@ function rcl_delete_attachments_with_post($postid){
 
 add_action('init','rcl_init_avatar_sizes');
 function rcl_init_avatar_sizes(){
-	global $rcl_avatar_sizes;
+    global $rcl_avatar_sizes;
 
-	$sizes = array(70,150,300);
+    $sizes = array(70,150,300);
 
-	$rcl_avatar_sizes = apply_filters('rcl_avatar_sizes',$sizes);
-	asort($rcl_avatar_sizes);
+    $rcl_avatar_sizes = apply_filters('rcl_avatar_sizes',$sizes);
+    asort($rcl_avatar_sizes);
 
-}
-
-function rcl_get_url_avatar($url_image,$user_id,$size){
-	global $rcl_avatar_sizes;
-
-	$optimal_size = 150;
-	$optimal_path = false;
-	$name = explode('.',basename($url_image));
-	foreach($rcl_avatar_sizes as $rcl_size){
-		if($size>$rcl_size) continue;
-
-		$optimal_size = $rcl_size;
-		$optimal_url = RCL_UPLOAD_URL.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
-		$optimal_path = RCL_UPLOAD_PATH.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
-		break;
-	}
-
-	if($optimal_path&&file_exists($optimal_path)) $url_image = $optimal_url;
-
-	return $url_image;
 }
 
 //Функция вывода своего аватара
+add_filter('get_avatar','rcl_avatar_replacement', 20, 5);
 function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
 
     $user_id = 0;
@@ -432,6 +317,26 @@ function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
     if ( !empty($id_or_email->user_id)) $avatar = '<a height="'.$size.'" width="'.$size.'" href="'.get_author_posts_url($id_or_email->user_id).'">'.$avatar.'</a>';
 
     return $avatar;
+}
+
+function rcl_get_url_avatar($url_image,$user_id,$size){
+    global $rcl_avatar_sizes;
+
+    $optimal_size = 150;
+    $optimal_path = false;
+    $name = explode('.',basename($url_image));
+    foreach($rcl_avatar_sizes as $rcl_size){
+            if($size>$rcl_size) continue;
+
+            $optimal_size = $rcl_size;
+            $optimal_url = RCL_UPLOAD_URL.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
+            $optimal_path = RCL_UPLOAD_PATH.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
+            break;
+    }
+
+    if($optimal_path&&file_exists($optimal_path)) $url_image = $optimal_url;
+
+    return $url_image;
 }
 
 function rcl_sanitize_title_with_translit($title) {
@@ -483,107 +388,57 @@ function rcl_sanitize_title_with_translit($title) {
                 return strtr($title, $iso);
     }
 }
-if(!function_exists('sanitize_title_with_translit')) add_action('sanitize_title', 'rcl_sanitize_title_with_translit', 0);
+if(!function_exists('sanitize_title_with_translit'))
+    add_action('sanitize_title', 'rcl_sanitize_title_with_translit', 0);
 
-add_filter('the_content','rcl_message_post_moderation');
-function rcl_message_post_moderation($cont){
-global $post;
-	if($post->post_status=='pending'){
-		$mess = '<h3 class="pending-message">'.__('Publication pending approval!','rcl').'</h3>';
-		$cont = $mess.$cont;
-	}
-	return $cont;
-}
+
 function rcl_get_postmeta($post_id){
-	if($post_id){
-            $post = get_post($post_id);
-            $posttype = $post->post_type;
+    if($post_id){
+        $post = get_post($post_id);
+        $posttype = $post->post_type;
+    }
+
+    switch($posttype){
+            case 'post':
+                    if($post) $id_form = get_post_meta($post->ID,'publicform-id',1);
+                    if(!$id_form) $id_form = 1;
+                    $id_field = 'custom_public_fields_'.$id_form;
+            break;
+            case 'products': $id_field = 'custom_saleform_fields'; break;
+            default: $id_field = 'custom_fields_'.$posttype;
+    }
+
+    $get_fields = get_option($id_field);
+
+    if(!$get_fields) return false;
+
+    if($get_fields){
+
+        $cf = new Rcl_Custom_Fields();
+
+        foreach((array)$get_fields as $custom_field){
+            $slug = $custom_field['slug'];
+            $value = get_post_meta($post_id,$slug,1);
+            $show_custom_field .= $cf->get_field_value($custom_field,$value);
         }
 
-	switch($posttype){
-		case 'post':
-			if($post) $id_form = get_post_meta($post->ID,'publicform-id',1);
-			if(!$id_form) $id_form = 1;
-			$id_field = 'custom_public_fields_'.$id_form;
-		break;
-		case 'products': $id_field = 'custom_saleform_fields'; break;
-		default: $id_field = 'custom_fields_'.$posttype;
-	}
-
-	$get_fields = get_option($id_field);
-
-	if(!$get_fields) return false;
-
-	if($get_fields){
-
-            $cf = new Rcl_Custom_Fields();
-
-            foreach((array)$get_fields as $custom_field){
-                $slug = $custom_field['slug'];
-                $value = get_post_meta($post_id,$slug,1);
-                $show_custom_field .= $cf->get_field_value($custom_field,$value);
-            }
-
-            return $show_custom_field;
-	}
+        return $show_custom_field;
+    }
 }
+
 add_filter('author_link','rcl_author_link',999,2);
 function rcl_author_link($link, $author_id){
-	global $rcl_options;
-	if(!isset($rcl_options['view_user_lk_rcl'])||$rcl_options['view_user_lk_rcl']!=1) return $link;
-	$get = ! empty( $rcl_options['link_user_lk_rcl'] ) ? $rcl_options['link_user_lk_rcl'] : 'user';
-	return add_query_arg( array( $get => $author_id ), get_permalink( $rcl_options['lk_page_rcl'] ) );
+    global $rcl_options;
+    if(!isset($rcl_options['view_user_lk_rcl'])||$rcl_options['view_user_lk_rcl']!=1) return $link;
+    $get = ! empty( $rcl_options['link_user_lk_rcl'] ) ? $rcl_options['link_user_lk_rcl'] : 'user';
+    return add_query_arg( array( $get => $author_id ), get_permalink( $rcl_options['lk_page_rcl'] ) );
 	//return rcl_format_url( get_permalink( $rcl_options['lk_page_rcl'] ) ).$get.'='.$author_id;
-}
-/*not found*/
-function rcl_userfield_array($array,$field,$name_data){
-	global $wpdb;
-
-	foreach((array)$array as $object){
-            if(is_object($array))$userslst[] = $object->$name_data;
-                    if(is_array($array))$userslst[] = $object[$name_data];
-        }
-
-	$users_fields = $wpdb->get_results($wpdb->prepare("SELECT user_id,meta_value FROM ".$wpdb->prefix."usermeta WHERE user_id IN (".rcl_format_in($userslst).") AND meta_key = '%s'",$userslst,$field));
-
-	foreach((array)$users_fields as $user){
-		$fields[$user->user_id] = $user->$field;
-	}
-	return $fields;
 }
 
 function rcl_format_in($array){
-	$separats = array_fill(0, count($array), '%d');
-	return implode(', ', $separats);
+    $separats = array_fill(0, count($array), '%d');
+    return implode(', ', $separats);
 }
-
-function rmag_global_options(){
-	$content = ' <div id="recall" class="left-sidebar wrap">
-	<form method="post" action="">
-		'.wp_nonce_field('update-options-rmag','_wpnonce',true,false);
-
-	$content = apply_filters('admin_options_rmag',$content);
-
-	$content .= '<div class="submit-block">
-	<p><input type="submit" class="button button-primary button-large right" name="primary-rmag-options" value="'.__('Save settings','rcl').'" /></p>
-	</form></div>
-	</div>';
-	echo $content;
-}
-function rmag_update_options ( ) {
-  if ( isset( $_POST['primary-rmag-options'] ) ) {
-	if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rmag' ) ) return false;
-	$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    foreach($_POST as $key => $value){
-		if($key=='primary-rmag-options') continue;
-		$options[$key]=$value;
-	}
-	update_option('primary-rmag-options',$options);
-	wp_redirect(admin_url('admin.php?page=manage-wpm-options'));
-	exit;
-  }
-}
-add_action('init', 'rmag_update_options');
 
 function rcl_get_postmeta_array($post_id){
     global $wpdb;
@@ -638,14 +493,14 @@ function rcl_get_chart($arr=false){
 
 /*22-06-2015 Удаление папки с содержимым*/
 function rcl_remove_dir($dir){
-	$dir = untrailingslashit($dir);
-	if(!is_dir($dir)) return false;
-	if ($objs = glob($dir."/*")) {
-	   foreach($objs as $obj) {
-		 is_dir($obj) ? rcl_remove_dir($obj) : unlink($obj);
-	   }
-	}
-	rmdir($dir);
+    $dir = untrailingslashit($dir);
+    if(!is_dir($dir)) return false;
+    if ($objs = glob($dir."/*")) {
+       foreach($objs as $obj) {
+             is_dir($obj) ? rcl_remove_dir($obj) : unlink($obj);
+       }
+    }
+    rmdir($dir);
 }
 
 class Rcl_Form_Fields{
@@ -714,39 +569,39 @@ function rcl_form_field($args){
 }
 
 function rcl_get_smiles($id_area){
-	global $wpsmiliestrans,$rcl_smilies;
+    global $wpsmiliestrans,$rcl_smilies;
 
-	if(isset($rcl_smilies[1])&&is_array($rcl_smilies[1])){
-		foreach($rcl_smilies as $key=>$imgs){
-			foreach($imgs as $emo=>$img){
-				if(isset($rcl_smilies[$key][0])) $smilies_list[$key][0]=$rcl_smilies[$key][0];
-				else if(!isset($smilies_list[$key][0])) $smilies_list[$key][0]=$emo;
-				if($emo) $smilies_list[$key][$img]=$emo;
-			}
-		}
-	}else{
-		if(!$rcl_smilies) $rcl_smilies = $wpsmiliestrans;
+    if(isset($rcl_smilies[1])&&is_array($rcl_smilies[1])){
+            foreach($rcl_smilies as $key=>$imgs){
+                    foreach($imgs as $emo=>$img){
+                            if(isset($rcl_smilies[$key][0])) $smilies_list[$key][0]=$rcl_smilies[$key][0];
+                            else if(!isset($smilies_list[$key][0])) $smilies_list[$key][0]=$emo;
+                            if($emo) $smilies_list[$key][$img]=$emo;
+                    }
+            }
+    }else{
+            if(!$rcl_smilies) $rcl_smilies = $wpsmiliestrans;
 
-                if(!$rcl_smilies) return false;
+            if(!$rcl_smilies) return false;
 
-		foreach($rcl_smilies as $emo=>$img){
-			if(!isset($smilies_list[0][0])) $smilies_list[0][0]=$emo;
-			$smilies_list[0][$img]=$emo;
-		}
-	}
+            foreach($rcl_smilies as $emo=>$img){
+                    if(!isset($smilies_list[0][0])) $smilies_list[0][0]=$emo;
+                    $smilies_list[0][$img]=$emo;
+            }
+    }
 
-	$smiles = '<div class="rcl-smiles" data-area="'.$id_area.'">';
+    $smiles = '<div class="rcl-smiles" data-area="'.$id_area.'">';
 
-	foreach ( $smilies_list as $key=>$smils ) {
-		$smiles .= str_replace( 'style="height: 1em; max-height: 1em;"', 'data-dir="'.$key.'"', convert_smilies( $smils[0] ) );
-		$smiles .= '<div class="rcl-smiles-list">
-						<div class="smiles"></div>
-					</div>';
-	}
+    foreach ( $smilies_list as $key=>$smils ) {
+            $smiles .= str_replace( 'style="height: 1em; max-height: 1em;"', 'data-dir="'.$key.'"', convert_smilies( $smils[0] ) );
+            $smiles .= '<div class="rcl-smiles-list">
+                                            <div class="smiles"></div>
+                                    </div>';
+    }
 
-	$smiles .= '</div>';
+    $smiles .= '</div>';
 
-	return $smiles;
+    return $smiles;
 }
 
 function rcl_get_smiles_ajax(){
@@ -783,6 +638,150 @@ function rcl_get_smiles_ajax(){
 	exit;
 }
 add_action('wp_ajax_rcl_get_smiles_ajax','rcl_get_smiles_ajax');
+
+function rcl_mail($email, $title, $text){
+    add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+    $headers = 'From: '.get_bloginfo('name').' <noreply@'.$_SERVER['HTTP_HOST'].'>' . "\r\n";
+
+    $text .= '<p><small>-----------------------------------------------------<br/>
+    '.__('This letter was created automatically, no need to answer it.','wp-recall').'<br/>
+    "'.get_bloginfo('name').'"</small></p>';
+    wp_mail($email, $title, $text, $headers);
+}
+
+function rcl_multisort_array($array, $key, $type = SORT_ASC, $cmp_func = 'strcmp'){
+    $GLOBALS['ARRAY_MULTISORT_KEY_SORT_KEY']  = $key;
+    usort($array, create_function('$a, $b', '$k = &$GLOBALS["ARRAY_MULTISORT_KEY_SORT_KEY"];
+        return ' . $cmp_func . '($a[$k], $b[$k]) * ' . ($type == SORT_ASC ? 1 : -1) . ';'));
+    return $array;
+}
+
+function rcl_a_active($param1,$param2){
+	if($param1==$param2) return 'filter-active';
+}
+
+function rcl_get_usernames($objects,$name_data){
+	global $wpdb;
+
+	if(!$objects||!$name_data) return false;
+
+	foreach((array)$objects as $object){ $userslst[] = $object->$name_data; }
+
+	$display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($userslst).")",$userslst));
+
+	foreach((array)$display_names as $name){
+		$names[$name->ID] = $name->display_name;
+	}
+	return $names;
+}
+
+function rcl_get_useraction($user_action=false){
+	global $rcl_options,$rcl_userlk_action;
+
+        if(!$user_action) $user_action = $rcl_userlk_action;
+
+	$timeout = (isset($rcl_options['timeout'])&&$rcl_options['timeout'])? $rcl_options['timeout']*60: 600;
+
+	$unix_time_action = strtotime(current_time('mysql'));
+	$unix_time_user = strtotime($user_action);
+
+	if(!$user_action)
+		return $last_go = __('long ago','wp-recall');
+
+	if($unix_time_action > $unix_time_user+$timeout){
+                return human_time_diff($unix_time_user,$unix_time_action );
+	} else {
+		return false;
+	}
+}
+
+function rcl_update_timeaction_user(){
+	global $user_ID,$wpdb;
+
+        if(!$user_ID) return false;
+
+	$rcl_current_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_ID));
+
+	$last_action = rcl_get_useraction($rcl_current_action);
+
+	if($last_action){
+
+            $time = current_time('mysql');
+
+            $res = $wpdb->update(
+                                    RCL_PREF.'user_action',
+                                    array( 'time_action' => $time ),
+                                    array( 'user' => $user_ID )
+                            );
+
+            if(!isset($res)||$res==0){
+                    $act_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(time_action) FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
+                    if($act_user==0){
+                            $wpdb->insert(
+                                    RCL_PREF.'user_action',
+                                    array( 'user' => $user_ID,
+                                    'time_action'=> $time )
+                            );
+                    }
+                    if($act_user>1){
+                            rcl_delete_user_action($user_ID);
+                    }
+            }
+	}
+
+	do_action('rcl_update_timeaction_user');
+
+}
+
+//удаляем данные об активности юзера при удалении
+add_action('delete_user','rcl_delete_user_action');
+function rcl_delete_user_action($user_id){
+    global $wpdb;
+    return $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_id));
+}
+
+function rcl_get_insert_image($image_id,$mime='image'){
+    global $rcl_options;
+    if($mime=='image'){
+            $small_url = wp_get_attachment_image_src( $image_id, 'thumbnail' );
+            $full_url = wp_get_attachment_image_src( $image_id, 'full' );
+            if($rcl_options['default_size_thumb']) $sizes = wp_get_attachment_image_src( $image_id, $rcl_options['default_size_thumb'] );
+            else $sizes = $small_url;
+            $act_sizes = wp_constrain_dimensions($full_url[1],$full_url[2],$sizes[1],$sizes[2]);
+            return '<a onclick="addfile_content(\'<a href='.$full_url[0].'><img height='.$act_sizes[1].' width='.$act_sizes[0].' class=aligncenter  src='.$full_url[0].'></a>\');return false;" href="#"><img src="'.$small_url[0].'"></a>';
+    }else{
+            return wp_get_attachment_link( $image_id, array(100,100),false,true );
+    }
+}
+
+function rcl_get_button($ancor,$url,$args=false){
+	$button = '<a href="'.$url.'" ';
+	if(isset($args['attr'])) $button .= $args['attr'].' ';
+	if(isset($args['id'])) $button .= 'id="'.$args['id'].'" ';
+	$button .= 'class="recall-button ';
+	if(isset($args['class'])) $button .= $args['class'];
+	$button .= '">';
+	if(isset($args['icon'])) $button .= '<i class="fa '.$args['icon'].'"></i>';
+	$button .= '<span>'.$ancor.'</span>';
+	$button .= '</a>';
+	return $button;
+}
+
+//сортируем вкладки согласно настроек
+add_filter('tab_data_rcl','rcl_edit_options_tab',5);
+function rcl_edit_options_tab($tab){
+    global $rcl_options;
+    if(isset($rcl_options['tabs']['name'][$tab['id']])) $tab['name'] = $rcl_options['tabs']['name'][$tab['id']];
+	//print_r($rcl_options);
+    if(isset($rcl_options['tabs']['order'])){
+        foreach($rcl_options['tabs']['order'] as $order=>$key){
+            if($key!=$tab['id']) continue;
+                $tab['args']['order'] = $order+10;
+        }
+    }
+
+    return $tab;
+}
 
 add_filter('file_scripts_rcl','rcl_get_scripts_ajaxload_tabs');
 function rcl_get_scripts_ajaxload_tabs($script){
@@ -841,5 +840,3 @@ function rcl_get_scripts_ajaxload_tabs($script){
 	";
 	return $script;
 }
-
-require_once("functions/rcl_addons.php");

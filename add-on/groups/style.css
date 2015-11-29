@@ -2,6 +2,8 @@
     clear: both;
     position: relative;
     overflow: hidden;
+    padding: 10px;
+    background: #fff;
 }
 #rcl-group a{
     text-decoration:none;

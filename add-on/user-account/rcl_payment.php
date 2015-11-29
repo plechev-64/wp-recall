@@ -54,7 +54,7 @@ class Rcl_Payment{
         if($this->get_pay()){
                 wp_redirect(get_permalink($rmag_options['page_successfully_pay'])); exit;
         } else {
-                wp_die(__('A record of the payment in the database was not found','rcl'));
+                wp_die(__('A record of the payment in the database was not found','wp-recall'));
         }
     }
 
@@ -96,7 +96,7 @@ class Rcl_Payment{
 
         rcl_update_user_money($newcount,$data->user_id);
 
-        do_action('payment_payservice_rcl',$data->user_id,$data->pay_summ,__('Top up personal account','rcl'),2);
+        do_action('payment_payservice_rcl',$data->user_id,$data->pay_summ,__('Top up personal account','wp-recall'),2);
     }
 
     function get_form($args){
@@ -107,20 +107,24 @@ class Rcl_Payment{
         $this->pay_id = $args['id_pay'];
         $this->pay_summ = $args['summ'];
         $this->pay_type = $args['type'];
-        if(!$args['user_id']) $this->user_id = $user_ID;
-        else $this->user_id = $args['user_id'];
+        if(!isset($args['user_id'])||!$args['user_id'])
+            $this->user_id = $user_ID;
+        else
+            $this->user_id = $args['user_id'];
 
        if(isset($rcl_payments[$rmag_options['connect_sale']])){
             $obj = new $rcl_payments[$rmag_options['connect_sale']]->class;
             $method = 'pay_form';
             return $obj->$method($this);
+        }else{
+            return '<span class="error">Ошибка! Не настроено подключение к платежному агрегатору.</span>';
         }
     }
 
     function form($fields,$data,$formaction){
         global $rmag_options,$user_ID;
 
-        $submit = ($data->pay_type==1)? __('Confirm the operation','rcl'): __('Pay through payment system','rcl');
+        $submit = ($data->pay_type==1)? __('Confirm the operation','wp-recall'): __('Pay through payment system','wp-recall');
 
         $form = "<form id='form-payment-".$data->pay_id."' style='display: inline;' action='".$formaction."' method=POST>"
                 .$this->get_hiddens( $fields )
@@ -129,7 +133,7 @@ class Rcl_Payment{
 
         $type_p = $rmag_options['type_order_payment'];
         if($user_ID&&$type_p==2&&$data->pay_type==2)
-            $form .= '<input class="recall-button" type="button" name="pay_order" onclick="'.$data->pay_callback.'(this);return false;" data-order="'.$data->pay_id.'" value="'.__('Pay personal account','rcl').'">';
+            $form .= '<input class="recall-button" type="button" name="pay_order" onclick="'.$data->pay_callback.'(this);return false;" data-order="'.$data->pay_id.'" value="'.__('Pay personal account','wp-recall').'">';
 
         return $form;
     }
@@ -171,6 +175,7 @@ function rcl_payments(){
     global $rmag_options,$rcl_payments;
 
     if(!$rmag_options['connect_sale']) return false;
+    if(!isset($rcl_payments[$rmag_options['connect_sale']])) return false;
 
     if (isset($_REQUEST[$rcl_payments[$rmag_options['connect_sale']]->request])){
         $payment = new Rcl_Payment();
