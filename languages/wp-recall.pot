@@ -1,0 +1,3036 @@
+# Copyright (C) 2015 WP-Recall
+# This file is distributed under the same license as the WP-Recall package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP-Recall 13.8.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-recall\n"
+"POT-Creation-Date: 2015-11-30 13:21:39+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: add-on/feed/addon-core.php:152
+msgid "For publication"
+msgstr ""
+
+#: add-on/feed/addon-core.php:154
+msgid "In response to"
+msgstr ""
+
+#: add-on/feed/addon-core.php:154
+msgid "your comment"
+msgstr ""
+
+#: add-on/feed/addon-core.php:180
+msgid "Read more"
+msgstr ""
+
+#: add-on/feed/addon-core.php:235
+msgid "Ignore the publication"
+msgstr ""
+
+#: add-on/feed/addon-core.php:277
+msgid "The subscription status changed"
+msgstr ""
+
+#: add-on/feed/addon-core.php:278 add-on/feed/index.php:18
+#: add-on/feed/index.php:160
+msgid "Subscribe"
+msgstr ""
+
+#: add-on/feed/addon-core.php:278 add-on/feed/index.php:16
+#: add-on/feed/index.php:147 add-on/feed/index.php:168
+msgid "Unsubscribe"
+msgstr ""
+
+#: add-on/feed/classes/class-rcl-feed.php:296
+msgid "News"
+msgstr ""
+
+#: add-on/feed/classes/class-rcl-feed.php:297
+#: add-on/rating-system/index.php:32 functions/class-rcl-users.php:447
+#: functions/shortcodes.php:84
+msgid "Comments"
+msgstr ""
+
+#: add-on/feed/classes/class-rcl-feed.php:298
+msgid "Answers"
+msgstr ""
+
+#: add-on/feed/index.php:34
+msgid "Followers"
+msgstr ""
+
+#: add-on/feed/index.php:57
+msgid "List subscribers"
+msgstr ""
+
+#: add-on/feed/index.php:74
+msgid "Following yet"
+msgstr ""
+
+#: add-on/feed/index.php:86
+msgid "Subscriptions"
+msgstr ""
+
+#: add-on/feed/index.php:91
+msgid "List subscriptions"
+msgstr ""
+
+#: add-on/feed/index.php:105
+msgid "Subscriptions yet"
+msgstr ""
+
+#: add-on/feed/index.php:146 add-on/feed/index.php:167
+msgid "Signed up for a subscription"
+msgstr ""
+
+#: add-on/feed/index.php:149 add-on/feed/index.php:162
+#: add-on/feed/index.php:170 add-on/groups/groups-core.php:617
+#: add-on/groups/groups-core.php:633 add-on/rating-system/index.php:513
+#: add-on/rating-system/index.php:534
+msgid "Error"
+msgstr ""
+
+#: add-on/feed/index.php:159
+msgid "Subscription has been dropped"
+msgstr ""
+
+#: add-on/feed/index.php:210 add-on/feed/shortcodes.php:36
+msgid "News not found"
+msgstr ""
+
+#: add-on/feed/shortcodes.php:9
+msgid ""
+"Login or register to view the latest publications and comments from users on "
+"which you will you subscribed."
+msgstr ""
+
+#: add-on/groups/classes/rcl-group-widget.php:48
+msgid "Show completely"
+msgstr ""
+
+#: add-on/groups/classes/rcl-group-widget.php:120
+msgid "Save changes"
+msgstr ""
+
+#: add-on/groups/classes/rcl-group-widget.php:125
+#: add-on/groups/classes/rcl-group-widget.php:277
+msgid "Unused"
+msgstr ""
+
+#: add-on/groups/classes/rcl-groups.php:227
+msgid "Total groups"
+msgstr ""
+
+#: add-on/groups/classes/rcl-groups.php:240
+#: add-on/publicpost/class_public.php:74 add-on/publicpost/fast-editor.php:104
+msgid "Name"
+msgstr ""
+
+#: add-on/groups/classes/rcl-groups.php:241 add-on/publicpost/index.php:151
+#: add-on/publicpost/templates/posts-list.php:6
+#: functions/rcl_editfields.php:151
+msgid "Date"
+msgstr ""
+
+#: add-on/groups/classes/rcl-groups.php:242 functions/class-rcl-users.php:446
+msgid "Publications"
+msgstr ""
+
+#: add-on/groups/classes/rcl-groups.php:243
+#: add-on/groups/groups-widgets.php:105 add-on/groups/groups-widgets.php:128
+#: add-on/groups/templates/group-list.php:11 class-rcl-install.php:109
+msgid "Users"
+msgstr ""
+
+#: add-on/groups/classes/rcl-groups.php:248 functions/class-rcl-users.php:456
+msgid "Filter by"
+msgstr ""
+
+#: add-on/groups/groups-core.php:143 class-rcl-install.php:239
+msgid "Ban"
+msgstr ""
+
+#: add-on/groups/groups-core.php:147
+msgid "Reader"
+msgstr ""
+
+#: add-on/groups/groups-core.php:151 functions/rcl_addons.php:241
+msgid "Author"
+msgstr ""
+
+#: add-on/groups/groups-core.php:155
+msgid "Moderator"
+msgstr ""
+
+#: add-on/groups/groups-core.php:159
+msgid "Administrator"
+msgstr ""
+
+#: add-on/groups/groups-core.php:209
+msgid "Opened group"
+msgstr ""
+
+#: add-on/groups/groups-core.php:210
+msgid "Closed group"
+msgstr ""
+
+#: add-on/groups/groups-core.php:329
+msgid "Group members"
+msgstr ""
+
+#: add-on/groups/groups-core.php:491
+msgid "Request for access to the group"
+msgstr ""
+
+#: add-on/groups/groups-core.php:590
+msgid "Return to the group"
+msgstr ""
+
+#: add-on/groups/groups-core.php:614
+msgid "User removed"
+msgstr ""
+
+#: add-on/groups/groups-core.php:631
+msgid "User Status updated"
+msgstr ""
+
+#: add-on/groups/groups-core.php:656
+msgid "Display all records"
+msgstr ""
+
+#: add-on/groups/groups-core.php:658
+msgid "Show"
+msgstr ""
+
+#: add-on/groups/groups-core.php:669
+msgid "Primary options"
+msgstr ""
+
+#: add-on/groups/groups-core.php:673
+msgid "Widgets manage"
+msgstr ""
+
+#: add-on/groups/groups-core.php:684
+msgid "Requests for access"
+msgstr ""
+
+#: add-on/groups/groups-core.php:696
+msgid "Administration"
+msgstr ""
+
+#: add-on/groups/groups-core.php:783
+msgid "Access to content is closed privacy settings"
+msgstr ""
+
+#: add-on/groups/groups-core.php:789
+msgid "(Comment hidden privacy settings)"
+msgstr ""
+
+#: add-on/groups/groups-init.php:7 add-on/groups/groups-init.php:8
+#: add-on/groups/groups-init.php:18 add-on/groups/index.php:17
+#: add-on/groups/index.php:29
+msgid "Record groups"
+msgstr ""
+
+#: add-on/groups/groups-init.php:9 add-on/groups/groups-init.php:10
+msgid "Add entry"
+msgstr ""
+
+#: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
+#: add-on/groups/groups-public.php:92
+msgid "Edit"
+msgstr ""
+
+#: add-on/groups/groups-init.php:12 add-on/groups/groups-init.php:57
+msgid "New"
+msgstr ""
+
+#: add-on/groups/groups-init.php:13
+msgid "View"
+msgstr ""
+
+#: add-on/groups/groups-init.php:14 add-on/groups/groups-init.php:49
+#: functions/shortcodes.php:146
+msgid "Search"
+msgstr ""
+
+#: add-on/groups/groups-init.php:15 add-on/publicpost/rcl_publicform.php:596
+msgid "Not found"
+msgstr ""
+
+#: add-on/groups/groups-init.php:16
+msgid "Cart is empty"
+msgstr ""
+
+#: add-on/groups/groups-init.php:17
+msgid "Parent record"
+msgstr ""
+
+#: add-on/groups/groups-init.php:47 add-on/groups/groups-init.php:48
+#: add-on/groups/groups-init.php:61 add-on/groups/groups-options.php:11
+#: add-on/groups/index.php:34
+msgid "Groups"
+msgstr ""
+
+#: add-on/groups/groups-init.php:50
+msgid "Popular Groups"
+msgstr ""
+
+#: add-on/groups/groups-init.php:51
+msgid "All categories"
+msgstr ""
+
+#: add-on/groups/groups-init.php:52 add-on/groups/groups-init.php:53
+msgid "Parent group"
+msgstr ""
+
+#: add-on/groups/groups-init.php:55 add-on/publicpost/class_public.php:79
+msgid "Update"
+msgstr ""
+
+#: add-on/groups/groups-init.php:56
+msgid "To add a new"
+msgstr ""
+
+#: add-on/groups/groups-init.php:58
+msgid "Separate with commas"
+msgstr ""
+
+#: add-on/groups/groups-init.php:59
+msgid "To add or remove"
+msgstr ""
+
+#: add-on/groups/groups-init.php:60
+msgid "Click to use"
+msgstr ""
+
+#: add-on/groups/groups-options.php:8
+msgid "Group settings"
+msgstr ""
+
+#: add-on/groups/groups-options.php:12
+msgid "Creating groups is allowed"
+msgstr ""
+
+#: add-on/groups/groups-options.php:16 add-on/publicpost/addon-options.php:27
+#: add-on/rating-system/addon-options.php:108 rcl-admin/admin-pages.php:129
+msgid "only Administrators"
+msgstr ""
+
+#: add-on/groups/groups-options.php:17 add-on/publicpost/addon-options.php:28
+#: add-on/rating-system/addon-options.php:107 rcl-admin/admin-pages.php:130
+msgid "Editors and older"
+msgstr ""
+
+#: add-on/groups/groups-options.php:18 add-on/publicpost/addon-options.php:29
+#: add-on/rating-system/addon-options.php:106 rcl-admin/admin-pages.php:131
+msgid "Authors and older"
+msgstr ""
+
+#: add-on/groups/groups-options.php:19
+#: add-on/rating-system/addon-options.php:105 rcl-admin/admin-pages.php:132
+msgid "Participants and older"
+msgstr ""
+
+#: add-on/groups/groups-options.php:22
+msgid "Moderation of publications in the group"
+msgstr ""
+
+#: add-on/groups/groups-options.php:26 add-on/publicpost/addon-options.php:230
+msgid "To publish immediately"
+msgstr ""
+
+#: add-on/groups/groups-options.php:27 add-on/publicpost/addon-options.php:230
+msgid "Send for moderation"
+msgstr ""
+
+#: add-on/groups/groups-options.php:29 add-on/publicpost/addon-options.php:232
+msgid ""
+"If used in moderation: To allow the user to see their publication before it "
+"is moderated, it is necessary to have on the website right below the Author"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:15 add-on/groups/groups-widgets.php:22
+#: rcl-widgets.php:140 rcl-widgets.php:161
+msgid "Control panel"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:25 add-on/groups/groups-widgets.php:131
+#: add-on/groups/groups-widgets.php:184 add-on/groups/groups-widgets.php:217
+#: add-on/groups/groups-widgets.php:297 add-on/groups/groups-widgets.php:388
+#: add-on/magazin/functions/shortcodes.php:120 add-on/publicpost/index.php:151
+#: add-on/publicpost/templates/posts-list.php:7
+#: add-on/publicpost/templates/public-form.php:5
+#: add-on/user-account/index.php:509 functions/rcl_editfields.php:117
+#: rcl-widgets.php:48 rcl-widgets.php:111 rcl-widgets.php:164
+msgid "Title"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:44
+msgid "Leave group"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:59
+msgid "Join group"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:71
+msgid "The request for access sent"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:76
+msgid "Apply for membership"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:121
+#: add-on/rating-system/addon-options.php:104 rcl-admin/admin-pages.php:133
+#: rcl-widgets.php:32 rcl-widgets.php:96
+msgid "All users"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:133
+msgid "Amount"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:135 add-on/groups/groups-widgets.php:299
+msgid "Template"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:155 add-on/groups/groups-widgets.php:181
+msgid "Form of the publication"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:186
+msgid "Type form"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:206 add-on/groups/groups-widgets.php:214
+msgid "Categories Content Group"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:250 add-on/groups/groups-widgets.php:294
+msgid "Management"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:321 add-on/groups/groups-widgets.php:333
+#: add-on/groups/groups-widgets.php:381
+msgid "Group posts"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:372
+msgid "Publications don't have"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:390
+msgid "The excerpt"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:392 add-on/groups/groups-widgets.php:397
+#: add-on/publicpost/addon-options.php:191
+#: add-on/publicpost/addon-options.php:263
+msgid "Do not display"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:393 add-on/groups/groups-widgets.php:398
+msgid "Display"
+msgstr ""
+
+#: add-on/groups/groups-widgets.php:395 add-on/publicpost/classes.php:278
+msgid "Thumbnail"
+msgstr ""
+
+#: add-on/groups/index.php:48
+msgid "Sidebar"
+msgstr ""
+
+#: add-on/groups/index.php:55
+msgid "Main"
+msgstr ""
+
+#: add-on/groups/index.php:62
+msgid "Footer"
+msgstr ""
+
+#: add-on/groups/index.php:116
+msgid "Enter the name of the new group"
+msgstr ""
+
+#: add-on/groups/index.php:117
+msgid "Сreate"
+msgstr ""
+
+#: add-on/groups/index.php:158
+msgid "Category in the group"
+msgstr ""
+
+#: add-on/groups/index.php:182
+msgid "Published in the group"
+msgstr ""
+
+#: add-on/groups/index.php:197
+msgid "Create a group failed"
+msgstr ""
+
+#: add-on/groups/index.php:328
+msgid "Requests for access to the group"
+msgstr ""
+
+#: add-on/groups/index.php:331
+msgid "No queries"
+msgstr ""
+
+#: add-on/groups/index.php:345
+msgid "Approve request"
+msgstr ""
+
+#: add-on/groups/index.php:346
+msgid "Reject request"
+msgstr ""
+
+#: add-on/groups/index.php:361 add-on/review/index.php:200
+#: functions/rcl_addons.php:230 functions/rcl_editfields.php:128
+msgid "Delete"
+msgstr ""
+
+#: add-on/groups/index.php:365 add-on/profile/index.php:740
+msgid "User status"
+msgstr ""
+
+#: add-on/groups/index.php:370 functions/rcl_addons.php:149
+#: functions/rcl_editfields.php:56
+msgid "Save"
+msgstr ""
+
+#: add-on/groups/index.php:397
+msgid "Request access to the group approved!"
+msgstr ""
+
+#: add-on/groups/index.php:407
+msgid "The request was accepted"
+msgstr ""
+
+#: add-on/groups/index.php:411
+msgid "Request rejected"
+msgstr ""
+
+#: add-on/groups/index.php:412
+msgid "The request to access the group rejected."
+msgstr ""
+
+#: add-on/groups/shortcodes.php:28
+msgid "Groups not found"
+msgstr ""
+
+#: add-on/groups/upload-avatar.php:45
+msgid "Size over"
+msgstr ""
+
+#: add-on/groups/upload-avatar.php:53
+msgid "The file is not an image"
+msgstr ""
+
+#: add-on/groups/upload-avatar.php:84
+msgid "Avatar has successfully loaded"
+msgstr ""
+
+#: add-on/magazin/functions/init.php:18 add-on/magazin/functions/init.php:19
+msgid "Attach image or download it"
+msgstr ""
+
+#: add-on/magazin/functions/init.php:223 rcl-admin/admin-pages.php:31
+#: rcl-admin/admin-pages.php:32
+msgid "Settings Wp-Recall"
+msgstr ""
+
+#: add-on/magazin/functions/shortcodes.php:88
+#: add-on/magazin/functions/shortcodes.php:90
+#: add-on/magazin/functions/shortcodes.php:117
+msgid "Cart"
+msgstr ""
+
+#: add-on/message/index.php:22
+msgid "File does not exist on the server or it has already been loaded!"
+msgstr ""
+
+#: add-on/message/index.php:28 add-on/message/index.php:1316
+msgid "The file was loaded."
+msgstr ""
+
+#: add-on/message/index.php:67
+msgid "Private chat"
+msgstr ""
+
+#: add-on/message/index.php:187
+msgid "Settings private messages"
+msgstr ""
+
+#: add-on/message/index.php:190
+msgid "Private messages"
+msgstr ""
+
+#: add-on/message/index.php:191
+msgid "Displaying messages in the correspondence"
+msgstr ""
+
+#: add-on/message/index.php:194
+msgid "Top-Down"
+msgstr ""
+
+#: add-on/message/index.php:194
+msgid "Bottom-Up"
+msgstr ""
+
+#: add-on/message/index.php:197
+msgid "Limit words message"
+msgstr ""
+
+#: add-on/message/index.php:199
+msgid "the default is 400"
+msgstr ""
+
+#: add-on/message/index.php:201
+msgid "The number of messages in the conversation"
+msgstr ""
+
+#: add-on/message/index.php:203
+msgid ""
+"the default is 100 messages in the conversation (per correspondence user)"
+msgstr ""
+
+#: add-on/message/index.php:205
+msgid ""
+"Pause between requests for new posts to show per page of correspondence with "
+"another user in seconds"
+msgstr ""
+
+#: add-on/message/index.php:208
+msgid "The number of requests you receive a new message page correspondence"
+msgstr ""
+
+#: add-on/message/index.php:213
+msgid ""
+"The pause between requests for new messages on all other pages of the "
+"website in seconds"
+msgstr ""
+
+#: add-on/message/index.php:215
+msgid ""
+"If null, then the receipt of new messages only when the page loads, without "
+"subsequent requests"
+msgstr ""
+
+#: add-on/message/index.php:217
+msgid "Lock requests if the person offline"
+msgstr ""
+
+#: add-on/message/index.php:220
+msgid "Do not block"
+msgstr ""
+
+#: add-on/message/index.php:220
+msgid "To block requests"
+msgstr ""
+
+#: add-on/message/index.php:222
+msgid ""
+"We mean a request to retrieve new messages from the user to the page which "
+"you are"
+msgstr ""
+
+#: add-on/message/index.php:224
+msgid "File sharing"
+msgstr ""
+
+#: add-on/message/index.php:228
+msgid "Prohibited"
+msgstr ""
+
+#: add-on/message/index.php:228
+msgid "Allowed"
+msgstr ""
+
+#: add-on/message/index.php:236
+msgid "Maximum file size, Mb"
+msgstr ""
+
+#: add-on/message/index.php:238
+msgid ""
+"To restrict downloading of files this value in megabytes. By default, 2MB"
+msgstr ""
+
+#: add-on/message/index.php:240
+msgid "The retention time of the file"
+msgstr ""
+
+#: add-on/message/index.php:242
+msgid ""
+"Specify the maximum number of unclaimed files in days. After this period, "
+"the file will be deleted. The default is 7 days."
+msgstr ""
+
+#: add-on/message/index.php:244
+msgid "Limit unmatched files"
+msgstr ""
+
+#: add-on/message/index.php:246
+msgid ""
+"Specify the number of files missed by the recipients in which the user loses "
+"the possibility of further transfer of files. Protection from spam. Default-"
+"without any restrictions."
+msgstr ""
+
+#: add-on/message/index.php:270
+msgid "Unblock"
+msgstr ""
+
+#: add-on/message/index.php:270
+msgid "In the black list"
+msgstr ""
+
+#: add-on/message/index.php:315
+msgid "The user is forbidden to write to him"
+msgstr ""
+
+#: add-on/message/index.php:328
+msgid "Sign in to start a conversation with the user."
+msgstr ""
+
+#: add-on/message/index.php:396
+msgid "Interlocutor"
+msgstr ""
+
+#: add-on/message/index.php:396
+msgid "All contacts"
+msgstr ""
+
+#: add-on/message/index.php:404
+msgid "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
+msgstr ""
+
+#: add-on/message/index.php:417 add-on/user-account/index.php:370
+#: templates/form-register.php:27 templates/form-remember.php:18
+msgid "Send"
+msgstr ""
+
+#: add-on/message/index.php:418
+msgid "Important messages"
+msgstr ""
+
+#: add-on/message/index.php:430
+msgid "Here will display correspondence history"
+msgstr ""
+
+#: add-on/message/index.php:433
+msgid "Show older messages"
+msgstr ""
+
+#: add-on/message/index.php:531
+msgid "days"
+msgstr ""
+
+#: add-on/message/index.php:532
+msgid "month"
+msgstr ""
+
+#: add-on/message/index.php:533
+msgid "all the time"
+msgstr ""
+
+#: add-on/message/index.php:534
+msgid "Blacklist"
+msgstr ""
+
+#: add-on/message/index.php:535
+msgid "Important"
+msgstr ""
+
+#: add-on/message/index.php:541
+msgid "You havent been in conversation with"
+msgstr ""
+
+#: add-on/message/index.php:570 add-on/message/index.php:590
+#: add-on/message/index.php:673
+msgid "Contacts not found!"
+msgstr ""
+
+#: add-on/message/index.php:668
+msgid "Last message"
+msgstr ""
+
+#: add-on/message/index.php:669
+msgid "The chat history is missing"
+msgstr ""
+
+#: add-on/message/index.php:682
+msgid "Delete?"
+msgstr ""
+
+#: add-on/message/index.php:748
+msgid "Uncheck"
+msgstr ""
+
+#: add-on/message/index.php:748
+msgid "Mark as important"
+msgstr ""
+
+#: add-on/message/index.php:813
+msgid "No posts found!"
+msgstr ""
+
+#: add-on/message/index.php:848
+msgid "Show more recent messages"
+msgstr ""
+
+#: add-on/message/index.php:966
+msgid "Your message has been sent!"
+msgstr ""
+
+#: add-on/message/index.php:1061
+msgid "The message is marked as read"
+msgstr ""
+
+#: add-on/message/index.php:1204
+msgid "You a new message!"
+msgstr ""
+
+#: add-on/message/index.php:1235
+msgid "Go to the correspondence"
+msgstr ""
+
+#: add-on/message/index.php:1237
+msgid "Reply"
+msgstr ""
+
+#: add-on/message/index.php:1290
+msgid "Show more recent posts"
+msgstr ""
+
+#: add-on/message/index.php:1318
+msgid "The file has been received, but not yet loaded."
+msgstr ""
+
+#: add-on/message/index.php:1319
+msgid "The file was sent to the recipient."
+msgstr ""
+
+#: add-on/message/index.php:1322
+msgid "Link to sent the file"
+msgstr ""
+
+#: add-on/message/index.php:1324
+msgid "(accept files only from trusted sources)"
+msgstr ""
+
+#: add-on/message/index.php:1349
+msgid "The file was sent successfully."
+msgstr ""
+
+#: add-on/message/index.php:1352
+msgid ""
+"You have exceeded the limit on the number of uploaded files. Wait until the "
+"files sent previously will be accepted."
+msgstr ""
+
+#: add-on/message/index.php:1362
+msgid "Removes the file from the server"
+msgstr ""
+
+#: add-on/message/notify.php:32
+msgid "You were sent a private message"
+msgstr ""
+
+#: add-on/message/notify.php:34 add-on/review/index.php:77
+msgid "from the user"
+msgstr ""
+
+#: add-on/message/notify.php:35
+msgid "You can read the message by clicking on the link:"
+msgstr ""
+
+#: add-on/message/notify.php:38 add-on/message/notify.php:39
+msgid "For you"
+msgstr ""
+
+#: add-on/message/notify.php:38
+msgid "new message"
+msgstr ""
+
+#: add-on/message/notify.php:39
+msgid "new messages"
+msgstr ""
+
+#: add-on/profile/index.php:5
+msgid "Profile fields"
+msgstr ""
+
+#: add-on/profile/index.php:20
+msgid "Your profile was updated"
+msgstr ""
+
+#: add-on/profile/index.php:140
+msgid "Very sorry, but your account has been deleted!"
+msgstr ""
+
+#: add-on/profile/index.php:141
+msgid "Back to main"
+msgstr ""
+
+#: add-on/profile/index.php:143
+msgid "Delete account failed! Go back and try again."
+msgstr ""
+
+#: add-on/profile/index.php:160
+msgid "Profile settings and account"
+msgstr ""
+
+#: add-on/profile/index.php:163
+msgid "Profile and account"
+msgstr ""
+
+#: add-on/profile/index.php:165
+msgid "Allow to delete users from your account?"
+msgstr ""
+
+#: add-on/profile/index.php:168 add-on/profile/index.php:588
+#: add-on/profile/index.php:593 add-on/profile/index.php:598
+#: add-on/profile/index.php:603 add-on/profile/index.php:608
+#: add-on/publicpost/addon-options.php:51
+#: add-on/publicpost/addon-options.php:285 add-on/publicpost/index.php:237
+#: add-on/rating-system/addon-options.php:68
+#: add-on/rating-system/addon-options.php:120
+#: add-on/rating-system/admin.php:16 add-on/rating-system/index.php:44
+#: rcl-admin/admin-pages.php:39 rcl-admin/admin-pages.php:271
+msgid "No"
+msgstr ""
+
+#: add-on/profile/index.php:168 add-on/profile/index.php:588
+#: add-on/profile/index.php:593 add-on/profile/index.php:598
+#: add-on/profile/index.php:603 add-on/profile/index.php:608
+#: add-on/publicpost/addon-options.php:51
+#: add-on/publicpost/addon-options.php:285 add-on/publicpost/index.php:237
+#: add-on/rating-system/addon-options.php:68
+#: add-on/rating-system/addon-options.php:120
+#: add-on/rating-system/admin.php:17 add-on/rating-system/index.php:45
+#: rcl-admin/admin-pages.php:40 rcl-admin/admin-pages.php:271
+msgid "Yes"
+msgstr ""
+
+#: add-on/profile/index.php:171
+msgid "The maximum size of the avatar, Mb"
+msgstr ""
+
+#: add-on/profile/index.php:173
+msgid ""
+"To restrict the loading of images as avatars this value in megabytes. By "
+"default, 2MB"
+msgstr ""
+
+#: add-on/profile/index.php:194
+msgid "Zoom avatar"
+msgstr ""
+
+#: add-on/profile/index.php:200
+msgid "Delete avatar"
+msgstr ""
+
+#: add-on/profile/index.php:242
+msgid "Your avatar has been removed"
+msgstr ""
+
+#: add-on/profile/index.php:253
+msgid "Profile"
+msgstr ""
+
+#: add-on/profile/index.php:279
+msgid "User profile"
+msgstr ""
+
+#: add-on/profile/index.php:293
+msgid "Admin toolbar"
+msgstr ""
+
+#: add-on/profile/index.php:298
+msgid "Show the admin bar when viewing site"
+msgstr ""
+
+#: add-on/profile/index.php:306 add-on/profile/index.php:688
+#: functions/loginform.php:49 functions/loginform.php:57
+#: functions/loginform.php:73 templates/form-sign.php:31
+#: templates/recallbar.php:28 templates/recallbar.php:35
+#: templates/recallbar.php:43
+msgid "Login"
+msgstr ""
+
+#: add-on/profile/index.php:312 add-on/profile/index.php:695
+msgid "Firstname"
+msgstr ""
+
+#: add-on/profile/index.php:318 add-on/profile/index.php:702
+msgid "Surname"
+msgstr ""
+
+#: add-on/profile/index.php:324 add-on/profile/index.php:709
+#: functions/register.php:216 templates/form-register.php:10
+#: templates/form-sign.php:10
+msgid "Nickname"
+msgstr ""
+
+#: add-on/profile/index.php:330 add-on/profile/index.php:716
+msgid "Display name"
+msgstr ""
+
+#: add-on/profile/index.php:392 functions/rcl_editfields.php:148
+#: templates/form-register.php:17
+msgid "E-mail"
+msgstr ""
+
+#: add-on/profile/index.php:398
+msgid "Your website"
+msgstr ""
+
+#: add-on/profile/index.php:404
+msgid "New password"
+msgstr ""
+
+#: add-on/profile/index.php:406
+msgid "If you want to change your password - enter new"
+msgstr ""
+
+#: add-on/profile/index.php:408
+msgid "Repeat the new password"
+msgstr ""
+
+#: add-on/profile/index.php:412 functions/register.php:403
+msgid "The password strength indicator"
+msgstr ""
+
+#: add-on/profile/index.php:414 functions/register.php:405
+msgid "A password is not entered"
+msgstr ""
+
+#: add-on/profile/index.php:418
+msgid "Note"
+msgstr ""
+
+#: add-on/profile/index.php:418
+msgid "The password must be at least 7 characters"
+msgstr ""
+
+#: add-on/profile/index.php:427 add-on/profile/index.php:737
+#: add-on/publicpost/index.php:151
+#: add-on/publicpost/templates/posts-list.php:8
+msgid "Status"
+msgstr ""
+
+#: add-on/profile/index.php:498
+msgid "Update profile"
+msgstr ""
+
+#: add-on/profile/index.php:502
+msgid "Are you sure? Then restore will not work!"
+msgstr ""
+
+#: add-on/profile/index.php:504
+msgid "To delete your profile"
+msgstr ""
+
+#: add-on/profile/index.php:566
+msgid "Fields to display in the profile note ticks."
+msgstr ""
+
+#: add-on/profile/index.php:574
+msgid "<td><input type=\"%s\" name=\"%s\" %s /></td><td>%s</td>"
+msgstr ""
+
+#: add-on/profile/index.php:582
+msgid "Manage profile fields"
+msgstr ""
+
+#: add-on/profile/index.php:587 add-on/publicpost/index.php:236
+msgid "required field"
+msgstr ""
+
+#: add-on/profile/index.php:592
+msgid "to display the registration form"
+msgstr ""
+
+#: add-on/profile/index.php:597
+msgid "display at checkout for guests"
+msgstr ""
+
+#: add-on/profile/index.php:602
+msgid "to show the content to other users"
+msgstr ""
+
+#: add-on/profile/index.php:607
+msgid "it only changes the administration of the site"
+msgstr ""
+
+#: add-on/profile/index.php:691
+msgid "Login user"
+msgstr ""
+
+#: add-on/profile/index.php:698
+msgid "Username"
+msgstr ""
+
+#: add-on/profile/index.php:705
+msgid "Surname user"
+msgstr ""
+
+#: add-on/profile/index.php:712
+msgid "Nickname user"
+msgstr ""
+
+#: add-on/profile/index.php:719
+msgid "Display name user"
+msgstr ""
+
+#: add-on/profile/index.php:723
+msgid "Емейл (be sure)"
+msgstr ""
+
+#: add-on/profile/index.php:726
+msgid "Емейл user"
+msgstr ""
+
+#: add-on/profile/index.php:730
+msgid "Website"
+msgstr ""
+
+#: add-on/profile/index.php:733
+msgid "Website user"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:11
+#: add-on/publicpost/addon-options.php:220 add-on/publicpost/classes.php:56
+#: add-on/user-account/addon-options.php:74
+#: add-on/user-account/addon-options.php:85
+#: add-on/user-account/addon-options.php:95
+#: add-on/user-account/addon-options.php:103 rcl-admin/admin-pages.php:87
+#: rcl-widgets.php:59 rcl-widgets.php:118
+msgid "Not selected"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:30
+msgid "Guests and users"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:33
+msgid "The publish settings"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:36 rcl-admin/admin-pages.php:81
+msgid "General settings"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:38
+msgid "Page publishing and editing records"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:40
+msgid ""
+"Required for proper formation of links to edit records, you must specify the "
+"page where the shortcode is [public-form] no matter where displayed the very "
+"form of publication this page will be used to edit the entry"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:42
+msgid "Display information about the author"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:45
+#: add-on/publicpost/addon-options.php:58
+#: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:171
+#: rcl-admin/admin-pages.php:244 rcl-admin/admin-pages.php:249
+#: rcl-admin/admin-pages.php:260
+msgid "Disabled"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:45
+#: add-on/publicpost/addon-options.php:58
+#: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:172
+#: rcl-admin/admin-pages.php:260
+msgid "Included"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:48
+msgid "Use preview"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:54
+msgid "Tab list of publications"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:63
+msgid "List of publications of the user"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:66
+msgid "Only the owner of the account"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:66
+msgid "Show everyone including guests"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:75
+#: add-on/publicpost/rcl_publicform.php:363
+msgid "Category"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:77
+msgid "Authorized headings"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:83
+msgid ""
+"It is better to specify the parent category, then their child will be "
+"withdrawn automatically."
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:85
+msgid "Number of columns to select"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:129 add-on/publicpost/index.php:36
+msgid "Form of publication"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:131
+msgid "Text editor"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:136
+msgid "WP-RECALL editor"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:137
+msgid "WordPress editor"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:143
+msgid "Images sizes"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:148
+msgid "Default: 800,600"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:150
+msgid "Available buttons Editor"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:154
+msgid "Subheader"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:155 functions/rcl_editfields.php:142
+msgid "Text"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:156
+msgid "Upload images"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:157
+msgid "HTML"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:165
+msgid "View editor WP"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:168
+msgid "Visual Editor"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:168
+msgid "HTML-Editor"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:170
+msgid "Number of images in the gallery Wp-Recall"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:173
+msgid "The maximum image size, Mb"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:175
+msgid ""
+"To limit image uploads to publish this value in megabytes. By default, 2MB"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:177
+msgid "The size in the editor by default"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:182
+msgid ""
+"Select the picture size in the silence of their use in the visual editor "
+"during the publishing process"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:186
+msgid "The output form of publication"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:191
+#: add-on/publicpost/addon-options.php:263
+msgid "Output"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:196
+msgid "The form ID"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:198
+msgid ""
+"Enter the form ID to the conclusion in the personal Cabinet. The default is 1"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:205
+msgid "Publication of records"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:207
+msgid "Republishing is allowed"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:216
+msgid "Redirect page"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:223
+msgid ""
+"Select the page to which visitors will be redirected after a successful "
+"publication , if the site is included in the registration confirmation email"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:227
+msgid "Moderation of publications"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:238
+msgid "Editing"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:240
+msgid "Frontend editing"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:244
+msgid "Administrators"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:245
+msgid "Editors"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:246
+msgid "Authors"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:249
+msgid "Time limit editing"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:251
+msgid "Limit editing time of publication in hours, by default: unlimited"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:257
+msgid "Tags"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:259
+msgid "Displaying a list of tags"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:268
+msgid "Limit the output"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:270
+msgid "IDs of tags separated by commas, default displays all"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:277
+msgid "Custom fields"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:278
+msgid ""
+"Settings only for fields created using the form of the publication wp-recall"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:280
+msgid "Automatic withdrawal"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:290
+msgid "Place output fields"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:293
+msgid "After the content recording"
+msgstr ""
+
+#: add-on/publicpost/addon-options.php:293
+msgid "On content recording"
+msgstr ""
+
+#: add-on/publicpost/class_public.php:22 add-on/publicpost/fast-editor.php:20
+msgid "The URL to the image"
+msgstr ""
+
+#: add-on/publicpost/class_public.php:25 add-on/publicpost/fast-editor.php:23
+msgid "Insert image"
+msgstr ""
+
+#: add-on/publicpost/class_public.php:42 add-on/publicpost/fast-editor.php:41
+msgid "Media library user"
+msgstr ""
+
+#: add-on/publicpost/class_public.php:54 add-on/publicpost/fast-editor.php:54
+msgid "Images in the media library is not found!"
+msgstr ""
+
+#: add-on/publicpost/class_public.php:55 add-on/publicpost/fast-editor.php:55
+msgid ""
+"Upload to your image and you will be able to use them in future from your "
+"media library."
+msgstr ""
+
+#: add-on/publicpost/class_public.php:76 add-on/publicpost/fast-editor.php:106
+#: functions/rcl_addons.php:191
+msgid "Description"
+msgstr ""
+
+#: add-on/publicpost/classes.php:239
+msgid ""
+"Click on Priceline the image to add it to the content of the publication"
+msgstr ""
+
+#: add-on/publicpost/classes.php:244
+msgid "Display all attached images in the gallery."
+msgstr ""
+
+#: add-on/publicpost/classes.php:249
+msgid "To add files to the download queue"
+msgstr ""
+
+#: add-on/publicpost/classes.php:253
+msgid "Add"
+msgstr ""
+
+#: add-on/publicpost/classes.php:279
+msgid "To assign a thumbnail"
+msgstr ""
+
+#: add-on/publicpost/index.php:56
+msgid "Records"
+msgstr ""
+
+#: add-on/publicpost/index.php:65 add-on/rating-system/index.php:23
+msgid "Posts"
+msgstr ""
+
+#: add-on/publicpost/index.php:68
+msgid "Publication"
+msgstr ""
+
+#: add-on/publicpost/index.php:155
+#: add-on/publicpost/templates/posts-list.php:15
+msgid "on approval"
+msgstr ""
+
+#: add-on/publicpost/index.php:156
+#: add-on/publicpost/templates/posts-list.php:16
+msgid "deleted"
+msgstr ""
+
+#: add-on/publicpost/index.php:157
+#: add-on/publicpost/templates/posts-list.php:17
+msgid "publish"
+msgstr ""
+
+#: add-on/publicpost/index.php:206
+msgid "Available forms"
+msgstr ""
+
+#: add-on/publicpost/index.php:213
+msgid "To add another form"
+msgstr ""
+
+#: add-on/publicpost/index.php:216 add-on/publicpost/index.php:224
+msgid "Form ID"
+msgstr ""
+
+#: add-on/publicpost/index.php:219
+msgid "To remove all fields"
+msgstr ""
+
+#: add-on/publicpost/index.php:219
+msgid "Вы уверены?"
+msgstr ""
+
+#: add-on/publicpost/index.php:227 add-on/publicpost/index.php:498
+msgid "Arbitrary form fields publishing"
+msgstr ""
+
+#: add-on/publicpost/index.php:438
+msgid "featured"
+msgstr ""
+
+#: add-on/publicpost/index.php:473
+msgid "The publication has been successfully removed!"
+msgstr ""
+
+#: add-on/publicpost/index.php:779 add-on/publicpost/rcl_publicform.php:138
+#: functions/rcl_custom_fields.php:271
+msgid "To publish"
+msgstr ""
+
+#: add-on/publicpost/index.php:839
+msgid "To add a media file"
+msgstr ""
+
+#: add-on/publicpost/rcl_editpost.php:57
+msgid "Error publishing!"
+msgstr ""
+
+#: add-on/publicpost/rcl_postlist.php:100
+msgid "has not yet been published"
+msgstr ""
+
+#: add-on/publicpost/rcl_postlist.php:109
+msgid "Published"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:140
+msgid "Preview"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:176
+#: add-on/publicpost/rcl_publicform.php:186
+msgid "Are you seriously"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:178
+#: add-on/publicpost/rcl_publicform.php:184
+#: add-on/publicpost/rcl_publicform.php:192
+msgid "Delete post"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:189
+msgid "or enter its cause"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:191
+msgid "Without notice"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:206
+msgid "Not correspond the subject"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:207
+msgid "The publication does not correspond to the subject site"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:210
+msgid "Not furnished"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:211
+msgid "Publication is not formalized under the rules"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:214
+msgid "Advertising/Spam"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:215
+msgid "Publication labeled as advertising or spam"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:223
+msgid "Use the blank notice"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:234
+msgid "You can not edit this publication :("
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:238
+msgid "Sorry, but you have no rights to publish within groups :("
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:242
+msgid "You must be logged in to post. Login or register"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:245
+msgid "Sorry, but you have no right<br>to publish the records on this site :("
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:284
+msgid "Being sent, please wait..."
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:288
+msgid "Your Name"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:292
+msgid "Your E-mail"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:464
+msgid "Select a tag from the list"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:539
+msgid "Text Box"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:540
+msgid "Subtitle"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:541
+msgid "Image"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:542
+msgid "HTML- code"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:585
+msgid "Enter your tags"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:586
+msgid "Add your tags"
+msgstr ""
+
+#: add-on/publicpost/rcl_publicform.php:586
+msgid "Each tag is separated with Enter"
+msgstr ""
+
+#: add-on/publicpost/templates/editor-image-box.php:14
+msgid "Select an image"
+msgstr ""
+
+#: add-on/publicpost/templates/editor-image-box.php:17
+msgid "or enter url image"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:15
+msgid "select a template output stories where"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:16
+msgid "%USER% - name of the voted"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:17
+msgid "%VALUE% - rated value"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:18
+msgid "%DATE% - date of changing the rating"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:19
+msgid "%COMMENT% - link to comment"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:20
+msgid "%POST% - link to publication"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:23
+msgid "Type of rating for"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:26
+msgid "Plus/minus"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:26
+#: add-on/rating-system/index.php:304
+msgid "I like"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:34
+msgid "Sum votes values"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:34
+msgid "Number of positive and negative votes"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:39
+msgid "Limit of one vote per user"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:40
+msgid "Positive votes"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:41
+#: add-on/rating-system/addon-options.php:44 functions/rcl_editfields.php:150
+msgid "Number"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:42
+#: add-on/rating-system/addon-options.php:45 functions/rcl_editfields.php:152
+msgid "Time"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:43
+msgid "Negative votes"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:46
+msgid "Note: Time in seconds"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:51
+msgid "The rating"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:60
+msgid "Points for ranking"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:62
+msgid ""
+"set how many points the ranking will be awarded for a positive vote or how "
+"many points will be subtracted from the rating for a negative vote"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:64
+msgid "The influence of rating %s on the overall rating"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:76
+msgid "Template output stories in the overall ranking"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:77 add-on/rating-system/core.php:322
+msgid "voted"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:85
+msgid "Rating settings"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:91
+msgid "Allow to bypass the moderation of publications at achievement rating"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:93
+msgid ""
+"specify the rating level at which the user will get the ability to post "
+"without moderation"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:99
+msgid "View results"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:111
+msgid "specify the user group which is allowed to view votes"
+msgstr ""
+
+#: add-on/rating-system/addon-options.php:117
+msgid "Deleting your voice"
+msgstr ""
+
+#: add-on/rating-system/admin.php:15 add-on/rating-system/index.php:43
+msgid "To disable the rating for publication"
+msgstr ""
+
+#: add-on/rating-system/admin.php:31 add-on/rating-system/index.php:59
+msgid "OK"
+msgstr ""
+
+#: add-on/rating-system/core.php:236
+msgid "Correction"
+msgstr ""
+
+#: add-on/rating-system/core.php:344
+msgid "comment"
+msgstr ""
+
+#: add-on/rating-system/core.php:356
+msgid "Rating changes not made"
+msgstr ""
+
+#: add-on/rating-system/index.php:51 add-on/rating-system/index.php:100
+#: add-on/rating-system/index.php:249
+msgid "Rating"
+msgstr ""
+
+#: add-on/rating-system/index.php:188
+msgid "rating"
+msgstr ""
+
+#: add-on/rating-system/index.php:297
+msgid "To remove your vote"
+msgstr ""
+
+#: add-on/rating-system/index.php:306
+msgid "minus"
+msgstr ""
+
+#: add-on/rating-system/index.php:307
+msgid "plus"
+msgstr ""
+
+#: add-on/rating-system/index.php:420
+msgid "exceeded the limit of votes for the period - %d seconds"
+msgstr ""
+
+#: add-on/rating-system/index.php:492
+msgid "You can not vote"
+msgstr ""
+
+#: add-on/review/index.php:16 add-on/review/index.php:147
+msgid "Reviews"
+msgstr ""
+
+#: add-on/review/index.php:42
+msgid "You dont have that right!"
+msgstr ""
+
+#: add-on/review/index.php:73
+msgid "You left a review"
+msgstr ""
+
+#: add-on/review/index.php:76
+msgid "You have been leaving feedback"
+msgstr ""
+
+#: add-on/review/index.php:78
+msgid "You can read the message by clicking on"
+msgstr ""
+
+#: add-on/review/index.php:78
+msgid "the link"
+msgstr ""
+
+#: add-on/review/index.php:144
+msgid "Settings reviews"
+msgstr ""
+
+#: add-on/review/index.php:148
+msgid "To accept and leave feedback can"
+msgstr ""
+
+#: add-on/review/index.php:151 functions/rcl_addons.php:165
+msgid "All"
+msgstr ""
+
+#: add-on/review/index.php:151
+msgid "With published posts"
+msgstr ""
+
+#: add-on/review/index.php:153
+msgid "Restriction rated"
+msgstr ""
+
+#: add-on/review/index.php:155
+msgid "the default not limited"
+msgstr ""
+
+#: add-on/review/index.php:189
+msgid "leave a review"
+msgstr ""
+
+#: add-on/review/index.php:207
+msgid "You have not left any reviews"
+msgstr ""
+
+#: add-on/review/index.php:209
+msgid "The user has no reviews yet"
+msgstr ""
+
+#: add-on/review/index.php:221
+msgid "Members with a value rating of less than %d can not leave a review."
+msgstr ""
+
+#: add-on/review/index.php:234
+msgid "Users without published records cannot accept and add reviews."
+msgstr ""
+
+#: add-on/review/index.php:248
+msgid "Review text"
+msgstr ""
+
+#: add-on/review/index.php:249
+msgid "Positively"
+msgstr ""
+
+#: add-on/review/index.php:250
+msgid "Neutral"
+msgstr ""
+
+#: add-on/review/index.php:251
+msgid "Negatively"
+msgstr ""
+
+#: add-on/review/index.php:256
+msgid "Add a review"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:13 rcl-admin/admin-pages.php:218
+msgid "Not used"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:15 add-on/user-account/index.php:69
+msgid "Payment systems"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:32
+msgid "Payment"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:34
+msgid "Type of payment"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:38
+msgid "Funds from the personal account user"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:39
+msgid "Directly through the payment system"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:40
+msgid "To offer both options"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:43
+msgid ""
+"If the connection to the payment aggregator not in use, it is possible to "
+"set only \"Funds from the personal account user\"!"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:45
+msgid "The connection to payment aggregator"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:46
+msgid "Used type of connection"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:60
+msgid "Service page payment systems"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:70
+msgid "Page RESULT"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:77
+msgid "For WalletOne: URL script"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:78
+msgid "For Interkassa: URL of interaction"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:79
+msgid "For Yandex.Cash: checkURL and avisoURL"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:81
+msgid "Page SUCCESS"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:88
+msgid "For WalletOne: not use"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:89
+msgid "For Interkassa: not use"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:91
+msgid "Page FAIL"
+msgstr ""
+
+#: add-on/user-account/addon-options.php:99
+msgid "The successful payment page"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:36
+msgid "Interkassa"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:50
+msgid "Connection settings Interkassa"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:51
+msgid "Secret Key"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:53
+msgid "Test Key"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:55
+#: add-on/user-account/gateways/robokassa.php:52
+msgid "The ID of the store"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:57
+msgid "The status of the account Interkassa"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:61
+#: add-on/user-account/gateways/robokassa.php:59
+msgid "Work"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:62
+#: add-on/user-account/gateways/robokassa.php:60
+msgid "Test"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:78
+#: add-on/user-account/rcl_payment.php:99
+msgid "Top up personal account"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:79
+msgid "Payment for the order on the website"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:80
+msgid "Other payments"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:82
+#: add-on/user-account/gateways/robokassa.php:108
+#: add-on/user-account/gateways/yandexkassa.php:60
+#: add-on/user-account/rcl_payment.php:127
+msgid "Confirm the operation"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:82
+#: add-on/user-account/gateways/robokassa.php:108
+#: add-on/user-account/gateways/yandexkassa.php:60
+#: add-on/user-account/rcl_payment.php:127
+msgid "Pay through payment system"
+msgstr ""
+
+#: add-on/user-account/gateways/interkassa.php:159
+#: add-on/user-account/gateways/robokassa.php:161
+#: add-on/user-account/gateways/yandexkassa.php:147
+#: add-on/user-account/rcl_payment.php:57
+msgid "A record of the payment in the database was not found"
+msgstr ""
+
+#: add-on/user-account/gateways/robokassa.php:37
+msgid "Robokassa"
+msgstr ""
+
+#: add-on/user-account/gateways/robokassa.php:51
+msgid "Connection settings ROBOKASSA"
+msgstr ""
+
+#: add-on/user-account/gateways/robokassa.php:54
+msgid "The status of the account ROBOKASSA"
+msgstr ""
+
+#: add-on/user-account/gateways/robokassa.php:69
+#: add-on/user-account/gateways/robokassa.php:81
+msgid "1 Password"
+msgstr ""
+
+#: add-on/user-account/gateways/robokassa.php:71
+#: add-on/user-account/gateways/robokassa.php:83
+msgid "2 Password"
+msgstr ""
+
+#: add-on/user-account/gateways/walletone.php:25
+msgid "WalletOne"
+msgstr ""
+
+#: add-on/user-account/gateways/walletone.php:39
+msgid "Connection settings WalletOne"
+msgstr ""
+
+#: add-on/user-account/gateways/walletone.php:40
+msgid "Merchant ID"
+msgstr ""
+
+#: add-on/user-account/gateways/walletone.php:42
+msgid "The secret key"
+msgstr ""
+
+#: add-on/user-account/gateways/yandexkassa.php:25
+msgid "Yandex.Kassa"
+msgstr ""
+
+#: add-on/user-account/gateways/yandexkassa.php:25
+msgid "not tested"
+msgstr ""
+
+#: add-on/user-account/gateways/yandexkassa.php:39
+msgid "Connection settings Yandex.Kassa"
+msgstr ""
+
+#: add-on/user-account/gateways/yandexkassa.php:40
+msgid "ID cash"
+msgstr ""
+
+#: add-on/user-account/gateways/yandexkassa.php:42
+msgid "The room showcases"
+msgstr ""
+
+#: add-on/user-account/gateways/yandexkassa.php:44
+msgid "The secret word"
+msgstr ""
+
+#: add-on/user-account/index.php:72
+msgid "Payments"
+msgstr ""
+
+#: add-on/user-account/index.php:80
+msgid "Balance"
+msgstr ""
+
+#: add-on/user-account/index.php:334
+msgid "The change in the balance"
+msgstr ""
+
+#: add-on/user-account/index.php:364
+msgid "Deposit"
+msgstr ""
+
+#: add-on/user-account/index.php:366
+msgid "To recharge your account"
+msgstr ""
+
+#: add-on/user-account/index.php:368
+msgid "Enter the amount required"
+msgstr ""
+
+#: add-on/user-account/index.php:449
+msgid "Income dynamics"
+msgstr ""
+
+#: add-on/user-account/index.php:450
+msgid "The time period"
+msgstr ""
+
+#: add-on/user-account/index.php:452
+msgid "\"Days/Months\""
+msgstr ""
+
+#: add-on/user-account/index.php:452
+msgid "\"Payments (PCs.)\""
+msgstr ""
+
+#: add-on/user-account/index.php:452
+msgid "\"Income (thousands)\""
+msgstr ""
+
+#: add-on/user-account/index.php:476
+msgid "Personal account of the user"
+msgstr ""
+
+#: add-on/user-account/index.php:478 add-on/user-account/index.php:506
+msgid "Personal account"
+msgstr ""
+
+#: add-on/user-account/rcl_payment.php:136
+msgid "Pay personal account"
+msgstr ""
+
+#: class-rcl-install.php:99 rcl-admin/admin-pages.php:92
+msgid "Personal office"
+msgstr ""
+
+#: class-rcl-install.php:104
+msgid "FEED"
+msgstr ""
+
+#: class-rcl-install.php:231
+msgid "Unconfirmed"
+msgstr ""
+
+#: functions/authorize.php:36 functions/register.php:147
+msgid "Fill in the required fields!"
+msgstr ""
+
+#: functions/authorize.php:45 functions/register.php:279
+msgid "Your email is not confirmed!"
+msgstr ""
+
+#: functions/captcha.php:29
+msgid "Enter characters"
+msgstr ""
+
+#: functions/captcha.php:51
+msgid "Field filled not right CAPTCHA!"
+msgstr ""
+
+#: functions/class-rcl-users.php:432
+msgid "Total users"
+msgstr ""
+
+#: functions/class-rcl-users.php:445
+msgid "Activity"
+msgstr ""
+
+#: functions/class-rcl-users.php:448 functions/loginform.php:50
+#: functions/loginform.php:58 functions/loginform.php:74
+#: functions/shortcodes.php:121 templates/form-register.php:4
+#: templates/form-remember.php:21 templates/form-sign.php:33
+msgid "Registration"
+msgstr ""
+
+#: functions/class-rcl-users.php:452
+msgid "Rated"
+msgstr ""
+
+#: functions/loginform.php:22
+msgid "Hi"
+msgstr ""
+
+#: functions/loginform.php:24 functions/loginform.php:33
+msgid "In personal account"
+msgstr ""
+
+#: functions/loginform.php:34
+msgid "Exit"
+msgstr ""
+
+#: functions/rcl-frontend.php:71
+msgid "The site works using the functionality of the plugin"
+msgstr ""
+
+#: functions/rcl-frontend.php:78
+msgid "Author of publication"
+msgstr ""
+
+#: functions/rcl-frontend.php:145
+msgid "Congratulations! You have been banned."
+msgstr ""
+
+#: functions/rcl-frontend.php:152
+msgid "Publication pending approval!"
+msgstr ""
+
+#: functions/rcl-frontend.php:204 functions/shortcodes.php:101
+msgid "not online"
+msgstr ""
+
+#: functions/rcl_addons.php:72
+msgid "Add-on manager"
+msgstr ""
+
+#: functions/rcl_addons.php:124
+msgid "Add-ons Wp-Recall"
+msgstr ""
+
+#: functions/rcl_addons.php:128
+msgid ""
+"Addition <strong>activated</strong>. It is possible that on the settings "
+"page of Wp-Recall new settings"
+msgstr ""
+
+#: functions/rcl_addons.php:129
+msgid "Addition <strong>deactivated</strong>."
+msgstr ""
+
+#: functions/rcl_addons.php:130
+msgid "Files and data additions have been <strong>removed</strong>."
+msgstr ""
+
+#: functions/rcl_addons.php:131
+msgid "The Supplement has not been loaded. Add missing the correct header."
+msgstr ""
+
+#: functions/rcl_addons.php:142
+msgid "Key is stored"
+msgstr ""
+
+#: functions/rcl_addons.php:146
+msgid "RCLKEY"
+msgstr ""
+
+#: functions/rcl_addons.php:148
+msgid "Enter RCLKEY"
+msgstr ""
+
+#: functions/rcl_addons.php:152
+msgid ""
+"He will need to update the add-ons here. Get it , you can profile your "
+"account online <a href=\"http://wppost.ru/\" target=\"_blank\">http://wppost."
+"ru</a>"
+msgstr ""
+
+#: functions/rcl_addons.php:155
+msgid "To install the add-on to Wp-Recall format .zip"
+msgstr ""
+
+#: functions/rcl_addons.php:156
+msgid ""
+"If you have the archive add-on for wp-recall format .zip, here you can "
+"download and install it."
+msgstr ""
+
+#: functions/rcl_addons.php:158
+msgid "Plugin archive"
+msgstr ""
+
+#: functions/rcl_addons.php:160
+msgid "To install"
+msgstr ""
+
+#: functions/rcl_addons.php:166
+msgid "Active"
+msgstr ""
+
+#: functions/rcl_addons.php:167
+msgid "Inactive"
+msgstr ""
+
+#: functions/rcl_addons.php:176
+msgid "Action"
+msgstr ""
+
+#: functions/rcl_addons.php:177 functions/rcl_addons.php:213
+msgid "Deactivate"
+msgstr ""
+
+#: functions/rcl_addons.php:178
+msgid "To activate"
+msgstr ""
+
+#: functions/rcl_addons.php:180
+msgid "Apply"
+msgstr ""
+
+#: functions/rcl_addons.php:187
+msgid "Select all"
+msgstr ""
+
+#: functions/rcl_addons.php:190
+msgid "Additions"
+msgstr ""
+
+#: functions/rcl_addons.php:205
+msgid "Choose"
+msgstr ""
+
+#: functions/rcl_addons.php:218 functions/rcl_addons.php:222
+msgid "Settings"
+msgstr ""
+
+#: functions/rcl_addons.php:227
+msgid "Activate"
+msgstr ""
+
+#: functions/rcl_addons.php:240
+msgid "Version"
+msgstr ""
+
+#: functions/rcl_addons.php:241
+msgid "Visit the page of the author"
+msgstr ""
+
+#: functions/rcl_addons.php:242
+msgid "Visit the page of the add-on"
+msgstr ""
+
+#: functions/rcl_addons.php:242
+msgid "Page Add-on"
+msgstr ""
+
+#: functions/rcl_addons.php:310
+msgid "You cant control polucheniya plugins on this site."
+msgstr ""
+
+#: functions/rcl_addons.php:470
+msgid "Unpacking of archive failed."
+msgstr ""
+
+#: functions/rcl_addons.php:473
+msgid "ZIP archive not found."
+msgstr ""
+
+#: functions/rcl_addons.php:548 rcl-admin/admin-pages.php:192
+msgid "Login and register"
+msgstr ""
+
+#: functions/rcl_custom_fields.php:80
+msgid "delete"
+msgstr ""
+
+#: functions/rcl_custom_fields.php:88
+msgid "Max size"
+msgstr ""
+
+#: functions/rcl_custom_fields.php:182
+msgid "Download file"
+msgstr ""
+
+#: functions/rcl_custom_fields.php:278 functions/rcl_custom_fields.php:296
+msgid "File size exceeded!"
+msgstr ""
+
+#: functions/rcl_custom_fields.php:401 functions/rcl_custom_fields.php:426
+#: functions/rcl_custom_fields.php:450
+msgid "File does not exist on the server!"
+msgstr ""
+
+#: functions/rcl_custom_fields.php:469
+msgid "File has deleted"
+msgstr ""
+
+#: functions/rcl_editfields.php:47
+msgid "List of columns to select"
+msgstr ""
+
+#: functions/rcl_editfields.php:48
+msgid "ID separated by comma"
+msgstr ""
+
+#: functions/rcl_editfields.php:55
+msgid "Add field"
+msgstr ""
+
+#: functions/rcl_editfields.php:91
+msgid ""
+"specify the types of files that are loaded by a comma, for example: image/*, "
+"video/*"
+msgstr ""
+
+#: functions/rcl_editfields.php:91
+msgid "the list of options to share the \" # \" sign"
+msgstr ""
+
+#: functions/rcl_editfields.php:98
+msgid "maximum size of uploaded file, MB (Default - 2)"
+msgstr ""
+
+#: functions/rcl_editfields.php:99
+msgid "URL Agreement"
+msgstr ""
+
+#: functions/rcl_editfields.php:107 functions/rcl_editfields.php:206
+msgid "MetaKey"
+msgstr ""
+
+#: functions/rcl_editfields.php:108 functions/rcl_editfields.php:207
+msgid ""
+"not necessarily<br>if you want to enlist their arbitrary field, we list the "
+"meta_key in this field"
+msgstr ""
+
+#: functions/rcl_editfields.php:109 functions/rcl_editfields.php:208
+msgid "Latin and numbers"
+msgstr ""
+
+#: functions/rcl_editfields.php:138
+msgid "The field type"
+msgstr ""
+
+#: functions/rcl_editfields.php:143
+msgid "Textarea"
+msgstr ""
+
+#: functions/rcl_editfields.php:144
+msgid "Select"
+msgstr ""
+
+#: functions/rcl_editfields.php:145
+msgid "MultiSelect"
+msgstr ""
+
+#: functions/rcl_editfields.php:146
+msgid "Checkbox"
+msgstr ""
+
+#: functions/rcl_editfields.php:147
+msgid "Radiobutton"
+msgstr ""
+
+#: functions/rcl_editfields.php:149
+msgid "Phone"
+msgstr ""
+
+#: functions/rcl_editfields.php:153
+msgid "Url"
+msgstr ""
+
+#: functions/rcl_editfields.php:154
+msgid "Agreement"
+msgstr ""
+
+#: functions/rcl_editfields.php:155
+msgid "File"
+msgstr ""
+
+#: functions/rcl_editfields.php:177
+msgid "Change"
+msgstr ""
+
+#: functions/rcl_editfields.php:289
+msgid "All values of a custom field with meta_key"
+msgstr ""
+
+#: functions/rcl_editfields.php:289
+msgid "were removed from the Database"
+msgstr ""
+
+#: functions/rcl_update.php:98
+msgid "Unable to retrieve the file from the server!"
+msgstr ""
+
+#: functions/rcl_update.php:125
+msgid "Update does not have the correct title!"
+msgstr ""
+
+#: functions/rcl_update.php:150
+msgid "Unable to open archive!"
+msgstr ""
+
+#: functions/recallbar.php:17
+msgid "In bookmarks"
+msgstr ""
+
+#: functions/recallbar.php:20
+msgid "My bookmarks"
+msgstr ""
+
+#: functions/register.php:213
+msgid "Confirm your registration!"
+msgstr ""
+
+#: functions/register.php:215
+msgid "You or someone else signed up on the website"
+msgstr ""
+
+#: functions/register.php:215
+msgid "with the following data:"
+msgstr ""
+
+#: functions/register.php:217 functions/register.php:390
+#: templates/form-sign.php:17
+msgid "Password"
+msgstr ""
+
+#: functions/register.php:229
+msgid "If it wasnt you, then just ignore this email"
+msgstr ""
+
+#: functions/register.php:273
+msgid "Registration is completed!"
+msgstr ""
+
+#: functions/register.php:274
+msgid "Registration is completed! Check your email."
+msgstr ""
+
+#: functions/register.php:282
+msgid "Registration is completed! Check your email"
+msgstr ""
+
+#: functions/register.php:288
+msgid "Your password has been sent!<br>Check your email."
+msgstr ""
+
+#: functions/register.php:313
+msgid "Error filling!"
+msgstr ""
+
+#: functions/register.php:335
+msgid "Repeat password is not correct!"
+msgstr ""
+
+#: functions/register.php:420
+msgid "Repeat the password"
+msgstr ""
+
+#: functions/register.php:432
+msgid "The passwords do not match!"
+msgstr ""
+
+#: functions/register.php:433
+msgid "The passwords match"
+msgstr ""
+
+#: functions/shortcodes.php:31
+msgid "Users not found"
+msgstr ""
+
+#: functions/shortcodes.php:92
+msgid "Publics"
+msgstr ""
+
+#: functions/shortcodes.php:140
+msgid "Search users"
+msgstr ""
+
+#: functions/shortcodes.php:143
+msgid "by name"
+msgstr ""
+
+#: functions/shortcodes.php:144
+msgid "by login"
+msgstr ""
+
+#: functions/shortcodes.php:158
+msgid ""
+"To begin to use the capabilities of your personal account, please log in or "
+"register on this site"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:3
+msgid "WP-RECALL"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:4
+msgid "SETTINGS"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:5
+msgid "Documentation"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:6
+msgid "Repository"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:10
+msgid "Documentation for the plugin WP-RECALL"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:12
+msgid "Plugin installation"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:13
+msgid "Update the plugin and its extensions"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:14
+msgid "The plugin settings"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:15
+msgid "Used shortcodes Wp-Recall"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:16
+msgid "General information about plugins Wp-Recall"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:17
+msgid "Basic add-ons Wp-Recall"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:18
+msgid "Paid add-ons Wp-Recall"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:19
+msgid "Custom fields profile Wp-Recall"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:20
+msgid "Custom fields form publishing Wp-Recall"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:21
+msgid "An example of additions Wp-Recall"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:22
+msgid "Functions and hooks Wp-Recall for the development"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:23
+msgid "Update history Wp-Recall"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:24
+msgid "Used libraries and resources"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:25
+msgid "FAQ"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:38
+msgid "Pictures record the withdrawal in the gallery Wp-Recall?"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:77
+msgid "Configure the plugin Wp-Recall and additions"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:93
+msgid "The order of withdrawal of the personal Cabinet"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:98
+msgid "On the archive page of the author"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:99
+msgid "Using the shortcode [wp-recall]"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:107
+msgid "The host page the shortcode"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:109
+msgid "The formation of links to personal account"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:111
+msgid ""
+"The link is formed by a principle \"/slug_page/?get=ID\". The parameter \"get"
+"\" can be set here. By default user"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:114
+msgid "Download tabs"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:118
+msgid "Downloads all"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:119 rcl-admin/admin-pages.php:199
+msgid "On a separate page"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:120
+msgid "Ajax loading"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:122
+msgid "Inactivity timeout"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:124
+msgid ""
+"Specify the time in minutes after which the user will be considered offline "
+"if you did not show activity on the website. The default is 10 minutes."
+msgstr ""
+
+#: rcl-admin/admin-pages.php:136
+msgid "Access to the console"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:137
+msgid "Access to the site is permitted console"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:143
+msgid ""
+"If the selected archive page of the author, in the right place template "
+"author.php paste the code if(function_exists('wp_recall')) wp_recall();"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:147
+msgid "Download the current style file for editing"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:150
+msgid "Making"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:152
+msgid "The placement of the buttons sections"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:156
+msgid "Top"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:157
+msgid "Left"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:162
+msgid "Pause Slider"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:164
+msgid ""
+"The value of the pause between slide transitions in seconds. Default value "
+"is 0 - the slide show is not made"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:166
+msgid "Minimization of style files"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:174
+msgid ""
+"Minimization of style files only works against the style files Wp-Recall and "
+"additions that support this feature"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:181
+msgid "Your stylesheet(CSS)"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:183
+msgid "File replaces the minified stylesheet, if enabled minimization"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:193
+msgid "The order"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:198
+msgid "Floating form"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:200
+msgid "Form Wordpress"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:201
+msgid "The form in the widget"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:209
+msgid "ID of the page with the shortcode [loginform]"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:211
+msgid ""
+"<b>note:</b> If selected, the order of the login form and registration on a "
+"separate page, create the page, to arrange its contents shortcode "
+"[loginform] and specify the ID of this page in the box above."
+msgstr ""
+
+#: rcl-admin/admin-pages.php:214
+msgid "A registration confirmation by the user"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:219
+msgid "Used"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:221
+msgid "Redirect user after login"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:226
+msgid "The user profile"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:227
+msgid "Current page"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:228
+msgid "Arbitrary URL"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:236
+msgid "URL"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:238
+msgid "Enter your URL below, if you select an arbitrary URL after login"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:241
+msgid "Field repeat password"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:244 rcl-admin/admin-pages.php:249
+msgid "Displayed"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:246
+msgid "Indicator password complexity"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:256 rcl-functions.php:6
+msgid "Recallbar"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:257
+msgid "Conclusion the panel recallbar"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:267
+msgid "Your gratitude"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:268
+msgid ""
+"To display a link to the developer`s site (Thank you, if you decide to show)"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:281 rcl-admin/rcl-admin.php:19
+msgid "Save settings"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:306
+msgid "Used template"
+msgstr ""
+
+#: rcl-admin/admin-pages.php:308
+msgid "Not connected"
+msgstr ""
+
+#: rcl-admin/tabs_options.php:12 rcl-admin/tabs_options.php:66
+msgid "Setting tabs"
+msgstr ""
+
+#: rcl-admin/tabs_options.php:12
+msgid "Neither one tab personal account not found"
+msgstr ""
+
+#: rcl-admin/tabs_options.php:16
+msgid "Sort your tabs by dragging them to the desired position"
+msgstr ""
+
+#: rcl-admin/tabs_options.php:75
+msgid "Name tab"
+msgstr ""
+
+#: rcl-functions.php:196
+msgid "Error! Perhaps this addition does not support ajax loading"
+msgstr ""
+
+#: rcl-functions.php:651
+msgid "This letter was created automatically, no need to answer it."
+msgstr ""
+
+#: rcl-functions.php:693
+msgid "long ago"
+msgstr ""
+
+#: rcl-widgets.php:12
+msgid "New users on the website"
+msgstr ""
+
+#: rcl-widgets.php:14 rcl-widgets.php:45
+msgid "New users"
+msgstr ""
+
+#: rcl-widgets.php:52
+msgid "The number of displayed users"
+msgstr ""
+
+#: rcl-widgets.php:64 rcl-widgets.php:123
+msgid "Page all users"
+msgstr ""
+
+#: rcl-widgets.php:79
+msgid "Conclusion the users in the network"
+msgstr ""
+
+#: rcl-widgets.php:81
+msgid "Users on the network"
+msgstr ""
+
+#: rcl-widgets.php:108
+msgid "Right now"
+msgstr ""
+
+#: rcl-widgets.php:138
+msgid "The block with the main profile information"
+msgstr ""
+
+#: templates/form-register.php:29
+msgid "Authorization "
+msgstr ""
+
+#: templates/form-remember.php:3
+msgid "Generation password"
+msgstr ""
+
+#: templates/form-remember.php:10
+msgid "Username or e-mail"
+msgstr ""
+
+#: templates/form-remember.php:19 templates/form-sign.php:4
+msgid "Authorization"
+msgstr ""
+
+#: templates/form-sign.php:27
+msgid "Remember"
+msgstr ""
+
+#: templates/form-sign.php:35
+msgid "Forgot your password"
+msgstr ""
+
+#: templates/recallbar.php:10 templates/recallbar.php:17
+#: templates/recallbar.php:26 templates/recallbar.php:31
+#: templates/recallbar.php:38 templates/recallbar.php:41
+msgid "Home"
+msgstr ""
+
+#: templates/recallbar.php:11
+msgid "Dashboard"
+msgstr ""
+
+#: templates/recallbar.php:12 templates/recallbar.php:18
+msgid "Personal cabinet"
+msgstr ""
+
+#: templates/recallbar.php:13 templates/recallbar.php:19
+msgid "Log Out"
+msgstr ""
+
+#: templates/recallbar.php:27 templates/recallbar.php:33
+#: templates/recallbar.php:42
+msgid "Register"
+msgstr ""
+
+#: wp-recall.php:40 wp-recall.php:44
+msgid "Читеришь, гадёныш?"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WP-Recall"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://wppost.ru/?p=69"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте "
+"вордпресс."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Plechev Andrey"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://wppost.ru/"
+msgstr ""
