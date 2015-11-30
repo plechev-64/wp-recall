@@ -37,7 +37,9 @@ function rcl_feed_shortcode($atts){
         return $content;
     }
 
-    $content .= '<div id="rcl-feed" data-feed="'.$list->content.'" data-load="'.$list->load.'">';
+    $load = ($rclnavi->inpage)? 'data-load="'.$list->load.'"': '';
+
+    $content .= '<div id="rcl-feed" data-feed="'.$list->content.'" '.$load.'>';
 
     foreach($feedsdata as $rcl_feed){ $list->setup_data($rcl_feed);
         $content .= '<div id="feed-'.$rcl_feed->feed_type.'-'.$rcl_feed->feed_ID.'" class="feed-box feed-user-'.$rcl_feed->feed_author.' feed-'.$rcl_feed->feed_type.'">';
@@ -45,7 +47,7 @@ function rcl_feed_shortcode($atts){
         $content .= '</div>';
     }
 
-    if($list->load=='ajax')
+    if($list->load=='ajax'&&$rclnavi->inpage)
         $content .= '<div id="feed-preloader"><div></div></div>'
             . '<div id="feed-bottom"></div>';
 

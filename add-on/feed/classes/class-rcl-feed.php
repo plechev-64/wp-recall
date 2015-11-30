@@ -278,7 +278,7 @@ class Rcl_Feed{
 
         $content = '';
 
-        $count_groups = (false!==$count_groups)? $count_groups: $this->count_groups();
+        $count_groups = (false!==$count_groups)? $count_groups: $this->count_feed_posts();
 
         //$content .='<h3>'.__('Total groups','wp-recall').': '.$count_groups.'</h3>';
 
