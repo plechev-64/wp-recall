@@ -545,12 +545,15 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
             foreach((array)$get_fields as $custom_field){
                 $slug = $custom_field['slug'];
                 if($custom_field['type']=='checkbox'){
+                    $vals = array();
                     $select = explode('#',$custom_field['field_select']);
                     $count_field = count($select);
-                    foreach($POST[$slug] as $val){
-                        for($a=0;$a<$count_field;$a++){
-                            if($select[$a]==$val){
-                                $vals[] = $val;
+                    if(isset($POST[$slug])){
+                        foreach($POST[$slug] as $val){
+                            for($a=0;$a<$count_field;$a++){
+                                if($select[$a]==$val){
+                                    $vals[] = $val;
+                                }
                             }
                         }
                     }
