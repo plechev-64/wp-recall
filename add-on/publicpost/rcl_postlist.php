@@ -23,6 +23,8 @@ class Rcl_Postlist {
         $order = ( isset( $args['order'] ) && ! empty( $args['order'] ) ) ? $args['order'] : 10;
         $this->class = ( isset( $args['class'] ) && ! empty( $args['class'] ) ) ? $args['class'] : 'fa-list';
 
+        rcl_bxslider_scripts();
+
         add_filter( 'posts_button_rcl', array( $this, 'add_postlist_button' ), $order, 2 );
         add_filter( 'posts_block_rcl', array( $this, 'add_postlist_block' ), $order, 2 );
 

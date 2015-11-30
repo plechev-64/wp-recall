@@ -35,15 +35,19 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	) DEFAULT CHARSET=utf8;");
         }else{
 
-            $sql="ALTER TABLE $table8
-                CHANGE inv_id order_id INT(20) NOT NULL,
-                CHANGE user user_id INT(20) NOT NULL,
-                CHANGE product product_id INT(20) NOT NULL,
-                CHANGE price product_price INT(20) NOT NULL,
-                CHANGE count numberproduct INT(20) NOT NULL,
-                CHANGE time_action order_date DATETIME NOT NULL,
-                CHANGE status order_status INT(10) NOT NULL";
-            $wpdb->query($sql);
+            $inv_id = $wpdb->get_var("SELECT inv_id FROM ".RMAG_PREF ."orders_history WHERE status!='0'");
+
+            if($inv_id){
+                $sql="ALTER TABLE $table8
+                    CHANGE inv_id order_id INT(20) NOT NULL,
+                    CHANGE user user_id INT(20) NOT NULL,
+                    CHANGE product product_id INT(20) NOT NULL,
+                    CHANGE price product_price INT(20) NOT NULL,
+                    CHANGE count numberproduct INT(20) NOT NULL,
+                    CHANGE time_action order_date DATETIME NOT NULL,
+                    CHANGE status order_status INT(10) NOT NULL";
+                $wpdb->query($sql);
+            }
 
         }
 		$table9 = RMAG_PREF ."pay_results";

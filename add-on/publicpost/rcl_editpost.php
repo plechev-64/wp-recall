@@ -280,41 +280,44 @@ function rcl_add_box_content($post_id,$postdata,$update){
 
 	$post_content = '';
 	$thumbnail = false;
-	foreach($_POST['post_content'] as $k=>$contents){
-		foreach($contents as $type=>$content){
-			if($type=='text') $content = strip_tags($content);
-			if($type=='header') $content = sanitize_text_field($content);
-			if($type=='html') $content = str_replace('\'','"',$content);
 
-			if($type=='image'){
-				$path_media = rcl_path_by_url($content);
-				$filename = basename($content);
+        $POST = add_magic_quotes($_POST['post_content']);
 
-				$dir_path = RCL_UPLOAD_PATH.'post-media/';
-				$dir_url = RCL_UPLOAD_URL.'post-media/';
-				if(!is_dir($dir_path)){
-					mkdir($dir_path);
-					chmod($dir_path, 0755);
-				}
+	foreach($POST as $k=>$contents){
+            foreach($contents as $type=>$content){
+                if($type=='text') $content = strip_tags($content);
+                if($type=='header') $content = sanitize_text_field($content);
+                if($type=='html') $content = str_replace('\'','"',$content);
 
-				$dir_path = RCL_UPLOAD_PATH.'post-media/'.$post_id.'/';
-				$dir_url = RCL_UPLOAD_URL.'post-media/'.$post_id.'/';
-				if(!is_dir($dir_path)){
-					mkdir($dir_path);
-					chmod($dir_path, 0755);
-				}
+                if($type=='image'){
+                    $path_media = rcl_path_by_url($content);
+                    $filename = basename($content);
 
-				if(copy($path_media, $dir_path.$filename)){
-					unlink($path_media);
-				}
+                    $dir_path = RCL_UPLOAD_PATH.'post-media/';
+                    $dir_url = RCL_UPLOAD_URL.'post-media/';
+                    if(!is_dir($dir_path)){
+                            mkdir($dir_path);
+                            chmod($dir_path, 0755);
+                    }
 
-				if(!$thumbnail) $thumbnail = $dir_path.$filename;
+                    $dir_path = RCL_UPLOAD_PATH.'post-media/'.$post_id.'/';
+                    $dir_url = RCL_UPLOAD_URL.'post-media/'.$post_id.'/';
+                    if(!is_dir($dir_path)){
+                            mkdir($dir_path);
+                            chmod($dir_path, 0755);
+                    }
 
-				$content = $dir_url.$filename;
-			}
+                    if(copy($path_media, $dir_path.$filename)){
+                            unlink($path_media);
+                    }
 
-			$post_content .= "[rcl-box type='$type' content='$content']";
-		}
+                    if(!$thumbnail) $thumbnail = $dir_path.$filename;
+
+                    $content = $dir_url.$filename;
+                }
+
+                $post_content .= "[rcl-box type='$type' content='$content']";
+            }
 	}
 
 	if($thumbnail) rcl_add_thumbnail_post($post_id,$thumbnail);

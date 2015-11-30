@@ -46,8 +46,10 @@ function rcl_webcam_scripts(){
 function rcl_fileupload_scripts(){
     wp_enqueue_script( 'jquery-ui-widget', RCL_URL.'js/fileupload/js/vendor/jquery.ui.widget.js', array(), VER_RCL,true );
 
-    wp_enqueue_script( 'load-image', '//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js', array(), VER_RCL,true );
-    wp_enqueue_script( 'canvas-to-blob', '//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js', array(), VER_RCL,true );
+    //перенесено из blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js
+    wp_enqueue_script( 'load-image', RCL_URL.'js/fileupload/js/load-image.all.min.js', array(), VER_RCL,true );
+    //перенесено из blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js
+    wp_enqueue_script( 'canvas-to-blob', RCL_URL.'js/fileupload/js/canvas-to-blob.min.js', array(), VER_RCL,true );
 
     wp_enqueue_script( 'jquery-iframe-transport', RCL_URL.'js/fileupload/js/jquery.iframe-transport.js', array(), VER_RCL,true );
     wp_enqueue_script( 'jquery-fileupload', RCL_URL.'js/fileupload/js/jquery.fileupload.js', array(), VER_RCL,true );
@@ -56,8 +58,8 @@ function rcl_fileupload_scripts(){
 }
 
 function rcl_crop_scripts(){
-	wp_enqueue_style( 'jcrop-master-css', RCL_URL.'js/jcrop.master/css/jquery.Jcrop.min.css' );
-	wp_enqueue_script( 'jcrop-master', RCL_URL.'js/jcrop.master/js/jquery.Jcrop.min.js', array(), VER_RCL,true );
+    wp_enqueue_style( 'jcrop-master-css', RCL_URL.'js/jcrop.master/css/jquery.Jcrop.min.css' );
+    wp_enqueue_script( 'jcrop-master', RCL_URL.'js/jcrop.master/js/jquery.Jcrop.min.js', array(), VER_RCL,true );
 }
 
 add_action('login_enqueue_scripts','rcl_enqueue_wp_form_scripts',1);

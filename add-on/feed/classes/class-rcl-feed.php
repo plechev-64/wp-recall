@@ -211,6 +211,7 @@ class Rcl_Feed{
         $query['where'][] = "feeds.feed_type='author'";
         $query['where'][] = "feeds.user_id='$user_ID'";
         $query['where'][] = "feeds.feed_status!='0'";
+        $query['where'][] = "comments.comment_ID NOT IN (SELECT comment_id FROM $wpdb->commentmeta WHERE meta_key = '_wp_trash_meta_status' AND meta_value ='1')";
 
         $query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON comments.user_id=feeds.object_id";
 

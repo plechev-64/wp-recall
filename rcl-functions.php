@@ -38,6 +38,10 @@ function rcl_block($place,$callback,$args=false){
 
     if(is_admin())return false;
 
+    if(isset($data['args']['gallery'])){
+        rcl_bxslider_scripts();
+    }
+
     if (!class_exists('Rcl_Blocks')) include_once plugin_dir_path( __FILE__ ).'functions/rcl_blocks.php';
     $block = new Rcl_Blocks($data);
 }
@@ -781,6 +785,12 @@ function rcl_edit_options_tab($tab){
     }
 
     return $tab;
+}
+
+function rcl_add_balloon_menu($data,$args){
+    if($data['id']!=$args['tab_id']||!$args['ballon_value']) return $data;
+    $data['name'] = sprintf('%s <span class="rcl-menu-notice">%s</span>',$data['name'],$args['ballon_value']);
+    return $data;
 }
 
 add_filter('file_scripts_rcl','rcl_get_scripts_ajaxload_tabs');

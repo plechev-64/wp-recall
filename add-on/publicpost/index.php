@@ -540,14 +540,14 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
 
 	if($get_fields){
 
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            $POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
             foreach((array)$get_fields as $custom_field){
                 $slug = $custom_field['slug'];
                 if($custom_field['type']=='checkbox'){
                     $select = explode('#',$custom_field['field_select']);
                     $count_field = count($select);
-                    foreach($_POST[$slug] as $val){
+                    foreach($POST[$slug] as $val){
                         for($a=0;$a<$count_field;$a++){
                             if($select[$a]==$val){
                                 $vals[] = $val;
@@ -567,8 +567,8 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
 
                 }else{
 
-                    if($_POST[$slug]){
-                        update_post_meta($post_id, $slug, $_POST[$slug]);
+                    if($POST[$slug]){
+                        update_post_meta($post_id, $slug, $POST[$slug]);
                     }else{
                         if(get_post_meta($post_id, $slug, 1)) delete_post_meta($post_id, $slug);
                     }
@@ -847,15 +847,18 @@ add_shortcode('rcl-box','rcl_box_shortcode');
 function rcl_box_shortcode($atts){
 	global $rcl_box;
 
-	$rcl_box = $atts;
+        $default = array(
+                        'type' => 'text',
+                        'content' => ''
+                    );
 
-	extract(shortcode_atts(array(
-		'type' => 'text',
-		'content' => ''
-	),
-	$atts));
+        $rcl_box = wp_parse_args( $atts, $default );
+
+        extract(shortcode_atts($default,$atts));
 
 	$html = '';
+
+        //print_r(wp_unslash($atts));exit;
 
         $clear_content = nl2br(strip_tags($content));
 

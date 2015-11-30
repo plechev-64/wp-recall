@@ -49,7 +49,10 @@ class Rcl_Blocks {
         $content .= '">';
         if($this->title) $content .= '<h4>'.$this->title.'</h4>';
         $content .= $cl_content;
-        if($this->gallery) $content .= '<script>jQuery("#'.$this->gallery.'").bxSlider({
+
+        if($this->gallery){
+
+            $content .= '<script>jQuery("#'.$this->gallery.'").bxSlider({
             pager:false,
             minSlides: 1,
             maxSlides: 20,
@@ -58,6 +61,8 @@ class Rcl_Blocks {
             slideMargin: 5,
             moveSlides:1
             });</script>';
+        }
+
         $content .= '</div>';
 
         return $content;
