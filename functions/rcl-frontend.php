@@ -43,7 +43,8 @@ function init_user_lk(){
 //добавляем уведомление в личном кабинете
 function rcl_notice_text($text,$type='warning'){
     if(is_admin())return false;
-    if (!class_exists('Rcl_Notify')) include_once plugin_dir_path( __FILE__ ).'functions/rcl_notify.php';
+    if (!class_exists('Rcl_Notify'))
+        include_once RCL_PATH.'functions/rcl_notify.php';
     $block = new Rcl_Notify($text,$type);
 }
 
