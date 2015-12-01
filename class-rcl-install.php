@@ -298,7 +298,7 @@ class RCL_Install {
             }
 
             /*Ниже функции модифицикации данных плагина при обновлении плагина с более ранних версий*/
-            //require_once('functions/migration.php');
+            require_once('functions/migration.php');
             //переименование temp-rcl на rcl-upload и данных юзеров использующих эту папку
             //rcl_rename_media_dir();
             //изменение путей до загруженных в качестве аватарок изображений

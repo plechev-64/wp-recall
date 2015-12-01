@@ -169,6 +169,7 @@ class Rcl_Feed{
         $ignored = array();
 
         $query['from'] = "$wpdb->posts AS posts";
+        $query['where'][] = "posts.post_status='publish'";
 
         $feeds = $wpdb->get_col("SELECT object_id FROM ".RCL_PREF."feeds WHERE user_id='$user_ID' AND feed_type='author' AND feed_status='1'");
 
@@ -185,7 +186,7 @@ class Rcl_Feed{
 
         $posts = apply_filters('rcl_feed_posts_array',$posts);
 
-        if($posts) $query['where'][] = "posts.ID IN (".implode(',',$posts).") AND posts.post_status='publish'";
+        if($posts) $query['where'][] = "posts.ID IN (".implode(',',$posts).")";
 
         $ignored = ($ignored)? array_unique(array_merge($ignored,array($user_ID))): array($user_ID);
 
