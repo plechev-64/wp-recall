@@ -168,10 +168,12 @@ function rcl_get_feed_excerpt($content){
     remove_filter('the_content','get_notifi_bkms',20);
     remove_filter('the_content','add_button_bmk_in_content',20);
 
-    $rcl_box = strpos($content, '[rcl-box');
+    /*$rcl_box = strpos($content, '[rcl-box');
     if($rcl_box!==false){
         $content = apply_filters('the_content',$content);
-    }
+    }*/
+
+    $content = apply_filters('the_content',$content);
 
     $content = strip_tags($content);
 

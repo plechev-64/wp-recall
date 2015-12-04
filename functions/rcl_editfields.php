@@ -285,7 +285,7 @@ class Rcl_EditFields {
 
     function delete($slug,$table){
         global $wpdb;
-        if($slug) $res = $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."$table WHERE meta_key = '%d' OR meta_key LIKE %s'",$slug,$slug.'%'));
+        if($slug) $res = $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."$table WHERE meta_key = '%s'",$slug));
         if($res) echo __('All values of a custom field with meta_key','wp-recall').' "'.$slug.'" '.__('were removed from the Database','wp-recall').'<br/>';
     }
 

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-11-28 11:42+0300\n"
+"POT-Creation-Date: 2015-12-03 10:23+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -36,39 +36,39 @@ msgstr "В ответ на"
 msgid "your comment"
 msgstr "ваш комментарий"
 
-#: add-on/feed/addon-core.php:180
+#: add-on/feed/addon-core.php:182
 msgid "Read more"
 msgstr "Читать полностью"
 
-#: add-on/feed/addon-core.php:235
+#: add-on/feed/addon-core.php:237
 msgid "Ignore the publication"
 msgstr "Игнорировать публикации"
 
-#: add-on/feed/addon-core.php:277
+#: add-on/feed/addon-core.php:279
 msgid "The subscription status changed"
 msgstr "Статус подписки изменен"
 
-#: add-on/feed/addon-core.php:278 add-on/feed/index.php:18
+#: add-on/feed/addon-core.php:280 add-on/feed/index.php:18
 #: add-on/feed/index.php:160
 msgid "Subscribe"
 msgstr "Подписаться"
 
-#: add-on/feed/addon-core.php:278 add-on/feed/index.php:16
+#: add-on/feed/addon-core.php:280 add-on/feed/index.php:16
 #: add-on/feed/index.php:147 add-on/feed/index.php:168
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
-#: add-on/feed/classes/class-rcl-feed.php:314
+#: add-on/feed/classes/class-rcl-feed.php:297
 msgid "News"
 msgstr "Новости"
 
-#: add-on/feed/classes/class-rcl-feed.php:315
+#: add-on/feed/classes/class-rcl-feed.php:298
 #: add-on/rating-system/index.php:32 functions/class-rcl-users.php:447
 #: functions/shortcodes.php:84
 msgid "Comments"
 msgstr "Комментарии"
 
-#: add-on/feed/classes/class-rcl-feed.php:316
+#: add-on/feed/classes/class-rcl-feed.php:299
 msgid "Answers"
 msgstr "Ответы"
 
@@ -136,32 +136,41 @@ msgstr "Сохранить изменения"
 msgid "Unused"
 msgstr "Неиспользуемые"
 
-#: add-on/groups/classes/rcl-groups.php:227
+#: add-on/groups/classes/rcl-groups.php:235
+msgid "Search groups"
+msgstr "Поиск групп"
+
+#: add-on/groups/classes/rcl-groups.php:237 add-on/groups/groups-init.php:14
+#: add-on/groups/groups-init.php:49 functions/shortcodes.php:146
+msgid "Search"
+msgstr "Поиск"
+
+#: add-on/groups/classes/rcl-groups.php:245
 msgid "Total groups"
 msgstr "Всего групп"
 
-#: add-on/groups/classes/rcl-groups.php:240
+#: add-on/groups/classes/rcl-groups.php:258
 #: add-on/publicpost/class_public.php:74 add-on/publicpost/fast-editor.php:104
 msgid "Name"
 msgstr "Имя"
 
-#: add-on/groups/classes/rcl-groups.php:241 add-on/publicpost/index.php:151
+#: add-on/groups/classes/rcl-groups.php:259 add-on/publicpost/index.php:151
 #: add-on/publicpost/templates/posts-list.php:6
 #: functions/rcl_editfields.php:151
 msgid "Date"
 msgstr "Дата"
 
-#: add-on/groups/classes/rcl-groups.php:242 functions/class-rcl-users.php:446
+#: add-on/groups/classes/rcl-groups.php:260 functions/class-rcl-users.php:446
 msgid "Publications"
 msgstr "Публикациям"
 
-#: add-on/groups/classes/rcl-groups.php:243
+#: add-on/groups/classes/rcl-groups.php:261
 #: add-on/groups/groups-widgets.php:105 add-on/groups/groups-widgets.php:128
 #: add-on/groups/templates/group-list.php:11 class-rcl-install.php:109
 msgid "Users"
 msgstr "Пользователи"
 
-#: add-on/groups/classes/rcl-groups.php:248 functions/class-rcl-users.php:456
+#: add-on/groups/classes/rcl-groups.php:266 functions/class-rcl-users.php:456
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -267,11 +276,6 @@ msgstr "Новый"
 #: add-on/groups/groups-init.php:13
 msgid "View"
 msgstr "Смотреть"
-
-#: add-on/groups/groups-init.php:14 add-on/groups/groups-init.php:49
-#: functions/shortcodes.php:146
-msgid "Search"
-msgstr "Поиск"
 
 #: add-on/groups/groups-init.php:15 add-on/publicpost/rcl_publicform.php:596
 msgid "Not found"
@@ -379,7 +383,7 @@ msgstr "Панель управления"
 #: add-on/groups/groups-widgets.php:25 add-on/groups/groups-widgets.php:131
 #: add-on/groups/groups-widgets.php:184 add-on/groups/groups-widgets.php:217
 #: add-on/groups/groups-widgets.php:297 add-on/groups/groups-widgets.php:388
-#: add-on/magazin/functions/shortcodes.php:118 add-on/publicpost/index.php:151
+#: add-on/magazin/functions/shortcodes.php:120 add-on/publicpost/index.php:151
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
 #: add-on/user-account/index.php:509 functions/rcl_editfields.php:117
@@ -563,9 +567,9 @@ msgstr "Выбрать изображение или загрузить"
 msgid "Settings Wp-Recall"
 msgstr "Настройки Wp-Recall"
 
-#: add-on/magazin/functions/shortcodes.php:86
 #: add-on/magazin/functions/shortcodes.php:88
-#: add-on/magazin/functions/shortcodes.php:115
+#: add-on/magazin/functions/shortcodes.php:90
+#: add-on/magazin/functions/shortcodes.php:117
 msgid "Cart"
 msgstr "Корзина"
 
@@ -1001,8 +1005,8 @@ msgstr "Отображать панель администратора на са
 #: add-on/profile/index.php:306 add-on/profile/index.php:688
 #: functions/loginform.php:49 functions/loginform.php:57
 #: functions/loginform.php:73 templates/form-sign.php:31
-#: templates/recallbar.php:30 templates/recallbar.php:38
-#: templates/recallbar.php:46
+#: templates/recallbar.php:28 templates/recallbar.php:35
+#: templates/recallbar.php:43
 msgid "Login"
 msgstr "Вход"
 
@@ -1559,12 +1563,12 @@ msgstr "главное"
 msgid "The publication has been successfully removed!"
 msgstr "Публикация была успешно удалена!"
 
-#: add-on/publicpost/index.php:779 add-on/publicpost/rcl_publicform.php:138
-#: functions/rcl_custom_fields.php:271
+#: add-on/publicpost/index.php:782 add-on/publicpost/rcl_publicform.php:138
+#: functions/rcl_custom_fields.php:277
 msgid "To publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/index.php:839
+#: add-on/publicpost/index.php:842
 msgid "To add a media file"
 msgstr "Добавить медиафайл"
 
@@ -1572,11 +1576,11 @@ msgstr "Добавить медиафайл"
 msgid "Error publishing!"
 msgstr "Ошибка публикации!"
 
-#: add-on/publicpost/rcl_postlist.php:98
+#: add-on/publicpost/rcl_postlist.php:100
 msgid "has not yet been published"
 msgstr "пока не было опубликовано"
 
-#: add-on/publicpost/rcl_postlist.php:107
+#: add-on/publicpost/rcl_postlist.php:109
 msgid "Published"
 msgstr "Опубликованные"
 
@@ -2108,14 +2112,14 @@ msgstr "Другие платежи"
 #: add-on/user-account/gateways/interkassa.php:82
 #: add-on/user-account/gateways/robokassa.php:108
 #: add-on/user-account/gateways/yandexkassa.php:60
-#: add-on/user-account/rcl_payment.php:123
+#: add-on/user-account/rcl_payment.php:127
 msgid "Confirm the operation"
 msgstr "Подтвердить операцию"
 
 #: add-on/user-account/gateways/interkassa.php:82
 #: add-on/user-account/gateways/robokassa.php:108
 #: add-on/user-account/gateways/yandexkassa.php:60
-#: add-on/user-account/rcl_payment.php:123
+#: add-on/user-account/rcl_payment.php:127
 msgid "Pay through payment system"
 msgstr "Оплатить через платежные системы"
 
@@ -2240,7 +2244,7 @@ msgstr "Личный счет пользователя"
 msgid "Personal account"
 msgstr "Личный счет"
 
-#: add-on/user-account/rcl_payment.php:132
+#: add-on/user-account/rcl_payment.php:136
 msgid "Pay personal account"
 msgstr "Оплатить с личного счета"
 
@@ -2303,23 +2307,23 @@ msgstr "В личный кабинет"
 msgid "Exit"
 msgstr "Выход"
 
-#: functions/rcl-frontend.php:77
+#: functions/rcl-frontend.php:72
 msgid "The site works using the functionality of the plugin"
 msgstr "Сайт использует функционал плагина"
 
-#: functions/rcl-frontend.php:84
+#: functions/rcl-frontend.php:79
 msgid "Author of publication"
 msgstr "Автор публикации"
 
-#: functions/rcl-frontend.php:151
+#: functions/rcl-frontend.php:146
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: functions/rcl-frontend.php:158
+#: functions/rcl-frontend.php:153
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
-#: functions/rcl-frontend.php:210 functions/shortcodes.php:101
+#: functions/rcl-frontend.php:205 functions/shortcodes.php:101
 msgid "not online"
 msgstr "не в сети"
 
@@ -2481,16 +2485,16 @@ msgstr "Макс. размер"
 msgid "Download file"
 msgstr "Загрузить файл"
 
-#: functions/rcl_custom_fields.php:278 functions/rcl_custom_fields.php:296
+#: functions/rcl_custom_fields.php:284 functions/rcl_custom_fields.php:302
 msgid "File size exceeded!"
 msgstr "Размер файла превышен!"
 
-#: functions/rcl_custom_fields.php:401 functions/rcl_custom_fields.php:426
-#: functions/rcl_custom_fields.php:450
+#: functions/rcl_custom_fields.php:407 functions/rcl_custom_fields.php:432
+#: functions/rcl_custom_fields.php:456
 msgid "File does not exist on the server!"
 msgstr "Файл не найден на сервере!"
 
-#: functions/rcl_custom_fields.php:469
+#: functions/rcl_custom_fields.php:475
 msgid "File has deleted"
 msgstr "Файл был удален"
 
@@ -3025,16 +3029,16 @@ msgstr "Сортируйте вкладки перетаскиванием"
 msgid "Name tab"
 msgstr "Имя вкладки"
 
-#: rcl-functions.php:192
+#: rcl-functions.php:196
 msgid "Error! Perhaps this addition does not support ajax loading"
 msgstr "Ошибка! Данное дополнениене поддерживает ajax-загрузку"
 
-#: rcl-functions.php:647
+#: rcl-functions.php:651
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Это сообщение было сформировано автоматически, не надо отвечать на него."
 
-#: rcl-functions.php:689
+#: rcl-functions.php:713
 msgid "long ago"
 msgstr "давно"
 
@@ -3094,9 +3098,9 @@ msgstr "Запомнить"
 msgid "Forgot your password"
 msgstr "Напомнить пароль"
 
-#: templates/recallbar.php:10 templates/recallbar.php:18
-#: templates/recallbar.php:28 templates/recallbar.php:34
-#: templates/recallbar.php:41 templates/recallbar.php:44
+#: templates/recallbar.php:10 templates/recallbar.php:17
+#: templates/recallbar.php:26 templates/recallbar.php:31
+#: templates/recallbar.php:38 templates/recallbar.php:41
 msgid "Home"
 msgstr "Домой"
 
@@ -3104,16 +3108,16 @@ msgstr "Домой"
 msgid "Dashboard"
 msgstr "Консоль"
 
-#: templates/recallbar.php:12 templates/recallbar.php:19
+#: templates/recallbar.php:12 templates/recallbar.php:18
 msgid "Personal cabinet"
 msgstr "Личный кабинет"
 
-#: templates/recallbar.php:13 templates/recallbar.php:20
+#: templates/recallbar.php:13 templates/recallbar.php:19
 msgid "Log Out"
 msgstr "Выйти"
 
-#: templates/recallbar.php:29 templates/recallbar.php:36
-#: templates/recallbar.php:45
+#: templates/recallbar.php:27 templates/recallbar.php:33
+#: templates/recallbar.php:42
 msgid "Register"
 msgstr "Регистрация"
 

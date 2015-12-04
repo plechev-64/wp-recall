@@ -51,9 +51,9 @@ function rcl_saveform_data_script($content,$data){
     return $content;
 }
 
-if(!is_admin()) add_action('init','rcl_add_postlist_posts');
+add_action('init','rcl_add_postlist_posts');
 function rcl_add_postlist_posts(){
-    rcl_postlist('wp-recall','post',__('Records','wp-recall'),array('order'=>30));
+    rcl_postlist('posts','post',__('Records','wp-recall'),array('order'=>30));
 }
 
 add_action('init','rcl_init_publics_block');
@@ -1205,24 +1205,25 @@ function rcl_public_file_scripts($script){
 
 		jQuery('#lk-content').on('click','#tab-publics .sec_block_button',function(){
 			var btn = jQuery(this);
-			get_page_content_rcl(btn,'posts_rcl_block');
+			get_page_content_rcl(btn,'posts_posts_block');
 			return false;
 		});
 
-	function get_page_content_rcl(btn,id_page_rcl){
+	function get_page_content_rcl(btn){
 			if(btn.hasClass('active'))return false;
 			rcl_preloader_show('#tab-publics');
+                        var id = btn.parents('.recall_child_content_block').attr('id');
 			var start = btn.attr('data');
 			var type = btn.attr('type');
 			var id_user = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
-			jQuery('.'+id_page_rcl+' .sec_block_button').removeClass('active');
+			jQuery('.'+id+' .sec_block_button').removeClass('active');
 			btn.addClass('active');
 			var dataString = 'action=rcl_posts_list&start='+start+'&type='+type+'&id_user='+id_user;
 			jQuery.ajax({
 				".$ajaxdata."
 				success: function(data){
 					if(data['recall']==100){
-						jQuery('.'+id_page_rcl+' .publics-table-rcl').html(data['post_content']);
+						jQuery('#'+id+' .publics-table-rcl').html(data['post_content']);
 					} else {
 						alert('Error');
 					}

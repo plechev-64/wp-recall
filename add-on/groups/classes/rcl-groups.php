@@ -16,6 +16,7 @@ class Rcl_Groups {
     public $query_count = false;
     public $users_count = 0;
     public $data;
+    public $like = false;
     public $user_id;
     public $add_uri;
     public $relation = 'AND';
@@ -29,8 +30,12 @@ class Rcl_Groups {
         }
 
         if(isset($_GET['groups-filter'])&&$this->filters) $this->orderby = $_GET['groups-filter'];
+        if(isset($_GET['group-name'])) $this->like = $_GET['group-name'];
 
         $this->add_uri['groups-filter'] = $this->orderby;
+
+        if($this->like)
+            add_filter('rcl_groups_query',array($this,'add_query_like'));
 
         if($this->user_id)
             add_filter('rcl_groups_query',array($this,'add_query_user_id'));
@@ -151,6 +156,11 @@ class Rcl_Groups {
 
     }
 
+    function add_query_like($query){
+        $query['where'][] = "terms.name LIKE '%$this->like%'";
+        return $query;
+    }
+
     function add_query_user_id($query){
 
         if($this->query_count){
@@ -193,7 +203,7 @@ class Rcl_Groups {
 
         $rqst = '';
 
-        if(isset($_GET['search-groups'])||$user_LK){
+        if(isset($_GET['group-name'])||$user_LK){
             $rqst = array();
             foreach($_GET as $k=>$v){
                 if($k=='navi'||$k=='groups-filter') continue;
@@ -218,7 +228,15 @@ class Rcl_Groups {
 
         if(!$this->filters) return false;
 
-        $content = '';
+        $search_text = ((isset($_GET['group-name'])))? $_GET['group-name']: '';
+
+	$content ='<div class="rcl-search-form">
+                <form method="get" action="">
+                    <p>'.__('Search groups','wp-recall').'</p>
+                    <input type="text" name="group-name" value="'.$search_text.'">
+                    <input type="submit" class="recall-button" value="'.__('Search','wp-recall').'">
+                </form>
+            </div>';
 
         if($this->search_form) $content = apply_filters('rcl_groups_search_form',$content);
 

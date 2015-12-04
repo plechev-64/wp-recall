@@ -423,15 +423,15 @@ span.ruble-symbol{
     
 	max-height: 25px;
 }
-.rcl-search-users{
+.rcl-search-form{
 
 }
-.rcl-search-users p{
+.rcl-search-form p{
     margin-bottom: 10px;
 
 }
-.rcl-search-users input,
-.rcl-search-users select{
+.rcl-search-form input,
+.rcl-search-form select{
     display: inline-block;
     width: auto;
     padding: 5px;
@@ -440,15 +440,12 @@ span.ruble-symbol{
     font-size: 14px;
     height: auto;
 }
-.rcl-search-users input[type="submit"]{
+.rcl-search-form input[type="submit"]{
     padding: 10px;
-
     font-size: 12px;
 }
-.rcl-search-users{
+.rcl-search-form{
     text-align: right;
-
-    
     clear: both;
     margin-bottom: 10px;
 }

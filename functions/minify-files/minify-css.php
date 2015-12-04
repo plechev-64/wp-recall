@@ -31,7 +31,8 @@ function rcl_enqueue_style($id,$path){
 }
 
 function rcl_minify_style(){
-    global $rcl_options;
+    global $rcl_options,$wp_scripts;
+    //print_r($wp_scripts->registered);exit;
     if(!isset($rcl_options['minify_css'])||$rcl_options['minify_css']!=1) return false;
 
     $css_dir = RCL_PATH.'css/';

@@ -135,7 +135,7 @@ function rcl_default_search_form($form){
         $search_text = ((isset($_GET['search_text'])))? $_GET['search_text']: '';
         $search_field = (isset($_GET['search_field']))? $_GET['search_field']: '';
 
-	$form .='<div class="rcl-search-users">
+	$form .='<div class="rcl-search-form">
                 <form method="get" action="">
                     <p>'.__('Search users','wp-recall').'</p>
                     <input type="text" name="search_text" value="'.$search_text.'">

@@ -1,5 +1,5 @@
 Name: Feed Wp-Recall (Подписки);
-Version: 2.0.1;
+Version: 2.0.2;
 Support Core: 13.7.0;
 Description: Формирование и вывод новостной ленты пользователя;
 Author: Плечев Андрей;

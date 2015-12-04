@@ -679,6 +679,26 @@ function rcl_get_usernames($objects,$name_data){
 	return $names;
 }
 
+/*function rcl_get_data($array,$args){
+
+    $search_field = $args['search'];
+    $search_by = $args['by'];
+    $table = $args['table'];
+    $unique_key = $args['key'];
+
+    if(!$array||!$args) return false;
+
+    foreach((array)$array as $object){ $search_data[] = $object->$search_by; }
+
+    $datas = $wpdb->get_results($wpdb->prepare("SELECT $unique_key,$search_field FROM ".$wpdb->prefix."users WHERE $unique_key IN (".rcl_format_in($search_data).")",$search_data));
+
+    foreach((array)$datas as $data){
+            $result[$data->$unique_key] = $data->$search_field;
+    }
+
+    return $result;
+}*/
+
 function rcl_get_useraction($user_action=false){
 	global $rcl_options,$rcl_userlk_action;
 

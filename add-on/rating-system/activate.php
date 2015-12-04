@@ -29,17 +29,17 @@ if($wpdb->get_var("show tables like '". $table . "'") != $table) {
 $table = RCL_PREF."rating_users";
 if($wpdb->get_var("show tables like '". $table . "'") != $table) {
 	   $wpdb->query("CREATE TABLE IF NOT EXISTS `". $table . "` (
-	  ID bigint (20) NOT NULL AUTO_INCREMENT,
 	  user_id INT(20) NOT NULL,
 	  rating_total VARCHAR(10) NOT NULL,
-	  UNIQUE KEY id (id)
+	  UNIQUE KEY id (user_id)
 	) DEFAULT CHARSET=utf8;");
 
 }
 
 $table = RCL_PREF."rayting_post";
 if($wpdb->get_var("show tables like '". $table . "'") == $table) {
-	rcl_update_rating_data();
+    include_once 'migration.php';
+    rcl_update_rating_data();
 }
 
 global $rcl_options;

@@ -2,13 +2,12 @@
 
 class Rcl_Postlist {
 
-    public $id;
     public $name;
+    public $id;
     public $posttype;
     public $start;
 
     /**
-     * @param $id
      * @param $posttype
      * @param $name
      * @param array $args
@@ -41,7 +40,10 @@ class Rcl_Postlist {
     function add_postlist_block($posts_block,$author_lk){
             if(!isset($posts_block)||!$posts_block) $status = 'active';
             else $status = '';
-            $posts_block .= '<div class="posts_'.$this->id.'_block recall_child_content_block '.$status.'">';
+
+            $id = 'posts_'.$this->id.'_block';
+
+            $posts_block .= '<div id="'.$id.'" class="'.$id.' recall_child_content_block '.$status.'">';
             $posts_block .= $this->get_postslist($author_lk);
             $posts_block .= '</div>';
             return $posts_block;
@@ -122,6 +124,7 @@ class Rcl_Postlist {
 	$list = $this->get_postslist_table( $author_lk );
 
 	$log['post_content']=$list;
+        $log['post_content']=$list;
 	$log['recall']=100;
 
 	echo json_encode($log);
