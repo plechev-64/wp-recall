@@ -11,8 +11,12 @@ function rcl_recallbar_rightside(){
     echo apply_filters('recallbar_right_content',$right_li);
 }
 
-add_filter('recallbar_right_content','rcl_get_modified_bookmarks',20);
+add_filter('recallbar_right_content','rcl_get_modified_bookmarks',10);
 function rcl_get_modified_bookmarks($links){ // добавил span вокруг текста. Мог и регуляркой, но при изменении чего - она поломается
+    global $active_addons,$user_ID;
+
+    if(isset($active_addons['bookmarks'])&&$user_ID) return $links;
+
     $links = '<li><a onclick="addfav()" href="javascript://">
                 <i class="fa fa-plus"></i><span>'.__('In bookmarks','wp-recall').'</span></a>
             </li>

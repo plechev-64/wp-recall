@@ -4,7 +4,10 @@ rcl_enqueue_style('rmag',__FILE__);
 function rmag_global_unit(){
     if(defined('RMAG_PREF')) return false;
     global $wpdb,$rmag_options,$user_ID;
-    if(!$_SESSION['return_'.$user_ID]) $_SESSION['return_'.$user_ID] = $_SERVER['HTTP_REFERER'];
+
+    if(!isset($_SESSION['return_'.$user_ID]))
+            $_SESSION['return_'.$user_ID] = $_SERVER['HTTP_REFERER'];
+    
     $rmag_options = get_option('primary-rmag-options');
     define('RMAG_PREF', $wpdb->prefix."rmag_");
 }

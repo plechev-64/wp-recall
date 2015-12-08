@@ -52,7 +52,7 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_url($field){
-        return '<input type="url" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="url" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" value="'.$this->value.'"/>';
     }
 
     function get_type_date($field){

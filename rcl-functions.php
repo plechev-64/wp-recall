@@ -252,8 +252,9 @@ function rcl_admin_access(){
         get_currentuserinfo();
         $access = 7;
         if(isset($rcl_options['consol_access_rcl'])) $access = $rcl_options['consol_access_rcl'];
-        $user_info = get_userdata($current_user->ID);
-        if ( $user_info->user_level < $access ){
+        //$user_info = get_userdata($current_user->ID);
+        //print_r($user_info->user_level);exit;
+        if ( $current_user->user_level < $access ){
             if(intval($_POST['short'])==1||intval($_POST['fetch'])==1){
                     return true;
             }else{
@@ -397,37 +398,34 @@ if(!function_exists('sanitize_title_with_translit'))
 
 
 function rcl_get_postmeta($post_id){
-    if($post_id){
-        $post = get_post($post_id);
-        $posttype = $post->post_type;
-    }
 
-    switch($posttype){
+    $post = get_post($post_id);
+
+    switch($post->post_type){
             case 'post':
-                    if($post) $id_form = get_post_meta($post->ID,'publicform-id',1);
-                    if(!$id_form) $id_form = 1;
-                    $id_field = 'custom_public_fields_'.$id_form;
+                $id_form = ($post)?  get_post_meta($post->ID,'publicform-id',1): 1;
+                $id_field = 'custom_public_fields_'.$id_form;
             break;
             case 'products': $id_field = 'custom_saleform_fields'; break;
-            default: $id_field = 'custom_fields_'.$posttype;
+            default: $id_field = 'custom_fields_'.$post->post_type;
     }
 
     $get_fields = get_option($id_field);
 
     if(!$get_fields) return false;
 
-    if($get_fields){
+    $show_custom_field = '';
 
-        $cf = new Rcl_Custom_Fields();
+    $cf = new Rcl_Custom_Fields();
 
-        foreach((array)$get_fields as $custom_field){
-            $slug = $custom_field['slug'];
-            $value = get_post_meta($post_id,$slug,1);
-            $show_custom_field .= $cf->get_field_value($custom_field,$value);
-        }
-
-        return $show_custom_field;
+    foreach((array)$get_fields as $custom_field){
+        $slug = $custom_field['slug'];
+        $value = get_post_meta($post_id,$slug,1);
+        $show_custom_field .= $cf->get_field_value($custom_field,$value);
     }
+
+    return $show_custom_field;
+
 }
 
 add_filter('author_link','rcl_author_link',999,2);

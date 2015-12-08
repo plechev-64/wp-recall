@@ -15,7 +15,7 @@ function rcl_get_show_profile_fields($author_lk){
 	return apply_filters('show_profile_fields_rcl',$profile_fields,$author_lk);
 }
 
-add_action('wp','rcl_update_profile_notice');
+if(!is_admin()) add_action('wp','rcl_update_profile_notice');
 function rcl_update_profile_notice(){
     if (isset($_GET['updated'])) rcl_notice_text(__('Your profile was updated','wp-recall'),'success');
 }
@@ -197,7 +197,7 @@ function rcl_button_avatar_upload($content,$author_lk){
 	if($user_ID!=$author_lk) return $content;
 
 	if($avatar){
-            $content .= '<a title="'.__('Delete avatar','wp-recall').'" class="rcl-avatar-delete" href="'.wp_nonce_url( rcl_format_url(rcl_get_current_url()).'rcl-action=delete_avatar', $user_ID ).'"><i class="fa fa-times"></i></a>';
+            $content .= '<a title="'.__('Delete avatar','wp-recall').'" class="rcl-avatar-delete" href="'.wp_nonce_url( rcl_format_url(get_author_posts_url($author_lk)).'rcl-action=delete_avatar', $user_ID ).'"><i class="fa fa-times"></i></a>';
 	}
 
 	$content .= '

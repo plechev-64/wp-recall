@@ -267,7 +267,7 @@ add_filter('rating_block_content','rcl_add_buttons_rating',10,3);
 function rcl_add_buttons_rating($content,$args){
 	global $user_ID;
 	if(doing_filter('the_excerpt')) return $content;
-	if(is_front_page()||$user_ID==$args['object_author']) return $content;
+	if(is_front_page()||!$args['object_author']||$user_ID==$args['object_author']) return $content;
 	$content .= rcl_get_buttons_rating($args);
 	return $content;
 }
@@ -275,7 +275,7 @@ function rcl_add_buttons_rating($content,$args){
 function rcl_get_buttons_rating($args){
     global $user_ID,$rating_value,$rcl_options;
 
-    if(!$user_ID) return $block;
+    if(!$user_ID) return false;
 
     $args['user_id'] = $user_ID;
 

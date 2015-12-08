@@ -188,6 +188,8 @@ class Rcl_Feed{
 
         if($posts) $query['where'][] = "posts.ID IN (".implode(',',$posts).")";
 
+        $query['where'][] = "posts.post_type NOT IN ('page','nav_menu_item')";
+
         $ignored = ($ignored)? array_unique(array_merge($ignored,array($user_ID))): array($user_ID);
 
         //print_r($ignored);exit;
