@@ -167,13 +167,14 @@ class Rcl_EditPost {
         global $rcl_options,$user_ID;
 
         $post_content = '';
+        $post_excerpt = (isset($_POST['post_excerpt']))? $_POST['post_excerpt']: '';
 
         if(!is_array($_POST['post_content'])) $post_content = $_POST['post_content'];
 
         $postdata = array(
             'post_type'=>$this->post_type,
             'post_title'=>sanitize_text_field($_POST['post_title']),
-            'post_excerpt'=>$_POST['post_excerpt'],
+            'post_excerpt'=> $post_excerpt,
             'post_content'=> $post_content
         );
 
