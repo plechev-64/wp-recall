@@ -7,7 +7,7 @@
 
     <form action="<?php rcl_form_action('login'); ?>" method="post">
         <div class="form-block-rcl">
-            <label><?php _e('Nickname','wp-recall'); ?> <span class="required">*</span></label>
+            <label><?php _e('Login','wp-recall'); ?> <span class="required">*</span></label>
             <div class="default-field">
                 <span class="field-icon"><i class="fa fa-user"></i></span>
                 <input required type="text" value="" name="user_login">
@@ -28,7 +28,7 @@
         </div>
 
         <div class="input-container">
-            <input type="submit" class="recall-button link-tab-form" name="submit-login" value="<?php _e('Login','wp-recall'); ?>">
+            <input type="submit" class="recall-button link-tab-form" name="submit-login" value="<?php _e('Entry','wp-recall'); ?>">
 
             <?php if(!$typeform){ ?><a href="#" class="link-register-rcl link-tab-rcl "><i class="fa fa-reply-all"></i><?php _e('Registration','wp-recall'); ?></a><?php } ?>
 

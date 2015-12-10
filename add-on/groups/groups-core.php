@@ -752,15 +752,15 @@ function rcl_edit_group_pre_get_posts($query){
 
             if($rcl_group->admin_id==$user_ID) return $query;
 
-            if($rcl_group->group_status=='closed'){
+            if(!$rcl_group->current_user&&$user_ID) $in_group = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
+            else $in_group = $rcl_group->current_user;
 
-                if(!$rcl_group->current_user&&$user_ID) $in_group = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
-                else $in_group = $rcl_group->current_user;
+            if($rcl_group->group_status=='closed'){
 
                 if(!$in_group||$in_group=='banned'){
                         if($query->is_single){
                             global $comments_array;
-                            //print_r($comments_array);
+
                             add_filter('the_content','rcl_close_group_post_content');
                             add_filter('the_content','rcl_get_link_group_tag',80);
                             add_filter('the_content','rcl_add_namegroup',80);
@@ -772,6 +772,13 @@ function rcl_edit_group_pre_get_posts($query){
                         }
                 }else{
 
+                }
+            }else{
+                if($in_group=='banned'){
+                    if($query->is_single){
+                        add_filter( 'comments_open', 'rcl_close_group_comments', 10 );
+                        remove_filter('rating_block_content','rcl_add_buttons_rating',10);
+                    }
                 }
             }
 	}

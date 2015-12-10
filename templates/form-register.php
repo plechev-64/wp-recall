@@ -7,7 +7,7 @@ $f_reg = ($typeform=='register')? 'style="display:block;"': ''; ?>
 
     <form action="<?php rcl_form_action('register'); ?>" method="post" enctype="multipart/form-data">
         <div class="form-block-rcl">
-            <label><?php _e('Nickname','wp-recall'); ?> <span class="required">*</span></label>
+            <label><?php _e('Login','wp-recall'); ?> <span class="required">*</span></label>
             <div class="default-field">
                 <span class="field-icon"><i class="fa fa-user"></i></span>
                 <input required type="text" value="" name="user_login" id="login-user">

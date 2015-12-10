@@ -25,14 +25,14 @@
 			$page_in_out = rcl_format_url(get_permalink($rcl_options['page_login_form_recall'])); // страница с формой входа-регистрации
 			echo '<li><a href="/"><i class="fa fa-home"></i><span>' . __('Home') . '</span></a></li>'
 					. '<li><a href="' . $page_in_out . 'action-rcl=register"><i class="fa fa-book"></i><span>' . __('Register') . '</span></a></li>'
-					. '<li><a href="' . $page_in_out . 'action-rcl=login"><i class="fa fa-sign-in"></i><span>' . __('Login','wp-recall') . '</span></a></li>';
+					. '<li><a href="' . $page_in_out . 'action-rcl=login"><i class="fa fa-sign-in"></i><span>' . __('Entry','wp-recall') . '</span></a></li>';
 		}
 		else if($rcl_options['login_form_recall']==2){ // Формы Wordpress
 			echo '<li><a href="/"><i class="fa fa-home"></i><span>' . __('Home') . '</span></a></li>';
 			if (get_option('users_can_register') ) { // если в настройках вордпресса разрешена регистрация - выводим
 				echo '<li><a href="' . esc_url(wp_registration_url()) . '"><i class="fa fa-book"></i><span>' . __('Register') . '</span></a></li>';
 			}
-			echo '<li><a href="' . esc_url(wp_login_url('/')) . '"><i class="fa fa-sign-in"></i><span>' . __('Login','wp-recall') . '</span></a></li>';
+			echo '<li><a href="' . esc_url(wp_login_url('/')) . '"><i class="fa fa-sign-in"></i><span>' . __('Entry','wp-recall') . '</span></a></li>';
 		}
 		else if($rcl_options['login_form_recall']==3){ // Форма в виджете
 			echo '<li><a href="/"><i class="fa fa-home"></i><span>' . __('Home') . '</span></a></li>';
@@ -40,7 +40,7 @@
 		else if(!$rcl_options['login_form_recall']){ //  Всплывающая форма
 			echo '<li><a href="/"><i class="fa fa-home"></i><span>' . __('Home') . '</span></a></li>'
 					. '<li><a href="#" class="rcl-register"><i class="fa fa-book"></i><span>' . __('Register') . '</span></a></li>'
-					. '<li><a href="#" class="rcl-login"><i class="fa fa-sign-in"></i><span>' . __('Login','wp-recall') . '</span></a></li>';
+					. '<li><a href="#" class="rcl-login"><i class="fa fa-sign-in"></i><span>' . __('Entry','wp-recall') . '</span></a></li>';
 		}
 	} ?>
 	</ul>

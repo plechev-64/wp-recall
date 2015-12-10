@@ -213,7 +213,7 @@ function rcl_register_mail($userdata){
     $subject = __('Confirm your registration!','wp-recall');
     $textmail = '
     <p>'.__('You or someone else signed up on the website','wp-recall').' "'.get_bloginfo('name').'" '.__('with the following data:','wp-recall').'</p>
-    <p>'.__('Nickname','wp-recall').': '.$userdata['user_login'].'</p>
+    <p>'.__('Login','wp-recall').': '.$userdata['user_login'].'</p>
     <p>'.__('Password','wp-recall').': '.$userdata['user_pass'].'</p>';
 
     if($rcl_options['confirm_register_recall']==1){

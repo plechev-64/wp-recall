@@ -183,6 +183,18 @@ function rcl_format_url($url,$id_tab=null){
 	return $url;
 }
 
+if (! function_exists('get_called_class')) :
+    function get_called_class()
+    {
+        $traces = debug_backtrace();
+        foreach ($traces as $trace) :
+            if (! isset($trace['class']))
+                continue;
+            return $trace['class'];
+        endforeach;
+    }
+endif;
+
 add_action('wp_ajax_rcl_ajax_tab', 'rcl_ajax_tab');
 add_action('wp_ajax_nopriv_rcl_ajax_tab', 'rcl_ajax_tab');
 function rcl_ajax_tab(){
@@ -310,10 +322,13 @@ function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
 
             if(is_numeric($avatar_data)){
                     $image_attributes = wp_get_attachment_image_src($avatar_data);
-                    if($image_attributes) $avatar = "<img class='avatar' src='".$image_attributes[0]."' alt='".$alt."' height='".$size."' width='".$size."' />";
+                    if($image_attributes) $url = $image_attributes[0];
             }else if(is_string($avatar_data)){
-                    $avatar_data = rcl_get_url_avatar($avatar_data,$user_id,$size);
-                    $avatar = "<img class='avatar' src='".$avatar_data."' alt='".$alt."' height='".$size."' width='".$size."' />";
+                    $url = rcl_get_url_avatar($avatar_data,$user_id,$size);
+            }
+
+            if($url&&file_exists(rcl_path_by_url($url))){
+                $avatar = "<img class='avatar' src='".$url."' alt='".$alt."' height='".$size."' width='".$size."' />";
             }
 
         }

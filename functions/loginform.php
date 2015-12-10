@@ -46,7 +46,7 @@ function rcl_get_authorize_form($type=false,$form=false){
 
                         echo '<div class="buttons">';
 
-                            $buttons = '<p>'.rcl_get_button(__('Login','wp-recall'),$redirect_url.'action-rcl=login',array('icon'=>'fa-sign-in')).'</p>
+                            $buttons = '<p>'.rcl_get_button(__('Entry','wp-recall'),$redirect_url.'action-rcl=login',array('icon'=>'fa-sign-in')).'</p>
                             <p>'.rcl_get_button(__('Registration','wp-recall'),$redirect_url.'action-rcl=register',array('icon'=>'fa-book')).'</p>';
                             echo apply_filters('buttons_widget_rcl',$buttons);
 
@@ -54,7 +54,7 @@ function rcl_get_authorize_form($type=false,$form=false){
 
                     }else if($login_form==2){
                         echo '<div class="buttons">';
-                            $buttons = '<p>'.rcl_get_button(__('Login','wp-recall'),esc_url(wp_login_url('/')),array('icon'=>'fa-sign-in')).'</p>
+                            $buttons = '<p>'.rcl_get_button(__('Entry','wp-recall'),esc_url(wp_login_url('/')),array('icon'=>'fa-sign-in')).'</p>
                             <p>'.rcl_get_button(__('Registration','wp-recall'),esc_url(wp_registration_url()),array('icon'=>'fa-book')).'</p>';
                             echo apply_filters('buttons_widget_rcl',$buttons);
                         echo '</div>';
@@ -70,7 +70,7 @@ function rcl_get_authorize_form($type=false,$form=false){
                         }
                     }else if(!$login_form){
                         echo '<div class="buttons">';
-                                $buttons = '<p>'.rcl_get_button(__('Login','wp-recall'),'#',array('icon'=>'fa-sign-in','class'=>'rcl-login')).'</p>
+                                $buttons = '<p>'.rcl_get_button(__('Entry','wp-recall'),'#',array('icon'=>'fa-sign-in','class'=>'rcl-login')).'</p>
                                 <p>'.rcl_get_button(__('Registration','wp-recall'),'#',array('icon'=>'fa-book','class'=>'rcl-register')).'</p>';
                                 echo apply_filters('buttons_widget_rcl',$buttons);
                         echo '</div>';

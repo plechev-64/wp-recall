@@ -268,7 +268,7 @@ function rcl_tab_profile_content($author_lk){
 			case 'user_login': $select_login = 'checked="checked"'; break;
 			case 'first_name': $select_first = 'checked="checked"'; break;
 			case 'last_name': $select_last = 'checked="checked"'; break;
-			case 'nickname': $select_nickname = 'checked="checked"'; break;
+			//case 'nickname': $select_nickname = 'checked="checked"'; break;
 			case 'display_name': $select_display = 'checked="checked"'; break;
 			//case 'email': $select_email = 'checked="checked"'; break;
 			case 'url': $select_url = 'checked="checked"'; break;
@@ -301,6 +301,16 @@ function rcl_tab_profile_content($author_lk){
 		</tr>';
 	}
 
+        $profile_block .= '<tr>
+        <th><label for="nickname">'.__('Nickname','wp-recall').' ('.__('required','wp-recall').'):</label></th>
+        <td><input type="text" name="nickname" required class="regular-text" id="nickname" value="'.esc_attr( $userdata->nickname ).'" maxlength="100" /></td>
+        </tr>';
+
+        $profile_block .= '<tr>
+        <th><label for="email">'.__('E-mail','wp-recall').' ('.__('required','wp-recall').'):</label></th>
+        <td><input type="text" name="email" class="regular-text" id="email" required value="'.esc_attr($userdata->user_email).'" maxlength="100" /></td>
+        </tr>';
+
 	if(isset($select_login)){
 		$profile_block .= '<tr>
 		<th><label for="user_login">'.__('Login','wp-recall').':</label></th>
@@ -319,12 +329,7 @@ function rcl_tab_profile_content($author_lk){
 		<td><input type="text" name="last_name" class="regular-text" id="last_name" value="'.esc_attr( $userdata->last_name ).'" maxlength="100" /></td>
 		</tr>';
 	}
-	if(isset($select_nickname)){
-		$profile_block .= '<tr>
-		<th><label for="nickname">'.__('Nickname','wp-recall').':</label></th>
-		<td><input type="text" name="nickname" class="regular-text" id="nickname" value="'.esc_attr( $userdata->nickname ).'" maxlength="100" /></td>
-		</tr>';
-	}
+
 	if(isset($select_display)){
 		$profile_block .= '<tr>
 		<th><label for="display_name">'.__('Display name','wp-recall').':</label></th>
@@ -387,11 +392,6 @@ function rcl_tab_profile_content($author_lk){
 		});
 		} ) ( jQuery );
 	</script>";
-
-		$profile_block .= '<tr>
-		<th><label for="email">'.__('E-mail','wp-recall').':</label></th>
-		<td><input type="text" name="email" class="regular-text" id="email" required value="'.esc_attr($userdata->user_email).'" maxlength="100" /></td>
-		</tr>';
 
 	if(isset($select_url)){
 		$profile_block .= '<tr>
@@ -705,25 +705,11 @@ function rcl_get_default_fields_profile() {
 			'desc' => __('Surname user','wp-recall')
 		),
 		array(
-			'id' => 'nickname',
-			'label' => __('Nickname','wp-recall'),
-			'type' => 'checkbox',
-			'std' => 'no',
-			'desc' => __('Nickname user','wp-recall')
-		),
-		array(
 			'id' => 'display_name',
 			'label' => __('Display name','wp-recall'),
 			'type' => 'checkbox',
 			'std' => 'no',
 			'desc' => __('Display name user','wp-recall')
-		),
-		array(
-			'id' => 'email',
-			'label' => __('Емейл (be sure)','wp-recall'),
-			'type' => 'checkbox',
-			'std' => 'no',
-			'desc' => __('Емейл user','wp-recall')
 		),
 		array(
 			'id' => 'url',

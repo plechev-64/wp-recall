@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2015-12-03 10:23+0300\n"
+"POT-Creation-Date: 2015-12-10 12:44+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -58,17 +58,17 @@ msgstr "Подписаться"
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
-#: add-on/feed/classes/class-rcl-feed.php:297
+#: add-on/feed/classes/class-rcl-feed.php:299
 msgid "News"
 msgstr "Новости"
 
-#: add-on/feed/classes/class-rcl-feed.php:298
+#: add-on/feed/classes/class-rcl-feed.php:300
 #: add-on/rating-system/index.php:32 functions/class-rcl-users.php:447
 #: functions/shortcodes.php:84
 msgid "Comments"
 msgstr "Комментарии"
 
-#: add-on/feed/classes/class-rcl-feed.php:299
+#: add-on/feed/classes/class-rcl-feed.php:301
 msgid "Answers"
 msgstr "Ответы"
 
@@ -246,11 +246,11 @@ msgstr "Запросы на доступ"
 msgid "Administration"
 msgstr "Администрирование"
 
-#: add-on/groups/groups-core.php:783
+#: add-on/groups/groups-core.php:790
 msgid "Access to content is closed privacy settings"
 msgstr "Контент закрыт настройками приватности"
 
-#: add-on/groups/groups-core.php:789
+#: add-on/groups/groups-core.php:796
 msgid "(Comment hidden privacy settings)"
 msgstr "(комментарий скрыт настройками приватности)"
 
@@ -517,7 +517,7 @@ msgstr "Отклонить запрос"
 msgid "Delete"
 msgstr "Удалить"
 
-#: add-on/groups/index.php:365 add-on/profile/index.php:740
+#: add-on/groups/index.php:365 add-on/profile/index.php:726
 msgid "User status"
 msgstr "Статус пользователя"
 
@@ -1002,36 +1002,36 @@ msgstr "Панель администратора"
 msgid "Show the admin bar when viewing site"
 msgstr "Отображать панель администратора на сайте"
 
-#: add-on/profile/index.php:306 add-on/profile/index.php:688
-#: functions/loginform.php:49 functions/loginform.php:57
-#: functions/loginform.php:73 templates/form-sign.php:31
-#: templates/recallbar.php:28 templates/recallbar.php:35
-#: templates/recallbar.php:43
-msgid "Login"
-msgstr "Вход"
-
-#: add-on/profile/index.php:312 add-on/profile/index.php:695
-msgid "Firstname"
-msgstr "Имя"
-
-#: add-on/profile/index.php:318 add-on/profile/index.php:702
-msgid "Surname"
-msgstr "Фамилия"
-
-#: add-on/profile/index.php:324 add-on/profile/index.php:709
-#: functions/register.php:216 templates/form-register.php:10
-#: templates/form-sign.php:10
+#: add-on/profile/index.php:305
 msgid "Nickname"
-msgstr "Логин"
+msgstr "Никнейм"
 
-#: add-on/profile/index.php:330 add-on/profile/index.php:716
-msgid "Display name"
-msgstr "Отображаемое имя"
+#: add-on/profile/index.php:305 add-on/profile/index.php:310
+msgid "required"
+msgstr "обязательно"
 
-#: add-on/profile/index.php:392 functions/rcl_editfields.php:148
+#: add-on/profile/index.php:310 functions/rcl_editfields.php:148
 #: templates/form-register.php:17
 msgid "E-mail"
 msgstr ""
+
+#: add-on/profile/index.php:316 add-on/profile/index.php:688
+#: functions/register.php:216 templates/form-register.php:10
+#: templates/form-sign.php:10
+msgid "Login"
+msgstr "Логин"
+
+#: add-on/profile/index.php:322 add-on/profile/index.php:695
+msgid "Firstname"
+msgstr "Имя"
+
+#: add-on/profile/index.php:328 add-on/profile/index.php:702
+msgid "Surname"
+msgstr "Фамилия"
+
+#: add-on/profile/index.php:335 add-on/profile/index.php:709
+msgid "Display name"
+msgstr "Отображаемое имя"
 
 #: add-on/profile/index.php:398
 msgid "Your website"
@@ -1065,7 +1065,7 @@ msgstr "Замечание"
 msgid "The password must be at least 7 characters"
 msgstr "Пароль должен содержать не менее 7 символов"
 
-#: add-on/profile/index.php:427 add-on/profile/index.php:737
+#: add-on/profile/index.php:427 add-on/profile/index.php:723
 #: add-on/publicpost/index.php:151
 #: add-on/publicpost/templates/posts-list.php:8
 msgid "Status"
@@ -1129,26 +1129,14 @@ msgid "Surname user"
 msgstr "Имя пользователя"
 
 #: add-on/profile/index.php:712
-msgid "Nickname user"
-msgstr "Никнейм пользователя"
-
-#: add-on/profile/index.php:719
 msgid "Display name user"
 msgstr "Отображаемое имя"
 
-#: add-on/profile/index.php:723
-msgid "Емейл (be sure)"
-msgstr "E-mail (обязательно)"
-
-#: add-on/profile/index.php:726
-msgid "Емейл user"
-msgstr "E-mail пользователя"
-
-#: add-on/profile/index.php:730
+#: add-on/profile/index.php:716
 msgid "Website"
 msgstr "Вебсайт"
 
-#: add-on/profile/index.php:733
+#: add-on/profile/index.php:719
 msgid "Website user"
 msgstr "Сайт пользователя"
 
@@ -1576,11 +1564,11 @@ msgstr "Добавить медиафайл"
 msgid "Error publishing!"
 msgstr "Ошибка публикации!"
 
-#: add-on/publicpost/rcl_postlist.php:100
+#: add-on/publicpost/rcl_postlist.php:102
 msgid "has not yet been published"
 msgstr "пока не было опубликовано"
 
-#: add-on/publicpost/rcl_postlist.php:109
+#: add-on/publicpost/rcl_postlist.php:111
 msgid "Published"
 msgstr "Опубликованные"
 
@@ -2307,6 +2295,13 @@ msgstr "В личный кабинет"
 msgid "Exit"
 msgstr "Выход"
 
+#: functions/loginform.php:49 functions/loginform.php:57
+#: functions/loginform.php:73 templates/form-sign.php:31
+#: templates/recallbar.php:28 templates/recallbar.php:35
+#: templates/recallbar.php:43
+msgid "Entry"
+msgstr "Вход"
+
 #: functions/rcl-frontend.php:72
 msgid "The site works using the functionality of the plugin"
 msgstr "Сайт использует функционал плагина"
@@ -2609,11 +2604,11 @@ msgstr "Полученное дополнение не имеет коррект
 msgid "Unable to open archive!"
 msgstr "Не удалось открыть полученный архив обновления!"
 
-#: functions/recallbar.php:17
+#: functions/recallbar.php:21
 msgid "In bookmarks"
 msgstr "В избранное"
 
-#: functions/recallbar.php:20
+#: functions/recallbar.php:24
 msgid "My bookmarks"
 msgstr "Избранное"
 
@@ -3029,16 +3024,16 @@ msgstr "Сортируйте вкладки перетаскиванием"
 msgid "Name tab"
 msgstr "Имя вкладки"
 
-#: rcl-functions.php:196
+#: rcl-functions.php:208
 msgid "Error! Perhaps this addition does not support ajax loading"
 msgstr "Ошибка! Данное дополнениене поддерживает ajax-загрузку"
 
-#: rcl-functions.php:651
+#: rcl-functions.php:664
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Это сообщение было сформировано автоматически, не надо отвечать на него."
 
-#: rcl-functions.php:713
+#: rcl-functions.php:726
 msgid "long ago"
 msgstr "давно"
 
@@ -3124,6 +3119,15 @@ msgstr "Регистрация"
 #: wp-recall.php:40 wp-recall.php:44
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "Nickname user"
+#~ msgstr "Никнейм пользователя"
+
+#~ msgid "Емейл (be sure)"
+#~ msgstr "E-mail (обязательно)"
+
+#~ msgid "Емейл user"
+#~ msgstr "E-mail пользователя"
 
 #~ msgid "Templates"
 #~ msgstr "Шаблон выво"
