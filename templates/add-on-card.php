@@ -1,11 +1,13 @@
 <?php global $addon,$active_addons;?>
 <div class="plugin-card plugin-card-<?php echo $addon->slug; ?>">
     <div class="plugin-card-top">
-        <a href="<?php echo $addon->add_on_uri; ?>" target="_blank" class="thickbox plugin-icon">
-            <img src="<?php echo $addon->thumbnail; ?>">
-        </a>
         <div class="name column-name">
-            <h4><a href="<?php echo $addon->add_on_uri; ?>" class="thickbox"><?php echo $addon->name; ?></a></h4>
+            <h3>
+                <a href="<?php echo $addon->add_on_uri; ?>" class="thickbox">
+                <?php echo $addon->name; ?>
+                <img src="<?php echo $addon->thumbnail; ?>" class="plugin-icon" alt="">
+                </a>
+            </h3>
         </div>
         <div class="action-links">
             <ul class="plugin-action-buttons">

@@ -95,12 +95,15 @@ function rcl_user_posts(){
 
 function rcl_user_action($type=1){
     global $rcl_user;
+
+    $action = (isset($rcl_user->time_action))? $rcl_user->time_action: $rcl_user->user_registered;
+
     switch($type){
-        case 1: $last_action = rcl_get_useraction($rcl_user->time_action);
+        case 1: $last_action = rcl_get_useraction($action);
                 if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
                 else echo '<span class="status_user offline" title="'.__('not online','wp-recall').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
         break;
-        case 2: echo rcl_get_miniaction($rcl_user->time_action); break;
+        case 2: echo rcl_get_miniaction($action); break;
     }
 }
 

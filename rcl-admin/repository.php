@@ -52,6 +52,7 @@ function rcl_repository_page(){
         (object)$addon;
         foreach($add as $k=>$v){
             $key = str_replace('-','_',$k);
+            $v = (isset($v))? $v: '';
             $addon->$key = $v;
         }
 
