@@ -21,6 +21,11 @@ function init_location_data(){
 	return get_param;
 }
 
+function rcl_is_valid_url(url){
+  var objRE = /http(s?):\/\/[-\w\.]{3,}\.[A-Za-z]{2,3}/;
+  return objRE.test(url);
+}
+
 jQuery(function($){
 	
     init_location_data();

@@ -56,15 +56,8 @@ jQuery(document).ready(function($) {
         });
         return false;
     });
-	
-	
 
 });
-
-function rcl_is_valid_url(url){
-  var objRE = /http(s?):\/\/[-\w\.]{3,}\.[A-Za-z]{2,3}/;
-  return objRE.test(url);
-}
 
 function rcl_add_editor_box(e,type,idbox,content){
 	rcl_preloader_show(e);

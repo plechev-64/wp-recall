@@ -152,10 +152,12 @@ class Rcl_Robokassa_Payment extends Rcl_Payment{
     function success(){
         global $rmag_options;
 
-        $data->pay_id = $_REQUEST["InvId"];
-        $data->user_id = $_REQUEST["shpa"];
+        $data = array(
+            'pay_id' => $_REQUEST["InvId"],
+            'user_id' => $_REQUEST["shpa"]
+        );
 
-        if(parent::get_pay($data)){
+        if(parent::get_pay((object)$data)){
             wp_redirect(get_permalink($rmag_options['page_successfully_pay'])); exit;
         } else {
             wp_die(__('A record of the payment in the database was not found','wp-recall'));

@@ -44,23 +44,23 @@
 	text-align: center;
 	width: 100%;
 }
-.wprecallblock input[type="text"],
-.wprecallblock input[type="password"],
-.wprecallblock input[type="url"],
-.wprecallblock input[type="email"],
-.wprecallblock input[type="number"],
-.wprecallblock input[type="date"],
-.wprecallblock input[type="tel"],
+.wprecallblock input,
 .wprecallblock select,
 .wprecallblock textarea{
 	border:1px solid #ccc;
 	border-radius:none;
 	padding:5px 10px;
+        color:#000;
+}
+.wprecallblock input[type="checkbox"],
+.wprecallblock input[type="radio"]{
+    border:none;
 }
 .wprecallblock #lk-conteyner{
     background: #fff;
     padding: 5px;
     overflow: hidden;
+    position: relative;
 }
 .wprecallblock #lk-conteyner .lk-header{
     overflow: hidden;
@@ -207,6 +207,7 @@
 	clear:both;
 	width: 100%;
         margin:5px 0;
+        table-layout: fixed;
 }
 .wprecallblock #lk-content th,
 .wprecallblock #lk-content td{
@@ -348,4 +349,27 @@
     clear: both;
     background-color: rgba(255,255,255,0.5);
     padding: 10px;
+}
+
+/*11.12.2015*/
+#your-profile table tr th {
+    overflow: hidden;
+    width: 32%;
+}
+#your-profile input[type="checkbox"] {   
+    margin: 4px 4px 0 0;
+    width: 20px;
+    float: none;
+}
+#your-profile table input, #your-profile table textarea {
+    float: left;
+    max-width: 94%;
+    padding: 10px 2%;
+    width: 100%;
+}
+#your-profile table select {
+    float: left;
+    max-width: 99%;
+    padding: 10px 2%;
+    width: 100%;
 }
