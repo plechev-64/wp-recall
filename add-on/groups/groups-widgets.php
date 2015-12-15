@@ -369,7 +369,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
             </nav>
 
         <?php }else{ ?>
-            <p><?php _e("Publications don't have","rcl"); ?></p>
+            <p><?php _e("Publications don't have","wp-recall"); ?></p>
         <?php }
 
         echo $after;

@@ -144,7 +144,7 @@ class Rcl_Custom_Fields{
         for($a=0;$a<$count_field;$a++){
             $sl = '';
             if($this->value){
-                foreach($this->value as $meta){
+                foreach((array)$this->value as $meta){
                     if($chek[$a]!=$meta) continue;
                     $sl = 'checked=checked';
                     break;

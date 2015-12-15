@@ -593,7 +593,7 @@ function rcl_get_tags_input($post_id=false){
 		$('#rcl_post_tags').magicSuggest({
 		  data: wpurl+'wp-admin/admin-ajax.php',
 		  dataUrlParams: { action: 'rcl_get_like_tags' },
-		  noSuggestionText: '".__("Not found","rcl")."',
+		  noSuggestionText: '".__("Not found","wp-recall")."',
 		  ajaxConfig: {
 			xhrFields: {
 			  withCredentials: true,

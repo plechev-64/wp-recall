@@ -1346,10 +1346,10 @@ class Rcl_Messages{
 		$done = "
 			var result = data.result;
 			if(result['recall']==100){
-				var text = '".__("The file was sent successfully.","rcl")."';
+				var text = '".__("The file was sent successfully.","wp-recall")."';
 			}
 			if(result['recall']==150){
-				var text = '".__("You have exceeded the limit on the number of uploaded files. Wait until the files sent previously will be accepted.","rcl")."';
+				var text = '".__("You have exceeded the limit on the number of uploaded files. Wait until the files sent previously will be accepted.","wp-recall")."';
 			}
 			$('.new_mess').replaceWith('$replace');
 			$('#upload-box-message .progress-bar').hide();";
@@ -1359,7 +1359,7 @@ class Rcl_Messages{
 
 		$script .= "
 			$('#lk-content').on('click','.link-file-rcl',function(){
-				$(this).parent().text('".__("Removes the file from the server","rcl")."');
+				$(this).parent().text('".__("Removes the file from the server","wp-recall")."');
 			});
 			var talker = $('input[name=\"adressat_mess\"]').val();
 			var online = $('input[name=\"online\"]').val();
