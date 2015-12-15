@@ -64,7 +64,7 @@ function rcl_followers_tab($user_id){
         $content .= rcl_get_userlist(array(
             'templates' => 'rows',
             'inpage'=>20,
-            'orderby'=>'time_action',
+            'orderby'=>'user_registered',
             'filters'=>1,
             'search_form'=>0,
             'data'=>'rating_total,description,posts_count,comments_count',
@@ -94,7 +94,7 @@ function rcl_subscriptions_tab($user_id){
         add_filter('rcl_users_query','rcl_feed_authors_query_userlist',10);
         $content .= rcl_get_userlist(array(
             'template' => 'rows',
-            'orderby'=>'time_action',
+            'orderby'=>'user_registered',
             'inpage'=>20,
             'filters'=>1,
             'search_form'=>0,
@@ -110,18 +110,22 @@ function rcl_subscriptions_tab($user_id){
 function rcl_feed_authors_query_userlist($query){
     global $user_LK;
     $query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON users.ID=feeds.object_id";
-    $query['where'][] = "user_id='$user_LK'";
-    $query['where'][] = "feed_type='author'";
-    $query['where'][] = "feed_status='1'";
+    $query['where'][] = "feeds.user_id='$user_LK'";
+    $query['where'][] = "feeds.feed_type='author'";
+    $query['where'][] = "feeds.feed_status='1'";
+    $query['relation'] = "AND";
+    $query['group'] = false;
     return $query;
 }
 
 function rcl_feed_subsribers_query_userlist($query){
     global $user_LK;
     $query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON users.ID=feeds.user_id";
-    $query['where'][] = "object_id='$user_LK'";
-    $query['where'][] = "feed_type='author'";
-    $query['where'][] = "feed_status='1'";
+    $query['where'][] = "feeds.object_id='$user_LK'";
+    $query['where'][] = "feeds.feed_type='author'";
+    $query['where'][] = "feeds.feed_status='1'";
+    $query['relation'] = "AND";
+    $query['group'] = false;
     return $query;
 }
 

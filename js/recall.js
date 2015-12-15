@@ -35,7 +35,7 @@ jQuery(function($){
             return false;
     });
 
-    $('.rcl-smiles').on('hover','> img',function(){
+    $('body').on('hover','.rcl-smiles > img',function(){
         var block = $(this).next().children();
         if(block.html()) return false;
         block.html('Загрузка...');
