@@ -123,6 +123,7 @@ class Rcl_Groups {
               , "groups.admin_id"
               , "groups.group_users"
               , "groups.group_status"
+              , "term_taxonomy.count"
             );
 
             $query['join'][] = "INNER JOIN ".RCL_PREF."groups AS groups ON terms.term_id=groups.ID";
@@ -180,8 +181,7 @@ class Rcl_Groups {
     function add_query_posts_count($query){
         global $wpdb;
 
-        if(!$this->query_count){
-            $query['select'][] = "term_taxonomy.count";
+        if(!$this->query_count){            
             $query['orderby'] = "term_taxonomy.count";
         }
 

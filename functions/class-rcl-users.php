@@ -228,7 +228,7 @@ class Rcl_Users{
             $f = explode(':',$filt);
             $n = 'metas_'.++$a;
             $query['join'][] = "INNER JOIN $wpdb->usermeta AS $n ON users.ID=$n.user_id";
-            $query['where'][] = "($n.meta_key='$f[0]' AND $n.meta_value='$f[1]')";
+            $query['where'][] = "($n.meta_key='$f[0]' AND $n.meta_value LIKE '%$f[1]%')";
         }
         return $query;
     }

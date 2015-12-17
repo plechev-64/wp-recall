@@ -571,37 +571,41 @@ function rcl_publication_editor(){
 function rcl_get_tags_input($post_id=false){
 	global $rcl_options;
 
-	rcl_autocomplete_scripts();
-
 	$fields = '';
 
 	if(isset($rcl_options['display_tags'])&&$rcl_options['display_tags']==1)
 		$fields .= rcl_get_tags_checklist($post_id);
+        
+        if(isset($rcl_options['field_tags'])&&$rcl_options['field_tags']==1){
+            
+            rcl_autocomplete_scripts();
 
-	$args = array(
-		'type' => 'text',
-		'id' => 'rcl_post_tags',
-		'name' => 'tags',
-		'placeholder' => __('Enter your tags','wp-recall'),
-		'label' => __('Add your tags','wp-recall').'<br><small>'.__('Each tag is separated with Enter','wp-recall').'</small>'
-	);
+            $args = array(
+                    'type' => 'text',
+                    'id' => 'rcl_post_tags',
+                    'name' => 'tags',
+                    'placeholder' => __('Enter your tags','wp-recall'),
+                    'label' => __('Add your tags','wp-recall').'<br><small>'.__('Each tag is separated with Enter','wp-recall').'</small>'
+            );
 
-	$fields .= rcl_form_field($args);
+            $fields .= rcl_form_field($args);
 
-	$fields .= "<script>
-	jQuery(function($){
-		$('#rcl_post_tags').magicSuggest({
-		  data: wpurl+'wp-admin/admin-ajax.php',
-		  dataUrlParams: { action: 'rcl_get_like_tags' },
-		  noSuggestionText: '".__("Not found","wp-recall")."',
-		  ajaxConfig: {
-			xhrFields: {
-			  withCredentials: true,
-			}
-		  }
-		});
-	});
-	</script>";
+            $fields .= "<script>
+            jQuery(function($){
+                    $('#rcl_post_tags').magicSuggest({
+                      data: wpurl+'wp-admin/admin-ajax.php',
+                      dataUrlParams: { action: 'rcl_get_like_tags' },
+                      noSuggestionText: '".__("Not found","wp-recall")."',
+                      ajaxConfig: {
+                            xhrFields: {
+                              withCredentials: true,
+                            }
+                      }
+                    });
+            });
+            </script>";
+        
+        }
 
 	return $fields;
 }

@@ -255,6 +255,12 @@ function rcl_get_publics_options_page($content){
 		$opt->option_block(
             array(
                 $opt->title(__('Tags','wp-recall')),
+                
+                $opt->label(__('Field add tags','wp-recall')),
+                $opt->option('select',array(
+                    'name'=>'field_tags',
+                    'options'=>array(__('Do not display','wp-recall'),__('Output','wp-recall'))
+                )),
 
                 $opt->label(__('Displaying a list of tags','wp-recall')),
                 $opt->option('select',array(

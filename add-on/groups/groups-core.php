@@ -201,6 +201,12 @@ function rcl_group_name(){
     echo $rcl_group->name;
 }
 
+function rcl_group_post_counter(){
+    global $rcl_group;
+    if(!$rcl_group) return false;
+    echo $rcl_group->count;
+}
+
 function rcl_group_status(){
     global $rcl_group;
     if(!$rcl_group) return false;

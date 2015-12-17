@@ -177,23 +177,23 @@ class Rcl_Custom_Fields{
         global $user_ID;
         $show = '';
         if($field['type']=='text'&&$value)
-                $show = ' <span>'.esc_textarea($value).'</span>';
+                $show = ' <span>'.esc_html($value).'</span>';
         if($field['type']=='file'&&$value)
                 $show = ' <span><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($value), 'user-'.$user_ID ).'">'.__('Download file','wp-recall').'</a></span>';
         if($field['type']=='tel'&&$value)
-                $show = ' <span>'.esc_textarea($value).'</span>';
+                $show = ' <span>'.esc_html($value).'</span>';
         if($field['type']=='email'&&$value)
-                $show = ' <span><a rel="nofolow" target="_blank" href="mailto:'.$value.'">'.esc_textarea($value).'</a></span>';
+                $show = ' <span><a rel="nofolow" target="_blank" href="mailto:'.$value.'">'.esc_html($value).'</a></span>';
         if($field['type']=='url'&&$value)
-                $show = ' <span><a rel="nofolow" target="_blank" href="'.$value.'">'.esc_textarea($value).'</a></span>';
+                $show = ' <span><a rel="nofolow" target="_blank" href="'.$value.'">'.esc_html($value).'</a></span>';
         if($field['type']=='time'&&$value)
-                $show = ' <span>'.esc_textarea($value).'</span>';
+                $show = ' <span>'.esc_html($value).'</span>';
         if($field['type']=='date'&&$value)
-                $show = ' <span>'.esc_textarea($value).'</span>';
+                $show = ' <span>'.esc_html($value).'</span>';
         if($field['type']=='number'&&$value)
-                $show = ' <span>'.esc_textarea($value).'</span>';
+                $show = ' <span>'.esc_html($value).'</span>';
         if($field['type']=='select'&&$value||$field['type']=='radio'&&$value)
-                $show = ' <span>'.esc_textarea($value).'</span>';
+                $show = ' <span>'.esc_html($value).'</span>';
         if($field['type']=='checkbox'){
                 $chek_field = '';
                 if(is_array($value)) $chek_field = implode(', ',$value);
@@ -207,7 +207,7 @@ class Rcl_Custom_Fields{
                     $show = $chek_field;
         }
         if($field['type']=='textarea'&&$value)
-                $show = '<p>'.nl2br(esc_textarea($value)).'</p>';
+                $show = '<p>'.nl2br(esc_html($value)).'</p>';
 
         if(isset($field['after'])) $show .= ' '.$field['after'];
 
