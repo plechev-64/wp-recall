@@ -118,6 +118,32 @@ function rcl_delete_group($group_id){
     rcl_delete_term_groups($group_id, $group_id, 'groups');
 }
 
+function rcl_register_group_area($contents){
+    global $rcl_group_area;
+    $rcl_group_area[] = $contents;
+}
+
+function rcl_remove_group_area($area_id){
+    global $rcl_group_area;    
+    foreach($rcl_group_area as $key=>$area){
+        if(isset($area['id'])&&$area['id']==$area_id){
+            unset($rcl_group_area[$key]);
+            return true;
+        }
+    } 
+    return false;
+}
+
+function rcl_is_group_area($area_id){
+    global $rcl_group_area;
+    foreach($rcl_group_area as $key=>$area){
+        if(isset($area['id'])&&$area['id']==$area_id){
+            return true;      
+        }
+    } 
+    return false;
+}
+
 add_action('delete_term', 'rcl_delete_term_groups',10,3);
 function rcl_delete_term_groups($term_id, $tt_id, $taxonomy){
     if(!$taxonomy||$taxonomy!='groups') return false;

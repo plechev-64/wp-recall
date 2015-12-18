@@ -200,7 +200,7 @@ function rcl_manage_publicform(){
             $fields = $f_edit->update_fields();
 	}
 
-	$custom_public_form_data = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."options WHERE option_name LIKE 'custom_public_fields%'");
+	$custom_public_form_data = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."options WHERE option_name LIKE 'custom_public_fields%' ORDER BY option_id ASC");
 
 	if($custom_public_form_data){
 		$form_navi = '<h3>'.__('Available forms','wp-recall').'</h3><div class="form-navi">';

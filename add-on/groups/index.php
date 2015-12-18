@@ -43,21 +43,21 @@ add_filter('ajax_tabs_rcl','rcl_ajax_tab_groups');
 add_action('init','rcl_register_default_group_sidebars',10);
 function rcl_register_default_group_sidebars(){
 
-    rcl_register_group_content(
+    rcl_register_group_area(
         array(
             'name'=>__('Sidebar','wp-recall'),
             'id'=>'sidebar'
         )
     );
 
-    rcl_register_group_content(
+    rcl_register_group_area(
         array(
             'name'=>__('Main','wp-recall'),
             'id'=>'content'
         )
     );
 
-    rcl_register_group_content(
+    rcl_register_group_area(
         array(
             'name'=>__('Footer','wp-recall'),
             'id'=>'footer'

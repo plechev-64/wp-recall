@@ -344,7 +344,19 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
             <?php while ( have_posts() ): the_post(); ?>
                 <div class="post-group">
-                    <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a> <span class="post-date"><i class="fa fa-clock-o"></i><?php echo get_the_date(); ?></span></h3>
+                    <div class="postdata-header">
+                        <div class="post-meta">
+                            <span class="post-date">
+                                <i class="fa fa-clock-o"></i><?php echo get_the_date(); ?>                             
+                            </span>
+                            <span class="post-comments-number">
+                                <i class="fa fa-comments-o"></i><?php comments_number('0', '1', '%'); ?>
+                            </span>
+                        </div>    
+                        <h3>
+                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>                         
+                        </h3>                                          
+                    </div>
                     <?php if($instance['thumbnail']&&has_post_thumbnail()){ ?>
                         <div class="post-group-thumb"><?php the_post_thumbnail('thumbnail'); ?></div>
                     <?php } ?>

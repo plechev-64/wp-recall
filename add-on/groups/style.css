@@ -51,9 +51,18 @@
     position: relative;
 }
 
-#rcl-group .group-sidebar .group-avatar img{    
+#rcl-group .group-sidebar .group-avatar img,
+#rcl-group .group-content .group-avatar img{    
     max-width: 100%;
     width: 100%;
+}
+
+#rcl-group .group-content .group-avatar{   
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    position: relative;
+    width: 250px;
 }
 
 #rcl-group .group-sidebar .sidebar-content{
@@ -103,6 +112,11 @@
 
 #rcl-group .group-content a{
     
+}
+
+#rcl-group .group-content .group-metadata{
+    overflow:hidden;
+    margin-bottom: 15px;
 }
 
 #rcl-group .group-content .sidebar-widget{
@@ -436,10 +450,29 @@ text-align: right;}
     overflow: hidden;
     padding: 5px 10px;
 }
-#group-posts-widget .post-group h3{
-    font-size: 16px;
+#group-posts-widget .post-group .postdata-header{    
     background: #EFEFEF;
     padding: 5px 10px;
+    color: #6d6d6e;
+    overflow: hidden;
+}
+#group-posts-widget .post-group .postdata-header h3{
+    font-size: 16px;
+    clear: none;
+}
+#group-posts-widget .post-group .post-meta{
+    font-size: 12px;
+    float: right;
+    color: #6B6B6B;
+}
+#group-posts-widget .post-group .post-meta span{
+    margin: 0 5px;
+}
+#group-posts-widget .post-group .post-meta .post-date{   
+    margin-right: 10px;
+}
+#group-posts-widget .post-group .post-meta .post-comments-number{
+
 }
 #group-posts-widget .post-group a{
     
@@ -459,12 +492,6 @@ text-align: right;}
 
 #group-users-widget .rcl-group-link{
     float:right;
-}
-#group-posts-widget .post-group .post-date{
-    float: right;
-    font-size: 12px;
-    font-weight: normal;
-    color: #6d6d6e;
 }
 #group-posts-widget .post-group .post-edit-button{
     clear:both;

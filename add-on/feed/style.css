@@ -71,6 +71,7 @@
     background: #fff none repeat scroll 0 0;
     color: #3b8dbd;
     padding: 0;
+    text-decoration: none;
 }
 .userlist .follow-button {
     margin: 15px 0 5px;
