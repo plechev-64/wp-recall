@@ -32,7 +32,7 @@
         <?php if(rcl_is_group_area('content')) rcl_group_area('content'); ?>
     </div>
 </div>
-<?php if(rcl_is_group_area('sidebar')): ?>
+<?php if(rcl_is_group_area('footer')): ?>
     <div class="group-footer">
         <?php rcl_group_area('footer'); ?>
     </div>
