@@ -27,9 +27,10 @@
     margin-bottom:5px;
 }
 
-#rcl-group .title-widget{
+#rcl-group .title-widget {
     background: #D9F1FF;
     padding: 5px;
+    clear: both;
 }
 
 #rcl-group .widget-content p{
@@ -487,12 +488,12 @@ text-align: right;}
 }
 
 #group-posts-widget .post-group .post-group-content{
-    overflow: hidden;
+    
 }
 
 #group-users-widget .rcl-group-link{
     float:right;
 }
 #group-posts-widget .post-group .post-edit-button{
-    clear:both;
+    
 }

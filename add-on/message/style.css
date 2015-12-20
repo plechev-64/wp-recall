@@ -27,11 +27,12 @@
     margin: 5px 0 0;
 }
 #privatemess .private-message p {
-    line-height: 1;
+    line-height: 1.2;
     margin: 0;
 }
 #privatemess .private-message .content-mess {
     min-height: 45px;
+    margin: 5px 0;
 }
 #tab-privat .old_mess_block {
     background: none repeat scroll 0 0 #FFFFFF;

@@ -76,16 +76,17 @@ function rcl_frontend_scripts(){
 
         if($user_LK) rcl_dialog_scripts();
 
-	if($user_ID==$user_LK
-		||($post&&isset($rcl_options['public_form_page_rcl'])
-		&&$post->ID==$rcl_options['public_form_page_rcl']
-	)){
-            rcl_crop_scripts();
-            rcl_webcam_scripts();
-	}
-
 	if($user_ID){
-		rcl_fileupload_scripts();
+            
+            if($user_ID==$user_LK
+                    ||($post&&isset($rcl_options['public_form_page_rcl'])
+                    &&$post->ID==$rcl_options['public_form_page_rcl']
+            )){
+                rcl_crop_scripts();
+                rcl_webcam_scripts();
+            }
+            
+            rcl_fileupload_scripts();
 	}
 
 	if( wp_style_is( 'font-awesome' ) ) wp_deregister_style('font-awesome');

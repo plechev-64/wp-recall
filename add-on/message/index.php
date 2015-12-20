@@ -1195,7 +1195,15 @@ class Rcl_Messages{
                 $class = (!$last_action)?'online':'offline';
                 $online = (!$last_action)?1:0;
 
-				$words = (isset($rcl_options['ms_limit_words'])&&$rcl_options['ms_limit_words'])? $rcl_options['ms_limit_words']: 400;
+                $words = (isset($rcl_options['ms_limit_words'])&&$rcl_options['ms_limit_words'])? $rcl_options['ms_limit_words']: 400;
+                                
+                $access = apply_filters('access_chat_rcl','',$mess->author_mess);
+                
+                $content_message = $this->mess_preg_replace_rcl($mess->content_mess);
+
+		//$content_message = $this->get_url_file_message($message,$content_message);
+
+		$content_message = $this->str_nl2br_rcl($content_message);
 
 		$message_block .= '<div id="privatemess">'
                             .'<div id="'.$mess->ID.'" class="close-mess-window">'
@@ -1215,7 +1223,7 @@ class Rcl_Messages{
                                 <p class="name-author-mess">
                                     Отправитель: '.get_the_author_meta('display_name', $mess->author_mess).'
                                 </p>
-                                <p class="content-mess">'.$mess->content_mess.'</p>
+                                <p class="content-mess">'.$content_message.'</p>
 
                                 <div class="prmess">
                                     <textarea name="content_mess" id="minicontent_mess" rows="3" style="width:98%;padding:5px;"></textarea>
@@ -1233,10 +1241,13 @@ class Rcl_Messages{
                                 <input type="hidden" name="id_mess" value="'.$mess->ID.'">
                                 <input type="hidden" name="author_mess" value="'.$mess->author_mess.'">
                                 <input class="reading_mess  recall-button" type="submit" name="old_status_message_recall" value="'.__('Go to the correspondence','wp-recall').'">
-                            </form>
-                            <input type="button" name="view-form" class="recall-button view-form" value="'.__('Reply','wp-recall').'">
+                            </form>';
+                
+                            if(!$access){
+                                $message_block .= '<input type="button" name="view-form" class="recall-button view-form" value="'.__('Reply','wp-recall').'">';
+                            }
 
-                            </div>
+                            $message_block .= '</div>
                         </div>';
 
 		$log['recall']=100;
