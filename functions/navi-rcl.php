@@ -170,8 +170,8 @@ function rcl_navi_admin($inpage,$cnt_data,$page,$page_id,$get_data){
 
 			</span>
 		</div>
-	</div>
-	<input type="button" value="Назад" onClick="history.back()">';
+                <input type="button" value="Назад" onClick="history.back()">
+	</div>';
 
 	return $pagination;
 }

@@ -65,29 +65,7 @@ add_filter( 'manage_users_custom_column', 'rcl_get_rating_column_content', 10, 3
 
 //if(function_exists('rcl_block')) rcl_block('sidebar','rcl_get_content_rating',array('id'=>'rt-block','order'=>2));
 function rcl_get_content_rating($author_lk){
-    global $user_ID,$rcl_rating_types,$rcl_options;
-
-    $karma = rcl_get_user_rating($author_lk);
-
-    /*foreach($rcl_rating_types as $type=>$val){
-
-	if(!isset($rcl_options['rating_user_'.$type])||!$rcl_options['rating_user_'.$type])continue;
-
-        $args = array(
-            'object_author' => $author_lk,
-            'rating_type'=>$type
-        );
-        break;
-    }
-
-    if($karma){
-        if($user_ID) return '<a href="#" data-rating="'.rcl_encode_data_rating('user',$args).'" id="rating-user-'.$author_lk.'" class="rating-rcl view-votes">'.rcl_format_rating($karma).'</a>';
-        else return rcl_rating_block(array('value'=>$karma));
-    } else {
-        return rcl_rating_block(array('value'=>$karma));
-    }*/
-
-    return rcl_rating_block(array('value'=>$karma));
+    return rcl_rating_block(array('value'=>rcl_get_user_rating($author_lk)));
 }
 
 add_filter('ajax_tabs_rcl','rcl_ajax_rating_tab');
@@ -97,10 +75,10 @@ function rcl_ajax_rating_tab($array_tabs){
 
 add_action('init','rcl_add_rating_tab');
 function rcl_add_rating_tab(){
-    rcl_tab('rating','rcl_rating_tab',__('Rating','wp-recall'),array('public'=>1,'output'=>'sidebar','class'=>'fa-balance-scale'));
+    rcl_tab('rating','rcl_rating_tab',__('Rating','wp-recall'),array('public'=>1,'cache'=>true,'output'=>'sidebar','class'=>'fa-balance-scale'));
 }
 
-add_filter('tab_data_rcl','rcl_add_counter_rating',10);
+if(!is_admin()) add_filter('tab_data_rcl','rcl_add_counter_rating',10);
 function rcl_add_counter_rating($tab){
      global $user_LK;
     if($tab['id']!='rating') return $tab;
@@ -256,6 +234,8 @@ function rcl_get_rating_block($args){
 		$user_info = get_userdata($user_ID);
 		if ( $user_info->user_level < $access )	$can = false;
 	}
+        
+        //print_r($args);
 
     if($value&&$can)$block .= '<a href="#" onclick="rcl_view_list_votes(this);return false;" data-rating="'.rcl_encode_data_rating('view',$args).'" class="view-votes post-votes"><i class="fa fa-question-circle"></i></a>';
     $block .=  '</div>';
@@ -357,6 +337,9 @@ function rcl_decode_data_rating($data){
 
 function rcl_edit_rating_user(){
 	global $wpdb,$user_ID;
+        
+        rcl_verify_ajax_nonce();
+        
 	$user_id = intval($_POST['user']);
 	$new_rating = floatval($_POST['rayting']);
 
@@ -390,76 +373,139 @@ if(is_admin()) add_action('wp_ajax_rcl_edit_rating_user', 'rcl_edit_rating_user'
 add_action('wp_ajax_rcl_view_rating_votes', 'rcl_view_rating_votes');
 add_action('wp_ajax_nopriv_rcl_view_rating_votes', 'rcl_view_rating_votes');
 function rcl_view_rating_votes(){
+    global $rcl_options;
+    
+    rcl_verify_ajax_nonce();
 
-		$args = rcl_decode_data_rating(sanitize_text_field($_POST['rating']));
+    $string = sanitize_text_field($_POST['rating']);
+    
+    if(isset($rcl_options['use_cache'])&&$rcl_options['use_cache']){
+           
+        $rcl_cache = new Rcl_Cache();
+    
+        $file = $rcl_cache->get_file($string);
+        
+        if(!$file||$file->is_old){
+            
+            $content = rcl_rating_window_content($string);
+            $content = $rcl_cache->update_cache($content);
+            
+        }else{
 
-		$navi = false;
+            $content = $rcl_cache->get_cache();
 
-		if($args['rating_status']=='user') $navi = rcl_rating_navi($args);
+        }
+    
+    }else{
+        
+        $content = rcl_rating_window_content($string);
+        
+    }
 
-		$votes = rcl_get_rating_votes($args,array(0,100));
+    $log['result']=100;
+    $log['window']=$content;
+    echo json_encode($log);
+    exit;
+}
 
-		$window = rcl_get_votes_window($args,$votes,$navi);
+function rcl_rating_window_content($string){
+    $navi = false;
+    $args = rcl_decode_data_rating($string);
+    if($args['rating_status']=='user') $navi = rcl_rating_navi($args);
+    $votes = rcl_get_rating_votes($args,array(0,100));
+    $content = rcl_get_votes_window($args,$votes,$navi);
+    return $content;
+}
 
-		$log['result']=100;
-		$log['window']=$window;
-		echo json_encode($log);
-		exit;
+add_action('rcl_edit_rating_post','rcl_remove_cashe_rating_post',10);
+function rcl_remove_cashe_rating_post($args){
+    global $rcl_options;
+    if(isset($rcl_options['use_cache'])&&$rcl_options['use_cache']){
+
+        $array = $args;
+        
+        unset($array['rating_value']);
+        unset($array['user_id']);
+        
+        $statuses = array('view','user');
+        
+        foreach($statuses as $status){
+
+            $array['rating_status'] = $status;
+            if($status == 'user') unset($array['object_id']);
+            
+            $str = array();
+            foreach($array as $k=>$v){
+                $str[] = $k.':'.$v;
+            }
+
+            $string = base64_encode(implode(',',$str));
+
+            $rcl_cache = new Rcl_Cache();
+            $rcl_cache->get_file($string);
+            $rcl_cache->delete_cache();
+            
+        }
+    }
 }
 
 add_action('wp_ajax_rcl_edit_rating_post', 'rcl_edit_rating_post');
 function rcl_edit_rating_post(){
-		global $rcl_options,$rcl_rating_types;
+    global $rcl_options,$rcl_rating_types;
+    
+    rcl_verify_ajax_nonce();
 
-		$args = rcl_decode_data_rating(sanitize_text_field($_POST['rating']));
+    $args = rcl_decode_data_rating(sanitize_text_field($_POST['rating']));
 
-		if($rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
-			$timelimit = ($rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']])? $rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']]: 3600;
-			$votes = rcl_count_votes_time($args,$timelimit);
-			if($votes>=$rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
-				$log['error']=sprintf(__('exceeded the limit of votes for the period - %d seconds','wp-recall'),$timelimit);
-				echo json_encode($log);
-				exit;
-			}
-		}
+    if($rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
+            $timelimit = ($rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']])? $rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']]: 3600;
+            $votes = rcl_count_votes_time($args,$timelimit);
+            if($votes>=$rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
+                    $log['error']=sprintf(__('exceeded the limit of votes for the period - %d seconds','wp-recall'),$timelimit);
+                    echo json_encode($log);
+                    exit;
+            }
+    }
 
-		$value = rcl_get_vote_value($args);
+    $value = rcl_get_vote_value($args);
 
-		if($value){
+    if($value){
 
-			if($args['rating_status']=='cancel'){
+            if($args['rating_status']=='cancel'){
 
-				$rating = rcl_delete_rating($args);
+                    $rating = rcl_delete_rating($args);
 
-			}else{
-				$log['result']=110;
-				echo json_encode($log);
-				exit;
-			}
+            }else{
+                    $log['result']=110;
+                    echo json_encode($log);
+                    exit;
+            }
 
-		}else{
+    }else{
 
-			$args['rating_value'] = rcl_get_rating_value($args['rating_type']);
+            $args['rating_value'] = rcl_get_rating_value($args['rating_type']);
 
-			$rating = rcl_insert_rating($args);
+            $rating = rcl_insert_rating($args);
 
-		}
+    }
+    
+    $total = rcl_get_total_rating($args['object_id'],$args['rating_type']);
 
-		$total = rcl_get_total_rating($args['object_id'],$args['rating_type']);
+    do_action('rcl_edit_rating_post',$args);
 
-		$log['result']=100;
-		$log['object_id']=$args['object_id'];
-		$log['rating_type']=$args['rating_type'];
-		$log['rating']=$total;
+    $log['result']=100;
+    $log['object_id']=$args['object_id'];
+    $log['rating_type']=$args['rating_type'];
+    $log['rating']=$total;
 
-		echo json_encode($log);
-		exit;
+    echo json_encode($log);
+    exit;
 }
 
 add_filter('rcl_functions_js','rcl_rating_functions_js');
 function rcl_rating_functions_js($string){
 
-    $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
+    $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
 
     $string .= "
         function rcl_close_votes_window(e){
@@ -469,9 +515,10 @@ function rcl_rating_functions_js($string){
         function rcl_edit_rating(e){
             var block = jQuery(e);
             var rating = block.data('rating');
-
+            
             var dataString = 'action=rcl_edit_rating_post&rating='+rating;
-
+            dataString += '&ajax_nonce='+Rcl.nonce;
+            
             jQuery.ajax({
                 ".$ajaxdata."
                 success: function(data){
@@ -503,7 +550,8 @@ function rcl_rating_functions_js($string){
             var rating = jQuery(e).data('rating');
 
             var dataString = 'action=rcl_view_rating_votes&rating='+rating+'&content=list-votes';
-
+            dataString += '&ajax_nonce='+Rcl.nonce;
+            
             jQuery.ajax({
                 ".$ajaxdata."
                 success: function(data){
@@ -523,7 +571,8 @@ function rcl_rating_functions_js($string){
             var rating = block.data('rating');
 
             var dataString = 'action=rcl_view_rating_votes&rating='+rating;
-
+            dataString += '&ajax_nonce='+Rcl.nonce;
+            
             jQuery.ajax({
                 ".$ajaxdata."
                 success: function(data){

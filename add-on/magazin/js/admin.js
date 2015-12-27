@@ -16,25 +16,25 @@ jQuery(function(){
 Удаляем заказ пользователя воопще)
 *************************************************/
 	jQuery('.delete-order').click(function(){
-		if(confirm('Уверены?')){
-			var idorder = jQuery(this).attr('id');
-			var dataString_reg = 'action=rcl_all_delete_order&idorder='+ idorder;
-
-			jQuery.ajax({
-			type: 'POST',
-			data: dataString_reg,
-			dataType: 'json',
-			url: ajaxurl,
-			success: function(data){
-				if(data['otvet']==100){
-					jQuery('#row-'+data['idorder']).remove();
-				}else{
-					alert('Ошибка при удалении заказа!');
-				}
-			} 
-			});	  	
-			return false;
-		}
+            if(confirm('Уверены?')){
+                var idorder = jQuery(this).attr('id');
+                var dataString = 'action=rcl_all_delete_order&idorder='+idorder;
+                
+                jQuery.ajax({
+                type: 'POST',
+                data: dataString,
+                dataType: 'json',
+                url: ajaxurl,
+                success: function(data){
+                    if(data['otvet']==100){
+                        jQuery('#row-'+data['idorder']).remove();
+                    }else{
+                        alert('Ошибка при удалении заказа!');
+                    }
+                } 
+                });	  	
+                return false;
+            }
 	});
 /*************************************************
 Меняем статус заказа в админке
@@ -44,7 +44,8 @@ jQuery('.select_status').click(function(){
     //var id_user = parseInt(id_attr.replace(/\D+/g,''));	
     var status = jQuery('#status-'+order).val();
     //alert(order+' + '+status);
-    var dataString = 'action=rcl_edit_order_status&order='+order+'&status='+status;	
+    var dataString = 'action=rcl_edit_order_status&order='+order+'&status='+status;
+
     jQuery.ajax({
     type: 'POST',
     data: dataString,

@@ -147,7 +147,7 @@ class Rcl_Cart {
 
                     $basket .= '<div class="confirm">';
 
-                    $get_fields_order = get_option( 'custom_orders_field' );
+                    $get_fields_order = get_option( 'rcl_cart_fields' );
 
                     if($get_fields_order) $order_field = $this->cart_fields($get_fields_order,'order');
 
@@ -167,36 +167,35 @@ class Rcl_Cart {
                     $basket .= $this->script_request('order');
 
                     $basket .= "
-
-                            var dataString_count = 'action=rcl_confirm_order'".$this->request.";
-                            jQuery.ajax({
-                            type: 'POST',
-                            data: dataString_count,
-                            dataType: 'json',
-                            url: wpurl+'wp-admin/admin-ajax.php',
-                            success: function(data){
-                                    if(data['otvet']==100){
-                                            jQuery('.redirectform').html(data['redirectform']);
-                                            jQuery('.confirm').remove();
-                                            jQuery('.add_remove').empty();
-                                    } else if(data['otvet']==10){
-                                       jQuery('.redirectform').html(data['amount']);
-                                    } else if(data['otvet']==5){
-                                            jQuery('#regnewuser').html(data['recall']);
-                                            jQuery('#regnewuser').slideDown(500).delay(5000).slideUp(500);
-                                    }else {
-                                       alert('Ошибка проверки данных.');
-                                    }
-                            }
-                            });
-
-                            return false;
+                        var dataString = 'action=rcl_confirm_order'".$this->request.";
+                        dataString += '&ajax_nonce='+Rcl.nonce;
+                        jQuery.ajax({
+                        type: 'POST',
+                        data: dataString,
+                        dataType: 'json',
+                        url: Rcl.ajaxurl,
+                        success: function(data){
+                                if(data['otvet']==100){
+                                        jQuery('.redirectform').html(data['redirectform']);
+                                        jQuery('.confirm').remove();
+                                        jQuery('.add_remove').empty();
+                                } else if(data['otvet']==10){
+                                   jQuery('.redirectform').html(data['amount']);
+                                } else if(data['otvet']==5){
+                                        jQuery('#regnewuser').html(data['recall']);
+                                        jQuery('#regnewuser').slideDown(500).delay(5000).slideUp(500);
+                                }else {
+                                   alert('Ошибка проверки данных.');
+                                }
+                        }
+                        });
+                        return false;
                     });
                 });
                 </script>";
 
                 }else{
-                        $get_fields = get_option( 'custom_profile_field' );
+                        $get_fields = get_option( 'rcl_profile_fields' );
 
                         if($get_fields) $order_field .= $this->cart_fields($get_fields,'profile');
 
@@ -227,14 +226,13 @@ class Rcl_Cart {
                                     $basket .= "
                                     var fio = jQuery('.confirm .fio_new_user').attr('value');
                                     var email = jQuery('.confirm .email_new_user').attr('value');
-
-                                    var dataString = 'action=rcl_confirm_order&action=rcl_register_user_order&fio_new_user='+fio+'&email_new_user='+email".$this->request.";
-
+                                    var dataString = 'action=rcl_register_user_order&fio_new_user='+fio+'&email_new_user='+email".$this->request.";
+                                    dataString += '&ajax_nonce='+Rcl.nonce;
                                     jQuery.ajax({
                                             type: 'POST',
                                             data: dataString,
                                             dataType: 'json',
-                                            url: wpurl+'wp-admin/admin-ajax.php',
+                                            url: Rcl.ajaxurl,
                                             success: function(data){
                                                     if(data['int']==100){
                                                             jQuery('#regnewuser').html(data['recall']);

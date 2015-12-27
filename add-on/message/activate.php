@@ -22,8 +22,6 @@ if($wpdb->get_var("show tables like '". $table2 . "'") != $table2) {
 	  status_mess INT(10) NOT NULL,
 	  UNIQUE KEY id (id)
 	  ) DEFAULT CHARSET=utf8;");
-}else{
-	$wpdb->query("ALTER TABLE `$table2` CHANGE `content_mess` `content_mess` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL");
 }
 
 $table3 = RCL_PREF."black_list_user";
@@ -42,5 +40,4 @@ if(!isset($rcl_options['max_private_message'])) $rcl_options['max_private_messag
 if(!isset($rcl_options['sort_mess'])) $rcl_options['sort_mess']=0;
 if(!isset($rcl_options['update_private_message'])) $rcl_options['update_private_message']=20;
 if(!isset($rcl_options['global_update_private_message'])) $rcl_options['global_update_private_message']=0;
-update_option('primary-rcl-options',$rcl_options);
-?>
+update_option('rcl_global_options',$rcl_options);

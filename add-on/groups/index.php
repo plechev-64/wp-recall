@@ -18,6 +18,46 @@ if(function_exists('rcl_register_rating_type')){
     }
 }
 
+//обновление кеша вкладки групп ее админа
+add_action('rcl_create_group','rcl_tab_groups_remove_cache',10);
+add_action('rcl_pre_delete_group','rcl_tab_groups_remove_cache',10);
+add_action('rcl_group_add_user','rcl_tab_groups_remove_cache',10);
+add_action('rcl_group_remove_user','rcl_tab_groups_remove_cache',10);
+function rcl_tab_groups_remove_cache($groupdata){
+    global $rcl_options;
+    if(isset($rcl_options['use_cache'])&&$rcl_options['use_cache']){
+        
+        if(is_array($groupdata)){
+            $group_id = $groupdata['group_id'];
+            $user_id = $groupdata['user_id'];
+        }else{
+            $group_id = $groupdata;
+            $group = rcl_get_group($group_id);
+            $user_id = $group->admin_id;
+        }
+
+        $string = rcl_format_url(get_author_posts_url($user_id),'groups');
+
+        $rcl_cache = new Rcl_Cache();       
+        $rcl_cache->get_file($string);
+        $rcl_cache->delete_cache();
+        
+    }
+}
+
+add_action('update_post_rcl','rcl_groups_widget_posts_remove_cache',10,2);
+function rcl_groups_widget_posts_remove_cache($post_id,$postdata){
+    if($postdata['post_type']!='post-group') return false;
+    
+    global $rcl_options;
+    if(isset($rcl_options['use_cache'])&&$rcl_options['use_cache']){
+        $group_id = rcl_get_group_id_by_post($post_id);
+        $rcl_cache = new Rcl_Cache();       
+        $rcl_cache->get_file('group-posts-widget:'.$group_id);
+        $rcl_cache->delete_cache();
+    }
+}
+
 add_filter('taxonomy_public_form_rcl','rcl_add_taxonomy_public_groups');
 function rcl_add_taxonomy_public_groups($tax){
     if (!isset($tax['post-group'])) $tax['post-group'] = 'groups';
@@ -31,7 +71,7 @@ function rcl_add_postlist_group(){
 
 add_action('init','rcl_add_tab_groups');
 function rcl_add_tab_groups(){
-    rcl_tab('groups','rcl_tab_groups',__('Groups','wp-recall'),array('public'=>1,'class'=>'fa-group'));
+    rcl_tab('groups','rcl_tab_groups',__('Groups','wp-recall'),array('public'=>1,'cache'=>true,'class'=>'fa-group'));
 }
 
 function rcl_ajax_tab_groups($array_tabs){
@@ -376,6 +416,8 @@ function rcl_add_group_user_options(){
 add_action('wp_ajax_rcl_apply_group_request','rcl_apply_group_request');
 function rcl_apply_group_request(){
     global $rcl_group,$user_ID;
+    
+    rcl_verify_ajax_nonce();
 
     $user_id = intval($_POST['user_id']);
     $apply = intval($_POST['apply']);
@@ -453,7 +495,7 @@ function rcl_add_feed_group_posts($posts){
 add_filter('file_scripts_rcl','rcl_get_scripts_groups');
 function rcl_get_scripts_groups($script){
 
-	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
+	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
 
 	$script .= "
 	jQuery('#rcl-group').on('click','a.rcl-group-link',function(){
@@ -463,6 +505,7 @@ function rcl_get_scripts_groups($script){
 
             var dataString = 'action=rcl_get_group_link_content&group_id='+group_id+'&callback='+callback;
             if(value) dataString += '&value='+value;
+            dataString += '&ajax_nonce='+Rcl.nonce;
             rcl_preloader_show('#rcl-group > div');
             jQuery.ajax({
                 ".$ajaxdata."
@@ -494,6 +537,7 @@ function rcl_get_scripts_groups($script){
             var url = jQuery(this).attr('href');
             var group_id = jQuery(this).parents('#rcl-group').data('group');
             var dataString = 'action=rcl_get_group_link_content&group_id='+group_id+'&callback=rcl_get_group_users&page='+page+'&get='+url;
+            dataString += '&ajax_nonce='+Rcl.nonce;
             rcl_preloader_show('#rcl-group > div');
             jQuery.ajax({
                 ".$ajaxdata."
@@ -521,6 +565,7 @@ function rcl_get_scripts_groups($script){
             var apply = button.data('request');
             var group_id = button.parents('#rcl-group').data('group');
             var dataString = 'action=rcl_apply_group_request&group_id='+group_id+'&user_id='+user_id+'&apply='+apply;
+            dataString += '&ajax_nonce='+Rcl.nonce;
             rcl_preloader_show('#group-popup > div');
             jQuery.ajax({
                 ".$ajaxdata."
@@ -546,6 +591,7 @@ function rcl_get_scripts_groups($script){
             }
             var user_id = jQuery(this).parents('.group-request').data('user');
             var dataString = 'action=rcl_group_callback&group_id='+group_id+'&callback='+callback+'&user_id='+user_id;
+            dataString += '&ajax_nonce='+Rcl.nonce;
             if(name) dataString += '&'+name+'='+valname;
             rcl_preloader_show('#rcl-group > div');
             jQuery.ajax({
@@ -579,8 +625,8 @@ function rcl_get_groups_footer_scripts($script){
 	$('#groupavatarupload').fileupload({
 		dataType: 'json',
 		type: 'POST',
-		url: wpurl+'wp-admin/admin-ajax.php',
-		formData:{action:'rcl_group_avatar_upload'},
+		url: Rcl.ajaxurl,
+		formData:{action:'rcl_group_avatar_upload',ajax_nonce:Rcl.nonce},
 		loadImageMaxFileSize: ".$maxsize.",
 		autoUpload:true,
 		imageMinWidth:150,

@@ -8,5 +8,5 @@ global $rcl_options;
 unset($rcl_options['max_private_message']);
 unset($rcl_options['update_private_message']);
 unset($rcl_options['global_update_private_message']);
-update_option('primary-rcl-options',$rcl_options);
+update_option('rcl_global_options',$rcl_options);
 ?>

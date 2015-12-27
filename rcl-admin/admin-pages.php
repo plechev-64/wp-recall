@@ -72,18 +72,18 @@ function rcl_global_options(){
     include_once RCL_PATH.'functions/rcl_options.php';
     $fields = new Rcl_Options();
 
-    $rcl_options = get_option('primary-rcl-options');
+    $rcl_options = get_option('rcl_global_options');
 
     $content = '<h2>'.__('Configure the plugin Wp-Recall and additions','wp-recall').'</h2>
         <div id="recall" class="left-sidebar wrap">
 	<form method="post" action="">
 	'.wp_nonce_field('update-options-rcl','_wpnonce',true,false).'
-	<span class="title-option active">'.__('General settings','wp-recall').'</span>
+	<span class="title-option active"><span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '.__('General settings','wp-recall').'</span>
 	<div class="wrap-recall-options" style="display:block;">';
 
                 $args = array(
                     'selected'   => $rcl_options['lk_page_rcl'],
-                    'name'       => 'lk_page_rcl',
+                    'name'       => 'global[lk_page_rcl]',
                     'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
                     'echo'       => 0
                 );
@@ -163,6 +163,34 @@ function rcl_global_options(){
                         $fields->option('number',array('name'=>'slide-pause')),
                         $fields->notice(__('The value of the pause between slide transitions in seconds. Default value is 0 - the slide show is not made','wp-recall')),
 
+                    )
+                );
+                
+                $content .= $fields->option_block(
+                    array(
+			$fields->title(__('Caching','wp-recall')),
+                        
+                        $fields->label(__('Cache','wp-recall')),
+                        $fields->option('select',array(
+                            'name'=>'use_cache',
+                            'parent'=>true,
+                            'options'=>array(
+                                __('Disabled','wp-recall'),
+                                __('Included','wp-recall'))
+                        )),
+                        
+                        $fields->child(
+                             array(
+                                 'name'=>'use_cache',
+                                 'value'=>1
+                             ),
+                             array(
+                                 $fields->label(__('Time cache (seconds)','wp-recall')),
+                                 $fields->option('number',array('name'=>'cache_time','default'=>3600)),
+                                 $fields->notice(__('Default','wp-recall').': 3600')
+                             )
+                        ),
+
                         $fields->label(__('Minimization of style files','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'minify_css',
@@ -171,19 +199,7 @@ function rcl_global_options(){
                                 __('Disabled','wp-recall'),
                                 __('Included','wp-recall'))
                         )),
-                        $fields->notice(__('Minimization of style files only works against the style files Wp-Recall and additions that support this feature','wp-recall')),
-			$fields->child(
-                             array(
-                                 'name'=>'minify_css',
-                                 'value'=>1
-                             ),
-                             array(
-                                 $fields->label(__('Your stylesheet(CSS)','wp-recall')),
-                                 $fields->option('text',array('name'=>'custom_scc_file_recall')),
-                                 $fields->notice(__('File replaces the minified stylesheet, if enabled minimization','wp-recall')),
-                                 $filecss
-                             )
-                        )
+                        $fields->notice(__('Minimization of style files only works against the style files Wp-Recall and additions that support this feature','wp-recall'))			
                     )
                 );
 
@@ -207,8 +223,12 @@ function rcl_global_options(){
                             ),
                             array(
                                 $fields->label(__('ID of the page with the shortcode [loginform]','wp-recall')),
-                                $fields->option('text',array('name'=>'page_login_form_recall','wp-recall')),
-                                $fields->notice(__('<b>note:</b> If selected, the order of the login form and registration on a separate page, create the page, to arrange its contents shortcode [loginform] and specify the ID of this page in the box above.','wp-recall'))
+                                wp_dropdown_pages( array(
+                                        'selected'   => $rcl_options['page_login_form_recall'],
+                                        'name'       => 'global[page_login_form_recall]',
+                                        'show_option_none' => __('Not selected','wp-recall'),
+                                        'echo'             => 0 )
+                                )
                             )
                         ),
                         $fields->label(__('A registration confirmation by the user','wp-recall')),
@@ -267,7 +287,8 @@ function rcl_global_options(){
                         $fields->title(__('Your gratitude','wp-recall')),
                         $fields->label(__('To display a link to the developer`s site (Thank you, if you decide to show)','wp-recall')),
                         $fields->option('select',array(
-                               'name'=>'footer_url_recall',
+                               'name'=>'rcl_footer_link',
+                               'type'=>'local',
                                'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
                         ))
                     )
@@ -278,7 +299,7 @@ function rcl_global_options(){
     $content = apply_filters('admin_options_wprecall',$content);
 
     $content .= '<div class="submit-block">
-    <p><input type="submit" class="button button-primary button-large right" name="primary-rcl-options" value="'.__('Save settings','wp-recall').'" /></p>
+    <p><input type="submit" class="button button-primary button-large right" name="rcl_global_options" value="'.__('Save settings','wp-recall').'" /></p>
     </div></form></div>';
 
     echo $content;
@@ -304,7 +325,7 @@ function rcl_theme_list(){
     }
     if($t_list){
             $content = '<label>'.__('Used template','wp-recall').'</label>';
-            $content .= '<select name="color_theme" size="1">
+            $content .= '<select name="global[color_theme]" size="1">
                 <option value="">'.__('Not connected','wp-recall').'</option>
                     '.$t_list.'
             </select>';

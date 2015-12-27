@@ -7,7 +7,7 @@ function rcl_get_publics_options_page($content){
 
     $args = array(
         'selected'   => $rcl_options['public_form_page_rcl'],
-        'name'       => 'public_form_page_rcl',
+        'name'       => 'global[public_form_page_rcl]',
         'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
         'echo'             => 0
     );
@@ -81,49 +81,30 @@ function rcl_get_publics_options_page($content){
                         . 'to specify the desired category in shortcode forms, for example: [public-form cats="72,149"] '
                         . 'or for each form separately on the page generate custom fields','wp-recall')),
                 $opt->notice(__('It is better to specify the parent category, then their child will be withdrawn automatically.','wp-recall')),
-
-                $opt->label(__('Number of columns to select','wp-recall')),
+                
+                $opt->label(__('Output category list','wp-recall')),
                 $opt->option('select',array(
-                    'name'=>'count_category_post',
-                    'default'=>1,
-                    'options'=>array(1=>1,2=>2,3=>3,4=>4,5=>5)
-                ))
-            )
-        ),
-        /*$opt->option_block(
-            array(
-                $opt->title(__('Media','wp-recall')),
-
-                $opt->label(__('Load the media files to the publications','wp-recall')),
-                $opt->option('select',array(
-                    'name'=>'media_downloader_recall',
+                    'name'=>'output_category_list',
                     'parent'=>true,
-                    'options'=>array(__('Download Wp-Recall','wp-recall'),__('The Wordpress Media Library','wp-recall'))
+                    'options'=>array(
+                        'select'=>__('select','wp-recall'),
+                        'checkbox'=>__('checkbox','wp-recall')
+                    )
                 )),
-                $opt->child(
-                    array('name'=>'media_downloader_recall','value'=>0),
+		$opt->child(
+                    array('name'=>'output_category_list','value'=>'select'),
                     array(
-                        $opt->notice(__('<b>note:</b> Using the ability to upload media to Wp-Recall you disable the ability to use the media library site, the downloaded files will form the gallery of images above the content you publish.','wp-recall')),
-                        $opt->label(__('Number of images in the gallery Wp-Recall','wp-recall')),
+                        $opt->label(__('Number of columns to select','wp-recall')),
                         $opt->option('select',array(
-                            'name'=>'count_image_gallery',
-                            'options'=>$count_img
-                        )),
-
-                        $opt->label(__('The maximum image size, Mb','wp-recall')),
-                        $opt->option('number',array('name'=>'public_gallery_weight')),
-                        $opt->notice(__('To limit image uploads to publish this value in megabytes. By default, 2MB','wp-recall')),
-
-                        $opt->label(__('The size in the editor by default','wp-recall')),
-                        $opt->option('select',array(
-                            'name'=>'default_size_thumb',
-                            'options'=>$d_sizes
-                        )),
-                        $opt->notice(__('Select the picture size in the silence of their use in the visual editor during the publishing process','wp-recall'))
+                            'name'=>'count_category_post',
+                            'default'=>1,
+                            'options'=>array(1=>1,2=>2,3=>3,4=>4,5=>5)
+                        ))
                     )
                 )
+                
             )
-        ),*/
+        ),
         $opt->option_block(
             array(
                 $opt->title(__('Form of publication','wp-recall')),
@@ -131,13 +112,13 @@ function rcl_get_publics_options_page($content){
                 $opt->label(__('Text editor','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'type_text_editor',
-					'parent'=>true,
+                    'parent'=>true,
                     'options'=>array(
                         __('WP-RECALL editor','wp-recall'),
                         __('WordPress editor','wp-recall')
                     )
                 )),
-				$opt->child(
+		$opt->child(
                     array('name'=>'type_text_editor','value'=>0),
                     array(
                         $opt->label(__('Images sizes','wp-recall')),
@@ -159,7 +140,7 @@ function rcl_get_publics_options_page($content){
                         ))
                     )
                 ),
-				$opt->child(
+		$opt->child(
                     array('name'=>'type_text_editor','value'=>1),
                     array(
                         $opt->label(__('View editor WP','wp-recall')),
@@ -216,7 +197,7 @@ function rcl_get_publics_options_page($content){
                         $opt->label(__('Redirect page','wp-recall')),
                         wp_dropdown_pages( array(
 							'selected'   => $guest_redirect,
-							'name'       => 'guest_post_redirect',
+							'name'       => 'global[guest_post_redirect]',
 							'show_option_none' => __('Not selected','wp-recall'),
 							'echo'             => 0 )
 						),
@@ -233,7 +214,7 @@ function rcl_get_publics_options_page($content){
             )
         ),
 
-		$opt->option_block(
+	$opt->option_block(
             array(
                 $opt->title(__('Editing','wp-recall')),
 
@@ -241,18 +222,18 @@ function rcl_get_publics_options_page($content){
                 $opt->option('checkbox',array(
                     'name'=>'front_editing',
                     'options'=>array(
-						10=>__('Administrators','wp-recall'),
-						7=>__('Editors','wp-recall'),
-						2=>__('Authors','wp-recall')
-					)
+                            10=>__('Administrators','wp-recall'),
+                            7=>__('Editors','wp-recall'),
+                            2=>__('Authors','wp-recall')
+                    )
                 )),
-				$opt->label(__('Time limit editing','wp-recall')),
+		$opt->label(__('Time limit editing','wp-recall')),
                 $opt->option('number',array('name'=>'time_editing')),
-				$opt->notice(__('Limit editing time of publication in hours, by default: unlimited','wp-recall'))
+		$opt->notice(__('Limit editing time of publication in hours, by default: unlimited','wp-recall'))
             )
         ),
 
-		$opt->option_block(
+	$opt->option_block(
             array(
                 $opt->title(__('Tags','wp-recall')),
                 

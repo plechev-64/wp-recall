@@ -222,7 +222,7 @@ class Rcl_Custom_Fields{
         require_once(ABSPATH . "wp-admin" . '/includes/file.php');
         require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
-        $get_fields = get_option( 'custom_profile_field' );
+        $get_fields = get_option( 'rcl_profile_fields' );
 
         if(!$get_fields) return false;
 
@@ -356,10 +356,10 @@ function rcl_get_custom_fields($post_id,$posttype=false,$id_form=false){
         case 'post':
                 if(isset($post)) $id_form = get_post_meta($post->ID,'publicform-id',1);
                 if(!$id_form) $id_form = 1;
-                $id_field = 'custom_public_fields_'.$id_form;
+                $id_field = 'rcl_fields_post_'.$id_form;
         break;
-        case 'products': $id_field = 'custom_saleform_fields'; break;
-        default: $id_field = 'custom_fields_'.$posttype;
+        case 'products': $id_field = 'rcl_fields_products'; break;
+        default: $id_field = 'rcl_fields_'.$posttype;
     }
 
     return get_option($id_field);

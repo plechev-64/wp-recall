@@ -4,6 +4,9 @@
 *************************************************/
 function rcl_add_minicart(){
     global $rmag_options,$CartData;
+    
+    rcl_verify_ajax_nonce();
+    
     $id_post = intval($_POST['id_post']);
     $number = intval($_POST['number']);
 
@@ -100,6 +103,8 @@ add_action('wp_ajax_nopriv_rcl_add_cart', 'rcl_add_cart');
 Уменьшаем товар в корзине
 *************************************************/
 function rcl_remove_product_cart(){
+    
+    rcl_verify_ajax_nonce();
 
     $id_post = intval($_POST['id_post']);
     $number = intval($_POST['number']);
@@ -151,6 +156,8 @@ add_action('wp_ajax_nopriv_rcl_remove_product_cart', 'rcl_remove_product_cart');
 Подтверждение заказа
 *************************************************/
 function rcl_confirm_order(){
+    
+    rcl_verify_ajax_nonce();
 
 	global $user_ID,$rmag_options,$order;
 
@@ -159,7 +166,7 @@ function rcl_confirm_order(){
             include_once 'rcl_order.php';
             $ord = new Rcl_Order();
 
-            $get_fields = get_option( 'custom_orders_field' );
+            $get_fields = get_option( 'rcl_cart_fields' );
             $requared = $ord->chek_requared_fields($get_fields);
 
             if($requared){
@@ -252,6 +259,8 @@ add_action('wp_ajax_nopriv_rcl_confirm_order', 'rcl_confirm_order');
 *************************************************/
 function rcl_edit_order_status(){
 	global $user_ID,$rmag_options,$wpdb;
+        
+        rcl_verify_ajax_nonce();
 
 	$order = intval($_POST['order']);
 	$status = intval($_POST['status']);
@@ -299,9 +308,10 @@ add_action('wp_ajax_rcl_edit_order_status', 'rcl_edit_order_status');
 Удаление заказа в корзину
 *************************************************/
 function rcl_delete_trash_order(){
-    global $user_ID;
-    global $wpdb;
-    global $rmag_options;
+    global $user_ID,$wpdb,$rmag_options;
+    
+    rcl_verify_ajax_nonce();
+    
     $idorder = intval($_POST['idorder']);
 
     if($idorder&&$user_ID){
@@ -328,22 +338,24 @@ add_action('wp_ajax_rcl_delete_trash_order', 'rcl_delete_trash_order');
 Полное удаление заказа
 *************************************************/
 function rcl_all_delete_order(){
-	global $user_ID;
-	global $wpdb;
-	$idorder = intval($_POST['idorder']);
+    global $user_ID,$wpdb;
 
-	if($idorder&&$user_ID){
-            $res = rcl_delete_order($idorder);
+    rcl_verify_ajax_nonce();
 
-            if($res){
-                    $log['otvet']=100;
-                    $log['idorder']=$idorder;
-            }
-	} else {
-		$log['otvet']=1;
-	}
-	echo json_encode($log);
-	exit;
+    $idorder = intval($_POST['idorder']);
+
+    if($idorder&&$user_ID){
+        $res = rcl_delete_order($idorder);
+
+        if($res){
+                $log['otvet']=100;
+                $log['idorder']=$idorder;
+        }
+    } else {
+            $log['otvet']=1;
+    }
+    echo json_encode($log);
+    exit;
 }
 add_action('wp_ajax_rcl_all_delete_order', 'rcl_all_delete_order');
 add_action('wp_ajax_nopriv_rcl_all_delete_order', 'rcl_all_delete_order');
@@ -353,6 +365,8 @@ add_action('wp_ajax_nopriv_rcl_all_delete_order', 'rcl_all_delete_order');
 *************************************************/
 function rcl_register_user_order(){
     global $rmag_options,$wpdb,$order,$rcl_options;
+    
+    rcl_verify_ajax_nonce();
 
     $reg_user = ($rmag_options['noreg_order'])? false: true;
 
@@ -362,154 +376,154 @@ function rcl_register_user_order(){
     include_once 'rcl_order.php';
     $ord = new Rcl_Order();
 
-    $get_fields = get_option( 'custom_profile_field' );
-    $get_order_fields = get_option( 'custom_orders_field' );
+    $get_fields = get_option( 'rcl_profile_fields' );
+    $get_order_fields = get_option( 'rcl_cart_fields' );
 
     $req_prof = $ord->chek_requared_fields($get_fields,'profile');
     $req_order = $ord->chek_requared_fields($get_order_fields);
 
-	if($email_new_user&&$req_prof&&$req_order){
+    if($email_new_user&&$req_prof&&$req_order){
 
-            $res_email = email_exists( $email_new_user );
-            $res_login = username_exists($email_new_user);
-            $correctemail = is_email($email_new_user);
-            $valid = validate_username($email_new_user);
+        $res_email = email_exists( $email_new_user );
+        $res_login = username_exists($email_new_user);
+        $correctemail = is_email($email_new_user);
+        $valid = validate_username($email_new_user);
 
-            if(!$reg_user&&(!$correctemail||!$valid)){
-		if(!$valid||!$correctemail){
+        if(!$reg_user&&(!$correctemail||!$valid)){
+            if(!$valid||!$correctemail){
+                $log['int']=1;
+                $log['recall'] = '<p style="text-align:center;color:red;">Вы ввели некорректный email!</p>';
+                echo json_encode($res);
+                exit;
+            }
+        }
+
+        //var_dump($reg_user);exit;
+        if($reg_user&&($res_login||$res_email||!$correctemail||!$valid)){
+
+            if(!$valid||!$correctemail){
+                $log['int']=1;
+                $log['recall'] .= '<p style="text-align:center;color:red;">Вы ввели некорректный email!</p>';
+            }
+            if($res_login||$res_email){
+                $log['int']=1;
+                $log['recall'] .= '<p style="text-align:center;color:red;">Этот email уже используется!<br>'
+                        . 'Если это ваш email, то авторизуйтесь и продолжите оформление заказа.</p>';
+            }
+
+        }else{
+
+            $user_id = false;
+
+            if(!$reg_user){
+                $user = get_user_by('email', $email_new_user);
+                if($user) $user_id = $user->ID;
+            }
+
+            if(!$user_id){
+
+                $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+
+                $userdata = array(
+                    'user_pass'=>$random_password,
+                    'user_login'=>$email_new_user,
+                    'user_email'=>$email_new_user,
+                    'display_name'=>$fio_new_user
+                );
+
+                $user_id = rcl_insert_user($userdata);
+
+            }
+
+            if($user_id){
+
+                if($get_fields&&$user_id){
+                    $cf = new Rcl_Custom_Fields();
+                    $cf->register_user_metas($user_id);
+                }
+
+                //Сразу авторизуем пользователя
+                if($reg_user&&!$rcl_options['confirm_register_recall']){
+
+                    $creds = array();
+                    $creds['user_login'] = $email_new_user;
+                    $creds['user_password'] = $random_password;
+                    $creds['remember'] = true;
+                    $user = wp_signon( $creds, false );
+                    $redirect_url = rcl_format_url(get_author_posts_url($user_id),'orders');
+
+                }else{
+
+                    $redirect_url = false;
+
+                }
+
+                $order_id = $ord->get_order_id();
+
+                $results = $ord->insert_order($order_id,$user_id);
+
+                if(!$results){
                     $log['int']=1;
-                    $log['recall'] = '<p style="text-align:center;color:red;">Вы ввели некорректный email!</p>';
-                    echo json_encode($res);
+                    $log['recall'] = '<p style="text-align:center;color:red;">Возникла ошибка, заказ не был создан!</p>';
+                    echo json_encode($log);
                     exit;
                 }
-            }
 
-            //var_dump($reg_user);exit;
-            if($reg_user&&($res_login||$res_email||!$correctemail||!$valid)){
+                $order_custom_field = $ord->insert_detail_order($get_order_fields);
+                $order = rcl_get_order($order_id);
+                $table_order = rcl_get_include_template('order.php',__FILE__);
+                $ord->send_mail($order_custom_field,$table_order,$user_id,$creds);
 
-                if(!$valid||!$correctemail){
-                    $log['int']=1;
-                    $log['recall'] .= '<p style="text-align:center;color:red;">Вы ввели некорректный email!</p>';
-                }
-                if($res_login||$res_email){
-                    $log['int']=1;
-                    $log['recall'] .= '<p style="text-align:center;color:red;">Этот email уже используется!<br>'
-                            . 'Если это ваш email, то авторизуйтесь и продолжите оформление заказа.</p>';
-                }
+                $notice = ($rcl_options['confirm_register_recall']==1)? '<p class=res_confirm style="color:orange;">Для отслеживания статуса заказа подтвердите указанный email!<br>'
+                            . 'Перейдите по ссылке в высланном письме.</p>': '';
 
-            }else{
-
-                $user_id = false;
-
-                if(!$reg_user){
-                    $user = get_user_by('email', $email_new_user);
-                    if($user) $user_id = $user->ID;
+                if(!$order->order_price){ //Если заказ бесплатный
+                    $notice .= "<p class='res_confirm'>Ваш заказ был создан!<br />"
+                            . "Заказ содержал только бесплатные товары<br>"
+                            . "Заказу присвоен статус - \"Оплачено\"<br>"
+                            . "Заказ поступил в обработку. В своем личном кабинете вы можете узнать статус вашего заказа.</p>";
+                    $log['recall'] = $notice;
+                    $log['redirect']= $redirect_url;
+                    $log['int']=100;
+                    echo json_encode($log);
+                    exit;
                 }
 
-                if(!$user_id){
+                if(function_exists('rcl_payform')){
+                    $type_order_payment = $rmag_options['type_order_payment'];
+                    if($type_order_payment==1||$type_order_payment==2){
 
-                    $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+                        $notice .= "<p class='res_confirm'>Ваш заказ был создан!<br />Заказу присвоен статус - \"Неоплачено\"<br />Вы можете оплатить его сейчас или из своего ЛК. Там же вы можете узнать статус вашего заказа.</p>";
+                        if($type_order_payment==2) $notice .= "<p class='res_confirm'>Вы можете пополнить свой личный счет на сайте из своего личного кабинета и в будущем оплачивать свои заказы через него</p>";
 
-                    $userdata = array(
-                        'user_pass'=>$random_password,
-                        'user_login'=>$email_new_user,
-                        'user_email'=>$email_new_user,
-                        'display_name'=>$fio_new_user
-                    );
-
-                    $user_id = rcl_insert_user($userdata);
-
-                }
-
-		if($user_id){
-
-                    if($get_fields&&$user_id){
-                        $cf = new Rcl_Custom_Fields();
-                        $cf->register_user_metas($user_id);
-                    }
-
-                    //Сразу авторизуем пользователя
-                    if($reg_user&&!$rcl_options['confirm_register_recall']){
-
-                        $creds = array();
-                        $creds['user_login'] = $email_new_user;
-                        $creds['user_password'] = $random_password;
-                        $creds['remember'] = true;
-                        $user = wp_signon( $creds, false );
-                        $redirect_url = rcl_format_url(get_author_posts_url($user_id),'orders');
-
-                    }else{
-
-                        $redirect_url = false;
-
-                    }
-
-                    $order_id = $ord->get_order_id();
-
-                    $results = $ord->insert_order($order_id,$user_id);
-
-                    if(!$results){
-                        $log['int']=1;
-                        $log['recall'] = '<p style="text-align:center;color:red;">Возникла ошибка, заказ не был создан!</p>';
-                        echo json_encode($log);
-                        exit;
-                    }
-
-                    $order_custom_field = $ord->insert_detail_order($get_order_fields);
-                    $order = rcl_get_order($order_id);
-                    $table_order = rcl_get_include_template('order.php',__FILE__);
-                    $ord->send_mail($order_custom_field,$table_order,$user_id,$creds);
-
-                    $notice = ($rcl_options['confirm_register_recall']==1)? '<p class=res_confirm style="color:orange;">Для отслеживания статуса заказа подтвердите указанный email!<br>'
-                                . 'Перейдите по ссылке в высланном письме.</p>': '';
-
-                    if(!$order->order_price){ //Если заказ бесплатный
-                        $notice .= "<p class='res_confirm'>Ваш заказ был создан!<br />"
-                                . "Заказ содержал только бесплатные товары<br>"
-                                . "Заказу присвоен статус - \"Оплачено\"<br>"
-                                . "Заказ поступил в обработку. В своем личном кабинете вы можете узнать статус вашего заказа.</p>";
-                        $log['recall'] = $notice;
-                        $log['redirect']= $redirect_url;
-                        $log['int']=100;
-                        echo json_encode($log);
-                        exit;
-                    }
-
-                    if(function_exists('rcl_payform')){
-                        $type_order_payment = $rmag_options['type_order_payment'];
-                        if($type_order_payment==1||$type_order_payment==2){
-
-                            $notice .= "<p class='res_confirm'>Ваш заказ был создан!<br />Заказу присвоен статус - \"Неоплачено\"<br />Вы можете оплатить его сейчас или из своего ЛК. Там же вы можете узнать статус вашего заказа.</p>";
-                            if($type_order_payment==2) $notice .= "<p class='res_confirm'>Вы можете пополнить свой личный счет на сайте из своего личного кабинета и в будущем оплачивать свои заказы через него</p>";
-
-                            if(!$rcl_options['confirm_register_recall']){
-                                $notice .= "<p align='center'><a href='".$redirect_url."'>Перейти в свой личный кабинет</a></p>";
-                                $notice .= rcl_payform(array('id_pay'=>$order_id,'summ'=>$order->order_price,'user_id'=>$user_id,'type'=>2));
-                            }
-                            $log['recall'] = $notice;
-                            $log['redirect']=0;
-                            $log['int']=100;
-
-                        }else{
-                            $log['int']=100;
-                            $log['redirect']= $redirect_url;
-                            $notice .= "<p class=res_confirm>Ваш заказ был создан!<br />Проверьте свою почту.</p>";
-                            $log['recall'] = $notice;
+                        if(!$rcl_options['confirm_register_recall']){
+                            $notice .= "<p align='center'><a href='".$redirect_url."'>Перейти в свой личный кабинет</a></p>";
+                            $notice .= rcl_payform(array('id_pay'=>$order_id,'summ'=>$order->order_price,'user_id'=>$user_id,'type'=>2));
                         }
+                        $log['recall'] = $notice;
+                        $log['redirect']=0;
+                        $log['int']=100;
+
                     }else{
                         $log['int']=100;
-                        $log['redirect'] = $redirect_url;
-                        $notice .= '<p class=res_confirm>Ваш заказ был создан!<br />Проверьте свою почту.</p>';
+                        $log['redirect']= $redirect_url;
+                        $notice .= "<p class=res_confirm>Ваш заказ был создан!<br />Проверьте свою почту.</p>";
                         $log['recall'] = $notice;
                     }
+                }else{
+                    $log['int']=100;
+                    $log['redirect'] = $redirect_url;
+                    $notice .= '<p class=res_confirm>Ваш заказ был создан!<br />Проверьте свою почту.</p>';
+                    $log['recall'] = $notice;
                 }
             }
-	}else{
-            $log['int']=1;
-            $log['recall'] = '<p style="text-align:center;color:red;">Пожалуйста, заполните все обязательные поля!</p>';
         }
-	echo json_encode($log);
-	exit;
+    }else{
+        $log['int']=1;
+        $log['recall'] = '<p style="text-align:center;color:red;">Пожалуйста, заполните все обязательные поля!</p>';
+    }
+    echo json_encode($log);
+    exit;
 }
 add_action('wp_ajax_rcl_register_user_order', 'rcl_register_user_order');
 add_action('wp_ajax_nopriv_rcl_register_user_order', 'rcl_register_user_order');
@@ -519,67 +533,73 @@ add_action('wp_ajax_nopriv_rcl_register_user_order', 'rcl_register_user_order');
 Оплата заказа средствами с личного счета
 *************************************************/
 function rcl_pay_order_private_account(){
-	global $user_ID,$wpdb,$rmag_options,$order;
-	$order_id = intval($_POST['idorder']);
+    global $user_ID,$wpdb,$rmag_options,$order;
 
-	if(!$order_id||!$user_ID){
-		$log['otvet']=1;
-		echo json_encode($log);
-		exit;
-	}
+    rcl_verify_ajax_nonce();
 
-	$order = rcl_get_order($order_id);
-	//rcl_setup_orderdata($order);
+    $order_id = intval($_POST['idorder']);
 
-	$oldusercount = rcl_get_user_money();
+    if(!$order_id||!$user_ID){
+            $log['otvet']=1;
+            echo json_encode($log);
+            exit;
+    }
 
-	if(!$oldusercount){
-		$log['otvet']=1;
-		$log['recall'] = $order->order_price;
-		echo json_encode($log);
-		exit;
-	}
+    $order = rcl_get_order($order_id);
+    //rcl_setup_orderdata($order);
 
-	//print_r($order);
+    $oldusercount = rcl_get_user_money();
 
-	$newusercount = $oldusercount - $order->order_price;
+    if(!$oldusercount){
+            $log['otvet']=1;
+            $log['recall'] = $order->order_price;
+            echo json_encode($log);
+            exit;
+    }
 
-	if($newusercount<0){
-		$log['otvet']=1;
-		$log['recall'] = $order->order_price;
-		echo json_encode($log);
-		exit;
-	}
+    //print_r($order);
 
-	rcl_update_user_money($newusercount);
+    $newusercount = $oldusercount - $order->order_price;
 
-	$result = rcl_update_status_order($order_id,2);
+    if($newusercount<0){
+            $log['otvet']=1;
+            $log['recall'] = $order->order_price;
+            echo json_encode($log);
+            exit;
+    }
 
-	if(!$result){
-		$log['otvet']=1;
-		$log['recall'] = 'Ошибка запроса!';
-		echo json_encode($log);
-		exit;
-	}
+    rcl_update_user_money($newusercount,$user_ID,'Оплата заказа №'.$order_id);
 
-	rcl_payment_order($order_id,$user_ID);
+    $result = rcl_update_status_order($order_id,2);
+
+    if(!$result){
+            $log['otvet']=1;
+            $log['recall'] = 'Ошибка запроса!';
+            echo json_encode($log);
+            exit;
+    }
+
+    rcl_payment_order($order_id,$user_ID);
 
     do_action('payment_rcl',$user_ID,$order->order_price,$order_id,2);
 
-	$text = "<p>Ваш заказ успешно оплачен! Соответствующее уведомление было выслано администрации сервиса.</p>";
+    $text = "<p>Ваш заказ успешно оплачен! Соответствующее уведомление было выслано администрации сервиса.</p>";
 
-	$text = apply_filters('payment_order_text',$text);
+    $text = apply_filters('payment_order_text',$text);
 
-	$log['recall'] = "<div style='clear: both;color:green;font-weight:bold;padding:10px; border:2px solid green;'>".$text."</div>";
-	$log['count'] = $newusercount;
-	$log['idorder']=$order_id;
-	$log['otvet']=100;
-	echo json_encode($log);
-	exit;
+    $log['recall'] = "<div style='clear: both;color:green;font-weight:bold;padding:10px; border:2px solid green;'>".$text."</div>";
+    $log['count'] = $newusercount;
+    $log['idorder']=$order_id;
+    $log['otvet']=100;
+    echo json_encode($log);
+    exit;
 }
 add_action('wp_ajax_rcl_pay_order_private_account', 'rcl_pay_order_private_account');
 
 function rcl_edit_price_product(){
+    
+    rcl_verify_ajax_nonce();
+    
     $id_post = intval($_POST['id_post']);
     $price = intval($_POST['price']);
     if(isset($price)){
@@ -591,5 +611,5 @@ function rcl_edit_price_product(){
     echo json_encode($log);
     exit;
 }
-if(is_admin()) add_action('wp_ajax_rcl_edit_price_product', 'rcl_edit_price_product');
-?>
+if(is_admin()) 
+    add_action('wp_ajax_rcl_edit_price_product', 'rcl_edit_price_product');

@@ -14,9 +14,11 @@ function rcl_repository_page(){
             }
         }
     }
+    
+    $page = (isset($_GET['paged']))? $_GET['paged']: 1;
 
      $url = 'http://wppost.ru/products-files/api/add-ons.php'
-            . '?rcl-addon-info=get-add-ons&number=20';
+            . '?rcl-addon-info=get-add-ons&page='.$page;
 
      $data = array(
         'rcl-key' => get_option('rcl-key'),
@@ -44,11 +46,15 @@ function rcl_repository_page(){
     if(is_array($result)&&isset($result['error'])){
         echo '<h2>Ошибка! '.$result['error'].'</h2>'; exit;
     }
+    
+    $pagenavi = rcl_navi_admin($result->number,$result->count,$result->page,'rcl-repository','');
+    
+    //$content = $pagenavi;
 
     $content = '<div class="wp-list-table widefat plugin-install">
 	<div id="the-list">';
-    foreach($result as $add){
-        if(!$add||isset($install_addons[$add->slug])) continue;
+    foreach($result->addons as $add){
+        if(!$add) continue;
         (object)$addon;
         foreach($add as $k=>$v){
             $key = str_replace('-','_',$k);
@@ -60,9 +66,12 @@ function rcl_repository_page(){
     }
     $content .= '</div>'
     .'</div>';
+    
+    $content .= $pagenavi;
 
     echo '<h1>Репозиторий дополнений Wp-Recall</h1>';
     echo '<p>На этой странице отображаются доступные на данный момент дополнения, но не установленные на вашем сайте.</p>';
     echo $content;
+    
 }
 

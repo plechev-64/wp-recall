@@ -14,16 +14,16 @@ jQuery(function($){
     
 
     $("#recall").find(".parent-select").each(function(){
-        var name = $(this).attr('name');
+        var id = $(this).attr('id');
         var val = $(this).val();
-        $('#'+name+'-'+val).show();
+        $('#'+id+'-'+val).show();
     });
 
     $('.parent-select').change(function(){
-        var name = $(this).attr('name');
+        var id = $(this).attr('id');
         var val = $(this).val();
-        $('.'+name).slideUp();
-        $('#'+name+'-'+val).slideDown();		
+        $('.'+id).slideUp();
+        $('#'+id+'-'+val).slideDown();		
     });
 
     $('.profilefield-item-edit').click(function() {

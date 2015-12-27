@@ -414,3 +414,18 @@ form #rcl-preview{
 #tab-publics .bx-wrapper .bx-controls-direction .bx-next{
     right: -20px;
 }
+.public_block .category-list{
+    overflow: hidden;
+    padding: 5px;
+    background: #F5F5F5;
+}
+.public_block .category-list span{
+    display: block;
+}
+.public_block .category-list .child-list-category{
+    padding: 5px 5px 5px 10px;
+}
+.public_block .category-list .child-list-category .parent-category{background: #E8E8E8;padding: 5px;}
+.public_block .category-list .child-list-category span{
+    padding-left: 5px;
+}

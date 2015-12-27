@@ -131,7 +131,7 @@ class RCL_Install {
 
     private static function add_addons() {
 
-        //$active_addons = get_site_option('active_addons_recall');
+        //$active_addons = get_site_option('rcl_active_addons');
         $def_addons = apply_filters( 'default_wprecall_addons', array(
             'rating-system',
             'review',
@@ -305,12 +305,13 @@ class RCL_Install {
             //rcl_update_avatar_data();
             //обновление данных фида пользователей
             //rcl_update_old_feeds();
+            
 
         }
 
 	//устанавливаем показ ссылки на сайт автора плагина
-        $rcl_options['footer_url_recall'] = 1;
-        update_option('primary-rcl-options', $rcl_options );
+        update_option('rcl_footer_link',1);
+        update_option('rcl_global_options', $rcl_options );
 
         rcl_update_dinamic_files();
 

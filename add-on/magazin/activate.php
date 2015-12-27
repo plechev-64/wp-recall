@@ -8,18 +8,15 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	  ID bigint (20) NOT NULL AUTO_INCREMENT,
 	  order_id INT(20) NOT NULL,
 	  details_order LONGTEXT NOT NULL,
-	  UNIQUE KEY id (id)
+	  UNIQUE KEY id (id),
+            INDEX order_id (order_id),
 	) DEFAULT CHARSET=utf8;");
-	}
-	$table7 = RMAG_PREF ."user_count";
-   if($wpdb->get_var("show tables like '". $table7 . "'") != $table7) {
-	   $wpdb->query("CREATE TABLE IF NOT EXISTS `". $table7 ."` (
-	  ID bigint (20) NOT NULL AUTO_INCREMENT,
-	  user INT(20) NOT NULL,
-	  count INT(20) NOT NULL,
-	  UNIQUE KEY id (id)
-	) DEFAULT CHARSET=utf8;");
-	}
+	}else{
+            /*14.0.0*/
+            $wpdb->query("ALTER TABLE $table "
+                    . "ADD INDEX order_id (order_id)");
+        }
+        
 	$table8 = RMAG_PREF ."orders_history";
    if($wpdb->get_var("show tables like '". $table8 . "'") != $table8) {
 	   $wpdb->query("CREATE TABLE IF NOT EXISTS `". $table8 . "` (
@@ -31,7 +28,11 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	  numberproduct INT(20) NOT NULL,
 	  order_date DATETIME NOT NULL,
 	  order_status INT(10) NOT NULL,
-	  UNIQUE KEY id (id)
+	  UNIQUE KEY id (id),
+            INDEX order_id (order_id),
+            INDEX user_id (user_id),
+            INDEX product_id (product_id),
+            INDEX order_status (order_status)
 	) DEFAULT CHARSET=utf8;");
         }else{
 
@@ -48,19 +49,15 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
                     CHANGE status order_status INT(10) NOT NULL";
                 $wpdb->query($sql);
             }
+            
+            /*14.0.0*/
+            $wpdb->query("ALTER TABLE $table8 "
+                    . "ADD INDEX order_id (order_id), "
+                    . "ADD INDEX product_id (product_id), "
+                    . "ADD INDEX order_status (order_status), "
+                    . "ADD INDEX user_id (user_id)");
 
         }
-		$table9 = RMAG_PREF ."pay_results";
-   if($wpdb->get_var("show tables like '". $table9 . "'") != $table9) {
-	   $wpdb->query("CREATE TABLE IF NOT EXISTS `". $table9 . "` (
-	  ID bigint (20) NOT NULL AUTO_INCREMENT,
-	  inv_id INT(20) NOT NULL,
-	  user INT(20) NOT NULL,
-	  count INT(20) NOT NULL,
-	  time_action DATETIME NOT NULL,
-	  UNIQUE KEY id (id)
-	) DEFAULT CHARSET=utf8;");
-	}
 
 $rmag_options = get_option('primary-rmag-options');
 

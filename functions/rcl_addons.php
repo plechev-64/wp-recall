@@ -1,15 +1,16 @@
 <?php
 
 function rcl_activate_addon($addon){
-    $active_addons = get_site_option('active_addons_recall');
+    $active_addons = get_site_option('rcl_active_addons');
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
-    foreach($paths as $path){
+    foreach($paths as $k=>$path){
         if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
         $index_src = $path.'/'.$addon.'/index.php';
         if(!is_readable($index_src)) continue;
 
-        $active_addons[$addon]['src'] = $path.'/'.$addon;
+        $active_addons[$addon]['path'] = $path.'/'.$addon;
+        $active_addons[$addon]['priority'] = (!$k)? 1: 0;
         $install_src = $path.'/'.$addon.'/activate.php';
 
         if(file_exists($install_src)){
@@ -18,13 +19,13 @@ function rcl_activate_addon($addon){
         }
     }
 
-    update_site_option('active_addons_recall',$active_addons);
+    update_site_option('rcl_active_addons',$active_addons);
 
     do_action('rcl_activate_'.$addon,$active_addons[$addon]);
 }
 
 function rcl_deactivate_addon($addon){
-    $active_addons = get_site_option('active_addons_recall');
+    $active_addons = get_site_option('rcl_active_addons');
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
     foreach($paths as $path){
@@ -36,13 +37,13 @@ function rcl_deactivate_addon($addon){
 
     unset($active_addons[$addon]);
 
-    update_site_option('active_addons_recall',$active_addons);
+    update_site_option('rcl_active_addons',$active_addons);
 
     do_action('rcl_deactivate_'.$addon);
 }
 
 function rcl_delete_addon($addon){
-    $active_addons = get_site_option('active_addons_recall');
+    $active_addons = get_site_option('rcl_active_addons');
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
     foreach($paths as $path){
@@ -52,7 +53,7 @@ function rcl_delete_addon($addon){
 
     unset($active_addons[$addon]);
 
-    update_site_option('active_addons_recall',$active_addons);
+    update_site_option('rcl_active_addons',$active_addons);
 
     do_action('rcl_delete_'.$addon);
 }
@@ -262,46 +263,6 @@ class Rcl_Addons{
 		echo $table;
 	}
 
-        function get_actual_version($key,$version){
-            global $active_addons;
-
-            $status = (isset($active_addons[$key]))?1:0;
-
-            $url = "http://wppost.ru/products-files/api/update.php"
-                    . "?rcl-addon-action=version-check"
-                    . "&host=".$_SERVER['SERVER_NAME']
-                    . "&addon=".$key
-                    . "&version=".$version
-                    . "&status=".$status;
-
-            $ver = 0;
-
-            $xml = @simplexml_load_file($url);
-
-            if(!$xml) return false;
-
-            $act_version = (string)$xml->version;
-            $ver = (version_compare($act_version,$version));
-            if($ver>0) return $act_version;
-
-            return $ver;
-        }
-
-	function rcl_removeDir( $path ){
-            if ( $content_del_cat = glob( $path.'/*') ){
-                foreach ( $content_del_cat as $object ){
-                    if ( is_dir( $object ) ){
-                        $this->rcl_removeDir( $object );
-                        }else {
-                            @chmod( $object, 0777 );
-                            unlink( $object );
-                        }
-                    }
-                }
-            @chmod( $object, 0777 );
-            rmdir( $path );
-	}
-
 	function update_status_addon_recall_activate ( ) {
 	  if ( isset( $_GET['action-addon'] ) ) {
 		if( !wp_verify_nonce( $_GET['_wpnonce'], 'action_addon' ) ) return false;
@@ -388,32 +349,33 @@ class Rcl_Addons{
                 $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
 		if($_POST['group-addon-action']=='activate'){
-			foreach((array)$_POST['checked'] as $key){
-                            foreach($paths as $path){
-                                if(file_exists($path.'/'.$key.'/index.php')){
-                                    $active_addons[$key]['src'] = $path.'/'.$key.'/';
-                                    if(file_exists($path.'/'.$key.'/activate.php')) include($path.'/'.$key.'/activate.php');
-                                    do_action('rcl_activate_'.$key,$active_addons[$key]);
+			foreach((array)$_POST['checked'] as $addon){
+                            foreach($paths as $k=>$path){
+                                if(file_exists($path.'/'.$addon.'/index.php')){
+                                    $active_addons[$addon]['path'] = $path.'/'.$addon;
+                                    $active_addons[$addon]['priority'] = $k;
+                                    if(file_exists($path.'/'.$addon.'/activate.php')) include($path.'/'.$addon.'/activate.php');
+                                    do_action('rcl_activate_'.$addon,$active_addons[$addon]);
                                     break;
                                 }
                             }
 			}
-			update_site_option('active_addons_recall',$active_addons);
+			update_site_option('rcl_active_addons',$active_addons);
 			wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
 		}
 		if($_POST['group-addon-action']=='deactivate'){
-			foreach((array)$_POST['checked'] as $key){
-				foreach((array)$active_addons as $name=>$src){
-                                    if($name!=$key){
-                                        $new_active_list[$name] = $src;
+			foreach((array)$_POST['checked'] as $addon){
+				foreach((array)$active_addons as $name=>$data){
+                                    if($name!=$addon){
+                                        $new_active_list[$name] = $data['path'];
                                     }else{
                                         foreach($paths as $path){
-                                            if(file_exists($path.'/'.$key.'/deactivate.php')){
-                                                include($path.'/'.$key.'/deactivate.php');
+                                            if(file_exists($path.'/'.$addon.'/deactivate.php')){
+                                                include($path.'/'.$addon.'/deactivate.php');
                                                 break;
                                             }
                                         }
-                                        do_action('rcl_deactivate_'.$key,$active_addons[$key]);
+                                        do_action('rcl_deactivate_'.$addon,$active_addons[$addon]);
                                     }
 				}
 
@@ -421,7 +383,7 @@ class Rcl_Addons{
 				$active_addons = $new_active_list;
 				$new_active_list = '';
 			}
-			update_site_option('active_addons_recall',$active_addons);
+			update_site_option('rcl_active_addons',$active_addons);
 			wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
 		}
 	  }
@@ -539,21 +501,27 @@ class Rcl_Addons{
 
 	function update_options_rcl_activate ( ) {
             global $rcl_options;
-	  if ( isset( $_POST['primary-rcl-options'] ) ) {
+	  if ( isset( $_POST['rcl_global_options'] ) ) {
 		if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rcl' ) ) return false;
 
 		$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-		if($_POST['login_form_recall']==1&&!isset($_POST['page_login_form_recall'])){
-			$_POST['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
+                //print_r($_POST);exit;
+		if($_POST['global']['login_form_recall']==1&&!isset($_POST['global']['page_login_form_recall'])){
+			$_POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
 		}
 
-		foreach((array)$_POST as $key => $value){
-			if($key=='primary-rcl-options') continue;
+		foreach((array)$_POST['global'] as $key => $value){			
 			$options[$key] = $value;
 		}
 
-		update_option('primary-rcl-options',$options);
+		update_option('rcl_global_options',$options);
+                
+                if(isset($_POST['local'])){
+                    foreach((array)$_POST['local'] as $key => $value){
+                        //print_r(array($key,$value));exit;
+                        update_option($key,$value);
+                    }
+                }
 
 		$rcl_options = $options;
 

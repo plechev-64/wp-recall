@@ -99,7 +99,6 @@ class Rcl_PublicForm {
         );
 
         if($this->user_can()){
-			rcl_fileapi_scripts();
             rcl_fileupload_scripts();
         }
 
@@ -369,12 +368,15 @@ function get_public_catlist(){
     if(!isset($formData->taxonomy[$formData->post_type])) return false;
 
     if($formData->post_type=='post'){
+        
         $cat_list = get_the_category($formData->post_id);
+        
     }else{
+        
         $post_cat = get_the_terms( $formData->post_id, $formData->taxonomy[$formData->post_type] );
-
         $Child_Terms = new Rcl_Child_Terms();
         $cat_list = $Child_Terms->get_terms_post($post_cat);
+        
     }
 
     return $cat_list;
@@ -593,7 +595,7 @@ function rcl_get_tags_input($post_id=false){
             $fields .= "<script>
             jQuery(function($){
                     $('#rcl_post_tags').magicSuggest({
-                      data: wpurl+'wp-admin/admin-ajax.php',
+                      data: Rcl.ajaxurl,
                       dataUrlParams: { action: 'rcl_get_like_tags' },
                       noSuggestionText: '".__("Not found","wp-recall")."',
                       ajaxConfig: {

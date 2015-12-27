@@ -60,7 +60,7 @@ function rcl_update_profile_fields($user_id){
     require_once(ABSPATH . "wp-admin" . '/includes/file.php');
     require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
-    $get_fields = get_option( 'custom_profile_field' );
+    $get_fields = get_option( 'rcl_profile_fields' );
 
     $get_fields = apply_filters('rcl_profile_fields',$get_fields);
 
@@ -181,6 +181,14 @@ function rcl_profile_options($content){
 add_filter('after-avatar-rcl','rcl_button_avatar_upload',2,2);
 function rcl_button_avatar_upload($content,$author_lk){
 	global $user_ID;
+        
+        rcl_dialog_scripts();
+        
+        if($user_ID==$author_lk){ 
+            rcl_fileupload_scripts();
+            rcl_crop_scripts();
+            rcl_webcam_scripts();
+        }
 
         $avatar = get_user_meta($author_lk,'rcl_avatar',1);
 
@@ -261,7 +269,7 @@ function rcl_tab_profile_content($author_lk){
 
 	get_currentuserinfo();
 	do_action('show_user_profile', $userdata);
-	$defolt_field = get_option( 'show_defolt_field' );
+	$defolt_field = get_option( 'rcl_profile_default' );
 
 	foreach((array)$defolt_field as $onefield){
 		switch($onefield){
@@ -431,7 +439,7 @@ function rcl_tab_profile_content($author_lk){
 
         $profile_block .= '</table>';
 
-	$get_fields = get_option( 'custom_profile_field' );
+	$get_fields = get_option( 'rcl_profile_fields' );
 
         $get_fields = apply_filters('rcl_profile_fields',$get_fields);
 
@@ -533,7 +541,7 @@ function rcl_manage_profile_fields(){
 			}
 		}
 
-		update_option('show_defolt_field', $save_data );
+		update_option('rcl_profile_default', $save_data );
 	}
 
 	$profile_default_fields_styles = "
@@ -569,7 +577,7 @@ function rcl_manage_profile_fields(){
 			foreach ( $profile_default_fields as $field ) {
 				$field_loop++;
 				if ( 0 == ( $field_loop - 1 ) % 2 ) $default_form .= '<tr class="rcl_defoult_row">';
-                                $df_field = get_option( 'show_defolt_field' );
+                                $df_field = get_option( 'rcl_profile_default' );
 				$checked = ($df_field&&in_array( $field['id'], $df_field )) ? 'checked="checked"' : '';
 				$default_form .= sprintf(__('<td><input type="%s" name="%s" %s /></td><td>%s</td>','wp-recall'), $field['type'], $field['id'], $checked, $field['label']);
 				if ( 0 == $field_loop % 2 || $field_loop == count( $profile_default_fields ) ) $default_form .= '</tr><!-- End .rcl_defoult_row -->';
@@ -627,7 +635,7 @@ if(function_exists('ulogin_profile_personal_options')){
 
 add_filter('show_profile_fields_rcl','rcl_show_custom_fields_profile',10,2);
 function rcl_show_custom_fields_profile($fields_content,$author_lk){
-	$get_fields = get_option( 'custom_profile_field' );
+	$get_fields = get_option( 'rcl_profile_fields' );
 
         $show_custom_field = '';
 
@@ -661,7 +669,7 @@ if (is_admin()):
 endif;
 function rcl_get_custom_fields_profile($user){
 
-    $get_fields = get_option( 'custom_profile_field' );
+    $get_fields = get_option( 'rcl_profile_fields' );
 
     $cf = new Rcl_Custom_Fields();
 
@@ -740,8 +748,8 @@ function rcl_get_profile_scripts($script){
 	$('#userpicupload').fileupload({
 		dataType: 'json',
 		type: 'POST',
-		url: wpurl+'wp-admin/admin-ajax.php',
-		formData:{action:'rcl_avatar_upload'},
+		url: Rcl.ajaxurl,
+		formData:{action:'rcl_avatar_upload',ajax_nonce:Rcl.nonce},
 		loadImageMaxFileSize: ".$maxsize.",
 		autoUpload:false,
 		previewMaxWidth: 900,
@@ -878,11 +886,12 @@ function rcl_get_profile_scripts($script){
 			img.src = snapshot.toDataURL('image/png');
 
 			var dataString = 'action=rcl_avatar_upload&src='+img.src;
+                        dataString += '&ajax_nonce='+Rcl.nonce;
 			$.ajax({
 				type: 'POST',
 				data: dataString,
 				dataType: 'json',
-				url: wpurl+'wp-admin/admin-ajax.php',
+				url: Rcl.ajaxurl,
 				success: function(data){
 
 					if(data['error']){

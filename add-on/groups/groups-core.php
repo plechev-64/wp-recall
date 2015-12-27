@@ -113,9 +113,22 @@ function rcl_update_group($args){
      do_action('rcl_update_group',$args);
 }
 
-function rcl_delete_group($group_id){
-    do_action('rcl_delete_group',$group_id);
+function rcl_delete_group($group_id){    
     rcl_delete_term_groups($group_id, $group_id, 'groups');
+}
+
+add_action('delete_term', 'rcl_delete_term_groups',10,3);
+function rcl_delete_term_groups($term_id, $tt_id, $taxonomy){
+    if(!$taxonomy||$taxonomy!='groups') return false;
+    global  $wpdb;
+    
+    do_action('rcl_pre_delete_group',$term_id);
+    
+    $imade_id = rcl_get_group_option($term_id,'avatar_id');
+    wp_delete_attachment($imade_id,true);
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."groups_options WHERE group_id = '%d'",$term_id));
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."groups_users WHERE group_id = '%d'",$term_id));
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."groups WHERE ID = '%d'",$term_id));
 }
 
 function rcl_register_group_area($contents){
@@ -142,17 +155,6 @@ function rcl_is_group_area($area_id){
         }
     } 
     return false;
-}
-
-add_action('delete_term', 'rcl_delete_term_groups',10,3);
-function rcl_delete_term_groups($term_id, $tt_id, $taxonomy){
-    if(!$taxonomy||$taxonomy!='groups') return false;
-    global  $wpdb;
-    $imade_id = rcl_get_group_option($term_id,'avatar_id');
-    wp_delete_attachment($imade_id,true);
-    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."groups_options WHERE group_id = '%d'",$term_id));
-    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."groups_users WHERE group_id = '%d'",$term_id));
-    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."groups WHERE ID = '%d'",$term_id));
 }
 
 function rcl_is_group_single(){
@@ -258,7 +260,7 @@ function rcl_get_group_thumbnail($group_id,$size='thumbnail'){
         $url = $image_attributes[0];
     }
 
-    $attr = (isset($image_attributes))? "width='.$image_attributes[1].' height='.$image_attributes[2].'": '';
+    $attr = (isset($image_attributes))? "width=$image_attributes[1] height=$image_attributes[2]": '';
 
     $content = '<img src="'.$url.'" '.$attr.'>';
 
@@ -488,8 +490,13 @@ function rcl_group_remove_user($user_id,$group_id){
     $result = $wpdb->query("DELETE FROM ".RCL_PREF."groups_users WHERE group_id='$group_id' AND user_id='$user_id'");
 
     rcl_group_update_users_count($group_id);
+    
+    $args = array(
+        'group_id'      =>  $group_id,
+        'user_id'       =>  $user_id        
+    );
 
-    do_action('rcl_group_remove_user',$user_id,$group_id);
+    do_action('rcl_group_remove_user',$args);
 
     return $result;
 }
@@ -614,6 +621,9 @@ add_action('wp_ajax_rcl_get_group_link_content','rcl_get_group_link_content');
 add_action('wp_ajax_nopriv_rcl_get_group_link_content','rcl_get_group_link_content');
 function rcl_get_group_link_content(){
     global $rcl_group;
+    
+    rcl_verify_ajax_nonce();
+    
     $group_id = intval($_POST['group_id']);
     $callback = $_POST['callback'];
     $rcl_group = rcl_get_group($group_id);

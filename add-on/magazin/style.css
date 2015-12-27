@@ -85,6 +85,7 @@
     font-size: 18px;
     position: absolute;
     background: rgba(255,255,255,0.8);
+    width: 100%;
 }
 .prodlist .prod-single img {
     display: block;

@@ -553,7 +553,7 @@ span.ruble-symbol{
 
 #rcl-preview iframe,
 #rcl-preview img{
-    max-width:100%;
+    
 }
 
 @media only screen and (min-width: 240px) and (max-width: 720px) {

@@ -36,11 +36,12 @@ jQuery(document).ready(function($) {
         rcl_preloader_show('#'+idbox);
         var parent = jQuery(this).parent();
         var dataString = 'action=rcl_upload_box&url_image='+content;
+        dataString += '&ajax_nonce='+Rcl.nonce;
         jQuery.ajax({
                 type: 'POST', 
                 data: dataString, 
                 dataType: 'json', 
-                url: wpurl+'wp-admin/admin-ajax.php',
+                url: Rcl.ajaxurl,
                 success: function(data){
 
                     if(data['error']){
@@ -64,12 +65,12 @@ function rcl_add_editor_box(e,type,idbox,content){
 	var dataString = 'action=rcl_add_editor_box';
 	if(type) dataString += '&type='+type;
 	if(idbox) dataString += '&idbox='+idbox;
-	
+	dataString += '&ajax_nonce='+Rcl.nonce;
 	jQuery.ajax({
 		type: 'POST', 
 		data: dataString, 
 		dataType: 'json', 
-		url: wpurl+'wp-admin/admin-ajax.php',
+		url: Rcl.ajaxurl,
 		success: function(data){
 			if(!data['content']){
 				rcl_notice('Ошибка!','error');
@@ -100,8 +101,9 @@ function rcl_delete_post(element){
     if(confirm('Действительно удалить?')){
         var post_id = jQuery(element).data('post');
         var dataString = 'action=rcl_ajax_delete_post&post_id='+post_id;
+        dataString += '&ajax_nonce='+Rcl.nonce;
         jQuery.ajax({
-            type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',
+            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
             success: function(data){
                 if(data['result']==100){
                         jQuery('#'+data['post_type']+'-'+post_id).remove();
@@ -130,8 +132,9 @@ function rcl_edit_post(element){
 		open: function (e, data){
 			var post_id = jQuery(element).data('post');
 			var dataString = 'action=rcl_get_edit_postdata&post_id='+post_id;
+                        dataString += '&ajax_nonce='+Rcl.nonce;
 			jQuery.ajax({
-				type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',
+				type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
 				success: function(data){
 					if(data['result']==100){
 						contayner.html(data['content']);
@@ -150,9 +153,9 @@ function rcl_edit_post(element){
 		  click: function() {
 			var postdata   = jQuery('#'+id_contayner+' form').serialize();
 			var dataString = 'action=rcl_edit_postdata&'+postdata;
-
+                        dataString += '&ajax_nonce='+Rcl.nonce;
 			jQuery.ajax({
-			type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',
+			type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
 			success: function(data){
 				if(data['result']==100){
 					rcl_notice('Публикация обновлена!','success');
@@ -186,30 +189,27 @@ function rcl_init_upload_box(idbox){
 		dataType: 'json',
 		type: 'POST',
 		singleFileUploads:false,
-		url: wpurl+'wp-admin/admin-ajax.php',
-		formData:{action:'rcl_upload_box'},
+		url: Rcl.ajaxurl,
+		formData:{action:'rcl_upload_box',ajax_nonce:Rcl.nonce},
 		dropZone: jQuery('#rcl-upload-'+idbox),
-		/*progressall: function (e, data) {
-			var progress = parseInt(data.loaded / data.total * 100, 10);
-			jQuery('.short-loader').html('<span>'+progress+'%</span>');
-		},*/
 		change: function (e, data){				
 			rcl_preloader_show('#rcl-upload-'+idbox);
 		},
 		done: function (e, data) {				
 			if(data.result['error']){
-				rcl_notice(data.result['error'],'error');
-				return false;
+                            rcl_notice(data.result['error'],'error');
+                            rcl_preloader_hide();
+                            return false;
 			}
 			var id = idbox;
 			jQuery.each(data.files, function (index, file) {
-				if(cntFiles>=1){
-					id++;
-					rcl_add_editor_box('#rcl-upload-'+idbox,'image',id,data.result[cntFiles]['content']);					
-				}else{
-					jQuery('#rcl-upload-'+idbox).html(data.result[cntFiles]['content']);
-				}
-				cntFiles++;
+                            if(cntFiles>=1){
+                                    id++;
+                                    rcl_add_editor_box('#rcl-upload-'+idbox,'image',id,data.result[cntFiles]['content']);					
+                            }else{
+                                    jQuery('#rcl-upload-'+idbox).html(data.result[cntFiles]['content']);
+                            }
+                            cntFiles++;
 			});
 			rcl_preloader_hide();
 		}
@@ -222,8 +222,6 @@ function rcl_preview(e){
 	var submit = jQuery(e);
 	var formblock = submit.parents('form');
 	var required = true;
-        
-        //jQuery('#contentarea').tinymce().save();
 
 	formblock.find(':required').each(function(){
 		if(!jQuery(this).val()){
@@ -250,11 +248,12 @@ function rcl_preview(e){
         var string   = formblock.serialize();
 
 	var dataString = 'action=rcl_preview_post&'+string;
+        dataString += '&ajax_nonce='+Rcl.nonce;
 	jQuery.ajax({
 		type: 'POST', 
 		data: dataString, 
 		dataType: 'json', 
-		url: wpurl+'wp-admin/admin-ajax.php',
+		url: Rcl.ajaxurl,
 		success: function(data){
 			
 			if(data['error']){

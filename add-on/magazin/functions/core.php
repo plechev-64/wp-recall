@@ -336,7 +336,7 @@ function rcl_payment_order($order_id,$user_id=false){
     if(function_exists('add_referall_incentive_order'))
             add_referall_incentive_order($user_id,$order->order_price);
 
-    $get_fields = get_option( 'custom_profile_field' );
+    $get_fields = get_option( 'rcl_profile_fields' );
 
     if($get_fields){
         $cf = new Rcl_Custom_Fields();
@@ -401,5 +401,5 @@ function rcl_payment_order($order_id,$user_id=false){
     <p>Ваш заказ оплачен и поступил в обработку. Вы можете следить за сменой его статуса из своего личного кабинета</p>';
     rcl_mail($email, $subject, $textmail);
 
-    do_action('payorder_user_count_rcl',$user_id,$order->order_price,'Оплата заказа №'.$order_id,1);
+    do_action('rcl_payment_order',$order_id);
 }

@@ -17,8 +17,24 @@ function rcl_tab_review(){
 		'public'=>1,
 		'class'=>'fa-trophy',
 		'order'=>50,
+                'cache'=>true,
 		'path'=>__FILE__
 	));
+}
+
+add_action('rcl_add_review','rcl_review_delete_cache',10);
+add_action('rcl_delete_review','rcl_review_delete_cache',10);
+function rcl_review_delete_cache($author_lk){
+    global $rcl_options;
+    if(isset($rcl_options['use_cache'])&&$rcl_options['use_cache']){
+        
+        $string = rcl_format_url(get_author_posts_url($author_lk),'recall');
+        
+        $rcl_cache = new Rcl_Cache();       
+        $rcl_cache->get_file($string);
+        $rcl_cache->delete_cache();
+        
+    }
 }
 
 class Rcl_Review{
@@ -64,7 +80,7 @@ class Rcl_Review{
 
 		}
 
-		do_action('rcl_add_review',$user_ID,$adressat_id);
+		do_action('rcl_add_review',$adressat_id);
 
 		if($online != 0){
 			wp_redirect( rcl_format_url(get_author_posts_url($adressat_id),'recall'));  exit;
@@ -117,7 +133,7 @@ class Rcl_Review{
 
 			if ($result) {
 
-				do_action('rcl_delete_review',$review);
+				do_action('rcl_delete_review',$user_id);
 
 				wp_redirect( rcl_format_url(get_author_posts_url($user_id),'recall') );  exit;
 

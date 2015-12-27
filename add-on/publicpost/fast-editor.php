@@ -5,6 +5,9 @@ class Rcl_Public{
 	}
 	function get_media(){
 		global $user_ID,$wpdb;
+                
+                rcl_verify_ajax_nonce();
+                
                 $page = 1;
 		if(isset($_POST['page'])) $page = intval($_POST['page']);
 		if($user_ID){
@@ -65,6 +68,8 @@ $Rcl_Public = new Rcl_Public();
 add_action('wp_ajax_rcl_ajax_delete_post', 'rcl_ajax_delete_post');
 function rcl_ajax_delete_post(){
 	global $user_ID;
+        
+        rcl_verify_ajax_nonce();
 
 	if(!$user_ID) return false;
 
@@ -94,6 +99,9 @@ function rcl_ajax_delete_post(){
 add_action('wp_ajax_rcl_get_edit_postdata', 'rcl_get_edit_postdata');
 function rcl_get_edit_postdata(){
 	global $user_ID;
+        
+        rcl_verify_ajax_nonce();
+        
 	$post_id = intval($_POST['post_id']);
 	$post = get_post($post_id);
 
@@ -114,8 +122,9 @@ function rcl_get_edit_postdata(){
 
 add_action('wp_ajax_rcl_edit_postdata', 'rcl_edit_postdata');
 function rcl_edit_postdata(){
-	global $user_ID,$wpdb;
-	if(!$user_ID) exit;
+	global $wpdb;
+        
+        rcl_verify_ajax_nonce();
 
 	$post_array = array();
 	$post_array['post_title'] = sanitize_text_field($_POST['post_title']);
@@ -124,14 +133,13 @@ function rcl_edit_postdata(){
 	$post_array = apply_filters('rcl_pre_edit_post',$post_array);
 
 	$result = $wpdb->update(
-		$wpdb->prefix.'posts',
-		$post_array,
-		array('ID'=>intval($_POST['post_id']))
+            $wpdb->posts,
+            $post_array,
+            array('ID'=>intval($_POST['post_id']))
 	);
 
-	if($result){
-		$log['result']=100;
-	}
+        $log['result']=100;
+        
 	echo json_encode($log);
 	exit;
 }

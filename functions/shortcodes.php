@@ -2,8 +2,8 @@
 
 add_shortcode('userlist','rcl_get_userlist');
 function rcl_get_userlist($atts, $content = null){
-    global $rcl_user,$rcl_users_set;
-
+    global $rcl_user,$rcl_users_set,$rcl_options,$user_ID;
+    
     require_once 'class-rcl-users.php';
 
     $users = new Rcl_Users($atts);
@@ -21,6 +21,27 @@ function rcl_get_userlist($atts, $content = null){
         $rclnavi = new RCL_navi($users->inpage,$count_users,$search_string,$users->paged);
         $users->offset = $rclnavi->offset;
         $users->number = $rclnavi->inpage;
+    }
+        
+    $is_cache = (isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? 1: 0;
+
+    if($is_cache){
+        
+        $timecache = ($user_ID&&$users->orderby=='time_action')? 600: 0;
+
+        $string = json_encode($users->query());
+        
+        $rcl_cache = new Rcl_Cache($timecache);       
+        $file = $rcl_cache->get_file($string);
+
+        if($file&&!$file->is_old){
+            
+            $users->remove_data();
+            
+            return $rcl_cache->get_cache();
+
+        }
+        
     }
 
     $usersdata = $users->get_users();
@@ -48,6 +69,10 @@ function rcl_get_userlist($atts, $content = null){
         $userlist .= $rclnavi->navi();
 
     $users->remove_data();
+    
+    if($is_cache){        
+        $rcl_cache->update_cache($userlist);        
+    }
 
     return $userlist;
 }
@@ -174,6 +199,7 @@ function rcl_get_shortcode_wp_recall(){
 
 add_shortcode('slider-rcl','rcl_slider');
 function rcl_slider($atts, $content = null){
+    
     rcl_bxslider_scripts();
 
     extract(shortcode_atts(array(

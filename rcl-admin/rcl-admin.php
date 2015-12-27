@@ -1,13 +1,5 @@
 <?php
 
-//формируем массив данных о вкладках личного кабинета
-if(is_admin()) add_filter('tab_data_rcl','rcl_get_data_tab',10);
-function rcl_get_data_tab($data){
-    global $tabs_rcl;
-    $tabs_rcl[$data['id']] = $data;
-    return $data;
-}
-
 function rmag_global_options(){
     $content = ' <div id="recall" class="left-sidebar wrap">
     <form method="post" action="">

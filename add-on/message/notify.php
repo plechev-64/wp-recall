@@ -1,14 +1,6 @@
 <?php
-add_action('wp', 'rcl_activation_hourly_notify_new_message');
-function rcl_activation_hourly_notify_new_message() {
-	//wp_clear_scheduled_hook('hourly_notify_new_message');
-	if ( !wp_next_scheduled( 'hourly_notify_new_message' ) ) {
-		$start_date = strtotime(current_time('mysql'));
-		wp_schedule_event( $start_date, 'hourly', 'hourly_notify_new_message');
-	}
-}
 
-add_action('hourly_notify_new_message','rcl_send_notify_messages');
+add_action('rcl_cron_hourly','rcl_send_notify_messages',10);
 function rcl_send_notify_messages(){
     global $wpdb;
 

@@ -112,7 +112,7 @@ function rcl_get_register_user($errors){
 
     $ref = ($_POST['redirect_to'])? apply_filters('url_after_register_rcl',esc_url($_POST['redirect_to'])): wp_registration_url();
 
-    $get_fields = get_option( 'custom_profile_field' );
+    $get_fields = get_option( 'rcl_profile_fields' );
     $requared = true;
     if($get_fields){
         foreach((array)$get_fields as $custom_field){
@@ -441,7 +441,7 @@ function rcl_secondary_password($fields){
 //Вывод произвольных полей профиля в форме регистрации
 add_filter('regform_fields_rcl','rcl_custom_fields_regform',20);
 function rcl_custom_fields_regform($field){
-    $get_fields = get_option( 'custom_profile_field' );
+    $get_fields = get_option( 'rcl_profile_fields' );
 
     if($get_fields){
         $get_fields = stripslashes_deep($get_fields);

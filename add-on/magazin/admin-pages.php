@@ -219,7 +219,7 @@ if($_GET['order-id']){
 		</tr>
 	</table>';
 
-	$get_fields = get_option( 'custom_profile_field' );
+	$get_fields = get_option( 'rcl_profile_fields' );
 
 	$cf = new Rcl_Custom_Fields();
 

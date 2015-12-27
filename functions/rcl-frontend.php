@@ -36,7 +36,7 @@ function init_user_lk(){
 
     if($user_LK){
         $rcl_userlk_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_LK));
-        rcl_fileapi_scripts();
+        //rcl_fileapi_scripts();
     }
 }
 
@@ -48,17 +48,6 @@ function rcl_notice_text($text,$type='warning'){
     $block = new Rcl_Notify($text,$type);
 }
 
-add_action('wp_head','rcl_head_js_data',1);
-function rcl_head_js_data(){
-    global $user_ID;
-    $data = "<script>
-	var user_ID = $user_ID;
-	var wpurl = '".preg_quote(trailingslashit(get_bloginfo('wpurl')),'/:')."';
-	var rcl_url = '".preg_quote(RCL_URL,'/:')."';
-	</script>\n";
-    echo $data;
-}
-
 add_action('wp_footer','rcl_popup_contayner');
 function rcl_popup_contayner(){
     echo '<div id="rcl-overlay"></div>
@@ -66,10 +55,11 @@ function rcl_popup_contayner(){
 }
 
 add_filter('wp_footer', 'rcl_footer_url');
-function rcl_footer_url(){
-	global $rcl_options;
-	if($rcl_options['footer_url_recall']!=1) return false;
-	if(is_front_page()&&!is_user_logged_in()) echo '<p class="plugin-info">'.__('The site works using the functionality of the plugin').'  <a target="_blank" href="http://wppost.ru/">Wp-Recall</a></p>';
+function rcl_footer_url(){	
+	if(is_front_page()&&!is_user_logged_in()){
+            if(get_option('rcl_footer_link')==1)
+                echo '<p class="plugin-info">'.__('The site works using the functionality of the plugin').'  <a target="_blank" href="http://wppost.ru/">Wp-Recall</a></p>';
+        }
 }
 
 function rcl_get_author_block(){

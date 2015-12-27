@@ -11,12 +11,13 @@ jQuery(document).ready( function() {
 		jQuery(function(){
 			var mess = jQuery("#rcl-new-mess").html();
 			if(mess) return false;
-			var dataString_new_mess = 'action=get_new_outside_message'+'&user_ID='+user_ID;	
+			var dataString = 'action=get_new_outside_message'+'&user_ID='+Rcl.user_ID;
+                        dataString += '&ajax_nonce='+Rcl.nonce;
 			jQuery.ajax({
 				type: 'POST',
-				data: dataString_new_mess,
+				data: dataString,
 				dataType: 'json',
-				url: wpurl+'/wp-admin/admin-ajax.php',				
+				url: Rcl.ajaxurl,				
 				success: function(data){
 					if(data['recall']==100){
 						jQuery('#rcl-new-mess').html(data['message_block']);

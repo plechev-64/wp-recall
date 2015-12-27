@@ -116,6 +116,8 @@ class Rcl_Postlist {
     }
 
     function rcl_posts_list(){
+        
+        rcl_verify_ajax_nonce();
 
 	$this->posttype = sanitize_text_field($_POST['type']);
 	$this->start = intval($_POST['start']);

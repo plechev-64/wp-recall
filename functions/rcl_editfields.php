@@ -14,11 +14,11 @@ class Rcl_EditFields {
         $this->primary = $primary;
 
         switch($posttype){
-            case 'post': $name_option = 'custom_public_fields_'.$this->primary['id']; break;
-            case 'products': $name_option = 'custom_saleform_fields'; break;
-            case 'orderform': $name_option = 'custom_orders_field'; break;
-            case 'profile': $name_option = 'custom_profile_field'; break;
-            default: $name_option = 'custom_fields_'.$posttype;
+            case 'post': $name_option = 'rcl_fields_post_'.$this->primary['id']; break;
+            case 'products': $name_option = 'rcl_fields_products'; break;
+            case 'orderform': $name_option = 'rcl_cart_fields'; break;
+            case 'profile': $name_option = 'rcl_profile_fields'; break;
+            default: $name_option = 'rcl_fields_'.$posttype;
         }
 
         $Option_Value = get_option( $name_option );

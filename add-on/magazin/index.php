@@ -86,14 +86,14 @@ function rcl_orders($author_lk){
 add_filter('rcl_functions_js','rcl_magazine_functions_js');
 function rcl_magazine_functions_js($string){
 
-    $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
+    $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
 
     $string .= "
         /* Удаляем заказ пользователя в корзину */
         function rcl_trash_order(e){
             var idorder = jQuery(e).data('order');
             var dataString = 'action=rcl_delete_trash_order&idorder='+ idorder;
-
+            dataString += '&ajax_nonce='+Rcl.nonce;
             jQuery.ajax({
             ".$ajaxdata."
             success: function(data){
@@ -110,6 +110,7 @@ function rcl_magazine_functions_js($string){
             var id_post = jQuery(e).parent().data('product');
             var number = 1;
             var dataString = 'action=rcl_add_cart&id_post='+ id_post+'&number='+ number;
+            dataString += '&ajax_nonce='+Rcl.nonce;
             jQuery.ajax({
             ".$ajaxdata."
             success: function(data){
@@ -132,6 +133,7 @@ function rcl_magazine_functions_js($string){
             var number = 1;
             if(number>0){
                 var dataString = 'action=rcl_remove_product_cart&id_post='+ id_post+'&number='+ number;
+                dataString += '&ajax_nonce='+Rcl.nonce;
                 jQuery.ajax({
                 ".$ajaxdata."
                 success: function(data){
@@ -171,6 +173,7 @@ function rcl_magazine_functions_js($string){
                     var number = jQuery('#number_product').val();
             }
             var dataString = 'action=rcl_add_minicart&id_post='+ id_post+'&number='+number+'&custom='+id_custom_prod;
+            dataString += '&ajax_nonce='+Rcl.nonce;
             jQuery.ajax({
             ".$ajaxdata."
             success: function(data){

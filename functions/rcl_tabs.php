@@ -7,8 +7,11 @@ class Rcl_Tabs{
     public $class;
     public $public;
     public $output;
+    public $cache;
+    
     function __construct($data){
-
+        global $rcl_options;
+        
         $idkey = $data['id'];
         $name = $data['name'];
         $callback = $data['callback'];
@@ -18,7 +21,8 @@ class Rcl_Tabs{
         $this->name = $name;
         $this->callback = $callback;
         $this->output = (isset($args['output']))? $args['output']: null;
-        //print_r($data);
+        $this->cache = (isset($args['cache'])&&isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? $args['cache']: false;
+
         if(isset($args['class'])) $this->class = $args['class'];
         if(isset($args['order'])) $ord = $args['order'];
         else $ord = 10;
@@ -33,6 +37,7 @@ class Rcl_Tabs{
             else add_filter('the_button_wprecall',array(&$this, 'add_button'),$ord,2);
         }
     }
+    
     function add_tab($block_wprecall='',$author_lk){
         global $user_ID,$rcl_options;
         switch($this->public){
@@ -44,17 +49,45 @@ class Rcl_Tabs{
 
         $status = (!$block_wprecall) ? 'active':'';
 
-        $cl_content = rcl_callback_tab_func($this->callback,$author_lk);
-        if(!$cl_content) return $content;
+        if($this->cache){
+                                   
+            $rcl_cache = new Rcl_Cache();
+            
+            if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+                $string = rcl_format_url(get_author_posts_url($author_lk),$this->id);
+            }else{
+                $protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://':  'https://';
+                $string = $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+            }
+            
+            $file = $rcl_cache->get_file($string);
 
-        //$cl_content = apply_filters('rcl_'.$this->callback.'_lk',$cl_content);
+            if(!$file||$file->is_old){
+
+                $cl_content = rcl_callback_tab_func($this->callback,$author_lk);
+                $rcl_cache->update_cache($cl_content);
+            
+            }else{
+
+                $cl_content = $rcl_cache->get_cache();
+            
+            }
+
+        }else{
+
+            $cl_content = rcl_callback_tab_func($this->callback,$author_lk);
+            if(!$cl_content) return $content;
+        
+        }
 
         $block_wprecall .= '<div id="tab-'.$this->id.'" class="'.$this->id.'_block recall_content_block '.$status.'">'
         . $cl_content
         . '</div>';
-
+        
         return $block_wprecall;
+
     }
+    
     function add_button($button,$author_lk){
         global $user_ID;
         switch($this->public){
@@ -77,9 +110,6 @@ class Rcl_Tabs{
 function rcl_get_button_tab($args,$button=false){
 	global $rcl_options,$user_LK;
 	$link = rcl_format_url(get_author_posts_url($user_LK),$args['id_tab']);
-	/*if(!$button) $status = 'active';
-        else $status = '';*/
-        //var_dump($button);
         $html_button = rcl_get_button($args['name'],$link,array('class'=>rcl_get_class_button_tab($button,$args['id_tab']),'icon'=>$args['class']));
 	$button .= apply_filters('rcl_get_button_tab',$html_button,$args);
 
@@ -112,11 +142,21 @@ function rcl_get_class_button_tab($button,$id_tab){
 }
 
 function rcl_callback_tab_func($function,$author_lk){
+    
+    //ob_start();
+    
     if(is_array($function)){
         $obj = new $function[0];
         $content = $obj->$function[1]($author_lk);
     }else{
         $content = $function($author_lk);
     }
-    return apply_filters('rcl_tab_'.$function,$content);
+
+    /*$cntnt = ob_get_contents();
+    ob_end_clean();*/
+    
+    $content = apply_filters('rcl_tab_'.$function,$content);
+
+    return $content;
+
 }

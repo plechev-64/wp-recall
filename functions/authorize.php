@@ -73,14 +73,14 @@ function rcl_get_login_user_activate ( ) {
 
 //получаем путь на возврат пользователя после авторизации
 function rcl_get_authorize_url($user_id){
-	global $rcl_options;
-	if(isset($rcl_options['authorize_page'])&&$rcl_options['authorize_page']){
-		if($rcl_options['authorize_page']==1) $redirect = $_POST['redirect_to'];
-		if($rcl_options['authorize_page']==2) $redirect = $rcl_options['custom_authorize_page'];
-		if(!$redirect) $redirect = get_author_posts_url($user_id);
-	}else{
-		$redirect = get_author_posts_url($user_id);
-	}
-	return $redirect;
+    global $rcl_options;
+    if(isset($rcl_options['authorize_page'])&&$rcl_options['authorize_page']){
+            if($rcl_options['authorize_page']==1) $redirect = $_POST['redirect_to'];
+            if($rcl_options['authorize_page']==2) $redirect = $rcl_options['custom_authorize_page'];
+            if(!$redirect) $redirect = get_author_posts_url($user_id);
+    }else{
+            $redirect = get_author_posts_url($user_id);
+    }
+    return $redirect;
 }
 

@@ -119,21 +119,21 @@ function rcl_get_rating_value($type){
 //добавляем голос пользователя к публикации
 function rcl_insert_rating($args){
     global $wpdb;
-    //print_r($args);exit;
+    
     $rating_date = current_time('mysql');
 
     if($args['rating_status']=='minus') $args['rating_value'] = -1 * $args['rating_value'];
 
     $args['rating_date'] = $rating_date;
 
-	$data = array(
-		'object_id' => $args['object_id'],
-		'object_author' => $args['object_author'],
-		'rating_type' => $args['rating_type'],
-		'user_id' => $args['user_id'],
-		'rating_value' => $args['rating_value'],
-		'rating_date' => $rating_date
-	);
+    $data = array(
+        'object_id' => $args['object_id'],
+        'object_author' => $args['object_author'],
+        'rating_type' => $args['rating_type'],
+        'user_id' => $args['user_id'],
+        'rating_value' => $args['rating_value'],
+        'rating_date' => $rating_date
+    );
 
     $wpdb->insert( RCL_PREF.'rating_values',  $data );
 
@@ -186,31 +186,37 @@ function rcl_get_vote_value($args){
 //Получаем значение рейтинга публикации
 function rcl_get_total_rating($object_id,$rating_type){
     global $wpdb,$rcl_options;
-	$total = 0;
+    $total = 0;
 
-	if(!isset($rcl_options['rating_overall_'.$rating_type])||!$rcl_options['rating_overall_'.$rating_type]){
-		$total =  $wpdb->get_var(
+    if(!isset($rcl_options['rating_overall_'.$rating_type])||!$rcl_options['rating_overall_'.$rating_type]){
+        
+        $total =  $wpdb->get_var(
             $wpdb->prepare(
-                    "SELECT rating_total FROM ".RCL_PREF."rating_totals "
-                    . "WHERE object_id = '%d' AND rating_type='%s'",
-                    $object_id,$rating_type
-            ));
-	}else{
-		$values =  $wpdb->get_results(
-			$wpdb->prepare(
-					"SELECT rating_value FROM ".RCL_PREF."rating_values "
-					. "WHERE object_id = '%d' AND rating_type='%s'",
-                    $object_id,$rating_type));
-		if($values){
-			foreach($values as $value){
-				if($value->rating_value>0){
-					$total ++;
-				}else{
-					$total --;
-				}
-			}
-		}
-	}
+                "SELECT rating_total FROM ".RCL_PREF."rating_totals "
+                . "WHERE object_id = '%d' AND rating_type='%s'",
+                $object_id,$rating_type
+        ));
+        
+    }else{
+        
+        $values =  $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT rating_value FROM ".RCL_PREF."rating_values "
+                . "WHERE object_id = '%d' AND rating_type='%s'",
+        $object_id,$rating_type));
+        
+        if($values){
+            foreach($values as $value){
+                if($value->rating_value>0){
+                    $total ++;
+                }else{
+                    $total --;
+                }
+            }
+        }
+        
+    }
+    
     return $total;
 }
 

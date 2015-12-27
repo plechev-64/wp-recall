@@ -112,6 +112,8 @@ function rcl_group_migrate_old_data(){
 
             $wpdb->query("INSERT INTO ".RCL_PREF."groups_users (group_id, user_id, user_role, user_date, status_time) VALUES ".implode(',',$sql));
         }
+        
+        $wpdb->query("DELETE FROM ".RCL_PREF."groups_options WHERE option_key IS NULL");
 
     }
 }

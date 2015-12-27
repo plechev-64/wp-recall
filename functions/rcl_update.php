@@ -1,22 +1,15 @@
 <?php
 
-add_action('wp', 'rcl_activation_daily_addon_update');
-function rcl_activation_daily_addon_update() {
-	//wp_clear_scheduled_hook('rcl_daily_addon_update');
-	if ( !wp_next_scheduled( 'rcl_daily_addon_update' ) ) {
-		$start_date = strtotime(current_time('mysql'));
-		wp_schedule_event( $start_date, 'twicedaily', 'rcl_daily_addon_update');
-	}
-}
-
 add_action('wp','rcl_hand_addon_update');
 function rcl_hand_addon_update(){
     if(!isset($_GET['rcl-addon-update'])||$_GET['rcl-addon-update']!='now') return false;
-    rcl_daily_addon_update();
+    rcl_check_addon_update();
 }
 
-add_action('rcl_daily_addon_update','rcl_daily_addon_update');
-function rcl_daily_addon_update(){
+add_action('rcl_cron_twicedaily','rcl_check_addon_update',10);
+function rcl_check_addon_update(){
+    global $active_addons;
+    
     $paths = array(RCL_TAKEPATH.'add-on') ;
 
     $rcl_addons = new Rcl_Addons();
@@ -26,44 +19,90 @@ function rcl_daily_addon_update(){
             $addons = scandir($path,1);
             $a=0;
             foreach((array)$addons as $namedir){
-                    $addon_dir = $path.'/'.$namedir;
-                    $index_src = $addon_dir.'/index.php';
-                    if(!file_exists($index_src)) continue;
-                    $info_src = $addon_dir.'/info.txt';
-                    if(file_exists($info_src)){
-                            $info = file($info_src);
-                            $addons_data[$namedir] = $rcl_addons->get_parse_addon_info($info);
-                            $addons_data[$namedir]['src'] = $index_src;
-                            $a++;
-                            flush();
-                    }
+                $addon_dir = $path.'/'.$namedir;
+                $index_src = $addon_dir.'/index.php';
+                if(!file_exists($index_src)) continue;
+                $info_src = $addon_dir.'/info.txt';
+                if(file_exists($info_src)){
+                    $info = file($info_src);
+                    $addons_data[$namedir] = $rcl_addons->get_parse_addon_info($info);
+                    $addons_data[$namedir]['src'] = $index_src;
+                    $a++;
+                    flush();
+                }
             }
         }
     }
 
-    //print_r($addons_data);exit;
-
-    $need_update = array();
+    $need_update = array();    
+    $get = array();
+    
     foreach((array)$addons_data as $key=>$addon){
-        $ver = $rcl_addons->get_actual_version($key,$addon['version']);
-        if($ver){
-            $addon['new-version'] = $ver;
-            $need_update[$key] = $addon;
+        $status = (isset($active_addons[$key]))?1:0;
+        $get[] = $key.':'.$addon['version'].':'.$status;
+    }
+    
+    $addonlist = implode(';',$get);
+
+    $url = "http://wppost.ru/products-files/api/update.php"
+            . "?rcl-addon-action=version-check-list";
+    
+    $data = array(
+        'rcl-version' => VER_RCL,
+        'addons' => base64_encode($addonlist),
+        'host' => $_SERVER['SERVER_NAME']
+    );
+    
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data),
+        ),
+    );
+    
+    $context  = stream_context_create($options);
+    $xml_array = file_get_contents($url, false, $context);
+    
+    if(!$xml_array){
+        $log['error'] = __('Unable to retrieve the file from the server!','wp-recall');
+        echo json_encode($log); exit;
+    }
+    
+    $xml_array = json_decode($xml_array, true);
+
+    if(isset($xml_array['error'])){
+        echo json_encode($xml_array); exit;
+    }
+    
+    $ver = 0;    
+    foreach($xml_array as $addondata){
+        if(!$addondata) continue;
+        
+        $key = $addondata['slug'];
+        
+        $ver = version_compare($addondata['version'],$addons_data[$key]['version']); 
+        if($ver>0){  
+            
+            $addons_data[$key]['new-version'] = $addondata['version'];
+            $need_update[$key] = $addons_data[$key];
         }
     }
-
+    
     update_option('rcl_addons_need_update',$need_update);
 
 }
 
 add_action('wp_ajax_rcl_update_addon','rcl_update_addon');
 function rcl_update_addon(){
+    
+    rcl_verify_ajax_nonce();
 
     $addon = $_POST['addon'];
     $need_update = get_option('rcl_addons_need_update');
     if(!isset($need_update[$addon])) return false;
 
-    $activeaddons = get_site_option('active_addons_recall');
+    $activeaddons = get_site_option('rcl_active_addons');
 
     $url = 'http://wppost.ru/products-files/api/update.php'
             . '?rcl-addon-action=update';

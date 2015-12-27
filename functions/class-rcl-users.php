@@ -178,6 +178,7 @@ class Rcl_Users{
             $query['select'] = array(
                 "users.ID"
               , "users.display_name"
+              //, "users.user_email"
             );
 
             if($this->data('user_registered')||

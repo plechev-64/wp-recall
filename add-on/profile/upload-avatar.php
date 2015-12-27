@@ -1,6 +1,8 @@
 <?php
 add_action('wp_ajax_rcl_avatar_upload', 'rcl_avatar_upload');
 function rcl_avatar_upload(){
+    
+        rcl_verify_ajax_nonce();
 
 	require_once(ABSPATH . "wp-admin" . '/includes/image.php');
 	require_once(ABSPATH . "wp-admin" . '/includes/file.php');

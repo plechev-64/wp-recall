@@ -2,6 +2,8 @@
 add_action('wp_ajax_rcl_message_upload', 'rcl_message_upload');
 function rcl_message_upload(){
 	global $user_ID,$wpdb,$rcl_options;
+        
+        rcl_verify_ajax_nonce();
 
 	$adressat_mess = intval($_POST['talker']);
 	$online = intval($_POST['online']);

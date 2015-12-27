@@ -325,7 +325,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
     function widget($args,$instance) {
 
-        global $rcl_group,$user_ID;
+        global $rcl_group,$user_ID,$rcl_options,$wp_query;
 
         extract( $args );
 
@@ -337,6 +337,27 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
         );
 
         $instance = wp_parse_args( (array) $instance, $defaults );
+        
+        /*$is_cache = (isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? 1: 0;
+    
+        if($is_cache){
+        
+            $rcl_cache = new Rcl_Cache();
+            
+            $string = (isset($wp_query->query_vars['paged']))? $rcl_group->group_id.':'.$wp_query->query_vars['paged']: $rcl_group->group_id;
+
+            $file = $rcl_cache->get_file('group-posts-widget:'.$string);
+
+            if($file&&!$file->is_old){
+
+                echo $rcl_cache->get_cache();
+                return;
+
+            }
+        
+        }
+        
+        ob_start();*/
 
         echo $before;
 
@@ -385,6 +406,15 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
         <?php }
 
         echo $after;
+        
+       /* $content = ob_get_contents();
+        ob_end_clean();
+        
+        if($is_cache){
+            $rcl_cache->update_cache($content);
+        }
+        
+        echo $content;*/
     }
 
     function options($instance){

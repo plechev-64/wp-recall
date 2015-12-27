@@ -1,13 +1,13 @@
 <?php
 
 function rcl_login_form(){
-	echo rcl_get_authorize_form('floatform');
+    echo rcl_get_authorize_form('floatform');
 }
 
 add_shortcode('loginform','rcl_get_login_form');
 function rcl_get_login_form($atts){
-	extract(shortcode_atts(array( 'form' => false ),$atts));
-	return rcl_get_authorize_form('pageform',$form);
+    extract(shortcode_atts(array( 'form' => false ),$atts));
+    return rcl_get_authorize_form('pageform',$form);
 }
 
 function rcl_get_authorize_form($type=false,$form=false){

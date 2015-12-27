@@ -31,7 +31,7 @@ function rcl_ajax_followers_tab($array_tabs){
 
 add_action('init','rcl_add_followers_tab');
 function rcl_add_followers_tab(){
-    rcl_tab('followers','rcl_followers_tab',__('Followers','wp-recall'),array('public'=>1,'output'=>'sidebar','class'=>'fa-twitter'));
+    rcl_tab('followers','rcl_followers_tab',__('Followers','wp-recall'),array('public'=>1,'cache'=>true,'output'=>'sidebar','class'=>'fa-twitter'));
 }
 
 if(!is_admin()) add_filter('tab_data_rcl','rcl_add_counter_followers_tab',10);
@@ -83,7 +83,7 @@ function rcl_ajax_subscriptions_tab($array_tabs){
 
 add_action('init','rcl_add_subscriptions_tab');
 function rcl_add_subscriptions_tab(){
-    rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','wp-recall'),array('public'=>0,'output'=>'sidebar','class'=>'fa-bell-o'));
+    rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','wp-recall'),array('public'=>0,'cache'=>true,'output'=>'sidebar','class'=>'fa-bell-o'));
 }
 
 function rcl_subscriptions_tab($user_id){
@@ -184,6 +184,8 @@ function rcl_update_feed_current_user($author_id){
 add_action('wp_ajax_rcl_feed_progress','rcl_feed_progress');
 function rcl_feed_progress(){
     global $rcl_feed;
+    
+    rcl_verify_ajax_nonce();
 
     $content = $_POST['content'];
     $paged = $_POST['paged'];
@@ -238,7 +240,7 @@ function rcl_feed_progress(){
 add_filter('file_scripts_rcl','rcl_scripts_feed_rcl');
 function rcl_scripts_feed_rcl($script){
 
-    $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
+    $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
 
     $script .= "
     var feed_progress = false;
@@ -256,6 +258,7 @@ function rcl_scripts_feed_rcl($script){
             feed_progress = true;
             var feed_type = jQuery('#rcl-feed').data('feed');
             var dataString = 'action=rcl_feed_progress&paged='+feed_page+'&content='+feed_type;
+            dataString += '&ajax_nonce='+Rcl.nonce;
             jQuery.ajax({
                 ".$ajaxdata."
                 success: function(result){
@@ -282,6 +285,7 @@ function rcl_scripts_feed_rcl($script){
             var data = link.data('feed');
             var callback = link.data('callback');
             var dataString = 'action=rcl_feed_callback&data='+data+'&callback='+callback;
+            dataString += '&ajax_nonce='+Rcl.nonce;
             jQuery.ajax({
                 ".$ajaxdata."
                 success: function(result){

@@ -128,6 +128,9 @@ function rcl_feed_count_subscribers($user_id){
 
 add_action('wp_ajax_rcl_feed_callback','rcl_feed_callback');
 function rcl_feed_callback(){
+    
+    rcl_verify_ajax_nonce();
+    
     $data = $_POST['data'];
     $callback = $_POST['callback'];
     $content = $callback($data);

@@ -1,13 +1,14 @@
 <?php
 class Rcl_Options {
     public $key;
+    public $type;
 
     function __construct($key=false){
         $this->key=rcl_key_addon(pathinfo($key));
     }
 
     function options($title,$conts){
-        $return = '<span class="title-option">'.$title.'</span>
+        $return = '<span class="title-option"><span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '.$title.'</span>
 	<div ';
         if($this->key) $return .= 'id="options-'.$this->key.'" ';
         $return .= 'class="wrap-recall-options">';
@@ -40,18 +41,6 @@ class Rcl_Options {
         return $return;
     }
 
-    /*depricated*/
-    /*function tab_name($name,$id=false){
-        global $rcl_options;
-        if(!$this->key) return false;
-	$content = $this->label(__('The name of the tab in the personal Cabinet','wp-recall'));
-        if($rcl_options[$id]['tab_'.$this->key]) $rcl_options['tab_'.$this->key] = $rcl_options[$id]['tab_'.$this->key];
-	elseif(!$rcl_options['tab_'.$this->key]) $rcl_options['tab_'.$this->key] = $name;
-        $content .= $this->option('text',array('name'=>'tab_'.$this->key));
-        $content .= $this->notice(__('Enter your inscription on the toggle button tab in the personal Cabinet','wp-recall'));
-	return $content;
-    }*/
-
     function title($title){
         return '<h3>'.$title.'</h3>';
     }
@@ -65,21 +54,32 @@ class Rcl_Options {
     }
 
     function option($type,$args){
-        return $this->$type($args);
+        global $rcl_options;
+        
+        if(isset($args['type'])&&$args['type']=='local') 
+            $value = get_option($args['name']);
+        else if(isset($args['default'])&&!isset($rcl_options[$args['name']]))
+            $value = $args['default'];
+        else 
+            $value = $rcl_options[$args['name']];
+        
+        $this->type = (isset($args['type']))? $args['type']: 'global';
+        
+        return $this->$type($args,$value);
     }
 
-    function select($args){
+    function select($args,$value){
         global $rcl_options;
 
-        if(isset($args['default'])&&!isset($rcl_options[$args['name']]))
-            $rcl_options[$args['name']] = $args['default'];
+        //if(isset($args['default'])&&!isset($rcl_options[$args['name']]))
+            //$rcl_options[$args['name']] = $args['default'];
 
-        $content = '<select ';
+        $content = '<select id="'.$args['name'].'"';
         if(isset($args['parent'])) $content .= 'class="parent-select" ';
-        $content .= 'name="'.$args['name'].'" size="1">';
+        $content .= 'name="'.$this->type.'['.$args['name'].']" size="1">';
             foreach($args['options'] as $val=>$name){
-               $key = (isset($rcl_options[$args['name']]))? $rcl_options[$args['name']]:'';
-               $content .= '<option value="'.$val.'" '.selected($key,$val,false).'>'
+               //$key = (isset($rcl_options[$args['name']]))? $rcl_options[$args['name']]:'';
+               $content .= '<option value="'.$val.'" '.selected($value,$val,false).'>'
                        . $name
                        .'</option>';
             }
@@ -105,7 +105,7 @@ class Rcl_Options {
            }
 
            $content .= '<label for="'.$args['name'].'_'.$a.'">';
-           $content .= '<input id="'.$args['name'].'_'.$a.'" type="checkbox" name="'.$args['name'].'[]" value="'.trim($val).'" '.checked($key,$val,false).'> '.$name;
+           $content .= '<input id="'.$args['name'].'_'.$a.'" type="checkbox" name="'.$this->type.'['.$args['name'].'][]" value="'.trim($val).'" '.checked($key,$val,false).'> '.$name;
            $content .= '</label>';
         }
 
@@ -115,37 +115,37 @@ class Rcl_Options {
     function text($args){
         global $rcl_options;
         $val = $this->get_value($args);
-        return '<input type="text" name="'.$args['name'].'" value="'.$val.'" size="60">';
+        return '<input type="text" name="'.$this->type.'['.$args['name'].']" value="'.$val.'" size="60">';
     }
 
     function password($args){
         global $rcl_options;
         $val = $this->get_value($args);
-        return '<input type="password" name="'.$args['name'].'" value="'.$val.'" size="60">';
+        return '<input type="password" name="'.$this->type.'['.$args['name'].']" value="'.$val.'" size="60">';
     }
 
     function number($args){
         global $rcl_options;
         $val = $this->get_value($args);
-        return '<input type="number" name="'.$args['name'].'" value="'.$val.'" size="60">';
+        return '<input type="number" name="'.$this->type.'['.$args['name'].']" value="'.$val.'" size="60">';
     }
 
     function email($args){
         global $rcl_options;
         $val = $this->get_value($args);
-        return '<input type="email" name="'.$args['name'].'" value="'.$val.'" size="60">';
+        return '<input type="email" name="'.$this->type.'['.$args['name'].']" value="'.$val.'" size="60">';
     }
 
     function url($args){
         global $rcl_options;
         $val = $this->get_value($args);
-        return '<input type="url" name="'.$args['name'].'" value="'.$val.'" size="60">';
+        return '<input type="url" name="'.$this->type.'['.$args['name'].']" value="'.$val.'" size="60">';
     }
 
     function textarea($args){
         global $rcl_options;
         $val = $this->get_value($args);
-        return '<textarea name="'.$args['name'].'">'.$val.'</textarea>';
+        return '<textarea name="'.$this->type.'['.$args['name'].']">'.$val.'</textarea>';
     }
 
 	function get_value($args){

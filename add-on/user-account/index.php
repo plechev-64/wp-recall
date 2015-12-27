@@ -37,28 +37,40 @@ function rcl_admin_user_account_scripts(){
 function rcl_get_user_money($user_id=false){
     global $wpdb,$user_ID;
     if(!$user_id) $user_id = $user_ID;
-    return $wpdb->get_var($wpdb->prepare("SELECT count FROM ".RMAG_PREF."user_count WHERE user='%d'",$user_id));
+    return $wpdb->get_var($wpdb->prepare("SELECT user_balance FROM ".RMAG_PREF."users_balance WHERE user_id='%d'",$user_id));
 }
 
-function rcl_update_user_money($newmoney,$user_id=false){
+function rcl_update_user_money($newmoney,$user_id,$comment=''){
     global $user_ID,$wpdb;
     if(!$user_id) $user_id = $user_ID;
 
     $money = rcl_get_user_money($user_id);
 
-    if(isset($money)) return $wpdb->update(RMAG_PREF .'user_count',
-                        array( 'count' => $newmoney ),
-                        array( 'user' => $user_id )
-                    );
+    if(isset($money)){
+        
+        do_action('rcl_pre_update_user_money',$newmoney,$user_id,$comment);
+        
+        return $wpdb->update(RMAG_PREF .'users_balance',
+            array( 'user_balance' => $newmoney ),
+            array( 'user_id' => $user_id )
+        );
+        
+        do_action('rcl_update_user_money',$newmoney,$user_id,$comment);
+        
+    }
 
-    return rcl_add_user_money($newmoney,$user_id);
+    return rcl_add_user_money($newmoney,$user_id,$comment);
 }
 
-function rcl_add_user_money($money,$user_id=false){
-    global $wpdb,$user_ID;
-    if(!$user_id) $user_id = $user_ID;
-    return $wpdb->insert( RMAG_PREF .'user_count',
-	array( 'user' => $user_id, 'count' => $money ));
+function rcl_add_user_money($money,$user_id,$comment=''){
+    global $wpdb;
+
+    $result =  $wpdb->insert( RMAG_PREF .'users_balance',
+	array( 'user_id' => $user_id, 'user_balance' => $money ));
+    
+    do_action('rcl_insert_user_money',$money,$user_id,$comment);
+    
+    return $result;
 }
 
 function rcl_statistic_user_pay_page(){
@@ -254,61 +266,27 @@ function rcl_admin_statistic_cashe(){
 	echo $table;
 }
 
-/*function rcl_invoice_generation($user_id,$amount,$order_id=0){
-    global $wpdb;
-
-    $wpdb->insert(
-        RCL_PREF.'payments_history',
-        array(
-            'user_id'=>$user_id,
-            'order_id'=>$order_id,
-            'payment_amount'=>$amount,
-            'payment_date'=>current_date('mysql'),
-            'payment_status'=>0
-        )
-    );
-
-    return $wpdg->insert_id;
-}
-
-function rcl_get_invoice($payment_id,$user_id){
-    global $wpdb;
-    return $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."payments_history WHERE payment_id = '%s' AND user_id = '%d'",$payment_id,$user_id));
-}
-
-function rcl_update_status_invoice($payment_id,$new_status){
-    global $wpdb;
-
-    return $wpdb->update(
-        RCL_PREF.'payments_history',
-        array(
-            'payment_status'=>$new_status
-        ),
-        array(
-            'payment_id'=>$payment_id
-        )
-    );
-}*/
-
 /*************************************************
 Пополнение личного счета пользователя
 *************************************************/
 function rcl_add_count_user(){
-	global $user_ID;
+    global $user_ID;
 
-	if($user_ID&&$_POST['count']){
+    rcl_verify_ajax_nonce();
 
-            $amount = intval($_POST['count']);
-            $id_pay = current_time('timestamp');
+    if($user_ID&&$_POST['count']){
 
-            $log['redirectform'] = rcl_payform(array('id_pay'=>$id_pay,'summ'=>$amount,'type'=>1));
-            $log['otvet']=100;
+        $amount = intval($_POST['count']);
+        $id_pay = current_time('timestamp');
 
-	} else {
-		$log['otvet']=1;
-	}
-	echo json_encode($log);
-	exit;
+        $log['redirectform'] = rcl_payform(array('id_pay'=>$id_pay,'summ'=>$amount,'type'=>1));
+        $log['otvet']=100;
+
+    } else {
+            $log['otvet']=1;
+    }
+    echo json_encode($log);
+    exit;
 }
 if(is_admin()) add_action('wp_ajax_rcl_add_count_user', 'rcl_add_count_user');
 
@@ -316,37 +294,33 @@ if(is_admin()) add_action('wp_ajax_rcl_add_count_user', 'rcl_add_count_user');
 Меняем баланс пользователя из админки
 *************************************************/
 function rcl_edit_balance_user(){
-	$user_id = intval($_POST['user']);
-	$balance = intval($_POST['balance']);
+    
+    rcl_verify_ajax_nonce();
+    
+    $user_id = intval($_POST['user']);
+    $balance = intval($_POST['balance']);
 
-	$oldusercount = rcl_get_user_money($user_id);
+    $oldusercount = rcl_get_user_money($user_id);
 
-	$new_cnt = $balance - $oldusercount;
+    $new_cnt = $balance - $oldusercount;
 
-	if(!$new_cnt) return false;
+    if(!$new_cnt) return false;
 
-	if($new_cnt<0) $type = 1;
-	else $type = 2;
+    if($new_cnt<0) $type = 1;
+    else $type = 2;
 
-	rcl_update_user_money($balance,$user_id);
+    rcl_update_user_money($balance,$user_id,__('The change in the balance','wp-recall'));
 
-	$new_cnt = abs((int)$new_cnt);
-	do_action('admin_edit_user_count_rcl',$user_id,$new_cnt,__('The change in the balance','wp-recall'),$type);
+    $new_cnt = abs((int)$new_cnt);
 
-	$log['otvet']=100;
-	$log['user']=$user_id;
-	$log['balance']=$balance;
+    $log['otvet']=100;
+    $log['user']=$user_id;
+    $log['balance']=$balance;
 
-	echo json_encode($log);
+    echo json_encode($log);
     exit;
 }
 if(is_admin()) add_action('wp_ajax_rcl_edit_balance_user', 'rcl_edit_balance_user');
-
-/*not found*/
-function rcl_get_usercount($user_id){
-    global $wpdb;
-    return $wpdb->get_var($wpdb->prepare("SELECT count FROM ".RMAG_PREF ."user_count WHERE user = '%d'",$user_id));
-}
 
 function rcl_get_html_usercount(){
     global $user_ID,$rmag_options;
@@ -380,44 +354,44 @@ function rcl_get_html_usercount(){
 add_filter('file_scripts_rcl','rcl_get_useraccount_scripts');
 function rcl_get_useraccount_scripts($script){
 
-	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
+	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
 
 	$script .= "
-		/* Пополняем личный счет пользователя */
-			jQuery('body').on('click','.add_count_user',function(){
-					var count = jQuery('.value_count_user');
-					var addcount = count.val();
-					var dataString = 'action=rcl_add_count_user&count='+addcount;
+            /* Пополняем личный счет пользователя */
+            jQuery('body').on('click','.add_count_user',function(){
+                var count = jQuery('.value_count_user');
+                var addcount = count.val();
+                var dataString = 'action=rcl_add_count_user&count='+addcount;
+                dataString += '&ajax_nonce='+Rcl.nonce;
+                jQuery.ajax({
+                        ".$ajaxdata."
+                        success: function(data){
+                                if(data['otvet']==100){
+                                        jQuery('.redirectform').html(data['redirectform']);
+                                } else {
+                                   alert('Ошибка проверки данных.');
+                                }
+                        }
+                });
+                return false;
+            });
 
-					jQuery.ajax({
-						".$ajaxdata."
-						success: function(data){
-							if(data['otvet']==100){
-								jQuery('.redirectform').html(data['redirectform']);
-							} else {
-							   alert('Ошибка проверки данных.');
-							}
-						}
-					});
-					return false;
-				});
-
-		jQuery('body').on('click','.go_to_add_count',function(){
-                    jQuery('.count_user').slideToggle();
-                    return false;
-		});
+            jQuery('body').on('click','.go_to_add_count',function(){
+                jQuery('.count_user').slideToggle();
+                return false;
+            });
 	";
 	return $script;
 }
 
 add_filter('rcl_functions_js','rcl_add_user_count_functions');
 function rcl_add_user_count_functions($string){
-    $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
+    $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
     $string .= "/* Оплачиваем заказ средствами из личного счета */
     function rcl_pay_order_private_account(e){
         var idorder = jQuery(e).data('order');
         var dataString = 'action=rcl_pay_order_private_account&idorder='+ idorder;
-
+        dataString += '&ajax_nonce='+Rcl.nonce;
         jQuery.ajax({
         ".$ajaxdata."
         success: function(data){

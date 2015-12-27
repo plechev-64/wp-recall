@@ -38,5 +38,5 @@ if(!isset($rcl_options['rcl_editor_buttons']))
 if(!isset($rcl_options['front_editing']))
     $rcl_options['front_editing'] = array(2);
 
-update_option('primary-rcl-options',$rcl_options);
+update_option('rcl_global_options',$rcl_options);
 ?>

@@ -37,6 +37,9 @@ add_filter( 'manage_users_custom_column', 'rcl_user_rating_admin_content', 10, 3
 
 function rcl_edit_rating_user(){
 	global $wpdb;
+        
+        rcl_verify_ajax_nonce();
+        
 	$user = intval($_POST['user']);
 	$rayting = intval($_POST['rayting']);
 

@@ -43,11 +43,12 @@ jQuery(function($){
         var area = $(this).parent().data('area');
         var dataString = 'action=rcl_get_smiles_ajax&area='+area;
         if(dir) dataString += '&dir='+dir;
+        dataString += '&ajax_nonce='+Rcl.nonce;
         $.ajax({
             type: 'POST', 
             data: dataString, 
             dataType: 'json', 
-            url: wpurl+'wp-admin/admin-ajax.php',
+            url: Rcl.ajaxurl,
             success: function(data){				
                     if(data['result']==1){
                             block.html(data['content']);
@@ -324,8 +325,6 @@ jQuery(function($){
             $("#favs").html('<p style="margin:0;" align="right"><a onclick="jQuery(\'#favs\').slideToggle();return false;" href="#">Закрыть</a></p><p class="empty"><b>Формируйте свой список интересных страниц сайта с помощью закладок!</b><br />Закладки не добавляются в ваш браузер и действуют только на этом сайте.<br />Для добавления новой закладки,<br>на нужной странице нажмите <b>В закладки</b>.<br> Помните что если очистить Cookies, то закладки тоже исчезнут.<br>Управляйте временем сохранения закладок через настройки вашего браузера для Cookies.</p>');
             return false;
     }
-	
-	
 
 });
 

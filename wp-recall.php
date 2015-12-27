@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://wppost.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 13.8.15
+    Version: 14.a.0
     Author: Plechev Andrey
     Author URI: http://wppost.ru/
     Text Domain: wp-recall
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '13.8.15';
+	public $version = '14.a.0';
 
 	protected static $_instance = null;
 
@@ -73,7 +73,6 @@ final class WP_Recall {
 	}
 
 	private function init_hooks() {
-            global $user_ID,$user_LK,$rcl_options;
 
             register_activation_hook( __FILE__, array( 'RCL_Install', 'install' ) );
 
@@ -86,17 +85,6 @@ final class WP_Recall {
             }else{
                  add_action('wp_enqueue_scripts', 'rcl_frontend_scripts');
                  add_action('wp_head','rcl_update_timeaction_user');
-
-                if(!$user_ID){
-                    if(!isset($rcl_options['login_form_recall'])||!$rcl_options['login_form_recall']){
-                        add_filter('wp_footer', 'rcl_login_form',99);
-                        add_filter('wp_enqueue_scripts', 'rcl_floatform_scripts');
-                    }else{
-                        add_filter('wp_enqueue_scripts', 'rcl_pageform_scripts');
-                    }
-                }
-
-                if($user_LK) rcl_bxslider_scripts();
 
             }
 	}
@@ -112,9 +100,6 @@ final class WP_Recall {
             $this->define('RCL_PREF', $wpdb->base_prefix . 'rcl_' );
 
             $this->define('RCL_PATH', trailingslashit( $this->plugin_path() ) );
-
-            $this->define('TEMP_PATH', $upload_dir['basedir'] . '/temp-rcl/');
-            $this->define('TEMP_URL', $upload_dir['baseurl'] . '/temp-rcl/' );
 
             $this->define('RCL_UPLOAD_PATH', $upload_dir['basedir'] . '/rcl-uploads/' );
             $this->define('RCL_UPLOAD_URL', $upload_dir['baseurl'] . '/rcl-uploads/' );
@@ -153,6 +138,8 @@ final class WP_Recall {
             include_once 'functions/rcl_activate.php';
             require_once("functions/minify-files/minify-css.php");
             require_once('functions/enqueue-scripts.php');
+            require_once('functions/rcl-cron.php');
+            include_once 'functions/class-rcl-cache.php';
             require_once('functions/rcl_custom_fields.php');
             require_once('functions/loginform.php');
             require_once('functions/rcl_currency.php');
@@ -198,20 +185,10 @@ final class WP_Recall {
 	 * Сюда складываем все файлы для фронт-энда
 	 */
 	public function frontend_includes() {
-            global $user_ID;
+            
 
             require_once('functions/recallbar.php');
             require_once("functions/rcl-frontend.php");
-
-            if($user_ID){
-
-            }else{
-                require_once('functions/register.php');
-                require_once('functions/authorize.php');
-                if(class_exists('ReallySimpleCaptcha')){
-                    require_once('functions/captcha.php');
-                }
-            }
 
 	}
 
@@ -220,20 +197,32 @@ final class WP_Recall {
 
             do_action( 'wprecall_before_init' );
 
-            $rcl_options = get_option('primary-rcl-options');
-
-            //$this->load_plugin_textdomain();
+            $rcl_options = get_option('rcl_global_options');
+            
+            if(!$user_ID){
+                //тут подключаем файлы необходимые для регистрации и авторизации
+                require_once('functions/register.php');
+                require_once('functions/authorize.php');
+                if(class_exists('ReallySimpleCaptcha')){
+                    require_once('functions/captcha.php');
+                }
+                if(!isset($rcl_options['login_form_recall'])||!$rcl_options['login_form_recall']){
+                    add_filter('wp_footer', 'rcl_login_form',99);
+                    add_filter('wp_enqueue_scripts', 'rcl_floatform_scripts');
+                }else{
+                    add_filter('wp_enqueue_scripts', 'rcl_pageform_scripts');
+                }
+                
+            }
+            
+            if(!isset($rcl_options['view_user_lk_rcl'])){
+                require_once('functions/migration.php');
+                //14.0.0 переименование опций плагина
+                rcl_rename_plugin_options();
+                $rcl_options = get_option('rcl_global_options');
+            }
 
             if ( $this->is_request( 'frontend' ) ) {
-                /*
-                 * RCL_Session_Handler и RCL_Customer название классов которые нужно будет подключить в $this->frontend_includes()
-                             * ap: пока закомментил
-                 */
-                /*$session_handler = apply_filters( 'wprecall_session_handler', 'RCL_Session_Handler' );
-                $customer_handler = apply_filters( 'wprecall_customer_handler', 'RCL_Customer' );
-
-                $this->session = new $session_handler();
-                $this->customer = new $customer_handler();*/
 
                 $rcl_user_URL = get_author_posts_url($user_ID);
                 $rcl_current_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_ID));
@@ -246,20 +235,28 @@ final class WP_Recall {
         function rcl_include_addons(){
             global $active_addons;
 
-            $active_addons = get_site_option('active_addons_recall');
-            $path_addon_rcl = RCL_PATH.'add-on/';
-            $path_addon_theme = RCL_TAKEPATH.'add-on/';
+            $active_addons = get_site_option('rcl_active_addons');
 
             if($active_addons){
-
-                foreach($active_addons as $addon=>$src_dir){
+                $addons = array();
+                foreach($active_addons as $addon=>$data){
                     if(!$addon) continue;
-                    if(is_readable($path_addon_theme.$addon.'/index.php')){
-                        include_once($path_addon_theme.$addon.'/index.php');
-                    }else if(is_readable($path_addon_rcl.$addon.'/index.php')){
-                        include_once($path_addon_rcl.$addon.'/index.php');
-                    }else{
-                        unset($active_addons[$addon]);
+                    if(isset($data['priority'])) 
+                        $addons[$data['priority']][$addon] = $data;
+                    else 
+                        $addons[0][$addon] = $data;
+                }
+
+                foreach($addons as $priority=>$adds){
+                    foreach($adds as $addon=>$data){
+                        if(!$addon) continue;
+
+                        $path = untrailingslashit( $data['path'] );
+                        if(file_exists($path.'/index.php')){                            
+                            include_once($path.'/index.php');
+                        }else{
+                            unset($active_addons[$addon]);
+                        }
                     }
                 }
 
@@ -271,20 +268,6 @@ final class WP_Recall {
         }
 
 	public function load_plugin_textdomain() {
-
-		//$locale = apply_filters( 'plugin_locale', get_locale() );
-
-		/*
-		 * Тут файлы перевода для админки
-		 */
-		/*if ( $this->is_request( 'admin' ) ) {
-			//load_textdomain( 'wp-recall', RCL_PATH . 'languages/rcl-admin-' . $locale . '.mo' );
-		}*/
-
-		/*
-		 * Тут для фронт-энда
-		 */
-		//load_textdomain( 'wp-recall', RCL_PATH . 'languages/rcl-' . $locale . '.mo' );
                 load_plugin_textdomain( 'wp-recall', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
@@ -329,17 +312,14 @@ final class WP_Recall {
  * @return WP_Recall
  */
 function RCL() {
-	return WP_Recall::instance();
+    return WP_Recall::instance();
 }
 
 /*
  * Теперь у нас есть глобальная переменная $wprecall
  * Которая содержит в себе основной класс WP_Recall
- * $
  */
 $GLOBALS['wprecall'] = RCL();
-
-
 
 function wp_recall(){
     rcl_include_template('cabinet.php');

@@ -19,7 +19,7 @@ function rcl_key_addon($path_parts){
 //добавляем вкладку со списком публикаций хозяина ЛК указанного типа записей в личный кабинет
 function rcl_postlist($id,$posttype,$name='',$args=false){
     global $rcl_options;
-    if(!$rcl_options) $rcl_options = get_option('primary-rcl-options');
+    if(!$rcl_options) $rcl_options = get_option('rcl_global_options');
     if($rcl_options['publics_block_rcl']!=1) return false;
     if (!class_exists('Rcl_Postlist')) include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
     $plist = new Rcl_Postlist($id,$posttype,$name,$args);
@@ -48,7 +48,8 @@ function rcl_block($place,$callback,$args=false){
 
 //добавляем вкладку в личный кабинет
 function rcl_tab($id,$callback,$name='',$args=false){
-
+    global $rcl_tabs;
+    
     $data = array(
         'id'=>$id,
         'callback'=>$callback,
@@ -57,6 +58,8 @@ function rcl_tab($id,$callback,$name='',$args=false){
     );
 
     if($name) $data = apply_filters('tab_data_rcl',$data);
+    
+    $rcl_tabs[$id] = $data;
 
     if(is_admin())return false;
 
@@ -159,7 +162,7 @@ function rcl_path_by_url($url,$dir=false){
     $array = explode('/',$url);
     $cnt = count($array);
     $path = '';
-	$content_dir = $dir;
+    $content_dir = $dir;
     foreach($array as $key=>$ar){
         if($array[$key]==$content_dir){
             $path = $_SERVER['DOCUMENT_ROOT'].'/'.$array[$key].'/';
@@ -199,21 +202,27 @@ endif;
 add_action('wp_ajax_rcl_ajax_tab', 'rcl_ajax_tab');
 add_action('wp_ajax_nopriv_rcl_ajax_tab', 'rcl_ajax_tab');
 function rcl_ajax_tab(){
-    global $wpdb,$array_tabs,$user_LK,$rcl_userlk_action;
+    global $wpdb,$array_tabs,$user_LK,$rcl_userlk_action,$rcl_tabs;
+    
+    rcl_verify_ajax_nonce();
+    
     $id_tab = sanitize_title($_POST['id']);
     $func = $array_tabs[$id_tab];
     $user_LK = intval($_POST['lk']);
-    if(!$rcl_userlk_action) $rcl_userlk_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_LK));
-    if (!class_exists('Rcl_Tabs')) include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
+    
+    if (!class_exists('Rcl_Tabs')) 
+        include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
+    
     if(!$array_tabs[$id_tab]){
+        
         $log['content']=__('Error! Perhaps this addition does not support ajax loading','wp-recall');
+        
     }else{
-        $data = array(
-            'id'=>$id_tab,
-            'callback'=>$func,
-            'name'=>false,
-            'args'=>array('public'=>1)
-        );
+        
+        if(!isset($rcl_tabs[$id_tab])) return false;
+        
+        $data = $rcl_tabs[$id_tab];
+        
         $tab = new Rcl_Tabs($data);
         $log['content']=$tab->add_tab('',$user_LK);
     }
@@ -261,7 +270,7 @@ function rcl_admin_access(){
     if(defined( 'DOING_AJAX' ) && DOING_AJAX) return;
     if(defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST) return;
     if(is_admin()){
-        $rcl_options = get_option('primary-rcl-options');
+        $rcl_options = get_option('rcl_global_options');
         get_currentuserinfo();
         $access = 7;
         if(isset($rcl_options['consol_access_rcl'])) $access = $rcl_options['consol_access_rcl'];
@@ -420,10 +429,10 @@ function rcl_get_postmeta($post_id){
     switch($post->post_type){
             case 'post':
                 $id_form = ($post)?  get_post_meta($post->ID,'publicform-id',1): 1;
-                $id_field = 'custom_public_fields_'.$id_form;
+                $id_field = 'rcl_fields_post_'.$id_form;
             break;
-            case 'products': $id_field = 'custom_saleform_fields'; break;
-            default: $id_field = 'custom_fields_'.$post->post_type;
+            case 'products': $id_field = 'rcl_fields_products'; break;
+            default: $id_field = 'rcl_fields_'.$post->post_type;
     }
 
     $get_fields = get_option($id_field);
@@ -507,6 +516,12 @@ function rcl_get_chart($arr=false){
     if(!$chartData) return false;
 
     return rcl_get_include_template('chart.php');
+}
+
+add_action('rcl_cron_daily','rcl_clear_cache',20);
+function rcl_clear_cache(){
+    $rcl_cache = new Rcl_Cache();
+    $rcl_cache->clear_cache();
 }
 
 /*22-06-2015 Удаление папки с содержимым*/
@@ -623,37 +638,39 @@ function rcl_get_smiles($id_area){
 }
 
 function rcl_get_smiles_ajax(){
-	global $wpsmiliestrans,$rcl_smilies;
+    global $wpsmiliestrans,$rcl_smilies;
 
-	if(!$rcl_smilies){
-		foreach($wpsmiliestrans as $emo=>$smilie){
-			$rcl_smilies[$emo]=$smilie;
-		}
-	};
+    rcl_verify_ajax_nonce();
 
-	$namedir = $_POST['dir'];
-	$area = $_POST['area'];
+    if(!$rcl_smilies){
+        foreach($wpsmiliestrans as $emo=>$smilie){
+            $rcl_smilies[$emo]=$smilie;
+        }
+    };
 
-	$smiles = '';
+    $namedir = $_POST['dir'];
+    $area = $_POST['area'];
 
-	$dir = (isset($rcl_smilies[$namedir]))? $rcl_smilies[$namedir]: $rcl_smilies;
+    $smiles = '';
 
-	foreach ( $dir as $emo=>$gif ) {
-		if(!$emo) continue;
-		//$b = array('','img alt="'.$emo.'" onclick="document.getElementById(\''.$area.'\').value=document.getElementById(\''.$area.'\').value+\' '.$emo.' \'"');
-		$smiles .= str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $emo ) );
-	}
+    $dir = (isset($rcl_smilies[$namedir]))? $rcl_smilies[$namedir]: $rcl_smilies;
+
+    foreach ( $dir as $emo=>$gif ) {
+            if(!$emo) continue;
+            //$b = array('','img alt="'.$emo.'" onclick="document.getElementById(\''.$area.'\').value=document.getElementById(\''.$area.'\').value+\' '.$emo.' \'"');
+            $smiles .= str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $emo ) );
+    }
 
 
-	if($smiles){
-		$log['result'] = 1;
-	}else{
-		$log['result'] = 0;
-	}
+    if($smiles){
+            $log['result'] = 1;
+    }else{
+            $log['result'] = 0;
+    }
 
-	$log['content'] = $smiles;
-	echo json_encode($log);
-	exit;
+    $log['content'] = $smiles;
+    echo json_encode($log);
+    exit;
 }
 add_action('wp_ajax_rcl_get_smiles_ajax','rcl_get_smiles_ajax');
 
@@ -692,26 +709,6 @@ function rcl_get_usernames($objects,$name_data){
 	}
 	return $names;
 }
-
-/*function rcl_get_data($array,$args){
-
-    $search_field = $args['search'];
-    $search_by = $args['by'];
-    $table = $args['table'];
-    $unique_key = $args['key'];
-
-    if(!$array||!$args) return false;
-
-    foreach((array)$array as $object){ $search_data[] = $object->$search_by; }
-
-    $datas = $wpdb->get_results($wpdb->prepare("SELECT $unique_key,$search_field FROM ".$wpdb->prefix."users WHERE $unique_key IN (".rcl_format_in($search_data).")",$search_data));
-
-    foreach((array)$datas as $data){
-            $result[$data->$unique_key] = $data->$search_field;
-    }
-
-    return $result;
-}*/
 
 function rcl_get_useraction($user_action=false){
 	global $rcl_options,$rcl_userlk_action;
@@ -808,11 +805,15 @@ function rcl_get_button($ancor,$url,$args=false){
 //сортируем вкладки согласно настроек
 add_filter('tab_data_rcl','rcl_edit_options_tab',5);
 function rcl_edit_options_tab($tab){
-    global $rcl_options;
-    if(isset($rcl_options['tabs']['name'][$tab['id']])) $tab['name'] = $rcl_options['tabs']['name'][$tab['id']];
-	//print_r($rcl_options);
-    if(isset($rcl_options['tabs']['order'])){
-        foreach($rcl_options['tabs']['order'] as $order=>$key){
+    global $rcl_order_tabs;
+    
+    if(!$rcl_order_tabs) $rcl_order_tabs = get_option('rcl_order_tabs');
+
+    if(isset($rcl_order_tabs['name'][$tab['id']])) 
+        $tab['name'] = $rcl_order_tabs['name'][$tab['id']];
+
+    if(isset($rcl_order_tabs['order'])){
+        foreach($rcl_order_tabs['order'] as $order=>$key){
             if($key!=$tab['id']) continue;
                 $tab['args']['order'] = $order+10;
         }
@@ -827,10 +828,18 @@ function rcl_add_balloon_menu($data,$args){
     return $data;
 }
 
+/*14.0.0*/
+function rcl_verify_ajax_nonce(){
+    if ( ! wp_verify_nonce( $_POST['ajax_nonce'], 'rcl-post-nonce' ) ){
+        echo json_encode(array('error'=>'Проверка подписи не пройдена!'));
+        exit;
+    }
+}
+
 add_filter('file_scripts_rcl','rcl_get_scripts_ajaxload_tabs');
 function rcl_get_scripts_ajaxload_tabs($script){
 
-	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: wpurl+'wp-admin/admin-ajax.php',";
+	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
 
 	$script .= "
 	function setAttr_rcl(prmName,val){
@@ -852,7 +861,8 @@ function rcl_get_scripts_ajaxload_tabs($script){
 	}
 	function get_ajax_content_tab(id){
 		var lk = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
-		var dataString = 'action=rcl_ajax_tab&id='+id+'&lk='+lk+'&locale='+jQuery('html').attr('lang');
+		var dataString = 'action=rcl_ajax_tab&id='+id+'&lk='+lk;
+                dataString += '&ajax_nonce='+Rcl.nonce;
 		jQuery.ajax({
 			".$ajaxdata."
 			success: function(data){

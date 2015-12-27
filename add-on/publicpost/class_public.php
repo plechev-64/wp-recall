@@ -7,6 +7,9 @@ class Rcl_Public{
 	}
 	function get_media(){
 		global $user_ID,$wpdb;
+                
+                rcl_verify_ajax_nonce();
+                
                 $page = 1;
 		if(isset($_POST['page'])) $page = intval($_POST['page']);
 		if($user_ID){
@@ -61,6 +64,9 @@ class Rcl_Public{
 
 	function step_one_redactor_post(){
 		global $user_ID,$wpdb;
+                
+                rcl_verify_ajax_nonce();
+                
 		$post_id = intval($_POST['post_id']);
 		$post_array = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."posts WHERE ID='%d'",$post_id));
 		$title = $post_array->post_title;
@@ -84,6 +90,9 @@ class Rcl_Public{
 	}
 	function step_two_redactor_post(){
 		global $user_ID,$wpdb;
+                
+                rcl_verify_ajax_nonce();
+                
 		if(!$user_ID) exit;
 
 		$post_id = intval($_POST['post_id']);

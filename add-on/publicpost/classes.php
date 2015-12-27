@@ -1,27 +1,31 @@
 <?php
 class Rcl_Child_Terms{
 
-	function get_terms_post( $post_cat = array() ){
+    function get_terms_post( $post_cat = array() ){
+        
+        $cat_list = array();
+        foreach( $post_cat as $key => $p_cat ){
+            foreach($post_cat as $pc){
+                if($pc->parent==$p_cat->term_id){
+                    unset($post_cat[$key]);
+                    break;
+                }
 
-		$cat_list = array();
-		foreach( $post_cat as $key => $p_cat ){
-			foreach($post_cat as $pc){
-				if($pc->parent==$p_cat->term_id){
-					unset($post_cat[$key]);
-					break;
-				}
-
-			}
-		}
-		$cnt = count($post_cat);
-		foreach($post_cat as $data){
-			if($cnt>1){
-				if($data->parent==0) continue;
-			}
-			$cat_list[] = $data;
-		}
-		return $cat_list;
-	}
+            }
+        }
+        
+        return $post_cat;
+        
+        $cnt = count($post_cat);
+        foreach($post_cat as $data){
+            if($cnt>1){
+                if($data->parent==0) continue;
+            }
+            $cat_list[] = $data;
+        }
+        print_r($cat_list);
+        return $cat_list;
+    }
 }
 
 class Rcl_List_Terms{
@@ -31,122 +35,171 @@ class Rcl_List_Terms{
 	public $sel;
 	public $cat_list;
 	public $allcats;
-    public $selected;
+        public $selected;
 	public $taxonomy;
+        public $output;
 
 	function __construct($taxonomy=false){
-		$this->taxonomy = $taxonomy;
+            global $rcl_options;
+            $this->taxonomy = $taxonomy;
+            $this->output = (isset($rcl_options['output_category_list']))? $rcl_options['output_category_list']: 'select';
 	}
 
-	function get_select_list($allcats,$cat_list,$cnt,$ctg){
-                if(!$allcats) return false;
-		$catlist = '';
+	function get_select_list($allcats,$cat_list,$cnt,$ctg,$output=false){                      
+            if(!$allcats) return false;
+            $catlist = '';
+            
+            if($output) $this->output = $output;
 
-		if($ctg) $this->ctg = $ctg;
-		$this->allcats = $allcats;
+            if($ctg) $this->ctg = $ctg;
+            $this->allcats = $allcats;
+            
+            //print_r($this->output); exit;
 
-		if($cat_list&&is_array($cat_list)&&$this->taxonomy){
-			$cat_list = get_terms( $this->taxonomy, array('include'=>$cat_list) );
-		}
+            if($cat_list&&is_array($cat_list)&&$this->taxonomy){
+                $cat_list = get_terms( $this->taxonomy, array('include'=>$cat_list) );
+            }
 
-		$this->cat_list = $cat_list;
-		for($this->sel=0;$this->sel<$cnt;$this->sel++){
-                        $this->selected = false;
-			$catlist .= '<select class="postform" name="cats[]">';
-			if($this->sel>0) $catlist .= '<option value="">'.__('Not selected','wp-recall').'</option>';
-			$catlist .= $this->get_option_list();
-			$catlist .= '</select>';
-		}
-		return $catlist;
+            $this->cat_list = $cat_list;
+            
+            for($this->sel=0;$this->sel<$cnt;$this->sel++){
+                $this->selected = false;
+                if($this->output=='select'){
+                    $catlist .= '<select class="postform" name="cats[]">';
+                    if($this->sel>0) $catlist .= '<option value="">'.__('Not selected','wp-recall').'</option>';
+                    $catlist .= $this->get_option_list();
+                    $catlist .= '</select>';
+                }
+                if($this->output=='checkbox'){
+                    $catlist .= '<div class="category-list">';                            
+                    $catlist .= $this->get_option_list();
+                    $catlist .= '</div>';
+                }
+            }
+            return $catlist;
 	}
 
 	function get_option_list(){
+            if($this->ctg){
+                $ctg_ar = explode(',',$this->ctg);
+                $cnt_c = count($ctg_ar);
+            }
+            $catlist = '';
+            foreach($this->allcats as $cat){
 
-		if($this->ctg){
-			$ctg_ar = explode(',',$this->ctg);
-			$cnt_c = count($ctg_ar);
-		}
-                $catlist = '';
-		foreach($this->allcats as $cat){
+                $this->a = 0;
 
-			$this->a = 0;
+                if($this->ctg){
 
-			if($this->ctg){
+                    for($z=0;$z<$cnt_c;$z++){
+                        if($ctg_ar[$z]==$cat->term_id){
+                            $catlist .= $this->get_loop_child($cat);
+                        }
+                    }
 
-				for($z=0;$z<$cnt_c;$z++){
-					if($ctg_ar[$z]==$cat->term_id){
-						$catlist .= $this->get_loop_child($cat);
-					}
-				}
-
-			}else{
-				if($cat->parent!=0) continue;
-				$catlist .= $this->get_loop_child($cat);
-			}
-		}
-		return $catlist;
+                }else{
+                    if($cat->parent!=0) continue;
+                    $catlist .= $this->get_loop_child($cat);
+                }
+            }
+            return $catlist;
 	}
 
 	function get_loop_child($cat){
-        $catlist = false;
-		$child = $this->get_child_option($cat->term_id,$this->a);
-		if($child){
+            
+            $catlist = false;
+            $child = $this->get_child_option($cat->term_id,$this->a);
+            
+            if($child){
+                if($this->output=='select'){
                     $catlist = '<optgroup label="'.$cat->name.'">'.$child.'</optgroup>';
-        }else{
+                }else{
+                    $catlist = '<div class="child-list-category">'
+                    . '<label class="parent-category">'.$cat->name.'</label>'
+                    . $child
+                    .'</div>';
+                }
+                
+            }else{
 
-            $selected = '';
-            if(!$this->selected&&$this->cat_list){
-                foreach($this->cat_list as $key=>$sel){
-                    if($sel->term_id==$cat->term_id){
-                        //echo $sel->term_id.' - '.$cat->term_id.'<br>';
-                        $selected = selected($sel->term_id,$cat->term_id,false);
-                        $this->selected = true;
-                        unset($this->cat_list[$key]);
-                        break;
+                $selected = '';
+                if(!$this->selected&&$this->cat_list){
+                    foreach($this->cat_list as $key=>$sel){
+                        if($sel->term_id==$cat->term_id){
+                            //echo $sel->term_id.' - '.$cat->term_id.'<br>';
+                            if($this->output=='select') $selected = selected($sel->term_id,$cat->term_id,false);
+                            if($this->output=='checkbox') $selected = checked($sel->term_id,$cat->term_id,false);
+                            $this->selected = true;
+                            unset($this->cat_list[$key]);
+                            break;
+                        }
                     }
                 }
-            }
 
-            $catlist = '<option '.$selected.' value="'.$cat->term_id.'">'.$cat->name.'</option>';
+                if($this->output=='select') $catlist = '<option '.$selected.' value="'.$cat->term_id.'">'.$cat->name.'</option>';
+                if($this->output=='checkbox') $catlist = '<span><input type="checkbox" '.$selected.' name="cats[]" value="'.$cat->term_id.'">'.$cat->name.'</span>';
+                $this->selected = false;
             }
             return $catlist;
 	}
 
 	function get_child_option($term_id,$a){
-        $catlist = false;
-		foreach($this->allcats as $cat){
-			if($cat->parent!==$term_id) continue;
-			$child = '';
-			$b = '-'.$a;
-			$child = $this->get_child_option($cat->term_id,$b);
+            $catlist = false;
+            foreach($this->allcats as $cat){
+                if($cat->parent!==$term_id) continue;
+                $child = '';
+                $b = '-'.$a;
+                $child = $this->get_child_option($cat->term_id,$b);
 
-			if($child){
-                            $catlist .= '<optgroup label=" '.$b.' '.$cat->name.'">'.$child.'</optgroup>';
-                        }else{
+                if($child){
 
-                            $selected = '';
-                            if(!$this->selected&&$this->cat_list){
+                    if($this->output=='select'){
+                        $catlist .= '<optgroup label="'.$b.' '.$cat->name.'">'.$child.'</optgroup>';
+                    }else{
+                        $catlist .= '<div class="child-list-category">'
+                        . '<label class="parent-category">'.$cat->name.'</label>'
+                        . $child
+                        .'</div>';
+                    }
 
-                                foreach($this->cat_list as $key=>$sel){
-                                    if($sel->term_id==$cat->term_id){
-                                        $selected = selected($sel->term_id,$cat->term_id,false);
-                                        $this->selected = true;
-                                        unset($this->cat_list[$key]);
-                                        break;
-                                    }
-                                }
+                }else{
+
+                    $selected = '';
+                    if(!$this->selected&&$this->cat_list){
+
+                        foreach($this->cat_list as $key=>$sel){
+                            if($sel->term_id==$cat->term_id){
+                                if($this->output=='select') $selected = selected($sel->term_id,$cat->term_id,false);
+                                if($this->output=='checkbox') $selected = checked($sel->term_id,$cat->term_id,false);
+                                $this->selected = true;
+                                unset($this->cat_list[$key]);
+                                break;
                             }
-                            $catlist .= '<option '.$selected.' value="'.$cat->term_id.'">'.$cat->name.'</option>';
                         }
-			$this->a = $a;
-		}
-		return $catlist;
+                    }
+                    //$catlist .= '<option '.$selected.' value="'.$cat->term_id.'">'.$cat->name.'</option>';
+                    if($this->output=='select') $catlist .= '<option '.$selected.' value="'.$cat->term_id.'">'.$cat->name.'</option>';
+                    if($this->output=='checkbox') $catlist .= '<span><input type="checkbox" '.$selected.' name="cats[]" value="'.$cat->term_id.'">'.$cat->name.'</span>';
+                    $this->selected = false;
+                    
+                            }
+                $this->a = $a;
+            }
+            return $catlist;
 	}
 
 	function get_parent_option($child,$term_id,$a){
 		foreach($this->allcats as $cat){
 			if($cat->term_id!=$term_id) continue;
-			$parent = '<optgroup label="'.$cat->name.'">'.$child.'</optgroup>';
+			//$parent = '<optgroup label="'.$cat->name.'">'.$child.'</optgroup>';
+                        if($this->output=='select'){
+                            $parent = '<optgroup label="'.$cat->name.'">'.$child.'</optgroup>';
+                        }else{
+                            $catlist = '<div class="child-list-category">'
+                            . '<label class="parent-category">'.$cat->name.'</label>'
+                            . $child
+                            .'</div>';
+                        }
 		}
 		return $parent;
 	}

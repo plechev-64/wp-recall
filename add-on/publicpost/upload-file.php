@@ -3,6 +3,8 @@ add_action('wp_ajax_rcl_imagepost_upload', 'rcl_imagepost_upload');
 //add_action('wp_ajax_nopriv_rcl_imagepost_upload', 'rcl_imagepost_upload');
 function rcl_imagepost_upload(){
 	global $rcl_options,$user_ID;
+        
+        rcl_verify_ajax_nonce();
 
 	require_once(ABSPATH . "wp-admin" . '/includes/image.php');
 	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
@@ -11,6 +13,8 @@ function rcl_imagepost_upload(){
 	if(!$user_ID) return false;
 
 	if(isset($_POST['post_id'])&&$_POST['post_id']!='undefined') $id_post = intval($_POST['post_id']);
+        
+        $post = get_post($id_post);
 
 	$files = array();
 	foreach($_FILES['uploadfile'] as $key=>$fls){
@@ -18,27 +22,39 @@ function rcl_imagepost_upload(){
 			$files[$k][$key] = $data;
 		}
 	}
-
+        
 	foreach($files as $k=>$file){
 
-		$image = wp_handle_upload( $file, array('test_form' => FALSE) );
+            $mime = explode('/',$file['type']);
+            
+            if($post->post_type=='post'){
+                $valid_types = array("gif", "jpg", "png", "jpeg");
+                if (!in_array($mime[1], $valid_types)){ 
+                    echo json_encode(array('error'=>'Недозволенное расширение файла. Используйте только: .gif, .png, .jpg'));
+                    exit;
+                } 
+            }
 
-		$mime = explode('/',$image['type']);
-		if($mime[1]=='php'||$mime[1]=='html'||$mime[1]=='txt') exit;
+            if($mime[1]=='php'||$mime[1]=='html'||$mime[1]=='txt'||$mime[1]=='javascript'){ 
+                echo json_encode(array('error'=>'Запрещенное расширение файла.'));
+                exit;
+            }
 
-		if($image['file']){
-				$attachment = array(
-					'post_mime_type' => $image['type'],
-					'post_title' => preg_replace('/\.[^.]+$/', '', basename($image['file'])),
-					'post_content' => '',
-					'guid' => $image['url'],
-					'post_parent' => $id_post,
-					'post_author' => $user_ID,
-					'post_status' => 'inherit'
-				);
+            $image = wp_handle_upload( $file, array('test_form' => FALSE) );
 
-				$res[$k]['string'] = rcl_insert_attachment($attachment,$image,$id_post);
-		}
+            if($image['file']){
+                $attachment = array(
+                    'post_mime_type' => $image['type'],
+                    'post_title' => preg_replace('/\.[^.]+$/', '', basename($image['file'])),
+                    'post_content' => '',
+                    'guid' => $image['url'],
+                    'post_parent' => $id_post,
+                    'post_author' => $user_ID,
+                    'post_status' => 'inherit'
+                );
+
+                $res[$k]['string'] = rcl_insert_attachment($attachment,$image,$id_post);
+            }
 
 	}
 
