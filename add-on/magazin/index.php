@@ -20,16 +20,9 @@ require_once("admin-pages.php");
 require_once("functions/shortcodes.php");
 require_once("functions/ajax-func.php");
 
-
-function rcl_ajax_tab_order($array_tabs){
-    $array_tabs['order']='rcl_orders';
-    return $array_tabs;
-}
-add_filter('ajax_tabs_rcl','rcl_ajax_tab_order');
-
 add_action('init','rcl_tab_orders');
 function rcl_tab_orders(){
-    rcl_tab('orders','rcl_orders','Заказы',array('class'=>'fa-shopping-cart','order'=>30,'path'=>__FILE__));
+    rcl_tab('orders','rcl_orders','Заказы',array('ajax-load'=>true,'class'=>'fa-shopping-cart','order'=>30,'path'=>__FILE__));
 }
 
 function rcl_orders($author_lk){
@@ -52,9 +45,14 @@ function rcl_orders($author_lk){
                 $block .= '<a class="recall-button view-orders" href="'.rcl_format_url(get_author_posts_url($author_lk),'orders').'">Смотреть все заказы</a>';
 
                 $block .= '<h3>Заказ №'.$order_id.'</h3>';
+                
+                $postdata = rcl_encode_post(array(
+                    'callback'=>'rcl_trash_order',
+                    'order_id'=>$order_id
+                ));
 
                 $block .= '<div id="manage-order">';
-                if($status == 1||$status == 5) $block .= '<input class="remove_order recall-button" onclick="rcl_trash_order(this);return false;" type="button" name="remove_order" data-order="'.$order_id.'" value="Удалить">';
+                if($status == 1||$status == 5) $block .= '<input class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'" type="button" value="Удалить">';
                 if($status==1&&function_exists('rcl_payform')){
                     $type_pay = $rmag_options['type_order_payment'];
                     if($type_pay==1||$type_pay==2){
@@ -90,20 +88,9 @@ function rcl_magazine_functions_js($string){
 
     $string .= "
         /* Удаляем заказ пользователя в корзину */
-        function rcl_trash_order(e){
-            var idorder = jQuery(e).data('order');
-            var dataString = 'action=rcl_delete_trash_order&idorder='+ idorder;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            jQuery.ajax({
-            ".$ajaxdata."
-            success: function(data){
-                if(data['otvet']==100){
-                    jQuery('#manage-order, table.order-data').remove();
-                    jQuery('.redirectform').html(data['content']);
-                }
-            }
-            });
-            return false;
+        function rcl_trash_order(e,data){       
+            jQuery('#manage-order, table.order-data').remove();
+            jQuery('.redirectform').html(data.result);
         }
         /* Увеличиваем количество товара в большой корзине */
         function rcl_cart_add_product(e){

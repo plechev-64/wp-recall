@@ -1,7 +1,7 @@
 jQuery(window).load(function() {
-	jQuery(document.body).bind("drop", function(e){
-		e.preventDefault();
-	});
+    jQuery(document.body).bind("drop", function(e){
+        e.preventDefault();
+    });
 });
 
 var get_param = new Array();
@@ -26,6 +26,36 @@ function rcl_is_valid_url(url){
   return objRE.test(url);
 }
 
+function setAttr_rcl(prmName,val){
+    var res = '';
+    var d = location.href.split("#")[0].split("?");  
+    var base = d[0];
+    var query = d[1];
+    if(query) {
+        var params = query.split("&");  
+        for(var i = 0; i < params.length; i++) {  
+                var keyval = params[i].split("=");  
+                if(keyval[0] !== prmName) {  
+                        res += params[i] + '&';
+                }
+        }
+    }
+    res += prmName + '=' + val;
+    return base + '?' + res;
+} 
+
+function rcl_ajax_tab(e,data){
+    jQuery('.rcl-tab-button .recall-button').removeClass('active');
+    e.addClass('active');
+    var url = setAttr_rcl('tab',data.post.tab_id);
+    if(url != window.location){
+        if ( history.pushState ){
+            window.history.pushState(null, null, url);
+        }
+    }
+    jQuery('#lk-content').html(data.result);
+}
+
 jQuery(function($){
 	
     init_location_data();
@@ -33,6 +63,30 @@ jQuery(function($){
     $('#rcl-notice,body').on('click','a.close-notice',function(){	
             $(this).parent().remove();
             return false;
+    });
+    
+    $('body').on('click','.rcl-ajax',function(){
+        rcl_preloader_show('#lk-content > div');
+        var e = $(this);
+        var post = e.data('post');
+        var dataString = 'action=rcl_ajax&post='+post;
+        dataString += '&ajax_nonce='+Rcl.nonce;
+        $.ajax({
+            type: 'POST', 
+            data: dataString, 
+            dataType: 'json', 
+            url: Rcl.ajaxurl,
+            success: function(data){
+                rcl_preloader_hide();
+                if(data.result.error){
+                    rcl_notice(data.result.error,'error');
+                    return false;
+                }
+                var funcname = data.post.callback;              
+                new (window[funcname])(e,data);
+            }			
+        }); 
+        return false;
     });
 
     $('body').on('hover','.rcl-smiles > img',function(){
@@ -85,26 +139,6 @@ jQuery(function($){
         //return false;
     });
 
-    function setAttr_rcl(prmName,val){
-        var res = '';
-        var d = location.href.split("#")[0].split("?");  
-        var base = d[0];
-        var query = d[1];
-        if(query) {
-                var params = query.split("&");  
-                for(var i = 0; i < params.length; i++) {  
-                        var keyval = params[i].split("=");  
-                        if(keyval[0] !== prmName) {  
-                                res += params[i] + '&';
-                        }
-                }
-        }
-        res += prmName + '=' + val;
-        return base + '?' + res;
-    } 
-
-    
-
     $('#rcl-popup,.floatform').on('click','.close-popup',function(){
         $('#rcl-overlay').fadeOut();
         $('.floatform').fadeOut();
@@ -131,14 +165,6 @@ jQuery(function($){
         $(".largeImglink").attr({ href: largePath });		
         $("h2 em").html(" (" + largeAlt + ")"); return false;
     });	
-	
-    /*var num_field_rcl = $('input .field_thumb_rcl').size() + 1;
-    $('#add-new-input-rcl').click(function() {
-        if(num_field_rcl<5) $('<tr><td><input type="radio" name="image_thumb" value="'+num_field_rcl+'"/></td><td><input type="file" class="field_thumb_rcl" name="image_file_'+num_field_rcl+'" value="" /></td></tr>').fadeIn('slow').appendTo('.inputs');
-		else $(this).remove();
-        num_field_rcl++;
-		return false;
-    });*/
 	
     $('.public-post-group').click(function(){				
         $(this).slideUp();
@@ -455,24 +481,19 @@ function rcl_add_dropzone(idzone){
     }
 	
     function rcl_notice(text,type){	
-            var html = '<div class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
-            if(!jQuery('#rcl-notice').size()){
-                    jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
-            }else{
-                    if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
-                    else jQuery('#rcl-notice').html(html);
-            }
-
-            /*var first = jQuery('#rcl-notice > div:first-child');
-            setTimeout(function() {
-                    first.animate({height: 0}, 1000).remove();
-            }, 3000);*/
+        var html = '<div class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
+        if(!jQuery('#rcl-notice').size()){
+                jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
+        }else{
+                if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
+                else jQuery('#rcl-notice').html(html);
+        }
     }
 
     function rcl_preloader_show(e){
-            jQuery(e).after('<div class="rcl_preloader"></div>');
+        jQuery(e).after('<div class="rcl_preloader"></div>');
     }
 
     function rcl_preloader_hide(){
-            jQuery('.rcl_preloader').remove();
+        jQuery('.rcl_preloader').remove();
     }

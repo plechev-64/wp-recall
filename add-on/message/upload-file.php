@@ -8,9 +8,6 @@ function rcl_message_upload(){
 	$adressat_mess = intval($_POST['talker']);
 	$online = intval($_POST['online']);
 
-	//print_r($_POST);
-	//print_r($_FILES); exit;
-
 	if(!$user_ID) exit;
 
 		if($rcl_options['file_limit']){

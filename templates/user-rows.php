@@ -15,8 +15,6 @@
 
         <?php rcl_user_description(); ?>
 
-        <?php do_action('user_description'); ?>
-
     </div>
 
 </div>

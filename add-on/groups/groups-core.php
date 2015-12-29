@@ -25,7 +25,6 @@ function rcl_group_init(){
     return $rcl_group;
 
 }
-//add_action('wp','rcl_group_init',1);
 
 function rcl_create_group($groupdata){
     global $wpdb;
@@ -342,7 +341,7 @@ function rcl_get_group_users($group_id){
     add_filter('rcl_users_query','rcl_group_add_users_query');
 
     if(rcl_is_group_can('moderator')||current_user_can('edit_others_posts'))
-        add_action('user_description','rcl_add_group_user_options');
+        add_action('rcl_user_description','rcl_add_group_user_options');
 
     $page = (isset($_POST['page']))? $_POST['page']: false;
     $users_role = (isset($_POST['value']))? $_POST['value']: "all";
@@ -720,11 +719,10 @@ function rcl_group_admin_panel(){
 
         $requests = rcl_get_group_option($rcl_group->term_id,'requests_group_access');
 
-        //if($requests)
-            $admins_buttons[] = array(
-                    'callback' => 'rcl_get_group_requests_content',
-                    'name' => __('Requests for access','wp-recall').' - '.count($requests)
-                );
+        $admins_buttons[] = array(
+                'callback' => 'rcl_get_group_requests_content',
+                'name' => __('Requests for access','wp-recall').' - '.count($requests)
+            );
 
     }
 

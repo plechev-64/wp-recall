@@ -109,9 +109,9 @@ class Rcl_Cart {
 
 	function get_products(){
 		global $post;
-        //print_r($_SESSION);
+
         $basket = '';
-        //unset($_SESSION['cart']);
+
         if(isset($_SESSION['cart'])&&$_SESSION['cart']){
             foreach($_SESSION['cart'] as $id_prod=>$val){
                 $ids[] = $id_prod;

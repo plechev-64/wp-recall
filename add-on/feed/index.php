@@ -24,14 +24,9 @@ function rcl_add_userlist_follow_button(){
     echo '<div class="follow-button">'.rcl_add_feed_button($rcl_user->ID).'</div>';
 }
 
-add_filter('ajax_tabs_rcl','rcl_ajax_followers_tab');
-function rcl_ajax_followers_tab($array_tabs){
-    return array_merge( $array_tabs,array( 'followers' => 'rcl_followers_tab' ));
-}
-
 add_action('init','rcl_add_followers_tab');
 function rcl_add_followers_tab(){
-    rcl_tab('followers','rcl_followers_tab',__('Followers','wp-recall'),array('public'=>1,'cache'=>true,'output'=>'sidebar','class'=>'fa-twitter'));
+    rcl_tab('followers','rcl_followers_tab',__('Followers','wp-recall'),array('public'=>1,'ajax-load'=>true,'cache'=>true,'output'=>'sidebar','class'=>'fa-twitter'));
 }
 
 if(!is_admin()) add_filter('tab_data_rcl','rcl_add_counter_followers_tab',10);
@@ -59,7 +54,7 @@ function rcl_followers_tab($user_id){
     $cnt = rcl_feed_count_subscribers($user_id);
 
     if($cnt){
-        add_filter('user_description','rcl_add_userlist_follow_button',90);
+        add_filter('rcl_user_description','rcl_add_userlist_follow_button',90);
         add_filter('rcl_users_query','rcl_feed_subsribers_query_userlist',10);
         $content .= rcl_get_userlist(array(
             'templates' => 'rows',
@@ -76,21 +71,16 @@ function rcl_followers_tab($user_id){
     return $content;
 }
 
-add_filter('ajax_tabs_rcl','rcl_ajax_subscriptions_tab');
-function rcl_ajax_subscriptions_tab($array_tabs){
-    return array_merge( $array_tabs,array( 'subscriptions' => 'rcl_subscriptions_tab' ));
-}
-
 add_action('init','rcl_add_subscriptions_tab');
 function rcl_add_subscriptions_tab(){
-    rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','wp-recall'),array('public'=>0,'cache'=>true,'output'=>'sidebar','class'=>'fa-bell-o'));
+    rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','wp-recall'),array('public'=>0,'ajax-load'=>true,'cache'=>true,'output'=>'sidebar','class'=>'fa-bell-o'));
 }
 
 function rcl_subscriptions_tab($user_id){
     $feeds = rcl_feed_count_authors($user_id);
     $content = '<h3>'.__('List subscriptions','wp-recall').'</h3>';
     if($feeds){
-        add_filter('user_description','rcl_add_userlist_follow_button',90);
+        add_filter('rcl_user_description','rcl_add_userlist_follow_button',90);
         add_filter('rcl_users_query','rcl_feed_authors_query_userlist',10);
         $content .= rcl_get_userlist(array(
             'template' => 'rows',

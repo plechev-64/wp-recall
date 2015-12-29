@@ -2,10 +2,10 @@
 function rcl_insert_user($data){
     global $wpdb,$rcl_options;
 
-    if ( get_user_by('email', $userdata['user_email']) )
+    if ( get_user_by('email', $data['user_email']) )
         return false;
 
-    if ( get_user_by('login', $userdata['user_login']) )
+    if ( get_user_by('login', $data['user_login']) )
         return false;
 
     $data2 = array(
@@ -107,8 +107,6 @@ function rcl_get_register_user($errors){
     $pass = sanitize_text_field($_POST['user_pass']);
     $email = $_POST['user_email'];
     $login = sanitize_user($_POST['user_login']);
-
-    //print_r($_POST);exit;
 
     $ref = ($_POST['redirect_to'])? apply_filters('url_after_register_rcl',esc_url($_POST['redirect_to'])): wp_registration_url();
 
@@ -244,7 +242,7 @@ function rcl_register_user_data($user_id){
 //Формируем массив сервисных сообщений формы регистрации и входа
 function rcl_notice_form($form='login'){
     global $wp_errors;
-    //print_r($wp_errors);
+
     if ( isset($wp_errors->errors)&&$wp_errors->errors ) {
         $errors = '';
         $messages = '';

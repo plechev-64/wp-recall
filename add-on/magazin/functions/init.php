@@ -265,10 +265,7 @@ function rcl_metabox_products( $post ){
 			Цена: <input type="number" class="custom-price" name="custom-price[]" value="'.$customprice[$a]['price'].'">
 			<a href="#" class="delete-price" id="'.$a.'">удалить</a></p>';
 		}
-	}
-
-	//echo '<div id="custom-price-list">'.$price.'</div>
-	//<input type="button" id="add-custom-price" class="button-secondary" value="Добавить еще цену">'; ?>
+	} ?>
 
 	<?php if($rmag_options['products_warehouse_recall']==1){ ?>
 		<h4>Наличие товара: <?php $mark_v = get_post_meta($post->ID, 'availability_product', 1); ?></h4>

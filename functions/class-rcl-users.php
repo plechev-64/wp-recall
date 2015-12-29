@@ -41,8 +41,6 @@ class Rcl_Users{
             $this->offset = $this->paged*$this->inpage - $this->inpage;
         }
 
-        //print_r($this);
-
         if($this->data('description'))
             add_filter('rcl_users',array($this,'add_descriptions'));
 
@@ -68,6 +66,9 @@ class Rcl_Users{
             add_filter('rcl_users_query',array($this,'add_query_time_action'));
         else
             add_filter('rcl_users',array($this,'add_time_action'));
+        
+        if($this->data('profile_fields'))
+            add_filter('rcl_users',array($this,'add_profile_fields'));
 
 
         if($this->usergroup){
@@ -105,8 +106,6 @@ class Rcl_Users{
 
         $users = $wpdb->get_results( $this->query() );
 
-        //if($this->number) $this->users_count = count($users);
-        //print_r($users);
         $users = apply_filters('rcl_users',$users);
 
         return $users;
@@ -232,6 +231,61 @@ class Rcl_Users{
             $query['where'][] = "($n.meta_key='$f[0]' AND $n.meta_value LIKE '%$f[1]%')";
         }
         return $query;
+    }
+    
+    function add_profile_fields($users){
+        global $wpdb;
+
+        $ids = $this->get_users_ids($users);
+        
+        $profile_fields = get_option( 'rcl_profile_fields' );
+
+        if(!$profile_fields) return $users;
+
+        $profile_fields = stripslashes_deep($profile_fields);
+
+        $cf = new Rcl_Custom_Fields();
+
+        $slugs= array(); 
+        $fields = array();
+        
+        foreach($profile_fields as $custom_field){
+            $custom_field = apply_filters('custom_field_profile',$custom_field);
+            if(!$custom_field) continue;
+            if(isset($custom_field['req'])&&$custom_field['req']==1){
+                $fields[] =  $custom_field;   
+                $slugs[] = $custom_field['slug'];   
+            }
+        }
+        
+        if(!$fields) return $users;
+        
+        $fielddata = array();
+        foreach($fields as $k=>$field){
+            $fielddata[$field['slug']]['title'] = $field['title'];
+            $fielddata[$field['slug']]['type'] = $field['type'];
+        }
+
+        $query = "SELECT meta_key,meta_value, user_id AS ID "
+                . "FROM $wpdb->usermeta "
+                . "WHERE user_id IN (".implode(',',$ids).") AND meta_key IN ('".implode("','",$slugs)."')";
+
+        $metas = $wpdb->get_results($query);
+ 
+        $newmetas = array();
+        foreach($metas as $k => $meta){
+            $newmetas[$meta->ID]['ID'] = $meta->ID;
+            $newmetas[$meta->ID]['profile_fields'][$k]['key'] = $meta->meta_key;
+            $newmetas[$meta->ID]['profile_fields'][$k]['value'] = maybe_unserialize($meta->meta_value);
+            $newmetas[$meta->ID]['profile_fields'][$k]['title'] = $fielddata[$meta->meta_key]['title'];
+            $newmetas[$meta->ID]['profile_fields'][$k]['type'] = $fielddata[$meta->meta_key]['type'];
+            (object)$newmetas[$meta->ID];
+        }
+
+        if($newmetas)
+            $users = $this->merge_objects($users,$newmetas,'profile_fields');
+
+        return $users;
     }
 
     //добавляем выборку данных активности пользователей в основной запрос
@@ -412,8 +466,13 @@ class Rcl_Users{
     function merge_objects($users,$data,$key){
         foreach($users as $k=>$user){
             foreach($data as $d){
-                if($d->ID!=$user->ID) continue;
-                $users[$k]->$key = $d->$key;
+                if(is_array($d)){
+                    if($d['ID']!=$user->ID) continue;
+                    $users[$k]->$key = $d[$key];
+                }else{
+                    if($d->ID!=$user->ID) continue;
+                    $users[$k]->$key = $d->$key;
+                }
             }
         }
         return $users;

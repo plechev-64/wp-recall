@@ -36,8 +36,6 @@ class Rcl_Group_Widget {
 
         $before = sprintf('<div %s class="sidebar-widget '.$object->widget_type.'-widget">','id="'.$object->widget_id.'"');
 
-        //print_r($object);
-
         $title = (isset($object->widget_options['title']))? $object->widget_options['title']: $object->widget_title;
 
         if($title)
@@ -74,10 +72,8 @@ class Rcl_Group_Widget {
 
         $rcl_group_widgets = apply_filters('rcl_group_widgets',$rcl_group_widgets);
 
-        //print_r($rcl_group_widgets);exit;
         $group_widgets = rcl_get_group_option($rcl_group->term_id,'group_widgets');
         $widgets_options = rcl_get_group_option($rcl_group->term_id,'widgets_options');
-        //print_r($widgets_options);exit;
 
         ob_start();
 
@@ -124,7 +120,6 @@ class Rcl_Group_Widget {
         if($rcl_group_area[0]['id']!='unuses')
             array_unshift($rcl_group_area,array('id'=>'unuses','name'=>__('Unused','wp-recall')));
 
-        //print_r($rcl_group_area);exit;
         $widgets_options = rcl_get_group_option($group_id,'widgets_options');
 
         foreach($rcl_group_area as $zone){
@@ -214,8 +209,6 @@ function rcl_get_group_widgets($group_id){
 function rcl_update_group_widgets($group_id,$args){
     global $rcl_group_widgets,$rcl_group_area;
 
-    //print_r($_POST);exit;
-
     $zones = array();
     $options = array();
     foreach($args as $widget){
@@ -248,8 +241,6 @@ function rcl_update_group_widgets($group_id,$args){
         }
     }
 
-    //print_r($options);exit;
-
     if($zones) rcl_update_group_option($group_id,'group_widgets',$zones);
     else rcl_delete_group_option($group_id,'group_widgets');
 
@@ -260,7 +251,7 @@ function rcl_update_group_widgets($group_id,$args){
 add_filter('rcl_group_widgets','rcl_edit_group_widgets');
 function rcl_edit_group_widgets($widgets){
     global $rcl_group,$rcl_group_area,$rcl_group_widgets;
-    //print_r($widgets);exit;
+
     $group_widgets = rcl_get_group_option($rcl_group->term_id,'group_widgets');
 
     if(!$group_widgets) return $widgets;
@@ -272,15 +263,10 @@ function rcl_edit_group_widgets($widgets){
         }
     }
 
-    //print_r($group_widgets);exit;
-
     array_unshift($rcl_group_area,array('id'=>'unuses','name'=>__('Unused','wp-recall')));
-    
-    //print_r($rcl_group_area);exit;
     
     foreach($rcl_group_area as $zone){
 
-        //print_r($rcl_group_area);exit;
         if(!isset($group_widgets[$zone['id']])) continue;
 
         foreach($widgets as $k=>$widget){
@@ -291,8 +277,7 @@ function rcl_edit_group_widgets($widgets){
                 $widget->widget_place = $zone['id'];
                 $NewWidgets[$zone['id']][$key] = $widget;
             }else{
-                //$widget->widget_place = 'unuses';
-                //$NewWidgets['unuses'][] = $widget;
+
             }
         }
 
@@ -310,13 +295,10 @@ function rcl_edit_group_widgets($widgets){
         }
     }
 
-    //print_r($NewWidgets); exit;
-
     foreach($NewWidgets as $z=>$Widgets){
         ksort($Widgets);
         $NewWidgets[$z] = $Widgets;
     }
-    //print_r($NewWidgets);exit;
 
     $widgets = array();
     foreach($NewWidgets as $zone=>$wdgts){
@@ -324,8 +306,6 @@ function rcl_edit_group_widgets($widgets){
             $widgets[] = $widget;
         }
     }
-
-    //print_r($widgets);exit;
 
     return $widgets;
 }

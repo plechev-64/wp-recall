@@ -68,7 +68,7 @@ function rcl_get_author_block(){
     $content = "<div id=block_author-rcl>";
     $content .= "<h3>".__('Author of publication','wp-recall')."</h3>";
 
-    if(function_exists('rcl_add_userlist_follow_button')) add_filter('user_description','rcl_add_userlist_follow_button',90);
+    if(function_exists('rcl_add_userlist_follow_button')) add_filter('rcl_user_description','rcl_add_userlist_follow_button',90);
 
     $content .= rcl_get_userlist(array(
             'template' => 'rows',
@@ -78,7 +78,7 @@ function rcl_get_author_block(){
             //'orderby'=>'time_action'
         ));
 
-    if(function_exists('rcl_add_userlist_follow_button')) remove_filter('user_description','rcl_add_userlist_follow_button',90);
+    if(function_exists('rcl_add_userlist_follow_button')) remove_filter('rcl_user_description','rcl_add_userlist_follow_button',90);
 
     $content .= "</div>";
 

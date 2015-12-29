@@ -111,7 +111,7 @@ function rcl_get_orders($args){
 	$sql .= " $orderby $order";
 
 	$rdrs = $wpdb->get_results($sql);
-	//print_r($rdrs);
+
 	if(!$rdrs) return false;
 
 	foreach($rdrs as $rd){
@@ -170,7 +170,6 @@ function rcl_product_category_excerpt($excerpt){
     $excerpt .= rcl_get_product_category($post->ID);
     return $excerpt;
 }
-//add_filter('rcl_get_product_excerpt','rcl_product_category_excerpt',10);
 
 //Вывод дополнительной валюты сайта
 function rcl_get_secondary_currency($type=0){
@@ -268,7 +267,6 @@ function rcl_setup_orderdata($orderdata){
 	);
 
 	foreach($orderdata as $data){ rcl_setup_productdata($data);
-		//print_r($product);
 		if(!$order->order_id) $order->order_id = $product->order_id;
 		if(!$order->order_author) $order->order_author = $product->user_id;
 		if(!$order->order_date) $order->order_date = $product->order_date;
@@ -359,11 +357,9 @@ function rcl_payment_order($order_id,$user_id=false){
 
     $admin_email = $rmag_options['admin_email_magazin_recall'];
 
-	$text = '';
+    $text = '';
 
-	$text = apply_filters('payment_mail_text',$text);
-
-	//print_r($text);exit;
+    $text = apply_filters('payment_mail_text',$text);
 
     $textmail = '
     <p>Пользователь оплатил заказ в магазине "'.get_bloginfo('name').'".</p>

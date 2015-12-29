@@ -192,8 +192,6 @@ class Rcl_Feed{
 
         $ignored = ($ignored)? array_unique(array_merge($ignored,array($user_ID))): array($user_ID);
 
-        //print_r($ignored);exit;
-
         $query['exclude']['post_author'] = $ignored;
 
         if(!$this->query_count){
@@ -282,8 +280,6 @@ class Rcl_Feed{
         $content = '';
 
         $count_groups = (false!==$count_groups)? $count_groups: $this->count_feed_posts();
-
-        //$content .='<h3>'.__('Total groups','wp-recall').': '.$count_groups.'</h3>';
 
         if(isset($this->add_uri['feed-filter'])) unset($this->add_uri['feed-filter']);
 

@@ -24,7 +24,7 @@
 		<?php rcl_publication_editor(); ?>
 	</div>
 <?php endif; ?>
-<?php //print_r($formFields); ?>
+
 <?php if($formFields['upload']): ?>
     <?php rcl_publication_upload(); ?>
 <?php endif; ?>

@@ -19,8 +19,6 @@ function rcl_group_avatar_upload(){
     $maxsize = ($rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: $maxsize = 2;
     $tmpname = current_time('timestamp').'.jpg';
 
-    //print_r($_FILES['uploadfile']);exit;
-
     if($_FILES['uploadfile']){
             foreach($_FILES['uploadfile'] as $key => $data){
                     $upload['file'][$key] = $data;

@@ -25,15 +25,11 @@ function rcl_edit_profile(){
     global $user_ID;
     if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-profile_' . $user_ID ) ) return false;
 
-    //if(isset($_POST['pass1']))  $_POST['pass1'] = str_replace('\\\\','\\',$_POST['pass1']);
-
     if ( defined('ABSPATH') ) {
-			require_once(ABSPATH . 'wp-admin/includes/user.php');
-	} else {
-			require_once('../wp-admin/includes/user.php');
-	}
-	//require_once( ABSPATH . WPINC . '/registration.php' );
-    //echo $_POST['pass1'];exit;
+                    require_once(ABSPATH . 'wp-admin/includes/user.php');
+    } else {
+                    require_once('../wp-admin/includes/user.php');
+    }
 
     $redirect_url = rcl_format_url(get_author_posts_url($user_ID),'profile').'&updated=true';
 
@@ -54,7 +50,6 @@ function rcl_edit_profile(){
 }
 
 function rcl_update_profile_fields($user_id){
-    //global $user_ID;
 
     require_once(ABSPATH . "wp-admin" . '/includes/image.php');
     require_once(ABSPATH . "wp-admin" . '/includes/file.php');
@@ -129,19 +124,19 @@ add_action('init', 'rcl_edit_profile_activate');
 
 //Удаляем аккаунт пользователя
 function rcl_delete_user_account(){
-	global $user_ID,$wpdb;
-	if( !wp_verify_nonce( $_POST['_wpnonce'], 'delete-user-' . $user_ID ) ) return false;
+    global $user_ID,$wpdb;
+    if( !wp_verify_nonce( $_POST['_wpnonce'], 'delete-user-' . $user_ID ) ) return false;
 
-        require_once(ABSPATH.'wp-admin/includes/user.php' );
+    require_once(ABSPATH.'wp-admin/includes/user.php' );
 
-	$wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
-	$delete = wp_delete_user( $user_ID );
-	if($delete){
-		wp_die(__('Very sorry, but your account has been deleted!','wp-recall'));
-		echo '<a href="/">'.__('Back to main','wp-recall').'</a>';
-	}else{
-		wp_die(__('Delete account failed! Go back and try again.','wp-recall'));
-	}
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
+    $delete = wp_delete_user( $user_ID );
+    if($delete){
+        wp_die(__('Very sorry, but your account has been deleted!','wp-recall'));
+        echo '<a href="/">'.__('Back to main','wp-recall').'</a>';
+    }else{
+        wp_die(__('Delete account failed! Go back and try again.','wp-recall'));
+    }
 }
 
 function rcl_delete_user_account_activate ( ) {
@@ -180,62 +175,62 @@ function rcl_profile_options($content){
 
 add_filter('after-avatar-rcl','rcl_button_avatar_upload',2,2);
 function rcl_button_avatar_upload($content,$author_lk){
-	global $user_ID;
-        
-        rcl_dialog_scripts();
-        
-        if($user_ID==$author_lk){ 
-            rcl_fileupload_scripts();
-            rcl_crop_scripts();
-            rcl_webcam_scripts();
+    global $user_ID;
+
+    rcl_dialog_scripts();
+
+    if($user_ID==$author_lk){ 
+        rcl_fileupload_scripts();
+        rcl_crop_scripts();
+        rcl_webcam_scripts();
+    }
+
+    $avatar = get_user_meta($author_lk,'rcl_avatar',1);
+
+    if($avatar){
+        if(is_numeric($avatar)){
+            $image_attributes = wp_get_attachment_image_src($avatar);
+            $url_avatar = $image_attributes[0];
+        }else{
+            $url_avatar = $avatar;
         }
+        $content .= '<a title="'.__('Zoom avatar','wp-recall').'" data-zoom="'.$url_avatar.'" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="fa fa-search-plus"></i></a>';
+    }
 
-        $avatar = get_user_meta($author_lk,'rcl_avatar',1);
+    if($user_ID!=$author_lk) return $content;
 
-        if($avatar){
-            if(is_numeric($avatar)){
-                $image_attributes = wp_get_attachment_image_src($avatar);
-                $url_avatar = $image_attributes[0];
-            }else{
-                $url_avatar = $avatar;
-            }
-            $content .= '<a title="'.__('Zoom avatar','wp-recall').'" data-zoom="'.$url_avatar.'" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="fa fa-search-plus"></i></a>';
-        }
+    if($avatar){
+        $content .= '<a title="'.__('Delete avatar','wp-recall').'" class="rcl-avatar-delete" href="'.wp_nonce_url( rcl_format_url(get_author_posts_url($author_lk)).'rcl-action=delete_avatar', $user_ID ).'"><i class="fa fa-times"></i></a>';
+    }
 
-	if($user_ID!=$author_lk) return $content;
-
-	if($avatar){
-            $content .= '<a title="'.__('Delete avatar','wp-recall').'" class="rcl-avatar-delete" href="'.wp_nonce_url( rcl_format_url(get_author_posts_url($author_lk)).'rcl-action=delete_avatar', $user_ID ).'"><i class="fa fa-times"></i></a>';
-	}
-
-	$content .= '
-	<div id="userpic-upload">
-		<span id="file-upload" class="fa fa-download">
-			<input type="file" id="userpicupload" accept="image/*" name="uploadfile">
-		</span>
-		<span id="webcamupload" class="fa fa-camera"></span>
-	</div>
-	<span id="avatar-upload-progress"></span>';
-	return $content;
+    $content .= '
+    <div id="userpic-upload">
+            <span id="file-upload" class="fa fa-download">
+                    <input type="file" id="userpicupload" accept="image/*" name="uploadfile">
+            </span>
+            <span id="webcamupload" class="fa fa-camera"></span>
+    </div>
+    <span id="avatar-upload-progress"></span>';
+    return $content;
 }
 
 add_action('wp','rcl_delete_avatar_action');
 function rcl_delete_avatar_action(){
-	global $wpdb,$user_ID,$rcl_avatar_sizes;
-	if ( !isset( $_GET['rcl-action'] )||$_GET['rcl-action']!='delete_avatar' ) return false;
-	if( !wp_verify_nonce( $_GET['_wpnonce'], $user_ID ) ) wp_die('Error');
+    global $wpdb,$user_ID,$rcl_avatar_sizes;
+    if ( !isset( $_GET['rcl-action'] )||$_GET['rcl-action']!='delete_avatar' ) return false;
+    if( !wp_verify_nonce( $_GET['_wpnonce'], $user_ID ) ) wp_die('Error');
 
-	$result = delete_user_meta($user_ID,'rcl_avatar');
+    $result = delete_user_meta($user_ID,'rcl_avatar');
 
-	if (!$result) wp_die('Error');
+    if (!$result) wp_die('Error');
 
-        $dir_path = RCL_UPLOAD_PATH.'avatars/';
-        foreach($rcl_avatar_sizes as $key=>$size){
-            unlink($dir_path.$user_ID.'-'.$size.'.jpg');
-	}
-        unlink($dir_path.$user_ID.'.jpg');
+    $dir_path = RCL_UPLOAD_PATH.'avatars/';
+    foreach($rcl_avatar_sizes as $key=>$size){
+        unlink($dir_path.$user_ID.'-'.$size.'.jpg');
+    }
+    unlink($dir_path.$user_ID.'.jpg');
 
-	wp_redirect( rcl_format_url(get_author_posts_url($user_ID)).'rcl-avatar=deleted' );  exit;
+    wp_redirect( rcl_format_url(get_author_posts_url($user_ID)).'rcl-avatar=deleted' );  exit;
 }
 
 add_filter('rcl_content_lk','rcl_add_more_link_content',100);
@@ -250,113 +245,107 @@ function rcl_notice_avatar_deleted(){
     if (isset($_GET['rcl-avatar'])&&$_GET['rcl-avatar']=='deleted') rcl_notice_text(__('Your avatar has been removed','wp-recall'),'success');
 }
 
-function rcl_ajax_tab_profile($array_tabs){
-    $array_tabs['profile']='rcl_tab_profile_content';
-    return $array_tabs;
-}
-add_filter('ajax_tabs_rcl','rcl_ajax_tab_profile');
-
 add_action('init','rcl_tab_profile');
 function rcl_tab_profile(){
-    rcl_tab('profile','rcl_tab_profile_content',__('Profile','wp-recall'),array('class'=>'fa-user','order'=>20,'path'=>__FILE__));
+    rcl_tab('profile','rcl_tab_profile_content',__('Profile','wp-recall'),array('ajax-load'=>true,'class'=>'fa-user','order'=>20,'path'=>__FILE__));
 }
 
 function rcl_tab_profile_content($author_lk){
 
-	global $userdata, $user_ID, $rcl_options;
+    global $userdata, $user_ID, $rcl_options;
 
-	if($user_ID!=$author_lk) return false;
+    if($user_ID!=$author_lk) return false;
 
-	get_currentuserinfo();
-	do_action('show_user_profile', $userdata);
-	$defolt_field = get_option( 'rcl_profile_default' );
+    get_currentuserinfo();
+    do_action('show_user_profile', $userdata);
+    $defolt_field = get_option( 'rcl_profile_default' );
 
-	foreach((array)$defolt_field as $onefield){
-		switch($onefield){
-			case 'user_login': $select_login = 'checked="checked"'; break;
-			case 'first_name': $select_first = 'checked="checked"'; break;
-			case 'last_name': $select_last = 'checked="checked"'; break;
-			//case 'nickname': $select_nickname = 'checked="checked"'; break;
-			case 'display_name': $select_display = 'checked="checked"'; break;
-			//case 'email': $select_email = 'checked="checked"'; break;
-			case 'url': $select_url = 'checked="checked"'; break;
-			case 'description': $select_description = 'checked="checked"'; break;
-		}
-	}
+    foreach((array)$defolt_field as $onefield){
+        switch($onefield){
+            case 'user_login': $select_login = 'checked="checked"'; break;
+            case 'first_name': $select_first = 'checked="checked"'; break;
+            case 'last_name': $select_last = 'checked="checked"'; break;
+            //case 'nickname': $select_nickname = 'checked="checked"'; break;
+            case 'display_name': $select_display = 'checked="checked"'; break;
+            //case 'email': $select_email = 'checked="checked"'; break;
+            case 'url': $select_url = 'checked="checked"'; break;
+            case 'description': $select_description = 'checked="checked"'; break;
+        }
+    }
 
-	$profile_block = '<h3>'.__('User profile','wp-recall').' '.$userdata->user_login.'</h3>
-	<form name="profile" id="your-profile" action="" method="post" enctype="multipart/form-data">
-	'.wp_nonce_field( 'update-profile_' . $user_ID,'_wpnonce',true,false ).'
-	<input type="hidden" name="from" value="profile" />
-	<input type="hidden" name="checkuser_id" value="'.$user_ID.'" />
-	<table class="form-table">';
+    $profile_block = '<h3>'.__('User profile','wp-recall').' '.$userdata->user_login.'</h3>
+    <form name="profile" id="your-profile" action="" method="post" enctype="multipart/form-data">
+    '.wp_nonce_field( 'update-profile_' . $user_ID,'_wpnonce',true,false ).'
+    <input type="hidden" name="from" value="profile" />
+    <input type="hidden" name="checkuser_id" value="'.$user_ID.'" />
+    <table class="form-table">';
 
-	$access = 7;
-	if(isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])
-            $access = $rcl_options['consol_access_rcl'];
+    $access = 7;
+    if(isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])
+        $access = $rcl_options['consol_access_rcl'];
 
-	if($userdata->user_level >= $access){
-		$profile_block .= '<tr>
-			<th>
-				<span>'.__('Admin toolbar','wp-recall').'</span>
-			</th>
-			<td>
-				<label for="admin_bar_front">
-				<input id="admin_bar_front" '.checked('true',$userdata->show_admin_bar_front,false).' type="checkbox" value="1" name="admin_bar_front">
-				'.__('Show the admin bar when viewing site','wp-recall').'
-				</label>
-			</td>
-		</tr>';
-	}
+    if($userdata->user_level >= $access){
+            $profile_block .= '<tr>
+                    <th>
+                            <span>'.__('Admin toolbar','wp-recall').'</span>
+                    </th>
+                    <td>
+                            <label for="admin_bar_front">
+                            <input id="admin_bar_front" '.checked('true',$userdata->show_admin_bar_front,false).' type="checkbox" value="1" name="admin_bar_front">
+                            '.__('Show the admin bar when viewing site','wp-recall').'
+                            </label>
+                    </td>
+            </tr>';
+    }
 
-        $profile_block .= '<tr>
-        <th><label for="nickname">'.__('Nickname','wp-recall').' ('.__('required','wp-recall').'):</label></th>
-        <td><input type="text" name="nickname" required class="regular-text" id="nickname" value="'.esc_attr( $userdata->nickname ).'" maxlength="100" /></td>
-        </tr>';
+    $profile_block .= '<tr>
+    <th><label for="nickname">'.__('Nickname','wp-recall').' ('.__('required','wp-recall').'):</label></th>
+    <td><input type="text" name="nickname" required class="regular-text" id="nickname" value="'.esc_attr( $userdata->nickname ).'" maxlength="100" /></td>
+    </tr>';
 
-        $profile_block .= '<tr>
-        <th><label for="email">'.__('E-mail','wp-recall').' ('.__('required','wp-recall').'):</label></th>
-        <td><input type="text" name="email" class="regular-text" id="email" required value="'.esc_attr($userdata->user_email).'" maxlength="100" /></td>
-        </tr>';
+    $profile_block .= '<tr>
+    <th><label for="email">'.__('E-mail','wp-recall').' ('.__('required','wp-recall').'):</label></th>
+    <td><input type="text" name="email" class="regular-text" id="email" required value="'.esc_attr($userdata->user_email).'" maxlength="100" /></td>
+    </tr>';
 
-	if(isset($select_login)){
-		$profile_block .= '<tr>
-		<th><label for="user_login">'.__('Login','wp-recall').':</label></th>
-		<td><input type="text" name="user_login" class="regular-text" id="user_login" value="'.esc_attr( $userdata->user_login ).'" maxlength="100" disabled /></td>
-		</tr>';
-	}
-	if(isset($select_first)){
-		$profile_block .= '<tr>
-		<th><label for="first_name">'.__('Firstname','wp-recall').':</label></th>
-		<td><input type="text" name="first_name" class="regular-text" id="first_name" value="'.esc_attr( $userdata->first_name ).'" maxlength="100" /></td>
-		</tr>';
-	}
-	if(isset($select_last)){
-		$profile_block .= '<tr>
-		<th><label for="last_name">'.__('Surname','wp-recall').':</label></th>
-		<td><input type="text" name="last_name" class="regular-text" id="last_name" value="'.esc_attr( $userdata->last_name ).'" maxlength="100" /></td>
-		</tr>';
-	}
+    if(isset($select_login)){
+            $profile_block .= '<tr>
+            <th><label for="user_login">'.__('Login','wp-recall').':</label></th>
+            <td><input type="text" name="user_login" class="regular-text" id="user_login" value="'.esc_attr( $userdata->user_login ).'" maxlength="100" disabled /></td>
+            </tr>';
+    }
+    if(isset($select_first)){
+            $profile_block .= '<tr>
+            <th><label for="first_name">'.__('Firstname','wp-recall').':</label></th>
+            <td><input type="text" name="first_name" class="regular-text" id="first_name" value="'.esc_attr( $userdata->first_name ).'" maxlength="100" /></td>
+            </tr>';
+    }
+    if(isset($select_last)){
+            $profile_block .= '<tr>
+            <th><label for="last_name">'.__('Surname','wp-recall').':</label></th>
+            <td><input type="text" name="last_name" class="regular-text" id="last_name" value="'.esc_attr( $userdata->last_name ).'" maxlength="100" /></td>
+            </tr>';
+    }
 
-	if(isset($select_display)){
-		$profile_block .= '<tr>
-		<th><label for="display_name">'.__('Display name','wp-recall').':</label></th>
-		<td>
-		<select name="display_name" class="regular-dropdown" id="display_name">';
-			$public_display = array();
-			$public_display['display_displayname'] = esc_attr($userdata->display_name);
-			$public_display['display_nickname'] = esc_attr($userdata->nickname);
-			$public_display['display_username'] = esc_attr($userdata->user_login);
-			$public_display['display_firstname'] = esc_attr($userdata->first_name);
-			if($userdata->first_name&&$userdata->last_name) $public_display['display_firstlast'] = esc_attr($userdata->first_name) . '&nbsp;' . esc_attr($userdata->last_name);
-			if($userdata->first_name&&$userdata->last_name) $public_display['display_lastfirst'] = esc_attr($userdata->last_name) . '&nbsp;' . esc_attr($userdata->first_name);
-			$public_display = array_unique(array_filter(array_map('trim', $public_display)));
-			foreach((array)$public_display as $id => $item) {
-				$profile_block .= '<option id="'.$id.'" value="'.esc_attr($item).'">'.esc_attr($item).'</option>';
-			}
-			$profile_block .= '</select>
-		</td></tr>';
-	}
+    if(isset($select_display)){
+            $profile_block .= '<tr>
+            <th><label for="display_name">'.__('Display name','wp-recall').':</label></th>
+            <td>
+            <select name="display_name" class="regular-dropdown" id="display_name">';
+                    $public_display = array();
+                    $public_display['display_displayname'] = esc_attr($userdata->display_name);
+                    $public_display['display_nickname'] = esc_attr($userdata->nickname);
+                    $public_display['display_username'] = esc_attr($userdata->user_login);
+                    $public_display['display_firstname'] = esc_attr($userdata->first_name);
+                    if($userdata->first_name&&$userdata->last_name) $public_display['display_firstlast'] = esc_attr($userdata->first_name) . '&nbsp;' . esc_attr($userdata->last_name);
+                    if($userdata->first_name&&$userdata->last_name) $public_display['display_lastfirst'] = esc_attr($userdata->last_name) . '&nbsp;' . esc_attr($userdata->first_name);
+                    $public_display = array_unique(array_filter(array_map('trim', $public_display)));
+                    foreach((array)$public_display as $id => $item) {
+                            $profile_block .= '<option id="'.$id.'" value="'.esc_attr($item).'">'.esc_attr($item).'</option>';
+                    }
+                    $profile_block .= '</select>
+            </td></tr>';
+    }
 
 
     $profile_block .= "<script>( function($) {
@@ -635,31 +624,32 @@ if(function_exists('ulogin_profile_personal_options')){
 
 add_filter('show_profile_fields_rcl','rcl_show_custom_fields_profile',10,2);
 function rcl_show_custom_fields_profile($fields_content,$author_lk){
-	$get_fields = get_option( 'rcl_profile_fields' );
+    
+    $get_fields = get_option( 'rcl_profile_fields' );
 
-        $show_custom_field = '';
+    $show_custom_field = '';
 
-	if($get_fields){
+    if($get_fields){
 
-		$get_fields = stripslashes_deep($get_fields);
+        $get_fields = stripslashes_deep($get_fields);
 
-                $cf = new Rcl_Custom_Fields();
+        $cf = new Rcl_Custom_Fields();
 
-		foreach((array)$get_fields as $custom_field){
-                        $custom_field = apply_filters('custom_field_profile',$custom_field);
-                        if(!$custom_field) continue;
-			$slug = $custom_field['slug'];
-			if(isset($custom_field['req'])&&$custom_field['req']==1){
-                            $meta = get_the_author_meta($slug,$author_lk);
-                            $show_custom_field .= $cf->get_field_value($custom_field,$meta);
-			}
-		}
-	}
+        foreach((array)$get_fields as $custom_field){
+                $custom_field = apply_filters('custom_field_profile',$custom_field);
+                if(!$custom_field) continue;
+                $slug = $custom_field['slug'];
+                if(isset($custom_field['req'])&&$custom_field['req']==1){
+                    $meta = get_the_author_meta($slug,$author_lk);
+                    $show_custom_field .= $cf->get_field_value($custom_field,$meta);
+                }
+        }
+    }
 
-        if(!$show_custom_field) return false;
+    if(!$show_custom_field) return false;
 
-	if(isset($show_custom_field))$fields_content .= '<div class="show-profile-fields">'.$show_custom_field.'</div>';
-	return $fields_content;
+    if(isset($show_custom_field))$fields_content .= '<div class="show-profile-fields">'.$show_custom_field.'</div>';
+    return $fields_content;
 }
 
 //Выводим произвольные поля профиля на странице пользователя в админке
@@ -828,9 +818,10 @@ function rcl_get_profile_scripts($script){
 				var w = image.data('w');
 				var h = image.data('h');
 				data.formData = {
-					coord: x+','+y+','+w+','+h,
-					image: width+','+height,
-					action:'rcl_avatar_upload'
+                                    coord: x+','+y+','+w+','+h,
+                                    image: width+','+height,
+                                    action:'rcl_avatar_upload',
+                                    ajax_nonce:Rcl.nonce
 				};
 			}
 		},

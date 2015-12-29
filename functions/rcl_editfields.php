@@ -338,7 +338,7 @@ class Rcl_EditFields {
                 $this->delete($del,$table);
             }
         }
-        //print_r($fields);
+
         $res = update_option( $this->name_option, $fields );
 
         if($res) $Option_Value = $fields;

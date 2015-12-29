@@ -5,20 +5,14 @@ if(function_exists('rcl_register_rating_type')){
 
 rcl_enqueue_style('review',__FILE__);
 
-add_filter('ajax_tabs_rcl','rcl_ajax_tab_review');
-function rcl_ajax_tab_review($array_tabs){
-    $array_tabs['recall']=array('Rcl_Review','get_content_review');
-    return $array_tabs;
-}
-
 add_action('init','rcl_tab_review');
 function rcl_tab_review(){
     rcl_tab('recall',array('Rcl_Review','get_content_review'),__('Reviews','wp-recall'),array(
-		'public'=>1,
-		'class'=>'fa-trophy',
-		'order'=>50,
-                'cache'=>true,
-		'path'=>__FILE__
+            'ajax-load'=>true,
+            'public'=>1,
+            'class'=>'fa-trophy',
+            'order'=>50,
+            'cache'=>true
 	));
 }
 
@@ -29,11 +23,7 @@ function rcl_review_delete_cache($author_lk){
     if(isset($rcl_options['use_cache'])&&$rcl_options['use_cache']){
         
         $string = rcl_format_url(get_author_posts_url($author_lk),'recall');
-        
-        $rcl_cache = new Rcl_Cache();       
-        $rcl_cache->get_file($string);
-        $rcl_cache->delete_cache();
-        
+        rcl_delete_file_cache($string);
     }
 }
 

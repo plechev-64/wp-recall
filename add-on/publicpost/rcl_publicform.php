@@ -499,74 +499,72 @@ function rcl_get_tags_checklist($post_id=false){
 }
 
 function rcl_publication_editor(){
-	global $editpost,$rcl_options,$formfields,$formData;
+    global $editpost,$rcl_options,$formfields,$formData;
 
-        //print_r($formData);
+    if($formData->type_editor){
 
-	if($formData->type_editor){
+            rcl_wp_editor();
 
-		rcl_wp_editor();
+    }else{
 
-	}else{
+        $content = (is_object($editpost)&&$editpost->post_content)? $editpost->post_content: '';
 
-                $content = (is_object($editpost)&&$editpost->post_content)? $editpost->post_content: '';
+        rcl_sortable_scripts();
 
-		rcl_sortable_scripts();
+        echo '<script>
+        jQuery(function(){
+                jQuery(".rcl-editor-content").sortable({ axis: "y", containment: "parent", handle: ".move-box", cursor: "move" });
+        });
+        </script>';
 
-		echo '<script>
-		jQuery(function(){
-			jQuery(".rcl-editor-content").sortable({ axis: "y", containment: "parent", handle: ".move-box", cursor: "move" });
-		});
-		</script>';
+        if($content){
+                $rcl_box = strpos($content, '[rcl-box');
+                if($rcl_box===false){
+                        rcl_wp_editor(array('type_editor'=>1,'wp_editor'=>3),$content);
+                        return;
+                }
+        }
 
-		if($content){
-			$rcl_box = strpos($content, '[rcl-box');
-			if($rcl_box===false){
-				rcl_wp_editor(array('type_editor'=>1,'wp_editor'=>3),$content);
-				return;
-			}
-		}
+        $panel = '';
+        $buttons = array();
 
-		$panel = '';
-		$buttons = array();
+        if(isset($rcl_options['rcl_editor_buttons'])){
+                $icons = array(
+                        'text'=>'fa-align-left',
+                        'header'=>'fa-header',
+                        'image'=>'fa-picture-o',
+                        'html'=>'fa-code',
+                );
+                $names = array(
+                        'text'=>__('Text Box','wp-recall'),
+                        'header'=>__('Subtitle','wp-recall'),
+                        'image'=>__('Image','wp-recall'),
+                        'html'=>__('HTML- code','wp-recall'),
+                );
 
-		if(isset($rcl_options['rcl_editor_buttons'])){
-			$icons = array(
-				'text'=>'fa-align-left',
-				'header'=>'fa-header',
-				'image'=>'fa-picture-o',
-				'html'=>'fa-code',
-			);
-			$names = array(
-				'text'=>__('Text Box','wp-recall'),
-				'header'=>__('Subtitle','wp-recall'),
-				'image'=>__('Image','wp-recall'),
-				'html'=>__('HTML- code','wp-recall'),
-			);
+                foreach($rcl_options['rcl_editor_buttons'] as $type){
+                        $buttons[] = '<li><a href="#" title="'.$names[$type].'" class="get-'.$type.'-box" onclick="return rcl_add_editor_box(this,\''.$type.'\');"><i class="fa '.$icons[$type].'"></i></a></li>';
+                }
 
-			foreach($rcl_options['rcl_editor_buttons'] as $type){
-				$buttons[] = '<li><a href="#" title="'.$names[$type].'" class="get-'.$type.'-box" onclick="return rcl_add_editor_box(this,\''.$type.'\');"><i class="fa '.$icons[$type].'"></i></a></li>';
-			}
+                if($buttons){
+                        $panel = '<div class="rcl-tools-panel">
+                                        <ul>'
+                                                .implode('',$buttons)
+                                        .'</ul>
+                                        </div>';
+                }
+        }
 
-			if($buttons){
-				$panel = '<div class="rcl-tools-panel">
-						<ul>'
-							.implode('',$buttons)
-						.'</ul>
-						</div>';
-			}
-		}
+        echo '
+        <div class="rcl-public-editor">
 
-		echo '
-		<div class="rcl-public-editor">
+                <div class="rcl-editor-content">
+                        '.rcl_get_editor_content($content).'
+                </div>
+                '.$panel.'
+        </div>';
 
-			<div class="rcl-editor-content">
-				'.rcl_get_editor_content($content).'
-			</div>
-			'.$panel.'
-		</div>';
-
-	}
+    }
 
 }
 
@@ -596,7 +594,7 @@ function rcl_get_tags_input($post_id=false){
             jQuery(function($){
                     $('#rcl_post_tags').magicSuggest({
                       data: Rcl.ajaxurl,
-                      dataUrlParams: { action: 'rcl_get_like_tags' },
+                      dataUrlParams: { action: 'rcl_get_like_tags',ajax_nonce:Rcl.nonce },
                       noSuggestionText: '".__("Not found","wp-recall")."',
                       ajaxConfig: {
                             xhrFields: {

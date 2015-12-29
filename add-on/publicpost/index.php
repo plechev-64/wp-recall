@@ -62,7 +62,7 @@ function rcl_init_publics_block(){
 	if($rcl_options['publics_block_rcl']==1){
                 $view = 0;
                 if($rcl_options['view_publics_block_rcl']) $view = $rcl_options['view_publics_block_rcl'];
-                rcl_tab('publics','rcl_tab_publics',__('Posts','wp-recall'),array('public'=>$view,'cache'=>true,'class'=>'fa-list','order'=>50));
+                rcl_tab('publics','rcl_tab_publics',__('Posts','wp-recall'),array('ajax-load'=>true,'public'=>$view,'cache'=>true,'class'=>'fa-list','order'=>50));
 	}
 	if($rcl_options['output_public_form_rcl']==1){
                 rcl_tab('postform','rcl_tab_postform',__('Publication','wp-recall'),array('class'=>'fa-pencil','cache'=>true,'order'=>60,'path'=>__FILE__));
@@ -105,12 +105,6 @@ function rcl_tab_postform($author_lk){
         if(isset($rcl_options['form-lk'])&&$rcl_options['form-lk']) $id_form = $rcl_options['form-lk'];
 	return do_shortcode('[public-form id="'.$id_form.'"]');
 }
-
-function rcl_ajax_tab_publics($array_tabs){
-    $array_tabs['publics']='rcl_tab_publics';
-    return $array_tabs;
-}
-add_filter('ajax_tabs_rcl','rcl_ajax_tab_publics');
 
 function rcl_tab_publics($author_lk){
 	global $user_ID;
@@ -870,8 +864,6 @@ function rcl_box_shortcode($atts){
 
 	$html = '';
 
-        //print_r(wp_unslash($atts));exit;
-
         $clear_content = nl2br(strip_tags($content));
 
 	if(isset($_GET['rcl-post-edit'])){
@@ -1175,47 +1167,47 @@ function rcl_public_file_scripts($script){
 			else return false;
 		});
 		jQuery('#rcl-popup').on('click','.rcl-navi.ajax-navi a',function(){
-			var page = jQuery(this).text();
-			var dataString = 'action=get_media&user_ID='+Rcl.user_ID+'&page='+page;
-                        dataString += '&ajax_nonce='+Rcl.nonce;
-			jQuery.ajax({
-				".$ajaxdata."
-				success: function(data){
-					if(data['result']==100){
-						jQuery('#rcl-overlay').fadeIn();
-						jQuery('#rcl-popup').html(data['content']);
-						var screen_top = jQuery(window).scrollTop();
-						var popup_h = jQuery('#rcl-popup').height();
-						var window_h = jQuery(window).height();
-						screen_top = screen_top + 60;
-						jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
-					}else{
-						alert('Ошибка!');
-					}
-				}
-			});
-			return false;
+                    var page = jQuery(this).text();
+                    var dataString = 'action=get_media&user_ID='+Rcl.user_ID+'&page='+page;
+                    dataString += '&ajax_nonce='+Rcl.nonce;
+                    jQuery.ajax({
+                            ".$ajaxdata."
+                            success: function(data){
+                                    if(data['result']==100){
+                                            jQuery('#rcl-overlay').fadeIn();
+                                            jQuery('#rcl-popup').html(data['content']);
+                                            var screen_top = jQuery(window).scrollTop();
+                                            var popup_h = jQuery('#rcl-popup').height();
+                                            var window_h = jQuery(window).height();
+                                            screen_top = screen_top + 60;
+                                            jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
+                                    }else{
+                                            alert('Ошибка!');
+                                    }
+                            }
+                    });
+                    return false;
 		});
 		jQuery('form #get-media-rcl').click(function(){
-			var dataString = 'action=get_media&user_ID='+Rcl.user_ID;
-                        dataString += '&ajax_nonce='+Rcl.nonce;
-			jQuery.ajax({
-				".$ajaxdata."
-				success: function(data){
-					if(data['result']==100){
-						jQuery('#rcl-overlay').fadeIn();
-						jQuery('#rcl-popup').html(data['content']);
-						var screen_top = jQuery(window).scrollTop();
-						var popup_h = jQuery('#rcl-popup').height();
-						var window_h = jQuery(window).height();
-						screen_top = screen_top + 60;
-						jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
-					}else{
-						alert('Ошибка!');
-					}
-				}
-			});
-			return false;
+                    var dataString = 'action=get_media&user_ID='+Rcl.user_ID;
+                    dataString += '&ajax_nonce='+Rcl.nonce;
+                    jQuery.ajax({
+                        ".$ajaxdata."
+                        success: function(data){
+                            if(data['result']==100){
+                                jQuery('#rcl-overlay').fadeIn();
+                                jQuery('#rcl-popup').html(data['content']);
+                                var screen_top = jQuery(window).scrollTop();
+                                var popup_h = jQuery('#rcl-popup').height();
+                                var window_h = jQuery(window).height();
+                                screen_top = screen_top + 60;
+                                jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
+                            }else{
+                                alert('Ошибка!');
+                            }
+                        }
+                    });
+                    return false;
 		});
 
 		jQuery('#lk-content').on('click','#tab-publics .sec_block_button',function(){
@@ -1225,28 +1217,28 @@ function rcl_public_file_scripts($script){
 		});
 
 	function get_page_content_rcl(btn){
-			if(btn.hasClass('active'))return false;
-			rcl_preloader_show('#tab-publics');
-                        var id = btn.parents('.recall_child_content_block').attr('id');
-			var start = btn.attr('data');
-			var type = btn.attr('type');
-			var id_user = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
-			jQuery('.'+id+' .sec_block_button').removeClass('active');
-			btn.addClass('active');
-			var dataString = 'action=rcl_posts_list&start='+start+'&type='+type+'&id_user='+id_user;
-                        dataString += '&ajax_nonce='+Rcl.nonce;
-			jQuery.ajax({
-				".$ajaxdata."
-				success: function(data){
-					if(data['recall']==100){
-						jQuery('#'+id+' .publics-table-rcl').html(data['post_content']);
-					} else {
-						alert('Error');
-					}
-					rcl_preloader_hide();
-				}
-			});
-			return false;
+            if(btn.hasClass('active'))return false;
+            rcl_preloader_show('#tab-publics');
+            var id = btn.parents('.recall_child_content_block').attr('id');
+            var start = btn.attr('data');
+            var type = btn.attr('type');
+            var id_user = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
+            jQuery('.'+id+' .sec_block_button').removeClass('active');
+            btn.addClass('active');
+            var dataString = 'action=rcl_posts_list&start='+start+'&type='+type+'&id_user='+id_user;
+            dataString += '&ajax_nonce='+Rcl.nonce;
+            jQuery.ajax({
+                    ".$ajaxdata."
+                    success: function(data){
+                            if(data['recall']==100){
+                                    jQuery('#'+id+' .publics-table-rcl').html(data['post_content']);
+                            } else {
+                                    alert('Error');
+                            }
+                            rcl_preloader_hide();
+                    }
+            });
+            return false;
 	}
 		";
 	return $script;

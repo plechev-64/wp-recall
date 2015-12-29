@@ -199,23 +199,28 @@ if (! function_exists('get_called_class')) :
     }
 endif;
 
-add_action('wp_ajax_rcl_ajax_tab', 'rcl_ajax_tab');
-add_action('wp_ajax_nopriv_rcl_ajax_tab', 'rcl_ajax_tab');
-function rcl_ajax_tab(){
-    global $wpdb,$array_tabs,$user_LK,$rcl_userlk_action,$rcl_tabs;
-    
-    rcl_verify_ajax_nonce();
-    
-    $id_tab = sanitize_title($_POST['id']);
-    $func = $array_tabs[$id_tab];
-    $user_LK = intval($_POST['lk']);
-    
+function rcl_encode_post($array){
+    return base64_encode(json_encode($array));
+}
+
+function rcl_decode_post($string){
+    return json_decode(base64_decode($string));
+}
+
+function rcl_ajax_tab($post){
+    global $user_LK,$rcl_tabs;
+
+    $id_tab = sanitize_title($post->tab_id);
+    $user_LK = intval($post->user_LK);
+
     if (!class_exists('Rcl_Tabs')) 
         include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
     
-    if(!$array_tabs[$id_tab]){
+    $ajax = (!isset($rcl_tabs[$id_tab]['args']['ajax-load'])||!$rcl_tabs[$id_tab]['args']['ajax-load'])? 0: 1;
+    
+    if(!$ajax){
         
-        $log['content']=__('Error! Perhaps this addition does not support ajax loading','wp-recall');
+        return __('Error! Perhaps this addition does not support ajax loading','wp-recall');
         
     }else{
         
@@ -224,20 +229,11 @@ function rcl_ajax_tab(){
         $data = $rcl_tabs[$id_tab];
         
         $tab = new Rcl_Tabs($data);
-        $log['content']=$tab->add_tab('',$user_LK);
+        return $tab->add_tab('',$user_LK);
     }
+    
+    return array('error'=>__('Error!','wp-recall'));
 
-    $log['result']=100;
-    echo json_encode($log);
-    exit;
-}
-
-add_action('init','rcl_init_ajax_tabs');
-function rcl_init_ajax_tabs(){
-        global $array_tabs;
-        $id_tabs = array();
-	$array_tabs = apply_filters( 'ajax_tabs_rcl', $id_tabs );
-	return $array_tabs;
 }
 
 function rcl_get_wp_upload_dir(){
@@ -274,8 +270,7 @@ function rcl_admin_access(){
         get_currentuserinfo();
         $access = 7;
         if(isset($rcl_options['consol_access_rcl'])) $access = $rcl_options['consol_access_rcl'];
-        //$user_info = get_userdata($current_user->ID);
-        //print_r($user_info->user_level);exit;
+
         if ( $current_user->user_level < $access ){
             if(intval($_POST['short'])==1||intval($_POST['fetch'])==1){
                     return true;
@@ -458,8 +453,7 @@ function rcl_author_link($link, $author_id){
     global $rcl_options;
     if(!isset($rcl_options['view_user_lk_rcl'])||$rcl_options['view_user_lk_rcl']!=1) return $link;
     $get = ! empty( $rcl_options['link_user_lk_rcl'] ) ? $rcl_options['link_user_lk_rcl'] : 'user';
-    return add_query_arg( array( $get => $author_id ), get_permalink( $rcl_options['lk_page_rcl'] ) );
-	//return rcl_format_url( get_permalink( $rcl_options['lk_page_rcl'] ) ).$get.'='.$author_id;
+    return add_query_arg( array( $get => $author_id ), get_permalink( $rcl_options['lk_page_rcl'] ) );	
 }
 
 function rcl_format_in($array){
@@ -475,7 +469,6 @@ function rcl_get_postmeta_array($post_id){
     foreach($metas as $meta){
         $mts[$meta->meta_key] = $meta->meta_value;
     }
-    //print_r($mts);exit;
     return $mts;
 }
 
@@ -516,12 +509,6 @@ function rcl_get_chart($arr=false){
     if(!$chartData) return false;
 
     return rcl_get_include_template('chart.php');
-}
-
-add_action('rcl_cron_daily','rcl_clear_cache',20);
-function rcl_clear_cache(){
-    $rcl_cache = new Rcl_Cache();
-    $rcl_cache->clear_cache();
 }
 
 /*22-06-2015 Удаление папки с содержимым*/
@@ -834,63 +821,4 @@ function rcl_verify_ajax_nonce(){
         echo json_encode(array('error'=>'Проверка подписи не пройдена!'));
         exit;
     }
-}
-
-add_filter('file_scripts_rcl','rcl_get_scripts_ajaxload_tabs');
-function rcl_get_scripts_ajaxload_tabs($script){
-
-	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
-
-	$script .= "
-	function setAttr_rcl(prmName,val){
-		var res = '';
-		var d = location.href.split('#')[0].split('?');
-		var base = d[0];
-		var query = d[1];
-		if(query) {
-			var params = query.split('&');
-			for(var i = 0; i < params.length; i++) {
-				var keyval = params[i].split('=');
-				if(keyval[0] != prmName) {
-					res += params[i] + '&';
-				}
-			}
-		}
-		res += prmName + '=' + val;
-		return base + '?' + res;
-	}
-	function get_ajax_content_tab(id){
-		var lk = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
-		var dataString = 'action=rcl_ajax_tab&id='+id+'&lk='+lk;
-                dataString += '&ajax_nonce='+Rcl.nonce;
-		jQuery.ajax({
-			".$ajaxdata."
-			success: function(data){
-				if(data['result']==100){
-					jQuery('#lk-content').html(data['content']);
-				} else {
-					alert('Error');
-				}
-				rcl_preloader_hide();
-			}
-		});
-		return false;
-	}
-	jQuery('.rcl-tab-button').on('click','.ajax_button',function(){
-            if(jQuery(this).hasClass('active'))return false;
-            rcl_preloader_show('#lk-content > div');
-            var id = jQuery(this).parent().data('tab');
-            jQuery('.rcl-tab-button .recall-button').removeClass('active');
-            jQuery(this).addClass('active');
-            var url = setAttr_rcl('tab',id);
-            if(url != window.location){
-                if ( history.pushState ){
-                    window.history.pushState(null, null, url);
-                }
-            }
-            get_ajax_content_tab(id);
-            return false;
-	});
-	";
-	return $script;
 }

@@ -105,9 +105,6 @@ function rcl_register_rating_type($args){
 
     $args['type_point'] = $rcl_options['rating_point_'.$type];
     $rcl_rating_types[$type] = $args;
-
-	//print_r($args);
-    //return $rcl_rating_types;
 }
 
 function rcl_get_rating_value($type){
@@ -285,7 +282,7 @@ function rcl_get_rating_votes($args,$diap=false){
     if($diap){
         $limit = " LIMIT ".implode(',',$diap);
     }
-	//print_r($args);
+
     $query = "SELECT * FROM ".RCL_PREF."rating_values WHERE ".implode(' AND ',$where)." ORDER BY rating_date DESC ".$limit;
 
     return $wpdb->get_results($query);
@@ -315,7 +312,7 @@ function rcl_get_votes_window($args,$votes,$navi=false){
 
 function rcl_get_list_votes($args,$votes){
     global $rcl_rating_types,$rcl_options;
-	//print_r($rcl_rating_types);
+
     $list = '<ul class="votes-list">';
 
     if($votes){
@@ -632,8 +629,6 @@ function rcl_add_data_rating_posts(){
                         $post->rating_none = (isset($none[$post->ID]))? $none[$post->ID]: 0;
 		}
 
-		//print_r($wp_query);
-
 	}
 }
 
@@ -655,8 +650,6 @@ function rcl_rating_shortcode($atts){
 	$rcl_rating = new Rcl_Rating();
 
 	$ratings = $rcl_rating->get_values($atts);
-
-	//print_r($ratings);
 
 	$userlist ='<div class="ratinglist '.$list_type.'-list">';
 	foreach($ratings as $rating){

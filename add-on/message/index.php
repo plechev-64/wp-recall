@@ -89,6 +89,7 @@ if(function_exists('rcl_tab')){
     function add_tab_message(){
         rcl_tab('privat',array('Rcl_Messages','recall_user_private_message'),__('Private chat','wp-recall'),
                                 array(
+                                    'ajax-load'=>true,
                                     'public'=>1,
                                     'class'=>'fa-comments',
                                     'order'=>10,
@@ -130,7 +131,6 @@ class Rcl_Messages{
 			add_filter('file_scripts_rcl',array(&$this, 'get_scripts_message_rcl'));
 		endif;
 
-                add_filter('ajax_tabs_rcl',array(&$this, 'add_tab_privat_rcl'));
 		add_action('wp_ajax_update_message_history_recall', array(&$this, 'update_message_history_recall'));
 		add_action('wp_ajax_add_private_message_recall', array(&$this, 'add_private_message_recall'));
 		add_action('wp_ajax_close_new_message_recall', array(&$this, 'close_new_message_recall'));
@@ -288,12 +288,6 @@ class Rcl_Messages{
 		remove_filter( 'embed_oembed_discover', '__return_false', 999 );
 		return $text;
 	}
-
-        function add_tab_privat_rcl($array_tabs){
-            $array_tabs['privat']=array('Rcl_Messages','recall_user_private_message');
-            return $array_tabs;
-        }
-
 
         function get_chek_ban_user($chat,$author_lk){
             global $user_ID,$wpdb;

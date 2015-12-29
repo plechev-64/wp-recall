@@ -76,8 +76,6 @@ class Rcl_Groups {
 
         $groups = apply_filters('rcl_groups',$groups);
 
-        //print_r($groups);
-
         return $groups;
     }
 

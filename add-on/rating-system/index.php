@@ -68,14 +68,9 @@ function rcl_get_content_rating($author_lk){
     return rcl_rating_block(array('value'=>rcl_get_user_rating($author_lk)));
 }
 
-add_filter('ajax_tabs_rcl','rcl_ajax_rating_tab');
-function rcl_ajax_rating_tab($array_tabs){
-    return array_merge( $array_tabs,array( 'rating' => 'rcl_rating_tab' ));
-}
-
 add_action('init','rcl_add_rating_tab');
 function rcl_add_rating_tab(){
-    rcl_tab('rating','rcl_rating_tab',__('Rating','wp-recall'),array('public'=>1,'cache'=>true,'output'=>'sidebar','class'=>'fa-balance-scale'));
+    rcl_tab('rating','rcl_rating_tab',__('Rating','wp-recall'),array('ajax-load'=>true,'public'=>1,'cache'=>true,'output'=>'sidebar','class'=>'fa-balance-scale'));
 }
 
 if(!is_admin()) add_filter('tab_data_rcl','rcl_add_counter_rating',10);
@@ -234,8 +229,6 @@ function rcl_get_rating_block($args){
 		$user_info = get_userdata($user_ID);
 		if ( $user_info->user_level < $access )	$can = false;
 	}
-        
-        //print_r($args);
 
     if($value&&$can)$block .= '<a href="#" onclick="rcl_view_list_votes(this);return false;" data-rating="'.rcl_encode_data_rating('view',$args).'" class="view-votes post-votes"><i class="fa fa-question-circle"></i></a>';
     $block .=  '</div>';
@@ -440,11 +433,7 @@ function rcl_remove_cashe_rating_post($args){
             }
 
             $string = base64_encode(implode(',',$str));
-
-            $rcl_cache = new Rcl_Cache();
-            $rcl_cache->get_file($string);
-            $rcl_cache->delete_cache();
-            
+            rcl_delete_file_cache($string);
         }
     }
 }

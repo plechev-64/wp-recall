@@ -1,19 +1,11 @@
 <?php
 
 function rcl_pageform_scripts(){
-    /*if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/page_form.js"></script>';
-    }else{*/
-        wp_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js' );
-    //}
+    wp_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js' );
 }
 
 function rcl_floatform_scripts(){
-    /*if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/float_form.js"></script>';
-    }else{*/
         wp_enqueue_script( 'rcl-float-form', RCL_URL.'js/float_form.js' );
-    //}
 }
 
 function rcl_sortable_scripts(){
@@ -27,29 +19,18 @@ function rcl_resizable_scripts(){
 }
 
 function rcl_datepicker_scripts(){
-    /*if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/datepicker/datepicker-init.js"></script>';
-        echo '<link rel=stylesheet href="'.RCL_URL.'js/datepicker/style.css" type=text/css media=all />';
-    }else{*/
         wp_enqueue_style( 'datepicker', RCL_URL.'js/datepicker/style.css' );
         wp_enqueue_script( 'jquery' );
         wp_enqueue_script('jquery-ui-core');
         wp_enqueue_script('jquery-ui-datepicker');
         wp_enqueue_script( 'custom-datepicker', RCL_URL.'js/datepicker/datepicker-init.js', array('jquery-ui-datepicker') );
-    //}
 }
 
 function rcl_bxslider_scripts(){
-    /*if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-        echo '<link rel=stylesheet href="'.RCL_URL.'js/jquery.bxslider/jquery.bxslider.css" type=text/css media=all/>';
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/jquery.bxslider/jquery.bxslider.min.js"></script>';
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/slider.js"></script>';
-    }else{*/
         wp_enqueue_style( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.css' );
         wp_enqueue_script( 'jquery' );
         wp_enqueue_script( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.min.js' );
         wp_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js', array('bx-slider','rcl-header-scripts'));
-    //}
 }
 
 function rcl_dialog_scripts(){
@@ -63,28 +44,17 @@ function rcl_webcam_scripts(){
 }
 
 function rcl_fileupload_scripts(){
-    /*if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/fileupload/js/vendor/jquery.ui.widget.js"></script>';
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/fileupload/js/load-image.all.min.js"></script>';
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/fileupload/js/canvas-to-blob.min.js"></script>';
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/fileupload/js/canvas-to-blob.min.js"></script>';
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/fileupload/js/jquery.iframe-transport.js"></script>';
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/fileupload/js/jquery.fileupload.js"></script>';
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/fileupload/js/jquery.fileupload-process.js"></script>';
-        echo '<script type="text/javascript" src="'.RCL_URL.'js/fileupload/js/jquery.fileupload-image.js"></script>';
-    }else{*/
-        wp_enqueue_script( 'jquery-ui-widget', RCL_URL.'js/fileupload/js/vendor/jquery.ui.widget.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'jquery-ui-widget', RCL_URL.'js/fileupload/js/vendor/jquery.ui.widget.js', array(), VER_RCL,true );
 
-        //перенесено из blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js
-        wp_enqueue_script( 'load-image', RCL_URL.'js/fileupload/js/load-image.all.min.js', array(), VER_RCL,true );
-        //перенесено из blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js
-        wp_enqueue_script( 'canvas-to-blob', RCL_URL.'js/fileupload/js/canvas-to-blob.min.js', array(), VER_RCL,true );
+    //перенесено из blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js
+    wp_enqueue_script( 'load-image', RCL_URL.'js/fileupload/js/load-image.all.min.js', array(), VER_RCL,true );
+    //перенесено из blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js
+    wp_enqueue_script( 'canvas-to-blob', RCL_URL.'js/fileupload/js/canvas-to-blob.min.js', array(), VER_RCL,true );
 
-        wp_enqueue_script( 'jquery-iframe-transport', RCL_URL.'js/fileupload/js/jquery.iframe-transport.js', array(), VER_RCL,true );
-        wp_enqueue_script( 'jquery-fileupload', RCL_URL.'js/fileupload/js/jquery.fileupload.js', array(), VER_RCL,true );
-        wp_enqueue_script( 'jquery-fileupload-process', RCL_URL.'js/fileupload/js/jquery.fileupload-process.js', array(), VER_RCL,true );
-        wp_enqueue_script( 'jquery-fileupload-image', RCL_URL.'js/fileupload/js/jquery.fileupload-image.js', array(), VER_RCL,true );
-    //}
+    wp_enqueue_script( 'jquery-iframe-transport', RCL_URL.'js/fileupload/js/jquery.iframe-transport.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'jquery-fileupload', RCL_URL.'js/fileupload/js/jquery.fileupload.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'jquery-fileupload-process', RCL_URL.'js/fileupload/js/jquery.fileupload-process.js', array(), VER_RCL,true );
+    wp_enqueue_script( 'jquery-fileupload-image', RCL_URL.'js/fileupload/js/jquery.fileupload-image.js', array(), VER_RCL,true );
     
     rcl_fileapi_scripts();
 }
@@ -188,15 +158,9 @@ function rcl_admin_scrips(){
 }
 
 function rcl_fileapi_scripts() {
-    //global $user_ID;
-    //if(!$user_ID) return false;
-    /*if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-        return '<script type="text/javascript" src="'.RCL_URL.'scripts/footer-scripts.js"></script>';        
-    }else{*/
-        if(file_exists(RCL_UPLOAD_PATH.'scripts/footer-scripts.js')){
-            wp_enqueue_script( 'jquery' );
-            wp_enqueue_script( 'rcl-footer-scripts', RCL_UPLOAD_URL.'scripts/footer-scripts.js', array(), VER_RCL, true );
-        }
-    //}
+    if(file_exists(RCL_UPLOAD_PATH.'scripts/footer-scripts.js')){
+        wp_enqueue_script( 'jquery' );
+        wp_enqueue_script( 'rcl-footer-scripts', RCL_UPLOAD_URL.'scripts/footer-scripts.js', array(), VER_RCL, true );
+    }
 }
 

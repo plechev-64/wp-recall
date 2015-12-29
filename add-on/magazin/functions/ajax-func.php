@@ -307,33 +307,27 @@ add_action('wp_ajax_rcl_edit_order_status', 'rcl_edit_order_status');
 /*************************************************
 Удаление заказа в корзину
 *************************************************/
-function rcl_delete_trash_order(){
-    global $user_ID,$wpdb,$rmag_options;
+function rcl_trash_order($post){
+    global $user_ID;
     
-    rcl_verify_ajax_nonce();
-    
-    $idorder = intval($_POST['idorder']);
+    $order_id = intval($post->order_id);
 
-    if($idorder&&$user_ID){
+    if($order_id&&$user_ID){
 
-        rcl_remove_reserve($idorder,1);
+        rcl_remove_reserve($order_id,1);
 
         //убираем заказ в корзину
-        $res = rcl_update_status_order($idorder,6,$user_ID);
+        $res = rcl_update_status_order($order_id,6,$user_ID);
 
         if($res){
-            $log['otvet']=100;
-            $log['idorder']=$idorder;
-            $log['content']='<h3>Заказ №'.$idorder.' был удален.</h3>';
+            return '<h3>Заказ №'.$order_id.' был удален.</h3>';
         }
 
     } else {
-            $log['otvet']=1;
+        return array('error'=>'Ошибка!');
     }
-    echo json_encode($log);
-    exit;
 }
-add_action('wp_ajax_rcl_delete_trash_order', 'rcl_delete_trash_order');
+
 /*************************************************
 Полное удаление заказа
 *************************************************/
@@ -398,7 +392,6 @@ function rcl_register_user_order(){
             }
         }
 
-        //var_dump($reg_user);exit;
         if($reg_user&&($res_login||$res_email||!$correctemail||!$valid)){
 
             if(!$valid||!$correctemail){
@@ -546,7 +539,6 @@ function rcl_pay_order_private_account(){
     }
 
     $order = rcl_get_order($order_id);
-    //rcl_setup_orderdata($order);
 
     $oldusercount = rcl_get_user_money();
 
@@ -556,8 +548,6 @@ function rcl_pay_order_private_account(){
             echo json_encode($log);
             exit;
     }
-
-    //print_r($order);
 
     $newusercount = $oldusercount - $order->order_price;
 

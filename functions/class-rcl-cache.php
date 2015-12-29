@@ -58,7 +58,7 @@ class Rcl_Cache{
         return $content;
     }
     
-    function delete_cache(){
+    function delete_file(){
         if(!$this->file_exists) return false;
         unlink($this->filepath);
     }
@@ -66,6 +66,18 @@ class Rcl_Cache{
     function clear_cache(){
         rcl_remove_dir(RCL_UPLOAD_PATH.'cache/');
     }
+}
+
+add_action('rcl_cron_daily','rcl_clear_cache',20);
+function rcl_clear_cache(){
+    $rcl_cache = new Rcl_Cache();
+    $rcl_cache->clear_cache();
+}
+
+function rcl_delete_file_cache($string){
+    $rcl_cache = new Rcl_Cache();       
+    $rcl_cache->get_file($string);
+    $rcl_cache->delete_file();
 }
 
 

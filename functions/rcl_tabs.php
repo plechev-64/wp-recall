@@ -8,6 +8,7 @@ class Rcl_Tabs{
     public $public;
     public $output;
     public $cache;
+    public $ajax;
     
     function __construct($data){
         global $rcl_options;
@@ -22,13 +23,14 @@ class Rcl_Tabs{
         $this->callback = $callback;
         $this->output = (isset($args['output']))? $args['output']: null;
         $this->cache = (isset($args['cache'])&&isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? $args['cache']: false;
+        $this->ajax = (!isset($args['ajax-load'])||!$args['ajax-load'])? 0: 1;
 
         if(isset($args['class'])) $this->class = $args['class'];
         if(isset($args['order'])) $ord = $args['order'];
         else $ord = 10;
         if(!$this->class) $this->class = 'fa-cog';
         $this->public = (!isset($args['public'])) ? 0 : $args['public'];
-        //print_r($args);
+
         if(isset($args['path'])) $this->key = rcl_key_addon(pathinfo($args['path']));
 
         add_filter('the_block_wprecall',array(&$this, 'add_tab'),$ord,2);
@@ -98,7 +100,8 @@ class Rcl_Tabs{
         $args = array(
             'id_tab' => $this->id,
             'name' => $this->name,
-            'class' => $this->class
+            'class' => $this->class,
+            'ajax' => $this->ajax
         );
         if($this->output&&$button=='') $button = false;
         if(isset($this->key)) $args['key'] = $this->key;
@@ -110,7 +113,21 @@ class Rcl_Tabs{
 function rcl_get_button_tab($args,$button=false){
 	global $rcl_options,$user_LK;
 	$link = rcl_format_url(get_author_posts_url($user_LK),$args['id_tab']);
-        $html_button = rcl_get_button($args['name'],$link,array('class'=>rcl_get_class_button_tab($button,$args['id_tab']),'icon'=>$args['class']));
+        
+        $datapost = array(
+            'callback'=>'rcl_ajax_tab',
+            'tab_id'=>$args['id_tab'],
+            'user_LK'=>$user_LK
+        );
+        
+        $html_button = rcl_get_button($args['name'],$link,
+            array(
+                'class'=>rcl_get_class_button_tab($button,$args['ajax']),
+                'icon'=>$args['class'],
+                'attr'=>'data-post='.rcl_encode_post($datapost)
+            )
+        );
+        
 	$button .= apply_filters('rcl_get_button_tab',$html_button,$args);
 
 	return $button;
@@ -130,13 +147,15 @@ function rcl_chek_view_tab($block_wprecall,$idtab){
 	return true;
 }
 
-function rcl_get_class_button_tab($button,$id_tab){
-	global $rcl_options,$array_tabs;
-	//print_r($rcl_options);
+function rcl_get_class_button_tab($button,$ajax){
+	global $rcl_options;
+
         $class = false;
         $tb = (isset($rcl_options['tab_newpage']))? $rcl_options['tab_newpage']:false;
 	if(!$tb) $class = 'block_button';
-	if($tb==2&&isset($array_tabs[$id_tab])) $class = 'ajax_button';
+	if($tb==2&&$ajax){
+            $class = 'rcl-ajax';
+        }
 	if($button==''&&$button!==false) $class .= ' active';
 	return $class;
 }

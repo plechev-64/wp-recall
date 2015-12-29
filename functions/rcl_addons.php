@@ -367,7 +367,7 @@ class Rcl_Addons{
 			foreach((array)$_POST['checked'] as $addon){
 				foreach((array)$active_addons as $name=>$data){
                                     if($name!=$addon){
-                                        $new_active_list[$name] = $data['path'];
+                                        $new_active_list[$name] = $data;
                                     }else{
                                         foreach($paths as $path){
                                             if(file_exists($path.'/'.$addon.'/deactivate.php')){
@@ -505,7 +505,7 @@ class Rcl_Addons{
 		if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rcl' ) ) return false;
 
 		$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-                //print_r($_POST);exit;
+                
 		if($_POST['global']['login_form_recall']==1&&!isset($_POST['global']['page_login_form_recall'])){
 			$_POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
 		}
@@ -518,7 +518,6 @@ class Rcl_Addons{
                 
                 if(isset($_POST['local'])){
                     foreach((array)$_POST['local'] as $key => $value){
-                        //print_r(array($key,$value));exit;
                         update_option($key,$value);
                     }
                 }

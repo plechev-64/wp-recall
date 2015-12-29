@@ -37,11 +37,8 @@ function rcl_tab_groups_remove_cache($groupdata){
         }
 
         $string = rcl_format_url(get_author_posts_url($user_id),'groups');
-
-        $rcl_cache = new Rcl_Cache();       
-        $rcl_cache->get_file($string);
-        $rcl_cache->delete_cache();
         
+        rcl_delete_file_cache($string);       
     }
 }
 
@@ -52,9 +49,7 @@ function rcl_groups_widget_posts_remove_cache($post_id,$postdata){
     global $rcl_options;
     if(isset($rcl_options['use_cache'])&&$rcl_options['use_cache']){
         $group_id = rcl_get_group_id_by_post($post_id);
-        $rcl_cache = new Rcl_Cache();       
-        $rcl_cache->get_file('group-posts-widget:'.$group_id);
-        $rcl_cache->delete_cache();
+        rcl_delete_file_cache('group-posts-widget:'.$group_id);
     }
 }
 
@@ -71,14 +66,8 @@ function rcl_add_postlist_group(){
 
 add_action('init','rcl_add_tab_groups');
 function rcl_add_tab_groups(){
-    rcl_tab('groups','rcl_tab_groups',__('Groups','wp-recall'),array('public'=>1,'cache'=>true,'class'=>'fa-group'));
+    rcl_tab('groups','rcl_tab_groups',__('Groups','wp-recall'),array('ajax-load'=>true,'public'=>1,'cache'=>true,'class'=>'fa-group'));
 }
-
-function rcl_ajax_tab_groups($array_tabs){
-    $array_tabs['groups']='rcl_tab_groups';
-    return $array_tabs;
-}
-add_filter('ajax_tabs_rcl','rcl_ajax_tab_groups');
 
 add_action('init','rcl_register_default_group_sidebars',10);
 function rcl_register_default_group_sidebars(){
@@ -372,7 +361,7 @@ function rcl_get_group_requests_content($group_id){
         return $content;
     }
 
-    add_action('user_description','rcl_add_group_access_button');
+    add_action('rcl_user_description','rcl_add_group_access_button');
 
     $content .= rcl_get_userlist(array('include'=>implode(',',$requests),'filters'=>0,'orderby'=>'time_action','data'=>'rating_total,posts_count,comments_count,description,user_registered'));
 

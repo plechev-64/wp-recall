@@ -426,7 +426,7 @@ echo '</div>';//конец блока заказов
 add_action('admin_init','rcl_read_exportfile');
 function rcl_read_exportfile(){
 	global $wpdb;
-	//print_r($_POST);exit;
+
 	if(!isset($_POST['_wpnonce'])||!wp_verify_nonce( $_POST['_wpnonce'], 'get-csv-file' )) return false;
 
 	$file_name = 'products.xml';

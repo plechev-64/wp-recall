@@ -56,9 +56,6 @@ class Rcl_Postlist {
             $ratings = array();
             $posts = array();
 
-            //print_r($_POST);
-            //exit;
-
             $start = $this->start.',';
 
             $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $start 20",$author_lk,$this->posttype));

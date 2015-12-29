@@ -53,8 +53,6 @@ class Rcl_List_Terms{
 
             if($ctg) $this->ctg = $ctg;
             $this->allcats = $allcats;
-            
-            //print_r($this->output); exit;
 
             if($cat_list&&is_array($cat_list)&&$this->taxonomy){
                 $cat_list = get_terms( $this->taxonomy, array('include'=>$cat_list) );

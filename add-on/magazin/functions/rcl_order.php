@@ -10,7 +10,7 @@ class Rcl_Order {
     function chek_requared_fields($get_fields,$key=false){
         $requared = true;
         if($get_fields){
-            //print_r($_POST);
+
             foreach($get_fields as $custom_field){
 
                 if($key=='profile'&&$custom_field['order']!=1) continue;

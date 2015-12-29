@@ -27,7 +27,9 @@ function rcl_get_userlist($atts, $content = null){
 
     if($is_cache){
         
-        $timecache = ($user_ID&&$users->orderby=='time_action')? 600: 0;
+        $timeout = (isset($rcl_options['timeout'])&&$rcl_options['timeout'])? $rcl_options['timeout']: 600;
+        
+        $timecache = ($user_ID&&$users->orderby=='time_action')? $timeout: 0;
 
         $string = json_encode($users->query());
         
@@ -101,7 +103,24 @@ function rcl_user_rayting(){
     }
 }
 
-add_action('user_description','rcl_user_comments');
+add_action('rcl_user_description','rcl_user_meta',30);
+function rcl_user_meta(){
+    global $rcl_user,$rcl_users_set;
+    if(false!==array_search('profile_fields', $rcl_users_set->data)||isset($rcl_user->profile_fields)){
+        if(!isset($rcl_user->profile_fields)) $rcl_user->profile_fields = array();
+        
+        if($rcl_user->profile_fields){
+            $cf = new Rcl_Custom_Fields();
+            echo '<div class="user-profile-fields">';
+            foreach($rcl_user->profile_fields as $k=>$field){
+                echo $cf->get_field_value($field,$field['value'],$field['title']);
+            }
+            echo '</div>';
+        } 
+    }
+}
+
+add_action('rcl_user_description','rcl_user_comments',20);
 function rcl_user_comments(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('comments_count', $rcl_users_set->data)||isset($rcl_user->comments_count)){
@@ -109,7 +128,7 @@ function rcl_user_comments(){
         echo '<span class="filter-data"><i class="fa fa-comment"></i>'.__('Comments','wp-recall').': '.$rcl_user->comments_count.'</span>';
     }
 }
-add_action('user_description','rcl_user_posts');
+add_action('rcl_user_description','rcl_user_posts',20);
 function rcl_user_posts(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('posts_count', $rcl_users_set->data)||isset($rcl_user->posts_count)){
@@ -134,14 +153,18 @@ function rcl_user_action($type=1){
 
 function rcl_user_description(){
     global $rcl_user;
-    if(!$rcl_user->description) return false;
-    echo '<div class="ballun-status">';
-        //'<span class="ballun"></span>'
-        echo '<p class="status-user-rcl">'.nl2br(esc_textarea($rcl_user->description)).'</p>
-    </div>';
+    
+    if($rcl_user->description){
+        echo '<div class="ballun-status">';
+            echo '<p class="status-user-rcl">'.nl2br(esc_textarea($rcl_user->description)).'</p>
+        </div>';
+    }
+        
+    do_action('rcl_user_description');
+
 }
 
-add_action('user_description','rcl_user_register');
+add_action('rcl_user_description','rcl_user_register',20);
 function rcl_user_register(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('user_registered', $rcl_users_set->data)||isset($rcl_user->user_registered)){
@@ -150,7 +173,7 @@ function rcl_user_register(){
     }
 }
 
-add_action('user_description','rcl_filter_user_description');
+add_action('rcl_user_description','rcl_filter_user_description',10);
 function rcl_filter_user_description(){
     global $rcl_user;
     $cont = '';
@@ -220,14 +243,14 @@ function rcl_slider($atts, $content = null){
     $atts));
 
     $args = array(
-            'numberposts'     => $num,
-            'orderby'         => $orderby,
-            'order'           => $order,
-            'exclude'         => $exclude,
-            'post_type'       => $type,
-            'post_status'     => 'publish',
-            'meta_key'        => '_thumbnail_id'
-	);
+        'numberposts'     => $num,
+        'orderby'         => $orderby,
+        'order'           => $order,
+        'exclude'         => $exclude,
+        'post_type'       => $type,
+        'post_status'     => 'publish',
+        'meta_key'        => '_thumbnail_id'
+    );
 
     if($term)
 	$args['tax_query'] = array(
@@ -245,7 +268,7 @@ function rcl_slider($atts, $content = null){
                 'value'=>$meta_value
             )
 	);
-        //print_r($args);
+        
 	$posts = get_posts($args);
 
 	if(!$posts) return false;
@@ -255,7 +278,6 @@ function rcl_slider($atts, $content = null){
 
 	$plslider = '<ul class="slider-rcl">';
 	foreach($posts as $post){
-            //if( !has_post_thumbnail($post->ID)) continue;
 
             $thumb_id = get_post_thumbnail_id($post->ID);
             $large_url = wp_get_attachment_image_src( $thumb_id, 'full');
