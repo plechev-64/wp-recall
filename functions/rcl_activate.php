@@ -9,10 +9,11 @@ if (!class_exists('reg_core')){
 
         function init_prefix(){
             global $wpdb;
-            $dm = explode('.',$_SERVER['HTTP_HOST']);
+            $host = str_replace('www.','',$_SERVER['HTTP_HOST']);
+            $dm = explode('.',$host);
             $cnt = count($dm);
-            if($cnt==3) $sn_nm = $dm[1].'.'.$dm[2];
-            else $sn_nm = $dm[0].'.'.$dm[1];
+            if($cnt==3&&$dm[2]!='ua') $sn_nm = $dm[1].'.'.$dm[2];
+            else $sn_nm = $host;
             define('WP_HOST',md5($sn_nm));
             define('WP_PREFIX', $wpdb->prefix . substr(WP_HOST, -4) . '_');
         }

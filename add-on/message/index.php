@@ -724,10 +724,8 @@ class Rcl_Messages{
 		$privat_block .= '<div id="message-'.$this->mess_id.'" class="public-post message-block '.$class.'">';
 		if($class!="file")$privat_block .= '<div '.$uslk.' class="author-avatar">'.$avatar_mess.'</div>';
 		$privat_block .= '<div class="content-mess">';
-		if($class!="file")$privat_block .= '<span class="privat-balloon"></span>';
-		$privat_block .= '<div class="balloon-message">'
-                        . '<p class="time-message"><span class="time">'.$message->time_mess.'</span></p>'
-                        . '<p>'.$content_message.'</p></div>
+		$privat_block .= '<p class="time-message"><span class="time">'.$message->time_mess.'</span></p>'
+                        . '<p>'.$content_message.'</p>
 		</div>';
 
 		$st = $message->status_mess;

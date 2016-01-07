@@ -252,10 +252,7 @@ function rcl_get_wp_upload_dir(){
 }
 
 function rcl_update_dinamic_files(){
-    include_once 'functions/rcl_addons.php';
-    $rcl_addons = new Rcl_Addons();
-    $rcl_addons->get_update_scripts_file_rcl();
-    $rcl_addons->get_update_scripts_footer_rcl();
+    rcl_update_scripts();
     rcl_minify_style();
 }
 
@@ -474,14 +471,14 @@ function rcl_get_postmeta_array($post_id){
 
 function rcl_setup_chartdata($mysqltime,$data){
     global $chartArgs;
-    $day = date("j", strtotime($mysqltime));
+    
+    $day = date("Y.m.j", strtotime($mysqltime));
     $price = $data/1000;
-    $month = date("n", strtotime($mysqltime));
-    $chartArgs[$month][$day]['summ'] += $price;
-    $chartArgs[$month]['summ'] += $price;
-    $chartArgs[$month][$day]['cnt'] += 1;
-    $chartArgs[$month]['cnt'] += 1;
-    $chartArgs[$month]['days'] = date("t", strtotime($mysqltime));
+
+    $chartArgs[$day]['summ'] += $price;
+    $chartArgs[$day]['cnt'] += 1;
+    $chartArgs[$day]['days'] = date("t", strtotime($mysqltime));
+    
     return $chartArgs;
 }
 
@@ -490,21 +487,13 @@ function rcl_get_chart($arr=false){
 
     if(!$arr) return false;
 
-    if(count($arr)==1){
-        foreach($arr as $month=>$data){
-            for($a=1;$a<=$data['days'];$a++){
-                $cnt = (isset($data[$a]['cnt']))?$data[$a]['cnt']:0;
-                $summ = (isset($data[$a]['summ']))?$data[$a]['summ']:0;
-                $chartData['data'][] = array($a, $cnt,$summ);
-            }
-        }
-    }else{
-        for($a=1;$a<=12;$a++){
-            $cnt = (isset($arr[$a]['cnt']))?$arr[$a]['cnt']:0;
-            $summ = (isset($arr[$a]['summ']))?$arr[$a]['summ']:0;
-            $chartData['data'][] = array($a, $cnt,$summ);
-        }
+    ksort($arr);
+    foreach($arr as $month=>$data){
+            $cnt = (isset($data['cnt']))?$data['cnt']:0;
+            $summ = (isset($data['summ']))?$data['summ']:0;
+            $chartData['data'][] = array('"'.$month.'"', $cnt,$summ);
     }
+    
 
     if(!$chartData) return false;
 

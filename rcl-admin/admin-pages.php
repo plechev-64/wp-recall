@@ -305,6 +305,42 @@ function rcl_global_options(){
     echo $content;
 }
 
+add_action('init', 'rcl_update_options');
+function rcl_update_options(){
+    global $rcl_options;
+    if ( isset( $_POST['rcl_global_options'] ) ) {
+        if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rcl' ) ) return false;
+
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        if($_POST['global']['login_form_recall']==1&&!isset($_POST['global']['page_login_form_recall'])){
+                $_POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
+        }
+
+        foreach((array)$_POST['global'] as $key => $value){			
+                $options[$key] = $value;
+        }
+
+        update_option('rcl_global_options',$options);
+
+        if(isset($_POST['local'])){
+            foreach((array)$_POST['local'] as $key => $value){
+                update_option($key,$value);
+            }
+        }
+
+        $rcl_options = $options;
+
+        if( current_user_can('edit_plugins') ){
+            rcl_update_scripts();
+            rcl_minify_style();
+        }
+
+        wp_redirect(admin_url('admin.php?page=manage-wprecall'));
+        exit;
+    }
+}
+
 function rcl_theme_list(){
     global $rcl_options;
 
@@ -334,15 +370,7 @@ function rcl_theme_list(){
     }
     return false;
 }
-/*no found*/
-function rcl_url_theme(){
-    $dirs   = array(RCL_TAKEPATH.'themes',RCL_PATH.'css/themes');
-    foreach($dirs as $dir){
-        if(!file_exists($dir.'/'.$rcl_options['color_theme'].'.css')) continue;
-        wp_enqueue_theme_rcl(rcl_path_to_url($dir.'/'.$rcl_options['color_theme'].'.css'));
-        break;
-    }
-}
+
 function wp_enqueue_theme_rcl($url){
     wp_enqueue_style( 'theme_rcl', $url );
 }

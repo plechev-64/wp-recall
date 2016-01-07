@@ -109,7 +109,6 @@ jQuery(function($){
 	$('.update-message .update-add-on').click(function(){
             var addon = $(this).data('addon');				
             var dataString = 'action=rcl_update_addon&addon='+addon;
-
             $.ajax({
                 type: 'POST',
                 data: dataString,

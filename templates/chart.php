@@ -15,12 +15,15 @@
         ]);
 
         var options = {
-          title: "<?php echo $chartData['title']; ?>",
-          hAxis: {title: "<?php echo $chartData['title-x']; ?>",  titleTextStyle: {color: "#333"}},
-          vAxis: {minValue: 0}
+            title: "<?php echo $chartData['title']; ?>",
+            hAxis: {title: "<?php echo $chartData['title-x']; ?>",  titleTextStyle: {color: "#333"}},
+            vAxis: {minValue: 0},
+            fontSize: 12,
+            seriesType: 'bars',
+            series: {1: {type: 'area'}}
         };
 
-        var chart = new google.visualization.AreaChart(document.getElementById("chart_div"));
+        var chart = new google.visualization.ComboChart(document.getElementById("chart_div"));
         chart.draw(data, options);
   }
 </script>

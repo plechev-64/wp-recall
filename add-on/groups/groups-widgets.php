@@ -268,9 +268,9 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 
     function add_admins_query($query){
         global $rcl_group;
-        $query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
-        $query['where'][] = "(groups_users.user_role IN ('admin','moderator') AND groups_users.group_id='$rcl_group->term_id') OR (users.ID='$rcl_group->admin_id')";
-        $query['group'] = "users.ID";
+        $query->query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
+        $query->query['where'][] = "(groups_users.user_role IN ('admin','moderator') AND groups_users.group_id='$rcl_group->term_id') OR (users.ID='$rcl_group->admin_id')";
+        $query->query['group'] = "users.ID";
 
         return $query;
     }

@@ -77,8 +77,7 @@ function rcl_primary_scripts(){
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'rcl-primary-scripts', RCL_URL.'js/recall.js', array(), VER_RCL );
     if(!file_exists(RCL_UPLOAD_PATH.'scripts/header-scripts.js')){
-            $rcl_addons = new rcl_addons();
-            $rcl_addons->get_update_scripts_file_rcl();
+        rcl_update_scripts;
     }
     wp_enqueue_script( 'rcl-header-scripts', RCL_UPLOAD_URL.'scripts/header-scripts.js', array('rcl-primary-scripts'), VER_RCL );
 }

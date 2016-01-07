@@ -12,8 +12,6 @@ function rcl_check_addon_update(){
     
     $paths = array(RCL_TAKEPATH.'add-on') ;
 
-    $rcl_addons = new Rcl_Addons();
-
     foreach($paths as $path){
         if(file_exists($path)){
             $addons = scandir($path,1);
@@ -25,7 +23,7 @@ function rcl_check_addon_update(){
                 $info_src = $addon_dir.'/info.txt';
                 if(file_exists($info_src)){
                     $info = file($info_src);
-                    $addons_data[$namedir] = $rcl_addons->get_parse_addon_info($info);
+                    $addons_data[$namedir] = rcl_parse_addon_info($info);
                     $addons_data[$namedir]['src'] = $index_src;
                     $a++;
                     flush();
@@ -33,11 +31,13 @@ function rcl_check_addon_update(){
             }
         }
     }
+    
+    if(!$addons_data) return false;
 
     $need_update = array();    
     $get = array();
-    
-    foreach((array)$addons_data as $key=>$addon){
+
+    foreach($addons_data as $key=>$addon){
         $status = (isset($active_addons[$key]))?1:0;
         $get[] = $key.':'.$addon['version'].':'.$status;
     }
@@ -95,8 +95,6 @@ function rcl_check_addon_update(){
 
 add_action('wp_ajax_rcl_update_addon','rcl_update_addon');
 function rcl_update_addon(){
-    
-    rcl_verify_ajax_nonce();
 
     $addon = $_POST['addon'];
     $need_update = get_option('rcl_addons_need_update');

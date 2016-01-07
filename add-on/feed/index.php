@@ -99,23 +99,23 @@ function rcl_subscriptions_tab($user_id){
 
 function rcl_feed_authors_query_userlist($query){
     global $user_LK;
-    $query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON users.ID=feeds.object_id";
-    $query['where'][] = "feeds.user_id='$user_LK'";
-    $query['where'][] = "feeds.feed_type='author'";
-    $query['where'][] = "feeds.feed_status='1'";
-    $query['relation'] = "AND";
-    $query['group'] = false;
+    $query->query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON users.ID=feeds.object_id";
+    $query->query['where'][] = "feeds.user_id='$user_LK'";
+    $query->query['where'][] = "feeds.feed_type='author'";
+    $query->query['where'][] = "feeds.feed_status='1'";
+    $query->query['relation'] = "AND";
+    $query->query['group'] = false;
     return $query;
 }
 
 function rcl_feed_subsribers_query_userlist($query){
     global $user_LK;
-    $query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON users.ID=feeds.user_id";
-    $query['where'][] = "feeds.object_id='$user_LK'";
-    $query['where'][] = "feeds.feed_type='author'";
-    $query['where'][] = "feeds.feed_status='1'";
-    $query['relation'] = "AND";
-    $query['group'] = false;
+    $query->query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON users.ID=feeds.user_id";
+    $query->query['where'][] = "feeds.object_id='$user_LK'";
+    $query->query['where'][] = "feeds.feed_type='author'";
+    $query->query['where'][] = "feeds.feed_status='1'";
+    $query->query['relation'] = "AND";
+    $query->query['group'] = false;
     return $query;
 }
 

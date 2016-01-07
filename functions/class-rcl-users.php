@@ -1,7 +1,8 @@
 <?php
 
 class Rcl_Users{
-
+    
+    public $id = 0;
     public $number = false;
     public $inpage = 10;
     public $offset = 0;
@@ -16,14 +17,14 @@ class Rcl_Users{
     public $only = false;
     public $filters = 0;
     public $search_form = 1;
-    public $query_count = false;
-    public $users_count = 0;
+    public $query = array();
+    public $is_count = 0;
     public $data;
     public $add_uri;
     public $relation = 'AND';
 
     function __construct($args){
-
+        
         $this->init_properties($args);
 
         if($this->include){
@@ -77,6 +78,7 @@ class Rcl_Users{
 
         if($this->filters)
             add_filter('rcl_users_query',array($this,'add_query_search'));
+
     }
 
     function remove_data(){
@@ -116,8 +118,15 @@ class Rcl_Users{
         if($this->number){
             $users = $this->get_users();
             return count($users);
-        }else{
-            return $wpdb->get_var( $this->query('count') );
+        }else{   
+            
+            $query_string = $this->query('count');
+            
+            if($this->query['relation']=='OR'){
+                return $wpdb->query( $query_string );
+            }else{
+                return $wpdb->get_var( $query_string );
+            }
         }
     }
 
@@ -155,7 +164,7 @@ class Rcl_Users{
     function query($count=false){
         global $wpdb,$active_addons,$rcl_options;
 
-        if($count) $this->query_count = true;
+        if($count) $this->is_count = 1;
 
         $query = array(
             'select'    => array(),
@@ -169,7 +178,7 @@ class Rcl_Users{
         if($count){
 
             $query['select'] = array(
-                "COUNT(users.ID)"
+                "COUNT(DISTINCT users.ID)"
             );
 
         }else{
@@ -194,25 +203,27 @@ class Rcl_Users{
             $query['where'][] = "actions.time_action > date_sub('".current_time('mysql')."', interval $timeout minute)";
         }
 
-        $query = apply_filters('rcl_users_query',$query);
+        $this->query = $query;
+        
+        $users_query = apply_filters('rcl_users_query',$this);
 
         $query_string = "SELECT "
-            . implode(", ",$query['select'])." "
+            . implode(", ",$users_query->query['select'])." "
             . "FROM $wpdb->users AS users "
-            . implode(" ",$query['join'])." ";
+            . implode(" ",$users_query->query['join'])." ";
 
-        if($query['where']) $query_string .= "WHERE ".implode(' '.$query['relation'].' ',$query['where'])." ";
-        if($query['group']) $query_string .= "GROUP BY ".$query['group']." ";
+        if($users_query->query['where']) $query_string .= "WHERE ".implode(' '.$users_query->query['relation'].' ',$users_query->query['where'])." ";
+        if($users_query->query['group']) $query_string .= "GROUP BY ".$users_query->query['group']." ";
 
-        if(!$this->query_count){
-            if(!$query['orderby']) $query['orderby'] = "users.".$this->orderby;
-            $query_string .= "ORDER BY ".$query['orderby']." $this->order ";
-            $query_string .= "LIMIT $this->offset,$this->number";
+        if(!$users_query->is_count){
+            if(!$users_query->query['orderby']) $users_query->query['orderby'] = "users.".$users_query->orderby;
+            $query_string .= "ORDER BY ".$users_query->query['orderby']." $users_query->order ";
+            $query_string .= "LIMIT $users_query->offset,$this->number";
         }
-        //if(!$count) echo $query_string;
+        //if($count) echo $query_string;
 
-        if($this->query_count)
-            $this->query_count = false;
+        if($this->is_count)
+            $this->is_count = false;
 
         return $query_string;
 
@@ -227,8 +238,8 @@ class Rcl_Users{
         foreach($usergroup as $k=>$filt){
             $f = explode(':',$filt);
             $n = 'metas_'.++$a;
-            $query['join'][] = "INNER JOIN $wpdb->usermeta AS $n ON users.ID=$n.user_id";
-            $query['where'][] = "($n.meta_key='$f[0]' AND $n.meta_value LIKE '%$f[1]%')";
+            $query->query['join'][] = "INNER JOIN $wpdb->usermeta AS $n ON users.ID=$n.user_id";
+            $query->query['where'][] = "($n.meta_key='$f[0]' AND $n.meta_value LIKE '%$f[1]%')";
         }
         return $query;
     }
@@ -236,8 +247,6 @@ class Rcl_Users{
     function add_profile_fields($users){
         global $wpdb;
 
-        $ids = $this->get_users_ids($users);
-        
         $profile_fields = get_option( 'rcl_profile_fields' );
 
         if(!$profile_fields) return $users;
@@ -259,6 +268,8 @@ class Rcl_Users{
         }
         
         if(!$fields) return $users;
+        
+        $ids = $this->get_users_ids($users);
         
         $fielddata = array();
         foreach($fields as $k=>$field){
@@ -292,12 +303,12 @@ class Rcl_Users{
     function add_query_time_action($query){
         global $wpdb;
 
-        if(!$this->query_count){
-            $query['select'][] = "actions.time_action";
-            $query['orderby'] = "(CASE WHEN actions.$this->orderby IS NULL then users.user_registered ELSE actions.$this->orderby END)";
+        if(!$this->is_count){
+            $query->query['select'][] = "actions.time_action";
+            $query->query['orderby'] = "(CASE WHEN actions.$this->orderby IS NULL then users.user_registered ELSE actions.$this->orderby END)";
         }
 
-        $query['join'][] = "RIGHT JOIN ".RCL_PREF."user_action AS actions ON users.ID=actions.user";
+        $query->query['join'][] = "RIGHT JOIN ".RCL_PREF."user_action AS actions ON users.ID=actions.user";
         return $query;
     }
 
@@ -323,12 +334,12 @@ class Rcl_Users{
     function add_query_posts_count($query){
         global $wpdb;
 
-        if(!$this->query_count){
-            $query['select'][] = "posts.posts_count";
-            $query['orderby'] = "posts.posts_count";
+        if(!$this->is_count){
+            $query->query['select'][] = "posts.posts_count";
+            $query->query['orderby'] = "posts.posts_count";
         }
 
-        $query['join'][] = "INNER JOIN (SELECT COUNT(post_author) AS posts_count, post_author "
+        $query->query['join'][] = "INNER JOIN (SELECT COUNT(post_author) AS posts_count, post_author "
                 . "FROM $wpdb->posts "
                 . "WHERE post_status='publish' "
                 . "GROUP BY post_author) posts "
@@ -362,12 +373,12 @@ class Rcl_Users{
     function add_query_comments_count($query){
         global $wpdb;
 
-        if(!$this->query_count){
-            $query['select'][] = "comments.comments_count";
-            $query['orderby'] = "comments.comments_count";
+        if(!$this->is_count){
+            $query->query['select'][] = "comments.comments_count";
+            $query->query['orderby'] = "comments.comments_count";
         }
 
-        $query['join'][] = "INNER JOIN (SELECT COUNT(user_id) AS comments_count, user_id "
+        $query->query['join'][] = "INNER JOIN (SELECT COUNT(user_id) AS comments_count, user_id "
                 . "FROM $wpdb->comments "
                 . "GROUP BY user_id) comments "
                 . "ON users.ID=comments.user_id";
@@ -419,13 +430,13 @@ class Rcl_Users{
     //добавляем выборку данных рейтинга в основной запрос
     function add_query_rating_total($query){
 
-        if(!$this->query_count){
-            $query['select'][] = "ratings.rating_total";
-            $query['group'] = "ratings.user_id";
-            $query['orderby'] = "(CASE WHEN CAST(ratings.$this->orderby AS DECIMAL) IS NULL then 0 ELSE CAST(ratings.$this->orderby AS DECIMAL) END)";
+        if(!$this->is_count){
+            $query->query['select'][] = "ratings.rating_total";
+            $query->query['group'] = "ratings.user_id";
+            $query->query['orderby'] = "(CASE WHEN CAST(ratings.$this->orderby AS DECIMAL) IS NULL then 0 ELSE CAST(ratings.$this->orderby AS DECIMAL) END)";
         }
 
-        $query['join'][] = "LEFT JOIN ".RCL_PREF."rating_users AS ratings ON users.ID=ratings.user_id";
+        $query->query['join'][] = "LEFT JOIN ".RCL_PREF."rating_users AS ratings ON users.ID=ratings.user_id";
 
         return $query;
     }
@@ -533,7 +544,7 @@ class Rcl_Users{
             $search_text = (isset($_GET['search_text']))? sanitize_user($_GET['search_text']): '';
             $search_field = (isset($_GET['search_field']))? $_GET['search_field']: '';
             if(!$search_text||!$search_field) return $query;
-            $query['where'][] = "users.$search_field LIKE '%$search_text%'";
+            $query->query['where'][] = "users.$search_field LIKE '%$search_text%'";
             return $query;
     }
 }

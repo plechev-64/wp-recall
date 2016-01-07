@@ -1,7 +1,10 @@
 <?php
+include_once 'orders-history.php';
+
 function wpmagazin_options_panel(){
-  add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', 'manage-rmag', 'rmag_manage_orders');
-	add_submenu_page( 'manage-rmag', 'Заказы', 'Заказы', 'manage_options', 'manage-rmag', 'rmag_manage_orders');
+    $hook = add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', 'manage-rmag', 'rmag_manage_orders');
+	$hook = add_submenu_page( 'manage-rmag', 'Заказы', 'Заказы', 'manage_options', 'manage-rmag', 'rmag_manage_orders');
+        add_action( "load-$hook", 'rcl_orders_page_options' );
 	add_submenu_page( 'manage-rmag', 'Экспорт/импорт', 'Экспорт/импорт', 'manage_options', 'manage-wpm-price', 'rmag_export');
 	add_submenu_page( 'manage-rmag', 'Форма заказа', 'Форма заказа', 'manage_options', 'manage-custom-fields', 'rmag_custom_fields');
 	add_submenu_page( 'manage-rmag', 'Настройки магазина', 'Настройки магазина', 'manage_options', 'manage-wpm-options', 'rmag_global_options');
@@ -161,18 +164,20 @@ function rmag_manage_orders(){
 
 	global $wpdb;
 
-	echo '<h2>Управление заказами</h2>
-			<div style="width:1050px">';//начало блока настроек профиля
+	
 	$n=0;
 	$s=0;
 	if($_GET['remove-trash']==101&&wp_verify_nonce( $_GET['_wpnonce'], 'delete-trash-rmag'))
                 $wpdb->query($wpdb->prepare("DELETE FROM ".RMAG_PREF ."orders_history WHERE order_status = '%d'",6));
 
-if($_GET['order-id']){
+    if(isset($_GET['action'])&&$_GET['action']=='order-details'){
+    
+        echo '<h2>Управление заказами</h2>
+			<div style="width:1050px">';
 
 	global $order,$product;
 
-	$order = rcl_get_order($_GET['order-id']);
+	$order = rcl_get_order($_GET['order']);
 
 	if($_POST['submit_message']){
 		if($_POST['email_author']) $email_author = sanitize_email($_POST['email_author']);
@@ -190,7 +195,7 @@ if($_GET['order-id']){
 		'Статус',
 	);
 
-	echo '<h3>ID заказа: '.$_GET['order_id'].'</h3>'
+	echo '<h3>ID заказа: '.$_GET['order'].'</h3>'
                 . '<table class="widefat">'
                 . '<tr>';
 
@@ -274,153 +279,15 @@ if($_GET['order-id']){
 	</form>';
 
 	echo $table;
+        
+        echo '</div>';//конец блока заказов
 
-}else{
+    }else{
 
-	global $order,$product;
-	$all_pr =0;
-
-	list( $year, $month, $day, $hour, $minute, $second ) = preg_split( '([^0-9])', current_time('mysql') );
-
-	$args = array();
-
-	if($_POST['filter-date']){
-
-		if($_POST['year']){
-			$args['year'] = $_POST['year'];
-			if($_POST['month']) $args['month'] = sanitize_text_field($_POST['month']);
-		}
-
-		if($_POST['status']) $args['order_status'] = intval($_POST['status']);
-
-		$orders = rcl_get_orders($args);
-
-	}else{
-		if($_GET['status']){
-			$args['order_status'] = intval($_GET['status']);
-		}elseif($_GET['user']){
-			$args['user_id'] = intval($_GET['user']);
-                }elseif($_GET['search_order']){
-                    $args['order_id'] = intval($_GET['search_order']);
-                    $args['user_id'] = intval($_GET['search_order']);
-                    $args['search'] = true;
-                }else{
-			$args['status_not_in'] = 6;
-			$args['year'] = $year;
-			$args['month'] = $month;
-			$_POST['year'] = $year;
-			$_POST['month'] = $month;
-		}
-        //$where = apply_filters('string_where_get_orders',$where);
-	}
-
-	$orders = rcl_get_orders($args);
-
-        if($orders){
-            foreach($orders as $rdr){
-                $n++;
-                foreach($rdr as $prods){
-                    $all_pr += $prods->product_price*$prods->numberproduct;
-                }
-            }
-        }
-
-        //if(!isset($_GET['status'])||$_GET['status']!=6)
-            $table .= rcl_get_chart_orders($orders);
-
-	$table .= '<h3>Всего заказов: '.$n.' на '.$all_pr.' рублей</h3>';
-
-        $table .= '<form method="get" action="'.admin_url('admin.php?page=manage-rmag').'"><p class="search-box">
-	<label class="screen-reader-text" for="order-search-input">Поиск заказов:</label>
-	<input type="search" id="order-search-input" name="search_order" placeholder="ID заказа или покупателя" value="">
-	<input type="submit" id="search-submit" class="button" value="Поиск заказов">
-        <input type="hidden" name="page" value="manage-rmag">
-        </p></form>';
-
-	$table .= '<form action="" method="post">';
-
-	$table .= '<select name="status">';
-	$table .= '<option value="">Все заказы</option>';
-	for($a=1;$a<=6;$a++){
-		$table .= '<option value="'.$a.'" '.selected($a,$_POST['status'],false).'>'.rcl_get_status_name_order($a).'</option>';
-	}
-	$table .= '</select>';
-
-	$table .= '<select name="month">';
-	$months = array('За все месяцы','январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь');
-	foreach($months as $k=>$month){
-		if($k) $k = zeroise($k, 2);
-		$table .= '<option value="'.$k.'" '.selected($k,$_POST['month'],false).'>'.$month.'</option>';
-	}
-	$table .= '</select>';
-
-	$table .= '<select name="year">';
-	for($a=2013;$a<=$year+1;$a++){
-	$table .= '<option value="'.$a.'" '.selected($a,$_POST['year'],false).'>'.$a.'</option>';
-	}
-	$table .= '</select>';
-	$table .= '<input type="submit" value="Фильтровать" name="filter-date" class="button-secondary">';
-	if($_GET['status']==6) $table .= '<a href="'.wp_nonce_url(admin_url('admin.php?page=manage-rmag&remove-trash=101'),'delete-trash-rmag').'">Очистить корзину</a>';
-	$table .= '</form>';
-
-        if(!$orders){ echo $table; exit;}
-
-        $cols = array('Заказ ID','Пользователь','Сумма заказа','Дата и время','Статус','Смена статуса','Действие');
-	$cols = apply_filters('header_table_orders_rcl',$cols);
-
-	$table .= '<table class="widefat"><tr>';
-	foreach($cols as $col){
-            $table .= '<th>'.$col.'</th>';
-	}
-	$table .= '</tr>';
-
-    foreach($orders as $order_id=>$order){ rcl_setup_orderdata($order);
-        $radioform .= '<select id="status-'.$order_id.'" name="status-'.$order_id.'">';
-        for($a=1;$a<7;$a++){
-            $radioform .= '<option '.selected($a,$order->order_status,false).' value="'.$a.'">'.rcl_get_status_name_order($a).'</option>';
-        }
-        $radioform .= '</select>';
-
-        if($order->order_status==6) $delete = '<input type="button" class="button-primary delete-order" id="'.$order_id.'" value="Удалить">';
-        $button = '<input type="button" class="button-secondary select_status" id="'.$order_id.'" value="Изменить статус"> '.$delete;
-        $user_id = $order->order_author;
-
-        $pagelink = admin_url('admin.php?page=manage-rmag');
-
-        $cols_content = array(
-                '<a href="'.$pagelink.'&order-id='.$order_id.'">Заказ '.$order_id.'</a>',
-                '<a href="'.$pagelink.'&user='.$user_id.'">'.get_the_author_meta('user_login',$user_id).'</a>',
-                $order->order_price,
-                $order->order_date,
-                '<a href="'.$pagelink.'&status='.$order->order_status.'"><span class="change-'.$order_id.'">'.rcl_get_status_name_order($order->order_status).'</span></a>',
-                $radioform,
-                $button
-        );
-
-        $cols_content = apply_filters('content_table_orders_rcl',$cols_content,$user_id);
-
-        $table .= '<tr id="row-'.$order_id.'">';
-
-        foreach($cols_content as $content){
-                $table .= '<td>'.$content.'</td>';
-        }
-
-        $table .= '</tr>';
-        $radioform = '';
-        $delete = '';
+        rcl_admin_orders_page();
 
     }
 
-    $cnt_cols = count($cols);
-    if($_GET['status']!=6) $table .= '<tr><td align="right" colspan="'.$cnt_cols.'"><a href="'.admin_url('admin.php?page=manage-rmag&status=6').'">Перейти в корзину</a></td></tr>';
-    $table .= '</table>';
-
-    echo $table;
-
-if($_GET['user']||$_GET['status']||$_GET['date'])echo '<form><input type="button" value="Назад" onClick="history.back()"></form><div style="text-align:right;"><a href="'.admin_url('admin.php?page=manage-rmag').'">Показать текущие заказы</a></div>';
-}
-
-echo '</div>';//конец блока заказов
 }
 
 add_action('admin_init','rcl_read_exportfile');

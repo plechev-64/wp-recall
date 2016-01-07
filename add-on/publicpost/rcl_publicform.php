@@ -343,7 +343,7 @@ function rcl_publication_termlist($tax=false){
     if($formData->post_type=='post'){
         $cf = rcl_get_custom_fields($formData->post_id,$formData->post_type,$formData->form_id);
         if(!$ctg) $ctg = (isset($cf['options']['terms'])&&$cf['options']['terms'])? $cf['options']['terms']: $rcl_options['id_parent_category'];
-        $cnt = (isset($rcl_options['count_category_post']))? $rcl_options['count_category_post']:0;
+        $cnt = (isset($rcl_options['count_category_post'])&&$rcl_options['output_category_list']=='select')? $rcl_options['count_category_post']:0;
     }
 
     if($formData->post_type=='post-group'){
@@ -357,6 +357,7 @@ function rcl_publication_termlist($tax=false){
         $catlist = $sel->get_select_list(get_public_allterms(),$cat_list,$cnt,$ctg);
 
     }
+
     if(!$catlist) return false;
 
     echo '<label>'.__('Category','wp-recall').':</label>'.$catlist;
@@ -369,17 +370,25 @@ function get_public_catlist(){
 
     if($formData->post_type=='post'){
         
-        $cat_list = get_the_category($formData->post_id);
+        $post_cat = get_the_category($formData->post_id);
         
     }else{
         
         $post_cat = get_the_terms( $formData->post_id, $formData->taxonomy[$formData->post_type] );
-        $Child_Terms = new Rcl_Child_Terms();
-        $cat_list = $Child_Terms->get_terms_post($post_cat);
+        
+        foreach( $post_cat as $key => $p_cat ){
+            foreach($post_cat as $pc){
+                if($pc->parent==$p_cat->term_id){
+                    unset($post_cat[$key]);
+                    break;
+                }
+
+            }
+        }
         
     }
 
-    return $cat_list;
+    return $post_cat;
 }
 
 function get_public_allterms(){

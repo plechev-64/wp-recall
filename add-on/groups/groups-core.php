@@ -309,15 +309,15 @@ function rcl_group_add_users_query($query){
     $role_query = ($role&&$role!='all')? "='".$role."'": "NOT IN ('admin','moderator')";
 
 
-    $query['select'][] = "groups_users.user_role";
+    $query->query['select'][] = "groups_users.user_role";
 
     if($role=='admin'){
-        $query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
-        $query['where'][] = "(groups_users.user_role = 'admin' AND groups_users.group_id='$rcl_group->term_id') OR (users.ID='$rcl_group->admin_id')";
-        $query['group'] = "users.ID";
+        $query->query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
+        $query->query['where'][] = "(groups_users.user_role = 'admin' AND groups_users.group_id='$rcl_group->term_id') OR (users.ID='$rcl_group->admin_id')";
+        $query->query['group'] = "users.ID";
     }else{
-        $query['join'][] = "INNER JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
-        $query['where'][] = "groups_users.group_id = '$rcl_group->term_id' AND groups_users.user_role $role_query";
+        $query->query['join'][] = "INNER JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
+        $query->query['where'][] = "groups_users.group_id = '$rcl_group->term_id' AND groups_users.user_role $role_query";
     }
 
     return $query;

@@ -27,7 +27,7 @@ class Widget_new_author extends WP_Widget {
 
 		if ( $title ) echo $before_title . $title . $after_title;
 
-                echo rcl_get_userlist(array('template' => 'mini', 'number'=>$count_user, 'filter'=>false));
+                echo rcl_get_userlist(array('template' => 'mini', 'number'=>$count_user, 'filter'=>false, 'id'=>'rcl-new-users'));
 
 		if($all) echo '<p class="clear alignright"><a href="'.get_permalink($all).'">'.__('All users','wp-recall').'</a></p>';
 		echo $after_widget;
@@ -91,7 +91,7 @@ class Widget_online_users extends WP_Widget {
 
 		if ( $title ) echo $before_title . $title . $after_title;
 
-                echo rcl_get_userlist(array('template' => 'mini', 'number'=>10, 'orderby'=>'time_action', 'only'=>'action', 'filter'=>false ));
+                echo rcl_get_userlist(array('template' => 'mini', 'number'=>10, 'orderby'=>'time_action', 'only'=>'action', 'filter'=>false, 'id'=>'rcl-online-users' ));
 
 		if($all) echo '<p class="clear alignright"><a href="'.get_permalink($all).'">'.__('All users','wp-recall').'</a></p>';
 		echo $after_widget;

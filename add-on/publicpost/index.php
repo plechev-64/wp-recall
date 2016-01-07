@@ -1103,21 +1103,30 @@ function rcl_footer_publics_scripts($script){
 		singleFileUploads:false,
 		autoUpload:true,
 		progressall: function (e, data) {
-			/*var progress = parseInt(data.loaded / data.total * 100, 10);
-			$('#upload-box-message .progress-bar').show().css('width',progress+'px');*/
+                    /*var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#upload-box-message .progress-bar').show().css('width',progress+'px');*/
 		},
 		change:function (e, data) {
-			var error = 0;
-                        /*rcl_preloader_show('#tab-postform');*/
-                        rcl_preloader_show('.public_block form');
-			$.each(data.files, function (index, file) {
-				if(file['size']>".$maxsize."){
-					rcl_notice('Превышен максимальный размер для файла '+file['name']+'! Макс. ".$maxsize_mb."MB','error');
-                                        rcl_preloader_hide();
-					error = 1;
-				}
-			});
-			if(error) return false;
+                    var error = 0;
+                    /*rcl_preloader_show('#tab-postform');*/
+                    rcl_preloader_show('.public_block form');
+                    
+                    var cnt_now = $('#temp-files li').length;
+                    
+                    $.each(data.files, function (index, file) {
+                        cnt_now++;
+                        if(cnt_now>".$cnt."){
+                            rcl_notice('Превышено разрешенное кол-во загружаемых файлов! Макс. ".$cnt."','error');
+                            rcl_preloader_hide();
+                            error = 1;
+                        }                       
+                        if(file['size']>".$maxsize."){
+                            rcl_notice('Превышен максимальный размер для файла '+file['name']+'! Макс. ".$maxsize_mb."MB','error');
+                            rcl_preloader_hide();
+                            error = 1;
+                        }                       
+                    });
+                    if(error) return false;
 		},
 		done: function (e, data) {
                     $.each(data.result, function (index, file) {

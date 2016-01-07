@@ -1,32 +1,4 @@
 <?php
-class Rcl_Child_Terms{
-
-    function get_terms_post( $post_cat = array() ){
-        
-        $cat_list = array();
-        foreach( $post_cat as $key => $p_cat ){
-            foreach($post_cat as $pc){
-                if($pc->parent==$p_cat->term_id){
-                    unset($post_cat[$key]);
-                    break;
-                }
-
-            }
-        }
-        
-        return $post_cat;
-        
-        $cnt = count($post_cat);
-        foreach($post_cat as $data){
-            if($cnt>1){
-                if($data->parent==0) continue;
-            }
-            $cat_list[] = $data;
-        }
-        print_r($cat_list);
-        return $cat_list;
-    }
-}
 
 class Rcl_List_Terms{
 
@@ -253,8 +225,7 @@ class Rcl_Thumb_Form{
 		global $rcl_options;
 
 		if($this->post_id) $this->thumb = get_post_meta($this->post_id, '_thumbnail_id',1);
-		if(!$rcl_options['media_downloader_recall']) $this->gallery_rcl();
-		else $this->thumbnail_post();
+		$this->gallery_rcl();		
 	}
 
 	function gallery_rcl(){
@@ -318,16 +289,4 @@ class Rcl_Thumb_Form{
 		return $attachlist;
 	}
 
-	function thumbnail_post(){
-		echo '<div id="thumbblock-post">
-			<div id="thumbnail_rcl" class="alignleft">';
-			if($this->thumb){
-				$thumb_url = wp_get_attachment_image_src( $this->thumb, 'thumbnail' );
-				echo '<span class="delete"></span><img width="100" height="100" src="'.$thumb_url[0].'"><input type="hidden" name="thumb" value="'.$this->thumb.'">';
-			}
-			echo '</div>
-			<h3>'.__('Thumbnail','wp-recall').'</h3>
-			<div>'.rcl_get_button(__('To assign a thumbnail','wp-recall'),'#',array('id'=>'add_thumbnail_rcl')).'</div>
-		</div>';
-	}
 }

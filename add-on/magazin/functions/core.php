@@ -1,8 +1,19 @@
 <?php
+function rcl_order_statuses(){
+    $sts = array(
+          1    => __( 'Paid', 'wp-recall' ),
+          2    => __( 'Not paid', 'wp-recall' ),
+          3   => __( 'Sent', 'wp-recall' ),
+          4    => __( 'Received', 'wp-recall' ),
+          5    => __( 'Closed', 'wp-recall' ),
+          6    => __( 'Trash', 'wp-recall' )
+      );
+    return apply_filters('order_statuses',$sts);
+}
+
 //Устанавливаем перечень статусов
-function rcl_get_status_name_order($status_id){
-    $sts = array('','Не оплачен','Оплачен','Отправлен','Получен','Закрыт','Корзина');
-	$sts = apply_filters('order_statuses',$sts);
+function rcl_get_status_name_order($status_id){   
+    $sts = rcl_order_statuses();
     return $sts[$status_id];
 }
 
@@ -82,43 +93,64 @@ function rcl_get_order_details($order_id){
 }
 //Получаем все заказы по указанным параметрам
 function rcl_get_orders($args){
-	global $wpdb;
-	$date = array();
+    global $wpdb;
+    $date = array();
+    
+    if(isset($args['count'])) $sql = "SELECT COUNT(DISTINCT order_id) FROM ".RMAG_PREF ."orders_history";
+    else $sql = "SELECT DISTINCT(order_id) FROM ".RMAG_PREF ."orders_history";
 
-	$sql = "SELECT * FROM ".RMAG_PREF ."orders_history";
+    if(isset($args['order_id'])) $wheres[] = "order_id IN ('".$args['order_id']."')";
+    if(isset($args['user_id'])) $wheres[] = "user_id='".$args['user_id']."'";
+    if(isset($args['order_status'])) $wheres[] = "order_status='".$args['order_status']."'";
+    if(isset($args['status_not_in'])) $wheres[] = "order_status NOT IN ('".$args['status_not_in']."')";
+    if(isset($args['product_id'])) $wheres[] = "product_id IN ('".$args['product_id']."')";
+    if(isset($args['year'])) $date[] = $args['year'];
+    if(isset($args['month'])) $date[] = $args['month'];
 
-	$orderby = (isset($args['orderby']))? "ORDER BY ".$args['orderby']:"ORDER BY ID";
-	$order = (isset($args['order']))? $args['order']:"DESC";
+    if($date){
+        $date = implode('-',$date);
+        $wheres[] = "order_date LIKE '%$date%'";
+    }
 
-	if(isset($args['order_id'])) $wheres[] = "order_id IN ('".$args['order_id']."')";
-	if(isset($args['user_id'])) $wheres[] = "user_id='".$args['user_id']."'";
-	if(isset($args['order_status'])) $wheres[] = "order_status='".$args['order_status']."'";
-	if(isset($args['status_not_in'])) $wheres[] = "order_status NOT IN ('".$args['status_not_in']."')";
-	if(isset($args['product_id'])) $wheres[] = "product_id IN ('".$args['product_id']."')";
-	if(isset($args['year'])) $date[] = $args['year'];
-	if(isset($args['month'])) $date[] = $args['month'];
+    if($wheres){
+        /*if(isset($args['search'])&&$args['search']) $where = implode(' OR ',$wheres);
+        else */
+            $where = implode(' AND ',$wheres);
+    }
 
-	if($date){
-		$date = implode('-',$date);
-		$wheres[] = "order_date  LIKE '%$date%'";
-	}
+    if($where) $sql .= " WHERE ".$where;
+    
+    if(!isset($args['count'])){
+        $orderby = (isset($args['orderby']))? "ORDER BY ".$args['orderby']:"ORDER BY ID";
+        $order = (isset($args['order']))? $args['order']:"DESC";
 
-        if($wheres){
-            if(isset($args['search'])&&$args['search']) $where = implode(' OR ',$wheres);
-            else $where = implode(' AND ',$wheres);
+        $sql .= " $orderby $order";
+
+        if(isset($args['per_page'])){
+
+            $per_page = (isset($args['per_page']))? $args['per_page']: 30;
+            $offset = (isset($args['offset']))? $args['offset']: 0;
+            $sql .= " LIMIT $offset,$per_page";
+
         }
-	if($where) $sql .= " WHERE ".$where;
-	$sql .= " $orderby $order";
+    }else{
+        //если считаем
+        return $wpdb->get_var($sql);
+    }
 
-	$rdrs = $wpdb->get_results($sql);
+    $ids = $wpdb->get_col($sql);
+    
+    if(!$ids) return false;
+    
+    $rdrs = $wpdb->get_results("SELECT * FROM ".RMAG_PREF ."orders_history WHERE order_id IN (".implode(',',$ids).") $orderby $order");
 
-	if(!$rdrs) return false;
+    if(!$rdrs) return false;
 
-	foreach($rdrs as $rd){
-		$orders[$rd->order_id][] = $rd;
-	}
+    foreach($rdrs as $rd){
+        $orders[$rd->order_id][] = $rd;
+    }
 
-	return $orders;
+    return $orders;
 }
 
 //Удаляем заказ
@@ -245,7 +277,7 @@ function rcl_get_chart_orders($orders){
     );
 
     foreach($orders as $order){
-        rcl_setup_orderdata($order);
+        //rcl_setup_orderdata($order);
         rcl_setup_chartdata($order->order_date,$order->order_price);
     }
 

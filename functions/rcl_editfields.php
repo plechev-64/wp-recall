@@ -125,7 +125,6 @@ class Rcl_EditFields {
                         <p class="place-sel link-to-original">
                         '.$textarea_select.'
                         '.$this->get_options().'</p>
-                        <p align="right"><a id="'.$this->vals['slug'].'" class="item-delete field-delete deletion" href="#">'.__('Delete','wp-recall').'</a></p>
                 </div>
         </li>';
 
@@ -170,12 +169,13 @@ class Rcl_EditFields {
 
     function header_field(){
         return '<dl class="menu-item-bar">
-                    <dt class="menu-item-handle">
-                        <span class="item-title">'.$this->vals['title'].'</span>
+                    <dt class="menu-item-handle">        
+                        <span class="item-title">'.$this->vals['title'].'</span>                           
                         <span class="item-controls">
-                        <span class="item-type">'.$this->vals['type'].'</span>
-                        <a id="edit-'.$this->vals['slug'].'" class="profilefield-item-edit item-edit" href="#" title="'.__('Change','wp-recall').'">'.__('Change','wp-recall').'</a>
-                        </span>
+                            <span class="item-type">'.$this->vals['type'].'</span>   
+                            <a id="'.$this->vals['slug'].'" class="item-delete field-delete deletion" href="#">'.__('Delete','wp-recall').'</a>
+                            <a id="edit-'.$this->vals['slug'].'" class="profilefield-item-edit" href="#" title="'.__('Edit','wp-recall').'">'.__('Edit','wp-recall').'</a>
+                        </span>           
                     </dt>
                 </dl>';
     }
