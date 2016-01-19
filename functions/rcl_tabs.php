@@ -64,7 +64,7 @@ class Rcl_Tabs{
             
             $file = $rcl_cache->get_file($string);
 
-            if(!$file||$file->is_old){
+            if($file->need_update){
 
                 $cl_content = rcl_callback_tab_func($this->callback,$author_lk);
                 $rcl_cache->update_cache($cl_content);

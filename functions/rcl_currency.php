@@ -2,8 +2,11 @@
 
 //Перечень действующих валют
 function rcl_get_currency_list(){
+    
+    $rub = (is_admin())? 'p': '<i class="fa fa-rub"></i>';
+    
     return array(
-        'RUB' => array('руб','<i class="fa fa-rub"></i>','<span class="ruble-symbol">P<span>–</span></span>'),
+        'RUB' => array('руб',$rub,'<span class="ruble-symbol">P<span>–</span></span>'),
         'UAH' => array('гривен','грн','грн'),
         'KZT' => array('тенге','тнг','тнг'),
         'USD' => array('dollars','<i class="fa fa-usd"></i>','$'),
@@ -20,6 +23,7 @@ function rcl_get_currency($cur=false,$type=0){
 		}
 		return $crs;
 	}
+        
 	if(!isset($curs[$cur][$type])) return false;
 	return $curs[$cur][$type];
 }

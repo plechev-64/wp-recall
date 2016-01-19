@@ -6,17 +6,17 @@ class Rcl_PublicForm {
     public $post_type; //тип записи
     public $terms; //список категорий доступных для выбора
     public $form_id; //идентификатор формы
-	public $id_upload;
-	public $accept;
-	public $type_editor;
-	public $wp_editor;
-	public $can_edit;
+    public $id_upload;
+    public $accept;
+    public $type_editor;
+    public $wp_editor;
+    public $can_edit;
 
     function __construct($atts){
         global $editpost,$group_id,$rcl_options,$user_ID,$formData;
 
-		$editpost = false;
-		$this->can_edit = true;
+        $editpost = false;
+        $this->can_edit = true;
 
         extract(shortcode_atts(array(
             'cats' => false,
@@ -27,14 +27,14 @@ class Rcl_PublicForm {
             'type_editor'=> null,
             'wp_editor'=> null,
             'group_id'=>$group_id
-            ),
+        ),
         $atts));
 
         $this->post_type = $post_type;
         $this->id_upload = $id_upload;
         $this->terms = $cats;
         $this->form_id = $id;
-		$this->accept = $accept;
+        $this->accept = $accept;
 
         if(!isset($wp_editor)){
             if(isset($rcl_options['wp_editor'])){
@@ -60,8 +60,6 @@ class Rcl_PublicForm {
             $this->post_id = $_GET['rcl-post-edit'];
             $editpost = get_post($this->post_id);
             $this->post_type = $editpost->post_type;
-
-
 
             if($this->post_type=='post-group'){
 
@@ -110,16 +108,22 @@ class Rcl_PublicForm {
         global $rcl_options,$user_ID;
 
         $user_can = $rcl_options['user_public_access_recall'];
+		
+        if($user_can){
 
-        if(!$user_can) return true;
+            if($user_ID){
+                $userinfo = get_userdata( $user_ID );
 
-		if(!$user_ID) return false;
+                if($userinfo->user_level>=$user_can) $can = true;
+                else $can = false;
+            }else{
+                $can = false;
+            }
 
-        $userinfo = get_userdata( $user_ID );
-
-        if($userinfo->user_level>=$user_can) $can = true;
-        else $can = false;
-
+        }else{
+            $can = true;
+        }
+        
         $can = apply_filters('rcl_user_can_public',$can,$this);
 
         return $can;
@@ -449,64 +453,6 @@ function rcl_publication_custom_fields(){
     echo rcl_get_list_custom_fields($formData->post_id,$formData->post_type,$formData->form_id);
 }
 
-function rcl_get_tags($post_id){
-	$posttags = get_the_tags($post_id);
-	$tags = array();
-	if ($posttags) {
-		foreach($posttags as $tag){ $tags[$tag->slug] = $tag; }
-	}
-	return $tags;
-}
-
-function rcl_get_tags_checklist($post_id=false){
-	global $rcl_options;
-
-	$t_args = array('hide_empty'=>false);
-
-	if($rcl_options['limit_tags']){
-		$include = explode(',',$rcl_options['limit_tags']);
-		$t_args['include'] = array_map('trim', $include);
-	}
-
-	$tags = get_tags($t_args);
-
-	$post_tags = ($post_id)? rcl_get_tags($post_id): array();
-
-	$checks = '<label>'.__('Select a tag from the list','wp-recall').'</label>
-	<div id="rcl-tags-list">';
-	foreach ($tags as $tag){
-		$checked = false;
-		if($tag->name==$post_tags[$tag->slug]->name){
-			$checked = true;
-			unset($post_tags[$tag->slug]);
-		}
-		$args = array(
-			'type' => 'checkbox',
-			'name' => 'tags[]',
-			'checked' => $checked,
-			'label' => $tag->name,
-			'value' => $tag->name
-		);
-		$checks .= rcl_form_field($args);
-	}
-
-	if($post_tags){
-		foreach ($post_tags as $tag){
-			$args = array(
-				'type' => 'checkbox',
-				'name' => 'tags[]',
-				'checked' => true,
-				'label' => $tag->name,
-				'value' => $tag->name
-			);
-			$checks .= rcl_form_field($args);
-		}
-        }
-
-	$checks .= '</div>';
-	return $checks;
-}
-
 function rcl_publication_editor(){
     global $editpost,$rcl_options,$formfields,$formData;
 
@@ -577,58 +523,125 @@ function rcl_publication_editor(){
 
 }
 
-function rcl_get_tags_input($post_id=false){
-	global $rcl_options;
+function rcl_get_tags($post_id,$taxonomy='post_tag'){
+    $posttags = get_the_terms( $post_id, $taxonomy );
 
-	$fields = '';
+    $tags = array();
+    if ($posttags) {
+        foreach($posttags as $tag){ $tags[$tag->slug] = $tag; }
+    }
+    return $tags;
+}
 
-	if(isset($rcl_options['display_tags'])&&$rcl_options['display_tags']==1)
-		$fields .= rcl_get_tags_checklist($post_id);
-        
-        if(isset($rcl_options['field_tags'])&&$rcl_options['field_tags']==1){
-            
-            rcl_autocomplete_scripts();
+function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = array()){
+    global $rcl_options;
 
+    $tags = get_terms($taxonomy,$t_args);
+
+    $post_tags = ($post_id)? rcl_get_tags($post_id,$taxonomy): array();
+
+    $checks = '<label>'.__('Select a tag from the list','wp-recall').'</label>
+    <div id="rcl-tags-list">';
+    
+    if($tags){
+        foreach ($tags as $tag){
+            $checked = false;
+            if($tag->name==$post_tags[$tag->slug]->name){
+                $checked = true;
+                unset($post_tags[$tag->slug]);
+            }
             $args = array(
-                    'type' => 'text',
-                    'id' => 'rcl_post_tags',
-                    'name' => 'tags',
-                    'placeholder' => __('Enter your tags','wp-recall'),
-                    'label' => __('Add your tags','wp-recall').'<br><small>'.__('Each tag is separated with Enter','wp-recall').'</small>'
+                'type' => 'checkbox',
+                'name' => 'tags[]',
+                'checked' => $checked,
+                'label' => $tag->name,
+                'value' => $tag->name
             );
-
-            $fields .= rcl_form_field($args);
-
-            $fields .= "<script>
-            jQuery(function($){
-                    $('#rcl_post_tags').magicSuggest({
-                      data: Rcl.ajaxurl,
-                      dataUrlParams: { action: 'rcl_get_like_tags',ajax_nonce:Rcl.nonce },
-                      noSuggestionText: '".__("Not found","wp-recall")."',
-                      ajaxConfig: {
-                            xhrFields: {
-                              withCredentials: true,
-                            }
-                      }
-                    });
-            });
-            </script>";
-        
+            $checks .= rcl_form_field($args);
         }
+    }
 
-	return $fields;
+    if($post_tags){
+        foreach ($post_tags as $tag){
+            $args = array(
+                'type' => 'checkbox',
+                'name' => 'tags[]',
+                'checked' => true,
+                'label' => $tag->name,
+                'value' => $tag->name
+            );
+            $checks .= rcl_form_field($args);
+        }
+    }
+
+    $checks .= '</div>';
+    return $checks;
+}
+
+function rcl_get_tags_input($post_id=false,$taxonomy='post_tag'){
+    global $rcl_options;
+
+    $fields = '';
+
+    rcl_autocomplete_scripts();
+
+    $args = array(
+        'type' => 'text',
+        'id' => 'rcl_post_tags',
+        'name' => 'tags',
+        'placeholder' => __('Enter your tags','wp-recall'),
+        'label' => __('Add your tags','wp-recall').'<br><small>'.__('Each tag is separated with Enter','wp-recall').'</small>'
+    );
+
+    $fields .= rcl_form_field($args);
+
+    $fields .= "<script>
+    jQuery(function($){
+        $('#rcl_post_tags').magicSuggest({
+            data: Rcl.ajaxurl,
+            dataUrlParams: { action: 'rcl_get_like_tags',taxonomy: '".$taxonomy."',ajax_nonce:Rcl.nonce },
+            noSuggestionText: '".__("Not found","wp-recall")."',
+            ajaxConfig: {
+                  xhrFields: {
+                    withCredentials: true,
+                  }
+            }
+        });
+    });
+    </script>";
+
+    return $fields;
 }
 
 add_filter('public_form_rcl','rcl_add_tags_input',10,2);
 function rcl_add_tags_input($fields,$formData){
+    global $rcl_options;
+    
+    if($formData->post_type!='post') return $fields;
+    
+    $fields .= '<div id="tags-list">';
+    
+    if(isset($rcl_options['display_tags'])&&$rcl_options['display_tags']==1){
+        
+        $args = array('hide_empty'=>false);
 
-	if($formData->post_type!='post') return $fields;
+        if($rcl_options['limit_tags']){
+            $include = explode(',',$rcl_options['limit_tags']);
+            $args['include'] = array_map('trim', $include);
+        }
+        
+        $fields .= rcl_get_tags_checklist($post_id,'post_tag',$args);
+    }
+    
+    if(isset($rcl_options['field_tags'])&&$rcl_options['field_tags']==1){
+        $fields .= rcl_get_tags_input($formData->post_id,'post_tag');
+    }
+    
+    $fields .= '</div>';
 
-	$fields .= rcl_get_tags_input($formData->post_id);
-
-	return $fields;
+    return $fields;
 }
 
 function rcl_get_edit_box($type){
-	return rcl_get_include_template('editor-'.$type.'-box.php',__FILE__);
+    return rcl_get_include_template('editor-'.$type.'-box.php',__FILE__);
 }

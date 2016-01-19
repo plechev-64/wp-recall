@@ -2,16 +2,20 @@
 
 class Rcl_Cache{
     
+    public $inc_cache;
+    public $only_guest;
     public $time_cache;
     public $is_cache;
     public $filepath;
     public $last_update;
     public $file_exists;
     
-    function __construct($timecache=0){
-        global $rcl_options;
-
-        $this->is_cache = (isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? $rcl_options['use_cache']: 0;
+    function __construct($timecache=0,$only_guest=false){
+        global $rcl_options,$user_ID;
+        $this->inc_cache = (isset($rcl_options['use_cache']))? $rcl_options['use_cache']: 0;
+        $this->only_guest = $only_guest;
+        if(!$this->only_guest) $this->only_guest = (isset($rcl_options['cache_output']))? $rcl_options['cache_output']: 0;
+        $this->is_cache = ($this->inc_cache&&(!$this->only_guest||$this->only_guest&&!$user_ID))? 1: 0;
         $this->time_cache = (isset($rcl_options['cache_time'])&&$rcl_options['cache_time'])? $rcl_options['cache_time']: 3600;
         if($timecache) $this->time_cache = $timecache;
     }
@@ -28,26 +32,34 @@ class Rcl_Cache{
             chmod($cachepath, 0755);
         }
         
-        if(!file_exists($this->filepath)) return false;
+        $file = array(
+                'filename'=>$filename,
+                'filepath'=>$this->filepath
+            );
+        
+        if(!file_exists($this->filepath)){
+
+            $file['need_update'] = 1;
+            $file['file_exists'] = 0;
+            return (object)$file;
+            
+        }
         
         $this->last_update = filemtime($this->filepath);
         $endcache = $this->last_update+$this->time_cache;
 
         $this->file_exists = 1;
-
-        $file = array(
-            'filename'=>$filename,
-            'filepath'=>$this->filepath,
-            'last_update'=>$this->last_update,
-            'is_old'=> ($endcache<current_time('timestamp',1))? 1: 0,
-        );
+        
+        $file['file_exists'] = 1;
+        $file['last_update'] = $this->last_update;
+        $file['need_update'] = ($endcache<current_time('timestamp',1))? 1: 0;
         
         return (object)$file;
     }
     
     function get_cache(){
         if(!$this->file_exists) return false;
-        return file_get_contents($this->filepath).'<!-- Tab cached:'.date('d.m.Y H:i',$this->last_update).' -->';
+        return file_get_contents($this->filepath).'<!-- Rcl cache:'.date('d.m.Y H:i',$this->last_update).' -->';
     }
 
     function update_cache($content){
@@ -80,5 +92,39 @@ function rcl_delete_file_cache($string){
     $rcl_cache->delete_file();
 }
 
+add_shortcode('rcl-cache','rcl_cache_shortcode');
+function rcl_cache_shortcode($atts,$content = null){
+    global $post;
 
+    extract(shortcode_atts(array(
+	'key' => '',
+        'only_guest' => false,
+        'time' => false
+	),
+    $atts));
+    
+    $key .= '-cache-'.$post->ID;
+    
+    $rcl_cache = new Rcl_Cache($time,$only_guest);
+    
+    if($rcl_cache->is_cache){
 
+        $file = $rcl_cache->get_file($key);
+
+        if(!$file->need_update){
+            return $rcl_cache->get_cache();
+        }
+
+    }
+    
+    $content = do_shortcode( shortcode_unautop( $content ) );
+    if ( '</p>' == substr( $content, 0, 4 )
+    and '<p>' == substr( $content, strlen( $content ) - 3 ) )
+    $content = substr( $content, 4, strlen( $content ) - 7 );
+
+    if($rcl_cache->is_cache){
+        $rcl_cache->update_cache($content);
+    }
+    
+    return $content;
+}

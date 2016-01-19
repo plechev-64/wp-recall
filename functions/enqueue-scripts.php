@@ -1,11 +1,13 @@
 <?php
 
 function rcl_pageform_scripts(){
+    wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js' );
 }
 
 function rcl_floatform_scripts(){
-        wp_enqueue_script( 'rcl-float-form', RCL_URL.'js/float_form.js' );
+    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script( 'rcl-float-form', RCL_URL.'js/float_form.js' );
 }
 
 function rcl_sortable_scripts(){
@@ -19,18 +21,18 @@ function rcl_resizable_scripts(){
 }
 
 function rcl_datepicker_scripts(){
-        wp_enqueue_style( 'datepicker', RCL_URL.'js/datepicker/style.css' );
-        wp_enqueue_script( 'jquery' );
-        wp_enqueue_script('jquery-ui-core');
-        wp_enqueue_script('jquery-ui-datepicker');
-        wp_enqueue_script( 'custom-datepicker', RCL_URL.'js/datepicker/datepicker-init.js', array('jquery-ui-datepicker') );
+    wp_enqueue_style( 'datepicker', RCL_URL.'js/datepicker/style.css' );
+    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script('jquery-ui-core');
+    wp_enqueue_script('jquery-ui-datepicker');
+    wp_enqueue_script( 'custom-datepicker', RCL_URL.'js/datepicker/datepicker-init.js', array('jquery-ui-datepicker') );
 }
 
 function rcl_bxslider_scripts(){
-        wp_enqueue_style( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.css' );
-        wp_enqueue_script( 'jquery' );
-        wp_enqueue_script( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.min.js' );
-        wp_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js', array('bx-slider','rcl-header-scripts'));
+    wp_enqueue_style( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.css' );
+    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.min.js' );
+    wp_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js', array('bx-slider','rcl-header-scripts'));
 }
 
 function rcl_dialog_scripts(){
@@ -40,10 +42,12 @@ function rcl_dialog_scripts(){
 }
 
 function rcl_webcam_scripts(){
+    wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'say-cheese', RCL_URL.'js/say-cheese/say-cheese.js', array(), VER_RCL,true );
 }
 
 function rcl_fileupload_scripts(){
+    wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'jquery-ui-widget', RCL_URL.'js/fileupload/js/vendor/jquery.ui.widget.js', array(), VER_RCL,true );
 
     //перенесено из blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js
@@ -60,6 +64,7 @@ function rcl_fileupload_scripts(){
 }
 
 function rcl_crop_scripts(){
+    wp_enqueue_script( 'jquery' );
     wp_enqueue_style( 'jcrop-master-css', RCL_URL.'js/jcrop.master/css/jquery.Jcrop.min.css' );
     wp_enqueue_script( 'jcrop-master', RCL_URL.'js/jcrop.master/js/jquery.Jcrop.min.js', array(), VER_RCL,true );
 }

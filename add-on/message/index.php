@@ -647,7 +647,7 @@ class Rcl_Messages{
 
                             $privat_block .= '<span user_id="'.$data['contact'].'" class="author-avatar"><a href="'.$redirect_url.'">'.get_avatar($data['contact'], 40).'</a></span><a href="#" class="recall-button ';
 
-                            if($days>0) $privat_block .= 'del_history';
+                            if($days>=0) $privat_block .= 'del_history';
                             else $privat_block .= 'remove_black_list';
 
                             $privat_block .='" data-contact="'.$data['contact'].'"><i class="fa fa-remove"></i></a>

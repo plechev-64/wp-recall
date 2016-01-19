@@ -10,7 +10,7 @@ add_action('rcl_cron_twicedaily','rcl_check_addon_update',10);
 function rcl_check_addon_update(){
     global $active_addons;
     
-    $paths = array(RCL_TAKEPATH.'add-on') ;
+    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on') ;
 
     foreach($paths as $path){
         if(file_exists($path)){
@@ -168,6 +168,8 @@ function rcl_update_addon(){
 
             if(isset($activeaddons[$addon]))
                 rcl_deactivate_addon($addon);
+            
+            rcl_delete_addon($addon);
 
             $rs = $zip->extractTo(RCL_TAKEPATH.'add-on'.'/');
 

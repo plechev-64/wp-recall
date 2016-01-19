@@ -429,3 +429,9 @@ form #rcl-preview{
 .public_block .category-list .child-list-category span{
     padding-left: 5px;
 }
+
+.public_block #tags-list{
+    padding: 15px 10px;
+    background: #FBFBFB;
+    margin: 15px 0;
+}

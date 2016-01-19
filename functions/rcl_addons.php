@@ -1,27 +1,48 @@
 <?php
+
 //активация указанного дополнения
 function rcl_activate_addon($addon){
-    $active_addons = get_site_option('rcl_active_addons');
+    global $active_addons;
+    
+    if(!$active_addons) 
+        $active_addons = get_site_option('rcl_active_addons');
+    
+    if(isset($active_addons[$addon])) return false;
+    
+    register_shutdown_function(function () {
+        $error = error_get_last();
+        if ($error && ($error['type'] == E_ERROR || $error['type'] == E_PARSE || $error['type'] == E_COMPILE_ERROR)) {
+            $text = "Подключение дополнения не удалось. Дополнение вызвало ошибку:<br>Fatal Error: ".$error['message']." in ".str_replace('\\','/',$error['file']).":".$error['line'];
+            echo '<script type="text/javascript">';
+            echo 'window.location.href="'.admin_url('admin.php?page=manage-addon-recall&update-addon=error-activate&error-text='.$text).'";';
+            echo '</script>';
+        }
+    });
+    
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
     foreach($paths as $k=>$path){
         if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
         $index_src = $path.'/'.$addon.'/index.php';
+        
         if(!is_readable($index_src)) continue;
 
-        $active_addons[$addon]['path'] = $path.'/'.$addon;
-        $active_addons[$addon]['priority'] = (!$k)? 1: 0;
-        $install_src = $path.'/'.$addon.'/activate.php';
+        if(file_exists($index_src)){
+            
+            $active_addons[$addon]['path'] = $path.'/'.$addon;
+            $active_addons[$addon]['priority'] = (!$k)? 1: 0;
+            $install_src = $path.'/'.$addon.'/activate.php';
+            
+            if(file_exists($index_src)) include($install_src);
+            include($index_src);
+            update_site_option('rcl_active_addons',$active_addons);
+            do_action('rcl_activate_'.$addon,$active_addons[$addon]);
+            return true;
 
-        if(file_exists($install_src)){
-            include($install_src);
-            break;
         }
     }
 
-    update_site_option('rcl_active_addons',$active_addons);
-
-    do_action('rcl_activate_'.$addon,$active_addons[$addon]);
+    return false;
 }
 //деактивация указанного дополнения
 function rcl_deactivate_addon($addon){
@@ -51,7 +72,8 @@ function rcl_delete_addon($addon){
         rcl_remove_dir($path.'/'.$addon);
     }
 
-    unset($active_addons[$addon]);
+    if(isset($active_addons[$addon])) 
+        unset($active_addons[$addon]);
 
     update_site_option('rcl_active_addons',$active_addons);
 

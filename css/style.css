@@ -38,14 +38,24 @@ img.aligncenter{
 	padding: 40px 0;
 }
 body .rcl_preloader{
-	position: absolute!important;
+    position: absolute!important;
     height: 100%!important;
     width: 100%!important;
-    background: url(img/loader.gif) no-repeat center rgba(255,255,255,0.6)!important;
+    background: rgba(255,255,255,0.6)!important;
     top: 0!important;
     left: 0!important;
     display: block!important;
     z-index: 99;
+    font-size: 80px;
+}
+.rcl_preloader i{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+.rcl_preloader i:before{
+    padding: 0;
+    color: #5597FF;
 }
 label.block-label{
     font-weight:normal;

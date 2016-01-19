@@ -22,7 +22,7 @@ function rmag_primary_options($content){
 
         $args = array(
                 'selected'   => $rcl_options['basket_page_rmag'],
-                'name'       => 'basket_page_rmag',
+                'name'       => 'global[basket_page_rmag]',
                 'show_option_none' => '<span style="color:red">Не выбрано</span>',
                 'echo'       => 0
         );
@@ -315,7 +315,7 @@ function rcl_read_exportfile(){
 	if($posts){
 	$xml .= "<posts>\n";
 		foreach($posts as $post){
-			$trms = array();
+			
 			$xml .= "<post>\n";
 			for($a=0;$a<$cnt;$a++){
 				$xml .= "<".$sql_field[$a].">";
@@ -332,7 +332,8 @@ function rcl_read_exportfile(){
 					}
 				}
 			}
-
+                        
+                        $trms = array();
 			$terms = get_the_terms( $post->ID, 'prodcat' );
 			$xml .= "<prodcat>";
 			if($terms){
@@ -344,6 +345,19 @@ function rcl_read_exportfile(){
 				$xml .= "<![CDATA[0]]>";
 			}
 			$xml .= "</prodcat>\n";
+                        
+                        $trms = array();
+                        $terms = get_the_terms( $post->ID, 'product_tag' );
+			$xml .= "<product_tag>";
+			if($terms){
+                            foreach($terms as $term){
+                                $trms[] = $term->name;
+                            }
+                            $xml .= "<![CDATA[".implode(',',$trms)."]]>";
+			}else{
+                            $xml .= "<![CDATA[0]]>";
+			}
+			$xml .= "</product_tag>\n";
 
 			$xml .= "</post>\r";
 		}
@@ -460,53 +474,70 @@ global $wpdb;
 				foreach((array)$posts as $value){
 					$ID = false;
 					$prodcat = false;
+                                        $product_tag = false;
 					$data = array();
 					$args = array();
 					$post = array();
 					//echo $updated.': '.$value.'<br>';
 					if (preg_match_all('|<(.+?)><!\[CDATA\[(.*?)\]\]></.+?>|s', $value, $m1)||preg_match_all('|<(.+?)>(.*?)</.+?>|s', $value, $m1) ){
 						foreach ($m1[1] as $n => $key){
-							if ($key == "prodcat"){
-								$prodcat = html_entity_decode($m1[2][$n]);
-								continue;
-							}
-							$data[$key] = html_entity_decode($m1[2][$n]);
-							flush();
+                                                    if ($key == "prodcat"){
+                                                        $prodcat = html_entity_decode($m1[2][$n]);
+                                                        continue;
+                                                    }
+                                                    if ($key == "product_tag"){
+                                                        $product_tag = html_entity_decode($m1[2][$n]);
+                                                        continue;
+                                                    }
+                                                    $data[$key] = html_entity_decode($m1[2][$n]);
+                                                    flush();
 						}
 					}
 					reset($posts_columns);
 					foreach ($posts_columns as $col){
-						if ( isset($data[$col->Field]) ){
-							if ($col->Field == "ID"){
-								$ID	= $data[$col->Field];
-							}else{
-								$post[$col->Field] = "{$col->Field} = '{$data[$col->Field]}'";
-								$args[$col->Field] = "{$data[$col->Field]}";
-							}
-							unset($data[$col->Field]);
-							flush();
-						}
+                                            if ( isset($data[$col->Field]) ){
+                                                if ($col->Field == "ID"){
+                                                    $ID	= $data[$col->Field];
+                                                }else{
+                                                    $post[$col->Field] = "{$col->Field} = '{$data[$col->Field]}'";
+                                                    $args[$col->Field] = "{$data[$col->Field]}";
+                                                }
+                                                unset($data[$col->Field]);
+                                                flush();
+                                            }
 					}
 
 					if(!$ID){
-						$args['tax_input'] = array('prodcat'=>explode(',',$prodcat));
-						$args['post_type'] = 'products';
-						$ID = wp_insert_post($args);
-						$action = 'создан и добавлен';
+                                            //$args['tax_input'] = array('prodcat'=>explode(',',$prodcat));
+                                            //$args['tax_input'] = array('product_tag'=>explode(',',$product_tag));
+                                            $args['post_type'] = 'products';
+                                            $ID = wp_insert_post($args);
+                                            $action = 'создан и добавлен';
 					}else{
-						if (count($post)>0){
-							$wpdb->query($wpdb->prepare("UPDATE {$wpdb->posts} SET %s WHERE ID = '%d'",implode(',',$post),$ID));
-							$action = 'обновлен';
-						}
+                                            if (count($post)>0){
+
+                                                $wpdb->query($wpdb->prepare("UPDATE {$wpdb->posts} SET %s WHERE ID = '%d'",implode(',',$post),$ID));
+                                                $action = 'обновлен';
+                                            }
 					}
 					unset($post);
 
 					if (count($data)){
-						foreach ($data as $key => $value){
-							if($value!='*') update_post_meta($ID, $key, $value);
-							else $emptyFields[$key][] = $ID;
-						}
+                                            foreach ($data as $key => $value){
+                                                if($value!='*') update_post_meta($ID, $key, $value);
+                                                else $emptyFields[$key][] = $ID;
+                                            }
 					}
+                                        
+                                        //$args = array();
+                                        if($prodcat){
+                                            //$args['tax_input'] = array('prodcat'=>explode(',',$prodcat));
+                                            wp_set_post_terms( $ID, explode(',',$prodcat), 'prodcat' );
+                                        }
+                                        if($product_tag){
+                                            //$args['tax_input'] = array('product_tag'=>explode(',',$product_tag));
+                                            wp_set_post_terms( $ID, explode(',',$product_tag), 'product_tag' );
+                                        }
 
                                         do_action('rcl_upload_product_data',$ID,$data);
 

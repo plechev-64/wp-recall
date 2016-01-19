@@ -22,21 +22,20 @@ function rcl_get_userlist($atts, $content = null){
         $users->offset = $rclnavi->offset;
         $users->number = $rclnavi->inpage;
     }
-        
-    $is_cache = (isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? 1: 0;
 
-    if($is_cache){
-        
-        $timeout = (isset($rcl_options['timeout'])&&$rcl_options['timeout'])? $rcl_options['timeout']: 600;
-        
-        $timecache = ($user_ID&&$users->orderby=='time_action')? $timeout: 0;
+    $timeout = (isset($rcl_options['timeout'])&&$rcl_options['timeout'])? $rcl_options['timeout']: 600;
 
+    $timecache = ($user_ID&&$users->orderby=='time_action')? $timeout: 0;
+
+    $rcl_cache = new Rcl_Cache($timecache);
+        
+    if($rcl_cache->is_cache){
+        
         $string = json_encode($users->query());
         
-        $rcl_cache = new Rcl_Cache($timecache);       
         $file = $rcl_cache->get_file($string);
 
-        if($file&&!$file->is_old){
+        if(!$file->need_update){
             
             $users->remove_data();
             
@@ -72,7 +71,7 @@ function rcl_get_userlist($atts, $content = null){
 
     $users->remove_data();
     
-    if($is_cache){        
+    if($rcl_cache->is_cache){        
         $rcl_cache->update_cache($userlist);        
     }
 

@@ -378,7 +378,7 @@ function rcl_view_rating_votes(){
     
         $file = $rcl_cache->get_file($string);
         
-        if(!$file||$file->is_old){
+        if($file->need_update){
             
             $content = rcl_rating_window_content($string);
             $content = $rcl_cache->update_cache($content);

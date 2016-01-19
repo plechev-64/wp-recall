@@ -1,25 +1,27 @@
 <?php
 class Rcl_Blocks {
+    
     public $id;
     public $class;
-	public $width;
+    public $width;
     public $title;
     public $place;
     public $callback;
     public $public;
     public $gallery;
+    
     function __construct($data){
+        
         $this->place = $data['place'];
         $this->callback = $data['callback'];
-
-		$args = $data['args'];
+        $args = $data['args'];
 
         if(isset($args['title'])) $this->title = $args['title'];
         if(isset($args['gallery'])) $this->gallery = $args['gallery'];
 
         $this->public = (isset($args['public']))? $args['public']: 1;
-		$this->width = (isset($args['width']))? $args['width']: 50;
-		$order = (isset($args['order']))? $args['order']: 10;
+        $this->width = (isset($args['width']))? $args['width']: 50;
+        $order = (isset($args['order']))? $args['order']: 10;
 
         if(isset($args['id'])) $this->id = $args['id'];
         if(isset($args['class'])) $this->class = $args['class'];

@@ -365,7 +365,7 @@ function rcl_register_user_order(){
     $reg_user = ($rmag_options['noreg_order'])? false: true;
 
     $fio_new_user = sanitize_text_field($_POST['fio_new_user']);
-    $email_new_user = sanitize_email($_POST['email_new_user']);
+    $email_new_user = sanitize_text_field($_POST['email_new_user']);
 
     include_once 'rcl_order.php';
     $ord = new Rcl_Order();
@@ -375,7 +375,7 @@ function rcl_register_user_order(){
 
     $req_prof = $ord->chek_requared_fields($get_fields,'profile');
     $req_order = $ord->chek_requared_fields($get_order_fields);
-
+    
     if($email_new_user&&$req_prof&&$req_order){
 
         $res_email = email_exists( $email_new_user );
@@ -587,16 +587,14 @@ function rcl_pay_order_private_account(){
 add_action('wp_ajax_rcl_pay_order_private_account', 'rcl_pay_order_private_account');
 
 function rcl_edit_price_product(){
-    
-    rcl_verify_ajax_nonce();
-    
+
     $id_post = intval($_POST['id_post']);
-    $price = intval($_POST['price']);
+    $price = floatval($_POST['price']);
     if(isset($price)){
-            update_post_meta($id_post,'price-products',$price);
-            $log['otvet']=100;
+        update_post_meta($id_post,'price-products',$price);
+        $log['otvet']=100;
     }else {
-            $log['otvet']=1;
+        $log['otvet']=1;
     }
     echo json_encode($log);
     exit;

@@ -133,94 +133,116 @@ function rcl_shortcode_cart() {
 
 add_shortcode('productlist','rcl_shortcode_productlist');
 function rcl_shortcode_productlist($atts, $content = null){
-	global $post,$wpdb,$rmag_options,$desc;
+    global $post,$wpdb,$rmag_options,$desc,$user_ID;
 
-	extract(shortcode_atts(array(
-            'num' => false,
-            'inpage' => 10,
-            'type' => 'list',
-            'inline' => 3,
-            'cat' => false,
-            'desc'=> 200,
-            'tag'=> false,
-            'include' => false,
-            'orderby'=> 'post_date',
-            'order'=> 'DESC',
-            'author'=>false
-	),
-	$atts));
+    extract(shortcode_atts(array(
+        'num' => false,
+        'inpage' => 10,
+        'type' => 'list',
+        'inline' => 3,
+        'cat' => false,
+        'desc'=> 200,
+        'tag'=> false,
+        'include' => false,
+        'orderby'=> 'post_date',
+        'order'=> 'DESC',
+        'author'=>false
+    ),
+    $atts));
 
-	if(!$num){
-		$count_prod = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->prefix."posts WHERE post_type='%s' AND post_status='%s'",'products','publish'));
-	}else{
-                $count_prod = false;
-		$inpage = $num;
-	}
+    if(!$num){
+        $count_prod = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->prefix."posts WHERE post_type='%s' AND post_status='%s'",'products','publish'));
+    }else{
+        $count_prod = false;
+        $inpage = $num;
+    }
 
-	$rclnavi = new RCL_navi($inpage,$count_prod,'&filter='.$orderby);
+    $rclnavi = new RCL_navi($inpage,$count_prod,'&filter='.$orderby);
 
-	if($cat)
-	$args = array(
-	'numberposts'     => $inpage,
-	'offset'          => $rclnavi->offset,
+    if($cat){
+
+        $args = array(
+        'numberposts'     => $inpage,
+        'offset'          => $rclnavi->offset,
         'orderby'         => $orderby,
         'order'           => $order,
         'author'           => $author,
         'post_type'       => 'products',
-	'tag'             => $tag,
-	'include'         => $include,
-	'tax_query' 	  => array(
+        'tag'             => $tag,
+        'include'         => $include,
+        'tax_query' 	  => array(
             array(
                     'taxonomy'=>'prodcat',
                     'field'=>'id',
                     'terms'=> explode(',',$cat)
-                    )
+                )
             )
-	);
-	else
-		$args = array(
-		'numberposts'     => $inpage,
-		'offset'          => $rclnavi->offset,
-		'category'        => '',
-		'orderby'         => $orderby,
-		'order'           => $order,
-                'author'           => $author,
-		'include'         => $include,
-		'tag'			  => $tag,
-		'exclude'         => '',
-		'meta_key'        => '',
-		'meta_value'      => '',
-		'post_type'       => 'products',
-		'post_mime_type'  => '',
-		'post_parent'     => '',
-		'post_status'     => 'publish'
-		);
+        );
 
-	$products = get_posts($args);
+    }else{
 
-	if(!$products) return false;
+        $args = array(
+            'numberposts'     => $inpage,
+            'offset'          => $rclnavi->offset,
+            'category'        => '',
+            'orderby'         => $orderby,
+            'order'           => $order,
+            'author'          => $author,
+            'include'         => $include,
+            'tag'             => $tag,
+            'exclude'         => '',
+            'meta_key'        => '',
+            'meta_value'      => '',
+            'post_type'       => 'products',
+            'post_mime_type'  => '',
+            'post_parent'     => '',
+            'post_status'     => 'publish'
+        );
 
-	$n=0;
+    }
 
-	$block = ($type=='rows')? 'table': 'div';
+    $rcl_cache = new Rcl_Cache();
+        
+    if(!$user_ID&&$rcl_cache->is_cache){
 
-	$prodlist .='<'.$block.' class="prodlist">';
+        $file = $rcl_cache->get_file(json_encode($args));
 
-	foreach($products as $post){ setup_postdata($post);
-		$n++;
-		$prodlist .= rcl_get_include_template('product-'.$type.'.php',__FILE__);
-		if($type=='slab'){
-			$cnt = $n%$inline;
-			if($cnt==0) $prodlist .='<div class="clear"></div>';
-		}
-	}
-	wp_reset_query();
+        if(!$file->need_update){
+            return $rcl_cache->get_cache();
+        }
 
-	$prodlist .='</'.$block.'>';
+    }
 
-	if(!$num) $prodlist .= $rclnavi->navi();
+    $products = get_posts($args);
 
-	return $prodlist;
+    if(!$products) return false;
+
+    $n=0;
+
+    $block = ($type=='rows')? 'table': 'div';
+
+    $prodlist .='<'.$block.' class="prodlist">';
+
+    foreach($products as $post){ setup_postdata($post);
+        $n++;
+        $prodlist .= rcl_get_include_template('product-'.$type.'.php',__FILE__);
+        if($type=='slab'){
+            $cnt = $n%$inline;
+            if($cnt==0) $prodlist .='<div class="clear"></div>';
+        }
+    }
+
+    wp_reset_query();
+
+    $prodlist .='</'.$block.'>';
+
+    if(!$num) $prodlist .= $rclnavi->navi();
+    
+    if(!$user_ID&&$rcl_cache->is_cache){
+        $rcl_cache->update_cache($prodlist);
+    }
+
+    return $prodlist;
 }
 
 add_shortcode('pricelist', 'rcl_shortcode_pricelist');

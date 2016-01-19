@@ -188,7 +188,7 @@ function rcl_get_publics_options_page($content){
                 $opt->label(__('Republishing is allowed','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'user_public_access_recall',
-					'parent'=>1,
+                    'parent'=>1,
                     'options'=>$roles
                 )),
                 $opt->child(
@@ -196,11 +196,11 @@ function rcl_get_publics_options_page($content){
                     array(
                         $opt->label(__('Redirect page','wp-recall')),
                         wp_dropdown_pages( array(
-							'selected'   => $guest_redirect,
-							'name'       => 'global[guest_post_redirect]',
-							'show_option_none' => __('Not selected','wp-recall'),
-							'echo'             => 0 )
-						),
+                            'selected'   => $guest_redirect,
+                            'name'       => 'global[guest_post_redirect]',
+                            'show_option_none' => __('Not selected','wp-recall'),
+                            'echo'             => 0 )
+                        ),
                         $opt->notice(__('Select the page to which visitors will be redirected after a successful publication , if the site is included in the registration confirmation email','wp-recall'))
                     )
                 ),

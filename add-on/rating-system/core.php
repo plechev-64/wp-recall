@@ -322,7 +322,7 @@ function rcl_get_list_votes($args,$votes){
             if(isset($rcl_options['rating_temp_'.$vote->rating_type])&&$args['rating_status']=='user'){
                     $row = $rcl_options['rating_temp_'.$vote->rating_type];
             }else{
-                    $row = '%USER% '.__('voted','wp-recall').': %VALUE%';
+                    $row = mysql2date('d.m.Y',$vote->rating_date).' %USER% '.__('voted','wp-recall').': %VALUE%';
             }
 
             $temps = array(
@@ -632,33 +632,67 @@ function rcl_add_data_rating_posts(){
 	}
 }
 
-add_shortcode('rcl-rating','rcl_rating_shortcode');
+add_shortcode('ratinglist','rcl_rating_shortcode');
 function rcl_rating_shortcode($atts){
-	global $rating;
+    global $rating;
 
-	extract(shortcode_atts(array(
-		'rating_type'=>false,
-		'days'=>false,
-		'number'=>10,
-		'offset'=>0,
-		'order'=>'ID',
-		'list_type' => 'row',
-		'group_by' => ''
-	),
-	$atts));
+    $rcl_rating = new Rcl_Rating($atts);
+    
+    $count_users = false;
 
-	$rcl_rating = new Rcl_Rating();
+    if(!$rcl_rating->number){
 
-	$ratings = $rcl_rating->get_values($atts);
+        $count_values = $rcl_rating->count_values();
+        //echo $count_values;
+        $rclnavi = new RCL_navi($rcl_rating->per_page,$count_values);
+        $rcl_rating->offset = $rclnavi->offset;
+        $rcl_rating->per_page = $rclnavi->inpage;
+    }
+    
+    $rcl_cache = new Rcl_Cache();
+    
+    if($rcl_cache->is_cache){
+        $obj = $rcl_rating;
+        $obj->query = array();
+        $string = json_encode($obj);
+        $file = $rcl_cache->get_file($string);
+        
+        if(!$file->need_update){
 
-	$userlist ='<div class="ratinglist '.$list_type.'-list">';
-	foreach($ratings as $rating){
-		$rating = (object)$rating;
-		$userlist .= rcl_get_include_template('rating-'.$list_type.'.php',__FILE__);
-	}
+            $rcl_rating->remove_data();
 
-	$userlist .='</div>';
+            return $rcl_cache->get_cache();
 
-	return $userlist;
+        }
+    }
+
+    $ratings = $rcl_rating->get_values();
+    
+    if(!$ratings){
+        $content = '<p align="center">'.__('Data not found','wp-recall').'</p>';
+        $rcl_rating->remove_data();
+
+        return $content;
+    }
+
+    $content ='<div class="ratinglist rating-'.$rcl_rating->template.'">';
+    foreach($ratings as $rating){
+        $rating = (object)$rating;
+        $content .= rcl_get_include_template('rating-'.$rcl_rating->template.'.php',__FILE__);
+    }
+
+    $content .='</div>';
+    
+    if(isset($rclnavi->inpage)&&$rclnavi->inpage)
+        $content .= $rclnavi->navi();
+    
+    if($rcl_cache->is_cache){
+        //print_r($rcl_cache);
+        $rcl_cache->update_cache($content);        
+    }
+    
+    $rcl_rating->remove_data();
+
+    return $content;
 
 }

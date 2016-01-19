@@ -491,7 +491,7 @@ function rcl_add_dropzone(idzone){
     }
 
     function rcl_preloader_show(e){
-        jQuery(e).after('<div class="rcl_preloader"></div>');
+        jQuery(e).after('<div class="rcl_preloader"><i class="fa fa-spinner fa-pulse"></i></div>');
     }
 
     function rcl_preloader_hide(){

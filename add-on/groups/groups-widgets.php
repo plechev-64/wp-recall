@@ -338,17 +338,15 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
         $instance = wp_parse_args( (array) $instance, $defaults );
         
-        $is_cache = (isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? 1: 0;
-    
-        if($is_cache){
+        $rcl_cache = new Rcl_Cache();
         
-            $rcl_cache = new Rcl_Cache();
-            
+        if($rcl_cache->is_cache){
+
             $string = (isset($wp_query->query_vars['paged']))? $rcl_group->term_id.':'.$wp_query->query_vars['paged']: $rcl_group->group_id;
 
             $file = $rcl_cache->get_file('group-posts-widget:'.$string);
 
-            if($file&&!$file->is_old){
+            if(!$file->need_update){
 
                 echo $rcl_cache->get_cache();
                 return;
@@ -410,7 +408,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
         $content = ob_get_contents();
         ob_end_clean();
         
-        if($is_cache){
+        if($rcl_cache->is_cache){
             $rcl_cache->update_cache($content);
         }
         

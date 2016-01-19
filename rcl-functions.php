@@ -1,34 +1,8 @@
 <?php
-add_action('init','rcl_register_recallbar');
-function rcl_register_recallbar(){
-	global $rcl_options;
-	if( isset( $rcl_options['view_recallbar'] ) && $rcl_options['view_recallbar'] != 1 ) return false;
-	register_nav_menus(array( 'recallbar' => __('Recallbar','wp-recall') ));
-}
-
-function rcl_key_addon($path_parts){
-    if(!isset($path_parts['dirname'])) return false;
-    $key = false;
-    $ar_dir = explode('/',$path_parts['dirname']);
-    if(!isset($ar_dir[1])) $ar_dir = explode('\\',$path_parts['dirname']);
-    $cnt = count($ar_dir)-1;
-    for($a=$cnt;$a>=0;$a--){if($ar_dir[$a]=='add-on'){$key=$ar_dir[$a+1];break;}}
-    return $key;
-}
-
-//добавляем вкладку со списком публикаций хозяина ЛК указанного типа записей в личный кабинет
-function rcl_postlist($id,$posttype,$name='',$args=false){
-    global $rcl_options;
-    if(!$rcl_options) $rcl_options = get_option('rcl_global_options');
-    if($rcl_options['publics_block_rcl']!=1) return false;
-    if (!class_exists('Rcl_Postlist')) include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
-    $plist = new Rcl_Postlist($id,$posttype,$name,$args);
-}
-
 //добавляем контентный блок в указанное место личного кабинета
 function rcl_block($place,$callback,$args=false){
 
-	$data = array(
+    $data = array(
         'place'=>$place,
         'callback'=>$callback,
         'args'=>$args
@@ -66,6 +40,32 @@ function rcl_tab($id,$callback,$name='',$args=false){
     if (!class_exists('Rcl_Tabs')) include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
 
     $tab = new Rcl_Tabs($data);
+}
+
+add_action('init','rcl_register_recallbar');
+function rcl_register_recallbar(){
+    global $rcl_options;
+    if( isset( $rcl_options['view_recallbar'] ) && $rcl_options['view_recallbar'] != 1 ) return false;
+    register_nav_menus(array( 'recallbar' => __('Recallbar','wp-recall') ));
+}
+
+function rcl_key_addon($path_parts){
+    if(!isset($path_parts['dirname'])) return false;
+    $key = false;
+    $ar_dir = explode('/',$path_parts['dirname']);
+    if(!isset($ar_dir[1])) $ar_dir = explode('\\',$path_parts['dirname']);
+    $cnt = count($ar_dir)-1;
+    for($a=$cnt;$a>=0;$a--){if($ar_dir[$a]=='add-on'){$key=$ar_dir[$a+1];break;}}
+    return $key;
+}
+
+//добавляем вкладку со списком публикаций хозяина ЛК указанного типа записей в личный кабинет
+function rcl_postlist($id,$posttype,$name='',$args=false){
+    global $rcl_options;
+    if(!$rcl_options) $rcl_options = get_option('rcl_global_options');
+    if($rcl_options['publics_block_rcl']!=1) return false;
+    if (!class_exists('Rcl_Postlist')) include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
+    $plist = new Rcl_Postlist($id,$posttype,$name,$args);
 }
 
 function rcl_crop($filesource,$width,$height,$file){
@@ -287,8 +287,9 @@ function rcl_delete_attachments_with_post($postid){
     $attachments = get_posts( array( 'post_type' => 'attachment', 'posts_per_page' => -1, 'post_status' => null, 'post_parent' => $postid ) );
     if($attachments){
 	foreach((array)$attachments as $attachment ){
-        wp_delete_attachment( $attachment->ID, true ); }
-	}
+            wp_delete_attachment( $attachment->ID, true );         
+        }
+    }
 }
 
 add_action('init','rcl_init_avatar_sizes');
@@ -486,17 +487,22 @@ function rcl_get_chart($arr=false){
     global $chartData;
 
     if(!$arr) return false;
+    
+    //$titles = $chartData['data'][0];
 
-    ksort($arr);
     foreach($arr as $month=>$data){
-            $cnt = (isset($data['cnt']))?$data['cnt']:0;
-            $summ = (isset($data['summ']))?$data['summ']:0;
-            $chartData['data'][] = array('"'.$month.'"', $cnt,$summ);
+        $cnt = (isset($data['cnt']))?$data['cnt']:0;
+        $summ = (isset($data['summ']))?$data['summ']:0;
+        $chartData['data'][] = array('"'.$month.'"', $cnt,$summ);
     }
     
-
     if(!$chartData) return false;
-
+    
+    //$array_pop($chartData['data']);
+    //print_r($titles);
+    krsort($chartData['data']);
+    array_unshift($chartData['data'], array_pop($chartData['data']));
+    
     return rcl_get_include_template('chart.php');
 }
 

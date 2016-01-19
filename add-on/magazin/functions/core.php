@@ -1,8 +1,8 @@
 <?php
 function rcl_order_statuses(){
     $sts = array(
-          1    => __( 'Paid', 'wp-recall' ),
-          2    => __( 'Not paid', 'wp-recall' ),
+          1    => __( 'Not paid', 'wp-recall' ),
+          2    => __( 'Paid', 'wp-recall' ),
           3   => __( 'Sent', 'wp-recall' ),
           4    => __( 'Received', 'wp-recall' ),
           5    => __( 'Closed', 'wp-recall' ),
@@ -193,8 +193,9 @@ function rcl_product_excerpt(){
 }
 
 function rcl_get_product_category($prod_id){
-	$product_cat = get_the_term_list( $prod_id, 'prodcat', '<p class="fa fa-tag product-cat"><b>Категория товара:</b> ', ', ', '</p>' );
-	return $product_cat;
+    $product_cat = get_the_term_list( $prod_id, 'prodcat', '<p class="fa fa-folder-open product-cat"><b>Категория товара:</b> ', ', ', '</p>' );
+    $product_cat .= get_the_term_list( $prod_id, 'product_tag', '<p class="fa fa-tag product-cat"><b>Метки товара:</b> ', ', ', '</p>' );
+    return $product_cat;
 }
 
 function rcl_product_category_excerpt($excerpt){

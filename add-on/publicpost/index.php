@@ -79,23 +79,23 @@ function rcl_update_postdata_excerpt($postdata){
 add_filter('pre_update_postdata_rcl','rcl_update_postdata_tags');
 function rcl_update_postdata_tags($postdata){
 
-	if(!isset($_POST['post_tags'])&&!isset($_POST['tags'])) return $postdata;
+    if(!isset($_POST['post_tags'])&&!isset($_POST['tags'])||$postdata['post_type']!='post') return $postdata;
 
-	$tags = array();
+    $tags = array();
 
-	if($_POST['post_tags']){
-		$posttags = $_POST['post_tags'];
-		$tags = explode(',',$posttags);
-		$tags = array_map('trim', $tags);
-	}
+    if($_POST['post_tags']){
+            $posttags = $_POST['post_tags'];
+            $tags = explode(',',$posttags);
+            $tags = array_map('trim', $tags);
+    }
 
-	if($_POST['tags']){
-		$tags = array_merge ( $tags, $_POST['tags'] );
-	}
+    if($_POST['tags']){
+            $tags = array_merge ( $tags, $_POST['tags'] );
+    }
 
-	if($tags) $postdata['tags_input'] = $tags;
+    if($tags) $postdata['tags_input'] = $tags;
 
-	return $postdata;
+    return $postdata;
 }
 
 function rcl_tab_postform($author_lk){
@@ -179,11 +179,11 @@ function rcl_manage_publicform(){
 	if(isset($_POST['delete-form'])&&wp_verify_nonce( $_POST['_wpnonce'], 'update-public-fields' )){
             $id_form = intval($_POST['id-form']);
             $_GET['status'] = 'old';
-            $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."options WHERE option_name LIKE 'custom_public_fields_%d'",$id_form));
+            $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."options WHERE option_name LIKE 'rcl_fields_post_%d'",$id_form));
 	}
 
 	if(!$form){
-		$option_name = $wpdb->get_var("SELECT option_name FROM ".$wpdb->prefix."options WHERE option_name LIKE 'custom_public_fields%'");
+		$option_name = $wpdb->get_var("SELECT option_name FROM ".$wpdb->prefix."options WHERE option_name LIKE 'rcl_fields_post_%'");
 		if($option_name) $form = preg_replace("/[a-z_]+/", '', $option_name);
 		else $form = 1;
 	}
@@ -196,7 +196,7 @@ function rcl_manage_publicform(){
             $fields = $f_edit->update_fields();
 	}
 
-	$custom_public_form_data = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."options WHERE option_name LIKE 'custom_public_fields%' ORDER BY option_id ASC");
+	$custom_public_form_data = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."options WHERE option_name LIKE 'rcl_fields_post_%' ORDER BY option_id ASC");
 
 	if($custom_public_form_data){
 		$form_navi = '<h3>'.__('Available forms','wp-recall').'</h3><div class="form-navi">';
@@ -246,32 +246,34 @@ function rcl_manage_publicform(){
 
 //формируем галерею записи
 function rcl_post_gallery($content){
-	global $post;
-	if(get_post_meta($post->ID, 'recall_slider', 1)!=1||!is_single()||$post->post_type=='products') return $content;
-	$gallery = do_shortcode('[gallery-rcl post_id="'.$post->ID.'"]');
-	return $gallery.$content;
+    global $post;
+    if(get_post_meta($post->ID, 'recall_slider', 1)!=1||!is_single()||$post->post_type=='products') return $content;
+    $gallery = do_shortcode('[gallery-rcl post_id="'.$post->ID.'"]');
+    return $gallery.$content;
 }
 
 function rcl_get_like_tags(){
-	global $wpdb;
-        
-        rcl_verify_ajax_nonce();
+    global $wpdb;
 
-	if(!$_POST['query']){
-		echo json_encode(array(array('id'=>'')));
-		exit;
-	};
-	$query = $_POST['query'];
+    rcl_verify_ajax_nonce();
 
-	$terms = get_terms( 'post_tag', array('hide_empty'=>false,'name__like'=>$query) );
+    if(!$_POST['query']){
+            echo json_encode(array(array('id'=>'')));
+            exit;
+    };
 
-	$tags = array();
-	foreach($terms as $key=>$term){
-		$tags[$key]['id'] = $term->name;
-		$tags[$key]['name'] = $term->name;
-	}
+    $query = $_POST['query'];
+    $taxonomy = $_POST['taxonomy'];
 
-	echo json_encode($tags);
+    $terms = get_terms( $taxonomy, array('hide_empty'=>false,'name__like'=>$query) );
+
+    $tags = array();
+    foreach($terms as $key=>$term){
+        $tags[$key]['id'] = $term->name;
+        $tags[$key]['name'] = $term->name;
+    }
+
+    echo json_encode($tags);
     exit;
 }
 add_action('wp_ajax_rcl_get_like_tags','rcl_get_like_tags');
@@ -1095,11 +1097,12 @@ function rcl_footer_publics_scripts($script){
 	$script .= "
 	rcl_add_dropzone('#rcl-public-dropzone');
 	var post_id_edit = $('input[name=\"post-rcl\"]').val();
+        var post_type = $('input[name=\"posttype\"]').val();
 	$('#upload-public-form').fileupload({
 		dataType: 'json',
 		type: 'POST',
 		url: Rcl.ajaxurl,
-		formData:{action:'rcl_imagepost_upload',post_id:post_id_edit,ajax_nonce:Rcl.nonce},
+		formData:{action:'rcl_imagepost_upload',post_type:post_type,post_id:post_id_edit,ajax_nonce:Rcl.nonce},
 		singleFileUploads:false,
 		autoUpload:true,
 		progressall: function (e, data) {

@@ -32,6 +32,7 @@ function rcl_add_followers_tab(){
 if(!is_admin()) add_filter('tab_data_rcl','rcl_add_counter_followers_tab',10);
 function rcl_add_counter_followers_tab($data){
     global $user_LK;
+    if($data['id']!='followers') return $data;
     return rcl_add_balloon_menu($data,array(
         'tab_id'=>'followers',
         'ballon_value'=>rcl_feed_count_subscribers($user_LK))
@@ -41,6 +42,7 @@ function rcl_add_counter_followers_tab($data){
 if(!is_admin()) add_filter('tab_data_rcl','rcl_add_counter_subscriptions',10);
 function rcl_add_counter_subscriptions($data){
     global $user_LK;
+    if($data['id']!='subscriptions') return $data;
     return rcl_add_balloon_menu($data,array(
         'tab_id'=>'subscriptions',
         'ballon_value'=>rcl_feed_count_authors($user_LK))

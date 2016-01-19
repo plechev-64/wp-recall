@@ -4,24 +4,24 @@ if (is_admin()):
 endif;
 
 function rmag_admin_scripts(){
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rmag_admin_scripts', rcl_addon_url('js/admin.js', __FILE__) );
+    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script( 'rmag_admin_scripts', rcl_addon_url('js/admin.js', __FILE__) );
 }
 
 add_action( 'attachments_register', 'rcl_attachments_products' );
 function rcl_attachments_products( $attachments ){
-	$args = array(
-		'label' => 'Галлерея товара',
-		'post_type' => array( 'products' ),
-		'filetype' => null,
-		'note' => null,
-		'button_text' => __( 'Attach image or download it', 'wp-recall' ),
-		'modal_text' => __( 'Attach image or download it', 'wp-recall' ),
-		'fields' => array(
-		)
-	);
+    $args = array(
+        'label' => 'Галлерея товара',
+        'post_type' => array( 'products' ),
+        'filetype' => null,
+        'note' => null,
+        'button_text' => __( 'Attach image or download it', 'wp-recall' ),
+        'modal_text' => __( 'Attach image or download it', 'wp-recall' ),
+        'fields' => array(
+        )
+    );
 
-	$attachments->register( 'attachments_products', $args );
+    $attachments->register( 'attachments_products', $args );
 }
 
 add_action( 'init', 'rcl_register_posttype_products' );
@@ -45,7 +45,7 @@ function rcl_register_posttype_products(){
     $args = array(
         'labels' => $labels,
         'hierarchical' => false,
-        'supports' => array( 'title', 'editor','custom-fields','thumbnail','comments','excerpt'),
+        'supports' => array( 'title', 'editor','custom-fields','thumbnail','comments','excerpt','author'),
         'taxonomies' => array( 'prodcat' ),
         'public' => true,
         'show_ui' => true,
@@ -99,6 +99,41 @@ function rcl_register_taxonomy_prodcat() {
     );
 
     register_taxonomy( 'prodcat', array('products'), $args );
+}
+
+add_action( 'init', 'rcl_register_taxonomy_product_tag' );
+function rcl_register_taxonomy_product_tag() {
+
+    $labels = array(
+          'name' => 'Метки товаров',
+        'singular_name' => 'Метки товаров',
+        'search_items' => 'Поиск',
+        'popular_items' => 'Популярные',
+        'all_items' => 'Все',
+        'parent_item' => 'Родительская',
+        'parent_item_colon' => 'Родительская:',
+        'edit_item' => 'Редактировать',
+        'update_item' => 'Обновить',
+        'add_new_item' => 'Добавить новую',
+        'new_item_name' => 'Новая',
+        'separate_items_with_commas' => 'Separate страна with commas',
+        'add_or_remove_items' => 'Добавить или удалить',
+        'choose_from_most_used' => 'Выберите для использования',
+        'menu_name' => 'Метки товаров'
+    );
+
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'show_in_nav_menus' => true,
+        'show_ui' => true,
+        'show_tagcloud' => true,
+        'hierarchical' => false,
+        'rewrite' => true,
+        'query_var' => true
+    );
+
+    register_taxonomy( 'product_tag', array('products'), $args );
 }
 
 // создаем колонку товарных категорий

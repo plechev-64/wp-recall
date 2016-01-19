@@ -358,7 +358,6 @@ function rcl_get_custom_fields($post_id,$posttype=false,$id_form=false){
                 if(!$id_form) $id_form = 1;
                 $id_field = 'rcl_fields_post_'.$id_form;
         break;
-        case 'products': $id_field = 'rcl_fields_products'; break;
         default: $id_field = 'rcl_fields_'.$posttype;
     }
 

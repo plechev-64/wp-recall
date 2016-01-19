@@ -233,20 +233,20 @@ function rcl_sort_gallery($attaches,$key,$user_id=false){
     $cnt = count($attaches);
     $v=$cnt+10;
     foreach($attaches as $attach){
-            $id = str_replace($key.'-'.$user_id.'-','',$attach->post_name);
-            if(!is_numeric($id)||$id>100) $id = $v++;
-            if(!$id) $id = 0;
-            foreach($attach as $k=>$att){
-                    $gallerylist[(int)$id][$k]=$attach->$k;
-            }
+        $id = str_replace($key.'-'.$user_id.'-','',$attach->post_name);
+        if(!is_numeric($id)||$id>100) $id = $v++;
+        if(!$id) $id = 0;
+        foreach($attach as $k=>$att){
+                $gallerylist[(int)$id][$k]=$attach->$k;
+        }
     }
 
     $b=0;
     $cnt = count($gallerylist);
     for($a=0;$b<$cnt;$a++){
-            if(!isset($gallerylist[$a])) continue;
-            $new[$b] = $gallerylist[$a];
-            $b++;
+        if(!isset($gallerylist[$a])) continue;
+        $new[$b] = $gallerylist[$a];
+        $b++;
     }
     for($a=$cnt-1;$a>=0;$a--){$news[]=(object)$new[$a];}
 

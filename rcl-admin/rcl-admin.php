@@ -19,10 +19,11 @@ function rmag_update_options ( ) {
 	if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rmag' ) ) return false;
 	$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-    foreach($_POST as $key => $value){
+    foreach($_POST['global'] as $key => $value){
         if($key=='primary-rmag-options') continue;
         $options[$key]=$value;
     }
+
     update_option('primary-rmag-options',$options);
     wp_redirect(admin_url('admin.php?page=manage-wpm-options'));
     exit;

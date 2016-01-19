@@ -3,10 +3,6 @@
 rcl_enqueue_style('user_account',__FILE__);
 
 include_once "rcl_payment.php";
-include_once 'gateways/robokassa.php';
-include_once 'gateways/interkassa.php';
-include_once 'gateways/walletone.php';
-//include_once 'gateways/yandexkassa.php';
 
 if(is_admin()) include_once 'payments.php';
 if(is_admin()) require_once 'addon-options.php';

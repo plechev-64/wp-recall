@@ -232,13 +232,11 @@ class Rcl_Addons_Manager extends WP_List_Table {
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
         if( 'manage-addon-recall' != $page ) return;
         
-        if ( parent::current_action() ) {
+        if ( isset($_GET['addon'])&&isset($_GET['action']) ) {
               //if( !wp_verify_nonce( $_GET['_wpnonce'], 'action_addon' ) ) return false;
 
               global $wpdb, $user_ID, $active_addons;
               if ( ! current_user_can('activate_plugins') ) wp_die(__('You cant control polucheniya plugins on this site.','wp-recall'));
-
-              $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
               $addon = $_GET['addon'];
               $action = parent::current_action();
@@ -262,7 +260,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
         
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
         if( 'manage-addon-recall' != $page ) return;
-            //print_r($_GET);exit;
+
 	  if ( parent::current_action() && isset( $_POST['addons'] )&& is_array($_POST['addons']) ) {
               global $wpdb,$user_ID,$active_addons;
 
@@ -271,19 +269,10 @@ class Rcl_Addons_Manager extends WP_List_Table {
                 $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
 		if($action=='activate'){
-			foreach($_POST['addons'] as $addon){
-                            foreach($paths as $k=>$path){
-                                if(file_exists($path.'/'.$addon.'/index.php')){
-                                    $active_addons[$addon]['path'] = $path.'/'.$addon;
-                                    $active_addons[$addon]['priority'] = $k;
-                                    if(file_exists($path.'/'.$addon.'/activate.php')) include($path.'/'.$addon.'/activate.php');
-                                    do_action('rcl_activate_'.$addon,$active_addons[$addon]);
-                                    break;
-                                }
-                            }
-			}
-			update_site_option('rcl_active_addons',$active_addons);
-			wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
+                    foreach($_POST['addons'] as $addon){
+                        rcl_activate_addon($addon);
+                    }			
+                    wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
 		}
                 
 		if($action=='deactivate'){
@@ -428,10 +417,11 @@ function rcl_render_addons_manager(){
 
         if(isset($_GET['update-addon'])){
                 switch($_GET['update-addon']){
-                        case 'activate': $text_notice = __('Addition <strong>activated</strong>. It is possible that on the settings page of Wp-Recall new settings','wp-recall'); $type='updated'; break;
-                        case 'deactivate': $text_notice = __('Addition <strong>deactivated</strong>.','wp-recall'); $type='updated'; break;
-                        case 'delete': $text_notice = __('Files and data additions have been <strong>removed</strong>.','wp-recall'); $type='updated'; break;
-                        case 'error-info': $text_notice = __('The Supplement has not been loaded. Add missing the correct header.','wp-recall'); $type='error'; break;
+                    case 'activate': $text_notice = __('Addition <strong>activated</strong>. It is possible that on the settings page of Wp-Recall new settings','wp-recall'); $type='updated'; break;
+                    case 'deactivate': $text_notice = __('Addition <strong>deactivated</strong>.','wp-recall'); $type='updated'; break;
+                    case 'delete': $text_notice = __('Files and data additions have been <strong>removed</strong>.','wp-recall'); $type='updated'; break;
+                    case 'error-info': $text_notice = __('The Supplement has not been loaded. Add missing the correct header.','wp-recall'); $type='error'; break;
+                    case 'error-activate': $text_notice = $_GET['error-text']; $type='error'; break;
                 }
                 
                 rcl_update_scripts();

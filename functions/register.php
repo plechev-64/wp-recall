@@ -191,17 +191,12 @@ add_filter('registration_errors','rcl_get_register_user',90);
 //принимаем данные с формы регистрации
 add_action('wp', 'rcl_get_register_user_activate');
 function rcl_get_register_user_activate ( ) {
-  if ( isset( $_POST['submit-register'] ) ) { //если данные пришли с формы wp-recall
-	if( !wp_verify_nonce( $_POST['_wpnonce'], 'register-key-rcl' ) ) return false;
+    if ( isset( $_POST['submit-register'] ) ) { //если данные пришли с формы wp-recall
+        if( !wp_verify_nonce( $_POST['_wpnonce'], 'register-key-rcl' ) ) return false;
         $email = $_POST['user_email'];
-	$login = sanitize_user($_POST['user_login']);
-        register_new_user($login,$email);
-        //add_action( 'wp', 'rcl_get_register_user',999 );
-  }
-
-  /*if(isset($_POST['wp-submit'])&&$_GET['action']=='register'){ //если данные пришли со страницы wp-login.php
-      add_filter('registration_errors','rcl_get_register_user',999);
-  }*/
+        $login = sanitize_user($_POST['user_login']);
+        register_new_user($login,$email);       
+    }
 }
 
 //письмо высылаемое при регистрации

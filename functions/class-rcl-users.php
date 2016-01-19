@@ -305,7 +305,8 @@ class Rcl_Users{
 
         if(!$this->is_count){
             $query->query['select'][] = "actions.time_action";
-            $query->query['orderby'] = "(CASE WHEN actions.$this->orderby IS NULL then users.user_registered ELSE actions.$this->orderby END)";
+            //$query->query['orderby'] = "(CASE WHEN actions.$this->orderby IS NULL then users.user_registered ELSE actions.$this->orderby END)";
+            $query->query['orderby'] = "actions.$this->orderby";
         }
 
         $query->query['join'][] = "RIGHT JOIN ".RCL_PREF."user_action AS actions ON users.ID=actions.user";
@@ -433,10 +434,10 @@ class Rcl_Users{
         if(!$this->is_count){
             $query->query['select'][] = "ratings.rating_total";
             $query->query['group'] = "ratings.user_id";
-            $query->query['orderby'] = "(CASE WHEN CAST(ratings.$this->orderby AS DECIMAL) IS NULL then 0 ELSE CAST(ratings.$this->orderby AS DECIMAL) END)";
+            $query->query['orderby'] = "CAST(ratings.$this->orderby AS DECIMAL)";
         }
 
-        $query->query['join'][] = "LEFT JOIN ".RCL_PREF."rating_users AS ratings ON users.ID=ratings.user_id";
+        $query->query['join'][] = "INNER JOIN ".RCL_PREF."rating_users AS ratings ON users.ID=ratings.user_id";
 
         return $query;
     }

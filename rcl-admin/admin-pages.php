@@ -187,7 +187,14 @@ function rcl_global_options(){
                              array(
                                  $fields->label(__('Time cache (seconds)','wp-recall')),
                                  $fields->option('number',array('name'=>'cache_time','default'=>3600)),
-                                 $fields->notice(__('Default','wp-recall').': 3600')
+                                 $fields->notice(__('Default','wp-recall').': 3600'),
+                                 $fields->label(__('Cache output','wp-recall')),
+                                 $fields->option('select',array(
+                                    'name'=>'cache_output',
+                                    'options'=>array(
+                                        __('All users','wp-recall'),
+                                        __('Only guests','wp-recall'))
+                                ))
                              )
                         ),
 
