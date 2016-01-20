@@ -31,18 +31,18 @@ function rcl_admin_user_account_scripts(){
 	wp_enqueue_script( 'rcl_admin_user_account_scripts', plugins_url('js/admin.js', __FILE__) );
 }
 
-function rcl_get_user_money($user_id=false){
+function rcl_get_user_balance($user_id=false){
     global $wpdb,$user_ID;
     if(!$user_id) $user_id = $user_ID;
     return $wpdb->get_var($wpdb->prepare("SELECT user_balance FROM ".RMAG_PREF."users_balance WHERE user_id='%d'",$user_id));
 }
 
-function rcl_update_user_money($newmoney,$user_id,$comment=''){
+function rcl_update_user_balance($newmoney,$user_id,$comment=''){
     global $wpdb;
     
     $newmoney = round(str_replace(',','.',$newmoney), 2);
 
-    $money = rcl_get_user_money($user_id);
+    $money = rcl_get_user_balance($user_id);
 
     if(isset($money)){
         
@@ -53,14 +53,14 @@ function rcl_update_user_money($newmoney,$user_id,$comment=''){
             array( 'user_id' => $user_id )
         );
         
-        do_action('rcl_update_user_money',$newmoney,$user_id,$comment);
+        do_action('rcl_update_user_balance',$newmoney,$user_id,$comment);
         
     }
 
-    return rcl_add_user_money($newmoney,$user_id,$comment);
+    return rcl_add_user_balance($newmoney,$user_id,$comment);
 }
 
-function rcl_add_user_money($money,$user_id,$comment=''){
+function rcl_add_user_balance($money,$user_id,$comment=''){
     global $wpdb;
 
     $result =  $wpdb->insert( RMAG_PREF .'users_balance',
@@ -86,7 +86,7 @@ global $wpdb;
 
   switch( $column_name ){
     case 'balance_user_recall':
-          $user_count = rcl_get_user_money($user_id);
+          $user_count = rcl_get_user_balance($user_id);
 	  $custom_column = '<input type="text" class="balanceuser-'.$user_id.'" size="4" value="'.$user_count.'"><input type="button" class="recall-button edit_balance" id="user-'.$user_id.'" value="Ок">';
           $custom_column = apply_filters('balans_column_rcl',$custom_column,$user_id);
           break;
@@ -128,7 +128,7 @@ function rcl_edit_balance_user(){
     $user_id = intval($_POST['user']);
     $balance = floatval(str_replace(',','.',$_POST['balance']));
 
-    rcl_update_user_money($balance,$user_id,__('The change in the balance','wp-recall'));
+    rcl_update_user_balance($balance,$user_id,__('The change in the balance','wp-recall'));
 
     $log['otvet']=100;
     $log['user']=$user_id;
@@ -144,7 +144,7 @@ function rcl_get_html_usercount(){
 
     $usercount = '<div id="user-count-rcl">';
 
-    $user_count = rcl_get_user_money();
+    $user_count = rcl_get_user_balance();
     if(!$user_count) $user_count = 0;
 
     $usercount .= '<div class="usercount" style="text-align:center;">'.$user_count.' '.rcl_get_primary_currency(1).'</div>';

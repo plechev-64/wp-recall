@@ -89,12 +89,12 @@ class Rcl_Payment{
 
         if($data->pay_type!=1) return false;
 
-        $oldcount = rcl_get_user_money($data->user_id);
+        $oldcount = rcl_get_user_balance($data->user_id);
 
         if($oldcount) $newcount = $oldcount + $data->pay_summ;
         else $newcount = $data->pay_summ;
 
-        rcl_update_user_money($newcount,$data->user_id,__('Top up personal account','wp-recall'));
+        rcl_update_user_balance($newcount,$data->user_id,__('Top up personal account','wp-recall'));
 
     }
 

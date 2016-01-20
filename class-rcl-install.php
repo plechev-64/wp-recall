@@ -315,7 +315,7 @@ class RCL_Install {
 
         rcl_update_dinamic_files();
         
-        update_options('rcl_version',VER_RCL);
+        update_option('rcl_version',VER_RCL);
 
     }
 

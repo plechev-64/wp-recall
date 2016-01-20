@@ -94,7 +94,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
     }
 
     function no_items() {
-        _e( 'No books found, dude.' );
+        _e( 'No addons found.', 'wp-recall' );
     }
 
     function column_default( $item, $column_name ) {

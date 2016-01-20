@@ -232,7 +232,7 @@ function rcl_ajax_tab($post){
         return $tab->add_tab('',$user_LK);
     }
     
-    return array('error'=>__('Error!','wp-recall'));
+    return array('error'=>__('Error','wp-recall').'!');
 
 }
 

@@ -151,7 +151,7 @@ function rcl_tab_groups($author_lk){
         }
     }
 
-    $content .= rcl_get_grouplist(array('filters'=>1,'search_form'=>0,'user_id'=>$author_lk,'add_uri'=>array('tab'=>'groups')));
+    $content .= rcl_get_grouplist(array('filters'=>0,'search_form'=>0,'user_id'=>$author_lk,'add_uri'=>array('tab'=>'groups')));
 
     return $content;
 }
@@ -629,6 +629,7 @@ function rcl_get_groups_footer_scripts($script){
                     var group_id = $('#groupavatarupload').parents('#rcl-group').data('group');
                     data.formData = {
                         group_id: group_id,
+                        ajax_nonce:Rcl.nonce,
                         action:'rcl_group_avatar_upload'
                     };
 		},

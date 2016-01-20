@@ -34,7 +34,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 
         if(!$user_ID||rcl_is_group_can('admin')) return false;
 
-        if($rcl_group->current_user=='banned') return false;
+        //if($rcl_group->current_user=='banned') return false;
 
         if(rcl_is_group_can('reader')){
 
@@ -53,31 +53,34 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
             if(rcl_get_group_option($rcl_group->term_id,'can_register')){
 
                 echo $before;
-
-                if($rcl_group->group_status=='open'){
-                    echo '<form method="post">'
-                        . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Join group','wp-recall').'">'
-                        . '<input type="hidden" name="group-action" value="join">'
-                        . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false )
-                    . '</form>';
-                }
-
-                if($rcl_group->group_status=='closed'){
-
-                    $requests = rcl_get_group_option($rcl_group->term_id,'requests_group_access');
-
-                    if($requests&&false!==array_search($user_ID, $requests)){
-
-                        echo '<h3 class="title-widget">'.__('The request for access sent','wp-recall').'</h3>';
-
-                    }else{
-
+                if($rcl_group->current_user=='banned'){
+                    echo '<div class="error"><p>'.__('You are banned group','wp-recall').'</p></div>';
+                }else{
+                    if($rcl_group->group_status=='open'){
                         echo '<form method="post">'
-                            . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Apply for membership','wp-recall').'">'
-                            . '<input type="hidden" name="group-action" value="ask">'
+                            . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Join group','wp-recall').'">'
+                            . '<input type="hidden" name="group-action" value="join">'
                             . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false )
                         . '</form>';
+                    }
 
+                    if($rcl_group->group_status=='closed'){
+
+                        $requests = rcl_get_group_option($rcl_group->term_id,'requests_group_access');
+
+                        if($requests&&false!==array_search($user_ID, $requests)){
+
+                            echo '<h3 class="title-widget">'.__('The request for access sent','wp-recall').'</h3>';
+
+                        }else{
+
+                            echo '<form method="post">'
+                                . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Apply for membership','wp-recall').'">'
+                                . '<input type="hidden" name="group-action" value="ask">'
+                                . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false )
+                            . '</form>';
+
+                        }
                     }
                 }
 

@@ -540,7 +540,7 @@ function rcl_pay_order_private_account(){
 
     $order = rcl_get_order($order_id);
 
-    $oldusercount = rcl_get_user_money();
+    $oldusercount = rcl_get_user_balance();
 
     if(!$oldusercount){
             $log['otvet']=1;
@@ -558,7 +558,7 @@ function rcl_pay_order_private_account(){
             exit;
     }
 
-    rcl_update_user_money($newusercount,$user_ID,'Оплата заказа №'.$order_id);
+    rcl_update_user_balance($newusercount,$user_ID,'Оплата заказа №'.$order_id);
 
     $result = rcl_update_status_order($order_id,2);
 
