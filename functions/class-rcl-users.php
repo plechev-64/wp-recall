@@ -186,7 +186,7 @@ class Rcl_Users{
             $query['select'] = array(
                 "users.ID"
               , "users.display_name"
-              //, "users.user_email"
+              , "users.user_email"
             );
 
             if($this->data('user_registered')||
@@ -379,10 +379,10 @@ class Rcl_Users{
             $query->query['orderby'] = "comments.comments_count";
         }
 
-        $query->query['join'][] = "INNER JOIN (SELECT COUNT(user_id) AS comments_count, user_id "
+        $query->query['join'][] = "INNER JOIN (SELECT COUNT(comment_author_email) AS comments_count, comment_author_email "
                 . "FROM $wpdb->comments "
-                . "GROUP BY user_id) comments "
-                . "ON users.ID=comments.user_id";
+                . "GROUP BY comment_author_email) comments "
+                . "ON users.user_email=comments.comment_author_email";
 
         return $query;
     }
@@ -391,14 +391,18 @@ class Rcl_Users{
     function add_comments_count($users){
         global $wpdb;
 
-		if(!$users) return $users;
+        if(!$users) return $users;
 
-        $ids = $this->get_users_ids($users);
+        $emails = array();
 
-        $query = "SELECT COUNT(user_id) AS comments_count, user_id AS ID "
+        foreach($users as $user){
+            $emails[] = $user->user_email;
+        }
+        
+        $query = "SELECT COUNT(comment_author_email) AS comments_count, user_id AS ID "
                 . "FROM $wpdb->comments "
-                . "WHERE user_id IN (".implode(',',$ids).") "
-                . "GROUP BY user_id";
+                . "WHERE comment_author_email IN ('".implode("','",$emails)."') "
+                . "GROUP BY comment_author_email";
 
         $comments = $wpdb->get_results($query);
 
@@ -464,7 +468,7 @@ class Rcl_Users{
 
     function get_users_ids($users){
 
-		if(!$users) return $users;
+        if(!$users) return $users;
 
         $ids = array();
 

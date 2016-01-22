@@ -382,12 +382,6 @@ function rcl_manager_set_option($status, $option, $value) {
   return $value;
 }
 
-add_action( 'admin_menu', 'rcl_add_manager_menu_item',20 );
-function rcl_add_manager_menu_item(){
-    $hook = add_submenu_page( 'manage-wprecall', __('Add-on manager','wp-recall'), __('Add-on manager','wp-recall'), 'manage_options', 'manage-addon-recall', 'rcl_render_addons_manager');
-    add_action( "load-$hook", 'rcl_add_options_addons_manager' );
-}
-
 function rcl_add_options_addons_manager() {
     global $Rcl_Addons_Manager;
     

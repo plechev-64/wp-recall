@@ -1,7 +1,6 @@
 <?php
 require_once 'core.php';
 require_once 'addon-options.php';
-require_once 'class_rayting.php';
 
 if(function_exists('rcl_enqueue_style')) rcl_enqueue_style('rating-system',__FILE__);
 

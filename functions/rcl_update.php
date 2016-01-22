@@ -180,6 +180,9 @@ function rcl_update_addon(){
 
         $zip->close();
         unlink($new_addon);
+        
+        unset($need_update[$addon]);
+        update_option('rcl_addons_need_update',$need_update);
 
         $log['success'] = $addon;
         echo json_encode($log);

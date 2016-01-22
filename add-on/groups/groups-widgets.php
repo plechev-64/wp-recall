@@ -312,6 +312,8 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 
 add_action('init','rcl_group_add_posts_widget');
 function rcl_group_add_posts_widget(){
+    global $rcl_options;
+    if(!isset($rcl_options['groups_posts_widget'])||!$rcl_options['groups_posts_widget']) return false;
     rcl_group_register_widget('Group_Posts_Widget');
 }
 
@@ -320,7 +322,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
     function Group_Posts_Widget() {
         parent::__construct( array(
             'widget_id'=>'group-posts-widget',
-            'widget_place'=>'unuses',
+            'widget_place'=>'content',
             'widget_title'=>__('Group posts','wp-recall')
             )
         );

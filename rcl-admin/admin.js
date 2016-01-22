@@ -78,36 +78,11 @@ jQuery(function($){
 		$('.wrap-recall-options').slideUp();
 		$('#options-'+get_param['options']).slideDown();
 		return false;
-	}
-	
-	/*$('.type_field').live('change',function(){
-		var type = $(this).val();
-		var slug = $(this).attr('id');
-		if(type==='text'||type==='textarea'){
-			$('#content-'+slug+' textarea').remove();
-			return false;
-		}
-		if($('#content-'+slug+' textarea').attr('name')) return false;				
-		var dataString = 'action=rcl_data_type_profile_field&type='+type+'&slug='+slug;
-
-		$.ajax({
-			type: 'POST',
-			data: dataString,
-			dataType: 'json',
-			url: ajaxurl,
-			success: function(data){
-				if(data['result']===100){					
-					$('#content-'+slug+' .first-chek').before(data['content']);				
-				}else{
-					alert('Ошибка!');
-				}
-			} 
-		});	  	
-		return false;
-	});*/
+	}	
         
 	$('.update-message .update-add-on').click(function(){
-            var addon = $(this).data('addon');				
+            var addon = $(this).data('addon');
+            $('#'+addon+'-update .update-message').addClass('updating-message');
             var dataString = 'action=rcl_update_addon&addon='+addon;
             $.ajax({
                 type: 'POST',
@@ -116,9 +91,10 @@ jQuery(function($){
                 url: ajaxurl,
                 success: function(data){
                     if(data['success']==addon){					
-                            $('#'+addon+'-update .update-message').html('Успешно обновлено!');				
+                            $('#'+addon+'-update .update-message').toggleClass('updating-message updated-message').html('Успешно обновлено!');				
                     }
                     if(data['error']){
+                        $('#'+addon+'-update .update-message').removeClass('updating-message');
                         alert(data['error']);
                     }
                 } 

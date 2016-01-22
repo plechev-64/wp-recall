@@ -27,6 +27,15 @@ function rcl_admin_groups_page_content($content){
                             __('Send for moderation','wp-recall'))
                     )),
                     $opt->notice(__('If used in moderation: To allow the user to see their publication before it is moderated, it is necessary to have on the website right below the Author','wp-recall')),
+                    
+                    $opt->label(__('Widget Content Groups','wp-recall')),
+                    $opt->option('select',array(
+                        'name'=>'groups_posts_widget',
+                        'options'=>array(
+                            __('Disabled','wp-recall'),
+                            __('Included','wp-recall'))
+                    )),
+                    $opt->notice(__('Include if the loop publications in the group was removed from the template','wp-recall'))
                 )
             )
         );

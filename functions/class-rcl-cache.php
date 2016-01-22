@@ -59,7 +59,7 @@ class Rcl_Cache{
     
     function get_cache(){
         if(!$this->file_exists) return false;
-        return file_get_contents($this->filepath).'<!-- Rcl cache:'.date('d.m.Y H:i',$this->last_update).' -->';
+        return file_get_contents($this->filepath).'<!-- Rcl-cache start:'.date('d.m.Y H:i',$this->last_update).' time:'.$this->time_cache.' -->';
     }
 
     function update_cache($content){

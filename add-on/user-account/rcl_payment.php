@@ -116,7 +116,7 @@ class Rcl_Payment{
             $method = 'pay_form';
             return $obj->$method($this);
         }else{
-            return '<span class="error">Ошибка! Не настроено подключение к платежному агрегатору.</span>';
+            return '<div class="error"><p class="error">Ошибка! Не настроено подключение к платежному агрегатору.</p></div>';
         }
     }
 

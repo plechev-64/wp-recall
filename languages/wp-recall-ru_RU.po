@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-01-20 12:44+0300\n"
+"POT-Creation-Date: 2016-01-20 18:53+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -63,7 +63,7 @@ msgid "News"
 msgstr "Новости"
 
 #: add-on/feed/classes/class-rcl-feed.php:296 add-on/rating-system/index.php:32
-#: functions/class-rcl-users.php:519 functions/shortcodes.php:127
+#: functions/class-rcl-users.php:523 functions/shortcodes.php:127
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -161,7 +161,7 @@ msgstr "Имя"
 msgid "Date"
 msgstr "Дата"
 
-#: add-on/groups/classes/rcl-groups.php:258 functions/class-rcl-users.php:518
+#: add-on/groups/classes/rcl-groups.php:258 functions/class-rcl-users.php:522
 msgid "Publications"
 msgstr "Публикациям"
 
@@ -173,7 +173,7 @@ msgstr "Публикациям"
 msgid "Users"
 msgstr "Пользователи"
 
-#: add-on/groups/classes/rcl-groups.php:264 functions/class-rcl-users.php:528
+#: add-on/groups/classes/rcl-groups.php:264 functions/class-rcl-users.php:532
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -378,6 +378,30 @@ msgstr ""
 "Если используется модерация: Для просмотра контента публикации находящейся "
 "на модерации, пользователь должен иметь роль не ниже Автора"
 
+#: add-on/groups/groups-options.php:31
+msgid "Widget Content Groups"
+msgstr "Виджет публикаций группы"
+
+#: add-on/groups/groups-options.php:35 add-on/publicpost/addon-options.php:45
+#: add-on/publicpost/addon-options.php:58
+#: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:178
+#: rcl-admin/admin-pages.php:206 rcl-admin/admin-pages.php:271
+#: rcl-admin/admin-pages.php:276 rcl-admin/admin-pages.php:287
+msgid "Disabled"
+msgstr "Отключено"
+
+#: add-on/groups/groups-options.php:36 add-on/publicpost/addon-options.php:45
+#: add-on/publicpost/addon-options.php:58
+#: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:179
+#: rcl-admin/admin-pages.php:207 rcl-admin/admin-pages.php:287
+msgid "Included"
+msgstr "Подключено"
+
+#: add-on/groups/groups-options.php:38
+msgid ""
+"Include if the loop publications in the group was removed from the template"
+msgstr "Подключить, если цикл публикаций внутри группы был удален из шаблона"
+
 #: add-on/groups/groups-widgets.php:15 add-on/groups/groups-widgets.php:22
 #: rcl-widgets.php:140 rcl-widgets.php:161
 msgid "Control panel"
@@ -385,7 +409,7 @@ msgstr "Панель управления"
 
 #: add-on/groups/groups-widgets.php:25 add-on/groups/groups-widgets.php:134
 #: add-on/groups/groups-widgets.php:187 add-on/groups/groups-widgets.php:220
-#: add-on/groups/groups-widgets.php:300 add-on/groups/groups-widgets.php:431
+#: add-on/groups/groups-widgets.php:300 add-on/groups/groups-widgets.php:433
 #: add-on/magazin/functions/shortcodes.php:120 add-on/publicpost/index.php:147
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
@@ -444,31 +468,31 @@ msgstr "Категории группы"
 msgid "Management"
 msgstr "Администрация"
 
-#: add-on/groups/groups-widgets.php:324 add-on/groups/groups-widgets.php:336
-#: add-on/groups/groups-widgets.php:424
+#: add-on/groups/groups-widgets.php:326 add-on/groups/groups-widgets.php:338
+#: add-on/groups/groups-widgets.php:426
 msgid "Group posts"
 msgstr "Публикации группы"
 
-#: add-on/groups/groups-widgets.php:406
+#: add-on/groups/groups-widgets.php:408
 msgid "Publications don't have"
 msgstr "Публикаций пока нет"
 
-#: add-on/groups/groups-widgets.php:433
+#: add-on/groups/groups-widgets.php:435
 msgid "The excerpt"
 msgstr "Краткое описание"
 
-#: add-on/groups/groups-widgets.php:435 add-on/groups/groups-widgets.php:440
+#: add-on/groups/groups-widgets.php:437 add-on/groups/groups-widgets.php:442
 #: add-on/publicpost/addon-options.php:172
 #: add-on/publicpost/addon-options.php:243
 #: add-on/publicpost/addon-options.php:250
 msgid "Do not display"
 msgstr "Не выводить"
 
-#: add-on/groups/groups-widgets.php:436 add-on/groups/groups-widgets.php:441
+#: add-on/groups/groups-widgets.php:438 add-on/groups/groups-widgets.php:443
 msgid "Display"
 msgstr "Отображать"
 
-#: add-on/groups/groups-widgets.php:438
+#: add-on/groups/groups-widgets.php:440
 msgid "Thumbnail"
 msgstr "Миниатюра"
 
@@ -1280,21 +1304,6 @@ msgstr ""
 #: add-on/publicpost/addon-options.php:42
 msgid "Display information about the author"
 msgstr "Отображать информацию об авторе"
-
-#: add-on/publicpost/addon-options.php:45
-#: add-on/publicpost/addon-options.php:58
-#: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:178
-#: rcl-admin/admin-pages.php:206 rcl-admin/admin-pages.php:271
-#: rcl-admin/admin-pages.php:276 rcl-admin/admin-pages.php:287
-msgid "Disabled"
-msgstr "Отключено"
-
-#: add-on/publicpost/addon-options.php:45
-#: add-on/publicpost/addon-options.php:58
-#: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:179
-#: rcl-admin/admin-pages.php:207 rcl-admin/admin-pages.php:287
-msgid "Included"
-msgstr "Подключено"
 
 #: add-on/publicpost/addon-options.php:48
 msgid "Use preview"
@@ -2200,22 +2209,22 @@ msgstr "Введите символы"
 msgid "Field filled not right CAPTCHA!"
 msgstr "Не верно заполнено поле CAPTCHA!"
 
-#: functions/class-rcl-users.php:504
+#: functions/class-rcl-users.php:508
 msgid "Total users"
 msgstr "Всего пользователей"
 
-#: functions/class-rcl-users.php:517
+#: functions/class-rcl-users.php:521
 msgid "Activity"
 msgstr "Активности"
 
-#: functions/class-rcl-users.php:520 functions/loginform.php:50
+#: functions/class-rcl-users.php:524 functions/loginform.php:50
 #: functions/loginform.php:58 functions/loginform.php:74
 #: functions/shortcodes.php:171 templates/form-register.php:4
 #: templates/form-remember.php:21 templates/form-sign.php:33
 msgid "Registration"
 msgstr "Регистрация"
 
-#: functions/class-rcl-users.php:524
+#: functions/class-rcl-users.php:528
 msgid "Rated"
 msgstr "Рейтингу"
 

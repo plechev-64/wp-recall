@@ -1,6 +1,10 @@
 <?php
-//проверка подтверждения емейла юзера при авторизации
 add_action('wp_authenticate','rcl_chek_user_authenticate');
+/**
+ * проверяем подтверждение емейла, если такая настройка включена
+ * 
+ * @param string $email емейл юзера на проверку
+ */
 function rcl_chek_user_authenticate($email){
     global $rcl_options;
     $confirm = (isset($rcl_options['confirm_register_recall']))? $rcl_options['confirm_register_recall']: 0;
@@ -21,7 +25,9 @@ function rcl_chek_user_authenticate($email){
     }
 }
 
-//авторизация пользователя
+/**
+ * авторизация пользователя
+ */
 function rcl_get_login_user(){
     global $wp_errors;
 
@@ -71,7 +77,11 @@ function rcl_get_login_user_activate ( ) {
     }
 }
 
-//получаем путь на возврат пользователя после авторизации
+/**
+ * получаем путь на возврат пользователя после авторизации
+ * 
+ * @param int $user_id идентификатор пользователя
+ */
 function rcl_get_authorize_url($user_id){
     global $rcl_options;
     if(isset($rcl_options['authorize_page'])&&$rcl_options['authorize_page']){

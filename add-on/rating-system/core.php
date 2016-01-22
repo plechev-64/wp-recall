@@ -395,9 +395,10 @@ add_action('rcl_update_total_rating','rcl_post_update_user_rating');
 add_action('rcl_delete_rating_with_post','rcl_post_update_user_rating');
 function rcl_post_update_user_rating($args){
     global $rcl_options;
+    
     if(!isset($args['object_author'])||!$args['object_author']) return false;
     if($rcl_options['rating_user_'.$args['rating_type']]==1||$args['rating_type']=='edit-admin'||isset($args['user_overall']))
-		rcl_update_user_rating($args);
+        rcl_update_user_rating($args);
 }
 
 //Обновляем общий рейтинг пользователя
@@ -414,54 +415,15 @@ function rcl_update_user_rating($args){
             array('user_id' => $args['object_author'])
         );
     }else{
-		$total = $args['rating_value'];
+        $total = $args['rating_value'];
         rcl_insert_user_rating($args['object_author'],$args['rating_value']);
     }
 
     do_action('rcl_update_user_rating',$args,$total);
 
-	return $total;
+    return $total;
 
 }
-
-//Удаляем из БД всю информацию об активности пользователя на сайте
-//Корректируем рейтинг других пользователей
-function rcl_delete_ratingdata_user($user_id){
-    global  $wpdb;
-
-    $datas = array();
-
-    $r_posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."rating_values WHERE user_id = '%d'",$user_id));
-
-    if($r_posts){
-        foreach($r_posts as $r_post){
-            $datas[$r_post->object_author][$r_post->rating_type][$r_post->object_id] += $r_post->rating_value;
-        }
-    }
-
-    if($datas){
-        foreach($datas as $object_author=>$val){
-            foreach($val as $type=>$data){
-                foreach($data as $object_id=>$value){
-                    $rayt = -1*$rayt;
-                    $args = array(
-                        'user_id' => $user_id,
-                        'object_id' => $object_id,
-                        'object_author' => $object_author,
-                        'rating_value' => $value,
-                        'rating_type' => $type
-                    );
-                    rcl_update_total_rating($args);
-                }
-            }
-        }
-    }
-
-    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rating_values WHERE user_id = '%d' OR object_author='%d'",$user_id,$user_id));
-    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rating_totals WHERE user_id = '%d' OR object_author='%d'",$user_id,$user_id));
-    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rating_users WHERE user_id = '%d'",$user_id));
-}
-add_action('delete_user','rcl_delete_ratingdata_user');
 
 //Удаляем голос пользователя за публикацию
 function rcl_delete_rating($args){
@@ -530,11 +492,13 @@ function rcl_delete_rating_with_post($args){
 //Удаляем данные рейтинга публикации
 add_action('delete_post', 'rcl_delete_rating_post');
 function rcl_delete_rating_post($post_id){
-    rcl_delete_rating_with_post(array('object_id'=>$post_id,'rating_type'=>get_post_type($post_id)));
+    $post = get_post($post_id);
+    rcl_delete_rating_with_post(array('object_id'=>$post_id,'object_author'=>$post->post_author,'rating_type'=>$post->post_type));
 }
 add_action('delete_comment', 'rcl_delete_rating_comment');
 function rcl_delete_rating_comment($comment_id){
-    rcl_delete_rating_with_post(array('object_id'=>$comment_id,'rating_type'=>'comment'));
+    $comment = get_comment($comment_id);
+    rcl_delete_rating_with_post(array('object_id'=>$comment_id,'object_author'=>$comment->user_id,'rating_type'=>'comment'));
 }
 
 add_filter('comments_array','rcl_add_data_rating_comments');
@@ -632,9 +596,50 @@ function rcl_add_data_rating_posts(){
 	}
 }
 
+//Удаляем из БД всю информацию об активности пользователя на сайте
+//Корректируем рейтинг других пользователей
+function rcl_delete_ratingdata_user($user_id){
+    global  $wpdb;
+
+    $datas = array();
+
+    $r_posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."rating_values WHERE user_id = '%d'",$user_id));
+
+    if($r_posts){
+        foreach($r_posts as $r_post){
+            $datas[$r_post->object_author][$r_post->rating_type][$r_post->object_id] += $r_post->rating_value;
+        }
+    }
+
+    if($datas){
+        foreach($datas as $object_author=>$val){
+            foreach($val as $type=>$data){
+                foreach($data as $object_id=>$value){
+                    $rayt = -1*$rayt;
+                    $args = array(
+                        'user_id' => $user_id,
+                        'object_id' => $object_id,
+                        'object_author' => $object_author,
+                        'rating_value' => $value,
+                        'rating_type' => $type
+                    );
+                    rcl_update_total_rating($args);
+                }
+            }
+        }
+    }
+
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rating_values WHERE user_id = '%d' OR object_author='%d'",$user_id,$user_id));
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rating_totals WHERE user_id = '%d' OR object_author='%d'",$user_id,$user_id));
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rating_users WHERE user_id = '%d'",$user_id));
+}
+add_action('delete_user','rcl_delete_ratingdata_user');
+
 add_shortcode('ratinglist','rcl_rating_shortcode');
 function rcl_rating_shortcode($atts){
     global $rating;
+    
+    require_once 'class-rcl-rayting.php';
 
     $rcl_rating = new Rcl_Rating($atts);
     

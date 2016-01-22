@@ -12,6 +12,7 @@ class Rcl_Payments_List_Table extends WP_List_Table {
     var $current_page = 1;
     var $total_items;
     var $offset = 0;
+    var $sum_balance;
     var $sum = 0;
     var $query = array(
             'select'    => array(),
@@ -211,7 +212,7 @@ class Rcl_Payments_List_Table extends WP_List_Table {
 
         $query_string = "SELECT "
             . implode(", ",$this->query['select'])." "
-            . "FROM ".RMAG_PREF ."pay_results AS payments "
+            . "FROM ".RMAG_PREF."pay_results AS payments "
             . implode(" ",$this->query['join'])." ";
 
         if($this->query['where']) $query_string .= "WHERE ".implode(' '.$this->query['relation'].' ',$this->query['where'])." ";
@@ -225,6 +226,11 @@ class Rcl_Payments_List_Table extends WP_List_Table {
 
         return $query_string;
 
+    }
+    
+    function get_sum_balance(){
+        global $wpdb;
+        return $wpdb->get_var("SELECT SUM(CAST(user_balance AS DECIMAL)) FROM ".RMAG_PREF."users_balance WHERE user_balance!='0'");
     }
     
     function get_data(){
@@ -251,6 +257,7 @@ class Rcl_Payments_List_Table extends WP_List_Table {
         
         $this->total_items = $this->count_items();
         $this->sum = $this->get_sum();
+        $this->sum_balance = $this->get_sum_balance();
         $items = $this->get_items();
         
         return $items;
@@ -305,6 +312,7 @@ function rcl_admin_statistic_cashe(){
   echo '</pre><div class="wrap"><h2>'.__('Payment history','wp-recall').'</h2>';
 
   echo '<p>Всего переводов: '.$Rcl_Payments->total_items.' на сумму '.$Rcl_Payments->sum.' '.rcl_get_primary_currency(1).' (Средний чек: '.$sr.' '.rcl_get_primary_currency(1).')</p>';
+  echo '<p>Всего в системе: '.$Rcl_Payments->sum_balance.' '.rcl_get_primary_currency(1).'</p>';
   //echo '<p>Средняя выручка за сутки: '.$day_pay.' '.rcl_get_primary_currency(1).'</p>';
   echo rcl_get_chart_payments($Rcl_Payments->items);
    ?>
