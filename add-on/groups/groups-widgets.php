@@ -347,9 +347,9 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
         
         if($rcl_cache->is_cache){
 
-            $string = (isset($wp_query->query_vars['paged']))? $rcl_group->term_id.':'.$wp_query->query_vars['paged']: $rcl_group->group_id;
+            $string = json_encode($wp_query->query_vars);
 
-            $file = $rcl_cache->get_file('group-posts-widget:'.$string);
+            $file = $rcl_cache->get_file($string);
 
             if(!$file->need_update){
 

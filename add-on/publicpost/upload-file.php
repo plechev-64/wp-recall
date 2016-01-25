@@ -53,6 +53,8 @@ function rcl_imagepost_upload(){
         }
 
     }
+    
+    do_action('rcl_post_upload',$post);
 
     echo json_encode($res);
     exit;

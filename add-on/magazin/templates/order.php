@@ -9,9 +9,9 @@
 	<table bordercolor="сссссс" border="1" cellpadding="5" class="order-data">
 		<tr>
 			<th class="product-name">Товар</th>
-			<th>Цена</th>
+			<th width="70">Цена</th>
 			<th class="product-number">Количество</th>
-			<th>Сумма</th>
+			<th width="70">Сумма</th>
 		</tr>
 		<?php foreach($order->products as $product): ?>
 			<tr id="product-<?php rcl_product_ID; ?>">

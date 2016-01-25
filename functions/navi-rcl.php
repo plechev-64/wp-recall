@@ -125,7 +125,7 @@ function rcl_get_ajax_pagenavi($userid,$post_type){
 
 	$navi = '<ul id="'.$post_type.'-pagenavi" class="pagenavi-rcl">';
 	for($a=0;$a<$pages;$a++){
-		$navi .= '<li><a type="'.$post_type.'" data="'.$a*$in_page.'" class="sec_block_button';
+		$navi .= '<li><a type="'.$post_type.'" data="'.$a*$in_page.'" class="recall-button sec_block_button';
 		if($a==0)$navi .= ' active';
 		$navi .= '" href="#">'.++$page.'</a></li>';
 	}

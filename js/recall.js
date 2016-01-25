@@ -7,18 +7,18 @@ jQuery(window).load(function() {
 var get_param = new Array();
 
 function init_location_data(){
-	var rcl_tmp = new Array();
-	var rcl_tmp2 = new Array();	
+    var rcl_tmp = new Array();
+    var rcl_tmp2 = new Array();	
 
-	var get = location.search;
-	if(get !== ''){
-	  rcl_tmp = (get.substr(1)).split('&');
-	  for(var i=0; i < rcl_tmp.length; i++) {
-	  rcl_tmp2 = rcl_tmp[i].split('=');
-	  get_param[rcl_tmp2[0]] = rcl_tmp2[1];
-	  }
-	}
-	return get_param;
+    var get = location.search;
+    if(get !== ''){
+      rcl_tmp = (get.substr(1)).split('&');
+      for(var i=0; i < rcl_tmp.length; i++) {
+      rcl_tmp2 = rcl_tmp[i].split('=');
+      get_param[rcl_tmp2[0]] = rcl_tmp2[1];
+      }
+    }
+    return get_param;
 }
 
 function rcl_is_valid_url(url){
@@ -88,8 +88,48 @@ jQuery(function($){
         }); 
         return false;
     });
+    
+    $("body .rcl-smiles > img").on({
+        mouseenter: function () {
+            var sm_box = $(this).next();
+            var block = sm_box.children();
+            sm_box.show();
+            if(block.html()) return false;
+            block.html('Загрузка...');
+            var dir = $(this).data('dir');
+            var area = $(this).parent().data('area');
+            var dataString = 'action=rcl_get_smiles_ajax&area='+area;
+            if(dir) dataString += '&dir='+dir;
+            dataString += '&ajax_nonce='+Rcl.nonce;
+            $.ajax({
+                type: 'POST', 
+                data: dataString, 
+                dataType: 'json', 
+                url: Rcl.ajaxurl,
+                success: function(data){				
+                        if(data['result']==1){
+                                block.html(data['content']);
+                        }else{
+                                rcl_notice('Ошибка!','error');
+                        }					
+                }			
+            }); 
+        },
+        mouseleave: function () {
+            $(this).next().hide();
+        }
+    });
+    
+    $("body .rcl-smiles > .rcl-smiles-list").on({
+        mouseenter: function () {
+            $(this).show();           
+        },
+        mouseleave: function () {
+            $(this).hide();
+        }
+    });
 
-    $('body').on('hover','.rcl-smiles > img',function(){
+    $('body').on('hover click','.rcl-smiles > img',function(){
         var block = $(this).next().children();
         if(block.html()) return false;
         block.html('Загрузка...');
@@ -267,36 +307,8 @@ jQuery(function($){
             }
         });
     }
-
-	$.fn.extend({
-		insertAtCaret: function(myValue){
-			return this.each(function(i) {
-				if (document.selection) {
-					// Для браузеров типа Internet Explorer
-					this.focus();
-					var sel = document.selection.createRange();
-					sel.text = myValue;
-					this.focus();
-				}
-				else if (this.selectionStart || this.selectionStart == '0') {
-					// Для браузеров типа Firefox и других Webkit-ов
-					var startPos = this.selectionStart;
-					var endPos = this.selectionEnd;
-					var scrollTop = this.scrollTop;
-					this.value = this.value.substring(0, startPos)+myValue+this.value.substring(endPos,this.value.length);
-					this.focus();
-					this.selectionStart = startPos + myValue.length;
-					this.selectionEnd = startPos + myValue.length;
-					this.scrollTop = scrollTop;
-				} else {
-					this.value += myValue;
-					this.focus();
-				}
-			})
-		}
-	});
-
-	$.cookie = function(name, value, options) {
+    
+    $.cookie = function(name, value, options) {
         if (typeof value !== 'undefined') { 
                 options = options || {};
                 if (value === null) {
@@ -333,24 +345,6 @@ jQuery(function($){
                 return cookieValue;
         }
     };
-	
-	if($.cookie('favs')){		
-            favsr=$.cookie('favs'); 
-            favsr=favsr.split('|');
-            $("#favs").html('<p style="margin:0;" align="right"><a onclick="jQuery(\'#favs\').slideToggle();return false;" href="#">Закрыть</a></p>');
-            for(i=1;i<favsr.length;i++){
-                    favsl=favsr[i].split(',');
-                    if(favsl[1]){ 
-                            $("#favs").append('<div><a href="'+favsl[0]+'">'+favsl[1]+'</a> [<a href="javascript://" onclick="delfav(\''+favsl[0]+'\')">x</a>]</div>');
-                    }else{
-                            delfav(favsl[0]);
-                    }
-            }
-            return false;
-    } else {
-            $("#favs").html('<p style="margin:0;" align="right"><a onclick="jQuery(\'#favs\').slideToggle();return false;" href="#">Закрыть</a></p><p class="empty"><b>Формируйте свой список интересных страниц сайта с помощью закладок!</b><br />Закладки не добавляются в ваш браузер и действуют только на этом сайте.<br />Для добавления новой закладки,<br>на нужной странице нажмите <b>В закладки</b>.<br> Помните что если очистить Cookies, то закладки тоже исчезнут.<br>Управляйте временем сохранения закладок через настройки вашего браузера для Cookies.</p>');
-            return false;
-    }
 
 });
 
@@ -430,54 +424,6 @@ function rcl_add_dropzone(idzone){
         if (password.length > 12) score++;
         document.getElementById("passwordDescription").innerHTML = desc[score];
         document.getElementById("passwordStrength").className = "strength" + score;
-    }
-
-    cookiepar={expires: 9999, path: '/'} // Все закладки общие
-
-    function addfav(title,url) {
-        title=title || document.title; url=url || document.location.href; if(title.length>20){
-                title=title.substr(0,99)+'..';
-        }
-        if(jQuery("#favs a[href='"+url+"']").length>0){
-                jQuery("#add_bookmarks").html('Страница уже есть в закладках').slideDown().delay(1000).fadeOut(1000);		
-                return false;
-        }
-        if(jQuery.cookie('favs')){
-                jQuery.cookie('favs',jQuery.cookie('favs')+'|'+url+','+title,cookiepar);
-        } else {
-                jQuery.cookie('favs','|'+url+','+title,cookiepar);
-        }
-        jQuery("#add_bookmarks").html('Закладка добавлена!').slideDown().delay(2000).fadeOut(1000);
-
-        if(jQuery("#favs").text()==='У вас пока нет закладок') {
-               jQuery("#favs").html(' ');
-        }
-        var empty =jQuery("#favs .empty");
-        if(empty) jQuery("#favs .empty").remove();
-        title=title.split('|');
-        jQuery("#favs").append('<div style="display:none" id="newbk"><a href="'+url+'">'+title[0]+'</a> [<a href="javascript://" onclick="delfav(\''+url+'\')">x</a>]</div>');
-        jQuery("#newbk").fadeIn('slow').attr('id','');
-    }
-	
-    function delfav(url){
-        jQuery("#favs a[href='"+url+"']").parent().fadeOut('slow',function(){
-            jQuery(this).empty().remove(); 
-            if(jQuery("#favs").html().length<2){
-                    jQuery("#favs").html('У вас нет закладок');
-            }
-        });
-        nfavs=''; 
-        dfavs=jQuery.cookie('favs');
-        dfavs=dfavs.split('|');
-        for(i=0;i<dfavs.length;i++){
-            if(dfavs[i].split(',')[0]===url){
-                    dfavs[i]='';
-            }
-            if(dfavs[i]!==''){
-                    nfavs+='|'+dfavs[i];
-            }
-        }
-        jQuery.cookie('favs',nfavs,cookiepar);
     }
 	
     function rcl_notice(text,type){	

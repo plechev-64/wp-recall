@@ -312,7 +312,7 @@ class Rcl_Feed{
     }
 
     function get_filter($key,$name,$perm){
-        return '<a class="data-filter '.rcl_a_active($this->content,$key).'" href="'.$perm.'feed-filter='.$key.'">'.$name.'</a> ';
+        return '<a class="data-filter recall-button '.rcl_a_active($this->content,$key).'" href="'.$perm.'feed-filter='.$key.'">'.$name.'</a> ';
     }
 }
 

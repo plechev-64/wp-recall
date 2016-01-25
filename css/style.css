@@ -419,7 +419,6 @@ span.ruble-symbol{
 .rcl-smiles > img:hover{
 	opacity:0.8;
 }
-.rcl-smiles > img:hover +.rcl-smiles-list,
 .rcl-smiles .rcl-smiles-list:hover{
 	display:block;
 }

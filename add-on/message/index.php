@@ -514,11 +514,11 @@ class Rcl_Messages{
                     $ban = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".RCL_PREF."black_list_user WHERE user = '%d'",$user_ID));
 
                     $privat_block .= '<div class="buttons-navi">
-                    <a data="'.$days.'" class="sec_block_button active" href="#"><i class="fa fa-clock-o"></i>'.$days.' '.__('days','wp-recall').'</a>
-                    <a data="30" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('month','wp-recall').'</a>
-                    <a data="0" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('all the time','wp-recall').'</a>';
-                    if(isset($ban)) $privat_block .= '<a data="-1" class="sec_block_button" href="#"><i class="fa fa-bug"></i>'.__('Blacklist','wp-recall').'</a>';
-                    $privat_block .= '<a data="important" class="sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('Important','wp-recall').'</a>';
+                    <a data="'.$days.'" class="recall-button sec_block_button active" href="#"><i class="fa fa-clock-o"></i>'.$days.' '.__('days','wp-recall').'</a>
+                    <a data="30" class="recall-button sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('month','wp-recall').'</a>
+                    <a data="0" class="recall-button sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('all the time','wp-recall').'</a>';
+                    if(isset($ban)) $privat_block .= '<a data="-1" class="recall-button sec_block_button" href="#"><i class="fa fa-bug"></i>'.__('Blacklist','wp-recall').'</a>';
+                    $privat_block .= '<a data="important" class="recall-button sec_block_button" href="#"><i class="fa fa-clock-o"></i>'.__('Important','wp-recall').'</a>';
                     $privat_block .= '</div>';
 
                     $privat_block .= '<div id="contact-lists">'.$this->get_loop_contacts_rcl($contacts,$days).'</div>';

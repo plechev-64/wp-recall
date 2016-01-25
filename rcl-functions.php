@@ -50,13 +50,19 @@ function rcl_register_recallbar(){
 }
 
 function rcl_key_addon($path_parts){
-    if(!isset($path_parts['dirname'])) return false;
-    $key = false;
-    $ar_dir = explode('/',$path_parts['dirname']);
-    if(!isset($ar_dir[1])) $ar_dir = explode('\\',$path_parts['dirname']);
+    if(!isset($path_parts['dirname'])) return false;    
+    return rcl_get_addon_dir($path_parts['dirname']);
+}
+
+function rcl_get_addon_dir($path){
+    if(function_exists('wp_normalize_path')) 
+        $path = wp_normalize_path($path);
+    $dir = false;
+    $ar_dir = explode('/',$path);
+    if(!isset($ar_dir[1])) $ar_dir = explode('\\',$path);
     $cnt = count($ar_dir)-1;
-    for($a=$cnt;$a>=0;$a--){if($ar_dir[$a]=='add-on'){$key=$ar_dir[$a+1];break;}}
-    return $key;
+    for($a=$cnt;$a>=0;$a--){if($ar_dir[$a]=='add-on'){$dir=$ar_dir[$a+1];break;}}
+    return $dir;
 }
 
 //добавляем вкладку со списком публикаций хозяина ЛК указанного типа записей в личный кабинет

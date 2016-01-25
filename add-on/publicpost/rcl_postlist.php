@@ -33,7 +33,7 @@ class Rcl_Postlist {
 
     function add_postlist_button( $button ){
             $status = ! $button ? 'active' : '';
-            $button .= ' <a href="#" id="posts_'.$this->id.'" class="child_block_button '.$status.'"><i class="fa '.$this->class.'"></i>'.$this->name.'</a> ';
+            $button .= ' <a href="#" id="posts_'.$this->id.'" class="recall-button child_block_button '.$status.'"><i class="fa '.$this->class.'"></i>'.$this->name.'</a> ';
             return $button;
     }
 

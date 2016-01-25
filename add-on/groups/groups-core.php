@@ -355,6 +355,7 @@ function rcl_get_group_users($group_id){
 
     foreach($group_roles as $role=>$data){
         $class = ($role==$users_role)? 'filter-active': 'data-filter';
+        $class .= ' recall-button';
         $content .=  rcl_get_group_link('rcl_get_group_users',$data['role_name'],array('value'=>$role,'class'=>$class));
     }
     $content .= '</div>';

@@ -438,7 +438,8 @@ function get_public_allterms(){
 
 function rcl_publication_upload(){
     global $formData;
-    new Rcl_Thumb_Form($formData->post_id,$formData->id_upload);
+    $gallery = new Rcl_Thumb_Form($formData->post_id,$formData->id_upload);
+    echo $gallery->get_gallery();
 }
 
 add_action('public_form','rcl_filter_public_form');

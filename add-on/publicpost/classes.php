@@ -218,18 +218,16 @@ class Rcl_Thumb_Form{
 
         $this->post_id = $p_id;
         $this->id_upload = $id_upload;
-        $this->gallery_init();
+        
+        if($this->post_id) 
+            $this->thumb = get_post_meta($this->post_id, '_thumbnail_id',1);
+
     }
 
-    function gallery_init(){
-        global $rcl_options;
-
-        if($this->post_id) $this->thumb = get_post_meta($this->post_id, '_thumbnail_id',1);
-        $this->gallery_rcl();		
-    }
-
-    function gallery_rcl(){
+    function get_gallery($accept='image/*'){
         global $user_ID,$formData;
+        
+        $accept = ($formData->accept)? $formData->accept: $accept;
 
         if($this->post_id) $gal = get_post_meta($this->post_id, 'recall_slider', 1);
         else $gal = 0;
@@ -253,13 +251,17 @@ class Rcl_Thumb_Form{
             $attachlist = $this->get_gallery_list($temp_gal);
         }
 
-        echo '<small class="notice-upload">'.__('Click on Priceline the image to add it to the content of the publication','wp-recall').'</small>';
+        if($formData) $content = '<small class="notice-upload">'.__('Click on Priceline the image to add it to the content of the publication','wp-recall').'</small>';
 
-        echo '<ul id="temp-files">'.$attachlist.'</ul>';
-        echo '<p><label><input ';
-        //if(!$this->post_id) echo 'checked="checked"';
-        echo 'type="checkbox" '.checked($gal,1,false).' name="add-gallery-rcl" value="1"> - '.__('Display all attached images in the gallery.','wp-recall').'</label></p>
-        <div id="status-temp"></div>
+        $content .= '<ul id="temp-files">'.$attachlist.'</ul>';
+		
+        if($formData){
+                $content .= '<p><label><input ';
+                //if(!$this->post_id) echo 'checked="checked"';
+                $content .= 'type="checkbox" '.checked($gal,1,false).' name="add-gallery-rcl" value="1"> - '.__('Display all attached images in the gallery.','wp-recall').'</label></p>';
+        }
+		
+        $content .= '<div id="status-temp"></div>
         <div>
             <div id="rcl-public-dropzone" class="rcl-dropzone mass-upload-box">
                 <div class="mass-upload-area">
@@ -268,11 +270,13 @@ class Rcl_Thumb_Form{
                 <hr>
                 <div class="recall-button rcl-upload-button">
                         <span>'.__('Add','wp-recall').'</span>
-                        <input id="'.$this->id_upload.'" name="uploadfile[]" type="file" accept="'.$formData->accept.'" multiple>
+                        <input id="'.$this->id_upload.'" name="uploadfile[]" type="file" accept="'.$accept.'" multiple>
                 </div>
-                <small class="notice">Разрешенные расширения: '.$formData->accept.'</small>
+                <small class="notice">Разрешенные расширения: '.$accept.'</small>
             </div>
         </div>';
+        
+        return $content;
     }
 
     function get_gallery_list($temp_gal){

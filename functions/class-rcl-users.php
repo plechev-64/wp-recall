@@ -542,7 +542,7 @@ class Rcl_Users{
     }
 
     function get_filter($key,$name,$perm){
-        return '<a class="data-filter '.rcl_a_active($this->orderby,$key).'" href="'.$perm.'users-filter='.$key.'">'.$name.'</a> ';
+        return '<a class="data-filter recall-button '.rcl_a_active($this->orderby,$key).'" href="'.$perm.'users-filter='.$key.'">'.$name.'</a> ';
     }
 
     function add_query_search($query){

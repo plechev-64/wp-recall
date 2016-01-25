@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://wppost.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 14.a.5
+    Version: 14.a.6
     Author: Plechev Andrey
     Author URI: http://wppost.ru/
     Text Domain: wp-recall
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '14.a.5';
+	public $version = '14.a.6';
 
 	protected static $_instance = null;
 
@@ -238,8 +238,16 @@ final class WP_Recall {
         function rcl_include_addons(){
             global $active_addons;
 
-            $active_addons = get_site_option('rcl_active_addons');
+            require_once("functions/rcl_addons.php");
+            
+            if(is_admin()){
+                global $rcl_error;
+                $rcl_error = (isset($_GET['error-text']))? $_GET['error-text']: '';
+                register_shutdown_function('rcl_register_shutdown');
+            }
 
+            $active_addons = get_site_option('rcl_active_addons');
+            
             if($active_addons){
                 $addons = array();
                 foreach($active_addons as $addon=>$data){
@@ -249,14 +257,16 @@ final class WP_Recall {
                     else 
                         $addons[0][$addon] = $data;
                 }
-
+                
+                ksort($addons);
+                
                 foreach($addons as $priority=>$adds){
                     foreach($adds as $addon=>$data){
                         if(!$addon) continue;
 
                         $path = untrailingslashit( $data['path'] );
                         if(file_exists($path.'/index.php')){                            
-                            include_once($path.'/index.php');
+                            rcl_include_addon($path.'/index.php');
                         }else{
                             unset($active_addons[$addon]);
                         }
@@ -264,8 +274,6 @@ final class WP_Recall {
                 }
 
             }
-
-            require_once("functions/rcl_addons.php");
 
         }
 
