@@ -1,9 +1,8 @@
-/*Рекаллбар*/
+/* Реколлбар Start */
 #recallbar {
-    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.8);
     font-size: 14px;
     left: 0;
-    /* padding: 5px 0; */
     position: fixed;
     top: 0;
     width: 100%;
@@ -12,72 +11,105 @@
 #recallbar ul li {
     float: left;
     line-height: 1;
-    list-style: none outside none;
+    list-style: none;
     margin: 0;
-    /* padding: 10px 0; */
     display: block;
-}
-#recallbar .recallbar, #recallbar .recallbar ul {
-    margin: 0;
-    overflow: hidden;
 }
 #recallbar .left-recall-menu {
     float: left;
     margin: 0 0 0 60px;
+	padding: 0;
 }
 #recallbar .right-recall-menu {
     float: right;
     margin: 0;
 }
+#recallbar li a,
+#recallbar .recallbar .sub-menu li a {
+    color: #fff !important;
+    margin: 0 2px;
+    padding: 10px 5px;
+    text-decoration: none;
+    display: block;
+}
+#recallbar li a:hover,
+#recallbar .recallbar .sub-menu li a:hover {
+	background: rgba(219, 219, 219, 0.3);
+	color: #fff;
+	text-decoration: none;
+}
+#recallbar .recallbar,
+#recallbar .recallbar ul {
+    margin: 0;
+	padding: 0;
+    overflow: hidden;
+}
 #recallbar .recallbar .sub-menu {
-    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.8);
-    /* margin-top: 5px; */
+    background: rgba(0, 0, 0, 0.8);
+	color: #fff;
+    display: none;
+    margin: 0;
     padding: 0;
     position: absolute;
-    display: none;
+    top: unset;
 }
 #recallbar .recallbar .sub-menu li {
     float: none;
-    padding: 0 0 0 10px;
+    padding: 0;
 }
-#recallbar li a, .recallbar .sub-menu li a {
-    color: #FFFFFF !important;
-    margin: 0 10px 0 0;
-    text-decoration: none;
-    padding: 10px 0;
-    display: block;
-}
-#recallbar .recallbar .sub-menu li a {
-    padding: 5px 0;
-}
-#recallbar .recallbar .sub-menu li a:hover {
-    background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
-    color: #FFFFFF;
-    margin: 0 10px 0 0;
-    text-decoration: none;
-}
-#recallbar .recallbar li:hover > .sub-menu,#recallbar .recallbar li .sub-menu:hover{
+
+#recallbar .recallbar li:hover > .sub-menu,
+#recallbar .recallbar li .sub-menu:hover{
 	display:block;
 }
-#add_bookmarks, #favs {
-    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
-    border-radius: 5px;
-    box-shadow: 3px 3px 3px 3px #CCCCCC;
-    color: #DDDDDD;
-    font-size: 14px;
-    left: 50%;
-    margin-left: -250px;
-    padding: 20px;
-    position: fixed;
-    top: 30%;
-    width: 500px;
-    z-index: 999;
+/* коррекция к теме Start */
+#recallbar .current-menu-item > a {
+	background: unset;
 }
-#favs a {
-    color: #FFFFFF;
+#recallbar .current-menu-item > a::after {
+    height: 0;
 }
-#add_bookmarks {
-    margin-left: -150px;
-    text-align: center;
-    width: 300px;
+#recallbar .menu-item-has-children > a::after {
+    content: "";
 }
+/* коррекция к теме End */
+
+
+
+
+
+@media screen and (max-width:720px) {
+	#recallbar .left-recall-menu {
+		margin: 0 0 0 15px;
+	}
+	#recallbar li a {
+		padding: 5px 8px;
+	}
+	#recallbar a i.fa {
+		display: list-item;
+		text-align: center;
+	}
+}
+
+@media screen and (max-width:585px) {
+	#recallbar .left-recall-menu {
+		margin: 0 0 0 2px;
+	}
+	#recallbar li a {
+		padding: 5px 3px;
+	}
+	#recallbar a span {
+		font-size: 13px;
+	}
+}
+
+@media screen and (max-width:445px) {
+	#recallbar a span {
+		display: none;
+	}
+	#recallbar a i.fa {
+		font-size: 22px;
+		padding: 0 5px 0 10px;
+	}
+}
+/* Реколлбар End */

@@ -1,107 +1,39 @@
 /*Личные сообщения*/
-#lk-content #tab-privat .avatar {
-    border-radius: 3px;
-	margin:0 10px;
+#tab-privat #message-list {
+    overflow: hidden;
 }
-#lk-content #tab-privat p {
-	margin:0px;
+#tab-privat .old_mess_block {
+	background: #4C8CBD;
+	font: 14px Verdana,arial;
+    margin: 0 0 15px 5px;
+    padding: 6px 10px;
+    text-align: center;
 }
-#lk-content #tab-privat .content-mess p img{
-	margin:0px 3px;
+#tab-privat .old_mess_block:hover {
+	opacity: 0.8;
+}
+#tab-privat .old_mess_block a {
+    color: #fff;
+    font-weight: bold;
+	display: block;
+}
+#tab-privat .avatar {
+    border-radius: 2px;
+    height: 40px;				/*++Twenty16++*/
+    margin: 0 10px;
+    width: 40px;				/*++Twenty16++*/
 }
 #lk-content .message-block {
-	border-radius: 3px;
-	margin: 0 5px;
+	font: 14px/1 Tahoma,arial;	/*++Twenty15++*/
+	margin: 4px 5px;
 	min-height: 45px;
 	overflow: hidden;
-	padding: 0 5px 0px;
+	padding: 0 5px 0;
+	position: relative;
 }
 #lk-content .message-block iframe{
 	display:block;
 	margin:5px auto;
-}
-#count-word {
-    color: #008000;
-}
-.form_new_message .reading_mess {
-    margin: 5px 0 0;
-}
-#privatemess .private-message p {
-    line-height: 1.2;
-    margin: 0;
-}
-#privatemess .private-message .content-mess {
-    min-height: 45px;
-    margin: 5px 0;
-}
-#tab-privat .old_mess_block {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 3px solid #1DACD6;
-    margin-bottom: 15px;
-    padding: 5px 10px;
-    text-align: center;
-}
-#tab-privat .old_mess_block a {
-    color: #1DACD6;
-    font-weight: bold;
-    text-decoration: none;
-}
-.correspond .status_author_mess {
-    height: 16px;
-    margin-left: -15px;
-    margin-top: 5px;
-    position: absolute;
-}
-#message-list{
-    clear: both;
-    padding-top: 20px;
-    
-    
-    padding-right: 5px;
-    min-height: 100px;
-}
-#tab-privat .prmess{
-    margin-bottom:10px;
-}
-#tab-privat .prmess .ban-notice{
-    text-align: center;
-    background: #FFE99B;
-    margin: 10px 0;
-}
-#tab-privat #resize-content{
-    height:300px;
-    overflow-y: auto;
-}
-#tab-privat #resize.ui-resizable {
-    z-index: 999;
-    width: 100%;
-    position: absolute;
-}
-#tab-privat #resize .ui-resizable-s {
-    background: none repeat scroll 0 0 #E5E5E5;
-    height: 3px;
-    width: 50px;
-    margin: 0 auto;
-    cursor: s-resize;
-    position: static;
-    border-top: 3px dotted #fff;
-    border-bottom: 3px dotted #fff;
-}
-#tab-privat .private-buttons{
-	overflow: hidden;
-	clear: both;
-	margin-top: 10px;
-}
-#tab-privat .private-buttons .alignright{
-	float:right;
-}
-#tab-privat .private-buttons .alignleft{
-	float:left;
-}
-#tab-privat .message-block {
-    border: medium none;
-	position:relative;
-	overflow:hidden;
 }
 #tab-privat .message-block .important{
     display:block;
@@ -128,239 +60,349 @@
 	float:right;
 }
 #tab-privat .message-block .content-mess {
-    max-width: 390px;
+    max-width: 60%;
 	overflow: hidden;
+    border-radius: 3px;
+    margin: 10px 12px;
+    padding: 5px;
 }
-.chatroom  #tab-privat .message-block .content-mess {
-max-width: 80%;
+.message-block.you .content-mess::before {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 16px 16px 0 0;
+	border-color: #B6EF81 transparent transparent transparent;
+    content: "";
+    right: 61px;
+    position: absolute;
+    top: 18px;
+}
+.message-block.im .content-mess::before {
+    border-color: transparent rgb(183, 209, 228) transparent transparent;
+    border-style: solid;
+    border-width: 0 16px 16px 0;
+    content: "";
+    height: 0;
+    left: 61px;
+    position: absolute;
+    top: 18px;
+    width: 0;
 }
 #tab-privat .message-block .content-mess .time-message {
-    font-size: 9px;
-    font-weight: normal;
+    font: normal 9px Arial;
+    padding: 0 15px;
 }
-#tab-privat .message-block .content-mess .balloon-message {
-    background: none repeat scroll 0 0 #E7FFE8;
-    border: 1px solid #008000;
-    border-radius: 3px;
-    box-shadow: 3px 3px 3px #888888;
-    color: #000000;
-    margin: 20px 0 10px;
-	float: left;
-    padding: 2px 10px;
-	word-wrap: break-word;
-	max-width:300px;
-}
-#tab-privat .message-block .content-mess p{
-	margin:0;
-}
-#tab-privat .message-block .content-mess .privat-balloon {
-    background: url("img/ballun-left.png") no-repeat scroll 0 0 #008000;
-    display: block;
-    height: 13px;
-    margin: 7px 0 0 0px;
-    position: absolute;
-    width: 29px;
-}
-#tab-privat .message-block.you .balloon-message {
-    background: none repeat scroll 0 0 #F0FBFF;
-	border-color: #3F7BAA;
-	margin-right: 0;
-	min-width: 25px;
-	word-wrap: break-word;
-}
-#tab-privat .you .content-mess .privat-balloon {
-    background: url("img/ballun-right.png") no-repeat scroll 0 0 #3F7BAA;
-    display: block;
-    height: 13px;
-    margin: 7px 0 0 70px;
-    position: absolute;
-    right: 0;
-    width: 29px;
+.message-block.im .content-mess {
+    background: rgb(216, 231, 238);
+    border: 1px solid rgb(183, 209, 228);
+    float: left;
 }
 #tab-privat .you .content-mess {
     float: right;
-    position: relative;
-}
-#tab-privat .you .author-avatar {
-    float: right;
-    margin-top: 0 !important;
+	position: static;
+	background: #e0f8c9;
+    border: 1px solid #b6ef81;
 }
 #tab-privat .you .time-message {
     text-align: right;
 }
 #tab-privat .mess_status {
-    color: #FF0000;
+    color: rgb(229, 57, 53);
     float: right;
 	font-size: 18px;
 }
-
-#tab-privat .message-block.file .content-mess{
-	max-width: 100%;
+#tab-privat .mess_status:hover {
+    transform: scale(1.3);
 }
-#tab-privat .message-block.file .time-message{
-	margin-bottom: 0;
+#tab-privat .message-block.file  {
+	background: rgba(219, 219, 219, 0.6);
+    display: inline-block;
+    width: auto;
 }
-#tab-privat .message-block.file .balloon-message{
-	background: none repeat scroll 0 0 #FFFF99;
-    border: medium none;
-    box-shadow: none;
+#tab-privat .message-block.file .content-mess {
     margin: 0;
+    max-width: none;
+}
+#tab-privat textarea{
+    box-sizing: border-box;
+    min-height: 100px;
     padding: 5px;
-    text-align: center;
-    float: none;
+    width: 100%;
 }
-#upload-files-mess .b-upload__files{
-	position: relative;
+.prmess {
+	font: 14px/1.5 Tahoma,arial;	/*++Twenty15++*/
 }
-#upload-files-mess .b-upload__files .b-thumb{
-	background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
-    box-shadow: none;
-    margin-top: -45px;
-    padding: 5px 10px 10px;
-    position: absolute;
-    width: 95%;
+#count-word {
+    color: #008000;
 }
-#upload-files-mess .b-upload__files .progress{
-	position: absolute;
-    top: 23px;
-}
-.prmess .delete_old_message{
-	float: right; 
-	margin-top: -17px;
-}
-#tab-privat .b-upload__dnd{
-	padding: 15px;
-}
-#upload-files-mess{
-	margin-top: 10px;
+
+#tab-privat .private-buttons{
+	overflow: hidden;
 	clear: both;
+	margin-top: 10px;
 }
-#tab-privat #simple-btn{
-	font-size: 12px;
-    padding: 3px 5px;
-    float: right;
-}
-#tab-privat #simple-btn .js-browse{
-	display: inline-block;
-}
-#tab-privat .recall-button.btn{
-	width:auto;
-}
-.pending-message {
-    color: #FF0000;
-    font-size: 25px;
-    font-weight: bold;
+
+#tab-privat .prmess .ban-notice{
     text-align: center;
-    text-decoration: underline;
+    background: rgb(255, 207, 207);
+    margin: 10px 0;
+    padding: 10px;
+    color: #000;
+    font: bold 16px arial;
 }
+#tab-privat #resize-content{
+    height:300px;
+    overflow-y: auto;
+}
+#tab-privat #resize.ui-resizable {
+    z-index: 999;
+    width: 100%;
+    position: absolute;
+}
+#tab-privat #resize .ui-resizable-s {
+    background: #c2c2c2;
+    height: 3px;
+    width: 80px;
+    margin: 0 auto;
+    position: static;
+    border-top: 3px dotted #fff;
+    border-bottom: 3px dotted #fff;
+}
+
+.wprecallblock .recall-button.remove_black_list {
+    background: rgb(183, 209, 228);
+    color: rgb(30, 56, 75);
+}
+
+
+/* лист общения в профиле start */
+.correspond .buttons-navi{
+	clear:both;
+	overflow:hidden;
+}
+.single_correspond {
+    background: rgba(236, 240, 241, 0.7);
+    box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
+	font: 14px Verdana,arial;
+    margin: 11px 2px 5px;
+	padding: 3px 11px 7px 6px;
+}
+.privat_block .correspond .redline {
+	background: rgba(255, 207, 207, 0.4);
+    box-shadow: 0 0 1px 2px rgba(255, 207, 207, 0.8);
+}
+.correspond .status_author_mess {
+    margin: 9px 0 0;
+	height: 16px;
+	position: absolute;
+}
+.wprecallblock .single_correspond .author-avatar {
+    display: inline-block;
+    margin: 0 0 0 10px;
+}
+#tab-privat .del_history,
+#tab-privat .remove_ban_list,
+#tab-privat .remove_black_list{
+    float: right;
+	margin: 9px 0 0;
+}
+#tab-privat .fa-remove {
+    font-size: 13px;
+    vertical-align: top;
+}
+#tab-privat .fa-remove::before {
+	padding: 0;
+}
+/* лист общения в профиле end */
+
+
+
+/* всплывающий справа блок start */
 #privatemess {
-    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
-    bottom: -250px;
-    box-shadow: 4px 4px 5px #777777;
-    color: #FFFFFF;
-    margin: 10px;
-    opacity: 0.9;
-    padding: 10px 10px 40px 10px;
+	background: rgba(30, 56, 75, 0.9);
+	bottom: -250px;
+    box-shadow: 0 0 1px 1px rgb(30, 56, 75);
+	box-sizing: content-box;						/*++Twenty16++*/
+    color: #fff;
+	font: 14px/1 Verdana,arial;
+    margin: 0 20px 10px 10px;
+    padding: 0;
     position: fixed;
     right: 0;
     width: 300px;
     z-index: 9999;
 }
-#privatemess textarea{
-	color:#333;
-	margin: 0;
+#privatemess textarea {
+    box-sizing: border-box;
+    color: #333;
+    display: block;
+    font: 14px Verdana,arial;
+    margin: 0 auto 4px;
 }
-#privatemess p {
-    padding: 0;
+
+#privatemess #minicount-word {
+    margin: 0 0 4px 10px;
 }
 #privatemess .close-mess-window {
     cursor: pointer;
     float: right;
+    color: rgb(229, 57, 53);
+    font-size: 22px;
+    margin: 3px 0 0;
+}
+#privatemess .close-mess-window:hover {
+	opacity: 0.8;
 }
 #privatemess .prmess {
     display: none;
     margin-top: 10px;
 }
 #privatemess .title-new-mess {
-    color: #FF0000;
+    color: #fff5ce;
     font-weight: bold;
+	margin: 0;										/*++Twenty16++*/
+    padding: 8px;
     text-align: center;
-    text-decoration: blink;
-    line-height: 1;
-    margin: 0;
 }
 #privatemess .name-author-mess {
     font-weight: bold;
-    margin: 0 0 5px !important;
-    text-decoration: underline;
+    margin: 0 0 0 58px;
+    padding: 5px 0;
 }
 #privatemess .mini_status_user{
+    font-size: 11px;
+    left: 0;
+    margin: 4px 0 0 35px;
     position: absolute;
-    bottom: 50px;
-    left: 50px;
+    top: 0;
+}
+
+#privatemess .private-message .content-mess {
+    background: rgba(126, 164, 191, 0.7);
+    float: right;
+    margin: 2px 0 4px;
+    min-height: 14px;
+    padding: 4px 0 4px 5px;
+    width: 100%;
+	-webkit-hyphens: auto;
+	hyphens: auto;
+    word-wrap: break-word;
 }
 #privatemess .content-notice{
-    clear:both;
+    box-sizing: border-box;
+    clear: both;
+    display: inline-block;
+    padding: 0 5px 3px;
+    width: 100%;
 }
 #privatemess .form_new_message{
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
+    bottom: 3px;
+    float: left;
+    left: 5px;
+    position: relative;
+    text-align: center;
+    width: auto;
 }
 #privatemess .view-form{
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
+    bottom: 3px;
+    float: right;
+    position: relative;
+    right: 5px;
+    width: 100px;
 }
 #privatemess .notice-ava{
-    float:left;
-    margin:0 10px 0 0;
-    position:relative;
+    float: left;
+    height: auto;
+    margin: 5px 0;
+    position: relative;
+    width: 56px;
+}
+
+#privatemess .notice-ava img.avatar {
+    background: rgb(216, 231, 238);
+    display: block;
+    height: 50px;
+    padding: 3px;
+    width: 50px;
 }
 #privatemess .miniaddmess{
     position: absolute;
-	right: 10px;
-	bottom: 10px;
+    bottom: 5px;
+    right: 5px;
 }
-#privatemess .notice{
-    font-size:10px;
-    float:right;
-}
-.correspond .redline {
-    background: none repeat scroll 0 0 #FFFAFA !important;
-    border: 3px solid rgba(253, 55, 55, 0.33) !important;
-}
-.correspond .buttons-navi{
-	clear:both;
-	overflow:hidden;
-}
-.correspond #contact-lists > div {
-	margin:5px 0;
-}
-.single_correspond {
-    border: 1px solid #AAAAAA;
-    margin: 5px 0;
+
+#privatemess .success-mess {
+    font: 14px/1 Verdana,arial;
+    margin: 5px 0 6px;
     padding: 5px;
+    text-align: center;
 }
-.single_correspond .avatar {
-    margin: 0 15px 0 0;
+/* всплывающий справа блок end */
+
+
+
+@media screen and (max-width:480px) {
+	.single_correspond {
+		padding: 3px 3px 1px 6px;
+	}
+	#tab-privat .old_mess_block{
+		padding: 5px;
+	}
+	#tab-privat .message-block.im,
+	#tab-privat .message-block.you {
+		margin:0;
+		padding:0;
+	}
+	#tab-privat .message-block.im  img.avatar{
+		margin:0;
+		height: 25px;
+		width: 25px;
+	}
+	#tab-privat .message-block.you  img.avatar{
+		margin:0;
+		height: 35px;
+		width: 35px;
+	}
+	#tab-privat .message-block .important{
+		margin: 5px 11px;
+		transform: scale(1.3);
+	}
+	#tab-privat .mess_status{
+		margin: 0 6px 0 0;
+	}
+	#tab-privat .message-block.im .content-mess {
+		max-width: 77%;
+	}
+	#tab-privat .message-block.you .content-mess {
+		max-width: 74%;
+	}
+	.message-block.im .content-mess::before{
+		border-width: 0 12px 12px 0;
+		left: 26px;
+	}
+	.message-block.you .content-mess::before{
+		border-width: 12px 12px 0 0;
+		right: 36px;
+	}
+	#lk-content .message-block.file .content-mess,
+	#lk-content .message-block.file{
+		font-size: 12px;
+		margin: 0;
+		max-width: 100%;
+	}
+	.rcl-smiles div.smiles{
+		width: 290px;
+	}
+	.rcl-smiles > img {
+		transform: scale(1.5);
+	}
 }
-#rcl-popup .single_correspond{
-	width: 260px;
-	float: left;
-	margin: 2px;
-	font-size: 12px;
-	line-height: 1;
-}
-#tab-privat .del_history, #tab-privat .remove_ban_list, #tab-privat .remove_black_list{
-    float: right;
-    padding-right:0px;
-}
-#tab-privat textarea{
-	width:100%;
-	padding:5px;
-        box-sizing: border-box;
-}
-#lk-conteyner .remove_black_list{
-	background-color:#ccc;
+
+@media screen and (max-width:320px) {
+	#tab-privat .message-block.you .content-mess {
+		max-width: 70%;
+	}
+	#privatemess {
+		margin: 10px;
+	}
 }

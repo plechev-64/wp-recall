@@ -3,7 +3,7 @@
 function rcl_group_migrate_old_data(){
     global $wpdb;
     
-    $row = $wpdb->get_row("SELECT * FROM $table ORDER BY ID DESC");
+    $row = $wpdb->get_row("SELECT * FROM ".RCL_PREF."groups_options ORDER BY ID DESC");
     $row = (array)$row;   
     if(isset($row['option_key'])) return false;
 

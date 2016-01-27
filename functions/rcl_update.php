@@ -44,7 +44,7 @@ function rcl_check_addon_update(){
     
     $addonlist = implode(';',$get);
 
-    $url = "http://wppost.ru/products-files/api/update.php"
+    $url = RCL_UPDATE_HOST."/products-files/api/update.php"
             . "?rcl-addon-action=version-check-list";
     
     $data = array(
@@ -102,7 +102,7 @@ function rcl_update_addon(){
 
     $activeaddons = get_site_option('rcl_active_addons');
 
-    $url = 'http://wppost.ru/products-files/api/update.php'
+    $url = RCL_UPDATE_HOST.'/products-files/api/update.php'
             . '?rcl-addon-action=update';
 
     $data = array(
@@ -130,6 +130,8 @@ function rcl_update_addon(){
     );
     $context  = stream_context_create($options);
     $archive = file_get_contents($url, false, $context);
+    
+    //print_r($archive);
 
     if(!$archive){
         $log['error'] = __('Unable to retrieve the file from the server!','wp-recall');

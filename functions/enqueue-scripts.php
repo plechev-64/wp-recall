@@ -97,7 +97,7 @@ function rcl_plugin_style(){
     if(isset($rcl_options['minify_css'])&&$rcl_options['minify_css']==1){
         wp_enqueue_style( 'rcl-style', RCL_UPLOAD_URL.'css/minify.css' );
     }else{
-        $css_ar = array('lk','recbar','regform','slider','users','style');
+        $css_ar = array('style','recbar','regform','slider','users');
         foreach($css_ar as $name){
             wp_enqueue_style( 'style_'.$name, RCL_URL.'css/'.$name.'.css' );           
         }

@@ -37,12 +37,11 @@ function rcl_minify_style(){
 
     $css_dir = RCL_PATH.'css/';
     $css_ar = array(
-        $css_dir.'lk.css',
+        $css_dir.'style.css',
         $css_dir.'recbar.css',
         $css_dir.'regform.css',
         $css_dir.'slider.css',
-        $css_dir.'users.css',
-        $css_dir.'style.css'
+        $css_dir.'users.css'
     );
 
     $csses = apply_filters('csspath_array_rcl',$css_ar);

@@ -1,168 +1,267 @@
-/*Рейтинг*/
-.post-rating{
+/* Рейтинг Start */
+.post-rating {
     overflow: hidden;
-    
     clear: both;
+	font: 14px arial;
     margin: 5px 0;
+}
+.post-rating a:link {							/*++Twenty16++*/
+	border: none;
+	box-shadow: none;
 }
 .post-rating .buttons-rating{
     float: right;
+	line-height: 1;
 }
 .post-rating .buttons-rating a > i{
-    font-size: 22px;
+    font-size: 24px;
+}
+.post-rating .buttons-rating a > i::before {
+    padding: 0;
 }
 .post-rating .buttons-rating .rating-minus{
+	float: right;
     color: red;
-    
+	margin: 0 2px 0 3px;
 }
-.post-rating .buttons-rating .rating-plus{
-    color: green;
-    
+.post-rating .buttons-rating .rating-plus {
+	float: left;
+    color: #008000;
+	margin: 0 3px 0 0;
+}
+.post-rating .buttons-rating a.rating-cancel {
+    background: rgba(219, 219, 219, 0.6);
+    box-shadow: 0 0 1px 1px rgb(219, 219, 219);
+    margin: -4px 4px 0;
+    line-height: 1.7;
+    color: #333;
+    padding: 1px 3px;
+}
+.post-rating .buttons-rating a.rating-cancel:hover {
+    opacity:0.8;
 }
 .post-rating .rating-value-block{
-    color: green;
+    color: #008000;
 }
-.rating-value-block .rating-value{
-    margin:0 5px;
+.rating-value-block .rating-value {
+    margin: 0 6px 0 3px;
 }
 .rating-value-block .post-votes{
-    color: #A9A9A9;
+    color: #aaa;
     font-size: 14px;
 }
-.userlist .rating-rcl, 
-#lk-conteyner .rating-rcl {
-  display: block;
-}
-.votes-list .fa-thumbs-o-up,
-.rating-plus {
-  color: #008000!important;
-}
-.votes-list .fa-thumbs-o-down,
-.rating-minus {
-  color: #FF0000!important;
-}
-.rating-rcl span {
-  background: none repeat scroll 0 0 #FDF4E3;
-  border: 0px solid;
-  border-radius: 3px;
-  font-size: 12px;
-  margin: 0 auto;
-  padding: 3px 4px;
-  text-align: center;
-  width: 50px;
-  display: block;
-  line-height: 1.4;
-  clear: both;
-}
-.publics-table-rcl .rating-rcl span{
-	display:inline-block;
-	margin-left:5px;
-}
-.rating-rcl .rating-null{
-	color: #333;
-}
-.rating-rcl .rating-plus {
-  background: none repeat scroll 0 0 #BDECB6;
-  border-color: #008000;
-}
-.rating-rcl .rating-minus {
-  background: none repeat scroll 0 0 #FDDDE6;
-  border-color: #FF0000;
-}
 .votes-window{
-    position: absolute;
     background: #fff;
-    padding: 10px;
-    box-shadow: 0px 0px 5px 2px #ccc;
+    box-shadow: 0 0 2px 3px rgba(219, 219, 219, 0.8);
     color: #333;
-    margin-top: -20px;
+    display: none;
+	font-size: 14px;
+	line-height: 1;
+    margin: -35px 10px 0 4px;
+    max-width: 500px;
+    padding: 5px 10px;
+    position: absolute;
     text-align: left;
     z-index: 999;
-    max-width: 500px;
-	display:none;
 }
-.votes-window .recall-button{
-	font-size:11px;
+.votes-window .close {
+    color: rgb(229, 57, 53);
+    font-size: 23px;
+    position: absolute;
+    right: -11px;
+    text-shadow: 0 0 1px #ccc;
+	top: -9px;
 }
 .votes-window .votes-list{
     margin: 0;
-    
     list-style: none;
     clear: both;
     overflow-y: auto;
     max-height: 350px;
 }
-#tab-rating .get-list-votes{
-    margin:3px;
-    display: inline-block;
-}
-#tab-rating .votes-list{
-    margin: 10px;
-}
-.votes-window .close{
-    position: absolute;
-    
-    color: #FF7E7E;
-    right: -10px;
-    top: -10px;
-}
-.votes-window .votes-list li,
-#tab-rating .votes-list li{
+.rating_block .votes-list li,
+.rating-value-block .votes-window .votes-list li {
+    border: none;
+    float: none;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
     list-style: none;
-    
+    margin: 2px 0;
+    padding: 0;
+    width: auto;
 }
-.lk-sidebar .votes-window ul li a,
-#tab-rating .votes-list li a{
-    display:inline;
+.votes-window .rating-plus,
+.votes-list .fa-thumbs-o-up,
+.rating_block .votes-list .rating-plus {
+	color: #008000;
 }
-.votes-window a.active,
-#tab-rating a.active{
-    background-color: #ccc;
-    cursor:default;
+.votes-window .rating-minus,
+.votes-list .fa-thumbs-o-down,
+.rating-value-block span.rating-minus,
+.rating_block .votes-list .rating-minus {
+	color: red;
+}
+.rating-rcl span {
+    background: rgba(219, 219, 219, 0.6);
+    clear: both;
+    display: block;
+	font: 12px/1 Helvetica,serif,arial;				/*++Twenty16++*/
+    margin: 0 auto;
+    padding: 6px 0;
+    text-align: center;
+}
+.rating-rcl .rating-plus {
+    background: #bfffbd;
+    color: #008000;
+}
+.rating-rcl .rating-minus {
+    background: rgb(255, 207, 207);
+    color: rgb(229, 57, 53);
+}
+.lk-sidebar .recall-button .rating-value {
+    display: inline;
+    font: 12px/1 Helvetica,serif,arial;				/*++Twenty16++*/
+    margin: 0;
+    padding: 1.6px 4px 1px;
+}
+.lk-sidebar a.recall-button.active .rating-value {
+    opacity: 0.7;
+}
+.publics-table-rcl .rating-rcl span{
+    display: inline-block;
+    margin: 0;
+    min-width: 20px;
+    padding: 5px;
+}
+.rating_block .votes-list {
+	display: inline-block;
+	list-style: none;
+    margin: 10px 5px;
+    width: 98%;
+}
+.rating_block .votes-list li a {
+	display: inline;
 }
 .ratinglist{
-    overflow: hidden;
-
     clear: both;
+    font: 14px/1.4 Verdana,arial;
+    overflow: hidden;
+}
+.ratinglist .rating-single  p {
+	margin: 4px 0;
 }
 .ratinglist .rating-single{
-    padding: 5px;
-
+    background: #F9F9F9;
+    border-left: 3px solid #8cdd89;
+    box-sizing: border-box;
+    margin: 12px auto;
+    outline: 1px solid rgb(230, 230, 230);
     overflow: hidden;
+    width: 98%;
 }
-.ratinglist .rating-single .avatar{
+.ratinglist .rating-sidebar {
     float: left;
-
+    height: auto;
+    padding: 5px 7px 5px 5px;
+    width: auto;								/*++Twenty16++*/
 }
-.ratinglist .rating-single .rating-meta{
-
+.ratinglist .rating-single .rating-sidebar a {
+    float: left;
+	border: none;								/*++Twenty15++*/
+	box-shadow: none;							/*++Twenty16++*/
 }
-.ratinglist .rating-single .rating-meta .meta{
+.ratinglist .rating-single .avatar {
+	border-radius: 0;							/*++Twenty16++*/
+    float: left;
+    height: auto;
+    width: 55px;
+}
+.ratinglist .object-rating {
+    background: rgb(224, 248, 201);
+    float: right;
+    line-height: 1;
+    padding: 4px 5px;
+    text-align: center;
+}
+.ratinglist .object-rating i {
+    color: #ffae19;
+    font-size: 15px;
+}
+.ratinglist .object-rating .fa-star::before {
+    padding: 0;
+}
+.ratinglist .object-rating .rtng-ttl {
+	font-size: 16px;
+}
+.ratinglist .object-rating .rtng-time {
+    font-size: 12px;
+    vertical-align: text-bottom;
+}
+.ratinglist .rating-single .rating-meta {
+    color: #333;
+    font: 14px/1 Verdana,arial;
+	padding: 0 5px 2px;
+}
+.rating-meta .comm-more a {						/*++Twenty16++*/
+	border: none;								/*++Twenty15++*/
+    box-shadow: none;
+}
+.ratinglist .rating-single .comm-more i {
+	font-size: 20px;
+	vertical-align: bottom;
+    margin: 0 0 -3px 3px;
+}
+.ratinglist .rating-meta a img {
+    float: inherit;
+    height: auto;
+    margin: 3px 0;
+    max-height: 25px;
+    text-align: unset;
+    width: 25px;
+}
+.ratinglist .rating-meta blockquote {
+    border: medium none;
     font-size: 16px;
+    font-style: italic;
     font-weight: bold;
-    line-height: 1;
+    margin: 5px;
+    padding: 5px;
 }
-.ratinglist .rating-single .rating-meta .object-title{
+.ratinglist .rating-meta blockquote::before,
+.ratinglist .rating-meta blockquote::after {
+	content: "\"";
+	display: inline;							/*++Twenty16++*/
 }
-.ratinglist .rating-single .rating-meta .object-title a{
-	color: #8C8C8C;
+.ratinglist.rating-post .rating-single {
+	display: flex;
 }
-.ratinglist .rating-single .rating-meta .object-rating{
-    color: #B2AEAE;
-    display: block;
+.ratinglist.rating-post .object-rating {
+    align-items: center;
+    display: flex;
     float: left;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    justify-content: center;
+	margin: 0 5px 0 0;
+    min-width: 85px;
+    padding: 5px 3px;
 }
-.ratinglist .rating-single .rating-meta .object-rating i{
-    color: orange;
-
+.ratinglist.rating-post .fa-star::before {
+    padding: 0 2px 0 0;
 }
-#lk-conteyner .recall-button .rating-rcl{
-    display: inline;
+.ratinglist.rating-post .rtng-time {
+    font-size: 10px;
+    margin: 6px 0 0 4px;
 }
-#lk-conteyner .recall-button .rating-rcl .rating-value{
-    display: inline;
-    padding: 1px 5px;
-    line-height: 1;
+.ratinglist.rating-post .object-title {
+    display: block;
+    margin: 0 0 0 5px;
+    padding: 2px;
 }
+.rating-post .object-title a {
+	border: none;									/*++Twenty15++*/
+	box-shadow: none;								/*++Twenty16++*/
+}
+.widget .ratinglist.rating-post .rating-single {
+    display: block;
+}
+/* Рейтинг End */

@@ -1,128 +1,156 @@
 /*Список пользователей*/
 .userlist{
 	overflow:hidden;
-        clear:both;
+	clear:both;
 }
 .userlist a {
     text-decoration: none;
 }
-.userlist .ballun-status{
-    clear:none;
-    margin-bottom: 10px;
-}
-
 .userlist .user-single {
-    overflow: hidden;
-    border: 1px solid #CCCCCC;
+    background: rgba(237, 237, 237, 0.3);
+    box-shadow: 0 0 1px 2px rgb(237, 237, 237);
+	box-sizing: content-box;
     margin: 5px 3px;
+    overflow: hidden;
     padding: 5px;
 }
-.userlist.avatars-list .user-single{
-    border: 0px solid #CCCCCC;
+.userlist .user-single a {
+	border: none;								/*++Twenty15++*/
+	box-shadow: none;							/*++Twenty16++*/
+}
+.userlist.rows-list .user-single {
+    clear: both;
+	margin: 11px 4px;
 }
 .userlist .user-single .thumb-user {
     float: left;
+	line-height:1;
     margin: 0;
     position:relative;
 }
-.userlist .user-single .thumb-user .status_user {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-}
 .userlist .user-single .user-content-rcl {
-    margin: 0 0 0 100px;
-}
-.userlist .user-single .action-user-rcl {
-    float: right;
-    height: 70px;
-    width: 70px;
-}
-.userlist .user-single .user-name {
-    padding: 5px 0;
-    line-height: 1;
-    margin: 0 0 5px 0;
-    font-size: 18px;
-    clear:none;
-}
-.userlist .user-single .user-name .filter-data{
-    font-size: 13px;
-	color: #333;
-    font-weight: normal;
-}
-.userlist #social-link-rcl {
-    clear: none;
-}
-.userlist .status_author_mess {
+    margin: 0 0 0 80px;
 }
 .status_author_mess.online {
     float: right;
-    color:rgb(0, 237, 0);
-}
-.single_correspond .status_author_mess.offline{
-    color:red;
+	font: 16px/1.6 arial;
+    color: #89e535;
 }
 .userlist .status_author_mess.offline {
     float: right;
 	font-size: 12px;
 }
-.user-single .action-user {
-    min-width: 150px;
-    text-align: center;
-    vertical-align: middle;
+.userlist .user-single .user-name {
+    clear: none;
+	font-size: 18px;
+    margin: 0 0 5px;
+    padding: 3px 0 5px;
+    text-transform: none;
 }
-.user-single .action-user .status_author_mess {
-    height: 16px;
-    margin: 0 auto;
-    width: 16px;
+.userlist .ballun-status {
+    clear: none;
+    margin: 0 10px 10px 0;
+    max-width: 450px;
 }
-.userlist.rows-list .user-single {
-    clear: both;
-	border: 1px solid #ccc;
-	margin: 5px 0;
-	padding: 5px;
-}
-.userlist.rows-list .user-single {
-    clear: both;
-	border: 1px solid #ccc;
-	margin: 5px 0;
-	padding: 5px;
-}
-.userlist.rows-list .user-single .filter-data{
-    background-color: #EAEAEA;
-    margin: 3px;
-    padding: 5px;
+.userlist.rows-list .user-single .filter-data {
+    background: rgba(219, 219, 219, 0.3);
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
+    color: #777;
+    display: inline-block;
     font-size: 12px;
-    color: #6F6F6F;
-    white-space: nowrap;
+	line-height:1;
+    margin: 2px 5px 7px;
+    padding: 5px 7px;
 }
-.rcl-user-filters{
-    margin:10px 0;
+
+/* вывод аватарками и mini start */
+.rows-list .thumb-user a,
+.avatars-list .thumb-user a {
+    display: inline-block;
+    height: auto;
+	margin: 0 0 3px;
+    width: 100%;
 }
-.rcl-user-filters .user-filter {
-    background-color: #EAEAEA;
-    margin: 3px;
-    padding: 5px;
-    font-size: 12px;
-    color: #6F6F6F;
-    white-space: nowrap;
+.rows-list .thumb-user a img,
+.avatars-list .thumb-user a img {
+	border-radius: 0;							/*++Twenty16++*/
+    display: block;
+    height: auto;
+    max-width: 100%;
 }
-.rcl-user-filters .user-filter.filter-active,
-.rcl-user-filters .user-filter:hover{
-    background-color: #6F6F6F;
-    color: #EAEAEA;
-}
-.userlist.mini-list .user-single{
-	border:none;
-	padding:0;
-	float:left;
-	margin: 0;
-}
-.userlist.mini-list .user-single .avatar{
-    height:50px;
-	width:50px;
+.userlist.mini-list,
+.userlist.avatars-list,
+.userlist.mini-list .thumb-user,
+.userlist.avatars-list .thumb-user,
+.userlist.mini-list .thumb-user a img,
+.userlist.avatars-list .thumb-user a img {
+	border-radius: 0;							/*++Twenty16++*/
+	display: block;								/*++Twenty16++*/
+	/* float: right; */							/*++Twenty16++*/
+	height: auto;
+	width:100%
 }
 .userlist.avatars-list .user-single {
-    margin: 5px 1px;
     float: left;
+    margin: 5px 1%;
+    padding: 0.8%;
+    width: 13%;
+}
+.userlist.mini-list .user-single:hover,
+.userlist.avatars-list .user-single:hover {
+    box-shadow: 0 0 2px 2px #ccc;
+}
+.userlist .user-single .thumb-user .status_user {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+.user-single .status_user .fa-circle::before {
+    padding: 0;
+}
+.userlist.mini-list .user-single {
+    float: left;
+    margin: 1%;
+    max-width: 55px;
+    padding: 0;
+    width: 18%;
+}
+/* вывод аватарками и mini end */
+
+
+@media screen and (max-width:480px) {
+	a.data-filter {
+		display: table-cell;
+		padding: 10px 3px;
+	}
+	.userlist .user-single .user-content-rcl {
+		margin: 0 0 0 80px;
+	}
+	.userlist.avatars-list .user-single {
+		padding: 1%;
+		width: 16%;
+	}
+	.userlist .user-single .thumb-user .status_user {
+		font-size: 11px;
+	}
+}
+@media screen and (max-width:360px) {
+	a.data-filter {
+		display: inline-block;
+		padding: 10px 6.5px;
+		text-align: center;
+	}
+	.userlist .user-single .thumb-user {
+		width: 60px;
+	}
+	.userlist .user-single .user-content-rcl {
+		margin: 0 0 0 65px;
+	}
+	.userlist.mini-list .thumb-user,
+	.userlist.avatars-list .thumb-user {
+		width: 100%;
+	}
+	.userlist.avatars-list .user-single {
+		width: 21%;
+	}
 }

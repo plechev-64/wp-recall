@@ -28,9 +28,9 @@ function rcl_update_user_money($newmoney,$user_id=false){
     $money = rcl_get_user_money($user_id);
 
     if(isset($money)) return $wpdb->update(RMAG_PREF .'users_balance',
-                        array( 'user_balance' => $newmoney ),
-                        array( 'user_id' => $user_id )
-                    );
+            array( 'user_balance' => $newmoney ),
+            array( 'user_id' => $user_id )
+        );
 
     return rcl_add_user_money($newmoney,$user_id);
 }

@@ -1,106 +1,103 @@
-
-#rcl-feed {
-}
+/* feed Start */
 #rcl-feed .feed-box {
-    border: 1px solid #d7d7d7;
-    clear: both;
-    margin: 15px 0;
-    overflow: hidden;
+	background: rgba(237, 237, 237, 0.2);
+	box-shadow: 0 0 1px 1px rgb(237, 237, 237);
+	box-sizing: border-box;
+	clear: both;
+	margin: 15px 2px;
+	overflow: hidden;
 }
-#rcl-feed .feed-posts {
-}
-#rcl-feed .feed-comments {
-}
-#rcl-feed .feed-answers {
+#rcl-feed .feed-box a {
+	border: none;						/*++Twenty15++*/
+	box-shadow:none;					/*++Twenty16++*/
 }
 #rcl-feed .feed-box .feed-header {
-    background: #f8f8f8 none repeat scroll 0 0;
-    overflow: hidden;
-    padding: 5px 10px;
-}
-#rcl-feed .feed-box .feed-author-avatar {
-    float: left;
-    margin: 0 10px 0 0;
-}
-#rcl-feed .feed-box .feed-author-avatar img {
-    margin: 0;
-}
-#rcl-feed .feed-box .feed-author-name {
-}
-#rcl-feed .feed-box .feed-date {
-}
-#rcl-feed .feed-box .feed-title {
-    border-bottom: 1px solid #f2f2f2;
-    font-size: 16px;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-}
-#rcl-feed .feed-box .feed-content {
-    padding: 10px;
-}
-#rcl-feed .feed-box .feed-content-meta {
-    background: #f8f8f8 none repeat scroll 0 0;
-    font-size: 12px;
-    margin: 10px 0 0;
-    padding: 5px 10px;
-}
-.callback-link {
-}
-
-.callback-link > a:hover {
-    color:#ccc;
-}
-.callback-link > span {
-    display: inline-block;
-    padding: 5px 10px;
-    width: auto;
-}
-.callback-link .success {
-}
-.callback-link .error {
-}
-.callback-link a > i {
-}
-.callback-link a > i[class^="fa fa-"]::before, .callback-link a > i[class*=" fa fa-"]::before {
-    padding: 0;
-}
-.callback-link a > span {
-    padding-left: 5px;
-}
-#rcl-feed .callback-link > a {
-    background: #fff none repeat scroll 0 0;
-    color: #3b8dbd;
-    padding: 0;
-    text-decoration: none;
-}
-.userlist .follow-button {
-    margin: 15px 0 5px;
-    text-align: right;
+    background: rgba(237, 237, 237, 0.5);
+    font: 16px/1.4 Verdana,arial;
+    padding: 5px;
 }
 .feed-header .feed-options {
-    float: right;
-    position: relative;
+	float: right;
+	position: relative;
 }
-.feed-header .feed-options > .fa{
-    color: #aaa;
-    font-size: 18px;
+.feed-header .feed-options .fa-times{
+	color: #aaa;
+	font-size: 18px;
+}
+.feed-options .fa-times::before {
+	padding: 0 3px 0 0;
 }
 .feed-header .feed-options > .fa:hover + .options-box,
 .feed-header .feed-options .options-box:hover{
-    display:block;
+	display:block;
 }
 .feed-header .feed-options .options-box {
-    background: #fff none repeat scroll 0 0;
-    box-shadow: 0 0 2px #ccc;
-    padding: 10px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    display: none;
+	background: #fff;
+	box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
+	display: none;
+	overflow: hidden;
+	padding: 10px 15px;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
-.feed-header .feed-options .options-box .callback-link {
+.feed-options .feed-callback {
+	background: rgba(0, 0, 0, 0);
+	color: #333;
+	font: 14px Georgia,arial;
+}
+.feed-options .feed-callback:hover {
+    background: rgba(0, 0, 0, 0);
+    color: #333;
+    text-decoration: underline;
+}
+#rcl-feed .feed-box .feed-author-avatar {
+	float: left;
+	margin: 0 10px 0 0;
+}
+#rcl-feed .feed-box .feed-author-avatar img {
+	border-radius: 0;
+	height: 44px;
+	margin: 0;
+	width: 44px;
+}
+#rcl-feed .feed-box .feed-content {
+	padding: 10px;
+}
+#rcl-feed .feed-box .feed-title {
+	border-bottom: 1px solid rgba(219, 219, 219, 0.6);
+	font: bold 16px/1 Arial;
+	margin: 0 0 10px;
+	padding: 0 0 10px;
 }
 #feed-preloader{
-    position: relative;
-    height: 100px;
+	position: relative;
+	height: 100px;
 }
+#rcl-feed .feed-box .feed-content-meta {
+	font-size: 12px;
+	margin: 10px 0 0;
+	padding: 0 10px;
+}
+.userlist .follow-button {
+	margin: 10px 0 5px;
+	text-align: right;
+}
+.follow-button a.recall-button {
+	color: #fff;
+}
+
+
+
+
+@media screen and (max-width:480px) {
+	.feed-header .feed-options .options-box {
+		max-width: 400px;
+	}
+}
+@media screen and (max-width:360px) {
+	.feed-header .feed-options .options-box {
+		max-width: 290px;
+	}
+}
+/* feed End */
