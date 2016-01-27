@@ -179,7 +179,7 @@ body .rcl_preloader{
 
 /* общие стили start */
 .wprecallblock {
-    background: rgba(236, 240, 241, 0.7);
+    background: rgba(236, 240, 241, 0.3);
     box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
 	color: #333;				/*BlackTheme*/
     margin: 3px;
@@ -501,7 +501,10 @@ a.rcl-avatar-delete:hover,
     float: right;
 	margin: 0 0 0 3px;
 }
-
+.lk-header .block-rcl .recall-button,
+.lk-header .rcl-tab-button .recall-button{
+    display:block;
+}
 #lk-conteyner .lk-content {
     margin: 0 0 0 130px;
 	overflow: hidden;
@@ -778,7 +781,7 @@ a.data-filter.filter-active:hover {
 
 .wprecallblock #lk-content th,
 .wprecallblock #lk-content td {
-    border: 1px solid rgb(237, 237, 237);
+    border: 1px solid rgb(243, 243, 243);
     padding: 5px;
     text-align: left;
 	text-transform: none;					/*++Twenty14++*/
@@ -984,7 +987,7 @@ a.data-filter.filter-active:hover {
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.4);
 }
 .rcl-navi a:link {										/*++hueman++ добавил :link для перевеса*/
-    background: rgba(237, 237, 237, 0.5);
+    background: rgba(243, 243, 243, 0.5);
 	border: none;										/*++Twenty15++*/
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     text-decoration: none;

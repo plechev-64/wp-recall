@@ -193,8 +193,8 @@ function rcl_product_excerpt(){
 }
 
 function rcl_get_product_category($prod_id){
-    $product_cat = get_the_term_list( $prod_id, 'prodcat', '<p class="fa fa-folder-open product-cat"><b>Категория товара:</b> ', ', ', '</p>' );
-    $product_cat .= get_the_term_list( $prod_id, 'product_tag', '<p class="fa fa-tag product-cat"><b>Метки товара:</b> ', ', ', '</p>' );
+    $product_cat = get_the_term_list( $prod_id, 'prodcat', '<p><i class="fa fa-folder-open product-cat"></i><b>Категория товара:</b> ', ', ', '</p>' );
+    $product_cat .= get_the_term_list( $prod_id, 'product_tag', '<p><i class="fa fa-tag product-cat"></i><b>Метки товара:</b> ', ', ', '</p>' );
     return $product_cat;
 }
 

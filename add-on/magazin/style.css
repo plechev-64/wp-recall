@@ -26,8 +26,8 @@
 }
 .prodlist .slab-list,
 .prodlist .list-list {
-    background: rgba(237, 237, 237, 0.3);
-    box-shadow: 0 0 1px 1px rgb(237, 237, 237);
+    background: rgba(243, 243, 243, 0.3);
+    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
     margin: 5px 2px;
 	overflow: hidden;
     padding: 5px;
@@ -80,11 +80,15 @@
     margin: 0;
     padding: 3px 0 7px;
 }
-.product-content p:nth-last-child(2)::after { /*добавляем предпоследнему эл-ту псевдоблок на отступ к кнопке*/
+/*.product-content p:nth-last-child(2)::after { //добавляем предпоследнему эл-ту псевдоблок на отступ к кнопке
     content: "";
     width: 115px;
     display: inline-block;
     height: 25px;
+}*/
+
+.prodlist .list-list .product-content{
+    overflow:hidden;
 }
 
 .prodlist .list-list .cart-button {
@@ -170,7 +174,7 @@ table.prodlist {
     border: none;
     border-collapse: separate;
     border-spacing: 0;
-    box-shadow: 0 0 1px 1px rgb(237, 237, 237);
+    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
 	font-size: 14px;
 	line-height: 1.5;
     margin: 0 2px;
@@ -192,7 +196,7 @@ table.order-data tbody tr:nth-child(even):not(:first-child):not(:last-child) {
 .order-data tbody tr:nth-child(odd):not(:first-child):not(:last-child),
 .pricelist tbody tr:nth-child(odd):not(:first-child),
 .prodlist tbody tr:nth-child(even) {
-    background: rgba(237, 237, 237, 0.4);
+    background: rgba(243, 243, 243, 0.4);
 }
 .wprecallblock .order-data .product-number {
 	width: 115px;
@@ -319,7 +323,7 @@ table.prodlist  td .cart-button {
 .form-table input:not([type="text"]),
 .form-table select {
     border: none;
-    box-shadow: 0 0 1px 1px rgb(237, 237, 237);
+    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
     color: #000;
     margin: 5px 0 1px;
     padding: 8px 10px;
@@ -329,7 +333,7 @@ table.prodlist  td .cart-button {
     box-sizing: border-box;
     width: 99%;
     border: none;
-    box-shadow: 0 0 1px 1px rgb(237, 237, 237);
+    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
     color: #000;
 	display: inline-block;
 	font-size: 14px;
@@ -376,7 +380,7 @@ table.prodlist  td .cart-button {
 }
 .price-basket-product input[type="text"] {
     border: none;
-    box-shadow: 0 0 1px 1px rgb(237, 237, 237);
+    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
     color: #000;
     font-size: 12px;
     height: 29px;

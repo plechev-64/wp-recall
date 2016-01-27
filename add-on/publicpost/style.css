@@ -1,8 +1,8 @@
 /*Публикация*/
 /* Блок публикации Start */
 .public_block {
-    background: rgba(237, 237, 237, 0.3);
-    box-shadow: 0 0 1px 1px rgb(237, 237, 237);
+    background: rgba(243, 243, 243, 0.3);
+    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
 	color: #000;
     margin: 3px;
     padding: 5px;
@@ -48,8 +48,8 @@
     display: block;
 }
 .public_block .category-list {
-    background: rgba(237, 237, 237, 0.3);
-    box-shadow: 0 0 1px 1px rgb(237, 237, 237);
+    background: rgba(243, 243, 243, 0.3);
+    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
     margin: 10px 2px;
     overflow: hidden;
     padding: 5px;
@@ -172,7 +172,7 @@
 }
 .rcl-form-field table tbody th,
 .rcl-form-field table tbody td {
-    border: 1px solid rgb(237, 237, 237);
+    border: 1px solid rgb(243, 243, 243);
     padding: 5px;
     text-align: left;
     vertical-align: middle;
@@ -302,8 +302,8 @@ h3.pending-message{
 
 /* блок О Авторе Start */
 #block_author-rcl {
-    background: rgba(237, 237, 237, 0.3);
-    box-shadow: 0 0 1px 1px rgb(237, 237, 237);
+    background: rgba(243, 243, 243, 0.3);
+    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
     clear: both;
     margin: 15px 3px;
     overflow: hidden;
@@ -328,8 +328,8 @@ h3.pending-message{
 
 /* форма WP-Recall start */
 .rcl-public-editor  {
-    background: rgba(237, 237, 237, 0.3);
-    box-shadow: 0 0 1px 1px rgb(237, 237, 237);
+    background: rgba(243, 243, 243, 0.3);
+    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
     margin: 10px 2px 0;
     padding: 5px;
 }
@@ -476,7 +476,7 @@ h3.pending-message{
 .wprecallblock .publics_block table {
 	border-collapse: collapse;
     border-spacing: 0;
-	background: rgba(237, 237, 237, 0.3);
+	background: rgba(243, 243, 243, 0.3);
 	box-sizing: content-box;							/*++Twenty16++*/
 	table-layout: unset;								/*++Twenty16++*/
 	width:100%;
@@ -491,7 +491,7 @@ h3.pending-message{
     background: rgba(216, 231, 238, 0.3);
 }
 .wprecallblock #tab-publics table tr:nth-child(2n+1):not(:first-child) {
-    background: rgba(237, 237, 237, 0.4);
+    background: rgba(243, 243, 243, 0.4);
 }
 .wprecallblock #tab-publics table tr:first-child td {
     font: bold 16px arial;

@@ -1,7 +1,7 @@
 /* feed Start */
 #rcl-feed .feed-box {
-	background: rgba(237, 237, 237, 0.2);
-	box-shadow: 0 0 1px 1px rgb(237, 237, 237);
+	background: rgba(243, 243, 243, 0.2);
+	box-shadow: 0 0 1px 1px rgb(243, 243, 243);
 	box-sizing: border-box;
 	clear: both;
 	margin: 15px 2px;
@@ -12,7 +12,7 @@
 	box-shadow:none;					/*++Twenty16++*/
 }
 #rcl-feed .feed-box .feed-header {
-    background: rgba(237, 237, 237, 0.5);
+    background: rgba(243, 243, 243, 0.5);
     font: 16px/1.4 Verdana,arial;
     padding: 5px;
 }
