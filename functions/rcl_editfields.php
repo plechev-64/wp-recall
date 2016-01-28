@@ -173,8 +173,8 @@ class Rcl_EditFields {
                         <span class="item-title">'.$this->vals['title'].'</span>                           
                         <span class="item-controls">
                             <span class="item-type">'.$this->vals['type'].'</span>   
-                            <a id="'.$this->vals['slug'].'" class="item-delete field-delete deletion" href="#">'.__('Delete','wp-recall').'</a>
-                            <a id="edit-'.$this->vals['slug'].'" class="profilefield-item-edit" href="#" title="'.__('Edit','wp-recall').'">'.__('Edit','wp-recall').'</a>
+                            <a id="'.$this->vals['slug'].'" class="item-delete field-delete deletion" title="'.__('Delete','wp-recall').'" href="#"></a>
+                            <a id="edit-'.$this->vals['slug'].'" class="profilefield-item-edit" href="#" title="'.__('Edit','wp-recall').'"></a>
                         </span>           
                     </dt>
                 </dl>';

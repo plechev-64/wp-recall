@@ -884,8 +884,6 @@ a.data-filter.filter-active:hover {
 /* Контент лк End */
 
 
-
-
 /* upload avatar overlay and block zoom start  */
 .ui-button.ui-button-text-only {
     line-height: 1;
@@ -893,23 +891,26 @@ a.data-filter.filter-active:hover {
 .ui-dialog-titlebar-close {
     margin: 0 2px;
 }
-.ui-dialog-titlebar-close::before{
-	font-size: 40px;
-	color: rgba(229, 57, 53, 0.8);
+.ui-button.ui-widget.ui-dialog-titlebar-close {
+	margin: 0;
+	padding: 0;
+	top: -5px;
+}
+.ui-dialog-titlebar-close::before {
+    color: rgba(229, 57, 53, 0.8);
+    font-size: 34px;
 }
 .ui-dialog-titlebar-close:hover::before {
 	color: rgb(229, 57, 53);
 }
 .ui-dialog-titlebar-close:hover {
-	-webkit-transform: scale(1.2);
-    transform: scale(1.2);
+	-webkit-transform: scale(1.15);
+    transform: scale(1.15);
 }
-
 .ui-widget-overlay {
     opacity: 0.8;
 }
 .ui-dialog {
-	background:none;
 	box-shadow: 0 0 20px 10px #000;
 	max-width:90%;
 	max-width: calc(100% - 10px);
@@ -919,7 +920,6 @@ a.data-filter.filter-active:hover {
 }
 .ui-dialog.ui-widget.ui-dialog-buttons {
 	width: unset !important;
-	border-radius: 5px;
 }
 .ui-dialog.ui-draggable #rcl-preview {
     display: table;
@@ -927,35 +927,27 @@ a.data-filter.filter-active:hover {
 }
 .ui-dialog #rcl-preview{
 	overflow: hidden;
-	padding: 0;
+	padding: 5px;
 }
 .ui-dialog #rcl-preview img.aligncenter {
-    border-radius: 5px;
 	margin: 0;
 }
-
-.ui-dialog-titlebar {
-    background: transparent;
-    border-bottom: medium none;
-	margin: -37px 0 0;
+.ui-dialog.ui-widget .ui-dialog-titlebar {
+    border: medium none;
+    height: 24px;
+    padding: 0;
+}
+.ui-dialog .ui-dialog-titlebar span,
+.ui-dialog-buttonpane.ui-helper-clearfix {
+    display: none;
 }
 .ui-draggable .ui-dialog-titlebar {
 	margin: 0;
-    background: #ecf0f1;
     border-top: 1px solid #c2c2c2;
 }
-.ui-dialog-buttonpane.ui-helper-clearfix{
-	display:none;
-}
-
 .ui-draggable .ui-dialog-buttonpane.ui-helper-clearfix{
 	display:block;
 }
-.ui-dialog-buttonpane {
-    background: #ecf0f1;
-    border-top: 1px solid #c2c2c2;
-}
-
 /* upload avatar overlay and block zoom end  */
 
 
@@ -992,7 +984,9 @@ a.data-filter.filter-active:hover {
 }
 /* navigation End */
 
-
+p.rcl-custom-fields{
+    clear:both;
+}
 
 
 @media screen and (max-width:768px) {

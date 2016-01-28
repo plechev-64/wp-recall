@@ -103,27 +103,35 @@ function rcl_cache_shortcode($atts,$content = null){
 	),
     $atts));
     
-    $key .= '-cache-'.$post->ID;
+    if($post->post_status=='publish'){
     
-    $rcl_cache = new Rcl_Cache($time,$only_guest);
-    
-    if($rcl_cache->is_cache){
+        $key .= '-cache-'.$post->ID;
 
-        $file = $rcl_cache->get_file($key);
+        $rcl_cache = new Rcl_Cache($time,$only_guest);
 
-        if(!$file->need_update){
-            return $rcl_cache->get_cache();
+        if($rcl_cache->is_cache){
+
+            $file = $rcl_cache->get_file($key);
+
+            if(!$file->need_update){
+                return $rcl_cache->get_cache();
+            }
+
         }
-
+    
     }
     
     $content = do_shortcode( shortcode_unautop( $content ) );
     if ( '</p>' == substr( $content, 0, 4 )
     and '<p>' == substr( $content, strlen( $content ) - 3 ) )
     $content = substr( $content, 4, strlen( $content ) - 7 );
+    
+    if($post->post_status=='publish'){
 
-    if($rcl_cache->is_cache){
-        $rcl_cache->update_cache($content);
+        if($rcl_cache->is_cache){
+            $rcl_cache->update_cache($content);
+        }
+    
     }
     
     return $content;

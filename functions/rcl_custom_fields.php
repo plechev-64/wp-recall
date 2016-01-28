@@ -211,7 +211,7 @@ class Rcl_Custom_Fields{
 
         if(isset($field['after'])) $show .= ' '.$field['after'];
 
-        if($title&&$show) $show = '<p><b>'.$field['title'].':</b> '.$show.'</p>';
+        if($title&&$show) $show = '<p class="rcl-custom-fields"><b>'.$field['title'].':</b> '.$show.'</p>';
 
         return $show;
     }
