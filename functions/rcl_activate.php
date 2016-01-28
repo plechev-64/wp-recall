@@ -48,7 +48,7 @@ if (!class_exists('reg_core')){
             $form = '<div class="error"><p>Плагин не активирован!</p></div>'
             . '<style>.error{padding:10px!important;color:red;border:1px solid red;text-align:center;width:500px;margin-top:20px;}</style>
                     <h3>Введите ключ:</h3>
-                    <form action="http://wppost.ru/activate-plugins/access/?plug='.$id.'" method="post">
+                    <form action="'.RCL_SERVICE_HOST.'/activate-plugins/access/?plug='.$id.'" method="post">
                     <input type="text" value="" size="90" name="pass">
                     <input type="hidden" value="'.$_SERVER['HTTP_HOST'].'" name="domen">
                     <input type="submit" value="Отправить на проверку">

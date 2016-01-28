@@ -1,4 +1,48 @@
 <?php
+//добавляем стили колорпикера в хеадер
+add_action('wp_head','rcl_add_colorpicker_style',100);
+function rcl_add_colorpicker_style(){
+    global $rcl_options;
+
+    $rgb = (isset($rcl_options['primary-color'])&&$rcl_options['primary-color'])? rcl_hex2rgb($rcl_options['primary-color']): array(76, 140, 189);
+    
+    $data = "<style>
+    a.recall-button,
+    .recall-button.rcl-upload-button,
+    input[type='submit'].recall-button,
+    input[type='submit'] .recall-button,
+    input[type='button'].recall-button,
+    input[type='button'] .recall-button,
+    a.recall-button:hover,
+    .recall-button.rcl-upload-button:hover,
+    input[type='submit'].recall-button:hover,
+    input[type='submit'] .recall-button:hover,
+    input[type='button'].recall-button:hover,
+    input[type='button'] .recall-button:hover{
+        background: rgb(".$rgb[0].", ".$rgb[1].", ".$rgb[2].");
+    }
+    a.recall-button.active,
+    a.recall-button.active:hover,
+    a.recall-button.filter-active,
+    a.recall-button.filter-active:hover,
+    a.data-filter.filter-active,
+    a.data-filter.filter-active:hover,
+    #lk-conteyner .rcl-more-link{
+        background: rgba(".$rgb[0].", ".$rgb[1].", ".$rgb[2].", 0.4);
+    } 
+    .rcl_preloader i{
+        color: rgb(".$rgb[0].", ".$rgb[1].", ".$rgb[2].");
+    }
+    p.status-user-rcl::before{
+        border-color: transparent transparent transparent rgb(".$rgb[0].", ".$rgb[1].", ".$rgb[2].");   
+    }
+    .ballun-status p.status-user-rcl{
+        border: 1px solid rgb(".$rgb[0].", ".$rgb[1].", ".$rgb[2].");
+    }
+    </style>\n";
+    
+    echo $data;
+}
 
 add_action('wprecall_init','init_user_lk',2);
 function init_user_lk(){
@@ -251,4 +295,21 @@ function rcl_sort_gallery($attaches,$key,$user_id=false){
     for($a=$cnt-1;$a>=0;$a--){$news[]=(object)$new[$a];}
 
     return $news;
+}
+
+function rcl_hex2rgb($hex) {
+   $hex = str_replace("#", "", $hex);
+
+   if(strlen($hex) == 3) {
+      $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+      $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+      $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+   } else {
+      $r = hexdec(substr($hex,0,2));
+      $g = hexdec(substr($hex,2,2));
+      $b = hexdec(substr($hex,4,2));
+   }
+   $rgb = array($r, $g, $b);
+   //return implode(",", $rgb); // returns the rgb values separated by commas
+   return $rgb; // returns an array with the rgb values
 }

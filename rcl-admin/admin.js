@@ -12,6 +12,7 @@
 
 jQuery(function($){
     
+    $("input[name='global[primary-color]']").wpColorPicker();
 
     $("#recall").find(".parent-select").each(function(){
         var id = $(this).attr('id');

@@ -73,7 +73,7 @@ function rcl_postmeta_update( $post_id ){
 //Настройки плагина в админке
 function rcl_global_options(){
     global $rcl_options;
-
+    
     include_once RCL_PATH.'functions/rcl_options.php';
     $fields = new Rcl_Options();
 
@@ -153,6 +153,9 @@ function rcl_global_options(){
                 $content .= $fields->option_block(
                     array(
 			$fields->title(__('Making','wp-recall')),
+                        
+                        $fields->label(__('Primary color','wp-recall')),
+                        $fields->option('text',array('name'=>'primary-color','default'=>'#4C8CBD')),
 
 			$fields->label(__('The placement of the buttons sections','wp-recall')),
                         $fields->option('select',array(

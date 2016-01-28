@@ -44,7 +44,7 @@ function rcl_check_addon_update(){
     
     $addonlist = implode(';',$get);
 
-    $url = RCL_UPDATE_HOST."/products-files/api/update.php"
+    $url = RCL_SERVICE_HOST."/products-files/api/update.php"
             . "?rcl-addon-action=version-check-list";
     
     $data = array(
@@ -102,7 +102,7 @@ function rcl_update_addon(){
 
     $activeaddons = get_site_option('rcl_active_addons');
 
-    $url = RCL_UPDATE_HOST.'/products-files/api/update.php'
+    $url = RCL_SERVICE_HOST.'/products-files/api/update.php'
             . '?rcl-addon-action=update';
 
     $data = array(

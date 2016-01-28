@@ -8,6 +8,7 @@
 i.fa, a.fa, p.fa,span.fa,div.fa{
     width:auto;
     text-align: left;
+    font-family: FontAwesome!important;
 }
 .floatright{
 	float:right;
@@ -104,8 +105,7 @@ body .rcl_preloader{
     left: 50%;
 }
 .rcl_preloader i:before{
-    padding: 0;
-    color: rgb(76, 140, 189);
+    padding: 0;    
 }
 #passwordStrength {
 	padding: 7px 15px 5px;
@@ -161,9 +161,10 @@ body .rcl_preloader{
 	display:block;
 }
 .rcl-smiles .smiles img{
-	cursor:pointer;
-	display:inline-block;
-	max-height: 25px;
+    cursor:pointer;
+    display:inline-block;
+    max-height: 25px;
+    margin: 3px;
 }
 .rcl-new-users p,
 .rcl-online-users p {
@@ -539,8 +540,7 @@ a.rcl-avatar-delete:hover,
 .ballun-status {
     max-width: 350px;
 }
-p.status-user-rcl::before {
-    border-color: transparent transparent transparent #4c8cbd;
+p.status-user-rcl::before {    
     border-style: solid;
     border-width: 11px 0 0 11px;
     content: "";
@@ -552,11 +552,10 @@ p.status-user-rcl::before {
 }
 .ballun-status p.status-user-rcl {
     background: #fff;
-    border: 1px solid #4c8cbd;
     border-radius: 3px;
-	color: #333;										/*++hueman++*/
+    color: #333;										/*++hueman++*/
     display: inline-block;
-	font-size: 14px;									/*++hueman++*/
+    font-size: 14px;									/*++hueman++*/
     font-weight: normal;								/*++hueman++*/
     line-height: normal;								/*++hueman++*/
     margin: 3px 0 0 5px;
@@ -564,15 +563,11 @@ p.status-user-rcl::before {
     min-width: 50px;
     padding: 6px 8px;
     position: relative;
-	-webkit-hyphens: auto;
-	hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
     word-wrap: break-word;
 }
-
-
-
 #lk-conteyner .rcl-more-link {
-    background-color: rgb(183, 209, 228);
     color: rgb(30, 56, 75);
     display: inherit;
     float: none;
@@ -598,8 +593,7 @@ p.status-user-rcl::before {
 
 
 
-#rcl-tabs {
-    background: rgba(216, 231, 238, 0.5);
+#rcl-tabs {    
     overflow: hidden;
 }
 #lk-menu {
@@ -622,7 +616,7 @@ input[type="submit"].recall-button,
 input[type="submit"] .recall-button,
 input[type="button"].recall-button,
 input[type="button"] .recall-button {
-	background: rgb(76, 140, 189);		/*основной цвет для колорпикера*/
+	/*background: rgb(76, 140, 189);*/		/*основной цвет для колорпикера*/
 	border-radius: 0;							/*++hueman++*/
 	color: #fff;
 	cursor:pointer;
@@ -646,7 +640,7 @@ input[type="submit"].recall-button:hover,
 input[type="submit"] .recall-button:hover,
 input[type="button"].recall-button:hover,
 input[type="button"] .recall-button:hover {
-	background: rgb(76, 140, 189);				/*цвет вставлять колорпикером как у обычной кнопки обязательно. Иначе темы его перезаписывают*/
+	/*background: rgb(76, 140, 189);*/				/*цвет вставлять колорпикером как у обычной кнопки обязательно. Иначе темы его перезаписывают*/
 	color: #fff;
 	opacity: 0.8;
 }
@@ -662,11 +656,11 @@ a.recall-button.filter-active,
 a.recall-button.filter-active:hover,
 a.data-filter.filter-active,
 a.data-filter.filter-active:hover {
-	box-shadow: none;							/*++Twenty16++*/
+    box-shadow: none;							/*++Twenty16++*/
     cursor: default;
-    background: rgba(76, 140, 189, 0.4);		/*для колорпикера на 6 оттенков светлей*/
+    /*background: rgba(76, 140, 189, 0.4);*/		/*для колорпикера на 6 оттенков светлей*/
     color: rgb(30, 56, 75);
-	opacity: 1;
+    opacity: 1;
 }
 /* Состояния кнопок End */
 
@@ -980,6 +974,7 @@ a.data-filter.filter-active:hover {
 }
 .rcl-navi a,
 .rcl-navi span {
+    display:inline-block;
     margin: 0 4px;
     padding: 2px 9px;
 }
