@@ -215,7 +215,7 @@ div.wprecallblock h3 {
 .wprecallblock input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
 	border:none;
 	border-radius:none;
-	font: 14px/1 Tahoma,Arial;						/*++Twenty15++*/
+	font: 14px/1.4 Tahoma,Arial;						/*++Twenty15++*/
 	padding:5px 10px;
 	color:#000;
 	box-shadow: 0 0 1px 1px #ccc;

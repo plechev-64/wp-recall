@@ -230,7 +230,7 @@
 	text-transform: none;				/*++Twenty16++*/
     width: auto;
 }
-.public-form #rcl-preview{
+.public_block #rcl-preview{
     background-color: #fff;
     box-shadow: 0 0 1px 2px #ccc;
     margin: 0 0 0 -6px;
@@ -239,23 +239,23 @@
     width: 100%;
 	width: calc(100% + 6px);
 }
-form.public-form #rcl-preview {
+.public_block form #rcl-preview {
 	top: 0;
     left: 0;
 	z-index: 9;       
 	position:absolute;
 }
-.public-form #rcl-preview h2:first-child,
-.public-form #rcl-preview .rcl-notice-preview {
+.public_block #rcl-preview h2:first-child,
+.public_block #rcl-preview .rcl-notice-preview {
     background: #fff5ce;
     display: block;
     padding: 6px;
     text-align: center;
 }
-.public-form #rcl-preview .rcl-notice-preview p {							/*++hueman++*/
+.public_block #rcl-preview .rcl-notice-preview p {							/*++hueman++*/
 	margin: 0;
 }
-.public-form #rcl-preview .rcl-notice-preview .rcl-preview-buttons{
+.public_block #rcl-preview .rcl-notice-preview .rcl-preview-buttons{
     text-align: right;
 }
 

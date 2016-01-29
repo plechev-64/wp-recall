@@ -266,7 +266,7 @@
 }
 #privatemess .name-author-mess {
     font-weight: bold;
-    margin: 0 0 0 58px;
+    margin: 0 0 0 60px;
     padding: 5px 0;
 }
 #privatemess .mini_status_user{
@@ -279,13 +279,13 @@
 
 #privatemess .private-message .content-mess {
     background: rgba(126, 164, 191, 0.7);
-    float: right;
+    box-sizing: border-box;
+    float: left;
+    hyphens: auto;
     margin: 2px 0 4px;
     min-height: 14px;
     padding: 4px 0 4px 5px;
     width: 100%;
-	-webkit-hyphens: auto;
-	hyphens: auto;
     word-wrap: break-word;
 }
 #privatemess .content-notice{
