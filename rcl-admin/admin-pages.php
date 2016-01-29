@@ -78,6 +78,8 @@ function rcl_global_options(){
     $fields = new Rcl_Options();
 
     $rcl_options = get_option('rcl_global_options');
+    
+    
 
     $content = '<h2>'.__('Configure the plugin Wp-Recall and additions','wp-recall').'</h2>
         <div id="recall" class="left-sidebar wrap">
@@ -154,7 +156,7 @@ function rcl_global_options(){
                     array(
 			$fields->title(__('Making','wp-recall')),
                         
-                        $fields->label(__('Primary color','wp-recall')),
+                        $fields->label(__('Primary color','wp-recall')),                       
                         $fields->option('text',array('name'=>'primary-color','default'=>'#4C8CBD')),
 
 			$fields->label(__('The placement of the buttons sections','wp-recall')),

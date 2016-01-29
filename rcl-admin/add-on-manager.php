@@ -6,7 +6,7 @@ if( ! class_exists( 'WP_List_Table' ) ) {
 
 add_action('admin_init',array('Rcl_Addons_Manager','update_status_addon'));
 add_action('admin_init',array('Rcl_Addons_Manager','update_status_group_addon'));
-add_action('admin_init',array('Rcl_Addons_Manager','upload_addon_activate'));
+add_action('admin_init','rcl_init_upload_addon');
 
 class Rcl_Addons_Manager extends WP_List_Table {
 	
@@ -185,8 +185,9 @@ class Rcl_Addons_Manager extends WP_List_Table {
     function single_row( $item ) {
         
         $this->addon = $this->addons_data[$item['ID']];
-        $class = ($item['addon_status'])? 'active': 'inactive';        
+        $status = ($item['addon_status'])? 'active': 'inactive';        
         $ver = (isset($this->need_update[$item['ID']]))? version_compare($this->need_update[$item['ID']]['new-version'],$this->addon['version']): 0;
+        $class = $status;
         $class .= ($ver>0)? ' update': '';
 
         echo '<tr class="'.$class.'">';
@@ -196,7 +197,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
         if($ver>0){
             $colspan = ($hidden = count($this->column_info[1]))? 4-$hidden: 4;
             
-            echo '<tr class="plugin-update-tr active" id="'.$item['ID'].'-update" data-slug="'.$item['ID'].'">'
+            echo '<tr class="plugin-update-tr '.$status.'" id="'.$item['ID'].'-update" data-slug="'.$item['ID'].'">'
                 . '<td colspan="'.$colspan.'" class="plugin-update colspanchange">'
                     . '<div class="update-message">'
                         . 'Доступна свежая версия '.$this->addon['name'].' '.$this->need_update[$item['ID']]['new-version'].'. ';
@@ -318,64 +319,63 @@ class Rcl_Addons_Manager extends WP_List_Table {
 		}
 	  }
 	}
-        
-        function upload_addon_activate ( ) {
-	  if ( isset( $_POST['install-addon-submit'] ) ) {
-		if( !wp_verify_nonce( $_POST['_wpnonce'], 'install-addons-rcl' ) ) return false;
-		add_action( 'wp', array(&$this, 'upload_addon') );
-	  }
-	}
-        
-        function upload_addon(){
 
-            $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
-
-            $filename = $_FILES['addonzip']['tmp_name'];
-            $arch = current(wp_upload_dir()) . "/" . basename($filename);
-            copy($filename,$arch);
-
-            $zip = new ZipArchive;
-
-            $res = $zip->open($arch);
-
-            if($res === TRUE){
-
-                for ($i = 0; $i < $zip->numFiles; $i++) {
-                    //echo $zip->getNameIndex($i).'<br>';
-                    if($i==0) $dirzip = $zip->getNameIndex($i);
-
-                    if($zip->getNameIndex($i)==$dirzip.'info.txt'){
-                            $info = true;
-                    }
-                }
-
-                if(!$info){
-                      $zip->close();
-                      wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=error-info') );exit;
-                }
-
-                foreach($paths as $path){
-                      if(file_exists($path.'/')){
-                          $rs = $zip->extractTo($path.'/');
-                          break;
-                      }
-                }
-
-                $zip->close();
-                unlink($arch);
-                if($rs){
-                      wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=upload') );exit;
-                }else{
-                      wp_die(__('Unpacking of archive failed.','wp-recall'));
-                }
-            } else {
-                    wp_die(__('ZIP archive not found.','wp-recall'));
-            }
-
-	}
-    
-    
 } //class
+
+function rcl_init_upload_addon ( ) {
+    if ( isset( $_POST['install-addon-submit'] ) ) {
+          if( !wp_verify_nonce( $_POST['_wpnonce'], 'install-addons-rcl' ) ) return false;
+          rcl_upload_addon();
+    }
+}
+
+function rcl_upload_addon(){
+
+    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+
+    $filename = $_FILES['addonzip']['tmp_name'];
+    $arch = current(wp_upload_dir()) . "/" . basename($filename);
+    copy($filename,$arch);
+
+    $zip = new ZipArchive;
+
+    $res = $zip->open($arch);
+
+    if($res === TRUE){
+
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            //echo $zip->getNameIndex($i).'<br>';
+            if($i==0) $dirzip = $zip->getNameIndex($i);
+
+            if($zip->getNameIndex($i)==$dirzip.'info.txt'){
+                    $info = true;
+            }
+        }
+
+        if(!$info){
+              $zip->close();
+              wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=error-info') );exit;
+        }
+
+        foreach($paths as $path){
+              if(file_exists($path.'/')){
+                  $rs = $zip->extractTo($path.'/');
+                  break;
+              }
+        }
+
+        $zip->close();
+        unlink($arch);
+        if($rs){
+              wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=upload') );exit;
+        }else{
+              wp_die(__('Unpacking of archive failed.','wp-recall'));
+        }
+    } else {
+            wp_die(__('ZIP archive not found.','wp-recall'));
+    }
+
+}
 
 add_filter('set-screen-option', 'rcl_manager_set_option', 10, 3);
 function rcl_manager_set_option($status, $option, $value) {
@@ -443,7 +443,7 @@ function rcl_render_addons_manager(){
     echo '
         <h4>'.__('To install the add-on to Wp-Recall format .zip','wp-recall').'</h4>
         <p class="install-help">'.__('If you have the archive add-on for wp-recall format .zip, here you can download and install it.','wp-recall').'</p>
-        <form class="wp-upload-form" action="/" enctype="multipart/form-data" method="post">
+        <form class="wp-upload-form" action="" enctype="multipart/form-data" method="post">
                 <label class="screen-reader-text" for="addonzip">'.__('Plugin archive','wp-recall').'</label>
                 <input id="addonzip" type="file" name="addonzip">
                 <input id="install-plugin-submit" class="button" type="submit" value="'.__('To install','wp-recall').'" name="install-addon-submit">
