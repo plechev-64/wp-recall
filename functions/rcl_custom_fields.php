@@ -305,10 +305,11 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
     $accept = array();
     $attachment = array();
     if($custom_field['field_select']){
-        $acps = explode(',',$custom_field['field_select']);
-        foreach($acps as $acp){
-            $acpt = explode('/',$acp);
-            $accept[$acpt[0]] = $acpt[1];
+        $valid_types = array_map('trim',explode(',',$custom_field['field_select']));
+        $filetype = wp_check_filetype_and_ext( $_FILES[$slug]['tmp_name'], $_FILES[$slug]['name'] );
+
+        if (!in_array($filetype['ext'], $valid_types)){ 
+            wp_die( __('Запрещенный тип файла!','wp-recall'));
         }
     }
 
@@ -316,12 +317,7 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
 
     if($file['url']){
 
-        if($accept){
-            $mime = explode('/',$file['type']);
-            if(!isset($accept[$mime[0]])) return false;
-        }
-
-		if($post_id) $file_id = get_post_meta($post_id,$slug,1);
+        if($post_id) $file_id = get_post_meta($post_id,$slug,1);
         else $file_id = get_user_meta($user_id,$slug,1);
         if($file_id) wp_delete_attachment($file_id);
 
@@ -405,15 +401,16 @@ function rcl_download_file(){
 
     if(!$file) wp_die(__('File does not exist on the server!','wp-recall'));
 
-    $name = explode('/',$file->guid);
-    $cnt = count($name);
-    $f_name = $name[--$cnt];
+    $path = get_attached_file($id_file);
 
-    header('Content-Description: File Transfer');
-    header('Content-Disposition: attachment; filename="'.$f_name.'"');
-    header('Content-Type: application/octet-stream; charset=utf-8');
-    readfile($file->guid);
-
+    header( 'Content-Disposition: attachment; filename="'.basename($path).'"' );
+    header( "Content-Transfer-Encoding: binary");
+    header( 'Pragma: no-cache');
+    header( 'Expires: 0');
+    header( 'Content-Length: '.filesize($path));
+    header( 'Accept-Ranges: bytes' );
+    header( 'Content-Type: application/octet-stream' );
+    readfile($path);
     exit;
 }
 

@@ -88,7 +88,7 @@ class Rcl_EditFields {
             'file'=>1
         );
 
-        $notice = ($this->vals['type']=='file')? __('specify the types of files that are loaded by a comma, for example: image/*, video/*','wp-recall'): __('the list of options to share the " # " sign','wp-recall');
+        $notice = ($this->vals['type']=='file')? __('specify the types of files that are loaded by a comma, for example: pdf, zip, jpg','wp-recall'): __('the list of options to share the " # " sign','wp-recall');
 
         $textarea_select = (isset($types[$this->vals['type']]))?
             $notice.'<br>'
