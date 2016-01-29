@@ -79,7 +79,7 @@ class Rcl_Custom_Fields{
 
         if($this->value&&!$field['requared']) $input .= ' <a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a>';
 
-        $accept = ($field['field_select'])? 'accept=".'.array_map('trim',explode(',.',$field['field_select'])).'"': '';
+        $accept = ($field['field_select'])? 'accept=".'.implode(',.',array_map('trim',explode(',',$field['field_select']))).'"': '';
         $required = (!$this->value)? $this->required: '';
 
         if($this->value) $input .= '<br>';
