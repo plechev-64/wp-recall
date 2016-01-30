@@ -539,6 +539,14 @@ h3.pending-message{
 }
 /* Корректировка виз редактора End */
 
+/* Форма удаления публикации Start */
+.delete-form-contayner{
+    
+}
+.delete-form-contayner textarea{   
+    width:100%;
+}
+/* Форма удаления публикации End */
 
 @media screen and (max-width:480px) {
 	#temp-files li {
