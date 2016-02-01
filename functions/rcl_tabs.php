@@ -55,11 +55,18 @@ class Rcl_Tabs{
                                    
             $rcl_cache = new Rcl_Cache();
             
-            if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-                $string = rcl_format_url(get_author_posts_url($author_lk),$this->id);
+            $protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://':  'https://';
+            
+            if(!$rcl_options['tab_newpage']){ //если загружаются все вкладки               
+                $string = (isset($_GET['tab'])&&$_GET['tab']==$this->id)? $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']: rcl_format_url(get_author_posts_url($author_lk),$this->id);               
             }else{
-                $protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://':  'https://';
-                $string = $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+            
+                if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+                    $string = rcl_format_url(get_author_posts_url($author_lk),$this->id);
+                }else{                   
+                    $string = $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+                }
+            
             }
             
             $file = $rcl_cache->get_file($string);

@@ -17,7 +17,7 @@ function rcl_repository_page(){
     
     $page = (isset($_GET['paged']))? $_GET['paged']: 1;
 
-     $url = 'http://wppost.ru/products-files/api/add-ons.php'
+     $url = RCL_SERVICE_HOST.'/products-files/api/add-ons.php'
             . '?rcl-addon-info=get-add-ons&page='.$page;
 
      $data = array(

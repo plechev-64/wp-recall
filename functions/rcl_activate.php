@@ -42,7 +42,7 @@ if (!class_exists('reg_core')){
                 switch($_GET['id_access_'.$id]){
                     case 7: echo '<div class="error"><p>Переданы неверные данные</p></div>'; break;
                     case 8: echo '<div class="error"><p>Переданы неверные данные</p></div>'; break;
-                    case 9: echo '<div class="error"><p>Для вашего домена действует другой ключ <a href="http://wppost.ru/activate-plugins/findkey/?plug='.$id.'">Потеряли ключ?</a></p></div>'; break;
+                    case 9: echo '<div class="error"><p>Для вашего домена действует другой ключ <a href="'.RCL_SERVICE_HOST.'/activate-plugins/findkey/?plug='.$id.'&host='.$_SERVER['HTTP_HOST'].'">Потеряли ключ?</a></p></div>'; break;
                 }
             }
             $form = '<div class="error"><p>Плагин не активирован!</p></div>'
