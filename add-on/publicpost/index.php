@@ -1101,6 +1101,7 @@ function rcl_footer_publics_scripts($script){
 	$('#upload-public-form').fileupload({
 		dataType: 'json',
 		type: 'POST',
+                dropZone: $('#rcl-public-dropzone'),
 		url: Rcl.ajaxurl,
 		formData:{action:'rcl_imagepost_upload',post_type:post_type,post_id:post_id_edit,ajax_nonce:Rcl.nonce},
 		singleFileUploads:false,
@@ -1109,27 +1110,25 @@ function rcl_footer_publics_scripts($script){
                     /*var progress = parseInt(data.loaded / data.total * 100, 10);
                     $('#upload-box-message .progress-bar').show().css('width',progress+'px');*/
 		},
-		change:function (e, data) {
-                    var error = 0;
-                    /*rcl_preloader_show('#tab-postform');*/
-                    rcl_preloader_show('.public_block form');
-                    
-                    var cnt_now = $('#temp-files li').length;
-                    
+		send:function (e, data) {
+                    var error = false;
+                    rcl_preloader_show('.public_block form');                   
+                    var cnt_now = $('#temp-files li').length;                    
                     $.each(data.files, function (index, file) {
                         cnt_now++;
                         if(cnt_now>".$cnt."){
                             rcl_notice('Превышено разрешенное кол-во загружаемых файлов! Макс. ".$cnt."','error');
-                            rcl_preloader_hide();
-                            error = 1;
+                            error = true;
                         }                       
                         if(file['size']>".$maxsize."){
-                            rcl_notice('Превышен максимальный размер для файла '+file['name']+'! Макс. ".$maxsize_mb."MB','error');
-                            rcl_preloader_hide();
-                            error = 1;
+                            rcl_notice('Превышен максимальный размер для файла '+file['name']+'! Макс. ".$maxsize_mb."MB','error');                            
+                            error = true;
                         }                       
                     });
-                    if(error) return false;
+                    if(error){
+                        rcl_preloader_hide();
+                        return false;
+                    }
 		},
 		done: function (e, data) {
                     $.each(data.result, function (index, file) {

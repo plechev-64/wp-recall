@@ -99,12 +99,14 @@ function rcl_delete_editor_box(e){
 
 function rcl_delete_post(element){
     if(confirm('Действительно удалить?')){
+        rcl_preloader_show(element);
         var post_id = jQuery(element).data('post');
         var dataString = 'action=rcl_ajax_delete_post&post_id='+post_id;
         dataString += '&ajax_nonce='+Rcl.nonce;
         jQuery.ajax({
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
             success: function(data){
+                rcl_preloader_hide();
                 if(data['result']==100){
                         jQuery('#'+data['post_type']+'-'+post_id).remove();
                         rcl_notice('Материал успешно удален!','success');

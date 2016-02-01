@@ -385,19 +385,18 @@ function rcl_add_dropzone(idzone){
 
         if(dropZone[0]){		
             dropZone.removeClass('in hover');
-
-            do {
-                    if (node === dropZone[0]) {
-                            found = true;
-                            break;
-                    }
-                    node = node.parentNode;
+            do {               
+                if (node === dropZone[0]) {
+                    found = true;
+                    break;
+                }
+                node = node.parentNode;
             } while (node != null);
 
             if(found){
-                    e.preventDefault();
+                e.preventDefault();
             }else{			
-                    return false;
+                return false;
             }
         }
     });

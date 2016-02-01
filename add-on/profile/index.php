@@ -206,7 +206,7 @@ function rcl_button_avatar_upload($content,$author_lk){
     $content .= '
     <div id="userpic-upload">
         <span id="file-upload" class="fa fa-download">
-            <input type="file" id="userpicupload" accept="image/*" name="uploadfile">
+            <input type="file" id="userpicupload" accept="image/*" name="userpicupload">
         </span>';
     $content .= @( $_SERVER["HTTPS"] != 'on' ) ? '':  '<span id="webcamupload" class="fa fa-camera"></span>';
     $content .= '</div>
@@ -752,50 +752,58 @@ function rcl_get_profile_scripts($script){
                 var progress = parseInt(data.loaded / data.total * 100, 10);
                 $('#avatar-upload-progress').show().html('<span>'+progress+'%</span>');
             },
-            processalways: function (e, data) {
+            add: function (e, data) {
+                if(!data.form) return false;
                 $.each(data.files, function (index, file) {
                     $('#rcl-preview').remove();
                     if(file.size>".$maxsize."){
                         rcl_notice('Превышен максимальный размер для изображения! Макс. ".$maxsize_mb."MB','error');
                         return false;
                     }
-                    var canvas = data.files[0].preview;
-                    var dataURL = canvas.toDataURL();
-                    $( '#rcl-preview' ).remove();
-                    $('body > div').last().after('<div id=\'rcl-preview\' title=\'Загружаемое изображение\'><img src=\''+dataURL+'\'></div>');
-                    var image = $('#rcl-preview img');
-                    image.load(function() {
-                        var img = $(this);
-                        var height = img.height();
-                        var width = img.width();
-                        var jcrop_api;
-                        img.Jcrop({
-                            aspectRatio: 1,
-                            minSize:[150,150],
-                            onSelect:function(c){
-                                    img.attr('data-width',width).attr('data-height',height).attr('data-x',c.x).attr('data-y',c.y).attr('data-w',c.w).attr('data-h',c.h);
-                            }
-                        },function(){
-                                jcrop_api = this;
-                        });
 
-                        $( '#rcl-preview' ).dialog({
-                          modal: true,
-                          imageQuality: 1,
-                          width: width+32,
-                          resizable: false,
-                          close: function (e, data) {
-                                  jcrop_api.destroy();
-                                  $( '#rcl-preview' ).remove();
-                          },
-                          buttons: {
-                                Ok: function() {
-                                  data.submit();
-                                  $( this ).dialog( 'close' );
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        var imgUrl = event.target.result;
+                        $( '#rcl-preview' ).remove();
+                        $('body > div').last().after('<div id=\'rcl-preview\' title=\'Загружаемое изображение\'><img src=\''+imgUrl+'\'></div>');
+                        var image = $('#rcl-preview img');
+                        image.load(function() {
+                            var img = $(this);
+                            var height = img.height();
+                            var width = img.width();
+                            var jcrop_api;
+                            img.Jcrop({
+                                aspectRatio: 1,
+                                minSize:[150,150],
+                                onSelect:function(c){
+                                        img.attr('data-width',width).attr('data-height',height).attr('data-x',c.x).attr('data-y',c.y).attr('data-w',c.w).attr('data-h',c.h);
                                 }
-                          }
+                            },function(){
+                                    jcrop_api = this;
+                            });
+
+                            $( '#rcl-preview' ).dialog({
+                              modal: true,
+                              imageQuality: 1,
+                              width: width+32,
+                              dialogClass: 'rcl-load-avatar',
+                              resizable: false,
+                              close: function (e, data) {
+                                      jcrop_api.destroy();
+                                      $( '#rcl-preview' ).remove();
+                              },
+                              buttons: {
+                                    Ok: function() {
+                                      data.submit();
+                                      $( this ).dialog( 'close' );
+                                    }
+                              }
+                            });
                         });
-                    });
+                    };
+                    
+                    reader.readAsDataURL(file);
+
                 });
             },
             submit: function (e, data) {

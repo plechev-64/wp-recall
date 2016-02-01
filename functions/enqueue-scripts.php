@@ -21,7 +21,7 @@ function rcl_resizable_scripts(){
 }
 
 function rcl_datepicker_scripts(){
-    wp_enqueue_style( 'datepicker', RCL_URL.'js/datepicker/style.css' );
+    wp_enqueue_style( 'jquery-ui-datepicker', RCL_URL.'js/datepicker/style.css' );
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-core');
     wp_enqueue_script('jquery-ui-datepicker');

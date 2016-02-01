@@ -47,8 +47,8 @@ function rcl_avatar_upload(){
 		$upload['file']['size'] = file_put_contents($upload['file']['tmp_name'], $data);
                 $mime = explode('/',$upload['file']['type']);
 	}else{
-		if($_FILES['uploadfile']){
-			foreach($_FILES['uploadfile'] as $key => $data){
+		if($_FILES['userpicupload']){
+			foreach($_FILES['userpicupload'] as $key => $data){
 				$upload['file'][$key] = $data;
 			}
 		}
