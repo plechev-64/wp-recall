@@ -898,6 +898,7 @@ function rcl_profile_functions_js($string){
         jQuery( '#rcl-preview img' ).load(function() {
             jQuery( '#rcl-preview' ).dialog({
                 modal: true,
+                dialogClass: 'rcl-zoom-avatar',
                 draggable: false,
                 imageQuality: 1,
                 resizable: false,
@@ -905,11 +906,6 @@ function rcl_profile_functions_js($string){
                 close: function (e, data) {
                     jQuery( this ).dialog( 'close' );
                     jQuery( '#rcl-preview' ).remove();
-                },
-                buttons: {
-                    Ок: function() {
-                        jQuery( this ).dialog( 'close' );
-                    }
                 }
             });
         });
