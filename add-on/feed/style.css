@@ -11,6 +11,9 @@
 	border: none;						/*++Twenty15++*/
 	box-shadow:none;					/*++Twenty16++*/
 }
+#rcl-feed .feed-box span {
+	margin: 0 0 0 5px;
+}
 #rcl-feed .feed-box .feed-header {
     background: rgba(243, 243, 243, 0.5);
     font: 16px/1.4 Verdana,arial;
@@ -25,7 +28,7 @@
 	font-size: 18px;
 }
 .feed-options .fa-times::before {
-	padding: 0 3px 0 0;
+	padding: 0;
 }
 .feed-header .feed-options > .fa:hover + .options-box,
 .feed-header .feed-options .options-box:hover{

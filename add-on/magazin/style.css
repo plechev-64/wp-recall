@@ -1,8 +1,18 @@
 /* Магазин Start*/
+p.product-meta{
+    clear:both;   
+}
+p.product-meta i{
+    margin-right:5px;   
+}
 .cart-icon{
     font-size:40px;
     color:#ccc;
     float:left;
+}
+.prodlist .list-list p .fa,
+.cart-icon .fa-shopping-cart {
+	margin: 0 5px 0 0;
 }
 .prodlist {
 	box-sizing: content-box;
@@ -16,13 +26,6 @@
 	border: none;					/*++Twenty15++*/
 	box-shadow: none;				/*++Twenty16++*/
 	text-decoration: none;
-}
-.cart-data .fa-plus::before,
-.cart-data .fa-minus::before,
-.prodlist .fa-rub::before,
-.prodlist .fa-usd::before,
-.prodlist .fa-eur::before {
-	padding: 0;
 }
 .prodlist .slab-list,
 .prodlist .list-list {

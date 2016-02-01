@@ -62,11 +62,12 @@
     margin: 2px 5px 7px;
     padding: 5px 7px;
 }
-
-.user-profile-fields .rcl-custom-fields {
-    clear: none;
+.userlist.rows-list .user-single .filter-data .fa {
+	margin: 0 5px 0 0;
 }
-
+.user-profile-fields .rcl-custom-fields {
+	clear: none;
+}
 /* вывод аватарками и mini start */
 .rows-list .thumb-user a,
 .avatars-list .thumb-user a {
@@ -108,9 +109,6 @@
     position: absolute;
     right: 5px;
     top: 5px;
-}
-.user-single .status_user .fa-circle::before {
-    padding: 0;
 }
 .userlist.mini-list .user-single {
     float: left;

@@ -29,7 +29,7 @@
 	color: rgba(229, 57, 53, 0.7);
     font-size: 24px;
 	line-height: 1;							/*++Twenty16++*/
-    margin: 3px 0 0;
+    margin: 3px 4px 0 0;
     position: absolute;
     right: 0;
 }
@@ -90,9 +90,8 @@ div.panel_lk_recall a {
     top: 50%;
     width: 34px;
 }
-.panel_lk_recall .form-block-rcl .field-icon i.fa:before {  
+.panel_lk_recall .form-block-rcl .field-icon i.fa::before {  
 	display: inline-block;
-    padding: 0;
 }
 .panel_lk_recall form input,
 .panel_lk_recall form select,
@@ -137,6 +136,9 @@ div.panel_lk_recall a {
     display: inline-block;
     min-width: 100px;
     padding: 3px;
+}
+.panel_lk_recall a.link-tab-rcl .fa {
+	margin: 0 5px 0 0;
 }
 .panel_lk_recall .form-tab-rcl a:hover > i {
 	color: #000;

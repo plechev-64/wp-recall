@@ -41,8 +41,15 @@
     overflow: hidden;
     position: relative;
 }
-#rcl-group a{
+#rcl-group a {
     text-decoration:none;
+}
+#rcl-group .group-request a .fa,
+#group-posts-widget .post-meta span .fa,
+#group-link-content .close-content .fa,
+#group-admin-panel .title-panel .fa-cogs,
+#widgets-options .widgets-zone .widget-box .widget-name .fa {
+	margin: 0 5px 0 0;
 }
 #rcl-group ul {
     list-style: none;
@@ -110,7 +117,7 @@
     line-height: 1;
     opacity: 0.7;
     overflow: hidden;
-    padding: 6px 4px 5px 8px;
+    padding: 6px 8px 5px;
     position: relative;
     text-align: center;
 }
@@ -186,7 +193,7 @@
 #rcl-group select,
 #rcl-group textarea{
     margin:5px;
-    border: medium none;
+    border: none;
     box-shadow: 0 0 1px 1px #ccc;
     box-sizing: border-box;
     color: #000;
@@ -228,11 +235,11 @@
     font-weight: bold;
     padding: 5px;
 }
-
 #group-public-form-widget .fa-plus-square-o,
 #group-public-form-widget .fa-minus-square-o {
     display: inline-block;
     font-size: 19px;
+	margin: 0 5px 0 0;
     vertical-align: middle;
 }
 #rcl-group .group-content .public_block  select {
@@ -241,7 +248,6 @@
 #rcl-group .hidden-widget .widget-content{
     display: none;
 }
-
 .group-content {
     padding: 0 0.5%;
 }
@@ -325,7 +331,7 @@
 	height: 100%;
     z-index: 9;
 }
-#group-link-content .close-content{
+#group-link-content .close-content {
     background: rgba(219, 219, 219, 0.6);
     color: rgb(76, 140, 189);
     display: block;
@@ -441,7 +447,7 @@
     margin: 5px;
     padding: 5px;
 }
-#widgets-options .widgets-zone .widget-box .widget-name{
+#widgets-options .widgets-zone .widget-box .widget-name {
     font-size: 14px;
     font-weight: bold;
     display: block;

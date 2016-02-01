@@ -37,7 +37,7 @@
     width: 96%;
 }
 .public_block input#post_title_input:focus {				/*++hueman++*/
-    border: medium none;
+    border: none;
     box-shadow: 0 0 1px 1px #ccc;
     color: #000;
 }
@@ -103,7 +103,7 @@
     cursor: pointer;
     font-size: 24px;
 	line-height: 1;							/*++Twenty16++*/
-    padding: 6px 2px 6px 6px;
+    padding: 6px;
     position: absolute;
     right: 0;
     top: 0;
@@ -311,7 +311,7 @@ h3.pending-message{
 }
 #block_author-rcl h3,
 #block_author-rcl .userlist {
-    font-size: 20px;							/*++hueman++*/
+    font-size: 18px;							/*++hueman++*/
     letter-spacing: normal;						/*++hueman++*/
     margin: 3px;
 }
@@ -349,8 +349,9 @@ h3.pending-message{
 }
 .rcl-public-editor .field-icons .rcl-icon {
 	background: rgb(183, 209, 228);
-	padding: 2px 0 2px 4px;
+	padding: 2px 4px;
 	color: #fff;
+        display: inline-block;
 }
 .rcl-public-editor .move-box {
     cursor: move;
@@ -416,7 +417,7 @@ h3.pending-message{
     list-style: none;
 }
 .rcl-public-editor .rcl-tools-panel i{
-    margin: 0 3px;
+    margin: 0 6px;
 }
 .rcl-tools-panel li a {
     color: rgb(76, 140, 189);

@@ -2,12 +2,13 @@
 
 
 /* общие стили start */
-[class^="fa fa-"]:before, [class*=" fa fa-"]:before{
-	padding:0 5px 0 0;
+[class^="fa fa-"]::before,
+[class*=" fa fa-"]::before{
+	padding: 0;
 }
 i.fa, a.fa, p.fa,span.fa,div.fa{
     width:auto;
-    text-align: left;
+    text-align: center;
     font-family: FontAwesome!important;
 }
 .floatright{
@@ -43,6 +44,7 @@ span.ruble-symbol{
     top: 55%;
     left: 0;
 }
+
 .wprecallblock .notify-lk {
     color: #000;
     font: bold 16px arial;
@@ -86,7 +88,7 @@ span.ruble-symbol{
 #rcl-notice .notice-window .close-notice{
     float:right;
 	color:inherit;
-	padding: 0 0 0 4px;
+	padding: 0 5px 0 4px;
 }
 body .rcl_preloader{
     position: absolute!important;
@@ -99,13 +101,10 @@ body .rcl_preloader{
     z-index: 99;
     font-size: 80px;
 }
-.rcl_preloader i{
+.rcl_preloader i {
     position: absolute;
     top: 50%;
     left: 50%;
-}
-.rcl_preloader i:before{
-    padding: 0;    
 }
 #passwordStrength {
 	padding: 7px 15px 5px;
@@ -379,6 +378,9 @@ div.wprecallblock h3 {
     overflow: hidden;
     position: relative;
 }
+#lk-conteyner .footer-block-rcl{
+    padding:5px 10px;
+}
 #lk-conteyner .lk-sidebar {
     float: left;
     height: auto;
@@ -432,9 +434,6 @@ div.wprecallblock h3 {
     font-size: 16px;
     margin: 0;
 }
-.rcl-avatar-delete .fa.fa-times::before {
-	padding: 0;
-}
 #userpic-upload {
     bottom: 0;
     color: rgb(229, 57, 53);
@@ -450,7 +449,7 @@ div.wprecallblock h3 {
     margin-right: 4px;
     opacity: 0.7;
     overflow: hidden;
-    padding: 6px 4px 5px 8px;
+    padding: 6px 8px 5px;
     position: relative;
     text-align: center;
 }
@@ -470,7 +469,7 @@ a.rcl-avatar-delete:hover,
 	max-width: none;
 }
 #avatar-upload-progress {
-    background: rgb(216, 231, 238) none repeat scroll 0 0;
+    background: rgb(216, 231, 238);
     display: none;
     height: 50px;
     left: 0;
@@ -606,9 +605,16 @@ p.status-user-rcl::before {
 .wprecallblock .rcl-menu {
 	overflow: hidden;
 }
-
+.wprecallblock a.sec_block_button i.fa,
+.wprecallblock a.child_block_button i.fa {
+	margin: 0 5px 0 0;
+}
 /* Группа кнопок Start */
 	/* Основной стиль кнопок Start */
+        
+.recall-button i + span {
+    margin: 0 0 0 5px;
+}       
 
 a.recall-button,
 .recall-button.rcl-upload-button,		/*input[type="file"]*/
@@ -794,7 +800,7 @@ a.data-filter.filter-active:hover {
     overflow: hidden;
     width: 32%;
 }
-#your-profile input[type="checkbox"] {   
+#your-profile input[type="checkbox"] {
     margin: 4px 2px 0;
     width: 15px;
     float: none;
@@ -885,68 +891,97 @@ a.data-filter.filter-active:hover {
 
 
 /* upload avatar overlay and block zoom start  */
-.ui-button.ui-button-text-only {
-    line-height: 1;
-}
-.ui-dialog-titlebar-close {
-    margin: 0 2px;
-}
-.ui-button.ui-widget.ui-dialog-titlebar-close {
-	margin: 0;
-	padding: 0;
-	top: -5px;
-}
-.ui-dialog-titlebar-close::before {
-    color: rgba(229, 57, 53, 0.8);
-    font-size: 34px;
-}
-.ui-dialog-titlebar-close:hover::before {
-	color: rgb(229, 57, 53);
-}
-.ui-dialog-titlebar-close:hover {
-	-webkit-transform: scale(1.15);
-    transform: scale(1.15);
-}
-.ui-widget-overlay {
+.ui-widget-overlay.ui-front {
+    background: #000;
     opacity: 0.8;
+	position: fixed;
 }
-.ui-dialog {
-	box-shadow: 0 0 20px 10px #000;
-	max-width:90%;
-	max-width: calc(100% - 10px);
+.ui-dialog-buttonpane .ui-button.ui-button-text-only {
+    background: rgba(219, 219, 219, 0.3);
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    color: #000;
+    font: 16px/1 Tahoma,arial;
+	margin: 0;
+	padding: 5px 10px;
 }
-.ui-dialog.ui-draggable {
-	background: #fff;
-}
-.ui-dialog.ui-widget.ui-dialog-buttons {
+.ui-dialog.rcl-zoom-avatar {
+    background: none;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 0 20px 10px #000;
+	max-width: 99%;
 	width: unset !important;
 }
-.ui-dialog.ui-draggable #rcl-preview {
-    display: table;
-	margin:0 auto;
+.ui-dialog.rcl-load-avatar .ui-button-icon-primary,
+.ui-dialog.rcl-zoom-avatar .ui-button-icon-primary {
+	display: none;
 }
-.ui-dialog #rcl-preview{
-	overflow: hidden;
-	padding: 5px;
-}
-.ui-dialog #rcl-preview img.aligncenter {
-	margin: 0;
-}
-.ui-dialog.ui-widget .ui-dialog-titlebar {
-    border: medium none;
-    height: 24px;
+.ui-dialog.rcl-zoom-avatar .ui-dialog-titlebar {
+    border: none;
+    border-radius: 0;
+    height: 0;
     padding: 0;
 }
-.ui-dialog .ui-dialog-titlebar span,
-.ui-dialog-buttonpane.ui-helper-clearfix {
-    display: none;
+.ui-dialog.rcl-load-avatar .ui-dialog-titlebar-close::before,
+.ui-dialog.rcl-zoom-avatar .ui-dialog-titlebar-close::before {
+    content: "\f335";
+    font: 400 33px/33px dashicons;
+    height: 33px;
+    vertical-align: middle;
+    width: 33px;
 }
-.ui-draggable .ui-dialog-titlebar {
-	margin: 0;
-    border-top: 1px solid #c2c2c2;
+.ui-dialog.rcl-zoom-avatar .ui-button {
+    background: none;
+    border: none;
+    color: rgb(229, 57, 53);
 }
-.ui-draggable .ui-dialog-buttonpane.ui-helper-clearfix{
-	display:block;
+
+.ui-dialog.rcl-zoom-avatar .ui-button:hover,
+.ui-dialog.rcl-load-avatar .ui-dialog-titlebar-close:hover,
+.ui-dialog-buttonpane .ui-button.ui-button-text-only:hover {
+	opacity: 0.8;
+}
+.ui-dialog.rcl-zoom-avatar .ui-dialog-content {
+    background: transparent;
+    border: none;
+	border-radius: 4px;
+    color: transparent;
+    padding: 0;
+}
+.ui-dialog.rcl-load-avatar {
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0 0 20px 10px #000;
+	max-width: 100%;
+	min-width: 245px;
+}
+.ui-dialog.rcl-load-avatar .ui-dialog-titlebar {
+    background: none;
+    border: none;
+    border-radius: 0;
+    font: 16px/32px Tahoma,arial;
+    height: 34px;
+    padding: 0 0 0 7px;
+}
+.ui-dialog.rcl-load-avatar .ui-dialog-titlebar-close {
+    background: none;
+    border: none;
+    border-radius: 0;
+    color: rgb(229, 57, 53);
+    padding: 0;
+}
+.ui-dialog.rcl-load-avatar .ui-dialog-content {
+    background: #fff;
+    border: none;
+    display: table;
+    margin: 0 auto;
+	padding: 5px;
+}
+.ui-dialog.rcl-load-avatar .ui-dialog-buttonpane {
+    border: 0 none;
+    padding: 5px 15px 10px 0;
 }
 /* upload avatar overlay and block zoom end  */
 

@@ -16,9 +16,6 @@
 .post-rating .buttons-rating a > i{
     font-size: 24px;
 }
-.post-rating .buttons-rating a > i::before {
-    padding: 0;
-}
 .post-rating .buttons-rating .rating-minus{
 	float: right;
     color: red;
@@ -27,7 +24,7 @@
 .post-rating .buttons-rating .rating-plus {
 	float: left;
     color: #008000;
-	margin: 0 3px 0 0;
+	margin: 0 5px 0 0;
 }
 .post-rating .buttons-rating a.rating-cancel {
     background: rgba(219, 219, 219, 0.6);
@@ -44,7 +41,7 @@
     color: #008000;
 }
 .rating-value-block .rating-value {
-    margin: 0 6px 0 3px;
+    margin: 0 8px 0 2px;
 }
 .rating-value-block .post-votes{
     color: #aaa;
@@ -188,9 +185,6 @@
     color: #ffae19;
     font-size: 15px;
 }
-.ratinglist .object-rating .fa-star::before {
-    padding: 0;
-}
 .ratinglist .object-rating .rtng-ttl {
 	font-size: 16px;
 }
@@ -221,7 +215,7 @@
     width: 25px;
 }
 .ratinglist .rating-meta blockquote {
-    border: medium none;
+    border: none;
     font-size: 16px;
     font-style: italic;
     font-weight: bold;
