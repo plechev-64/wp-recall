@@ -779,12 +779,12 @@ function rcl_get_insert_image($image_id,$mime='image'){
 
 function rcl_get_button($ancor,$url,$args=false){
 	$button = '<a href="'.$url.'" ';
-	if(isset($args['attr'])) $button .= $args['attr'].' ';
-	if(isset($args['id'])) $button .= 'id="'.$args['id'].'" ';
+	if(isset($args['attr'])&&$args['attr']) $button .= $args['attr'].' ';
+	if(isset($args['id'])&&$args['id']) $button .= 'id="'.$args['id'].'" ';
 	$button .= 'class="recall-button ';
-	if(isset($args['class'])) $button .= $args['class'];
+	if(isset($args['class'])&&$args['class']) $button .= $args['class'];
 	$button .= '">';
-	if(isset($args['icon'])) $button .= '<i class="fa '.$args['icon'].'"></i>';
+	if(isset($args['icon'])&&$args['icon']) $button .= '<i class="fa '.$args['icon'].'"></i>';
 	if($ancor) $button .= '<span>'.$ancor.'</span>';
 	$button .= '</a>';
 	return $button;
