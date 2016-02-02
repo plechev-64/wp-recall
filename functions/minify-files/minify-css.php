@@ -64,9 +64,10 @@ function rcl_minify_style(){
         $us = array();
         if(!file_exists($css_path)) continue;
         $string_value = '';
-        preg_match_all("/(?<=\/wp\-content\/)[A-z0-9\-\/\.\_\s\ё]*(?=)/i", $css_path, $string_value);
+        //preg_match_all("/(?<=\/wp\-content\/)[A-z0-9\-\/\.\_\s\ё]*(?=)/i", $css_path, $string_value);
+        $addon_name = rcl_get_addon_dir($css_path);
         if($k!==0) $fullcss .= "\n\n";
-        $fullcss .= '/*'.$string_value[0][0].'*/'."\r\n";
+        if($addon_name) $fullcss .= '/*'.$addon_name.'*/'."\r\n";
         $string = file_get_contents($css_path);
         preg_match_all('/(?<=url\()[A-zА-я0-9\-\_\/\"\'\.\?\s]*(?=\))/iu', $string, $url);
         $addon = (rcl_addon_path($css_path))? true: false;
@@ -79,6 +80,9 @@ function rcl_minify_style(){
 
             $string = str_replace($us, $imgs, $string);
         }
+        
+        $string = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $string);
+        $string =  preg_replace('/ {2,}/',' ',$string);
 
         $fullcss .= $string;
     }

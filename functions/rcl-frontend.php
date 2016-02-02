@@ -6,20 +6,20 @@ function rcl_add_colorpicker_style(){
 
     $rgb = (isset($rcl_options['primary-color'])&&$rcl_options['primary-color'])? rcl_hex2rgb($rcl_options['primary-color']): array(76, 140, 189);
     
-    $data = "<style>
+    $data = '<style>
     a.recall-button,
     .recall-button.rcl-upload-button,
-    input[type='submit'].recall-button,
-    input[type='submit'] .recall-button,
-    input[type='button'].recall-button,
-    input[type='button'] .recall-button,
+    input[type="submit"].recall-button,
+    input[type="submit"] .recall-button,
+    input[type="button"].recall-button,
+    input[type="button"] .recall-button,
     a.recall-button:hover,
     .recall-button.rcl-upload-button:hover,
-    input[type='submit'].recall-button:hover,
-    input[type='submit'] .recall-button:hover,
-    input[type='button'].recall-button:hover,
-    input[type='button'] .recall-button:hover{
-        background: rgb(".$rgb[0].", ".$rgb[1].", ".$rgb[2].");
+    input[type="submit"].recall-button:hover,
+    input[type="submit"] .recall-button:hover,
+    input[type="button"].recall-button:hover,
+    input[type="button"] .recall-button:hover{
+        background: rgb('.$rgb[0].', '.$rgb[1].', '.$rgb[2].');
     }
     a.recall-button.active,
     a.recall-button.active:hover,
@@ -28,18 +28,18 @@ function rcl_add_colorpicker_style(){
     a.data-filter.filter-active,
     a.data-filter.filter-active:hover,
     #lk-conteyner .rcl-more-link{
-        background: rgba(".$rgb[0].", ".$rgb[1].", ".$rgb[2].", 0.4);
+        background: rgba('.$rgb[0].', '.$rgb[1].', '.$rgb[2].', 0.4);
     } 
     .rcl_preloader i{
-        color: rgb(".$rgb[0].", ".$rgb[1].", ".$rgb[2].");
+        color: rgb('.$rgb[0].', '.$rgb[1].', '.$rgb[2].');
     }
     p.status-user-rcl::before{
-        border-color: transparent transparent transparent rgb(".$rgb[0].", ".$rgb[1].", ".$rgb[2].");   
+        border-color: transparent transparent transparent rgb('.$rgb[0].', '.$rgb[1].', '.$rgb[2].');   
     }
     .ballun-status p.status-user-rcl{
-        border: 1px solid rgb(".$rgb[0].", ".$rgb[1].", ".$rgb[2].");
+        border: 1px solid rgb('.$rgb[0].', '.$rgb[1].', '.$rgb[2].');
     }
-    </style>\n";
+    </style>'."\n";
     
     echo $data;
 }

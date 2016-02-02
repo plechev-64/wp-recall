@@ -65,7 +65,7 @@ function rcl_init_publics_block(){
                 rcl_tab('publics','rcl_tab_publics',__('Posts','wp-recall'),array('ajax-load'=>true,'public'=>$view,'cache'=>true,'class'=>'fa-list','order'=>50));
 	}
 	if($rcl_options['output_public_form_rcl']==1){
-                rcl_tab('postform','rcl_tab_postform',__('Publication','wp-recall'),array('class'=>'fa-pencil','cache'=>true,'order'=>60,'path'=>__FILE__));
+                rcl_tab('postform','rcl_tab_postform',__('Publication','wp-recall'),array('class'=>'fa-pencil','order'=>60,'path'=>__FILE__));
 	}
 }
 

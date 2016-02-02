@@ -1735,7 +1735,7 @@ class Rcl_Messages{
 			});
 			return false;
 		});
-		jQuery('#lk-content').on('click','#message-list .important',function(){
+		jQuery('#lk-content').on('click','#tab-privat .important',function(){
 			update_important_rcl(jQuery(this).attr('idmess'));
 			return false;
 		});
