@@ -182,7 +182,7 @@ function rcl_button_avatar_upload($content,$author_lk){
     if($user_ID==$author_lk){ 
         rcl_fileupload_scripts();
         rcl_crop_scripts();
-        rcl_webcam_scripts();
+        if( $_SERVER["HTTPS"] == 'on') rcl_webcam_scripts();
     }
 
     $avatar = get_user_meta($author_lk,'rcl_avatar',1);

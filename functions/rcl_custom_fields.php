@@ -309,7 +309,7 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
         $filetype = wp_check_filetype_and_ext( $_FILES[$slug]['tmp_name'], $_FILES[$slug]['name'] );
 
         if (!in_array($filetype['ext'], $valid_types)){ 
-            wp_die( __('Запрещенный тип файла!','wp-recall'));
+            wp_die( __('Prohibited file type!','wp-recall'));
         }
     }
 

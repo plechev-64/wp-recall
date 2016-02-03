@@ -46,7 +46,7 @@ function rcl_update_user_balance($newmoney,$user_id,$comment=''){
 
     if(isset($money)){
         
-        do_action('rcl_pre_update_user_money',$newmoney,$user_id,$comment);
+        do_action('rcl_pre_update_user_balance',$newmoney,$user_id,$comment);
         
         return $wpdb->update(RMAG_PREF .'users_balance',
             array( 'user_balance' => $newmoney ),
@@ -66,7 +66,7 @@ function rcl_add_user_balance($money,$user_id,$comment=''){
     $result =  $wpdb->insert( RMAG_PREF .'users_balance',
 	array( 'user_id' => $user_id, 'user_balance' => $money ));
     
-    do_action('rcl_insert_user_money',$money,$user_id,$comment);
+    do_action('rcl_add_user_balance',$money,$user_id,$comment);
     
     return $result;
 }

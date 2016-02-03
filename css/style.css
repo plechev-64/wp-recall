@@ -896,23 +896,16 @@ a.data-filter.filter-active:hover {
     opacity: 0.8;
 	position: fixed;
 }
-.ui-dialog-buttonpane .ui-button.ui-button-text-only {
-    background: rgba(219, 219, 219, 0.3);
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    color: #000;
-    font: 16px/1 Tahoma,arial;
-	margin: 0;
-	padding: 5px 10px;
-}
 .ui-dialog.rcl-zoom-avatar {
     background: none;
     border: none;
     border-radius: 4px;
     box-shadow: 0 0 20px 10px #000;
+	padding: 0;
 	max-width: 99%;
 	width: unset !important;
 }
+.ui-dialog.rcl-zoom-avatar .ui-dialog-title,
 .ui-dialog.rcl-load-avatar .ui-button-icon-primary,
 .ui-dialog.rcl-zoom-avatar .ui-button-icon-primary {
 	display: none;
@@ -922,21 +915,23 @@ a.data-filter.filter-active:hover {
     border-radius: 0;
     height: 0;
     padding: 0;
+	position: unset;
 }
 .ui-dialog.rcl-load-avatar .ui-dialog-titlebar-close::before,
 .ui-dialog.rcl-zoom-avatar .ui-dialog-titlebar-close::before {
     content: "\f335";
-    font: 400 33px/33px dashicons;
-    height: 33px;
+    font: 400 40px/40px dashicons;
+    height: 40px;
     vertical-align: middle;
-    width: 33px;
+    width: 40px;
 }
 .ui-dialog.rcl-zoom-avatar .ui-button {
     background: none;
     border: none;
     color: rgb(229, 57, 53);
+	margin: 0 5px 0 0;
+	z-index: 99;
 }
-
 .ui-dialog.rcl-zoom-avatar .ui-button:hover,
 .ui-dialog.rcl-load-avatar .ui-dialog-titlebar-close:hover,
 .ui-dialog-buttonpane .ui-button.ui-button-text-only:hover {
@@ -947,6 +942,7 @@ a.data-filter.filter-active:hover {
     border: none;
 	border-radius: 4px;
     color: transparent;
+	overflow: unset;
     padding: 0;
 }
 .ui-dialog.rcl-load-avatar {
@@ -970,6 +966,7 @@ a.data-filter.filter-active:hover {
     border: none;
     border-radius: 0;
     color: rgb(229, 57, 53);
+	margin: 0 5px 0 0;
     padding: 0;
 }
 .ui-dialog.rcl-load-avatar .ui-dialog-content {
@@ -980,11 +977,24 @@ a.data-filter.filter-active:hover {
 	padding: 5px;
 }
 .ui-dialog.rcl-load-avatar .ui-dialog-buttonpane {
-    border: 0 none;
+    border: none;
     padding: 5px 15px 10px 0;
 }
+.ui-dialog.rcl-load-avatar .ui-button-text-only {
+    background: rgba(219, 219, 219, 0.3);
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    color: #000;
+    font: 16px/1 Tahoma,arial;
+    height: auto;
+    margin: 0;
+    padding: 5px 15px;
+    vertical-align: middle;
+}
+.ui-dialog.rcl-load-avatar .ui-button-text-only span {
+    padding: 0;
+}
 /* upload avatar overlay and block zoom end  */
-
 
 
 /* navigation Start */

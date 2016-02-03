@@ -97,6 +97,10 @@
 .slider-rcl .content-slide p{
 	margin:0 0;
 }
+
+.bx-wrapper .bx-controls-direction a {
+    z-index: 999;
+}
 /* slider End */
 
 

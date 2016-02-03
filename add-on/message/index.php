@@ -234,7 +234,12 @@ class Rcl_Messages{
                                     $opt->option('number',array('name'=>'file_limit')),
                                     $opt->notice(__('Specify the number of files missed by the recipients in which the user loses the possibility of further transfer of files. Protection from spam. Default-without any restrictions.','wp-recall'))
                                 )
-                            )
+                            ),
+                            $opt->label(__('Mail alert','wp-recall')),
+                            $opt->option('select',array(
+                                'name'=>'messages_mail',
+                                'options'=>array(__('Without the text of the message','wp-recall'),__('Full text of the message','wp-recall'))
+                            )),
                         )
                     )
                 );

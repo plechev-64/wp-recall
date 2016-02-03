@@ -25,9 +25,12 @@ wp_trash_post( get_option( $rcl_options['users_page_rcl'] ) );
 $user_action_table = RCL_PREF . 'user_action';
 $wpdb->query( "DROP TABLE IF EXISTS " . $user_action_table );
 
-wp_clear_scheduled_hook('rcl_daily_addon_update');
-wp_clear_scheduled_hook('days_garbage_file_rcl');
-wp_clear_scheduled_hook('hourly_notify_new_message');
+if ( wp_next_scheduled( 'rcl_daily_addon_update' ))
+    wp_clear_scheduled_hook('rcl_daily_addon_update');
+if ( wp_next_scheduled( 'days_garbage_file_rcl' ))
+    wp_clear_scheduled_hook('days_garbage_file_rcl');
+if ( wp_next_scheduled( 'hourly_notify_new_message' ))
+    wp_clear_scheduled_hook('hourly_notify_new_message');
 
 wp_clear_scheduled_hook('rcl_cron_hourly_schedule');
 wp_clear_scheduled_hook('rcl_cron_twicedaily_schedule');
