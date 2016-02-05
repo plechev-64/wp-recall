@@ -3,6 +3,7 @@ include_once('classes.php');
 include_once('fast-editor.php');
 include_once('upload-file.php');
 include_once 'addon-options.php';
+include_once 'rcl_publicform.php';
 
 rcl_enqueue_style('publics',__FILE__);
 
@@ -487,7 +488,6 @@ function rcl_delete_notice_author_post($post_id){
 }
 
 function rcl_publicform($atts, $content = null){
-    include_once 'rcl_publicform.php';
     $form = new Rcl_PublicForm($atts);
     return $form->public_form();
 }

@@ -356,7 +356,7 @@ function rcl_get_group_users($group_id){
     foreach($group_roles as $role=>$data){
         
         $class = 'data-filter';
-        if($role==$users_role) $class .= 'filter-active';
+        if($role==$users_role) $class .= ' filter-active';
         
         $content .=  rcl_get_group_link('rcl_get_group_users',$data['role_name'],array('value'=>$role,'class'=>$class));
     }

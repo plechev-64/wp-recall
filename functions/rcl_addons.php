@@ -59,7 +59,7 @@ function rcl_delete_addon($addon){
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
     foreach($paths as $path){
-        if(is_readable($path.'/'.$addon.'/delete.php')) include($path.'/'.$addon.'/deactivate.php');
+        if(is_readable($path.'/'.$addon.'/delete.php')) include($path.'/'.$addon.'/delete.php');
         rcl_remove_dir($path.'/'.$addon);
     }
 

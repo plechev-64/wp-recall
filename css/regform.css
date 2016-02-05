@@ -1,10 +1,11 @@
 /*Вход и регистрация*/
 .panel_lk_recall {
-	line-height: 1.5;					/*++Twenty16++*/
+    line-height: 1.5;					/*++Twenty16++*/
     margin: 0 auto;
     max-width: 300px;
     width: 100%;
     color:#333;
+    display: inline-block;
 }
 /*++Twenty16++*/
 /* .widget .panel_lk_recall {			

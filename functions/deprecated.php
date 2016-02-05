@@ -43,3 +43,8 @@ function rcl_add_user_money($money,$user_id=false){
     return $wpdb->insert( RMAG_PREF .'users_balance',
 	array( 'user_id' => $user_id, 'user_balance' => $money ));
 }
+
+_deprecated_function( 'get_key_addon_rcl', '14.0.0', 'rcl_key_addon' );
+function get_key_addon_rcl($path_parts){
+    return rcl_key_addon($path_parts);
+}

@@ -297,14 +297,16 @@ div.wprecallblock h3 {
 
 /* Непроверенная секция Start */
 #rcl-popup {
+    background: #fff;
+    display: block;
     left: 50%;
-	margin-left: -310px;
-	position: absolute;
-	width: 600px;
-	max-width: 80%;
-	z-index: 999;
-	background: #fff;
-	top: 10%;
+    max-width: 80%;
+    position: absolute;
+    top: 10%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 600px;
+    z-index: 999;
 }
 #rcl-popup.fixed {
     position: fixed;
@@ -717,13 +719,15 @@ a.data-filter.filter-active:hover {
 .rcl-upload-button{
     position: relative;
 }
-.rcl-upload-button input[type="file"]{
-    position: absolute;
-    width: 100%;
+.rcl-upload-button input[type="file"] {
     height: 100%;
     left: 0;
-    top: 0;
+    margin: 0;
     opacity: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 /* Кнопки End */
