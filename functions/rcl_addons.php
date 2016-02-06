@@ -1,7 +1,7 @@
 <?php
 
 //активация указанного дополнения
-function rcl_activate_addon($addon){
+function rcl_activate_addon($addon,$activate=true){
     global $active_addons;
     
     if(!$active_addons) 
@@ -23,7 +23,7 @@ function rcl_activate_addon($addon){
             $active_addons[$addon]['priority'] = (!$k)? 1: 0;
             $install_src = $path.'/'.$addon.'/activate.php';
             
-            if(file_exists($install_src)) include($install_src);
+            if($activate&&file_exists($install_src)) include($install_src);
             include($index_src);
             update_site_option('rcl_active_addons',$active_addons);
             
@@ -36,12 +36,12 @@ function rcl_activate_addon($addon){
     return false;
 }
 //деактивация указанного дополнения
-function rcl_deactivate_addon($addon){
+function rcl_deactivate_addon($addon,$deactivate=true){
     $active_addons = get_site_option('rcl_active_addons');
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
     foreach($paths as $path){
-        if(is_readable($path.'/'.$addon.'/deactivate.php')){
+        if($deactivate&&is_readable($path.'/'.$addon.'/deactivate.php')){
             include($path.'/'.$addon.'/deactivate.php');
             break;
         }
@@ -54,12 +54,12 @@ function rcl_deactivate_addon($addon){
     do_action('rcl_deactivate_'.$addon);
 }
 //удаление дополнения
-function rcl_delete_addon($addon){
+function rcl_delete_addon($addon,$delete=true){
     $active_addons = get_site_option('rcl_active_addons');
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
     foreach($paths as $path){
-        if(is_readable($path.'/'.$addon.'/delete.php')) include($path.'/'.$addon.'/delete.php');
+        if($delete&&is_readable($path.'/'.$addon.'/delete.php')) include($path.'/'.$addon.'/delete.php');
         rcl_remove_dir($path.'/'.$addon);
     }
 

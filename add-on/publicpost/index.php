@@ -602,7 +602,7 @@ function rcl_get_list_custom_fields($post_id,$posttype=false,$id_form=false){
 
                 $custom_field = apply_filters('custom_field_public_form',$custom_field,$data);
 
-                $star = ($custom_field['requared']==1)? ' <span class="required">*</span> ': '';
+                $star = ($custom_field['requared']==1)? '<span class="required">*</span> ': '';
 		$postmeta = ($post_id)? get_post_meta($post_id,$custom_field['slug'],1):'';
 
 		$public_fields .= '<tr><th><label>'.$cf->get_title($custom_field).$star.':</label></th>';

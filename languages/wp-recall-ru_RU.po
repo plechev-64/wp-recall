@@ -2179,7 +2179,7 @@ msgstr "Платеж не найден в базе данных"
 
 #: add-on/user-account/rcl_payment.php:97
 msgid "Top up personal account"
-msgstr "Пополнить личный счет"
+msgstr "Пополнение личного счета"
 
 #: add-on/user-account/rcl_payment.php:126
 msgid "Confirm the operation"

@@ -171,7 +171,7 @@ function rcl_update_addon(){
             if(isset($activeaddons[$addon]))
                 rcl_deactivate_addon($addon);
             
-            rcl_delete_addon($addon);
+            rcl_delete_addon($addon,false);
 
             $rs = $zip->extractTo(RCL_TAKEPATH.'add-on'.'/');
 
