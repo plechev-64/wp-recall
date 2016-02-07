@@ -294,12 +294,15 @@ div.wprecallblock h3 {
     padding: 1.6px 4px 1px;
 }
 
-
-/* Непроверенная секция Start */
+/* popup окно записи Start */
 #rcl-popup {
-    background: #fff;
+    background: #f8f8f8;
+	border-radius: 3px;
+	box-sizing: border-box;
+	color: #333;
     display: block;
     left: 50%;
+	line-height: 1.4;
     max-width: 80%;
     position: absolute;
     top: 10%;
@@ -308,23 +311,90 @@ div.wprecallblock h3 {
     width: 600px;
     z-index: 999;
 }
+#rcl-popup h2 {
+	clear: none;
+    font-size: 18px;
+    line-height: 1;
+    margin: 0;
+    padding: 8px 0 0 5px;
+    text-transform: none;
+	width: calc(100% - 40px);
+}
+#rcl-popup h4 {
+	clear:both;
+    font-size: 16px;
+	line-height: 1;
+    margin: 8px 0 0;
+    overflow: hidden;
+    padding: 0 10px 4px;
+	text-transform: none;
+}
+#rcl-popup p {
+    margin: 0 10px 10px;
+	padding: 0;
+}
+#rcl-popup textarea {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    color: #000;
+    display: block;
+    margin: 10px auto;
+	min-height: 80px;
+    padding: 5px;
+    width: 98%;
+}
+#rcl-popup #commentlist .comm-attach {
+    background: rgba(237, 237, 237, 0.5);
+    margin: 10px 0;
+    padding: 10px;
+}
+#rcl-popup #commentlist .comment-author::after,
+#rcl-popup #commentlist .comment-author::before {
+	display: none;
+}
+#rcl-popup #commentlist .author-avatar {
+    float: left;
+    margin: 0 10px 0 0;
+}
+#rcl-popup .navi-gallery {
+	color: #ccc;
+    cursor: pointer;
+	font-size: 50px;
+    height: 50px;
+    left: 50%;
+	line-height: 50px;
+    opacity: 0.6;
+    position: absolute;
+    top: 200px;
+	-webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: auto;
+}
+#rcl-popup .navi-gallery:hover {
+	opacity: 1;
+}
+#rcl-popup .prev-attach {
+	float: left;
+    margin-left: -54%;
+}
+#rcl-popup .next-attach {
+    margin-left: 54%;
+    float: right;
+}
+#rcl-popup .next-attach::after {
+    content: "\f138";
+    font-family: FontAwesome;
+}
+#rcl-popup .prev-attach::after {
+    content: "\f137";
+    font-family: FontAwesome;
+}
+/* popup окно записи End */
+
+/* Непроверенная секция Start */
 #rcl-popup.fixed {
     position: fixed;
     top: 80px;
-}
-
-#rcl-popup h4{
-	margin:15px 0;
-	font-size:20px;
-	clear:both;
-}
-#rcl-popup .close-popup{
-	float: right;
-	margin: 5px 5px 10px;
-	display: block;
-	height: 31px;
-	width: 31px;
-	
 }
 #rcl-popup .delete{
 	float: left;
@@ -337,8 +407,6 @@ div.wprecallblock h3 {
 #rcl-popup .popup-body{
     padding:10px;
 }
-
-
 .rcl-upload-button span.progress-bar{
 	position: absolute;
     top: 0;
@@ -347,14 +415,9 @@ div.wprecallblock h3 {
     background: #36C515;
     z-index: -99;
 }
-
 .prmess .rcl-upload-button{
 	float:right;
 }
-
-
-
-
 .rcl-dropzone .get-crop-image{
 	float:right;
 }
@@ -363,15 +426,10 @@ div.wprecallblock h3 {
 	margin:0 auto;
 	display: block;
 }
-
 .rcl-dropzone.hover {
     background: rgba(0,0,0,0.5);
 }
 /* Непроверенная секция End */
-/* общие стили end */
-
-
-
 
 /* блок lk-conteyner start */
 
@@ -1037,6 +1095,20 @@ p.rcl-custom-fields{
     clear:both;
 }
 
+@media screen and (max-width:480px) {
+    #rcl-popup {
+     max-width: 95%;
+    }
+    #rcl-popup .navi-gallery {
+     top: 25%;
+    }
+    #rcl-popup .prev-attach {
+     margin-left: -47%;
+    }
+    #rcl-popup .next-attach {
+     margin-left: 47%;
+    }
+}
 
 @media screen and (max-width:768px) {
 	.wprecallblock #rcl-tabs .left-buttons .recall-button{

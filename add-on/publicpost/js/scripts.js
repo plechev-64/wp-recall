@@ -127,6 +127,7 @@ function rcl_edit_post(element){
 		modal: true,
 		resizable: false,
 		width:500,
+                dialogClass: 'rcl-edit-post-form',
 		close: function (e, data) {
 			jQuery( this ).dialog( 'close' );
 			contayner.remove();

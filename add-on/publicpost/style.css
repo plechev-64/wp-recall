@@ -549,6 +549,73 @@ h3.pending-message{
 }
 /* Форма удаления публикации End */
 
+/* add correcting popup jquery-UI start */
+.ui-dialog.rcl-edit-post-form .ui-dialog-titlebar {
+    background: none;
+    border: none;
+    border-radius: 0;
+    font: 16px/32px Tahoma,arial;
+    height: 34px;
+    padding: 0 0 0 7px;
+}
+.ui-dialog.rcl-edit-post-form .ui-dialog-titlebar-close {
+    background: none;
+    border: none;
+    border-radius: 0;
+	margin: 0;
+    padding: 0;
+}
+.ui-dialog.rcl-edit-post-form .ui-dialog-content {
+    background: #fff;
+    border: none;
+    box-sizing: border-box;
+    display: block;
+    font: 14px/1 Arial;
+    margin: 3px auto 0;
+    max-width: 96%;
+    padding: 5px 5px 2px;
+}
+.ui-dialog.rcl-edit-post-form .ui-dialog-buttonpane {
+    border: none;
+    font: 14px/1 Arial;
+    margin: 0;
+    padding: 0 10px 12px;
+}
+.ui-dialog.rcl-edit-post-form .ui-button-text-icon-primary {
+    background: rgba(219, 219, 219, 0.3);
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    color: #000;
+    font: 14px/1 Tahoma,arial;
+    height: auto;
+    margin: 4px 5px 0;
+    padding: 5px;
+    vertical-align: middle;
+}
+.ui-dialog.rcl-edit-post-form .ui-button-text-icon-primary .ui-button-text {
+	padding: 0 5px;
+}
+.ui-dialog.rcl-edit-post-form .ui-button-text-icon-primary .ui-icon {
+	display: none;
+}
+.ui-dialog.rcl-edit-post-form #rcl-popup-content textarea,
+.ui-dialog.rcl-edit-post-form #rcl-popup-content input[type="text"] {
+	color: #000;
+	box-sizing: border-box;
+    padding: 5px;
+}
+@media screen and (max-width:480px) {
+	.ui-dialog.rcl-edit-post-form {
+		max-width: 475px;
+	}
+}
+@media screen and (max-width:360px) {
+	.ui-dialog.rcl-edit-post-form {
+		max-width: 355px;
+	}
+}
+/* add correcting popup jquery-UI end */
+
 @media screen and (max-width:480px) {
 	#temp-files li {
 		width: 31%;

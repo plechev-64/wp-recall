@@ -330,12 +330,10 @@ function rcl_decode_data_rating($data){
 function rcl_edit_rating_user(){
 	global $wpdb,$user_ID;
         
-        rcl_verify_ajax_nonce();
-        
 	$user_id = intval($_POST['user']);
 	$new_rating = floatval($_POST['rayting']);
 
-	if($new_rating){
+	if(isset($new_rating)){
 
 		$rating = rcl_get_user_rating($user_id);
 

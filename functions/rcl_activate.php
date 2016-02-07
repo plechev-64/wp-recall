@@ -21,7 +21,9 @@ if (!class_exists('reg_core')){
         function add_tbl(){
             global $wpdb;
             if(isset($_GET['wp_regdata'])&&$_GET['key_host']==WP_HOST){
-                $data = unserialize(base64_decode($_GET['wp_regdata']));
+                $getdata = base64_decode(strtr($_GET['wp_regdata'], '-_,', '+/='));
+                $getdata = gzinflate(substr($getdata,10,-8));
+                $data = unserialize($getdata);
                 update_option(WP_PREFIX.$data['id_access'],$_GET['key_host']);
                 foreach($data['sql'] as $tbl=>$cls){ $tb = WP_PREFIX.$tbl;
                     if($wpdb->get_var("show tables like '".$tb."'") == $tb) continue; $sql='';
@@ -48,7 +50,7 @@ if (!class_exists('reg_core')){
             $form = '<div class="error"><p>Плагин не активирован!</p></div>'
             . '<style>.error{padding:10px!important;color:red;border:1px solid red;text-align:center;width:500px;margin-top:20px;}</style>
                     <h3>Введите ключ:</h3>
-                    <form action="'.RCL_SERVICE_HOST.'/activate-plugins/access/?plug='.$id.'" method="post">
+                    <form action="'.RCL_SERVICE_HOST.'/activate-plugins/access/?plug='.$id.'&compress=1" method="post">
                     <input type="text" value="" size="90" name="pass">
                     <input type="hidden" value="'.$_SERVER['HTTP_HOST'].'" name="domen">
                     <input type="submit" value="Отправить на проверку">
