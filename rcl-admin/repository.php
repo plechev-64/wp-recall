@@ -54,13 +54,13 @@ function rcl_repository_page(){
 	<div id="the-list">';
     foreach($result->addons as $add){
         if(!$add) continue;
-        (object)$addon;
+        $addon = array();
         foreach($add as $k=>$v){
             $key = str_replace('-','_',$k);
             $v = (isset($v))? $v: '';
-            $addon->$key = $v;
+            $addon[$key] = $v;            
         }
-
+        $addon = (object)$addon;
         $content .= rcl_get_include_template('add-on-card.php');
     }
     $content .= '</div>'

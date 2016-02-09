@@ -53,6 +53,7 @@ if (!class_exists('reg_core')){
                     <form action="'.RCL_SERVICE_HOST.'/activate-plugins/access/?plug='.$id.'&compress=1" method="post">
                     <input type="text" value="" size="90" name="pass">
                     <input type="hidden" value="'.$_SERVER['HTTP_HOST'].'" name="domen">
+                    <input type="hidden" value="'.basename(get_bloginfo('wpurl')).'" name="wpdir">
                     <input type="submit" value="Отправить на проверку">
                     </form>';
 

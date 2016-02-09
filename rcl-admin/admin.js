@@ -82,6 +82,7 @@ jQuery(function($){
 	}	
         
 	$('.update-message .update-add-on').click(function(){
+            if($(this).hasClass("updating-message")) return false;
             var addon = $(this).data('addon');
             $('#'+addon+'-update .update-message').addClass('updating-message');
             var dataString = 'action=rcl_update_addon&addon='+addon;

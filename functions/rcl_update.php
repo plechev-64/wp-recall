@@ -165,15 +165,24 @@ function rcl_update_addon(){
             echo json_encode($log);
             exit;
         }
+        
+        $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+        
+        foreach($paths as $path){
+            if(file_exists($path.'/'.$addon.'/')){
+                $dirpath = $path.'/';
+                break;
+            }
+        }
 
-        if(file_exists(RCL_TAKEPATH.'add-on'.'/')){
+        if(file_exists($dirpath)){
 
             if(isset($activeaddons[$addon]))
                 rcl_deactivate_addon($addon);
             
             rcl_delete_addon($addon,false);
 
-            $rs = $zip->extractTo(RCL_TAKEPATH.'add-on'.'/');
+            $rs = $zip->extractTo($dirpath);
 
             if(isset($activeaddons[$addon]))
                 rcl_activate_addon($addon);
