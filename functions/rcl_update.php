@@ -45,11 +45,14 @@ function rcl_check_addon_update(){
     $addonlist = implode(';',$get);
 
     $url = RCL_SERVICE_HOST."/products-files/api/update.php"
-            . "?rcl-addon-action=version-check-list";
+            . "?rcl-addon-action=version-check-list&compress=1";
+    
+    $addonlist = gzencode($addonlist);
+    $addonlist = strtr(base64_encode($addonlist), '+/=', '-_,');		
     
     $data = array(
         'rcl-version' => VER_RCL,
-        'addons' => base64_encode($addonlist),
+        'addons' => $addonlist,
         'host' => $_SERVER['SERVER_NAME']
     );
     
@@ -170,22 +173,22 @@ function rcl_update_addon(){
         
         foreach($paths as $path){
             if(file_exists($path.'/'.$addon.'/')){
-                $dirpath = $path.'/';
+                $dirpath = $path;
                 break;
             }
         }
 
-        if(file_exists($dirpath)){
+        if(file_exists($dirpath.'/')){
 
             if(isset($activeaddons[$addon]))
                 rcl_deactivate_addon($addon);
             
             rcl_delete_addon($addon,false);
 
-            $rs = $zip->extractTo($dirpath);
+            $rs = $zip->extractTo($dirpath.'/');
 
             if(isset($activeaddons[$addon]))
-                rcl_activate_addon($addon);
+                rcl_activate_addon($addon,true,$dirpath);
 
         }
 

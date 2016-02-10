@@ -1,15 +1,15 @@
 <?php
 
 //активация указанного дополнения
-function rcl_activate_addon($addon,$activate=true){
-    global $active_addons;
+function rcl_activate_addon($addon,$activate=true,$dirpath=false){
+    //global $active_addons;
     
-    if(!$active_addons) 
+    //if(!$active_addons) 
         $active_addons = get_site_option('rcl_active_addons');
     
     if(isset($active_addons[$addon])) return false;
     
-    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+    $paths = ($dirpath)? array($dirpath): array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
     foreach($paths as $k=>$path){
         if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
@@ -23,8 +23,8 @@ function rcl_activate_addon($addon,$activate=true){
             $active_addons[$addon]['priority'] = (!$k)? 1: 0;
             $install_src = $path.'/'.$addon.'/activate.php';
             
-            if($activate&&file_exists($install_src)) include($install_src);
-            include($index_src);
+            if($activate&&file_exists($install_src)) include_once($install_src);
+            include_once($index_src);
             update_site_option('rcl_active_addons',$active_addons);
             
             do_action('rcl_activate_'.$addon,$active_addons[$addon]);
@@ -42,7 +42,7 @@ function rcl_deactivate_addon($addon,$deactivate=true){
 
     foreach($paths as $path){
         if($deactivate&&is_readable($path.'/'.$addon.'/deactivate.php')){
-            include($path.'/'.$addon.'/deactivate.php');
+            include_once($path.'/'.$addon.'/deactivate.php');
             break;
         }
     }
@@ -59,7 +59,7 @@ function rcl_delete_addon($addon,$delete=true){
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
     foreach($paths as $path){
-        if($delete&&is_readable($path.'/'.$addon.'/delete.php')) include($path.'/'.$addon.'/delete.php');
+        if($delete&&is_readable($path.'/'.$addon.'/delete.php')) include_once($path.'/'.$addon.'/delete.php');
         rcl_remove_dir($path.'/'.$addon);
     }
 

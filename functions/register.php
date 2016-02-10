@@ -32,6 +32,8 @@ function rcl_insert_user($data){
         'user_login'=>$userdata['user_login'],
         'user_email'=>$userdata['user_email']
     ));
+    
+    do_action( 'register_new_user', $user_id );
 
     return $user_id;
 }
@@ -176,9 +178,9 @@ function rcl_get_register_user($errors){
 
             //иначе возвращаем на ту же страницу
             if($rcl_options['confirm_register_recall']==1)
-                wp_redirect(rcl_format_url($ref).'action-rcl=register&success=confirm-email');
+                wp_redirect(rcl_format_url($ref).'action-rcl=login&success=confirm-email');
             else
-                wp_redirect(rcl_format_url($ref).'action-rcl=register&success=true');
+                wp_redirect(rcl_format_url($ref).'action-rcl=login&success=true');
         }
 
         exit();
@@ -272,7 +274,8 @@ function rcl_notice_form($form='login'){
                 'confirm'=>__('Your email is not confirmed!','wp-recall')
             ),
             'success'=>array(
-                'true'=>__('Registration is completed! Check your email','wp-recall')
+                'true'=>__('Registration is completed! Check your email','wp-recall'),
+                'confirm-email'=>__('Registration is completed! Check your email.','wp-recall')
             )
         ),
         'remember'=> array(
