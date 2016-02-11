@@ -2,12 +2,12 @@
 
 function rcl_pageform_scripts(){
     wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js' );
+    wp_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js', array('rcl-primary-scripts'));
 }
 
 function rcl_floatform_scripts(){
     wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'rcl-float-form', RCL_URL.'js/float_form.js' );
+    wp_enqueue_script( 'rcl-float-form', RCL_URL.'js/float_form.js', array('rcl-primary-scripts'));
 }
 
 function rcl_sortable_scripts(){
