@@ -378,7 +378,7 @@ class Rcl_Users{
             $query->query['orderby'] = "comments.comments_count";
         }
 
-        $query['join'][] = "INNER JOIN (SELECT COUNT(user_id) AS comments_count, user_id "
+        $query->query['join'][] = "INNER JOIN (SELECT COUNT(user_id) AS comments_count, user_id "
                 . "FROM $wpdb->comments "
                 . "GROUP BY user_id) comments "
                 . "ON users.ID=comments.user_id";
