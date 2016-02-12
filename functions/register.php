@@ -32,8 +32,8 @@ function rcl_insert_user($data){
         'user_login'=>$userdata['user_login'],
         'user_email'=>$userdata['user_email']
     ));
-    
-    do_action( 'register_new_user', $user_id );
+
+    wp_send_new_user_notifications( $user_id, 'admin' );
 
     return $user_id;
 }
