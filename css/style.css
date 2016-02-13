@@ -701,6 +701,7 @@ input[type="button"] .recall-button {
 
 /* Состояния кнопок Start */
 a.recall-button:hover,
+a.recall-button:visited,
 .recall-button.rcl-upload-button:hover,
 input[type="submit"].recall-button:hover,
 input[type="submit"] .recall-button:hover,

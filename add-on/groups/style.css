@@ -1,5 +1,12 @@
 /* Group Start */
 
+.post-group-meta{
+    
+}
+.post-group-meta i{
+    margin-right:5px;
+}
+
 /* умная секция для скрипта. Каркас группы Start */
 
 	/* Start сумма 2х блоков 2x0.5 + 30% + 2x0.5% + 68% = 100% */

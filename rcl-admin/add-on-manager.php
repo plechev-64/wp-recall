@@ -47,7 +47,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
                     if(file_exists($info_src)){
                         $info = file($info_src);
                         $data = rcl_parse_addon_info($info);
-                        if(isset($_POST['s'])){                           
+                        if(isset($_POST['s'])&&$_POST['s']){                           
                             if (strpos($data['name'], $_POST['s']) !== false) {
                                 $this->addons_data[$namedir] = $data;
                             }

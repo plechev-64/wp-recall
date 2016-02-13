@@ -134,7 +134,7 @@ function rcl_update_addon(){
     $context  = stream_context_create($options);
     $archive = file_get_contents($url, false, $context);
     
-    //print_r($archive);
+    print_r($archive);
 
     if(!$archive){
         $log['error'] = __('Unable to retrieve the file from the server!','wp-recall');

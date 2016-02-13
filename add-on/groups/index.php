@@ -184,7 +184,7 @@ function rcl_get_link_group_tag($content){
             }
         }
 
-	$cat = '<p><i class="fa fa-folder"></i>'.__('Category in the group','wp-recall').': <a href="'. get_term_link( (int)$group_id, 'groups' ) .'?group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
+	$cat = '<p class="post-group-meta"><i class="fa fa-folder"></i>'.__('Category in the group','wp-recall').': <a href="'. get_term_link( (int)$group_id, 'groups' ) .'?group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
 
 	return $cat.$content;
 }
@@ -208,7 +208,7 @@ function rcl_add_namegroup($content){
 	$groups = get_the_terms( $post->ID, 'groups' );
 	foreach((array)$groups as $group){
 		if($group->parent) continue;
-		$group_link = '<p><i class="fa fa-users"></i>'.__('Published in the group','wp-recall').': <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
+		$group_link = '<p class="post-group-meta"><i class="fa fa-users"></i>'.__('Published in the group','wp-recall').': <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
 	}
 	$content = $group_link.$content;
 	return $content;
