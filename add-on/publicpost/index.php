@@ -1117,11 +1117,11 @@ function rcl_footer_publics_scripts($script){
                     $.each(data.files, function (index, file) {
                         cnt_now++;
                         if(cnt_now>".$cnt."){
-                            rcl_notice('Превышено разрешенное кол-во загружаемых файлов! Макс. ".$cnt."','error');
+                            rcl_notice('".sprintf(__("You have exceeded the allowed number of downloads! Max. %s",$cnt),'wp-recall')."','error');
                             error = true;
                         }                       
                         if(file['size']>".$maxsize."){
-                            rcl_notice('Превышен максимальный размер для файла '+file['name']+'! Макс. ".$maxsize_mb."MB','error');                            
+                            rcl_notice('".sprintf(__("Exceeds the maximum size for the file %s! Max. %s MB","'+file['name']+'",$maxsize_mb),'wp-recall')."','error');                            
                             error = true;
                         }                       
                     });

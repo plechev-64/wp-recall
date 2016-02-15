@@ -1236,7 +1236,7 @@ class Rcl_Messages{
                                     .get_avatar($mess->author_mess,60)
                                 .'</div>
                                 <p class="name-author-mess">
-                                    Отправитель: '.get_the_author_meta('display_name', $mess->author_mess).'
+                                    '.__('Sender','wp-recall').': '.get_the_author_meta('display_name', $mess->author_mess).'
                                 </p>
                                 <p class="content-mess">'.$content_message.'</p>
 
@@ -1244,7 +1244,7 @@ class Rcl_Messages{
                                     <textarea name="content_mess" id="minicontent_mess" rows="3" style="width:98%;padding:5px;"></textarea>
                                     <div id="minicount-word">'.$words.'</div>
 
-                                    <input type="button" name="addmess" class="miniaddmess recall-button" value="Отправить">
+                                    <input type="button" name="addmess" class="miniaddmess recall-button" value="'.__('Send','wp-recall').'">
                                     <input type="hidden" name="adressat_mess" id="miniadressat_mess" value="'.$mess->author_mess.'">
                                     <input type="hidden" name="online" id="minionline" value="'.$online.'">
                                     <input type="hidden" name="widget-mess" id="widget-mess" value="'.$mess->ID.'">
@@ -1406,7 +1406,7 @@ class Rcl_Messages{
 			},
 			change:function (e, data) {
 				if(data.files[0]['size']>".$maxsize."){
-					rcl_notice('Превышен максимальный размер для изображения! Макс. ".$maxsize_mb."MB','error');
+					rcl_notice('".sprintf(__("Exceeds the maximum size for a picture! Max. %s MB",$maxsize_mb),'wp-recall')."','error');
 					return false;
 				}
 			},
@@ -1597,7 +1597,7 @@ class Rcl_Messages{
 							jQuery('#privatemess').html(data['message_block']).fadeOut(5000);
 							jQuery('#rcl-new-mess').delay(2000).queue(function () {jQuery('#rcl-new-mess').empty();jQuery('#rcl-new-mess').dequeue();});
 						} else {
-							rcl_notice('Ошибка!','error');
+							rcl_notice('".__('Error','wp-recall')."!','error');
 						}
 					}
 				});
@@ -1614,7 +1614,7 @@ class Rcl_Messages{
 						if(data['otvet']==100){
 							jQuery('#manage-blacklist').replaceWith(data['content']);
 						} else {
-							rcl_notice('Ошибка!','error');
+							rcl_notice('".__('Error','wp-recall')."!','error');
 						}
 					}
 				});
@@ -1630,7 +1630,7 @@ class Rcl_Messages{
 						if(data['otvet']==100){
 							 jQuery('.history-'+data['id_user']).remove();
 						} else {
-							rcl_notice('Ошибка!','error');
+							rcl_notice('".__('Error','wp-recall')."!','error');
 						}
 					}
 				});
@@ -1647,7 +1647,7 @@ class Rcl_Messages{
 						if(data['otvet']==100){
 							 jQuery('.history-'+data['id_user']).remove();
 						} else {
-							rcl_notice('Ошибка!','error');
+							rcl_notice('".__('Error','wp-recall')."!','error');
 						}
 					}
 				});
@@ -1676,11 +1676,11 @@ class Rcl_Messages{
 		jQuery('#lk-content').on('click','#get-important-rcl',function(){
 			rcl_preloader_show('#tab-privat > div');
 			if(jQuery(this).hasClass('important')){
-				jQuery(this).removeClass('important').text('Вся переписка');
+				jQuery(this).removeClass('important').text('".__('All correspondence','wp-recall')."');
 				var type = 0;
 				if(block_mess) block_mess = 1;
 			}else{
-				jQuery(this).addClass('important').text('Важные сообщения');
+				jQuery(this).addClass('important').text('".__('Important notices','wp-recall')."');
 				var type = 1;
 			}
 				var userid = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
@@ -1712,7 +1712,7 @@ class Rcl_Messages{
 						if(data['recall']==100){
 							jQuery('.correspond #contact-lists').html(data['message_block']);
 						} else {
-							rcl_notice('Ошибка!','error');
+							rcl_notice('".__('Error','wp-recall')."!','error');
 						}
                                                 rcl_preloader_hide();
 					}
@@ -1734,7 +1734,7 @@ class Rcl_Messages{
 						screen_top = screen_top + 60;
 						jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
 					}else{
-						rcl_notice('Ошибка!','error');
+						rcl_notice('".__('Error','wp-recall')."!','error');
 					}
 				}
 			});

@@ -236,7 +236,7 @@ function rcl_delete_avatar_action(){
 add_filter('rcl_content_lk','rcl_add_more_link_content',100);
 function rcl_add_more_link_content($content){
     if(!$content) return $content;
-    return '<a href="#" class="rcl-more-link" onclick="rcl_more_view(this); return false;">Подробная информация <i class="fa fa-plus-square-o"></i></a>'
+    return '<a href="#" class="rcl-more-link" onclick="rcl_more_view(this); return false;">'.__('Detailed information','wp-recall').' <i class="fa fa-plus-square-o"></i></a>'
     .'<div class="more-content">'.$content.'</div>';
 }
 
@@ -757,7 +757,7 @@ function rcl_get_profile_scripts($script){
                 $.each(data.files, function (index, file) {
                     $('#rcl-preview').remove();
                     if(file.size>".$maxsize."){
-                        rcl_notice('Превышен максимальный размер для изображения! Макс. ".$maxsize_mb."MB','error');
+                        rcl_notice('".sprintf(__("Exceeds the maximum size for a picture! Max. %s MB",$maxsize_mb),'wp-recall')."','error');
                         return false;
                     }
 

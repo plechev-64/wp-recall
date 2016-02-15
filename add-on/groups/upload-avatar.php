@@ -75,7 +75,7 @@ function rcl_group_avatar_upload(){
 
         rcl_update_group_option($group_id,'avatar_id',$imade_id);
     }else{
-        $res['error'] = 'Ошибка загрузки!';
+        $res['error'] = __('Error','wp-recall').'!';
         echo json_encode($res);
         exit;
     }

@@ -23,10 +23,10 @@
                 <?php rcl_group_description(); ?>
             </div>
             <div class="group-meta">
-                <p><b>Статус группы:</b> <?php rcl_group_status(); ?></p>
+                <p><b><?php _e('Group status','wp-recall') ?>:</b> <?php rcl_group_status(); ?></p>
             </div>
             <div class="group-meta">
-                <p><b>Пользователей в группе:</b> <?php rcl_group_count_users(); ?></p>
+                <p><b><?php _e('Members in the group','wp-recall') ?>:</b> <?php rcl_group_count_users(); ?></p>
             </div>
         </div>
         <?php if(rcl_is_group_area('content')) rcl_group_area('content'); ?>

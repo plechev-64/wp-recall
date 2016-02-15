@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Recall\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-02 17:16+0300\n"
-"PO-Revision-Date: 2016-02-02 17:16+0300\n"
+"POT-Creation-Date: 2016-02-15 07:59+0300\n"
+"PO-Revision-Date: 2016-02-15 07:59+0300\n"
 "Last-Translator: bloria <allmedkaplan@med.allmed.co.il>\n"
 "Language-Team: \n"
 "Language: he\n"
@@ -57,7 +57,7 @@ msgid "News"
 msgstr ""
 
 #: ../add-on/feed/classes/class-rcl-feed.php:296
-#: ../add-on/rating-system/index.php:31 ../functions/class-rcl-users.php:523
+#: ../add-on/rating-system/index.php:31 ../functions/class-rcl-users.php:516
 #: ../functions/shortcodes.php:127
 msgid "Comments"
 msgstr "תגובות"
@@ -95,9 +95,13 @@ msgid "Signed up for a subscription"
 msgstr ""
 
 #: ../add-on/feed/index.php:145 ../add-on/feed/index.php:158
-#: ../add-on/feed/index.php:166 ../add-on/groups/groups-core.php:661
-#: ../add-on/groups/groups-core.php:677 ../add-on/rating-system/index.php:549
-#: ../add-on/rating-system/index.php:571 ../rcl-functions.php:241
+#: ../add-on/feed/index.php:166 ../add-on/groups/groups-core.php:674
+#: ../add-on/groups/groups-core.php:690 ../add-on/groups/upload-avatar.php:78
+#: ../add-on/message/index.php:1600 ../add-on/message/index.php:1617
+#: ../add-on/message/index.php:1633 ../add-on/message/index.php:1650
+#: ../add-on/message/index.php:1715 ../add-on/message/index.php:1737
+#: ../add-on/rating-system/index.php:547 ../add-on/rating-system/index.php:569
+#: ../rcl-functions.php:241
 msgid "Error"
 msgstr ""
 
@@ -151,14 +155,14 @@ msgid "Name"
 msgstr "שם"
 
 #: ../add-on/groups/classes/rcl-groups.php:257
-#: ../add-on/magazin/orders-history.php:77 ../add-on/publicpost/index.php:147
+#: ../add-on/magazin/orders-history.php:77 ../add-on/publicpost/index.php:148
 #: ../add-on/publicpost/templates/posts-list.php:6
 #: ../add-on/user-account/payments.php:85 ../functions/rcl_editfields.php:150
 msgid "Date"
 msgstr "תאריך"
 
 #: ../add-on/groups/classes/rcl-groups.php:258
-#: ../functions/class-rcl-users.php:522
+#: ../functions/class-rcl-users.php:515
 msgid "Publications"
 msgstr "מאמרים"
 
@@ -172,7 +176,7 @@ msgid "Users"
 msgstr "משתמשים"
 
 #: ../add-on/groups/classes/rcl-groups.php:264
-#: ../functions/class-rcl-users.php:532
+#: ../functions/class-rcl-users.php:525
 msgid "Filter by"
 msgstr "לסנן לפי"
 
@@ -184,7 +188,8 @@ msgstr "Ban"
 msgid "Reader"
 msgstr ""
 
-#: ../add-on/groups/groups-core.php:178 ../rcl-admin/add-on-manager.php:175
+#: ../add-on/groups/groups-core.php:178 ../add-on/groups/index.php:332
+#: ../rcl-admin/add-on-manager.php:175
 msgid "Author"
 msgstr "מחבר"
 
@@ -200,8 +205,12 @@ msgstr ""
 msgid "Opened group"
 msgstr ""
 
-#: ../add-on/groups/groups-core.php:243
+#: ../add-on/groups/groups-core.php:243 ../add-on/groups/index.php:323
 msgid "Closed group"
+msgstr ""
+
+#: ../add-on/groups/groups-core.php:354
+msgid "Sort by status"
 msgstr ""
 
 #: ../add-on/groups/groups-core.php:365
@@ -212,47 +221,66 @@ msgstr "חברי קבוצה"
 msgid "Request for access to the group"
 msgstr ""
 
-#: ../add-on/groups/groups-core.php:634
+#: ../add-on/groups/groups-core.php:540
+#, php-format
+msgid ""
+"You have received a new request for access to the group administered by your "
+"\"%s\" on the site \"%s\""
+msgstr ""
+
+#: ../add-on/groups/groups-core.php:544
+msgid "User information"
+msgstr ""
+
+#: ../add-on/groups/groups-core.php:547 ../add-on/profile/index.php:250
+msgid "Profile"
+msgstr "פרופיל"
+
+#: ../add-on/groups/groups-core.php:549
+msgid "You can approve or reject the request by clicking the link"
+msgstr ""
+
+#: ../add-on/groups/groups-core.php:647
 msgid "Return to the group"
 msgstr ""
 
-#: ../add-on/groups/groups-core.php:658
+#: ../add-on/groups/groups-core.php:671
 msgid "User removed"
 msgstr ""
 
-#: ../add-on/groups/groups-core.php:675
+#: ../add-on/groups/groups-core.php:688
 msgid "User Status updated"
 msgstr ""
 
-#: ../add-on/groups/groups-core.php:700
+#: ../add-on/groups/groups-core.php:713
 msgid "Display all records"
 msgstr "Display all records"
 
-#: ../add-on/groups/groups-core.php:702
+#: ../add-on/groups/groups-core.php:715
 msgid "Show"
 msgstr "הצג"
 
-#: ../add-on/groups/groups-core.php:713
+#: ../add-on/groups/groups-core.php:726
 msgid "Primary options"
 msgstr ""
 
-#: ../add-on/groups/groups-core.php:717
+#: ../add-on/groups/groups-core.php:730
 msgid "Widgets manage"
 msgstr ""
 
-#: ../add-on/groups/groups-core.php:727
+#: ../add-on/groups/groups-core.php:740
 msgid "Requests for access"
 msgstr ""
 
-#: ../add-on/groups/groups-core.php:739
+#: ../add-on/groups/groups-core.php:752
 msgid "Administration"
 msgstr ""
 
-#: ../add-on/groups/groups-core.php:833
+#: ../add-on/groups/groups-core.php:846
 msgid "Access to content is closed privacy settings"
 msgstr "כניסה וגישה פרטית לפורום"
 
-#: ../add-on/groups/groups-core.php:839
+#: ../add-on/groups/groups-core.php:852
 msgid "(Comment hidden privacy settings)"
 msgstr "(הערה הגדרות פרטיות נסתרות)"
 
@@ -330,7 +358,7 @@ msgstr "להוסיף או להסיר"
 msgid "Click to use"
 msgstr "לחץ לצפייה"
 
-#: ../add-on/groups/groups-options.php:8
+#: ../add-on/groups/groups-options.php:8 ../add-on/groups/index.php:309
 msgid "Group settings"
 msgstr "הגדרות של הקבוצה"
 
@@ -429,7 +457,7 @@ msgstr "לוח בקרה"
 #: ../add-on/groups/groups-widgets.php:300
 #: ../add-on/groups/groups-widgets.php:433
 #: ../add-on/magazin/functions/shortcodes.php:120
-#: ../add-on/publicpost/index.php:147
+#: ../add-on/publicpost/index.php:148
 #: ../add-on/publicpost/templates/posts-list.php:7
 #: ../add-on/publicpost/templates/public-form.php:5
 #: ../add-on/user-account/index.php:301 ../functions/rcl_editfields.php:117
@@ -540,8 +568,8 @@ msgid "Enter the name of the new group"
 msgstr ""
 
 #: ../add-on/groups/index.php:146
-msgid "Сreate"
-msgstr "Сreate"
+msgid "Create"
+msgstr ""
 
 #: ../add-on/groups/index.php:187
 msgid "Category in the group"
@@ -554,6 +582,53 @@ msgstr "פורסם בקבוצה"
 #: ../add-on/groups/index.php:226
 msgid "Create a group failed"
 msgstr ""
+
+#: ../add-on/groups/index.php:312
+msgid "Group name"
+msgstr ""
+
+#: ../add-on/groups/index.php:316 ../add-on/publicpost/class_public.php:82
+#: ../add-on/publicpost/fast-editor.php:114 ../rcl-admin/add-on-manager.php:130
+msgid "Description"
+msgstr "Description"
+
+#: ../add-on/groups/index.php:320
+#: ../add-on/groups/templates/single-group.php:26
+msgid "Group status"
+msgstr ""
+
+#: ../add-on/groups/index.php:322
+msgid "Open group"
+msgstr ""
+
+#: ../add-on/groups/index.php:327
+msgid "Membership"
+msgstr ""
+
+#: ../add-on/groups/index.php:328
+msgid "Registration is permitted"
+msgstr ""
+
+#: ../add-on/groups/index.php:329
+msgid "The role of the new user"
+msgstr ""
+
+#: ../add-on/groups/index.php:331
+msgid "Visitor"
+msgstr ""
+
+#: ../add-on/groups/index.php:336
+msgid "Group categories"
+msgstr ""
+
+#: ../add-on/groups/index.php:336
+msgid "separated by commas"
+msgstr ""
+
+#: ../add-on/groups/index.php:343 ../rcl-admin/admin-pages.php:319
+#: ../rcl-admin/rcl-admin.php:11
+msgid "Save settings"
+msgstr "שמור הגדרות"
 
 #: ../add-on/groups/index.php:357
 msgid "Requests for access to the group"
@@ -591,26 +666,57 @@ msgstr "שמור"
 msgid "Request access to the group approved!"
 msgstr "בקשת גישה לקבוצה אושרה!"
 
-#: ../add-on/groups/index.php:438
-msgid "The request was accepted"
+#: ../add-on/groups/index.php:435
+msgid "Welcome to the group"
 msgstr ""
 
-#: ../add-on/groups/index.php:442
-msgid "Request rejected"
+#: ../add-on/groups/index.php:436
+#, php-format
+msgid ""
+"Congratulations , your request for access to a private group on \"%s\" "
+"website has been approved"
+msgstr ""
+
+#: ../add-on/groups/index.php:437
+msgid ""
+"Now you can take part in the life of the group as it is a full participant."
+msgstr ""
+
+#: ../add-on/groups/index.php:438
+msgid "You can visit the group by clicking on the link"
 msgstr ""
 
 #: ../add-on/groups/index.php:443
+msgid "The request was accepted"
+msgstr ""
+
+#: ../add-on/groups/index.php:447
+msgid "Request rejected"
+msgstr ""
+
+#: ../add-on/groups/index.php:448
 msgid "The request to access the group rejected."
 msgstr "בקשת גישה לקבוצה נדחה."
+
+#: ../add-on/groups/index.php:449
+#, php-format
+msgid ""
+"We are sorry, but your request to access the private group \"%s\" on the "
+"site \"%s\" was rejected by its administrator"
+msgstr ""
 
 #: ../add-on/groups/shortcodes.php:28
 msgid "Groups not found"
 msgstr ""
 
 #: ../add-on/groups/templates/group-list.php:12
-#: ../add-on/publicpost/index.php:65 ../add-on/rating-system/index.php:22
+#: ../add-on/publicpost/index.php:66 ../add-on/rating-system/index.php:22
 msgid "Posts"
 msgstr "הודעות"
+
+#: ../add-on/groups/templates/single-group.php:29
+msgid "Members in the group"
+msgstr ""
 
 #: ../add-on/groups/upload-avatar.php:45
 msgid "Size over"
@@ -695,7 +801,7 @@ msgid "Order sum"
 msgstr ""
 
 #: ../add-on/magazin/orders-history.php:76 ../add-on/profile/index.php:424
-#: ../add-on/profile/index.php:721 ../add-on/publicpost/index.php:147
+#: ../add-on/profile/index.php:721 ../add-on/publicpost/index.php:148
 #: ../add-on/publicpost/templates/posts-list.php:8
 #: ../rcl-admin/add-on-manager.php:129
 msgid "Status"
@@ -934,8 +1040,9 @@ msgstr "כל אנשי קשר"
 msgid "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 msgstr "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 
-#: ../add-on/message/index.php:407 ../add-on/user-account/index.php:161
-#: ../templates/form-register.php:27 ../templates/form-remember.php:18
+#: ../add-on/message/index.php:407 ../add-on/message/index.php:1247
+#: ../add-on/user-account/index.php:161 ../templates/form-register.php:27
+#: ../templates/form-remember.php:18
 msgid "Send"
 msgstr "שלח"
 
@@ -1020,6 +1127,10 @@ msgstr "הודעה סומנה כי נקראה"
 msgid "You a new message!"
 msgstr "יש לך הודעה חדשה!"
 
+#: ../add-on/message/index.php:1239
+msgid "Sender"
+msgstr ""
+
 #: ../add-on/message/index.php:1258
 msgid "Go to the correspondence"
 msgstr "עבור להתכתבות"
@@ -1062,6 +1173,19 @@ msgstr ""
 #: ../add-on/message/index.php:1390
 msgid "Removes the file from the server"
 msgstr "מסיר את הקובץ מהשרת"
+
+#: ../add-on/message/index.php:1409 ../add-on/profile/index.php:760
+#, php-format
+msgid "Exceeds the maximum size for a picture! Max. %s MB"
+msgstr ""
+
+#: ../add-on/message/index.php:1679
+msgid "All correspondence"
+msgstr ""
+
+#: ../add-on/message/index.php:1683
+msgid "Important notices"
+msgstr ""
 
 #: ../add-on/message/notify.php:26
 msgid "You were sent a private message"
@@ -1124,11 +1248,11 @@ msgstr "Allow to delete users from your account?"
 #: ../add-on/profile/index.php:600 ../add-on/profile/index.php:605
 #: ../add-on/publicpost/addon-options.php:51
 #: ../add-on/publicpost/addon-options.php:272
-#: ../add-on/publicpost/index.php:233
+#: ../add-on/publicpost/index.php:234
 #: ../add-on/rating-system/addon-options.php:68
 #: ../add-on/rating-system/addon-options.php:120
-#: ../add-on/rating-system/admin.php:16 ../add-on/rating-system/index.php:43
-#: ../rcl-admin/admin-pages.php:44 ../rcl-admin/admin-pages.php:309
+#: ../add-on/rating-system/index.php:43 ../rcl-admin/admin-pages.php:44
+#: ../rcl-admin/admin-pages.php:309
 msgid "No"
 msgstr "לא"
 
@@ -1137,11 +1261,11 @@ msgstr "לא"
 #: ../add-on/profile/index.php:600 ../add-on/profile/index.php:605
 #: ../add-on/publicpost/addon-options.php:51
 #: ../add-on/publicpost/addon-options.php:272
-#: ../add-on/publicpost/index.php:233
+#: ../add-on/publicpost/index.php:234
 #: ../add-on/rating-system/addon-options.php:68
 #: ../add-on/rating-system/addon-options.php:120
-#: ../add-on/rating-system/admin.php:17 ../add-on/rating-system/index.php:44
-#: ../rcl-admin/admin-pages.php:45 ../rcl-admin/admin-pages.php:309
+#: ../add-on/rating-system/index.php:44 ../rcl-admin/admin-pages.php:45
+#: ../rcl-admin/admin-pages.php:309
 msgid "Yes"
 msgstr "כן"
 
@@ -1165,13 +1289,13 @@ msgstr ""
 msgid "Delete avatar"
 msgstr ""
 
+#: ../add-on/profile/index.php:239
+msgid "Detailed information"
+msgstr ""
+
 #: ../add-on/profile/index.php:245
 msgid "Your avatar has been removed"
 msgstr ""
-
-#: ../add-on/profile/index.php:250
-msgid "Profile"
-msgstr "פרופיל"
 
 #: ../add-on/profile/index.php:276
 msgid "User profile"
@@ -1199,7 +1323,7 @@ msgid "E-mail"
 msgstr "דואל"
 
 #: ../add-on/profile/index.php:313 ../add-on/profile/index.php:686
-#: ../functions/register.php:209 ../templates/form-register.php:10
+#: ../functions/register.php:211 ../templates/form-register.php:10
 #: ../templates/form-sign.php:10
 msgid "Login"
 msgstr "כניסה"
@@ -1232,11 +1356,11 @@ msgstr "לשינוי הסיסמה לחץ על אישור"
 msgid "Repeat the new password"
 msgstr "חזור על הסיסמה החדשה"
 
-#: ../add-on/profile/index.php:409 ../functions/register.php:396
+#: ../add-on/profile/index.php:409 ../functions/register.php:399
 msgid "The password strength indicator"
 msgstr "The password strength indicator"
 
-#: ../add-on/profile/index.php:411 ../functions/register.php:398
+#: ../add-on/profile/index.php:411 ../functions/register.php:401
 msgid "A password is not entered"
 msgstr "סיסמה לא נכונה"
 
@@ -1275,7 +1399,7 @@ msgstr "<td><input type=\"%s\" name=\"%s\" %s /></td><td>%s</td>"
 msgid "Manage profile fields"
 msgstr "ניהול שדות פרופיל"
 
-#: ../add-on/profile/index.php:584 ../add-on/publicpost/index.php:232
+#: ../add-on/profile/index.php:584 ../add-on/publicpost/index.php:233
 msgid "required field"
 msgstr "שדה חובה"
 
@@ -1322,10 +1446,10 @@ msgstr "אתר ל המשתמש"
 #: ../add-on/publicpost/addon-options.php:11
 #: ../add-on/publicpost/addon-options.php:201
 #: ../add-on/publicpost/classes.php:39
-#: ../add-on/user-account/addon-options.php:74
-#: ../add-on/user-account/addon-options.php:85
-#: ../add-on/user-account/addon-options.php:95
-#: ../add-on/user-account/addon-options.php:103 ../rcl-admin/admin-pages.php:94
+#: ../add-on/user-account/addon-options.php:87
+#: ../add-on/user-account/addon-options.php:98
+#: ../add-on/user-account/addon-options.php:108
+#: ../add-on/user-account/addon-options.php:116 ../rcl-admin/admin-pages.php:94
 #: ../rcl-admin/admin-pages.php:246 ../rcl-widgets.php:59
 #: ../rcl-widgets.php:118
 msgid "Not selected"
@@ -1423,7 +1547,7 @@ msgstr ""
 msgid "Number of columns to select"
 msgstr "Number of columns to select"
 
-#: ../add-on/publicpost/addon-options.php:110 ../add-on/publicpost/index.php:36
+#: ../add-on/publicpost/addon-options.php:110 ../add-on/publicpost/index.php:37
 msgid "Form of publication"
 msgstr "צורת הפרסום"
 
@@ -1649,11 +1773,6 @@ msgid ""
 "media library."
 msgstr "העלה את התמונה שלך ותוכל להשתמש בם בעתיד מספריית המדיה שלך."
 
-#: ../add-on/publicpost/class_public.php:82
-#: ../add-on/publicpost/fast-editor.php:114 ../rcl-admin/add-on-manager.php:130
-msgid "Description"
-msgstr "Description"
-
 #: ../add-on/publicpost/classes.php:254
 msgid ""
 "Click on Priceline the image to add it to the content of the publication"
@@ -1671,58 +1790,58 @@ msgstr "To add files to the download queue"
 msgid "Add"
 msgstr "להוסיף"
 
-#: ../add-on/publicpost/index.php:56
+#: ../add-on/publicpost/index.php:57
 msgid "Records"
 msgstr "רשומות"
 
-#: ../add-on/publicpost/index.php:68
+#: ../add-on/publicpost/index.php:69
 msgid "Publication"
 msgstr "מאמרים"
 
-#: ../add-on/publicpost/index.php:151
+#: ../add-on/publicpost/index.php:152
 #: ../add-on/publicpost/templates/posts-list.php:15
 msgid "on approval"
 msgstr "ממתין לאישור"
 
-#: ../add-on/publicpost/index.php:152
+#: ../add-on/publicpost/index.php:153
 #: ../add-on/publicpost/templates/posts-list.php:16
 msgid "deleted"
 msgstr "נמחק"
 
-#: ../add-on/publicpost/index.php:153
+#: ../add-on/publicpost/index.php:154
 #: ../add-on/publicpost/templates/posts-list.php:17
 msgid "publish"
 msgstr "פורסם"
 
-#: ../add-on/publicpost/index.php:202
+#: ../add-on/publicpost/index.php:203
 msgid "Available forms"
 msgstr "Available forms"
 
-#: ../add-on/publicpost/index.php:209
+#: ../add-on/publicpost/index.php:210
 msgid "To add another form"
 msgstr "להוסיף צורה n"
 
-#: ../add-on/publicpost/index.php:212 ../add-on/publicpost/index.php:220
+#: ../add-on/publicpost/index.php:213 ../add-on/publicpost/index.php:221
 msgid "Form ID"
 msgstr "Form ID"
 
-#: ../add-on/publicpost/index.php:215
+#: ../add-on/publicpost/index.php:216
 msgid "To remove all fields"
 msgstr "להסיר את כל השדות"
 
-#: ../add-on/publicpost/index.php:215
+#: ../add-on/publicpost/index.php:216
 msgid "Вы уверены?"
 msgstr "אתה בטוח?"
 
-#: ../add-on/publicpost/index.php:223 ../add-on/publicpost/index.php:498
+#: ../add-on/publicpost/index.php:224 ../add-on/publicpost/index.php:498
 msgid "Arbitrary form fields publishing"
 msgstr "Arbitrary form fields publishing"
 
-#: ../add-on/publicpost/index.php:438
+#: ../add-on/publicpost/index.php:439
 msgid "featured"
 msgstr "מומלצים"
 
-#: ../add-on/publicpost/index.php:473
+#: ../add-on/publicpost/index.php:474
 msgid "The publication has been successfully removed!"
 msgstr "הפרסום הוסר בהצלחה!"
 
@@ -1731,6 +1850,16 @@ msgstr "הפרסום הוסר בהצלחה!"
 #: ../functions/rcl_custom_fields.php:277
 msgid "To publish"
 msgstr "לפרסם"
+
+#: ../add-on/publicpost/index.php:1120
+#, php-format
+msgid "You have exceeded the allowed number of downloads! Max. %s"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:1124
+#, php-format
+msgid "Exceeds the maximum size for the file %s! Max. %s MB"
+msgstr ""
 
 #: ../add-on/publicpost/rcl_editpost.php:57
 msgid "Error publishing!"
@@ -1996,14 +2125,6 @@ msgstr ""
 msgid "Deleting your voice"
 msgstr ""
 
-#: ../add-on/rating-system/admin.php:15 ../add-on/rating-system/index.php:42
-msgid "To disable the rating for publication"
-msgstr "לביטול את הדירוג לפרסום"
-
-#: ../add-on/rating-system/admin.php:31 ../add-on/rating-system/index.php:58
-msgid "OK"
-msgstr "יש"
-
 #: ../add-on/rating-system/core.php:239
 msgid "Correction"
 msgstr ""
@@ -2020,10 +2141,18 @@ msgstr ""
 msgid "Data not found"
 msgstr ""
 
+#: ../add-on/rating-system/index.php:42
+msgid "To disable the rating for publication"
+msgstr "לביטול את הדירוג לפרסום"
+
 #: ../add-on/rating-system/index.php:50 ../add-on/rating-system/index.php:72
 #: ../add-on/rating-system/index.php:221
 msgid "Rating"
 msgstr "דירוג"
+
+#: ../add-on/rating-system/index.php:58
+msgid "OK"
+msgstr "יש"
 
 #: ../add-on/rating-system/index.php:160
 msgid "rating"
@@ -2041,12 +2170,12 @@ msgstr "פחות"
 msgid "plus"
 msgstr "יותר"
 
-#: ../add-on/rating-system/index.php:452
+#: ../add-on/rating-system/index.php:450
 #, php-format
 msgid "exceeded the limit of votes for the period - %d seconds"
 msgstr ""
 
-#: ../add-on/rating-system/index.php:527
+#: ../add-on/rating-system/index.php:525
 msgid "You can not vote"
 msgstr ""
 
@@ -2059,27 +2188,27 @@ msgstr "לא בשימוש"
 msgid "Payment systems"
 msgstr "שיטת תשלום"
 
-#: ../add-on/user-account/addon-options.php:32
-msgid "Payment"
-msgstr "תשלום"
-
-#: ../add-on/user-account/addon-options.php:34
-msgid "Type of payment"
-msgstr "סוגי תשלום"
-
 #: ../add-on/user-account/addon-options.php:38
 msgid "Funds from the personal account user"
 msgstr "כספים המשתמש בחשבון אישי"
 
-#: ../add-on/user-account/addon-options.php:39
+#: ../add-on/user-account/addon-options.php:42
 msgid "Directly through the payment system"
 msgstr "ישירות דרך מערכת התשלומים"
 
-#: ../add-on/user-account/addon-options.php:40
+#: ../add-on/user-account/addon-options.php:43
 msgid "To offer both options"
 msgstr "להציע שני האפשרויות"
 
-#: ../add-on/user-account/addon-options.php:43
+#: ../add-on/user-account/addon-options.php:48
+msgid "Payment"
+msgstr "תשלום"
+
+#: ../add-on/user-account/addon-options.php:50
+msgid "Type of payment"
+msgstr "סוגי תשלום"
+
+#: ../add-on/user-account/addon-options.php:55
 msgid ""
 "If the connection to the payment aggregator not in use, it is possible to "
 "set only \"Funds from the personal account user\"!"
@@ -2087,51 +2216,51 @@ msgstr ""
 "אם החיבור לצובר תשלום אינו בשימוש, ניתן להגדיר רק \"קרנות ממשתמש החשבון האישי"
 "\"!"
 
-#: ../add-on/user-account/addon-options.php:45
+#: ../add-on/user-account/addon-options.php:57
 msgid "The connection to payment aggregator"
 msgstr "החיבור לצורך השלום"
 
-#: ../add-on/user-account/addon-options.php:46
+#: ../add-on/user-account/addon-options.php:58
 msgid "Used type of connection"
 msgstr "סוג החיבור"
 
-#: ../add-on/user-account/addon-options.php:60
+#: ../add-on/user-account/addon-options.php:73
 msgid "Service page payment systems"
 msgstr "Service page payment systems"
 
-#: ../add-on/user-account/addon-options.php:70
+#: ../add-on/user-account/addon-options.php:83
 msgid "Page RESULT"
 msgstr "Page RESULT"
 
-#: ../add-on/user-account/addon-options.php:77
+#: ../add-on/user-account/addon-options.php:90
 msgid "For WalletOne: URL script"
 msgstr ""
 
-#: ../add-on/user-account/addon-options.php:78
+#: ../add-on/user-account/addon-options.php:91
 msgid "For Interkassa: URL of interaction"
 msgstr "For Interkassa: URL of interaction"
 
-#: ../add-on/user-account/addon-options.php:79
+#: ../add-on/user-account/addon-options.php:92
 msgid "For Yandex.Cash: checkURL and avisoURL"
 msgstr "For Yandex.Cash: checkURL and avisoURL"
 
-#: ../add-on/user-account/addon-options.php:81
+#: ../add-on/user-account/addon-options.php:94
 msgid "Page SUCCESS"
 msgstr "Page SUCCESS"
 
-#: ../add-on/user-account/addon-options.php:88
+#: ../add-on/user-account/addon-options.php:101
 msgid "For WalletOne: not use"
 msgstr ""
 
-#: ../add-on/user-account/addon-options.php:89
+#: ../add-on/user-account/addon-options.php:102
 msgid "For Interkassa: not use"
 msgstr ""
 
-#: ../add-on/user-account/addon-options.php:91
+#: ../add-on/user-account/addon-options.php:104
 msgid "Page FAIL"
 msgstr "Page FAIL"
 
-#: ../add-on/user-account/addon-options.php:99
+#: ../add-on/user-account/addon-options.php:112
 msgid "The successful payment page"
 msgstr "The successful payment page"
 
@@ -2252,11 +2381,11 @@ msgstr "FEED"
 msgid "Unconfirmed"
 msgstr "לא מאושר"
 
-#: ../functions/authorize.php:42 ../functions/register.php:145
+#: ../functions/authorize.php:42 ../functions/register.php:147
 msgid "Fill in the required fields!"
 msgstr ""
 
-#: ../functions/authorize.php:51 ../functions/register.php:272
+#: ../functions/authorize.php:51 ../functions/register.php:274
 msgid "Your email is not confirmed!"
 msgstr "הדוא\"ל שלך לא אישר!"
 
@@ -2268,22 +2397,22 @@ msgstr "הזן את התווים"
 msgid "Field filled not right CAPTCHA!"
 msgstr "שדה CAPTCHA לא נכון!"
 
-#: ../functions/class-rcl-users.php:508
+#: ../functions/class-rcl-users.php:501
 msgid "Total users"
 msgstr "סה\"כ משתמשים"
 
-#: ../functions/class-rcl-users.php:521
+#: ../functions/class-rcl-users.php:514
 msgid "Activity"
 msgstr "פעילות"
 
-#: ../functions/class-rcl-users.php:524 ../functions/loginform.php:50
+#: ../functions/class-rcl-users.php:517 ../functions/loginform.php:50
 #: ../functions/loginform.php:58 ../functions/loginform.php:74
 #: ../functions/shortcodes.php:171 ../templates/form-register.php:4
 #: ../templates/form-remember.php:21 ../templates/form-sign.php:33
 msgid "Registration"
 msgstr "הרשמה"
 
-#: ../functions/class-rcl-users.php:528
+#: ../functions/class-rcl-users.php:521
 msgid "Rated"
 msgstr "דירוג"
 
@@ -2451,72 +2580,72 @@ msgstr "All values of a custom field with meta_key"
 msgid "were removed from the Database"
 msgstr "נמחק מהמאגר"
 
-#: ../functions/rcl_update.php:68 ../functions/rcl_update.php:137
+#: ../functions/rcl_update.php:71 ../functions/rcl_update.php:140
 msgid "Unable to retrieve the file from the server!"
 msgstr ""
 
-#: ../functions/rcl_update.php:164
+#: ../functions/rcl_update.php:167
 msgid "Update does not have the correct title!"
 msgstr ""
 
-#: ../functions/rcl_update.php:194
+#: ../functions/rcl_update.php:206
 msgid "Unable to open archive!"
 msgstr ""
 
-#: ../functions/register.php:206
+#: ../functions/register.php:208
 msgid "Confirm your registration!"
 msgstr "נרשמת בהצלחה!"
 
-#: ../functions/register.php:208
+#: ../functions/register.php:210
 msgid "You or someone else signed up on the website"
 msgstr "אתה או מישהו אחר נרשם באתר"
 
-#: ../functions/register.php:208
+#: ../functions/register.php:210
 msgid "with the following data:"
 msgstr "עם הנתונים הבאים:"
 
-#: ../functions/register.php:210 ../functions/register.php:383
+#: ../functions/register.php:212 ../functions/register.php:386
 #: ../templates/form-sign.php:17
 msgid "Password"
 msgstr "סיסמה"
 
-#: ../functions/register.php:222
+#: ../functions/register.php:224
 msgid "If it wasnt you, then just ignore this email"
 msgstr "אם זה לא אתה, אז פשוט להתעלם מדוא\"ל זה"
 
-#: ../functions/register.php:266
+#: ../functions/register.php:268
 msgid "Registration is completed!"
 msgstr ""
 
-#: ../functions/register.php:267
+#: ../functions/register.php:269 ../functions/register.php:278
 msgid "Registration is completed! Check your email."
 msgstr "הרשמה הושלמה! בדוק את הדואר האלקטרוני שלך."
 
-#: ../functions/register.php:275
+#: ../functions/register.php:277
 msgid "Registration is completed! Check your email"
 msgstr "הרשמה הושלמה! בדוק את הדואר האלקטרוני שלך."
 
-#: ../functions/register.php:281
+#: ../functions/register.php:284
 msgid "Your password has been sent!<br>Check your email."
 msgstr "סיסמתך נשלחה אילך! <br> בדוק את תיבת הדוא\"ל שלך."
 
-#: ../functions/register.php:306
+#: ../functions/register.php:309
 msgid "Error filling!"
 msgstr "שגיאה במילוי!"
 
-#: ../functions/register.php:328
+#: ../functions/register.php:331
 msgid "Repeat password is not correct!"
 msgstr "הסיסמה חזורת אינה נכונה!"
 
-#: ../functions/register.php:413
+#: ../functions/register.php:416
 msgid "Repeat the password"
 msgstr "חזור על הסיסמה"
 
-#: ../functions/register.php:425
+#: ../functions/register.php:428
 msgid "The passwords do not match!"
 msgstr "סיסמאתך לא תואמות!"
 
-#: ../functions/register.php:426
+#: ../functions/register.php:429
 msgid "The passwords match"
 msgstr "סיסמה תואמת"
 
@@ -2989,10 +3118,6 @@ msgid ""
 msgstr ""
 "To display a link to the developer`s site (Thank you, if you decide to show)"
 
-#: ../rcl-admin/admin-pages.php:319 ../rcl-admin/rcl-admin.php:11
-msgid "Save settings"
-msgstr "שמור הגדרות"
-
 #: ../rcl-admin/admin-pages.php:380
 msgid "Used template"
 msgstr "תבנית בשימוש"
@@ -3111,6 +3236,9 @@ msgstr ""
 #: ../wp-recall.php:40 ../wp-recall.php:44
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "Сreate"
+#~ msgstr "Сreate"
 
 #~ msgid "Nickname user"
 #~ msgstr "ao vna,na"

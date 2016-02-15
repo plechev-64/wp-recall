@@ -143,7 +143,7 @@ function rcl_tab_groups($author_lk){
                 . '<form method="post">'
                     . '<div class="form-field">'
                         . '<input type="text" required placeholder="'.__('Enter the name of the new group','wp-recall').'" name="rcl_group[name]">'
-                        . '<input type="submit" class="recall-button" name="rcl_group[create]" value="'.__('Сreate','wp-recall').'">'
+                        . '<input type="submit" class="recall-button" name="rcl_group[create]" value="'.__('Create','wp-recall').'">'
                     . '</div>'
                     . wp_nonce_field('rcl-group-create','_wpnonce',true,false)
                 . '</form>'
@@ -306,41 +306,41 @@ function rcl_get_group_options($group_id){
     ob_end_clean();*/
 
     $content = '<div id="group-options">'
-        . '<h3>Настройки группы</h3>'
+        . '<h3>'.__('Group settings','wp-recall').'</h3>'
         . '<form method="post">'
             . '<div class="group-option">'
-                . '<label>Название группы</label>'
+                . '<label>'.__('Group name','wp-recall').'</label>'
                 . '<input type="text" name="group-options[name]" value="'.$rcl_group->name.'">'
             . '</div>'
             . '<div class="group-option">'
-                . '<label>Описание</label>'
+                . '<label>'.__('Description','wp-recall').'</label>'
                 . '<textarea name="group-options[description]">'.esc_html(strip_tags(rcl_get_group_description($group_id))).'</textarea>'
             . '</div>'
             . '<div class="group-option">'
-                . '<label>Статус группы</label>'
+                . '<label>'.__('Group status','wp-recall').'</label>'
                 . '<select name="group-options[status]">'
-                . '<option '.selected($rcl_group->group_status,'open',false).' value="open">Открытая группа</option>'
-                . '<option '.selected($rcl_group->group_status,'closed',false).' value="closed">Закрытая группа</option>'
+                . '<option '.selected($rcl_group->group_status,'open',false).' value="open">'.__('Open group','wp-recall').'</option>'
+                . '<option '.selected($rcl_group->group_status,'closed',false).' value="closed">'.__('Closed group','wp-recall').'</option>'
                 . '</select>'
             . '</div>'
             . '<div class="group-option">'
-                . '<label>Членство</label>'
-                . '<input type="checkbox" name="group-options[can_register]" '.checked(rcl_get_group_option($group_id,'can_register'),1,false).' value="1"> Регистрация разрешена'
-                . '<label>Роль нового пользователя</label>'
+                . '<label>'.__('Membership','wp-recall').'</label>'
+                . '<input type="checkbox" name="group-options[can_register]" '.checked(rcl_get_group_option($group_id,'can_register'),1,false).' value="1"> '.__('Registration is permitted','wp-recall')
+                . '<label>'.__('The role of the new user','wp-recall').'</label>'
                 . '<select name="group-options[default_role]">'
-                . '<option '.selected($default_role,'reader',false).' value="reader">Посетитель</option>'
-                . '<option '.selected($default_role,'author',false).' value="author">Автор</option>'
+                . '<option '.selected($default_role,'reader',false).' value="reader">'.__('Visitor','wp-recall').'</option>'
+                . '<option '.selected($default_role,'author',false).' value="author">'.__('Author','wp-recall').'</option>'
                 . '</select>'
             . '</div>'
             . '<div class="group-option">'
-                . '<label>Категории группы <small>(указывать через запятую)</small></label>'
+                . '<label>'.sprintf('%s <small>(%s)</small>',__('Group categories','wp-recall'),__('separated by commas','wp-recall')).'</label>'
                 . '<textarea name="group-options[category]">'.$category.'</textarea>'
             . '</div>';
 
             $content = apply_filters('rcl_group_options',$content);
 
             $content .= '<div class="group-option">'
-                . '<input type="submit" class="recall-button" name="group-submit" value="Сохранить настройки">'
+                . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Save settings','wp-recall').'">'
                 . '<input type="hidden" name="group-action" value="update">'
                 . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false )
             . '</div>'
@@ -426,12 +426,17 @@ function rcl_apply_group_request(){
     if($apply){
 
         $subject = __('Request access to the group approved!','wp-recall');
-        $textmail = '
-        <h3>Добро пожаловать в группу "'.$rcl_group->name.'"!</h3>
-        <p>Поздравляем, ваш запрос на доступ к приватной группе на сайте "'.get_bloginfo('name').'" был одобрен.</p>
-        <p>Теперь вы можете принимать участие в жизни этой группы как полноценный ее участник.</p>
-        <p>Вы можете перейти в группу прямо сейчас, перейдя по ссылке:</p>
-        <p>'.get_term_link( (int)$group_id, 'groups' ).'</p>';
+        $textmail = sprintf(
+                '<h3>%s "'.$rcl_group->name.'"!</h3>
+                <p>%s</p>
+                <p>%s.</p>
+                <p>%s:</p>
+                <p>'.get_term_link( (int)$group_id, 'groups' ).'</p>',
+                __('Welcome to the group','wp-recall'),
+                sprintf(__('Congratulations , your request for access to a private group on "%s" website has been approved','wp-recall'),get_bloginfo('name')),
+                __('Now you can take part in the life of the group as it is a full participant.','wp-recall'),
+                __('You can visit the group by clicking on the link','wp-recall')
+            );
 
         rcl_group_add_user($user_id,$group_id);
 
@@ -441,8 +446,10 @@ function rcl_apply_group_request(){
 
         $log['result']='<span class="error">'.__('Request rejected','wp-recall').'</span>';
         $subject = __('The request to access the group rejected.','wp-recall');
-        $textmail = '
-        <p>Сожалеем, но ваш запрос на доступ к приватной группе "'.$rcl_group->name.'" на сайте "'.get_bloginfo('name').'" был отклонен ее админом.</p>';
+        $textmail = sprintf('<p>'.__('We are sorry, but your request to access the private group "%s" on the site "%s" was rejected by its administrator','wp-recall').'.</p>',
+                $rcl_group->name,
+                get_bloginfo('name')
+            );
 
     }
 

@@ -351,7 +351,7 @@ function rcl_get_group_users($group_id){
     $group_roles = rcl_get_group_roles();
 
     $content .= '<div class="rcl-data-filters">'
-            . 'Сортировка по статусу: ';
+            . __('Sort by status','wp-recall').': ';
 
     foreach($group_roles as $role=>$data){
         
@@ -530,12 +530,25 @@ function rcl_group_add_request_for_membership($user_id,$group_id){
     rcl_update_group_option($group_id,'requests_group_access',$requests);
 
     $subject = __('Request for access to the group','wp-recall');
-    $textmail = '
-    <p>Вы получили новый запрос на доступ к администрируемой вами группе "'.$rcl_group->name.'" на сайте "'.get_bloginfo('name').'".</p>
-    <h3>Информация о пользователе:</h3>
-    <p><b>Профиль пользователя</b>: <a href="'.get_author_posts_url($user_id).'">'.get_the_author_meta('display_name',$user_id).'</a></p>
-    <p>Вы можете одобрить или отклонить запрос перейдя по ссылке:</p>
-    <p>'.get_term_link( (int)$group_id, 'groups' ).'</p>';
+    $textmail = sprintf(
+            '<p>%s</p>
+            <h3>%s:</h3>
+            <p>%s</p>
+            <p>%s:</p>
+            <p>%s</p>',
+            sprintf(
+                    __('You have received a new request for access to the group administered by your "%s" on the site "%s"','wp-recall'),
+                    $rcl_group->name,
+                    get_bloginfo('name')
+                    ),
+            __('User information','wp-recall'),
+            sprintf(
+                    '<b>%s</b>: <a href="'.get_author_posts_url($user_id).'">'.get_the_author_meta('display_name',$user_id).'</a>',               
+                    __('Profile','wp-recall')
+                    ),
+            __('You can approve or reject the request by clicking the link','wp-recall'),
+            get_term_link( (int)$group_id, 'groups' )
+          );
     $admin_email = get_the_author_meta('user_email',$rcl_group->admin_id);
     rcl_mail($admin_email, $subject, $textmail);
 }
