@@ -1121,7 +1121,7 @@ function rcl_footer_publics_scripts($script){
                             error = true;
                         }                       
                         if(file['size']>".$maxsize."){
-                            rcl_notice('".sprintf(__("Exceeds the maximum size for the file %s! Max. %s MB","'+file['name']+'",$maxsize_mb),'wp-recall')."','error');                            
+                            rcl_notice('".sprintf(__("Exceeds the maximum size for the file %s! Max. %s MB","'+file['name']+'",$maxsize_mb,'wp-recall'))."','error');                            
                             error = true;
                         }                       
                     });
