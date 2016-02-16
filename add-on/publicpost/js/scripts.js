@@ -1,29 +1,4 @@
 jQuery(document).ready(function($) {
-    /*var tbframe;
-	var wpds_orig_send_to_editor = window.send_to_editor;
-    jQuery('#add_thumbnail_rcl').live('click',function() {
-		send_to = true;
-        tb_show('', '/wp-admin/media-upload.php?type=image&amp;TB_iframe=true');
-        tbframe = setInterval(function() {jQuery('#TB_iframeContent').contents().find('.savesend .button').val('Использовать как миниатюру');}, 2000);
-		
-		window.send_to_editor = function(html) {			
-			clearInterval(tbframe);
-			img = jQuery(html).find('img').andSelf().filter('img');
-			imgurl = img.attr('src');
-			imgclass = img.attr('class');
-			idimg = parseInt(imgclass.replace(/\D+/g,''));
-			jQuery("#thumbnail_rcl").html('<span class="delete"></span><img width="100" height="100" src="'+imgurl+'"><input type="hidden" name="thumb" value="'+idimg+'">');
-			tb_remove();
-			window.send_to_editor = wpds_orig_send_to_editor;
-		};
-		
-        return false;
-    });
-
-    jQuery('#thumbnail_rcl .delete').live('click',function() {		
-		jQuery('#thumbnail_rcl').empty();
-		return false;
-    });*/
     
     jQuery('.rcl-public-editor .rcl-upload-box .upload-image-url').live('keyup',function(){
         
@@ -67,56 +42,49 @@ function rcl_add_editor_box(e,type,idbox,content){
 	if(idbox) dataString += '&idbox='+idbox;
 	dataString += '&ajax_nonce='+Rcl.nonce;
 	jQuery.ajax({
-		type: 'POST', 
-		data: dataString, 
-		dataType: 'json', 
-		url: Rcl.ajaxurl,
-		success: function(data){
-			if(!data['content']){
-				rcl_notice('Ошибка!','error');
-				return false;
-			}
-			var editor = jQuery(e).parents('.rcl-public-editor');
-			editor.children('.rcl-editor-content').append(data['content']);
-			if(content) jQuery('#rcl-upload-'+idbox).html(content);
-			rcl_preloader_hide();
-			return true;
-		}			
+            type: 'POST', 
+            data: dataString, 
+            dataType: 'json', 
+            url: Rcl.ajaxurl,
+            success: function(data){
+                if(data['error']){
+                    rcl_notice(data['error'],'error');
+                    return false;
+                }
+                var editor = jQuery(e).parents('.rcl-public-editor');
+                editor.children('.rcl-editor-content').append(data['content']);
+                if(content) jQuery('#rcl-upload-'+idbox).html(content);
+                rcl_preloader_hide();
+                return true;
+            }			
 	}); 
 	return false;
 }
 	
 function rcl_delete_editor_box(e){
 	var box = jQuery(e).parents('.rcl-content-box');
-	var content = box.find('[name*="post_content"]').val();
-	if(content){
-		if(!confirm('Are you sare?')) return false;
-	}
-
 	box.remove();
 	return false;
 }
 
 function rcl_delete_post(element){
-    if(confirm('Действительно удалить?')){
-        rcl_preloader_show(element);
-        var post_id = jQuery(element).data('post');
-        var dataString = 'action=rcl_ajax_delete_post&post_id='+post_id;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        jQuery.ajax({
-            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-            success: function(data){
-                rcl_preloader_hide();
-                if(data['result']==100){
-                        jQuery('#'+data['post_type']+'-'+post_id).remove();
-                        rcl_notice('Материал успешно удален!','success');
-                }else{
-                        rcl_notice('Удаление не удалось!','error');
-                        return false;
-                }
+    rcl_preloader_show(element);
+    var post_id = jQuery(element).data('post');
+    var dataString = 'action=rcl_ajax_delete_post&post_id='+post_id;
+    dataString += '&ajax_nonce='+Rcl.nonce;
+    jQuery.ajax({
+        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+        success: function(data){
+            rcl_preloader_hide();
+            if(data['error']){
+                rcl_notice(data['error'],'error');
+                return false;
             }
-        });
-    }
+            jQuery('#'+data['post_type']+'-'+post_id).remove();
+            rcl_notice(data['success'],'success');
+        }
+    });
+    return false;
 }
 
 function rcl_edit_post(element){

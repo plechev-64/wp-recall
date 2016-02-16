@@ -272,7 +272,7 @@ class Rcl_Thumb_Form{
                         <span>'.__('Add','wp-recall').'</span>
                         <input id="'.$this->id_upload.'" name="uploadfile[]" type="file" accept="'.$accept.'" multiple>
                 </div>
-                <small class="notice">Разрешенные расширения: '.$accept.'</small>
+                <small class="notice">'.__('Allowed extensions','wp-recall').': '.$accept.'</small>
             </div>
         </div>';
         

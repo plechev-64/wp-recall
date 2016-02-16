@@ -67,32 +67,32 @@ $Rcl_Public = new Rcl_Public();
 
 add_action('wp_ajax_rcl_ajax_delete_post', 'rcl_ajax_delete_post');
 function rcl_ajax_delete_post(){
-	global $user_ID;
-        
-        rcl_verify_ajax_nonce();
+    global $user_ID;
 
-	if(!$user_ID) return false;
+    rcl_verify_ajax_nonce();
 
-	$post = get_post(intval($_POST['post_id']));
-	$res = wp_delete_post( $post->ID );
+    if(!$user_ID) return false;
 
-	if($res){
-		$temp_gal = get_user_meta($user_ID,'tempgallery',1);
-		if($temp_gal){
-			$cnt = count($temp_gal);
-			foreach((array)$temp_gal as $key=>$gal){ if($gal['ID']==$_POST['post_id']) unset($temp_gal[$key]); }
-			foreach((array)$temp_gal as $t){ $new_temp[] = $t; }
-			if($new_temp) update_user_meta($user_ID,'tempgallery',$new_temp);
-			else delete_user_meta($user_ID,'tempgallery');
-		}
+    $post = get_post(intval($_POST['post_id']));
+    $res = wp_delete_post( $post->ID );
 
-		$log['result']=100;
-		$log['post_type']=$post->post_type;
-	}else {
-		$log['result']=1;
-	}
+    if($res){
+        $temp_gal = get_user_meta($user_ID,'tempgallery',1);
+        if($temp_gal){
+                $cnt = count($temp_gal);
+                foreach((array)$temp_gal as $key=>$gal){ if($gal['ID']==$_POST['post_id']) unset($temp_gal[$key]); }
+                foreach((array)$temp_gal as $t){ $new_temp[] = $t; }
+                if($new_temp) update_user_meta($user_ID,'tempgallery',$new_temp);
+                else delete_user_meta($user_ID,'tempgallery');
+        }
 
-	echo json_encode($log);
+        $log['success']=__('Material removed successfully!','wp-recall');
+        $log['post_type']=$post->post_type;
+    }else {
+        $log['error']=__('Delete failed!','wp-recall');
+    }
+
+    echo json_encode($log);
     exit;
 }
 
@@ -149,5 +149,5 @@ function rcl_button_fast_edit_post($post_id){
 }
 
 function rcl_button_fast_delete_post($post_id){
-	return '<a class="rcl-delete-post rcl-service-button" data-post="'.$post_id.'" onclick="rcl_delete_post(this); return false;"><i class="fa fa-trash"></i></a>';
+	return '<a class="rcl-delete-post rcl-service-button" data-post="'.$post_id.'" onclick="return confirm(\''.__('Are you sare?','wp-recall').'\')? rcl_delete_post(this): false;"><i class="fa fa-trash"></i></a>';
 }

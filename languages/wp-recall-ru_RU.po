@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-02-15 14:05+0300\n"
+"POT-Creation-Date: 2016-02-16 11:05+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -105,8 +105,8 @@ msgstr "Подписка оформлена"
 #: add-on/message/index.php:1600 add-on/message/index.php:1617
 #: add-on/message/index.php:1633 add-on/message/index.php:1650
 #: add-on/message/index.php:1715 add-on/message/index.php:1737
-#: add-on/rating-system/index.php:547 add-on/rating-system/index.php:569
-#: rcl-functions.php:241
+#: add-on/publicpost/index.php:707 add-on/rating-system/index.php:547
+#: add-on/rating-system/index.php:569 rcl-functions.php:241
 msgid "Error"
 msgstr "Ошибка"
 
@@ -298,7 +298,8 @@ msgid "Add entry"
 msgstr "Добавить"
 
 #: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
-#: add-on/groups/groups-public.php:92 functions/rcl_editfields.php:177
+#: add-on/groups/groups-public.php:92 add-on/publicpost/index.php:690
+#: add-on/publicpost/index.php:790 functions/rcl_editfields.php:177
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -1336,6 +1337,15 @@ msgstr "Замечание"
 msgid "The password must be at least 7 characters"
 msgstr "Пароль должен содержать не менее 7 символов"
 
+#: add-on/profile/index.php:416
+msgid "Use upper and lower case for a strong password"
+msgstr ""
+"Используйте символы в верхнем и нижнем регистре для более сложного пароля"
+
+#: add-on/profile/index.php:417
+msgid "Use characters from"
+msgstr "Используйте также символы"
+
 #: add-on/profile/index.php:495
 msgid "Update profile"
 msgstr "Обновить профиль"
@@ -1542,7 +1552,9 @@ msgstr "Разрешенные кнопки редактора"
 msgid "Subheader"
 msgstr "Подзаголовок"
 
-#: add-on/publicpost/addon-options.php:136 functions/rcl_editfields.php:141
+#: add-on/publicpost/addon-options.php:136
+#: add-on/publicpost/templates/editor-text-box.php:7
+#: functions/rcl_editfields.php:141
 msgid "Text"
 msgstr "Текстовое поле"
 
@@ -1750,6 +1762,26 @@ msgstr "Добавить файлы в очередь загрузки"
 msgid "Add"
 msgstr "Добавить"
 
+#: add-on/publicpost/classes.php:275
+msgid "Allowed extensions"
+msgstr "Разрешенные типы файлов"
+
+#: add-on/publicpost/fast-editor.php:89
+msgid "Material removed successfully!"
+msgstr "Материал успешно удален!"
+
+#: add-on/publicpost/fast-editor.php:92
+msgid "Delete failed!"
+msgstr "Удаление не удалось!"
+
+#: add-on/publicpost/fast-editor.php:152
+#: add-on/publicpost/templates/editor-header-box.php:4
+#: add-on/publicpost/templates/editor-html-box.php:4
+#: add-on/publicpost/templates/editor-image-box.php:4
+#: add-on/publicpost/templates/editor-text-box.php:4
+msgid "Are you sare?"
+msgstr "Вы серьезно?"
+
 #: add-on/publicpost/index.php:57
 msgid "Records"
 msgstr "Записи"
@@ -1805,17 +1837,59 @@ msgstr "главное"
 msgid "The publication has been successfully removed!"
 msgstr "Публикация была успешно удалена!"
 
-#: add-on/publicpost/index.php:787 add-on/publicpost/rcl_publicform.php:141
+#: add-on/publicpost/index.php:731
+msgid "Enter your e-mail!"
+msgstr "Укажите свой e-mail!"
+
+#: add-on/publicpost/index.php:734
+msgid "Enter your name!"
+msgstr "Укажите свое имя!"
+
+#: add-on/publicpost/index.php:745
+msgid "You have entered an invalid email!"
+msgstr "Вы указали некорректный email!"
+
+#: add-on/publicpost/index.php:748
+msgid "This email is already used!"
+msgstr "Этот email уже используется!"
+
+#: add-on/publicpost/index.php:749
+msgid "If this is your email, then log in and publish their post"
+msgstr "Если это ваш email, то авторизуйтесь и опубликуйте запись"
+
+#: add-on/publicpost/index.php:755
+msgid "Add the contents of the publication!"
+msgstr "Добавьте содержимое публикации!"
+
+#: add-on/publicpost/index.php:783 add-on/publicpost/rcl_publicform.php:143
+msgid "Preview"
+msgstr "Предпросмотр"
+
+#: add-on/publicpost/index.php:788
+msgid ""
+"If everything is in order - the public! If not, you can go back to the "
+"editor."
+msgstr "Если все верно - публикуйте! Если нет, то вернитесь в редактор."
+
+#: add-on/publicpost/index.php:791 add-on/publicpost/rcl_publicform.php:141
 #: functions/rcl_custom_fields.php:277
 msgid "To publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/index.php:1120
+#: add-on/publicpost/index.php:959
+msgid "Loading image failed!"
+msgstr "Загрузка изображения не далась!"
+
+#: add-on/publicpost/index.php:991
+msgid "Unauthorized file extension . Use only : .gif, .png, .jpg"
+msgstr "Запрещенный тип файла. Используйте только: .gif, .png, .jpg"
+
+#: add-on/publicpost/index.php:1124
 #, php-format
 msgid "You have exceeded the allowed number of downloads! Max. %s"
 msgstr "Превышено разрешенное количество файлов к загрузке! Макс. %s"
 
-#: add-on/publicpost/index.php:1124
+#: add-on/publicpost/index.php:1128
 #, php-format
 msgid "Exceeds the maximum size for the file %s! Max. %s MB"
 msgstr "Превышен максимальный размер файла %s! Макс. %s МВ"
@@ -1831,10 +1905,6 @@ msgstr "пока не было опубликовано"
 #: add-on/publicpost/rcl_postlist.php:108
 msgid "Published"
 msgstr "Опубликованные"
-
-#: add-on/publicpost/rcl_publicform.php:143
-msgid "Preview"
-msgstr "Предпросмотр"
 
 #: add-on/publicpost/rcl_publicform.php:179
 #: add-on/publicpost/rcl_publicform.php:189
@@ -1917,6 +1987,7 @@ msgid "Text Box"
 msgstr "Текстовый блок"
 
 #: add-on/publicpost/rcl_publicform.php:496
+#: add-on/publicpost/templates/editor-header-box.php:7
 msgid "Subtitle"
 msgstr "Подзаголовок"
 
@@ -1943,6 +2014,18 @@ msgstr "Добавьте свои теги"
 #: add-on/publicpost/rcl_publicform.php:594
 msgid "Each tag is separated with Enter"
 msgstr "каждый тег разделяется нажатием на кнопку Enter"
+
+#: add-on/publicpost/templates/editor-header-box.php:5
+#: add-on/publicpost/templates/editor-html-box.php:5
+#: add-on/publicpost/templates/editor-image-box.php:5
+#: add-on/publicpost/templates/editor-text-box.php:5
+msgid "move"
+msgstr "переместить"
+
+#: add-on/publicpost/templates/editor-image-box.php:4
+#: functions/rcl_custom_fields.php:80
+msgid "delete"
+msgstr "удалить"
 
 #: add-on/publicpost/templates/editor-image-box.php:14
 msgid "Select an image"
@@ -2412,10 +2495,6 @@ msgstr "Публикация ожидает утверждения!"
 msgid "not online"
 msgstr "не в сети"
 
-#: functions/rcl_custom_fields.php:80
-msgid "delete"
-msgstr "удалить"
-
 #: functions/rcl_custom_fields.php:88
 msgid "Max size"
 msgstr "Макс. размер"
@@ -2535,15 +2614,15 @@ msgstr "Все значения произвольных полей с этим 
 msgid "were removed from the Database"
 msgstr "были удалены из базы данных"
 
-#: functions/rcl_update.php:71 functions/rcl_update.php:140
+#: functions/rcl_update.php:71 functions/rcl_update.php:138
 msgid "Unable to retrieve the file from the server!"
 msgstr "Не удалось получить файл обновления!"
 
-#: functions/rcl_update.php:167
+#: functions/rcl_update.php:165
 msgid "Update does not have the correct title!"
 msgstr "Полученное дополнение не имеет корректного заголовка!"
 
-#: functions/rcl_update.php:206
+#: functions/rcl_update.php:204
 msgid "Unable to open archive!"
 msgstr "Не удалось открыть полученный архив обновления!"
 

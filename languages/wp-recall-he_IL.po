@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Recall\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-15 07:59+0300\n"
-"PO-Revision-Date: 2016-02-15 07:59+0300\n"
+"POT-Creation-Date: 2016-02-16 11:17+0300\n"
+"PO-Revision-Date: 2016-02-16 11:17+0300\n"
 "Last-Translator: bloria <allmedkaplan@med.allmed.co.il>\n"
 "Language-Team: \n"
 "Language: he\n"
@@ -100,8 +100,8 @@ msgstr ""
 #: ../add-on/message/index.php:1600 ../add-on/message/index.php:1617
 #: ../add-on/message/index.php:1633 ../add-on/message/index.php:1650
 #: ../add-on/message/index.php:1715 ../add-on/message/index.php:1737
-#: ../add-on/rating-system/index.php:547 ../add-on/rating-system/index.php:569
-#: ../rcl-functions.php:241
+#: ../add-on/publicpost/index.php:707 ../add-on/rating-system/index.php:547
+#: ../add-on/rating-system/index.php:569 ../rcl-functions.php:241
 msgid "Error"
 msgstr ""
 
@@ -295,7 +295,8 @@ msgid "Add entry"
 msgstr "הוסף כניסה"
 
 #: ../add-on/groups/groups-init.php:11 ../add-on/groups/groups-init.php:54
-#: ../add-on/groups/groups-public.php:92 ../functions/rcl_editfields.php:177
+#: ../add-on/groups/groups-public.php:92 ../add-on/publicpost/index.php:690
+#: ../add-on/publicpost/index.php:790 ../functions/rcl_editfields.php:177
 msgid "Edit"
 msgstr "לעריכה"
 
@@ -1374,6 +1375,14 @@ msgstr ""
 "הסיסמה חייבת להיות 7 תווים\n"
 " לפחות "
 
+#: ../add-on/profile/index.php:416
+msgid "Use upper and lower case for a strong password"
+msgstr ""
+
+#: ../add-on/profile/index.php:417
+msgid "Use characters from"
+msgstr ""
+
 #: ../add-on/profile/index.php:495
 msgid "Update profile"
 msgstr "עדכן פרופיל"
@@ -1580,6 +1589,7 @@ msgid "Subheader"
 msgstr ""
 
 #: ../add-on/publicpost/addon-options.php:136
+#: ../add-on/publicpost/templates/editor-text-box.php:7
 #: ../functions/rcl_editfields.php:141
 msgid "Text"
 msgstr "טקסט"
@@ -1790,6 +1800,26 @@ msgstr "To add files to the download queue"
 msgid "Add"
 msgstr "להוסיף"
 
+#: ../add-on/publicpost/classes.php:275
+msgid "Allowed extensions"
+msgstr ""
+
+#: ../add-on/publicpost/fast-editor.php:89
+msgid "Material removed successfully!"
+msgstr ""
+
+#: ../add-on/publicpost/fast-editor.php:92
+msgid "Delete failed!"
+msgstr ""
+
+#: ../add-on/publicpost/fast-editor.php:152
+#: ../add-on/publicpost/templates/editor-header-box.php:4
+#: ../add-on/publicpost/templates/editor-html-box.php:4
+#: ../add-on/publicpost/templates/editor-image-box.php:4
+#: ../add-on/publicpost/templates/editor-text-box.php:4
+msgid "Are you sare?"
+msgstr ""
+
 #: ../add-on/publicpost/index.php:57
 msgid "Records"
 msgstr "רשומות"
@@ -1845,18 +1875,61 @@ msgstr "מומלצים"
 msgid "The publication has been successfully removed!"
 msgstr "הפרסום הוסר בהצלחה!"
 
-#: ../add-on/publicpost/index.php:787
+#: ../add-on/publicpost/index.php:731
+msgid "Enter your e-mail!"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:734
+msgid "Enter your name!"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:745
+msgid "You have entered an invalid email!"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:748
+msgid "This email is already used!"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:749
+msgid "If this is your email, then log in and publish their post"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:755
+msgid "Add the contents of the publication!"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:783
+#: ../add-on/publicpost/rcl_publicform.php:143
+msgid "Preview"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:788
+msgid ""
+"If everything is in order - the public! If not, you can go back to the "
+"editor."
+msgstr ""
+
+#: ../add-on/publicpost/index.php:791
 #: ../add-on/publicpost/rcl_publicform.php:141
 #: ../functions/rcl_custom_fields.php:277
 msgid "To publish"
 msgstr "לפרסם"
 
-#: ../add-on/publicpost/index.php:1120
+#: ../add-on/publicpost/index.php:959
+msgid "Loading image failed!"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:991
+msgid "Unauthorized file extension . Use only : .gif, .png, .jpg"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:1124
 #, php-format
 msgid "You have exceeded the allowed number of downloads! Max. %s"
 msgstr ""
 
-#: ../add-on/publicpost/index.php:1124
+#: ../add-on/publicpost/index.php:1128
 #, php-format
 msgid "Exceeds the maximum size for the file %s! Max. %s MB"
 msgstr ""
@@ -1872,10 +1945,6 @@ msgstr "טרם פורסם"
 #: ../add-on/publicpost/rcl_postlist.php:108
 msgid "Published"
 msgstr "פורסם"
-
-#: ../add-on/publicpost/rcl_publicform.php:143
-msgid "Preview"
-msgstr ""
 
 #: ../add-on/publicpost/rcl_publicform.php:179
 #: ../add-on/publicpost/rcl_publicform.php:189
@@ -1957,6 +2026,7 @@ msgid "Text Box"
 msgstr ""
 
 #: ../add-on/publicpost/rcl_publicform.php:496
+#: ../add-on/publicpost/templates/editor-header-box.php:7
 msgid "Subtitle"
 msgstr ""
 
@@ -1983,6 +2053,18 @@ msgstr ""
 #: ../add-on/publicpost/rcl_publicform.php:594
 msgid "Each tag is separated with Enter"
 msgstr ""
+
+#: ../add-on/publicpost/templates/editor-header-box.php:5
+#: ../add-on/publicpost/templates/editor-html-box.php:5
+#: ../add-on/publicpost/templates/editor-image-box.php:5
+#: ../add-on/publicpost/templates/editor-text-box.php:5
+msgid "move"
+msgstr ""
+
+#: ../add-on/publicpost/templates/editor-image-box.php:4
+#: ../functions/rcl_custom_fields.php:80
+msgid "delete"
+msgstr "מחק"
 
 #: ../add-on/publicpost/templates/editor-image-box.php:14
 msgid "Select an image"
@@ -2455,10 +2537,6 @@ msgstr "פרסום ממתין לאישור!"
 msgid "not online"
 msgstr "לא מחובר"
 
-#: ../functions/rcl_custom_fields.php:80
-msgid "delete"
-msgstr "מחק"
-
 #: ../functions/rcl_custom_fields.php:88
 msgid "Max size"
 msgstr "לגודל המקסימלי"
@@ -2580,15 +2658,15 @@ msgstr "All values of a custom field with meta_key"
 msgid "were removed from the Database"
 msgstr "נמחק מהמאגר"
 
-#: ../functions/rcl_update.php:71 ../functions/rcl_update.php:140
+#: ../functions/rcl_update.php:71 ../functions/rcl_update.php:138
 msgid "Unable to retrieve the file from the server!"
 msgstr ""
 
-#: ../functions/rcl_update.php:167
+#: ../functions/rcl_update.php:165
 msgid "Update does not have the correct title!"
 msgstr ""
 
-#: ../functions/rcl_update.php:206
+#: ../functions/rcl_update.php:204
 msgid "Unable to open archive!"
 msgstr ""
 

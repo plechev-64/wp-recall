@@ -322,32 +322,38 @@ function rcl_get_list_votes($args,$votes){
             if(isset($rcl_options['rating_temp_'.$vote->rating_type])&&$args['rating_status']=='user'){
                     $row = $rcl_options['rating_temp_'.$vote->rating_type];
             }else{
-                    $row = mysql2date('d.m.Y',$vote->rating_date).' %USER% '.__('voted','wp-recall').': %VALUE%';
+                $row = ($vote->rating_date!='0000-00-00 00:00:00')? mysql2date('d.m.Y',$vote->rating_date).' ': '';
+                $row .= '%USER% '.__('voted','wp-recall').': %VALUE%';
             }
 
             $temps = array(
-                    '%USER%',
-                    '%VALUE%'
+                '%USER%',
+                '%VALUE%'
             );
+            
             $reps = array(
-                    '<a class="" target="_blank" href="'.get_author_posts_url($vote->user_id).'">'.$names[$vote->user_id].'</a>',
-                    rcl_format_rating($vote->rating_value)
+                '<a class="" target="_blank" href="'.get_author_posts_url($vote->user_id).'">'.$names[$vote->user_id].'</a>',
+                rcl_format_rating($vote->rating_value)
             );
 
             $row = str_replace($temps,$reps,$row);
 
             if($args['rating_status']=='user'){
-                    $temps = array(
-                            '%DATE%',
-                            '%COMMENT%',
-                            '%POST%'
-                    );
-                    $reps = array(
-                            mysql2date('d F Y',$vote->rating_date),
-                            '<a href="'.get_comment_link( $vote->object_id ).'">'.__('comment','wp-recall').'</a>',
-                            '<a href="'.get_permalink($vote->object_id).'">'.get_the_title( $vote->object_id ).'</a>'
-                    );
-                    $row = str_replace($temps,$reps,$row);
+                $temps = array(
+                    '%DATE%',
+                    '%COMMENT%',
+                    '%POST%'
+                );
+
+                $date = ($vote->rating_date!='0000-00-00 00:00:00')? mysql2date('d F Y',$vote->rating_date): '';
+
+                $reps = array(
+                    $date,
+                    '<a href="'.get_comment_link( $vote->object_id ).'">'.__('comment','wp-recall').'</a>',
+                    '<a href="'.get_permalink($vote->object_id).'">'.get_the_title( $vote->object_id ).'</a>'
+                );
+
+                $row = str_replace($temps,$reps,$row);
             }
 
             $row = apply_filters('rcl_list_votes',$row,$vote);

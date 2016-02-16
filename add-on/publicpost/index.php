@@ -687,7 +687,7 @@ function rcl_is_limit_editing($post_date){
 
 function rcl_edit_post_button_html($post_id){
     return '<p class="post-edit-button">'
-        . '<a title="Редактировать" object-id="none" href="'. get_edit_post_link($post_id) .'">'
+        . '<a title="'.__('Edit','wp-recall').'" object-id="none" href="'. get_edit_post_link($post_id) .'">'
             . '<i class="fa fa-pencil-square-o"></i>'
         . '</a>'
     . '</p>';
@@ -700,7 +700,11 @@ function rcl_add_editor_box(){
 
     $rcl_box['id_box'] = (isset($_POST['idbox']))? $_POST['idbox']: rand(1,100000);
     $type = $_POST['type'];
-    $log['content']=rcl_get_include_template("editor-$type-box.php",__FILE__);
+    
+    $content = rcl_get_include_template("editor-$type-box.php",__FILE__);
+    if($content) $log['content']= $content;
+    
+    else $log['error']= __('Error','wp-recall').'!';
     echo json_encode($log);
     exit;
 }
@@ -724,10 +728,10 @@ function rcl_preview_post(){
 		$name_new_user = $_POST['name-user'];
 
 		if(!$email_new_user){
-			$log['error'] = 'Введите свой e-mail!';
+			$log['error'] = __('Enter your e-mail!','wp-recall');
 		}
 		if(!$name_new_user){
-			$log['error'] = 'Введите свое имя!';
+			$log['error'] = __('Enter your name!','wp-recall');
 		}
 
 		$res_email = email_exists( $email_new_user );
@@ -738,17 +742,17 @@ function rcl_preview_post(){
 		if($res_login||$res_email||!$correctemail||!$valid){
 
 			if(!$valid||!$correctemail){
-				$log['error'] .= 'Вы ввели некорректный email!';
+				$log['error'] .= __('You have entered an invalid email!','wp-recall');
 			}
 			if($res_login||$res_email){
-				$log['error'] .= 'Этот email уже используется!<br>'
-						. 'Если это ваш email, то авторизуйтесь и опубликуйте свою запись';
+				$log['error'] .= __('This email is already used!','wp-recall').'<br>'
+						.__('If this is your email, then log in and publish their post','wp-recall');
 			}
 		}
 	}
 
 	//if(!$_POST['post_title']) $log['error'] = 'Заполните заголовок публикации';
-	if(!$_POST['post_content']) $log['error'] = 'Добавьте содержимое публикации!';
+	if(!$_POST['post_content']) $log['error'] = __('Add the contents of the publication!','wp-recall');
 
 	if($log['error']){
 		echo json_encode($log);
@@ -776,14 +780,14 @@ function rcl_preview_post(){
 
 	$preview = '<div id="rcl-preview">';
 
-	$preview .= '<h2>Предварительный просмотр</h2>
+	$preview .= '<h2>'.__('Preview','wp-recall').'</h2>
 		<h3 class="title-post">'.$_POST['post_title'].'</h3>
 		'.$post_content;
 
 	$preview .= '<div class="rcl-notice-preview">
-			<p>Если все в порядке - публикуйте! Если нет, то вы можете вернуться в редактор.</p>
+			<p>'.__('If everything is in order - the public! If not, you can go back to the editor.','wp-recall').'</p>
 			<div class="rcl-preview-buttons">
-				<input type="button" class="recall-button" onclick="rcl_preview_close(this);" value="Редактировать">
+				<input type="button" class="recall-button" onclick="rcl_preview_close(this);" value="'.__('Edit','wp-recall').'">
 				<input type="submit" class="recall-button" id="edit-post-rcl" value="'.__('To publish','wp-recall').'">
 			</div>
 		</div>';
@@ -952,7 +956,7 @@ function rcl_upload_box(){
 			$img = @file_get_contents($url_image);
 			if($img) file_put_contents($dir_path.$filename, $img);
 			else{
-                            $res['error'] = "Загрузка изображения не удалась!";
+                            $res['error'] = __('Loading image failed!','wp-recall');
                             echo json_encode($res);
                             exit;
 			}
@@ -984,7 +988,7 @@ function rcl_upload_box(){
 		$mime = explode('/',$image['mime']);
 
                 if (!in_array($mime[1], $valid_types)){ 
-                    echo json_encode(array('error'=>'Недозволенное расширение файла. Используйте только: .gif, .png, .jpg'));
+                    echo json_encode(array('error'=>__('Unauthorized file extension . Use only : .gif, .png, .jpg','wp-recall')));
                     exit;
                 } 
 

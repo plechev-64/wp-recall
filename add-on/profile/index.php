@@ -413,8 +413,8 @@ function rcl_tab_profile_content($author_lk){
                 </div>
                 <p>
                 <small><strong>'.__('Note','wp-recall').':</strong> '.__('The password must be at least 7 characters','wp-recall').'. <br/>
-                Используйте верхний и нижний регистр для более надежного пароля. <br/>
-                Используйте также символы: ! " ? $ % ^ &amp;</small>
+                '.__('Use upper and lower case for a strong password','wp-recall').'. <br/>
+                '.__('Use characters from','wp-recall').': ! " ? $ % ^ &amp;</small>
 		</p>';
             }
             $profile_block .= '</td>
