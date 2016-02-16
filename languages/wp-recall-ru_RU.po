@@ -1878,7 +1878,7 @@ msgstr "Публиковать"
 
 #: add-on/publicpost/index.php:959
 msgid "Loading image failed!"
-msgstr "Загрузка изображения не далась!"
+msgstr "Загрузка изображения не удалась!"
 
 #: add-on/publicpost/index.php:991
 msgid "Unauthorized file extension . Use only : .gif, .png, .jpg"
