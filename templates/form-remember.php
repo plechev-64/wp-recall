@@ -5,7 +5,7 @@
     <?php rcl_notice_form('remember'); ?>
 
     <?php if(!isset($_GET['success'])){ ?>
-        <form action="<?php echo esc_url( site_url( 'wp-login.php?action=lostpassword', 'login_post' )); ?>" method="post">
+        <form action="<?php echo wp_lostpassword_url(); ?>" method="post">
             <div class="form-block-rcl">
                 <label><?php _e('Username or e-mail','wp-recall'); ?></label>
                 <div class="default-field">
