@@ -31,7 +31,7 @@ function rcl_imagepost_upload(){
 
         $filetype = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
 
-        if (!in_array($filetype['ext'], strtolower($valid_types))){ 
+        if (!in_array(strtolower($filetype['ext']), $valid_types)){ 
             echo json_encode(array('error'=>'Запрещенное расширение файла. Разрешено: '.implode(', ',$valid_types)));
             exit;
         }
