@@ -156,13 +156,3 @@ class Rcl_Options {
 	}
 
 }
-
-/*depricated*/
-/*function get_name_tab_rcl($name,$key){
-	global $rcl_options;
-	$content = '<label>'.__('The name of the tab','wp-recall').'</label>';
-	if(!$rcl_options['tab_'.$key]) $rcl_options['tab_'.$key] = $name;
-	$content .= '<input type="text" name="tab_'.$key.'" value="'.$rcl_options['tab_'.$key].'" size="10">
-	<small>'.__('Enter your inscription on the toggle button tab in the personal Cabinet','wp-recall').'</small>';
-	return $content;
-}*/

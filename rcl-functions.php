@@ -524,6 +524,14 @@ function rcl_remove_dir($dir){
     rmdir($dir);
 }
 
+//добавляем уведомление в личном кабинете
+function rcl_notice_text($text,$type='warning'){
+    if(is_admin())return false;
+    if (!class_exists('Rcl_Notify'))
+        include_once RCL_PATH.'functions/rcl_notify.php';
+    $block = new Rcl_Notify($text,$type);
+}
+
 class Rcl_Form_Fields{
 
 	public $type;

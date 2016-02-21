@@ -45,7 +45,8 @@ class Rcl_EditFields {
                 $form .= $this->option('options',array(
                     'name'=>'terms',
                     'label'=>__('List of columns to select','wp-recall'),
-                    'placeholder'=>__('ID separated by comma','wp-recall')
+                    'placeholder'=>__('ID separated by comma','wp-recall'),
+                    'pattern'=>'^([0-9,])*$'
                 ));
 
                 $form .= '<ul id="sortable">
@@ -264,7 +265,8 @@ class Rcl_EditFields {
 	$val = ($this->vals)? $this->vals[$args['name']]: '';
         if(!$edit) return $val.'<input type="hidden" name="field['.$args['name'].'][]" value="'.$val.'">';
         $ph = (isset($args['placeholder']))? $args['placeholder']: '';
-        $field = '<input type="text" placeholder="'.$ph.'" name="field['.$args['name'].'][]" value="'.$val.'"> ';
+        $pattern = (isset($args['pattern']))? 'pattern="'.$args['pattern'].'"': '';
+        $field = '<input type="text" placeholder="'.$ph.'" '.$pattern.' name="field['.$args['name'].'][]" value="'.$val.'"> ';
         if(isset($args['notice'])) $field .= $args['notice'];
         return $field;
     }
@@ -273,7 +275,8 @@ class Rcl_EditFields {
         global $Option_Value;
         $val = ($Option_Value['options']) ? $Option_Value['options'][$args['name']]: '';
         $ph = (isset($args['placeholder']))? $args['placeholder']: '';
-        $field = '<input type="text" placeholder="'.$ph.'" name="options['.$args['name'].']" value="'.$val.'"> ';
+        $pattern = (isset($args['pattern']))? 'pattern="'.$args['pattern'].'"': '';
+        $field = '<input type="text" placeholder="'.$ph.'" title="'.$ph.'" '.$pattern.' name="options['.$args['name'].']" value="'.$val.'"> ';
         if(isset($args['notice'])) $field .= $args['notice'];
         return $field;
     }

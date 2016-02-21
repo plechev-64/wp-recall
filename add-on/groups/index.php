@@ -42,7 +42,7 @@ function rcl_tab_groups_remove_cache($groupdata){
     }
 }
 
-add_action('update_post_rcl','rcl_groups_widget_posts_remove_cache',10,2);
+/*add_action('update_post_rcl','rcl_groups_widget_posts_remove_cache',10,2);
 function rcl_groups_widget_posts_remove_cache($post_id,$postdata){
     if($postdata['post_type']!='post-group') return false;
     
@@ -51,7 +51,7 @@ function rcl_groups_widget_posts_remove_cache($post_id,$postdata){
         $group_id = rcl_get_group_id_by_post($post_id);
         rcl_delete_file_cache('group-posts-widget:'.$group_id);
     }
-}
+}*/
 
 add_filter('taxonomy_public_form_rcl','rcl_add_taxonomy_public_groups');
 function rcl_add_taxonomy_public_groups($tax){

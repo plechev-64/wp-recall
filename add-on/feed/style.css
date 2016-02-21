@@ -23,6 +23,9 @@
 	float: right;
 	position: relative;
 }
+.feed-header .feed-options a{
+	color:rgb(30, 56, 75);
+}
 .feed-header .feed-options .fa-times{
 	color: #aaa;
 	font-size: 18px;

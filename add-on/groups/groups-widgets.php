@@ -343,7 +343,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
         $instance = wp_parse_args( (array) $instance, $defaults );
         
-        $rcl_cache = new Rcl_Cache();
+        /*$rcl_cache = new Rcl_Cache();
         
         if($rcl_cache->is_cache){
 
@@ -360,7 +360,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
         
         }
         
-        ob_start();
+        ob_start();*/
 
         echo $before;
 
@@ -410,14 +410,14 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
         echo $after;
         
-        $content = ob_get_contents();
+        /*$content = ob_get_contents();
         ob_end_clean();
         
         if($rcl_cache->is_cache){
             $rcl_cache->update_cache($content);
         }
         
-        echo $content;
+        echo $content;*/
     }
 
     function options($instance){

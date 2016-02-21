@@ -169,17 +169,13 @@ function rcl_get_class_button_tab($button,$ajax){
 
 function rcl_callback_tab_func($function,$author_lk){
     
-    //ob_start();
-    
     if(is_array($function)){
         $obj = new $function[0];
-        $content = $obj->$function[1]($author_lk);
+        $func = $function[1];
+        $content = $obj->$func($author_lk);
     }else{
         $content = $function($author_lk);
     }
-
-    /*$cntnt = ob_get_contents();
-    ob_end_clean();*/
     
     $content = apply_filters('rcl_tab_'.$function,$content);
 

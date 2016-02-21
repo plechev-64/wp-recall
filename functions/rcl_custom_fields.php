@@ -175,6 +175,9 @@ class Rcl_Custom_Fields{
 
     function get_field_value($field,$value=false,$title=true){
         global $user_ID;
+        
+        if(!isset($field['type'])) return false;
+        
         $show = '';
         if($field['type']=='text'&&$value)
                 $show = ' <span>'.esc_html($value).'</span>';
@@ -369,7 +372,7 @@ function rcl_get_custom_post_meta($post_id){
         $cf = new Rcl_Custom_Fields();
         foreach((array)$get_fields as $custom_field){
             $custom_field = apply_filters('rcl_custom_post_meta',$custom_field);
-            if(!$custom_field) continue;
+            if(!$custom_field||!$custom_field['slug']) continue;
             $p_meta = get_post_meta($post_id,$custom_field['slug'],true);
             $show_custom_field .= $cf->get_field_value($custom_field,$p_meta);
         }

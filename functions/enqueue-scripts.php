@@ -106,7 +106,7 @@ function rcl_plugin_style(){
 
 function rcl_theme_style(){
     global $rcl_options;
-    if($rcl_options['color_theme']){
+    if(isset($rcl_options['color_theme'])&&$rcl_options['color_theme']){
         $dirs   = array(RCL_PATH.'css/themes',RCL_TAKEPATH.'themes');
         foreach($dirs as $dir){
             if(!file_exists($dir.'/'.$rcl_options['color_theme'].'.css')) continue;
