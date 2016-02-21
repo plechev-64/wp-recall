@@ -11,7 +11,7 @@ function rcl_send_notify_messages(){
     if(!$mess) return false;
 
     foreach($mess as $m){
-        $arrs[$m->adressat_mess][$m->author_mess]['time'] = $m->content_mess;
+        $arrs[$m->adressat_mess][$m->author_mess][] = $m->content_mess;
     }
 
     foreach($arrs as $add_id=>$vals){
@@ -27,7 +27,8 @@ function rcl_send_notify_messages(){
                 <div style="float:left;margin-right:15px;">'.get_avatar($auth_id,60).'</div>'
                 . '<p>'.__('from the user','wp-recall').' '.get_the_author_meta('display_name',$auth_id).'</p>';
             
-                if($mailtext) $mess .= '<p>'.$content.'</p>';
+                if($mailtext) $mess .= '<p><b>Текст сообщения:</b></p>'
+                        . '<p>'.implode('<br>',$content).'</p>';
             
                 $mess .= '<p>'.__('You can read the message by clicking on the link:','wp-recall').' <a href="'.$url.'">'.$url.'</a></p>'
                 . '</div>';
