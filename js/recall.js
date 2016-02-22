@@ -159,14 +159,7 @@ jQuery(function($){
             var area = $(this).parents(".rcl-smiles").data("area");
             $("#"+area).val($("#"+area).val()+" "+alt+" ");
     });
-    
-    $('body').on('click','.requared-checkbox',function(){
-        var name = $(this).attr('name');
-        var chekval = $('form input[name="'+name+'"]:checked').val();
-        if(chekval) $('form input[name="'+name+'"]').attr('required',false);
-        else $('form input[name="'+name+'"]').attr('required',true);
-    });
-    
+
     //общий чат
     $('#lk-content, #rcl-popup').on('click','.author-avatar',function(){
         var userid = $(this).attr("user_id");
@@ -277,6 +270,21 @@ jQuery(function($){
         var offsetTop = $("#lk-content").offset().top;
         $('body,html').animate({scrollTop:offsetTop -50}, 1000);
         view_recall_content_block(id_block);
+    }
+    
+    $('.public_block form.edit-form').find('.requared-checkbox').each(function(){
+        rcl_update_require_checkbox(this);
+    });
+    
+    $('body').on('click','.requared-checkbox',function(){
+        rcl_update_require_checkbox(this);
+    });
+    
+    function rcl_update_require_checkbox(e){
+        var name = $(e).attr('name');
+        var chekval = $('form input[name="'+name+'"]:checked').val();
+        if(chekval) $('form input[name="'+name+'"]').attr('required',false);
+        else $('form input[name="'+name+'"]').attr('required',true);
     }
 	
     function view_recall_content_block(id_block){

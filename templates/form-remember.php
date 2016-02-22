@@ -13,7 +13,7 @@
                     <input required type="text" value="" name="user_login">
                 </div>
             </div>
-
+            <?php do_action( 'lostpassword_form' ); ?>
             <div class="input-container">
                 <input type="submit" class="recall-button link-tab-form" name="remember-login" value="<?php _e('Send','wp-recall'); ?>">
                 <a href="#" class="link-login-rcl link-tab-rcl "><i class="fa fa-reply-all"></i><?php _e('Authorization','wp-recall'); ?></a>
