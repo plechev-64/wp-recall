@@ -367,7 +367,7 @@ class Rcl_Messages{
                     $delete = $num_mess - $max_private_mess;
                     $st = $user_ID+100;
                     $us = $this->user_lk+100;
-                    $delete_num = $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."private_message WHERE author_mess = '%d' AND adressat_mess = '%d' AND status_mess NOT IN (7,%d,%d) OR author_mess = '%d' AND adressat_mess = '%d' AND status_mess NOT IN (7,%d,%d) ORDER BY id ASC",$user_ID,$this->user_lk,$st,$us,$this->user_lk,$user_ID,$st,$us,$st));
+                    $delete_num = $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."private_message WHERE author_mess = '%d' AND adressat_mess = '%d' AND status_mess NOT IN (7,%d,%d) OR author_mess = '%d' AND adressat_mess = '%d' AND status_mess NOT IN (7,%d,%d) ORDER BY id ASC LIMIT %d",$user_ID,$this->user_lk,$st,$us,$this->user_lk,$user_ID,$st,$us,$st,$delete));
                     $num_mess = $num_mess - $delete_num;
             }
 
