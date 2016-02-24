@@ -278,7 +278,7 @@ class Rcl_Messages{
 	function mess_preg_replace_rcl($mess){
             global $rcl_options;
             $mess = popuplinks(make_clickable($mess));
-            if($rcl_options['ms_oembed']&&function_exists('wp_oembed_get')){
+            if(isset($rcl_options['ms_oembed'])&&$rcl_options['ms_oembed']&&function_exists('wp_oembed_get')){
                     $links='';
                     preg_match_all('/href="([^"]+)"/', $mess, $links);
                     foreach( $links[1] as $link ){

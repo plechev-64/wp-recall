@@ -239,25 +239,23 @@ function rcl_register_user_data($user_id){
 //Формируем массив сервисных сообщений формы регистрации и входа
 function rcl_notice_form($form='login'){
     global $wp_errors;
+    
+    $messages = apply_filters( 'login_messages', '' );
+    $errors = apply_filters( 'login_errors','' );
+
+    if($errors) $wp_errors->errors['login_errors'][0] = $errors;
+    if($messages) $wp_errors->errors['login_messages'][0] = $messages;
 
     if ( isset($wp_errors->errors)&&$wp_errors->errors ) {
         $errors = '';
         $messages = '';
         foreach ( $wp_errors->errors as $code ) {
-                $severity = true;
-                foreach ( $code as $error_message ) {
-                        if ( 'message' == $severity )
-                                $messages .= '	' . $error_message . "<br />\n";
-                        else
-                                $errors .= '<span class="error">' . $error_message . "</span>\n";
-                }
+            foreach ( $code as $error_message ) {
+                $errors .= '<span class="error">' . $error_message . "</span>\n";
+            }
         }
-        if ( ! empty( $errors ) ) {
-                echo '<div id="login_error">' . apply_filters( 'login_errors', $errors ) . "</div>\n";
-        }
-        if ( ! empty( $messages ) ) {
-                echo '<span class="error">' . apply_filters( 'login_messages', $messages ) . "</span>\n";
-        }
+        
+        echo $errors;
     }
 
     if(!isset($_GET['action-rcl'])||$_GET['action-rcl']!=$form) return;
