@@ -238,24 +238,37 @@ function rcl_register_user_data($user_id){
 
 //Формируем массив сервисных сообщений формы регистрации и входа
 function rcl_notice_form($form='login'){
-    global $wp_errors;
+    global $wp_errors,$error;
     
-    $messages = apply_filters( 'login_messages', '' );
-    $errors = apply_filters( 'login_errors','' );
-
-    if($errors) $wp_errors->errors['login_errors'][0] = $errors;
-    if($messages) $wp_errors->errors['login_messages'][0] = $messages;
-
-    if ( isset($wp_errors->errors)&&$wp_errors->errors ) {
+    do_action('rcl_'.$form.'_form_head');
+    
+    $wp_error = new WP_Error();
+    
+    if ( !empty( $wp_errors ) ) {
+        $wp_error = $wp_errors;
+        unset($wp_errors);
+    }
+    
+    if ( $wp_error->get_error_code() ) {
         $errors = '';
         $messages = '';
-        foreach ( $wp_errors->errors as $code ) {
-            foreach ( $code as $error_message ) {
-                $errors .= '<span class="error">' . $error_message . "</span>\n";
-            }
+        foreach ( $wp_error->get_error_codes() as $code ) {
+                $severity = $wp_error->get_error_data( $code );
+                foreach ( $wp_error->get_error_messages( $code ) as $error_message ) {
+                    
+                        if ( 'message' == $severity )
+                                $messages .= '	' . $error_message . "<br />\n";
+                        else
+                                $errors .= ' ' . $error_message . "<br />\n";
+                }
         }
         
-        echo $errors;
+        if ( ! empty( $errors ) ) {
+                echo '<div class="error">' . apply_filters( 'login_errors', $errors ) . "</div>\n";
+        }
+        if ( ! empty( $messages ) ) {
+                echo '<span class="error">' . apply_filters( 'login_messages', $messages ) . "</span>\n";
+        }
     }
 
     if(!isset($_GET['action-rcl'])||$_GET['action-rcl']!=$form) return;
