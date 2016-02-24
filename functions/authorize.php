@@ -99,6 +99,8 @@ add_action('rcl_login_form_head', 'rcl_limit_login_add_error_message');
 
 function rcl_limit_login_add_error_message() {
     global $wp_errors, $limit_login_my_error_shown;
+    
+    print_r($wp_errors);exit;
 
     if (!should_limit_login_show_msg() || $limit_login_my_error_shown) {
             return;
@@ -108,7 +110,7 @@ function rcl_limit_login_add_error_message() {
 
     if ($msg != '') {
         $limit_login_my_error_shown = true;
-        $wp_errors->add( 'rcl_limit_login', $msg );
+        $wp_errors->errors['rcl_limit_login'][] = $msg;
     }
 
     return;
