@@ -194,8 +194,8 @@ class Rcl_Users{
 
         }
 
-        if($this->include) $query['where'][] = "users.ID IN ($this->include)";
-        if($this->exclude) $query['where'][] = "users.ID NOT IN ($this->exclude)";
+        if($this->include) $query['include'] = "users.ID IN ($this->include)";
+        if($this->exclude) $query['exclude'] = "users.ID NOT IN ($this->exclude)";
 
         if($this->only=='action'){
             $timeout = ($rcl_options['timeout'])? $rcl_options['timeout']: 10;
@@ -210,8 +210,24 @@ class Rcl_Users{
             . implode(", ",$users_query->query['select'])." "
             . "FROM $wpdb->users AS users "
             . implode(" ",$users_query->query['join'])." ";
+        
+        $wheres = array(
+            $users_query->query['relation'] => $users_query->query['where']
+        );
+        
+        if($users_query->query['exclude'])
+            $wheres['AND'][] = $users_query->query['exclude'];
+        
+        if($users_query->query['include'])
+            $wheres['AND'][] = $users_query->query['include'];
 
-        if($users_query->query['where']) $query_string .= "WHERE ".implode(' '.$users_query->query['relation'].' ',$users_query->query['where'])." ";
+        foreach($wheres as $relation=>$w){
+            if(!$w) continue;           
+            $wh[] = "(".implode(' '.$relation.' ',$w).")";
+        }
+
+        $query_string .= ($wh)? "WHERE ".implode(' AND ',$wh)." ": "";
+
         if($users_query->query['group']) $query_string .= "GROUP BY ".$users_query->query['group']." ";
 
         if(!$users_query->is_count){

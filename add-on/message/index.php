@@ -183,9 +183,15 @@ class Rcl_Messages{
                                 'options'=>array(__('Top-Down','wp-recall'),__('Bottom-Up','wp-recall'))
                             )),
 
-							$opt->label(__('Limit words message','wp-recall')),
+                            $opt->label(__('Limit words message','wp-recall')),
                             $opt->option('number',array('name'=>'ms_limit_words')),
                             $opt->notice(__('the default is 400','wp-recall')),
+                            
+                            $opt->label(__('OEMBED in messages','wp-recall')),
+                            $opt->option('select',array(
+                                'name'=>'ms_oembed',
+                                'options'=>array(__('Off','wp-recall'),__('On','wp-recall'))
+                                )),
 
                             $opt->label(__('The number of messages in the conversation','wp-recall')),
                             $opt->option('number',array('name'=>'max_private_message')),
@@ -270,22 +276,22 @@ class Rcl_Messages{
 	}
 
 	function mess_preg_replace_rcl($mess){
-		//$mess = $this->oembed_filter( $mess );
-		$mess = popuplinks(make_clickable($mess));
-		if(function_exists('wp_oembed_get')){
-			$links='';
-			preg_match_all('/href="([^"]+)"/', $mess, $links);
-			foreach( $links[1] as $link ){
-				$m_lnk = wp_oembed_get($link,array('width'=>300,'height'=>250));
-				if($m_lnk){
-					$mess = str_replace('<a href="'.$link.'" rel="nofollow">'.$link.'</a>','',$mess);
-					$mess .= $m_lnk;
-				}
-			}
-		}
-		//$mess = preg_replace("~(http|https|ftp|ftps)://(.*?)(\s|\n|[,.?!](\s|\n)|$)~", '<a target="_blank" href="$1://$2">$1://$2</a>$3', $mess);
-		if(function_exists('convert_smilies')) $mess = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $mess ) );
-		return $mess;
+            global $rcl_options;
+            $mess = popuplinks(make_clickable($mess));
+            if($rcl_options['ms_oembed']&&function_exists('wp_oembed_get')){
+                    $links='';
+                    preg_match_all('/href="([^"]+)"/', $mess, $links);
+                    foreach( $links[1] as $link ){
+                            $m_lnk = wp_oembed_get($link,array('width'=>300,'height'=>250));
+                            if($m_lnk){
+                                    $mess = str_replace('<a href="'.$link.'" rel="nofollow">'.$link.'</a>','',$mess);
+                                    $mess .= $m_lnk;
+                            }
+                    }
+            }
+            //$mess = preg_replace("~(http|https|ftp|ftps)://(.*?)(\s|\n|[,.?!](\s|\n)|$)~", '<a target="_blank" href="$1://$2">$1://$2</a>$3', $mess);
+            if(function_exists('convert_smilies')) $mess = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $mess ) );
+            return $mess;
 	}
 
 	function oembed_filter( $text ) {
@@ -351,9 +357,12 @@ class Rcl_Messages{
             }else{
                     $user_lk = $this->user_lk;
             }
+            
+            $st = $user_ID+100;
+            $us = $this->user_lk+100;
 
             if(!$this->room) $where = $wpdb->prepare("WHERE author_mess = '%d' AND adressat_mess = '%d' OR author_mess = '%d' AND adressat_mess = '%d'", $user_ID,$this->user_lk,$this->user_lk,$user_ID);
-            else $where = $wpdb->prepare("WHERE author_mess = '%d' OR adressat_mess = '%d'",$user_ID,$user_ID);
+            else $where = $wpdb->prepare("WHERE (author_mess = '%d' OR adressat_mess = '%d') AND status_mess NOT IN (7,%d,%d)",$user_ID,$user_ID,$st,$us);
 
             $private_messages = $wpdb->get_results("SELECT * FROM ".RCL_PREF."private_message $where ORDER BY id DESC LIMIT 10");
             $num_mess = $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."private_message $where");
@@ -364,11 +373,9 @@ class Rcl_Messages{
             $max_private_mess = $rcl_options['max_private_message'];
             if(!$max_private_mess) $max_private_mess = 100;
             if($num_mess>$max_private_mess&&!$this->room){
-                    $delete = $num_mess - $max_private_mess;
-                    $st = $user_ID+100;
-                    $us = $this->user_lk+100;
-                    $delete_num = $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."private_message WHERE author_mess = '%d' AND adressat_mess = '%d' AND status_mess NOT IN (7,%d,%d) OR author_mess = '%d' AND adressat_mess = '%d' AND status_mess NOT IN (7,%d,%d) ORDER BY id ASC LIMIT %d",$user_ID,$this->user_lk,$st,$us,$this->user_lk,$user_ID,$st,$us,$st,$delete));
-                    $num_mess = $num_mess - $delete_num;
+                $delete = $num_mess - $max_private_mess;
+                $delete_num = $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."private_message WHERE ((author_mess = '%d' AND adressat_mess = '%d') OR (author_mess = '%d' AND adressat_mess = '%d')) AND status_mess NOT IN (7,%d,%d) ORDER BY id ASC LIMIT %d",$user_ID,$this->user_lk,$this->user_lk,$user_ID,$st,$us,$delete));
+                $num_mess = $num_mess - $delete_num;
             }
 
             $num=0;

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-02-16 11:05+0300\n"
+"POT-Creation-Date: 2016-02-24 16:57+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -63,7 +63,7 @@ msgid "News"
 msgstr "Новости"
 
 #: add-on/feed/classes/class-rcl-feed.php:296 add-on/rating-system/index.php:31
-#: functions/class-rcl-users.php:516 functions/shortcodes.php:127
+#: functions/class-rcl-users.php:532 functions/shortcodes.php:127
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -102,9 +102,9 @@ msgstr "Подписка оформлена"
 #: add-on/feed/index.php:145 add-on/feed/index.php:158
 #: add-on/feed/index.php:166 add-on/groups/groups-core.php:674
 #: add-on/groups/groups-core.php:690 add-on/groups/upload-avatar.php:78
-#: add-on/message/index.php:1600 add-on/message/index.php:1617
-#: add-on/message/index.php:1633 add-on/message/index.php:1650
-#: add-on/message/index.php:1715 add-on/message/index.php:1737
+#: add-on/message/index.php:1607 add-on/message/index.php:1624
+#: add-on/message/index.php:1640 add-on/message/index.php:1657
+#: add-on/message/index.php:1722 add-on/message/index.php:1744
 #: add-on/publicpost/index.php:707 add-on/rating-system/index.php:547
 #: add-on/rating-system/index.php:569 rcl-functions.php:241
 msgid "Error"
@@ -161,11 +161,11 @@ msgstr "Имя"
 #: add-on/groups/classes/rcl-groups.php:257
 #: add-on/magazin/orders-history.php:77 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:6
-#: add-on/user-account/payments.php:85 functions/rcl_editfields.php:150
+#: add-on/user-account/payments.php:85 functions/rcl_editfields.php:151
 msgid "Date"
 msgstr "Дата"
 
-#: add-on/groups/classes/rcl-groups.php:258 functions/class-rcl-users.php:515
+#: add-on/groups/classes/rcl-groups.php:258 functions/class-rcl-users.php:531
 msgid "Publications"
 msgstr "Публикациям"
 
@@ -177,7 +177,7 @@ msgstr "Публикациям"
 msgid "Users"
 msgstr "Пользователи"
 
-#: add-on/groups/classes/rcl-groups.php:264 functions/class-rcl-users.php:525
+#: add-on/groups/classes/rcl-groups.php:264 functions/class-rcl-users.php:541
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -299,7 +299,7 @@ msgstr "Добавить"
 
 #: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
 #: add-on/groups/groups-public.php:92 add-on/publicpost/index.php:690
-#: add-on/publicpost/index.php:790 functions/rcl_editfields.php:177
+#: add-on/publicpost/index.php:790 functions/rcl_editfields.php:178
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -444,7 +444,7 @@ msgstr "Панель управления"
 #: add-on/magazin/functions/shortcodes.php:120 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
-#: add-on/user-account/index.php:301 functions/rcl_editfields.php:117
+#: add-on/user-account/index.php:301 functions/rcl_editfields.php:118
 #: rcl-widgets.php:48 rcl-widgets.php:111 rcl-widgets.php:164
 msgid "Title"
 msgstr "Заголовок"
@@ -623,7 +623,7 @@ msgstr "Отклонить запрос"
 
 #: add-on/groups/index.php:390 add-on/magazin/orders-history.php:107
 #: add-on/magazin/orders-history.php:124 add-on/user-account/payments.php:100
-#: functions/rcl_editfields.php:176 rcl-admin/add-on-manager.php:145
+#: functions/rcl_editfields.php:177 rcl-admin/add-on-manager.php:145
 #: rcl-admin/add-on-manager.php:156
 msgid "Delete"
 msgstr "Удалить"
@@ -632,7 +632,7 @@ msgstr "Удалить"
 msgid "User status"
 msgstr "Статус пользователя"
 
-#: add-on/groups/index.php:399 functions/rcl_editfields.php:56
+#: add-on/groups/index.php:399 functions/rcl_editfields.php:57
 #: rcl-admin/add-on-manager.php:437
 msgid "Save"
 msgstr "Сохранить"
@@ -821,7 +821,7 @@ msgstr "Фильтр"
 msgid "File does not exist on the server or it has already been loaded!"
 msgstr "Файла нет на сервере или он был удален!"
 
-#: add-on/message/index.php:28 add-on/message/index.php:1344
+#: add-on/message/index.php:28 add-on/message/index.php:1351
 msgid "The file was loaded."
 msgstr "Файл был загружен"
 
@@ -858,15 +858,27 @@ msgid "the default is 400"
 msgstr "по-умолчанию 400"
 
 #: add-on/message/index.php:190
+msgid "OEMBED in messages"
+msgstr "OEMBED в сообщениях"
+
+#: add-on/message/index.php:193
+msgid "Off"
+msgstr "Выключено"
+
+#: add-on/message/index.php:193
+msgid "On"
+msgstr "Включено"
+
+#: add-on/message/index.php:196
 msgid "The number of messages in the conversation"
 msgstr "Количество сообщений в переписке"
 
-#: add-on/message/index.php:192
+#: add-on/message/index.php:198
 msgid ""
 "the default is 100 messages in the conversation (per correspondence user)"
 msgstr "По-умолчанию 100 сообщений на каждую переписку пользователя"
 
-#: add-on/message/index.php:194
+#: add-on/message/index.php:200
 msgid ""
 "Pause between requests for new posts to show per page of correspondence with "
 "another user in seconds"
@@ -874,11 +886,11 @@ msgstr ""
 "Пауза между запросами на получение новых сообщений на странице переписки в "
 "секундах"
 
-#: add-on/message/index.php:197
+#: add-on/message/index.php:203
 msgid "The number of requests you receive a new message page correspondence"
 msgstr "Кол-во запросов на получение новых сообщений на странице переписки"
 
-#: add-on/message/index.php:199
+#: add-on/message/index.php:205
 msgid ""
 "Specify the maximum number of requests to retrieve a new message from a "
 "friend on the page of correspondence.If the number of requests exceeds the "
@@ -888,7 +900,7 @@ msgstr ""
 "Укажите максимальное кол-во запросов на получение новых сообщений на "
 "странице переписки, если кол-во не указано или ноль, то ограничения нет."
 
-#: add-on/message/index.php:202
+#: add-on/message/index.php:208
 msgid ""
 "The pause between requests for new messages on all other pages of the "
 "website in seconds"
@@ -896,7 +908,7 @@ msgstr ""
 "Пауза между запросами на получение новых сообщений на всех страницах сайта в "
 "секундах"
 
-#: add-on/message/index.php:204
+#: add-on/message/index.php:210
 msgid ""
 "If null, then the receipt of new messages only when the page loads, without "
 "subsequent requests"
@@ -904,52 +916,52 @@ msgstr ""
 "Если ноль, то запрос производится только один в момент загрузки страницы "
 "сайта"
 
-#: add-on/message/index.php:206
+#: add-on/message/index.php:212
 msgid "Lock requests if the person offline"
 msgstr "Запросы если собеседник не в сети"
 
-#: add-on/message/index.php:209
+#: add-on/message/index.php:215
 msgid "Do not block"
 msgstr "Не блокировать"
 
-#: add-on/message/index.php:209
+#: add-on/message/index.php:215
 msgid "To block requests"
 msgstr "Блокировать запросы"
 
-#: add-on/message/index.php:211
+#: add-on/message/index.php:217
 msgid ""
 "We mean a request to retrieve new messages from the user to the page which "
 "you are"
 msgstr "Имеются ввиду запросы на получение новых сообщений от собеседника"
 
-#: add-on/message/index.php:213
+#: add-on/message/index.php:219
 msgid "File sharing"
 msgstr "Пересылка файлов"
 
-#: add-on/message/index.php:217
+#: add-on/message/index.php:223
 msgid "Prohibited"
 msgstr "Запрещено"
 
-#: add-on/message/index.php:217
+#: add-on/message/index.php:223
 msgid "Allowed"
 msgstr "Разрешено"
 
-#: add-on/message/index.php:225
+#: add-on/message/index.php:231
 msgid "Maximum file size, Mb"
 msgstr "Максимальный размер файлов, МБ"
 
-#: add-on/message/index.php:227
+#: add-on/message/index.php:233
 msgid ""
 "To restrict downloading of files this value in megabytes. By default, 2MB"
 msgstr ""
 "Ограничте размер загружаемого файла, указав значение в мегабайтах. По "
 "умолчанию 2МБ"
 
-#: add-on/message/index.php:229
+#: add-on/message/index.php:235
 msgid "The retention time of the file"
 msgstr "Время хранения файла"
 
-#: add-on/message/index.php:231
+#: add-on/message/index.php:237
 msgid ""
 "Specify the maximum number of unclaimed files in days. After this period, "
 "the file will be deleted. The default is 7 days."
@@ -957,11 +969,11 @@ msgstr ""
 "Укажите максимальный срок хранения файла на сервере, после которого он "
 "удаляется. По умолчанию 7 дней."
 
-#: add-on/message/index.php:233
+#: add-on/message/index.php:239
 msgid "Limit unmatched files"
 msgstr "Лимит непринятых файлов"
 
-#: add-on/message/index.php:235
+#: add-on/message/index.php:241
 msgid ""
 "Specify the number of files missed by the recipients in which the user loses "
 "the possibility of further transfer of files. Protection from spam. Default-"
@@ -970,170 +982,170 @@ msgstr ""
 "Укажите максимальное кол-во непринятых файлов для одного пользователя. "
 "Защита от спама. По-умолчанию без ограничений"
 
-#: add-on/message/index.php:238
+#: add-on/message/index.php:244
 msgid "Mail alert"
 msgstr "Уведомления на почту"
 
-#: add-on/message/index.php:241
+#: add-on/message/index.php:247
 msgid "Without the text of the message"
 msgstr "Без текста сообщения"
 
-#: add-on/message/index.php:241
+#: add-on/message/index.php:247
 msgid "Full text of the message"
 msgstr "Полный текст сообщения"
 
-#: add-on/message/index.php:264
+#: add-on/message/index.php:270
 msgid "Unblock"
 msgstr "Разблокировать"
 
-#: add-on/message/index.php:264
+#: add-on/message/index.php:270
 msgid "In the black list"
 msgstr "В черный список"
 
-#: add-on/message/index.php:303
+#: add-on/message/index.php:309
 msgid "The user is forbidden to write to him"
 msgstr "Пользователь запретил писать ему"
 
-#: add-on/message/index.php:316
+#: add-on/message/index.php:322
 msgid "Sign in to start a conversation with the user."
 msgstr "Авторизуйтесь для начала переписки с пользователем"
 
-#: add-on/message/index.php:386
+#: add-on/message/index.php:393
 msgid "Interlocutor"
 msgstr "Собеседник"
 
-#: add-on/message/index.php:386
+#: add-on/message/index.php:393
 msgid "All contacts"
 msgstr "Все контакты"
 
-#: add-on/message/index.php:394
+#: add-on/message/index.php:401
 msgid "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 msgstr "<b>Enter</b> - перенос строки, <b>Ctrl+Enter</b> - отправить"
 
-#: add-on/message/index.php:407 add-on/message/index.php:1247
+#: add-on/message/index.php:414 add-on/message/index.php:1254
 #: add-on/user-account/index.php:161 templates/form-register.php:27
 #: templates/form-remember.php:18
 msgid "Send"
 msgstr "Отправить"
 
-#: add-on/message/index.php:408
+#: add-on/message/index.php:415
 msgid "Important messages"
 msgstr "Важные сообщения"
 
-#: add-on/message/index.php:420
+#: add-on/message/index.php:427
 msgid "Here will display correspondence history"
 msgstr "Здесь будет отображаться история переписки"
 
-#: add-on/message/index.php:423
+#: add-on/message/index.php:430
 msgid "Show older messages"
 msgstr "Показать более поздние сообщения"
 
-#: add-on/message/index.php:522
+#: add-on/message/index.php:529
 msgid "days"
 msgstr "дн."
 
-#: add-on/message/index.php:523
+#: add-on/message/index.php:530
 msgid "month"
 msgstr "месяц"
 
-#: add-on/message/index.php:524
+#: add-on/message/index.php:531
 msgid "all the time"
 msgstr "все время"
 
-#: add-on/message/index.php:525
+#: add-on/message/index.php:532
 msgid "Blacklist"
 msgstr "Черный список"
 
-#: add-on/message/index.php:526
+#: add-on/message/index.php:533
 msgid "Important"
 msgstr "Важное"
 
-#: add-on/message/index.php:532
+#: add-on/message/index.php:539
 msgid "You havent been in conversation with"
 msgstr "Вы еще ни с кем не вели переписку"
 
-#: add-on/message/index.php:563 add-on/message/index.php:583
-#: add-on/message/index.php:666
+#: add-on/message/index.php:570 add-on/message/index.php:590
+#: add-on/message/index.php:673
 msgid "Contacts not found!"
 msgstr "Контакты не найдены!"
 
-#: add-on/message/index.php:661
+#: add-on/message/index.php:668
 msgid "Last message"
 msgstr "Последнее сообщение"
 
-#: add-on/message/index.php:662
+#: add-on/message/index.php:669
 msgid "The chat history is missing"
 msgstr "История переписки не найдена"
 
-#: add-on/message/index.php:675
+#: add-on/message/index.php:682
 msgid "Delete?"
 msgstr "Удалить?"
 
-#: add-on/message/index.php:739
+#: add-on/message/index.php:746
 msgid "Uncheck"
 msgstr "Снять"
 
-#: add-on/message/index.php:739
+#: add-on/message/index.php:746
 msgid "Mark as important"
 msgstr "Пометить как важное"
 
-#: add-on/message/index.php:808
+#: add-on/message/index.php:815
 msgid "No posts found!"
 msgstr "Сообщения не найдены!"
 
-#: add-on/message/index.php:845
+#: add-on/message/index.php:852
 msgid "Show more recent messages"
 msgstr "Показать больше последних сообщений"
 
-#: add-on/message/index.php:965
+#: add-on/message/index.php:972
 msgid "Your message has been sent!"
 msgstr "Ваше сообщение было доставлено!"
 
-#: add-on/message/index.php:1068
+#: add-on/message/index.php:1075
 msgid "The message is marked as read"
 msgstr "Сообщение помечено как прочтенное"
 
-#: add-on/message/index.php:1227
+#: add-on/message/index.php:1234
 msgid "You a new message!"
 msgstr "Вам новое сообщение!"
 
-#: add-on/message/index.php:1239
+#: add-on/message/index.php:1246
 msgid "Sender"
 msgstr "Отправитель"
 
-#: add-on/message/index.php:1258
+#: add-on/message/index.php:1265
 msgid "Go to the correspondence"
 msgstr "Перейти к переписке"
 
-#: add-on/message/index.php:1262
+#: add-on/message/index.php:1269
 msgid "Reply"
 msgstr "Ответить"
 
-#: add-on/message/index.php:1318
+#: add-on/message/index.php:1325
 msgid "Show more recent posts"
 msgstr "Показать больше последних сообщений"
 
-#: add-on/message/index.php:1346
+#: add-on/message/index.php:1353
 msgid "The file has been received, but not yet loaded."
 msgstr "Файл был отправлен, но не был загружен."
 
-#: add-on/message/index.php:1347
+#: add-on/message/index.php:1354
 msgid "The file was sent to the recipient."
 msgstr "Файл был отправлен получателю,"
 
-#: add-on/message/index.php:1350
+#: add-on/message/index.php:1357
 msgid "Link to sent the file"
 msgstr "Ссылка на файл"
 
-#: add-on/message/index.php:1352
+#: add-on/message/index.php:1359
 msgid "(accept files only from trusted sources)"
 msgstr "(принимайте файлы только от доверенных источников)"
 
-#: add-on/message/index.php:1377
+#: add-on/message/index.php:1384
 msgid "The file was sent successfully."
 msgstr "Файл был успешно отправлен"
 
-#: add-on/message/index.php:1380
+#: add-on/message/index.php:1387
 msgid ""
 "You have exceeded the limit on the number of uploaded files. Wait until the "
 "files sent previously will be accepted."
@@ -1141,20 +1153,20 @@ msgstr ""
 "Вы достигли предела по кол-ву отправляемых файлов. Подождите пока файлы "
 "отправленные ранее будут приняты."
 
-#: add-on/message/index.php:1390
+#: add-on/message/index.php:1397
 msgid "Removes the file from the server"
 msgstr "Удаляю файл с сервера"
 
-#: add-on/message/index.php:1409 add-on/profile/index.php:760
+#: add-on/message/index.php:1416 add-on/profile/index.php:760
 #, php-format
 msgid "Exceeds the maximum size for a picture! Max. %s MB"
 msgstr "Превышен максимальный размер изображения! Макс. %s МВ"
 
-#: add-on/message/index.php:1679
+#: add-on/message/index.php:1686
 msgid "All correspondence"
 msgstr "Вся переписка"
 
-#: add-on/message/index.php:1683
+#: add-on/message/index.php:1690
 msgid "Important notices"
 msgstr "Важные сообщения"
 
@@ -1166,19 +1178,19 @@ msgstr "Вам было отправлено сообщение"
 msgid "from the user"
 msgstr "от пользователя"
 
-#: add-on/message/notify.php:32
+#: add-on/message/notify.php:33
 msgid "You can read the message by clicking on the link:"
 msgstr "Вы можете прочитать сообщение перейдя по ссылке:"
 
-#: add-on/message/notify.php:35 add-on/message/notify.php:36
+#: add-on/message/notify.php:36 add-on/message/notify.php:37
 msgid "For you"
 msgstr "Для вас"
 
-#: add-on/message/notify.php:35
+#: add-on/message/notify.php:36
 msgid "new message"
 msgstr "новое сообщение"
 
-#: add-on/message/notify.php:36
+#: add-on/message/notify.php:37
 msgid "new messages"
 msgstr "новых сообщений"
 
@@ -1282,7 +1294,7 @@ msgstr "Никнейм"
 msgid "required"
 msgstr "обязательно"
 
-#: add-on/profile/index.php:307 functions/rcl_editfields.php:147
+#: add-on/profile/index.php:307 functions/rcl_editfields.php:148
 #: templates/form-register.php:17
 msgid "E-mail"
 msgstr ""
@@ -1554,7 +1566,7 @@ msgstr "Подзаголовок"
 
 #: add-on/publicpost/addon-options.php:136
 #: add-on/publicpost/templates/editor-text-box.php:7
-#: functions/rcl_editfields.php:141
+#: functions/rcl_editfields.php:142
 msgid "Text"
 msgstr "Текстовое поле"
 
@@ -1872,7 +1884,7 @@ msgid ""
 msgstr "Если все верно - публикуйте! Если нет, то вернитесь в редактор."
 
 #: add-on/publicpost/index.php:791 add-on/publicpost/rcl_publicform.php:141
-#: functions/rcl_custom_fields.php:277
+#: functions/rcl_custom_fields.php:280
 msgid "To publish"
 msgstr "Публиковать"
 
@@ -2092,12 +2104,12 @@ msgid "Positive votes"
 msgstr "Положительные голоса"
 
 #: add-on/rating-system/addon-options.php:41
-#: add-on/rating-system/addon-options.php:44 functions/rcl_editfields.php:149
+#: add-on/rating-system/addon-options.php:44 functions/rcl_editfields.php:150
 msgid "Number"
 msgstr "Кол-во"
 
 #: add-on/rating-system/addon-options.php:42
-#: add-on/rating-system/addon-options.php:45 functions/rcl_editfields.php:151
+#: add-on/rating-system/addon-options.php:45 functions/rcl_editfields.php:152
 msgid "Time"
 msgstr "Время"
 
@@ -2134,7 +2146,7 @@ msgstr "Влияние рейтинга %s на общий рейтинг пол
 msgid "Template output stories in the overall ranking"
 msgstr "Шаблон вывода истории в общем рейтинге пользователя"
 
-#: add-on/rating-system/addon-options.php:77 add-on/rating-system/core.php:325
+#: add-on/rating-system/addon-options.php:77 add-on/rating-system/core.php:326
 msgid "voted"
 msgstr "голосовал"
 
@@ -2170,15 +2182,15 @@ msgstr "Удаление своего голоса"
 msgid "Correction"
 msgstr "Корректировка"
 
-#: add-on/rating-system/core.php:347
+#: add-on/rating-system/core.php:352
 msgid "comment"
 msgstr "комментарий"
 
-#: add-on/rating-system/core.php:359
+#: add-on/rating-system/core.php:365
 msgid "Rating changes not made"
 msgstr "Изменение рейтинга не производилось"
 
-#: add-on/rating-system/core.php:677
+#: add-on/rating-system/core.php:683
 msgid "Data not found"
 msgstr "Данные не найдены"
 
@@ -2437,22 +2449,22 @@ msgstr "Введите символы"
 msgid "Field filled not right CAPTCHA!"
 msgstr "Не верно заполнено поле CAPTCHA!"
 
-#: functions/class-rcl-users.php:501
+#: functions/class-rcl-users.php:517
 msgid "Total users"
 msgstr "Всего пользователей"
 
-#: functions/class-rcl-users.php:514
+#: functions/class-rcl-users.php:530
 msgid "Activity"
 msgstr "Активности"
 
-#: functions/class-rcl-users.php:517 functions/loginform.php:50
+#: functions/class-rcl-users.php:533 functions/loginform.php:50
 #: functions/loginform.php:58 functions/loginform.php:74
 #: functions/shortcodes.php:171 templates/form-register.php:4
 #: templates/form-remember.php:21 templates/form-sign.php:33
 msgid "Registration"
 msgstr "Регистрация"
 
-#: functions/class-rcl-users.php:521
+#: functions/class-rcl-users.php:537
 msgid "Rated"
 msgstr "Рейтингу"
 
@@ -2475,23 +2487,23 @@ msgstr "Выход"
 msgid "Entry"
 msgstr "Вход"
 
-#: functions/rcl-frontend.php:105
+#: functions/rcl-frontend.php:97
 msgid "The site works using the functionality of the plugin"
 msgstr "Сайт использует функционал плагина"
 
-#: functions/rcl-frontend.php:113
+#: functions/rcl-frontend.php:105
 msgid "Author of publication"
 msgstr "Автор публикации"
 
-#: functions/rcl-frontend.php:180
+#: functions/rcl-frontend.php:172
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: functions/rcl-frontend.php:187
+#: functions/rcl-frontend.php:179
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
-#: functions/rcl-frontend.php:239 functions/shortcodes.php:147
+#: functions/rcl-frontend.php:231 functions/shortcodes.php:147
 msgid "not online"
 msgstr "не в сети"
 
@@ -2499,24 +2511,24 @@ msgstr "не в сети"
 msgid "Max size"
 msgstr "Макс. размер"
 
-#: functions/rcl_custom_fields.php:182
+#: functions/rcl_custom_fields.php:185
 msgid "Download file"
 msgstr "Загрузить файл"
 
-#: functions/rcl_custom_fields.php:284 functions/rcl_custom_fields.php:302
+#: functions/rcl_custom_fields.php:287 functions/rcl_custom_fields.php:305
 msgid "File size exceeded!"
 msgstr "Размер файла превышен!"
 
-#: functions/rcl_custom_fields.php:312
+#: functions/rcl_custom_fields.php:315
 msgid "Prohibited file type!"
 msgstr "Запрещенный тип файла!"
 
-#: functions/rcl_custom_fields.php:402 functions/rcl_custom_fields.php:428
-#: functions/rcl_custom_fields.php:452
+#: functions/rcl_custom_fields.php:405 functions/rcl_custom_fields.php:431
+#: functions/rcl_custom_fields.php:455
 msgid "File does not exist on the server!"
 msgstr "Файл не найден на сервере!"
 
-#: functions/rcl_custom_fields.php:471
+#: functions/rcl_custom_fields.php:474
 msgid "File has deleted"
 msgstr "Файл был удален"
 
@@ -2528,33 +2540,33 @@ msgstr "Список категорий к выбору"
 msgid "ID separated by comma"
 msgstr "Идентификаторы разделяются запятой"
 
-#: functions/rcl_editfields.php:55
+#: functions/rcl_editfields.php:56
 msgid "Add field"
 msgstr "Добавить поле"
 
-#: functions/rcl_editfields.php:91
+#: functions/rcl_editfields.php:92
 msgid ""
 "specify the types of files that are loaded by a comma, for example: pdf, "
 "zip, jpg"
 msgstr "разрешенные типы файлов разделяются запятой, например: pdf, zip, jpg"
 
-#: functions/rcl_editfields.php:91
+#: functions/rcl_editfields.php:92
 msgid "the list of options to share the \" # \" sign"
 msgstr "множественные значения разделяются знаком решетки \" # \""
 
-#: functions/rcl_editfields.php:98
+#: functions/rcl_editfields.php:99
 msgid "maximum size of uploaded file, MB (Default - 2)"
 msgstr "макс. размер загружаемого файла, МБ (по-умолчанию - 2)"
 
-#: functions/rcl_editfields.php:99
+#: functions/rcl_editfields.php:100
 msgid "URL Agreement"
 msgstr "URL Соглашения"
 
-#: functions/rcl_editfields.php:107 functions/rcl_editfields.php:206
+#: functions/rcl_editfields.php:108 functions/rcl_editfields.php:207
 msgid "MetaKey"
 msgstr ""
 
-#: functions/rcl_editfields.php:108 functions/rcl_editfields.php:207
+#: functions/rcl_editfields.php:109 functions/rcl_editfields.php:208
 msgid ""
 "not necessarily<br>if you want to enlist their arbitrary field, we list the "
 "meta_key in this field"
@@ -2562,55 +2574,55 @@ msgstr ""
 "не обязательно<br>если необходимо, то можно прописать свое значение meta_key "
 "для поля"
 
-#: functions/rcl_editfields.php:109 functions/rcl_editfields.php:208
+#: functions/rcl_editfields.php:110 functions/rcl_editfields.php:209
 msgid "Latin and numbers"
 msgstr "латиница и числа"
 
-#: functions/rcl_editfields.php:137
+#: functions/rcl_editfields.php:138
 msgid "The field type"
 msgstr "Тип поля"
 
-#: functions/rcl_editfields.php:142
+#: functions/rcl_editfields.php:143
 msgid "Textarea"
 msgstr "Многострочное поле"
 
-#: functions/rcl_editfields.php:143
+#: functions/rcl_editfields.php:144
 msgid "Select"
 msgstr "Выпадающий список"
 
-#: functions/rcl_editfields.php:144
+#: functions/rcl_editfields.php:145
 msgid "MultiSelect"
 msgstr "Множественный выбор"
 
-#: functions/rcl_editfields.php:145
+#: functions/rcl_editfields.php:146
 msgid "Checkbox"
 msgstr "Чекбоксы"
 
-#: functions/rcl_editfields.php:146
+#: functions/rcl_editfields.php:147
 msgid "Radiobutton"
 msgstr "Радиокнопки"
 
-#: functions/rcl_editfields.php:148
+#: functions/rcl_editfields.php:149
 msgid "Phone"
 msgstr "Телефон"
 
-#: functions/rcl_editfields.php:152
+#: functions/rcl_editfields.php:153
 msgid "Url"
 msgstr "Ссылка"
 
-#: functions/rcl_editfields.php:153
+#: functions/rcl_editfields.php:154
 msgid "Agreement"
 msgstr "Соглашение"
 
-#: functions/rcl_editfields.php:154
+#: functions/rcl_editfields.php:155
 msgid "File"
 msgstr "Файл"
 
-#: functions/rcl_editfields.php:289
+#: functions/rcl_editfields.php:292
 msgid "All values of a custom field with meta_key"
 msgstr "Все значения произвольных полей с этим meta_key"
 
-#: functions/rcl_editfields.php:289
+#: functions/rcl_editfields.php:292
 msgid "were removed from the Database"
 msgstr "были удалены из базы данных"
 
@@ -3178,12 +3190,12 @@ msgstr "Имя вкладки"
 msgid "Error! Perhaps this addition does not support ajax loading"
 msgstr "Ошибка! Данное дополнениене поддерживает ajax-загрузку"
 
-#: rcl-functions.php:670
+#: rcl-functions.php:678
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Это сообщение было сформировано автоматически, не надо отвечать на него."
 
-#: rcl-functions.php:712
+#: rcl-functions.php:720
 msgid "long ago"
 msgstr "давно"
 
