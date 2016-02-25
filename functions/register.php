@@ -238,15 +238,14 @@ function rcl_register_user_data($user_id){
 
 //Формируем массив сервисных сообщений формы регистрации и входа
 function rcl_notice_form($form='login'){
-    global $wp_errors,$error;
+    global $wp_errors;
     
     do_action('rcl_'.$form.'_form_head');
     
     $wp_error = new WP_Error();
     
     if ( !empty( $wp_errors ) ) {
-        $wp_error = $wp_errors;
-        unset($wp_errors);
+        $wp_error->errors = $wp_errors->errors;
     }
     
     if ( $wp_error->get_error_code() ) {
@@ -257,7 +256,7 @@ function rcl_notice_form($form='login'){
                 foreach ( $wp_error->get_error_messages( $code ) as $error_message ) {
                     
                         if ( 'message' == $severity )
-                                $messages .= '	' . $error_message . "<br />\n";
+                                $messages .= ' ' . $error_message . "<br />\n";
                         else
                                 $errors .= ' ' . $error_message . "<br />\n";
                 }
