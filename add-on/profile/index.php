@@ -182,7 +182,7 @@ function rcl_button_avatar_upload($content,$author_lk){
     if($user_ID==$author_lk){ 
         rcl_fileupload_scripts();
         rcl_crop_scripts();
-        if( $_SERVER["HTTPS"] == 'on') rcl_webcam_scripts();
+        if( isset($_SERVER["HTTPS"])&&$_SERVER["HTTPS"] == 'on') rcl_webcam_scripts();
     }
 
     $avatar = get_user_meta($author_lk,'rcl_avatar',1);
@@ -507,7 +507,8 @@ function rcl_tab_profile_content($author_lk){
 
 //Редактируем произвольные поля профиля
 function rcl_manage_profile_fields(){
-
+        global $rcl_options;
+        
         rcl_sortable_scripts();
 
 	if ( ! class_exists( 'Rcl_EditFields' ) ) include_once RCL_PATH.'functions/rcl_editfields.php';
@@ -531,10 +532,16 @@ function rcl_manage_profile_fields(){
 		}
 
 		update_option('rcl_profile_default', $save_data );
+                
+                $rcl_options['users_page'] = $_POST['users_page'];
+                update_option('rcl_global_options', $rcl_options );
 	}
 
 	$profile_default_fields_styles = "
 		<style>
+                #users_page{
+                    width:400px;
+                }
 		#inputs_user_fields table {
 			cursor: move;
 			background:#fafafa;
@@ -559,6 +566,7 @@ function rcl_manage_profile_fields(){
 		</style>";
 
 	if ( sizeof( $profile_default_fields ) > 0 ) {
+                $default_form .= '<h3>'.__('Fields profile default','wp-recall').'</h3>';
 		$default_form .= apply_filters('rcl_profile_default_fields_styles', $profile_default_fields_styles);
 		$default_form .= '<p>'.__('Fields to display in the profile note ticks.','wp-recall').'</p>';
 		$default_form .= '<table class="form-table" style="width:600px;">';
@@ -575,10 +583,23 @@ function rcl_manage_profile_fields(){
 
 		$default_form .= '</table>';
 	}
+        
+        $default_form .= '<h3>'.__('Users page','wp-recall').'</h3>';
+        
+        $default_form .= wp_dropdown_pages( array(
+            'selected'   => $rcl_options['users_page'],
+            'name'       => 'users_page',
+            'show_option_none' => __('Not selected','wp-recall'),
+            'echo'             => 0 )
+        );
+        
+        $default_form .= '<p>'.__('Note this page is required to filter users by value profile fields','wp-recall').'</p>';
+        
+        $default_form .= '<h3>'.__('Custom profile fields','wp-recall').'</h3>';
 
-	$users_fields = '<h2>'.__('Manage profile fields','wp-recall').'</h2>'
+	$users_fields = '<h2>'.__('Manage profile fields','wp-recall').'</h2>';
 
-        .$f_edit->edit_form(array(
+        $users_fields .= $f_edit->edit_form(array(
             $f_edit->option('select',array(
                 'name'=>'requared',
                 'notice'=>__('required field','wp-recall'),
@@ -602,6 +623,11 @@ function rcl_manage_profile_fields(){
             $f_edit->option('select',array(
                 'name'=>'admin',
                 'notice'=>__('it only changes the administration of the site','wp-recall'),
+                'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+            )),
+            $f_edit->option('select',array(
+                'name'=>'filter',
+                'notice'=>__('Filter users meaningfully this field','wp-recall'),
                 'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
             ))
         ),$default_form);

@@ -31,7 +31,8 @@ img.aligncenter{
 	margin:0 auto;
 }
 .plugin-info{
-	text-align:center;
+    text-align:center;
+    clear: both;
 }
 span.ruble-symbol{
     position: relative;
@@ -105,6 +106,7 @@ body .rcl_preloader{
     position: absolute;
     top: 50%;
     left: 50%;
+    margin: -40px 0 0 -40px;
 }
 #passwordStrength {
 	padding: 7px 15px 5px;

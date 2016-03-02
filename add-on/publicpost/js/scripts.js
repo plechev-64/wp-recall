@@ -202,12 +202,21 @@ function rcl_preview(e){
 			jQuery(this).css('box-shadow','none');
 		}
 	});
-	
+        
+        if(formblock.find( 'input[name="cats[]"]' ).length > 0){             
+            if(formblock.find('input[name="cats[]"]:checked').length == 0){
+                formblock.find( 'input[name="cats[]"]' ).css('box-shadow','0px 0px 1px 1px red');
+                required = false;
+            }else{
+                formblock.find( 'input[name="cats[]"]' ).css('box-shadow','none');
+            }
+        }
+
 	if(!required){
 		rcl_notice('Заполните все обязательные поля!','error');
 		return false;
 	}
-        
+
         submit.attr('disabled',true).val('Идет отправка, подождите...');
 	
 	var iframe = jQuery("#contentarea_ifr").contents().find("#tinymce").html();

@@ -70,7 +70,7 @@ function rcl_shortcode_minicart() {
 		'cart_url'=>$rmag_options['basket_page_rmag'],
 		'cart'=> $cart
 	);
-
+        
     $minibasket = rcl_get_include_template('cart-mini.php',__FILE__);
 
     return $minibasket;

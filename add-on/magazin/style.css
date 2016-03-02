@@ -5,13 +5,13 @@ p.product-meta{
 p.product-meta i{
     margin-right:5px;   
 }
-.cart-icon{
+.rcl-mini-cart .cart-icon{
     font-size:40px;
     color:#ccc;
     float:left;
 }
 .prodlist .list-list p .fa,
-.cart-icon .fa-shopping-cart {
+.rcl-mini-cart .cart-icon .fa-shopping-cart {
 	margin: 0 5px 0 0;
 }
 .prodlist {
@@ -178,11 +178,10 @@ table.prodlist {
     border-collapse: separate;
     border-spacing: 0;
     box-shadow: 0 0 1px 1px rgb(243, 243, 243);
-	font-size: 14px;
-	line-height: 1.5;
-    margin: 0 2px;
+    font-size: 14px;
+    line-height: 1.5;
     text-align: left;
-	width: 100%;
+    width: 100%;
 }
 .wprecallblock #lk-content .order-data  tr:first-child,
 table.order-data tbody tr:first-child,
@@ -303,7 +302,9 @@ table.prodlist  td .cart-button {
 }
 #cart-form.cart-data {
     margin: 0 0 20px;
-	width: 98%;
+    width: 100%;
+    box-sizing: border-box;
+    position:relative;
 }
 #rcl-cart a {
 	border: none;					/*++Twenty15++*/
@@ -311,9 +312,11 @@ table.prodlist  td .cart-button {
 }
 
 #rcl-cart .confirm {
-    margin: 25px 1px;
+    margin: 25px 0px;
     text-align: center;
-	width: 98%;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 .confirm h3 {
     font-size: 16px;

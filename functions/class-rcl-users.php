@@ -30,6 +30,10 @@ class Rcl_Users{
         if($this->include){
             $this->number = count(explode(',',$this->include));
         }
+        
+        if(isset($_GET['usergroup'])){
+            $this->usergroup = $_GET['usergroup'];
+        }
 
         if(isset($_GET['users-filter'])&&$this->filters) $this->orderby = $_GET['users-filter'];
         if(isset($_GET['users-order'])&&$this->filters) $this->order = $_GET['users-order'];
@@ -141,7 +145,7 @@ class Rcl_Users{
 
         $rqst = '';
 
-        if(isset($_GET['search-user'])||$user_LK){
+        if(isset($_GET['usergroup'])||isset($_GET['search-user'])||$user_LK){
             $rqst = array();
             foreach($_GET as $k=>$v){
                 if($k=='navi'||$k=='users-filter') continue;
@@ -290,6 +294,7 @@ class Rcl_Users{
         foreach($fields as $k=>$field){
             $fielddata[$field['slug']]['title'] = $field['title'];
             $fielddata[$field['slug']]['type'] = $field['type'];
+            $fielddata[$field['slug']]['filter'] = $field['filter'];
         }
 
         $query = "SELECT meta_key,meta_value, user_id AS ID "
@@ -301,10 +306,11 @@ class Rcl_Users{
         $newmetas = array();
         foreach($metas as $k => $meta){
             $newmetas[$meta->ID]['ID'] = $meta->ID;
-            $newmetas[$meta->ID]['profile_fields'][$k]['key'] = $meta->meta_key;
+            $newmetas[$meta->ID]['profile_fields'][$k]['slug'] = $meta->meta_key;
             $newmetas[$meta->ID]['profile_fields'][$k]['value'] = maybe_unserialize($meta->meta_value);
             $newmetas[$meta->ID]['profile_fields'][$k]['title'] = $fielddata[$meta->meta_key]['title'];
             $newmetas[$meta->ID]['profile_fields'][$k]['type'] = $fielddata[$meta->meta_key]['type'];
+            $newmetas[$meta->ID]['profile_fields'][$k]['filter'] = $fielddata[$meta->meta_key]['filter'];
             (object)$newmetas[$meta->ID];
         }
 
@@ -320,7 +326,6 @@ class Rcl_Users{
 
         if(!$this->is_count){
             $query->query['select'][] = "actions.time_action";
-            //$query->query['orderby'] = "(CASE WHEN actions.$this->orderby IS NULL then users.user_registered ELSE actions.$this->orderby END)";
             $query->query['orderby'] = "actions.$this->orderby";
         }
 

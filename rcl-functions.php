@@ -164,14 +164,14 @@ function rcl_path_to_url($path,$dir=false){
 
 function rcl_path_by_url($url,$dir=false){
     if(!$dir) $dir = basename(content_url());
-    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
+    if(function_exists('wp_normalize_path')) $url = wp_normalize_path($url);
     $array = explode('/',$url);
     $cnt = count($array);
     $path = '';
     $content_dir = $dir;
     foreach($array as $key=>$ar){
         if($array[$key]==$content_dir){
-            $path = $_SERVER['DOCUMENT_ROOT'].'/'.$array[$key].'/';
+            $path = untrailingslashit(rcl_get_home_path()).'/'.$array[$key].'/';
             continue;
         }
         if($path){
@@ -180,6 +180,20 @@ function rcl_path_by_url($url,$dir=false){
         }
     }
     return $path;
+}
+
+function rcl_get_home_path() {
+    $home    = set_url_scheme( get_option( 'home' ), 'http' );
+    $siteurl = set_url_scheme( get_option( 'siteurl' ), 'http' );
+    if ( ! empty( $home ) && 0 !== strcasecmp( $home, $siteurl ) ) {
+        $wp_path_rel_to_home = str_ireplace( $home, '', $siteurl ); /* $siteurl - $home */
+        $pos = strripos( str_replace( '\\', '/', $_SERVER['SCRIPT_FILENAME'] ), trailingslashit( $wp_path_rel_to_home ) );
+        $home_path = substr( $_SERVER['SCRIPT_FILENAME'], 0, $pos );
+        $home_path = trailingslashit( $home_path );
+    } else {
+        $home_path = ABSPATH;
+    }	
+    return str_replace( '\\', '/', $home_path );
 }
 
 function rcl_format_url($url,$id_tab=null){

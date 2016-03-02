@@ -47,7 +47,6 @@ class Rcl_EditPost {
         }else{
             if (!session_id()) { session_start(); }
             unset($_SESSION['new-'.$this->post_type]);
-            //session_destroy();
         }
 
         if($_POST['posttype']){

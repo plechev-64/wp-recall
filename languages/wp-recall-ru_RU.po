@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-02-24 16:57+0300\n"
+"POT-Creation-Date: 2016-02-25 16:32+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -63,7 +63,7 @@ msgid "News"
 msgstr "Новости"
 
 #: add-on/feed/classes/class-rcl-feed.php:296 add-on/rating-system/index.php:31
-#: functions/class-rcl-users.php:532 functions/shortcodes.php:127
+#: functions/class-rcl-users.php:537 functions/shortcodes.php:127
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -165,7 +165,7 @@ msgstr "Имя"
 msgid "Date"
 msgstr "Дата"
 
-#: add-on/groups/classes/rcl-groups.php:258 functions/class-rcl-users.php:531
+#: add-on/groups/classes/rcl-groups.php:258 functions/class-rcl-users.php:536
 msgid "Publications"
 msgstr "Публикациям"
 
@@ -177,7 +177,7 @@ msgstr "Публикациям"
 msgid "Users"
 msgstr "Пользователи"
 
-#: add-on/groups/classes/rcl-groups.php:264 functions/class-rcl-users.php:541
+#: add-on/groups/classes/rcl-groups.php:264 functions/class-rcl-users.php:546
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -628,7 +628,7 @@ msgstr "Отклонить запрос"
 msgid "Delete"
 msgstr "Удалить"
 
-#: add-on/groups/index.php:394 add-on/profile/index.php:724
+#: add-on/groups/index.php:394 add-on/profile/index.php:747
 msgid "User status"
 msgstr "Статус пользователя"
 
@@ -774,7 +774,7 @@ msgid "Order sum"
 msgstr "Сумма заказа"
 
 #: add-on/magazin/orders-history.php:76 add-on/profile/index.php:424
-#: add-on/profile/index.php:721 add-on/publicpost/index.php:148
+#: add-on/profile/index.php:744 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:8
 #: rcl-admin/add-on-manager.php:129
 msgid "Status"
@@ -1157,7 +1157,7 @@ msgstr ""
 msgid "Removes the file from the server"
 msgstr "Удаляю файл с сервера"
 
-#: add-on/message/index.php:1416 add-on/profile/index.php:760
+#: add-on/message/index.php:1416 add-on/profile/index.php:783
 #, php-format
 msgid "Exceeds the maximum size for a picture! Max. %s MB"
 msgstr "Превышен максимальный размер изображения! Макс. %s МВ"
@@ -1226,10 +1226,10 @@ msgstr "Профиль и аккаунт"
 msgid "Allow to delete users from your account?"
 msgstr "Разрешить удалять пользователям свой аккаунт?"
 
-#: add-on/profile/index.php:163 add-on/profile/index.php:585
-#: add-on/profile/index.php:590 add-on/profile/index.php:595
-#: add-on/profile/index.php:600 add-on/profile/index.php:605
-#: add-on/publicpost/addon-options.php:51
+#: add-on/profile/index.php:163 add-on/profile/index.php:603
+#: add-on/profile/index.php:608 add-on/profile/index.php:613
+#: add-on/profile/index.php:618 add-on/profile/index.php:623
+#: add-on/profile/index.php:628 add-on/publicpost/addon-options.php:51
 #: add-on/publicpost/addon-options.php:272 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120 add-on/rating-system/index.php:43
@@ -1237,10 +1237,10 @@ msgstr "Разрешить удалять пользователям свой а
 msgid "No"
 msgstr "Нет"
 
-#: add-on/profile/index.php:163 add-on/profile/index.php:585
-#: add-on/profile/index.php:590 add-on/profile/index.php:595
-#: add-on/profile/index.php:600 add-on/profile/index.php:605
-#: add-on/publicpost/addon-options.php:51
+#: add-on/profile/index.php:163 add-on/profile/index.php:603
+#: add-on/profile/index.php:608 add-on/profile/index.php:613
+#: add-on/profile/index.php:618 add-on/profile/index.php:623
+#: add-on/profile/index.php:628 add-on/publicpost/addon-options.php:51
 #: add-on/publicpost/addon-options.php:272 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120 add-on/rating-system/index.php:44
@@ -1299,21 +1299,21 @@ msgstr "обязательно"
 msgid "E-mail"
 msgstr ""
 
-#: add-on/profile/index.php:313 add-on/profile/index.php:686
+#: add-on/profile/index.php:313 add-on/profile/index.php:709
 #: functions/register.php:211 templates/form-register.php:10
 #: templates/form-sign.php:10
 msgid "Login"
 msgstr "Логин"
 
-#: add-on/profile/index.php:319 add-on/profile/index.php:693
+#: add-on/profile/index.php:319 add-on/profile/index.php:716
 msgid "Firstname"
 msgstr "Имя"
 
-#: add-on/profile/index.php:325 add-on/profile/index.php:700
+#: add-on/profile/index.php:325 add-on/profile/index.php:723
 msgid "Surname"
 msgstr "Фамилия"
 
-#: add-on/profile/index.php:332 add-on/profile/index.php:707
+#: add-on/profile/index.php:332 add-on/profile/index.php:730
 msgid "Display name"
 msgstr "Отображаемое имя"
 
@@ -1333,11 +1333,11 @@ msgstr "Если вы хотите сменить пароль - введите 
 msgid "Repeat the new password"
 msgstr "Повтор нового пароля"
 
-#: add-on/profile/index.php:409 functions/register.php:399
+#: add-on/profile/index.php:409 functions/register.php:409
 msgid "The password strength indicator"
 msgstr "Индикатор сложности пароля"
 
-#: add-on/profile/index.php:411 functions/register.php:401
+#: add-on/profile/index.php:411 functions/register.php:411
 msgid "A password is not entered"
 msgstr "Пароль не введен"
 
@@ -1370,64 +1370,24 @@ msgstr "Вы серьезно? Восстановить не получитьс�
 msgid "To delete your profile"
 msgstr "Удаление вашего профиля"
 
-#: add-on/profile/index.php:563
+#: add-on/profile/index.php:566
+msgid "Fields profile default"
+msgstr "Поля профиля по-умолчанию"
+
+#: add-on/profile/index.php:568
 msgid "Fields to display in the profile note ticks."
 msgstr "Поля отображаемые в профиле"
 
-#: add-on/profile/index.php:571
+#: add-on/profile/index.php:576
 #, php-format
 msgid "<td><input type=\"%s\" name=\"%s\" %s /></td><td>%s</td>"
 msgstr ""
 
-#: add-on/profile/index.php:579
-msgid "Manage profile fields"
-msgstr "Управление полями профиля"
+#: add-on/profile/index.php:584
+msgid "Users page"
+msgstr "Страница вывода пользователей"
 
-#: add-on/profile/index.php:584 add-on/publicpost/index.php:233
-msgid "required field"
-msgstr "обязательное поле"
-
-#: add-on/profile/index.php:589
-msgid "to display the registration form"
-msgstr "отображать в форме регистрации"
-
-#: add-on/profile/index.php:594
-msgid "display at checkout for guests"
-msgstr "отображать при оформлении заказа для гостей"
-
-#: add-on/profile/index.php:599
-msgid "to show the content to other users"
-msgstr "отображать для других пользователей"
-
-#: add-on/profile/index.php:604
-msgid "it only changes the administration of the site"
-msgstr "редактируется только администрацией сайта"
-
-#: add-on/profile/index.php:689
-msgid "Login user"
-msgstr "логин пользователя"
-
-#: add-on/profile/index.php:696
-msgid "Username"
-msgstr "Логин"
-
-#: add-on/profile/index.php:703
-msgid "Surname user"
-msgstr "Имя пользователя"
-
-#: add-on/profile/index.php:710
-msgid "Display name user"
-msgstr "Отображаемое имя"
-
-#: add-on/profile/index.php:714
-msgid "Website"
-msgstr "Вебсайт"
-
-#: add-on/profile/index.php:717
-msgid "Website user"
-msgstr "Сайт пользователя"
-
-#: add-on/publicpost/addon-options.php:11
+#: add-on/profile/index.php:589 add-on/publicpost/addon-options.php:11
 #: add-on/publicpost/addon-options.php:201 add-on/publicpost/classes.php:39
 #: add-on/user-account/addon-options.php:87
 #: add-on/user-account/addon-options.php:98
@@ -1436,6 +1396,68 @@ msgstr "Сайт пользователя"
 #: rcl-admin/admin-pages.php:246 rcl-widgets.php:59 rcl-widgets.php:118
 msgid "Not selected"
 msgstr "Не выбрано"
+
+#: add-on/profile/index.php:593
+msgid "Note this page is required to filter users by value profile fields"
+msgstr ""
+"Указание данной страницы требуется для фильтрации пользователей по значению "
+"произвольного поля"
+
+#: add-on/profile/index.php:595
+msgid "Custom profile fields"
+msgstr "Произвольные поля профиля"
+
+#: add-on/profile/index.php:597
+msgid "Manage profile fields"
+msgstr "Управление полями профиля"
+
+#: add-on/profile/index.php:602 add-on/publicpost/index.php:233
+msgid "required field"
+msgstr "обязательное поле"
+
+#: add-on/profile/index.php:607
+msgid "to display the registration form"
+msgstr "отображать в форме регистрации"
+
+#: add-on/profile/index.php:612
+msgid "display at checkout for guests"
+msgstr "отображать при оформлении заказа для гостей"
+
+#: add-on/profile/index.php:617
+msgid "to show the content to other users"
+msgstr "отображать для других пользователей"
+
+#: add-on/profile/index.php:622
+msgid "it only changes the administration of the site"
+msgstr "редактируется только администрацией сайта"
+
+#: add-on/profile/index.php:627
+msgid "Filter users meaningfully this field"
+msgstr "Фильтровать пользователей по значению этого поля"
+
+#: add-on/profile/index.php:712
+msgid "Login user"
+msgstr "логин пользователя"
+
+#: add-on/profile/index.php:719
+msgid "Username"
+msgstr "Логин"
+
+#: add-on/profile/index.php:726
+msgid "Surname user"
+msgstr "Имя пользователя"
+
+#: add-on/profile/index.php:733
+msgid "Display name user"
+msgstr "Отображаемое имя"
+
+#: add-on/profile/index.php:737
+msgid "Website"
+msgstr "Вебсайт"
+
+#: add-on/profile/index.php:740
+msgid "Website user"
+msgstr "Сайт пользователя"
 
 #: add-on/publicpost/addon-options.php:30
 msgid "Guests and users"
@@ -1884,7 +1906,7 @@ msgid ""
 msgstr "Если все верно - публикуйте! Если нет, то вернитесь в редактор."
 
 #: add-on/publicpost/index.php:791 add-on/publicpost/rcl_publicform.php:141
-#: functions/rcl_custom_fields.php:280
+#: functions/rcl_custom_fields.php:304
 msgid "To publish"
 msgstr "Публиковать"
 
@@ -2035,7 +2057,7 @@ msgid "move"
 msgstr "переместить"
 
 #: add-on/publicpost/templates/editor-image-box.php:4
-#: functions/rcl_custom_fields.php:80
+#: functions/rcl_custom_fields.php:84
 msgid "delete"
 msgstr "удалить"
 
@@ -2437,7 +2459,7 @@ msgstr "Неподтвержденные"
 msgid "Fill in the required fields!"
 msgstr "Заполните обязательные поля!"
 
-#: functions/authorize.php:51 functions/register.php:274
+#: functions/authorize.php:51 functions/register.php:284
 msgid "Your email is not confirmed!"
 msgstr "Ваш E-mail не подтвержден!"
 
@@ -2449,22 +2471,22 @@ msgstr "Введите символы"
 msgid "Field filled not right CAPTCHA!"
 msgstr "Не верно заполнено поле CAPTCHA!"
 
-#: functions/class-rcl-users.php:517
+#: functions/class-rcl-users.php:522
 msgid "Total users"
 msgstr "Всего пользователей"
 
-#: functions/class-rcl-users.php:530
+#: functions/class-rcl-users.php:535
 msgid "Activity"
 msgstr "Активности"
 
-#: functions/class-rcl-users.php:533 functions/loginform.php:50
+#: functions/class-rcl-users.php:538 functions/loginform.php:50
 #: functions/loginform.php:58 functions/loginform.php:74
 #: functions/shortcodes.php:171 templates/form-register.php:4
 #: templates/form-remember.php:21 templates/form-sign.php:33
 msgid "Registration"
 msgstr "Регистрация"
 
-#: functions/class-rcl-users.php:537
+#: functions/class-rcl-users.php:542
 msgid "Rated"
 msgstr "Рейтингу"
 
@@ -2507,28 +2529,28 @@ msgstr "Публикация ожидает утверждения!"
 msgid "not online"
 msgstr "не в сети"
 
-#: functions/rcl_custom_fields.php:88
+#: functions/rcl_custom_fields.php:92
 msgid "Max size"
 msgstr "Макс. размер"
 
-#: functions/rcl_custom_fields.php:185
+#: functions/rcl_custom_fields.php:225
 msgid "Download file"
 msgstr "Загрузить файл"
 
-#: functions/rcl_custom_fields.php:287 functions/rcl_custom_fields.php:305
+#: functions/rcl_custom_fields.php:311 functions/rcl_custom_fields.php:329
 msgid "File size exceeded!"
 msgstr "Размер файла превышен!"
 
-#: functions/rcl_custom_fields.php:315
+#: functions/rcl_custom_fields.php:339
 msgid "Prohibited file type!"
 msgstr "Запрещенный тип файла!"
 
-#: functions/rcl_custom_fields.php:405 functions/rcl_custom_fields.php:431
-#: functions/rcl_custom_fields.php:455
+#: functions/rcl_custom_fields.php:429 functions/rcl_custom_fields.php:455
+#: functions/rcl_custom_fields.php:479
 msgid "File does not exist on the server!"
 msgstr "Файл не найден на сервере!"
 
-#: functions/rcl_custom_fields.php:474
+#: functions/rcl_custom_fields.php:498
 msgid "File has deleted"
 msgstr "Файл был удален"
 
@@ -2650,7 +2672,7 @@ msgstr "Вы или кто то другой зарегистрировалис�
 msgid "with the following data:"
 msgstr "со следующими данными:"
 
-#: functions/register.php:212 functions/register.php:386
+#: functions/register.php:212 functions/register.php:396
 #: templates/form-sign.php:17
 msgid "Password"
 msgstr "Пароль"
@@ -2659,39 +2681,39 @@ msgstr "Пароль"
 msgid "If it wasnt you, then just ignore this email"
 msgstr "Если это были не вы, то просто проигнорируйте это письмо"
 
-#: functions/register.php:268
+#: functions/register.php:278
 msgid "Registration is completed!"
 msgstr "Регистрация успешно завершена!"
 
-#: functions/register.php:269 functions/register.php:278
+#: functions/register.php:279 functions/register.php:288
 msgid "Registration is completed! Check your email."
 msgstr "Регистрация завершена! Проверьте свой E-mail."
 
-#: functions/register.php:277
+#: functions/register.php:287
 msgid "Registration is completed! Check your email"
 msgstr "Регистрация завершена! Проверьте свой E-mail"
 
-#: functions/register.php:284
+#: functions/register.php:294
 msgid "Your password has been sent!<br>Check your email."
 msgstr "Новый пароль был сформирован! Проверьте свою почту."
 
-#: functions/register.php:309
+#: functions/register.php:319
 msgid "Error filling!"
 msgstr "Ошибка заполнения!"
 
-#: functions/register.php:331
+#: functions/register.php:341
 msgid "Repeat password is not correct!"
 msgstr "Повтор пароля не верный!"
 
-#: functions/register.php:416
+#: functions/register.php:426
 msgid "Repeat the password"
 msgstr "Повтор пароля"
 
-#: functions/register.php:428
+#: functions/register.php:438
 msgid "The passwords do not match!"
 msgstr "Пароли не совпадают!"
 
-#: functions/register.php:429
+#: functions/register.php:439
 msgid "The passwords match"
 msgstr "Пароли совпадают"
 

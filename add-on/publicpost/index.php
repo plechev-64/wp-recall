@@ -330,7 +330,7 @@ function rcl_author_info($content){
 	if(!is_single()) return $content;
 	if($post->post_type=='page') return $content;
 	$out = rcl_get_author_block();
-        if($post->post_type=='task') return $out.$content;
+        //if($post->post_type=='task') return $out.$content;
 	return $content.$out;
 }
 
@@ -639,7 +639,7 @@ function rcl_edit_post_link($admin_url, $post_id){
 
 function rcl_get_edit_post_button($content){
 	global $post,$user_ID,$current_user,$rcl_options;
-	if(is_tax('groups')||$post->post_type=='page') return $content;
+	if(is_front_page()||is_tax('groups')||$post->post_type=='page') return $content;
 
 	if(!current_user_can('edit_post', $post->ID)) return $content;
 
@@ -668,7 +668,7 @@ function rcl_get_edit_post_button($content){
 	return $content;
 }
 add_filter('the_content','rcl_get_edit_post_button',999);
-add_filter('the_excerpt','rcl_get_edit_post_button',999);
+//add_filter('the_excerpt','rcl_get_edit_post_button',999);
 
 function rcl_is_limit_editing($post_date){
 	global $rcl_options;

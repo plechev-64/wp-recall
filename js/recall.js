@@ -344,7 +344,7 @@ jQuery(function($){
         }
     });
     
-    $.cookie = function(name, value, options) {
+    /*$.cookie = function(name, value, options) {
         if (typeof value !== 'undefined') { 
                 options = options || {};
                 if (value === null) {
@@ -380,7 +380,7 @@ jQuery(function($){
                 }
                 return cookieValue;
         }
-    };
+    };*/
 
 });
 

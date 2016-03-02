@@ -27,8 +27,12 @@ class Rcl_Custom_Fields{
 
         if(!is_admin()&&isset($field['admin'])&&$field['admin']==1&&$user_ID){
             $value = get_user_meta($user_LK,$this->slug,1);
-            if($value) return $this->get_field_value($field,$value,false);
-            else return false;
+            if($value){
+                $html = $this->get_field_value($field,$value,false);               
+                return $html;
+            }else{
+                return false;
+            }
         }
 
         if($field['type']=='date') rcl_datepicker_scripts();
@@ -176,47 +180,67 @@ class Rcl_Custom_Fields{
     function get_field_value($field,$value=false,$title=true){
         global $user_ID;
         
-        if(!isset($field['type'])) return false;
+        if(!isset($field['type'])||!$value) return false;
         
         $show = '';
-        if($field['type']=='text'&&$value)
-                $show = ' <span>'.esc_html($value).'</span>';
-        if($field['type']=='file'&&$value)
-                $show = ' <span><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($value), 'user-'.$user_ID ).'">'.__('Download file','wp-recall').'</a></span>';
-        if($field['type']=='tel'&&$value)
-                $show = ' <span>'.esc_html($value).'</span>';
-        if($field['type']=='email'&&$value)
-                $show = ' <span><a rel="nofolow" target="_blank" href="mailto:'.$value.'">'.esc_html($value).'</a></span>';
-        if($field['type']=='url'&&$value)
-                $show = ' <span><a rel="nofolow" target="_blank" href="'.$value.'">'.esc_html($value).'</a></span>';
-        if($field['type']=='time'&&$value)
-                $show = ' <span>'.esc_html($value).'</span>';
-        if($field['type']=='date'&&$value)
-                $show = ' <span>'.esc_html($value).'</span>';
-        if($field['type']=='number'&&$value)
-                $show = ' <span>'.esc_html($value).'</span>';
-        if($field['type']=='select'&&$value||$field['type']=='radio'&&$value)
-                $show = ' <span>'.esc_html($value).'</span>';
-        if($field['type']=='checkbox'){
-                $chek_field = '';
-                if(is_array($value)) $chek_field = implode(', ',$value);
-                if($chek_field)
-                    $show = $chek_field;
-        }
-        if($field['type']=='multiselect'){
-                $chek_field = '';
-                if(is_array($value)) $chek_field = implode(', ',$value);
-                if($chek_field)
-                    $show = $chek_field;
-        }
-        if($field['type']=='textarea'&&$value)
-                $show = '<p>'.nl2br(esc_html($value)).'</p>';
 
+        if(is_array($value)){
+            
+            if($field['filter']){
+                $links = array();
+                foreach($value as $val){
+                    $links[] = '<a href="'.$this->get_filter_url($field['slug'],$val).'" target="_blank">'.$val.'</a>';
+                }
+                $value = $links;
+            }
+            
+            if($field['type']=='checkbox'){
+                $chek_field = '';
+                $chek_field = implode(', ',$value);
+                if($chek_field)
+                    $show = $chek_field;
+            }
+            if($field['type']=='multiselect'){
+                $chek_field = '';
+                $chek_field = implode(', ',$value);
+                if($chek_field)
+                    $show = $chek_field;
+            }
+        }else{
+            
+            $value = esc_html($value);
+            
+            if($field['filter']){
+                $value = '<a href="'.$this->get_filter_url($field['slug'],$value).'" target="_blank">'.$value.'</a>';
+            }
+
+        }
+        
+        $types = array('text','tel','time','date','number','select','radio');
+            
+        if(in_array($field['type'],$types)){
+            $show = ' <span>'.$value.'</span>';
+        }
+        if($field['type']=='file')
+                $show = ' <span><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($value), 'user-'.$user_ID ).'">'.__('Download file','wp-recall').'</a></span>';
+        if($field['type']=='email')
+                $show = ' <span><a rel="nofolow" target="_blank" href="mailto:'.$value.'">'.$value.'</a></span>';
+        if($field['type']=='url')
+                $show = ' <span><a rel="nofolow" target="_blank" href="'.$value.'">'.$value.'</a></span>';            
+        if($field['type']=='textarea')
+                $show = '<p>'.nl2br($value).'</p>';
+        
         if(isset($field['after'])) $show .= ' '.$field['after'];
 
         if($title&&$show) $show = '<p class="rcl-custom-fields"><b>'.$field['title'].':</b> '.$show.'</p>';
 
         return $show;
+    }
+    
+    function get_filter_url($slug,$value){
+        global $rcl_options;
+        if(!isset($rcl_options['users_page'])||!$rcl_options['users_page']) return false;
+        return rcl_format_url(get_permalink($rcl_options['users_page'])).'usergroup='.$slug.':'.$value;
     }
 
     function register_user_metas($user_id){

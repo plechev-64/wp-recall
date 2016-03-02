@@ -51,7 +51,8 @@ function init_user_lk(){
     $user_LK = false;
     $userLK = false;
     $get='user';
-
+    $nicename = false;
+    
     if(isset($rcl_options['link_user_lk_rcl'])&&$rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];
     if(isset($_GET[$get])) $userLK = $_GET[$get];
 

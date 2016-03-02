@@ -304,6 +304,7 @@ function rcl_read_exportfile(){
 	$sql_field = "ID";
 	if($_POST['post_title']==1) $sql_field .= ',post_title';
 	if($_POST['post_content']==1) $sql_field .= ',post_content';
+        if($_POST['post_excerpt']==1) $sql_field .= ',post_excerpt';
 	$sql_field .= ',post_status';
 
 	$posts = $wpdb->get_results("SELECT $sql_field FROM ".$wpdb->prefix ."posts WHERE post_type = 'products' AND post_status!='draft'");
@@ -386,6 +387,7 @@ global $wpdb;
 	'.wp_nonce_field('get-csv-file','_wpnonce',true,false).'
 	<p><input type="checkbox" name="post_title" checked value="1"> Добавить заголовок</p>
 	<p><input type="checkbox" name="post_content" checked value="1"> Добавить описание</p>
+        <p><input type="checkbox" name="post_excerpt" value="1"> Добавить краткое описание</p>
 	<h3>Произвольные поля товаров:</h3><table><tr>';
 
 	$fields = array(
@@ -493,13 +495,14 @@ global $wpdb;
                                                     flush();
 						}
 					}
+                                        
 					reset($posts_columns);
 					foreach ($posts_columns as $col){
                                             if ( isset($data[$col->Field]) ){
                                                 if ($col->Field == "ID"){
                                                     $ID	= $data[$col->Field];
                                                 }else{
-                                                    $post[$col->Field] = "{$col->Field} = '{$data[$col->Field]}'";
+                                                    $post[$col->Field] = "$col->Field = '".$data[$col->Field]."'";
                                                     $args[$col->Field] = "{$data[$col->Field]}";
                                                 }
                                                 unset($data[$col->Field]);
@@ -508,16 +511,16 @@ global $wpdb;
 					}
 
 					if(!$ID){
-                                            //$args['tax_input'] = array('prodcat'=>explode(',',$prodcat));
-                                            //$args['tax_input'] = array('product_tag'=>explode(',',$product_tag));
                                             $args['post_type'] = 'products';
                                             $ID = wp_insert_post($args);
-                                            $action = 'создан и добавлен';
+                                            $action = 'был создан и добавлен';
 					}else{
-                                            if (count($post)>0){
-
-                                                $wpdb->query($wpdb->prepare("UPDATE {$wpdb->posts} SET %s WHERE ID = '%d'",implode(',',$post),$ID));
-                                                $action = 'обновлен';
+                                            if (count($post)>0){    
+                                                
+                                                $sql = "UPDATE $wpdb->posts SET ".implode(",",$post)." WHERE ID = '$ID'";
+                                                $res = $wpdb->query($sql);
+                                                if($res) $action = 'был обновлен';
+                                                else $action = 'не был обновлен';
                                             }
 					}
 					unset($post);
@@ -543,7 +546,7 @@ global $wpdb;
 
 					unset($data);
 					$updated++;
-					echo "{$updated}. Товар {$ID} был $action<br>";
+					echo "{$updated}. Товар {$ID} $action<br>";
 					flush();
 				}
 
