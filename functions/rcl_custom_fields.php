@@ -210,7 +210,7 @@ class Rcl_Custom_Fields{
             
             $value = esc_html($value);
             
-            if($field['filter']){
+            if(isset($field['filter'])&&$field['filter']){
                 $value = '<a href="'.$this->get_filter_url($field['slug'],$value).'" target="_blank">'.$value.'</a>';
             }
 
@@ -239,8 +239,8 @@ class Rcl_Custom_Fields{
     
     function get_filter_url($slug,$value){
         global $rcl_options;
-        if(!isset($rcl_options['users_page'])||!$rcl_options['users_page']) return false;
-        return rcl_format_url(get_permalink($rcl_options['users_page'])).'usergroup='.$slug.':'.$value;
+        if(!isset($rcl_options['users_page_rcl'])||!$rcl_options['users_page_rcl']) return false;
+        return rcl_format_url(get_permalink($rcl_options['users_page_rcl'])).'usergroup='.$slug.':'.$value;
     }
 
     function register_user_metas($user_id){
@@ -392,11 +392,11 @@ function rcl_get_custom_post_meta($post_id){
     $get_fields = rcl_get_custom_fields($post_id);
 
     if($get_fields){
-
+        $show_custom_field = '';
         $cf = new Rcl_Custom_Fields();
-        foreach((array)$get_fields as $custom_field){
+        foreach($get_fields as $custom_field){
             $custom_field = apply_filters('rcl_custom_post_meta',$custom_field);
-            if(!$custom_field||!$custom_field['slug']) continue;
+            if(!$custom_field||!isset($custom_field['slug'])||!$custom_field['slug']) continue;
             $p_meta = get_post_meta($post_id,$custom_field['slug'],true);
             $show_custom_field .= $cf->get_field_value($custom_field,$p_meta);
         }

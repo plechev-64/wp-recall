@@ -48,7 +48,8 @@ function rcl_product_permalink(){
 }
 function rcl_product_title(){
 	global $product;
-        echo apply_filters('rcl_product_title',get_the_title($product->product_id));
+        $title = ($product->post_title)? $product->post_title: get_the_title($product->product_id);
+        echo apply_filters('rcl_product_title',$title);
 }
 function rcl_product_price(){
 	global $product;
@@ -74,9 +75,12 @@ function rcl_get_product($product_id){
 }
 add_filter('product_price','rcl_add_primary_currency_price',10);
 add_filter('order_price','rcl_add_primary_currency_price',10);
-add_filter('not_null_price','rcl_add_primary_currency_price',10);
-function rcl_add_primary_currency_price($price){
-	return $price .= ' '.rcl_get_primary_currency(1);
+add_filter('not_null_price','rcl_add_primary_currency_price',10,2);
+function rcl_add_primary_currency_price($price,$product_id=false){
+    if($product_id){
+        return $price .= ' '.sprintf('<span itemprop="priceCurrency" content="%s">%s</span>',rcl_get_current_type_currency($product_id),rcl_get_primary_currency(1));
+    }
+    return $price .= ' '.rcl_get_primary_currency(1);
 }
 //Получаем данные заказа
 function rcl_get_order($order_id){
@@ -170,10 +174,15 @@ function rcl_update_status_order($order_id,$status,$user_id=false){
 }
 //Вывод краткого описания товара
 function rcl_get_product_excerpt($desc){
-    global $post;
+    global $post,$product;
     if(!$desc) return false;
-
-    $excerpt = strip_tags($post->post_content);
+    
+    if($product){
+        if($product->post_excerpt) $excerpt = strip_tags($product->post_excerpt);
+        else $excerpt = strip_tags($product->post_content);
+    }else{
+        $excerpt = strip_tags($post->post_content);
+    }
 
     if($excerpt){
         if(strlen($excerpt) > $desc){
@@ -188,13 +197,14 @@ function rcl_get_product_excerpt($desc){
 }
 
 function rcl_product_excerpt(){
-    global $post,$desc;
+    global $post,$desc,$product;
+    if($product) $desc = 200; 
     echo rcl_get_product_excerpt($desc);
 }
 
 function rcl_get_product_category($prod_id){
     
-    $start = '<div class="meta"><i class="fa fa-%s rcl-icon"></i><span class="meta-content-box"><span class="meta-content">%s: ';
+    $start = '<div class="product-meta meta"><i class="fa fa-%s rcl-icon"></i><span class="meta-content-box"><span class="meta-content">%s: ';
     $end = '</span></span></div>';
     
     $cats = get_the_term_list( $prod_id, 'prodcat', sprintf($start,'folder-open','Категории'), ', ', $end );
@@ -207,7 +217,7 @@ function rcl_get_product_category($prod_id){
 
 function rcl_product_category_excerpt($excerpt){
     global $post;
-    $excerpt .= rcl_get_product_category($post->ID);
+    $excerpt .= '<div class="product-meta">'.rcl_get_product_category($post->ID).'</div>';
     return $excerpt;
 }
 
@@ -251,18 +261,22 @@ function rcl_get_margin_product($price,$prod_id){
 
 function rcl_get_price($prod_id){
     $price = rcl_get_number_price($prod_id);
-	return apply_filters('rcl_get_price',$price,$prod_id);
+    return apply_filters('rcl_get_price',$price,$prod_id);
 }
 
 add_filter('rcl_get_price','rcl_filters_price',10,2);
 function rcl_filters_price($price,$prod_id){
-	if($price) return apply_filters('not_null_price',$price,$prod_id);
-    else return apply_filters('null_price',$price,$prod_id);
+    if($price){
+        $price = '<span itemprop="price" content="'.$price.'">'.$price.'</span>';
+        return apply_filters('not_null_price',$price,$prod_id);
+    }else{
+        return apply_filters('null_price',$price,$prod_id);
+    }
 }
 
 add_filter('null_price','rcl_get_null_price_content',10);
 function rcl_get_null_price_content($price){
-    return '<span class="price-prod no-price">Бесплатно!</span>';
+    return '<span class="price-prod no-price" itemprop="price" content="0">Бесплатно!</span>';
 }
 
 add_filter('not_null_price','rcl_get_not_null_price_content',20);
@@ -320,17 +334,17 @@ function rcl_setup_orderdata($orderdata){
 }
 function rcl_setup_productdata($productdata){
 	global $product;
-
-	$product = (object)array(
-		'product_id'=>$productdata->product_id,
-		'product_price'=>$productdata->product_price,
-		'summ_price'=>$productdata->product_price*$productdata->numberproduct,
-		'numberproduct'=>$productdata->numberproduct,
-		'user_id'=>$productdata->user_id,
-		'order_id'=>$productdata->order_id,
-		'order_date'=>$productdata->order_date,
-		'order_status'=>$productdata->order_status
-	);
+        
+        $product = get_post($productdata->product_id);
+        
+        $product->product_id = $productdata->product_id;
+	$product->product_price = $productdata->product_price;
+        $product->summ_price = $productdata->product_price*$productdata->numberproduct;
+        $product->numberproduct = $productdata->numberproduct;
+        $product->user_id = $productdata->user_id;
+        $product->order_id = $productdata->order_id;
+        $product->order_date = $productdata->order_date;
+        $product->order_status = $productdata->order_status;
 
 	return $product;
 }
@@ -342,12 +356,14 @@ function rcl_setup_cartdata($productdata){
 	$product_price = $price * $numprod;
 	$price = apply_filters('cart_price_product',$price,$productdata->ID);
 
-	$product = (object)array(
+	$productdata = (object)array(
 		'product_id'=>$productdata->ID,
 		'product_price'=>$CartData->cart[$productdata->ID]['price'],
 		'summ_price'=>$price,
 		'numberproduct'=>$CartData->cart[$productdata->ID]['number']
 	);
+        
+        $product = rcl_setup_productdata($productdata);
 
 	return $product;
 }
@@ -388,10 +404,6 @@ function rcl_payment_order($order_id,$user_id=false){
 
     $table_order = rcl_get_include_template('order.php',__FILE__);
 
-    $args = array(
-            'role' => 'administrator'
-    );
-    $users = get_users( $args );
 
     $subject = 'Заказ №'.$order->order_id.' оплачен!';
 
@@ -417,10 +429,8 @@ function rcl_payment_order($order_id,$user_id=false){
     if($admin_email){
         rcl_mail($admin_email, $subject, $textmail);
     }else{
-        foreach((array)$users as $userdata){
-                $email = $userdata->user_email;
-                rcl_mail($email, $subject, $textmail);
-        }
+        $admin_email = get_option('admin_email');
+        rcl_mail($admin_email, $subject, $textmail);
     }
 
     $email = get_the_author_meta('user_email',$user_id);
@@ -429,7 +439,6 @@ function rcl_payment_order($order_id,$user_id=false){
     <h3>Информация о покупателе:</h3>
     <p><b>Имя</b>: '.get_the_author_meta('display_name',$user_id).'</p>
     <p><b>Email</b>: '.get_the_author_meta('user_email',$user_id).'</p>
-    '.$show_custom_field.'
     <p>Заказ №'.$order_id.' получил статус "Оплачено".</p>
     <h3>Детали заказа:</h3>
     '.$table_order.'

@@ -11,6 +11,9 @@ i.fa, a.fa, p.fa,span.fa,div.fa{
     text-align: center;
     font-family: FontAwesome!important;
 }
+.fa.rcl-icon{
+    margin-right: 5px;
+}
 .floatright{
 	float:right;
 }

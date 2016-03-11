@@ -533,7 +533,7 @@ function rcl_manage_profile_fields(){
 
 		update_option('rcl_profile_default', $save_data );
                 
-                $rcl_options['users_page'] = $_POST['users_page'];
+                $rcl_options['users_page_rcl'] = $_POST['users_page_rcl'];
                 update_option('rcl_global_options', $rcl_options );
 	}
 
@@ -587,8 +587,8 @@ function rcl_manage_profile_fields(){
         $default_form .= '<h3>'.__('Users page','wp-recall').'</h3>';
         
         $default_form .= wp_dropdown_pages( array(
-            'selected'   => $rcl_options['users_page'],
-            'name'       => 'users_page',
+            'selected'   => $rcl_options['users_page_rcl'],
+            'name'       => 'users_page_rcl',
             'show_option_none' => __('Not selected','wp-recall'),
             'echo'             => 0 )
         );

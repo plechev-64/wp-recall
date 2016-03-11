@@ -381,7 +381,8 @@ class Rcl_Messages{
             $num=0;
 
             if(!$rcl_options['sort_mess']) krsort($private_messages);
-
+            
+            $messlist = '';
             foreach((array)$private_messages as $message){
                     $num++;
                     $messlist = $this->get_private_message_block_rcl($messlist,$message);

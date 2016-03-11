@@ -18,21 +18,23 @@ class Rcl_Payment{
         $rcl_payments[$type] = (object)$data;
     }
 
-    function payment_process(){
+    function payment_process($connect=false){
         global $post,$rmag_options;
 
         add_action('insert_pay_rcl',array($this,'pay_account'));
 
         $this->pay_date = current_time('mysql');
-        if($post->ID==$rmag_options['page_result_pay']) $this->get_result();
-        if($post->ID==$rmag_options['page_success_pay']) $this->get_success();
+        if($post->ID==$rmag_options['page_result_pay']) $this->get_result($connect);
+        if($post->ID==$rmag_options['page_success_pay']) $this->get_success($connect);
     }
 
-    function get_result(){
+    function get_result($connect){
         global $rmag_options,$rcl_payments;
+        
+        if(!$connect) $connect = $rmag_options['connect_sale'];
 
-        if(isset($rcl_payments[$rmag_options['connect_sale']])){
-            $obj = new $rcl_payments[$rmag_options['connect_sale']]->class;
+        if(isset($rcl_payments[$connect])){
+            $obj = new $rcl_payments[$connect]->class;
             $method = 'result';
             $obj->$method($this);
         }else{
@@ -40,11 +42,13 @@ class Rcl_Payment{
         }
     }
 
-    function get_success(){
+    function get_success($connect){
         global $rmag_options,$rcl_payments;
+        
+        if(!$connect) $connect = $rmag_options['connect_sale'];
 
-        if(isset($rcl_payments[$rmag_options['connect_sale']])){
-            $obj = new $rcl_payments[$rmag_options['connect_sale']]->class;
+        if(isset($rcl_payments[$connect])){
+            $obj = new $rcl_payments[$connect]->class;
             $method = 'success';
             $obj->$method();
         }else{
@@ -101,6 +105,8 @@ class Rcl_Payment{
     function get_form($args){
 
         global $rmag_options,$rcl_payments,$user_ID;
+        
+        $type_connect = (isset($args['connect']))? $args['connect']: $rmag_options['connect_sale'];
 
         $this->pay_callback = (isset($args['callback']))? $args['callback']: 'rcl_pay_order_private_account';
         $this->pay_id = $args['id_pay'];
@@ -111,8 +117,9 @@ class Rcl_Payment{
         else
             $this->user_id = $args['user_id'];
 
-       if(isset($rcl_payments[$rmag_options['connect_sale']])){
-            $obj = new $rcl_payments[$rmag_options['connect_sale']]->class;
+       if(isset($rcl_payments[$type_connect])){
+            $class = $rcl_payments[$type_connect]->class;
+            $obj = new $class;
             $method = 'pay_form';
             return $obj->$method($this);
         }else{
@@ -125,7 +132,7 @@ class Rcl_Payment{
 
         $submit = ($data->pay_type==1)? __('Confirm the operation','wp-recall'): __('Pay through payment system','wp-recall');
 
-        $form = "<form id='form-payment-".$data->pay_id."' style='display: inline;' action='".$formaction."' method=POST>"
+        $form = "<form id='form-payment-".$data->pay_id."' action='".$formaction."' method=POST>"
                 .$this->get_hiddens( $fields )
                 ."<input class='recall-button' type=submit value='$submit'>"
                 ."</form>";
@@ -174,11 +181,11 @@ function rcl_payments(){
     global $rmag_options,$rcl_payments;
 
     if(!$rmag_options['connect_sale']) return false;
-    if(!isset($rcl_payments[$rmag_options['connect_sale']])) return false;
+    if(is_array($rmag_options['connect_sale'])||!isset($rcl_payments[$rmag_options['connect_sale']])) return false;
 
     if (isset($_REQUEST[$rcl_payments[$rmag_options['connect_sale']]->request])){
         $payment = new Rcl_Payment();
         $payment->payment_process();
     }
 }
-add_action('wp', 'rcl_payments');
+add_action('wp', 'rcl_payments',10);

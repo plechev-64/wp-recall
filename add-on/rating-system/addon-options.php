@@ -28,7 +28,7 @@ function rcl_admin_page_rating($content){
 		}
 
 		if(isset($data['data_type'])){
-			$more .= $opt->label(__('Overall rating '.$data['type_name'],'wp-recall'));
+			$more .= $opt->label(__('Overall rating','wp-recall').' '.$data['type_name']);
             $more .= $opt->option('select',array(
                     'name'=>'rating_overall_'.$type,
                     'options'=>array(__('Sum votes values','wp-recall'),__('Number of positive and negative votes','wp-recall'))

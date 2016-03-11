@@ -187,31 +187,48 @@ function rcl_get_total_rating($object_id,$rating_type){
 
     if(!isset($rcl_options['rating_overall_'.$rating_type])||!$rcl_options['rating_overall_'.$rating_type]){
         
-        $total =  $wpdb->get_var(
-            $wpdb->prepare(
-                "SELECT rating_total FROM ".RCL_PREF."rating_totals "
-                . "WHERE object_id = '%d' AND rating_type='%s'",
-                $object_id,$rating_type
-        ));
+        $total = rcl_get_rating_sum($object_id,$rating_type);
         
     }else{
         
-        $values =  $wpdb->get_results(
-            $wpdb->prepare(
-                "SELECT rating_value FROM ".RCL_PREF."rating_values "
-                . "WHERE object_id = '%d' AND rating_type='%s'",
-        $object_id,$rating_type));
+        $total = rcl_get_votes_sum($object_id,$rating_type);
         
-        if($values){
-            foreach($values as $value){
-                if($value->rating_value>0){
-                    $total ++;
-                }else{
-                    $total --;
-                }
+    }
+    
+    return $total;
+}
+
+function rcl_get_rating_sum($object_id,$rating_type){
+    global $wpdb;
+    
+    $total =  $wpdb->get_var(
+        $wpdb->prepare(
+            "SELECT rating_total FROM ".RCL_PREF."rating_totals "
+            . "WHERE object_id = '%d' AND rating_type='%s'",
+            $object_id,$rating_type
+    ));
+    
+    return $total;
+}
+
+function rcl_get_votes_sum($object_id,$rating_type){
+    global $wpdb;
+    
+    $total = 0;
+    $values =  $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT rating_value FROM ".RCL_PREF."rating_values "
+            . "WHERE object_id = '%d' AND rating_type='%s'",
+    $object_id,$rating_type));
+
+    if($values){
+        foreach($values as $value){
+            if($value->rating_value>0){
+                $total ++;
+            }else{
+                $total --;
             }
         }
-        
     }
     
     return $total;
@@ -377,7 +394,7 @@ add_action('rcl_insert_rating','rcl_update_total_rating');
 function rcl_update_total_rating($args){
     global $wpdb;
 
-    $total = rcl_get_total_rating($args['object_id'],$args['rating_type']);
+    $total = rcl_get_rating_sum($args['object_id'],$args['rating_type']);
 
     if(isset($total)){
         $total += $args['rating_value'];
@@ -476,7 +493,7 @@ function rcl_delete_rating($args){
 function rcl_delete_rating_with_post($args){
     global $wpdb;
 
-    $args['rating_value'] = rcl_get_total_rating($args['object_id'],$args['rating_type']);
+    $args['rating_value'] = rcl_get_rating_sum($args['object_id'],$args['rating_type']);
 
     $wpdb->query(
             $wpdb->prepare(

@@ -305,15 +305,15 @@ function rcl_encode_data_rating($status,$args){
         $str[] = $k.':'.$v;
     }
 
-    return base64_encode(implode(',',$str));
-    //return implode(',',$str);
+    //return base64_encode(implode(',',$str));
+    return implode(',',$str);
 }
 
 function rcl_decode_data_rating($data){
     global $user_ID;
 
-    $data = explode(',',base64_decode($data));
-    //$data = explode(',',$data);
+    //$data = explode(',',base64_decode($data));
+    $data = explode(',',$data);
 
     $args = array();
 

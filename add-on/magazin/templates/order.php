@@ -15,7 +15,9 @@
 		</tr>
 		<?php foreach($order->products as $product): ?>
 			<tr id="product-<?php rcl_product_ID; ?>">
-				<td><a href="<?php rcl_product_permalink(); ?>"><?php rcl_product_title(); ?></a></td>
+				<td>
+                                    <a href="<?php rcl_product_permalink(); ?>"><?php rcl_product_title(); ?></a> - <?php rcl_product_excerpt(); ?>
+                                </td>
 				<td><?php rcl_product_price(); ?></td>
 				<td align="center" data-product="<?php rcl_product_ID; ?>">
 					<span class="number-product"><?php rcl_product_number(); ?></span>

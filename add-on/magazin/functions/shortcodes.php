@@ -17,7 +17,7 @@ global $post,$rmag_options;
         $metas = rcl_get_postmeta_array($post->ID);
 
         $price = $metas['price-products'];
-        $outsale = $metas['outsale'];
+        $outsale = (isset($metas['outsale']))?$metas['outsale']:false;
 
         $button = '<div class="price-basket-product">';
 
@@ -221,7 +221,7 @@ function rcl_shortcode_productlist($atts, $content = null){
 
     $block = ($type=='rows')? 'table': 'div';
 
-    $prodlist .='<'.$block.' class="prodlist">';
+    $prodlist ='<'.$block.' class="prodlist">';
 
     foreach($products as $post){ setup_postdata($post);
         $n++;

@@ -12,17 +12,17 @@ function rcl_head_js_data(){
 }
 
 /*14.0.0*/
-_deprecated_function( 'rcl_get_user_money', '14.0.0', 'rcl_get_user_balance' );
 function rcl_get_user_money($user_id=false){
     global $wpdb,$user_ID;
+    _deprecated_function( 'rcl_get_user_money', '14.0.0', 'rcl_get_user_balance' );
     if(!$user_id) $user_id = $user_ID;
     return $wpdb->get_var($wpdb->prepare("SELECT user_balance FROM ".RMAG_PREF."users_balance WHERE user_id='%d'",$user_id));
 }
 
 /*14.0.0*/
-_deprecated_function( 'rcl_update_user_money', '14.0.0', 'rcl_update_user_balance' );
 function rcl_update_user_money($newmoney,$user_id=false){
     global $user_ID,$wpdb;
+    _deprecated_function( 'rcl_update_user_money', '14.0.0', 'rcl_update_user_balance' );
     if(!$user_id) $user_id = $user_ID;
 
     $money = rcl_get_user_money($user_id);
@@ -36,15 +36,15 @@ function rcl_update_user_money($newmoney,$user_id=false){
 }
 
 /*14.0.0*/
-_deprecated_function( 'rcl_add_user_money', '14.0.0', 'rcl_add_user_balance' );
 function rcl_add_user_money($money,$user_id=false){
     global $wpdb,$user_ID;
+    _deprecated_function( 'rcl_add_user_money', '14.0.0', 'rcl_add_user_balance' );
     if(!$user_id) $user_id = $user_ID;
     return $wpdb->insert( RMAG_PREF .'users_balance',
 	array( 'user_id' => $user_id, 'user_balance' => $money ));
 }
 
-_deprecated_function( 'get_key_addon_rcl', '14.0.0', 'rcl_key_addon' );
 function get_key_addon_rcl($path_parts){
+    _deprecated_function( 'get_key_addon_rcl', '14.0.0', 'rcl_key_addon' );
     return rcl_key_addon($path_parts);
 }

@@ -108,8 +108,16 @@ function rcl_add_count_user(){
 
         $amount = intval($_POST['count']);
         $id_pay = current_time('timestamp');
+        
+        $args = array(
+                'id_pay'=>$id_pay,
+                'summ'=>$amount,
+                'type'=>1
+            );
+        
+        $args = apply_filters('rcl_edit_balance_args',$args);
 
-        $log['redirectform'] = rcl_payform(array('id_pay'=>$id_pay,'summ'=>$amount,'type'=>1));
+        $log['redirectform'] = rcl_payform($args);
         $log['otvet']=100;
 
     } else {
@@ -141,8 +149,10 @@ if(is_admin()) add_action('wp_ajax_rcl_edit_balance_user', 'rcl_edit_balance_use
 
 function rcl_get_html_usercount(){
     global $user_ID,$rmag_options;
+    
+    $id = rand(1,100);
 
-    $usercount = '<div id="user-count-rcl">';
+    $usercount = '<div class="rcl-widget-balance" id="rcl-widget-balance-'.$id.'">';
 
     $user_count = rcl_get_user_balance();
     if(!$user_count) $user_count = 0;
@@ -152,20 +162,53 @@ function rcl_get_html_usercount(){
 
     $usercount = apply_filters('count_widget_rcl',$usercount);
 
-    if($rmag_options['connect_sale']!='') $usercount .= "<p align='right'><a class='go_to_add_count' href='#'>".__("Deposit",'wp-recall')."</a></p>
-    <div class='count_user'>
-    <p>".__("To recharge your account",'wp-recall')."</p>
-    <div>
-    <p style='margin-bottom: 10px;'><label>".__("Enter the amount required",'wp-recall')."</label></p>
-        <input class='value_count_user' size='4' type='text' value=''>
-        <input class='add_count_user recall-button' type='button' value='".__("Send",'wp-recall')."'>
-    </div>
-    <div class='redirectform' style='margin:10px 0;text-align:center;'></div>
-    </div>";
+    if($rmag_options['connect_sale']!='') 
+        $usercount .= "<div class='rcl-toggle-form-balance'>"
+                . "<a class='recall-button rcl-toggle-form-link' href='#'>"
+                .__("Deposit",'wp-recall')
+                ."</a>
+            </div>
+            <div class='rcl-form-balance'>               
+                ".rcl_form_user_balance(array('idform'=>$id))."
+            </div>";
 
     $usercount .= '</div>';
 
     return $usercount;
+}
+
+add_shortcode('rcl-form-balance','rcl_form_user_balance');
+function rcl_form_user_balance($attr=false){
+    global $user_ID;
+    
+    if(!$user_ID) return '<p align="center">Для совершения платежа необходимо авторизоваться</p>';
+
+    extract(shortcode_atts(array(
+        'idform' => rand(1,1000)
+    ),
+    $attr));
+    
+    $form = array(
+        'fields' => array('<input class=value-user-count name=count type=number value=>'),
+        'submit' => '<input class="rcl-get-form-pay recall-button" type=submit value=Отправить>'
+    );
+    
+    $form = apply_filters('rcl_user_balance_form',$form);
+    
+    if(!is_array($form['fields'])) return false;
+    
+    $content = '<div class=rcl-form-add-user-count id=rcl-form-balance-'.$idform.'>
+                    <p class="form-balance-notice">'.__("Укажите сумму для пополнения",'wp-recall').'</p>
+                    <form class=rcl-form-input>';
+                        foreach($form['fields'] as $field){
+                            $content .= '<span class="form-field">'.$field.'</span>';
+                        }
+                        $content .= '<span class="form-submit">'.$form['submit'].'</span>'
+                    .'</form>
+                    <div class=rcl-result-box></div>
+                </div>';
+                        
+    return $content;
 }
 
 add_filter('file_scripts_rcl','rcl_get_useraccount_scripts');
@@ -175,26 +218,29 @@ function rcl_get_useraccount_scripts($script){
 
 	$script .= "
             /* Пополняем личный счет пользователя */
-            jQuery('body').on('click','.add_count_user',function(){
-                var count = jQuery('.value_count_user');
-                var addcount = count.val();
-                var dataString = 'action=rcl_add_count_user&count='+addcount;
-                dataString += '&ajax_nonce='+Rcl.nonce;
-                jQuery.ajax({
-                        ".$ajaxdata."
-                        success: function(data){
-                                if(data['otvet']==100){
-                                        jQuery('.redirectform').html(data['redirectform']);
-                                } else {
-                                   alert('Ошибка проверки данных.');
-                                }
+            jQuery('.rcl-form-add-user-count').on('click','.rcl-get-form-pay',function(){
+                var id = jQuery(this).parents('.rcl-form-add-user-count').attr('id');
+		rcl_preloader_show('#'+id+' .rcl-form-input');
+                var dataform   = jQuery('#'+id+' form').serialize();
+		var dataString = 'action=rcl_add_count_user&'+dataform;
+		dataString += '&ajax_nonce='+Rcl.nonce;
+		jQuery.ajax({
+                    ".$ajaxdata."
+                    success: function(data){
+                        rcl_preloader_hide();
+                        if(data['otvet']==100){
+                            jQuery('#'+id+' .rcl-result-box').html(data['redirectform']);
+                        } else {
+                           alert('Ошибка проверки данных.');
                         }
-                });
-                return false;
+                    }
+		});
+		return false;
             });
 
-            jQuery('body').on('click','.go_to_add_count',function(){
-                jQuery('.count_user').slideToggle();
+            jQuery('.rcl-widget-balance').on('click','.rcl-toggle-form-link',function(){
+                var id = jQuery(this).parents('.rcl-widget-balance').attr('id');
+                jQuery('#'+id+' .rcl-form-balance').slideToggle(200);
                 return false;
             });
 	";

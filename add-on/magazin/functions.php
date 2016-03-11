@@ -48,11 +48,12 @@ function rcl_related_products($content){
 	$related_products = get_posts($args);
 
 	if(!$related_products) return $content;
-
+        
+        $title_related = $rmag_options['title_related_products_recall'];
+        if($title_related) $content .= '<h3>'.$title_related.'</h3>';
+        
 	$content .= '<div class="related-products prodlist">';
-	$title_related = $rmag_options['title_related_products_recall'];
-	if($title_related) $content .= '<h3>'.$title_related.'</h3>';
-
+        
 	foreach($related_products as $post){ setup_postdata($post);
 		$content .= rcl_get_include_template('product-slab.php',__FILE__);
 	}
@@ -139,10 +140,10 @@ function rcl_excerpt_cart($excerpt){
 //Выводим категорию товара
 add_filter('the_content','rcl_product_meta',10);
 function rcl_product_meta($content){
-	global $post;
-	if($post->post_type!='products') return $content;
-	$product_cat = rcl_get_product_category($post->ID);
-	return $product_cat.$content;
+    global $post;
+    if($post->post_type!='products') return $content;
+    $product_cat = rcl_get_product_category($post->ID);
+    return $product_cat.$content;
 }
 
 //снимаем товар заказа с резерва

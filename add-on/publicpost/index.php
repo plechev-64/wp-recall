@@ -1121,7 +1121,7 @@ function rcl_footer_publics_scripts($script){
                     $.each(data.files, function (index, file) {
                         cnt_now++;
                         if(cnt_now>".$cnt."){
-                            rcl_notice('".sprintf(__("You have exceeded the allowed number of downloads! Max. %s",$cnt),'wp-recall')."','error');
+                            rcl_notice('".sprintf(__("You have exceeded the allowed number of downloads! Max. %s",'wp-recall'),$cnt)."','error');
                             error = true;
                         }                       
                         if(file['size']>".$maxsize."){

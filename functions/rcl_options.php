@@ -53,8 +53,13 @@ class Rcl_Options {
         return '<small>'.$notice.'</small>';
     }
 
-    function option($type,$args){
+    function option($typefield,$atts){
         global $rcl_options;
+        
+        $optiondata = apply_filters('rcl_option_data',array($typefield,$atts));
+        
+        $type = $optiondata[0];
+        $args = $optiondata[1];
         
         if(isset($args['type'])&&$args['type']=='local') 
             $value = get_option($args['name']);
@@ -70,9 +75,6 @@ class Rcl_Options {
 
     function select($args,$value){
         global $rcl_options;
-
-        //if(isset($args['default'])&&!isset($rcl_options[$args['name']]))
-            //$rcl_options[$args['name']] = $args['default'];
 
         $content = '<select id="'.$args['name'].'"';
         if(isset($args['parent'])) $content .= 'class="parent-select" ';
@@ -96,7 +98,7 @@ class Rcl_Options {
 
         foreach($args['options'] as $val=>$name){
            $a++;
-           if(isset($rcl_options[$args['name']])){
+           if(isset($rcl_options[$args['name']])&&is_array($rcl_options[$args['name']])){
                 foreach($rcl_options[$args['name']] as $v){
                     if($val!=$v) continue;
                         $key = $v;

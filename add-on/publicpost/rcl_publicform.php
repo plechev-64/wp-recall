@@ -355,7 +355,7 @@ function rcl_publication_termlist($tax=false){
         $catlist = rcl_get_tags_list_group($options_gr['tags'],$formData->post_id);
 
     }else{
-        $cnt = (!$cnt)? 1: $cnt;
+    $cnt = (!isset($cnt)||!$cnt)? 1: $cnt;
         $cat_list = ($formData->post_id)? get_public_catlist(): '';
         $sel = new Rcl_List_Terms();
         $catlist = $sel->get_select_list(get_public_allterms(),$cat_list,$cnt,$ctg);
@@ -547,7 +547,7 @@ function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = ar
     if($tags){
         foreach ($tags as $tag){
             $checked = false;
-            if($tag->name==$post_tags[$tag->slug]->name){
+            if(isset($post_tags[$tag->slug])&&$tag->name==$post_tags[$tag->slug]->name){
                 $checked = true;
                 unset($post_tags[$tag->slug]);
             }
@@ -631,7 +631,7 @@ function rcl_add_tags_input($fields,$formData){
             $args['include'] = array_map('trim', $include);
         }
         
-        $fields .= rcl_get_tags_checklist($post_id,'post_tag',$args);
+        $fields .= rcl_get_tags_checklist($formData->post_id,'post_tag',$args);
     }
     
     if(isset($rcl_options['field_tags'])&&$rcl_options['field_tags']==1){

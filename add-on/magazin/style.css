@@ -224,6 +224,9 @@ table.order-data tbody tr:nth-child(even):not(:first-child):not(:last-child) {
 	text-align: left;		/*++hueman++*/
     vertical-align: middle;
 }
+.order-data tbody tr td p{
+    margin:5px 0;
+}
 .prodlist tbody tr td:nth-child(2) {
 	width: 23%;
 }
@@ -234,6 +237,7 @@ table.order-data tbody tr th {
     border: none;
     font-weight: 600;
     padding: 8px 5px;
+    min-width: 80px;
 }
 table.order-data tbody tr th:nth-child(1) {
 	text-align: left;
@@ -301,7 +305,7 @@ table.prodlist  td .cart-button {
     font: bold 15px Tahoma,arial;
 }
 #cart-form.cart-data {
-    margin: 0 0 20px;
+    margin: 10px 0 20px;
     width: 100%;
     box-sizing: border-box;
     position:relative;

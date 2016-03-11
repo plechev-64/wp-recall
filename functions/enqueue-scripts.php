@@ -149,8 +149,9 @@ function rcl_frontend_scripts(){
             'nonce' => wp_create_nonce( 'rcl-post-nonce' )
         );
         
-        $data['post_ID'] = ($post->ID)? $post->ID: 0;
-
+        $data['post_ID'] = (isset($post->ID)&&$post->ID)? $post->ID: 0;
+        $data['mobile'] = (wp_is_mobile())? 1: 0;
+        
         wp_localize_script( 'jquery', 'Rcl',$data);
 
 }

@@ -143,9 +143,12 @@
 }
 
 #tab-privat .private-buttons{
-	overflow: hidden;
-	clear: both;
-	margin-top: 10px;
+    overflow: hidden;
+    clear: both;
+    margin-top: 10px;
+}
+#tab-privat .private-buttons .addmess{
+    float:right;
 }
 
 #tab-privat .prmess .ban-notice{

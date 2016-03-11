@@ -219,10 +219,10 @@ class Rcl_Users{
             $users_query->query['relation'] => $users_query->query['where']
         );
         
-        if($users_query->query['exclude'])
+        if(isset($users_query->query['exclude'])&&$users_query->query['exclude'])
             $wheres['AND'][] = $users_query->query['exclude'];
         
-        if($users_query->query['include'])
+        if(isset($users_query->query['include'])&&$users_query->query['include'])
             $wheres['AND'][] = $users_query->query['include'];
 
         foreach($wheres as $relation=>$w){

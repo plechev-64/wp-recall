@@ -771,7 +771,7 @@ function rcl_edit_group_pre_get_posts($query){
             $rcl_group = rcl_group_init();
 	}
 
-	if($query->is_single&&$query->query['post_type']=='post-group'&&$query->query['name']){
+	if(isset($query->query['post_type'])&&$query->is_single&&$query->query['post_type']=='post-group'&&$query->query['name']){
 
             if(!$post) $post_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."posts WHERE post_name='%s'",$query->query['name']));
             else $post_id = $post->ID;

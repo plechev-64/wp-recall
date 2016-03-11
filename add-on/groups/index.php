@@ -123,6 +123,8 @@ function add_post_in_group(){
 function rcl_tab_groups($author_lk){
 
     global $wpdb,$user_ID,$rcl_options;
+    
+    $content = '';
 
     if($author_lk==$user_ID){
 
