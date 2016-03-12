@@ -179,7 +179,7 @@ add_shortcode('rcl-form-balance','rcl_form_user_balance');
 function rcl_form_user_balance($attr=false){
     global $user_ID;
     
-    if(!$user_ID) return '<p align="center">Для совершения платежа необходимо авторизоваться</p>';
+    if(!$user_ID) return '<p align="center">'.__("To make a payment please log in",'wp-recall').'</p>';
 
     extract(shortcode_atts(array(
         'idform' => rand(1,1000)
@@ -196,7 +196,7 @@ function rcl_form_user_balance($attr=false){
     if(!is_array($form['fields'])) return false;
     
     $content = '<div class=rcl-form-add-user-count id=rcl-form-balance-'.$idform.'>
-                    <p class="form-balance-notice">'.__("Укажите сумму для пополнения",'wp-recall').'</p>
+                    <p class="form-balance-notice">'.__("Enter the amount to replenish",'wp-recall').'</p>
                     <form class=rcl-form-input>';
                         foreach($form['fields'] as $field){
                             $content .= '<span class="form-field">'.$field.'</span>';

@@ -12,22 +12,24 @@ function rcl_options_panel(){
 }
 
 function rcl_doc_manage(){
-    echo '<h2>'.__('Documentation for the plugin WP-RECALL').'</h2>
+    echo '<h2>'.__('Documentation for the plugin WP-RECALL','wp-recall').'</h2>
     <ol>
-        <li><a href="http://wppost.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank">'.__('Plugin installation','wp-recall').'</a></li>
-        <li><a href="http://wppost.ru/obnovlenie-plagina-wp-recall-i-ego-dopolnenij/" target="_blank">'.__('Update the plugin and its extensions','wp-recall').'</a></li>
-        <li><a href="http://wppost.ru/nastrojki-plagina-wp-recall/" target="_blank">'.__('The plugin settings','wp-recall').'</a></li>
-        <li><a href="http://wppost.ru/shortkody-wp-recall/" target="_blank">'.__('Used shortcodes Wp-Recall','wp-recall').'</a></li>
-        <li><a href="http://wppost.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/" target="_blank">'.__('General information about plugins Wp-Recall','wp-recall').'</a></li>
-        <li><a href="http://wppost.ru/dopolneniya-wp-recall/" target="_blank">'.__('Basic add-ons Wp-Recall','wp-recall').'</a></li>
-        <li><a href="http://wppost.ru/downloads-files/" target="_blank">'.__('Paid add-ons Wp-Recall','wp-recall').'</a></li>
-        <li><a title="Произвольные поля Wp-Recall" href="http://wppost.ru/proizvolnye-polya-wp-recall/" target="_blank">'.__('Custom fields profile Wp-Recall','wp-recall').'</a></li>
-        <li><a title="Произвольные поля формы публикации Wp-Recall" href="http://wppost.ru/proizvolnye-polya-formy-publikacii-wp-recall/" target="_blank">'.__('Custom fields form publishing Wp-Recall','wp-recall').'</a></li>
-        <li><a href="http://wppost.ru/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/" target="_blank">'.__('An example of additions Wp-Recall','wp-recall').'</a></li>
-        <li><a href="http://wppost.ru/xuki-i-filtry-wp-recall/" target="_blank">'.__('Functions and hooks Wp-Recall for the development','wp-recall').'</a></li>
-        <li><a href="http://wppost.ru/category/novosti/obnovleniya/" target="_blank">'.__('Update history Wp-Recall','wp-recall').'</a></li>
-        <li><a title="Используемые библиотеки и ресурсы" href="http://wppost.ru/ispolzuemye-biblioteki-i-resursy/">'.__('Used libraries and resources','wp-recall').'</a></li>
-        <li><a href="http://wppost.ru/faq/" target="_blank">'.__('FAQ','wp-recall').'</a></li>
+	<li><a href="http://wppost.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank">Установка плагина </a></li>
+	<li><a href="http://wppost.ru/obnovlenie-plagina-wp-recall-i-ego-dopolnenij/" target="_blank">Обновление плагина и его дополнений</a></li>
+	<li><a href="http://wppost.ru/nastrojki-plagina-wp-recall/" target="_blank">Настройки плагина</a></li>
+	<li><a href="http://wppost.ru/shortkody-wp-recall/" target="_blank">Используемые шорткоды Wp-Recall</a></li>
+	<li><a href="http://wppost.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/" target="_blank">Общие сведения о дополнениях Wp-Recall</a></li>
+	<li><a href="http://wppost.ru/post-group/poryadok-dobavleniya-funkcionala-grupp-s-pomoshhyu-plagina-wp-recall/">Порядок добавления функционала групп</a></li>
+	<li><a href="http://wppost.ru/prodcat/dopolneniya-wp-recall/" target="_blank">Все дополнения Wp-Recall</a></li>
+	<li><a title="Произвольные поля Wp-Recall" href="http://wppost.ru/proizvolnye-polya-wp-recall/" target="_blank">Произвольные поля профиля Wp-Recall</a></li>
+	<li><a title="Произвольные поля формы публикации Wp-Recall" href="http://wppost.ru/proizvolnye-polya-formy-publikacii-wp-recall/" target="_blank">Произвольные поля формы публикации Wp-Recall</a></li>
+	<li><a href="http://wppost.ru/post-group/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/" target="_blank">Пример создания своего дополнения Wp-Recall</a></li>
+	<li><a href="http://wppost.ru/xuki-i-filtry-wp-recall/" target="_blank">Функции и хуки Wp-Recall для разработки</a></li>
+	<li><a href="http://wppost.ru/api-rcl/" target="_blank">API WP-Recall</a></li>
+	<li><a href="http://wppost.ru/groups/obnovleniya/" target="_blank">История обновлений Wp-Recall</a></li>
+	<li><a title="Используемые библиотеки и ресурсы" href="http://wppost.ru/ispolzuemye-biblioteki-i-resursy/">Используемые библиотеки и ресурсы</a></li>
+	<li><a href="http://wppost.ru/forum/problemi-i-reshenia-na-localnom-servere/">Проблемы и решения на локальном сервере</a></li>
+	<li><a href="http://wppost.ru/faq/" target="_blank">FAQ</a></li>
     </ol>';
 }
 
