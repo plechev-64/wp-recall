@@ -373,6 +373,9 @@ table.prodlist  td .cart-button {
     clear: both;
     margin: 10px 0;
 }
+#manage-order .remove-order{
+    text-align:right;
+}
 
 #tab-orders .order-data {
     margin: 20px 2px;

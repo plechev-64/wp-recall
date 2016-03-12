@@ -52,7 +52,10 @@ function rcl_orders($author_lk){
                 ));
 
                 $block .= '<div id="manage-order">';
-                if($status == 1||$status == 5) $block .= '<input class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'" type="button" value="Удалить">';
+                if($status == 1||$status == 5) 
+                    $block .= '<div class="remove-order">'
+                        . '<input class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'" type="button" value="Удалить">'
+                        . '</div>';
                 if($status==1&&function_exists('rcl_payform')){
                     $type_pay = $rmag_options['type_order_payment'];
                     if($type_pay==1||$type_pay==2){

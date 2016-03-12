@@ -167,6 +167,7 @@ class Rcl_Cart {
                     $basket .= $this->script_request('order');
 
                     $basket .= "
+                        rcl_preloader_show('#cart-form > table');
                         var dataString = 'action=rcl_confirm_order'".$this->request.";
                         dataString += '&ajax_nonce='+Rcl.nonce;
                         jQuery.ajax({
@@ -175,18 +176,19 @@ class Rcl_Cart {
                         dataType: 'json',
                         url: Rcl.ajaxurl,
                         success: function(data){
-                                if(data['otvet']==100){
-                                        jQuery('.redirectform').html(data['redirectform']);
-                                        jQuery('.confirm').remove();
-                                        jQuery('.add_remove').empty();
-                                } else if(data['otvet']==10){
-                                   jQuery('.redirectform').html(data['amount']);
-                                } else if(data['otvet']==5){
-                                        jQuery('#regnewuser').html(data['recall']);
-                                        jQuery('#regnewuser').slideDown(500).delay(5000).slideUp(500);
-                                }else {
-                                   alert('Ошибка проверки данных.');
-                                }
+                            rcl_preloader_hide();
+                            if(data['otvet']==100){
+                                    jQuery('.redirectform').html(data['redirectform']);
+                                    jQuery('.confirm').remove();
+                                    jQuery('.add_remove').empty();
+                            } else if(data['otvet']==10){
+                               jQuery('.redirectform').html(data['amount']);
+                            } else if(data['otvet']==5){
+                                    jQuery('#regnewuser').html(data['recall']);
+                                    jQuery('#regnewuser').slideDown(500).delay(5000).slideUp(500);
+                            }else {
+                               alert('Ошибка проверки данных.');
+                            }
                         }
                         });
                         return false;

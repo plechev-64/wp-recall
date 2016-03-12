@@ -337,6 +337,9 @@ function rcl_update_options(){
         foreach((array)$_POST['global'] as $key => $value){			
                 $options[$key] = $value;
         }
+        
+        if(isset($rcl_options['users_page_rcl'])) 
+            $options['users_page_rcl'] = $rcl_options['users_page_rcl'];
 
         update_option('rcl_global_options',$options);
 

@@ -110,12 +110,10 @@ function rcl_add_count_user(){
         $id_pay = current_time('timestamp');
         
         $args = array(
-                'id_pay'=>$id_pay,
-                'summ'=>$amount,
-                'type'=>1
-            );
-        
-        $args = apply_filters('rcl_edit_balance_args',$args);
+            'id_pay'=>$id_pay,
+            'summ'=>$amount,
+            'type'=>1
+        );
 
         $log['redirectform'] = rcl_payform($args);
         $log['otvet']=100;

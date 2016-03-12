@@ -106,6 +106,8 @@ class Rcl_Payment{
 
         global $rmag_options,$rcl_payments,$user_ID;
         
+        $args = apply_filters('rcl_payform_args',$args);
+        
         $type_connect = (isset($args['connect']))? $args['connect']: $rmag_options['connect_sale'];
 
         $this->pay_callback = (isset($args['callback']))? $args['callback']: 'rcl_pay_order_private_account';
@@ -131,15 +133,23 @@ class Rcl_Payment{
         global $rmag_options,$user_ID;
 
         $submit = ($data->pay_type==1)? __('Confirm the operation','wp-recall'): __('Pay through payment system','wp-recall');
-
-        $form = "<form id='form-payment-".$data->pay_id."' action='".$formaction."' method=POST>"
+        
+        $form = '<div class="rcl-pay-form">';
+        
+        $form .= "<div class='rcl-pay-button'>"
+                . "<form id='form-payment-".$data->pay_id."' action='".$formaction."' method=POST>"
                 .$this->get_hiddens( $fields )
                 ."<input class='recall-button' type=submit value='$submit'>"
-                ."</form>";
+                ."</form>"
+                . "</div>";
 
         $type_p = $rmag_options['type_order_payment'];
         if($user_ID&&$type_p==2&&$data->pay_type==2)
-            $form .= '<input class="recall-button" type="button" name="pay_order" onclick="'.$data->pay_callback.'(this);return false;" data-order="'.$data->pay_id.'" value="'.__('Pay personal account','wp-recall').'">';
+            $form .= '<div class="rcl-pay-button">'
+                . '<input class="recall-button" type="button" name="pay_order" onclick="'.$data->pay_callback.'(this);return false;" data-order="'.$data->pay_id.'" value="'.__('Pay personal account','wp-recall').'">'
+                . '</div>';
+        
+        $form .= '</div>';
 
         return $form;
     }
