@@ -285,7 +285,7 @@ if(!is_admin()):
 endif;
 function rcl_post_content_rating($content){
     global $post;
-    if(doing_filter('get_the_excerpt')||is_front_page()) return $content;
+    if(doing_filter('get_the_excerpt')||(is_front_page()&&is_singular())) return $content;
     $content .= rcl_get_html_post_rating($post->ID,$post->post_type);
     return $content;
 }
@@ -305,15 +305,15 @@ function rcl_encode_data_rating($status,$args){
         $str[] = $k.':'.$v;
     }
 
-    //return base64_encode(implode(',',$str));
-    return implode(',',$str);
+    return base64_encode(implode(',',$str));
+    //return implode(',',$str);
 }
 
 function rcl_decode_data_rating($data){
     global $user_ID;
 
-    //$data = explode(',',base64_decode($data));
-    $data = explode(',',$data);
+    $data = explode(',',base64_decode($data));
+    //$data = explode(',',$data);
 
     $args = array();
 

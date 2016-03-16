@@ -129,6 +129,9 @@ span.ruble-symbol{
 .field-delete:hover::before {
 	color: rgb(229, 57, 53);
 }
+span.item-type {
+    display: inline-block;
+}
 span.item-controls {
     font-family: dashicons;
     font-size: 25px;

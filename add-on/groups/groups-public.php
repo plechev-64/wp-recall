@@ -42,10 +42,22 @@ function rcl_get_group_id_by_post($post_id){
     if(!$groups) return false;
     foreach($groups as $group){
         if($group->parent!=0) continue;
-        $group_id = $group->term_id;
+        return $group->term_id;
     }
-    if($group_id) return $group_id;
-    else return false;
+
+    return false;
+}
+
+//Получаем данные группы которой принадлежит публикация
+function rcl_get_group_by_post($post_id){
+    $groups = get_the_terms( $post_id, 'groups' );
+    if(!$groups) return false;
+    foreach($groups as $group){
+        if($group->parent!=0) continue;
+        return $group;
+    }
+
+    return false;
 }
 
 //Проверяем возможность пользователя редактировать публикации группы

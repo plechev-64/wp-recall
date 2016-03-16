@@ -2,7 +2,7 @@
 
 <div class="feed-header">
 
-    <?php rcl_feed_options(); ?>
+    <?php if($rcl_feed->is_options) rcl_feed_options(); ?>
 
     <div class="feed-author-avatar">
         <a href="<?php echo get_author_posts_url($rcl_feed->feed_author); ?>">
@@ -23,9 +23,13 @@
 
     <?php if($rcl_feed->feed_title): ?>
         <h3 class="feed-title">
-            <a href="<?php echo get_permalink($rcl_feed->feed_ID); ?>">
+            <?php if($rcl_feed->feed_permalink): ?>
+            <a href="<?php echo $rcl_feed->feed_permalink; ?>">
+            <?php endif; ?>
                 <?php echo $rcl_feed->feed_title; ?>
+            <?php if($rcl_feed->feed_permalink): ?>
             </a>
+            <?php endif; ?>
         </h3>
      <?php endif; ?>
 

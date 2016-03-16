@@ -52,7 +52,7 @@ function rcl_saveform_data_script($content,$data){
     return $content;
 }
 
-add_action('init','rcl_add_postlist_posts');
+add_action('init','rcl_add_postlist_posts',10);
 function rcl_add_postlist_posts(){
     rcl_postlist('posts','post',__('Records','wp-recall'),array('order'=>30));
 }

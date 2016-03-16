@@ -163,8 +163,14 @@ class Rcl_Payment{
 
 }
 
-function rcl_mail_payment_error($hash=false){
+function rcl_mail_payment_error($hash=false,$other=false){
     global $rmag_options,$post;
+    
+    if($other){
+        foreach($other as $k=>$v){
+            $textmail .= $k.' - '.$v.'<br>';
+        }
+    }
 
     foreach($_REQUEST as $key=>$R){
         $textmail .= $key.' - '.$R.'<br>';

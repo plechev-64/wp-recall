@@ -25,10 +25,12 @@ class Rcl_EditFields {
         $this->name_option = $name_option;
     }
 
-    function edit_form($options,$more=''){
-
-        foreach($options as $opt){
-            $this->options_html .= $opt;
+    function edit_form($options=false,$more=''){
+        
+        if($options){
+            foreach($options as $opt){
+                $this->options_html .= $opt;
+            }
         }
 
         $form = '<style>
@@ -158,6 +160,9 @@ class Rcl_EditFields {
     }
 
     function get_options(){
+        
+        if(!$this->options) return false;
+        
         $opt = '';
         foreach($this->options as $option){
             foreach($option as $type=>$args){

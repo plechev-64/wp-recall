@@ -59,7 +59,7 @@ function rcl_add_taxonomy_public_groups($tax){
     return $tax;
 }
 
-add_action('init','rcl_add_postlist_group');
+add_action('init','rcl_add_postlist_group',10);
 function rcl_add_postlist_group(){
     rcl_postlist('group','post-group',__('Record groups','wp-recall'),array('order'=>40));
 }
@@ -204,16 +204,17 @@ function rcl_init_namegroup(){
 add_action('wp','rcl_init_namegroup');
 
 function rcl_add_namegroup($content){
-	global $post;
-	if(get_post_type( $post->ID )!='post-group') return $content;
+    global $post;
+    if(get_post_type( $post->ID )!='post-group') return $content;
 
-	$groups = get_the_terms( $post->ID, 'groups' );
-	foreach((array)$groups as $group){
-		if($group->parent) continue;
-		$group_link = '<p class="post-group-meta"><i class="fa fa-users rcl-icon"></i>'.__('Published in the group','wp-recall').': <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
-	}
-	$content = $group_link.$content;
-	return $content;
+    $group = rcl_get_group_by_post($post->ID);
+    
+    if(!$group) return $content;
+
+    $group_link = '<p class="post-group-meta"><i class="fa fa-users rcl-icon"></i>'.__('Published in the group','wp-recall').': <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
+
+    $content = $group_link.$content;
+    return $content;
 }
 
 //Создаем новую группу

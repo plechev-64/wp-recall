@@ -232,8 +232,6 @@ function rcl_get_feed_video($content){
 function rcl_feed_options(){
     global $rcl_feed;
 
-    if($rcl_feed->feed_type=='answers') return false;
-
     $content = '<div class="feed-options">'
             . '<i class="fa fa-times"></i>'
             . '<div class="options-box">'
@@ -288,5 +286,22 @@ function rcl_ignored_feed_author($author_id){
     $data['return'] = 'notice';
 
     return $data;
+}
+
+function rcl_get_feed_array($user_id,$type_feed='author'){
+    global $wpdb;
+    
+    $feeds = array();
+    
+    $feeds = $wpdb->get_col("SELECT object_id FROM ".RCL_PREF."feeds WHERE user_id='$user_id' AND feed_type='$type_feed' AND feed_status='1'");
+
+    if($feeds){
+
+        $sec_feeds = $wpdb->get_col("SELECT object_id FROM ".RCL_PREF."feeds WHERE user_id IN (".implode(',',$feeds).") AND feed_type='$type_feed' AND feed_status='1'");
+
+        if($sec_feeds) $feeds = array_unique(array_merge($feeds,$sec_feeds));
+    }
+    
+    return $feeds;
 }
 

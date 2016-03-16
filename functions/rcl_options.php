@@ -70,7 +70,11 @@ class Rcl_Options {
         
         $this->type = (isset($args['type']))? $args['type']: 'global';
         
-        return $this->$type($args,$value);
+        $content = $this->$type($args,$value);
+        
+        $content = apply_filters('rcl_option_content',$content,array($type,$args));
+        
+        return $content;
     }
 
     function select($args,$value){

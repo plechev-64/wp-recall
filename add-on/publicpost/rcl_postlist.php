@@ -90,8 +90,11 @@ class Rcl_Postlist {
 					}
 
 				}
-
-				$posts_block = rcl_get_include_template('posts-list.php',__FILE__);
+                                
+                                if(rcl_get_template_path('posts-list-'.$this->posttype.'.php',__FILE__)) 
+                                    $posts_block = rcl_get_include_template('posts-list-'.$this->posttype.'.php',__FILE__);
+				else 
+                                    $posts_block = rcl_get_include_template('posts-list.php',__FILE__);
 
 				wp_reset_postdata();
 

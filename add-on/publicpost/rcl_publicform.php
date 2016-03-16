@@ -618,7 +618,9 @@ add_filter('public_form_rcl','rcl_add_tags_input',10,2);
 function rcl_add_tags_input($fields,$formData){
     global $rcl_options;
     
-    if($formData->post_type!='post') return $fields;
+    $tag_obj = get_taxonomy('post_tag');
+    
+    if(!in_array($formData->post_type,$tag_obj->object_type)) return $fields;
     
     $fields .= '<div id="tags-list">';
     

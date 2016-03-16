@@ -25,8 +25,13 @@ class Rcl_Feed{
         if($this->paged){
             $this->offset = $this->paged*$this->inpage - $this->inpage;
         }
+        
+        $default_types = array('posts','comments','answers');
 
-        add_filter('rcl_feed_query',array($this,'add_query_'.$this->content));
+        if(in_array($this->content,$default_types)){
+            add_filter('rcl_feed_'.$this->content.'_query',array($this,'add_query_'.$this->content),10);
+            add_filter('rcl_setup_'.$this->content.'_feed_data',array($this,'setup_'.$this->content.'_feed_data'),10,2);
+        }
 
     }
 
@@ -39,57 +44,85 @@ class Rcl_Feed{
     }
 
     function remove_data(){
-        remove_all_filters('rcl_feed_query');
+        remove_all_filters('rcl_feed_'.$this->content.'_query');
         remove_all_filters('rcl_feed');
     }
 
     function setup_data($data){
         global $rcl_feed;
-
-        switch($this->content){
-            case 'posts':
-                $array_feed = array(
-                    'feed_ID'=>$data->ID,
-                    'feed_content'=>$data->post_content,
-                    'feed_author'=>$data->post_author,
-                    'feed_title'=>$data->post_title,
-                    'feed_date'=>$data->post_date,
-                    'feed_parent'=>0,
-                    'post_type'=>$data->post_type,
-                    'feed_excerpt'=>$data->post_excerpt
-                );
-            break;
-            case 'comments':
-                $array_feed = array(
-                    'feed_ID'=>$data->comment_ID,
-                    'feed_content'=>$data->comment_content,
-                    'feed_author'=>$data->user_id,
-                    'feed_title'=>'',
-                    'feed_date'=>$data->comment_date,
-                    'feed_parent'=>$data->comment_post_ID,
-                    'post_type'=>'',
-                    'feed_excerpt'=>''
-                );
-            break;
-            case 'answers':
-                $array_feed = array(
-                    'feed_ID'=>$data->comment_ID,
-                    'feed_content'=>$data->comment_content,
-                    'feed_author'=>$data->user_id,
-                    'feed_title'=>'',
-                    'feed_date'=>$data->comment_date,
-                    'feed_parent'=>$data->comment_parent,
-                    'post_type'=>'',
-                    'feed_excerpt'=>''
-                );
-            break;
-        }
+        
+        $array_feed = array(
+                'feed_ID',
+                'feed_content',
+                'feed_author',
+                'feed_title',
+                'feed_date',
+                'feed_parent',
+                'post_type',
+                'feed_excerpt',
+                'feed_permalink',
+                'is_options'
+            );
+        
+        $array_feed = apply_filters('rcl_setup_'.$this->content.'_feed_data',$array_feed,$data);
 
         $array_feed['feed_type'] = $this->content;
 
         $rcl_feed = (object)$array_feed;
 
         return $rcl_feed;
+    }
+    
+    function setup_posts_feed_data($array_feed,$data){
+        
+        $array_feed = array(
+            'feed_ID'=>$data->ID,
+            'feed_content'=>$data->post_content,
+            'feed_author'=>$data->post_author,
+            'feed_title'=>$data->post_title,
+            'feed_date'=>$data->post_date,
+            'feed_parent'=>0,
+            'post_type'=>$data->post_type,
+            'feed_excerpt'=>$data->post_excerpt,
+            'feed_permalink'=>get_permalink($data->ID),
+            'is_options'=>1
+        );
+        
+        return $array_feed;
+    }
+    
+    function setup_comments_feed_data($array_feed,$data){
+        
+        $array_feed = array(
+            'feed_ID'=>$data->comment_ID,
+            'feed_content'=>$data->comment_content,
+            'feed_author'=>$data->user_id,
+            'feed_title'=>'',
+            'feed_date'=>$data->comment_date,
+            'feed_parent'=>$data->comment_post_ID,
+            'post_type'=>'',
+            'feed_excerpt'=>'',
+            'feed_permalink'=>''
+        );
+        
+        return $array_feed;
+    }
+    
+    function setup_answers_feed_data($array_feed,$data){
+        
+        $array_feed = array(
+            'feed_ID'=>$data->comment_ID,
+            'feed_content'=>$data->comment_content,
+            'feed_author'=>$data->user_id,
+            'feed_title'=>'',
+            'feed_date'=>$data->comment_date,
+            'feed_parent'=>$data->comment_parent,
+            'post_type'=>'',
+            'feed_excerpt'=>'',
+            'feed_permalink'=>''
+        );
+        
+        return $array_feed;
     }
 
     function get_feed($args = false){
@@ -121,6 +154,7 @@ class Rcl_Feed{
 
         $query = array(
             'select'    => array(),
+            'query_count'    => $this->query_count,
             'from'      => "$wpdb->posts AS posts",
             'join'      => array(),
             'where'     => array(),
@@ -130,11 +164,11 @@ class Rcl_Feed{
             'orderby'   => ''
         );
 
-        $query = apply_filters('rcl_feed_query',$query);
-
+        $query = apply_filters('rcl_feed_'.$this->content.'_query',$query);
+        //print_r($query);exit;
         if($query['exclude']){
             foreach($query['exclude'] as $field=>$data){
-                $query['where'][] = "posts.$field NOT IN (".implode(',',$data).")";
+                $query['where'][] = "$field NOT IN (".implode(',',$data).")";
                 break;
             }
         }
@@ -171,16 +205,11 @@ class Rcl_Feed{
         $query['from'] = "$wpdb->posts AS posts";
         $query['where'][] = "posts.post_status='publish'";
 
-        $feeds = $wpdb->get_col("SELECT object_id FROM ".RCL_PREF."feeds WHERE user_id='$user_ID' AND feed_type='author' AND feed_status='1'");
+        $feeds = rcl_get_feed_array($user_ID,'author');
 
         $ignored = $wpdb->get_col("SELECT object_id FROM ".RCL_PREF."feeds WHERE user_id='$user_ID' AND feed_type='author' AND feed_status='0'");
 
         if($feeds){
-
-            $sec_feeds = $wpdb->get_col("SELECT object_id FROM ".RCL_PREF."feeds WHERE user_id IN (".implode(',',$feeds).") AND feed_type='author' AND feed_status='1'");
-
-            if($sec_feeds) $feeds = array_unique(array_merge($feeds,$sec_feeds));
-
             $posts = $wpdb->get_col("SELECT ID FROM $wpdb->posts WHERE post_status='publish' AND post_parent='0' AND post_author IN (".implode(',',$feeds).") AND post_author NOT IN ($user_ID)");
         }
 
@@ -192,7 +221,7 @@ class Rcl_Feed{
 
         $ignored = ($ignored)? array_unique(array_merge($ignored,array($user_ID))): array($user_ID);
 
-        $query['exclude']['post_author'] = $ignored;
+        $query['exclude']['posts.post_author'] = $ignored;
 
         if(!$this->query_count){
             $query['select'][] = "posts.*";
@@ -294,7 +323,7 @@ class Rcl_Feed{
         $filters = array(
             'posts'       => __('News','wp-recall'),
             'comments'    => __('Comments','wp-recall'),
-            'answers'     => __('Answers','wp-recall')
+            'answers'     => __('Ответы в комментариях','wp-recall')
         );
 
         $filters = apply_filters('rcl_feed_filter',$filters);
