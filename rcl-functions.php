@@ -745,7 +745,7 @@ function rcl_update_timeaction_user(){
 
         if(!$user_ID) return false;
 
-	$rcl_current_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_ID));
+	$rcl_current_action = rcl_get_time_user_action($user_ID);
 
 	$last_action = rcl_get_useraction($rcl_current_action);
 
@@ -754,10 +754,10 @@ function rcl_update_timeaction_user(){
             $time = current_time('mysql');
 
             $res = $wpdb->update(
-                                    RCL_PREF.'user_action',
-                                    array( 'time_action' => $time ),
-                                    array( 'user' => $user_ID )
-                            );
+                    RCL_PREF.'user_action',
+                    array( 'time_action' => $time ),
+                    array( 'user' => $user_ID )
+                );
 
             if(!isset($res)||$res==0){
                     $act_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(time_action) FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));

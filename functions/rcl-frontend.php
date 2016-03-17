@@ -80,8 +80,7 @@ function init_user_lk(){
     }
 
     if($user_LK){
-        $rcl_userlk_action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_LK));
-        //rcl_fileapi_scripts();
+        $rcl_userlk_action = rcl_get_time_user_action($user_LK);
     }
 }
 
@@ -122,9 +121,24 @@ function rcl_get_author_block(){
     return $content;
 }
 
+function rcl_get_time_user_action($user_id){
+    global $wpdb;
+    
+    $cachekey = json_encode(array('rcl_get_time_user_action',$user_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    $action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_id));
+
+    wp_cache_add( $cachekey, $action );
+    
+    return $action;
+}
+
 function rcl_get_miniaction($action,$user_id=false){
     global $wpdb;
-    if(!$action) $action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_id));
+    if(!$action) $action = rcl_get_time_user_action($user_id);
     $last_action = rcl_get_useraction($action);
     $class = (!$last_action&&$action)?'online':'offline';
 

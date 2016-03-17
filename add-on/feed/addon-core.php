@@ -71,10 +71,17 @@ function rcl_remove_feed_author($author_id){
 //получаем данные фида по ИД
 function rcl_get_feed_data($feed_id){
     global $wpdb;
+    
+    $cachekey = json_encode(array('rcl_get_feed_data',$feed_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
 
     $result = $wpdb->get_row(
         $wpdb->prepare("SELECT * FROM ".RCL_PREF."feeds WHERE feed_id='%d'",$feed_id)
     );
+    
+    wp_cache_add( $cachekey, $result );
 
     return $result;
 }
@@ -98,14 +105,33 @@ function rcl_remove_feed($feed_id){
 
 function rcl_is_ignored_feed_author($author_id){
     global $user_ID,$wpdb;
+    
+    $cachekey = json_encode(array('rcl_is_ignored_feed_author',$author_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
     $feed_id = $wpdb->get_var("SELECT feed_id FROM ".RCL_PREF."feeds WHERE user_id='$user_ID' AND object_id='$author_id' AND feed_type='author' AND feed_status='0'");
+    
+    wp_cache_add( $cachekey, $feed_id );
+    
     return $feed_id;
 }
 
 //получаем ИД фида текущего пользователя по ИД автора
 function rcl_get_feed_author_current_user($author_id){
     global $user_ID,$wpdb;
-    return $wpdb->get_var("SELECT feed_id FROM ".RCL_PREF."feeds WHERE user_id='$user_ID' AND object_id='$author_id' AND feed_type='author' AND feed_status='1'");
+    
+    $cachekey = json_encode(array('rcl_get_feed_author_current_user',$author_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    $result = $wpdb->get_var("SELECT feed_id FROM ".RCL_PREF."feeds WHERE user_id='$user_ID' AND object_id='$author_id' AND feed_type='author' AND feed_status='1'");
+    
+    wp_cache_add( $cachekey, $result );
+    
+    return $result;
 }
 
 function rcl_get_feed_callback_link($user_id,$name,$callback){
@@ -117,13 +143,33 @@ function rcl_get_feed_callback_link($user_id,$name,$callback){
 //считаем кол-во подписок указанного пользователя
 function rcl_feed_count_authors($user_id){
     global $wpdb;
-    return $wpdb->get_var("SELECT COUNT(feed_id) FROM ".RCL_PREF."feeds WHERE user_id='$user_id' AND feed_type='author' AND feed_status='1'");
+    
+    $cachekey = json_encode(array('rcl_feed_count_authors',$user_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    $result = $wpdb->get_var("SELECT COUNT(feed_id) FROM ".RCL_PREF."feeds WHERE user_id='$user_id' AND feed_type='author' AND feed_status='1'");
+
+    wp_cache_add( $cachekey, $result );
+    
+    return $result;
 }
 
 //считаем кол-во подписчиков указанного пользователя
 function rcl_feed_count_subscribers($user_id){
     global $wpdb;
-    return $wpdb->get_var("SELECT COUNT(feed_id) FROM ".RCL_PREF."feeds WHERE object_id='$user_id' AND feed_type='author' AND feed_status='1'");
+    
+    $cachekey = json_encode(array('rcl_feed_count_subscribers',$user_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    $result =  $wpdb->get_var("SELECT COUNT(feed_id) FROM ".RCL_PREF."feeds WHERE object_id='$user_id' AND feed_type='author' AND feed_status='1'");
+
+    wp_cache_add( $cachekey, $result );
+    
+    return $result;
 }
 
 add_action('wp_ajax_rcl_feed_callback','rcl_feed_callback');
@@ -245,7 +291,17 @@ function rcl_feed_options(){
 
 function rcl_get_author_feed_data($author_id){
     global $user_ID,$wpdb;
-    return $wpdb->get_row("SELECT * FROM ".RCL_PREF."feeds WHERE user_id='$user_ID' AND object_id='$author_id' AND feed_type='author'");
+    
+    $cachekey = json_encode(array('rcl_get_author_feed_data',$author_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    $result = $wpdb->get_row("SELECT * FROM ".RCL_PREF."feeds WHERE user_id='$user_ID' AND object_id='$author_id' AND feed_type='author'");
+
+    wp_cache_add( $cachekey, $result );
+    
+    return $result;
 }
 
 function rcl_ignored_feed_author($author_id){
@@ -291,6 +347,11 @@ function rcl_ignored_feed_author($author_id){
 function rcl_get_feed_array($user_id,$type_feed='author'){
     global $wpdb;
     
+    $cachekey = json_encode(array('rcl_get_feed_array',$user_id,$type_feed));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
     $feeds = array();
     
     $feeds = $wpdb->get_col("SELECT object_id FROM ".RCL_PREF."feeds WHERE user_id='$user_id' AND feed_type='$type_feed' AND feed_status='1'");
@@ -301,6 +362,8 @@ function rcl_get_feed_array($user_id,$type_feed='author'){
 
         if($sec_feeds) $feeds = array_unique(array_merge($feeds,$sec_feeds));
     }
+    
+    wp_cache_add( $cachekey, $feeds );
     
     return $feeds;
 }

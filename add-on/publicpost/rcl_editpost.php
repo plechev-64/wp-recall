@@ -66,7 +66,7 @@ class Rcl_EditPost {
         $this->update_post();
     }
 
-    function update_thumbnail(){
+    function update_thumbnail($postdata){
         global $rcl_options;
 
         $thumb = $_POST['thumb'];
@@ -74,7 +74,7 @@ class Rcl_EditPost {
             if(isset($thumb)) update_post_meta($this->post_id, '_thumbnail_id', $thumb);
             else delete_post_meta($this->post_id, '_thumbnail_id');
         }else{
-            if(!$this->update) return $this->rcl_add_attachments_in_temps();
+            if(!$this->update) return $this->rcl_add_attachments_in_temps($postdata);
             if($thumb){
                 foreach((array)$thumb as $key=>$gal){
                         update_post_meta($this->post_id, '_thumbnail_id', $key);
@@ -99,18 +99,31 @@ class Rcl_EditPost {
         }
     }
 
-    function rcl_add_attachments_in_temps(){
-        global $user_ID;
+    function rcl_add_attachments_in_temps($postdata){
 
-        $temp_gal = get_user_meta($user_ID,'tempgallery',1);
+        $user_id = $postdata['post_author'];
+        $temps = get_option('rcl_tempgallery');            
+        $temp_gal = $temps[$user_id];
+        
         if($temp_gal){
             $thumb = $_POST['thumb'];
-            foreach((array)$temp_gal as $key=>$gal){
-                    if($thumb[$gal['ID']]==1) add_post_meta($this->post_id, '_thumbnail_id', $gal['ID']);
-                    wp_update_post( array('ID'=>$gal['ID'],'post_parent'=>$this->post_id) );
+            foreach($temp_gal as $key=>$gal){
+                
+                if($thumb[$gal['ID']]==1) 
+                    add_post_meta($this->post_id, '_thumbnail_id', $gal['ID']);
+
+                $post_upd = array(
+                    'ID'=>$gal['ID'],
+                    'post_parent'=>$this->post_id,
+                    'post_author'=>$user_id
+                );
+
+                wp_update_post( $post_upd );
             }
             if($_POST['add-gallery-rcl']==1) add_post_meta($this->post_id, 'recall_slider', 1);
-            delete_user_meta($user_ID,'tempgallery');
+            
+            unset($temps[$user_id]);
+            update_option('rcl_tempgallery',$temps);
 
             if(!$thumb){
                 $args = array(
@@ -199,7 +212,7 @@ class Rcl_EditPost {
             wp_update_post( $postdata );
         }
 
-        $this->update_thumbnail();
+        $this->update_thumbnail($postdata);
 
         if($_POST['add-gallery-rcl']==1) update_post_meta($this->post_id, 'recall_slider', 1);
         else delete_post_meta($this->post_id, 'recall_slider');
@@ -251,6 +264,16 @@ function rcl_register_author_post($postdata){
             $user_id = rcl_insert_user($userdata);
 
             if($user_id){
+                
+                //переназначаем временный массив изображений от гостя юзеру
+                $temp_id = $_COOKIE['PHPSESSID'];
+                $temps = get_option('rcl_tempgallery'); 
+                if(isset($temps[$temp_id])){
+                    $temp_gal = $temps[$temp_id];
+                    unset($temps[$temp_id]);
+                    $temps[$user_id] = $temp_gal;
+                    update_option('rcl_tempgallery',$temps);
+                }
 
                 //Сразу авторизуем пользователя
                 if(!$rcl_options['confirm_register_recall']){

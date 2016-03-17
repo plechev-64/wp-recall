@@ -66,25 +66,32 @@ class Rcl_Public{
 $Rcl_Public = new Rcl_Public();
 
 add_action('wp_ajax_rcl_ajax_delete_post', 'rcl_ajax_delete_post');
+add_action('wp_ajax_nopriv_rcl_ajax_delete_post', 'rcl_ajax_delete_post');
 function rcl_ajax_delete_post(){
     global $user_ID;
 
     rcl_verify_ajax_nonce();
 
-    if(!$user_ID) return false;
-
     $post = get_post(intval($_POST['post_id']));
     $res = wp_delete_post( $post->ID );
 
     if($res){
-        $temp_gal = get_user_meta($user_ID,'tempgallery',1);
+        
+        $user_id = ($user_ID)? $user_ID: $_COOKIE['PHPSESSID'];
+        
+        $temps = get_option('rcl_tempgallery');            
+        $temp_gal = $temps[$user_id];
+
         if($temp_gal){
-                $cnt = count($temp_gal);
-                foreach((array)$temp_gal as $key=>$gal){ if($gal['ID']==$_POST['post_id']) unset($temp_gal[$key]); }
-                foreach((array)$temp_gal as $t){ $new_temp[] = $t; }
-                if($new_temp) update_user_meta($user_ID,'tempgallery',$new_temp);
-                else delete_user_meta($user_ID,'tempgallery');
+
+            foreach((array)$temp_gal as $key=>$gal){ if($gal['ID']==$_POST['post_id']) unset($temp_gal[$key]); }
+            foreach((array)$temp_gal as $t){ $new_temp[] = $t; }
+
+            if($new_temp) $temps[$user_id] = $new_temp;
+            else unset($temps[$user_id]);
         }
+        
+        update_option('rcl_tempgallery',$temps);
 
         $log['success']=__('Material removed successfully!','wp-recall');
         $log['post_type']=$post->post_type;

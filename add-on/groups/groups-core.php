@@ -371,7 +371,16 @@ function rcl_get_group_users($group_id){
 
 function rcl_get_group_option($group_id,$option_key){
     global $wpdb;
+    
+    $cachekey = json_encode(array('rcl_get_group_option',$group_id,$option_key));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
     $value = $wpdb->get_var("SELECT option_value FROM ".RCL_PREF."groups_options WHERE group_id='$group_id' AND option_key='$option_key'");
+    
+    wp_cache_add( $cachekey, maybe_unserialize( $value ) );
+    
     return maybe_unserialize( $value );
 }
 
@@ -412,8 +421,15 @@ function rcl_delete_group_option($group_id,$option_key){
 }
 
 function rcl_get_group($group_id){
+    
+    $cachekey = json_encode(array('rcl_get_group',$group_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
 
     $group = rcl_get_groups(array('include'=>$group_id));
+    
+    wp_cache_add( $cachekey, $group );
 
     return $group[0];
 }

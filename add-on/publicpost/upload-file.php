@@ -1,6 +1,7 @@
 <?php
 
 add_action('wp_ajax_rcl_imagepost_upload', 'rcl_imagepost_upload');
+add_action('wp_ajax_nopriv_rcl_imagepost_upload', 'rcl_imagepost_upload');
 function rcl_imagepost_upload(){
     global $rcl_options,$user_ID;
 
@@ -9,8 +10,6 @@ function rcl_imagepost_upload(){
     require_once(ABSPATH . "wp-admin" . '/includes/image.php');
     require_once(ABSPATH . "wp-admin" . '/includes/file.php');
     require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-
-    if(!$user_ID) return false;
 
     if(isset($_POST['post_id'])&&$_POST['post_id']!='undefined') $id_post = intval($_POST['post_id']);
     
@@ -48,6 +47,10 @@ function rcl_imagepost_upload(){
                 'post_author' => $user_ID,
                 'post_status' => 'inherit'
             );
+            
+            if(!$user_ID){   
+                $attachment['post_content'] = $_COOKIE['PHPSESSID'];
+            }
 
             $res[$k]['string'] = rcl_insert_attachment($attachment,$image,$id_post);
         }

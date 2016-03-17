@@ -407,11 +407,20 @@ function rcl_add_attachments_in_temps($id_post){
 
 function rcl_update_tempgallery($attach_id,$attach_url){
 	global $user_ID;
-	$temp_gal = get_user_meta($user_ID,'tempgallery',1);
-	if(!$temp_gal||!is_array($temp_gal)) $temp_gal = array();
-	$temp_gal[$attach_id]['ID'] = $attach_id;
-	$temp_gal[$attach_id]['url'] = $attach_url;
-	update_user_meta($user_ID,'tempgallery',$temp_gal);
+        
+        $user_id = ($user_ID)? $user_ID: $_COOKIE['PHPSESSID'];
+        
+	$temp_gal = get_option('rcl_tempgallery');
+        
+        if(!$temp_gal) $temp_gal = array();
+        
+        $temp_gal[$user_id][] = array(
+            'ID' => $attach_id,
+            'url' => $attach_url
+        );
+
+	update_option('rcl_tempgallery',$temp_gal);
+        
 	return $temp_gal;
 }
 
@@ -442,6 +451,27 @@ function rcl_get_html_attachment($attach_id,$mime_type){
 	return $rt;
 }
 
+/*14.2.0*/
+//очищаем временный массив загруженных изображений к публикациям 
+//и удаляем все изображения к неопубликованным записям
+add_action('rcl_cron_daily_schedule','rcl_clear_temps_gallery',10);
+function rcl_clear_temps_gallery(){
+    
+    $temps = get_option('rcl_tempgallery');
+    
+    foreach($temps as $user_id=>$usertemps){
+        foreach($usertemps as $temp){
+            $post_id = intval($temp['ID']);
+            if($post_id)
+                wp_delete_post( $post_id );
+        }
+    }
+    
+    $temps = array();
+    update_option('rcl_tempgallery',$temps);
+    
+}
+
 function rcl_edit_post(){
     include_once 'rcl_editpost.php';
     $edit = new Rcl_EditPost();
@@ -457,7 +487,7 @@ add_action('init', 'rcl_edit_post_activate');
 function rcl_delete_post(){
 	global $rcl_options,$user_ID;
 	$post_id = wp_update_post( array('ID'=>intval($_POST['post-rcl']),'post_status'=>'trash'));
-    do_action('after_delete_post_rcl',$post_id);
+        do_action('after_delete_post_rcl',$post_id);
 	wp_redirect(rcl_format_url(get_author_posts_url($user_ID)).'&public=deleted');
 	exit;
 }

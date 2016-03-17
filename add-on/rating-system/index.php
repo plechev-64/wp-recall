@@ -474,6 +474,9 @@ function rcl_edit_rating_post(){
             $rating = rcl_insert_rating($args);
 
     }
+
+    wp_cache_delete(json_encode(array('rcl_get_rating_sum',$args['object_id'],$args['rating_type'])));
+    wp_cache_delete(json_encode(array('rcl_get_votes_sum',$args['object_id'],$args['rating_type'])));
     
     $total = rcl_get_total_rating($args['object_id'],$args['rating_type']);
 

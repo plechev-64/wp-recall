@@ -470,14 +470,21 @@ function rcl_apply_group_request(){
 add_filter('rcl_feed_posts_array','rcl_add_feed_group_posts',10);
 function rcl_add_feed_group_posts($posts){
     global $wpdb,$user_ID;
+    
+    $cachekey = json_encode(array('rcl_add_feed_group_posts',$posts));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
 
-    $groups = $wpdb->get_col("SELECT groups_users.group_id, groups.ID AS group_id "
+    $groups = $wpdb->get_col("SELECT groups_users.group_id, groups.ID "
             . "FROM ".RCL_PREF."groups_users AS groups_users "
             . "INNER JOIN ".RCL_PREF."groups AS groups ON groups_users.user_id=groups.admin_id "
             . "WHERE (groups_users.user_id='$user_ID' OR groups.admin_id='$user_ID') "
             . "GROUP BY groups_users.group_id, groups.ID");
 
     if($groups){
+       
+        $groups = array_unique($groups);
 
         $objects = $wpdb->get_col("SELECT term_relationships.object_id "
             . "FROM $wpdb->term_relationships AS term_relationships "
@@ -487,6 +494,8 @@ function rcl_add_feed_group_posts($posts){
         if($objects) $posts = array_unique(array_merge($posts,$objects));
 
     }
+    
+    wp_cache_add( $cachekey, $posts );
 
     return $posts;
 }

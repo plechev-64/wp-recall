@@ -149,10 +149,10 @@ class Rcl_PublicForm {
 		$post_id = (isset($post))? $post->ID: 0;
 
 		$hiddens = array(
-            'post-group' => array('term_id'=>base64_encode($group_id)),
-            'products' => array('formpage'=>$post_id),
-            'task' => array('formpage'=>$post_id)
-        );
+                    'post-group' => array('term_id'=>base64_encode($group_id)),
+                    'products' => array('formpage'=>$post_id),
+                    'task' => array('formpage'=>$post_id)
+                );
 
 		if(isset($hiddens[$this->post_type])){
 			foreach($hiddens[$this->post_type] as $name=>$val){

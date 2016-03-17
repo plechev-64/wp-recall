@@ -212,12 +212,12 @@ class Rcl_Thumb_Form{
     public $id_upload;
 
     function __construct($p_id=false,$id_upload='upload-public-form') {
-        global $user_ID;
-
+        global $user_ID,$formData;
+        
         if(!$user_ID) return false;
 
         $this->post_id = $p_id;
-        $this->id_upload = $id_upload;
+        $this->id_upload = ($id_upload)? $id_upload: $formData->id_upload;
         
         if($this->post_id) 
             $this->thumb = get_post_meta($this->post_id, '_thumbnail_id',1);
@@ -228,6 +228,7 @@ class Rcl_Thumb_Form{
         global $user_ID,$formData;
         
         $accept = ($formData->accept)? $formData->accept: $accept;
+        if(!$this->id_upload) $this->id_upload = $formData->id_upload;
 
         if($this->post_id) $gal = get_post_meta($this->post_id, 'recall_slider', 1);
         else $gal = 0;
@@ -243,7 +244,9 @@ class Rcl_Thumb_Form{
             if($child){ foreach($child as $ch){$temp_gal[]['ID']=$ch->ID;} }
 
         }else{
-            $temp_gal = get_user_meta($user_ID,'tempgallery',1);
+            $user_id = ($user_ID)? $user_ID: $_COOKIE['PHPSESSID'];
+            $temps = get_option('rcl_tempgallery');            
+            $temp_gal = $temps[$user_id];
         }
 
         $attachlist = '';
@@ -260,7 +263,7 @@ class Rcl_Thumb_Form{
                 //if(!$this->post_id) echo 'checked="checked"';
                 $content .= 'type="checkbox" '.checked($gal,1,false).' name="add-gallery-rcl" value="1"> - '.__('Display all attached images in the gallery.','wp-recall').'</label></p>';
         }
-		
+	
         $content .= '<div id="status-temp"></div>
         <div>
             <div id="rcl-public-dropzone" class="rcl-dropzone mass-upload-box">

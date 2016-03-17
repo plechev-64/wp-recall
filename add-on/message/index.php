@@ -954,7 +954,7 @@ class Rcl_Messages{
 			$status_mess = 0;
 			$time = current_time('mysql');
 
-			$rcl_action_users = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."user_action WHERE user = '%d'",$this->user_lk));
+			$rcl_action_users = rcl_get_time_user_action($this->user_lk);
 			$last_action = rcl_get_useraction($rcl_action_users->time_action);
 			if(!$last_action) $online = 1;
 
@@ -1213,7 +1213,7 @@ class Rcl_Messages{
                 
                 rcl_rangyinputs_scripts();
 
-                $rcl_action_users = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".RCL_PREF."user_action WHERE user = '%d'",$mess->author_mess));
+                $rcl_action_users = rcl_get_time_user_action($mess->author_mess);
 		$last_action = rcl_get_useraction($rcl_action_users->time_action);
                 $class = (!$last_action)?'online':'offline';
                 $online = (!$last_action)?1:0;

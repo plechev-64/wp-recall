@@ -48,7 +48,7 @@ global $wpdb,$rcl_options;
         if ( $user = get_user_by('login', $reglogin) ){
             wp_update_user( array ('ID' => $user->ID, 'role' => get_option('default_role')) ) ;
             $time_action = current_time('mysql');
-            $action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user = '%d'",$user->ID));
+            $action = rcl_get_time_user_action($user->ID);
             if(!$action)$wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => $time_action ) );
 
             $creds = array();
