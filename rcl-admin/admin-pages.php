@@ -42,7 +42,7 @@ function rcl_postmeta_post() {
 add_filter('rcl_post_options','rcl_gallery_options',10,2);
 function rcl_gallery_options($options,$post){
     $mark_v = get_post_meta($post->ID, 'recall_slider', 1);
-    $options .= '<p>'.__('Pictures record the withdrawal in the gallery Wp-Recall?').':
+    $options .= '<p>'.__('Pictures record the withdrawal in the gallery Wp-Recall?','wp-recall').':
         <label><input type="radio" name="wprecall[recall_slider]" value="" '.checked( $mark_v, '',false ).' />'.__('No','wp-recall').'</label>
         <label><input type="radio" name="wprecall[recall_slider]" value="1" '.checked( $mark_v, '1',false ).' />'.__('Yes','wp-recall').'</label>
     </p>';

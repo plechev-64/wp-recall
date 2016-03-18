@@ -486,7 +486,8 @@ function rcl_register_user_order(){
                     $type_order_payment = $rmag_options['type_order_payment'];
                     if($type_order_payment==1||$type_order_payment==2){
 
-                        $notice .= "<p class='res_confirm'>Ваш заказ был создан!<br />Заказу присвоен статус - \"Неоплачено\"<br />Вы можете оплатить его сейчас или из своего ЛК. Там же вы можете узнать статус вашего заказа.</p>";
+                        $notice .= "<p class='res_confirm'>Ваш заказ был создан!<br />Заказу присвоен статус - \"Неоплачено\"<br />Вы можете оплатить его из своего личного каббинета. Там же вы можете узнать статус вашего заказа.</p>";
+                        $notice .= "<p class='res_confirm'>Все необходимые данные для авторизации на сайте были высланы на указанную вами эл.почту.</p>";
                         if($type_order_payment==2) $notice .= "<p class='res_confirm'>Вы можете пополнить свой личный счет на сайте из своего личного кабинета и в будущем оплачивать свои заказы через него</p>";
 
                         if(!$rcl_options['confirm_register_recall']){

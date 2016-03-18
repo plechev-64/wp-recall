@@ -1,8 +1,8 @@
 === Wp-Recall ===
 Contributors: wppost
-Donate link: http://wppost.ru/
+Donate link: http://codeseller.ru/
 Tags: personal account, private message, groups, user profile, личный кабинет, личные сообщения, профиль пользователя
-Requires at least: 3.0.1
+Requires at least: 4.4.0
 Tested up to: 4.4.0
 Stable tag: 12.0.7
 License: GPLv2 or later
@@ -20,27 +20,27 @@ WordPress плагин для создания личного кабинета �
 
 To expand its functional plugin uses supplements.
 General information about the plug-ons:
-http://wppost.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/
+http://codeseller.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/
 
 Плагин расширяет свой функционал через дополнения. Основная информация о дополнениях плагина:
-http://wppost.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/
+http://codeseller.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/
 
 If you wish, you can very easily write its complement and bring any information in your personal account user.
 Example of creating add-ons:
-http://wppost.ru/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/
+http://codeseller.ru/post-group/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/
 
 Если хотите, то вы можете создать свое дополнение и вывести любую информацию в личном кабинете пользователя.
 Пример создания дополнения к плагину:
-http://wppost.ru/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/
+http://codeseller.ru/post-group/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/
 
 You can share your additions with other users or download new additions here:
-http://wppost.ru/nash-magazin/
+http://codeseller.ru/products/
 
 Вы можете поделиться своим дополнением или скачать дополнения других пользователей здесь:
-http://wppost.ru/nash-magazin/
+http://codeseller.ru/products/
 
 Документация плагина 
-http://wppost.ru/dokumentaciya-wp-recall/
+http://codeseller.ru/dokumentaciya-wp-recall/
 
 == Installation ==
 

@@ -34,7 +34,9 @@ function rcl_admin_user_account_scripts(){
 function rcl_get_user_balance($user_id=false){
     global $wpdb,$user_ID;
     if(!$user_id) $user_id = $user_ID;
-    return $wpdb->get_var($wpdb->prepare("SELECT user_balance FROM ".RMAG_PREF."users_balance WHERE user_id='%d'",$user_id));
+    $balance = $wpdb->get_var($wpdb->prepare("SELECT user_balance FROM ".RMAG_PREF."users_balance WHERE user_id='%d'",$user_id));
+    if(!$balance) $balance = 0;
+    return $balance;
 }
 
 function rcl_update_user_balance($newmoney,$user_id,$comment=''){
