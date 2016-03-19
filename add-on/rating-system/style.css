@@ -69,12 +69,13 @@
     text-shadow: 0 0 1px #ccc;
 	top: -9px;
 }
-.votes-window .votes-list{
+.rating-value-block .votes-window .votes-list{
     margin: 0;
     list-style: none;
     clear: both;
     overflow-y: auto;
     max-height: 350px;
+    padding:0;
 }
 .rating_block .votes-list li,
 .rating-value-block .votes-window .votes-list li {

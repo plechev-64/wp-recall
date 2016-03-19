@@ -454,7 +454,7 @@ function rcl_get_html_attachment($attach_id,$mime_type){
 /*14.2.0*/
 //очищаем временный массив загруженных изображений к публикациям 
 //и удаляем все изображения к неопубликованным записям
-add_action('rcl_cron_daily_schedule','rcl_clear_temps_gallery',10);
+add_action('rcl_cron_daily','rcl_clear_temps_gallery',10);
 function rcl_clear_temps_gallery(){
     
     $temps = get_option('rcl_tempgallery');

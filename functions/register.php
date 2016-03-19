@@ -1,4 +1,10 @@
 <?php
+if(!function_exists('wp_send_new_user_notifications')){
+    function wp_send_new_user_notifications( $user_id, $notify = 'both' ) {
+        wp_new_user_notification( $user_id, null, $notify );
+    }
+}
+
 function rcl_insert_user($data){
     global $wpdb,$rcl_options;
 
