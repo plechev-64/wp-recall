@@ -6,7 +6,7 @@ function rmag_global_unit(){
     global $wpdb,$rmag_options,$user_ID;
 
     if(!isset($_SESSION['return_'.$user_ID]))
-            $_SESSION['return_'.$user_ID] = $_SERVER['HTTP_REFERER'];
+            $_SESSION['return_'.$user_ID] = (isset($_SERVER['HTTP_REFERER']))? $_SERVER['HTTP_REFERER']: '/';
     
     $rmag_options = get_option('primary-rmag-options');
     define('RMAG_PREF', $wpdb->prefix."rmag_");

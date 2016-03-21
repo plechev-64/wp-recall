@@ -101,7 +101,7 @@ function rcl_rating_tab($author_lk){
 
     $content = rcl_rating_navi($args);
 
-    $content .= rcl_get_list_votes($args,$votes);
+    $content .= '<div class="rating-list-votes">'.rcl_get_list_votes($args,$votes).'</div>';
 
     return $content;
 }
@@ -545,7 +545,7 @@ function rcl_rating_functions_js($string){
                 ".$ajaxdata."
                 success: function(data){
                     if(data['result']==100){
-                        jQuery('#tab-rating .votes-list').replaceWith(data['window']);
+                        jQuery('#tab-rating .rating-list-votes').html(data['window']);
                     }else{
                         rcl_notice('".__('Error','wp-recall')."!','error');
                     }

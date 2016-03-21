@@ -35,7 +35,6 @@ function rcl_get_user_balance($user_id=false){
     global $wpdb,$user_ID;
     if(!$user_id) $user_id = $user_ID;
     $balance = $wpdb->get_var($wpdb->prepare("SELECT user_balance FROM ".RMAG_PREF."users_balance WHERE user_id='%d'",$user_id));
-    if(!$balance) $balance = 0;
     return $balance;
 }
 
@@ -54,8 +53,6 @@ function rcl_update_user_balance($newmoney,$user_id,$comment=''){
             array( 'user_balance' => $newmoney ),
             array( 'user_id' => $user_id )
         );
-        
-        do_action('rcl_update_user_balance',$newmoney,$user_id,$comment);
         
     }
 
@@ -179,7 +176,7 @@ function rcl_get_html_usercount(){
 
 add_shortcode('rcl-form-balance','rcl_form_user_balance');
 function rcl_form_user_balance($attr=false){
-    global $user_ID;
+    global $user_ID,$rcl_payments,$rmag_options;
     
     if(!$user_ID) return '<p align="center">'.__("To make a payment please log in",'wp-recall').'</p>';
 
@@ -190,8 +187,17 @@ function rcl_form_user_balance($attr=false){
     
     $form = array(
         'fields' => array('<input class=value-user-count name=count type=number value=>'),
+        'notice' => '',
         'submit' => '<input class="rcl-get-form-pay recall-button" type=submit value=Отправить>'
     );
+    
+    if(!is_array($rmag_options['connect_sale'])&&isset($rcl_payments[$rmag_options['connect_sale']])){
+        $background = (isset($rcl_payments[$rmag_options['connect_sale']]->image))? 'style="background:url('.$rcl_payments[$rmag_options['connect_sale']]->image.') no-repeat center;"': '';       
+        $form['notice'] = '<span class="form-notice">'
+                        . '<span class="thumb-connect" '.$background.'></span> Оплата через '
+                        .$rcl_payments[$rmag_options['connect_sale']]->name
+                        .'<span>';
+    }
     
     $form = apply_filters('rcl_user_balance_form',$form);
     
@@ -203,6 +209,8 @@ function rcl_form_user_balance($attr=false){
                         foreach($form['fields'] as $field){
                             $content .= '<span class="form-field">'.$field.'</span>';
                         }
+                        if(isset($form['notice'])&&$form['notice']) 
+                            $content .= '<span class="form-field">'.$form['notice'].'</span>';
                         $content .= '<span class="form-submit">'.$form['submit'].'</span>'
                     .'</form>
                     <div class=rcl-result-box></div>

@@ -128,6 +128,7 @@ class Rcl_Order {
                 );
 
         }
+        
         do_action('insert_order_rcl',$user_id,$order_id);
 
         session_destroy();

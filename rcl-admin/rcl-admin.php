@@ -25,6 +25,14 @@ function rmag_update_options ( ) {
     }
 
     update_option('primary-rmag-options',$options);
+    
+    
+    if(isset($_POST['local'])){
+        foreach((array)$_POST['local'] as $key => $value){
+            update_option($key,$value);
+        }
+    }
+    
     wp_redirect(admin_url('admin.php?page=manage-wpm-options'));
     exit;
   }
