@@ -192,11 +192,12 @@ function rcl_form_user_balance($attr=false){
     );
     
     if(!is_array($rmag_options['connect_sale'])&&isset($rcl_payments[$rmag_options['connect_sale']])){
-        $background = (isset($rcl_payments[$rmag_options['connect_sale']]->image))? 'style="background:url('.$rcl_payments[$rmag_options['connect_sale']]->image.') no-repeat center;"': '';       
+        $connect = $rcl_payments[$rmag_options['connect_sale']];
+        $background = (isset($connect->image))? 'style="background:url('.$connect->image.') no-repeat center;"': '';       
         $form['notice'] = '<span class="form-notice">'
                         . '<span class="thumb-connect" '.$background.'></span> Оплата через '
-                        .$rcl_payments[$rmag_options['connect_sale']]->name
-                        .'<span>';
+                        .$connect->name
+                        .'</span>';
     }
     
     $form = apply_filters('rcl_user_balance_form',$form);
