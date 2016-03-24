@@ -116,7 +116,7 @@ jQuery(function($){
 });
 
 function rcl_update_options(){
-    rcl_preloader_show('#rcl-options-form > div');
+    rcl_preloader_show('#rcl-options-form > div:last-child');
     var form = jQuery('#rcl-options-form');
     var dataString = 'action=rcl_update_options&'+form.serialize();
     jQuery.ajax({
