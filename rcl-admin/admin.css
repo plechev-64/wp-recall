@@ -1,7 +1,62 @@
 #recall{
     position: relative;
 }
-
+#rcl-notice{
+	position: fixed;
+    top: 70px;
+	right: 30px;
+    width: 210px;
+	z-index: 999999;
+}
+#rcl-notice .notice-window {
+    line-height: 1;
+    font-size: 14px;
+	margin: 5px 0;
+	padding: 8px 2px 8px 10px;
+	word-wrap: break-word;
+}
+#rcl-notice .type-error{
+	background: rgb(255, 207, 207);
+    color: red;
+	border-left: 3px solid red;
+}
+#rcl-notice .type-warning{
+	background: #fff5ce;
+    color: #333;
+	border-left: 3px solid #333;
+}
+#rcl-notice .type-success{
+	background: #bfffbd;
+    color: #008000;
+	border-left: 3px solid #008000;
+}
+#rcl-notice .notice-window .close-notice{
+    float:right;
+	color:inherit;
+	padding: 0 5px 0 4px;
+}
+body .rcl_preloader{
+    position: absolute!important;
+    height: 100%!important;
+    width: 100%!important;
+    background: rgba(255,255,255,0.5)!important;
+    top: 0!important;
+    left: 0!important;
+    display: block!important;
+    z-index: 99;   
+}
+.rcl_preloader i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -40px 0 0 -40px;
+}
+.rcl_preloader i:before{
+    font: 400 120px/1 dashicons;
+    content:"\f463";
+    -webkit-animation:rotation 2s infinite linear;
+    animation:rotation 2s infinite linear;
+}
 #recall .title-option {
     border: 1px solid #AAAAAA;
     box-shadow: 0 0 50px #CCCCCC inset;

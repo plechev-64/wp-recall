@@ -1,5 +1,5 @@
 Name: Rating System (Система рейтинга);
-Version: 2.0.3;
+Version: 2.1.0;
 Support Core: 13.2.0;
 Description: Рейтинговая система для wp-recall;
 Author: Плечев Андрей;

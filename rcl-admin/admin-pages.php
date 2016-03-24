@@ -80,12 +80,10 @@ function rcl_global_options(){
     $fields = new Rcl_Options();
 
     $rcl_options = get_option('rcl_global_options');
-    
-    
 
     $content = '<h2>'.__('Configure the plugin Wp-Recall and additions','wp-recall').'</h2>
         <div id="recall" class="left-sidebar wrap">
-	<form method="post" action="">
+	<form method="post" id="rcl-options-form" onsubmit="rcl_update_options();return false;" action="">
 	'.wp_nonce_field('update-options-rcl','_wpnonce',true,false).'
 	<span class="title-option active"><span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '.__('General settings','wp-recall').'</span>
 	<div class="wrap-recall-options" style="display:block;">';
@@ -324,43 +322,51 @@ function rcl_global_options(){
     echo $content;
 }
 
-add_action('init', 'rcl_update_options');
+add_action('wp_ajax_rcl_update_options', 'rcl_update_options');
 function rcl_update_options(){
     global $rcl_options;
-    if ( isset( $_POST['rcl_global_options'] ) ) {
-        if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rcl' ) ) return false;
-
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-        if($_POST['global']['login_form_recall']==1&&!isset($_POST['global']['page_login_form_recall'])){
-                $_POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
-        }
-
-        foreach((array)$_POST['global'] as $key => $value){			
-                $options[$key] = $value;
-        }
-        
-        if(isset($rcl_options['users_page_rcl'])) 
-            $options['users_page_rcl'] = $rcl_options['users_page_rcl'];
-
-        update_option('rcl_global_options',$options);
-
-        if(isset($_POST['local'])){
-            foreach((array)$_POST['local'] as $key => $value){
-                update_option($key,$value);
-            }
-        }
-
-        $rcl_options = $options;
-
-        if( current_user_can('edit_plugins') ){
-            rcl_update_scripts();
-            rcl_minify_style();
-        }
-
-        wp_redirect(admin_url('admin.php?page=manage-wprecall'));
+    
+    if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rcl' ) ){
+        $result['result'] = 0;
+        $result['notice'] = __('Error','wp-recall');
+        echo json_encode($result);
         exit;
     }
+
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+    if($_POST['global']['login_form_recall']==1&&!isset($_POST['global']['page_login_form_recall'])){
+            $_POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
+    }
+
+    foreach((array)$_POST['global'] as $key => $value){			
+            $options[$key] = $value;
+    }
+
+    if(isset($rcl_options['users_page_rcl'])) 
+        $options['users_page_rcl'] = $rcl_options['users_page_rcl'];
+
+    update_option('rcl_global_options',$options);
+
+    if(isset($_POST['local'])){
+        foreach((array)$_POST['local'] as $key => $value){
+            update_option($key,$value);
+        }
+    }
+
+    $rcl_options = $options;
+
+    if( current_user_can('edit_plugins') ){
+        rcl_update_scripts();
+        rcl_minify_style();
+    }
+
+    $result['result'] = 1;
+    $result['notice'] = __('Options saved!','wp-recall');
+
+    echo json_encode($result);
+    exit;
+
 }
 
 function rcl_theme_list(){

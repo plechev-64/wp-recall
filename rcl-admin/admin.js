@@ -103,8 +103,56 @@ jQuery(function($){
             });	  	
             return false;
 	});
-	
+
 	function str_replace(search, replace, subject) {
 		return subject.split(search).join(replace);
 	}
+
+        $('#rcl-notice,body').on('click','a.close-notice',function(){	
+                $(this).parent().remove();
+                return false;
+        });
+
 });
+
+function rcl_update_options(){
+    rcl_preloader_show('#rcl-options-form > div');
+    var form = jQuery('#rcl-options-form');
+    var dataString = 'action=rcl_update_options&'+form.serialize();
+    jQuery.ajax({
+        type: 'POST',
+        data: dataString,
+        dataType: 'json',
+        url: ajaxurl,
+        success: function(data){
+            rcl_preloader_hide();
+
+            if(data['result']==1){
+                var type = 'success';
+            } else {
+                var type = 'error';
+            }
+
+            rcl_notice(data['notice'],type);
+        } 
+    });	  	
+    return false;
+}
+
+function rcl_notice(text,type){	
+    var html = '<div class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
+    if(!jQuery('#rcl-notice').size()){
+            jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
+    }else{
+        if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
+        else jQuery('#rcl-notice').html(html);
+    }
+}
+
+function rcl_preloader_show(e){
+    jQuery(e).after('<div class="rcl_preloader"><i class="fa fa-spinner fa-pulse"></i></div>');
+}
+
+function rcl_preloader_hide(){
+    jQuery('.rcl_preloader').remove();
+}

@@ -10,170 +10,11 @@ p.product-meta i{
     color:#ccc;
     float:left;
 }
-.prodlist .list-list p .fa,
-.rcl-mini-cart .cart-icon .fa-shopping-cart {
-	margin: 0 5px 0 0;
-}
-.prodlist {
-	box-sizing: content-box;
-    clear: both;
-	font-size: 14px;
-    margin: 10px 0 5px;
-    overflow: hidden;
-    width: 100%;
-}
-.prodlist .prod-single a {
-	border: none;					/*++Twenty15++*/
-	box-shadow: none;				/*++Twenty16++*/
-	text-decoration: none;
-}
-.prodlist .slab-list,
-.prodlist .list-list {
-    background: rgba(243, 243, 243, 0.3);
-    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
-    margin: 5px 2px;
-	overflow: hidden;
-    padding: 5px;
-	position: relative;
-}
-.prodlist .list-list .thumb-prod,
-.userlist .list-list .thumb-user {
-    float: left;
-    margin: 0 15px 0 0;
-}
-.prodlist .prod-single img {
-    display: block;
-}
-.slider-rcl .price-prod,
-.prodlist .list-list .price-prod {
-    background: orange;
-    color: #fff;
-    float: right;
-    font-size: 14px;
-    font-weight: bold;
-    margin: 0 0 1px 5px;
-    min-width: 95px;
-    padding: 3px 5px;
-    text-align: center;
-}
-.slider-rcl .no-price,
-.prodlist div.prod-single .no-price {
-    background: #8CDD89;
-}
-
-.prodlist .list-list h3,
-.prodlist .list-list h4,
-.userlist .list-list h3,
-.userlist .list-list h4 {
-    margin: 0;
-}
-.prodlist .list-list h3 {
-	clear: none;
-    color: #333;
-    font: 18px/1 Verdana,arial;
-	margin: 0 0 3px;
-    padding: 3px 0;
-	text-transform: none;
-}
-.prodlist .product-excerpt {
-    padding: 5px 3px 3px;
-}
-.prodlist .list-list p {
-    display: table;
-    margin: 0;
-    padding: 3px 0 7px;
-}
-/*.product-content p:nth-last-child(2)::after { //добавляем предпоследнему эл-ту псевдоблок на отступ к кнопке
-    content: "";
-    width: 115px;
-    display: inline-block;
-    height: 25px;
-}*/
-
-.prodlist .list-list .product-content{
-    overflow:hidden;
-}
-
-.prodlist .list-list .cart-button {
-    bottom: 5px;
-    position: absolute;
-    right: 5px;
-}
-.prodlist .list-list .cart-button a{
-    border: none;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: bold;
-    min-width: 105px;
-    padding: 8px 5px;
-    text-align: center;
-}
-.prodlist .slab-list {
-    float: left;
-    margin: 2% 1%;
-    min-width: 20%;
-    padding: 0;
-    width: 31.3%;
-}
-.prodlist .slab-list h3 {
-    background: rgba(255, 255, 255, 0.8);
-    font-size: 18px;
-    line-height: 1;
-    margin: 0;
-    padding: 6px 0;
-    position: absolute;
-    text-align: center;
-    text-transform: none;
-    width: 100%;
-	-webkit-hyphens: auto;
-	hyphens: auto;
-    word-wrap: break-word;
-}
-.prodlist .slab-list h3:hover {
-    background: rgba(255, 255, 255, 0.9);
-}
-.slab-list .thumb-prod {
-    display: inline-block;
-    width: 100%;
-}
-.prodlist .slab-list img {
-    float: left;
-    height: auto;
-    max-width: 100%;
-    width: 100%;
-}
-.prodlist .slab-list p {
-    margin: 0;
-    padding: 0 5px 5px;
-}
-.prodlist .slab-list .price-prod {
-    background: orange;
-    color: #fff;
-    display: block;
-    font-size: 15px;
-    font-weight: bold;
-    margin: 5px 0 0;
-    padding: 5px 1px;
-    text-align: center;
-}
-.prodlist .slab-list .add_to_cart {
-    color: #fff;
-    display: block;
-    font-size: 16px;
-    margin: 0 auto;
-	padding: 9px;
-    text-align: center;
-}
-.prodlist .clear{
-	clear:both;
-}
-
 
 #tab-orders .order-data table,
 .confirm table.form-table,
 table.order-data,
-table.pricelist,
-table.prodlist {
+table.pricelist{
     border: none;
     border-collapse: separate;
     border-spacing: 0;
@@ -196,8 +37,7 @@ table.order-data tbody tr:nth-child(even):not(:first-child):not(:last-child) {
 }
 .wprecallblock #lk-content .order-data  tr:nth-child(odd):not(:first-child),
 .order-data tbody tr:nth-child(odd):not(:first-child):not(:last-child),
-.pricelist tbody tr:nth-child(odd):not(:first-child),
-.prodlist tbody tr:nth-child(even) {
+.pricelist tbody tr:nth-child(odd):not(:first-child){
     background: rgba(243, 243, 243, 0.4);
 }
 .wprecallblock .order-data .product-number {
@@ -227,12 +67,6 @@ table.order-data tbody tr:nth-child(even):not(:first-child):not(:last-child) {
 .order-data tbody tr td p{
     margin:5px 0;
 }
-.prodlist tbody tr td:nth-child(2) {
-	width: 23%;
-}
-.prodlist tbody tr td:nth-child(3) {
-	width: 80px;
-}
 table.order-data tbody tr th {
     border: none;
     font-weight: 600;
@@ -245,29 +79,6 @@ table.order-data tbody tr th:nth-child(1) {
 .order-data tbody tr th:nth-child(n+2),
 .order-data tbody tr td:nth-child(n+2) {
     text-align: center;
-}
-.prodlist td h3,
-.userlist td h3 {
-	color: inherit;
-    font-size: 16px;
-	font-weight: normal;
-    line-height: 1;
-    margin: 0;
-    text-transform: none;
-}
-.prodlist td h4,
-.userlist td h4 {
-    font-size: 14px;
-    line-height: 1;
-    margin: 0;
-    text-transform: none;
-}
-.prodlist .price-prod span {
-	color: #333;
-}
-table.prodlist  td .cart-button {
-    display: table;
-    margin: 0 auto;
 }
 .pricelist tbody tr td:first-child {
     text-align: center;
@@ -409,7 +220,254 @@ table.prodlist  td .cart-button {
     text-decoration: none;
 }
 
+/*Вывод товаров списка товаров*/
+.product-meta{
+	margin-bottom: 5px;
+}
+.product-meta .meta{
+	margin-bottom: 5px;
+}
+.products-box .products-list .product{
+	position:relative;
+}
+.products-box .cart-button{
+	overflow: hidden;
+	text-align: right;
+	font-size: 16px;
+}
+.products-box .cart-button .product-outsale{
+        display: block;
+        text-align: center;
+        color: #fff;
+        background: #B9C9D6;
+}
+.products-box.type-list .cart-button .product-outsale{
+    display:none;
+}
+.products-box .cart-button .product-number{
+	margin-right: 10px;
+}
+.products-box .cart-button .product-number input{
+	width: 40px;
+}
+.products-box .cart-button a{
+	display: block;
+	background: #1F7CA9;
+	color: #fff;
+	padding: 5px 0 5px;
+	float: right;
+	width: 100px;
+	font-size: 16px;
+}
+.products-box .cart-button a:hover{
+	background: #2eabdb;
+}
+.products-box .cart-button a .cart-price{
+	display: block;
+	text-align: center;
+}
+.products-box .cart-button a .cart-price i{
+	font-size:14px;
+}
+.products-box .cart-button a .cart-icon{
+	float: right;
+	margin-right: 10px;
+}
+.products-box .cart-button a .cart-icon i{
+	
+}
+.products-box .view-switch{
+	float: right;
+	margin-bottom: 10px;
+}
+.products-box .view-switch a{
+	
+}
+.products-box .view-switch a:hover i{
+	background:#d9e0e6;
+}
+.products-box .view-switch a:last-child i{
+	margin-right:0;
+}
+.products-box .products-list .product .product-content .product-title{
+	color: #0b0b0b;
+}
+.products-box.type-slab{
+	overflow: hidden;
+}
+.products-box.type-slab .products-list{
+	clear: both;
+	overflow: hidden;
+}
+.products-box.type-slab .products-list .product{
+	display: inline-block;
+        width: 150px;
+        padding: 5px;
+        border: 2px solid #d9e0e6;
+        margin: 0 10px 30px 10px;
+}
+.products-box.type-slab .products-list .product .product-thumbnail{
+	margin-bottom: 5px;
+	display: block;
+}
+.products-box.type-slab .products-list .product .product-thumbnail img{
+	width: 100%;
+}
+.products-box.type-slab .products-list .product .product-content{
+	
+}
+.products-box.type-slab .products-list .product .product-content .cart-button a{
+	width: 100%;
+	float:none;
+}
+.products-box.type-slab .products-list .product .product-content .product-title{
+	text-align: center;
+    display: block;
+    line-height: 1;
+    padding: 10px 0;
+    position: absolute;
+    width: 100%;
+    background: rgba(255,255,255, 0.8);
+    top: 0;
+    font-size: 14px;
+    left: 0;
+}
+.products-box.type-slab .products-list .product .product-content .product-meta{
+	position: relative;
+}
+.products-box.type-slab .products-list .product .product-content .product-meta .meta-name{
+	
+}
+.products-box.type-slab .products-list .product .product-content .product-meta .meta{
+	display: inline-block;
+	margin: 0 0 5px 0;
+	position: relative;
+}
+.products-box.type-slab .products-list .product .product-content .product-meta .meta a{
+	color:#fff;
+	text-decoration:underline;
+}
+.products-box.type-slab .products-list .product .product-content .product-meta .meta .meta-content-box{
+	display: none;
+	position: absolute;
+	padding: 5px;
+	color: #fff;
+    background: #2EABDB;
+	width: 140px;
+	bottom: 24px;
+	left: 0;
+	z-index:9;
+	box-shadow: 2px -2px 2px 0px rgb(185, 201, 214);
+	font-size:13px;
+}
+.products-box.type-slab .products-list .product .product-content .product-meta .meta .meta-content{
+	
+}
 
+.products-box.type-slab .products-list .product .product-content .product-meta .meta .meta-content-box:before{
+    left: 2px;
+    bottom: -20px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: #2EABDB;
+    border-width: 10px;
+}
+.products-box.type-slab .products-list .product .product-content .product-meta .meta:nth-child(2) .meta-content-box{
+	left: -33px;
+}
+.products-box.type-slab .products-list .product .product-content .product-meta .meta:nth-child(2) .meta-content-box:before{
+	left: 35px;
+}
+.products-box.type-slab .products-list .product .product-content .product-meta .meta:nth-child(3) .meta-content-box{
+	left: -63px;
+}
+.products-box.type-slab .products-list .product .product-content .product-meta .meta:nth-child(3) .meta-content-box:before{
+	left: 65px;
+}
+.products-box.type-slab .products-list .product .product-content .product-meta .meta > i:hover + span,
+.products-box.type-slab .products-list .product .product-content .product-meta .meta > span:hover{
+	display: block;
+}
+.products-box.type-slab .products-list .product .product-content .product-meta a{
+	
+}
+/*.products-box.type-slab .products-list .product:nth-child(4n+4){
+	margin-right:0;
+}*/
+
+.products-box.type-list{
+	margin-bottom: 20px;
+}
+.products-box.type-list .products-list{
+	clear: both;	
+}
+.products-box.type-list .products-list .product{
+	overflow: hidden;
+	padding: 5px;
+	border: 2px solid #d9e0e6;
+	margin-bottom: 10px;
+}
+.products-box.type-list .products-list .product .product-thumbnail{
+	float: left;
+	margin-right: 10px;
+}
+.products-box.type-list .products-list .product .product-thumbnail img{
+	width:100px;
+	height:auto;
+}
+.products-box.type-list .products-list .product .product-content{
+	position: relative;
+	min-height: 100px;
+}
+.products-box.type-list .products-list .product .product-content .product-title{
+	line-height: 1;
+	display: block;
+	color: #0b0b0b;
+	margin-bottom: 5px;
+	font-size: 20px;
+}
+.products-box.type-list .products-list .product .product-content .product-meta{
+	overflow: hidden;
+}
+.products-box.type-list .products-list .product .product-content .product-meta .meta-name{
+	
+}
+.products-box.type-list .products-list .product .product-content .product-meta .meta{
+	margin: 0 0 3px;
+	clear: both;
+    overflow: hidden;
+}
+.products-box.type-list .products-list .product .product-content .product-meta .meta i{
+	float:left;
+}	
+.products-box.type-list .products-list .product .product-content .product-meta .meta > span{
+	overflow:hidden;
+	display:block;
+}
+.products-box.type-list .products-list .product .product-content .product-meta .meta:last-child{
+	margin:0;
+}
+.products-box.type-list .products-list .product .product-content .product-meta .meta .meta-content{
+	
+}
+.products-box.type-list .products-list .product .product-content .product-meta a{
+	
+}
+.products-box.type-list .products-list .product .product-content .cart-button{
+	position: absolute;
+	right: 0;
+	float: none;
+	bottom: 0;
+}
+.products-box.type-list .products-list .product .product-content .cart-button .no-price{
+	font-size:13px;
+}
+/*конец*/
 
 
 /* Непроверенная секция Start */
@@ -450,18 +508,6 @@ table.prodlist  td .cart-button {
 .order_block table td {
     padding: 10px;
 }
-.prodlist td img {
-    margin: 5px;
-}
-.prodlist .parne {
-    background: #F0F0F8;
-}
-.prodlist .list-list .thumb-prod img{
-    border-radius:none;
-}
-.prodlist .list-list .product-category{
-    margin:0;
-}
 .widget-user-count .count_user{
 	display:none;
 }
@@ -481,13 +527,7 @@ table.prodlist  td .cart-button {
 /* Непроверенная секция End */
 
 @media screen and (max-width:480px) {
-	.prodlist .list-list .thumb-prod, .userlist .list-list .thumb-user {
-		height: 70px;
-		width: 70px;
-	}
-	.prodlist .price-prod span {
-		display: inline-block;
-	}
+	
 	.wprecallblock .order-data .product-number {
 		min-width: unset;
 		width: auto;
@@ -503,14 +543,6 @@ table.prodlist  td .cart-button {
 	}
 }
 @media screen and (max-width:360px) {
-	.product-content p:nth-last-child(2)::after {
-		display: block;
-		height: 30px;
-	}
-	.prodlist .list-list .price-prod {
-		bottom: 4px;
-		left: 0;
-		position: absolute;
-	}
+
 }
 /* Магазин End*/

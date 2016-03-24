@@ -181,7 +181,8 @@ function rcl_get_product_excerpt($desc){
         if($product->post_excerpt) $excerpt = strip_tags($product->post_excerpt);
         else $excerpt = strip_tags($product->post_content);
     }else{
-        $excerpt = strip_tags($post->post_content);
+        if($post->post_excerpt) $excerpt = strip_tags($post->post_excerpt);
+        else $excerpt = strip_tags($post->post_content);
     }
 
     if($excerpt){
@@ -197,9 +198,22 @@ function rcl_get_product_excerpt($desc){
 }
 
 function rcl_product_excerpt(){
-    global $post,$desc,$product;
-    if($product) $desc = 200; 
-    echo rcl_get_product_excerpt($desc);
+    global $post,$productlist,$product;
+    
+    $desc = (isset($productlist['desc']))? $productlist['desc']: 200;
+    
+    $excerpt = rcl_get_product_excerpt($desc);
+    
+    if(!$excerpt) return false;
+    
+    $excerpt = '<div class="meta">
+        <i class="fa fa-info rcl-icon"></i>
+        <span class="meta-content-box">
+            <span class="meta-content" itemprop="description">'.$excerpt.'</span>
+        </span>
+    </div>';
+    
+    echo $excerpt;
 }
 
 function rcl_get_product_category($prod_id){

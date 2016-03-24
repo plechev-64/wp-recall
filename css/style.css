@@ -12,7 +12,12 @@ i.fa, a.fa, p.fa,span.fa,div.fa{
     font-family: FontAwesome!important;
 }
 .fa.rcl-icon{
+    padding: 5px;
+    background: #b9c9d6;
+    color: #fff;
     margin-right: 5px;
+    text-align: center;
+    width: 15px;
 }
 .floatright{
 	float:right;

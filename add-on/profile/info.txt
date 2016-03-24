@@ -1,5 +1,5 @@
 Name: User Profile (Профиль пользователя);
-Version: 1.3.2;
+Version: 1.3.3;
 Support Core: 13.2.0;
 Description: Расширение настроек профиля пользователя для wp-recall;
 Author: Плечев Андрей;

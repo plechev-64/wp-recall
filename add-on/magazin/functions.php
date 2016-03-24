@@ -3,23 +3,33 @@ include_once 'functions/core.php';
 include_once 'functions/init.php';
 
 function rcl_get_cart_button($product_id){
-    if(get_post_meta($product_id, 'outsale', 1)) return false;
-
-    if(get_post_meta($product_id, 'availability_product', 1)=='empty'){ //если товар цифровой
-        $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'onclick="rcl_add_cart(this);return false;" data-product='.$product_id)).'</div>';
-    }else{
-        if($rmag_options['products_warehouse_recall']==1){
-            $amount = get_post_meta($product_id, 'amount_product', 1);
-            if($amount>0||$amount==false){
-                $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'onclick="rcl_add_cart(this);return false;" data-product='.$product_id)).'</div>';
-            }
-        }else{
-            $button = '<div class="cart-button">'.rcl_get_button('В корзину','#',array('icon'=>false,'class'=>'add_basket add_to_cart','attr'=>'onclick="rcl_add_cart(this);return false;" data-product='.$product_id)).'</div>';
-        }
+    global $rmag_options;
+    
+    $insale = (get_post_meta($product_id,'outsale',1))? 0: 1;
+    if(isset($rmag_options['products_warehouse_recall'])&&$rmag_options['products_warehouse_recall']==1){
+        $amount = get_post_meta($product_id, 'amount_product', 1);
+        $insale = ($amount>0||$amount==false)? 1: 0;
     }
-
+    
+    $button = '<div class="cart-button" itemprop="offers" itemscope itemtype="http://schema.org/Offer">';		
+        if($insale){
+            $button .= '<a href="#" class="recall-button" data-product="'.$product_id.'" onclick="rcl_add_cart(this);return false;" itemprop="availability" href="http://schema.org/InStock">
+                <span class="cart-icon">
+                        <i class="fa fa-shopping-cart"></i>
+                </span>
+                <span class="cart-price">';
+                    $button .= rcl_get_price($product_id);
+                $button .= '</span>
+            </a>';
+        }else{
+            $button .= '<span class="product-outsale">
+                <i class="fa fa-refresh rcl-icon"></i>Не в продаже
+            </span>';
+        }
+    $button .= '</div>';
+    
     $button = apply_filters('rcl_cart_button',$button,$product_id);
-
+    
     return $button;
 }
 
