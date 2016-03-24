@@ -64,10 +64,12 @@ function rcl_postmeta_update( $post_id ){
 
     if( !isset($_POST['wprecall']) ) return false;
 
-    $_POST['wprecall'] = array_map('trim', (array)$_POST['wprecall']);
-    foreach((array) $_POST['wprecall'] as $key=>$value ){
-            if($value=='') delete_post_meta($post_id, $key);
-            else update_post_meta($post_id, $key, $value);
+    $POST = $_POST['wprecall'];
+    
+    foreach($POST as $key=>$value ){
+        if(!is_array($value)) $value = trim($value);
+        if($value=='') delete_post_meta($post_id, $key);
+        else update_post_meta($post_id, $key, $value);
     }
     return $post_id;
 }

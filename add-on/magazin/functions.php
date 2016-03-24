@@ -36,24 +36,30 @@ function rcl_get_cart_button($product_id){
 add_filter('the_content','rcl_related_products',70);
 function rcl_related_products($content){
 	global $rmag_options,$post;
+        
 	if($rmag_options['sistem_related_products']!=1) return $content;
+        
 	if($post->post_type!='products')return $content;
-	$related_prodcat = get_post_meta($post->ID,'related_products_recall',1);
-	if(!$related_prodcat) return $content;
+        
+	$related = get_post_meta($post->ID,'related_products_recall',1);
+        
+	if(!$related) return $content;
 
 	$args = array(
             'numberposts' => $rmag_options['size_related_products'],
             'orderby'     => 'rand',
             'post_type'   => 'products',
-            'exclude'     => $post->ID,
-            'tax_query'   => array(
-                array(
-                    'taxonomy'=>'prodcat',
-                    'field'=>'id',
-                    'terms'=> $related_prodcat
-                    )
-                )
+            'exclude'     => $post->ID
 	);
+        
+        foreach($related as $tax=>$id){
+            if($id>0) 
+                $args['tax_query'][] = array(
+                        'taxonomy'=>$tax,
+                        'field'=>'id',
+                        'terms'=> $id
+                    );
+        }
 
 	$related_products = get_posts($args);
 
@@ -62,14 +68,16 @@ function rcl_related_products($content){
         $title_related = $rmag_options['title_related_products_recall'];
         if($title_related) $content .= '<h3>'.$title_related.'</h3>';
         
-	$content .= '<div class="related-products prodlist">';
+	$content .='<div class="products-box type-slab">
+                    <div class="products-list">';
         
 	foreach($related_products as $post){ setup_postdata($post);
 		$content .= rcl_get_include_template('product-slab.php',__FILE__);
 	}
         wp_reset_query();
 
-	$content .= '</div>';
+	$content .= '</div>'
+                . '</div>';
 
 	return $content;
 }

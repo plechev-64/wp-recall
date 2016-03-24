@@ -11,6 +11,21 @@ p.product-meta i{
     float:left;
 }
 
+.slider-rcl .price-prod{
+    background: orange;
+    color: #fff;
+    float: right;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 0 1px 5px;
+    min-width: 95px;
+    padding: 3px 5px;
+    text-align: center;
+}
+.slider-rcl .no-price{
+    background: #8CDD89;
+}
+
 #tab-orders .order-data table,
 .confirm table.form-table,
 table.order-data,

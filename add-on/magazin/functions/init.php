@@ -317,10 +317,13 @@ function rcl_metabox_products( $post ){
 
 	<?php
 	if($rmag_options['sistem_related_products']==1){
+            
+          $related = get_post_meta($post->ID, 'related_products_recall', 1);  
+            
 	echo '<h3>Похожие или рекомендуемые товары:</h3>';
 	$args = array(
 		'show_option_all'    => '',
-		'show_option_none'   => '',
+		'show_option_none'   => 'Выбрать категорию',
 		'orderby'            => 'ID',
 		'order'              => 'ASC',
 		'show_last_update'   => 0,
@@ -329,9 +332,9 @@ function rcl_metabox_products( $post ){
 		'child_of'           => 0,
 		'exclude'            => '',
 		'echo'               => 0,
-		'selected'           => get_post_meta($post->ID, 'related_products_recall', 1),
+		'selected'           => $related['prodcat'],
 		'hierarchical'       => 0,
-		'name'               => 'wprecall[related_products_recall]',
+		'name'               => 'wprecall[related_products_recall][prodcat]',
 		'id'                 => 'name',
 		'class'              => 'postform',
 		'depth'              => 0,
@@ -339,7 +342,31 @@ function rcl_metabox_products( $post ){
 		'taxonomy'           => 'prodcat',
 		'hide_if_empty'      => false );
 
-	echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - выберите товарную категорию</div>';
+            echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - выберите товарную категорию</div>';
+        
+            $args = array(
+		'show_option_all'    => '',
+		'show_option_none'   => 'Выбрать метку',
+		'orderby'            => 'ID',
+		'order'              => 'ASC',
+		'show_last_update'   => 0,
+		'show_count'         => 1,
+		'hide_empty'         => 0,
+		'child_of'           => 0,
+		'exclude'            => '',
+		'echo'               => 0,
+		'selected'           => $related['product_tag'],
+		'hierarchical'       => 0,
+		'name'               => 'wprecall[related_products_recall][product_tag]',
+		'id'                 => 'name',
+		'class'              => 'postform',
+		'depth'              => 0,
+		'tab_index'          => 0,
+		'taxonomy'           => 'product_tag',
+		'hide_if_empty'      => true );
+
+            echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - выберите товарную метку</div>';
+        
 	}
 
         echo apply_filters('rcl_products_custom_fields','',$post);
