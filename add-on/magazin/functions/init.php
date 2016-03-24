@@ -324,7 +324,7 @@ function rcl_metabox_products( $post ){
 	$args = array(
 		'show_option_all'    => '',
 		'show_option_none'   => 'Выбрать категорию',
-		'orderby'            => 'ID',
+		'orderby'            => 'name',
 		'order'              => 'ASC',
 		'show_last_update'   => 0,
 		'show_count'         => 0,
@@ -347,7 +347,7 @@ function rcl_metabox_products( $post ){
             $args = array(
 		'show_option_all'    => '',
 		'show_option_none'   => 'Выбрать метку',
-		'orderby'            => 'ID',
+		'orderby'            => 'name',
 		'order'              => 'ASC',
 		'show_last_update'   => 0,
 		'show_count'         => 1,

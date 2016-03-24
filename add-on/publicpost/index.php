@@ -30,7 +30,7 @@ if (!is_admin()):
 	add_filter('the_content','rcl_post_gallery',10);
 endif;
 
-if (!is_admin()||defined('DOING_AJAX'))add_filter('the_content','rcl_author_info',100);
+if (!is_admin()||defined('DOING_AJAX'))add_filter('the_content','rcl_author_info',70);
 
 add_action('admin_menu', 'rcl_admin_page_publicform',30);
 function rcl_admin_page_publicform(){
