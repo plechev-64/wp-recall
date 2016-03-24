@@ -226,102 +226,91 @@ function rcl_shortcode_productlist($atts, $content = null){
 
 add_shortcode('pricelist', 'rcl_shortcode_pricelist');
 function rcl_shortcode_pricelist($atts, $content = null){
-	global $post;
+    global $post;
 
-	extract(shortcode_atts(array(
-	'catslug' => '',
-	'tagslug'=> '',
-	'catorder'=>'id',
-	'prodorder'=>'post_date'
-	),
-	$atts));
+    extract(shortcode_atts(array(
+        'catslug' => '',
+        'tagslug'=> '',
+        'catorder'=>'id',
+        'prodorder'=>'post_date'
+    ),
+    $atts));
 
-	if($catslug)
-	$args = array(
-	'numberposts'     => -1,
-    'orderby'         => $prodorder,
-    'order'           => '',
-    'post_type'       => 'products',
-	'tag'			  => $tagslug,
-	'include'         => $include,
-	'tax_query' 	  => array(
-							array(
-								'taxonomy'=>'prodcat',
-								'field'=>'slug',
-								'terms'=> $catslug
-								)
-							)
-	);
-	else
-	$args = array(
-    'numberposts'     => -1,
-    'orderby'         => $prodorder,
-    'order'           => '',
-	'tag'			  => $tagslug,
-    'exclude'         => '',
-    'meta_key'        => '',
-    'meta_value'      => '',
-    'post_type'       => 'products',
-    'post_mime_type'  => '',
-    'post_parent'     => '',
-    'post_status'     => 'publish'
-	);
+    $args = array(
+        'numberposts'     => -1,
+        'orderby'         => $prodorder,
+        'order'           => '',
+        'post_type'       => 'products',
+        'tag'             => $tagslug,
+        'include'         => $include            
+    );
 
-	$products = get_posts($args);
+    if($cat){
+        $args['tax_query'][] = array(
+                                    'taxonomy'=>'prodcat',
+                                    'field'=>'id',
+                                    'terms'=> explode(',',$catslug)
+                                );
+    }
 
-	$catargs = array(
-		'orderby'      => $catorder
-		,'order'        => 'ASC'
-		,'hide_empty'   => true
-		,'slug'         => $catslug
-		,'hierarchical' => false
-		,'pad_counts'   => false
-		,'get'          => ''
-		,'child_of'     => 0
-		,'parent'       => ''
-	);
+    if($tag){
+        $args['tax_query'][] = array(
+                                    'taxonomy'=>'product_tag',
+                                    'field'=>'id',
+                                    'terms'=> explode(',',$tagslug)
+                                );
+    }
 
-	$prodcats = get_terms('prodcat', $catargs);
+    $products = get_posts($args);
+
+    $catargs = array(
+        'orderby'      => $catorder
+        ,'order'        => 'ASC'
+        ,'hide_empty'   => true
+        ,'slug'         => $catslug
+        ,'hierarchical' => false
+        ,'pad_counts'   => false
+        ,'get'          => ''
+        ,'child_of'     => 0
+        ,'parent'       => ''
+    );
+
+    $prodcats = get_terms('prodcat', $catargs);
+
+    $n=0;
+
+    $pricelist ='<table class="pricelist">
+            <tr><td>№</td><td>Наименование товара</td><td>Метка товара</td><td>Цена</td></tr>';
+    foreach((array)$prodcats as $prodcat){
+
+        $pricelist .='<tr><td colspan="4" align="center"><b>'.$prodcat->name.'</b></td></tr>';
+
+        foreach((array)$products as $product){
+
+            if( has_term($prodcat->term_id, 'prodcat', $product->ID)){
+
+            $n++;
+            
+            $tags_prod = get_the_term_list( $product->ID, 'product_tag', '', ', ' );
+            
+            $pricelist .='<tr>';
+            $pricelist .='<td>'.$n.'</td>';
+            $pricelist .='<td><a target="_blank" href="'.get_permalink($product->ID).'">'.$product->post_title.'</a>';
+            $pricelist .='<td>'.$tags_prod.'</td>';
+            $pricelist .='<td>'.get_post_meta($product->ID, 'price-products', 1).' руб</td>';
+            $pricelist .='</tr>';
+
+            }
+            unset ($tags_prod);
+        }
 
         $n=0;
 
-        $pricelist ='<table class="pricelist">
-                <tr><td>№</td><td>Наименование товара</td><td>Метка товара</td><td>Цена</td></tr>';
-        foreach((array)$prodcats as $prodcat){
+    }
 
-                $pricelist .='<tr><td colspan="4" align="center"><b>'.$prodcat->name.'</b></td></tr>';
+    $pricelist .='</table>';
 
-                foreach((array)$products as $product){
-
-                        if( has_term($prodcat->term_id, 'prodcat', $product->ID)){
-
-                        $n++;
-
-                        if( has_term( '', 'post_tag', $product->ID ) ){
-                                $tags = get_the_terms( $product->ID, 'post_tag' );
-                                foreach((array)$tags as $tag){
-                                        $tags_prod .= $tag->name;
-                                }
-                        }
-
-                        $pricelist .='<tr>';
-                        $pricelist .='<td>'.$n.'</td>';
-                        $pricelist .='<td><a target="_blank" href="'.get_permalink($product->ID).'">'.$product->post_title.'</a>';
-                        $pricelist .='<td>'.$tags_prod.'</td>';
-                        $pricelist .='<td>'.get_post_meta($product->ID, 'price-products', 1).' руб</td>';
-                        $pricelist .='</tr>';
-
-                        }
-                        unset ($tags_prod);
-                }
-
-                $n=0;
-
-        }
-
-        $pricelist .='</table>';
-
-	return $pricelist;
+    return $pricelist;
 
 }
 
