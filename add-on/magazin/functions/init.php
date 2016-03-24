@@ -81,7 +81,7 @@ function rcl_register_taxonomy_prodcat() {
         'update_item' => 'Обновить категорию',
         'add_new_item' => 'Добавить новую категорию',
         'new_item_name' => 'Новая категория',
-        'separate_items_with_commas' => 'Separate страна with commas',
+        'separate_items_with_commas' => 'Категории разделяются запятыми',
         'add_or_remove_items' => 'Добавить или удалить категорию',
         'choose_from_most_used' => 'Выберите для использования',
         'menu_name' => 'Категории'
@@ -116,7 +116,7 @@ function rcl_register_taxonomy_product_tag() {
         'update_item' => 'Обновить',
         'add_new_item' => 'Добавить новую',
         'new_item_name' => 'Новая',
-        'separate_items_with_commas' => 'Separate страна with commas',
+        'separate_items_with_commas' => 'Разделяйте метки запятыми',
         'add_or_remove_items' => 'Добавить или удалить',
         'choose_from_most_used' => 'Выберите для использования',
         'menu_name' => 'Метки товаров'

@@ -468,7 +468,9 @@ function rcl_add_dropzone(idzone){
         document.getElementById("passwordStrength").className = "strength" + score;
     }
 	
-    function rcl_notice(text,type){
+    function rcl_notice(text,type,time_close){
+        
+        time_close = time_close || false;
         
         var notice_id = rcl_rand(1, 1000);
         
@@ -479,10 +481,12 @@ function rcl_add_dropzone(idzone){
                 if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
                 else jQuery('#rcl-notice').html(html);
         }
-
-        setTimeout(function () {
-            rcl_close_notice('#rcl-notice #notice-'+notice_id)
-        }, 5000);
+        
+        if(time_close){
+            setTimeout(function () {
+                rcl_close_notice('#rcl-notice #notice-'+notice_id)
+            }, time_close);
+        }
     }
 
     function rcl_preloader_show(e){

@@ -133,7 +133,7 @@ function rcl_update_options(){
                 var type = 'error';
             }
 
-            rcl_notice(data['notice'],type);
+            rcl_notice(data['notice'],type,3000);
         } 
     });	  	
     return false;
@@ -154,8 +154,10 @@ function rcl_close_notice(e){
     }, 300);
 }
 
-function rcl_notice(text,type){
+function rcl_notice(text,type,time_close){
         
+    time_close = time_close || false;
+
     var notice_id = rcl_rand(1, 1000);
 
     var html = '<div id="notice-'+notice_id+'" class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
@@ -166,9 +168,11 @@ function rcl_notice(text,type){
             else jQuery('#rcl-notice').html(html);
     }
 
-    setTimeout(function () {
-        rcl_close_notice('#rcl-notice #notice-'+notice_id)
-    }, 5000);
+    if(time_close){
+        setTimeout(function () {
+            rcl_close_notice('#rcl-notice #notice-'+notice_id)
+        }, time_close);
+    }
 }
 
 function rcl_preloader_show(e){

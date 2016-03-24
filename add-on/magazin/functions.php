@@ -35,7 +35,7 @@ function rcl_get_cart_button($product_id){
 
 add_filter('the_content','rcl_related_products',80);
 function rcl_related_products($content){
-	global $rmag_options,$post;
+	global $rmag_options,$productlist;$post;
         
 	if($rmag_options['sistem_related_products']!=1) return $content;
         
@@ -44,6 +44,8 @@ function rcl_related_products($content){
 	$related = get_post_meta($post->ID,'related_products_recall',1);
         
 	if(!$related||!is_array($related)) return $content;
+        
+        $productlist['desc'] = 200;
         
 	$args = array(
             'numberposts' => $rmag_options['size_related_products'],
