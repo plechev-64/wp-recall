@@ -267,15 +267,11 @@ table.order-data tbody tr th:nth-child(1) {
 }
 .products-box .cart-button a{
 	display: block;
-	background: #1F7CA9;
 	color: #fff;
 	padding: 5px 0 5px;
 	float: right;
 	width: 100px;
 	font-size: 16px;
-}
-.products-box .cart-button a:hover{
-	background: #2eabdb;
 }
 .products-box .cart-button a .cart-price{
 	display: block;
