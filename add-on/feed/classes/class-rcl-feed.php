@@ -323,7 +323,7 @@ class Rcl_Feed{
         $filters = array(
             'posts'       => __('News','wp-recall'),
             'comments'    => __('Comments','wp-recall'),
-            'answers'     => __('Ответы в комментариях','wp-recall')
+            'answers'     => __('Answers in comments','wp-recall')
         );
 
         $filters = apply_filters('rcl_feed_filter',$filters);
