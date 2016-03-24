@@ -60,11 +60,6 @@ jQuery(function($){
 	
     init_location_data();
 
-    $('#rcl-notice,body').on('click','a.close-notice',function(){	
-            $(this).parent().remove();
-            return false;
-    });
-    
     $('body').on('click','.rcl-ajax',function(){
         rcl_preloader_show('#lk-content > div');
         var e = $(this);
@@ -280,6 +275,11 @@ jQuery(function($){
         rcl_update_require_checkbox(this);
     });
     
+    $('#rcl-notice,body').on('click','a.close-notice',function(){           
+            rcl_close_notice(jQuery(this).parent());
+            return false;
+    });
+    
     function rcl_update_require_checkbox(e){
         var name = $(e).attr('name');
         var chekval = $('form input[name="'+name+'"]:checked').val();
@@ -384,6 +384,13 @@ jQuery(function($){
 
 });
 
+function rcl_close_notice(e){
+    jQuery(e).animate({
+        opacity: 0,
+        height: 'hide'
+    }, 300);
+}
+
 function rcl_add_dropzone(idzone){
 
     jQuery(document.body).bind("drop", function(e){
@@ -461,14 +468,21 @@ function rcl_add_dropzone(idzone){
         document.getElementById("passwordStrength").className = "strength" + score;
     }
 	
-    function rcl_notice(text,type){	
-        var html = '<div class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
+    function rcl_notice(text,type){
+        
+        var notice_id = rcl_rand(1, 1000);
+        
+        var html = '<div id="notice-'+notice_id+'" class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
         if(!jQuery('#rcl-notice').size()){
                 jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
         }else{
                 if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
                 else jQuery('#rcl-notice').html(html);
         }
+
+        setTimeout(function () {
+            rcl_close_notice('#rcl-notice #notice-'+notice_id)
+        }, 5000);
     }
 
     function rcl_preloader_show(e){
@@ -477,4 +491,12 @@ function rcl_add_dropzone(idzone){
 
     function rcl_preloader_hide(){
         jQuery('.rcl_preloader').remove();
+    }
+    
+    function rcl_rand( min, max ) {
+        if( max ) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+        } else {
+                return Math.floor(Math.random() * (min + 1));
+        }
     }

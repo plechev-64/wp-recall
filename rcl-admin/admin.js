@@ -108,9 +108,9 @@ jQuery(function($){
 		return subject.split(search).join(replace);
 	}
 
-        $('#rcl-notice,body').on('click','a.close-notice',function(){	
-                $(this).parent().remove();
-                return false;
+        $('#rcl-notice,body').on('click','a.close-notice',function(){           
+            rcl_close_notice(jQuery(this).parent());
+            return false;
         });
 
 });
@@ -139,14 +139,36 @@ function rcl_update_options(){
     return false;
 }
 
-function rcl_notice(text,type){	
-    var html = '<div class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
+function rcl_rand( min, max ) {
+    if( max ) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+    } else {
+            return Math.floor(Math.random() * (min + 1));
+    }
+}
+
+function rcl_close_notice(e){
+    jQuery(e).animate({
+        opacity: 0,
+        height: 'hide'
+    }, 300);
+}
+
+function rcl_notice(text,type){
+        
+    var notice_id = rcl_rand(1, 1000);
+
+    var html = '<div id="notice-'+notice_id+'" class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
     if(!jQuery('#rcl-notice').size()){
             jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
     }else{
-        if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
-        else jQuery('#rcl-notice').html(html);
+            if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
+            else jQuery('#rcl-notice').html(html);
     }
+
+    setTimeout(function () {
+        rcl_close_notice('#rcl-notice #notice-'+notice_id)
+    }, 5000);
 }
 
 function rcl_preloader_show(e){
