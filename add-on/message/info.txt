@@ -3,5 +3,5 @@ Version: 3.1.4;
 Support Core: 13.2.0;
 Description: Функционал приватных сообщений для wp-recall;
 Author: Плечев Андрей;
-Author URI: http://wppost.ru/;
-Add-on URI: http://wppost.ru/products/private-message-dopolnenie-privatnyx-soobshhenij-dlya-vashego-sajta-s-pomoshhyu-wp-recall/;
+Author URI: http://codeseller.ru/;
+Add-on URI: http://codeseller.ru/products/private-message-dopolnenie-privatnyx-soobshhenij-dlya-vashego-sajta-s-pomoshhyu-wp-recall/;
