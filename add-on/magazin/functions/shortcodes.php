@@ -19,7 +19,8 @@ global $post,$rmag_options;
         $price = $metas['price-products'];
         $outsale = (isset($metas['outsale']))?$metas['outsale']:false;
 
-        $button = '<div class="price-basket-product">';
+        $button = '<div id="product-'.$post->ID.'" class="single-cart-button">'
+                . '<div class="price-basket-product">';
 
         if(!$outsale){
             if($metas['availability_product']=='empty'){ //если товар цифровой
@@ -40,7 +41,8 @@ global $post,$rmag_options;
             }
         }
 
-        $button .= '</div>';
+        $button .= '</div>'
+                . '</div>';
 
         $button = apply_filters('cart_button_product_page',$button);
 

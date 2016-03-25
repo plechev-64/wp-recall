@@ -24,8 +24,7 @@ function rmag_update_options ( ) {
         $options[$key]=$value;
     }
 
-    update_option('primary-rmag-options',$options);
-    
+    update_option('primary-rmag-options',$options);    
     
     if(isset($_POST['local'])){
         foreach((array)$_POST['local'] as $key => $value){

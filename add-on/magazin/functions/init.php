@@ -66,39 +66,41 @@ function rcl_register_posttype_products(){
     register_post_type( 'products', $args );
 }
 
-add_action( 'init', 'rcl_register_taxonomy_prodcat' );
-function rcl_register_taxonomy_prodcat() {
+if(!function_exists('rcl_register_taxonomy_prodcat')){
+    add_action( 'init', 'rcl_register_taxonomy_prodcat' );
+    function rcl_register_taxonomy_prodcat() {
 
-    $labels = array(
-          'name' => 'Категории',
-        'singular_name' => 'Категории',
-        'search_items' => 'Поиск',
-        'popular_items' => 'Популярные категории',
-        'all_items' => 'Все категории',
-        'parent_item' => 'Родительская категория',
-        'parent_item_colon' => 'Родительская категория:',
-        'edit_item' => 'Редактировать категорию',
-        'update_item' => 'Обновить категорию',
-        'add_new_item' => 'Добавить новую категорию',
-        'new_item_name' => 'Новая категория',
-        'separate_items_with_commas' => 'Категории разделяются запятыми',
-        'add_or_remove_items' => 'Добавить или удалить категорию',
-        'choose_from_most_used' => 'Выберите для использования',
-        'menu_name' => 'Категории'
-    );
+        $labels = array(
+              'name' => 'Категории',
+            'singular_name' => 'Категории',
+            'search_items' => 'Поиск',
+            'popular_items' => 'Популярные категории',
+            'all_items' => 'Все категории',
+            'parent_item' => 'Родительская категория',
+            'parent_item_colon' => 'Родительская категория:',
+            'edit_item' => 'Редактировать категорию',
+            'update_item' => 'Обновить категорию',
+            'add_new_item' => 'Добавить новую категорию',
+            'new_item_name' => 'Новая категория',
+            'separate_items_with_commas' => 'Категории разделяются запятыми',
+            'add_or_remove_items' => 'Добавить или удалить категорию',
+            'choose_from_most_used' => 'Выберите для использования',
+            'menu_name' => 'Категории'
+        );
 
-    $args = array(
-        'labels' => $labels,
-        'public' => true,
-        'show_in_nav_menus' => true,
-        'show_ui' => true,
-        'show_tagcloud' => true,
-        'hierarchical' => true,
-        'rewrite' => true,
-        'query_var' => true
-    );
+        $args = array(
+            'labels' => $labels,
+            'public' => true,
+            'show_in_nav_menus' => true,
+            'show_ui' => true,
+            'show_tagcloud' => true,
+            'hierarchical' => true,
+            'rewrite' => true,
+            'query_var' => true
+        );
 
-    register_taxonomy( 'prodcat', array('products'), $args );
+        register_taxonomy( 'prodcat', array('products'), $args );
+    }
 }
 
 add_action( 'init', 'rcl_register_taxonomy_product_tag' );
@@ -271,172 +273,172 @@ function rcl_fill_thumb_column($column_name, $post_id) {
 
 add_action('admin_init', 'rcl_products_fields', 1);
 function rcl_products_fields() {
-    add_meta_box( 'products_fields', 'Характеристики товара', 'rcl_metabox_products', 'products', 'normal', 'high'  );
+    add_meta_box( 'products_fields', 'Характеристики товара', 'rcl_metabox_products', 'products', 'normal','high' );
 }
 
 function rcl_metabox_products( $post ){
-	global $rmag_options; ?>
+    global $rmag_options; ?>
 
-	<p>Цена товара:<br>
-	<label><input type="number" name="wprecall[price-products]" value="<?php echo get_post_meta($post->ID,'price-products',1); ?>" style="width:70px" /> <?php rcl_type_currency_list($post->ID); ?></label></p>
+    <p>Цена товара:<br>
+    <label><input type="number" name="wprecall[price-products]" value="<?php echo get_post_meta($post->ID,'price-products',1); ?>" style="width:70px" /> <?php rcl_type_currency_list($post->ID); ?></label></p>
 
-	<?php if($rmag_options['multi_cur']){ ?>
-	<p>Курс доп.валюты для товара:<br>
-	<label><input type="text" name="wprecall[curse_currency]" value="<?php echo get_post_meta($post->ID,'curse_currency',1); ?>" style="width:70px" /></label><br>
-	<small>Текущий курс доп.валюты: <?php echo $rmag_options['curse_currency']; ?>.<br>
-	Если для товара указан свой курс, то он будет приоритетным при расчете цены этого товара.</small></p>
-	<?php } ?>
+    <?php if($rmag_options['multi_cur']){ ?>
+    <p>Курс доп.валюты для товара:<br>
+    <label><input type="text" name="wprecall[curse_currency]" value="<?php echo get_post_meta($post->ID,'curse_currency',1); ?>" style="width:70px" /></label><br>
+    <small>Текущий курс доп.валюты: <?php echo $rmag_options['curse_currency']; ?>.<br>
+    Если для товара указан свой курс, то он будет приоритетным при расчете цены этого товара.</small></p>
+    <?php } ?>
 
-	<p>Наценка на товар (%):<br>
-	<label><input type="number" name="wprecall[margin_product]" value="<?php echo get_post_meta($post->ID,'margin_product',1); ?>" style="width:70px" /></label><br>
-	<small>Наценка на товар будет прибавляться к выводимой стоимости товара</small></p>
+    <p>Наценка на товар:<br>
+    <label><input type="number" name="wprecall[margin_product]" value="<?php echo get_post_meta($post->ID,'margin_product',1); ?>" style="width:70px" /> (%)</label><br>
+    <small>Наценка на товар будет прибавляться к выводимой стоимости товара</small></p>
 
-	<?php
-	$customprice = unserialize(get_post_meta($post->ID, 'custom-price', 1));
-	if($customprice){
-		$cnt = count($customprice);
-		for($a=0;$a<$cnt;$a++){
-			$price .= '<p id="custom-price-'.$a.'">Заголовок: <input type="text" class="title-custom-price" name="title-custom-price[]" value="'.$customprice[$a]['title'].'">
-			Цена: <input type="number" class="custom-price" name="custom-price[]" value="'.$customprice[$a]['price'].'">
-			<a href="#" class="delete-price" id="'.$a.'">удалить</a></p>';
-		}
-	} ?>
+    <?php
+    $customprice = unserialize(get_post_meta($post->ID, 'custom-price', 1));
+    if($customprice){
+            $cnt = count($customprice);
+            for($a=0;$a<$cnt;$a++){
+                    $price .= '<p id="custom-price-'.$a.'">Заголовок: <input type="text" class="title-custom-price" name="title-custom-price[]" value="'.$customprice[$a]['title'].'">
+                    Цена: <input type="number" class="custom-price" name="custom-price[]" value="'.$customprice[$a]['price'].'">
+                    <a href="#" class="delete-price" id="'.$a.'">удалить</a></p>';
+            }
+    } ?>
 
-	<?php if($rmag_options['products_warehouse_recall']==1){ ?>
-		<h4>Наличие товара: <?php $mark_v = get_post_meta($post->ID, 'availability_product', 1); ?></h4>
-		 <p><label><input type="radio" name="wprecall[availability_product]" value="" <?php checked( $mark_v, '' ); ?>/> в наличии</label>
-		 <input type="number" name="wprecall[amount_product]" value="<?php echo get_post_meta($post->ID, 'amount_product', 1); ?>" size="4"/> шт.</p>
-		 <p><label><input type="radio" name="wprecall[availability_product]" value="empty" <?php checked( $mark_v, 'empty' ); ?> /> Цифровой товар</label></p>
+    <?php if($rmag_options['products_warehouse_recall']==1){ ?>
+            <h4>Наличие товара: <?php $mark_v = get_post_meta($post->ID, 'availability_product', 1); ?></h4>
+             <p><label><input type="radio" name="wprecall[availability_product]" value="" <?php checked( $mark_v, '' ); ?>/> в наличии</label>
+             <input type="number" name="wprecall[amount_product]" value="<?php echo get_post_meta($post->ID, 'amount_product', 1); ?>" size="4"/> шт.</p>
+             <p><label><input type="radio" name="wprecall[availability_product]" value="empty" <?php checked( $mark_v, 'empty' ); ?> /> Цифровой товар</label></p>
 
-        <?php }else{ ?>
-            <p><label><input type="checkbox" name="wprecall[availability_product]" value="empty" <?php checked( get_post_meta($post->ID, 'availability_product', 1), 'empty' ); ?> /> Цифровой товар</label></p>
-        <?php } ?>
+    <?php }else{ ?>
+        <p><label><input type="checkbox" name="wprecall[availability_product]" value="empty" <?php checked( get_post_meta($post->ID, 'availability_product', 1), 'empty' ); ?> /> Цифровой товар</label></p>
+    <?php } ?>
 
 
-        <p><label><input type="checkbox" name="wprecall[outsale]" value="1" <?php checked( get_post_meta($post->ID, 'outsale', 1), 1 ); ?> /> Снять с продажи</label></p>
+    <p><label><input type="checkbox" name="wprecall[outsale]" value="1" <?php checked( get_post_meta($post->ID, 'outsale', 1), 1 ); ?> /> Снять с продажи</label></p>
 
-	<?php
-	if($rmag_options['sistem_related_products']==1){
-            
-          $related = get_post_meta($post->ID, 'related_products_recall', 1);  
-            
-	echo '<h3>Похожие или рекомендуемые товары:</h3>';
-	$args = array(
-		'show_option_all'    => '',
-		'show_option_none'   => 'Выбрать категорию',
-		'orderby'            => 'name',
-		'order'              => 'ASC',
-		'show_last_update'   => 0,
-		'show_count'         => 0,
-		'hide_empty'         => 0,
-		'child_of'           => 0,
-		'exclude'            => '',
-		'echo'               => 0,
-		'selected'           => $related['prodcat'],
-		'hierarchical'       => 0,
-		'name'               => 'wprecall[related_products_recall][prodcat]',
-		'id'                 => 'name',
-		'class'              => 'postform',
-		'depth'              => 0,
-		'tab_index'          => 0,
-		'taxonomy'           => 'prodcat',
-		'hide_if_empty'      => false );
+    <?php
+    if($rmag_options['sistem_related_products']==1){
 
-            echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - выберите товарную категорию</div>';
-        
-            $args = array(
-		'show_option_all'    => '',
-		'show_option_none'   => 'Выбрать метку',
-		'orderby'            => 'name',
-		'order'              => 'ASC',
-		'show_last_update'   => 0,
-		'show_count'         => 1,
-		'hide_empty'         => 0,
-		'child_of'           => 0,
-		'exclude'            => '',
-		'echo'               => 0,
-		'selected'           => $related['product_tag'],
-		'hierarchical'       => 0,
-		'name'               => 'wprecall[related_products_recall][product_tag]',
-		'id'                 => 'name',
-		'class'              => 'postform',
-		'depth'              => 0,
-		'tab_index'          => 0,
-		'taxonomy'           => 'product_tag',
-		'hide_if_empty'      => true );
+      $related = get_post_meta($post->ID, 'related_products_recall', 1);  
 
-            echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - выберите товарную метку</div>';
-        
-	}
+    echo '<h3>Похожие или рекомендуемые товары:</h3>';
+    $args = array(
+            'show_option_all'    => '',
+            'show_option_none'   => 'Выбрать категорию',
+            'orderby'            => 'name',
+            'order'              => 'ASC',
+            'show_last_update'   => 0,
+            'show_count'         => 0,
+            'hide_empty'         => 0,
+            'child_of'           => 0,
+            'exclude'            => '',
+            'echo'               => 0,
+            'selected'           => $related['prodcat'],
+            'hierarchical'       => 0,
+            'name'               => 'wprecall[related_products_recall][prodcat]',
+            'id'                 => 'name',
+            'class'              => 'postform',
+            'depth'              => 0,
+            'tab_index'          => 0,
+            'taxonomy'           => 'prodcat',
+            'hide_if_empty'      => false );
 
-        echo apply_filters('rcl_products_custom_fields','',$post);
+        echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - выберите товарную категорию</div>';
 
-	if(!class_exists( 'Attachments' )){
-	$args = array(
-    'numberposts' => -1,
-    'order'=> 'ASC',
-    'post_mime_type' => 'image',
-    'post_parent' => $post->ID,
-    'post_status' => null,
-    'post_type' => 'attachment'
+        $args = array(
+            'show_option_all'    => '',
+            'show_option_none'   => 'Выбрать метку',
+            'orderby'            => 'name',
+            'order'              => 'ASC',
+            'show_last_update'   => 0,
+            'show_count'         => 1,
+            'hide_empty'         => 0,
+            'child_of'           => 0,
+            'exclude'            => '',
+            'echo'               => 0,
+            'selected'           => $related['product_tag'],
+            'hierarchical'       => 0,
+            'name'               => 'wprecall[related_products_recall][product_tag]',
+            'id'                 => 'name',
+            'class'              => 'postform',
+            'depth'              => 0,
+            'tab_index'          => 0,
+            'taxonomy'           => 'product_tag',
+            'hide_if_empty'      => true );
+
+        echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - выберите товарную метку</div>';
+
+    }
+
+    echo apply_filters('rcl_products_custom_fields','',$post);
+
+    if(!class_exists( 'Attachments' )){
+    $args = array(
+        'numberposts' => -1,
+        'order'=> 'ASC',
+        'post_mime_type' => 'image',
+        'post_parent' => $post->ID,
+        'post_status' => null,
+        'post_type' => 'attachment'
     );
 
-	$childrens = get_children( $args );
+    $childrens = get_children( $args );
 
-	$postmeta = get_post_meta($post->ID, 'children_prodimage', 1);
-	$value = explode(',',$postmeta);
-	$count_value = count($value);
-	$id_thumbnail = get_post_thumbnail_id( $post->ID );
+    $postmeta = get_post_meta($post->ID, 'children_prodimage', 1);
+    $value = explode(',',$postmeta);
+    $count_value = count($value);
+    $id_thumbnail = get_post_thumbnail_id( $post->ID );
 
-	echo '
-	<style>
-	.image-prod-gallery{float: left; margin: 3px;} .prod-gallery{overflow:hidden;}
-	</style>
-	<h3>Изображения галереи</h3>
+    echo '
+    <style>
+    .image-prod-gallery{float: left; margin: 3px;} .prod-gallery{overflow:hidden;}
+    </style>
+    <h3>Изображения галереи</h3>
 
-	<div class="prod-gallery">';
-	if( $childrens ){
-		$n=0;
+    <div class="prod-gallery">';
+    if( $childrens ){
+            $n=0;
 
-		foreach((array) $childrens as $children ){
+            foreach((array) $childrens as $children ){
 
-                    $n++;
+                $n++;
 
+                for($a=0;$a<=$count_value;$a++){
+                        if($value[$a]==$children->ID) $selected = ' checked=checked';
+                }
+                echo '<div class="image-prod-gallery"><label><img width="100" src="'.wp_get_attachment_thumb_url( $children->ID ).'" class="current">';
+                echo '<input style="position: absolute; margin-left: -15px; margin-top: 85px;" type="checkbox" id="imageprod-'.$children->ID.'" name="children_prodimage[]" value="'.$children->ID.'"'.$selected.'></label></div>';
+
+
+                $selected = '';
+
+                if($id_thumbnail==$children->ID) $thumb = true;
+
+            }
+            if(!$thumb&&has_post_thumbnail($post->ID)){
                     for($a=0;$a<=$count_value;$a++){
-                            if($value[$a]==$children->ID) $selected = ' checked=checked';
+                            if($value[$a]==$id_thumbnail) $selected = ' checked=checked';
                     }
-                    echo '<div class="image-prod-gallery"><label><img width="100" src="'.wp_get_attachment_thumb_url( $children->ID ).'" class="current">';
-                    echo '<input style="position: absolute; margin-left: -15px; margin-top: 85px;" type="checkbox" id="imageprod-'.$children->ID.'" name="children_prodimage[]" value="'.$children->ID.'"'.$selected.'></label></div>';
-
+                    echo '<div class="image-prod-gallery"><label><img width="100" src="'.wp_get_attachment_thumb_url( $id_thumbnail ).'" class="current">';
+                    echo '<input style="position: absolute; margin-left: -15px; margin-top: 85px;" type="checkbox" id="imageprod-'.$id_thumbnail.'" name="children_prodimage[]" value="'.$id_thumbnail.'"'.$selected.'></label></div>';
 
                     $selected = '';
+            }
 
-                    if($id_thumbnail==$children->ID) $thumb = true;
+    }else{
+            if(has_post_thumbnail($post->ID)){
+                    for($a=0;$a<=$count_value;$a++){
+                                    if($value[$a]==$id_thumbnail) $selected = ' checked=checked';
+                    }
+                    echo '<div class="image-prod-gallery"><label><img width="100" src="'.wp_get_attachment_thumb_url( $id_thumbnail ).'" class="current">';
+                    echo '<input style="position: absolute; margin-left: -15px; margin-top: 85px;" type="checkbox" id="imageprod-'.$id_thumbnail.'" name="children_prodimage[]" value="'.$id_thumbnail.'"'.$selected.'></label></div>';
 
-		}
-		if(!$thumb&&has_post_thumbnail($post->ID)){
-			for($a=0;$a<=$count_value;$a++){
-				if($value[$a]==$id_thumbnail) $selected = ' checked=checked';
-			}
-			echo '<div class="image-prod-gallery"><label><img width="100" src="'.wp_get_attachment_thumb_url( $id_thumbnail ).'" class="current">';
-			echo '<input style="position: absolute; margin-left: -15px; margin-top: 85px;" type="checkbox" id="imageprod-'.$id_thumbnail.'" name="children_prodimage[]" value="'.$id_thumbnail.'"'.$selected.'></label></div>';
-
-			$selected = '';
-		}
-
-	}else{
-		if(has_post_thumbnail($post->ID)){
-			for($a=0;$a<=$count_value;$a++){
-					if($value[$a]==$id_thumbnail) $selected = ' checked=checked';
-			}
-			echo '<div class="image-prod-gallery"><label><img width="100" src="'.wp_get_attachment_thumb_url( $id_thumbnail ).'" class="current">';
-			echo '<input style="position: absolute; margin-left: -15px; margin-top: 85px;" type="checkbox" id="imageprod-'.$id_thumbnail.'" name="children_prodimage[]" value="'.$id_thumbnail.'"'.$selected.'></label></div>';
-
-			$selected = '';
-		}
-	}
-	echo '</div>';
-	}
+                    $selected = '';
+            }
+    }
+    echo '</div>';
+    }
 
 ?>
 

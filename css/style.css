@@ -63,36 +63,36 @@ span.ruble-symbol{
     padding: 6px 2px 6px 10px;
 }
 #rcl-notice{
-	position: fixed;
+    position: fixed;
     top: 70px;
-	left: 10px;
+    left: 10px;
     width: 210px;
-	z-index: 999999;
+    z-index: 999999;
 }
 #rcl-notice .notice-window {
-    line-height: 1;
+    line-height: 1.2;
     font-size: 14px;
-	margin: 5px 0;
-	padding: 8px 2px 8px 10px;
-	word-wrap: break-word;
+    margin: 5px 0;
+    padding: 8px 2px 8px 10px;
+    word-wrap: break-word;
 }
 .notify-lk .error,
 #rcl-notice .type-error{
-	background: rgb(255, 207, 207);
+    background: rgb(255, 207, 207);
     color: red;
-	border-left: 3px solid red;
+    border-left: 3px solid red;
 }
 .notify-lk .warning,
 #rcl-notice .type-warning{
-	background: #fff5ce;
+    background: #fff5ce;
     color: #333;
-	border-left: 3px solid #333;
+    border-left: 3px solid #333;
 }
 .notify-lk .success,
 #rcl-notice .type-success{
-	background: #bfffbd;
+    background: #bfffbd;
     color: #008000;
-	border-left: 3px solid #008000;
+    border-left: 3px solid #008000;
 }
 #rcl-notice .notice-window .close-notice{
     float:right;

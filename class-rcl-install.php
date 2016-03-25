@@ -150,11 +150,6 @@ class RCL_Install {
         $upload_dir = RCL()->upload_dir();
 
         $files = array(
-            /*array(
-                'base'  => $upload_dir['basedir'],
-                'file' 		=> '.htaccess',
-                'content' 	=> 'deny from all'
-            ),*/
             array(
                 'base'  => $upload_dir['basedir'],
                 'file' 		=> 'index.html',
@@ -170,41 +165,21 @@ class RCL_Install {
                 'file' 		=> 'index.html',
                 'content' 	=> ''
             ),
-            /*array(
-                'base'  => RCL_TAKEPATH . 'add-on',
-                'file' 		=> '.htaccess',
-                'content' 	=> 'deny from all'
-            ),*/
             array(
                 'base'  => RCL_TAKEPATH . 'add-on',
                 'file' 		=> 'index.html',
                 'content' 	=> ''
             ),
-            /*array(
-                'base'  => RCL_TAKEPATH . 'themes',
-                'file' 		=> '.htaccess',
-                'content' 	=> 'deny from all'
-            ),*/
             array(
                 'base'  => RCL_TAKEPATH . 'themes',
                 'file' 		=> 'index.html',
                 'content' 	=> ''
             ),
-            /*array(
-                'base'  => RCL_TAKEPATH . 'templates',
-                'file' 		=> '.htaccess',
-                'content' 	=> 'deny from all'
-            ),*/
             array(
                 'base'  => RCL_TAKEPATH . 'templates',
                 'file' 		=> 'index.html',
                 'content' 	=> ''
             ),
-            /*array(
-                'base'  => RCL_UPLOAD_PATH,
-                'file' 		=> '.htaccess',
-                'content' 	=> 'deny from all'
-            ),*/
             array(
                 'base'  => RCL_UPLOAD_PATH,
                 'file' 		=> 'index.html',
@@ -298,14 +273,7 @@ class RCL_Install {
             }
 
             /*Ниже функции модифицикации данных плагина при обновлении плагина с более ранних версий*/
-            require_once('functions/migration.php');
-            //переименование temp-rcl на rcl-upload и данных юзеров использующих эту папку
-            //rcl_rename_media_dir();
-            //изменение путей до загруженных в качестве аватарок изображений
-            //rcl_update_avatar_data();
-            //обновление данных фида пользователей
-            //rcl_update_old_feeds();
-            
+            require_once('functions/migration.php');            
 
         }
 

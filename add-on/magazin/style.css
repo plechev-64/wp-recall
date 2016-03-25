@@ -212,12 +212,15 @@ table.order-data tbody tr th:nth-child(1) {
 #tab-orders.orders_block table td:not(:first-child) {
     text-align: center;
 }
-.price-basket-product {
-	clear: both;
+.single-cart-button{
+    position:relative;
+    clear: both;
+}
+.single-cart-button .price-basket-product {
     padding: 5px 0;
     text-align: right;
 }
-.price-basket-product input[type="text"] {
+.single-cart-button .price-basket-product input[type="text"] {
     border: none;
     box-shadow: 0 0 1px 1px rgb(243, 243, 243);
     color: #000;
@@ -228,7 +231,7 @@ table.order-data tbody tr th:nth-child(1) {
     padding: 0 10px;
     width: 50px;
 }
-.price-basket-product .add_basket {
+.single-cart-button .price-basket-product .add_basket {
     color: #fff;
     margin: 0 2px 0 5px;
     padding: 5px 10px;
@@ -344,32 +347,33 @@ table.order-data tbody tr th:nth-child(1) {
     left: 0;
 }
 .products-box.type-slab .products-list .product .product-content .product-meta{
-	position: relative;
+    position: relative;
 }
 .products-box.type-slab .products-list .product .product-content .product-meta .meta-name{
 	
 }
 .products-box.type-slab .products-list .product .product-content .product-meta .meta{
-	display: inline-block;
-	margin: 0 0 5px 0;
-	position: relative;
+    display: inline-block;
+    margin: 0 0 5px 0;
+    position: relative;
 }
 .products-box.type-slab .products-list .product .product-content .product-meta .meta a{
-	color:#fff;
-	text-decoration:underline;
+    color:#fff;
+    text-decoration:underline;
 }
 .products-box.type-slab .products-list .product .product-content .product-meta .meta .meta-content-box{
-	display: none;
-	position: absolute;
-	padding: 5px;
-	color: #fff;
+    display: none;
+    position: absolute;
+    padding: 5px;
+    color: #fff;
     background: #2EABDB;
-	width: 140px;
-	bottom: 24px;
-	left: 0;
-	z-index:9;
-	box-shadow: 2px -2px 2px 0px rgb(185, 201, 214);
-	font-size:13px;
+    width: 140px;
+    bottom: 24px;
+    left: 0;
+    z-index:9;
+    box-shadow: 2px -2px 2px 0px rgb(185, 201, 214);
+    font-size:13px;
+    line-height: 1.2;
 }
 .products-box.type-slab .products-list .product .product-content .product-meta .meta .meta-content{
 	

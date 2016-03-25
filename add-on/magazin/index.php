@@ -86,7 +86,10 @@ function rcl_orders($author_lk){
 
 add_filter('rcl_functions_js','rcl_magazine_functions_js');
 function rcl_magazine_functions_js($string){
-
+    global $rmag_options;
+    
+    $cart_url = (isset($rmag_options['basket_page_rmag']))? get_permalink($rmag_options['basket_page_rmag']): '#';
+    
     $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
 
     $string .= "
@@ -137,20 +140,20 @@ function rcl_magazine_functions_js($string){
 
                         var numprod = data['num_product'];
                         if(numprod>0){
-                                jQuery('#product-'+data['id_prod']+' .number-product').text(data['num_product']);
+                            jQuery('#product-'+data['id_prod']+' .number-product').text(data['num_product']);
                         }else{
-                                var numberproduct = 0;
-                                jQuery('#product-'+data['id_prod']).remove();
+                            var numberproduct = 0;
+                            jQuery('#product-'+data['id_prod']).remove();
                         }
                         if(data['allprod']==0) jQuery('.confirm').remove();
 
                         jQuery('.cart-numbers').text(data['allprod']);
                     }
                     if(data['recall']==200){
-                            alert('Отрицательное значение!');
+                        alert('Отрицательное значение!');
                     }
                     if(data['recall']==300){
-                            alert('Вы пытаетесь удалить из корзины больше товара чем там есть!');
+                        alert('Вы пытаетесь удалить из корзины больше товара чем там есть!');
                     }
                 }
                 });
@@ -163,24 +166,25 @@ function rcl_magazine_functions_js($string){
             rcl_preloader_show('#product-'+id_post+' > div');
             var id_custom_prod = jQuery(e).attr('name');
             if(id_custom_prod){
-                    var number = jQuery('#number-custom-product-'+id_custom_prod).val();
+                var number = jQuery('#number-custom-product-'+id_custom_prod).val();
             }else{
-                    var number = jQuery('#number_product').val();
+                var number = jQuery('#number_product').val();
             }
-            var dataString = 'action=rcl_add_minicart&id_post='+ id_post+'&number='+number+'&custom='+id_custom_prod;
+            var dataString = 'action=rcl_add_minicart&id_post='+id_post+'&number='+number+'&custom='+id_custom_prod;
             dataString += '&ajax_nonce='+Rcl.nonce;
             jQuery.ajax({
             ".$ajaxdata."
             success: function(data){
                 rcl_preloader_hide();
                 if(data['recall']==100){
-                        jQuery('.empty-basket').replaceWith(data['empty-content']);
-                        jQuery('.cart-summa').html(data['data_sumprice']);
-                        jQuery('.cart-numbers').html(data['allprod']);
-                        rcl_notice('Добавлено в корзину!','success');
+                    rcl_close_notice('#rcl-notice > div');
+                    jQuery('.empty-basket').replaceWith(data['empty-content']);
+                    jQuery('.cart-summa').html(data['data_sumprice']);
+                    jQuery('.cart-numbers').html(data['allprod']);
+                    rcl_notice('Добавлено в корзину!<br>В корзине товаров: '+data['allprod']+' шт<br><a href=\"".$cart_url."\">Перейти в корзину</a>','success');
                 }
                 if(data['recall']==200){
-                        alert('Отрицательное значение!');
+                    alert('Отрицательное значение!');
                 }
             }
             });
