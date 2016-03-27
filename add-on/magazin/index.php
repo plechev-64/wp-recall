@@ -181,7 +181,7 @@ function rcl_magazine_functions_js($string){
                     jQuery('.empty-basket').replaceWith(data['empty-content']);
                     jQuery('.cart-summa').html(data['data_sumprice']);
                     jQuery('.cart-numbers').html(data['allprod']);
-                    rcl_notice('Добавлено в корзину!<br>В корзине товаров: '+data['allprod']+' шт<br><a href=\"".$cart_url."\">Перейти в корзину</a>','success');
+                    rcl_notice('Добавлено в корзину!<br>В корзине товаров: '+data['allprod']+' шт<br><a style=\"text-decoration:underline;\" href=\"".$cart_url."\">Перейти в корзину</a>','success');
                 }
                 if(data['recall']==200){
                     alert('Отрицательное значение!');

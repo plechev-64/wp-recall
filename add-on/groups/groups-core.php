@@ -429,7 +429,7 @@ function rcl_get_group($group_id){
 
     $group = rcl_get_groups(array('include'=>$group_id));
     
-    wp_cache_add( $cachekey, $group );
+    wp_cache_add( $cachekey, $group[0] );
 
     return $group[0];
 }

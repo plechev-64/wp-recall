@@ -203,9 +203,7 @@ if(!isset($rmag_options['basket_page_rmag'])){
         'post_type'=>'page',
         'post_name'=>'productlist'
     ));
-    
-    flush_rewrite_rules();
-    
+
 }
 
 update_option('primary-rmag-options',$rmag_options);

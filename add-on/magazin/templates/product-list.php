@@ -2,7 +2,7 @@
 	/*Шаблон для отображения содержимого шорткода [productlist] с указанием атрибута type='list'*/
 	/*Данный шаблон можно разместить в папке используемого шаблона /wp-content/wp-recall/templates/ и он будет подключаться оттуда*/
 ?>
-<?php global $post,$desc,$productlist; ?>
+<?php global $post,$productlist; ?>
 <div class="product" id="product-<?php the_ID(); ?>" itemscope itemtype="http://schema.org/Product">
 	<a class="product-thumbnail" href="<?php the_permalink(); ?>">
 		<?php the_post_thumbnail('thumbnail',array('alt'=>$post->post_title,'itemprop'=>'image')); ?>
