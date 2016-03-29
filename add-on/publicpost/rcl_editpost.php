@@ -238,6 +238,14 @@ class Rcl_EditPost {
     }
 }
 
+add_action('update_post_rcl','rcl_set_object_terms_post',10,3);
+function rcl_set_object_terms_post($post_id,$postdata,$update){
+    if(!$update||!isset($postdata['tax_input'])||!$postdata['tax_input']) return false;
+    foreach($postdata['tax_input'] as $taxonomy=>$terms){
+        wp_set_object_terms( $post_id, array_map('intval', $terms), $taxonomy );
+    }
+}
+
 add_filter('pre_update_postdata_rcl','rcl_register_author_post',10);
 function rcl_register_author_post($postdata){
     global $user_ID,$rcl_options,$wpdb;

@@ -348,6 +348,7 @@ class Rcl_Messages{
             global $user_ID,$rcl_options,$wpdb;
 
             $access = '';
+            $getold = '';
             $access = apply_filters('access_chat_rcl',$access,$this->user_lk);
 
             if($this->room){

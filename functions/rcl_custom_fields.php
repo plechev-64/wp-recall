@@ -224,9 +224,9 @@ class Rcl_Custom_Fields{
         if($field['type']=='file')
                 $show = ' <span><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($value), 'user-'.$user_ID ).'">'.__('Download file','wp-recall').'</a></span>';
         if($field['type']=='email')
-                $show = ' <span><a rel="nofolow" target="_blank" href="mailto:'.$value.'">'.$value.'</a></span>';
+                $show = ' <span><a rel="nofollow" target="_blank" href="mailto:'.$value.'">'.$value.'</a></span>';
         if($field['type']=='url')
-                $show = ' <span><a rel="nofolow" target="_blank" href="'.$value.'">'.$value.'</a></span>';            
+                $show = ' <span><a rel="nofollow" target="_blank" href="'.$value.'">'.$value.'</a></span>';            
         if($field['type']=='textarea')
                 $show = '<p>'.nl2br($value).'</p>';
         
