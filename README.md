@@ -21,7 +21,7 @@
 
 ## LICENSE
 License:     GPLv2 or later (license.txt)
-Copyright 2012 Plechev Andrey <support@wppost.ru>
-http://wppost.ru/
+Copyright 2012 Plechev Andrey <support@codeseller.ru>
+http://codeseller.ru/
 
 

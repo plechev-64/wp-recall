@@ -437,7 +437,7 @@ function rcl_render_addons_manager(){
                 <input class="button" type="submit" value="'.__('Save','wp-recall').'" name="save-rcl-key">
                 '.wp_nonce_field('add-rcl-key','_wpnonce',true,false).'
         </form>
-        <p class="install-help">'.__('He will need to update the add-ons here. Get it , you can profile your account online <a href="http://wppost.ru/" target="_blank">http://wppost.ru</a>','wp-recall').'</p>';
+        <p class="install-help">'.__('He will need to update the add-ons here. Get it , you can profile your account online <a href="http://codeseller.ru/" target="_blank">http://codeseller.ru</a>','wp-recall').'</p>';
             
         
     echo '

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-03-24 15:17+0300\n"
+"POT-Creation-Date: 2016-03-29 19:37+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -102,11 +102,11 @@ msgstr "Подписка оформлена"
 #: add-on/feed/index.php:145 add-on/feed/index.php:158
 #: add-on/feed/index.php:166 add-on/groups/groups-core.php:690
 #: add-on/groups/groups-core.php:706 add-on/groups/upload-avatar.php:78
-#: add-on/message/index.php:1608 add-on/message/index.php:1625
-#: add-on/message/index.php:1641 add-on/message/index.php:1658
-#: add-on/message/index.php:1723 add-on/message/index.php:1745
+#: add-on/message/index.php:1609 add-on/message/index.php:1626
+#: add-on/message/index.php:1642 add-on/message/index.php:1659
+#: add-on/message/index.php:1724 add-on/message/index.php:1746
 #: add-on/publicpost/index.php:737 add-on/rating-system/index.php:550
-#: add-on/rating-system/index.php:572 rcl-admin/admin-pages.php:331
+#: add-on/rating-system/index.php:572 rcl-admin/admin-pages.php:333
 #: rcl-functions.php:255
 msgid "Error"
 msgstr "Ошибка"
@@ -182,7 +182,7 @@ msgstr "Пользователи"
 msgid "Filter by"
 msgstr "Фильтр по"
 
-#: add-on/groups/groups-core.php:170 class-rcl-install.php:239
+#: add-on/groups/groups-core.php:170 class-rcl-install.php:214
 msgid "Ban"
 msgstr "Бан"
 
@@ -371,22 +371,22 @@ msgid "Creating groups is allowed"
 msgstr "Создание групп разрешено"
 
 #: add-on/groups/groups-options.php:16 add-on/publicpost/addon-options.php:27
-#: add-on/rating-system/addon-options.php:108 rcl-admin/admin-pages.php:136
+#: add-on/rating-system/addon-options.php:108 rcl-admin/admin-pages.php:138
 msgid "only Administrators"
 msgstr "Только администраторам"
 
 #: add-on/groups/groups-options.php:17 add-on/publicpost/addon-options.php:28
-#: add-on/rating-system/addon-options.php:107 rcl-admin/admin-pages.php:137
+#: add-on/rating-system/addon-options.php:107 rcl-admin/admin-pages.php:139
 msgid "Editors and older"
 msgstr "Редакторам и старше"
 
 #: add-on/groups/groups-options.php:18 add-on/publicpost/addon-options.php:29
-#: add-on/rating-system/addon-options.php:106 rcl-admin/admin-pages.php:138
+#: add-on/rating-system/addon-options.php:106 rcl-admin/admin-pages.php:140
 msgid "Authors and older"
 msgstr "Авторам и старше"
 
 #: add-on/groups/groups-options.php:19
-#: add-on/rating-system/addon-options.php:105 rcl-admin/admin-pages.php:139
+#: add-on/rating-system/addon-options.php:105 rcl-admin/admin-pages.php:141
 msgid "Participants and older"
 msgstr "Участникам и старше"
 
@@ -416,16 +416,16 @@ msgstr "Виджет публикаций группы"
 
 #: add-on/groups/groups-options.php:35 add-on/publicpost/addon-options.php:45
 #: add-on/publicpost/addon-options.php:58
-#: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:188
-#: rcl-admin/admin-pages.php:216 rcl-admin/admin-pages.php:281
-#: rcl-admin/admin-pages.php:286 rcl-admin/admin-pages.php:297
+#: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:190
+#: rcl-admin/admin-pages.php:218 rcl-admin/admin-pages.php:283
+#: rcl-admin/admin-pages.php:288 rcl-admin/admin-pages.php:299
 msgid "Disabled"
 msgstr "Отключено"
 
 #: add-on/groups/groups-options.php:36 add-on/publicpost/addon-options.php:45
 #: add-on/publicpost/addon-options.php:58
-#: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:189
-#: rcl-admin/admin-pages.php:217 rcl-admin/admin-pages.php:297
+#: add-on/rating-system/addon-options.php:55 rcl-admin/admin-pages.php:191
+#: rcl-admin/admin-pages.php:219 rcl-admin/admin-pages.php:299
 msgid "Included"
 msgstr "Подключено"
 
@@ -442,7 +442,7 @@ msgstr "Панель управления"
 #: add-on/groups/groups-widgets.php:25 add-on/groups/groups-widgets.php:134
 #: add-on/groups/groups-widgets.php:187 add-on/groups/groups-widgets.php:220
 #: add-on/groups/groups-widgets.php:300 add-on/groups/groups-widgets.php:433
-#: add-on/magazin/functions/shortcodes.php:120 add-on/publicpost/index.php:148
+#: add-on/magazin/functions/shortcodes.php:122 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
 #: add-on/user-account/index.php:356 functions/rcl_editfields.php:120
@@ -471,8 +471,8 @@ msgid "Apply for membership"
 msgstr "Заявка на доступ"
 
 #: add-on/groups/groups-widgets.php:124
-#: add-on/rating-system/addon-options.php:104 rcl-admin/admin-pages.php:140
-#: rcl-admin/admin-pages.php:205 rcl-widgets.php:32 rcl-widgets.php:96
+#: add-on/rating-system/addon-options.php:104 rcl-admin/admin-pages.php:142
+#: rcl-admin/admin-pages.php:207 rcl-widgets.php:32 rcl-widgets.php:96
 msgid "All users"
 msgstr "Все пользователи"
 
@@ -601,7 +601,7 @@ msgstr "Категории группы"
 msgid "separated by commas"
 msgstr "разделять запятыми"
 
-#: add-on/groups/index.php:346 rcl-admin/admin-pages.php:319
+#: add-on/groups/index.php:346 rcl-admin/admin-pages.php:321
 #: rcl-admin/rcl-admin.php:11
 msgid "Save settings"
 msgstr "Сохранить настройки"
@@ -739,14 +739,14 @@ msgstr "Корзина"
 msgid "Attach image or download it"
 msgstr "Выбрать изображение или загрузить"
 
-#: add-on/magazin/functions/init.php:258 rcl-admin/admin-pages.php:38
+#: add-on/magazin/functions/init.php:260 rcl-admin/admin-pages.php:38
 #: rcl-admin/admin-pages.php:39
 msgid "Settings Wp-Recall"
 msgstr "Настройки Wp-Recall"
 
-#: add-on/magazin/functions/shortcodes.php:88
 #: add-on/magazin/functions/shortcodes.php:90
-#: add-on/magazin/functions/shortcodes.php:117
+#: add-on/magazin/functions/shortcodes.php:92
+#: add-on/magazin/functions/shortcodes.php:119
 msgid "Cart"
 msgstr "Корзина"
 
@@ -822,7 +822,7 @@ msgstr "Фильтр"
 msgid "File does not exist on the server or it has already been loaded!"
 msgstr "Файла нет на сервере или он был удален!"
 
-#: add-on/message/index.php:28 add-on/message/index.php:1352
+#: add-on/message/index.php:28 add-on/message/index.php:1353
 msgid "The file was loaded."
 msgstr "Файл был загружен"
 
@@ -1011,141 +1011,141 @@ msgstr "Пользователь запретил писать ему"
 msgid "Sign in to start a conversation with the user."
 msgstr "Авторизуйтесь для начала переписки с пользователем"
 
-#: add-on/message/index.php:394
+#: add-on/message/index.php:395
 msgid "Interlocutor"
 msgstr "Собеседник"
 
-#: add-on/message/index.php:394
+#: add-on/message/index.php:395
 msgid "All contacts"
 msgstr "Все контакты"
 
-#: add-on/message/index.php:402
+#: add-on/message/index.php:403
 msgid "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 msgstr "<b>Enter</b> - перенос строки, <b>Ctrl+Enter</b> - отправить"
 
-#: add-on/message/index.php:415 add-on/message/index.php:1255
+#: add-on/message/index.php:416 add-on/message/index.php:1256
 #: templates/form-register.php:27 templates/form-remember.php:18
 msgid "Send"
 msgstr "Отправить"
 
-#: add-on/message/index.php:416
+#: add-on/message/index.php:417
 msgid "Important messages"
 msgstr "Важные сообщения"
 
-#: add-on/message/index.php:428
+#: add-on/message/index.php:429
 msgid "Here will display correspondence history"
 msgstr "Здесь будет отображаться история переписки"
 
-#: add-on/message/index.php:431
+#: add-on/message/index.php:432
 msgid "Show older messages"
 msgstr "Показать более поздние сообщения"
 
-#: add-on/message/index.php:530
+#: add-on/message/index.php:531
 msgid "days"
 msgstr "дн."
 
-#: add-on/message/index.php:531
+#: add-on/message/index.php:532
 msgid "month"
 msgstr "месяц"
 
-#: add-on/message/index.php:532
+#: add-on/message/index.php:533
 msgid "all the time"
 msgstr "все время"
 
-#: add-on/message/index.php:533
+#: add-on/message/index.php:534
 msgid "Blacklist"
 msgstr "Черный список"
 
-#: add-on/message/index.php:534
+#: add-on/message/index.php:535
 msgid "Important"
 msgstr "Важное"
 
-#: add-on/message/index.php:540
+#: add-on/message/index.php:541
 msgid "You havent been in conversation with"
 msgstr "Вы еще ни с кем не вели переписку"
 
-#: add-on/message/index.php:571 add-on/message/index.php:591
-#: add-on/message/index.php:674
+#: add-on/message/index.php:572 add-on/message/index.php:592
+#: add-on/message/index.php:675
 msgid "Contacts not found!"
 msgstr "Контакты не найдены!"
 
-#: add-on/message/index.php:669
+#: add-on/message/index.php:670
 msgid "Last message"
 msgstr "Последнее сообщение"
 
-#: add-on/message/index.php:670
+#: add-on/message/index.php:671
 msgid "The chat history is missing"
 msgstr "История переписки не найдена"
 
-#: add-on/message/index.php:683
+#: add-on/message/index.php:684
 msgid "Delete?"
 msgstr "Удалить?"
 
-#: add-on/message/index.php:747
+#: add-on/message/index.php:748
 msgid "Uncheck"
 msgstr "Снять"
 
-#: add-on/message/index.php:747
+#: add-on/message/index.php:748
 msgid "Mark as important"
 msgstr "Пометить как важное"
 
-#: add-on/message/index.php:816
+#: add-on/message/index.php:817
 msgid "No posts found!"
 msgstr "Сообщения не найдены!"
 
-#: add-on/message/index.php:853
+#: add-on/message/index.php:854
 msgid "Show more recent messages"
 msgstr "Показать больше последних сообщений"
 
-#: add-on/message/index.php:973
+#: add-on/message/index.php:974
 msgid "Your message has been sent!"
 msgstr "Ваше сообщение было доставлено!"
 
-#: add-on/message/index.php:1076
+#: add-on/message/index.php:1077
 msgid "The message is marked as read"
 msgstr "Сообщение помечено как прочтенное"
 
-#: add-on/message/index.php:1235
+#: add-on/message/index.php:1236
 msgid "You a new message!"
 msgstr "Вам новое сообщение!"
 
-#: add-on/message/index.php:1247
+#: add-on/message/index.php:1248
 msgid "Sender"
 msgstr "Отправитель"
 
-#: add-on/message/index.php:1266
+#: add-on/message/index.php:1267
 msgid "Go to the correspondence"
 msgstr "Перейти к переписке"
 
-#: add-on/message/index.php:1270
+#: add-on/message/index.php:1271
 msgid "Reply"
 msgstr "Ответить"
 
-#: add-on/message/index.php:1326
+#: add-on/message/index.php:1327
 msgid "Show more recent posts"
 msgstr "Показать больше последних сообщений"
 
-#: add-on/message/index.php:1354
+#: add-on/message/index.php:1355
 msgid "The file has been received, but not yet loaded."
 msgstr "Файл был отправлен, но не был загружен."
 
-#: add-on/message/index.php:1355
+#: add-on/message/index.php:1356
 msgid "The file was sent to the recipient."
 msgstr "Файл был отправлен получателю,"
 
-#: add-on/message/index.php:1358
+#: add-on/message/index.php:1359
 msgid "Link to sent the file"
 msgstr "Ссылка на файл"
 
-#: add-on/message/index.php:1360
+#: add-on/message/index.php:1361
 msgid "(accept files only from trusted sources)"
 msgstr "(принимайте файлы только от доверенных источников)"
 
-#: add-on/message/index.php:1385
+#: add-on/message/index.php:1386
 msgid "The file was sent successfully."
 msgstr "Файл был успешно отправлен"
 
-#: add-on/message/index.php:1388
+#: add-on/message/index.php:1389
 msgid ""
 "You have exceeded the limit on the number of uploaded files. Wait until the "
 "files sent previously will be accepted."
@@ -1153,20 +1153,20 @@ msgstr ""
 "Вы достигли предела по кол-ву отправляемых файлов. Подождите пока файлы "
 "отправленные ранее будут приняты."
 
-#: add-on/message/index.php:1398
+#: add-on/message/index.php:1399
 msgid "Removes the file from the server"
 msgstr "Удаляю файл с сервера"
 
-#: add-on/message/index.php:1417 add-on/profile/index.php:786
+#: add-on/message/index.php:1418 add-on/profile/index.php:786
 #, php-format
 msgid "Exceeds the maximum size for a picture! Max. %s MB"
 msgstr "Превышен максимальный размер изображения! Макс. %s МВ"
 
-#: add-on/message/index.php:1687
+#: add-on/message/index.php:1688
 msgid "All correspondence"
 msgstr "Вся переписка"
 
-#: add-on/message/index.php:1691
+#: add-on/message/index.php:1692
 msgid "Important notices"
 msgstr "Важные сообщения"
 
@@ -1233,7 +1233,7 @@ msgstr "Разрешить удалять пользователям свой а
 #: add-on/publicpost/addon-options.php:272 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120 add-on/rating-system/index.php:43
-#: rcl-admin/admin-pages.php:46 rcl-admin/admin-pages.php:309
+#: rcl-admin/admin-pages.php:46 rcl-admin/admin-pages.php:311
 msgid "No"
 msgstr "Нет"
 
@@ -1244,7 +1244,7 @@ msgstr "Нет"
 #: add-on/publicpost/addon-options.php:272 add-on/publicpost/index.php:234
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120 add-on/rating-system/index.php:44
-#: rcl-admin/admin-pages.php:47 rcl-admin/admin-pages.php:309
+#: rcl-admin/admin-pages.php:47 rcl-admin/admin-pages.php:311
 msgid "Yes"
 msgstr "Да"
 
@@ -1392,8 +1392,8 @@ msgstr "Страница вывода пользователей"
 #: add-on/user-account/addon-options.php:87
 #: add-on/user-account/addon-options.php:98
 #: add-on/user-account/addon-options.php:108
-#: add-on/user-account/addon-options.php:116 rcl-admin/admin-pages.php:94
-#: rcl-admin/admin-pages.php:246 rcl-widgets.php:59 rcl-widgets.php:118
+#: add-on/user-account/addon-options.php:116 rcl-admin/admin-pages.php:96
+#: rcl-admin/admin-pages.php:248 rcl-widgets.php:59 rcl-widgets.php:118
 msgid "Not selected"
 msgstr "Не выбрано"
 
@@ -1467,7 +1467,7 @@ msgstr "Гостям и пользователям"
 msgid "The publish settings"
 msgstr "Настройки публикации"
 
-#: add-on/publicpost/addon-options.php:36 rcl-admin/admin-pages.php:88
+#: add-on/publicpost/addon-options.php:36 rcl-admin/admin-pages.php:90
 msgid "General settings"
 msgstr "Общие настройки"
 
@@ -2254,7 +2254,7 @@ msgstr "превышение ограничения голосов в течен
 msgid "You can not vote"
 msgstr "Вы не можете голосовать"
 
-#: add-on/user-account/addon-options.php:13 rcl-admin/admin-pages.php:255
+#: add-on/user-account/addon-options.php:13 rcl-admin/admin-pages.php:257
 msgid "Not used"
 msgstr "Не используется"
 
@@ -2443,7 +2443,7 @@ msgstr "Оплатить через платежные системы"
 msgid "Pay personal account"
 msgstr "Оплатить с личного счета"
 
-#: class-rcl-install.php:99 rcl-admin/admin-pages.php:99
+#: class-rcl-install.php:99 rcl-admin/admin-pages.php:101
 msgid "Personal office"
 msgstr "Личный кабинет"
 
@@ -2451,7 +2451,7 @@ msgstr "Личный кабинет"
 msgid "FEED"
 msgstr ""
 
-#: class-rcl-install.php:231
+#: class-rcl-install.php:206
 msgid "Unconfirmed"
 msgstr "Неподтвержденные"
 
@@ -2845,12 +2845,12 @@ msgstr "Введите RCLKEY"
 #: rcl-admin/add-on-manager.php:440
 msgid ""
 "He will need to update the add-ons here. Get it , you can profile your "
-"account online <a href=\"http://wppost.ru/\" target=\"_blank\">http://wppost."
-"ru</a>"
+"account online <a href=\"http://codeseller.ru/\" target=\"_blank\">http://"
+"codeseller.ru</a>"
 msgstr ""
-"Ключ понадобится для обновления дополнений на этой странице. Свой ключ вы "
-"можете получить на странице профиля своего аккаунта на сайте <a href="
-"\"http://wppost.ru/\" target=\"_blank\">http://wppost.ru</a>"
+"Ключ необходим для обновления дополнений на этой странице. Вы можете "
+"получить его в своем личном кабинете во вкладке профиля на сайте <a href="
+"\"http://codeseller.ru/\" target=\"_blank\">http://codeseller.ru</a>"
 
 #: rcl-admin/add-on-manager.php:444
 msgid "To install the add-on to Wp-Recall format .zip"
@@ -2896,31 +2896,31 @@ msgstr "Документация к плагину WP-RECALL"
 msgid "Pictures record the withdrawal in the gallery Wp-Recall?"
 msgstr "Использовать вывод изображений публикации через галерею Wp-Recall?"
 
-#: rcl-admin/admin-pages.php:84
+#: rcl-admin/admin-pages.php:86
 msgid "Configure the plugin Wp-Recall and additions"
 msgstr "Настройка плагина Wp-Recall и его дополнений"
 
-#: rcl-admin/admin-pages.php:100
+#: rcl-admin/admin-pages.php:102
 msgid "The order of withdrawal of the personal Cabinet"
 msgstr "Порядок вывода личного кабинета"
 
-#: rcl-admin/admin-pages.php:105
+#: rcl-admin/admin-pages.php:107
 msgid "On the archive page of the author"
 msgstr "На странице архива автора"
 
-#: rcl-admin/admin-pages.php:106
+#: rcl-admin/admin-pages.php:108
 msgid "Using the shortcode [wp-recall]"
 msgstr "Через шорткод [wp-recall]"
 
-#: rcl-admin/admin-pages.php:114
+#: rcl-admin/admin-pages.php:116
 msgid "The host page the shortcode"
 msgstr "Страница размещения шорткода"
 
-#: rcl-admin/admin-pages.php:116
+#: rcl-admin/admin-pages.php:118
 msgid "The formation of links to personal account"
 msgstr "Формат ссылки на личный кабинет"
 
-#: rcl-admin/admin-pages.php:118
+#: rcl-admin/admin-pages.php:120
 msgid ""
 "The link is formed by a principle \"/slug_page/?get=ID\". The parameter \"get"
 "\" can be set here. By default user"
@@ -2928,41 +2928,41 @@ msgstr ""
 "Ссылка формируется по принципу \"/slug_page/?get=ID\". Параметр \"get\" "
 "можно указать здесь. По-умолчанию user"
 
-#: rcl-admin/admin-pages.php:121
+#: rcl-admin/admin-pages.php:123
 msgid "Download tabs"
 msgstr "Загрузка вкладок"
 
-#: rcl-admin/admin-pages.php:125
+#: rcl-admin/admin-pages.php:127
 msgid "Downloads all"
 msgstr "Загружать все"
 
-#: rcl-admin/admin-pages.php:126 rcl-admin/admin-pages.php:232
+#: rcl-admin/admin-pages.php:128 rcl-admin/admin-pages.php:234
 msgid "On a separate page"
 msgstr "На отдельной странице"
 
-#: rcl-admin/admin-pages.php:127
+#: rcl-admin/admin-pages.php:129
 msgid "Ajax loading"
 msgstr "Ajax-загрузка"
 
-#: rcl-admin/admin-pages.php:129
+#: rcl-admin/admin-pages.php:131
 msgid "Inactivity timeout"
 msgstr "Таймаут активности"
 
-#: rcl-admin/admin-pages.php:131
+#: rcl-admin/admin-pages.php:133
 msgid ""
 "Specify the time in minutes after which the user will be considered offline "
 "if you did not show activity on the website. The default is 10 minutes."
 msgstr "По-умолчанию 10 минут."
 
-#: rcl-admin/admin-pages.php:143
+#: rcl-admin/admin-pages.php:145
 msgid "Access to the console"
 msgstr "Доступ в консоль сайта"
 
-#: rcl-admin/admin-pages.php:144
+#: rcl-admin/admin-pages.php:146
 msgid "Access to the site is permitted console"
 msgstr "Доступ к консоли сайта разрешен"
 
-#: rcl-admin/admin-pages.php:150
+#: rcl-admin/admin-pages.php:152
 msgid ""
 "If the selected archive page of the author, in the right place template "
 "author.php paste the code if(function_exists('wp_recall')) wp_recall();"
@@ -2970,70 +2970,70 @@ msgstr ""
 "Если выбрана страница архива автора, то внутри шаблона archive.php "
 "необходимо разместить функцию if(function_exists('wp_recall')) wp_recall();"
 
-#: rcl-admin/admin-pages.php:154
+#: rcl-admin/admin-pages.php:156
 msgid "Download the current style file for editing"
 msgstr "Загрузить текущий стилевой файл"
 
-#: rcl-admin/admin-pages.php:157
+#: rcl-admin/admin-pages.php:159
 msgid "Making"
 msgstr "Оформление"
 
-#: rcl-admin/admin-pages.php:159
+#: rcl-admin/admin-pages.php:161
 msgid "Primary color"
 msgstr "Основной цвет"
 
-#: rcl-admin/admin-pages.php:162
+#: rcl-admin/admin-pages.php:164
 msgid "The placement of the buttons sections"
 msgstr "Размещение кнопок вывода вкладок"
 
-#: rcl-admin/admin-pages.php:166
+#: rcl-admin/admin-pages.php:168
 msgid "Top"
 msgstr "Сверху"
 
-#: rcl-admin/admin-pages.php:167
+#: rcl-admin/admin-pages.php:169
 msgid "Left"
 msgstr "Слева"
 
-#: rcl-admin/admin-pages.php:172
+#: rcl-admin/admin-pages.php:174
 msgid "Pause Slider"
 msgstr "Пауза слайдера"
 
-#: rcl-admin/admin-pages.php:174
+#: rcl-admin/admin-pages.php:176
 msgid ""
 "The value of the pause between slide transitions in seconds. Default value "
 "is 0 - the slide show is not made"
 msgstr ""
 "Значение паузы для слайдера в секундах. По-умолчанию 0 - слайды не сменяются"
 
-#: rcl-admin/admin-pages.php:181
+#: rcl-admin/admin-pages.php:183
 msgid "Caching"
 msgstr "Кеширование"
 
-#: rcl-admin/admin-pages.php:183
+#: rcl-admin/admin-pages.php:185
 msgid "Cache"
 msgstr "Кеш"
 
-#: rcl-admin/admin-pages.php:198
+#: rcl-admin/admin-pages.php:200
 msgid "Time cache (seconds)"
 msgstr "Время жизни кеша (в секундах)"
 
-#: rcl-admin/admin-pages.php:200
+#: rcl-admin/admin-pages.php:202
 msgid "Default"
 msgstr "По-умолчанию"
 
-#: rcl-admin/admin-pages.php:201
+#: rcl-admin/admin-pages.php:203
 msgid "Cache output"
 msgstr "Вывод кеша"
 
-#: rcl-admin/admin-pages.php:206
+#: rcl-admin/admin-pages.php:208
 msgid "Only guests"
 msgstr "Только гостям"
 
-#: rcl-admin/admin-pages.php:211
+#: rcl-admin/admin-pages.php:213
 msgid "Minimization of style files"
 msgstr "Минимизация стилевых файлов"
 
-#: rcl-admin/admin-pages.php:219
+#: rcl-admin/admin-pages.php:221
 msgid ""
 "Minimization of style files only works against the style files Wp-Recall and "
 "additions that support this feature"
@@ -3041,102 +3041,102 @@ msgstr ""
 "Минимизация стилевых файлов работает только со стилевыми файлами плагина Wp-"
 "Recall и его дополнений, которые поддерживают этот функционал"
 
-#: rcl-admin/admin-pages.php:225 rcl-admin/admin-pages.php:339
+#: rcl-admin/admin-pages.php:227 rcl-admin/admin-pages.php:341
 msgid "Login and register"
 msgstr "Вход и регистрация"
 
-#: rcl-admin/admin-pages.php:226
+#: rcl-admin/admin-pages.php:228
 msgid "The order"
 msgstr "Порядок вывода"
 
-#: rcl-admin/admin-pages.php:231
+#: rcl-admin/admin-pages.php:233
 msgid "Floating form"
 msgstr "Всплывающая форма"
 
-#: rcl-admin/admin-pages.php:233
+#: rcl-admin/admin-pages.php:235
 msgid "Form Wordpress"
 msgstr "Формы Wordpress"
 
-#: rcl-admin/admin-pages.php:234
+#: rcl-admin/admin-pages.php:236
 msgid "The form in the widget"
 msgstr "Форма в виджете"
 
-#: rcl-admin/admin-pages.php:242
+#: rcl-admin/admin-pages.php:244
 msgid "ID of the page with the shortcode [loginform]"
 msgstr "Идентификатор страницы с шорткодом [loginform]"
 
-#: rcl-admin/admin-pages.php:251
+#: rcl-admin/admin-pages.php:253
 msgid "A registration confirmation by the user"
 msgstr "Подтверждение регистрации пользователя"
 
-#: rcl-admin/admin-pages.php:256
+#: rcl-admin/admin-pages.php:258
 msgid "Used"
 msgstr "Используется"
 
-#: rcl-admin/admin-pages.php:258
+#: rcl-admin/admin-pages.php:260
 msgid "Redirect user after login"
 msgstr "Перенаправление после авторизации"
 
-#: rcl-admin/admin-pages.php:263
+#: rcl-admin/admin-pages.php:265
 msgid "The user profile"
 msgstr "Профиль пользователя"
 
-#: rcl-admin/admin-pages.php:264
+#: rcl-admin/admin-pages.php:266
 msgid "Current page"
 msgstr "Текущая страница"
 
-#: rcl-admin/admin-pages.php:265
+#: rcl-admin/admin-pages.php:267
 msgid "Arbitrary URL"
 msgstr "Произвольный URL"
 
-#: rcl-admin/admin-pages.php:273
+#: rcl-admin/admin-pages.php:275
 msgid "URL"
 msgstr ""
 
-#: rcl-admin/admin-pages.php:275
+#: rcl-admin/admin-pages.php:277
 msgid "Enter your URL below, if you select an arbitrary URL after login"
 msgstr "Введите URL, если выбран произвольный URL после авторизации"
 
-#: rcl-admin/admin-pages.php:278
+#: rcl-admin/admin-pages.php:280
 msgid "Field repeat password"
 msgstr "Поле повтора пароля"
 
-#: rcl-admin/admin-pages.php:281 rcl-admin/admin-pages.php:286
+#: rcl-admin/admin-pages.php:283 rcl-admin/admin-pages.php:288
 msgid "Displayed"
 msgstr "Отображать"
 
-#: rcl-admin/admin-pages.php:283
+#: rcl-admin/admin-pages.php:285
 msgid "Indicator password complexity"
 msgstr "Индикатор сложности пароля"
 
-#: rcl-admin/admin-pages.php:293 rcl-functions.php:49
+#: rcl-admin/admin-pages.php:295 rcl-functions.php:49
 msgid "Recallbar"
 msgstr ""
 
-#: rcl-admin/admin-pages.php:294
+#: rcl-admin/admin-pages.php:296
 msgid "Conclusion the panel recallbar"
 msgstr "Вывод панели recallbar"
 
-#: rcl-admin/admin-pages.php:304
+#: rcl-admin/admin-pages.php:306
 msgid "Your gratitude"
 msgstr "Ваша благодарность"
 
-#: rcl-admin/admin-pages.php:305
+#: rcl-admin/admin-pages.php:307
 msgid ""
 "To display a link to the developer`s site (Thank you, if you decide to show)"
 msgstr ""
 "Отображение ссылки на сайт разработчика плагина (Спасибо, если решили "
 "показать)"
 
-#: rcl-admin/admin-pages.php:365
+#: rcl-admin/admin-pages.php:367
 msgid "Options saved!"
 msgstr "Настройки сохранены!"
 
-#: rcl-admin/admin-pages.php:391
+#: rcl-admin/admin-pages.php:393
 msgid "Used template"
 msgstr "Используемый шаблон"
 
-#: rcl-admin/admin-pages.php:393
+#: rcl-admin/admin-pages.php:395
 msgid "Not connected"
 msgstr "Не подключен"
 
@@ -3251,6 +3251,15 @@ msgstr "Регистрация"
 #: wp-recall.php:40 wp-recall.php:44
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid ""
+#~ "He will need to update the add-ons here. Get it , you can profile your "
+#~ "account online <a href=\"http://wppost.ru/\" target=\"_blank\">http://"
+#~ "wppost.ru</a>"
+#~ msgstr ""
+#~ "Ключ понадобится для обновления дополнений на этой странице. Свой ключ вы "
+#~ "можете получить на странице профиля своего аккаунта на сайте <a href="
+#~ "\"http://wppost.ru/\" target=\"_blank\">http://wppost.ru</a>"
 
 #~ msgid "Answers"
 #~ msgstr "Ответы"

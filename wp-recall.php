@@ -1,18 +1,18 @@
 <?php
 /*
     Plugin Name: WP-Recall
-    Plugin URI: http://wppost.ru/?p=69
+    Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
     Version: 14.2.3
     Author: Plechev Andrey
-    Author URI: http://wppost.ru/
+    Author URI: http://codeseller.ru/
     Text Domain: wp-recall
     Domain Path: /languages
     GitHub Plugin URI: https://github.com/plechev-64/wp-recall
     License: GPLv2 or later (license.txt)
 */
 
-/*  Copyright 2012  Plechev Andrey  (email : support {at} wppost.ru)  */
+/*  Copyright 2012  Plechev Andrey  (email : support {at} codeseller.ru)  */
 
 final class WP_Recall {
 
