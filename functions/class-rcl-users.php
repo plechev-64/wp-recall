@@ -410,6 +410,8 @@ class Rcl_Users{
     //добавление данных комментариев после основного запроса
     function add_comments_count($users){
         global $wpdb;
+        
+        if(!$users) return $users;
 
         $ids = $this->get_users_ids($users);
 
@@ -430,9 +432,9 @@ class Rcl_Users{
     function add_descriptions($users){
         global $wpdb;
 
-		if(!$users) return $users;
+	if(!$users) return $users;
 
-        $ids = $this->get_users_ids($users);
+        $ids = $this->get_users_ids($users);        
 
         $query = "SELECT meta_value AS description, user_id AS ID "
                 . "FROM $wpdb->usermeta "
@@ -464,7 +466,7 @@ class Rcl_Users{
     function add_rating_total($users){
         global $wpdb;
 
-		if(!$users) return $users;
+	if(!$users) return $users;
 
         $ids = $this->get_users_ids($users);
 

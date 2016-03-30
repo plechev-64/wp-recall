@@ -240,7 +240,7 @@ class Rcl_EditPost {
 
 add_action('update_post_rcl','rcl_set_object_terms_post',10,3);
 function rcl_set_object_terms_post($post_id,$postdata,$update){
-    if(!$update||!isset($postdata['tax_input'])||!$postdata['tax_input']) return false;
+    if($update||!isset($postdata['tax_input'])||!$postdata['tax_input']) return false;
     foreach($postdata['tax_input'] as $taxonomy=>$terms){
         wp_set_object_terms( $post_id, array_map('intval', $terms), $taxonomy );
     }
