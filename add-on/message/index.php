@@ -122,7 +122,7 @@ class Rcl_Messages{
                         add_filter('access_chat_rcl',array(&$this, 'get_chek_ban_user'),10,2);
                         add_action('init',array(&$this, 'rcl_add_block_black_list_button'));
 			//if(function_exists('add_shortcode'))
-                            //add_shortcode('chat',array(&$this, 'get_shortcode_chat'));
+                            //add_shortcode('rcl-chat',array(&$this, 'get_shortcode_chat'));
 		endif;
 
 		if (is_admin()):
@@ -1342,7 +1342,7 @@ class Rcl_Messages{
 		extract(shortcode_atts(array('room'=>false),$atts));
 		$this->room = $user_ID;
 		return '<div id="lk-content" class="chatroom rcl-content">
-		<div class="privat_block recall_content_block active" style="display: block;">
+		<div id="tab-privat" class="privat_block recall_content_block active" style="display: block;">
 		'.$this->get_chat().'
 		</div>
 		</div>';

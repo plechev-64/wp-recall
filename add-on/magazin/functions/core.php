@@ -460,5 +460,5 @@ function rcl_payment_order($order_id,$user_id=false){
     <p>Ваш заказ оплачен и поступил в обработку. Вы можете следить за сменой его статуса из своего личного кабинета</p>';
     rcl_mail($email, $subject, $textmail);
 
-    do_action('rcl_payment_order',$order_id);
+    do_action('rcl_payment_order',$order_id,$order);
 }

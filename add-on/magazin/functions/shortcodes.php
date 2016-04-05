@@ -299,7 +299,7 @@ function rcl_shortcode_pricelist($atts, $content = null){
             $pricelist .='<td>'.$n.'</td>';
             $pricelist .='<td><a target="_blank" href="'.get_permalink($product->ID).'">'.$product->post_title.'</a>';
             $pricelist .='<td>'.$tags_prod.'</td>';
-            $pricelist .='<td>'.get_post_meta($product->ID, 'price-products', 1).' руб</td>';
+            $pricelist .='<td>'.get_post_meta($product->ID, 'price-products', 1).' '.rcl_get_primary_currency(1).'</td>';
             $pricelist .='</tr>';
 
             }

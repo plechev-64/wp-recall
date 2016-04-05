@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-03-29 19:37+0300\n"
+"POT-Creation-Date: 2016-04-02 07:39+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -63,7 +63,7 @@ msgid "News"
 msgstr "Новости"
 
 #: add-on/feed/classes/class-rcl-feed.php:325 add-on/rating-system/index.php:31
-#: functions/class-rcl-users.php:537 functions/shortcodes.php:127
+#: functions/class-rcl-users.php:539 functions/shortcodes.php:127
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -166,7 +166,7 @@ msgstr "Имя"
 msgid "Date"
 msgstr "Дата"
 
-#: add-on/groups/classes/rcl-groups.php:258 functions/class-rcl-users.php:536
+#: add-on/groups/classes/rcl-groups.php:258 functions/class-rcl-users.php:538
 msgid "Publications"
 msgstr "Публикациям"
 
@@ -178,7 +178,7 @@ msgstr "Публикациям"
 msgid "Users"
 msgstr "Пользователи"
 
-#: add-on/groups/classes/rcl-groups.php:264 functions/class-rcl-users.php:546
+#: add-on/groups/classes/rcl-groups.php:264 functions/class-rcl-users.php:548
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -2471,22 +2471,22 @@ msgstr "Введите символы"
 msgid "Field filled not right CAPTCHA!"
 msgstr "Не верно заполнено поле CAPTCHA!"
 
-#: functions/class-rcl-users.php:522
+#: functions/class-rcl-users.php:524
 msgid "Total users"
 msgstr "Всего пользователей"
 
-#: functions/class-rcl-users.php:535
+#: functions/class-rcl-users.php:537
 msgid "Activity"
 msgstr "Активности"
 
-#: functions/class-rcl-users.php:538 functions/loginform.php:50
+#: functions/class-rcl-users.php:540 functions/loginform.php:50
 #: functions/loginform.php:58 functions/loginform.php:74
 #: functions/shortcodes.php:171 templates/form-register.php:4
 #: templates/form-remember.php:21 templates/form-sign.php:33
 msgid "Registration"
 msgstr "Регистрация"
 
-#: functions/class-rcl-users.php:542
+#: functions/class-rcl-users.php:544
 msgid "Rated"
 msgstr "Рейтингу"
 
