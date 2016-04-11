@@ -110,11 +110,13 @@ function rcl_add_count_user(){
         
         $args = array(
             'id_pay'=>$id_pay,
+            'description'=>'Пополнение личного счета от '.get_the_author_meta('user_email',$user_ID),
+            'id_form'=>$_POST['id_form'],
             'summ'=>$amount,
             'type'=>1
         );
 
-        $log['redirectform'] = rcl_payform($args);
+        $log['redirectform'] =  rcl_payform($args);
         $log['otvet']=100;
 
     } else {
@@ -231,7 +233,7 @@ function rcl_get_useraccount_scripts($script){
                 var id = jQuery(this).parents('.rcl-form-add-user-count').attr('id');
 		rcl_preloader_show('#'+id+' .rcl-form-input');
                 var dataform   = jQuery('#'+id+' form').serialize();
-		var dataString = 'action=rcl_add_count_user&'+dataform;
+		var dataString = 'action=rcl_add_count_user&id_form='+id+'&'+dataform;
 		dataString += '&ajax_nonce='+Rcl.nonce;
 		jQuery.ajax({
                     ".$ajaxdata."

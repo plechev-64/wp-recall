@@ -210,7 +210,7 @@ class Rcl_Feed{
         $ignored = $wpdb->get_col("SELECT object_id FROM ".RCL_PREF."feeds WHERE user_id='$user_ID' AND feed_type='author' AND feed_status='0'");
 
         if($feeds){
-            $posts = $wpdb->get_col("SELECT ID FROM $wpdb->posts WHERE post_status='publish' AND post_parent='0' AND post_author IN (".implode(',',$feeds).") AND post_author NOT IN ($user_ID)");
+            $posts = $wpdb->get_col("SELECT ID FROM $wpdb->posts WHERE post_status='publish' AND post_parent='0' AND post_author IN (".implode(',',$feeds).") AND post_author NOT IN ($user_ID)");            
         }
 
         $posts = apply_filters('rcl_feed_posts_array',$posts);
@@ -246,6 +246,10 @@ class Rcl_Feed{
         $query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON comments.user_id=feeds.object_id";
 
         $query['orderby'] = "comments.comment_ID";
+        
+        $ignored = apply_filters('rcl_feed_ignored_posts_in_comments',array());
+        
+        if($ignored) $query['exclude']['comments.comment_post_ID'] = $ignored;
 
         if(!$this->query_count){
             $query['select'][] = "comments.*";

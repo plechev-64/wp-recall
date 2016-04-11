@@ -253,10 +253,9 @@ class Rcl_Users{
         global $wpdb;
 
         $usergroup = explode('|',$this->usergroup);
-        $a = 0;
         foreach($usergroup as $k=>$filt){
             $f = explode(':',$filt);
-            $n = 'metas_'.++$a;
+            $n = 'metas_'.$f[0];
             $query->query['join'][] = "INNER JOIN $wpdb->usermeta AS $n ON users.ID=$n.user_id";
             $query->query['where'][] = "($n.meta_key='$f[0]' AND $n.meta_value LIKE '%$f[1]%')";
         }

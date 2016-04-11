@@ -203,7 +203,13 @@ function rcl_confirm_order(){
                                             . "Заказу присвоен статус - \"Неоплачено\"<br />"
                                             . "Вы можете оплатить его сейчас или из своего личного кабинета. "
                                             . "Там же вы можете узнать статус вашего заказа.<br />";
-                                    $payform = rcl_payform(array('id_pay'=>$order_id,'summ'=>$order->order_price,'user_id'=>$user_ID,'type'=>2));
+                                    $payform = rcl_payform(array(
+                                            'id_pay'=>$order_id,
+                                            'summ'=>$order->order_price,
+                                            'user_id'=>$user_ID,
+                                            'type'=>2,
+                                            'description'=>'Оплата заказа №'.$order_id.' от '.get_the_author_meta('user_email',$user_ID)
+                                        ));
 
                             }else{
                                 $notify = "Ваш заказ был создан!<br />"
@@ -492,7 +498,13 @@ function rcl_register_user_order(){
 
                         if(!$rcl_options['confirm_register_recall']){
                             $notice .= "<p align='center'><a href='".$redirect_url."'>Перейти в свой личный кабинет</a></p>";
-                            $notice .= rcl_payform(array('id_pay'=>$order_id,'summ'=>$order->order_price,'user_id'=>$user_id,'type'=>2));
+                            $notice .= rcl_payform(array(
+                                    'id_pay'=>$order_id,
+                                    'summ'=>$order->order_price,
+                                    'user_id'=>$user_id,
+                                    'type'=>2,
+                                    'description'=>'Оплата заказа №'.$order_id.' от '.get_the_author_meta('user_email',$user_id)
+                                ));
                         }
                         $log['recall'] = $notice;
                         $log['redirect']=0;

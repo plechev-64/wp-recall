@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-04-02 07:39+0300\n"
+"POT-Creation-Date: 2016-04-06 19:10+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -58,16 +58,16 @@ msgstr "Подписаться"
 msgid "Unsubscribe"
 msgstr "Отписаться"
 
-#: add-on/feed/classes/class-rcl-feed.php:324
+#: add-on/feed/classes/class-rcl-feed.php:328
 msgid "News"
 msgstr "Новости"
 
-#: add-on/feed/classes/class-rcl-feed.php:325 add-on/rating-system/index.php:31
+#: add-on/feed/classes/class-rcl-feed.php:329 add-on/rating-system/index.php:31
 #: functions/class-rcl-users.php:539 functions/shortcodes.php:127
 msgid "Comments"
 msgstr "Комментарии"
 
-#: add-on/feed/classes/class-rcl-feed.php:326
+#: add-on/feed/classes/class-rcl-feed.php:330
 msgid "Answers in comments"
 msgstr "Ответы в комментариях"
 
@@ -280,11 +280,15 @@ msgstr "Запросы на доступ"
 msgid "Administration"
 msgstr "Администрирование"
 
-#: add-on/groups/groups-core.php:862
-msgid "Access to content is closed privacy settings"
-msgstr "Контент закрыт настройками приватности"
+#: add-on/groups/groups-core.php:863
+msgid "Publication available!"
+msgstr "Публикация недоступна!"
 
-#: add-on/groups/groups-core.php:868
+#: add-on/groups/groups-core.php:864
+msgid "To view the publication , you must be a member of the group"
+msgstr "Для просмотра публикации, вы должны быть членом группы"
+
+#: add-on/groups/groups-core.php:871
 msgid "(Comment hidden privacy settings)"
 msgstr "(комментарий скрыт настройками приватности)"
 
@@ -445,7 +449,7 @@ msgstr "Панель управления"
 #: add-on/magazin/functions/shortcodes.php:122 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
-#: add-on/user-account/index.php:356 functions/rcl_editfields.php:120
+#: add-on/user-account/index.php:358 functions/rcl_editfields.php:120
 #: rcl-widgets.php:48 rcl-widgets.php:111 rcl-widgets.php:164
 msgid "Title"
 msgstr "Заголовок"
@@ -2343,47 +2347,47 @@ msgstr "Страница успешного платежа"
 msgid "Balance"
 msgstr "Баланс"
 
-#: add-on/user-account/index.php:136
+#: add-on/user-account/index.php:138
 msgid "The change in the balance"
 msgstr "Изменение баланса"
 
-#: add-on/user-account/index.php:165
+#: add-on/user-account/index.php:167
 msgid "Deposit"
 msgstr "Пополнить"
 
-#: add-on/user-account/index.php:181
+#: add-on/user-account/index.php:183
 msgid "To make a payment please log in"
 msgstr "Для совершения платежа необходимо авторизоваться"
 
-#: add-on/user-account/index.php:208
+#: add-on/user-account/index.php:210
 msgid "Enter the amount to replenish"
 msgstr "Укажите сумму для пополнения"
 
-#: add-on/user-account/index.php:295
+#: add-on/user-account/index.php:297
 msgid "Income dynamics"
 msgstr "Динамика платежей"
 
-#: add-on/user-account/index.php:296
+#: add-on/user-account/index.php:298
 msgid "The time period"
 msgstr "Период времени"
 
-#: add-on/user-account/index.php:298
+#: add-on/user-account/index.php:300
 msgid "\"Days/Months\""
 msgstr "\"Дни/Месяцы\""
 
-#: add-on/user-account/index.php:298
+#: add-on/user-account/index.php:300
 msgid "\"Payments (PCs.)\""
 msgstr "\"Платежи (шт.)\""
 
-#: add-on/user-account/index.php:298
+#: add-on/user-account/index.php:300
 msgid "\"Income (thousands)\""
 msgstr "\"Доход (тыс.)\""
 
-#: add-on/user-account/index.php:323
+#: add-on/user-account/index.php:325
 msgid "Personal account of the user"
 msgstr "Личный счет пользователя"
 
-#: add-on/user-account/index.php:325 add-on/user-account/index.php:353
+#: add-on/user-account/index.php:327 add-on/user-account/index.php:355
 msgid "Personal account"
 msgstr "Личный счет"
 
@@ -2423,23 +2427,23 @@ msgstr "Платежи"
 msgid "Payment history"
 msgstr "История платежей"
 
-#: add-on/user-account/rcl_payment.php:61
+#: add-on/user-account/rcl_payment.php:62
 msgid "A record of the payment in the database was not found"
 msgstr "Платеж не найден в базе данных"
 
-#: add-on/user-account/rcl_payment.php:101
+#: add-on/user-account/rcl_payment.php:102
 msgid "Top up personal account"
 msgstr "Пополнение личного счета"
 
-#: add-on/user-account/rcl_payment.php:135
+#: add-on/user-account/rcl_payment.php:140
 msgid "Confirm the operation"
 msgstr "Подтвердить операцию"
 
-#: add-on/user-account/rcl_payment.php:135
+#: add-on/user-account/rcl_payment.php:140
 msgid "Pay through payment system"
 msgstr "Оплатить через платежные системы"
 
-#: add-on/user-account/rcl_payment.php:149
+#: add-on/user-account/rcl_payment.php:154
 msgid "Pay personal account"
 msgstr "Оплатить с личного счета"
 
@@ -3251,6 +3255,9 @@ msgstr "Регистрация"
 #: wp-recall.php:40 wp-recall.php:44
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "Access to content is closed privacy settings"
+#~ msgstr "Контент закрыт настройками приватности"
 
 #~ msgid ""
 #~ "He will need to update the add-ons here. Get it , you can profile your "

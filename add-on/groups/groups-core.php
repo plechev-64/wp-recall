@@ -859,7 +859,10 @@ function rcl_edit_group_pre_get_posts($query){
     }
 
 function rcl_close_group_post_content(){
-    return '<p align="center" style="color:red;">'.__('Access to content is closed privacy settings','wp-recall').'</p>';
+    global $rcl_group;
+    $content = '<h3 align="center" style="color:red;">'.__('Publication available!','wp-recall').'</h3>';
+    $content .= '<p align="center" style="color:red;">'.__('To view the publication , you must be a member of the group','wp-recall').' "'.$rcl_group->name.'"</p>';
+    return $content;
 }
 
 
@@ -873,4 +876,48 @@ function rcl_close_group_comments_content($comments){
 function rcl_close_group_comments( $open ) {
     $open = false;
     return $open;
+}
+
+function rcl_get_closed_groups($user_id){
+    global $wpdb,$user_ID;
+    
+    $cachekey = json_encode(array('rcl_get_closed_groups',$user_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    $sql = "SELECT groups.ID FROM ".RCL_PREF."groups AS groups "
+            . "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON groups.ID=groups_users.group_id "
+            . "WHERE groups.group_status = 'closed' "
+            . "AND (groups_users.user_id != '$user_id' OR groups_users.user_id IS NULL) "
+            . "AND groups.admin_id != '$user_id'";
+    
+    $groups = $wpdb->get_col($sql);
+    
+    wp_cache_add( $cachekey, $groups );
+    
+    return $groups;
+}
+
+function rcl_get_closed_group_posts($user_id){
+    global $wpdb,$user_ID;
+    
+    $groups = rcl_get_closed_groups($user_id);
+
+    if(!$groups) return array();
+    
+    $cachekey = json_encode(array('rcl_get_closed_group_posts',$user_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    $sql = "SELECT term_relationships.object_id FROM $wpdb->term_relationships AS term_relationships "
+            . "INNER JOIN $wpdb->term_taxonomy AS term_taxonomy ON term_relationships.term_taxonomy_id=term_taxonomy.term_taxonomy_id "
+            . "WHERE term_taxonomy.term_id IN (".implode(',',$groups).") GROUP BY term_relationships.object_id";
+        
+    $posts = $wpdb->get_col($sql);
+    
+    wp_cache_add( $cachekey, $posts );
+    
+    return $posts;
 }

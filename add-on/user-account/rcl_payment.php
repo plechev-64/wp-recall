@@ -8,6 +8,7 @@ class Rcl_Payment{
     public $user_id; //идентификатор пользователя
     public $pay_status; //статус платежа
     public $pay_callback;
+    public $description;
 
     function __construct(){
 
@@ -114,6 +115,8 @@ class Rcl_Payment{
         $this->pay_id = $args['id_pay'];
         $this->pay_summ = $args['summ'];
         $this->pay_type = $args['type'];
+        $this->description = (isset($args['description']))? $args['description']: '';        
+        
         if(!isset($args['user_id'])||!$args['user_id'])
             $this->user_id = $user_ID;
         else
@@ -131,6 +134,8 @@ class Rcl_Payment{
 
     function form($fields,$data,$formaction){
         global $rmag_options,$user_ID;
+        
+        $fields = apply_filters('rcl_pay_form_fields',$fields,$data);
 
         $submit = ($data->pay_type==1)? __('Confirm the operation','wp-recall'): __('Pay through payment system','wp-recall');
         

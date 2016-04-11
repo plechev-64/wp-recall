@@ -467,6 +467,40 @@ function rcl_apply_group_request(){
     exit;
 }
 
+//исключаем из поиска публикации из закрытых групп 
+add_action('pre_get_posts','rcl_search_filter_closed_posts',10);
+function rcl_search_filter_closed_posts($query) {
+    global $user_ID;
+    if ( ! is_admin() && $query->is_main_query() ) {
+          if ($query->is_search) {
+              $groups = rcl_get_closed_groups($user_ID);
+              
+              if(!$groups) return $query; 
+              
+              $query->set( 'tax_query', array(
+                    array(
+                        'taxonomy' => 'groups',
+                        'field' => 'id',
+                        'terms' => $groups,
+                        'operator' => 'NOT IN'
+                    )
+                ) );
+          }
+    }
+    return $query;
+}
+
+//исключаем из фида комментарии из закрытых групп
+add_filter('rcl_feed_ignored_posts_in_comments','rcl_add_feed_ignored_posts_in_comments',10);
+function rcl_add_feed_ignored_posts_in_comments($posts){
+    global $user_ID;
+    
+    $ignored_posts = rcl_get_closed_group_posts($user_ID);
+    
+    return $ignored_posts;
+}
+
+//исключаем из фида публикации из закрытых групп
 add_filter('rcl_feed_posts_array','rcl_add_feed_group_posts',10);
 function rcl_add_feed_group_posts($posts){
     global $wpdb,$user_ID;
@@ -475,6 +509,10 @@ function rcl_add_feed_group_posts($posts){
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
         return $cache;
+    
+    $ignored_posts = rcl_get_closed_group_posts($user_ID);
+
+    if($ignored_posts) $posts = array_diff($posts,$ignored_posts);
 
     $groups = $wpdb->get_col("SELECT groups_users.group_id, groups.ID "
             . "FROM ".RCL_PREF."groups_users AS groups_users "
