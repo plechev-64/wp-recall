@@ -504,3 +504,10 @@ function rcl_add_dropzone(idzone){
                 return Math.floor(Math.random() * (min + 1));
         }
     }
+    
+    function rcl_more_view(e){
+        var link = jQuery(e);
+        var icon = link.children('i');
+        link.parent().children('div').slideToggle();
+        icon.toggleClass('fa-plus-square-o fa-minus-square-o');
+    }

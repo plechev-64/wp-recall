@@ -79,7 +79,9 @@ class Rcl_Custom_Fields{
         $user_id = (is_admin())? $_GET['user_id']: $user_ID;
         if(!$user_id) $user_id = $user_ID;
 
-        $url = (is_admin())? admin_url('?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value).'&user_id='.$user_id): get_bloginfo('wpurl').'/?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value);
+        $url = (is_admin()&&!(defined( 'DOING_AJAX' ) && DOING_AJAX))? 
+                admin_url('?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value).'&user_id='.$user_id): 
+                get_bloginfo('wpurl').'/?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value);
 
         if($this->value&&!$field['requared']) $input .= ' <a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a>';
 

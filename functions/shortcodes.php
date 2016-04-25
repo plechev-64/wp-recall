@@ -282,7 +282,7 @@ function rcl_slider($atts, $content = null){
             $large_url = wp_get_attachment_image_src( $thumb_id, 'full');
             $thumb_url = wp_get_attachment_image_src( $thumb_id, $size);
             $plslider .= '<li><a href="'.get_permalink($post->ID).'">';
-            if($type='products'){
+            if($type=='products'){
                 $plslider .= rcl_get_price($post->ID);
             }
             $plslider .= '<img src='.$thumb_url[0].'>';
