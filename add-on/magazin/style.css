@@ -408,8 +408,8 @@ table.order-data tbody tr th:nth-child(1) {
 .products-box.type-slab .product .product-content .product-meta .meta:nth-child(3) .meta-content-box:before{
 	left: 65px;
 }
-.products-box.type-slab .product .product-content .product-meta .meta > i:hover + span,
-.products-box.type-slab .product .product-content .product-meta .meta > span:hover{
+.products-box.type-slab .products-list .product .product-content .product-meta .meta > i:hover + span,
+.products-box.type-slab .products-list .product .product-content .product-meta .meta > span:hover{
 	display: block;
 }
 .products-box.type-slab .product .product-content .product-meta a{
