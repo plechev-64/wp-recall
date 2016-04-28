@@ -9,6 +9,7 @@ class Rcl_Payment{
     public $pay_status; //статус платежа
     public $pay_callback;
     public $description;
+    public $method = 'post';
 
     function __construct(){
 
@@ -142,7 +143,7 @@ class Rcl_Payment{
         $form = '<div class="rcl-pay-form">';
         
         $form .= "<div class='rcl-pay-button'>"
-                . "<form id='form-payment-".$data->pay_id."' action='".$formaction."' method=POST>"
+                . "<form id='form-payment-".$data->pay_id."' action='".$formaction."' method=$data->method>"
                 .$this->get_hiddens( $fields )
                 ."<input class='recall-button' type=submit value='$submit'>"
                 ."</form>"
