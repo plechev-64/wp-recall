@@ -325,21 +325,21 @@ table.order-data tbody tr th:nth-child(1) {
     box-shadow: 0px 2px 4px #B9C9D6;
 }
 .products-box.type-slab .products-list .product .product-thumbnail{
-	margin-bottom: 5px;
-	display: block;
+    margin-bottom: 5px;
+    display: inline-block;
 }
 .products-box.type-slab .products-list .product .product-thumbnail img{
-	width: 100%;
+    width: 100%;
 }
 .products-box.type-slab .products-list .product .product-content{
 	
 }
 .products-box.type-slab .products-list .product .product-content .cart-button a{
-	width: 100%;
-	float:none;
+    width: 100%;
+    float:none;
 }
 .products-box.type-slab .products-list .product .product-content .product-title{
-	text-align: center;
+    text-align: center;
     display: block;
     line-height: 1;
     padding: 10px 0;
@@ -433,26 +433,27 @@ table.order-data tbody tr th:nth-child(1) {
     box-shadow: 0px 2px 4px #B9C9D6;
 }
 .products-box.type-list .product .product-thumbnail{
-	float: left;
-	margin-right: 10px;
+    float: left;
+    margin-right: 10px;
 }
 .products-box.type-list .product .product-thumbnail img{
-	width:100px;
-	height:auto;
+    width:100px;
+    height:auto;
 }
 .products-box.type-list .product .product-content{
-	position: relative;
-	min-height: 100px;
+    position: relative;
+    min-height: 100px;
+    overflow: hidden;
 }
 .products-box.type-list .product .product-content .product-title{
-	line-height: 1;
-	display: block;
-	color: #0b0b0b;
-	margin-bottom: 5px;
-	font-size: 20px;
+    line-height: 1;
+    display: block;
+    color: #0b0b0b;
+    margin-bottom: 5px;
+    font-size: 20px;
 }
 .products-box.type-list .product .product-content .product-meta{
-	overflow: hidden;
+    overflow: hidden;
 }
 .products-box.type-list .product .product-content .product-meta .meta-name{
 	

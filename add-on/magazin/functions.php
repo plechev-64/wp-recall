@@ -5,14 +5,20 @@ include_once 'functions/init.php';
 function rcl_get_cart_button($product_id){
     global $rmag_options;
     
-    $insale = (get_post_meta($product_id,'outsale',1))? 0: 1;
-    if(isset($rmag_options['products_warehouse_recall'])&&$rmag_options['products_warehouse_recall']==1){
-        $amount = get_post_meta($product_id, 'amount_product', 1);
-        $insale = ($amount>0||$amount==false)? 1: 0;
-    }
+    $check = apply_filters('rcl_check_cart_button',true,$product_id);
     
-    $button = '<div class="cart-button" itemprop="offers" itemscope itemtype="http://schema.org/Offer">';		
+    $button = '<div class="cart-button" itemprop="offers" itemscope itemtype="http://schema.org/Offer">';
+    
+    if($check){
+    
+        $insale = (get_post_meta($product_id,'outsale',1))? 0: 1;
+        if(isset($rmag_options['products_warehouse_recall'])&&$rmag_options['products_warehouse_recall']==1){
+            $amount = get_post_meta($product_id, 'amount_product', 1);
+            $insale = ($amount>0||$amount==false)? 1: 0;
+        }
+		
         if($insale){
+            
             $button .= '<a href="#" class="recall-button" data-product="'.$product_id.'" onclick="rcl_add_cart(this);return false;" itemprop="availability" href="http://schema.org/InStock">
                 <span class="cart-icon">
                         <i class="fa fa-shopping-cart"></i>
@@ -21,11 +27,24 @@ function rcl_get_cart_button($product_id){
                     $button .= rcl_get_price($product_id);
                 $button .= '</span>
             </a>';
+             
         }else{
+            
             $button .= '<span class="product-outsale">
                 <i class="fa fa-refresh rcl-icon"></i>Не в продаже
             </span>';
+            
         }
+
+    }else{
+        
+        $text_button = apply_filters('rcl_text_cart_button','Не в продаже',$product_id);
+        $button .= '<span class="product-outsale">
+            <i class="fa fa-refresh rcl-icon"></i>'.$text_button.'
+        </span>';
+
+    }
+    
     $button .= '</div>';
     
     $button = apply_filters('rcl_cart_button',$button,$product_id);

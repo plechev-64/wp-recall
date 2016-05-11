@@ -335,14 +335,15 @@ function rcl_update_options(){
         exit;
     }
 
-    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    $POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-    if($_POST['global']['login_form_recall']==1&&!isset($_POST['global']['page_login_form_recall'])){
-            $_POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
+    if($POST['global']['login_form_recall']==1&&!isset($POST['global']['page_login_form_recall'])){
+            $POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
     }
 
-    foreach((array)$_POST['global'] as $key => $value){			
-            $options[$key] = $value;
+    foreach((array)$POST['global'] as $key => $value){
+        $value = apply_filters('rcl_global_option_value',$value,$key);
+        $options[$key] = $value;
     }
 
     if(isset($rcl_options['users_page_rcl'])) 
@@ -350,8 +351,9 @@ function rcl_update_options(){
 
     update_option('rcl_global_options',$options);
 
-    if(isset($_POST['local'])){
-        foreach((array)$_POST['local'] as $key => $value){
+    if(isset($POST['local'])){
+        foreach((array)$POST['local'] as $key => $value){
+            $value = apply_filters('rcl_local_option_value',$value,$key);
             update_option($key,$value);
         }
     }
