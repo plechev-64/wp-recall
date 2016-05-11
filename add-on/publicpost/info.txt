@@ -1,5 +1,5 @@
 Name: Public Wp-Recall (Публикация);
-Version: 2.4.0;
+Version: 2.4.1;
 Support Core: 13.2.0;
 Description: Дайте возможность посетителям вашего сайта публиковать свои записи с помощью плагина wp-recall;
 Author: Плечев Андрей;

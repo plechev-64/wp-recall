@@ -380,13 +380,15 @@ function get_public_catlist(){
         
         $post_cat = get_the_terms( $formData->post_id, $formData->taxonomy[$formData->post_type] );
         
-        foreach( $post_cat as $key => $p_cat ){
-            foreach($post_cat as $pc){
-                if($pc->parent==$p_cat->term_id){
-                    unset($post_cat[$key]);
-                    break;
-                }
+        if($post_cat){
+            foreach( $post_cat as $key => $p_cat ){
+                foreach($post_cat as $pc){
+                    if($pc->parent==$p_cat->term_id){
+                        unset($post_cat[$key]);
+                        break;
+                    }
 
+                }
             }
         }
         
