@@ -221,10 +221,10 @@ function rcl_register_mail($userdata){
 
         $url = get_bloginfo('wpurl').'/?rglogin='.$userdata['user_login'].'&rgpass='.$userdata['user_pass'].'&rgcode='.md5($userdata['user_login']);
 
-        $textmail .= '<p>Если это были вы, то подтвердите свою регистрацию перейдя по ссылке ниже:</p>
+        $textmail .= '<p>'.__('If it was you, then confirm your registration by clicking on the link below','wp-recall').':</p>
         <p><a href="'.$url.'">'.$url.'</a></p>
-        <p>Не получается активировать аккаунт?</p>
-        <p>Скопируйте текст ссылки ниже, вставьте его в адресную строку вашего браузера и нажмите Enter</p>';
+        <p>'.__('Unable to activate the account?','wp-recall').'</p>
+        <p>'.__('Copy the link text below, paste it into the address bar of your browser and hit Enter','wp-recall').'</p>';
     }
 
     $textmail .= '<p>'.__('If it wasnt you, then just ignore this email','wp-recall').'</p>';

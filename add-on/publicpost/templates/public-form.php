@@ -15,7 +15,7 @@
 
 <?php if(isset($formFields['excerpt'])&&$formFields['excerpt']): ?>
 	<div class="rcl-form-field">
-            <textarea name="post_excerpt" required placeholder="Введите краткое описание публикации" ><?php rcl_publication_excerpt(); ?></textarea>
+            <textarea name="post_excerpt" required placeholder="<?php _e('Enter a brief description of the publication','wp-recall') ?>" ><?php rcl_publication_excerpt(); ?></textarea>
 	</div>
 <?php endif; ?>
 

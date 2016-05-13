@@ -27,7 +27,7 @@ function rcl_send_notify_messages(){
                 <div style="float:left;margin-right:15px;">'.get_avatar($auth_id,60).'</div>'
                 . '<p>'.__('from the user','wp-recall').' '.get_the_author_meta('display_name',$auth_id).'</p>';
             
-                if($mailtext) $mess .= '<p><b>Текст сообщения:</b></p>'
+                if($mailtext) $mess .= '<p><b>'.__('Message text','wp-recall').':</b></p>'
                         . '<p>'.implode('<br>',$content).'</p>';
             
                 $mess .= '<p>'.__('You can read the message by clicking on the link:','wp-recall').' <a href="'.$url.'">'.$url.'</a></p>'

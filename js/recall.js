@@ -90,7 +90,7 @@ jQuery(function($){
             var block = sm_box.children();
             sm_box.show();
             if(block.html()) return false;
-            block.html('Загрузка...');
+            block.html(Rcl.local.loading+'...');
             var dir = $(this).data('dir');
             var area = $(this).parent().data('area');
             var dataString = 'action=rcl_get_smiles_ajax&area='+area;

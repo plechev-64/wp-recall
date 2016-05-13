@@ -213,7 +213,7 @@ function rcl_manage_publicform(){
 		<h3>'.__('Form ID','wp-recall').':'.$form.' </h3>';
 		if(!isset($_GET['status'])||$_GET['status']!='new') $form_navi .= '<form method="post" action="">
 			'.wp_nonce_field('update-public-fields','_wpnonce',true,false).'
-			<input class="button-primary" type="submit" value="'.__('To remove all fields','wp-recall').'" onClick="return confirm(\''.__('Вы уверены?','wp-recall').'\');" name="delete-form">
+			<input class="button-primary" type="submit" value="'.__('To remove all fields','wp-recall').'" onClick="return confirm(\''.__('You are sure?','wp-recall').'\');" name="delete-form">
 			<input type="hidden" value="'.$form.'" name="id-form">
 		</form>';
 	}else{
@@ -222,8 +222,8 @@ function rcl_manage_publicform(){
 	}
 
 	$users_fields = '<h2>'.__('Arbitrary form fields publishing','wp-recall').'</h2>
-	<small>Для размещения формы публикации используем шорткод [public-form]</small><br>
-        <small>Можно создавать разный набор произвольных полей для разных форм.<br>
+	<small>'.__('To embed forms publications use the shortcode','wp-recall').' [public-form]</small><br>
+        <small>'.__('You can create a different set of custom fields for different forms','wp-recall').'.<br>
         Чтобы вывести определенный набор полей через шорткод следует указать идентификатор формы, например, [public-form id="2"]</small><br>
 	<small>Форма публикации уже содержит обязательные поля для заголовка записи, контента, ее категории и указания метки.</small><br>
 	'.$form_navi.'

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-05-13 18:13+0300\n"
+"POT-Creation-Date: 2016-05-13 19:39+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -107,7 +107,8 @@ msgstr "Подписка оформлена"
 #: add-on/message/index.php:1724 add-on/message/index.php:1746
 #: add-on/publicpost/index.php:737 add-on/rating-system/index.php:550
 #: add-on/rating-system/index.php:572 functions/enqueue-scripts.php:149
-#: rcl-admin/admin-pages.php:333 rcl-functions.php:255
+#: rcl-admin/admin-pages.php:333 rcl-admin/repository.php:46
+#: rcl-functions.php:255
 msgid "Error"
 msgstr "Ошибка"
 
@@ -191,7 +192,7 @@ msgid "Reader"
 msgstr "Читатель"
 
 #: add-on/groups/groups-core.php:178 add-on/groups/index.php:335
-#: rcl-admin/add-on-manager.php:175
+#: rcl-admin/add-on-manager.php:175 templates/add-on-card.php:24
 msgid "Author"
 msgstr "Автор"
 
@@ -347,6 +348,7 @@ msgid "Parent group"
 msgstr "Родительская группа"
 
 #: add-on/groups/groups-init.php:55 add-on/publicpost/class_public.php:85
+#: templates/add-on-card.php:40
 msgid "Update"
 msgstr "Обновить"
 
@@ -707,7 +709,7 @@ msgstr "Пользователей в группе"
 msgid "Size over"
 msgstr "Размер файла превышен"
 
-#: add-on/groups/upload-avatar.php:53
+#: add-on/groups/upload-avatar.php:53 add-on/profile/upload-avatar.php:85
 msgid "The file is not an image"
 msgstr "Файл не является изображением"
 
@@ -1023,6 +1025,10 @@ msgstr "Собеседник"
 msgid "All contacts"
 msgstr "Все контакты"
 
+#: add-on/message/index.php:398
+msgid "Select file"
+msgstr "Выбрать файл"
+
 #: add-on/message/index.php:403
 msgid "<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send"
 msgstr "<b>Enter</b> - перенос строки, <b>Ctrl+Enter</b> - отправить"
@@ -1181,6 +1187,10 @@ msgstr "Вам было отправлено сообщение"
 #: add-on/message/notify.php:28
 msgid "from the user"
 msgstr "от пользователя"
+
+#: add-on/message/notify.php:30
+msgid "Message text"
+msgstr "Текст сообщения"
 
 #: add-on/message/notify.php:33
 msgid "You can read the message by clicking on the link:"
@@ -1439,6 +1449,10 @@ msgstr "редактируется только администрацией с�
 msgid "Filter users meaningfully this field"
 msgstr "Фильтровать пользователей по значению этого поля"
 
+#: add-on/profile/index.php:693
+msgid "Custom Profile Fields"
+msgstr "Произвольные поля профиля"
+
 #: add-on/profile/index.php:715
 msgid "Login user"
 msgstr "логин пользователя"
@@ -1462,6 +1476,30 @@ msgstr "Вебсайт"
 #: add-on/profile/index.php:743
 msgid "Website user"
 msgstr "Сайт пользователя"
+
+#: add-on/profile/index.php:794
+msgid "The image being loaded"
+msgstr "Изображение было загружено"
+
+#: add-on/profile/index.php:870
+msgid "Image from the camera"
+msgstr "Изображение с камеры"
+
+#: add-on/profile/upload-avatar.php:77
+msgid "Size exceeded"
+msgstr "Размер превышен"
+
+#: add-on/profile/upload-avatar.php:121
+msgid "The downloaded image is incorrect"
+msgstr "Загружаемое изображение некорректно"
+
+#: add-on/profile/upload-avatar.php:159
+msgid "Error download"
+msgstr "Ошибка загрузки"
+
+#: add-on/profile/upload-avatar.php:175
+msgid "Avatar successfully uploaded"
+msgstr "Аватар успешно загружен"
 
 #: add-on/publicpost/addon-options.php:30
 msgid "Guests and users"
@@ -1872,12 +1910,21 @@ msgid "To remove all fields"
 msgstr "Удалить все поля"
 
 #: add-on/publicpost/index.php:216
-msgid "Вы уверены?"
-msgstr "Вы уверены?"
+msgid "You are sure?"
+msgstr "Вы серьезно?"
 
 #: add-on/publicpost/index.php:224 add-on/publicpost/index.php:528
 msgid "Arbitrary form fields publishing"
 msgstr "Произвольные поля формы публикации"
+
+#: add-on/publicpost/index.php:225
+msgid "To embed forms publications use the shortcode"
+msgstr "Для размещения формы публикации используйте шорткод"
+
+#: add-on/publicpost/index.php:226
+msgid "You can create a different set of custom fields for different forms"
+msgstr ""
+"Вы можете создавать несколько форм с различным набором произвольных полей"
 
 #: add-on/publicpost/index.php:448
 msgid "featured"
@@ -2074,17 +2121,20 @@ msgstr "Добавьте свои теги"
 msgid "Each tag is separated with Enter"
 msgstr "каждый тег разделяется нажатием на кнопку Enter"
 
+#: add-on/publicpost/templates/editor-header-box.php:4
+#: add-on/publicpost/templates/editor-html-box.php:4
+#: add-on/publicpost/templates/editor-image-box.php:4
+#: add-on/publicpost/templates/editor-text-box.php:4
+#: functions/rcl_custom_fields.php:86
+msgid "delete"
+msgstr "удалить"
+
 #: add-on/publicpost/templates/editor-header-box.php:5
 #: add-on/publicpost/templates/editor-html-box.php:5
 #: add-on/publicpost/templates/editor-image-box.php:5
 #: add-on/publicpost/templates/editor-text-box.php:5
 msgid "move"
 msgstr "переместить"
-
-#: add-on/publicpost/templates/editor-image-box.php:4
-#: functions/rcl_custom_fields.php:86
-msgid "delete"
-msgstr "удалить"
 
 #: add-on/publicpost/templates/editor-image-box.php:14
 msgid "Select an image"
@@ -2093,6 +2143,14 @@ msgstr "Выберите изображение"
 #: add-on/publicpost/templates/editor-image-box.php:17
 msgid "or enter url image"
 msgstr "или введите URL изображения"
+
+#: add-on/publicpost/templates/public-form.php:18
+msgid "Enter a brief description of the publication"
+msgstr "Введите краткое содержание публикации"
+
+#: add-on/publicpost/upload-file.php:34
+msgid "Banned file extension. Resolved:"
+msgstr "Запрещенное расширение файла. Разрешено:"
 
 #: add-on/rating-system/addon-options.php:15
 msgid "select a template output stories where"
@@ -2252,7 +2310,7 @@ msgstr "Рейтинг"
 
 #: add-on/rating-system/index.php:58
 msgid "OK"
-msgstr ""
+msgstr "Ок"
 
 #: add-on/rating-system/index.php:160
 msgid "rating"
@@ -2278,6 +2336,10 @@ msgstr "превышение ограничения голосов в течен
 #: add-on/rating-system/index.php:528
 msgid "You can not vote"
 msgstr "Вы не можете голосовать"
+
+#: add-on/rating-system/templates/rating-comment.php:16
+msgid "Go to comment"
+msgstr "Перейти к комментарию"
 
 #: add-on/user-account/addon-options.php:13 rcl-admin/admin-pages.php:257
 msgid "Not used"
@@ -2570,6 +2632,30 @@ msgstr "Выход"
 msgid "Entry"
 msgstr "Вход"
 
+#: functions/navi-rcl.php:163
+msgid "Go to the first page"
+msgstr "Перейти к первой странице"
+
+#: functions/navi-rcl.php:164
+msgid "Go to the previous page"
+msgstr "Перейти к предыдущей странице"
+
+#: functions/navi-rcl.php:166
+msgid "of"
+msgstr "из"
+
+#: functions/navi-rcl.php:168
+msgid "Go to the next page"
+msgstr "Перейти к следующей странице"
+
+#: functions/navi-rcl.php:169
+msgid "Go to the last page"
+msgstr "Перейти к последней странице"
+
+#: functions/navi-rcl.php:173
+msgid "Go back"
+msgstr "Назад"
+
 #: functions/rcl-frontend.php:97
 msgid "The site works using the functionality of the plugin"
 msgstr "Сайт использует функционал плагина"
@@ -2739,6 +2825,23 @@ msgstr "со следующими данными:"
 msgid "Password"
 msgstr "Пароль"
 
+#: functions/register.php:224
+msgid ""
+"If it was you, then confirm your registration by clicking on the link below"
+msgstr "Если желаете, то можете подтвердить свою регистрацию по ссылке ниже"
+
+#: functions/register.php:226
+msgid "Unable to activate the account?"
+msgstr "Не получается активировать аккаунт?"
+
+#: functions/register.php:227
+msgid ""
+"Copy the link text below, paste it into the address bar of your browser and "
+"hit Enter"
+msgstr ""
+"Скопируйте текст ссылки ниже, вставьте его в адресную строку браузера и "
+"нажмите Enter"
+
 #: functions/register.php:230
 msgid "If it wasnt you, then just ignore this email"
 msgstr "Если это были не вы, то просто проигнорируйте это письмо"
@@ -2855,6 +2958,18 @@ msgstr "Посетить страницу дополнения"
 #: rcl-admin/add-on-manager.php:176
 msgid "Page Add-on"
 msgstr "Страница дополнения"
+
+#: rcl-admin/add-on-manager.php:203
+msgid "Available fresh version"
+msgstr "Доступная свежая версия"
+
+#: rcl-admin/add-on-manager.php:204
+msgid "view information about the version"
+msgstr "смотреть информацию о версии"
+
+#: rcl-admin/add-on-manager.php:205
+msgid "To update automatically"
+msgstr "обновиться автоматически"
 
 #: rcl-admin/add-on-manager.php:240
 msgid "You cant control polucheniya plugins on this site."
@@ -3202,6 +3317,14 @@ msgstr "Используемый шаблон"
 msgid "Not connected"
 msgstr "Не подключен"
 
+#: rcl-admin/repository.php:42
+msgid "Failed to get data"
+msgstr "Данные не были получены"
+
+#: rcl-admin/repository.php:71
+msgid "Repository add-ons WP-Recall"
+msgstr "Репозиторий дополнений WP-Recall"
+
 #: rcl-admin/tabs_options.php:14 rcl-admin/tabs_options.php:68
 msgid "Setting tabs"
 msgstr "Настройки вкладок"
@@ -3230,6 +3353,10 @@ msgstr ""
 #: rcl-functions.php:734
 msgid "long ago"
 msgstr "давно"
+
+#: rcl-functions.php:844
+msgid "Signature verification failed"
+msgstr "Проверка подписи не пройдена"
 
 #: rcl-widgets.php:12
 msgid "New users on the website"
@@ -3262,6 +3389,34 @@ msgstr "Сейчас в сети"
 #: rcl-widgets.php:138
 msgid "The block with the main profile information"
 msgstr "Блок с основной информацией профиля"
+
+#: templates/add-on-card.php:15
+msgid "This extension has already been installed"
+msgstr "Дополнение уже установлено"
+
+#: templates/add-on-card.php:15
+msgid "Installed"
+msgstr "Установлено"
+
+#: templates/add-on-card.php:17
+msgid "Go to the page"
+msgstr "Перейти на страницу"
+
+#: templates/add-on-card.php:17
+msgid "Go to"
+msgstr "Перейти"
+
+#: templates/add-on-card.php:41
+msgid "ago"
+msgstr "назад"
+
+#: templates/add-on-card.php:44
+msgid "downloads"
+msgstr "загрузок"
+
+#: templates/add-on-card.php:47
+msgid "Compatible"
+msgstr "Совместимо"
 
 #: templates/form-register.php:29
 msgid "Authorization "
@@ -3313,6 +3468,9 @@ msgstr "Регистрация"
 #: wp-recall.php:40 wp-recall.php:44
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "Вы уверены?"
+#~ msgstr "Вы уверены?"
 
 #~ msgid "Access to content is closed privacy settings"
 #~ msgstr "Контент закрыт настройками приватности"

@@ -13,7 +13,7 @@
 	<div class="rating-meta">		
 		<p>
 			<?php echo strip_tags(get_comment_text($rating->object_id)); ?>
-			<span class="comm-more"><a href="<?php echo get_comment_link($rating->object_id); ?>" title="Перейти к комментарию"><i class="fa fa-angle-double-right"></i></a></span>
+			<span class="comm-more"><a href="<?php echo get_comment_link($rating->object_id); ?>" title="<?php _e('Go to comment','wp-recall') ?>"><i class="fa fa-angle-double-right"></i></a></span>
 		</p>	
 	</div>
 </div>

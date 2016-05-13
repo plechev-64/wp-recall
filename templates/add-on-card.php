@@ -12,16 +12,16 @@
         <div class="action-links">
             <ul class="plugin-action-buttons">
                 <?php if(isset($active_addons[$addon->slug])): ?>
-                    <li><span class="button button-disabled" title="Это дополнение уже установлено">Установлен</span></li>
+                    <li><span class="button button-disabled" title="<?php _e('This extension has already been installed','wp-recall') ?>"><?php _e('Installed','wp-recall') ?></span></li>
                 <?php else: ?>
-                    <li><a class="button" target="_blank" data-slug="<?php echo $addon->slug; ?>" href="<?php echo $addon->add_on_uri; ?>" aria-label="Перейти на страницу <?php echo $addon->name; ?> <?php echo $addon->version; ?>" data-name="<?php echo $addon->name; ?> <?php echo $addon->version; ?>">Перейти</a></li>
+                    <li><a class="button" target="_blank" data-slug="<?php echo $addon->slug; ?>" href="<?php echo $addon->add_on_uri; ?>" aria-label="<?php _e('Go to the page','wp-recall') ?> <?php echo $addon->name; ?> <?php echo $addon->version; ?>" data-name="<?php echo $addon->name; ?> <?php echo $addon->version; ?>"><?php _e('Go to','wp-recall') ?></a></li>
                 <?php endif; ?>
                 <!--<li><a href="<?php echo $addon->add_on_uri; ?>" class="thickbox" aria-label="Подробности о <?php echo $addon->name; ?> <?php echo $addon->version; ?>" data-title="<?php echo $addon->add_on_uri; ?> <?php echo $addon->version; ?>">Детали</a></li>-->
             </ul>
         </div>
         <div class="desc column-description">
             <p><?php print_r($addon->description); ?></p>
-            <p class="authors"> <cite>Автор: <a href="<?php echo $addon->author_uri; ?>" target="_blank" ><?php echo $addon->author; ?></a></cite></p>
+            <p class="authors"> <cite><?php _e('Author','wp-recall') ?>: <a href="<?php echo $addon->author_uri; ?>" target="_blank" ><?php echo $addon->author; ?></a></cite></p>
         </div>
     </div>
     <div class="plugin-card-bottom">
@@ -37,14 +37,14 @@
             <span class="num-ratings">(428)</span>
         </div>-->
         <div class="column-updated">
-            <strong>Обновление:</strong> <span title="<?php echo $addon->update; ?>">
-                <?php echo human_time_diff(strtotime($addon->update),time() ).' назад'; ?>
+            <strong><?php _e('Update','wp-recall') ?>:</strong> <span title="<?php echo $addon->update; ?>">
+                <?php echo human_time_diff(strtotime($addon->update),time() ).' '.__('ago','wp-recall'); ?>
             </span>
         </div>
-        <div class="column-downloaded"><?php echo $addon->downloads; ?> загрузок</div>
+        <div class="column-downloaded"><?php echo $addon->downloads; ?> <?php _e('downloads','wp-recall') ?></div>
         <div class="column-compatibility">
             <?php if($addon->support_core){ ?>
-            <span class="compatibility-compatible"><strong>Совместим</strong> с Wp-Recall <?php echo $addon->support_core; ?> и выше</span>
+            <span class="compatibility-compatible"><strong><?php _e('Compatible','wp-recall') ?></strong> с Wp-Recall <?php echo $addon->support_core; ?> и выше</span>
             <?php }
              /* else{ ?>
                 <span class="compatibility-compatible">Поддержка Wp-Recall вашей версии не гарантируется</span>

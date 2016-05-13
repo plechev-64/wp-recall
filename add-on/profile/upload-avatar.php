@@ -74,7 +74,7 @@ function rcl_avatar_upload(){
 	$mb = $upload['file']['size']/1024/1024;
 
 	if($mb>$maxsize){
-		$res['error'] = 'Превышен размер!';
+		$res['error'] = __('Size exceeded','wp-recall');
 		echo json_encode($res);
 		exit;
 	}
@@ -82,7 +82,7 @@ function rcl_avatar_upload(){
     $ext = explode('.',$filename);
 
 	if($mime[0]!='image'){
-		$res['error'] = 'Файл не является изображением!';
+		$res['error'] = __('The file is not an image','wp-recall');
 		echo json_encode($res);
 		exit;
 	}
@@ -118,7 +118,7 @@ function rcl_avatar_upload(){
                     }else{
                         $jpg = rcl_check_jpeg($upload['file']['tmp_name'], true );
                         if(!$jpg){
-                                $res['error'] = 'Загруженое изображение некорректно!';
+                                $res['error'] = __('The downloaded image is incorrect','wp-recall');
                                 echo json_encode($res);
                                 exit;
                         }
@@ -156,7 +156,7 @@ function rcl_avatar_upload(){
 	}
 
 	if (!$rst){
-		$res['error'] = 'Ошибка загрузки!';
+		$res['error'] = __('Error download','wp-recall');
 		echo json_encode($res);
 		exit;
 	}
@@ -172,7 +172,7 @@ function rcl_avatar_upload(){
 		if(!$coord) copy($file_src,$tmp_path.$tmpname);
 
 		$res['avatar_url'] = $tmp_url.$tmpname;
-		$res['success'] = 'Аватар успешно загружен!';
+		$res['success'] = __('Avatar successfully uploaded','wp-recall');
 	}
 
 	echo json_encode($res);

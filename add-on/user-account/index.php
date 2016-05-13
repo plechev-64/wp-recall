@@ -86,7 +86,7 @@ global $wpdb;
   switch( $column_name ){
     case 'balance_user_recall':
           $user_count = rcl_get_user_balance($user_id);
-	  $custom_column = '<input type="text" class="balanceuser-'.$user_id.'" size="4" value="'.$user_count.'"><input type="button" class="recall-button edit_balance" id="user-'.$user_id.'" value="Ок">';
+	  $custom_column = '<input type="text" class="balanceuser-'.$user_id.'" size="4" value="'.$user_count.'"><input type="button" class="recall-button edit_balance" id="user-'.$user_id.'" value="Ok">';
           $custom_column = apply_filters('balans_column_rcl',$custom_column,$user_id);
           break;
   }

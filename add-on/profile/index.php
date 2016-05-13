@@ -690,7 +690,7 @@ function rcl_get_custom_fields_profile($user){
     $cf = new Rcl_Custom_Fields();
 
     if($get_fields){
-        $field = '<h3>Произвольные поля профиля:</h3>
+        $field = '<h3>'.__('Custom Profile Fields','wp-recall').':</h3>
         <table class="form-table">';
         foreach((array)$get_fields as $custom_field){
             $slug = $custom_field['slug'];
@@ -791,7 +791,7 @@ function rcl_get_profile_scripts($script){
                     reader.onload = function(event) {
                         var imgUrl = event.target.result;
                         $( '#rcl-preview' ).remove();
-                        $('body > div').last().after('<div id=\'rcl-preview\' title=\'Загружаемое изображение\'><img src=\''+imgUrl+'\'></div>');
+                        $('body > div').last().after('<div id=\'rcl-preview\' title=\'".__('The image being loaded','wp-recall')."\'><img src=\''+imgUrl+'\'></div>');
                         var image = $('#rcl-preview img');
                         image.load(function() {
                             var img = $(this);
@@ -867,7 +867,7 @@ function rcl_get_profile_scripts($script){
 	$script .= "$('#webcamupload').click(function(){
 
             $( '#rcl-preview' ).remove();
-            $('body > div').last().after('<div id=\'rcl-preview\' title=\'Снимок с камеры\'></div>');
+            $('body > div').last().after('<div id=\'rcl-preview\' title=\'".__('Image from the camera','wp-recall')."\'></div>');
 
             var webCam = new SayCheese('#rcl-preview', { audio: true });
 

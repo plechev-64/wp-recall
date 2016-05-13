@@ -39,11 +39,11 @@ function rcl_repository_page(){
     $result =  json_decode($result);
 
     if(!$result){
-        echo '<h2>Не удалось получить данные.</h2>'; exit;
+        echo '<h2>'.__('Failed to get data','wp-recall').'.</h2>'; exit;
     }
 
     if(is_array($result)&&isset($result['error'])){
-        echo '<h2>Ошибка! '.$result['error'].'</h2>'; exit;
+        echo '<h2>'.__('Error','wp-recall').'! '.$result['error'].'</h2>'; exit;
     }
     
     $pagenavi = rcl_navi_admin($result->number,$result->count,$result->page,'rcl-repository','');
@@ -68,7 +68,7 @@ function rcl_repository_page(){
     
     $content .= $pagenavi;
 
-    echo '<h1>Репозиторий дополнений Wp-Recall</h1>';
+    echo '<h1>'.__('Repository add-ons WP-Recall','wp-recall').'</h1>';
     //echo '<p>На этой странице отображаются доступные на данный момент дополнения, но не установленные на вашем сайте.</p>';
     echo $content;
     

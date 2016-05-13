@@ -160,17 +160,17 @@ function rcl_navi_admin($inpage,$cnt_data,$page,$page_id,$get_data){
 		<div class="tablenav-pages">
 			<span class="pagination-links">';
 
-			if($page!=1)$pagination .= '<a class="first-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data).'" title="Перейти на первую страницу">«</a>
-			<a class="prev-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data.'&paged='.$prev).'" title="Перейти на предыдущую страницу">‹</a>';
+			if($page!=1)$pagination .= '<a class="first-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data).'" title="'.__('Go to the first page','wp-recall').'">«</a>
+			<a class="prev-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data.'&paged='.$prev).'" title="'.__('Go to the previous page','wp-recall').'">‹</a>';
 			$pagination .= '<span class="paging-input">
-				'.$page.' из <span class="total-pages">'.$num_page.'</span>
+				'.$page.' '.__('of','wp-recall').' <span class="total-pages">'.$num_page.'</span>
 			</span>';
-			if($page!=$num_page)$pagination .= '<a class="next-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data.'&paged='.$next).'" title="Перейти на следующую страницу">›</a>
-			<a class="last-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data.'&paged='.$num_page).'" title="Перейти на последнюю страницу">»</a>
+			if($page!=$num_page)$pagination .= '<a class="next-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data.'&paged='.$next).'" title="'.__('Go to the next page','wp-recall').'">›</a>
+			<a class="last-page" href="'.admin_url('admin.php?page='.$page_id.''.$get_data.'&paged='.$num_page).'" title="'.__('Go to the last page','wp-recall').'">»</a>
 
 			</span>
 		</div>
-                <input type="button" value="Назад" onClick="history.back()">
+                <input type="button" value="'.__('Go back','wp-recall').'" onClick="history.back()">
 	</div>';
 
 	return $pagination;

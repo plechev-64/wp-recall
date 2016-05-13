@@ -841,7 +841,7 @@ function rcl_add_balloon_menu($data,$args){
 /*14.0.0*/
 function rcl_verify_ajax_nonce(){
     if ( ! wp_verify_nonce( $_POST['ajax_nonce'], 'rcl-post-nonce' ) ){
-        echo json_encode(array('error'=>'Проверка подписи не пройдена!'));
+        echo json_encode(array('error'=>__('Signature verification failed','wp-recall').'!'));
         exit;
     }
 }

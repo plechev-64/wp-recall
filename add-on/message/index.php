@@ -395,10 +395,10 @@ class Rcl_Messages{
                 if($this->room) $textarea .= '<span title="'.__('Interlocutor','wp-recall').'" id="opponent"></span> '.rcl_get_button(__('All contacts','wp-recall'),'#',array('icon'=>'fa-book','id'=>'get-all-contacts'));
                 if($rcl_options['file_exchange']==1){
                         $textarea .= '<div id="upload-box-message" class="fa fa-paperclip recall-button rcl-upload-button">
-                                                                                    <span>Выбрать файл</span>
-                                                                                    <span class="progress-bar"></span>
-                                                                                    <input name="filedata" id="upload-private-message" type="file">
-                                                                            </div>';
+                                    <span>'.__('Select file','wp-recall').'</span>
+                                    <span class="progress-bar"></span>
+                                    <input name="filedata" id="upload-private-message" type="file">
+                            </div>';
                 }
                 $textarea .='<span class="fa fa-exclamation-triangle notice">'.__('<b>Enter</b> - line break, <b>Ctrl+Enter</b> - send','wp-recall').'</span>';
                 $textarea .= '<textarea name="content_mess" id="content_mess" rows="3"></textarea>';
