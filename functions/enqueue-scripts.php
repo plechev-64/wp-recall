@@ -141,12 +141,31 @@ function rcl_frontend_scripts(){
 
 	rcl_primary_scripts();
         
+        $local = array(
+            'save' => __('Save','wp-recall'),
+            'close' =>__('Close','wp-recall'),
+            'wait' => __('Please wait','wp-recall'),
+            'preview' => __('Preview','wp-recall'),
+            'error' => __('Error','wp-recall'),
+            'loading' => __('Loading','wp-recall')
+        );
+        
+        if($rcl_options['difficulty_parole']&&(!$user_ID||$user_LK==$user_ID)){
+            $local['pass0'] = __('Very weak','wp-recall');
+            $local['pass1'] = __('Weak','wp-recall');
+            $local['pass2'] = __('Worse than average','wp-recall');
+            $local['pass3'] = __('Average','wp-recall');
+            $local['pass4'] = __('Reliable','wp-recall');
+            $local['pass5'] = __('Strong','wp-recall');
+        }
+        
         $data = array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'wpurl' => get_bloginfo('wpurl'),
             'rcl_url' => RCL_URL,
             'user_ID' => $user_ID,
-            'nonce' => wp_create_nonce( 'rcl-post-nonce' )
+            'nonce' => wp_create_nonce( 'rcl-post-nonce' ),
+            'local' => apply_filters('rcl_js_localize',$local)
         );
         
         $data['post_ID'] = (isset($post->ID)&&$post->ID)? $post->ID: 0;

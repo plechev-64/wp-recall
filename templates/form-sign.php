@@ -10,14 +10,14 @@
             <label><?php _e('Login','wp-recall'); ?> <span class="required">*</span></label>
             <div class="default-field">
                 <span class="field-icon"><i class="fa fa-user"></i></span>
-                <input required type="text" value="" name="user_login">
+                <input required type="text" value="<?php echo $_REQUEST['user_login']; ?>" name="user_login">
             </div>
         </div>
         <div class="form-block-rcl">
             <label><?php _e('Password','wp-recall'); ?> <span class="required">*</span></label>
             <div class="default-field">
                 <span class="field-icon"><i class="fa fa-lock"></i></span>
-                <input required type="password" value="" name="user_pass">
+                <input required type="password" value="<?php echo $_REQUEST['user_pass']; ?>" name="user_pass">
             </div>
         </div>
 

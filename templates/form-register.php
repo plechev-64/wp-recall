@@ -10,14 +10,14 @@ $f_reg = ($typeform=='register')? 'style="display:block;"': ''; ?>
             <label><?php _e('Login','wp-recall'); ?> <span class="required">*</span></label>
             <div class="default-field">
                 <span class="field-icon"><i class="fa fa-user"></i></span>
-                <input required type="text" value="" name="user_login" id="login-user">
+                <input required type="text" value="<?php echo $_REQUEST['user_login']; ?>" name="user_login" id="login-user">
             </div>
         </div>
         <div class="form-block-rcl">
             <label><?php _e('E-mail','wp-recall'); ?> <span class="required">*</span></label>
             <div class="default-field">
                 <span class="field-icon"><i class="fa fa-at"></i></span>
-                <input required type="email" value="" name="user_email" id="email-user">
+                <input required type="email" value="<?php echo $_REQUEST['user_email']; ?>" name="user_email" id="email-user">
             </div>
         </div>
 

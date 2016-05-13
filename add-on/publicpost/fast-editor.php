@@ -105,50 +105,56 @@ function rcl_ajax_delete_post(){
 
 add_action('wp_ajax_rcl_get_edit_postdata', 'rcl_get_edit_postdata');
 function rcl_get_edit_postdata(){
-	global $user_ID;
-        
-        rcl_verify_ajax_nonce();
-        
-	$post_id = intval($_POST['post_id']);
-	$post = get_post($post_id);
+    global $user_ID;
 
-	if($user_ID){
-		$log['result']=100;
-		$log['content']= "
-		<form id='rcl-edit-form' method='post'>
-			<label>".__("Name",'wp-recall').":</label>
-			 <input type='text' name='post_title' value='$post->post_title'>
-			 <label>".__("Description",'wp-recall').":</label>
-			 <textarea name='post_content' rows='10'>$post->post_content</textarea>
-			 <input type='hidden' name='post_id' value='$post_id'>
-		</form>";
-	}
-	echo json_encode($log);
-	exit;
+    rcl_verify_ajax_nonce();
+
+    $post_id = intval($_POST['post_id']);
+    $post = get_post($post_id);
+
+    if($user_ID){
+        $log['result']=100;
+        $log['content']= "
+        <form id='rcl-edit-form' method='post'>
+                <label>".__("Name",'wp-recall').":</label>
+                 <input type='text' name='post_title' value='$post->post_title'>
+                 <label>".__("Description",'wp-recall').":</label>
+                 <textarea name='post_content' rows='10'>$post->post_content</textarea>
+                 <input type='hidden' name='post_id' value='$post_id'>
+        </form>";
+    }else{
+        $log['error']=__('Failed to get the data','wp-recall');
+    }
+    echo json_encode($log);
+    exit;
 }
 
 add_action('wp_ajax_rcl_edit_postdata', 'rcl_edit_postdata');
 function rcl_edit_postdata(){
-	global $wpdb;
-        
-        rcl_verify_ajax_nonce();
+    global $wpdb;
 
-	$post_array = array();
-	$post_array['post_title'] = sanitize_text_field($_POST['post_title']);
-	$post_array['post_content'] = esc_textarea($_POST['post_content']);
+    rcl_verify_ajax_nonce();
 
-	$post_array = apply_filters('rcl_pre_edit_post',$post_array);
+    $post_array = array();
+    $post_array['post_title'] = sanitize_text_field($_POST['post_title']);
+    $post_array['post_content'] = esc_textarea($_POST['post_content']);
 
-	$result = $wpdb->update(
-            $wpdb->posts,
-            $post_array,
-            array('ID'=>intval($_POST['post_id']))
-	);
+    $post_array = apply_filters('rcl_pre_edit_post',$post_array);
 
+    $result = $wpdb->update(
+        $wpdb->posts,
+        $post_array,
+        array('ID'=>intval($_POST['post_id']))
+    );
+    if($result){
         $log['result']=100;
-        
-	echo json_encode($log);
-	exit;
+        $log['content']=__('Publication of updated','wp-recall');;
+    }else{
+        $log['error']=__('Changes to save not found','wp-recall');
+    }
+
+    echo json_encode($log);
+    exit;
 }
 
 function rcl_button_fast_edit_post($post_id){

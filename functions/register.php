@@ -403,9 +403,9 @@ function rcl_password_regform($content){
             . '<div class="default-field">
                 <span class="field-icon"><i class="fa fa-lock"></i></span>';
     if($difficulty==1){
-        $content .= '<input required id="primary-pass-user" type="password" onkeyup="passwordStrength(this.value)" value="" name="user_pass">';
+        $content .= '<input required id="primary-pass-user" type="password" onkeyup="passwordStrength(this.value)" value="'.$_REQUEST['user_pass'].'" name="user_pass">';
     }else{
-        $content .= '<input required type="password" value="" id="primary-pass-user" name="user_pass">';
+        $content .= '<input required type="password" value="'.$_REQUEST['user_pass'].'" id="primary-pass-user" name="user_pass">';
     }
     $content .= '</div>'
             . '</div>';
@@ -432,7 +432,7 @@ function rcl_secondary_password($fields){
                 <label>'.__('Repeat the password','wp-recall').' <span class="required">*</span></label>
                 <div class="default-field">
                     <span class="field-icon"><i class="fa fa-lock"></i></span>
-                    <input required id="secondary-pass-user" type="password" value="" name="user_secondary_pass">
+                    <input required id="secondary-pass-user" type="password" value="'.$_REQUEST['user_secondary_pass'].'" name="user_secondary_pass">
                 </div>
                 <div id="notice-chek-password"></div>
             </div>

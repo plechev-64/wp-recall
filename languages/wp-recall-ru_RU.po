@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-04-06 19:10+0300\n"
+"POT-Creation-Date: 2016-05-13 18:13+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -63,7 +63,7 @@ msgid "News"
 msgstr "Новости"
 
 #: add-on/feed/classes/class-rcl-feed.php:329 add-on/rating-system/index.php:31
-#: functions/class-rcl-users.php:539 functions/shortcodes.php:127
+#: functions/class-rcl-users.php:538 functions/shortcodes.php:127
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -106,8 +106,8 @@ msgstr "Подписка оформлена"
 #: add-on/message/index.php:1642 add-on/message/index.php:1659
 #: add-on/message/index.php:1724 add-on/message/index.php:1746
 #: add-on/publicpost/index.php:737 add-on/rating-system/index.php:550
-#: add-on/rating-system/index.php:572 rcl-admin/admin-pages.php:333
-#: rcl-functions.php:255
+#: add-on/rating-system/index.php:572 functions/enqueue-scripts.php:149
+#: rcl-admin/admin-pages.php:333 rcl-functions.php:255
 msgid "Error"
 msgstr "Ошибка"
 
@@ -166,7 +166,7 @@ msgstr "Имя"
 msgid "Date"
 msgstr "Дата"
 
-#: add-on/groups/classes/rcl-groups.php:258 functions/class-rcl-users.php:538
+#: add-on/groups/classes/rcl-groups.php:258 functions/class-rcl-users.php:537
 msgid "Publications"
 msgstr "Публикациям"
 
@@ -178,7 +178,7 @@ msgstr "Публикациям"
 msgid "Users"
 msgstr "Пользователи"
 
-#: add-on/groups/classes/rcl-groups.php:264 functions/class-rcl-users.php:548
+#: add-on/groups/classes/rcl-groups.php:264 functions/class-rcl-users.php:547
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -316,7 +316,7 @@ msgstr "Новый"
 msgid "View"
 msgstr "Смотреть"
 
-#: add-on/groups/groups-init.php:15 add-on/publicpost/rcl_publicform.php:604
+#: add-on/groups/groups-init.php:15 add-on/publicpost/rcl_publicform.php:606
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -446,7 +446,7 @@ msgstr "Панель управления"
 #: add-on/groups/groups-widgets.php:25 add-on/groups/groups-widgets.php:134
 #: add-on/groups/groups-widgets.php:187 add-on/groups/groups-widgets.php:220
 #: add-on/groups/groups-widgets.php:300 add-on/groups/groups-widgets.php:433
-#: add-on/magazin/functions/shortcodes.php:122 add-on/publicpost/index.php:148
+#: add-on/magazin/functions/shortcodes.php:126 add-on/publicpost/index.php:148
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
 #: add-on/user-account/index.php:358 functions/rcl_editfields.php:120
@@ -637,8 +637,8 @@ msgstr "Удалить"
 msgid "User status"
 msgstr "Статус пользователя"
 
-#: add-on/groups/index.php:402 functions/rcl_editfields.php:59
-#: rcl-admin/add-on-manager.php:437
+#: add-on/groups/index.php:402 functions/enqueue-scripts.php:145
+#: functions/rcl_editfields.php:59 rcl-admin/add-on-manager.php:437
 msgid "Save"
 msgstr "Сохранить"
 
@@ -748,9 +748,9 @@ msgstr "Выбрать изображение или загрузить"
 msgid "Settings Wp-Recall"
 msgstr "Настройки Wp-Recall"
 
-#: add-on/magazin/functions/shortcodes.php:90
-#: add-on/magazin/functions/shortcodes.php:92
-#: add-on/magazin/functions/shortcodes.php:119
+#: add-on/magazin/functions/shortcodes.php:94
+#: add-on/magazin/functions/shortcodes.php:96
+#: add-on/magazin/functions/shortcodes.php:123
 msgid "Cart"
 msgstr "Корзина"
 
@@ -1812,7 +1812,19 @@ msgstr "Материал успешно удален!"
 msgid "Delete failed!"
 msgstr "Удаление не удалось!"
 
-#: add-on/publicpost/fast-editor.php:159
+#: add-on/publicpost/fast-editor.php:126
+msgid "Failed to get the data"
+msgstr "Данные не были получены"
+
+#: add-on/publicpost/fast-editor.php:151
+msgid "Publication of updated"
+msgstr "Публикация обновлена"
+
+#: add-on/publicpost/fast-editor.php:153
+msgid "Changes to save not found"
+msgstr "Изменения не найдены для сохранения"
+
+#: add-on/publicpost/fast-editor.php:165
 #: add-on/publicpost/templates/editor-header-box.php:4
 #: add-on/publicpost/templates/editor-html-box.php:4
 #: add-on/publicpost/templates/editor-image-box.php:4
@@ -1899,7 +1911,8 @@ msgstr "Если это ваш email, то авторизуйтесь и опу�
 msgid "Add the contents of the publication!"
 msgstr "Добавьте содержимое публикации!"
 
-#: add-on/publicpost/index.php:813 add-on/publicpost/rcl_publicform.php:143
+#: add-on/publicpost/index.php:813 add-on/publicpost/index.php:1127
+#: add-on/publicpost/rcl_publicform.php:143 functions/enqueue-scripts.php:148
 msgid "Preview"
 msgstr "Предпросмотр"
 
@@ -1910,7 +1923,7 @@ msgid ""
 msgstr "Если все верно - публикуйте! Если нет, то вернитесь в редактор."
 
 #: add-on/publicpost/index.php:821 add-on/publicpost/rcl_publicform.php:141
-#: functions/rcl_custom_fields.php:304
+#: functions/rcl_custom_fields.php:306
 msgid "To publish"
 msgstr "Публиковать"
 
@@ -1922,12 +1935,20 @@ msgstr "Загрузка изображения не удалась!"
 msgid "Unauthorized file extension . Use only : .gif, .png, .jpg"
 msgstr "Запрещенный тип файла. Используйте только: .gif, .png, .jpg"
 
-#: add-on/publicpost/index.php:1154
+#: add-on/publicpost/index.php:1128
+msgid "Quick edit"
+msgstr "Быстрое редактирование"
+
+#: add-on/publicpost/index.php:1129
+msgid "Fill in all required fields"
+msgstr "Заполните все обязательные поля"
+
+#: add-on/publicpost/index.php:1162
 #, php-format
 msgid "You have exceeded the allowed number of downloads! Max. %s"
 msgstr "Превышено разрешенное количество файлов к загрузке! Макс. %s"
 
-#: add-on/publicpost/index.php:1158
+#: add-on/publicpost/index.php:1166
 #, php-format
 msgid "Exceeds the maximum size for the file %s! Max. %s MB"
 msgstr "Превышен максимальный размер файла %s! Макс. %s МВ"
@@ -2020,36 +2041,36 @@ msgstr "Ваше имя"
 msgid "Your E-mail"
 msgstr "Ваш E-mail"
 
-#: add-on/publicpost/rcl_publicform.php:495
+#: add-on/publicpost/rcl_publicform.php:497
 msgid "Text Box"
 msgstr "Текстовый блок"
 
-#: add-on/publicpost/rcl_publicform.php:496
+#: add-on/publicpost/rcl_publicform.php:498
 #: add-on/publicpost/templates/editor-header-box.php:7
 msgid "Subtitle"
 msgstr "Подзаголовок"
 
-#: add-on/publicpost/rcl_publicform.php:497
+#: add-on/publicpost/rcl_publicform.php:499
 msgid "Image"
 msgstr "Изображение"
 
-#: add-on/publicpost/rcl_publicform.php:498
+#: add-on/publicpost/rcl_publicform.php:500
 msgid "HTML- code"
 msgstr "HTML- код"
 
-#: add-on/publicpost/rcl_publicform.php:544
+#: add-on/publicpost/rcl_publicform.php:546
 msgid "Select a tag from the list"
 msgstr "Выберите метку из списка"
 
-#: add-on/publicpost/rcl_publicform.php:593
+#: add-on/publicpost/rcl_publicform.php:595
 msgid "Enter your tags"
 msgstr "Введите свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:594
+#: add-on/publicpost/rcl_publicform.php:596
 msgid "Add your tags"
 msgstr "Добавьте свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:594
+#: add-on/publicpost/rcl_publicform.php:596
 msgid "Each tag is separated with Enter"
 msgstr "каждый тег разделяется нажатием на кнопку Enter"
 
@@ -2061,7 +2082,7 @@ msgid "move"
 msgstr "переместить"
 
 #: add-on/publicpost/templates/editor-image-box.php:4
-#: functions/rcl_custom_fields.php:84
+#: functions/rcl_custom_fields.php:86
 msgid "delete"
 msgstr "удалить"
 
@@ -2427,23 +2448,23 @@ msgstr "Платежи"
 msgid "Payment history"
 msgstr "История платежей"
 
-#: add-on/user-account/rcl_payment.php:62
+#: add-on/user-account/rcl_payment.php:63
 msgid "A record of the payment in the database was not found"
 msgstr "Платеж не найден в базе данных"
 
-#: add-on/user-account/rcl_payment.php:102
+#: add-on/user-account/rcl_payment.php:103
 msgid "Top up personal account"
 msgstr "Пополнение личного счета"
 
-#: add-on/user-account/rcl_payment.php:140
+#: add-on/user-account/rcl_payment.php:141
 msgid "Confirm the operation"
 msgstr "Подтвердить операцию"
 
-#: add-on/user-account/rcl_payment.php:140
+#: add-on/user-account/rcl_payment.php:141
 msgid "Pay through payment system"
 msgstr "Оплатить через платежные системы"
 
-#: add-on/user-account/rcl_payment.php:154
+#: add-on/user-account/rcl_payment.php:155
 msgid "Pay personal account"
 msgstr "Оплатить с личного счета"
 
@@ -2475,24 +2496,60 @@ msgstr "Введите символы"
 msgid "Field filled not right CAPTCHA!"
 msgstr "Не верно заполнено поле CAPTCHA!"
 
-#: functions/class-rcl-users.php:524
+#: functions/class-rcl-users.php:523
 msgid "Total users"
 msgstr "Всего пользователей"
 
-#: functions/class-rcl-users.php:537
+#: functions/class-rcl-users.php:536
 msgid "Activity"
 msgstr "Активности"
 
-#: functions/class-rcl-users.php:540 functions/loginform.php:50
+#: functions/class-rcl-users.php:539 functions/loginform.php:50
 #: functions/loginform.php:58 functions/loginform.php:74
 #: functions/shortcodes.php:171 templates/form-register.php:4
 #: templates/form-remember.php:21 templates/form-sign.php:33
 msgid "Registration"
 msgstr "Регистрация"
 
-#: functions/class-rcl-users.php:544
+#: functions/class-rcl-users.php:543
 msgid "Rated"
 msgstr "Рейтингу"
+
+#: functions/enqueue-scripts.php:146
+msgid "Close"
+msgstr "Закрыть"
+
+#: functions/enqueue-scripts.php:147
+msgid "Please wait"
+msgstr "Подождите"
+
+#: functions/enqueue-scripts.php:150
+msgid "Loading"
+msgstr "Загрузка"
+
+#: functions/enqueue-scripts.php:154
+msgid "Very weak"
+msgstr "Очень слабый"
+
+#: functions/enqueue-scripts.php:155
+msgid "Weak"
+msgstr "Слабый"
+
+#: functions/enqueue-scripts.php:156
+msgid "Worse than average"
+msgstr "Хуже среднего"
+
+#: functions/enqueue-scripts.php:157
+msgid "Average"
+msgstr "Средний"
+
+#: functions/enqueue-scripts.php:158
+msgid "Reliable"
+msgstr "Надежный"
+
+#: functions/enqueue-scripts.php:159
+msgid "Strong"
+msgstr "Сильный"
 
 #: functions/loginform.php:22
 msgid "Hi"
@@ -2521,6 +2578,11 @@ msgstr "Сайт использует функционал плагина"
 msgid "Author of publication"
 msgstr "Автор публикации"
 
+#: functions/rcl-frontend.php:147 functions/rcl-frontend.php:246
+#: functions/shortcodes.php:147
+msgid "not online"
+msgstr "не в сети"
+
 #: functions/rcl-frontend.php:187
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
@@ -2529,32 +2591,28 @@ msgstr "Поздравляем! Вы были заблокированы на э
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
-#: functions/rcl-frontend.php:246 functions/shortcodes.php:147
-msgid "not online"
-msgstr "не в сети"
-
-#: functions/rcl_custom_fields.php:92
+#: functions/rcl_custom_fields.php:94
 msgid "Max size"
 msgstr "Макс. размер"
 
-#: functions/rcl_custom_fields.php:225
+#: functions/rcl_custom_fields.php:227
 msgid "Download file"
 msgstr "Загрузить файл"
 
-#: functions/rcl_custom_fields.php:311 functions/rcl_custom_fields.php:329
+#: functions/rcl_custom_fields.php:313 functions/rcl_custom_fields.php:331
 msgid "File size exceeded!"
 msgstr "Размер файла превышен!"
 
-#: functions/rcl_custom_fields.php:339
+#: functions/rcl_custom_fields.php:341
 msgid "Prohibited file type!"
 msgstr "Запрещенный тип файла!"
 
-#: functions/rcl_custom_fields.php:429 functions/rcl_custom_fields.php:455
-#: functions/rcl_custom_fields.php:479
+#: functions/rcl_custom_fields.php:431 functions/rcl_custom_fields.php:457
+#: functions/rcl_custom_fields.php:481
 msgid "File does not exist on the server!"
 msgstr "Файл не найден на сервере!"
 
-#: functions/rcl_custom_fields.php:498
+#: functions/rcl_custom_fields.php:500
 msgid "File has deleted"
 msgstr "Файл был удален"
 
@@ -3132,15 +3190,15 @@ msgstr ""
 "Отображение ссылки на сайт разработчика плагина (Спасибо, если решили "
 "показать)"
 
-#: rcl-admin/admin-pages.php:367
+#: rcl-admin/admin-pages.php:369
 msgid "Options saved!"
 msgstr "Настройки сохранены!"
 
-#: rcl-admin/admin-pages.php:393
+#: rcl-admin/admin-pages.php:395
 msgid "Used template"
 msgstr "Используемый шаблон"
 
-#: rcl-admin/admin-pages.php:395
+#: rcl-admin/admin-pages.php:397
 msgid "Not connected"
 msgstr "Не подключен"
 
@@ -3558,9 +3616,6 @@ msgstr ""
 
 #~ msgid "In this group don`t have bookmarks"
 #~ msgstr "В этой группе пусто"
-
-#~ msgid "Close"
-#~ msgstr "Закрыть"
 
 #~ msgid "Group bookmarks"
 #~ msgstr "Группы избранного"

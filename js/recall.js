@@ -105,7 +105,7 @@ jQuery(function($){
                         if(data['result']==1){
                                 block.html(data['content']);
                         }else{
-                                rcl_notice('Ошибка!','error');
+                                rcl_notice(Rcl.local.error,'error');
                         }					
                 }			
             }); 
@@ -127,7 +127,7 @@ jQuery(function($){
     $('body').on('hover click','.rcl-smiles > img',function(){
         var block = $(this).next().children();
         if(block.html()) return false;
-        block.html('Загрузка...');
+        block.html(Rcl.local.loading+'...');
         var dir = $(this).data('dir');
         var area = $(this).parent().data('area');
         var dataString = 'action=rcl_get_smiles_ajax&area='+area;
@@ -142,7 +142,7 @@ jQuery(function($){
                     if(data['result']==1){
                             block.html(data['content']);
                     }else{
-                            rcl_notice('Ошибка!','error');
+                            rcl_notice(Rcl.local.error,'error');
                     }					
             }			
         }); 
@@ -452,12 +452,12 @@ function rcl_add_dropzone(idzone){
 
     function passwordStrength(password){
         var desc = new Array();
-        desc[0] = "Очень слабый";
-        desc[1] = "Слабый";
-        desc[2] = "Лучше";
-        desc[3] = "Средний";
-        desc[4] = "Надёжный";
-        desc[5] = "Сильный";
+        desc[0] = Rcl.local.pass0;
+        desc[1] = Rcl.local.pass1;
+        desc[2] = Rcl.local.pass2;
+        desc[3] = Rcl.local.pass3;
+        desc[4] = Rcl.local.pass4;
+        desc[5] = Rcl.local.pass5;
         var score   = 0;
         if (password.length > 6) score++;   
         if ( ( password.match(/[a-z]/) ) && ( password.match(/[A-Z]/) ) ) score++;

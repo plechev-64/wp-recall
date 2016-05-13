@@ -144,7 +144,7 @@ function rcl_get_miniaction($action,$user_id=false){
 
     $content = '<div class="status_author_mess '.$class.'">';
     if(!$last_action&&$action) $content .= '<i class="fa fa-circle"></i>';
-    else $content .= 'не в сети '.$last_action;
+    else $content .= __('not online','wp-recall').' '.$last_action;
     $content .= '</div>';
 
     return $content;

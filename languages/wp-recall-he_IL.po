@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP-Recall\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-29 19:39+0300\n"
-"PO-Revision-Date: 2016-03-29 19:39+0300\n"
+"POT-Creation-Date: 2016-05-13 18:14+0300\n"
+"PO-Revision-Date: 2016-05-13 18:14+0300\n"
 "Last-Translator: bloria <allmedkaplan@med.allmed.co.il>\n"
 "Language-Team: \n"
 "Language: he\n"
@@ -52,17 +52,17 @@ msgstr "הירשם"
 msgid "Unsubscribe"
 msgstr "ביטול מנוי"
 
-#: ../add-on/feed/classes/class-rcl-feed.php:324
+#: ../add-on/feed/classes/class-rcl-feed.php:328
 msgid "News"
 msgstr ""
 
-#: ../add-on/feed/classes/class-rcl-feed.php:325
-#: ../add-on/rating-system/index.php:31 ../functions/class-rcl-users.php:537
+#: ../add-on/feed/classes/class-rcl-feed.php:329
+#: ../add-on/rating-system/index.php:31 ../functions/class-rcl-users.php:538
 #: ../functions/shortcodes.php:127
 msgid "Comments"
 msgstr "תגובות"
 
-#: ../add-on/feed/classes/class-rcl-feed.php:326
+#: ../add-on/feed/classes/class-rcl-feed.php:330
 msgid "Answers in comments"
 msgstr ""
 
@@ -101,8 +101,8 @@ msgstr ""
 #: ../add-on/message/index.php:1642 ../add-on/message/index.php:1659
 #: ../add-on/message/index.php:1724 ../add-on/message/index.php:1746
 #: ../add-on/publicpost/index.php:737 ../add-on/rating-system/index.php:550
-#: ../add-on/rating-system/index.php:572 ../rcl-admin/admin-pages.php:333
-#: ../rcl-functions.php:255
+#: ../add-on/rating-system/index.php:572 ../functions/enqueue-scripts.php:149
+#: ../rcl-admin/admin-pages.php:333 ../rcl-functions.php:255
 msgid "Error"
 msgstr ""
 
@@ -163,7 +163,7 @@ msgid "Date"
 msgstr "תאריך"
 
 #: ../add-on/groups/classes/rcl-groups.php:258
-#: ../functions/class-rcl-users.php:536
+#: ../functions/class-rcl-users.php:537
 msgid "Publications"
 msgstr "מאמרים"
 
@@ -177,7 +177,7 @@ msgid "Users"
 msgstr "משתמשים"
 
 #: ../add-on/groups/classes/rcl-groups.php:264
-#: ../functions/class-rcl-users.php:546
+#: ../functions/class-rcl-users.php:547
 msgid "Filter by"
 msgstr "לסנן לפי"
 
@@ -277,11 +277,15 @@ msgstr ""
 msgid "Administration"
 msgstr ""
 
-#: ../add-on/groups/groups-core.php:862
-msgid "Access to content is closed privacy settings"
-msgstr "כניסה וגישה פרטית לפורום"
+#: ../add-on/groups/groups-core.php:863
+msgid "Publication available!"
+msgstr ""
 
-#: ../add-on/groups/groups-core.php:868
+#: ../add-on/groups/groups-core.php:864
+msgid "To view the publication , you must be a member of the group"
+msgstr ""
+
+#: ../add-on/groups/groups-core.php:871
 msgid "(Comment hidden privacy settings)"
 msgstr "(הערה הגדרות פרטיות נסתרות)"
 
@@ -310,7 +314,7 @@ msgid "View"
 msgstr "לראות"
 
 #: ../add-on/groups/groups-init.php:15
-#: ../add-on/publicpost/rcl_publicform.php:604
+#: ../add-on/publicpost/rcl_publicform.php:606
 msgid "Not found"
 msgstr "לא נמצא"
 
@@ -458,11 +462,11 @@ msgstr "לוח בקרה"
 #: ../add-on/groups/groups-widgets.php:220
 #: ../add-on/groups/groups-widgets.php:300
 #: ../add-on/groups/groups-widgets.php:433
-#: ../add-on/magazin/functions/shortcodes.php:122
+#: ../add-on/magazin/functions/shortcodes.php:126
 #: ../add-on/publicpost/index.php:148
 #: ../add-on/publicpost/templates/posts-list.php:7
 #: ../add-on/publicpost/templates/public-form.php:5
-#: ../add-on/user-account/index.php:356 ../functions/rcl_editfields.php:120
+#: ../add-on/user-account/index.php:358 ../functions/rcl_editfields.php:120
 #: ../rcl-widgets.php:48 ../rcl-widgets.php:111 ../rcl-widgets.php:164
 msgid "Title"
 msgstr "כותרת"
@@ -659,8 +663,8 @@ msgstr "מחק"
 msgid "User status"
 msgstr "מצב המשתמש"
 
-#: ../add-on/groups/index.php:402 ../functions/rcl_editfields.php:59
-#: ../rcl-admin/add-on-manager.php:437
+#: ../add-on/groups/index.php:402 ../functions/enqueue-scripts.php:145
+#: ../functions/rcl_editfields.php:59 ../rcl-admin/add-on-manager.php:437
 msgid "Save"
 msgstr "שמור"
 
@@ -772,9 +776,9 @@ msgstr "צרף תמונה או להוריד אותו"
 msgid "Settings Wp-Recall"
 msgstr "הגדרות"
 
-#: ../add-on/magazin/functions/shortcodes.php:90
-#: ../add-on/magazin/functions/shortcodes.php:92
-#: ../add-on/magazin/functions/shortcodes.php:119
+#: ../add-on/magazin/functions/shortcodes.php:94
+#: ../add-on/magazin/functions/shortcodes.php:96
+#: ../add-on/magazin/functions/shortcodes.php:123
 msgid "Cart"
 msgstr "עגלה"
 
@@ -1844,7 +1848,19 @@ msgstr ""
 msgid "Delete failed!"
 msgstr ""
 
-#: ../add-on/publicpost/fast-editor.php:159
+#: ../add-on/publicpost/fast-editor.php:126
+msgid "Failed to get the data"
+msgstr ""
+
+#: ../add-on/publicpost/fast-editor.php:151
+msgid "Publication of updated"
+msgstr ""
+
+#: ../add-on/publicpost/fast-editor.php:153
+msgid "Changes to save not found"
+msgstr ""
+
+#: ../add-on/publicpost/fast-editor.php:165
 #: ../add-on/publicpost/templates/editor-header-box.php:4
 #: ../add-on/publicpost/templates/editor-html-box.php:4
 #: ../add-on/publicpost/templates/editor-image-box.php:4
@@ -1931,8 +1947,9 @@ msgstr ""
 msgid "Add the contents of the publication!"
 msgstr ""
 
-#: ../add-on/publicpost/index.php:813
+#: ../add-on/publicpost/index.php:813 ../add-on/publicpost/index.php:1127
 #: ../add-on/publicpost/rcl_publicform.php:143
+#: ../functions/enqueue-scripts.php:148
 msgid "Preview"
 msgstr ""
 
@@ -1944,7 +1961,7 @@ msgstr ""
 
 #: ../add-on/publicpost/index.php:821
 #: ../add-on/publicpost/rcl_publicform.php:141
-#: ../functions/rcl_custom_fields.php:304
+#: ../functions/rcl_custom_fields.php:306
 msgid "To publish"
 msgstr "לפרסם"
 
@@ -1956,12 +1973,20 @@ msgstr ""
 msgid "Unauthorized file extension . Use only : .gif, .png, .jpg"
 msgstr ""
 
-#: ../add-on/publicpost/index.php:1154
+#: ../add-on/publicpost/index.php:1128
+msgid "Quick edit"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:1129
+msgid "Fill in all required fields"
+msgstr ""
+
+#: ../add-on/publicpost/index.php:1162
 #, php-format
 msgid "You have exceeded the allowed number of downloads! Max. %s"
 msgstr ""
 
-#: ../add-on/publicpost/index.php:1158
+#: ../add-on/publicpost/index.php:1166
 #, php-format
 msgid "Exceeds the maximum size for the file %s! Max. %s MB"
 msgstr ""
@@ -2053,36 +2078,36 @@ msgstr ""
 msgid "Your E-mail"
 msgstr ""
 
-#: ../add-on/publicpost/rcl_publicform.php:495
+#: ../add-on/publicpost/rcl_publicform.php:497
 msgid "Text Box"
 msgstr ""
 
-#: ../add-on/publicpost/rcl_publicform.php:496
+#: ../add-on/publicpost/rcl_publicform.php:498
 #: ../add-on/publicpost/templates/editor-header-box.php:7
 msgid "Subtitle"
 msgstr ""
 
-#: ../add-on/publicpost/rcl_publicform.php:497
+#: ../add-on/publicpost/rcl_publicform.php:499
 msgid "Image"
 msgstr ""
 
-#: ../add-on/publicpost/rcl_publicform.php:498
+#: ../add-on/publicpost/rcl_publicform.php:500
 msgid "HTML- code"
 msgstr ""
 
-#: ../add-on/publicpost/rcl_publicform.php:544
+#: ../add-on/publicpost/rcl_publicform.php:546
 msgid "Select a tag from the list"
 msgstr ""
 
-#: ../add-on/publicpost/rcl_publicform.php:593
+#: ../add-on/publicpost/rcl_publicform.php:595
 msgid "Enter your tags"
 msgstr ""
 
-#: ../add-on/publicpost/rcl_publicform.php:594
+#: ../add-on/publicpost/rcl_publicform.php:596
 msgid "Add your tags"
 msgstr ""
 
-#: ../add-on/publicpost/rcl_publicform.php:594
+#: ../add-on/publicpost/rcl_publicform.php:596
 msgid "Each tag is separated with Enter"
 msgstr ""
 
@@ -2094,7 +2119,7 @@ msgid "move"
 msgstr ""
 
 #: ../add-on/publicpost/templates/editor-image-box.php:4
-#: ../functions/rcl_custom_fields.php:84
+#: ../functions/rcl_custom_fields.php:86
 msgid "delete"
 msgstr "מחק"
 
@@ -2382,47 +2407,47 @@ msgstr "The successful payment page"
 msgid "Balance"
 msgstr "מאזן"
 
-#: ../add-on/user-account/index.php:136
+#: ../add-on/user-account/index.php:138
 msgid "The change in the balance"
 msgstr "שינוי במאזן"
 
-#: ../add-on/user-account/index.php:165
+#: ../add-on/user-account/index.php:167
 msgid "Deposit"
 msgstr "הפקדה"
 
-#: ../add-on/user-account/index.php:181
+#: ../add-on/user-account/index.php:183
 msgid "To make a payment please log in"
 msgstr ""
 
-#: ../add-on/user-account/index.php:208
+#: ../add-on/user-account/index.php:210
 msgid "Enter the amount to replenish"
 msgstr ""
 
-#: ../add-on/user-account/index.php:295
+#: ../add-on/user-account/index.php:297
 msgid "Income dynamics"
 msgstr "דינמיקת הכנסות"
 
-#: ../add-on/user-account/index.php:296
+#: ../add-on/user-account/index.php:298
 msgid "The time period"
 msgstr "The time period"
 
-#: ../add-on/user-account/index.php:298
+#: ../add-on/user-account/index.php:300
 msgid "\"Days/Months\""
 msgstr "\"Days/Months\""
 
-#: ../add-on/user-account/index.php:298
+#: ../add-on/user-account/index.php:300
 msgid "\"Payments (PCs.)\""
 msgstr "\"Payments (PCs.)\""
 
-#: ../add-on/user-account/index.php:298
+#: ../add-on/user-account/index.php:300
 msgid "\"Income (thousands)\""
 msgstr "\"Income (thousands)\""
 
-#: ../add-on/user-account/index.php:323
+#: ../add-on/user-account/index.php:325
 msgid "Personal account of the user"
 msgstr "חשבון אישי של המשתמש"
 
-#: ../add-on/user-account/index.php:325 ../add-on/user-account/index.php:353
+#: ../add-on/user-account/index.php:327 ../add-on/user-account/index.php:355
 msgid "Personal account"
 msgstr "חשבון אישי"
 
@@ -2463,23 +2488,23 @@ msgstr "תשלומים"
 msgid "Payment history"
 msgstr ""
 
-#: ../add-on/user-account/rcl_payment.php:61
+#: ../add-on/user-account/rcl_payment.php:63
 msgid "A record of the payment in the database was not found"
 msgstr "A record of the payment in the database was not found"
 
-#: ../add-on/user-account/rcl_payment.php:101
+#: ../add-on/user-account/rcl_payment.php:103
 msgid "Top up personal account"
 msgstr "חשבון אישי למעלה"
 
-#: ../add-on/user-account/rcl_payment.php:135
+#: ../add-on/user-account/rcl_payment.php:141
 msgid "Confirm the operation"
 msgstr "Confirm the operation"
 
-#: ../add-on/user-account/rcl_payment.php:135
+#: ../add-on/user-account/rcl_payment.php:141
 msgid "Pay through payment system"
 msgstr "Pay through payment system"
 
-#: ../add-on/user-account/rcl_payment.php:149
+#: ../add-on/user-account/rcl_payment.php:155
 msgid "Pay personal account"
 msgstr "Pay personal account"
 
@@ -2511,24 +2536,60 @@ msgstr "הזן את התווים"
 msgid "Field filled not right CAPTCHA!"
 msgstr "שדה CAPTCHA לא נכון!"
 
-#: ../functions/class-rcl-users.php:522
+#: ../functions/class-rcl-users.php:523
 msgid "Total users"
 msgstr "סה\"כ משתמשים"
 
-#: ../functions/class-rcl-users.php:535
+#: ../functions/class-rcl-users.php:536
 msgid "Activity"
 msgstr "פעילות"
 
-#: ../functions/class-rcl-users.php:538 ../functions/loginform.php:50
+#: ../functions/class-rcl-users.php:539 ../functions/loginform.php:50
 #: ../functions/loginform.php:58 ../functions/loginform.php:74
 #: ../functions/shortcodes.php:171 ../templates/form-register.php:4
 #: ../templates/form-remember.php:21 ../templates/form-sign.php:33
 msgid "Registration"
 msgstr "הרשמה"
 
-#: ../functions/class-rcl-users.php:542
+#: ../functions/class-rcl-users.php:543
 msgid "Rated"
 msgstr "דירוג"
+
+#: ../functions/enqueue-scripts.php:146
+msgid "Close"
+msgstr "סגור"
+
+#: ../functions/enqueue-scripts.php:147
+msgid "Please wait"
+msgstr ""
+
+#: ../functions/enqueue-scripts.php:150
+msgid "Loading"
+msgstr ""
+
+#: ../functions/enqueue-scripts.php:154
+msgid "Very weak"
+msgstr ""
+
+#: ../functions/enqueue-scripts.php:155
+msgid "Weak"
+msgstr ""
+
+#: ../functions/enqueue-scripts.php:156
+msgid "Worse than average"
+msgstr ""
+
+#: ../functions/enqueue-scripts.php:157
+msgid "Average"
+msgstr ""
+
+#: ../functions/enqueue-scripts.php:158
+msgid "Reliable"
+msgstr ""
+
+#: ../functions/enqueue-scripts.php:159
+msgid "Strong"
+msgstr ""
 
 #: ../functions/loginform.php:22
 msgid "Hi"
@@ -2557,6 +2618,11 @@ msgstr "The site works using the functionality of the plugin"
 msgid "Author of publication"
 msgstr ""
 
+#: ../functions/rcl-frontend.php:147 ../functions/rcl-frontend.php:246
+#: ../functions/shortcodes.php:147
+msgid "not online"
+msgstr "לא מחובר"
+
 #: ../functions/rcl-frontend.php:187
 msgid "Congratulations! You have been banned."
 msgstr "Congratulations! You have been banned."
@@ -2565,34 +2631,30 @@ msgstr "Congratulations! You have been banned."
 msgid "Publication pending approval!"
 msgstr "פרסום ממתין לאישור!"
 
-#: ../functions/rcl-frontend.php:246 ../functions/shortcodes.php:147
-msgid "not online"
-msgstr "לא מחובר"
-
-#: ../functions/rcl_custom_fields.php:92
+#: ../functions/rcl_custom_fields.php:94
 msgid "Max size"
 msgstr "לגודל המקסימלי"
 
-#: ../functions/rcl_custom_fields.php:225
+#: ../functions/rcl_custom_fields.php:227
 msgid "Download file"
 msgstr "להוריד קובץ"
 
-#: ../functions/rcl_custom_fields.php:311
-#: ../functions/rcl_custom_fields.php:329
+#: ../functions/rcl_custom_fields.php:313
+#: ../functions/rcl_custom_fields.php:331
 msgid "File size exceeded!"
 msgstr "קובץ גדול מהרצוי !"
 
-#: ../functions/rcl_custom_fields.php:339
+#: ../functions/rcl_custom_fields.php:341
 msgid "Prohibited file type!"
 msgstr ""
 
-#: ../functions/rcl_custom_fields.php:429
-#: ../functions/rcl_custom_fields.php:455
-#: ../functions/rcl_custom_fields.php:479
+#: ../functions/rcl_custom_fields.php:431
+#: ../functions/rcl_custom_fields.php:457
+#: ../functions/rcl_custom_fields.php:481
 msgid "File does not exist on the server!"
 msgstr "קובץ לא קיים על השרת!"
 
-#: ../functions/rcl_custom_fields.php:498
+#: ../functions/rcl_custom_fields.php:500
 msgid "File has deleted"
 msgstr "הקובץ נמחק"
 
@@ -3170,15 +3232,15 @@ msgid ""
 msgstr ""
 "To display a link to the developer`s site (Thank you, if you decide to show)"
 
-#: ../rcl-admin/admin-pages.php:367
+#: ../rcl-admin/admin-pages.php:369
 msgid "Options saved!"
 msgstr ""
 
-#: ../rcl-admin/admin-pages.php:393
+#: ../rcl-admin/admin-pages.php:395
 msgid "Used template"
 msgstr "תבנית בשימוש"
 
-#: ../rcl-admin/admin-pages.php:395
+#: ../rcl-admin/admin-pages.php:397
 msgid "Not connected"
 msgstr "לא מחובר"
 
@@ -3292,6 +3354,9 @@ msgstr ""
 #: ../wp-recall.php:40 ../wp-recall.php:44
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "Access to content is closed privacy settings"
+#~ msgstr "כניסה וגישה פרטית לפורום"
 
 #~ msgid "To recharge your account"
 #~ msgstr "להטענת החשבון שלך"
@@ -3693,9 +3758,6 @@ msgstr ""
 
 #~ msgid "The user is not in group"
 #~ msgstr "משתמש זה אינו שייך לקבוצה"
-
-#~ msgid "Close"
-#~ msgstr "סגור"
 
 #~ msgid "Search group"
 #~ msgstr "חפש קבוצה"
