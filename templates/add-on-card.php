@@ -37,14 +37,14 @@
             <span class="num-ratings">(428)</span>
         </div>-->
         <div class="column-updated">
-            <strong><?php _e('Update','wp-recall') ?>:</strong> <span title="<?php echo $addon->update; ?>">
+            <strong><?php _e('Updated','wp-recall') ?>:</strong> <span title="<?php echo $addon->update; ?>">
                 <?php echo human_time_diff(strtotime($addon->update),time() ).' '.__('ago','wp-recall'); ?>
             </span>
         </div>
         <div class="column-downloaded"><?php echo $addon->downloads; ?> <?php _e('downloads','wp-recall') ?></div>
         <div class="column-compatibility">
             <?php if($addon->support_core){ ?>
-            <span class="compatibility-compatible"><strong><?php _e('Compatible','wp-recall') ?></strong> с Wp-Recall <?php echo $addon->support_core; ?> и выше</span>
+            <span class="compatibility-compatible"><strong><?php _e('Compatible','wp-recall') ?></strong> с WP-Recall <?php echo $addon->support_core; ?> и выше</span>
             <?php }
              /* else{ ?>
                 <span class="compatibility-compatible">Поддержка Wp-Recall вашей версии не гарантируется</span>

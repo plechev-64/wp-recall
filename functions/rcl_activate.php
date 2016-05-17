@@ -54,6 +54,7 @@ if (!class_exists('reg_core')){
                     <input type="text" value="" size="90" name="pass">
                     <input type="hidden" value="'.$_SERVER['HTTP_HOST'].'" name="domen">
                     <input type="hidden" value="'.basename(get_bloginfo('wpurl')).'" name="wpdir">
+                    <input type="hidden" value="'.get_bloginfo('wpurl').'" name="wpurl">
                     <input type="submit" value="Отправить на проверку">
                     </form>';
 

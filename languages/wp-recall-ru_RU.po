@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-05-13 19:39+0300\n"
+"POT-Creation-Date: 2016-05-16 13:43+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -348,7 +348,6 @@ msgid "Parent group"
 msgstr "Родительская группа"
 
 #: add-on/groups/groups-init.php:55 add-on/publicpost/class_public.php:85
-#: templates/add-on-card.php:40
 msgid "Update"
 msgstr "Обновить"
 
@@ -3405,6 +3404,10 @@ msgstr "Перейти на страницу"
 #: templates/add-on-card.php:17
 msgid "Go to"
 msgstr "Перейти"
+
+#: templates/add-on-card.php:40
+msgid "Updated"
+msgstr "Обновлено"
 
 #: templates/add-on-card.php:41
 msgid "ago"
