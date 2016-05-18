@@ -79,8 +79,14 @@ class Rcl_PublicForm {
             if($form_id) $this->form_id = $form_id;
         }
 
-        $taxs = array();
-        $taxs = apply_filters('taxonomy_public_form_rcl',$taxs);
+        $post_types = get_post_types( array('public' => true,'_builtin' => false), 'objects', 'and' );
+
+        $taxs = array('post'=>array('category'));
+        foreach($post_types as $p_type=>$p_data){
+            $taxs[$p_type] = $p_data->taxonomies;
+        }
+        
+        //print_r($post_type);
 
         if(isset($rcl_options['accept-'.$this->post_type])) $this->accept = $rcl_options['accept-'.$this->post_type];
 
@@ -340,7 +346,7 @@ function rcl_publication_excerpt(){
 function rcl_publication_termlist($tax=false){
     global $group_id,$rcl_options,$options_gr,$formData;
     if($tax) $formData->taxonomy[$formData->post_type] = $tax;
-    if(!isset($formData->taxonomy[$formData->post_type])&&$formData->post_id) return false;
+    if(!isset($formData->taxonomy[$formData->post_type])) return false;
 
     $ctg = ($formData->terms)? $formData->terms: 0;
 
@@ -351,23 +357,36 @@ function rcl_publication_termlist($tax=false){
     }
 
     if($formData->post_type=='post-group'){
+        
         $options_gr = rcl_get_options_group($group_id);
         $catlist = rcl_get_tags_list_group($options_gr['tags'],$formData->post_id);
+        
+        echo '<label>'.__('Group categories','wp-recall').':</label>'.$catlist;
 
     }else{
-    $cnt = (!isset($cnt)||!$cnt)? 1: $cnt;
-        $cat_list = ($formData->post_id)? get_public_catlist(): '';
-        $sel = new Rcl_List_Terms();
-        $catlist = $sel->get_select_list(get_public_allterms(),$cat_list,$cnt,$ctg);
+        
+        $cnt = (!isset($cnt)||!$cnt)? 1: $cnt;
+        if($formData->post_type=='post'){
+            $taxonomy_objects = get_object_taxonomies( $formData->post_type, 'objects' );
+        }else{
+            $taxonomy_objects = get_object_taxonomies( $formData->post_type, 'objects' );
+        }    
+
+        foreach($formData->taxonomy[$formData->post_type] as $taxonomy){
+            $cat_list = ($formData->post_id)? get_public_catlist($taxonomy): '';
+            
+            $sel = new Rcl_List_Terms($taxonomy);
+            $catlist = $sel->get_select_list(get_public_allterms($taxonomy),$cat_list,$cnt,$ctg);
+            if(!$catlist) continue;
+            
+            echo '<label>'.$taxonomy_objects[$taxonomy]->labels->name.':</label>'.$catlist;
+        }   
 
     }
-
-    if(!$catlist) return false;
-
-    echo '<label>'.__('Category','wp-recall').':</label>'.$catlist;
+ 
 }
 
-function get_public_catlist(){
+function get_public_catlist($taxonomy=false){
     global $formData;
 
     if(!isset($formData->taxonomy[$formData->post_type])) return false;
@@ -378,7 +397,7 @@ function get_public_catlist(){
         
     }else{
         
-        $post_cat = get_the_terms( $formData->post_id, $formData->taxonomy[$formData->post_type] );
+        $post_cat = get_the_terms( $formData->post_id, $taxonomy );
         
         if($post_cat){
             foreach( $post_cat as $key => $p_cat ){
@@ -397,10 +416,10 @@ function get_public_catlist(){
     return $post_cat;
 }
 
-function get_public_allterms(){
+function get_public_allterms($taxonomy=false){
     global $formData;
 
-    if($formData->post_type&&!isset($formData->taxonomy[$formData->post_type])) return false;
+    //if($formData->post_type&&!isset($formData->taxonomy[$formData->post_type])) return false;
 
     if($formData->post_type=='post'||!$formData->post_type){
 
@@ -431,7 +450,7 @@ function get_public_allterms(){
             ,'parent'       => ''
         );
 
-        $allcats = get_terms($formData->taxonomy[$formData->post_type], $term_args);
+        $allcats = get_terms($taxonomy, $term_args);
 
     }
 

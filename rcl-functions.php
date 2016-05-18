@@ -33,6 +33,8 @@ function rcl_tab($id,$callback,$name='',$args=false){
 
     if($name) $data = apply_filters('tab_data_rcl',$data);
     
+    if(!$data) return false;
+    
     $rcl_tabs[$id] = $data;
 
     if(is_admin())return false;
@@ -822,7 +824,7 @@ function rcl_edit_options_tab($tab){
     if(isset($rcl_order_tabs['name'][$tab['id']])) 
         $tab['name'] = $rcl_order_tabs['name'][$tab['id']];
 
-    if(isset($rcl_order_tabs['order'])){
+    if(isset($rcl_order_tabs['order'])&&is_array($rcl_order_tabs['order'])){
         foreach($rcl_order_tabs['order'] as $order=>$key){
             if($key!=$tab['id']) continue;
                 $tab['args']['order'] = $order+10;

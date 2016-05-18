@@ -155,21 +155,9 @@ class Rcl_EditPost {
     function add_data_post($postdata,$data){
         global $rcl_options;
 
-        if(!$_POST['cats']||$data->post_type!='post') return $postdata;
-
-        $catargs = array(
-                'orderby'                  => 'name'
-                ,'order'                   => 'ASC'
-                ,'hide_empty'              => 0
-                ,'hierarchical'=>true
-        );
-        $cats = get_categories( $catargs );
-
-        $term_l = new Rcl_Edit_Terms_List();
-        $new_cat = $term_l->get_terms_list($cats,$_POST['cats']);
+        if($data->post_type!='post') return $postdata;
 
         $postdata['post_status'] = $this->get_status_post($rcl_options['moderation_public_post']);
-        $postdata['post_category'] = $new_cat;
 
         return $postdata;
 
@@ -236,6 +224,30 @@ class Rcl_EditPost {
         wp_redirect($redirect_url);  exit;
 
     }
+}
+
+add_filter('pre_update_postdata_rcl','rcl_add_taxonomy_in_postdata',50,2);
+function rcl_add_taxonomy_in_postdata($postdata,$data){
+
+    if(!$_POST['cats']) return $postdata;
+
+    $post_type = get_post_types( array('name' => $data->post_type), 'objects' );
+    
+    if($data->post_type=='post') $post_type['post']->taxonomies = array('category');   
+
+    foreach($post_type[$data->post_type]->taxonomies as $taxonomy){
+        if(!isset($_POST['cats'][$taxonomy])) continue;
+
+        $cats = get_terms($taxonomy);
+
+        $term_l = new Rcl_Edit_Terms_List();
+        $new_cat = $term_l->get_terms_list($cats,$_POST['cats'][$taxonomy]);
+
+        $postdata['tax_input'][$taxonomy] = $new_cat;
+    }
+
+    return $postdata;
+
 }
 
 add_action('update_post_rcl','rcl_set_object_terms_post',10,3);

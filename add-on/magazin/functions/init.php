@@ -8,6 +8,16 @@ function rmag_admin_scripts(){
     wp_enqueue_script( 'rmag_admin_scripts', rcl_addon_url('js/admin.js', __FILE__) );
 }
 
+if(function_exists('rcl_register_rating_type')){
+    if(!function_exists('rcl_register_rating_product_type')){
+        if(!is_admin()) add_action('init','rcl_register_rating_product_type');
+        if(is_admin()) add_action('admin_init','rcl_register_rating_product_type');
+        function rcl_register_rating_product_type(){
+                rcl_register_rating_type(array('post_type'=>'products','type_name'=>'Товары','style'=>true));
+        }
+    }
+}
+
 add_action( 'attachments_register', 'rcl_attachments_products' );
 function rcl_attachments_products( $attachments ){
     $args = array(

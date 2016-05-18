@@ -325,8 +325,9 @@ table.order-data tbody tr th:nth-child(1) {
     box-shadow: 0px 2px 4px #B9C9D6;
 }
 .products-box.type-slab .products-list .product .product-thumbnail{
-    margin-bottom: 5px;
     display: inline-block;
+    margin-bottom: 5px;
+    width: 100%;
 }
 .products-box.type-slab .products-list .product .product-thumbnail img{
     width: 100%;

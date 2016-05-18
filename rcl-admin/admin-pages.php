@@ -336,6 +336,13 @@ function rcl_update_options(){
     }
 
     $POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    
+    array_walk_recursive(
+    $POST, function(&$v, $k) {
+      $v = trim($v);
+    });
+    
+    //print_r($POST);exit;
 
     if($POST['global']['login_form_recall']==1&&!isset($POST['global']['page_login_form_recall'])){
             $POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));

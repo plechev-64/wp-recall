@@ -19,6 +19,7 @@ class Rcl_List_Terms{
 
     function get_select_list($allcats,$cat_list,$cnt,$ctg,$output=false){                      
         if(!$allcats) return false;
+        
         $catlist = '';
 
         if($output) $this->output = $output;
@@ -26,16 +27,17 @@ class Rcl_List_Terms{
         if($ctg) $this->ctg = $ctg;
         $this->allcats = $allcats;
 
-        if($cat_list&&is_array($cat_list)&&$this->taxonomy){
+        /*if($cat_list&&is_array($cat_list)&&$this->taxonomy){
             $cat_list = get_terms( $this->taxonomy, array('include'=>$cat_list) );
-        }
+            //print_r($cat_list);
+        }*/
 
         $this->cat_list = $cat_list;
 
         for($this->sel=0;$this->sel<$cnt;$this->sel++){
             $this->selected = false;
             if($this->output=='select'){
-                $catlist .= '<select class="postform" name="cats[]">';
+                $catlist .= '<select class="postform" name="cats['.$this->taxonomy.'][]">';
                 if($this->sel>0) $catlist .= '<option value="">'.__('Not selected','wp-recall').'</option>';
                 $catlist .= $this->get_option_list();
                 $catlist .= '</select>';
@@ -107,7 +109,7 @@ class Rcl_List_Terms{
             }
 
             if($this->output=='select') $catlist = '<option '.$selected.' value="'.$cat->term_id.'">'.$cat->name.'</option>';
-            if($this->output=='checkbox') $catlist = '<label><input type="checkbox" '.$selected.' name="cats[]" value="'.$cat->term_id.'">'.$cat->name.'</label>';
+            if($this->output=='checkbox') $catlist = '<label><input type="checkbox" '.$selected.' name="cats['.$this->taxonomy.'][]" value="'.$cat->term_id.'">'.$cat->name.'</label>';
             $this->selected = false;
         }
         return $catlist;
@@ -149,7 +151,7 @@ class Rcl_List_Terms{
                 }
 
                 if($this->output=='select') $catlist .= '<option '.$selected.' value="'.$cat->term_id.'">&nbsp;&nbsp;&nbsp;'.$cat->name.'</option>';
-                if($this->output=='checkbox') $catlist .= '<label><input type="checkbox" '.$selected.' name="cats[]" value="'.$cat->term_id.'">'.$cat->name.'</label>';
+                if($this->output=='checkbox') $catlist .= '<label><input type="checkbox" '.$selected.' name="cats['.$this->taxonomy.'][]" value="'.$cat->term_id.'">'.$cat->name.'</label>';
                 $this->selected = false;
 
                         }

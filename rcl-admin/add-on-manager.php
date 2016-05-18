@@ -237,7 +237,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
               //if( !wp_verify_nonce( $_GET['_wpnonce'], 'action_addon' ) ) return false;
 
               global $wpdb, $user_ID, $active_addons;
-              if ( ! current_user_can('activate_plugins') ) wp_die(__('You cant control polucheniya plugins on this site.','wp-recall'));
+              if ( ! current_user_can('activate_plugins') ) wp_die(__('You cant control install plugins on this site.','wp-recall'));
 
               $addon = $_GET['addon'];
               $action = parent::current_action();

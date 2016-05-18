@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Blank Pot v1.0.0\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-05-13 19:48+0300\n"
+"POT-Creation-Date: 2016-05-17 21:21+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Your Team <translations@example.com>\n"
@@ -346,7 +346,6 @@ msgid "Parent group"
 msgstr "Батькіська група"
 
 #: add-on/groups/groups-init.php:55 add-on/publicpost/class_public.php:85
-#: templates/add-on-card.php:40
 msgid "Update"
 msgstr "Оновити"
 
@@ -734,11 +733,11 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: add-on/magazin/functions/init.php:18 add-on/magazin/functions/init.php:19
+#: add-on/magazin/functions/init.php:28 add-on/magazin/functions/init.php:29
 msgid "Attach image or download it"
 msgstr "Вибрати зображення або завантажити"
 
-#: add-on/magazin/functions/init.php:260 rcl-admin/admin-pages.php:38
+#: add-on/magazin/functions/init.php:270 rcl-admin/admin-pages.php:38
 #: rcl-admin/admin-pages.php:39
 msgid "Settings Wp-Recall"
 msgstr "Налаштування  Wp-Recall"
@@ -2961,8 +2960,8 @@ msgid "To update automatically"
 msgstr ""
 
 #: rcl-admin/add-on-manager.php:240
-msgid "You cant control polucheniya plugins on this site."
-msgstr "Ви не можете керувати загрузкою плагінів на цьому сайті."
+msgid "You cant control install plugins on this site."
+msgstr ""
 
 #: rcl-admin/add-on-manager.php:372
 msgid "Unpacking of archive failed."
@@ -3394,6 +3393,10 @@ msgstr ""
 msgid "Go to"
 msgstr ""
 
+#: templates/add-on-card.php:40
+msgid "Updated"
+msgstr ""
+
 #: templates/add-on-card.php:41
 msgid "ago"
 msgstr ""
@@ -3456,6 +3459,9 @@ msgstr ""
 #: wp-recall.php:40 wp-recall.php:44
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "You cant control polucheniya plugins on this site."
+#~ msgstr "Ви не можете керувати загрузкою плагінів на цьому сайті."
 
 #~ msgid "Вы уверены?"
 #~ msgstr "Ви впевнені?"
