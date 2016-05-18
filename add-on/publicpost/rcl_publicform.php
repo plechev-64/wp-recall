@@ -552,12 +552,26 @@ function rcl_add_non_hierarchical_tags_field($fields,$formData){
     $taxonomy_objects = get_object_taxonomies( $formData->post_type, 'objects' ); 
     
     $tagslist = '';
-    $args = array('hide_empty'=>false,'number'=>20,'orderby'=>'count','order'=>'DESC');
-    
-    foreach($formData->taxonomy[$formData->post_type] as $taxonomy){           
+
+    foreach($formData->taxonomy[$formData->post_type] as $taxonomy){  
+        
         if($taxonomy_objects[$taxonomy]->hierarchical==1) continue;
+        
+        $args = array(
+            'input_field'=>true,
+            'terms_args'=>array(
+                'hide_empty'=>false,
+                'number'=>20,
+                'orderby'=>'count',
+                'order'=>'DESC'
+            )
+        );
+        
+        $args = apply_filters('rcl_public_form_tags',$args,$taxonomy,$formData->post_type);
+        
         $tagslist .= rcl_get_tags_checklist($formData->post_id,$taxonomy,$args);
-        $tagslist .= rcl_get_tags_input($formData->post_id,$taxonomy);
+        
+        if($args['input_field']) $tagslist .= rcl_get_tags_input($formData->post_id,$taxonomy);
     }
     
     if($tagslist){
@@ -582,8 +596,6 @@ function rcl_get_tags($post_id,$taxonomy='post_tag'){
 function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = array()){
     global $rcl_options,$formData;
 
-    $t_args = apply_filters('rcl_public_form_tags',$t_args,$taxonomy,$formData->post_type);
-    
     $tags = get_terms($taxonomy,$t_args);
 
     $post_tags = ($post_id)? rcl_get_tags($post_id,$taxonomy): array();
@@ -640,7 +652,7 @@ function rcl_get_tags_input($post_id=false,$taxonomy='post_tag'){
         'id' => 'rcl-tags-'.$taxonomy,
         'name' => 'tags['.$taxonomy.']',
         'placeholder' => __('Enter your tags','wp-recall'),
-        'label' => __('Add your tags','wp-recall').'<br><small>'.__('Each tag is separated with Enter','wp-recall').'</small>'
+        'label' => '<span>'.__('Add your tags','wp-recall').'</span><br><small>'.__('Each tag is separated with Enter','wp-recall').'</small>'
     );
 
     $fields .= rcl_form_field($args);
