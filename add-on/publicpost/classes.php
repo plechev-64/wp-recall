@@ -43,7 +43,7 @@ class Rcl_List_Terms{
                 $catlist .= '</select>';
             }
             if($this->output=='checkbox'){
-                $catlist .= '<div class="category-list">';                            
+                $catlist .= '<div class="category-list">';                          
                 $catlist .= $this->get_option_list();
                 $catlist .= '</div>';
             }

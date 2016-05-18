@@ -125,10 +125,13 @@
     font-size: 12px;
 }
 #rcl-tags-list{
+    
+}
+#rcl-tags-list .rcl-tags-list{
 	overflow:hidden;
 	clear:both;
 }
-#rcl-tags-list label {
+#rcl-tags-list .rcl-tags-list label {
     background: rgba(219, 219, 219, 0.3);
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
 	font: 12px arial;
@@ -137,7 +140,7 @@
     padding: 7px 9px 6px 8px;
 	cursor: pointer;
 }
-#rcl-tags-list label input {
+#rcl-tags-list .rcl-tags-list label input {
     height: 13px;
     margin: 0 4px 1px 0;
     padding: 0;
@@ -145,26 +148,26 @@
     vertical-align: bottom;
     width: 13px;
 }
-#rcl_post_tags.ms-ctn {
+#rcl-tags-list .ms-ctn {
 	background: #fff;
     border: none;
     box-shadow: 0 0 1px 1px #ccc;
     margin: 10px 0;
 	width: 94%;
 }
-#rcl_post_tags.ms-ctn input:focus {
+#rcl-tags-list .ms-ctn input:focus {
 	box-shadow: 0 0 1px 1px #ccc;
 }
-#rcl_post_tags .ms-sel-item {
+#rcl-tags-list .ms-sel-item {
     padding: 2px 3px 4px 7px;
 }
-#rcl_post_tags .ms-sel-ctn input {
+#rcl-tags-list .ms-sel-ctn input {
     margin: 3px 5px;
 }
-#rcl_post_tags.ms-ctn .ms-trigger{
+#rcl-tags-list .ms-ctn .ms-trigger{
 	display:none;
 }
-#rcl_post_tags .ms-helper {
+#rcl-tags-list .ms-helper {
     bottom: -20px;
     color: #000;
     font-size: 12px;

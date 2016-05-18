@@ -192,14 +192,14 @@ class Rcl_EditPost {
         if(!$postdata['post_status']||$user_info->user_level==10) $postdata['post_status'] = 'publish';
 
         do_action('pre_update_post_rcl',$postdata);
-
+        
         if(!$this->post_id){
             $this->post_id = wp_insert_post( $postdata );
             if($id_form>1) add_post_meta($this->post_id, 'publicform-id', $id_form);
         }else{
             wp_update_post( $postdata );
         }
-
+        
         $this->update_thumbnail($postdata);
 
         if($_POST['add-gallery-rcl']==1) update_post_meta($this->post_id, 'recall_slider', 1);
@@ -233,7 +233,15 @@ function rcl_add_taxonomy_in_postdata($postdata,$data){
 
     $post_type = get_post_types( array('name' => $data->post_type), 'objects' );
     
-    if($data->post_type=='post') $post_type['post']->taxonomies = array('category');   
+    if($data->post_type=='post'){
+        
+        $post_type['post']->taxonomies = array('category'); 
+        
+        if($_POST['tags']){
+            $postdata['tags_input'] = $_POST['tags']['post_tag'];
+        }
+        
+    }
 
     foreach($post_type[$data->post_type]->taxonomies as $taxonomy){
         if(!isset($_POST['cats'][$taxonomy])) continue;
@@ -247,6 +255,17 @@ function rcl_add_taxonomy_in_postdata($postdata,$data){
     }
 
     return $postdata;
+
+}
+
+add_action('update_post_rcl','rcl_update_postdata_product_tags',10,2);
+function rcl_update_postdata_product_tags($post_id,$postdata){
+
+    if(!isset($_POST['tags'])||$postdata['post_type']=='post') return false;
+    
+    foreach($_POST['tags'] as $taxonomy=>$terms){
+        wp_set_object_terms( $post_id, $terms, $taxonomy );
+    }
 
 }
 

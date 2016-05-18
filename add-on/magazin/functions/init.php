@@ -56,7 +56,7 @@ function rcl_register_posttype_products(){
         'labels' => $labels,
         'hierarchical' => false,
         'supports' => array( 'title', 'editor','custom-fields','thumbnail','comments','excerpt','author'),
-        'taxonomies' => array( 'prodcat' ),
+        'taxonomies' => array( 'prodcat','product_tag' ),
         'public' => true,
         'show_ui' => true,
         'show_in_menu' => true,

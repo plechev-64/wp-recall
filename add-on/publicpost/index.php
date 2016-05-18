@@ -37,12 +37,6 @@ function rcl_admin_page_publicform(){
 	add_submenu_page( 'manage-wprecall', __('Form of publication','wp-recall'), __('Form of publication','wp-recall'), 'manage_options', 'manage-public-form', 'rcl_manage_publicform');
 }
 
-add_filter('taxonomy_public_form_rcl','rcl_taxonomy_public_post');
-function rcl_taxonomy_public_post($tax){
-    if (!isset($tax['post'])) $tax['post'] = 'category';
-    return $tax;
-}
-
 //add_filter('after_public_form_rcl','rcl_saveform_data_script',10,2);
 function rcl_saveform_data_script($content,$data){
     $idform = 'form-'.$data->post_type.'-';
@@ -75,28 +69,6 @@ function rcl_update_postdata_excerpt($postdata){
 	if(!isset($_POST['post_excerpt'])) return $postdata;
 	$postdata['post_excerpt'] = sanitize_text_field($_POST['post_excerpt']);
 	return $postdata;
-}
-
-add_filter('pre_update_postdata_rcl','rcl_update_postdata_tags');
-function rcl_update_postdata_tags($postdata){
-
-    if(!isset($_POST['post_tags'])&&!isset($_POST['tags'])||$postdata['post_type']!='post') return $postdata;
-
-    $tags = array();
-
-    if($_POST['post_tags']){
-            $posttags = $_POST['post_tags'];
-            $tags = explode(',',$posttags);
-            $tags = array_map('trim', $tags);
-    }
-
-    if($_POST['tags']){
-            $tags = array_merge ( $tags, $_POST['tags'] );
-    }
-
-    if($tags) $postdata['tags_input'] = $tags;
-
-    return $postdata;
 }
 
 function rcl_tab_postform($author_lk){

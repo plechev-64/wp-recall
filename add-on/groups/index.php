@@ -53,12 +53,6 @@ function rcl_groups_widget_posts_remove_cache($post_id,$postdata){
     }
 }*/
 
-add_filter('taxonomy_public_form_rcl','rcl_add_taxonomy_public_groups');
-function rcl_add_taxonomy_public_groups($tax){
-    if (!isset($tax['post-group'])) $tax['post-group'] = 'groups';
-    return $tax;
-}
-
 add_action('init','rcl_add_postlist_group',10);
 function rcl_add_postlist_group(){
     rcl_postlist('group','post-group',__('Record groups','wp-recall'),array('order'=>40));

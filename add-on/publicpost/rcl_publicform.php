@@ -366,13 +366,13 @@ function rcl_publication_termlist($tax=false){
     }else{
         
         $cnt = (!isset($cnt)||!$cnt)? 1: $cnt;
-        if($formData->post_type=='post'){
-            $taxonomy_objects = get_object_taxonomies( $formData->post_type, 'objects' );
-        }else{
-            $taxonomy_objects = get_object_taxonomies( $formData->post_type, 'objects' );
-        }    
+
+        $taxonomy_objects = get_object_taxonomies( $formData->post_type, 'objects' ); 
 
         foreach($formData->taxonomy[$formData->post_type] as $taxonomy){
+            
+            if($taxonomy_objects[$taxonomy]->hierarchical!=1) continue;
+            
             $cat_list = ($formData->post_id)? get_public_catlist($taxonomy): '';
             
             $sel = new Rcl_List_Terms($taxonomy);
@@ -545,6 +545,30 @@ function rcl_publication_editor(){
 
 }
 
+add_filter('public_form_rcl','rcl_add_non_hierarchical_tags_field',100,2);
+function rcl_add_non_hierarchical_tags_field($fields,$formData){
+    global $formData;
+    
+    $taxonomy_objects = get_object_taxonomies( $formData->post_type, 'objects' ); 
+    
+    $tagslist = '';
+    $args = array('hide_empty'=>false,'number'=>20,'orderby'=>'count','order'=>'DESC');
+    
+    foreach($formData->taxonomy[$formData->post_type] as $taxonomy){           
+        if($taxonomy_objects[$taxonomy]->hierarchical==1) continue;
+        $tagslist .= rcl_get_tags_checklist($formData->post_id,$taxonomy,$args);
+        $tagslist .= rcl_get_tags_input($formData->post_id,$taxonomy);
+    }
+    
+    if($tagslist){
+        $fields .= '<div id="rcl-tags-list">';
+        $fields .= $tagslist;
+        $fields .= '</div>';
+    }
+
+    return $fields;
+}
+
 function rcl_get_tags($post_id,$taxonomy='post_tag'){
     $posttags = get_the_terms( $post_id, $taxonomy );
 
@@ -556,14 +580,18 @@ function rcl_get_tags($post_id,$taxonomy='post_tag'){
 }
 
 function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = array()){
-    global $rcl_options;
+    global $rcl_options,$formData;
 
+    $t_args = apply_filters('rcl_public_form_tags',$t_args,$taxonomy,$formData->post_type);
+    
     $tags = get_terms($taxonomy,$t_args);
 
     $post_tags = ($post_id)? rcl_get_tags($post_id,$taxonomy): array();
+    
+    $taxonomy_objects = get_object_taxonomies( $formData->post_type, 'objects' ); 
 
-    $checks = '<label>'.__('Select a tag from the list','wp-recall').'</label>
-    <div id="rcl-tags-list">';
+    $checks = '<label>'.$taxonomy_objects[$taxonomy]->labels->name.':</label>
+    <div id="rcl-tags-list-'.$taxonomy.'" class="rcl-tags-list">';
     
     if($tags){
         foreach ($tags as $tag){
@@ -574,7 +602,7 @@ function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = ar
             }
             $args = array(
                 'type' => 'checkbox',
-                'name' => 'tags[]',
+                'name' => 'tags['.$taxonomy.'][]',
                 'checked' => $checked,
                 'label' => $tag->name,
                 'value' => $tag->name
@@ -587,7 +615,7 @@ function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = ar
         foreach ($post_tags as $tag){
             $args = array(
                 'type' => 'checkbox',
-                'name' => 'tags[]',
+                'name' => 'tags['.$taxonomy.'][]',
                 'checked' => true,
                 'label' => $tag->name,
                 'value' => $tag->name
@@ -601,7 +629,7 @@ function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = ar
 }
 
 function rcl_get_tags_input($post_id=false,$taxonomy='post_tag'){
-    global $rcl_options;
+    global $rcl_options,$formData;
 
     $fields = '';
 
@@ -609,8 +637,8 @@ function rcl_get_tags_input($post_id=false,$taxonomy='post_tag'){
 
     $args = array(
         'type' => 'text',
-        'id' => 'rcl_post_tags',
-        'name' => 'tags',
+        'id' => 'rcl-tags-'.$taxonomy,
+        'name' => 'tags['.$taxonomy.']',
         'placeholder' => __('Enter your tags','wp-recall'),
         'label' => __('Add your tags','wp-recall').'<br><small>'.__('Each tag is separated with Enter','wp-recall').'</small>'
     );
@@ -619,7 +647,7 @@ function rcl_get_tags_input($post_id=false,$taxonomy='post_tag'){
 
     $fields .= "<script>
     jQuery(function($){
-        $('#rcl_post_tags').magicSuggest({
+        $('#rcl-tags-".$taxonomy."').magicSuggest({
             data: Rcl.ajaxurl,
             dataUrlParams: { action: 'rcl_get_like_tags',taxonomy: '".$taxonomy."',ajax_nonce:Rcl.nonce },
             noSuggestionText: '".__("Not found","wp-recall")."',
@@ -643,7 +671,7 @@ function rcl_add_tags_input($fields,$formData){
     
     if(!in_array($formData->post_type,$tag_obj->object_type)) return $fields;
     
-    $fields .= '<div id="tags-list">';
+    $fields .= '<div id="rcl-tags-list">';
     
     if(isset($rcl_options['display_tags'])&&$rcl_options['display_tags']==1){
         
