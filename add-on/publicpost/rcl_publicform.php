@@ -81,7 +81,7 @@ class Rcl_PublicForm {
 
         $post_types = get_post_types( array('public' => true,'_builtin' => false), 'objects', 'and' );
 
-        $taxs = array('post'=>array('category'));
+        $taxs = array('post'=>array('category','post_tag'));
         foreach($post_types as $p_type=>$p_data){
             $taxs[$p_type] = $p_data->taxonomies;
         }
@@ -569,7 +569,7 @@ function rcl_add_non_hierarchical_tags_field($fields,$formData){
         
         $args = apply_filters('rcl_public_form_tags',$args,$taxonomy,$formData->post_type);
         
-        $tagslist .= rcl_get_tags_checklist($formData->post_id,$taxonomy,$args);
+        $tagslist .= rcl_get_tags_checklist($formData->post_id,$taxonomy,$args['terms_args']);
         
         if($args['input_field']) $tagslist .= rcl_get_tags_input($formData->post_id,$taxonomy);
     }
@@ -595,7 +595,7 @@ function rcl_get_tags($post_id,$taxonomy='post_tag'){
 
 function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = array()){
     global $rcl_options,$formData;
-
+    
     $tags = get_terms($taxonomy,$t_args);
 
     $post_tags = ($post_id)? rcl_get_tags($post_id,$taxonomy): array();
@@ -671,37 +671,6 @@ function rcl_get_tags_input($post_id=false,$taxonomy='post_tag'){
         });
     });
     </script>";
-
-    return $fields;
-}
-
-add_filter('public_form_rcl','rcl_add_tags_input',10,2);
-function rcl_add_tags_input($fields,$formData){
-    global $rcl_options;
-    
-    $tag_obj = get_taxonomy('post_tag');
-    
-    if(!in_array($formData->post_type,$tag_obj->object_type)) return $fields;
-    
-    $fields .= '<div id="rcl-tags-list">';
-    
-    if(isset($rcl_options['display_tags'])&&$rcl_options['display_tags']==1){
-        
-        $args = array('hide_empty'=>false);
-
-        if($rcl_options['limit_tags']){
-            $include = explode(',',$rcl_options['limit_tags']);
-            $args['include'] = array_map('trim', $include);
-        }
-        
-        $fields .= rcl_get_tags_checklist($formData->post_id,'post_tag',$args);
-    }
-    
-    if(isset($rcl_options['field_tags'])&&$rcl_options['field_tags']==1){
-        $fields .= rcl_get_tags_input($formData->post_id,'post_tag');
-    }
-    
-    $fields .= '</div>';
 
     return $fields;
 }
