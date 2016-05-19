@@ -10,7 +10,7 @@ if(!isset($rcl_options['media_downloader_recall']))
 if(!isset($rcl_options['id_parent_category']))
     $rcl_options['id_parent_category']='';
 if(!isset($rcl_options['user_public_access_recall']))
-    $rcl_options['user_public_access_recall']=0;
+    $rcl_options['user_public_access_recall']=2;
 
 if(!isset($rcl_options['public_form_page_rcl']))
     $rcl_options['public_form_page_rcl'] = wp_insert_post(
@@ -39,4 +39,3 @@ if(!isset($rcl_options['front_editing']))
     $rcl_options['front_editing'] = array(2);
 
 update_option('rcl_global_options',$rcl_options);
-?>
