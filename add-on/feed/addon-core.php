@@ -249,7 +249,8 @@ function rcl_get_feed_attachment($content){
     if($rcl_feed->feed_type!='posts'||$rcl_feed->post_type!='attachment') return $content;
 
     $src = wp_get_attachment_image_src($rcl_feed->feed_ID,'medium');
-    $content = '<a href="'.get_permalink($rcl_feed->feed_ID).'"><img class="aligncenter" src="' . $src[0] . '" alt="" /></a>'.$content;
+
+    $content = '<a href="'.$rcl_feed->feed_permalink.'"><img class="aligncenter" src="' . $src[0] . '" alt="" /></a>'.$content;
 
     return $content;
 }

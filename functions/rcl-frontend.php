@@ -94,7 +94,7 @@ add_filter('wp_footer', 'rcl_footer_url');
 function rcl_footer_url(){	
 	if(is_front_page()&&!is_user_logged_in()){
             if(get_option('rcl_footer_link')==1)
-                echo '<p class="plugin-info">'.__('The site works using the functionality of the plugin','wp-recall').'  <a target="_blank" href="http://codeseller.ru/">Wp-Recall</a></p>';
+                echo '<p class="plugin-info">'.__('The site works using the functionality of the plugin','wp-recall').'  <a target="_blank" href="https://codeseller.ru/">Wp-Recall</a></p>';
         }
 }
 

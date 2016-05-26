@@ -197,7 +197,7 @@ if(!isset($rmag_options['basket_page_rmag'])){
     
     wp_insert_post(array(
         'post_title'=>'Каталог товаров',
-        'post_content'=>'<p>Здесь будет выводиться ваш каталог товаров. Вывод каталога товаров формируется шорткодом productlist <a href="http://codeseller.ru/api-rcl/productlist/">(описание шорткода)</a>. Вы можете выбрать другую страницу для его размещения.</p><br/>[productlist]',
+        'post_content'=>'<p>Здесь будет выводиться ваш каталог товаров. Вывод каталога товаров формируется шорткодом productlist <a href="https://codeseller.ru/api-rcl/productlist/">(описание шорткода)</a>. Вы можете выбрать другую страницу для его размещения.</p><br/>[productlist]',
         'post_status'=>'publish',
         'post_author'=>1,
         'post_type'=>'page',

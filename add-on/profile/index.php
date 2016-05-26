@@ -96,7 +96,8 @@ function rcl_update_profile_fields($user_id){
                 if($_POST[$slug]){
                         update_user_meta($user_id, $slug, $_POST[$slug]);
                 }else{
-                        if(get_user_meta($user_id, $slug, $_POST[$slug])) delete_user_meta($user_id, $slug, $_POST[$slug]);
+                        if(get_user_meta($user_id, $slug, $_POST[$slug])) 
+                                delete_user_meta($user_id, $slug, $_POST[$slug]);
                 }
             }
         }
@@ -328,23 +329,23 @@ function rcl_tab_profile_content($author_lk){
     }
 
     if(isset($select_display)){
-            $profile_block .= '<tr>
-            <th><label for="display_name">'.__('Display name','wp-recall').':</label></th>
-            <td>
-            <select name="display_name" class="regular-dropdown" id="display_name">';
-                    $public_display = array();
-                    $public_display['display_displayname'] = esc_attr($userdata->display_name);
-                    $public_display['display_nickname'] = esc_attr($userdata->nickname);
-                    $public_display['display_username'] = esc_attr($userdata->user_login);
-                    $public_display['display_firstname'] = esc_attr($userdata->first_name);
-                    if($userdata->first_name&&$userdata->last_name) $public_display['display_firstlast'] = esc_attr($userdata->first_name) . '&nbsp;' . esc_attr($userdata->last_name);
-                    if($userdata->first_name&&$userdata->last_name) $public_display['display_lastfirst'] = esc_attr($userdata->last_name) . '&nbsp;' . esc_attr($userdata->first_name);
-                    $public_display = array_unique(array_filter(array_map('trim', $public_display)));
-                    foreach((array)$public_display as $id => $item) {
-                            $profile_block .= '<option id="'.$id.'" value="'.esc_attr($item).'">'.esc_attr($item).'</option>';
-                    }
-                    $profile_block .= '</select>
-            </td></tr>';
+        $profile_block .= '<tr>
+        <th><label for="display_name">'.__('Display name','wp-recall').':</label></th>
+        <td>
+        <select name="display_name" class="regular-dropdown" id="display_name">';
+        $public_display = array();
+        $public_display['display_displayname'] = esc_attr($userdata->display_name);
+        $public_display['display_nickname'] = esc_attr($userdata->nickname);
+        $public_display['display_username'] = esc_attr($userdata->user_login);
+        $public_display['display_firstname'] = esc_attr($userdata->first_name);
+        if($userdata->first_name&&$userdata->last_name) $public_display['display_firstlast'] = esc_attr($userdata->first_name) . '&nbsp;' . esc_attr($userdata->last_name);
+        if($userdata->first_name&&$userdata->last_name) $public_display['display_lastfirst'] = esc_attr($userdata->last_name) . '&nbsp;' . esc_attr($userdata->first_name);
+        $public_display = array_unique(array_filter(array_map('trim', $public_display)));
+        foreach((array)$public_display as $id => $item) {
+                $profile_block .= '<option id="'.$id.'" value="'.esc_attr($item).'">'.esc_attr($item).'</option>';
+        }
+        $profile_block .= '</select>
+        </td></tr>';
     }
 
 
@@ -443,9 +444,13 @@ function rcl_tab_profile_content($author_lk){
 		foreach((array)$get_fields as $custom_field){
 
                     $custom_field = apply_filters('custom_field_profile',$custom_field);
+					
+                    $slug = $custom_field['slug'];
 
-                    if($custom_field['admin']==1&&!$userdata->$custom_field['slug']) continue;
-                    if(!$custom_field||!$custom_field['slug']) continue;
+                    if($custom_field['admin']==1&&!$userdata->$slug) continue;
+                    if(!$custom_field||!$slug) continue;
+
+                    $value = (isset($userdata->$slug))? $userdata->$slug: '';
 
                     $class = (isset($custom_field['class']))? $custom_field['class']: '';
                     $id = (isset($custom_field['id']))? 'id='.$custom_field['id']: '';
@@ -459,7 +464,7 @@ function rcl_tab_profile_content($author_lk){
                             if($custom_field['type']) $field .= ':';
                             $field .= '</label>'
                             . '</th>';
-                    $field .= '<td>'.$cf->get_input($custom_field,$userdata->$custom_field['slug']).'</td></tr>';
+                    $field .= '<td>'.$cf->get_input($custom_field,$value).'</td></tr>';
 		}
 
 		$profile_block .= $field;
@@ -479,7 +484,7 @@ function rcl_tab_profile_content($author_lk){
 
 	}
 
-    $profile_block = apply_filters('profile_options_rcl',$profile_block,$userdata);
+        $profile_block = apply_filters('profile_options_rcl',$profile_block,$userdata);
 
 	$profile_block .= '<input type="hidden" name="action" value="update" />
 	<input type="hidden" name="user_id" id="user_id" value="'.$user_ID.'" />
