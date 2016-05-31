@@ -34,6 +34,67 @@ function rcl_check_addon_update(){
     
     if(!$addons_data) return false;
 
+    $url = RCL_SERVICE_HOST."/products-files/info/light-info.xml";
+
+    $xml_array = @simplexml_load_file($url);
+    
+    if(!$xml_array){
+        $log['error'] = __('Unable to retrieve the file from the server!','wp-recall');
+        echo json_encode($log); exit;
+    }
+
+    $need_update = array(); $ver = 0;
+    
+    foreach($xml_array as $xml_data){
+        
+        if(!$xml_data) continue;
+        
+        $key = (string)$xml_data->slug;
+        
+        if(!isset($addons_data[$key])) continue;
+        
+        $last_ver = (string)$xml_data->version;
+        
+        $ver = version_compare($last_ver,$addons_data[$key]['version']);
+        
+        if($ver>0){
+            $addons_data[$key]['new-version'] = $last_ver;
+            $need_update[$key] = $addons_data[$key];
+        }
+    }
+    
+    update_option('rcl_addons_need_update',$need_update);
+
+}
+
+add_action('rcl_cron_daily','rcl_send_addons_data',10);
+function rcl_send_addons_data(){
+    global $active_addons;
+    
+    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on') ;
+
+    foreach($paths as $path){
+        if(file_exists($path)){
+            $addons = scandir($path,1);
+            $a=0;
+            foreach((array)$addons as $namedir){
+                $addon_dir = $path.'/'.$namedir;
+                $index_src = $addon_dir.'/index.php';
+                if(!file_exists($index_src)) continue;
+                $info_src = $addon_dir.'/info.txt';
+                if(file_exists($info_src)){
+                    $info = file($info_src);
+                    $addons_data[$namedir] = rcl_parse_addon_info($info);
+                    $addons_data[$namedir]['src'] = $index_src;
+                    $a++;
+                    flush();
+                }
+            }
+        }
+    }
+    
+    if(!$addons_data) return false;
+
     $need_update = array();    
     $get = array();
 
@@ -45,7 +106,7 @@ function rcl_check_addon_update(){
     $addonlist = implode(';',$get);
 
     $url = RCL_SERVICE_HOST."/products-files/api/update.php"
-            . "?rcl-addon-action=version-check-list&compress=1";
+            . "?rcl-addon-action=version-check-list&compress=1&noreply=1";
     
     $addonlist = gzencode($addonlist);
     $addonlist = strtr(base64_encode($addonlist), '+/=', '-_,');		
@@ -65,34 +126,7 @@ function rcl_check_addon_update(){
     );
     
     $context  = stream_context_create($options);
-    $xml_array = file_get_contents($url, false, $context);
-    
-    if(!$xml_array){
-        $log['error'] = __('Unable to retrieve the file from the server!','wp-recall');
-        echo json_encode($log); exit;
-    }
-    
-    $xml_array = json_decode($xml_array, true);
-
-    if(isset($xml_array['error'])){
-        echo json_encode($xml_array); exit;
-    }
-    
-    $ver = 0;    
-    foreach($xml_array as $addondata){
-        if(!$addondata) continue;
-        
-        $key = $addondata['slug'];
-        
-        $ver = version_compare($addondata['version'],$addons_data[$key]['version']); 
-        if($ver>0){  
-            
-            $addons_data[$key]['new-version'] = $addondata['version'];
-            $need_update[$key] = $addons_data[$key];
-        }
-    }
-    
-    update_option('rcl_addons_need_update',$need_update);
+    file_get_contents($url, false, $context);
 
 }
 

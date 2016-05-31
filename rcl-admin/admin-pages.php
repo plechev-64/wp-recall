@@ -361,7 +361,8 @@ function rcl_update_options(){
     if(isset($POST['local'])){
         foreach((array)$POST['local'] as $key => $value){
             $value = apply_filters('rcl_local_option_value',$value,$key);
-            update_option($key,$value);
+            if($value=='') delete_option($key);
+            else update_option($key,$value);
         }
     }
 

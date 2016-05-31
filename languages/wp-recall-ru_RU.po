@@ -2826,7 +2826,8 @@ msgstr "Пароль"
 #: functions/register.php:224
 msgid ""
 "If it was you, then confirm your registration by clicking on the link below"
-msgstr "Если желаете, то можете подтвердить свою регистрацию по ссылке ниже"
+msgstr ""
+"Если это были вы, то подтвердите свою регистрацию перейдя по ссылке ниже"
 
 #: functions/register.php:226
 msgid "Unable to activate the account?"

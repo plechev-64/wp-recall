@@ -133,6 +133,21 @@ body .rcl_preloader{
 .wrap-recall-options p {
     overflow: hidden;
 }
+.wrap-recall-options .adm_warn {
+    color: #d32723;
+}
+.wrap-recall-options .adm_succ {
+    color: #52ae02;
+}
+.wrap-recall-options .adm_b14 {
+    font: bold 14px Arial,Georgia,Verdana;
+}
+.wrap-recall-options .adm_b16 {
+    font: bold 16px Arial,Georgia,Verdana;
+}
+.wrap-recall-options .adm_b18 {
+    font: bold 18px Arial,Georgia,Verdana;
+}
 .child-select{
 	display:none;
 }

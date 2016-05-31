@@ -31,7 +31,7 @@ function rcl_user_account_options($content){
         $pay_options_child = apply_filters('rcl_pay_child_option','');
         if(!$pay_options_child){
             $init_gateway = false;
-            $pay_options_child = '<p style="color:red;">Похоже ни одного подключения не настроено. Скачайте <a href="http://codeseller.ru/product_tag/platezhnye-sistemy/" target="_blank">одно из доступных дополнений</a> для подключения к платежному агрегатору и настройте его</p>';
+            $pay_options_child = '<p style="color:red;">Похоже ни одного подключения не настроено. Скачайте <a href="https://codeseller.ru/product_tag/platezhnye-sistemy/" target="_blank">одно из доступных дополнений</a> для подключения к платежному агрегатору и настройте его</p>';
         }
         
         $payment_opt = array(
