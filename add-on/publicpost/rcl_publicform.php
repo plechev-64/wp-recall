@@ -559,7 +559,7 @@ function rcl_add_non_hierarchical_tags_field($fields,$formData){
         
         $args = array(
             'input_field'=>true,
-            'terms_args'=>array(
+            'terms_cloud'=>array(
                 'hide_empty'=>false,
                 'number'=>20,
                 'orderby'=>'count',
@@ -569,7 +569,7 @@ function rcl_add_non_hierarchical_tags_field($fields,$formData){
         
         $args = apply_filters('rcl_public_form_tags',$args,$taxonomy,$formData->post_type);
         
-        $tagslist .= rcl_get_tags_checklist($formData->post_id,$taxonomy,$args['terms_args']);
+        $tagslist .= rcl_get_tags_checklist($formData->post_id,$taxonomy,$args['terms_cloud']);
         
         if($args['input_field']) $tagslist .= rcl_get_tags_input($formData->post_id,$taxonomy);
     }
@@ -595,6 +595,8 @@ function rcl_get_tags($post_id,$taxonomy='post_tag'){
 
 function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = array()){
     global $rcl_options,$formData;
+    
+    if(!is_array($t_args)||$t_args===false) return false;
     
     $tags = get_terms($taxonomy,$t_args);
 

