@@ -1,16 +1,30 @@
-	var tmp_1 = new Array();
-	var tmp_2 = new Array();
-	var get_param = new Array();
-	var get = location.search;
-	if(get !== ''){
-	  tmp_1 = (get.substr(1)).split('&');
-	  for(var i=0; i < tmp_1.length; i++) {
-	  tmp_2 = tmp_1[i].split('=');
-	  get_param[tmp_2[0]] = tmp_2[1];
-	  }
-	}
+function rcl_get_value_url_params(){
+    var tmp_1 = new Array();
+    var tmp_2 = new Array();
+    var get_param = new Array();
+    var get = location.search;
+    if(get !== ''){
+      tmp_1 = (get.substr(1)).split('&');
+      for(var i=0; i < tmp_1.length; i++) {
+      tmp_2 = tmp_1[i].split('=');
+        get_param[tmp_2[0]] = tmp_2[1];
+      }
+    }
+    
+    return get_param;
+}
+
+var rcl_url_params = rcl_get_value_url_params();
 
 jQuery(function($){
+    
+    
+    
+    if(rcl_url_params['options']){
+        $('.wrap-recall-options').slideUp();
+        $('#options-'+rcl_url_params['options']).slideDown();
+        return false;
+    }
     
     $("input[name='global[primary-color]']").wpColorPicker();
 
@@ -26,92 +40,99 @@ jQuery(function($){
         $('.'+id).slideUp();
         $('#'+id+'-'+val).slideDown();		
     });
-
-    $('.profilefield-item-edit').click(function() {
-        var id_button = $(this).attr('id');
-        var id_item = str_replace('edit-','settings-',id_button);	
-        $('#'+id_item).slideToggle();
+    
+    $("#rcl-custom-fields-editor .add-field-button").click(function() {
+        var html = $("#rcl-custom-fields-editor ul li").last().html();
+        $("#rcl-custom-fields-editor ul").append('<li class="rcl-custom-field new-field">'+html+'<li>');
         return false;
     });
     
-    $('.field-delete').click(function() {
-        var id_item = $(this).attr('id');
-        var item = id_item;
-        $('#item-'+id_item).remove();
-        var val = $('#deleted-fields').val();
-        if(val) item += ',';
-        item += val;
-        $('#deleted-fields').val(item);
-        return false;
-    });
-        
-    $('body').on('change','.typefield', function (){
+    $('#rcl-custom-fields-editor').on('change','.typefield', function (){
         var val = $(this).val();
-        var id = $(this).parent().parent().parent().parent().attr('id');
-        if(val!='select'&&val!='radio'&&val!='checkbox'&&val!='agree'&&val!='file'){
-                $('#'+id+' .field-select').attr('disabled',true);
+        var parent = $(this).parents('.rcl-custom-field');
+        var textarea = parent.find('.field-select');
+        if(val!='select'&&val!='multiselect'&&val!='radio'&&val!='checkbox'&&val!='agree'&&val!='file'){
+            textarea.attr('disabled',true);
         }else{ 
-            if($('#'+id+' .field-select').size()){
-                $('#'+id+' .field-select').attr('disabled',false);
+            
+            var option_box = parent.find('.secondary-settings');
+            
+            if(textarea.size()){              
+                textarea.attr('disabled',false);
             }else{
-                $('#'+id+' .place-sel').prepend('перечень вариантов разделять знаком #<br><textarea rows="1" style="height:50px" class="field-select" name="field[field_select][]"></textarea>');
+                option_box.prepend('<span class="textarea-notice"></span><textarea rows="1" style="height:50px" class="field-select" name="field[field_select][]"></textarea>');
+            }
+            
+            var notice_box = option_box.children('.textarea-notice');
+            
+            if(val=='agree'){
+                notice_box.text('Укажите текст ссылки на соглашение');
+            }else if(val=='file'){
+                notice_box.text('Разрешенные типы файлов разделяются запятой, например: pdf, zip, jpg');
+            }else{
+                notice_box.text('Перечень вариантов разделять знаком #');
             }
 
         }
-    });    
+    });
     
-    $('#add_public_field').on('click','input',function() {
-        var html = $(".public_fields ul li").last().html();
-        $(".public_fields ul").append('<li class="menu-item menu-item-edit-active">'+html+'</li>');
+    $('#rcl-custom-fields-editor .field-delete').click(function(){
+        var id_item = $(this).parents('.rcl-custom-field').data('slug');
+        var item = id_item;
+        $('#field-'+id_item).remove();
+        var val = $('#rcl-deleted-fields').val();
+        if(val) item += ',';
+        item += val;
+        $('#rcl-deleted-fields').val(item);
+        return false;
+    });
+    
+    $('#rcl-custom-fields-editor .field-edit').click(function() {
+        var id_item = $(this).parents('.rcl-custom-field').data('slug');	
+        $('#field-'+id_item+' .field-settings').slideToggle();
         return false;
     });
 	
-	$('#recall .title-option').click(function(){  
-                if($(this).hasClass('active')) return false;
-		$('.wrap-recall-options').hide();
-                $('#recall .title-option').removeClass('active');
-                $(this).addClass('active');
-		$(this).next('.wrap-recall-options').show();
-		return false;
-	});
-	
-	if(get_param['options']){
-		$('.wrap-recall-options').slideUp();
-		$('#options-'+get_param['options']).slideDown();
-		return false;
-	}	
-        
-	$('.update-message .update-add-on').click(function(){
-            if($(this).hasClass("updating-message")) return false;
-            var addon = $(this).data('addon');
-            $('#'+addon+'-update .update-message').addClass('updating-message');
-            var dataString = 'action=rcl_update_addon&addon='+addon;
-            $.ajax({
-                type: 'POST',
-                data: dataString,
-                dataType: 'json',
-                url: ajaxurl,
-                success: function(data){
-                    if(data['success']==addon){					
-                            $('#'+addon+'-update .update-message').toggleClass('updating-message updated-message').html('Успешно обновлено!');				
-                    }
-                    if(data['error']){
-                        $('#'+addon+'-update .update-message').removeClass('updating-message');
-                        alert(data['error']);
-                    }
-                } 
-            });	  	
-            return false;
-	});
+    $('#recall .title-option').click(function(){  
+        if($(this).hasClass('active')) return false;
+        $('.wrap-recall-options').hide();
+        $('#recall .title-option').removeClass('active');
+        $(this).addClass('active');
+        $(this).next('.wrap-recall-options').show();
+        return false;
+    });
 
-	function str_replace(search, replace, subject) {
-		return subject.split(search).join(replace);
-	}
+    $('.update-message .update-add-on').click(function(){
+        if($(this).hasClass("updating-message")) return false;
+        var addon = $(this).data('addon');
+        $('#'+addon+'-update .update-message').addClass('updating-message');
+        var dataString = 'action=rcl_update_addon&addon='+addon;
+        $.ajax({
+            type: 'POST',
+            data: dataString,
+            dataType: 'json',
+            url: ajaxurl,
+            success: function(data){
+                if(data['success']==addon){					
+                    $('#'+addon+'-update .update-message').toggleClass('updating-message updated-message').html('Успешно обновлено!');				
+                }
+                if(data['error']){
+                    $('#'+addon+'-update .update-message').removeClass('updating-message');
+                    alert(data['error']);
+                }
+            } 
+        });	  	
+        return false;
+    });
 
-        $('#rcl-notice,body').on('click','a.close-notice',function(){           
-            rcl_close_notice(jQuery(this).parent());
-            return false;
-        });
+    function str_replace(search, replace, subject) {
+        return subject.split(search).join(replace);
+    }
+
+    $('#rcl-notice,body').on('click','a.close-notice',function(){           
+        rcl_close_notice(jQuery(this).parent());
+        return false;
+    });
 
 });
 

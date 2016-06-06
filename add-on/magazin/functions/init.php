@@ -330,7 +330,10 @@ function rcl_metabox_products( $post ){
     <?php
     if($rmag_options['sistem_related_products']==1){
 
-      $related = get_post_meta($post->ID, 'related_products_recall', 1);  
+      $related = get_post_meta($post->ID, 'related_products_recall', 1); 
+      
+      $rel_prodcat = (isset($related['prodcat']))? $related['prodcat']: '';
+      $rel_product_tag = (isset($related['product_tag']))? $related['product_tag']: '';
 
     echo '<h3>Похожие или рекомендуемые товары:</h3>';
     $args = array(
@@ -344,7 +347,7 @@ function rcl_metabox_products( $post ){
             'child_of'           => 0,
             'exclude'            => '',
             'echo'               => 0,
-            'selected'           => $related['prodcat'],
+            'selected'           => $rel_prodcat,
             'hierarchical'       => 0,
             'name'               => 'wprecall[related_products_recall][prodcat]',
             'id'                 => 'name',
@@ -367,7 +370,7 @@ function rcl_metabox_products( $post ){
             'child_of'           => 0,
             'exclude'            => '',
             'echo'               => 0,
-            'selected'           => $related['product_tag'],
+            'selected'           => $rel_product_tag,
             'hierarchical'       => 0,
             'name'               => 'wprecall[related_products_recall][product_tag]',
             'id'                 => 'name',

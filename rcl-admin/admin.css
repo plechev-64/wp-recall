@@ -180,29 +180,101 @@ span.ruble-symbol{
 }
 .ruble-symbol span{
     position: absolute;
-  line-height: 1px;
-  top: 55%;
-  left: 0;
+    line-height: 1px;
+    top: 55%;
+    left: 0;
 }
-.profilefield-item-edit {
-    margin: 0 0 0 11px;
+
+#rcl-custom-fields-editor{
+    width: 500px;
 }
-.profilefield-item-edit::before {
-    content: "\f140";
+#rcl-custom-fields-editor input,
+#rcl-custom-fields-editor textarea,
+#rcl-custom-fields-editor select{
+    width: 100%; 
+    box-sizing: border-box;
+}
+#rcl-custom-fields-editor input[type="checkbox"],
+#rcl-custom-fields-editor input[type="radio"]{
+    width: initial;
+}
+#rcl-custom-fields-editor #rcl-sortable-fileds{
+    
+}
+#rcl-custom-fields-editor .rcl-custom-field{
+    margin-bottom: 10px;
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-header{
+    padding: 10px;
+    background: #E4E4E4;
+    border: 1px solid #ccc;
+    cursor: move;
+    overflow: hidden;
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-header .field-title{
+    font-weight: bold;
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-header .field-controls{
+    font-family: dashicons;
+    float: right;
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-header .field-control{
+    font-size: 25px;
+    text-decoration: none;
     vertical-align: middle;
 }
-.field-delete::before {
-	color: rgba(229, 57, 53, 0.7);
-    content: "\f158";
-    vertical-align: middle;
-}
-.field-delete:hover::before {
-	color: rgb(229, 57, 53);
-}
-span.item-type {
+#rcl-custom-fields-editor .rcl-custom-field .field-header .field-type{
+    margin: 0 20px;
+    font-family: arial;
     display: inline-block;
 }
-span.item-controls {
-    font-family: dashicons;
-    font-size: 25px;
+#rcl-custom-fields-editor .rcl-custom-field .field-header .field-delete:before{
+    color: rgba(229, 57, 53, 0.7);
+    content: "\f158";
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-header .field-edit:before{
+    content: "\f140";
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-settings{
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: #F9F9F9;
+    display: none;
+}
+#rcl-custom-fields-editor .rcl-custom-field.new-field .field-settings{
+    display: block;
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-options-box{
+    padding: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-label{
+    font-weight:bold;
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-option{
+    margin: 5px 0;
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-option .field-notice{
+    
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-option select{
+    width: 70px;
+}
+#rcl-custom-fields-editor .rcl-custom-field .half-width{
+    width: 47%;
+    display: inline-block;
+    float: left;
+    margin: 0 5px;
+}
+#rcl-custom-fields-editor .add-new-field{
+    margin: 15px 0;
+    overflow: hidden;
+}
+#rcl-custom-fields-editor .fields-submit{
+    
+}
+#rcl-custom-fields-editor .fields-submit input[type="submit"]{
+    
 }

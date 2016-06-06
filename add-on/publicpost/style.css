@@ -64,9 +64,9 @@
     padding: 5px 5px 5px 10px;
 }
 .public_block .category-list .child-list-category .parent-category{
-	background: rgba(219, 219, 219, 0.3);
-	box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
-	padding: 7px;
+    background: rgba(219, 219, 219, 0.3);
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
+    padding: 7px;
 }
 .public_block .category-list .child-list-category span{
     padding-left: 5px;
@@ -75,20 +75,20 @@
     background: rgba(219, 219, 219, 0.3);
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
     padding: 5px;
-	margin: 10px 0 0;
+    margin: 10px 0 0;
 }
 .public_block small {
-	font: 12px arial;
+    font: 12px arial;
 }
-#temp-files {
+.rcl-public-form .attachments-post {
     list-style: none;
     margin: 5px 0;
     overflow: hidden;
-    padding: 0;
-	width: 100%;
+    padding: 0!important;
+    width: 100%;
 }
-#temp-files li {
-	background: rgba(219, 219, 219, 0.6);
+.rcl-public-form .attachments-post li {
+    background: rgba(219, 219, 219, 0.6);
     box-sizing: border-box;
     float: left;
     list-style: outside none none;
@@ -96,8 +96,9 @@
     padding: 0 8px 0 7px;
     position: relative;
     width: 23%;
+    list-style: none!important;
 }
-#temp-files li .rcl-service-button {
+.rcl-public-form .attachments-post li .rcl-service-button {
     background: rgba(30, 56, 75, 0.7);
     color: rgb(229, 57, 53);
     cursor: pointer;
@@ -109,18 +110,18 @@
     top: 0;
 	z-index: 2;
 }
-#temp-files li .rcl-service-button i:hover {
+.rcl-public-form .attachments-post li .rcl-service-button i:hover {
 	opacity: 0.8;
 }
-#temp-files li img {
+.rcl-public-form .attachments-post li img {
     cursor: pointer;
     margin-bottom: 7px;
     width: 100%;
 }
-#temp-files li img:hover {
+.rcl-public-form .attachments-post li img:hover {
 	box-shadow: 0 0 1px 1px rgb(30, 56, 75);
 }
-#temp-files label span {
+.rcl-public-form .attachments-post label span {
     display: inline-flex;
     font-size: 12px;
 }

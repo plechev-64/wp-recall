@@ -107,6 +107,8 @@ class Rcl_PublicForm {
         }
 
         if($this->post_id) add_filter('after_public_form_rcl',array(&$this,'delete_button'),10,2);
+        
+        add_action('wp_footer',array(&$this,'init_form_scripts'),999);
 
     }
 
@@ -272,9 +274,9 @@ class Rcl_PublicForm {
 
             $form = '<div class="public_block">';
 
-                $id_form = ($this->post_id)? $this->post_id : 0;
+                $id_post = ($this->post_id)? $this->post_id : 0;
 
-                if(!$id_form){
+                if(!$id_post){
                     if(!isset($_SESSION['new-'.$this->post_type])){
                         $_SESSION['new-'.$this->post_type] = 1;
                         $form .= '<script>Object.keys(localStorage)
@@ -286,9 +288,9 @@ class Rcl_PublicForm {
                     }
                 }
 
-                $id_form = 'form-'.$this->post_type.'-'.$id_form;
+                $id_form = 'form-'.$this->post_type.'-'.$id_post;
 
-                $form .= '<form id="'.$id_form.'" class="';
+                $form .= '<form id="'.$id_form.'" data-post_type="'.$this->post_type.'" class="rcl-public-form ';
                 $form .= ($this->post_id)? 'edit-form' : 'public-form';
                 $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','wp-recall').'\';"  action="" method="post" enctype="multipart/form-data">
                 '.wp_nonce_field('edit-post-rcl','_wpnonce',true,false);
@@ -313,21 +315,17 @@ class Rcl_PublicForm {
 
                . '</form>';
 
-               $form .= '<script type="text/javascript">
-                    function addfile_content($file){
-                        var ifr = jQuery("#contentarea_ifr").contents().find("#tinymce").html();
-                        jQuery("#contentarea").insertAtCaret($file+"&nbsp;");
-                        jQuery("#contentarea_ifr").contents().find("#tinymce").html(ifr+$file+"&nbsp;");
-                        return false;
-                    }
-                </script>';
-
                $after = '';
                $form .= apply_filters('after_public_form_rcl',$after,$this);
 
            $form .= '</div>';
 
         return $form;
+    }
+    
+    function init_form_scripts(){
+        $id_post = ($this->post_id)? $this->post_id : 0;
+        echo '<script type="text/javascript">rcl_init_public_form("'.$this->post_type.'","'.$id_post.'");</script>';
     }
 }
 
@@ -549,7 +547,9 @@ add_filter('public_form_rcl','rcl_add_non_hierarchical_tags_field',100,2);
 function rcl_add_non_hierarchical_tags_field($fields,$formData){
     global $formData;
     
-    $taxonomy_objects = get_object_taxonomies( $formData->post_type, 'objects' ); 
+    $taxonomy_objects = get_object_taxonomies( $formData->post_type, 'objects' );
+    
+    if(!$taxonomy_objects) return false;
     
     $tagslist = '';
 

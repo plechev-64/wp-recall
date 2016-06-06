@@ -44,6 +44,36 @@ function rcl_tab($id,$callback,$name='',$args=false){
     $tab = new Rcl_Tabs($data);
 }
 
+add_action('init','rcl_init_custom_tabs');
+function rcl_init_custom_tabs(){
+    $custom_tabs = get_option('rcl_fields_custom_tabs');
+    if(!$custom_tabs) return false;
+    
+    foreach($custom_tabs as $tab){
+        rcl_tab($tab['slug'],'',$tab['title'],
+            array(
+                'ajax-load'=>$tab['ajax'],
+                'class'=>$tab['icon'],
+                'public'=>$tab['public'],
+                'cache'=>$tab['cache'],
+                'content'=> $tab['content']
+            )
+        );
+    }
+}
+
+add_action('rcl_cron_daily','rcl_clear_cache',20);
+function rcl_clear_cache(){
+    $rcl_cache = new Rcl_Cache();
+    $rcl_cache->clear_cache();
+}
+
+function rcl_delete_file_cache($string){
+    $rcl_cache = new Rcl_Cache();       
+    $rcl_cache->get_file($string);
+    $rcl_cache->delete_file();
+}
+
 add_action('init','rcl_register_recallbar');
 function rcl_register_recallbar(){
     global $rcl_options;
@@ -112,11 +142,19 @@ function rcl_get_include_template($file_temp,$path=false){
     return $content;
 }
 
-function rcl_addon_url($file,$path){
+function rcl_get_url_current_addon($path){
+    
+    $cachekey = json_encode(array('rcl_url_current_addon',$path));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
     if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
+    
     $array = explode('/',$path);
     $url = '';
-	$content_dir = basename(content_url());
+    $content_dir = basename(content_url());
+    
     foreach($array as $key=>$ar){
         if($array[$key]==$content_dir){
             $url = get_bloginfo('wpurl').'/'.$array[$key].'/';
@@ -127,21 +165,42 @@ function rcl_addon_url($file,$path){
             if($array[$key-1]=='add-on') break;
         }
     }
-    $url .= $file;
+    
+    $url = untrailingslashit($url);
+    
+    wp_cache_add( $cachekey, $url );
+    
     return $url;
 }
 
+function rcl_addon_url($file,$path){
+    return rcl_get_url_current_addon($path).'/'.$file;
+}
+
 function rcl_addon_path($path){
+    
+    $cachekey = json_encode(array('rcl_addon_path',$path));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
     if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
     $array = explode('/',$path);
     $addon_path = '';
+    $ad_path = false;
+    
     foreach($array as $key=>$ar){
         $addon_path .= $ar.'/';
         if(!$key) continue;
-        if($array[$key-1]=='add-on')
-           return $addon_path;
+        if($array[$key-1]=='add-on'){
+            $ad_path =  $addon_path;
+            break;
+        }
     }
-    return false;
+    
+    wp_cache_add( $cachekey, $ad_path );
+    
+    return $ad_path;
 }
 
 function rcl_path_to_url($path,$dir=false){
@@ -199,13 +258,13 @@ function rcl_get_home_path() {
 }
 
 function rcl_format_url($url,$id_tab=null){
-	$ar_perm = explode('?',$url);
-	$cnt = count($ar_perm);
-	if($cnt>1) $a = '&';
-	else $a = '?';
-	$url = $url.$a;
-	if($id_tab) $url = $url.'tab='.$id_tab;
-	return $url;
+    $ar_perm = explode('?',$url);
+    $cnt = count($ar_perm);
+    if($cnt>1) $a = '&';
+    else $a = '?';
+    $url = $url.$a;
+    if($id_tab) $url = $url.'tab='.$id_tab;
+    return $url;
 }
 
 if (! function_exists('get_called_class')) :
@@ -275,7 +334,7 @@ function rcl_get_wp_upload_dir(){
 
 function rcl_update_dinamic_files(){
     rcl_update_scripts();
-    rcl_minify_style();
+    //rcl_minify_style();
 }
 
 //запрещаем доступ в админку
@@ -366,17 +425,19 @@ function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
 
 function rcl_get_url_avatar($url_image,$user_id,$size){
     global $rcl_avatar_sizes;
+    
+    if(!$rcl_avatar_sizes) return $url_image;
 
     $optimal_size = 150;
     $optimal_path = false;
     $name = explode('.',basename($url_image));
     foreach($rcl_avatar_sizes as $rcl_size){
-            if($size>$rcl_size) continue;
+        if($size>$rcl_size) continue;
 
-            $optimal_size = $rcl_size;
-            $optimal_url = RCL_UPLOAD_URL.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
-            $optimal_path = RCL_UPLOAD_PATH.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
-            break;
+        $optimal_size = $rcl_size;
+        $optimal_url = RCL_UPLOAD_URL.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
+        $optimal_path = RCL_UPLOAD_PATH.'avatars/'.$user_id.'-'.$optimal_size.'.'.$name[1];
+        break;
     }
 
     if($optimal_path&&file_exists($optimal_path)) $url_image = $optimal_url;
@@ -795,7 +856,7 @@ function rcl_get_insert_image($image_id,$mime='image'){
             if($rcl_options['default_size_thumb']) $sizes = wp_get_attachment_image_src( $image_id, $rcl_options['default_size_thumb'] );
             else $sizes = $small_url;
             $act_sizes = wp_constrain_dimensions($full_url[1],$full_url[2],$sizes[1],$sizes[2]);
-            return '<a onclick="addfile_content(\'<a href='.$full_url[0].'><img height='.$act_sizes[1].' width='.$act_sizes[0].' class=aligncenter  src='.$full_url[0].'></a>\');return false;" href="#"><img src="'.$small_url[0].'"></a>';
+            return '<a onclick="rcl_add_image_in_form(this,\'<a href='.$full_url[0].'><img height='.$act_sizes[1].' width='.$act_sizes[0].' class=aligncenter  src='.$full_url[0].'></a>\');return false;" href="#"><img src="'.$small_url[0].'"></a>';
     }else{
             return wp_get_attachment_link( $image_id, array(100,100),false,true );
     }

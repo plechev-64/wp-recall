@@ -8,9 +8,13 @@ class Rcl_EditFields {
     public $vals;
     public $status;
     public $primary;
+    public $select_type;
+    public $meta_key;
 
     function __construct($posttype,$primary=false){
-        global $Option_Value;
+        global $Option_Value; 
+        $this->select_type = (isset($primary['select-type']))? $primary['select-type']:true;
+        $this->meta_key = (isset($primary['meta-key']))? $primary['meta-key']:true;
         $this->primary = $primary;
 
         switch($posttype){
@@ -33,16 +37,13 @@ class Rcl_EditFields {
             }
         }
 
-        $form = '<style>
-                #inputs_public_fields textarea{width:100%;}
-                #inputs_public_fields .menu-item-settings,
-                #inputs_public_fields .menu-item-handle{padding-right:10px;width:100%;}
-            </style>
-            <form class="nav-menus-php" action="" method="post">
-            '.wp_nonce_field('update-public-fields','_wpnonce',true,false).'
-            <div id="inputs_public_fields" class="public_fields" style="width:550px;">
-                '.$more;
-
+        $form = '<style></style>
+            
+            <div id="rcl-custom-fields-editor">
+            <form action="" method="post">
+            '.wp_nonce_field('rcl-update-custom-fields','_wpnonce',true,false).'
+            '.$more;
+        
             if($this->primary['terms'])
                 $form .= $this->option('options',array(
                     'name'=>'terms',
@@ -51,15 +52,17 @@ class Rcl_EditFields {
                     'pattern'=>'^([0-9,])*$'
                 ));
 
-                $form .= '<ul id="sortable">
-                    '.$this->loop().'
-                </ul>
-            </div>
-            <p style="width:550px;" id="add_public_field"><input type="button" class="button-secondary right" value="+ '.__('Add field','wp-recall').'"></p>
-            <input id="save_menu_footer" class="button button-primary menu-save" type="submit" value="'.__('Save','wp-recall').'" name="add_field_public">
-            <input type="hidden" id="deleted-fields" name="deleted" value="">
-        </form>
-        <script>jQuery(function(){jQuery("#sortable").sortable();return false;});</script>';
+                $form .= '<ul id="rcl-sortable-fileds">'.$this->loop().'</ul>
+                <div class="add-new-field">
+                    <input type="button" class="add-field-button button-secondary right" value="+ '.__('Add field','wp-recall').'">
+                </div>
+                <div class="fields-submit">
+                    <input class="button button-primary" type="submit" value="'.__('Save','wp-recall').'" name="rcl_save_custom_fields">
+                    <input type="hidden" id="rcl-deleted-fields" name="rcl_deleted_custom_fields" value="">
+                </div>
+            </form>
+            <script>jQuery(function(){jQuery("#rcl-sortable-fileds").sortable();return false;});</script>
+            </div>';
 
         return $form;
     }
@@ -90,44 +93,49 @@ class Rcl_EditFields {
             'radio'=>1,
             'file'=>1
         );
-
-        $notice = ($this->vals['type']=='file')? __('specify the types of files that are loaded by a comma, for example: pdf, zip, jpg','wp-recall'): __('the list of options to share the " # " sign','wp-recall');
+        
+        switch($this->vals['type']=='file'){
+            case 'agree': $notice = __('Enter the text of the link agreement','wp-recall'); break;
+            case 'file': $notice = __('specify the types of files that are loaded by a comma, for example: pdf, zip, jpg','wp-recall'); break;
+            default: $notice = __('the list of options to share the " # " sign','wp-recall');
+        }
 
         $textarea_select = (isset($types[$this->vals['type']]))?
-            $notice.'<br>'
-                        . '<textarea rows="1" class="field-select" style="height:50px" name="field[field_select][]">'.$this->vals['field_select'].'</textarea>'
+            '<span class="textarea-notice">'.$notice.'</span><br>'
+            . '<textarea rows="1" class="field-select" style="height:50px" name="field[field_select][]">'.$this->vals['field_select'].'</textarea>'
         : '';
 
         $textarea_select .= ($this->vals['type']=='file')? '<input type="number" name="field[sizefile]['.$this->vals['slug'].']" value="'.$this->vals['sizefile'].'"> '.__('maximum size of uploaded file, MB (Default - 2)','wp-recall').'<br>':'';
         $textarea_select .= ($this->vals['type']=='agree')? '<input type="url" name="field[url-agreement]['.$this->vals['slug'].']" value="'.$this->vals['url-agreement'].'"> '.__('URL Agreement','wp-recall').'<br>':'';
 
-        $field = '<li id="item-'.$this->vals['slug'].'" class="menu-item menu-item-edit-active">
+        $field = '<li id="field-'.$this->vals['slug'].'" data-slug="'.$this->vals['slug'].'" data-type="'.$this->vals['type'].'" class="rcl-custom-field">
                 '.$this->header_field().'
-                <div id="settings-'.$this->vals['slug'].'" class="menu-item-settings" style="display: none;">
-                        <p class="link-to-original" style="clear:both;">
+                <div class="field-settings">';
+                    if($this->meta_key){
+                       $field .= '<div class="field-options-box">
+                           '.$this->option('text',array(
+                               'name'=>'slug',
+                               'label'=>__('MetaKey','wp-recall').':',
+                               'notice'=>__('not necessarily<br>if you want to enlist their arbitrary field, we list the meta_key in this field','wp-recall'),
+                               'placeholder'=>__('Latin and numbers','wp-recall')
+                           ),false).'
+                       </div>';
+                    }
+                    $field .= '<div class="field-options-box">
+                        <div class="half-width">
                             '.$this->option('text',array(
-                                'name'=>'slug',
-                                'label'=>__('MetaKey','wp-recall').':',
-                                'notice'=>__('not necessarily<br>if you want to enlist their arbitrary field, we list the meta_key in this field','wp-recall'),
-                                'placeholder'=>__('Latin and numbers','wp-recall')
-                            ),false).'
-                        </p>
-                        <div class="link-to-original" style="overflow:hidden;">
-                                <p class="description description-thin" style="width: 300px;">
-                                    <label>
-                                        '.$this->option('text',array(
-                                            'name'=>'title',
-                                            'label'=>__('Title','wp-recall').'<br>'
-                                        )).'
-                                    </label>
-                                </p>
-                                <p class="description description-thin">
-                                    <label>'.$this->get_types().'</label>
-                                </p>
+                                'name'=>'title',
+                                'label'=>__('Title','wp-recall').'<br>'
+                            )).'
                         </div>
-                        <p class="place-sel link-to-original">
-                        '.$textarea_select.'
-                        '.$this->get_options().'</p>
+                        <div class="half-width">
+                            '.$this->get_types().'
+                        </div>
+                    </div>
+                    <div class="field-options-box secondary-settings">'
+                        .$textarea_select
+                        .$this->get_options()
+                    .'</div>
                 </div>
         </li>';
 
@@ -136,6 +144,9 @@ class Rcl_EditFields {
     }
 
     function get_types(){
+        
+        if(!$this->select_type) return false;
+        
         return $this->option('select',array(
             'label'=>__('The field type','wp-recall'),
             'name'=>'type',
@@ -167,59 +178,53 @@ class Rcl_EditFields {
         foreach($this->options as $option){
             foreach($option as $type=>$args){
                 if($type=='options') continue;
-                $opt .= $this->option($type,$args);
+                $opt .= '<div class="field-option">'.$this->option($type,$args).'</div>';
             }
         }
         return $opt;
     }
 
     function header_field(){
-        return '<dl class="menu-item-bar">
-                    <dt class="menu-item-handle">        
-                        <span class="item-title">'.$this->vals['title'].'</span>                           
-                        <span class="item-controls">
-                            <span class="item-type">'.$this->vals['type'].'</span>   
-                            <a id="'.$this->vals['slug'].'" class="item-delete field-delete deletion" title="'.__('Delete','wp-recall').'" href="#"></a>
-                            <a id="edit-'.$this->vals['slug'].'" class="profilefield-item-edit" href="#" title="'.__('Edit','wp-recall').'"></a>
-                        </span>           
-                    </dt>
-                </dl>';
+        return '<div class="field-header">
+                    <span class="field-title">'.$this->vals['title'].'</span>                           
+                    <span class="field-controls">
+                        <span class="field-type">'.$this->vals['type'].'</span>   
+                        <a class="field-delete field-control" title="'.__('Delete','wp-recall').'" href="#"></a>
+                        <a class="field-edit field-control" href="#" title="'.__('Edit','wp-recall').'"></a>
+                    </span>
+                </div>';
     }
 
     function empty_field(){
         $this->status = false;
 
-        $field = '<li class="menu-item menu-item-edit-active">
-                    <dl class="menu-item-bar">
-                        <dt class="menu-item-handle">
-                            <span class="item-title">
-                                '.$this->option('text',array('name'=>'title')).'
-                            </span>
-                            <span class="item-controls">
-                                <span class="item-type">
-                                    '.$this->get_types().'
-                                </span>
-                            </span>
-                        </dt>
-                    </dl>
-                    <div class="menu-item-settings" style="display: block;">
-                            <p class="link-to-original" style="clear:both;">';
+        $field = '<li class="rcl-custom-field new-field">
+                <div class="field-header">
+                    <span class="field-title half-width">'.__('Name','wp-recall').' '.$this->option('text',array('name'=>'title')).'</span>
+                    <span class="field-controls half-width">
+                        <span class="field-type">'.$this->get_types().'</span>                                
+                    </span>
+                </div>
+                <div class="field-settings">';
+                if($this->meta_key){
+                    $field .= '<div class="field-options-box">';
 
-                            $edit = ($this->primary['custom-slug'])? true: false;
+                        $edit = ($this->primary['custom-slug'])? true: false;
 
-                            $field .= $this->option('text',array(
-                                'name'=>'slug',
-                                'label'=>__('MetaKey','wp-recall'),
-                                'notice'=>__('not necessarily<br>if you want to enlist their arbitrary field, we list the meta_key in this field','wp-recall'),
-                                'placeholder'=>__('Latin and numbers','wp-recall')
-                            ),
-                            $edit);
+                        $field .= $this->option('text',array(
+                            'name'=>'slug',
+                            'label'=>__('MetaKey','wp-recall'),
+                            'notice'=>__('not necessarily<br>if you want to enlist their arbitrary field, we list the meta_key in this field','wp-recall'),
+                            'placeholder'=>__('Latin and numbers','wp-recall')
+                        ),
+                        $edit);
 
-                            $field .= '</p>
-                            <p class="place-sel link-to-original">
-                            '.$this->get_options().'
-                            </p>
-                    </div>
+                    $field .= '</div>';
+                }           
+                    $field .= '<div class="field-options-box secondary-settings">'
+                        .$this->get_options()
+                    .'</div>
+                </div>
             </li>';
 
         return $field;
@@ -234,7 +239,7 @@ class Rcl_EditFields {
     }
 
     function option($type,$args,$edit=true){
-        $fld = '';
+        $field = '';
 
         if(!$this->vals&&!isset($this->status)){
             $this->options[][$type] = $args;
@@ -244,9 +249,15 @@ class Rcl_EditFields {
 
         if(!$this->status) $this->vals = '';
 
-        if(isset($args['label'])&&$args['label']) $fld .= $args['label'].' ';
-        $fld .= $this->$type($args,$edit);
-        return $fld;
+        if(isset($args['label'])&&$args['label']) 
+            $field .= '<span class="field-label">'.$args['label'].' </span>';
+        
+        $field .= $this->$type($args,$edit);
+        
+        if($edit&&isset($args['notice'])&&$args['notice']) 
+            $field .= '<span class="field-notice">'.$args['notice'].'</span>';
+        
+        return $field;
     }
 
     function select($args,$edit){
@@ -261,18 +272,25 @@ class Rcl_EditFields {
             $field .= '<option '.$sel.' value="'.$key.'">'.$val.'</option>';
         }
         $field .= '</select> ';
-        if(isset($args['notice'])) $field .= $args['notice'];
-        $field .= '<br />';
+
         return $field;
     }
 
     function text($args,$edit){
-	$val = ($this->vals)? $this->vals[$args['name']]: '';
+	$val = ($this->vals)? stripslashes_deep( $this->vals[$args['name']] ): '';
         if(!$edit) return $val.'<input type="hidden" name="field['.$args['name'].'][]" value="'.$val.'">';
         $ph = (isset($args['placeholder']))? $args['placeholder']: '';
         $pattern = (isset($args['pattern']))? 'pattern="'.$args['pattern'].'"': '';
         $field = '<input type="text" placeholder="'.$ph.'" '.$pattern.' name="field['.$args['name'].'][]" value="'.$val.'"> ';
-        if(isset($args['notice'])) $field .= $args['notice'];
+        
+        return $field;
+    }
+    
+    function textarea($args){
+	$value = ($this->vals)? stripslashes_deep( $this->vals[$args['name']] ): '';        
+        $placeholder = (isset($args['placeholder']))? 'placeholder="'.$args['placeholder']."'": '';
+        $pattern = (isset($args['pattern']))? 'pattern="'.$args['pattern'].'"': '';        
+        $field = '<textarea '.$placeholder.' '.$pattern.' name="field['.$args['name'].'][]" value="'.$value.'">'.$value.'</textarea>';
         return $field;
     }
 
@@ -282,12 +300,12 @@ class Rcl_EditFields {
         $ph = (isset($args['placeholder']))? $args['placeholder']: '';
         $pattern = (isset($args['pattern']))? 'pattern="'.$args['pattern'].'"': '';
         $field = '<input type="text" placeholder="'.$ph.'" title="'.$ph.'" '.$pattern.' name="options['.$args['name'].']" value="'.$val.'"> ';
-        if(isset($args['notice'])) $field .= $args['notice'];
+        
         return $field;
     }
 
     function verify(){
-        if(!isset($_POST['add_field_public'])||!wp_verify_nonce( $_POST['_wpnonce'], 'update-public-fields' )) return false;
+        if(!isset($_POST['rcl_save_custom_fields'])||!wp_verify_nonce( $_POST['_wpnonce'], 'rcl-update-custom-fields' )) return false;
         return true;
     }
 
@@ -302,18 +320,25 @@ class Rcl_EditFields {
 
         $fields = array();
 
-	$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
+	//$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        
         if(isset($_POST['options'])){
-                foreach($_POST['options'] as $key=>$val){
-                        $fields['options'][$key] = $val;
-                }
+            foreach($_POST['options'] as $key=>$val){
+                $fields['options'][$key] = $val;
+            }
         }
+        
         $fs = 0;
         $tps = array('select'=>1,'multiselect'=>1,'radio'=>1,'checkbox'=>1,'agree'=>1,'file'=>1);
+        
         foreach($_POST['field'] as $key=>$data){
+            
             if($key=='field_select'||$key=='sizefile') continue;
+            
             foreach($data as $a=>$value){
+                
+                if(!$_POST['field']['title'][$a]) break;
+                
                 if($table&&!$_POST['field']['title'][$a]){
                     if($_POST['field']['slug'][$a]){
                         $this->delete($_POST['field']['slug'][$a],$table);

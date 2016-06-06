@@ -52,6 +52,15 @@ class Rcl_Options {
     function notice($notice){
         return '<small>'.$notice.'</small>';
     }
+    
+    function attr_name($args){
+        if(isset($args['group'])){
+            $name = $this->type.'['.$args['group'].']['.$args['name'].']';
+        }else{
+            $name = $this->type.'['.$args['name'].']';
+        }
+        return $name;
+    }
 
     function option($typefield,$atts){
         global $rcl_options;
@@ -61,12 +70,23 @@ class Rcl_Options {
         $type = $optiondata[0];
         $args = $optiondata[1];
         
-        if(isset($args['type'])&&$args['type']=='local') 
-            $value = get_option($args['name']);
-        else if(isset($args['default'])&&!isset($rcl_options[$args['name']]))
-            $value = $args['default'];
-        else 
-            $value = $rcl_options[$args['name']];
+        if(isset($args['group'])){
+            if(isset($args['type'])&&$args['type']=='local'){
+                $value = get_option($args['group']);
+                $value = $value[$args['name']];
+            }else if(isset($args['default'])&&!isset($rcl_options[$args['name']])){
+                $value = $args['default'];
+            }else{
+                $value = $rcl_options[$args['group']][$args['name']];
+            }
+        }else{
+            if(isset($args['type'])&&$args['type']=='local') 
+                $value = get_option($args['name']);
+            else if(isset($args['default'])&&!isset($rcl_options[$args['name']]))
+                $value = $args['default'];
+            else 
+                $value = $rcl_options[$args['name']];
+        }
         
         $this->type = (isset($args['type']))? $args['type']: 'global';
         
@@ -82,7 +102,7 @@ class Rcl_Options {
 
         $content = '<select id="'.$args['name'].'"';
         if(isset($args['parent'])) $content .= 'class="parent-select" ';
-        $content .= 'name="'.$this->type.'['.$args['name'].']" size="1">';
+        $content .= 'name="'.$this->attr_name($args).'" size="1">';
             foreach($args['options'] as $val=>$name){
                $content .= '<option value="'.$val.'" '.selected($value,$val,false).'>'
                        . $name
@@ -110,7 +130,7 @@ class Rcl_Options {
            }
 
            $content .= '<label for="'.$args['name'].'_'.$a.'">';
-           $content .= '<input id="'.$args['name'].'_'.$a.'" type="checkbox" name="'.$this->type.'['.$args['name'].'][]" value="'.trim($val).'" '.checked($key,$val,false).'> '.$name;
+           $content .= '<input id="'.$args['name'].'_'.$a.'" type="checkbox" name="'.$this->attr_name($args).'[]" value="'.trim($val).'" '.checked($key,$val,false).'> '.$name;
            $content .= '</label>';
         }
 
@@ -118,27 +138,27 @@ class Rcl_Options {
     }
 
     function text($args,$value){
-        return '<input type="text" name="'.$this->type.'['.$args['name'].']" value="'.$value.'" size="60">';
+        return '<input type="text" name="'.$this->attr_name($args).'" value="'.$value.'" size="60">';
     }
 
     function password($args,$value){
-        return '<input type="password" name="'.$this->type.'['.$args['name'].']" value="'.$value.'" size="60">';
+        return '<input type="password" name="'.$this->attr_name($args).'" value="'.$value.'" size="60">';
     }
 
     function number($args,$value){
-        return '<input type="number" name="'.$this->type.'['.$args['name'].']" value="'.$value.'" size="60">';
+        return '<input type="number" name="'.$this->attr_name($args).'" value="'.$value.'" size="60">';
     }
 
     function email($args,$value){
-        return '<input type="email" name="'.$this->type.'['.$args['name'].']" value="'.$value.'" size="60">';
+        return '<input type="email" name="'.$this->attr_name($args).'" value="'.$value.'" size="60">';
     }
 
     function url($args,$value){
-        return '<input type="url" name="'.$this->type.'['.$args['name'].']" value="'.$value.'" size="60">';
+        return '<input type="url" name="'.$this->attr_name($args).'" value="'.$value.'" size="60">';
     }
 
     function textarea($args,$value){
-        return '<textarea name="'.$this->type.'['.$args['name'].']">'.$value.'</textarea>';
+        return '<textarea name="'.$this->attr_name($args).'">'.$value.'</textarea>';
     }
 
     function get_value($args){

@@ -1,13 +1,11 @@
 <?php
 
-function rcl_pageform_scripts(){
-    wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js', array('rcl-primary-scripts'));
+function rcl_pageform_scripts(){    
+    rcl_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js', array('rcl-primary-scripts'),true);
 }
 
 function rcl_floatform_scripts(){
-    wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'rcl-float-form', RCL_URL.'js/float_form.js', array('rcl-primary-scripts'));
+    rcl_enqueue_script( 'rcl-float-form', RCL_URL.'js/float_form.js', array('rcl-primary-scripts'),true);
 }
 
 function rcl_sortable_scripts(){
@@ -21,18 +19,18 @@ function rcl_resizable_scripts(){
 }
 
 function rcl_datepicker_scripts(){
-    wp_enqueue_style( 'jquery-ui-datepicker', RCL_URL.'js/datepicker/style.css' );
+    rcl_enqueue_style( 'jquery-ui-datepicker', RCL_URL.'js/datepicker/style.css' );
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-core');
     wp_enqueue_script('jquery-ui-datepicker');
-    wp_enqueue_script( 'custom-datepicker', RCL_URL.'js/datepicker/datepicker-init.js', array('jquery-ui-datepicker') );
+    rcl_enqueue_script( 'custom-datepicker', RCL_URL.'js/datepicker/datepicker-init.js', array('jquery-ui-datepicker') );
 }
 
 function rcl_bxslider_scripts(){
-    wp_enqueue_style( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.css' );
+    rcl_enqueue_style( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.css' );
     wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.min.js' );
-    wp_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js', array('bx-slider','rcl-header-scripts'));
+    rcl_enqueue_script( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.min.js' );
+    rcl_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js', array('bx-slider','rcl-header-scripts'));
 }
 
 function rcl_dialog_scripts(){
@@ -42,66 +40,45 @@ function rcl_dialog_scripts(){
 }
 
 function rcl_webcam_scripts(){
-    wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'say-cheese', RCL_URL.'js/say-cheese/say-cheese.js', array(), VER_RCL,true );
+    rcl_enqueue_script( 'say-cheese', RCL_URL.'js/say-cheese/say-cheese.js', array(),true );
 }
 
 function rcl_fileupload_scripts(){
-    wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'jquery-ui-widget', RCL_URL.'js/fileupload/js/vendor/jquery.ui.widget.js', array(), VER_RCL,true );
+    rcl_enqueue_script( 'jquery-ui-widget', RCL_URL.'js/fileupload/js/vendor/jquery.ui.widget.js', array(),true );
 
     //перенесено из blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js
-    wp_enqueue_script( 'load-image', RCL_URL.'js/fileupload/js/load-image.all.min.js', array(), VER_RCL,true );
+    rcl_enqueue_script( 'load-image', RCL_URL.'js/fileupload/js/load-image.all.min.js', array(),true );
     //перенесено из blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js
-    wp_enqueue_script( 'canvas-to-blob', RCL_URL.'js/fileupload/js/canvas-to-blob.min.js', array(), VER_RCL,true );
+    rcl_enqueue_script( 'canvas-to-blob', RCL_URL.'js/fileupload/js/canvas-to-blob.min.js', array(),true );
 
-    wp_enqueue_script( 'jquery-iframe-transport', RCL_URL.'js/fileupload/js/jquery.iframe-transport.js', array(), VER_RCL,true );
-    wp_enqueue_script( 'jquery-fileupload', RCL_URL.'js/fileupload/js/jquery.fileupload.js', array(), VER_RCL,true );
-    wp_enqueue_script( 'jquery-fileupload-process', RCL_URL.'js/fileupload/js/jquery.fileupload-process.js', array(), VER_RCL,true );
-    wp_enqueue_script( 'jquery-fileupload-image', RCL_URL.'js/fileupload/js/jquery.fileupload-image.js', array(), VER_RCL,true );
-    
-    rcl_fileapi_scripts();
+    rcl_enqueue_script( 'jquery-iframe-transport', RCL_URL.'js/fileupload/js/jquery.iframe-transport.js', array(),true );
+    rcl_enqueue_script( 'jquery-fileupload', RCL_URL.'js/fileupload/js/jquery.fileupload.js', array(),true );
+    rcl_enqueue_script( 'jquery-fileupload-process', RCL_URL.'js/fileupload/js/jquery.fileupload-process.js', array(),true );
+    rcl_enqueue_script( 'jquery-fileupload-image', RCL_URL.'js/fileupload/js/jquery.fileupload-image.js', array(),true );
+
 }
 
 function rcl_crop_scripts(){
-    wp_enqueue_script( 'jquery' );
-    wp_enqueue_style( 'jcrop-master-css', RCL_URL.'js/jcrop.master/css/jquery.Jcrop.min.css' );
-    wp_enqueue_script( 'jcrop-master', RCL_URL.'js/jcrop.master/js/jquery.Jcrop.min.js', array(), VER_RCL,true );
+    rcl_enqueue_style( 'jcrop-master-css', RCL_URL.'js/jcrop.master/css/jquery.Jcrop.min.css' );
+    rcl_enqueue_script( 'jcrop-master', RCL_URL.'js/jcrop.master/js/jquery.Jcrop.min.js', array(),true );
 }
 
 function rcl_rangyinputs_scripts(){
     if(defined( 'DOING_AJAX' ) && DOING_AJAX){
         return '<script type="text/javascript" src="'.RCL_URL.'js/rangyinputs.js"></script>';
     }else{
-        wp_enqueue_script( 'jquery' );
-        wp_enqueue_script( 'rangyinputs', RCL_URL.'js/rangyinputs.js' );
+        rcl_enqueue_script( 'rangyinputs', RCL_URL.'js/rangyinputs.js' );
     }
 }
 
 function rcl_primary_scripts(){
     wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'rcl-primary-scripts', RCL_URL.'js/recall.js', array(), VER_RCL );
-    if(!file_exists(RCL_UPLOAD_PATH.'scripts/header-scripts.js')){
-        rcl_update_scripts;
-    }
-    wp_enqueue_script( 'rcl-header-scripts', RCL_UPLOAD_URL.'scripts/header-scripts.js', array('rcl-primary-scripts'), VER_RCL );
+    rcl_enqueue_script( 'rcl-primary-scripts', RCL_URL.'js/recall.js', array() );
 }
 
 function rcl_font_awesome_style(){
     if( wp_style_is( 'font-awesome' ) ) wp_deregister_style('font-awesome');
-    wp_enqueue_style( 'font-awesome', RCL_URL.'css/font-awesome/css/font-awesome.min.css', array(), '4.5.0' );
-}
-
-function rcl_plugin_style(){
-    global $rcl_options;
-    if(isset($rcl_options['minify_css'])&&$rcl_options['minify_css']==1){
-        wp_enqueue_style( 'rcl-style', RCL_UPLOAD_URL.'css/minify.css' );
-    }else{
-        $css_ar = array('style','recbar','regform','slider','users');
-        foreach($css_ar as $name){
-            wp_enqueue_style( 'style_'.$name, RCL_URL.'css/'.$name.'.css' );           
-        }
-    }
+    wp_enqueue_style( 'font-awesome', RCL_URL.'css/font-awesome/css/font-awesome.min.css' );
 }
 
 function rcl_theme_style(){
@@ -110,7 +87,7 @@ function rcl_theme_style(){
         $dirs   = array(RCL_PATH.'css/themes',RCL_TAKEPATH.'themes');
         foreach($dirs as $dir){
             if(!file_exists($dir.'/'.$rcl_options['color_theme'].'.css')) continue;
-            wp_enqueue_style( 'rcl-theme', rcl_path_to_url($dir.'/'.$rcl_options['color_theme'].'.css') );
+            rcl_enqueue_style( 'rcl-theme', rcl_path_to_url($dir.'/'.$rcl_options['color_theme'].'.css') );
             break;
         }
     }
@@ -135,7 +112,7 @@ function rcl_frontend_scripts(){
 
     rcl_font_awesome_style();
 
-    rcl_plugin_style();
+    //rcl_plugin_style();
 
     rcl_theme_style();
 
@@ -170,6 +147,9 @@ function rcl_frontend_scripts(){
 
     $data['post_ID'] = (isset($post->ID)&&$post->ID)? $post->ID: 0;
     $data['mobile'] = (wp_is_mobile())? 1: 0;
+    $data['https'] = @( $_SERVER["HTTPS"] != 'on' ) ? 0:  1;
+    
+    $data = apply_filters('rcl_init_js_variables',$data);
 
     wp_localize_script( 'jquery', 'Rcl',$data);
 
@@ -180,12 +160,5 @@ function rcl_admin_scrips(){
     wp_enqueue_style( 'wp-color-picker' ); 
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'rcl-admin-scripts', RCL_URL.'rcl-admin/admin.js', array('wp-color-picker'), VER_RCL );
-}
-
-function rcl_fileapi_scripts() {
-    if(file_exists(RCL_UPLOAD_PATH.'scripts/footer-scripts.js')){
-        wp_enqueue_script( 'jquery' );
-        wp_enqueue_script( 'rcl-footer-scripts', RCL_UPLOAD_URL.'scripts/footer-scripts.js', array(), VER_RCL, true );
-    }
 }
 

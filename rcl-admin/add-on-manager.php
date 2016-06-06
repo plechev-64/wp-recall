@@ -419,7 +419,7 @@ function rcl_render_addons_manager(){
                 }
                 
                 rcl_update_scripts();
-                rcl_minify_style();
+                //rcl_minify_style();
                 
                 echo '<div id="message" class="'.$type.'"><p>'.$text_notice.'</p></div>';
         }

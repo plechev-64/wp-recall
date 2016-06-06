@@ -1,36 +1,32 @@
 <?php
+
+if (!is_admin()):
+    add_action('wp_recall_loaded','rcl_publics_scripts');
+endif;
+
+function rcl_publics_scripts(){
+    rcl_enqueue_style('rcl_publics_styles',rcl_addon_url('style.css', __FILE__));
+    rcl_enqueue_script( 'rcl_publics_scripts', rcl_addon_url('js/scripts.js', __FILE__) );
+}
+
 include_once('classes.php');
 include_once('fast-editor.php');
 include_once('upload-file.php');
 include_once 'addon-options.php';
 include_once 'rcl_publicform.php';
 
-rcl_enqueue_style('publics',__FILE__);
-
-//if (!session_id()) { session_start(); }
-
-if (!is_admin()):
-	add_action('wp_enqueue_scripts','rcl_publics_scripts');
-endif;
-
-function rcl_publics_scripts(){
-	global $rcl_options;
-	//if($rcl_options['media_downloader_recall']!=1) return false;
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl_publics_scripts', rcl_addon_url('js/scripts.js', __FILE__) );
-}
-
 function rcl_autocomplete_scripts(){
-	wp_enqueue_style( 'rcl_autocomplete_scripts', rcl_addon_url('js/magicsuggest/magicsuggest-min.css', __FILE__) );
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl_autocomplete_scripts', rcl_addon_url('js/magicsuggest/magicsuggest-min.js', __FILE__) );
+    rcl_enqueue_style( 'magicsuggest', rcl_addon_url('js/magicsuggest/magicsuggest-min.css', __FILE__) );
+    //wp_enqueue_script( 'jquery' );
+    rcl_enqueue_script( 'magicsuggest', rcl_addon_url('js/magicsuggest/magicsuggest-min.js', __FILE__) );
 }
 
 if (!is_admin()):
 	add_filter('the_content','rcl_post_gallery',10);
 endif;
 
-if (!is_admin()||defined('DOING_AJAX'))add_filter('the_content','rcl_author_info',70);
+if (!is_admin()||defined('DOING_AJAX')) 
+    add_filter('the_content','rcl_author_info',70);
 
 add_action('admin_menu', 'rcl_admin_page_publicform',30);
 function rcl_admin_page_publicform(){
@@ -410,17 +406,17 @@ function rcl_get_html_attachment($attach_id,$mime_type){
 
     $editpost = $_GET['rcl-post-edit'];
 
-	$mime = explode('/',$mime_type);
+    $mime = explode('/',$mime_type);
 
-	$rt = "<li id='attachment-".$attach_id."'>
-		".rcl_button_fast_delete_post($attach_id)."
-		<label>
-			".rcl_get_insert_image($attach_id,$mime[0]);
-			if($mime[0]=='image') $rt .= "<span>
-				<input type='checkbox' class='thumb-foto' ".checked(get_post_thumbnail_id( $editpost ),$attach_id,false)." id='thumb-".$attach_id."' name='thumb[".$attach_id."]' value='1'> - ".__('featured','wp-recall')."</span>";
-		$rt .= "</label>
-	</li>";
-	return $rt;
+    $rt = "<li class='attachment-".$attach_id."'>
+            ".rcl_button_fast_delete_post($attach_id)."
+            <label>
+                    ".rcl_get_insert_image($attach_id,$mime[0]);
+                    if($mime[0]=='image') $rt .= "<span>
+                            <input type='checkbox' class='thumb-foto' ".checked(get_post_thumbnail_id( $editpost ),$attach_id,false)." id='thumb-".$attach_id."' name='thumb[".$attach_id."]' value='1'> - ".__('featured','wp-recall')."</span>";
+            $rt .= "</label>
+    </li>";
+    return $rt;
 }
 
 /*14.2.0*/
@@ -854,7 +850,7 @@ function rcl_wp_editor($args=false,$content=false){
 
 	if(!$content) $content = (isset($editpost->post_content))? $editpost->post_content: '';
 
-    wp_editor( $content, 'contentarea', $data );
+    wp_editor( $content, 'contentarea-'.$formData->post_type, $data );
 }
 
 add_shortcode('rcl-box','rcl_box_shortcode');
@@ -862,9 +858,9 @@ function rcl_box_shortcode($atts){
 	global $rcl_box;
 
         $default = array(
-                        'type' => 'text',
-                        'content' => ''
-                    );
+            'type' => 'text',
+            'content' => ''
+        );
 
         $rcl_box = wp_parse_args( $atts, $default );
 
@@ -1102,170 +1098,10 @@ function rcl_add_public_js_localize($localize){
     return $localize;
 }
 
-function rcl_footer_publics_scripts($script){
-	global $rcl_options;
-	$maxsize_mb = (isset($rcl_options['public_gallery_weight'])&&$rcl_options['public_gallery_weight'])? $rcl_options['public_gallery_weight']: 2;
-	$maxsize = $maxsize_mb*1024*1024;
-	$cnt = (isset($rcl_options['count_image_gallery'])&&$rcl_options['count_image_gallery'])? $rcl_options['count_image_gallery']: 1;
-
-	$script .= "
-	rcl_add_dropzone('#rcl-public-dropzone');
-	var post_id_edit = $('input[name=\"post-rcl\"]').val();
-        var post_type = $('input[name=\"posttype\"]').val();
-	$('#upload-public-form').fileupload({
-		dataType: 'json',
-		type: 'POST',
-                dropZone: $('#rcl-public-dropzone'),
-		url: Rcl.ajaxurl,
-		formData:{action:'rcl_imagepost_upload',post_type:post_type,post_id:post_id_edit,ajax_nonce:Rcl.nonce},
-		singleFileUploads:false,
-		autoUpload:true,
-		progressall: function (e, data) {
-                    /*var progress = parseInt(data.loaded / data.total * 100, 10);
-                    $('#upload-box-message .progress-bar').show().css('width',progress+'px');*/
-		},
-		send:function (e, data) {
-                    var error = false;
-                    rcl_preloader_show('.public_block form');                   
-                    var cnt_now = $('#temp-files li').length;                    
-                    $.each(data.files, function (index, file) {
-                        cnt_now++;
-                        if(cnt_now>".$cnt."){
-                            rcl_notice('".sprintf(__("You have exceeded the allowed number of downloads! Max. %s",'wp-recall'),$cnt)."','error');
-                            error = true;
-                        }                       
-                        if(file['size']>".$maxsize."){
-                            rcl_notice('".sprintf(__("Exceeds the maximum size for the file %s! Max. %s MB",'wp-recall'),"'+file['name']+'",$maxsize_mb)."','error');                            
-                            error = true;
-                        }                       
-                    });
-                    if(error){
-                        rcl_preloader_hide();
-                        return false;
-                    }
-		},
-		done: function (e, data) {
-                    $.each(data.result, function (index, file) {
-                        if(data.result['error']){
-                            rcl_notice(data.result['error'],'error');
-                            rcl_preloader_hide();
-                            return false;
-                        }
-
-                        if(file['string']){
-                            $('#temp-files').append(file['string']);
-                        }
-                    });
-                    rcl_preloader_hide();
-		}
-	});";
-	return $script;
+add_filter('rcl_init_js_variables','rcl_init_js_public_variables',10);
+function rcl_init_js_public_variables($data){
+    global $rcl_options;
+    $data['public']['maxsize_mb'] = (isset($rcl_options['public_gallery_weight'])&&$rcl_options['public_gallery_weight'])? $rcl_options['public_gallery_weight']: 2;
+    $data['public']['maxcnt'] = (isset($rcl_options['count_image_gallery'])&&$rcl_options['count_image_gallery'])? $rcl_options['count_image_gallery']: 1;
+    return $data;
 }
-add_filter('file_footer_scripts_rcl','rcl_footer_publics_scripts');
-
-function rcl_public_file_scripts($script){
-
-	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
-
-	$script .= "
-
-		jQuery('#rcl-delete-post .delete-toggle').click(function() {
-			jQuery(this).next().toggle('fast');
-			return false;
-		});
-
-		jQuery('form[name=\'public_post\'] input[name=\'edit-post-rcl\'],form[name=\'public_post\'] input[name=\'add_new_task\']').click(function(){
-			var error=0;
-			jQuery('form[name=\'public_post\']').find(':input').each(function() {
-				for(var i=0;i<field.length;i++){
-					if(jQuery(this).attr('name')==field[i]){
-						if(jQuery(this).val()==''){
-							jQuery(this).attr('style','border:1px solid red !important');
-							error=1;
-						}else{
-							jQuery(this).attr('style','border:1px solid #E6E6E6 !important');
-						}
-					}
-				}
-			});
-			if(error==0) return true;
-			else return false;
-		});
-		jQuery('#rcl-popup').on('click','.rcl-navi.ajax-navi a',function(){
-                    var page = jQuery(this).text();
-                    var dataString = 'action=get_media&user_ID='+Rcl.user_ID+'&page='+page;
-                    dataString += '&ajax_nonce='+Rcl.nonce;
-                    jQuery.ajax({
-                            ".$ajaxdata."
-                            success: function(data){
-                                    if(data['result']==100){
-                                            jQuery('#rcl-overlay').fadeIn();
-                                            jQuery('#rcl-popup').html(data['content']);
-                                            var screen_top = jQuery(window).scrollTop();
-                                            var popup_h = jQuery('#rcl-popup').height();
-                                            var window_h = jQuery(window).height();
-                                            screen_top = screen_top + 60;
-                                            jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
-                                    }else{
-                                            alert('Ошибка!');
-                                    }
-                            }
-                    });
-                    return false;
-		});
-		jQuery('form #get-media-rcl').click(function(){
-                    var dataString = 'action=get_media&user_ID='+Rcl.user_ID;
-                    dataString += '&ajax_nonce='+Rcl.nonce;
-                    jQuery.ajax({
-                        ".$ajaxdata."
-                        success: function(data){
-                            if(data['result']==100){
-                                jQuery('#rcl-overlay').fadeIn();
-                                jQuery('#rcl-popup').html(data['content']);
-                                var screen_top = jQuery(window).scrollTop();
-                                var popup_h = jQuery('#rcl-popup').height();
-                                var window_h = jQuery(window).height();
-                                screen_top = screen_top + 60;
-                                jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
-                            }else{
-                                alert('Ошибка!');
-                            }
-                        }
-                    });
-                    return false;
-		});
-
-		jQuery('#lk-content').on('click','#tab-publics .sec_block_button',function(){
-			var btn = jQuery(this);
-			get_page_content_rcl(btn,'posts_posts_block');
-			return false;
-		});
-
-	function get_page_content_rcl(btn){
-            if(btn.hasClass('active'))return false;
-            rcl_preloader_show('#tab-publics');
-            var id = btn.parents('.recall_child_content_block').attr('id');
-            var start = btn.attr('data');
-            var type = btn.attr('type');
-            var id_user = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
-            jQuery('.'+id+' .sec_block_button').removeClass('active');
-            btn.addClass('active');
-            var dataString = 'action=rcl_posts_list&start='+start+'&type='+type+'&id_user='+id_user;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            jQuery.ajax({
-                    ".$ajaxdata."
-                    success: function(data){
-                            if(data['recall']==100){
-                                    jQuery('#'+id+' .publics-table-rcl').html(data['post_content']);
-                            } else {
-                                    alert('Error');
-                            }
-                            rcl_preloader_hide();
-                    }
-            });
-            return false;
-	}
-		";
-	return $script;
-}
-add_filter('file_scripts_rcl','rcl_public_file_scripts');

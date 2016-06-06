@@ -1,0 +1,123 @@
+/* Удаляем заказ пользователя в корзину */
+function rcl_trash_order(e,data){       
+    jQuery('#manage-order, table.order-data').remove();
+    jQuery('.redirectform').html(data.result);
+}
+
+/* Увеличиваем количество товара в большой корзине */
+function rcl_cart_add_product(e){
+    rcl_preloader_show('#cart-form > table');
+    var id_post = jQuery(e).parent().data('product');
+    var number = 1;
+    var dataString = 'action=rcl_add_cart&id_post='+ id_post+'&number='+ number;
+    dataString += '&ajax_nonce='+Rcl.nonce;
+    jQuery.ajax({
+    type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+    success: function(data){
+        rcl_preloader_hide();
+        if(data['recall']==100){
+            jQuery('.cart-summa').text(data['data_sumprice']);
+            jQuery('#product-'+data['id_prod']+' .sumprice-product').text(data['sumproduct']);
+            jQuery('#product-'+data['id_prod']+' .number-product').text(data['num_product']);
+            jQuery('.cart-numbers').text(data['allprod']);
+        }
+        if(data['recall']==200){
+            alert('Отрицательное значение!');
+        }
+    }
+    });
+    return false;
+}
+
+/* Уменьшаем товар количество товара в большой корзине */
+function rcl_cart_remove_product(e){
+    rcl_preloader_show('#cart-form > table');
+    var id_post = jQuery(e).parent().data('product');
+    var number = 1;
+    if(number>0){
+        var dataString = 'action=rcl_remove_product_cart&id_post='+ id_post+'&number='+ number;
+        dataString += '&ajax_nonce='+Rcl.nonce;
+        jQuery.ajax({
+        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+        success: function(data){
+            rcl_preloader_hide();
+            if(data['recall']==100){
+                jQuery('.cart-summa').text(data['data_sumprice']);
+                jQuery('#product-'+data['id_prod']+' .sumprice-product').text(data['sumproduct']);
+
+                var numprod = data['num_product'];
+                if(numprod>0){
+                    jQuery('#product-'+data['id_prod']+' .number-product').text(data['num_product']);
+                }else{
+                    var numberproduct = 0;
+                    jQuery('#product-'+data['id_prod']).remove();
+                }
+                if(data['allprod']==0) jQuery('.confirm').remove();
+
+                jQuery('.cart-numbers').text(data['allprod']);
+            }
+            if(data['recall']==200){
+                alert('Отрицательное значение!');
+            }
+            if(data['recall']==300){
+                alert('Вы пытаетесь удалить из корзины больше товара чем там есть!');
+            }
+        }
+        });
+    }
+    return false;
+}
+
+/* Кладем товар в малую корзину */
+function rcl_add_cart(e){            
+    var id_post = jQuery(e).data('product');
+    rcl_preloader_show('#product-'+id_post+' > div');
+    var id_custom_prod = jQuery(e).attr('name');
+    if(id_custom_prod){
+        var number = jQuery('#number-custom-product-'+id_custom_prod).val();
+    }else{
+        var number = jQuery('#number_product').val();
+    }
+    var dataString = 'action=rcl_add_minicart&id_post='+id_post+'&number='+number+'&custom='+id_custom_prod;
+    dataString += '&ajax_nonce='+Rcl.nonce;
+    jQuery.ajax({
+    type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+    success: function(data){
+        rcl_preloader_hide();
+        if(data['recall']==100){
+            rcl_close_notice('#rcl-notice > div');
+            jQuery('.empty-basket').replaceWith(data['empty-content']);
+            jQuery('.cart-summa').html(data['data_sumprice']);
+            jQuery('.cart-numbers').html(data['allprod']);
+            rcl_notice('Добавлено в корзину!<br>В корзине товаров: '+data['allprod']+' шт<br><a style=\"text-decoration:underline;\" href=\"'+Rcl.magazine.cart_url+'">Перейти в корзину</a>','success');
+        }
+        if(data['recall']==200){
+            alert('Отрицательное значение!');
+        }
+    }
+    });
+    return false;
+}
+
+function rcl_pay_order_private_account(e){
+    var idorder = jQuery(e).data('order');
+    var dataString = 'action=rcl_pay_order_private_account&idorder='+ idorder;
+    dataString += '&ajax_nonce='+Rcl.nonce;
+    jQuery.ajax({
+        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+        success: function(data){
+            if(data['otvet']==100){
+                jQuery('.order_block').find('.pay_order').each(function() {
+                        if(jQuery(e).attr('name')==data['idorder']) jQuery(e).remove();
+                });
+                jQuery('.redirectform').html(data['recall']);
+                jQuery('.usercount').html(data['count']);
+                jQuery('.order-'+data['idorder']+' .remove_order').remove();
+                jQuery('#manage-order').remove();
+            }else{
+                rcl_notice('Недостаточно средств на счету! Сумма заказа: '+data['recall'],'error');
+            }
+        }
+    });
+    return false;
+}

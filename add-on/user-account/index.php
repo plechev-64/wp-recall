@@ -1,6 +1,13 @@
 <?php
 
-rcl_enqueue_style('user_account',__FILE__);
+if (!is_admin()):
+    add_action('wp_recall_loaded','rcl_user_account_scripts');
+endif;
+
+function rcl_user_account_scripts(){
+    rcl_enqueue_style('user-account',rcl_addon_url('style.css', __FILE__));
+    rcl_enqueue_script( 'user-account', rcl_addon_url('js/scripts.js', __FILE__) );
+}
 
 include_once "rcl_payment.php";
 
@@ -14,21 +21,21 @@ function rcl_payform($args){
 
 function rmag_get_global_unit_wallet(){
     if (!defined('RMAG_PREF')){
-            global $wpdb;
-            global $rmag_options;
-            $rmag_options = get_option('primary-rmag-options');
-            define('RMAG_PREF', $wpdb->prefix."rmag_");
+        global $wpdb;
+        global $rmag_options;
+        $rmag_options = get_option('primary-rmag-options');
+        define('RMAG_PREF', $wpdb->prefix."rmag_");
     }
 }
 add_action('init','rmag_get_global_unit_wallet',10);
 
 if (is_admin()):
-	add_action('admin_head','rcl_admin_user_account_scripts');
+    add_action('admin_head','rcl_admin_user_account_scripts');
 endif;
 
 function rcl_admin_user_account_scripts(){
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl_admin_user_account_scripts', plugins_url('js/admin.js', __FILE__) );
+    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script( 'rcl_admin_user_account_scripts', plugins_url('js/admin.js', __FILE__) );
 }
 
 function rcl_get_user_balance($user_id=false){
@@ -220,71 +227,6 @@ function rcl_form_user_balance($attr=false){
                 </div>';
                         
     return $content;
-}
-
-add_filter('file_scripts_rcl','rcl_get_useraccount_scripts');
-function rcl_get_useraccount_scripts($script){
-
-	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
-
-	$script .= "
-            /* Пополняем личный счет пользователя */
-            jQuery('.rcl-form-add-user-count').on('click','.rcl-get-form-pay',function(){
-                var id = jQuery(this).parents('.rcl-form-add-user-count').attr('id');
-		rcl_preloader_show('#'+id+' .rcl-form-input');
-                var dataform   = jQuery('#'+id+' form').serialize();
-		var dataString = 'action=rcl_add_count_user&id_form='+id+'&'+dataform;
-		dataString += '&ajax_nonce='+Rcl.nonce;
-		jQuery.ajax({
-                    ".$ajaxdata."
-                    success: function(data){
-                        rcl_preloader_hide();
-                        if(data['otvet']==100){
-                            jQuery('#'+id+' .rcl-result-box').html(data['redirectform']);
-                        } else {
-                           alert('Ошибка проверки данных.');
-                        }
-                    }
-		});
-		return false;
-            });
-
-            jQuery('.rcl-widget-balance').on('click','.rcl-toggle-form-link',function(){
-                var id = jQuery(this).parents('.rcl-widget-balance').attr('id');
-                jQuery('#'+id+' .rcl-form-balance').slideToggle(200);
-                return false;
-            });
-	";
-	return $script;
-}
-
-add_filter('rcl_functions_js','rcl_add_user_count_functions');
-function rcl_add_user_count_functions($string){
-    $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
-    $string .= "/* Оплачиваем заказ средствами из личного счета */
-    function rcl_pay_order_private_account(e){
-        var idorder = jQuery(e).data('order');
-        var dataString = 'action=rcl_pay_order_private_account&idorder='+ idorder;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        jQuery.ajax({
-        ".$ajaxdata."
-        success: function(data){
-                if(data['otvet']==100){
-                    jQuery('.order_block').find('.pay_order').each(function() {
-                            if(jQuery(e).attr('name')==data['idorder']) jQuery(e).remove();
-                    });
-                    jQuery('.redirectform').html(data['recall']);
-                    jQuery('.usercount').html(data['count']);
-                    jQuery('.order-'+data['idorder']+' .remove_order').remove();
-                    jQuery('#manage-order').remove();
-                }else{
-                    rcl_notice('Недостаточно средств на счету! Сумма заказа: '+data['recall'],'error');
-                }
-        }
-        });
-        return false;
-    }";
-    return $string;
 }
 
 function rcl_get_chart_payments($pays){

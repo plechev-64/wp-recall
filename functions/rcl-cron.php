@@ -3,16 +3,13 @@
 add_action('wp', 'rcl_cron_activated');
 function rcl_cron_activated() {
     if ( !wp_next_scheduled( 'rcl_cron_hourly_schedule' ) ) {
-        $start_date = strtotime(current_time('mysql'));
-        wp_schedule_event( $start_date, 'hourly', 'rcl_cron_hourly_schedule');
+        wp_schedule_event( time(), 'hourly', 'rcl_cron_hourly_schedule');
     }
     if ( !wp_next_scheduled( 'rcl_cron_twicedaily_schedule' ) ) {
-        $start_date = strtotime(current_time('mysql'));
-        wp_schedule_event( $start_date, 'twicedaily', 'rcl_cron_twicedaily_schedule');
+        wp_schedule_event( time()+900, 'twicedaily', 'rcl_cron_twicedaily_schedule');
     }
     if ( !wp_next_scheduled( 'rcl_cron_daily_schedule' ) ) {
-        $start_date = strtotime(current_time('mysql'));
-        wp_schedule_event( $start_date, 'daily', 'rcl_cron_daily_schedule');
+        wp_schedule_event( time()+1800, 'daily', 'rcl_cron_daily_schedule');
     }
 }
 

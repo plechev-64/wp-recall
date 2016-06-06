@@ -3,8 +3,8 @@
     overflow: hidden;
 }
 #tab-privat .old_mess_block {
-	background: #4C8CBD;
-	font: 14px Verdana,arial;
+    background: #4C8CBD;
+    font: 14px Verdana,arial;
     margin: 0 0 15px 5px;
     padding: 6px 10px;
     text-align: center;
@@ -24,57 +24,57 @@
     width: 40px;				/*++Twenty16++*/
 }
 #lk-content .message-block {
-	font: 14px/1 Tahoma,arial;	/*++Twenty15++*/
-	margin: 4px 5px;
-	min-height: 45px;
-	overflow: hidden;
-	padding: 0 5px 0;
-	position: relative;
+    font: 14px/1 Tahoma,arial;	/*++Twenty15++*/
+    margin: 4px 5px;
+    min-height: 45px;
+    overflow: hidden;
+    padding: 0 10px 0;
+    position: relative;
 }
 #lk-content .message-block iframe{
-	display:block;
-	margin:5px auto;
+    display:block;
+    margin:5px auto;
 }
 #tab-privat .message-block .important{
     display:block;
-	position:absolute;
-	height:13px;
-	margin: 0 5px 0 0;
-	width:13px;
-	opacity:0;
-	right:0;
-	top:50%;
-	background:url(img/star.png) no-repeat;
+    position:absolute;
+    height:13px;
+    margin: 0;
+    width:13px;
+    opacity:0;
+    right:0;
+    top:50%;
+    background:url(img/star.png) no-repeat;
 }
 #tab-privat .message-block:hover > .important{
-	opacity:0.5;
+    opacity:0.5;
 }
 #tab-privat .message-block .important:hover,
 #tab-privat .message-block .important.active{
-	opacity:1;
-	cursor:pointer;
+    opacity:1;
+    cursor:pointer;
 }
 #tab-privat .message-block .author-avatar {
-	float:left
+    float:left
 }
 #tab-privat .message-block.you .author-avatar {
-	float:right;
+    float:right;
 }
 #tab-privat .message-block .content-mess {
     max-width: 60%;
-	overflow: hidden;
+    overflow: hidden;
     border-radius: 3px;
     margin: 10px 12px;
     padding: 5px;
 }
 .message-block.you .content-mess::before {
-	width: 0;
-	height: 0;
-	border-style: solid;
-	border-width: 16px 16px 0 0;
-	border-color: #B6EF81 transparent transparent transparent;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 16px 16px 0 0;
+    border-color: #B6EF81 transparent transparent transparent;
     content: "";
-    right: 61px;
+    right: 66px;
     position: absolute;
     top: 18px;
 }
@@ -84,7 +84,7 @@
     border-width: 0 16px 16px 0;
     content: "";
     height: 0;
-    left: 61px;
+    left: 66px;
     position: absolute;
     top: 18px;
     width: 0;

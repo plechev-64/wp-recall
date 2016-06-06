@@ -9,18 +9,20 @@ class Rcl_Tabs{
     public $output;
     public $cache;
     public $ajax;
+    public $content;
     
     function __construct($data){
         global $rcl_options;
         
         $idkey = $data['id'];
         $name = $data['name'];
-        $callback = $data['callback'];
+        $callback = ($data['callback'])? $data['callback']: false;
         $args = $data['args'];
 
         $this->id = $idkey;
         $this->name = $name;
         $this->callback = $callback;
+        $this->content = (isset($args['content']))? $args['content']: '';
         $this->output = (isset($args['output']))? $args['output']: null;
         $this->cache = (isset($args['cache'])&&isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? $args['cache']: false;
         $this->ajax = (!isset($args['ajax-load'])||!$args['ajax-load'])? 0: 1;
@@ -72,8 +74,14 @@ class Rcl_Tabs{
             $file = $rcl_cache->get_file($string);
 
             if($file->need_update){
-
-                $cl_content = rcl_callback_tab_func($this->callback,$author_lk);
+                
+                $cl_content = '';
+                if($this->callback){
+                    $cl_content = rcl_callback_tab_func($this->callback,$author_lk);
+                }else if($this->content){
+                    $cl_content = apply_filters('the_content',stripslashes_deep($this->content));
+                }
+                
                 $rcl_cache->update_cache($cl_content);
             
             }else{
@@ -84,7 +92,13 @@ class Rcl_Tabs{
 
         }else{
 
-            $cl_content = rcl_callback_tab_func($this->callback,$author_lk);
+            $cl_content = '';
+            if($this->callback){
+                $cl_content = rcl_callback_tab_func($this->callback,$author_lk);
+            }else if($this->content){
+                $cl_content = apply_filters('the_content',stripslashes_deep($this->content));
+            }
+            
             if(!$cl_content) return $content;
         
         }

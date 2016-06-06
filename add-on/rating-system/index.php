@@ -2,15 +2,22 @@
 require_once 'core.php';
 require_once 'addon-options.php';
 
-if(function_exists('rcl_enqueue_style')) rcl_enqueue_style('rating-system',__FILE__);
+if (!is_admin()):
+    add_action('wp_recall_loaded','rcl_rating_scripts');
+endif;
+
+function rcl_rating_scripts(){
+    rcl_enqueue_style('rating-system',rcl_addon_url('style.css', __FILE__));
+    rcl_enqueue_script( 'rating-system', rcl_addon_url('js/scripts.js', __FILE__) );
+}
 
 if (is_admin()):
-	add_action('admin_head','rcl_add_admin_rating_scripts');
+    add_action('admin_head','rcl_add_admin_rating_scripts');
 endif;
 
 function rcl_add_admin_rating_scripts(){
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl_admin_rating_scripts', plugins_url('js/admin.js', __FILE__) );
+    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script( 'rcl_admin_rating_scripts', plugins_url('js/admin.js', __FILE__) );
 }
 
 if(!is_admin()) add_action('init','rcl_register_rating_base_type',30);
@@ -489,92 +496,4 @@ function rcl_edit_rating_post(){
 
     echo json_encode($log);
     exit;
-}
-
-add_filter('rcl_functions_js','rcl_rating_functions_js');
-function rcl_rating_functions_js($string){
-
-    $ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
-
-    $string .= "
-        function rcl_close_votes_window(e){
-            jQuery(e).parent().remove();
-            return false;
-        }
-        function rcl_edit_rating(e){
-            var block = jQuery(e);
-            var rating = block.data('rating');
-            
-            var dataString = 'action=rcl_edit_rating_post&rating='+rating;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            
-            jQuery.ajax({
-                ".$ajaxdata."
-                success: function(data){
-                    if(data['error']){
-                        rcl_notice(data['error'],'error');
-                        return false;
-                    }
-                    if(data['result']==100){
-                        var val = jQuery('.'+data['rating_type']+'-rating-'+data['object_id']+' .rating-value');
-                        val.empty().text(data['rating']);
-                        if(data['rating']<0){
-                                val.parent().css('color','#FF0000');
-                        }else{
-                                val.parent().css('color','#008000');
-                        }
-                        block.parent().remove();
-                    }else{
-                        rcl_notice('".__('You can not vote','wp-recall')."!','error');
-                    }
-                }
-            });
-            return false;
-        }
-        function rcl_get_list_votes(e){
-            if(jQuery(this).hasClass('active')) return false;
-            rcl_preloader_show('#tab-rating .votes-list');
-            jQuery('#tab-rating a.get-list-votes').removeClass('active');
-            jQuery(e).addClass('active');
-            var rating = jQuery(e).data('rating');
-
-            var dataString = 'action=rcl_view_rating_votes&rating='+rating+'&content=list-votes';
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            
-            jQuery.ajax({
-                ".$ajaxdata."
-                success: function(data){
-                    if(data['result']==100){
-                        jQuery('#tab-rating .rating-list-votes').html(data['window']);
-                    }else{
-                        rcl_notice('".__('Error','wp-recall')."!','error');
-                    }
-                    rcl_preloader_hide();
-                }
-            });
-            return false;
-        }
-        function rcl_view_list_votes(e){
-            jQuery('.rating-value-block .votes-window').remove();
-            var block = jQuery(e);
-            var rating = block.data('rating');
-
-            var dataString = 'action=rcl_view_rating_votes&rating='+rating;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            
-            jQuery.ajax({
-                ".$ajaxdata."
-                success: function(data){
-                    if(data['result']==100){
-                        block.after(data['window']);
-                        block.next().slideDown();
-                    }else{
-                        rcl_notice('".__('Error','wp-recall')."!','error');
-                    }
-                }
-            });
-            return false;
-        }
-        ";
-    return $string;
 }

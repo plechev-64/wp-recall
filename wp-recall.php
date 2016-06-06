@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 14.4.1
+    Version: 15.a
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '14.4.1';
+	public $version = '15.a';
 
 	protected static $_instance = null;
 
@@ -69,7 +69,7 @@ final class WP_Recall {
 		$this->includes(); //Подключаем все нужные файлы с функциями и классами
 		$this->init_hooks(); //Тут все наши хуки
 
-		do_action( 'wprecall_loaded' ); //Оставляем кручёк
+		do_action( 'wp_recall_loaded' ); //Оставляем кручёк
 	}
 
 	private function init_hooks() {
@@ -138,7 +138,7 @@ final class WP_Recall {
              */
 
             include_once 'functions/rcl_activate.php';
-            require_once("functions/minify-files/minify-css.php");
+            require_once("functions/class-rcl-includer.php");
             require_once('functions/enqueue-scripts.php');
             require_once('functions/rcl-cron.php');
             include_once 'functions/class-rcl-cache.php';
@@ -151,8 +151,6 @@ final class WP_Recall {
             require_once("functions/deprecated.php");
             require_once("functions/shortcodes.php");
             require_once("rcl-widgets.php");           
-
-            $this->rcl_include_addons();
 
             include_once('class-rcl-install.php');
 
@@ -167,6 +165,8 @@ final class WP_Recall {
             if ( $this->is_request( 'frontend' ) ) {
                     $this->frontend_includes();
             }
+            
+            $this->rcl_include_addons();
 	}
 
 	/*
@@ -199,7 +199,7 @@ final class WP_Recall {
 	public function init() {
             global $wpdb,$rcl_options,$user_ID,$rcl_current_action,$rcl_user_URL;
 
-            do_action( 'wprecall_before_init' );
+            do_action( 'wp_recall_before_init' );
 
             $rcl_options = get_option('rcl_global_options');
             
@@ -232,7 +232,7 @@ final class WP_Recall {
 
             }
 
-            do_action( 'wprecall_init' );
+            do_action( 'wp_recall_init' );
 	}
 
         function rcl_include_addons(){

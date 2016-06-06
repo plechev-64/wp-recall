@@ -258,7 +258,7 @@ class Rcl_Thumb_Form{
 
         if($formData) $content = '<small class="notice-upload">'.__('Click on Priceline the image to add it to the content of the publication','wp-recall').'</small>';
 
-        $content .= '<ul id="temp-files">'.$attachlist.'</ul>';
+        $content .= '<ul id="temp-files-'.$formData->post_type.'" class="attachments-post">'.$attachlist.'</ul>';
 		
         if($formData){
                 $content .= '<p><label><input ';
@@ -268,14 +268,14 @@ class Rcl_Thumb_Form{
 	
         $content .= '<div id="status-temp"></div>
         <div>
-            <div id="rcl-public-dropzone" class="rcl-dropzone mass-upload-box">
+            <div id="rcl-public-dropzone-'.$formData->post_type.'" class="rcl-dropzone mass-upload-box">
                 <div class="mass-upload-area">
                         '.__('To add files to the download queue','wp-recall').'
                 </div>
                 <hr>
                 <div class="recall-button rcl-upload-button">
                         <span>'.__('Add','wp-recall').'</span>
-                        <input id="'.$this->id_upload.'" name="uploadfile[]" type="file" accept="'.$accept.'" multiple>
+                        <input id="'.$this->id_upload.'-'.$formData->post_type.'" name="uploadfile[]" type="file" accept="'.$accept.'" multiple>
                 </div>
                 <small class="notice">'.__('Allowed extensions','wp-recall').': '.$accept.'</small>
             </div>

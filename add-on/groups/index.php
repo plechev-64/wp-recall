@@ -1,5 +1,22 @@
 <?php
 
+if (!is_admin()):
+    add_action('wp_recall_loaded','rcl_groups_scripts');
+endif;
+
+function rcl_groups_scripts(){
+    rcl_enqueue_style('rcl-groups',rcl_addon_url('style.css', __FILE__));
+    rcl_enqueue_script( 'rcl-groups', rcl_addon_url('js/scripts.js', __FILE__) );
+    rcl_enqueue_script( 'rcl-groups-footer', rcl_addon_url('js/footer.js', __FILE__),false,true);
+}
+
+add_filter('rcl_init_js_variables','rcl_init_js_groups_variables',10);
+function rcl_init_js_groups_variables($data){
+    global $rcl_options;
+    $data['groups']['avatar_size'] = (isset($rcl_options['avatar_weight']))? $rcl_options['avatar_weight']: 2;
+    return $data;
+}
+
 require_once 'groups-init.php';
 require_once 'groups-core.php';
 require_once 'shortcodes.php';
@@ -7,8 +24,6 @@ if(is_admin()) require_once 'groups-options.php';
 require_once 'groups-widgets.php';
 if(!is_admin()) require_once 'groups-public.php';
 require_once 'upload-avatar.php';
-
-rcl_enqueue_style('groups',__FILE__);
 
 if(function_exists('rcl_register_rating_type')){
     if(!is_admin()) add_action('init','rcl_register_rating_group_type');
@@ -531,205 +546,3 @@ function rcl_add_feed_group_posts($posts){
 
     return $posts;
 }
-
-add_filter('file_scripts_rcl','rcl_get_scripts_groups');
-function rcl_get_scripts_groups($script){
-
-	$ajaxdata = "type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,";
-
-	$script .= "
-	jQuery('#rcl-group').on('click','a.rcl-group-link',function(){
-            var callback = jQuery(this).data('callback');
-            var group_id = jQuery(this).data('group');
-            var value = jQuery(this).data('value');
-
-            var dataString = 'action=rcl_get_group_link_content&group_id='+group_id+'&callback='+callback;
-            if(value) dataString += '&value='+value;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            rcl_preloader_show('#rcl-group > div');
-            jQuery.ajax({
-                ".$ajaxdata."
-                success: function(data){
-                    if(data){
-                        jQuery('#group-popup').html(data);
-
-                        var height = jQuery('#group-link-content').height();
-                        /*var height_group = jQuery('#rcl-group').height();*/
-
-                        /*if(height_group>height_content) var height = height_group;
-                        else var height = height_content;*/
-
-                        /*height = height+300;*/
-                        jQuery('#group-popup').height(height);
-                        var offsetTop = jQuery('#group-link-content').offset().top;
-                        jQuery('body,html').animate({scrollTop:offsetTop -70}, 500);
-
-                    } else {
-                        rcl_notice('Error','error');
-                    }
-                    rcl_preloader_hide();
-                }
-            });
-            return false;
-	});
-        jQuery('#group-popup').on('click','#group-userlist .ajax-navi a',function(){
-            var page = jQuery(this).text();
-            var url = jQuery(this).attr('href');
-            var group_id = jQuery(this).parents('#rcl-group').data('group');
-            var dataString = 'action=rcl_get_group_link_content&group_id='+group_id+'&callback=rcl_get_group_users&page='+page+'&get='+url;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            rcl_preloader_show('#rcl-group > div');
-            jQuery.ajax({
-                ".$ajaxdata."
-                success: function(data){
-                    if(data){
-
-                        jQuery('#group-popup').html(data);
-
-                        /*var height = jQuery('#group-link-content').height()+200;*/
-                        /*jQuery('#group-link-content').parent().height(height);*/
-                        var offsetTop = jQuery('#group-link-content').offset().top;
-                        jQuery('body,html').animate({scrollTop:offsetTop -70}, 500);
-
-                    } else {
-                        rcl_notice('Error','error');
-                    }
-                    rcl_preloader_hide();
-                }
-            });
-            return false;
-	});
-        jQuery('#group-popup').on('click','.group-request .apply-request',function(){
-            var button = jQuery(this);
-            var user_id = button.parent().data('user');
-            var apply = button.data('request');
-            var group_id = button.parents('#rcl-group').data('group');
-            var dataString = 'action=rcl_apply_group_request&group_id='+group_id+'&user_id='+user_id+'&apply='+apply;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            rcl_preloader_show('#group-popup > div');
-            jQuery.ajax({
-                ".$ajaxdata."
-                success: function(data){
-                    if(data){
-
-                        button.parent().html(data['result']);
-
-                    } else {
-                        rcl_notice('Error','error');
-                    }
-                    rcl_preloader_hide();
-                }
-            });
-            return false;
-	});
-        jQuery('#rcl-group').on('click','.rcl-group-callback',function(){
-            var callback = jQuery(this).data('callback');
-            var group_id = jQuery(this).data('group');
-            var name = jQuery(this).data('name');
-            if(name){
-                var valname = jQuery(this).parents('.group-user-option').children('[name*=\''+name+'\']').val();
-            }
-            var user_id = jQuery(this).parents('.group-request').data('user');
-            var dataString = 'action=rcl_group_callback&group_id='+group_id+'&callback='+callback+'&user_id='+user_id;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            if(name) dataString += '&'+name+'='+valname;
-            rcl_preloader_show('#rcl-group > div');
-            jQuery.ajax({
-                ".$ajaxdata."
-                success: function(data){
-                    if(data['success']){
-                        var type = 'success';
-                    } else {
-                        var type = 'error';
-                    }
-
-                    if(data['place']=='notice') rcl_notice(data[type],type);
-                    if(data['place']=='buttons') jQuery('#options-user-'+user_id).html('<span class=\''+type+'\'>'+data[type]+'</span>');
-
-                    rcl_preloader_hide();
-                }
-            });
-            return false;
-	});
-        
-        var func = function(e){
-
-            var rclGroup = jQuery('#rcl-group');
-
-            /* если верстка шаблона single-group.php не содержит эти классы - останавливаем:*/
-            if (!rclGroup.children('.group-sidebar').length || !rclGroup.children('.group-wrapper').length) return false; 
-
-            var sidebar = jQuery('.group-sidebar');
-
-            var hUpSidebar = sidebar.offset().top; /* высота до сайтбара*/
-            var hSidebar = sidebar.height(); /* высота сайтбара*/
-            var hWork = hUpSidebar + hSidebar - 30; /* общая высота при которой будет работать скрипт*/
-            var scrolled = jQuery(this).scrollTop(); /* позиция окна от верха*/
-            var hBlock = jQuery('#rcl-group').height(); /* высота всего блока*/
-
-
-            if (hBlock < (hWork + 55)) return false; /* если в группе нет контента - не выполняем. 55 - это отступ на group-admin-panel*/
-
-
-            if( scrolled > hWork && !jQuery('.group-wrapper').hasClass('collapsexxx') ) {			/* вниз, расширение блока*/
-                jQuery('.group-wrapper').addClass('collapsexxx');
-                jQuery('.group-sidebar').addClass('hideexxx');
-                sidebar.css({'height' : hSidebar,'width':'0','min-width':'0','padding':'0'});
-            }
-            if( scrolled < (hWork - 200) && jQuery('.group-wrapper').hasClass('collapsexxx') ) {		/* вверх, сужение блока   */
-                jQuery('.group-wrapper').removeClass('collapsexxx');
-                jQuery('.group-sidebar').removeClass('hideexxx');
-                sidebar.css({'width' : '','min-width':'','padding':''});
-            }
-
-        };
-        jQuery(window).scroll(func).resize(func);
-	";
-	return $script;
-}
-
-function rcl_get_groups_footer_scripts($script){
-	global $rcl_options;
-
-	$maxsize_mb = (isset($rcl_options['avatar_weight'])&&$rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: 2;
-	$maxsize = $maxsize_mb*1024*1024;
-
-	$script .= "
-	$('#groupavatarupload').fileupload({
-		dataType: 'json',
-		type: 'POST',
-		url: Rcl.ajaxurl,
-		formData:{action:'rcl_group_avatar_upload',ajax_nonce:Rcl.nonce},
-		loadImageMaxFileSize: ".$maxsize.",
-		autoUpload:true,
-		imageMinWidth:150,
-		imageMinHeight:150,
-		disableExifThumbnail: true,
-		progressall: function (e, data) {
-			var progress = parseInt(data.loaded / data.total * 100, 10);
-			$('#avatar-upload-progress').show().html('<span>'+progress+'%</span>');
-		},
-		submit: function (e, data) {
-                    var group_id = $('#groupavatarupload').parents('#rcl-group').data('group');
-                    data.formData = {
-                        group_id: group_id,
-                        ajax_nonce:Rcl.nonce,
-                        action:'rcl_group_avatar_upload'
-                    };
-		},
-		done: function (e, data) {
-
-                    if(data.result['error']){
-                            rcl_notice(data.result['error'],'error');
-                            return false;
-                    }
-
-                    $('#rcl-group .group-avatar img').attr('src',data.result['avatar_url']);
-                    $('#avatar-upload-progress').hide().empty();
-                    rcl_notice(data.result['success'],'success');
-
-		}
-	});";
-	return $script;
-}
-add_filter('file_footer_scripts_rcl','rcl_get_groups_footer_scripts');

@@ -9,6 +9,7 @@ function rcl_options_panel(){
     add_action( "load-$hook", 'rcl_add_options_addons_manager' );
     add_submenu_page( 'manage-wprecall', __('Repository','wp-recall'), __('Repository','wp-recall'), 'manage_options', 'rcl-repository', 'rcl_repository_page');
     add_submenu_page( 'manage-wprecall', __('Documentation','wp-recall'), __('Documentation','wp-recall'), 'manage_options', 'manage-doc-recall', 'rcl_doc_manage');
+    add_submenu_page( 'manage-wprecall', __('Custom tabs','wp-recall'), __('Custom tabs','wp-recall'), 'manage_options', 'manage-custom-tabs', 'rcl_custom_tabs_manage');
 }
 
 function rcl_doc_manage(){
@@ -213,12 +214,19 @@ function rcl_global_options(){
                         $fields->label(__('Minimization of style files','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'minify_css',
-                            'parent'=>true,
                             'options'=>array(
                                 __('Disabled','wp-recall'),
                                 __('Included','wp-recall'))
                         )),
-                        $fields->notice(__('Minimization of style files only works against the style files Wp-Recall and additions that support this feature','wp-recall'))			
+                        $fields->notice(__('Minimization of style files only works against the style files Wp-Recall and additions that support this feature','wp-recall')),
+                        
+                        $fields->label(__('Minimization of scripts','wp-recall')),
+                        $fields->option('select',array(
+                            'name'=>'minify_js',
+                            'options'=>array(
+                                __('Disabled','wp-recall'),
+                                __('Included','wp-recall'))
+                        )),
                     )
                 );
 
@@ -370,7 +378,7 @@ function rcl_update_options(){
 
     if( current_user_can('edit_plugins') ){
         rcl_update_scripts();
-        rcl_minify_style();
+        //rcl_minify_style();
     }
 
     $result['result'] = 1;
@@ -379,6 +387,59 @@ function rcl_update_options(){
     echo json_encode($result);
     exit;
 
+}
+
+function rcl_custom_tabs_manage(){
+    
+    rcl_sortable_scripts();
+
+    include_once RCL_PATH.'functions/rcl_editfields.php';
+    
+    $f_edit = new Rcl_EditFields('custom_tabs',
+            array(
+                'meta-key'=>false,
+                'select-type'=>false
+                )
+            );
+    
+    if($f_edit->verify()) $fields = $f_edit->update_fields(false);
+    
+    $content = '<h2>'.__('Custom tabs personal account','wp-recall').'</h2>';
+
+    $content .= $f_edit->edit_form(array(
+        $f_edit->option('text',array(
+            'name'=>'slug',
+            'label'=>__('ID tab','wp-recall'),
+            'placeholder'=>__('Latin alphabet and numbers','wp-recall')
+        )),
+        $f_edit->option('text',array(
+            'name'=>'icon',
+            'label'=>__('Class icon font-awesome','wp-recall'),
+            'placeholder'=>__('Example , fa-user','wp-recall')
+        )),
+        $f_edit->option('select',array(
+            'name'=>'public',
+            'notice'=>__('Privacy tab','wp-recall'),
+            'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+        )),
+        $f_edit->option('select',array(
+            'name'=>'ajax',
+            'notice'=>__('ajax-loading support','wp-recall'),
+            'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+        )),
+        $f_edit->option('select',array(
+            'name'=>'cache',
+            'notice'=>__('caching support','wp-recall'),
+            'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+        )),
+        $f_edit->option('textarea',array(
+            'name'=>'content',
+            'label'=>__('Content tab','wp-recall'),
+            'notice'=>__('supported shortcodes and HTML-code','wp-recall')
+        ))
+    ));
+
+    echo $content;
 }
 
 function rcl_theme_list(){

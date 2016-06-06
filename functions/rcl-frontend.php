@@ -44,7 +44,7 @@ function rcl_add_colorpicker_style(){
     echo $data;
 }
 
-add_action('wprecall_init','init_user_lk',2);
+add_action('wp_recall_init','init_user_lk',2);
 function init_user_lk(){
     global $wpdb,$user_LK,$rcl_userlk_action,$rcl_options,$user_ID;
 

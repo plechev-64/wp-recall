@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
     
     jQuery('.rcl-public-editor .rcl-upload-box .upload-image-url').live('keyup',function(){        
         var content = jQuery(this).val();
-        //console.log(content);
+        
         var idbox = jQuery(this).parents('.rcl-upload-box').attr('id');
         var res = rcl_is_valid_url(content);
         if(!res) return false;
@@ -31,6 +31,105 @@ jQuery(document).ready(function($) {
         });
         return false;
     });
+    
+    jQuery('#rcl-delete-post .delete-toggle').click(function() {
+        jQuery(this).next().toggle('fast');
+        return false;
+    });
+
+    jQuery('form[name="public_post"] input[name="edit-post-rcl"],form[name="public_post"] input[name="add_new_task"]').click(function(){
+        var error=0;
+        jQuery('form[name="public_post"]').find(':input').each(function() {
+            for(var i=0;i<field.length;i++){
+                if(jQuery(this).attr('name')==field[i]){
+                    if(jQuery(this).val()==''){
+                            jQuery(this).attr('style','border:1px solid red !important');
+                            error=1;
+                    }else{
+                            jQuery(this).attr('style','border:1px solid #E6E6E6 !important');
+                    }
+                }
+            }
+        });
+        if(error==0) return true;
+        else return false;
+    });
+    
+    jQuery('#rcl-popup').on('click','.rcl-navi.ajax-navi a',function(){
+        var page = jQuery(this).text();
+        var dataString = 'action=get_media&user_ID='+Rcl.user_ID+'&page='+page;
+        dataString += '&ajax_nonce='+Rcl.nonce;
+        jQuery.ajax({
+            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+            success: function(data){
+                if(data['result']==100){
+                        jQuery('#rcl-overlay').fadeIn();
+                        jQuery('#rcl-popup').html(data['content']);
+                        var screen_top = jQuery(window).scrollTop();
+                        var popup_h = jQuery('#rcl-popup').height();
+                        var window_h = jQuery(window).height();
+                        screen_top = screen_top + 60;
+                        jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
+                }else{
+                        alert('Ошибка!');
+                }
+            }
+        });
+        return false;
+    });
+    
+    jQuery('form #get-media-rcl').click(function(){
+        var dataString = 'action=get_media&user_ID='+Rcl.user_ID;
+        dataString += '&ajax_nonce='+Rcl.nonce;
+        jQuery.ajax({
+            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+            success: function(data){
+                if(data['result']==100){
+                    jQuery('#rcl-overlay').fadeIn();
+                    jQuery('#rcl-popup').html(data['content']);
+                    var screen_top = jQuery(window).scrollTop();
+                    var popup_h = jQuery('#rcl-popup').height();
+                    var window_h = jQuery(window).height();
+                    screen_top = screen_top + 60;
+                    jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
+                }else{
+                    alert('Ошибка!');
+                }
+            }
+        });
+        return false;
+    });
+
+    jQuery('#lk-content').on('click','#tab-publics .sec_block_button',function(){
+            var btn = jQuery(this);
+            get_page_content_rcl(btn,'posts_posts_block');
+            return false;
+    });
+
+    function get_page_content_rcl(btn){
+        if(btn.hasClass('active'))return false;
+        rcl_preloader_show('#tab-publics');
+        var id = btn.parents('.recall_child_content_block').attr('id');
+        var start = btn.attr('data');
+        var type = btn.attr('type');
+        var id_user = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
+        jQuery('.'+id+' .sec_block_button').removeClass('active');
+        btn.addClass('active');
+        var dataString = 'action=rcl_posts_list&start='+start+'&type='+type+'&id_user='+id_user;
+        dataString += '&ajax_nonce='+Rcl.nonce;
+        jQuery.ajax({
+            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+            success: function(data){
+                if(data['recall']==100){
+                        jQuery('#'+id+' .publics-table-rcl').html(data['post_content']);
+                } else {
+                        alert('Error');
+                }
+                rcl_preloader_hide();
+            }
+        });
+        return false;
+    }
 
 });
 
@@ -69,6 +168,7 @@ function rcl_delete_editor_box(e){
 function rcl_delete_post(element){
     rcl_preloader_show(element);
     var post_id = jQuery(element).data('post');
+    var post_type = jQuery(element).parents('form').data('post_type');
     var dataString = 'action=rcl_ajax_delete_post&post_id='+post_id;
     dataString += '&ajax_nonce='+Rcl.nonce;
     jQuery.ajax({
@@ -79,7 +179,7 @@ function rcl_delete_post(element){
                 rcl_notice(data['error'],'error');
                 return false;
             }
-            jQuery('#'+data['post_type']+'-'+post_id).remove();
+            jQuery('.public-form .attachments-post .'+data['post_type']+'-'+post_id).remove();
             rcl_notice(data['success'],'success');
         }
     });
@@ -88,7 +188,7 @@ function rcl_delete_post(element){
 
 function rcl_edit_post(element){
     var id_contayner = 'rcl-popup-content';	
-    jQuery('body > div').last().after('<div id=\''+id_contayner+'\' title=\''+Rcl.local.edit_box_title+'\'></div>');
+    jQuery('body > div').last().after('<div id="'+id_contayner+'" title="'+Rcl.local.edit_box_title+'"></div>');
     var contayner = jQuery( '#'+id_contayner );
     contayner.dialog({
         modal: true,
@@ -194,13 +294,14 @@ function rcl_preview(e){
 	var submit = jQuery(e);
 	var formblock = submit.parents('form');
 	var required = true;
-
+        var post_type = formblock.data('post_type');
+        
 	formblock.find(':required').each(function(){
             if(!jQuery(this).val()){
-                    jQuery(this).css('box-shadow','0px 0px 1px 1px red');
-                    required = false;
+                jQuery(this).css('box-shadow','0px 0px 1px 1px red');
+                required = false;
             }else{
-                    jQuery(this).css('box-shadow','none');
+                jQuery(this).css('box-shadow','none');
             }
 	});
         
@@ -220,7 +321,7 @@ function rcl_preview(e){
 
         submit.attr('disabled',true).val(Rcl.local.wait+'...');
 	
-	var iframe = jQuery("#contentarea_ifr").contents().find("#tinymce").html();
+	var iframe = jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html();
 	if(iframe){
             tinyMCE.triggerSave();
             formblock.find('textarea[name="post_content"]').html(iframe);
@@ -273,4 +374,69 @@ function rcl_preview_close(e){
 	var offsetTop = preview.offset().top;
 	jQuery('body,html').animate({scrollTop:offsetTop -50}, 500);
 	preview.remove();	
+}
+
+function rcl_init_public_form(post_type,post_id){
+    
+    var maxcnt = Rcl.public.maxcnt;
+    var maxsize_mb = Rcl.public.maxcnt;
+    var maxsize = maxsize_mb*1024*1024;
+
+    rcl_add_dropzone('#rcl-public-dropzone-'+post_type);
+    
+    jQuery('#upload-public-form-'+post_type).fileupload({
+        dataType: 'json',
+        type: 'POST',
+        dropZone: jQuery('#rcl-public-dropzone-'+post_type),
+        url: Rcl.ajaxurl,
+        formData:{action:'rcl_imagepost_upload',post_type:post_type,post_id:post_id,ajax_nonce:Rcl.nonce},
+        singleFileUploads:false,
+        autoUpload:true,
+        progressall: function (e, data) {
+            /*var progress = parseInt(data.loaded / data.total * 100, 10);
+            jQuery('#upload-box-message .progress-bar').show().css('width',progress+'px');*/
+        },
+        send:function (e, data) {
+            var error = false;
+            rcl_preloader_show('.public_block form');                   
+            var cnt_now = jQuery('#temp-files-'+post_type+' li').length;                    
+            jQuery.each(data.files, function (index, file) {
+                cnt_now++;
+                if(cnt_now>maxcnt){
+                    rcl_notice('You have exceeded the allowed number of downloads! Max. '+maxcnt,'error');
+                    error = true;
+                }                       
+                if(file['size']>maxsize){
+                    rcl_notice('Exceeds the maximum size for the file '+file['name']+'! Max. '+maxsize_mb+' MB','error');                            
+                    error = true;
+                }                       
+            });
+            if(error){
+                rcl_preloader_hide();
+                return false;
+            }
+        },
+        done: function (e, data) {
+            jQuery.each(data.result, function (index, file) {
+                if(data.result['error']){
+                    rcl_notice(data.result['error'],'error');
+                    rcl_preloader_hide();
+                    return false;
+                }
+
+                if(file['string']){
+                    jQuery('#temp-files-'+post_type).append(file['string']);
+                }
+            });
+            rcl_preloader_hide();
+        }
+    });
+}
+
+function rcl_add_image_in_form(e,$file){
+    var post_type = jQuery(e).parents("form").data("post_type");           
+    var ifr = jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html();
+    jQuery("#contentarea-"+post_type+"").insertAtCaret($file+"&nbsp;");
+    jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html(ifr+$file+"&nbsp;");
+    return false;
 }
