@@ -1,5 +1,9 @@
 jQuery(function($){ 
-    $('#userpicupload').fileupload({
+    rcl_avatar_uploader();
+});
+
+function rcl_avatar_uploader(){
+    jQuery('#userpicupload').fileupload({
         dataType: 'json',
         type: 'POST',
         url: Rcl.ajaxurl,
@@ -13,12 +17,12 @@ jQuery(function($){
         disableExifThumbnail: true,
         progressall: function (e, data) {
             var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#avatar-upload-progress').show().html('<span>'+progress+'%</span>');
+            jQuery('#avatar-upload-progress').show().html('<span>'+progress+'%</span>');
         },
         add: function (e, data) {
             if(!data.form) return false;
-            $.each(data.files, function (index, file) {
-                $('#rcl-preview').remove();
+            jQuery.each(data.files, function (index, file) {
+                jQuery('#rcl-preview').remove();
                 if(file.size>Rcl.profile.avatar_size*1024*1024){
                     rcl_notice('Exceeds the maximum size for a picture! Max. '+Rcl.profile.avatar_size+' MB','error');
                     return false;
@@ -27,8 +31,8 @@ jQuery(function($){
                 var reader = new FileReader();
                 reader.onload = function(event) {
                     var imgUrl = event.target.result;
-                    $( '#rcl-preview' ).remove();
-                    $('body > div').last().after('<div id="rcl-preview" title="\'The image being loaded\'"><img src="'+imgUrl+'"></div>');
+                    jQuery( '#rcl-preview' ).remove();
+                    jQuery('body > div').last().after('<div id="rcl-preview" title="\'The image being loaded\'"><img src="'+imgUrl+'"></div>');
                     var image = $('#rcl-preview img');
                     image.load(function() {
                         var img = $(this);
@@ -45,7 +49,7 @@ jQuery(function($){
                                 jcrop_api = this;
                         });
 
-                        $( '#rcl-preview' ).dialog({
+                        jQuery( '#rcl-preview' ).dialog({
                           modal: true,
                           imageQuality: 1,
                           width: width+32,
@@ -70,7 +74,7 @@ jQuery(function($){
             });
         },
         submit: function (e, data) {
-            var image = $('#rcl-preview img');
+            var image = jQuery('#rcl-preview img');
             if (parseInt(image.data('w'))){
                 var src = image.attr('src');
                 var width = image.data('width');
@@ -92,31 +96,31 @@ jQuery(function($){
                 rcl_notice(data.result['error'],'error');
                 return false;
             }
-            $('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data.result['avatar_url']);
-            $('#avatar-upload-progress').hide().empty();
-            $( '#rcl-preview' ).remove();
+            jQuery('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data.result['avatar_url']);
+            jQuery('#avatar-upload-progress').hide().empty();
+            jQuery( '#rcl-preview' ).remove();
             rcl_notice(data.result['success'],'success');
         }
     });
 
     if(Rcl.https){
 
-        $('#webcamupload').click(function(){
+        jQuery('#webcamupload').click(function(){
 
-            $( '#rcl-preview' ).remove();
-            $('body > div').last().after('<div id="rcl-preview" title="Image from the camera"></div>');
+            jQuery( '#rcl-preview' ).remove();
+            jQuery('body > div').last().after('<div id="rcl-preview" title="Image from the camera"></div>');
 
             var webCam = new SayCheese('#rcl-preview', { audio: true });
 
-            $( '#rcl-preview' ).dialog({
+            jQuery( '#rcl-preview' ).dialog({
                 modal: true,
                 imageQuality: 1,
                 resizable: false,
                 width:355,
                 close: function (e, data) {
                     webCam.stop();
-                    $( this ).dialog( 'close' );
-                    $( '#rcl-preview' ).remove();
+                    jQuery( this ).dialog( 'close' );
+                    jQuery( '#rcl-preview' ).remove();
                 },
                 open: function (e, data) {
                     webCam.start();
@@ -130,13 +134,13 @@ jQuery(function($){
 
             webCam.on('snapshot', function(snapshot) {
                 var img = document.createElement('img');
-                $(img).on('load', function() {
-                    $('#rcl-preview').html(img);
+                jQuery(img).on('load', function() {
+                    jQuery('#rcl-preview').html(img);
                 });
                 img.src = snapshot.toDataURL('image/png');
                 var dataString = 'action=rcl_avatar_upload&src='+img.src;
                 dataString += '&ajax_nonce='+Rcl.nonce;
-                $.ajax({
+                jQuery.ajax({
                     type: 'POST',
                     data: dataString,
                     dataType: 'json',
@@ -146,16 +150,13 @@ jQuery(function($){
                                 rcl_notice(data['error'],'error');
                                 return false;
                         }
-                        $( '#rcl-preview' ).dialog('close');
-                        $('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data['avatar_url']);
-                        $( '#rcl-preview' ).remove();
+                        jQuery( '#rcl-preview' ).dialog('close');
+                        jQuery('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data['avatar_url']);
+                        jQuery( '#rcl-preview' ).remove();
                         rcl_notice(data['success'],'success');
                     }
                 });
             });
         });
     }
-
-});
-
-
+}

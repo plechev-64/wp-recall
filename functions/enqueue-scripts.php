@@ -27,7 +27,7 @@ function rcl_datepicker_scripts(){
 }
 
 function rcl_bxslider_scripts(){
-    rcl_enqueue_style( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.css' );
+    wp_enqueue_style( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.css' );
     wp_enqueue_script( 'jquery' );
     rcl_enqueue_script( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.min.js' );
     rcl_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js', array('bx-slider','rcl-header-scripts'));
@@ -140,14 +140,16 @@ function rcl_frontend_scripts(){
         'ajaxurl' => admin_url('admin-ajax.php'),
         'wpurl' => get_bloginfo('wpurl'),
         'rcl_url' => RCL_URL,
-        'user_ID' => $user_ID,
+        'user_ID' => (int)$user_ID,       
         'nonce' => wp_create_nonce( 'rcl-post-nonce' ),
         'local' => apply_filters('rcl_js_localize',$local)
     );
 
-    $data['post_ID'] = (isset($post->ID)&&$post->ID)? $post->ID: 0;
-    $data['mobile'] = (wp_is_mobile())? 1: 0;
-    $data['https'] = @( $_SERVER["HTTPS"] != 'on' ) ? 0:  1;
+    $data['post_ID'] = (isset($post->ID)&&$post->ID)? (int)$post->ID: (int)0;
+    $data['account_ID'] = ($user_LK==$user_ID)? (int)$user_LK: (int)0;
+    $data['mobile'] = (wp_is_mobile())? (int)1: (int)0;
+    $data['https'] = @( $_SERVER["HTTPS"] != 'on' ) ? (int)0:  (int)1;
+    $data['slider'] = (isset($rcl_options['slide-pause'])&&$rcl_options['slide-pause'])? "{auto:true,pause:".($rcl_options['slide-pause']*1000)."}": "''";
     
     $data = apply_filters('rcl_init_js_variables',$data);
 

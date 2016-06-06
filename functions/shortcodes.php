@@ -202,21 +202,21 @@ function rcl_default_search_form($form){
 
 add_shortcode('wp-recall','rcl_get_shortcode_wp_recall');
 function rcl_get_shortcode_wp_recall(){
-	global $user_LK;
+    global $user_LK;
 
-	if(!$user_LK){
-		return '<h4>'.__('To begin to use the capabilities of your personal account, please log in or register on this site','wp-recall').'</h4>
-		<div class="authorize-form-rcl">'.rcl_get_authorize_form().'</div>';
-	}
+    if(!$user_LK){
+            return '<h4>'.__('To begin to use the capabilities of your personal account, please log in or register on this site','wp-recall').'</h4>
+            <div class="authorize-form-rcl">'.rcl_get_authorize_form().'</div>';
+    }
 
-	ob_start();
+    ob_start();
 
-	wp_recall();
+    wp_recall();
 
-	$content = ob_get_contents();
-	ob_end_clean();
+    $content = ob_get_contents();
+    ob_end_clean();
 
-	return $content;
+    return $content;
 }
 
 add_shortcode('slider-rcl','rcl_slider');

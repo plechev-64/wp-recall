@@ -1,12 +1,14 @@
 <?php
 
 if (!is_admin()):
-    add_action('wp_recall_loaded','rcl_profile_scripts');
+    add_action('wp','rcl_profile_scripts');
 endif;
 
 function rcl_profile_scripts(){
+    global $user_ID,$user_LK;
     rcl_enqueue_script( 'rcl-profile', rcl_addon_url('js/scripts.js', __FILE__) );
-    rcl_enqueue_script( 'rcl-profile-footer', rcl_addon_url('js/footer.js', __FILE__),false,true );
+    if($user_ID==$user_LK)
+        rcl_enqueue_script( 'user-avatar-uploader', rcl_addon_url('js/avatar-uploader.js', __FILE__),false,true );
 }
 
 add_filter('rcl_init_js_variables','rcl_init_js_profile_variables',10);

@@ -1,13 +1,12 @@
 <?php
 
 if (!is_admin()):
-    add_action('wp_recall_loaded','rcl_groups_scripts');
+    add_action('wp','rcl_groups_scripts');
 endif;
 
 function rcl_groups_scripts(){
     rcl_enqueue_style('rcl-groups',rcl_addon_url('style.css', __FILE__));
-    rcl_enqueue_script( 'rcl-groups', rcl_addon_url('js/scripts.js', __FILE__) );
-    rcl_enqueue_script( 'rcl-groups-footer', rcl_addon_url('js/footer.js', __FILE__),false,true);
+    rcl_enqueue_script( 'rcl-groups', rcl_addon_url('js/scripts.js', __FILE__) );       
 }
 
 add_filter('rcl_init_js_variables','rcl_init_js_groups_variables',10);
@@ -106,6 +105,8 @@ function rcl_register_default_group_sidebars(){
 
 function rcl_group(){
     global $rcl_group;
+    
+    rcl_enqueue_script( 'groups-image-uploader', rcl_addon_url('js/groups-image-uploader.js', __FILE__),false,true);
 
     $admin = (rcl_is_group_can('admin')||current_user_can('edit_others_posts'))? 1: 0;
 

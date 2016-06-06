@@ -419,7 +419,7 @@ function rcl_custom_tabs_manage(){
         )),
         $f_edit->option('select',array(
             'name'=>'public',
-            'notice'=>__('Privacy tab','wp-recall'),
+            'notice'=>__('Public tab','wp-recall'),
             'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
         )),
         $f_edit->option('select',array(

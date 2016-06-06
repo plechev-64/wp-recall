@@ -90,7 +90,7 @@ final class WP_Recall {
 	}
 
 	private function define_constants() {
-		global $wpdb;
+            global $wpdb;
 
             $upload_dir = $this->upload_dir();
 

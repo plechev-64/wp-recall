@@ -1,23 +1,23 @@
 jQuery(function($){
-    $('#lk-content').on('click','.link-file-rcl',function(){
-        $(this).parent().text('Removes the file from the server');
+    jQuery('#lk-content').on('click','.link-file-rcl',function(){
+        jQuery(this).parent().text('Removes the file from the server');
     });
 
-    $('#upload-private-message').fileupload({
+    jQuery('#upload-private-message').fileupload({
         dataType: 'json',
         type: 'POST',
         url: Rcl.ajaxurl,
         formData:{
             action:'rcl_message_upload',
-            talker:$('input[name="adressat_mess"]').val(),
-            online:$('input[name="online"]').val(),
+            talker:jQuery('input[name="adressat_mess"]').val(),
+            online:jQuery('input[name="online"]').val(),
             ajax_nonce:Rcl.nonce
         },
         loadImageMaxFileSize: Rcl.private.filesize_mb*1024*1024,
         autoUpload:true,
         progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#upload-box-message .progress-bar').show().css('width',progress+'px');
+                jQuery('#upload-box-message .progress-bar').show().css('width',progress+'px');
         },
         change:function (e, data) {
             if(data.files[0]['size']>Rcl.private.filesize_mb*1024*1024){
@@ -40,14 +40,14 @@ jQuery(function($){
             if(Rcl.private.sort){
                 rcl_replace = rcl_newmess+rcl_replace;
             }else{
-                rcl_replace = rcl_newmess;
+                rcl_replace += rcl_newmess;
             }
             
-            $('.new_mess').replaceWith(rcl_replace);
-            $('#upload-box-message .progress-bar').hide();
+            jQuery('#message-list .new_mess').replaceWith(rcl_replace);
+            jQuery('#upload-box-message .progress-bar').hide();
             
             if(!Rcl.private.sort){
-                var div = $('#resize-content');
+                var div = jQuery('#resize-content');
                 div.scrollTop( div.get(0).scrollHeight );
             }
         }

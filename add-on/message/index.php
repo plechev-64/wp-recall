@@ -1,13 +1,12 @@
 <?php
 
 if (!is_admin()):
-    add_action('wp_recall_loaded','rcl_private_messages_scripts');
+    add_action('wp','rcl_private_messages_scripts');
 endif;
 
 function rcl_private_messages_scripts(){
     rcl_enqueue_style('rcl-private',rcl_addon_url('style.css', __FILE__));
     rcl_enqueue_script( 'rcl-private', rcl_addon_url('js/scripts.js', __FILE__) );
-    rcl_enqueue_script( 'rcl-private-footer', rcl_addon_url('js/footer.js', __FILE__),false,true );
 }
 
 add_filter('rcl_init_js_variables','rcl_init_js_private_messages_variables',10);
@@ -360,6 +359,8 @@ class Rcl_Messages{
             rcl_resizable_scripts();
             rcl_rangyinputs_scripts();
             rcl_fileupload_scripts();
+            
+            rcl_enqueue_script( 'rcl-private-footer', rcl_addon_url('js/footer.js', __FILE__),false,true );
 
             global $user_ID,$rcl_options,$wpdb;
 
@@ -424,7 +425,7 @@ class Rcl_Messages{
 
                 $textarea .= rcl_get_smiles('content_mess');
 
-                                    $words = (isset($rcl_options['ms_limit_words'])&&$rcl_options['ms_limit_words'])? $rcl_options['ms_limit_words']: 400;
+                $words = (isset($rcl_options['ms_limit_words'])&&$rcl_options['ms_limit_words'])? $rcl_options['ms_limit_words']: 400;
 
                 $textarea .= '<div class="fa fa-edit" id="count-word">'.$words.'</div>';
 

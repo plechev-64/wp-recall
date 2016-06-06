@@ -1,7 +1,7 @@
 <?php
 
 if (!is_admin()):
-    add_action('wp_recall_loaded','rcl_feed_scripts');
+    add_action('wp','rcl_feed_scripts');
 endif;
 
 function rcl_feed_scripts(){

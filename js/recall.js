@@ -1,3 +1,4 @@
+
 jQuery(window).load(function() {
     jQuery(document.body).bind("drop", function(e){
         e.preventDefault();

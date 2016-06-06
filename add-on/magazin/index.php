@@ -1,6 +1,6 @@
 <?php
 if (!is_admin()):
-    add_action('wp_recall_loaded','rcl_rmag_scripts');
+    add_action('wp','rcl_rmag_scripts');
 endif;
 
 function rcl_rmag_scripts(){
