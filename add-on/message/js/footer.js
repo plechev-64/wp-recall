@@ -2,6 +2,23 @@ jQuery(function($){
     jQuery('#lk-content').on('click','.link-file-rcl',function(){
         jQuery(this).parent().text('Removes the file from the server');
     });
+    
+    if(!Rcl.private.sort){
+        var div = jQuery('#resize-content');
+        div.scrollTop( div.get(0).scrollHeight );
+
+        var chatHeight = 'chatHeight';
+        var chatNow = jQuery.cookie(chatHeight);
+        if(chatNow != null)
+            jQuery('#resize-content,#resize').css('height', chatNow + 'px');
+        jQuery('#resize').resizable( {
+            alsoResize: '#resize-content',
+            stop: function(event, ui) {
+                chatNow = jQuery('#resize-content').height();
+                jQuery.cookie(chatHeight, chatNow);
+            }
+        });
+    }
 
     jQuery('#upload-private-message').fileupload({
         dataType: 'json',
@@ -15,9 +32,9 @@ jQuery(function($){
         },
         loadImageMaxFileSize: Rcl.private.filesize_mb*1024*1024,
         autoUpload:true,
-        progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                jQuery('#upload-box-message .progress-bar').show().css('width',progress+'px');
+        progressall: function (e, data){
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            jQuery('#upload-box-message .progress-bar').show().css('width',progress+'px');
         },
         change:function (e, data) {
             if(data.files[0]['size']>Rcl.private.filesize_mb*1024*1024){

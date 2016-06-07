@@ -1,12 +1,12 @@
 <?php
 
 if (!is_admin()):
-    add_action('wp_recall_loaded','rcl_publics_scripts');
+    add_action('rcl_enqueue_scripts','rcl_publics_scripts',10);
 endif;
 
 function rcl_publics_scripts(){
-    rcl_enqueue_style('rcl_publics_styles',rcl_addon_url('style.css', __FILE__));
-    rcl_enqueue_script( 'rcl_publics_scripts', rcl_addon_url('js/scripts.js', __FILE__) );
+    rcl_enqueue_style('rcl-publics',rcl_addon_url('style.css', __FILE__));
+    rcl_enqueue_script( 'rcl-publics', rcl_addon_url('js/scripts.js', __FILE__) );
 }
 
 include_once('classes.php');

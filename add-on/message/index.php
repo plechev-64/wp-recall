@@ -1,7 +1,7 @@
 <?php
 
 if (!is_admin()):
-    add_action('wp','rcl_private_messages_scripts');
+    add_action('rcl_enqueue_scripts','rcl_private_messages_scripts',10);
 endif;
 
 function rcl_private_messages_scripts(){
@@ -56,7 +56,7 @@ function rcl_download_file_message(){
 	exit;
 }
 
-add_action('wp_enqueue_scripts', 'rcl_messages_scripts');
+add_action('wp', 'rcl_messages_scripts');
 function rcl_messages_scripts(){
 	global $user_ID,$rcl_options,$post,$wpdb;
 	if(isset($rcl_options['notify_message'])&&$rcl_options['notify_message'])
@@ -66,15 +66,15 @@ function rcl_messages_scripts(){
 	if(!$glup) $new_mess = $wpdb->get_row($wpdb->prepare("SELECT ID FROM ".RCL_PREF."private_message WHERE adressat_mess = '%d' AND status_mess = '0' OR adressat_mess = '%d' AND status_mess = '4'",$user_ID,$user_ID));
 	else $new_mess = true;
 	if($new_mess){
-		$scr = false;
-		if($rcl_options['view_user_lk_rcl']==1){
-			$get = 'user';
-			if($rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];
-			if(isset($_GET[$get])&&$user_ID==$_GET[$get]||$rcl_options['lk_page_rcl']!=$post->ID) $scr = true;
-		}else{
-			if(!is_author()||is_author($user_ID)) $scr = true;
-		}
-		if($scr) wp_enqueue_script( 'newmess_recall', plugins_url('js/new_mess.js', __FILE__) );
+            $scr = false;
+            if($rcl_options['view_user_lk_rcl']==1){
+                    $get = 'user';
+                    if($rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];
+                    if(isset($_GET[$get])&&$user_ID==$_GET[$get]||$rcl_options['lk_page_rcl']!=$post->ID) $scr = true;
+            }else{
+                    if(!is_author()||is_author($user_ID)) $scr = true;
+            }
+            if($scr) rcl_enqueue_script( 'newmess_recall', plugins_url('js/new_mess.js', __FILE__) );
 	}
 }
 
@@ -104,14 +104,17 @@ function rcl_messages_remove_garbage_file(){
 if(function_exists('rcl_tab')){
     add_action('init','add_tab_message');
     function add_tab_message(){
-        rcl_tab('privat',array('Rcl_Messages','recall_user_private_message'),__('Private chat','wp-recall'),
-                                array(
-                                    'ajax-load'=>true,
-                                    'public'=>1,
-                                    'class'=>'fa-comments',
-                                    'order'=>10,
-                                    'path'=>__FILE__
-                                ));
+        rcl_tab(
+            'privat',
+            array('Rcl_Messages','recall_user_private_message'),
+            __('Private chat','wp-recall'),
+            array(
+                'ajax-load'=>true,
+                'public'=>1,
+                'class'=>'fa-comments',
+                'order'=>10,
+                'path'=>__FILE__
+        ));
     }
 }
 
@@ -453,24 +456,7 @@ class Rcl_Messages{
                 $messlist .= $newblock;
                 $privat_block = '<div id="resize-content"><div id="message-list">'.$messlist.'</div></div>';
                 $privat_block .= $textarea;
-                $privat_block .= "<script>jQuery(document).ready(function() {
-
-                        var div = jQuery('#resize-content');
-                        div.scrollTop( div.get(0).scrollHeight );
-
-                        var chatHeight = 'chatHeight';
-                        var chatNow = jQuery.cookie(chatHeight);
-                        if(chatNow != null)
-                            jQuery('#resize-content,#resize').css('height', chatNow + 'px');
-                        jQuery('#resize').resizable( {
-                            alsoResize: '#resize-content',
-                            stop: function(event, ui) {
-                                chatNow = jQuery('#resize-content').height();
-                                jQuery.cookie(chatHeight, chatNow);
-                            }
-                        });
-                    });"
-                    . "</script>";
+                
             }else{
                 $privat_block = $textarea;
                 $messlist = $newblock.$messlist;

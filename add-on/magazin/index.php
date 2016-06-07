@@ -1,11 +1,11 @@
 <?php
 if (!is_admin()):
-    add_action('wp','rcl_rmag_scripts');
+    add_action('rcl_enqueue_scripts','rcl_rmag_scripts',10);
 endif;
 
 function rcl_rmag_scripts(){
-    rcl_enqueue_style('rcl_rmag_styles',rcl_addon_url('style.css', __FILE__));
-    rcl_enqueue_script( 'rcl_rmag_scripts', rcl_addon_url('js/scripts.js', __FILE__) );
+    rcl_enqueue_style('rcl-magazine',rcl_addon_url('style.css', __FILE__));
+    rcl_enqueue_script( 'rcl-magazine', rcl_addon_url('js/scripts.js', __FILE__) );
 }
 
 function rmag_global_unit(){

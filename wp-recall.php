@@ -80,11 +80,11 @@ final class WP_Recall {
 
             if(is_admin()){
                 add_action('save_post', 'rcl_postmeta_update', 0);
-                add_action('admin_head','rcl_admin_scrips');
+                add_action('admin_head','rcl_admin_scrips',10);
                 add_action('admin_menu', 'rcl_options_panel',19);
             }else{
-                 add_action('wp_enqueue_scripts', 'rcl_frontend_scripts',100);
-                 add_action('wp_head','rcl_update_timeaction_user');
+                 add_action('rcl_enqueue_scripts', 'rcl_frontend_scripts');
+                 add_action('wp_head','rcl_update_timeaction_user',10);
 
             }
 	}

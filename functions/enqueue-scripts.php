@@ -1,11 +1,11 @@
 <?php
 
 function rcl_pageform_scripts(){    
-    rcl_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js', array('rcl-primary-scripts'),true);
+    rcl_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js', false, true);
 }
 
 function rcl_floatform_scripts(){
-    rcl_enqueue_script( 'rcl-float-form', RCL_URL.'js/float_form.js', array('rcl-primary-scripts'),true);
+    rcl_enqueue_script( 'rcl-float-form', RCL_URL.'js/float_form.js', false, true);
 }
 
 function rcl_sortable_scripts(){
@@ -30,7 +30,7 @@ function rcl_bxslider_scripts(){
     wp_enqueue_style( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.css' );
     wp_enqueue_script( 'jquery' );
     rcl_enqueue_script( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.min.js' );
-    rcl_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js', array('bx-slider','rcl-header-scripts'));
+    rcl_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js');
 }
 
 function rcl_dialog_scripts(){
@@ -71,11 +71,6 @@ function rcl_rangyinputs_scripts(){
     }
 }
 
-function rcl_primary_scripts(){
-    wp_enqueue_script( 'jquery' );
-    rcl_enqueue_script( 'rcl-primary-scripts', RCL_URL.'js/recall.js', array() );
-}
-
 function rcl_font_awesome_style(){
     if( wp_style_is( 'font-awesome' ) ) wp_deregister_style('font-awesome');
     wp_enqueue_style( 'font-awesome', RCL_URL.'css/font-awesome/css/font-awesome.min.css' );
@@ -112,11 +107,9 @@ function rcl_frontend_scripts(){
 
     rcl_font_awesome_style();
 
-    //rcl_plugin_style();
-
     rcl_theme_style();
 
-    rcl_primary_scripts();
+    rcl_enqueue_script( 'rcl-primary-scripts', RCL_URL.'js/recall.js' );
 
     $local = array(
         'save' => __('Save','wp-recall'),

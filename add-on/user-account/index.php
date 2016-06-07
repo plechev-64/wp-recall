@@ -1,12 +1,12 @@
 <?php
 
 if (!is_admin()):
-    add_action('wp_recall_loaded','rcl_user_account_scripts');
+    add_action('rcl_enqueue_scripts','rcl_user_account_scripts',10);
 endif;
 
 function rcl_user_account_scripts(){
-    rcl_enqueue_style('user-account',rcl_addon_url('style.css', __FILE__));
-    rcl_enqueue_script( 'user-account', rcl_addon_url('js/scripts.js', __FILE__) );
+    rcl_enqueue_style('rcl-user-account',rcl_addon_url('style.css', __FILE__));
+    rcl_enqueue_script( 'rcl-user-account', rcl_addon_url('js/scripts.js', __FILE__) );
 }
 
 include_once "rcl_payment.php";

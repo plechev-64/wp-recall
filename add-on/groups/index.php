@@ -1,7 +1,7 @@
 <?php
 
 if (!is_admin()):
-    add_action('wp','rcl_groups_scripts');
+    add_action('rcl_enqueue_scripts','rcl_groups_scripts',10);
 endif;
 
 function rcl_groups_scripts(){

@@ -9,8 +9,8 @@ class Rcl_Includer{
     public $minify_dir;
     public $is_minify;
     
-    function __construct(){
-        global $rcl_styles;       
+    function __construct(){ 
+        global $rcl_styles;
         $this->place = (!isset($rcl_styles['header']))? 'header': 'footer';
     }
     
@@ -33,13 +33,9 @@ class Rcl_Includer{
             $primary = array(
                 'primary'           =>  $css_dir.'style.css',
                 'slider'            =>  $css_dir.'slider.css',
-                'users-list'        =>  $css_dir.'users.css'
+                'users-list'        =>  $css_dir.'users.css',
+                'register-form'     =>  $css_dir.'regform.css'
             );
-            
-            //если гость, то подключаем стили формы регистрации
-            if(!$user_ID){
-                $primary['register-form'] = $css_dir.'regform.css';
-            }
             
             //если используем recallbar, то подключаем его стили
             if(isset($rcl_options['view_recallbar'])&&$rcl_options['view_recallbar']){
@@ -79,7 +75,6 @@ class Rcl_Includer{
         }
         
         wp_enqueue_style( 'rcl-'.$this->place, RCL_UPLOAD_URL.'css/'.$filename);
-        //wp_enqueue_style( 'rcl-'.$this->place, RCL_URL.'includes/load-styles.php?place='.$this->place.'&cache='.$this->cache.'&cache_time='.$this->cache_time.'&css='.implode(',',$ids));
 
     }
     
@@ -104,21 +99,26 @@ class Rcl_Includer{
         $in_footer = ($this->place=='footer')? true: false;
         
         $scripts = array();
-        foreach($rcl_scripts[$this->place] as $key => $value) {
+        foreach($rcl_scripts[$this->place] as $key => $url) {
             
             //Если минификация не используется, то подключаем файлы как обычно
-            if(!$this->is_minify){
-                wp_enqueue_script( $key, rcl_path_to_url($value),array('jquery'),VER_RCL,$in_footer );
+            if(!$this->is_minify){ 
+                $parents = (isset($rcl_scripts['parents'][$key]))? $rcl_scripts['parents'][$key]: array();
+                wp_enqueue_script( $key, rcl_path_to_url($url),$parents,VER_RCL,$in_footer );
                 continue;
             }
 
-            $this->files['js'][$key] = $value;
+            $this->files['js'][$key] = $url;
         }
 
         if(!$this->files['js']) return false;
-
-        foreach($this->files['js'] as $id=>$url){
-            $ids[] = $id;
+        
+        $parents = array('jquery');
+        foreach($this->files['js'] as $key=>$url){
+            $ids[] = $key;
+            if((isset($rcl_scripts['parents'][$key]))){
+                $parents = array_merge($rcl_scripts['parents'][$key],$parents);
+            }
         }
 
         $filename = md5(implode(',',$ids)).'.js';
@@ -128,9 +128,8 @@ class Rcl_Includer{
             $this->create_file($filename,'js');
         }
         
-        wp_enqueue_script( 'rcl-'.$this->place.'-scripts', RCL_UPLOAD_URL.'js/'.$filename,array('jquery'),VER_RCL,$in_footer);
+        wp_enqueue_script( 'rcl-'.$this->place.'-scripts', RCL_UPLOAD_URL.'js/'.$filename,$parents,VER_RCL,$in_footer);
 
-        //wp_enqueue_script( 'rcl-'.$this->place.'-scripts', RCL_URL.'includes/load-scripts.php?place='.$this->place.'&cache='.$this->cache.'&cache_time='.$this->cache_time.'&js='.implode(',',$ids),array('jquery'),VER_RCL,$in_footer);
     }
     
     function init_dir(){
@@ -174,14 +173,17 @@ class Rcl_Includer{
             $string .= $file_string;
             
         }
-
-        //$string = preg_replace('/#.*/','',$string);
-        // удаляем строки начинающиеся с //
-        //$string = preg_replace('#//.*#','',$string);
+        
+        if($type=='js'){
+            // удаляем строки начинающиеся с //
+            $string = preg_replace('#//.*#','',$string);
+        }
+        
         // удаляем многострочные комментарии /* */
-        //$string = preg_replace('#/\*(?:[^*]*(?:\*(?!/))*)*\*/#','',$string);*/
-        //$string = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $string);
-        //$string =  preg_replace('/ {2,}/',' ',$string);
+        $string = preg_replace('#/\*(?:[^*]*(?:\*(?!/))*)*\*/#','',$string);
+        // удаляем пробелы, переносы, табуляцию
+        $string = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $string);
+        $string =  preg_replace('/ {2,}/',' ',$string);
 
         fwrite($f, $string);
         fclose($f);
@@ -226,16 +228,23 @@ function rcl_enqueue_style($id,$url,$footer=false){
 
 function rcl_enqueue_script($id,$url,$parents=array(),$footer=false){
     global $rcl_scripts;
+    
     if($footer||isset($rcl_scripts['header'])){
         $rcl_scripts['footer'][$id] = $url;
     }else{
         $rcl_scripts[$id] = $url; 
-    }   
+    }
+    
+    if($parents) 
+        $rcl_scripts['parents'][$id] = $parents;
 }
 
-add_action('wp_enqueue_scripts','rcl_include_styles',10);
-add_action('wp_footer','rcl_include_styles',10);
-function rcl_include_styles(){   
+add_action('wp_enqueue_scripts','rcl_include_scripts',10);
+add_action('wp_footer','rcl_include_scripts',10);
+function rcl_include_scripts(){  
+    
+    do_action('rcl_enqueue_scripts');
+    
     $Rcl_Include = new Rcl_Includer();
     $Rcl_Include->include_styles();
     $Rcl_Include->include_scripts();

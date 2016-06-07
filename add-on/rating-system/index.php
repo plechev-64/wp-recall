@@ -3,12 +3,12 @@ require_once 'core.php';
 require_once 'addon-options.php';
 
 if (!is_admin()):
-    add_action('wp_recall_loaded','rcl_rating_scripts');
+    add_action('rcl_enqueue_scripts','rcl_rating_scripts',10);
 endif;
 
 function rcl_rating_scripts(){
-    rcl_enqueue_style('rating-system',rcl_addon_url('style.css', __FILE__));
-    rcl_enqueue_script( 'rating-system', rcl_addon_url('js/scripts.js', __FILE__) );
+    rcl_enqueue_style('rcl-rating-system',rcl_addon_url('style.css', __FILE__));
+    rcl_enqueue_script( 'rcl-rating-system', rcl_addon_url('js/scripts.js', __FILE__) );
 }
 
 if (is_admin()):

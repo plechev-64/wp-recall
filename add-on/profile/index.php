@@ -1,7 +1,7 @@
 <?php
 
 if (!is_admin()):
-    add_action('wp','rcl_profile_scripts');
+    add_action('rcl_enqueue_scripts','rcl_profile_scripts',10);
 endif;
 
 function rcl_profile_scripts(){
