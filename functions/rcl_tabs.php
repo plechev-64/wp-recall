@@ -128,6 +128,10 @@ class Rcl_Tabs{
         if(isset($this->key)) $args['key'] = $this->key;
         return rcl_get_button_tab($args,$button);
     }
+    
+    function get_tab_content($user_id){
+        return $this->add_tab($block_wprecall='',$user_id);
+    }
 
 }
 

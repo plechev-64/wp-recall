@@ -24,7 +24,7 @@ function rcl_avatar_uploader(){
             jQuery.each(data.files, function (index, file) {
                 jQuery('#rcl-preview').remove();
                 if(file.size>Rcl.profile.avatar_size*1024*1024){
-                    rcl_notice('Exceeds the maximum size for a picture! Max. '+Rcl.profile.avatar_size+' MB','error');
+                    rcl_notice(Rcl.local.upload_size_avatar,'error');
                     return false;
                 }
 
@@ -32,7 +32,7 @@ function rcl_avatar_uploader(){
                 reader.onload = function(event) {
                     var imgUrl = event.target.result;
                     jQuery( '#rcl-preview' ).remove();
-                    jQuery('body > div').last().after('<div id="rcl-preview" title="\'The image being loaded\'"><img src="'+imgUrl+'"></div>');
+                    jQuery('body > div').last().after('<div id="rcl-preview" title="'+Rcl.local.title_image_upload+'"><img src="'+imgUrl+'"></div>');
                     var image = $('#rcl-preview img');
                     image.load(function() {
                         var img = $(this);
@@ -43,10 +43,10 @@ function rcl_avatar_uploader(){
                             aspectRatio: 1,
                             minSize:[150,150],
                             onSelect:function(c){
-                                    img.attr('data-width',width).attr('data-height',height).attr('data-x',c.x).attr('data-y',c.y).attr('data-w',c.w).attr('data-h',c.h);
+                                img.attr('data-width',width).attr('data-height',height).attr('data-x',c.x).attr('data-y',c.y).attr('data-w',c.w).attr('data-h',c.h);
                             }
                         },function(){
-                                jcrop_api = this;
+                            jcrop_api = this;
                         });
 
                         jQuery( '#rcl-preview' ).dialog({
@@ -108,10 +108,11 @@ function rcl_avatar_uploader(){
         jQuery('#webcamupload').click(function(){
 
             jQuery( '#rcl-preview' ).remove();
-            jQuery('body > div').last().after('<div id="rcl-preview" title="Image from the camera"></div>');
+            jQuery('body > div').last().after('<div id="rcl-preview" title="'+Rcl.local.title_webcam_upload+'"></div>');
 
             var webCam = new SayCheese('#rcl-preview', { audio: true });
-
+            var Snapshot = Rcl.local.snapshot;
+            
             jQuery( '#rcl-preview' ).dialog({
                 modal: true,
                 imageQuality: 1,
@@ -126,7 +127,7 @@ function rcl_avatar_uploader(){
                     webCam.start();
                 },
                 buttons: {
-                    Снимок: function() {
+                    Snapshot: function() {
                         webCam.takeSnapshot(320, 240);
                     }
                 }

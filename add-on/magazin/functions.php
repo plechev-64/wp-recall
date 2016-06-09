@@ -31,14 +31,14 @@ function rcl_get_cart_button($product_id){
         }else{
             
             $button .= '<span class="product-outsale">
-                <i class="fa fa-refresh rcl-icon"></i>Не в продаже
+                <i class="fa fa-refresh rcl-icon"></i>'.__('Not in the sale','wp-recall').'
             </span>';
             
         }
 
     }else{
         
-        $text_button = apply_filters('rcl_text_cart_button','Не в продаже',$product_id);
+        $text_button = apply_filters('rcl_text_cart_button',__('Not in the sale','wp-recall'),$product_id);
         $button .= '<span class="product-outsale">
             <i class="fa fa-refresh rcl-icon"></i>'.$text_button.'
         </span>';

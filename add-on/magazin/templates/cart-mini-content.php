@@ -1,12 +1,12 @@
 <?
-	/*Шаблон для отображения динамичного содержимого содержимого шорткода minibasket*/
-	/*Данный шаблон можно разместить в папке используемого шаблона /wp-content/wp-recall/templates/ и он будет подключаться оттуда*/
+/*Шаблон для отображения динамичного содержимого содержимого шорткода minibasket*/
+/*Данный шаблон можно разместить в папке используемого шаблона /wp-content/wp-recall/templates/ и он будет подключаться оттуда*/
 ?>
 <?php global $CartData; ?>
 <div>
-	Всего товаров: <span class="cart-numbers"><?php echo $CartData->numberproducts; ?></span> шт.
+    <?php _e('Goods of all','wp-recall'); ?>: <span class="cart-numbers"><?php echo $CartData->numberproducts; ?></span> шт.
 </div>
 <div>
-	Общая сумма: <span class="cart-summa"><?php echo rcl_add_primary_currency_price($CartData->cart_price); ?></span>
+    <?php _e('Total amount','wp-recall'); ?>: <span class="cart-summa"><?php echo rcl_add_primary_currency_price($CartData->cart_price); ?></span>
 </div>
-<a href="<?php echo get_permalink($CartData->cart_url); ?>">Перейти в корзину</a>
+<a href="<?php echo get_permalink($CartData->cart_url); ?>"><?php _e('Go to basket','wp-recall'); ?></a>

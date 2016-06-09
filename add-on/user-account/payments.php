@@ -311,8 +311,8 @@ function rcl_admin_statistic_cashe(){
   
   echo '</pre><div class="wrap"><h2>'.__('Payment history','wp-recall').'</h2>';
 
-  echo '<p>Всего переводов: '.$Rcl_Payments->total_items.' на сумму '.$Rcl_Payments->sum.' '.rcl_get_primary_currency(1).' (Средний чек: '.$sr.' '.rcl_get_primary_currency(1).')</p>';
-  echo '<p>Всего в системе: '.$Rcl_Payments->sum_balance.' '.rcl_get_primary_currency(1).'</p>';
+  echo '<p>'.__('All transfers','wp-recall').': '.$Rcl_Payments->total_items.' '.__('in the amount of','wp-recall').' '.$Rcl_Payments->sum.' '.rcl_get_primary_currency(1).' ('.__('Average check','wp-recall').': '.$sr.' '.rcl_get_primary_currency(1).')</p>';
+  echo '<p>'.__('In the system','wp-recall').': '.$Rcl_Payments->sum_balance.' '.rcl_get_primary_currency(1).'</p>';
   //echo '<p>Средняя выручка за сутки: '.$day_pay.' '.rcl_get_primary_currency(1).'</p>';
   echo rcl_get_chart_payments($Rcl_Payments->items);
    ?>

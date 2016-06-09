@@ -13,7 +13,7 @@ if(function_exists('rcl_register_rating_type')){
         if(!is_admin()) add_action('init','rcl_register_rating_product_type');
         if(is_admin()) add_action('admin_init','rcl_register_rating_product_type');
         function rcl_register_rating_product_type(){
-                rcl_register_rating_type(array('post_type'=>'products','type_name'=>'Товары','style'=>true));
+                rcl_register_rating_type(array('post_type'=>'products','type_name'=>__('Products','wp-recall'),'style'=>true));
         }
     }
 }
@@ -21,7 +21,7 @@ if(function_exists('rcl_register_rating_type')){
 add_action( 'attachments_register', 'rcl_attachments_products' );
 function rcl_attachments_products( $attachments ){
     $args = array(
-        'label' => 'Галлерея товара',
+        'label' => __('Product gallery','wp-recall'),
         'post_type' => array( 'products' ),
         'filetype' => null,
         'note' => null,
@@ -38,18 +38,18 @@ add_action( 'init', 'rcl_register_posttype_products' );
 function rcl_register_posttype_products(){
 
     $labels = array(
-        'name' => 'Каталог товаров',
-        'singular_name' => 'Каталог товаров',
-        'add_new' => 'Добавить товар',
-        'add_new_item' => 'Добавить новый товар',
-        'edit_item' => 'Редактировать',
-        'new_item' => 'Новое',
-        'view_item' => 'Просмотр',
-        'search_items' => 'Поиск',
-        'not_found' => 'Не найдено',
-        'not_found_in_trash' => 'Корзина пуста',
-        'parent_item_colon' => 'Родительский товар',
-        'menu_name' => 'Товары'
+        'name' => __('Products catalog','wp-recall'),
+        'singular_name' => __('Product','wp-recall'),
+        'add_new' => __('Add this item','wp-recall'),
+        'add_new_item' => __('Add new item','wp-recall'),
+        'edit_item' => __('Edit','wp-recall'),
+        'new_item' => __('New','wp-recall'),
+        'view_item' => __('View','wp-recall'),
+        'search_items' => __('Search','wp-recall'),
+        'not_found' => __('Not found','wp-recall'),
+        'not_found_in_trash' => __('Cart is empty','wp-recall'),
+        'parent_item_colon' => __('Parental goods','wp-recall'),
+        'menu_name' => __('Products','wp-recall')
     );
 
     $args = array(
@@ -81,21 +81,21 @@ if(!function_exists('rcl_register_taxonomy_prodcat')){
     function rcl_register_taxonomy_prodcat() {
 
         $labels = array(
-              'name' => 'Категории',
-            'singular_name' => 'Категории',
-            'search_items' => 'Поиск',
-            'popular_items' => 'Популярные категории',
-            'all_items' => 'Все категории',
-            'parent_item' => 'Родительская категория',
-            'parent_item_colon' => 'Родительская категория:',
-            'edit_item' => 'Редактировать категорию',
-            'update_item' => 'Обновить категорию',
-            'add_new_item' => 'Добавить новую категорию',
-            'new_item_name' => 'Новая категория',
-            'separate_items_with_commas' => 'Категории разделяются запятыми',
-            'add_or_remove_items' => 'Добавить или удалить категорию',
-            'choose_from_most_used' => 'Выберите для использования',
-            'menu_name' => 'Категории'
+            'name' => __('Product categories','wp-recall'),
+            'singular_name' => __('Category','wp-recall'),
+            'search_items' => __('Search','wp-recall'),
+            'popular_items' => __('Popular categories','wp-recall'),
+            'all_items' => __('All categories','wp-recall'),
+            'parent_item' => __('Parent category','wp-recall'),
+            'parent_item_colon' => __('Parent category','wp-recall'),
+            'edit_item' => __('Edit category','wp-recall'),
+            'update_item' => __('Update category','wp-recall'),
+            'add_new_item' => __('Add a new category','wp-recall'),
+            'new_item_name' => __('New category','wp-recall'),
+            'separate_items_with_commas' => __('Categories separated by commas','wp-recall'),
+            'add_or_remove_items' => __('Add or delete a category','wp-recall'),
+            'choose_from_most_used' => __('Select to use the','wp-recall'),
+            'menu_name' => __('Product categories','wp-recall')
         );
 
         $args = array(
@@ -117,21 +117,21 @@ add_action( 'init', 'rcl_register_taxonomy_product_tag' );
 function rcl_register_taxonomy_product_tag() {
 
     $labels = array(
-          'name' => 'Метки товаров',
-        'singular_name' => 'Метки товаров',
-        'search_items' => 'Поиск',
-        'popular_items' => 'Популярные',
-        'all_items' => 'Все',
-        'parent_item' => 'Родительская',
-        'parent_item_colon' => 'Родительская:',
-        'edit_item' => 'Редактировать',
-        'update_item' => 'Обновить',
-        'add_new_item' => 'Добавить новую',
-        'new_item_name' => 'Новая',
-        'separate_items_with_commas' => 'Разделяйте метки запятыми',
-        'add_or_remove_items' => 'Добавить или удалить',
-        'choose_from_most_used' => 'Выберите для использования',
-        'menu_name' => 'Метки товаров'
+        'name' => __('Product Tags','wp-recall'),
+        'singular_name' => __('Product Tag','wp-recall'),
+        'search_items' => __('Search','wp-recall'),
+        'popular_items' => __('Popular tags','wp-recall'),
+        'all_items' => __('All tags','wp-recall'),
+        'parent_item' => __('Parent tag','wp-recall'),
+        'parent_item_colon' => __('Parent tag','wp-recall'),
+        'edit_item' => __('Edit','wp-recall'),
+        'update_item' => __('Update','wp-recall'),
+        'add_new_item' => __('Add a new','wp-recall'),
+        'new_item_name' => __('New tag','wp-recall'),
+        'separate_items_with_commas' => __('Tags separated by commas','wp-recall'),
+        'add_or_remove_items' => __('Add or delete','wp-recall'),
+        'choose_from_most_used' => __('Select to use the','wp-recall'),
+        'menu_name' => __('Product Tags','wp-recall')
     );
 
     $args = array(
@@ -151,7 +151,7 @@ function rcl_register_taxonomy_product_tag() {
 // создаем колонку товарных категорий
 add_filter('manage_edit-products_columns', 'rcl_prodcat_column', 10, 1);
 function rcl_prodcat_column( $columns ){
-    $columns['prodcat'] = 'Категория';
+    $columns['prodcat'] = __('Category','wp-recall');
     return $columns;
 }
 
@@ -180,7 +180,7 @@ function rcl_price_column( $columns ){
 	$out = array();
     foreach((array)$columns as $col=>$name){
         if(++$i==3)
-             $out['price'] = 'Цена';
+             $out['price'] = __('Price','wp-recall');
         $out[$col] = $name;
     }
     return $out;
@@ -192,8 +192,8 @@ add_filter('manage_products_posts_custom_column', 'rcl_fill_price_column', 5, 2)
 function rcl_fill_price_column($column_name, $post_id) {
     switch( $column_name ){
         case 'price':
-			echo '<input type="text" id="price-product-'.$post_id.'" name="price-product" size="4" value="'.get_post_meta($post_id,'price-products',1).'"> '.rcl_get_current_type_currency($post_id).'
-                <input type="button" class="recall-button edit-price-product" product="'.$post_id.'" id="product-'.$post_id.'" value="Ок">';
+            echo '<input type="text" id="price-product-'.$post_id.'" name="price-product" size="4" value="'.get_post_meta($post_id,'price-products',1).'"> '.rcl_get_current_type_currency($post_id).'
+                <input type="button" class="recall-button edit-price-product" product="'.$post_id.'" id="product-'.$post_id.'" value="'.__('OK','wp-recall').'">';
         break;
     }
 }
@@ -208,47 +208,47 @@ function rcl_delete_column_date_product( $columns ){
 // создаем колонку наличия товара
 add_filter('manage_edit-products_columns', 'rcl_availability_column', 10, 1);
 function rcl_availability_column( $columns ){
-	global $rmag_options;
-	if($rmag_options['products_warehouse_recall']!=1) return $columns;
-		$out = array();
-		foreach((array)$columns as $col=>$name){
-			if(++$i==3)
-				 $out['availability'] = 'Наличие';
-			$out[$col] = $name;
-		}
-		return $out;
+    global $rmag_options;
+    if($rmag_options['products_warehouse_recall']!=1) return $columns;
+    $out = array();
+    foreach((array)$columns as $col=>$name){
+            if(++$i==3)
+                $out['availability'] = __('Availability','wp-recall');
+            $out[$col] = $name;
+    }
+    return $out;
 
 }
 
 // заполняем колонку наличия товара
 add_filter('manage_products_posts_custom_column', 'rcl_fill_availability_column', 5, 2);
 function rcl_fill_availability_column($column_name, $post_id) {
-	global $rmag_options;
-	if($rmag_options['products_warehouse_recall']!=1) return $column_name;
+    global $rmag_options;
+    if($rmag_options['products_warehouse_recall']!=1) return $column_name;
 
-        if( $column_name != 'availability' ) return;
+    if( $column_name != 'availability' ) return;
 
-         if(get_post_meta($post_id, 'availability_product', 1)=='empty'){ //если товар цифровой
-             echo '<span>цифровой товар</span>';
-         }else{
-            if(!get_post_meta($post_id, 'outsale', 1)){
-                    $amount = get_post_meta($post_id,'amount_product',1);
-                    $reserve = get_post_meta($post_id,'reserve_product',1);
+     if(get_post_meta($post_id, 'availability_product', 1)=='empty'){ //если товар цифровой
+         echo '<span>'.__('digital goods','wp-recall').'</span>';
+     }else{
+        if(!get_post_meta($post_id, 'outsale', 1)){
+            $amount = get_post_meta($post_id,'amount_product',1);
+            $reserve = get_post_meta($post_id,'reserve_product',1);
 
-                    if($amount==0&&$amount!='') echo '<span style="color:red;">в наличии</span> ';
-                    else echo '<span style="color:green;">в наличии</span> ';
+            if($amount==0&&$amount!='') echo '<span style="color:red;">'.__('in stock','wp-recall').'</span> ';
+            else echo '<span style="color:green;">'.__('in stock','wp-recall').'</span> ';
 
-                    if($amount!='') $form_amount = '<input type="text" name="amountprod[]" size="3" value=""> шт.';
-                            else $form_amount = false;
+            if($amount!='') $form_amount = '<input type="text" name="amountprod[]" size="3" value="">';
+                    else $form_amount = false;
 
-                    if($amount!=false&&$amount>0) echo '<span style="color:green;">'.$amount.'</span> '.$form_amount;
-                            else if($amount<=0) echo '<span style="color:red;">'.$amount.'</span> '.$form_amount;
+            if($amount!=false&&$amount>0) echo '<span style="color:green;">'.$amount.'</span> '.$form_amount;
+                    else if($amount<=0) echo '<span style="color:red;">'.$amount.'</span> '.$form_amount;
 
-                    if($reserve) echo '<br /><span style="color:orange;">в резерве '.$reserve.'</span>';
-            }else{
-                    echo '<span style="color:red;">снят с продажи</span>';
-            }
-         }
+            if($reserve) echo '<br /><span style="color:orange;">'.__('in reserve','wp-recall').' '.$reserve.'</span>';
+        }else{
+                echo '<span style="color:red;">'.__('withdrawn from sale','wp-recall').'</span>';
+        }
+     }
 }
 
 
@@ -258,7 +258,7 @@ function rcl_thumb_column( $columns ){
 	$out = array();
     foreach((array)$columns as $col=>$name){
         if(++$i==2)
-             $out['thumb'] = 'Миниатюра';
+             $out['thumb'] = __('Thumbnail','wp-recall');
         $out[$col] = $name;
     }
     return $out;
@@ -283,49 +283,49 @@ function rcl_fill_thumb_column($column_name, $post_id) {
 
 add_action('admin_init', 'rcl_products_fields', 1);
 function rcl_products_fields() {
-    add_meta_box( 'products_fields', 'Характеристики товара', 'rcl_metabox_products', 'products', 'normal','high' );
+    add_meta_box( 'products_fields', __('Product features','wp-recall'), 'rcl_metabox_products', 'products', 'normal','high' );
 }
 
 function rcl_metabox_products( $post ){
     global $rmag_options; ?>
 
-    <p>Цена товара:<br>
+    <p><?php _e('Price product','wp-recall') ?>:<br>
     <label><input type="number" name="wprecall[price-products]" value="<?php echo get_post_meta($post->ID,'price-products',1); ?>" style="width:70px" /> <?php rcl_type_currency_list($post->ID); ?></label></p>
 
     <?php if($rmag_options['multi_cur']){ ?>
-    <p>Курс доп.валюты для товара:<br>
+    <p><?php _e('The course is an additional currency for the goods','wp-recall') ?>:<br>
     <label><input type="text" name="wprecall[curse_currency]" value="<?php echo get_post_meta($post->ID,'curse_currency',1); ?>" style="width:70px" /></label><br>
-    <small>Текущий курс доп.валюты: <?php echo $rmag_options['curse_currency']; ?>.<br>
-    Если для товара указан свой курс, то он будет приоритетным при расчете цены этого товара.</small></p>
+    <small><?php _e('The current rate of additional currency','wp-recall') ?>: <?php echo $rmag_options['curse_currency']; ?>.<br>
+    <?php _e('If the goods specified its course , it will be a priority in the calculation of the price of this commodity','wp-recall') ?>.</small></p>
     <?php } ?>
 
-    <p>Наценка на товар:<br>
+    <p><?php _e('The margin on goods','wp-recall') ?>:<br>
     <label><input type="number" name="wprecall[margin_product]" value="<?php echo get_post_meta($post->ID,'margin_product',1); ?>" style="width:70px" /> (%)</label><br>
-    <small>Наценка на товар будет прибавляться к выводимой стоимости товара</small></p>
+    <small><?php _e('The margin on the goods will be added to the output value of the goods','wp-recall') ?></small></p>
 
     <?php
     $customprice = unserialize(get_post_meta($post->ID, 'custom-price', 1));
     if($customprice){
             $cnt = count($customprice);
             for($a=0;$a<$cnt;$a++){
-                    $price .= '<p id="custom-price-'.$a.'">Заголовок: <input type="text" class="title-custom-price" name="title-custom-price[]" value="'.$customprice[$a]['title'].'">
-                    Цена: <input type="number" class="custom-price" name="custom-price[]" value="'.$customprice[$a]['price'].'">
-                    <a href="#" class="delete-price" id="'.$a.'">удалить</a></p>';
+                    $price .= '<p id="custom-price-'.$a.'">'.__('Title','wp-recall').': <input type="text" class="title-custom-price" name="title-custom-price[]" value="'.$customprice[$a]['title'].'">
+                    '.__('Price','wp-recall').': <input type="number" class="custom-price" name="custom-price[]" value="'.$customprice[$a]['price'].'">
+                    <a href="#" class="delete-price" id="'.$a.'">'.__('delete','wp-recall').'</a></p>';
             }
     } ?>
 
     <?php if($rmag_options['products_warehouse_recall']==1){ ?>
-            <h4>Наличие товара: <?php $mark_v = get_post_meta($post->ID, 'availability_product', 1); ?></h4>
-             <p><label><input type="radio" name="wprecall[availability_product]" value="" <?php checked( $mark_v, '' ); ?>/> в наличии</label>
-             <input type="number" name="wprecall[amount_product]" value="<?php echo get_post_meta($post->ID, 'amount_product', 1); ?>" size="4"/> шт.</p>
-             <p><label><input type="radio" name="wprecall[availability_product]" value="empty" <?php checked( $mark_v, 'empty' ); ?> /> Цифровой товар</label></p>
+            <h4><?php _e('Product availability','wp-recall') ?>: <?php $mark_v = get_post_meta($post->ID, 'availability_product', 1); ?></h4>
+             <p><label><input type="radio" name="wprecall[availability_product]" value="" <?php checked( $mark_v, '' ); ?>/> <?php _e('in stock','wp-recall') ?></label>
+             <input type="number" name="wprecall[amount_product]" value="<?php echo get_post_meta($post->ID, 'amount_product', 1); ?>" size="4"/></p>
+             <p><label><input type="radio" name="wprecall[availability_product]" value="empty" <?php checked( $mark_v, 'empty' ); ?> /> <?php _e('Digital goods','wp-recall') ?></label></p>
 
     <?php }else{ ?>
-        <p><label><input type="checkbox" name="wprecall[availability_product]" value="empty" <?php checked( get_post_meta($post->ID, 'availability_product', 1), 'empty' ); ?> /> Цифровой товар</label></p>
+        <p><label><input type="checkbox" name="wprecall[availability_product]" value="empty" <?php checked( get_post_meta($post->ID, 'availability_product', 1), 'empty' ); ?> /> <?php _e('Digital goods','wp-recall') ?></label></p>
     <?php } ?>
 
 
-    <p><label><input type="checkbox" name="wprecall[outsale]" value="1" <?php checked( get_post_meta($post->ID, 'outsale', 1), 1 ); ?> /> Снять с продажи</label></p>
+    <p><label><input type="checkbox" name="wprecall[outsale]" value="1" <?php checked( get_post_meta($post->ID, 'outsale', 1), 1 ); ?> /> <?php _e('Remove the sale','wp-recall') ?></label></p>
 
     <?php
     if($rmag_options['sistem_related_products']==1){
@@ -335,10 +335,10 @@ function rcl_metabox_products( $post ){
       $rel_prodcat = (isset($related['prodcat']))? $related['prodcat']: '';
       $rel_product_tag = (isset($related['product_tag']))? $related['product_tag']: '';
 
-    echo '<h3>Похожие или рекомендуемые товары:</h3>';
+    echo '<h3>'.__('Similar and recommended products','wp-recall').':</h3>';
     $args = array(
             'show_option_all'    => '',
-            'show_option_none'   => 'Выбрать категорию',
+            'show_option_none'   => __('Choose category','wp-recall'),
             'orderby'            => 'name',
             'order'              => 'ASC',
             'show_last_update'   => 0,
@@ -357,11 +357,11 @@ function rcl_metabox_products( $post ){
             'taxonomy'           => 'prodcat',
             'hide_if_empty'      => false );
 
-        echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - выберите товарную категорию</div>';
+        echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - '.__('Select product category','wp-recall').'</div>';
 
         $args = array(
             'show_option_all'    => '',
-            'show_option_none'   => 'Выбрать метку',
+            'show_option_none'   => __('Select tag','wp-recall'),
             'orderby'            => 'name',
             'order'              => 'ASC',
             'show_last_update'   => 0,
@@ -380,7 +380,7 @@ function rcl_metabox_products( $post ){
             'taxonomy'           => 'product_tag',
             'hide_if_empty'      => true );
 
-        echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - выберите товарную метку</div>';
+        echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - '.__('select product tag','wp-recall').'</div>';
 
     }
 
@@ -407,7 +407,7 @@ function rcl_metabox_products( $post ){
     <style>
     .image-prod-gallery{float: left; margin: 3px;} .prod-gallery{overflow:hidden;}
     </style>
-    <h3>Изображения галереи</h3>
+    <h3>'.__('Images gallery','wp-recall').'</h3>
 
     <div class="prod-gallery">';
     if( $childrens ){
@@ -463,38 +463,24 @@ add_action('save_post', 'rmag_extra_fields_update');
 function rmag_extra_fields_update( $post_id ){
     if(!isset($_POST['wpm_fields_nonce'])) return false;
     if ( !wp_verify_nonce($_POST['wpm_fields_nonce'], __FILE__) ) return false;
-	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE  ) return false;
-	if ( !current_user_can('edit_post', $post_id) ) return false;
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE  ) return false;
+    if ( !current_user_can('edit_post', $post_id) ) return false;
 
-	if(!isset($_POST['wprecall']['outsale'])) delete_post_meta($post_id, 'outsale');
+    if(!isset($_POST['wprecall']['outsale'])) delete_post_meta($post_id, 'outsale');
     if(!isset($_POST['wprecall']['availability_product'])) delete_post_meta($post_id, 'availability_product');
 
-	/*if(isset($_POST['custom-price'])){
-		$cnt = count($_POST['custom-price']);
-		for($a=0;$a<$cnt;$a++){
-			if($_POST['custom-price']){
-				$customprice[$a]['title'] .= $_POST['title-custom-price'][$a];
-				$customprice[$a]['price'] .= $_POST['custom-price'][$a];
-			}
-		}
-		$customprice = serialize($customprice);
-		update_post_meta($post_id, 'custom-price', $customprice);
-	}else{
-		delete_post_meta($post_id, 'custom-price');
-	}*/
+    if( $_POST['children_prodimage']=='' ){
+            delete_post_meta($post_id, 'children_prodimage');
+    }else{
+        $_POST['children_prodimage'] = array_map('trim', (array)$_POST['children_prodimage']);
+        $n=0;
+        foreach((array) $_POST['children_prodimage'] as $value ){
+            $n++;
+            if($n==1) $children_prodimage = $value;
+                    else $children_prodimage .= ','.$value;
+        }
+        update_post_meta($post_id, 'children_prodimage', $children_prodimage);
+    }
 
-	if( $_POST['children_prodimage']=='' ){
-		delete_post_meta($post_id, 'children_prodimage');
-	}else{
-		$_POST['children_prodimage'] = array_map('trim', (array)$_POST['children_prodimage']);
-		$n=0;
-		foreach((array) $_POST['children_prodimage'] as $value ){
-			$n++;
-			if($n==1) $children_prodimage = $value;
-				else $children_prodimage .= ','.$value;
-		}
-		update_post_meta($post_id, 'children_prodimage', $children_prodimage);
-	}
-
-	return $post_id;
+    return $post_id;
 }

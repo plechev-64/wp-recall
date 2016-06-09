@@ -13,7 +13,7 @@ jQuery(function($){
                 if(data['otvet']==100){
                     jQuery('#'+id+' .rcl-result-box').html(data['redirectform']);
                 } else {
-                   alert('Ошибка проверки данных.');
+                   rcl_notice(Rcl.local.error,'error');
                 }
             }
         });

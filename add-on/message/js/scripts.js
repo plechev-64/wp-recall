@@ -130,19 +130,19 @@ jQuery(function($){
         var widget = jQuery('#widget-mess').attr('value');
         var adressat_mess = jQuery('#miniadressat_mess').attr('value');
         if(content_mess){
-                var dataString = 'action=add_private_message_recall&content_mess='+content_mess+'&adressat_mess='+adressat_mess+'&widget='+widget+'&user_ID='+Rcl.user_ID;
-                dataString += '&ajax_nonce='+Rcl.nonce;
+            var dataString = 'action=add_private_message_recall&content_mess='+content_mess+'&adressat_mess='+adressat_mess+'&widget='+widget+'&user_ID='+Rcl.user_ID;
+            dataString += '&ajax_nonce='+Rcl.nonce;
         }else{
-                return false;
+            return false;
         }
         jQuery.ajax({
-                type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-                success: function(data){
-                        if(data['recall']==200){
-                                jQuery('#privatemess').html(data['message_block']).fadeOut(5000);
-                                jQuery('#rcl-new-mess').delay(2000).queue(function () {jQuery('#rcl-new-mess').empty();jQuery('#rcl-new-mess').dequeue();});
-                        }
+            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+            success: function(data){
+                if(data['recall']==200){
+                    jQuery('#privatemess').html(data['message_block']).fadeOut(5000);
+                    jQuery('#rcl-new-mess').delay(2000).queue(function () {jQuery('#rcl-new-mess').empty();jQuery('#rcl-new-mess').dequeue();});
                 }
+            }
         });
         return false;
     }
@@ -161,10 +161,10 @@ jQuery(function($){
     }
 
     jQuery('#minicontent_mess').keydown(function(event){
-      switch (event.which) {
-            case 13: return false;
-            case 17: ctrl = true;
-      }
+        switch (event.which) {
+          case 13: return false;
+          case 17: ctrl = true;
+        }
     });
 
     /* Отмечаем сообщение как прочтенное */
@@ -179,7 +179,7 @@ jQuery(function($){
                             jQuery('#privatemess').html(data['message_block']).fadeOut(5000);
                             jQuery('#rcl-new-mess').delay(2000).queue(function () {jQuery('#rcl-new-mess').empty();jQuery('#rcl-new-mess').dequeue();});
                     } else {
-                            rcl_notice('Error','error');
+                            rcl_notice(Rcl.local.error,'error');
                     }
             }
         });
@@ -194,11 +194,11 @@ jQuery(function($){
         jQuery.ajax({
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
             success: function(data){
-                    if(data['otvet']==100){
-                            jQuery('#manage-blacklist').replaceWith(data['content']);
-                    } else {
-                            rcl_notice('Error','error');
-                    }
+                if(data['otvet']==100){
+                    jQuery('#manage-blacklist').replaceWith(data['content']);
+                } else {
+                    rcl_notice(Rcl.local.error,'error');
+                }
             }
         });
         return false;
@@ -209,14 +209,14 @@ jQuery(function($){
         var dataString = 'action=remove_ban_list_rcl&id_user='+id_user+'&user_ID='+Rcl.user_ID;
         dataString += '&ajax_nonce='+Rcl.nonce;
         jQuery.ajax({
-                type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-                success: function(data){
-                        if(data['otvet']==100){
-                                 jQuery('.history-'+data['id_user']).remove();
-                        } else {
-                                rcl_notice('Error','error');
-                        }
+            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+            success: function(data){
+                if(data['otvet']==100){
+                         jQuery('.history-'+data['id_user']).remove();
+                } else {
+                        rcl_notice(Rcl.local.error,'error');
                 }
+            }
         });
         return false;
     });
@@ -232,7 +232,7 @@ jQuery(function($){
                 if(data['otvet']==100){
                          jQuery('.history-'+data['id_user']).remove();
                 } else {
-                        rcl_notice('Error','error');
+                        rcl_notice(Rcl.local.error,'error');
                 }
             }
         });
@@ -241,21 +241,21 @@ jQuery(function($){
 
     /* Получаем старые сообщения в переписке */
     jQuery('#lk-content').on('click','.old_message',function(){
-            rcl_preloader_show('#tab-privat > div');
-            block_mess++;
-            var dataString = 'action=get_old_private_message_recall&block_mess='+block_mess+'&old_num_mess='+old_num_mess+'&user='+user_old_mess+'&user_ID='+Rcl.user_ID;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            jQuery.ajax({
-                    type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-                    success: function(data){
-                            if(data['recall']==100){
-                                    jQuery('.old_mess_block').replaceWith(data['message_block']);
-                                    old_num_mess = data['num_mess_now'];
-                            }
-                            rcl_preloader_hide();
-                    }
-            });
-            return false;
+        rcl_preloader_show('#tab-privat > div');
+        block_mess++;
+        var dataString = 'action=get_old_private_message_recall&block_mess='+block_mess+'&old_num_mess='+old_num_mess+'&user='+user_old_mess+'&user_ID='+Rcl.user_ID;
+        dataString += '&ajax_nonce='+Rcl.nonce;
+        jQuery.ajax({
+            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+            success: function(data){
+                if(data['recall']==100){
+                        jQuery('.old_mess_block').replaceWith(data['message_block']);
+                        old_num_mess = data['num_mess_now'];
+                }
+                rcl_preloader_hide();
+            }
+        });
+        return false;
     });
 
     jQuery('#lk-content').on('click','#get-important-rcl',function(){
@@ -263,24 +263,24 @@ jQuery(function($){
         rcl_preloader_show('#tab-privat > div');
         
         if(jQuery(this).hasClass('important')){
-                jQuery(this).removeClass('important').text('All correspondence');
-                var type = 0;
-                if(block_mess) block_mess = 1;
+            jQuery(this).removeClass('important').text(Rcl.local.all_correspond);
+            var type = 0;
+            if(block_mess) block_mess = 1;
         }else{
-                jQuery(this).addClass('important').text('Important notices');
-                var type = 1;
+            jQuery(this).addClass('important').text(Rcl.local.important_notice);
+            var type = 1;
         }
         
-        var userid = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
+        var userid = jQuery('.wprecallblock').data('account');
         var dataString = 'action=get_important_message_rcl&user='+userid+'&type='+type+'&user_ID='+Rcl.user_ID;
         dataString += '&ajax_nonce='+Rcl.nonce;
         jQuery.ajax({
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
             success: function(data){
-                    if(data['recall']==100){
-                            jQuery('#message-list').html(data['content']);
-                    }
-                    rcl_preloader_hide();
+                if(data['recall']==100){
+                        jQuery('#message-list').html(data['content']);
+                }
+                rcl_preloader_hide();
             }
         });
         return false;
@@ -300,7 +300,7 @@ jQuery(function($){
                 if(data['recall']==100){
                         jQuery('.correspond #contact-lists').html(data['message_block']);
                 } else {
-                        rcl_notice('Error','error');
+                        rcl_notice(Rcl.local.error,'error');
                 }
                 rcl_preloader_hide();
             }
@@ -323,7 +323,7 @@ jQuery(function($){
                     screen_top = screen_top + 60;
                     jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
                 }else{
-                    rcl_notice('Error','error');
+                    rcl_notice(Rcl.local.error,'error');
                 }
             }
         });
@@ -339,11 +339,11 @@ jQuery(function($){
         var dataString = 'action=update_important_rcl&id_mess='+id_mess+'&user_ID='+Rcl.user_ID;
         dataString += '&ajax_nonce='+Rcl.nonce;
         jQuery.ajax({
-                type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-                success: function(data){
-                        if(data['res']==100) jQuery('#message-'+id_mess+' .important').addClass('active');
-                        if(data['res']==200) jQuery('#message-'+id_mess+' .important').removeClass('active');
-                }
+            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+            success: function(data){
+                if(data['res']==100) jQuery('#message-'+id_mess+' .important').addClass('active');
+                if(data['res']==200) jQuery('#message-'+id_mess+' .important').removeClass('active');
+            }
         });
         return false;
     }

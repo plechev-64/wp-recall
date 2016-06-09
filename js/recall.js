@@ -150,7 +150,7 @@ jQuery(function($){
         return false;
     });
 
-    $(".rcl-smiles-list").on("click",'img',function(){
+    $("body").on("click",'.rcl-smiles-list img',function(){
             var alt = $(this).attr("alt");
             var area = $(this).parents(".rcl-smiles").data("area");
             $("#"+area).val($("#"+area).val()+" "+alt+" ");

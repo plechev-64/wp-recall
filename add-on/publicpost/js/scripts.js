@@ -71,7 +71,7 @@ jQuery(document).ready(function($) {
                         screen_top = screen_top + 60;
                         jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
                 }else{
-                        alert('Ошибка!');
+                        alert(Rcl.local.error);
                 }
             }
         });
@@ -93,7 +93,7 @@ jQuery(document).ready(function($) {
                     screen_top = screen_top + 60;
                     jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
                 }else{
-                    alert('Ошибка!');
+                    alert(Rcl.local.error);
                 }
             }
         });
@@ -112,7 +112,7 @@ jQuery(document).ready(function($) {
         var id = btn.parents('.recall_child_content_block').attr('id');
         var start = btn.attr('data');
         var type = btn.attr('type');
-        var id_user = parseInt(jQuery('.wprecallblock').attr('id').replace(/\D+/g,''));
+        var id_user = jQuery('.wprecallblock').data('account');
         jQuery('.'+id+' .sec_block_button').removeClass('active');
         btn.addClass('active');
         var dataString = 'action=rcl_posts_list&start='+start+'&type='+type+'&id_user='+id_user;
@@ -123,7 +123,7 @@ jQuery(document).ready(function($) {
                 if(data['recall']==100){
                         jQuery('#'+id+' .publics-table-rcl').html(data['post_content']);
                 } else {
-                        alert('Error');
+                        alert(Rcl.local.error);
                 }
                 rcl_preloader_hide();
             }
@@ -379,7 +379,7 @@ function rcl_preview_close(e){
 function rcl_init_public_form(post_type,post_id){
     
     var maxcnt = Rcl.public.maxcnt;
-    var maxsize_mb = Rcl.public.maxcnt;
+    var maxsize_mb = Rcl.public.maxsize_mb;
     var maxsize = maxsize_mb*1024*1024;
 
     rcl_add_dropzone('#rcl-public-dropzone-'+post_type);
@@ -402,12 +402,12 @@ function rcl_init_public_form(post_type,post_id){
             var cnt_now = jQuery('#temp-files-'+post_type+' li').length;                    
             jQuery.each(data.files, function (index, file) {
                 cnt_now++;
-                if(cnt_now>maxcnt){
-                    rcl_notice('You have exceeded the allowed number of downloads! Max. '+maxcnt,'error');
+                if(cnt_now>Rcl.public.maxcnt){
+                    rcl_notice(Rcl.local.allowed_downloads,'error');
                     error = true;
                 }                       
                 if(file['size']>maxsize){
-                    rcl_notice('Exceeds the maximum size for the file '+file['name']+'! Max. '+maxsize_mb+' MB','error');                            
+                    rcl_notice(Rcl.local.upload_size_public,'error');                            
                     error = true;
                 }                       
             });

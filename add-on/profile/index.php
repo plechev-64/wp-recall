@@ -6,15 +6,24 @@ endif;
 
 function rcl_profile_scripts(){
     global $user_ID,$user_LK;
-    rcl_enqueue_script( 'rcl-profile', rcl_addon_url('js/scripts.js', __FILE__) );
-    if($user_ID==$user_LK)
-        rcl_enqueue_script( 'user-avatar-uploader', rcl_addon_url('js/avatar-uploader.js', __FILE__),false,true );
+    if($user_LK){
+        rcl_enqueue_script( 'rcl-profile', rcl_addon_url('js/scripts.js', __FILE__) );
+        if($user_ID==$user_LK)
+            rcl_enqueue_script( 'user-avatar-uploader', rcl_addon_url('js/avatar-uploader.js', __FILE__),false,true );
+    }
 }
 
 add_filter('rcl_init_js_variables','rcl_init_js_profile_variables',10);
 function rcl_init_js_profile_variables($data){
     global $rcl_options;
-    $data['profile']['avatar_size'] = (isset($rcl_options['avatar_weight']))? $rcl_options['avatar_weight']: 2;
+    
+    $size_ava = (isset($rcl_options['avatar_weight']))? $rcl_options['avatar_weight']: 2;
+    
+    $data['profile']['avatar_size'] = $size_ava;
+    $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),$size_ava);
+    $data['local']['title_image_upload'] = __('The image being loaded','wp-recall');
+    $data['local']['title_webcam_upload'] = __('Image from the camera','wp-recall');
+    $data['local']['snapshot'] = __('Snapshot','wp-recall');
     return $data;
 }
 

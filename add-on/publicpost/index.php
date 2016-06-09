@@ -9,17 +9,35 @@ function rcl_publics_scripts(){
     rcl_enqueue_script( 'rcl-publics', rcl_addon_url('js/scripts.js', __FILE__) );
 }
 
+function rcl_autocomplete_scripts(){
+    rcl_enqueue_style( 'magicsuggest', rcl_addon_url('js/magicsuggest/magicsuggest-min.css', __FILE__) );
+    rcl_enqueue_script( 'magicsuggest', rcl_addon_url('js/magicsuggest/magicsuggest-min.js', __FILE__) );
+}
+
+add_filter('rcl_init_js_variables','rcl_init_js_public_variables',10);
+function rcl_init_js_public_variables($data){
+    global $rcl_options;
+    
+    $max_downloads = (isset($rcl_options['count_image_gallery'])&&$rcl_options['count_image_gallery'])? $rcl_options['count_image_gallery']: 1;
+    $max_size = (isset($rcl_options['public_gallery_weight'])&&$rcl_options['public_gallery_weight'])? $rcl_options['public_gallery_weight']: 2;
+    
+    $data['local']['preview'] = __('Preview','wp-recall');
+    $data['local']['edit_box_title'] = __('Quick edit','wp-recall');   
+    $data['local']['requared_fields_empty'] = __('Fill in all required fields','wp-recall');
+    $data['local']['allowed_downloads'] = sprintf(__('You have exceeded the allowed number of downloads! Max. %s','wp-recall'),$max_downloads);
+    $data['local']['upload_size_public'] = sprintf(__('Exceeds the maximum size for the file! Max. %s MB','wp-recall'),$max_size);
+    
+    $data['public']['maxsize_mb'] = $max_size;
+    $data['public']['maxcnt'] = $max_downloads;
+    
+    return $data;
+}
+
 include_once('classes.php');
 include_once('fast-editor.php');
 include_once('upload-file.php');
 include_once 'addon-options.php';
 include_once 'rcl_publicform.php';
-
-function rcl_autocomplete_scripts(){
-    rcl_enqueue_style( 'magicsuggest', rcl_addon_url('js/magicsuggest/magicsuggest-min.css', __FILE__) );
-    //wp_enqueue_script( 'jquery' );
-    rcl_enqueue_script( 'magicsuggest', rcl_addon_url('js/magicsuggest/magicsuggest-min.js', __FILE__) );
-}
 
 if (!is_admin()):
 	add_filter('the_content','rcl_post_gallery',10);
@@ -1088,20 +1106,4 @@ add_action('delete_post','rcl_delete_tempdir_attachments');
 function rcl_delete_tempdir_attachments($postid){
     $dir_path = RCL_UPLOAD_PATH.'post-media/'.$postid;
     rcl_remove_dir($dir_path);
-}
-
-add_filter('rcl_js_localize','rcl_add_public_js_localize');
-function rcl_add_public_js_localize($localize){
-    $localize['preview'] = __('Preview','wp-recall');
-    $localize['edit_box_title'] = __('Quick edit','wp-recall');   
-    $localize['requared_fields_empty'] = __('Fill in all required fields','wp-recall');
-    return $localize;
-}
-
-add_filter('rcl_init_js_variables','rcl_init_js_public_variables',10);
-function rcl_init_js_public_variables($data){
-    global $rcl_options;
-    $data['public']['maxsize_mb'] = (isset($rcl_options['public_gallery_weight'])&&$rcl_options['public_gallery_weight'])? $rcl_options['public_gallery_weight']: 2;
-    $data['public']['maxcnt'] = (isset($rcl_options['count_image_gallery'])&&$rcl_options['count_image_gallery'])? $rcl_options['count_image_gallery']: 1;
-    return $data;
 }

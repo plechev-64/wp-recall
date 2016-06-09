@@ -187,19 +187,19 @@ class Rcl_Order {
 
 		$reg_user = ($rmag_options['noreg_order'])? false: true;
 
-        $subject = 'Данные заказа №'.$this->order_id;
+        $subject = __('Order data','wp-recall').' №'.$this->order_id;
 
         $textmail = '
-        <p>Пользователь сформировал заказ в магазине "'.get_bloginfo('name').'".</p>
-        <h3>Информация о пользователе:</h3>
-        <p><b>Имя</b>: '.get_the_author_meta('display_name',$user_id).'</p>
-        <p><b>Email</b>: '.get_the_author_meta('user_email',$user_id).'</p>
-        <h3>Данные полученные при оформлении:</h3>
+        <p>'.__('This user has formed a purchase','wp-recall').' "'.get_bloginfo('name').'".</p>
+        <h3>'.__('Information about the customer','wp-recall').':</h3>
+        <p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$user_id).'</p>
+        <p><b>'.__('Email','wp-recall').'</b>: '.get_the_author_meta('user_email',$user_id).'</p>
+        <h3>'.__('The data obtained at registration','wp-recall').':</h3>
         '.$order_custom_field.'
-        <p>Заказ №'.$this->order_id.' получил статус "Не оплачено".</p>
-        <h3>Детали заказа:</h3>
+        <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$order_id,rcl_get_status_name_order(1)).'.</p>
+        <h3>'.__('Order details','wp-recall').':</h3>
         '.$table_order.'
-        <p>Ссылка для управления заказом в админке:</p>
+        <p>'.__('Link to control order','wp-recall').':</p>
         <p>'.admin_url('admin.php?page=manage-rmag&order-id='.$this->order_id).'</p>';
 
         $admin_email = $rmag_options['admin_email_magazin_recall'];
@@ -218,34 +218,34 @@ class Rcl_Order {
         $textmail = '';
 
         if($args&&$reg_user){
-            $subject = 'Данные вашего аккаунта и заказа №'.$this->order_id;
+            $subject = __('Your account information and order','wp-recall').' №'.$this->order_id;
 
             if($rcl_options['confirm_register_recall']==1){
                 $url = get_bloginfo('wpurl').'/?rglogin='.$args['user_login'].'&rgpass='.$args['user_password'].'&rgcode='.md5($args['user_login']);
 
-                $textmail .= '<h3>Вы были зарегистрированы</h3>
-                <p>Подтвердите свою электронную почту на сайте перейдя по ссылке ниже:</p>
+                $textmail .= '<h3>'.__('You have been registered','wp-recall').'</h3>
+                <p>'.__('Confirm your email on the site by clicking on the link below','wp-recall').':</p>
                 <p><a href="'.$url.'">'.$url.'</a></p>
-                <p>Не получается активировать аккаунт?</p>
-                <p>Скопируйте текст ссылки ниже, вставьте его в адресную строку вашего браузера и нажмите Enter</p>';
+                <p>'.__('It is impossible to activate your account?','wp-recall').'</p>
+                <p>'.__('Copy the text of the link below , paste it into the address bar of your browser and press Enter','wp-recall').'</p>';
             }
 
-            $textmail .= '<h3>Данные аккаунта</h3>
-            <p>Для вас был создан личный кабинет покупателя, где вы сможете следить за сменой статусов ваших заказов, формировать новые заказы и оплачивать их доступными способами</p>
-            <p>Ваши данные для авторизации в вашем личном кабинете:</p>
-            <p>Логин: '.$args['user_login'].'</p>
-            <p>Пароль: '.$args['user_password'].'</p>
-            <p>В дальнейшем используйте свой личный кабинет для новых заказов на нашем сайте.</p>';
+            $textmail .= '<h3>'.__('Account data','wp-recall').'</h3>
+            <p>'.__('Personal account of the buyer has been created for you , where you can watch the changing of the status of your orders , create new orders and pay for them means available','wp-recall').'</p>
+            <p>'.__('Your authorization data in your personal account','wp-recall').':</p>
+            <p>'.__('Login','wp-recall').': '.$args['user_login'].'</p>
+            <p>'.__('Password','wp-recall').': '.$args['user_password'].'</p>
+            <p>'.__('In the future, use your personal cabinet in new orders on our website','wp-recall').'.</p>';
         }
 
         $textmail .= '
-        <p>Вы сформировали заказ в магазине "'.get_bloginfo('name').'".</p>
-        <h3>Детали заказа</h3>
-        <p>Заказ №'.$this->order_id.' получил статус "Не оплачено".</p>
+        <p>'.__('You have formed a purchase','wp-recall').' "'.get_bloginfo('name').'".</p>
+        <h3>'.__('Order details','wp-recall').'</h3>
+        <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$order_id,rcl_get_status_name_order(1)).'.</p>
         '.$table_order;
 
         $link = rcl_format_url(get_author_posts_url($user_id),'orders');
-        $textmail .= '<p>Ссылка для управления заказами: <a href="'.$link.'">'.$link.'</a></p>';
+        $textmail .= '<p>'.__('Link to control order','wp-recall').': <a href="'.$link.'">'.$link.'</a></p>';
 
         $mail = array(
             'email'=>$email,

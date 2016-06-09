@@ -22,13 +22,13 @@ global $post,$rmag_options;
         $price = $metas['price-products'];
         $outsale = (isset($metas['outsale']))?$metas['outsale']:false;
         
-        $price_input = 'Цена: '.rcl_get_price($post->ID).' <input type="text" size="2" name="number_product" id="number_product" value="1">';
-        $cart_button = rcl_get_button('Добавить в корзину','#',array('icon'=>false,'class'=>'add_basket','attr'=>'onclick="rcl_add_cart(this);return false;" data-product='.$post->ID));
+        $price_input = __('Price','wp-recall').': '.rcl_get_price($post->ID).' <input type="text" size="2" name="number_product" id="number_product" value="1">';
+        $cart_button = rcl_get_button(__('Add to cart','wp-recall'),'#',array('icon'=>false,'class'=>'add_basket','attr'=>'onclick="rcl_add_cart(this);return false;" data-product='.$post->ID));
 
         if(!$outsale){
             if($metas['availability_product']=='empty'){ //если товар цифровой
                 if($price) $button = $price_input;
-                else $button = 'Бесплатно ';
+                else $button = __('Free','wp-recall').' ';
                 $button .= $cart_button;
             }else{
                 if($rmag_options['products_warehouse_recall']==1){
@@ -179,18 +179,18 @@ function rcl_shortcode_productlist($atts, $content = null){
     
     if($cat){
         $args['tax_query'][] = array(
-                                    'taxonomy'=>'prodcat',
-                                    'field'=>'id',
-                                    'terms'=> explode(',',$cat)
-                                );
+                'taxonomy'=>'prodcat',
+                'field'=>'id',
+                'terms'=> explode(',',$cat)
+            );
     }
 
     if($tag){
         $args['tax_query'][] = array(
-                                    'taxonomy'=>'product_tag',
-                                    'field'=>'id',
-                                    'terms'=> explode(',',$tag)
-                                );
+                'taxonomy'=>'product_tag',
+                'field'=>'id',
+                'terms'=> explode(',',$tag)
+            );
     }
 
     $rcl_cache = new Rcl_Cache();
@@ -253,18 +253,18 @@ function rcl_shortcode_pricelist($atts, $content = null){
 
     if($cat){
         $args['tax_query'][] = array(
-                                    'taxonomy'=>'prodcat',
-                                    'field'=>'id',
-                                    'terms'=> explode(',',$catslug)
-                                );
+                'taxonomy'=>'prodcat',
+                'field'=>'id',
+                'terms'=> explode(',',$catslug)
+            );
     }
 
     if($tag){
         $args['tax_query'][] = array(
-                                    'taxonomy'=>'product_tag',
-                                    'field'=>'id',
-                                    'terms'=> explode(',',$tagslug)
-                                );
+                'taxonomy'=>'product_tag',
+                'field'=>'id',
+                'terms'=> explode(',',$tagslug)
+            );
     }
 
     $products = get_posts($args);
@@ -286,7 +286,13 @@ function rcl_shortcode_pricelist($atts, $content = null){
     $n=0;
 
     $pricelist ='<table class="pricelist">
-            <tr><td>№</td><td>Наименование товара</td><td>Метка товара</td><td>Цена</td></tr>';
+            <tr>
+                <td>№</td>
+                <td>'.__('Name product','wp-recall').'</td>
+                <td>'.__('Product tags','wp-recall').'</td>
+                <td>'.__('Price','wp-recall').'</td>
+            </tr>';
+    
     foreach((array)$prodcats as $prodcat){
 
         $pricelist .='<tr><td colspan="4" align="center"><b>'.$prodcat->name.'</b></td></tr>';
@@ -349,4 +355,3 @@ function rcl_slider_products($atts, $content = null){
     ));
 
 }
-?>

@@ -1,7 +1,8 @@
 <?php
 //добавляем контентный блок в указанное место личного кабинета
 function rcl_block($place,$callback,$args=false){
-
+    global $rcl_blocks;
+    
     $data = array(
         'place'=>$place,
         'callback'=>$callback,
@@ -15,9 +16,25 @@ function rcl_block($place,$callback,$args=false){
     if(isset($data['args']['gallery'])){
         rcl_bxslider_scripts();
     }
+    
+    $rcl_blocks[] = $data;
+    
+    $rcl_blocks = apply_filters('rcl_blocks',$rcl_blocks);
+  
+}
 
-    if (!class_exists('Rcl_Blocks')) include_once plugin_dir_path( __FILE__ ).'functions/rcl_blocks.php';
-    $block = new Rcl_Blocks($data);
+add_action('wp','rcl_init_blocks');
+function rcl_init_blocks(){
+    global $rcl_blocks,$user_LK;
+
+    if(is_admin()||!$user_LK)return false;
+
+    if (!class_exists('Rcl_Blocks')) 
+        include_once plugin_dir_path( __FILE__ ).'functions/rcl_blocks.php';
+
+    foreach($rcl_blocks as $block){
+        $Rcl_Blocks = new Rcl_Blocks($block);
+    }
 }
 
 //добавляем вкладку в личный кабинет
@@ -36,12 +53,22 @@ function rcl_tab($id,$callback,$name='',$args=false){
     if(!$data) return false;
     
     $rcl_tabs[$id] = $data;
+    
+    $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
+}
 
-    if(is_admin())return false;
+add_action('wp','rcl_init_tabs');
+function rcl_init_tabs(){
+    global $rcl_tabs,$user_LK;
 
-    if (!class_exists('Rcl_Tabs')) include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
+    if(is_admin()||!$user_LK)return false;
 
-    $tab = new Rcl_Tabs($data);
+    if (!class_exists('Rcl_Tabs')) 
+        include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
+
+    foreach($rcl_tabs as $tab){
+        $Rcl_Tabs = new Rcl_Tabs($tab);
+    }
 }
 
 add_action('init','rcl_init_custom_tabs');

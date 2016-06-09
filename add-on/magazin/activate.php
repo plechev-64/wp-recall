@@ -56,25 +56,25 @@ if(!isset($rmag_options['primary_cur'])) $rmag_options['primary_cur']='RUB';
 if(!isset($rmag_options['basket_page_rmag'])){
     
     $labels = array(
-        'name' => 'Каталог товаров',
-        'singular_name' => 'Каталог товаров',
-        'add_new' => 'Добавить товар',
-        'add_new_item' => 'Добавить новый товар',
-        'edit_item' => 'Редактировать',
-        'new_item' => 'Новое',
-        'view_item' => 'Просмотр',
-        'search_items' => 'Поиск',
-        'not_found' => 'Не найдено',
-        'not_found_in_trash' => 'Корзина пуста',
-        'parent_item_colon' => 'Родительский товар',
-        'menu_name' => 'Товары'
+        'name' => __('Products catalog','wp-recall'),
+        'singular_name' => __('Product','wp-recall'),
+        'add_new' => __('Add this item','wp-recall'),
+        'add_new_item' => __('Add new item','wp-recall'),
+        'edit_item' => __('Edit','wp-recall'),
+        'new_item' => __('New','wp-recall'),
+        'view_item' => __('View','wp-recall'),
+        'search_items' => __('Search','wp-recall'),
+        'not_found' => __('Not found','wp-recall'),
+        'not_found_in_trash' => __('Cart is empty','wp-recall'),
+        'parent_item_colon' => __('Parental goods','wp-recall'),
+        'menu_name' => __('Products','wp-recall')
     );
 
     $args = array(
         'labels' => $labels,
         'hierarchical' => false,
         'supports' => array( 'title', 'editor','custom-fields','thumbnail','comments','excerpt','author'),
-        'taxonomies' => array( 'prodcat' ),
+        'taxonomies' => array( 'prodcat','product_tag' ),
         'public' => true,
         'show_ui' => true,
         'show_in_menu' => true,
@@ -92,21 +92,21 @@ if(!isset($rmag_options['basket_page_rmag'])){
     register_post_type( 'products', $args );
     
     $labels = array(
-          'name' => 'Категории',
-        'singular_name' => 'Категории',
-        'search_items' => 'Поиск',
-        'popular_items' => 'Популярные категории',
-        'all_items' => 'Все категории',
-        'parent_item' => 'Родительская категория',
-        'parent_item_colon' => 'Родительская категория:',
-        'edit_item' => 'Редактировать категорию',
-        'update_item' => 'Обновить категорию',
-        'add_new_item' => 'Добавить новую категорию',
-        'new_item_name' => 'Новая категория',
-        'separate_items_with_commas' => 'Категории разделяются запятыми',
-        'add_or_remove_items' => 'Добавить или удалить категорию',
-        'choose_from_most_used' => 'Выберите для использования',
-        'menu_name' => 'Категории'
+        'name' => __('Product categories','wp-recall'),
+        'singular_name' => __('Category','wp-recall'),
+        'search_items' => __('Search','wp-recall'),
+        'popular_items' => __('Popular categories','wp-recall'),
+        'all_items' => __('All categories','wp-recall'),
+        'parent_item' => __('Parent category','wp-recall'),
+        'parent_item_colon' => __('Parent category','wp-recall'),
+        'edit_item' => __('Edit category','wp-recall'),
+        'update_item' => __('Update category','wp-recall'),
+        'add_new_item' => __('Add a new category','wp-recall'),
+        'new_item_name' => __('New category','wp-recall'),
+        'separate_items_with_commas' => __('Categories separated by commas','wp-recall'),
+        'add_or_remove_items' => __('Add or delete a category','wp-recall'),
+        'choose_from_most_used' => __('Select to use the','wp-recall'),
+        'menu_name' => __('Product categories','wp-recall')
     );
 
     $args = array(
@@ -132,21 +132,21 @@ if(!isset($rmag_options['basket_page_rmag'])){
     );
     
     $labels = array(
-          'name' => 'Метки товаров',
-        'singular_name' => 'Метки товаров',
-        'search_items' => 'Поиск',
-        'popular_items' => 'Популярные',
-        'all_items' => 'Все',
-        'parent_item' => 'Родительская',
-        'parent_item_colon' => 'Родительская:',
-        'edit_item' => 'Редактировать',
-        'update_item' => 'Обновить',
-        'add_new_item' => 'Добавить новую',
-        'new_item_name' => 'Новая',
-        'separate_items_with_commas' => 'Разделяйте метки запятыми',
-        'add_or_remove_items' => 'Добавить или удалить',
-        'choose_from_most_used' => 'Выберите для использования',
-        'menu_name' => 'Метки товаров'
+        'name' => __('Product Tags','wp-recall'),
+        'singular_name' => __('Product Tag','wp-recall'),
+        'search_items' => __('Search','wp-recall'),
+        'popular_items' => __('Popular tags','wp-recall'),
+        'all_items' => __('All tags','wp-recall'),
+        'parent_item' => __('Parent tag','wp-recall'),
+        'parent_item_colon' => __('Parent tag','wp-recall'),
+        'edit_item' => __('Edit','wp-recall'),
+        'update_item' => __('Update','wp-recall'),
+        'add_new_item' => __('Add a new','wp-recall'),
+        'new_item_name' => __('New tag','wp-recall'),
+        'separate_items_with_commas' => __('Tags separated by commas','wp-recall'),
+        'add_or_remove_items' => __('Add or delete','wp-recall'),
+        'choose_from_most_used' => __('Select to use the','wp-recall'),
+        'menu_name' => __('Product Tags','wp-recall')
     );
 
     $args = array(
@@ -163,7 +163,7 @@ if(!isset($rmag_options['basket_page_rmag'])){
     register_taxonomy( 'product_tag', array('products'), $args );
     
     wp_insert_term(
-        'Метка товара 1',
+        __('Product Tag','wp-recall').' 1',
         'product_tag',
         array(
               'slug' => 'products_tag_1'
@@ -171,7 +171,7 @@ if(!isset($rmag_options['basket_page_rmag'])){
     );
     
     wp_insert_term(
-        'Метка товара 2',
+        __('Product Tag','wp-recall').' 2',
         'product_tag',
         array(              
               'slug' => 'products_tag_2'
@@ -179,7 +179,7 @@ if(!isset($rmag_options['basket_page_rmag'])){
     );
     
     wp_insert_term(
-        'Метка товара 3',
+        __('Product Tag','wp-recall').' 3',
         'product_tag',
         array(
               'slug' => 'products_tag_3'
@@ -187,7 +187,7 @@ if(!isset($rmag_options['basket_page_rmag'])){
     );
     
     $rmag_options['basket_page_rmag'] = wp_insert_post(array(
-        'post_title'=>'Корзина',
+        'post_title'=>__('Cart','wp-recall'),
         'post_content'=>'[basket]',
         'post_status'=>'publish',
         'post_author'=>1,
@@ -196,8 +196,8 @@ if(!isset($rmag_options['basket_page_rmag'])){
     ));
     
     wp_insert_post(array(
-        'post_title'=>'Каталог товаров',
-        'post_content'=>'<p>Здесь будет выводиться ваш каталог товаров. Вывод каталога товаров формируется шорткодом productlist <a href="https://codeseller.ru/api-rcl/productlist/">(описание шорткода)</a>. Вы можете выбрать другую страницу для его размещения.</p><br/>[productlist]',
+        'post_title'=>__('Products catalog','wp-recall'),
+        'post_content'=>'<p>'.__('It will display your product catalog. Display product catalog generated shortcode productlist <a href="https://codeseller.ru/api-rcl/productlist/">(description shortcode)</a>. You can choose another page to its location.','wp-recall').'</p><br/>[productlist]',
         'post_status'=>'publish',
         'post_author'=>1,
         'post_type'=>'page',

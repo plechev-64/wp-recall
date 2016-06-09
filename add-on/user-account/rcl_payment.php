@@ -129,7 +129,7 @@ class Rcl_Payment{
             $method = 'pay_form';
             return $obj->$method($this);
         }else{
-            return '<div class="error"><p class="error">Ошибка! Не настроено подключение к платежному агрегатору.</p></div>';
+            return '<div class="error"><p class="error">'.__('Error! Not configured the connection to the payment aggregator.','wp-recall').'</p></div>';
         }
     }
 

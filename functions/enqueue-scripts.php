@@ -19,7 +19,7 @@ function rcl_resizable_scripts(){
 }
 
 function rcl_datepicker_scripts(){
-    rcl_enqueue_style( 'jquery-ui-datepicker', RCL_URL.'js/datepicker/style.css' );
+    wp_enqueue_style( 'jquery-ui-datepicker', RCL_URL.'js/datepicker/style.css' );
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-core');
     wp_enqueue_script('jquery-ui-datepicker');
@@ -59,7 +59,7 @@ function rcl_fileupload_scripts(){
 }
 
 function rcl_crop_scripts(){
-    rcl_enqueue_style( 'jcrop-master-css', RCL_URL.'js/jcrop.master/css/jquery.Jcrop.min.css' );
+    wp_enqueue_style( 'jcrop-master-css', RCL_URL.'js/jcrop.master/css/jquery.Jcrop.min.css' );
     rcl_enqueue_script( 'jcrop-master', RCL_URL.'js/jcrop.master/js/jquery.Jcrop.min.js', array(),true );
 }
 

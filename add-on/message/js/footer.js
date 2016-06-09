@@ -1,6 +1,6 @@
 jQuery(function($){
     jQuery('#lk-content').on('click','.link-file-rcl',function(){
-        jQuery(this).parent().text('Removes the file from the server');
+        jQuery(this).parent().text(Rcl.local.remove_file);
     });
     
     if(!Rcl.private.sort){
@@ -38,17 +38,15 @@ jQuery(function($){
         },
         change:function (e, data) {
             if(data.files[0]['size']>Rcl.private.filesize_mb*1024*1024){
-                rcl_notice('Exceeds the maximum size for a picture! Max. '+Rcl.private.filesize_mb+' MB','error');
+                rcl_notice(Rcl.private.filesize_mb,'error');
                 return false;
             }
         },
         done: function (e, data) {
             var result = data.result;
-            if(result['recall']==100){
-                var text = 'The file was sent successfully.';
-            }
-            if(result['recall']==150){
-                var text = 'You have exceeded the limit on the number of uploaded files. Wait until the files sent previously will be accepted.';
+            
+            if(result['error']){
+                var text = result['error'];
             }
             
             var rcl_replace = "<div class='public-post message-block file'><div class='content-mess'><p style='margin-bottom:0px;' class='time-message'><span class='time'>"+result['time']+"</span></p><p class='balloon-message'>"+text+"</p></div></div>";

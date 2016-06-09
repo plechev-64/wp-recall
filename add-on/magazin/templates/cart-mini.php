@@ -1,13 +1,13 @@
-<?
-	/*Шаблон для отображения содержимого шорткода minibasket - малой корзины пользователя*/
-	/*Данный шаблон можно разместить в папке используемого шаблона /wp-content/wp-recall/templates/ и он будет подключаться оттуда*/
+<?php
+    /*Шаблон для отображения содержимого шорткода minibasket - малой корзины пользователя*/
+    /*Данный шаблон можно разместить в папке используемого шаблона /wp-content/wp-recall/templates/ и он будет подключаться оттуда*/
 ?>
 <?php global $CartData; ?>
 <div class="rcl-mini-cart">
     <div class="cart-icon">
             <i class="fa fa-shopping-cart"></i>
     </div>
-    <div>В вашей корзине:</div>
+    <div><?php _e('In your cart','wp-recall'); ?>:</div>
 
     <?php if($CartData->numberproducts): ?>
 
@@ -15,7 +15,7 @@
 
     <?php else: ?>
 
-            <div class="empty-basket" style="text-align:center;">Пока пусто</div>
+            <div class="empty-basket" style="text-align:center;"><?php _e('While empty','wp-recall'); ?></div>
 
     <?php endif; ?>
 </div>

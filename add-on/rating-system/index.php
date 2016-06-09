@@ -454,7 +454,7 @@ function rcl_edit_rating_post(){
             $timelimit = ($rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']])? $rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']]: 3600;
             $votes = rcl_count_votes_time($args,$timelimit);
             if($votes>=$rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
-                    $log['error']=sprintf(__('exceeded the limit of votes for the period - %d seconds','wp-recall'),$timelimit);
+                    $log['error'] = sprintf(__('exceeded the limit of votes for the period - %d seconds','wp-recall'),$timelimit);
                     echo json_encode($log);
                     exit;
             }
@@ -466,12 +466,12 @@ function rcl_edit_rating_post(){
 
             if($args['rating_status']=='cancel'){
 
-                    $rating = rcl_delete_rating($args);
+                $rating = rcl_delete_rating($args);
 
             }else{
-                    $log['result']=110;
-                    echo json_encode($log);
-                    exit;
+                $log['error'] = __('You can not vote!','wp-recall');
+                echo json_encode($log);
+                exit;
             }
 
     }else{

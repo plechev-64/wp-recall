@@ -188,68 +188,76 @@ function rcl_confirm_order(){
                     $order = rcl_get_order($order_id);
                     $table_order = rcl_get_include_template('order.php',__FILE__);
                     $ord->send_mail($order_custom_field,$table_order);
+                    
+                    $notify = __('Your order has been created!','wp-recall').'<br>';
+                    
 
                     if(!$order->order_price){ //Если заказ бесплатный
-                            $notify = "Ваш заказ был создан!<br />"
-                                . "Заказ содержал только бесплатные товары<br>"
-                                . "Заказу присвоен статус - \"Оплачено\"<br>"
-                                . "Заказ поступил в обработку. Ссылки на заказанные файлы будут высланы письмом на вашу почту.";
+                        
+                        $notify .= sprintf(__('Order granted the status - "%s"','wp-recall'),rcl_get_status_name_order(2)).'<br>';
+                        $notify .= __('The order contained only free items','wp-recall').'<br>';
+                        $notify .= __('The order is processing','wp-recall');
 
                     }else{
                         if(function_exists('rcl_payform')){
                             $type_order_payment = $rmag_options['type_order_payment'];
                             if($type_order_payment==1||$type_order_payment==2){
-                                    $notify = "Ваш заказ был создан!<br />"
-                                            . "Заказу присвоен статус - \"Неоплачено\"<br />"
-                                            . "Вы можете оплатить его сейчас или из своего личного кабинета. "
-                                            . "Там же вы можете узнать статус вашего заказа.<br />";
-                                    $payform = rcl_payform(array(
-                                            'id_pay'=>$order_id,
-                                            'summ'=>$order->order_price,
-                                            'user_id'=>$user_ID,
-                                            'type'=>2,
-                                            'description'=>'Оплата заказа №'.$order_id.' от '.get_the_author_meta('user_email',$user_ID)
-                                        ));
+                                
+                                $notify .= sprintf(__('Order granted the status - "%s"','wp-recall'),rcl_get_status_name_order(1)).'<br>';
+                                $notify .= __('You can pay it now or from your personal account. There you can find out the status of your order.','wp-recall');
+                                    
+                                $payform = rcl_payform(array(
+                                    'id_pay'=>$order_id,
+                                    'summ'=>$order->order_price,
+                                    'user_id'=>$user_ID,
+                                    'type'=>2,
+                                    'description'=>sprintf(__('Payment order №%d from %s','wp-recall'),$order_id,get_the_author_meta('user_email',$user_ID))
+                                ));
 
                             }else{
-                                $notify = "Ваш заказ был создан!<br />"
-                                        . "Заказу присвоен статус - \"Неоплачено\"<br />"
-                                        . "Вы можете оплатить его в любое время в своем личном кабинете. "
-                                        . "Там же вы можете узнать статус вашего заказа.";
-                                //$log['redirectform'] = apply_filters('notify_new_order',$notify);
+                                
+                                $notify .= sprintf(__('Order granted the status - "%s"','wp-recall'),rcl_get_status_name_order(1)).'<br>';
+                                $notify .= __('You can pay at any time in your personal account. There you can find out the status of your order.','wp-recall');
+
                             }
                         }else{
-                            $notify = "Ваш заказ был создан!<br />"
-                                    . "Заказу присвоен статус - \"Неоплачено\"<br />"
-                                    . "Вы можете следить за статусом своего заказа в своем личном кабинете.";
+                            
+                            $notify .= sprintf(__('Order granted the status - "%s"','wp-recall'),rcl_get_status_name_order(1)).'<br>';
+                            $notify .= __('You can monitor the status of your order in your personal account.','wp-recall');
+
                         }
                     }
 
                     $notify = apply_filters('notify_new_order',$notify,$order_data);
 
-                    if($payform) $notify .= $payform;
+                    if($payform) 
+                        $notify .= $payform;
+                    
                     $log['redirectform'] = "<p class='res_confirm' style='border:1px solid #ccc;font-weight:bold;padding:10px;'>".$notify."</p>";
                     $log['otvet']=100;
 
                 } else { //если товар не весь в наличии, формируем сообщение об ошибке и отправляем пользователю
 
                     foreach($false_amount as $prod_id => $cnt){
-                            $error_amount .= 'Наименование товара: <b>'.get_the_title($prod_id).' доступно '.get_post_meta($prod_id, 'amount_product', 1).' шт.</b>';
+                        $error_amount .= sprintf(__('Product Name :%s available %d items .','wp-recall'),'<b>'.get_the_title($prod_id).'</b>',get_post_meta($prod_id, 'amount_product', 1)).'<br>';
                     }
 
                     $log['otvet']=10;
                     $log['amount'] = "<p class='res_confirm' style='margin-top:20px;color:red;border:1px solid #ccc;font-weight:bold;padding:10px;'>"
-                            . "Заказ не был создан!<br />"
-                            . "Возможно вы пытаетесь зарезервировать большее количество товара, чем есть в наличии.</p>"
-                            . "".$error_amount.""
-                            . "<p>Пожалуйста уменьшите количество товара в заказе и попробуйте оформить заказ снова.</p>";
+                            . __('The order was not created!','wp-recall').'<br>'
+                            . __('You may be trying to book a larger quantity than is available.','wp-recall')
+                            . '</p>'
+                            . $error_amount
+                            . '<p>'
+                            . __('Please reduce the quantity of goods in order and try to place your order again','wp-recall')
+                            . '</p>';
                     echo json_encode($log);
                     exit;
                 }
             }else{
                 $log['otvet']=5;
                 $log['recall'] = '<p style="text-align:center;color:red;">'
-                        . 'Пожалуйста, заполните все обязательные поля!'
+                        . __('Please fill in all mandatory fields','wp-recall')
                         . '</p>';
             }
 	} else {
@@ -264,48 +272,40 @@ add_action('wp_ajax_nopriv_rcl_confirm_order', 'rcl_confirm_order');
 Смена статуса заказа
 *************************************************/
 function rcl_edit_order_status(){
-	global $user_ID,$rmag_options,$wpdb;
+    global $user_ID,$rmag_options,$wpdb;
+
+    rcl_verify_ajax_nonce();
+
+    $order = intval($_POST['order']);
+    $status = intval($_POST['status']);
+
+    if($order){
+
+        $oldstatus = $wpdb->get_var($wpdb->prepare("SELECT order_status FROM ".RMAG_PREF."orders_history WHERE order_id='%d'",$order));
+
+        $res = rcl_update_status_order($order,$status);
+
+        if($res){
+
+            if($oldstatus==1&&$status==6){
+                    rcl_remove_reserve($order,1);
+            }else{
+                    rcl_remove_reserve($order);
+            }
+
+            $log['otvet'] = 100;
+            $log['order'] = $order;
+            $log['status'] = rcl_get_status_name_order($status_id);
+
+        }else {
+                $log['otvet']=1;
+        }
+
+    } else {
+            $log['otvet']=1;
+    }
         
-        rcl_verify_ajax_nonce();
-
-	$order = intval($_POST['order']);
-	$status = intval($_POST['status']);
-
-	if($order){
-
-		$oldstatus = $wpdb->get_var($wpdb->prepare("SELECT order_status FROM ".RMAG_PREF."orders_history WHERE order_id='%d'",$order));
-
-		$res = rcl_update_status_order($order,$status);
-
-		if($res){
-
-			if($oldstatus==1&&$status==6){
-				rcl_remove_reserve($order,1);
-			}else{
-				rcl_remove_reserve($order);
-			}
-
-			switch($status){
-				case 1: $status = 'Не оплачен'; break;
-				case 2: $status = 'Оплачен'; break;
-				case 3: $status = 'В обработке'; break;
-				case 4: $status = 'Отправлен'; break;
-				case 5: $status = 'Закрыт'; break;
-				case 6: $status = 'Корзина'; break;
-			}
-
-
-
-			$log['otvet']=100;
-			$log['order']=$order;
-			$log['status']=$status;
-		}else {
-			$log['otvet']=1;
-		}
-	} else {
-		$log['otvet']=1;
-	}
-	echo json_encode($log);
+    echo json_encode($log);
     exit;
 }
 add_action('wp_ajax_rcl_edit_order_status', 'rcl_edit_order_status');
@@ -326,11 +326,11 @@ function rcl_trash_order($post){
         $res = rcl_update_status_order($order_id,6,$user_ID);
 
         if($res){
-            return '<h3>Заказ №'.$order_id.' был удален.</h3>';
+            return '<h3>'.sprintf(__('Order №%s was deleted','wp-recall'),$order_id).'</h3>';
         }
 
     } else {
-        return array('error'=>'Ошибка!');
+        return array('error'=>__('Error','wp-recall'));
     }
 }
 
@@ -391,8 +391,7 @@ function rcl_register_user_order(){
 
         if(!$reg_user&&(!$correctemail||!$valid)){
             if(!$valid||!$correctemail){
-                $log['int']=1;
-                $log['recall'] = '<p style="text-align:center;color:red;">Вы ввели некорректный email!</p>';
+                $log['error'] = __('You have entered an invalid email!','wp-recall');
                 echo json_encode($res);
                 exit;
             }
@@ -401,13 +400,11 @@ function rcl_register_user_order(){
         if($reg_user&&($res_login||$res_email||!$correctemail||!$valid)){
 
             if(!$valid||!$correctemail){
-                $log['int']=1;
-                $log['recall'] .= '<p style="text-align:center;color:red;">Вы ввели некорректный email!</p>';
+                $log['error'] .= __('You have entered an invalid email!','wp-recall').'<br>';
             }
+            
             if($res_login||$res_email){
-                $log['int']=1;
-                $log['recall'] .= '<p style="text-align:center;color:red;">Этот email уже используется!<br>'
-                        . 'Если это ваш email, то авторизуйтесь и продолжите оформление заказа.</p>';
+                $log['error'] .= __('This email is already used! If this is your email, then log in and proceed with the order.','wp-recall');
             }
 
         }else{
@@ -462,8 +459,7 @@ function rcl_register_user_order(){
                 $results = $ord->insert_order($order_id,$user_id);
 
                 if(!$results){
-                    $log['int']=1;
-                    $log['recall'] = '<p style="text-align:center;color:red;">Возникла ошибка, заказ не был создан!</p>';
+                    $log['error'] = __('An error has occurred, the order was not created!','wp-recall');
                     echo json_encode($log);
                     exit;
                 }
@@ -473,14 +469,19 @@ function rcl_register_user_order(){
                 $table_order = rcl_get_include_template('order.php',__FILE__);
                 $ord->send_mail($order_custom_field,$table_order,$user_id,$creds);
 
-                $notice = ($rcl_options['confirm_register_recall']==1)? '<p class=res_confirm style="color:orange;">Для отслеживания статуса заказа подтвердите указанный email!<br>'
-                            . 'Перейдите по ссылке в высланном письме.</p>': '';
+                $notice = ($rcl_options['confirm_register_recall']==1)? '<p class=res_confirm style="color:orange;">'
+                        .__('To monitor the status of the order to confirm the specified email!','wp-recall').'<br>'
+                        .__('Follow the link in the email sent to','wp-recall').'</p>': '';
 
                 if(!$order->order_price){ //Если заказ бесплатный
-                    $notice .= "<p class='res_confirm'>Ваш заказ был создан!<br />"
-                            . "Заказ содержал только бесплатные товары<br>"
-                            . "Заказу присвоен статус - \"Оплачено\"<br>"
-                            . "Заказ поступил в обработку. В своем личном кабинете вы можете узнать статус вашего заказа.</p>";
+                    
+                    $notice .= "<p class='res_confirm'>"
+                            . __('Your order has been created!','wp-recall')."<br />"
+                            . __('The order contained only free items','wp-recall')."<br />"
+                            . sprintf(__('Order granted the status - "%s"','wp-recall'),rcl_get_status_name_order(2)).'<br>'
+                            . __('The order is processing. In your personal account you can find out the status of your order.','wp-recall')
+                            . "</p>";
+                    
                     $log['recall'] = $notice;
                     $log['redirect']= $redirect_url;
                     $log['int']=100;
@@ -492,18 +493,28 @@ function rcl_register_user_order(){
                     $type_order_payment = $rmag_options['type_order_payment'];
                     if($type_order_payment==1||$type_order_payment==2){
 
-                        $notice .= "<p class='res_confirm'>Ваш заказ был создан!<br />Заказу присвоен статус - \"Неоплачено\"<br />Вы можете оплатить его из своего личного каббинета. Там же вы можете узнать статус вашего заказа.</p>";
-                        $notice .= "<p class='res_confirm'>Все необходимые данные для авторизации на сайте были высланы на указанную вами эл.почту.</p>";
-                        if($type_order_payment==2) $notice .= "<p class='res_confirm'>Вы можете пополнить свой личный счет на сайте из своего личного кабинета и в будущем оплачивать свои заказы через него</p>";
+                        $notice .= "<p class='res_confirm'>"
+                                    .__('Your order has been created!','wp-recall')."<br />"
+                                    .sprintf(__('Order granted the status - "%s"','wp-recall'),rcl_get_status_name_order(1))."<br />"
+                                    .__('You can pay it from his personal account. There you can find out the status of your order.','wp-recall')
+                                . "</p>";
+                        
+                        $notice .= "<p class='res_confirm'>"
+                                    .__('All necessary data for authorization on the site have been sent to the specified e-mail','wp-recall')
+                                . "</p>";
+                        
+                        if($type_order_payment==2) $notice .= "<p class='res_confirm'>"
+                                    .__('You can fill up your personal account on the site of his private office in the future to pay for their orders through it','wp-recall')
+                                . "</p>";
 
                         if(!$rcl_options['confirm_register_recall']){
-                            $notice .= "<p align='center'><a href='".$redirect_url."'>Перейти в свой личный кабинет</a></p>";
+                            $notice .= "<p align='center'><a href='".$redirect_url."'>".__('Go to your personal cabinet','wp-recall')."</a></p>";
                             $notice .= rcl_payform(array(
                                     'id_pay'=>$order_id,
                                     'summ'=>$order->order_price,
                                     'user_id'=>$user_id,
                                     'type'=>2,
-                                    'description'=>'Оплата заказа №'.$order_id.' от '.get_the_author_meta('user_email',$user_id)
+                                    'description'=>sprintf(__('Payment order №%s from %s','wp-recall'),$order_id,get_the_author_meta('user_email',$user_id))
                                 ));
                         }
                         $log['recall'] = $notice;
@@ -513,20 +524,25 @@ function rcl_register_user_order(){
                     }else{
                         $log['int']=100;
                         $log['redirect']= $redirect_url;
-                        $notice .= "<p class=res_confirm>Ваш заказ был создан!<br />Проверьте свою почту.</p>";
+                        $notice .= "<p class=res_confirm>"
+                                .__('Your order has been created!','wp-recall')."<br />"
+                                .__('Check your email','wp-recall')
+                                . "</p>";
                         $log['recall'] = $notice;
                     }
                 }else{
                     $log['int']=100;
                     $log['redirect'] = $redirect_url;
-                    $notice .= '<p class=res_confirm>Ваш заказ был создан!<br />Проверьте свою почту.</p>';
+                    $notice .= "<p class=res_confirm>"
+                                .__('Your order has been created!','wp-recall')."<br />"
+                                .__('Check your email','wp-recall')
+                                . "</p>";
                     $log['recall'] = $notice;
                 }
             }
         }
     }else{
-        $log['int']=1;
-        $log['recall'] = '<p style="text-align:center;color:red;">Пожалуйста, заполните все обязательные поля!</p>';
+        $log['error'] = __('Please fill in all mandatory fields!','wp-recall');
     }
     echo json_encode($log);
     exit;
@@ -546,9 +562,9 @@ function rcl_pay_order_private_account(){
     $order_id = intval($_POST['idorder']);
 
     if(!$order_id||!$user_ID){
-            $log['otvet']=1;
-            echo json_encode($log);
-            exit;
+        $log['otvet']=1;
+        echo json_encode($log);
+        exit;
     }
 
     $order = rcl_get_order($order_id);
@@ -556,37 +572,37 @@ function rcl_pay_order_private_account(){
     $oldusercount = rcl_get_user_balance();
 
     if(!$oldusercount){
-            $log['otvet']=1;
-            $log['recall'] = $order->order_price;
-            echo json_encode($log);
-            exit;
+        $log['otvet']=1;
+        $log['recall'] = $order->order_price;
+        echo json_encode($log);
+        exit;
     }
 
     $newusercount = $oldusercount - $order->order_price;
 
     if($newusercount<0){
-            $log['otvet']=1;
-            $log['recall'] = $order->order_price;
-            echo json_encode($log);
-            exit;
+        $log['otvet']=1;
+        $log['recall'] = $order->order_price;
+        echo json_encode($log);
+        exit;
     }
 
-    rcl_update_user_balance($newusercount,$user_ID,'Оплата заказа №'.$order_id);
+    rcl_update_user_balance($newusercount,$user_ID,sprintf(__('Payment order №%d','wp-recall'),$order_id));
 
     $result = rcl_update_status_order($order_id,2);
 
     if(!$result){
-            $log['otvet']=1;
-            $log['recall'] = 'Ошибка запроса!';
-            echo json_encode($log);
-            exit;
+        $log['otvet']=1;
+        $log['recall'] = __('Error','wp-recall');
+        echo json_encode($log);
+        exit;
     }
 
     rcl_payment_order($order_id,$user_ID);
 
     do_action('payment_rcl',$user_ID,$order->order_price,$order_id,2);
 
-    $text = "<p>Ваш заказ успешно оплачен! Соответствующее уведомление было выслано администрации сервиса.</p>";
+    $text = "<p>".__('Your order is successfully paid! The notification has been sent to the administration.','wp-recall')."</p>";
 
     $text = apply_filters('payment_order_text',$text);
 

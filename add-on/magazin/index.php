@@ -29,7 +29,7 @@ require_once("functions/ajax-func.php");
 
 add_action('init','rcl_tab_orders');
 function rcl_tab_orders(){
-    rcl_tab('orders','rcl_orders','Заказы',array('ajax-load'=>true,'class'=>'fa-shopping-cart','order'=>30,'path'=>__FILE__));
+    rcl_tab('orders','rcl_orders',__('Orders','wp-recall'),array('ajax-load'=>true,'class'=>'fa-shopping-cart','order'=>30,'path'=>__FILE__));
 }
 
 function rcl_orders($author_lk){
@@ -51,7 +51,7 @@ function rcl_orders($author_lk){
 
                 $block .= '<a class="recall-button view-orders" href="'.rcl_format_url(get_author_posts_url($author_lk),'orders').'">Смотреть все заказы</a>';
 
-                $block .= '<h3>Заказ №'.$order_id.'</h3>';
+                $block .= '<h3>'.__('Order','wp-recall').' №'.$order_id.'</h3>';
                 
                 $postdata = rcl_encode_post(array(
                     'callback'=>'rcl_trash_order',
@@ -61,14 +61,14 @@ function rcl_orders($author_lk){
                 $block .= '<div id="manage-order">';
                 if($status == 1||$status == 5) 
                     $block .= '<div class="remove-order">'
-                        . '<input class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'" type="button" value="Удалить">'
+                        . '<input class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'" type="button" value="'.__('Delete','wp-recall').'">'
                         . '</div>';
                 if($status==1&&function_exists('rcl_payform')){
                     $type_pay = $rmag_options['type_order_payment'];
                     if($type_pay==1||$type_pay==2){
                         $block .= rcl_payform(array('id_pay'=>$order_id,'summ'=>$price,'type'=>2));
                     }else{
-                        $block .= '<input class="pay_order recall-button" onclick="rcl_pay_order_private_account(this);return false;" type="button" name="pay_order" data-order="'.$order_id.'" value="Оплатить">';
+                        $block .= '<input class="pay_order recall-button" onclick="rcl_pay_order_private_account(this);return false;" type="button" name="pay_order" data-order="'.$order_id.'" value="'.__('To pay','wp-recall').'">';
                     }
                 }
                 $block .= '</div>';
@@ -83,7 +83,7 @@ function rcl_orders($author_lk){
 
 		$orders = rcl_get_orders(array('user_id'=>$user_ID,'status_not_in'=>6));
 
-		if(!$orders) $block .= '<p>У вас пока не оформлено ни одного заказа.</p>';
+		if(!$orders) $block .= '<p>'.__('You have not yet issued any order','wp-recall').'.</p>';
 		else $block .= rcl_get_include_template('orders-history.php',__FILE__);
 
 	}

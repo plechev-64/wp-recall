@@ -205,8 +205,8 @@ function rcl_get_shortcode_wp_recall(){
     global $user_LK;
 
     if(!$user_LK){
-            return '<h4>'.__('To begin to use the capabilities of your personal account, please log in or register on this site','wp-recall').'</h4>
-            <div class="authorize-form-rcl">'.rcl_get_authorize_form().'</div>';
+        return '<h4>'.__('To begin to use the capabilities of your personal account, please log in or register on this site','wp-recall').'</h4>
+        <div class="authorize-form-rcl">'.rcl_get_authorize_form().'</div>';
     }
 
     ob_start();
@@ -347,6 +347,41 @@ function rcl_cache_shortcode($atts,$content = null){
         }
     
     }
+    
+    return $content;
+}
+
+add_shortcode('rcl-tab','rcl_tab_shortcode');
+function rcl_tab_shortcode($atts){
+    global $rcl_tabs,$user_ID,$user_LK;
+    
+    $user_LK = $user_ID;
+    
+    extract(shortcode_atts(array(
+	'tab_id' => ''
+	),
+    $atts));
+    
+    if(!$user_ID){
+        return '<h4>'.__('To begin to use the capabilities of your personal account, please log in or register on this site','wp-recall').'</h4>
+        <div class="authorize-form-rcl">'.rcl_get_authorize_form().'</div>';
+    }
+    
+    if(!$tab_id||!isset($rcl_tabs[$tab_id])) 
+        return '<p>Такой вкладки не найдено!</p>';
+    
+    if (!class_exists('Rcl_Tabs')) 
+        include_once RCL_PATH.'functions/rcl_tabs.php';
+    
+    $Rcl_Tab = new Rcl_Tabs($rcl_tabs[$tab_id]);
+    
+    $content = '<div class="wprecallblock" data-account="'.$user_ID.'">';   
+        $content .= '<div id="lk-content">';
+
+            $content .= $Rcl_Tab->get_tab_content($user_ID);
+
+        $content .= '</div>';    
+    $content .= '</div>';
     
     return $content;
 }

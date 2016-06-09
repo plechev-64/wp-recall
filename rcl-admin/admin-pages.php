@@ -415,7 +415,8 @@ function rcl_custom_tabs_manage(){
         $f_edit->option('text',array(
             'name'=>'icon',
             'label'=>__('Class icon font-awesome','wp-recall'),
-            'placeholder'=>__('Example , fa-user','wp-recall')
+            'placeholder'=>__('Example , fa-user','wp-recall'),
+            'notice'=>__('Источник <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/</a>','wp-recall')
         )),
         $f_edit->option('select',array(
             'name'=>'public',

@@ -5,77 +5,89 @@ if (!is_admin()):
 endif;
 
 function rcl_private_messages_scripts(){
-    rcl_enqueue_style('rcl-private',rcl_addon_url('style.css', __FILE__));
-    rcl_enqueue_script( 'rcl-private', rcl_addon_url('js/scripts.js', __FILE__) );
+    global $user_ID;
+    if($user_ID){
+        rcl_enqueue_style('rcl-private',rcl_addon_url('style.css', __FILE__));
+        rcl_enqueue_script( 'rcl-private', rcl_addon_url('js/scripts.js', __FILE__) );
+    }
 }
 
 add_filter('rcl_init_js_variables','rcl_init_js_private_messages_variables',10);
 function rcl_init_js_private_messages_variables($data){
     global $rcl_options;
+    
+    $max_size_mb = (isset($rcl_options['file_exchange_weight'])&&$rcl_options['file_exchange_weight'])? $rcl_options['file_exchange_weight']: 2;
+    
     $data['private']['words'] = (isset($rcl_options['ms_limit_words'])&&$rcl_options['ms_limit_words'])? $rcl_options['ms_limit_words']: 400;
     $data['private']['sounds'] = rcl_addon_url('sounds/',__FILE__);
     $data['private']['sort'] = (isset($rcl_options['sort_mess']))? (int)$rcl_options['sort_mess']: 0;
-    $data['private']['filesize_mb'] = (isset($rcl_options['file_exchange_weight'])&&$rcl_options['file_exchange_weight'])? $rcl_options['file_exchange_weight']: 2;
+    $data['private']['filesize_mb'] = $max_size_mb;
+    
+    $data['local']['all_correspond'] = __('All correspondence','wp-recall');
+    $data['local']['important_notice'] = __('Important notices','wp-recall');
+    $data['local']['remove_file'] = __('Removes the file from the server','wp-recall');
+    $data['local']['upload_size_message'] = sprintf(__('Exceeds the maximum size for the file! Max. %s MB','wp-recall'),$max_size_mb);
+    
     return $data;
 }
 
 function rcl_count_noread_messages($user_id){
-	global  $wpdb;
-	$where = "WHERE adressat_mess = '$user_id' AND status_mess='0'";
-	return $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."private_message $where");
+    global  $wpdb;
+    $where = "WHERE adressat_mess = '$user_id' AND status_mess='0'";
+    return $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."private_message $where");
 }
 
 add_action('wp','rcl_download_file_message');
 function rcl_download_file_message(){
-	global $user_ID,$wpdb;
+    global $user_ID,$wpdb;
 
-	if ( !isset( $_GET['rcl-download-id'] ) ) return false;
-	$id_file = base64_decode($_GET['rcl-download-id']);
+    if ( !isset( $_GET['rcl-download-id'] ) ) return false;
+    $id_file = base64_decode($_GET['rcl-download-id']);
 
-	if ( !$user_ID||!wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
+    if ( !$user_ID||!wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
 
-	$file = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."rcl_private_message WHERE ID = '%d' AND adressat_mess = '%d' AND status_mess = '5'",$id_file,$user_ID));
+    $file = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."rcl_private_message WHERE ID = '%d' AND adressat_mess = '%d' AND status_mess = '5'",$id_file,$user_ID));
 
-	if(!$file) wp_die(__('File does not exist on the server or it has already been loaded!','wp-recall'));
+    if(!$file) wp_die(__('File does not exist on the server or it has already been loaded!','wp-recall'));
 
-	$name = explode('/',$file->content_mess);
-	$cnt = count($name);
-	$f_name = $name[--$cnt];
+    $name = explode('/',$file->content_mess);
+    $cnt = count($name);
+    $f_name = $name[--$cnt];
 
-	$wpdb->update( RCL_PREF.'private_message',array( 'status_mess' => 6,'content_mess' => __('The file was loaded.','wp-recall') ),array( 'ID' => $file->ID ));
+    $wpdb->update( RCL_PREF.'private_message',array( 'status_mess' => 6,'content_mess' => __('The file was loaded.','wp-recall') ),array( 'ID' => $file->ID ));
 
-	header('Content-Description: File Transfer');
-	header('Content-Disposition: attachment; filename="'.$f_name.'"');
-	header('Content-Type: application/octet-stream; charset=utf-8');
-	readfile($file->content_mess);
+    header('Content-Description: File Transfer');
+    header('Content-Disposition: attachment; filename="'.$f_name.'"');
+    header('Content-Type: application/octet-stream; charset=utf-8');
+    readfile($file->content_mess);
 
-	$upload_dir = wp_upload_dir();
-	$path_temp = $upload_dir['basedir'].'/temp-files/'.$f_name;
-	unlink($path_temp);
+    $upload_dir = wp_upload_dir();
+    $path_temp = $upload_dir['basedir'].'/temp-files/'.$f_name;
+    unlink($path_temp);
 
-	exit;
+    exit;
 }
 
 add_action('wp', 'rcl_messages_scripts');
 function rcl_messages_scripts(){
-	global $user_ID,$rcl_options,$post,$wpdb;
-	if(isset($rcl_options['notify_message'])&&$rcl_options['notify_message'])
-            return false;
-	wp_enqueue_script( 'jquery' );
-	$glup = $rcl_options['global_update_private_message'];
-	if(!$glup) $new_mess = $wpdb->get_row($wpdb->prepare("SELECT ID FROM ".RCL_PREF."private_message WHERE adressat_mess = '%d' AND status_mess = '0' OR adressat_mess = '%d' AND status_mess = '4'",$user_ID,$user_ID));
-	else $new_mess = true;
-	if($new_mess){
-            $scr = false;
-            if($rcl_options['view_user_lk_rcl']==1){
-                    $get = 'user';
-                    if($rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];
-                    if(isset($_GET[$get])&&$user_ID==$_GET[$get]||$rcl_options['lk_page_rcl']!=$post->ID) $scr = true;
-            }else{
-                    if(!is_author()||is_author($user_ID)) $scr = true;
-            }
-            if($scr) rcl_enqueue_script( 'newmess_recall', plugins_url('js/new_mess.js', __FILE__) );
-	}
+    global $user_ID,$rcl_options,$post,$wpdb;
+    
+    if(!$user_ID||isset($rcl_options['notify_message'])&&$rcl_options['notify_message']) return false;
+    
+    $glup = $rcl_options['global_update_private_message'];
+    if(!$glup) $new_mess = $wpdb->get_row($wpdb->prepare("SELECT ID FROM ".RCL_PREF."private_message WHERE adressat_mess = '%d' AND status_mess = '0' OR adressat_mess = '%d' AND status_mess = '4'",$user_ID,$user_ID));
+    else $new_mess = true;
+    if($new_mess){
+        $scr = false;
+        if($rcl_options['view_user_lk_rcl']==1){
+            $get = 'user';
+            if($rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];
+            if(isset($_GET[$get])&&$user_ID==$_GET[$get]||$rcl_options['lk_page_rcl']!=$post->ID) $scr = true;
+        }else{
+            if(!is_author()||is_author($user_ID)) $scr = true;
+        }
+        if($scr) rcl_enqueue_script( 'newmess_recall', plugins_url('js/new_mess.js', __FILE__) );
+    }
 }
 
 add_action('rcl_cron_daily','rcl_messages_remove_garbage_file',20);

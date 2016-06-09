@@ -135,9 +135,9 @@ class Rcl_Cart {
 
         $products = $this->get_products();
 
-        if(!$products) return '<p>В вашей корзине пусто.</p>';
+        if(!$products) return '<p>'.__('Your shopping cart is empty','wp-recall').'.</p>';
 
-        if(!$user_ID) $basket .= '<h3 class="title-data">Корзина <span class="weight-normal">(цены указаны в рублях)</span></h3>';
+        if(!$user_ID) $basket .= '<h3 class="title-data">'.__('Cart','wp-recall').'Корзина</h3>';
 
         $basket .= rcl_get_include_template('cart.php',__FILE__);
 
@@ -153,11 +153,11 @@ class Rcl_Cart {
 
                     if($user_ID){
 
-                    if($order_field) $basket .= '<h3 align="center">Для оформления заказа заполните форму ниже:</h3>
+                    if($order_field) $basket .= '<h3 align="center">'.__('To place an order fill out the form below','wp-recall').':</h3>
                                                 <div id="regnewuser"  style="display:none;"></div>
                     <table class="form-table">'.$order_field.'</table>';
 
-                    $basket .= rcl_get_button('Оформить заказ','#',array('icon'=>false,'class'=>'confirm_order'))
+                    $basket .= rcl_get_button(__('Checkout','wp-recall'),'#',array('icon'=>false,'class'=>'confirm_order'))
                                                 .'</div>';
 
                     $basket .= "<script>
@@ -187,7 +187,7 @@ class Rcl_Cart {
                                     jQuery('#regnewuser').html(data['recall']);
                                     jQuery('#regnewuser').slideDown(500).delay(5000).slideUp(500);
                             }else {
-                               alert('Ошибка проверки данных.');
+                               alert('".__('Error','wp-recall')."');
                             }
                         }
                         });
@@ -201,20 +201,20 @@ class Rcl_Cart {
 
                         if($get_fields) $order_field .= $this->cart_fields($get_fields,'profile');
 
-                        $basket .= '<h3 align="center">Для оформления заказа заполните форму ниже:</h3>
+                        $basket .= '<h3 align="center">'.__('To place an order fill out the form below','wp-recall').':</h3>
 						<div id="regnewuser"  style="display:none;"></div>
                         <table class="form-table">
                             <tr>
-                                <td><label>Укажите ваш E-mail <span class="required">*</span>:</label></td>
+                                <td><label>'.__('Enter your E-mail','wp-recall').' <span class="required">*</span>:</label></td>
                                 <td><input required type="text" class="email_new_user" name="email_new_user" value=""></td>
                             </tr>
                              <tr>
-                                <td><label>Ваше Имя</label></td>
+                                <td><label>'.__('Your name','wp-recall').'</label></td>
                                 <td><input type="text" class="fio_new_user" name="fio_new_user" value=""></td>
                             </tr>
                             '.$order_field.'
                         </table>
-                        <p align="right">'.rcl_get_button('Оформить заказ','#',array('icon'=>false,'class'=>'rcl_register_user_order','id'=>false)).'</p>
+                        <p align="right">'.rcl_get_button(__('Checkout','wp-recall'),'#',array('icon'=>false,'class'=>'rcl_register_user_order','id'=>false)).'</p>
 
                         </div>';
                         $basket .= "<script>
@@ -231,25 +231,26 @@ class Rcl_Cart {
                                     var dataString = 'action=rcl_register_user_order&fio_new_user='+fio+'&email_new_user='+email".$this->request.";
                                     dataString += '&ajax_nonce='+Rcl.nonce;
                                     jQuery.ajax({
-                                            type: 'POST',
-                                            data: dataString,
-                                            dataType: 'json',
-                                            url: Rcl.ajaxurl,
-                                            success: function(data){
-                                                    if(data['int']==100){
-                                                            jQuery('#regnewuser').html(data['recall']);
-                                                            jQuery('#regnewuser').slideDown(500);
-                                                            if(data['redirect']!=0){
-                                                                    location.replace(data['redirect']);
-                                                            }else{
-                                                                    jQuery('.form-table').remove();
-                                                                    jQuery('.rcl_register_user_order').remove();
-                                                            }
-                                                    } else {
-                                                            jQuery('#regnewuser').html(data['recall']);
-                                                            jQuery('#regnewuser').slideDown(500).delay(5000).slideUp(500);
-                                                    }
+                                        type: 'POST',
+                                        data: dataString,
+                                        dataType: 'json',
+                                        url: Rcl.ajaxurl,
+                                        success: function(data){
+                                            if(data['error']){
+                                                rcl_notice(data['error'],'error',10000);
+                                                return false;
                                             }
+                                            if(data['int']==100){
+                                                jQuery('#regnewuser').html(data['recall']);
+                                                jQuery('#regnewuser').slideDown(500);
+                                                if(data['redirect']!=0){
+                                                    location.replace(data['redirect']);
+                                                }else{
+                                                    jQuery('.form-table').remove();
+                                                    jQuery('.rcl_register_user_order').remove();
+                                                }
+                                            }
+                                        }
                                     });
                                     return false;
                             });

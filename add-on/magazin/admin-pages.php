@@ -2,12 +2,12 @@
 include_once 'orders-history.php';
 
 function wpmagazin_options_panel(){
-    $hook = add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', 'manage-rmag', 'rmag_manage_orders');
-	$hook = add_submenu_page( 'manage-rmag', 'Заказы', 'Заказы', 'manage_options', 'manage-rmag', 'rmag_manage_orders');
+    add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', 'manage-rmag', 'rmag_manage_orders');
+    $hook = add_submenu_page( 'manage-rmag', __('Orders','wp-recall'), __('Orders','wp-recall'), 'manage_options', 'manage-rmag', 'rmag_manage_orders');
         add_action( "load-$hook", 'rcl_orders_page_options' );
-	add_submenu_page( 'manage-rmag', 'Экспорт/импорт', 'Экспорт/импорт', 'manage_options', 'manage-wpm-price', 'rmag_export');
-	add_submenu_page( 'manage-rmag', 'Форма заказа', 'Форма заказа', 'manage_options', 'manage-custom-fields', 'rmag_custom_fields');
-	add_submenu_page( 'manage-rmag', 'Настройки магазина', 'Настройки магазина', 'manage_options', 'manage-wpm-options', 'rmag_global_options');
+    add_submenu_page( 'manage-rmag', __('Export/Import','wp-recall'), __('Export/Import','wp-recall'), 'manage_options', 'manage-wpm-price', 'rmag_export');
+    add_submenu_page( 'manage-rmag', __('Order form','wp-recall'), __('Order form','wp-recall'), 'manage_options', 'manage-custom-fields', 'rmag_custom_fields');
+    add_submenu_page( 'manage-rmag', __('Store settings','wp-recall'), __('Store settings','wp-recall'), 'manage_options', 'manage-wpm-options', 'rmag_global_options');
 }
 add_action('admin_menu', 'wpmagazin_options_panel',20);
 
@@ -21,98 +21,97 @@ function rmag_primary_options($content){
         $opt = new Rcl_Options(rcl_key_addon(pathinfo(__FILE__)));
 
         $args = array(
-                'selected'   => $rcl_options['basket_page_rmag'],
-                'name'       => 'global[basket_page_rmag]',
-                'show_option_none' => '<span style="color:red">Не выбрано</span>',
-                'echo'       => 0
+            'selected'   => $rcl_options['basket_page_rmag'],
+            'name'       => 'global[basket_page_rmag]',
+            'show_option_none' => __('Not selected','wp-recall'),
+            'echo'       => 0
         );
 
         $content .= $opt->options(
-            'Настройки WP-RECALL-MAGAZIN',array(
+            __('Settings','wp-recall').' WP-RECALL-MAGAZIN',array(
             $opt->option_block(
                 array(
-                    $opt->title('Общие настройки'),
+                    $opt->title(__('General settings','wp-recall')),
 
-                    $opt->label('Email для уведомлений'),
+                    $opt->label(__('Email Notification','wp-recall')),
                     $opt->option('email',array('name'=>'admin_email_magazin_recall')),
-                    $opt->notice('Если email не указан, то уведомления будут рассылаться всем пользователям сайта с правами "Администратор"'),
+                    $opt->notice(__('If email is not specified, a notification will be sent to all users of the website with the rights of the "Administrator"','wp-recall')),
 
-					$opt->label('Наценка на товары (%)'),
+                    $opt->label(__('The margin on the goods (%)','wp-recall')),
                     $opt->option('number',array('name'=>'margin_product')),
-                    $opt->notice('Если ноль или ничего нет, то наценка на товары не используется')
+                    $opt->notice(__('If zero or nothing, the margin on the goods not being used','wp-recall'))
                 )
             ),
             $opt->option_block(
                 array(
-                    $opt->title('Оформление заказа'),
+                    $opt->title(__('Drawing up of an order','wp-recall')),
 
-                    $opt->label('Регистрация при оформлении'),
+                    $opt->label(__('Register at registration','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'noreg_order',
-                        'options'=>array('Включено','Отключено')
+                        'options'=>array(__('Included','wp-recall'),__('Disabled','wp-recall'))
                     )),
-                    $opt->notice('Если включено, то пользователь автоматически регистрируется на сайте при успешном оформлении заказа')
+                    $opt->notice(__('If enabled , the user is automatically registered on the site if successful ordering','wp-recall'))
                 )
             ),
             $opt->option_block(
                 array(
-                    $opt->title('Учет товара'),
+                    $opt->title(__('Accounting product','wp-recall')),
 
-                    $opt->label('Учет товара на складе'),
+                    $opt->label(__('Accounting for goods in stock','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'products_warehouse_recall',
-                        'options'=>array('Отключено','Включено')
+                        'options'=>array(__('Included','wp-recall'),__('Disabled','wp-recall'))
                     )),
-                    $opt->notice('Если учет ведется, то у товаров можно будет отмечать наличие на складе. Если товар не в наличии, то кнопка на добавление товара в корзину отсутствует')
+                    $opt->notice(__('If records are maintained , then the goods will be possible to observe the presence of the warehouse. If the goods are not available , the button on the product to add to cart is not','wp-recall'))
                 )
             ),
             $opt->option_block(
                 array(
-                    $opt->title('Корзина'),
+                    $opt->title(__('Cart','wp-recall')),
 
-                    $opt->label('Порядок вывода кнопки "В корзину"'),
+                    $opt->label(__('The procedure for withdrawal of the button " Add to Cart "','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'add_basket_button_recall',
-                        'options'=>array('Автоматически','Через шорткод')
+                        'options'=>array(__('Automatically','wp-recall'),__('Through shortcode','wp-recall'))
                     )),
-                    $opt->notice('На странице товара. Если шорткод, то используем [add-basket]'),
+                    $opt->notice(__('On the product page . If shortcode , then use the [add-basket]','wp-recall')),
 
-                    $opt->label('Страница оформления заказа'),
+                    $opt->label(__('Page checkout','wp-recall')),
                     wp_dropdown_pages( $args ),
-                    $opt->notice('Укажите страницу, где размещен шорткод [basket]'),
+                    $opt->notice(__('Specify the page that hosts the shortcode [basket]','wp-recall')),
                 )
             ),
              $opt->option_block(
                 array(
-                    $opt->title('Система похожих или рекомендуемых товаров'),
+                    $opt->title(__('System or similar featured products','wp-recall')),
 
-                    $opt->label('Порядок вывода'),
+                    $opt->label(__('The order of withdrawal','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'sistem_related_products',
-                        'options'=>array('Отключено','Включено')
+                        'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
                     )),
-                    $opt->notice('Если учет ведется, то у товаров можно будет отмечать наличие на складе. Если товар не в наличии, то кнопка на добавление товара в корзину отсутствует'),
 
-                    $opt->label('Заголовок блока рекомендуемых товаров'),
+                    $opt->label(__('Title block featured products','wp-recall')),
                     $opt->option('text',array('name'=>'title_related_products_recall')),
 
-                    $opt->label('Количество рекомендуемых товаров'),
+                    $opt->label(__('Number of featured products','wp-recall')),
                     $opt->option('number',array('name'=>'size_related_products'))
                 )
             ),
              $opt->option_block(
                 array(
-                    $opt->title('Валюта и курсы'),
-			$opt->label('Основная валюта'),
+                    $opt->title(__('Currency and courses','wp-recall')),
+			$opt->label(__('The base currency','wp-recall')),
 			$opt->option('select',array(
                         'name'=>'primary_cur',
                         'options'=>rcl_get_currency()
                     )),
-                    $opt->label('Второстепенная валюта'),
+                    $opt->label(__('Secondary currency','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'multi_cur',
                         'parent'=>true,
-                        'options'=>array('Отключено','Включено')
+                        'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
                     )
                     ),
                     $opt->child(
@@ -121,14 +120,14 @@ function rmag_primary_options($content){
                             'value'=>1
                         ),
                         array(
-                            $opt->label('Выберите валюту'),
+                            $opt->label(__('Select a currency','wp-recall')),
                             $opt->option('select',array(
                                     'name'=>'secondary_cur',
                                     'options'=>rcl_get_currency()
                             )),
-                            $opt->label('Курс'),
+                            $opt->label(__('Course','wp-recall')),
                             $opt->option('text',array('name'=>'curse_currency')),
-                            $opt->notice('Укажите курс второстепенной валюты по отношению к основной. Например: 1.3')
+                            $opt->notice(__('Enter the secondary currency exchange rate in relation to the principal. For example: 1.3','wp-recall'))
                         )
                     )
                 )
@@ -147,13 +146,13 @@ function rmag_custom_fields(){
 
 	if($f_edit->verify()) $fields = $f_edit->update_fields();
 
-	$content = '<h2>Управление полями Формы заказа</h2>
+	$content = '<h2>'.__('Field Management Order Form','wp-recall').'</h2>
 
 	'.$f_edit->edit_form(array(
             $f_edit->option('select',array(
                 'name'=>'requared',
-                'notice'=>'обязательное поле',
-                'value'=>array('Нет','Да')
+                'notice'=>__('required field','wp-recall'),
+                'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
             ))
         ));
 
@@ -161,18 +160,16 @@ function rmag_custom_fields(){
 }
 
 function rmag_manage_orders(){
+    global $wpdb;
 
-	global $wpdb;
-
-	
-	$n=0;
-	$s=0;
-	if($_GET['remove-trash']==101&&wp_verify_nonce( $_GET['_wpnonce'], 'delete-trash-rmag'))
-                $wpdb->query($wpdb->prepare("DELETE FROM ".RMAG_PREF ."orders_history WHERE order_status = '%d'",6));
+    $n=0;
+    $s=0;
+    if($_GET['remove-trash']==101&&wp_verify_nonce( $_GET['_wpnonce'], 'delete-trash-rmag'))
+            $wpdb->query($wpdb->prepare("DELETE FROM ".RMAG_PREF ."orders_history WHERE order_status = '%d'",6));
 
     if(isset($_GET['action'])&&$_GET['action']=='order-details'){
     
-        echo '<h2>Управление заказами</h2>
+        echo '<h2>'.__('Order management','wp-recall').'</h2>
 			<div style="width:1050px">';
 
 	global $order,$product;
@@ -188,14 +185,14 @@ function rmag_manage_orders(){
 
 	$header_tb = array(
 		'№ п/п',
-		'Наименование товара',
-		'Цена',
-		'Количество',
-		'Сумма',
-		'Статус',
+		__('Name product','wp-recall'),
+		__('Price','wp-recall'),
+		__('Amount','wp-recall'),
+		__('Sum','wp-recall'),
+		__('Status','wp-recall'),
 	);
 
-	echo '<h3>ID заказа: '.$_GET['order'].'</h3>'
+	echo '<h3>'.__('ID order','wp-recall').': '.$_GET['order'].'</h3>'
                 . '<table class="widefat">'
                 . '<tr>';
 
@@ -219,8 +216,8 @@ function rmag_manage_orders(){
 
 	}
 	echo '<tr>
-			<td colspan="4">Сумма заказа</td>
-			<td colspan="2">'.$order->order_price.'</td>
+                    <td colspan="4">'.__('Sum order','wp-recall').'</td>
+                    <td colspan="2">'.$order->order_price.'</td>
 		</tr>
 	</table>';
 
@@ -229,33 +226,38 @@ function rmag_manage_orders(){
 	$cf = new Rcl_Custom_Fields();
 
 	foreach((array)$get_fields as $custom_field){
-		$meta = get_the_author_meta($custom_field['slug'],$order->order_author);
-		$show_custom_field .= $cf->get_field_value($custom_field,$meta);
+            $meta = get_the_author_meta($custom_field['slug'],$order->order_author);
+            $show_custom_field .= $cf->get_field_value($custom_field,$meta);
 	}
 
 	$details_order = rcl_get_order_details($order->order_id);
 
-	echo '<form><input type="button" value="Назад" onClick="history.back()"></form><div style="text-align:right;"><a href="'.admin_url('admin.php?page=manage-rmag').'">Показать все заказы</a></div>
-	<h3>Все заказы пользователя: <a href="'.admin_url('admin.php?page=manage-rmag&user='.$order->order_author).'">'.$user_login.'</a></h3>
-	<h3>Информация о пользователе:</h3><p><b>Имя</b>: '.get_the_author_meta('display_name',$order->order_author).'</p><p><b>Email</b>: '.get_the_author_meta('user_email',$order->order_author).'</p>'.$show_custom_field;
-	if($details_order) echo '<h3>Детали заказа:</h3>'.$details_order;
-	if($result_mess) echo '<h3 style="color:green;">Сообщение было отправлено!</h3>';
+	echo '<form><input type="button" value="'.__('Ago','wp-recall').'" onClick="history.back()"></form>'
+                . '<div style="text-align:right;">'
+                    . '<a href="'.admin_url('admin.php?page=manage-rmag').'">'.__('Show all orders','wp-recall').'</a>
+                </div>
+	<h3>'.__('All orders user','wp-recall').': <a href="'.admin_url('admin.php?page=manage-rmag&user='.$order->order_author).'">'.$user_login.'</a></h3>
+	<h3>'.__('Information about the user','wp-recall').':</h3>'
+                . '<p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$order->order_author).'</p>'
+                . '<p><b>'.__('Email','wp-recall').'</b>: '.get_the_author_meta('user_email',$order->order_author).'</p>'.$show_custom_field;
+	if($details_order) echo '<h3>'.__('Order details','wp-recall').':</h3>'.$details_order;
+	if($result_mess) echo '<h3 style="color:green;">'.__('The message was sent','wp-recall').'!</h3>';
 	echo '<style>.form_message input[type="text"], .form_message textarea{width:450px;padding:5px;}</style>
-	<h3>Написать пользователю сообщение на почту '.get_the_author_meta('user_email',$order->order_author).'</h3>
+	<h3>'.__('Email a user an activation e-mail','wp-recall').' '.get_the_author_meta('user_email',$order->order_author).'</h3>
 	<form method="post" action="" class="form_message" >
-	<p><b>Почта отправителя</b> (по-умолчанию "noreply@'.$_SERVER['HTTP_HOST'].'")</p>
+	<p><b></b> ('.__('by default','wp-recall').' "noreply@'.$_SERVER['HTTP_HOST'].'")</p>
 	<input type="text" name="email_author" value="'.sanitize_email($_POST['email_author']).'">
-	<p><b>Тема письма</b></p>
+	<p><b>'.__('The subject of the email','wp-recall').'</b></p>
 	<input type="text" name="title_message" value="'.sanitize_text_field($_POST['title_message']).'">
-	<p><b>Текст сообщения</b></p>';
+	<p><b>'.__('Text messages','wp-recall').'</b></p>';
 
-	$textmail = "<p>Добрый день!</p>
-	<p>Вы или кто то другой оформил заказ на сайте ".get_bloginfo('name')."</p>
-	<h3>Детали заказа:</h3>
+	$textmail = "<p>".__('Good day','wp-recall')."!</p>
+	<p>".__('You or someone else place your order on the website','wp-recall')." ".get_bloginfo('name')."</p>
+	<h3>".__('Order details','wp-recall').":</h3>
 	".rcl_get_include_template('order.php',__FILE__)."
-	<p>Ваш заказ ожидает оплаты. Вы можете произвести оплату своего заказа любым из предложенных способ из своего личного кабинета или просто пополнив свой личный счет на сайте <a href='".get_bloginfo('wpurl')."'>".get_bloginfo('wpurl')."<p>
+	<p>".__('Your order is awaiting payment. You can pay your order with any of the proposed method from your personal account or just adding to your personal account on the website','wp-recall')." <a href='".get_bloginfo('wpurl')."'>".get_bloginfo('wpurl')."<p>
 	____________________________________________________________________________
-	Это письмо было сформировано автоматически не надо отвечать на него";
+	<p>".__('This letter was generated automatically and don`t need to answer it','wp-recall').'</p>';
 
 	if($_POST['text_message']) $textmail = force_balance_tags($_POST['text_message']);
 
@@ -275,7 +277,7 @@ function rmag_manage_orders(){
 	wp_editor( $textmail, 'textmessage', $args );
 
 	echo '<input type="hidden" name="address_message" value="'.$order->order_author.'">
-	<p><input type="submit" name="submit_message" value="Отправить"></p>
+	<p><input type="submit" name="submit_message" value="'.__('Send','wp-recall').'"></p>
 	</form>';
 
 	echo $table;
@@ -383,22 +385,22 @@ global $wpdb;
 
 	$table_price .='<style>table{min-width:500px;width:50%;margin:20px 0;}table td{border:1px solid #ccc;padding:3px;}</style>';
 	$postmeta = $wpdb->get_results("SELECT meta_key FROM ".$wpdb->prefix ."postmeta GROUP BY meta_key ORDER BY meta_key");
-	$table_price .='<h2>Экспорт/импорт данных</h2><form method="post" action="">
+	$table_price .='<h2>'.__('Export/import data','wp-recall').'</h2><form method="post" action="">
 	'.wp_nonce_field('get-csv-file','_wpnonce',true,false).'
-	<p><input type="checkbox" name="post_title" checked value="1"> Добавить заголовок</p>
-	<p><input type="checkbox" name="post_content" checked value="1"> Добавить описание</p>
-        <p><input type="checkbox" name="post_excerpt" value="1"> Добавить краткое описание</p>
-	<h3>Произвольные поля товаров:</h3><table><tr>';
+	<p><input type="checkbox" name="post_title" checked value="1"> '.__('Add a title','wp-recall').'</p>
+	<p><input type="checkbox" name="post_content" checked value="1"> '.__('Add a description','wp-recall').'</p>
+        <p><input type="checkbox" name="post_excerpt" value="1"> '.__('Add a short description','wp-recall').'</p>
+	<h3>'.__('Custom fields goods','wp-recall').':</h3><table><tr>';
 
 	$fields = array(
-		'price-products'=>'Цена товара в основной валюте',
-		'amount_product'=>'Количество товара в наличии',
-		'reserve_product'=>'Товары в резерве',
-		'type_currency'=>'Валюта стоимости товара',
-		'curse_currency'=>'Курс доп.валюты для товара',
-		'margin_product'=>'Наценка на товар',
-		'outsale'=>'1 - товар снят с продажи',
-		'related_products_recall'=>'ID товарной категории выводимой в блоке рекомендуемых или похожих товаров',
+		'price-products'=>__('The price of the product in the default currency','wp-recall'),
+		'amount_product'=>__('The quantity of goods in stock','wp-recall'),
+		'reserve_product'=>__('The goods in reserve','wp-recall'),
+		'type_currency'=>__('The currency value of the goods','wp-recall'),
+		'curse_currency'=>__('The course is for more currency for a product','wp-recall'),
+		'margin_product'=>__('The mark on the product','wp-recall'),
+		'outsale'=>'1 - '.__('the item is no longer available','wp-recall'),
+		'related_products_recall'=>__('ID commodity category is displayed in the unit or recommended similar products','wp-recall'),
 	);
 
 	$fields = apply_filters('products_field_list',$fields);
@@ -420,7 +422,8 @@ global $wpdb;
 		}
 	}
 
-	$table_price .='</tr><tr><td colspan="2" align="right"><input type="submit" name="get_csv_file" value="Выгрузить товары в файл"></td></tr></table>
+	$table_price .='</tr><tr><td colspan="2" align="right">'
+                . '<input type="submit" name="get_csv_file" value="'.__('Upload products to a file','wp-recall').'"></td></tr></table>
 	'.wp_nonce_field('get-csv-file','_wpnonce',true,false).'
         </form>';
 
@@ -428,9 +431,9 @@ global $wpdb;
 	'.wp_nonce_field('add-file-csv','_wpnonce',true,false).'
 	<p>
 	<input type="file" name="file_csv" value="1">
-	<input type="submit" name="add_file_csv" value="Импортировать товары из файла"><br>
-	<small><span style="color:red;">Внимание!</span> Пустые ячейки XML-файла не участвуют в обновлении характеристик товара<br>
-	Значения произвольных полей удаляемые через файл должны заменяться в файле знаком звездочки (*)</small>
+	<input type="submit" name="add_file_csv" value="'.__('To import products from a file','wp-recall').'"><br>
+	<small><span style="color:red;">'.__('Attention','wp-recall').'!</span> '.__('Blank cells XML file do not participate in the update of the characteristics of the goods','wp-recall').'<br>
+	'.__('The values of custom fields to be deleted using the file should be replaced in the file with an asterisk (*)','wp-recall').'</small>
 	</p>
 	</form>';
 	echo $table_price;
@@ -513,14 +516,14 @@ global $wpdb;
 					if(!$ID){
                                             $args['post_type'] = 'products';
                                             $ID = wp_insert_post($args);
-                                            $action = 'был создан и добавлен';
+                                            $action = __('was created and added','wp-recall');
 					}else{
                                             if (count($post)>0){    
                                                 
                                                 $sql = "UPDATE $wpdb->posts SET ".implode(",",$post)." WHERE ID = '$ID'";
                                                 $res = $wpdb->query($sql);
-                                                if($res) $action = 'был обновлен';
-                                                else $action = 'не был обновлен';
+                                                if($res) $action = __('was updated','wp-recall');
+                                                else $action = __('was not updated','wp-recall');
                                             }
 					}
 					unset($post);
@@ -546,7 +549,7 @@ global $wpdb;
 
 					unset($data);
 					$updated++;
-					echo "{$updated}. Товар {$ID} $action<br>";
+					echo "{$updated}. ".__('Product','wp-recall')." {$ID} $action<br>";
 					flush();
 				}
 
@@ -557,7 +560,7 @@ global $wpdb;
 				}
 
 			}else{
-				echo '<div class="error">Неверный формат загруженного файла! Допустимо только XML</div>';
+				echo '<div class="error">'.__('Invalid format of the downloaded file! Only valid XML','wp-recall').'</div>';
 			}
 	}
 }

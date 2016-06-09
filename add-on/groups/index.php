@@ -106,7 +106,8 @@ function rcl_register_default_group_sidebars(){
 function rcl_group(){
     global $rcl_group;
     
-    rcl_enqueue_script( 'groups-image-uploader', rcl_addon_url('js/groups-image-uploader.js', __FILE__),false,true);
+    if(rcl_is_group_can('admin'))
+        rcl_enqueue_script( 'groups-image-uploader', rcl_addon_url('js/groups-image-uploader.js', __FILE__),false,true);
 
     $admin = (rcl_is_group_can('admin')||current_user_can('edit_others_posts'))? 1: 0;
 

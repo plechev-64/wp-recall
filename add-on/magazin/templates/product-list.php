@@ -1,6 +1,6 @@
-<?
-	/*Шаблон для отображения содержимого шорткода [productlist] с указанием атрибута type='list'*/
-	/*Данный шаблон можно разместить в папке используемого шаблона /wp-content/wp-recall/templates/ и он будет подключаться оттуда*/
+<?php
+    /*Шаблон для отображения содержимого шорткода [productlist] с указанием атрибута type='list'*/
+    /*Данный шаблон можно разместить в папке используемого шаблона /wp-content/wp-recall/templates/ и он будет подключаться оттуда*/
 ?>
 <?php global $post,$productlist; ?>
 <div class="product" id="product-<?php the_ID(); ?>" itemscope itemtype="http://schema.org/Product">

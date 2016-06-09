@@ -221,8 +221,8 @@ function rcl_get_product_category($prod_id){
     $start = '<div class="product-meta meta"><i class="fa fa-%s rcl-icon"></i><span class="meta-content-box"><span class="meta-content">%s: ';
     $end = '</span></span></div>';
     
-    $cats = get_the_term_list( $prod_id, 'prodcat', sprintf($start,'folder-open','Категории'), ', ', $end );
-    $cats .= get_the_term_list( $prod_id, 'product_tag', sprintf($start,'tags','Метки'), ', ', $end );
+    $cats = get_the_term_list( $prod_id, 'prodcat', sprintf($start,'folder-open',__('Categories','wp-recall')), ', ', $end );
+    $cats .= get_the_term_list( $prod_id, 'product_tag', sprintf($start,'tags',__('Tags','wp-recall')), ', ', $end );
     
     if(!$cats) return false;
     
@@ -290,7 +290,7 @@ function rcl_filters_price($price,$prod_id){
 
 add_filter('null_price','rcl_get_null_price_content',10);
 function rcl_get_null_price_content($price){
-    return '<span class="price-prod no-price" itemprop="price" content="0">Бесплатно!</span>';
+    return '<span class="price-prod no-price" itemprop="price" content="0">'.__('Free','wp-recall').'!</span>';
 }
 
 add_filter('not_null_price','rcl_get_not_null_price_content',20);
@@ -305,10 +305,10 @@ function rcl_get_chart_orders($orders){
 
     $chartArgs = array();
     $chartData = array(
-        'title' => 'Динамика доходов',
-        'title-x' => 'Период времени',
+        'title' => __('Finance','wp-recall'),
+        'title-x' => __('Period of time','wp-recall'),
         'data'=>array(
-            array('"Дни/Месяцы"', '"Платежи (шт.)"', '"Доход (тыс.)"')
+            array('"'.__('Days/Months','wp-recall').'"', '"'.__('Payments (pcs.)','wp-recall').'"', '"'.__('Income (tsd.)','wp-recall').'"')
         )
     );
 
@@ -428,16 +428,16 @@ function rcl_payment_order($order_id,$user_id=false){
     $text = apply_filters('payment_mail_text',$text);
 
     $textmail = '
-    <p>Пользователь оплатил заказ в магазине "'.get_bloginfo('name').'".</p>
-    <h3>Информация о пользователе:</h3>
-    <p><b>Имя</b>: '.get_the_author_meta('display_name',$user_id).'</p>
-    <p><b>Email</b>: '.get_the_author_meta('user_email',$user_id).'</p>
+    <p>'.__('User pay a purchase','wp-recall').' "'.get_bloginfo('name').'".</p>
+    <h3>'.__('Information about the customer','wp-recall').':</h3>
+    <p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$user_id).'</p>
+    <p><b>'.__('Email','wp-recall').'</b>: '.get_the_author_meta('user_email',$user_id).'</p>
     '.$show_custom_field.'
-    <p>Заказ №'.$order_id.' получил статус "Оплачено".</p>
-    <h3>Детали заказа:</h3>
+    <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$order_id,rcl_get_status_name_order(1)).'.</p>
+    <h3>'.__('Order details','wp-recall').':</h3>
     '.$table_order.'
 	'.$text.'
-    <p>Ссылка для управления заказом в админке:</p>
+    <p>'.__('Link to control the order in admin','wp-recall').':</p>
     <p>'.admin_url('admin.php?page=manage-rmag&order-id='.$order_id).'</p>';
 
     if($admin_email){
@@ -449,15 +449,15 @@ function rcl_payment_order($order_id,$user_id=false){
 
     $email = get_the_author_meta('user_email',$user_id);
     $textmail = '
-    <p>Вы оплатили заказ в магазине "'.get_bloginfo('name').'" средствами со своего личного счета.</p>
-    <h3>Информация о покупателе:</h3>
-    <p><b>Имя</b>: '.get_the_author_meta('display_name',$user_id).'</p>
-    <p><b>Email</b>: '.get_the_author_meta('user_email',$user_id).'</p>
-    <p>Заказ №'.$order_id.' получил статус "Оплачено".</p>
-    <h3>Детали заказа:</h3>
+    <p>'.sprintf(__('You paid for a purchase "%s" funds from his personal account.','wp-recall'),get_bloginfo('name')).'</p>
+    <h3>'.__('Information about the customer','wp-recall').':</h3>
+    <p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$user_id).'</p>
+    <p><b>'.__('Email','wp-recall').'</b>: '.get_the_author_meta('user_email',$user_id).'</p>
+    <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$order_id,rcl_get_status_name_order(1)).'.</p>
+    <h3>'.__('Order details','wp-recall').':</h3>
     '.$table_order.'
 	'.$text.'
-    <p>Ваш заказ оплачен и поступил в обработку. Вы можете следить за сменой его статуса из своего личного кабинета</p>';
+    <p>'.__('Your order has been paid and is processing. You can follow the change of his status from his personal account','wp-recall').'</p>';
     rcl_mail($email, $subject, $textmail);
 
     do_action('rcl_payment_order',$order_id,$order);
