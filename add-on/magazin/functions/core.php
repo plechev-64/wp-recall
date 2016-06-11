@@ -247,8 +247,10 @@ function rcl_secondary_currency($type=0){
 
 //Цена товара
 function rcl_get_number_price($prod_id){
-	$price = get_post_meta($prod_id,'price-products',1);
-    return apply_filters('rcl_get_number_price',$price,$prod_id);
+    $price = get_post_meta($prod_id,'price-products',1);
+    $price = apply_filters('rcl_get_number_price',$price,$prod_id);
+    $price = (!$price) ? 0 : $price;
+    return $price;
 }
 
 add_filter('rcl_get_number_price','rcl_get_currency_price',10,2);

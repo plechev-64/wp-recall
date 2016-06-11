@@ -48,8 +48,9 @@ function rmag_primary_options($content){
 
                     $opt->label(__('Register at registration','wp-recall')),
                     $opt->option('select',array(
-                        'name'=>'noreg_order',
-                        'options'=>array(__('Included','wp-recall'),__('Disabled','wp-recall'))
+                        'name'=>'buyer_register',
+                        'default'=>1,
+                        'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
                     )),
                     $opt->notice(__('If enabled , the user is automatically registered on the site if successful ordering','wp-recall'))
                 )
@@ -61,7 +62,7 @@ function rmag_primary_options($content){
                     $opt->label(__('Accounting for goods in stock','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'products_warehouse_recall',
-                        'options'=>array(__('Included','wp-recall'),__('Disabled','wp-recall'))
+                        'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
                     )),
                     $opt->notice(__('If records are maintained , then the goods will be possible to observe the presence of the warehouse. If the goods are not available , the button on the product to add to cart is not','wp-recall'))
                 )

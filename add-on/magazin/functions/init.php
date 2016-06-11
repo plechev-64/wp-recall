@@ -238,11 +238,8 @@ function rcl_fill_availability_column($column_name, $post_id) {
             if($amount==0&&$amount!='') echo '<span style="color:red;">'.__('in stock','wp-recall').'</span> ';
             else echo '<span style="color:green;">'.__('in stock','wp-recall').'</span> ';
 
-            if($amount!='') $form_amount = '<input type="text" name="amountprod[]" size="3" value="">';
-                    else $form_amount = false;
-
-            if($amount!=false&&$amount>0) echo '<span style="color:green;">'.$amount.'</span> '.$form_amount;
-                    else if($amount<=0) echo '<span style="color:red;">'.$amount.'</span> '.$form_amount;
+            if($amount!=false&&$amount>0) echo '<span style="color:green;">'.$amount.'</span>';
+                    else if($amount<=0) echo '<span style="color:red;">'.$amount.'</span>' ;
 
             if($reserve) echo '<br /><span style="color:orange;">'.__('in reserve','wp-recall').' '.$reserve.'</span>';
         }else{

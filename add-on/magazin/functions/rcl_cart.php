@@ -23,12 +23,12 @@ class Rcl_Cart {
         $this->values = array();
         $this->request = '';
 
-		$CartData = (object)array(
-			'numberproducts'=>$all,
-			'cart_price'=>$this->summ,
-			'cart_url'=>$rmag_options['basket_page_rmag'],
-			'cart'=> $_SESSION['cart']
-		);
+        $CartData = (object)array(
+                'numberproducts'=>$all,
+                'cart_price'=>$this->summ,
+                'cart_url'=>$rmag_options['basket_page_rmag'],
+                'cart'=> $_SESSION['cart']
+        );
     }
 
     function cart_fields($get_fields_order,$key){
@@ -84,50 +84,50 @@ class Rcl_Cart {
 
     }
 
-    function script_request($key){
+        function script_request($key){
 
-        $basket = '';
+            $basket = '';
 
-        foreach((array)$this->values[$key] as $value){
-            if($value['chek']){
-                    $basket .=  "if(jQuery('#".$value['chek']."').attr('checked')=='checked') var ".$value['chek']." = jQuery('#".$value['chek']."').attr('value');";
-                    $reg_request .= "+'&".$value['chek']."='+".$value['chek'];
+            foreach((array)$this->values[$key] as $value){
+                if($value['chek']){
+                        $basket .=  "if(jQuery('#".$value['chek']."').attr('checked')=='checked') var ".$value['chek']." = jQuery('#".$value['chek']."').attr('value');";
+                        $reg_request .= "+'&".$value['chek']."='+".$value['chek'];
+                }
+                if($value['radio']){
+                        $basket .=  "if(jQuery('#".$value['radio']['id']."').attr('checked')=='checked') var ".$value['radio']['name']." = jQuery('#".$value['radio']['id']."').attr('value');";
+                        $reg_radio .= "+'&".$value['radio']['name']."='+".$value['radio']['name'];
+                }
+                if($value['other']){
+                        $basket .=  "var ".$value['other']." = jQuery('#".$value['other']."').attr('value');";
+                        $reg_request .= "+'&".$value['other']."='+".$value['other'];
+                }
             }
-            if($value['radio']){
-                    $basket .=  "if(jQuery('#".$value['radio']['id']."').attr('checked')=='checked') var ".$value['radio']['name']." = jQuery('#".$value['radio']['id']."').attr('value');";
-                    $reg_radio .= "+'&".$value['radio']['name']."='+".$value['radio']['name'];
-            }
-            if($value['other']){
-                    $basket .=  "var ".$value['other']." = jQuery('#".$value['other']."').attr('value');";
-                    $reg_request .= "+'&".$value['other']."='+".$value['other'];
-            }
-        }
 
-        $this->request .=  $reg_request.$reg_radio;
-        return $basket;
-    }
-
-	function get_products(){
-		global $post;
-
-        $basket = '';
-
-        if(isset($_SESSION['cart'])&&$_SESSION['cart']){
-            foreach($_SESSION['cart'] as $id_prod=>$val){
-                $ids[] = $id_prod;
-            }
-            $ids = implode(',',$ids);
-
-            $products = get_posts(array('numberposts' => -1,'order' => 'ASC','post_type' => 'products','include' => $ids));
-
-        }else{
+            $this->request .=  $reg_request.$reg_radio;
             return $basket;
         }
 
-		if(!$products) return false;
+        function get_products(){
+                    global $post;
 
-        return $products;
-    }
+            $basket = '';
+
+            if(isset($_SESSION['cart'])&&$_SESSION['cart']){
+                foreach($_SESSION['cart'] as $id_prod=>$val){
+                    $ids[] = $id_prod;
+                }
+                $ids = implode(',',$ids);
+
+                $products = get_posts(array('numberposts' => -1,'order' => 'ASC','post_type' => 'products','include' => $ids));
+
+            }else{
+                return $basket;
+            }
+
+            if(!$products) return false;
+
+            return $products;
+        }
 
     function cart() {
 
@@ -171,25 +171,30 @@ class Rcl_Cart {
                         var dataString = 'action=rcl_confirm_order'".$this->request.";
                         dataString += '&ajax_nonce='+Rcl.nonce;
                         jQuery.ajax({
-                        type: 'POST',
-                        data: dataString,
-                        dataType: 'json',
-                        url: Rcl.ajaxurl,
-                        success: function(data){
-                            rcl_preloader_hide();
-                            if(data['otvet']==100){
-                                    jQuery('.redirectform').html(data['redirectform']);
-                                    jQuery('.confirm').remove();
-                                    jQuery('.add_remove').empty();
-                            } else if(data['otvet']==10){
-                               jQuery('.redirectform').html(data['amount']);
-                            } else if(data['otvet']==5){
-                                    jQuery('#regnewuser').html(data['recall']);
-                                    jQuery('#regnewuser').slideDown(500).delay(5000).slideUp(500);
-                            }else {
-                               alert('".__('Error','wp-recall')."');
+                            type: 'POST',
+                            data: dataString,
+                            dataType: 'json',
+                            url: Rcl.ajaxurl,
+                            success: function(data){
+                                rcl_preloader_hide();
+
+                                if(data.errors){
+                                    jQuery.each(data.errors, function( index, value ) {
+                                        rcl_notice(value,'error',10000);
+                                    });
+
+                                    if(data['code']==10){
+                                        jQuery('#rcl-cart-notice').html(data['html']);
+                                    }
+
+                                    return false;
+                                }
+
+                                jQuery('#rcl-cart-notice').html(data['success']);
+                                jQuery('#rcl-cart .confirm').remove();
+                                jQuery('#rcl-cart .add_remove').empty();
+
                             }
-                        }
                         });
                         return false;
                     });
@@ -202,7 +207,7 @@ class Rcl_Cart {
                         if($get_fields) $order_field .= $this->cart_fields($get_fields,'profile');
 
                         $basket .= '<h3 align="center">'.__('To place an order fill out the form below','wp-recall').':</h3>
-						<div id="regnewuser"  style="display:none;"></div>
+			<div id="regnewuser"  style="display:none;"></div>
                         <table class="form-table">
                             <tr>
                                 <td><label>'.__('Enter your E-mail','wp-recall').' <span class="required">*</span>:</label></td>
@@ -228,28 +233,37 @@ class Rcl_Cart {
                                     $basket .= "
                                     var fio = jQuery('.confirm .fio_new_user').attr('value');
                                     var email = jQuery('.confirm .email_new_user').attr('value');
-                                    var dataString = 'action=rcl_register_user_order&fio_new_user='+fio+'&email_new_user='+email".$this->request.";
+                                    var dataString = 'action=rcl_confirm_order&fio_new_user='+fio+'&email_new_user='+email".$this->request.";
                                     dataString += '&ajax_nonce='+Rcl.nonce;
+                                    rcl_preloader_show('#cart-form > table');
                                     jQuery.ajax({
                                         type: 'POST',
                                         data: dataString,
                                         dataType: 'json',
                                         url: Rcl.ajaxurl,
                                         success: function(data){
-                                            if(data['error']){
-                                                rcl_notice(data['error'],'error',10000);
+                                            rcl_preloader_hide();
+
+                                            if(data.errors){
+                                                jQuery.each(data.errors, function( index, value ) {
+                                                    rcl_notice(value,'error',10000);
+                                                });
+
+                                                if(data['code']==10){
+                                                    jQuery('#rcl-cart-notice').html(data['html']);
+                                                }
+
                                                 return false;
                                             }
-                                            if(data['int']==100){
-                                                jQuery('#regnewuser').html(data['recall']);
-                                                jQuery('#regnewuser').slideDown(500);
-                                                if(data['redirect']!=0){
-                                                    location.replace(data['redirect']);
-                                                }else{
-                                                    jQuery('.form-table').remove();
-                                                    jQuery('.rcl_register_user_order').remove();
-                                                }
+                                            
+                                            jQuery('#rcl-cart-notice').html(data['success']);
+                                            jQuery('#rcl-cart .confirm').remove();
+                                            jQuery('#rcl-cart .add_remove').empty();
+                                            
+                                            if(data['redirect']!=0){
+                                                //location.replace(data['redirect']);
                                             }
+
                                         }
                                     });
                                     return false;
@@ -260,6 +274,6 @@ class Rcl_Cart {
             }
 
             return '<form id="rcl-cart" method="post">'.$basket.'</form>'
-                    . '<div class="redirectform" style="text-align:center;"></div>';
+                    . '<div id="rcl-cart-notice" class="redirectform" style="text-align:center;"></div>';
     }
 }

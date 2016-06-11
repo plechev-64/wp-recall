@@ -90,10 +90,3 @@ function rcl_orders($author_lk){
 
 	return $block;
 }
-
-add_filter('rcl_init_js_variables','rcl_init_js_magazine_variables',10);
-function rcl_init_js_magazine_variables($data){
-    global $rmag_options;
-    $data['magazine']['cart_url'] = (isset($rmag_options['basket_page_rmag']))? get_permalink($rmag_options['basket_page_rmag']): '#';
-    return $data;
-}

@@ -46,12 +46,18 @@ function rcl_insert_user($data){
 
 //подтверждаем регистрацию пользователя по ссылке
 function rcl_confirm_user_registration(){
-global $wpdb,$rcl_options;
+    global $wpdb,$rcl_options;
     $reglogin = $_GET['rglogin'];
     $regpass = $_GET['rgpass'];
     $regcode = md5($reglogin);
     if($regcode==$_GET['rgcode']){
         if ( $user = get_user_by('login', $reglogin) ){
+            
+            $user_data = get_userdata( $user->ID );
+            $roles = $user_data->roles;
+            $role = array_shift($roles);
+            if($role!='need-confirm') return false;
+            
             wp_update_user( array ('ID' => $user->ID, 'role' => get_option('default_role')) ) ;
             $time_action = current_time('mysql');
             $action = rcl_get_time_user_action($user->ID);
