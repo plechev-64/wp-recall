@@ -214,6 +214,10 @@ function rcl_manage_publicform(){
 	<small>Форма публикации уже содержит обязательные поля для заголовка записи, контента, ее категории и указания метки.</small><br>
 	'.$form_navi.'
 	'.$f_edit->edit_form(array(
+            $f_edit->option('text',array(
+                'name'=>'notice',
+                'notice'=>__('signature to the field','wp-recall')
+            )),
             $f_edit->option('select',array(
                 'name'=>'requared',
                 'notice'=>__('required field','wp-recall'),

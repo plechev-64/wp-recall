@@ -835,7 +835,26 @@ a.data-filter.filter-active:hover {
 }
 /* фильтр поиск End */
 
+/*Произвольные поля плагина*/
+.rcl-field-input{
+    display: block;
+}
 
+.rcl-field-input .rcl-field-notice{
+    display:block;
+    clear: both;
+    margin: 5px 0 0;
+    color:#797979;
+}
+
+.rcl-field-input .rcl-field-notice .fa{
+    margin-right:5px;
+}
+
+.rcl-custom-fields .rcl-field-value{
+    
+}
+/**/
 
 /* Контент лк Start */
 .wprecallblock #lk-content .recall_content_block,
@@ -884,13 +903,12 @@ a.data-filter.filter-active:hover {
 
 #your-profile table input,
 #your-profile table textarea {
-    float: left;
-	font: 14px/1.5 Tahoma,Arial;			/*++Twenty15++*/
+    font: 14px/1.5 Tahoma,Arial;			/*++Twenty15++*/
     max-width: 99%;
     padding: 8px 2%;
     width: 100%;
-	border:none;
-	box-sizing: border-box;
+    border:none;
+    box-sizing: border-box;
 }
 #your-profile table select {
     float: left;
@@ -936,32 +954,43 @@ a.data-filter.filter-active:hover {
     color: #000;
     text-decoration: underline;
 }
-#your-profile table td a {
-    color: rgb(76, 140, 189);
-    display: flex;
-    font: 14px/1.5 Verdana,arial;
-    margin: 6px 0 0 6px;
-    padding: 0;
-    width: 100px;
-}
+
 #your-profile table td a:hover {
 	color: #000;
 }
 #your-profile table td a:hover i {
 	color: red;
 }
-#your-profile table  td .fa-times-circle-o {
+
+#tab-profile .type-file-input{
+    
+}
+#tab-profile .file-manage-box{
+    display: block;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+#tab-profile .file-manage-box .fa {
     color: rgb(229, 57, 53);
-    font-size: 24px;
-    padding: 0 2px;
+    font-size: 16px;
+    margin-right: 5px;
 }
-#your-profile table td span a {
+#tab-profile .file-manage-box .type-file-value{
+    
+}
+#tab-profile .file-manage-box .delete-file-url{
     float: right;
-    width: 115px;
 }
-#your-profile .meta-file {
-    margin: -11px 0 5px;
+#tab-profile .file-manage-box .delete-file-url a{
+    display: inline-block;
+}
+#tab-profile .file-field-upload{
+    display: block;
     padding: 5px;
+    background: #f4f4f4;
+}
+#tab-profile .file-field-upload input{
+    width: auto;
 }
 /* Контент лк End */
 

@@ -632,6 +632,10 @@ function rcl_manage_profile_fields(){
 	$users_fields = '<h2>'.__('Manage profile fields','wp-recall').'</h2>';
 
         $users_fields .= $f_edit->edit_form(array(
+            $f_edit->option('text',array(
+                'name'=>'notice',
+                'notice'=>__('signature to the field','wp-recall')
+            )),
             $f_edit->option('select',array(
                 'name'=>'requared',
                 'notice'=>__('required field','wp-recall'),

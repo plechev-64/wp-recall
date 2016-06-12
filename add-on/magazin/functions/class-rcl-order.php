@@ -243,6 +243,7 @@ class Rcl_Order{
             }
             
             $confirm = (isset($rcl_options['confirm_register_recall']))? $rcl_options['confirm_register_recall']: false;
+            
             //Сразу авторизуем пользователя
             if($this->buyer_register&&!$confirm){
 
@@ -377,7 +378,7 @@ class Rcl_Order{
             $subject = __('Your account information and order','wp-recall').' №'.$this->order_id;
 
             if($rcl_options['confirm_register_recall']==1){
-                $url = get_bloginfo('wpurl').'/?rglogin='.$this->userdata['user_login'].'&rgpass='.$this->userdata['user_password'].'&rgcode='.md5($this->userdata['user_login']);
+                $url = get_bloginfo('wpurl').'/?rglogin='.$this->userdata['user_login'].'&rgpass='.$this->userdata['user_pass'].'&rgcode='.md5($this->userdata['user_login']);
 
                 $textmail .= '<h3>'.__('You have been registered','wp-recall').'</h3>
                 <p>'.__('Confirm your email on the site by clicking on the link below','wp-recall').':</p>
@@ -390,7 +391,7 @@ class Rcl_Order{
             <p>'.__('Personal account of the buyer has been created for you , where you can watch the changing of the status of your orders , create new orders and pay for them means available','wp-recall').'</p>
             <p>'.__('Your authorization data in your personal account','wp-recall').':</p>
             <p>'.__('Login','wp-recall').': '.$this->userdata['user_login'].'</p>
-            <p>'.__('Password','wp-recall').': '.$this->userdata['user_password'].'</p>
+            <p>'.__('Password','wp-recall').': '.$this->userdata['user_pass'].'</p>
             <p>'.__('In the future, use your personal cabinet in new orders on our website','wp-recall').'.</p>';
         }
 

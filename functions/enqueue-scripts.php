@@ -55,6 +55,8 @@ function rcl_fileupload_scripts(){
     rcl_enqueue_script( 'jquery-fileupload', RCL_URL.'js/fileupload/js/jquery.fileupload.js', array(),true );
     rcl_enqueue_script( 'jquery-fileupload-process', RCL_URL.'js/fileupload/js/jquery.fileupload-process.js', array(),true );
     rcl_enqueue_script( 'jquery-fileupload-image', RCL_URL.'js/fileupload/js/jquery.fileupload-image.js', array(),true );
+    
+    rcl_old_footer_scripts();
 
 }
 
@@ -110,6 +112,8 @@ function rcl_frontend_scripts(){
     rcl_theme_style();
 
     rcl_enqueue_script( 'rcl-primary-scripts', RCL_URL.'js/recall.js' );
+    
+    rcl_old_header_scripts();
 
     $local = array(
         'save' => __('Save','wp-recall'),
@@ -155,5 +159,21 @@ function rcl_admin_scrips(){
     wp_enqueue_style( 'wp-color-picker' ); 
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'rcl-admin-scripts', RCL_URL.'rcl-admin/admin.js', array('wp-color-picker'), VER_RCL );
+}
+
+/*deprecated*/
+function rcl_old_header_scripts(){
+    if(!file_exists(RCL_UPLOAD_PATH.'scripts/header-scripts.js')){
+        rcl_update_scripts;
+    }
+    rcl_enqueue_script( 'rcl-old-header-scripts', RCL_UPLOAD_URL.'scripts/header-scripts.js' );
+    
+}
+
+/*deprecated*/
+function rcl_old_footer_scripts(){
+    if(file_exists(RCL_UPLOAD_PATH.'scripts/footer-scripts.js')){
+        rcl_enqueue_script( 'rcl-old-footer-scripts', RCL_UPLOAD_URL.'scripts/footer-scripts.js', array(), true );
+    }
 }
 

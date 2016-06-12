@@ -6,6 +6,7 @@ class Rcl_Custom_Fields{
     public $slug;
     public $required;
     public $files;
+    public $placeholder;
 
     function __construct(){
         $this->files = array();
@@ -19,9 +20,10 @@ class Rcl_Custom_Fields{
     function get_input($field,$value=false){
         global $user_LK,$user_ID;
 
-        $this->value = (isset($field['default'])&&!$value)? $field['default']: $value;
+        $this->value = (isset($field['default'])&&!$value)? $field['default']: stripslashes_deep($value);
         $this->slug = $field['slug'];
         $this->required = ($field['requared']==1)? 'required': '';
+        $this->placeholder = (isset($field['placeholder'])&&$field['placeholder'])? "placeholder='".str_replace("'",'"',$field['placeholder'])."'": '';
 
         if(!$field['type']) return false;
 
@@ -39,59 +41,65 @@ class Rcl_Custom_Fields{
 
         $callback = 'get_type_'.$field['type'];
 
-        return $this->$callback($field);
-
+        $html_field = $this->$callback($field);
+        
+        if(isset($field['notice'])&&$field['notice']) 
+            $html_field .= '<span class="rcl-field-notice"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>'.$field['notice'].'</span>';
+        
+        return '<span class="rcl-field-input type-'.$field['type'].'-input">'.$html_field.'</span>';
     }
 
     function get_type_text($field){
-        return '<input type="text" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="text" '.$this->required.' '.$this->placeholder.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
     }
 
     function get_type_tel($field){
-        return '<input type="tel" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="tel" '.$this->required.' '.$this->placeholder.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
     }
 
     function get_type_email($field){
-        return '<input type="email" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="email" '.$this->required.' '.$this->placeholder.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
     }
 
     function get_type_url($field){
-        return '<input type="url" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        return '<input type="url" '.$this->required.' '.$this->placeholder.' name="'.$this->slug.'" id="'.$this->slug.'" value="'.$this->value.'"/>';
     }
 
     function get_type_date($field){
-        return '<input type="text" '.$this->required.' class="datepicker" name="'.$this->slug.'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        return '<input type="text" '.$this->required.' '.$this->placeholder.' class="datepicker" name="'.$this->slug.'" id="'.$this->slug.'" value="'.$this->value.'"/>';
     }
 
     function get_type_time($field){
-        return '<input type="time" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="time" '.$this->required.' '.$this->placeholder.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
     }
 
     function get_type_number($field){
-        return '<input type="number" '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="number" '.$this->required.' '.$this->placeholder.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
     }
 
     function get_type_file($field){
         global $user_ID;
         $input = '';
-        if($this->value) $input .= $this->get_field_value($field,$this->value,0);
-
+        
         $user_id = (is_admin())? $_GET['user_id']: $user_ID;
         if(!$user_id) $user_id = $user_ID;
 
         $url = (is_admin()&&!(defined( 'DOING_AJAX' ) && DOING_AJAX))? 
                 admin_url('?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value).'&user_id='.$user_id): 
                 get_bloginfo('wpurl').'/?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value);
-
-        if($this->value&&!$field['requared']) $input .= ' <a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a>';
+        
+        if($this->value){
+            $input .= $this->get_field_value($field,$this->value,0);
+            if(!$field['requared']) $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a></span>';
+            $input = '<span class="file-manage-box">'.$input.'</span>';
+        }
 
         $accept = ($field['field_select'])? 'accept=".'.implode(',.',array_map('trim',explode(',',$field['field_select']))).'"': '';
         $required = (!$this->value)? $this->required: '';
-
-        if($this->value) $input .= '<br>';
+        
         $size = ($field['sizefile'])? $field['sizefile']: 2;
 
-        $input .= '<span id="'.$this->slug.'-content"><input class="meta-file" data-size="'.$size.'" type="file" '.$required.' '.$accept.' name="'.$this->slug.'" id="'.$this->slug.'" value=""/></span> ('.__('Max size','wp-recall').': '.$size.'MB)';
+        $input .= '<span id="'.$this->slug.'-content" class="file-field-upload"><input class="meta-file" data-size="'.$size.'" type="file" '.$required.' '.$accept.' name="'.$this->slug.'" id="'.$this->slug.'" value=""/> ('.__('Max size','wp-recall').': '.$size.'MB)</span>';
 
         $input .= $this->get_files_scripts();
 
@@ -101,7 +109,7 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_textarea($field){
-        return '<textarea name="'.$this->slug.'" '.$this->required.' id="'.$this->slug.'" rows="5" cols="50">'.$this->value.'</textarea>';
+        return '<textarea name="'.$this->slug.'" '.$this->required.' '.$this->placeholder.' id="'.$this->slug.'" rows="5" cols="50">'.$this->value.'</textarea>';
     }
 
     function get_type_agree($field){
@@ -114,7 +122,7 @@ class Rcl_Custom_Fields{
         $count_field = count($fields);
         $field_select = '';
         for($a=0;$a<$count_field;$a++){
-                $field_select .='<option '.selected($this->value,$fields[$a],false).' value="'.trim($fields[$a]).'">'.$fields[$a].'</option>';
+            $field_select .='<option '.selected($this->value,$fields[$a],false).' value="'.trim($fields[$a]).'">'.$fields[$a].'</option>';
         }
         return '<select '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'">
         '.$field_select.'
@@ -129,11 +137,11 @@ class Rcl_Custom_Fields{
         for($a=0;$a<$count_field;$a++){
             if(!is_array($this->value)) $selected = selected($this->value,$fields[$a],false);
             else {
-                    $arrValue = $this->value;
-                    for($ttt = 0; $ttt < count($arrValue); $ttt++) {
-                            $selected = selected($arrValue[$ttt],$fields[$a],false);
-                            if(strlen($selected) > 3) break;
-                    }
+                $arrValue = $this->value;
+                for($ttt = 0; $ttt < count($arrValue); $ttt++) {
+                    $selected = selected($arrValue[$ttt],$fields[$a],false);
+                    if(strlen($selected) > 3) break;
+                }
             }
             $field_select .='<option '.$selected.' value="'.trim($fields[$a]).'">'.$fields[$a].'</option>';
         }
@@ -185,6 +193,9 @@ class Rcl_Custom_Fields{
         if(!isset($field['type'])||!$value) return false;
         
         $show = '';
+        
+        if($value) 
+            $value = stripslashes_deep($value);
 
         if(is_array($value)){
             
@@ -221,16 +232,19 @@ class Rcl_Custom_Fields{
         $types = array('text','tel','time','date','number','select','radio');
             
         if(in_array($field['type'],$types)){
-            $show = ' <span>'.$value.'</span>';
+            $show = $value;
         }
+
         if($field['type']=='file')
-                $show = ' <span><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($value), 'user-'.$user_ID ).'">'.__('Download file','wp-recall').'</a></span>';
+                $show = '<i class="fa fa-upload" aria-hidden="true"></i><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($value), 'user-'.$user_ID ).'">'.__('Upload the downloaded file','wp-recall').'</a>';
         if($field['type']=='email')
-                $show = ' <span><a rel="nofollow" target="_blank" href="mailto:'.$value.'">'.$value.'</a></span>';
+                $show = '<a rel="nofollow" target="_blank" href="mailto:'.$value.'">'.$value.'</a>';
         if($field['type']=='url')
-                $show = ' <span><a rel="nofollow" target="_blank" href="'.$value.'">'.$value.'</a></span>';            
+                $show = '<a rel="nofollow" target="_blank" href="'.$value.'">'.$value.'</a>';            
         if($field['type']=='textarea')
-                $show = '<p>'.nl2br($value).'</p>';
+                $show = nl2br($value);
+        
+        $show = '<span class="rcl-field-value type-'.$field['type'].'-value">'.$show.'</span>';
         
         if(isset($field['after'])) $show .= ' '.$field['after'];
 

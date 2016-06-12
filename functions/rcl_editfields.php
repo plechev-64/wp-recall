@@ -25,7 +25,7 @@ class Rcl_EditFields {
             default: $name_option = 'rcl_fields_'.$posttype;
         }
 
-        $Option_Value = get_option( $name_option );
+        $Option_Value = stripslashes_deep(get_option( $name_option ));
         $this->name_option = $name_option;
     }
 
@@ -107,6 +107,11 @@ class Rcl_EditFields {
 
         $textarea_select .= ($this->vals['type']=='file')? '<input type="number" name="field[sizefile]['.$this->vals['slug'].']" value="'.$this->vals['sizefile'].'"> '.__('maximum size of uploaded file, MB (Default - 2)','wp-recall').'<br>':'';
         $textarea_select .= ($this->vals['type']=='agree')? '<input type="url" name="field[url-agreement]['.$this->vals['slug'].']" value="'.$this->vals['url-agreement'].'"> '.__('URL Agreement','wp-recall').'<br>':'';
+        
+        if(!isset($types[$this->vals['type']])){
+            $placeholder = (isset($this->vals['placeholder']))? $this->vals['placeholder']: '';
+            $textarea_select .= "<div class='field-option placeholder-field'><input type=text name='field[placeholder][]' value='".$placeholder."'><br>placeholder</div>";
+        }
 
         $field = '<li id="field-'.$this->vals['slug'].'" data-slug="'.$this->vals['slug'].'" data-type="'.$this->vals['type'].'" class="rcl-custom-field">
                 '.$this->header_field().'
@@ -220,8 +225,10 @@ class Rcl_EditFields {
                         $edit);
 
                     $field .= '</div>';
-                }           
-                    $field .= '<div class="field-options-box secondary-settings">'
+                } 
+                
+                $field .= '<div class="field-options-box secondary-settings">'
+                        .'<div class="field-option placeholder-field"><input type="text" name="field[placeholder][]" value=""><br>placeholder</div>'
                         .$this->get_options()
                     .'</div>
                 </div>
@@ -277,11 +284,11 @@ class Rcl_EditFields {
     }
 
     function text($args,$edit){
-	$val = ($this->vals)? stripslashes_deep( $this->vals[$args['name']] ): '';
+	$val = ($this->vals)? stripslashes_deep( str_replace("'",'"',$this->vals[$args['name']] )): '';
         if(!$edit) return $val.'<input type="hidden" name="field['.$args['name'].'][]" value="'.$val.'">';
         $ph = (isset($args['placeholder']))? $args['placeholder']: '';
         $pattern = (isset($args['pattern']))? 'pattern="'.$args['pattern'].'"': '';
-        $field = '<input type="text" placeholder="'.$ph.'" '.$pattern.' name="field['.$args['name'].'][]" value="'.$val.'"> ';
+        $field = "<input type=text placeholder='".$ph."' ".$pattern." name=field[".$args['name']."][] value='".$val."'> ";
         
         return $field;
     }
@@ -329,11 +336,12 @@ class Rcl_EditFields {
         }
         
         $fs = 0;
+        $placeholder_id = 0;
         $tps = array('select'=>1,'multiselect'=>1,'radio'=>1,'checkbox'=>1,'agree'=>1,'file'=>1);
         
         foreach($_POST['field'] as $key=>$data){
             
-            if($key=='field_select'||$key=='sizefile') continue;
+            if($key=='placeholder'||$key=='field_select'||$key=='sizefile') continue;
             
             foreach($data as $a=>$value){
                 
@@ -356,8 +364,11 @@ class Rcl_EditFields {
                     if($_POST['field']['type'][$a]=='agree'){
                         $fields[$a]['url-agreement'] = $_POST['field']['url-agreement'][$_POST['field']['slug'][$a]];
                     }
+                    
                     if(isset($tps[$_POST['field']['type'][$a]])){
                         $fields[$a]['field_select'] = $_POST['field']['field_select'][$fs++];
+                    }else{
+                        $fields[$a]['placeholder'] = $_POST['field']['placeholder'][$placeholder_id++];
                     }
 
                 }
@@ -374,7 +385,7 @@ class Rcl_EditFields {
 
         $res = update_option( $this->name_option, $fields );
 
-        if($res) $Option_Value = $fields;
+        if($res) $Option_Value = stripslashes_deep($fields);
 
         return $res;
     }

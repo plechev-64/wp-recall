@@ -17,9 +17,7 @@ function rcl_get_value_url_params(){
 var rcl_url_params = rcl_get_value_url_params();
 
 jQuery(function($){
-    
-    
-    
+
     if(rcl_url_params['options']){
         $('.wrap-recall-options').slideUp();
         $('#options-'+rcl_url_params['options']).slideDown();
@@ -51,18 +49,24 @@ jQuery(function($){
         var val = $(this).val();
         var parent = $(this).parents('.rcl-custom-field');
         var textarea = parent.find('.field-select');
+        
+        var option_box = parent.find('.secondary-settings');
+        var placeholder = parent.find('.placeholder-field');
+        
         if(val!='select'&&val!='multiselect'&&val!='radio'&&val!='checkbox'&&val!='agree'&&val!='file'){
             textarea.attr('disabled',true);
+            if(!placeholder.size())
+                option_box.prepend('<div class="field-option placeholder-field"><input type="text" name="field[placeholder][]"><br>placeholder</div>');
         }else{ 
             
-            var option_box = parent.find('.secondary-settings');
+            parent.find('.placeholder-field').remove();
             
             if(textarea.size()){              
                 textarea.attr('disabled',false);
             }else{
                 option_box.prepend('<span class="textarea-notice"></span><textarea rows="1" style="height:50px" class="field-select" name="field[field_select][]"></textarea>');
             }
-            
+
             var notice_box = option_box.children('.textarea-notice');
             
             if(val=='agree'){
