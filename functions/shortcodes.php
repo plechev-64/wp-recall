@@ -7,20 +7,16 @@ function rcl_get_userlist($atts, $content = null){
     require_once 'class-rcl-users.php';
 
     $users = new Rcl_Users($atts);
-
+    
     $count_users = false;
 
     if(!$users->number){
 
-        $rqst = $users->search_request();
-
-        $search_string = ($rqst)? '&'.implode('&',$rqst): '';
-
         $count_users = $users->count_users();
-
-        $rclnavi = new RCL_navi($users->inpage,$count_users,$search_string,$users->paged);
-        $users->offset = $rclnavi->offset;
-        $users->number = $rclnavi->inpage;
+        
+        $pagenavi = new Rcl_PageNavi('rcl-users-'.$users->id,$count_users,array('in_page'=>$users->inpage));
+        $users->offset = $pagenavi->offset;
+        $users->number = $pagenavi->in_page;
     }
 
     $timeout = (isset($rcl_options['timeout'])&&$rcl_options['timeout'])? $rcl_options['timeout']: 600;
@@ -66,8 +62,8 @@ function rcl_get_userlist($atts, $content = null){
 
     $userlist .= '</div>';
 
-    if(isset($rclnavi->inpage)&&$rclnavi->inpage)
-        $userlist .= $rclnavi->navi();
+    if(isset($pagenavi->in_page)&&$pagenavi->in_page)
+        $userlist .= $pagenavi->pagenavi();
 
     $users->remove_data();
     

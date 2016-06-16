@@ -44,9 +44,37 @@ class Rcl_Custom_Fields{
         $html_field = $this->$callback($field);
         
         if(isset($field['notice'])&&$field['notice']) 
-            $html_field .= '<span class="rcl-field-notice"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>'.$field['notice'].'</span>';
+            $html_field .= '<span class="rcl-field-notice"><i class="fa fa-info" aria-hidden="true"></i>'.$field['notice'].'</span>';
         
         return '<span class="rcl-field-input type-'.$field['type'].'-input">'.$html_field.'</span>';
+    }
+    
+    function get_type_dynamic($args){
+        
+        $field = '<span class="dynamic-values">';
+        
+        if($this->value&&is_array($this->value)){
+            $cnt = count($this->value);
+            foreach((array)$this->value as $k=>$val){
+                $field .= '<span class="dynamic-value">';
+                $field .= '<input type="text" '.$this->required.' '.$this->placeholder.' name="'.$this->slug.'[]" maxlength="50" value="'.$val.'"/>';
+                if($cnt==($k+1)){
+                    $field .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+                }else{
+                    $field .= '<a href="#" onclick="rcl_remove_dynamic_field(this);return false;"><i class="fa fa-minus" aria-hidden="true"></i></a>';
+                }
+                $field .= '</span>';
+            }
+        }else{
+            $field .= '<span class="dynamic-value">';
+            $field .= '<input type="text" '.$this->required.' '.$this->placeholder.' name="'.$this->slug.'[]" maxlength="50" value=""/>';
+            $field .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+            $field .= '</span>';
+        }
+        
+        $field .= '</span>';
+        
+        return $field;
     }
 
     function get_type_text($field){
@@ -207,18 +235,15 @@ class Rcl_Custom_Fields{
                 $value = $links;
             }
             
-            if($field['type']=='checkbox'){
+            $array_types = array('checkbox','multiselect','dynamic');
+            
+            if(in_array($field['type'],$array_types)){
                 $chek_field = '';
                 $chek_field = implode(', ',$value);
                 if($chek_field)
                     $show = $chek_field;
             }
-            if($field['type']=='multiselect'){
-                $chek_field = '';
-                $chek_field = implode(', ',$value);
-                if($chek_field)
-                    $show = $chek_field;
-            }
+            
         }else{
             
             $value = esc_html($value);

@@ -170,7 +170,8 @@ class Rcl_EditFields {
                 'time'=>__('Time','wp-recall'),
                 'url'=>__('Url','wp-recall'),
                 'agree'=>__('Agreement','wp-recall'),
-                'file'=>__('File','wp-recall')
+                'file'=>__('File','wp-recall'),
+                'dynamic'=>__('Dynamic','wp-recall')
             )
         ));
     }

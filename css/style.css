@@ -854,6 +854,33 @@ a.data-filter.filter-active:hover {
 .rcl-custom-fields .rcl-field-value{
     
 }
+
+.type-dynamic-input{
+    
+}
+.type-dynamic-input .dynamic-values{
+    display: block;
+}
+.type-dynamic-input .dynamic-values .dynamic-value{
+    display: block;
+    margin-bottom: 10px;
+}
+.type-dynamic-input .dynamic-values .dynamic-value a{
+    width:auto;
+    min-width:initial;
+    color: #797979;
+}
+.type-dynamic-input .dynamic-values .dynamic-value .fa{ 
+    padding: 5px;
+    margin: 5px 10px;
+    border: 1px solid #ccc;
+}
+.type-dynamic-input .dynamic-values .dynamic-value input{
+    width: 78%!important;
+}
+#register-form-rcl .type-dynamic-input .dynamic-values .dynamic-value{
+    margin-bottom: 0px;
+}
 /**/
 
 /* Контент лк Start */
@@ -1103,7 +1130,8 @@ a.data-filter.filter-active:hover {
 
 
 /* navigation Start */
-.rcl-navi {
+.rcl-navi,
+.rcl-pager{
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     box-sizing: border-box;
     clear: both;
@@ -1115,21 +1143,25 @@ a.data-filter.filter-active:hover {
     width: 99%;
 }
 .rcl-navi a,
-.rcl-navi span {
+.rcl-navi span,
+.rcl-pager .pager-item span,
+.rcl-pager .pager-item a{
     display:inline-block;
     margin: 0 4px;
     padding: 2px 9px;
 }
-.rcl-navi span {
+.rcl-navi span{
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.4);
 }
-.rcl-navi a:link {										/*++hueman++ добавил :link для перевеса*/
+.rcl-navi a:link,
+.rcl-pager .pager-item a:link{										/*++hueman++ добавил :link для перевеса*/
     background: rgba(243, 243, 243, 0.5);
 	border: none;										/*++Twenty15++*/
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     text-decoration: none;
 }
-.rcl-navi a:hover {
+.rcl-navi a:hover,
+.rcl-pager .pager-item a:hover {
     box-shadow: 0 0 1px 2px rgb(219, 219, 219);
 }
 /* navigation End */

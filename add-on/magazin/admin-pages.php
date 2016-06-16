@@ -142,7 +142,7 @@ function rmag_custom_fields(){
 
         rcl_sortable_scripts();
 
-	include_once RCL_PATH.'functions/rcl_editfields.php';
+	include_once RCL_PATH.'functions/class-rcl-editfields.php';
         $f_edit = new Rcl_EditFields('orderform');
 
 	if($f_edit->verify()) $fields = $f_edit->update_fields();

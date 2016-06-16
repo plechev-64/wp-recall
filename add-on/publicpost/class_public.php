@@ -16,7 +16,8 @@ class Rcl_Public{
 
 			$where = $wpdb->prepare("WHERE post_author='%d' AND post_type='attachment' AND post_mime_type LIKE '%s'",$user_ID,'image%');
 			$cnt = $wpdb->get_var("SELECT COUNT(ID) FROM ".$wpdb->prefix."posts $where");
-			$rclnavi = new RCL_navi(20,$cnt,false,$page);
+
+                        $rclnavi = new Rcl_PageNavi('rcl-posts',$cnt,array('in_page'=>20,'current_page'=>$page));
 			$limit_us = $rclnavi->limit();
 
 			$medias = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts $where ORDER BY ID DESC LIMIT $limit_us");
@@ -49,7 +50,7 @@ class Rcl_Public{
 				}
 				$fls .= '</ul>'
                                     . '</div>';
-				$fls .= $rclnavi->navi();
+				$fls .= $rclnavi->pagenavi();
 				$log['result']=100;
 				$log['content']= $fls;
 			}else{

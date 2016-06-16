@@ -175,7 +175,7 @@ function rcl_manage_publicform(){
 		else $form = 1;
 	}
 
-        include_once RCL_PATH.'functions/rcl_editfields.php';
+        include_once RCL_PATH.'functions/class-rcl-editfields.php';
         $f_edit = new Rcl_EditFields('post',array('id'=>$form,'custom-slug'=>1,'terms'=>1));
 
 	if($f_edit->verify()){

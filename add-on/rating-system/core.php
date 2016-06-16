@@ -743,10 +743,10 @@ function rcl_rating_shortcode($atts){
     if(!$rcl_rating->number){
 
         $count_values = $rcl_rating->count_values();
-        //echo $count_values;
-        $rclnavi = new RCL_navi($rcl_rating->per_page,$count_values);
+
+        $rclnavi = new Rcl_PageNavi('rcl-rating',$count_values,array('in_page'=>$rcl_rating->per_page));
         $rcl_rating->offset = $rclnavi->offset;
-        $rcl_rating->per_page = $rclnavi->inpage;
+        $rcl_rating->per_page = $rclnavi->in_page;
     }
     
     $rcl_cache = new Rcl_Cache();
@@ -778,13 +778,14 @@ function rcl_rating_shortcode($atts){
     $content ='<div class="ratinglist rating-'.$rcl_rating->template.'">';
     foreach($ratings as $rating){
         $rating = (object)$rating;
+        $rating->time_sum = ($rating->time_sum>0)? '+'.$rating->time_sum: $rating->time_sum;
         $content .= rcl_get_include_template('rating-'.$rcl_rating->template.'.php',__FILE__);
     }
 
     $content .='</div>';
     
-    if(isset($rclnavi->inpage)&&$rclnavi->inpage)
-        $content .= $rclnavi->navi();
+    if(isset($rclnavi->in_page)&&$rclnavi->in_page)
+        $content .= $rclnavi->pagenavi();
     
     if($rcl_cache->is_cache){
         //print_r($rcl_cache);

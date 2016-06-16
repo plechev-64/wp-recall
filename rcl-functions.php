@@ -71,7 +71,7 @@ function rcl_init_tabs(){
     }
 }
 
-add_action('init','rcl_init_custom_tabs');
+add_action('init','rcl_init_custom_tabs',10);
 function rcl_init_custom_tabs(){
     $custom_tabs = get_option('rcl_fields_custom_tabs');
     if(!$custom_tabs) return false;
@@ -101,7 +101,7 @@ function rcl_delete_file_cache($string){
     $rcl_cache->delete_file();
 }
 
-add_action('init','rcl_register_recallbar');
+add_action('after_setup_theme','rcl_register_recallbar');
 function rcl_register_recallbar(){
     global $rcl_options;
     if( isset( $rcl_options['view_recallbar'] ) && $rcl_options['view_recallbar'] != 1 ) return false;
@@ -141,18 +141,20 @@ function rcl_crop($filesource,$width,$height,$file){
     return $crop->get_crop($filesource,$width,$height,$file);
 }
 
-function rcl_get_template_path($file_temp,$path=false){
+function rcl_get_template_path($filename,$path=false){
+    
+    if(file_exists(RCL_TAKEPATH.'templates/'.$filename)) 
+            return RCL_TAKEPATH.'templates/'.$filename;
+    
+    $path = ($path)? rcl_addon_path($path).'templates/': RCL_PATH.'templates/';
+    
+    $filepath = $path.$filename;
 
-    $dirs   = array(RCL_TAKEPATH.'templates/', RCL_PATH.'templates/');
+    $filepath = apply_filters('rcl_template_path',$filepath,$filename);
+    
+    if(!file_exists($filepath)) return false;
 
-    if($path) $dirs[1] = rcl_addon_path($path).'templates/';
-
-    foreach($dirs as $dir){
-        if(!file_exists($dir.$file_temp)) continue;
-        return $dir.$file_temp;
-        break;
-    }
-    return false;
+    return $filepath;
 }
 
 function rcl_include_template($file_temp,$path=false){

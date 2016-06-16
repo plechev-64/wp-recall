@@ -1,12 +1,12 @@
 <?php
 //добавляем стили колорпикера в хеадер
-add_action('wp_head','rcl_add_colorpicker_style',100);
+add_action('wp_enqueue_scripts','rcl_add_colorpicker_style',10);
 function rcl_add_colorpicker_style(){
     global $rcl_options;
 
     $rgb = (isset($rcl_options['primary-color'])&&$rcl_options['primary-color'])? rcl_hex2rgb($rcl_options['primary-color']): array(76, 140, 189);
     
-    $data = '<style>
+    $color_style = '<style>
     a.recall-button,
     .recall-button.rcl-upload-button,
     input[type="submit"].recall-button,
@@ -39,9 +39,12 @@ function rcl_add_colorpicker_style(){
     .ballun-status p.status-user-rcl{
         border: 1px solid rgb('.$rgb[0].', '.$rgb[1].', '.$rgb[2].');
     }
-    </style>'."\n";
+    </style>';
     
-    echo $data;
+    $key = (isset($rcl_options['minify_css'])&&$rcl_options['minify_css'])? 'rcl-header': 'rcl-primary';
+    
+    wp_add_inline_style( $key , $color_style);
+
 }
 
 add_action('wp_recall_init','init_user_lk',2);

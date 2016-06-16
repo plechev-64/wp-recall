@@ -393,7 +393,7 @@ function rcl_custom_tabs_manage(){
     
     rcl_sortable_scripts();
 
-    include_once RCL_PATH.'functions/rcl_editfields.php';
+    include_once RCL_PATH.'functions/class-rcl-editfields.php';
     
     $f_edit = new Rcl_EditFields('custom_tabs',
             array(

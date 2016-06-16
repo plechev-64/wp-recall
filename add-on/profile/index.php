@@ -543,7 +543,8 @@ function rcl_manage_profile_fields(){
         
         rcl_sortable_scripts();
 
-	if ( ! class_exists( 'Rcl_EditFields' ) ) include_once RCL_PATH.'functions/rcl_editfields.php';
+	if ( ! class_exists( 'Rcl_EditFields' ) ) 
+            include_once RCL_PATH.'functions/class-rcl-editfields.php';
 
 	$f_edit = new Rcl_EditFields('profile');
 

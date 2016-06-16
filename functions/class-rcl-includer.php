@@ -31,15 +31,15 @@ class Rcl_Includer{
             $css_dir = RCL_URL.'css/';
 
             $primary = array(
-                'primary'           =>  $css_dir.'style.css',
-                'slider'            =>  $css_dir.'slider.css',
-                'users-list'        =>  $css_dir.'users.css',
-                'register-form'     =>  $css_dir.'regform.css'
+                'rcl-primary'           =>  $css_dir.'style.css',
+                'rcl-slider'            =>  $css_dir.'slider.css',
+                'rcl-users-list'        =>  $css_dir.'users.css',
+                'rcl-register-form'     =>  $css_dir.'regform.css'
             );
             
             //если используем recallbar, то подключаем его стили
             if(isset($rcl_options['view_recallbar'])&&$rcl_options['view_recallbar']){
-                $primary['recall-bar'] = $css_dir.'recbar.css';
+                $primary['rcl-bar'] = $css_dir.'recbar.css';
             }
 
             $rcl_styles = array_merge($primary, $rcl_styles);

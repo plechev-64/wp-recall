@@ -74,29 +74,29 @@ class Rcl_Postlist {
                 $p_list = array();
 
 
-				if(function_exists('rcl_format_rating')){
+                    if(function_exists('rcl_format_rating')){
 
-					foreach($posts as $postdata){
-						foreach($postdata as $p){
-							$p_list[] = $p->ID;
-						}
-					}
+                            foreach($posts as $postdata){
+                                    foreach($postdata as $p){
+                                            $p_list[] = $p->ID;
+                                    }
+                            }
 
-					$rayt_p = rcl_get_ratings(array('object_id'=>$p_list,'rating_type'=>array($this->posttype)));
+                            $rayt_p = rcl_get_ratings(array('object_id'=>$p_list,'rating_type'=>array($this->posttype)));
 
-					foreach((array)$rayt_p as $r){
-						if(!isset($r->object_id)) continue;
-						$ratings[$r->object_id] = $r->rating_total;
-					}
+                            foreach((array)$rayt_p as $r){
+                                    if(!isset($r->object_id)) continue;
+                                    $ratings[$r->object_id] = $r->rating_total;
+                            }
 
-				}
-                                
-                                if(rcl_get_template_path('posts-list-'.$this->posttype.'.php',__FILE__)) 
-                                    $posts_block = rcl_get_include_template('posts-list-'.$this->posttype.'.php',__FILE__);
-				else 
-                                    $posts_block = rcl_get_include_template('posts-list.php',__FILE__);
+                    }
 
-				wp_reset_postdata();
+                    if(rcl_get_template_path('posts-list-'.$this->posttype.'.php',__FILE__)) 
+                        $posts_block = rcl_get_include_template('posts-list-'.$this->posttype.'.php',__FILE__);
+                    else 
+                        $posts_block = rcl_get_include_template('posts-list.php',__FILE__);
+
+                    wp_reset_postdata();
 
             }else{
                 $posts_block = '<p>'.$this->name.' '.__('has not yet been published','wp-recall').'</p>';
@@ -109,7 +109,7 @@ class Rcl_Postlist {
 
         $posts_list = $this->get_postslist_table( $author_lk );
         $posts_block = '<h3>'.__('Published','wp-recall').' '.$this->name.'</h3>';
-        $posts_block .= rcl_get_ajax_pagenavi($author_lk,$this->posttype);
+        $posts_block .= $this->page_navi($author_lk,$this->posttype);
         $posts_block .= $posts_list;
 
         return $posts_block;
@@ -131,5 +131,47 @@ class Rcl_Postlist {
 
 	echo json_encode($log);
         exit;
+    }
+    
+    function page_navi($userid,$post_type){
+	global $wpdb;
+
+	$count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft')",$userid,$post_type));
+	if(is_multisite()){
+            $blog_list = get_blog_list( 0, 'all' );
+
+            foreach ($blog_list as $blog) {
+                $pref = $wpdb->base_prefix.$blog['blog_id'].'_posts';
+                $count += $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$pref." WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft')",$userid,$post_type));
+            }
+	}
+        
+        if(!$count) return false;
+	$in_page = 20;
+        $page = 0;
+	$pages = ceil($count/$in_page);
+
+	$navi = '<ul id="'.$post_type.'-pagenavi" class="pagenavi-rcl">';
+	for($a=0;$a<$pages;$a++){
+		$navi .= '<li><a type="'.$post_type.'" data="'.$a*$in_page.'" class="recall-button sec_block_button';
+		if($a==0)$navi .= ' active';
+		$navi .= '" href="#">'.++$page.'</a></li>';
+	}
+	$slider = str_replace('-','',$post_type);
+	$navi .= '</ul>
+	<script>
+	jQuery(function($){
+            $("#'.$post_type.'-pagenavi").bxSlider({
+                pager:false,
+                minSlides: 1,
+                maxSlides: 20,
+                slideWidth: 25,
+                infiniteLoop:false,
+                slideMargin: 0,
+                moveSlides:10
+            });
+	});
+	</script>';
+	return $navi;
     }
 }

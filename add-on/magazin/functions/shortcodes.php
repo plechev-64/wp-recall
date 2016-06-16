@@ -165,7 +165,7 @@ function rcl_shortcode_productlist($atts, $content = null){
         $inpage = $num;
     }
 
-    $rclnavi = new RCL_navi($inpage,$count_prod,'&filter='.$orderby);
+    $rclnavi = new Rcl_PageNavi('rcl-products',$count_prod,array('in_page'=>$inpage));
 
     $args = array(
         'numberposts'     => $inpage,
@@ -221,7 +221,8 @@ function rcl_shortcode_productlist($atts, $content = null){
     $prodlist .='</div>'
             . '</div>';
 
-    if(!$num) $prodlist .= $rclnavi->navi();
+    if(!$num) 
+        $prodlist .= $rclnavi->pagenavi();
     
     if(!$user_ID&&$rcl_cache->is_cache){
         $rcl_cache->update_cache($prodlist);

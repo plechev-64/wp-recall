@@ -17,15 +17,15 @@ function rcl_feed_shortcode($atts){
 
     if(!$list->number){
 
-        $rqst = $list->search_request();
+        //$rqst = $list->search_request();
 
-        $search_string = ($rqst)? '&'.implode('&',$rqst): '';
+        //$search_string = ($rqst)? '&'.implode('&',$rqst): '';
 
         $count = $list->count_feed_posts();
 
-        $rclnavi = new RCL_navi($list->inpage,$count,$search_string,$list->paged);
+        $rclnavi = new Rcl_PageNavi('rcl-feed',$count,array('in_page'=>$list->inpage,'current_page'=>$list->paged));
         $list->offset = $rclnavi->offset;
-        $list->number = $rclnavi->inpage;
+        $list->number = $rclnavi->in_page;
     }
 
     $feedsdata = $list->get_feed();
@@ -53,8 +53,8 @@ function rcl_feed_shortcode($atts){
 
     $content .= '</div>';
 
-    if($list->load=='pagenavi'&&$rclnavi->inpage)
-        $content .= $rclnavi->navi();
+    if($list->load=='pagenavi'&&$rclnavi->in_page)
+        $content .= $rclnavi->pagenavi();
 
     $list->remove_data();
 

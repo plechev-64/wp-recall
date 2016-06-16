@@ -143,10 +143,10 @@ final class WP_Recall {
             require_once('functions/rcl-cron.php');
             include_once 'functions/class-rcl-cache.php';
             include_once 'functions/class-rcl-ajax.php';
-            require_once('functions/rcl_custom_fields.php');
+            require_once('functions/class-rcl-custom-fields.php');
             require_once('functions/loginform.php');
             require_once('functions/rcl_currency.php');
-            require_once('functions/navi-rcl.php');
+            require_once('functions/class-rcl-pagenavi.php');
             require_once("rcl-functions.php");
             require_once("functions/deprecated.php");
             require_once("functions/shortcodes.php");

@@ -2,7 +2,7 @@
 
 <?php rcl_before(); ?>
 
-<div id="rcl-<?php echo $user_LK; ?>" class="wprecallblock">
+<div id="rcl-<?php echo $user_LK; ?>" class="wprecallblock" data-account="<?php echo $user_LK; ?>">
     <?php rcl_notice(); ?>
 
     <div id="lk-conteyner">

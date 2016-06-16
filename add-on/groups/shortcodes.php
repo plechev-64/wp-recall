@@ -9,15 +9,11 @@ function rcl_get_grouplist($atts){
 
     if(!$list->number){
 
-        $rqst = $list->search_request();
-
-        $search_string = ($rqst)? '&'.implode('&',$rqst): '';
-
         $count = $list->count_groups();
 
-        $rclnavi = new RCL_navi($list->inpage,$count,$search_string,$list->paged);
+        $rclnavi = new Rcl_PageNavi('rcl-groups',$count,array('in_page'=>$list->inpage,'current_page'=>$list->paged));
         $list->offset = $rclnavi->offset;
-        $list->number = $rclnavi->inpage;
+        $list->number = $rclnavi->in_page;
     }
 
     $groupsdata = $list->get_groups();
@@ -37,8 +33,8 @@ function rcl_get_grouplist($atts){
 
     $content .= '</div>';
 
-    if($rclnavi->inpage)
-        $content .= $rclnavi->navi();
+    if($rclnavi->in_page)
+        $content .= $rclnavi->pagenavi();
 
     $list->remove_data();
 

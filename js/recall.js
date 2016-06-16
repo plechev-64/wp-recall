@@ -451,64 +451,76 @@ function rcl_add_dropzone(idzone){
     });
 }
 
-    function passwordStrength(password){
-        var desc = new Array();
-        desc[0] = Rcl.local.pass0;
-        desc[1] = Rcl.local.pass1;
-        desc[2] = Rcl.local.pass2;
-        desc[3] = Rcl.local.pass3;
-        desc[4] = Rcl.local.pass4;
-        desc[5] = Rcl.local.pass5;
-        var score   = 0;
-        if (password.length > 6) score++;   
-        if ( ( password.match(/[a-z]/) ) && ( password.match(/[A-Z]/) ) ) score++;
-        if (password.match(/\d+/)) score++;
-        if ( password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/) ) score++;
-        if (password.length > 12) score++;
-        document.getElementById("passwordDescription").innerHTML = desc[score];
-        document.getElementById("passwordStrength").className = "strength" + score;
-    }
-	
-    function rcl_notice(text,type,time_close){
-        
-        time_close = time_close || false;
-        
-        var notice_id = rcl_rand(1, 1000);
-        
-        var html = '<div id="notice-'+notice_id+'" class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
-        if(!jQuery('#rcl-notice').size()){
-                jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
-        }else{
-                if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
-                else jQuery('#rcl-notice').html(html);
-        }
-        
-        if(time_close){
-            setTimeout(function () {
-                rcl_close_notice('#rcl-notice #notice-'+notice_id)
-            }, time_close);
-        }
+function passwordStrength(password){
+    var desc = new Array();
+    desc[0] = Rcl.local.pass0;
+    desc[1] = Rcl.local.pass1;
+    desc[2] = Rcl.local.pass2;
+    desc[3] = Rcl.local.pass3;
+    desc[4] = Rcl.local.pass4;
+    desc[5] = Rcl.local.pass5;
+    var score   = 0;
+    if (password.length > 6) score++;   
+    if ( ( password.match(/[a-z]/) ) && ( password.match(/[A-Z]/) ) ) score++;
+    if (password.match(/\d+/)) score++;
+    if ( password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/) ) score++;
+    if (password.length > 12) score++;
+    document.getElementById("passwordDescription").innerHTML = desc[score];
+    document.getElementById("passwordStrength").className = "strength" + score;
+}
+
+function rcl_notice(text,type,time_close){
+
+    time_close = time_close || false;
+
+    var notice_id = rcl_rand(1, 1000);
+
+    var html = '<div id="notice-'+notice_id+'" class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
+    if(!jQuery('#rcl-notice').size()){
+            jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
+    }else{
+            if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
+            else jQuery('#rcl-notice').html(html);
     }
 
-    function rcl_preloader_show(e){
-        jQuery(e).after('<div class="rcl_preloader"><i class="fa fa-spinner fa-pulse"></i></div>');
+    if(time_close){
+        setTimeout(function () {
+            rcl_close_notice('#rcl-notice #notice-'+notice_id)
+        }, time_close);
     }
+}
 
-    function rcl_preloader_hide(){
-        jQuery('.rcl_preloader').remove();
+function rcl_preloader_show(e){
+    jQuery(e).after('<div class="rcl_preloader"><i class="fa fa-spinner fa-pulse"></i></div>');
+}
+
+function rcl_preloader_hide(){
+    jQuery('.rcl_preloader').remove();
+}
+
+function rcl_rand( min, max ) {
+    if( max ) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+    } else {
+            return Math.floor(Math.random() * (min + 1));
     }
-    
-    function rcl_rand( min, max ) {
-        if( max ) {
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-        } else {
-                return Math.floor(Math.random() * (min + 1));
-        }
-    }
-    
-    function rcl_more_view(e){
-        var link = jQuery(e);
-        var icon = link.children('i');
-        link.parent().children('div').slideToggle();
-        icon.toggleClass('fa-plus-square-o fa-minus-square-o');
-    }
+}
+
+function rcl_more_view(e){
+    var link = jQuery(e);
+    var icon = link.children('i');
+    link.parent().children('div').slideToggle();
+    icon.toggleClass('fa-plus-square-o fa-minus-square-o');
+}
+
+function rcl_add_dynamic_field(e){
+    var parent = jQuery(e).parents('.dynamic-value');
+    var box = parent.parent('.dynamic-values');
+    var html = parent.html();
+    box.append('<span class="dynamic-value">'+html+'</span>');
+    jQuery(e).attr('onclick','rcl_remove_dynamic_field(this);return false;').children('i').toggleClass("fa-plus fa-minus");
+}
+
+function rcl_remove_dynamic_field(e){
+    jQuery(e).parents('.dynamic-value').remove();
+}
