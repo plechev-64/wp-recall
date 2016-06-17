@@ -39,6 +39,9 @@ class Rcl_PageNavi{
             if(isset($this->custom['output_number'])) 
                 $this->output_number = $this->custom['output_number'];
         }
+        
+        if($this->current_page==0)
+            $this->current_page = 1;
 
         $this->offset = ($this->current_page-1)*$this->in_page;
         $this->pages_amount = ceil($this->data_amount/$this->in_page);
@@ -47,7 +50,8 @@ class Rcl_PageNavi{
     }
     
     function uri_data_init(){
-        $this->uri['current'] = get_bloginfo('wpurl').str_replace('?'.$_SERVER['QUERY_STRING'],'',$_SERVER['REQUEST_URI']);
+        
+        $this->uri['current'] = (defined( 'DOING_AJAX' ) && DOING_AJAX && $_POST['href'])? $_POST['href']: get_bloginfo('wpurl').str_replace('?'.$_SERVER['QUERY_STRING'],'',$_SERVER['REQUEST_URI']);
         
         if($_SERVER['QUERY_STRING']){
             $strings = explode('&',$_SERVER['QUERY_STRING']);
@@ -72,8 +76,7 @@ class Rcl_PageNavi{
     }
     
     function limit(){
-        $limit_us = $this->offset.','.$this->in_page;
-        return $limit_us;
+        return $this->offset.','.$this->in_page;
     }
     
     function pager_query(){
@@ -122,10 +125,12 @@ class Rcl_PageNavi{
     }
     
     function get_url($page_id){          
-        return $this->uri['current'].'?'.$this->uri['string'].'&'.$this->key.'='.$page_id;
+        return rcl_format_url($this->uri['current']).$this->uri['string'].'&'.$this->key.'='.$page_id;
     }
     
     function pagenavi($classes = ''){
+        
+        if($this->pages_amount==1) return false;
         
         $query = $this->pager_query();
         

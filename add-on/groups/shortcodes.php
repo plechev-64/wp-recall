@@ -11,13 +11,13 @@ function rcl_get_grouplist($atts){
 
         $count = $list->count_groups();
 
-        $rclnavi = new Rcl_PageNavi('rcl-groups',$count,array('in_page'=>$list->inpage,'current_page'=>$list->paged));
+        $rclnavi = new Rcl_PageNavi('rcl-groups',$count,array('in_page'=>$list->inpage));
         $list->offset = $rclnavi->offset;
         $list->number = $rclnavi->in_page;
     }
 
     $groupsdata = $list->get_groups();
-
+    
     $content = $list->get_filters($count);
 
     if(!$groupsdata){

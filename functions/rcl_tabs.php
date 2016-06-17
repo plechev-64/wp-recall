@@ -79,7 +79,7 @@ class Rcl_Tabs{
                 if($this->callback){
                     $cl_content = rcl_callback_tab_func($this->callback,$author_lk);
                 }else if($this->content){
-                    $cl_content = apply_filters('the_content',stripslashes_deep($this->content));
+                    $cl_content = apply_filters('rcl_custom_tab_content',stripslashes_deep($this->content));
                 }
                 
                 $rcl_cache->update_cache($cl_content);
@@ -96,7 +96,7 @@ class Rcl_Tabs{
             if($this->callback){
                 $cl_content = rcl_callback_tab_func($this->callback,$author_lk);
             }else if($this->content){
-                $cl_content = apply_filters('the_content',stripslashes_deep($this->content));
+                $cl_content = apply_filters('rcl_custom_tab_content',stripslashes_deep($this->content));
             }
             
             if(!$cl_content) return $content;
@@ -134,6 +134,9 @@ class Rcl_Tabs{
     }
 
 }
+
+add_filter( 'rcl_custom_tab_content', 'do_shortcode', 11 );
+add_filter( 'rcl_custom_tab_content', 'wpautop', 10 );
 
 function rcl_get_button_tab($args,$button=false){
 	global $rcl_options,$user_LK;

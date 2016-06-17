@@ -208,36 +208,52 @@ function rcl_add_feed_content_meta($content){
     return $content;
 }
 
+add_filter( 'rcl_feed_excerpt', 'wpautop', 11 );
+//add_filter( 'rcl_get_feed_excerpt', 'wp_trim_excerpt' );
 add_filter('rcl_feed_content','rcl_get_feed_excerpt',20);
 function rcl_get_feed_excerpt($content){
     global $rcl_feed;
 
     if($rcl_feed->feed_type!='posts') return $content;
+    
+    $content = strip_shortcodes( $content );
+    
+    if ( preg_match( '/<!--more(.*?)?-->/', $content, $matches ) ) {
+        $content = explode( $matches[0], $content, 2 );
+        $content = $content[0];
+    }else{
+        
+        $content = wp_kses($content,array(
+                'b' => array(), 
+                'li' => array(), 
+                'ul' => array(), 
+                'strong' => array(), 
+                'br' => array(), 
+                'ol' => array(), 
+                'p' => array(), 
+                'span' => array(), 
+                'div' => array(), 
+                'i' => array(), 
+                'u' => array(), 
+                'pre' => array(), 
+                's' => array()
+            )
+        );
 
-    remove_filter('the_content','get_notifi_bkms',20);
-    remove_filter('the_content','add_button_bmk_in_content',20);
-
-    /*$rcl_box = strpos($content, '[rcl-box');
-    if($rcl_box!==false){
-        $content = apply_filters('the_content',$content);
-    }*/
-
-    $content = apply_filters('the_content',$content);
-
-    $content = strip_tags($content);
-
-    if(( iconv_strlen($content, 'utf-8') > 500 )) {
-        $content = iconv_substr($content, 0, 500, 'utf-8');
-        $content = preg_replace('@(.*)\s[^\s]*$@s', '\\1', $content).'...<a href="'.get_permalink( $rcl_feed->feed_ID ).'">'.__('Read more','wp-recall').'</a>';
+        if(( iconv_strlen($content, 'utf-8') > 500 )) {
+            $content = iconv_substr($content, 0, 500, 'utf-8');
+            $content = preg_replace('@(.*)\s[^\s]*$@s', '\\1', $content).'...';
+        }
+        $content = force_balance_tags($content);
     }
-
-    $content = nl2br($content);
 
     $thumb = get_post_meta($rcl_feed->feed_ID,'_thumbnail_id',1);
     if($thumb){
         $src = wp_get_attachment_image_src($thumb,'medium');
         $content = '<img class="aligncenter" src="' . $src[0] . '" alt="" />'.$content;
     }
+    
+    $content .= apply_filters( 'the_content_more_link', ' <a href="'.get_permalink( $rcl_feed->feed_ID ).'" class="more-link">'.__('Read more','wp-recall').'</a>', __('Read more','wp-recall') );
 
     return $content;
 }

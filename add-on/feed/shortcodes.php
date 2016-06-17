@@ -17,13 +17,9 @@ function rcl_feed_shortcode($atts){
 
     if(!$list->number){
 
-        //$rqst = $list->search_request();
-
-        //$search_string = ($rqst)? '&'.implode('&',$rqst): '';
-
         $count = $list->count_feed_posts();
 
-        $rclnavi = new Rcl_PageNavi('rcl-feed',$count,array('in_page'=>$list->inpage,'current_page'=>$list->paged));
+        $rclnavi = new Rcl_PageNavi('rcl-feed',$count,array('in_page'=>$list->inpage));
         $list->offset = $rclnavi->offset;
         $list->number = $rclnavi->in_page;
     }
@@ -37,7 +33,7 @@ function rcl_feed_shortcode($atts){
         return $content;
     }
 
-    $load = ($rclnavi->inpage)? 'data-load="'.$list->load.'"': '';
+    $load = ($rclnavi->in_page)? 'data-load="'.$list->load.'"': '';
 
     $content .= '<div id="rcl-feed" data-feed="'.$list->content.'" '.$load.'>';
 
@@ -47,7 +43,7 @@ function rcl_feed_shortcode($atts){
         $content .= '</div>';
     }
 
-    if($list->load=='ajax'&&$rclnavi->inpage)
+    if($list->load=='ajax'&&$rclnavi->in_page)
         $content .= '<div id="feed-preloader"><div></div></div>'
             . '<div id="feed-bottom"></div>';
 
