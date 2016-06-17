@@ -398,7 +398,8 @@ function rcl_custom_tabs_manage(){
     $f_edit = new Rcl_EditFields('custom_tabs',
             array(
                 'meta-key'=>false,
-                'select-type'=>false
+                'select-type'=>false,
+                'placeholder'=>false
                 )
             );
     

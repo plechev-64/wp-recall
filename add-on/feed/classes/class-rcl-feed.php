@@ -288,7 +288,7 @@ class Rcl_Feed{
         if(isset($_GET['search-groups'])||$user_LK){
             $rqst = array();
             foreach($_GET as $k=>$v){
-                if($k=='navi'||$k=='feed-filter') continue;
+                if($k=='rcl-page'||$k=='feed-filter') continue;
                 $rqst[$k] = $k.'='.$v;
             }
 

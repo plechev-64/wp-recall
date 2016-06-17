@@ -209,7 +209,6 @@ function rcl_add_feed_content_meta($content){
 }
 
 add_filter( 'rcl_feed_excerpt', 'wpautop', 11 );
-//add_filter( 'rcl_get_feed_excerpt', 'wp_trim_excerpt' );
 add_filter('rcl_feed_content','rcl_get_feed_excerpt',20);
 function rcl_get_feed_excerpt($content){
     global $rcl_feed;
@@ -252,6 +251,8 @@ function rcl_get_feed_excerpt($content){
         $src = wp_get_attachment_image_src($thumb,'medium');
         $content = '<img class="aligncenter" src="' . $src[0] . '" alt="" />'.$content;
     }
+    
+    $content = apply_filters('rcl_feed_excerpt',$content);
     
     $content .= apply_filters( 'the_content_more_link', ' <a href="'.get_permalink( $rcl_feed->feed_ID ).'" class="more-link">'.__('Read more','wp-recall').'</a>', __('Read more','wp-recall') );
 

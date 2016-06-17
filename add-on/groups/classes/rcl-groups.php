@@ -204,7 +204,7 @@ class Rcl_Groups {
         if(isset($_GET['group-name'])||$user_LK){
             $rqst = array();
             foreach($_GET as $k=>$v){
-                if($k=='navi'||$k=='groups-filter') continue;
+                if($k=='rcl-page'||$k=='groups-filter') continue;
                 $rqst[$k] = $k.'='.$v;
             }
 

@@ -10,11 +10,13 @@ class Rcl_EditFields {
     public $primary;
     public $select_type;
     public $meta_key;
+    public $placeholder;
 
     function __construct($posttype,$primary=false){
         global $Option_Value; 
         $this->select_type = (isset($primary['select-type']))? $primary['select-type']:true;
         $this->meta_key = (isset($primary['meta-key']))? $primary['meta-key']:true;
+        $this->placeholder = (isset($primary['placeholder']))? $primary['placeholder']:true;
         $this->primary = $primary;
 
         switch($posttype){
@@ -108,7 +110,7 @@ class Rcl_EditFields {
         $textarea_select .= ($this->vals['type']=='file')? '<input type="number" name="field[sizefile]['.$this->vals['slug'].']" value="'.$this->vals['sizefile'].'"> '.__('maximum size of uploaded file, MB (Default - 2)','wp-recall').'<br>':'';
         $textarea_select .= ($this->vals['type']=='agree')? '<input type="url" name="field[url-agreement]['.$this->vals['slug'].']" value="'.$this->vals['url-agreement'].'"> '.__('URL Agreement','wp-recall').'<br>':'';
         
-        if(!isset($types[$this->vals['type']])){
+        if($this->placeholder&&!isset($types[$this->vals['type']])){
             $placeholder = (isset($this->vals['placeholder']))? $this->vals['placeholder']: '';
             $textarea_select .= "<div class='field-option placeholder-field'><input type=text name='field[placeholder][]' value='".$placeholder."'><br>placeholder</div>";
         }
@@ -228,9 +230,13 @@ class Rcl_EditFields {
                     $field .= '</div>';
                 } 
                 
-                $field .= '<div class="field-options-box secondary-settings">'
-                        .'<div class="field-option placeholder-field"><input type="text" name="field[placeholder][]" value=""><br>placeholder</div>'
-                        .$this->get_options()
+                $field .= '<div class="field-options-box secondary-settings">';
+                
+                if($this->placeholder){
+                    $field .='<div class="field-option placeholder-field"><input type="text" name="field[placeholder][]" value=""><br>placeholder</div>';
+                }
+
+                $field .=$this->get_options()
                     .'</div>
                 </div>
             </li>';
@@ -285,7 +291,7 @@ class Rcl_EditFields {
     }
 
     function text($args,$edit){
-	$val = ($this->vals)? stripslashes_deep( str_replace("'",'"',$this->vals[$args['name']] )): '';
+	$val = ($this->vals)? esc_textarea( str_replace("'",'"',$this->vals[$args['name']] )): '';
         if(!$edit) return $val.'<input type="hidden" name="field['.$args['name'].'][]" value="'.$val.'">';
         $ph = (isset($args['placeholder']))? $args['placeholder']: '';
         $pattern = (isset($args['pattern']))? 'pattern="'.$args['pattern'].'"': '';
@@ -295,7 +301,7 @@ class Rcl_EditFields {
     }
     
     function textarea($args){
-	$value = ($this->vals)? stripslashes_deep( $this->vals[$args['name']] ): '';        
+	$value = ($this->vals)? esc_textarea( $this->vals[$args['name']] ): '';        
         $placeholder = (isset($args['placeholder']))? 'placeholder="'.$args['placeholder']."'": '';
         $pattern = (isset($args['pattern']))? 'pattern="'.$args['pattern'].'"': '';        
         $field = '<textarea '.$placeholder.' '.$pattern.' name="field['.$args['name'].'][]" value="'.$value.'">'.$value.'</textarea>';
@@ -369,7 +375,8 @@ class Rcl_EditFields {
                     if(isset($tps[$_POST['field']['type'][$a]])){
                         $fields[$a]['field_select'] = $_POST['field']['field_select'][$fs++];
                     }else{
-                        $fields[$a]['placeholder'] = $_POST['field']['placeholder'][$placeholder_id++];
+                        if($this->placeholder)
+                            $fields[$a]['placeholder'] = $_POST['field']['placeholder'][$placeholder_id++];
                     }
 
                 }

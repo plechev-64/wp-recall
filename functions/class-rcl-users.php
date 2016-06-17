@@ -148,7 +148,7 @@ class Rcl_Users{
         if(isset($_GET['usergroup'])||isset($_GET['search-user'])||$user_LK){
             $rqst = array();
             foreach($_GET as $k=>$v){
-                if($k=='navi'||$k=='users-filter') continue;
+                if($k=='rcl-page'||$k=='users-filter') continue;
                 $rqst[$k] = $k.'='.$v;
             }
 
