@@ -278,3 +278,20 @@ span.ruble-symbol{
 #rcl-custom-fields-editor .fields-submit input[type="submit"]{
     
 }
+
+#rcl-custom-fields-editor .ui-sortable-placeholder{
+    border:2px dashed #ccc;
+    height:45px;
+    width:100%;
+    box-sizing:border-box;
+    background:#fff;
+}
+#rcl-sortable-fileds .new-field .field-header .field-control{
+    float: right;
+    margin-top: 20px;
+}
+#rcl-sortable-fileds .new-field .field-header .field-type{
+    float: left;
+    margin: 0;
+    width: 190px;
+}

@@ -15,7 +15,7 @@
         <?php foreach($orders as $data){ rcl_setup_orderdata($data); ?>
             <tr>
                 <td>
-                    <a href="<?php echo rcl_format_url(get_author_posts_url($user_ID),'orders'); ?>&order-id=<?php rcl_order_ID(); ?>">
+                    <a href="<?php echo rcl_format_url(get_author_posts_url($order->order_author),'orders'); ?>&order-id=<?php rcl_order_ID(); ?>">
                         <?php rcl_order_ID(); ?>
                     </a>
                 </td>

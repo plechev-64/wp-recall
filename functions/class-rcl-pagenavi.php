@@ -51,7 +51,7 @@ class Rcl_PageNavi{
     
     function uri_data_init(){
         
-        $this->uri['current'] = (defined( 'DOING_AJAX' ) && DOING_AJAX && $_POST['href'])? $_POST['href']: get_bloginfo('wpurl').str_replace('?'.$_SERVER['QUERY_STRING'],'',$_SERVER['REQUEST_URI']);
+        $this->uri['current'] = (defined( 'DOING_AJAX' ) && DOING_AJAX && isset($_POST['tab_url']))? $_POST['tab_url']: get_bloginfo('wpurl').str_replace('?'.$_SERVER['QUERY_STRING'],'',$_SERVER['REQUEST_URI']);
         
         if($_SERVER['QUERY_STRING']){
             $strings = explode('&',$_SERVER['QUERY_STRING']);

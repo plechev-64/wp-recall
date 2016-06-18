@@ -24,7 +24,9 @@ jQuery(function($){
         return false;
     }
     
-    $("input[name='global[primary-color]']").wpColorPicker();
+    $("input[name='global[primary-color]']").wpColorPicker({
+        defaultColor: '#4c8cbd'
+    });
 
     $("#recall").find(".parent-select").each(function(){
         var id = $(this).attr('id');
@@ -39,9 +41,9 @@ jQuery(function($){
         $('#'+id+'-'+val).slideDown();		
     });
     
-    $("#rcl-custom-fields-editor .add-field-button").click(function() {
+    $("#rcl-custom-fields-editor").on('click','.add-field-button',function() {
         var html = $("#rcl-custom-fields-editor ul li").last().html();
-        $("#rcl-custom-fields-editor ul").append('<li class="rcl-custom-field new-field">'+html+'<li>');
+        $("#rcl-custom-fields-editor ul").append('<li class="rcl-custom-field new-field">'+html+'</li>');
         return false;
     });
     
@@ -91,9 +93,8 @@ jQuery(function($){
         return false;
     });
     
-    $('#rcl-custom-fields-editor .field-edit').click(function() {
-        var id_item = $(this).parents('.rcl-custom-field').data('slug');	
-        $('#field-'+id_item+' .field-settings').slideToggle();
+    $('#rcl-custom-fields-editor').on('click','.field-edit',function() {
+        $(this).parents('.rcl-custom-field').find('.field-settings').slideToggle();	
         return false;
     });
 	

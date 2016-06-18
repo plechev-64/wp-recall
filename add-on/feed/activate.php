@@ -28,6 +28,3 @@ $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
   ) $collate; ";
 
 dbDelta( $sql );
-
-require_once 'migration.php';
-rcl_migration_feed_data();

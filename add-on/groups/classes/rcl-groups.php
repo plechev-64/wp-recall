@@ -248,7 +248,11 @@ class Rcl_Groups {
 
         $rqst = ($s_array)? implode('&',$s_array).'&' :'';
 
-        $url = ($user_LK)? get_author_posts_url($user_LK): get_permalink($post->ID);
+        if($user_LK){
+            $url = (isset($_POST['tab_url']))? $_POST['tab_url']: get_author_posts_url($user_LK);
+        }else{
+            $url = get_permalink($post->ID);
+        }
 
         $perm = rcl_format_url($url).$rqst;
 

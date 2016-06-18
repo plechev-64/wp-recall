@@ -58,13 +58,6 @@ $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
 
 dbDelta( $sql );
 
-
-$table = RCL_PREF."rayting_post";
-if($wpdb->get_var("show tables like '". $table . "'") == $table) {
-    include_once 'migration.php';
-    rcl_update_rating_data();
-}
-
 global $rcl_options;
 if(!isset($rcl_options['rating_post'])){
     $rcl_options['rating_post'] = 1;

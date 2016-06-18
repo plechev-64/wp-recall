@@ -353,6 +353,14 @@ function rcl_setup_productdata($productdata){
         
         $product = get_post($productdata->product_id);
         
+        if(!$product){
+            $product = array(
+                'ID'=>$productdata->product_id,
+                'post_title'=>'Товар не существует'
+            );
+            $product = (object)$product;
+        }
+        
         $product->product_id = $productdata->product_id;
 	$product->product_price = $productdata->product_price;
         $product->summ_price = $productdata->product_price*$productdata->numberproduct;

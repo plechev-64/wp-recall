@@ -1,4 +1,52 @@
 <?php
+add_action('rcl_account_menu','rcl_buttons',10);
+function rcl_buttons(){
+    global $user_LK;
+    echo apply_filters( 'the_button_wprecall', '', $user_LK );
+}
+
+add_action('rcl_account_tabs','rcl_tabs',10);
+function rcl_tabs(){
+    global $user_LK;
+    echo apply_filters( 'the_block_wprecall', '', $user_LK);
+}
+
+add_action('rcl_account_before','rcl_before',10);
+function rcl_before(){
+    global $user_LK;
+    echo apply_filters( 'rcl_before_lk', '', $user_LK );
+}
+
+add_action('rcl_account_after','rcl_after',10);
+function rcl_after(){
+    global $user_LK;
+    echo apply_filters( 'rcl_after_lk', '', $user_LK );
+}
+
+add_action('rcl_account_header','rcl_header',10);
+function rcl_header(){
+    global $user_LK;
+    echo apply_filters('rcl_header_lk','',$user_LK);
+}
+
+add_action('rcl_account_sidebar','rcl_sidebar',10);
+function rcl_sidebar(){
+    global $user_LK;
+    echo apply_filters('rcl_sidebar_lk','',$user_LK);
+}
+
+add_action('rcl_account_content','rcl_content',10);
+function rcl_content(){
+    global $user_LK;
+    echo apply_filters('rcl_content_lk','',$user_LK);
+}
+
+add_action('rcl_account_footer','rcl_footer',10);
+function rcl_footer(){
+    global $user_LK;
+    echo apply_filters('rcl_footer_lk','',$user_LK);
+}
+
 //добавляем стили колорпикера в хеадер
 add_action('wp_enqueue_scripts','rcl_add_colorpicker_style',10);
 function rcl_add_colorpicker_style(){
@@ -40,6 +88,9 @@ function rcl_add_colorpicker_style(){
         border: 1px solid rgb('.$rgb[0].', '.$rgb[1].', '.$rgb[2].');
     }
     </style>';
+    
+    // удаляем пробелы, переносы, табуляцию
+    $color_style =  preg_replace('/ {2,}/','',str_replace(array("\r\n", "\r", "\n", "\t"), '', $color_style));
     
     $key = (isset($rcl_options['minify_css'])&&$rcl_options['minify_css'])? 'rcl-header': 'rcl-primary';
     
@@ -198,47 +249,6 @@ global $post;
         $cont = $mess.$cont;
     }
     return $cont;
-}
-
-function rcl_buttons(){
-    global $user_LK; $content = '';
-    echo apply_filters( 'the_button_wprecall', $content, $user_LK );
-}
-
-function rcl_tabs(){
-    global $user_LK; $content = '';
-    echo apply_filters( 'the_block_wprecall', $content, $user_LK);
-}
-
-function rcl_before(){
-    global $user_LK; $content = '';
-    echo apply_filters( 'rcl_before_lk', $content, $user_LK );
-}
-
-function rcl_after(){
-    global $user_LK; $content = '';
-    echo apply_filters( 'rcl_after_lk', $content, $user_LK );
-}
-
-function rcl_header(){
-    global $user_LK; $content = '';
-    echo apply_filters('rcl_header_lk',$content,$user_LK);
-}
-
-function rcl_sidebar(){
-    global $user_LK; $content = '';
-    echo apply_filters('rcl_sidebar_lk',$content,$user_LK);
-}
-
-function rcl_content(){
-    global $user_LK; $content = '';
-    $content = apply_filters('rcl_content_lk',$content,$user_LK);
-    echo $content;
-}
-
-function rcl_footer(){
-    global $user_LK; $content = '';
-    echo apply_filters('rcl_footer_lk',$content,$user_LK);
 }
 
 function rcl_action(){

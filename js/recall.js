@@ -65,8 +65,8 @@ jQuery(function($){
         rcl_preloader_show('#lk-content > div');
         var e = $(this);
         var post = e.data('post');
-        var href = e.attr('href');
-        var dataString = 'action=rcl_ajax&post='+post+'&href='+href;
+        var tab_url = e.attr('href');
+        var dataString = 'action=rcl_ajax&post='+post+'&tab_url='+tab_url;
         dataString += '&ajax_nonce='+Rcl.nonce;
         $.ajax({
             type: 'POST', 

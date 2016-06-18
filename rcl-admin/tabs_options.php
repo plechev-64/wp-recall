@@ -63,7 +63,7 @@ function rcl_get_tablist_options($content){
     }
     $tabs .= '</ul>';
 
-    $tabs .= '<script>jQuery(function(){jQuery(".sortable").sortable();return false;});</script>';
+    $tabs .= '<script>jQuery(function(){jQuery(".sortable").sortable({containment: "parent"});return false;});</script>';
 
     $content .= $opt->options(__('Setting tabs','wp-recall'),$opt->option_block(array($tabs)));
 

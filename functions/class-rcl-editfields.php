@@ -63,7 +63,18 @@ class Rcl_EditFields {
                     <input type="hidden" id="rcl-deleted-fields" name="rcl_deleted_custom_fields" value="">
                 </div>
             </form>
-            <script>jQuery(function(){jQuery("#rcl-sortable-fileds").sortable();return false;});</script>
+            <script>
+                jQuery(function(){
+                    jQuery("#rcl-sortable-fileds").sortable({
+                        connectWith: "#rcl-sortable-fileds",
+                        containment: "parent",
+                        handle: ".field-header",
+                        placeholder: "ui-sortable-placeholder",
+                        distance: 15
+                    });
+                    return false;
+                });
+            </script>
             </div>';
 
         return $form;
@@ -210,7 +221,8 @@ class Rcl_EditFields {
                 <div class="field-header">
                     <span class="field-title half-width">'.__('Name','wp-recall').' '.$this->option('text',array('name'=>'title')).'</span>
                     <span class="field-controls half-width">
-                        <span class="field-type">'.$this->get_types().'</span>                                
+                        <a class="field-edit field-control" href="#" title="'.__('Edit','wp-recall').'"></a>
+                        <span class="field-type">'.$this->get_types().'</span>
                     </span>
                 </div>
                 <div class="field-settings">';

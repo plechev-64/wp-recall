@@ -54,7 +54,3 @@ $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
       ) $collate;";
 
 dbDelta( $sql );
-
-/*переход с версии ниже 13.7.0*/
-require_once 'migration.php';
-rcl_group_migrate_old_data();
