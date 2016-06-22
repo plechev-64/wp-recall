@@ -9,6 +9,12 @@ function rcl_user_account_scripts(){
     rcl_enqueue_script( 'rcl-user-account', rcl_addon_url('js/scripts.js', __FILE__) );
 }
 
+add_filter('rcl_init_js_variables','rcl_init_js_account_variables',10);
+function rcl_init_js_account_variables($data){   
+    $data['account']['currency'] = rcl_get_primary_currency(1);          
+    return $data;
+}
+
 include_once "rcl_payment.php";
 
 if(is_admin()) include_once 'payments.php';
@@ -109,8 +115,14 @@ function rcl_add_count_user(){
     global $user_ID;
 
     rcl_verify_ajax_nonce();
+    
+    if(!$_POST['count']){
+        $log['error'] = __('Enter the amount to replenish','wp-recall');
+        echo json_encode($log);
+        exit;
+    }
 
-    if($user_ID&&$_POST['count']){
+    if($user_ID){
 
         $amount = intval($_POST['count']);
         $id_pay = current_time('timestamp');
@@ -127,7 +139,7 @@ function rcl_add_count_user(){
         $log['otvet']=100;
 
     } else {
-            $log['otvet']=1;
+        $log['error'] = __('Error','wp-recall');
     }
     echo json_encode($log);
     exit;

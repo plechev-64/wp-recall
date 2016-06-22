@@ -67,15 +67,15 @@ function rcl_add_postlist_posts(){
 
 add_action('init','rcl_init_publics_block');
 function rcl_init_publics_block(){
-	global $rcl_options;
-	if($rcl_options['publics_block_rcl']==1){
-                $view = 0;
-                if($rcl_options['view_publics_block_rcl']) $view = $rcl_options['view_publics_block_rcl'];
-                rcl_tab('publics','rcl_tab_publics',__('Posts','wp-recall'),array('ajax-load'=>true,'public'=>$view,'cache'=>true,'class'=>'fa-list','order'=>50));
-	}
-	if($rcl_options['output_public_form_rcl']==1){
-                rcl_tab('postform','rcl_tab_postform',__('Publication','wp-recall'),array('class'=>'fa-pencil','order'=>60,'path'=>__FILE__));
-	}
+    global $rcl_options;
+    if($rcl_options['publics_block_rcl']==1){
+        $view = 0;
+        if($rcl_options['view_publics_block_rcl']) $view = $rcl_options['view_publics_block_rcl'];
+        rcl_tab('publics','rcl_tab_publics',__('Posts','wp-recall'),array('ajax-load'=>true,'public'=>$view,'cache'=>true,'class'=>'fa-list','order'=>50));
+    }
+    if($rcl_options['output_public_form_rcl']==1){
+        rcl_tab('postform','rcl_tab_postform',__('Publication','wp-recall'),array('class'=>'fa-pencil','order'=>60,'path'=>__FILE__));
+    }
 }
 
 add_filter('pre_update_postdata_rcl','rcl_update_postdata_excerpt');
@@ -94,15 +94,15 @@ function rcl_tab_postform($author_lk){
 }
 
 function rcl_tab_publics($author_lk){
-	global $user_ID;
-        $p_button='';
-	$p_button = apply_filters('posts_button_rcl',$p_button,$author_lk);
-	$posts_block = '<div class="rcl-menu">'.$p_button.'</div>';
-        $p_block='';
-	$p_block = apply_filters('posts_block_rcl',$p_block,$author_lk);
-	$posts_block .= $p_block;
+    global $user_ID;
 
-	return $posts_block;
+    $p_button = apply_filters('posts_button_rcl','',$author_lk);
+    $posts_block = '<div class="rcl-sub-menu">'.$p_button.'</div>';
+
+    $p_block = apply_filters('posts_block_rcl','',$author_lk);
+    $posts_block .= $p_block;
+
+    return $posts_block;
 }
 
 function rcl_get_postlist_page(){

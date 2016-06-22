@@ -4,133 +4,119 @@ class Rcl_Postlist {
 
     public $name;
     public $id;
-    public $posttype;
-    public $start;
+    public $post_type;
+    public $in_page = 30;
+    public $offset;
+    public $subtab;
+    public $actived;
 
     /**
-     * @param $posttype
+     * @param $post_type
      * @param $name
      * @param array $args
      */
-    function __construct( $id, $posttype, $name, $args = array() ){
+    function __construct( $id, $post_type, $name, $args = array() ){
 
         $this->id = $id;
-        $this->posttype = $posttype;
+        $this->post_type = $post_type;
         $this->name = $name;
-        $this->start = 0;
+        $this->offset = 0;
+        $this->subtab = (isset($_GET['subtab']))? $_GET['subtab']: 'post';
+        $this->actived = ($this->subtab==$this->post_type)? true: false;
 
         $order = ( isset( $args['order'] ) && ! empty( $args['order'] ) ) ? $args['order'] : 10;
         $this->class = ( isset( $args['class'] ) && ! empty( $args['class'] ) ) ? $args['class'] : 'fa-list';
 
-        rcl_bxslider_scripts();
-
         add_filter( 'posts_button_rcl', array( $this, 'add_postlist_button' ), $order, 2 );
-        add_filter( 'posts_block_rcl', array( $this, 'add_postlist_block' ), $order, 2 );
-
-        add_action('wp_ajax_rcl_posts_list', array( $this, 'rcl_posts_list'));
-        add_action('wp_ajax_nopriv_rcl_posts_list', array( $this, 'rcl_posts_list'));
+        
+        if($this->actived)
+            add_filter( 'posts_block_rcl', array( $this, 'add_postlist_block' ), $order, 2 );
     }
 
     function add_postlist_button( $button ){
-            $status = ! $button ? 'active' : '';
-            $button .= ' <a href="#" id="posts_'.$this->id.'" class="recall-button child_block_button '.$status.'"><i class="fa '.$this->class.'"></i>'.$this->name.'</a> ';
-            return $button;
+        global $user_LK;
+        $status = $this->actived ? 'active' : '';
+        $button .= rcl_get_button($this->name,rcl_format_url(get_author_posts_url($user_LK), 'publics').'&subtab='.$this->post_type,array('class'=>$status,'icon'=>$this->class));
+        return $button;
     }
 
     function add_postlist_block($posts_block,$author_lk){
-            if(!isset($posts_block)||!$posts_block) $status = 'active';
-            else $status = '';
 
-            $id = 'posts_'.$this->id.'_block';
+        $id = 'posts_'.$this->id.'_block';
 
-            $posts_block .= '<div id="'.$id.'" class="'.$id.' recall_child_content_block '.$status.'">';
-            $posts_block .= $this->get_postslist($author_lk);
-            $posts_block .= '</div>';
-            return $posts_block;
+        $posts_block .= '<div id="'.$id.'" class="'.$id.'">';
+        $posts_block .= $this->get_postslist($author_lk);
+        $posts_block .= '</div>';
+        return $posts_block;
     }
 
     function get_postslist_table( $author_lk ){
 
-            global $wpdb,$post,$posts,$ratings;
+        global $wpdb,$post,$posts,$ratings;
 
-            $ratings = array();
-            $posts = array();
+        $ratings = array();
+        $posts = array();
 
-            $start = $this->start.',';
+        $offset = $this->offset.',';
 
-            $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $start 20",$author_lk,$this->posttype));
+        $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $offset ".$this->in_page,$author_lk,$this->post_type));
 
-            if(is_multisite()){
-                $blog_list = get_blog_list( 0, 'all' );
+        if(is_multisite()){
+            $blog_list = get_blog_list( 0, 'all' );
 
-                foreach ($blog_list as $blog) {
-                        $pref = $wpdb->base_prefix.$blog['blog_id'].'_posts';
-                        $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$pref." WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $start 20",$author_lk,$this->posttype));
-                }
+            foreach ($blog_list as $blog) {
+                $pref = $wpdb->base_prefix.$blog['blog_id'].'_posts';
+                $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$pref." WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $offset ".$this->in_page,$author_lk,$this->post_type));
             }
+        }
 
-            if($posts[0]){
+        if($posts[0]){
 
-                $p_list = array();
+            $p_list = array();
 
 
-                    if(function_exists('rcl_format_rating')){
+            if(function_exists('rcl_format_rating')){
 
-                            foreach($posts as $postdata){
-                                    foreach($postdata as $p){
-                                            $p_list[] = $p->ID;
-                                    }
-                            }
-
-                            $rayt_p = rcl_get_ratings(array('object_id'=>$p_list,'rating_type'=>array($this->posttype)));
-
-                            foreach((array)$rayt_p as $r){
-                                    if(!isset($r->object_id)) continue;
-                                    $ratings[$r->object_id] = $r->rating_total;
-                            }
-
+                foreach($posts as $postdata){
+                    foreach($postdata as $p){
+                        $p_list[] = $p->ID;
                     }
+                }
 
-                    if(rcl_get_template_path('posts-list-'.$this->posttype.'.php',__FILE__)) 
-                        $posts_block = rcl_get_include_template('posts-list-'.$this->posttype.'.php',__FILE__);
-                    else 
-                        $posts_block = rcl_get_include_template('posts-list.php',__FILE__);
+                $rayt_p = rcl_get_ratings(array('object_id'=>$p_list,'rating_type'=>array($this->post_type)));
 
-                    wp_reset_postdata();
+                foreach((array)$rayt_p as $r){
+                    if(!isset($r->object_id)) continue;
+                    $ratings[$r->object_id] = $r->rating_total;
+                }
 
-            }else{
-                $posts_block = '<p>'.$this->name.' '.__('has not yet been published','wp-recall').'</p>';
             }
 
-            return $posts_block;
-    }
+            if(rcl_get_template_path('posts-list-'.$this->post_type.'.php',__FILE__)) 
+                $posts_block = rcl_get_include_template('posts-list-'.$this->post_type.'.php',__FILE__);
+            else 
+                $posts_block = rcl_get_include_template('posts-list.php',__FILE__);
 
-    function get_postslist($author_lk){
+            wp_reset_postdata();
 
-        $posts_list = $this->get_postslist_table( $author_lk );
-        $posts_block = '<h3>'.__('Published','wp-recall').' '.$this->name.'</h3>';
-        $posts_block .= $this->page_navi($author_lk,$this->posttype);
-        $posts_block .= $posts_list;
+        }else{
+            $posts_block = '<p>'.$this->name.' '.__('has not yet been published','wp-recall').'</p>';
+        }
 
         return $posts_block;
     }
 
-    function rcl_posts_list(){
+    function get_postslist($author_lk){
+
+        $page_navi = $this->page_navi($author_lk,$this->post_type);
+
+        $posts_block = '<h3>'.__('Published','wp-recall').' "'.$this->name.'"</h3>';
         
-        rcl_verify_ajax_nonce();
-
-	$this->posttype = sanitize_text_field($_POST['type']);
-	$this->start = intval($_POST['start']);
-	$author_lk = intval($_POST['id_user']);
-
-	$list = $this->get_postslist_table( $author_lk );
-
-	$log['post_content']=$list;
-        $log['post_content']=$list;
-	$log['recall']=100;
-
-	echo json_encode($log);
-        exit;
+        $posts_block .= $page_navi;
+        $posts_block .= $this->get_postslist_table( $author_lk );
+        $posts_block .= $page_navi;
+        
+        return $posts_block;
     }
     
     function page_navi($userid,$post_type){
@@ -147,31 +133,11 @@ class Rcl_Postlist {
 	}
         
         if(!$count) return false;
-	$in_page = 20;
-        $page = 0;
-	$pages = ceil($count/$in_page);
+	
+        $rclnavi = new Rcl_PageNavi($post_type.'-navi', $count);
+        
+        $this->offset = $rclnavi->offset;
 
-	$navi = '<ul id="'.$post_type.'-pagenavi" class="pagenavi-rcl">';
-	for($a=0;$a<$pages;$a++){
-		$navi .= '<li><a type="'.$post_type.'" data="'.$a*$in_page.'" class="recall-button sec_block_button';
-		if($a==0)$navi .= ' active';
-		$navi .= '" href="#">'.++$page.'</a></li>';
-	}
-	$slider = str_replace('-','',$post_type);
-	$navi .= '</ul>
-	<script>
-	jQuery(function($){
-            $("#'.$post_type.'-pagenavi").bxSlider({
-                pager:false,
-                minSlides: 1,
-                maxSlides: 20,
-                slideWidth: 25,
-                infiniteLoop:false,
-                slideMargin: 0,
-                moveSlides:10
-            });
-	});
-	</script>';
-	return $navi;
+	return $rclnavi->pagenavi();
     }
 }

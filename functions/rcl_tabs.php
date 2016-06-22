@@ -34,6 +34,8 @@ class Rcl_Tabs{
         $this->public = (!isset($args['public'])) ? 0 : $args['public'];
 
         if(isset($args['path'])) $this->key = rcl_key_addon(pathinfo($args['path']));
+        
+        do_action('rcl_construct_'.$idkey.'_tab');
 
         add_filter('the_block_wprecall',array(&$this, 'add_tab'),$ord,2);
         if($name){

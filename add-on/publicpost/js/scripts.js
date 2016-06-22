@@ -54,82 +54,6 @@ jQuery(document).ready(function($) {
         if(error==0) return true;
         else return false;
     });
-    
-    jQuery('#rcl-popup').on('click','.rcl-navi.ajax-navi a',function(){
-        var page = jQuery(this).text();
-        var dataString = 'action=get_media&user_ID='+Rcl.user_ID+'&page='+page;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        jQuery.ajax({
-            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-            success: function(data){
-                if(data['result']==100){
-                        jQuery('#rcl-overlay').fadeIn();
-                        jQuery('#rcl-popup').html(data['content']);
-                        var screen_top = jQuery(window).scrollTop();
-                        var popup_h = jQuery('#rcl-popup').height();
-                        var window_h = jQuery(window).height();
-                        screen_top = screen_top + 60;
-                        jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
-                }else{
-                        alert(Rcl.local.error);
-                }
-            }
-        });
-        return false;
-    });
-    
-    jQuery('form #get-media-rcl').click(function(){
-        var dataString = 'action=get_media&user_ID='+Rcl.user_ID;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        jQuery.ajax({
-            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-            success: function(data){
-                if(data['result']==100){
-                    jQuery('#rcl-overlay').fadeIn();
-                    jQuery('#rcl-popup').html(data['content']);
-                    var screen_top = jQuery(window).scrollTop();
-                    var popup_h = jQuery('#rcl-popup').height();
-                    var window_h = jQuery(window).height();
-                    screen_top = screen_top + 60;
-                    jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
-                }else{
-                    alert(Rcl.local.error);
-                }
-            }
-        });
-        return false;
-    });
-
-    jQuery('#lk-content').on('click','#tab-publics .sec_block_button',function(){
-            var btn = jQuery(this);
-            get_page_content_rcl(btn,'posts_posts_block');
-            return false;
-    });
-
-    function get_page_content_rcl(btn){
-        if(btn.hasClass('active'))return false;
-        rcl_preloader_show('#tab-publics');
-        var id = btn.parents('.recall_child_content_block').attr('id');
-        var start = btn.attr('data');
-        var type = btn.attr('type');
-        var id_user = jQuery('.wprecallblock').data('account');
-        jQuery('.'+id+' .sec_block_button').removeClass('active');
-        btn.addClass('active');
-        var dataString = 'action=rcl_posts_list&start='+start+'&type='+type+'&id_user='+id_user;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        jQuery.ajax({
-            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-            success: function(data){
-                if(data['recall']==100){
-                        jQuery('#'+id+' .publics-table-rcl').html(data['post_content']);
-                } else {
-                        alert(Rcl.local.error);
-                }
-                rcl_preloader_hide();
-            }
-        });
-        return false;
-    }
 
 });
 
@@ -179,7 +103,7 @@ function rcl_delete_post(element){
                 rcl_notice(data['error'],'error');
                 return false;
             }
-            jQuery('.public-form .attachments-post .'+data['post_type']+'-'+post_id).remove();
+            jQuery('.'+data['post_type']+'-'+post_id).remove();
             rcl_notice(data['success'],'success');
         }
     });

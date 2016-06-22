@@ -1,53 +1,4 @@
 <?php
-/*14.0.0*/
-add_action('wp_head','rcl_head_js_data',1);
-function rcl_head_js_data(){
-    global $user_ID;
-    $data = "<script>
-	var user_ID = $user_ID;
-	var wpurl = '".preg_quote(trailingslashit(get_bloginfo('wpurl')),'/:')."';
-	var rcl_url = '".preg_quote(RCL_URL,'/:')."';
-	</script>\n";
-    echo $data;
-}
-
-/*14.0.0*/
-function rcl_get_user_money($user_id=false){
-    global $wpdb,$user_ID;
-    _deprecated_function( 'rcl_get_user_money', '14.0.0', 'rcl_get_user_balance' );
-    if(!$user_id) $user_id = $user_ID;
-    return $wpdb->get_var($wpdb->prepare("SELECT user_balance FROM ".RMAG_PREF."users_balance WHERE user_id='%d'",$user_id));
-}
-
-/*14.0.0*/
-function rcl_update_user_money($newmoney,$user_id=false){
-    global $user_ID,$wpdb;
-    _deprecated_function( 'rcl_update_user_money', '14.0.0', 'rcl_update_user_balance' );
-    if(!$user_id) $user_id = $user_ID;
-
-    $money = rcl_get_user_money($user_id);
-
-    if(isset($money)) return $wpdb->update(RMAG_PREF .'users_balance',
-            array( 'user_balance' => $newmoney ),
-            array( 'user_id' => $user_id )
-        );
-
-    return rcl_add_user_money($newmoney,$user_id);
-}
-
-/*14.0.0*/
-function rcl_add_user_money($money,$user_id=false){
-    global $wpdb,$user_ID;
-    _deprecated_function( 'rcl_add_user_money', '14.0.0', 'rcl_add_user_balance' );
-    if(!$user_id) $user_id = $user_ID;
-    return $wpdb->insert( RMAG_PREF .'users_balance',
-	array( 'user_id' => $user_id, 'user_balance' => $money ));
-}
-
-function get_key_addon_rcl($path_parts){
-    _deprecated_function( 'get_key_addon_rcl', '14.0.0', 'rcl_key_addon' );
-    return rcl_key_addon($path_parts);
-}
 
 /*15.0.0*/
 class RCL_navi{
@@ -119,4 +70,53 @@ class RCL_navi{
 
         return $page_navi;
     }
+}
+
+/*15.0.0*/
+function rcl_update_dinamic_files(){
+    rcl_update_scripts();
+    //rcl_minify_style();
+}
+
+/*перед удалением удалить все применения данной функции в ядре*/
+function rcl_update_scripts(){
+    global $rcl_options;
+
+    $path = RCL_UPLOAD_PATH.'scripts';
+
+    wp_mkdir_p($path);
+
+    $filename = 'footer-scripts.js';
+    $file_src = $path.'/'.$filename;
+    $f = fopen($file_src, 'w');
+
+    $scripts = '';
+    $scripts = apply_filters('file_footer_scripts_rcl',$scripts);
+    if(!isset($scripts)) return false;
+    if($scripts) $scripts = "jQuery(function($){".$scripts."});";
+    $scripts = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $scripts);
+    $scripts =  preg_replace('/ {2,}/',' ',$scripts);
+    fwrite($f, $scripts);
+    fclose($f);
+
+
+    $opt_slider = "''";
+    if(isset($rcl_options['slide-pause'])&&$rcl_options['slide-pause']){
+        $pause = $rcl_options['slide-pause']*1000;
+        $opt_slider = "{auto:true,pause:$pause}";
+    }
+
+    $filename = 'header-scripts.js';
+    $file_src = $path.'/'.$filename;
+    $f = fopen($file_src, 'w');
+
+    $scripts = "var SliderOptions = ".$opt_slider.";"
+            . "jQuery(function(){";
+    $scripts = apply_filters('file_scripts_rcl',$scripts);
+    $scripts .= "});";
+    $scripts = apply_filters('rcl_functions_js',$scripts);
+    $scripts = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $scripts);
+    $scripts =  preg_replace('/ {2,}/',' ',$scripts);
+    fwrite($f, $scripts);
+    fclose($f);
 }

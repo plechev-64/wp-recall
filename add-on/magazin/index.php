@@ -62,12 +62,23 @@ function rcl_orders($author_lk){
                         . '<input class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'" type="button" value="'.__('Delete','wp-recall').'">'
                         . '</div>';
                 if($status==1&&function_exists('rcl_payform')){
+                    
                     $type_pay = $rmag_options['type_order_payment'];
+                    
+                    $payment = new Rcl_Payment();
+                    
+                    $block .= '<div class="rcl-types-paeers">';
+                    
                     if($type_pay==1||$type_pay==2){
-                        $block .= rcl_payform(array('id_pay'=>$order_id,'summ'=>$price,'type'=>2));
-                    }else{
-                        $block .= '<input class="pay_order recall-button" onclick="rcl_pay_order_private_account(this);return false;" type="button" name="pay_order" data-order="'.$order_id.'" value="'.__('To pay','wp-recall').'">';
+                        $block .= $payment->get_form(array('id_pay'=>$order_id,'summ'=>$price,'type'=>2));
                     }
+                    
+                    if(!$type_pay||$type_pay==2){
+                        $block .= $payment->personal_account_pay_form($order_id);
+                    }
+                    
+                    $block .= '</div>';
+                    
                 }
                 $block .= '</div>';
 

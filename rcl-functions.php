@@ -1,5 +1,64 @@
 <?php
-//добавляем контентный блок в указанное место личного кабинета
+
+//регистрируем вкладку личного кабинета
+function rcl_tab($id,$callback,$name='',$args=false){
+    global $rcl_tabs;
+    
+    $data = array(
+        'id'=>$id,
+        'callback'=>$callback,
+        'name'=>$name,
+        'args'=>$args
+    );
+
+    $data = apply_filters('tab_data_rcl',$data);
+    
+    if(!$data) return false;
+    
+    $rcl_tabs[$id] = $data;
+    
+}
+
+//регистрируем созданные произвольные вкладки
+add_action('init','rcl_init_custom_tabs',10);
+function rcl_init_custom_tabs(){
+    $custom_tabs = get_option('rcl_fields_custom_tabs');
+    if(!$custom_tabs) return false;
+    
+    foreach($custom_tabs as $tab){
+        rcl_tab($tab['slug'],'',$tab['title'],
+            array(
+                'ajax-load'=>$tab['ajax'],
+                'class'=>$tab['icon'],
+                'public'=>$tab['public'],
+                'cache'=>$tab['cache'],
+                'content'=> $tab['content']
+            )
+        );
+    }
+}
+
+//выводим все зарегистрированные вкладки в личном кабинете
+add_action('wp','rcl_setup_tabs',10);
+function rcl_setup_tabs(){
+    global $rcl_tabs,$user_LK;
+
+    if(is_admin()||!$user_LK) return false;
+    
+    $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
+
+    if (!class_exists('Rcl_Tabs')) 
+        include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
+
+    foreach($rcl_tabs as $tab){
+        $Rcl_Tabs = new Rcl_Tabs($tab);
+    }
+    
+    do_action('rcl_setup_tabs');
+    
+}
+
+//регистрируем контентые блоки
 function rcl_block($place,$callback,$args=false){
     global $rcl_blocks;
     
@@ -23,8 +82,9 @@ function rcl_block($place,$callback,$args=false){
   
 }
 
-add_action('wp','rcl_init_blocks');
-function rcl_init_blocks(){
+//формируем вывод зарегистрированных контентных блоков в личном кабинете
+add_action('wp','rcl_setup_blocks');
+function rcl_setup_blocks(){
     global $rcl_blocks,$user_LK;
 
     if(is_admin()||!$user_LK)return false;
@@ -35,82 +95,8 @@ function rcl_init_blocks(){
     foreach($rcl_blocks as $block){
         $Rcl_Blocks = new Rcl_Blocks($block);
     }
-}
-
-//добавляем вкладку в личный кабинет
-function rcl_tab($id,$callback,$name='',$args=false){
-    global $rcl_tabs;
     
-    $data = array(
-        'id'=>$id,
-        'callback'=>$callback,
-        'name'=>$name,
-        'args'=>$args
-    );
-
-    if($name) $data = apply_filters('tab_data_rcl',$data);
-    
-    if(!$data) return false;
-    
-    $rcl_tabs[$id] = $data;
-    
-    $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
-}
-
-add_action('wp','rcl_init_tabs');
-function rcl_init_tabs(){
-    global $rcl_tabs,$user_LK;
-
-    if(is_admin()||!$user_LK)return false;
-
-    if (!class_exists('Rcl_Tabs')) 
-        include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
-
-    foreach($rcl_tabs as $tab){
-        $Rcl_Tabs = new Rcl_Tabs($tab);
-    }
-}
-
-add_action('init','rcl_init_custom_tabs',10);
-function rcl_init_custom_tabs(){
-    $custom_tabs = get_option('rcl_fields_custom_tabs');
-    if(!$custom_tabs) return false;
-    
-    foreach($custom_tabs as $tab){
-        rcl_tab($tab['slug'],'',$tab['title'],
-            array(
-                'ajax-load'=>$tab['ajax'],
-                'class'=>$tab['icon'],
-                'public'=>$tab['public'],
-                'cache'=>$tab['cache'],
-                'content'=> $tab['content']
-            )
-        );
-    }
-}
-
-add_action('rcl_cron_daily','rcl_clear_cache',20);
-function rcl_clear_cache(){
-    $rcl_cache = new Rcl_Cache();
-    $rcl_cache->clear_cache();
-}
-
-function rcl_delete_file_cache($string){
-    $rcl_cache = new Rcl_Cache();       
-    $rcl_cache->get_file($string);
-    $rcl_cache->delete_file();
-}
-
-add_action('after_setup_theme','rcl_register_recallbar');
-function rcl_register_recallbar(){
-    global $rcl_options;
-    if( isset( $rcl_options['view_recallbar'] ) && $rcl_options['view_recallbar'] != 1 ) return false;
-    register_nav_menus(array( 'recallbar' => __('Recallbar','wp-recall') ));
-}
-
-function rcl_key_addon($path_parts){
-    if(!isset($path_parts['dirname'])) return false;    
-    return rcl_get_addon_dir($path_parts['dirname']);
+    do_action('rcl_setup_blocks');
 }
 
 function rcl_get_addon_dir($path){
@@ -124,15 +110,62 @@ function rcl_get_addon_dir($path){
     return $dir;
 }
 
-//добавляем вкладку со списком публикаций хозяина ЛК указанного типа записей в личный кабинет
-function rcl_postlist($id,$posttype,$name='',$args=false){
-    global $rcl_options;
-    if(!$rcl_options) $rcl_options = get_option('rcl_global_options');
-    if($rcl_options['publics_block_rcl']!=1) return false;
-    if (!class_exists('Rcl_Postlist')) include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
-    $plist = new Rcl_Postlist($id,$posttype,$name,$args);
+//регистрируем список публикаций указанного типа записи
+function rcl_postlist($id,$post_type,$name='',$args=false){
+    global $rcl_options,$rcl_postlist;
+
+    if(!isset($rcl_options['publics_block_rcl'])||$rcl_options['publics_block_rcl']!=1) return false;
+    
+    $rcl_postlist[$post_type] = array('id'=>$id,'post_type'=>$post_type,'name'=>$name,'args'=>$args);
+
 }
 
+//добавляем зарегистрированные списки публикаций в личный кабинет
+add_action('rcl_construct_publics_tab','rcl_init_postslist',10);
+function rcl_init_postslist(){
+    global $rcl_options,$rcl_postlist,$user_LK;
+    
+    if($rcl_options['publics_block_rcl']!=1||!$user_LK) return false;
+    
+    if($rcl_postlist){
+        
+        if (!class_exists('Rcl_Postlist')) 
+                include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
+        
+        foreach($rcl_postlist as $post_type=>$data){
+            $plist = new Rcl_Postlist($data['id'],$data['post_type'],$data['name'],$data['args']);
+        }
+    }
+}
+
+//регистрация recalolbar`a
+add_action('after_setup_theme','rcl_register_recallbar');
+function rcl_register_recallbar(){
+    global $rcl_options;
+    if( isset( $rcl_options['view_recallbar'] ) && $rcl_options['view_recallbar'] != 1 ) return false;
+    register_nav_menus(array( 'recallbar' => __('Recallbar','wp-recall') ));
+}
+
+function rcl_key_addon($path_parts){
+    if(!isset($path_parts['dirname'])) return false;    
+    return rcl_get_addon_dir($path_parts['dirname']);
+}
+
+//очищаем кеш плагина раз в сутки
+add_action('rcl_cron_daily','rcl_clear_cache',20);
+function rcl_clear_cache(){
+    $rcl_cache = new Rcl_Cache();
+    $rcl_cache->clear_cache();
+}
+
+//удаление определенного файла кеша
+function rcl_delete_file_cache($string){
+    $rcl_cache = new Rcl_Cache();       
+    $rcl_cache->get_file($string);
+    $rcl_cache->delete_file();
+}
+
+//кроп изображений
 function rcl_crop($filesource,$width,$height,$file){
     if (!class_exists('Rcl_Crop'))
         require_once(RCL_PATH.'functions/rcl_crop.php');
@@ -141,6 +174,7 @@ function rcl_crop($filesource,$width,$height,$file){
     return $crop->get_crop($filesource,$width,$height,$file);
 }
 
+//получение абсолютного пути до указанного файла шаблона
 function rcl_get_template_path($filename,$path=false){
     
     if(file_exists(RCL_TAKEPATH.'templates/'.$filename)) 
@@ -157,12 +191,14 @@ function rcl_get_template_path($filename,$path=false){
     return $filepath;
 }
 
+//подключение указанного файла шаблона с выводом
 function rcl_include_template($file_temp,$path=false){
     $pathfile = rcl_get_template_path($file_temp,$path);
     if(!$pathfile) return false;
     include $pathfile;
 }
 
+//подключение указанного файла шаблона без вывода
 function rcl_get_include_template($file_temp,$path=false){
     ob_start();
     rcl_include_template($file_temp,$path);
@@ -171,6 +207,7 @@ function rcl_get_include_template($file_temp,$path=false){
     return $content;
 }
 
+//получение урла до папки текущего дополнения
 function rcl_get_url_current_addon($path){
     
     $cachekey = json_encode(array('rcl_url_current_addon',$path));
@@ -202,10 +239,12 @@ function rcl_get_url_current_addon($path){
     return $url;
 }
 
+//получение урла до указанного файла текущего дополнения
 function rcl_addon_url($file,$path){
     return rcl_get_url_current_addon($path).'/'.$file;
 }
 
+//получение абсолютного пути до папки текущего дополнения
 function rcl_addon_path($path){
     
     $cachekey = json_encode(array('rcl_addon_path',$path));
@@ -232,6 +271,7 @@ function rcl_addon_path($path){
     return $ad_path;
 }
 
+//форматирование абсолютного пути в урл
 function rcl_path_to_url($path,$dir=false){
     if(!$dir) $dir = basename(content_url());
     if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
@@ -252,6 +292,7 @@ function rcl_path_to_url($path,$dir=false){
     return $url;
 }
 
+//получение абсолютного пути из указанного урла
 function rcl_path_by_url($url,$dir=false){
     if(!$dir) $dir = basename(content_url());
     if(function_exists('wp_normalize_path')) $url = wp_normalize_path($url);
@@ -361,11 +402,6 @@ function rcl_get_wp_upload_dir(){
     return $upload_dir;
 }
 
-function rcl_update_dinamic_files(){
-    rcl_update_scripts();
-    //rcl_minify_style();
-}
-
 //запрещаем доступ в админку
 add_action('init','rcl_admin_access',1);
 function rcl_admin_access(){
@@ -402,6 +438,7 @@ function rcl_delete_attachments_with_post($postid){
     }
 }
 
+//регистрируем размеры миниатюра загружаемого аватара пользователя
 add_action('init','rcl_init_avatar_sizes');
 function rcl_init_avatar_sizes(){
     global $rcl_avatar_sizes;
@@ -880,28 +917,28 @@ function rcl_delete_user_action($user_id){
 function rcl_get_insert_image($image_id,$mime='image'){
     global $rcl_options;
     if($mime=='image'){
-            $small_url = wp_get_attachment_image_src( $image_id, 'thumbnail' );
-            $full_url = wp_get_attachment_image_src( $image_id, 'full' );
-            if($rcl_options['default_size_thumb']) $sizes = wp_get_attachment_image_src( $image_id, $rcl_options['default_size_thumb'] );
-            else $sizes = $small_url;
-            $act_sizes = wp_constrain_dimensions($full_url[1],$full_url[2],$sizes[1],$sizes[2]);
-            return '<a onclick="rcl_add_image_in_form(this,\'<a href='.$full_url[0].'><img height='.$act_sizes[1].' width='.$act_sizes[0].' class=aligncenter  src='.$full_url[0].'></a>\');return false;" href="#"><img src="'.$small_url[0].'"></a>';
+        $small_url = wp_get_attachment_image_src( $image_id, 'thumbnail' );
+        $full_url = wp_get_attachment_image_src( $image_id, 'full' );
+        if($rcl_options['default_size_thumb']) $sizes = wp_get_attachment_image_src( $image_id, $rcl_options['default_size_thumb'] );
+        else $sizes = $small_url;
+        $act_sizes = wp_constrain_dimensions($full_url[1],$full_url[2],$sizes[1],$sizes[2]);
+        return '<a onclick="rcl_add_image_in_form(this,\'<a href='.$full_url[0].'><img height='.$act_sizes[1].' width='.$act_sizes[0].' class=aligncenter  src='.$full_url[0].'></a>\');return false;" href="#"><img src="'.$small_url[0].'"></a>';
     }else{
-            return wp_get_attachment_link( $image_id, array(100,100),false,true );
+        return wp_get_attachment_link( $image_id, array(100,100),false,true );
     }
 }
 
 function rcl_get_button($ancor,$url,$args=false){
-	$button = '<a href="'.$url.'" ';
-	if(isset($args['attr'])&&$args['attr']) $button .= $args['attr'].' ';
-	if(isset($args['id'])&&$args['id']) $button .= 'id="'.$args['id'].'" ';
-	$button .= 'class="recall-button ';
-	if(isset($args['class'])&&$args['class']) $button .= $args['class'];
-	$button .= '">';
-	if(isset($args['icon'])&&$args['icon']) $button .= '<i class="fa '.$args['icon'].'"></i>';
-	if($ancor) $button .= '<span>'.$ancor.'</span>';
-	$button .= '</a>';
-	return $button;
+    $button = '<a href="'.$url.'" ';
+    if(isset($args['attr'])&&$args['attr']) $button .= $args['attr'].' ';
+    if(isset($args['id'])&&$args['id']) $button .= 'id="'.$args['id'].'" ';
+    $button .= 'class="recall-button ';
+    if(isset($args['class'])&&$args['class']) $button .= $args['class'];
+    $button .= '">';
+    if(isset($args['icon'])&&$args['icon']) $button .= '<i class="fa '.$args['icon'].'"></i>';
+    if($ancor) $button .= '<span>'.$ancor.'</span>';
+    $button .= '</a>';
+    return $button;
 }
 
 //сортируем вкладки согласно настроек

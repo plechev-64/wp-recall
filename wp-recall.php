@@ -63,13 +63,13 @@ final class WP_Recall {
 	 */
 	public function __construct() {
 
-                add_action('plugins_loaded', array( $this, 'load_plugin_textdomain'),10);
+            add_action('plugins_loaded', array( $this, 'load_plugin_textdomain'),10);
 
-		$this->define_constants(); //Определяем константы.
-		$this->includes(); //Подключаем все нужные файлы с функциями и классами
-		$this->init_hooks(); //Тут все наши хуки
+            $this->define_constants(); //Определяем константы.
+            $this->includes(); //Подключаем все нужные файлы с функциями и классами
+            $this->init_hooks(); //Тут все наши хуки
 
-		do_action( 'wp_recall_loaded' ); //Оставляем кручёк
+            do_action( 'wp_recall_loaded' ); //Оставляем кручёк
 	}
 
 	private function init_hooks() {
@@ -83,7 +83,7 @@ final class WP_Recall {
                 add_action('admin_head','rcl_admin_scrips',10);
                 add_action('admin_menu', 'rcl_options_panel',19);
             }else{
-                 add_action('rcl_enqueue_scripts', 'rcl_frontend_scripts');
+                 add_action('rcl_enqueue_scripts', 'rcl_frontend_scripts',1);
                  add_action('wp_head','rcl_update_timeaction_user',10);
 
             }

@@ -1,18 +1,25 @@
 /* feed Start */
 #rcl-feed .feed-box {
-	background: rgba(243, 243, 243, 0.2);
-	box-shadow: 0 0 1px 1px rgb(243, 243, 243);
-	box-sizing: border-box;
-	clear: both;
-	margin: 15px 2px;
-	overflow: hidden;
+    background: rgba(243, 243, 243, 0.2);
+    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
+    box-sizing: border-box;
+    clear: both;
+    margin: 15px 2px;
+    overflow: hidden;
+}
+#rcl-feed .feed-box pre,
+#rcl-feed .feed-box code{
+    padding: 10px;
+    background: rgb(242, 251, 255);
+    border-top: 2px solid rgb(175, 230, 255);
+    border-bottom: 2px solid rgb(175, 230, 255);
 }
 #rcl-feed .feed-box a {
-	border: none;						/*++Twenty15++*/
-	box-shadow:none;					/*++Twenty16++*/
+    border: none;						/*++Twenty15++*/
+    box-shadow:none;					/*++Twenty16++*/
 }
 #rcl-feed .feed-box span {
-	margin: 0 0 0 5px;
+    margin: 0 0 0 5px;
 }
 #rcl-feed .feed-box .feed-header {
     background: rgba(243, 243, 243, 0.5);
@@ -20,8 +27,8 @@
     padding: 5px;
 }
 .feed-header .feed-options {
-	float: right;
-	position: relative;
+    float: right;
+    position: relative;
 }
 .feed-header .feed-options a{
 	color:rgb(30, 56, 75);

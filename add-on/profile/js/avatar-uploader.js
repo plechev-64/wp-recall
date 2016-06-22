@@ -33,9 +33,9 @@ function rcl_avatar_uploader(){
                     var imgUrl = event.target.result;
                     jQuery( '#rcl-preview' ).remove();
                     jQuery('body > div').last().after('<div id="rcl-preview" title="'+Rcl.local.title_image_upload+'"><img src="'+imgUrl+'"></div>');
-                    var image = $('#rcl-preview img');
+                    var image = jQuery('#rcl-preview img');
                     image.load(function() {
-                        var img = $(this);
+                        var img = jQuery(this);
                         var height = img.height();
                         var width = img.width();
                         var jcrop_api;
@@ -57,12 +57,12 @@ function rcl_avatar_uploader(){
                           resizable: false,
                           close: function (e, data) {
                                   jcrop_api.destroy();
-                                  $( '#rcl-preview' ).remove();
+                                  jQuery( '#rcl-preview' ).remove();
                           },
                           buttons: {
                                 Ok: function() {
                                   data.submit();
-                                  $( this ).dialog( 'close' );
+                                  jQuery( this ).dialog( 'close' );
                                 }
                           }
                         });
@@ -111,7 +111,6 @@ function rcl_avatar_uploader(){
             jQuery('body > div').last().after('<div id="rcl-preview" title="'+Rcl.local.title_webcam_upload+'"></div>');
 
             var webCam = new SayCheese('#rcl-preview', { audio: true });
-            var Snapshot = Rcl.local.snapshot;
             
             jQuery( '#rcl-preview' ).dialog({
                 modal: true,
@@ -127,7 +126,7 @@ function rcl_avatar_uploader(){
                     webCam.start();
                 },
                 buttons: {
-                    Snapshot: function() {
+                    OK: function() {
                         webCam.takeSnapshot(320, 240);
                     }
                 }

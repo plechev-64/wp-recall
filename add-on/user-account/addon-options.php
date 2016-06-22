@@ -87,10 +87,7 @@ function rcl_user_account_options($content){
                             'show_option_none' => __('Not selected','wp-recall'),
                             'echo'             => 0 )
                     ),
-                    $opt->notice(__('For WalletOne: URL script','wp-recall')),
-                    $opt->notice(__('For Interkassa: URL of interaction','wp-recall')),
-                    $opt->notice(__('For Yandex.Cash: checkURL and avisoURL','wp-recall')),
-
+                    
                     $opt->label(__('Page SUCCESS','wp-recall')),
                     wp_dropdown_pages( array(
                             'selected'   => $rcl_options['page_success_pay'],
@@ -98,9 +95,7 @@ function rcl_user_account_options($content){
                             'show_option_none' => __('Not selected','wp-recall'),
                             'echo'             => 0 )
                     ),
-                    $opt->notice(__('For WalletOne: not use','wp-recall')),
-                    $opt->notice(__('For Interkassa: not use','wp-recall')),
-
+                    
                     $opt->label(__('Page FAIL','wp-recall')),
                     wp_dropdown_pages( array(
                             'selected'   => $rcl_options['page_fail_pay'],
@@ -108,7 +103,7 @@ function rcl_user_account_options($content){
                             'show_option_none' => __('Not selected','wp-recall'),
                             'echo'             => 0 )
                     ),
-
+                    
                     $opt->label(__('The successful payment page','wp-recall')),
                     wp_dropdown_pages( array(
                             'selected'   => $rcl_options['page_successfully_pay'],

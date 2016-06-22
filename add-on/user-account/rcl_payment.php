@@ -9,6 +9,7 @@ class Rcl_Payment{
     public $pay_status; //статус платежа
     public $pay_callback;
     public $description;
+    public $connect = array();
     public $method = 'post';
 
     function __construct(){
@@ -88,7 +89,6 @@ class Rcl_Payment{
         if($data->pay_status)
             do_action('payment_rcl',$data->user_id,$data->pay_summ,$data->pay_id,$data->pay_type);
 
-        //echo 'OK'; exit;
     }
 
     function pay_account($data){
@@ -111,8 +111,9 @@ class Rcl_Payment{
         $args = apply_filters('rcl_payform_args',$args);
         
         $type_connect = (isset($args['connect']))? $args['connect']: $rmag_options['connect_sale'];
+        
+        $types_connect = (is_array($type_connect))? $type_connect: array($type_connect);
 
-        $this->pay_callback = (isset($args['callback']))? $args['callback']: 'rcl_pay_order_private_account';
         $this->pay_id = $args['id_pay'];
         $this->pay_summ = $args['summ'];
         $this->pay_type = $args['type'];
@@ -122,15 +123,31 @@ class Rcl_Payment{
             $this->user_id = $user_ID;
         else
             $this->user_id = $args['user_id'];
+        
+        $content = '<div class="rcl-types-connects">';
+        
+        foreach($types_connect as $type){
 
-       if(isset($rcl_payments[$type_connect])){
-            $class = $rcl_payments[$type_connect]->class;
-            $obj = new $class;
-            $method = 'pay_form';
-            return $obj->$method($this);
-        }else{
-            return '<div class="error"><p class="error">'.__('Error! Not configured the connection to the payment aggregator.','wp-recall').'</p></div>';
+            if(isset($rcl_payments[$type])){
+                 $connect = $rcl_payments[$type];
+                 $class = $connect->class;
+                 $this->connect = array(
+                     'name'=>$connect->name,
+                     'image'=>$connect->image
+                 );
+                 $obj = new $class;
+                 $method = 'pay_form';
+                 $content .= $obj->$method($this);
+             }else{
+                 $content .= '<div class="error"><p class="error">'.__('Error! Not configured the connection to the payment aggregator.','wp-recall').'</p></div>';
+             }
+        
         }
+        
+        $content .= '</div>';
+        
+        return $content;
+        
     }
 
     function form($fields,$data,$formaction){
@@ -138,25 +155,43 @@ class Rcl_Payment{
         
         $fields = apply_filters('rcl_pay_form_fields',$fields,$data);
 
-        $submit = ($data->pay_type==1)? __('Confirm the operation','wp-recall'): __('Pay through payment system','wp-recall');
+        $submit = ($data->pay_type==1)? __('Confirm the operation','wp-recall'): __('To pay via','wp-recall').' "'.$data->connect['name'].'"';
         
         $form = '<div class="rcl-pay-form">';
         
+        $background = (isset($data->connect['image'])&&$data->pay_type==2)? 'style="background-image: url('.$data->connect['image'].');"': '';
+        
         $form .= "<div class='rcl-pay-button'>"
-                . "<form id='form-payment-".$data->pay_id."' action='".$formaction."' method=$data->method>"
-                .$this->get_hiddens( $fields )
-                ."<input class='recall-button' type=submit value='$submit'>"
-                ."</form>"
+                    . "<form id='form-payment-".$data->pay_id."' action='".$formaction."' method=$data->method>"
+                    . $this->get_hiddens( $fields )
+                    . "<span class='rcl-connect-submit' ".$background.">"
+                        . "<input class='recall-button' type=submit value='$submit'>"
+                    . "</span>"
+                    . "</form>"
                 . "</div>";
 
-        $type_p = $rmag_options['type_order_payment'];
-        if($user_ID&&$type_p==2&&$data->pay_type==2)
-            $form .= '<div class="rcl-pay-button">'
-                . '<input class="recall-button" type="button" name="pay_order" onclick="'.$data->pay_callback.'(this);return false;" data-order="'.$data->pay_id.'" value="'.__('Pay personal account','wp-recall').'">'
-                . '</div>';
-        
         $form .= '</div>';
 
+        return $form;
+    }
+    
+    function personal_account_pay_form($pay_id, $args = array()){
+        
+        $pay_callback = (isset($args['callback']))? $args['callback']: 'rcl_pay_order_private_account';
+        $submit = (isset($args['submit']))? $args['submit']: __('Pay personal account','wp-recall');
+        
+        $form = '<div class="rcl-account-pay">';
+            $form .= '<div class="rcl-pay-form">';
+
+            $form .= '<div class="rcl-pay-button">'
+                        . '<span class=rcl-connect-submit><i class="fa fa-credit-card" aria-hidden="true"></i>'
+                        . '<input class="recall-button" type="button" name="pay_order" onclick="'.$pay_callback.'(this);return false;" data-order="'.$pay_id.'" value="'.$submit.'">'
+                        . '</span>'
+                    . '</div>';
+
+            $form .= '</div>';
+        $form .= '</div>';
+        
         return $form;
     }
 

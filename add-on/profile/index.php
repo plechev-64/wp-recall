@@ -17,13 +17,12 @@ add_filter('rcl_init_js_variables','rcl_init_js_profile_variables',10);
 function rcl_init_js_profile_variables($data){
     global $rcl_options;
     
-    $size_ava = (isset($rcl_options['avatar_weight']))? $rcl_options['avatar_weight']: 2;
+    $size_ava = (isset($rcl_options['avatar_weight'])&&$rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: 2;
     
     $data['profile']['avatar_size'] = $size_ava;
     $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),$size_ava);
     $data['local']['title_image_upload'] = __('The image being loaded','wp-recall');
     $data['local']['title_webcam_upload'] = __('Image from the camera','wp-recall');
-    $data['local']['snapshot'] = __('Snapshot','wp-recall');
     return $data;
 }
 
@@ -44,12 +43,15 @@ function rcl_get_show_profile_fields($author_lk){
 
 if(!is_admin()) add_action('wp','rcl_update_profile_notice');
 function rcl_update_profile_notice(){
-    if (isset($_GET['updated'])) rcl_notice_text(__('Your profile was updated','wp-recall'),'success');
+    if (isset($_GET['updated'])) 
+        rcl_notice_text(__('Your profile was updated','wp-recall'),'success');
 }
 
 //Обновляем профиль пользователя
+add_action('wp_ajax_rcl_edit_profile','rcl_edit_profile',10);
 function rcl_edit_profile(){
     global $user_ID;
+    
     if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-profile_' . $user_ID ) ) return false;
 
     if ( defined('ABSPATH') ) {
@@ -58,23 +60,38 @@ function rcl_edit_profile(){
         require_once('../wp-admin/includes/user.php');
     }
 
-    $redirect_url = rcl_format_url(get_author_posts_url($user_ID),'profile').'&updated=true';
-
-    $args = array('hide_empty'=>false);
-    $allterms = get_terms('category', $args );
-
     rcl_update_profile_fields($user_ID);
 
     check_admin_referer( 'update-profile_' . $user_ID );
+    
     $errors = edit_user( $user_ID );
+    
     if ( is_wp_error( $errors ) ) {
-            foreach ( $errors->get_error_messages() as $message )
-                    $errmsg = "$message";
+        foreach ( $errors->get_error_messages() as $message )
+                $errmsg = "$message";
     }
-    if(isset($errmsg)) wp_die($errmsg);
+    
+    if(isset($errmsg)) 
+        wp_die($errmsg);
+    
     do_action( 'personal_options_update', $user_ID );
-    wp_redirect( $redirect_url );
+    
+    if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+        echo json_encode(array('success'=>__('Your profile was updated','wp-recall')));
+    }else{
+        $redirect_url = rcl_format_url(get_author_posts_url($user_ID),'profile').'&updated=true';
+        wp_redirect( $redirect_url );
+    }
+    
+    exit;
 }
+
+function rcl_edit_profile_activate ( ) {
+  if ( isset( $_POST['submit_user_profil'] ) ) {
+    add_action( 'wp', 'rcl_edit_profile' );
+  }
+}
+add_action('init', 'rcl_edit_profile_activate',10);
 
 function rcl_update_profile_fields($user_id){
 
@@ -142,13 +159,6 @@ function rcl_save_profile_fields($user_id) {
 
     rcl_update_profile_fields($user_id);
 }
-
-function rcl_edit_profile_activate ( ) {
-  if ( isset( $_POST['submit_user_profil'] ) ) {
-    add_action( 'wp', 'rcl_edit_profile' );
-  }
-}
-add_action('init', 'rcl_edit_profile_activate');
 
 //Удаляем аккаунт пользователя
 function rcl_delete_user_account(){
@@ -270,7 +280,8 @@ function rcl_add_more_link_content($content){
 
 add_action('wp','rcl_notice_avatar_deleted');
 function rcl_notice_avatar_deleted(){
-    if (isset($_GET['rcl-avatar'])&&$_GET['rcl-avatar']=='deleted') rcl_notice_text(__('Your avatar has been removed','wp-recall'),'success');
+    if (isset($_GET['rcl-avatar'])&&$_GET['rcl-avatar']=='deleted') 
+        rcl_notice_text(__('Your avatar has been removed','wp-recall'),'success');
 }
 
 add_action('init','rcl_tab_profile');
@@ -302,7 +313,7 @@ function rcl_tab_profile_content($author_lk){
     }
 
     $profile_block = '<h3>'.__('User profile','wp-recall').' '.$userdata->user_login.'</h3>
-    <form name="profile" id="your-profile" action="" method="post" enctype="multipart/form-data">
+    <form name="profile" id="your-profile" action="" method="post" onsubmit="return rcl_update_profile();" enctype="multipart/form-data">
     '.wp_nonce_field( 'update-profile_' . $user_ID,'_wpnonce',true,false ).'
     <input type="hidden" name="from" value="profile" />
     <input type="hidden" name="checkuser_id" value="'.$user_ID.'" />
@@ -513,8 +524,7 @@ function rcl_tab_profile_content($author_lk){
 
         $profile_block = apply_filters('profile_options_rcl',$profile_block,$userdata);
 
-	$profile_block .= '<input type="hidden" name="action" value="update" />
-	<input type="hidden" name="user_id" id="user_id" value="'.$user_ID.'" />
+	$profile_block .= '<input type="hidden" name="user_id" id="user_id" value="'.$user_ID.'" />
 	<input type="hidden" name="admin_color" value="'.esc_attr( $userdata->admin_color ).'" />
 	<input type="hidden" name="rich_editing" value="'.esc_attr( $userdata->rich_editing ).'" />
 	<input type="hidden" name="comment_shortcuts" value="'.esc_attr( $userdata->comment_shortcuts ).'" />';

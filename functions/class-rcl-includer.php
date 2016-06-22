@@ -120,8 +120,6 @@ class Rcl_Includer{
                 $parents = array_merge($rcl_scripts['parents'][$key],$parents);
             }
         }
-        
-        //print_r($rcl_scripts);
 
         $filename = md5(implode(',',$ids)).'.js';
         $filepath = RCL_UPLOAD_PATH.'js/'.$filename;
@@ -221,8 +219,11 @@ function rcl_enqueue_style($id,$url,$footer=false){
         $url = rcl_addon_url('style.css',$url);
     }
     
+    //если скрипт выводим в футере
     if($footer||isset($rcl_styles['header'])){
-        $rcl_styles['footer'][$id] = $url;
+        //если не обнаружен дубль скрипта в хедере
+        if(!isset($rcl_styles['header'][$id]))
+            $rcl_styles['footer'][$id] = $url;
     }else{
         $rcl_styles[$id] = $url;
     }  

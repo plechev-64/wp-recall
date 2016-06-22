@@ -99,48 +99,6 @@ function rcl_register_shutdown(){
 
 }
 
-//обновление файлов header-scripts.js и footer-scripts.js
-function rcl_update_scripts(){
-    global $rcl_options;
-
-    $path = RCL_UPLOAD_PATH.'scripts';
-
-    wp_mkdir_p($path);
-
-    $filename = 'footer-scripts.js';
-    $file_src = $path.'/'.$filename;
-    $f = fopen($file_src, 'w');
-
-    $scripts = '';
-    $scripts = apply_filters('file_footer_scripts_rcl',$scripts);
-    if(!isset($scripts)) return false;
-    if($scripts) $scripts = "jQuery(function($){".$scripts."});";
-    $scripts = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $scripts);
-    $scripts =  preg_replace('/ {2,}/',' ',$scripts);
-    fwrite($f, $scripts);
-    fclose($f);
-
-
-    $opt_slider = "''";
-    if(isset($rcl_options['slide-pause'])&&$rcl_options['slide-pause']){
-        $pause = $rcl_options['slide-pause']*1000;
-        $opt_slider = "{auto:true,pause:$pause}";
-    }
-
-    $filename = 'header-scripts.js';
-    $file_src = $path.'/'.$filename;
-    $f = fopen($file_src, 'w');
-
-    $scripts = "var SliderOptions = ".$opt_slider.";"
-            . "jQuery(function(){";
-    $scripts = apply_filters('file_scripts_rcl',$scripts);
-    $scripts .= "});";
-    $scripts = apply_filters('rcl_functions_js',$scripts);
-    $scripts = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $scripts);
-    $scripts =  preg_replace('/ {2,}/',' ',$scripts);
-    fwrite($f, $scripts);
-    fclose($f);
-}
 //парсим содержимое файла info.txt дополнения
 function rcl_parse_addon_info($info){
     $addon_data = array();

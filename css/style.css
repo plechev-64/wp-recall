@@ -676,7 +676,18 @@ p.status-user-rcl::before {
     margin: 3px;
 }
 .wprecallblock .rcl-menu {
-	overflow: hidden;
+    overflow: hidden;
+}
+.wprecallblock .rcl-sub-menu {
+    overflow: hidden;
+    background: #f7f8f8;
+    padding: 10px;
+    margin: 5px 0;
+}
+.wprecallblock .rcl-sub-menu .recall-button{
+    display: inline-block;
+    padding: 7px;
+    margin-right: 5px;
 }
 .wprecallblock a.sec_block_button i.fa,
 .wprecallblock a.child_block_button i.fa {
@@ -689,28 +700,27 @@ p.status-user-rcl::before {
     margin: 0 0 0 5px;
 }       
 
-a.recall-button,
+body a.recall-button,
 .recall-button.rcl-upload-button,		/*input[type="file"]*/
 input[type="submit"].recall-button,
 input[type="submit"] .recall-button,
 input[type="button"].recall-button,
 input[type="button"] .recall-button {
-	/*background: rgb(76, 140, 189);*/		/*основной цвет для колорпикера*/
-	border-radius: 0;							/*++hueman++*/
-	color: #fff;
-	cursor:pointer;
-	padding: 5px 5px;
-	font-size: 12px;
-	font-weight: normal;						/*++hueman++*/
-	letter-spacing: normal;						/*++Twenty16++*/
-	line-height:1;
-	text-decoration: none;
-	white-space: nowrap;
-	box-sizing: border-box;
-	text-transform: none;						/*++Twenty16++*/
-	border: none;
+    border-radius: 0;							/*++hueman++*/
+    color: #fff;
+    cursor:pointer;
+    padding: 5px 5px;
+    font-size: 12px;
+    font-weight: normal;						/*++hueman++*/
+    letter-spacing: normal;						/*++Twenty16++*/
+    line-height:1;
+    text-decoration: none;
+    white-space: nowrap;
+    box-sizing: border-box;
+    text-transform: none;						/*++Twenty16++*/
+    border: none;
 }
-	/* Основной стиль кнопок End */
+/* Основной стиль кнопок End */
 
 /* Состояния кнопок Start */
 a.recall-button:hover,
@@ -720,14 +730,13 @@ input[type="submit"].recall-button:hover,
 input[type="submit"] .recall-button:hover,
 input[type="button"].recall-button:hover,
 input[type="button"] .recall-button:hover {
-	/*background: rgb(76, 140, 189);*/				/*цвет вставлять колорпикером как у обычной кнопки обязательно. Иначе темы его перезаписывают*/
-	color: #fff;
-	opacity: 0.8;
+    color: #fff;
+    opacity: 0.8;
 }
 
 .rcl-search-form input[type="submit"]:hover,
 .rcl-upload-button input[type="file"]:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 a.recall-button.active,
@@ -738,7 +747,6 @@ a.data-filter.filter-active,
 a.data-filter.filter-active:hover {
     box-shadow: none;							/*++Twenty16++*/
     cursor: default;
-    /*background: rgba(76, 140, 189, 0.4);*/		/*для колорпикера на 6 оттенков светлей*/
     color: rgb(30, 56, 75);
     opacity: 1;
 }
@@ -1015,6 +1023,7 @@ a.data-filter.filter-active:hover {
     display: block;
     padding: 5px;
     background: #f4f4f4;
+    font-size: 11px;
 }
 #tab-profile .file-field-upload input{
     width: auto;
@@ -1135,12 +1144,12 @@ a.data-filter.filter-active:hover {
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     box-sizing: border-box;
     clear: both;
-	display: inline-block;									/*++hueman++*/
+    display: inline-block;
     font-size: 20px;
     font-weight: bold;
-    margin: 4px 2px 3px;
+    margin: 10px 0;
     padding: 6px 5px;
-    width: 99%;
+    width: 100%;
 }
 .rcl-navi a,
 .rcl-navi span,

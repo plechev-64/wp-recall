@@ -11,6 +11,7 @@ class Rcl_PageNavi{
     public $pager_id;
     public $custom = array();
     public $offset;
+    public $ajax = false;
     
     function __construct($pager_id,$data_amount,$custom = array()){
 
@@ -38,6 +39,9 @@ class Rcl_PageNavi{
             
             if(isset($this->custom['output_number'])) 
                 $this->output_number = $this->custom['output_number'];
+            
+            if(isset($this->custom['ajax'])) 
+                $this->ajax = $this->custom['ajax'];
         }
         
         if($this->current_page==0)
@@ -124,7 +128,8 @@ class Rcl_PageNavi{
         return $query;
     }
     
-    function get_url($page_id){          
+    function get_url($page_id){ 
+        if($this->ajax) return '#';
         return rcl_format_url($this->uri['current']).$this->uri['string'].'&'.$this->key.'='.$page_id;
     }
     
@@ -137,6 +142,8 @@ class Rcl_PageNavi{
         $class = 'rcl-pager';
         
         if($classes) $class .= $class.' '.$classes;
+        
+        if($this->ajax) $class = $class.' rcl-ajax-navi';
         
         $content = '<div class="'.$class.'">';
         

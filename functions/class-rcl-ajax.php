@@ -12,7 +12,7 @@ class Rcl_Ajax{
         rcl_verify_ajax_nonce();
         
         $post = rcl_decode_post($_POST['post']);
-
+        
         $callback = $post->callback;
         $result['result'] = $callback($post);
         $result['post'] = $post;

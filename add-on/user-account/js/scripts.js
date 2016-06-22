@@ -10,10 +10,14 @@ jQuery(function($){
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
             success: function(data){
                 rcl_preloader_hide();
+                
+                if(data['error']){
+                    rcl_notice(data['error'],'error');
+                    return false;
+                }
+                
                 if(data['otvet']==100){
                     jQuery('#'+id+' .rcl-result-box').html(data['redirectform']);
-                } else {
-                   rcl_notice(Rcl.local.error,'error');
                 }
             }
         });

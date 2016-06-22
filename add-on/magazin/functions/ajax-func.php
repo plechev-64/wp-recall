@@ -209,6 +209,32 @@ function rcl_confirm_order(){
         $notice .= __('The order contained only free items','wp-recall').'<br>';
     }
     
+    if(function_exists('rcl_payform')){
+        $type_pay = $rmag_options['type_order_payment'];
+        
+        $args_pay = array(
+                'id_pay'=>$order->order_id,
+                'summ'=>$order->order_price,
+                'user_id'=>$order->order_author,
+                'type'=>2,
+                'description'=>sprintf(__('Payment order №%s from %s','wp-recall'),$order->order_id,get_the_author_meta('user_email',$order->order_author))
+            );
+                    
+        $payment = new Rcl_Payment();
+
+        $payment_form = '<div class="rcl-types-paeers">';
+
+        if($type_pay==1||$type_pay==2){
+            $payment_form .= $payment->get_form($args_pay);
+        }
+
+        if(!$type_pay||$type_pay==2){
+            $payment_form .= $payment->personal_account_pay_form($order->order_id);
+        }
+
+        $payment_form .= '</div>';
+    }
+    
     //Если регистрировали пользователя
     if($rcl_order->userdata){
         
@@ -230,18 +256,7 @@ function rcl_confirm_order(){
                 
                 if($order->order_price){
                     if(function_exists('rcl_payform')){
-
-                        $type_pay = $rmag_options['type_order_payment'];
-                        if($type_pay==1||$type_pay==2){
-
-                            $notice .= rcl_payform(array(
-                                    'id_pay'=>$order->order_id,
-                                    'summ'=>$order->order_price,
-                                    'user_id'=>$order->order_author,
-                                    'type'=>2,
-                                    'description'=>sprintf(__('Payment order №%s from %s','wp-recall'),$order->order_id,get_the_author_meta('user_email',$order->order_author))
-                                ));
-                        }
+                        $notice .= $payment_form;
                     }
                 }
                 
@@ -258,25 +273,12 @@ function rcl_confirm_order(){
     }else{
         
         if($order->order_price){
-            if(function_exists('rcl_payform')){
-                $type_pay = $rmag_options['type_order_payment'];
-                if($type_pay==1||$type_pay==2){
+            if(function_exists('rcl_payform')){              
 
                     $notice .= __('You can pay it now or from your personal account. There you can find out the status of your order.','wp-recall');
 
-                    $payform = rcl_payform(array(
-                        'id_pay'=>$order->order_id,
-                        'summ'=>$order->order_price,
-                        'user_id'=>$order->order_author,
-                        'type'=>2,
-                        'description'=>sprintf(__('Payment order №%d from %s','wp-recall'),$order->order_id,get_the_author_meta('user_email',$order->order_author))
-                    ));
+                    $payform = $payment_form;
 
-                }else{
-
-                    $notice .= __('You can pay at any time in your personal account. There you can find out the status of your order.','wp-recall');
-
-                }
             }else{
 
                 $notice .= __('You can monitor the status of your order in your personal account.','wp-recall');
