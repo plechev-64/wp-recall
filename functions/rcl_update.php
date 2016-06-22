@@ -179,7 +179,13 @@ function rcl_update_addon(){
         echo json_encode($result); exit;
     }
 
-    file_put_contents($new_addon, $archive);
+    $put = file_put_contents($new_addon, $archive);
+    
+    if($put===false){
+        $log['error'] = __('Архив не удалось загрузить!','wp-recall');
+        echo json_encode($log);
+        exit;
+    }
 
     $zip = new ZipArchive;
 

@@ -46,7 +46,7 @@ class Rcl_EditFields {
             '.wp_nonce_field('rcl-update-custom-fields','_wpnonce',true,false).'
             '.$more;
         
-            if($this->primary['terms'])
+            if(isset($this->primary['terms'])&&$this->primary['terms'])
                 $form .= $this->option('options',array(
                     'name'=>'terms',
                     'label'=>__('List of columns to select','wp-recall'),

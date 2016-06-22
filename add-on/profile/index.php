@@ -246,7 +246,7 @@ function rcl_button_avatar_upload($content,$author_lk){
         <span id="file-upload" class="fa fa-download">
             <input type="file" id="userpicupload" accept="image/*" name="userpicupload">
         </span>';
-    $content .= @( $_SERVER["HTTPS"] != 'on' ) ? '':  '<span id="webcamupload" class="fa fa-camera"></span>';
+    $content .= @( !isset($_SERVER["HTTPS"])||$_SERVER["HTTPS"] != 'on' ) ? '':  '<span id="webcamupload" class="fa fa-camera"></span>';
     $content .= '</div>
     <span id="avatar-upload-progress"></span>';
     return $content;

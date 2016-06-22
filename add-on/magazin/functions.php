@@ -58,7 +58,7 @@ function rcl_related_products($content){
         
 	if($rmag_options['sistem_related_products']!=1) return $content;
         
-	if($post->post_type!='products')return $content;
+	if(!isset($post)||$post->post_type!='products')return $content;
         
 	$related = get_post_meta($post->ID,'related_products_recall',1);
         

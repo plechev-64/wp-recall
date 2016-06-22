@@ -61,7 +61,7 @@ class Rcl_Includer{
             $this->files['css'][$key] = $value;
         }
 
-        if(!$this->files['css']) return false;
+        if(!isset($this->files['css'])||!$this->files['css']) return false;
 
         foreach($this->files['css'] as $id=>$url){
             $ids[] = $id;
@@ -111,7 +111,7 @@ class Rcl_Includer{
             $this->files['js'][$key] = $url;
         }
 
-        if(!$this->files['js']) return false;
+        if(!isset($this->files['js'])||!$this->files['js']) return false;
         
         $parents = array('jquery');
         foreach($this->files['js'] as $key=>$url){

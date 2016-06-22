@@ -123,14 +123,16 @@ function rcl_frontend_scripts(){
         'error' => __('Error','wp-recall'),
         'loading' => __('Loading','wp-recall')
     );
-
-    if($rcl_options['difficulty_parole']&&(!$user_ID||$user_LK==$user_ID)){
-        $local['pass0'] = __('Very weak','wp-recall');
-        $local['pass1'] = __('Weak','wp-recall');
-        $local['pass2'] = __('Worse than average','wp-recall');
-        $local['pass3'] = __('Average','wp-recall');
-        $local['pass4'] = __('Reliable','wp-recall');
-        $local['pass5'] = __('Strong','wp-recall');
+    
+    if(isset($rcl_options['difficulty_parole'])){
+        if($rcl_options['difficulty_parole']&&(!$user_ID||$user_LK==$user_ID)){
+            $local['pass0'] = __('Very weak','wp-recall');
+            $local['pass1'] = __('Weak','wp-recall');
+            $local['pass2'] = __('Worse than average','wp-recall');
+            $local['pass3'] = __('Average','wp-recall');
+            $local['pass4'] = __('Reliable','wp-recall');
+            $local['pass5'] = __('Strong','wp-recall');
+        }
     }
 
     $data = array(
@@ -145,7 +147,7 @@ function rcl_frontend_scripts(){
     $data['post_ID'] = (isset($post->ID)&&$post->ID)? (int)$post->ID: (int)0;
     $data['account_ID'] = ($user_LK==$user_ID)? (int)$user_LK: (int)0;
     $data['mobile'] = (wp_is_mobile())? (int)1: (int)0;
-    $data['https'] = @( $_SERVER["HTTPS"] != 'on' ) ? (int)0:  (int)1;
+    $data['https'] = @( !isset($_SERVER["HTTPS"])||$_SERVER["HTTPS"] != 'on' ) ? (int)0:  (int)1;
     $data['slider'] = (isset($rcl_options['slide-pause'])&&$rcl_options['slide-pause'])? "{auto:true,pause:".($rcl_options['slide-pause']*1000)."}": "''";
     
     $data = apply_filters('rcl_init_js_variables',$data);

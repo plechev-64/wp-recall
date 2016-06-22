@@ -172,15 +172,14 @@ class Rcl_PageNavi{
 
 function rcl_navi_admin($inpage,$cnt_data,$page,$page_id,$get_data){
 
-    if($_GET['paged']) $page = $_GET['paged'];
-    else $page=1;
+    $page = (isset($_GET['paged']))? $_GET['paged']: 1;
 
     $num_page = ceil($cnt_data/$inpage);
 
     $prev = $page-1;
     $next = $page+1;
     
-    $pagination .= '<div class="tablenav">
+    $pagination = '<div class="tablenav">
         <div class="tablenav-pages">
             <span class="pagination-links">';
 

@@ -391,6 +391,7 @@ function rcl_add_options_addons_manager() {
         'default' => 20,
         'option' => 'addons_per_page'
     );
+    
     add_screen_option( $option, $args );
     $Rcl_Addons_Manager = new Rcl_Addons_Manager();
 }
