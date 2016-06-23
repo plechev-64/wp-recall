@@ -237,7 +237,7 @@ function rcl_mail_payment_error($hash=false,$other=false){
 function rcl_payments(){
     global $rmag_options,$rcl_payments;
 
-    if(!$rmag_options['connect_sale']) return false;
+    if(!isset($rmag_options['connect_sale'])||!$rmag_options['connect_sale']) return false;
     if(!isset($rcl_payments[$rmag_options['connect_sale']])||is_array($rmag_options['connect_sale'])) return false;
 
     if (isset($_REQUEST[$rcl_payments[$rmag_options['connect_sale']]->request])){

@@ -55,23 +55,46 @@ global $post,$rmag_options;
 	return $content;
 }
 
+add_action('rcl_bar_setup','rcl_bar_add_cart',10);
+function rcl_bar_add_cart(){
+    global $CartData,$rmag_options;
+    
+    if(!is_user_logged_in()) return false;
+    
+    $amount = 0;
+    if(isset($_SESSION['cart'])){
+        foreach($_SESSION['cart'] as $prod_id=>$val){
+            $amount += $val['number'];
+        }
+    }
+    
+    rcl_bar_add_icon('rcl-cart',
+        array(
+            'icon'=>'fa-shopping-cart',
+            'url'=>$rmag_options['basket_page_rmag'],
+            'label'=>__('Cart','wp-recall'),
+            'counter'=>'<span class="cart-numbers">'.$amount.'</span>'
+        )
+    );
+}
+
 function rcl_shortcode_minicart() {
     global $rmag_options,$CartData;
     $sumprice = 0;
 
     if(isset($_SESSION['cartdata']['summ'])) $sumprice = $_SESSION['cartdata']['summ'];
 
-    $all = 0;
+    $amount = 0;
     if(isset($_SESSION['cart'])){
         foreach($_SESSION['cart'] as $prod_id=>$val){
-            $all += $val['number'];
+            $amount += $val['number'];
         }
     }
 
     $cart = (isset($_SESSION['cart']))? $_SESSION['cart']: false;
 
 	$CartData = (object)array(
-		'numberproducts'=>$all,
+		'numberproducts'=>$amount,
 		'cart_price'=>$sumprice,
 		'cart_url'=>$rmag_options['basket_page_rmag'],
 		'cart'=> $cart

@@ -137,7 +137,7 @@ class Rcl_Cart {
 
         if(!$products) return '<p>'.__('Your shopping cart is empty','wp-recall').'.</p>';
 
-        if(!$user_ID) $basket .= '<h3 class="title-data">'.__('Cart','wp-recall').'Корзина</h3>';
+        if(!$user_ID) $basket .= '<h3 class="title-data">'.__('Cart','wp-recall').'</h3>';
 
         $basket .= rcl_get_include_template('cart.php',__FILE__);
 

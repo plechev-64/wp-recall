@@ -249,6 +249,7 @@ class RCL_Install {
         if(!isset($rcl_options['view_user_lk_rcl'])){
 
             $rcl_options['view_user_lk_rcl'] = 1;
+            $rcl_options['tab_newpage'] = 1;
 
             //отключаем все пользователям сайта показ админ панели, если включена
             $wpdb->update(

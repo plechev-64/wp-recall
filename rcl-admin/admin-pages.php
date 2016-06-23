@@ -304,6 +304,11 @@ function rcl_global_options(){
                         $fields->option('select',array(
                             'name'=>'view_recallbar',
                             'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
+                        )),
+                        $fields->label(__('Цвет','wp-recall')),
+                        $fields->option('select',array(
+                            'name'=>'rcb_color',
+                            'options'=>array(__('Default','wp-recall'),__('Установленный цвет WP-Recall','wp-recall'))
                         ))
                     )
                 );

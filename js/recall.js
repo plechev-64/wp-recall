@@ -60,6 +60,12 @@ function rcl_ajax_tab(e,data){
 jQuery(function($){
 	
     init_location_data();
+    
+    $("#recallbar_new .menu-item-has-children").hover(function() {
+        $(this).children(".sub-menu").css({'visibility': 'visible'})
+    }, function() {
+        $(this).children(".sub-menu").css({'visibility': ''})
+    });
 
     $('body').on('click','.rcl-ajax',function(){
         rcl_preloader_show('#lk-content > div');

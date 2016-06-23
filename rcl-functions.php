@@ -46,6 +46,8 @@ function rcl_setup_tabs(){
     if(is_admin()||!$user_LK) return false;
     
     $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
+    
+    if(!$rcl_tabs) return false;
 
     if (!class_exists('Rcl_Tabs')) 
         include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
@@ -88,6 +90,8 @@ function rcl_setup_blocks(){
     global $rcl_blocks,$user_LK;
 
     if(is_admin()||!$user_LK)return false;
+    
+    if(!$rcl_blocks) return false;
 
     if (!class_exists('Rcl_Blocks')) 
         include_once plugin_dir_path( __FILE__ ).'functions/rcl_blocks.php';
@@ -143,7 +147,16 @@ add_action('after_setup_theme','rcl_register_recallbar');
 function rcl_register_recallbar(){
     global $rcl_options;
     if( isset( $rcl_options['view_recallbar'] ) && $rcl_options['view_recallbar'] != 1 ) return false;
+    
     register_nav_menus(array( 'recallbar' => __('Recallbar','wp-recall') ));
+
+}
+
+add_action('wp','rcl_bar_setup',10);
+function rcl_bar_setup(){
+    global $rcl_options;
+    if( !isset( $rcl_options['view_recallbar'] ) || $rcl_options['view_recallbar'] != 1 ) return false;
+    do_action('rcl_bar_setup');
 }
 
 function rcl_key_addon($path_parts){

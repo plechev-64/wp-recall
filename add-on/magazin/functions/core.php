@@ -443,7 +443,7 @@ function rcl_payment_order($order_id,$user_id=false){
     <p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$user_id).'</p>
     <p><b>'.__('Email','wp-recall').'</b>: '.get_the_author_meta('user_email',$user_id).'</p>
     '.$show_custom_field.'
-    <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$order_id,rcl_get_status_name_order(1)).'.</p>
+    <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$order_id,rcl_get_status_name_order(2)).'.</p>
     <h3>'.__('Order details','wp-recall').':</h3>
     '.$table_order.'
 	'.$text.'
@@ -463,7 +463,7 @@ function rcl_payment_order($order_id,$user_id=false){
     <h3>'.__('Information about the customer','wp-recall').':</h3>
     <p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$user_id).'</p>
     <p><b>'.__('Email','wp-recall').'</b>: '.get_the_author_meta('user_email',$user_id).'</p>
-    <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$order_id,rcl_get_status_name_order(1)).'.</p>
+    <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$order_id,rcl_get_status_name_order(2)).'.</p>
     <h3>'.__('Order details','wp-recall').':</h3>
     '.$table_order.'
 	'.$text.'
