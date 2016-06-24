@@ -1,5 +1,14 @@
 <?php
-if (!is_admin()):
+
+if (!session_id()) { session_start(); }
+
+require_once("functions.php");
+require_once("functions/ajax-func.php");
+
+if(is_admin()):
+    require_once("admin-pages.php");
+else:
+    require_once("functions/shortcodes.php");
     add_action('rcl_enqueue_scripts','rcl_rmag_scripts',10);
 endif;
 
@@ -19,13 +28,6 @@ function rmag_global_unit(){
     define('RMAG_PREF', $wpdb->prefix."rmag_");
 }
 add_action('init','rmag_global_unit',10);
-
-if (!session_id()) { session_start(); }
-
-require_once("functions.php");
-require_once("admin-pages.php");
-require_once("functions/shortcodes.php");
-require_once("functions/ajax-func.php");
 
 add_action('init','rcl_tab_orders');
 function rcl_tab_orders(){

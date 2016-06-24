@@ -152,13 +152,6 @@ function rcl_register_recallbar(){
 
 }
 
-add_action('wp','rcl_bar_setup',10);
-function rcl_bar_setup(){
-    global $rcl_options;
-    if( !isset( $rcl_options['view_recallbar'] ) || $rcl_options['view_recallbar'] != 1 ) return false;
-    do_action('rcl_bar_setup');
-}
-
 function rcl_key_addon($path_parts){
     if(!isset($path_parts['dirname'])) return false;    
     return rcl_get_addon_dir($path_parts['dirname']);

@@ -36,6 +36,7 @@ function rcl_update_profile(){
             }
             if(data['success']){
                 rcl_notice(data['success'],'success',10000);
+                location.href = data['redirect_url'];
             }
         } 
     });	  	

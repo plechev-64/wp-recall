@@ -61,7 +61,7 @@ jQuery(function($){
 	
     init_location_data();
     
-    $("#recallbar_new .menu-item-has-children").hover(function() {
+    $("#recallbar .menu-item-has-children").hover(function() {
         $(this).children(".sub-menu").css({'visibility': 'visible'})
     }, function() {
         $(this).children(".sub-menu").css({'visibility': ''})

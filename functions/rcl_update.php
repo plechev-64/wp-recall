@@ -182,7 +182,7 @@ function rcl_update_addon(){
     $put = file_put_contents($new_addon, $archive);
     
     if($put===false){
-        $log['error'] = __('Архив не удалось загрузить!','wp-recall');
+        $log['error'] = __('The files failed to upload!','wp-recall');
         echo json_encode($log);
         exit;
     }

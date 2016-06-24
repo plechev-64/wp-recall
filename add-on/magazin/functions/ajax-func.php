@@ -390,7 +390,6 @@ function rcl_all_delete_order(){
     exit;
 }
 add_action('wp_ajax_rcl_all_delete_order', 'rcl_all_delete_order');
-add_action('wp_ajax_nopriv_rcl_all_delete_order', 'rcl_all_delete_order');
 
 /*************************************************
 Оплата заказа средствами с личного счета

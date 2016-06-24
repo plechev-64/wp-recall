@@ -1,6 +1,6 @@
 <?php global $rcl_user_URL,$rcl_options,$user_ID; ?>
 
-<div id="recallbar_new" class="my_recallbar">
+<div id="recallbar">
     <div class="rcb_left">
         
         <?php $rcb_menu = wp_nav_menu(array( 'echo'=>false,'theme_location' => 'recallbar','container_class'=>'rcb_menu','fallback_cb' => '__return_empty_string')); ?>
@@ -40,14 +40,14 @@
         <?php if(isset($urls)){ ?>
         <div class="rcb_icon">
             <a href="<?php echo $urls[0]; ?>" class="rcl-login">
-                <i class="fa fa-sign-in" aria-hidden="true"></i><span><?php _e('Вход','wp-recall'); ?></span>
-                <div class="rcb_hiden"><span><?php _e('Вход','wp-recall'); ?></span></span></div>
+                <i class="fa fa-sign-in" aria-hidden="true"></i><span><?php _e('Entry','wp-recall'); ?></span>
+                <div class="rcb_hiden"><span><?php _e('Entry','wp-recall'); ?></span></span></div>
             </a>
         </div>
         <div class="rcb_icon">
             <a href="<?php echo $urls[1]; ?>" class="rcl-register">
-                <i class="fa fa-book" aria-hidden="true"></i><span><?php _e('Регистрация','wp-recall'); ?></span>
-                <div class="rcb_hiden"><span><?php _e('Регистрация','wp-recall'); ?></span></span></div>
+                <i class="fa fa-book" aria-hidden="true"></i><span><?php _e('Register','wp-recall'); ?></span>
+                <div class="rcb_hiden"><span><?php _e('Register','wp-recall'); ?></span></span></div>
             </a>
         </div>
         <?php } ?>
@@ -68,6 +68,7 @@
             <a href="<?php echo $rcl_user_URL; ?>"><?php echo get_avatar($user_ID,36); ?></a>
             <div class="pr_sub_menu">
                 <?php do_action('rcl_bar_print_menu'); ?>
+                <div class="rcb_line"><a href="<?php echo wp_logout_url('/'); ?>"><i class="fa fa-sign-out" aria-hidden="true"></i><span><?php _e('Exit','wp-recall'); ?></span></a></div>
             </div>    
         </div>
         

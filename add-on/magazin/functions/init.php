@@ -18,6 +18,29 @@ if(function_exists('rcl_register_rating_type')){
     }
 }
 
+add_action('rcl_bar_setup','rcl_bar_add_cart',10);
+function rcl_bar_add_cart(){
+    global $CartData,$rmag_options;
+    
+    if(!is_user_logged_in()) return false;
+    
+    $amount = 0;
+    if(isset($_SESSION['cart'])){
+        foreach($_SESSION['cart'] as $prod_id=>$val){
+            $amount += $val['number'];
+        }
+    }
+    
+    rcl_bar_add_icon('rcl-cart',
+        array(
+            'icon'=>'fa-shopping-cart',
+            'url'=>$rmag_options['basket_page_rmag'],
+            'label'=>__('Cart','wp-recall'),
+            'counter'=>'<span class="cart-numbers">'.$amount.'</span>'
+        )
+    );
+}
+
 add_action( 'attachments_register', 'rcl_attachments_products' );
 function rcl_attachments_products( $attachments ){
     $args = array(

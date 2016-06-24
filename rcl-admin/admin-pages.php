@@ -303,13 +303,23 @@ function rcl_global_options(){
                         $fields->label(__('Conclusion the panel recallbar','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'view_recallbar',
+                            'parent'=>true,
                             'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
                         )),
-                        $fields->label(__('Цвет','wp-recall')),
-                        $fields->option('select',array(
-                            'name'=>'rcb_color',
-                            'options'=>array(__('Default','wp-recall'),__('Установленный цвет WP-Recall','wp-recall'))
-                        ))
+                        $fields->child(
+                            array(
+                                'name'=>'view_recallbar',
+                                'value'=>1
+                            ),
+                            array(
+                                $fields->label(__('Color','wp-recall')),
+                                $fields->option('select',array(
+                                    'name'=>'rcb_color',
+                                    'options'=>array(__('Default','wp-recall'),__('Primary colors WP-Recall','wp-recall'))
+                                ))
+                            )
+                        ),
+                        
                     )
                 );
 

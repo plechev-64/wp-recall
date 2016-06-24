@@ -26,6 +26,22 @@ function rcl_init_js_profile_variables($data){
     return $data;
 }
 
+add_action('rcl_bar_setup','rcl_bar_add_profile_link',10);
+function rcl_bar_add_profile_link(){
+    global $user_ID;
+    
+    if(!is_user_logged_in()) return false;
+    
+    rcl_bar_add_menu_item('profile-link',
+        array(                
+            'url'=>rcl_format_url(get_author_posts_url($user_ID),'profile'),
+            'icon'=>'fa-user-secret',
+            'label'=>__('Profile settings','wp-recall')
+        )
+    );
+
+}
+
 add_action('admin_menu', 'rcl_profile_options_page',30);
 function rcl_profile_options_page(){
 	add_submenu_page( 'manage-wprecall', __('Profile fields','wp-recall'), __('Profile fields','wp-recall'), 'manage_options', 'manage-userfield', 'rcl_manage_profile_fields');
@@ -71,15 +87,25 @@ function rcl_edit_profile(){
                 $errmsg = "$message";
     }
     
-    if(isset($errmsg)) 
-        wp_die($errmsg);
-    
+    if(isset($errmsg)){
+        if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+            echo json_encode(array('error'=>$errmsg));
+            exit;
+        }else{
+            wp_die($errmsg);
+        }
+    }
+
     do_action( 'personal_options_update', $user_ID );
     
+    $redirect_url = rcl_format_url(get_author_posts_url($user_ID),'profile').'&updated=true';
+    
     if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-        echo json_encode(array('success'=>__('Your profile was updated','wp-recall')));
+        echo json_encode(array(
+            'success'=>__('Your profile was updated','wp-recall'),
+            'redirect_url'=>$redirect_url
+        ));
     }else{
-        $redirect_url = rcl_format_url(get_author_posts_url($user_ID),'profile').'&updated=true';
         wp_redirect( $redirect_url );
     }
     

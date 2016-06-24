@@ -39,7 +39,7 @@ class Rcl_Includer{
             
             //если используем recallbar, то подключаем его стили
             if(isset($rcl_options['view_recallbar'])&&$rcl_options['view_recallbar']){
-                $primary['rcl-bar'] = $css_dir.'recbar.css';
+                $primary['rcl-bar'] = $css_dir.'recallbar.css';
             }
 
             $rcl_styles = array_merge($primary, $rcl_styles);

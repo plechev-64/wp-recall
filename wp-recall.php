@@ -190,8 +190,6 @@ final class WP_Recall {
 	 * Сюда складываем все файлы для фронт-энда
 	 */
 	public function frontend_includes() {
-
-            require_once('functions/recallbar.php');
             require_once("functions/rcl-frontend.php");
 
 	}
@@ -218,15 +216,13 @@ final class WP_Recall {
                 }
                 
             }
-            
-            if(!isset($rcl_options['view_user_lk_rcl'])){
-                require_once('functions/migration.php');
-                //14.0.0 переименование опций плагина
-                rcl_rename_plugin_options();
-                $rcl_options = get_option('rcl_global_options');
-            }
 
             if ( $this->is_request( 'frontend' ) ) {
+                
+                if(isset($rcl_options['view_recallbar'])&&$rcl_options['view_recallbar']){
+                    require_once('functions/recallbar.php');
+                }
+                
                 $rcl_user_URL = get_author_posts_url($user_ID);
                 $rcl_current_action = rcl_get_time_user_action($user_ID);
 

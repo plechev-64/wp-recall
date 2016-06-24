@@ -47,15 +47,52 @@ function rcl_footer(){
     echo apply_filters('rcl_footer_lk','',$user_LK);
 }
 
-//добавляем стили колорпикера в хеадер
-add_action('wp_head','rcl_add_colorpicker_style',100);
-function rcl_add_colorpicker_style(){
+function rcl_action(){
+    global $rcl_userlk_action;
+    $last_action = rcl_get_useraction($rcl_userlk_action);
+    $class = (!$last_action)? 'online': 'offline';
+    $status = '<div class="status_user '.$class.'"><i class="fa fa-circle"></i></div>';
+    if($last_action) $status .= __('not online','wp-recall').' '.$last_action;
+    echo $status;
+}
+
+function rcl_avatar($size=120){
+    global $user_LK; $after='';
+    echo '<div id="rcl-contayner-avatar">';
+	echo '<span class="rcl-user-avatar">'.get_avatar($user_LK,$size).'</span>';
+	echo apply_filters('after-avatar-rcl',$after,$user_LK);
+	echo '</div>';
+
+}
+
+function rcl_status_desc(){
+    global $user_LK;
+    $desc = get_the_author_meta('description',$user_LK);
+    if($desc) echo '<div class="ballun-status">'
+        //. '<span class="ballun"></span>'
+        . '<p class="status-user-rcl">'.nl2br(esc_textarea($desc)).'</p>'
+        . '</div>';
+}
+
+function rcl_username(){
+    global $user_LK;
+    echo get_the_author_meta('display_name',$user_LK);
+}
+
+function rcl_notice(){
+    $notify = '';
+    $notify = apply_filters('notify_lk',$notify);
+    if($notify) echo '<div class="notify-lk">'.$notify.'</div>';
+}
+
+//добавляем стили колорпикера и другие в хеадер
+add_action('wp_head','rcl_inline_styles',100);
+function rcl_inline_styles(){
     global $rcl_options;
 
-    $rgb = (isset($rcl_options['primary-color'])&&$rcl_options['primary-color'])? rcl_hex2rgb($rcl_options['primary-color']): array(76, 140, 189);
+    list($r, $g, $b) = (isset($rcl_options['primary-color'])&&$rcl_options['primary-color'])? sscanf($rcl_options['primary-color'], "#%02x%02x%02x"): array(76, 140, 189);
     
-    $color_style = '<style>
-    a.recall-button,
+    $styles = 'a.recall-button,
     .recall-button.rcl-upload-button,
     input[type="submit"].recall-button,
     input[type="submit"] .recall-button,
@@ -67,7 +104,7 @@ function rcl_add_colorpicker_style(){
     input[type="submit"] .recall-button:hover,
     input[type="button"].recall-button:hover,
     input[type="button"] .recall-button:hover{
-        background: rgb('.$rgb[0].', '.$rgb[1].', '.$rgb[2].');
+        background: rgb('.$r.', '.$g.', '.$b.');
     }
     a.recall-button.active,
     a.recall-button.active:hover,
@@ -76,75 +113,24 @@ function rcl_add_colorpicker_style(){
     a.data-filter.filter-active,
     a.data-filter.filter-active:hover,
     #lk-conteyner .rcl-more-link{
-        background: rgba('.$rgb[0].', '.$rgb[1].', '.$rgb[2].', 0.4);
+        background: rgba('.$r.', '.$g.', '.$b.', 0.4);
     } 
     .rcl_preloader i{
-        color: rgb('.$rgb[0].', '.$rgb[1].', '.$rgb[2].');
+        color: rgb('.$r.', '.$g.', '.$b.');
     }
     p.status-user-rcl::before{
-        border-color: transparent transparent transparent rgb('.$rgb[0].', '.$rgb[1].', '.$rgb[2].');   
+        border-color: transparent transparent transparent rgb('.$r.', '.$g.', '.$b.');   
     }
     .ballun-status p.status-user-rcl{
-        border: 1px solid rgb('.$rgb[0].', '.$rgb[1].', '.$rgb[2].');
-    }
-    </style>';
+        border: 1px solid rgb('.$r.', '.$g.', '.$b.');
+    }';
     
-    if(isset($rcl_options['rcb_color'])&&$rcl_options['rcb_color']){
+    $styles = apply_filters('rcl_inline_styles',$styles,array($r, $g, $b));
 
-        $lcp_hex = $rcl_options['primary-color'];               // достаем оттуда наш цвет
-        list($r, $g, $b) = sscanf($lcp_hex, "#%02x%02x%02x");   // разбиваем строку на нужный нам формат
-        $rs = round($r * 0.45);
-        $gs = round($g * 0.45);
-        $bs = round($b * 0.45);
-
-        // $r $g $b - родные цвета от кнопки
-        // $rs $gs $bs - темный оттенок от кнопки
-        $color_style .= '<style>
-        #recallbar_new.my_recallbar {
-        background:rgba('.$rs.','.$gs.','.$bs.',0.85);}
-        #recallbar_new .rcb_menu,#recallbar_new .pr_sub_menu {
-        border-top: 2px solid rgba('.$r.','.$g.','.$b.',0.8);}
-        #recallbar_new .rcb_right_menu:hover {
-        border-left: 2px solid rgba('.$r.','.$g.','.$b.',0.8);}
-        #recallbar_new .rcb_right_menu .fa-ellipsis-h {
-        color: rgba('.$r.','.$g.','.$b.',0.8);}
-        #recallbar_new .rcb_nmbr {
-        background: rgba('.$r.','.$g.','.$b.',0.8);}
-        #recallbar_new .rcb_menu,#recallbar_new .pr_sub_menu,#recallbar_new .rcb_menu .sub-menu {
-        background: rgba('.$rs.','.$gs.','.$bs.',0.95);}
-        .rcb_icon div.rcb_hiden span {
-        background: rgba('.$rs.','.$gs.','.$bs.',0.9);
-        border-top: 2px solid rgba('.$r.','.$g.','.$b.',0.8);}
-        </style>';
-        
-        if (is_admin_bar_showing()){ 
-            // 68 = 32 админбар + 36 реколлбар
-            // на 782 пикселях 82 = 46 + 36 соответственно отступ
-            $color_style .= '<style>
-            html {margin-top:68px !important;}
-            * html body {margin-top:68px !important;}
-            #recallbar_new{margin-top:32px;}
-            @media screen and (max-width:782px) {
-            html {margin-top: 82px !important;}
-            * html body {margin-top: 82px !important;}
-            #recallbar_new{margin-top:46px;}
-            }
-            </style>';
-        } else {
-            $color_style .= '<style>
-            html {margin-top:36px !important;}
-            * html body {margin-top:36px !important;}
-            </style>';
-        }
-    
-    }
-    
     // удаляем пробелы, переносы, табуляцию
-    $color_style =  preg_replace('/ {2,}/','',str_replace(array("\r\n", "\r", "\n", "\t"), '', $color_style));
-    
-    $key = (isset($rcl_options['minify_css'])&&$rcl_options['minify_css'])? 'rcl-header': 'rcl-primary';
-    
-    echo $color_style;
+    $styles =  preg_replace('/ {2,}/','',str_replace(array("\r\n", "\r", "\n", "\t"), '', $styles));
+
+    echo '<style>'.$styles.'</style>';
 
 }
 
@@ -191,7 +177,7 @@ function init_user_lk(){
 add_action('wp_footer','rcl_popup_contayner');
 function rcl_popup_contayner(){
     echo '<div id="rcl-overlay"></div>
-		  <div id="rcl-popup"></div>';
+        <div id="rcl-popup"></div>';
 }
 
 add_filter('wp_footer', 'rcl_footer_url');
@@ -301,44 +287,6 @@ global $post;
     return $cont;
 }
 
-function rcl_action(){
-    global $rcl_userlk_action;
-    $last_action = rcl_get_useraction($rcl_userlk_action);
-    $class = (!$last_action)? 'online': 'offline';
-    $status = '<div class="status_user '.$class.'"><i class="fa fa-circle"></i></div>';
-    if($last_action) $status .= __('not online','wp-recall').' '.$last_action;
-    echo $status;
-}
-
-function rcl_avatar($size=120){
-    global $user_LK; $after='';
-    echo '<div id="rcl-contayner-avatar">';
-	echo '<span class="rcl-user-avatar">'.get_avatar($user_LK,$size).'</span>';
-	echo apply_filters('after-avatar-rcl',$after,$user_LK);
-	echo '</div>';
-
-}
-
-function rcl_status_desc(){
-    global $user_LK;
-    $desc = get_the_author_meta('description',$user_LK);
-    if($desc) echo '<div class="ballun-status">'
-        //. '<span class="ballun"></span>'
-        . '<p class="status-user-rcl">'.nl2br(esc_textarea($desc)).'</p>'
-        . '</div>';
-}
-
-function rcl_username(){
-    global $user_LK;
-    echo get_the_author_meta('display_name',$user_LK);
-}
-
-function rcl_notice(){
-    $notify = '';
-    $notify = apply_filters('notify_lk',$notify);
-    if($notify) echo '<div class="notify-lk">'.$notify.'</div>';
-}
-
 function rcl_sort_gallery($attaches,$key,$user_id=false){
     global $user_ID;
 
@@ -367,131 +315,13 @@ function rcl_sort_gallery($attaches,$key,$user_id=false){
     return $news;
 }
 
-function rcl_hex2rgb($hex) {
-   $hex = str_replace("#", "", $hex);
-
-   if(strlen($hex) == 3) {
-      $r = hexdec(substr($hex,0,1).substr($hex,0,1));
-      $g = hexdec(substr($hex,1,1).substr($hex,1,1));
-      $b = hexdec(substr($hex,2,1).substr($hex,2,1));
-   } else {
-      $r = hexdec(substr($hex,0,2));
-      $g = hexdec(substr($hex,2,2));
-      $b = hexdec(substr($hex,4,2));
-   }
-   $rgb = array($r, $g, $b);
-   //return implode(",", $rgb); // returns the rgb values separated by commas
-   return $rgb; // returns an array with the rgb values
-}
-
 function rcl_bar_add_icon($id_icon,$args){
     global $rcl_bar,$rcl_options;
-    if( !isset( $rcl_options['view_recallbar'] ) || $rcl_options['view_recallbar'] != 1 ) return false;
+    if(!isset($rcl_options['view_recallbar'])||!$rcl_options['view_recallbar']) return false;
     $rcl_bar['icons'][$id_icon] = $args;
 }
 function rcl_bar_add_menu_item($id_item,$args){
     global $rcl_bar,$rcl_options;
-    if( !isset( $rcl_options['view_recallbar'] ) || $rcl_options['view_recallbar'] != 1 ) return false;
+    if(!isset($rcl_options['view_recallbar'])||!$rcl_options['view_recallbar']) return false;
     $rcl_bar['menu'][$id_item] = $args;
-}
-
-add_action('rcl_bar_setup','rcl_setup_bar_default_data',10);
-function rcl_setup_bar_default_data(){
-    global $rcl_user_URL;
-    
-    if(!is_user_logged_in()) return false;
-
-    rcl_bar_add_menu_item('account-link',
-        array(                
-            'url'=>$rcl_user_URL,
-            'icon'=>'fa-user',
-            'label'=>__('В личный кабинет','wp-recall')
-        )
-    );
-    
-    if(current_user_can('activate_plugins')){
-        rcl_bar_add_menu_item('admin-link',
-            array(                
-                'url'=>admin_url(),
-                'icon'=>'fa-external-link-square',
-                'label'=>__('В админку','wp-recall')
-            )
-        );
-    }
-    
-    rcl_bar_add_menu_item('logout-link',
-        array(                
-            'url'=>wp_logout_url('/'),
-            'icon'=>'fa-sign-out',
-            'label'=>__('Выход','wp-recall')
-        )
-    );
-}
-
-add_action('rcl_bar_print_icons','rcl_print_bar_icons',10);
-function rcl_print_bar_icons(){
-    global $rcl_bar;
-    if(!isset($rcl_bar['icons'])||!$rcl_bar['icons']) return false;
-    
-    if(is_array($rcl_bar['icons'])){
-        
-        $rcl_bar_icons = apply_filters('rcl_bar_icons',$rcl_bar['icons']);
-        
-        foreach($rcl_bar_icons as $icon){
-            if(!isset($icon['icon'])) continue;
-            
-            $class = (isset($icon['class']))? $icon['class']: '';
-        
-            echo '<div class="rcb_icon '.$class.'">';
-            
-            if(isset($icon['url'])):
-                echo '<a href="'.$icon['url'].'">';
-            endif;
-            
-                echo '<i class="fa '.$icon['icon'].'" aria-hidden="true"></i>';
-                echo '<div class="rcb_hiden"><span>';
-                
-                if(isset($icon['label'])):
-                    echo $icon['label'];
-                endif;
-                
-                echo '</span></div>';
-                
-            if(isset($icon['url'])):
-                echo '</a>';
-            endif;
-            
-            if(isset($icon['counter'])):
-                echo '<div class="rcb_nmbr">'.$icon['counter'].'</div>';
-            endif;
-
-            echo '</div>';
-        }
-    }
-}
-
-add_action('rcl_bar_print_menu','rcl_print_bar_right_menu',10);
-function rcl_print_bar_right_menu(){
-    global $rcl_bar;
-    if(!isset($rcl_bar['menu'])||!$rcl_bar['menu']) return false;
-    
-    if(is_array($rcl_bar['menu'])){
-        
-        $rcl_bar_menu = apply_filters('rcl_bar_menu',$rcl_bar['menu']);
-        
-        foreach($rcl_bar_menu as $icon){
-            if(!isset($icon['url'])) continue;
-            
-            echo '<div class="rcb_line">';
-            echo '<a href="'.$icon['url'].'">';
-            
-            if(isset($icon['icon'])):
-                echo '<i class="fa '.$icon['icon'].'" aria-hidden="true"></i>';
-            endif;
-
-            echo '<span>'.$icon['label'].'</span>';
-            echo '</a>';
-            echo '</div>';
-        }
-    }
 }
