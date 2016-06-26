@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-06-24 11:59+0300\n"
+"POT-Creation-Date: 2016-06-25 12:37+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -103,7 +103,7 @@ msgstr "Подписка оформлена"
 #: add-on/feed/index.php:174 add-on/groups/groups-core.php:690
 #: add-on/groups/groups-core.php:706 add-on/groups/upload-avatar.php:78
 #: add-on/magazin/functions/ajax-func.php:365
-#: add-on/magazin/functions/ajax-func.php:428 add-on/publicpost/index.php:727
+#: add-on/magazin/functions/ajax-func.php:427 add-on/publicpost/index.php:727
 #: add-on/user-account/index.php:142 functions/enqueue-scripts.php:123
 #: rcl-admin/admin-pages.php:355 rcl-admin/repository.php:46
 #: rcl-functions.php:392
@@ -146,8 +146,8 @@ msgstr "Поиск групп"
 #: add-on/groups/classes/rcl-groups.php:235 add-on/groups/groups-init.php:14
 #: add-on/groups/groups-init.php:49 add-on/magazin/activate.php:66
 #: add-on/magazin/activate.php:97 add-on/magazin/activate.php:137
-#: add-on/magazin/functions/init.php:48 add-on/magazin/functions/init.php:86
-#: add-on/magazin/functions/init.php:122 add-on/magazin/orders-history.php:301
+#: add-on/magazin/functions/init.php:71 add-on/magazin/functions/init.php:109
+#: add-on/magazin/functions/init.php:145 add-on/magazin/orders-history.php:301
 #: add-on/user-account/payments.php:328 functions/shortcodes.php:194
 msgid "Search"
 msgstr "Поиск"
@@ -159,14 +159,14 @@ msgstr "Всего групп"
 #: add-on/groups/classes/rcl-groups.php:260 add-on/magazin/admin-pages.php:242
 #: add-on/magazin/functions/class-rcl-order.php:352
 #: add-on/magazin/functions/core.php:443 add-on/magazin/functions/core.php:464
-#: add-on/publicpost/fast-editor.php:119 functions/class-rcl-editfields.php:222
+#: add-on/publicpost/fast-editor.php:119 functions/class-rcl-editfields.php:229
 msgid "Name"
 msgstr "Имя"
 
 #: add-on/groups/classes/rcl-groups.php:261
 #: add-on/magazin/orders-history.php:77 add-on/publicpost/index.php:134
 #: add-on/publicpost/templates/posts-list.php:6
-#: add-on/user-account/payments.php:85 functions/class-rcl-editfields.php:182
+#: add-on/user-account/payments.php:85 functions/class-rcl-editfields.php:189
 msgid "Date"
 msgstr "Дата"
 
@@ -308,31 +308,31 @@ msgstr "Добавить"
 
 #: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
 #: add-on/groups/groups-public.php:104 add-on/magazin/activate.php:63
-#: add-on/magazin/activate.php:142 add-on/magazin/functions/init.php:45
-#: add-on/magazin/functions/init.php:127 add-on/publicpost/index.php:710
-#: add-on/publicpost/index.php:810 functions/class-rcl-editfields.php:212
-#: functions/class-rcl-editfields.php:224
+#: add-on/magazin/activate.php:142 add-on/magazin/functions/init.php:68
+#: add-on/magazin/functions/init.php:150 add-on/publicpost/index.php:710
+#: add-on/publicpost/index.php:810 functions/class-rcl-editfields.php:219
+#: functions/class-rcl-editfields.php:231
 msgid "Edit"
 msgstr "Редактировать"
 
 #: add-on/groups/groups-init.php:12 add-on/groups/groups-init.php:57
-#: add-on/magazin/activate.php:64 add-on/magazin/functions/init.php:46
+#: add-on/magazin/activate.php:64 add-on/magazin/functions/init.php:69
 msgid "New"
 msgstr "Новый"
 
 #: add-on/groups/groups-init.php:13 add-on/magazin/activate.php:65
-#: add-on/magazin/functions/init.php:47
+#: add-on/magazin/functions/init.php:70
 msgid "View"
 msgstr "Смотреть"
 
 #: add-on/groups/groups-init.php:15 add-on/magazin/activate.php:67
-#: add-on/magazin/functions/init.php:49
-#: add-on/publicpost/rcl_publicform.php:667
+#: add-on/magazin/functions/init.php:72
+#: add-on/publicpost/rcl_publicform.php:669
 msgid "Not found"
 msgstr "Не найдено"
 
 #: add-on/groups/groups-init.php:16 add-on/magazin/activate.php:68
-#: add-on/magazin/functions/init.php:50
+#: add-on/magazin/functions/init.php:73
 msgid "Cart is empty"
 msgstr "Корзина пуста"
 
@@ -351,7 +351,7 @@ msgid "Popular Groups"
 msgstr "Популярные группы"
 
 #: add-on/groups/groups-init.php:51 add-on/magazin/activate.php:99
-#: add-on/magazin/functions/init.php:88
+#: add-on/magazin/functions/init.php:111
 msgid "All categories"
 msgstr "Все категории"
 
@@ -360,7 +360,7 @@ msgid "Parent group"
 msgstr "Родительская группа"
 
 #: add-on/groups/groups-init.php:55 add-on/magazin/activate.php:143
-#: add-on/magazin/functions/init.php:128
+#: add-on/magazin/functions/init.php:151
 msgid "Update"
 msgstr "Обновить"
 
@@ -412,15 +412,15 @@ msgstr "Участникам и старше"
 msgid "Moderation of publications in the group"
 msgstr "Модерация публикаций группы"
 
-#: add-on/groups/groups-options.php:26 add-on/publicpost/addon-options.php:211
+#: add-on/groups/groups-options.php:26 add-on/publicpost/addon-options.php:225
 msgid "To publish immediately"
 msgstr "Публиковать сразу"
 
-#: add-on/groups/groups-options.php:27 add-on/publicpost/addon-options.php:211
+#: add-on/groups/groups-options.php:27 add-on/publicpost/addon-options.php:225
 msgid "Send for moderation"
 msgstr "Отправлять на модерацию"
 
-#: add-on/groups/groups-options.php:29 add-on/publicpost/addon-options.php:213
+#: add-on/groups/groups-options.php:29 add-on/publicpost/addon-options.php:227
 msgid ""
 "If used in moderation: To allow the user to see their publication before it "
 "is moderated, it is necessary to have on the website right below the Author"
@@ -466,11 +466,11 @@ msgstr "Панель управления"
 #: add-on/groups/groups-widgets.php:25 add-on/groups/groups-widgets.php:134
 #: add-on/groups/groups-widgets.php:187 add-on/groups/groups-widgets.php:220
 #: add-on/groups/groups-widgets.php:300 add-on/groups/groups-widgets.php:433
-#: add-on/magazin/functions/init.php:308
-#: add-on/magazin/functions/shortcodes.php:149 add-on/publicpost/index.php:134
+#: add-on/magazin/functions/init.php:331
+#: add-on/magazin/functions/shortcodes.php:126 add-on/publicpost/index.php:134
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
-#: add-on/user-account/index.php:312 functions/class-rcl-editfields.php:146
+#: add-on/user-account/index.php:312 functions/class-rcl-editfields.php:153
 #: rcl-widgets.php:48 rcl-widgets.php:111 rcl-widgets.php:164
 msgid "Title"
 msgstr "Заголовок"
@@ -540,7 +540,7 @@ msgid "The excerpt"
 msgstr "Краткое описание"
 
 #: add-on/groups/groups-widgets.php:437 add-on/groups/groups-widgets.php:442
-#: add-on/publicpost/addon-options.php:172
+#: add-on/publicpost/addon-options.php:186
 msgid "Do not display"
 msgstr "Не выводить"
 
@@ -548,7 +548,7 @@ msgstr "Не выводить"
 msgid "Display"
 msgstr "Отображать"
 
-#: add-on/groups/groups-widgets.php:440 add-on/magazin/functions/init.php:258
+#: add-on/groups/groups-widgets.php:440 add-on/magazin/functions/init.php:281
 msgid "Thumbnail"
 msgstr "Миниатюра"
 
@@ -646,9 +646,9 @@ msgstr "Одобрить запрос"
 msgid "Reject request"
 msgstr "Отклонить запрос"
 
-#: add-on/groups/index.php:404 add-on/magazin/index.php:62
+#: add-on/groups/index.php:404 add-on/magazin/index.php:64
 #: add-on/magazin/orders-history.php:107 add-on/magazin/orders-history.php:124
-#: add-on/user-account/payments.php:100 functions/class-rcl-editfields.php:211
+#: add-on/user-account/payments.php:100 functions/class-rcl-editfields.php:218
 #: rcl-admin/add-on-manager.php:145 rcl-admin/add-on-manager.php:156
 msgid "Delete"
 msgstr "Удалить"
@@ -657,7 +657,7 @@ msgstr "Удалить"
 msgid "User status"
 msgstr "Статус пользователя"
 
-#: add-on/groups/index.php:413 functions/class-rcl-editfields.php:62
+#: add-on/groups/index.php:413 functions/class-rcl-editfields.php:64
 #: functions/enqueue-scripts.php:119 rcl-admin/add-on-manager.php:438
 msgid "Save"
 msgstr "Сохранить"
@@ -736,127 +736,127 @@ msgid "Avatar has successfully loaded"
 msgstr "Аватар успешно загружен"
 
 #: add-on/magazin/activate.php:59 add-on/magazin/activate.php:199
-#: add-on/magazin/functions/init.php:41
+#: add-on/magazin/functions/init.php:64
 msgid "Products catalog"
 msgstr "Каталог товаров"
 
 #: add-on/magazin/activate.php:60 add-on/magazin/admin-pages.php:553
-#: add-on/magazin/functions/init.php:42 add-on/magazin/templates/cart.php:9
+#: add-on/magazin/functions/init.php:65 add-on/magazin/templates/cart.php:9
 #: add-on/magazin/templates/order.php:11
 msgid "Product"
 msgstr "Товар"
 
-#: add-on/magazin/activate.php:61 add-on/magazin/functions/init.php:43
+#: add-on/magazin/activate.php:61 add-on/magazin/functions/init.php:66
 msgid "Add this item"
 msgstr "Добавить товар"
 
-#: add-on/magazin/activate.php:62 add-on/magazin/functions/init.php:44
+#: add-on/magazin/activate.php:62 add-on/magazin/functions/init.php:67
 msgid "Add new item"
 msgstr "Добавить новый товар"
 
-#: add-on/magazin/activate.php:69 add-on/magazin/functions/init.php:51
+#: add-on/magazin/activate.php:69 add-on/magazin/functions/init.php:74
 msgid "Parental goods"
 msgstr "Родительский товар"
 
 #: add-on/magazin/activate.php:70 add-on/magazin/functions/init.php:16
-#: add-on/magazin/functions/init.php:52
+#: add-on/magazin/functions/init.php:75
 msgid "Products"
 msgstr "Товары"
 
 #: add-on/magazin/activate.php:95 add-on/magazin/activate.php:109
-#: add-on/magazin/functions/init.php:84 add-on/magazin/functions/init.php:98
+#: add-on/magazin/functions/init.php:107 add-on/magazin/functions/init.php:121
 msgid "Product categories"
 msgstr "Товарные категории"
 
-#: add-on/magazin/activate.php:96 add-on/magazin/functions/init.php:85
-#: add-on/magazin/functions/init.php:154 add-on/publicpost/addon-options.php:75
+#: add-on/magazin/activate.php:96 add-on/magazin/functions/init.php:108
+#: add-on/magazin/functions/init.php:177 add-on/publicpost/addon-options.php:75
 msgid "Category"
 msgstr "Категории"
 
-#: add-on/magazin/activate.php:98 add-on/magazin/functions/init.php:87
+#: add-on/magazin/activate.php:98 add-on/magazin/functions/init.php:110
 msgid "Popular categories"
 msgstr "Популярные категории"
 
 #: add-on/magazin/activate.php:100 add-on/magazin/activate.php:101
-#: add-on/magazin/functions/init.php:89 add-on/magazin/functions/init.php:90
+#: add-on/magazin/functions/init.php:112 add-on/magazin/functions/init.php:113
 msgid "Parent category"
 msgstr "Родительская категория"
 
-#: add-on/magazin/activate.php:102 add-on/magazin/functions/init.php:91
+#: add-on/magazin/activate.php:102 add-on/magazin/functions/init.php:114
 msgid "Edit category"
 msgstr "Изменить категорию"
 
-#: add-on/magazin/activate.php:103 add-on/magazin/functions/init.php:92
+#: add-on/magazin/activate.php:103 add-on/magazin/functions/init.php:115
 msgid "Update category"
 msgstr "Обновить категорию"
 
-#: add-on/magazin/activate.php:104 add-on/magazin/functions/init.php:93
+#: add-on/magazin/activate.php:104 add-on/magazin/functions/init.php:116
 msgid "Add a new category"
 msgstr "Добавить новую категорию"
 
-#: add-on/magazin/activate.php:105 add-on/magazin/functions/init.php:94
+#: add-on/magazin/activate.php:105 add-on/magazin/functions/init.php:117
 msgid "New category"
 msgstr "Новая категория"
 
-#: add-on/magazin/activate.php:106 add-on/magazin/functions/init.php:95
+#: add-on/magazin/activate.php:106 add-on/magazin/functions/init.php:118
 msgid "Categories separated by commas"
 msgstr "Категории разделяются запятыми"
 
-#: add-on/magazin/activate.php:107 add-on/magazin/functions/init.php:96
+#: add-on/magazin/activate.php:107 add-on/magazin/functions/init.php:119
 msgid "Add or delete a category"
 msgstr "Добавить или удалить категорию"
 
 #: add-on/magazin/activate.php:108 add-on/magazin/activate.php:148
-#: add-on/magazin/functions/init.php:97 add-on/magazin/functions/init.php:133
+#: add-on/magazin/functions/init.php:120 add-on/magazin/functions/init.php:156
 msgid "Select to use the"
 msgstr "Выбрать для использования"
 
 #: add-on/magazin/activate.php:135 add-on/magazin/activate.php:149
-#: add-on/magazin/functions/init.php:120 add-on/magazin/functions/init.php:134
+#: add-on/magazin/functions/init.php:143 add-on/magazin/functions/init.php:157
 msgid "Product Tags"
 msgstr "Метки товаров"
 
 #: add-on/magazin/activate.php:136 add-on/magazin/activate.php:166
 #: add-on/magazin/activate.php:174 add-on/magazin/activate.php:182
-#: add-on/magazin/functions/init.php:121
+#: add-on/magazin/functions/init.php:144
 msgid "Product Tag"
 msgstr "Метка товара"
 
-#: add-on/magazin/activate.php:138 add-on/magazin/functions/init.php:123
+#: add-on/magazin/activate.php:138 add-on/magazin/functions/init.php:146
 msgid "Popular tags"
 msgstr "Популярные метки"
 
-#: add-on/magazin/activate.php:139 add-on/magazin/functions/init.php:124
+#: add-on/magazin/activate.php:139 add-on/magazin/functions/init.php:147
 msgid "All tags"
 msgstr "Все метки"
 
 #: add-on/magazin/activate.php:140 add-on/magazin/activate.php:141
-#: add-on/magazin/functions/init.php:125 add-on/magazin/functions/init.php:126
+#: add-on/magazin/functions/init.php:148 add-on/magazin/functions/init.php:149
 msgid "Parent tag"
 msgstr "Родительские метки"
 
-#: add-on/magazin/activate.php:144 add-on/magazin/functions/init.php:129
+#: add-on/magazin/activate.php:144 add-on/magazin/functions/init.php:152
 msgid "Add a new"
 msgstr "Добавить новую"
 
-#: add-on/magazin/activate.php:145 add-on/magazin/functions/init.php:130
+#: add-on/magazin/activate.php:145 add-on/magazin/functions/init.php:153
 msgid "New tag"
 msgstr "Новая метка"
 
-#: add-on/magazin/activate.php:146 add-on/magazin/functions/init.php:131
+#: add-on/magazin/activate.php:146 add-on/magazin/functions/init.php:154
 msgid "Tags separated by commas"
 msgstr "Метки разделяются запятыми"
 
-#: add-on/magazin/activate.php:147 add-on/magazin/functions/init.php:132
+#: add-on/magazin/activate.php:147 add-on/magazin/functions/init.php:155
 msgid "Add or delete"
 msgstr "Добавить или удалить"
 
 #: add-on/magazin/activate.php:190 add-on/magazin/admin-pages.php:72
+#: add-on/magazin/functions/init.php:38
 #: add-on/magazin/functions/rcl_cart.php:140
-#: add-on/magazin/functions/shortcodes.php:75
-#: add-on/magazin/functions/shortcodes.php:117
-#: add-on/magazin/functions/shortcodes.php:119
-#: add-on/magazin/functions/shortcodes.php:146
+#: add-on/magazin/functions/shortcodes.php:94
+#: add-on/magazin/functions/shortcodes.php:96
+#: add-on/magazin/functions/shortcodes.php:123
 msgid "Cart"
 msgstr "Корзина"
 
@@ -870,7 +870,7 @@ msgstr ""
 "шорткодом productlist <a href=\"https://codeseller.ru/api-rcl/productlist/"
 "\">(описание шорткода)</a>. Вы можете изменить страницу вывода."
 
-#: add-on/magazin/admin-pages.php:6 add-on/magazin/index.php:32
+#: add-on/magazin/admin-pages.php:6 add-on/magazin/index.php:34
 #: add-on/magazin/orders-history.php:275
 msgid "Orders"
 msgstr "Заказы"
@@ -889,7 +889,7 @@ msgstr "Настройки магазина"
 
 #: add-on/magazin/admin-pages.php:26 add-on/profile/index.php:661
 #: add-on/publicpost/addon-options.php:11
-#: add-on/publicpost/addon-options.php:201 add-on/publicpost/classes.php:41
+#: add-on/publicpost/addon-options.php:215 add-on/publicpost/classes.php:41
 #: add-on/user-account/addon-options.php:87
 #: add-on/user-account/addon-options.php:95
 #: add-on/user-account/addon-options.php:103
@@ -1041,12 +1041,12 @@ msgstr "обязательное поле"
 #: add-on/profile/index.php:689 add-on/profile/index.php:694
 #: add-on/profile/index.php:699 add-on/profile/index.php:704
 #: add-on/publicpost/addon-options.php:51
-#: add-on/publicpost/addon-options.php:246 add-on/publicpost/index.php:224
+#: add-on/publicpost/addon-options.php:260 add-on/publicpost/index.php:224
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120 add-on/rating-system/index.php:50
 #: rcl-admin/admin-pages.php:47 rcl-admin/admin-pages.php:333
-#: rcl-admin/admin-pages.php:439 rcl-admin/admin-pages.php:444
-#: rcl-admin/admin-pages.php:449
+#: rcl-admin/admin-pages.php:440 rcl-admin/admin-pages.php:445
+#: rcl-admin/admin-pages.php:450
 msgid "No"
 msgstr "Нет"
 
@@ -1055,12 +1055,12 @@ msgstr "Нет"
 #: add-on/profile/index.php:689 add-on/profile/index.php:694
 #: add-on/profile/index.php:699 add-on/profile/index.php:704
 #: add-on/publicpost/addon-options.php:51
-#: add-on/publicpost/addon-options.php:246 add-on/publicpost/index.php:224
+#: add-on/publicpost/addon-options.php:260 add-on/publicpost/index.php:224
 #: add-on/rating-system/addon-options.php:68
 #: add-on/rating-system/addon-options.php:120 add-on/rating-system/index.php:51
 #: rcl-admin/admin-pages.php:48 rcl-admin/admin-pages.php:333
-#: rcl-admin/admin-pages.php:439 rcl-admin/admin-pages.php:444
-#: rcl-admin/admin-pages.php:449
+#: rcl-admin/admin-pages.php:440 rcl-admin/admin-pages.php:445
+#: rcl-admin/admin-pages.php:450
 msgid "Yes"
 msgstr "Да"
 
@@ -1069,14 +1069,14 @@ msgid "Order management"
 msgstr "Управление заказами"
 
 #: add-on/magazin/admin-pages.php:189
-#: add-on/magazin/functions/shortcodes.php:315
+#: add-on/magazin/functions/shortcodes.php:292
 msgid "Name product"
 msgstr "Наименование товара"
 
-#: add-on/magazin/admin-pages.php:190 add-on/magazin/functions/init.php:183
-#: add-on/magazin/functions/init.php:309
+#: add-on/magazin/admin-pages.php:190 add-on/magazin/functions/init.php:206
+#: add-on/magazin/functions/init.php:332
 #: add-on/magazin/functions/shortcodes.php:25
-#: add-on/magazin/functions/shortcodes.php:317
+#: add-on/magazin/functions/shortcodes.php:294
 #: add-on/magazin/templates/cart.php:10 add-on/magazin/templates/order.php:12
 msgid "Price"
 msgstr "Цена"
@@ -1393,17 +1393,17 @@ msgstr "Вы можете отслеживать статус своего за�
 msgid "Order №%s was deleted"
 msgstr "Заказ №%s был удален"
 
-#: add-on/magazin/functions/ajax-func.php:418
+#: add-on/magazin/functions/ajax-func.php:417
 #, php-format
 msgid "Insufficient funds in the account!<br>Order price: %d %s"
 msgstr "Недостаточно средств на личном счету!<br>Стоимость заказа: %d %s"
 
-#: add-on/magazin/functions/ajax-func.php:423
+#: add-on/magazin/functions/ajax-func.php:422
 #, php-format
 msgid "Payment order №%d"
 msgstr "Оплата заказа №%d"
 
-#: add-on/magazin/functions/ajax-func.php:437
+#: add-on/magazin/functions/ajax-func.php:436
 msgid ""
 "Your order is successfully paid! The notification has been sent to the "
 "administration."
@@ -1615,75 +1615,75 @@ msgstr ""
 "Ваш заказ оплачен и поступил в обработку. Вы можете отслеживать статус "
 "заказа в своем личном кабинете"
 
-#: add-on/magazin/functions/init.php:24
+#: add-on/magazin/functions/init.php:47
 msgid "Product gallery"
 msgstr "Гарелея товара"
 
-#: add-on/magazin/functions/init.php:28 add-on/magazin/functions/init.php:29
+#: add-on/magazin/functions/init.php:51 add-on/magazin/functions/init.php:52
 msgid "Attach image or download it"
 msgstr "Выбрать изображение или загрузить"
 
-#: add-on/magazin/functions/init.php:196 add-on/rating-system/index.php:65
+#: add-on/magazin/functions/init.php:219 add-on/rating-system/index.php:65
 msgid "OK"
 msgstr "Ок"
 
-#: add-on/magazin/functions/init.php:216
+#: add-on/magazin/functions/init.php:239
 msgid "Availability"
 msgstr "Наличие"
 
-#: add-on/magazin/functions/init.php:232
+#: add-on/magazin/functions/init.php:255
 msgid "digital goods"
 msgstr "цифровой товар"
 
-#: add-on/magazin/functions/init.php:238 add-on/magazin/functions/init.php:239
-#: add-on/magazin/functions/init.php:316
+#: add-on/magazin/functions/init.php:261 add-on/magazin/functions/init.php:262
+#: add-on/magazin/functions/init.php:339
 msgid "in stock"
 msgstr "в наличии"
 
-#: add-on/magazin/functions/init.php:244
+#: add-on/magazin/functions/init.php:267
 msgid "in reserve"
 msgstr "в резерве"
 
-#: add-on/magazin/functions/init.php:246
+#: add-on/magazin/functions/init.php:269
 msgid "withdrawn from sale"
 msgstr "снят с продажи"
 
-#: add-on/magazin/functions/init.php:267 rcl-admin/admin-pages.php:39
+#: add-on/magazin/functions/init.php:290 rcl-admin/admin-pages.php:39
 #: rcl-admin/admin-pages.php:40
 msgid "Settings Wp-Recall"
 msgstr "Настройки Wp-Recall"
 
-#: add-on/magazin/functions/init.php:283
+#: add-on/magazin/functions/init.php:306
 msgid "Product features"
 msgstr "Характеристики товара"
 
-#: add-on/magazin/functions/init.php:289
+#: add-on/magazin/functions/init.php:312
 msgid "Price product"
 msgstr "Цена товара"
 
-#: add-on/magazin/functions/init.php:293
+#: add-on/magazin/functions/init.php:316
 msgid "The course is an additional currency for the goods"
 msgstr "Курс дополнительной валюты товаров"
 
-#: add-on/magazin/functions/init.php:295
+#: add-on/magazin/functions/init.php:318
 msgid "The current rate of additional currency"
 msgstr "Текущий курс дополнительной валюты"
 
-#: add-on/magazin/functions/init.php:296
+#: add-on/magazin/functions/init.php:319
 msgid ""
 "If the goods specified its course , it will be a priority in the calculation "
 "of the price of this commodity"
 msgstr "Если для товара указан этот курс, то цена будет расчитываться по нему"
 
-#: add-on/magazin/functions/init.php:299
+#: add-on/magazin/functions/init.php:322
 msgid "The margin on goods"
 msgstr "Наценка на товар"
 
-#: add-on/magazin/functions/init.php:301
+#: add-on/magazin/functions/init.php:324
 msgid "The margin on the goods will be added to the output value of the goods"
 msgstr "Наценка на товар будет прибавляться к стоимости товара"
 
-#: add-on/magazin/functions/init.php:310
+#: add-on/magazin/functions/init.php:333
 #: add-on/publicpost/templates/editor-header-box.php:4
 #: add-on/publicpost/templates/editor-html-box.php:4
 #: add-on/publicpost/templates/editor-image-box.php:4
@@ -1692,39 +1692,39 @@ msgstr "Наценка на товар будет прибавляться к с
 msgid "delete"
 msgstr "удалить"
 
-#: add-on/magazin/functions/init.php:315
+#: add-on/magazin/functions/init.php:338
 msgid "Product availability"
 msgstr "Наличие товара"
 
-#: add-on/magazin/functions/init.php:318 add-on/magazin/functions/init.php:321
+#: add-on/magazin/functions/init.php:341 add-on/magazin/functions/init.php:344
 msgid "Digital goods"
 msgstr "Цифровой товар"
 
-#: add-on/magazin/functions/init.php:325
+#: add-on/magazin/functions/init.php:348
 msgid "Remove the sale"
 msgstr "Снять с продажи"
 
-#: add-on/magazin/functions/init.php:335
+#: add-on/magazin/functions/init.php:358
 msgid "Similar and recommended products"
 msgstr "Похожие и рекомендуемые товары"
 
-#: add-on/magazin/functions/init.php:338
+#: add-on/magazin/functions/init.php:361
 msgid "Choose category"
 msgstr "Выбрать категорию"
 
-#: add-on/magazin/functions/init.php:357
+#: add-on/magazin/functions/init.php:380
 msgid "Select product category"
 msgstr "Выбрать категорию товара"
 
-#: add-on/magazin/functions/init.php:361
+#: add-on/magazin/functions/init.php:384
 msgid "Select tag"
 msgstr "Выбрать метку"
 
-#: add-on/magazin/functions/init.php:380
+#: add-on/magazin/functions/init.php:403
 msgid "select product tag"
 msgstr "выбрать метку товара"
 
-#: add-on/magazin/functions/init.php:407
+#: add-on/magazin/functions/init.php:430
 msgid "Images gallery"
 msgstr "Галерея изображений"
 
@@ -1754,15 +1754,15 @@ msgstr "Ваше имя"
 msgid "Add to cart"
 msgstr "Добавить в корзину"
 
-#: add-on/magazin/functions/shortcodes.php:316
+#: add-on/magazin/functions/shortcodes.php:293
 msgid "Product tags"
 msgstr "Метки товара"
 
-#: add-on/magazin/index.php:52
+#: add-on/magazin/index.php:54
 msgid "Order"
 msgstr "Заказ"
 
-#: add-on/magazin/index.php:95
+#: add-on/magazin/index.php:97
 msgid "You have not yet issued any order"
 msgstr "У вас пока не создано ни одного заказа"
 
@@ -2330,7 +2330,7 @@ msgstr "Никнейм"
 msgid "required"
 msgstr "обязательно"
 
-#: add-on/profile/index.php:372 functions/class-rcl-editfields.php:179
+#: add-on/profile/index.php:372 functions/class-rcl-editfields.php:186
 #: templates/form-register.php:17
 msgid "E-mail"
 msgstr ""
@@ -2619,7 +2619,7 @@ msgstr "Подзаголовок"
 
 #: add-on/publicpost/addon-options.php:136
 #: add-on/publicpost/templates/editor-text-box.php:7
-#: functions/class-rcl-editfields.php:173
+#: functions/class-rcl-editfields.php:180
 msgid "Text"
 msgstr "Текстовое поле"
 
@@ -2644,23 +2644,35 @@ msgid "HTML-Editor"
 msgstr "HTML-Редактор"
 
 #: add-on/publicpost/addon-options.php:151
+msgid "Media Uploader"
+msgstr "Медиазагрузчик"
+
+#: add-on/publicpost/addon-options.php:156
+msgid "WP-RECALL Uploader"
+msgstr "Загрузчик WP-RECALL"
+
+#: add-on/publicpost/addon-options.php:157
+msgid "WordPress Uploader"
+msgstr "Загрузчик WordPress"
+
+#: add-on/publicpost/addon-options.php:163
 msgid "Number of images in the gallery Wp-Recall"
 msgstr "Кол-во изображений в галерее Wp-Recall"
 
-#: add-on/publicpost/addon-options.php:154
+#: add-on/publicpost/addon-options.php:166
 msgid "The maximum image size, Mb"
 msgstr "Максимальный размер изображений, Mb"
 
-#: add-on/publicpost/addon-options.php:156
+#: add-on/publicpost/addon-options.php:168
 msgid ""
 "To limit image uploads to publish this value in megabytes. By default, 2MB"
 msgstr "Ограничение размера загружаемого изображения, по-умолчанию 2МБ"
 
-#: add-on/publicpost/addon-options.php:158
+#: add-on/publicpost/addon-options.php:170
 msgid "The size in the editor by default"
 msgstr "Размер изображений в редакторе по-умолчанию"
 
-#: add-on/publicpost/addon-options.php:163
+#: add-on/publicpost/addon-options.php:175
 msgid ""
 "Select the picture size in the silence of their use in the visual editor "
 "during the publishing process"
@@ -2668,38 +2680,38 @@ msgstr ""
 "Выберите размер изображений при их размещении в контенте визуального "
 "редактора"
 
-#: add-on/publicpost/addon-options.php:167
+#: add-on/publicpost/addon-options.php:181
 msgid "The output form of publication"
 msgstr "Вывод формы публикации в личном кабинете"
 
-#: add-on/publicpost/addon-options.php:172
+#: add-on/publicpost/addon-options.php:186
 msgid "Output"
 msgstr "Выводить"
 
-#: add-on/publicpost/addon-options.php:177
+#: add-on/publicpost/addon-options.php:191
 msgid "The form ID"
 msgstr "Идентификатор формы"
 
-#: add-on/publicpost/addon-options.php:179
+#: add-on/publicpost/addon-options.php:193
 msgid ""
 "Enter the form ID to the conclusion in the personal Cabinet. The default is 1"
 msgstr ""
 "Введите идентификатор формы публикации выводимой в личном кабинете. По-"
 "умолчанию 1"
 
-#: add-on/publicpost/addon-options.php:186
+#: add-on/publicpost/addon-options.php:200
 msgid "Publication of records"
 msgstr "Публикация записей"
 
-#: add-on/publicpost/addon-options.php:188
+#: add-on/publicpost/addon-options.php:202
 msgid "Republishing is allowed"
 msgstr "Публикация разрешена"
 
-#: add-on/publicpost/addon-options.php:197
+#: add-on/publicpost/addon-options.php:211
 msgid "Redirect page"
 msgstr "Перенаправление на страницу"
 
-#: add-on/publicpost/addon-options.php:204
+#: add-on/publicpost/addon-options.php:218
 msgid ""
 "Select the page to which visitors will be redirected after a successful "
 "publication , if the site is included in the registration confirmation email"
@@ -2707,60 +2719,60 @@ msgstr ""
 "Выберите страницу на которую гости будут перенаправляться после удачной "
 "публикации, если на сайте включено подтверждение email при регистрации"
 
-#: add-on/publicpost/addon-options.php:208
+#: add-on/publicpost/addon-options.php:222
 msgid "Moderation of publications"
 msgstr "Модерация публикаций"
 
-#: add-on/publicpost/addon-options.php:219
+#: add-on/publicpost/addon-options.php:233
 msgid "Editing"
 msgstr "Редактирование"
 
-#: add-on/publicpost/addon-options.php:221
+#: add-on/publicpost/addon-options.php:235
 msgid "Frontend editing"
 msgstr "Фронтэнд редактирование"
 
-#: add-on/publicpost/addon-options.php:225
+#: add-on/publicpost/addon-options.php:239
 msgid "Administrators"
 msgstr "Администраторы"
 
-#: add-on/publicpost/addon-options.php:226
+#: add-on/publicpost/addon-options.php:240
 msgid "Editors"
 msgstr "Редакторы"
 
-#: add-on/publicpost/addon-options.php:227
+#: add-on/publicpost/addon-options.php:241
 msgid "Authors"
 msgstr "Авторы"
 
-#: add-on/publicpost/addon-options.php:230
+#: add-on/publicpost/addon-options.php:244
 msgid "Time limit editing"
 msgstr "Ограничение времени редактирования"
 
-#: add-on/publicpost/addon-options.php:232
+#: add-on/publicpost/addon-options.php:246
 msgid "Limit editing time of publication in hours, by default: unlimited"
 msgstr "Ограничение времени публикации в часах, по-умолчанию: без ограничений"
 
-#: add-on/publicpost/addon-options.php:238
+#: add-on/publicpost/addon-options.php:252
 msgid "Custom fields"
 msgstr "Произвольные поля"
 
-#: add-on/publicpost/addon-options.php:239
+#: add-on/publicpost/addon-options.php:253
 msgid ""
 "Settings only for fields created using the form of the publication wp-recall"
 msgstr "Настройки только для полей созданных для формы публикации Wp-Recall"
 
-#: add-on/publicpost/addon-options.php:241
+#: add-on/publicpost/addon-options.php:255
 msgid "Automatic withdrawal"
 msgstr "Автоматический вывод"
 
-#: add-on/publicpost/addon-options.php:251
+#: add-on/publicpost/addon-options.php:265
 msgid "Place output fields"
 msgstr "Место вывода полей"
 
-#: add-on/publicpost/addon-options.php:254
+#: add-on/publicpost/addon-options.php:268
 msgid "After the content recording"
 msgstr "После контента публикации"
 
-#: add-on/publicpost/addon-options.php:254
+#: add-on/publicpost/addon-options.php:268
 msgid "On content recording"
 msgstr "Над контентом публикации"
 
@@ -2950,11 +2962,11 @@ msgstr "Если все верно - публикуйте! Если нет, то
 msgid "To publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/index.php:979
+#: add-on/publicpost/index.php:988
 msgid "Loading image failed!"
 msgstr "Загрузка изображения не удалась!"
 
-#: add-on/publicpost/index.php:1011
+#: add-on/publicpost/index.php:1020
 msgid "Unauthorized file extension . Use only : .gif, .png, .jpg"
 msgstr "Запрещенный тип файла. Используйте только: .gif, .png, .jpg"
 
@@ -3046,32 +3058,32 @@ msgstr "Ваше имя"
 msgid "Your E-mail"
 msgstr "Ваш E-mail"
 
-#: add-on/publicpost/rcl_publicform.php:514
+#: add-on/publicpost/rcl_publicform.php:516
 msgid "Text Box"
 msgstr "Текстовый блок"
 
-#: add-on/publicpost/rcl_publicform.php:515
+#: add-on/publicpost/rcl_publicform.php:517
 #: add-on/publicpost/templates/editor-header-box.php:7
 msgid "Subtitle"
 msgstr "Подзаголовок"
 
-#: add-on/publicpost/rcl_publicform.php:516
+#: add-on/publicpost/rcl_publicform.php:518
 msgid "Image"
 msgstr "Изображение"
 
-#: add-on/publicpost/rcl_publicform.php:517
+#: add-on/publicpost/rcl_publicform.php:519
 msgid "HTML- code"
 msgstr "HTML- код"
 
-#: add-on/publicpost/rcl_publicform.php:656
+#: add-on/publicpost/rcl_publicform.php:658
 msgid "Enter your tags"
 msgstr "Введите свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:657
+#: add-on/publicpost/rcl_publicform.php:659
 msgid "Add your tags"
 msgstr "Добавьте свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:657
+#: add-on/publicpost/rcl_publicform.php:659
 msgid "Each tag is separated with Enter"
 msgstr "каждый тег разделяется нажатием на кнопку Enter"
 
@@ -3156,13 +3168,13 @@ msgstr "Положительные голоса"
 
 #: add-on/rating-system/addon-options.php:41
 #: add-on/rating-system/addon-options.php:44
-#: functions/class-rcl-editfields.php:181
+#: functions/class-rcl-editfields.php:188
 msgid "Number"
 msgstr "Кол-во"
 
 #: add-on/rating-system/addon-options.php:42
 #: add-on/rating-system/addon-options.php:45
-#: functions/class-rcl-editfields.php:183
+#: functions/class-rcl-editfields.php:190
 msgid "Time"
 msgstr "Время"
 
@@ -3533,47 +3545,47 @@ msgstr "Файл не найден на сервере!"
 msgid "File has deleted"
 msgstr "Файл был удален"
 
-#: functions/class-rcl-editfields.php:52
+#: functions/class-rcl-editfields.php:54
 msgid "List of columns to select"
 msgstr "Список категорий к выбору"
 
-#: functions/class-rcl-editfields.php:53
+#: functions/class-rcl-editfields.php:55
 msgid "ID separated by comma"
 msgstr "Идентификаторы разделяются запятой"
 
-#: functions/class-rcl-editfields.php:59
+#: functions/class-rcl-editfields.php:61
 msgid "Add field"
 msgstr "Добавить поле"
 
-#: functions/class-rcl-editfields.php:111
+#: functions/class-rcl-editfields.php:118
 msgid "Enter the text of the link agreement"
 msgstr "Укажите текст ссылки соглашения"
 
-#: functions/class-rcl-editfields.php:112
+#: functions/class-rcl-editfields.php:119
 msgid ""
 "specify the types of files that are loaded by a comma, for example: pdf, "
 "zip, jpg"
 msgstr "разрешенные типы файлов разделяются запятой, например: pdf, zip, jpg"
 
-#: functions/class-rcl-editfields.php:113
+#: functions/class-rcl-editfields.php:120
 msgid "the list of options to share the \" # \" sign"
 msgstr "множественные значения разделяются знаком решетки \" # \""
 
-#: functions/class-rcl-editfields.php:121
+#: functions/class-rcl-editfields.php:128
 msgid "maximum size of uploaded file, MB (Default - 2)"
 msgstr "макс. размер загружаемого файла, МБ (по-умолчанию - 2)"
 
-#: functions/class-rcl-editfields.php:122
+#: functions/class-rcl-editfields.php:129
 msgid "URL Agreement"
 msgstr "URL Соглашения"
 
-#: functions/class-rcl-editfields.php:136
-#: functions/class-rcl-editfields.php:236
+#: functions/class-rcl-editfields.php:143
+#: functions/class-rcl-editfields.php:243
 msgid "MetaKey"
 msgstr ""
 
-#: functions/class-rcl-editfields.php:137
-#: functions/class-rcl-editfields.php:237
+#: functions/class-rcl-editfields.php:144
+#: functions/class-rcl-editfields.php:244
 msgid ""
 "not necessarily<br>if you want to enlist their arbitrary field, we list the "
 "meta_key in this field"
@@ -3581,60 +3593,60 @@ msgstr ""
 "не обязательно<br>если необходимо, то можно прописать свое значение meta_key "
 "для поля"
 
-#: functions/class-rcl-editfields.php:138
-#: functions/class-rcl-editfields.php:238
+#: functions/class-rcl-editfields.php:145
+#: functions/class-rcl-editfields.php:245
 msgid "Latin and numbers"
 msgstr "латиница и числа"
 
-#: functions/class-rcl-editfields.php:169
+#: functions/class-rcl-editfields.php:176
 msgid "The field type"
 msgstr "Тип поля"
 
-#: functions/class-rcl-editfields.php:174
+#: functions/class-rcl-editfields.php:181
 msgid "Textarea"
 msgstr "Многострочное поле"
 
-#: functions/class-rcl-editfields.php:175
+#: functions/class-rcl-editfields.php:182
 msgid "Select"
 msgstr "Выпадающий список"
 
-#: functions/class-rcl-editfields.php:176
+#: functions/class-rcl-editfields.php:183
 msgid "MultiSelect"
 msgstr "Множественный выбор"
 
-#: functions/class-rcl-editfields.php:177
+#: functions/class-rcl-editfields.php:184
 msgid "Checkbox"
 msgstr "Чекбоксы"
 
-#: functions/class-rcl-editfields.php:178
+#: functions/class-rcl-editfields.php:185
 msgid "Radiobutton"
 msgstr "Радиокнопки"
 
-#: functions/class-rcl-editfields.php:180
+#: functions/class-rcl-editfields.php:187
 msgid "Phone"
 msgstr "Телефон"
 
-#: functions/class-rcl-editfields.php:184
+#: functions/class-rcl-editfields.php:191
 msgid "Url"
 msgstr "Ссылка"
 
-#: functions/class-rcl-editfields.php:185
+#: functions/class-rcl-editfields.php:192
 msgid "Agreement"
 msgstr "Соглашение"
 
-#: functions/class-rcl-editfields.php:186
+#: functions/class-rcl-editfields.php:193
 msgid "File"
 msgstr "Файл"
 
-#: functions/class-rcl-editfields.php:187
+#: functions/class-rcl-editfields.php:194
 msgid "Dynamic"
 msgstr "Динамическое"
 
-#: functions/class-rcl-editfields.php:341
+#: functions/class-rcl-editfields.php:348
 msgid "All values of a custom field with meta_key"
 msgstr "Все значения произвольных полей с этим meta_key"
 
-#: functions/class-rcl-editfields.php:341
+#: functions/class-rcl-editfields.php:348
 msgid "were removed from the Database"
 msgstr "были удалены из базы данных"
 
@@ -3722,7 +3734,7 @@ msgid "Hi"
 msgstr "Привет"
 
 #: functions/loginform.php:24 functions/loginform.php:33
-#: functions/recallbar.php:38
+#: functions/recallbar.php:23
 msgid "In personal account"
 msgstr "В личный кабинет"
 
@@ -3736,24 +3748,24 @@ msgstr "Выход"
 msgid "Entry"
 msgstr "Вход"
 
-#: functions/rcl-frontend.php:55 functions/rcl-frontend.php:286
+#: functions/rcl-frontend.php:55 functions/rcl-frontend.php:237
 #: functions/shortcodes.php:145
 msgid "not online"
 msgstr "не в сети"
 
-#: functions/rcl-frontend.php:236
+#: functions/rcl-frontend.php:187
 msgid "The site works using the functionality of the plugin"
 msgstr "Сайт использует функционал плагина"
 
-#: functions/rcl-frontend.php:244
+#: functions/rcl-frontend.php:195
 msgid "Author of publication"
 msgstr "Автор публикации"
 
-#: functions/rcl-frontend.php:326
+#: functions/rcl-frontend.php:277
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: functions/rcl-frontend.php:333
+#: functions/rcl-frontend.php:284
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
@@ -3773,7 +3785,7 @@ msgstr "Полученное дополнение не имеет коррект
 msgid "Unable to open archive!"
 msgstr "Не удалось открыть полученный архив обновления!"
 
-#: functions/recallbar.php:47
+#: functions/recallbar.php:32
 msgid "In admin area"
 msgstr "В админку"
 
@@ -4286,57 +4298,57 @@ msgstr ""
 msgid "Options saved!"
 msgstr "Настройки сохранены!"
 
-#: rcl-admin/admin-pages.php:422
+#: rcl-admin/admin-pages.php:423
 msgid "Custom tabs personal account"
 msgstr "Произвольные вкладки личного кабинета"
 
-#: rcl-admin/admin-pages.php:427
+#: rcl-admin/admin-pages.php:428
 msgid "ID tab"
 msgstr "Идентификатор вкладки"
 
-#: rcl-admin/admin-pages.php:428
+#: rcl-admin/admin-pages.php:429
 msgid "Latin alphabet and numbers"
 msgstr "Латиница и цифры"
 
-#: rcl-admin/admin-pages.php:432
+#: rcl-admin/admin-pages.php:433
 msgid "Class icon font-awesome"
 msgstr "Класс иконки font-awesome"
 
-#: rcl-admin/admin-pages.php:433
+#: rcl-admin/admin-pages.php:434
 msgid "Example , fa-user"
 msgstr "Например: fa-user"
 
-#: rcl-admin/admin-pages.php:434
+#: rcl-admin/admin-pages.php:435
 msgid ""
 "Источник <a href=\"http://fontawesome.io/icons/\" target=\"_blank\">http://"
 "fontawesome.io/</a>"
 msgstr ""
 
-#: rcl-admin/admin-pages.php:438
+#: rcl-admin/admin-pages.php:439
 msgid "Public tab"
 msgstr "Публичная вкладка"
 
-#: rcl-admin/admin-pages.php:443
+#: rcl-admin/admin-pages.php:444
 msgid "ajax-loading support"
 msgstr "поддержка ajax-загрузки"
 
-#: rcl-admin/admin-pages.php:448
+#: rcl-admin/admin-pages.php:449
 msgid "caching support"
 msgstr "поддержка кеширования"
 
-#: rcl-admin/admin-pages.php:453
+#: rcl-admin/admin-pages.php:454
 msgid "Content tab"
 msgstr "Контент вкладки"
 
-#: rcl-admin/admin-pages.php:454
+#: rcl-admin/admin-pages.php:455
 msgid "supported shortcodes and HTML-code"
 msgstr "поддерживаются шорткоды и HTML-код"
 
-#: rcl-admin/admin-pages.php:480
+#: rcl-admin/admin-pages.php:481
 msgid "Used template"
 msgstr "Используемый шаблон"
 
-#: rcl-admin/admin-pages.php:482
+#: rcl-admin/admin-pages.php:483
 msgid "Not connected"
 msgstr "Не подключен"
 

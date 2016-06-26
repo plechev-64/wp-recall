@@ -9,7 +9,7 @@ class Rcl_EditPost {
     function __construct(){
         global $user_ID,$rcl_options;
 
-		$user_can = $rcl_options['user_public_access_recall'];
+        $user_can = $rcl_options['user_public_access_recall'];
 
         if($user_can&&!$user_ID) return false;
 
@@ -192,10 +192,16 @@ class Rcl_EditPost {
         if(!$postdata['post_status']||$user_info->user_level==10) $postdata['post_status'] = 'publish';
 
         do_action('pre_update_post_rcl',$postdata);
-        
+
         if(!$this->post_id){
             $this->post_id = wp_insert_post( $postdata );
-            if($id_form>1) add_post_meta($this->post_id, 'publicform-id', $id_form);
+
+            if(!$this->post_id) 
+                wp_die(__('Error publishing!','wp-recall'));
+            
+            if($id_form>1) 
+                add_post_meta($this->post_id, 'publicform-id', $id_form);
+            
         }else{
             wp_update_post( $postdata );
         }

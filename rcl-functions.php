@@ -50,14 +50,28 @@ function rcl_setup_tabs(){
     if(!$rcl_tabs) return false;
 
     if (!class_exists('Rcl_Tabs')) 
-        include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
+        include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-tabs.php';
 
     foreach($rcl_tabs as $tab){
         $Rcl_Tabs = new Rcl_Tabs($tab);
+        $Rcl_Tabs->add_tab();
     }
     
     do_action('rcl_setup_tabs');
     
+}
+
+add_filter('rcl_tabs','rcl_get_order_tabs',10);
+function rcl_get_order_tabs($rcl_tabs){
+    $counter = array();
+    foreach($rcl_tabs as $id=>$data){
+        if(isset($data['args']['output'])) continue;
+        $counter[$data['args']['order']] = $id;
+    }
+    ksort($counter);
+    $id_first = array_shift($counter);
+    $rcl_tabs[$id_first]['args']['first'] = 1;
+    return $rcl_tabs;
 }
 
 //регистрируем контентые блоки
@@ -94,7 +108,7 @@ function rcl_setup_blocks(){
     if(!$rcl_blocks) return false;
 
     if (!class_exists('Rcl_Blocks')) 
-        include_once plugin_dir_path( __FILE__ ).'functions/rcl_blocks.php';
+        include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-blocks.php';
 
     foreach($rcl_blocks as $block){
         $Rcl_Blocks = new Rcl_Blocks($block);
@@ -371,7 +385,7 @@ function rcl_ajax_tab($post){
     $user_LK = intval($post->user_LK);
 
     if (!class_exists('Rcl_Tabs')) 
-        include_once plugin_dir_path( __FILE__ ).'functions/rcl_tabs.php';
+        include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-tabs.php';
     
     $ajax = (!isset($rcl_tabs[$id_tab]['args']['ajax-load'])||!$rcl_tabs[$id_tab]['args']['ajax-load'])? 0: 1;
     
@@ -385,8 +399,10 @@ function rcl_ajax_tab($post){
         
         $data = $rcl_tabs[$id_tab];
         
+        $data['args']['first'] = 1;
+
         $tab = new Rcl_Tabs($data);
-        return $tab->add_tab('',$user_LK);
+        return $tab->get_tab($user_LK);
     }
     
     return array('error'=>__('Error','wp-recall').'!');

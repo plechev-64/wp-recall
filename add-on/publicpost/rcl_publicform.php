@@ -456,7 +456,9 @@ function get_public_allterms($taxonomy=false){
 }
 
 function rcl_publication_upload(){
-    global $formData;
+    global $formData,$rcl_options;
+    $wp_uploader = (isset($rcl_options['media_uploader']))? $rcl_options['media_uploader']: 0;
+    if($wp_uploader) return false;
     $gallery = new Rcl_Thumb_Form($formData->post_id,$formData->id_upload);
     echo $gallery->get_gallery();
 }

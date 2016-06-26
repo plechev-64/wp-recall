@@ -84,7 +84,7 @@ function rcl_add_counter_rating($tab){
      global $user_LK;
     if($tab['id']!='rating') return $tab;
     $cnt = rcl_rating_block(array('value'=>rcl_get_user_rating($user_LK)));
-    $tab['name'] .= ': '.$cnt;
+    $tab['name'] .= ' '.$cnt;
     return $tab;
 }
 

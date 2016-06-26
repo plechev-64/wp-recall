@@ -34,7 +34,7 @@ function rcl_bar_add_cart(){
     rcl_bar_add_icon('rcl-cart',
         array(
             'icon'=>'fa-shopping-cart',
-            'url'=>$rmag_options['basket_page_rmag'],
+            'url'=>get_permalink($rmag_options['basket_page_rmag']),
             'label'=>__('Cart','wp-recall'),
             'counter'=>'<span class="cart-numbers">'.$amount.'</span>'
         )

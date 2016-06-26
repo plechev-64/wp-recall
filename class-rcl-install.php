@@ -270,10 +270,7 @@ class RCL_Install {
                 foreach($active_addons as $addon=>$src_dir){
                     rcl_activate_addon($addon);
                 }
-            }
-
-            /*Ниже функции модифицикации данных плагина при обновлении плагина с более ранних версий*/
-            require_once('functions/migration.php');            
+            }          
 
         }
 

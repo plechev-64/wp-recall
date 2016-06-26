@@ -1,15 +1,4 @@
 <?php
-add_action('rcl_account_menu','rcl_buttons',10);
-function rcl_buttons(){
-    global $user_LK;
-    echo apply_filters( 'the_button_wprecall', '', $user_LK );
-}
-
-add_action('rcl_account_tabs','rcl_tabs',10);
-function rcl_tabs(){
-    global $user_LK;
-    echo apply_filters( 'the_block_wprecall', '', $user_LK);
-}
 
 add_action('rcl_account_before','rcl_before',10);
 function rcl_before(){

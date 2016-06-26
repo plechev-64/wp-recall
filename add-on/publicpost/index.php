@@ -849,13 +849,15 @@ function rcl_wp_editor($args=false,$content=false){
     global $rcl_options,$editpost,$formData,$user_ID;
 
     $media = (isset($args['media']))? $args['media']: true;
-	$wp_editor = (isset($args['wp_editor']))? $args['wp_editor']: $formData->wp_editor;
+    $wp_editor = (isset($args['wp_editor']))? $args['wp_editor']: $formData->wp_editor;
 
     $tinymce = ($wp_editor==1||$wp_editor==3)? $tinymce = 1: 0;
     $quicktags = ($wp_editor==2||$wp_editor==3)? $quicktags = 1: 0;
+    
+    $wp_uploader = (isset($rcl_options['media_uploader']))? $rcl_options['media_uploader']: 0;
 
     $data = array( 'wpautop' => 1
-        ,'media_buttons' => 0
+        ,'media_buttons' => $wp_uploader
         ,'textarea_name' => 'post_content'
         ,'textarea_rows' => 10
         ,'tabindex' => null
@@ -867,12 +869,20 @@ function rcl_wp_editor($args=false,$content=false){
         ,'quicktags' => $quicktags
     );
 
-    if($media)
-        //if($user_ID) echo rcl_get_button(__('To add a media file','wp-recall'),'#',array('icon'=>'fa-folder-open','id'=>'get-media-rcl'));
-
-	if(!$content) $content = (isset($editpost->post_content))? $editpost->post_content: '';
+    if(!$content) $content = (isset($editpost->post_content))? $editpost->post_content: '';
 
     wp_editor( $content, 'contentarea-'.$formData->post_type, $data );
+}
+
+//выводим в медиабиблиотеке только медиафайлы текущего автора
+add_action('pre_get_posts','rcl_restrict_media_library');
+function rcl_restrict_media_library( $wp_query_obj ) {
+    global $current_user, $pagenow;
+    if( !is_a( $current_user, 'WP_User') ) return;
+    if( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' ) return;
+    if( !current_user_can('manage_media_library') )
+    $wp_query_obj->set('author', $current_user->ID );
+    return;
 }
 
 add_shortcode('rcl-box','rcl_box_shortcode');

@@ -145,22 +145,36 @@ function rcl_get_publics_options_page($content){
                     array(
                         $opt->label(__('View editor WP','wp-recall')),
                         $opt->option('checkbox',array(
-							'name'=>'wp_editor',
-							'options'=>array(1=>__('Visual Editor','wp-recall'),2=>__('HTML-Editor','wp-recall'))
-						)),
-                        $opt->label(__('Number of images in the gallery Wp-Recall','wp-recall')),
-                        $opt->option('number',array('name'=>'count_image_gallery','default'=>10)),
-
-                        $opt->label(__('The maximum image size, Mb','wp-recall')),
-                        $opt->option('number',array('name'=>'public_gallery_weight','default'=>2)),
-                        $opt->notice(__('To limit image uploads to publish this value in megabytes. By default, 2MB','wp-recall')),
-
-                        $opt->label(__('The size in the editor by default','wp-recall')),
-                        $opt->option('select',array(
-                            'name'=>'default_size_thumb',
-                            'options'=>$d_sizes
+                            'name'=>'wp_editor',
+                            'options'=>array(1=>__('Visual Editor','wp-recall'),2=>__('HTML-Editor','wp-recall'))
                         )),
-                        $opt->notice(__('Select the picture size in the silence of their use in the visual editor during the publishing process','wp-recall'))
+                        $opt->label(__('Media Uploader','wp-recall')),
+                        $opt->option('select',array(
+                            'name'=>'media_uploader',
+                            'parent'=>true,
+                            'options'=>array(
+                                __('WP-RECALL Uploader','wp-recall'),
+                                __('WordPress Uploader','wp-recall')
+                            )
+                        )),
+                        $opt->child(
+                        array('name'=>'media_uploader','value'=>0),
+                            array(
+                                $opt->label(__('Number of images in the gallery Wp-Recall','wp-recall')),
+                                $opt->option('number',array('name'=>'count_image_gallery','default'=>10)),
+
+                                $opt->label(__('The maximum image size, Mb','wp-recall')),
+                                $opt->option('number',array('name'=>'public_gallery_weight','default'=>2)),
+                                $opt->notice(__('To limit image uploads to publish this value in megabytes. By default, 2MB','wp-recall')),
+
+                                $opt->label(__('The size in the editor by default','wp-recall')),
+                                $opt->option('select',array(
+                                    'name'=>'default_size_thumb',
+                                    'options'=>$d_sizes
+                                )),
+                                $opt->notice(__('Select the picture size in the silence of their use in the visual editor during the publishing process','wp-recall'))
+                            )
+                        )
                     )
                 ),
 

@@ -11,12 +11,14 @@ class Rcl_EditFields {
     public $select_type;
     public $meta_key;
     public $placeholder;
+    public $sortable;
 
     function __construct($posttype,$primary=false){
         global $Option_Value; 
         $this->select_type = (isset($primary['select-type']))? $primary['select-type']:true;
         $this->meta_key = (isset($primary['meta-key']))? $primary['meta-key']:true;
         $this->placeholder = (isset($primary['placeholder']))? $primary['placeholder']:true;
+        $this->sortable = (isset($primary['sortable']))? $primary['sortable']:true;
         $this->primary = $primary;
 
         switch($posttype){
@@ -62,20 +64,25 @@ class Rcl_EditFields {
                     <input class="button button-primary" type="submit" value="'.__('Save','wp-recall').'" name="rcl_save_custom_fields">
                     <input type="hidden" id="rcl-deleted-fields" name="rcl_deleted_custom_fields" value="">
                 </div>
-            </form>
-            <script>
-                jQuery(function(){
-                    jQuery("#rcl-sortable-fileds").sortable({
-                        connectWith: "#rcl-sortable-fileds",
-                        containment: "parent",
-                        handle: ".field-header",
-                        placeholder: "ui-sortable-placeholder",
-                        distance: 15
+            </form>';
+                
+            if($this->sortable){
+                $form .= '<script>
+                    jQuery(function(){
+                        jQuery("#rcl-sortable-fileds").sortable({
+                            connectWith: "#rcl-sortable-fileds",
+                            containment: "parent",
+                            handle: ".field-header",
+                            cursor: "move",
+                            placeholder: "ui-sortable-placeholder",
+                            distance: 15
+                        });
+                        return false;
                     });
-                    return false;
-                });
-            </script>
-            </div>';
+                </script>';
+            }
+            
+            $form .= '</div>';
 
         return $form;
     }

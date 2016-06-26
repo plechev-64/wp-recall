@@ -413,7 +413,8 @@ function rcl_custom_tabs_manage(){
             array(
                 'meta-key'=>false,
                 'select-type'=>false,
-                'placeholder'=>false
+                'placeholder'=>false,
+                'sortable'=>false
                 )
             );
     

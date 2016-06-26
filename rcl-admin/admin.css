@@ -208,8 +208,10 @@ span.ruble-symbol{
     padding: 10px;
     background: #E4E4E4;
     border: 1px solid #ccc;
-    cursor: move;
     overflow: hidden;
+}
+.ui-sortable .rcl-custom-field .field-header{
+    cursor:move;
 }
 #rcl-custom-fields-editor .rcl-custom-field .field-header .field-title{
     font-weight: bold;

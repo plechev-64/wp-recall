@@ -7,7 +7,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 9999;
+    z-index: 99;
 }
 #recallbar a {
     color: #e6e6e6;
@@ -64,6 +64,9 @@
     transform: translateY(-18px);
     visibility: visible;
 }
+#recallbar .current-menu-item a {
+    background: none;
+}
 #recallbar .rcb_icon .rcb_hiden span {
     background: rgba(0, 0, 0, 0.7);
     border-radius: 0 0 3px 3px;
@@ -113,8 +116,9 @@
     list-style: none;
     padding: 10px;
 }
-.rcb_line:hover,
-#recallbar li:hover {
+#recallbar .rcb_line:hover,
+#recallbar li:hover, 
+#recallbar .current-menu-item {
     background: rgba(0, 0, 0, 0.3);
 }
 #recallbar .menu-item-has-children {
@@ -122,7 +126,7 @@
 }
 #recallbar .menu-item-has-children > a::after {
     color: inherit;
-    content: "\f054";									/* fa-chevron-right */
+    content: "\f054"; /* fa-chevron-right */
     font-family: fontawesome;
     font-size: 11px;
     pointer-events: none;
