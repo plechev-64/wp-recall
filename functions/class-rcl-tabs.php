@@ -126,12 +126,12 @@ class Rcl_Tabs{
     function get_tab_button($author_lk){
         global $user_ID;
         
-        switch($this->public){
+        switch($this->args['public']){
             case 0: if(!$user_ID||$user_ID!=$author_lk) return false; break;
-            case -1: if(!$user_ID||$user_ID==$author_lk) return false; break;
-            case -2: if($user_ID&&$user_ID==$author_lk) return false; break;
+            //case -1: if(!$user_ID||$user_ID==$author_lk) return false; break;
+            //case -2: if($user_ID&&$user_ID==$author_lk) return false; break;
         }
-        
+
         $link = rcl_format_url(get_author_posts_url($author_lk),$this->id);
         
         $datapost = array(
@@ -155,14 +155,14 @@ class Rcl_Tabs{
     function get_tab($author_lk){
         global $user_ID,$rcl_options;
         
-        switch($this->public){
+        switch($this->args['public']){
             case 0: if(!$user_ID||$user_ID!=$author_lk) return false; break;
-            case -1: if(!$user_ID||$user_ID==$author_lk) return false; break;
-            case -2: if($user_ID&&$user_ID==$author_lk) return false; break;
+            //case -1: if(!$user_ID||$user_ID==$author_lk) return false; break;
+            //case -2: if($user_ID&&$user_ID==$author_lk) return false; break;
         }
         
         if(!$this->tab_upload) return false;
-
+        
         $status = ($this->tab_active) ? 'active':'';
         
         $content = '';

@@ -61,11 +61,22 @@ function rcl_setup_tabs(){
     
 }
 
+//выясняем какую вкладку ЛК показывать пользователю, 
+//если ни одна не указана для вывода
 add_filter('rcl_tabs','rcl_get_order_tabs',10);
 function rcl_get_order_tabs($rcl_tabs){
+    global $user_ID,$user_LK;
+    
+    if(isset($_GET['tab'])) return false;
+    
     $counter = array();
     foreach($rcl_tabs as $id=>$data){
         if(isset($data['args']['output'])) continue;
+        
+        if($data['args']['public']!=1){
+            if(!$user_ID||$user_ID!=$user_LK) continue;
+        }
+        
         $counter[$data['args']['order']] = $id;
     }
     ksort($counter);
