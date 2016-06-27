@@ -67,7 +67,7 @@ add_filter('rcl_tabs','rcl_get_order_tabs',10);
 function rcl_get_order_tabs($rcl_tabs){
     global $user_ID,$user_LK;
     
-    if(isset($_GET['tab'])) return false;
+    if(isset($_GET['tab'])) return $rcl_tabs;
     
     $counter = array();
     foreach($rcl_tabs as $id=>$data){

@@ -225,18 +225,24 @@ class Rcl_Groups {
         global $post,$active_addons,$user_LK;
 
         if(!$this->filters) return false;
+        
+        $content = '';
+        
+        if($this->search_form){
 
-        $search_text = ((isset($_GET['group-name'])))? $_GET['group-name']: '';
+            $search_text = ((isset($_GET['group-name'])))? $_GET['group-name']: '';
 
-	$content ='<div class="rcl-search-form">
-                <form method="get" action="">
-                    <p>'.__('Search groups','wp-recall').'</p>
-                    <input type="text" name="group-name" value="'.$search_text.'">
-                    <input type="submit" class="recall-button" value="'.__('Search','wp-recall').'">
-                </form>
-            </div>';
+            $content ='<div class="rcl-search-form">
+                    <form method="get" action="">
+                        <p>'.__('Search groups','wp-recall').'</p>
+                        <input type="text" name="group-name" value="'.$search_text.'">
+                        <input type="submit" class="recall-button" value="'.__('Search','wp-recall').'">
+                    </form>
+                </div>';
 
-        if($this->search_form) $content = apply_filters('rcl_groups_search_form',$content);
+            $content = apply_filters('rcl_groups_search_form',$content);
+         
+        }
 
         $count_groups = (false!==$count_groups)? $count_groups: $this->count_groups();
 
