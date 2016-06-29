@@ -120,3 +120,23 @@ function rcl_update_scripts(){
     fwrite($f, $scripts);
     fclose($f);
 }
+
+add_action('rcl_area_actions','rcl_area_header',10);
+function rcl_area_header(){
+    do_action('rcl_area_header');
+}
+
+add_action('rcl_area_counters','rcl_area_sidebar',10);
+function rcl_area_sidebar(){
+    do_action('rcl_area_sidebar');
+}
+
+add_action('rcl_area_extra','rcl_area_footer',10);
+function rcl_area_footer(){
+    do_action('rcl_area_footer');
+}
+
+add_action('rcl_area_details','rcl_area_content',10);
+function rcl_area_content(){
+    do_action('rcl_area_content');
+}

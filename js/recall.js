@@ -60,7 +60,7 @@ function rcl_ajax_tab(e,data){
 jQuery(function($){
 	
     init_location_data();
-    
+
     $("#recallbar .menu-item-has-children").hover(function() {
         $(this).children(".sub-menu").css({'visibility': 'visible'})
     }, function() {

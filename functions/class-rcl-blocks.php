@@ -1,64 +1,79 @@
 <?php
 class Rcl_Blocks {
     
-    public $id;
-    public $class;
-    public $width;
-    public $title;
     public $place;
     public $callback;
-    public $public;
-    public $gallery;
+    public $args = array(
+                'id'=>'',
+                'class'=>'',
+                'title'=>'',
+                'gallery'=>0,
+                'public'=>1,
+                'order'=>10,
+                'width'=>50
+            );
+    
     
     function __construct($data){
+        $this->init_properties($data);
+    }
+    
+    function init_properties($args){
+
+        $properties = get_class_vars(get_class($this));
+
+        foreach ($properties as $name=>$val){
+            
+            if(!isset($args[$name])) continue;
+            
+            if($name=='args'){
+                $this->args = wp_parse_args( $args[$name], $this->args  );
+                continue;
+            }
+            
+            $this->$name = $args[$name];
+     
+        }
         
-        $this->place = $data['place'];
-        $this->callback = $data['callback'];
-        $args = $data['args'];
-
-        if(isset($args['title'])) $this->title = $args['title'];
-        if(isset($args['gallery'])) $this->gallery = $args['gallery'];
-
-        $this->public = (isset($args['public']))? $args['public']: 1;
-        $this->width = (isset($args['width']))? $args['width']: 50;
-        $order = (isset($args['order']))? $args['order']: 10;
-
-        if(isset($args['id'])) $this->id = $args['id'];
-        if(isset($args['class'])) $this->class = $args['class'];
-
-        if($this->gallery) $this->class .= ' gallery-lk';
-        if( !has_filter('rcl_'.$this->place.'_lk', array(&$this,'add_block')) )
-                add_filter('rcl_'.$this->place.'_lk',array(&$this,'add_block'),$order,2);
+    }
+    
+    function add_block(){
+        add_action('rcl_area_'.$this->place,array($this,'print_block'),$this->args['order']);
+    }
+    
+    function print_block(){
+        global $user_LK;
+        echo $this->get_block($user_LK);
     }
 
-    function add_block($content,$user_lk){
+    function get_block($user_lk){
         global $user_ID;
-
-        switch($this->public){
-            case 0: if(!$user_ID||$user_ID!=$user_lk) return $content; break; //только хозяину ЛК
-            case -1: if(!$user_ID||$user_ID==$user_lk) return $content; break; //всем зарегистрированным кроме хозяина ЛК
-            case -2: if($user_ID&&$user_ID==$user_lk) return $content; break; //всем посетителям кроме хозяина
+        
+        switch($this->args['public']){
+            case 0: if(!$user_ID||$user_ID!=$user_lk) return false; break; //только хозяину ЛК
+            case -1: if(!$user_ID||$user_ID==$user_lk) return false; break; //всем зарегистрированным кроме хозяина ЛК
+            case -2: if($user_ID&&$user_ID==$user_lk) return false; break; //всем посетителям кроме хозяина
         }
+        
+        $cl_content = $this->get_callback_content($user_lk);
+        if(!$cl_content) return false;
 
-        $cl_content = call_user_func($this->callback,$user_lk);
-        if(!$cl_content) return $content;
-
-
+        
         $content .= '<div';
-        if($this->id) $content .= ' id="'.$this->id.'"';
+        if($this->args['id']) $content .= ' id="'.$this->id.'"';
         $content .= ' class="'.$this->place.'-block-rcl block-rcl';
-        if($this->class) $content .= ' '.$this->class;
+        if($this->args['class']) $content .= ' '.$this->class;
         $content .= '">';
-        if($this->title) $content .= '<h4>'.$this->title.'</h4>';
+        if($this->args['title']) $content .= '<h4>'.$this->args['title'].'</h4>';
         $content .= $cl_content;
 
-        if($this->gallery){
+        if($this->args['gallery']){
 
-            $content .= '<script>jQuery("#'.$this->gallery.'").bxSlider({
+            $content .= '<script>jQuery("#'.$this->args['gallery'].'").bxSlider({
             pager:false,
             minSlides: 1,
             maxSlides: 20,
-            slideWidth: '.$this->width.',
+            slideWidth: '.$this->args['width'].',
             infiniteLoop:true,
             slideMargin: 5,
             moveSlides:1
@@ -68,5 +83,21 @@ class Rcl_Blocks {
         $content .= '</div>';
 
         return $content;
+    }
+    
+    function get_callback_content($author_lk){
+        
+        $callback = $this->callback;
+        
+        if(is_array($callback)){
+            $object = new $callback[0];
+            $method = $callback[1];
+            $content = $object->$method($author_lk);
+        }else{
+            $content = $callback($author_lk);
+        }
+
+        return $content;
+
     }
 }

@@ -179,7 +179,7 @@ class Rcl_Messages{
 	}
 
         function rcl_add_block_black_list_button(){
-            rcl_block('header',array(&$this, 'get_header_black_list_button'),array('id'=>'bl-block','order'=>50,'public'=>1));
+            rcl_block('actions',array(&$this, 'get_header_black_list_button'),array('id'=>'bl-block','order'=>50,'public'=>1));
         }
 
 	function add_global_update_new_mess_script(){

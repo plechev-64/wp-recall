@@ -137,12 +137,12 @@ final class WP_Recall {
              * Остальные распихаем по соответсвующим функциям
              */
 
-            include_once 'functions/rcl_activate.php';
+            require_once 'functions/rcl_activate.php';
             require_once("functions/class-rcl-includer.php");
             require_once('functions/enqueue-scripts.php');
             require_once('functions/rcl-cron.php');
-            include_once 'functions/class-rcl-cache.php';
-            include_once 'functions/class-rcl-ajax.php';
+            require_once 'functions/class-rcl-cache.php';
+            require_once 'functions/class-rcl-ajax.php';
             require_once('functions/class-rcl-custom-fields.php');
             require_once('functions/loginform.php');
             require_once('functions/rcl_currency.php');
@@ -150,9 +150,9 @@ final class WP_Recall {
             require_once("rcl-functions.php");
             require_once("functions/deprecated.php");
             require_once("functions/shortcodes.php");
-            require_once("rcl-widgets.php");           
+            require_once("rcl-widgets.php"); 
 
-            include_once('class-rcl-install.php');
+            require_once('class-rcl-install.php');
 
             if ( $this->is_request( 'admin' ) ) {
                     $this->admin_includes();

@@ -52,8 +52,8 @@ class Rcl_Tabs{
     }
 
     function add_tab(){
-        add_action('rcl_account_tabs',array($this,'print_tab'),$this->args['order']);
-        add_action('rcl_account_'.$this->args['output'],array($this,'print_tab_button'),$this->args['order']);
+        add_action('rcl_area_tabs',array($this,'print_tab'),$this->args['order']);
+        add_action('rcl_area_'.$this->args['output'],array($this,'print_tab_button'),$this->args['order']);
     }
     
     function print_tab(){

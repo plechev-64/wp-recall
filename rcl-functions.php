@@ -97,13 +97,13 @@ function rcl_block($place,$callback,$args=false){
 
     $data = apply_filters('block_data_rcl',$data);
 
-    if(is_admin())return false;
+    //if(is_admin())return false;
 
-    if(isset($data['args']['gallery'])){
+    /*if(isset($data['args']['gallery'])){
         rcl_bxslider_scripts();
-    }
+    }*/
     
-    $rcl_blocks[] = $data;
+    $rcl_blocks[$place][] = $data;
     
     $rcl_blocks = apply_filters('rcl_blocks',$rcl_blocks);
   
@@ -121,8 +121,12 @@ function rcl_setup_blocks(){
     if (!class_exists('Rcl_Blocks')) 
         include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-blocks.php';
 
-    foreach($rcl_blocks as $block){
-        $Rcl_Blocks = new Rcl_Blocks($block);
+    foreach($rcl_blocks as $place_id=>$blocks){
+        if(!$blocks) continue;
+        foreach($blocks as $data){
+            $Rcl_Blocks = new Rcl_Blocks($data);
+            $Rcl_Blocks->add_block();
+        }
     }
     
     do_action('rcl_setup_blocks');

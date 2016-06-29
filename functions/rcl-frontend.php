@@ -1,36 +1,36 @@
 <?php
 
-add_action('rcl_account_before','rcl_before',10);
+add_action('rcl_area_before','rcl_before',10);
 function rcl_before(){
     global $user_LK;
     echo apply_filters( 'rcl_before_lk', '', $user_LK );
 }
 
-add_action('rcl_account_after','rcl_after',10);
+add_action('rcl_area_after','rcl_after',10);
 function rcl_after(){
     global $user_LK;
     echo apply_filters( 'rcl_after_lk', '', $user_LK );
 }
 
-add_action('rcl_account_header','rcl_header',10);
+add_action('rcl_area_actions','rcl_header',10);
 function rcl_header(){
     global $user_LK;
     echo apply_filters('rcl_header_lk','',$user_LK);
 }
 
-add_action('rcl_account_sidebar','rcl_sidebar',10);
+add_action('rcl_area_counters','rcl_sidebar',10);
 function rcl_sidebar(){
     global $user_LK;
     echo apply_filters('rcl_sidebar_lk','',$user_LK);
 }
 
-add_action('rcl_account_content','rcl_content',10);
+add_action('rcl_area_details','rcl_content',10);
 function rcl_content(){
     global $user_LK;
     echo apply_filters('rcl_content_lk','',$user_LK);
 }
 
-add_action('rcl_account_footer','rcl_footer',10);
+add_action('rcl_area_extra','rcl_footer',10);
 function rcl_footer(){
     global $user_LK;
     echo apply_filters('rcl_footer_lk','',$user_LK);
@@ -39,9 +39,11 @@ function rcl_footer(){
 function rcl_action(){
     global $rcl_userlk_action;
     $last_action = rcl_get_useraction($rcl_userlk_action);
-    $class = (!$last_action)? 'online': 'offline';
-    $status = '<div class="status_user '.$class.'"><i class="fa fa-circle"></i></div>';
-    if($last_action) $status .= __('not online','wp-recall').' '.$last_action;
+    //$class = (!$last_action)? 'online': 'offline';
+    //$status = '<div class="status_user '.$class.'"><i class="fa fa-circle"></i></div>';
+    if($last_action) $status = __('not online','wp-recall').' '.$last_action;
+    else $status = __('online','wp-recall');
+    
     echo $status;
 }
 
@@ -58,7 +60,6 @@ function rcl_status_desc(){
     global $user_LK;
     $desc = get_the_author_meta('description',$user_LK);
     if($desc) echo '<div class="ballun-status">'
-        //. '<span class="ballun"></span>'
         . '<p class="status-user-rcl">'.nl2br(esc_textarea($desc)).'</p>'
         . '</div>';
 }

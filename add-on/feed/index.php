@@ -14,7 +14,7 @@ require_once 'shortcodes.php';
 
 add_action('init','rcl_add_block_feed_button');
 function rcl_add_block_feed_button(){
-    rcl_block('header','rcl_add_feed_button',array('id'=>'fd-footer','order'=>5,'public'=>-1));
+    rcl_block('actions','rcl_add_feed_button',array('id'=>'fd-footer','order'=>5,'public'=>-1));
 }
 
 function rcl_add_feed_button($user_id){
@@ -34,7 +34,7 @@ function rcl_add_userlist_follow_button(){
 
 add_action('init','rcl_add_followers_tab');
 function rcl_add_followers_tab(){
-    rcl_tab('followers','rcl_followers_tab',__('Followers','wp-recall'),array('public'=>1,'ajax-load'=>true,'cache'=>true,'output'=>'sidebar','class'=>'fa-twitter'));
+    rcl_tab('followers','rcl_followers_tab',__('Followers','wp-recall'),array('public'=>1,'ajax-load'=>true,'cache'=>true,'output'=>'counters','class'=>'fa-twitter'));
 }
 
 if(!is_admin()) add_filter('tab_data_rcl','rcl_add_counter_followers_tab',10);
@@ -83,7 +83,7 @@ function rcl_followers_tab($user_id){
 
 add_action('init','rcl_add_subscriptions_tab');
 function rcl_add_subscriptions_tab(){
-    rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','wp-recall'),array('public'=>0,'ajax-load'=>true,'cache'=>true,'output'=>'sidebar','class'=>'fa-bell-o'));
+    rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','wp-recall'),array('public'=>0,'ajax-load'=>true,'cache'=>true,'output'=>'counters','class'=>'fa-bell-o'));
 }
 
 function rcl_subscriptions_tab($user_id){

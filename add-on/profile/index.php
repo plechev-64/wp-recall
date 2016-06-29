@@ -49,12 +49,19 @@ function rcl_profile_options_page(){
 
 add_action('init','rcl_add_block_show_profile_fields');
 function rcl_add_block_show_profile_fields(){
-    rcl_block('content','rcl_get_show_profile_fields',array('id'=>'pf-block','order'=>20,'public'=>1));
+    rcl_block('details','rcl_get_show_profile_fields',array('id'=>'pf-block','order'=>20,'public'=>1));
 }
 
 function rcl_get_show_profile_fields($author_lk){
-	$profile_fields='';
-	return apply_filters('show_profile_fields_rcl',$profile_fields,$author_lk);
+
+    $content = apply_filters('show_profile_fields_rcl','',$author_lk);
+    
+    if(!$content) return false;
+    
+    if(defined( 'DOING_AJAX' ) && DOING_AJAX) return $content;
+    
+    return '<a href="#" class="rcl-more-link" onclick="rcl_more_view(this); return false;">'.__('Detailed information','wp-recall').' <i class="fa fa-plus-square-o"></i></a>'
+    .'<div class="more-content">'.$content.'</div>';
 }
 
 if(!is_admin()) add_action('wp','rcl_update_profile_notice');
@@ -237,17 +244,9 @@ function rcl_profile_options($content){
     return $content;
 }
 
-add_filter('after-avatar-rcl','rcl_button_avatar_upload',2,2);
-function rcl_button_avatar_upload($content,$author_lk){
-    global $user_ID;
-
-    rcl_dialog_scripts();
-
-    if($user_ID==$author_lk){ 
-        rcl_fileupload_scripts();
-        rcl_crop_scripts();
-        if( isset($_SERVER["HTTPS"])&&$_SERVER["HTTPS"] == 'on') rcl_webcam_scripts();
-    }
+add_filter('after-avatar-rcl','rcl_add_avatar_zoom_button',10,2);
+function rcl_add_avatar_zoom_button($content,$author_lk){
+   rcl_dialog_scripts();
 
     $avatar = get_user_meta($author_lk,'rcl_avatar',1);
 
@@ -259,9 +258,24 @@ function rcl_button_avatar_upload($content,$author_lk){
             $url_avatar = $avatar;
         }
         $content .= '<a title="'.__('Zoom avatar','wp-recall').'" data-zoom="'.$url_avatar.'" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="fa fa-search-plus"></i></a>';
-    }
+    } 
+    return $content;
+}
+
+add_filter('after-avatar-rcl','rcl_button_avatar_upload',11,2);
+function rcl_button_avatar_upload($content,$author_lk){
+    global $user_ID;
 
     if($user_ID!=$author_lk) return $content;
+    
+    rcl_dialog_scripts();
+    rcl_fileupload_scripts();
+    rcl_crop_scripts();
+    
+    if( isset($_SERVER["HTTPS"])&&$_SERVER["HTTPS"] == 'on') 
+        rcl_webcam_scripts();
+    
+    $avatar = get_user_meta($author_lk,'rcl_avatar',1);
 
     if($avatar){
         $content .= '<a title="'.__('Delete avatar','wp-recall').'" class="rcl-avatar-delete" href="'.wp_nonce_url( rcl_format_url(get_author_posts_url($author_lk)).'rcl-action=delete_avatar', $user_ID ).'"><i class="fa fa-times"></i></a>';
@@ -275,6 +289,7 @@ function rcl_button_avatar_upload($content,$author_lk){
     $content .= @( !isset($_SERVER["HTTPS"])||$_SERVER["HTTPS"] != 'on' ) ? '':  '<span id="webcamupload" class="fa fa-camera"></span>';
     $content .= '</div>
     <span id="avatar-upload-progress"></span>';
+    
     return $content;
 }
 
@@ -295,13 +310,6 @@ function rcl_delete_avatar_action(){
     unlink($dir_path.$user_ID.'.jpg');
 
     wp_redirect( rcl_format_url(get_author_posts_url($user_ID)).'rcl-avatar=deleted' );  exit;
-}
-
-add_filter('rcl_content_lk','rcl_add_more_link_content',100);
-function rcl_add_more_link_content($content){
-    if(!$content) return $content;
-    return '<a href="#" class="rcl-more-link" onclick="rcl_more_view(this); return false;">'.__('Detailed information','wp-recall').' <i class="fa fa-plus-square-o"></i></a>'
-    .'<div class="more-content">'.$content.'</div>';
 }
 
 add_action('wp','rcl_notice_avatar_deleted');
