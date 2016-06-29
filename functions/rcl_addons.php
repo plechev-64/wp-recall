@@ -18,9 +18,12 @@ function rcl_activate_addon($addon,$activate=true,$dirpath=false){
         if(!is_readable($index_src)) continue;
 
         if(file_exists($index_src)){
-
+            $addon_headers = rcl_get_addon_headers($addon);
+            
+            $active_addons[$addon] = $addon_headers;
             $active_addons[$addon]['path'] = $path.'/'.$addon;
             $active_addons[$addon]['priority'] = (!$k)? 1: 0;
+            
             $install_src = $path.'/'.$addon.'/activate.php';
             
             if($activate&&file_exists($install_src)) include_once($install_src);
@@ -28,6 +31,7 @@ function rcl_activate_addon($addon,$activate=true,$dirpath=false){
             update_site_option('rcl_active_addons',$active_addons);
             
             do_action('rcl_activate_'.$addon,$active_addons[$addon]);
+            //print_r($active_addons);exit;
             return true;
 
         }
@@ -109,50 +113,36 @@ function rcl_parse_addon_info($info){
     foreach((array)$info as $string){
 
         if($cnt>1) $string = str_replace(';','',$string);
+        
+        if ( false !== strpos($string, ':') ){
+            $val = trim(substr($string, strpos($string,':')+strlen(':')));
+            $title = strtolower(str_replace(' ','-',trim(substr($string, 0, strpos($string, ':')))));
+            $addon_data[$title] = $val;
+        }
 
-        if ( false !== strpos($string, 'Name:') ){
-                preg_match_all('/(?<=Name\:)[A-zА-я0-9\-\_\:\/\.\,\?\=\&\@\s\(\)]*/iu', $string, $string_value);
-                $addon_data['name'] = trim($string_value[0][0]);
-                continue;
-        }
-        if ( false !== strpos($string, 'Version:') ){
-                preg_match_all('/(?<=Version\:)[A-zА-я0-9\-\_\:\/\.\,\?\=\&\@\s]*/iu', $string, $version_value);
-                $addon_data['version'] = trim($version_value[0][0]);
-                continue;
-        }
-        if ( false !== strpos($string, 'Support Core:') ){
-                preg_match_all('/(?<=Support Core\:)[A-zА-я0-9\-\_\:\/\.\,\?\=\&\@\s]*/iu', $string, $version_value);
-                $addon_data['support-core'] = trim($version_value[0][0]);
-                continue;
-        }
-        if ( false !== strpos($string, 'Description:') ){
-                preg_match_all('/(?<=Description\:)[A-zА-я0-9\-\_\:\/\.\,\?\=\&\@\s\(\)]*/iu', $string, $desc_value);
-                $addon_data['description'] = trim($desc_value[0][0]);
-                continue;
-        }
-        if ( false !== strpos($string, 'Author:') ){
-                preg_match_all('/(?<=Author\:)[A-zА-я0-9\-\_\:\/\.\,\?\=\&\@\s]*/iu', $string, $author_value);
-                $addon_data['author'] = trim($author_value[0][0]);
-                continue;
-        }
-        if ( false !== strpos($string, 'Url:') ){
-                preg_match_all('/(?<=Url\:)[A-zА-я0-9\-\_\:\/\.\?\=\&\@\s]*/iu', $string, $url_value);
-                $addon_data['url'] = trim($url_value[0][0]);
-                continue;
-        }
-        if ( false !== strpos($string, 'Add-on URI:') ){
-                preg_match_all('/(?<=Add-on URI\:)[A-zА-я0-9\-\_\:\/\.\?\=\&\@\s]*/iu', $string, $url_value);
-                $addon_data['add-on-uri'] = trim($url_value[0][0]);
-                continue;
-        }
-        if ( false !== strpos($string, 'Author URI:') ){
-                preg_match_all('/(?<=Author URI\:)[A-zА-я0-9\-\_\:\/\.\?\=\&\@\s]*/iu', $string, $url_value);
-                $addon_data['author-uri'] = trim($url_value[0][0]);
-                continue;
-        }
     }
 
     return $addon_data;
+}
+
+function rcl_get_addon_headers($addon_name){
+    
+    $paths = array(RCL_PATH.'add-on',RCL_TAKEPATH.'add-on') ;
+    
+    $data = array();
+    foreach($paths as $path){
+        $addon_dir = $path.'/'.$addon_name;
+        $index_src = $addon_dir.'/index.php';
+        if(!is_dir($addon_dir)||!file_exists($index_src)) continue;
+        $info_src = $addon_dir.'/info.txt';
+        if(file_exists($info_src)){
+            $file_data = file($info_src);
+            $data = rcl_parse_addon_info($file_data);                       
+            break;
+        } 
+    }
+    
+    return $data;
 }
 
 require_once("rcl_update.php");

@@ -90,7 +90,7 @@ final class WP_Recall {
 	}
 
 	private function define_constants() {
-            global $wpdb;
+            global $wpdb,$rcl_options;
 
             $upload_dir = $this->upload_dir();
 
@@ -107,6 +107,8 @@ final class WP_Recall {
             $this->define('RCL_TAKEPATH', WP_CONTENT_DIR . '/wp-recall/' );
             
             $this->define('RCL_SERVICE_HOST', 'http://downloads.codeseller.ru' );
+            
+            $rcl_options = get_option('rcl_global_options');
 	}
 
 	private function define( $name, $value ) {
@@ -199,8 +201,6 @@ final class WP_Recall {
 
             do_action( 'wp_recall_before_init' );
 
-            $rcl_options = get_option('rcl_global_options');
-            
             if(!$user_ID){
                 //тут подключаем файлы необходимые для регистрации и авторизации
                 require_once('functions/register.php');
@@ -232,7 +232,7 @@ final class WP_Recall {
 	}
 
         function rcl_include_addons(){
-            global $active_addons;
+            global $active_addons,$rcl_options;
 
             require_once("functions/rcl_addons.php");
             
@@ -248,6 +248,9 @@ final class WP_Recall {
                 $addons = array();
                 foreach($active_addons as $addon=>$data){
                     if(!$addon) continue;
+                    
+                    if(isset($data['template'])&&$rcl_options['active_template']!=$data['template']) continue;
+                    
                     if(isset($data['priority']))
                         $addons[$data['priority']][$addon] = $data;
                     else 

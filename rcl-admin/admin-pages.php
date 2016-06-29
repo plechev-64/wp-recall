@@ -169,7 +169,7 @@ function rcl_global_options(){
                                 __('Left','wp-recall'))
                         )),
 
-			rcl_theme_list(),
+			rcl_templates_list(),
 
                         $fields->label(__('Pause Slider','wp-recall')),
                         $fields->option('number',array('name'=>'slide-pause')),
@@ -459,30 +459,25 @@ function rcl_custom_tabs_manage(){
     echo $content;
 }
 
-function rcl_theme_list(){
-    global $rcl_options;
+function rcl_templates_list(){
+    global $rcl_options,$active_addons;
 
-    if(!isset($rcl_options['color_theme'])) $color_theme = 1;
-    else $color_theme = $rcl_options['color_theme'];
-    $dirs   = array(RCL_PATH.'css/themes',RCL_TAKEPATH.'themes');
+    if(!$active_addons) return false;
+    
+    $active_template = (isset($rcl_options['active_template']))? $rcl_options['active_template']: '';
+    
     $t_list = '';
-    foreach($dirs as $dir){
-        //echo $dir;
-        if(!file_exists($dir)) continue;
-        $ts = scandir($dir,1);
-
-        foreach((array)$ts as $t){
-                if ( false == strpos($t, '.css') ) continue;
-                $name = str_replace('.css','',$t);
-                $t_list .= '<option value="'.$name.'" '.selected($color_theme,$name,false).'>'.$name.'</option>';
-        }
+    foreach($active_addons as $addon){
+        if(!isset($addon['template'])) continue;
+        $t_list .= '<option value="'.$addon['template'].'" '.selected($active_template,$addon['template'],false).'>'.$addon['template'].'</option>';
     }
+
     if($t_list){
-            $content = '<label>'.__('Used template','wp-recall').'</label>';
-            $content .= '<select name="global[color_theme]" size="1">
-                <option value="">'.__('Not connected','wp-recall').'</option>
-                    '.$t_list.'
-            </select>';
+        $content = '<label>'.__('Used template','wp-recall').'</label>';
+        $content .= '<select name="global[active_template]" size="1">
+            <option value="">'.__('Not connected','wp-recall').'</option>
+                '.$t_list.'
+        </select>';
 
         return $content;
     }
