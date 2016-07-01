@@ -87,7 +87,7 @@ function rcl_add_cover_inline_styles($styles){
     return $styles;
 }
 
-add_filter('rcl_inline_styles','cab_15_style_correct',10);
+/*add_filter('rcl_inline_styles','cab_15_style_correct',10);
 function cab_15_style_correct($styles) {
     global $rcl_options, $user_LK;
     if($user_LK && $rcl_options['buttons_place']==1 && is_active_sidebar('cab_15_sidebar')) { // если кнопки слева выводятся и есть в сайтбаре контент- корректируем контент и сайдбар в нем
@@ -105,7 +105,7 @@ function cab_15_style_correct($styles) {
         }';
     }
     return $styles;
-}
+}*/
 
 add_filter('after-avatar-rcl','rcl_add_user_info_button',10);
 function rcl_add_user_info_button($content){
