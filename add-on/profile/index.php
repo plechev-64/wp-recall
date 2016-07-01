@@ -49,19 +49,35 @@ function rcl_profile_options_page(){
 
 add_action('init','rcl_add_block_show_profile_fields');
 function rcl_add_block_show_profile_fields(){
-    rcl_block('details','rcl_get_show_profile_fields',array('id'=>'pf-block','order'=>20,'public'=>1));
+    rcl_block('details','rcl_show_custom_fields_profile',array('id'=>'pf-block','order'=>20,'public'=>1));
 }
 
-function rcl_get_show_profile_fields($author_lk){
+function rcl_show_custom_fields_profile($author_lk){
+    
+    $get_fields = get_option( 'rcl_profile_fields' );
 
-    $content = apply_filters('show_profile_fields_rcl','',$author_lk);
-    
-    if(!$content) return false;
-    
-    if(defined( 'DOING_AJAX' ) && DOING_AJAX) return $content;
-    
-    return '<a href="#" class="rcl-more-link" onclick="rcl_more_view(this); return false;">'.__('Detailed information','wp-recall').' <i class="fa fa-plus-square-o"></i></a>'
-    .'<div class="more-content">'.$content.'</div>';
+    $show_custom_field = '';
+
+    if($get_fields){
+
+        $get_fields = stripslashes_deep($get_fields);
+
+        $cf = new Rcl_Custom_Fields();
+
+        foreach((array)$get_fields as $custom_field){
+                $custom_field = apply_filters('custom_field_profile',$custom_field);
+                if(!$custom_field) continue;
+                $slug = $custom_field['slug'];
+                if(isset($custom_field['req'])&&$custom_field['req']==1){
+                    $meta = get_the_author_meta($slug,$author_lk);
+                    $show_custom_field .= $cf->get_field_value($custom_field,$meta);
+                }
+        }
+    }
+
+    if(!$show_custom_field) return false;
+
+    return '<div class="show-profile-fields">'.$show_custom_field.'</div>';
 }
 
 if(!is_admin()) add_action('wp','rcl_update_profile_notice');
@@ -241,24 +257,6 @@ function rcl_profile_options($content){
         )
     );
 
-    return $content;
-}
-
-add_filter('after-avatar-rcl','rcl_add_avatar_zoom_button',10,2);
-function rcl_add_avatar_zoom_button($content,$author_lk){
-   rcl_dialog_scripts();
-
-    $avatar = get_user_meta($author_lk,'rcl_avatar',1);
-
-    if($avatar){
-        if(is_numeric($avatar)){
-            $image_attributes = wp_get_attachment_image_src($avatar);
-            $url_avatar = $image_attributes[0];
-        }else{
-            $url_avatar = $avatar;
-        }
-        $content .= '<a title="'.__('Zoom avatar','wp-recall').'" data-zoom="'.$url_avatar.'" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="fa fa-search-plus"></i></a>';
-    } 
     return $content;
 }
 
@@ -727,36 +725,6 @@ if(function_exists('ulogin_profile_personal_options')){
 	return $profile_block;
     }
     add_filter('profile_options_rcl','get_ulogin_profile_options',10,2);
-}
-
-add_filter('show_profile_fields_rcl','rcl_show_custom_fields_profile',10,2);
-function rcl_show_custom_fields_profile($fields_content,$author_lk){
-    
-    $get_fields = get_option( 'rcl_profile_fields' );
-
-    $show_custom_field = '';
-
-    if($get_fields){
-
-        $get_fields = stripslashes_deep($get_fields);
-
-        $cf = new Rcl_Custom_Fields();
-
-        foreach((array)$get_fields as $custom_field){
-                $custom_field = apply_filters('custom_field_profile',$custom_field);
-                if(!$custom_field) continue;
-                $slug = $custom_field['slug'];
-                if(isset($custom_field['req'])&&$custom_field['req']==1){
-                    $meta = get_the_author_meta($slug,$author_lk);
-                    $show_custom_field .= $cf->get_field_value($custom_field,$meta);
-                }
-        }
-    }
-
-    if(!$show_custom_field) return false;
-
-    if(isset($show_custom_field))$fields_content .= '<div class="show-profile-fields">'.$show_custom_field.'</div>';
-    return $fields_content;
 }
 
 //Выводим произвольные поля профиля на странице пользователя в админке

@@ -1,41 +1,5 @@
 <?php
 
-add_action('rcl_area_before','rcl_before',10);
-function rcl_before(){
-    global $user_LK;
-    echo apply_filters( 'rcl_before_lk', '', $user_LK );
-}
-
-add_action('rcl_area_after','rcl_after',10);
-function rcl_after(){
-    global $user_LK;
-    echo apply_filters( 'rcl_after_lk', '', $user_LK );
-}
-
-add_action('rcl_area_actions','rcl_header',10);
-function rcl_header(){
-    global $user_LK;
-    echo apply_filters('rcl_header_lk','',$user_LK);
-}
-
-add_action('rcl_area_counters','rcl_sidebar',10);
-function rcl_sidebar(){
-    global $user_LK;
-    echo apply_filters('rcl_sidebar_lk','',$user_LK);
-}
-
-add_action('rcl_area_details','rcl_content',10);
-function rcl_content(){
-    global $user_LK;
-    echo apply_filters('rcl_content_lk','',$user_LK);
-}
-
-add_action('rcl_area_extra','rcl_footer',10);
-function rcl_footer(){
-    global $user_LK;
-    echo apply_filters('rcl_footer_lk','',$user_LK);
-}
-
 function rcl_action(){
     global $rcl_userlk_action;
     $last_action = rcl_get_useraction($rcl_userlk_action);
@@ -101,8 +65,7 @@ function rcl_inline_styles(){
     a.recall-button.filter-active,
     a.recall-button.filter-active:hover,
     a.data-filter.filter-active,
-    a.data-filter.filter-active:hover,
-    #lk-conteyner .rcl-more-link{
+    a.data-filter.filter-active:hover{
         background: rgba('.$r.', '.$g.', '.$b.', 0.4);
     } 
     .rcl_preloader i{
@@ -164,13 +127,13 @@ function init_user_lk(){
     }
 }
 
-add_action('wp_footer','rcl_popup_contayner');
+add_action('wp_footer','rcl_popup_contayner',10);
 function rcl_popup_contayner(){
     echo '<div id="rcl-overlay"></div>
         <div id="rcl-popup"></div>';
 }
 
-add_filter('wp_footer', 'rcl_footer_url');
+add_filter('wp_footer', 'rcl_footer_url',10);
 function rcl_footer_url(){	
 	if(is_front_page()&&!is_user_logged_in()){
             if(get_option('rcl_footer_link')==1)

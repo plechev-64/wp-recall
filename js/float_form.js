@@ -9,15 +9,15 @@ jQuery(function($){
             $('.panel_lk_recall.floatform #login-form-rcl').show();
             return false;
     });
-    if(get_param['action-rcl']=='login'){
+    if(rcl_url_params['action-rcl']=='login'){
             position_float_form_rcl();
             $('.panel_lk_recall.floatform #login-form-rcl').show();
     }
-    if(get_param['action-rcl']=='register'){
+    if(rcl_url_params['action-rcl']=='register'){
             position_float_form_rcl();
             $('.panel_lk_recall.floatform #register-form-rcl').show();
     }
-    if(get_param['action-rcl']=='remember'){
+    if(rcl_url_params['action-rcl']=='remember'){
             position_float_form_rcl();
             $('.panel_lk_recall.floatform #remember-form-rcl').show();
     }

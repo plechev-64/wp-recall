@@ -34,9 +34,9 @@ function rcl_bxslider_scripts(){
 }
 
 function rcl_dialog_scripts(){
-    wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'jquery-ui-dialog' );
-    wp_enqueue_style('wp-jquery-ui-dialog');
+    wp_enqueue_script( 'jquery' );   
+    wp_enqueue_style( 'ssi-modal', RCL_URL.'js/ssi-modal/ssi-modal.min.css' );
+    wp_enqueue_script( 'ssi-modal', RCL_URL.'js/ssi-modal/ssi-modal.min.js' );
 }
 
 function rcl_webcam_scripts(){
@@ -78,18 +78,6 @@ function rcl_font_awesome_style(){
     wp_enqueue_style( 'font-awesome', RCL_URL.'css/font-awesome/css/font-awesome.min.css' );
 }
 
-function rcl_theme_style(){
-    global $rcl_options;
-    if(isset($rcl_options['color_theme'])&&$rcl_options['color_theme']){
-        $dirs   = array(RCL_PATH.'css/themes',RCL_TAKEPATH.'themes');
-        foreach($dirs as $dir){
-            if(!file_exists($dir.'/'.$rcl_options['color_theme'].'.css')) continue;
-            rcl_enqueue_style( 'rcl-theme', rcl_path_to_url($dir.'/'.$rcl_options['color_theme'].'.css') );
-            break;
-        }
-    }
-}
-
 add_action('login_enqueue_scripts','rcl_enqueue_wp_form_scripts',1);
 function rcl_enqueue_wp_form_scripts(){
     wp_enqueue_script( 'jquery' );
@@ -108,8 +96,6 @@ function rcl_frontend_scripts(){
     }
 
     rcl_font_awesome_style();
-
-    rcl_theme_style();
 
     rcl_enqueue_script( 'rcl-primary-scripts', RCL_URL.'js/recall.js' );
     

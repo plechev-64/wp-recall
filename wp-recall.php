@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 15.a
+    Version: 15.b
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '15.a';
+	public $version = '15.b';
 
 	protected static $_instance = null;
 
@@ -209,10 +209,10 @@ final class WP_Recall {
                     require_once('functions/captcha.php');
                 }
                 if(!isset($rcl_options['login_form_recall'])||!$rcl_options['login_form_recall']){
-                    add_filter('wp_footer', 'rcl_login_form',99);
-                    add_filter('wp_enqueue_scripts', 'rcl_floatform_scripts');
+                    add_action('wp_footer', 'rcl_login_form',5);
+                    add_action('rcl_enqueue_scripts', 'rcl_floatform_scripts');
                 }else{
-                    add_filter('wp_enqueue_scripts', 'rcl_pageform_scripts');
+                    add_action('rcl_enqueue_scripts', 'rcl_pageform_scripts');
                 }
                 
             }
@@ -249,7 +249,7 @@ final class WP_Recall {
                 foreach($active_addons as $addon=>$data){
                     if(!$addon) continue;
                     
-                    if(isset($data['template'])&&$rcl_options['active_template']!=$data['template']) continue;
+                    if(isset($data['template'])&&$rcl_options['active_template']!=$addon) continue;
                     
                     if(isset($data['priority']))
                         $addons[$data['priority']][$addon] = $data;
@@ -333,5 +333,17 @@ function RCL() {
 $GLOBALS['wprecall'] = RCL();
 
 function wp_recall(){
-    rcl_include_template('cabinet.php');
+    global $rcl_options,$user_LK;
+    
+    do_action('rcl_area_before'); ?>
+
+    <div id="rcl-<?php echo $user_LK; ?>" class="wprecallblock cab_15" data-account="<?php echo $user_LK; ?>">
+        
+        <?php rcl_notice(); ?>
+
+        <?php rcl_include_template_office(); ?>
+        
+    </div>
+
+    <?php do_action('rcl_area_after');
 }

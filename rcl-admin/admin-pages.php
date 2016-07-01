@@ -168,8 +168,11 @@ function rcl_global_options(){
                                 __('Top','wp-recall'),
                                 __('Left','wp-recall'))
                         )),
-
-			rcl_templates_list(),
+                        $fields->label(__('Used template','wp-recall')),
+                        $fields->option('select',array(
+                            'name'=>'active_template',
+                            'options'=>rcl_get_install_templates())
+                        ),
 
                         $fields->label(__('Pause Slider','wp-recall')),
                         $fields->option('number',array('name'=>'slide-pause')),
@@ -457,31 +460,6 @@ function rcl_custom_tabs_manage(){
     ));
 
     echo $content;
-}
-
-function rcl_templates_list(){
-    global $rcl_options,$active_addons;
-
-    if(!$active_addons) return false;
-    
-    $active_template = (isset($rcl_options['active_template']))? $rcl_options['active_template']: '';
-    
-    $t_list = '';
-    foreach($active_addons as $addon){
-        if(!isset($addon['template'])) continue;
-        $t_list .= '<option value="'.$addon['template'].'" '.selected($active_template,$addon['template'],false).'>'.$addon['template'].'</option>';
-    }
-
-    if($t_list){
-        $content = '<label>'.__('Used template','wp-recall').'</label>';
-        $content .= '<select name="global[active_template]" size="1">
-            <option value="">'.__('Not connected','wp-recall').'</option>
-                '.$t_list.'
-        </select>';
-
-        return $content;
-    }
-    return false;
 }
 
 function wp_enqueue_theme_rcl($url){

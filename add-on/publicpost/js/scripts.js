@@ -110,68 +110,55 @@ function rcl_delete_post(element){
     return false;
 }
 
-function rcl_edit_post(element){
-    var id_contayner = 'rcl-popup-content';	
-    jQuery('body > div').last().after('<div id="'+id_contayner+'" title="'+Rcl.local.edit_box_title+'"></div>');
-    var contayner = jQuery( '#'+id_contayner );
-    contayner.dialog({
-        modal: true,
-        resizable: false,
-        width:500,
-        dialogClass: 'rcl-edit-post-form',
-        close: function (e, data) {
-            jQuery( this ).dialog( 'close' );
-            contayner.remove();
-        },
-        open: function (e, data){
-            var post_id = jQuery(element).data('post');
-            var dataString = 'action=rcl_get_edit_postdata&post_id='+post_id;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            jQuery.ajax({
-                    type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-                    success: function(data){                                   
-                        if(data['error']){
-                            rcl_notice(data['error'],'error');
-                            return false;
-                        }                                   
-                        if(data['result']==100){
-                            contayner.html(data['content']);
-                        }
-                    }
-            });				
-        },
-        buttons: [{
-          text: Rcl.local.save,
-          icons: {
-                primary: "ui-icon-disk"
-          },
-          click: function() {
-                var postdata   = jQuery('#'+id_contayner+' form').serialize();
-                var dataString = 'action=rcl_edit_postdata&'+postdata;
-                dataString += '&ajax_nonce='+Rcl.nonce;
-                jQuery.ajax({
-                type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-                success: function(data){
-                    if(data['error']){
-                        rcl_notice(data['error'],'warning');
-                        return false;
-                    }  
-                    if(data['result']==100){
-                        rcl_notice(data['content'],'success');
-                    }
+function rcl_edit_post(element){	
+
+    var post_id = jQuery(element).data('post');
+    var dataString = 'action=rcl_get_edit_postdata&post_id='+post_id;
+    dataString += '&ajax_nonce='+Rcl.nonce;
+    jQuery.ajax({
+            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+            success: function(data){                                   
+                if(data['error']){
+                    rcl_notice(data['error'],'error');
+                    return false;
+                }                                   
+                if(data['result']==100){
+                    
+                    ssi_modal.show({
+                        title: Rcl.local.edit_box_title,
+                        className: 'rcl-edit-post-form',
+                        sizeClass: 'small',
+                        buttons: [{
+                            label: Rcl.local.save,
+                            closeAfter: false,
+                            method: function () {
+                                rcl_preloader_show('#rcl-popup-content > form');
+                                var postdata   = jQuery('#rcl-popup-content form').serialize();
+                                var dataString = 'action=rcl_edit_postdata&'+postdata;
+                                dataString += '&ajax_nonce='+Rcl.nonce;
+                                jQuery.ajax({
+                                    type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+                                    success: function(data){
+                                        if(data['error']){
+                                            rcl_notice(data['error'],'warning');
+                                        }  
+                                        if(data['result']==100){
+                                            rcl_notice(data['content'],'success');
+                                            ssi_modal.close();
+                                        }
+                                        rcl_preloader_hide();
+                                    }
+                                });
+                            }
+                        }, {
+                            label: Rcl.local.close,
+                            closeAfter: true
+                        }],
+                        content: '<div id="rcl-popup-content">'+data['content']+'</div>'
+                    });
+
                 }
-                });
-          }
-        },
-        {
-          text: Rcl.local.close,
-          icons: {
-                primary: "ui-icon-closethick"
-          },
-          click: function() {
-                jQuery( this ).dialog( "close" );
-          }
-        }]
+            }
     });
 }
 

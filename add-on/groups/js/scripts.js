@@ -27,56 +27,7 @@ jQuery(function($){
         });
         return false;
     });
-    jQuery('#group-popup').on('click','#group-userlist .ajax-navi a',function(){
-        var page = jQuery(this).text();
-        var url = jQuery(this).attr('href');
-        var group_id = jQuery(this).parents('#rcl-group').data('group');
-        var dataString = 'action=rcl_get_group_link_content&group_id='+group_id+'&callback=rcl_get_group_users&page='+page+'&get='+url;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        rcl_preloader_show('#rcl-group > div');
-        jQuery.ajax({
-            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-            success: function(data){
-                if(data){
 
-                    jQuery('#group-popup').html(data);
-
-                    /*var height = jQuery('#group-link-content').height()+200;*/
-                    /*jQuery('#group-link-content').parent().height(height);*/
-                    var offsetTop = jQuery('#group-link-content').offset().top;
-                    jQuery('body,html').animate({scrollTop:offsetTop -70}, 500);
-
-                } else {
-                    rcl_notice('Error','error');
-                }
-                rcl_preloader_hide();
-            }
-        });
-        return false;
-    });
-    jQuery('#group-popup').on('click','.group-request .apply-request',function(){
-        var button = jQuery(this);
-        var user_id = button.parent().data('user');
-        var apply = button.data('request');
-        var group_id = button.parents('#rcl-group').data('group');
-        var dataString = 'action=rcl_apply_group_request&group_id='+group_id+'&user_id='+user_id+'&apply='+apply;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        rcl_preloader_show('#group-popup > div');
-        jQuery.ajax({
-            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-            success: function(data){
-                if(data){
-
-                    button.parent().html(data['result']);
-
-                } else {
-                    rcl_notice('Error','error');
-                }
-                rcl_preloader_hide();
-            }
-        });
-        return false;
-    });
     jQuery('#rcl-group').on('click','.rcl-group-callback',function(){
         var callback = jQuery(this).data('callback');
         var group_id = jQuery(this).data('group');
@@ -141,3 +92,10 @@ jQuery(function($){
     jQuery(window).scroll(func).resize(func);
 
 });
+
+function rcl_more_view(e){
+    var link = jQuery(e);
+    var icon = link.children('i');
+    link.parent().children('div').slideToggle();
+    icon.toggleClass('fa-plus-square-o fa-minus-square-o');
+}

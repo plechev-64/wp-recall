@@ -140,3 +140,39 @@ add_action('rcl_area_details','rcl_area_content',10);
 function rcl_area_content(){
     do_action('rcl_area_content');
 }
+
+add_action('rcl_area_before','rcl_before',10);
+function rcl_before(){
+    global $user_LK;
+    echo apply_filters( 'rcl_before_lk', '', $user_LK );
+}
+
+add_action('rcl_area_after','rcl_after',10);
+function rcl_after(){
+    global $user_LK;
+    echo apply_filters( 'rcl_after_lk', '', $user_LK );
+}
+
+add_action('rcl_area_actions','rcl_header',10);
+function rcl_header(){
+    global $user_LK;
+    echo apply_filters('rcl_header_lk','',$user_LK);
+}
+
+add_action('rcl_area_counters','rcl_sidebar',10);
+function rcl_sidebar(){
+    global $user_LK;
+    echo apply_filters('rcl_sidebar_lk','',$user_LK);
+}
+
+add_action('rcl_area_details','rcl_content',10);
+function rcl_content(){
+    global $user_LK;
+    echo apply_filters('rcl_content_lk','',$user_LK);
+}
+
+add_action('rcl_area_extra','rcl_footer',10);
+function rcl_footer(){
+    global $user_LK;
+    echo apply_filters('rcl_footer_lk','',$user_LK);
+}

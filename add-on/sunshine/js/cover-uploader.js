@@ -1,19 +1,19 @@
-jQuery(function($){ 
-    rcl_avatar_uploader();
+jQuery(function($){
+    rcl_cover_uploader();
 });
 
-function rcl_avatar_uploader(){
-    jQuery('#userpicupload').fileupload({
+function rcl_cover_uploader(){
+    jQuery('#rcl-cover-upload').fileupload({
         dataType: 'json',
         type: 'POST',
         url: Rcl.ajaxurl,
-        formData:{action:'rcl_avatar_upload',ajax_nonce:Rcl.nonce},
+        formData:{action:'rcl_cover_upload',ajax_nonce:Rcl.nonce},
         loadImageMaxFileSize: Rcl.profile.avatar_size*1024*1024,
         autoUpload:false,
         previewMaxWidth: 900,
         previewMaxHeight: 900,
-        imageMinWidth:150,
-        imageMinHeight:150,
+        imageMinWidth:200,
+        imageMinHeight:200,
         disableExifThumbnail: true,
         progressall: function (e, data) {
             var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -32,6 +32,8 @@ function rcl_avatar_uploader(){
                 reader.onload = function(event) {
                     var jcrop_api;
                     var imgUrl = event.target.result;
+                    
+                    jQuery( '#rcl-preview' ).remove();
                     
                     ssi_modal.show({
                         title: Rcl.local.title_image_upload,
@@ -53,16 +55,16 @@ function rcl_avatar_uploader(){
                         }],
                         content: '<div id="rcl-preview"><img src="'+imgUrl+'"></div>'
                     });
-                   
+                    
                     var image = jQuery('#rcl-preview img');
+                    
                     image.load(function() {
                         var img = jQuery(this);
                         var height = img.height();
                         var width = img.width();
-                        
+                        var jcrop_api;
                         img.Jcrop({
-                            aspectRatio: 1,
-                            minSize:[150,150],
+                            minSize:[200,200],
                             onSelect:function(c){
                                 img.attr('data-width',width).attr('data-height',height).attr('data-x',c.x).attr('data-y',c.y).attr('data-w',c.w).attr('data-h',c.h);
                             }
@@ -90,7 +92,7 @@ function rcl_avatar_uploader(){
                 data.formData = {
                     coord: x+','+y+','+w+','+h,
                     image: width+','+height,
-                    action:'rcl_avatar_upload',
+                    action:'rcl_cover_upload',
                     ajax_nonce:Rcl.nonce
                 };
             }
@@ -100,71 +102,12 @@ function rcl_avatar_uploader(){
                 rcl_notice(data.result['error'],'error');
                 return false;
             }
-            jQuery('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data.result['avatar_url']);
+            jQuery('#lk-conteyner').css('background-image','url('+data.result['cover_url']+')');
             jQuery('#avatar-upload-progress').hide().empty();
             jQuery( '#rcl-preview' ).remove();
             rcl_notice(data.result['success'],'success');
         }
     });
-
-    if(Rcl.https){
-
-        jQuery('#webcamupload').click(function(){
-            
-            var webCam;
-            
-            ssi_modal.show({
-                title: Rcl.local.title_webcam_upload,
-                className: 'rcl-webcam-uploader',
-                beforeShow: function (modal) {
-                    webCam.start();
-                },
-                beforeClose:function(modal){
-                    webCam.stop();
-                },
-                buttons: [{
-                    label: 'Ok',
-                    closeAfter: true,
-                    method: function () {
-                        webCam.takeSnapshot(320, 240);
-                    }
-                }, {
-                    label: Rcl.local.close,
-                    closeAfter: true,
-                    method: function () {
-                        webCam.stop();
-                    }
-                }],
-                content: '<div id="rcl-preview"></div>'
-            });
-
-            webCam = new SayCheese('#rcl-preview', { audio: true });
-
-            webCam.on('snapshot', function(snapshot) {
-                var img = document.createElement('img');
-                jQuery(img).on('load', function() {
-                    jQuery('#rcl-preview').html(img);
-                });
-                img.src = snapshot.toDataURL('image/png');
-                var dataString = 'action=rcl_avatar_upload&src='+img.src;
-                dataString += '&ajax_nonce='+Rcl.nonce;
-                jQuery.ajax({
-                    type: 'POST',
-                    data: dataString,
-                    dataType: 'json',
-                    url: Rcl.ajaxurl,
-                    success: function(data){
-                        if(data['error']){
-                                rcl_notice(data['error'],'error');
-                                return false;
-                        }
-                        ssi_modal.close();
-                        jQuery('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data['avatar_url']);
-                        jQuery( '#rcl-preview' ).remove();
-                        rcl_notice(data['success'],'success');
-                    }
-                });
-            });
-        });
-    }
 }
+
+

@@ -9,7 +9,7 @@ class Rcl_Cart {
     public $request;
 
     function __construct() {
-		global $CartData,$rmag_options;
+        global $CartData,$rmag_options;
 
         $this->summ = $_SESSION['cartdata']['summ'];
 

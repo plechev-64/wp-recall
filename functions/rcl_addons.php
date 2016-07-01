@@ -115,8 +115,8 @@ function rcl_parse_addon_info($info){
         if($cnt>1) $string = str_replace(';','',$string);
         
         if ( false !== strpos($string, ':') ){
-            $val = trim(substr($string, strpos($string,':')+strlen(':')));
-            $title = strtolower(str_replace(' ','-',trim(substr($string, 0, strpos($string, ':')))));
+            $val = trim(mb_substr($string, strpos($string,':')+strlen(':')));
+            $title = strtolower(str_replace(' ','-',trim(mb_substr($string, 0, strpos($string, ':')))));
             $addon_data[$title] = $val;
         }
 

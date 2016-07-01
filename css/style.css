@@ -183,6 +183,28 @@ body .rcl_preloader{
     margin: 5px 0;
     padding: 0;
 }
+.online .fa-circle {
+    -webkit-animation: pulsate 2s linear infinite;
+    animation: pulsate 2s linear infinite;
+    color: #89e535;
+}
+.offline .fa-circle {
+    color: rgb(229, 57, 53);
+    text-shadow: 0 0 1px #5a0d0c;
+}
+@keyframes pulsate {
+	25% {
+		transform: scale(1.025);
+	}
+	50% {
+		color: #A3F558;
+		text-shadow: 0 0 3px #35e668;
+		transform: scale(1.05);
+	}
+	75% {
+		transform: scale(1.025);
+	}
+}
 /* общие стили End */
 
 
@@ -195,23 +217,19 @@ body .rcl_preloader{
     background: rgba(236, 240, 241, 0.3);
     box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
 	color: #333;				/*BlackTheme*/
-    margin: 3px;
     overflow: visible;
 	position: relative;
 }
-
 .wprecallblock a:link {
     border: none;				/*++Twenty15++*/
     box-shadow: none;			/*++Twenty16++*/
     text-decoration: none;
 }
-
 div.wprecallblock h2 {
     font: bold 22px/1 Arial,sans-serif;
     margin: 0;
     text-transform: none;
 }
-
 div.wprecallblock h3 {
     font-size: 18px;
     line-height: 1;
@@ -240,29 +258,6 @@ div.wprecallblock h3 {
 .wprecallblock input[type="radio"] {
 	box-shadow: none;
 }
-.online .fa-circle {
-    -webkit-animation: pulsate 2s linear infinite;
-    animation: pulsate 2s linear infinite;
-    color: #89e535;
-}
-.offline .fa-circle {
-    color: rgb(229, 57, 53);
-    text-shadow: 0 0 1px #5a0d0c;
-}
-@keyframes pulsate {
-	25% {
-		transform: scale(1.025);
-	}
-	50% {
-		color: #A3F558;
-		text-shadow: 0 0 3px #35e668;
-		transform: scale(1.05);
-	}
-	75% {
-		transform: scale(1.025);
-	}
-}
-
 #rcl-overlay {
     background: rgba(30, 56, 75, 0.8);
     bottom: 0;
@@ -273,9 +268,6 @@ div.wprecallblock h3 {
     top: 0;
     z-index: 999;
 }
-
-
-
 .mass-upload-box{
     padding: 5px;
     background: rgba(219, 219, 219, 0.3);
@@ -300,171 +292,26 @@ div.wprecallblock h3 {
 .mass-upload-box .rcl-upload-button{
     display: inline-block;
 }
-.rcl-tab-button .rcl-menu-notice{
-    background-color: #bfffbd;
-    color: #008000;
+.rcl-tab-button .rcl-menu-notice {
+    color: #fff;
 	font: 12px/1 Helvetica,serif,arial;				/*++Twenty16++*/
-    padding: 1.6px 4px 1px;
 }
 
-/* popup окно записи Start */
-#rcl-popup {
-    background: #f8f8f8;
-	border-radius: 3px;
-	box-sizing: border-box;
-	color: #333;
-    display: block;
-    left: 50%;
-	line-height: 1.4;
-    max-width: 80%;
-    position: absolute;
-    top: 10%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    width: 600px;
-    z-index: 999;
-}
-#rcl-popup h2 {
-	clear: none;
-    font-size: 18px;
-    line-height: 1;
-    margin: 0;
-    padding: 8px 0 0 5px;
-    text-transform: none;
-	width: calc(100% - 40px);
-}
-#rcl-popup h4 {
-	clear:both;
-    font-size: 16px;
-	line-height: 1;
-    margin: 8px 0 0;
-    overflow: hidden;
-    padding: 0 10px 4px;
-	text-transform: none;
-}
-#rcl-popup p {
-    margin: 0 10px 10px;
-	padding: 0;
-}
-#rcl-popup textarea {
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    color: #000;
-    display: block;
-    margin: 10px auto;
-	min-height: 80px;
-    padding: 5px;
-    width: 98%;
-}
-#rcl-popup #commentlist .comm-attach {
-    background: rgba(237, 237, 237, 0.5);
-    margin: 10px 0;
-    padding: 10px;
-}
-#rcl-popup #commentlist .comment-author::after,
-#rcl-popup #commentlist .comment-author::before {
-	display: none;
-}
-#rcl-popup #commentlist .author-avatar {
-    float: left;
-    margin: 0 10px 0 0;
-}
-#rcl-popup .navi-gallery {
-	color: #ccc;
-    cursor: pointer;
-	font-size: 50px;
-    height: 50px;
-    left: 50%;
-	line-height: 50px;
-    opacity: 0.6;
-    position: absolute;
-    top: 200px;
-	-webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    width: auto;
-}
-#rcl-popup .navi-gallery:hover {
-	opacity: 1;
-}
-#rcl-popup .prev-attach {
-	float: left;
-    margin-left: -54%;
-}
-#rcl-popup .next-attach {
-    margin-left: 54%;
-    float: right;
-}
-#rcl-popup .next-attach::after {
-    content: "\f138";
-    font-family: FontAwesome;
-}
-#rcl-popup .prev-attach::after {
-    content: "\f137";
-    font-family: FontAwesome;
-}
-/* popup окно записи End */
-
-/* Непроверенная секция Start */
-#rcl-popup.fixed {
-    position: fixed;
-    top: 80px;
-}
-#rcl-popup .delete{
-	float: left;
-	margin: 5px 5px 10px;
-	display: block;
-	height: 31px;
-	width: 31px;
-	
-}
-#rcl-popup .popup-body{
-    padding:10px;
-}
-.rcl-upload-button span.progress-bar{
-	position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background: #36C515;
-    z-index: -99;
-}
-.prmess .rcl-upload-button{
-	float:right;
-}
-.rcl-dropzone .get-crop-image{
-	float:right;
-}
-.rcl-dropzone img,
-.rcl-dropzone .jcrop-holder{
-	margin:0 auto;
-	display: block;
-}
-.rcl-dropzone.hover {
-    background: rgba(0,0,0,0.5);
-}
-/* Непроверенная секция End */
 
 /* блок lk-conteyner start */
-
-#lk-conteyner{
-    padding: 5px;
+#lk-conteyner {
+	background-color: #e3e3e3;
     overflow: hidden;
     position: relative;
 }
-#lk-conteyner .footer-block-rcl{
-    padding:5px 10px;
-}
-#lk-conteyner .lk-sidebar {
+.lk-sidebar {
     float: left;
-    height: auto;
     line-height: 1;				/*++Twenty16++*/
-    width: 125px;
 }
 .lk-sidebar .lk-avatar {
     display: inline-block;
-    height: auto;				/*++Twenty16++*/
     position: relative;
-    width: 125px;				/*++Twenty16++*/
+	z-index: 2;
 }
 .lk-avatar .rcl-user-avatar img {
 	border-radius: 0;
@@ -473,39 +320,35 @@ div.wprecallblock h3 {
 	margin: 0;
 	float: left;
 }
-.lk-avatar  .fa-search-plus {
-	margin: 1px 0 0 1px;
-}
-.lk-avatar .rcl-avatar-zoom {
-    color: rgba(255, 255, 255, 0.7);
-    display: none;
-    font-size: 35px;
-    left: 5px;
-	line-height: 1;							/*++Twenty16++*/
-	opacity: 0.7;
-    position: absolute;
-    top: 3px;
-    z-index: 9;
-}
 .lk-avatar .rcl-avatar-delete {
     background-color: rgb(216, 231, 238);
 	opacity: 0.7;
     color: #333;
     display: none;
-    font-size: 14px;
-    padding: 5px;
+    padding: 7px;
     position: absolute;
-    right: 5px;
-    top: 6px;
+    right: 0;
+    top: 0;
     z-index: 9;
 }
-.lk-avatar:hover .rcl-avatar-zoom,
 .lk-avatar:hover .rcl-avatar-delete{
 	display:block;
 }
 .rcl-avatar-delete .fa.fa-times {
     font-size: 16px;
     margin: 0;
+}
+.lk-avatar .cab_usr_info {
+    background: rgb(216, 231, 238);
+    color: rgb(229, 57, 53);
+    font-size: 24px;
+    left: 0;
+    line-height: 1;
+    opacity: 0.7;
+    padding: 4px 6px;
+    position: absolute;
+    top: 0;
+    z-index: 2;
 }
 #userpic-upload {
     bottom: 0;
@@ -526,9 +369,9 @@ div.wprecallblock h3 {
     position: relative;
     text-align: center;
 }
-a.rcl-avatar-zoom:hover,
 a.rcl-avatar-delete:hover,
-#userpic-upload span:hover{
+#userpic-upload span:hover,
+.lk-avatar .cab_usr_info:hover{
     opacity: 1;
 }
 
@@ -562,53 +405,11 @@ a.rcl-avatar-delete:hover,
     font-size: 25px;
     margin: 10px 0 0;
 }
-.lk-header.rcl-node {
-    display: block;
-    width: 100%;
-	overflow: hidden;
-}
-
-.lk-header .block-rcl,
-.lk-header .rcl-tab-button{
-    display: inline-block;
-    float: right;
-	margin: 0 0 0 3px;
-}
-.lk-header .block-rcl .recall-button,
-.lk-header .rcl-tab-button .recall-button{
-    display:block;
-}
-#lk-conteyner .lk-content {
-    margin: 0 0 0 130px;
-	overflow: hidden;
-    padding: 5px;
-}
-
-#lk-conteyner .rcl-content {
-	display: inline-block;
-	font: 14px Verdana,arial;
-    width: 100%;
-}
-
-.wprecallblock .lk-content .rcl-action {
-    color: #000;
-    display: initial;
-    font-size: 12px;
-}
-.wprecallblock .lk-content .rcl-action .status_user {
-    float: left;
-    font: 16px/1.6 arial;
-    margin: 0 5px;
-}
-.wprecallblock .lk-content .rcl-action .online {
-    float: right;
-    margin: -24px 0 0;
-}
+/* блок lk-conteyner end */
 
 
-.rcl-user-status {
-    margin: 7px 10px 2px;
-}
+
+
 .ballun-status {
     max-width: 350px;
 }
@@ -639,44 +440,14 @@ p.status-user-rcl::before {
     hyphens: auto;
     word-wrap: break-word;
 }
-#lk-conteyner .rcl-more-link {
-    color: rgb(30, 56, 75);
-    display: inherit;
-    float: none;
-    margin: 10px 0 0;
-    padding: 5px 0;
-    text-align: center;
-    width: 100%;
-}
-#lk-conteyner  .rcl-more-link .fa-minus-square-o,			/*++hueman++*/
-#lk-conteyner  .rcl-more-link .fa-plus-square-o {
-	font-size: 17px;
-    vertical-align: middle;
-}
-#lk-conteyner .rcl-content .more-content {
-    background-color: #fff;
-    clear: both;
-    display: none;
-    padding: 8px 5px 8px 10px;
-    text-align: left;
-}
-
-/* блок lk-conteyner end */
 
 
-
+#lk-menu,
 #rcl-tabs {    
     overflow: hidden;
 }
-#lk-menu {
-    overflow: hidden;
-    padding: 0 5px 5px;
-}
 #lk-content {
     margin: 3px;
-}
-.wprecallblock .rcl-menu {
-    overflow: hidden;
 }
 .wprecallblock .rcl-sub-menu {
     overflow: hidden;
@@ -764,7 +535,6 @@ a.data-filter.filter-active:hover {
 	padding: 7px;
 }
 
-
 .rcl-data-filters .recall-button {
     display: inline-block;
     float: none;
@@ -772,21 +542,18 @@ a.data-filter.filter-active:hover {
     padding: 7px;
 }
 
-.wprecallblock .lk-sidebar .recall-button{
-	margin: 3px 0;
-	display: block;
-}
-
-.wprecallblock #lk-menu.left-buttons{
+#lk-menu.left-buttons {
     float: left;
-}
-.wprecallblock #lk-menu.left-buttons a{
-    float: none;
+    max-width: 170px;
     width: auto;
 }
+#lk-menu.left-buttons a {
+    border-bottom: 2px solid #fff;
+    display: flex;
+    float: none;
+    white-space: normal;
+}
 /* Корректировки к кнопкам End */
-
-
 
 
 .rcl-data-filters {
@@ -809,7 +576,37 @@ a.data-filter.filter-active:hover {
     top: 0;
     width: 100%;
 }
-
+/* START кнопки lite */
+.cab_bttn_lite {
+    float: right;
+}
+.cab_bttn_lite > span {
+    display: inline-block;
+}
+.cab_bttn_lite .recall-button {
+	padding: 0;
+}
+.cab_bttn_lite .fa {
+    display: none;
+}
+.cab_bttn_lite .rcl-tab-button a > span {
+	color: #ccc;
+    display: table;
+    text-align: center;
+}
+.cab_bttn_lite .rcl-tab-button span span {
+    background: transparent;
+    color: #fff;
+    display: table-caption;
+    font-size: 20px;
+    font-weight: bold;
+	padding: 0;
+    text-align: center;
+}
+#lk-conteyner .cab_bttn_lite .rcl-tab-button span span > span {
+    display: table;
+}
+/* END кнопки lite */
 /* Кнопки End */
 
 /* фильтр поиск start */
@@ -820,7 +617,6 @@ a.data-filter.filter-active:hover {
 }
 .rcl-search-form form p {
     margin-bottom: 5px;
-
 }
 .rcl-search-form form input[type="text"],
 .rcl-search-form form select {
@@ -847,24 +643,14 @@ a.data-filter.filter-active:hover {
 .rcl-field-input{
     display: block;
 }
-
 .rcl-field-input .rcl-field-notice{
     display:block;
     clear: both;
     margin: 5px 0 0;
     color:#797979;
 }
-
 .rcl-field-input .rcl-field-notice .fa{
     margin-right:5px;
-}
-
-.rcl-custom-fields .rcl-field-value{
-    
-}
-
-.type-dynamic-input{
-    
 }
 .type-dynamic-input .dynamic-values{
     display: block;
@@ -882,6 +668,7 @@ a.data-filter.filter-active:hover {
     padding: 5px;
     margin: 5px 10px;
     border: 1px solid #ccc;
+	vertical-align: middle;
 }
 .type-dynamic-input .dynamic-values .dynamic-value input{
     width: 78%!important;
@@ -946,9 +733,11 @@ a.data-filter.filter-active:hover {
     box-sizing: border-box;
 }
 #your-profile table select {
+	box-shadow: 0 0 1px 1px #ccc;
+	box-sizing: border-box;
     float: left;
     max-width: 99%;
-    padding: 10px 2%;
+    padding: 8px 2%;
     width: 100%;
 }
 #your-profile table .block-label {
@@ -996,10 +785,6 @@ a.data-filter.filter-active:hover {
 #your-profile table td a:hover i {
 	color: red;
 }
-
-#tab-profile .type-file-input{
-    
-}
 #tab-profile .file-manage-box{
     display: block;
     overflow: hidden;
@@ -1009,9 +794,6 @@ a.data-filter.filter-active:hover {
     color: rgb(229, 57, 53);
     font-size: 16px;
     margin-right: 5px;
-}
-#tab-profile .file-manage-box .type-file-value{
-    
 }
 #tab-profile .file-manage-box .delete-file-url{
     float: right;
@@ -1179,6 +961,158 @@ p.rcl-custom-fields{
     clear:both;
 }
 
+
+
+@media screen and (max-width:768px) {
+	#lk-menu.left-buttons {
+		max-width: none;
+	}
+	#lk-menu.left-buttons .recall-button{
+		display: inline-block!important;
+	}
+    .left-buttons a.recall-button span,
+    .left-buttons a.recall-button i.fa {
+        display: block;
+        margin: 0 auto;
+    }
+    #lk-menu.left-buttons a {
+		border-right: 2px solid #fff;
+        padding: 6px;
+        margin: 0;
+    }
+}
+
+
+@media screen and (max-width:360px) {
+	#userpic-upload #webcamupload {
+		float: right;
+	}
+	#lk-content {
+		margin: 0;
+	}
+	.wprecallblock #lk-content .recall_content_block,
+	.wprecallblock #lk-content .recall_child_content_block {
+		padding: 2px;
+	}
+	.wprecallblock #lk-content th,
+	.wprecallblock #lk-content td {
+		padding: 4px 2px;
+	}
+	#your-profile table tr th {
+		max-width: 107px;
+		-webkit-hyphens: auto;
+		hyphens: auto;
+		word-wrap: break-word;
+	}
+	#your-profile table td a {
+		font-size: 13px;
+		width: 83px;
+	}
+}
+
+
+@media screen and (max-width:320px) {
+	#your-profile table td a {
+		margin: 3px 0;
+	}
+}
+
+
+/* START галерея и видеогалерея - выделить в одно ядро */
+#rcl-popup {
+    background: #f8f8f8;
+	border-radius: 3px;
+	box-sizing: border-box;
+	color: #333;
+    display: block;
+    left: 50%;
+	line-height: 1.4;
+    max-width: 80%;
+    position: absolute;
+    top: 10%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: 600px;
+    z-index: 999;
+}
+#rcl-popup h2 {
+	clear: none;
+    font-size: 18px;
+    line-height: 1;
+    margin: 0;
+    padding: 8px 0 0 5px;
+    text-transform: none;
+	width: calc(100% - 40px);
+}
+#rcl-popup h4 {
+	clear:both;
+    font-size: 16px;
+	line-height: 1;
+    margin: 8px 0 0;
+    overflow: hidden;
+    padding: 0 10px 4px;
+	text-transform: none;
+}
+#rcl-popup p {
+    margin: 0 10px 10px;
+	padding: 0;
+}
+#rcl-popup textarea {
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    color: #000;
+    display: block;
+    margin: 10px auto;
+	min-height: 80px;
+    padding: 5px;
+    width: 98%;
+}
+#rcl-popup #commentlist .comm-attach {
+    background: rgba(237, 237, 237, 0.5);
+    margin: 10px 0;
+    padding: 10px;
+}
+#rcl-popup #commentlist .comment-author::after,
+#rcl-popup #commentlist .comment-author::before {
+	display: none;
+}
+#rcl-popup #commentlist .author-avatar {
+    float: left;
+    margin: 0 10px 0 0;
+}
+#rcl-popup .navi-gallery {
+	color: #ccc;
+    cursor: pointer;
+	font-size: 50px;
+    height: 50px;
+    left: 50%;
+	line-height: 50px;
+    opacity: 0.6;
+    position: absolute;
+    top: 200px;
+	-webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    width: auto;
+}
+#rcl-popup .navi-gallery:hover {
+	opacity: 1;
+}
+#rcl-popup .prev-attach {
+	float: left;
+    margin-left: -54%;
+}
+#rcl-popup .next-attach {
+    margin-left: 54%;
+    float: right;
+}
+#rcl-popup .next-attach::after {
+    content: "\f138";
+    font-family: FontAwesome;
+}
+#rcl-popup .prev-attach::after {
+    content: "\f137";
+    font-family: FontAwesome;
+}
 @media screen and (max-width:480px) {
     #rcl-popup {
      max-width: 95%;
@@ -1193,109 +1127,44 @@ p.rcl-custom-fields{
      margin-left: 47%;
     }
 }
+/* END галерея и видеогалерея - выделить в одно ядро */
 
-@media screen and (max-width:768px) {
-	.wprecallblock #rcl-tabs .left-buttons .recall-button{
-		display: inline-block!important;
-		width: auto!important;
-	}
-	.wprecallblock #rcl-tabs .left-buttons {
-		float: none!important;
-	}
+/* Непроверенная секция Start */
+#rcl-popup.fixed {
+    position: fixed;
+    top: 80px;
+}
+#rcl-popup .delete{
+	float: left;
+	margin: 5px 5px 10px;
+	display: block;
+	height: 31px;
+	width: 31px;
 	
 }
-
-
-@media screen and (max-width:420px) {
-	#lk-conteyner .lk-content {
-		padding: 2px 5px;
-		margin: 0 0 0 100px;
-	}
-	.lk-sidebar .lk-avatar,
-	.wprecallblock #lk-conteyner .lk-sidebar {
-		width: 95px;
-	}
-	.lk-sidebar .rcl-tab-button i.fa {
-		display: none;
-	}
-	.lk-sidebar .recall-button {
-		padding: 6px 2px;
-	}
-	.rcl-user-status {
-		display: flex;
-		margin: 7px 5px 2px;
-	}
-	#lk-conteyner .rcl-content {
-		clear: none;
-		padding: 2px 0;
-	}
-	#lk-conteyner div.lk-content h2 {
-		font-size: 18px;
-	}
-	#lk-conteyner .rcl-content .more-content {
-		padding: 2px 3px;
-	}
+#rcl-popup .popup-body{
+    padding:10px;
 }
-
-@media screen and (max-width:360px) {
-	.wprecallblock h3 {
-		font-size: 16px;
-		margin: 7px 0 2px 5px;
-	}
-	#lk-conteyner {
-		padding: 2px;
-	}
-	#lk-conteyner .lk-content {
-		margin: 0 0 0 80px;
-	}
-	.lk-sidebar .lk-avatar,
-	.wprecallblock #lk-conteyner .lk-sidebar {
-		width: 80px;
-	}
-	#userpic-upload {
-		left: 0;
-		padding: 0 3px;
-		width: 98%;
-	}
-	#userpic-upload #webcamupload {
-		float: right;
-	}
-	.wprecallblock #lk-conteyner .rcl-tab-button span{
-		display: table;
-		margin: 1px auto 0;
-	}
-	#lk-content {
-		margin: 0;
-	}
-	.wprecallblock #lk-content .recall_content_block,
-	.wprecallblock #lk-content .recall_child_content_block {
-		padding: 2px;
-	}
-	.wprecallblock #lk-content th, .wprecallblock #lk-content td {
-		padding: 4px 2px;
-	}
-	#your-profile table tr th {
-		max-width: 107px;
-		-webkit-hyphens: auto;
-		hyphens: auto;
-		word-wrap: break-word;
-	}
-	#your-profile table td a {
-		font-size: 13px;
-		width: 83px;
-	}
-	#your-profile table td span a {
-		width: 108px;
-	}
-	#avatar-upload-progress span {
-		font-size: 28px;
-		left: 83%;
-	}
+.rcl-upload-button span.progress-bar{
+	position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #36C515;
+    z-index: -99;
 }
-
-
-@media screen and (max-width:320px) {
-	#your-profile table td a {
-		margin: 3px 0;
-	}
+.prmess .rcl-upload-button{
+	float:right;
 }
+.rcl-dropzone .get-crop-image{
+	float:right;
+}
+.rcl-dropzone img,
+.rcl-dropzone .jcrop-holder{
+	margin:0 auto;
+	display: block;
+}
+.rcl-dropzone.hover {
+    background: rgba(0,0,0,0.5);
+}
+/* Непроверенная секция End */

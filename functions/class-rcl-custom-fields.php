@@ -37,7 +37,8 @@ class Rcl_Custom_Fields{
             }
         }
 
-        if($field['type']=='date') rcl_datepicker_scripts();
+        if($field['type']=='date') 
+            rcl_datepicker_scripts();
 
         $callback = 'get_type_'.$field['type'];
 
@@ -94,7 +95,7 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_date($field){
-        return '<input type="text" '.$this->required.' '.$this->placeholder.' class="datepicker" name="'.$this->slug.'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        return '<input type="text" '.$this->required.' '.$this->placeholder.' class="rcl-datepicker" name="'.$this->slug.'" id="'.$this->slug.'" value="'.$this->value.'"/>';
     }
 
     function get_type_time($field){

@@ -131,7 +131,6 @@ class RCL_Install {
 
     private static function add_addons() {
 
-        //$active_addons = get_site_option('rcl_active_addons');
         $def_addons = apply_filters( 'default_wprecall_addons', array(
             'rating-system',
             'review',
@@ -140,7 +139,7 @@ class RCL_Install {
             'publicpost',
             'message'
         ));
-
+        
         foreach( $def_addons as $addon ) {
             rcl_activate_addon($addon);
         }
@@ -250,6 +249,16 @@ class RCL_Install {
 
             $rcl_options['view_user_lk_rcl'] = 1;
             $rcl_options['tab_newpage'] = 1;
+            
+            //подключаем первый попавшийся шаблон ЛК
+            $templates = rcl_get_install_templates();
+            
+            foreach($templates as $addon_id=>$template){
+                $rcl_options['active_template'] = $addon_id;
+                break;
+            }
+           
+            update_option('rcl_global_options',$rcl_options);
 
             //отключаем все пользователям сайта показ админ панели, если включена
             $wpdb->update(

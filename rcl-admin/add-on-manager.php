@@ -47,16 +47,13 @@ class Rcl_Addons_Manager extends WP_List_Table {
                     if(file_exists($info_src)){
                         $info = file($info_src);
                         $data = rcl_parse_addon_info($info);
-                        if(isset($_POST['s'])&&$_POST['s']){                           
-                            if (strpos($data['name'], $_POST['s']) !== false) {
+                        if(isset($_POST['s'])&&$_POST['s']){
+                            if (strpos(strtolower(trim($data['name'])), strtolower(trim($_POST['s']))) !== false) {
                                 $this->addons_data[$namedir] = $data;
                             }
-
-                            flush();
                             continue;
                         }
-                        $this->addons_data[$namedir] = $data;                        
-                        flush();
+                        $this->addons_data[$namedir] = $data;
                     }
                     
                 }
@@ -71,7 +68,8 @@ class Rcl_Addons_Manager extends WP_List_Table {
         foreach($this->addons_data as $namedir=>$data){
             $desc = $this->get_description_column($data);
             $add_ons[$namedir]['ID'] = $namedir;
-            $add_ons[$namedir]['addon_name'] = '<strong>'.$data['name'].'</strong>';
+            if(isset($data['template'])) $add_ons[$namedir]['template'] = $data['template'];
+            $add_ons[$namedir]['addon_name'] = $data['name'];
             $add_ons[$namedir]['addon_status'] = ($active_addons&&isset($active_addons[$namedir]))? 1: 0;
             $add_ons[$namedir]['addon_description'] = $desc;           
         }
@@ -98,9 +96,11 @@ class Rcl_Addons_Manager extends WP_List_Table {
     }
 
     function column_default( $item, $column_name ) {
+        
         switch( $column_name ) { 
             case 'addon_name':
-                return '<strong>'.$item[ $column_name ].'</strong>';
+                $name = (isset($item['template']))? $item[ 'addon_name' ].' ('.__('Template','wp-recall').')': $item[ 'addon_name' ];
+                return '<strong>'.$name.'</strong>';
             case 'addon_status':
                 if($item[ $column_name ]){
                     return __( 'Active', 'wp-recall' );
@@ -147,8 +147,8 @@ class Rcl_Addons_Manager extends WP_List_Table {
         
         if($item['addon_status']==1) $actions['deactivate'] = sprintf('<a href="?page=%s&action=%s&addon=%s">'.__( 'Deactivate', 'wp-recall' ).'</a>',$_REQUEST['page'],'deactivate',$item['ID']);
         else $actions['activate'] = sprintf('<a href="?page=%s&action=%s&addon=%s">'.__( 'Activate', 'wp-recall' ).'</a>',$_REQUEST['page'],'activate',$item['ID']);
-        
-        return sprintf('%1$s %2$s', $item['addon_name'], $this->row_actions($actions) );
+        $name = (isset($item['template']))? $item[ 'addon_name' ].' ('.__('Template','wp-recall').')': $item[ 'addon_name' ];
+        return sprintf('%1$s %2$s', '<strong>'.$name.'</strong>', $this->row_actions($actions) );
     }
 
     function get_bulk_actions() {
@@ -388,7 +388,7 @@ function rcl_add_options_addons_manager() {
     $option = 'per_page';
     $args = array(
         'label' => __( 'Add-ons', 'wp-recall' ),
-        'default' => 20,
+        'default' => 100,
         'option' => 'addons_per_page'
     );
     

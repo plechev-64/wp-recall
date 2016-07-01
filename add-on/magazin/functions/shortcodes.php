@@ -157,24 +157,13 @@ function rcl_shortcode_productlist($atts, $content = null){
     $atts));
     
     $productlist = $atts;
-
-    if(!$num){
-        $count_prod = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->prefix."posts WHERE post_type='%s' AND post_status='%s'",'products','publish'));
-    }else{
-        $count_prod = false;
-        $inpage = $num;
-    }
-
-    $rclnavi = new Rcl_PageNavi('rcl-products',$count_prod,array('in_page'=>$inpage));
-
+    
     $args = array(
-        'numberposts'     => $inpage,
-        'offset'          => $rclnavi->offset,
-        'orderby'         => $orderby,
-        'order'           => $order,
+        'numberposts'     => -1,
         'author'          => $author,
         'post_type'       => 'products',
-        'include'         => $include
+        'include'         => $include,
+        'fields'         => 'ids'
     );
     
     if($cat){
@@ -192,6 +181,27 @@ function rcl_shortcode_productlist($atts, $content = null){
                 'terms'=> explode(',',$tag)
             );
     }
+    
+    if(!$num){
+        $count_prod = count(get_posts($args));
+    }else{
+        $count_prod = false;
+        $inpage = $num;
+    }
+
+    $rclnavi = new Rcl_PageNavi('rcl-products',$count_prod,array('in_page'=>$inpage));
+    
+    $args['numberposts'] = $inpage;
+    $args['fields'] = '';
+
+    $more_args = array(
+        'numberposts'     => $inpage,
+        'offset'          => $rclnavi->offset,
+        'orderby'         => $orderby,
+        'order'           => $order
+    );
+    
+    $args = array_merge($more_args,$args);
 
     $rcl_cache = new Rcl_Cache();
         

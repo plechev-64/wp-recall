@@ -13,6 +13,8 @@ class Rcl_Ajax{
         
         $post = rcl_decode_post($_POST['post']);
         
+        $post->tab_url = $_POST['tab_url'];
+        
         $callback = $post->callback;
         $result['result'] = $callback($post);
         $result['post'] = $post;

@@ -103,7 +103,7 @@ class Rcl_Includer{
             
             //Если минификация не используется, то подключаем файлы как обычно
             if(!$this->is_minify){ 
-                $parents = (isset($rcl_scripts['parents'][$key]))? $rcl_scripts['parents'][$key]: array();
+                $parents = (isset($rcl_scripts['parents'][$key]))? $parents = array_merge($rcl_scripts['parents'][$key],array('jquery')): array('jquery');
                 wp_enqueue_script( $key, rcl_path_to_url($url),$parents,VER_RCL,$in_footer );
                 continue;
             }

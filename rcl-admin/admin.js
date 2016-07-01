@@ -1,17 +1,17 @@
 function rcl_get_value_url_params(){
     var tmp_1 = new Array();
     var tmp_2 = new Array();
-    var get_param = new Array();
+    var rcl_url_params = new Array();
     var get = location.search;
     if(get !== ''){
-      tmp_1 = (get.substr(1)).split('&');
-      for(var i=0; i < tmp_1.length; i++) {
-      tmp_2 = tmp_1[i].split('=');
-        get_param[tmp_2[0]] = tmp_2[1];
-      }
+        tmp_1 = (get.substr(1)).split('&');
+        for(var i=0; i < tmp_1.length; i++) {
+            tmp_2 = tmp_1[i].split('=');
+            rcl_url_params[tmp_2[0]] = tmp_2[1];
+        }
     }
     
-    return get_param;
+    return rcl_url_params;
 }
 
 var rcl_url_params = rcl_get_value_url_params();
