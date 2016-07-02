@@ -153,6 +153,9 @@ function rcl_global_options(){
                     $fields->notice(__('If the selected archive page of the author, in the right place template author.php paste the code if(function_exists(\'wp_recall\')) wp_recall();','wp-recall')),
 
                 ));
+                
+                $templates = rcl_get_install_templates();
+                $templates = ($templates)? $templates: array(__('Not found','wp-recall'));
 
                 $content .= $fields->option_block(
                     array(
@@ -171,7 +174,8 @@ function rcl_global_options(){
                         $fields->label(__('Used template','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'active_template',
-                            'options'=>array_merge(array(__('Not selected','wp-recall')),rcl_get_install_templates()))
+                            'options'=>$templates
+                            )
                         ),
 
                         $fields->label(__('Pause Slider','wp-recall')),

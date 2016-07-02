@@ -8,7 +8,7 @@ function rcl_cover_uploader(){
         type: 'POST',
         url: Rcl.ajaxurl,
         formData:{action:'rcl_cover_upload',ajax_nonce:Rcl.nonce},
-        loadImageMaxFileSize: Rcl.profile.avatar_size*1024*1024,
+        loadImageMaxFileSize: Rcl.theme.cover_size*1024*1024,
         autoUpload:false,
         previewMaxWidth: 900,
         previewMaxHeight: 900,
@@ -23,7 +23,7 @@ function rcl_cover_uploader(){
             if(!data.form) return false;
             jQuery.each(data.files, function (index, file) {
                 jQuery('#rcl-preview').remove();
-                if(file.size>Rcl.profile.avatar_size*1024*1024){
+                if(file.size>Rcl.theme.cover_size*1024*1024){
                     rcl_notice(Rcl.local.upload_size_avatar,'error');
                     return false;
                 }

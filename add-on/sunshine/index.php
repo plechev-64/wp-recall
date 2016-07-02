@@ -29,9 +29,17 @@ function cab_15_script_load() {
 
 add_filter('rcl_init_js_variables','rcl_init_js_office',10);
 function rcl_init_js_office($data){
-    global $user_LK;
+    global $user_LK,$user_ID;
     if(!$user_LK) return $data;
+    
+    if($user_LK==$user_ID){
+        $data['theme']['cover_size'] = 2;
+        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),2);
+        $data['local']['title_image_upload'] = __('The image being loaded','wp-recall');
+    }
+    
     $data['local']['title_user_info'] = __('Detailed information','wp-recall');
+    
     return $data;
 }
 
@@ -171,10 +179,14 @@ function rcl_get_user_details(){
         $content .= '<div class="ballun-status">'
         . '<p class="status-user-rcl">'.nl2br(esc_textarea($desc)).'</p>'
         . '</div>';
+    
+    if($rcl_blocks&&isset($rcl_blocks['details'])){
 
-    foreach($rcl_blocks['details'] as $block){
-        $Rcl_Blocks = new Rcl_Blocks($block);
-        $content .= $Rcl_Blocks->get_block($user_LK);
+        foreach($rcl_blocks['details'] as $block){
+            $Rcl_Blocks = new Rcl_Blocks($block);
+            $content .= $Rcl_Blocks->get_block($user_LK);
+        }
+    
     }
     
     $content .= '</div>';

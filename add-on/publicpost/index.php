@@ -465,6 +465,9 @@ function rcl_clear_temps_gallery(){
 add_action('wp_ajax_rcl_edit_post','rcl_edit_post',10);
 add_action('wp_ajax_nopriv_rcl_edit_post','rcl_edit_post',10);
 function rcl_edit_post(){
+    
+    rcl_verify_ajax_nonce();
+    
     include_once 'rcl_editpost.php';
     $edit = new Rcl_EditPost();
 }
