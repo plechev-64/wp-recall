@@ -469,10 +469,13 @@ function rcl_edit_post(){
     rcl_verify_ajax_nonce();
     
     include_once 'rcl_editpost.php';
+    
     $edit = new Rcl_EditPost();
+
 }
 
 function rcl_edit_post_activate ( ) {
+if( defined( 'DOING_AJAX' ) && DOING_AJAX) return false;
   if ( isset( $_POST['edit-post-rcl'] )&&wp_verify_nonce( $_POST['_wpnonce'], 'edit-post-rcl' ) ) {
     add_action( 'wp', 'rcl_edit_post' );
   }

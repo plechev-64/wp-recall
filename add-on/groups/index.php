@@ -21,7 +21,8 @@ require_once 'groups-core.php';
 require_once 'shortcodes.php';
 if(is_admin()) require_once 'groups-options.php';
 require_once 'groups-widgets.php';
-if(!is_admin()) require_once 'groups-public.php';
+if(!is_admin()||defined( 'DOING_AJAX' )) 
+    require_once 'groups-public.php';
 require_once 'upload-avatar.php';
 
 if(function_exists('rcl_register_rating_type')){

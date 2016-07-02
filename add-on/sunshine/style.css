@@ -405,6 +405,9 @@
 		margin: 15px auto 10px;
 		width: 250px;
 	}
+        .lk-avatar .cab_usr_info {
+            font-size: 45px;
+        }
 	.lk-sidebar .lk-avatar {
 		box-shadow: 0 0 0 5px #fff;
 	}

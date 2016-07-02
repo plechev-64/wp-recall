@@ -33,34 +33,15 @@ function rcl_avatar_uploader(){
                     var jcrop_api;
                     var imgUrl = event.target.result;
                     
-                    ssi_modal.show({
-                        sizeClass: 'auto',
-                        title: Rcl.local.title_image_upload,
-                        className: 'rcl-hand-uploader',
-                        buttons: [{
-                            className: 'btn btn-primary',
-                            label: 'Ok',
-                            closeAfter: true,
-                            method: function () {
-                                data.submit();
-                            }
-                        }, {
-                            className: 'btn btn-danger',
-                            label: Rcl.local.close,
-                            closeAfter: true,
-                            method: function () {
-                                jcrop_api.destroy();
-                            }
-                        }],
-                        content: '<div id="rcl-preview"><img src="'+imgUrl+'"></div>'
-                    });
-                   
+                    jQuery('body > div').last().after('<div id=rcl-preview><img src="'+imgUrl+'"></div>');
+                    
                     var image = jQuery('#rcl-preview img');
+                    
                     image.load(function() {
                         var img = jQuery(this);
                         var height = img.height();
                         var width = img.width();
-                        
+                        var jcrop_api;
                         img.Jcrop({
                             aspectRatio: 1,
                             minSize:[150,150],
@@ -70,8 +51,32 @@ function rcl_avatar_uploader(){
                         },function(){
                             jcrop_api = this;
                         });
+                        
+                        ssi_modal.show({
+                            sizeClass: 'auto',
+                            title: Rcl.local.title_image_upload,
+                            className: 'rcl-hand-uploader',
+                            buttons: [{
+                                className: 'btn btn-primary',
+                                label: 'Ok',
+                                closeAfter: true,
+                                method: function () {
+                                    data.submit();
+                                }
+                            }, {
+                                className: 'btn btn-danger',
+                                label: Rcl.local.close,
+                                closeAfter: true,
+                                method: function () {
+                                    jcrop_api.destroy();
+                                }
+                            }],
+                            content: jQuery('#rcl-preview'),
+                            extendOriginalContent:true
+                        });
 
                     });
+
                 };
 
                 reader.readAsDataURL(file);

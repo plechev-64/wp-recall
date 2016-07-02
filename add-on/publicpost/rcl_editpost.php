@@ -8,17 +8,17 @@ class Rcl_EditPost {
 
     function __construct(){
         global $user_ID,$rcl_options;
-
+        
         $user_can = $rcl_options['user_public_access_recall'];
 
         if($user_can&&!$user_ID) return false;
-
+        
         if(isset($_FILES)){
             require_once(ABSPATH . "wp-admin" . '/includes/image.php');
             require_once(ABSPATH . "wp-admin" . '/includes/file.php');
             require_once(ABSPATH . "wp-admin" . '/includes/media.php');
         }
-
+        
         if($_POST['post-rcl']){
 
             $post_id = intval($_POST['post-rcl']);
@@ -27,7 +27,9 @@ class Rcl_EditPost {
             $this->post_type = $pst->post_type;
 
             if($this->post_type=='post-group'){
+                
                 if(!rcl_can_user_edit_post_group($post_id)) return false;
+                
             }else{
 
                 if(!current_user_can('edit_post', $post_id)) return false;

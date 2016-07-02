@@ -64,8 +64,9 @@ function rcl_get_group_by_post($post_id){
 function rcl_can_user_edit_post_group($post_id){
     global $user_ID;
     $group_id = rcl_get_group_id_by_post($post_id);
+    
     if(!$group_id) return false;
-
+    
     if(current_user_can('edit_post', $post_id)) return true;
 
     $rcl_group = rcl_get_group($group_id);
