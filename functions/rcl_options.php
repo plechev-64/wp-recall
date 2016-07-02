@@ -99,6 +99,8 @@ class Rcl_Options {
 
     function select($args,$value){
         global $rcl_options;
+        
+        if(!isset($args['options'])) return false;
 
         $content = '<select id="'.$args['name'].'"';
         if(isset($args['parent'])) $content .= 'class="parent-select" ';

@@ -3,12 +3,12 @@
 function rcl_action(){
     global $rcl_userlk_action;
     $last_action = rcl_get_useraction($rcl_userlk_action);
-    //$class = (!$last_action)? 'online': 'offline';
-    //$status = '<div class="status_user '.$class.'"><i class="fa fa-circle"></i></div>';
+    $class = (!$last_action)? 'online': 'offline';
+
     if($last_action) $status = __('not online','wp-recall').' '.$last_action;
     else $status = __('online','wp-recall');
     
-    echo $status;
+    echo sprintf('<span class="user-status %s">%s</span>',$class,$status);
 }
 
 function rcl_avatar($size=120){

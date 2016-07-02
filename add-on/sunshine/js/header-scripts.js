@@ -20,7 +20,7 @@ function rcl_get_user_info(element){
                 rcl_preloader_hide();
                 
                 ssi_modal.show({
-                    title: 'Детали пользователя',
+                    title: Rcl.local.title_user_info,
                     sizeClass: 'auto',
                     className: 'rcl-user-getails',
                     buttons: [{

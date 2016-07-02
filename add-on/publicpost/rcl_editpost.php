@@ -53,7 +53,7 @@ class Rcl_EditPost {
 
             $post_type = sanitize_text_field(base64_decode($_POST['posttype']));
 
-            if(!get_post_types(array('name'=>$post_type))) wp_die(__('Error publishing!','wp-recall'));
+            if(!get_post_types(array('name'=>$post_type))) $this->error(__('Error publishing!','wp-recall'));
 
             $this->post_type = $post_type;
             $this->update = false;
@@ -64,6 +64,16 @@ class Rcl_EditPost {
         add_filter('pre_update_postdata_rcl',array(&$this,'add_data_post'),10,2);
 
         $this->update_post();
+    }
+    
+    function error($error){
+        if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+            echo json_encode(array('error'=>$error));
+            exit;
+        }else{
+            wp_die($error);
+        }
+        
     }
 
     function update_thumbnail($postdata){
@@ -197,7 +207,7 @@ class Rcl_EditPost {
             $this->post_id = wp_insert_post( $postdata );
 
             if(!$this->post_id) 
-                wp_die(__('Error publishing!','wp-recall'));
+                $this->error(__('Error publishing!','wp-recall'));
             
             if($id_form>1) 
                 add_post_meta($this->post_id, 'publicform-id', $id_form);
@@ -208,8 +218,10 @@ class Rcl_EditPost {
         
         $this->update_thumbnail($postdata);
 
-        if($_POST['add-gallery-rcl']==1) update_post_meta($this->post_id, 'recall_slider', 1);
-        else delete_post_meta($this->post_id, 'recall_slider');
+        if($_POST['add-gallery-rcl']==1) 
+            update_post_meta($this->post_id, 'recall_slider', 1);
+        else 
+            delete_post_meta($this->post_id, 'recall_slider');
 
         rcl_update_post_custom_fields($this->post_id,$id_form);
 

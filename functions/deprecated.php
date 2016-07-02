@@ -83,42 +83,49 @@ function rcl_update_scripts(){
     global $rcl_options;
 
     $path = RCL_UPLOAD_PATH.'scripts';
+    
+    rcl_remove_dir($path);
 
     wp_mkdir_p($path);
+    
+    $footer_scripts = apply_filters('file_footer_scripts_rcl','');
+    
+    if($footer_scripts){
+        $filename = 'footer-scripts.js';
+        $file_src = $path.'/'.$filename;
+        $f = fopen($file_src, 'w');
 
-    $filename = 'footer-scripts.js';
-    $file_src = $path.'/'.$filename;
-    $f = fopen($file_src, 'w');
-
-    $scripts = '';
-    $scripts = apply_filters('file_footer_scripts_rcl',$scripts);
-    if(!isset($scripts)) return false;
-    if($scripts) $scripts = "jQuery(function($){".$scripts."});";
-    $scripts = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $scripts);
-    $scripts =  preg_replace('/ {2,}/',' ',$scripts);
-    fwrite($f, $scripts);
-    fclose($f);
-
-
-    $opt_slider = "''";
-    if(isset($rcl_options['slide-pause'])&&$rcl_options['slide-pause']){
-        $pause = $rcl_options['slide-pause']*1000;
-        $opt_slider = "{auto:true,pause:$pause}";
+        $scripts = "jQuery(function($){".$footer_scripts."});";
+        $scripts = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $scripts);
+        $scripts =  preg_replace('/ {2,}/',' ',$scripts);
+        fwrite($f, $scripts);
+        fclose($f);
     }
 
-    $filename = 'header-scripts.js';
-    $file_src = $path.'/'.$filename;
-    $f = fopen($file_src, 'w');
-
-    $scripts = "var SliderOptions = ".$opt_slider.";"
-            . "jQuery(function(){";
-    $scripts = apply_filters('file_scripts_rcl',$scripts);
-    $scripts .= "});";
-    $scripts = apply_filters('rcl_functions_js',$scripts);
-    $scripts = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $scripts);
-    $scripts =  preg_replace('/ {2,}/',' ',$scripts);
-    fwrite($f, $scripts);
-    fclose($f);
+    $header_scripts = apply_filters('file_scripts_rcl','');
+    
+    if($header_scripts){
+        
+        $opt_slider = "''";
+        if(isset($rcl_options['slide-pause'])&&$rcl_options['slide-pause']){
+            $pause = $rcl_options['slide-pause']*1000;
+            $opt_slider = "{auto:true,pause:$pause}";
+        }
+        
+        $filename = 'header-scripts.js';
+        $file_src = $path.'/'.$filename;
+        $f = fopen($file_src, 'w');
+        
+        $scripts = "var SliderOptions = ".$opt_slider.";"
+                . "jQuery(function(){"
+                . $header_scripts
+                . "});";
+        $scripts = apply_filters('rcl_functions_js',$scripts);
+        $scripts = str_replace(array("\r\n", "\r", "\n", "\t"), " ", $scripts);
+        $scripts =  preg_replace('/ {2,}/',' ',$scripts);
+        fwrite($f, $scripts);
+        fclose($f);
+    }
 }
 
 add_action('rcl_area_actions','rcl_area_header',10);

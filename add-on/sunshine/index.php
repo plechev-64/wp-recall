@@ -27,6 +27,14 @@ function cab_15_script_load() {
 
 }
 
+add_filter('rcl_init_js_variables','rcl_init_js_office',10);
+function rcl_init_js_office($data){
+    global $user_LK;
+    if(!$user_LK) return $data;
+    $data['local']['title_user_info'] = __('Detailed information','wp-recall');
+    return $data;
+}
+
 // регистрируем 3 области виджетов
 function cab_15_sidebar() {
     register_sidebar(array(
@@ -114,12 +122,6 @@ function rcl_add_user_info_button($content){
     $content .= '<a title="'.__('User info','wp-recall').'" onclick="rcl_get_user_info(this);return false;" class="cab_usr_info" href="#"><i class="fa fa-info-circle"></i></a>';
 
     return $content;
-}
-
-add_filter('rcl_avatar_sizes','rcl_register_new_avatar_size',10);
-function rcl_register_new_avatar_size($sizes){
-    $sizes[] = 200;
-    return $sizes;
 }
 
 add_action('rcl_area_top','rcl_add_cover_uploader_button',10);

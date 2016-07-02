@@ -447,7 +447,9 @@ function rcl_get_custom_post_meta($post_id){
     }
 }
 
-function rcl_get_post_meta($content){
+if (!is_admin())
+    add_filter('the_content','rcl_concat_post_meta',10);
+function rcl_concat_post_meta($content){
     global $post,$rcl_options;
     if(!isset($rcl_options['pm_rcl'])||!$rcl_options['pm_rcl'])return $content;
     $pm = rcl_get_custom_post_meta($post->ID);
@@ -455,7 +457,6 @@ function rcl_get_post_meta($content){
     else $content = $pm.$content;
     return $content;
 }
-if(!is_admin()) add_filter('the_content','rcl_get_post_meta');
 
 add_action('wp','rcl_download_file');
 function rcl_download_file(){

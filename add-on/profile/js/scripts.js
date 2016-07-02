@@ -3,7 +3,7 @@ function rcl_zoom_avatar(e){
     var src = link.data('zoom');
     ssi_modal.show({
         sizeClass: 'auto',
-        className: 'rcl-user-getails',
+        className: 'rcl-user-avatar-zoom',
         content: '<div id="rcl-preview"><img class=aligncenter src=\''+src+'\'></div>'
     });
 }

@@ -171,7 +171,7 @@ function rcl_global_options(){
                         $fields->label(__('Used template','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'active_template',
-                            'options'=>rcl_get_install_templates())
+                            'options'=>array_merge(array(__('Not selected','wp-recall')),rcl_get_install_templates()))
                         ),
 
                         $fields->label(__('Pause Slider','wp-recall')),

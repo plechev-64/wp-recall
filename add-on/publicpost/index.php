@@ -22,6 +22,8 @@ function rcl_init_js_public_variables($data){
     $max_size = (isset($rcl_options['public_gallery_weight'])&&$rcl_options['public_gallery_weight'])? $rcl_options['public_gallery_weight']: 2;
     
     $data['local']['preview'] = __('Preview','wp-recall');
+    $data['local']['publish'] = __('To publish','wp-recall');
+    $data['local']['edit'] = __('Edit','wp-recall');
     $data['local']['edit_box_title'] = __('Quick edit','wp-recall');   
     $data['local']['requared_fields_empty'] = __('Fill in all required fields','wp-recall');
     $data['local']['allowed_downloads'] = sprintf(__('You have exceeded the allowed number of downloads! Max. %s','wp-recall'),$max_downloads);
@@ -39,12 +41,10 @@ include_once('upload-file.php');
 include_once 'addon-options.php';
 include_once 'rcl_publicform.php';
 
-if (!is_admin()):
-	add_filter('the_content','rcl_post_gallery',10);
-endif;
-
-if (!is_admin()||defined('DOING_AJAX')) 
+if (!is_admin()||defined('DOING_AJAX')):
+    add_filter('the_content','rcl_post_gallery',10);
     add_filter('the_content','rcl_author_info',70);
+endif;
 
 add_action('admin_menu', 'rcl_admin_page_publicform',30);
 function rcl_admin_page_publicform(){
@@ -462,6 +462,8 @@ function rcl_clear_temps_gallery(){
     
 }
 
+add_action('wp_ajax_rcl_edit_post','rcl_edit_post',10);
+add_action('wp_ajax_nopriv_rcl_edit_post','rcl_edit_post',10);
 function rcl_edit_post(){
     include_once 'rcl_editpost.php';
     $edit = new Rcl_EditPost();
@@ -771,7 +773,6 @@ function rcl_preview_post(){
 		}
 	}
 
-	//if(!$_POST['post_title']) $log['error'] = 'Заполните заголовок публикации';
 	if(!$_POST['post_content']) $log['error'] = __('Add the contents of the publication!','wp-recall');
 
 	if($log['error']){
@@ -791,28 +792,17 @@ function rcl_preview_post(){
                 }
             }
 	}else{
-		//$content = str_replace('\\"','',$_POST['post_content']);
-		//$post_content = "[rcl-box type='html' content='$content']";
                 $post_content = stripslashes_deep($_POST['post_content']);
 	}
 
 	$post_content = rcl_get_editor_content($post_content,'preview');
 
-	$preview = '<div id="rcl-preview">';
-
-	$preview .= '<h2>'.__('Preview','wp-recall').'</h2>
-		<h3 class="title-post">'.$_POST['post_title'].'</h3>
+	$preview = '<h2>'.$_POST['post_title'].'</h2>
 		'.$post_content;
 
 	$preview .= '<div class="rcl-notice-preview">
 			<p>'.__('If everything is in order - the public! If not, you can go back to the editor.','wp-recall').'</p>
-			<div class="rcl-preview-buttons">
-				<input type="button" class="recall-button" onclick="rcl_preview_close(this);" value="'.__('Edit','wp-recall').'">
-				<input type="submit" class="recall-button" id="edit-post-rcl" value="'.__('To publish','wp-recall').'">
-			</div>
 		</div>';
-
-	$preview .= '</div>';
 
 	$log['content'] = $preview;
 	echo json_encode($log);

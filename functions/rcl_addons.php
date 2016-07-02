@@ -145,4 +145,98 @@ function rcl_get_addon_headers($addon_name){
     return $data;
 }
 
+//Подключаем шаблон личного кабинета
+function rcl_include_template_office(){
+    global $rcl_options,$active_addons,$user_LK;
+    
+    $templates = rcl_get_install_templates();
+    $active_template = (isset($rcl_options['active_template'])&&$rcl_options['active_template'])? $rcl_options['active_template']: '';
+    
+    //Если ни один шаблон не активен
+    if(!$templates){
+        //ищем шаблоны в папке дополнений
+        $templates = rcl_search_templates();
+        if(!$templates){
+            //если опять ничего не найдено
+            echo '<h3>'.__('Templates office not found!','wp-recall').'</h3>';
+        }else{
+            //если шаблон нашли, то активируем дополнение и ниже подключаем шаблон
+            foreach ($templates as $addon_id => $data){
+                
+                rcl_activate_addon($addon_id);
+            
+                $rcl_options['active_template'] = $addon_id;
+                update_option('rcl_global_options',$rcl_options);
+
+                $active_addons[$addon_id] = $data;
+                $active_template = $addon_id;
+
+                break;
+            }
+        }
+    }
+    
+    if($active_template){
+        if(isset($templates[$active_template])){
+            
+            //Если шаблон найден и активирован, то подключаем
+            rcl_include_template('office.php',$active_addons[$active_template]['path']);
+        }
+    }else{
+        //Если ни один не активирован, то выбираем первый найденный, активируем и подключаем
+        foreach ($templates as $addon_id => $data){
+            
+            $rcl_options['active_template'] = $addon_id;
+            update_option('rcl_global_options',$rcl_options);
+
+            rcl_include_template('office.php',$data['path']);
+            
+            break;
+        }
+    }
+}
+
+function rcl_get_install_templates(){
+    global $rcl_options,$active_addons;
+
+    if(!$active_addons) return false;
+    
+    $list = array();
+    foreach($active_addons as $addon_id=>$addon){
+        if(!isset($addon['template'])) continue;
+        $list[$addon_id] = $addon['template'];
+    }
+
+    return $list;
+}
+
+function rcl_search_templates(){
+    $paths = array(RCL_PATH.'add-on',RCL_TAKEPATH.'add-on') ;
+    
+    $templates = array();
+    foreach($paths as $path){
+        if(!file_exists($path)) continue;
+        
+        $addons = scandir($path,1);
+        
+        if(!$addons) continue;
+        
+        foreach($addons as $namedir){
+            $addon_dir = $path.'/'.$namedir;
+            $index_src = $addon_dir.'/index.php';
+            if(!is_dir($addon_dir)||!file_exists($index_src)) continue;
+            $info_src = $addon_dir.'/info.txt';
+            if(file_exists($info_src)){
+                $file_data = file($info_src);
+                $data = rcl_parse_addon_info($file_data); 
+                if(!isset($data['template'])) continue;
+                $data['path'] = $addon_dir;
+                $templates[$namedir] = $data;
+            }
+        }
+    }
+    
+    return $templates;
+}
+
 require_once("rcl_update.php");

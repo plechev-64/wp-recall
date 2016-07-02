@@ -89,6 +89,8 @@ function rcl_enqueue_wp_form_scripts(){
 function rcl_frontend_scripts(){
     global $rcl_options,$user_LK,$user_ID,$post;
     if(!isset($rcl_options['font_icons']))  $rcl_options['font_icons']=1;
+    
+    wp_enqueue_script( 'jquery' );
 
     if($user_LK){
         rcl_dialog_scripts();
@@ -138,7 +140,7 @@ function rcl_frontend_scripts(){
     
     $data = apply_filters('rcl_init_js_variables',$data);
 
-    wp_localize_script( 'jquery', 'Rcl',$data);
+    wp_localize_script( 'jquery', 'Rcl', $data);
 
 }
 
@@ -151,17 +153,14 @@ function rcl_admin_scrips(){
 
 /*deprecated*/
 function rcl_old_header_scripts(){
-    if(!file_exists(RCL_UPLOAD_PATH.'scripts/header-scripts.js')){
-        rcl_update_scripts;
-    }
+    if(!file_exists(RCL_UPLOAD_PATH.'scripts/header-scripts.js')) return false;
     rcl_enqueue_script( 'rcl-old-header-scripts', RCL_UPLOAD_URL.'scripts/header-scripts.js' );
     
 }
 
 /*deprecated*/
 function rcl_old_footer_scripts(){
-    if(file_exists(RCL_UPLOAD_PATH.'scripts/footer-scripts.js')){
-        rcl_enqueue_script( 'rcl-old-footer-scripts', RCL_UPLOAD_URL.'scripts/footer-scripts.js', array(), true );
-    }
+    if(!file_exists(RCL_UPLOAD_PATH.'scripts/footer-scripts.js')) return false;
+    rcl_enqueue_script( 'rcl-old-footer-scripts', RCL_UPLOAD_URL.'scripts/footer-scripts.js', array(), true );
 }
 

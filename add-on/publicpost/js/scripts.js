@@ -256,11 +256,47 @@ function rcl_preview(e){
                 }
 
                 if(data['content']){
-                    formblock.children().last('div').after(data['content']);
-                    var height = jQuery("#rcl-preview").height()+100;
-                    jQuery("#rcl-preview").parent().height(height);
-                    var offsetTop = jQuery("#rcl-preview").offset().top;
-                    jQuery('body,html').animate({scrollTop:offsetTop -50}, 500);
+                    
+                    ssi_modal.show({
+                        sizeClass: 'small',
+                        title: Rcl.local.preview,
+                        className: 'rcl-preview-post',
+                        buttons: [{
+                            className: 'btn btn-primary',
+                            label: Rcl.local.edit,
+                            closeAfter: true,
+                            method: function () {
+                                submit.attr('disabled',false).val(Rcl.local.preview);
+                            }
+                        }, {
+                            className: 'btn btn-danger',
+                            label: Rcl.local.publish,
+                            closeAfter: false,
+                            method: function () {
+                                rcl_preloader_show('#ssi-modalContent > div');
+                                var dataString = 'action=rcl_edit_post&'+string;
+                                dataString += '&ajax_nonce='+Rcl.nonce;
+                                jQuery.ajax({
+                                    type: 'POST', 
+                                    data: dataString, 
+                                    dataType: 'json', 
+                                    url: Rcl.ajaxurl,
+                                    success: function(data){
+                                        if(data['error']){
+                                            rcl_preloader_hide();
+                                            rcl_notice(data['error'],'error');
+                                        }
+                                        if(data['redirect']){
+                                            location.replace(data['redirect']);
+                                        }
+                                    }
+                                }); 
+                                return false; 
+                            }
+                        }],
+                        content: '<div id="rcl-preview">'+data['content']+'</div>'
+                    });
+
                     submit.attr('disabled',false).val(Rcl.local.preview);
                     return true;
                 }
@@ -280,11 +316,7 @@ function rcl_get_prefiew_content(formblock,iframe){
 }
 
 function rcl_preview_close(e){
-	var preview = jQuery(e).parents('#rcl-preview');
-	preview.parent().removeAttr('style');
-	var offsetTop = preview.offset().top;
-	jQuery('body,html').animate({scrollTop:offsetTop -50}, 500);
-	preview.remove();	
+    ssi_modal.close();	
 }
 
 function rcl_init_public_form(post_type,post_id){

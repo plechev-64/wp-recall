@@ -372,51 +372,6 @@ function rcl_format_url($url,$id_tab=null){
     return $url;
 }
 
-//Подключаем шаблон личного кабинета
-function rcl_include_template_office(){
-    global $rcl_options,$active_addons;
-    
-    $templates = rcl_get_install_templates();
-    $active_template = (isset($rcl_options['active_template']))? $rcl_options['active_template']: '';
-    
-    //Если ни один шаблон не найден
-    if(!$templates){
-        echo '<h3>'.__('Templates office not found!','wp-recall').'</h3>';
-    }
-    
-    if($active_template){
-        if(isset($templates[$active_template])){
-            //Если шаблон найден и активирован, то подключаем
-            rcl_include_template('office.php',$active_addons[$active_template]['path']);
-        }
-    }else{
-        //Если ни один не активирован, то выбираем первый найденный, активируем и подключаем
-        foreach ($templates as $addon_id => $data){
-            
-            $rcl_options['active_template'] = $addon_id;
-            update_option('rcl_global_options',$rcl_options);
-
-            rcl_include_template('office.php',$data['path']);
-            
-            break;
-        }
-    }
-}
-
-function rcl_get_install_templates(){
-    global $rcl_options,$active_addons;
-
-    if(!$active_addons) return false;
-    
-    $list = array();
-    foreach($active_addons as $addon_id=>$addon){
-        if(!isset($addon['template'])) continue;
-        $list[$addon_id] = $addon['template'];
-    }
-
-    return $list;
-}
-
 if (! function_exists('get_called_class')) :
     function get_called_class(){
         $arr = array(); 

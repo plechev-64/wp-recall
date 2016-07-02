@@ -136,6 +136,8 @@ function rcl_avatar_upload(){
 		if($width>$height) $src_size = $height;
 		else $src_size = $width;
 	}
+        
+        array_map("unlink", glob($dir_path.$user_ID."-*.jpg"));
 
 	$rcl_avatar_sizes[999] = $src_size;
 	foreach($rcl_avatar_sizes as $key=>$size){
