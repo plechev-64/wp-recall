@@ -24,7 +24,7 @@ function rcl_cover_uploader(){
             jQuery.each(data.files, function (index, file) {
                 jQuery('#rcl-preview').remove();
                 if(file.size>Rcl.theme.cover_size*1024*1024){
-                    rcl_notice(Rcl.local.upload_size_avatar,'error');
+                    rcl_notice(Rcl.local.upload_size_avatar,'error',10000);
                     return false;
                 }
 
@@ -36,6 +36,7 @@ function rcl_cover_uploader(){
                     jQuery( '#rcl-preview' ).remove();
                     
                     ssi_modal.show({
+                        sizeClass: 'auto',
                         title: Rcl.local.title_image_upload,
                         className: 'rcl-hand-uploader',
                         buttons: [{
@@ -48,10 +49,7 @@ function rcl_cover_uploader(){
                         }, {
                             className: 'btn btn-danger',
                             label: Rcl.local.close,
-                            closeAfter: true,
-                            method: function () {
-                                jcrop_api.destroy();
-                            }
+                            closeAfter: true
                         }],
                         content: '<div id="rcl-preview"><img src="'+imgUrl+'"></div>'
                     });
@@ -99,13 +97,13 @@ function rcl_cover_uploader(){
         },
         done: function (e, data) {
             if(data.result['error']){
-                rcl_notice(data.result['error'],'error');
+                rcl_notice(data.result['error'],'error',10000);
                 return false;
             }
             jQuery('#lk-conteyner').css('background-image','url('+data.result['cover_url']+')');
             jQuery('#avatar-upload-progress').hide().empty();
             jQuery( '#rcl-preview' ).remove();
-            rcl_notice(data.result['success'],'success');
+            rcl_notice(data.result['success'],'success',10000);
         }
     });
 }

@@ -1,0 +1,107 @@
+#tab-profile table {
+    border: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+	font: 14px/1.5 Tahoma,Arial;			/*++Twenty15++*/
+    margin: 0 0 12px;
+    text-align: left;
+    width: 100%;
+}
+#tab-profile table tr th {
+    overflow: hidden;
+    width: 32%;
+}
+#tab-profile input[type="checkbox"] {
+    margin: 4px 2px 0;
+    width: 15px;
+    float: none;
+}
+
+#tab-profile table input,
+#tab-profile table textarea {
+    font: 14px/1.5 Tahoma,Arial;			/*++Twenty15++*/
+    max-width: 99%;
+    padding: 8px 2%;
+    width: 100%;
+    border:none;
+    box-sizing: border-box;
+}
+#tab-profile table select {
+	box-shadow: 0 0 1px 1px #ccc;
+	box-sizing: border-box;
+    float: left;
+    max-width: 99%;
+    padding: 8px 2%;
+    width: 100%;
+}
+#tab-profile table .block-label {
+    background: rgba(219, 219, 219, 0.3);
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    font: 12px arial;
+    margin: 4px;
+    padding: 7px 9px 6px 8px;
+}
+#tab-profile table .block-label input[type="checkbox"] {
+    margin: 0 6px 0 0;
+}
+#tab-profile table .block-label input[type="radio"] {
+    border: 1px solid #d1d1d1;
+    color: #b1b1b1;
+    float: none;
+    font-size: 13px;
+    padding: 8px 12px;
+    width: auto;
+}
+#tab-profile .required {
+    color: rgb(229, 57, 53);
+    font: bold 15px/1 Verdana,arial;
+}
+#tab-profile table label a {
+    color: rgb(76, 140, 189);
+    display: inline;
+    font-weight: bold;
+	margin: 0;
+    padding: 0 1px 0 0;
+}
+
+#tab-profile table label a:hover,
+#tab-profile table td span a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+#tab-profile table td a:hover {
+	color: #000;
+}
+#tab-profile table td a:hover i {
+	color: red;
+}
+#tab-profile .file-manage-box{
+    display: block;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+#tab-profile .file-manage-box .fa {
+    color: rgb(229, 57, 53);
+    font-size: 16px;
+    margin-right: 5px;
+}
+#tab-profile .file-manage-box .delete-file-url{
+    float: right;
+}
+#tab-profile .file-manage-box .delete-file-url a{
+    display: inline-block;
+}
+#tab-profile .file-field-upload{
+    display: block;
+    padding: 5px;
+    background: #f4f4f4;
+    font-size: 11px;
+}
+#tab-profile .file-field-upload input{
+    width: auto;
+}
+

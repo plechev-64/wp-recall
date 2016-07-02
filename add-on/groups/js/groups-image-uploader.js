@@ -24,13 +24,13 @@ jQuery(function($){
         done: function (e, data) {
 
             if(data.result['error']){
-                rcl_notice(data.result['error'],'error');
+                rcl_notice(data.result['error'],'error',10000);
                 return false;
             }
 
             $('#rcl-group .group-avatar img').attr('src',data.result['avatar_url']);
             $('#avatar-upload-progress').hide().empty();
-            rcl_notice(data.result['success'],'success');
+            rcl_notice(data.result['success'],'success',10000);
 
         }
     });

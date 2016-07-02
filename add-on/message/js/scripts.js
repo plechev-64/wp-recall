@@ -179,7 +179,7 @@ jQuery(function($){
                             jQuery('#privatemess').html(data['message_block']).fadeOut(5000);
                             jQuery('#rcl-new-mess').delay(2000).queue(function () {jQuery('#rcl-new-mess').empty();jQuery('#rcl-new-mess').dequeue();});
                     } else {
-                            rcl_notice(Rcl.local.error,'error');
+                            rcl_notice(Rcl.local.error,'error',10000);
                     }
             }
         });
@@ -197,7 +197,7 @@ jQuery(function($){
                 if(data['otvet']==100){
                     jQuery('#manage-blacklist').replaceWith(data['content']);
                 } else {
-                    rcl_notice(Rcl.local.error,'error');
+                    rcl_notice(Rcl.local.error,'error',10000);
                 }
             }
         });
@@ -214,7 +214,7 @@ jQuery(function($){
                 if(data['otvet']==100){
                          jQuery('.history-'+data['id_user']).remove();
                 } else {
-                        rcl_notice(Rcl.local.error,'error');
+                        rcl_notice(Rcl.local.error,'error',10000);
                 }
             }
         });
@@ -232,7 +232,7 @@ jQuery(function($){
                 if(data['otvet']==100){
                          jQuery('.history-'+data['id_user']).remove();
                 } else {
-                        rcl_notice(Rcl.local.error,'error');
+                        rcl_notice(Rcl.local.error,'error',10000);
                 }
             }
         });
@@ -300,7 +300,7 @@ jQuery(function($){
                 if(data['recall']==100){
                         jQuery('.correspond #contact-lists').html(data['message_block']);
                 } else {
-                        rcl_notice(Rcl.local.error,'error');
+                        rcl_notice(Rcl.local.error,'error',10000);
                 }
                 rcl_preloader_hide();
             }
@@ -323,7 +323,7 @@ jQuery(function($){
                     screen_top = screen_top + 60;
                     jQuery('#rcl-popup').css('top', screen_top+'px').delay(100).slideDown(400);
                 }else{
-                    rcl_notice(Rcl.local.error,'error');
+                    rcl_notice(Rcl.local.error,'error',10000);
                 }
             }
         });

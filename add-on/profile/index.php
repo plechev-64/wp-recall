@@ -8,8 +8,10 @@ function rcl_profile_scripts(){
     global $user_ID,$user_LK;
     if($user_LK){
         rcl_enqueue_script( 'rcl-profile', rcl_addon_url('js/scripts.js', __FILE__) );
-        if($user_ID==$user_LK)
+        if($user_ID==$user_LK){
+            rcl_enqueue_style( 'rcl-profile', rcl_addon_url('style.css', __FILE__) );
             rcl_enqueue_script( 'user-avatar-uploader', rcl_addon_url('js/avatar-uploader.js', __FILE__),false,true );
+        }
     }
 }
 
@@ -44,7 +46,7 @@ function rcl_bar_add_profile_link(){
 
 add_action('admin_menu', 'rcl_profile_options_page',30);
 function rcl_profile_options_page(){
-	add_submenu_page( 'manage-wprecall', __('Profile fields','wp-recall'), __('Profile fields','wp-recall'), 'manage_options', 'manage-userfield', 'rcl_manage_profile_fields');
+    add_submenu_page( 'manage-wprecall', __('Profile fields','wp-recall'), __('Profile fields','wp-recall'), 'manage_options', 'manage-userfield', 'rcl_manage_profile_fields');
 }
 
 add_action('init','rcl_add_block_show_profile_fields');

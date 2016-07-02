@@ -1,4 +1,4 @@
-.cab_15 #lk-conteyner {
+.office-sunshine #lk-conteyner {
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -6,17 +6,17 @@
     max-width: 1280px;
 	padding: 0;
 }
-.cab_15 #lk-conteyner::after {
+.office-sunshine #lk-conteyner::after {
     background: rgba(0, 0, 0, 0) linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)) repeat scroll 0 0;
     bottom: 0;
 	content: "";
 	display: block;
     height: 38%;
-    left: 0;
-    pointer-events: none;
+	left: 0;
+	pointer-events: none;
     position: absolute;
     width: 100%;
-    z-index: 1;
+	z-index: 1;
 }
 .cab_header {
     display: inline-block;
@@ -61,7 +61,7 @@
     width: 100%;
     z-index: 2;
 }
-.cab_15 .lk-sidebar {
+.office-sunshine .lk-sidebar {
     height: 200px;
 	margin: 0 30px;
     width: 200px;
@@ -78,14 +78,14 @@
 	width: 68%;
     width: calc(100% - 265px);
 }
-.cab_15 .cab_title h2 {
+.office-sunshine .cab_title h2 {
     color: #fff;
     font-size: 34px;
     line-height: 1.1;
 	padding: 0;
 	text-shadow: 1px 0 1px #000;
 }
-.cab_15 .rcl-action {
+.office-sunshine .rcl-action {
 	color: #ddd;
 	font-size: 14px;
 	margin: 0 0 0 10px;
@@ -128,7 +128,7 @@
 .cab_bttn > div {
     display: inline-block;
 }
-.wprecallblock.cab_15 #lk-menu a {
+.office-sunshine #lk-menu a {
 	margin: 0 2px 0 0;
 }
 
@@ -149,7 +149,7 @@
     max-width: 280px;
     padding: 0 2px;
 }
-.cab_15 .recall_content_block.active {
+.office-sunshine .recall_content_block.active {
     min-width: 380px;
 }
 /* END для сайдбара-виджета */
@@ -296,7 +296,7 @@
 
 /* START responsive */
 @media screen and (max-width:800px) {
-	.cab_15 #lk-conteyner::after {
+	.office-sunshine #lk-conteyner::after {
 		height: 25%;
 	}
 	.cab_content {
@@ -306,7 +306,7 @@
 	.cab_center {
 		min-height: 112px;
 	}
-	.cab_15 .lk-sidebar {
+	.office-sunshine .lk-sidebar {
 		height: 150px;
 		margin: 0 20px;
 		width: 150px;
@@ -319,10 +319,10 @@
 		width: 68%;
 		width: calc(100% - 205px);
 	}
-	.cab_15 .cab_title h2 {
+	.office-sunshine .cab_title h2 {
 		font-size: 26px;
 	}
-	.cab_15 .rcl-action {
+	.office-sunshine .rcl-action {
 		font-size: 13px;
 		line-height: 1;
 	}
@@ -347,6 +347,9 @@
 		padding: 1px 2px;
 		width: 99%;
 	}
+	.office-sunshine .recall_content_block.active {
+		min-width: auto;
+	}
 }
 @media screen and (max-width:667px) {
 	.cab_header {
@@ -363,7 +366,7 @@
 	.cab_center {
 		min-height: 85px;
 	}
-	.cab_15 .lk-sidebar {
+	.office-sunshine .lk-sidebar {
 		height: 80px;
 		margin: 0 15px;
 		width: 80px;
@@ -371,10 +374,10 @@
 	.lk-sidebar .lk-avatar {
 		box-shadow: 0 0 0 3px #fff;
 	}
-	.cab_15 .rcl-avatar-delete {
+	.office-sunshine .rcl-avatar-delete {
 		padding: 5px 6px;
 	}
-	.cab_15 .cab_title h2,
+	.office-sunshine .cab_title h2,
 	.lk-avatar .cab_usr_info {
 		font-size: 20px;
 	}
@@ -395,7 +398,7 @@
 		margin: 0 5px;
 		text-align: center;
 	}
-	.cab_15 .lk-sidebar {
+	.office-sunshine .lk-sidebar {
 		display: block;
 		float: none;
 		height: 250px;
@@ -425,7 +428,7 @@
 	}
 }
 @media screen and (max-width:320px) {
-	.cab_15 .lk-sidebar {
+	.office-sunshine .lk-sidebar {
 		height: 205px;
 		width: 205px;
 	}

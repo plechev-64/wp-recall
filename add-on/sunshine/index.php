@@ -21,6 +21,7 @@ function cab_15_script_load() {
             rcl_enqueue_script('cab_15_scrpt', rcl_addon_url( 'js/my-scr.js', __FILE__ ), false, true);
         }
         if($user_LK==$user_ID){
+            rcl_crop_scripts();
             rcl_enqueue_script('cover-uploder', rcl_addon_url( 'js/cover-uploader.js', __FILE__ ), false, true);
         }
     }
@@ -30,6 +31,7 @@ function cab_15_script_load() {
 add_filter('rcl_init_js_variables','rcl_init_js_office',10);
 function rcl_init_js_office($data){
     global $user_LK,$user_ID;
+    
     if(!$user_LK) return $data;
     
     if($user_LK==$user_ID){

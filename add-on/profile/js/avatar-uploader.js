@@ -24,7 +24,7 @@ function rcl_avatar_uploader(){
             jQuery.each(data.files, function (index, file) {
                 jQuery('#rcl-preview').remove();
                 if(file.size>Rcl.profile.avatar_size*1024*1024){
-                    rcl_notice(Rcl.local.upload_size_avatar,'error');
+                    rcl_notice(Rcl.local.upload_size_avatar,'error',10000);
                     return false;
                 }
 
@@ -34,6 +34,7 @@ function rcl_avatar_uploader(){
                     var imgUrl = event.target.result;
                     
                     ssi_modal.show({
+                        sizeClass: 'auto',
                         title: Rcl.local.title_image_upload,
                         className: 'rcl-hand-uploader',
                         buttons: [{
@@ -97,13 +98,13 @@ function rcl_avatar_uploader(){
         },
         done: function (e, data) {
             if(data.result['error']){
-                rcl_notice(data.result['error'],'error');
+                rcl_notice(data.result['error'],'error',10000);
                 return false;
             }
             jQuery('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data.result['avatar_url']);
             jQuery('#avatar-upload-progress').hide().empty();
             jQuery( '#rcl-preview' ).remove();
-            rcl_notice(data.result['success'],'success');
+            rcl_notice(data.result['success'],'success',10000);
         }
     });
 
@@ -155,13 +156,13 @@ function rcl_avatar_uploader(){
                     url: Rcl.ajaxurl,
                     success: function(data){
                         if(data['error']){
-                                rcl_notice(data['error'],'error');
+                                rcl_notice(data['error'],'error',10000);
                                 return false;
                         }
                         ssi_modal.close();
                         jQuery('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data['avatar_url']);
                         jQuery( '#rcl-preview' ).remove();
-                        rcl_notice(data['success'],'success');
+                        rcl_notice(data['success'],'success',10000);
                     }
                 });
             });

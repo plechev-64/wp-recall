@@ -14,7 +14,7 @@ function rcl_edit_rating(e){
         type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
         success: function(data){
             if(data['error']){
-                rcl_notice(data['error'],'error');
+                rcl_notice(data['error'],'error',10000);
                 return false;
             }
             if(data['result']==100){
@@ -48,7 +48,7 @@ function rcl_get_list_votes(e){
             if(data['result']==100){
                 jQuery('#tab-rating .rating-list-votes').html(data['window']);
             }else{
-                rcl_notice(Rcl.local.error,'error');
+                rcl_notice(Rcl.local.error,'error',10000);
             }
             rcl_preloader_hide();
         }
@@ -71,7 +71,7 @@ function rcl_view_list_votes(e){
                 block.after(data['window']);
                 block.next().slideDown();
             }else{
-                rcl_notice(Rcl.local.error,'error');
+                rcl_notice(Rcl.local.error,'error',10000);
             }
         }
     });

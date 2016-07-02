@@ -21,7 +21,7 @@ function rcl_get_user_info(element){
         success: function(data){                                   
             if(data['error']){
                 rcl_preloader_hide();
-                rcl_notice(data['error'],'error');
+                rcl_notice(data['error'],'error',10000);
                 return false;
             }                                   
             if(data['success']){

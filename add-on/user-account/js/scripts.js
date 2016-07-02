@@ -12,7 +12,7 @@ jQuery(function($){
                 rcl_preloader_hide();
                 
                 if(data['error']){
-                    rcl_notice(data['error'],'error');
+                    rcl_notice(data['error'],'error',10000);
                     return false;
                 }
                 

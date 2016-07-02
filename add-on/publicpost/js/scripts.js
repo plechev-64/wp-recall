@@ -19,7 +19,7 @@ jQuery(document).ready(function($) {
             success: function(data){
 
                 if(data['error']){
-                    rcl_notice(data['error'],'error');
+                    rcl_notice(data['error'],'error',10000);
                     rcl_preloader_hide();
                     return false;
                 }
@@ -70,7 +70,7 @@ function rcl_add_editor_box(e,type,idbox,content){
         url: Rcl.ajaxurl,
         success: function(data){
             if(data['error']){
-                rcl_notice(data['error'],'error');
+                rcl_notice(data['error'],'error',10000);
                 return false;
             }
             var editor = jQuery(e).parents('.rcl-public-editor');
@@ -100,11 +100,11 @@ function rcl_delete_post(element){
         success: function(data){
             rcl_preloader_hide();
             if(data['error']){
-                rcl_notice(data['error'],'error');
+                rcl_notice(data['error'],'error',10000);
                 return false;
             }
             jQuery('.'+data['post_type']+'-'+post_id).remove();
-            rcl_notice(data['success'],'success');
+            rcl_notice(data['success'],'success',10000);
         }
     });
     return false;
@@ -119,7 +119,7 @@ function rcl_edit_post(element){
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
             success: function(data){                                   
                 if(data['error']){
-                    rcl_notice(data['error'],'error');
+                    rcl_notice(data['error'],'error',10000);
                     return false;
                 }                                   
                 if(data['result']==100){
@@ -140,10 +140,10 @@ function rcl_edit_post(element){
                                     type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
                                     success: function(data){
                                         if(data['error']){
-                                            rcl_notice(data['error'],'warning');
+                                            rcl_notice(data['error'],'warning',10000);
                                         }  
                                         if(data['result']==100){
-                                            rcl_notice(data['content'],'success');
+                                            rcl_notice(data['content'],'success',10000);
                                             ssi_modal.close();
                                         }
                                         rcl_preloader_hide();
@@ -180,7 +180,7 @@ function rcl_init_upload_box(idbox){
         },
         done: function (e, data) {				
             if(data.result['error']){
-                rcl_notice(data.result['error'],'error');
+                rcl_notice(data.result['error'],'error',10000);
                 rcl_preloader_hide();
                 return false;
             }
@@ -226,7 +226,7 @@ function rcl_preview(e){
         }
 
 	if(!required){
-            rcl_notice(Rcl.local.requared_fields_empty,'error');
+            rcl_notice(Rcl.local.requared_fields_empty,'error',10000);
             return false;
 	}
 
@@ -250,7 +250,7 @@ function rcl_preview(e){
             success: function(data){
 
                 if(data['error']){
-                    rcl_notice(data['error'],'error');
+                    rcl_notice(data['error'],'error',10000);
                     submit.attr('disabled',false).val(Rcl.local.preview);
                     return false;
                 }
@@ -284,7 +284,7 @@ function rcl_preview(e){
                                     success: function(data){
                                         if(data['error']){
                                             rcl_preloader_hide();
-                                            rcl_notice(data['error'],'error');
+                                            rcl_notice(data['error'],'error',10000);
                                         }
                                         if(data['redirect']){
                                             location.replace(data['redirect']);
@@ -302,7 +302,7 @@ function rcl_preview(e){
                 }
 
                 submit.attr('disabled',false).val(Rcl.local.preview);
-                rcl_notice(Rcl.local.error,'error');
+                rcl_notice(Rcl.local.error,'error',10000);
 
             }
 	}); 
@@ -346,11 +346,11 @@ function rcl_init_public_form(post_type,post_id){
             jQuery.each(data.files, function (index, file) {
                 cnt_now++;
                 if(cnt_now>Rcl.public.maxcnt){
-                    rcl_notice(Rcl.local.allowed_downloads,'error');
+                    rcl_notice(Rcl.local.allowed_downloads,'error',10000);
                     error = true;
                 }                       
                 if(file['size']>maxsize){
-                    rcl_notice(Rcl.local.upload_size_public,'error');                            
+                    rcl_notice(Rcl.local.upload_size_public,'error',10000);                            
                     error = true;
                 }                       
             });
@@ -362,7 +362,7 @@ function rcl_init_public_form(post_type,post_id){
         done: function (e, data) {
             jQuery.each(data.result, function (index, file) {
                 if(data.result['error']){
-                    rcl_notice(data.result['error'],'error');
+                    rcl_notice(data.result['error'],'error',10000);
                     rcl_preloader_hide();
                     return false;
                 }
