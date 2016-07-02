@@ -28,14 +28,13 @@
 /* START upload cover */
 .cab_cover_upl {
     background: rgba(0, 0, 0, 0.3);
-    border-radius: 4px 0 0 4px;
     color: #ddd;
     float: right;
     font-size: 26px;
+	line-height: 1;
     overflow: hidden;
     padding: 4px 7px;
     z-index: 3;
-    margin: 0 10px;
 }
 .cab_cover_upl span{
     position: relative;
@@ -51,12 +50,6 @@
     right: 0;
     top: 0;
     z-index: 99;
-}
-.ui-dialog.rcl-load-cover {
-	max-width: 99%;
-}
-.rcl-load-cover .ui-dialog-content {
-    padding: 0;
 }
 /* END upload cover */
 
@@ -74,6 +67,7 @@
     width: 200px;
 }
 .lk-sidebar .lk-avatar {
+	background: #ddd;
     box-shadow: 0 0 0 5px #fff;
     height: 100%;
     width: 100%;
@@ -238,9 +232,7 @@
 
 
 /* START Модальное окно с информацией о пользователе */
-.rcl-user-getails .ui-widget-content {
-    padding: 0;
-}
+
 .rcl-user-getails .rcl-user-avatar {
     display: inline-block;
     position: relative;
@@ -264,6 +256,7 @@
     height: 100%;
     opacity: 0.7;
     position: absolute;
+	text-decoration: none;
     top: 0;
     width: 100%;
 }
@@ -277,7 +270,7 @@
     width: 100%;
 }
 .rcl-user-getails .ballun-status {
-    margin: 10px auto 0;
+    margin: 5px auto 0;
     max-width: 425px;
 }
 .rcl-user-getails p.status-user-rcl::before {
@@ -285,14 +278,17 @@
     margin-left: 50%;
 }
 .rcl-user-getails .details-block-rcl {
-    padding: 10px;
+    padding: 5px;
 }
 .rcl-user-getails p {
     margin: 0;
 	padding: 0;
 }
-.rcl-user-getails .ui-dialog-buttonpane {
-    padding: 5px;
+.rcl-user-avatar-zoom .ssi-modalContent {
+    padding: 0;
+}
+.rcl-user-avatar-zoom .ssi-topIcons {
+    z-index: 1600;
 }
 /* END Модальное окно с информацией о пользователе */
 

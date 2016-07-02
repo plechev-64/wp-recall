@@ -44,13 +44,6 @@ class RCL_Install {
         global $wpdb, $user_ID, $rcl_current_action, $rcl_user_URL, $rcl_options;
 
         $upload_dir = rcl_get_wp_upload_dir();
-
-        /*Убрать данную проверку позже*/
-        if(!file_exists(RCL_UPLOAD_PATH)&&file_exists(TEMP_PATH)){
-            rename(TEMP_PATH,RCL_UPLOAD_PATH);
-            rcl_rename_media_dir();
-        }
-
         wp_mkdir_p(($upload_dir['basedir']));
     }
 

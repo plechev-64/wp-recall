@@ -813,113 +813,6 @@ a.data-filter.filter-active:hover {
 /* Контент лк End */
 
 
-/* upload avatar overlay and block zoom start  */
-.ui-widget-overlay.ui-front {
-    background: #000;
-    opacity: 0.8;
-	position: fixed;
-}
-.ui-dialog.rcl-zoom-avatar {
-    background: none;
-    border: none;
-    border-radius: 4px;
-    box-shadow: 0 0 20px 10px #000;
-	padding: 0;
-	max-width: 99%;
-	width: unset !important;
-}
-.ui-dialog.rcl-zoom-avatar .ui-dialog-title,
-.ui-dialog.rcl-load-avatar .ui-button-icon-primary,
-.ui-dialog.rcl-zoom-avatar .ui-button-icon-primary {
-	display: none;
-}
-.ui-dialog.rcl-zoom-avatar .ui-dialog-titlebar {
-    border: none;
-    border-radius: 0;
-    height: 0;
-    padding: 0;
-	position: unset;
-}
-.ui-dialog.rcl-load-avatar .ui-dialog-titlebar-close::before,
-.ui-dialog.rcl-zoom-avatar .ui-dialog-titlebar-close::before {
-    content: "\f335";
-    font: 400 40px/40px dashicons;
-    height: 40px;
-    vertical-align: middle;
-    width: 40px;
-}
-.ui-dialog.rcl-zoom-avatar .ui-button {
-    background: none;
-    border: none;
-    color: rgb(229, 57, 53);
-	margin: 0 5px 0 0;
-	z-index: 99;
-}
-.ui-dialog.rcl-zoom-avatar .ui-button:hover,
-.ui-dialog.rcl-load-avatar .ui-dialog-titlebar-close:hover,
-.ui-dialog-buttonpane .ui-button.ui-button-text-only:hover {
-	opacity: 0.8;
-}
-.ui-dialog.rcl-zoom-avatar .ui-dialog-content {
-    background: transparent;
-    border: none;
-	border-radius: 4px;
-    color: transparent;
-	overflow: unset;
-    padding: 0;
-}
-.ui-dialog.rcl-load-avatar {
-    background: #fff;
-    border: none;
-    border-radius: 0;
-    box-shadow: 0 0 20px 10px #000;
-	max-width: 100%;
-	min-width: 245px;
-}
-.ui-dialog.rcl-load-avatar .ui-dialog-titlebar {
-    background: none;
-    border: none;
-    border-radius: 0;
-    font: 16px/32px Tahoma,arial;
-    height: 34px;
-    padding: 0 0 0 7px;
-}
-.ui-dialog.rcl-load-avatar .ui-dialog-titlebar-close {
-    background: none;
-    border: none;
-    border-radius: 0;
-    color: rgb(229, 57, 53);
-	margin: 0 5px 0 0;
-    padding: 0;
-}
-.ui-dialog.rcl-load-avatar .ui-dialog-content {
-    background: #fff;
-    border: none;
-    display: table;
-    margin: 0 auto;
-	padding: 5px;
-}
-.ui-dialog.rcl-load-avatar .ui-dialog-buttonpane {
-    border: none;
-    padding: 5px 15px 10px 0;
-}
-.ui-dialog.rcl-load-avatar .ui-button-text-only {
-    background: rgba(219, 219, 219, 0.3);
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    color: #000;
-    font: 16px/1 Tahoma,arial;
-    height: auto;
-    margin: 0;
-    padding: 5px 15px;
-    vertical-align: middle;
-}
-.ui-dialog.rcl-load-avatar .ui-button-text-only span {
-    padding: 0;
-}
-/* upload avatar overlay and block zoom end  */
-
-
 /* navigation Start */
 .rcl-navi,
 .rcl-pager{
@@ -962,6 +855,54 @@ p.rcl-custom-fields{
 }
 
 
+/* START ssi-modal */
+.ssi-backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+.ssi-modalWindow {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+.ssi-modalTitle {
+    border: none;
+    font: 22px/1 bold;
+	padding: 6px 0 5px 15px;
+}
+.ssi-topIcons {
+    top: 2px;
+}
+.ssi-topIcons .ssi-closeIcon,
+.ssi-topIcons .ssi-closeIcon:hover {
+    background: none;
+	height: 30px;
+}
+.ssi-topIcons .ssi-closeIcon::after {
+    color: rgb(229, 57, 53);
+    content: "\f00d";                /* fa-times */
+    font: 400 30px/30px fontawesome;
+    margin: 0 7px 0 0;
+}
+.ssi-topIcons .ssi-closeIcon:hover::after {
+    color: rgb(192, 0, 0);
+}
+.ssi-buttons .ssi-modalBtn {
+    background: #eee;
+    border: medium none;
+    border-radius: 0;
+    box-shadow: 0 0 1px 1px #ccc;
+    color: #555;
+    cursor: pointer;
+    font: 15px/1 normal;
+    margin: 3px 3px 7px;
+    padding: 5px 7px;
+    text-transform: none;
+}
+.ssi-modalBtn:hover {
+    background: #e9e9e9;
+    box-shadow: 0 0 1px 1px #aaa;
+}
+/* END ssi-modal */
 
 @media screen and (max-width:768px) {
 	#lk-menu.left-buttons {

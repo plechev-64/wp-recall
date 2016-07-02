@@ -198,10 +198,11 @@ function rcl_include_template_office(){
 
 function rcl_get_install_templates(){
     global $rcl_options,$active_addons;
-
-    if(!$active_addons) return false;
     
     $list = array();
+    
+    if(!$active_addons) return $list;
+
     foreach($active_addons as $addon_id=>$addon){
         if(!isset($addon['template'])) continue;
         $list[$addon_id] = $addon['template'];

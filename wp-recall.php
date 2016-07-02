@@ -337,7 +337,7 @@ function wp_recall(){
     
     do_action('rcl_area_before'); ?>
 
-    <div id="rcl-<?php echo $user_LK; ?>" class="wprecallblock cab_15" data-account="<?php echo $user_LK; ?>">
+    <div id="rcl-office" <?php rcl_office_class(); ?> data-account="<?php echo $user_LK; ?>">
         
         <?php rcl_notice(); ?>
 

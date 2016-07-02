@@ -1011,3 +1011,23 @@ function rcl_verify_ajax_nonce(){
         exit;
     }
 }
+
+function rcl_office_class(){
+    global $rcl_options,$user_LK,$user_ID;
+    
+    $class = array('wprecallblock','rcl-office','cab_15');
+    
+    if(isset($rcl_options['active_template'])&&$rcl_options['active_template']){
+        $class[] = 'office-'.$rcl_options['active_template'];
+    }
+    
+    if($user_ID){
+        
+        $class[] = ($user_LK==$user_ID)? 'visitor-master': 'visitor-guest';
+
+    }else{
+        $class[] = 'visitor-guest';
+    }
+    
+    echo 'class="'.implode(' ',$class).'"';
+}
