@@ -11,6 +11,7 @@ class Rcl_PublicForm {
     public $type_editor;
     public $wp_editor;
     public $can_edit;
+    public $preview;
 
     function __construct($atts){
         global $editpost,$group_id,$rcl_options,$user_ID,$formData;
@@ -35,6 +36,8 @@ class Rcl_PublicForm {
         $this->terms = $cats;
         $this->form_id = $id;
         $this->accept = $accept;
+        
+        $this->preview = (isset($rcl_options['public_preview'])&&!$rcl_options['public_preview'])? 1: 0;
 
         if(!isset($wp_editor)){
             if(isset($rcl_options['wp_editor'])){
@@ -145,7 +148,7 @@ class Rcl_PublicForm {
 			array('type'=>'hidden','value'=>base64_encode($this->form_id),'name'=>'id_form'),
 		);
 
-                if(isset($rcl_options['public_preview'])&&$rcl_options['public_preview']==1){
+                if(!$this->preview){
                     $inputs[] = array('type'=>'submit','value'=>__('To publish','wp-recall'),'id'=>'edit-post-rcl','class'=>'recall-button');
                 }else{
                     rcl_dialog_scripts();
@@ -293,8 +296,13 @@ class Rcl_PublicForm {
 
                 $form .= '<form id="'.$id_form.'" data-post_type="'.$this->post_type.'" class="rcl-public-form ';
                 $form .= ($this->post_id)? 'edit-form' : 'public-form';
-                $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','wp-recall').'\';"  action="" method="post" enctype="multipart/form-data">
-                '.wp_nonce_field('edit-post-rcl','_wpnonce',true,false);
+                
+                if(!$this->preview){
+                    $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','wp-recall').'\';"';  
+                }
+                
+                $form .= 'action="" method="post" enctype="multipart/form-data">
+                 '.wp_nonce_field('edit-post-rcl','_wpnonce',true,false);
 
                     if(!$user_ID) $form .= '<div class="rcl-form-field">
                             <label>'.__('Your Name','wp-recall').' <span class="required">*</span></label>

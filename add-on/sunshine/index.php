@@ -105,26 +105,6 @@ function rcl_add_cover_inline_styles($styles){
     return $styles;
 }
 
-/*add_filter('rcl_inline_styles','cab_15_style_correct',10);
-function cab_15_style_correct($styles) {
-    global $rcl_options, $user_LK;
-    if($user_LK && $rcl_options['buttons_place']==1 && is_active_sidebar('cab_15_sidebar')) { // если кнопки слева выводятся и есть в сайтбаре контент- корректируем контент и сайдбар в нем
-        $styles .= '#rcl-tabs {
-                display: flex;
-            }
-        .cab_content_blk {
-            display: inline-flex;width: 100%;
-        }
-        @media screen and (max-width:800px) {
-            .cab_content_blk {display: inline-block;}
-        }
-        @media screen and (max-width:768px) {
-            #rcl-tabs {display: inline-block;}
-        }';
-    }
-    return $styles;
-}*/
-
 add_filter('after-avatar-rcl','rcl_add_user_info_button',10);
 function rcl_add_user_info_button($content){
     rcl_dialog_scripts();
@@ -182,9 +162,14 @@ function rcl_get_user_details(){
         . '<p class="status-user-rcl">'.nl2br(esc_textarea($desc)).'</p>'
         . '</div>';
     
-    if($rcl_blocks&&isset($rcl_blocks['details'])){
+    if($rcl_blocks&&(isset($rcl_blocks['details'])||isset($rcl_blocks['content']))){
+        
+        $details = isset($rcl_blocks['details'])? $rcl_blocks['details']: array();
+        $old_output = isset($rcl_blocks['content'])? $rcl_blocks['content']: array();
 
-        foreach($rcl_blocks['details'] as $block){
+        $details = array_merge($details,$old_output);
+        
+        foreach($details as $block){
             $Rcl_Blocks = new Rcl_Blocks($block);
             $content .= $Rcl_Blocks->get_block($user_LK);
         }

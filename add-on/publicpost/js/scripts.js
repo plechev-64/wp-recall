@@ -273,25 +273,7 @@ function rcl_preview(e){
                             label: Rcl.local.publish,
                             closeAfter: false,
                             method: function () {
-                                rcl_preloader_show('#ssi-modalContent > div');
-                                var dataString = 'action=rcl_edit_post&'+string;
-                                dataString += '&ajax_nonce='+Rcl.nonce;
-                                jQuery.ajax({
-                                    type: 'POST', 
-                                    data: dataString, 
-                                    dataType: 'json', 
-                                    url: Rcl.ajaxurl,
-                                    success: function(data){
-                                        if(data['error']){
-                                            rcl_preloader_hide();
-                                            rcl_notice(data['error'],'error',10000);
-                                        }
-                                        if(data['redirect']){
-                                            location.replace(data['redirect']);
-                                        }
-                                    }
-                                }); 
-                                return false; 
+                                jQuery('form.rcl-public-form').submit();
                             }
                         }],
                         content: '<div id="rcl-preview">'+data['content']+'</div>'

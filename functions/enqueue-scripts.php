@@ -33,10 +33,9 @@ function rcl_bxslider_scripts(){
     rcl_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js');
 }
 
-function rcl_dialog_scripts(){
-    wp_enqueue_script( 'jquery' );   
-    wp_enqueue_style( 'ssi-modal', RCL_URL.'js/ssi-modal/ssi-modal.min.css' );
-    wp_enqueue_script( 'ssi-modal', RCL_URL.'js/ssi-modal/ssi-modal.min.js' );
+function rcl_dialog_scripts(){  
+    rcl_enqueue_style( 'ssi-modal', RCL_URL.'js/ssi-modal/ssi-modal.min.css' );
+    rcl_enqueue_script( 'ssi-modal', RCL_URL.'js/ssi-modal/ssi-modal.min.js' );
 }
 
 function rcl_webcam_scripts(){

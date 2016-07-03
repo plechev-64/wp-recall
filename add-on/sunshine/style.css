@@ -94,7 +94,16 @@
 .cab_cntr_layout div,
 .cab_cntr_layout span {
 	display: inline-block;
-	margin: 2px 5px;
+	
+}
+.cab_cntr_layout .block-rcl{
+    margin: 5px;
+}
+.cab_cntr_layout .bx-wrapper .bx-viewport{
+    border: 0;
+}
+.cab_cntr_layout .bx-wrapper{
+    
 }
 #lk-conteyner .cab_cntr_layout > ul {
     height: 24px;
@@ -102,7 +111,6 @@
 }
 .cab_cntr_layout img, .cab_cntr_layout .fa {
     font-size: 25px;
-    height: 25px  !important; /* stupid Point theme correction */
 }
 .cab_footer {
     bottom: 15px;
@@ -277,7 +285,7 @@
     left: 0;
     margin-left: 50%;
 }
-.rcl-user-getails .details-block-rcl {
+.rcl-user-getails .block-rcl {
     padding: 5px;
 }
 .rcl-user-getails p {

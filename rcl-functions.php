@@ -87,7 +87,7 @@ function rcl_get_order_tabs($rcl_tabs){
 
 //регистрируем контентые блоки
 function rcl_block($place,$callback,$args=false){
-    global $rcl_blocks;
+    global $rcl_blocks,$user_LK;
     
     $data = array(
         'place'=>$place,
@@ -99,9 +99,9 @@ function rcl_block($place,$callback,$args=false){
 
     //if(is_admin())return false;
 
-    /*if(isset($data['args']['gallery'])){
+    if($user_LK&&isset($data['args']['gallery'])){
         rcl_bxslider_scripts();
-    }*/
+    }
     
     $rcl_blocks[$place][] = $data;
     
@@ -973,7 +973,7 @@ function rcl_get_button($ancor,$url,$args=false){
     if(isset($args['class'])&&$args['class']) $button .= $args['class'];
     $button .= '">';
     if(isset($args['icon'])&&$args['icon']) $button .= '<i class="fa '.$args['icon'].'"></i>';
-    if($ancor) $button .= '<span>'.$ancor.'</span>';
+    $button .= '<span>'.$ancor.'</span>';
     $button .= '</a>';
     return $button;
 }
@@ -1014,21 +1014,24 @@ function rcl_verify_ajax_nonce(){
 }
 
 function rcl_office_class(){
-    global $rcl_options,$user_LK,$user_ID;
+    global $rcl_options,$active_addons,$user_LK,$user_ID;
     
-    $class = array('wprecallblock','rcl-office','cab_15');
+    $class = array('wprecallblock','rcl-office');
     
-    if(isset($rcl_options['active_template'])&&$rcl_options['active_template']){
-        $class[] = 'office-'.$rcl_options['active_template'];
+    $active_template = (isset($rcl_options['active_template'])&&$rcl_options['active_template'])? $rcl_options['active_template']: '';
+    
+    if($active_template){
+        if(isset($active_addons[$active_template])) 
+            $class[] = 'office-'.strtolower(str_replace(' ','-',$active_addons[$active_template]['template']));
     }
     
-    if($user_ID){
-        
+    if($user_ID){       
         $class[] = ($user_LK==$user_ID)? 'visitor-master': 'visitor-guest';
-
     }else{
         $class[] = 'visitor-guest';
     }
+    
+    $class[] = (isset($rcl_options['buttons_place'])&&$rcl_options['buttons_place']==1)? "vertical-menu":"horizontal-menu";
     
     echo 'class="'.implode(' ',$class).'"';
 }

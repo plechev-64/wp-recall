@@ -538,12 +538,13 @@ a.data-filter.filter-active:hover {
     margin: 1px 1px 4px 0;
     padding: 7px;
 }
-#lk-menu.left-buttons {
+.vertical-menu #lk-menu {
     float: left;
     max-width: 170px;
+    min-width: 120px;
     width: auto;
 }
-#lk-menu.left-buttons a {
+.vertical-menu #lk-menu a {
     border-bottom: 2px solid #fff;
     display: flex;
     float: none;
@@ -797,15 +798,15 @@ div.ssi-backdrop {
 /* END ssi-modal */
 
 @media screen and (max-width:768px) {
-	#lk-menu.left-buttons {
-		max-width: none;
-	}
-	#lk-menu.left-buttons .recall-button {
-		display: inline-block!important;
-		padding: 6px;
-	}
-    .left-buttons .recall-button span,
-    .left-buttons .recall-button .fa {
+    .vertical-menu #lk-menu {
+            max-width: none;
+    }
+    .vertical-menu #lk-menu .recall-button {
+            display: inline-block!important;
+            padding: 6px;
+    }
+    .vertical-menu .recall-button span,
+    .vertical-menu .recall-button .fa {
         display: block;
         margin: 0 auto;
     }

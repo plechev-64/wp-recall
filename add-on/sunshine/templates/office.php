@@ -1,4 +1,4 @@
-<?php global $rcl_options;
+<?php
 /*
 This script uses original idea Dasari Srinivas
 http://blog.sodhanalibrary.com/2014/01/responsive-menu-or-navigation-bar-with.html
@@ -40,10 +40,8 @@ http://blog.sodhanalibrary.com/2014/01/responsive-menu-or-navigation-bar-with.ht
         </div>
     </div>
 
-    <?php $class = (isset($rcl_options['buttons_place'])&&$rcl_options['buttons_place']==1)? "left-buttons":""; ?>
-
     <div id="rcl-tabs">
-        <div id="lk-menu" class="rcl-menu <?php echo $class; ?> rcl-node">
+        <div id="lk-menu" class="rcl-menu">
             <?php do_action('rcl_area_menu'); ?>
         </div>
         <?php if(is_active_sidebar('cab_15_sidebar')){ // если в сайтбаре(виджете) есть контент выводим и контент и сайтбар обернутыми в div cab_content_blk ?>

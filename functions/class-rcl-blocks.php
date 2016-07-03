@@ -10,7 +10,7 @@ class Rcl_Blocks {
                 'gallery'=>0,
                 'public'=>1,
                 'order'=>10,
-                'width'=>50
+                'width'=>40
             );
     
     
@@ -68,16 +68,17 @@ class Rcl_Blocks {
         $content .= $cl_content;
 
         if($this->args['gallery']){
-
+            
             $content .= '<script>jQuery("#'.$this->args['gallery'].'").bxSlider({
             pager:false,
             minSlides: 1,
-            maxSlides: 20,
+            maxSlides: 10,
             slideWidth: '.$this->args['width'].',
             infiniteLoop:true,
-            slideMargin: 5,
+            slideMargin: 0,
             moveSlides:1
             });</script>';
+            
         }
 
         $content .= '</div>';
