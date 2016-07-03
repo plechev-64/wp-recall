@@ -14,7 +14,7 @@
         <div class="rcb_icon">
             <a href="/">
                 <i class="fa fa-home" aria-hidden="true"></i>
-                <div class="rcb_hiden"><span><?php _e('Home','wp-recall'); ?></span></div>
+                <div class="rcb_hiden"><span><?php _e('Homepage','wp-recall'); ?></span></div>
             </a>
         </div>
 

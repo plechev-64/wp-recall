@@ -242,6 +242,7 @@ class RCL_Install {
 
             $rcl_options['view_user_lk_rcl'] = 1;
             $rcl_options['tab_newpage'] = 1;
+            $rcl_options['view_recallbar'] = 1;
             
             //подключаем первый попавшийся шаблон ЛК
             $templates = rcl_get_install_templates();

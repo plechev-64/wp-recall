@@ -54,3 +54,4 @@ if($tables){
 
 $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '%rcl%'" );
 $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '%rmag%'" );
+$wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key LIKE '%rcl%'" );

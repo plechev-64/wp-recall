@@ -31,6 +31,22 @@ function rcl_init_js_private_messages_variables($data){
     return $data;
 }
 
+add_action('rcl_bar_setup','rcl_bar_add_private_messages_icon',10);
+function rcl_bar_add_private_messages_icon(){
+    global $user_ID;
+    
+    if(!is_user_logged_in()) return false;
+    
+    rcl_bar_add_icon('rcl-notifications',
+        array(
+            'icon'=>'fa-envelope',
+            'url'=>rcl_format_url(get_author_posts_url($user_ID),'privat'),
+            'label'=>__('Messages','wp-recall'),
+            'counter'=>rcl_count_noread_messages($user_ID)
+        )
+    );
+}
+
 function rcl_count_noread_messages($user_id){
     global  $wpdb;
     $where = "WHERE adressat_mess = '$user_id' AND status_mess='0'";
