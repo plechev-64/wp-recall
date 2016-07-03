@@ -328,9 +328,7 @@ function rcl_tab_profile_content($author_lk){
     global $userdata, $user_ID, $rcl_options;
 
     if($user_ID!=$author_lk) return false;
-
-    get_currentuserinfo();
-    //do_action('show_user_profile', $userdata);
+    
     $defolt_field = get_option( 'rcl_profile_default' );
 
     foreach((array)$defolt_field as $onefield){

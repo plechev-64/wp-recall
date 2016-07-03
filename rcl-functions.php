@@ -73,7 +73,7 @@ function rcl_get_order_tabs($rcl_tabs){
     foreach($rcl_tabs as $id=>$data){
         if(isset($data['args']['output'])) continue;
         
-        if($data['args']['public']!=1){
+        if(!isset($data['args']['public'])||$data['args']['public']!=1){
             if(!$user_ID||$user_ID!=$user_LK) continue;
         }
         

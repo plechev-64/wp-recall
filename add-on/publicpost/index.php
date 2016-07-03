@@ -650,7 +650,6 @@ function rcl_get_list_custom_fields($post_id,$posttype=false,$id_form=false){
 if(!is_admin()) add_filter('get_edit_post_link','rcl_edit_post_link',100,2);
 function rcl_edit_post_link($admin_url, $post_id){
 	global $user_ID,$rcl_options;
-	get_currentuserinfo();
 
 	if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
 
@@ -671,7 +670,6 @@ function rcl_get_edit_post_button($content){
 
 	if(!current_user_can('edit_post', $post->ID)) return $content;
 
-	get_currentuserinfo();
 	$user_info = get_userdata($current_user->ID);
 
 	if($post->post_author!=$user_ID){
