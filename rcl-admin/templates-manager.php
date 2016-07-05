@@ -4,6 +4,7 @@ if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
+add_action('rcl_before_include_addons',array('Rcl_Templates_Manager','update_status'));
 add_action('admin_init','rcl_init_upload_addon');
 
 class Rcl_Templates_Manager extends WP_List_Table {
@@ -127,7 +128,7 @@ class Rcl_Templates_Manager extends WP_List_Table {
 	
     function get_columns(){
         $columns = array(
-            'addon_name' => __( 'Add-ons', 'wp-recall' ),
+            'addon_name' => __( 'Templates', 'wp-recall' ),
             'addon_status'    => __( 'Status', 'wp-recall' ),
             'addon_description'      => __( 'Description', 'wp-recall' )
         );
@@ -146,8 +147,8 @@ class Rcl_Templates_Manager extends WP_List_Table {
         $actions = array();
         
         if($item['addon_status']!=1){
-            $actions['delete'] = sprintf('<a href="?page=%s&action=%s&addon=%s">'.__( 'Delete', 'wp-recall' ).'</a>',$_REQUEST['page'],'delete',$item['ID']);
-            $actions['connect'] = sprintf('<a href="?page=%s&action=%s&addon=%s">'.__( 'To connect', 'wp-recall' ).'</a>',$_REQUEST['page'],'connect',$item['ID']);
+            $actions['delete'] = sprintf('<a href="?page=%s&action=%s&template=%s">'.__( 'Delete', 'wp-recall' ).'</a>',$_REQUEST['page'],'delete',$item['ID']);
+            $actions['connect'] = sprintf('<a href="?page=%s&action=%s&template=%s">'.__( 'To connect', 'wp-recall' ).'</a>',$_REQUEST['page'],'connect',$item['ID']);
         }
         
         return sprintf('%1$s %2$s', '<strong>'.$item[ 'addon_name' ].'</strong>', $this->row_actions($actions) );
@@ -221,32 +222,33 @@ class Rcl_Templates_Manager extends WP_List_Table {
 
     }
 
-    function update_status_addon ( ) {
+    function update_status ( ) {
         global $rcl_options;
         
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-        if( 'manage-template-recall' != $page ) return;
+        if( 'manage-templates-recall' != $page ) return;
         
         if ( isset($_GET['template'])&&isset($_GET['action']) ) {
-              //if( !wp_verify_nonce( $_GET['_wpnonce'], 'action_addon' ) ) return false;
 
               global $wpdb, $user_ID, $active_addons;
-              if ( ! current_user_can('activate_plugins') ) wp_die(__('You cant control install plugins on this site.','wp-recall'));
-
-              $addon = $_GET['addon'];
+              
+              $addon = $_GET['template'];
               $action = parent::current_action();
 
               if($action=='connect'){
                   rcl_deactivate_addon(get_option('rcl_active_template'));
-                  rcl_activate_addon($addon);
-                  update_option('rcl_active_template',$addon);
                   
-                  wp_redirect( admin_url('admin.php?page=manage-template-recall&update-template=activate') );exit;
+                  rcl_activate_addon($addon);
+                  
+                  update_option('rcl_active_template',$addon);
+                  header("Location: ".admin_url('admin.php?page=manage-templates-recall&update-template=activate'), true, 302);
+                  exit;
               }
 
               if($action=='delete'){
                  rcl_delete_addon($addon);
-                 wp_redirect( admin_url('admin.php?page=manage-template-recall&update-template=delete') );exit;
+                 header("Location: ".admin_url('admin.php?page=manage-templates-recall&update-template=delete'), true, 302);
+                 exit;
               }
         }
     }
@@ -285,7 +287,7 @@ function rcl_upload_template(){
 
         if(!$info){
               $zip->close();
-              wp_redirect( admin_url('admin.php?page=manage-template-recall&update-template=error-info') );exit;
+              wp_redirect( admin_url('admin.php?page=manage-templates-recall&update-template=error-info') );exit;
         }
 
         foreach($paths as $path){
@@ -298,7 +300,7 @@ function rcl_upload_template(){
         $zip->close();
         unlink($arch);
         if($rs){
-              wp_redirect( admin_url('admin.php?page=manage-template-recall&update-template=upload') );exit;
+              wp_redirect( admin_url('admin.php?page=manage-templates-recall&update-template=upload') );exit;
         }else{
               wp_die(__('Unpacking of archive failed.','wp-recall'));
         }
