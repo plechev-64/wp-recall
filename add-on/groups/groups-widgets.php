@@ -170,11 +170,9 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 
         global $rcl_group;
 
-        $typeform = (isset($instance['type_form']))? $instance['type_form']: 0;
-
         echo $before;
 
-        echo do_shortcode('[public-form post_type="post-group" type_editor="'.$typeform.'" group_id="'.$rcl_group->term_id.'"]');
+        echo do_shortcode('[public-form post_type="post-group" group_id="'.$rcl_group->term_id.'"]');
 
         echo $after;
     }
@@ -186,11 +184,6 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 
         echo '<label>'.__('Title','wp-recall').'</label>'
                 . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
-        echo '<label>'.__('Type form','wp-recall').'</label>'
-                . '<select name="'.$this->field_name('type_form').'">'
-                . '<option value="0" '.selected(0,$instance['type_form'],false).'>WP-Recall</option>'
-                . '<option value="1" '.selected(1,$instance['type_form'],false).'>WordPress</option>'
-                . '</select>';
 
     }
 

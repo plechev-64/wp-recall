@@ -25,7 +25,6 @@ class Rcl_PublicForm {
             'id_upload' => 'upload-public-form',
             'accept' => 'image/*',
             'post_type'=> 'post',
-            'type_editor'=> null,
             'wp_editor'=> null,
             'group_id'=>$group_id
         ),
@@ -51,12 +50,7 @@ class Rcl_PublicForm {
             $this->wp_editor = (isset($type))? $type: 0;
         }else $this->wp_editor = $wp_editor;
 
-        $this->type_editor = $type_editor;
-
-        if(!isset($this->type_editor))
-            $this->type_editor = (isset($rcl_options['type_editor-'.$this->post_type]))?
-                $rcl_options['type_editor-'.$this->post_type]:
-                $rcl_options['type_text_editor'];
+        $this->type_editor = null;
 
         if(isset($_GET['rcl-post-edit'])){
 
@@ -67,11 +61,6 @@ class Rcl_PublicForm {
             if($this->post_type=='post-group'){
 
                 if(!rcl_can_user_edit_post_group($this->post_id)&&!current_user_can('edit_post', $this->post_id)) $this->can_edit = false;
-
-                $group_id = rcl_get_group_id_by_post($this->post_id);
-
-                $widget_options  = rcl_get_group_option($group_id, 'widgets_options');
-                if(isset($widget_options['group-public-form-widget'])) $this->type_editor = $widget_options['group-public-form-widget']['type_form'];
 
             }else if(!current_user_can('edit_post', $this->post_id))
 
@@ -88,8 +77,6 @@ class Rcl_PublicForm {
         foreach($post_types as $p_type=>$p_data){
             $taxs[$p_type] = $p_data->taxonomies;
         }
-        
-        //print_r($post_type);
 
         if(isset($rcl_options['accept-'.$this->post_type])) $this->accept = $rcl_options['accept-'.$this->post_type];
 
@@ -280,25 +267,16 @@ class Rcl_PublicForm {
 
                 $id_post = ($this->post_id)? $this->post_id : 0;
 
-                if(!$id_post){
-                    if(!isset($_SESSION['new-'.$this->post_type])){
-                        $_SESSION['new-'.$this->post_type] = 1;
-                        $form .= '<script>Object.keys(localStorage)
-                                .forEach(function(key){
-                                     if (/^form-'.$this->post_type.'-0/.test(key)) {
-                                         localStorage.removeItem(key);
-                                     }
-                             });</script>';
-                    }
-                }
-
                 $id_form = 'form-'.$this->post_type.'-'.$id_post;
-
-                $form .= '<form id="'.$id_form.'" data-post_type="'.$this->post_type.'" class="rcl-public-form ';
-                $form .= ($this->post_id)? 'edit-form' : 'public-form';
                 
+                $classes = array('rcl-public-form');
+                
+                $classes[] = ($this->post_id)? 'edit-form' : 'public-form';
+
+                $form .= '<form id="'.$id_form.'" data-post_type="'.$this->post_type.'" class="'.implode(' ',$classes).'" ';
+
                 if(!$this->preview){
-                    $form .= '" onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','wp-recall').'\';"';  
+                    $form .= ' onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','wp-recall').'\';"';  
                 }
                 
                 $form .= 'action="" method="post" enctype="multipart/form-data">
@@ -506,9 +484,12 @@ function rcl_publication_editor(){
         if($content){
                 $rcl_box = strpos($content, '[rcl-box');
                 if($rcl_box===false){
-                        rcl_wp_editor(array('type_editor'=>1,'wp_editor'=>3),$content);
+                        rcl_wp_editor();
                         return;
                 }
+        }else{
+            rcl_wp_editor();
+            return;
         }
 
         $panel = '';

@@ -48,7 +48,7 @@ function rcl_setup_tabs(){
     $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
     
     if(!$rcl_tabs) return false;
-
+    
     if (!class_exists('Rcl_Tabs')) 
         include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-tabs.php';
 
@@ -67,7 +67,7 @@ add_filter('rcl_tabs','rcl_get_order_tabs',10);
 function rcl_get_order_tabs($rcl_tabs){
     global $user_ID,$user_LK;
     
-    if(isset($_GET['tab'])) return $rcl_tabs;
+    if(isset($_GET['tab'])||!$rcl_tabs) return $rcl_tabs;
     
     $counter = array();
     foreach($rcl_tabs as $id=>$data){
@@ -1018,7 +1018,7 @@ function rcl_office_class(){
     
     $class = array('wprecallblock','rcl-office');
     
-    $active_template = (isset($rcl_options['active_template'])&&$rcl_options['active_template'])? $rcl_options['active_template']: '';
+    $active_template = get_site_option('rcl_active_template');
     
     if($active_template){
         if(isset($active_addons[$active_template])) 

@@ -4,13 +4,12 @@ if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-add_action('admin_init',array('Rcl_Addons_Manager','update_status_addon'));
-add_action('admin_init',array('Rcl_Addons_Manager','update_status_group_addon'));
 add_action('admin_init','rcl_init_upload_addon');
 
-class Rcl_Addons_Manager extends WP_List_Table {
+class Rcl_Templates_Manager extends WP_List_Table {
 	
     var $addon = array();
+    var $template_number;
     var $addons_data = array();    
     var $need_update = array();
     var $column_info = array();
@@ -31,7 +30,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
 
     }
     
-    function get_addons_data(){
+    function get_templates_data(){
         $paths = array(RCL_PATH.'add-on',RCL_TAKEPATH.'add-on') ;
         
         $add_ons = array();
@@ -47,7 +46,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
                     if(file_exists($info_src)){
                         $info = file($info_src);
                         $data = rcl_parse_addon_info($info);
-                        if(isset($data['template'])) continue;
+                        if(!isset($data['template'])) continue;
                         if(isset($_POST['s'])&&$_POST['s']){
                             if (strpos(strtolower(trim($data['name'])), strtolower(trim($_POST['s']))) !== false) {
                                 $this->addons_data[$namedir] = $data;
@@ -60,6 +59,9 @@ class Rcl_Addons_Manager extends WP_List_Table {
                 }
             }
         }
+        
+        $this->template_number = count($this->addons_data);
+        
     }
     
     function get_addons_content(){
@@ -100,7 +102,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
         
         switch( $column_name ) { 
             case 'addon_name':
-                $name = (isset($item['template']))? $item[ 'addon_name' ].' ('.__('Template','wp-recall').')': $item[ 'addon_name' ];
+                $name = (isset($item['template']))? $item[ 'addon_name' ]: $item[ 'addon_name' ];
                 return '<strong>'.$name.'</strong>';
             case 'addon_status':
                 if($item[ $column_name ]){
@@ -125,7 +127,6 @@ class Rcl_Addons_Manager extends WP_List_Table {
 	
     function get_columns(){
         $columns = array(
-            'cb'        => '<input type="checkbox" />',
             'addon_name' => __( 'Add-ons', 'wp-recall' ),
             'addon_status'    => __( 'Status', 'wp-recall' ),
             'addon_description'      => __( 'Description', 'wp-recall' )
@@ -142,23 +143,14 @@ class Rcl_Addons_Manager extends WP_List_Table {
 
     function column_addon_name($item){
 
-        $actions = array(
-            'delete'    => sprintf('<a href="?page=%s&action=%s&addon=%s">'.__( 'Delete', 'wp-recall' ).'</a>',$_REQUEST['page'],'delete',$item['ID'])
-        );
+        $actions = array();
         
-        if($item['addon_status']==1) $actions['deactivate'] = sprintf('<a href="?page=%s&action=%s&addon=%s">'.__( 'Deactivate', 'wp-recall' ).'</a>',$_REQUEST['page'],'deactivate',$item['ID']);
-        else $actions['activate'] = sprintf('<a href="?page=%s&action=%s&addon=%s">'.__( 'Activate', 'wp-recall' ).'</a>',$_REQUEST['page'],'activate',$item['ID']);
-        $name = (isset($item['template']))? $item[ 'addon_name' ].' ('.__('Template','wp-recall').')': $item[ 'addon_name' ];
-        return sprintf('%1$s %2$s', '<strong>'.$name.'</strong>', $this->row_actions($actions) );
-    }
-
-    function get_bulk_actions() {
-        $actions = array(
-            'delete'    => __( 'Delete', 'wp-recall' ),
-            'activate'    => __( 'Activate', 'wp-recall' ),
-            'deactivate'    => __( 'Deactivate', 'wp-recall' ),
-        );
-        return $actions;
+        if($item['addon_status']!=1){
+            $actions['delete'] = sprintf('<a href="?page=%s&action=%s&addon=%s">'.__( 'Delete', 'wp-recall' ).'</a>',$_REQUEST['page'],'delete',$item['ID']);
+            $actions['connect'] = sprintf('<a href="?page=%s&action=%s&addon=%s">'.__( 'To connect', 'wp-recall' ).'</a>',$_REQUEST['page'],'connect',$item['ID']);
+        }
+        
+        return sprintf('%1$s %2$s', '<strong>'.$item[ 'addon_name' ].'</strong>', $this->row_actions($actions) );
     }
 
     function column_cb($item) {
@@ -212,11 +204,11 @@ class Rcl_Addons_Manager extends WP_List_Table {
     function prepare_items() {
         
         $addons = $this->get_addons_content();
-
+        
         $this->_column_headers = $this->get_column_info();
         usort( $addons, array( &$this, 'usort_reorder' ) );
 
-        $per_page = $this->get_items_per_page('addons_per_page', 20);
+        $per_page = $this->get_items_per_page('templates_per_page', 20);
         $current_page = $this->get_pagenum();
         $total_items = count( $addons );
 
@@ -230,11 +222,12 @@ class Rcl_Addons_Manager extends WP_List_Table {
     }
 
     function update_status_addon ( ) {
-        //print_r($_GET);
-        $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-        if( 'manage-addon-recall' != $page ) return;
+        global $rcl_options;
         
-        if ( isset($_GET['addon'])&&isset($_GET['action']) ) {
+        $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+        if( 'manage-template-recall' != $page ) return;
+        
+        if ( isset($_GET['template'])&&isset($_GET['action']) ) {
               //if( !wp_verify_nonce( $_GET['_wpnonce'], 'action_addon' ) ) return false;
 
               global $wpdb, $user_ID, $active_addons;
@@ -243,94 +236,31 @@ class Rcl_Addons_Manager extends WP_List_Table {
               $addon = $_GET['addon'];
               $action = parent::current_action();
 
-              if($action=='activate'){
+              if($action=='connect'){
+                  rcl_deactivate_addon(get_option('rcl_active_template'));
                   rcl_activate_addon($addon);
-                  wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
+                  update_option('rcl_active_template',$addon);
+                  
+                  wp_redirect( admin_url('admin.php?page=manage-template-recall&update-template=activate') );exit;
               }
-              if($action=='deactivate'){
-                  rcl_deactivate_addon($addon);
-                  wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
-              }
+
               if($action=='delete'){
                  rcl_delete_addon($addon);
-                 wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=delete') );exit;
+                 wp_redirect( admin_url('admin.php?page=manage-template-recall&update-template=delete') );exit;
               }
         }
     }
-    
-    function update_status_group_addon ( ) {
-        
-        $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-        if( 'manage-addon-recall' != $page ) return;
-
-	  if ( parent::current_action() && isset( $_POST['addons'] )&& is_array($_POST['addons']) ) {
-              global $wpdb,$user_ID,$active_addons;
-
-                $action = parent::current_action();
-
-                $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
-
-		if($action=='activate'){
-                    foreach($_POST['addons'] as $addon){
-                        rcl_activate_addon($addon);
-                    }			
-                    wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
-		}
-                
-		if($action=='deactivate'){
-                    foreach($_POST['addons'] as $addon){
-                            foreach((array)$active_addons as $name=>$data){
-                                if($name!=$addon){
-                                    $new_active_list[$name] = $data;
-                                }else{
-                                    foreach($paths as $path){
-                                        if(file_exists($path.'/'.$addon.'/deactivate.php')){
-                                            include($path.'/'.$addon.'/deactivate.php');
-                                            break;
-                                        }
-                                    }
-                                    do_action('rcl_deactivate_'.$addon,$active_addons[$addon]);
-                                }
-                            }
-
-                            $active_addons = '';
-                            $active_addons = $new_active_list;
-                            $new_active_list = '';
-                    }
-                    update_site_option('rcl_active_addons',$active_addons);
-                    wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
-		}
-                
-                if($action=='delete'){
-                    foreach($_POST['addons'] as $addon){
-                            foreach((array)$active_addons as $name=>$data){
-                                if($name!=$addon){
-                                    $new_active_list[$name] = $data;
-                                }else{
-                                    rcl_delete_addon($addon);                                   
-                                }
-                            }
-
-                            $active_addons = '';
-                            $active_addons = $new_active_list;
-                            $new_active_list = '';
-                    }
-                    //update_site_option('rcl_active_addons',$active_addons);
-                    wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
-		}
-	  }
-	}
 
 } //class
 
-function rcl_init_upload_addon ( ) {
-    if ( isset( $_POST['install-addon-submit'] ) ) {
-          if( !wp_verify_nonce( $_POST['_wpnonce'], 'install-addons-rcl' ) ) return false;
-          rcl_upload_addon();
+function rcl_init_upload_template ( ) {
+    if ( isset( $_POST['install-template-submit'] ) ) {
+          if( !wp_verify_nonce( $_POST['_wpnonce'], 'install-template-rcl' ) ) return false;
+          rcl_upload_template();
     }
 }
 
-function rcl_upload_addon(){
+function rcl_upload_template(){
 
     $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
 
@@ -355,7 +285,7 @@ function rcl_upload_addon(){
 
         if(!$info){
               $zip->close();
-              wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=error-info') );exit;
+              wp_redirect( admin_url('admin.php?page=manage-template-recall&update-template=error-info') );exit;
         }
 
         foreach($paths as $path){
@@ -368,7 +298,7 @@ function rcl_upload_addon(){
         $zip->close();
         unlink($arch);
         if($rs){
-              wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=upload') );exit;
+              wp_redirect( admin_url('admin.php?page=manage-template-recall&update-template=upload') );exit;
         }else{
               wp_die(__('Unpacking of archive failed.','wp-recall'));
         }
@@ -378,46 +308,35 @@ function rcl_upload_addon(){
 
 }
 
-add_filter('set-screen-option', 'rcl_manager_set_option', 10, 3);
-function rcl_manager_set_option($status, $option, $value) {
-  return $value;
-}
-
-function rcl_add_options_addons_manager() {
-    global $Rcl_Addons_Manager;
+function rcl_add_options_templates_manager() {
+    global $Rcl_Templates_Manager;
     
     $option = 'per_page';
     $args = array(
-        'label' => __( 'Add-ons', 'wp-recall' ),
+        'label' => __( 'Templates', 'wp-recall' ),
         'default' => 100,
-        'option' => 'addons_per_page'
+        'option' => 'templates_per_page'
     );
     
     add_screen_option( $option, $args );
-    $Rcl_Addons_Manager = new Rcl_Addons_Manager();
+    $Rcl_Templates_Manager = new Rcl_Templates_Manager();
 }
 
-function rcl_render_addons_manager(){
-    global $active_addons,$Rcl_Addons_Manager;
-        
-    $Rcl_Addons_Manager->get_addons_data();
+function rcl_render_templates_manager(){
+    global $active_addons,$Rcl_Templates_Manager;
+
+    $Rcl_Templates_Manager->get_templates_data();
     
-    $cnt_all = count($Rcl_Addons_Manager->addons_data);
-    $cnt_act = count($active_addons);
-    $cnt_inact = $cnt_all - $cnt_act;
+    $cnt_all = $Rcl_Templates_Manager->template_number;
 
     echo '</pre><div class="wrap">'; 
     
     echo '<div id="icon-plugins" class="icon32"><br></div>
-        <h2>'.__('Add-ons Wp-Recall','wp-recall').'</h2>';
+        <h2>'.__('Templates','wp-recall').' Wp-Recall</h2>';
 
-        if(isset($_GET['update-addon'])){
-                switch($_GET['update-addon']){
-                    case 'activate': $text_notice = __('Addition <strong>activated</strong>. It is possible that on the settings page of Wp-Recall new settings','wp-recall'); $type='updated'; break;
-                    case 'deactivate': $text_notice = __('Addition <strong>deactivated</strong>.','wp-recall'); $type='updated'; break;
-                    case 'delete': $text_notice = __('Files and data additions have been <strong>removed</strong>.','wp-recall'); $type='updated'; break;
-                    case 'error-info': $text_notice = __('The Supplement has not been loaded. Add missing the correct header.','wp-recall'); $type='error'; break;
-                    case 'error-activate': $text_notice = $_GET['error-text']; $type='error'; break;
+        if(isset($_GET['update-template'])){
+                switch($_GET['update-template']){
+                    case 'connect': $text_notice = __('Addition <strong>activated</strong>. It is possible that on the settings page of Wp-Recall new settings','wp-recall'); $type='updated'; break;
                 }
                 
                 rcl_update_scripts();
@@ -439,32 +358,29 @@ function rcl_render_addons_manager(){
                 <input class="button" type="submit" value="'.__('Save','wp-recall').'" name="save-rcl-key">
                 '.wp_nonce_field('add-rcl-key','_wpnonce',true,false).'
         </form>
-        <p class="install-help">'.__('He will need to update the add-ons here. Get it , you can profile your account online <a href="http://codeseller.ru/" target="_blank">http://codeseller.ru</a>','wp-recall').'</p>';
-            
-        
+        <p class="install-help">'.__('He will need to update the template here. Get it , you can profile your account online <a href="http://codeseller.ru/" target="_blank">http://codeseller.ru</a>','wp-recall').'</p>';
+
     echo '
         <h4>'.__('To install the add-on to Wp-Recall format .zip','wp-recall').'</h4>
-        <p class="install-help">'.__('If you have the archive add-on for wp-recall format .zip, here you can download and install it.','wp-recall').'</p>
+        <p class="install-help">'.__('If you have the archive template for wp-recall format .zip, here you can download and install it.','wp-recall').'</p>
         <form class="wp-upload-form" action="" enctype="multipart/form-data" method="post">
                 <label class="screen-reader-text" for="addonzip">'.__('Plugin archive','wp-recall').'</label>
                 <input id="addonzip" type="file" name="addonzip">
-                <input id="install-plugin-submit" class="button" type="submit" value="'.__('To install','wp-recall').'" name="install-addon-submit">
-                '.wp_nonce_field('install-addons-rcl','_wpnonce',true,false).'
+                <input id="install-plugin-submit" class="button" type="submit" value="'.__('To install','wp-recall').'" name="install-template-submit">
+                '.wp_nonce_field('install-template-rcl','_wpnonce',true,false).'
         </form>
 
         <ul class="subsubsub">
-                <li class="all"><b>'.__('All','wp-recall').'<span class="count">('.$cnt_all.')</span></b>|</li>
-                <li class="active"><b>'.__('Active','wp-recall').'<span class="count">('.$cnt_act.')</span></b>|</li>
-                <li class="inactive"><b>'.__('Inactive','wp-recall').'<span class="count">('.$cnt_inact.')</span></b></li>
+                <li class="all"><b>'.__('All','wp-recall').'<span class="count">('.$cnt_all.')</span></b></li>
         </ul>';
     
-    $Rcl_Addons_Manager->prepare_items(); ?>
+    $Rcl_Templates_Manager->prepare_items(); ?>
 
     <form method="post">
     <input type="hidden" name="page" value="manage-addon-recall">
     <?php
-    $Rcl_Addons_Manager->search_box( 'Search by name', 'search_id' );
-    $Rcl_Addons_Manager->display(); 
+    $Rcl_Templates_Manager->search_box( 'Search by name', 'search_id' );
+    $Rcl_Templates_Manager->display(); 
     echo '</form></div>'; 
 }
 

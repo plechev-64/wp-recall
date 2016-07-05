@@ -1,12 +1,14 @@
 <?php
 function rcl_options_panel(){
     $need_update = get_option('rcl_addons_need_update');
-    $cnt = count($need_update);
+    $cnt = $need_update? count($need_update): 0;
     $notice = ($cnt)? ' <span class="update-plugins count-'.$cnt.'"><span class="plugin-count">'.$cnt.'</span></span>': '';
     add_menu_page(__('WP-RECALL','wp-recall').$notice, __('WP-RECALL','wp-recall').$notice, 'manage_options', 'manage-wprecall', 'rcl_global_options');
     add_submenu_page( 'manage-wprecall', __('SETTINGS','wp-recall'), __('SETTINGS','wp-recall'), 'manage_options', 'manage-wprecall', 'rcl_global_options');
     $hook = add_submenu_page( 'manage-wprecall', __('Add-ons','wp-recall').$notice, __('Add-ons','wp-recall').$notice, 'manage_options', 'manage-addon-recall', 'rcl_render_addons_manager');
     add_action( "load-$hook", 'rcl_add_options_addons_manager' );
+    $hook = add_submenu_page( 'manage-wprecall', __('Templates','wp-recall'), __('Templates','wp-recall').$notice, 'manage_options', 'manage-templates-recall', 'rcl_render_templates_manager');
+    add_action( "load-$hook", 'rcl_add_options_templates_manager' );
     add_submenu_page( 'manage-wprecall', __('Repository','wp-recall'), __('Repository','wp-recall'), 'manage_options', 'rcl-repository', 'rcl_repository_page');
     add_submenu_page( 'manage-wprecall', __('Documentation','wp-recall'), __('Documentation','wp-recall'), 'manage_options', 'manage-doc-recall', 'rcl_doc_manage');
     add_submenu_page( 'manage-wprecall', __('Custom tabs','wp-recall'), __('Custom tabs','wp-recall'), 'manage_options', 'manage-custom-tabs', 'rcl_custom_tabs_manage');
@@ -83,10 +85,15 @@ function rcl_global_options(){
     $fields = new Rcl_Options();
 
     $rcl_options = get_option('rcl_global_options');
+    
+    $extends = isset($_COOKIE['rcl_extends'])? $_COOKIE['rcl_extends']: 0;
 
     $content = '<h2>'.__('Configure the plugin Wp-Recall and additions','wp-recall').'</h2>
         <div id="recall" class="left-sidebar wrap">
-	<form method="post" id="rcl-options-form" onsubmit="rcl_update_options();return false;" action="">
+        <span class="shift-extend-options">
+            <label><input type="checkbox" name="extend_options" '.checked($extends,1,false).' onclick="return rcl_enable_extend_options(this);" value="1"> Расширенные настройки</label>
+	</span>
+        <form method="post" id="rcl-options-form" onsubmit="rcl_update_options();return false;" action="">
 	'.wp_nonce_field('update-options-rcl','_wpnonce',true,false).'
 	<span class="title-option active"><span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '.__('General settings','wp-recall').'</span>
 	<div class="wrap-recall-options" style="display:block;">';
@@ -97,44 +104,7 @@ function rcl_global_options(){
                     'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
                     'echo'       => 0
                 );
-
-                $content .= $fields->option_block(array(
-                    $fields->title(__('Personal office','wp-recall')),
-                    $fields->label(__('The order of withdrawal of the personal Cabinet','wp-recall')),
-                    $fields->option('select',array(
-                            'name'=>'view_user_lk_rcl',
-                            'parent'=>true,
-                            'options'=>array(
-                                __('On the archive page of the author','wp-recall'),
-                                __('Using the shortcode [wp-recall]','wp-recall'))
-                        )),
-                    $fields->child(
-                        array(
-                            'name'=>'view_user_lk_rcl',
-                            'value'=>1
-                        ),
-                        array(
-                            $fields->label(__('The host page the shortcode','wp-recall')),
-                            wp_dropdown_pages( $args ),
-                            $fields->label(__('The formation of links to personal account','wp-recall')),
-                            $fields->option('text',array('name'=>'link_user_lk_rcl')),
-                            $fields->notice(__('The link is formed by a principle "/slug_page/?get=ID". The parameter "get" can be set here. By default user','wp-recall'))
-                        )
-                    ),
-                    $fields->label(__('Download tabs','wp-recall')),
-                    $fields->option('select',array(
-                        'name'=>'tab_newpage',
-                        'options'=>array(
-                            __('Downloads all','wp-recall'),
-                            __('On a separate page','wp-recall'),
-                            __('Ajax loading','wp-recall'))
-                    )),
-                    $fields->label(__('Inactivity timeout','wp-recall')),
-                    $fields->option('number',array('name'=>'timeout')),
-                    $fields->notice(__('Specify the time in minutes after which the user will be considered offline if you did not show activity on the website. The default is 10 minutes.','wp-recall'))
-                ));
-
-
+                
                 $roles = array(
                     10=>__('only Administrators','wp-recall'),
                     7=>__('Editors and older','wp-recall'),
@@ -143,105 +113,146 @@ function rcl_global_options(){
                     0=>__('All users','wp-recall'));
 
                 $content .= $fields->option_block(array(
-                    $fields->title(__('Access to the console','wp-recall')),
-                    $fields->label(__('Access to the site is permitted console','wp-recall')),
-                    $fields->option('select',array(
+                    $fields->extend(array(
+                        $fields->title(__('Personal office','wp-recall')),
+                    
+                        $fields->option('select',array(
+                            'name'=>'view_user_lk_rcl',
+                            'label'=>__('The order of withdrawal of the personal Cabinet','wp-recall'),
+                            'parent'=>true,
+                            'options'=>array(
+                                __('On the archive page of the author','wp-recall'),
+                                __('Using the shortcode [wp-recall]','wp-recall'))
+                        )),
+                        $fields->child(
+                            array(
+                                'name'=>'view_user_lk_rcl',
+                                'value'=>1
+                            ),
+                            array(
+                                $fields->label(__('The host page the shortcode','wp-recall')),
+                                wp_dropdown_pages( $args ),
+                                $fields->option('text',array(
+                                    'name'=>'link_user_lk_rcl',
+                                    'label'=>__('The formation of links to personal account','wp-recall'),
+                                    'notice'=>__('The link is formed by a principle "/slug_page/?get=ID". The parameter "get" can be set here. By default user','wp-recall')
+                                ))
+                            )
+                        ),
+                        $fields->option('select',array(
+                            'name'=>'tab_newpage',
+                            'label'=>__('Download tabs','wp-recall'),
+                            'options'=>array(
+                                __('Downloads all','wp-recall'),
+                                __('On a separate page','wp-recall'),
+                                __('Ajax loading','wp-recall'))
+                        )),
+                        $fields->option('number',array(
+                            'name'=>'timeout',
+                            'label'=>__('Inactivity timeout','wp-recall'),
+                            'notice'=>__('Specify the time in minutes after which the user will be considered offline if you did not show activity on the website. The default is 10 minutes.','wp-recall')
+                        ))
+                ))));
+                
+                $content .= $fields->option_block(array(
+                    $fields->extend(array(
+                        $fields->title(__('Access to the console','wp-recall')),
+                        $fields->option('select',array(
                             'default'=>7,
                             'name'=>'consol_access_rcl',
-                            'options'=>$roles
-                    )),
-                    $fields->notice(__('If the selected archive page of the author, in the right place template author.php paste the code if(function_exists(\'wp_recall\')) wp_recall();','wp-recall')),
-
-                ));
+                            'label'=>__('Access to the site is permitted console','wp-recall'),
+                            'options'=>$roles,
+                            'notice'=>__('If the selected archive page of the author, in the right place template author.php paste the code if(function_exists(\'wp_recall\')) wp_recall();','wp-recall')
+                        ))
+                ))));
                 
                 $templates = rcl_get_install_templates();
                 $templates = ($templates)? $templates: array(__('Not found','wp-recall'));
 
                 $content .= $fields->option_block(
                     array(
-			$fields->title(__('Making','wp-recall')),
-                        
-                        $fields->label(__('Primary color','wp-recall')),                       
-                        $fields->option('text',array('name'=>'primary-color','default'=>'#4C8CBD')),
-
-			$fields->label(__('The placement of the buttons sections','wp-recall')),
+			$fields->title(__('Making','wp-recall')),                 
+                        $fields->option('text',array(
+                            'name'=>'primary-color',
+                            'label'=>__('Primary color','wp-recall'),
+                            'default'=>'#4C8CBD'
+                        )),
                         $fields->option('select',array(
                             'name'=>'buttons_place',
+                            'label'=>__('The placement of the buttons sections','wp-recall'),
                             'options'=>array(
                                 __('Top','wp-recall'),
                                 __('Left','wp-recall'))
                         )),
-                        $fields->label(__('Used template','wp-recall')),
-                        $fields->option('select',array(
-                            'name'=>'active_template',
-                            'options'=>$templates
-                            )
-                        ),
-
-                        $fields->label(__('Pause Slider','wp-recall')),
-                        $fields->option('number',array('name'=>'slide-pause')),
-                        $fields->notice(__('The value of the pause between slide transitions in seconds. Default value is 0 - the slide show is not made','wp-recall')),
-
+                        $fields->option('number',array(
+                            'name'=>'slide-pause',
+                            'label'=>__('Pause Slider','wp-recall'),
+                            'notice'=>__('The value of the pause between slide transitions in seconds. Default value is 0 - the slide show is not made','wp-recall')
+                        ))
                     )
                 );
                 
+                
                 $content .= $fields->option_block(
                     array(
-			$fields->title(__('Caching','wp-recall')),
-                        
-                        $fields->label(__('Cache','wp-recall')),
-                        $fields->option('select',array(
-                            'name'=>'use_cache',
-                            'parent'=>true,
-                            'options'=>array(
-                                __('Disabled','wp-recall'),
-                                __('Included','wp-recall'))
-                        )),
-                        
-                        $fields->child(
-                             array(
-                                 'name'=>'use_cache',
-                                 'value'=>1
-                             ),
-                             array(
-                                 $fields->label(__('Time cache (seconds)','wp-recall')),
-                                 $fields->option('number',array('name'=>'cache_time','default'=>3600)),
-                                 $fields->notice(__('Default','wp-recall').': 3600'),
-                                 $fields->label(__('Cache output','wp-recall')),
-                                 $fields->option('select',array(
-                                    'name'=>'cache_output',
-                                    'options'=>array(
-                                        __('All users','wp-recall'),
-                                        __('Only guests','wp-recall'))
-                                ))
-                             )
-                        ),
+                        $fields->extend(array(
+                            $fields->title(__('Caching','wp-recall')),
 
-                        $fields->label(__('Minimization of style files','wp-recall')),
-                        $fields->option('select',array(
-                            'name'=>'minify_css',
-                            'options'=>array(
-                                __('Disabled','wp-recall'),
-                                __('Included','wp-recall'))
-                        )),
-                        $fields->notice(__('Minimization of style files only works against the style files Wp-Recall and additions that support this feature','wp-recall')),
-                        
-                        $fields->label(__('Minimization of scripts','wp-recall')),
-                        $fields->option('select',array(
-                            'name'=>'minify_js',
-                            'options'=>array(
-                                __('Disabled','wp-recall'),
-                                __('Included','wp-recall'))
-                        )),
+                            $fields->option('select',array(
+                                'name'=>'use_cache',
+                                'label'=>__('Cache','wp-recall'),
+                                'parent'=>true,
+                                'options'=>array(
+                                    __('Disabled','wp-recall'),
+                                    __('Included','wp-recall'))
+                            )),
+                            $fields->child(
+                                 array(
+                                     'name'=>'use_cache',
+                                     'value'=>1
+                                 ),
+                                 array(
+                                     $fields->option('number',array(
+                                         'name'=>'cache_time',
+                                         'default'=>3600,
+                                         'label'=>__('Time cache (seconds)','wp-recall'),
+                                         'notice'=>__('Default','wp-recall').': 3600'
+                                         )),
+
+                                     $fields->option('select',array(
+                                        'name'=>'cache_output',
+                                        'label'=>__('Cache output','wp-recall'),
+                                        'options'=>array(
+                                            __('All users','wp-recall'),
+                                            __('Only guests','wp-recall'))
+                                    ))
+                                 )
+                            ),
+                            $fields->option('select',array(
+                                'name'=>'minify_css',
+                                'label'=>__('Minimization of style files','wp-recall'),
+                                'options'=>array(
+                                    __('Disabled','wp-recall'),
+                                    __('Included','wp-recall')),
+                                    'notice'=>__('Minimization of style files only works against the style files Wp-Recall and additions that support this feature','wp-recall')
+                            )),
+                            $fields->option('select',array(
+                                'name'=>'minify_js',
+                                'label'=>__('Minimization of scripts','wp-recall'),
+                                'options'=>array(
+                                    __('Disabled','wp-recall'),
+                                    __('Included','wp-recall'))
+                            ))
+                        ))
                     )
                 );
 
                 $content .= $fields->option_block(
                     array(
                         $fields->title(__('Login and register','wp-recall')),
-                        $fields->label(__('The order','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'login_form_recall',
+                            'label'=>__('The order','wp-recall'),
                             'parent'=>true,
                             'options'=>array(
                                 __('Floating form','wp-recall'),
@@ -257,49 +268,53 @@ function rcl_global_options(){
                             array(
                                 $fields->label(__('ID of the page with the shortcode [loginform]','wp-recall')),
                                 wp_dropdown_pages( array(
-                                        'selected'   => $rcl_options['page_login_form_recall'],
-                                        'name'       => 'global[page_login_form_recall]',
-                                        'show_option_none' => __('Not selected','wp-recall'),
-                                        'echo'             => 0 )
+                                    'selected'   => $rcl_options['page_login_form_recall'],
+                                    'name'       => 'global[page_login_form_recall]',
+                                    'show_option_none' => __('Not selected','wp-recall'),
+                                    'echo'             => 0 )
                                 )
                             )
                         ),
-                        $fields->label(__('A registration confirmation by the user','wp-recall')),
-                        $fields->option('select',array(
-                            'name'=>'confirm_register_recall',
-                            'options'=>array(
-                                __('Not used','wp-recall'),
-                                __('Used','wp-recall'))
-                        )),
-                        $fields->label(__('Redirect user after login','wp-recall')),
-                        $fields->option('select',array(
-                            'name'=>'authorize_page',
-                            'parent'=>1,
-                            'options'=>array(
-                                __('The user profile','wp-recall'),
-                                __('Current page','wp-recall'),
-                                __('Arbitrary URL','wp-recall'))
-                        )),
-                        $fields->child(
-                            array(
-                              'name' => 'authorize_page',
-                              'value' => 2
+                        $fields->extend(array(
+                            $fields->option('select',array(
+                                'name'=>'confirm_register_recall',
+                                'label'=>__('A registration confirmation by the user','wp-recall'),
+                                'options'=>array(
+                                    __('Not used','wp-recall'),
+                                    __('Used','wp-recall'))
+                            )),
+                            $fields->option('select',array(
+                                'name'=>'authorize_page',
+                                'label'=>__('Redirect user after login','wp-recall'),
+                                'parent'=>1,
+                                'options'=>array(
+                                    __('The user profile','wp-recall'),
+                                    __('Current page','wp-recall'),
+                                    __('Arbitrary URL','wp-recall'))
+                            )),
+                            $fields->child(
+                                array(
+                                  'name' => 'authorize_page',
+                                  'value' => 2
+                                ),
+                                array(
+                                    $fields->option('text',array(
+                                        'name'=>'custom_authorize_page',
+                                        'label'=>__('URL','wp-recall'),
+                                        'notice'=>__('Enter your URL below, if you select an arbitrary URL after login','wp-recall')
+                                    ))
+                                )
                             ),
-                            array(
-                                $fields->label(__('URL','wp-recall')),
-                                $fields->option('text',array('name'=>'custom_authorize_page')),
-                                $fields->notice(__('Enter your URL below, if you select an arbitrary URL after login','wp-recall'))
-                            )
-                        ),
-                        $fields->label(__('Field repeat password','wp-recall')),
-                        $fields->option('select',array(
-                            'name'=>'repeat_pass',
-                            'options'=>array(__('Disabled','wp-recall'),__('Displayed','wp-recall'))
-                        )),
-                        $fields->label(__('Indicator password complexity','wp-recall')),
-                        $fields->option('select',array(
-                            'name'=>'difficulty_parole',
-                            'options'=>array(__('Disabled','wp-recall'),__('Displayed','wp-recall'))
+                            $fields->option('select',array(
+                                'name'=>'repeat_pass',
+                                'label'=>__('Field repeat password','wp-recall'),
+                                'options'=>array(__('Disabled','wp-recall'),__('Displayed','wp-recall'))
+                            )),
+                            $fields->option('select',array(
+                                'name'=>'difficulty_parole',
+                                'label'=>__('Indicator password complexity','wp-recall'),
+                                'options'=>array(__('Disabled','wp-recall'),__('Displayed','wp-recall'))
+                            ))
                         ))
                     )
                 );
@@ -307,9 +322,9 @@ function rcl_global_options(){
                 $content .= $fields->option_block(
                     array(
                         $fields->title(__('Recallbar','wp-recall')),
-                        $fields->label(__('Conclusion the panel recallbar','wp-recall')),
                         $fields->option('select',array(
                             'name'=>'view_recallbar',
+                            'label'=>__('Conclusion the panel recallbar','wp-recall'),
                             'parent'=>true,
                             'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
                         )),
@@ -319,25 +334,26 @@ function rcl_global_options(){
                                 'value'=>1
                             ),
                             array(
-                                $fields->label(__('Color','wp-recall')),
                                 $fields->option('select',array(
                                     'name'=>'rcb_color',
+                                    'label'=>__('Color','wp-recall'),
                                     'options'=>array(__('Default','wp-recall'),__('Primary colors WP-Recall','wp-recall'))
                                 ))
                             )
-                        ),
-                        
+                        )
                     )
                 );
 
                 $content .= $fields->option_block(
                     array(
-                        $fields->title(__('Your gratitude','wp-recall')),
-                        $fields->label(__('To display a link to the developer`s site (Thank you, if you decide to show)','wp-recall')),
-                        $fields->option('select',array(
-                               'name'=>'rcl_footer_link',
-                               'type'=>'local',
-                               'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                        $fields->extend(array(
+                            $fields->title(__('Your gratitude','wp-recall')),
+                            $fields->option('select',array(
+                                'name'=>'rcl_footer_link',
+                                'label'=>__('To display a link to the developer`s site (Thank you, if you decide to show)','wp-recall'),
+                                'type'=>'local',
+                                'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                            ))
                         ))
                     )
                 );

@@ -145,40 +145,55 @@ function rcl_get_addon_headers($addon_name){
     return $data;
 }
 
-add_action('wp','rcl_check_active_template',10);
+add_action('rcl_before_include_addons','rcl_check_active_template',10);
 function rcl_check_active_template(){
-    global $active_addons,$rcl_options;
+    global $active_addons,$rcl_options,$rcl_template;
     
     $templates = rcl_get_install_templates();
+    
+    if($templates){
+        //Если найденный шаблон указан как используемый, то активируем его
+        if(!$rcl_template){
+            foreach ($templates as $addon_id => $data){
+
+                rcl_activate_addon($addon_id);
+
+                update_option('rcl_active_template',$addon_id);
+                
+                $rcl_template = $addon_id;
+                $active_addons[$addon_id] = $data;
+                
+                return true;
+            }
+        }
+    }
+    
     //Если ни один шаблон не активен
     if(!$templates){
         //ищем шаблоны в папке дополнений
         $templates = rcl_search_templates();
         
         if(!$templates){
-            $rcl_options['active_template'] = 0;
             return false;
         }
         
-        $active_template = (isset($rcl_options['active_template'])&&$rcl_options['active_template'])? $rcl_options['active_template']: '';
-        
-        if($active_template){
+        if($rcl_template){
             //Если найденный шаблон указан как используемый, то активируем его
-            if(isset($templates[$active_template])){
-                rcl_activate_addon($active_template);
-                $active_addons[$active_template] = $templates[$active_template];
+            if(isset($templates[$rcl_template])){
+                rcl_activate_addon($rcl_template);
+                $rcl_template = $addon_id;
+                $active_addons[$rcl_template] = $templates[$rcl_template];
                 return true;
             }
         }
-
+        
         //если используемых шаблонов не указано, то активируем первый попавшийся
         foreach ($templates as $addon_id => $data){
 
             rcl_activate_addon($addon_id);
 
-            $rcl_options['active_template'] = $addon_id;
-            update_option('rcl_global_options',$rcl_options);
-
+            update_option('rcl_active_template',$addon_id);
+            $rcl_template = $addon_id;
             $active_addons[$addon_id] = $data;
             
             return true;
@@ -190,17 +205,15 @@ function rcl_check_active_template(){
 
 //Подключаем шаблон личного кабинета
 function rcl_include_template_office(){
-    global $rcl_options,$active_addons;
+    global $rcl_options,$active_addons,$rcl_template;
     
-    $active_template = (isset($rcl_options['active_template'])&&$rcl_options['active_template'])? $rcl_options['active_template']: '';
-
     //Если ни один шаблон не активен
-    if(!$active_template){
+    if(!$rcl_template){
         //если опять ничего не найдено
         echo '<h3>'.__('Templates office not found!','wp-recall').'</h3>';
     }else{
         //Если шаблон найден и активирован, то подключаем
-        rcl_include_template('office.php',$active_addons[$active_template]['path']);           
+        rcl_include_template('office.php',$active_addons[$rcl_template]['path']);           
     }
 }
 
@@ -213,7 +226,7 @@ function rcl_get_install_templates(){
 
     foreach($active_addons as $addon_id=>$addon){
         if(!isset($addon['template'])) continue;
-        $list[$addon_id] = $addon['template'];
+        $list[$addon_id] = $addon;
     }
 
     return $list;

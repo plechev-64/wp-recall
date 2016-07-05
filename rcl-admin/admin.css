@@ -148,6 +148,15 @@ body .rcl_preloader{
 .wrap-recall-options .adm_b18 {
     font: bold 18px Arial,Georgia,Verdana;
 }
+.shift-extend-options{
+    display: inline-block;
+    background: #ff8989;
+    padding: 10px;
+    width: 218px;
+}
+.wrap-recall-options .extend-options.hidden-option{
+    display:none;
+}
 .child-select{
 	display:none;
 }

@@ -60,8 +60,9 @@ function rcl_fileupload_scripts(){
 }
 
 function rcl_crop_scripts(){
-    wp_enqueue_style( 'jcrop-master-css', RCL_URL.'js/jcrop.master/css/jquery.Jcrop.min.css' );
-    rcl_enqueue_script( 'jcrop-master', RCL_URL.'js/jcrop.master/js/jquery.Jcrop.min.js', array(),true );
+    wp_enqueue_style( 'jcrop' );
+    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script( 'jcrop' );
 }
 
 function rcl_rangyinputs_scripts(){
@@ -108,7 +109,8 @@ function rcl_frontend_scripts(){
         'wait' => __('Please wait','wp-recall'),
         'preview' => __('Preview','wp-recall'),
         'error' => __('Error','wp-recall'),
-        'loading' => __('Loading','wp-recall')
+        'loading' => __('Loading','wp-recall'),
+        'upload' => __('Upload','wp-recall')
     );
     
     if(isset($rcl_options['difficulty_parole'])){

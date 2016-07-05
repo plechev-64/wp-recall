@@ -53,6 +53,22 @@ class Rcl_Options {
         return '<small>'.$notice.'</small>';
     }
     
+    function extend($content){
+        
+        $extends = isset($_COOKIE['rcl_extends'])? $_COOKIE['rcl_extends']: 0;
+        $classes = array('extend-options');
+        $classes[] = $extends? 'show-option': 'hidden-option';
+        
+        if(is_array($content)){
+            $return = '';
+            foreach($content as $cont){
+                $return .= $cont;
+            }
+            return '<div class="'.implode(' ',$classes).'">'.$return.'</div>';
+        }
+        return '<div class="'.implode(' ',$classes).'">'.$content.'</div>';
+    }
+    
     function attr_name($args){
         if(isset($args['group'])){
             $name = $this->type.'['.$args['group'].']['.$args['name'].']';
@@ -64,6 +80,8 @@ class Rcl_Options {
 
     function option($typefield,$atts){
         global $rcl_options;
+        
+        $content = '';
         
         $optiondata = apply_filters('rcl_option_data',array($typefield,$atts));
         
@@ -90,9 +108,23 @@ class Rcl_Options {
         
         $this->type = (isset($args['type']))? $args['type']: 'global';
         
-        $content = $this->$type($args,$value);
+        if(isset($args['label'])&&$args['label']){
+            $content .= $this->label($args['label']);
+        }
         
-        $content = apply_filters('rcl_option_content',$content,array($type,$args));
+        $content .= $this->$type($args,$value);
+        
+        if(isset($args['notice'])&&$args['notice']){
+            $content .= $this->notice($args['notice']);
+        }
+        
+        $classes = array('rcl-option');
+        
+        if(isset($args['extend'])&&$args['extend']){
+            $classes[] = 'extend-option';
+        }
+
+        $content = '<span class="'.implode(' ',$classes).'">'.$content.'</span>';
         
         return $content;
     }

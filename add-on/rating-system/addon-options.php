@@ -52,30 +52,39 @@ function rcl_admin_page_rating($content){
 
                 $opt->option('select',array(
                     'name'=>'rating_'.$type,
+                    'parent'=>true,
                     'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
-                )),
-
-                $more,
-
-                $opt->label(__('Points for ranking','wp-recall').' '.$data['type_name']),
-                $opt->option('text',array('name'=>'rating_point_'.$type)),
-                $opt->notice(__('set how many points the ranking will be awarded for a positive vote or how many points will be subtracted from the rating for a negative vote','wp-recall')),
-
-                $opt->label(sprintf(__('The influence of rating %s on the overall rating','wp-recall'),$data['type_name'])),
-                $opt->option('select',array(
-                    'name'=>'rating_user_'.$type,
-					'parent'=>true,
-                    'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
                 )),
                 $opt->child(
                     array(
-                        'name'=>'rating_user_'.$type,
+                        'name'=>'rating_'.$type,
                         'value'=>1
                     ),
                     array(
-                    $opt->label(__('Template output stories in the overall ranking','wp-recall')),
-                    $opt->option('text',array('name'=>'rating_temp_'.$type,'default'=>'%USER% '.__('voted','wp-recall').': %VALUE%')),
-                    $opt->notice($notice_temp)
+                        
+                    $more,
+
+                    $opt->label(__('Points for ranking','wp-recall').' '.$data['type_name']),
+                    $opt->option('text',array('name'=>'rating_point_'.$type)),
+                    $opt->notice(__('set how many points the ranking will be awarded for a positive vote or how many points will be subtracted from the rating for a negative vote','wp-recall')),
+
+                    $opt->label(sprintf(__('The influence of rating %s on the overall rating','wp-recall'),$data['type_name'])),
+                    $opt->option('select',array(
+                        'name'=>'rating_user_'.$type,
+                                            'parent'=>true,
+                        'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                    )),
+                    $opt->child(
+                        array(
+                            'name'=>'rating_user_'.$type,
+                            'value'=>1
+                        ),
+                        array(
+                        $opt->label(__('Template output stories in the overall ranking','wp-recall')),
+                        $opt->option('text',array('name'=>'rating_temp_'.$type,'default'=>'%USER% '.__('voted','wp-recall').': %VALUE%')),
+                        $opt->notice($notice_temp)
+                    ))
+                        
                 ))
             )
         );

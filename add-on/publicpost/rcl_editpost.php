@@ -55,7 +55,7 @@ class Rcl_EditPost {
 
             $post_type = sanitize_text_field(base64_decode($_POST['posttype']));
 
-            if(!get_post_types(array('name'=>$post_type))) $this->error(__('Error publishing!','wp-recall'));
+            if(!get_post_types(array('name'=>$post_type))) $this->error(__('Error publishing!','wp-recall').' Error 100');
 
             $this->post_type = $post_type;
             $this->update = false;
@@ -209,7 +209,7 @@ class Rcl_EditPost {
             $this->post_id = wp_insert_post( $postdata );
 
             if(!$this->post_id) 
-                $this->error(__('Error publishing!','wp-recall'));
+                $this->error(__('Error publishing!','wp-recall').' Error 101');
             
             if($id_form>1) 
                 add_post_meta($this->post_id, 'publicform-id', $id_form);

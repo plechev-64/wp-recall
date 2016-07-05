@@ -248,7 +248,7 @@ class RCL_Install {
             $templates = rcl_get_install_templates();
             
             foreach($templates as $addon_id=>$template){
-                $rcl_options['active_template'] = $addon_id;
+                update_option('rcl_active_template',$addon_id);
                 break;
             }
            

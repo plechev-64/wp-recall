@@ -12,7 +12,7 @@
         var menuhtml = '';
         var totalWidth = 0;                                                 // сумма ширины всех кнопок
         jQuery.each($("#lk-menu").children('.rcl-tab-button'), function() {
-            totalWidth += $(this).children().outerWidth();                  // считаем ширину всех кнопок с учетом отступов
+            totalWidth += $(this).children().outerWidth(true);                  // считаем ширину всех кнопок с учетом отступов
             if (mw < totalWidth) {                                          // если ширина блока кнопок меньше чем сумма ширины кнопок:
                 menuhtml += $('<div>').append($(this).clone()).html();
                 $(this).remove();

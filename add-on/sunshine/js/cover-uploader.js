@@ -59,7 +59,7 @@ function rcl_cover_uploader(){
                             className: 'rcl-hand-uploader',
                             buttons: [{
                                 className: 'btn btn-primary',
-                                label: 'Ok',
+                                label: Rcl.local.upload,
                                 closeAfter: true,
                                 method: function () {
                                     data.submit();

@@ -179,6 +179,7 @@ final class WP_Recall {
             require_once("rcl-admin/tabs_options.php");
             require_once("rcl-admin/rcl-admin.php");
             require_once("rcl-admin/add-on-manager.php");
+            require_once("rcl-admin/templates-manager.php");
 	}
 
 	/*
@@ -232,7 +233,7 @@ final class WP_Recall {
 	}
 
         function rcl_include_addons(){
-            global $active_addons,$rcl_options;
+            global $active_addons,$rcl_options,$rcl_template;
 
             require_once("functions/rcl_addons.php");
             
@@ -243,13 +244,16 @@ final class WP_Recall {
             }
 
             $active_addons = get_site_option('rcl_active_addons');
+            $rcl_template = get_site_option('rcl_active_template');
+            
+            do_action('rcl_before_include_addons');
             
             if($active_addons){
                 $addons = array();
                 foreach($active_addons as $addon=>$data){
                     if(!$addon) continue;
                     
-                    if(isset($data['template'])&&$rcl_options['active_template']!=$addon) continue;
+                    if(isset($data['template'])&&$rcl_template!=$addon) continue;
                     
                     if(isset($data['priority']))
                         $addons[$data['priority']][$addon] = $data;

@@ -37,5 +37,7 @@ if(!isset($rcl_options['user_public_access_recall']))
     $rcl_options['user_public_access_recall'] = 2;
 if(!isset($rcl_options['front_editing']))
     $rcl_options['front_editing'] = array(2);
+if(!isset($rcl_options['media_uploader']))
+    $rcl_options['media_uploader'] = 1;
 
 update_option('rcl_global_options',$rcl_options);

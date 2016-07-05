@@ -114,8 +114,8 @@ function rcl_get_publics_options_page($content){
                     'name'=>'type_text_editor',
                     'parent'=>true,
                     'options'=>array(
-                        __('WP-RECALL editor','wp-recall'),
-                        __('WordPress editor','wp-recall')
+                        //__('WP-RECALL editor','wp-recall'),
+                        1=>__('WordPress editor','wp-recall')
                     )
                 )),
 		$opt->child(
