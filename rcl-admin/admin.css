@@ -80,7 +80,7 @@ body .rcl_preloader{
     box-shadow:none;
 }
 .wrap-recall-options {
-    border: 1px solid #AAAAAA;
+    border: 1px solid #ccc;
     box-shadow: 0 0 50px #F0F0F0 inset;
     display: none;
     margin: 0 0 5px;
@@ -95,9 +95,10 @@ body .rcl_preloader{
     overflow-y: scroll;
 }
 .wrap-recall-options .option-block {
-    border: 1px solid #CCCCCC;
-    border-radius: 5px;
-    margin: 5px;
+    background: #eee none repeat scroll 0 0;
+    border: 1px solid #dadada;
+    border-radius: 2px;
+    margin: 8px 0;
     padding: 5px 15px;
     width: 500px;
     /* float: left; */
@@ -148,11 +149,13 @@ body .rcl_preloader{
 .wrap-recall-options .adm_b18 {
     font: bold 18px Arial,Georgia,Verdana;
 }
-.shift-extend-options{
+.shift-extend-options > label {
+    background: #f5c0c0;
+    border: 1px solid #ccc;
     display: inline-block;
-    background: #ff8989;
-    padding: 10px;
-    width: 218px;
+    font-size: 14px;
+    padding: 8px 8px 7px;
+    width: 220px;
 }
 .wrap-recall-options .extend-options.hidden-option{
     display:none;
@@ -305,4 +308,27 @@ span.ruble-symbol{
     float: left;
     margin: 0;
     width: 190px;
+}
+
+#rcl-options-form .submit-block > p {
+    margin: 0;
+    width: 236px;
+}
+
+#rcl-options-form .button-large.right {
+    float: right;
+    font-size: 15px;
+    padding: 0 14px;
+    width: 236px;
+}
+
+.option-block .rcl-option {
+    display: block;
+    padding: 0 0 4px;
+}
+.extend-options {
+    background: #f5f5f5 none repeat scroll 0 0;
+    border-left: 2px solid #f8d3d3;
+    margin: 5px 0;
+    padding: 5px 8px;
 }
