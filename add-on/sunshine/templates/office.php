@@ -24,9 +24,6 @@ http://blog.sodhanalibrary.com/2014/01/responsive-menu-or-navigation-bar-with.ht
                     <h2><?php rcl_username(); ?></h2>
                     <div class="rcl-action"><?php rcl_action(); ?></div>
                 </div>
-                <div class="cab_cntr_layout">
-                    <?php do_action('rcl_area_extra'); ?>
-                </div>
             </div>
 
             <div class="cab_footer">

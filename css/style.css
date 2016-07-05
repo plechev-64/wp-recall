@@ -260,7 +260,7 @@ div.wprecallblock h3 {
 	box-shadow: none;
 }
 #rcl-overlay {
-    background: rgba(30, 56, 75, 0.8);
+    background: rgba(0, 0, 0, 0.7);
     bottom: 0;
     display: none;
     left: 0;
@@ -540,15 +540,18 @@ a.data-filter.filter-active:hover {
 }
 .vertical-menu #lk-menu {
     float: left;
-    max-width: 170px;
+	margin: 3px;
+    max-width: 160px;
     min-width: 120px;
     width: auto;
 }
 .vertical-menu #lk-menu a {
-    border-bottom: 2px solid #fff;
-    display: flex;
-    float: none;
+    border-bottom: 3px solid #fff;
+    display: table;
+	float: none;
+	margin: 0 3px 0 0;
     white-space: normal;
+	width: 100%;
 }
 /* Корректировки к кнопкам End */
 
@@ -709,6 +712,7 @@ a.data-filter.filter-active:hover {
     display: inline-block;
     font-size: 20px;
     font-weight: bold;
+	line-height: 1.4;
     margin: 10px 0;
     padding: 6px 5px;
     width: 100%;
@@ -797,20 +801,20 @@ div.ssi-backdrop {
 }
 /* END ssi-modal */
 
-@media screen and (max-width:768px) {
+/* @media screen and (max-width:768px) {
     .vertical-menu #lk-menu {
-            max-width: none;
+		max-width: none;
     }
     .vertical-menu #lk-menu .recall-button {
-            display: inline-block!important;
-            padding: 6px;
+		display: inline-block;
+		float: left;
+		width: auto;
     }
-    .vertical-menu .recall-button span,
-    .vertical-menu .recall-button .fa {
-        display: block;
+    .vertical-menu #lk-menu .recall-button span,
+    .vertical-menu #lk-menu .recall-button .fa {
         margin: 0 auto;
     }
-}
+} */
 
 @media screen and (max-width:360px) {
 	#userpic-upload #webcamupload {

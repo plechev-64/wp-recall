@@ -136,9 +136,24 @@
 .cab_bttn > div {
     display: inline-block;
 }
-.office-sunshine #lk-menu a {
-	margin: 0 2px 0 0;
+#lk-menu a {
+	margin: 0 3px 0 0;
+	opacity: 1;
+    padding: 0;
 }
+#lk-menu a .fa {
+	background: rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    padding: 7px;
+    vertical-align: middle;
+}
+#lk-menu a span {
+	font-size: 14px;
+    margin: 0;
+    padding: 0 8px;
+	vertical-align: middle;
+}
+
 
 /* START для сайдбара-виджета */
 .cabinet_sidebar_after,
@@ -157,87 +172,96 @@
     max-width: 280px;
     padding: 0 2px;
 }
-.office-sunshine .recall_content_block.active {
+.vertical-menu .cab_content_blk .recall_content_block.active {
     min-width: 380px;
 }
 /* END для сайдбара-виджета */
 
 
-
 /* START стили кнопок для скрипта скрипта группировки */
-#rcl-tabs {
+.horizontal-menu #rcl-tabs {
 	position: relative;
 }
-#lk-menu {
-	font-family: unset; /* IE edge fix */
-	width: 99%; /* old browsers */
-	width: calc(100% - 30px); /*отступ на гамбургер*/
+.horizontal-menu #lk-menu {
+	font-family: unset;			/* IE edge fix */
+	padding: 3px;
+	width: 99%;					/* old browsers */
+	width: calc(100% - 30px);	/* отступ на гамбургер */
 }
-#lk-menu .rcl-tab-butt.hideshow {
+#lk-menu .hideshow {
     display: inline;
     float: right;
     width: 28px;
-    z-index: 15;
 }
-#lk-menu .rcl-tab-butt.hideshow ul {
-    display: none;
+#lk-menu .hideshow ul {
+	background: #f8f8f8;
+	float: right;
+	left: 500%;
     list-style: none;
+	margin: 14px 0 0;
+    padding: 3px 3px 0;
     position: relative;
+	visibility: hidden;
+	width: 200px;
+	z-index: 1000;
 }
-#lk-menu .rcl-tab-butt.hideshow a.bars {
-    font-size: 21px;
-    height: 26px;
-    line-height: 1;
+#lk-menu .hideshow a.bars {
     margin: 0;
-    padding: 0 5px;
+    max-height: 30px;
+    padding: 4px 7px;
 }
-#lk-menu .fa-bars {
-    vertical-align: text-bottom;
+#lk-menu a.bars .fa {
+	font-size: 23px;
+    background: transparent;
+    padding: 0;
 }
-#lk-menu .rcl-tab-butt.hideshow ul.bounce {
-    background: #f8f8f8;
-    border: 2px solid #aaa;
-    border-radius: 0;
-    box-shadow: 0 1px 2px 0 rgba(42, 55, 64, 0.5);
-    display: block;
-    float: right;
+#lk-menu .hideshow ul.bounce {
     left: 60%;
-    margin: 14px 0 4px;
-	max-width: 200px;
-    padding: 1px;
+	transition: all 0.25s ease-in-out 0s;
+	visibility: visible;
 }
-#lk-menu .rcl-tab-butt.hideshow ul.bounce:after,
-#lk-menu .rcl-tab-butt.hideshow ul.bounce:before {
-    bottom: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
+#lk-menu .hideshow ul.bounce::before {
+    color: #f8f8f8;
+    content: "\f0d8"; /*fa-caret-up*/
+    font-family: fontawesome;
+    font-size: 42px;
     position: absolute;
-    pointer-events: none;
-	right: 15px;
-    width: 0;
+    right: 16px;
+    top: -18px;
 }
-#lk-menu .rcl-tab-butt.hideshow ul.bounce:after {
-    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #f8f8f8;
-    border-width: 11px;
-    margin-left: -11px;
-}
-#lk-menu .rcl-tab-butt.hideshow ul.bounce:before {
-    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #aaa;
-    border-width: 14px;
-    margin-right: -3px;
-}
-.wprecallblock #lk-menu .rcl-tab-butt .bounce a {
-    border-bottom: 1px solid #ccc;
-    margin: 0;
-    min-width: 120px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+#lk-menu .bounce a {
+	border-bottom: 3px solid #f8f8f8;
+    display: flex;
+	margin: 0;
+    white-space: normal;
     width: 100%;
+}
+#lk-menu .bounce a .fa {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+	min-width: 35px;
+}
+#lk-menu .bounce a span {
+    padding: 10px 10px 10px 8px;
+}
+#rcl-overlay.rcl_menu_bttn_overlay {
+	display: block;
 }
 /* END стили кнопок для скрипта скрипта группировки */
 
-
+/* START left buttons */
+.vertical-menu #lk-menu a .fa {
+    display: table-cell;
+	padding: 7px 0;
+    width: 35px;
+}
+.vertical-menu #lk-menu a span {
+    display: table-cell;
+    padding: 5px;
+}
+/* END left buttons */
 
 /* START Модальное окно с информацией о пользователе */
 
@@ -355,7 +379,7 @@
 		padding: 1px 2px;
 		width: 99%;
 	}
-	.office-sunshine .recall_content_block.active {
+	.vertical-menu .cab_content_blk .recall_content_block.active {
 		min-width: auto;
 	}
 }
@@ -413,9 +437,9 @@
 		margin: 15px auto 10px;
 		width: 250px;
 	}
-        .lk-avatar .cab_usr_info {
-            font-size: 45px;
-        }
+	.lk-avatar .cab_usr_info {
+		font-size: 32px;
+	}
 	.lk-sidebar .lk-avatar {
 		box-shadow: 0 0 0 5px #fff;
 	}
@@ -436,6 +460,9 @@
 @media screen and (max-width:360px) {
 	#lk-conteyner .cab_bttn_lite .rcl-tab-button span span {
 		display: table-header-group;
+	}
+	#lk-menu .rcl-tab-butt.hideshow ul.bounce {
+		max-width: 200px;
 	}
 }
 @media screen and (max-width:320px) {

@@ -184,10 +184,12 @@ function rcl_global_options(){
                                 __('Top','wp-recall'),
                                 __('Left','wp-recall'))
                         )),
-                        $fields->option('number',array(
-                            'name'=>'slide-pause',
-                            'label'=>__('Pause Slider','wp-recall'),
-                            'notice'=>__('The value of the pause between slide transitions in seconds. Default value is 0 - the slide show is not made','wp-recall')
+                        $fields->extend(array(
+                            $fields->option('number',array(
+                                'name'=>'slide-pause',
+                                'label'=>__('Pause Slider','wp-recall'),
+                                'notice'=>__('The value of the pause between slide transitions in seconds. Default value is 0 - the slide show is not made','wp-recall')
+                            ))
                         ))
                     )
                 );

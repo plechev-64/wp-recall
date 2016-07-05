@@ -138,11 +138,6 @@ function rcl_area_sidebar(){
     do_action('rcl_area_sidebar');
 }
 
-add_action('rcl_area_extra','rcl_area_footer',10);
-function rcl_area_footer(){
-    do_action('rcl_area_footer');
-}
-
 add_action('rcl_area_details','rcl_area_content',10);
 function rcl_area_content(){
     do_action('rcl_area_content');
@@ -176,10 +171,4 @@ add_action('rcl_area_details','rcl_content',10);
 function rcl_content(){
     global $user_LK;
     echo apply_filters('rcl_content_lk','',$user_LK);
-}
-
-add_action('rcl_area_extra','rcl_footer',10);
-function rcl_footer(){
-    global $user_LK;
-    echo apply_filters('rcl_footer_lk','',$user_LK);
 }

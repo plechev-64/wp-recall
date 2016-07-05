@@ -15,11 +15,10 @@ function cab_15_script_load() {
     global $rcl_options, $user_LK,$user_ID;
 
     if($user_LK){
+        
         rcl_enqueue_script('theme-header', rcl_addon_url( 'js/header-scripts.js', __FILE__ ), false, true);
-        if($rcl_options['buttons_place']==0) {
-            // мы в кабинете и выбраны горизонтальные кнопки ("Сверху")
-            rcl_enqueue_script('cab_15_scrpt', rcl_addon_url( 'js/my-scr.js', __FILE__ ), false, true);
-        }
+        rcl_enqueue_script('cab_15_scrpt', rcl_addon_url( 'js/my-scr.js', __FILE__ ), false, true);
+        
         if($user_LK==$user_ID){
             rcl_crop_scripts();
             rcl_enqueue_script('cover-uploder', rcl_addon_url( 'js/cover-uploader.js', __FILE__ ), false, true);
@@ -98,10 +97,27 @@ function rcl_add_sidebar_area_after(){
 // корректирующие стили
 add_filter('rcl_inline_styles','rcl_add_cover_inline_styles',10);
 function rcl_add_cover_inline_styles($styles){
-    global $user_LK;
+    global $user_LK,$rcl_options;
     $cover_url = get_user_meta($user_LK,'rcl_cover',1);
     if(!$cover_url) $cover_url = rcl_addon_url('img/default-cover.jpg',__FILE__);
     $styles .= '#lk-conteyner{background-image: url('.$cover_url.');}';
+
+    $lca_hex = $rcl_options['primary-color']; // достаем оттуда наш цвет
+    list($r, $g, $b) = sscanf($lca_hex, "#%02x%02x%02x"); 
+
+    $rp = round($r * 0.90);
+    $gp = round($g * 0.90);
+    $bp = round($b * 0.90);
+
+    $styles .= '
+    #lk-menu a:hover {
+            background: rgba('.$rp.', '.$gp.', '.$bp.', 1);
+    }
+    #lk-menu a.active:hover {
+        background: rgba('.$r.', '.$g.', '.$b.', 0.4);
+    }
+    ';
+	
     return $styles;
 }
 
