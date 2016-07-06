@@ -13,7 +13,7 @@ class Rcl_Ajax{
         
         $post = rcl_decode_post($_POST['post']);
         
-        $post->tab_url = $_POST['tab_url'];
+        $post->tab_url = (isset($_POST['tab']))? $_POST['tab_url'].'&tab='.$_POST['tab']: $_POST['tab_url'];
         
         $callback = $post->callback;
         $result['result'] = $callback($post);

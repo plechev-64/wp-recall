@@ -79,7 +79,7 @@ function rcl_add_rating_tab(){
     global $user_LK;
     $count = 0;
     if(!is_admin()){
-        $count = rcl_rating_block(array('value'=>rcl_get_user_rating($user_LK)));
+        $count = rcl_format_rating(rcl_get_user_rating($user_LK));
     }
     rcl_tab('rating','rcl_rating_tab',__('Rating','wp-recall'),array('ajax-load'=>true,'public'=>1,'cache'=>true,'output'=>'counters','counter'=>$count,'class'=>'fa-balance-scale'));
 }

@@ -89,16 +89,11 @@
 	font-size: 14px;
 	margin: 0 0 0 10px;
 }
-.cab_footer {
-    bottom: 15px;
-    position: absolute;
-    right: 15px;
-	max-width: 68%;
-    max-width: calc(100% - 275px);
-}
 .cab_bttn {
     display: inline-block;
-	margin: 13px 2px 10px 10px;
+	margin: 10px 0 2px;
+	width: 68%;
+    width: calc(100% - 265px);
 }
 .cab_footer .cab_bttn a {
     background: rgba(0, 0, 0, 0.4);
@@ -110,10 +105,19 @@
     background: rgba(0, 0, 0, 0.4);
     opacity: 0.8;
 }
-.cab_bttn > div {
+.cab_bttn > div,
+.cab_bttn > span {
     display: inline-block;
+	margin: 1px 1px 5px;
 }
-
+.cab_bttn_lite {
+    bottom: 15px;
+    position: absolute;
+    right: 15px;
+}
+#rcl-office .cab_bttn_lite .rcl-tab-button .rcl-menu-notice span{
+    display:inline-block;
+}
 
 /* START для сайдбара-виджета */
 .cabinet_sidebar_after,
@@ -302,9 +306,6 @@
 		min-height: 175px;
 		margin: 86px 0 0;
 	}
-	.cab_center {
-		min-height: 112px;
-	}
 	.office-sunshine .lk-sidebar {
 		height: 150px;
 		margin: 0 20px;
@@ -313,6 +314,7 @@
 	.lk-sidebar .lk-avatar {
 		box-shadow: 0 0 0 4px #fff;
 	}
+	.cab_bttn,
 	.cab_title {
 		width: 68%;
 		width: calc(100% - 205px);
@@ -323,16 +325,6 @@
 	.office-sunshine .rcl-action {
 		font-size: 13px;
 		line-height: 1;
-	}
-	.cab_footer {
-		bottom: 0;
-		margin: 0 auto;
-		max-width: 98%;
-		position: relative;
-		right: 0;
-	}
-	.cab_bttn_lite {
-		margin: 5px 0;
 	}
 }
 @media screen and (max-width:768px) {
@@ -362,7 +354,7 @@
 		min-height: 140px;
 	}
 	.cab_center {
-		min-height: 85px;
+		min-height: 45px;
 	}
 	.office-sunshine .lk-sidebar {
 		height: 80px;
@@ -379,15 +371,15 @@
 	.lk-avatar .cab_usr_info {
 		font-size: 20px;
 	}
+	.cab_bttn,
 	.cab_title {
 		width: 68%;
 		width: calc(100% - 155px);
 	}
-	.cab_bttn,
 	.cab_bttn_lite {
-		display: table;
-		float: none;
-		margin: 8px auto;
+		bottom: 0;
+		margin: 8px 0;
+		position: relative;
 	}
 }
 @media screen and (max-width:480px) {
@@ -408,6 +400,7 @@
 	.lk-sidebar .lk-avatar {
 		box-shadow: 0 0 0 5px #fff;
 	}
+	.cab_bttn,
 	.cab_title {
 		width: 100%;
 	}
@@ -419,6 +412,12 @@
 	}
 	.cab_bttn i + span {
 		margin: 0;
+	}
+	.cab_bttn_lite {
+		display: table;
+		float: none;
+		margin: 8px auto;
+		right: 0;
 	}
 }
 @media screen and (max-width:360px) {

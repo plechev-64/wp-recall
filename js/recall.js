@@ -49,7 +49,7 @@ function setAttr_rcl(prmName,val){
 function rcl_ajax_tab(e,data){
     jQuery('.rcl-tab-button .recall-button').removeClass('active');
     e.addClass('active');
-    var url = data.post.tab_url+'&tab='+data.post.tab_id;
+    var url = data.post.tab_url;
     if(url != window.location){
         if ( history.pushState ){
             window.history.pushState(null, null, url);
