@@ -322,13 +322,23 @@ span.ruble-symbol{
     width: 236px;
 }
 
-.option-block .rcl-option {
-    display: block;
-    padding: 0 0 4px;
-}
-.extend-options {
+#rcl-options-form .extend-options {
     background: #f5f5f5 none repeat scroll 0 0;
     border-left: 2px solid #f8d3d3;
     margin: 5px 0;
     padding: 5px 8px;
+}
+#rcl-options-form .help-option{
+    display: inline-block;
+}
+#rcl-options-form .help-option .dashicons{
+    color: #2ea2cc;
+    cursor: pointer;
+    font-size: 18px;
+}
+#rcl-options-form .help-option .help-content{
+    display: none;
+}
+.rcl-help-dialog .help-content{
+    display:block;
 }

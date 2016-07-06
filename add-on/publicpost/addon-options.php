@@ -73,15 +73,15 @@ function rcl_get_publics_options_page($content){
         $opt->option_block(
             array(
                 $opt->title(__('Category','wp-recall')),
-
-                $opt->label(__('Authorized headings','wp-recall')),
-                $opt->option('text',array('name'=>'id_parent_category')),
-                $opt->notice(__('ID columns in which permitted the publication should be separated by commas. '
-                        . 'This setting is common to all forms of publication, but it is possible '
-                        . 'to specify the desired category in shortcode forms, for example: [public-form cats="72,149"] '
-                        . 'or for each form separately on the page generate custom fields','wp-recall')),
-                $opt->notice(__('It is better to specify the parent category, then their child will be withdrawn automatically.','wp-recall')),
-                
+                $opt->extend(array(
+                    $opt->label(__('Authorized headings','wp-recall')),
+                    $opt->option('text',array('name'=>'id_parent_category')),
+                    $opt->notice(__('ID columns in which permitted the publication should be separated by commas. '
+                            . 'This setting is common to all forms of publication, but it is possible '
+                            . 'to specify the desired category in shortcode forms, for example: [public-form cats="72,149"] '
+                            . 'or for each form separately on the page generate custom fields','wp-recall')),
+                    $opt->notice(__('It is better to specify the parent category, then their child will be withdrawn automatically.','wp-recall')),
+                )),
                 $opt->label(__('Output category list','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'output_category_list',
@@ -188,9 +188,11 @@ function rcl_get_publics_options_page($content){
                 $opt->child(
                     array('name'=>'output_public_form_rcl','value'=>1),
                     array(
+                        $opt->extend(array(
                         $opt->label(__('The form ID','wp-recall')),
                         $opt->option('number',array('name'=>'form-lk')),
                         $opt->notice(__('Enter the form ID to the conclusion in the personal Cabinet. The default is 1','wp-recall'))
+                    ))
                     )
                 )
             )
@@ -230,20 +232,22 @@ function rcl_get_publics_options_page($content){
 
 	$opt->option_block(
             array(
-                $opt->title(__('Editing','wp-recall')),
+                $opt->extend(array(
+                    $opt->title(__('Editing','wp-recall')),
 
-                $opt->label(__('Frontend editing','wp-recall')),
-                $opt->option('checkbox',array(
-                    'name'=>'front_editing',
-                    'options'=>array(
-                            10=>__('Administrators','wp-recall'),
-                            7=>__('Editors','wp-recall'),
-                            2=>__('Authors','wp-recall')
-                    )
-                )),
-		$opt->label(__('Time limit editing','wp-recall')),
-                $opt->option('number',array('name'=>'time_editing')),
-		$opt->notice(__('Limit editing time of publication in hours, by default: unlimited','wp-recall'))
+                    $opt->label(__('Frontend editing','wp-recall')),
+                    $opt->option('checkbox',array(
+                        'name'=>'front_editing',
+                        'options'=>array(
+                                10=>__('Administrators','wp-recall'),
+                                7=>__('Editors','wp-recall'),
+                                2=>__('Authors','wp-recall')
+                        )
+                    )),
+                    $opt->label(__('Time limit editing','wp-recall')),
+                    $opt->option('number',array('name'=>'time_editing')),
+                    $opt->notice(__('Limit editing time of publication in hours, by default: unlimited','wp-recall'))
+                ))
             )
         ),
 

@@ -94,42 +94,45 @@ function rcl_admin_page_rating($content){
         __('Rating settings','wp-recall'),array(
 
         $options,
+            
+        $opt->extend(array(
 
-        $opt->option_block(
-            array(
-                $opt->label(__('Allow to bypass the moderation of publications at achievement rating','wp-recall')),
-                $opt->option('number',array('name'=>'rating_no_moderation')),
-                $opt->notice(__('specify the rating level at which the user will get the ability to post without moderation','wp-recall'))
-            )
-        ),
+            $opt->option_block(
+                array(
+                    $opt->label(__('Allow to bypass the moderation of publications at achievement rating','wp-recall')),
+                    $opt->option('number',array('name'=>'rating_no_moderation')),
+                    $opt->notice(__('specify the rating level at which the user will get the ability to post without moderation','wp-recall'))
+                )
+            ),
 
-		$opt->option_block(
-            array(
-                $opt->label(__('View results','wp-recall')),
-                $opt->option('select',array(
-					'name'=>'rating_results_can',
-					'default'=>0,
-					'options'=>array(
-						0=>__('All users','wp-recall'),
-						1=>__('Participants and older','wp-recall'),
-						2=>__('Authors and older','wp-recall'),
-						7=>__('Editors and older','wp-recall'),
-						10=>__('only Administrators','wp-recall')
-					)
-				)),
-                $opt->notice(__('specify the user group which is allowed to view votes','wp-recall'))
-            )
-        ),
+            $opt->option_block(
+                array(
+                    $opt->label(__('View results','wp-recall')),
+                    $opt->option('select',array(
+                            'name'=>'rating_results_can',
+                            'default'=>0,
+                            'options'=>array(
+                                    0=>__('All users','wp-recall'),
+                                    1=>__('Participants and older','wp-recall'),
+                                    2=>__('Authors and older','wp-recall'),
+                                    7=>__('Editors and older','wp-recall'),
+                                    10=>__('only Administrators','wp-recall')
+                            )
+                        )),
+                    $opt->notice(__('specify the user group which is allowed to view votes','wp-recall'))
+                )
+            ),
 
-		$opt->option_block(
-            array(
-                $opt->label(__('Deleting your voice','wp-recall')),
-                $opt->option('select',array(
-					'name'=>'rating_delete_voice',
-					'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-				))
+            $opt->option_block(
+                array(
+                    $opt->label(__('Deleting your voice','wp-recall')),
+                    $opt->option('select',array(
+                            'name'=>'rating_delete_voice',
+                            'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                    ))
+                )
             )
-        )
+        ))
     ));
 
     return $content;

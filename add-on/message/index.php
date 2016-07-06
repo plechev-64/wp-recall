@@ -222,46 +222,47 @@ class Rcl_Messages{
                     __('Settings private messages','wp-recall'),
                     $opt->option_block(
                         array(
-                            $opt->title(__('Private messages','wp-recall')),
-                            $opt->label(__('Displaying messages in the correspondence','wp-recall')),
-                            $opt->option('select',array(
-                                'name'=>'sort_mess',
-                                'options'=>array(__('Top-Down','wp-recall'),__('Bottom-Up','wp-recall'))
-                            )),
-
-                            $opt->label(__('Limit words message','wp-recall')),
-                            $opt->option('number',array('name'=>'ms_limit_words')),
-                            $opt->notice(__('the default is 400','wp-recall')),
-                            
-                            $opt->label(__('OEMBED in messages','wp-recall')),
-                            $opt->option('select',array(
-                                'name'=>'ms_oembed',
-                                'options'=>array(__('Off','wp-recall'),__('On','wp-recall'))
+                            $opt->extend(array(
+                                $opt->title(__('Private messages','wp-recall')),
+                                $opt->label(__('Displaying messages in the correspondence','wp-recall')),
+                                $opt->option('select',array(
+                                    'name'=>'sort_mess',
+                                    'options'=>array(__('Top-Down','wp-recall'),__('Bottom-Up','wp-recall'))
                                 )),
 
-                            $opt->label(__('The number of messages in the conversation','wp-recall')),
-                            $opt->option('number',array('name'=>'max_private_message')),
-                            $opt->notice(__('the default is 100 messages in the conversation (per correspondence user)','wp-recall')),
+                                $opt->label(__('Limit words message','wp-recall')),
+                                $opt->option('number',array('name'=>'ms_limit_words')),
+                                $opt->notice(__('the default is 400','wp-recall')),
 
-                            $opt->label(__('Pause between requests for new posts to show per page of correspondence with another user in seconds','wp-recall')),
-                            $opt->option('number',array('name'=>'update_private_message')),
+                                $opt->label(__('OEMBED in messages','wp-recall')),
+                                $opt->option('select',array(
+                                    'name'=>'ms_oembed',
+                                    'options'=>array(__('Off','wp-recall'),__('On','wp-recall'))
+                                    )),
 
-                            $opt->label(__('The number of requests you receive a new message page correspondence','wp-recall')),
-                            $opt->option('number',array('name'=>'max_request_new_message')),
-                            $opt->notice(__('Specify the maximum number of requests to retrieve a new message from a friend on the page of correspondence.'
-                                    . 'If the number of requests exceeds the specified value, then the requests will stop. If nothing is specified or you specify zero, then there is no limit.','wp-recall')),
+                                $opt->label(__('The number of messages in the conversation','wp-recall')),
+                                $opt->option('number',array('name'=>'max_private_message')),
+                                $opt->notice(__('the default is 100 messages in the conversation (per correspondence user)','wp-recall')),
 
-                            $opt->label(__('The pause between requests for new messages on all other pages of the website in seconds','wp-recall')),
-                            $opt->option('number',array('name'=>'global_update_private_message')),
-                            $opt->notice(__('If null, then the receipt of new messages only when the page loads, without subsequent requests','wp-recall')),
+                                $opt->label(__('Pause between requests for new posts to show per page of correspondence with another user in seconds','wp-recall')),
+                                $opt->option('number',array('name'=>'update_private_message')),
 
-                            $opt->label(__('Lock requests if the person offline','wp-recall')),
-                            $opt->option('select',array(
-                                'name'=>'block_offrequest',
-                                'options'=>array(__('Do not block','wp-recall'),__('To block requests','wp-recall'))
+                                $opt->label(__('The number of requests you receive a new message page correspondence','wp-recall')),
+                                $opt->option('number',array('name'=>'max_request_new_message')),
+                                $opt->notice(__('Specify the maximum number of requests to retrieve a new message from a friend on the page of correspondence.'
+                                        . 'If the number of requests exceeds the specified value, then the requests will stop. If nothing is specified or you specify zero, then there is no limit.','wp-recall')),
+
+                                $opt->label(__('The pause between requests for new messages on all other pages of the website in seconds','wp-recall')),
+                                $opt->option('number',array('name'=>'global_update_private_message')),
+                                $opt->notice(__('If null, then the receipt of new messages only when the page loads, without subsequent requests','wp-recall')),
+
+                                $opt->label(__('Lock requests if the person offline','wp-recall')),
+                                $opt->option('select',array(
+                                    'name'=>'block_offrequest',
+                                    'options'=>array(__('Do not block','wp-recall'),__('To block requests','wp-recall'))
+                                )),
+                                $opt->notice(__('We mean a request to retrieve new messages from the user to the page which you are','wp-recall'))
                             )),
-                            $opt->notice(__('We mean a request to retrieve new messages from the user to the page which you are','wp-recall')),
-
                             $opt->label(__('File sharing','wp-recall')),
                             $opt->option('select',array(
                                 'name'=>'file_exchange',
@@ -291,7 +292,7 @@ class Rcl_Messages{
                             $opt->option('select',array(
                                 'name'=>'messages_mail',
                                 'options'=>array(__('Without the text of the message','wp-recall'),__('Full text of the message','wp-recall'))
-                            )),
+                            ))
                         )
                     )
                 );

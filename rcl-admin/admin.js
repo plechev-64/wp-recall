@@ -254,3 +254,23 @@ function rcl_preloader_show(e){
 function rcl_preloader_hide(){
     jQuery('.rcl_preloader').remove();
 }
+
+function rcl_get_option_help(elem){
+    var help = jQuery(elem).children('.help-content');
+    var content = help.html();
+    help.dialog({
+        modal: true,
+        dialogClass: 'rcl-help-dialog',
+        resizable: false,
+        width: 400,
+        open: function (e, data) {
+            jQuery('.rcl-help-dialog .help-content').css({
+                'display':'block',
+                'min-height':'initial'
+            });
+        },
+        close: function (e, data) {
+            jQuery(elem).append('<span class="help-content">'+content+'</span>');
+        }
+    });
+}

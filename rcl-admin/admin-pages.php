@@ -81,6 +81,10 @@ function rcl_postmeta_update( $post_id ){
 function rcl_global_options(){
     global $rcl_options;
     
+    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script( 'jquery-ui-dialog' );
+    wp_enqueue_style('wp-jquery-ui-dialog');
+    
     include_once RCL_PATH.'functions/rcl_options.php';
     $fields = new Rcl_Options();
 
@@ -110,7 +114,8 @@ function rcl_global_options(){
                     7=>__('Editors and older','wp-recall'),
                     2=>__('Authors and older','wp-recall'),
                     1=>__('Participants and older','wp-recall'),
-                    0=>__('All users','wp-recall'));
+                    0=>__('All users','wp-recall')
+                );
 
                 $content .= $fields->option_block(array(
                     $fields->extend(array(
@@ -122,7 +127,9 @@ function rcl_global_options(){
                             'parent'=>true,
                             'options'=>array(
                                 __('On the archive page of the author','wp-recall'),
-                                __('Using the shortcode [wp-recall]','wp-recall'))
+                                __('Using the shortcode [wp-recall]','wp-recall')),
+                            'help'=>__('Attention! To change this parameter is not required. Detailed instructions on withdrawal personal account using the file author.php described <a href="https://codeseller.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank">here</a>','wp-recall'),
+                            'notice'=>__('If the selected archive page of the author, in the right place template author.php paste the code if(function_exists(\'wp_recall\')) wp_recall();','wp-recall')
                         )),
                         $fields->child(
                             array(
@@ -135,13 +142,14 @@ function rcl_global_options(){
                                 $fields->option('text',array(
                                     'name'=>'link_user_lk_rcl',
                                     'label'=>__('The formation of links to personal account','wp-recall'),
-                                    'notice'=>__('The link is formed by a principle "/slug_page/?get=ID". The parameter "get" can be set here. By default user','wp-recall')
+                                    'help'=>__('The link is formed by a principle "/slug_page/?get=ID". The parameter "get" can be set here. By default user','wp-recall')
                                 ))
                             )
                         ),
                         $fields->option('select',array(
                             'name'=>'tab_newpage',
                             'label'=>__('Download tabs','wp-recall'),
+                            'help'=>__('Depending on the setting, it will load the content of tabs personal account. It is recommended to install a separate download or tabs ajax loading','wp-recall'),
                             'options'=>array(
                                 __('Downloads all','wp-recall'),
                                 __('On a separate page','wp-recall'),
@@ -149,6 +157,7 @@ function rcl_global_options(){
                         )),
                         $fields->option('number',array(
                             'name'=>'timeout',
+                            'help'=>__('This value sets the maximum time a user is considered "online" in the absence of active','wp-recall'),
                             'label'=>__('Inactivity timeout','wp-recall'),
                             'notice'=>__('Specify the time in minutes after which the user will be considered offline if you did not show activity on the website. The default is 10 minutes.','wp-recall')
                         ))
@@ -161,8 +170,7 @@ function rcl_global_options(){
                             'default'=>7,
                             'name'=>'consol_access_rcl',
                             'label'=>__('Access to the site is permitted console','wp-recall'),
-                            'options'=>$roles,
-                            'notice'=>__('If the selected archive page of the author, in the right place template author.php paste the code if(function_exists(\'wp_recall\')) wp_recall();','wp-recall')
+                            'options'=>$roles
                         ))
                 ))));
                 
@@ -188,6 +196,7 @@ function rcl_global_options(){
                             $fields->option('number',array(
                                 'name'=>'slide-pause',
                                 'label'=>__('Pause Slider','wp-recall'),
+                                'help'=>__('Only used in the derivation of the slider via shortcode publications <a href="https://codeseller.ru/api-rcl/slider-rcl/" target="_blank">[slider-rcl]</a>','wp-recall'),
                                 'notice'=>__('The value of the pause between slide transitions in seconds. Default value is 0 - the slide show is not made','wp-recall')
                             ))
                         ))
@@ -203,6 +212,7 @@ function rcl_global_options(){
                             $fields->option('select',array(
                                 'name'=>'use_cache',
                                 'label'=>__('Cache','wp-recall'),
+                                'help'=>__('Use the functionality of the caching plugin WP-Recall. <a href="https://codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/" target="_blank">read More</a>','wp-recall'),
                                 'parent'=>true,
                                 'options'=>array(
                                     __('Disabled','wp-recall'),
@@ -280,6 +290,7 @@ function rcl_global_options(){
                         $fields->extend(array(
                             $fields->option('select',array(
                                 'name'=>'confirm_register_recall',
+                                'help'=>__('If you are using the confirmation of registration, after registration, the user will need to confirm your email by clicking on the link in the sent email','wp-recall'),
                                 'label'=>__('A registration confirmation by the user','wp-recall'),
                                 'options'=>array(
                                     __('Not used','wp-recall'),
@@ -327,6 +338,7 @@ function rcl_global_options(){
                         $fields->option('select',array(
                             'name'=>'view_recallbar',
                             'label'=>__('Conclusion the panel recallbar','wp-recall'),
+                            'help'=>__('Recallbar - top panel from the plugin WP-Recall using that plugin and its add-ons can withdraw their data and the administrator can place an arbitrary menu, forming him on <a href="/wp-admin/nav-menus.php" target="_blank">page management menu of the website</a>','wp-recall'),
                             'parent'=>true,
                             'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
                         )),

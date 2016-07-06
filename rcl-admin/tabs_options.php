@@ -1,6 +1,6 @@
 <?php
 
-add_filter('admin_options_wprecall','rcl_get_tablist_options');
+add_filter('admin_options_wprecall','rcl_get_tablist_options',100);
 function rcl_get_tablist_options($content){
     global $rcl_tabs,$rcl_order_tabs;
 

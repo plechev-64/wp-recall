@@ -48,6 +48,10 @@ class Rcl_Options {
     function label($label){
         return '<label>'.$label.'</label>';
     }
+    
+    function help($content){
+        return '<span class="help-option" onclick="return rcl_get_option_help(this);"><i class="dashicons dashicons-editor-help"></i><span class="help-content">'.$content.'</span></span>';
+    }
 
     function notice($notice){
         return '<small>'.$notice.'</small>';
@@ -113,6 +117,10 @@ class Rcl_Options {
         }
         
         $content .= $this->$type($args,$value);
+        
+        if(isset($args['help'])&&$args['help']){
+            $content .= $this->help($args['help']);
+        }
         
         if(isset($args['notice'])&&$args['notice']){
             $content .= $this->notice($args['notice']);

@@ -40,4 +40,9 @@ if(!isset($rcl_options['front_editing']))
 if(!isset($rcl_options['media_uploader']))
     $rcl_options['media_uploader'] = 1;
 
+if(!isset($rcl_options['pm_rcl']))
+    $rcl_options['pm_rcl'] = 1;
+if(!isset($rcl_options['pm_place']))
+    $rcl_options['pm_place'] = 0;
+
 update_option('rcl_global_options',$rcl_options);
