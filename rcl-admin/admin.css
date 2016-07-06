@@ -342,3 +342,6 @@ span.ruble-symbol{
 .rcl-help-dialog .help-content{
     display:block;
 }
+.rcl-help-dialog .ui-dialog-titlebar {
+    font-size:14px;
+}

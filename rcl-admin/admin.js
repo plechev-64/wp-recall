@@ -256,13 +256,17 @@ function rcl_preloader_hide(){
 }
 
 function rcl_get_option_help(elem){
+    
     var help = jQuery(elem).children('.help-content');
+    var title_dialog = jQuery(elem).parents('.rcl-option').children('label').text();
+
     var content = help.html();
     help.dialog({
         modal: true,
         dialogClass: 'rcl-help-dialog',
         resizable: false,
-        width: 400,
+        minWidth: 400,
+        title:title_dialog,
         open: function (e, data) {
             jQuery('.rcl-help-dialog .help-content').css({
                 'display':'block',
