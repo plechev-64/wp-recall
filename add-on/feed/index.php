@@ -34,27 +34,22 @@ function rcl_add_userlist_follow_button(){
 
 add_action('init','rcl_add_followers_tab');
 function rcl_add_followers_tab(){
-    rcl_tab('followers','rcl_followers_tab',__('Followers','wp-recall'),array('public'=>1,'ajax-load'=>true,'cache'=>true,'output'=>'counters','class'=>'fa-twitter'));
+    global $user_LK;
+    $count = 0;
+    if(!is_admin()){
+        $count = rcl_feed_count_subscribers($user_LK);
+    }
+    rcl_tab('followers','rcl_followers_tab',__('Followers','wp-recall'),array('public'=>1,'ajax-load'=>true,'cache'=>true,'output'=>'counters','counter'=>$count,'class'=>'fa-twitter'));
 }
 
-if(!is_admin()) add_filter('tab_data_rcl','rcl_add_counter_followers_tab',10);
-function rcl_add_counter_followers_tab($data){
+add_action('init','rcl_add_subscriptions_tab');
+function rcl_add_subscriptions_tab(){
     global $user_LK;
-    if($data['id']!='followers') return $data;
-    return rcl_add_balloon_menu($data,array(
-        'tab_id'=>'followers',
-        'ballon_value'=>rcl_feed_count_subscribers($user_LK))
-    );
-}
-
-if(!is_admin()) add_filter('tab_data_rcl','rcl_add_counter_subscriptions',10);
-function rcl_add_counter_subscriptions($data){
-    global $user_LK;
-    if($data['id']!='subscriptions') return $data;
-    return rcl_add_balloon_menu($data,array(
-        'tab_id'=>'subscriptions',
-        'ballon_value'=>rcl_feed_count_authors($user_LK))
-    );
+    $count = 0;
+    if(!is_admin()){
+        $count = rcl_feed_count_authors($user_LK);
+    }
+    rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','wp-recall'),array('public'=>0,'ajax-load'=>true,'cache'=>true,'output'=>'counters','counter'=>$count,'class'=>'fa-bell-o'));
 }
 
 function rcl_followers_tab($user_id){
@@ -79,11 +74,6 @@ function rcl_followers_tab($user_id){
         $content .= '<p>'.__('Following yet','wp-recall').'</p>';
 
     return $content;
-}
-
-add_action('init','rcl_add_subscriptions_tab');
-function rcl_add_subscriptions_tab(){
-    rcl_tab('subscriptions','rcl_subscriptions_tab',__('Subscriptions','wp-recall'),array('public'=>0,'ajax-load'=>true,'cache'=>true,'output'=>'counters','class'=>'fa-bell-o'));
 }
 
 function rcl_subscriptions_tab($user_id){

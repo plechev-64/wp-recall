@@ -51,10 +51,12 @@ class Rcl_Templates_Manager extends WP_List_Table {
                         if(isset($_POST['s'])&&$_POST['s']){
                             if (strpos(strtolower(trim($data['name'])), strtolower(trim($_POST['s']))) !== false) {
                                 $this->addons_data[$namedir] = $data;
+                                $this->addons_data[$namedir]['path'] = $addon_dir;
                             }
                             continue;
                         }
                         $this->addons_data[$namedir] = $data;
+                        $this->addons_data[$namedir]['path'] = $addon_dir;
                     }
                     
                 }
@@ -67,15 +69,15 @@ class Rcl_Templates_Manager extends WP_List_Table {
     
     function get_addons_content(){
         global $active_addons;
-
         $add_ons = array();
         foreach($this->addons_data as $namedir=>$data){
             $desc = $this->get_description_column($data);
             $add_ons[$namedir]['ID'] = $namedir;
             if(isset($data['template'])) $add_ons[$namedir]['template'] = $data['template'];
             $add_ons[$namedir]['addon_name'] = $data['name'];
+            $add_ons[$namedir]['addon_path'] = $data['path'];
             $add_ons[$namedir]['addon_status'] = ($active_addons&&isset($active_addons[$namedir]))? 1: 0;
-            $add_ons[$namedir]['addon_description'] = $desc;           
+            $add_ons[$namedir]['addon_description'] = $desc; 
         }
         
         return $add_ons;
@@ -84,13 +86,13 @@ class Rcl_Templates_Manager extends WP_List_Table {
     function admin_header() {
         
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-        if( 'manage-addon-recall' != $page ) return;
+        if( 'manage-templates-recall' != $page ) return;
         
         echo '<style type="text/css">';
-        echo '.wp-list-table .column-id { width: 5%; }';
-        echo '.wp-list-table .column-addon_name { width: 25%; }';
+        echo '.wp-list-table .column-addon_screen { width: 200px; }';
+        echo '.wp-list-table .column-addon_name { width: 10%; }';
         echo '.wp-list-table .column-addon_status { width: 10%; }';
-        echo '.wp-list-table .column-addon_description { width: 60%;}';
+        echo '.wp-list-table .column-addon_description { width: 70%;}';
         echo '</style>';
         
     }
@@ -102,6 +104,11 @@ class Rcl_Templates_Manager extends WP_List_Table {
     function column_default( $item, $column_name ) {
         
         switch( $column_name ) { 
+            case 'addon_screen':
+                if(file_exists($item['addon_path'].'/screenshot.jpg')){
+                   return '<img src="'.rcl_addon_url('screenshot.jpg',$item['addon_path']).'">';
+                }
+                break;
             case 'addon_name':
                 $name = (isset($item['template']))? $item[ 'addon_name' ]: $item[ 'addon_name' ];
                 return '<strong>'.$name.'</strong>';
@@ -128,6 +135,7 @@ class Rcl_Templates_Manager extends WP_List_Table {
 	
     function get_columns(){
         $columns = array(
+            'addon_screen' => '',
             'addon_name' => __( 'Templates', 'wp-recall' ),
             'addon_status'    => __( 'Status', 'wp-recall' ),
             'addon_description'      => __( 'Description', 'wp-recall' )

@@ -61,7 +61,7 @@
     width: 100%;
     z-index: 2;
 }
-.office-sunshine .lk-sidebar {
+.cab_content .lk-sidebar {
     height: 200px;
 	margin: 0 30px;
     width: 200px;
@@ -72,8 +72,7 @@
     height: 100%;
     width: 100%;
 }
-.cab_title,
-.cab_cntr_layout {
+.cab_title {
     display: inline-block;
 	width: 68%;
     width: calc(100% - 265px);
@@ -89,28 +88,6 @@
 	color: #ddd;
 	font-size: 14px;
 	margin: 0 0 0 10px;
-}
-.cab_cntr_layout ul,
-.cab_cntr_layout div,
-.cab_cntr_layout span {
-	display: inline-block;
-	
-}
-.cab_cntr_layout .block-rcl{
-    margin: 5px;
-}
-.cab_cntr_layout .bx-wrapper .bx-viewport{
-    border: 0;
-}
-.cab_cntr_layout .bx-wrapper{
-    
-}
-#lk-conteyner .cab_cntr_layout > ul {
-    height: 24px;
-    margin: 0;
-}
-.cab_cntr_layout img, .cab_cntr_layout .fa {
-    font-size: 25px;
 }
 .cab_footer {
     bottom: 15px;
@@ -135,23 +112,6 @@
 }
 .cab_bttn > div {
     display: inline-block;
-}
-#lk-menu a {
-	margin: 0 3px 0 0;
-	opacity: 1;
-    padding: 0;
-}
-#lk-menu a .fa {
-	background: rgba(0, 0, 0, 0.1);
-    font-size: 16px;
-    padding: 7px;
-    vertical-align: middle;
-}
-#lk-menu a span {
-	font-size: 14px;
-    margin: 0;
-    padding: 0 8px;
-	vertical-align: middle;
 }
 
 
@@ -178,7 +138,24 @@
 /* END для сайдбара-виджета */
 
 
-/* START стили кнопок для скрипта скрипта группировки */
+/* START стили кнопок для скрипта */
+#lk-menu a {
+	margin: 0 3px 0 0;
+	opacity: 1;
+    padding: 0;
+}
+#lk-menu a .fa {
+	background: rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    padding: 7px;
+    vertical-align: middle;
+}
+#lk-menu a span {
+	font-size: 14px;
+    margin: 0;
+    padding: 0 8px;
+	vertical-align: middle;
+}
 .horizontal-menu #rcl-tabs {
 	position: relative;
 }
@@ -187,23 +164,6 @@
 	padding: 3px;
 	width: 99%;					/* old browsers */
 	width: calc(100% - 30px);	/* отступ на гамбургер */
-}
-#lk-menu .hideshow {
-    display: inline;
-    float: right;
-    width: 28px;
-}
-#lk-menu .hideshow ul {
-	background: #f8f8f8;
-	float: right;
-	left: 500%;
-    list-style: none;
-	margin: 14px 0 0;
-    padding: 3px 3px 0;
-    position: relative;
-	visibility: hidden;
-	width: 200px;
-	z-index: 1000;
 }
 #lk-menu .hideshow a.bars {
     margin: 0;
@@ -215,46 +175,52 @@
     background: transparent;
     padding: 0;
 }
-#lk-menu .hideshow ul.bounce {
-    left: 60%;
-	transition: all 0.25s ease-in-out 0s;
-	visibility: visible;
+#sunshine_ext_menu {
+	display: none;
 }
-#lk-menu .hideshow ul.bounce::before {
-    color: #f8f8f8;
-    content: "\f0d8"; /*fa-caret-up*/
-    font-family: fontawesome;
-    font-size: 42px;
+#sunshine_ext_menu.bounce {
+    display: block;
     position: absolute;
-    right: 16px;
-    top: -18px;
+    right: 0;
+    top: 0;
+    transition: top 0.25s ease-in-out 0s;
+    z-index: 1000;
 }
-
-#lk-menu .bounce a {
+#sunshine_ext_menu ul {
+	background: #f8f8f8;
+	line-height: 1;
+    list-style: none;
+	margin: 0;
+    padding: 3px 3px 0;
+	width: 200px;
+}
+#sunshine_ext_menu a {
 	border-bottom: 3px solid #f8f8f8;
     display: flex;
 	margin: 0;
+	padding: 0;
     white-space: normal;
     width: 100%;
 }
-#lk-menu .bounce a .fa {
+#sunshine_ext_menu a .fa {
+	background: rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
+	font-size: 16px;
     justify-content: center;
 	min-width: 35px;
 }
-#lk-menu .bounce a span {
+#sunshine_ext_menu a span {
+    font-size: 14px;
+    margin: 0;
     padding: 10px 10px 10px 8px;
 }
-#rcl-overlay.rcl_menu_bttn_overlay {
-	display: block;
-}
-/* END стили кнопок для скрипта скрипта группировки */
+/* END стили кнопок для скрипта */
+
 
 /* START left buttons */
 .vertical-menu #lk-menu a .fa {
     display: table-cell;
-	padding: 7px 0;
     width: 35px;
 }
 .vertical-menu #lk-menu a span {
@@ -263,8 +229,8 @@
 }
 /* END left buttons */
 
-/* START Модальное окно с информацией о пользователе */
 
+/* START Модальное окно с информацией о пользователе */
 .rcl-user-getails .rcl-user-avatar {
     display: inline-block;
     position: relative;
@@ -272,11 +238,13 @@
     width: 100%;
 }
 .rcl-user-getails .rcl-user-avatar img {
+    border: 0;
     border-radius: 0;
     display: block;
     float: none;
     height: 100%;
     margin: 0;
+    max-width: 100%;
     padding: 0;
     width: 100%;
 }
@@ -325,7 +293,6 @@
 /* END Модальное окно с информацией о пользователе */
 
 
-
 /* START responsive */
 @media screen and (max-width:800px) {
 	.office-sunshine #lk-conteyner::after {
@@ -346,8 +313,7 @@
 	.lk-sidebar .lk-avatar {
 		box-shadow: 0 0 0 4px #fff;
 	}
-	.cab_title,
-	.cab_cntr_layout {
+	.cab_title {
 		width: 68%;
 		width: calc(100% - 205px);
 	}
@@ -413,8 +379,7 @@
 	.lk-avatar .cab_usr_info {
 		font-size: 20px;
 	}
-	.cab_title,
-	.cab_cntr_layout {
+	.cab_title {
 		width: 68%;
 		width: calc(100% - 155px);
 	}
@@ -443,8 +408,7 @@
 	.lk-sidebar .lk-avatar {
 		box-shadow: 0 0 0 5px #fff;
 	}
-	.cab_title,
-	.cab_cntr_layout {
+	.cab_title {
 		width: 100%;
 	}
 	.cab_content .cab_footer {
@@ -460,9 +424,6 @@
 @media screen and (max-width:360px) {
 	#lk-conteyner .cab_bttn_lite .rcl-tab-button span span {
 		display: table-header-group;
-	}
-	#lk-menu .rcl-tab-butt.hideshow ul.bounce {
-		max-width: 200px;
 	}
 }
 @media screen and (max-width:320px) {

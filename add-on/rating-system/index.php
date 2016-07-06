@@ -76,16 +76,12 @@ function rcl_get_content_rating($author_lk){
 
 add_action('init','rcl_add_rating_tab');
 function rcl_add_rating_tab(){
-    rcl_tab('rating','rcl_rating_tab',__('Rating','wp-recall'),array('ajax-load'=>true,'public'=>1,'cache'=>true,'output'=>'counters','class'=>'fa-balance-scale'));
-}
-
-if(!is_admin()) add_filter('tab_data_rcl','rcl_add_counter_rating',10);
-function rcl_add_counter_rating($tab){
-     global $user_LK;
-    if($tab['id']!='rating') return $tab;
-    $cnt = rcl_rating_block(array('value'=>rcl_get_user_rating($user_LK)));
-    $tab['name'] .= ' '.$cnt;
-    return $tab;
+    global $user_LK;
+    $count = 0;
+    if(!is_admin()){
+        $count = rcl_rating_block(array('value'=>rcl_get_user_rating($user_LK)));
+    }
+    rcl_tab('rating','rcl_rating_tab',__('Rating','wp-recall'),array('ajax-load'=>true,'public'=>1,'cache'=>true,'output'=>'counters','counter'=>$count,'class'=>'fa-balance-scale'));
 }
 
 function rcl_rating_tab($author_lk){

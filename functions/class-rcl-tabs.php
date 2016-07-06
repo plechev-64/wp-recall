@@ -140,12 +140,15 @@ class Rcl_Tabs{
             'user_LK'=>$author_lk
         );
         
-        $html_button = rcl_get_button($this->name,$link,
-            array(
-                'class'=>$this->get_class_button(),
-                'icon'=> ($this->args['class'])? $this->args['class']:'fa-cog',
-                'attr'=>'data-post='.rcl_encode_post($datapost)
-            )
+        $name = (isset($this->args['counter']))? sprintf('%s <span class="rcl-menu-notice">%s</span>',$this->name,$this->args['counter']): $this->name;
+        
+        $html_button = rcl_get_button(
+                $name,$link,
+                array(
+                    'class'=>$this->get_class_button(),
+                    'icon'=> ($this->args['class'])? $this->args['class']:'fa-cog',
+                    'attr'=>'data-post='.rcl_encode_post($datapost)
+                )
         );
         
 	return sprintf('<span class="rcl-tab-button" data-tab="%s" id="tab-button-%s">%s</span>',$this->id,$this->id,$html_button);
