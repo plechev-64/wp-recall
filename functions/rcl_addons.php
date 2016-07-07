@@ -115,13 +115,17 @@ function rcl_parse_addon_info($info){
         if($cnt>1) $string = str_replace(';','',$string);
         
         if ( false !== strpos($string, ':') ){
-            $val = trim(mb_substr($string, strpos($string,':')+strlen(':')));
-            $title = strtolower(str_replace(' ','-',trim(mb_substr($string, 0, strpos($string, ':')))));
+            $str = explode(':',$string);
+            $title = strtolower(str_replace(' ','-',trim($str[0])));
+            if(substr($title, 0, 3) == pack('CCC', 0xef, 0xbb, 0xbf)) {
+                $title = substr($title, 3);
+            }
+            $val = trim(str_replace($str[0].':','',$string));
             $addon_data[$title] = $val;
         }
 
     }
-
+    
     return $addon_data;
 }
 

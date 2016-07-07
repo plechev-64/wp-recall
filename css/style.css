@@ -753,6 +753,10 @@ div.ssi-backdrop {
 .ssi-modalOuter .ssi-modalWindow {
     border: none;
     border-radius: 0;
+    margin: 0 auto;
+    max-width: 99%;
+    min-width: 315px;
+    overflow: hidden;
     padding: 0;
 }
 .ssi-modalOuter .ssi-modalTitle {
@@ -781,6 +785,8 @@ div.ssi-backdrop {
     color: rgb(192, 0, 0);
 }
 .ssi-modalOuter .ssi-modalContent {
+    display: table;
+    margin: 0 auto;
 	padding: 9px 9px 10px;
 }
 .ssi-modalOuter .ssi-buttons .ssi-modalBtn {

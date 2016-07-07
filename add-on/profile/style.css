@@ -114,22 +114,21 @@
 	line-height: 1;
     overflow: hidden;
     padding: 4px 7px;
+	position: relative;
     z-index: 3;
 }
-.cab_cover_upl span{
-    position: relative;
-}
-.cab_cover_upl span:hover{
+.cab_cover_upl:hover{
     color: #eee;
     cursor: pointer;
 }
-.cab_cover_upl span input{
+.cab_cover_upl input{
     cursor: pointer;
     opacity: 0;
     position: absolute;
     right: 0;
     top: 0;
     z-index: 99;
+    height: 100%;
 }
 /* END upload cover */
 
@@ -148,6 +147,7 @@
     margin: 0 auto;
     max-width: 100%;
     padding: 0;
+	width: 100%;
 }
 .rcl-user-getails .rcl-user-avatar .rcl-avatar-zoom {
     background: rgba(0, 0, 0, 0.5);
@@ -192,7 +192,10 @@
     z-index: 1600;
 }
 .rcl-user-getails #ssi-modalWrapper{
-    max-width:350px;
+    max-width: 450px;
+}
+.ssi-modalOuter.rcl-hand-uploader .ssi-modalContent {
+	padding: 0;
 }
 /* END Модальное окно с информацией о пользователе */
 
