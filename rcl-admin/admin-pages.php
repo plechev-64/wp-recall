@@ -1,13 +1,26 @@
 <?php
 function rcl_options_panel(){
+    
     $need_update = get_option('rcl_addons_need_update');
-    $cnt = $need_update? count($need_update): 0;
-    $notice = ($cnt)? ' <span class="update-plugins count-'.$cnt.'"><span class="plugin-count">'.$cnt.'</span></span>': '';
-    add_menu_page(__('WP-RECALL','wp-recall').$notice, __('WP-RECALL','wp-recall').$notice, 'manage_options', 'manage-wprecall', 'rcl_global_options');
+    
+    $templates = array(); $addons = array();
+    foreach($need_update as $addon_id=>$data){
+        if(isset($data['template'])) $templates[] = $addon_id;
+        else $addons[] = $addon_id;
+    }
+
+    $cnt_t = $templates? count($templates): 0;
+    $cnt_a = $addons? count($addons): 0;
+    
+    $notice_all = ($cnt_all=$cnt_a+$cnt_t)? ' <span class="update-plugins count-'.$cnt_all.'"><span class="plugin-count">'.$cnt_all.'</span></span>': '';
+    $notice_t = ($cnt_t)? ' <span class="update-plugins count-'.$cnt_t.'"><span class="plugin-count">'.$cnt_t.'</span></span>': '';
+    $notice_a = ($cnt_a)? ' <span class="update-plugins count-'.$cnt_a.'"><span class="plugin-count">'.$cnt_a.'</span></span>': '';
+    
+    add_menu_page(__('WP-RECALL','wp-recall').$notice_all, __('WP-RECALL','wp-recall').$notice_all, 'manage_options', 'manage-wprecall', 'rcl_global_options');
     add_submenu_page( 'manage-wprecall', __('SETTINGS','wp-recall'), __('SETTINGS','wp-recall'), 'manage_options', 'manage-wprecall', 'rcl_global_options');
-    $hook = add_submenu_page( 'manage-wprecall', __('Add-ons','wp-recall').$notice, __('Add-ons','wp-recall').$notice, 'manage_options', 'manage-addon-recall', 'rcl_render_addons_manager');
+    $hook = add_submenu_page( 'manage-wprecall', __('Add-ons','wp-recall').$notice_a, __('Add-ons','wp-recall').$notice_a, 'manage_options', 'manage-addon-recall', 'rcl_render_addons_manager');
     add_action( "load-$hook", 'rcl_add_options_addons_manager' );
-    $hook = add_submenu_page( 'manage-wprecall', __('Templates','wp-recall'), __('Templates','wp-recall').$notice, 'manage_options', 'manage-templates-recall', 'rcl_render_templates_manager');
+    $hook = add_submenu_page( 'manage-wprecall', __('Templates','wp-recall').$notice_t, __('Templates','wp-recall').$notice_t, 'manage_options', 'manage-templates-recall', 'rcl_render_templates_manager');
     add_action( "load-$hook", 'rcl_add_options_templates_manager' );
     add_submenu_page( 'manage-wprecall', __('Repository','wp-recall'), __('Repository','wp-recall'), 'manage_options', 'rcl-repository', 'rcl_repository_page');
     add_submenu_page( 'manage-wprecall', __('Documentation','wp-recall'), __('Documentation','wp-recall'), 'manage_options', 'manage-doc-recall', 'rcl_doc_manage');
@@ -400,8 +413,6 @@ function rcl_update_options(){
     $POST, function(&$v, $k) {
       $v = trim($v);
     });
-    
-    //print_r($POST);exit;
 
     if($POST['global']['login_form_recall']==1&&!isset($POST['global']['page_login_form_recall'])){
             $POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));

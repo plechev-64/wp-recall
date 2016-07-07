@@ -175,10 +175,10 @@ body .rcl_preloader{
     width: 200px;
     margin-top:50px;
 }
-#tabs-list-rcl{
+#rcl-options-form .tabs-list-rcl{
     
 }
-#tabs-list-rcl li{
+#rcl-options-form .tabs-list-rcl li{
     border: solid 1px #ccc;
     padding: 1px 10px;
     background: #ddd;
@@ -338,6 +338,11 @@ span.ruble-symbol{
 }
 #rcl-options-form .help-option .help-content{
     display: none;
+}
+#rcl-options-form .rcl-area{
+    padding: 10px;
+    background: #fff;
+    margin: 20px 0;
 }
 .rcl-help-dialog .help-content{
     display:block;

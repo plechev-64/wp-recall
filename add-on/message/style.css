@@ -176,6 +176,7 @@
     position: static;
     border-top: 3px dotted #fff;
     border-bottom: 3px dotted #fff;
+    cursor: n-resize;
 }
 
 .wprecallblock .recall-button.remove_black_list {

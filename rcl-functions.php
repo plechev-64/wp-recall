@@ -61,6 +61,26 @@ function rcl_setup_tabs(){
     
 }
 
+//сортируем вкладки согласно настроек
+add_filter('rcl_tabs','rcl_edit_options_tab',5);
+function rcl_edit_options_tab($rcl_tabs){
+
+    $rcl_order_tabs = get_option('rcl_order_tabs');
+    
+    if(!$rcl_order_tabs) return $rcl_tabs;
+
+    foreach($rcl_order_tabs as $area_id=>$tabs){
+        $a=0;
+        foreach($tabs as $tab_id=>$tab){
+            if(isset($rcl_tabs[$tab_id])){
+                $rcl_tabs[$tab_id]['args']['order'] = ++$a;
+            }
+        }
+    }
+    
+    return $rcl_tabs;
+}
+
 //выясняем какую вкладку ЛК показывать пользователю, 
 //если ни одна не указана для вывода
 add_filter('rcl_tabs','rcl_get_order_tabs',10);
@@ -976,26 +996,6 @@ function rcl_get_button($ancor,$url,$args=false){
     $button .= '<span>'.$ancor.'</span>';
     $button .= '</a>';
     return $button;
-}
-
-//сортируем вкладки согласно настроек
-add_filter('tab_data_rcl','rcl_edit_options_tab',5);
-function rcl_edit_options_tab($tab){
-    global $rcl_order_tabs;
-    
-    if(!$rcl_order_tabs) $rcl_order_tabs = get_option('rcl_order_tabs');
-
-    if(isset($rcl_order_tabs['name'][$tab['id']])) 
-        $tab['name'] = $rcl_order_tabs['name'][$tab['id']];
-
-    if(isset($rcl_order_tabs['order'])&&is_array($rcl_order_tabs['order'])){
-        foreach($rcl_order_tabs['order'] as $order=>$key){
-            if($key!=$tab['id']) continue;
-                $tab['args']['order'] = $order+10;
-        }
-    }
-
-    return $tab;
 }
 
 function rcl_add_balloon_menu($data,$args){
