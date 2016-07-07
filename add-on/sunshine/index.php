@@ -34,8 +34,8 @@ function rcl_init_js_office($data){
     if(!$user_LK) return $data;
     
     if($user_LK==$user_ID){
-        $data['theme']['cover_size'] = 2;
-        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),2);
+        $data['theme']['cover_size'] = 1;
+        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),1);
         $data['local']['title_image_upload'] = __('The image being loaded','wp-recall');
     }
     

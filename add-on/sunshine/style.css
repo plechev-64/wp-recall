@@ -226,6 +226,7 @@
 .vertical-menu #lk-menu a .fa {
     display: table-cell;
     width: 35px;
+    box-sizing: border-box;
 }
 .vertical-menu #lk-menu a span {
     display: table-cell;
@@ -246,11 +247,9 @@
     border-radius: 0;
     display: block;
     float: none;
-    height: 100%;
-    margin: 0;
+    margin: 0 auto;
     max-width: 100%;
     padding: 0;
-    width: 100%;
 }
 .rcl-user-getails .rcl-user-avatar .rcl-avatar-zoom {
     background: rgba(0, 0, 0, 0.5);
@@ -293,6 +292,9 @@
 }
 .rcl-user-avatar-zoom .ssi-topIcons {
     z-index: 1600;
+}
+.rcl-user-getails #ssi-modalWrapper{
+    max-width:350px;
 }
 /* END Модальное окно с информацией о пользователе */
 

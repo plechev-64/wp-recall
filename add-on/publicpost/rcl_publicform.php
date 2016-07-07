@@ -94,11 +94,9 @@ class Rcl_PublicForm {
 
         if($this->user_can()){
             rcl_fileupload_scripts();
+            add_action('wp_footer',array(&$this,'init_form_scripts'),999);
+            if($this->post_id) add_filter('after_public_form_rcl',array(&$this,'delete_button'),10,2);
         }
-
-        if($this->post_id) add_filter('after_public_form_rcl',array(&$this,'delete_button'),10,2);
-        
-        add_action('wp_footer',array(&$this,'init_form_scripts'),999);
 
     }
 

@@ -60,9 +60,9 @@ class Rcl_Blocks {
 
         
         $content .= '<div';
-        if($this->args['id']) $content .= ' id="'.$this->id.'"';
+        if($this->args['id']) $content .= ' id="'.$this->args['id'].'"';
         $content .= ' class="'.$this->place.'-block-rcl block-rcl';
-        if($this->args['class']) $content .= ' '.$this->class;
+        if($this->args['class']) $content .= ' '.$this->args['class'];
         $content .= '">';
         if($this->args['title']) $content .= '<h4>'.$this->args['title'].'</h4>';
         $content .= $cl_content;

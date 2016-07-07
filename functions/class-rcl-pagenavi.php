@@ -135,7 +135,7 @@ class Rcl_PageNavi{
     
     function pagenavi($classes = ''){
         
-        if($this->pages_amount==1) return false;
+        if(!$this->data_amount||$this->pages_amount==1) return false;
         
         $query = $this->pager_query();
         

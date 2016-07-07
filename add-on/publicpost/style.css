@@ -608,6 +608,13 @@ h3.pending-message{
 	box-sizing: border-box;
     padding: 5px;
 }
+.media-modal .media-modal-icon .screen-reader-text{
+    display:none;
+}
+.media-modal .media-modal-content .media-frame select.attachment-filters,
+.media-modal .media-modal-content .attachments-browser .search{
+    max-width:200px;
+}
 @media screen and (max-width:480px) {
 	.ui-dialog.rcl-edit-post-form {
 		max-width: 475px;
