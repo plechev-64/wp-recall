@@ -6,25 +6,42 @@ endif;
 
 function rcl_profile_scripts(){
     global $user_ID,$user_LK;
+    
     if($user_LK){
+        
+        rcl_dialog_scripts();
         rcl_enqueue_script( 'rcl-profile', rcl_addon_url('js/scripts.js', __FILE__) );
+        
         if($user_ID==$user_LK){
+
+            rcl_fileupload_scripts();
+            rcl_crop_scripts();
+            
             rcl_enqueue_style( 'rcl-profile', rcl_addon_url('style.css', __FILE__) );
-            rcl_enqueue_script( 'user-avatar-uploader', rcl_addon_url('js/avatar-uploader.js', __FILE__),false,true );
+            rcl_enqueue_script( 'profile-uploader', rcl_addon_url('js/uploader.js', __FILE__),false,true );
         }
     }
 }
 
 add_filter('rcl_init_js_variables','rcl_init_js_profile_variables',10);
 function rcl_init_js_profile_variables($data){
-    global $rcl_options;
+    global $rcl_options,$user_LK,$user_ID;
     
-    $size_ava = (isset($rcl_options['avatar_weight'])&&$rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: 2;
+    if($user_LK==$user_ID){
+        $data['profile']['cover_size'] = 1;
+        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),1);
+        $data['local']['title_image_upload'] = __('The image being loaded','wp-recall');
+        
+        $size_ava = (isset($rcl_options['avatar_weight'])&&$rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: 2;
     
-    $data['profile']['avatar_size'] = $size_ava;
-    $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),$size_ava);
-    $data['local']['title_image_upload'] = __('The image being loaded','wp-recall');
-    $data['local']['title_webcam_upload'] = __('Image from the camera','wp-recall');
+        $data['profile']['avatar_size'] = $size_ava;
+        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),$size_ava);
+        $data['local']['title_image_upload'] = __('The image being loaded','wp-recall');
+        $data['local']['title_webcam_upload'] = __('Image from the camera','wp-recall');
+    }
+    
+    $data['local']['title_user_info'] = __('Detailed information','wp-recall');
+    
     return $data;
 }
 
@@ -267,11 +284,7 @@ function rcl_button_avatar_upload($content,$author_lk){
     global $user_ID;
 
     if($user_ID!=$author_lk) return $content;
-    
-    rcl_dialog_scripts();
-    rcl_fileupload_scripts();
-    rcl_crop_scripts();
-    
+
     if( isset($_SERVER["HTTPS"])&&$_SERVER["HTTPS"] == 'on') 
         rcl_webcam_scripts();
     
@@ -803,4 +816,86 @@ function rcl_get_default_fields_profile() {
 	return apply_filters('rcl_profile_default_fields', $default_fields );
 }
 
-include_once 'upload-avatar.php';
+/* Details user info */
+add_filter('after-avatar-rcl','rcl_add_user_info_button',10);
+function rcl_add_user_info_button($content){
+    rcl_dialog_scripts();
+    $content .= '<a title="'.__('User info','wp-recall').'" onclick="rcl_get_user_info(this);return false;" class="cab_usr_info" href="#"><i class="fa fa-info-circle"></i></a>';
+    return $content;
+}
+
+add_action('wp_ajax_rcl_get_user_details','rcl_get_user_details',10);
+add_action('wp_ajax_nopriv_rcl_get_user_details','rcl_get_user_details',10);
+function rcl_get_user_details(){
+    global $user_LK, $rcl_blocks;
+    $user_LK = $_POST['user_id'];
+    
+    if (!class_exists('Rcl_Blocks')) 
+        include_once RCL_PATH.'functions/class-rcl-blocks.php';
+
+    $content = '<div id="rcl-user-details">';
+    
+    $content .= '<div class="rcl-user-avatar">';
+    
+    $content .= get_avatar($user_LK,300);
+    
+    $avatar = get_user_meta($user_LK,'rcl_avatar',1);
+
+    if($avatar){
+        if(is_numeric($avatar)){
+            $image_attributes = wp_get_attachment_image_src($avatar);
+            $url_avatar = $image_attributes[0];
+        }else{
+            $url_avatar = $avatar;
+        }
+        $content .= '<a title="'.__('Zoom avatar','wp-recall').'" data-zoom="'.$url_avatar.'" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="fa fa-search-plus"></i></a>';
+        
+    }
+    
+    $content .= '</div>';
+    
+    $desc = get_the_author_meta('description',$user_LK);
+    if($desc) 
+        $content .= '<div class="ballun-status">'
+        . '<p class="status-user-rcl">'.nl2br(esc_textarea($desc)).'</p>'
+        . '</div>';
+    
+    if($rcl_blocks&&(isset($rcl_blocks['details'])||isset($rcl_blocks['content']))){
+        
+        $details = isset($rcl_blocks['details'])? $rcl_blocks['details']: array();
+        $old_output = isset($rcl_blocks['content'])? $rcl_blocks['content']: array();
+
+        $details = array_merge($details,$old_output);
+        
+        foreach($details as $block){
+            $Rcl_Blocks = new Rcl_Blocks($block);
+            $content .= $Rcl_Blocks->get_block($user_LK);
+        }
+    
+    }
+    
+    $content .= '</div>';
+    
+    $result['content'] = $content;
+    $result['success'] = 1;
+    echo json_encode($result); exit;
+}
+
+/* Details user info end */
+
+/* Cover */
+
+add_action('rcl_area_top','rcl_add_cover_uploader_button',10);
+function rcl_add_cover_uploader_button(){
+    global $user_ID,$user_LK;
+    if($user_ID&&$user_ID==$user_LK){
+        echo '<span class="fa fa-camera cab_cover_upl" title="Загрузите обложку">
+                <input type="file" id="rcl-cover-upload" accept="image/*" name="cover-file">
+        </span>';
+    }
+}
+
+/* Cover end */
+
+include_once 'uploader-avatar.php';
+include_once 'uploader-cover.php';

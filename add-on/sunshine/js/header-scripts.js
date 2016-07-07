@@ -1,47 +1,89 @@
-function rcl_zoom_avatar(e){
-    var link = jQuery(e);
-    var src = link.data('zoom');
-    ssi_modal.show({
-        sizeClass: 'auto',
-        className: 'rcl-user-avatar-zoom',
-        content: '<div id="rcl-preview"><img class=aligncenter src=\''+src+'\'></div>'
-    });
-}
-
-function rcl_get_user_info(element){
-    
-    rcl_preloader_show('#lk-conteyner > div');
-
-    var post_id = jQuery(element).data('post');
-    
-    var dataString = 'action=rcl_get_user_details&user_id='+jQuery(element).parents('.wprecallblock').data('account');
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-        success: function(data){                                   
-            if(data['error']){
-                rcl_preloader_hide();
-                rcl_notice(data['error'],'error',10000);
-                return false;
-            }                                   
-            if(data['success']){
-                
-                rcl_preloader_hide();
-                
-                ssi_modal.show({
-                    title: Rcl.local.title_user_info,
-                    sizeClass: 'auto',
-                    className: 'rcl-user-getails',
-                    buttons: [{
-                        label: Rcl.local.close,
-                        closeAfter: true
-                    }],
-                    content: '<div id="rcl-popup-content">'+data['content']+'</div>'
-                });
-                
+(function($){
+	var LkMenu = $('#lk-menu');
+	var typeButton = $('#rcl-office');
+	
+// определяем какой тип кнопок у нас
+	if (typeButton.hasClass('vertical-menu')){
+		if ($(window).width() <= 768) {										// ширина экрана
+			typeButton.removeClass('vertical-menu').addClass('horizontal-menu');
+			alignMenu();
+		}
+		$(window).resize(function() {										// действия при ресайзе окна
+			if ($(window).width() <= 768) {
+				typeButton.removeClass('vertical-menu').addClass('horizontal-menu');
+				LkMenu.append($('#sunshine_ext_menu ul').html());
+				$('#lk-menu .hideshow').remove();
+				$('#sunshine_ext_menu').remove();
+				alignMenu();
+			} else {
+				typeButton.removeClass('horizontal-menu').addClass('vertical-menu');
+				LkMenu.append($('#sunshine_ext_menu ul').html());
+				$('#lk-menu .hideshow').remove();
+				$('#sunshine_ext_menu').remove();
+			}
+		});
+	} else if (typeButton.hasClass('horizontal-menu')){
+		alignMenu();
+		$(window).resize(function() {
+			LkMenu.append($('#sunshine_ext_menu ul').html());
+			$('#lk-menu .hideshow').remove();
+			$('#sunshine_ext_menu').remove();
+			alignMenu();
+		});
+	}
+	
+// отступ сверху до наших кнопок
+	function countHeight(){
+		var hUpMenu = $("#lk-menu").offset().top + 2;
+		$('#sunshine_ext_menu').css({'top' : hUpMenu});
+	}
+	
+// группировка кнопок
+    function alignMenu() {
+		
+        var mw = LkMenu.outerWidth() - 30;                           		// ширина блока - отступ на кнопку
+        var menuhtml = '';
+        var totalWidth = 0;                                                 // сумма ширины всех кнопок
+		
+        $.each(LkMenu.children('.rcl-tab-button'), function() {
+            totalWidth += $(this).children().outerWidth(true);				// считаем ширину всех кнопок с учетом отступов
+            if (mw < totalWidth) {                                          // если ширина блока кнопок меньше чем сумма ширины кнопок:
+                menuhtml += $('<div>').append($(this).clone()).html();
+                $(this).remove();
             }
+        });
+        LkMenu.append(                                               		// формируем в кнопке контент
+            '<span style="position:absolute;" class="rcl-tab-butt hideshow">'
+             + '<a class="recall-button block_button bars" ><i class="fa fa-bars"></i></a>'
+             + '</span>'
+        );
+		$('body').append(
+			'<div id="sunshine_ext_menu"><ul>' + menuhtml + '</ul></div>'
+		);
+		var RcOverlay = $('#rcl-overlay').css({'display' : ''});
+		var extMenu = $('#sunshine_ext_menu');
+        $('#lk-menu .hideshow').click(function(event){                      // по клику на кнопке
+            extMenu.toggleClass('bounce', 500);
+			RcOverlay.fadeToggle(100);
+			countHeight();
+        });
+		function closeExtMenu(){
+			extMenu.removeClass('bounce');
+			RcOverlay.fadeOut(100);
+			extMenu.css({'top' : ''});
+		}
+		RcOverlay.on('click', function () {
+			closeExtMenu();
+		});
+		$('#sunshine_ext_menu a').on('click', function () {
+			closeExtMenu();
+		});
+		var hideshow = $('#lk-menu .rcl-tab-butt.hideshow');
+        if (menuhtml == '') {                                               // если нет контента в кнопке - скрываем её
+            hideshow.hide();
+        } else {
+            hideshow.show();
         }
-    });
-    
-    
-}
+    }
+
+})(jQuery);

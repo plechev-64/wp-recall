@@ -1,6 +1,6 @@
 Name: Private Message Wp-Recall (Личные сообщения);
-Version: 3.1.4;
-Support Core: 13.2.0;
+Version: 3.2.0;
+Support Core: 15.0.0;
 Description: Функционал приватных сообщений для wp-recall;
 Author: Плечев Андрей;
 Author URI: http://codeseller.ru/;

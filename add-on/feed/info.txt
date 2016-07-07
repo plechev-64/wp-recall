@@ -1,6 +1,6 @@
 Name: Feed Wp-Recall (Подписки);
-Version: 2.2.0;
-Support Core: 14.0.0;
+Version: 3.0.0;
+Support Core: 15.0.0;
 Description: Формирование и вывод новостной ленты пользователя;
 Author: Плечев Андрей;
 Author URI: http://codeseller.ru/;

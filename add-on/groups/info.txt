@@ -1,6 +1,6 @@
 Name: Groups Wp-Recall (Группы);
-Version: 2.3.0;
-Support Core: 13.7.0;
+Version: 2.4.0;
+Support Core: 15.0.0;
 Description: Расширение групп для wp-recall;
 Author: Плечев Андрей;
 Author URI: http://codeseller.ru/;

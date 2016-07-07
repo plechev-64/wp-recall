@@ -25,34 +25,6 @@
     width: 100%;
 }
 
-/* START upload cover */
-.cab_cover_upl {
-    background: rgba(0, 0, 0, 0.3);
-    color: #ddd;
-    float: right;
-    font-size: 26px;
-	line-height: 1;
-    overflow: hidden;
-    padding: 4px 7px;
-    z-index: 3;
-}
-.cab_cover_upl span{
-    position: relative;
-}
-.cab_cover_upl span:hover{
-    color: #eee;
-    cursor: pointer;
-}
-.cab_cover_upl span input{
-    cursor: pointer;
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 99;
-}
-/* END upload cover */
-
 .cab_content {
     display: block;
     min-height: 230px;
@@ -221,7 +193,6 @@
 }
 /* END стили кнопок для скрипта */
 
-
 /* START left buttons */
 .vertical-menu #lk-menu a .fa {
     display: table-cell;
@@ -233,71 +204,6 @@
     padding: 5px;
 }
 /* END left buttons */
-
-
-/* START Модальное окно с информацией о пользователе */
-.rcl-user-getails .rcl-user-avatar {
-    display: inline-block;
-    position: relative;
-    text-align: center;
-    width: 100%;
-}
-.rcl-user-getails .rcl-user-avatar img {
-    border: 0;
-    border-radius: 0;
-    display: block;
-    float: none;
-    margin: 0 auto;
-    max-width: 100%;
-    padding: 0;
-}
-.rcl-user-getails .rcl-user-avatar .rcl-avatar-zoom {
-    background: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    display: none;
-    font-size: 150px;
-    height: 100%;
-    opacity: 0.7;
-    position: absolute;
-	text-decoration: none;
-    top: 0;
-    width: 100%;
-}
-.rcl-user-getails .rcl-user-avatar:hover .rcl-avatar-zoom {
-    display:flex;
-}
-.rcl-user-getails .rcl-avatar-zoom i {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-}
-.rcl-user-getails .ballun-status {
-    margin: 5px auto 0;
-    max-width: 425px;
-}
-.rcl-user-getails p.status-user-rcl::before {
-    left: 0;
-    margin-left: 50%;
-}
-.rcl-user-getails .block-rcl {
-    padding: 5px;
-}
-.rcl-user-getails p {
-    margin: 0;
-	padding: 0;
-}
-.rcl-user-avatar-zoom .ssi-modalContent {
-    padding: 0;
-}
-.rcl-user-avatar-zoom .ssi-topIcons {
-    z-index: 1600;
-}
-.rcl-user-getails #ssi-modalWrapper{
-    max-width:350px;
-}
-/* END Модальное окно с информацией о пользователе */
-
 
 /* START responsive */
 @media screen and (max-width:800px) {
