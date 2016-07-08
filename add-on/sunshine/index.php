@@ -13,8 +13,15 @@ add_action('rcl_enqueue_scripts', 'cab_15_script_load' );
 function cab_15_script_load() {
     global $user_LK;
     if($user_LK){       
-        rcl_enqueue_script('theme-header', rcl_addon_url( 'js/header-scripts.js', __FILE__ ), false, true);
+        rcl_enqueue_script('theme-header', rcl_addon_url( 'js/header-scripts.js', __FILE__ ));
     }
+}
+
+add_action('rcl_addons_included','rcl_setup_template_options',10);
+function rcl_setup_template_options(){
+    rcl_template_support('avatar-uploader');
+    rcl_template_support('cover-uploader');
+    rcl_template_support('modal-user-details');
 }
 
 // регистрируем 3 области виджетов

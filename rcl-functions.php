@@ -1055,3 +1055,18 @@ function rcl_check_jpeg($f, $fix=false ){
         return false;
     }
 }
+
+function rcl_template_support($support){
+    
+    switch($support){
+        case 'avatar-uploader': 
+            include_once 'functions/supports/uploader-avatar.php';
+            break;
+        case 'cover-uploader': 
+            include_once 'functions/supports/uploader-cover.php';
+            break;
+        case 'modal-user-details':
+            include_once 'functions/supports/modal-user-details.php';
+            break;
+    }
+}

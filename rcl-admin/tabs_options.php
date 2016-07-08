@@ -40,7 +40,12 @@ function rcl_get_tablist_options($content){
         $tab_content .= '</ul>';
         $tab_content .= '</div>';
     }
-    $tab_content .= '<script>jQuery(function(){jQuery(".sortable").sortable({containment: "parent"});return false;});</script>';
+    $tab_content .= '<script>jQuery(function(){'
+            . 'jQuery(".sortable").sortable({'
+            . 'containment: "parent",'
+            . 'distance: 5,'
+            . 'tolerance: "pointer"'
+            . '});return false;});</script>';
 
     $content .= $opt->options(__('Setting tabs','wp-recall'),$opt->option_block(array($tab_content)));
 

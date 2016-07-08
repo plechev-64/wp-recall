@@ -70,8 +70,8 @@
 .cab_footer .cab_bttn a {
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(125, 125, 125, 0.4);
-    border-radius: 2px;
     color: #ccc;
+    display: block;
 }
 .cab_footer .cab_bttn a:hover {
     background: rgba(0, 0, 0, 0.4);
@@ -80,7 +80,7 @@
 .cab_bttn > div,
 .cab_bttn > span {
     display: inline-block;
-	margin: 1px 1px 5px;
+    margin: 1px;
 }
 .cab_bttn_lite {
     bottom: 15px;

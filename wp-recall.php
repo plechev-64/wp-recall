@@ -280,6 +280,8 @@ final class WP_Recall {
                 if($unset) update_site_option('rcl_active_addons',$active_addons);
                 
             }
+            
+            do_action('rcl_addons_included');
         }
 
 	public function load_plugin_textdomain() {

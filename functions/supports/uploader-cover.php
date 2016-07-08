@@ -1,4 +1,43 @@
 <?php
+
+if (!is_admin()):
+    add_action('rcl_enqueue_scripts','rcl_support_cover_uploader_scripts',10);
+endif;
+
+function rcl_support_cover_uploader_scripts(){
+    global $user_ID,$user_LK;    
+    if($user_LK){        
+        if($user_ID==$user_LK){
+            rcl_fileupload_scripts();
+            rcl_crop_scripts();
+            rcl_enqueue_script( 'cover-uploader', RCL_URL.'functions/supports/js/uploader-cover.js',false,true );
+        }
+    }
+}
+
+add_filter('rcl_init_js_variables','rcl_init_js_cover_variables',10);
+function rcl_init_js_cover_variables($data){
+    global $rcl_options,$user_LK,$user_ID;
+    
+    if($user_LK==$user_ID){
+        $data['profile']['cover_size'] = 1;
+        $data['local']['upload_size_cover'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),1);
+        $data['local']['title_image_upload'] = __('The image being loaded','wp-recall');
+    }
+    
+    return $data;
+}
+
+add_action('rcl_area_top','rcl_add_cover_uploader_button',10);
+function rcl_add_cover_uploader_button(){
+    global $user_ID,$user_LK;
+    if($user_ID&&$user_ID==$user_LK){
+        echo '<span class="fa fa-camera cab_cover_upl" title="Загрузите обложку">
+                <input type="file" id="rcl-cover-upload" accept="image/*" name="cover-file">
+        </span>';
+    }
+}
+
 add_action('wp_ajax_rcl_cover_upload', 'rcl_cover_upload',10);
 function rcl_cover_upload(){
     

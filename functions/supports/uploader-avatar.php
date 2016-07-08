@@ -1,4 +1,88 @@
 <?php
+
+if (!is_admin()):
+    add_action('rcl_enqueue_scripts','rcl_support_avatar_uploader_scripts',10);
+endif;
+
+function rcl_support_avatar_uploader_scripts(){
+    global $user_ID,$user_LK;    
+    if($user_LK){        
+        if($user_ID==$user_LK){
+            rcl_fileupload_scripts();
+            rcl_crop_scripts();
+            rcl_enqueue_script( 'avatar-uploader', RCL_URL.'functions/supports/js/uploader-avatar.js',false,true );
+        }
+    }
+}
+
+add_filter('rcl_init_js_variables','rcl_init_js_avatar_variables',10);
+function rcl_init_js_avatar_variables($data){
+    global $rcl_options,$user_LK,$user_ID;
+    
+    if($user_LK==$user_ID){
+        $size_ava = (isset($rcl_options['avatar_weight'])&&$rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: 2;
+    
+        $data['profile']['avatar_size'] = $size_ava;
+        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),$size_ava);
+        $data['local']['title_image_upload'] = __('The image being loaded','wp-recall');
+        $data['local']['title_webcam_upload'] = __('Image from the camera','wp-recall');
+    }
+    
+    return $data;
+}
+
+add_filter('after-avatar-rcl','rcl_button_avatar_upload',11,2);
+function rcl_button_avatar_upload($content,$author_lk){
+    global $user_ID;
+
+    if($user_ID!=$author_lk) return $content;
+
+    if( isset($_SERVER["HTTPS"])&&$_SERVER["HTTPS"] == 'on') 
+        rcl_webcam_scripts();
+    
+    $avatar = get_user_meta($author_lk,'rcl_avatar',1);
+
+    if($avatar){
+        $content .= '<a title="'.__('Delete avatar','wp-recall').'" class="rcl-avatar-delete" href="'.wp_nonce_url( rcl_format_url(get_author_posts_url($author_lk)).'rcl-action=delete_avatar', $user_ID ).'"><i class="fa fa-times"></i></a>';
+    }
+
+    $content .= '
+    <div id="userpic-upload">
+        <span id="file-upload" class="fa fa-download">
+            <input type="file" id="userpicupload" accept="image/*" name="userpicupload">
+        </span>';
+    $content .= @( !isset($_SERVER["HTTPS"])||$_SERVER["HTTPS"] != 'on' ) ? '':  '<span id="webcamupload" class="fa fa-camera"></span>';
+    $content .= '</div>
+    <span id="avatar-upload-progress"></span>';
+    
+    return $content;
+}
+
+add_action('wp','rcl_delete_avatar_action');
+function rcl_delete_avatar_action(){
+    global $wpdb,$user_ID,$rcl_avatar_sizes;
+    if ( !isset( $_GET['rcl-action'] )||$_GET['rcl-action']!='delete_avatar' ) return false;
+    if( !wp_verify_nonce( $_GET['_wpnonce'], $user_ID ) ) wp_die('Error');
+
+    $result = delete_user_meta($user_ID,'rcl_avatar');
+
+    if (!$result) wp_die('Error');
+
+    $dir_path = RCL_UPLOAD_PATH.'avatars/';
+    foreach($rcl_avatar_sizes as $key=>$size){
+        unlink($dir_path.$user_ID.'-'.$size.'.jpg');
+    }
+    unlink($dir_path.$user_ID.'.jpg');
+
+    wp_redirect( rcl_format_url(get_author_posts_url($user_ID)).'rcl-avatar=deleted' );  exit;
+}
+
+add_action('wp','rcl_notice_avatar_deleted');
+function rcl_notice_avatar_deleted(){
+    if (isset($_GET['rcl-avatar'])&&$_GET['rcl-avatar']=='deleted') 
+        rcl_notice_text(__('Your avatar has been removed','wp-recall'),'success');
+}
+
 add_action('wp_ajax_rcl_avatar_upload', 'rcl_avatar_upload');
 function rcl_avatar_upload(){
     
