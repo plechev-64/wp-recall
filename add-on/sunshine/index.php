@@ -13,7 +13,7 @@ add_action('rcl_enqueue_scripts', 'cab_15_script_load' );
 function cab_15_script_load() {
     global $user_LK;
     if($user_LK){       
-        rcl_enqueue_script('theme-header', rcl_addon_url( 'js/header-scripts.js', __FILE__ ));
+        rcl_enqueue_script('theme-scripts', rcl_addon_url( 'js/scripts.js', __FILE__ ),false,true);
     }
 }
 
