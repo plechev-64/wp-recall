@@ -5,14 +5,10 @@ if (!is_admin()):
 endif;
 
 function rcl_profile_scripts(){
-    global $user_ID,$user_LK;
-    
+    global $user_ID,$user_LK;   
     if($user_LK){
-
-        rcl_enqueue_script( 'rcl-profile', rcl_addon_url('js/scripts.js', __FILE__) );
-        
         if($user_ID==$user_LK){
-            
+            rcl_enqueue_script( 'rcl-profile', rcl_addon_url('js/scripts.js', __FILE__) );
             rcl_enqueue_style( 'rcl-profile', rcl_addon_url('style.css', __FILE__) );
         }
     }

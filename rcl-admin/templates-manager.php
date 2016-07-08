@@ -90,7 +90,7 @@ class Rcl_Templates_Manager extends WP_List_Table {
         
         echo '<style type="text/css">';
         echo '.wp-list-table .column-addon_screen { width: 200px; }';
-        echo '.wp-list-table .column-addon_name { width: 10%; }';
+        echo '.wp-list-table .column-addon_name { width: 15%; }';
         echo '.wp-list-table .column-addon_status { width: 10%; }';
         echo '.wp-list-table .column-addon_description { width: 70%;}';
         echo '</style>';

@@ -74,6 +74,7 @@ function rcl_edit_options_tab($rcl_tabs){
         foreach($tabs as $tab_id=>$tab){
             if(isset($rcl_tabs[$tab_id])){
                 $rcl_tabs[$tab_id]['args']['order'] = ++$a;
+                $rcl_tabs[$tab_id]['name'] = $tab['name'];
             }
         }
     }

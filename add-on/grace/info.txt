@@ -1,0 +1,8 @@
+Name: Grace;
+Version: 0.1;
+Support Core: 15.0.0;
+Template: Grace;
+Description: Grace использует только вывод кнопок слева (как в админке включен вывод кнопок всё равно);
+Author: ;
+Author URI: ;
+Add-on URI: ;

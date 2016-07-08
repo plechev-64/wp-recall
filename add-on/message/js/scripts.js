@@ -187,7 +187,7 @@ jQuery(function($){
     });
     
     /* Добавление в черный список */
-    jQuery('#lk-conteyner').on('click','#manage-blacklist',function(){
+    jQuery('#rcl-office').on('click','#manage-blacklist',function(){
         var user_id = jQuery(this).data('contact');
         var dataString = 'action=manage_blacklist_recall&user_id='+user_id;
         dataString += '&ajax_nonce='+Rcl.nonce;
