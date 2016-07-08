@@ -8,17 +8,12 @@ function rcl_profile_scripts(){
     global $user_ID,$user_LK;
     
     if($user_LK){
-        
-        rcl_dialog_scripts();
+
         rcl_enqueue_script( 'rcl-profile', rcl_addon_url('js/scripts.js', __FILE__) );
         
         if($user_ID==$user_LK){
-
-            rcl_fileupload_scripts();
-            rcl_crop_scripts();
             
             rcl_enqueue_style( 'rcl-profile', rcl_addon_url('style.css', __FILE__) );
-            rcl_enqueue_script( 'profile-uploader', rcl_addon_url('js/uploader.js', __FILE__),false,true );
         }
     }
 }

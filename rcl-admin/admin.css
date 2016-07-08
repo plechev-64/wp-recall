@@ -353,3 +353,42 @@ span.ruble-symbol{
 .wp-list-table .addon_screen img{
     width:200px;
 }
+
+/* navigation Start */
+.rcl-navi,
+.rcl-pager{
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
+    box-sizing: border-box;
+    clear: both;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin: 10px 0;
+    padding: 6px 5px;
+    width: 100%;
+    text-align: right;
+}
+.rcl-navi a,
+.rcl-navi span,
+.rcl-pager .pager-item span,
+.rcl-pager .pager-item a{
+    display:inline-block;
+    margin: 0 4px;
+    padding: 2px 9px;
+}
+.rcl-navi span{
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.4);
+}
+.rcl-navi a:link,
+.rcl-pager .pager-item a:link{										/*++hueman++ добавил :link для перевеса*/
+    background: #e4e4e4;
+    border: none;										/*++Twenty15++*/
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
+    text-decoration: none;
+}
+.rcl-navi a:hover,
+.rcl-pager .pager-item a:hover {
+    box-shadow: 0 0 1px 2px rgb(219, 219, 219);
+}
+/* navigation End */

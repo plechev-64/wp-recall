@@ -37,7 +37,7 @@ function rcl_repository_page(){
     $context  = stream_context_create($options);
     $result = file_get_contents($url, false, $context);
     $result =  json_decode($result);
-
+    
     if(!$result){
         echo '<h2>'.__('Failed to get data','wp-recall').'.</h2>'; exit;
     }
@@ -46,11 +46,11 @@ function rcl_repository_page(){
         echo '<h2>'.__('Error','wp-recall').'! '.$result['error'].'</h2>'; exit;
     }
     
-    $pagenavi = rcl_navi_admin($result->number,$result->count,$result->page,'rcl-repository','');
-    
-    //$content = $pagenavi;
+    $navi = new Rcl_PageNavi('rcl-addons',$result->count,array('key'=>'paged','in_page'=>$result->number));
 
-    $content = '<div class="wp-list-table widefat plugin-install">
+    $content = $navi->pagenavi();
+    
+    $content .= '<div class="wp-list-table widefat plugin-install">
 	<div id="the-list">';
     foreach($result->addons as $add){
         if(!$add) continue;
@@ -66,7 +66,7 @@ function rcl_repository_page(){
     $content .= '</div>'
     .'</div>';
     
-    $content .= $pagenavi;
+    $content .= $navi->pagenavi();
 
     echo '<h1>'.__('Repository add-ons WP-Recall','wp-recall').'</h1>';
     //echo '<p>На этой странице отображаются доступные на данный момент дополнения, но не установленные на вашем сайте.</p>';
