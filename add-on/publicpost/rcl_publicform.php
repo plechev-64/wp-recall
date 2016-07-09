@@ -59,8 +59,12 @@ class Rcl_PublicForm {
             $this->post_type = $editpost->post_type;
 
             if($this->post_type=='post-group'){
+                
+                if(!$group_id) 
+                    $group_id = rcl_get_group_id_by_post($this->post_id);
 
-                if(!rcl_can_user_edit_post_group($this->post_id)&&!current_user_can('edit_post', $this->post_id)) $this->can_edit = false;
+                if(!rcl_can_user_edit_post_group($this->post_id)&&!current_user_can('edit_post', $this->post_id)) 
+                        $this->can_edit = false;
 
             }else if(!current_user_can('edit_post', $this->post_id))
 

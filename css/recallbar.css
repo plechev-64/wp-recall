@@ -225,6 +225,9 @@
     margin: 0 0 0 8px;
     vertical-align: text-top;
 }
+#recallbar .pr_sub_menu .rcb_line > a {
+    display: block;
+}
 /* Меню справа END */
 /* Правая часть END */
 @media screen and (max-width:768px) {

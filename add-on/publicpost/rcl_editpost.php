@@ -28,22 +28,26 @@ class Rcl_EditPost {
 
             if($this->post_type=='post-group'){
                 
-                if(!rcl_can_user_edit_post_group($post_id)) return false;
+                if(!rcl_can_user_edit_post_group($post_id)) 
+                    $this->error(__('Error publishing!','wp-recall').' Error 102');
                 
             }else{
 
-                if(!current_user_can('edit_post', $post_id)) return false;
+                if(!current_user_can('edit_post', $post_id)) 
+                        $this->error(__('Error publishing!','wp-recall').' Error 103');
 
                 $user_info = get_userdata($user_ID);
 
                 if($pst->post_author!=$user_ID){
                     $author_info = get_userdata($pst->post_author);
 
-                    if($user_info->user_level < $author_info->user_level) return false;
+                    if($user_info->user_level < $author_info->user_level) 
+                        $this->error(__('Error publishing!','wp-recall').' Error 104');
 
                 }
 
-                if($user_info->user_level<10&&rcl_is_limit_editing($post->post_date)) return false;
+                if($user_info->user_level<10&&rcl_is_limit_editing($post->post_date)) 
+                    $this->error(__('Error publishing!','wp-recall').' Error 105');
             }
             $this->update = true;
         }else{
@@ -196,7 +200,7 @@ class Rcl_EditPost {
         else $postdata['post_author'] = $user_ID;
 
         $postdata = apply_filters('pre_update_postdata_rcl',$postdata,$this);
-
+        
         if(!$postdata) return false;
 
         $user_info = get_userdata($user_ID);

@@ -3,7 +3,7 @@ jQuery(function($){
         jQuery(this).parent().text(Rcl.local.remove_file);
     });
     
-    if(!Rcl.private.sort){
+    if(Rcl.private.sort==0){
         var div = jQuery('#resize-content');
         div.scrollTop( div.get(0).scrollHeight );
 
