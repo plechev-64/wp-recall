@@ -18,10 +18,24 @@ function rcl_get_tablist_options($content){
         return $content;
     }
     
+    $areas = array();
     if($rcl_order_tabs){
-        $areas = $rcl_order_tabs;
+        
+        foreach($rcl_order_tabs as $area_id=>$tabs){
+            foreach($tabs as $id_tab=>$tab){
+                if(!isset($rcl_tabs[$id_tab])) continue;
+                $areas[$area_id][$id_tab] = $tab;
+            }
+        }
+        
+        foreach($rcl_tabs as $id_tab=>$tab){
+            $area = isset($tab['args']['output'])? $tab['args']['output']: 'menu';
+            if(isset($rcl_order_tabs[$area][$id_tab])) continue;
+            $areas[$area][$id_tab] = $tab;
+        }
+        
     }else{
-        $areas = array();
+        
         foreach($rcl_tabs as $id_tab=>$tab){
             $area = isset($tab['args']['output'])? $tab['args']['output']: 'menu';
             $areas[$area][$id_tab] = $tab;
