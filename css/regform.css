@@ -1,60 +1,38 @@
-/*Вход и регистрация*/
+/* START Вход и регистрация */
 .panel_lk_recall {
+	color:#333;
+    display: inline-block;
     line-height: 1.5;					/*++Twenty16++*/
     margin: 0 auto;
     max-width: 320px;
     width: 100%;
-    color:#333;
-    display: inline-block;
 }
 .panel_lk_recall.pageform {
     display: block;
 }
-/*++Twenty16++*/
-/* .widget .panel_lk_recall {			
-    overflow:hidden;
-} */
-.panel_lk_recall .recall-button,
-.widget .panel_lk_recall .recall-button {
-	color:#fff;
-	margin-right: 3px;
-}
-.panel_lk_recall p a.recall-button:hover {
-    color: #fff;
-}
 .panel_lk_recall.floatform{
 	display:none;
-	z-index: 9999;
-	position: absolute;
 	left: 50%;
 	margin-left: -160px;
+	position: absolute;
+	z-index: 9999;
 }
-.panel_lk_recall.floatform .close-popup{
-	color: rgba(229, 57, 53, 0.7);
-    font-size: 24px;
-	line-height: 1;							/*++Twenty16++*/
-    margin: 3px 4px 0 0;
-    position: absolute;
-    right: 0;
+.panel_lk_recall.floatform .close-popup {
+    display: none;
 }
-.panel_lk_recall.floatform .close-popup:hover{
-	color: rgb(229, 57, 53);
-}
-div.panel_lk_recall a {
+div.panel_lk_recall a:not(.close-popup) {
 	border: none;							/*++Twenty15++*/
 	box-shadow: none;						/*++Twenty16++*/
     text-decoration: none;
 }
-
-
-
-
-.panel_lk_recall.floatform .fa.fa-times-circle {
-    display: none;
+div.panel_lk_recall .form-tab-rcl a {
+    color: #aaa;
+    display: block;
+    padding: 8px 0;
 }
-
 .panel_lk_recall .form-tab-rcl {
     background: #fff;
+	border-radius: 2px;
     box-shadow: 0 0 1px 1px #bebebe;
 	display: none;
 	font: 16px/26px Verdana,Tahoma,sans-serif;
@@ -62,29 +40,19 @@ div.panel_lk_recall a {
 	overflow: hidden;
     width: 320px;
 }
-.widget .panel_lk_recall .form-tab-rcl {
-    margin: 3px auto;
-    width: 99%;
-}
 .panel_lk_recall.floatform .form-tab-rcl {
-	border-radius: 2px;
 	box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.5);
 }
-.panel_lk_recall .form-tab-rcl a {
-    color: #aaa;
-    display: block;
-    padding: 8px 0;
-}
-.panel_lk_recall .form-tab-rcl a.link-tab-rcl:hover {
-    color: #555;
-}
-.form_head {
+.panel_lk_recall .form_head {
     display: inline-block;
 	overflow: hidden;
     width: 100%;
 }
-.form_reg,
-.form_auth {
+.panel_lk_recall .form-tab-rcl .form_head a {
+    border-bottom: 1px solid #ccc;
+}
+.panel_lk_recall .form_reg,
+.panel_lk_recall .form_auth {
     background: #e6e7e8;
     color: #666;
     display: block;
@@ -92,24 +60,18 @@ div.panel_lk_recall a {
     text-align: center;
     width: 50%;
 }
-.panel_lk_recall .form_head a {
-    border-bottom: 1px solid #ccc;
-}
-
-.form_active {
+.panel_lk_recall .form_active {
     background-color: #fff;
-    display: block;
     padding: 8px 0;
+}
+.panel_lk_recall .form-tab-rcl a.link-tab-rcl:hover {
+    color: #555;
 }
 .panel_lk_recall .form-block-rcl {
 	line-height: 1.4;
     margin: 0 17px 15px;
     position: relative;
 }
-#login-form-rcl .form-block-rcl:last-child {
-    margin: 0 17px 8px;
-}
-
 
 /* START общие для полей*/
 .panel_lk_recall .rcl-field-input select,
@@ -129,10 +91,10 @@ div.panel_lk_recall a {
 	line-height: normal;
     margin: 5px auto;
 	max-width: none;
+	outline: none;
 	text-transform: none;
-    outline: none;
     width: 100%;
-	-webkit-box-shadow: 0 0 0px 1000px #F2F2F2 inset !important;
+	-webkit-box-shadow: 0 0 0px 1000px #F2F2F2 inset !important; /* chrome banana fix */
 }
 .panel_lk_recall .form-tab-rcl input:focus:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]) {
     background-color: #EBEBEB;
@@ -158,7 +120,6 @@ div.panel_lk_recall a {
 	overflow: hidden;
 	padding: 6px 3px;
 }
-
 #register-form-rcl .form_extend input[type="text"],
 #register-form-rcl .form_extend input[type="email"],
 #register-form-rcl .form_extend input[type="url"],
@@ -174,6 +135,13 @@ div.panel_lk_recall a {
 #register-form-rcl .form-block-rcl .dynamic-value input {
     float: left;
 }
+.panel_lk_recall .rcl-radio-box,
+.panel_lk_recall .rcl-checkbox-box {
+    display: block;
+}
+.panel_lk_recall .block-label {
+    font-weight: normal;
+}
 /* END корректировки для полей*/
 
 .panel_lk_recall .form-tab-rcl input[type="submit"] {
@@ -186,7 +154,6 @@ div.panel_lk_recall a {
     text-transform: uppercase;
     width: 100%;
 }
-
 .form-block-rcl.default-field .fa {
     color: #538a9a;
     left: 12px;
@@ -202,12 +169,12 @@ div.panel_lk_recall a {
 .panel_lk_recall .form-block-rcl .required {
     color: rgb(229, 57, 53);
     font: bold 15px/1 Verdana,arial;
+	padding: 0;
     position: absolute;
     right: 12px;
     top: 15px;
 }
-
-.form-block-rcl a.link-remember-rcl {
+.form-tab-rcl .form-block-rcl a.link-remember-rcl {
     float: right;
     font-size: 12px;
     margin: 3px 0;
@@ -220,20 +187,20 @@ div.panel_lk_recall a {
 }
 
 .form_rmmbr a {
-    background: #e6e7e8 none repeat scroll 0 0;
+    background: #e6e7e8;
     float: left;
-    padding: 8px 0;
     text-align: center;
     width: 50%;
 }
 .form_auth,
-.form_rmmbr a:first-child {
+.form_head.form_rmmbr a:first-child {
     border-right: 1px solid #ccc;
     box-sizing: border-box;
 }
-.panel_lk_recall .form-tab-rcl .form-title {
+.form-tab-rcl .form-title {
     display: block;
     font-size: 20px;
+	margin: 0 0 7px;
     text-align: center;
 }
 .form-block-rcl #passwordStrength {
@@ -253,74 +220,11 @@ div.panel_lk_recall a {
 .form-block-rcl #passwordStrength.strength5 {
     width: 100%;
 }
-.form-block-rcl .rcl-field-notice {
-    font-size: 13px;
-}
-
-/* .panel_lk_recall .form-block-rcl label {
-    display: block;
-} */
-
-.panel_lk_recall .form-block-rcl .default-field{
-    position: relative;
-    margin: 5px 0;
-}
-/* .panel_lk_recall .form-block-rcl .field-icon{
-    background: rgb(219, 219, 219);
-    border-radius: 50%;
-    box-sizing: border-box;
-    color: #999;
-    display: block;
-    font-size: 20px;
-    height: 34px;
-    left: 0;
-    line-height: 1;
-    margin-top: -17px;
-    padding: 7px;
-    position: absolute;
-    text-align: center;
-    top: 50%;
-    width: 34px;
-} */
-.panel_lk_recall .form-block-rcl .field-icon i.fa::before {  
-	display: inline-block;
-}
-/* .panel_lk_recall form input,
-.panel_lk_recall form select,
-.panel_lk_recall form textarea {
-	background: #fff;						
-    border: 1px solid #ccc;
-	box-sizing: border-box;
-	color:#000;
-	font:normal 14px/1.2 arial;
-    padding: 5px;
-    width: 93%;
-	margin: 0 0 0 10px;
-} */
-/* .panel_lk_recall .default-field input[type="text"],
-.panel_lk_recall .default-field input[type="email"],
-.panel_lk_recall .default-field input[type="password"] {   
-	padding: 5px 0 5px 25px;
-	margin: 0 0 0 16px;
-} */
-
-.panel_lk_recall .input-container {
-    clear:both;
-    overflow:hidden;
-}
-
-#notice-chek-password{
+.form-block-rcl #notice-chek-password{
     margin-top: 10px;
 }
-#notice-chek-password span{
-    padding: 0;
-}
-
-.panel_lk_recall a.link-tab-rcl .fa {
-	margin: 0 5px 0 0;
-}
-.panel_lk_recall .form-tab-rcl a:hover > i {
-	color: #000;
+.form-block-rcl .rcl-field-notice {
+    font-size: 13px;
 }
 .panel_lk_recall .form-block-rcl label a {
     color: rgb(76, 140, 189);
@@ -336,20 +240,43 @@ div.panel_lk_recall a {
     font-size: 14px;
 }
 .panel_lk_recall .form-tab-rcl .error {
-    background: rgb(255, 207, 207);
-    display: block;
-    font-size: 12px;
-    margin: 5px 0;
-    padding: 5px;
-    text-align: center;
+	background: rgb(255, 207, 207);
 }
 .panel_lk_recall .form-tab-rcl .success {
 	background: #bfffbd;
+}
+.panel_lk_recall .form-tab-rcl .error,
+.panel_lk_recall .form-tab-rcl .success {
     display: block;
     font-size: 12px;
-	margin: 5px 0;
-    padding: 5px;
+    margin: 5px 0;
+    padding: 8px 5px;
     text-align: center;
+}
+
+/* START панель управления */
+.widget .panel_lk_recall .form-tab-rcl {
+    margin: 3px auto;
+    width: 99%;
+}
+.panel_lk_recall .buttons p {
+    margin: 0 0 4px;
+    overflow: hidden;
+    padding: 0;
+}
+.widget .panel_lk_recall p .recall-button {
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1;
+    padding: 8px;
+}
+.widget .panel_lk_recall p a.recall-button:hover {
+    color: #fff;
+}
+.panel_lk_recall .buttons a .fa,
+.panel_lk_recall .buttons a span {
+    vertical-align: middle;
 }
 .panel_lk_recall .username{
 	margin: 0 0 5px;
@@ -358,7 +285,7 @@ div.panel_lk_recall a {
 	margin:0 5px 0 0;
 	float: left;
 	position: relative;
-	width: 60px;						/*++Twenty16++*/
+	width: 67px;						/*++Twenty16++*/
 }
 .panel_lk_recall .author-avatar a {
 	display: inline-block;
@@ -366,18 +293,12 @@ div.panel_lk_recall a {
     width: 100%;
 }
 .panel_lk_recall .author-avatar a img {
-	border-radius: 0;
+    border-radius: 0;
+    float: left;
     height: auto;
+    margin: 0;
+    max-width: 100%;
     width: 100%;
-	margin: 0;
-	float: left;
 }
-.panel_lk_recall .buttons p {
-    margin: 0 0 4px;
-    overflow: hidden;
-    padding: 0;
-}
-.panel_lk_recall .buttons a.recall-button {
-    display: inline-block;
-    padding: 8px;
-}
+/* END панель управления */
+/* END Вход и регистрация */
