@@ -193,11 +193,14 @@ class Rcl_Custom_Fields{
                     break;
                 }
             }
-            $input .='<label class="block-label" for="'.$this->slug.'_'.$a.'">'
+            
+            $input .='<span class="rcl-checkbox-box">'
                     . '<input '.$this->required.' '.$sl.' id="'.$this->slug.'_'.$a.'" type="checkbox" '.$class.' name="'.$this->slug.'[]" value="'.trim($chek[$a]).'"> ';
+            $input .='<label class="block-label" for="'.$this->slug.'_'.$a.'">';
             $input .= (!isset($field['before']))? '': $field['before'];
             $input .= $chek[$a]
-                    .'</label>';
+                    .'</label>'
+                    . '</span>';
             $input .= (!isset($field['after']))? '': $field['after'];
         }
         return $input;
@@ -208,10 +211,13 @@ class Rcl_Custom_Fields{
         $count_field = count($radio);
         $input = '';
         for($a=0;$a<$count_field;$a++){
-            $input .='<label class="block-label" for="'.$this->slug.'_'.$a.'">'
-                    . '<input '.$this->required.' '.checked($this->value,$radio[$a],false).' type="radio" '.checked($a,0,false).' id="'.$this->slug.'_'.$a.'" name="'.$this->slug.'" value="'.trim($radio[$a]).'"> '
-                    .$radio[$a]
-                    .'</label>';
+            
+            $input .='<span class="rcl-radio-box">'
+                    . '<input '.$this->required.' '.checked($this->value,$radio[$a],false).' type="radio" '.checked($a,0,false).' id="'.$this->slug.'_'.$a.'" name="'.$this->slug.'" value="'.trim($radio[$a]).'"> ';
+            $input .='<label class="block-label" for="'.$this->slug.'_'.$a.'">';        
+            $input .= $radio[$a]
+                    .'</label>'
+                    . '</span>';
         }
         return $input;
     }

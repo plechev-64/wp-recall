@@ -404,17 +404,15 @@ function rcl_password_regform($content){
 
     $difficulty = (isset($rcl_options['difficulty_parole']))? $rcl_options['difficulty_parole']: false;
 
-    $content .= '<div class="form-block-rcl">'
-            . '<label>'.__('Password','wp-recall').' <span class="required">*</span></label>'
-            . '<div class="default-field">
-                <span class="field-icon"><i class="fa fa-lock"></i></span>';
+    $content .= '<div class="form-block-rcl default-field">';
     if($difficulty==1){
-        $content .= '<input required id="primary-pass-user" type="password" onkeyup="passwordStrength(this.value)" value="'.$_REQUEST['user_pass'].'" name="user_pass">';
+        $content .= '<input placeholder="'.__('Password','wp-recall').'" required id="primary-pass-user" type="password" onkeyup="passwordStrength(this.value)" value="'.$_REQUEST['user_pass'].'" name="user_pass">';
     }else{
-        $content .= '<input required type="password" value="'.$_REQUEST['user_pass'].'" id="primary-pass-user" name="user_pass">';
+        $content .= '<input placeholder="'.__('Password','wp-recall').'" required type="password" value="'.$_REQUEST['user_pass'].'" id="primary-pass-user" name="user_pass">';
     }
-    $content .= '</div>'
-            . '</div>';
+	$content .= '<i class="fa fa-lock"></i>';
+	$content .= '<span class="required">*</span>';
+    $content .= '</div>';
 
     if($difficulty==1){
         $content .= '<div class="form-block-rcl">
@@ -434,12 +432,10 @@ function rcl_secondary_password($fields){
     global $rcl_options;
     if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return $fields;
 
-    $fields .= '<div class="form-block-rcl">
-                <label>'.__('Repeat the password','wp-recall').' <span class="required">*</span></label>
-                <div class="default-field">
-                    <span class="field-icon"><i class="fa fa-lock"></i></span>
-                    <input required id="secondary-pass-user" type="password" value="'.$_REQUEST['user_secondary_pass'].'" name="user_secondary_pass">
-                </div>
+    $fields .= '<div class="form-block-rcl default-field">
+                    <input placeholder="'.__('Repeat the password','wp-recall').'" required id="secondary-pass-user" type="password" value="'.$_REQUEST['user_secondary_pass'].'" name="user_secondary_pass">
+					<i class="fa fa-lock"></i>
+					<span class="required">*</span>
                 <div id="notice-chek-password"></div>
             </div>
             <script>jQuery(function(){

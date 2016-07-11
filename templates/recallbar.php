@@ -23,13 +23,13 @@
         <?php if($rcl_options['login_form_recall']==1){
             $page_in_out = rcl_format_url(get_permalink($rcl_options['page_login_form_recall']));
             $urls = array(
-                $page_in_out . 'action-rcl=register',
-                $page_in_out . 'action-rcl=login'
+                $page_in_out . 'action-rcl=login',
+                $page_in_out . 'action-rcl=register'
             );
         }else if($rcl_options['login_form_recall']==2){
             $urls = array(
-                wp_registration_url(),
-                wp_login_url('/')
+                wp_login_url('/'),
+                wp_registration_url()
             );
         }else if($rcl_options['login_form_recall']==3){ // Форма в виджете
                 

@@ -602,6 +602,7 @@ function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = ar
     <div id="rcl-tags-list-'.$taxonomy.'" class="rcl-tags-list">';
     
     if($tags){
+        $checks .= '<span class="rcl-field-input type-checkbox-input">';
         foreach ($tags as $tag){
             $checked = false;
             if(isset($post_tags[$tag->slug])&&$tag->name==$post_tags[$tag->slug]->name){
@@ -610,6 +611,7 @@ function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = ar
             }
             $args = array(
                 'type' => 'checkbox',
+                'id' => 'tag-'.$tag->slug,
                 'name' => 'tags['.$taxonomy.'][]',
                 'checked' => $checked,
                 'label' => $tag->name,
@@ -617,12 +619,15 @@ function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = ar
             );
             $checks .= rcl_form_field($args);
         }
+        $checks .= '<span>';
     }
 
     if($post_tags){
+        $checks .= '<span class="rcl-field-input type-checkbox-input">';
         foreach ($post_tags as $tag){
             $args = array(
                 'type' => 'checkbox',
+                'id' => 'tag-'.$tag->slug,
                 'name' => 'tags['.$taxonomy.'][]',
                 'checked' => true,
                 'label' => $tag->name,
@@ -630,6 +635,7 @@ function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = ar
             );
             $checks .= rcl_form_field($args);
         }
+        $checks .= '<span>';
     }
 
     $checks .= '</div>';

@@ -43,7 +43,7 @@ class Rcl_List_Terms{
                 $catlist .= '</select>';
             }
             if($this->output=='checkbox'){
-                $catlist .= '<div class="category-list">';                          
+                $catlist .= '<div class="category-list rcl-field-input type-checkbox-input">';                          
                 $catlist .= $this->get_option_list();
                 $catlist .= '</div>';
             }
@@ -108,8 +108,15 @@ class Rcl_List_Terms{
                 }
             }
 
-            if($this->output=='select') $catlist = '<option '.$selected.' value="'.$cat->term_id.'">'.$cat->name.'</option>';
-            if($this->output=='checkbox') $catlist = '<label><input type="checkbox" '.$selected.' name="cats['.$this->taxonomy.'][]" value="'.$cat->term_id.'">'.$cat->name.'</label>';
+            if($this->output=='select') 
+                $catlist = '<option '.$selected.' value="'.$cat->term_id.'">'.$cat->name.'</option>';
+            
+            if($this->output=='checkbox') 
+                $catlist = '<span class="rcl-checkbox-box">'
+                    . '<input id="category-'.$cat->term_id.'" type="checkbox" '.$selected.' name="cats['.$this->taxonomy.'][]" value="'.$cat->term_id.'">'
+                    . '<label class="block-label" for="category-'.$cat->term_id.'">'.$cat->name.'</label>'
+                    . '</span>';
+            
             $this->selected = false;
         }
         return $catlist;
@@ -150,8 +157,15 @@ class Rcl_List_Terms{
                     }
                 }
 
-                if($this->output=='select') $catlist .= '<option '.$selected.' value="'.$cat->term_id.'">&nbsp;&nbsp;&nbsp;'.$cat->name.'</option>';
-                if($this->output=='checkbox') $catlist .= '<label><input type="checkbox" '.$selected.' name="cats['.$this->taxonomy.'][]" value="'.$cat->term_id.'">'.$cat->name.'</label>';
+                if($this->output=='select') 
+                    $catlist .= '<option '.$selected.' value="'.$cat->term_id.'">&nbsp;&nbsp;&nbsp;'.$cat->name.'</option>';
+                
+                if($this->output=='checkbox') 
+                    $catlist = '<span class="rcl-checkbox-box">'
+                    . '<input id="category-'.$cat->term_id.'" type="checkbox" '.$selected.' name="cats['.$this->taxonomy.'][]" value="'.$cat->term_id.'">'
+                    . '<label class="block-label" for="category-'.$cat->term_id.'">'.$cat->name.'</label>'
+                    . '</span>';
+                
                 $this->selected = false;
 
                         }
@@ -261,9 +275,14 @@ class Rcl_Thumb_Form{
         $content .= '<ul id="temp-files-'.$formData->post_type.'" class="attachments-post">'.$attachlist.'</ul>';
 		
         if($formData){
-                $content .= '<p><label><input ';
-                //if(!$this->post_id) echo 'checked="checked"';
-                $content .= 'type="checkbox" '.checked($gal,1,false).' name="add-gallery-rcl" value="1"> - '.__('Display all attached images in the gallery.','wp-recall').'</label></p>';
+            $content .= '<div class="rcl-form-field">'
+                . '<span class="rcl-field-input type-checkbox-input">'
+                . '<span class="rcl-checkbox-box">'
+                . '<input id="rcl-gallery" type="checkbox" '.checked($gal,1,false).' name="add-gallery-rcl" value="1">'
+                . '<label for="rcl-gallery" class="block-label"> - '.__('Display all attached images in the gallery.','wp-recall').'</label>'
+                . '</span>'
+                . '</span>'
+                . '</div>';
         }
 	
         $content .= '<div id="status-temp"></div>

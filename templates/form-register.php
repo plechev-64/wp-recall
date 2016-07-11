@@ -1,33 +1,32 @@
-<?php global $typeform;
+<?php 
+global $typeform;
 $f_reg = ($typeform=='register')? 'style="display:block;"': ''; ?>
-<div class="form-tab-rcl" id="register-form-rcl" <?php echo $f_reg; ?>>
-    <h4 class="form-title"><?php _e('Registration','wp-recall'); ?></h4>
 
-    <?php rcl_notice_form('register'); ?>
+<div class="form-tab-rcl" id="register-form-rcl" <?php echo $f_reg; ?>>
+	<div class="form_head">
+            <div class="form_auth"><?php if(!$typeform){ ?><a href="#" class="link-login-rcl link-tab-rcl"><?php _e('Authorization ','wp-recall'); ?></a><?php } ?></div>
+            <div class="form_reg form_active"><?php _e('Registration','wp-recall'); ?></div>
+	</div>
+	
+    <div class="form-block-rcl"><?php rcl_notice_form('register'); ?></div>
 
     <form action="<?php rcl_form_action('register'); ?>" method="post" enctype="multipart/form-data">
-        <div class="form-block-rcl">
-            <label><?php _e('Login','wp-recall'); ?> <span class="required">*</span></label>
-            <div class="default-field">
-                <span class="field-icon"><i class="fa fa-user"></i></span>
-                <input required type="text" value="<?php echo $_REQUEST['user_login']; ?>" name="user_login" id="login-user">
-            </div>
+        <div class="form-block-rcl default-field">
+            <input required type="text" placeholder="<?php _e('Login','wp-recall'); ?>" value="<?php echo $_REQUEST['user_login']; ?>" name="user_login" id="login-user">
+            <i class="fa fa-user"></i>
+            <span class="required">*</span>
         </div>
-        <div class="form-block-rcl">
-            <label><?php _e('E-mail','wp-recall'); ?> <span class="required">*</span></label>
-            <div class="default-field">
-                <span class="field-icon"><i class="fa fa-at"></i></span>
-                <input required type="email" value="<?php echo $_REQUEST['user_email']; ?>" name="user_email" id="email-user">
-            </div>
+        <div class="form-block-rcl default-field">
+            <input required type="email" placeholder="<?php _e('E-mail','wp-recall'); ?>" value="<?php echo $_REQUEST['user_email']; ?>" name="user_email" id="email-user">
+            <i class="fa fa-at"></i>
+            <span class="required">*</span>
         </div>
-
-        <?php do_action( 'register_form' ); ?>
-
-        <div class="input-container">
-            <input type="submit" class="recall-button" name="submit-register" value="<?php _e('Send','wp-recall'); ?>">
-            <?php if(!$typeform){ ?>
-                <a href="#" class="link-login-rcl link-tab-rcl"><i class="fa fa-reply-all"></i><?php _e('Authorization ','wp-recall'); ?></a>
-            <?php } ?>
+            <div class="form-block-rcl form_extend">
+                <?php do_action( 'register_form' ); ?>
+            </div>
+        <div class="form-block-rcl">
+            <input type="submit" class="recall-button" name="submit-register" value="<?php _e('Signup','wp-recall'); // Зарегистрироваться ?>">
+            
             <?php echo wp_nonce_field('register-key-rcl','_wpnonce',true,false); ?>
             <input type="hidden" name="redirect_to" value="<?php rcl_referer_url('register'); ?>">
         </div>

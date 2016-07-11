@@ -676,6 +676,11 @@ a.data-filter.filter-active:hover {
 #register-form-rcl .type-dynamic-input .dynamic-values .dynamic-value{
     margin-bottom: 0px;
 }
+.rcl-field-input .rcl-checkbox-box,
+.rcl-field-input .rcl-radio-box{
+    display:inline-block;
+    position: relative;
+}
 /**/
 
 /* Контент лк Start */
@@ -806,6 +811,47 @@ div.ssi-backdrop {
     box-shadow: 0 0 1px 1px #aaa;
 }
 /* END ssi-modal */
+
+/* START checkbox-radio stilization */
+.block-label {
+    cursor: pointer;
+    display: block;
+    font-weight: normal;
+    margin: 0;
+    position: relative;
+    vertical-align: middle;
+}
+.rcl-field-input input[type="radio"],
+.rcl-field-input input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+	z-index: -1;
+}
+.rcl-field-input label.block-label::before {
+    background: #fff none repeat scroll 0 0;
+    border: 2px solid #ddd;
+    box-sizing: content-box;
+    content: "";
+    display: inline-block;
+    height: 13px;
+    margin: 0 8px 2px 0;
+    padding: 0 2px 4px;
+    text-align: center;
+    vertical-align: middle;
+    width: 13px;
+}
+.rcl-field-input.type-radio-input label::before {
+    border-radius: 50%;
+}
+.rcl-field-input input[type="checkbox"]:checked + label.block-label::before {
+    color: #fff;
+    content: "\f00c";
+    font-family: "FontAwesome";
+    font-size: 12px;
+    line-height: 1;
+    padding: 2px;
+}
+/* END checkbox-radio stilization */
 
 /* @media screen and (max-width:768px) {
     .vertical-menu #lk-menu {

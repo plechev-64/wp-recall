@@ -76,6 +76,10 @@ function rcl_inline_styles(){
     }
     .ballun-status p.status-user-rcl{
         border: 1px solid rgb('.$r.', '.$g.', '.$b.');
+    }
+    .rcl-field-input input[type="checkbox"]:checked + label.block-label::before,
+    .rcl-field-input input[type="radio"]:checked + label.block-label::before{
+        background: rgb('.$r.', '.$g.', '.$b.');
     }';
     
     $styles = apply_filters('rcl_inline_styles',$styles,array($r, $g, $b));
