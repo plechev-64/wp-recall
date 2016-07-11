@@ -619,7 +619,7 @@ function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = ar
             );
             $checks .= rcl_form_field($args);
         }
-        $checks .= '<span>';
+        $checks .= '</span>';
     }
 
     if($post_tags){
@@ -635,7 +635,7 @@ function rcl_get_tags_checklist($post_id=false,$taxonomy='post_tag',$t_args = ar
             );
             $checks .= rcl_form_field($args);
         }
-        $checks .= '<span>';
+        $checks .= '</span>';
     }
 
     $checks .= '</div>';
