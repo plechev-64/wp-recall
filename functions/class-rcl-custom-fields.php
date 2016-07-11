@@ -143,7 +143,7 @@ class Rcl_Custom_Fields{
 
     function get_type_agree($field){
         return '<input type="checkbox" '.checked($this->value,1,false).' '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" value="1"/> '
-                . $field['field_select'];
+                . '<label class="block-label" for="'.$this->slug.'">'.$field['field_select'].'</label>';
     }
 
     function get_type_select($field){
