@@ -25,7 +25,7 @@ if(!$typeform||$typeform=='sign') $f_sign = 'style="display:block;"'; ?>
             <?php do_action( 'login_form' ); ?>
 
             <div class="default-field rcl-field-input type-checkbox-input">
-                <div class="group_input_label">
+                <div class="rcl-checkbox-box">
                     <input type="checkbox" id="chck_remember" class="checkbox-custom" value="1" name="rememberme">
                     <label class="block-label" for="chck_remember"><?php _e('Remember','wp-recall'); ?></label>
                 </div>
