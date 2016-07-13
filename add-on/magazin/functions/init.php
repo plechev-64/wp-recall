@@ -22,8 +22,6 @@ add_action('rcl_bar_setup','rcl_bar_add_cart',10);
 function rcl_bar_add_cart(){
     global $CartData,$rmag_options;
     
-    if(!is_user_logged_in()) return false;
-    
     $amount = 0;
     if(isset($_SESSION['cart'])){
         foreach($_SESSION['cart'] as $prod_id=>$val){

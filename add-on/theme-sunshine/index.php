@@ -27,7 +27,7 @@ function rcl_setup_template_options(){
 // регистрируем 3 области виджетов
 function cab_15_sidebar() {
     register_sidebar(array(
-        'name' => "RCL: Виджет контента личного кабинета",
+        'name' => "RCL: Сайдбар контента личного кабинета",
         'id' => 'cab_15_sidebar',
         'description' => 'Выводится только в личном кабинете. Справа от контента (сайдбар)',
         'before_title' => '<h3 class="cabinet_sidebar_title">',
@@ -40,7 +40,7 @@ add_action('widgets_init', 'cab_15_sidebar');
 
 function cab_15_sidebar_before() {
     register_sidebar(array(
-        'name' => "RCL: Виджет над личным кабинетом",
+        'name' => "RCL: Сайдбар над личным кабинетом",
         'id' => 'cab_15_sidebar_before',
         'description' => 'Выводится только в личном кабинете',
         'before_title' => '<h3 class="cab_title_before">',
@@ -53,7 +53,7 @@ add_action('widgets_init', 'cab_15_sidebar_before');
 
 function cab_15_sidebar_after() {
     register_sidebar(array(
-        'name' => "RCL: Виджет под личным кабинетом",
+        'name' => "RCL: Сайдбар под личным кабинетом",
         'id' => 'cab_15_sidebar_after',
         'description' => 'Выводится только в личном кабинете',
         'before_title' => '<h3 class="cab_title_after">',

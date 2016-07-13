@@ -31,7 +31,7 @@ function lt_setup_template_options(){
 // регистрируем 2 области виджетов и выводим их
 function lt_sidebar_before() {
     register_sidebar(array(
-        'name' => "RCL: Виджет над личным кабинетом",
+        'name' => "RCL: Сайдбар над личным кабинетом",
         'id' => 'lt_sidebar_before',
         'description' => 'Выводится только в личном кабинете',
         'before_title' => '<h3 class="cab_title_before">',
@@ -49,7 +49,7 @@ function lt_add_sidebar_area_before(){
 
 function lt_sidebar_after() {
     register_sidebar(array(
-        'name' => "RCL: Виджет под личным кабинетом",
+        'name' => "RCL: Сайдбар под личным кабинетом",
         'id' => 'lt_sidebar_after',
         'description' => 'Выводится только в личном кабинете',
         'before_title' => '<h3 class="cab_title_after">',
