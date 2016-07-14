@@ -4,9 +4,12 @@ function rcl_options_panel(){
     $need_update = get_option('rcl_addons_need_update');
     
     $templates = array(); $addons = array();
-    foreach($need_update as $addon_id=>$data){
-        if(isset($data['template'])) $templates[] = $addon_id;
-        else $addons[] = $addon_id;
+    
+    if($need_update){
+        foreach($need_update as $addon_id=>$data){
+            if(isset($data['template'])) $templates[] = $addon_id;
+            else $addons[] = $addon_id;
+        }
     }
 
     $cnt_t = $templates? count($templates): 0;

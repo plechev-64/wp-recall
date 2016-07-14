@@ -230,7 +230,7 @@ class Rcl_Templates_Manager extends WP_List_Table {
 
     }
 
-    function update_status ( ) {
+    static function update_status ( ) {
         global $rcl_options;
         
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;

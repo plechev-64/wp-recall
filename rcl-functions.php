@@ -468,7 +468,6 @@ function rcl_admin_access(){
     if(defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST) return;
     if(is_admin()){
         $rcl_options = get_option('rcl_global_options');
-        get_currentuserinfo();
         $access = 7;
         if(isset($rcl_options['consol_access_rcl'])) $access = $rcl_options['consol_access_rcl'];
 

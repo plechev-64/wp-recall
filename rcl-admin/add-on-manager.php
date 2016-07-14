@@ -229,7 +229,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
 
     }
 
-    function update_status_addon ( ) {
+    static function update_status_addon ( ) {
         //print_r($_GET);
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
         if( 'manage-addon-recall' != $page ) return;
@@ -258,7 +258,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
         }
     }
     
-    function update_status_group_addon ( ) {
+    static function update_status_group_addon ( ) {
         
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
         if( 'manage-addon-recall' != $page ) return;
