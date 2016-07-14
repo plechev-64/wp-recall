@@ -1607,7 +1607,7 @@ msgstr "Ссылка для управления заказом"
 #: add-on/magazin/functions/core.php:462
 #, php-format
 msgid "You paid for a purchase \"%s\" funds from his personal account."
-msgstr "Вы оплатили заказ %s средства со своего личного счета."
+msgstr "Вы оплатили заказ %s средствами со своего личного счета."
 
 #: add-on/magazin/functions/core.php:470
 msgid ""

@@ -777,8 +777,8 @@ div.ssi-backdrop {
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon,
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon:hover {
     background: none;
-	height: 30px;
-	text-decoration: none;
+    height: 30px;
+    text-decoration: none;
 }
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon::after {
     color: rgb(229, 57, 53);
@@ -789,10 +789,10 @@ div.ssi-backdrop {
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon:hover::after {
     color: rgb(192, 0, 0);
 }
-.ssi-modalOuter .ssi-modalContent {
+.rcl-user-getails .ssi-modalOuter .ssi-modalContent {
     display: table;
     margin: 0 auto;
-	padding: 9px 9px 10px;
+    padding: 9px 9px 10px;
 }
 .ssi-modalOuter .ssi-buttons .ssi-modalBtn {
     background: #eee;

@@ -274,7 +274,9 @@ function rcl_global_options(){
                         ))
                     )
                 );
-
+                
+                $page_lg_form = isset($rcl_options['page_login_form_recall'])? $rcl_options['page_login_form_recall']: '';
+                
                 $content .= $fields->option_block(
                     array(
                         $fields->title(__('Login and register','wp-recall')),
@@ -296,7 +298,7 @@ function rcl_global_options(){
                             array(
                                 $fields->label(__('ID of the page with the shortcode [loginform]','wp-recall')),
                                 wp_dropdown_pages( array(
-                                    'selected'   => $rcl_options['page_login_form_recall'],
+                                    'selected'   => $page_lg_form,
                                     'name'       => 'global[page_login_form_recall]',
                                     'show_option_none' => __('Not selected','wp-recall'),
                                     'echo'             => 0 )

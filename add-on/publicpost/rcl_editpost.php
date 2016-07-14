@@ -19,7 +19,7 @@ class Rcl_EditPost {
             require_once(ABSPATH . "wp-admin" . '/includes/media.php');
         }
         
-        if($_POST['post-rcl']){
+        if(isset($_POST['post-rcl'])&&$_POST['post-rcl']){
 
             $post_id = intval($_POST['post-rcl']);
             $this->post_id = $post_id;
@@ -85,14 +85,14 @@ class Rcl_EditPost {
     function update_thumbnail($postdata){
         global $rcl_options;
 
-        $thumb = $_POST['thumb'];
-        if($rcl_options['media_downloader_recall']==1){
-            if(isset($thumb)) update_post_meta($this->post_id, '_thumbnail_id', $thumb);
+        $thumb = (isset($_POST['thumb']))? $_POST['thumb']: false;
+        if(isset($rcl_options['media_downloader_recall'])&&$rcl_options['media_downloader_recall']==1){
+            if($thumb) update_post_meta($this->post_id, '_thumbnail_id', $thumb);
             else delete_post_meta($this->post_id, '_thumbnail_id');
         }else{
             if(!$this->update) return $this->rcl_add_attachments_in_temps($postdata);
             if($thumb){
-                foreach((array)$thumb as $key=>$gal){
+                foreach($thumb as $key=>$gal){
                         update_post_meta($this->post_id, '_thumbnail_id', $key);
                 }
             }else{
@@ -224,7 +224,7 @@ class Rcl_EditPost {
         
         $this->update_thumbnail($postdata);
 
-        if($_POST['add-gallery-rcl']==1) 
+        if(isset($_POST['add-gallery-rcl'])&&$_POST['add-gallery-rcl']==1) 
             update_post_meta($this->post_id, 'recall_slider', 1);
         else 
             delete_post_meta($this->post_id, 'recall_slider');
@@ -261,7 +261,7 @@ function rcl_add_taxonomy_in_postdata($postdata,$data){
         
         $post_type['post']->taxonomies = array('category'); 
         
-        if($_POST['tags']){
+        if(isset($_POST['tags'])&&$_POST['tags']){
             $postdata['tags_input'] = $_POST['tags']['post_tag'];
         }
         

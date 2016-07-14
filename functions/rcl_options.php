@@ -107,7 +107,7 @@ class Rcl_Options {
             else if(isset($args['default'])&&!isset($rcl_options[$args['name']]))
                 $value = $args['default'];
             else 
-                $value = $rcl_options[$args['name']];
+                $value = isset($rcl_options[$args['name']])? $rcl_options[$args['name']]: '';
         }
         
         $this->type = (isset($args['type']))? $args['type']: 'global';

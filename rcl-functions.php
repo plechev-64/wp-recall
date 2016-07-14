@@ -772,7 +772,7 @@ class Rcl_Form_Fields{
                     $content .= sprintf('%s<label for="%s" class="block-label">%s</label>',$field,$this->id,$this->label); 
                     $content .= '</span>';
                     break;
-                default: $content .= sprintf('<label class="block-label">%s</label>%s',$this->label,$field);
+                default: $content = sprintf('<label class="block-label">%s</label>%s',$this->label,$field);
             }
             
             return $content;
