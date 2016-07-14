@@ -275,7 +275,7 @@ function rcl_widget_usercount() {
 
 class Rcl_Widget_user_count extends WP_Widget {
 
-	function Rcl_Widget_user_count() {
+	function __construct() {
 		$widget_ops = array( 'classname' => 'widget-user-count', 'description' => __('Personal account of the user','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-user-count' );
 		parent::__construct( 'widget-user-count', __('Personal account','wp-recall'), $widget_ops, $control_ops );

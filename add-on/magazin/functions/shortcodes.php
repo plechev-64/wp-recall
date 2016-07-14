@@ -90,7 +90,7 @@ function rcl_widget_minicart() {
 
 class Widget_minibasket extends WP_Widget {
 
-	function Widget_minibasket() {
+	function __construct() {
             $widget_ops = array( 'classname' => 'widget-minibasket', 'description' => __('Cart','wp-recall') );
             $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-minibasket' );
             parent::__construct( 'widget-minibasket', __('Cart','wp-recall'), $widget_ops, $control_ops );

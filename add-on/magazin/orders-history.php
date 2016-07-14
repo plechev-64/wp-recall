@@ -177,7 +177,7 @@ class Rcl_Orders_History_Table extends WP_List_Table {
         </select>
     <?php }
     
-    function update_status_order(){
+    static function update_status_order(){
         global $wpdb;
         
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;

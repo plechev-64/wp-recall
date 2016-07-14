@@ -8,7 +8,7 @@ function widget_new_author() {
 
 class Widget_new_author extends WP_Widget {
 
-	function Widget_new_author() {
+	function __construct() {
 		$widget_ops = array( 'classname' => 'rcl-new-users', 'description' => __('New users on the website','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'rcl-new-users' );
 		parent::__construct( 'rcl-new-users', 'RCL: '.__('New users','wp-recall'), $widget_ops, $control_ops );
@@ -75,7 +75,7 @@ function widget_online_users() {
 
 class Widget_online_users extends WP_Widget {
 
-	function Widget_online_users() {
+	function __construct() {
 		$widget_ops = array( 'classname' => 'rcl-online-users', 'description' => __('Conclusion the users in the network','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'rcl-online-users' );
 		parent::__construct( 'rcl-online-users', 'RCL: '.__('Users on the network','wp-recall'), $widget_ops, $control_ops );
@@ -134,7 +134,7 @@ function widget_author_profil() {
 
 class Widget_author_profil extends WP_Widget {
 
-	function Widget_author_profil() {
+	function __construct() {
 		$widget_ops = array( 'classname' => 'rcl-primary-panel', 'description' => __('The block with the main profile information','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'rcl-primary-panel' );
 		parent::__construct( 'rcl-primary-panel', 'RCL: '.__('Control panel','wp-recall'), $widget_ops, $control_ops );

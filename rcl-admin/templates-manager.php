@@ -241,7 +241,7 @@ class Rcl_Templates_Manager extends WP_List_Table {
               global $wpdb, $user_ID, $active_addons;
               
               $addon = $_GET['template'];
-              $action = parent::current_action();
+              $action = rcl_wp_list_current_action();
 
               if($action=='connect'){
                   rcl_deactivate_addon(get_option('rcl_active_template'));
@@ -343,17 +343,6 @@ function rcl_render_templates_manager(){
     
     echo '<div id="icon-plugins" class="icon32"><br></div>
         <h2>'.__('Templates','wp-recall').' Wp-Recall</h2>';
-
-        if(isset($_GET['update-template'])){
-                switch($_GET['update-template']){
-                    case 'connect': $text_notice = __('Addition <strong>activated</strong>. It is possible that on the settings page of Wp-Recall new settings','wp-recall'); $type='updated'; break;
-                }
-                
-                rcl_update_scripts();
-                //rcl_minify_style();
-                
-                echo '<div id="message" class="'.$type.'"><p>'.$text_notice.'</p></div>';
-        }
 
         if(isset($_POST['save-rcl-key'])){
             if( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ){

@@ -8,7 +8,7 @@ function rcl_group_add_primary_widget(){
 
 class Group_Primary_Widget extends Rcl_Group_Widget {
 
-    function Group_Primary_Widget() {
+    function __construct() {
         parent::__construct( array(
             'widget_id'=>'group-primary-widget',
             'widget_place'=>'sidebar',
@@ -101,7 +101,7 @@ function rcl_group_add_users_widget(){
 
 class Group_Users_Widget extends Rcl_Group_Widget {
 
-    function Group_Users_Widget() {
+    function __construct() {
         parent::__construct( array(
             'widget_id'=>'group-users-widget',
             'widget_place'=>'sidebar',
@@ -152,7 +152,7 @@ function rcl_group_add_publicform_widget(){
 
 class Group_PublicForm_Widget extends Rcl_Group_Widget {
 
-    function Group_PublicForm_Widget() {
+    function __construct() {
         parent::__construct( array(
             'widget_id'=>'group-public-form-widget',
             'widget_title'=>__('Form of the publication','wp-recall'),
@@ -196,7 +196,7 @@ function rcl_group_add_categorylist_widget(){
 
 class Group_CategoryList_Widget extends Rcl_Group_Widget {
 
-    function Group_CategoryList_Widget() {
+    function __construct() {
         parent::__construct( array(
             'widget_id'=>'group-category-list-widget',
             'widget_title'=>__('Categories Content Group','wp-recall'),
@@ -239,7 +239,7 @@ function rcl_group_add_admins_widget(){
 
 class Group_Admins_Widget extends Rcl_Group_Widget {
 
-    function Group_Admins_Widget() {
+    function __construct() {
         parent::__construct( array(
             'widget_id'=>'group-admins-widget',
             'widget_place'=>'sidebar',
@@ -312,7 +312,7 @@ function rcl_group_add_posts_widget(){
 
 class Group_Posts_Widget extends Rcl_Group_Widget {
 
-    function Group_Posts_Widget() {
+    function __construct() {
         parent::__construct( array(
             'widget_id'=>'group-posts-widget',
             'widget_place'=>'content',

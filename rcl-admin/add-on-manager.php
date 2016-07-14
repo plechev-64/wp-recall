@@ -4,8 +4,8 @@ if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-add_action('admin_init',array('Rcl_Addons_Manager','update_status_addon'));
-add_action('admin_init',array('Rcl_Addons_Manager','update_status_group_addon'));
+add_action('admin_init','rcl_update_status_addon');
+add_action('admin_init','rcl_update_status_group_addon');
 add_action('admin_init','rcl_init_upload_addon');
 
 class Rcl_Addons_Manager extends WP_List_Table {
@@ -229,104 +229,104 @@ class Rcl_Addons_Manager extends WP_List_Table {
 
     }
 
-    static function update_status_addon ( ) {
-        //print_r($_GET);
-        $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-        if( 'manage-addon-recall' != $page ) return;
-        
-        if ( isset($_GET['addon'])&&isset($_GET['action']) ) {
-              //if( !wp_verify_nonce( $_GET['_wpnonce'], 'action_addon' ) ) return false;
-
-              global $wpdb, $user_ID, $active_addons;
-              if ( ! current_user_can('activate_plugins') ) wp_die(__('You cant control install plugins on this site.','wp-recall'));
-
-              $addon = $_GET['addon'];
-              $action = parent::current_action();
-
-              if($action=='activate'){
-                  rcl_activate_addon($addon);
-                  wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
-              }
-              if($action=='deactivate'){
-                  rcl_deactivate_addon($addon);
-                  wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
-              }
-              if($action=='delete'){
-                 rcl_delete_addon($addon);
-                 wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=delete') );exit;
-              }
-        }
-    }
-    
-    static function update_status_group_addon ( ) {
-        
-        $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-        if( 'manage-addon-recall' != $page ) return;
-
-	  if ( parent::current_action() && isset( $_POST['addons'] )&& is_array($_POST['addons']) ) {
-              global $wpdb,$user_ID,$active_addons;
-
-                $action = parent::current_action();
-
-                $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
-
-		if($action=='activate'){
-                    foreach($_POST['addons'] as $addon){
-                        rcl_activate_addon($addon);
-                    }			
-                    wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
-		}
-                
-		if($action=='deactivate'){
-                    foreach($_POST['addons'] as $addon){
-                            foreach((array)$active_addons as $name=>$data){
-                                if($name!=$addon){
-                                    $new_active_list[$name] = $data;
-                                }else{
-                                    foreach($paths as $path){
-                                        if(file_exists($path.'/'.$addon.'/deactivate.php')){
-                                            include($path.'/'.$addon.'/deactivate.php');
-                                            break;
-                                        }
-                                    }
-                                    do_action('rcl_deactivate_'.$addon,$active_addons[$addon]);
-                                }
-                            }
-
-                            $active_addons = '';
-                            $active_addons = $new_active_list;
-                            $new_active_list = '';
-                    }
-                    update_site_option('rcl_active_addons',$active_addons);
-                    wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
-		}
-                
-                if($action=='delete'){
-                    foreach($_POST['addons'] as $addon){
-                            foreach((array)$active_addons as $name=>$data){
-                                if($name!=$addon){
-                                    $new_active_list[$name] = $data;
-                                }else{
-                                    rcl_delete_addon($addon);                                   
-                                }
-                            }
-
-                            $active_addons = '';
-                            $active_addons = $new_active_list;
-                            $new_active_list = '';
-                    }
-                    //update_site_option('rcl_active_addons',$active_addons);
-                    wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
-		}
-	  }
-	}
-
 } //class
 
 function rcl_init_upload_addon ( ) {
     if ( isset( $_POST['install-addon-submit'] ) ) {
           if( !wp_verify_nonce( $_POST['_wpnonce'], 'install-addons-rcl' ) ) return false;
           rcl_upload_addon();
+    }
+}
+
+function rcl_update_status_addon ( ) {
+	
+    $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+    if( 'manage-addon-recall' != $page ) return;
+
+    if ( isset($_GET['addon'])&&isset($_GET['action']) ) {
+
+        global $wpdb, $user_ID, $active_addons;
+        if ( ! current_user_can('activate_plugins') ) wp_die(__('You cant control install plugins on this site.','wp-recall'));
+
+        $addon = $_GET['addon'];
+        $action = rcl_wp_list_current_action();
+
+        if($action=='activate'){
+            rcl_activate_addon($addon);
+            wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
+        }
+        if($action=='deactivate'){
+            rcl_deactivate_addon($addon);
+            wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
+        }
+        if($action=='delete'){
+            rcl_delete_addon($addon);
+            wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=delete') );exit;
+        }
+    }
+}
+    
+ function rcl_update_status_group_addon ( ) {
+	
+    $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+    if( 'manage-addon-recall' != $page ) return;
+
+    if ( rcl_wp_list_current_action() && isset( $_POST['addons'] )&& is_array($_POST['addons']) ) {
+
+        global $wpdb,$user_ID,$active_addons;
+
+        $action = rcl_wp_list_current_action();
+
+        $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+
+        if($action=='activate'){
+            foreach($_POST['addons'] as $addon){
+                rcl_activate_addon($addon);
+            }			
+            wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=activate') );exit;
+        }
+
+        if($action=='deactivate'){
+            foreach($_POST['addons'] as $addon){
+                foreach((array)$active_addons as $name=>$data){
+                    if($name!=$addon){
+                        $new_active_list[$name] = $data;
+                    }else{
+                        foreach($paths as $path){
+                            if(file_exists($path.'/'.$addon.'/deactivate.php')){
+                                include($path.'/'.$addon.'/deactivate.php');
+                                break;
+                            }
+                        }
+                        do_action('rcl_deactivate_'.$addon,$active_addons[$addon]);
+                    }
+                }
+
+                $active_addons = '';
+                $active_addons = $new_active_list;
+                $new_active_list = '';
+            }
+            update_site_option('rcl_active_addons',$active_addons);
+            wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
+        }
+
+        if($action=='delete'){
+            foreach($_POST['addons'] as $addon){
+                foreach((array)$active_addons as $name=>$data){
+                    if($name!=$addon){
+                        $new_active_list[$name] = $data;
+                    }else{
+                        rcl_delete_addon($addon);                                   
+                    }
+                }
+
+                $active_addons = '';
+                $active_addons = $new_active_list;
+                $new_active_list = '';
+            }
+
+            wp_redirect( admin_url('admin.php?page=manage-addon-recall&update-addon=deactivate') );exit;
+        }
     }
 }
 

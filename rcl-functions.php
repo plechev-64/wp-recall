@@ -98,7 +98,9 @@ function rcl_get_order_tabs($rcl_tabs){
             if(!$user_ID||$user_ID!=$user_LK) continue;
         }
         
-        $counter[$data['args']['order']] = $id;
+        $order = (isset($data['args']['order']))? $data['args']['order']: 10;
+        
+        $counter[$order] = $id;
     }
     ksort($counter);
     $id_first = array_shift($counter);

@@ -142,7 +142,7 @@ class Rcl_Payments_List_Table extends WP_List_Table {
         </select>
     <?php }
     
-    function delete_payment(){
+    static function delete_payment(){
         global $wpdb;
         
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
