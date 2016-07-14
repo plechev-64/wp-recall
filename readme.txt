@@ -3,7 +3,7 @@ Contributors: wppost
 Donate link: http://codeseller.ru/
 Tags: personal account, private message, groups, user profile, личный кабинет, личные сообщения, профиль пользователя
 Requires at least: 4.4.0
-Tested up to: 4.5.2
+Tested up to: 4.5.3
 Stable tag: 12.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
