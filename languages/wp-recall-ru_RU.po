@@ -1619,7 +1619,7 @@ msgstr ""
 
 #: add-on/magazin/functions/init.php:47
 msgid "Product gallery"
-msgstr "Гарелея товара"
+msgstr "Галерея товара"
 
 #: add-on/magazin/functions/init.php:51 add-on/magazin/functions/init.php:52
 msgid "Attach image or download it"
@@ -1675,7 +1675,7 @@ msgstr "Текущий курс дополнительной валюты"
 msgid ""
 "If the goods specified its course , it will be a priority in the calculation "
 "of the price of this commodity"
-msgstr "Если для товара указан этот курс, то цена будет расчитываться по нему"
+msgstr "Если для товара указан этот курс, то цена будет рассчитываться по нему"
 
 #: add-on/magazin/functions/init.php:322
 msgid "The margin on goods"
@@ -4173,7 +4173,7 @@ msgid ""
 "This value sets the maximum time a user is considered \"online\" in the "
 "absence of active"
 msgstr ""
-"Это значения устанавливает максимальное время до истечения которого "
+"Это значение устанавливает максимальное время до истечения которого "
 "пользователь будет иметь статус \"в сети\" при отсутствии активности"
 
 #: rcl-admin/admin-pages.php:174

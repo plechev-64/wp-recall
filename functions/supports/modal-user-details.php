@@ -74,6 +74,26 @@ function rcl_get_user_details(){
 
         $details = array_merge($details,$old_output);
         
+        foreach($details as $a=>$detail){
+            if(!isset($details[$a]['args']['order'])) 
+                $details[$a]['args']['order'] = 10;
+        }
+
+        for($a = 0;$a < count($details); $a++){
+            
+            $min = $details[$a];
+            $newArray = $details;
+
+            for($n = $a;$n < count($newArray); $n++){
+
+                if($newArray[$n]['args']['order']<$min['args']['order']){
+                    $details[$n] = $min;
+                    $min = $newArray[$n];
+                    $details[$a] = $min;
+                }
+            }
+        }
+        
         foreach($details as $block){
             $Rcl_Blocks = new Rcl_Blocks($block);
             $content .= $Rcl_Blocks->get_block($user_LK);
