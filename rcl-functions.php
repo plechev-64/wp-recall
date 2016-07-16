@@ -74,7 +74,8 @@ function rcl_edit_options_tab($rcl_tabs){
         foreach($tabs as $tab_id=>$tab){
             if(isset($rcl_tabs[$tab_id])){
                 $rcl_tabs[$tab_id]['args']['order'] = ++$a;
-                if(isset($tab['name'])) $rcl_tabs[$tab_id]['name'] = $tab['name'];
+                if(isset($tab['name'])) 
+                    $rcl_tabs[$tab_id]['name'] = $tab['name'];
             }
         }
     }
@@ -474,7 +475,7 @@ function rcl_admin_access(){
         if(isset($rcl_options['consol_access_rcl'])) $access = $rcl_options['consol_access_rcl'];
 
         if ( $current_user->user_level < $access ){
-            if(intval($_POST['short'])==1||intval($_POST['fetch'])==1){
+            if(isset($_POST['short'])&&intval($_POST['short'])==1||isset($_POST['fetch'])&&intval($_POST['fetch'])==1){
                     return true;
             }else{
                     if(!$current_user->ID) return true;
