@@ -128,8 +128,8 @@ class Rcl_Tabs{
         
         switch($this->args['public']){
             case 0: if(!$user_ID||$user_ID!=$author_lk) return false; break;
-            //case -1: if(!$user_ID||$user_ID==$author_lk) return false; break;
-            //case -2: if($user_ID&&$user_ID==$author_lk) return false; break;
+            case -1: if(!$user_ID||$user_ID==$author_lk) return false; break;
+            case -2: if($user_ID&&$user_ID==$author_lk) return false; break;
         }
 
         $link = rcl_format_url(get_author_posts_url($author_lk),$this->id);
