@@ -70,7 +70,7 @@ jQuery(function($){
         rcl_preloader_show('#lk-content > div');
         var e = $(this);
         var post = e.data('post');
-        var tab_url = e.attr('href');
+        var tab_url = encodeURIComponent(e.attr('href'));
         var dataString = 'action=rcl_ajax&post='+post+'&tab_url='+tab_url;
         dataString += '&ajax_nonce='+Rcl.nonce;
         $.ajax({
