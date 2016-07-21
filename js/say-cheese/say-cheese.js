@@ -186,7 +186,9 @@ var SayCheese = (function() {
     };
 
     SayCheese.prototype.stop = function stop() {
-        this.stream.stop();
+        if (this.stream) {
+            this.stream.getTracks().forEach(function (track) { track.stop(); });
+       }
 
         if (window.URL && window.URL.revokeObjectURL) {
             window.URL.revokeObjectURL(this.video.src);

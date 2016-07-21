@@ -117,11 +117,16 @@ function rcl_avatar_uploader(){
 
         jQuery('#webcamupload').click(function(){
             
+            jQuery('body > div').last().after('<div id=rcl-preview></div>');
+            
             var webCam;
+            
+            webCam = new SayCheese('#rcl-preview', { audio: true });
             
             ssi_modal.show({
                 title: Rcl.local.title_webcam_upload,
                 className: 'rcl-webcam-uploader',
+                sizeClass: 'auto',
                 beforeShow: function (modal) {
                     webCam.start();
                 },
@@ -136,15 +141,11 @@ function rcl_avatar_uploader(){
                     }
                 }, {
                     label: Rcl.local.close,
-                    closeAfter: true,
-                    method: function () {
-                        webCam.stop();
-                    }
+                    closeAfter: true
                 }],
-                content: '<div id="rcl-preview"></div>'
+                content: jQuery('#rcl-preview'),
+                extendOriginalContent:true
             });
-
-            webCam = new SayCheese('#rcl-preview', { audio: true });
 
             webCam.on('snapshot', function(snapshot) {
                 var img = document.createElement('img');
@@ -161,10 +162,9 @@ function rcl_avatar_uploader(){
                     url: Rcl.ajaxurl,
                     success: function(data){
                         if(data['error']){
-                                rcl_notice(data['error'],'error',10000);
-                                return false;
+                            rcl_notice(data['error'],'error',10000);
+                            return false;
                         }
-                        ssi_modal.close();
                         jQuery('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data['avatar_url']);
                         jQuery( '#rcl-preview' ).remove();
                         rcl_notice(data['success'],'success',10000);

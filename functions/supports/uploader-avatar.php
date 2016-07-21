@@ -4,8 +4,9 @@ if (!is_admin()):
     add_action('rcl_enqueue_scripts','rcl_support_avatar_uploader_scripts',10);
 endif;
 
-function rcl_support_avatar_uploader_scripts(){   
-    if(rcl_is_office()){
+function rcl_support_avatar_uploader_scripts(){
+    global $user_ID;
+    if(rcl_is_office($user_ID)){
         rcl_fileupload_scripts();
         rcl_crop_scripts();
         rcl_enqueue_script( 'avatar-uploader', RCL_URL.'functions/supports/js/uploader-avatar.js',false,true );
@@ -14,9 +15,9 @@ function rcl_support_avatar_uploader_scripts(){
 
 add_filter('rcl_init_js_variables','rcl_init_js_avatar_variables',10);
 function rcl_init_js_avatar_variables($data){
-    global $rcl_options,$user_LK,$user_ID;
-    
-    if($user_LK==$user_ID){
+    global $rcl_options,$user_ID;
+
+    if(rcl_is_office($user_ID)){
         $size_ava = (isset($rcl_options['avatar_weight'])&&$rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: 2;
     
         $data['profile']['avatar_size'] = $size_ava;
