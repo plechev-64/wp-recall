@@ -14,7 +14,7 @@ function rcl_get_user_info(element){
 
     var post_id = jQuery(element).data('post');
     
-    var dataString = 'action=rcl_get_user_details&user_id='+jQuery(element).parents('.wprecallblock').data('account');
+    var dataString = 'action=rcl_return_user_details&user_id='+jQuery(element).parents('.wprecallblock').data('account');
     dataString += '&ajax_nonce='+Rcl.nonce;
     jQuery.ajax({
         type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,

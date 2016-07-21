@@ -280,10 +280,13 @@ class RCL_Install {
 	//устанавливаем показ ссылки на сайт автора плагина
         update_option('rcl_footer_link',1);
         update_option('rcl_global_options', $rcl_options );
-
+        update_option('rcl_version',VER_RCL);
+        
+        //позже удалить
         rcl_update_dinamic_files();
         
-        update_option('rcl_version',VER_RCL);
+        rcl_remove_dir(RCL_UPLOAD_PATH.'js');
+        rcl_remove_dir(RCL_UPLOAD_PATH.'css');
 
     }
 

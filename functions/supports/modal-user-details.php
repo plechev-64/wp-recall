@@ -4,10 +4,8 @@ if (!is_admin()):
     add_action('rcl_enqueue_scripts','rcl_support_user_info_scripts',10);
 endif;
 
-function rcl_support_user_info_scripts(){
-    global $user_LK;
-    
-    if($user_LK){
+function rcl_support_user_info_scripts(){ 
+    if(rcl_is_office()){
         rcl_dialog_scripts();
         rcl_enqueue_script( 'rcl-user-info', RCL_URL.'functions/supports/js/user-details.js' );
     }
@@ -15,9 +13,8 @@ function rcl_support_user_info_scripts(){
 
 add_filter('rcl_init_js_variables','rcl_init_js_user_info_variables',10);
 function rcl_init_js_user_info_variables($data){
-    global $user_LK;
 
-    if($user_LK){
+    if(rcl_is_office()){
         $data['local']['title_user_info'] = __('Detailed information','wp-recall');
     }
     
@@ -31,11 +28,20 @@ function rcl_add_user_info_button($content){
     return $content;
 }
 
-add_action('wp_ajax_rcl_get_user_details','rcl_get_user_details',10);
-add_action('wp_ajax_nopriv_rcl_get_user_details','rcl_get_user_details',10);
-function rcl_get_user_details(){
+add_action('wp_ajax_rcl_return_user_details','rcl_return_user_details',10);
+add_action('wp_ajax_nopriv_rcl_return_user_details','rcl_return_user_details',10);
+function rcl_return_user_details(){
+    
+    $content = rcl_get_user_details(intval($_POST['user_id']));
+    
+    $result['content'] = $content;
+    $result['success'] = 1;
+    echo json_encode($result); exit;
+}
+
+function rcl_get_user_details($user_id){
     global $user_LK, $rcl_blocks;
-    $user_LK = $_POST['user_id'];
+    $user_LK = $user_id;
     
     if (!class_exists('Rcl_Blocks')) 
         include_once RCL_PATH.'functions/class-rcl-blocks.php';
@@ -103,8 +109,5 @@ function rcl_get_user_details(){
     
     $content .= '</div>';
     
-    $result['content'] = $content;
-    $result['success'] = 1;
-    echo json_encode($result); exit;
+    return $content;
 }
-

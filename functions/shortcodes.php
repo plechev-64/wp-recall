@@ -373,10 +373,10 @@ function rcl_tab_shortcode($atts){
     
     $Rcl_Tab = new Rcl_Tabs($rcl_tabs[$tab_id]);
     
-    $content = '<div class="wprecallblock" data-account="'.$user_ID.'">';   
+    $content = '<div id="rcl-office" class="wprecallblock" data-account="'.$user_ID.'">';   
         $content .= '<div id="lk-content">';
-
-            $content .= $Rcl_Tab->get_tab_content($user_ID);
+            
+            $content .= sprintf('<div id="tab-%s" class="%s_block recall_content_block %s">%s</div>',$tab_id,$tab_id,'active',$Rcl_Tab->get_tab_content($user_ID));
 
         $content .= '</div>';    
     $content .= '</div>';

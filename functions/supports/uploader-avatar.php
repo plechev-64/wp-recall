@@ -4,14 +4,11 @@ if (!is_admin()):
     add_action('rcl_enqueue_scripts','rcl_support_avatar_uploader_scripts',10);
 endif;
 
-function rcl_support_avatar_uploader_scripts(){
-    global $user_ID,$user_LK;    
-    if($user_LK){        
-        if($user_ID==$user_LK){
-            rcl_fileupload_scripts();
-            rcl_crop_scripts();
-            rcl_enqueue_script( 'avatar-uploader', RCL_URL.'functions/supports/js/uploader-avatar.js',false,true );
-        }
+function rcl_support_avatar_uploader_scripts(){   
+    if(rcl_is_office()){
+        rcl_fileupload_scripts();
+        rcl_crop_scripts();
+        rcl_enqueue_script( 'avatar-uploader', RCL_URL.'functions/supports/js/uploader-avatar.js',false,true );
     }
 }
 

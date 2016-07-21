@@ -93,7 +93,7 @@ function rcl_inline_styles(){
 
 add_action('wp_recall_init','init_user_lk',2);
 function init_user_lk(){
-    global $wpdb,$user_LK,$rcl_userlk_action,$rcl_options,$user_ID;
+    global $wpdb,$user_LK,$rcl_userlk_action,$rcl_options,$user_ID,$rcl_office;
 
     $user_LK = false;
     $userLK = false;
@@ -129,6 +129,19 @@ function init_user_lk(){
     if($user_LK){
         $rcl_userlk_action = rcl_get_time_user_action($user_LK);
     }
+    
+    $rcl_office = ($user_LK)? $user_LK: false;
+    
+}
+
+function rcl_is_office($user_id=false){
+    global $rcl_office;
+    if(!$user_id){
+        if($rcl_office) return true;
+    }else{
+        if($user_id==$rcl_office) return true;
+    }
+    return false;
 }
 
 add_action('wp_footer','rcl_popup_contayner',10);

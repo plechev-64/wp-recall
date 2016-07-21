@@ -205,6 +205,9 @@ jQuery(function($){
     });
             
     jQuery('#lk-content').on('click','.remove_black_list',function(){
+        
+        rcl_preloader_show('#tab-privat > div');
+        
         var id_user = jQuery(this).data('contact');
         var dataString = 'action=remove_ban_list_rcl&id_user='+id_user+'&user_ID='+Rcl.user_ID;
         dataString += '&ajax_nonce='+Rcl.nonce;
@@ -212,10 +215,11 @@ jQuery(function($){
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
             success: function(data){
                 if(data['otvet']==100){
-                         jQuery('.history-'+data['id_user']).remove();
+                    jQuery('.history-'+data['id_user']).remove();
                 } else {
-                        rcl_notice(Rcl.local.error,'error',10000);
+                    rcl_notice(Rcl.local.error,'error',10000);
                 }
+                rcl_preloader_hide();
             }
         });
         return false;
@@ -223,6 +227,9 @@ jQuery(function($){
             
     /* Удаление истории переписки */
     jQuery('#lk-content').on('click','.del_history',function(){
+        
+        rcl_preloader_show('#tab-privat > div');
+        
         var id_user = jQuery(this).data('contact');
         var dataString = 'action=delete_history_private_recall&id_user='+id_user+'&user_ID='+Rcl.user_ID;
         dataString += '&ajax_nonce='+Rcl.nonce;
@@ -234,6 +241,7 @@ jQuery(function($){
                 } else {
                         rcl_notice(Rcl.local.error,'error',10000);
                 }
+                rcl_preloader_hide();
             }
         });
         return false;
@@ -336,13 +344,20 @@ jQuery(function($){
     });
     
     function update_important_rcl(id_mess){
+        rcl_preloader_show('#tab-privat > div');
         var dataString = 'action=update_important_rcl&id_mess='+id_mess+'&user_ID='+Rcl.user_ID;
         dataString += '&ajax_nonce='+Rcl.nonce;
         jQuery.ajax({
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
             success: function(data){
-                if(data['res']==100) jQuery('#message-'+id_mess+' .important').addClass('active');
-                if(data['res']==200) jQuery('#message-'+id_mess+' .important').removeClass('active');
+                
+                if(data['res']==100) 
+                    jQuery('#message-'+id_mess+' .important').addClass('active');
+                
+                if(data['res']==200) 
+                    jQuery('#message-'+id_mess+' .important').removeClass('active');
+                
+                rcl_preloader_hide();
             }
         });
         return false;
