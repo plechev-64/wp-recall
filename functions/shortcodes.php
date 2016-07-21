@@ -369,7 +369,7 @@ function rcl_tab_shortcode($atts){
         return '<p>Такой вкладки не найдено!</p>';
     
     if (!class_exists('Rcl_Tabs')) 
-        include_once RCL_PATH.'functions/rcl_tabs.php';
+        include_once RCL_PATH.'functions/class-rcl-tabs.php';
     
     $Rcl_Tab = new Rcl_Tabs($rcl_tabs[$tab_id]);
     
