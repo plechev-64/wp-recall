@@ -42,7 +42,7 @@ function rcl_bar_add_private_messages_icon(){
     
     if(!is_user_logged_in()) return false;
     
-    rcl_bar_add_icon('rcl-notifications',
+    rcl_bar_add_icon('rcl-messages',
         array(
             'icon'=>'fa-envelope',
             'url'=>rcl_format_url(get_author_posts_url($user_ID),'privat'),

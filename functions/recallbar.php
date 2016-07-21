@@ -45,12 +45,12 @@ function rcl_print_bar_icons(){
         
         $rcl_bar_icons = apply_filters('rcl_bar_icons',$rcl_bar['icons']);
         
-        foreach($rcl_bar_icons as $icon){
+        foreach($rcl_bar_icons as $id_icon=>$icon){
             if(!isset($icon['icon'])) continue;
             
             $class = (isset($icon['class']))? $icon['class']: '';
         
-            echo '<div class="rcb_icon '.$class.'">';
+            echo '<div id="'.$id_icon.'" class="rcb_icon '.$class.'">';
             
             if(isset($icon['url'])):
                 echo '<a href="'.$icon['url'].'">';

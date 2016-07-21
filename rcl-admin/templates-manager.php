@@ -5,7 +5,7 @@ if( ! class_exists( 'WP_List_Table' ) ) {
 }
 
 add_action('rcl_before_include_addons',array('Rcl_Templates_Manager','update_status'));
-add_action('admin_init','rcl_init_upload_addon');
+add_action('admin_init','rcl_init_upload_template');
 
 class Rcl_Templates_Manager extends WP_List_Table {
 	
