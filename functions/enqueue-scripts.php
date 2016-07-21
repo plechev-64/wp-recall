@@ -92,9 +92,11 @@ function rcl_frontend_scripts(){
     
     wp_enqueue_script( 'jquery' );
 
-    if($user_LK){
+    if(rcl_is_office()){
         rcl_dialog_scripts();
-        rcl_fileupload_scripts();
+        if(rcl_is_office($user_ID)){
+            rcl_fileupload_scripts();
+        }
     }
 
     rcl_font_awesome_style();

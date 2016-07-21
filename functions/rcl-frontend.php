@@ -130,17 +130,23 @@ function init_user_lk(){
         $rcl_userlk_action = rcl_get_time_user_action($user_LK);
     }
     
-    $rcl_office = ($user_LK)? $user_LK: false;
+    $rcl_office = ($user_LK)? $user_LK: 0;
     
 }
 
-function rcl_is_office($user_id=false){
+function rcl_is_office($user_id=null){
     global $rcl_office;
-    if(!$user_id){
-        if($rcl_office) return true;
-    }else{
-        if($user_id==$rcl_office) return true;
+    
+    if($rcl_office){
+        
+        if(isset($user_id)){
+            if($user_id==$rcl_office) return true;
+            return false;
+        }
+        
+        return true;       
     }
+    
     return false;
 }
 
