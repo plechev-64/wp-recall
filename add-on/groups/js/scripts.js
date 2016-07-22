@@ -57,6 +57,30 @@ jQuery(function($){
         });
         return false;
     });
+    
+    jQuery('#group-popup').on('click','.group-request .apply-request',function(){
+        var button = jQuery(this);
+        var user_id = button.parent().data('user');
+        var apply = button.data('request');
+        var group_id = button.parents('#rcl-group').data('group');
+        var dataString = 'action=rcl_apply_group_request&group_id='+group_id+'&user_id='+user_id+'&apply='+apply;
+        dataString += '&ajax_nonce='+Rcl.nonce;
+        rcl_preloader_show('#group-popup > div');
+        jQuery.ajax({
+            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+            success: function(data){
+                if(data){
+
+                    button.parent().html(data['result']);
+
+                } else {
+                    rcl_notice('Error','error');
+                }
+                rcl_preloader_hide();
+            }
+        });
+        return false;
+    });
 
     var func = function(e){
 

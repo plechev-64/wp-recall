@@ -17,8 +17,8 @@ class Rcl_PageNavi{
 
         $this->pager_id = $pager_id;
         
-        if(isset($_GET['pager-id'])&&$_GET['pager-id']==$this->pager_id){
-            $this->current_page = $_GET[$this->key];
+        if(isset($_REQUEST['pager-id'])&&$_REQUEST['pager-id']==$this->pager_id){
+            $this->current_page = $_REQUEST[$this->key];
         }
         
         $this->data_amount = $data_amount;        
@@ -30,8 +30,8 @@ class Rcl_PageNavi{
             
             if(isset($this->custom['key'])){ 
                 $this->key = $this->custom['key'];
-                if(isset($_GET[$this->key]))
-                    $this->current_page = $_GET[$this->key];
+                if(isset($_REQUEST[$this->key]))
+                    $this->current_page = $_REQUEST[$this->key];
             }
             
             if(isset($this->custom['current_page'])) 
@@ -43,6 +43,9 @@ class Rcl_PageNavi{
             if(isset($this->custom['ajax'])) 
                 $this->ajax = $this->custom['ajax'];
         }
+        
+        if(defined( 'DOING_AJAX' ) && DOING_AJAX)
+            $this->ajax = true;
         
         if($this->current_page==0)
             $this->current_page = 1;
@@ -152,7 +155,18 @@ class Rcl_PageNavi{
             foreach($query['output'] as $item){
                 foreach($item as $type=>$data){
                     if($type=='page'){
-                        $html = '<a href="'.$this->get_url($data).'" data-page="'.$data.'">'.$data.'</a>';
+                        
+                        $attrs = array(
+                            'href'=>$this->get_url($data),
+                            'data'=>array(
+                                'page'=>$data,
+                                'pager-id'=>$this->pager_id
+                            )
+                        );
+                        
+                        $attrs = apply_filters('rcl_page_link_attributes',$attrs);
+                        
+                        $html = '<a '.$this->get_string_attributes($attrs).'>'.$data.'</a>';
                     }else if($type=='current'){
                         $html = '<span data-page="'.$data.'">'.$data.'</span>';
                     }else{
@@ -167,5 +181,19 @@ class Rcl_PageNavi{
         $content .= '</div>';
         
         return $content;
+    }
+    
+    function get_string_attributes($attrs){
+        $str = array();
+        foreach($attrs as $name=>$val){
+            if(is_array($val)){
+               foreach($val as $k=>$v){
+                $str[] = $name.'-'.$k.'='.$v; 
+               }
+            }else{
+                $str[] = $name.'='.$val;
+            }
+        }
+        return implode(' ',$str);
     }
 }

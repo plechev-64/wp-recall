@@ -24,6 +24,7 @@ function rcl_get_tablist_options($content){
         foreach($rcl_order_tabs as $area_id=>$tabs){
             foreach($tabs as $id_tab=>$tab){
                 if(!isset($rcl_tabs[$id_tab])) continue;
+                if(isset($rcl_tabs[$id_tab]['args']['output'])&&$rcl_tabs[$id_tab]['args']['output']!=$area_id) continue;
                 $areas[$area_id][$id_tab] = $tab;
             }
         }

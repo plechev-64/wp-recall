@@ -319,6 +319,8 @@ function rcl_group_add_users_query($query){
         $query->query['join'][] = "INNER JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
         $query->query['where'][] = "groups_users.group_id = '$rcl_group->term_id' AND groups_users.user_role $role_query";
     }
+    
+    //print_r($query);exit;
 
     return $query;
 }
@@ -339,11 +341,12 @@ function rcl_get_group_users($group_id){
     global $rcl_group,$user_ID;
 
     add_filter('rcl_users_query','rcl_group_add_users_query');
+    add_filter('rcl_page_link_attributes','rcl_group_add_page_link_attributes',10);
 
     if(rcl_is_group_can('moderator')||current_user_can('edit_others_posts'))
         add_action('rcl_user_description','rcl_add_group_user_options');
-
-    $page = (isset($_POST['page']))? $_POST['page']: false;
+    
+    $page = (isset($_POST['rcl-page']))? $_POST['rcl-page']: false;
     $users_role = (isset($_POST['value']))? $_POST['value']: "all";
 
     $content = '<div id="group-userlist">';
@@ -363,10 +366,33 @@ function rcl_get_group_users($group_id){
     $content .= '</div>';
 
     $content .= '<h3>'.__('Group members','wp-recall').'</h3>';
-    $content .= rcl_get_userlist(array('paged'=>$page,'filters'=>0,'orderby'=>'time_action','data'=>'rating_total,posts_count,comments_count,description,user_registered','add_uri'=>array('value'=>$users_role)));
+    $content .= rcl_get_userlist(
+            array(
+                'paged'=>$page,
+                'filters'=>0,
+                'orderby'=>'time_action',
+                'data'=>'rating_total,posts_count,comments_count,description,user_registered',
+                'add_uri'=>array('value'=>$users_role)
+            ));
+
     $content .= '</div>';
 
     return $content;
+}
+
+
+function rcl_group_add_page_link_attributes($attrs){
+    global $rcl_group;
+    
+    $page = (isset($_POST['page']))? $_POST['page']: 1;
+    $users_role = (isset($_POST['value']))? $_POST['value']: "all";
+    
+    $attrs['data']['callback'] = 'rcl_get_group_users&rcl-page='.$attrs['data']['page'].'&pager-id='.$attrs['data']['pager-id'];
+    $attrs['data']['value'] = $users_role;
+    $attrs['data']['group'] = $rcl_group->term_id;
+    $attrs['class'] = 'rcl-group-link';
+    
+    return $attrs;
 }
 
 function rcl_get_group_option($group_id,$option_key){
