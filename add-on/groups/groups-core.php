@@ -369,6 +369,7 @@ function rcl_get_group_users($group_id){
     $content .= rcl_get_userlist(
             array(
                 'paged'=>$page,
+                'ajax'=>true,
                 'filters'=>0,
                 'orderby'=>'time_action',
                 'data'=>'rating_total,posts_count,comments_count,description,user_registered',

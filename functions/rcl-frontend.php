@@ -14,9 +14,9 @@ function rcl_action(){
 function rcl_avatar($size=120){
     global $user_LK; $after='';
     echo '<div id="rcl-contayner-avatar">';
-	echo '<span class="rcl-user-avatar">'.get_avatar($user_LK,$size).'</span>';
-	echo apply_filters('after-avatar-rcl',$after,$user_LK);
-	echo '</div>';
+    echo '<span class="rcl-user-avatar">'.get_avatar($user_LK,$size).'</span>';
+    echo apply_filters('after-avatar-rcl',$after,$user_LK);
+    echo '</div>';
 
 }
 
@@ -91,7 +91,7 @@ function rcl_inline_styles(){
 
 }
 
-add_action('wp_recall_init','init_user_lk',2);
+add_action('rcl_init','init_user_lk',1);
 function init_user_lk(){
     global $wpdb,$user_LK,$rcl_userlk_action,$rcl_options,$user_ID,$rcl_office;
 
@@ -217,7 +217,7 @@ function rcl_get_miniaction($action,$user_id=false){
 }
 
 //заменяем ссылку автора комментария на ссылку его ЛК
-add_filter('get_comment_author_url', 'rcl_get_link_author_comment');
+add_filter('get_comment_author_url', 'rcl_get_link_author_comment', 10);
 function rcl_get_link_author_comment($href){
     global $comment;
     if($comment->user_id==0) return $href;
@@ -233,8 +233,7 @@ function rcl_hidden_admin_panel(){
         return show_admin_bar(false);
     }
 
-    $access = 7;
-    if(isset($rcl_options['consol_access_rcl'])) $access = $rcl_options['consol_access_rcl'];
+    $access = (isset($rcl_options['consol_access_rcl']))? $rcl_options['consol_access_rcl']: 7;
     $user_info = get_userdata($user_ID);
     if ( $user_info->user_level < $access ){
             show_admin_bar(false);
@@ -247,10 +246,8 @@ add_action('init','rcl_banned_user_redirect');
 function rcl_banned_user_redirect(){
     global $user_ID;
     if(!$user_ID) return false;
-    $user_data = get_userdata( $user_ID );
-    $roles = $user_data->roles;
-    $role = array_shift($roles);
-    if($role=='banned') wp_die(__('Congratulations! You have been banned.','wp-recall'));
+    if(user_can($user_ID, 'banned')) 
+        wp_die(__('Congratulations! You have been banned.','wp-recall'));
 }
 
 add_filter('the_content','rcl_message_post_moderation');
@@ -295,9 +292,11 @@ function rcl_bar_add_icon($id_icon,$args){
     global $rcl_bar,$rcl_options;
     if(!isset($rcl_options['view_recallbar'])||!$rcl_options['view_recallbar']) return false;
     $rcl_bar['icons'][$id_icon] = $args;
+    return true;
 }
 function rcl_bar_add_menu_item($id_item,$args){
     global $rcl_bar,$rcl_options;
     if(!isset($rcl_options['view_recallbar'])||!$rcl_options['view_recallbar']) return false;
     $rcl_bar['menu'][$id_item] = $args;
+    return true;
 }

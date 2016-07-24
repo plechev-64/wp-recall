@@ -99,13 +99,10 @@
 	margin:0 0;
 }
 
-.bx-wrapper .bx-controls-direction a {
+.bx-wrapper div.bx-controls-direction a {
     z-index: 999;
 }
 /* slider End */
-
-
-
 
 @media screen and (max-width:380px) {
 	.bx-wrapper .bx-viewport .rcl-gallery {

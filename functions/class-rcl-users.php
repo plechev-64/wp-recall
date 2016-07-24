@@ -3,6 +3,7 @@
 class Rcl_Users{
     
     public $id = 0;
+    public $ajax = false;
     public $number = false;
     public $inpage = 10;
     public $offset = 0;

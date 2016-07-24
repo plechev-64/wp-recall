@@ -12,9 +12,10 @@ class Rcl_EditFields {
     public $meta_key;
     public $placeholder;
     public $sortable;
+    public $fieldsData;
 
     function __construct($posttype,$primary=false){
-        global $Option_Value; 
+
         $this->select_type = (isset($primary['select-type']))? $primary['select-type']:true;
         $this->meta_key = (isset($primary['meta-key']))? $primary['meta-key']:true;
         $this->placeholder = (isset($primary['placeholder']))? $primary['placeholder']:true;
@@ -29,7 +30,7 @@ class Rcl_EditFields {
             default: $name_option = 'rcl_fields_'.$posttype;
         }
 
-        $Option_Value = stripslashes_deep(get_option( $name_option ));
+        $this->fieldsData = stripslashes_deep(get_option( $name_option ));
         $this->name_option = $name_option;
     }
 
@@ -88,10 +89,10 @@ class Rcl_EditFields {
     }
 
     function loop(){
-        global $Option_Value;
+        
         $form = '';
-        if($Option_Value){
-            foreach($Option_Value as $key=>$vals){
+        if($this->fieldsData){
+            foreach($this->fieldsData as $key=>$vals){
                 if($key==='options') continue;
                 $form .= $this->field($vals);
             }
@@ -264,9 +265,7 @@ class Rcl_EditFields {
     }
 
     function get_vals($name){
-        global $Option_Value;
-
-        foreach($Option_Value as $vals){
+        foreach($this->fieldsData as $vals){
             if($vals[$name]) return $vals;
         }
     }
@@ -328,8 +327,8 @@ class Rcl_EditFields {
     }
 
     function options($args){
-        global $Option_Value;
-        $val = ($Option_Value['options']) ? $Option_Value['options'][$args['name']]: '';
+        
+        $val = ($this->fieldsData['options']) ? $this->fieldsData['options'][$args['name']]: '';
         $ph = (isset($args['placeholder']))? $args['placeholder']: '';
         $pattern = (isset($args['pattern']))? 'pattern="'.$args['pattern'].'"': '';
         $field = '<input type="text" placeholder="'.$ph.'" title="'.$ph.'" '.$pattern.' name="options['.$args['name'].']" value="'.$val.'"> ';
@@ -349,7 +348,6 @@ class Rcl_EditFields {
     }
 
     function update_fields($table='postmeta'){
-        global $Option_Value;
 
         $fields = array();
 
@@ -412,7 +410,7 @@ class Rcl_EditFields {
 
         $res = update_option( $this->name_option, $fields );
 
-        if($res) $Option_Value = stripslashes_deep($fields);
+        if($res) $this->fieldsData = stripslashes_deep($fields);
 
         return $res;
     }

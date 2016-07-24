@@ -4,11 +4,11 @@ add_filter( 'rcl_custom_tab_content', 'do_shortcode', 11 );
 add_filter( 'rcl_custom_tab_content', 'wpautop', 10 );
 
 class Rcl_Tabs{
-    public $id;
-    public $callback;
-    public $name;
-    public $tab_active = 0;
-    public $tab_upload = 0;
+    public $id;//идентификатор вкладки
+    public $callback;//имя функции обработчика
+    public $name;//имя вкладки
+    public $tab_active = 0;//указание активности вкладки
+    public $tab_upload = 0;//указание загрузки содержимого вкладки
     public $args = array(
                 'ajax-load'=>0,
                 'output'=>'menu',
@@ -18,7 +18,7 @@ class Rcl_Tabs{
                 'public'=>0,
                 'class'=>'fa-cog',
                 'first'=>0
-            );
+            ); //массив параметров
     
     function __construct($args){
         global $rcl_options;

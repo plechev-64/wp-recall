@@ -1070,8 +1070,7 @@ function rcl_check_jpeg($f, $fix=false ){
     }
 }
 
-function rcl_template_support($support){
-    
+function rcl_template_support($support){   
     switch($support){
         case 'avatar-uploader': 
             include_once 'functions/supports/uploader-avatar.php';

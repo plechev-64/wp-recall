@@ -1,17 +1,17 @@
 <?php
 
 class Rcl_PageNavi{
-    public $current_page = 1;
-    public $pages_amount;
-    public $output_number = array(4,4);
-    public $in_page = 30;
-    public $key = 'rcl-page';
-    public $data_amount = 0;
-    public $uri = array();
-    public $pager_id;
-    public $custom = array();
-    public $offset;
-    public $ajax = false;
+    public $current_page = 1;//текущая страница
+    public $pages_amount;//кол-во страниц
+    public $output_number = array(4,4);//диапазон вывода отображаемых страниц
+    public $in_page = 30;//кол-во элементов на странице
+    public $key = 'rcl-page';//ключ передаваемый номер текущей страницы
+    public $data_amount = 0;//общее кол-во элементов
+    public $uri = array();//массив параметров из адресной строки
+    public $pager_id;//идентификатор навигации
+    public $custom = array();//массив параметров
+    public $offset;//отступ выборки элементов
+    public $ajax = false;//указание использования ajax
     
     function __construct($pager_id,$data_amount,$custom = array()){
 
@@ -43,9 +43,6 @@ class Rcl_PageNavi{
             if(isset($this->custom['ajax'])) 
                 $this->ajax = $this->custom['ajax'];
         }
-        
-        if(defined( 'DOING_AJAX' ) && DOING_AJAX)
-            $this->ajax = true;
         
         if($this->current_page==0)
             $this->current_page = 1;
@@ -116,7 +113,6 @@ class Rcl_PageNavi{
             for($num=1;$num<=$query['args']['number_right'];$num++){
                 $query['output'][]['page'] = $this->current_page+$num;
             }
-            
         }
         
         $end = $this->pages_amount-($this->current_page+$query['args']['number_right']);

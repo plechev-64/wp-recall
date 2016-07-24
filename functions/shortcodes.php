@@ -16,7 +16,7 @@ function rcl_get_userlist($atts, $content = null){
         
         $id_pager = ($users->id)? 'rcl-users-'.$users->id: 'rcl-users';
         
-        $pagenavi = new Rcl_PageNavi($id_pager,$count_users,array('in_page'=>$users->inpage));
+        $pagenavi = new Rcl_PageNavi($id_pager,$count_users,array('in_page'=>$users->inpage,'ajax'=>$users->ajax));
         $users->offset = $pagenavi->offset;
         $users->number = $pagenavi->in_page;
     }

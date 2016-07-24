@@ -52,11 +52,8 @@ function rcl_confirm_user_registration(){
     $regcode = md5($reglogin);
     if($regcode==$_GET['rgcode']){
         if ( $user = get_user_by('login', $reglogin) ){
-            
-            $user_data = get_userdata( $user->ID );
-            $roles = $user_data->roles;
-            $role = array_shift($roles);
-            if($role!='need-confirm') return false;
+
+            if(!user_can($user->ID, 'need-confirm')) return false;
             
             wp_update_user( array ('ID' => $user->ID, 'role' => get_option('default_role')) ) ;
             $time_action = current_time('mysql');

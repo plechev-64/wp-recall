@@ -10,10 +10,7 @@ function rcl_chek_user_authenticate($email){
     $confirm = (isset($rcl_options['confirm_register_recall']))? $rcl_options['confirm_register_recall']: 0;
     if($confirm==1){
         if ( $user = get_user_by('login', $email) ){
-            $user_data = get_userdata( $user->ID );
-            $roles = $user_data->roles;
-            $role = array_shift($roles);
-            if($role=='need-confirm'){
+            if(user_can($user->ID, 'need-confirm')){
                 if($rcl_options['login_form_recall']==2){
                     wp_safe_redirect( 'wp-login.php?checkemail=confirm' );
                 }else{
@@ -44,10 +41,7 @@ function rcl_get_login_user(){
     }
 
     if ( $user = get_user_by('login', $login) ){
-        $user_data = get_userdata( $user->ID );
-        $roles = $user_data->roles;
-        $role = array_shift($roles);
-        if($role=='need-confirm'){
+        if(user_can($user->ID, 'need-confirm')){
             $wp_errors->add( 'rcl_login_confirm', __('Your email is not confirmed!','wp-recall') );
             return $wp_errors;
         }
