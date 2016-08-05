@@ -152,31 +152,37 @@ body .rcl_preloader{
 	float: right;
 	clear: both;
 }
+.rcl-smiles > i{
+    cursor: pointer;
+    font-size: 20px;
+    color: #4c8cbd;
+}
 .rcl-smiles .smiles{
-	text-align: right;
-	background: #fff;
-	box-shadow: 0 0 1px 1px #ccc;
-	padding: 3px;
-	width: 350px;	
-	border-radius: 5px;
+    text-align: left;
+    background: #fff;
+    box-shadow: 0 0 1px 1px #ccc;
+    padding: 3px;
+    width: 350px;
+    border-radius: 5px;
 }
 .rcl-smiles .rcl-smiles-list{
-	display: none;
-	padding: 0 15px 20px 0;
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	z-index: 9;
+    display: none;
+    padding: 0 15px 20px 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
 }
 .rcl-smiles > img:hover +.rcl-smiles-list,
 .rcl-smiles .rcl-smiles-list:hover{
-	display:block;
+    display:block;
 }
 .rcl-smiles .smiles img{
     cursor:pointer;
     display:inline-block;
-    max-height: 25px;
-    margin: 3px;
+    height: 18px!important;
+    margin: 3px!important;
+    width: auto!important;
 }
 .rcl-new-users p,
 .rcl-online-users p {

@@ -300,3 +300,61 @@ function rcl_bar_add_menu_item($id_item,$args){
     $rcl_bar['menu'][$id_item] = $args;
     return true;
 }
+
+add_action('init','rcl_add_block_black_list_button',10);
+function rcl_add_block_black_list_button(){
+    rcl_block('actions','rcl_user_black_list_button',array('id'=>'bl-block','order'=>50,'public'=>-1));
+}
+
+function rcl_user_black_list_button($office_id){
+    global $user_ID,$wpdb;
+    
+    $user_block = get_user_meta($user_ID,'rcl_black_list:'.$office_id);
+
+    $title = ($user_block)? __('Unblock','wp-recall'): __('In the black list','wp-recall');
+
+    $button = rcl_get_button($title,'#',array('class'=>'rcl-manage-blacklist','icon'=>'fa-bug','attr'=>'onclick="rcl_manage_user_black_list(this,'.$office_id.');return false;"'));
+
+    return $button;
+}
+
+add_action('wp_ajax_rcl_manage_user_black_list','rcl_manage_user_black_list');
+function rcl_manage_user_black_list(){
+    global $user_ID;
+    
+    rcl_verify_ajax_nonce();
+    
+    $user_id = intval($_POST['user_id']);
+    
+    $user_block = get_user_meta($user_ID,'rcl_black_list:'.$user_id);
+    
+    if($user_block){
+        delete_user_meta($user_ID,'rcl_black_list:'.$user_id);
+    }else{
+        add_user_meta($user_ID,'rcl_black_list:'.$user_id,1);
+    }
+    
+    $new_status = $user_block? 0: 1;
+    
+    $res['success'] = true;
+    $res['label'] = ($new_status)? __('Unblock','wp-recall'): __('In the black list','wp-recall');
+    echo json_encode($res);
+    exit;
+}
+
+add_filter('rcl_tabs','rcl_check_user_blocked',10);
+function rcl_check_user_blocked($rcl_tabs){
+    global $user_ID,$user_LK;
+    if($user_LK&&$user_LK!=$user_ID){
+        $user_block = get_user_meta($user_LK,'rcl_black_list:'.$user_ID);
+        if($user_block){
+            $rcl_tabs = array();
+            add_action('rcl_area_tabs','rcl_add_user_blocked_notice',10);
+        }
+    }
+    return $rcl_tabs;
+}
+
+function rcl_add_user_blocked_notice(){
+    echo '<div class="notify-lk"><div class="warning">'.__('The user has restricted access to their page','wp-recall').'</div></div>';
+}

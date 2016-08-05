@@ -136,7 +136,7 @@ function rcl_frontend_scripts(){
     );
 
     $data['post_ID'] = (isset($post->ID)&&$post->ID)? (int)$post->ID: (int)0;
-    $data['account_ID'] = ($user_LK==$user_ID)? (int)$user_LK: (int)0;
+    $data['office_ID'] = ($user_LK)? (int)$user_LK: (int)0;
     $data['mobile'] = (wp_is_mobile())? (int)1: (int)0;
     $data['https'] = @( !isset($_SERVER["HTTPS"])||$_SERVER["HTTPS"] != 'on' ) ? (int)0:  (int)1;
     $data['slider'] = (isset($rcl_options['slide-pause'])&&$rcl_options['slide-pause'])? "{auto:true,pause:".($rcl_options['slide-pause']*1000)."}": "''";

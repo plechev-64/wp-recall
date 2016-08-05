@@ -471,8 +471,8 @@ function rcl_admin_access(){
     if(defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST) return;
     if(is_admin()){
         $rcl_options = get_option('rcl_global_options');
-        $access = 7;
-        if(isset($rcl_options['consol_access_rcl'])) $access = $rcl_options['consol_access_rcl'];
+
+        $access = (isset($rcl_options['consol_access_rcl']))? $rcl_options['consol_access_rcl']: 7;
 
         if ( $current_user->user_level < $access ){
             if(isset($_POST['short'])&&intval($_POST['short'])==1||isset($_POST['fetch'])&&intval($_POST['fetch'])==1){
@@ -812,36 +812,12 @@ function rcl_form_field($args){
 }
 
 function rcl_get_smiles($id_area){
-    global $wpsmiliestrans,$rcl_smilies;
-
-    if(isset($rcl_smilies[1])&&is_array($rcl_smilies[1])){
-            foreach($rcl_smilies as $key=>$imgs){
-                    foreach($imgs as $emo=>$img){
-                            if(isset($rcl_smilies[$key][0])) $smilies_list[$key][0]=$rcl_smilies[$key][0];
-                            else if(!isset($smilies_list[$key][0])) $smilies_list[$key][0]=$emo;
-                            if($emo) $smilies_list[$key][$img]=$emo;
-                    }
-            }
-    }else{
-            if(!$rcl_smilies) $rcl_smilies = $wpsmiliestrans;
-
-            if(!$rcl_smilies) return false;
-
-            foreach($rcl_smilies as $emo=>$img){
-                    if(!isset($smilies_list[0][0])) $smilies_list[0][0]=$emo;
-                    $smilies_list[0][$img]=$emo;
-            }
-    }
 
     $smiles = '<div class="rcl-smiles" data-area="'.$id_area.'">';
-
-    foreach ( $smilies_list as $key=>$smils ) {
-            $smiles .= str_replace( 'style="height: 1em; max-height: 1em;"', 'data-dir="'.$key.'"', convert_smilies( $smils[0] ) );
-            $smiles .= '<div class="rcl-smiles-list">
-                                            <div class="smiles"></div>
-                                    </div>';
-    }
-
+        $smiles .= '<i class="fa fa-smile-o" aria-hidden="true"></i>';
+        $smiles .= '<div class="rcl-smiles-list">
+                        <div class="smiles"></div>
+                    </div>';
     $smiles .= '</div>';
 
     return $smiles;
@@ -852,33 +828,20 @@ function rcl_get_smiles_ajax(){
 
     rcl_verify_ajax_nonce();
 
-    if(!$rcl_smilies){
-        foreach($wpsmiliestrans as $emo=>$smilie){
-            $rcl_smilies[$emo]=$smilie;
-        }
-    };
-
-    $namedir = $_POST['dir'];
-    $area = $_POST['area'];
-
-    $smiles = '';
-
-    $dir = (isset($rcl_smilies[$namedir]))? $rcl_smilies[$namedir]: $rcl_smilies;
-
-    foreach ( $dir as $emo=>$gif ) {
-            if(!$emo) continue;
-            //$b = array('','img alt="'.$emo.'" onclick="document.getElementById(\''.$area.'\').value=document.getElementById(\''.$area.'\').value+\' '.$emo.' \'"');
-            $smiles .= str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $emo ) );
+    $content = array();
+    
+    $smilies = array();
+    foreach($wpsmiliestrans as $emo=>$smilie){
+        $smilies[$smilie] = $emo;
     }
 
-
-    if($smiles){
-            $log['result'] = 1;
-    }else{
-            $log['result'] = 0;
+    foreach($smilies as $smilie=>$emo){
+        if(!$emo) continue;
+        $content[] = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $emo ) );
     }
 
-    $log['content'] = $smiles;
+    $log['result'] = ($content)? 1: 0;
+    $log['content'] = implode('',$content);
     echo json_encode($log);
     exit;
 }
@@ -938,6 +901,12 @@ function rcl_get_useraction($user_action=false){
 	} else {
 		return false;
 	}
+}
+
+function rcl_human_time_diff($time_action){
+    $unix_current_time = strtotime(current_time('mysql'));
+    $unix_time_action = strtotime($time_action);
+    return human_time_diff($unix_time_action,$unix_current_time );
 }
 
 function rcl_update_timeaction_user(){

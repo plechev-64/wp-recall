@@ -91,7 +91,7 @@ jQuery(function($){
         return false;
     });
     
-    $("body .rcl-smiles > img").on({
+    $(document).on({
         mouseenter: function () {
             var sm_box = $(this).next();
             var block = sm_box.children();
@@ -120,16 +120,16 @@ jQuery(function($){
         mouseleave: function () {
             $(this).next().hide();
         }
-    });
+    }, "body .rcl-smiles .fa-smile-o");
     
-    $("body .rcl-smiles > .rcl-smiles-list").on({
+    $(document).on({
         mouseenter: function () {
             $(this).show();           
         },
         mouseleave: function () {
             $(this).hide();
         }
-    });
+    }, "body .rcl-smiles > .rcl-smiles-list");
 
     $('body').on('hover click','.rcl-smiles > img',function(){
         var block = $(this).next().children();
@@ -157,21 +157,9 @@ jQuery(function($){
     });
 
     $("body").on("click",'.rcl-smiles-list img',function(){
-            var alt = $(this).attr("alt");
-            var area = $(this).parents(".rcl-smiles").data("area");
-            $("#"+area).val($("#"+area).val()+" "+alt+" ");
-    });
-
-    //общий чат
-    $('#lk-content, #rcl-popup').on('click','.author-avatar',function(){
-        var userid = $(this).attr("user_id");
-        if(!userid) return false;
-        var ava = $(this).html();
-        $(".author-avatar").children().removeAttr('style');
-        $(this).children().css('opacity','0.4');
-        $("#adressat_mess").val(userid);
-        $("#opponent").html(ava);
-        //return false;
+        var alt = $(this).attr("alt");
+        var area = $(this).parents(".rcl-smiles").data("area");
+        $("#"+area).val($("#"+area).val()+" "+alt+" ");
     });
 
     $('#rcl-popup,.floatform').on('click','.close-popup',function(){
@@ -492,4 +480,40 @@ function rcl_add_dynamic_field(e){
 
 function rcl_remove_dynamic_field(e){
     jQuery(e).parents('.dynamic-value').remove();
+}
+
+function rcl_manage_user_black_list(e,user_id){
+    
+    var class_i = jQuery(e).children('i').attr('class');
+    
+    if(class_i=='fa fa-refresh fa-spin') return false;
+    
+    jQuery(e).children('i').attr('class','fa fa-refresh fa-spin');
+    
+    var office_id = jQuery(e).parents('#rcl-office').data('account');
+    
+    var dataString = 'action=rcl_manage_user_black_list&user_id='+user_id;
+    dataString += '&ajax_nonce='+Rcl.nonce;
+    jQuery.ajax({
+        type: 'POST',
+        data: dataString,
+        dataType: 'json',
+        url: Rcl.ajaxurl,				
+        success: function(data){
+            
+            jQuery(e).children('i').attr('class',class_i);
+
+            if(data['errors']){
+                jQuery.each(data['errors'], function( index, value ) {
+                    rcl_notice(value[1],'error',10000);
+                });
+            }
+
+            if(data['success']){
+                jQuery(e).find('span').text(data['label']);
+            }
+
+        } 
+    });
+    return false;   
 }

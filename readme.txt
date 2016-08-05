@@ -1,7 +1,7 @@
 === Wp-Recall ===
 Contributors: wppost
 Donate link: http://codeseller.ru/
-Tags: personal account, private message, groups, user profile, личный кабинет, личные сообщения, профиль пользователя
+Tags: группы, интернет магазин, личные сообщения, личный кабинет, магазин, онлайн магазин, пользователи, продажи, профиль, профиль пользователя, рейтинг, сообщество, социальная сеть, уведомления, электронная коммерция, author, author profile, authors, activity, cart, commerce, community, custom fields, e-commerce, ecommerce, file uploads, free-kassa, friends, front-end login, front-end registration, groups, interkassa, member, messaging, networking, networks, online shop, online store, personal account, private message, notifications, payeer, pay2pay, perfect money, profiles, ratings, robokassa, sales, sell, shop, shopping cart, social, social network, social networking, unitpay, user profile, users community, wallet one, webmoney, yandexKassa
 Requires at least: 4.4.0
 Tested up to: 4.5.3
 Stable tag: 12.0.7

@@ -1,7 +1,7 @@
 <?php
 
-add_action( 'init', 'register_terms_rec_post_group',10 );
-function register_terms_rec_post_group() {
+add_action( 'init', 'register_type_post_group',10 );
+function register_type_post_group() {
 
     $labels = array(
         'name' => __('Record groups','wp-recall'),
@@ -39,8 +39,8 @@ function register_terms_rec_post_group() {
 
     register_post_type( 'post-group', $args );
 }
-add_action( 'init', 'register_taxonomy_groups',10 );
 
+add_action( 'init', 'register_taxonomy_groups',10 );
 function register_taxonomy_groups() {
 
 	$labels = array(

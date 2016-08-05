@@ -202,7 +202,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
                 . '<td colspan="'.$colspan.'" class="plugin-update colspanchange">'
                     . '<div class="update-message">'
                         . __('Available fresh version','wp-recall').' '.$this->addon['name'].' '.$this->need_update[$item['ID']]['new-version'].'. ';
-                        if(isset($this->addon['add-on-uri'])) echo ' <a href="'.$this->addon['add-on-uri'].'"  title="'.$this->addon['name'].'">'.__('view information about the version','wp-recall').' '.$xml->version.'</a>';
+                        if(isset($this->addon['add-on-uri'])) echo ' <a href="'.$this->addon['add-on-uri'].'"  title="'.$this->addon['name'].'">'.__('view information about the version','wp-recall').'</a>';
                     echo 'или <a class="update-add-on" data-addon="'.$item['ID'].'" href="#">'.__('To update automatically','wp-recall').'</a></div>'
                 . '</td>'
             . '</tr>';
@@ -429,7 +429,7 @@ function rcl_render_addons_manager(){
         if(isset($_POST['save-rcl-key'])){
             if( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ){
                 update_option('rcl-key',$_POST['rcl-key']);
-                echo '<div id="message" class="'.$type.'"><p>'.__('Key is stored','wp-recall').'!</p></div>';
+                echo '<div id="message" class="updated"><p>'.__('Key is stored','wp-recall').'!</p></div>';
             }
         }
 

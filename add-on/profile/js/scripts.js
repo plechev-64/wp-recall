@@ -1,7 +1,7 @@
 
 function rcl_update_profile(){
-    rcl_preloader_show('#tab-profile > form');
-    var form = jQuery('#tab-profile form');
+    rcl_preloader_show('#tab-profile > form#your-profile');
+    var form = jQuery('#tab-profile form#your-profile');
     var dataString = 'action=rcl_edit_profile&'+form.serialize();
     jQuery.ajax({
         type: 'POST',

@@ -96,10 +96,10 @@ class Rcl_Options {
             if(isset($args['type'])&&$args['type']=='local'){
                 $value = get_option($args['group']);
                 $value = $value[$args['name']];
-            }else if(isset($args['default'])&&!isset($rcl_options[$args['name']])){
-                $value = $args['default'];
-            }else{
+            }else if(isset($rcl_options[$args['group']][$args['name']])){
                 $value = $rcl_options[$args['group']][$args['name']];
+            }else if(isset($args['default'])){
+                $value = $args['default'];
             }
         }else{
             if(isset($args['type'])&&$args['type']=='local') 

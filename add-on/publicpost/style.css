@@ -1,27 +1,31 @@
 /*Публикация*/
 /* Блок публикации Start */
 .public_block {
-    background: rgba(243, 243, 243, 0.3);
-    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
-	color: #000;
-    margin: 3px;
+    background: rgba(243, 243, 243, 0.6);
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
+    box-sizing: border-box;
+    color: #000;
+    margin: 3px auto;
+    overflow: hidden;
     padding: 5px;
+    width: 99%;
 }
 .public_block a:link {
-	border: none;								/*++Twenty15++*/
-	box-shadow: none;
+    border: none;								/*++Twenty15++*/
+    box-shadow: none;
 }
 .public_block form{
-	position:relative;
+    position:relative;
+    overflow: hidden;
 }
 .public_block form .rcl-form-field{
-	margin:10px 0;
+    margin:10px 0;
 }
 .public_block label {
     display: block;
-	font: bold 14px/1 georgia,serif,arial;
+    font: bold 14px/1 georgia,serif,arial;
     margin: 10px 0;
-	text-transform: none;						/*++Twenty14++*/
+    text-transform: none;						/*++Twenty14++*/
 }
 .public_block .category-list label {
 	font-weight: normal;
@@ -33,20 +37,6 @@
     color: rgb(229, 57, 53);
     font: bold 15px/1 Verdana,arial;
 }
-.public_block  input#post_title_input {
-    width: 96%;
-}
-.public_block input#post_title_input:focus {				/*++hueman++*/
-    border: none;
-    box-shadow: 0 0 1px 1px #ccc;
-    color: #000;
-}
-.public_block .rcl-form-field select.postform {
-    width: auto;
-    max-width: 45%;
-    margin: 5px 5px 5px 0;
-    display: block;
-}
 .public_block .category-list {
     background: rgba(243, 243, 243, 0.3);
     box-shadow: 0 0 1px 1px rgb(243, 243, 243);
@@ -57,8 +47,10 @@
 .public_block .category-list span{
     display: block;
 }
+.public_block input[type="radio"],
 .public_block input[type="checkbox"] {
-    margin: 0 6px 0 0;
+    left: 17px;
+    top: 10px;
 }
 .public_block .category-list .child-list-category{
     padding: 5px 5px 5px 10px;
@@ -98,6 +90,9 @@
     width: 23%;
     list-style: none!important;
 }
+.rcl-public-form .attachments-post li:first-child {
+    margin: 1% 1% 1% 0;
+}
 .rcl-public-form .attachments-post li .rcl-service-button {
     background: rgba(30, 56, 75, 0.7);
     color: rgb(229, 57, 53);
@@ -122,24 +117,25 @@
 	box-shadow: 0 0 1px 1px rgb(30, 56, 75);
 }
 .rcl-public-form .attachments-post label span {
+	cursor: pointer;
     display: inline-flex;
     font-size: 12px;
 }
-#rcl-tags-list{
-    
+.rcl-public-form .attachments-post label span input {
+    margin: 0 5px 0 0;
 }
 #rcl-tags-list .rcl-tags-list{
 	overflow:hidden;
 	clear:both;
 }
+.public_block  td label,
 #rcl-tags-list .rcl-tags-list label {
-    background: rgba(219, 219, 219, 0.3);
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
-	font: 12px arial;
+    background: rgba(237, 237, 237, 0.5);
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     float: left;
-    margin: 4px;
-    padding: 7px 9px 6px 8px;
-	cursor: pointer;
+    font: 14px/1.6 sans-serif,Tahoma,arial;
+    margin: 2px 5px;
+    padding: 3px 7px;
 }
 #rcl-tags-list .rcl-tags-list label input {
     height: 13px;
@@ -150,15 +146,13 @@
     width: 13px;
 }
 #rcl-tags-list .ms-ctn {
-	background: #fff;
+    background: #fff;
     border: none;
-    box-shadow: 0 0 1px 1px #ccc;
+    box-shadow: 0 0 1px 1px #ddd;
     margin: 10px 0;
-	width: 94%;
+    width: 100%;
 }
-#rcl-tags-list .ms-ctn input:focus {
-	box-shadow: 0 0 1px 1px #ccc;
-}
+
 #rcl-tags-list .ms-sel-item {
     padding: 2px 3px 4px 7px;
 }
@@ -174,95 +168,141 @@
     font-size: 12px;
     top: unset;
 }
+#rcl-tags-list .ms-res-ctn .ms-res-item em {
+    padding: 1px 3px;
+}
 .rcl-form-field table tbody th,
 .rcl-form-field table tbody td {
-    border: 1px solid rgb(243, 243, 243);
-    padding: 5px;
+    border: 1px solid rgba(219, 219, 219, 0.5);
     text-align: left;
     vertical-align: middle;
 }
 .rcl-form-field table th {
-    width: 160px;
+	padding: 5px;
 	-webkit-hyphens: auto;
 	hyphens: auto;
+	width: 160px;
     word-wrap: break-word;
 }
-.public_block form .rcl-form-field select,
-.public_block form .rcl-form-field textarea,
-.public_block form .rcl-form-field input[type="date"],
-.public_block form .rcl-form-field input[type="text"] {
-	background: #fff;								/*++Twenty16++*/
-    box-sizing: border-box;
-	color: #000;
-	font: 14px/1.4 Tahoma,arial;
-    width: 99%;
-	border: none;
-    box-shadow: 0 0 1px 1px #ccc;
-	padding: 5px;
+.rcl-form-field table tbody td {
+	padding: 5px 5px 0;
 }
-.public_block input[type="time"],
-.public_block input[type="number"],
-.public_block input.datepicker[type="text"] {
-    color: #000;
-	border: none;
-    box-shadow: 0 0 1px 1px #ccc;
-	font: 14px/1.4 Tahoma,arial;
-	padding: 5px;
-	width: auto;
-}
-.public_block  td label {
-    background: rgba(219, 219, 219, 0.3);
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
-    cursor: pointer;
-    float: left;
-    font: normal 12px arial;
-    margin: 4px;
-    padding: 7px 9px 6px 8px;
-    display: inline-block;
-}
-.public_block .submit-public-form{
-	clear:both;
-	text-align:right;
-}
-.public_block input[type="button"] {
-    border-radius: 0;					/*++Twenty16++*/
-    font-size: 12px;					/*++hueman++*/
-    font-weight: normal;				/*++Twenty16++*/
-    letter-spacing: normal;				/*++Twenty16++*/
-    margin: 3px 0 3px 3px;
-    padding: 5px 10px;					/*++Twenty16++*/
-	text-transform: none;				/*++Twenty16++*/
-    width: auto;
-}
-.public_block #rcl-preview{
-    background-color: #fff;
-    box-shadow: 0 0 1px 2px #ccc;
-    margin: 0 0 0 -6px;
-    min-height: 100%;
-    padding: 3px;
-    width: 100%;
-	width: calc(100% + 6px);
-}
-.public_block form #rcl-preview {
-	top: 0;
-    left: 0;
-	z-index: 9;       
-	position:absolute;
-}
-.public_block #rcl-preview h2:first-child,
-.public_block #rcl-preview .rcl-notice-preview {
-    background: #fff5ce;
-    display: block;
-    padding: 6px;
-    text-align: center;
-}
-.public_block #rcl-preview .rcl-notice-preview p {							/*++hueman++*/
-	margin: 0;
-}
-.public_block #rcl-preview .rcl-notice-preview .rcl-preview-buttons{
-    text-align: right;
+.public_block form table .type-agree-input {
+    position: relative;
 }
 
+/* START собираю формы */
+/* START общие формы */
+.public_block form .rcl-form-field select,
+.public_block form .rcl-form-field textarea,
+.public_block form .rcl-form-field input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 0;
+	box-shadow: none;
+    box-sizing: border-box;
+	color: #000;
+	font: 14px/1.4 Tahoma,Verdana,sans-serif;
+	height: auto;
+	margin: 0 0 5px;
+	outline: none;
+	padding: 6px 8px;
+	text-transform: none;
+}
+.public_block form .rcl-form-field textarea:focus,
+.public_block form .rcl-form-field input:focus:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 1px 0 #ddd;
+    color: #000;
+    outline: none;
+}
+/* END общие формы */
+
+/* START корректировки к формам */
+.public_block form .rcl-form-field select:not(.postform),
+.public_block form .rcl-form-field textarea,
+.public_block form .rcl-form-field input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="time"]):not([type="number"]):not(.rcl-datepicker) {
+	max-width: none;
+	width: 100%
+}
+.public_block form .rcl-form-field input[type="time"],
+.public_block form .rcl-form-field input[type="number"],
+.public_block form .rcl-form-field input.rcl-datepicker[type="text"] {
+    max-width: 200px !important;		/* Author & some themes */
+	width: 100% !important;				/* Author & some themes */
+}
+.public_block form .rcl-form-field .dynamic-value input[type="text"] {
+    display: inline-block;
+    vertical-align: middle;
+}
+.public_block .quicktags-toolbar input[type="button"] {
+    padding: 0 8px 1px !important;		/* Author & some themes */
+    width: auto !important;				/* Author & some themes */
+}
+.public_block input[type="submit"].delete-post-submit,
+.public_block input[type="button"] {
+    border-radius: 0;
+    font-weight: normal;
+    letter-spacing: normal;
+    text-transform: none;
+    width: auto;
+}
+.public_block input[type="button"] {
+	font-size: 14px !important;			/* Author & some themes */
+    margin: 0 0 5px;
+    padding: 8px 10px;
+}
+.public_block input[type="submit"].delete-post-submit {
+    font-size: 12px;
+    margin: 10px 0 0;
+    padding: 5px 6px;
+}
+.public_block .rcl-form-field select.postform {
+	width: auto;
+}
+.public_block form .rcl-form-field input[type="file"] {
+	background: rgba(237, 237, 237, 0.5);
+	cursor: pointer;
+}
+/* END корректировки к формам */
+/* END собираю формы */
+
+.public_block .type-dynamic-input .dynamic-values .dynamic-value .fa {
+    box-sizing: initial;
+    font-size: 18px;
+	line-height: 1;
+    margin: 0 0 0 10px;
+    padding: 6px 8px;
+    vertical-align: baseline;
+}
+.ssi-modalOuter.rcl-preview-post .rcl-notice-preview {
+	background: rgba(229, 57, 53, 0.15);
+    display: block;
+    text-align: center;
+}
+.ssi-modalOuter.rcl-preview-post .rcl-notice-preview p {
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+}
+.ssi-modalOuter.rcl-preview-post a {
+    color: #38b7ee;
+}
+.public_block .mce-edit-area {
+    outline: 1px solid #ddd;
+}
+
+.public_block form .rcl-field-notice {
+    font-size: 12px;
+    margin: 0 0 3px;
+}
+.public_block .submit-public-form{
+	float: right;
+	margin: 0 5px;
+}
 #rcl-delete-post .delete-form-contayner {
 	background: rgba(236, 240, 241, 0.7);
 	box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
@@ -515,7 +555,7 @@ h3.pending-message{
 	float:right;
 }
 
-/* Навигация Start */
+/* Навигация Start вроде тоже устарело */
 .wprecallblock .publics_block .bx-viewport {
     box-sizing: unset;
     display: table;
@@ -542,18 +582,25 @@ h3.pending-message{
 .wp-switch-editor.switch-tmce {									/*++hueman++*/
     box-sizing: content-box;
 }
+.public_block .wp-core-ui.wp-editor-wrap {
+    background: rgba(237, 237, 237, 0.6);
+	border: 1px solid #ddd;
+    margin: 15px auto;
+    padding: 4px;
+}
+.public_block .button.insert-media.add_media {
+    border-radius: 2px;
+    box-shadow: 0 0 1px #ccc;
+}
 /* Корректировка виз редактора End */
 
 /* Форма удаления публикации Start */
-.delete-form-contayner{
-    
-}
 .delete-form-contayner textarea{   
     width:100%;
 }
 /* Форма удаления публикации End */
 
-/* add correcting popup jquery-UI start */
+/* add correcting popup jquery-UI start - вроде устарело */
 .ui-dialog.rcl-edit-post-form .ui-dialog-titlebar {
     background: none;
     border: none;
@@ -646,6 +693,15 @@ h3.pending-message{
 	.wprecallblock .publics-table-rcl span.rating-value {
 		display: inline;
 	}
+	.public_block form .rcl-form-field input[type="time"],
+	.public_block form .rcl-form-field input[type="number"],
+	.public_block form .rcl-form-field input.rcl-datepicker[type="text"] {
+		max-width: none !important;		/* Author & some themes */
+		width: 100% !important;			/* Author & some themes */
+	}
+	.rcl-public-form .attachments-post li {
+		width: 31%;
+	}
 }
 @media screen and (max-width:360px) {
 	#temp-files li {
@@ -666,6 +722,9 @@ h3.pending-message{
 	}
 	.wprecallblock .publics-table-rcl span.rating-value {
 		display: inline;
+	}
+	.public_block .rcl-form-field select.postform {
+		width: 100%;
 	}
 }
 @media screen and (max-width:320px) {

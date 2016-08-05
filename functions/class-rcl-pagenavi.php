@@ -184,10 +184,10 @@ class Rcl_PageNavi{
         foreach($attrs as $name=>$val){
             if(is_array($val)){
                foreach($val as $k=>$v){
-                $str[] = $name.'-'.$k.'='.$v; 
+                $str[] = $name.'-'.$k.'="'.$v.'"'; 
                }
             }else{
-                $str[] = $name.'='.$val;
+                $str[] = $name.'="'.$val.'"';
             }
         }
         return implode(' ',$str);
