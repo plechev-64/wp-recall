@@ -65,8 +65,9 @@ function rcl_init_chat(token){
         if (typeof rcl_chat_beat[token] != "undefined") return;
         
         rcl_chat_get_new_messages(token);
-
-        rcl_chat_uploader(token);
+        
+        if(Rcl.user_ID!=0)
+            rcl_chat_uploader(token);
         
     });
 }

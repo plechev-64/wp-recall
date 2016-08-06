@@ -1,6 +1,6 @@
 <?php
 
-add_action('wp_footer','rcl_recallbar_menu');
+add_action('wp_footer','rcl_recallbar_menu',10);
 function rcl_recallbar_menu(){
     rcl_include_template('recallbar.php');
 }
