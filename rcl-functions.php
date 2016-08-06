@@ -1052,3 +1052,11 @@ function rcl_template_support($support){
             break;
     }
 }
+
+function rcl_is_user_role($user_id,$role){
+    $user_data = get_userdata( $user_id );
+    $roles = $user_data->roles;
+    $current_role = array_shift($roles);
+    if($current_role==$role) return true;
+    return false;
+}

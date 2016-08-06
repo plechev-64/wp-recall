@@ -246,7 +246,7 @@ add_action('init','rcl_banned_user_redirect');
 function rcl_banned_user_redirect(){
     global $user_ID;
     if(!$user_ID) return false;
-    if(user_can($user_ID, 'banned')) 
+    if(rcl_is_user_role($user_ID, 'banned')) 
         wp_die(__('Congratulations! You have been banned.','wp-recall'));
 }
 
