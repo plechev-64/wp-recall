@@ -1003,3 +1003,23 @@ function rcl_is_user_role($user_id,$role){
     if($current_role==$role) return true;
     return false;
 }
+
+function rcl_check_jpeg($f, $fix=false ){
+# [070203]
+# check for jpeg file header and footer - also try to fix it
+    if ( false !== (@$fd = fopen($f, 'r+b' )) ){
+        if ( fread($fd,2)==chr(255).chr(216) ){
+            fseek ( $fd, -2, SEEK_END );
+            if ( fread($fd,2)==chr(255).chr(217) ){
+                fclose($fd);
+                return true;
+            }else{
+                if ( $fix && fwrite($fd,chr(255).chr(217)) ){return true;}
+                fclose($fd);
+                return false;
+            }
+        }else{fclose($fd); return false;}
+    }else{
+        return false;
+    }
+}

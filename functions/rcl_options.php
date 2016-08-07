@@ -84,13 +84,13 @@ class Rcl_Options {
 
     function option($typefield,$atts){
         global $rcl_options;
-        
-        $content = '';
-        
+
         $optiondata = apply_filters('rcl_option_data',array($typefield,$atts));
         
         $type = $optiondata[0];
         $args = $optiondata[1];
+        $value = '';
+        $content = '';
         
         if(isset($args['group'])){
             if(isset($args['type'])&&$args['type']=='local'){
