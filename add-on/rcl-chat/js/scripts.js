@@ -8,7 +8,7 @@ var rcl_chat_important = 0;
 jQuery(function($){
     
     jQuery.ionSound({
-        sounds: ['e-oh','water_droplet'],
+        sounds: ['e-oh'],
         path: Rcl.chat.sounds,
         multiPlay: false,
         volume: '0.5'
@@ -267,7 +267,7 @@ function rcl_get_mini_chat(e,user_id){
                 minichat_box.addClass('active-chat');
                 rcl_chat_contact_token = data['chat_token'];
                 rcl_set_active_mini_chat(e);
-                rcl_chat_scroll_bottom(token);
+                rcl_chat_scroll_bottom(rcl_chat_contact_token);
             }
 
         } 

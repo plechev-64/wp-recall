@@ -41,6 +41,17 @@ function rcl_chat_options($content){
                         'group'=>'chat',
                         'default'=>50
                     )),
+                    
+                    $opt->option('select',array(
+                        'label'=>__('Using OEMBED','wp-recall'),
+                        'name'=>'oembed',
+                        'group'=>'chat',
+                        'parent'=>true,
+                        'options'=>array(
+                            __('No','wp-recall'),
+                            __('Yes','wp-recall')),
+                        'notice'=>__('Option is responsible for the incorporation by reference of media content, such as from Youtube or Twitter','wp-recall'),
+                    )),
 
                     $opt->option('select',array(
                         'label'=>__('Attaching files','wp-recall'),

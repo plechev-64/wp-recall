@@ -130,7 +130,7 @@ class RCL_Install {
             'profile',
             'feed',
             'publicpost',
-            'message'
+            'rcl-chat'
         ));
         
         foreach( $def_addons as $addon ) {

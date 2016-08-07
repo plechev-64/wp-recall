@@ -624,37 +624,6 @@ if(!function_exists('sanitize_title_with_translit'))
     add_action('sanitize_title', 'rcl_sanitize_title_with_translit', 0);
 
 
-function rcl_get_postmeta($post_id){
-
-    $post = get_post($post_id);
-
-    switch($post->post_type){
-            case 'post':
-                $id_form = ($post)?  get_post_meta($post->ID,'publicform-id',1): 1;
-                $id_field = 'rcl_fields_post_'.$id_form;
-            break;
-            case 'products': $id_field = 'rcl_fields_products'; break;
-            default: $id_field = 'rcl_fields_'.$post->post_type;
-    }
-
-    $get_fields = get_option($id_field);
-
-    if(!$get_fields) return false;
-
-    $show_custom_field = '';
-
-    $cf = new Rcl_Custom_Fields();
-
-    foreach((array)$get_fields as $custom_field){
-        $slug = $custom_field['slug'];
-        $value = get_post_meta($post_id,$slug,1);
-        $show_custom_field .= $cf->get_field_value($custom_field,$value);
-    }
-
-    return $show_custom_field;
-
-}
-
 add_filter('author_link','rcl_author_link',999,2);
 function rcl_author_link($link, $author_id){
     global $rcl_options;
@@ -670,12 +639,21 @@ function rcl_format_in($array){
 
 function rcl_get_postmeta_array($post_id){
     global $wpdb;
+    
+    $cachekey = json_encode(array('rcl_get_postmeta_array',$post_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
     $mts = array();
     $metas = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."postmeta WHERE post_id='%d'",$post_id));
     if(!$metas) return false;
     foreach($metas as $meta){
         $mts[$meta->meta_key] = $meta->meta_value;
     }
+    
+     wp_cache_add( $cachekey, $mts );
+    
     return $mts;
 }
 
@@ -865,42 +843,27 @@ function rcl_multisort_array($array, $key, $type = SORT_ASC, $cmp_func = 'strcmp
 }
 
 function rcl_a_active($param1,$param2){
-	if($param1==$param2) return 'filter-active';
-}
-
-function rcl_get_usernames($objects,$name_data){
-	global $wpdb;
-
-	if(!$objects||!$name_data) return false;
-
-	foreach((array)$objects as $object){ $userslst[] = $object->$name_data; }
-
-	$display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($userslst).")",$userslst));
-
-	foreach((array)$display_names as $name){
-		$names[$name->ID] = $name->display_name;
-	}
-	return $names;
+    if($param1==$param2) return 'filter-active';
 }
 
 function rcl_get_useraction($user_action=false){
-	global $rcl_options,$rcl_userlk_action;
+    global $rcl_options,$rcl_userlk_action;
 
-        if(!$user_action) $user_action = $rcl_userlk_action;
+    if(!$user_action) $user_action = $rcl_userlk_action;
 
-	$timeout = (isset($rcl_options['timeout'])&&$rcl_options['timeout'])? $rcl_options['timeout']*60: 600;
+    $timeout = (isset($rcl_options['timeout'])&&$rcl_options['timeout'])? $rcl_options['timeout']*60: 600;
 
-	$unix_time_action = strtotime(current_time('mysql'));
-	$unix_time_user = strtotime($user_action);
+    $unix_time_action = strtotime(current_time('mysql'));
+    $unix_time_user = strtotime($user_action);
 
-	if(!$user_action)
-		return $last_go = __('long ago','wp-recall');
+    if(!$user_action)
+            return $last_go = __('long ago','wp-recall');
 
-	if($unix_time_action > $unix_time_user+$timeout){
-                return human_time_diff($unix_time_user,$unix_time_action );
-	} else {
-		return false;
-	}
+    if($unix_time_action > $unix_time_user+$timeout){
+            return human_time_diff($unix_time_user,$unix_time_action );
+    } else {
+            return false;
+    }
 }
 
 function rcl_human_time_diff($time_action){
@@ -910,40 +873,40 @@ function rcl_human_time_diff($time_action){
 }
 
 function rcl_update_timeaction_user(){
-	global $user_ID,$wpdb;
+    global $user_ID,$wpdb;
 
-        if(!$user_ID) return false;
+    if(!$user_ID) return false;
 
-	$rcl_current_action = rcl_get_time_user_action($user_ID);
+    $rcl_current_action = rcl_get_time_user_action($user_ID);
 
-	$last_action = rcl_get_useraction($rcl_current_action);
+    $last_action = rcl_get_useraction($rcl_current_action);
 
-	if($last_action){
+    if($last_action){
 
-            $time = current_time('mysql');
+        $time = current_time('mysql');
 
-            $res = $wpdb->update(
-                    RCL_PREF.'user_action',
-                    array( 'time_action' => $time ),
-                    array( 'user' => $user_ID )
-                );
+        $res = $wpdb->update(
+                RCL_PREF.'user_action',
+                array( 'time_action' => $time ),
+                array( 'user' => $user_ID )
+            );
 
-            if(!isset($res)||$res==0){
-                    $act_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(time_action) FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
-                    if($act_user==0){
-                            $wpdb->insert(
-                                    RCL_PREF.'user_action',
-                                    array( 'user' => $user_ID,
-                                    'time_action'=> $time )
-                            );
-                    }
-                    if($act_user>1){
-                            rcl_delete_user_action($user_ID);
-                    }
-            }
-	}
+        if(!isset($res)||$res==0){
+                $act_user = $wpdb->get_var($wpdb->prepare("SELECT COUNT(time_action) FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
+                if($act_user==0){
+                        $wpdb->insert(
+                                RCL_PREF.'user_action',
+                                array( 'user' => $user_ID,
+                                'time_action'=> $time )
+                        );
+                }
+                if($act_user>1){
+                        rcl_delete_user_action($user_ID);
+                }
+        }
+    }
 
-	do_action('rcl_update_timeaction_user');
+    do_action('rcl_update_timeaction_user');
 
 }
 
@@ -1017,26 +980,6 @@ function rcl_office_class(){
     $class[] = (isset($rcl_options['buttons_place'])&&$rcl_options['buttons_place']==1)? "vertical-menu":"horizontal-menu";
     
     echo 'class="'.implode(' ',$class).'"';
-}
-
-function rcl_check_jpeg($f, $fix=false ){
-# [070203]
-# check for jpeg file header and footer - also try to fix it
-    if ( false !== (@$fd = fopen($f, 'r+b' )) ){
-        if ( fread($fd,2)==chr(255).chr(216) ){
-            fseek ( $fd, -2, SEEK_END );
-            if ( fread($fd,2)==chr(255).chr(217) ){
-                fclose($fd);
-                return true;
-            }else{
-                if ( $fix && fwrite($fd,chr(255).chr(217)) ){return true;}
-                fclose($fd);
-                return false;
-            }
-        }else{fclose($fd); return false;}
-    }else{
-        return false;
-    }
 }
 
 function rcl_template_support($support){   

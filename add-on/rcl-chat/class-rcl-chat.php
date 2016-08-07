@@ -525,12 +525,15 @@ class Rcl_Chat {
     }
     
     function the_content($content){
+        global $rcl_options;
 
         $content = esc_textarea($content);
         
         $content = popuplinks(make_clickable($content));
         
-        if(function_exists('wp_oembed_get')){
+        $oembed = (isset($rcl_options['chat']['oembed']))? $rcl_options['chat']['oembed']: 0;
+        
+        if($oembed&&function_exists('wp_oembed_get')){
             $links='';
             preg_match_all('/href="([^"]+)"/', $content, $links);
             foreach( $links[1] as $link ){

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-08-05 20:44+0300\n"
+"POT-Creation-Date: 2016-08-07 18:06+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -1046,9 +1046,10 @@ msgstr "обязательное поле"
 #: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:224
 #: add-on/rating-system/addon-options.php:75
 #: add-on/rating-system/addon-options.php:131 add-on/rating-system/index.php:50
-#: add-on/rcl-chat/addon-options.php:51 rcl-admin/admin-pages.php:65
-#: rcl-admin/admin-pages.php:387 rcl-admin/admin-pages.php:493
-#: rcl-admin/admin-pages.php:498 rcl-admin/admin-pages.php:503
+#: add-on/rcl-chat/addon-options.php:51 add-on/rcl-chat/addon-options.php:62
+#: rcl-admin/admin-pages.php:65 rcl-admin/admin-pages.php:387
+#: rcl-admin/admin-pages.php:493 rcl-admin/admin-pages.php:498
+#: rcl-admin/admin-pages.php:503
 msgid "No"
 msgstr "Нет"
 
@@ -1060,9 +1061,10 @@ msgstr "Нет"
 #: add-on/publicpost/addon-options.php:264 add-on/publicpost/index.php:224
 #: add-on/rating-system/addon-options.php:75
 #: add-on/rating-system/addon-options.php:131 add-on/rating-system/index.php:51
-#: add-on/rcl-chat/addon-options.php:52 rcl-admin/admin-pages.php:66
-#: rcl-admin/admin-pages.php:387 rcl-admin/admin-pages.php:493
-#: rcl-admin/admin-pages.php:498 rcl-admin/admin-pages.php:503
+#: add-on/rcl-chat/addon-options.php:52 add-on/rcl-chat/addon-options.php:63
+#: rcl-admin/admin-pages.php:66 rcl-admin/admin-pages.php:387
+#: rcl-admin/admin-pages.php:493 rcl-admin/admin-pages.php:498
+#: rcl-admin/admin-pages.php:503
 msgid "Yes"
 msgstr "Да"
 
@@ -2792,7 +2794,7 @@ msgstr "Влияние рейтинга %s на общий рейтинг пол
 msgid "Template output stories in the overall ranking"
 msgstr "Шаблон вывода истории в общем рейтинге пользователя"
 
-#: add-on/rating-system/addon-options.php:84 add-on/rating-system/core.php:415
+#: add-on/rating-system/addon-options.php:84 add-on/rating-system/core.php:430
 msgid "voted"
 msgstr "голосовал"
 
@@ -2828,15 +2830,15 @@ msgstr "Удаление своего голоса"
 msgid "Correction"
 msgstr "Корректировка"
 
-#: add-on/rating-system/core.php:441
+#: add-on/rating-system/core.php:456
 msgid "comment"
 msgstr "комментарий"
 
-#: add-on/rating-system/core.php:454
+#: add-on/rating-system/core.php:469
 msgid "Rating changes not made"
 msgstr "Изменение рейтинга не производилось"
 
-#: add-on/rating-system/core.php:772
+#: add-on/rating-system/core.php:787
 msgid "Data not found"
 msgstr "Данные не найдены"
 
@@ -2947,30 +2949,42 @@ msgid "Posts per page"
 msgstr "Сообщений на странице"
 
 #: add-on/rcl-chat/addon-options.php:46
+msgid "Using OEMBED"
+msgstr "Использование OEMBED"
+
+#: add-on/rcl-chat/addon-options.php:53
+msgid ""
+"Option is responsible for the incorporation by reference of media content, "
+"such as from Youtube or Twitter"
+msgstr ""
+"Опция отвечает за встраивание медиаконтента по ссылке, например от Youtube "
+"или Twitter"
+
+#: add-on/rcl-chat/addon-options.php:57
 msgid "Attaching files"
 msgstr "Прикрепление файлов"
 
-#: add-on/rcl-chat/addon-options.php:61
+#: add-on/rcl-chat/addon-options.php:72
 msgid "Allowed file types"
 msgstr "Разрешенные типы файлов"
 
-#: add-on/rcl-chat/addon-options.php:65
+#: add-on/rcl-chat/addon-options.php:76
 msgid "By default: jpeg, jpg, png, zip, mp3"
 msgstr "По-умолчанию: jpeg, jpg, png, zip, mp3"
 
-#: add-on/rcl-chat/addon-options.php:68
+#: add-on/rcl-chat/addon-options.php:79
 msgid "The maximum file size"
 msgstr "Максимальный размер файлов"
 
-#: add-on/rcl-chat/addon-options.php:80
+#: add-on/rcl-chat/addon-options.php:91
 msgid "Personal chat"
 msgstr "Личный чат"
 
-#: add-on/rcl-chat/addon-options.php:83
+#: add-on/rcl-chat/addon-options.php:94
 msgid "The number of messages in the conversation"
 msgstr "Количество сообщений в переписке"
 
-#: add-on/rcl-chat/addon-options.php:87
+#: add-on/rcl-chat/addon-options.php:98
 msgid ""
 "The maximum number of messages in the conversation between two users. "
 "Default: 100"
@@ -4299,16 +4313,16 @@ msgstr ""
 msgid "Error! Perhaps this addition does not support ajax loading"
 msgstr "Ошибка! Данное дополнениене поддерживает ajax-загрузку"
 
-#: rcl-functions.php:855
+#: rcl-functions.php:833
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Это сообщение было сформировано автоматически, не надо отвечать на него."
 
-#: rcl-functions.php:897
+#: rcl-functions.php:860
 msgid "long ago"
 msgstr "давно"
 
-#: rcl-functions.php:994
+#: rcl-functions.php:957
 msgid "Signature verification failed"
 msgstr "Проверка подписи не пройдена"
 

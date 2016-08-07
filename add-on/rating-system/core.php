@@ -399,6 +399,21 @@ function rcl_get_votes_window($args,$votes,$navi=false){
     return $window;
 }
 
+function rcl_get_usernames($objects,$name_data){
+    global $wpdb;
+
+    if(!$objects||!$name_data) return false;
+
+    foreach((array)$objects as $object){ $userslst[] = $object->$name_data; }
+
+    $display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($userslst).")",$userslst));
+
+    foreach((array)$display_names as $name){
+            $names[$name->ID] = $name->display_name;
+    }
+    return $names;
+}
+
 function rcl_get_list_votes($args,$votes){
     global $rcl_rating_types,$rcl_options;
 

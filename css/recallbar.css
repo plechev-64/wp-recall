@@ -259,6 +259,22 @@
 		margin: 0 5px;
 	}
 }
+@media screen and (max-width:375px) {
+	#recallbar .fa {
+		font-size: 27px;
+	}
+	#recallbar .rcb_icon {
+		margin: 0 2px;
+	}
+	#recallbar .rcb_left {
+		margin: 0 0 0 4px;
+	}
+	#recallbar .rcb_nmbr {
+		height: 20px;
+		line-height: 20px;
+		width: 20px;
+	}
+}
 @media screen and (max-width:350px) {
 	#recallbar .rcb_right {
 		margin: 0;

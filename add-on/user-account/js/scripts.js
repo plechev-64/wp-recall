@@ -1,6 +1,6 @@
 jQuery(function($){   
     /* Пополняем личный счет пользователя */
-    jQuery('.rcl-form-add-user-count').on('click','.rcl-get-form-pay',function(){
+    jQuery('body').on('click','.rcl-form-add-user-count .rcl-get-form-pay',function(){
         var id = jQuery(this).parents('.rcl-form-add-user-count').attr('id');
         rcl_preloader_show('#'+id+' .rcl-form-input');
         var dataform   = jQuery('#'+id+' form').serialize();
@@ -24,7 +24,7 @@ jQuery(function($){
         return false;
     });
 
-    jQuery('.rcl-widget-balance').on('click','.rcl-toggle-form-link',function(){
+    jQuery('body').on('click','.rcl-widget-balance .rcl-toggle-form-link',function(){
         var id = jQuery(this).parents('.rcl-widget-balance').attr('id');
         jQuery('#'+id+' .rcl-form-balance').slideToggle(200);
         return false;
