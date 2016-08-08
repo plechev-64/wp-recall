@@ -240,7 +240,7 @@ function rcl_get_user_contacts_list($user_id){
 
 add_action('wp_footer','rcl_get_last_chats_box');
 function rcl_get_last_chats_box(){
-    global $user_ID;
+    global $user_ID,$user_LK;
     
     $messages = rcl_get_user_contacts($user_ID,array(0,5));
     
@@ -262,6 +262,9 @@ function rcl_get_last_chats_box(){
                     . '<a href="'.rcl_format_url(get_author_posts_url($user_ID),'chat').'"><i class="fa fa-envelope" aria-hidden="true"></i></a>'
                 . '</span>';
         foreach($users as $user_id=>$data){
+            
+            if($user_id==$user_LK) continue;
+            
             echo '<span class="rcl-chat-user contact-box" data-contact="'.$user_id.'">';
             echo '<a href="#" title="'.__('Delete contact','wp-recall').'" onclick="rcl_chat_remove_contact(this,'.$data['chat_id'].');return false;"><i class="fa fa-times" aria-hidden="true"></i></a>';
             echo '<a href="#" onclick="rcl_get_mini_chat(this,'.$user_id.'); return false;">';

@@ -790,6 +790,9 @@ function rcl_form_field($args){
 }
 
 function rcl_get_smiles($id_area){
+    global $wpsmiliestrans;
+    
+    if(!$wpsmiliestrans) return false;
 
     $smiles = '<div class="rcl-smiles" data-area="'.$id_area.'">';
         $smiles .= '<i class="fa fa-smile-o" aria-hidden="true"></i>';
@@ -802,7 +805,7 @@ function rcl_get_smiles($id_area){
 }
 
 function rcl_get_smiles_ajax(){
-    global $wpsmiliestrans,$rcl_smilies;
+    global $wpsmiliestrans;
 
     rcl_verify_ajax_nonce();
 
