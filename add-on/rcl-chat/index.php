@@ -238,7 +238,7 @@ function rcl_get_user_contacts_list($user_id){
     return $content;
 }
 
-add_action('wp_footer','rcl_get_last_chats_box');
+add_action('wp_footer','rcl_get_last_chats_box',10);
 function rcl_get_last_chats_box(){
     global $user_ID,$user_LK;
     

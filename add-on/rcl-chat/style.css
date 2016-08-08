@@ -133,11 +133,15 @@ body audio {
     overflow: hidden;
     position: relative;
 }
-.rcl-chat .rcl-chat-uploader input{
+.rcl-chat .rcl-chat-uploader input {
+    bottom: 0;
+    cursor: pointer;
+    height: 26px;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
     position: absolute;
     right: 0;
-    opacity: 0;
-    cursor:pointer;
 }
 .rcl-chat .chat-form textarea{
     background: #f6f6f6;
