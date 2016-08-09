@@ -4,7 +4,7 @@
 .rcl-chat.chat-general {
     background: #fbfbfb;
     box-shadow: 0 0 1px 1px #ccc;
-    box-sizing: padding-box;
+    box-sizing: border-box;
     margin: 1px;
     overflow: hidden;
     width: 100%;
@@ -197,6 +197,11 @@ body audio {
     right: 5px;
     z-index: 101;
 }
+
+#rcl-chat-noread-box a{
+   vertical-align: bottom; 
+}
+
 #rcl-chat-noread-box .rcl-noread-users {
     box-sizing: border-box;
     float: right;
@@ -221,7 +226,7 @@ body audio {
 }
 #rcl-chat-noread-box .rcl-chat-user{
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 5px;
     position: relative;
     width: 40px;
 }
@@ -278,6 +283,7 @@ body audio {
 }
 .rcl-mini-chat .rcl-chat .chat-messages .chat-message .user-avatar img {
     width:30px;
+    height:auto;
 }
 .rcl-mini-chat .rcl-chat .chat-messages .chat-message .message-box .message-text{
     font-size: 12px;

@@ -298,3 +298,4 @@ function rcl_chat_shortcode($atts){
 
 include_once 'actions.php';
 include_once 'actions_cron.php';
+include_once 'actions_ajax.php';

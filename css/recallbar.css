@@ -232,13 +232,24 @@
 /* Правая часть END */
 @media screen and (max-width:768px) {
 	#recallbar .rcb_right {
-		margin: 0 10px 0 0;
+		margin: 0 5px 0 0;
 	}
 	#recallbar .rcb_left {
 		margin: 0 0 0 10px;
 	}
 	#recallbar .rcb_menu {
 		left: 15px;
+	}
+	.rcb_right_menu > a {
+		pointer-events: none;
+	}
+}
+@media screen and (max-width:600px) {
+	#recallbar .rcb_right_menu {
+		margin: 0 5px 0 0;
+	}
+	#recallbar .rcb_icon {
+		margin: 0 4px;
 	}
 }
 @media screen and (max-width:480px) {
@@ -247,7 +258,7 @@
 		width: 26px;
 	}
 	#recallbar .rcb_right_menu {
-		margin: 0 5px 0 10px;
+		margin: 0;
 	}
 	#recallbar .rcb_left_menu {
 		padding: 0;
@@ -255,34 +266,34 @@
 	#recallbar .rcb_menu {
 		left: 0;
 	}
-	#recallbar .rcb_icon {
-		margin: 0 5px;
-	}
-}
-@media screen and (max-width:375px) {
-	#recallbar .fa {
-		font-size: 27px;
-	}
-	#recallbar .rcb_icon {
-		margin: 0 2px;
-	}
 	#recallbar .rcb_left {
 		margin: 0 0 0 4px;
 	}
+	#recallbar .fa {
+		font-size: 27px;
+	}
 	#recallbar .rcb_nmbr {
-		height: 20px;
-		line-height: 20px;
-		width: 20px;
+		height: 17px;
+		line-height: 17px;
+		width: 17px;
 	}
 }
-@media screen and (max-width:350px) {
+@media screen and (max-width:375px) {
+	#recallbar .rcb_icon {
+		margin: 0 2px;
+	}
+	#recallbar .rcb_nmbr {
+		margin: 0 0 0 -10px;
+	}
+}
+@media screen and (max-width:360px) {
+	#recallbar .rcb_left,
 	#recallbar .rcb_right {
 		margin: 0;
 	}
-	#recallbar .rcb_left {
-		margin: 0 0 0 5px;
-	}
-	#recallbar .rcb_right_menu {
-		margin: 0 5px 0 0;
+}
+@media screen and (max-width:360px) {
+	#recallbar .rcb_icon {
+		margin: 0;
 	}
 }

@@ -4,3 +4,4 @@ Support Core: 15.0.0;
 Description: Приватные сообщения wp-recall и общий чат;
 Author: Плечев Андрей;
 Author URI: http://codeseller.ru/;
+Add-on URI: https://codeseller.ru/products/rcl-chat/;

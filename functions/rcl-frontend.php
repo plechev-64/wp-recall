@@ -123,7 +123,8 @@ function init_user_lk(){
             }
         }
     }else{
-	$user_LK = $userLK;
+        $user = get_user_by('id', $userLK);
+	$user_LK = ($user)? $userLK: 0;
     }
 
     if($user_LK){

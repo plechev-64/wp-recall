@@ -29,6 +29,108 @@ function rcl_get_chat_by_room($chat_room){
     return $wpdb->get_row("SELECT * FROM ".RCL_PREF."chats WHERE chat_room = '$chat_room'");
 }
 
+function rcl_delete_chat($chat_id){
+    global $wpdb;
+    
+    $result = $wpdb->query("DELETE FROM ".RCL_PREF."chats WHERE chat_id='$chat_id'");
+    
+    do_action('rcl_delete_chat',$chat_id);
+    
+    return $result;
+}
+
+add_action('rcl_delete_chat','rcl_chat_remove_users',10);
+function rcl_chat_remove_users($chat_id){
+    global $wpdb;
+    
+    $result = $wpdb->query("DELETE FROM ".RCL_PREF."chat_users WHERE chat_id='$chat_id'");
+    
+    do_action('rcl_chat_remove_users',$chat_id);
+    
+    return $result;
+}
+
+add_action('rcl_chat_remove_users','rcl_chat_remove_messages',10);
+add_action('rcl_chat_delete_user','rcl_chat_remove_messages',10,2);
+function rcl_chat_remove_messages($chat_id,$user_id = false){
+    global $wpdb;
+    
+    //получаем все сообщения в этом чате
+    $messages = rcl_chat_get_messages($chat_id,$user_id);
+
+    if($messages){
+        foreach($messages as $message){
+            //удаляем сообщение с метаданными
+            rcl_chat_delete_message($message->message_id);
+        }
+    }
+    
+    do_action('rcl_chat_remove_messages',$chat_id,$user_id);
+    
+    return $result;
+}
+
+function rcl_chat_delete_user($chat_id,$user_id){
+    global $wpdb;
+    
+    $result = $wpdb->query("DELETE FROM ".RCL_PREF."chat_users WHERE chat_id='$chat_id' AND user_id='$user_id'");
+    
+    do_action('rcl_chat_delete_user',$chat_id,$user_id);
+    
+    return $result;
+}
+
+function rcl_get_chats($args){
+    global $wpdb;
+    
+    $user_id = (isset($args['user_id']))? $args['user_id']: 0;
+    
+    if(!$user_id) return false;
+    
+    $query = array(
+        'join'=>array(),
+        'select'=>array(),
+        'where'=>array(),
+        'order'=>'',
+        'orderby'=>'',
+        'groupby'=>''
+    );
+    
+    $chat_status = (isset($args['chat_status']))? $args['chat_status']: '';
+    
+    $sql = "SELECT chats.* FROM ".RCL_PREF."chats AS chats ";
+    
+    if($chat_status){
+        $query['where'][] = "chats.chat_status='$chat_status'";
+    }
+    
+    if($user_id){
+        $query['join'][] = "INNER JOIN ".RCL_PREF."chat_messages AS chat_messages ON chats.chat_id=chat_messages.chat_id";
+        $query['where'][] = "(chat_messages.user_id='$user_id' OR chat_messages.private_key='$user_id')";
+    }
+    
+    if($chat_status=='private'){
+        $query['where'][] = "chat_messages.private_key!='0'";
+    }
+    
+    if($query['join']){
+        $sql .= " ".implode(" ",$query['join'])." ";
+    }
+    
+    if($query['where']){
+        $sql .= " WHERE ";
+        $sql .= implode(" AND ",$query['where']);
+    }
+    
+    if($query['groupby']){
+        $sql .= " GROUP BY ".$query['group']." ";
+    }
+    
+    $chats = $wpdb->get_results($sql);
+    
+    return $chats;
+}
+
 function rcl_chat_get_user_status($chat_id,$user_id){
     global $wpdb;
     return $wpdb->get_var("SELECT user_status FROM ".RCL_PREF."chat_users WHERE chat_id = '$chat_id' AND user_id='$user_id'");
@@ -60,6 +162,24 @@ function rcl_chat_delete_message($message_id){
     do_action('rcl_chat_delete_message',$message_id);
     
     return $result;
+}
+
+function rcl_chat_get_messages($chat_id,$user_id = false){
+    global $wpdb;
+    
+    $sql = "SELECT * FROM ".RCL_PREF."chat_messages ";
+    
+    $where = array("chat_id = '$chat_id'");
+    
+    if($user_id) 
+        $where[] = "user_id = '$user_id'";
+    
+    if($where){
+        $sql .= "WHERE ";
+        $sql .= implode(" AND ",$where);
+    }
+
+    return $wpdb->get_results($sql);
 }
 
 function rcl_chat_get_message_meta($message_id,$meta_key){
