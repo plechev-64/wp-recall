@@ -68,3 +68,13 @@ $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
 ) $collate;";
 
 dbDelta( $sql );
+
+global $rcl_options;
+
+if(!isset($rcl_options['chat']['contact_panel'])) 
+    $rcl_options['chat']['contact_panel'] = 1;
+
+if(!isset($rcl_options['chat']['place_contact_panel'])) 
+    $rcl_options['chat']['place_contact_panel'] = 0;
+
+update_option('rcl_global_options',$rcl_options);

@@ -9,15 +9,42 @@ else:
 endif;
 
 function rcl_chat_scripts(){
-    global $user_ID;
+    global $user_ID,$rcl_options;
 
     rcl_enqueue_style('rcl-chat',rcl_addon_url('style.css', __FILE__));
     rcl_enqueue_script( 'rcl-chat-sounds', rcl_addon_url('js/ion.sound.min.js', __FILE__) );
     rcl_enqueue_script( 'rcl-chat', rcl_addon_url('js/scripts.js', __FILE__) ); 
-        
-    if($user_ID)    
-        rcl_fileupload_scripts();
 
+    $file_upload = (isset($rcl_options['chat']['file_upload']))? $rcl_options['chat']['file_upload']: 0;
+    
+    if($user_ID&&$file_upload){
+        
+        $contact_panel = (isset($rcl_options['chat']['contact_panel']))? $rcl_options['chat']['contact_panel']: 0;
+        
+        if($contact_panel||rcl_is_office()){
+            rcl_fileupload_scripts();
+        }
+    }
+
+}
+
+add_action('rcl_bar_setup','rcl_bar_add_chat_icon',10);
+function rcl_bar_add_chat_icon(){
+    global $user_ID,$rcl_options;
+    
+    if(!is_user_logged_in()) return false;
+    
+    //если выводится панель контактов
+    if(isset($rcl_options['chat']['contact_panel'])&&$rcl_options['chat']['contact_panel']) return false;
+    
+    rcl_bar_add_icon('rcl-messages',
+        array(
+            'icon'=>'fa-envelope',
+            'url'=>rcl_format_url(get_author_posts_url($user_ID),'chat'),
+            'label'=>__('Messages','wp-recall'),
+            'counter'=>rcl_chat_noread_messages_amount($user_ID)
+        )
+    );
 }
 
 add_filter('rcl_init_js_variables','rcl_init_js_chat_variables',10);
@@ -50,6 +77,9 @@ function rcl_chat_add_inline_styles($styles,$rgb){
         . '{background:rgba('.$rs.','.$gs.','.$bs.',0.85);}'
         . '#rcl-chat-noread-box .rcl-noread-users a.active-chat::before'
         . '{border-color: transparent rgba('.$rs.','.$gs.','.$bs.',0.85) transparent transparent;}'
+        . '#rcl-chat-noread-box.left-panel .rcl-noread-users a.active-chat::before {
+            border-color: transparent transparent transparent rgba('.$rs.','.$gs.','.$bs.',0.85);
+        }'
         . '.rcl-chat .message-box::before 
             {border-color: transparent rgba('.$r.','.$g.','.$b.',0.15) transparent transparent;}'
         . '.rcl-chat .message-box {
@@ -224,8 +254,10 @@ function rcl_get_user_contacts_list($user_id){
 
 add_action('wp_footer','rcl_get_last_chats_box',10);
 function rcl_get_last_chats_box(){
-    global $user_ID,$user_LK;
+    global $user_ID,$user_LK,$rcl_options;
     
+    if(!isset($rcl_options['chat']['contact_panel'])||!$rcl_options['chat']['contact_panel']) return false;
+
     $messages = rcl_get_user_contacts($user_ID,array(0,5));
     
     if(!$messages) return false;
@@ -236,9 +268,11 @@ function rcl_get_last_chats_box(){
         $users[$user_id]['chat_id'] = $message['chat_id'];
     }
     
-    $new_counter = rcl_chat_noread_messages_amount($user_ID);
+    $class = (!isset($rcl_options['chat']['place_contact_panel'])||!$rcl_options['chat']['place_contact_panel'])? 'right-panel': 'left-panel';
     
-    echo '<div id="rcl-chat-noread-box">';
+    $new_counter = rcl_chat_noread_messages_amount($user_ID);
+
+    echo '<div id="rcl-chat-noread-box" class="'.$class.'">';
     
         echo '<div class="rcl-mini-chat"></div>';
 
@@ -283,6 +317,13 @@ add_action('init', 'rcl_chat_disable_oembeds', 9999);
 
 add_shortcode('rcl-chat','rcl_chat_shortcode');
 function rcl_chat_shortcode($atts){
+    global $user_ID;
+    
+    $file_upload = (isset($atts['file_upload']))? $atts['file_upload']: 0;
+    
+    if($user_ID&&$file_upload)
+        rcl_fileupload_scripts();
+    
     require_once 'class-rcl-chat.php';
     $chat = new Rcl_Chat($atts);
     return $chat->get_chat();

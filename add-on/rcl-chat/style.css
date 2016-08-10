@@ -207,6 +207,7 @@ body audio {
     float: right;
     padding: 1px;
     width: 50px;
+    position: relative;
 }
 #rcl-chat-noread-box .messages-icon{
     display: block;
@@ -313,6 +314,22 @@ body audio {
     line-height: normal;
     margin: 0 13px 0 5px;
     vertical-align: middle;
+}
+
+#rcl-chat-noread-box.left-panel{
+    right: initial;
+    left: 5px;
+}
+#rcl-chat-noread-box.left-panel .rcl-mini-chat{
+    float:right;
+}
+#rcl-chat-noread-box.left-panel .rcl-noread-users a.active-chat::before {
+    border-width: 12px 0px 12px 12px;
+    right:initial;
+    left: 45px;
+}
+#rcl-chat-noread-box.left-panel .rcl-mini-chat .rcl-chat-panel{
+    text-align:right;
 }
 .rcl-chat .rcl-pager {
     box-shadow: none;

@@ -57,7 +57,7 @@ function rcl_set_active_mini_chat(e){
     jQuery(e).addClass('active-chat').children('i').remove();
 }
 
-function rcl_init_chat(token){
+function rcl_init_chat(token,file_upload){
     jQuery(function($){
         
         rcl_chat_scroll_bottom(token);
@@ -66,7 +66,7 @@ function rcl_init_chat(token){
         
         rcl_chat_get_new_messages(token);
         
-        if(Rcl.user_ID!=0)
+        if(file_upload)
             rcl_chat_uploader(token);
         
     });
