@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-08-07 18:06+0300\n"
+"POT-Creation-Date: 2016-08-10 17:22+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -1047,9 +1047,9 @@ msgstr "обязательное поле"
 #: add-on/rating-system/addon-options.php:75
 #: add-on/rating-system/addon-options.php:131 add-on/rating-system/index.php:50
 #: add-on/rcl-chat/addon-options.php:51 add-on/rcl-chat/addon-options.php:62
-#: rcl-admin/admin-pages.php:65 rcl-admin/admin-pages.php:387
-#: rcl-admin/admin-pages.php:493 rcl-admin/admin-pages.php:498
-#: rcl-admin/admin-pages.php:503
+#: add-on/rcl-chat/addon-options.php:106 rcl-admin/admin-pages.php:65
+#: rcl-admin/admin-pages.php:387 rcl-admin/admin-pages.php:493
+#: rcl-admin/admin-pages.php:498 rcl-admin/admin-pages.php:503
 msgid "No"
 msgstr "Нет"
 
@@ -1062,9 +1062,9 @@ msgstr "Нет"
 #: add-on/rating-system/addon-options.php:75
 #: add-on/rating-system/addon-options.php:131 add-on/rating-system/index.php:51
 #: add-on/rcl-chat/addon-options.php:52 add-on/rcl-chat/addon-options.php:63
-#: rcl-admin/admin-pages.php:66 rcl-admin/admin-pages.php:387
-#: rcl-admin/admin-pages.php:493 rcl-admin/admin-pages.php:498
-#: rcl-admin/admin-pages.php:503
+#: add-on/rcl-chat/addon-options.php:107 rcl-admin/admin-pages.php:66
+#: rcl-admin/admin-pages.php:387 rcl-admin/admin-pages.php:493
+#: rcl-admin/admin-pages.php:498 rcl-admin/admin-pages.php:503
 msgid "Yes"
 msgstr "Да"
 
@@ -2880,11 +2880,11 @@ msgstr "Вы не можете голосовать!"
 msgid "Go to comment"
 msgstr "Перейти к комментарию"
 
-#: add-on/rcl-chat/actions.php:279 add-on/rcl-chat/class-rcl-chat.php:199
+#: add-on/rcl-chat/actions.php:83 add-on/rcl-chat/class-rcl-chat.php:199
 msgid "You have been blocked on chat"
 msgstr "Вы были заблокированы в чате"
 
-#: add-on/rcl-chat/actions.php:365
+#: add-on/rcl-chat/actions_ajax.php:262
 msgid "Forbidden file extension. Allowed:"
 msgstr "Запрещенное расширение файла. Разрешено:"
 
@@ -2992,6 +2992,22 @@ msgstr ""
 "Максимальное количество сообщений в переписке между двумя пользователями. По-"
 "умолчанию: 100"
 
+#: add-on/rcl-chat/addon-options.php:101
+msgid "The contacts bar"
+msgstr "Панель контактов"
+
+#: add-on/rcl-chat/addon-options.php:116
+msgid "The place of a conclusion"
+msgstr "Место вывода"
+
+#: add-on/rcl-chat/addon-options.php:121
+msgid "Right"
+msgstr "Справа"
+
+#: add-on/rcl-chat/addon-options.php:122 rcl-admin/admin-pages.php:209
+msgid "Left"
+msgstr "Слева"
+
 #: add-on/rcl-chat/class-rcl-chat.php:127
 msgid "Guest"
 msgstr "Гость"
@@ -3024,31 +3040,31 @@ msgstr "Здесь будет отображаться история переп
 msgid "Messages"
 msgstr "Сообщения"
 
-#: add-on/rcl-chat/index.php:91
+#: add-on/rcl-chat/index.php:105
 msgid "Chat"
 msgstr "Чат"
 
-#: add-on/rcl-chat/index.php:105
+#: add-on/rcl-chat/index.php:119
 msgid "Sign in to be in correspondence with the user"
 msgstr "Авторизуйтесь, чтобы написать пользователю сообщение"
 
-#: add-on/rcl-chat/index.php:146
+#: add-on/rcl-chat/index.php:160
 msgid "The user contacts"
 msgstr "Контакты пользователя"
 
-#: add-on/rcl-chat/index.php:192
+#: add-on/rcl-chat/index.php:206
 msgid "While there is no contact. Start a chat with another user on his page"
 msgstr "Пока контактов нет. Начните переписку на странице другого пользователя"
 
-#: add-on/rcl-chat/index.php:207
+#: add-on/rcl-chat/index.php:221
 msgid "Total contacts"
 msgstr "Всего контактов"
 
-#: add-on/rcl-chat/index.php:214 add-on/rcl-chat/index.php:266
+#: add-on/rcl-chat/index.php:228 add-on/rcl-chat/index.php:295
 msgid "Delete contact"
 msgstr "Удалить контакт"
 
-#: add-on/rcl-chat/index.php:224 templates/add-on-card.php:41
+#: add-on/rcl-chat/index.php:238 templates/add-on-card.php:41
 msgid "ago"
 msgstr "назад"
 
@@ -3507,7 +3523,7 @@ msgstr "Выход"
 msgid "Entry"
 msgstr "Вход"
 
-#: functions/rcl-frontend.php:8 functions/rcl-frontend.php:213
+#: functions/rcl-frontend.php:8 functions/rcl-frontend.php:214
 #: functions/shortcodes.php:145
 msgid "not online"
 msgstr "не в сети"
@@ -3516,31 +3532,31 @@ msgstr "не в сети"
 msgid "online"
 msgstr "в сети"
 
-#: functions/rcl-frontend.php:163
+#: functions/rcl-frontend.php:164
 msgid "The site works using the functionality of the plugin"
 msgstr "Сайт использует функционал плагина"
 
-#: functions/rcl-frontend.php:171
+#: functions/rcl-frontend.php:172
 msgid "Author of publication"
 msgstr "Автор публикации"
 
-#: functions/rcl-frontend.php:250
+#: functions/rcl-frontend.php:251
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: functions/rcl-frontend.php:257
+#: functions/rcl-frontend.php:258
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
-#: functions/rcl-frontend.php:314 functions/rcl-frontend.php:340
+#: functions/rcl-frontend.php:315 functions/rcl-frontend.php:341
 msgid "Unblock"
 msgstr "Разблокировать"
 
-#: functions/rcl-frontend.php:314 functions/rcl-frontend.php:340
+#: functions/rcl-frontend.php:315 functions/rcl-frontend.php:341
 msgid "In the black list"
 msgstr "В черный список"
 
-#: functions/rcl-frontend.php:359
+#: functions/rcl-frontend.php:360
 msgid "The user has restricted access to their page"
 msgstr "Пользователь ограничил доступ к своей странице"
 
@@ -4017,10 +4033,6 @@ msgstr "Размещение кнопок вывода вкладок"
 msgid "Top"
 msgstr "Сверху"
 
-#: rcl-admin/admin-pages.php:209
-msgid "Left"
-msgstr "Слева"
-
 #: rcl-admin/admin-pages.php:214
 msgid "Pause Slider"
 msgstr "Пауза слайдера"
@@ -4313,16 +4325,16 @@ msgstr ""
 msgid "Error! Perhaps this addition does not support ajax loading"
 msgstr "Ошибка! Данное дополнениене поддерживает ajax-загрузку"
 
-#: rcl-functions.php:833
+#: rcl-functions.php:836
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Это сообщение было сформировано автоматически, не надо отвечать на него."
 
-#: rcl-functions.php:860
+#: rcl-functions.php:863
 msgid "long ago"
 msgstr "давно"
 
-#: rcl-functions.php:957
+#: rcl-functions.php:960
 msgid "Signature verification failed"
 msgstr "Проверка подписи не пройдена"
 

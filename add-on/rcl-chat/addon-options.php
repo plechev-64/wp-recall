@@ -98,7 +98,7 @@ function rcl_chat_options($content){
                         'notice'=>__('The maximum number of messages in the conversation between two users. Default: 100','wp-recall')
                     )),
                     $opt->option('select',array(
-                        'label'=>__('Панель контактов','wp-recall'),
+                        'label'=>__('The contacts bar','wp-recall'),
                         'name'=>'contact_panel',
                         'group'=>'chat',
                         'parent'=>true,
@@ -113,13 +113,13 @@ function rcl_chat_options($content){
                         ),
                         array(
                             $opt->option('select',array(
-                                'label'=>__('Место вывода','wp-recall'),
+                                'label'=>__('The place of a conclusion','wp-recall'),
                                 'name'=>'place_contact_panel',
                                 'group'=>'chat',
                                 'parent'=>true,
                                 'options'=>array(
-                                    __('Справа','wp-recall'),
-                                    __('Слева','wp-recall'))
+                                    __('Right','wp-recall'),
+                                    __('Left','wp-recall'))
                             ))
                         )
                     )
