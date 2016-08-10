@@ -215,6 +215,16 @@ body audio {
     margin: 0 0 5px;
     text-align: center;
 }
+#rcl-chat-noread-box .messages-icon .chat-new-messages{
+    font-size: 12px;
+    position: absolute;
+    line-height: 18px;
+    width: 18px;
+    border-radius: 999px;
+    right: 16px;
+    top: 8px;
+    color: #fff;
+}
 #rcl-chat-noread-box .messages-icon .fa {
     color: #fff;
 }

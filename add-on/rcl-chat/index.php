@@ -31,22 +31,6 @@ function rcl_init_js_chat_variables($data){
     return $data;
 }
 
-add_action('rcl_bar_setup','rcl_bar_add_chat_icon',10);
-function rcl_bar_add_chat_icon(){
-    global $user_ID;
-    
-    if(!is_user_logged_in()) return false;
-    
-    rcl_bar_add_icon('rcl-messages',
-        array(
-            'icon'=>'fa-envelope',
-            'url'=>rcl_format_url(get_author_posts_url($user_ID),'chat'),
-            'label'=>__('Messages','wp-recall'),
-            'counter'=>rcl_chat_noread_messages_amount($user_ID)
-        )
-    );
-}
-
 add_filter('rcl_inline_styles','rcl_chat_add_inline_styles',10,2);
 function rcl_chat_add_inline_styles($styles,$rgb){
     global $rcl_options;
@@ -62,18 +46,18 @@ function rcl_chat_add_inline_styles($styles,$rgb){
     // $rs $gs $bs - темный оттенок от кнопки
     $styles .= '#rcl-chat-noread-box .rcl-noread-users,'
         . '.rcl-mini-chat .rcl-chat-panel,'
-            . '.rcl-chat .important-manager .important-shift'
-        //. '.rcl-chat .message-box'
+        . '.rcl-chat .important-manager .important-shift'
         . '{background:rgba('.$rs.','.$gs.','.$bs.',0.85);}'
         . '#rcl-chat-noread-box .rcl-noread-users a.active-chat::before'
         . '{border-color: transparent rgba('.$rs.','.$gs.','.$bs.',0.85) transparent transparent;}'
-        //. '.rcl-chat .message-box::before 
-            //{border-color: transparent rgba('.$rs.','.$gs.','.$bs.',0.85) transparent transparent;}'
         . '.rcl-chat .message-box::before 
             {border-color: transparent rgba('.$r.','.$g.','.$b.',0.15) transparent transparent;}'
         . '.rcl-chat .message-box {
                 background: rgba('.$r.','.$g.','.$b.',0.15);
             }'
+        . '#rcl-chat-noread-box .messages-icon .chat-new-messages{'
+        . 'background: rgb('.$rs.','.$gs.','.$bs.');'
+        . '}'
         . '.rcl-chat .nth .message-box::before 
             {border-color: transparent rgba('.$r.','.$g.','.$b.',0.35) transparent transparent;}'
         . '.rcl-chat .nth .message-box {
@@ -245,13 +229,14 @@ function rcl_get_last_chats_box(){
     $messages = rcl_get_user_contacts($user_ID,array(0,5));
     
     if(!$messages) return false;
-    
-    //$users = array(317,8138,30,31,21);
+
     foreach($messages as $message){
         $user_id = ($message['user_id']==$user_ID)? $message['private_key']: $message['user_id'];
         $users[$user_id]['status'] = (!$message['message_status']&&$message['private_key']==$user_ID)? 0: 1;
         $users[$user_id]['chat_id'] = $message['chat_id'];
     }
+    
+    $new_counter = rcl_chat_noread_messages_amount($user_ID);
     
     echo '<div id="rcl-chat-noread-box">';
     
@@ -259,7 +244,14 @@ function rcl_get_last_chats_box(){
 
         echo '<div class="rcl-noread-users">';
             echo '<span class="messages-icon">'
-                    . '<a href="'.rcl_format_url(get_author_posts_url($user_ID),'chat').'"><i class="fa fa-envelope" aria-hidden="true"></i></a>'
+                    . '<a href="'.rcl_format_url(get_author_posts_url($user_ID),'chat').'">'
+                    . '<i class="fa fa-envelope" aria-hidden="true"></i>';
+            
+                    if($new_counter){
+                        echo '<span class="chat-new-messages">'.$new_counter.'</span>';
+                    }
+
+                    echo '</a>'
                 . '</span>';
         foreach($users as $user_id=>$data){
             
