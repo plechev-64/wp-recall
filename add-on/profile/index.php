@@ -144,7 +144,7 @@ function rcl_update_profile_fields($user_id){
         foreach((array)$get_fields as $custom_field){
             $custom_field = apply_filters('update_custom_field_profile',$custom_field);
             if(!$custom_field||!$custom_field['slug']) continue;
-            if(!is_admin()&&$custom_field['admin']==1) continue;
+            if($custom_field['admin']==1&&(!is_admin()||(defined( 'DOING_AJAX' ) && DOING_AJAX))) continue;
 
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
