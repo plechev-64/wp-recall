@@ -119,7 +119,7 @@ class Rcl_EditPost {
 
         $user_id = $postdata['post_author'];
         $temps = get_option('rcl_tempgallery');            
-        $temp_gal = $temps[$user_id];
+        $temp_gal = (isset($temps[$user_id]))? $temps[$user_id]: 0;
         
         if($temp_gal){
             $thumb = $_POST['thumb'];
@@ -253,7 +253,7 @@ class Rcl_EditPost {
 add_filter('pre_update_postdata_rcl','rcl_add_taxonomy_in_postdata',50,2);
 function rcl_add_taxonomy_in_postdata($postdata,$data){
 
-    if(!$_POST['cats']) return $postdata;
+    if(!isset($_POST['cats'])||!$_POST['cats']) return $postdata;
 
     $post_type = get_post_types( array('name' => $data->post_type), 'objects' );
     

@@ -338,7 +338,8 @@ class Rcl_Chat {
 
         $content .= '<div class="chat-messages-box">';
         
-            $content .= '<div class="chat-meta">';        
+            $content .= '<div class="chat-meta">';
+            if($this->user_id)
                 $content .= $this->important_manager();
             $content .= '</div>';
 

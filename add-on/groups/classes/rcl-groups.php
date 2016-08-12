@@ -72,7 +72,7 @@ class Rcl_Groups {
 
         if($args) $this->init_properties($args);
 
-        $groups = $wpdb->get_results( $this->query() );
+        $groups = stripslashes_deep($wpdb->get_results( $this->query() ));
 
         $groups = apply_filters('rcl_groups',$groups);
 

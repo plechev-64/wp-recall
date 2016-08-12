@@ -9,7 +9,7 @@ function rcl_update_grouppost_meta($post_id,$postdata,$action){
 
     if(isset($term_id)) wp_set_object_terms( $post_id, (int)$term_id, 'groups' );
 
-    $gr_tag = sanitize_text_field($_POST['group-tag']);
+    $gr_tag = (isset($_POST['group-tag']))? sanitize_text_field($_POST['group-tag']): false;
     if($gr_tag){
 
             if(!$term_id){
@@ -85,7 +85,7 @@ function rcl_publicdata_group($postdata,$data){
     if($rcl_options['moderation_public_group']==1) $post_status = 'pending';
     else $post_status = 'publish';
 
-    if($rcl_options['nomoder_rayt']){
+    if(isset($rcl_options['nomoder_rayt'])&&$rcl_options['nomoder_rayt']){
             $all_r = rcl_get_all_rating_user(0,$user_ID);
             if($all_r >= $rcl_options['nomoder_rayt']) $post_status = 'publish';
     }

@@ -181,7 +181,7 @@ function rcl_get_link_group_tag($content){
 		else $tag = $data;
 	}
 
-	if(!$tag) return $content;
+	if(!isset($tag)||!$tag) return $content;
 
         if( doing_filter('the_excerpt') ){
 

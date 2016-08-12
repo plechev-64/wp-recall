@@ -561,7 +561,7 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
                 $id_field = 'rcl_fields_post_'.$id_form;
             break;
             case 'products': $id_field = 'rcl_fields_products'; break;
-            default: $id_field = rcl_fields_.$post->post_type;
+            default: $id_field = 'rcl_fields_'.$post->post_type;
 	}
 
 	$get_fields = get_option($id_field);
