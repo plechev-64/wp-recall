@@ -33,7 +33,7 @@ class Rcl_Custom_Fields{
                 $html = $this->get_field_value($field,$value,false);               
                 return $html;
             }else{
-                return false;
+                //return false;
             }
         }
 
