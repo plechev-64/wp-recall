@@ -8,7 +8,6 @@ function rcl_profile_scripts(){
     global $user_ID,$user_LK;   
     if($user_LK){
         if($user_ID==$user_LK){
-            rcl_enqueue_script( 'rcl-profile', rcl_addon_url('js/scripts.js', __FILE__) );
             rcl_enqueue_style( 'rcl-profile', rcl_addon_url('style.css', __FILE__) );
         }
     }
@@ -75,7 +74,6 @@ function rcl_update_profile_notice(){
 }
 
 //Обновляем профиль пользователя
-add_action('wp_ajax_rcl_edit_profile','rcl_edit_profile',10);
 function rcl_edit_profile(){
     global $user_ID;
     
@@ -99,26 +97,14 @@ function rcl_edit_profile(){
     }
     
     if(isset($errmsg)){
-        if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-            echo json_encode(array('error'=>$errmsg));
-            exit;
-        }else{
-            wp_die($errmsg);
-        }
+        wp_die($errmsg);
     }
 
     do_action( 'personal_options_update', $user_ID );
     
     $redirect_url = rcl_format_url(get_author_posts_url($user_ID),'profile').'&updated=true';
-    
-    if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-        echo json_encode(array(
-            'success'=>__('Your profile was updated','wp-recall'),
-            'redirect_url'=>$redirect_url
-        ));
-    }else{
-        wp_redirect( $redirect_url );
-    }
+
+    wp_redirect( $redirect_url );
     
     exit;
 }
