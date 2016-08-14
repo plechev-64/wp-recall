@@ -22,6 +22,7 @@ class Rcl_Chat {
     public $office_id;
     public $user_write;
     public $max_words;
+    public $user_can;
     public $errors = array();
     public $query = array(
             'select'=>array('chat_messages.*'),
@@ -67,6 +68,8 @@ class Rcl_Chat {
         if($this->important){
             add_filter('rcl_chat_query',array(&$this,'add_important_query'),10);
         }
+        
+        $this->user_can = ($this->is_user_can())? 1: 0;
 
     }
     
@@ -509,9 +512,7 @@ class Rcl_Chat {
                             . '</a>'
                         . '</span>';
 
-            $access = (isset($rcl_options['consol_access_rcl']))? $rcl_options['consol_access_rcl']: 7;
-            
-            if ( $current_user->user_level >= $access ){
+            if ( $this->user_can ){
 
                 $content .= '<span class="message-delete">'
                             . '<a href="#" onclick="rcl_chat_delete_message('.$message['message_id'].'); return false;">'
@@ -523,6 +524,16 @@ class Rcl_Chat {
         $content .= '</div>';
         
         return $content;
+    }
+    
+    function is_user_can(){
+        global $current_user,$rcl_options;
+        
+        $access = (isset($rcl_options['consol_access_rcl']))? $rcl_options['consol_access_rcl']: 7;
+        $user_can = ($current_user->user_level >= $access)? 1: 0;
+        
+        return apply_filters('rcl_chat_check_user_can',$user_can);
+        
     }
     
     function the_content($content){

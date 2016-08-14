@@ -68,7 +68,7 @@ function rcl_chat_send_notify_messages(){
     
     $mailtext = (isset($rcl_options['messages_mail'])&&$rcl_options['messages_mail'])? $rcl_options['messages_mail']: 0;
 
-    $mess = $wpdb->get_results("SELECT * FROM ".RCL_PREF."chat_messages WHERE message_status='0' && private_key!='0' && message_time  > date_sub(now(), interval 1 hour)");
+    $mess = $wpdb->get_results("SELECT * FROM ".RCL_PREF."chat_messages WHERE message_status='0' && private_key!='0' && message_time  > date_sub('".current_time('mysql')."', interval 1 hour)");
     
     if(!$mess) return false;
     

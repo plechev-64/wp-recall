@@ -509,3 +509,18 @@ function rcl_chat_uploader(token){
         }
     });
 }
+
+function rcl_chat_shift_contact_panel(){
+    
+    var box = jQuery('#rcl-chat-noread-box');
+    
+    if(box.hasClass('active-chat')) 
+        return true;
+    
+    var view = (jQuery.cookie('rcl_chat_contact_panel')==1)? 0: 1;
+    console.log(view);
+    jQuery('#rcl-chat-noread-box').toggleClass('hidden-contacts');
+    jQuery.cookie('rcl_chat_contact_panel', view, { expires: 30, path: '/'});
+    
+    return false;
+}

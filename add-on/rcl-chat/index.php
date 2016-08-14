@@ -268,17 +268,21 @@ function rcl_get_last_chats_box(){
         $users[$user_id]['chat_id'] = $message['chat_id'];
     }
     
-    $class = (!isset($rcl_options['chat']['place_contact_panel'])||!$rcl_options['chat']['place_contact_panel'])? 'right-panel': 'left-panel';
+    $class = array();
+    
+    $class[] = (!isset($rcl_options['chat']['place_contact_panel'])||!$rcl_options['chat']['place_contact_panel'])? 'right-panel': 'left-panel';
+    
+    $class[] = (isset($_COOKIE['rcl_chat_contact_panel'])&&$_COOKIE['rcl_chat_contact_panel'])? '': 'hidden-contacts';
     
     $new_counter = rcl_chat_noread_messages_amount($user_ID);
 
-    echo '<div id="rcl-chat-noread-box" class="'.$class.'">';
+    echo '<div id="rcl-chat-noread-box" class="'.implode(' ',$class).'">';
     
         echo '<div class="rcl-mini-chat"></div>';
 
         echo '<div class="rcl-noread-users">';
             echo '<span class="messages-icon">'
-                    . '<a href="'.rcl_format_url(get_author_posts_url($user_ID),'chat').'">'
+                    . '<a href="'.rcl_format_url(get_author_posts_url($user_ID),'chat').'" onclick="return rcl_chat_shift_contact_panel();">'
                     . '<i class="fa fa-envelope" aria-hidden="true"></i>';
             
                     if($new_counter){
@@ -286,13 +290,15 @@ function rcl_get_last_chats_box(){
                     }
 
                     echo '</a>'
-                . '</span>';
+                . '</span>'
+                . '<div class="chat-contacts">';
+                    
         foreach($users as $user_id=>$data){
             
             if($user_id==$user_LK) continue;
             
             echo '<span class="rcl-chat-user contact-box" data-contact="'.$user_id.'">';
-            echo '<a href="#" title="'.__('Delete contact','wp-recall').'" onclick="rcl_chat_remove_contact(this,'.$data['chat_id'].');return false;"><i class="fa fa-times" aria-hidden="true"></i></a>';
+            echo '<a class="chat-delete-contact" href="#" title="'.__('Delete contact','wp-recall').'" onclick="rcl_chat_remove_contact(this,'.$data['chat_id'].');return false;"><i class="fa fa-times" aria-hidden="true"></i></a>';
             echo '<a href="#" onclick="rcl_get_mini_chat(this,'.$user_id.'); return false;">';
             if(!$data['status']) 
                 echo '<i class="fa fa-commenting" aria-hidden="true"></i>';
@@ -300,6 +306,14 @@ function rcl_get_last_chats_box(){
             echo '</a>';
             echo '</span>';
         }
+        
+        echo '<span class="more-contacts">'
+            . '<a href="'.rcl_format_url(get_author_posts_url($user_ID),'chat').'">'
+            . '. . .';
+            echo '</a>'
+        . '</span>';
+        
+        echo '</div>';
 
         echo '</div>';
 
