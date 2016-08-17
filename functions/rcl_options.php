@@ -188,7 +188,32 @@ class Rcl_Options {
     }
 
     function number($args,$value){
-        return '<input type="number" name="'.$this->attr_name($args).'" value="'.$value.'" size="60">';
+        
+        $atts = array();
+        $atts[] = (isset($args['min']))? 'min="'.$args['min'].'"': '';
+        $atts[] = (isset($args['max']))? 'max="'.$args['max'].'"': '';
+        $atts[] = (isset($args['step']))? 'step="'.$args['step'].'"': '';
+        
+        return '<input type="number" name="'.$this->attr_name($args).'" value="'.$value.'" '.implode(' ',$atts).' size="60">';
+    }
+    
+    function range($args,$value){
+        
+        $atts = array();
+        $atts[] = (isset($args['min']))? 'min="'.$args['min'].'"': '';
+        $atts[] = (isset($args['max']))? 'max="'.$args['max'].'"': '';
+        $atts[] = (isset($args['step']))? 'step="'.$args['step'].'"': '';
+        
+        return '<input type="range" name="'.$this->attr_name($args).'" value="'.$value.'" '.implode(' ',$atts).'>';
+    }
+    
+    function date($args,$value){
+        
+        $atts = array();
+        $atts[] = (isset($args['min']))? 'min="'.$args['min'].'"': '';
+        $atts[] = (isset($args['max']))? 'max="'.$args['max'].'"': '';
+        
+        return '<input type="date" name="'.$this->attr_name($args).'" value="'.$value.'" '.implode(' ',$atts).'>';
     }
 
     function email($args,$value){

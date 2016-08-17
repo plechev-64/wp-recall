@@ -365,10 +365,10 @@ function rcl_setup_productdata($productdata){
 	$product->product_price = $productdata->product_price;
         $product->summ_price = $productdata->product_price*$productdata->numberproduct;
         $product->numberproduct = $productdata->numberproduct;
-        $product->user_id = $productdata->user_id;
-        $product->order_id = $productdata->order_id;
-        $product->order_date = $productdata->order_date;
-        $product->order_status = $productdata->order_status;
+        $product->user_id = (isset($productdata->user_id))? $productdata->user_id: 0;
+        $product->order_id = (isset($productdata->order_id))? $productdata->order_id: 0;
+        $product->order_date = (isset($productdata->order_date))? $productdata->order_date: 0;
+        $product->order_status = (isset($productdata->order_status))? $productdata->order_status: 0;
 
 	return $product;
 }

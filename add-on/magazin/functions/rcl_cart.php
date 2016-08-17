@@ -86,7 +86,10 @@ class Rcl_Cart {
 
         function script_request($key){
 
+            if(!isset($this->values[$key])||!$this->values[$key]) return false;
+            
             $basket = '';
+            $reg_request = '';
 
             foreach((array)$this->values[$key] as $value){
                 if($value['chek']){
@@ -139,7 +142,7 @@ class Rcl_Cart {
 
         if(!$user_ID) $basket .= '<h3 class="title-data">'.__('Cart','wp-recall').'</h3>';
 
-        $basket .= rcl_get_include_template('cart.php',__FILE__);
+        $basket = rcl_get_include_template('cart.php',__FILE__);
 
         $basket = apply_filters('cart_rcl',$basket);
 
@@ -149,7 +152,7 @@ class Rcl_Cart {
 
                     $get_fields_order = get_option( 'rcl_cart_fields' );
 
-                    if($get_fields_order) $order_field = $this->cart_fields($get_fields_order,'order');
+                    $order_field = ($get_fields_order)? $this->cart_fields($get_fields_order,'order'): '';
 
                     if($user_ID){
 

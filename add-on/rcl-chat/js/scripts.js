@@ -518,7 +518,7 @@ function rcl_chat_shift_contact_panel(){
         return true;
     
     var view = (jQuery.cookie('rcl_chat_contact_panel')==1)? 0: 1;
-    console.log(view);
+    //console.log(view);
     jQuery('#rcl-chat-noread-box').toggleClass('hidden-contacts');
     jQuery.cookie('rcl_chat_contact_panel', view, { expires: 30, path: '/'});
     

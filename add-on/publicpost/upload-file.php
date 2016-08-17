@@ -13,7 +13,7 @@ function rcl_imagepost_upload(){
 
     if(isset($_POST['post_id'])&&$_POST['post_id']!='undefined') $id_post = intval($_POST['post_id']);
     
-    $post_type = base64_decode($_POST['post_type']);
+    $post_type = $_POST['post_type'];
     
     $post = get_post($id_post);
 

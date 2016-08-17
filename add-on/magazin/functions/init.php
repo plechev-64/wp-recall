@@ -487,7 +487,7 @@ function rmag_extra_fields_update( $post_id ){
     if(!isset($_POST['wprecall']['outsale'])) delete_post_meta($post_id, 'outsale');
     if(!isset($_POST['wprecall']['availability_product'])) delete_post_meta($post_id, 'availability_product');
 
-    if( $_POST['children_prodimage']=='' ){
+    if( !isset($_POST['children_prodimage'])||$_POST['children_prodimage']=='' ){
             delete_post_meta($post_id, 'children_prodimage');
     }else{
         $_POST['children_prodimage'] = array_map('trim', (array)$_POST['children_prodimage']);
