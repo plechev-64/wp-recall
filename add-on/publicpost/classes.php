@@ -11,10 +11,10 @@ class Rcl_List_Terms{
     public $taxonomy;
     public $output;
 
-    function __construct($taxonomy=false){
+    function __construct($taxonomy=false,$output = 'select'){
         global $rcl_options;
         $this->taxonomy = $taxonomy;
-        $this->output = (isset($rcl_options['output_category_list']))? $rcl_options['output_category_list']: 'select';
+        $this->output = $output;
     }
 
     function get_select_list($allcats,$cat_list,$cnt,$ctg,$output=false){                      
@@ -27,17 +27,12 @@ class Rcl_List_Terms{
         if($ctg) $this->ctg = $ctg;
         $this->allcats = $allcats;
 
-        /*if($cat_list&&is_array($cat_list)&&$this->taxonomy){
-            $cat_list = get_terms( $this->taxonomy, array('include'=>$cat_list) );
-            //print_r($cat_list);
-        }*/
-
         $this->cat_list = $cat_list;
 
         for($this->sel=0;$this->sel<$cnt;$this->sel++){
             $this->selected = false;
             if($this->output=='select'){
-                $catlist .= '<select class="postform" name="cats['.$this->taxonomy.'][]">';
+                $catlist .= '<select class="postform terms-select" name="cats['.$this->taxonomy.'][]">';
                 if($this->sel>0) $catlist .= '<option value="">'.__('Not selected','wp-recall').'</option>';
                 $catlist .= $this->get_option_list();
                 $catlist .= '</select>';

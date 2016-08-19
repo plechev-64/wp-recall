@@ -11,6 +11,8 @@ class Rcl_PublicForm {
     public $type_editor;
     public $wp_editor;
     public $can_edit;
+    public $select_amount;
+    public $select_type;
     public $preview;
 
     function __construct($atts){
@@ -26,6 +28,8 @@ class Rcl_PublicForm {
             'accept' => 'image/*',
             'post_type'=> 'post',
             'wp_editor'=> null,
+            'select_amount'=> false,
+            'select_type'=> false,
             'group_id'=>$group_id
         ),
         $atts));
@@ -84,6 +88,14 @@ class Rcl_PublicForm {
 
         if(isset($rcl_options['accept-'.$this->post_type])) $this->accept = $rcl_options['accept-'.$this->post_type];
 
+        $this->select_type = (isset($rcl_options['output_category_list']))? $rcl_options['output_category_list']: 'select';
+        if($select_type) $this->select_type = $select_type;
+        
+        if($select_type=='select'){
+            $this->select_amount = (isset($rcl_options['count_category_post'])&&$rcl_options['output_category_list']=='select')? $rcl_options['count_category_post']:0;
+            if($select_amount) $this->select_amount = $select_amount;
+        }
+        
         $formData = (object)array(
             'form_id' =>$this->form_id,
             'post_id' =>$this->post_id,
@@ -93,6 +105,8 @@ class Rcl_PublicForm {
             'accept' =>$this->accept,
             'type_editor' =>$this->type_editor,
             'wp_editor' =>$this->wp_editor,
+            'select_amount' =>$this->select_amount,
+            'select_type' =>$this->select_type,
             'taxonomy' =>$taxs
         );
 
@@ -340,8 +354,10 @@ function rcl_publication_termlist($tax=false){
     if($formData->post_type=='post'){
         $cf = rcl_get_custom_fields($formData->post_id,$formData->post_type,$formData->form_id);
         if(!$ctg) $ctg = (isset($cf['options']['terms'])&&$cf['options']['terms'])? $cf['options']['terms']: $rcl_options['id_parent_category'];
-        $cnt = (isset($rcl_options['count_category_post'])&&$rcl_options['output_category_list']=='select')? $rcl_options['count_category_post']:0;
     }
+    
+    $cnt = $formData->select_amount;
+    $select_type = $formData->select_type;
 
     if($formData->post_type=='post-group'){
         
@@ -363,7 +379,7 @@ function rcl_publication_termlist($tax=false){
             
             $cat_list = ($formData->post_id)? get_public_catlist($taxonomy): '';
             
-            $sel = new Rcl_List_Terms($taxonomy);
+            $sel = new Rcl_List_Terms($taxonomy,$select_type);
             $catlist = $sel->get_select_list(get_public_allterms($taxonomy),$cat_list,$cnt,$ctg);
             if(!$catlist) continue;
             

@@ -249,7 +249,7 @@
     width: auto;
 }
 .public_block input[type="button"] {
-	font-size: 14px !important;			/* Author & some themes */
+    font-size: 14px !important;			/* Author & some themes */
     margin: 0 0 5px;
     padding: 8px 10px;
 }
@@ -259,11 +259,14 @@
     padding: 5px 6px;
 }
 .public_block .rcl-form-field select.postform {
-	width: auto;
+    width: auto;
+}
+.public_block .rcl-form-field select.terms-select{
+    margin:5px;
 }
 .public_block form .rcl-form-field input[type="file"] {
-	background: rgba(237, 237, 237, 0.5);
-	cursor: pointer;
+    background: rgba(237, 237, 237, 0.5);
+    cursor: pointer;
 }
 /* END корректировки к формам */
 /* END собираю формы */
