@@ -190,7 +190,7 @@ function rcl_global_options(){
                         ))
                 ))));
                 
-                $templates = rcl_get_install_templates();
+                $templates = rcl_get_active_template();
                 $templates = ($templates)? $templates: array(__('Not found','wp-recall'));
 
                 $content .= $fields->option_block(

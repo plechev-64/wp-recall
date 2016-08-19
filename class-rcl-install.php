@@ -245,7 +245,7 @@ class RCL_Install {
             $rcl_options['view_recallbar'] = 1;
             
             //подключаем первый попавшийся шаблон ЛК
-            $templates = rcl_get_install_templates();
+            $templates = rcl_search_templates();
             
             foreach($templates as $addon_id=>$template){
                 update_option('rcl_active_template',$addon_id);
