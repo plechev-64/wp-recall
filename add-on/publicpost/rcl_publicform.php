@@ -91,7 +91,7 @@ class Rcl_PublicForm {
         $this->select_type = (isset($rcl_options['output_category_list']))? $rcl_options['output_category_list']: 'select';
         if($select_type) $this->select_type = $select_type;
         
-        if($select_type=='select'){
+        if($this->select_type=='select'){
             $this->select_amount = (isset($rcl_options['count_category_post'])&&$rcl_options['output_category_list']=='select')? $rcl_options['count_category_post']:0;
             if($select_amount) $this->select_amount = $select_amount;
         }
