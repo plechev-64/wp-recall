@@ -402,20 +402,20 @@ function get_public_catlist($taxonomy=false){
     }else{
         
         $post_cat = get_the_terms( $formData->post_id, $taxonomy );
-        
-        if($post_cat){
-            foreach( $post_cat as $key => $p_cat ){
-                foreach($post_cat as $pc){
-                    if($pc->parent==$p_cat->term_id){
-                        unset($post_cat[$key]);
-                        break;
-                    }
-
-                }
-            }
-        }
-        
+ 
     }
+	
+	if($post_cat){
+		foreach( $post_cat as $key => $p_cat ){
+			foreach($post_cat as $pc){
+				if($pc->parent==$p_cat->term_id){
+					unset($post_cat[$key]);
+					break;
+				}
+
+			}
+		}
+	}
 
     return $post_cat;
 }

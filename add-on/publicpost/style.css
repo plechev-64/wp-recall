@@ -261,7 +261,7 @@
 .public_block .rcl-form-field select.postform {
     width: auto;
 }
-.public_block .rcl-form-field select.terms-select{
+.public_block .rcl-form-field .rcl-terms-select select{
     margin:5px;
 }
 .public_block form .rcl-form-field input[type="file"] {
