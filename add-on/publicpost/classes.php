@@ -21,7 +21,7 @@ class Rcl_List_Terms{
 	function get_select_list($terms, $post_terms, $select_amount, $include_terms, $type_output = false){
 		
 		$this->terms = $terms;
-		$this->post_terms = $this->get_select_data($post_terms);
+		$this->post_terms = ($post_terms)? $this->get_select_data($post_terms): 0;
 		$this->select_amount = $select_amount;
 		$this->include_terms = $include_terms;
 		
@@ -119,12 +119,14 @@ class Rcl_List_Terms{
 				continue;
 			}
 			
-			if(!$this->selected_term&&selected(isset($this->post_terms[$term_id]),true,false)){
-				
-				unset($this->post_terms[$term_id]);
-				
-				$this->selected_term = $term_id;
-				
+			if($this->post_terms){
+				if(!$this->selected_term&&selected(isset($this->post_terms[$term_id]),true,false)){
+					
+					unset($this->post_terms[$term_id]);
+					
+					$this->selected_term = $term_id;
+					
+				}
 			}
 
 			$options[] = '<option '.selected($this->selected_term,$term_id,false).' value="'.$term_id.'">'.$term['name'].'</option>';

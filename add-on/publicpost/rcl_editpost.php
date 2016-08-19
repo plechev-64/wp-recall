@@ -290,14 +290,39 @@ function rcl_update_postdata_product_tags($post_id,$postdata){
     foreach($_POST['tags'] as $taxonomy=>$terms){
         wp_set_object_terms( $post_id, $terms, $taxonomy );
     }
+}
+
+add_action('update_post_rcl','rcl_unset_postdata_tags',20,2);
+function rcl_unset_postdata_tags($post_id,$postdata){
+
+    if(!isset($_POST['tags'])){
+        
+        $obj = get_post_type_object( $postdata['post_type'] );
+        
+        if($obj->taxonomies){
+
+            foreach($obj->taxonomies as $taxonomy_name){
+                
+                $taxonomy = get_taxonomy( $taxonomy_name );
+                
+                if($taxonomy->hierarchical) continue;
+                
+                wp_set_object_terms( $post_id, NULL, $taxonomy_name );
+            } 
+            
+        }
+        
+    }
 
 }
 
 add_action('update_post_rcl','rcl_set_object_terms_post',10,3);
 function rcl_set_object_terms_post($post_id,$postdata,$update){
+    
     if($update||!isset($postdata['tax_input'])||!$postdata['tax_input']) return false;
-    foreach($postdata['tax_input'] as $taxonomy=>$terms){
-        wp_set_object_terms( $post_id, array_map('intval', $terms), $taxonomy );
+    
+    foreach($postdata['tax_input'] as $taxonomy_name=>$terms){
+        wp_set_object_terms( $post_id, array_map('intval', $terms), $taxonomy_name );
     }
 }
 
