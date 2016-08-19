@@ -172,7 +172,7 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 
         echo $before;
 
-        echo do_shortcode('[public-form post_type="post-group" group_id="'.$rcl_group->term_id.'"]');
+        echo do_shortcode('[public-form post_type="post-group" select_type="select" select_amount="1" group_id="'.$rcl_group->term_id.'"]');
 
         echo $after;
     }
