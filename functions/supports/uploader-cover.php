@@ -181,21 +181,18 @@ function rcl_cover_upload(){
     }
 
 
-    if (!$rst){
+    if ( is_wp_error( $rst )){
         $res['error'] = __('Error download','wp-recall');
         echo json_encode($res);
         exit;
     }
 
-    if($rst){
+    update_user_meta( $user_ID,'rcl_cover',$srcfile_url );
 
-        update_user_meta( $user_ID,'rcl_cover',$srcfile_url );
+    if(!$coord) copy($file_src,$tmp_path.$tmpname);
 
-        if(!$coord) copy($file_src,$tmp_path.$tmpname);
-
-        $res['cover_url'] = $tmp_url.$tmpname;
-        $res['success'] = __('Cover successfully uploaded','wp-recall');
-    }
+    $res['cover_url'] = $tmp_url.$tmpname;
+    $res['success'] = __('Cover successfully uploaded','wp-recall');
 
     echo json_encode($res);
     exit;

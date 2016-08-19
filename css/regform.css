@@ -259,19 +259,19 @@ div.panel_lk_recall .form-tab-rcl a {
     margin: 3px auto;
     width: 99%;
 }
-.panel_lk_recall .buttons p {
+.panel_lk_recall .rcl-widget-buttons p {
     margin: 0 0 4px;
     overflow: hidden;
     padding: 0;
 }
-.widget .panel_lk_recall p .recall-button {
+.panel_lk_recall .rcl-widget-buttons .recall-button {
     color: #fff;
     display: inline-block;
     font-size: 14px;
     line-height: 1;
     padding: 8px;
 }
-.widget .panel_lk_recall p a.recall-button:hover {
+.panel_lk_recall .rcl-widget-buttons a.recall-button:hover {
     color: #fff;
 }
 .panel_lk_recall .buttons a .fa,

@@ -956,119 +956,103 @@ function rcl_box_excerpt($excerpt){
 add_action('wp_ajax_rcl_upload_box','rcl_upload_box');
 add_action('wp_ajax_nopriv_rcl_upload_box','rcl_upload_box');
 function rcl_upload_box(){
-	global $rcl_options,$user_ID;
-        
-        rcl_verify_ajax_nonce();
+    global $rcl_options,$user_ID;
 
-	require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+    rcl_verify_ajax_nonce();
 
-	if($rcl_options['user_public_access_recall']&&!$user_ID) return false;
+    require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
-	$maxsize = (isset($rcl_options['max_sizes_attachment'])&&$rcl_options['max_sizes_attachment'])? explode(',',$rcl_options['max_sizes_attachment']): array(800,600);
-	$files = array();
+    if($rcl_options['user_public_access_recall']&&!$user_ID) return false;
 
-        $valid_types = array("gif", "jpg", "png", "jpeg");
+    $maxsize = (isset($rcl_options['max_sizes_attachment'])&&$rcl_options['max_sizes_attachment'])? explode(',',$rcl_options['max_sizes_attachment']): array(800,600);
+    $files = array();
 
-        if(isset($_POST['url_image'])){
+    $valid_types = array("gif", "jpg", "png", "jpeg");
 
-		$url_image = $_POST['url_image'];
-		$filename = basename($url_image);
+    if(isset($_POST['url_image'])){
 
-		if($url_image){
-			$img = @file_get_contents($url_image);
-			if($img) file_put_contents($dir_path.$filename, $img);
-			else{
-                            $res['error'] = __('Loading image failed!','wp-recall');
-                            echo json_encode($res);
-                            exit;
-			}
-		}
+        $url_image = $_POST['url_image'];
+        $filename = basename($url_image);
 
-		$files[] = array(
-			'tmp_name'=>$dir_path.$filename,
-			'name' => $filename
-		);
-
-	}else{
-
-            foreach($_FILES['editor_upload'] as $key=>$fls){
-                    foreach($fls as $k=>$data){
-                            $files[$k][$key] = $data;
-                    }
+        if($url_image){
+            $img = @file_get_contents($url_image);
+            if($img) file_put_contents($dir_path.$filename, $img);
+            else{
+                $res['error'] = __('Loading image failed!','wp-recall');
+                echo json_encode($res);
+                exit;
             }
-
-            $files = rcl_multisort_array($files, 'name', SORT_ASC);
-
         }
 
-	$user_dir = ($user_ID)? $user_ID: $_COOKIE['PHPSESSID'];
+        $files[] = array(
+            'tmp_name'=>$dir_path.$filename,
+            'name' => $filename
+        );
 
-	foreach($files as $k=>$file){
+    }else{
 
-		$image = getimagesize($file['tmp_name']);
+        foreach($_FILES['editor_upload'] as $key=>$fls){
+                foreach($fls as $k=>$data){
+                        $files[$k][$key] = $data;
+                }
+        }
 
-		$mime = explode('/',$image['mime']);
+        $files = rcl_multisort_array($files, 'name', SORT_ASC);
 
-                if (!in_array($mime[1], $valid_types)){ 
-                    echo json_encode(array('error'=>__('Unauthorized file extension . Use only : .gif, .png, .jpg','wp-recall')));
-                    exit;
-                } 
+    }
 
-		$dir_path = RCL_UPLOAD_PATH.'users-temp/';
-		$dir_url = RCL_UPLOAD_URL.'users-temp/';
-		if(!is_dir($dir_path)){
-			mkdir($dir_path);
-			chmod($dir_path, 0755);
-		}
+    $user_dir = ($user_ID)? $user_ID: $_COOKIE['PHPSESSID'];
 
-		$dir_path = RCL_UPLOAD_PATH.'users-temp/'.$user_dir.'/';
-		$dir_url = RCL_UPLOAD_URL.'users-temp/'.$user_dir.'/';
-		if(!is_dir($dir_path)){
-			mkdir($dir_path);
-			chmod($dir_path, 0755);
-		}
+    foreach($files as $k=>$file){
 
-		$filename = str_replace(array('`',']','[','\'',' '),'',basename($file['name']));
+        $image = getimagesize($file['tmp_name']);
 
-		$filepath = $dir_path.$filename;
-		$fileurl = $dir_url.$filename;
+        $mime = explode('/',$image['mime']);
 
-		//if(stripos($mime[1],'gif')===false){
-			if($image[0]>$maxsize[0]||$image[1]>$maxsize[1]){
-				rcl_crop($file['tmp_name'],$maxsize[0],$maxsize[1],$filepath);
-			}else{
-				if(copy($file['tmp_name'], $dir_path.$filename)){
-					unlink($file['tmp_name']);
-				}
-			}
-			//$crop = 1;
-			$html = '<img class="aligncenter" src='.$fileurl.'>';
-		/*}else{
-			$name = explode('.',$filename);
-			$thumb_name = $name[0].'-thumb.'.$name[1];
-			$crop->get_crop($file['tmp_name'],$image[0],$image[1],$dir_path.$thumb_name);
-			if(copy($file['tmp_name'], $dir_path.$filename)){
-				unlink($file['tmp_name']);
-			}
-			$thumb_url = $dir_url.$thumb_name;
-			$crop = 0;
-			$html = get_html_gif_image($thumb_url);
-		}*/
+        if (!in_array($mime[1], $valid_types)){ 
+            echo json_encode(array('error'=>__('Unauthorized file extension . Use only : .gif, .png, .jpg','wp-recall')));
+            exit;
+        } 
 
-		//if($crop) $html .= '<input type="button" class="get-crop-image recall-button" value="Обрезать" onclick="return rcl_crop(this);"/>';
-		$html .= '<input type="hidden" name="post_content[][image]" value="'.$fileurl.'"/>';
+        $dir_path = RCL_UPLOAD_PATH.'users-temp/';
+        $dir_url = RCL_UPLOAD_URL.'users-temp/';
+        if(!is_dir($dir_path)){
+                mkdir($dir_path);
+                chmod($dir_path, 0755);
+        }
 
-		$res[$k]['content'] = $html;
-		//$res[$k]['crop'] = $crop;
+        $dir_path = RCL_UPLOAD_PATH.'users-temp/'.$user_dir.'/';
+        $dir_url = RCL_UPLOAD_URL.'users-temp/'.$user_dir.'/';
+        if(!is_dir($dir_path)){
+                mkdir($dir_path);
+                chmod($dir_path, 0755);
+        }
 
-	}
+        $filename = str_replace(array('`',']','[','\'',' '),'',basename($file['name']));
 
+        $filepath = $dir_path.$filename;
+        $fileurl = $dir_url.$filename;
 
+        if($image[0]>$maxsize[0]||$image[1]>$maxsize[1]){
+                rcl_crop($file['tmp_name'],$maxsize[0],$maxsize[1],$filepath);
+        }else{
+                if(copy($file['tmp_name'], $dir_path.$filename)){
+                        unlink($file['tmp_name']);
+                }
+        }
 
-	echo json_encode($res);
-	exit;
+        $html = '<img class="aligncenter" src='.$fileurl.'>';
+
+        $html .= '<input type="hidden" name="post_content[][image]" value="'.$fileurl.'"/>';
+
+        $res[$k]['content'] = $html;
+
+    }
+
+    echo json_encode($res);
+    exit;
 }
 
 //Прикрепление новой миниатюры к публикации из произвольного места на сервере

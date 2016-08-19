@@ -348,7 +348,8 @@ function rcl_publication_termlist($tax=false){
         $options_gr = rcl_get_options_group($group_id);
         $catlist = rcl_get_tags_list_group($options_gr['tags'],$formData->post_id);
         
-        echo '<label>'.__('Group categories','wp-recall').':</label>'.$catlist;
+        if($catlist)
+            echo '<label>'.__('Group categories','wp-recall').':</label>'.$catlist;
 
     }else{
         

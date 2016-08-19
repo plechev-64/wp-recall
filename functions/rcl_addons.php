@@ -153,7 +153,7 @@ add_action('rcl_before_include_addons','rcl_check_active_template',10);
 function rcl_check_active_template(){
     global $active_addons,$rcl_options,$rcl_template;
     
-    $templates = rcl_get_install_templates();
+    $templates = rcl_get_active_template();
     
     if($templates){
         //Если найденный шаблон указан как используемый, то активируем его
@@ -221,7 +221,7 @@ function rcl_include_template_office(){
     }
 }
 
-function rcl_get_install_templates(){
+function rcl_get_active_template(){
     global $rcl_options,$active_addons;
     
     $list = array();

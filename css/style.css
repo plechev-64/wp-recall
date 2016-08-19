@@ -18,9 +18,7 @@ i.fa, a.fa, p.fa,span.fa,div.fa{
     margin-right: 5px;
     text-align: center;
     width: 15px;
-    webkit-box-sizing: initial;
-    -moz-box-sizing: initial;
-    box-sizing: initial;
+    box-sizing: content-box;
 }
 .floatright{
 	float:right;

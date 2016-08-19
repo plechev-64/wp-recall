@@ -223,7 +223,7 @@ function rcl_add_namegroup($content){
     
     if(!$group) return $content;
 
-    $group_link = '<p class="post-group-meta"><i class="fa fa-users rcl-icon"></i>'.__('Published in the group','wp-recall').': <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
+    $group_link = '<p class="post-group-meta"><i class="fa fa-users rcl-icon"></i><span>'.__('Published in the group','wp-recall').'</span>: <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
 
     $content = $group_link.$content;
     return $content;

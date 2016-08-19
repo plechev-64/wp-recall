@@ -239,25 +239,22 @@ function rcl_avatar_upload(){
 		}
 	}
 
-	if (!$rst){
+	if ( is_wp_error( $rst )){
 		$res['error'] = __('Error download','wp-recall');
 		echo json_encode($res);
 		exit;
 	}
 
-	if($rst){
+        if(function_exists('ulogin_get_avatar')){
+            delete_user_meta($user_ID, 'ulogin_photo');
+        }
 
-                if(function_exists('ulogin_get_avatar')){
-                    delete_user_meta($user_ID, 'ulogin_photo');
-                }
+        update_user_meta( $user_ID,'rcl_avatar',$srcfile_url );
 
-		update_user_meta( $user_ID,'rcl_avatar',$srcfile_url );
+        if(!$coord) copy($file_src,$tmp_path.$tmpname);
 
-		if(!$coord) copy($file_src,$tmp_path.$tmpname);
-
-		$res['avatar_url'] = $tmp_url.$tmpname;
-		$res['success'] = __('Avatar successfully uploaded','wp-recall');
-	}
+        $res['avatar_url'] = $tmp_url.$tmpname;
+        $res['success'] = __('Avatar successfully uploaded','wp-recall');
 
 	echo json_encode($res);
 	exit;

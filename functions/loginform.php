@@ -28,7 +28,7 @@ function rcl_get_authorize_form($type=false,$form=false){
                     endif;
 
                     echo '</div>';
-                    echo '<div class="buttons">';
+                    echo '<div class="rcl-widget-buttons">';
 
                             $buttons = '<p>'.rcl_get_button(__('In personal account','wp-recall'),$rcl_user_URL,array('icon'=>'fa-home')).'</p>
                             <p>'.rcl_get_button(__('Exit','wp-recall'),wp_logout_url( home_url() ),array('icon'=>'fa-external-link')).'</p>';
@@ -44,7 +44,7 @@ function rcl_get_authorize_form($type=false,$form=false){
 
                         $redirect_url = rcl_format_url(get_permalink($rcl_options['page_login_form_recall']));
 
-                        echo '<div class="buttons">';
+                        echo '<div class="rcl-widget-buttons">';
 
                             $buttons = '<p>'.rcl_get_button(__('Entry','wp-recall'),$redirect_url.'action-rcl=login',array('icon'=>'fa-sign-in')).'</p>
                             <p>'.rcl_get_button(__('Registration','wp-recall'),$redirect_url.'action-rcl=register',array('icon'=>'fa-book')).'</p>';
@@ -53,7 +53,7 @@ function rcl_get_authorize_form($type=false,$form=false){
                         echo '</div>';
 
                     }else if($login_form==2){
-                        echo '<div class="buttons">';
+                        echo '<div class="rcl-widget-buttons">';
                             $buttons = '<p>'.rcl_get_button(__('Entry','wp-recall'),esc_url(wp_login_url('/')),array('icon'=>'fa-sign-in')).'</p>
                             <p>'.rcl_get_button(__('Registration','wp-recall'),esc_url(wp_registration_url()),array('icon'=>'fa-book')).'</p>';
                             echo apply_filters('buttons_widget_rcl',$buttons);
@@ -69,7 +69,7 @@ function rcl_get_authorize_form($type=false,$form=false){
                                 rcl_include_template('form-remember.php');
                         }
                     }else if(!$login_form){
-                        echo '<div class="buttons">';
+                        echo '<div class="rcl-widget-buttons">';
                                 $buttons = '<p>'.rcl_get_button(__('Entry','wp-recall'),'#',array('icon'=>'fa-sign-in','class'=>'rcl-login')).'</p>
                                 <p>'.rcl_get_button(__('Registration','wp-recall'),'#',array('icon'=>'fa-book','class'=>'rcl-register')).'</p>';
                                 echo apply_filters('buttons_widget_rcl',$buttons);

@@ -226,11 +226,14 @@ function rcl_delete_file_cache($string){
 
 //кроп изображений
 function rcl_crop($filesource,$width,$height,$file){
-    if (!class_exists('Rcl_Crop'))
-        require_once(RCL_PATH.'functions/rcl_crop.php');
-
-    $crop = new Rcl_Crop();
-    return $crop->get_crop($filesource,$width,$height,$file);
+    
+    if ( ! is_wp_error( $image ) ) { 
+        $image = wp_get_image_editor( $filesource );
+        $image->resize($width,$height,true);
+        $image->save( $file );
+    }
+    
+    return $image;
 }
 
 //получение абсолютного пути до указанного файла шаблона
