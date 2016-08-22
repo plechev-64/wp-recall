@@ -50,7 +50,7 @@ function rcl_chat_delete_unattached_attachments(){
     global $wpdb;
     
     $unattaches = $wpdb->get_col(
-        "SELECT ID FROM $wpdb->post "
+        "SELECT ID FROM $wpdb->posts "
         . "WHERE post_type='attachment' "
         . "AND post_excerpt='rcl_chat_attachment:unattached'"
     );
