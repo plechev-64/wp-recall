@@ -48,7 +48,7 @@ endif;
 
 add_action('admin_menu', 'rcl_admin_page_publicform',30);
 function rcl_admin_page_publicform(){
-	add_submenu_page( 'manage-wprecall', __('Form of publication','wp-recall'), __('Form of publication','wp-recall'), 'manage_options', 'manage-public-form', 'rcl_manage_publicform');
+    add_submenu_page( 'manage-wprecall', __('Form of publication','wp-recall'), __('Form of publication','wp-recall'), 'manage_options', 'manage-public-form', 'rcl_manage_publicform');
 }
 
 //add_filter('after_public_form_rcl','rcl_saveform_data_script',10,2);
