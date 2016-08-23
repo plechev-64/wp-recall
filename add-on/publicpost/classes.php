@@ -10,6 +10,7 @@ class Rcl_List_Terms{
     public $include_terms;
     public $select_amount;
     public $type_output;
+    public $first_option;
 	
     function __construct($taxonomy = false, $type_output = 'select'){
 
@@ -18,13 +19,14 @@ class Rcl_List_Terms{
 
     }
 	
-    function get_select_list($terms, $post_terms, $select_amount, $include_terms = false, $type_output = false){
+    function get_select_list($terms, $post_terms, $select_amount, $include_terms = false, $type_output = false, $first = false){
         
         $this->include_terms = ($include_terms)? array_map('trim',explode(',', $include_terms)): false;
 
         $this->terms = $terms;
         $this->datalist = $this->setup_data($terms);
         
+        $this->first_option = ($first)? true: false;
         $this->post_terms = ($post_terms)? $this->setup_data($post_terms): 0;
         $this->select_amount = $select_amount;
 
@@ -47,8 +49,8 @@ class Rcl_List_Terms{
 
             $content .= '<select class="postform" name="cats['.$this->taxonomy.'][]">';
 
-            if($a>0) 
-                    $content .= '<option value="">'.__('Not selected','wp-recall').'</option>';			
+            if($a>0||$this->first_option) 
+                $content .= '<option value="">'.__('Not selected','wp-recall').'</option>';			
 
             $content .= $this->get_options_list();
 
@@ -193,8 +195,8 @@ class Rcl_List_Terms{
     function get_terms_data($term_ids){
         $terms = array();
         foreach($term_ids as $term_id){
-                $terms[$term_id] = $this->datalist[$term_id];
-                $terms[$term_id]['parent'] = 0;
+            $terms[$term_id] = $this->datalist[$term_id];
+            $terms[$term_id]['parent'] = 0;
         }
         return $terms;
     }
