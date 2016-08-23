@@ -105,3 +105,20 @@
     width: auto;
 }
 
+@media screen and (max-width:360px) {
+    #tab-profile table tr th {
+        max-width: 107px;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        word-wrap: break-word;
+    }
+    #tab-profile table td a {
+        font-size: 13px;
+        margin: 3px 0;
+        width: 83px;
+    }
+    #tab-profile .file-field-upload {
+        width: 205px;
+    }
+}
+

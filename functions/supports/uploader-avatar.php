@@ -29,31 +29,50 @@ function rcl_init_js_avatar_variables($data){
     return $data;
 }
 
-add_filter('after-avatar-rcl','rcl_button_avatar_upload',11,2);
-function rcl_button_avatar_upload($content,$author_lk){
+add_filter('rcl_avatar_icons','rcl_button_avatar_upload',10);
+function rcl_button_avatar_upload($icons){
     global $user_ID;
-
-    if($user_ID!=$author_lk) return $content;
-
-    if( isset($_SERVER["HTTPS"])&&$_SERVER["HTTPS"] == 'on') 
-        rcl_webcam_scripts();
     
-    $avatar = get_user_meta($author_lk,'rcl_avatar',1);
+    if(!rcl_is_office($user_ID)) return false;
 
-    if($avatar){
-        $content .= '<a title="'.__('Delete avatar','wp-recall').'" class="rcl-avatar-delete" href="'.wp_nonce_url( rcl_format_url(get_author_posts_url($author_lk)).'rcl-action=delete_avatar', $user_ID ).'"><i class="fa fa-times"></i></a>';
+    $icons['avatar-upload'] = array(
+        'icon' => 'fa-download',
+        'content'=> '<span><input type="file" id="userpicupload" accept="image/*" name="userpicupload"></span>',
+        'atts' => array(
+            'title' => __('Avatar upload','wp-recall'),
+            'url' => '#'
+        )
+    );
+    
+    if(get_user_meta($user_ID,'rcl_avatar',1)){
+    
+        $icons['avatar-delete'] = array(
+            'icon' => 'fa-times',
+            'atts' => array(
+                'title' => __('Delete avatar','wp-recall'),
+                'url' => wp_nonce_url( rcl_format_url(get_author_posts_url($user_ID)).'rcl-action=delete_avatar', $user_ID )
+            )
+        );
+    
     }
-
-    $content .= '
-    <div id="userpic-upload">
-        <span id="file-upload" class="fa fa-download">
-            <input type="file" id="userpicupload" accept="image/*" name="userpicupload">
-        </span>';
-    $content .= @( !isset($_SERVER["HTTPS"])||$_SERVER["HTTPS"] != 'on' ) ? '':  '<span id="webcamupload" class="fa fa-camera"></span>';
-    $content .= '</div>
-    <span id="avatar-upload-progress"></span>';
     
-    return $content;
+    if( isset($_SERVER["HTTPS"])&&$_SERVER["HTTPS"] == 'on' ){
+        
+        rcl_webcam_scripts();
+        
+        $icons['webcam-upload'] = array(
+            'icon' => 'fa-camera',
+            'content'=> '<span id="webcamupload"></span>',
+            'atts' => array(
+                'title' => __('Webcam upload','wp-recall'),
+                'onclick' => 'rcl_avatar_webcam_upload(this);return false;',
+                'url' => '#'
+            )
+        );
+        
+    }
+    
+    return $icons;
 }
 
 add_action('wp','rcl_delete_avatar_action');

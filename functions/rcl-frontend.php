@@ -11,13 +11,53 @@ function rcl_action(){
     echo sprintf('<span class="user-status %s">%s</span>',$class,$status);
 }
 
-function rcl_avatar($size=120){
-    global $user_LK; $after='';
-    echo '<div id="rcl-contayner-avatar">';
-    echo '<span class="rcl-user-avatar">'.get_avatar($user_LK,$size).'</span>';
-    echo apply_filters('after-avatar-rcl',$after,$user_LK);
-    echo '</div>';
+function rcl_avatar($avatar_size = 120){
+    global $user_LK; ?>
+    <div id="rcl-avatar">
+        <span class="avatar-image">
+            <?php echo get_avatar($user_LK,$avatar_size); ?>
+        </span>
+        <?php do_action('rcl_avatar'); ?>
+    </div>
+<?php }
 
+add_action('rcl_avatar','rcl_setup_avatar_icons',10);
+function rcl_setup_avatar_icons(){
+    
+    $icons = rcl_avatar_icons();
+    
+    if(!$icons) return false;
+    
+    $html = array();
+    foreach($icons as $icon_id => $icon ){
+        
+        $atts = array();
+
+        if(isset($icon['atts'])){
+            foreach($icon['atts'] as $attr => $val){
+                $val = (is_array($val))? implode(' ',$val): $val;
+                $atts[] = $attr.'="'.$val.'"';
+            }
+        }
+        
+        $string = '<a '.implode(' ',$atts).'>';
+        
+        if(isset($icon['icon'])) 
+            $string .= '<i class="fa '.$icon['icon'].'"></i>';
+        
+        if(isset($icon['content'])) 
+            $string .= $icon['content'];
+        
+        $string .= '</a>';
+        
+        $html[] = '<span class="rcl-avatar-icon icon-'.$icon_id.'">'.$string.'</span>';
+    }
+    
+    echo '<span class="avatar-icons">'.implode('',$html).'</span>';   
+}
+
+function rcl_avatar_icons(){
+    return apply_filters('rcl_avatar_icons',array());
 }
 
 function rcl_status_desc(){

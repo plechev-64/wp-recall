@@ -21,11 +21,21 @@ function rcl_init_js_user_info_variables($data){
     return $data;
 }
 
-add_filter('after-avatar-rcl','rcl_add_user_info_button',10);
-function rcl_add_user_info_button($content){
+add_filter('rcl_avatar_icons','rcl_add_user_info_button',10);
+function rcl_add_user_info_button($icons){
+    
     rcl_dialog_scripts();
-    $content .= '<a title="'.__('User info','wp-recall').'" onclick="rcl_get_user_info(this);return false;" class="cab_usr_info" href="#"><i class="fa fa-info-circle"></i></a>';
-    return $content;
+    
+    $icons['user-info'] = array(
+        'icon' => 'fa-info-circle',
+        'atts' => array(
+            'title' => __('User info','wp-recall'),
+            'onclick' => 'rcl_get_user_info(this);return false;',
+            'url' => '#'
+        )
+    );
+
+    return $icons;
 }
 
 add_action('wp_ajax_rcl_return_user_details','rcl_return_user_details',10);

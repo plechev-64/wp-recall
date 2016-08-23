@@ -217,36 +217,36 @@ body .rcl_preloader{
 /* Личный кабинет start*/
 
 /* общие стили start */
-.wprecallblock {
+#rcl-office {
     background: rgba(236, 240, 241, 0.3);
     box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
 	color: #333;				/*BlackTheme*/
     overflow: visible;
 	position: relative;
 }
-.wprecallblock a:link {
+#rcl-office a:link {
     border: none;				/*++Twenty15++*/
     box-shadow: none;			/*++Twenty16++*/
     text-decoration: none;
 }
-div.wprecallblock h2 {
+#rcl-office h2 {
     font: bold 22px/1 Arial,sans-serif;
     margin: 0;
     text-transform: none;
 }
-div.wprecallblock h3 {
+#rcl-office h3 {
     font-size: 18px;
     line-height: 1;
     margin: 15px 0 5px 10px;
 }
-.wprecallblock p {
+#rcl-office p {
     line-height: 1;
     margin: 0;
 	padding: 4px 0;
 }
-.wprecallblock select,
-.wprecallblock textarea,
-.wprecallblock input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
+#rcl-office select,
+#rcl-office textarea,
+#rcl-office input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
     border:none;
     border-radius:none;
     font: 14px/1.4 Tahoma,Arial;						/*++Twenty15++*/
@@ -259,8 +259,8 @@ div.wprecallblock h3 {
 /* .wprecallblock input.recall-button {
 	color:#fff;
 } */
-.wprecallblock input[type="checkbox"],
-.wprecallblock input[type="radio"] {
+#rcl-office input[type="checkbox"],
+#rcl-office input[type="radio"] {
 	box-shadow: none;
 }
 #rcl-overlay {
@@ -276,11 +276,11 @@ div.wprecallblock h3 {
 .mass-upload-box{
     padding: 5px;
     background: rgba(219, 219, 219, 0.3);
-	box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
 }
 .rcl-dropzone {
     overflow: hidden;
-	margin-bottom: 10px;
+    margin-bottom: 10px;
     font-size: 12px;
 }
 .rcl-dropzone.mass-upload-box small {
@@ -292,133 +292,21 @@ div.wprecallblock h3 {
     background-color: #ccc;
 }
 .mass-upload-box hr{
-	margin:3px;
+    margin:3px;
 }
 .mass-upload-box .rcl-upload-button{
     display: inline-block;
 }
 .rcl-tab-button .rcl-menu-notice {
     color: #fff;
-	font: 12px/1 Helvetica,serif,arial;				/*++Twenty16++*/
+    font: 12px/1 Helvetica,serif,arial;				/*++Twenty16++*/
 }
 
-
-/* блок lk-conteyner start */
-#lk-conteyner {
-	background-color: #e3e3e3;
-    overflow: hidden;
-    position: relative;
-}
-.lk-sidebar {
-    float: left;
-    line-height: 1;				/*++Twenty16++*/
-}
-.lk-sidebar .lk-avatar {
-    display: inline-block;
-    position: relative;
-	z-index: 2;
-}
-.lk-avatar .rcl-user-avatar img {
-	border-radius: 0;
-    height: auto;
-    width: 100%;
-	margin: 0;
-	float: left;
-}
-.lk-avatar .rcl-avatar-delete {
-    background-color: rgb(216, 231, 238);
-	opacity: 0.7;
-    color: #333;
-    display: none;
-    padding: 7px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 9;
-}
-.lk-avatar:hover .rcl-avatar-delete{
-	display:block;
-}
-.rcl-avatar-delete .fa.fa-times {
-    font-size: 16px;
-    margin: 0;
-}
-.lk-avatar .cab_usr_info {
-    background: rgb(216, 231, 238);
-    color: rgb(229, 57, 53);
-    font-size: 24px;
-    left: 0;
-    line-height: 1;
-    opacity: 0.7;
-    padding: 4px 6px;
-    position: absolute;
-    top: 0;
-    z-index: 2;
-}
-#userpic-upload {
-    bottom: 0;
-    color: rgb(229, 57, 53);
-    font-size: 16px;
-    overflow: hidden;
-    position: absolute;
-}
-#userpic-upload span {
-    background-color: rgb(216, 231, 238);
-    cursor: pointer;
-    float: left;
-    line-height: 1;
-    margin-right: 4px;
-    opacity: 0.7;
-    overflow: hidden;
-    padding: 6px 8px 5px;
-    position: relative;
-    text-align: center;
-}
-a.rcl-avatar-delete:hover,
-#userpic-upload span:hover,
-.lk-avatar .cab_usr_info:hover{
-    opacity: 1;
-}
-
-#userpic-upload .fa input{
-	position: absolute;
-	top: 0;
-	right: 0;
-	opacity: 0;
-	z-index: 99;
-	cursor: pointer;
-	max-width: none;
-}
-#avatar-upload-progress {
-    background: rgb(216, 231, 238);
-    display: none;
-    height: 50px;
-    left: 0;
-    line-height: 1;
-    opacity: 0.6;
-    position: absolute;
-    top: 44%;
-    width: 100%;
-}
-#avatar-upload-progress span { /*ava in group*/
-    display: block;
-    font-size: 48px;
-    font-weight: bold;
-    text-align: center;
-}
-.wprecallblock #avatar-upload-progress span {
-    font-size: 25px;
-    margin: 10px 0 0;
-}
-/* блок lk-conteyner end */
-
-
-
-
-.ballun-status {
+body .ballun-status{
     max-width: 350px;
 }
-p.status-user-rcl::before {    
+
+body p.status-user-rcl::before {    
     border-style: solid;
     border-width: 11px 0 0 11px;
     content: "";
@@ -428,7 +316,8 @@ p.status-user-rcl::before {
     top: -12px;
     width: 0;
 }
-.ballun-status p.status-user-rcl {
+body .ballun-status p.status-user-rcl,
+body #rcl-office .ballun-status p.status-user-rcl {
     background: #fff;
     border-radius: 3px;
     color: #333;										/*++hueman++*/
@@ -446,7 +335,6 @@ p.status-user-rcl::before {
     word-wrap: break-word;
 }
 
-
 #lk-menu,
 #rcl-tabs {    
     overflow: hidden;
@@ -454,18 +342,18 @@ p.status-user-rcl::before {
 #lk-content {
     margin: 3px;
 }
-.wprecallblock .rcl-sub-menu {
+#rcl-office .rcl-sub-menu {
     overflow: hidden;
     background: #f7f8f8;
     padding: 10px;
     margin: 5px 0;
 }
-.wprecallblock .rcl-sub-menu .recall-button{
+#rcl-office .rcl-sub-menu .recall-button{
     display: inline-block;
     padding: 7px;
     margin-right: 5px;
 }
-.wprecallblock a.sec_block_button i.fa {
+#rcl-office a.sec_block_button i.fa {
 	margin: 0 5px 0 0;
 }
 /* Группа кнопок Start */
@@ -531,10 +419,10 @@ a.data-filter.filter-active:hover {
 #lk-menu a,
 #lk-content .get-list-votes,
 #lk-content .sec_block_button {
-	display: block;
-	float: left;
-	margin: 5px 5px 0 0;
-	padding: 7px;
+    display: block;
+    float: left;
+    margin: 5px 5px 0 0;
+    padding: 7px;
 }
 .rcl-data-filters .recall-button {
     display: inline-block;
@@ -544,7 +432,7 @@ a.data-filter.filter-active:hover {
 }
 .vertical-menu #lk-menu {
     float: left;
-	margin: 3px;
+    margin: 3px;
     max-width: 160px;
     min-width: 120px;
     width: auto;
@@ -552,13 +440,12 @@ a.data-filter.filter-active:hover {
 .vertical-menu #lk-menu a {
     border-bottom: 3px solid #fff;
     display: table;
-	float: none;
-	margin: 0 3px 0 0;
+    float: none;
+    margin: 0 3px 0 0;
     white-space: normal;
-	width: 100%;
+    width: 100%;
 }
 /* Корректировки к кнопкам End */
-
 
 .rcl-data-filters {
     margin:10px 0;
@@ -580,37 +467,7 @@ a.data-filter.filter-active:hover {
     top: 0;
     width: 100%;
 }
-/* START кнопки lite */
-.cab_bttn_lite {
-    float: right;
-}
-.cab_bttn_lite > span {
-    display: inline-block;
-}
-.cab_bttn_lite .recall-button {
-	padding: 0;
-}
-.cab_bttn_lite .fa {
-    display: none;
-}
-.cab_bttn_lite .rcl-tab-button a > span {
-	color: #ccc;
-    display: table;
-    text-align: center;
-}
-.cab_bttn_lite .rcl-tab-button span span {
-    background: transparent;
-    color: #fff;
-    display: table-caption;
-    font-size: 20px;
-    font-weight: bold;
-	padding: 0;
-    text-align: center;
-}
-#lk-conteyner .cab_bttn_lite .rcl-tab-button span span > span {
-    display: table;
-}
-/* END кнопки lite */
+
 /* Кнопки End */
 
 /* фильтр поиск start */
@@ -642,6 +499,42 @@ a.data-filter.filter-active:hover {
 	padding: 2px 3px 3px;
 }
 /* фильтр поиск End */
+
+/* START аватар и элементы управления внутри него */
+#rcl-avatar{
+    position: relative;
+}
+#rcl-avatar .avatar-icons{
+    display: block;
+    line-height: 1;
+}
+#rcl-avatar .avatar-icons .rcl-avatar-icon{
+    cursor:pointer;
+}
+#rcl-avatar .avatar-icons .rcl-avatar-icon a{
+    display: inline-block;
+    position: relative;
+}
+#rcl-avatar .icon-avatar-upload span{
+    overflow: hidden;
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+#rcl-avatar .icon-avatar-upload input[type="file"]{
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    height: 100%;
+    z-index: 9;
+    cursor: pointer;
+    opacity: 0;
+}
+/* END аватар и элементы управления внутри него */
 
 /*Произвольные поля плагина*/
 .rcl-field-input{
@@ -688,25 +581,25 @@ a.data-filter.filter-active:hover {
 /**/
 
 /* Контент лк Start */
-#lk-content .recall_content_block {
-	background: rgba(255, 255, 255, 0.7);
+#rcl-office .recall_content_block {
+    background: rgba(255, 255, 255, 0.7);
     padding: 4px 5px;
-	overflow:hidden;
-	display: none;
-	position:relative;
+    overflow:hidden;
+    display: none;
+    position:relative;
 }
-#lk-content .recall_content_block.active {
-	display:block;
+#rcl-office .recall_content_block.active {
+    display:block;
 }
-#lk-content tr {
-	background: #fff;
+#rcl-office .recall_content_block tr {
+    background: #fff;
 }
-#lk-content th,
-#lk-content td {
+#rcl-office .recall_content_block th,
+#rcl-office .recall_content_block td {
     border: 1px solid rgb(243, 243, 243);
     padding: 5px;
     text-align: left;
-	text-transform: none;					/*++Twenty14++*/
+    text-transform: none;					/*++Twenty14++*/
     vertical-align: middle;
 }
 /* Контент лк End */
@@ -873,45 +766,30 @@ div.ssi-backdrop {
 } */
 
 @media screen and (max-width:360px) {
-	#userpic-upload #webcamupload {
-		float: right;
-	}
-	#lk-content {
-		margin: 0;
-	}
-	#lk-content .recall_content_block {
-		padding: 2px;
-	}
-	#lk-content th,
-	#lk-content td {
-		padding: 4px 2px;
-	}
-	#your-profile table tr th {
-		max-width: 107px;
-		-webkit-hyphens: auto;
-		hyphens: auto;
-		word-wrap: break-word;
-	}
-	#your-profile table td a {
-		font-size: 13px;
-		margin: 3px 0;
-		width: 83px;
-	}
-	#tab-profile .file-field-upload {
-		width: 205px;
-	}
+    #userpic-upload #webcamupload {
+        float: right;
+    }
+    #rcl-office .recall_content_block {
+        margin: 0;
+    }
+    #rcl-office .recall_content_block {
+        padding: 2px;
+    }
+    #rcl-office .recall_content_block th,
+    #rcl-office .recall_content_block td {
+        padding: 4px 2px;
+    }
 }
-
 
 /* START галерея и видеогалерея - выделить в одно ядро */
 #rcl-popup {
     background: #f8f8f8;
-	border-radius: 3px;
-	box-sizing: border-box;
-	color: #333;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: #333;
     display: block;
     left: 50%;
-	line-height: 1.4;
+    line-height: 1.4;
     max-width: 80%;
     position: absolute;
     top: 10%;
@@ -921,26 +799,26 @@ div.ssi-backdrop {
     z-index: 999;
 }
 #rcl-popup h2 {
-	clear: none;
+    clear: none;
     font-size: 18px;
     line-height: 1;
     margin: 0;
     padding: 8px 0 0 5px;
     text-transform: none;
-	width: calc(100% - 40px);
+    width: calc(100% - 40px);
 }
 #rcl-popup h4 {
-	clear:both;
+    clear:both;
     font-size: 16px;
-	line-height: 1;
+    line-height: 1;
     margin: 8px 0 0;
     overflow: hidden;
     padding: 0 10px 4px;
-	text-transform: none;
+    text-transform: none;
 }
 #rcl-popup p {
     margin: 0 10px 10px;
-	padding: 0;
+    padding: 0;
 }
 #rcl-popup textarea {
     border: 1px solid #ccc;
@@ -948,7 +826,7 @@ div.ssi-backdrop {
     color: #000;
     display: block;
     margin: 10px auto;
-	min-height: 80px;
+    min-height: 80px;
     padding: 5px;
     width: 98%;
 }
@@ -966,24 +844,24 @@ div.ssi-backdrop {
     margin: 0 10px 0 0;
 }
 #rcl-popup .navi-gallery {
-	color: #ccc;
+    color: #ccc;
     cursor: pointer;
-	font-size: 50px;
+    font-size: 50px;
     height: 50px;
     left: 50%;
-	line-height: 50px;
+    line-height: 50px;
     opacity: 0.6;
     position: absolute;
     top: 200px;
-	-webkit-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     width: auto;
 }
 #rcl-popup .navi-gallery:hover {
-	opacity: 1;
+    opacity: 1;
 }
 #rcl-popup .prev-attach {
-	float: left;
+    float: left;
     margin-left: -54%;
 }
 #rcl-popup .next-attach {
@@ -1000,22 +878,15 @@ div.ssi-backdrop {
 }
 
 /* START upload cover */
-.fa.cab_cover_upl {
-    background: rgba(0, 0, 0, 0.3);
-    color: #ddd;
-    float: right;
-    font-size: 26px;
-	line-height: 1;
+#rcl-office .rcl-cover-icon{
+    line-height: 1;
     overflow: hidden;
-    padding: 4px 7px;
-	position: relative;
-    z-index: 3;
+    position: relative;
 }
-.cab_cover_upl:hover{
-    color: #eee;
+#rcl-office .rcl-cover-icon:hover{
     cursor: pointer;
 }
-.cab_cover_upl input{
+#rcl-office .rcl-cover-icon input[type="file"]{
     cursor: pointer;
     opacity: 0;
     position: absolute;

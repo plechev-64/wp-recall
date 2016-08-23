@@ -29,9 +29,10 @@ add_action('rcl_area_top','rcl_add_cover_uploader_button',10);
 function rcl_add_cover_uploader_button(){
     global $user_ID;
     if(rcl_is_office($user_ID)){
-        echo '<span class="fa fa-camera cab_cover_upl" title="Загрузите обложку">
+        echo '<span class="rcl-cover-icon" title="Загрузите обложку">
+                <i class="fa fa-camera"></i>
                 <input type="file" id="rcl-cover-upload" accept="image/*" name="cover-file">
-        </span>';
+            </span>';
     }
 }
 

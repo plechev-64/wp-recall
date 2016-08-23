@@ -1,3 +1,103 @@
+/* блок lk-conteyner start */
+#lk-conteyner {
+    background-color: #e3e3e3;
+    overflow: hidden;
+    position: relative;
+}
+.lk-sidebar {
+    float: left;
+    line-height: 1;				/*++Twenty16++*/
+}
+/* блок lk-conteyner end */
+
+/* START upload cover */
+#rcl-office .rcl-cover-icon{
+    background: rgba(0, 0, 0, 0.3);
+    color: #ddd;
+    float: right;
+    font-size: 26px;
+    padding: 4px 7px;
+    z-index: 3;
+}
+#rcl-office .rcl-cover-icon:hover{
+    color: #eee;
+}
+/* END upload cover */
+
+/* START кнопки lite */
+.cab_bttn_lite {
+    float: right;
+}
+.cab_bttn_lite > span {
+    display: inline-block;
+}
+.cab_bttn_lite .recall-button {
+	padding: 0;
+}
+.cab_bttn_lite .fa {
+    display: none;
+}
+.cab_bttn_lite .rcl-tab-button a > span {
+	color: #ccc;
+    display: table;
+    text-align: center;
+}
+.cab_bttn_lite .rcl-tab-button span span {
+    background: transparent;
+    color: #fff;
+    display: table-caption;
+    font-size: 20px;
+    font-weight: bold;
+	padding: 0;
+    text-align: center;
+}
+#lk-conteyner .cab_bttn_lite .rcl-tab-button span span > span {
+    display: table;
+}
+/* END кнопки lite */
+
+/* START аватар и элементы управления внутри него */
+#rcl-avatar{
+    border: 5px solid #fff;
+}
+#rcl-avatar .avatar-icons{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+#rcl-avatar .avatar-icons .rcl-avatar-icon{
+    position: absolute;
+}
+#rcl-avatar .avatar-icons .rcl-avatar-icon a{
+    font-size: 20px;
+    padding: 5px;
+    background: rgb(216, 231, 238);
+    color: rgb(229, 57, 53);
+    opacity: 0.7;
+}
+#rcl-avatar .avatar-icons .rcl-avatar-icon a:hover{
+    opacity: 1;
+}
+#rcl-avatar .icon-avatar-delete{
+    top: 0;
+    right: 0;
+    display: none;
+}
+#rcl-avatar:hover .icon-avatar-delete{
+    display:block
+}
+#rcl-avatar .icon-avatar-upload{
+    bottom: 0;
+    left: 0;
+}
+#rcl-avatar .icon-webcam-upload{
+    bottom: 0;
+    left: 35px;
+}
+/* END аватар и элементы управления внутри него */
+
 .office-sunshine #lk-conteyner {
     background-position: 50% 50%;
     background-repeat: no-repeat;

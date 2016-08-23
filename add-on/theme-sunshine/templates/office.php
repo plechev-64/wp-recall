@@ -16,9 +16,7 @@ http://blog.sodhanalibrary.com/2014/01/responsive-menu-or-navigation-bar-with.ht
         <div class="cab_content">
             <div class="cab_center">
                 <div class="lk-sidebar">
-                    <div class="lk-avatar">
-                        <?php rcl_avatar(200); ?>
-                    </div>
+                    <?php rcl_avatar(200); ?>
                 </div>
                 <div class="cab_title">
                     <h2><?php rcl_username(); ?></h2>
