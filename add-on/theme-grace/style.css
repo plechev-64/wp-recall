@@ -96,6 +96,10 @@
     bottom: 0;
     left: 35px;
 }
+#rcl-avatar .icon-user-info{
+    top: 0;
+    left: 0;
+}
 /* END аватар и элементы управления внутри него */
 
 /* START cab 15 lite */

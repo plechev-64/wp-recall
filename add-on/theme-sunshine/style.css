@@ -96,6 +96,10 @@
     bottom: 0;
     left: 35px;
 }
+#rcl-avatar .icon-user-info{
+    top: 0;
+    left: 0;
+}
 /* END аватар и элементы управления внутри него */
 
 .office-sunshine #lk-conteyner {
@@ -398,9 +402,9 @@
 	.office-sunshine .lk-sidebar {
 		display: block;
 		float: none;
-		height: 250px;
+		height: 210px;
 		margin: 15px auto 10px;
-		width: 250px;
+		width: 210px;
 	}
 	.lk-avatar .cab_usr_info {
 		font-size: 32px;

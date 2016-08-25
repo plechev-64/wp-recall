@@ -229,6 +229,33 @@ function rcl_add_namegroup($content){
     return $content;
 }
 
+if(is_admin())
+    add_action('created_groups','rcl_groups_admin_create',10);
+function rcl_groups_admin_create($term_id){
+   global $user_ID,$wpdb;
+   
+   $term = get_term( $term_id, 'groups' );
+   
+   if($term->parent) return false;
+   
+   $result = $wpdb->insert(
+        RCL_PREF.'groups',
+        array(
+            'ID'=>$term_id,
+            'admin_id'=>$user_ID,
+            'group_status'=>'open',
+            'group_date'=>current_time('mysql')
+        )
+    );
+
+    if(!$result) return false;
+
+    rcl_update_group_option($term_id,'can_register',1);
+    rcl_update_group_option($term_id,'default_role','author');
+
+    do_action('rcl_create_group',$term_id);
+}
+
 //Создаем новую группу
 function rcl_new_group(){
 

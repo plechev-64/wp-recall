@@ -471,7 +471,7 @@ function rcl_custom_fields_regform($field){
             $field .= '<div class="form-block-rcl '.$class.'" '.$id.' '.$attr.'>';
             $star = ($custom_field['requared']==1)? ' <span class="required">*</span> ': '';
             $field .= '<label>'.$cf->get_title($custom_field).$star.'';
-            if($custom_field['type']) $field .= ':';
+            if($custom_field['type']) $field .= '<span class="colon">:</span>';
             $field .= '</label>';
 
             $field .= $cf->get_input($custom_field,$_POST[$custom_field['slug']]);

@@ -62,10 +62,9 @@ function rcl_button_avatar_upload($icons){
         
         $icons['webcam-upload'] = array(
             'icon' => 'fa-camera',
-            'content'=> '<span id="webcamupload"></span>',
             'atts' => array(
-                'title' => __('Webcam upload','wp-recall'),
-                'onclick' => 'rcl_avatar_webcam_upload(this);return false;',
+                'title' => __('Webcam screen','wp-recall'),
+                'id' => 'webcamupload',
                 'url' => '#'
             )
         );

@@ -18,6 +18,8 @@ The plugin allows you to exchange private messages and more. Plug-in extends its
 WordPress плагин для создания личного кабинета пользователя. Кроме этого плагин добавляет личные сообщения, пользовательские группы, отзывы, систему рейтинга, подписок и многое другое.
 Плагин расширяет свой функционал за счет своих дополнений. Дополнения плагина имеют функционал автоматического обновления.
 
+[youtube https://www.youtube.com/watch?v=vXVKI8Ie0lY]
+
 To expand its functional plugin uses supplements.
 General information about the plug-ons:
 http://codeseller.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/

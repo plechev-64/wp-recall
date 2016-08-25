@@ -2,10 +2,6 @@ jQuery(function($){
     rcl_avatar_uploader();
 });
 
-function rcl_avatar_webcam_upload(e){
-    jQuery('#webcamupload').click();
-}
-
 function rcl_avatar_uploader(){
     jQuery('#userpicupload').fileupload({
         dataType: 'json',
