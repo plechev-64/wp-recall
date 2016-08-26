@@ -611,40 +611,37 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
 
 function rcl_get_list_custom_fields($post_id,$posttype=false,$id_form=false){
 
-	$get_fields = rcl_get_custom_fields($post_id,$posttype,$id_form);
+    $get_fields = rcl_get_custom_fields($post_id,$posttype,$id_form);
 
-	if(!$get_fields) return false;
+    if(!$get_fields) return false;
 
-        $public_fields = '';
+    $data = array(
+        'ID'=>$post_id,
+        'post_type'=>$posttype,
+        'form_id'=>$id_form
+    );
 
-        $data = array(
-            'ID'=>$post_id,
-            'post_type'=>$posttype,
-            'form_id'=>$id_form
-        );
+    $cf = new Rcl_Custom_Fields();
+    
+    $public_fields = '<table>';
 
-        $cf = new Rcl_Custom_Fields();
+    foreach((array)$get_fields as $key=>$custom_field){
+        if($key==='options') continue;
 
-	foreach((array)$get_fields as $key=>$custom_field){
-                if($key==='options') continue;
+        $custom_field = apply_filters('custom_field_public_form',$custom_field,$data);
 
-                $custom_field = apply_filters('custom_field_public_form',$custom_field,$data);
+        $star = ($custom_field['requared']==1)? '<span class="required">*</span> ': '';
+        $postmeta = ($post_id)? get_post_meta($post_id,$custom_field['slug'],1):'';
 
-                $star = ($custom_field['requared']==1)? '<span class="required">*</span> ': '';
-		$postmeta = ($post_id)? get_post_meta($post_id,$custom_field['slug'],1):'';
+        $public_fields .= '<tr><th><label>'.$cf->get_title($custom_field).$star.':</label></th>';
+        $public_fields .= '<td>'.$cf->get_input($custom_field,$postmeta).'</td>';
+        $public_fields .= '</tr>';
+    }
 
-		$public_fields .= '<tr><th><label>'.$cf->get_title($custom_field).$star.':</label></th>';
-		$public_fields .= '<td>'.$cf->get_input($custom_field,$postmeta).'</td>';
-		$public_fields .= '</tr>';
-	}
-
-	if(isset($public_fields)){
-            $public_fields = '<table>'.$public_fields.'</table>';
-            return $public_fields;
-        }else{
-            return false;
-        }
-
+    $public_fields .= '</table>';
+    
+    return $public_fields;
+    
 }
 
 if(!is_admin()) add_filter('get_edit_post_link','rcl_edit_post_link',100,2);

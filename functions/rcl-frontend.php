@@ -16,6 +16,7 @@ function rcl_avatar($avatar_size = 120){
     <div id="rcl-avatar">
         <span class="avatar-image">
             <?php echo get_avatar($user_LK,$avatar_size); ?>
+            <span id="avatar-upload-progress"><span></span></span>
         </span>
         <?php do_action('rcl_avatar'); ?>
     </div>
