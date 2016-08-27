@@ -321,6 +321,7 @@ class Rcl_PublicForm {
     }
     
     function init_form_scripts(){
+        global $formData;
         $id_post = ($formData->post_id)? $formData->post_id : 0;
         echo '<script type="text/javascript">rcl_init_public_form("'.$formData->post_type.'","'.$id_post.'");</script>';
     }
