@@ -156,6 +156,16 @@ function rcl_setup_blocks(){
     do_action('rcl_setup_blocks');
 }
 
+function rcl_subtabs($subtabs,$parent_id){
+    
+    include_once 'functions/class-rcl-sub-tabs.php';
+    
+    $subtab = new Rcl_Sub_Tabs($subtabs,$parent_id);
+    
+    return $subtab->get_sub_content();
+    
+}
+
 function rcl_get_addon_dir($path){
     if(function_exists('wp_normalize_path')) 
         $path = wp_normalize_path($path);
@@ -175,24 +185,6 @@ function rcl_postlist($id,$post_type,$name='',$args=false){
     
     $rcl_postlist[$post_type] = array('id'=>$id,'post_type'=>$post_type,'name'=>$name,'args'=>$args);
 
-}
-
-//добавляем зарегистрированные списки публикаций в личный кабинет
-add_action('rcl_construct_publics_tab','rcl_init_postslist',10);
-function rcl_init_postslist(){
-    global $rcl_options,$rcl_postlist,$user_LK;
-    
-    if($rcl_options['publics_block_rcl']!=1||!$user_LK) return false;
-    
-    if($rcl_postlist){
-        
-        if (!class_exists('Rcl_Postlist')) 
-                include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
-        
-        foreach($rcl_postlist as $post_type=>$data){
-            $plist = new Rcl_Postlist($data['id'],$data['post_type'],$data['name'],$data['args']);
-        }
-    }
 }
 
 //регистрация recalolbar`a

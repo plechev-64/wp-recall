@@ -95,18 +95,20 @@ class Rcl_Tabs{
             $content = $callback($author_lk);
         }
 
-        $content = apply_filters('rcl_tab_'.$this->id,$content);
-
         return $content;
 
     }
     
     function get_tab_content($author_lk){
+        
         if($this->callback){
             $content = $this->get_callback_content($author_lk);
         }else if($this->args['content']){
             $content = apply_filters('rcl_custom_tab_content',stripslashes_deep($this->args['content']));
         }
+        
+        $content = apply_filters('rcl_tab_'.$this->id,$content);
+        
         return $content;
     }
     

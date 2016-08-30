@@ -197,22 +197,19 @@ body .rcl_preloader{
     text-shadow: 0 0 1px #5a0d0c;
 }
 @keyframes pulsate {
-	25% {
-		transform: scale(1.025);
-	}
-	50% {
-		color: #A3F558;
-		text-shadow: 0 0 3px #35e668;
-		transform: scale(1.05);
-	}
-	75% {
-		transform: scale(1.025);
-	}
+    25% {
+        transform: scale(1.025);
+    }
+    50% {
+        color: #A3F558;
+        text-shadow: 0 0 3px #35e668;
+        transform: scale(1.05);
+    }
+    75% {
+        transform: scale(1.025);
+    }
 }
 /* общие стили End */
-
-
-
 
 /* Личный кабинет start*/
 
@@ -342,22 +339,8 @@ body #rcl-office .ballun-status p.status-user-rcl {
 #lk-content {
     margin: 3px;
 }
-#rcl-office .rcl-sub-menu {
-    overflow: hidden;
-    background: #f7f8f8;
-    padding: 10px;
-    margin: 5px 0;
-}
-#rcl-office .rcl-sub-menu .recall-button{
-    display: inline-block;
-    padding: 7px;
-    margin-right: 5px;
-}
-#rcl-office a.sec_block_button i.fa {
-	margin: 0 5px 0 0;
-}
 /* Группа кнопок Start */
-	/* Основной стиль кнопок Start */
+    /* Основной стиль кнопок Start */
         
 .recall-button i + span {
     margin: 0 0 0 5px;
@@ -446,6 +429,41 @@ a.data-filter.filter-active:hover {
     width: 100%;
 }
 /* Корректировки к кнопкам End */
+
+/*START Меню субвкладок ЛК*/
+.rcl-subtab-menu{
+    overflow: hidden;
+    background: #f7f8f8;
+    padding: 10px;
+    margin: 5px 0;
+}
+.rcl-subtab-menu .rcl-subtab-button{
+    display: inline-block;
+    padding: 7px;
+    margin-right: 5px;
+}
+.rcl-subtab-menu .rcl-subtab-button.active,
+.rcl-subtab-menu .rcl-subtab-button:hover{
+    
+}
+
+/*ниже устаревшие стили субвкладок, позднее удалить*/
+#rcl-office .rcl-sub-menu {
+    overflow: hidden;
+    background: #f7f8f8;
+    padding: 10px;
+    margin: 5px 0;
+}
+#rcl-office .rcl-sub-menu .recall-button{
+    display: inline-block;
+    padding: 7px;
+    margin-right: 5px;
+}
+#rcl-office a.sec_block_button i.fa {
+	margin: 0 5px 0 0;
+}
+
+/*END*/
 
 .rcl-data-filters {
     margin:10px 0;

@@ -57,8 +57,18 @@
 /* END кнопки lite */
 
 /* START аватар и элементы управления внутри него */
-#rcl-avatar{
+#rcl-avatar {
     border: 5px solid #fff;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 100%;
+    position: static;
+}
+#rcl-avatar img {
+    border-radius: 0;
+    display: inline-block;
+    max-height: 100%;
+    max-width: 100%;
 }
 #rcl-avatar .avatar-icons{
     position: absolute;

@@ -509,22 +509,25 @@ function rcl_apply_group_request(){
 //исключаем из поиска публикации из закрытых групп 
 add_action('pre_get_posts','rcl_search_filter_closed_posts',10);
 function rcl_search_filter_closed_posts($query) {
-    global $user_ID;
+
     if ( ! is_admin() && $query->is_main_query() ) {
-          if ($query->is_search) {
-              $groups = rcl_get_closed_groups($user_ID);
-              
-              if(!$groups) return $query; 
-              
-              $query->set( 'tax_query', array(
-                    array(
-                        'taxonomy' => 'groups',
-                        'field' => 'id',
-                        'terms' => $groups,
-                        'operator' => 'NOT IN'
-                    )
-                ) );
-          }
+        
+        global $user_ID;
+        
+        if ($query->is_search) {
+          $groups = rcl_get_closed_groups($user_ID);
+
+          if(!$groups) return $query; 
+
+          $query->set( 'tax_query', array(
+                array(
+                    'taxonomy' => 'groups',
+                    'field' => 'id',
+                    'terms' => $groups,
+                    'operator' => 'NOT IN'
+                )
+            ) );
+        }
     }
     return $query;
 }

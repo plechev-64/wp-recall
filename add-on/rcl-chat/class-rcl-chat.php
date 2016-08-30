@@ -215,6 +215,11 @@ class Rcl_Chat {
         
         $message = apply_filters('rcl_pre_insert_chat_message',$message);
         
+        if(!$message){
+            $this->add_error('insert_message',__('The message was not added','wp-recall'));
+            return $this->errors();
+        }
+        
         $result = $wpdb->insert(
             RCL_PREF.'chat_messages',
             $message

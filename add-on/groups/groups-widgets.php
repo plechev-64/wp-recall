@@ -1,7 +1,7 @@
 <?php
 include_once 'classes/rcl-group-widget.php';
 
-add_action('init','rcl_group_add_primary_widget');
+add_action('init','rcl_group_add_primary_widget',10);
 function rcl_group_add_primary_widget(){
     rcl_group_register_widget('Group_Primary_Widget');
 }
@@ -94,7 +94,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 
 }
 
-add_action('init','rcl_group_add_users_widget');
+add_action('init','rcl_group_add_users_widget',10);
 function rcl_group_add_users_widget(){
     rcl_group_register_widget('Group_Users_Widget');
 }
@@ -145,7 +145,7 @@ class Group_Users_Widget extends Rcl_Group_Widget {
 
 }
 
-add_action('init','rcl_group_add_publicform_widget');
+add_action('init','rcl_group_add_publicform_widget',10);
 function rcl_group_add_publicform_widget(){
     rcl_group_register_widget('Group_PublicForm_Widget');
 }
@@ -189,7 +189,7 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 
 }
 
-add_action('init','rcl_group_add_categorylist_widget');
+add_action('init','rcl_group_add_categorylist_widget',10);
 function rcl_group_add_categorylist_widget(){
     rcl_group_register_widget('Group_CategoryList_Widget');
 }
@@ -232,7 +232,7 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
 
 }
 
-add_action('init','rcl_group_add_admins_widget');
+add_action('init','rcl_group_add_admins_widget',10);
 function rcl_group_add_admins_widget(){
     rcl_group_register_widget('Group_Admins_Widget');
 }
@@ -303,7 +303,7 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 
 }
 
-add_action('init','rcl_group_add_posts_widget');
+add_action('init','rcl_group_add_posts_widget',10);
 function rcl_group_add_posts_widget(){
     global $rcl_options;
     if(!isset($rcl_options['groups_posts_widget'])||!$rcl_options['groups_posts_widget']) return false;

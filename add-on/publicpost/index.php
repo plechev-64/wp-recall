@@ -51,15 +51,6 @@ function rcl_admin_page_publicform(){
     add_submenu_page( 'manage-wprecall', __('Form of publication','wp-recall'), __('Form of publication','wp-recall'), 'manage_options', 'manage-public-form', 'rcl_manage_publicform');
 }
 
-//add_filter('after_public_form_rcl','rcl_saveform_data_script',10,2);
-function rcl_saveform_data_script($content,$data){
-    $idform = 'form-'.$data->post_type.'-';
-    $idform .= ($data->post_id)? $data->post_id : 0;
-    $content .= '<script type="text/javascript" src="'.rcl_addon_url('js/sisyphus.min.js',__FILE__).'"></script>'
-            . '<script>jQuery( function() { jQuery( "#'.$idform.'" ).sisyphus({timeout:10}) } );</script>';
-    return $content;
-}
-
 add_action('init','rcl_add_postlist_posts',10);
 function rcl_add_postlist_posts(){
     rcl_postlist('posts','post',__('Records','wp-recall'),array('order'=>30));
@@ -94,145 +85,121 @@ function rcl_tab_postform($author_lk){
 }
 
 function rcl_tab_publics($author_lk){
-    global $user_ID;
-
-    $p_button = apply_filters('posts_button_rcl','',$author_lk);
-    $posts_block = '<div class="rcl-sub-menu">'.$p_button.'</div>';
-
-    $p_block = apply_filters('posts_block_rcl','',$author_lk);
-    $posts_block .= $p_block;
-
-    return $posts_block;
-}
-
-function rcl_get_postlist_page(){
-	global $wpdb;
+    global $user_ID,$rcl_postlist;
+    
+    $subtabs = array();
+    
+    if($rcl_postlist){
         
-        rcl_verify_ajax_nonce();
+        foreach($rcl_postlist as $post_type=>$data){
+            $subtabs[] = array(
+                        'id' => 'type-'.$post_type,
+                        'name' => $data['name'],
+                        'icon' => 'fa-list',
+                        'callback' => array(
+                            'name'=>'rcl_get_postslist',
+                            'args'=>array($author_lk,$post_type,$data['name'])
+                        )
+                    );
+        }
+        
+    }
 
-	$type = sanitize_text_field($_POST['type']);
-	$start = intval($_POST['start']);
-	$author_lk = intval($_POST['id_user']);
-
-	$start .= ',';
-
-	//$edit_url = rcl_format_url(get_permalink($rcl_options['public_form_page_rcl']));
-
-	$posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $start 20",$author_lk,$type));
-
-		$rayting = false;
-		if(function_exists('rcl_get_rating_block')){
-                        $b=0;
-			foreach((array)$posts as $p){if(++$b>1) $p_list .= ',';$p_list .= $p->ID;}
-			$rayt_p = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."total_rayting_posts WHERE post_id IN ($p_list)",$p_list));
-			foreach((array)$rayt_p as $r){$rayt[$r->post_id] = $r->total;}
-			$rayting = true;
-		}
-
-		$posts_block .='<table class="publics-table-rcl">
-		<tr>
-			<td>'.__('Date','wp-recall').'</td><td>'.__('Title','wp-recall').'</td><td>'.__('Status','wp-recall').'</td>';
-			//if($user_ID==$author_lk) $posts_block .= '<td>Ред.</td>';
-			$posts_block .= '</tr>';
-		foreach((array)$posts as $post){
-			if($post->post_status=='pending') $status = '<span class="pending">'.__('on approval','wp-recall').'</span>';
-			elseif($post->post_status=='trash') $status = '<span class="pending">'.__('deleted','wp-recall').'</span>';
-			else $status = '<span class="publish">'.__('publish','wp-recall').'</span>';
-			$posts_block .= '<tr>
-			<td>'.mysql2date('d-m-Y', $post->post_date).'</td><td><a target="_blank" href="'.$post->guid.'">'.$post->post_title.'</a>';
-			if($rayting) $posts_block .= ' '.rcl_get_rating_block($rayt[$post->ID]);
-			$posts_block .= '</td><td>'.$status.'</td>';
-			//if($user_ID==$author_lk) $posts_block .= '<td><a target="_blank" href="'.$edit_url.'rcl-post-edit='.$post->ID.'">Ред.</a></td>';
-			$posts_block .= '</tr>';
-		}
-		$posts_block .= '</table>';
-
-	$log['post_content']=$posts_block;
-	$log['recall']=100;
-
-	echo json_encode($log);
-    exit;
+    if(!$subtabs) return false;
+    
+    $content = rcl_subtabs($subtabs);
+    
+    return $content;
 }
-add_action('wp_ajax_rcl_get_postlist_page', 'rcl_get_postlist_page');
-add_action('wp_ajax_nopriv_rcl_get_postlist_page', 'rcl_get_postlist_page');
+
+function rcl_get_postslist($user_id,$post_type,$type_name){
+
+    if (!class_exists('Rcl_Postlist')) 
+        include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
+    
+    $list = new Rcl_Postlist($user_id,$post_type,$type_name);
+    
+    return $list->get_postlist_block();
+    
+}
 
 function rcl_manage_publicform(){
 	global $wpdb;
 
     rcl_sortable_scripts();
 
-	$form = (isset($_GET['form'])) ? $_GET['form']: false;
+    $form = (isset($_GET['form'])) ? $_GET['form']: false;
 
-	if(isset($_POST['delete-form'])&&wp_verify_nonce( $_POST['_wpnonce'], 'update-public-fields' )){
-            $id_form = intval($_POST['id-form']);
-            $_GET['status'] = 'old';
-            $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."options WHERE option_name LIKE 'rcl_fields_post_%d'",$id_form));
-	}
+    if(isset($_POST['delete-form'])&&wp_verify_nonce( $_POST['_wpnonce'], 'update-public-fields' )){
+        $id_form = intval($_POST['id-form']);
+        $_GET['status'] = 'old';
+        $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."options WHERE option_name LIKE 'rcl_fields_post_%d'",$id_form));
+    }
 
-	if(!$form){
-		$option_name = $wpdb->get_var("SELECT option_name FROM ".$wpdb->prefix."options WHERE option_name LIKE 'rcl_fields_post_%'");
-		if($option_name) $form = preg_replace("/[a-z_]+/", '', $option_name);
-		else $form = 1;
-	}
+    if(!$form){
+            $option_name = $wpdb->get_var("SELECT option_name FROM ".$wpdb->prefix."options WHERE option_name LIKE 'rcl_fields_post_%'");
+            if($option_name) $form = preg_replace("/[a-z_]+/", '', $option_name);
+            else $form = 1;
+    }
 
-        include_once RCL_PATH.'functions/class-rcl-editfields.php';
-        $f_edit = new Rcl_EditFields('post',array('id'=>$form,'custom-slug'=>1,'terms'=>1));
+    include_once RCL_PATH.'functions/class-rcl-editfields.php';
+    $f_edit = new Rcl_EditFields('post',array('id'=>$form,'custom-slug'=>1,'terms'=>1));
 
-	if($f_edit->verify()){
-            $_GET['status'] = 'old';
-            $fields = $f_edit->update_fields();
-	}
+    if($f_edit->verify()){
+        $_GET['status'] = 'old';
+        $fields = $f_edit->update_fields();
+    }
 
-	$custom_public_form_data = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."options WHERE option_name LIKE 'rcl_fields_post_%' ORDER BY option_id ASC");
+    $custom_public_form_data = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."options WHERE option_name LIKE 'rcl_fields_post_%' ORDER BY option_id ASC");
 
-	if($custom_public_form_data){
-		$form_navi = '<h3>'.__('Available forms','wp-recall').'</h3><div class="form-navi">';
-		foreach((array)$custom_public_form_data as $form_data){
-			$id_form = preg_replace("/[a-z_]+/", '', $form_data->option_name);
-			if($form==$id_form) $class = 'button-primary';
-			else $class = 'button-secondary';
-			$form_navi .= '<input class="'.$class.'" type="button" onClick="document.location=\''.admin_url('admin.php?page=manage-public-form&form='.$id_form).'\';" value="ID:'.$id_form.'" name="public-form-'.$id_form.'">';
-		}
-		if(!isset($_GET['status'])||$_GET['status']!='new') $form_navi .= '<input class="button-secondary" type="button" onClick="document.location=\''.admin_url('admin.php?page=manage-public-form&form='.++$id_form.'&status=new').'\';" value="'.__('To add another form').'" name="public-form-'.$id_form.'">';
-		$form_navi .= '</div>
+    if($custom_public_form_data){
+            $form_navi = '<h3>'.__('Available forms','wp-recall').'</h3><div class="form-navi">';
+            foreach((array)$custom_public_form_data as $form_data){
+                    $id_form = preg_replace("/[a-z_]+/", '', $form_data->option_name);
+                    if($form==$id_form) $class = 'button-primary';
+                    else $class = 'button-secondary';
+                    $form_navi .= '<input class="'.$class.'" type="button" onClick="document.location=\''.admin_url('admin.php?page=manage-public-form&form='.$id_form).'\';" value="ID:'.$id_form.'" name="public-form-'.$id_form.'">';
+            }
+            if(!isset($_GET['status'])||$_GET['status']!='new') $form_navi .= '<input class="button-secondary" type="button" onClick="document.location=\''.admin_url('admin.php?page=manage-public-form&form='.++$id_form.'&status=new').'\';" value="'.__('To add another form').'" name="public-form-'.$id_form.'">';
+            $form_navi .= '</div>
 
-		<h3>'.__('Form ID','wp-recall').':'.$form.' </h3>';
-		if(!isset($_GET['status'])||$_GET['status']!='new') $form_navi .= '<form method="post" action="">
-			'.wp_nonce_field('update-public-fields','_wpnonce',true,false).'
-			<input class="button-primary" type="submit" value="'.__('To remove all fields','wp-recall').'" onClick="return confirm(\''.__('You are sure?','wp-recall').'\');" name="delete-form">
-			<input type="hidden" value="'.$form.'" name="id-form">
-		</form>';
-	}else{
-		$form = 1;
-		$form_navi = '<h3>'.__('Form ID','wp-recall').':'.$form.' </h3>';
-	}
+            <h3>'.__('Form ID','wp-recall').':'.$form.' </h3>';
+            if(!isset($_GET['status'])||$_GET['status']!='new') $form_navi .= '<form method="post" action="">
+                    '.wp_nonce_field('update-public-fields','_wpnonce',true,false).'
+                    <input class="button-primary" type="submit" value="'.__('To remove all fields','wp-recall').'" onClick="return confirm(\''.__('You are sure?','wp-recall').'\');" name="delete-form">
+                    <input type="hidden" value="'.$form.'" name="id-form">
+            </form>';
+    }else{
+            $form = 1;
+            $form_navi = '<h3>'.__('Form ID','wp-recall').':'.$form.' </h3>';
+    }
 
-	$users_fields = '<h2>'.__('Arbitrary form fields publishing','wp-recall').'</h2>
-	<small>'.__('To embed forms publications use the shortcode','wp-recall').' [public-form]</small><br>
-        <small>'.__('You can create a different set of custom fields for different forms','wp-recall').'.<br>
-        Чтобы вывести определенный набор полей через шорткод следует указать идентификатор формы, например, [public-form id="2"]</small><br>
-	<small>Форма публикации уже содержит обязательные поля для заголовка записи, контента, ее категории и указания метки.</small><br>
-	'.$form_navi.'
-	'.$f_edit->edit_form(array(
-            $f_edit->option('textarea',array(
-                'name'=>'notice',
-                'label'=>__('signature to the field','wp-recall')
-            )),
-            $f_edit->option('select',array(
-                'name'=>'requared',
-                'notice'=>__('required field','wp-recall'),
-                'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-            ))
-        )).'
-	<p>Чтобы вывести все данные занесенные в созданные произвольные поля формы публикации внутри опубликованной записи можно воспользоваться функцией<br />
-	<b>rcl_get_custom_post_meta($post_id)</b><br />
-	Разместите ее внутри цикла и передайте ей идентификатор записи первым аргументом<br />
-	Также можно вывести каждое произвольное поле в отдельности через функцию<br />
-	<b>get_post_meta($post_id,$slug,1)</b><br />
-	где<br />
-	$post_id - идентификатор записи<br />
-	$slug - ярлык произвольного поля формы</p>';
-	echo $users_fields;
+    $users_fields = '<h2>'.__('Arbitrary form fields publishing','wp-recall').'</h2>
+    <small>'.__('To embed forms publications use the shortcode','wp-recall').' [public-form]</small><br>
+    <small>'.__('You can create a different set of custom fields for different forms','wp-recall').'.<br>
+    Чтобы вывести определенный набор полей через шорткод следует указать идентификатор формы, например, [public-form id="2"]</small><br>
+    <small>Форма публикации уже содержит обязательные поля для заголовка записи, контента, ее категории и указания метки.</small><br>
+    '.$form_navi.'
+    '.$f_edit->edit_form(array(
+        $f_edit->option('textarea',array(
+            'name'=>'notice',
+            'label'=>__('signature to the field','wp-recall')
+        )),
+        $f_edit->option('select',array(
+            'name'=>'requared',
+            'notice'=>__('required field','wp-recall'),
+            'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+        ))
+    )).'
+    <p>Чтобы вывести все данные занесенные в созданные произвольные поля формы публикации внутри опубликованной записи можно воспользоваться функцией<br />
+    <b>rcl_get_custom_post_meta($post_id)</b><br />
+    Разместите ее внутри цикла и передайте ей идентификатор записи первым аргументом<br />
+    Также можно вывести каждое произвольное поле в отдельности через функцию<br />
+    <b>get_post_meta($post_id,$slug,1)</b><br />
+    где<br />
+    $post_id - идентификатор записи<br />
+    $slug - ярлык произвольного поля формы</p>';
+    echo $users_fields;
 }
 
 //формируем галерею записи
