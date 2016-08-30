@@ -50,11 +50,16 @@ function rcl_bar_add_chat_icon(){
 add_filter('rcl_init_js_variables','rcl_init_js_chat_variables',10);
 function rcl_init_js_chat_variables($data){
     global $rcl_options;
+    
     $data['chat']['sounds'] = rcl_addon_url('sounds/',__FILE__);
     $data['chat']['words'] = (isset($rcl_options['chat']['words']))? $rcl_options['chat']['words']: 400;
     $data['chat']['delay'] = (isset($rcl_options['chat']['delay']))? $rcl_options['chat']['delay']*1000: 15000;
     $data['chat']['inactivity'] = (isset($rcl_options['chat']['inactivity']))? $rcl_options['chat']['inactivity']: 10;
     $data['chat']['file_size'] = (isset($rcl_options['chat']['file_size']))? $rcl_options['chat']['file_size']: 2;
+    
+    $data['local']['empty_mess'] = __('Write something','wp-recall');
+    $data['local']['max_words'] = __('Exceeds the maximum message size','wp-recall');
+    
     return $data;
 }
 

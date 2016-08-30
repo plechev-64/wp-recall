@@ -102,9 +102,17 @@ function rcl_chat_add_new_message(form){
     
     var token = form.children('[name="chat[token]"]').val();
     var chat = jQuery('.rcl-chat[data-token="'+token+'"]');
+    var message_text = form.children('textarea').val();
     
-    if(!form.children('textarea').val()){
+    var counter = max - message_text.length;
+    
+    if(!message_text.length){
         rcl_notice('Напишите что-нибудь','error',10000);
+        return false;
+    }
+    
+    if(message_text.length>Rcl.chat.words){
+        rcl_notice('Превышен максимальный размер сообщения','error',10000);
         return false;
     }
     

@@ -396,6 +396,10 @@ a.data-filter.filter-active:hover {
     color: rgb(30, 56, 75);
     opacity: 1;
 }
+
+#rcl-office #lk-menu a.recall-button.active {
+    pointer-events: none;
+}
 /* Состояния кнопок End */
 
 /* Корректировки к кнопкам Start */
