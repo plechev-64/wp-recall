@@ -4,30 +4,7 @@
 function rcl_tab($tab_data,$deprecated_callback ,$deprecated_name='',$deprecated_args=false){
     global $rcl_tabs;
     
-    if(is_array($tab_data)){
-        
-        if(is_array($tab_data['content'])){
-
-            if(count($tab_data['content'])==1 && isset($tab_data['content']['callback'])){
-
-                $callback = $tab_data['content']['callback'];
-
-                $tab_data['content'] = array(
-                    array(
-                        'id'=> (isset($tab_data['id']))? $tab_data['id']: 'subtab-1',
-                        'name'=> (isset($tab_data['name']))? $tab_data['name']: 'Subtab',
-                        'icon'=> (isset($tab_data['icon']))? $tab_data['icon']: 'fa-cog',
-                        'callback' => array(
-                            'name'=> $callback
-                        )
-                    )
-                );
-
-            }
-        
-        }
-        
-    }else{ //поддержка старого варианта регистрации вкладки
+    if(!is_array($tab_data)){ //поддержка старого варианта регистрации вкладки
         
         $args_tab = array(
             'id'=> $tab_data, 
@@ -53,7 +30,7 @@ function rcl_tab($tab_data,$deprecated_callback ,$deprecated_name='',$deprecated
         }
         
         $args_tab['counter'] = (isset($deprecated_args['counter']))? $deprecated_args['counter']: false;
-        $args_tab['public'] = (isset($deprecated_args['public']))? $deprecated_args['public']: 1;
+        $args_tab['public'] = (isset($deprecated_args['public']))? $deprecated_args['public']: 0;
         $args_tab['icon'] = (isset($deprecated_args['class']))? $deprecated_args['class']: 'fa-cog';
         $args_tab['output'] = (isset($deprecated_args['output']))? $deprecated_args['output']: 'menu';
         
@@ -85,7 +62,14 @@ function rcl_init_custom_tabs(){
             'public'=>$tab['public'],
             'icon'=>$tab['icon'],
             'output'=>'menu',
-            'content'=>$tab['content']
+            'content'=> array(
+                array(
+                    'id'=> 'subtab-1',
+                    'name'=> $tab['title'],
+                    'icon'=> $tab['icon'],
+                    'content'=>$tab['content']
+                )
+            )
         );
         
         if($tab['cache']){

@@ -18,6 +18,7 @@ class Rcl_Sub_Tabs {
     public $active_tab;
     public $parent_id;
     public $callback;
+    public $content;
     
     function __construct($subtabs,$parent_id = false){
         
@@ -27,7 +28,8 @@ class Rcl_Sub_Tabs {
         
         foreach($this->subtabs as $key=>$tab){
             if($this->active_tab==$tab['id']){
-                $this->callback = $tab['callback'];
+                $this->callback = (isset($tab['callback']))? $tab['callback']: false;
+                $this->content = (isset($tab['content']))? $tab['content']: false;
             }
         }
     }
@@ -63,17 +65,27 @@ class Rcl_Sub_Tabs {
     }
     
     function get_subtab($author_lk){
+        
+        //print_r($this);
 
         $content = '<div id="subtab-'.$this->active_tab.'" class="rcl-subtab-content">';
         
-        if(isset($this->callback['args'])){
-            $args = $this->callback['args'];
-            array_unshift($args,$author_lk);
-        }else{
-            $args = array($author_lk);
+        if($this->content){
+            
+            $content .= apply_filters('rcl_custom_tab_content',stripslashes_deep($this->content));
+            
+        }else if($this->callback){
+            
+            if(isset($this->callback['args'])){
+                $args = $this->callback['args'];
+                array_unshift($args,$author_lk);
+            }else{
+                $args = array($author_lk);
+            }
+
+            $content .= call_user_func_array($this->callback['name'],$args);
+            
         }
-        
-        $content .= call_user_func_array($this->callback['name'],$args);
 
         $content .= '</div>';
 

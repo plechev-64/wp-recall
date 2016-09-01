@@ -32,7 +32,7 @@ function rcl_add_userlist_follow_button(){
     echo '<div class="follow-button">'.rcl_add_feed_button($rcl_user->ID).'</div>';
 }
 
-add_action('init','rcl_add_followers_tab');
+add_action('init','rcl_add_followers_tab',10);
 function rcl_add_followers_tab(){
     global $user_LK;
     $count = 0;
@@ -42,7 +42,7 @@ function rcl_add_followers_tab(){
     rcl_tab('followers','rcl_followers_tab',__('Followers','wp-recall'),array('public'=>1,'ajax-load'=>true,'cache'=>true,'output'=>'counters','counter'=>$count,'class'=>'fa-twitter'));
 }
 
-add_action('init','rcl_add_subscriptions_tab');
+add_action('init','rcl_add_subscriptions_tab',10);
 function rcl_add_subscriptions_tab(){
     global $user_LK;
     $count = 0;

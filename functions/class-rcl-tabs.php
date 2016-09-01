@@ -8,7 +8,7 @@ class Rcl_Tabs{
     public $id;//идентификатор вкладки
     public $name;//имя вкладки
     public $icon = 'fa-cog';
-    public $public = 1;
+    public $public = 0;
     public $order = 10;
     public $first = false;
     public $counter = false;
@@ -59,7 +59,6 @@ class Rcl_Tabs{
     }
     
     function is_view_tab(){
-        global $rcl_options;
         
         $view = false;
  
@@ -75,27 +74,7 @@ class Rcl_Tabs{
         
     }
     
-    function get_callback_content($author_lk){
-        
-        $callback = $this->callback;
-        
-        if(is_array($callback)){
-            $object = new $callback[0];
-            $method = $callback[1];
-            $content = $object->$method($author_lk);
-        }else{
-            $content = $callback($author_lk);
-        }
-
-        return $content;
-
-    }
-    
     function get_tab_content($author_lk){
-        
-        if(!is_array($this->content)){ //контент произвольных вкладок или указана строка к выводу
-            return apply_filters('rcl_custom_tab_content',stripslashes_deep($this->content));
-        }
         
         $subtabs = apply_filters('rcl_subtabs',$this->content,$this->id);
     
@@ -149,7 +128,7 @@ class Rcl_Tabs{
             'user_LK'=>$author_lk
         );
         
-        $name = ($this->counter)? sprintf('%s <span class="rcl-menu-notice">%s</span>',$this->name,$this->counter): $this->name;
+        $name = (isset($this->counter))? sprintf('%s <span class="rcl-menu-notice">%s</span>',$this->name,$this->counter): $this->name;
         
         $html_button = rcl_get_button(
                 $name,$link,
