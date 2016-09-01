@@ -22,6 +22,19 @@ function rcl_count_votes_time($args,$second){
     return $result;
 }
 
+function rcl_count_votes($user_id,$rating_type){
+    global $wpdb;
+    
+    $amount = $wpdb->get_var(
+            $wpdb->prepare("
+                    SELECT COUNT(ID) FROM ".RCL_PREF."rating_values
+                    WHERE object_author='%d' AND rating_type='%s'",
+                    $user_id,$rating_type)
+    );
+    
+    return $amount;
+}
+
 function rcl_get_rating_by_id($rating_id){
     global $wpdb;
 

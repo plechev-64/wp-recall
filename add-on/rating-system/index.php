@@ -76,36 +76,71 @@ function rcl_get_content_rating($author_lk){
 
 add_action('init','rcl_add_rating_tab');
 function rcl_add_rating_tab(){
-    global $user_LK;
+    global $user_LK,$rcl_options;
+    
     $count = 0;
     if(!is_admin()){
         $count = rcl_format_rating(rcl_get_user_rating($user_LK));
     }
-    rcl_tab('rating','rcl_rating_tab',__('Rating','wp-recall'),array('ajax-load'=>true,'public'=>1,'cache'=>true,'output'=>'counters','counter'=>$count,'class'=>'fa-balance-scale'));
+    
+    $tab_data = array(
+        'id'=>'rating', 
+        'name'=>__('Rating','wp-recall'),
+        'supports'=>array('ajax','cache'),
+        'public'=>1,
+        'icon'=>'fa-balance-scale',
+        'output'=>'counters',
+        'counter'=>$count
+    );
+    
+    rcl_tab($tab_data);
 }
 
-function rcl_rating_tab($author_lk){
+add_filter('rcl_tabs','rcl_rating_tab_add_types_data',10);
+function rcl_rating_tab_add_types_data($tabs){
     global $rcl_rating_types,$rcl_options;
+    
+    if(!isset($tabs['rating'])) return $tabs;
+    
+    foreach($rcl_rating_types as $type){
 
-    foreach($rcl_rating_types as $type=>$val){
-
-	if(!isset($rcl_options['rating_user_'.$type])||!$rcl_options['rating_user_'.$type])continue;
+        if(!isset($rcl_options['rating_user_'.$type['rating_type']])||!$rcl_options['rating_user_'.$type['rating_type']])continue;
 
         $args = array(
-            'object_author' => $author_lk,
-            'rating_type'=>$type
+            'rating_type'=>$type['rating_type'],
+            'rating_status'=>'user'
         );
-        break;
+    
+        $tabs['rating']['content'][] = array(
+            'id' => $type['rating_type'],
+            'name' => $type['type_name'],
+            'icon' => (isset($type['icon']))? $type['icon']: 'fa-list-ul',
+            'callback' => array(
+                'name'=>'rcl_rating_get_list_votes_content',
+                'args'=>array($args)
+            )
+        );
     }
+    
+    return $tabs;
+}
 
-    $args['rating_status'] = 'user';
-
-    $votes = rcl_get_rating_votes($args,array(0,100));
-
-    $content = rcl_rating_navi($args);
-
+function rcl_rating_get_list_votes_content($user_id,$args){
+    
+    $args['object_author'] = $user_id;
+    
+    $amount = rcl_count_votes($user_id,$args['rating_type']);
+    
+    $pagenavi = new Rcl_PageNavi('rcl-rating',$amount,array('in_page'=>50));
+    
+    $votes = rcl_get_rating_votes($args,array($pagenavi->offset,50));
+    
+    $content = $pagenavi->pagenavi();
+    
     $content .= '<div class="rating-list-votes">'.rcl_get_list_votes($args,$votes).'</div>';
-
+    
+    $content .= $pagenavi->pagenavi();
+    
     return $content;
 }
 

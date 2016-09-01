@@ -176,22 +176,6 @@ function init_user_lk(){
     
 }
 
-function rcl_is_office($user_id=null){
-    global $rcl_office;
-    
-    if($rcl_office){
-        
-        if(isset($user_id)){
-            if($user_id==$rcl_office) return true;
-            return false;
-        }
-        
-        return true;       
-    }
-    
-    return false;
-}
-
 add_action('wp_footer','rcl_popup_contayner',10);
 function rcl_popup_contayner(){
     echo '<div id="rcl-overlay"></div>

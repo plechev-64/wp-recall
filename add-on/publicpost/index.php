@@ -58,62 +58,64 @@ function rcl_add_postlist_posts(){
 
 add_action('init','rcl_init_publics_block');
 function rcl_init_publics_block(){
-    global $rcl_options;
+    global $rcl_options,$user_ID,$rcl_postlist,$user_LK;
+    
     if($rcl_options['publics_block_rcl']==1){
-        $view = 0;
-        if($rcl_options['view_publics_block_rcl']) $view = $rcl_options['view_publics_block_rcl'];
-        rcl_tab('publics','rcl_tab_publics',__('Posts','wp-recall'),array('ajax-load'=>true,'public'=>$view,'cache'=>true,'class'=>'fa-list','order'=>50));
+
+        $view = ($rcl_options['view_publics_block_rcl'])? $rcl_options['view_publics_block_rcl']: 0;
+        
+        $tab_data = array(
+            'id'=>'publics', 
+            'name'=>__('Posts','wp-recall'),
+            'supports'=>array('ajax','cache'),
+            'public'=>$view,
+            'icon'=>'fa-list',
+            'output'=>'menu'
+        );
+    
+        if($rcl_postlist){
+
+            foreach($rcl_postlist as $post_type=>$data){
+                $tab_data['content'][] = array(
+                    'id' => 'type-'.$post_type,
+                    'name' => $data['name'],
+                    'icon' => 'fa-list',
+                    'callback' => array(
+                        'name'=>'rcl_get_postslist',
+                        'args'=>array($post_type,$data['name'])
+                    )
+                );
+            }
+
+        }
+        
+        rcl_tab($tab_data);
     }
+    
     if($rcl_options['output_public_form_rcl']==1){
+        
         rcl_tab('postform','rcl_tab_postform',__('Publication','wp-recall'),array('class'=>'fa-pencil','order'=>60));
+    
     }
 }
 
 add_filter('pre_update_postdata_rcl','rcl_update_postdata_excerpt');
 function rcl_update_postdata_excerpt($postdata){
-	if(!isset($_POST['post_excerpt'])) return $postdata;
-	$postdata['post_excerpt'] = sanitize_text_field($_POST['post_excerpt']);
-	return $postdata;
+    if(!isset($_POST['post_excerpt'])) return $postdata;
+    $postdata['post_excerpt'] = sanitize_text_field($_POST['post_excerpt']);
+    return $postdata;
 }
 
 function rcl_tab_postform($author_lk){
-	global $user_ID,$rcl_options;
-	if($user_ID!=$author_lk) return false;
-        $id_form = 1;
-        if(isset($rcl_options['form-lk'])&&$rcl_options['form-lk']) $id_form = $rcl_options['form-lk'];
-	return do_shortcode('[public-form id="'.$id_form.'"]');
-}
-
-function rcl_tab_publics($author_lk){
-    global $user_ID,$rcl_postlist;
-    
-    $subtabs = array();
-    
-    if($rcl_postlist){
-        
-        foreach($rcl_postlist as $post_type=>$data){
-            $subtabs[] = array(
-                        'id' => 'type-'.$post_type,
-                        'name' => $data['name'],
-                        'icon' => 'fa-list',
-                        'callback' => array(
-                            'name'=>'rcl_get_postslist',
-                            'args'=>array($author_lk,$post_type,$data['name'])
-                        )
-                    );
-        }
-        
-    }
-
-    if(!$subtabs) return false;
-    
-    $content = rcl_subtabs($subtabs);
-    
-    return $content;
+    global $user_ID,$rcl_options;
+    if($user_ID!=$author_lk) return false;
+    $id_form = 1;
+    if(isset($rcl_options['form-lk'])&&$rcl_options['form-lk']) $id_form = $rcl_options['form-lk'];
+    return do_shortcode('[public-form id="'.$id_form.'"]');
 }
 
 function rcl_get_postslist($user_id,$post_type,$type_name){
-
+    
     if (!class_exists('Rcl_Postlist')) 
         include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
     

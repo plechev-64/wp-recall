@@ -20,27 +20,29 @@ class Rcl_Sub_Tabs {
     public $callback;
     
     function __construct($subtabs,$parent_id = false){
+        
         $this->subtabs = $subtabs;
         $this->parent_id = $parent_id;
         $this->active_tab = (isset($_GET['subtab']))? $_GET['subtab']: $this->subtabs[0]['id'];
+        
+        foreach($this->subtabs as $key=>$tab){
+            if($this->active_tab==$tab['id']){
+                $this->callback = $tab['callback'];
+            }
+        }
     }
     
-    function get_sub_content(){
-        $content = $this->get_submenu();
-        $content .= $this->get_subtab();
+    function get_sub_content($author_lk){
+        $content = $this->get_submenu($author_lk);
+        $content .= $this->get_subtab($author_lk);
         return $content;
     }
     
-    function get_submenu(){
-        global $user_LK;
+    function get_submenu($author_lk){
 
         $content = '<div class="rcl-subtab-menu">';
 
         foreach($this->subtabs as $key=>$tab){
-
-            if($this->active_tab==$tab['id']){
-                $this->callback = $tab['callback'];
-            }
 
             $classes = ($this->active_tab==$tab['id'])? array('active','rcl-subtab-button'): array('rcl-subtab-button');
 
@@ -60,12 +62,17 @@ class Rcl_Sub_Tabs {
         
     }
     
-    function get_subtab(){
+    function get_subtab($author_lk){
 
-        $content .= '<div class="rcl-subtab-content">';
+        $content = '<div id="subtab-'.$this->active_tab.'" class="rcl-subtab-content">';
         
-        $args = (isset($this->callback['args']))? $this->callback['args']: array();
-
+        if(isset($this->callback['args'])){
+            $args = $this->callback['args'];
+            array_unshift($args,$author_lk);
+        }else{
+            $args = array($author_lk);
+        }
+        
         $content .= call_user_func_array($this->callback['name'],$args);
 
         $content .= '</div>';
@@ -79,9 +86,9 @@ class Rcl_Sub_Tabs {
         
         $tab_id = (isset($_GET['tab']))? $_GET['tab']: '';
         
-        $url = (isset($_POST['tab_url']))? $_POST['tab_url']: rcl_format_url(get_author_posts_url($user_LK),$tab_id);
+        $url = (isset($_POST['tab_url']))? rcl_format_url($_POST['tab_url']): rcl_format_url(get_author_posts_url($user_LK),$tab_id).'&';
 
-        $url .= '&subtab='.$subtab_id;
+        $url .= 'subtab='.$subtab_id;
         
         return $url;
     }

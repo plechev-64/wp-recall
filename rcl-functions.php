@@ -1,21 +1,67 @@
 <?php
 
 //регистрируем вкладку личного кабинета
-function rcl_tab($id,$callback,$name='',$args=false){
+function rcl_tab($tab_data,$deprecated_callback ,$deprecated_name='',$deprecated_args=false){
     global $rcl_tabs;
     
-    $data = array(
-        'id'=>$id,
-        'callback'=>$callback,
-        'name'=>$name,
-        'args'=>$args
-    );
+    if(is_array($tab_data)){
+        
+        if(count($tab_data['content'])==1 && isset($tab_data['content']['callback'])){
+            
+            $callback = $tab_data['content']['callback'];
+            
+            $tab_data['content'] = array(
+                array(
+                    'id'=> (isset($tab_data['id']))? $tab_data['id']: 'subtab-1',
+                    'name'=> (isset($tab_data['name']))? $tab_data['name']: 'Subtab',
+                    'icon'=> (isset($tab_data['icon']))? $tab_data['icon']: 'fa-cog',
+                    'callback' => array(
+                        'name'=> $callback
+                    )
+                )
+            );
+            
+        }
+        
+    }else{ //поддержка старого варианта регистрации вкладки
+        
+        $args_tab = array(
+            'id'=> $tab_data, 
+            'name'=> $deprecated_name,
+            'content'=>array(
+                array(
+                    'id'=> $tab_data,
+                    'name'=> $deprecated_name,
+                    'icon'=> (isset($deprecated_args['class']))? $deprecated_args['class']: 'fa-cog',
+                    'callback' => array(
+                        'name'=> $deprecated_callback
+                    )
+                )
+            )
+        );
+        
+        if(isset($deprecated_args['cache']) && $deprecated_args['cache']){
+            $args_tab['supports'][] = 'cache';
+        }
+        
+        if(isset($deprecated_args['ajax-load']) && $deprecated_args['ajax-load']){
+            $args_tab['supports'][] = 'ajax';
+        }
+        
+        $args_tab['counter'] = (isset($deprecated_args['counter']))? $deprecated_args['counter']: false;
+        $args_tab['public'] = (isset($deprecated_args['public']))? $deprecated_args['public']: 1;
+        $args_tab['icon'] = (isset($deprecated_args['class']))? $deprecated_args['class']: 'fa-cog';
+        $args_tab['output'] = (isset($deprecated_args['output']))? $deprecated_args['output']: 'menu';
+        
+        $tab_data = $args_tab;
 
-    $data = apply_filters('tab_data_rcl',$data);
+    }
+
+    $tab_data = apply_filters('rcl_tab',$tab_data);
     
-    if(!$data) return false;
+    if(!$tab_data) return false;
     
-    $rcl_tabs[$id] = $data;
+    $rcl_tabs[$tab_data['id']] = $tab_data;
     
 }
 
@@ -73,7 +119,7 @@ function rcl_edit_options_tab($rcl_tabs){
         $a=0;
         foreach($tabs as $tab_id=>$tab){
             if(isset($rcl_tabs[$tab_id])){
-                $rcl_tabs[$tab_id]['args']['order'] = ++$a;
+                $rcl_tabs[$tab_id]['order'] = ++$a;
                 if(isset($tab['name'])) 
                     $rcl_tabs[$tab_id]['name'] = $tab['name'];
             }
@@ -93,19 +139,20 @@ function rcl_get_order_tabs($rcl_tabs){
     
     $counter = array();
     foreach($rcl_tabs as $id=>$data){
-        if(isset($data['args']['output'])) continue;
+        if(isset($data['output'])&&$data['output']!='menu') continue;
         
-        if(!isset($data['args']['public'])||$data['args']['public']!=1){
+        if(!isset($data['public'])||$data['public']!=1){
             if(!$user_ID||$user_ID!=$user_LK) continue;
         }
         
-        $order = (isset($data['args']['order']))? $data['args']['order']: 10;
+        $order = (isset($data['order']))? $data['order']: 10;
         
         $counter[$order] = $id;
     }
     ksort($counter);
     $id_first = array_shift($counter);
-    $rcl_tabs[$id_first]['args']['first'] = 1;
+    $rcl_tabs[$id_first]['first'] = 1;
+    
     return $rcl_tabs;
 }
 
@@ -156,14 +203,27 @@ function rcl_setup_blocks(){
     do_action('rcl_setup_blocks');
 }
 
-function rcl_subtabs($subtabs,$parent_id){
+function rcl_is_office($user_id=null){
+    global $rcl_office;
     
-    include_once 'functions/class-rcl-sub-tabs.php';
+    if(isset($_POST['action'])&&$_POST['action']=='rcl_ajax'){
+        $post = rcl_decode_post($_POST['post']);
+        
+        if($post->user_LK) 
+            $rcl_office = $post->user_LK;
+    }
     
-    $subtab = new Rcl_Sub_Tabs($subtabs,$parent_id);
+    if($rcl_office){
+        
+        if(isset($user_id)){
+            if($user_id==$rcl_office) return true;
+            return false;
+        }
+        
+        return true;       
+    }
     
-    return $subtab->get_sub_content();
-    
+    return false;
 }
 
 function rcl_get_addon_dir($path){
@@ -417,23 +477,25 @@ function rcl_ajax_tab($post){
 
     $id_tab = sanitize_title($post->tab_id);
     $user_LK = intval($post->user_LK);
+    
+    if(!isset($rcl_tabs[$id_tab])) return false;
 
     if (!class_exists('Rcl_Tabs')) 
         include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-tabs.php';
     
-    $ajax = (!isset($rcl_tabs[$id_tab]['args']['ajax-load'])||!$rcl_tabs[$id_tab]['args']['ajax-load'])? 0: 1;
+    $ajax = (in_array('ajax',$rcl_tabs[$id_tab]['supports']))? 1: 0;
     
     if(!$ajax){
         
         return __('Error! Perhaps this addition does not support ajax loading','wp-recall');
         
     }else{
-        
-        if(!isset($rcl_tabs[$id_tab])) return false;
+
+        $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
         
         $data = $rcl_tabs[$id_tab];
         
-        $data['args']['first'] = 1;
+        $data['first'] = 1;
 
         $tab = new Rcl_Tabs($data);
         return $tab->get_tab($user_LK);

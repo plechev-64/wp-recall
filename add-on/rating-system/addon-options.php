@@ -81,7 +81,7 @@ function rcl_admin_page_rating($content){
                         ),
                         array(
                         $opt->label(__('Template output stories in the overall ranking','wp-recall')),
-                        $opt->option('text',array('name'=>'rating_temp_'.$type,'default'=>'%USER% '.__('voted','wp-recall').': %VALUE%')),
+                        $opt->option('text',array('name'=>'rating_temp_'.$type,'default'=>'%DATE% %USER% '.__('voted','wp-recall').': %VALUE%')),
                         $opt->notice($notice_temp)
                     ))
                         

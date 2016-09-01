@@ -33,15 +33,10 @@ class Rcl_Chat {
 
     function __construct($args = array()){
         global $user_ID,$rcl_options;
-        
-        if(!isset($args['chat_room'])) return false;
 
         add_filter( 'rcl_chat_message', 'wpautop', 11 );
         
         $this->user_id = $user_ID;
-        $this->chat_room = $args['chat_room'];
-        $this->chat_token = rcl_chat_token_encode($this->chat_room);
-        
         $this->chat_status = (isset($args['chat_status']))? $args['chat_status']: 'general';
         $this->office_id = (isset($_POST['office_ID']))? $_POST['office_ID']: 0;
         $this->avatar_size = (isset($args['avatar_size']))? $args['avatar_size']: 50;
@@ -50,8 +45,13 @@ class Rcl_Chat {
         $this->file_upload = (isset($args['file_upload']))? $args['file_upload']: 0;
         $this->max_words = (isset($rcl_options['chat']['words']))? $rcl_options['chat']['words']: 300;
         $this->in_page = (isset($rcl_options['chat']['in_page']))? $rcl_options['chat']['in_page']: 50;
-        $this->chat = $this->get_chat_data($this->chat_room);
         $this->paged = (isset($args['paged']))? $args['paged']: 1;
+        
+        if(!isset($args['chat_room'])) return;
+        
+        $this->chat_room = $args['chat_room'];
+        $this->chat_token = rcl_chat_token_encode($this->chat_room);
+        $this->chat = $this->get_chat_data($this->chat_room);
         
         $this->user_write = (isset($_POST['chat']['message'])&&$_POST['chat']['message'])? 1: 0;
         
@@ -505,7 +505,7 @@ class Rcl_Chat {
     }
     
     function message_manager($message){
-        global $rcl_options,$current_user;
+        global $rcl_options;
         
         $class = ($message['important'])? 'active-important': '';
         

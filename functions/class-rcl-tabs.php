@@ -4,21 +4,20 @@ add_filter( 'rcl_custom_tab_content', 'do_shortcode', 11 );
 add_filter( 'rcl_custom_tab_content', 'wpautop', 10 );
 
 class Rcl_Tabs{
+    
     public $id;//идентификатор вкладки
-    public $callback;//имя функции обработчика
     public $name;//имя вкладки
+    public $icon = 'fa-cog';
+    public $public = 1;
+    public $order = 10;
+    public $first = false;
+    public $counter = false;
+    public $output = 'menu';
+    public $supports = array();
+    public $content = array();
     public $tab_active = 0;//указание активности вкладки
     public $tab_upload = 0;//указание загрузки содержимого вкладки
-    public $args = array(
-                'ajax-load'=>0,
-                'output'=>'menu',
-                'cache'=>0,
-                'content'=>'',
-                'order'=>10,
-                'public'=>0,
-                'class'=>'fa-cog',
-                'first'=>0
-            ); //массив параметров
+    public $use_cache;
     
     function __construct($args){
         global $rcl_options;
@@ -28,9 +27,10 @@ class Rcl_Tabs{
         $type_upload = (isset($rcl_options['tab_newpage']))? $rcl_options['tab_newpage']: 0;
         $this->tab_active = $this->is_view_tab();
         $this->tab_upload = (!$type_upload||$this->tab_active)? true: false;
-        $this->args['cache'] = ($this->args['cache']&&isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? $this->args['cache']: false;
-        
+        $this->use_cache = (isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? 1: 0;
+
         do_action('rcl_construct_'.$this->id.'_tab');
+
     }
     
     function init_properties($args){
@@ -38,22 +38,14 @@ class Rcl_Tabs{
         $properties = get_class_vars(get_class($this));
 
         foreach ($properties as $name=>$val){
-            
             if(!isset($args[$name])) continue;
-            
-            if($name=='args'){
-                $this->args = wp_parse_args( $args[$name], $this->args  );
-                continue;
-            }
-            
             $this->$name = $args[$name];
-     
         }
     }
 
     function add_tab(){
-        add_action('rcl_area_tabs',array($this,'print_tab'),$this->args['order']);
-        add_action('rcl_area_'.$this->args['output'],array($this,'print_tab_button'),$this->args['order']);
+        add_action('rcl_area_tabs',array($this,'print_tab'),$this->order);
+        add_action('rcl_area_'.$this->output,array($this,'print_tab_button'),$this->order);
     }
     
     function print_tab(){
@@ -74,7 +66,7 @@ class Rcl_Tabs{
         if(isset($_GET['tab'])){
             $view = ($_GET['tab']==$this->id)? true: false;
         }else{
-            if($this->args['first']){
+            if($this->first){
                 $view = true;
             }
         }
@@ -101,11 +93,22 @@ class Rcl_Tabs{
     
     function get_tab_content($author_lk){
         
-        if($this->callback){
-            $content = $this->get_callback_content($author_lk);
-        }else if($this->args['content']){
-            $content = apply_filters('rcl_custom_tab_content',stripslashes_deep($this->args['content']));
+        if(is_string($this->content)){ //контент произвольных вкладок или указана строка к выводу
+            return apply_filters('rcl_custom_tab_content',stripslashes_deep($this->content));
         }
+        
+        if(!is_array($this->content)) return false;
+        
+        $subtabs = apply_filters('rcl_subtabs',$this->content,$this->id);
+    
+        include_once 'class-rcl-sub-tabs.php';
+
+        $subtab = new Rcl_Sub_Tabs($subtabs,$this->id);
+
+        if(count($this->content)>1)
+            $content = $subtab->get_sub_content($author_lk);
+        else
+            $content = $subtab->get_subtab($author_lk);
         
         $content = apply_filters('rcl_tab_'.$this->id,$content);
         
@@ -117,18 +120,24 @@ class Rcl_Tabs{
 
         $class = false;
         $tb = (isset($rcl_options['tab_newpage']))? $rcl_options['tab_newpage']:false;
+        
         if(!$tb) $class = 'block_button';
-        if($tb==2&&$this->args['ajax-load']){
-            $class = 'rcl-ajax';
+        
+        if(in_array('ajax',$this->supports)){
+            if($tb==2){
+                $class = 'rcl-ajax';
+            }
         }
+        
         if($this->tab_active) $class .= ' active';
+        
         return $class;
     }
     
     function get_tab_button($author_lk){
         global $user_ID;
         
-        switch($this->args['public']){
+        switch($this->public){
             case 0: if(!$user_ID||$user_ID!=$author_lk) return false; break;
             case -1: if(!$user_ID||$user_ID==$author_lk) return false; break;
             case -2: if($user_ID&&$user_ID==$author_lk) return false; break;
@@ -142,13 +151,13 @@ class Rcl_Tabs{
             'user_LK'=>$author_lk
         );
         
-        $name = (isset($this->args['counter']))? sprintf('%s <span class="rcl-menu-notice">%s</span>',$this->name,$this->args['counter']): $this->name;
+        $name = ($this->counter)? sprintf('%s <span class="rcl-menu-notice">%s</span>',$this->name,$this->counter): $this->name;
         
         $html_button = rcl_get_button(
                 $name,$link,
                 array(
                     'class'=>$this->get_class_button(),
-                    'icon'=> ($this->args['class'])? $this->args['class']:'fa-cog',
+                    'icon'=> ($this->icon)? $this->icon:'fa-cog',
                     'attr'=>'data-post='.rcl_encode_post($datapost)
                 )
         );
@@ -160,7 +169,7 @@ class Rcl_Tabs{
     function get_tab($author_lk){
         global $user_ID,$rcl_options;
         
-        switch($this->args['public']){
+        switch($this->public){
             case 0: if(!$user_ID||$user_ID!=$author_lk) return false; break;
             case -1: if(!$user_ID||$user_ID==$author_lk) return false; break;
             case -2: if($user_ID&&$user_ID==$author_lk) return false; break;
@@ -171,8 +180,8 @@ class Rcl_Tabs{
         $status = ($this->tab_active) ? 'active':'';
         
         $content = '';
-        
-        if($this->args['cache']){
+
+        if($this->use_cache && in_array('cache',$this->supports)){
                                    
             $rcl_cache = new Rcl_Cache();
             

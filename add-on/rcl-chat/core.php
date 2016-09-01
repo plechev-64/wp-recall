@@ -255,3 +255,33 @@ function rcl_chat_noread_messages_amount($user_id){
     
 }
 
+function rcl_chat_get_important_messages($user_id,$limit){
+    global $wpdb;
+    
+    $messages = $wpdb->get_results(
+        "SELECT chat_messages.* FROM ".RCL_PREF."chat_messages AS chat_messages "
+        . "INNER JOIN ".RCL_PREF."chat_messagemeta AS chat_messagemeta ON chat_messages.message_id=chat_messagemeta.message_id "
+        . "WHERE chat_messagemeta.meta_key='important:$user_id' "
+        . "ORDER BY chat_messages.message_time DESC "
+        . "LIMIT $limit[0],$limit[1]"
+        ,
+        ARRAY_A
+    );
+    
+    $messages = stripslashes_deep($messages);
+
+    return $messages;
+}
+
+function rcl_chat_count_important_messages($user_id){
+    global $wpdb;
+    
+    $amount = $wpdb->get_var(
+        "SELECT COUNT(chat_messages.message_id) FROM ".RCL_PREF."chat_messages AS chat_messages "
+        . "INNER JOIN ".RCL_PREF."chat_messagemeta AS chat_messagemeta ON chat_messages.message_id=chat_messagemeta.message_id "
+        . "WHERE chat_messagemeta.meta_key='important:$user_id'"
+    );
+    
+    return $amount;
+}
+

@@ -82,6 +82,12 @@ body audio {
     margin:0;
     padding: 0 0 5px;
 }
+#subtab-important-messages .chat-messages{
+    max-height: initial;
+    padding: 0;
+    border: 0;
+    background: none;
+}
 .rcl-chat .chat-form {
     position: relative;
 }

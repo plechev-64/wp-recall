@@ -104,8 +104,6 @@ function rcl_chat_add_new_message(form){
     var chat = jQuery('.rcl-chat[data-token="'+token+'"]');
     var message_text = form.children('textarea').val();
     
-    var counter = max - message_text.length;
-    
     if(!message_text.length){
         rcl_notice('Напишите что-нибудь','error',10000);
         return false;

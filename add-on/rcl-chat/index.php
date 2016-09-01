@@ -107,14 +107,47 @@ function rcl_chat_add_inline_styles($styles,$rgb){
 
 add_action('init','rcl_add_chat_tab',10);
 function rcl_add_chat_tab(){
-    rcl_tab('chat','rcl_chat_tab',__('Chat','wp-recall'),array('public'=>1,'ajax-load'=>false,'class'=>'fa-comments-o'));
+    global $user_ID;
+    
+    $tab_data = array(
+        'id'=>'chat', 
+        'name'=>__('Chat','wp-recall'),
+        'supports'=>array('ajax','cache'),
+        'public'=>1,
+        'icon'=>'fa-comments-o',
+        'output'=>'menu',
+        'content'=>array(
+            array(
+                'id'=>'private-contacts',
+                'name'=>'Контакты',
+                'icon'=>'fa-book',
+                'callback'=>array(
+                    'name'=>'rcl_chat_tab'
+                )
+            )
+        )
+    );
+    
+    if(rcl_is_office($user_ID)){
+        $tab_data['content'][] = array(
+                'id'=>'important-messages',
+                'name'=>'Важные сообщения',
+                'icon'=>'fa-star',
+                'callback'=>array(
+                    'name'=>'rcl_get_tab_user_important'
+                )
+            );
+    }
+    
+    rcl_tab($tab_data);
 }
 
 function rcl_chat_tab($office_id){
     global $user_ID;
     
-    if($office_id==$user_ID) 
-        return rcl_get_tab_user_contacts();
+    if($office_id==$user_ID){
+        return rcl_get_tab_user_contacts($office_id);
+    } 
     
     if($user_ID){
         $chatdata = rcl_get_chat_private($office_id);
@@ -255,6 +288,58 @@ function rcl_get_user_contacts_list($user_id){
     $content .= $pagenavi->pagenavi();
     
     return $content;
+}
+
+function rcl_get_tab_user_important($user_id){
+    
+    $amount_messages = rcl_chat_count_important_messages($user_id);
+    
+    if(!$amount_messages){
+        return '<div class="chat-notice">'
+                . '<span class="notice-error">'.__('Важных сообщений пока нет','wp-recall').'</span>'
+                . '</div>'; 
+    }
+
+    require_once 'class-rcl-chat.php';
+    
+    $chat = new Rcl_Chat();
+    
+    $navi = false;
+        
+    $content = '<div class="rcl-chat">';
+
+        $content .= '<div class="chat-content">';
+
+            $content .= '<div class="chat-messages-box">';
+
+                $content .= '<div class="chat-messages">';
+
+                $pagenavi = new Rcl_PageNavi('rcl-chat',$amount_messages,array('in_page'=>$chat->in_page));
+
+                $chat->offset = $pagenavi->offset;
+
+                $messages = rcl_chat_get_important_messages($user_id,array($pagenavi->offset,$chat->in_page));
+
+                $messages = rcl_chat_messages_add_important_meta($messages);
+
+                krsort($messages);
+
+                foreach($messages as $k=>$message){
+                    $content .= $chat->get_message_box($message);
+                }
+
+                $content .= '</div>';
+
+            $content .= '</div>';
+
+        $content .= '</div>';
+
+    $content .= '</div>';
+    
+    $content .= $pagenavi->pagenavi();
+
+    return $content;
+    
 }
 
 add_action('wp_footer','rcl_get_last_chats_box',10);
