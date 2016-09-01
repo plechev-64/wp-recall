@@ -1,7 +1,7 @@
 <?php
 
 //регистрируем вкладку личного кабинета
-function rcl_tab($tab_data,$deprecated_callback ,$deprecated_name='',$deprecated_args=false){
+function rcl_tab($tab_data,$deprecated_callback=false ,$deprecated_name='',$deprecated_args=false){
     global $rcl_tabs;
     
     if(!is_array($tab_data)){ //поддержка старого варианта регистрации вкладки
