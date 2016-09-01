@@ -93,11 +93,9 @@ class Rcl_Tabs{
     
     function get_tab_content($author_lk){
         
-        if(is_string($this->content)){ //контент произвольных вкладок или указана строка к выводу
+        if(!is_array($this->content)){ //контент произвольных вкладок или указана строка к выводу
             return apply_filters('rcl_custom_tab_content',stripslashes_deep($this->content));
         }
-        
-        if(!is_array($this->content)) return false;
         
         $subtabs = apply_filters('rcl_subtabs',$this->content,$this->id);
     

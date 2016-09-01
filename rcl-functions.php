@@ -6,21 +6,25 @@ function rcl_tab($tab_data,$deprecated_callback ,$deprecated_name='',$deprecated
     
     if(is_array($tab_data)){
         
-        if(count($tab_data['content'])==1 && isset($tab_data['content']['callback'])){
-            
-            $callback = $tab_data['content']['callback'];
-            
-            $tab_data['content'] = array(
-                array(
-                    'id'=> (isset($tab_data['id']))? $tab_data['id']: 'subtab-1',
-                    'name'=> (isset($tab_data['name']))? $tab_data['name']: 'Subtab',
-                    'icon'=> (isset($tab_data['icon']))? $tab_data['icon']: 'fa-cog',
-                    'callback' => array(
-                        'name'=> $callback
+        if(is_array($tab_data['content'])){
+
+            if(count($tab_data['content'])==1 && isset($tab_data['content']['callback'])){
+
+                $callback = $tab_data['content']['callback'];
+
+                $tab_data['content'] = array(
+                    array(
+                        'id'=> (isset($tab_data['id']))? $tab_data['id']: 'subtab-1',
+                        'name'=> (isset($tab_data['name']))? $tab_data['name']: 'Subtab',
+                        'icon'=> (isset($tab_data['icon']))? $tab_data['icon']: 'fa-cog',
+                        'callback' => array(
+                            'name'=> $callback
+                        )
                     )
-                )
-            );
-            
+                );
+
+            }
+        
         }
         
     }else{ //поддержка старого варианта регистрации вкладки
@@ -68,19 +72,31 @@ function rcl_tab($tab_data,$deprecated_callback ,$deprecated_name='',$deprecated
 //регистрируем созданные произвольные вкладки
 add_action('init','rcl_init_custom_tabs',10);
 function rcl_init_custom_tabs(){
+    
     $custom_tabs = get_option('rcl_fields_custom_tabs');
+    
     if(!$custom_tabs) return false;
     
     foreach($custom_tabs as $tab){
-        rcl_tab($tab['slug'],'',$tab['title'],
-            array(
-                'ajax-load'=>$tab['ajax'],
-                'class'=>$tab['icon'],
-                'public'=>$tab['public'],
-                'cache'=>$tab['cache'],
-                'content'=> $tab['content']
-            )
+
+        $tab_data = array(
+            'id'=>$tab['slug'], 
+            'name'=>$tab['title'],
+            'public'=>$tab['public'],
+            'icon'=>$tab['icon'],
+            'output'=>'menu',
+            'content'=>$tab['content']
         );
+        
+        if($tab['cache']){
+            $tab_data['supports'][] = 'cache';
+        }
+        
+        if($tab['ajax']){
+            $tab_data['supports'][] = 'ajax';
+        }
+
+        rcl_tab($tab_data);
     }
 }
 
