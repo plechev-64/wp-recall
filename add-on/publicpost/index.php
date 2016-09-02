@@ -106,9 +106,9 @@ function rcl_update_postdata_excerpt($postdata){
     return $postdata;
 }
 
-function rcl_tab_postform($author_lk){
+function rcl_tab_postform($master_id){
     global $user_ID,$rcl_options;
-    if($user_ID!=$author_lk) return false;
+    if($user_ID!=$master_id) return false;
     $id_form = 1;
     if(isset($rcl_options['form-lk'])&&$rcl_options['form-lk']) $id_form = $rcl_options['form-lk'];
     return do_shortcode('[public-form id="'.$id_form.'"]');

@@ -70,8 +70,8 @@ function rcl_get_rating_column_content( $custom_column, $column_name, $user_id )
 add_filter( 'manage_users_custom_column', 'rcl_get_rating_column_content', 10, 3 );
 
 //if(function_exists('rcl_block')) rcl_block('sidebar','rcl_get_content_rating',array('id'=>'rt-block','order'=>2));
-function rcl_get_content_rating($author_lk){
-    return rcl_rating_block(array('value'=>rcl_get_user_rating($author_lk)));
+function rcl_get_content_rating($master_id){
+    return rcl_rating_block(array('value'=>rcl_get_user_rating($master_id)));
 }
 
 add_action('init','rcl_add_rating_tab');

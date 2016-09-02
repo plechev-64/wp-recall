@@ -45,7 +45,7 @@
 .cab_bttn_lite .rcl-tab-button span span {
     background: transparent;
     color: #fff;
-    display: table-caption;
+    display: table-header-group;
     font-size: 20px;
     font-weight: bold;
 	padding: 0;

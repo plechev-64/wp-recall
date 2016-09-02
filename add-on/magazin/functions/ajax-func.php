@@ -11,6 +11,10 @@ function rcl_add_minicart(){
     $number = intval($_POST['number']);
 
     if(get_post_type($id_post)!='products') return false;
+    
+    $check_rights = apply_filters('rcl_check_rights_edit_cart',true,$id_post);
+    
+    if(!$check_rights) return false;
 
     if(!$number||$number==''||$number==0) $number=1;
     if($number>=0){
@@ -69,6 +73,10 @@ function rcl_add_cart(){
     $number = intval($_POST['number']);
 
     if(get_post_type($id_post)!='products') return false;
+    
+    $check_rights = apply_filters('rcl_check_rights_edit_cart',true,$id_post);
+    
+    if(!$check_rights) return false;
 
     if(!$number||$number==''||$number==0) $number=1;
     if($number>=0){

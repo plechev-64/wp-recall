@@ -1,8 +1,5 @@
 <?php
 
-add_filter( 'rcl_custom_tab_content', 'do_shortcode', 11 );
-add_filter( 'rcl_custom_tab_content', 'wpautop', 10 );
-
 class Rcl_Tabs{
     
     public $id;//идентификатор вкладки
@@ -74,7 +71,7 @@ class Rcl_Tabs{
         
     }
     
-    function get_tab_content($author_lk){
+    function get_tab_content($master_id){
         
         $subtabs = apply_filters('rcl_subtabs',$this->content,$this->id);
     
@@ -83,9 +80,9 @@ class Rcl_Tabs{
         $subtab = new Rcl_Sub_Tabs($subtabs,$this->id);
 
         if(count($this->content)>1)
-            $content = $subtab->get_sub_content($author_lk);
+            $content = $subtab->get_sub_content($master_id);
         else
-            $content = $subtab->get_subtab($author_lk);
+            $content = $subtab->get_subtab($master_id);
         
         $content = apply_filters('rcl_tab_'.$this->id,$content);
         
@@ -111,21 +108,21 @@ class Rcl_Tabs{
         return $class;
     }
     
-    function get_tab_button($author_lk){
+    function get_tab_button($master_id){
         global $user_ID;
         
         switch($this->public){
-            case 0: if(!$user_ID||$user_ID!=$author_lk) return false; break;
-            case -1: if(!$user_ID||$user_ID==$author_lk) return false; break;
-            case -2: if($user_ID&&$user_ID==$author_lk) return false; break;
+            case 0: if(!$user_ID||$user_ID!=$master_id) return false; break;
+            case -1: if(!$user_ID||$user_ID==$master_id) return false; break;
+            case -2: if($user_ID&&$user_ID==$master_id) return false; break;
         }
 
-        $link = rcl_format_url(get_author_posts_url($author_lk),$this->id);
+        $link = rcl_format_url(get_author_posts_url($master_id),$this->id);
         
         $datapost = array(
             'callback'=>'rcl_ajax_tab',
             'tab_id'=>$this->id,
-            'user_LK'=>$author_lk
+            'user_LK'=>$master_id
         );
         
         $name = (isset($this->counter))? sprintf('%s <span class="rcl-menu-notice">%s</span>',$this->name,$this->counter): $this->name;
@@ -143,13 +140,13 @@ class Rcl_Tabs{
 
     }
     
-    function get_tab($author_lk){
+    function get_tab($master_id){
         global $user_ID,$rcl_options;
         
         switch($this->public){
-            case 0: if(!$user_ID||$user_ID!=$author_lk) return false; break;
-            case -1: if(!$user_ID||$user_ID==$author_lk) return false; break;
-            case -2: if($user_ID&&$user_ID==$author_lk) return false; break;
+            case 0: if(!$user_ID||$user_ID!=$master_id) return false; break;
+            case -1: if(!$user_ID||$user_ID==$master_id) return false; break;
+            case -2: if($user_ID&&$user_ID==$master_id) return false; break;
         }
         
         if(!$this->tab_upload) return false;
@@ -165,11 +162,11 @@ class Rcl_Tabs{
             $protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://':  'https://';
             
             if(!$rcl_options['tab_newpage']){ //если загружаются все вкладки               
-                $string = (isset($_GET['tab'])&&$_GET['tab']==$this->id)? $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']: rcl_format_url(get_author_posts_url($author_lk),$this->id);               
+                $string = (isset($_GET['tab'])&&$_GET['tab']==$this->id)? $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']: rcl_format_url(get_author_posts_url($master_id),$this->id);               
             }else{
             
                 if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-                    $string = rcl_format_url(get_author_posts_url($author_lk),$this->id);
+                    $string = rcl_format_url(get_author_posts_url($master_id),$this->id);
                 }else{                   
                     $string = $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
                 }
@@ -180,7 +177,7 @@ class Rcl_Tabs{
 
             if($file->need_update){
 
-                $content = $this->get_tab_content($author_lk);
+                $content = $this->get_tab_content($master_id);
 
                 $rcl_cache->update_cache($content);
             
@@ -192,7 +189,7 @@ class Rcl_Tabs{
 
         }else{
 
-            $content = $this->get_tab_content($author_lk);
+            $content = $this->get_tab_content($master_id);
             
             if(!$content) return false;
         

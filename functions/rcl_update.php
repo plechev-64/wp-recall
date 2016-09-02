@@ -18,6 +18,7 @@ function rcl_check_addon_update(){
             $a=0;
             foreach((array)$addons as $namedir){
                 $addon_dir = $path.'/'.$namedir;
+                if(!is_dir($addon_dir)) continue;
                 $index_src = $addon_dir.'/index.php';
                 if(!file_exists($index_src)) continue;
                 $info_src = $addon_dir.'/info.txt';

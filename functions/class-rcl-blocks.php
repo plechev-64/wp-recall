@@ -86,16 +86,16 @@ class Rcl_Blocks {
         return $content;
     }
     
-    function get_callback_content($author_lk){
+    function get_callback_content($master_id){
         
         $callback = $this->callback;
         
         if(is_array($callback)){
             $object = new $callback[0];
             $method = $callback[1];
-            $content = $object->$method($author_lk);
+            $content = $object->$method($master_id);
         }else{
-            $content = $callback($author_lk);
+            $content = $callback($master_id);
         }
 
         return $content;

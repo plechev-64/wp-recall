@@ -34,7 +34,7 @@ function rcl_tab_orders(){
     rcl_tab('orders','rcl_orders',__('Orders','wp-recall'),array('public'=>0,'ajax-load'=>true,'class'=>'fa-shopping-cart','order'=>30,'path'=>__FILE__));
 }
 
-function rcl_orders($author_lk){
+function rcl_orders($master_id){
     global $wpdb,$user_ID,$rmag_options,$rcl_options,$order;
 
         $block = apply_filters('content_order_tab','');
@@ -43,13 +43,13 @@ function rcl_orders($author_lk){
 
                 $order = rcl_get_order($_GET['order-id']);
 
-                if($order->order_author!=$author_lk) return false;
+                if($order->order_author!=$master_id) return false;
 
                 $status = $order->order_status;
                 $order_id = $order->order_id;
                 $price = $order->order_price;
 
-                $block .= '<a class="recall-button view-orders" href="'.rcl_format_url(get_author_posts_url($author_lk),'orders').'">Смотреть все заказы</a>';
+                $block .= '<a class="recall-button view-orders" href="'.rcl_format_url(get_author_posts_url($master_id),'orders').'">Смотреть все заказы</a>';
 
                 $block .= '<h3>'.__('Order','wp-recall').' №'.$order_id.'</h3>';
                 
@@ -92,7 +92,7 @@ function rcl_orders($author_lk){
 
 		global $orders;
 
-		$orders = rcl_get_orders(array('user_id'=>$author_lk,'status_not_in'=>6));
+		$orders = rcl_get_orders(array('user_id'=>$master_id,'status_not_in'=>6));
 
 		if(!$orders) $block .= '<p>'.__('You have not yet issued any order','wp-recall').'.</p>';
 		else $block .= rcl_get_include_template('orders-history.php',__FILE__);

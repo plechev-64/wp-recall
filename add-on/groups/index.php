@@ -132,13 +132,13 @@ function add_post_in_group(){
     rcl_group();
 }
 
-function rcl_tab_groups($author_lk){
+function rcl_tab_groups($master_id){
 
     global $wpdb,$user_ID,$rcl_options;
     
     $content = '';
 
-    if($author_lk==$user_ID){
+    if($master_id==$user_ID){
 
         $group_can_public = (isset($rcl_options['public_group_access_recall']))? $rcl_options['public_group_access_recall']: false;
         if($group_can_public){
@@ -165,7 +165,7 @@ function rcl_tab_groups($author_lk){
         }
     }
 
-    $content .= rcl_get_grouplist(array('filters'=>1,'search_form'=>0,'user_id'=>$author_lk));
+    $content .= rcl_get_grouplist(array('filters'=>1,'search_form'=>0,'user_id'=>$master_id));
 
     return $content;
 }

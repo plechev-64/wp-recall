@@ -39,7 +39,7 @@ function rcl_add_block_show_profile_fields(){
     rcl_block('details','rcl_show_custom_fields_profile',array('id'=>'pf-block','order'=>20,'public'=>1));
 }
 
-function rcl_show_custom_fields_profile($author_lk){
+function rcl_show_custom_fields_profile($master_id){
     
     $get_fields = get_option( 'rcl_profile_fields' );
 
@@ -56,7 +56,7 @@ function rcl_show_custom_fields_profile($author_lk){
                 if(!$custom_field) continue;
                 $slug = $custom_field['slug'];
                 if(isset($custom_field['req'])&&$custom_field['req']==1){
-                    $meta = get_the_author_meta($slug,$author_lk);
+                    $meta = get_the_author_meta($slug,$master_id);
                     $show_custom_field .= $cf->get_field_value($custom_field,$meta);
                 }
         }
@@ -244,11 +244,11 @@ function rcl_tab_profile(){
     rcl_tab('profile','rcl_tab_profile_content',__('Profile','wp-recall'),array('ajax-load'=>true,'class'=>'fa-user','order'=>20,'path'=>__FILE__));
 }
 
-function rcl_tab_profile_content($author_lk){
+function rcl_tab_profile_content($master_id){
 
     global $userdata, $user_ID, $rcl_options;
 
-    if($user_ID!=$author_lk) return false;
+    if($user_ID!=$master_id) return false;
     
     $defolt_field = get_option( 'rcl_profile_default' );
 

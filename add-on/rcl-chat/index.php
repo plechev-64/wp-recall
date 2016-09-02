@@ -233,7 +233,7 @@ function rcl_get_user_contacts_list($user_id){
     $amount = $wpdb->query(
         "SELECT COUNT(chat_messages.chat_id) FROM ".RCL_PREF."chat_messages AS chat_messages "
         . "INNER JOIN ".RCL_PREF."chat_users AS chat_users ON chat_messages.chat_id=chat_users.chat_id "
-        . "WHERE chat_messages. private_key!='0' "
+        . "WHERE chat_messages.private_key!='0' "
         . "AND (chat_messages.user_id='$user_id' OR chat_messages.private_key='$user_id') "
         . "AND chat_users.user_id='$user_id' "
         . "AND chat_users.user_status!='0' "

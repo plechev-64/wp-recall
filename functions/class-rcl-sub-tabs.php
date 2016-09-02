@@ -18,7 +18,6 @@ class Rcl_Sub_Tabs {
     public $active_tab;
     public $parent_id;
     public $callback;
-    public $content;
     
     function __construct($subtabs,$parent_id = false){
         
@@ -29,18 +28,17 @@ class Rcl_Sub_Tabs {
         foreach($this->subtabs as $key=>$tab){
             if($this->active_tab==$tab['id']){
                 $this->callback = (isset($tab['callback']))? $tab['callback']: false;
-                $this->content = (isset($tab['content']))? $tab['content']: false;
             }
         }
     }
     
-    function get_sub_content($author_lk){
-        $content = $this->get_submenu($author_lk);
-        $content .= $this->get_subtab($author_lk);
+    function get_sub_content($master_id){
+        $content = $this->get_submenu($master_id);
+        $content .= $this->get_subtab($master_id);
         return $content;
     }
     
-    function get_submenu($author_lk){
+    function get_submenu($master_id){
 
         $content = '<div class="rcl-subtab-menu">';
 
@@ -64,23 +62,17 @@ class Rcl_Sub_Tabs {
         
     }
     
-    function get_subtab($author_lk){
-        
-        //print_r($this);
+    function get_subtab($master_id){
 
         $content = '<div id="subtab-'.$this->active_tab.'" class="rcl-subtab-content">';
         
-        if($this->content){
-            
-            $content .= apply_filters('rcl_custom_tab_content',stripslashes_deep($this->content));
-            
-        }else if($this->callback){
+        if($this->callback){
             
             if(isset($this->callback['args'])){
                 $args = $this->callback['args'];
-                array_unshift($args,$author_lk);
+                array_unshift($args,$master_id);
             }else{
-                $args = array($author_lk);
+                $args = array($master_id);
             }
 
             $content .= call_user_func_array($this->callback['name'],$args);

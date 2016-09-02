@@ -6,6 +6,9 @@ function rcl_tab($tab_data,$deprecated_callback=false ,$deprecated_name='',$depr
     
     if(!is_array($tab_data)){ //поддержка старого варианта регистрации вкладки
         
+        //if($deprecated_callback)
+            //_deprecated_argument( 'rcl_tab', '15.2.0' );
+        
         $args_tab = array(
             'id'=> $tab_data, 
             'name'=> $deprecated_name,
@@ -57,17 +60,20 @@ function rcl_init_custom_tabs(){
     foreach($custom_tabs as $tab){
 
         $tab_data = array(
-            'id'=>$tab['slug'], 
-            'name'=>$tab['title'],
-            'public'=>$tab['public'],
-            'icon'=>$tab['icon'],
-            'output'=>'menu',
+            'id'=> $tab['slug'], 
+            'name'=> $tab['title'],
+            'public'=> $tab['public'],
+            'icon'=> ($tab['icon'])? $tab['icon']: 'fa-cog',
+            'output'=> 'menu',
             'content'=> array(
                 array(
                     'id'=> 'subtab-1',
                     'name'=> $tab['title'],
                     'icon'=> $tab['icon'],
-                    'content'=>$tab['content']
+                    'callback'=> array(
+                        'name'=>'rcl_custom_tab_content',
+                        'args'=> array($tab['content'])
+                    )
                 )
             )
         );
@@ -84,6 +90,20 @@ function rcl_init_custom_tabs(){
     }
 }
 
+//регистрация дочерней вкладки
+function rcl_add_sub_tab($tab_id,$subtab){
+    global $rcl_tabs;   
+    if(!isset($rcl_tabs[$tab_id])) return false;    
+    $rcl_tabs[$tab_id]['content'][] = $subtab;
+}
+
+//вывод контента произвольной вкладки
+add_filter( 'rcl_custom_tab_content', 'do_shortcode', 11 );
+add_filter( 'rcl_custom_tab_content', 'wpautop', 10 );
+function rcl_custom_tab_content($master_id,$content){
+    return apply_filters('rcl_custom_tab_content',stripslashes_deep($content));
+}
+
 //выводим все зарегистрированные вкладки в личном кабинете
 add_action('wp','rcl_setup_tabs',10);
 function rcl_setup_tabs(){
@@ -92,6 +112,8 @@ function rcl_setup_tabs(){
     if(is_admin()||!$user_LK) return false;
     
     $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
+    
+    do_action('rcl_setup_tabs');
     
     if(!$rcl_tabs) return false;
     
@@ -102,8 +124,6 @@ function rcl_setup_tabs(){
         $Rcl_Tabs = new Rcl_Tabs($tab);
         $Rcl_Tabs->add_tab();
     }
-    
-    do_action('rcl_setup_tabs');
     
 }
 
@@ -492,6 +512,8 @@ function rcl_ajax_tab($post){
     }else{
 
         $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
+        
+        do_action('rcl_setup_tabs');
         
         $data = $rcl_tabs[$id_tab];
         
