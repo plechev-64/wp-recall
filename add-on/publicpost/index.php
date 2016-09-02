@@ -94,8 +94,23 @@ function rcl_init_publics_block(){
     
     if($rcl_options['output_public_form_rcl']==1){
         
-        rcl_tab('postform','rcl_tab_postform',__('Publication','wp-recall'),array('class'=>'fa-pencil','order'=>60));
-    
+        rcl_tab(
+            array(
+                'id'=>'postform',
+                'name'=>__('Publication','wp-recall'),
+                'supports'=>array('ajax'),
+                'public'=>0,
+                'icon'=>'fa-pencil',
+                'content'=>array(
+                    array(
+                        'callback' => array(
+                            'name'=>'rcl_tab_postform'
+                        )
+                    )
+                )
+            )
+        );
+
     }
 }
 
@@ -114,12 +129,13 @@ function rcl_tab_postform($master_id){
     return do_shortcode('[public-form id="'.$id_form.'"]');
 }
 
-function rcl_get_postslist($user_id,$post_type,$type_name){
+function rcl_get_postslist($post_type,$type_name){
+    global $user_LK;
     
     if (!class_exists('Rcl_Postlist')) 
         include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
     
-    $list = new Rcl_Postlist($user_id,$post_type,$type_name);
+    $list = new Rcl_Postlist($user_LK,$post_type,$type_name);
     
     return $list->get_postlist_block();
     

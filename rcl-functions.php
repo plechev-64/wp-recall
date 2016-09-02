@@ -6,8 +6,8 @@ function rcl_tab($tab_data,$deprecated_callback=false ,$deprecated_name='',$depr
     
     if(!is_array($tab_data)){ //поддержка старого варианта регистрации вкладки
         
-        //if($deprecated_callback)
-            //_deprecated_argument( 'rcl_tab', '15.2.0' );
+        if($deprecated_callback)
+            _deprecated_argument( __FUNCTION__, '15.2.0' );
         
         $args_tab = array(
             'id'=> $tab_data, 
@@ -100,7 +100,7 @@ function rcl_add_sub_tab($tab_id,$subtab){
 //вывод контента произвольной вкладки
 add_filter( 'rcl_custom_tab_content', 'do_shortcode', 11 );
 add_filter( 'rcl_custom_tab_content', 'wpautop', 10 );
-function rcl_custom_tab_content($master_id,$content){
+function rcl_custom_tab_content($content){
     return apply_filters('rcl_custom_tab_content',stripslashes_deep($content));
 }
 

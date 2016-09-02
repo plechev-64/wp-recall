@@ -31,7 +31,24 @@ add_action('init','rmag_global_unit',10);
 
 add_action('init','rcl_tab_orders');
 function rcl_tab_orders(){
-    rcl_tab('orders','rcl_orders',__('Orders','wp-recall'),array('public'=>0,'ajax-load'=>true,'class'=>'fa-shopping-cart','order'=>30,'path'=>__FILE__));
+    
+    rcl_tab(
+        array(
+            'id'=>'orders',
+            'name'=>__('Orders','wp-recall'),
+            'supports'=>array('ajax'),
+            'public'=>0,
+            'icon'=>'fa-shopping-cart',
+            'content'=>array(
+                array(
+                    'callback' => array(
+                        'name'=>'rcl_orders'
+                    )
+                )
+            )
+        )
+    );
+    
 }
 
 function rcl_orders($master_id){

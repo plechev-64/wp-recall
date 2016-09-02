@@ -75,7 +75,24 @@ function rcl_add_postlist_group(){
 
 add_action('init','rcl_add_tab_groups');
 function rcl_add_tab_groups(){
-    rcl_tab('groups','rcl_tab_groups',__('Groups','wp-recall'),array('ajax-load'=>true,'public'=>1,'cache'=>true,'class'=>'fa-group'));
+
+    rcl_tab(
+        array(
+            'id'=>'groups',
+            'name'=>__('Groups','wp-recall'),
+            'supports'=>array('ajax','cache'),
+            'public'=>1,
+            'icon'=>'fa-group',
+            'content'=>array(
+                array(
+                    'callback' => array(
+                        'name'=>'rcl_tab_groups'
+                    )
+                )
+            )
+        )
+    );
+
 }
 
 add_action('init','rcl_register_default_group_sidebars',10);

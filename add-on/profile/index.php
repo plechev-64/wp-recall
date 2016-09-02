@@ -52,13 +52,13 @@ function rcl_show_custom_fields_profile($master_id){
         $cf = new Rcl_Custom_Fields();
 
         foreach((array)$get_fields as $custom_field){
-                $custom_field = apply_filters('custom_field_profile',$custom_field);
-                if(!$custom_field) continue;
-                $slug = $custom_field['slug'];
-                if(isset($custom_field['req'])&&$custom_field['req']==1){
-                    $meta = get_the_author_meta($slug,$master_id);
-                    $show_custom_field .= $cf->get_field_value($custom_field,$meta);
-                }
+            $custom_field = apply_filters('custom_field_profile',$custom_field);
+            if(!$custom_field) continue;
+            $slug = $custom_field['slug'];
+            if(isset($custom_field['req'])&&$custom_field['req']==1){
+                $meta = get_the_author_meta($slug,$master_id);
+                $show_custom_field .= $cf->get_field_value($custom_field,$meta);
+            }
         }
     }
 
@@ -241,7 +241,24 @@ function rcl_profile_options($content){
 
 add_action('init','rcl_tab_profile');
 function rcl_tab_profile(){
-    rcl_tab('profile','rcl_tab_profile_content',__('Profile','wp-recall'),array('ajax-load'=>true,'class'=>'fa-user','order'=>20,'path'=>__FILE__));
+    
+    rcl_tab(
+        array(
+            'id'=>'profile',
+            'name'=>__('Profile','wp-recall'),
+            'supports'=>array('ajax'),
+            'public'=>0,
+            'icon'=>'fa-user',
+            'content'=>array(
+                array(
+                    'callback' => array(
+                        'name'=>'rcl_tab_profile_content'
+                    )
+                )
+            )
+        )
+    );
+
 }
 
 function rcl_tab_profile_content($master_id){

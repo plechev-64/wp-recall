@@ -70,7 +70,6 @@ class Rcl_Sub_Tabs {
             
             if(isset($this->callback['args'])){
                 $args = $this->callback['args'];
-                array_unshift($args,$master_id);
             }else{
                 $args = array($master_id);
             }

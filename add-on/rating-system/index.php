@@ -125,11 +125,12 @@ function rcl_rating_tab_add_types_data($tabs){
     return $tabs;
 }
 
-function rcl_rating_get_list_votes_content($user_id,$args){
+function rcl_rating_get_list_votes_content($args){
+    global $user_LK;
     
-    $args['object_author'] = $user_id;
+    $args['object_author'] = $user_LK;
     
-    $amount = rcl_count_votes($user_id,$args['rating_type']);
+    $amount = rcl_count_votes($user_LK,$args['rating_type']);
     
     $pagenavi = new Rcl_PageNavi('rcl-rating',$amount,array('in_page'=>50));
     
