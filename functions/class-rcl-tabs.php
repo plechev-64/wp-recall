@@ -8,7 +8,7 @@ class Rcl_Tabs{
     public $public = 0;
     public $order = 10;
     public $first = false;
-    public $counter = false;
+    public $counter = null;
     public $output = 'menu';
     public $supports = array();
     public $content = array();

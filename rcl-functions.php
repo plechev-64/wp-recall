@@ -32,7 +32,7 @@ function rcl_tab($tab_data,$deprecated_callback=false ,$deprecated_name='',$depr
             $args_tab['supports'][] = 'ajax';
         }
         
-        $args_tab['counter'] = (isset($deprecated_args['counter']))? $deprecated_args['counter']: false;
+        $args_tab['counter'] = (isset($deprecated_args['counter']))? $deprecated_args['counter']: null;
         $args_tab['public'] = (isset($deprecated_args['public']))? $deprecated_args['public']: 0;
         $args_tab['icon'] = (isset($deprecated_args['class']))? $deprecated_args['class']: 'fa-cog';
         $args_tab['output'] = (isset($deprecated_args['output']))? $deprecated_args['output']: 'menu';
