@@ -296,7 +296,7 @@ function rcl_get_tab_user_important($user_id){
     
     if(!$amount_messages){
         return '<div class="chat-notice">'
-                . '<span class="notice-error">'.__('Важных сообщений пока нет','wp-recall').'</span>'
+                . '<span class="notice-error">'.__('Important messages yet','wp-recall').'</span>'
                 . '</div>'; 
     }
 
