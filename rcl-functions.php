@@ -69,7 +69,7 @@ function rcl_init_custom_tabs(){
                 array(
                     'id'=> 'subtab-1',
                     'name'=> $tab['title'],
-                    'icon'=> $tab['icon'],
+                    'icon'=> ($tab['icon'])? $tab['icon']: 'fa-cog',
                     'callback'=> array(
                         'name'=>'rcl_custom_tab_content',
                         'args'=> array($tab['content'])
