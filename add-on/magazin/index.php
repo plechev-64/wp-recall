@@ -90,7 +90,7 @@ function rcl_orders_tab($status_id){
 }
 
 function rcl_single_order_tab($order_id){
-    global $user_LK;
+    global $user_LK,$rmag_options;
     
     $order = rcl_get_order($order_id);
 
@@ -110,10 +110,12 @@ function rcl_single_order_tab($order_id){
     ));
 
     $block .= '<div id="manage-order">';
+    
     if($status == 1||$status == 5) 
         $block .= '<div class="remove-order">'
-            . '<input class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'" type="button" value="'.__('Delete','wp-recall').'">'
+            . '<a href="#" class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'"><i class="fa fa-trash" aria-hidden="true"></i> '.__('Delete','wp-recall').'</a>'
             . '</div>';
+    
     if($status==1&&function_exists('rcl_payform')){
 
         $type_pay = $rmag_options['type_order_payment'];
