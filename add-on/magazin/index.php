@@ -32,89 +32,112 @@ add_action('init','rmag_global_unit',10);
 add_action('init','rcl_tab_orders');
 function rcl_tab_orders(){
     
-    rcl_tab(
-        array(
-            'id'=>'orders',
-            'name'=>__('Orders','wp-recall'),
-            'supports'=>array('ajax'),
-            'public'=>0,
-            'icon'=>'fa-shopping-cart',
-            'content'=>array(
-                array(
-                    'callback' => array(
-                        'name'=>'rcl_orders'
-                    )
-                )
-            )
-        )
+    $tab_data = array(
+        'id'=>'orders',
+        'name'=>__('Orders','wp-recall'),
+        'supports'=>array('ajax'),
+        'public'=>0,
+        'icon'=>'fa-shopping-cart'
     );
+    
+    if(isset($_GET['order-id'])){
+
+        $tab_data['content'][] = array(
+            'id' => 'status-'.$k,
+            'name' => $name,
+            'callback' => array(
+                'name' => 'rcl_single_order_tab',
+                'args' => array($_GET['order-id'])
+            )
+        );
+
+        
+    }else{
+        
+        $statuses = rcl_order_statuses();
+    
+        foreach($statuses as $k=>$name){
+            $tab_data['content'][] = array(
+                'id' => 'status-'.$k,
+                'name' => $name,
+                'icon' => 'fa-folder-o',
+                'callback' => array(
+                    'name' => 'rcl_orders_tab',
+                    'args' => array($k)
+                )
+            );
+        }
+        
+    }
+
+    rcl_tab($tab_data);
     
 }
 
-function rcl_orders($master_id){
-    global $wpdb,$user_ID,$rmag_options,$rcl_options,$order;
+function rcl_orders_tab($status_id){
+    global $wpdb,$user_ID,$rmag_options,$rcl_options,$order,$user_LK;
 
-        $block = apply_filters('content_order_tab','');
+    $block = apply_filters('content_order_tab','');
 
-	if(isset($_GET['order-id'])){
+    global $orders;
 
-                $order = rcl_get_order($_GET['order-id']);
+    $orders = rcl_get_orders(array('user_id'=>$user_LK,'order_status'=>$status_id));
 
-                if($order->order_author!=$master_id) return false;
+    if(!$orders) $block .= '<p>'.__('Orders with this status yet','wp-recall').'.</p>';
+    else $block .= rcl_get_include_template('orders-history.php',__FILE__);
 
-                $status = $order->order_status;
-                $order_id = $order->order_id;
-                $price = $order->order_price;
+    return $block;
+}
 
-                $block .= '<a class="recall-button view-orders" href="'.rcl_format_url(get_author_posts_url($master_id),'orders').'">Смотреть все заказы</a>';
+function rcl_single_order_tab($order_id){
+    global $user_LK;
+    
+    $order = rcl_get_order($order_id);
 
-                $block .= '<h3>'.__('Order','wp-recall').' №'.$order_id.'</h3>';
-                
-                $postdata = rcl_encode_post(array(
-                    'callback'=>'rcl_trash_order',
-                    'order_id'=>$order_id
-                ));
+    if($order->order_author!=$user_LK) return false;
 
-                $block .= '<div id="manage-order">';
-                if($status == 1||$status == 5) 
-                    $block .= '<div class="remove-order">'
-                        . '<input class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'" type="button" value="'.__('Delete','wp-recall').'">'
-                        . '</div>';
-                if($status==1&&function_exists('rcl_payform')){
-                    
-                    $type_pay = $rmag_options['type_order_payment'];
-                    
-                    $payment = new Rcl_Payment();
-                    
-                    $block .= '<div class="rcl-types-paeers">';
-                    
-                    if($type_pay==1||$type_pay==2){
-                        $block .= $payment->get_form(array('id_pay'=>$order_id,'summ'=>$price,'type'=>2));
-                    }
-                    
-                    if(!$type_pay||$type_pay==2){
-                        $block .= $payment->personal_account_pay_form($order_id);
-                    }
-                    
-                    $block .= '</div>';
-                    
-                }
-                $block .= '</div>';
+    $status = $order->order_status;
+    $order_id = $order->order_id;
+    $price = $order->order_price;
 
-                $block .= '<div class="redirectform"></div>';
+    $block .= '<a class="recall-button view-orders" href="'.rcl_format_url(get_author_posts_url($user_LK),'orders').'">Смотреть все заказы</a>';
 
-		$block .= rcl_get_include_template('order.php',__FILE__);
+    $block .= '<h3>'.__('Order','wp-recall').' №'.$order_id.'</h3>';
 
-	}else{
+    $postdata = rcl_encode_post(array(
+        'callback'=>'rcl_trash_order',
+        'order_id'=>$order_id
+    ));
 
-		global $orders;
+    $block .= '<div id="manage-order">';
+    if($status == 1||$status == 5) 
+        $block .= '<div class="remove-order">'
+            . '<input class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'" type="button" value="'.__('Delete','wp-recall').'">'
+            . '</div>';
+    if($status==1&&function_exists('rcl_payform')){
 
-		$orders = rcl_get_orders(array('user_id'=>$master_id,'status_not_in'=>6));
+        $type_pay = $rmag_options['type_order_payment'];
 
-		if(!$orders) $block .= '<p>'.__('You have not yet issued any order','wp-recall').'.</p>';
-		else $block .= rcl_get_include_template('orders-history.php',__FILE__);
+        $payment = new Rcl_Payment();
 
-	}
+        $block .= '<div class="rcl-types-paeers">';
 
-	return $block;
+        if($type_pay==1||$type_pay==2){
+            $block .= $payment->get_form(array('id_pay'=>$order_id,'summ'=>$price,'type'=>2));
+        }
+
+        if(!$type_pay||$type_pay==2){
+            $block .= $payment->personal_account_pay_form($order_id);
+        }
+
+        $block .= '</div>';
+
+    }
+    $block .= '</div>';
+
+    $block .= '<div class="redirectform"></div>';
+
+    $block .= rcl_get_include_template('order.php',__FILE__);
+    
+    return $block;
 }

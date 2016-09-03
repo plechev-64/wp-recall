@@ -78,21 +78,72 @@ function rcl_add_tab_groups(){
 
     rcl_tab(
         array(
-            'id'=>'groups',
-            'name'=>__('Groups','wp-recall'),
-            'supports'=>array('ajax','cache'),
-            'public'=>1,
-            'icon'=>'fa-group',
-            'content'=>array(
+            'id' => 'groups',
+            'name' => __('Groups','wp-recall'),
+            'supports' => array('ajax','cache'),
+            'public' => 1,
+            'icon' => 'fa-group',
+            'content' => array(
                 array(
+                    'id' => 'all-groups',
+                    'name' => __('All groups','wp-recall'),
+                    'icon' => 'fa-group',
                     'callback' => array(
-                        'name'=>'rcl_tab_groups'
+                        'name' => 'rcl_tab_groups',
+                        'args' => array('user_id')
+                    )
+                ),
+                array(
+                    'id' => 'admin-groups',
+                    'name' => __('Created groups','wp-recall'),
+                    'icon' => 'fa-cogs',
+                    'callback' => array(
+                        'name' => 'rcl_tab_groups',
+                        'args' => array('admin_id')
                     )
                 )
             )
         )
     );
 
+}
+
+function rcl_tab_groups($type_account = 'user_id'){
+
+    global $wpdb,$user_ID,$rcl_options,$user_LK;
+    
+    $content = '';
+
+    if(rcl_is_office($user_ID)){
+
+        $group_can_public = (isset($rcl_options['public_group_access_recall']))? $rcl_options['public_group_access_recall']: false;
+        if($group_can_public){
+                $userdata = get_userdata( $user_ID );
+                if($userdata->user_level>=$group_can_public){
+                        $public_groups = true;
+                }else{
+                        $public_groups = false;
+                }
+        }else{
+                $public_groups = true;
+        }
+
+        if($public_groups){
+            $content = '<div id="create-group">'
+                . '<form method="post">'
+                    . '<div class="form-field">'
+                        . '<input type="text" required placeholder="'.__('Enter the name of the new group','wp-recall').'" name="rcl_group[name]">'
+                        . '<input type="submit" class="recall-button" name="rcl_group[create]" value="'.__('Create','wp-recall').'">'
+                    . '</div>'
+                    . wp_nonce_field('rcl-group-create','_wpnonce',true,false)
+                . '</form>'
+            . '</div>';
+        }
+    }
+
+    $content .= rcl_get_grouplist(array('filters'=>1,'search_form'=>0,$type_account=>$user_LK));
+
+    return $content;
 }
 
 add_action('init','rcl_register_default_group_sidebars',10);
@@ -147,44 +198,6 @@ function rcl_group(){
 /*deprecated*/
 function add_post_in_group(){
     rcl_group();
-}
-
-function rcl_tab_groups($master_id){
-
-    global $wpdb,$user_ID,$rcl_options;
-    
-    $content = '';
-
-    if($master_id==$user_ID){
-
-        $group_can_public = (isset($rcl_options['public_group_access_recall']))? $rcl_options['public_group_access_recall']: false;
-        if($group_can_public){
-                $userdata = get_userdata( $user_ID );
-                if($userdata->user_level>=$group_can_public){
-                        $public_groups = true;
-                }else{
-                        $public_groups = false;
-                }
-        }else{
-                $public_groups = true;
-        }
-
-        if($public_groups){
-            $content = '<div id="create-group">'
-                . '<form method="post">'
-                    . '<div class="form-field">'
-                        . '<input type="text" required placeholder="'.__('Enter the name of the new group','wp-recall').'" name="rcl_group[name]">'
-                        . '<input type="submit" class="recall-button" name="rcl_group[create]" value="'.__('Create','wp-recall').'">'
-                    . '</div>'
-                    . wp_nonce_field('rcl-group-create','_wpnonce',true,false)
-                . '</form>'
-            . '</div>';
-        }
-    }
-
-    $content .= rcl_get_grouplist(array('filters'=>1,'search_form'=>0,'user_id'=>$master_id));
-
-    return $content;
 }
 
 function rcl_get_link_group_tag($content){

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-09-02 16:41+0300\n"
+"POT-Creation-Date: 2016-09-03 15:17+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -139,11 +139,11 @@ msgstr "Сохранить изменения"
 msgid "Unused"
 msgstr "Неиспользуемые"
 
-#: add-on/groups/classes/rcl-groups.php:237
+#: add-on/groups/classes/rcl-groups.php:256
 msgid "Search groups"
 msgstr "Поиск групп"
 
-#: add-on/groups/classes/rcl-groups.php:239 add-on/groups/groups-init.php:14
+#: add-on/groups/classes/rcl-groups.php:258 add-on/groups/groups-init.php:14
 #: add-on/groups/groups-init.php:49 add-on/magazin/activate.php:66
 #: add-on/magazin/activate.php:97 add-on/magazin/activate.php:137
 #: add-on/magazin/functions/init.php:69 add-on/magazin/functions/init.php:107
@@ -152,29 +152,29 @@ msgstr "Поиск групп"
 msgid "Search"
 msgstr "Поиск"
 
-#: add-on/groups/classes/rcl-groups.php:249
+#: add-on/groups/classes/rcl-groups.php:268
 msgid "Total groups"
 msgstr "Всего групп"
 
-#: add-on/groups/classes/rcl-groups.php:266 add-on/magazin/admin-pages.php:242
+#: add-on/groups/classes/rcl-groups.php:285 add-on/magazin/admin-pages.php:242
 #: add-on/magazin/functions/class-rcl-order.php:352
 #: add-on/magazin/functions/core.php:443 add-on/magazin/functions/core.php:464
 #: add-on/publicpost/fast-editor.php:126 functions/class-rcl-editfields.php:230
 msgid "Name"
 msgstr "Имя"
 
-#: add-on/groups/classes/rcl-groups.php:267
+#: add-on/groups/classes/rcl-groups.php:286
 #: add-on/magazin/orders-history.php:77
 #: add-on/publicpost/templates/posts-list.php:6
 #: add-on/user-account/payments.php:85 functions/class-rcl-editfields.php:190
 msgid "Date"
 msgstr "Дата"
 
-#: add-on/groups/classes/rcl-groups.php:268 functions/class-rcl-users.php:542
+#: add-on/groups/classes/rcl-groups.php:287 functions/class-rcl-users.php:542
 msgid "Publications"
 msgstr "Публикациям"
 
-#: add-on/groups/classes/rcl-groups.php:269
+#: add-on/groups/classes/rcl-groups.php:288
 #: add-on/groups/groups-widgets.php:108 add-on/groups/groups-widgets.php:131
 #: add-on/groups/templates/group-list.php:11
 #: add-on/magazin/orders-history.php:73 add-on/user-account/payments.php:82
@@ -182,7 +182,7 @@ msgstr "Публикациям"
 msgid "Users"
 msgstr "Пользователи"
 
-#: add-on/groups/classes/rcl-groups.php:274 functions/class-rcl-users.php:552
+#: add-on/groups/classes/rcl-groups.php:293 functions/class-rcl-users.php:552
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -194,7 +194,7 @@ msgstr "Бан"
 msgid "Reader"
 msgstr "Читатель"
 
-#: add-on/groups/groups-core.php:178 add-on/groups/index.php:391
+#: add-on/groups/groups-core.php:178 add-on/groups/index.php:404
 #: rcl-admin/add-on-manager.php:176 rcl-admin/templates-manager.php:177
 #: templates/add-on-card.php:24
 msgid "Author"
@@ -212,7 +212,7 @@ msgstr "Администратор"
 msgid "Opened group"
 msgstr "Открытая группа"
 
-#: add-on/groups/groups-core.php:243 add-on/groups/index.php:382
+#: add-on/groups/groups-core.php:243 add-on/groups/index.php:395
 msgid "Closed group"
 msgstr "Закрытая группа"
 
@@ -381,7 +381,7 @@ msgstr "Добавить или удалить"
 msgid "Click to use"
 msgstr "Нажать для использования"
 
-#: add-on/groups/groups-options.php:8 add-on/groups/index.php:368
+#: add-on/groups/groups-options.php:8 add-on/groups/index.php:381
 msgid "Group settings"
 msgstr "Настройки группы"
 
@@ -550,101 +550,109 @@ msgstr "Отображать"
 msgid "Thumbnail"
 msgstr "Миниатюра"
 
-#: add-on/groups/index.php:103
-msgid "Sidebar"
-msgstr "Боковая колонка"
+#: add-on/groups/index.php:89
+msgid "All groups"
+msgstr "Все группы"
 
-#: add-on/groups/index.php:110
-msgid "Main"
-msgstr "Основной"
+#: add-on/groups/index.php:98
+msgid "Created groups"
+msgstr "Созданные группы"
 
-#: add-on/groups/index.php:117
-msgid "Footer"
-msgstr "Подвал"
-
-#: add-on/groups/index.php:176
+#: add-on/groups/index.php:135
 msgid "Enter the name of the new group"
 msgstr "Введите имя новой группы"
 
-#: add-on/groups/index.php:177
+#: add-on/groups/index.php:136
 msgid "Create"
 msgstr "Создать"
 
-#: add-on/groups/index.php:218
+#: add-on/groups/index.php:154
+msgid "Sidebar"
+msgstr "Боковая колонка"
+
+#: add-on/groups/index.php:161
+msgid "Main"
+msgstr "Основной"
+
+#: add-on/groups/index.php:168
+msgid "Footer"
+msgstr "Подвал"
+
+#: add-on/groups/index.php:231
 msgid "Category in the group"
 msgstr "Категории группы"
 
-#: add-on/groups/index.php:243
+#: add-on/groups/index.php:256
 msgid "Published in the group"
 msgstr "Публикация в группе"
 
-#: add-on/groups/index.php:285
+#: add-on/groups/index.php:298
 msgid "Create a group failed"
 msgstr "Создание группы не удалось"
 
-#: add-on/groups/index.php:371
+#: add-on/groups/index.php:384
 msgid "Group name"
 msgstr "Наименование группы"
 
-#: add-on/groups/index.php:375 add-on/publicpost/fast-editor.php:128
+#: add-on/groups/index.php:388 add-on/publicpost/fast-editor.php:128
 #: rcl-admin/add-on-manager.php:131 rcl-admin/templates-manager.php:141
 msgid "Description"
 msgstr "Описание"
 
-#: add-on/groups/index.php:379 add-on/groups/templates/single-group.php:26
+#: add-on/groups/index.php:392 add-on/groups/templates/single-group.php:26
 msgid "Group status"
 msgstr "Статус группы"
 
-#: add-on/groups/index.php:381
+#: add-on/groups/index.php:394
 msgid "Open group"
 msgstr "Открытая группа"
 
-#: add-on/groups/index.php:386
+#: add-on/groups/index.php:399
 msgid "Membership"
 msgstr "Членство"
 
-#: add-on/groups/index.php:387
+#: add-on/groups/index.php:400
 msgid "Registration is permitted"
 msgstr "Регистрация разрешена"
 
-#: add-on/groups/index.php:388
+#: add-on/groups/index.php:401
 msgid "The role of the new user"
 msgstr "Роль нового пользователя"
 
-#: add-on/groups/index.php:390
+#: add-on/groups/index.php:403
 msgid "Visitor"
 msgstr "Посетитель"
 
-#: add-on/groups/index.php:395 add-on/publicpost/rcl_publicform.php:363
+#: add-on/groups/index.php:408 add-on/publicpost/rcl_publicform.php:363
 msgid "Group categories"
 msgstr "Категории группы"
 
-#: add-on/groups/index.php:395
+#: add-on/groups/index.php:408
 msgid "separated by commas"
 msgstr "разделять запятыми"
 
-#: add-on/groups/index.php:402 rcl-admin/admin-pages.php:395
+#: add-on/groups/index.php:415 rcl-admin/admin-pages.php:395
 #: rcl-admin/rcl-admin.php:11
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
-#: add-on/groups/index.php:416
+#: add-on/groups/index.php:429
 msgid "Requests for access to the group"
 msgstr "Запросы на доступ к группе"
 
-#: add-on/groups/index.php:419
+#: add-on/groups/index.php:432
 msgid "No queries"
 msgstr "Нет запросов"
 
-#: add-on/groups/index.php:433
+#: add-on/groups/index.php:446
 msgid "Approve request"
 msgstr "Одобрить запрос"
 
-#: add-on/groups/index.php:434
+#: add-on/groups/index.php:447
 msgid "Reject request"
 msgstr "Отклонить запрос"
 
-#: add-on/groups/index.php:449 add-on/magazin/index.php:81
+#: add-on/groups/index.php:462 add-on/magazin/index.php:118
 #: add-on/magazin/orders-history.php:107 add-on/magazin/orders-history.php:124
 #: add-on/user-account/payments.php:100 functions/class-rcl-editfields.php:219
 #: rcl-admin/add-on-manager.php:146 rcl-admin/add-on-manager.php:157
@@ -652,25 +660,25 @@ msgstr "Отклонить запрос"
 msgid "Delete"
 msgstr "Удалить"
 
-#: add-on/groups/index.php:453 add-on/profile/index.php:736
+#: add-on/groups/index.php:466 add-on/profile/index.php:736
 msgid "User status"
 msgstr "Статус пользователя"
 
-#: add-on/groups/index.php:458 functions/class-rcl-editfields.php:65
+#: add-on/groups/index.php:471 functions/class-rcl-editfields.php:65
 #: functions/enqueue-scripts.php:109 rcl-admin/add-on-manager.php:441
 #: rcl-admin/templates-manager.php:357
 msgid "Save"
 msgstr "Сохранить"
 
-#: add-on/groups/index.php:487
+#: add-on/groups/index.php:500
 msgid "Request access to the group approved!"
 msgstr "Запрос на доступ к группе одобрен!"
 
-#: add-on/groups/index.php:494
+#: add-on/groups/index.php:507
 msgid "Welcome to the group"
 msgstr "Добро пожаловать в группу"
 
-#: add-on/groups/index.php:495
+#: add-on/groups/index.php:508
 #, php-format
 msgid ""
 "Congratulations , your request for access to a private group on \"%s\" "
@@ -679,29 +687,29 @@ msgstr ""
 "Поздравляем, ваш запрос на доступ к закрытой группе на сайте \"%s\" был "
 "одобрен"
 
-#: add-on/groups/index.php:496
+#: add-on/groups/index.php:509
 msgid ""
 "Now you can take part in the life of the group as it is a full participant."
 msgstr ""
 "Теперь вы можете принимать участие в жизни группы как ее полноценный участник"
 
-#: add-on/groups/index.php:497
+#: add-on/groups/index.php:510
 msgid "You can visit the group by clicking on the link"
 msgstr "Вы можете посетить группу по ссылке"
 
-#: add-on/groups/index.php:502
+#: add-on/groups/index.php:515
 msgid "The request was accepted"
 msgstr "Запрос одобрен"
 
-#: add-on/groups/index.php:506
+#: add-on/groups/index.php:519
 msgid "Request rejected"
 msgstr "Запрос отклонен"
 
-#: add-on/groups/index.php:507
+#: add-on/groups/index.php:520
 msgid "The request to access the group rejected."
 msgstr "Запрос на доступ к группе отклонен."
 
-#: add-on/groups/index.php:508
+#: add-on/groups/index.php:521
 #, php-format
 msgid ""
 "We are sorry, but your request to access the private group \"%s\" on the "
@@ -872,7 +880,7 @@ msgstr ""
 "шорткодом productlist <a href=\"https://codeseller.ru/api-rcl/productlist/"
 "\">(описание шорткода)</a>. Вы можете изменить страницу вывода."
 
-#: add-on/magazin/admin-pages.php:6 add-on/magazin/index.php:38
+#: add-on/magazin/admin-pages.php:6 add-on/magazin/index.php:37
 #: add-on/magazin/orders-history.php:275
 msgid "Orders"
 msgstr "Заказы"
@@ -1761,13 +1769,13 @@ msgstr "Добавить в корзину"
 msgid "Product tags"
 msgstr "Метки товара"
 
-#: add-on/magazin/index.php:71
+#: add-on/magazin/index.php:89
+msgid "Orders with this status yet"
+msgstr "Заказов с таким статусом пока нет"
+
+#: add-on/magazin/index.php:108
 msgid "Order"
 msgstr "Заказ"
-
-#: add-on/magazin/index.php:114
-msgid "You have not yet issued any order"
-msgstr "У вас пока не создано ни одного заказа"
 
 #: add-on/magazin/orders-history.php:20
 msgid "order"
@@ -3040,11 +3048,11 @@ msgstr "Сообщения"
 
 #: add-on/rcl-chat/index.php:60
 msgid "Write something"
-msgstr "Напишите хоть что то"
+msgstr "Напишите хоть что-то"
 
 #: add-on/rcl-chat/index.php:61
 msgid "Exceeds the maximum message size"
-msgstr "Превышен масимальный размер сообщения"
+msgstr "Превышен максимальный размер сообщения"
 
 #: add-on/rcl-chat/index.php:114
 msgid "Chat"
@@ -4463,6 +4471,9 @@ msgstr "Регистрация"
 #: wp-recall.php:40 wp-recall.php:44
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "You have not yet issued any order"
+#~ msgstr "У вас пока не создано ни одного заказа"
 
 #~ msgid "You have exceeded the allowed number of downloads! Max. %s"
 #~ msgstr "Превышено разрешенное количество файлов к загрузке! Макс. %s"

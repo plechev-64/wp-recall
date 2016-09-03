@@ -3,7 +3,7 @@ function rcl_order_statuses(){
     $sts = array(
           1    => __( 'Not paid', 'wp-recall' ),
           2    => __( 'Paid', 'wp-recall' ),
-          3   => __( 'Sent', 'wp-recall' ),
+          3    => __( 'Sent', 'wp-recall' ),
           4    => __( 'Received', 'wp-recall' ),
           5    => __( 'Closed', 'wp-recall' ),
           6    => __( 'Trash', 'wp-recall' )

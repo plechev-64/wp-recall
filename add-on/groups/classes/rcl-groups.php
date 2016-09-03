@@ -18,6 +18,7 @@ class Rcl_Groups {
     public $data;
     public $like = false;
     public $user_id;
+    public $admin_id;
     public $add_uri;
     public $relation = 'AND';
 
@@ -39,6 +40,9 @@ class Rcl_Groups {
 
         if($this->user_id)
             add_filter('rcl_groups_query',array($this,'add_query_user_id'));
+        
+        if($this->admin_id)
+            add_filter('rcl_groups_query',array($this,'add_query_admin_id'));
 
         if($this->orderby=='count')
             add_filter('rcl_groups_query',array($this,'add_query_posts_count'));
@@ -146,7 +150,7 @@ class Rcl_Groups {
             $query_string .= "ORDER BY ".$query['orderby']." $this->order ";
             $query_string .= "LIMIT $this->offset,$this->number";
         }
-        //if(!$count) echo $query_string;
+        //if($count) echo $query_string;
 
         if($this->query_count)
             $this->query_count = false;
@@ -164,13 +168,28 @@ class Rcl_Groups {
 
         if($this->query_count){
             $query['select'] = array("COUNT(DISTINCT terms.term_id)");
-            $query['join'] = array("INNER JOIN ".RCL_PREF."groups AS groups ON terms.term_id=groups.ID");
+            $query['join'][] = "INNER JOIN ".RCL_PREF."groups AS groups ON terms.term_id=groups.ID";
         }else{
             $query['group'] = "terms.term_id";
         }
 
         $query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON terms.term_id=groups_users.group_id";
-        $query['where'] = array("groups.admin_id='$this->user_id' OR groups_users.user_id='$this->user_id'");
+        $query['where'][] = "(groups.admin_id='$this->user_id' OR groups_users.user_id='$this->user_id')";
+
+        return $query;
+    }
+    
+    function add_query_admin_id($query){
+        
+        if($this->query_count){
+            $query['select'] = array("COUNT(DISTINCT terms.term_id)");
+            $query['join'][] = "INNER JOIN ".RCL_PREF."groups AS groups ON terms.term_id=groups.ID";
+        }else{
+            $query['group'] = "terms.term_id";
+        }
+        
+        $query['join'][] = "INNER JOIN ".RCL_PREF."groups_users AS groups_users ON terms.term_id=groups_users.group_id";
+        $query['where'][] = "groups.admin_id='$this->admin_id'";
 
         return $query;
     }
