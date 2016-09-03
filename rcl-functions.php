@@ -40,6 +40,12 @@ function rcl_tab($tab_data,$deprecated_callback=false ,$deprecated_name='',$depr
         $tab_data = $args_tab;
 
     }
+    
+    if(!isset($tab_data['content'][0]['id']))
+        $tab_data['content'][0]['id'] = $tab_data['id'];
+    
+    if(!isset($tab_data['content'][0]['id']))
+        $tab_data['content'][0]['name'] = $tab_data['name'];
 
     $tab_data = apply_filters('rcl_tab',$tab_data);
     
@@ -753,8 +759,6 @@ function rcl_get_chart($arr=false){
     global $chartData;
 
     if(!$arr) return false;
-    
-    //$titles = $chartData['data'][0];
 
     foreach($arr as $month=>$data){
         $cnt = (isset($data['cnt']))?$data['cnt']:0;
@@ -763,9 +767,7 @@ function rcl_get_chart($arr=false){
     }
     
     if(!$chartData) return false;
-    
-    //$array_pop($chartData['data']);
-    //print_r($titles);
+
     krsort($chartData['data']);
     array_unshift($chartData['data'], array_pop($chartData['data']));
     

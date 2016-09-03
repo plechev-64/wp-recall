@@ -83,7 +83,7 @@ function rcl_orders_tab($status_id){
 
     $orders = rcl_get_orders(array('user_id'=>$user_LK,'order_status'=>$status_id));
 
-    if(!$orders) $block .= '<p>'.__('Orders with this status yet','wp-recall').'.</p>';
+    if(!$orders) $block .= '<p>'.sprintf(__('Orders with a status of "%s" yet','wp-recall'),rcl_get_status_name_order($status_id)).'.</p>';
     else $block .= rcl_get_include_template('orders-history.php',__FILE__);
 
     return $block;

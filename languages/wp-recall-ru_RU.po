@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-09-03 15:17+0300\n"
+"POT-Creation-Date: 2016-09-03 16:02+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -652,7 +652,7 @@ msgstr "Одобрить запрос"
 msgid "Reject request"
 msgstr "Отклонить запрос"
 
-#: add-on/groups/index.php:462 add-on/magazin/index.php:118
+#: add-on/groups/index.php:462 add-on/magazin/index.php:115
 #: add-on/magazin/orders-history.php:107 add-on/magazin/orders-history.php:124
 #: add-on/user-account/payments.php:100 functions/class-rcl-editfields.php:219
 #: rcl-admin/add-on-manager.php:146 rcl-admin/add-on-manager.php:157
@@ -1769,11 +1769,12 @@ msgstr "Добавить в корзину"
 msgid "Product tags"
 msgstr "Метки товара"
 
-#: add-on/magazin/index.php:89
-msgid "Orders with this status yet"
-msgstr "Заказов с таким статусом пока нет"
+#: add-on/magazin/index.php:86
+#, php-format
+msgid "Orders with a status of \"%s\" yet"
+msgstr "Заказов со статусом \"%s\" пока нет"
 
-#: add-on/magazin/index.php:108
+#: add-on/magazin/index.php:105
 msgid "Order"
 msgstr "Заказ"
 
@@ -4471,6 +4472,9 @@ msgstr "Регистрация"
 #: wp-recall.php:40 wp-recall.php:44
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "Orders with this status yet"
+#~ msgstr "Заказов с таким статусом пока нет"
 
 #~ msgid "You have not yet issued any order"
 #~ msgstr "У вас пока не создано ни одного заказа"

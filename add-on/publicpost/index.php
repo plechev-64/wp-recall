@@ -98,7 +98,6 @@ function rcl_init_publics_block(){
             array(
                 'id'=>'postform',
                 'name'=>__('Publication','wp-recall'),
-                'supports'=>array('ajax'),
                 'public'=>0,
                 'icon'=>'fa-pencil',
                 'content'=>array(
