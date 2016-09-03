@@ -58,7 +58,7 @@ function rcl_add_postlist_posts(){
 
 add_action('init','rcl_init_publics_block');
 function rcl_init_publics_block(){
-    global $rcl_options,$user_ID,$rcl_postlist,$user_LK;
+    global $rcl_options,$user_ID,$user_LK;
     
     if($rcl_options['publics_block_rcl']==1){
 
@@ -72,23 +72,7 @@ function rcl_init_publics_block(){
             'icon'=>'fa-list',
             'output'=>'menu'
         );
-    
-        if($rcl_postlist){
 
-            foreach($rcl_postlist as $post_type=>$data){
-                $tab_data['content'][] = array(
-                    'id' => 'type-'.$post_type,
-                    'name' => $data['name'],
-                    'icon' => 'fa-list',
-                    'callback' => array(
-                        'name'=>'rcl_get_postslist',
-                        'args'=>array($post_type,$data['name'])
-                    )
-                );
-            }
-
-        }
-        
         rcl_tab($tab_data);
     }
     
@@ -111,6 +95,33 @@ function rcl_init_publics_block(){
         );
 
     }
+}
+
+add_filter('rcl_tabs','rcl_postlist_tab_add_types_data',10);
+function rcl_postlist_tab_add_types_data($tabs){
+    global $rcl_postlist,$rcl_options;
+    
+    if(!isset($tabs['publics'])) return $tabs;
+    
+    $tabs['publics']['content'] = array();
+    
+    if($rcl_postlist){
+
+        foreach($rcl_postlist as $post_type=>$data){
+            $tabs['publics']['content'][] = array(
+                'id' => 'type-'.$post_type,
+                'name' => $data['name'],
+                'icon' => 'fa-list',
+                'callback' => array(
+                    'name'=>'rcl_get_postslist',
+                    'args'=>array($post_type,$data['name'])
+                )
+            );
+        }
+
+    }
+    
+    return $tabs;
 }
 
 add_filter('pre_update_postdata_rcl','rcl_update_postdata_excerpt');

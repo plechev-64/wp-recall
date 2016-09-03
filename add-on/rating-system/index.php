@@ -102,6 +102,8 @@ function rcl_rating_tab_add_types_data($tabs){
     
     if(!isset($tabs['rating'])) return $tabs;
     
+    $tabs['rating']['content'] = array();
+    
     foreach($rcl_rating_types as $type){
 
         if(!isset($rcl_options['rating_user_'.$type['rating_type']])||!$rcl_options['rating_user_'.$type['rating_type']])continue;
