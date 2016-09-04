@@ -70,6 +70,8 @@ class Rcl_Chat {
         }
         
         $this->user_can = ($this->is_user_can())? 1: 0;
+        
+        do_action('rcl_chat',$this);
 
     }
     
