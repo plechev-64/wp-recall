@@ -66,8 +66,11 @@ function lt_add_sidebar_area_after(){
 }
 
 // выводим обложку
-add_filter('rcl_inline_styles','lt_add_cover_inline_styles',10);
-function lt_add_cover_inline_styles($styles){
+add_filter('rcl_inline_styles','rcl_add_cover_inline_styles',10);
+function rcl_add_cover_inline_styles($styles){
+    
+    if(!rcl_is_office()) return $styles;
+    
     global $user_LK;
     $cover_url = get_user_meta($user_LK,'rcl_cover',1);
     if(!$cover_url) $cover_url = rcl_addon_url('img/default-cover.jpg',__FILE__);

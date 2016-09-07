@@ -1,6 +1,7 @@
 <?php
 
 class Rcl_PageNavi{
+    
     public $current_page = 1;//текущая страница
     public $pages_amount;//кол-во страниц
     public $output_number = array(4,4);//диапазон вывода отображаемых страниц
@@ -14,11 +15,16 @@ class Rcl_PageNavi{
     public $ajax = false;//указание использования ajax
     
     function __construct($pager_id,$data_amount,$custom = array()){
-
+        
         $this->pager_id = $pager_id;
         
         if(isset($_REQUEST['pager-id'])&&$_REQUEST['pager-id']==$this->pager_id){
             $this->current_page = $_REQUEST[$this->key];
+        }
+        
+        if(defined( 'DOING_AJAX' ) && DOING_AJAX && isset($_POST['tab_url'])){
+            $post = rcl_decode_post($_POST['post']);
+            $this->current_page = $post->page;
         }
         
         $this->data_amount = $data_amount;        
@@ -44,6 +50,8 @@ class Rcl_PageNavi{
                 $this->ajax = $this->custom['ajax'];
         }
         
+        add_filter('rcl_page_link_attributes',array($this,'add_ajax_tab_attributes'));
+        
         if($this->current_page==0)
             $this->current_page = 1;
 
@@ -55,10 +63,18 @@ class Rcl_PageNavi{
     
     function uri_data_init(){
         
-        $this->uri['current'] = (defined( 'DOING_AJAX' ) && DOING_AJAX && isset($_POST['tab_url']))? $_POST['tab_url']: get_bloginfo('wpurl').str_replace('?'.$_SERVER['QUERY_STRING'],'',$_SERVER['REQUEST_URI']);
-        
-        if($_SERVER['QUERY_STRING']){
-            $strings = explode('&',$_SERVER['QUERY_STRING']);
+        if(defined( 'DOING_AJAX' ) && DOING_AJAX && isset($_POST['tab_url'])){
+            $uri = $_POST['tab_url'];
+            $uri_string = explode('?',$uri);
+            $query_string = $uri_string[1];
+            $this->uri['current'] = $uri_string[0];
+        }else{
+            $query_string = $_SERVER['QUERY_STRING'];
+            $this->uri['current'] = get_bloginfo('wpurl').str_replace('?'.$query_string,'',$_SERVER['REQUEST_URI']);
+        }
+
+        if($query_string){
+            $strings = explode('&',$query_string);
             foreach($strings as $string){
                 $query = explode('=',$string);
                 $this->uri['args'][$query[0]] = $query[1];
@@ -128,11 +144,12 @@ class Rcl_PageNavi{
     }
     
     function get_url($page_id){ 
-        if($this->ajax) return '#';
+        //if($this->ajax) return '#';
         return rcl_format_url($this->uri['current']).$this->uri['string'].'&'.$this->key.'='.$page_id;
     }
     
     function pagenavi($classes = ''){
+        global $rcl_tab;
         
         if(!$this->data_amount||$this->pages_amount==1) return false;
         
@@ -142,8 +159,16 @@ class Rcl_PageNavi{
         
         if($classes) $class .= $class.' '.$classes;
         
-        if($this->ajax) $class = $class.' rcl-ajax-navi';
-        
+        if($rcl_tab){
+            if(in_array('ajax',$rcl_tab->supports)){
+                $this->ajax = true;
+            }
+        }
+
+        if($this->ajax){
+            $class = $class.' rcl-ajax-navi';
+        }
+
         $content = '<div class="'.$class.'">';
         
             $content .= '<div class="rcl-page-navi">';
@@ -159,7 +184,7 @@ class Rcl_PageNavi{
                                 'pager-id'=>$this->pager_id
                             )
                         );
-                        
+
                         $attrs = apply_filters('rcl_page_link_attributes',$attrs);
                         
                         $html = '<a '.$this->get_string_attributes($attrs).'>'.$data.'</a>';
@@ -177,6 +202,25 @@ class Rcl_PageNavi{
         $content .= '</div>';
         
         return $content;
+    }
+    
+    function add_ajax_tab_attributes($attrs){
+        global $rcl_tab,$user_LK;
+        
+        if($rcl_tab){
+            if($this->ajax){
+                $attrs['data']['post'] = rcl_encode_post(array(
+                    'callback'=>'rcl_ajax_tab',
+                    'tab_id'=>$rcl_tab->id,
+                    'subtab_id'=>$rcl_tab->active_subtab,
+                    'user_LK'=>$user_LK,
+                    'page'=>$attrs['data']['page']
+                ));
+                $attrs['class'] = 'rcl-ajax';
+            }
+        }
+        
+        return $attrs;
     }
     
     function get_string_attributes($attrs){

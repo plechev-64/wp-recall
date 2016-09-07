@@ -50,7 +50,7 @@ function rcl_button_avatar_upload($icons){
             'icon' => 'fa-times',
             'atts' => array(
                 'title' => __('Delete avatar','wp-recall'),
-                'url' => wp_nonce_url( rcl_format_url(get_author_posts_url($user_ID)).'rcl-action=delete_avatar', $user_ID )
+                'href' => wp_nonce_url( rcl_format_url(get_author_posts_url($user_ID)).'rcl-action=delete_avatar', $user_ID )
             )
         );
     

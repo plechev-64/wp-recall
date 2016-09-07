@@ -36,22 +36,22 @@ http://blog.sodhanalibrary.com/2014/01/responsive-menu-or-navigation-bar-with.ht
     </div>
 
     <div id="rcl-tabs">
-        <div id="lk-menu" class="rcl-menu">
+        
             <?php do_action('rcl_area_menu'); ?>
-        </div>
+
         <?php if(is_active_sidebar('cab_15_sidebar')){ // если в сайтбаре(виджете) есть контент выводим и контент и сайтбар обернутыми в div cab_content_blk ?>
         <div class="cab_content_blk">
-            <div id="lk-content" class="rcl-content">
+            
                 <?php do_action('rcl_area_tabs'); ?>
-            </div>
+
             <div class="cab_sidebar">
                 <?php if (function_exists('dynamic_sidebar')){ dynamic_sidebar('cab_15_sidebar');} ?>
             </div>
         </div>
         <?php } else { // если нет - выводим только контент и не оборачиваем в див ?>
-            <div id="lk-content" class="rcl-content">
+            
                 <?php do_action('rcl_area_tabs'); ?>
-            </div>
+
         <?php } ?>
     </div>
 

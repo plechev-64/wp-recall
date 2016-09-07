@@ -467,13 +467,14 @@ function rcl_get_home_path() {
     return str_replace( '\\', '/', $home_path );
 }
 
-function rcl_format_url($url,$id_tab=null){
+function rcl_format_url($url, $tab_id = false, $subtab_id = false){
     $ar_perm = explode('?',$url);
     $cnt = count($ar_perm);
     if($cnt>1) $a = '&';
     else $a = '?';
     $url = $url.$a;
-    if($id_tab) $url = $url.'tab='.$id_tab;
+    if($tab_id) $url .= 'tab='.$tab_id;
+    if($subtab_id) $url .= '&subtab='.$subtab_id;
     return $url;
 }
 
@@ -504,6 +505,8 @@ function rcl_ajax_tab($post){
     $id_tab = sanitize_title($post->tab_id);
     $user_LK = intval($post->user_LK);
     
+    $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
+    
     if(!isset($rcl_tabs[$id_tab])) return false;
 
     if (!class_exists('Rcl_Tabs')) 
@@ -516,9 +519,9 @@ function rcl_ajax_tab($post){
         return __('Error! Perhaps this addition does not support ajax loading','wp-recall');
         
     }else{
-
-        $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
         
+        $subtab_id = (isset($post->subtab_id))? $post->subtab_id: false;
+
         do_action('rcl_setup_tabs');
         
         $data = $rcl_tabs[$id_tab];
@@ -526,7 +529,7 @@ function rcl_ajax_tab($post){
         $data['first'] = 1;
 
         $tab = new Rcl_Tabs($data);
-        return $tab->get_tab($user_LK);
+        return $tab->get_tab($user_LK,$subtab_id);
     }
     
     return array('error'=>__('Error','wp-recall').'!');
@@ -1066,7 +1069,10 @@ function rcl_office_class(){
     echo 'class="'.implode(' ',$class).'"';
 }
 
-function rcl_template_support($support){   
+function rcl_template_support($support){  
+    
+    if(!rcl_is_office()) return false;
+    
     switch($support){
         case 'avatar-uploader': 
             include_once 'functions/supports/uploader-avatar.php';

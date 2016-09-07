@@ -131,7 +131,8 @@ global $post;
 						}
 					$gallery .= '</div>';
 				}
-                                $gallery .= '</div>';
+                                $gallery .= '</div>'
+                                         . '<script>rcl_do_action("rcl_slider");</script>';
 			}
 			return $gallery.$content;
 		}else{
@@ -159,7 +160,8 @@ global $post;
 				$gallery .= '</div>';
 			endif;
 
-                        $gallery .= '</div>';
+                        $gallery .= '</div>'
+                                . '<script>rcl_do_action("rcl_slider");</script>';
 
 			return $gallery.$content;
 		}

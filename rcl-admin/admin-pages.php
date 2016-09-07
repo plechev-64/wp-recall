@@ -162,15 +162,6 @@ function rcl_global_options(){
                                 ))
                             )
                         ),
-                        $fields->option('select',array(
-                            'name'=>'tab_newpage',
-                            'label'=>__('Download tabs','wp-recall'),
-                            'help'=>__('Depending on the setting, it will load the content of tabs personal account. It is recommended to install a separate download or tabs ajax loading','wp-recall'),
-                            'options'=>array(
-                                __('Downloads all','wp-recall'),
-                                __('On a separate page','wp-recall'),
-                                __('Ajax loading','wp-recall'))
-                        )),
                         $fields->option('number',array(
                             'name'=>'timeout',
                             'help'=>__('This value sets the maximum time a user is considered "online" in the absence of active','wp-recall'),

@@ -8,12 +8,15 @@ class Rcl_Ajax{
     }
     
     function rcl_ajax(){
+        global $rcl_tabs;
         
         rcl_verify_ajax_nonce();
         
         $post = rcl_decode_post($_POST['post']);
         
         $post->tab_url = (isset($_POST['tab']))? $_POST['tab_url'].'&tab='.$_POST['tab']: $_POST['tab_url'];
+        
+        $post->supports = $rcl_tabs[$post->tab_id]['supports'];
         
         $callback = $post->callback;
         $result['result'] = $callback($post);

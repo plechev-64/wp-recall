@@ -77,11 +77,22 @@ function rcl_add_sidebar_area_after(){
 // корректирующие стили
 add_filter('rcl_inline_styles','rcl_add_cover_inline_styles',10);
 function rcl_add_cover_inline_styles($styles){
-    global $user_LK,$rcl_options;
+    
+    if(!rcl_is_office()) return $styles;
+    
+    global $user_LK;
     $cover_url = get_user_meta($user_LK,'rcl_cover',1);
     if(!$cover_url) $cover_url = rcl_addon_url('img/default-cover.jpg',__FILE__);
     $styles .= '#lk-conteyner{background-image: url('.$cover_url.');}';
+    return $styles;
+}
 
+add_filter('rcl_inline_styles','rcl_add_colors_inline_styles',10);
+function rcl_add_colors_inline_styles($styles){
+    global $rcl_options;
+    
+    if(!rcl_is_office()) return $styles;
+    
     $lca_hex = $rcl_options['primary-color']; // достаем оттуда наш цвет
     list($r, $g, $b) = sscanf($lca_hex, "#%02x%02x%02x"); 
 
@@ -95,8 +106,7 @@ function rcl_add_cover_inline_styles($styles){
     }
     #lk-menu a.active:hover {
         background: rgba('.$r.', '.$g.', '.$b.', 0.4);
-    }
-    ';
+    }';
 	
     return $styles;
 }

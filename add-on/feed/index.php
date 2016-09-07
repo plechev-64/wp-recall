@@ -36,6 +36,7 @@ add_action('init','rcl_add_followers_tab',10);
 function rcl_add_followers_tab(){
     global $user_LK;
     $count = 0;
+    
     if(!is_admin()){
         $count = rcl_feed_count_subscribers($user_LK);
     }

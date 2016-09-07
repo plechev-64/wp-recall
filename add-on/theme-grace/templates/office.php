@@ -21,13 +21,13 @@
             <a class="cab_lt_menu recall-button" style="display: none;"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
         </div>
     </div>
-    <div id="lk-menu" class="rcl-menu">
+    
         <?php do_action('rcl_area_menu'); ?>
-    </div>
+    
 </div>
 
 <div id="rcl-tabs">
-    <div id="lk-content" class="rcl-content">
+    
         <?php do_action('rcl_area_tabs'); ?>
-    </div>
+    
 </div>

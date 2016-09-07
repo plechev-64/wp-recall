@@ -1,5 +1,45 @@
 <?php
 
+add_action('rcl_area_tabs','rcl_apply_filters_area_tabs',10);
+function rcl_apply_filters_area_tabs(){
+
+    $content = '<div id="lk-content" class="rcl-content">';
+    $content .= apply_filters('rcl_content_area_tabs','');
+    $content .= '</div>';
+    
+    echo $content;
+}
+
+add_action('rcl_area_menu','rcl_apply_filters_area_menu',10);
+function rcl_apply_filters_area_menu(){
+
+    $content = '<div id="lk-menu" class="rcl-menu">';
+    $content .= apply_filters('rcl_content_area_menu','');
+    $content .= '</div>';
+    
+    echo $content;
+}
+
+add_action('rcl_area_top','rcl_apply_filters_area_top',10);
+function rcl_apply_filters_area_top(){
+    echo apply_filters('rcl_content_area_top','');
+}
+
+add_action('rcl_area_details','rcl_apply_filters_area_details',10);
+function rcl_apply_filters_area_details(){
+    echo apply_filters('rcl_content_area_details','');
+}
+
+add_action('rcl_area_actions','rcl_apply_filters_area_actions',10);
+function rcl_apply_filters_area_actions(){
+    echo apply_filters('rcl_content_area_actions','');
+}
+
+add_action('rcl_area_counters','rcl_apply_filters_area_counters',10);
+function rcl_apply_filters_area_counters(){
+    echo apply_filters('rcl_content_area_counters','');
+}
+
 function rcl_action(){
     global $rcl_userlk_action;
     $last_action = rcl_get_useraction($rcl_userlk_action);
@@ -176,7 +216,12 @@ function init_user_lk(){
     
 }
 
-add_action('wp_footer','rcl_popup_contayner',10);
+add_action('wp_footer','rcl_init_footer_action',100);
+function rcl_init_footer_action(){
+    echo '<script>rcl_do_action("rcl_footer")</script>';
+}
+
+add_action('wp_footer','rcl_popup_contayner',4);
 function rcl_popup_contayner(){
     echo '<div id="rcl-overlay"></div>
         <div id="rcl-popup"></div>';

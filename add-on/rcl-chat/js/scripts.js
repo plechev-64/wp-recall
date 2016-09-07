@@ -105,12 +105,12 @@ function rcl_chat_add_new_message(form){
     var message_text = form.children('textarea').val();
     
     if(!message_text.length){
-        rcl_notice('Напишите что-нибудь','error',10000);
+        rcl_notice(Rcl.local.empty_mess,'error',10000);
         return false;
     }
     
     if(message_text.length>Rcl.chat.words){
-        rcl_notice('Превышен максимальный размер сообщения','error',10000);
+        rcl_notice(Rcl.local.max_words,'error',10000);
         return false;
     }
     
@@ -485,7 +485,7 @@ function rcl_chat_uploader(token){
         change:function (e, data) {
             
             if(data.files[0]['size']>Rcl.chat.file_size*1024*1024){
-                rcl_notice('Максимальный размер файла - 1Мб','error',10000);
+                rcl_notice(Rcl.local.upload_size_chat,'error',10000);
                 return false;
             }
             

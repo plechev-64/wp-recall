@@ -59,6 +59,7 @@ function rcl_init_js_chat_variables($data){
     
     $data['local']['empty_mess'] = __('Write something','wp-recall');
     $data['local']['max_words'] = __('Exceeds the maximum message size','wp-recall');
+    $data['local']['upload_size_chat'] = sprintf(__('Exceeds the maximum size for the file! Max. %d MB','wp-recall'),$data['chat']['file_size']);
     
     return $data;
 }

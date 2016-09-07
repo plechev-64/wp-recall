@@ -4,7 +4,7 @@ class Rcl_Postlist {
 
     public $post_type;
     public $type_name;
-    public $in_page = 30;
+    public $in_page = 24;
     public $offset;
 
     function __construct( $user_id, $post_type, $type_name ){
@@ -33,14 +33,14 @@ class Rcl_Postlist {
 
         $offset = $this->offset.',';
 
-        $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $offset ".$this->in_page,$this->user_id,$this->post_type));
+        $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('trash','draft','auto-draft') ORDER BY post_date DESC LIMIT $offset ".$this->in_page,$this->user_id,$this->post_type));
 
         if(is_multisite()){
             $blog_list = get_blog_list( 0, 'all' );
 
             foreach ($blog_list as $blog) {
                 $pref = $wpdb->base_prefix.$blog['blog_id'].'_posts';
-                $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$pref." WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft') ORDER BY post_date DESC LIMIT $offset ".$this->in_page,$this->user_id,$this->post_type));
+                $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$pref." WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('trash',draft','auto-draft') ORDER BY post_date DESC LIMIT $offset ".$this->in_page,$this->user_id,$this->post_type));
             }
         }
 
@@ -96,13 +96,13 @@ class Rcl_Postlist {
     function page_navi(){
 	global $wpdb;
 
-	$count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft')",$this->user_id,$this->post_type));
+	$count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('trash','draft','auto-draft')",$this->user_id,$this->post_type));
 	if(is_multisite()){
             $blog_list = get_blog_list( 0, 'all' );
 
             foreach ($blog_list as $blog) {
                 $pref = $wpdb->base_prefix.$blog['blog_id'].'_posts';
-                $count += $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$pref." WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('draft','auto-draft')",$this->user_id,$this->post_type));
+                $count += $wpdb->get_var($wpdb->prepare("SELECT COUNT(ID) FROM ".$pref." WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('trash','draft','auto-draft')",$this->user_id,$this->post_type));
             }
 	}
         

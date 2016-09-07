@@ -15,15 +15,15 @@ class Rcl_Tabs{
     public $tab_active = 0;//указание активности вкладки
     public $tab_upload = 0;//указание загрузки содержимого вкладки
     public $use_cache;
+    public $active_subtab;
     
     function __construct($args){
         global $rcl_options;
         
         $this->init_properties($args);
         
-        $type_upload = (isset($rcl_options['tab_newpage']))? $rcl_options['tab_newpage']: 0;
         $this->tab_active = $this->is_view_tab();
-        $this->tab_upload = (!$type_upload||$this->tab_active)? true: false;
+        $this->tab_upload = ($this->tab_active)? true: false;
         $this->use_cache = (isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? 1: 0;
 
         do_action('rcl_construct_'.$this->id.'_tab');
@@ -41,18 +41,20 @@ class Rcl_Tabs{
     }
 
     function add_tab(){
-        add_action('rcl_area_tabs',array($this,'print_tab'),$this->order);
-        add_action('rcl_area_'.$this->output,array($this,'print_tab_button'),$this->order);
+        add_filter('rcl_content_area_tabs',array($this,'print_tab'),$this->order);
+        add_filter('rcl_content_area_'.$this->output,array($this,'print_tab_button'),$this->order);
     }
     
-    function print_tab(){
+    function print_tab($content){
         global $user_LK;
-        echo $this->get_tab($user_LK);
+        $content .= $this->get_tab($user_LK);
+        return $content;
     }
     
-    function print_tab_button(){
+    function print_tab_button($content){
         global $user_LK;
-        echo $this->get_tab_button($user_LK);
+        $content .= $this->get_tab_button($user_LK);
+        return $content;
     }
     
     function is_view_tab(){
@@ -71,13 +73,23 @@ class Rcl_Tabs{
         
     }
     
-    function get_tab_content($master_id){
-        
+    function get_tab_content($master_id,$subtab_id = false){
+        global $rcl_tab;
+
         $subtabs = apply_filters('rcl_subtabs',$this->content,$this->id);
     
         include_once 'class-rcl-sub-tabs.php';
 
         $subtab = new Rcl_Sub_Tabs($subtabs,$this->id);
+        
+        if($subtab_id)
+            $subtab->active_tab = $subtab_id;
+        
+        if($subtab->active_tab){
+            $this->active_subtab = $subtab->active_tab;
+        }
+        
+        $rcl_tab = $this;
 
         if(count($this->content)>1)
             $content = $subtab->get_sub_content($master_id);
@@ -92,20 +104,20 @@ class Rcl_Tabs{
     function get_class_button(){
         global $rcl_options;
 
-        $class = false;
-        $tb = (isset($rcl_options['tab_newpage']))? $rcl_options['tab_newpage']:false;
-        
-        if(!$tb) $class = 'block_button';
+        $classes = array();
         
         if(in_array('ajax',$this->supports)){
-            if($tb==2){
-                $class = 'rcl-ajax';
-            }
+            $classes[] = 'rcl-ajax';
         }
         
-        if($this->tab_active) $class .= ' active';
+        if(in_array('dialog',$this->supports)){
+            $classes[] = 'rcl-dialog';
+        }
         
-        return $class;
+        if($this->tab_active) 
+            $classes[] = ' active';
+        
+        return implode(' ',$classes);
     }
     
     function get_tab_button($master_id){
@@ -140,7 +152,7 @@ class Rcl_Tabs{
 
     }
     
-    function get_tab($master_id){
+    function get_tab($master_id, $subtab_id = false){
         global $user_ID,$rcl_options;
         
         switch($this->public){
@@ -151,7 +163,7 @@ class Rcl_Tabs{
         
         if(!$this->tab_upload) return false;
         
-        $status = ($this->tab_active) ? 'active':'';
+        $status = ($this->tab_active) ? 'active': '';
         
         $content = '';
 
@@ -160,24 +172,18 @@ class Rcl_Tabs{
             $rcl_cache = new Rcl_Cache();
             
             $protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://':  'https://';
-            
-            if(!$rcl_options['tab_newpage']){ //если загружаются все вкладки               
-                $string = (isset($_GET['tab'])&&$_GET['tab']==$this->id)? $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']: rcl_format_url(get_author_posts_url($master_id),$this->id);               
-            }else{
-            
-                if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-                    $string = rcl_format_url(get_author_posts_url($master_id),$this->id);
-                }else{                   
-                    $string = $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-                }
-            
+
+            if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+                $string = rcl_format_url(get_author_posts_url($master_id),$this->id,$subtab_id);
+            }else{                   
+                $string = $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
             }
-            
+
             $file = $rcl_cache->get_file($string);
 
             if($file->need_update){
 
-                $content = $this->get_tab_content($master_id);
+                $content = $this->get_tab_content($master_id,$subtab_id);
 
                 $rcl_cache->update_cache($content);
             
@@ -189,7 +195,7 @@ class Rcl_Tabs{
 
         }else{
 
-            $content = $this->get_tab_content($master_id);
+            $content = $this->get_tab_content($master_id,$subtab_id);
             
             if(!$content) return false;
         

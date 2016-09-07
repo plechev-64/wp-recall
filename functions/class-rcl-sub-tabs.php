@@ -17,19 +17,34 @@ class Rcl_Sub_Tabs {
     public $subtabs;
     public $active_tab;
     public $parent_id;
+    public $parent_tab;
     public $callback;
     
     function __construct($subtabs,$parent_id = false){
-        
+        global $rcl_tabs,$rcl_options;
+
         $this->subtabs = $subtabs;
         $this->parent_id = $parent_id;
-        $this->active_tab = (isset($_GET['subtab']))? $_GET['subtab']: $this->subtabs[0]['id'];
+        $this->parent_tab = $rcl_tabs[$parent_id];
         
-        foreach($this->subtabs as $key=>$tab){
-            if($this->active_tab==$tab['id']){
-                $this->callback = (isset($tab['callback']))? $tab['callback']: false;
+        if(isset($_GET['subtab'])){
+            
+            foreach($subtabs as $k=>$subtab){
+
+                if($_GET['subtab']==$subtab['id']){
+                    $this->active_tab = $subtab['id'];
+                }
+
             }
+            
         }
+        
+        if(!$this->active_tab){
+            
+           $this->active_tab = $this->subtabs[0]['id'];
+            
+        }
+
     }
     
     function get_sub_content($master_id){
@@ -45,14 +60,25 @@ class Rcl_Sub_Tabs {
         foreach($this->subtabs as $key=>$tab){
 
             $classes = ($this->active_tab==$tab['id'])? array('active','rcl-subtab-button'): array('rcl-subtab-button');
+            
+            if(in_array('ajax',$this->parent_tab['supports'])){
+                $classes[] = 'rcl-ajax';
+            }
 
             $button_args = array('class'=>implode(' ',$classes));
 
             if(isset($tab['icon'])){
                 $button_args['icon'] = $tab['icon'];
             }
+            
+            $button_args['attr'] = 'data-post='.rcl_encode_post(array(
+                                            'callback'=>'rcl_ajax_tab',
+                                            'tab_id'=>$this->parent_id,
+                                            'subtab_id'=>$tab['id'],
+                                            'user_LK'=>$master_id
+                                        ));
 
-            $content .= rcl_get_button($tab['name'],$this->url_string($tab['id']),$button_args);
+            $content .= rcl_get_button($tab['name'], $this->url_string($master_id,$tab['id']), $button_args);
 
         }
 
@@ -63,6 +89,12 @@ class Rcl_Sub_Tabs {
     }
     
     function get_subtab($master_id){
+        
+        foreach($this->subtabs as $key=>$tab){
+            if($this->active_tab==$tab['id']){
+                $this->callback = (isset($tab['callback']))? $tab['callback']: false;
+            }
+        }
 
         $content = '<div id="subtab-'.$this->active_tab.'" class="rcl-subtab-content">';
         
@@ -84,14 +116,9 @@ class Rcl_Sub_Tabs {
 
     }
 
-    function url_string($subtab_id){
-        global $user_LK;
+    function url_string($master_id,$subtab_id){
         
-        $tab_id = (isset($_GET['tab']))? $_GET['tab']: '';
-        
-        $url = (isset($_POST['tab_url']))? rcl_format_url($_POST['tab_url']): rcl_format_url(get_author_posts_url($user_LK),$tab_id).'&';
-
-        $url .= 'subtab='.$subtab_id;
+        $url = rcl_format_url(get_author_posts_url($master_id),$this->parent_id,$subtab_id);
         
         return $url;
     }

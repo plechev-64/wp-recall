@@ -338,6 +338,7 @@ body #rcl-office .ballun-status p.status-user-rcl {
 }
 #lk-content {
     margin: 3px;
+    position: relative;
 }
 /* Группа кнопок Start */
     /* Основной стиль кнопок Start */
@@ -693,6 +694,7 @@ div.ssi-backdrop {
 }
 .ssi-modalOuter .ssi-topIcons {
     top: 2px;
+    z-index: 1502;
 }
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon,
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon:hover {

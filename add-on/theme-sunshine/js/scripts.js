@@ -1,3 +1,4 @@
+
 (function($){
 	var LkMenu = $('#lk-menu');
 	var typeButton = $('#rcl-office');

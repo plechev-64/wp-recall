@@ -1,13 +1,5 @@
 <?php
 
-function rcl_pageform_scripts(){    
-    rcl_enqueue_script( 'rcl-page-form', RCL_URL.'js/page_form.js', false, true);
-}
-
-function rcl_floatform_scripts(){
-    rcl_enqueue_script( 'rcl-float-form', RCL_URL.'js/float_form.js', false, true);
-}
-
 function rcl_sortable_scripts(){
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-sortable');
@@ -30,7 +22,7 @@ function rcl_bxslider_scripts(){
     wp_enqueue_style( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.css' );
     wp_enqueue_script( 'jquery' );
     rcl_enqueue_script( 'bx-slider', RCL_URL.'js/jquery.bxslider/jquery.bxslider.min.js' );
-    rcl_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js');
+    //rcl_enqueue_script( 'custom-bx-slider', RCL_URL.'js/slider.js');
 }
 
 function rcl_dialog_scripts(){  
@@ -103,7 +95,7 @@ function rcl_frontend_scripts(){
 
     rcl_enqueue_script( 'rcl-primary-scripts', RCL_URL.'js/recall.js' );
     
-    rcl_old_header_scripts();
+    //rcl_old_header_scripts();
 
     $local = array(
         'save' => __('Save','wp-recall'),
