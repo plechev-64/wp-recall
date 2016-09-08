@@ -69,6 +69,7 @@ function rcl_chat_get_new_messages(){
 }
 
 add_action('wp_ajax_rcl_get_chat_page','rcl_get_chat_page',10);
+add_action('wp_ajax_nopriv_rcl_get_chat_page','rcl_get_chat_page',10);
 function rcl_get_chat_page(){
     
     rcl_verify_ajax_nonce();

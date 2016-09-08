@@ -282,7 +282,7 @@ class Rcl_Chat {
         }
         
         $content = '<script>'
-                . 'rcl_init_chat("'.$this->chat_token.'",'.$this->file_upload.','.$this->max_words.');'
+                . 'rcl_init_chat({token:"'.$this->chat_token.'",file_upload:'.$this->file_upload.',max_words:'.$this->max_words.'});'
                 . '</script>';
 
         $content .= '<div class="rcl-chat chat-'.$this->chat_status.'" data-token="'.$this->chat_token.'" data-in_page="'.$this->in_page.'">';

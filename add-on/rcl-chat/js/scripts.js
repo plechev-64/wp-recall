@@ -68,19 +68,26 @@ function rcl_set_active_mini_chat(e){
     jQuery(e).addClass('active-chat').children('i').remove();
 }
 
-function rcl_init_chat(token,file_upload,max_words){
+function rcl_init_chat(chat){
     jQuery(function($){
         
-        rcl_chat_scroll_bottom(token);
+        chat = rcl_apply_filters('rcl_init_chat',chat);
+
+        rcl_chat_scroll_bottom(chat.token);
         
-        if (typeof rcl_chat_beat[token] != "undefined") return;
+        if (typeof rcl_chat_beat[chat.token] != "undefined") return;
         
-        rcl_chat_get_new_messages(token);
+        var user_id = parseInt(Rcl.user_ID);
         
-        if(file_upload && parseInt(Rcl.user_ID))
-            rcl_chat_uploader(token);
-        
-        rcl_chat_max_words = max_words;
+        if(user_id){
+            
+            rcl_chat_get_new_messages(chat.token);
+            
+            if(chat.file_upload)
+                rcl_chat_uploader(chat.token);
+        }
+
+        rcl_chat_max_words = chat.max_words;
         
     });
 }
