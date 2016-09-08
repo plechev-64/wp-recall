@@ -546,7 +546,7 @@ function rcl_get_tab_button($tab_id, $user_id = false){
     if (!class_exists('Rcl_Tabs'))
         include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-tabs.php';
    
-    $data = $rcl_tabs[$id_tab];
+    $data = $rcl_tabs[$tab_id];
     $tab = new Rcl_Tabs($data);
    
     return $tab->get_tab_button($user_id);
