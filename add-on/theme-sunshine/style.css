@@ -66,8 +66,11 @@
 #rcl-avatar img {
     border-radius: 0;
     display: inline-block;
+    height: auto;
+    margin: 0;
     max-height: 100%;
     max-width: 100%;
+    padding: 0;
 }
 #rcl-avatar .avatar-icons{
     position: absolute;
@@ -211,6 +214,9 @@
 }
 .cab_content_blk {
     display: flex;
+}
+.cab_content_blk #lk-content {
+    width: 99%;
 }
 .cab_sidebar {
     background: rgba(219, 219, 219, 0.3);
