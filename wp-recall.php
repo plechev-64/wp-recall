@@ -50,12 +50,12 @@ final class WP_Recall {
 	 */
 	public function __get( $key ) {
 
-		/*
-		 * Пока что только метод для отправки писем
-		 */
-		if ( in_array( $key, array( 'mailer' ) ) ) {
-			return $this->$key();
-		}
+            /*
+             * Пока что только метод для отправки писем
+             */
+            if ( in_array( $key, array( 'mailer' ) ) ) {
+                return $this->$key();
+            }
 	}
 
 	/*

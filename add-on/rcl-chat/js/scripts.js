@@ -7,15 +7,25 @@ var rcl_chat_important = 0;
 
 jQuery(function($){
     
-    jQuery.ionSound({
+    rcl_chat_init_sound();
+    
+    rcl_chat_inactivity_counter();
+    
+});
+
+function rcl_chat_init_sound(){
+    
+    var options = {
         sounds: ['e-oh'],
         path: Rcl.chat.sounds,
         multiPlay: false,
         volume: '0.5'
-    });
+    };
     
-    rcl_chat_inactivity_counter();
-});
+    options = rcl_apply_filters('rcl_chat_sound_options',options);
+    
+    jQuery.ionSound(options);
+}
 
 function rcl_chat_inactivity_cancel(){
     rcl_chat_inactive_counter = 0;
@@ -66,7 +76,7 @@ function rcl_init_chat(token,file_upload){
         
         rcl_chat_get_new_messages(token);
         
-        if(file_upload)
+        if(file_upload && Rcl.user_ID)
             rcl_chat_uploader(token);
         
     });

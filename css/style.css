@@ -339,6 +339,7 @@ body #rcl-office .ballun-status p.status-user-rcl {
 #lk-content {
     margin: 3px;
     position: relative;
+    overflow: hidden;
 }
 /* Группа кнопок Start */
     /* Основной стиль кнопок Start */

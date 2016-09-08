@@ -207,13 +207,10 @@
 /* START для сайдбара-виджета */
 .cabinet_sidebar_after,
 .cabinet_sidebar_before {
-	margin: 4px 0;
+    margin: 4px 0;
 }
 .cab_content_blk {
-	display: flex;
-}
-.rcl-content {
-	width: 99%;
+    display: flex;
 }
 .cab_sidebar {
     background: rgba(219, 219, 219, 0.3);

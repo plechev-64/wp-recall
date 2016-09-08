@@ -103,7 +103,7 @@ function rcl_ajax_tab(e,data){
         if(!subtab_id){ //если загружается основная вкладка
         
             ssi_modal.show({
-                className: 'rcl-dialog-tab',
+                className: 'rcl-dialog-tab '+data.post.tab_id,
                 sizeClass: 'small',
                 buttons: [{
                     label: Rcl.local.close,

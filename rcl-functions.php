@@ -536,6 +536,22 @@ function rcl_ajax_tab($post){
 
 }
 
+function rcl_get_tab_button($id_tab,$user_id = false){
+    global $rcl_tabs,$user_LK;
+   
+    if(!isset($id_tab)) return false;
+    
+    if(!$user_id) $user_id = $user_LK;
+   
+    if (!class_exists('Rcl_Tabs'))
+        include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-tabs.php';
+   
+    $data = $rcl_tabs[$id_tab];
+    $tab = new Rcl_Tabs($data);
+   
+    return $tab->get_tab_button($user_id);
+}
+
 function rcl_get_wp_upload_dir(){
     if(defined( 'MULTISITE' )){
         $upload_dir = array(
@@ -1071,7 +1087,7 @@ function rcl_office_class(){
 
 function rcl_template_support($support){  
     
-    if(!rcl_is_office()) return false;
+    //if(!rcl_is_office()) return false;
     
     switch($support){
         case 'avatar-uploader': 
