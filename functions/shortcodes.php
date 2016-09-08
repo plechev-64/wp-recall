@@ -299,7 +299,8 @@ function rcl_slider($atts, $content = null){
             $plslider .= '</a></li>';
 
 	}
-	$plslider .= '</ul>';
+	$plslider .= '</ul>'
+                . '<script>rcl_do_action("rcl_slider");</script>';
 
 	return $plslider;
 }

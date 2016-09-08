@@ -294,7 +294,8 @@ function rcl_shortcode_gallery($atts, $content = null){
                     $gallery .= '<li><a class="fancybox" href="'.$large[0].'"><img src="'.$large[0].'"></a></li>';
                     $thumbs[] = $large[0];
             }
-            $gallery .= '</ul>';
+            $gallery .= '</ul>'
+                    . '<script>rcl_do_action("rcl_slider");</script>';
 
             if(count($thumbs)>1){
                     $gallery .= '<div id="bx-pager">';

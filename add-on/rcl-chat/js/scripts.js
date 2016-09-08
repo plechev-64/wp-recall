@@ -4,6 +4,7 @@ var rcl_chat_write = 0; //юзер пишет
 var rcl_chat_contact_token = 0; //открытый контакт
 var rcl_chat_inactive_counter = 0; //счетчик простоя пользователя
 var rcl_chat_important = 0; 
+var rcl_chat_max_words = 300;
 
 jQuery(function($){
     
@@ -67,7 +68,7 @@ function rcl_set_active_mini_chat(e){
     jQuery(e).addClass('active-chat').children('i').remove();
 }
 
-function rcl_init_chat(token,file_upload){
+function rcl_init_chat(token,file_upload,max_words){
     jQuery(function($){
         
         rcl_chat_scroll_bottom(token);
@@ -76,8 +77,10 @@ function rcl_init_chat(token,file_upload){
         
         rcl_chat_get_new_messages(token);
         
-        if(file_upload && Rcl.user_ID)
+        if(file_upload && parseInt(Rcl.user_ID))
             rcl_chat_uploader(token);
+        
+        rcl_chat_max_words = max_words;
         
     });
 }
@@ -165,8 +168,9 @@ function rcl_chat_navi(e){
     var page = jQuery(e).data('page');
     var pager = jQuery(e).data('pager-id');
     var token = jQuery(e).parents('.rcl-chat').data('token');
+    var in_page = jQuery(e).parents('.rcl-chat').data('in_page');
     rcl_preloader_show('.rcl-chat .chat-form > form');
-    var dataString = 'action=rcl_get_chat_page&page='+page+'&token='+token+'&pager-id='+pager+'&important='+rcl_chat_important;
+    var dataString = 'action=rcl_get_chat_page&page='+page+'&token='+token+'&pager-id='+pager+'&in_page='+in_page+'&important='+rcl_chat_important;
     dataString += '&ajax_nonce='+Rcl.nonce;
     jQuery.ajax({
         type: 'POST',
@@ -304,14 +308,13 @@ function rcl_chat_words_count(e,elem){
     }
     
     var words = jQuery(elem).val();
-    var max = Rcl.chat.words;
-    var counter = max - words.length;
+    var counter = rcl_chat_max_words - words.length;
     var color;
 
-    if(counter > (max-1)) return false;
+    if(counter > (rcl_chat_max_words-1)) return false;
     
     if(counter<0){
-        jQuery(elem).val(words.substr(0, (max-1)));
+        jQuery(elem).val(words.substr(0, (rcl_chat_max_words-1)));
         return false;
     }
     

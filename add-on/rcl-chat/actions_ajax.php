@@ -74,6 +74,7 @@ function rcl_get_chat_page(){
     rcl_verify_ajax_nonce();
     
     $chat_page = intval($_POST['page']);
+    $in_page = intval($_POST['in_page']);
     $important = intval($_POST['important']);
     $chat_token = $_POST['token'];
     $chat_room = rcl_chat_token_decode($chat_token);
@@ -82,7 +83,14 @@ function rcl_get_chat_page(){
         return false;
     
     require_once 'class-rcl-chat.php';
-    $chat = new Rcl_Chat(array('chat_room'=>$chat_room,'paged'=>$chat_page,'important'=>$important));
+    $chat = new Rcl_Chat(
+                array(
+                    'chat_room'=>$chat_room,
+                    'paged'=>$chat_page,
+                    'important'=>$important,
+                    'in_page'=>$in_page
+                )
+            );
     
     $res['success'] = true;    
     $res['content'] = $chat->get_messages_box();

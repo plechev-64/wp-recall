@@ -52,7 +52,6 @@ function rcl_init_js_chat_variables($data){
     global $rcl_options;
     
     $data['chat']['sounds'] = rcl_addon_url('sounds/',__FILE__);
-    $data['chat']['words'] = (isset($rcl_options['chat']['words']))? $rcl_options['chat']['words']: 400;
     $data['chat']['delay'] = (isset($rcl_options['chat']['delay']))? $rcl_options['chat']['delay']*1000: 15000;
     $data['chat']['inactivity'] = (isset($rcl_options['chat']['inactivity']))? $rcl_options['chat']['inactivity']: 10;
     $data['chat']['file_size'] = (isset($rcl_options['chat']['file_size']))? $rcl_options['chat']['file_size']: 2;

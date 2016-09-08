@@ -8,15 +8,15 @@ class Rcl_Chat {
     
     public $chat_id = 0;
     public $chat = array();
-    public $chat_room;
+    public $chat_room = false;
     public $chat_token;
-    public $chat_status;
-    public $important;
-    public $file_upload;
-    public $user_id;
-    public $paged;
-    public $userslist;
-    public $avatar_size;
+    public $chat_status = 'general';
+    public $important = false;
+    public $file_upload = 0;
+    public $user_id = 0;
+    public $paged = 1;
+    public $userslist = false;
+    public $avatar_size = 50;
     public $offset;
     public $in_page;
     public $office_id;
@@ -33,23 +33,24 @@ class Rcl_Chat {
 
     function __construct($args = array()){
         global $user_ID,$rcl_options;
+        
+        $this->init_properties($args);
 
         add_filter( 'rcl_chat_message', 'wpautop', 11 );
         
         $this->user_id = $user_ID;
-        $this->chat_status = (isset($args['chat_status']))? $args['chat_status']: 'general';
-        $this->office_id = (isset($_POST['office_ID']))? $_POST['office_ID']: 0;
-        $this->avatar_size = (isset($args['avatar_size']))? $args['avatar_size']: 50;
-        $this->userslist = (isset($args['userslist']))? $args['userslist']: 0;
-        $this->important = (isset($args['important']))? $args['important']: 0;
-        $this->file_upload = (isset($args['file_upload']))? $args['file_upload']: 0;
-        $this->max_words = (isset($rcl_options['chat']['words']))? $rcl_options['chat']['words']: 300;
-        $this->in_page = (isset($rcl_options['chat']['in_page']))? $rcl_options['chat']['in_page']: 50;
-        $this->paged = (isset($args['paged']))? $args['paged']: 1;
         
-        if(!isset($args['chat_room'])) return;
+        if(!$this->office_id)
+            $this->office_id = (isset($_POST['office_ID']))? $_POST['office_ID']: 0;
         
-        $this->chat_room = $args['chat_room'];
+        if(!$this->max_words)
+            $this->max_words = (isset($rcl_options['chat']['words']))? $rcl_options['chat']['words']: 300;
+        
+        if(!$this->in_page)
+            $this->in_page = (isset($rcl_options['chat']['in_page']))? $rcl_options['chat']['in_page']: 50;
+        
+        if(!$this->chat_room) return;
+        
         $this->chat_token = rcl_chat_token_encode($this->chat_room);
         $this->chat = $this->get_chat_data($this->chat_room);
         
@@ -73,6 +74,14 @@ class Rcl_Chat {
         
         do_action('rcl_chat',$this);
 
+    }
+    
+    function init_properties($args){
+        $properties = get_class_vars(get_class($this));
+
+        foreach ($properties as $name=>$val){
+            if(isset($args[$name])) $this->$name = $args[$name];
+        }
     }
     
     function get_chat_data($chat_room){
@@ -273,10 +282,10 @@ class Rcl_Chat {
         }
         
         $content = '<script>'
-                . 'rcl_init_chat("'.$this->chat_token.'",'.$this->file_upload.');'
+                . 'rcl_init_chat("'.$this->chat_token.'",'.$this->file_upload.','.$this->max_words.');'
                 . '</script>';
 
-        $content .= '<div class="rcl-chat chat-'.$this->chat_status.'" data-token="'.$this->chat_token.'">';
+        $content .= '<div class="rcl-chat chat-'.$this->chat_status.'" data-token="'.$this->chat_token.'" data-in_page="'.$this->in_page.'">';
                     
                     $content .= $this->get_messages_box();
                         
@@ -317,6 +326,7 @@ class Rcl_Chat {
                     . '<textarea maxlength="'.$this->max_words.'" onkeyup="rcl_chat_words_count(event,this);" id="chat-area-'.$this->chat_id.'" name="chat[message]"></textarea>'
                     . '<span class="words-counter">'.$this->max_words.'</span>'
                     . '<input type="hidden" name="chat[token]" value="'.$this->chat_token.'">'
+                    . '<input type="hidden" name="chat[in_page]" value="'.$this->in_page.'">'
                     . '<input type="hidden" name="chat[status]" value="'.$this->chat_status.'">'
                     . '<input type="hidden" name="chat[userslist]" value="'.$this->userslist.'">'
                     . '<input type="hidden" name="chat[file_upload]" value="'.$this->file_upload.'">'
