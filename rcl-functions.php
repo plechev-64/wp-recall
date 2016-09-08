@@ -536,10 +536,10 @@ function rcl_ajax_tab($post){
 
 }
 
-function rcl_get_tab_button($id_tab,$user_id = false){
+function rcl_get_tab_button($id_tab, $user_id = false){
     global $rcl_tabs,$user_LK;
    
-    if(!isset($id_tab)) return false;
+    if(!isset($rcl_tabs[$id_tab])) return false;
     
     if(!$user_id) $user_id = $user_LK;
    

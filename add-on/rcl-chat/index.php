@@ -189,6 +189,8 @@ function rcl_chat_add_page_link_attributes($attrs){
     
     $attrs['onclick'] = 'rcl_chat_navi(this); return false;';
     $attrs['class'] = 'rcl-chat-page-link';
+    $attrs['href'] = '#';
+    $attrs['data']['post'] = false;
     
     return $attrs;
 }

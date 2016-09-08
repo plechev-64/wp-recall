@@ -357,7 +357,7 @@ class Rcl_Chat {
         
         if($amount_messages){
             
-            add_filter('rcl_page_link_attributes','rcl_chat_add_page_link_attributes',10);
+            add_filter('rcl_page_link_attributes','rcl_chat_add_page_link_attributes',100);
 
             $pagenavi = new Rcl_PageNavi('rcl-chat',$amount_messages,array('in_page'=>$this->in_page,'ajax'=>true,'current_page'=>$this->paged));
 
@@ -373,7 +373,7 @@ class Rcl_Chat {
 
             $navi = $pagenavi->pagenavi();
 
-            remove_filter('rcl_page_link_attributes','rcl_chat_add_page_link_attributes',10);
+            remove_filter('rcl_page_link_attributes','rcl_chat_add_page_link_attributes',100);
 
         }else{
             if($this->important)
