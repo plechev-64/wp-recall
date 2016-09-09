@@ -135,7 +135,7 @@ function rcl_ajax_tab(e,data){
     
         jQuery(box_id).html(data.result);
         var offsetTop = jQuery(box_id).offset().top;
-        jQuery('body,html').animate({scrollTop:offsetTop -50}, 1000);
+        jQuery('body,html').animate({scrollTop:offsetTop -100}, 1000);
     
     }
 
