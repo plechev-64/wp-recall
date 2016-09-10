@@ -349,10 +349,12 @@ rcl_add_action('rcl_init','rcl_init_ajax_tab');
 function rcl_init_ajax_tab(){
     jQuery('body').on('click','.rcl-ajax',function(){
         
-        rcl_preloader_show('#lk-content > div');
-        rcl_preloader_show('#ssi-modalContent > div');
-        
         var e = jQuery(this);
+        
+        if(e.hasClass('tab-upload')) return false;
+        
+        rcl_do_action('rcl_before_upload_tab',e);
+
         var post = e.data('post');
         var tab_url = encodeURIComponent(e.attr('href'));
         var dataString = 'action=rcl_ajax&post='+post+'&tab_url='+tab_url;
@@ -361,19 +363,45 @@ function rcl_init_ajax_tab(){
             type: 'POST', 
             data: dataString, 
             dataType: 'json', 
-            url: Rcl.ajaxurl,
+            url: Rcl.ajaxurl, 
             success: function(data){
-                rcl_preloader_hide();
+                
+                rcl_do_action('rcl_upload_tab',{element:e,result:data});
+                
+                data = rcl_apply_filters('rcl_upload_tab',data);
+
                 if(data.result.error){
                     rcl_notice(data.result.error,'error',10000);
                     return false;
                 }
+                
                 var funcname = data.post.callback;              
                 new (window[funcname])(e,data);
             }			
         }); 
         return false;
     });
+}
+
+rcl_add_action('rcl_before_upload_tab','rcl_add_class_upload_tab');
+function rcl_add_class_upload_tab(e){
+    e.addClass('tab-upload');
+}
+
+rcl_add_action('rcl_before_upload_tab','rcl_add_preloader_tab');
+function rcl_add_preloader_tab(e){
+    rcl_preloader_show('#lk-content > div');
+    rcl_preloader_show('#ssi-modalContent > div');
+}
+
+rcl_add_action('rcl_upload_tab','rcl_remove_class_upload_tab');
+function rcl_remove_class_upload_tab(data){
+    data.element.removeClass('tab-upload');
+}
+
+rcl_add_action('rcl_upload_tab','rcl_remove_preloader_tab');
+function rcl_remove_preloader_tab(data){
+    rcl_preloader_hide();
 }
 
 rcl_add_action('rcl_init','rcl_init_get_smilies');

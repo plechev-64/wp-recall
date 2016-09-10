@@ -42,7 +42,8 @@ class Rcl_Tabs{
 
     function add_tab(){
         add_filter('rcl_content_area_tabs',array($this,'print_tab'),$this->order);
-        add_filter('rcl_content_area_'.$this->output,array($this,'print_tab_button'),$this->order);
+        if($this->output)
+            add_filter('rcl_content_area_'.$this->output,array($this,'print_tab_button'),$this->order);
     }
     
     function print_tab($content){

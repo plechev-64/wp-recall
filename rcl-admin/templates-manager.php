@@ -201,10 +201,13 @@ class Rcl_Templates_Manager extends WP_List_Table {
             
             echo '<tr class="plugin-update-tr '.$status.'" id="'.$item['ID'].'-update" data-slug="'.$item['ID'].'">'
                 . '<td colspan="'.$colspan.'" class="plugin-update colspanchange">'
-                    . '<div class="update-message">'
+                    . '<div class="update-message notice inline notice-warning notice-alt">'
+                    . '<p>'
                         . __('Available fresh version','wp-recall').' '.$this->addon['name'].' '.$this->need_update[$item['ID']]['new-version'].'. ';
                         if(isset($this->addon['add-on-uri'])) echo ' <a href="'.$this->addon['add-on-uri'].'"  title="'.$this->addon['name'].'">'.__('view information about the version','wp-recall').' '.$xml->version.'</a>';
-                    echo 'или <a class="update-add-on" data-addon="'.$item['ID'].'" href="#">'.__('To update automatically','wp-recall').'</a></div>'
+                        echo 'или <a class="update-add-on" data-addon="'.$item['ID'].'" href="#">'.__('To update automatically','wp-recall').'</a>'
+                    . '</p>'
+                    . '</div>'
                 . '</td>'
             . '</tr>';
         }
