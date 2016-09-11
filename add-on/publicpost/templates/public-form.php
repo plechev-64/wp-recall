@@ -35,7 +35,7 @@
 
 <?php if($formFields['custom_fields']): ?>
 	<div class="rcl-form-field">
-		<?php rcl_publication_custom_fields(); ?>
+            <?php rcl_publication_custom_fields(); ?>
 	</div>
 <?php endif; ?>
 

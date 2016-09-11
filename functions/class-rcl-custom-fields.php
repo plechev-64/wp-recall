@@ -370,8 +370,15 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
 
     $slug = $custom_field['slug'];
     $maxsize = ($custom_field['sizefile'])? $custom_field['sizefile']: 2;
+    
+    if(!isset($_FILES[$slug])){
+        delete_post_meta($post_id, $slug);
+        return false;
+    }
 
-    if(!$_FILES[$slug]['tmp_name']) return false;
+    if(!$_FILES[$slug]['tmp_name']){
+        return false;
+    }
 
     if ($_FILES[$slug]["size"] > $maxsize*1024*1024){
         wp_die( __('File size exceeded!','wp-recall'));

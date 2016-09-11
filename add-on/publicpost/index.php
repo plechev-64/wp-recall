@@ -605,21 +605,23 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
 	}
 }
 
-function rcl_get_list_custom_fields($post_id,$posttype=false,$id_form=false){
+function rcl_get_list_custom_fields($post_id, $post_type=false, $id_form=false){
 
-    $get_fields = rcl_get_custom_fields($post_id,$posttype,$id_form);
+    $get_fields = rcl_get_custom_fields($post_id,$post_type,$id_form);
+    
+    $get_fields = apply_filters('rcl_custom_fields_public_form', $get_fields, $post_id, $post_type, $id_form);
 
     if(!$get_fields) return false;
 
     $data = array(
         'ID'=>$post_id,
-        'post_type'=>$posttype,
+        'post_type'=>$post_type,
         'form_id'=>$id_form
     );
 
     $cf = new Rcl_Custom_Fields();
     
-    $public_fields = '<table>';
+    $fields = '';
 
     foreach((array)$get_fields as $key=>$custom_field){
         if($key==='options') continue;
@@ -629,14 +631,18 @@ function rcl_get_list_custom_fields($post_id,$posttype=false,$id_form=false){
         $star = ($custom_field['requared']==1)? '<span class="required">*</span> ': '';
         $postmeta = ($post_id)? get_post_meta($post_id,$custom_field['slug'],1):'';
 
-        $public_fields .= '<tr><th><label>'.$cf->get_title($custom_field).$star.':</label></th>';
-        $public_fields .= '<td>'.$cf->get_input($custom_field,$postmeta).'</td>';
-        $public_fields .= '</tr>';
+        $fields .= '<tr><th><label>'.$cf->get_title($custom_field).$star.':</label></th>';
+        $fields .= '<td>'.$cf->get_input($custom_field,$postmeta).'</td>';
+        $fields .= '</tr>';
     }
-
-    $public_fields .= '</table>';
     
-    return $public_fields;
+    if(!$fields) return false;
+    
+    $content .= '<table>';
+        $content .= $fields;
+    $content .= '</table>';
+    
+    return $content;
     
 }
 

@@ -282,8 +282,30 @@ class Rcl_PublicForm {
                 $classes = array('rcl-public-form');
                 
                 $classes[] = ($formData->post_id)? 'edit-form' : 'public-form';
+                
+                $data_form_id = ($this->form_id)? $this->form_id: 0;
+                $data_post_id = ($this->post_id)? $this->post_id: 0;
+                
+                $attrs_form = array(
+                    'id'=>$id_form,
+                    'data-form_id'=>$data_form_id,
+                    'data-post_id'=>$data_post_id,
+                    'data-post_type'=>$formData->post_type,
+                    'class'=>$classes
+                );
+                
+                $attrs_form = apply_filters('rcl_public_form_attributes', $attrs_form, $formData);
+                
+                $attrs = array();
+                foreach($attrs_form as $k=>$v){
+                    if(is_array($v)){
+                        $attrs[] = $k.'="'.implode(' ',$v).'"';
+                        continue;
+                    }
+                    $attrs[] = $k.'="'.$v.'"';
+                }
 
-                $form .= '<form id="'.$id_form.'" data-post_type="'.$formData->post_type.'" class="'.implode(' ',$classes).'" ';
+                $form .= '<form '.implode(' ',$attrs).' ';
 
                 if(!$formData->preview){
                     $form .= ' onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','wp-recall').'\';"';  
@@ -472,7 +494,10 @@ function rcl_filter_public_form(){
 
 function rcl_publication_custom_fields(){
     global $formData;
-    echo rcl_get_list_custom_fields($formData->post_id,$formData->post_type,$formData->form_id);
+    $content = '<div id="rcl-custom-fields-box" class="fields-'.$formData->post_type.'">';
+    $content .= rcl_get_list_custom_fields($formData->post_id,$formData->post_type,$formData->form_id);
+    $content .= '</div>';
+    echo $content;
 }
 
 function rcl_publication_editor(){

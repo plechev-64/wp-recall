@@ -315,6 +315,8 @@ function rcl_manage_user_black_list(e,user_id){
             if(data['success']){
                 jQuery(e).find('span').text(data['label']);
             }
+            
+            rcl_do_action('rcl_manage_user_black_list',{element:e,result:data});
 
         } 
     });
@@ -366,8 +368,10 @@ function rcl_init_ajax_tab(){
             url: Rcl.ajaxurl, 
             success: function(data){
                 
-                rcl_do_action('rcl_upload_tab',{element:e,result:data});
+                rcl_preloader_hide();
                 
+                e.removeClass('tab-upload');
+
                 data = rcl_apply_filters('rcl_upload_tab',data);
 
                 if(data.result.error){
@@ -377,6 +381,9 @@ function rcl_init_ajax_tab(){
                 
                 var funcname = data.post.callback;              
                 new (window[funcname])(e,data);
+                
+                rcl_do_action('rcl_upload_tab',{element:e,result:data});
+                
             }			
         }); 
         return false;
@@ -392,16 +399,6 @@ rcl_add_action('rcl_before_upload_tab','rcl_add_preloader_tab');
 function rcl_add_preloader_tab(e){
     rcl_preloader_show('#lk-content > div');
     rcl_preloader_show('#ssi-modalContent > div');
-}
-
-rcl_add_action('rcl_upload_tab','rcl_remove_class_upload_tab');
-function rcl_remove_class_upload_tab(data){
-    data.element.removeClass('tab-upload');
-}
-
-rcl_add_action('rcl_upload_tab','rcl_remove_preloader_tab');
-function rcl_remove_preloader_tab(data){
-    rcl_preloader_hide();
 }
 
 rcl_add_action('rcl_init','rcl_init_get_smilies');

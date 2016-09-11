@@ -565,6 +565,9 @@ a.data-filter.filter-active:hover {
 .rcl-field-input{
     display: block;
 }
+.rcl-field-input .file-manage-box .fa{
+    margin-right:5px;
+}
 .rcl-field-input .rcl-field-notice{
     display:block;
     clear: both;
@@ -590,7 +593,7 @@ a.data-filter.filter-active:hover {
     padding: 5px;
     margin: 5px 10px;
     border: 1px solid #ccc;
-	vertical-align: middle;
+    vertical-align: middle;
 }
 .type-dynamic-input .dynamic-values .dynamic-value input{
     width: 78%!important;
@@ -602,6 +605,12 @@ a.data-filter.filter-active:hover {
 .rcl-field-input .rcl-radio-box{
     display:inline-block;
     position: relative;
+}
+p.rcl-custom-fields{
+    clear:both;
+}
+p.rcl-custom-fields .rcl-field-value .fa-upload{
+    margin-right:5px;
 }
 /**/
 
@@ -667,10 +676,6 @@ a.data-filter.filter-active:hover {
     box-shadow: 0 0 1px 2px rgb(219, 219, 219);
 }
 /* navigation End */
-
-p.rcl-custom-fields{
-    clear:both;
-}
 
 
 /* START ssi-modal */

@@ -9,6 +9,7 @@
     overflow: hidden;
     padding: 5px;
     width: 99%;
+    position: relative;
 }
 .public_block a:link {
     border: none;								/*++Twenty15++*/

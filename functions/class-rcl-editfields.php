@@ -3,6 +3,7 @@
 class Rcl_EditFields {
 
     public $name_option;
+    public $post_type;
     public $options;
     public $options_html;
     public $vals;
@@ -14,37 +15,32 @@ class Rcl_EditFields {
     public $sortable;
     public $fieldsData;
 
-    function __construct($posttype,$primary=false){
+    function __construct($post_type,$primary=false){
 
         $this->select_type = (isset($primary['select-type']))? $primary['select-type']:true;
         $this->meta_key = (isset($primary['meta-key']))? $primary['meta-key']:true;
         $this->placeholder = (isset($primary['placeholder']))? $primary['placeholder']:true;
         $this->sortable = (isset($primary['sortable']))? $primary['sortable']:true;
         $this->primary = $primary;
+        $this->post_type = $post_type;
 
-        switch($posttype){
+        switch($this->post_type){
             case 'post': $name_option = 'rcl_fields_post_'.$this->primary['id']; break;
-            case 'products': $name_option = 'rcl_fields_products'; break;
             case 'orderform': $name_option = 'rcl_cart_fields'; break;
             case 'profile': $name_option = 'rcl_profile_fields'; break;
-            default: $name_option = 'rcl_fields_'.$posttype;
+            default: $name_option = 'rcl_fields_'.$this->post_type;
         }
 
-        $this->fieldsData = stripslashes_deep(get_option( $name_option ));
+        $this->fieldsData = apply_filters('rcl_edit_custom_fields_data',stripslashes_deep(get_option( $name_option )));
         $this->name_option = $name_option;
+        
     }
 
     function edit_form($options=false,$more=''){
         
-        if($options){
-            foreach($options as $opt){
-                $this->options_html .= $opt;
-            }
-        }
+        $this->options = apply_filters('rcl_custom_fields_options',$this->options,$this->post_type);
 
-        $form = '<style></style>
-            
-            <div id="rcl-custom-fields-editor">
+        $form = '<div id="rcl-custom-fields-editor">
             <form action="" method="post">
             '.wp_nonce_field('rcl-update-custom-fields','_wpnonce',true,false).'
             '.$more;
@@ -198,7 +194,7 @@ class Rcl_EditFields {
     }
 
     function get_options(){
-        
+
         if(!$this->options) return false;
         
         $opt = '';
@@ -307,6 +303,23 @@ class Rcl_EditFields {
 
         return $field;
     }
+    
+    function multiselect($args,$edit){
+
+        $class = (isset($args['class'])&&$args['class'])? 'class="'.$args['class'].'"': '';
+        
+        $rand = rand(1,1000);
+        
+        $field = '<select '.$class.' multiple size="5" name="field['.$args['name'].'-'.$rand.'][]">';
+        foreach($args['value'] as $key=>$val){
+            $sel = ($this->vals)? selected(in_array($key,$this->vals[$args['name']]),true,false): '';
+            $field .= '<option '.$sel.' value="'.$key.'">'.$val.'</option>';
+        }
+        $field .= '</select> '
+                . '<input type="hidden" name="field['.$args['name'].'][]" value="'.$rand.'">';
+
+        return $field;
+    }
 
     function text($args,$edit){
 	$val = ($this->vals)? esc_textarea( str_replace("'",'"',$this->vals[$args['name']] )): '';
@@ -353,44 +366,46 @@ class Rcl_EditFields {
 
 	//$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         
-        if(isset($_POST['options'])){
-            foreach($_POST['options'] as $key=>$val){
+        $POST = apply_filters('rcl_pre_update_custom_fields_options',$_POST);
+        
+        if(isset($POST['options'])){
+            foreach($POST['options'] as $key=>$val){
                 $fields['options'][$key] = $val;
             }
         }
-        
+
         $fs = 0;
         $placeholder_id = 0;
         $tps = array('select'=>1,'multiselect'=>1,'radio'=>1,'checkbox'=>1,'agree'=>1,'file'=>1);
         
-        foreach($_POST['field'] as $key=>$data){
+        foreach($POST['field'] as $key=>$data){
             
             if($key=='placeholder'||$key=='field_select'||$key=='sizefile') continue;
             
             foreach($data as $a=>$value){
                 
-                if(!$_POST['field']['title'][$a]) break;
+                if(!$POST['field']['title'][$a]) break;
                 
-                if($table&&!$_POST['field']['title'][$a]){
-                    if($_POST['field']['slug'][$a]){
-                        $this->delete($_POST['field']['slug'][$a],$table);
+                if($table&&!$POST['field']['title'][$a]){
+                    if($POST['field']['slug'][$a]){
+                        $this->delete($POST['field']['slug'][$a],$table);
                     }
                     continue;
                 }
                 if($key=='slug'&&!$value){
-                    $value = str_replace('-','_',sanitize_title($_POST['field']['title'][$a]).'-'.rand(10,100));
+                    $value = str_replace('-','_',sanitize_title($POST['field']['title'][$a]).'-'.rand(10,100));
                 }
                 if($key=='type'){
 
-                    if($_POST['field']['type'][$a]=='file'){
-                        $fields[$a]['sizefile'] = $_POST['field']['sizefile'][$_POST['field']['slug'][$a]];
+                    if($POST['field']['type'][$a]=='file'){
+                        $fields[$a]['sizefile'] = $POST['field']['sizefile'][$POST['field']['slug'][$a]];
                     }
-                    if($_POST['field']['type'][$a]=='agree'){
-                        $fields[$a]['url-agreement'] = $_POST['field']['url-agreement'][$_POST['field']['slug'][$a]];
+                    if($POST['field']['type'][$a]=='agree'){
+                        $fields[$a]['url-agreement'] = $POST['field']['url-agreement'][$POST['field']['slug'][$a]];
                     }
                     
-                    if(isset($tps[$_POST['field']['type'][$a]])){
-                        $fields[$a]['field_select'] = $_POST['field']['field_select'][$fs++];
+                    if(isset($tps[$POST['field']['type'][$a]])){
+                        $fields[$a]['field_select'] = $POST['field']['field_select'][$fs++];
                     }else{
                         if($this->placeholder)
                             $fields[$a]['placeholder'] = $_POST['field']['placeholder'][$placeholder_id++];

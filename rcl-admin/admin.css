@@ -266,6 +266,7 @@ span.ruble-symbol{
 }
 #rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-label{
     font-weight:bold;
+    display: block;
 }
 #rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-option{
     margin: 5px 0;
@@ -275,6 +276,9 @@ span.ruble-symbol{
 }
 #rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-option select{
     width: 70px;
+}
+#rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-option select[multiple]{
+    width: 100%;
 }
 #rcl-custom-fields-editor .rcl-custom-field .half-width{
     width: 47%;
