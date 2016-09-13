@@ -141,8 +141,10 @@ function rcl_chat_get_user_status($chat_id,$user_id){
     return $wpdb->get_var("SELECT user_status FROM ".RCL_PREF."chat_users WHERE chat_id = '$chat_id' AND user_id='$user_id'");
 }
 
-function rcl_chat_insert_user($chat_id,$user_id,$status = 1){
+function rcl_chat_insert_user($chat_id, $user_id, $status = 1, $activity = 1){
     global $wpdb;
+    
+    $user_activity = ($activity)? current_time('mysql'): '0000-00-00 00:00:00';
     
     $result = $wpdb->insert(
         RCL_PREF.'chat_users',
@@ -150,7 +152,7 @@ function rcl_chat_insert_user($chat_id,$user_id,$status = 1){
             'room_place'=>$chat_id.':'.$user_id,
             'chat_id'=>$chat_id,
             'user_id'=>$user_id,
-            'user_activity'=>current_time('mysql'),
+            'user_activity'=>$user_activity,
             'user_write'=>0,
             'user_status'=>$status
         )

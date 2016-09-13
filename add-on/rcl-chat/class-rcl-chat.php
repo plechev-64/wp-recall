@@ -38,7 +38,8 @@ class Rcl_Chat {
 
         add_filter( 'rcl_chat_message', 'wpautop', 11 );
         
-        $this->user_id = $user_ID;
+        if(!$this->user_id)
+            $this->user_id = $user_ID;
         
         if(!$this->office_id)
             $this->office_id = (isset($_POST['office_ID']))? $_POST['office_ID']: 0;
