@@ -207,23 +207,24 @@ function rcl_get_user_contacts($user_id,$limit){
     global $wpdb;
 
     $messages = $wpdb->get_results(
-        "SELECT t.* FROM ( "
-        . "SELECT chat_messages.* FROM ".RCL_PREF."chat_messages AS chat_messages "
-        . "INNER JOIN ".RCL_PREF."chat_users AS chat_users ON chat_messages.chat_id=chat_users.chat_id "
-        . "WHERE chat_messages.private_key!='0' "
-        . "AND (chat_messages.user_id='$user_id' OR chat_messages.private_key='$user_id') "
-        . "AND chat_users.user_id='$user_id' "
-        . "AND chat_users.user_status!='0' "
-        . "ORDER BY chat_messages.message_time DESC "
-        . ") "
-        . " AS t "
-        . "GROUP BY t.chat_id "
-        . "ORDER BY t.message_time DESC "
-        . "LIMIT $limit[0],$limit[1]"
-        ,
-        ARRAY_A
-    );
-    
+            "SELECT t.* FROM ( "
+            . "SELECT chat_messages.* FROM ".RCL_PREF."chat_messages AS chat_messages "
+            . "INNER JOIN ".RCL_PREF."chat_users AS chat_users ON chat_messages.chat_id=chat_users.chat_id "
+            . "WHERE chat_messages.private_key!='0' "
+            . "AND (chat_messages.user_id='$user_id' OR chat_messages.private_key='$user_id') "
+            . "AND chat_users.user_id='$user_id' "
+            . "AND chat_users.user_status!='0' "
+            . "ORDER BY chat_messages.message_time DESC "
+            . "LIMIT 18446744073709551615 "
+            . ") "
+            . "AS t "
+            . "GROUP BY t.chat_id "
+            . "ORDER BY t.message_time DESC "
+            . "LIMIT $limit[0],$limit[1]"
+            ,
+            ARRAY_A
+        );     
+      
     $messages = stripslashes_deep($messages);
 
     return $messages;

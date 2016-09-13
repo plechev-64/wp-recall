@@ -102,19 +102,25 @@ function rcl_chat_update_attachment_data($message){
 
 add_action('rcl_insert_chat','rcl_chat_insert_user_lk',10);
 function rcl_chat_insert_user_lk($chat_id){
-    global $user_LK,$wpdb;
-    
-    if(!$user_LK) return false;
+    global $wpdb;
     
     $chat = rcl_get_chat($chat_id);
     
     if($chat->chat_status=='private'){
+
+        $users = rcl_chat_get_users($chat_id);
+        
+        if(count($users)==2) return false;
+            
+        $key = explode(':',$chat->chat_room);
+        $user_id = ($key[1]==$users[0])? $key[2]: $key[1];
+        
         $wpdb->insert(
             RCL_PREF.'chat_users',
             array(
-                'room_place'=>$chat_id.':'.$user_LK,
+                'room_place'=>$chat_id.':'.$user_id,
                 'chat_id'=>$chat_id,
-                'user_id'=>$user_LK,
+                'user_id'=>$user_id,
                 'user_activity'=>'0000-00-00 00:00:00',
                 'user_write'=>0,
                 'user_status'=>1

@@ -337,7 +337,7 @@ body audio {
 }
 
 #rcl-chat-noread-box.left-panel{
-    right: initial;
+    right: auto;
     left: 5px;
 }
 #rcl-chat-noread-box.left-panel .rcl-mini-chat{

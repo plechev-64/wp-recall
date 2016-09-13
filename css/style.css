@@ -405,9 +405,7 @@ a.data-filter.filter-active:hover {
 /* Состояния кнопок End */
 
 /* Корректировки к кнопкам Start */
-#lk-menu a,
-#lk-content .get-list-votes,
-#lk-content .sec_block_button {
+#lk-menu a{
     display: block;
     float: left;
     margin: 5px 5px 0 0;

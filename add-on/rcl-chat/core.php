@@ -131,6 +131,11 @@ function rcl_get_chats($args){
     return $chats;
 }
 
+function rcl_chat_get_users($chat_id){
+    global $wpdb;
+    return $wpdb->get_col("SELECT user_id FROM ".RCL_PREF."chat_users WHERE chat_id = '$chat_id'");
+}
+
 function rcl_chat_get_user_status($chat_id,$user_id){
     global $wpdb;
     return $wpdb->get_var("SELECT user_status FROM ".RCL_PREF."chat_users WHERE chat_id = '$chat_id' AND user_id='$user_id'");

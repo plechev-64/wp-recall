@@ -27,7 +27,7 @@ class Rcl_Chat {
     public $query = array(
             'select'=>array('chat_messages.*'),
             'where'=>array(),
-            'orderby'=>'chat_messages.message_id',
+            'orderby'=>'chat_messages.message_time',
             'order'=>'DESC'           
         );
 
