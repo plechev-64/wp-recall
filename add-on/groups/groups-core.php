@@ -800,15 +800,11 @@ function rcl_group_admin_panel(){
 
 }
 
-add_action('pre_get_posts','rcl_edit_group_pre_get_posts');
+add_action('pre_get_posts','rcl_edit_group_pre_get_posts',10);
 function rcl_edit_group_pre_get_posts($query){
 	global $wpdb,$user_ID,$post,$rcl_group;
 
         if(!$query->is_main_query()) return $query;
-
-        /*if($query->is_search){
-
-	}*/
 
         if($query->is_tax&&isset($query->query['groups'])){
             $rcl_group = rcl_group_init();

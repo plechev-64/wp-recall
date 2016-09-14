@@ -686,6 +686,7 @@ function rcl_show_login_form_tab(tab,type_form){
 }
 
 function rcl_show_float_login_form(){
+    jQuery('.panel_lk_recall.floatform > div').hide();
     rcl_setup_position_float_form();
     jQuery('.panel_lk_recall.floatform').show();
 }
