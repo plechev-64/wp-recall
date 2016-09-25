@@ -11,7 +11,7 @@ class Rcl_Cart {
     function __construct() {
         global $CartData,$rmag_options;
 
-        $this->summ = $_SESSION['cartdata']['summ'];
+        $this->summ = (isset($_SESSION['cartdata']['summ']))? $_SESSION['cartdata']['summ']: 0;
 
         $all = 0;
         if(isset($_SESSION['cart'])){
@@ -22,12 +22,14 @@ class Rcl_Cart {
         $this->cnt_products = $all;
         $this->values = array();
         $this->request = '';
+        
+        $cart = (isset($_SESSION['cart']))? $_SESSION['cart']: false;
 
         $CartData = (object)array(
                 'numberproducts'=>$all,
                 'cart_price'=>$this->summ,
                 'cart_url'=>$rmag_options['basket_page_rmag'],
-                'cart'=> $_SESSION['cart']
+                'cart'=> $cart
         );
     }
 

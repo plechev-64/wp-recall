@@ -206,7 +206,7 @@ function rcl_is_group_can($role){
 
     $user_role = $rcl_group->current_user;
 
-	if(!$user_role) return false;
+    if(!$user_role) return false;
 
     if($group_roles[$user_role]['user_level']>=$group_roles[$role]['user_level']) return true;
     else return false;

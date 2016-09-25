@@ -224,14 +224,16 @@
 .public_block form .rcl-form-field select:not(.postform),
 .public_block form .rcl-form-field textarea,
 .public_block form .rcl-form-field input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="time"]):not([type="number"]):not(.rcl-datepicker) {
-	max-width: none;
-	width: 100%
+    max-width: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 .public_block form .rcl-form-field input[type="time"],
 .public_block form .rcl-form-field input[type="number"],
 .public_block form .rcl-form-field input.rcl-datepicker[type="text"] {
     max-width: 200px !important;		/* Author & some themes */
-	width: 100% !important;				/* Author & some themes */
+    width: 100% !important;
+    box-sizing: border-box; /* Author & some themes */
 }
 .public_block form .rcl-form-field .dynamic-value input[type="text"] {
     display: inline-block;

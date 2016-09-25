@@ -1,3 +1,7 @@
+var rcl_public_form = {
+    required: new Array
+};
+
 jQuery(document).ready(function($) {
     
     $.fn.extend({
@@ -232,31 +236,9 @@ function rcl_preview(e){
 
 	var submit = jQuery(e);
 	var formblock = submit.parents('form');
-	var required = true;
         var post_type = formblock.data('post_type');
         
-	formblock.find(':required').each(function(){
-            if(!jQuery(this).val()){
-                jQuery(this).css('box-shadow','0px 0px 1px 1px red');
-                required = false;
-            }else{
-                jQuery(this).css('box-shadow','none');
-            }
-	});
-        
-        if(formblock.find( 'input[name="cats[]"]' ).length > 0){             
-            if(formblock.find('input[name="cats[]"]:checked').length == 0){
-                formblock.find( 'input[name="cats[]"]' ).css('box-shadow','0px 0px 1px 1px red');
-                required = false;
-            }else{
-                formblock.find( 'input[name="cats[]"]' ).css('box-shadow','none');
-            }
-        }
-
-	if(!required){
-            rcl_notice(Rcl.local.requared_fields_empty,'error',10000);
-            return false;
-	}
+        if(!rcl_check_required_fields(formblock)) return false;
 
         submit.attr('disabled',true).val(Rcl.local.wait+'...');
 	
@@ -320,6 +302,66 @@ function rcl_preview(e){
 
 }
 
+function rcl_publish(e){
+    
+    var submit = jQuery(e);
+    var formblock = submit.parents('form');
+    
+    if(!rcl_check_required_fields(formblock)) return false;
+    
+    return true; 
+}
+
+function rcl_check_required_fields(form){
+    
+    var required = true;
+
+    var requireds = rcl_public_form.required;
+
+    requireds.forEach(function(namefield, i, requireds) {
+
+        var field = form.find('[name="'+namefield+'"]');
+        var type = field.attr('type');
+        var value = false;
+
+        if(type=='checkbox'){
+            if(field.is(":checked")){
+                value = true;
+                field.next('label').css('box-shadow','none');
+            }else {
+                field.next('label').css('box-shadow','red 0px 0px 5px 1px inset');
+            }
+        }else{
+            if(field.val()) value = true;
+        }
+
+        if(!value){
+            field.css('box-shadow','red 0px 0px 5px 1px inset');
+            required = false;
+        }else{
+            field.css('box-shadow','none');
+        }
+
+    });
+
+    if(form.find( 'input[name="cats[]"]' ).length > 0){             
+        if(form.find('input[name="cats[]"]:checked').length == 0){
+            form.find( 'input[name="cats[]"]' ).css('box-shadow','0px 0px 1px 1px red');
+            required = false;
+        }else{
+            form.find( 'input[name="cats[]"]' ).css('box-shadow','none');
+        }
+    }
+
+    if(!required){
+        rcl_notice(Rcl.local.requared_fields_empty,'error',10000);
+        return false;
+    }
+    
+    return true;
+    
+}
+
 function rcl_get_prefiew_content(formblock,iframe){
     formblock.find('textarea[name="post_content"]').html(iframe);
     return formblock.serialize();
@@ -330,6 +372,11 @@ function rcl_preview_close(e){
 }
 
 function rcl_init_public_form(post_type,post_id){
+    
+    jQuery('form.rcl-public-form').find(':required').each(function(){
+        var i = rcl_public_form.required.length;
+        rcl_public_form.required[i] = jQuery(this).attr('name');
+    });
     
     var maxcnt = Rcl.public.maxcnt;
     var maxsize_mb = Rcl.public.maxsize_mb;

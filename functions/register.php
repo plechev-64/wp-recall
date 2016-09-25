@@ -55,10 +55,12 @@ function rcl_confirm_user_registration(){
 
             if(!rcl_is_user_role($user->ID, 'need-confirm')) return false;
             
-            wp_update_user( array ('ID' => $user->ID, 'role' => get_option('default_role')) ) ;
+            wp_update_user( array ('ID' => $user->ID, 'role' => get_option('default_role')) );
             $time_action = current_time('mysql');
             $action = rcl_get_time_user_action($user->ID);
-            if(!$action)$wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => $time_action ) );
+            
+            if(!$action)
+                $wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => $time_action ) );
 
             $creds = array();
             $creds['user_login'] = $reglogin;

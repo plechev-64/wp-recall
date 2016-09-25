@@ -267,6 +267,8 @@ class Rcl_Users{
         global $wpdb;
 
         $profile_fields = get_option( 'rcl_profile_fields' );
+        
+        $profile_fields = apply_filters('rcl_userslist_custom_fields',$profile_fields);
 
         if(!$profile_fields) return $users;
 
@@ -278,7 +280,7 @@ class Rcl_Users{
         $fields = array();
         
         foreach($profile_fields as $custom_field){
-            $custom_field = apply_filters('custom_field_profile',$custom_field);
+            $custom_field = apply_filters('rcl_userslist_custom_field',$custom_field);
             if(!$custom_field) continue;
             if(isset($custom_field['req'])&&$custom_field['req']==1){
                 $fields[] =  $custom_field;   

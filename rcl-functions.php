@@ -570,25 +570,49 @@ function rcl_get_wp_upload_dir(){
 //запрещаем доступ в админку
 add_action('init','rcl_admin_access',1);
 function rcl_admin_access(){
-    global $current_user,$rcl_options;
+
     if(defined( 'DOING_AJAX' ) && DOING_AJAX) return;
     if(defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST) return;
+
     if(is_admin()){
+        
+        global $user_ID;
+
+        $access = rcl_check_access_console();
+
+        if ( $access ) 
+            return true;
+            
+        if(isset($_POST['short'])&&intval($_POST['short'])==1||isset($_POST['fetch'])&&intval($_POST['fetch'])==1){
+            
+            return true;
+            
+        }else{
+            
+            if(!$user_ID) return true;
+            
+            wp_redirect('/'); exit;
+            
+        }
+       
+    }
+}
+
+function rcl_check_access_console(){
+    global $current_user,$rcl_options;
+     
+    if(!$rcl_options)
         $rcl_options = get_option('rcl_global_options');
 
-        $access = (isset($rcl_options['consol_access_rcl']))? $rcl_options['consol_access_rcl']: 7;
+    $need_access = (isset($rcl_options['consol_access_rcl']))? $rcl_options['consol_access_rcl']: 7;
 
-        if ( $current_user->user_level < $access ){
-            if(isset($_POST['short'])&&intval($_POST['short'])==1||isset($_POST['fetch'])&&intval($_POST['fetch'])==1){
-                    return true;
-            }else{
-                    if(!$current_user->ID) return true;
-                    wp_redirect('/'); exit;
-            }
-        }else {
-            return true;
-        }
+    if($current_user->user_level){
+        $access = ( $current_user->user_level < $need_access )? false: true;
+    }else{
+        $access = ( isset($current_user->allcaps['level_'.$need_access]) && $current_user->allcaps['level_'.$need_access] == 1 )? true: false;
     }
+    
+    return $access;
 }
 
 /* Удаление поста вместе с его вложениями*/
@@ -928,9 +952,13 @@ function rcl_get_smiles_ajax(){
 }
 add_action('wp_ajax_rcl_get_smiles_ajax','rcl_get_smiles_ajax');
 
-function rcl_mail($email, $title, $text){
+function rcl_mail($email, $title, $text, $from = false){
+    
+    $from_name = (isset($from['name']))? $from['name']: get_bloginfo('name');
+    $from_mail = (isset($from['email']))? $from['email']: 'noreply@'.$_SERVER['HTTP_HOST'];
+    
     add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-    $headers = 'From: '.get_bloginfo('name').' <noreply@'.$_SERVER['HTTP_HOST'].'>' . "\r\n";
+    $headers = 'From: '.$from_name.' <'.$from_mail.'>' . "\r\n";
 
     $text .= '<p><small>-----------------------------------------------------<br/>
     '.__('This letter was created automatically, no need to answer it.','wp-recall').'<br/>
@@ -1105,6 +1133,7 @@ function rcl_template_support($support){
 function rcl_is_user_role($user_id,$role){
     $user_data = get_userdata( $user_id );
     $roles = $user_data->roles;
+    if(!$roles) return false;
     $current_role = array_shift($roles);
     if($current_role==$role) return true;
     return false;

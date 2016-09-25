@@ -165,7 +165,7 @@ function rmag_manage_orders(){
 
     $n=0;
     $s=0;
-    if($_GET['remove-trash']==101&&wp_verify_nonce( $_GET['_wpnonce'], 'delete-trash-rmag'))
+    if(isset($_GET['remove-trash'])&&$_GET['remove-trash']==101&&wp_verify_nonce( $_GET['_wpnonce'], 'delete-trash-rmag'))
             $wpdb->query($wpdb->prepare("DELETE FROM ".RMAG_PREF ."orders_history WHERE order_status = '%d'",6));
 
     if(isset($_GET['action'])&&$_GET['action']=='order-details'){

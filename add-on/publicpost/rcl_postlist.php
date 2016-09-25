@@ -31,16 +31,14 @@ class Rcl_Postlist {
         $ratings = array();
         $posts = array();
 
-        $offset = $this->offset.',';
-
-        $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('trash','draft','auto-draft') ORDER BY post_date DESC LIMIT $offset ".$this->in_page,$this->user_id,$this->post_type));
+        $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->base_prefix."posts WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('trash','draft','auto-draft') ORDER BY post_date DESC LIMIT $this->offset, ".$this->in_page,$this->user_id,$this->post_type));
 
         if(is_multisite()){
             $blog_list = get_blog_list( 0, 'all' );
 
             foreach ($blog_list as $blog) {
                 $pref = $wpdb->base_prefix.$blog['blog_id'].'_posts';
-                $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$pref." WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('trash',draft','auto-draft') ORDER BY post_date DESC LIMIT $offset ".$this->in_page,$this->user_id,$this->post_type));
+                $posts[] = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$pref." WHERE post_author='%d' AND post_type='%s' AND post_status NOT IN ('trash',draft','auto-draft') ORDER BY post_date DESC LIMIT $this->offset, ".$this->in_page,$this->user_id,$this->post_type));
             }
         }
 
@@ -108,7 +106,7 @@ class Rcl_Postlist {
         
         if(!$count) return false;
 	
-        $rclnavi = new Rcl_PageNavi($this->post_type.'-navi', $count);
+        $rclnavi = new Rcl_PageNavi($this->post_type.'-navi', $count, array('in_page'=>$this->in_page));
         
         $this->offset = $rclnavi->offset;
 

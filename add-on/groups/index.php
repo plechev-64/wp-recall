@@ -236,16 +236,16 @@ function rcl_get_link_group_tag($content){
 }
 
 function rcl_init_get_link_group_tag(){
-	if(is_single()) add_filter('the_content','rcl_get_link_group_tag',80);
-	else add_filter('the_excerpt','rcl_get_link_group_tag',80);
+    if(is_single()) add_filter('the_content','rcl_get_link_group_tag',80);
+    else add_filter('the_excerpt','rcl_get_link_group_tag',80);
 }
-add_action('wp','rcl_init_get_link_group_tag');
+add_action('wp','rcl_init_get_link_group_tag',10);
 
 function rcl_init_namegroup(){
 	if(is_single()) add_filter('the_content','rcl_add_namegroup',80);
         if(is_search()) add_filter('the_excerpt','rcl_add_namegroup',80);
 }
-add_action('wp','rcl_init_namegroup');
+add_action('wp','rcl_init_namegroup',10);
 
 function rcl_add_namegroup($content){
     global $post;

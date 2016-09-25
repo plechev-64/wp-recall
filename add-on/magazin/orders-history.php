@@ -213,24 +213,24 @@ class Rcl_Orders_History_Table extends WP_List_Table {
 
 	$args = array();
 
-	if($_GET['m']){
+	if(isset($_GET['m'])&&$_GET['m']){
 
             $args['year'] = substr($_GET['m'],0,4);
             $args['month'] = substr($_GET['m'],5,6);
 
-            if($_GET['sts']) $args['order_status'] = intval($_GET['sts']);
+            if(isset($_GET['sts'])&&$_GET['sts']) $args['order_status'] = intval($_GET['sts']);
 
 	}else{
-            if($_GET['sts']){
+            if(isset($_GET['sts'])&&$_GET['sts']){
                 $args['order_status'] = intval($_GET['sts']);
-            }elseif($_GET['user']){
+            }elseif(isset($_GET['user'])&&$_GET['user']){
                 $args['user_id'] = intval($_GET['user']);
             }else{
                 $args['status_not_in'] = 6;
             }
 	}
         
-        if($_POST['s']){
+        if(isset($_POST['s'])&&$_POST['s']){
             $args['order_id'] = intval($_POST['s']);
         }
         

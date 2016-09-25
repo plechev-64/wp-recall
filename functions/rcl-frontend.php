@@ -298,19 +298,19 @@ function rcl_get_link_author_comment($href){
 
 add_action('wp_head','rcl_hidden_admin_panel');
 function rcl_hidden_admin_panel(){
-    global $rcl_options,$user_ID;
+    global $user_ID;
 
     if(!$user_ID){
         return show_admin_bar(false);
     }
 
-    $access = (isset($rcl_options['consol_access_rcl']))? $rcl_options['consol_access_rcl']: 7;
-    $user_info = get_userdata($user_ID);
-    if ( $user_info->user_level < $access ){
-            show_admin_bar(false);
-    }else{
+    $access = rcl_check_access_console();
+    
+    if ( $access ) 
             return true;
-    }
+
+    show_admin_bar(false);
+    
 }
 
 add_action('init','rcl_banned_user_redirect');
