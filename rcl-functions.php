@@ -1135,7 +1135,13 @@ function rcl_is_user_role($user_id,$role){
     $roles = $user_data->roles;
     if(!$roles) return false;
     $current_role = array_shift($roles);
-    if($current_role==$role) return true;
+    
+    if(is_array($role)){
+        if(in_array($current_role,$role)) return true;
+    }else{
+        if($current_role==$role) return true;
+    }
+
     return false;
 }
 

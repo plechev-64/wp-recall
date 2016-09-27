@@ -58,6 +58,8 @@ class Rcl_Sub_Tabs {
         $content = '<div class="rcl-subtab-menu">';
 
         foreach($this->subtabs as $key=>$tab){
+            
+            if(!$tab['name']) continue;
 
             $classes = ($this->active_tab==$tab['id'])? array('active','rcl-subtab-button'): array('rcl-subtab-button');
             
