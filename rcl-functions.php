@@ -952,7 +952,7 @@ function rcl_get_smiles_ajax(){
 }
 add_action('wp_ajax_rcl_get_smiles_ajax','rcl_get_smiles_ajax');
 
-function rcl_mail($email, $title, $text, $from = false){
+function rcl_mail($email, $title, $text, $from = false, $attach = false){
     
     $from_name = (isset($from['name']))? $from['name']: get_bloginfo('name');
     $from_mail = (isset($from['email']))? $from['email']: 'noreply@'.$_SERVER['HTTP_HOST'];
@@ -963,7 +963,7 @@ function rcl_mail($email, $title, $text, $from = false){
     $text .= '<p><small>-----------------------------------------------------<br/>
     '.__('This letter was created automatically, no need to answer it.','wp-recall').'<br/>
     "'.get_bloginfo('name').'"</small></p>';
-    wp_mail($email, $title, $text, $headers);
+    wp_mail($email, $title, $text, $headers, $attach);
 }
 
 function rcl_multisort_array($array, $key, $type = SORT_ASC, $cmp_func = 'strcmp'){

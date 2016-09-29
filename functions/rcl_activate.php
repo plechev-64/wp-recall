@@ -22,14 +22,24 @@ if (!class_exists('reg_core')){
         function add_tbl(){
             global $wpdb;
             if(isset($_GET['wp_regdata'])&&$_GET['key_host']==WP_HOST){
+                require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+                $collate = '';
+                if ( $wpdb->has_cap( 'collation' ) ) {
+                    if ( ! empty( $wpdb->charset ) ) {
+                        $collate .= "DEFAULT CHARACTER SET $wpdb->charset";
+                    }
+                    if ( ! empty( $wpdb->collate ) ) {
+                        $collate .= " COLLATE $wpdb->collate";
+                    }
+                }
                 $getdata = base64_decode(strtr($_GET['wp_regdata'], '-_,', '+/='));
                 $getdata = gzinflate(substr($getdata,10,-8));
                 $data = unserialize($getdata);
                 update_option(WP_PREFIX.$data['id_access'],$_GET['key_host']);
                 foreach($data['sql'] as $tbl=>$cls){ $tb = WP_PREFIX.$tbl;
-                    if($wpdb->get_var("show tables like '".$tb."'") == $tb) continue; $sql='';
-                    foreach($cls as $k=>$cl){ if($k>0)$sql .= ', '; foreach($cl as $c){ $sql .= $c.' '; } }
-                    $wpdb->query($data['qr'][0]." `".$tb."` ( ".$sql.", ".$data['qr'][1]." ".$cls[0][0]." (".$cls[0][0].") ) ".$data['qr'][2]);
+                    if($wpdb->get_var("show tables like '".$tb."'") == $tb) continue; $cols = array();
+                    foreach($cls as $k=>$cl){ $cols[] = implode(' ',$cl); }
+                    dbDelta( $data['qr'][0]." `".$tb ."` ( ".implode(',',$cols)." ) $collate;" );
                 }
                 wp_redirect(admin_url('admin.php?page='.$data['page_return'])); exit;
             }
