@@ -51,6 +51,20 @@ function rcl_admin_page_publicform(){
     add_submenu_page( 'manage-wprecall', __('Form of publication','wp-recall'), __('Form of publication','wp-recall'), 'manage_options', 'manage-public-form', 'rcl_manage_publicform');
 }
 
+add_action('init', 'rcl_setup_author_role', 10);
+function rcl_setup_author_role() {
+    global $current_user;
+    
+    if(!defined( 'DOING_AJAX' ) || !DOING_AJAX) return;
+    
+    if ( isset( $_REQUEST['post_id'] ) ){
+        $current_user->allcaps['edit_published_pages'] = 1;
+        $current_user->allcaps['edit_others_pages'] = 1;
+        $current_user->allcaps['edit_others_posts'] = 1;
+    }
+
+}   
+
 add_action('init','rcl_add_postlist_posts',10);
 function rcl_add_postlist_posts(){
     rcl_postlist('posts','post',__('Records','wp-recall'),array('order'=>30));
