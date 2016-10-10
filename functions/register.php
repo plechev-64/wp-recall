@@ -402,12 +402,13 @@ function rcl_password_regform($content){
     global $rcl_options;
 
     $difficulty = (isset($rcl_options['difficulty_parole']))? $rcl_options['difficulty_parole']: false;
+    $user_pass = (isset($_REQUEST['user_pass']))? $_REQUEST['user_pass']: '';
 
     $content .= '<div class="form-block-rcl default-field">';
     if($difficulty==1){
-        $content .= '<input placeholder="'.__('Password','wp-recall').'" required id="primary-pass-user" type="password" onkeyup="passwordStrength(this.value)" value="'.$_REQUEST['user_pass'].'" name="user_pass">';
+        $content .= '<input placeholder="'.__('Password','wp-recall').'" required id="primary-pass-user" type="password" onkeyup="passwordStrength(this.value)" value="'.$user_pass.'" name="user_pass">';
     }else{
-        $content .= '<input placeholder="'.__('Password','wp-recall').'" required type="password" value="'.$_REQUEST['user_pass'].'" id="primary-pass-user" name="user_pass">';
+        $content .= '<input placeholder="'.__('Password','wp-recall').'" required type="password" value="'.$user_pass.'" id="primary-pass-user" name="user_pass">';
     }
 	$content .= '<i class="fa fa-lock"></i>';
 	$content .= '<span class="required">*</span>';

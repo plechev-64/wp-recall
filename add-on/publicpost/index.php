@@ -63,7 +63,27 @@ function rcl_setup_author_role() {
         $current_user->allcaps['edit_others_posts'] = 1;
     }
 
-}   
+} 
+
+//выводим в медиабиблиотеке только медиафайлы текущего автора
+add_action('pre_get_posts','rcl_restrict_media_library');
+function rcl_restrict_media_library( $wp_query_obj ) {
+    global $current_user, $pagenow;
+	
+	if( !is_a( $current_user, 'WP_User') ) 
+		return;
+
+    if( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' ) 
+		return;
+	
+	if(rcl_check_access_console()) 
+		return;
+	
+    if( !current_user_can('manage_media_library') ) 
+		$wp_query_obj->set('author', $current_user->ID );
+	
+    return;
+}
 
 add_action('init','rcl_add_postlist_posts',10);
 function rcl_add_postlist_posts(){
@@ -342,40 +362,6 @@ function rcl_get_basedir_image($path){
 	}
 	return $base_path;
 }
-
-/*deprecated*/
-function rcl_get_image_gallery($atts,$content=null){
-	global $post;
-	extract(shortcode_atts(array('id'=>'','size'=>'thumbnail'),$atts));
-	if(!$id) return false;
-
-	$upl_dir = wp_upload_dir();
-	$meta = wp_get_attachment_metadata($id);
-
-	if(!$meta) return false;
-
-	$full = $upl_dir['baseurl'].'/'.$meta['file'];
-
-	if($size=='full'){
-		$img = '<img class="thumbnail full"  src="'.$full.'">';
-	}else{
-
-		$size_ar = explode(',',$size);
-		if(isset($size_ar[1])){
-			$img = get_the_post_thumbnail($post->ID,$size_ar);
-		}else{
-			$dir_img = rcl_get_basedir_image($meta['file']);
-			$img = '<img class="thumbnail"  src="'.$upl_dir['baseurl'].'/'.$dir_img.'/'.$meta['sizes'][$size]['file'].'">';
-		}
-
-	}
-
-	$image .= '<a href="'.$upl_dir['baseurl'].'/'.$meta['file'].'" rel="lightbox">';
-	$image .= $img;
-	$image .= '</a>';
-	return $image;
-}
-add_shortcode('art','rcl_get_image_gallery');
 
 function rcl_add_attachments_in_temps($id_post){
     global $user_ID;
@@ -879,17 +865,6 @@ function rcl_wp_editor($args=false,$content=false){
     if(!$content) $content = (isset($editpost->post_content))? $editpost->post_content: '';
 
     wp_editor( $content, 'contentarea-'.$formData->post_type, $data );
-}
-
-//выводим в медиабиблиотеке только медиафайлы текущего автора
-add_action('pre_get_posts','rcl_restrict_media_library');
-function rcl_restrict_media_library( $wp_query_obj ) {
-    global $current_user, $pagenow;
-    if( !is_a( $current_user, 'WP_User') ) return;
-    if( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' ) return;
-    if( !current_user_can('manage_media_library') )
-    $wp_query_obj->set('author', $current_user->ID );
-    return;
 }
 
 add_shortcode('rcl-box','rcl_box_shortcode');

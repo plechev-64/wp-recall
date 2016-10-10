@@ -165,7 +165,7 @@ class Rcl_Feed{
         );
 
         $query = apply_filters('rcl_feed_'.$this->content.'_query',$query);
-        //print_r($query);exit;
+        
         if($query['exclude']){
             foreach($query['exclude'] as $field=>$data){
                 $query['where'][] = "$field NOT IN (".implode(',',$data).")";
@@ -186,8 +186,6 @@ class Rcl_Feed{
             $query_string .= "ORDER BY ".$query['orderby']." $this->order ";
             $query_string .= "LIMIT $this->offset,$this->number";
         }
-
-        //if(!$count) echo $query_string;
 
         if($this->query_count)
             $this->query_count = false;
