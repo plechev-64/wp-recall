@@ -50,15 +50,15 @@ function rcl_get_user_balance($user_id=false){
     global $wpdb,$user_ID;
     if(!$user_id) $user_id = $user_ID;
     
-    $cachekey = json_encode(array('rcl_get_user_balance',$user_id));
-    $cache = wp_cache_get( $cachekey );
+    //$cachekey = json_encode(array('rcl_get_user_balance',$user_id));
+    //$cache = wp_cache_get( $cachekey );
     
-    if ( $cache )
-        return $cache;
+    //if ( $cache )
+        //return $cache;
     
     $balance = $wpdb->get_var($wpdb->prepare("SELECT user_balance FROM ".RMAG_PREF."users_balance WHERE user_id='%d'",$user_id));
     
-    wp_cache_add( $cachekey, $balance );
+    //wp_cache_add( $cachekey, $balance );
     
     return $balance;
 }

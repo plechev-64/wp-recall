@@ -312,7 +312,7 @@ class Rcl_EditFields {
         
         $field = '<select '.$class.' multiple size="5" name="field['.$args['name'].'-'.$rand.'][]">';
         foreach($args['value'] as $key=>$val){
-            $sel = ($this->vals)? selected(in_array($key,$this->vals[$args['name']]),true,false): '';
+            $sel = ($this->vals&&isset($this->vals[$args['name']]))? selected(in_array($key,$this->vals[$args['name']]),true,false): '';
             $field .= '<option '.$sel.' value="'.$key.'">'.$val.'</option>';
         }
         $field .= '</select> '

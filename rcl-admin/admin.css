@@ -396,3 +396,12 @@ span.ruble-symbol{
     box-shadow: 0 0 1px 2px rgb(219, 219, 219);
 }
 /* navigation End */
+
+.wrap input[name="rcl-key"]:hover:not([value=""]) {
+    filter: none;
+    transition: all 0.15s linear 0s;
+}
+.wrap input[name="rcl-key"]:not([value=""]) {
+    filter: blur(3px) invert(0.4) opacity(0.3);
+    transition: all 0.15s linear 0s;
+}

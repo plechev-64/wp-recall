@@ -1,32 +1,30 @@
 /* Рейтинг Start */
-.post-rating {
+.rcl-box-rating {
     overflow: hidden;
     clear: both;
-	font: 14px arial;
+    font: 14px arial;
     margin: 5px 0;
 }
-.post-rating a:link {							/*++Twenty16++*/
-	border: none;
-	box-shadow: none;
+.rcl-box-rating a:link {							/*++Twenty16++*/
+    border: none;
+    box-shadow: none;
 }
-.post-rating .buttons-rating{
+.rcl-box-rating .buttons-rating{
     float: right;
-	line-height: 1;
+    line-height: 1;
+    position: relative;
 }
-.post-rating .buttons-rating a > i{
+.rcl-box-rating .buttons-rating a > i{
     font-size: 24px;
 }
-.post-rating .buttons-rating .rating-minus{
-	float: right;
-    color: red;
-	margin: 0 2px 0 3px;
+.rcl-box-rating .buttons-rating .rating-minus{
+    margin: 0 2px 0 3px;  
 }
-.post-rating .buttons-rating .rating-plus {
-	float: left;
-    color: #008000;
-	margin: 0 5px 0 0;
+.rcl-box-rating .buttons-rating .rating-plus {
+    float: left;
+    margin: 0 5px 0 0;
 }
-.post-rating .buttons-rating a.rating-cancel {
+.rcl-box-rating .buttons-rating a.rating-cancel {
     background: rgba(219, 219, 219, 0.6);
     box-shadow: 0 0 1px 1px rgb(219, 219, 219);
     margin: -4px 4px 0;
@@ -34,26 +32,33 @@
     color: #333;
     padding: 1px 3px;
 }
-.post-rating .buttons-rating a.rating-cancel:hover {
+.rcl-box-rating .buttons-rating a.rating-cancel:hover {
     opacity:0.8;
 }
-.post-rating .rating-value-block{
+.rcl-box-rating .rating-value-block{
+    float: left;
+}
+.rcl-box-rating .rating-plus{
     color: #008000;
 }
-.rating-value-block .rating-value {
-    margin: 0 8px 0 2px;
+.rcl-box-rating .rating-minus{
+    color: #ff0000;
+}
+.rating-value-block .rating-minus{
+    
 }
 .rating-value-block .post-votes{
     color: #aaa;
     font-size: 14px;
+    margin-left: 5px;
 }
 .votes-window{
     background: #fff;
     box-shadow: 0 0 2px 3px rgba(219, 219, 219, 0.8);
     color: #333;
     display: none;
-	font-size: 14px;
-	line-height: 1;
+    font-size: 14px;
+    line-height: 1;
     margin: -35px 10px 0 4px;
     max-width: 500px;
     padding: 5px 10px;
@@ -67,7 +72,7 @@
     position: absolute;
     right: -11px;
     text-shadow: 0 0 1px #ccc;
-	top: -9px;
+    top: -9px;
 }
 .rating-value-block .votes-window .votes-list{
     margin: 0;
@@ -92,21 +97,19 @@
 .votes-window .rating-plus,
 .votes-list .fa-thumbs-o-up,
 .rating_block .votes-list .rating-plus {
-	color: #008000;
+    color: #008000;
 }
 .votes-window .rating-minus,
-.votes-list .fa-thumbs-o-down,
-.rating-value-block span.rating-minus,
-.rating_block .votes-list .rating-minus {
-	color: red;
+.votes-list .fa-thumbs-o-down{
+    color: red;
 }
 .rating-rcl span {
     background: rgba(219, 219, 219, 0.6);
     clear: both;
     display: block;
-	font: 12px/1 Helvetica,serif,arial;				/*++Twenty16++*/
+    font: 12px/1 Helvetica,serif,arial;				/*++Twenty16++*/
     margin: 0 auto;
-    padding: 6px 0;
+    padding: 6px;
     text-align: center;
 }
 .rating-rcl .rating-plus {
@@ -133,8 +136,8 @@
     padding: 5px;
 }
 .rating_block .votes-list {
-	display: inline-block;
-	list-style: none;
+    display: inline-block;
+    list-style: none;
     margin: 10px 5px;
     width: 98%;
 }
@@ -147,7 +150,7 @@
     overflow: hidden;
 }
 .ratinglist .rating-single  p {
-	margin: 4px 0;
+    margin: 4px 0;
 }
 .ratinglist .rating-single{
     background: #F9F9F9;
@@ -166,11 +169,11 @@
 }
 .ratinglist .rating-single .rating-sidebar a {
     float: left;
-	border: none;								/*++Twenty15++*/
-	box-shadow: none;							/*++Twenty16++*/
+    border: none;								/*++Twenty15++*/
+    box-shadow: none;							/*++Twenty16++*/
 }
 .ratinglist .rating-single .avatar {
-	border-radius: 0;							/*++Twenty16++*/
+    border-radius: 0;							/*++Twenty16++*/
     float: left;
     height: auto;
     width: 55px;
@@ -187,7 +190,7 @@
     font-size: 15px;
 }
 .ratinglist .object-rating .rtng-ttl {
-	font-size: 16px;
+    font-size: 16px;
 }
 .ratinglist .object-rating .rtng-time {
     font-size: 12px;
@@ -196,15 +199,15 @@
 .ratinglist .rating-single .rating-meta {
     color: #333;
     font: 14px/1 Verdana,arial;
-	padding: 0 5px 2px;
+    padding: 0 5px 2px;
 }
 .rating-meta .comm-more a {						/*++Twenty16++*/
-	border: none;								/*++Twenty15++*/
+    border: none;								/*++Twenty15++*/
     box-shadow: none;
 }
 .ratinglist .rating-single .comm-more i {
-	font-size: 20px;
-	vertical-align: bottom;
+    font-size: 20px;
+    vertical-align: bottom;
     margin: 0 0 -3px 3px;
 }
 .ratinglist .rating-meta a img {

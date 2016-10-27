@@ -256,8 +256,11 @@ function rcl_notice(text,type,time_close){
     }
 }
 
-function rcl_preloader_show(e){
-    jQuery(e).after('<div class="rcl_preloader"><i class="fa fa-spinner fa-pulse"></i></div>');
+function rcl_preloader_show(e,size){
+    var font_size = (size)? size: 80;
+    var margin = font_size/2;
+    var style = 'style="font-size:'+font_size+'px;margin: -'+margin+'px 0 0 -'+margin+'px;"';    
+    jQuery(e).after('<div class="rcl_preloader"><i class="fa fa-spinner fa-pulse" '+style+'></i></div>');
 }
 
 function rcl_preloader_hide(){

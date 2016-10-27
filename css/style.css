@@ -109,13 +109,11 @@ body .rcl_preloader{
     left: 0!important;
     display: block!important;
     z-index: 99;
-    font-size: 80px;
 }
 .rcl_preloader i {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -40px 0 0 -40px;
 }
 #passwordStrength {
 	padding: 7px 15px 5px;
@@ -187,12 +185,17 @@ body .rcl_preloader{
     margin: 5px 0;
     padding: 0;
 }
-.online .fa-circle {
+span i.fa.fa-circle {
+    font-size: 16px;
+    padding: 0;
+    vertical-align: inherit;
+}
+.online .fa.fa-circle {
     -webkit-animation: pulsate 2s linear infinite;
     animation: pulsate 2s linear infinite;
     color: #89e535;
 }
-.offline .fa-circle {
+.offline .fa.fa-circle {
     color: rgb(229, 57, 53);
     text-shadow: 0 0 1px #5a0d0c;
 }
@@ -234,7 +237,7 @@ body .rcl_preloader{
 #rcl-office h3 {
     font-size: 18px;
     line-height: 1;
-    margin: 15px 0 5px 10px;
+    margin: 5px 0;
 }
 #rcl-office p {
     line-height: 1;
@@ -322,7 +325,7 @@ body #rcl-office .ballun-status p.status-user-rcl {
     font-size: 14px;									/*++hueman++*/
     font-weight: normal;								/*++hueman++*/
     line-height: normal;								/*++hueman++*/
-    margin: 3px 0 0 5px;
+    margin: 0 0 0 5px;
     max-width: 98%;
     min-width: 50px;
     padding: 6px 8px;

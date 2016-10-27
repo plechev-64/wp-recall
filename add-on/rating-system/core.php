@@ -620,7 +620,7 @@ function rcl_delete_rating_post($post_id){
 }
 add_action('delete_comment', 'rcl_delete_rating_comment');
 function rcl_delete_rating_comment($comment_id){
-    $comment = get_comment($comment_id);
+    $comment = get_comment($comment_id);   
     rcl_delete_rating_with_post(array('object_id'=>$comment_id,'object_author'=>$comment->user_id,'rating_type'=>'comment'));
 }
 

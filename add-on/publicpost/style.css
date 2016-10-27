@@ -360,17 +360,17 @@ h3.pending-message{
     overflow: hidden;
     padding: 2px;
 }
-#block_author-rcl h3,
-#block_author-rcl .userlist {
+#block_author-rcl > h3 {
     font-size: 18px;							/*++hueman++*/
     letter-spacing: normal;						/*++hueman++*/
-    margin: 3px;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0 0 5px 5px;
 }
 #block_author-rcl .userlist .user-single {
     background: transparent;
     box-shadow: none;
     margin: 0;
-    padding: 5px 5px 0;
 }
 /* блок О Авторе End */
 

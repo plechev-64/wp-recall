@@ -5,7 +5,10 @@ function rcl_close_votes_window(e){
 
 function rcl_edit_rating(e){
     var block = jQuery(e);
+    var idbox = block.parents('.rcl-box-rating').attr('id');
     var rating = block.data('rating');
+    
+    rcl_preloader_show('#' + idbox + ' .buttons-rating > a ',25);
 
     var dataString = 'action=rcl_edit_rating_post&rating='+rating;
     dataString += '&ajax_nonce='+Rcl.nonce;
@@ -13,12 +16,15 @@ function rcl_edit_rating(e){
     jQuery.ajax({
         type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
         success: function(data){
+            
+            rcl_preloader_hide();
+            
             if(data['error']){
                 rcl_notice(data['error'],'error',10000);
                 return false;
             }
             if(data['result']==100){
-                var val = jQuery('.'+data['rating_type']+'-rating-'+data['object_id']+' .rating-value');
+                var val = jQuery('#' + idbox + ' .rating-value');
                 val.empty().text(data['rating']);
                 if(data['rating']<0){
                     val.parent().css('color','#FF0000');

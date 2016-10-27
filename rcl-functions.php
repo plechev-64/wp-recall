@@ -304,9 +304,10 @@ function rcl_delete_file_cache($string){
 
 //кроп изображений
 function rcl_crop($filesource,$width,$height,$file){
+       
+    $image = wp_get_image_editor( $filesource );
     
     if ( ! is_wp_error( $image ) ) { 
-        $image = wp_get_image_editor( $filesource );
         $image->resize($width,$height,true);
         $image->save( $file );
     }

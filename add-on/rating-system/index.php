@@ -229,60 +229,62 @@ function rcl_get_html_post_rating($object_id,$type,$object_author=false){
         'rating_type'=>$type,
     );
 
-	$content = '';
-	$content = apply_filters('rating_block_content',$content,$args);
+    $content = apply_filters('rating_block_content','',$args);
 
-    $content = '<div class="'.$type.'-rating-'.$object_id.' post-rating">'.$content.'</div>';
+    $content = '<div id="'.$type.'-rating-'.$object_id.'" class="'.$type.'-rating rcl-box-rating">'.$content.'</div>';
 
     return $content;
 }
 
-add_filter('rating_block_content','rcl_add_rating_block',20,2);
+add_filter('rating_block_content','rcl_add_rating_block',10,2);
 function rcl_add_rating_block($content,$args){
-	$content .= rcl_get_rating_block($args);
-	return $content;
+    $content .= rcl_get_rating_block($args);
+    return $content;
 }
 
 function rcl_get_rating_block($args){
 	global $rcl_options,$comment,$post,$user_ID;
 
-	if(is_object($comment)&&$args['rating_type']=='comment'&&$args['object_id']==$comment->comment_ID){
-		if($rcl_options['rating_overall_comment']==1)
-                    $value = $comment->rating_votes;
-		else
-                    $value = $comment->rating_total;
-	}else{
-            if(is_object($post)&&$args['object_id']==$post->ID&&$post->rating_total)
-                $value = $post->rating_total;
-            else
-                $value = rcl_get_total_rating($args['object_id'],$args['rating_type']);
-	}
+    if(is_object($comment)&&$args['rating_type']=='comment'&&$args['object_id']==$comment->comment_ID){
+        if($rcl_options['rating_overall_comment']==1)
+                $value = $comment->rating_votes;
+        else
+                $value = $comment->rating_total;
+    }else{
+        if(is_object($post)&&$args['object_id']==$post->ID&&$post->rating_total)
+            $value = $post->rating_total;
+        else
+            $value = rcl_get_total_rating($args['object_id'],$args['rating_type']);
+
+    }
+
+    $access = (isset($rcl_options['rating_results_can']))? $rcl_options['rating_results_can']: false;
+
+    $can = true;
+
+    if($access){
+        $user_info = get_userdata($user_ID);
+        if ( $user_info->user_level < $access )	$can = false;
+    }
+
+    $listvotes = ($value&&$can)? '<a href="#" onclick="rcl_view_list_votes(this);return false;" data-rating="'.rcl_encode_data_rating('view',$args).'" class="view-votes post-votes"><i class="fa fa-question-circle"></i></a>': '';
 
     $block = '<div class="'.$args['rating_type'].'-value rating-value-block '.rcl_rating_class($value).'">'
-            . __('Rating','wp-recall').': '.rcl_format_rating($value);
-
-	$access = (isset($rcl_options['rating_results_can']))? $rcl_options['rating_results_can']: false;
-
-	$can = true;
-
-	if($access){
-		$user_info = get_userdata($user_ID);
-		if ( $user_info->user_level < $access )	$can = false;
-	}
-
-    if($value&&$can)$block .= '<a href="#" onclick="rcl_view_list_votes(this);return false;" data-rating="'.rcl_encode_data_rating('view',$args).'" class="view-votes post-votes"><i class="fa fa-question-circle"></i></a>';
+            . '<span class="rating-title">'.__('Rating','wp-recall').':</span> '
+            . rcl_format_rating($value);
+    $block .= $listvotes;
     $block .=  '</div>';
 
     return $block;
 }
 
-add_filter('rating_block_content','rcl_add_buttons_rating',10,3);
+add_filter('rating_block_content','rcl_add_buttons_rating',20,3);
 function rcl_add_buttons_rating($content,$args){
-	global $user_ID;
-	if(doing_filter('the_excerpt')) return $content;
-	if(is_front_page()||!$args['object_author']||$user_ID==$args['object_author']) return $content;
-	$content .= rcl_get_buttons_rating($args);
-	return $content;
+    global $user_ID;
+    if(doing_filter('the_excerpt')) return $content;
+    if(is_front_page()||!$args['object_author']||$user_ID==$args['object_author']) return $content;
+    $content .= rcl_get_buttons_rating($args);
+    return $content;
 }
 
 function rcl_get_buttons_rating($args){
@@ -294,14 +296,12 @@ function rcl_get_buttons_rating($args){
 
     $rating_value = rcl_get_vote_value($args);
 
-	if($rating_value&&!$rcl_options['rating_delete_voice']) return false;
+    if($rating_value&&!$rcl_options['rating_delete_voice']) return false;
 
-    $block = '<div class="buttons-rating">';
+    if($rating_value) $content = rcl_get_button_cancel_rating($args);
+    else $content = rcl_get_button_add_rating($args);
 
-    if($rating_value) $block .= rcl_get_button_cancel_rating($args);
-    else $block .= rcl_get_button_add_rating($args);
-
-    $block .= '</div>';
+    $block = '<div class="buttons-rating">'.$content.'</div>';
 
     return $block;
 }

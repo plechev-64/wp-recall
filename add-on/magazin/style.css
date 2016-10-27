@@ -343,13 +343,14 @@ table.order-data tbody tr th:nth-child(1) {
     text-align: center;
     display: block;
     line-height: 1;
-    padding: 10px 0;
+    padding: 10px 3px;
     position: absolute;
     width: 100%;
     background: rgba(255,255,255, 0.8);
     top: 0;
     font-size: 14px;
     left: 0;
+    box-sizing: border-box;
 }
 .products-box.type-slab .products-list .product .product-content .product-meta{
     position: relative;

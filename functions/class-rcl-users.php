@@ -22,6 +22,7 @@ class Rcl_Users{
     public $is_count = 0;
     public $data;
     public $add_uri;
+    public $width;
     public $relation = 'AND';
 
     function __construct($args){

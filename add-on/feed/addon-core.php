@@ -68,6 +68,14 @@ function rcl_remove_feed_author($author_id){
     return rcl_remove_feed($feed_id);
 }
 
+add_action('delete_user','rcl_remove_user_feed',10);
+function rcl_remove_user_feed($user_id){
+    global $wpdb;
+    return $wpdb->query(
+        $wpdb->prepare("DELETE FROM ".RCL_PREF."feeds WHERE user_id='%d'",$user_id)
+    );
+}
+
 //получаем данные фида по ИД
 function rcl_get_feed_data($feed_id){
     global $wpdb;
