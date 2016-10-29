@@ -180,7 +180,7 @@ function rcl_group(){
         rcl_enqueue_script( 'groups-image-uploader', rcl_addon_url('js/groups-image-uploader.js', __FILE__),false,true);
     }
 
-    $admin = (rcl_is_group_can('admin')||current_user_can('edit_others_posts'))? 1: 0;
+    $admin = (rcl_is_group_can('admin')||rcl_check_access_console())? 1: 0;
 
     $class = ($admin)? 'class="admin-view"': '';
 

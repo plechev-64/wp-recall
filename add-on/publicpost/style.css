@@ -24,9 +24,11 @@
 }
 .public_block label {
     display: block;
-    font: bold 14px/1 georgia,serif,arial;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
     margin: 10px 0;
-    text-transform: none;						/*++Twenty14++*/
+    text-transform: none;
 }
 .public_block .category-list label {
 	font-weight: normal;
@@ -71,7 +73,9 @@
     margin: 10px 0 0;
 }
 .public_block small {
-    font: 12px arial;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1;
 }
 .rcl-public-form .attachments-post {
     list-style: none;
@@ -134,9 +138,12 @@
     background: rgba(237, 237, 237, 0.5);
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     float: left;
-    font: 14px/1.6 sans-serif,Tahoma,arial;
+    font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.6;
     margin: 2px 5px;
-    padding: 3px 7px;
+    padding: 4px 7px;
 }
 #rcl-tags-list .rcl-tags-list label input {
     height: 13px;
@@ -148,10 +155,11 @@
 }
 #rcl-tags-list .ms-ctn {
     background: #fff;
-    border: none;
+    border: medium none;
     box-shadow: 0 0 1px 1px #ddd;
-    margin: 10px 0;
-    width: 100%;
+    box-sizing: border-box;
+    margin: 10px 0.5%;
+    width: 99%;
 }
 
 #rcl-tags-list .ms-sel-item {
@@ -203,8 +211,9 @@
 	box-shadow: none;
     box-sizing: border-box;
 	color: #000;
-	font: 14px/1.4 Tahoma,Verdana,sans-serif;
+    font-size: 14px;
 	height: auto;
+    line-height: 1.4;
 	margin: 0 0 5px;
 	outline: none;
 	padding: 6px 8px;
@@ -237,7 +246,7 @@
 }
 .public_block form .rcl-form-field .dynamic-value input[type="text"] {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: sub;
 }
 .public_block .quicktags-toolbar input[type="button"] {
     padding: 0 8px 1px !important;		/* Author & some themes */
@@ -266,7 +275,8 @@
 }
 .public_block .rcl-form-field .rcl-terms-select select,
 #tab-postform .public_block .rcl-form-field .rcl-terms-select select{
-    margin:5px;
+    margin: 5px 5px 5px 0;
+    padding: 6px 5px;
 }
 .public_block form .rcl-form-field input[type="file"] {
     background: rgba(237, 237, 237, 0.5);
@@ -281,7 +291,7 @@
 	line-height: 1;
     margin: 0 0 0 10px;
     padding: 6px 8px;
-    vertical-align: baseline;
+    vertical-align: sub;
 }
 .ssi-modalOuter.rcl-preview-post .rcl-notice-preview {
 	background: rgba(229, 57, 53, 0.15);
@@ -526,18 +536,19 @@ h3.pending-message{
 /* В профиле список записей start */
 .rcl-form-field table,
 .wprecallblock .publics_block table {
+    background: rgba(243, 243, 243, 0.3);
 	border-collapse: collapse;
     border-spacing: 0;
-	background: rgba(243, 243, 243, 0.3);
 	box-sizing: content-box;							/*++Twenty16++*/
-	table-layout: unset;								/*++Twenty16++*/
-	width:100%;
 	-webkit-hyphens: auto;
 	hyphens: auto;
+	table-layout: fixed;								/*++Twenty16++*/
+	width:100%;
 	word-wrap: break-word;
 }
 .wprecallblock #tab-publics table td {
-	font: 14px/1.4 Verdana,arial;
+    font-size: 14px;
+    line-height: 1.4;
 }
 .wprecallblock #tab-publics table tr:first-child {
     background: rgba(216, 231, 238, 0.3);
@@ -546,13 +557,15 @@ h3.pending-message{
     background: rgba(243, 243, 243, 0.4);
 }
 .wprecallblock #tab-publics table tr:first-child td {
-    font: bold 16px arial;
+    font-size: 16px;
+    font-weight: bold;
 }
 .wprecallblock #tab-publics table td:nth-child(n + 3),
 .wprecallblock #tab-publics table tr:first-child td:nth-child(odd) {
     text-align: center;
 }
 .wprecallblock #tab-publics table td:nth-child(1) {
+    text-align: center;
 	width: 70px;
 }
 .wprecallblock #tab-publics table td:nth-child(3) {
@@ -683,59 +696,62 @@ h3.pending-message{
 /* add correcting popup jquery-UI end */
 
 @media screen and (max-width:480px) {
-	#temp-files li {
-		width: 31%;
-	}
-	.rcl-form-field table th {
-		max-width: 130px;
-		font: bold 13px Verdana,arial;
-	}
-	.wprecallblock #tab-publics td:nth-child(1) {
-		font-size: 12px;
-	}
-	.wprecallblock #tab-publics td:nth-child(3) {
-		font-size: 12px;
-		max-width: 62px;
-	}
-	.wprecallblock .publics-table-rcl span.rating-value {
-		display: inline;
-	}
-	.public_block form .rcl-form-field input[type="time"],
-	.public_block form .rcl-form-field input[type="number"],
-	.public_block form .rcl-form-field input.rcl-datepicker[type="text"] {
-		max-width: none !important;		/* Author & some themes */
-		width: 100% !important;			/* Author & some themes */
-	}
-	.rcl-public-form .attachments-post li {
-		width: 31%;
-	}
+    #temp-files li {
+            width: 31%;
+    }
+    .rcl-form-field table th {
+            font-size: 13px;
+            font-weight: bold;
+            max-width: 110px;
+            width: 110px;
+    }
+    .wprecallblock #tab-publics td:nth-child(1) {
+            font-size: 12px;
+    }
+    .wprecallblock #tab-publics td:nth-child(3) {
+            font-size: 12px;
+            max-width: 62px;
+    }
+    .wprecallblock .publics-table-rcl span.rating-value {
+            display: inline;
+    }
+    .public_block form .rcl-form-field input[type="time"],
+    .public_block form .rcl-form-field input[type="number"],
+    .public_block form .rcl-form-field input.rcl-datepicker[type="text"] {
+            max-width: none !important;		/* Author & some themes */
+            width: 100% !important;			/* Author & some themes */
+    }
+    .rcl-public-form .attachments-post li {
+            width: 31%;
+    }
 }
 @media screen and (max-width:360px) {
-	#temp-files li {
-		width: 48%;
-	}
-	.public_block table th {
-		font: bold 12px Verdana,arial;
-		max-width: 100px;
-	}
-	.wprecallblock #tab-publics table tr:first-child td {
-		font: 12px arial;
-	}
-	.wprecallblock #tab-publics td:nth-child(1) {
-		font-size: 11px;
-	}
-	.wprecallblock #tab-publics td:nth-child(3) {
-		max-width: 48px;
-	}
-	.wprecallblock .publics-table-rcl span.rating-value {
-		display: inline;
-	}
-	.public_block .rcl-form-field select.postform {
-		width: 100%;
-	}
+    #temp-files li {
+            width: 48%;
+    }
+    .public_block table th {
+            font-size: 12px;
+            max-width: 80px;
+            width: 80px;
+    }
+    .wprecallblock #tab-publics table tr:first-child td {
+            font-size: 12px;
+    }
+    .wprecallblock #tab-publics td:nth-child(1) {
+            font-size: 11px;
+    }
+    .wprecallblock #tab-publics td:nth-child(3) {
+            max-width: 48px;
+    }
+    .wprecallblock .publics-table-rcl span.rating-value {
+            display: inline;
+    }
+    .public_block .rcl-form-field select.postform {
+            width: 100%;
+    }
 }
 @media screen and (max-width:320px) {
-	#rcl_post_tags.ms-ctn {
-		width: 90%;
-	}
+    #rcl_post_tags.ms-ctn {
+            width: 90%;
+    }
 }

@@ -31,8 +31,8 @@ function rcl_get_authorize_form($type=false,$form=false){
             echo '</div>';
             echo '<div class="rcl-widget-buttons">';
 
-                    $buttons = '<p>'.rcl_get_button(__('In personal account','wp-recall'),$rcl_user_URL,array('icon'=>'fa-home')).'</p>
-                    <p>'.rcl_get_button(__('Exit','wp-recall'),wp_logout_url( home_url() ),array('icon'=>'fa-external-link')).'</p>';
+                    $buttons = '<div class="rcl-widget-button">'.rcl_get_button(__('In personal account','wp-recall'),$rcl_user_URL,array('icon'=>'fa-home')).'</div>
+                    <div class="rcl-widget-button">'.rcl_get_button(__('Exit','wp-recall'),wp_logout_url( home_url() ),array('icon'=>'fa-external-link')).'</div>';
                     echo apply_filters('buttons_widget_rcl',$buttons);
 
             echo '</div>';
@@ -47,16 +47,16 @@ function rcl_get_authorize_form($type=false,$form=false){
 
                 echo '<div class="rcl-widget-buttons">';
 
-                    $buttons = '<p>'.rcl_get_button(__('Entry','wp-recall'),$redirect_url.'action-rcl=login',array('icon'=>'fa-sign-in')).'</p>
-                    <p>'.rcl_get_button(__('Registration','wp-recall'),$redirect_url.'action-rcl=register',array('icon'=>'fa-book')).'</p>';
+                    $buttons = '<div class="rcl-widget-button">'.rcl_get_button(__('Entry','wp-recall'),$redirect_url.'action-rcl=login',array('icon'=>'fa-sign-in')).'</div>
+                    <div class="rcl-widget-button">'.rcl_get_button(__('Registration','wp-recall'),$redirect_url.'action-rcl=register',array('icon'=>'fa-book')).'</div>';
                     echo apply_filters('buttons_widget_rcl',$buttons);
 
                 echo '</div>';
 
             }else if($login_form==2){
                 echo '<div class="rcl-widget-buttons">';
-                    $buttons = '<p>'.rcl_get_button(__('Entry','wp-recall'),esc_url(wp_login_url('/')),array('icon'=>'fa-sign-in')).'</p>
-                    <p>'.rcl_get_button(__('Registration','wp-recall'),esc_url(wp_registration_url()),array('icon'=>'fa-book')).'</p>';
+                    $buttons = '<div class="rcl-widget-button">'.rcl_get_button(__('Entry','wp-recall'),esc_url(wp_login_url('/')),array('icon'=>'fa-sign-in')).'</div>
+                    <div class="rcl-widget-button">'.rcl_get_button(__('Registration','wp-recall'),esc_url(wp_registration_url()),array('icon'=>'fa-book')).'</div>';
                     echo apply_filters('buttons_widget_rcl',$buttons);
                 echo '</div>';
             }else if($login_form==3||$type){
@@ -71,8 +71,8 @@ function rcl_get_authorize_form($type=false,$form=false){
                 }
             }else if(!$login_form){
                 echo '<div class="rcl-widget-buttons">';
-                        $buttons = '<p>'.rcl_get_button(__('Entry','wp-recall'),'#',array('icon'=>'fa-sign-in','class'=>'rcl-login')).'</p>
-                        <p>'.rcl_get_button(__('Registration','wp-recall'),'#',array('icon'=>'fa-book','class'=>'rcl-register')).'</p>';
+                        $buttons = '<div class="rcl-widget-button">'.rcl_get_button(__('Entry','wp-recall'),'#',array('icon'=>'fa-sign-in','class'=>'rcl-login')).'</div>
+                        <div class="rcl-widget-button">'.rcl_get_button(__('Registration','wp-recall'),'#',array('icon'=>'fa-book','class'=>'rcl-register')).'</div>';
                         echo apply_filters('buttons_widget_rcl',$buttons);
                 echo '</div>';
             }

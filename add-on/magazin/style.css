@@ -28,7 +28,7 @@ p.product-meta i{
 }
 
 #tab-orders .order-data table,
-.confirm table.form-table,
+.rcl-cart-fields table.form-table,
 table.order-data,
 table.pricelist{
     border: none;
@@ -142,14 +142,18 @@ table.order-data tbody tr th:nth-child(1) {
 	box-shadow: none;				/*++Twenty16++*/
 }
 
-#rcl-cart .confirm {
+#rcl-cart .rcl-cart-fields {
     margin: 25px 0px;
     text-align: center;
     width: 100%;
     overflow: hidden;
     box-sizing: border-box;
 }
-.confirm h3 {
+#rcl-cart .rcl-field-input .rcl-checkbox-box, 
+#rcl-cart .rcl-field-input .rcl-radio-box{
+    margin-right:10px;
+}
+.rcl-cart-fields h3 {
     font-size: 16px;
     font-weight: bold;
     line-height: 1;
@@ -177,12 +181,12 @@ table.order-data tbody tr th:nth-child(1) {
     margin: 5px 0 1px;
     padding: 8px 10px;
 }
-.confirm .form-table .required {
+.rcl-cart-fields .form-table .required {
     color: rgb(229, 57, 53);
     font: bold 15px/1 Verdana,arial;
 }
-.confirm .confirm_order,
-.confirm .rcl_register_user_order {
+.rcl-cart-fields .confirm_order,
+.rcl-cart-fields .rcl_register_user_order {
     display: inline-block;
 	float: right;
     margin: 15px 0;
@@ -190,7 +194,7 @@ table.order-data tbody tr th:nth-child(1) {
     text-decoration: none;
 	text-transform: uppercase;
 }
-.confirm .res_confirm{
+.rcl-cart-fields .res_confirm{
     border: 1px solid #ccc;
     font-weight: bold;
 	margin: 10px 2px 15px;

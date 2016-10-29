@@ -27,12 +27,7 @@ class Rcl_Order{
     
     function insert_order(){
         global $wpdb,$user_ID,$rmag_options,$active_addons,$order;
-        
-        if(!$user_ID){
-            $result = $this->register_user();
-            if($this->is_error) return $result;
-        }
-        
+
         $fields = get_option( 'rcl_cart_fields' );
         $required = $this->chek_require_fields($fields);
 
@@ -53,6 +48,11 @@ class Rcl_Order{
 
         if(!$cart){
             return $this->error('cart_empty',__('Your basket is empty!','wp-recall'));
+        }
+        
+        if(!$user_ID){
+            $result = $this->register_user();
+            if($this->is_error) return $result;
         }
         
         $this->order_id = $this->next_order_id();

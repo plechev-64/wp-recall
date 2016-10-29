@@ -1,10 +1,10 @@
 /* Group Start */
 
-.post-group-meta{
-    
+div p.post-group-meta {
+    margin: 0 0 5px;
 }
-.post-group-meta i{
-    margin-right:5px;
+.post-group-meta .fa {
+    width: auto;
 }
 
 /* умная секция для скрипта. Каркас группы Start */
@@ -199,14 +199,18 @@
 #rcl-group input[type="email"],
 #rcl-group select,
 #rcl-group textarea{
-    margin:5px;
-    border: none;
-    box-shadow: 0 0 1px 1px #ccc;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    box-shadow: none;
     box-sizing: border-box;
     color: #000;
-	font: 14px/1.4 Tahoma,Arial;				/*++Twenty15++*/
-    padding: 5px;
+    font-size: 14px;
+    height: auto;
+    line-height: 1.4;
+    margin: 5px 0.5%;
     max-width: 99%;
+    outline: none;
+    padding: 5px;
 }
 .group-wrapper p {
     margin: 5px 0;
@@ -235,12 +239,13 @@
 	padding: 0 5px 4px;
     text-align:right;
 }
-#rcl-group .hidden-widget .manage-hidden-widget{
+#rcl-group .hidden-widget .manage-hidden-widget {
     display: block;
-	font-size: 18px;								/*++Twenty15++*/
-    text-align: right;
+    font-size: 18px;
     font-weight: bold;
+    line-height: 1.4;
     padding: 5px;
+    text-align: right;
 }
 #group-public-form-widget .fa-plus-square-o,
 #group-public-form-widget .fa-minus-square-o {
@@ -305,10 +310,11 @@
     padding: 10px 0;
 }
 .rcl-grouplist .single-group{
-	font: 14px/1.2 Tahoma,arial;							/*++Twenty15++*/
+    clear: both;
+    font-size: 14px;
+    line-height: 1.2;
     margin-bottom: 10px;
     overflow: hidden;
-    clear: both;
 }
 .rcl-grouplist .single-group .group-avatar{
     float: left;
@@ -341,7 +347,8 @@
     background: rgba(219, 219, 219, 0.6);
     color: rgb(76, 140, 189);
     display: block;
-    font: bold 14px Verdana,arial;
+    font-size: 16px;
+    font-weight: bold;
     margin: 0 0 10px;
     padding: 7px;
     text-align: center;
@@ -364,6 +371,9 @@
 }
 .group-request .recall-button {
     padding: 6px 10px;
+}
+#group-userlist .group-user-option > select {
+    margin: 0 5px 5px;
 }
 .group-request .group-user-option select{
     width: 100px;
@@ -483,79 +493,79 @@
 
 
 @media screen and (max-width:480px) {
-	#group-admin-panel .title-panel {
-		margin: 5px 0 0 5px;
-	}
-	#rcl-group h3 {
-		font-size: 15px;
-	}
-	#rcl-group.admin-view #group-link-content {
-		top: 35px;
-	}
-	.group-request .group-user-option {
-		font-size: 12px;
-		margin: 5px 2px;
-	}
+    #group-admin-panel .title-panel {
+            margin: 5px 0 0 5px;
+    }
+    #rcl-group h3 {
+            font-size: 15px;
+    }
+    #rcl-group.admin-view #group-link-content {
+            top: 35px;
+    }
+    .group-request .group-user-option {
+            font-size: 12px;
+            margin: 5px 2px;
+    }
 }
 
 
 @media screen and (max-width:360px) {
-	#rcl-group .rcl-data-filters,
-	#tab-groups .rcl-data-filters {
-		border-spacing: 2px;
-	}
-	#rcl-group .rcl-data-filters a,
-	#tab-groups .rcl-data-filters a {
-		display: table-cell;
-		padding: 10px 5px;
-	}
-	.rcl-grouplist .single-group .group-avatar img {
-		max-width: 70px;
-	}
-	#widgets-options .widgets-zone .zone-name,
-	.rcl-grouplist .single-group .group-row .group-name {
-		font-size: 16px;
-	}
-	#rcl-group h3.title-widget {
-		font-size: 12px;
-		padding: 7px 1px;
-	}
-	#rcl-group .group-content h3.title-widget {
-		font-size: 15px;
-		padding: 7px;
-	}
-	#rcl-group .widget-content .mini-list .user-single {
-		width: 48%;
-	}
-	.group-sidebar .widget-content .avatars-list .user-single {
-		width: 46%;
-	}
-	#rcl-group .group-sidebar .rcl-group-link.recall-button {
-		font: 11px Tahoma,arial;
-		padding: 8px 0;
-	}
-	#group-primary-widget .widget-content input {
-		padding: 8px 2px;
-		font: 11px Tahoma,arial;
-	}
-	#group-posts-widget .post-group .postdata-header {
-		margin: 0;
-		padding: 5px;
-	}
-	#group-posts-widget .post-group .post-meta {
-		max-width: 100px;
-	}
-	#group-posts-widget .post-meta span {
-		float: right;
-		margin: 0 5px 0 0;
-	}
-	#widgets-options .widgets-zone .widget-box .widget-name {
-		font-size: 13px;
-	}
-	#widgets-options .widgets-zone .widget-box {
-		margin: 3px;
-		padding: 2px;
-		text-align: center;
-	}
+    #rcl-group .rcl-data-filters,
+    #tab-groups .rcl-data-filters {
+            border-spacing: 2px;
+    }
+    #rcl-group .rcl-data-filters a,
+    #tab-groups .rcl-data-filters a {
+            display: table-cell;
+            padding: 10px 5px;
+    }
+    .rcl-grouplist .single-group .group-avatar img {
+            max-width: 70px;
+    }
+    #widgets-options .widgets-zone .zone-name,
+    .rcl-grouplist .single-group .group-row .group-name {
+            font-size: 16px;
+    }
+    #rcl-group h3.title-widget {
+            font-size: 12px;
+            padding: 7px 1px;
+    }
+    #rcl-group .group-content h3.title-widget {
+            font-size: 15px;
+            padding: 7px;
+    }
+    #rcl-group .widget-content .mini-list .user-single {
+            width: 48%;
+    }
+    .group-sidebar .widget-content .avatars-list .user-single {
+            width: 46%;
+    }
+    #rcl-group .group-sidebar .rcl-group-link.recall-button {
+            font-size: 11px;
+            padding: 8px 0;
+    }
+    #group-primary-widget .widget-content input {
+            padding: 8px 2px;
+            font-size: 11px;
+    }
+    #group-posts-widget .post-group .postdata-header {
+            margin: 0;
+            padding: 5px;
+    }
+    #group-posts-widget .post-group .post-meta {
+            max-width: 100px;
+    }
+    #group-posts-widget .post-meta span {
+            float: right;
+            margin: 0 5px 0 0;
+    }
+    #widgets-options .widgets-zone .widget-box .widget-name {
+            font-size: 13px;
+    }
+    #widgets-options .widgets-zone .widget-box {
+            margin: 3px;
+            padding: 2px;
+            text-align: center;
+    }
 }
 /* Group End */

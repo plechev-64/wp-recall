@@ -57,7 +57,9 @@ span.ruble-symbol{
 
 .wprecallblock .notify-lk {
     color: #000;
-    font: bold 16px arial;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.4;
     text-align: center;
 }
 .wprecallblock .notify-lk div {
@@ -230,7 +232,9 @@ span i.fa.fa-circle {
     text-decoration: none;
 }
 #rcl-office h2 {
-    font: bold 22px/1 Arial,sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 1;
     margin: 0;
     text-transform: none;
 }
@@ -247,14 +251,18 @@ span i.fa.fa-circle {
 #rcl-office select,
 #rcl-office textarea,
 #rcl-office input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
-    border:none;
-    border-radius:none;
-    font: 14px/1.4 Tahoma,Arial;						/*++Twenty15++*/
-    padding:5px 10px;
-    color:#000;
-    box-shadow: 0 0 1px 1px #ccc;
-    margin: 0;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    box-shadow: none;
+    color: #000;
     display: inline-block;
+    float: none;
+    font-size: 14px;
+    height: auto;
+    line-height: 1.4;
+    margin: 0;
+    outline: none;
+    padding: 5px 10px;
 }
 /* .wprecallblock input.recall-button {
 	color:#fff;
@@ -299,7 +307,8 @@ span i.fa.fa-circle {
 }
 .rcl-tab-button .rcl-menu-notice {
     color: #fff;
-    font: 12px/1 Helvetica,serif,arial;				/*++Twenty16++*/
+    font-size: 12px;
+    line-height: 1;
 }
 
 body .ballun-status{
@@ -504,25 +513,36 @@ a.data-filter.filter-active:hover {
 }
 .rcl-search-form form p {
     margin-bottom: 5px;
+    padding: 0 0 3px;
 }
 .rcl-search-form form input[type="text"],
 .rcl-search-form form select {
-    border: none;
-    box-shadow: 0 0 1px 1px #ccc;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    box-shadow: none;
+    box-sizing: border-box;
     color: #000;
     display: inline-block;
-	font: 14px/1 Tahoma,arial;
-    line-height: 1;
+    font-size: 14px;
     height: auto;
+    line-height: normal;
     margin: 2px;
-    padding: 5px 6px 6px;
+    vertical-align: middle;
     width: auto;
 }
-.rcl-search-form form input[type="submit"]{
-    padding: 6px 10px;
+.rcl-search-form form input[type="text"] {
+    padding: 4px 6px;
 }
-.rcl-search-form select{
-	padding: 2px 3px 3px;
+.rcl-search-form form select {
+    padding: 3px;
+}
+.rcl-search-form form input[type="submit"]{
+    border-radius: 0;
+    font-size: 14px;
+    line-height: normal;
+    margin: 0;
+    padding: 5px 14px;
+    vertical-align: middle;
 }
 /* фильтр поиск End */
 
@@ -585,10 +605,11 @@ a.data-filter.filter-active:hover {
     display: block;
     margin-bottom: 10px;
 }
-.type-dynamic-input .dynamic-values .dynamic-value a{
-    width:auto;
-    min-width:initial;
+.type-dynamic-input .dynamic-values .dynamic-value a {
     color: #797979;
+    min-width: initial;
+    vertical-align: middle;
+    width: auto;
 }
 .type-dynamic-input .dynamic-values .dynamic-value .fa{ 
     padding: 5px;
@@ -650,9 +671,9 @@ p.rcl-custom-fields .rcl-field-value .fa-upload{
     font-size: 20px;
     font-weight: bold;
 	line-height: 1.4;
-    margin: 10px 0;
+    margin: 10px 0.5%;
     padding: 6px 5px;
-    width: 100%;
+    width: 99%;
 }
 .rcl-navi a,
 .rcl-navi span,

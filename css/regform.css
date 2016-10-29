@@ -259,7 +259,7 @@ div.panel_lk_recall .form-tab-rcl a {
     margin: 3px auto;
     width: 99%;
 }
-.panel_lk_recall .rcl-widget-buttons p {
+.panel_lk_recall .rcl-widget-buttons .rcl-widget-button {
     margin: 0 0 4px;
     overflow: hidden;
     padding: 0;

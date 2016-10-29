@@ -2,7 +2,8 @@
     border: none;
     border-collapse: collapse;
     border-spacing: 0;
-	font: 14px/1.5 Tahoma,Arial;			/*++Twenty15++*/
+    font-size: 14px;
+    line-height: 1.5;
     margin: 0 0 12px;
     text-align: left;
     width: 100%;
@@ -16,22 +17,31 @@
     width: 15px;
     float: none;
 }
-
 #tab-profile table input,
 #tab-profile table textarea {
-    font: 14px/1.5 Tahoma,Arial;			/*++Twenty15++*/
-    max-width: 99%;
-    padding: 8px 2%;
-    width: 100%;
-    border:none;
+    background-color: #fff;
     box-sizing: border-box;
+    max-width: 99%;
+    width: 100%;
+}
+#tab-profile table input:focus:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+#tab-profile table textarea:focus {
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 1px 0 #ddd;
+    color: #000;
+    outline: medium none;
+}
+#tab-profile table input[disabled] {
+    background-color: #eee;
+    opacity: 0.6;
 }
 #tab-profile table select {
-	box-shadow: 0 0 1px 1px #ccc;
+    background-color: #fff;
 	box-sizing: border-box;
     float: left;
     max-width: 99%;
-    padding: 8px 2%;
+    padding: 5px 7px;
     width: 100%;
 }
 #tab-profile table .block-label {
@@ -40,9 +50,11 @@
     cursor: pointer;
     display: inline-block;
     float: left;
-    font: 12px arial;
+    font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
+    font-size: 12px;
+    line-height: 1;
     margin: 4px;
-    padding: 7px 9px 6px 8px;
+    padding: 5px 9px 4px 8px;
 }
 #tab-profile table .block-label input[type="checkbox"] {
     margin: 0 6px 0 0;

@@ -1,3 +1,46 @@
+jQuery(function(){
+    
+    jQuery('#rcl-cart').on('click','.confirm_order',function(){
+        
+        var dataString = 'action=rcl_confirm_order&'+jQuery('#rcl-cart').serialize();
+        dataString += '&ajax_nonce='+Rcl.nonce;
+        rcl_preloader_show('#cart-form > div');
+        
+        jQuery.ajax({
+            type: 'POST',
+            data: dataString,
+            dataType: 'json',
+            url: Rcl.ajaxurl,
+            success: function(data){
+                rcl_preloader_hide();
+
+                if(data.errors){
+                    jQuery.each(data.errors, function( index, value ) {
+                        rcl_notice(value,'error',10000);
+                    });
+
+                    if(data['code']==10){
+                        jQuery('#rcl-cart-notice').html(data['html']);
+                    }
+
+                    return false;
+                }
+
+                //jQuery('#rcl-cart').submit();
+
+                jQuery('#rcl-cart-notice').html(data['success']);
+                jQuery('#rcl-cart .rcl-cart-fields').remove();
+                jQuery('#rcl-cart .add_remove').empty();
+
+            }
+        });
+        
+        return false;
+        
+    });
+    
+});
+
 /* Удаляем заказ пользователя в корзину */
 function rcl_trash_order(e,data){       
     jQuery('#manage-order, table.order-data').remove();
