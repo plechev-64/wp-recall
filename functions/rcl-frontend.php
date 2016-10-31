@@ -155,6 +155,9 @@ function rcl_inline_styles(){
     p.status-user-rcl::before{
         border-color: transparent transparent transparent rgb('.$r.', '.$g.', '.$b.');   
     }
+    .userlist.rows-list p.status-user-rcl::before{
+        border-color: rgb('.$r.', '.$g.', '.$b.') transparent transparent;   
+    }
     .ballun-status p.status-user-rcl{
         border: 1px solid rgb('.$r.', '.$g.', '.$b.');
     }

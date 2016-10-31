@@ -426,12 +426,17 @@ function rcl_get_html_attachment($attach_id,$mime_type){
 
     $mime = explode('/',$mime_type);
 
-    $rt = "<li class='attachment-".$attach_id."'>
-            ".rcl_button_fast_delete_post($attach_id)."
-            <label>
-                    ".rcl_get_insert_image($attach_id,$mime[0]);
-                    if($mime[0]=='image') $rt .= "<span>
-                            <input type='checkbox' class='thumb-foto' ".checked(get_post_thumbnail_id( $editpost ),$attach_id,false)." id='thumb-".$attach_id."' name='thumb[".$attach_id."]' value='1'> - ".__('featured','wp-recall')."</span>";
+    $rt = "<li class='attachment-".$attach_id."'>"
+            . rcl_button_fast_delete_post($attach_id)
+            . "<label>"
+            . rcl_get_insert_image($attach_id,$mime[0]);
+            if($mime[0]=='image') 
+                $rt .=    '<span class="rcl-field-input type-checkbox-input">'
+                        . '<span class="rcl-checkbox-box">'
+                        . '<input class="thumb-foto" id="thumb-'.$attach_id.'" type="checkbox" '.checked(get_post_thumbnail_id( $editpost ),$attach_id,false).' name="thumb['.$attach_id.']" value="1">'
+                        . '<label for="thumb-'.$attach_id.'" class="block-label"> - '.__('featured','wp-recall').'</label>'
+                        . '</span>'
+                        . '</span>';
             $rt .= "</label>
     </li>";
     return $rt;

@@ -147,7 +147,7 @@ class Rcl_Cart {
                         <td><label>'.__('Enter your E-mail','wp-recall').' <span class="required">*</span>:</label></td>
                         <td><input required type="text" class="email_new_user" name="email_new_user" value=""></td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td><label>'.__('Your name','wp-recall').'</label></td>
                         <td><input type="text" class="fio_new_user" name="fio_new_user" value=""></td>
                     </tr>';
