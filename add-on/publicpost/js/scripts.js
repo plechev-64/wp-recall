@@ -89,6 +89,14 @@ jQuery(document).ready(function($) {
 
 });
 
+rcl_add_action('rcl_init','rcl_init_click_post_thumbnail');
+function rcl_init_click_post_thumbnail(){
+    jQuery(".rcl-public-form").on('click','.thumb-foto',function(){		
+        jQuery(".rcl-public-form .thumb-foto").removeAttr("checked");
+        jQuery(this).attr("checked",'checked');			
+    });
+}
+
 function rcl_add_editor_box(e,type,idbox,content){
     rcl_preloader_show(e);
     var dataString = 'action=rcl_add_editor_box';

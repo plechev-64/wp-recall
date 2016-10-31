@@ -505,14 +505,6 @@ function rcl_init_click_overlay(){
     });
 }
 
-rcl_add_action('rcl_init','rcl_init_click_post_thumbnail');
-function rcl_init_click_post_thumbnail(){
-    jQuery("#temp-files").on('click','.thumb-foto',function(){		
-        jQuery("#temp-files .thumb-foto").removeAttr("checked");
-        jQuery(this).attr("checked",'checked');			
-    });
-}
-
 rcl_add_action('rcl_init','rcl_init_click_float_window');
 function rcl_init_click_float_window(){
     jQuery(".float-window-recall").on('click','.close',function(){	
