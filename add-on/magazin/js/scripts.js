@@ -44,7 +44,7 @@ jQuery(function(){
 /* Удаляем заказ пользователя в корзину */
 function rcl_trash_order(e,data){       
     jQuery('#manage-order, table.order-data').remove();
-    jQuery('.redirectform').html(data.result);
+    jQuery('#rcl-cart-notice').html(data.result);
 }
 
 /* Увеличиваем количество товара в большой корзине */
@@ -172,7 +172,7 @@ function rcl_pay_order_private_account(e){
                 jQuery('.order_block').find('.pay_order').each(function() {
                         if(jQuery(e).attr('name')==data['idorder']) jQuery(e).remove();
                 });
-                jQuery('.redirectform').html(data['recall']);
+                jQuery('#rcl-cart-notice').html(data['recall']);
                 jQuery('.usercount').html(data['count']);
                 jQuery('.order-'+data['idorder']+' .remove_order').remove();
                 jQuery('#manage-order').remove();

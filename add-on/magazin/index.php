@@ -137,7 +137,7 @@ function rcl_single_order_tab($order_id){
     }
     $block .= '</div>';
 
-    $block .= '<div class="redirectform"></div>';
+    $block .= '<div id="rcl-cart-notice" class="redirectform"></div>';
 
     $block .= rcl_get_include_template('order.php',__FILE__);
     
