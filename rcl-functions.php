@@ -517,7 +517,7 @@ function rcl_ajax_tab($post){
     
     if(!$ajax){
         
-        return __('Error! Perhaps this addition does not support ajax loading','wp-recall');
+        return __('Error! Perhaps this add-on does not support ajax loading','wp-recall');
         
     }else{
         

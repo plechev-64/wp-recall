@@ -184,7 +184,7 @@ function rcl_update_addon(){
     $put = file_put_contents($new_addon, $archive);
     
     if($put===false){
-        $log['error'] = __('The files failed to upload!','wp-recall');
+        $log['error'] = __('The files failed to be uploaded!','wp-recall');
         echo json_encode($log);
         exit;
     }
@@ -204,7 +204,7 @@ function rcl_update_addon(){
 
         if(!$info){
             $zip->close();
-            $log['error'] = __('Update does not have the correct title!','wp-recall');
+            $log['error'] = __('Update has incorrect title!','wp-recall');
             echo json_encode($log);
             exit;
         }
@@ -243,7 +243,7 @@ function rcl_update_addon(){
         exit;
 
     }else{
-        $log['error'] = __('Unable to open archive!','wp-recall');
+        $log['error'] = __('Unable to open update archive!','wp-recall');
         echo json_encode($log);
         exit;
     }

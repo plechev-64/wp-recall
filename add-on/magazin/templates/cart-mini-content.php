@@ -4,9 +4,9 @@
 ?>
 <?php global $CartData; ?>
 <div>
-    <?php _e('Goods of all','wp-recall'); ?>: <span class="cart-numbers"><?php echo $CartData->numberproducts; ?></span> шт.
+    <?php _e('Total number of goods','wp-recall'); ?>: <span class="cart-numbers"><?php echo $CartData->numberproducts; ?></span> шт.
 </div>
 <div>
     <?php _e('Total amount','wp-recall'); ?>: <span class="cart-summa"><?php echo rcl_add_primary_currency_price($CartData->cart_price); ?></span>
 </div>
-<a href="<?php echo get_permalink($CartData->cart_url); ?>"><?php _e('Go to basket','wp-recall'); ?></a>
+<a href="<?php echo get_permalink($CartData->cart_url); ?>"><?php _e('Go to cart','wp-recall'); ?></a>

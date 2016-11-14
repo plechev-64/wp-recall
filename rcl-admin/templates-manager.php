@@ -156,7 +156,7 @@ class Rcl_Templates_Manager extends WP_List_Table {
         
         if($item['addon_status']!=1){
             $actions['delete'] = sprintf('<a href="?page=%s&action=%s&template=%s">'.__( 'Delete', 'wp-recall' ).'</a>',$_REQUEST['page'],'delete',$item['ID']);
-            $actions['connect'] = sprintf('<a href="?page=%s&action=%s&template=%s">'.__( 'To connect', 'wp-recall' ).'</a>',$_REQUEST['page'],'connect',$item['ID']);
+            $actions['connect'] = sprintf('<a href="?page=%s&action=%s&template=%s">'.__( 'connect', 'wp-recall' ).'</a>',$_REQUEST['page'],'connect',$item['ID']);
         }
         
         return sprintf('%1$s %2$s', '<strong>'.$item[ 'addon_name' ].'</strong>', $this->row_actions($actions) );
@@ -174,8 +174,8 @@ class Rcl_Templates_Manager extends WP_List_Table {
             </div>
             <div class="active second plugin-version-author-uri">
             '.__('Version','wp-recall').' '.$data['version'];
-                    if(isset($data['author-uri'])) $content .= ' | '.__('Author','wp-recall').': <a title="'.__('Visit the page of the author','wp-recall').'" href="'.$data['author-uri'].'" target="_blank">'.$data['author'].'</a>';
-                    if(isset($data['add-on-uri'])) $content .= ' | <a title="'.__('Visit the page of the add-on','wp-recall').'" href="'.$data['add-on-uri'].'" target="_blank">'.__('Page Add-on','wp-recall').'</a>';
+                    if(isset($data['author-uri'])) $content .= ' | '.__('Author','wp-recall').': <a title="'.__('Visit the author’s page','wp-recall').'" href="'.$data['author-uri'].'" target="_blank">'.$data['author'].'</a>';
+                    if(isset($data['add-on-uri'])) $content .= ' | <a title="'.__('Visit the add-on page','wp-recall').'" href="'.$data['add-on-uri'].'" target="_blank">'.__('Add-on page','wp-recall').'</a>';
             $content .= '</div>';
         return $content;
     }
@@ -203,9 +203,9 @@ class Rcl_Templates_Manager extends WP_List_Table {
                 . '<td colspan="'.$colspan.'" class="plugin-update colspanchange">'
                     . '<div class="update-message notice inline notice-warning notice-alt">'
                     . '<p>'
-                        . __('Available fresh version','wp-recall').' '.$this->addon['name'].' '.$this->need_update[$item['ID']]['new-version'].'. ';
+                        . __('New version available','wp-recall').' '.$this->addon['name'].' '.$this->need_update[$item['ID']]['new-version'].'. ';
                         if(isset($this->addon['add-on-uri'])) echo ' <a href="'.$this->addon['add-on-uri'].'"  title="'.$this->addon['name'].'">'.__('view information about the version','wp-recall').' '.$xml->version.'</a>';
-                        echo 'или <a class="update-add-on" data-addon="'.$item['ID'].'" href="#">'.__('To update automatically','wp-recall').'</a>'
+                        echo 'или <a class="update-add-on" data-addon="'.$item['ID'].'" href="#">'.__('update automatically','wp-recall').'</a>'
                     . '</p>'
                     . '</div>'
                 . '</td>'
@@ -350,7 +350,7 @@ function rcl_render_templates_manager(){
         if(isset($_POST['save-rcl-key'])){
             if( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ){
                 update_option('rcl-key',$_POST['rcl-key']);
-                echo '<div id="message" class="'.$type.'"><p>'.__('Key is stored','wp-recall').'!</p></div>';
+                echo '<div id="message" class="'.$type.'"><p>'.__('Key has been saved','wp-recall').'!</p></div>';
             }
         }
 
@@ -360,15 +360,15 @@ function rcl_render_templates_manager(){
                 <input class="button" type="submit" value="'.__('Save','wp-recall').'" name="save-rcl-key">
                 '.wp_nonce_field('add-rcl-key','_wpnonce',true,false).'
         </form>
-        <p class="install-help">'.__('He will need to update the template here. Get it , you can profile your account online <a href="http://codeseller.ru/" target="_blank">http://codeseller.ru</a>','wp-recall').'</p>';
+        <p class="install-help">'.__('Required to update the templates here. Get it  in  your account online <a href="http://codeseller.ru/" target="_blank">http://"codeseller.ru</a>','wp-recall').'</p>';
 
     echo '
-        <h4>'.__('To install the add-on to Wp-Recall format .zip','wp-recall').'</h4>
-        <p class="install-help">'.__('If you have the archive template for wp-recall format .zip, here you can download and install it.','wp-recall').'</p>
+        <h4>'.__('Install the add-on to WP-Recall format .ZIP','wp-recall').'</h4>
+        <p class="install-help">'.__('If you have an archive template for wp-recall format .zip, here you can upload and install it','wp-recall').'</p>
         <form class="wp-upload-form" action="" enctype="multipart/form-data" method="post">
-                <label class="screen-reader-text" for="addonzip">'.__('Plugin archive','wp-recall').'</label>
+                <label class="screen-reader-text" for="addonzip">'.__('Add-on archive','wp-recall').'</label>
                 <input id="addonzip" type="file" name="addonzip">
-                <input id="install-plugin-submit" class="button" type="submit" value="'.__('To install','wp-recall').'" name="install-template-submit">
+                <input id="install-plugin-submit" class="button" type="submit" value="'.__('Install','wp-recall').'" name="install-template-submit">
                 '.wp_nonce_field('install-template-rcl','_wpnonce',true,false).'
         </form>
 

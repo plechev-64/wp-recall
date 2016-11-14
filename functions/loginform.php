@@ -22,7 +22,7 @@ function rcl_get_authorize_form($type=false,$form=false){
 
             echo '<div class="username"><b>'.__('Hi','wp-recall').', '.get_the_author_meta('display_name', $user_ID).'!</b></div>
             <div class="author-avatar">';
-            echo '<a href="'.$rcl_user_URL.'" title="'.__('In personal account','wp-recall').'">'.get_avatar($user_ID, 60).'</a>';
+            echo '<a href="'.$rcl_user_URL.'" title="'.__('To personal account','wp-recall').'">'.get_avatar($user_ID, 60).'</a>';
 
             if(function_exists('rcl_rating_block')):
                 echo rcl_rating_block(array('ID'=>$user_ID,'type'=>'user'));
@@ -31,7 +31,7 @@ function rcl_get_authorize_form($type=false,$form=false){
             echo '</div>';
             echo '<div class="rcl-widget-buttons">';
 
-                    $buttons = '<div class="rcl-widget-button">'.rcl_get_button(__('In personal account','wp-recall'),$rcl_user_URL,array('icon'=>'fa-home')).'</div>
+                    $buttons = '<div class="rcl-widget-button">'.rcl_get_button(__('To personal account','wp-recall'),$rcl_user_URL,array('icon'=>'fa-home')).'</div>
                     <div class="rcl-widget-button">'.rcl_get_button(__('Exit','wp-recall'),wp_logout_url( home_url() ),array('icon'=>'fa-external-link')).'</div>';
                     echo apply_filters('buttons_widget_rcl',$buttons);
 

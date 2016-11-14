@@ -4,8 +4,8 @@ add_action( 'init', 'register_type_post_group',10 );
 function register_type_post_group() {
 
     $labels = array(
-        'name' => __('Record groups','wp-recall'),
-        'singular_name' => __('Record groups','wp-recall'),
+        'name' => __('Groups records','wp-recall'),
+        'singular_name' => __('Groups records','wp-recall'),
         'add_new' => __('Add entry','wp-recall'),
         'add_new_item' => __('Add entry','wp-recall'),
         'edit_item' => __('Edit','wp-recall'),
@@ -15,7 +15,7 @@ function register_type_post_group() {
         'not_found' => __('Not found','wp-recall'),
         'not_found_in_trash' => __('Cart is empty','wp-recall'),
         'parent_item_colon' => __('Parent record','wp-recall'),
-        'menu_name' => __('Record groups','wp-recall'),
+        'menu_name' => __('Groups records','wp-recall'),
     );
 
     $args = array(
@@ -53,10 +53,10 @@ function register_taxonomy_groups() {
             'parent_item_colon' => __('Parent group','wp-recall'),
             'edit_item' => __('Edit','wp-recall'),
             'update_item' => __('Update','wp-recall'),
-            'add_new_item' => __('To add a new','wp-recall'),
+            'add_new_item' => __('Add a new group','wp-recall'),
             'new_item_name' => __('New','wp-recall'),
             'separate_items_with_commas' => __('Separate with commas','wp-recall'),
-            'add_or_remove_items' => __('To add or remove','wp-recall'),
+            'add_or_remove_items' => __('Add or delete','wp-recall'),
             'choose_from_most_used' => __('Click to use','wp-recall'),
             'menu_name' => __('Groups','wp-recall')
 	);

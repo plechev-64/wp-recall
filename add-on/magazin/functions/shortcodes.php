@@ -299,7 +299,7 @@ function rcl_shortcode_pricelist($atts, $content = null){
     $pricelist ='<table class="pricelist">
             <tr>
                 <td>№</td>
-                <td>'.__('Name product','wp-recall').'</td>
+                <td>'.__('Product name','wp-recall').'</td>
                 <td>'.__('Product tags','wp-recall').'</td>
                 <td>'.__('Price','wp-recall').'</td>
             </tr>';

@@ -89,7 +89,7 @@ class RCL_Install {
         $pages = apply_filters( 'wp_recall_pages', array(
             'lk_page_rcl' => array(
                 'name'    => 'account',
-                'title'   => __('Personal office','wp-recall'),
+                'title'   => __('Personal cabinet','wp-recall'),
                 'content' => '[wp-recall]'
             ),
             'feed_page_rcl' => array(

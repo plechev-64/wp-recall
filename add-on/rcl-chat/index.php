@@ -52,13 +52,13 @@ function rcl_init_js_chat_variables($data){
     global $rcl_options;
     
     $data['chat']['sounds'] = rcl_addon_url('sounds/',__FILE__);
-    $data['chat']['delay'] = (isset($rcl_options['chat']['delay']))? $rcl_options['chat']['delay']*1000: 15000;
-    $data['chat']['inactivity'] = (isset($rcl_options['chat']['inactivity']))? $rcl_options['chat']['inactivity']: 10;
-    $data['chat']['file_size'] = (isset($rcl_options['chat']['file_size']))? $rcl_options['chat']['file_size']: 2;
+    $data['chat']['delay'] = (isset($rcl_options['chat']['delay']) && $rcl_options['chat']['delay'])? $rcl_options['chat']['delay']*1000: 15000;
+    $data['chat']['inactivity'] = (isset($rcl_options['chat']['inactivity']) && $rcl_options['chat']['inactivity'])? $rcl_options['chat']['inactivity']: 10;
+    $data['chat']['file_size'] = (isset($rcl_options['chat']['file_size']) && $rcl_options['chat']['file_size'])? $rcl_options['chat']['file_size']: 2;
     
     $data['local']['empty_mess'] = __('Write something','wp-recall');
     $data['local']['max_words'] = __('Exceeds the maximum message size','wp-recall');
-    $data['local']['upload_size_chat'] = sprintf(__('Exceeds the maximum size for the file! Max. %d MB','wp-recall'),$data['chat']['file_size']);
+    $data['local']['upload_size_chat'] = sprintf(__('Exceeds the maximum file size! Max. %d MB','wp-recall'),(int)$data['chat']['file_size']);
     
     return $data;
 }
@@ -154,7 +154,7 @@ function rcl_chat_tab($office_id){
         $chat = $chatdata['content'];
     }else{
        $chat = '<div class="chat-notice">'
-                . '<span class="notice-error">'.__('Sign in to be in correspondence with the user','wp-recall').'</span>'
+                . '<span class="notice-error">'.__('Sign in to send a message to the user','wp-recall').'</span>'
                 . '</div>'; 
     }
     
@@ -197,7 +197,7 @@ function rcl_chat_add_page_link_attributes($attrs){
 function rcl_get_tab_user_contacts(){
     global $user_ID;
 
-    $content = '<h3>'.__('The user contacts','wp-recall').'</h3>';
+    $content = '<h3>'.__('User contacts','wp-recall').'</h3>';
     $content .= rcl_get_user_contacts_list($user_ID);
     
     return $content;
@@ -244,7 +244,7 @@ function rcl_get_user_contacts_list($user_id){
     );
     
     if(!$amount){
-        return '<p>'.__('While there is no contact. Start a chat with another user on his page','wp-recall').'</p>';
+        return '<p>'.__('No contacts yet. Start a chat with another user on his page','wp-recall').'</p>';
     }
     
     $inpage = 20;
@@ -259,7 +259,7 @@ function rcl_get_user_contacts_list($user_id){
 
     $content = '<div class="rcl-chat-contacts">';
     
-    $content .= '<div class="contacts-counter"><span>'.__('Total contacts','wp-recall').': '.$amount.'</span></div>';
+    $content .= '<div class="contacts-counter"><span>'.__('Total number of contacts','wp-recall').': '.$amount.'</span></div>';
     
     foreach($messages as $message){
         
@@ -299,7 +299,7 @@ function rcl_get_tab_user_important($user_id){
     
     if(!$amount_messages){
         return '<div class="chat-notice">'
-                . '<span class="notice-error">'.__('Important messages yet','wp-recall').'</span>'
+                . '<span class="notice-error">'.__('No important messages yet','wp-recall').'</span>'
                 . '</div>'; 
     }
 

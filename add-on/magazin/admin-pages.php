@@ -33,67 +33,67 @@ function rmag_primary_options($content){
                 array(
                     $opt->title(__('General settings','wp-recall')),
 
-                    $opt->label(__('Email Notification','wp-recall')),
+                    $opt->label(__('Email for notifications','wp-recall')),
                     $opt->option('email',array('name'=>'admin_email_magazin_recall')),
-                    $opt->notice(__('If email is not specified, a notification will be sent to all users of the website with the rights of the "Administrator"','wp-recall')),
+                    $opt->notice(__('If email is not specified, a notification will be sent to all users of the website with "Administrator" rights','wp-recall')),
 
-                    $opt->label(__('The margin on the goods (%)','wp-recall')),
+                    $opt->label(__('Goods surcharge (%)','wp-recall')),
                     $opt->option('number',array('name'=>'margin_product')),
-                    $opt->notice(__('If zero or nothing, the margin on the goods not being used','wp-recall'))
+                    $opt->notice(__('If zero or not specified, the goods’ surplus will not be applied','wp-recall'))
                 )
             ),
             $opt->option_block(
                 array(
-                    $opt->title(__('Drawing up of an order','wp-recall')),
+                    $opt->title(__('Check-out','wp-recall')),
 
-                    $opt->label(__('Register at registration','wp-recall')),
+                    $opt->label(__('Register at check-out','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'buyer_register',
                         'default'=>1,
-                        'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
+                        'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
                     )),
-                    $opt->notice(__('If enabled , the user is automatically registered on the site if successful ordering','wp-recall'))
+                    $opt->notice(__('If enabled, the user will be automatically registered on the site after successfull check-out','wp-recall'))
                 )
             ),
             $opt->option_block(
                 array(
-                    $opt->title(__('Accounting product','wp-recall')),
+                    $opt->title(__('Inventory','wp-recall')),
 
-                    $opt->label(__('Accounting for goods in stock','wp-recall')),
+                    $opt->label(__('Stock inventory','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'products_warehouse_recall',
-                        'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
+                        'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
                     )),
-                    $opt->notice(__('If records are maintained , then the goods will be possible to observe the presence of the warehouse. If the goods are not available , the button on the product to add to cart is not','wp-recall'))
+                    $opt->notice(__('If enabled, the number of goods in stock will be checked. If the goods are not available, the product can’t be added to cart','wp-recall'))
                 )
             ),
             $opt->option_block(
                 array(
                     $opt->title(__('Cart','wp-recall')),
 
-                    $opt->label(__('The procedure for withdrawal of the button " Add to Cart "','wp-recall')),
+                    $opt->label(__('Display button "Add to Cart"','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'add_basket_button_recall',
                         'options'=>array(__('Automatically','wp-recall'),__('Through shortcode','wp-recall'))
                     )),
-                    $opt->notice(__('On the product page . If shortcode , then use the [add-basket]','wp-recall')),
+                    $opt->notice(__('On the product page. If through shortcode, use [add-basket]','wp-recall')),
 
-                    $opt->label(__('Page checkout','wp-recall')),
+                    $opt->label(__('Checkout page','wp-recall')),
                     wp_dropdown_pages( $args ),
-                    $opt->notice(__('Specify the page that hosts the shortcode [basket]','wp-recall')),
+                    $opt->notice(__('Specify the page with the shortcode [basket]','wp-recall')),
                 )
             ),
              $opt->option_block(
                 array(
-                    $opt->title(__('System or similar featured products','wp-recall')),
+                    $opt->title(__('Similar or recommended goods','wp-recall')),
 
-                    $opt->label(__('The order of withdrawal','wp-recall')),
+                    $opt->label(__('Output order','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'sistem_related_products',
-                        'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
+                        'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
                     )),
 
-                    $opt->label(__('Title block featured products','wp-recall')),
+                    $opt->label(__('Block title for featured products','wp-recall')),
                     $opt->option('text',array('name'=>'title_related_products_recall')),
 
                     $opt->label(__('Number of featured products','wp-recall')),
@@ -102,17 +102,17 @@ function rmag_primary_options($content){
             ),
              $opt->option_block(
                 array(
-                    $opt->title(__('Currency and courses','wp-recall')),
-			$opt->label(__('The base currency','wp-recall')),
+                    $opt->title(__('Currency and rates','wp-recall')),
+			$opt->label(__('Basis currency','wp-recall')),
 			$opt->option('select',array(
                         'name'=>'primary_cur',
                         'options'=>rcl_get_currency()
                     )),
-                    $opt->label(__('Secondary currency','wp-recall')),
+                    $opt->label(__('Additional currency','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'multi_cur',
                         'parent'=>true,
-                        'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
+                        'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
                     )
                     ),
                     $opt->child(
@@ -126,9 +126,9 @@ function rmag_primary_options($content){
                                     'name'=>'secondary_cur',
                                     'options'=>rcl_get_currency()
                             )),
-                            $opt->label(__('Course','wp-recall')),
+                            $opt->label(__('Rate','wp-recall')),
                             $opt->option('text',array('name'=>'curse_currency')),
-                            $opt->notice(__('Enter the secondary currency exchange rate in relation to the principal. For example: 1.3','wp-recall'))
+                            $opt->notice(__('Enter additional currency exchange rate in relation to the main currency. For example: 1.3','wp-recall'))
                         )
                     )
                 )
@@ -147,7 +147,7 @@ function rmag_custom_fields(){
 
 	if($f_edit->verify()) $fields = $f_edit->update_fields();
 
-	$content = '<h2>'.__('Field Management Order Form','wp-recall').'</h2>
+	$content = '<h2>'.__('Order Form Field Management','wp-recall').'</h2>
 
 	'.$f_edit->edit_form(array(
             $f_edit->option('select',array(
@@ -186,14 +186,14 @@ function rmag_manage_orders(){
 
 	$header_tb = array(
 		'№ п/п',
-		__('Name product','wp-recall'),
+		__('Product name','wp-recall'),
 		__('Price','wp-recall'),
 		__('Amount','wp-recall'),
 		__('Sum','wp-recall'),
 		__('Status','wp-recall'),
 	);
 
-	echo '<h3>'.__('ID order','wp-recall').': '.$_GET['order'].'</h3>'
+	echo '<h3>'.__('Order ID','wp-recall').': '.$_GET['order'].'</h3>'
                 . '<table class="widefat">'
                 . '<tr>';
 
@@ -217,7 +217,7 @@ function rmag_manage_orders(){
 
 	}
 	echo '<tr>
-                    <td colspan="4">'.__('Sum order','wp-recall').'</td>
+                    <td colspan="4">'.__('Order amount','wp-recall').'</td>
                     <td colspan="2">'.$order->order_price.'</td>
 		</tr>
 	</table>';
@@ -233,32 +233,32 @@ function rmag_manage_orders(){
 
 	$details_order = rcl_get_order_details($order->order_id);
 
-	echo '<form><input type="button" value="'.__('Ago','wp-recall').'" onClick="history.back()"></form>'
+	echo '<form><input type="button" value="'.__('Back','wp-recall').'" onClick="history.back()"></form>'
                 . '<div style="text-align:right;">'
                     . '<a href="'.admin_url('admin.php?page=manage-rmag').'">'.__('Show all orders','wp-recall').'</a>
                 </div>
-	<h3>'.__('All orders user','wp-recall').': <a href="'.admin_url('admin.php?page=manage-rmag&user='.$order->order_author).'">'.$user_login.'</a></h3>
+	<h3>'.__('All user orders','wp-recall').': <a href="'.admin_url('admin.php?page=manage-rmag&user='.$order->order_author).'">'.$user_login.'</a></h3>
 	<h3>'.__('Information about the user','wp-recall').':</h3>'
                 . '<p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$order->order_author).'</p>'
                 . '<p><b>'.__('Email','wp-recall').'</b>: '.get_the_author_meta('user_email',$order->order_author).'</p>'.$show_custom_field;
 	if($details_order) echo '<h3>'.__('Order details','wp-recall').':</h3>'.$details_order;
-	if($result_mess) echo '<h3 style="color:green;">'.__('The message was sent','wp-recall').'!</h3>';
+	if($result_mess) echo '<h3 style="color:green;">'.__('Message sent','wp-recall').'!</h3>';
 	echo '<style>.form_message input[type="text"], .form_message textarea{width:450px;padding:5px;}</style>
-	<h3>'.__('Email a user an activation e-mail','wp-recall').' '.get_the_author_meta('user_email',$order->order_author).'</h3>
+	<h3>'.__('Send user an e-mail','wp-recall').' '.get_the_author_meta('user_email',$order->order_author).'</h3>
 	<form method="post" action="" class="form_message" >
 	<p><b></b> ('.__('by default','wp-recall').' "noreply@'.$_SERVER['HTTP_HOST'].'")</p>
 	<input type="text" name="email_author" value="'.sanitize_email($_POST['email_author']).'">
-	<p><b>'.__('The subject of the email','wp-recall').'</b></p>
+	<p><b>'.__('Email subject','wp-recall').'</b></p>
 	<input type="text" name="title_message" value="'.sanitize_text_field($_POST['title_message']).'">
-	<p><b>'.__('Text messages','wp-recall').'</b></p>';
+	<p><b>'.__('Message text','wp-recall').'</b></p>';
 
-	$textmail = "<p>".__('Good day','wp-recall')."!</p>
-	<p>".__('You or someone else place your order on the website','wp-recall')." ".get_bloginfo('name')."</p>
+	$textmail = "<p>".__('Good afternoon','wp-recall')."!</p>
+	<p>".__('You or someone else has placed an order on the website','wp-recall')." ".get_bloginfo('name')."</p>
 	<h3>".__('Order details','wp-recall').":</h3>
 	".rcl_get_include_template('order.php',__FILE__)."
-	<p>".__('Your order is awaiting payment. You can pay your order with any of the proposed method from your personal account or just adding to your personal account on the website','wp-recall')." <a href='".get_bloginfo('wpurl')."'>".get_bloginfo('wpurl')."<p>
+	<p>".__('Your order is awaiting payment. You can pay your with any of the proposed methods from your personal account or just topping up your personal website account','wp-recall')." <a href='".get_bloginfo('wpurl')."'>".get_bloginfo('wpurl')."<p>
 	____________________________________________________________________________
-	<p>".__('This letter was generated automatically and don`t need to answer it','wp-recall').'</p>';
+	<p>".__('This letter has been generated automatically and you don`t need to answer it','wp-recall').'</p>';
 
 	if($_POST['text_message']) $textmail = force_balance_tags($_POST['text_message']);
 
@@ -391,17 +391,17 @@ global $wpdb;
 	<p><input type="checkbox" name="post_title" checked value="1"> '.__('Add a title','wp-recall').'</p>
 	<p><input type="checkbox" name="post_content" checked value="1"> '.__('Add a description','wp-recall').'</p>
         <p><input type="checkbox" name="post_excerpt" value="1"> '.__('Add a short description','wp-recall').'</p>
-	<h3>'.__('Custom fields goods','wp-recall').':</h3><table><tr>';
+	<h3>'.__('Optional fields','wp-recall').':</h3><table><tr>';
 
 	$fields = array(
-		'price-products'=>__('The price of the product in the default currency','wp-recall'),
+		'price-products'=>__('The price of the product in the main currency','wp-recall'),
 		'amount_product'=>__('The quantity of goods in stock','wp-recall'),
-		'reserve_product'=>__('The goods in reserve','wp-recall'),
-		'type_currency'=>__('The currency value of the goods','wp-recall'),
-		'curse_currency'=>__('The course is for more currency for a product','wp-recall'),
-		'margin_product'=>__('The mark on the product','wp-recall'),
+		'reserve_product'=>__('The goods reserved','wp-recall'),
+		'type_currency'=>__('The currency value of goods','wp-recall'),
+		'curse_currency'=>__('The additional currency rate for the product','wp-recall'),
+		'margin_product'=>__('Product surcharge','wp-recall'),
 		'outsale'=>'1 - '.__('the item is no longer available','wp-recall'),
-		'related_products_recall'=>__('ID commodity category is displayed in the unit or recommended similar products','wp-recall'),
+		'related_products_recall'=>__('product category ID for display of recommended or similar products','wp-recall'),
 	);
 
 	$fields = apply_filters('products_field_list',$fields);
@@ -432,9 +432,9 @@ global $wpdb;
 	'.wp_nonce_field('add-file-csv','_wpnonce',true,false).'
 	<p>
 	<input type="file" name="file_csv" value="1">
-	<input type="submit" name="add_file_csv" value="'.__('To import products from a file','wp-recall').'"><br>
-	<small><span style="color:red;">'.__('Attention','wp-recall').'!</span> '.__('Blank cells XML file do not participate in the update of the characteristics of the goods','wp-recall').'<br>
-	'.__('The values of custom fields to be deleted using the file should be replaced in the file with an asterisk (*)','wp-recall').'</small>
+	<input type="submit" name="add_file_csv" value="'.__('Import products from a file','wp-recall').'"><br>
+	<small><span style="color:red;">'.__('Attention','wp-recall').'!</span> '.__('Blank cells in XML file do not participate in the update of product characteristics','wp-recall').'<br>
+	'.__('The values of product fields deleted should be replaced in the file with an asterisk (*)','wp-recall').'</small>
 	</p>
 	</form>';
 	echo $table_price;
@@ -517,14 +517,14 @@ global $wpdb;
 					if(!$ID){
                                             $args['post_type'] = 'products';
                                             $ID = wp_insert_post($args);
-                                            $action = __('was created and added','wp-recall');
+                                            $action = __('has been created and added','wp-recall');
 					}else{
                                             if (count($post)>0){    
                                                 
                                                 $sql = "UPDATE $wpdb->posts SET ".implode(",",$post)." WHERE ID = '$ID'";
                                                 $res = $wpdb->query($sql);
-                                                if($res) $action = __('was updated','wp-recall');
-                                                else $action = __('was not updated','wp-recall');
+                                                if($res) $action = __('has been updated','wp-recall');
+                                                else $action = __('has not been updated','wp-recall');
                                             }
 					}
 					unset($post);
@@ -561,7 +561,7 @@ global $wpdb;
 				}
 
 			}else{
-				echo '<div class="error">'.__('Invalid format of the downloaded file! Only valid XML','wp-recall').'</div>';
+				echo '<div class="error">'.__('Invalid format of the downloaded file! Only XML valid','wp-recall').'</div>';
 			}
 	}
 }

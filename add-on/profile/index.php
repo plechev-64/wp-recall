@@ -70,7 +70,7 @@ function rcl_show_custom_fields_profile($master_id){
 if(!is_admin()) add_action('wp','rcl_update_profile_notice');
 function rcl_update_profile_notice(){
     if (isset($_GET['updated'])) 
-        rcl_notice_text(__('Your profile was updated','wp-recall'),'success');
+        rcl_notice_text(__('Your profile has been updated','wp-recall'),'success');
 }
 
 //Обновляем профиль пользователя
@@ -198,10 +198,10 @@ function rcl_delete_user_account(){
     $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_ID));
     $delete = wp_delete_user( $user_ID );
     if($delete){
-        wp_die(__('Very sorry, but your account has been deleted!','wp-recall'));
-        echo '<a href="/">'.__('Back to main','wp-recall').'</a>';
+        wp_die(__('We are very sorry but your account has been deleted!','wp-recall'));
+        echo '<a href="/">'.__('Back to main page','wp-recall').'</a>';
     }else{
-        wp_die(__('Delete account failed! Go back and try again.','wp-recall'));
+        wp_die(__('Account deletion failed! Go back and try again.','wp-recall'));
     }
 }
 
@@ -218,12 +218,12 @@ function rcl_profile_options($content){
     $opt = new Rcl_Options(__FILE__);
 
     $content .= $opt->options(
-        __('Profile settings and account','wp-recall'),
+        __('Profile and account settings','wp-recall'),
         $opt->option_block(
             array(
                 $opt->title(__('Profile and account','wp-recall')),
 
-                $opt->label(__('Allow to delete users from your account?','wp-recall')),
+                $opt->label(__('Allow users to delete their account?','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'delete_user_account',
                     'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
@@ -231,7 +231,7 @@ function rcl_profile_options($content){
 
                 $opt->label(__('The maximum size of the avatar, Mb','wp-recall')),
                 $opt->option('number',array('name'=>'avatar_weight')),
-                $opt->notice(__('To restrict the loading of images as avatars this value in megabytes. By default, 2MB','wp-recall'))
+                $opt->notice(__('To limit the size uploading of avatars images, the size in megabytes by default is set at 2MB','wp-recall'))
             )
         )
     );
@@ -301,7 +301,7 @@ function rcl_tab_profile_content($master_id){
                     <td>
                             <label for="admin_bar_front">
                             <input id="admin_bar_front" '.checked('true',$userdata->show_admin_bar_front,false).' type="checkbox" value="1" name="admin_bar_front">
-                            '.__('Show the admin bar when viewing site','wp-recall').'
+                            '.__('Show admin bar when viewing the site','wp-recall').'
                             </label>
                     </td>
             </tr>';
@@ -338,7 +338,7 @@ function rcl_tab_profile_content($master_id){
 
     if(isset($select_display)){
         $profile_block .= '<tr>
-        <th><label for="display_name">'.__('Display name','wp-recall').':</label></th>
+        <th><label for="display_name">'.__('Name to be displayed','wp-recall').':</label></th>
         <td>
         <select name="display_name" class="regular-dropdown" id="display_name">';
         $public_display = array();
@@ -409,21 +409,21 @@ function rcl_tab_profile_content($master_id){
 	$profile_block .= '<tr id="password">
             <th><label for="pass1">'.__('New password','wp-recall').'</label></th><br/>
             <td><input type="password" name="pass1" id="pass1" size="16" value="" autocomplete="off" onkeyup="passwordStrength(this.value)"  /><br>
-			<small>'.__('If you want to change your password - enter new','wp-recall').'</small><br />
+			<small>'.__('If you want to change your password - enter a new one','wp-recall').'</small><br />
                 <input type="password" name="pass2" id="pass2" size="16" value="" autocomplete="off" /><br />
                     <small>'.__('Repeat the new password','wp-recall').'</small>';
             if(isset($rcl_options['difficulty_parole'])&&$rcl_options['difficulty_parole']==1){
                 $profile_block .= '<br />
                 <div>
-                    <b>'.__('The password strength indicator','wp-recall').':</b>
+                    <b>'.__('Password strength indicator','wp-recall').':</b>
                     <div id="passwordStrength" class="strength0">
-                            <div id="passwordDescription">'.__('A password is not entered','wp-recall').'</div>
+                            <div id="passwordDescription">'.__('A password has not been entered','wp-recall').'</div>
                     </div>
                 </div>
                 <p>
                 <small><strong>'.__('Note','wp-recall').':</strong> '.__('The password must be at least 7 characters','wp-recall').'. <br/>
                 '.__('Use upper and lower case for a strong password','wp-recall').'. <br/>
-                '.__('Use characters from','wp-recall').': ! " ? $ % ^ &amp;</small>
+                '.__('Use symbols','wp-recall').': ! " ? $ % ^ &amp;</small>
 		</p>';
             }
             $profile_block .= '</td>
@@ -507,9 +507,9 @@ function rcl_tab_profile_content($master_id){
 	</form>';
 	if($rcl_options['delete_user_account']==1){
             $profile_block .= '
-            <form method="post" action="" name="delete_account" onsubmit="return confirm(\''.__('Are you sure? Then restore will not work!','wp-recall').'\');">
+            <form method="post" action="" name="delete_account" onsubmit="return confirm(\''.__('Are you sure? It can’t be restaured!','wp-recall').'\');">
             '.wp_nonce_field('delete-user-'.$user_ID,'_wpnonce',true,false).'
-            <input type="submit" id="delete_acc" class="recall-button"  value="'.__('To delete your profile','wp-recall').'" name="rcl_delete_user_account"/>
+            <input type="submit" id="delete_acc" class="recall-button"  value="'.__('Delete your profile','wp-recall').'" name="rcl_delete_user_account"/>
             </form>';
 	}
 
@@ -578,9 +578,9 @@ function rcl_manage_profile_fields(){
 		</style>";
 
 	if ( sizeof( $profile_default_fields ) > 0 ) {
-                $default_form .= '<h3>'.__('Fields profile default','wp-recall').'</h3>';
+                $default_form .= '<h3>'.__('Profile fields by default','wp-recall').'</h3>';
 		$default_form .= apply_filters('rcl_profile_default_fields_styles', $profile_default_fields_styles);
-		$default_form .= '<p>'.__('Fields to display in the profile note ticks.','wp-recall').'</p>';
+		$default_form .= '<p>'.__('Fields to be displayed in the profile.','wp-recall').'</p>';
 		$default_form .= '<table class="form-table" style="width:600px;">';
 			$field_loop = $loop = 0;
 			foreach ( $profile_default_fields as $field ) {
@@ -605,7 +605,7 @@ function rcl_manage_profile_fields(){
             'echo'             => 0 )
         );
         
-        $default_form .= '<p>'.__('Note this page is required to filter users by value profile fields','wp-recall').'</p>';
+        $default_form .= '<p>'.__('This page is required to filter users by value of profile fields','wp-recall').'</p>';
         
         $default_form .= '<h3>'.__('Custom profile fields','wp-recall').'</h3>';
 
@@ -614,7 +614,7 @@ function rcl_manage_profile_fields(){
         $users_fields .= $f_edit->edit_form(array(
             $f_edit->option('textarea',array(
                 'name'=>'notice',
-                'label'=>__('signature to the field','wp-recall')
+                'label'=>__('field description','wp-recall')
             )),
             $f_edit->option('select',array(
                 'name'=>'requared',
@@ -623,7 +623,7 @@ function rcl_manage_profile_fields(){
             )),
             $f_edit->option('select',array(
                 'name'=>'register',
-                'notice'=>__('to display the registration form','wp-recall'),
+                'notice'=>__('display in registration form','wp-recall'),
                 'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
             )),
             $f_edit->option('select',array(
@@ -633,17 +633,17 @@ function rcl_manage_profile_fields(){
             )),
             $f_edit->option('select',array(
                 'name'=>'req',
-                'notice'=>__('to show the content to other users','wp-recall'),
+                'notice'=>__('show the content to other users','wp-recall'),
                 'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
             )),
             $f_edit->option('select',array(
                 'name'=>'admin',
-                'notice'=>__('it only changes the administration of the site','wp-recall'),
+                'notice'=>__('can be changed only by the site administration','wp-recall'),
                 'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
             )),
             $f_edit->option('select',array(
                 'name'=>'filter',
-                'notice'=>__('Filter users meaningfully this field','wp-recall'),
+                'notice'=>__('Filter users by this field','wp-recall'),
                 'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
             ))
         ),$default_form);
@@ -698,7 +698,7 @@ function rcl_get_default_fields_profile() {
 			'label' => __('Login','wp-recall'),
 			'type' => 'checkbox',
 			'std' => 'no',
-			'desc' => __('Login user','wp-recall')
+			'desc' => __('User login','wp-recall')
 		),
 		array(
 			'id' => 'first_name',
@@ -712,21 +712,21 @@ function rcl_get_default_fields_profile() {
 			'label' => __('Surname','wp-recall'),
 			'type' => 'checkbox',
 			'std' => 'no',
-			'desc' => __('Surname user','wp-recall')
+			'desc' => __('User name','wp-recall')
 		),
 		array(
 			'id' => 'display_name',
-			'label' => __('Display name','wp-recall'),
+			'label' => __('Name to be displayed','wp-recall'),
 			'type' => 'checkbox',
 			'std' => 'no',
-			'desc' => __('Display name user','wp-recall')
+			'desc' => __('Name to be displayed','wp-recall')
 		),
 		array(
 			'id' => 'url',
 			'label' => __('Website','wp-recall'),
 			'type' => 'checkbox',
 			'std' => 'no',
-			'desc' => __('Website user','wp-recall')
+			'desc' => __('User website','wp-recall')
 		),
 		array(
 			'id' => 'description',

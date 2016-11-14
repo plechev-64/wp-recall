@@ -45,7 +45,7 @@ function rcl_action(){
     $last_action = rcl_get_useraction($rcl_userlk_action);
     $class = (!$last_action)? 'online': 'offline';
 
-    if($last_action) $status = __('not online','wp-recall').' '.$last_action;
+    if($last_action) $status = __('offline','wp-recall').' '.$last_action;
     else $status = __('online','wp-recall');
     
     echo sprintf('<span class="user-status %s">%s</span>',$class,$status);
@@ -234,7 +234,7 @@ add_filter('wp_footer', 'rcl_footer_url',10);
 function rcl_footer_url(){	
 	if(is_front_page()&&!is_user_logged_in()){
             if(get_option('rcl_footer_link')==1)
-                echo '<p class="plugin-info">'.__('The site works using the functionality of the plugin','wp-recall').'  <a target="_blank" href="https://codeseller.ru/">Wp-Recall</a></p>';
+                echo '<p class="plugin-info">'.__('The site uses plugin functionality','wp-recall').'  <a target="_blank" href="https://codeseller.ru/">Wp-Recall</a></p>';
         }
 }
 
@@ -242,7 +242,7 @@ function rcl_get_author_block(){
     global $post;
 
     $content = "<div id=block_author-rcl>";
-    $content .= "<h3>".__('Author of publication','wp-recall')."</h3>";
+    $content .= "<h3>".__('Publiction author','wp-recall')."</h3>";
 
     if(function_exists('rcl_add_userlist_follow_button')) add_filter('rcl_user_description','rcl_add_userlist_follow_button',90);
 
@@ -284,7 +284,7 @@ function rcl_get_miniaction($action,$user_id=false){
 
     $content = '<div class="status_author_mess '.$class.'">';
     if(!$last_action&&$action) $content .= '<i class="fa fa-circle"></i>';
-    else $content .= __('not online','wp-recall').' '.$last_action;
+    else $content .= __('offline','wp-recall').' '.$last_action;
     $content .= '</div>';
 
     return $content;
@@ -385,7 +385,7 @@ function rcl_user_black_list_button($office_id){
     
     $user_block = get_user_meta($user_ID,'rcl_black_list:'.$office_id);
 
-    $title = ($user_block)? __('Unblock','wp-recall'): __('In the black list','wp-recall');
+    $title = ($user_block)? __('Unblock','wp-recall'): __('Blacklist','wp-recall');
 
     $button = rcl_get_button($title,'#',array('class'=>'rcl-manage-blacklist','icon'=>'fa-bug','attr'=>'onclick="rcl_manage_user_black_list(this,'.$office_id.');return false;"'));
 
@@ -411,7 +411,7 @@ function rcl_manage_user_black_list(){
     $new_status = $user_block? 0: 1;
     
     $res['success'] = true;
-    $res['label'] = ($new_status)? __('Unblock','wp-recall'): __('In the black list','wp-recall');
+    $res['label'] = ($new_status)? __('Unblock','wp-recall'): __('Blacklist','wp-recall');
     echo json_encode($res);
     exit;
 }

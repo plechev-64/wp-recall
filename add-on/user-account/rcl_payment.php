@@ -61,7 +61,7 @@ class Rcl_Payment{
         if($this->get_pay()){
                 wp_redirect(get_permalink($rmag_options['page_successfully_pay'])); exit;
         } else {
-                wp_die(__('A record of the payment in the database was not found','wp-recall'));
+                wp_die(__('No record of the payment in the database was found','wp-recall'));
         }
     }
 
@@ -139,7 +139,7 @@ class Rcl_Payment{
                  $method = 'pay_form';
                  $content .= $obj->$method($this);
              }else{
-                 $content .= '<div class="error"><p class="error">'.__('Error! Not configured the connection to the payment aggregator.','wp-recall').'</p></div>';
+                 $content .= '<div class="error"><p class="error">'.__('Error! Connection to payment aggregator not set.','wp-recall').'</p></div>';
              }
         
         }
@@ -155,7 +155,7 @@ class Rcl_Payment{
         
         $fields = apply_filters('rcl_pay_form_fields',$fields,$data);
 
-        $submit = ($data->pay_type==1)? __('Confirm the operation','wp-recall'): __('To pay via','wp-recall').' "'.$data->connect['name'].'"';
+        $submit = ($data->pay_type==1)? __('Confirm the operation','wp-recall'): __('Pay via','wp-recall').' "'.$data->connect['name'].'"';
         
         $form = '<div class="rcl-pay-form">';
         
@@ -178,7 +178,7 @@ class Rcl_Payment{
     function personal_account_pay_form($pay_id, $args = array()){
         
         $pay_callback = (isset($args['callback']))? $args['callback']: 'rcl_pay_order_private_account';
-        $submit = (isset($args['submit']))? $args['submit']: __('Pay personal account','wp-recall');
+        $submit = (isset($args['submit']))? $args['submit']: __('Pay from personal account','wp-recall');
         
         $form = '<div class="rcl-account-pay">';
             $form .= '<div class="rcl-pay-form">';

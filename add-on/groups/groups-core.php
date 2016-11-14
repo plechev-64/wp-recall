@@ -239,7 +239,7 @@ function rcl_group_status(){
     if(!$rcl_group) return false;
 
     switch($rcl_group->group_status){
-        case 'open': echo __('Opened group','wp-recall'); break;
+        case 'open': echo __('Open group','wp-recall'); break;
         case 'closed': echo __('Closed group','wp-recall'); break;
     }
 }
@@ -572,7 +572,7 @@ function rcl_group_add_request_for_membership($user_id,$group_id){
     $requests[] = $user_id;
     rcl_update_group_option($group_id,'requests_group_access',$requests);
 
-    $subject = __('Request for access to the group','wp-recall');
+    $subject = __('Request for group access','wp-recall');
     $textmail = sprintf(
             '<p>%s</p>
             <h3>%s:</h3>
@@ -580,7 +580,7 @@ function rcl_group_add_request_for_membership($user_id,$group_id){
             <p>%s:</p>
             <p>%s</p>',
             sprintf(
-                    __('You have received a new request for access to the group administered by your "%s" on the site "%s"','wp-recall'),
+                    __('You have received a new request for access to group managed by you "%s" on the site "%s"','wp-recall'),
                     $rcl_group->name,
                     get_bloginfo('name')
                     ),
@@ -589,7 +589,7 @@ function rcl_group_add_request_for_membership($user_id,$group_id){
                     '<b>%s</b>: <a href="'.get_author_posts_url($user_id).'">'.get_the_author_meta('display_name',$user_id).'</a>',               
                     __('Profile','wp-recall')
                     ),
-            __('You can approve or reject the request by clicking the link','wp-recall'),
+            __('You can approve or reject the request by clicking on the link','wp-recall'),
             get_term_link( (int)$group_id, 'groups' )
           );
     $admin_email = get_the_author_meta('user_email',$rcl_group->admin_id);
@@ -711,7 +711,7 @@ function rcl_group_callback(){
 function rcl_group_ajax_delete_user($group_id,$user_id){
     $result = rcl_group_remove_user($user_id,$group_id);
     if($result){
-        $log['success'] = __('User removed','wp-recall');
+        $log['success'] = __('User deleted','wp-recall');
         $log['place'] = 'buttons';
     }else{
         $log['error'] = __('Error','wp-recall');
@@ -766,11 +766,11 @@ function rcl_group_admin_panel(){
     $admins_buttons = array(
         array(
             'callback' => 'rcl_get_group_options',
-            'name' => __('Primary options','wp-recall')
+            'name' => __('Basic settings','wp-recall')
         ),
         array(
             'callback' => 'rcl_get_group_widgets',
-            'name' => __('Widgets manage','wp-recall')
+            'name' => __('Widget management','wp-recall')
         )
     );
 
@@ -780,7 +780,7 @@ function rcl_group_admin_panel(){
 
         $admins_buttons[] = array(
                 'callback' => 'rcl_get_group_requests_content',
-                'name' => __('Requests for access','wp-recall').' - '.count($requests)
+                'name' => __('Access request','wp-recall').' - '.count($requests)
             );
 
     }
@@ -883,7 +883,7 @@ function rcl_edit_group_pre_get_posts($query){
 
 function rcl_close_group_post_content(){
     global $rcl_group;
-    $content = '<h3 align="center" style="color:red;">'.__('Publication available!','wp-recall').'</h3>';
+    $content = '<h3 align="center" style="color:red;">'.__('Publication unavailable!','wp-recall').'</h3>';
     $content .= '<p align="center" style="color:red;">'.__('To view the publication , you must be a member of the group','wp-recall').' "'.$rcl_group->name.'"</p>';
     return $content;
 }
@@ -891,7 +891,7 @@ function rcl_close_group_post_content(){
 
 function rcl_close_group_comments_content($comments){
     foreach($comments as $comment){
-        $comment->comment_content = '<p>'.__('(Comment hidden privacy settings)','wp-recall').'</p>';
+        $comment->comment_content = '<p>'.__('(Comment hidden by privacy settings)','wp-recall').'</p>';
     }
     return $comments;
 }

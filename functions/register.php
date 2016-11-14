@@ -218,7 +218,7 @@ function rcl_register_mail($userdata){
 
     $subject = __('Confirm your registration!','wp-recall');
     $textmail = '
-    <p>'.__('You or someone else signed up on the website','wp-recall').' "'.get_bloginfo('name').'" '.__('with the following data:','wp-recall').'</p>
+    <p>'.__('You or someone else signed up on our website','wp-recall').' "'.get_bloginfo('name').'" '.__('with the following data:','wp-recall').'</p>
     <p>'.__('Login','wp-recall').': '.$userdata['user_login'].'</p>
     <p>'.__('Password','wp-recall').': '.$userdata['user_pass'].'</p>';
 
@@ -229,10 +229,10 @@ function rcl_register_mail($userdata){
         $textmail .= '<p>'.__('If it was you, then confirm your registration by clicking on the link below','wp-recall').':</p>
         <p><a href="'.$url.'">'.$url.'</a></p>
         <p>'.__('Unable to activate the account?','wp-recall').'</p>
-        <p>'.__('Copy the link text below, paste it into the address bar of your browser and hit Enter','wp-recall').'</p>';
+        <p>'.__('Copy the link below, paste it into the address bar of your browser and hit Enter','wp-recall').'</p>';
     }
 
-    $textmail .= '<p>'.__('If it wasnt you, then just ignore this email','wp-recall').'</p>';
+    $textmail .= '<p>'.__('If it wasn’t you, then just ignore this email','wp-recall').'</p>';
     rcl_mail($userdata['user_email'], $subject, $textmail);
 
 }
@@ -286,7 +286,7 @@ function rcl_notice_form($form='login'){
     $vls = array(
         'register'=> array(
             'success'=>array(
-                'true'=>__('Registration is completed!','wp-recall'),
+                'true'=>__('Registration completed!','wp-recall'),
                 'confirm-email'=>__('Registration is completed! Check your email.','wp-recall')
             )
         ),
@@ -295,8 +295,8 @@ function rcl_notice_form($form='login'){
                 'confirm'=>__('Your email is not confirmed!','wp-recall')
             ),
             'success'=>array(
-                'true'=>__('Registration is completed! Check your email','wp-recall'),
-                'confirm-email'=>__('Registration is completed! Check your email.','wp-recall')
+                'true'=>__('Registration completed! Check your email','wp-recall'),
+                'confirm-email'=>__('Registration completed! Check your email','wp-recall')
             )
         ),
         'remember'=> array(
@@ -327,7 +327,7 @@ function rcl_notice_form($form='login'){
 
     if(!$type) return false;
 
-    $notice = (isset($vls[$act][$type][$get[$type]]))? $vls[$act][$type][$get[$type]]:__('Error filling!','wp-recall');
+    $notice = (isset($vls[$act][$type][$get[$type]]))? $vls[$act][$type][$get[$type]]:__('Input error!','wp-recall');
 
     if($form=='login'){
         $errors = '';
@@ -349,7 +349,7 @@ function rcl_chek_repeat_pass($errors){
     if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return false;
     if($_POST['user_secondary_pass']!=$_POST['user_pass']){
         $errors = new WP_Error();
-        $errors->add( 'rcl_register_repeat_pass', __('Repeat password is not correct!','wp-recall') );
+        $errors->add( 'rcl_register_repeat_pass', __('Repeated password not correct!','wp-recall') );
     }
     return $errors;
 }
@@ -416,9 +416,9 @@ function rcl_password_regform($content){
 
     if($difficulty==1){
         $content .= '<div class="form-block-rcl">
-                <label>'.__('The password strength indicator','wp-recall').':</label>
+                <label>'.__('Password strength indicator','wp-recall').':</label>
                 <div id="passwordStrength" class="strength0">
-                    <div id="passwordDescription">'.__('A password is not entered','wp-recall').'</div>
+                    <div id="passwordDescription">'.__('A password has not been entered','wp-recall').'</div>
                 </div>
             </div>';
     }

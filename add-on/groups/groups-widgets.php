@@ -54,7 +54,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 
                 echo $before;
                 if($rcl_group->current_user=='banned'){
-                    echo '<div class="error"><p>'.__('You are banned group','wp-recall').'</p></div>';
+                    echo '<div class="error"><p>'.__('You have been banned from the group','wp-recall').'</p></div>';
                 }else{
                     if($rcl_group->group_status=='open'){
                         echo '<form method="post">'
@@ -70,7 +70,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 
                         if($requests&&false!==array_search($user_ID, $requests)){
 
-                            echo '<h3 class="title-widget">'.__('The request for access sent','wp-recall').'</h3>';
+                            echo '<h3 class="title-widget">'.__('The access request has been sent','wp-recall').'</h3>';
 
                         }else{
 
@@ -155,7 +155,7 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
     function __construct() {
         parent::__construct( array(
             'widget_id'=>'group-public-form-widget',
-            'widget_title'=>__('Form of the publication','wp-recall'),
+            'widget_title'=>__('Publication form','wp-recall'),
             'widget_place'=>'content',
             'widget_type'=>'hidden'
             )
@@ -179,7 +179,7 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 
     function options($instance){
 
-        $defaults = array('title' => __('Form of the publication','wp-recall'), 'type_form' => 0);
+        $defaults = array('title' => __('Publication form','wp-recall'), 'type_form' => 0);
         $instance = wp_parse_args( (array) $instance, $defaults );
 
         echo '<label>'.__('Title','wp-recall').'</label>'
@@ -199,7 +199,7 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
     function __construct() {
         parent::__construct( array(
             'widget_id'=>'group-category-list-widget',
-            'widget_title'=>__('Categories Content Group','wp-recall'),
+            'widget_title'=>__('Group categories','wp-recall'),
             'widget_place'=>'unuses'
             )
         );
@@ -207,7 +207,7 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
 
     function options($instance){
 
-        $defaults = array('title' => __('Categories Content Group','wp-recall'));
+        $defaults = array('title' => __('Group categories','wp-recall'));
         $instance = wp_parse_args( (array) $instance, $defaults );
 
         echo '<label>'.__('Title','wp-recall').'</label>'
@@ -398,7 +398,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
             </nav>
 
         <?php }else{ ?>
-            <p><?php _e("Publications don't have","wp-recall"); ?></p>
+            <p><?php _e("You do not have any publications","wp-recall"); ?></p>
         <?php }
 
         echo $after;
@@ -425,7 +425,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
         echo '<label>'.__('Title','wp-recall').'</label>'
                 . '<input type="text" name="'.$this->field_name('title').'" value="'.$instance['title'].'">';
-        echo '<label>'.__('The excerpt','wp-recall').'</label>'
+        echo '<label>'.__('Summary','wp-recall').'</label>'
                 . '<select name="'.$this->field_name('excerpt').'">'
                 . '<option value="0" '.selected(0,$instance['excerpt'],false).'>'.__('Do not display','wp-recall').'</option>'
                 . '<option value="1" '.selected(1,$instance['excerpt'],false).'>'.__('Display','wp-recall').'</option>'

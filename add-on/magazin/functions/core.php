@@ -438,16 +438,16 @@ function rcl_payment_order($order_id,$user_id=false){
     $text = apply_filters('payment_mail_text',$text);
 
     $textmail = '
-    <p>'.__('User pay a purchase','wp-recall').' "'.get_bloginfo('name').'".</p>
+    <p>'.__('User has paid for the order','wp-recall').' "'.get_bloginfo('name').'".</p>
     <h3>'.__('Information about the customer','wp-recall').':</h3>
     <p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$user_id).'</p>
     <p><b>'.__('Email','wp-recall').'</b>: '.get_the_author_meta('user_email',$user_id).'</p>
     '.$show_custom_field.'
-    <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$order_id,rcl_get_status_name_order(2)).'.</p>
+    <p>'.sprintf(__('Order №%d received status "%s"','wp-recall'),$order_id,rcl_get_status_name_order(2)).'.</p>
     <h3>'.__('Order details','wp-recall').':</h3>
     '.$table_order.'
 	'.$text.'
-    <p>'.__('Link to control the order in admin','wp-recall').':</p>
+    <p>'.__('Link for managing the order','wp-recall').':</p>
     <p>'.admin_url('admin.php?page=manage-rmag&order-id='.$order_id).'</p>';
 
     if($admin_email){
@@ -459,15 +459,15 @@ function rcl_payment_order($order_id,$user_id=false){
 
     $email = get_the_author_meta('user_email',$user_id);
     $textmail = '
-    <p>'.sprintf(__('You paid for a purchase "%s" funds from his personal account.','wp-recall'),get_bloginfo('name')).'</p>
+    <p>'.sprintf(__('You paid for the order %s with funds from your personal account.','wp-recall'),get_bloginfo('name')).'</p>
     <h3>'.__('Information about the customer','wp-recall').':</h3>
     <p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$user_id).'</p>
     <p><b>'.__('Email','wp-recall').'</b>: '.get_the_author_meta('user_email',$user_id).'</p>
-    <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$order_id,rcl_get_status_name_order(2)).'.</p>
+    <p>'.sprintf(__('Order №%d received status "%s"','wp-recall'),$order_id,rcl_get_status_name_order(2)).'.</p>
     <h3>'.__('Order details','wp-recall').':</h3>
     '.$table_order.'
 	'.$text.'
-    <p>'.__('Your order has been paid and is processing. You can follow the change of his status from his personal account','wp-recall').'</p>';
+    <p>'.__('Your order has been paid and is being processied. You can monitor its status in your personal cabinet','wp-recall').'</p>';
     rcl_mail($email, $subject, $textmail);
 
     do_action('rcl_payment_order',$order_id,$order);

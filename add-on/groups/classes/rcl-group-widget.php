@@ -43,7 +43,7 @@ class Rcl_Group_Widget {
 
         if($object->widget_type=='hidden')
             $before .= '<a href="#" onclick="rcl_more_view(this); return false;" class="manage-hidden-widget">'
-                . '<i class="fa fa-plus-square-o"></i>'.__('Show completely','wp-recall')
+                . '<i class="fa fa-plus-square-o"></i>'.__('Show all','wp-recall')
                 . '</a>';
 
         $before .= '<div class="widget-content">';

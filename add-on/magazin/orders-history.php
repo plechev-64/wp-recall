@@ -71,7 +71,7 @@ class Rcl_Orders_History_Table extends WP_List_Table {
             'cb'        => '<input type="checkbox" />',
             'order_id' => __( 'Order ID', 'wp-recall' ),
             'order_author' => __( 'Users', 'wp-recall' ),
-            'numberproducts' => __( 'Number products', 'wp-recall' ),
+            'numberproducts' => __( 'Number of products', 'wp-recall' ),
             'order_price'    => __( 'Order sum', 'wp-recall' ),
             'order_status'    => __( 'Status', 'wp-recall' ),
             'order_date'      => __( 'Date', 'wp-recall' )
@@ -114,7 +114,7 @@ class Rcl_Orders_History_Table extends WP_List_Table {
     
     function column_order_author($item){
       $actions = array(
-            'all-orders'    => sprintf('<a href="?page=%s&action=%s&user=%s">'.__( 'Get user orders', 'wp-recall' ).'</a>',$_REQUEST['page'],'all-orders',$item->order_author),
+            'all-orders'    => sprintf('<a href="?page=%s&action=%s&user=%s">'.__( 'All user orders', 'wp-recall' ).'</a>',$_REQUEST['page'],'all-orders',$item->order_author),
         );
       return sprintf('%1$s %2$s', $item->order_author.': '.get_the_author_meta('user_login',$item->order_author), $this->row_actions($actions) );
     }
@@ -285,7 +285,7 @@ function rcl_admin_orders_page(){
   
   $Rcl_Orders->prepare_items();
 
-  echo '</pre><div class="wrap"><h2>'.__('Orders history','wp-recall').'</h2>';
+  echo '</pre><div class="wrap"><h2>'.__('Order history','wp-recall').'</h2>';
 
   echo rcl_get_chart_orders($Rcl_Orders->items);
    ?>

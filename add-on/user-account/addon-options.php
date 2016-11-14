@@ -35,12 +35,12 @@ function rcl_user_account_options($content){
         }
         
         $payment_opt = array(
-                        __('Funds from the personal account user','wp-recall')                       
+                        __('Payment from user’s personal account','wp-recall')                       
                     );
         
         if($init_gateway){
-            $payment_opt[] = __('Directly through the payment system','wp-recall');
-            $payment_opt[] = __('To offer both options','wp-recall');
+            $payment_opt[] = __('Payment through payment systems','wp-recall');
+            $payment_opt[] = __('Offer both options','wp-recall');
         }
 
         $content .= $opt->option_block(
@@ -52,10 +52,10 @@ function rcl_user_account_options($content){
                     'name'=>'type_order_payment',
                     'options'=>$payment_opt
                 )),
-                $opt->notice(__('If the connection to the payment aggregator not in use, it is possible to set only "Funds from the personal account user"!','wp-recall')),
+                $opt->notice(__('If the connection to the payment aggregator not used, apply "Funds from user personal account"!','wp-recall')),
 
                 $opt->title(__('The connection to payment aggregator','wp-recall')),
-                $opt->label(__('Used type of connection','wp-recall')),
+                $opt->label(__('Applied connection type','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'connect_sale',
                     'parent'=>true,
@@ -70,7 +70,7 @@ function rcl_user_account_options($content){
         if($init_gateway){
             $content .= $opt->option_block(
                 array(
-                    $opt->title(__('Service page payment systems','wp-recall')),
+                    $opt->title(__('Service page of payment systems','wp-recall')),
                     $opt->notice('<p>1. Создайте на своем сайте четыре страницы:</p>
                     - пустую для success<br>
                     - пустую для result<br>
@@ -80,7 +80,7 @@ function rcl_user_account_options($content){
                     <p>2. Укажите здесь какие страницы и для чего вы создали. </p>
                     <p>3. В настройках своего аккаунта платежной системы укажите URL страницы для fail, success и result</p>'),
 
-                    $opt->label(__('Page RESULT','wp-recall')),
+                    $opt->label(__('RESULT Page','wp-recall')),
                     wp_dropdown_pages( array(
                             'selected'   => $rcl_options['page_result_pay'],
                             'name'       => 'global[page_result_pay]',
@@ -88,7 +88,7 @@ function rcl_user_account_options($content){
                             'echo'             => 0 )
                     ),
                     
-                    $opt->label(__('Page SUCCESS','wp-recall')),
+                    $opt->label(__('SUCCESS Page','wp-recall')),
                     wp_dropdown_pages( array(
                             'selected'   => $rcl_options['page_success_pay'],
                             'name'       => 'global[page_success_pay]',
@@ -96,7 +96,7 @@ function rcl_user_account_options($content){
                             'echo'             => 0 )
                     ),
                     
-                    $opt->label(__('Page FAIL','wp-recall')),
+                    $opt->label(__('FAIL Page','wp-recall')),
                     wp_dropdown_pages( array(
                             'selected'   => $rcl_options['page_fail_pay'],
                             'name'       => 'global[page_fail_pay]',
@@ -104,7 +104,7 @@ function rcl_user_account_options($content){
                             'echo'             => 0 )
                     ),
                     
-                    $opt->label(__('The successful payment page','wp-recall')),
+                    $opt->label(__('Successful payment page','wp-recall')),
                     wp_dropdown_pages( array(
                             'selected'   => $rcl_options['page_successfully_pay'],
                             'name'       => 'global[page_successfully_pay]',

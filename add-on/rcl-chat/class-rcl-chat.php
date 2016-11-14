@@ -211,7 +211,7 @@ class Rcl_Chat {
             $user_block = get_user_meta($private_key,'rcl_black_list:'.$this->user_id);
             
             if($user_block){
-                $this->add_error('insert_message',__('You have been blocked on chat','wp-recall'));
+                $this->add_error('insert_message',__('You have been blocked on this chat','wp-recall'));
                 return $this->errors();
             }
         }
@@ -388,9 +388,9 @@ class Rcl_Chat {
 
         }else{
             if($this->important)
-                $notice = __('Important messages in this chat no','wp-recall');
+                $notice = __('No important messages in this chat','wp-recall');
             else
-                $notice = __('There will be history','wp-recall');
+                $notice = __('Chat history will be displayed here','wp-recall');
             
             $content .= sprintf('<span class="anons-message">%s</span>',$notice);
         }

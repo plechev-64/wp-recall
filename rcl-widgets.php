@@ -9,7 +9,7 @@ function widget_new_author() {
 class Widget_new_author extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'rcl-new-users', 'description' => __('New users on the website','wp-recall') );
+		$widget_ops = array( 'classname' => 'rcl-new-users', 'description' => __('New users on website','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'rcl-new-users' );
 		parent::__construct( 'rcl-new-users', 'RCL: '.__('New users','wp-recall'), $widget_ops, $control_ops );
 	}
@@ -49,7 +49,7 @@ class Widget_new_author extends WP_Widget {
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('The number of displayed users','wp-recall'); ?>:</label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Number of displayed users','wp-recall'); ?>:</label>
 			<input id="<?php echo $this->get_field_id( 'count_user' ); ?>" name="<?php echo $this->get_field_name( 'count_user' ); ?>" value="<?php echo $instance['count_user']; ?>" style="width:100%;" />
 		</p>
 		<?php
@@ -61,7 +61,7 @@ class Widget_new_author extends WP_Widget {
 			);
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'page_all_users' ); ?>"><?php _e('Page all users','wp-recall'); ?>:</label>
+			<label for="<?php echo $this->get_field_id( 'page_all_users' ); ?>"><?php _e('All users page','wp-recall'); ?>:</label>
 			<?php echo wp_dropdown_pages( $args ); ?>
 		</p>
 	<?php
@@ -76,9 +76,9 @@ function widget_online_users() {
 class Widget_online_users extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'rcl-online-users', 'description' => __('Conclusion the users in the network','wp-recall') );
+		$widget_ops = array( 'classname' => 'rcl-online-users', 'description' => __('Online users output','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'rcl-online-users' );
-		parent::__construct( 'rcl-online-users', 'RCL: '.__('Users on the network','wp-recall'), $widget_ops, $control_ops );
+		parent::__construct( 'rcl-online-users', 'RCL: '.__('Online users','wp-recall'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
@@ -105,7 +105,7 @@ class Widget_online_users extends WP_Widget {
 	}
 
 	function form( $instance ) {
-		$defaults = array( 'title' => __('Right now','wp-recall'));
+		$defaults = array( 'title' => __('Online','wp-recall'));
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title','wp-recall'); ?>:</label>
@@ -120,7 +120,7 @@ class Widget_online_users extends WP_Widget {
 			);
 		?>
 		<p>
-			<label for="<?php echo $instance['page_all_users']; ?>"><?php _e('Page all users','wp-recall'); ?>:</label>
+			<label for="<?php echo $instance['page_all_users']; ?>"><?php _e('All users page','wp-recall'); ?>:</label>
 			<?php echo wp_dropdown_pages( $args ); ?>
 		</p>
 	<?php
@@ -135,7 +135,7 @@ function widget_author_profil() {
 class Widget_author_profil extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'rcl-primary-panel', 'description' => __('The block with the main profile information','wp-recall') );
+		$widget_ops = array( 'classname' => 'rcl-primary-panel', 'description' => __('Block with main profile information','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'rcl-primary-panel' );
 		parent::__construct( 'rcl-primary-panel', 'RCL: '.__('Control panel','wp-recall'), $widget_ops, $control_ops );
 	}

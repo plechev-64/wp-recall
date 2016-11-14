@@ -105,7 +105,7 @@ if(!isset($rmag_options['basket_page_rmag'])){
         'new_item_name' => __('New category','wp-recall'),
         'separate_items_with_commas' => __('Categories separated by commas','wp-recall'),
         'add_or_remove_items' => __('Add or delete a category','wp-recall'),
-        'choose_from_most_used' => __('Select to use the','wp-recall'),
+        'choose_from_most_used' => __('Select to use','wp-recall'),
         'menu_name' => __('Product categories','wp-recall')
     );
 
@@ -137,15 +137,15 @@ if(!isset($rmag_options['basket_page_rmag'])){
         'search_items' => __('Search','wp-recall'),
         'popular_items' => __('Popular tags','wp-recall'),
         'all_items' => __('All tags','wp-recall'),
-        'parent_item' => __('Parent tag','wp-recall'),
-        'parent_item_colon' => __('Parent tag','wp-recall'),
+        'parent_item' => __('Parental tag','wp-recall'),
+        'parent_item_colon' => __('Parental tag','wp-recall'),
         'edit_item' => __('Edit','wp-recall'),
         'update_item' => __('Update','wp-recall'),
-        'add_new_item' => __('Add a new','wp-recall'),
+        'add_new_item' => __('Add a new tag','wp-recall'),
         'new_item_name' => __('New tag','wp-recall'),
         'separate_items_with_commas' => __('Tags separated by commas','wp-recall'),
         'add_or_remove_items' => __('Add or delete','wp-recall'),
-        'choose_from_most_used' => __('Select to use the','wp-recall'),
+        'choose_from_most_used' => __('Select to use','wp-recall'),
         'menu_name' => __('Product Tags','wp-recall')
     );
 
@@ -197,7 +197,7 @@ if(!isset($rmag_options['basket_page_rmag'])){
     
     wp_insert_post(array(
         'post_title'=>__('Products catalog','wp-recall'),
-        'post_content'=>'<p>'.__('It will display your product catalog. Display product catalog generated shortcode productlist <a href="https://codeseller.ru/api-rcl/productlist/">(description shortcode)</a>. You can choose another page to its location.','wp-recall').'</p><br/>[productlist]',
+        'post_content'=>'<p>'.__('Your product catalog will be displayed here. Product catalog is being generated shortcode productlist <a href="https://codeseller.ru/api-rcl/productlist/">(description shortcode)</a>. You can choose another page for display','wp-recall').'</p><br/>[productlist]',
         'post_status'=>'publish',
         'post_author'=>1,
         'post_type'=>'page',

@@ -90,7 +90,7 @@ class Rcl_Payments_List_Table extends WP_List_Table {
     function column_payment_user($item){
       $actions = array(				
             'delete'    => sprintf('<a href="?page=%s&action=%s&payment=%s">'.__( 'Delete payment', 'wp-recall' ).'</a>',$_REQUEST['page'],'delete',$item['ID']),
-            'all-payments'    => sprintf('<a href="?page=%s&action=%s&user=%s">'.__( 'Get user payments', 'wp-recall' ).'</a>',$_REQUEST['page'],'all-payments',$item['user']),
+            'all-payments'    => sprintf('<a href="?page=%s&action=%s&user=%s">'.__( 'All user payments', 'wp-recall' ).'</a>',$_REQUEST['page'],'all-payments',$item['user']),
         );
       return sprintf('%1$s %2$s', $item[ 'user' ].': '.get_the_author_meta('user_login',$item[ 'user' ]), $this->row_actions($actions) );
     }
@@ -311,8 +311,8 @@ function rcl_admin_statistic_cashe(){
   
   echo '</pre><div class="wrap"><h2>'.__('Payment history','wp-recall').'</h2>';
 
-  echo '<p>'.__('All transfers','wp-recall').': '.$Rcl_Payments->total_items.' '.__('in the amount of','wp-recall').' '.$Rcl_Payments->sum.' '.rcl_get_primary_currency(1).' ('.__('Average check','wp-recall').': '.$sr.' '.rcl_get_primary_currency(1).')</p>';
-  echo '<p>'.__('In the system','wp-recall').': '.$Rcl_Payments->sum_balance.' '.rcl_get_primary_currency(1).'</p>';
+  echo '<p>'.__('All payments','wp-recall').': '.$Rcl_Payments->total_items.' '.__('for the amount of','wp-recall').' '.$Rcl_Payments->sum.' '.rcl_get_primary_currency(1).' ('.__('Average check','wp-recall').': '.$sr.' '.rcl_get_primary_currency(1).')</p>';
+  echo '<p>'.__('Total in the system','wp-recall').': '.$Rcl_Payments->sum_balance.' '.rcl_get_primary_currency(1).'</p>';
   //echo '<p>Средняя выручка за сутки: '.$day_pay.' '.rcl_get_primary_currency(1).'</p>';
   echo rcl_get_chart_payments($Rcl_Payments->items);
    ?>

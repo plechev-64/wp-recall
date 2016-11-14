@@ -12,8 +12,8 @@ function rcl_admin_page_rating($content){
 
             $more = false;
 
-            $notice_temp = __('select a template output stories where','wp-recall').' <br>'
-                . __('%USER% - name of the voted','wp-recall').', <br>'
+            $notice_temp = __('select a template for history output where','wp-recall').' <br>'
+                . __('%USER% - name of the user who voted','wp-recall').', <br>'
                 . __('%VALUE% - rated value','wp-recall').', <br>'
                 . __('%DATE% - date of changing the rating','wp-recall').', <br>';
                 if($type=='comment') $notice_temp .= __('%COMMENT% - link to comment','wp-recall').', <br>';
@@ -31,7 +31,7 @@ function rcl_admin_page_rating($content){
 			$more .= $opt->label(__('Overall rating','wp-recall').' '.$data['type_name']);
             $more .= $opt->option('select',array(
                     'name'=>'rating_overall_'.$type,
-                    'options'=>array(__('Sum votes values','wp-recall'),__('Number of positive and negative votes','wp-recall'))
+                    'options'=>array(__('Sum of votes','wp-recall'),__('Number of positive and negative votes','wp-recall'))
                 ));
 		}
 
@@ -48,12 +48,12 @@ function rcl_admin_page_rating($content){
 
         $options .= $opt->option_block(
             array(
-                $opt->title(__('The rating','wp-recall').' '.$data['type_name']),
+                $opt->title(__('Rating','wp-recall').' '.$data['type_name']),
 
                 $opt->option('select',array(
                     'name'=>'rating_'.$type,
                     'parent'=>true,
-                    'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
+                    'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
                 )),
                 $opt->child(
                     array(
@@ -66,7 +66,7 @@ function rcl_admin_page_rating($content){
 
                     $opt->label(__('Points for ranking','wp-recall').' '.$data['type_name']),
                     $opt->option('text',array('name'=>'rating_point_'.$type)),
-                    $opt->notice(__('set how many points the ranking will be awarded for a positive vote or how many points will be subtracted from the rating for a negative vote','wp-recall')),
+                    $opt->notice(__('set how many points will be awarded for a positive or negative vote for the publication','wp-recall')),
 
                     $opt->label(sprintf(__('The influence of rating %s on the overall rating','wp-recall'),$data['type_name'])),
                     $opt->option('select',array(
@@ -80,8 +80,8 @@ function rcl_admin_page_rating($content){
                             'value'=>1
                         ),
                         array(
-                        $opt->label(__('Template output stories in the overall ranking','wp-recall')),
-                        $opt->option('text',array('name'=>'rating_temp_'.$type,'default'=>'%DATE% %USER% '.__('voted','wp-recall').': %VALUE%')),
+                        $opt->label(__('Template of history output in the overall ranking','wp-recall')),
+                        $opt->option('text',array('name'=>'rating_temp_'.$type,'default'=>'%DATE% %USER% '.__('has voted','wp-recall').': %VALUE%')),
                         $opt->notice($notice_temp)
                     ))
                         
@@ -99,7 +99,7 @@ function rcl_admin_page_rating($content){
 
             $opt->option_block(
                 array(
-                    $opt->label(__('Allow to bypass the moderation of publications at achievement rating','wp-recall')),
+                    $opt->label(__('Influence of rationg on publication moderation','wp-recall')),
                     $opt->option('number',array('name'=>'rating_no_moderation')),
                     $opt->notice(__('specify the rating level at which the user will get the ability to post without moderation','wp-recall'))
                 )
@@ -113,9 +113,9 @@ function rcl_admin_page_rating($content){
                             'default'=>0,
                             'options'=>array(
                                     0=>__('All users','wp-recall'),
-                                    1=>__('Participants and older','wp-recall'),
-                                    2=>__('Authors and older','wp-recall'),
-                                    7=>__('Editors and older','wp-recall'),
+                                    1=>__('Participants and higher','wp-recall'),
+                                    2=>__('Authors and higher','wp-recall'),
+                                    7=>__('Editors and higher','wp-recall'),
                                     10=>__('only Administrators','wp-recall')
                             )
                         )),
@@ -125,7 +125,7 @@ function rcl_admin_page_rating($content){
 
             $opt->option_block(
                 array(
-                    $opt->label(__('Deleting your voice','wp-recall')),
+                    $opt->label(__('Delete your vote','wp-recall')),
                     $opt->option('select',array(
                             'name'=>'rating_delete_voice',
                             'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))

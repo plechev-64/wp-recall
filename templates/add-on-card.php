@@ -12,9 +12,9 @@
         <div class="action-links">
             <ul class="plugin-action-buttons">
                 <?php if(isset($active_addons[$addon->slug])): ?>
-                    <li><span class="button button-disabled" title="<?php _e('This extension has already been installed','wp-recall') ?>"><?php _e('Installed','wp-recall') ?></span></li>
+                    <li><span class="button button-disabled" title="<?php _e('This add-on has already been installed','wp-recall') ?>"><?php _e('Installed','wp-recall') ?></span></li>
                 <?php else: ?>
-                    <li><a class="button" target="_blank" data-slug="<?php echo $addon->slug; ?>" href="<?php echo $addon->add_on_uri; ?>" aria-label="<?php _e('Go to the page','wp-recall') ?> <?php echo $addon->name; ?> <?php echo $addon->version; ?>" data-name="<?php echo $addon->name; ?> <?php echo $addon->version; ?>"><?php _e('Go to','wp-recall') ?></a></li>
+                    <li><a class="button" target="_blank" data-slug="<?php echo $addon->slug; ?>" href="<?php echo $addon->add_on_uri; ?>" aria-label="<?php _e('Go to page','wp-recall') ?> <?php echo $addon->name; ?> <?php echo $addon->version; ?>" data-name="<?php echo $addon->name; ?> <?php echo $addon->version; ?>"><?php _e('Go to','wp-recall') ?></a></li>
                 <?php endif; ?>
                 <!--<li><a href="<?php echo $addon->add_on_uri; ?>" class="thickbox" aria-label="Подробности о <?php echo $addon->name; ?> <?php echo $addon->version; ?>" data-title="<?php echo $addon->add_on_uri; ?> <?php echo $addon->version; ?>">Детали</a></li>-->
             </ul>

@@ -214,7 +214,7 @@ function rcl_include_template_office(){
     //Если ни один шаблон не активен
     if(!$rcl_template){
         //если опять ничего не найдено
-        echo '<h3>'.__('Templates office not found!','wp-recall').'</h3>';
+        echo '<h3>'.__('Office templates not found!','wp-recall').'</h3>';
     }else{
         //Если шаблон найден и активирован, то подключаем
         rcl_include_template('office.php',$active_addons[$rcl_template]['path']);           

@@ -13,11 +13,11 @@ function rcl_chat_options($content){
                     $opt->title(__('General settings','wp-recall')),
 
                     $opt->option('number',array(
-                        'label'=>__('The delay between requests','wp-recall'),
+                        'label'=>__('Delay between requests','wp-recall'),
                         'name'=>'delay',
                         'group'=>'chat',
                         'default'=>15,
-                        'notice'=>__('In seconds. It is recommended to put at least 10 seconds','wp-recall'),
+                        'notice'=>__('In seconds. It is recommended to choose at least 10 seconds','wp-recall'),
                     )),
 
                     $opt->option('number',array(
@@ -25,7 +25,7 @@ function rcl_chat_options($content){
                         'name'=>'inactivity',
                         'group'=>'chat',
                         'default'=>10,
-                        'notice'=>__('In minuts. The time of user inactivity after which he ceases to receive new messages in chat','wp-recall'),
+                        'notice'=>__('"In minutes. The time of user inactivity after which he ceases to receive new messages in chat','wp-recall'),
                     )),
 
                     $opt->option('number',array(
@@ -50,7 +50,7 @@ function rcl_chat_options($content){
                         'options'=>array(
                             __('No','wp-recall'),
                             __('Yes','wp-recall')),
-                        'notice'=>__('Option is responsible for the incorporation by reference of media content, such as from Youtube or Twitter','wp-recall'),
+                        'notice'=>__('Option is responsible for the incorporation of media content, such as from Youtube or Twitter from the link','wp-recall'),
                     )),
 
                     $opt->option('select',array(
@@ -76,7 +76,7 @@ function rcl_chat_options($content){
                                 'notice'=>__('By default: jpeg, jpg, png, zip, mp3','wp-recall')
                             )),
                             $opt->option('number',array(
-                                'label'=>__('The maximum file size','wp-recall'),
+                                'label'=>__('Maximum file size','wp-recall'),
                                 'name'=>'file_size',
                                 'group'=>'chat',
                                 'default'=>2
@@ -91,14 +91,14 @@ function rcl_chat_options($content){
                     $opt->title(__('Personal chat','wp-recall')),
 
                     $opt->option('number',array(
-                        'label'=>__('The number of messages in the conversation','wp-recall'),
+                        'label'=>__('Number of messages in the conversation','wp-recall'),
                         'name'=>'messages_amount',
                         'group'=>'chat',
                         'default'=>100,
                         'notice'=>__('The maximum number of messages in the conversation between two users. Default: 100','wp-recall')
                     )),
                     $opt->option('select',array(
-                        'label'=>__('The contacts bar','wp-recall'),
+                        'label'=>__('Contacts bar','wp-recall'),
                         'name'=>'contact_panel',
                         'group'=>'chat',
                         'parent'=>true,
@@ -113,7 +113,7 @@ function rcl_chat_options($content){
                         ),
                         array(
                             $opt->option('select',array(
-                                'label'=>__('The place of a conclusion','wp-recall'),
+                                'label'=>__('Output location','wp-recall'),
                                 'name'=>'place_contact_panel',
                                 'group'=>'chat',
                                 'parent'=>true,

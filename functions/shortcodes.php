@@ -142,7 +142,7 @@ function rcl_user_action($type=1){
     switch($type){
         case 1: $last_action = rcl_get_useraction($action);
                 if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
-                else echo '<span class="status_user offline" title="'.__('not online','wp-recall').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
+                else echo '<span class="status_user offline" title="'.__('offline','wp-recall').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
         break;
         case 2: echo rcl_get_miniaction($action); break;
     }
@@ -203,7 +203,7 @@ function rcl_get_shortcode_wp_recall(){
     global $user_LK;
 
     if(!$user_LK){
-        return '<h4>'.__('To begin to use the capabilities of your personal account, please log in or register on this site','wp-recall').'</h4>
+        return '<h4>'.__('To use your personal account, please log in or register on this site','wp-recall').'</h4>
         <div class="authorize-form-rcl">'.rcl_get_authorize_form().'</div>';
     }
 
@@ -362,7 +362,7 @@ function rcl_tab_shortcode($atts){
     $atts));
     
     if(!$user_ID){
-        return '<h4>'.__('To begin to use the capabilities of your personal account, please log in or register on this site','wp-recall').'</h4>
+        return '<h4>'.__('To use your personal account, please log in or register on this site','wp-recall').'</h4>
         <div class="authorize-form-rcl">'.rcl_get_authorize_form().'</div>';
     }
     

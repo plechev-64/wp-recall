@@ -68,7 +68,7 @@ function rcl_repository_page(){
     
     $content .= $navi->pagenavi();
 
-    echo '<h1>'.__('Repository add-ons WP-Recall','wp-recall').'</h1>';
+    echo '<h1>'.__('Repository for WP-Recall add-ons','wp-recall').'</h1>';
     //echo '<p>На этой странице отображаются доступные на данный момент дополнения, но не установленные на вашем сайте.</p>';
     echo $content;
     

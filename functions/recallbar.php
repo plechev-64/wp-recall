@@ -20,7 +20,7 @@ function rcl_setup_bar_default_data(){
         array(                
             'url'=>$rcl_user_URL,
             'icon'=>'fa-user',
-            'label'=>__('In personal account','wp-recall')
+            'label'=>__('To personal account','wp-recall')
         )
     );
     
@@ -29,7 +29,7 @@ function rcl_setup_bar_default_data(){
             array(                
                 'url'=>admin_url(),
                 'icon'=>'fa-external-link-square',
-                'label'=>__('In admin area','wp-recall')
+                'label'=>__('To admin area','wp-recall')
             )
         );
     }

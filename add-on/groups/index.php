@@ -29,7 +29,7 @@ if(function_exists('rcl_register_rating_type')){
     if(!is_admin()) add_action('init','rcl_register_rating_group_type');
     if(is_admin()) add_action('admin_init','rcl_register_rating_group_type');
     function rcl_register_rating_group_type(){
-        rcl_register_rating_type(array('post_type'=>'post-group','type_name'=>__('Record groups','wp-recall'),'style'=>true));
+        rcl_register_rating_type(array('post_type'=>'post-group','type_name'=>__('Groups records','wp-recall'),'style'=>true));
     }
 }
 
@@ -70,7 +70,7 @@ function rcl_groups_widget_posts_remove_cache($post_id,$postdata){
 
 add_action('init','rcl_add_postlist_group',10);
 function rcl_add_postlist_group(){
-    rcl_postlist('group','post-group',__('Record groups','wp-recall'),array('order'=>40));
+    rcl_postlist('group','post-group',__('Groups records','wp-recall'),array('order'=>40));
 }
 
 add_action('init','rcl_add_tab_groups');
@@ -95,7 +95,7 @@ function rcl_add_tab_groups(){
                 ),
                 array(
                     'id' => 'admin-groups',
-                    'name' => __('Created groups','wp-recall'),
+                    'name' => __('Groups created','wp-recall'),
                     'icon' => 'fa-cogs',
                     'callback' => array(
                         'name' => 'rcl_tab_groups',
@@ -230,7 +230,7 @@ function rcl_get_link_group_tag($content){
             }
         }
 
-	$cat = '<p class="post-group-meta"><i class="fa fa-folder-open rcl-icon"></i>'.__('Category in the group','wp-recall').': <a href="'. get_term_link( (int)$group_id, 'groups' ) .'?group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
+	$cat = '<p class="post-group-meta"><i class="fa fa-folder-open rcl-icon"></i>'.__('Group categories','wp-recall').': <a href="'. get_term_link( (int)$group_id, 'groups' ) .'?group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
 
 	return $cat.$content;
 }
@@ -255,7 +255,7 @@ function rcl_add_namegroup($content){
     
     if(!$group) return $content;
 
-    $group_link = '<p class="post-group-meta"><i class="fa fa-users rcl-icon"></i><span>'.__('Published in the group','wp-recall').'</span>: <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
+    $group_link = '<p class="post-group-meta"><i class="fa fa-users rcl-icon"></i><span>'.__('Published in group','wp-recall').'</span>: <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
 
     $content = $group_link.$content;
     return $content;
@@ -297,7 +297,7 @@ function rcl_new_group(){
     $group_id = rcl_create_group(array('name'=>$name_group,'admin_id'=>$user_ID));
 
     if(!$group_id){
-        rcl_notice_text(__('Create a group failed','wp-recall'),'error');
+        rcl_notice_text(__('Group creation failed','wp-recall'),'error');
     }else{
         wp_redirect(get_term_link( (int)$group_id, 'groups' ));
         exit;
@@ -399,15 +399,15 @@ function rcl_get_group_options($group_id){
             . '</div>'
             . '<div class="group-option">'
                 . '<label>'.__('Membership','wp-recall').'</label>'
-                . '<input type="checkbox" name="group-options[can_register]" '.checked(rcl_get_group_option($group_id,'can_register'),1,false).' value="1"> '.__('Registration is permitted','wp-recall')
-                . '<label>'.__('The role of the new user','wp-recall').'</label>'
+                . '<input type="checkbox" name="group-options[can_register]" '.checked(rcl_get_group_option($group_id,'can_register'),1,false).' value="1"> '.__('Registration allowed','wp-recall')
+                . '<label>'.__('New user role','wp-recall').'</label>'
                 . '<select name="group-options[default_role]">'
                 . '<option '.selected($default_role,'reader',false).' value="reader">'.__('Visitor','wp-recall').'</option>'
                 . '<option '.selected($default_role,'author',false).' value="author">'.__('Author','wp-recall').'</option>'
                 . '</select>'
             . '</div>'
             . '<div class="group-option">'
-                . '<label>'.sprintf('%s <small>(%s)</small>',__('Group categories','wp-recall'),__('separated by commas','wp-recall')).'</label>'
+                . '<label>'.sprintf('%s <small>(%s)</small>',__('Group categories','wp-recall'),__('separate by commas','wp-recall')).'</label>'
                 . '<textarea name="group-options[category]">'.$category.'</textarea>'
             . '</div>';
 
@@ -507,20 +507,20 @@ function rcl_apply_group_request(){
                 <p>%s:</p>
                 <p>'.get_term_link( (int)$group_id, 'groups' ).'</p>',
                 __('Welcome to the group','wp-recall'),
-                sprintf(__('Congratulations , your request for access to a private group on "%s" website has been approved','wp-recall'),get_bloginfo('name')),
-                __('Now you can take part in the life of the group as it is a full participant.','wp-recall'),
+                sprintf(__('Congratulations , your access request to a private group on "%s" website has been approved','wp-recall'),get_bloginfo('name')),
+                __('Now you can take part in the life of the group as its full participant.','wp-recall'),
                 __('You can visit the group by clicking on the link','wp-recall')
             );
 
         rcl_group_add_user($user_id,$group_id);
 
-        $log['result']='<span class="success">'.__('The request was accepted','wp-recall').'</span>';
+        $log['result']='<span class="success">'.__('Request approved','wp-recall').'</span>';
 
     }else{
 
         $log['result']='<span class="error">'.__('Request rejected','wp-recall').'</span>';
-        $subject = __('The request to access the group rejected.','wp-recall');
-        $textmail = sprintf('<p>'.__('We are sorry, but your request to access the private group "%s" on the site "%s" was rejected by its administrator','wp-recall').'.</p>',
+        $subject = __('Access request to the group has been rejected.','wp-recall');
+        $textmail = sprintf('<p>'.__('We are sorry, but your request to access a private group "%s" on the site "%s" has been rejected by its administrator','wp-recall').'.</p>',
                 $rcl_group->name,
                 get_bloginfo('name')
             );

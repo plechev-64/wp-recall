@@ -21,9 +21,9 @@ function rcl_init_js_avatar_variables($data){
         $size_ava = (isset($rcl_options['avatar_weight'])&&$rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: 2;
     
         $data['profile']['avatar_size'] = $size_ava;
-        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),$size_ava);
-        $data['local']['title_image_upload'] = __('The image being loaded','wp-recall');
-        $data['local']['title_webcam_upload'] = __('Image from the camera','wp-recall');
+        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum image size! Max. %s MB','wp-recall'),$size_ava);
+        $data['local']['title_image_upload'] = __('Image being loaded','wp-recall');
+        $data['local']['title_webcam_upload'] = __('Image from camera','wp-recall');
     }
     
     return $data;
@@ -96,7 +96,7 @@ function rcl_delete_avatar_action(){
 add_action('wp','rcl_notice_avatar_deleted');
 function rcl_notice_avatar_deleted(){
     if (isset($_GET['rcl-avatar'])&&$_GET['rcl-avatar']=='deleted') 
-        rcl_notice_text(__('Your avatar has been removed','wp-recall'),'success');
+        rcl_notice_text(__('Your avatar has been deleted','wp-recall'),'success');
 }
 
 add_action('wp_ajax_rcl_avatar_upload', 'rcl_avatar_upload');
@@ -258,7 +258,7 @@ function rcl_avatar_upload(){
 	}
 
 	if ( is_wp_error( $rst )){
-		$res['error'] = __('Error download','wp-recall');
+		$res['error'] = __('Download error','wp-recall');
 		echo json_encode($res);
 		exit;
 	}

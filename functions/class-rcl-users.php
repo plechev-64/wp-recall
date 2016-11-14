@@ -524,7 +524,7 @@ class Rcl_Users{
 
         $count_users = (false!==$count_users)? $count_users: $this->count_users();
 
-        $content .='<h3>'.__('Total users','wp-recall').': '.$count_users.'</h3>';
+        $content .='<h3>'.__('Total number of users','wp-recall').': '.$count_users.'</h3>';
 
         if(isset($this->add_uri['users-filter'])) unset($this->add_uri['users-filter']);
 

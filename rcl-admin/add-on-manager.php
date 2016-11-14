@@ -173,8 +173,8 @@ class Rcl_Addons_Manager extends WP_List_Table {
             </div>
             <div class="active second plugin-version-author-uri">
             '.__('Version','wp-recall').' '.$data['version'];
-                    if(isset($data['author-uri'])) $content .= ' | '.__('Author','wp-recall').': <a title="'.__('Visit the page of the author','wp-recall').'" href="'.$data['author-uri'].'" target="_blank">'.$data['author'].'</a>';
-                    if(isset($data['add-on-uri'])) $content .= ' | <a title="'.__('Visit the page of the add-on','wp-recall').'" href="'.$data['add-on-uri'].'" target="_blank">'.__('Page Add-on','wp-recall').'</a>';
+                    if(isset($data['author-uri'])) $content .= ' | '.__('Author','wp-recall').': <a title="'.__('Visit the author’s page','wp-recall').'" href="'.$data['author-uri'].'" target="_blank">'.$data['author'].'</a>';
+                    if(isset($data['add-on-uri'])) $content .= ' | <a title="'.__('Visit the add-on page','wp-recall').'" href="'.$data['add-on-uri'].'" target="_blank">'.__('Add-on page','wp-recall').'</a>';
             $content .= '</div>';
         return $content;
     }
@@ -202,9 +202,9 @@ class Rcl_Addons_Manager extends WP_List_Table {
                 . '<td colspan="'.$colspan.'" class="plugin-update colspanchange">'
                     . '<div class="update-message notice inline notice-warning notice-alt">'
                     . '<p>'
-                        . __('Available fresh version','wp-recall').' '.$this->addon['name'].' '.$this->need_update[$item['ID']]['new-version'].'. ';
+                        . __('New version available','wp-recall').' '.$this->addon['name'].' '.$this->need_update[$item['ID']]['new-version'].'. ';
                         if(isset($this->addon['add-on-uri'])) echo ' <a href="'.$this->addon['add-on-uri'].'"  title="'.$this->addon['name'].'">'.__('view information about the version','wp-recall').'</a> или';
-                        echo ' <a class="update-add-on" data-addon="'.$item['ID'].'" href="#">'.__('To update automatically','wp-recall').'</a></div>'
+                        echo ' <a class="update-add-on" data-addon="'.$item['ID'].'" href="#">'.__('update automatically','wp-recall').'</a></div>'
                     . '</p>'
                 . '</td>'
             . '</tr>';
@@ -248,7 +248,7 @@ function rcl_update_status_addon ( ) {
     if ( isset($_GET['addon'])&&isset($_GET['action']) ) {
 
         global $wpdb, $user_ID, $active_addons;
-        if ( ! current_user_can('activate_plugins') ) wp_die(__('You cant control install plugins on this site.','wp-recall'));
+        if ( ! current_user_can('activate_plugins') ) wp_die(__('Insufficient rights to install plugins on this site.','wp-recall'));
 
         $addon = $_GET['addon'];
         $action = rcl_wp_list_current_action();
@@ -411,14 +411,14 @@ function rcl_render_addons_manager(){
     echo '</pre><div class="wrap">'; 
     
     echo '<div id="icon-plugins" class="icon32"><br></div>
-        <h2>'.__('Add-ons Wp-Recall','wp-recall').'</h2>';
+        <h2>'.__('WP-Recall Add-ons','wp-recall').'</h2>';
 
         if(isset($_GET['update-addon'])){
                 switch($_GET['update-addon']){
-                    case 'activate': $text_notice = __('Addition <strong>activated</strong>. It is possible that on the settings page of Wp-Recall new settings','wp-recall'); $type='updated'; break;
+                    case 'activate': $text_notice = __('Addition <strong>activated</strong>. New settings may be available on  WP-Recall page','wp-recall'); $type='updated'; break;
                     case 'deactivate': $text_notice = __('Addition <strong>deactivated</strong>.','wp-recall'); $type='updated'; break;
-                    case 'delete': $text_notice = __('Files and data additions have been <strong>removed</strong>.','wp-recall'); $type='updated'; break;
-                    case 'error-info': $text_notice = __('The Supplement has not been loaded. Add missing the correct header.','wp-recall'); $type='error'; break;
+                    case 'delete': $text_notice = __('Files and data additions have been <strong>deleted</strong>.','wp-recall'); $type='updated'; break;
+                    case 'error-info': $text_notice = __('Add-on has not been loaded. Correct headers not found.','wp-recall'); $type='error'; break;
                     case 'error-activate': $text_notice = $_GET['error-text']; $type='error'; break;
                 }
                 
@@ -431,7 +431,7 @@ function rcl_render_addons_manager(){
         if(isset($_POST['save-rcl-key'])){
             if( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ){
                 update_option('rcl-key',$_POST['rcl-key']);
-                echo '<div id="message" class="updated"><p>'.__('Key is stored','wp-recall').'!</p></div>';
+                echo '<div id="message" class="updated"><p>'.__('Key has been saved','wp-recall').'!</p></div>';
             }
         }
 
@@ -441,16 +441,16 @@ function rcl_render_addons_manager(){
                 <input class="button" type="submit" value="'.__('Save','wp-recall').'" name="save-rcl-key">
                 '.wp_nonce_field('add-rcl-key','_wpnonce',true,false).'
         </form>
-        <p class="install-help">'.__('He will need to update the add-ons here. Get it , you can profile your account online <a href="http://codeseller.ru/" target="_blank">http://codeseller.ru</a>','wp-recall').'</p>';
+        <p class="install-help">'.__('The key is required to update the add-ons here. You can get it in your personal account online <a href="http://codeseller.ru/" target="_blank">http://codeseller.ru</a>','wp-recall').'</p>';
             
         
     echo '
-        <h4>'.__('To install the add-on to Wp-Recall format .zip','wp-recall').'</h4>
-        <p class="install-help">'.__('If you have the archive add-on for wp-recall format .zip, here you can download and install it.','wp-recall').'</p>
+        <h4>'.__('Install the add-on to WP-Recall format .ZIP','wp-recall').'</h4>
+        <p class="install-help">'.__('If you have the add-on archive for WP-Recall format .zip, you can upload and install it here.','wp-recall').'</p>
         <form class="wp-upload-form" action="" enctype="multipart/form-data" method="post">
-                <label class="screen-reader-text" for="addonzip">'.__('Plugin archive','wp-recall').'</label>
+                <label class="screen-reader-text" for="addonzip">'.__('Add-on archive','wp-recall').'</label>
                 <input id="addonzip" type="file" name="addonzip">
-                <input id="install-plugin-submit" class="button" type="submit" value="'.__('To install','wp-recall').'" name="install-addon-submit">
+                <input id="install-plugin-submit" class="button" type="submit" value="'.__('Install','wp-recall').'" name="install-addon-submit">
                 '.wp_nonce_field('install-addons-rcl','_wpnonce',true,false).'
         </form>
 

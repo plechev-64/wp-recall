@@ -349,14 +349,14 @@ class Rcl_Custom_Fields{
                         filesize = filesize.size/1024/1024;
                         if(filesize>maxsize){
                             jQuery(this).parent().css("border","1px solid red").css("padding","2px");
-                            jQuery("#edit-post-rcl").attr("disabled",false).attr("value","'.__('To publish','wp-recall').'");
+                            jQuery("#edit-post-rcl").attr("disabled",false).attr("value","'.__('Publish','wp-recall').'");
                             error = true;
                         }else{
                             jQuery(this).parent().removeAttr("style");
                         }
                     });
                     if(error){
-                        alert("'.__('File size exceeded!','wp-recall').'");
+                        alert("'.__('File size exceedes maximum!','wp-recall').'");
                         return false;
                     }
                 });
@@ -381,7 +381,7 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
     }
 
     if ($_FILES[$slug]["size"] > $maxsize*1024*1024){
-        wp_die( __('File size exceeded!','wp-recall'));
+        wp_die( __('File size exceedes maximum!','wp-recall'));
     }
 
     $accept = array();
@@ -551,6 +551,6 @@ function rcl_delete_file_meta($post_id){
 
 add_action('wp','rcl_delete_file_notice');
 function rcl_delete_file_notice(){
-    if (isset($_GET['file'])&&$_GET['file']='deleted') rcl_notice_text(__('File has deleted','wp-recall'),'success');
+    if (isset($_GET['file'])&&$_GET['file']='deleted') rcl_notice_text(__('File has been deleted','wp-recall'),'success');
 }
 

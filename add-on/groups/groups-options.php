@@ -9,33 +9,33 @@ function rcl_admin_groups_page_content($content){
             $opt->option_block(
                 array(
                     $opt->title(__('Groups','wp-recall')),
-                    $opt->label(__('Creating groups is allowed','wp-recall')),
+                    $opt->label(__('Group creation allowed','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'public_group_access_recall',
                         'options'=>array(
                             10=>__('only Administrators','wp-recall'),
-                            7=>__('Editors and older','wp-recall'),
-                            2=>__('Authors and older','wp-recall'),
-                            1=>__('Participants and older','wp-recall'))
+                            7=>__('Editors and higher','wp-recall'),
+                            2=>__('Authors and higher','wp-recall'),
+                            1=>__('Participants and higher','wp-recall'))
                     )),
                     
-                    $opt->label(__('Moderation of publications in the group','wp-recall')),
+                    $opt->label(__('Group publication moderation','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'moderation_public_group',
                         'options'=>array(
-                            __('To publish immediately','wp-recall'),
+                            __('Publish now','wp-recall'),
                             __('Send for moderation','wp-recall'))
                     )),
-                    $opt->notice(__('If used in moderation: To allow the user to see their publication before it is moderated, it is necessary to have on the website right below the Author','wp-recall')),
+                    $opt->notice(__('If subject to moderation: To allow the user to see their publication before moderation has been completed, the user should be classifies as Author or higher','wp-recall')),
                     
-                    $opt->label(__('Widget Content Groups','wp-recall')),
+                    $opt->label(__('Group contents widget','wp-recall')),
                     $opt->option('select',array(
                         'name'=>'groups_posts_widget',
                         'options'=>array(
                             __('Disabled','wp-recall'),
-                            __('Included','wp-recall'))
+                            __('Enabled','wp-recall'))
                     )),
-                    $opt->notice(__('Include if the loop publications in the group was removed from the template','wp-recall'))
+                    $opt->notice(__('enable if publication loop within the group has been removed from the template','wp-recall'))
                 )
             )
         );

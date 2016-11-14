@@ -6,7 +6,7 @@ function rcl_feed_shortcode($atts){
 
     if(!$user_ID){
         return '<p class="aligncenter">'
-                .__('Login or register to view the latest publications and comments from users on which you will you subscribed.','wp-recall')
+                .__('Login or register to view the latest publications and comments from users for which you have subscribed.','wp-recall')
                 .'</p>';
     }
 
@@ -29,7 +29,7 @@ function rcl_feed_shortcode($atts){
     $content = $list->get_filters($count);
 
     if(!$feedsdata){
-        $content .= '<p align="center">'.__('News not found','wp-recall').'</p>';
+        $content .= '<p align="center">'.__('No news found','wp-recall').'</p>';
         return $content;
     }
 

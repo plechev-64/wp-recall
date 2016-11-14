@@ -14,7 +14,7 @@ function rcl_get_tablist_options($content){
     $opt = new Rcl_Options('tabs');
 
     if(!$rcl_tabs) {
-        $content .= $opt->options(__('Setting tabs','wp-recall'),__('Neither one tab personal account not found','wp-recall'));
+        $content .= $opt->options(__('Setting tabs','wp-recall'),__('No personal account tabs found','wp-recall'));
         return $content;
     }
     

@@ -378,10 +378,12 @@ div p.post-group-meta {
 .group-request .group-user-option select{
     width: 100px;
 }
-.group-request .apply-request{
+#group-popup .group-request .apply-request{
     float: right;
     margin: 1px 2px;
     padding: 7px;
+    display:inline-block;
+    width: initial;
 }
 #widgets-options,
 #group-options {

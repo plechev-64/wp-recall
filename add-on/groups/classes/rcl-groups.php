@@ -265,7 +265,7 @@ class Rcl_Groups {
 
         $count_groups = (false!==$count_groups)? $count_groups: $this->count_groups();
 
-        $content .='<h3>'.__('Total groups','wp-recall').': '.$count_groups.'</h3>';
+        $content .='<h3>'.__('Total number of groups','wp-recall').': '.$count_groups.'</h3>';
 
         if(isset($this->add_uri['groups-filter'])) unset($this->add_uri['groups-filter']);
 

@@ -53,7 +53,7 @@ function rcl_add_minicart(){
         $log['success'] =   __('Added to cart!','wp-recall').'<br>'
                             .sprintf(__('In your shopping cart: %d items','wp-recall'),$all).'<br>'
                             .'<a style="text-decoration:underline;" href="'.$cart_url.'">'
-                            .__('Go to basket','wp-recall')
+                            .__('Go to cart','wp-recall')
                             .'</a>';
     }else{
         $log['error'] = __('Negative meaning!','wp-recall');
@@ -132,7 +132,7 @@ function rcl_remove_product_cart(){
         $cnt = $_SESSION['cart'][$id_post]['number'] - $number;
 
         if($cnt<0){
-            $log['error'] = __('You are trying to remove from the basket more goods than there!','wp-recall');
+            $log['error'] = __('You are trying to remove more goods than there are in the cart!','wp-recall');
             echo json_encode($log);
             exit;
         }
@@ -196,10 +196,10 @@ function rcl_confirm_order(){
 
             $result['code'] = 10;
             $result['html'] = "<div class='order-notice-box'>"
-                . __('The order was not created!','wp-recall').'<br>'
-                . __('You may be trying to book a larger quantity than is available.','wp-recall').'<br>'
+                . __('The order has not been created!','wp-recall').'<br>'
+                . __('You may be trying to order a larger quantity of products than is available.','wp-recall').'<br>'
                 . $error_amount
-                . __('Please reduce the quantity of goods in order and try to place your order again','wp-recall')
+                . __('Please reduce the quantity of goods in yout order and try to place your order','wp-recall')
                 . '</div>';
         }
 
@@ -210,8 +210,8 @@ function rcl_confirm_order(){
     $status = ($order->order_price)? 1: 2;
 
     $notice = __('Your order has been created!','wp-recall').'<br>';
-    $notice .= sprintf(__('Order granted the status - "%s"','wp-recall'),rcl_get_status_name_order($status)).'. ';
-    $notice .= __('The order is processing.','wp-recall').'<br>';
+    $notice .= sprintf(__('Status granted to order - "%s"','wp-recall'),rcl_get_status_name_order($status)).'. ';
+    $notice .= __('The order is being processed.','wp-recall').'<br>';
 
     if(!$order->order_price){ //Если заказ бесплатный
         $notice .= __('The order contained only free items','wp-recall').'<br>';
@@ -225,7 +225,7 @@ function rcl_confirm_order(){
                 'summ'=>$order->order_price,
                 'user_id'=>$order->order_author,
                 'type'=>2,
-                'description'=>sprintf(__('Payment order №%s from %s','wp-recall'),$order->order_id,get_the_author_meta('user_email',$order->order_author))
+                'description'=>sprintf(__('Payment order №%s dated %s','wp-recall'),$order->order_id,get_the_author_meta('user_email',$order->order_author))
             );
                     
         $payment = new Rcl_Payment();
@@ -253,12 +253,12 @@ function rcl_confirm_order(){
             
             $notice .= __('All necessary data for authorization on the site have been sent to the specified e-mail','wp-recall')."<br />";
             $notice .= __('In your personal account you can find out the status of your order.','wp-recall').'<br>';
-            $notice .= __('You can fill up your personal account on the site of his private office in the future to pay for their orders through it','wp-recall')."<br />";
+            $notice .= __('You can top up your personal account on the site in your back office and in the future pay for orders with it','wp-recall')."<br />";
 
             if($confirm){
                 
-                $notice .= __('To monitor the status of the order to confirm the specified email!','wp-recall').'<br>';
-                $notice .= __('Follow the link in the email sent to','wp-recall').'<br>';
+                $notice .= __('To monitor the order status please confirm the specified email!','wp-recall').'<br>';
+                $notice .= __('Follow the link in the letter sent to your email','wp-recall').'<br>';
                 
             }else{
                 
@@ -283,7 +283,7 @@ function rcl_confirm_order(){
         if($order->order_price){
             if(function_exists('rcl_payform')){              
 
-                    $notice .= __('You can pay it now or from your personal account. There you can find out the status of your order.','wp-recall');
+                    $notice .= __('You can pay for it now or from your personal account. There you can find the status of your order.','wp-recall');
 
                     $payform = $payment_form;
 
@@ -422,12 +422,12 @@ function rcl_pay_order_private_account(){
     $newusercount = $oldusercount - $order->order_price;
 
     if(!$oldusercount||$newusercount<0){
-        $log['error'] = sprintf(__('Insufficient funds in the account!<br>Order price: %d %s','wp-recall'),$order->order_price,rcl_get_primary_currency(1));
+        $log['error'] = sprintf(__('Insufficient funds in your personal account!<br>Order price: %d %s','wp-recall'),$order->order_price,rcl_get_primary_currency(1));
         echo json_encode($log);
         exit;
     }
 
-    rcl_update_user_balance($newusercount,$user_ID,sprintf(__('Payment order №%d','wp-recall'),$order_id));
+    rcl_update_user_balance($newusercount,$user_ID,sprintf(__('Payment for order №%d','wp-recall'),$order_id));
 
     $result = rcl_update_status_order($order_id,2);
 
@@ -441,7 +441,7 @@ function rcl_pay_order_private_account(){
 
     do_action('payment_rcl',$user_ID,$order->order_price,$order_id,2);
 
-    $text = "<p>".__('Your order is successfully paid! The notification has been sent to the administration.','wp-recall')."</p>";
+    $text = "<p>".__('Your order has been successfully paid! A notification has been sent to the administration.','wp-recall')."</p>";
 
     $text = apply_filters('payment_order_text',$text);
 

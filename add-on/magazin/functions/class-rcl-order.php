@@ -39,7 +39,7 @@ class Rcl_Order{
         $this->amount = $this->chek_amount();
         
         if($this->amount['error']){
-            return $this->error('amount_false',__('It is not enough goods in stock!','wp-recall'));
+            return $this->error('amount_false',__('Products out of stock!','wp-recall'));
         }
 
         $cart = $_SESSION['cart'];
@@ -47,7 +47,7 @@ class Rcl_Order{
         $cart = apply_filters('cart_values_rcl',$cart);
 
         if(!$cart){
-            return $this->error('cart_empty',__('Your basket is empty!','wp-recall'));
+            return $this->error('cart_empty',__('Your cart is empty!','wp-recall'));
         }
         
         if(!$user_ID){
@@ -327,6 +327,8 @@ class Rcl_Order{
             }
             
         }
+        
+        $order_details = apply_filters('rcl_order_details',$order_details,$this->order_id);
 
         $wpdb->insert(
             RMAG_PREF ."details_orders",
@@ -347,16 +349,16 @@ class Rcl_Order{
         $subject = __('Order data','wp-recall').' №'.$this->order_id;
 
         $textmail = '
-        <p>'.__('This user has formed a purchase','wp-recall').' "'.get_bloginfo('name').'".</p>
+        <p>'.__('This user has formed an order','wp-recall').' "'.get_bloginfo('name').'".</p>
         <h3>'.__('Information about the customer','wp-recall').':</h3>
         <p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$this->user_id).'</p>
         <p><b>'.__('Email','wp-recall').'</b>: '.get_the_author_meta('user_email',$this->user_id).'</p>
         <h3>'.__('The data obtained at registration','wp-recall').':</h3>
         '.$order_details.'
-        <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$this->order_id,rcl_get_status_name_order(1)).'.</p>
+        <p>'.sprintf(__('Order №%d received status "%s"','wp-recall'),$this->order_id,rcl_get_status_name_order(1)).'.</p>
         <h3>'.__('Order details','wp-recall').':</h3>
         '.$table_order.'
-        <p>'.__('Link to control order','wp-recall').':</p>
+        <p>'.__('Link to managing your order','wp-recall').':</p>
         <p>'.admin_url('admin.php?page=manage-rmag&order-id='.$this->order_id).'</p>';
 
         $admin_email = $rmag_options['admin_email_magazin_recall'];
@@ -375,7 +377,7 @@ class Rcl_Order{
         $textmail = '';
 
         if($this->userdata&&$this->buyer_register){
-            $subject = __('Your account information and order','wp-recall').' №'.$this->order_id;
+            $subject = __('Your account and order information','wp-recall').' №'.$this->order_id;
 
             if($rcl_options['confirm_register_recall']==1){
                 $url = get_bloginfo('wpurl').'/?rglogin='.$this->userdata['user_login'].'&rgpass='.$this->userdata['user_pass'].'&rgcode='.md5($this->userdata['user_login']);
@@ -383,26 +385,26 @@ class Rcl_Order{
                 $textmail .= '<h3>'.__('You have been registered','wp-recall').'</h3>
                 <p>'.__('Confirm your email on the site by clicking on the link below','wp-recall').':</p>
                 <p><a href="'.$url.'">'.$url.'</a></p>
-                <p>'.__('It is impossible to activate your account?','wp-recall').'</p>
+                <p>'.__('Can’t activate your account?','wp-recall').'</p>
                 <p>'.__('Copy the text of the link below , paste it into the address bar of your browser and press Enter','wp-recall').'</p>';
             }
 
             $textmail .= '<h3>'.__('Account data','wp-recall').'</h3>
-            <p>'.__('Personal account of the buyer has been created for you , where you can watch the changing of the status of your orders , create new orders and pay for them means available','wp-recall').'</p>
-            <p>'.__('Your authorization data in your personal account','wp-recall').':</p>
+            <p>'.__('Personal account has been created, you can monitor the status of your orders , create new orders and pay for them by available means through it','wp-recall').'</p>
+            <p>'.__('Required data for authorization in your personal account','wp-recall').':</p>
             <p>'.__('Login','wp-recall').': '.$this->userdata['user_login'].'</p>
             <p>'.__('Password','wp-recall').': '.$this->userdata['user_pass'].'</p>
-            <p>'.__('In the future, use your personal cabinet in new orders on our website','wp-recall').'.</p>';
+            <p>'.__('Next time use your personal cabinet for placing new orders on our website','wp-recall').'.</p>';
         }
 
         $textmail .= '
-        <p>'.__('You have formed a purchase','wp-recall').' "'.get_bloginfo('name').'".</p>
+        <p>'.__('You have formed an order','wp-recall').' "'.get_bloginfo('name').'".</p>
         <h3>'.__('Order details','wp-recall').'</h3>
-        <p>'.sprintf(__('Order №%d received the status of "%s"','wp-recall'),$this->order_id,rcl_get_status_name_order(1)).'.</p>
+        <p>'.sprintf(__('Order №%d received status "%s"','wp-recall'),$this->order_id,rcl_get_status_name_order(1)).'.</p>
         '.$table_order;
 
         $link = rcl_format_url(get_author_posts_url($this->user_id),'orders');
-        $textmail .= '<p>'.__('Link to control order','wp-recall').': <a href="'.$link.'">'.$link.'</a></p>';
+        $textmail .= '<p>'.__('Link to managing your order','wp-recall').': <a href="'.$link.'">'.$link.'</a></p>';
 
         $mail = array(
             'email'=>$email,

@@ -129,7 +129,7 @@ function rcl_add_count_user(){
     rcl_verify_ajax_nonce();
     
     if(!$_POST['count']){
-        $log['error'] = __('Enter the amount to replenish','wp-recall');
+        $log['error'] = __('Enter the amount to top up','wp-recall');
         echo json_encode($log);
         exit;
     }
@@ -141,7 +141,7 @@ function rcl_add_count_user(){
         
         $args = array(
             'id_pay'=>$id_pay,
-            'description'=>__("Completion of a personal account from",'wp-recall').' '.get_the_author_meta('user_email',$user_ID),
+            'description'=>__("Top up personal account from",'wp-recall').' '.get_the_author_meta('user_email',$user_ID),
             'id_form'=>$_POST['id_form'],
             'summ'=>$amount,
             'type'=>1
@@ -166,7 +166,7 @@ function rcl_edit_balance_user(){
     $user_id = intval($_POST['user']);
     $balance = floatval(str_replace(',','.',$_POST['balance']));
 
-    rcl_update_user_balance($balance,$user_id,__('The change in the balance','wp-recall'));
+    rcl_update_user_balance($balance,$user_id,__('Balance changed','wp-recall'));
 
     $log['otvet']=100;
     $log['user']=$user_id;
@@ -195,7 +195,7 @@ function rcl_get_html_usercount(){
     if($rmag_options['connect_sale']!='') 
         $usercount .= "<div class='rcl-toggle-form-balance'>"
                 . "<a class='recall-button rcl-toggle-form-link' href='#'>"
-                .__("Deposit",'wp-recall')
+                .__("Top up",'wp-recall')
                 ."</a>
             </div>
             <div class='rcl-form-balance'>               
@@ -211,7 +211,7 @@ add_shortcode('rcl-form-balance','rcl_form_user_balance');
 function rcl_form_user_balance($attr=false){
     global $user_ID,$rcl_payments,$rmag_options;
     
-    if(!$user_ID) return '<p align="center">'.__("To make a payment please log in",'wp-recall').'</p>';
+    if(!$user_ID) return '<p align="center">'.__("please log in to make a payment",'wp-recall').'</p>';
 
     extract(shortcode_atts(array(
         'idform' => rand(1,1000)
@@ -238,7 +238,7 @@ function rcl_form_user_balance($attr=false){
     if(!is_array($form['fields'])) return false;
     
     $content = '<div class=rcl-form-add-user-count id=rcl-form-balance-'.$idform.'>
-                    <p class="form-balance-notice">'.__("Enter the amount to replenish",'wp-recall').'</p>
+                    <p class="form-balance-notice">'.__("Enter the amount to top up",'wp-recall').'</p>
                     <form class=rcl-form-input>';
                         foreach($form['fields'] as $field){
                             $content .= '<span class="form-field">'.$field.'</span>';
@@ -261,7 +261,7 @@ function rcl_get_chart_payments($pays){
     $chartArgs = array();
     $chartData = array(
         'title' => __('Income dynamics','wp-recall'),
-        'title-x' => __('The time period','wp-recall'),
+        'title-x' => __('Time period','wp-recall'),
         'data'=>array(
             array(__('"Days/Months"','wp-recall'), __('"Payments (PCs.)"','wp-recall'), __('"Income (thousands)"','wp-recall'))
         )
@@ -288,7 +288,7 @@ function rcl_widget_usercount() {
 class Rcl_Widget_user_count extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'widget-user-count', 'description' => __('Personal account of the user','wp-recall') );
+		$widget_ops = array( 'classname' => 'widget-user-count', 'description' => __('Personal user account','wp-recall') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'widget-user-count' );
 		parent::__construct( 'widget-user-count', __('Personal account','wp-recall'), $widget_ops, $control_ops );
 	}

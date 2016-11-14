@@ -115,7 +115,7 @@ if(!function_exists('rcl_register_taxonomy_prodcat')){
             'new_item_name' => __('New category','wp-recall'),
             'separate_items_with_commas' => __('Categories separated by commas','wp-recall'),
             'add_or_remove_items' => __('Add or delete a category','wp-recall'),
-            'choose_from_most_used' => __('Select to use the','wp-recall'),
+            'choose_from_most_used' => __('Select to use','wp-recall'),
             'menu_name' => __('Product categories','wp-recall')
         );
 
@@ -143,15 +143,15 @@ function rcl_register_taxonomy_product_tag() {
         'search_items' => __('Search','wp-recall'),
         'popular_items' => __('Popular tags','wp-recall'),
         'all_items' => __('All tags','wp-recall'),
-        'parent_item' => __('Parent tag','wp-recall'),
-        'parent_item_colon' => __('Parent tag','wp-recall'),
+        'parent_item' => __('Parental tag','wp-recall'),
+        'parent_item_colon' => __('Parental tag','wp-recall'),
         'edit_item' => __('Edit','wp-recall'),
         'update_item' => __('Update','wp-recall'),
-        'add_new_item' => __('Add a new','wp-recall'),
+        'add_new_item' => __('Add a new tag','wp-recall'),
         'new_item_name' => __('New tag','wp-recall'),
         'separate_items_with_commas' => __('Tags separated by commas','wp-recall'),
         'add_or_remove_items' => __('Add or delete','wp-recall'),
-        'choose_from_most_used' => __('Select to use the','wp-recall'),
+        'choose_from_most_used' => __('Select to use','wp-recall'),
         'menu_name' => __('Product Tags','wp-recall')
     );
 
@@ -285,7 +285,7 @@ function rcl_thumb_column( $columns ){
 
 if (is_admin()) add_action('admin_init', 'rcl_options_products');
 function rcl_options_products() {
-    add_meta_box( 'recall_meta', __('Settings Wp-Recall','wp-recall'), 'rcl_options_box', 'products', 'normal', 'high'  );
+    add_meta_box( 'recall_meta', __('Wp-Recall settings','wp-recall'), 'rcl_options_box', 'products', 'normal', 'high'  );
 }
 
 // заполняем колонку миниатюр
@@ -307,19 +307,19 @@ function rcl_products_fields() {
 function rcl_metabox_products( $post ){
     global $rmag_options; ?>
 
-    <p><?php _e('Price product','wp-recall') ?>:<br>
+    <p><?php _e('Product price','wp-recall') ?>:<br>
     <label><input type="number" name="wprecall[price-products]" value="<?php echo get_post_meta($post->ID,'price-products',1); ?>" style="width:70px" /> <?php rcl_type_currency_list($post->ID); ?></label></p>
 
     <?php if($rmag_options['multi_cur']){ ?>
-    <p><?php _e('The course is an additional currency for the goods','wp-recall') ?>:<br>
+    <p><?php _e('The additional currency rate for the goods','wp-recall') ?>:<br>
     <label><input type="text" name="wprecall[curse_currency]" value="<?php echo get_post_meta($post->ID,'curse_currency',1); ?>" style="width:70px" /></label><br>
-    <small><?php _e('The current rate of additional currency','wp-recall') ?>: <?php echo $rmag_options['curse_currency']; ?>.<br>
-    <?php _e('If the goods specified its course , it will be a priority in the calculation of the price of this commodity','wp-recall') ?>.</small></p>
+    <small><?php _e('The additional currency current rate','wp-recall') ?>: <?php echo $rmag_options['curse_currency']; ?>.<br>
+    <?php _e('If this rate is specified for the product , it will be a priority in the calculation of its price','wp-recall') ?>.</small></p>
     <?php } ?>
 
-    <p><?php _e('The margin on goods','wp-recall') ?>:<br>
+    <p><?php _e('Product surcharge','wp-recall') ?>:<br>
     <label><input type="number" name="wprecall[margin_product]" value="<?php echo get_post_meta($post->ID,'margin_product',1); ?>" style="width:70px" /> (%)</label><br>
-    <small><?php _e('The margin on the goods will be added to the output value of the goods','wp-recall') ?></small></p>
+    <small><?php _e('Product surcharge will be added to price of the goods','wp-recall') ?></small></p>
 
     <?php
     $customprice = unserialize(get_post_meta($post->ID, 'custom-price', 1));
@@ -343,7 +343,7 @@ function rcl_metabox_products( $post ){
     <?php } ?>
 
 
-    <p><label><input type="checkbox" name="wprecall[outsale]" value="1" <?php checked( get_post_meta($post->ID, 'outsale', 1), 1 ); ?> /> <?php _e('Remove the sale','wp-recall') ?></label></p>
+    <p><label><input type="checkbox" name="wprecall[outsale]" value="1" <?php checked( get_post_meta($post->ID, 'outsale', 1), 1 ); ?> /> <?php _e('Withdraw from sale','wp-recall') ?></label></p>
 
     <?php
     if($rmag_options['sistem_related_products']==1){
@@ -356,7 +356,7 @@ function rcl_metabox_products( $post ){
     echo '<h3>'.__('Similar and recommended products','wp-recall').':</h3>';
     $args = array(
             'show_option_all'    => '',
-            'show_option_none'   => __('Choose category','wp-recall'),
+            'show_option_none'   => __('Choose a category','wp-recall'),
             'orderby'            => 'name',
             'order'              => 'ASC',
             'show_last_update'   => 0,
@@ -375,11 +375,11 @@ function rcl_metabox_products( $post ){
             'taxonomy'           => 'prodcat',
             'hide_if_empty'      => false );
 
-        echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - '.__('Select product category','wp-recall').'</div>';
+        echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - '.__('Select a product category','wp-recall').'</div>';
 
         $args = array(
             'show_option_all'    => '',
-            'show_option_none'   => __('Select tag','wp-recall'),
+            'show_option_none'   => __('Select a tag','wp-recall'),
             'orderby'            => 'name',
             'order'              => 'ASC',
             'show_last_update'   => 0,
@@ -398,7 +398,7 @@ function rcl_metabox_products( $post ){
             'taxonomy'           => 'product_tag',
             'hide_if_empty'      => true );
 
-        echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - '.__('select product tag','wp-recall').'</div>';
+        echo '<div style="margin:10px 0;">'.wp_dropdown_categories( $args ).' - '.__('select a product tag','wp-recall').'</div>';
 
     }
 

@@ -15,7 +15,7 @@
 
     <?php else: ?>
 
-            <div class="empty-basket" style="text-align:center;"><?php _e('While empty','wp-recall'); ?></div>
+            <div class="empty-basket" style="text-align:center;"><?php _e('Empty','wp-recall'); ?></div>
 
     <?php endif; ?>
 </div>

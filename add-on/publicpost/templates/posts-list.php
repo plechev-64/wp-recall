@@ -12,9 +12,9 @@
 
 		<?php foreach($postdata as $post){ setup_postdata($post); ?>
 
-			<?php if($post->post_status=='pending') $status = '<span class="pending">'.__('on approval','wp-recall').'</span>';
+			<?php if($post->post_status=='pending') $status = '<span class="pending">'.__('to be approved','wp-recall').'</span>';
 			elseif($post->post_status=='trash') $status = '<span class="pending">'.__('deleted','wp-recall').'</span>';
-			else $status = '<span class="publish">'.__('publish','wp-recall').'</span>'; ?>
+			else $status = '<span class="publish">'.__('published','wp-recall').'</span>'; ?>
 
 			<tr>
 

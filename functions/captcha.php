@@ -48,7 +48,7 @@ function rcl_check_register_captcha($errors){
     $rcl_captcha->cleanup();
     if ( ! $rcl_captcha_correct ) {
         $errors = new WP_Error();
-        $errors->add( 'rcl_register_captcha', __('Field filled not right CAPTCHA!','wp-recall') );
+        $errors->add( 'rcl_register_captcha', __('Incorrect CAPTCHA!','wp-recall') );
     }
     return $errors;
 }

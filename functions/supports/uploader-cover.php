@@ -18,8 +18,8 @@ function rcl_init_js_cover_variables($data){
     global $rcl_options,$user_ID;
     if(rcl_is_office($user_ID)){
         $data['profile']['cover_size'] = 1;
-        $data['local']['upload_size_cover'] = sprintf(__('Exceeds the maximum size for a picture! Max. %s MB','wp-recall'),1);
-        $data['local']['title_image_upload'] = __('The image being loaded','wp-recall');
+        $data['local']['upload_size_cover'] = sprintf(__('Exceeds the maximum image size! Max. %s MB','wp-recall'),1);
+        $data['local']['title_image_upload'] = __('Image being loaded','wp-recall');
     }
     
     return $data;
@@ -29,7 +29,7 @@ add_action('rcl_area_top','rcl_add_cover_uploader_button',10);
 function rcl_add_cover_uploader_button(){
     global $user_ID;
     if(rcl_is_office($user_ID)){
-        echo '<span class="rcl-cover-icon" title="'.__('Download cover','wp-recall').'">
+        echo '<span class="rcl-cover-icon" title="'.__('Upload background','wp-recall').'">
                 <i class="fa fa-camera"></i>
                 <input type="file" id="rcl-cover-upload" accept="image/*" name="cover-file">
             </span>';
@@ -183,7 +183,7 @@ function rcl_cover_upload(){
 
 
     if ( is_wp_error( $rst )){
-        $res['error'] = __('Error download','wp-recall');
+        $res['error'] = __('Download error','wp-recall');
         echo json_encode($res);
         exit;
     }
@@ -193,7 +193,7 @@ function rcl_cover_upload(){
     if(!$coord) copy($file_src,$tmp_path.$tmpname);
 
     $res['cover_url'] = $tmp_url.$tmpname;
-    $res['success'] = __('Cover successfully uploaded','wp-recall');
+    $res['success'] = __('Image successfully uploaded','wp-recall');
 
     echo json_encode($res);
     exit;

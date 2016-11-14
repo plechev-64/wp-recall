@@ -307,7 +307,7 @@ function rcl_feed_options(){
     $content = '<div class="feed-options">'
             . '<i class="fa fa-times"></i>'
             . '<div class="options-box">'
-                . rcl_get_feed_callback_link($rcl_feed->feed_author,__('Ignore the publication','wp-recall').' '.get_the_author_meta('display_name',$rcl_feed->feed_author),'rcl_ignored_feed_author')
+                . rcl_get_feed_callback_link($rcl_feed->feed_author,__('Ignore publications','wp-recall').' '.get_the_author_meta('display_name',$rcl_feed->feed_author),'rcl_ignored_feed_author')
             . '</div>'
         . '</div>';
 
@@ -359,7 +359,7 @@ function rcl_ignored_feed_author($author_id){
     }
 
     if($result){
-        $data['success'] = __('The subscription status changed','wp-recall');
+        $data['success'] = __('Subscription status has been changed','wp-recall');
         $data['all'] = (!$feed||$feed->feed_status)? __('Subscribe','wp-recall'): __('Unsubscribe','wp-recall');
     }else{
         $data['error'] = 'Error';

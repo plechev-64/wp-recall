@@ -46,7 +46,7 @@ function rcl_register_rating_base_type(){
 add_filter('rcl_post_options','rcl_get_post_rating_options',10,2);
 function rcl_get_post_rating_options($options,$post){
     $mark_v = get_post_meta($post->ID, 'rayting-none', 1);
-    $options .= '<p>'.__('To disable the rating for publication','wp-recall').':
+    $options .= '<p>'.__('Disable rating for publication','wp-recall').':
         <label><input type="radio" name="wprecall[rayting-none]" value="" '.checked( $mark_v, '',false ).' />'.__('No','wp-recall').'</label>
         <label><input type="radio" name="wprecall[rayting-none]" value="1" '.checked( $mark_v, '1',false ).' />'.__('Yes','wp-recall').'</label>
     </p>';
@@ -307,7 +307,7 @@ function rcl_get_buttons_rating($args){
 }
 
 function rcl_get_button_cancel_rating($args){
-    return '<a data-rating="'.rcl_encode_data_rating('cancel',$args).'" onclick="rcl_edit_rating(this);return false;" class="rating-cancel edit-rating" href="#">'.__('To remove your vote','wp-recall').'</a>';
+    return '<a data-rating="'.rcl_encode_data_rating('cancel',$args).'" onclick="rcl_edit_rating(this);return false;" class="rating-cancel edit-rating" href="#">'.__('Remove your vote','wp-recall').'</a>';
 }
 
 function rcl_get_button_add_rating($args){

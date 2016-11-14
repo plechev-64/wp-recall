@@ -93,7 +93,7 @@ function rcl_add_subscriptions_tab(){
 
 function rcl_followers_tab($user_id){
 
-    $content = '<h3>'.__('List subscribers','wp-recall').'</h3>';
+    $content = '<h3>'.__('List of subscribers','wp-recall').'</h3>';
 
     $cnt = rcl_feed_count_subscribers($user_id);
 
@@ -110,14 +110,14 @@ function rcl_followers_tab($user_id){
             'add_uri'=>array('tab'=>'followers')
             ));
     }else
-        $content .= '<p>'.__('Following yet','wp-recall').'</p>';
+        $content .= '<p>'.__('You do not have any subscribers yet','wp-recall').'</p>';
 
     return $content;
 }
 
 function rcl_subscriptions_tab($user_id){
     $feeds = rcl_feed_count_authors($user_id);
-    $content = '<h3>'.__('List subscriptions','wp-recall').'</h3>';
+    $content = '<h3>'.__('List of subscriptions','wp-recall').'</h3>';
     if($feeds){
         add_filter('rcl_user_description','rcl_add_userlist_follow_button',90);
         add_filter('rcl_users_query','rcl_feed_authors_query_userlist',10);
@@ -131,7 +131,7 @@ function rcl_subscriptions_tab($user_id){
             'add_uri'=>array('tab'=>'subscriptions')
             ));
     } else{
-        $content .= '<p>'.__('Subscriptions yet','wp-recall').'</p>';
+        $content .= '<p>'.__('You do not have any subscriptions','wp-recall').'</p>';
     }
     return $content;
 }
@@ -189,7 +189,7 @@ function rcl_update_feed_current_user($author_id){
         if($feed){
             $result = rcl_remove_feed_author($author_id);
             if($result){
-                $data['success'] = __('Subscription has been dropped','wp-recall');
+                $data['success'] = __('Subscription has been cancelled','wp-recall');
                 $data['this'] = __('Subscribe','wp-recall');
             }else{
                 $data['error'] = __('Error','wp-recall');

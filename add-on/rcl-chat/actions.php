@@ -80,7 +80,7 @@ function rcl_chat_check_message_blocked($message){
     if(!$message['private_key']) return $message;
     
     if(get_user_meta($message['private_key'],'rcl_black_list:'.$user_ID)){
-        $result['error'] = __('You have been blocked on chat','wp-recall');
+        $result['error'] = __('You have been blocked on this chat','wp-recall');
         echo json_encode($result);
         exit;
     }

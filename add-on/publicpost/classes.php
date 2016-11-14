@@ -308,7 +308,7 @@ class Rcl_Thumb_Form{
             $attachlist = $this->get_gallery_list($temp_gal);
         }
 
-        if($formData) $content = '<small class="notice-upload">'.__('Click on Priceline the image to add it to the content of the publication','wp-recall').'</small>';
+        if($formData) $content = '<small class="notice-upload">'.__('Click on the image to add it to the publication','wp-recall').'</small>';
 
         $content .= '<ul id="temp-files-'.$formData->post_type.'" class="attachments-post">'.$attachlist.'</ul>';
 		
@@ -327,7 +327,7 @@ class Rcl_Thumb_Form{
         <div>
             <div id="rcl-public-dropzone-'.$formData->post_type.'" class="rcl-dropzone mass-upload-box">
                 <div class="mass-upload-area">
-                        '.__('To add files to the download queue','wp-recall').'
+                        '.__('Add files to the download queue','wp-recall').'
                 </div>
                 <hr>
                 <div class="recall-button rcl-upload-button">

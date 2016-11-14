@@ -440,7 +440,7 @@ function rcl_get_list_votes($args,$votes){
                     $row = $rcl_options['rating_temp_'.$vote->rating_type];
             }else{
                 $row = ($vote->rating_date!='0000-00-00 00:00:00')? mysql2date('d.m.Y',$vote->rating_date).' ': '';
-                $row .= '%USER% '.__('voted','wp-recall').': %VALUE%';
+                $row .= '%USER% '.__('has voted','wp-recall').': %VALUE%';
             }
 
             $temps = array(
@@ -479,7 +479,7 @@ function rcl_get_list_votes($args,$votes){
             $list .= '<li><i class="fa '.$class.'"></i> '.$row.'</li>';
         }
     }else{
-		$list .= '<li><b>'.$rcl_rating_types[$args['rating_type']]['type_name'].'</b>: '.__('Rating changes not made','wp-recall').'</li>';
+		$list .= '<li><b>'.$rcl_rating_types[$args['rating_type']]['type_name'].'</b>: '.__('No changes to rating','wp-recall').'</li>';
     }
 
     $list .= '</ul>';

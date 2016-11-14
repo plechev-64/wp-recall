@@ -20,7 +20,7 @@ class Rcl_Public{
 			$medias = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."posts $where ORDER BY ID DESC LIMIT $limit_us");
 
                         $custom_url = '<div id="custom-image-url" style="padding: 10px;">
-                                        <h3>'.__('The URL to the image','wp-recall').':</h3>
+                                        <h3>'.__('Image URL','wp-recall').':</h3>
                                         <input type="text" id="custom-url" name="custom-url" value="">
 
                                         <input type="button" onclick="add_custom_image_url();return false;" class="recall-button" value="'.__('Insert image','wp-recall').'">
@@ -41,7 +41,7 @@ class Rcl_Public{
 				$fls = '<span class="close-popup"></span>
                                     '.$custom_url.'
                                     <div id="user-medias" style="padding: 10px;">
-                                        <h3>'.__('Media library user','wp-recall').':</h3>
+                                        <h3>'.__('User media library','wp-recall').':</h3>
 					<ul class="media-list">';
 				foreach($medias as $m){
 					$fls .= '<li>'.rcl_get_insert_image($m->ID).'</li>';
@@ -54,8 +54,8 @@ class Rcl_Public{
 				$log['content']= $fls;
 			}else{
 				$log['result']=100;
-				$log['content']= $custom_url.'<div class="clear"><h3 align="center">'.__('Images in the media library is not found!','wp-recall').'</h3>
-				<p class="aligncenter">'.__('Upload to your image and you will be able to use them in future from your media library.','wp-recall').'</p></div>';
+				$log['content']= $custom_url.'<div class="clear"><h3 align="center">'.__('Images in media library not found!','wp-recall').'</h3>
+				<p class="aligncenter">'.__('Upload images and you will be able to apply them next time from your media library.','wp-recall').'</p></div>';
 			}
 		}
 		echo json_encode($log);
@@ -91,17 +91,17 @@ function rcl_ajax_delete_post(){
     $post = get_post(intval($_POST['post_id']));
     
     if(!$post){
-        $log['success']=__('Material removed successfully!','wp-recall');
+        $log['success']=__('Material successfully removed!','wp-recall');
         $log['post_type']='attachment';
     }else{
     
         $res = wp_delete_post( $post->ID );
 
         if($res){
-            $log['success']=__('Material removed successfully!','wp-recall');
+            $log['success']=__('Material successfully removed!','wp-recall');
             $log['post_type']=$post->post_type;
         }else {
-            $log['error']=__('Delete failed!','wp-recall');
+            $log['error']=__('Deletion failed!','wp-recall');
         }
     
     }
@@ -155,9 +155,9 @@ function rcl_edit_postdata(){
     );
     if($result){
         $log['result']=100;
-        $log['content']=__('Publication of updated','wp-recall');;
+        $log['content']=__('Publication updated','wp-recall');;
     }else{
-        $log['error']=__('Changes to save not found','wp-recall');
+        $log['error']=__('Changes to be saved not found','wp-recall');
     }
 
     echo json_encode($log);
@@ -169,5 +169,5 @@ function rcl_button_fast_edit_post($post_id){
 }
 
 function rcl_button_fast_delete_post($post_id){
-	return '<a class="rcl-delete-post rcl-service-button" data-post="'.$post_id.'" onclick="return confirm(\''.__('Are you sare?','wp-recall').'\')? rcl_delete_post(this): false;"><i class="fa fa-trash"></i></a>';
+	return '<a class="rcl-delete-post rcl-service-button" data-post="'.$post_id.'" onclick="return confirm(\''.__('Are you sure?','wp-recall').'\')? rcl_delete_post(this): false;"><i class="fa fa-trash"></i></a>';
 }

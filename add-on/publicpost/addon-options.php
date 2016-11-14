@@ -25,24 +25,24 @@ function rcl_get_publics_options_page($content){
 
     $roles = array(
         10=>__('only Administrators','wp-recall'),
-        7=>__('Editors and older','wp-recall'),
-        2=>__('Authors and older','wp-recall'),
+        7=>__('Editors and higher','wp-recall'),
+        2=>__('Authors and higher','wp-recall'),
         0=>__('Guests and users','wp-recall'));
 
     $content .= $opt->options(
-        __('The publish settings','wp-recall'),array(
+        __('Publication settings','wp-recall'),array(
         $opt->option_block(
             array(
                 $opt->title(__('General settings','wp-recall')),
 
-                $opt->label(__('Page publishing and editing records','wp-recall')),
+                $opt->label(__('Publishing and editing','wp-recall')),
                 wp_dropdown_pages( $args ),
-                $opt->notice(__('Required for proper formation of links to edit records, you must specify the page where the shortcode is [public-form] no matter where displayed the very form of publication this page will be used to edit the entry','wp-recall')),
+                $opt->notice(__('You are required to publish a links to managing publications, you must specify the page with the shortcode [public-form]','wp-recall')),
 
                 $opt->label(__('Display information about the author','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'info_author_recall',
-                    'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
+                    'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
                 )),
 
                 $opt->label(__('Use preview','wp-recall')),
@@ -51,11 +51,11 @@ function rcl_get_publics_options_page($content){
                     'options'=>array(__('Yes','wp-recall'),__('No','wp-recall'))
                 )),
 
-                $opt->label(__('Tab list of publications','wp-recall')),
+                $opt->label(__('List of publications tab','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'publics_block_rcl',
                     'parent'=>true,
-                    'options'=>array(__('Disabled','wp-recall'),__('Included','wp-recall'))
+                    'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
                 )),
                 $opt->child(
                       array('name'=>'publics_block_rcl','value'=>1),
@@ -63,7 +63,7 @@ function rcl_get_publics_options_page($content){
                             $opt->label(__('List of publications of the user','wp-recall')),
                             $opt->option('select',array(
                                 'name'=>'view_publics_block_rcl',
-                                'options'=>array(__('Only the owner of the account','wp-recall'),__('Show everyone including guests','wp-recall'))
+                                'options'=>array(__('Only owner of the account','wp-recall'),__('Show everyone including guests','wp-recall'))
                             ))
                       )
                 )
@@ -74,13 +74,12 @@ function rcl_get_publics_options_page($content){
             array(
                 $opt->title(__('Category','wp-recall')),
                 $opt->extend(array(
-                    $opt->label(__('Authorized headings','wp-recall')),
+                    $opt->label(__('Categories to choose from','wp-recall')),
                     $opt->option('text',array('name'=>'id_parent_category')),
-                    $opt->notice(__('ID columns in which permitted the publication should be separated by commas. '
-                            . 'This setting is common to all forms of publication, but it is possible '
-                            . 'to specify the desired category in shortcode forms, for example: [public-form cats="72,149"] '
-                            . 'or for each form separately on the page generate custom fields','wp-recall')),
-                    $opt->notice(__('It is better to specify the parent category, then their child will be withdrawn automatically.','wp-recall')),
+                    $opt->notice(__('ID columns should be separated by commas. '
+                            . 'This setting by default is applied to all posts, but it is possible to '
+                            . 'specify category in shortcode, for example: [public-form cats="72,149"]','wp-recall')),
+                    $opt->notice(__('It is recommended to specify parent category, then their child category will be withdrawn automatically.','wp-recall')),
                 )),
                 $opt->label(__('Output category list','wp-recall')),
                 $opt->option('select',array(
@@ -128,7 +127,7 @@ function rcl_get_publics_options_page($content){
                         )),
                         $opt->notice(__('Default: 800,600','wp-recall')),
 
-			$opt->label(__('Available buttons Editor','wp-recall')),
+			$opt->label(__('Available Editor buttons','wp-recall')),
                         $opt->option('checkbox',array(
                             'name'=>'rcl_editor_buttons',
                             'options'=>array(
@@ -160,25 +159,25 @@ function rcl_get_publics_options_page($content){
                         $opt->child(
                         array('name'=>'media_uploader','value'=>0),
                             array(
-                                $opt->label(__('Number of images in the gallery Wp-Recall','wp-recall')),
+                                $opt->label(__('Number of images in Wp-Recall gallery','wp-recall')),
                                 $opt->option('number',array('name'=>'count_image_gallery','default'=>10)),
 
                                 $opt->label(__('The maximum image size, Mb','wp-recall')),
                                 $opt->option('number',array('name'=>'public_gallery_weight','default'=>2)),
-                                $opt->notice(__('To limit image uploads to publish this value in megabytes. By default, 2MB','wp-recall')),
+                                $opt->notice(__('Maximum image size in megabytes. By default, 2MB','wp-recall')),
 
-                                $opt->label(__('The size in the editor by default','wp-recall')),
+                                $opt->label(__('The image size in editor by default','wp-recall')),
                                 $opt->option('select',array(
                                     'name'=>'default_size_thumb',
                                     'options'=>$d_sizes
                                 )),
-                                $opt->notice(__('Select the picture size in the silence of their use in the visual editor during the publishing process','wp-recall'))
+                                $opt->notice(__('Select image size for the visual editor during publishing','wp-recall'))
                             )
                         )
                     )
                 ),
 
-                $opt->label(__('The output form of publication','wp-recall')),
+                $opt->label(__('Form of publication output in the personal cabinet','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'output_public_form_rcl',
                     'default'=>1,
@@ -191,7 +190,7 @@ function rcl_get_publics_options_page($content){
                         $opt->extend(array(
                         $opt->label(__('The form ID','wp-recall')),
                         $opt->option('number',array('name'=>'form-lk')),
-                        $opt->notice(__('Enter the form ID to the conclusion in the personal Cabinet. The default is 1','wp-recall'))
+                        $opt->notice(__('Enter the form ID according to the personal Cabinet. The default is 1','wp-recall'))
                     ))
                     )
                 )
@@ -201,7 +200,7 @@ function rcl_get_publics_options_page($content){
             array(
                 $opt->title(__('Publication of records','wp-recall')),
 
-                $opt->label(__('Republishing is allowed','wp-recall')),
+                $opt->label(__('Publication is allowed','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'user_public_access_recall',
                     'parent'=>1,
@@ -210,23 +209,23 @@ function rcl_get_publics_options_page($content){
                 $opt->child(
                     array('name'=>'user_public_access_recall','value'=>0),
                     array(
-                        $opt->label(__('Redirect page','wp-recall')),
+                        $opt->label(__('Redirect to','wp-recall')),
                         wp_dropdown_pages( array(
                             'selected'   => $guest_redirect,
                             'name'       => 'global[guest_post_redirect]',
                             'show_option_none' => __('Not selected','wp-recall'),
                             'echo'             => 0 )
                         ),
-                        $opt->notice(__('Select the page to which visitors will be redirected after a successful publication , if the site is included in the registration confirmation email','wp-recall'))
+                        $opt->notice(__('Select the page to which the visitors will be redirected after a successful publication, if email authorization is included in the registration precess','wp-recall'))
                     )
                 ),
 
                 $opt->label(__('Moderation of publications','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'moderation_public_post',
-                    'options'=>array(__('To publish immediately','wp-recall'),__('Send for moderation','wp-recall'))
+                    'options'=>array(__('Publish now','wp-recall'),__('Send for moderation','wp-recall'))
                 )),
-                $opt->notice(__('If used in moderation: To allow the user to see their publication before it is moderated, it is necessary to have on the website right below the Author','wp-recall'))
+                $opt->notice(__('If subject to moderation: To allow the user to see their publication before moderation has been completed, the user should be classifies as Author or higher','wp-recall'))
             )
         ),
 
@@ -244,7 +243,7 @@ function rcl_get_publics_options_page($content){
                                 2=>__('Authors','wp-recall')
                         )
                     )),
-                    $opt->label(__('Time limit editing','wp-recall')),
+                    $opt->label(__('Ограничение времени редактирования','wp-recall')),
                     $opt->option('number',array('name'=>'time_editing')),
                     $opt->notice(__('Limit editing time of publication in hours, by default: unlimited','wp-recall'))
                 ))
@@ -256,7 +255,7 @@ function rcl_get_publics_options_page($content){
                 $opt->title(__('Custom fields','wp-recall')),
                 $opt->notice(__('Settings only for fields created using the form of the publication wp-recall','wp-recall')),
 
-                $opt->label(__('Automatic withdrawal','wp-recall')),
+                $opt->label(__('Automatic output','wp-recall')),
 
                 $opt->option('select',array(
                     'name'=>'pm_rcl',
@@ -266,10 +265,10 @@ function rcl_get_publics_options_page($content){
                 $opt->child(
                       array('name'=>'pm_rcl','value'=>1),
                       array(
-                            $opt->label(__('Place output fields','wp-recall')),
+                            $opt->label(__('Output fields location','wp-recall')),
                             $opt->option('select',array(
                                 'name'=>'pm_place',
-                                'options'=>array(__('After the content recording','wp-recall'),__('On content recording','wp-recall'))
+                                'options'=>array(__('Above publication content','wp-recall'),__('On content recording','wp-recall'))
                             ))
                       )
                 )

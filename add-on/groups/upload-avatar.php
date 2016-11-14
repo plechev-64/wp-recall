@@ -42,7 +42,7 @@ function rcl_group_avatar_upload(){
     $mb = $upload['file']['size']/1024/1024;
 
     if($mb>$maxsize){
-        $res['error'] = __('Size over','wp-recall');
+        $res['error'] = __('File size exceeds maximum size','wp-recall');
         echo json_encode($res);
         exit;
     }
@@ -81,7 +81,7 @@ function rcl_group_avatar_upload(){
     }
 
     $res['avatar_url'] = $image['url'];
-    $res['success'] = __('Avatar has successfully loaded','wp-recall');
+    $res['success'] = __('Avatar has been successfully uploaded','wp-recall');
 
     echo json_encode($res);
     exit;
