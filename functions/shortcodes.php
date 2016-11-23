@@ -371,8 +371,13 @@ function rcl_tab_shortcode($atts){
     
     if (!class_exists('Rcl_Tabs')) 
         include_once RCL_PATH.'functions/class-rcl-tabs.php';
-    
+
     $Rcl_Tab = new Rcl_Tabs($rcl_tabs[$tab_id]);
+    
+    switch($Rcl_Tab->public){
+        case -1: return false;
+        case -2: return false;
+    }
     
     $content = '<div id="rcl-office" class="wprecallblock" data-account="'.$user_ID.'">';   
         $content .= '<div id="lk-content">';

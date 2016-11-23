@@ -20,6 +20,8 @@ class Rcl_Tabs{
     function __construct($args){
         global $rcl_options;
         
+        $args = apply_filters('rcl_pre_output_tab',$args);
+        
         $this->init_properties($args);
         
         $this->tab_active = $this->is_view_tab();
