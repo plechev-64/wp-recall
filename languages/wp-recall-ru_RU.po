@@ -1924,7 +1924,7 @@ msgstr "Фамилия"
 #: add-on/profile/index.php:341 add-on/profile/index.php:719
 #: add-on/profile/index.php:722
 msgid "Name to be displayed"
-msgstr "Name to be displayed"
+msgstr "Отображаемое имя"
 
 #: add-on/profile/index.php:404
 msgid "Your website"

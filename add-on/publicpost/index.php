@@ -313,31 +313,31 @@ function rcl_shortcode_gallery($atts, $content = null){
     $post_id = $post->ID;
 
     $args = array(
-            'post_parent' => $post_id,
-            'post_type'   => 'attachment',
-            'numberposts' => -1,
-            'post_status' => 'any',
-            'post_mime_type'=> 'image'
+        'post_parent' => $post_id,
+        'post_type'   => 'attachment',
+        'numberposts' => -1,
+        'post_status' => 'any',
+        'post_mime_type'=> 'image'
     );
     $childrens = get_children($args);
 
     if( $childrens ){
-            $gallery = '<ul class="rcl-gallery">';
-            foreach((array) $childrens as $children ){
-                    $large = wp_get_attachment_image_src( $children->ID, 'large' );
-                    $gallery .= '<li><a class="fancybox" href="'.$large[0].'"><img src="'.$large[0].'"></a></li>';
-                    $thumbs[] = $large[0];
-            }
-            $gallery .= '</ul>'
-                    . '<script>rcl_do_action("rcl_slider");</script>';
+        $gallery = '<ul class="rcl-gallery">';
+        foreach((array) $childrens as $children ){
+                $large = wp_get_attachment_image_src( $children->ID, 'large' );
+                $gallery .= '<li><a class="fancybox" href="'.$large[0].'"><img src="'.$large[0].'"></a></li>';
+                $thumbs[] = $large[0];
+        }
+        $gallery .= '</ul>'
+                . '<script>rcl_do_action("rcl_slider");</script>';
 
-            if(count($thumbs)>1){
-                    $gallery .= '<div id="bx-pager">';
-                            foreach($thumbs as $k=>$src ){
-                                    $gallery .= '<a data-slide-index="'.$k.'" href=""><img src="'.$src.'" /></a>';
-                            }
-                    $gallery .= '</div>';
-            }
+        if(count($thumbs)>1){
+                $gallery .= '<div id="bx-pager">';
+                        foreach($thumbs as $k=>$src ){
+                                $gallery .= '<a data-slide-index="'.$k.'" href=""><img src="'.$src.'" /></a>';
+                        }
+                $gallery .= '</div>';
+        }
     }
 
     return $gallery;
@@ -368,25 +368,25 @@ function rcl_add_attachments_in_temps($id_post){
 
     $temp_gal = get_user_meta($user_ID,'tempgallery',1);
     if($temp_gal){
-            //$cnt = count($temp_gal);
-            foreach((array)$temp_gal as $key=>$gal){
-                    if($thumb[$gal['ID']]==1) add_post_meta($id_post, '_thumbnail_id', $gal['ID']);
-                    wp_update_post( array('ID'=>$gal['ID'],'post_parent'=>$id_post) );
-            }
-            if($_POST['add-gallery-rcl']==1) add_post_meta($id_post, 'recall_slider', 1);
-            delete_user_meta($user_ID,'tempgallery');
+        //$cnt = count($temp_gal);
+        foreach((array)$temp_gal as $key=>$gal){
+                if($thumb[$gal['ID']]==1) add_post_meta($id_post, '_thumbnail_id', $gal['ID']);
+                wp_update_post( array('ID'=>$gal['ID'],'post_parent'=>$id_post) );
+        }
+        if($_POST['add-gallery-rcl']==1) add_post_meta($id_post, 'recall_slider', 1);
+        delete_user_meta($user_ID,'tempgallery');
 
-            if(!$thumb){
-                $args = array(
-                'post_parent' => $id_post,
-                'post_type'   => 'attachment',
-                'numberposts' => 1,
-                'post_status' => 'any',
-                'post_mime_type'=> 'image'
-                );
-                $child = get_children($args);
-                if($child){ foreach($child as $ch){add_post_meta($id_post, '_thumbnail_id',$ch->ID);} }
-            }
+        if(!$thumb){
+            $args = array(
+            'post_parent' => $id_post,
+            'post_type'   => 'attachment',
+            'numberposts' => 1,
+            'post_status' => 'any',
+            'post_mime_type'=> 'image'
+            );
+            $child = get_children($args);
+            if($child){ foreach($child as $ch){add_post_meta($id_post, '_thumbnail_id',$ch->ID);} }
+        }
     }
     return $temp_gal;
 }
@@ -484,11 +484,11 @@ if( defined( 'DOING_AJAX' ) && DOING_AJAX) return false;
 add_action('init', 'rcl_edit_post_activate');
 
 function rcl_delete_post(){
-	global $rcl_options,$user_ID;
-	$post_id = wp_update_post( array('ID'=>intval($_POST['post-rcl']),'post_status'=>'trash'));
-        do_action('after_delete_post_rcl',$post_id);
-	wp_redirect(rcl_format_url(get_author_posts_url($user_ID)).'&public=deleted');
-	exit;
+    global $rcl_options,$user_ID;
+    $post_id = wp_update_post( array('ID'=>intval($_POST['post-rcl']),'post_status'=>'trash'));
+    do_action('after_delete_post_rcl',$post_id);
+    wp_redirect(rcl_format_url(get_author_posts_url($user_ID)).'&public=deleted');
+    exit;
 }
 
 function rcl_delete_post_activate ( ) {
@@ -528,9 +528,9 @@ function custom_fields_editor_post_rcl() {
 }
 
 function custom_fields_list_posteditor_rcl($post){
-	echo rcl_get_list_custom_fields($post->ID); ?>
-	<input type="hidden" name="custom_fields_nonce_rcl" value="<?php echo wp_create_nonce(__FILE__); ?>" />
-	<?php
+    echo rcl_get_list_custom_fields($post->ID); ?>
+    <input type="hidden" name="custom_fields_nonce_rcl" value="<?php echo wp_create_nonce(__FILE__); ?>" />
+    <?php
 }
 
 add_action('save_post', 'rcl_custom_fields_update', 0);
@@ -547,67 +547,67 @@ function rcl_custom_fields_update( $post_id ){
 
 function rcl_update_post_custom_fields($post_id,$id_form=false){
 
-        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
-	$post = get_post($post_id);
+    $post = get_post($post_id);
 
-	switch($post->post_type){
-            case 'post':
-                if(!$id_form){
-                        $id_form = get_post_meta($post->ID,'publicform-id',1);
-                        if(!$id_form) $id_form = 1;
-                }
-                $id_field = 'rcl_fields_post_'.$id_form;
-            break;
-            case 'products': $id_field = 'rcl_fields_products'; break;
-            default: $id_field = 'rcl_fields_'.$post->post_type;
-	}
+    switch($post->post_type){
+        case 'post':
+            if(!$id_form){
+                    $id_form = get_post_meta($post->ID,'publicform-id',1);
+                    if(!$id_form) $id_form = 1;
+            }
+            $id_field = 'rcl_fields_post_'.$id_form;
+        break;
+        case 'products': $id_field = 'rcl_fields_products'; break;
+        default: $id_field = 'rcl_fields_'.$post->post_type;
+    }
 
-	$get_fields = get_option($id_field);
+    $get_fields = get_option($id_field);
 
-	if($get_fields){
+    if($get_fields){
 
-            $POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            foreach((array)$get_fields as $custom_field){
-                $slug = $custom_field['slug'];
-                if($custom_field['type']=='checkbox'){
-                    $vals = array();
-                    $select = explode('#',$custom_field['field_select']);
-                    $count_field = count($select);
-                    if(isset($POST[$slug])){
-                        foreach($POST[$slug] as $val){
-                            for($a=0;$a<$count_field;$a++){
-                                if($select[$a]==$val){
-                                    $vals[] = $val;
-                                }
+        foreach((array)$get_fields as $custom_field){
+            $slug = $custom_field['slug'];
+            if($custom_field['type']=='checkbox'){
+                $vals = array();
+                $select = explode('#',$custom_field['field_select']);
+                $count_field = count($select);
+                if(isset($POST[$slug])){
+                    foreach($POST[$slug] as $val){
+                        for($a=0;$a<$count_field;$a++){
+                            if($select[$a]==$val){
+                                $vals[] = $val;
                             }
                         }
                     }
-                    if($vals){
-                        $res = update_post_meta($post_id, $slug, $vals);
-                    }else{
-                        delete_post_meta($post_id, $slug);
-                    }
-
-                }else if($custom_field['type']=='file'){
-
-                    $attach_id = rcl_upload_meta_file($custom_field,$post->post_author,$post_id);
-                    if($attach_id) update_post_meta($post_id, $slug, $attach_id);
-
-                }else{
-
-                    if($POST[$slug]){
-                        update_post_meta($post_id, $slug, $POST[$slug]);
-                    }else{
-                        if(get_post_meta($post_id, $slug, 1)) delete_post_meta($post_id, $slug);
-                    }
-
                 }
+                if($vals){
+                    $res = update_post_meta($post_id, $slug, $vals);
+                }else{
+                    delete_post_meta($post_id, $slug);
+                }
+
+            }else if($custom_field['type']=='file'){
+
+                $attach_id = rcl_upload_meta_file($custom_field,$post->post_author,$post_id);
+                if($attach_id) update_post_meta($post_id, $slug, $attach_id);
+
+            }else{
+
+                if($POST[$slug]){
+                    update_post_meta($post_id, $slug, $POST[$slug]);
+                }else{
+                    if(get_post_meta($post_id, $slug, 1)) delete_post_meta($post_id, $slug);
+                }
+
             }
-	}
+        }
+    }
 }
 
 function rcl_get_list_custom_fields($post_id, $post_type=false, $id_form=false){
@@ -651,21 +651,23 @@ function rcl_get_list_custom_fields($post_id, $post_type=false, $id_form=false){
     
 }
 
-if(!is_admin()) add_filter('get_edit_post_link','rcl_edit_post_link',100,2);
+add_filter('get_edit_post_link','rcl_edit_post_link',100,2);
 function rcl_edit_post_link($admin_url, $post_id){
-	global $user_ID,$rcl_options;
+    global $user_ID,$rcl_options;
+    
+    if( is_admin() && !defined( 'DOING_AJAX' ) && !DOING_AJAX) return false;
 
-	if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
+    if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
 
-	$access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;
-	$user_info = get_userdata($user_ID);
+    $access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;
+    $user_info = get_userdata($user_ID);
 
-	if ( array_search($user_info->user_level, $rcl_options['front_editing'])!==false ||$user_info->user_level < $access ){
-		$edit_url = rcl_format_url(get_permalink($rcl_options['public_form_page_rcl']));
-		return $edit_url.'rcl-post-edit='.$post_id;
-	}else{
-		return $admin_url;
-	}
+    if ( array_search($user_info->user_level, $rcl_options['front_editing'])!==false ||$user_info->user_level < $access ){
+            $edit_url = rcl_format_url(get_permalink($rcl_options['public_form_page_rcl']));
+            return $edit_url.'rcl-post-edit='.$post_id;
+    }else{
+            return $admin_url;
+    }
 }
 
 function rcl_get_edit_post_button($content){
@@ -701,18 +703,18 @@ add_filter('the_content','rcl_get_edit_post_button',999);
 //add_filter('the_excerpt','rcl_get_edit_post_button',999);
 
 function rcl_is_limit_editing($post_date){
-	global $rcl_options;
+    global $rcl_options;
 
-	$timelimit = (isset($rcl_options['time_editing'])&&$rcl_options['time_editing'])? $rcl_options['time_editing']: false;
+    $timelimit = (isset($rcl_options['time_editing'])&&$rcl_options['time_editing'])? $rcl_options['time_editing']: false;
 
-	$timelimit = apply_filters('rcl_time_editing',$timelimit);
+    $timelimit = apply_filters('rcl_time_editing',$timelimit);
 
-	if($timelimit){
-		$hours = (strtotime(current_time('mysql')) - strtotime($post_date))/3600;
-		if($hours>$timelimit) return true;
-	}
+    if($timelimit){
+            $hours = (strtotime(current_time('mysql')) - strtotime($post_date))/3600;
+            if($hours>$timelimit) return true;
+    }
 
-	return false;
+    return false;
 }
 
 function rcl_edit_post_button_html($post_id){
@@ -818,29 +820,29 @@ function rcl_preview_post(){
 }
 
 function rcl_get_editor_content($post_content,$type='editor'){
-	global $rcl_box,$formFields;
+    global $rcl_box,$formFields;
 
-	$formFields['upload'] = false;
+    $formFields['upload'] = false;
 
-	if($post_content){
-		remove_filter('the_content','add_button_bmk_in_content',20);
-		remove_filter('the_content','get_notifi_bkms',20);
-		remove_filter('the_content','rcl_get_edit_post_button',999);
-		$content = apply_filters('the_content',$post_content);
+    if($post_content){
+            remove_filter('the_content','add_button_bmk_in_content',20);
+            remove_filter('the_content','get_notifi_bkms',20);
+            remove_filter('the_content','rcl_get_edit_post_button',999);
+            $content = apply_filters('the_content',$post_content);
 
-		if($type=='preview') return $content;
+            if($type=='preview') return $content;
 
-		if(isset($rcl_box)){
+            if(isset($rcl_box)){
 
-		}else{
-			//return '<style>.rcl-public-editor{display:none}</style>'
-			//.rcl_wp_editor(array('type_editor'=>3,'media_buttons'=>0),$post_content);
-			//return rcl_box_shortcode(array('type'=>'html', 'content'=>str_replace('\'','"',$post_content)));
-		}
-		return $content;
-	}else{
-		return rcl_get_include_template('editor-text-box.php',__FILE__);
-	}
+            }else{
+                    //return '<style>.rcl-public-editor{display:none}</style>'
+                    //.rcl_wp_editor(array('type_editor'=>3,'media_buttons'=>0),$post_content);
+                    //return rcl_box_shortcode(array('type'=>'html', 'content'=>str_replace('\'','"',$post_content)));
+            }
+            return $content;
+    }else{
+            return rcl_get_include_template('editor-text-box.php',__FILE__);
+    }
 }
 
 function rcl_wp_editor($args=false,$content=false){
