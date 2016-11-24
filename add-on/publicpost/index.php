@@ -651,11 +651,11 @@ function rcl_get_list_custom_fields($post_id, $post_type=false, $id_form=false){
     
 }
 
-add_filter('get_edit_post_link','rcl_edit_post_link',100,2);
+if( !is_admin() || (defined( 'DOING_AJAX' ) && DOING_AJAX))
+    add_filter('get_edit_post_link','rcl_edit_post_link',100,2);
+
 function rcl_edit_post_link($admin_url, $post_id){
     global $user_ID,$rcl_options;
-    
-    if( is_admin() && !defined( 'DOING_AJAX' ) && !DOING_AJAX) return false;
 
     if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
 
