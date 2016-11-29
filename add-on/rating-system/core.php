@@ -310,14 +310,7 @@ function rcl_get_user_rating($user_id){
 function rcl_get_user_rating_value($user_id){
     global $wpdb;
     
-    $cachekey = json_encode(array('rcl_get_user_rating_value',$user_id));
-    $cache = wp_cache_get( $cachekey );
-    if ( $cache )
-        return $cache;
-    
     $result = $wpdb->get_var("SELECT rating_total FROM ".RCL_PREF."rating_users WHERE user_id = '$user_id'");
-    
-    wp_cache_add( $cachekey, $result );
     
     return $result;
 }
@@ -554,30 +547,30 @@ function rcl_delete_rating($args){
 
 	if(isset($args['ID'])){
 
-		$data = rcl_get_rating_by_id($args['ID']);
-		$query = $wpdb->prepare(
-			"DELETE FROM ".RCL_PREF."rating_values WHERE ID = '%d'",
-			$args['ID']
-		);
-		$args = array(
-			'object_id'=>$data->object_id,
-			'object_author'=>$data->object_author,
-			'rating_type'=>$data->rating_type,
-			'rating_value'=>$data->rating_value,
-		);
+            $data = rcl_get_rating_by_id($args['ID']);
+            $query = $wpdb->prepare(
+                    "DELETE FROM ".RCL_PREF."rating_values WHERE ID = '%d'",
+                    $args['ID']
+            );
+            $args = array(
+                    'object_id'=>$data->object_id,
+                    'object_author'=>$data->object_author,
+                    'rating_type'=>$data->rating_type,
+                    'rating_value'=>$data->rating_value,
+            );
 
 	}else{
 
-		$rating = rcl_get_vote_value($args);
+            $rating = rcl_get_vote_value($args);
 
-		if(!isset($rating)) return false;
+            if(!isset($rating)) return false;
 
-		$args['rating_value'] = (isset($args['rating_value']))? $args['rating_value']: $rating;
+            $args['rating_value'] = (isset($args['rating_value']))? $args['rating_value']: $rating;
 
-		$query = $wpdb->prepare(
-			"DELETE FROM ".RCL_PREF."rating_values WHERE object_id = '%d' AND rating_type='%s' AND user_id='%s'",
-			$args['object_id'],$args['rating_type'],$args['user_id']
-		);
+            $query = $wpdb->prepare(
+                    "DELETE FROM ".RCL_PREF."rating_values WHERE object_id = '%d' AND rating_type='%s' AND user_id='%s'",
+                    $args['object_id'],$args['rating_type'],$args['user_id']
+            );
 
 	}
 
@@ -613,12 +606,13 @@ function rcl_delete_rating_with_post($args){
 }
 
 //Удаляем данные рейтинга публикации
-add_action('delete_post', 'rcl_delete_rating_post');
+add_action('delete_post', 'rcl_delete_rating_post',10);
 function rcl_delete_rating_post($post_id){
     $post = get_post($post_id);
     rcl_delete_rating_with_post(array('object_id'=>$post_id,'object_author'=>$post->post_author,'rating_type'=>$post->post_type));
 }
-add_action('delete_comment', 'rcl_delete_rating_comment');
+
+add_action('delete_comment', 'rcl_delete_rating_comment',10);
 function rcl_delete_rating_comment($comment_id){
     $comment = get_comment($comment_id);   
     rcl_delete_rating_with_post(array('object_id'=>$comment_id,'object_author'=>$comment->user_id,'rating_type'=>'comment'));

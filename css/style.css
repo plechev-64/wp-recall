@@ -1045,6 +1045,38 @@ div.ssi-backdrop {
     margin-left: -30px;
 }
 
+/* Панель публикации */
+
+#rcl-post-bar{
+    text-align:right;
+    margin:10px 0;
+}
+#rcl-post-bar .post-bar-item{
+    display: inline-block;
+}
+#rcl-post-bar .post-bar-item a{
+    font-size: 14px;
+    margin: 0 0 0 5px;
+    display: inline-block;
+}
+#rcl-post-bar .post-bar-item span, 
+#rcl-post-bar .post-bar-item i {
+    vertical-align: middle;
+}
+#rcl-post-bar .post-bar-item i{
+    margin: 0 0 0 0;
+}
+#rcl-post-bar .post-bar-item i::before {
+    padding: 0 5px;
+}
+#rcl-post-bar .post-bar-item .item-label{
+    padding: 0 5px;
+    margin: 0 0 0 0;
+}
+#rcl-post-bar .post-bar-item .item-counter{
+    
+}
+
 @media screen and (max-width:480px) {
     #rcl-popup {
      max-width: 95%;

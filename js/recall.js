@@ -7,6 +7,9 @@ jQuery(function($){
 });
 
 jQuery(window).load(function() {
+    jQuery('body').on('drop', function (e) {
+        return false;
+   });
     jQuery(document.body).bind("drop", function(e){
         e.preventDefault();
     }); 

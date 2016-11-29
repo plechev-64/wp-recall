@@ -670,36 +670,49 @@ function rcl_edit_post_link($admin_url, $post_id){
     }
 }
 
-function rcl_get_edit_post_button($content){
-	global $post,$user_ID,$current_user,$rcl_options;
-	if(is_front_page()||is_tax('groups')||$post->post_type=='page') return $content;
+function rcl_setup_edit_post_button(){
+    global $post,$user_ID,$current_user,$rcl_options;
+    
+    if(!is_user_logged_in()) return false;
+    
+    if(is_front_page()||is_tax('groups')||$post->post_type=='page') return false;
 
-	if(!current_user_can('edit_post', $post->ID)) return $content;
+    if(!current_user_can('edit_post', $post->ID)) return false;
 
-	$user_info = get_userdata($current_user->ID);
+    $user_info = get_userdata($current_user->ID);
 
-	if($post->post_author!=$user_ID){
-		$author_info = get_userdata($post->post_author);
-		if($user_info->user_level < $author_info->user_level) return $content;
-	}
+    if($post->post_author!=$user_ID){
+        $author_info = get_userdata($post->post_author);
+        if($user_info->user_level < $author_info->user_level) return false;
+    }
 
-	if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
+    if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
 
-	$access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;
+    $access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;
 
-	if( false!==array_search($user_info->user_level, $rcl_options['front_editing']) || $user_info->user_level >= $access ) {
+    if( false!==array_search($user_info->user_level, $rcl_options['front_editing']) || $user_info->user_level >= $access ) {
 
-		if($post->post_type=='task'){
-			if(get_post_meta($post->ID,'step_order',1)!=1) return $content;
-		}
+        if($post->post_type=='task'){
+                if(get_post_meta($post->ID,'step_order',1)!=1) return false;
+        }
 
-		if($user_info->user_level<10&&rcl_is_limit_editing($post->post_date)) return $content;
+        if($user_info->user_level<10&&rcl_is_limit_editing($post->post_date)) return false;
 
-		$content = rcl_edit_post_button_html($post->ID).$content;
-	}
-	return $content;
+        rcl_post_bar_add_item('rcl-edit-post',
+            array(                
+                'url'=>get_edit_post_link($post->ID),
+                'icon'=>'fa-pencil-square-o',
+                'title'=>__('Edit','wp-recall')
+            )
+        );
+        
+        return true;
+
+    }
+    
+    return false;
 }
-add_filter('the_content','rcl_get_edit_post_button',999);
+add_action('rcl_post_bar_setup','rcl_setup_edit_post_button',10);
 //add_filter('the_excerpt','rcl_get_edit_post_button',999);
 
 function rcl_is_limit_editing($post_date){

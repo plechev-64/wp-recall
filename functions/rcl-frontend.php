@@ -432,3 +432,81 @@ function rcl_check_user_blocked($rcl_tabs){
 function rcl_add_user_blocked_notice(){
     echo '<div class="notify-lk"><div class="warning">'.__('The user has restricted access to their page','wp-recall').'</div></div>';
 }
+
+add_action('wp','rcl_post_bar_setup',10);
+function rcl_post_bar_setup(){
+    do_action('rcl_post_bar_setup');
+}
+
+function rcl_post_bar_add_item($id_item,$args){
+    global $rcl_post_bar;
+    $rcl_post_bar['items'][$id_item] = $args;
+    return true;
+}
+
+add_action('the_content','rcl_post_bar',999);
+function rcl_post_bar($content){
+    global $rcl_post_bar;
+    
+    if(!isset($rcl_post_bar['items'])||!$rcl_post_bar['items']) return $content;
+    
+    if(is_array($rcl_post_bar['items'])){
+        
+        $rcl_bar_items = apply_filters('rcl_post_bar_items',$rcl_post_bar['items']);
+
+        $bar = '<div id="rcl-post-bar">';
+        
+        foreach($rcl_bar_items as $id_item=>$item){
+            
+            $class = (isset($item['class']))? $item['class']: '';
+            $link = (isset($item['url']))? $item['url']: '#';
+            $attrs['title'] = (isset($item['title']))? $item['title']: $item['label'];
+            $attrs['onclick'] = (isset($item['onclick']))? $item['onclick']: false;
+            $datas = array();
+            $attributs = array();
+            
+            if(isset($item['data'])){
+
+                foreach($item['data'] as $k=>$value){
+                    if(!$value) continue;
+                    $datas[] = 'data-'.$k.'="'.$value.'"';
+                }
+                
+            }
+            
+            foreach($attrs as $attr=>$value){
+                if(!$value) continue;
+                $attributs[] = $attr.'="'.$value.'"';
+            }
+        
+            $bar .= '<div id="bar-item-'.$id_item.'" class="post-bar-item '.$class.'">';
+
+                $bar .= '<a href="'.$link.'" class="recall-button" '.implode(' ',$attributs).' '.implode(' ',$datas).'>';
+            
+                if(isset($item['icon'])):
+                    $bar .= '<i class="fa '.$item['icon'].'" aria-hidden="true"></i>';
+                endif;
+
+                if(isset($item['label'])):
+                    $bar .= '<span class="item-label">'.$item['label'].'</span>';
+                endif;
+
+                if(isset($item['counter'])):
+                    $bar .= '<span class="item-counter">'.$item['counter'].'</span>';
+                endif;
+
+                $bar .= '</a>';
+            
+            $bar .= '</div>';
+
+        }
+        
+        $bar .= '</div>';
+        
+        $content = $bar.$content;
+        
+    }
+    
+    return $content;
+    
+}

@@ -2322,7 +2322,7 @@ msgstr "Над контентом публикации"
 
 #: add-on/publicpost/addon-options.php:271
 msgid "On content recording"
-msgstr "Над контентом публикации"
+msgstr "Под контентом публикации"
 
 #: add-on/publicpost/classes.php:311
 msgid "Click on the image to add it to the publication"
@@ -2950,7 +2950,7 @@ msgstr ""
 
 #: add-on/rcl-chat/addon-options.php:101
 msgid "Contacts bar"
-msgstr "Количество сообщений в переписке"
+msgstr "Панель контактов"
 
 #: add-on/rcl-chat/addon-options.php:116
 msgid "Output location"

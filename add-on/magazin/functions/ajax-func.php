@@ -436,9 +436,9 @@ function rcl_pay_order_private_account(){
         echo json_encode($log);
         exit;
     }
-
+    
     rcl_payment_order($order_id,$user_ID);
-
+    
     do_action('payment_rcl',$user_ID,$order->order_price,$order_id,2);
 
     $text = "<p>".__('Your order has been successfully paid! A notification has been sent to the administration.','wp-recall')."</p>";

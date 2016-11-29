@@ -85,7 +85,7 @@ class Rcl_Payment{
         if(!$data->pay_status) exit;
 
         do_action('insert_pay_rcl',$data);
-
+        
         if($data->pay_status)
             do_action('payment_rcl',$data->user_id,$data->pay_summ,$data->pay_id,$data->pay_type);
 
