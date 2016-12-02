@@ -723,8 +723,8 @@ function rcl_is_limit_editing($post_date){
     $timelimit = apply_filters('rcl_time_editing',$timelimit);
 
     if($timelimit){
-            $hours = (strtotime(current_time('mysql')) - strtotime($post_date))/3600;
-            if($hours>$timelimit) return true;
+        $hours = (strtotime(current_time('mysql')) - strtotime($post_date))/3600;
+        if($hours>$timelimit) return true;
     }
 
     return false;

@@ -392,9 +392,16 @@ class Rcl_EditFields {
                     }
                     continue;
                 }
-                if($key=='slug'&&!$value){
-                    $value = str_replace('-','_',sanitize_title($POST['field']['title'][$a]).'-'.rand(10,100));
+                
+                if($key=='slug'){
+                    
+                    if(!$value)
+                        $value = str_replace('-','_',sanitize_title($POST['field']['title'][$a]).'-'.rand(10,100));
+
+                    $value = str_replace(' ','_',$value);
+                    
                 }
+                
                 if($key=='type'){
 
                     if($POST['field']['type'][$a]=='file'){

@@ -23,8 +23,8 @@ class Rcl_EditPost {
 
             $post_id = intval($_POST['post-rcl']);
             $this->post_id = $post_id;
-            $pst = get_post($this->post_id);
-            $this->post_type = $pst->post_type;
+            $post = get_post($this->post_id);
+            $this->post_type = $post->post_type;
 
             if($this->post_type=='post-group'){
                 
@@ -38,8 +38,8 @@ class Rcl_EditPost {
 
                 $user_info = get_userdata($user_ID);
 
-                if($pst->post_author!=$user_ID){
-                    $author_info = get_userdata($pst->post_author);
+                if($post->post_author!=$user_ID){
+                    $author_info = get_userdata($post->post_author);
 
                     if($user_info->user_level < $author_info->user_level) 
                         $this->error(__('Error publishing!','wp-recall').' Error 104');
