@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-11-14 11:52+0300\n"
+"POT-Creation-Date: 2016-12-08 16:21+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -103,7 +103,7 @@ msgstr "Подписка оформлена"
 #: add-on/feed/index.php:203 add-on/groups/groups-core.php:717
 #: add-on/groups/groups-core.php:733 add-on/groups/upload-avatar.php:78
 #: add-on/magazin/functions/ajax-func.php:373
-#: add-on/magazin/functions/ajax-func.php:435 add-on/publicpost/index.php:737
+#: add-on/magazin/functions/ajax-func.php:435 add-on/publicpost/index.php:752
 #: add-on/user-account/index.php:154 functions/enqueue-scripts.php:111
 #: rcl-admin/admin-pages.php:398 rcl-admin/repository.php:46
 #: rcl-functions.php:536
@@ -316,7 +316,8 @@ msgstr "Добавить"
 #: add-on/groups/groups-public.php:105 add-on/magazin/activate.php:63
 #: add-on/magazin/activate.php:142 add-on/magazin/functions/init.php:66
 #: add-on/magazin/functions/init.php:148 add-on/publicpost/index.php:26
-#: add-on/publicpost/index.php:720 functions/class-rcl-editfields.php:216
+#: add-on/publicpost/index.php:705 add-on/publicpost/index.php:735
+#: functions/class-rcl-editfields.php:216
 #: functions/class-rcl-editfields.php:228
 msgid "Edit"
 msgstr "Редактировать"
@@ -396,22 +397,22 @@ msgid "Group creation allowed"
 msgstr "Создание групп разрешено"
 
 #: add-on/groups/groups-options.php:16 add-on/publicpost/addon-options.php:27
-#: add-on/rating-system/addon-options.php:119 rcl-admin/admin-pages.php:129
+#: add-on/rating-system/addon-options.php:122 rcl-admin/admin-pages.php:129
 msgid "only Administrators"
 msgstr "Только администраторам"
 
 #: add-on/groups/groups-options.php:17 add-on/publicpost/addon-options.php:28
-#: add-on/rating-system/addon-options.php:118 rcl-admin/admin-pages.php:130
+#: add-on/rating-system/addon-options.php:121 rcl-admin/admin-pages.php:130
 msgid "Editors and higher"
 msgstr "Редакторам и старше"
 
 #: add-on/groups/groups-options.php:18 add-on/publicpost/addon-options.php:29
-#: add-on/rating-system/addon-options.php:117 rcl-admin/admin-pages.php:131
+#: add-on/rating-system/addon-options.php:120 rcl-admin/admin-pages.php:131
 msgid "Authors and higher"
 msgstr "Авторам и старше"
 
 #: add-on/groups/groups-options.php:19
-#: add-on/rating-system/addon-options.php:116 rcl-admin/admin-pages.php:132
+#: add-on/rating-system/addon-options.php:119 rcl-admin/admin-pages.php:132
 msgid "Participants and higher"
 msgstr "Участникам и старше"
 
@@ -444,7 +445,7 @@ msgstr "Виджет публикаций группы"
 #: add-on/magazin/admin-pages.php:65 add-on/magazin/admin-pages.php:93
 #: add-on/magazin/admin-pages.php:115 add-on/publicpost/addon-options.php:45
 #: add-on/publicpost/addon-options.php:58
-#: add-on/rating-system/addon-options.php:56 rcl-admin/admin-pages.php:222
+#: add-on/rating-system/addon-options.php:63 rcl-admin/admin-pages.php:222
 #: rcl-admin/admin-pages.php:251 rcl-admin/admin-pages.php:259
 #: rcl-admin/admin-pages.php:330 rcl-admin/admin-pages.php:335
 #: rcl-admin/admin-pages.php:349
@@ -455,7 +456,7 @@ msgstr "Отключено"
 #: add-on/magazin/admin-pages.php:65 add-on/magazin/admin-pages.php:93
 #: add-on/magazin/admin-pages.php:115 add-on/publicpost/addon-options.php:45
 #: add-on/publicpost/addon-options.php:58
-#: add-on/rating-system/addon-options.php:56 rcl-admin/admin-pages.php:223
+#: add-on/rating-system/addon-options.php:63 rcl-admin/admin-pages.php:223
 #: rcl-admin/admin-pages.php:252 rcl-admin/admin-pages.php:260
 #: rcl-admin/admin-pages.php:349
 msgid "Enabled"
@@ -505,7 +506,7 @@ msgid "Apply for membership"
 msgstr "Заявка на доступ"
 
 #: add-on/groups/groups-widgets.php:124
-#: add-on/rating-system/addon-options.php:115 rcl-admin/admin-pages.php:133
+#: add-on/rating-system/addon-options.php:118 rcl-admin/admin-pages.php:133
 #: rcl-admin/admin-pages.php:242 rcl-widgets.php:32 rcl-widgets.php:96
 msgid "All users"
 msgstr "Все пользователи"
@@ -1040,8 +1041,8 @@ msgstr "обязательное поле"
 #: add-on/profile/index.php:642 add-on/profile/index.php:647
 #: add-on/publicpost/addon-options.php:51
 #: add-on/publicpost/addon-options.php:263 add-on/publicpost/index.php:253
-#: add-on/rating-system/addon-options.php:75
-#: add-on/rating-system/addon-options.php:131 add-on/rating-system/index.php:50
+#: add-on/rating-system/addon-options.php:78
+#: add-on/rating-system/addon-options.php:134 add-on/rating-system/index.php:50
 #: add-on/rcl-chat/addon-options.php:51 add-on/rcl-chat/addon-options.php:62
 #: add-on/rcl-chat/addon-options.php:106 rcl-admin/admin-pages.php:65
 #: rcl-admin/admin-pages.php:375 rcl-admin/admin-pages.php:481
@@ -1055,8 +1056,8 @@ msgstr "Нет"
 #: add-on/profile/index.php:642 add-on/profile/index.php:647
 #: add-on/publicpost/addon-options.php:51
 #: add-on/publicpost/addon-options.php:263 add-on/publicpost/index.php:253
-#: add-on/rating-system/addon-options.php:75
-#: add-on/rating-system/addon-options.php:131 add-on/rating-system/index.php:51
+#: add-on/rating-system/addon-options.php:78
+#: add-on/rating-system/addon-options.php:134 add-on/rating-system/index.php:51
 #: add-on/rcl-chat/addon-options.php:52 add-on/rcl-chat/addon-options.php:63
 #: add-on/rcl-chat/addon-options.php:107 rcl-admin/admin-pages.php:66
 #: rcl-admin/admin-pages.php:375 rcl-admin/admin-pages.php:481
@@ -1426,7 +1427,7 @@ msgstr "При сохранении товара произошла ошибка
 
 #: add-on/magazin/functions/class-rcl-order.php:201
 #: add-on/magazin/functions/class-rcl-order.php:231
-#: add-on/publicpost/index.php:775
+#: add-on/publicpost/index.php:790
 msgid "You have entered an invalid email!"
 msgstr "Вы указали некорректный email!"
 
@@ -2475,36 +2476,36 @@ msgstr "главное"
 msgid "The publication has been successfully removed!"
 msgstr "Публикация была успешно удалена!"
 
-#: add-on/publicpost/index.php:761
+#: add-on/publicpost/index.php:776
 msgid "Enter your e-mail!"
 msgstr "Укажите свой e-mail!"
 
-#: add-on/publicpost/index.php:764
+#: add-on/publicpost/index.php:779
 msgid "Enter your name!"
 msgstr "Укажите свое имя!"
 
-#: add-on/publicpost/index.php:778
+#: add-on/publicpost/index.php:793
 msgid "This email is already used!"
 msgstr "Этот email уже используется!"
 
-#: add-on/publicpost/index.php:779
+#: add-on/publicpost/index.php:794
 msgid "If this is your email, then log in and publish your post"
 msgstr "Если это ваш email, то авторизуйтесь и опубликуйте запись"
 
-#: add-on/publicpost/index.php:784
+#: add-on/publicpost/index.php:799
 msgid "Add contents of the publication!"
 msgstr "Добавьте содержимое публикации!"
 
-#: add-on/publicpost/index.php:812
+#: add-on/publicpost/index.php:827
 msgid ""
 "If everything is correct – publish it! If not, you can go back to editing."
 msgstr "Если все верно - публикуйте! Если нет, то вернитесь в редактор."
 
-#: add-on/publicpost/index.php:976
+#: add-on/publicpost/index.php:991
 msgid "Loading image failed!"
 msgstr "Загрузка изображения не удалась!"
 
-#: add-on/publicpost/index.php:1008
+#: add-on/publicpost/index.php:1023
 msgid "Unauthorized file extension . Use only : .gif, .png, .jpg"
 msgstr "Запрещенный тип файла. Используйте только: .gif, .png, .jpg"
 
@@ -2657,92 +2658,87 @@ msgstr "Введите краткое содержание публикации"
 msgid "Banned file extension. Resolved:"
 msgstr "Запрещенное расширение файла. Разрешено:"
 
-#: add-on/rating-system/addon-options.php:15
+#: add-on/rating-system/addon-options.php:16
 msgid "select a template for history output where"
 msgstr "Выберите шаблон для вывода в истории, где"
 
-#: add-on/rating-system/addon-options.php:16
+#: add-on/rating-system/addon-options.php:17
 msgid "%USER% - name of the user who voted"
 msgstr "\"%USER% - имя голосовавшего"
 
-#: add-on/rating-system/addon-options.php:17
+#: add-on/rating-system/addon-options.php:18
 msgid "%VALUE% - rated value"
 msgstr "%VALUE% - значение голоса"
 
-#: add-on/rating-system/addon-options.php:18
+#: add-on/rating-system/addon-options.php:19
 msgid "%DATE% - date of changing the rating"
 msgstr "%DATE% - дата голоса"
 
-#: add-on/rating-system/addon-options.php:19
+#: add-on/rating-system/addon-options.php:20
 msgid "%COMMENT% - link to comment"
 msgstr "%COMMENT% - ссылка на комментарий"
 
-#: add-on/rating-system/addon-options.php:20
+#: add-on/rating-system/addon-options.php:21
 msgid "%POST% - link to publication"
 msgstr "%POST% - ссылка на публикацию"
 
-#: add-on/rating-system/addon-options.php:23
+#: add-on/rating-system/addon-options.php:24
 msgid "Type of rating for"
 msgstr "Тип рейтинга для"
 
-#: add-on/rating-system/addon-options.php:26
+#: add-on/rating-system/addon-options.php:27
 msgid "Plus/minus"
 msgstr "Плюс/Минус"
 
-#: add-on/rating-system/addon-options.php:26 add-on/rating-system/index.php:317
+#: add-on/rating-system/addon-options.php:27 add-on/rating-system/index.php:317
 msgid "I like"
 msgstr "Мне нравится"
 
-#: add-on/rating-system/addon-options.php:31
+#: add-on/rating-system/addon-options.php:32
 msgid "Overall rating"
 msgstr "Общий рейтинг"
 
-#: add-on/rating-system/addon-options.php:34
+#: add-on/rating-system/addon-options.php:35
 msgid "Sum of votes"
 msgstr "Сумма значений голосов"
 
-#: add-on/rating-system/addon-options.php:34
+#: add-on/rating-system/addon-options.php:35
 msgid "Number of positive and negative votes"
 msgstr "Кол-во положительных и отрицательных голосов"
 
-#: add-on/rating-system/addon-options.php:39
+#: add-on/rating-system/addon-options.php:40
 msgid "Limit of one vote per user"
 msgstr "Ограничение голосов за одного пользователя"
 
-#: add-on/rating-system/addon-options.php:40
+#: add-on/rating-system/addon-options.php:41
 msgid "Positive votes"
 msgstr "Положительные голоса"
 
-#: add-on/rating-system/addon-options.php:41
-#: add-on/rating-system/addon-options.php:44
+#: add-on/rating-system/addon-options.php:42
+#: add-on/rating-system/addon-options.php:45
 #: functions/class-rcl-editfields.php:185
 msgid "Number"
 msgstr "Кол-во"
 
-#: add-on/rating-system/addon-options.php:42
-#: add-on/rating-system/addon-options.php:45
+#: add-on/rating-system/addon-options.php:43
+#: add-on/rating-system/addon-options.php:46
 #: functions/class-rcl-editfields.php:187
 msgid "Time"
 msgstr "Время"
 
-#: add-on/rating-system/addon-options.php:43
+#: add-on/rating-system/addon-options.php:44
 msgid "Negative votes"
 msgstr "Отрицательные голоса"
 
-#: add-on/rating-system/addon-options.php:46
+#: add-on/rating-system/addon-options.php:47
 msgid "Note: Time in seconds"
 msgstr "Примечание: Время в секундах"
 
-#: add-on/rating-system/addon-options.php:51 add-on/rating-system/index.php:57
-#: add-on/rating-system/index.php:88 add-on/rating-system/index.php:273
-msgid "Rating"
-msgstr "Рейтинг"
-
-#: add-on/rating-system/addon-options.php:67
+#: add-on/rating-system/addon-options.php:51
 msgid "Points for ranking"
 msgstr "Баллы рейтинга"
 
-#: add-on/rating-system/addon-options.php:69
+#: add-on/rating-system/addon-options.php:53
 msgid ""
 "set how many points will be awarded for a positive or negative vote for the "
 "publication"
@@ -2750,28 +2746,33 @@ msgstr ""
 "укажите значение рейтинга для положительного или отрицательного голоса за "
 "публикацию"
 
-#: add-on/rating-system/addon-options.php:71
+#: add-on/rating-system/addon-options.php:58 add-on/rating-system/index.php:57
+#: add-on/rating-system/index.php:88 add-on/rating-system/index.php:273
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: add-on/rating-system/addon-options.php:74
 #, php-format
 msgid "The influence of rating %s on the overall rating"
 msgstr "Влияние рейтинга %s на общий рейтинг пользователя"
 
-#: add-on/rating-system/addon-options.php:83
+#: add-on/rating-system/addon-options.php:86
 msgid "Template of history output in the overall ranking"
 msgstr "Шаблон вывода истории в общем рейтинге пользователя"
 
-#: add-on/rating-system/addon-options.php:84 add-on/rating-system/core.php:443
+#: add-on/rating-system/addon-options.php:87 add-on/rating-system/core.php:436
 msgid "has voted"
 msgstr "голосовал"
 
-#: add-on/rating-system/addon-options.php:94
+#: add-on/rating-system/addon-options.php:97
 msgid "Rating settings"
 msgstr "Настройки рейтинга"
 
-#: add-on/rating-system/addon-options.php:102
+#: add-on/rating-system/addon-options.php:105
 msgid "Influence of rationg on publication moderation"
 msgstr "Влияние рейтинга на модерацию публикаций"
 
-#: add-on/rating-system/addon-options.php:104
+#: add-on/rating-system/addon-options.php:107
 msgid ""
 "specify the rating level at which the user will get the ability to post "
 "without moderation"
@@ -2779,31 +2780,31 @@ msgstr ""
 "пользователи с указанным уровнем рейтинга или превышающем его смогут "
 "публиковать без модерации"
 
-#: add-on/rating-system/addon-options.php:110
+#: add-on/rating-system/addon-options.php:113
 msgid "View results"
 msgstr "Просмотр результатов"
 
-#: add-on/rating-system/addon-options.php:122
+#: add-on/rating-system/addon-options.php:125
 msgid "specify the user group which is allowed to view votes"
 msgstr "укажите группу пользователей имеющих доступ к просмотру голосов"
 
-#: add-on/rating-system/addon-options.php:128
+#: add-on/rating-system/addon-options.php:131
 msgid "Delete your vote"
 msgstr "Удаление своего голоса"
 
-#: add-on/rating-system/core.php:332
+#: add-on/rating-system/core.php:325
 msgid "Correction"
 msgstr "Корректировка"
 
-#: add-on/rating-system/core.php:469
+#: add-on/rating-system/core.php:462
 msgid "comment"
 msgstr "комментарий"
 
-#: add-on/rating-system/core.php:482
+#: add-on/rating-system/core.php:475
 msgid "No changes to rating"
 msgstr "Изменение рейтинга не производилось"
 
-#: add-on/rating-system/core.php:800
+#: add-on/rating-system/core.php:794
 msgid "Data not found"
 msgstr "Данные не найдены"
 
@@ -3242,13 +3243,17 @@ msgstr "FEED"
 msgid "Unconfirmed"
 msgstr "Неподтвержденные"
 
-#: functions/authorize.php:39 functions/register.php:158
+#: functions/authorize.php:18
+msgid ""
+"Your account is unconfirmed! Confirm your account by clicking on the link in "
+"the email"
+msgstr ""
+"Ваш аккаунт неподтвержден! Подтвердите свой аккаунт перейдя по ссылке в "
+"письме"
+
+#: functions/authorize.php:42 functions/register.php:158
 msgid "Fill in the required fields!"
 msgstr "Заполните обязательные поля!"
-
-#: functions/authorize.php:45 functions/register.php:295
-msgid "Your email is not confirmed!"
-msgstr "Ваш E-mail не подтвержден!"
 
 #: functions/captcha.php:29
 msgid "Enter characters"
@@ -3590,6 +3595,10 @@ msgstr "Регистрация успешно завершена!"
 #: functions/register.php:290
 msgid "Registration is completed! Check your email."
 msgstr "Регистрация завершена! Проверьте свой E-mail."
+
+#: functions/register.php:295
+msgid "Your email is not confirmed!"
+msgstr "Ваш E-mail не подтвержден!"
 
 #: functions/register.php:298 functions/register.php:299
 msgid "Registration completed! Check your email"

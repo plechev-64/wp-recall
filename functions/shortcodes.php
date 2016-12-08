@@ -286,7 +286,7 @@ function rcl_slider($atts, $content = null){
             $plslider .= '<img src='.$thumb_url[0].'>';
 
             if($post->post_excerpt) $post_content = strip_tags($post->post_excerpt);
-            else $post_content = apply_filters('the_content',strip_tags($post->post_content));
+            else $post_content = strip_tags($post->post_content);
 
             if($desc > 0 && strlen($post_content) > $desc){
                     $post_content = substr($post_content, 0, $desc);

@@ -1,25 +1,28 @@
 <?php
-add_action('wp_authenticate','rcl_chek_user_authenticate');
+add_filter('wp_authenticate_user','rcl_chek_user_authenticate',10);
 /**
  * проверяем подтверждение емейла, если такая настройка включена
  * 
  * @param string $email емейл юзера на проверку
  */
-function rcl_chek_user_authenticate($email){
+function rcl_chek_user_authenticate($user){
     global $rcl_options;
+    
     $confirm = (isset($rcl_options['confirm_register_recall']))? $rcl_options['confirm_register_recall']: 0;
-    if($confirm==1){
-        if ( $user = get_user_by('login', $email) ){
-            if(rcl_is_user_role($user->ID, 'need-confirm')){
-                if($rcl_options['login_form_recall']==2){
-                    wp_safe_redirect( 'wp-login.php?checkemail=confirm' );
-                }else{
-                    wp_redirect( get_bloginfo('wpurl').'?action-rcl=login&error=confirm' );
-                }
-                exit;
-            }
+    
+    if(isset($user->ID) && $confirm == 1){
+        
+        if(rcl_is_user_role($user->ID, 'need-confirm')){
+
+            $wp_errors = new WP_Error();
+            $wp_errors->add( 'need-confirm', __('Your account is unconfirmed! Confirm your account by clicking on the link in the email','wp-recall') );
+            return $wp_errors;
+
         }
+        
     }
+    
+    return $user;
 }
 
 /**
@@ -40,24 +43,18 @@ function rcl_get_login_user(){
         return $wp_errors;
     }
 
-    if ( $user = get_user_by('login', $login) ){
-        if(rcl_is_user_role($user->ID, 'need-confirm')){
-            $wp_errors->add( 'rcl_login_confirm', __('Your email is not confirmed!','wp-recall') );
-            return $wp_errors;
-        }
-    }
-
     $creds = array();
     $creds['user_login'] = $login;
     $creds['user_password'] = $pass;
     $creds['remember'] = $member;
-    $user = wp_signon( $creds, false );
-    if ( is_wp_error($user) ){
-        $wp_errors = $user;
+    $userdata = wp_signon( $creds, false );
+    
+    if ( is_wp_error($userdata) ){
+        $wp_errors = $userdata;
         return $wp_errors;
     }else{
         rcl_update_timeaction_user();
-        wp_redirect(rcl_get_authorize_url($user->ID));exit;
+        wp_redirect(rcl_get_authorize_url($userdata->ID));exit;
     }
 
 }
