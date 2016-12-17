@@ -1,5 +1,7 @@
 var rcl_actions = [];
 var rcl_filters = [];
+var rcl_beats = [];
+var rcl_beats_delay = 0;
 var rcl_url_params = rcl_get_value_url_params();
 
 jQuery(function($){
@@ -626,8 +628,9 @@ function rcl_init_footer_slider(){
 }
 
 function rcl_init_slider(){
+    var slider_options = eval("("+Rcl.slider+")");
     jQuery('.rcl-gallery').bxSlider({ pagerCustom: '#bx-pager' });    
-    jQuery('.slider-rcl').bxSlider( Rcl.slider );    
+    jQuery('.slider-rcl').bxSlider( slider_options );    
     jQuery('.slider-products').bxSlider({ auto:true, pause:10000 });
 }
 
@@ -701,3 +704,93 @@ function rcl_setup_position_float_form(){
     screen_top = screen_top + 60;
     jQuery('.panel_lk_recall.floatform').css('top', screen_top+'px');
 }
+
+function rcl_add_beat(beat_name,delay){
+    
+    var i = rcl_beats.length;
+
+    rcl_beats[i] = {
+        beat_name:beat_name,
+        delay:delay
+    };
+    
+}
+
+rcl_add_action('rcl_footer','rcl_beat');
+function rcl_beat(){
+    
+    var beats = rcl_apply_filters('rcl_beats',rcl_beats);
+
+    var DataBeat = rcl_get_actual_beats_data(beats);
+    
+    DataBeat = JSON.stringify(DataBeat);
+    
+    if(rcl_beats_delay && DataBeat != '[]'){
+
+        var dataString = 'action=rcl_beat&databeat='+DataBeat;
+        dataString += '&ajax_nonce='+Rcl.nonce;
+        jQuery.ajax({
+            type: 'POST', 
+            data: dataString, 
+            dataType: 'json', 
+            url: Rcl.ajaxurl, 
+            success: function(data){
+
+                data.forEach(function(result, i, data) {
+                    new (window[result['success']])(result['result']);
+                });
+
+            }			
+        }); 
+    
+    }
+    
+    rcl_beats_delay++;
+    
+    setTimeout('rcl_beat()', 1000);
+}
+
+function rcl_get_actual_beats_data(beats){
+    
+    var beats_actual = [];
+    
+    if(beats){
+
+        beats.forEach(function(beat, i, beats) {
+            var rest = rcl_beats_delay%beat.delay;
+            if(rest == 0){
+
+                var object = new (window[beat.beat_name])();
+
+                object = rcl_apply_filters('rcl_beat_' + beat.beat_name,object);
+
+                var k = beats_actual.length;
+                beats_actual[k] = object;
+            }
+        });
+    
+    }
+
+    return beats_actual;
+    
+}
+
+/*rcl_add_beat('rcl_test_form_beat',10);
+function rcl_test_form_beat(){
+    
+    var i = Date();
+    
+    beat = {
+        action:'rcl_test_beat',
+        success:'rcl_test_beat_success',
+        data:{
+            formdata:i
+        }
+    };
+    
+    return beat;
+}
+
+function rcl_test_beat_success(data){
+    console.log(data);
+}*/

@@ -2,8 +2,6 @@
 add_filter('wp_authenticate_user','rcl_chek_user_authenticate',10);
 /**
  * проверяем подтверждение емейла, если такая настройка включена
- * 
- * @param string $email емейл юзера на проверку
  */
 function rcl_chek_user_authenticate($user){
     global $rcl_options;

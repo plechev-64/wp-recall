@@ -317,12 +317,15 @@
     margin: 0 0 3px;
 }
 .public_block .submit-public-form{
-	float: right;
-	margin: 0 5px;
+    float: right;
+    margin: 0 5px;
+}
+.public_block .submit-public-form input[type="button"]{
+    margin-left: 5px;
 }
 #rcl-delete-post .delete-form-contayner {
-	background: rgba(236, 240, 241, 0.7);
-	box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
+    background: rgba(236, 240, 241, 0.7);
+    box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
     display: none;
     margin: 8px 0 0;
     padding: 7px;

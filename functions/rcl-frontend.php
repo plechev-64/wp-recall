@@ -326,11 +326,18 @@ function rcl_banned_user_redirect(){
 
 add_filter('the_content','rcl_message_post_moderation');
 function rcl_message_post_moderation($cont){
-global $post;
+    global $post;
+
     if($post->post_status=='pending'){
         $mess = '<h3 class="pending-message">'.__('Publication pending approval!','wp-recall').'</h3>';
         $cont = $mess.$cont;
     }
+    
+    if($post->post_status=='draft'){
+        $mess = '<h3 class="pending-message">'.__('Draft of a post','wp-recall').'</h3>';
+        $cont = $mess.$cont;
+    }
+    
     return $cont;
 }
 
@@ -510,3 +517,33 @@ function rcl_post_bar($content){
     return $content;
     
 }
+
+add_action('wp_ajax_rcl_beat','rcl_beat');
+add_action('wp_ajax_nopriv_rcl_beat','rcl_beat');
+function rcl_beat(){
+    
+    rcl_verify_ajax_nonce();
+    
+    $databeat = json_decode(wp_unslash($_POST['databeat']));
+    $return = array();
+    
+    if($databeat){
+        foreach($databeat as $data){
+            
+            $result = array();
+            
+            $callback = $data->action;
+            $result['result'] = $callback($data->data);
+            $result['success'] = $data->success;
+            $return[] = $result;
+        }
+    }
+
+    echo json_encode($return); exit;
+    
+}
+
+/*function rcl_test_beat($data){
+    return $data;
+}*/
+

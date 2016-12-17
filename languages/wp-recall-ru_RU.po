@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-12-08 16:21+0300\n"
+"POT-Creation-Date: 2016-12-17 15:14+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -103,7 +103,7 @@ msgstr "Подписка оформлена"
 #: add-on/feed/index.php:203 add-on/groups/groups-core.php:717
 #: add-on/groups/groups-core.php:733 add-on/groups/upload-avatar.php:78
 #: add-on/magazin/functions/ajax-func.php:373
-#: add-on/magazin/functions/ajax-func.php:435 add-on/publicpost/index.php:752
+#: add-on/magazin/functions/ajax-func.php:435 add-on/publicpost/index.php:753
 #: add-on/user-account/index.php:154 functions/enqueue-scripts.php:111
 #: rcl-admin/admin-pages.php:398 rcl-admin/repository.php:46
 #: rcl-functions.php:536
@@ -315,8 +315,8 @@ msgstr "Добавить"
 #: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
 #: add-on/groups/groups-public.php:105 add-on/magazin/activate.php:63
 #: add-on/magazin/activate.php:142 add-on/magazin/functions/init.php:66
-#: add-on/magazin/functions/init.php:148 add-on/publicpost/index.php:26
-#: add-on/publicpost/index.php:705 add-on/publicpost/index.php:735
+#: add-on/magazin/functions/init.php:148 add-on/publicpost/index.php:27
+#: add-on/publicpost/index.php:706 add-on/publicpost/index.php:736
 #: functions/class-rcl-editfields.php:216
 #: functions/class-rcl-editfields.php:228
 msgid "Edit"
@@ -334,7 +334,7 @@ msgstr "Смотреть"
 
 #: add-on/groups/groups-init.php:15 add-on/magazin/activate.php:67
 #: add-on/magazin/functions/init.php:70
-#: add-on/publicpost/rcl_publicform.php:703
+#: add-on/publicpost/rcl_publicform.php:719
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -527,7 +527,7 @@ msgstr "Форма публикации"
 
 #: add-on/groups/groups-widgets.php:202 add-on/groups/groups-widgets.php:210
 #: add-on/groups/index.php:233 add-on/groups/index.php:410
-#: add-on/publicpost/rcl_publicform.php:385
+#: add-on/publicpost/rcl_publicform.php:401
 msgid "Group categories"
 msgstr "Категории группы"
 
@@ -720,7 +720,7 @@ msgstr ""
 msgid "Groups not found"
 msgstr "Группы не найдены"
 
-#: add-on/groups/templates/group-list.php:12 add-on/publicpost/index.php:103
+#: add-on/groups/templates/group-list.php:12 add-on/publicpost/index.php:104
 #: add-on/rating-system/index.php:29
 msgid "Posts"
 msgstr "Публикации"
@@ -1031,7 +1031,7 @@ msgid "Order Form Field Management"
 msgstr "Управление полями формы заказа"
 
 #: add-on/magazin/admin-pages.php:155 add-on/profile/index.php:621
-#: add-on/publicpost/index.php:252
+#: add-on/publicpost/index.php:253
 msgid "required field"
 msgstr "обязательное поле"
 
@@ -1040,7 +1040,7 @@ msgstr "обязательное поле"
 #: add-on/profile/index.php:632 add-on/profile/index.php:637
 #: add-on/profile/index.php:642 add-on/profile/index.php:647
 #: add-on/publicpost/addon-options.php:51
-#: add-on/publicpost/addon-options.php:263 add-on/publicpost/index.php:253
+#: add-on/publicpost/addon-options.php:263 add-on/publicpost/index.php:254
 #: add-on/rating-system/addon-options.php:78
 #: add-on/rating-system/addon-options.php:134 add-on/rating-system/index.php:50
 #: add-on/rcl-chat/addon-options.php:51 add-on/rcl-chat/addon-options.php:62
@@ -1055,7 +1055,7 @@ msgstr "Нет"
 #: add-on/profile/index.php:632 add-on/profile/index.php:637
 #: add-on/profile/index.php:642 add-on/profile/index.php:647
 #: add-on/publicpost/addon-options.php:51
-#: add-on/publicpost/addon-options.php:263 add-on/publicpost/index.php:253
+#: add-on/publicpost/addon-options.php:263 add-on/publicpost/index.php:254
 #: add-on/rating-system/addon-options.php:78
 #: add-on/rating-system/addon-options.php:134 add-on/rating-system/index.php:51
 #: add-on/rcl-chat/addon-options.php:52 add-on/rcl-chat/addon-options.php:63
@@ -1427,7 +1427,7 @@ msgstr "При сохранении товара произошла ошибка
 
 #: add-on/magazin/functions/class-rcl-order.php:201
 #: add-on/magazin/functions/class-rcl-order.php:231
-#: add-on/publicpost/index.php:790
+#: add-on/publicpost/index.php:791
 msgid "You have entered an invalid email!"
 msgstr "Вы указали некорректный email!"
 
@@ -2011,7 +2011,7 @@ msgstr "Произвольные поля профиля"
 msgid "Manage profile fields"
 msgstr "Управление полями профиля"
 
-#: add-on/profile/index.php:617 add-on/publicpost/index.php:248
+#: add-on/profile/index.php:617 add-on/publicpost/index.php:249
 msgid "field description"
 msgstr "подпись к полю"
 
@@ -2142,7 +2142,7 @@ msgstr "чекбокс"
 msgid "Number of columns to select"
 msgstr "Количество к выбору"
 
-#: add-on/publicpost/addon-options.php:109 add-on/publicpost/index.php:51
+#: add-on/publicpost/addon-options.php:109 add-on/publicpost/index.php:52
 msgid "Form of publication"
 msgstr "Форма публикации"
 
@@ -2390,8 +2390,8 @@ msgid "Changes to be saved not found"
 msgstr "Изменения не найдены для сохранения"
 
 #: add-on/publicpost/fast-editor.php:172
-#: add-on/publicpost/rcl_publicform.php:183
 #: add-on/publicpost/rcl_publicform.php:192
+#: add-on/publicpost/rcl_publicform.php:201
 #: add-on/publicpost/templates/editor-header-box.php:4
 #: add-on/publicpost/templates/editor-html-box.php:4
 #: add-on/publicpost/templates/editor-image-box.php:4
@@ -2399,119 +2399,123 @@ msgstr "Изменения не найдены для сохранения"
 msgid "Are you sure?"
 msgstr "Вы серьезно?"
 
-#: add-on/publicpost/index.php:24 add-on/publicpost/rcl_publicform.php:147
+#: add-on/publicpost/index.php:24 add-on/publicpost/rcl_publicform.php:152
 #: functions/enqueue-scripts.php:110
 msgid "Preview"
 msgstr "Предпросмотр"
 
-#: add-on/publicpost/index.php:25 add-on/publicpost/rcl_publicform.php:144
+#: add-on/publicpost/index.php:25 add-on/publicpost/rcl_publicform.php:149
 #: functions/class-rcl-custom-fields.php:352
 msgid "Publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/index.php:27
+#: add-on/publicpost/index.php:26 add-on/publicpost/rcl_publicform.php:146
+msgid "Save as Draft"
+msgstr "Сохранить как черновик"
+
+#: add-on/publicpost/index.php:28
 msgid "Quick edit"
 msgstr "Быстрое редактирование"
 
-#: add-on/publicpost/index.php:28
+#: add-on/publicpost/index.php:29
 msgid "Fill in all required fields"
 msgstr "Заполните все обязательные поля"
 
-#: add-on/publicpost/index.php:29
+#: add-on/publicpost/index.php:30
 #, php-format
 msgid "You have exceeded the allowed number of downloads! Max. %d"
 msgstr "Превышено разрешенное количество загрузок! Макс. %d"
 
-#: add-on/publicpost/index.php:30 add-on/rcl-chat/index.php:61
+#: add-on/publicpost/index.php:31 add-on/rcl-chat/index.php:61
 #, php-format
 msgid "Exceeds the maximum file size! Max. %d MB"
 msgstr "Превышен масимальный размер файла! Макс. %d МБ"
 
-#: add-on/publicpost/index.php:90
+#: add-on/publicpost/index.php:91
 msgid "Records"
 msgstr "Записи"
 
-#: add-on/publicpost/index.php:118
+#: add-on/publicpost/index.php:119
 msgid "Publication"
 msgstr "Публикация"
 
-#: add-on/publicpost/index.php:218
+#: add-on/publicpost/index.php:219
 msgid "Available forms"
 msgstr "Доступные формы"
 
-#: add-on/publicpost/index.php:225
+#: add-on/publicpost/index.php:226
 msgid "Add another form"
 msgstr "Добавить еще форму"
 
-#: add-on/publicpost/index.php:228 add-on/publicpost/index.php:236
+#: add-on/publicpost/index.php:229 add-on/publicpost/index.php:237
 msgid "Form ID"
 msgstr "Идентификатор формы"
 
-#: add-on/publicpost/index.php:231
+#: add-on/publicpost/index.php:232
 msgid "Remove all fields"
 msgstr "Удалить все поля"
 
-#: add-on/publicpost/index.php:231
+#: add-on/publicpost/index.php:232
 msgid "You are sure?"
 msgstr "Вы серьезно?"
 
-#: add-on/publicpost/index.php:239 add-on/publicpost/index.php:527
+#: add-on/publicpost/index.php:240 add-on/publicpost/index.php:528
 msgid "Arbitrary fields of  publication"
 msgstr "Произвольные поля формы публикации"
 
-#: add-on/publicpost/index.php:240
+#: add-on/publicpost/index.php:241
 msgid "Use shortcode for publication form"
 msgstr "Для размещения формы публикации используйте шорткод"
 
-#: add-on/publicpost/index.php:241
+#: add-on/publicpost/index.php:242
 msgid "You can create a different set of custom fields for different forms"
 msgstr ""
 "Вы можете создавать несколько форм с различным набором произвольных полей"
 
-#: add-on/publicpost/index.php:437
+#: add-on/publicpost/index.php:438
 msgid "featured"
 msgstr "главное"
 
-#: add-on/publicpost/index.php:503
+#: add-on/publicpost/index.php:504
 msgid "The publication has been successfully removed!"
 msgstr "Публикация была успешно удалена!"
 
-#: add-on/publicpost/index.php:776
+#: add-on/publicpost/index.php:777
 msgid "Enter your e-mail!"
 msgstr "Укажите свой e-mail!"
 
-#: add-on/publicpost/index.php:779
+#: add-on/publicpost/index.php:780
 msgid "Enter your name!"
 msgstr "Укажите свое имя!"
 
-#: add-on/publicpost/index.php:793
+#: add-on/publicpost/index.php:794
 msgid "This email is already used!"
 msgstr "Этот email уже используется!"
 
-#: add-on/publicpost/index.php:794
+#: add-on/publicpost/index.php:795
 msgid "If this is your email, then log in and publish your post"
 msgstr "Если это ваш email, то авторизуйтесь и опубликуйте запись"
 
-#: add-on/publicpost/index.php:799
+#: add-on/publicpost/index.php:800
 msgid "Add contents of the publication!"
 msgstr "Добавьте содержимое публикации!"
 
-#: add-on/publicpost/index.php:827
+#: add-on/publicpost/index.php:828
 msgid ""
 "If everything is correct – publish it! If not, you can go back to editing."
 msgstr "Если все верно - публикуйте! Если нет, то вернитесь в редактор."
 
-#: add-on/publicpost/index.php:991
+#: add-on/publicpost/index.php:992
 msgid "Loading image failed!"
 msgstr "Загрузка изображения не удалась!"
 
-#: add-on/publicpost/index.php:1023
+#: add-on/publicpost/index.php:1024
 msgid "Unauthorized file extension . Use only : .gif, .png, .jpg"
 msgstr "Запрещенный тип файла. Используйте только: .gif, .png, .jpg"
 
 #: add-on/publicpost/rcl_editpost.php:32 add-on/publicpost/rcl_editpost.php:37
 #: add-on/publicpost/rcl_editpost.php:45 add-on/publicpost/rcl_editpost.php:50
-#: add-on/publicpost/rcl_editpost.php:62 add-on/publicpost/rcl_editpost.php:216
+#: add-on/publicpost/rcl_editpost.php:59 add-on/publicpost/rcl_editpost.php:216
 msgid "Error publishing!"
 msgstr "Ошибка публикации!"
 
@@ -2523,103 +2527,103 @@ msgstr "пока не было опубликовано"
 msgid "Published"
 msgstr "Опубликованные"
 
-#: add-on/publicpost/rcl_publicform.php:185
-#: add-on/publicpost/rcl_publicform.php:190
-#: add-on/publicpost/rcl_publicform.php:198
+#: add-on/publicpost/rcl_publicform.php:194
+#: add-on/publicpost/rcl_publicform.php:199
+#: add-on/publicpost/rcl_publicform.php:207
 msgid "Delete post"
 msgstr "Удалить публикацию"
 
-#: add-on/publicpost/rcl_publicform.php:195
+#: add-on/publicpost/rcl_publicform.php:204
 msgid "or enter your own"
 msgstr "или введите свое"
 
-#: add-on/publicpost/rcl_publicform.php:197
+#: add-on/publicpost/rcl_publicform.php:206
 msgid "Without notice"
 msgstr "Без уведомления"
 
-#: add-on/publicpost/rcl_publicform.php:211
+#: add-on/publicpost/rcl_publicform.php:220
 msgid "Does not correspond the topic"
 msgstr "Н/с тематике сайта"
 
-#: add-on/publicpost/rcl_publicform.php:212
+#: add-on/publicpost/rcl_publicform.php:221
 msgid "The publication does not correspond to the site topic"
 msgstr "Публикация не соответствует тематике сайта"
 
-#: add-on/publicpost/rcl_publicform.php:215
+#: add-on/publicpost/rcl_publicform.php:224
 msgid "Not completed"
 msgstr "Не оформлен"
 
-#: add-on/publicpost/rcl_publicform.php:216
+#: add-on/publicpost/rcl_publicform.php:225
 msgid "Publication does not correspond the rules"
 msgstr "Публикация не оформлена согласно правил"
 
-#: add-on/publicpost/rcl_publicform.php:219
+#: add-on/publicpost/rcl_publicform.php:228
 msgid "Advertising/Spam"
 msgstr "Реклама/Спам"
 
-#: add-on/publicpost/rcl_publicform.php:220
+#: add-on/publicpost/rcl_publicform.php:229
 msgid "Publication labeled as advertising or spam"
 msgstr "Публикация помечена как реклама или спам"
 
-#: add-on/publicpost/rcl_publicform.php:228
+#: add-on/publicpost/rcl_publicform.php:237
 msgid "Use blank notice"
 msgstr "Используйте заготовку уведомления"
 
-#: add-on/publicpost/rcl_publicform.php:240
+#: add-on/publicpost/rcl_publicform.php:249
 msgid "You can not edit this publication :("
 msgstr "Вы не можете редактировать эту публикацию :("
 
-#: add-on/publicpost/rcl_publicform.php:244
+#: add-on/publicpost/rcl_publicform.php:253
 msgid "Sorry, but you have no rights to publish in this group :("
 msgstr "Извините, но вы не можете публиковать в этой группе :("
 
-#: add-on/publicpost/rcl_publicform.php:248
+#: add-on/publicpost/rcl_publicform.php:257
 msgid "You must be logged in to post. Login or register"
 msgstr ""
 "Вы должны быть авторизованы для публикации. Войдите или зарегистрируйтесь."
 
-#: add-on/publicpost/rcl_publicform.php:251
+#: add-on/publicpost/rcl_publicform.php:260
 msgid "Sorry, but you have no right to post on this site :("
 msgstr "Извините, но вы не можете публиковать на этом сайте :("
 
-#: add-on/publicpost/rcl_publicform.php:311
+#: add-on/publicpost/rcl_publicform.php:320
 msgid "Being sent, please wait..."
 msgstr "Идет отправка, подождите..."
 
-#: add-on/publicpost/rcl_publicform.php:318
+#: add-on/publicpost/rcl_publicform.php:327
 msgid "Your Name"
 msgstr "Ваше имя"
 
-#: add-on/publicpost/rcl_publicform.php:322
+#: add-on/publicpost/rcl_publicform.php:331
 msgid "Your E-mail"
 msgstr "Ваш E-mail"
 
-#: add-on/publicpost/rcl_publicform.php:544
+#: add-on/publicpost/rcl_publicform.php:560
 msgid "Text Box"
 msgstr "Текстовый блок"
 
-#: add-on/publicpost/rcl_publicform.php:545
+#: add-on/publicpost/rcl_publicform.php:561
 #: add-on/publicpost/templates/editor-header-box.php:7
 msgid "Subtitle"
 msgstr "Подзаголовок"
 
-#: add-on/publicpost/rcl_publicform.php:546
+#: add-on/publicpost/rcl_publicform.php:562
 msgid "Image"
 msgstr "Изображение"
 
-#: add-on/publicpost/rcl_publicform.php:547
+#: add-on/publicpost/rcl_publicform.php:563
 msgid "HTML- code"
 msgstr "HTML- код"
 
-#: add-on/publicpost/rcl_publicform.php:692
+#: add-on/publicpost/rcl_publicform.php:708
 msgid "Enter your tags"
 msgstr "Введите свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:693
+#: add-on/publicpost/rcl_publicform.php:709
 msgid "Add your tags"
 msgstr "Добавьте свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:693
+#: add-on/publicpost/rcl_publicform.php:709
 msgid "Each tag is separated with Enter"
 msgstr "каждый тег разделяется нажатием на кнопку Enter"
 
@@ -2647,6 +2651,10 @@ msgid "deleted"
 msgstr "удален"
 
 #: add-on/publicpost/templates/posts-list.php:17
+msgid "draft"
+msgstr "черновик"
+
+#: add-on/publicpost/templates/posts-list.php:18
 msgid "published"
 msgstr "опубликован"
 
@@ -2654,7 +2662,7 @@ msgstr "опубликован"
 msgid "Enter a brief description of the publication"
 msgstr "Введите краткое содержание публикации"
 
-#: add-on/publicpost/upload-file.php:34
+#: add-on/publicpost/upload-file.php:37
 msgid "Banned file extension. Resolved:"
 msgstr "Запрещенное расширение файла. Разрешено:"
 
@@ -3243,15 +3251,15 @@ msgstr "FEED"
 msgid "Unconfirmed"
 msgstr "Неподтвержденные"
 
-#: functions/authorize.php:18
+#: functions/authorize.php:16
 msgid ""
 "Your account is unconfirmed! Confirm your account by clicking on the link in "
 "the email"
 msgstr ""
-"Ваш аккаунт неподтвержден! Подтвердите свой аккаунт перейдя по ссылке в "
+"Ваш аккаунт не подтвержден! Подтвердите свой аккаунт перейдя по ссылке в "
 "письме"
 
-#: functions/authorize.php:42 functions/register.php:158
+#: functions/authorize.php:40 functions/register.php:158
 msgid "Fill in the required fields!"
 msgstr "Заполните обязательные поля!"
 
@@ -3514,19 +3522,23 @@ msgstr "Автор публикации"
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: functions/rcl-frontend.php:331
+#: functions/rcl-frontend.php:332
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
-#: functions/rcl-frontend.php:388 functions/rcl-frontend.php:414
+#: functions/rcl-frontend.php:337
+msgid "Draft of a post"
+msgstr "Черновик публикации"
+
+#: functions/rcl-frontend.php:395 functions/rcl-frontend.php:421
 msgid "Unblock"
 msgstr "Разблокировать"
 
-#: functions/rcl-frontend.php:388 functions/rcl-frontend.php:414
+#: functions/rcl-frontend.php:395 functions/rcl-frontend.php:421
 msgid "Blacklist"
 msgstr "Черный список"
 
-#: functions/rcl-frontend.php:433
+#: functions/rcl-frontend.php:440
 msgid "The user has restricted access to their page"
 msgstr "Пользователь ограничил доступ к своей странице"
 

@@ -4,6 +4,7 @@ class Rcl_PublicForm {
 
     public $post_id;//идентификатор записи
     public $post_type; //тип записи
+    public $post_status; //тип записи
     public $terms; //список категорий доступных для выбора
     public $form_id; //идентификатор формы
     public $id_upload;
@@ -53,7 +54,8 @@ class Rcl_PublicForm {
                 }
             }
             $this->wp_editor = (isset($type))? $type: 0;
-        }else $this->wp_editor = $wp_editor;
+        }else 
+            $this->wp_editor = $wp_editor;
 
         $this->type_editor = null;
 
@@ -62,6 +64,7 @@ class Rcl_PublicForm {
             $this->post_id = $_GET['rcl-post-edit'];
             $editpost = get_post($this->post_id);
             $this->post_type = $editpost->post_type;
+            $this->post_status = $editpost->post_status;
 
             if($this->post_type=='post-group'){
                 
@@ -139,16 +142,22 @@ class Rcl_PublicForm {
 			array('type'=>'hidden','value'=>1,'name'=>'edit-post-rcl'),
 			array('type'=>'hidden','value'=>base64_encode($formData->form_id),'name'=>'id_form'),
 		);
+                
+                $inputs[] = array('type'=>'button','value'=>__('Save as Draft','wp-recall'),'onclick'=>'rcl_save_draft(this);','id'=>'save-draft-rcl','class'=>'recall-button');
 
                 if(!$this->preview){
-                    $inputs[] = array('type'=>'submit','value'=>__('Publish','wp-recall'),'onclick'=>'rcl_publish(this);','id'=>'edit-post-rcl','class'=>'recall-button');
+                    $inputs[] = array('type'=>'button','value'=>__('Publish','wp-recall'),'onclick'=>'rcl_publish(this);','id'=>'edit-post-rcl','class'=>'recall-button');
                 }else{
                     rcl_dialog_scripts();
                     $inputs[] = array('type'=>'button','value'=>__('Preview','wp-recall'),'onclick'=>'rcl_preview(this);','class'=>'rcl-preview-post recall-button');
                 }
+                
+                $inputs[] = array('type'=>'hidden','value'=>$formData->post_id,'name'=>'post-rcl');
 
-		if($this->post_id) $inputs[] = array('type'=>'hidden','value'=>$formData->post_id,'name'=>'post-rcl');
-		else $inputs[] = array('type'=>'hidden','value'=>base64_encode($formData->post_type),'name'=>'posttype');
+		if(!$this->post_id) 
+                    $inputs[] = array('type'=>'hidden','value'=>base64_encode($formData->post_type),'name'=>'posttype');
+                else
+                    $inputs[] = array('type'=>'hidden','value'=>$formData->post_status,'name'=>'post_status');
 
 		$post_id = (isset($post))? $post->ID: 0;
 
@@ -311,8 +320,8 @@ class Rcl_PublicForm {
                     $form .= ' onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','wp-recall').'\';"';  
                 }
                 
-                $form .= 'action="" method="post" enctype="multipart/form-data">
-                 '.wp_nonce_field('edit-post-rcl','_wpnonce',true,false);
+                $form .= 'action="" method="post" enctype="multipart/form-data">'
+                 .wp_nonce_field('edit-post-rcl','_wpnonce',true,false);
 
                     if(!$user_ID) $form .= '<div class="rcl-form-field">
                             <label>'.__('Your Name','wp-recall').' <span class="required">*</span></label>
@@ -323,8 +332,10 @@ class Rcl_PublicForm {
                             <input required type="text" value="" name="email-user">
                     </div>';
 
-                    if(rcl_get_template_path($formData->post_type.'-form.php',__FILE__)) $form .= rcl_get_include_template($formData->post_type.'-form.php',__FILE__);
-                        else $form .= rcl_get_include_template('public-form.php',__FILE__);
+                    if(rcl_get_template_path($formData->post_type.'-form.php',__FILE__)) 
+                        $form .= rcl_get_include_template($formData->post_type.'-form.php',__FILE__);
+                    else 
+                        $form .= rcl_get_include_template('public-form.php',__FILE__);
 
                     $fields = '';
 
@@ -345,7 +356,12 @@ class Rcl_PublicForm {
     function init_form_scripts(){
         global $formData;
         $id_post = ($formData->post_id)? $formData->post_id : 0;
-        echo '<script type="text/javascript">rcl_init_public_form("'.$formData->post_type.'","'.$id_post.'");</script>';
+        echo '<script type="text/javascript">'
+                . 'rcl_init_public_form({'
+                . 'post_type:"'.$formData->post_type.'",'
+                . 'post_id:"'.$id_post.'",'
+                . 'post_status:"'.$formData->post_status.'"'
+            . '});</script>';
     }
 }
 
@@ -715,4 +731,38 @@ function rcl_get_tags_input($post_id=false,$taxonomy='post_tag'){
 
 function rcl_get_edit_box($type){
     return rcl_get_include_template('editor-'.$type.'-box.php',__FILE__);
+}
+
+function rcl_public_form_beat($data){
+    global $user_ID;
+    
+    $formdata = $data->formdata;
+    
+    $posts = array();
+    foreach($formdata as $post){
+        $posts[$post->name] = $post->value;
+    }
+    
+    $postdata = array(
+        'post_title'=>sanitize_text_field($posts['post_title']),
+        'post_content'=> $posts['post_content'],
+        'post_status'=> 'draft'
+    );
+    
+    if($posts['post-rcl']){
+        
+        $post_id = $posts['post-rcl'];
+        
+        $postdata['ID'] = $post_id;
+        
+        wp_update_post( $postdata );
+        
+    }else{
+        
+        $postdata['post_type'] = sanitize_text_field(base64_decode($posts['posttype']));
+        
+        $post_id = wp_insert_post( $postdata );
+    }
+
+    return array('post_id'=>$post_id);
 }

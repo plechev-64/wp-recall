@@ -50,9 +50,6 @@ class Rcl_EditPost {
                     $this->error(__('Error publishing!','wp-recall').' Error 105');
             }
             $this->update = true;
-        }else{
-            if (!session_id()) { session_start(); }
-            unset($_SESSION['new-'.$this->post_type]);
         }
 
         if($_POST['posttype']){
@@ -158,20 +155,27 @@ class Rcl_EditPost {
 
     function get_status_post($moderation){
         global $user_ID,$rcl_options;
-        if($moderation==1) $post_status = 'pending';
-        else $post_status = 'publish';
+        
+        if(isset($_POST['save-as-draft']))
+            return 'draft';
+        
+        $user_info = get_userdata($user_ID);
+        
+        if($user_info->user_level==10)
+            return 'publish';
+        
+        $post_status = ($moderation==1)? 'pending': 'publish';
 
         if($rcl_options['rating_no_moderation']){
-                $all_r = rcl_get_user_rating($user_ID);
-                if($all_r >= $rcl_options['rating_no_moderation']) $post_status = 'publish';
+            $all_r = rcl_get_user_rating($user_ID);
+            if($all_r >= $rcl_options['rating_no_moderation']) $post_status = 'publish';
         }
+
         return $post_status;
     }
 
     function add_data_post($postdata,$data){
         global $rcl_options;
-
-        if($data->post_type!='post') return $postdata;
 
         $postdata['post_status'] = $this->get_status_post($rcl_options['moderation_public_post']);
 
@@ -202,10 +206,6 @@ class Rcl_EditPost {
         $postdata = apply_filters('pre_update_postdata_rcl',$postdata,$this);
         
         if(!$postdata) return false;
-
-        $user_info = get_userdata($user_ID);
-
-        if(!$postdata['post_status']||$user_info->user_level==10) $postdata['post_status'] = 'publish';
 
         do_action('pre_update_post_rcl',$postdata);
 

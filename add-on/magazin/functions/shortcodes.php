@@ -1,58 +1,58 @@
 <?php
 function rcl_get_shortcode_cart(){
-	global $rmag_options;
-	if(isset($rmag_options['add_basket_button_recall'])&&$rmag_options['add_basket_button_recall']==1)
-            add_shortcode('add-basket','rcl_add_cart_button');
-	else
-            add_filter('the_content','rcl_add_cart_button',10);
+    global $rmag_options;
+    if(isset($rmag_options['add_basket_button_recall'])&&$rmag_options['add_basket_button_recall']==1)
+        add_shortcode('add-basket','rcl_add_cart_button');
+    else
+        add_filter('the_content','rcl_add_cart_button',10);
 }
 add_action('wp','rcl_get_shortcode_cart',10);
 
 //кнопку добавления заказа на странице товара
 function rcl_add_cart_button($content){
-global $post,$rmag_options;
+    global $post,$rmag_options;
 
-	if($post->post_type!=='products') return $content;
-        
-        $check = apply_filters('rcl_check_cart_button',true,$post->ID);
-        if(!$check) return $content;
+    if($post->post_type!=='products') return $content;
 
-        $metas = rcl_get_postmeta_array($post->ID);
+    $check = apply_filters('rcl_check_cart_button',true,$post->ID);
+    if(!$check) return $content;
 
-        $price = $metas['price-products'];
-        $outsale = (isset($metas['outsale']))?$metas['outsale']:false;
-        
-        $price_input = __('Price','wp-recall').': '.rcl_get_price($post->ID).' <input type="text" size="2" name="number_product" id="number_product" value="1">';
-        $cart_button = rcl_get_button(__('Add to cart','wp-recall'),'#',array('icon'=>false,'class'=>'add_basket','attr'=>'onclick="rcl_add_cart(this);return false;" data-product='.$post->ID));
+    $metas = rcl_get_postmeta_array($post->ID);
 
-        if(!$outsale){
-            if($metas['availability_product']=='empty'){ //если товар цифровой
-                if($price) $button = $price_input;
-                else $button = __('Free','wp-recall').' ';
-                $button .= $cart_button;
-            }else{
-                if($rmag_options['products_warehouse_recall']==1){
-                    $amount = get_post_meta($post->ID, 'amount_product', 1);
-                    if($amount>0||$amount==false){
-                        $button = $price_input . $cart_button;
-                    }
-                }else{
-                    $button = $price_input . $cart_button;;
+    $price = $metas['price-products'];
+    $outsale = (isset($metas['outsale']))?$metas['outsale']:false;
+
+    $price_input = __('Price','wp-recall').': '.rcl_get_price($post->ID).' <input type="text" size="2" name="number_product" id="number_product" value="1">';
+    $cart_button = rcl_get_button(__('Add to cart','wp-recall'),'#',array('icon'=>false,'class'=>'add_basket','attr'=>'onclick="rcl_add_cart(this);return false;" data-product='.$post->ID));
+
+    if(!$outsale){
+        if($metas['availability_product']=='empty'){ //если товар цифровой
+            if($price) $button = $price_input;
+            else $button = __('Free','wp-recall').' ';
+            $button .= $cart_button;
+        }else{
+            if($rmag_options['products_warehouse_recall']==1){
+                $amount = get_post_meta($post->ID, 'amount_product', 1);
+                if($amount>0||$amount==false){
+                    $button = $price_input . $cart_button;
                 }
+            }else{
+                $button = $price_input . $cart_button;;
             }
         }
-        
-        $button = '<div id="product-'.$post->ID.'" class="single-cart-button">'
-                    . '<div class="price-basket-product">'
-                        . $button
-                    . '</div>'
-                . '</div>';
+    }
 
-        $button = apply_filters('cart_button_product_page',$button);
+    $button = '<div id="product-'.$post->ID.'" class="single-cart-button">'
+                . '<div class="price-basket-product">'
+                    . $button
+                . '</div>'
+            . '</div>';
 
-        $content .= $button;
+    $button = apply_filters('cart_button_product_page',$button);
 
-	return $content;
+    $content .= $button;
+
+    return $content;
 }
 
 function rcl_shortcode_minicart() {

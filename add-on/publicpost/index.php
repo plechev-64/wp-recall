@@ -23,6 +23,7 @@ function rcl_init_js_public_variables($data){
     
     $data['local']['preview'] = __('Preview','wp-recall');
     $data['local']['publish'] = __('Publish','wp-recall');
+    $data['local']['save_draft'] = __('Save as Draft','wp-recall');
     $data['local']['edit'] = __('Edit','wp-recall');
     $data['local']['edit_box_title'] = __('Quick edit','wp-recall');   
     $data['local']['requared_fields_empty'] = __('Fill in all required fields','wp-recall');
@@ -759,77 +760,77 @@ add_action('wp_ajax_nopriv_rcl_add_editor_box','rcl_add_editor_box');
 add_action('wp_ajax_rcl_preview_post','rcl_preview_post');
 add_action('wp_ajax_nopriv_rcl_preview_post','rcl_preview_post');
 function rcl_preview_post(){
-	global $user_ID,$rcl_options;
-        
-        rcl_verify_ajax_nonce();
+    global $user_ID,$rcl_options;
 
-	$log = array();
+    rcl_verify_ajax_nonce();
 
-	$user_can = $rcl_options['user_public_access_recall'];
+    $log = array();
 
-	if(!$user_can&&!$user_ID){
+    $user_can = $rcl_options['user_public_access_recall'];
 
-		$email_new_user = sanitize_email($_POST['email-user']);
-		$name_new_user = $_POST['name-user'];
+    if(!$user_can&&!$user_ID){
 
-		if(!$email_new_user){
-			$log['error'] = __('Enter your e-mail!','wp-recall');
-		}
-		if(!$name_new_user){
-			$log['error'] = __('Enter your name!','wp-recall');
-		}
+        $email_new_user = sanitize_email($_POST['email-user']);
+        $name_new_user = $_POST['name-user'];
 
-		$res_email = email_exists( $email_new_user );
-		$res_login = username_exists($email_new_user);
-		$correctemail = is_email($email_new_user);
-		$valid = validate_username($email_new_user);
+        if(!$email_new_user){
+                $log['error'] = __('Enter your e-mail!','wp-recall');
+        }
+        if(!$name_new_user){
+                $log['error'] = __('Enter your name!','wp-recall');
+        }
 
-		if($res_login||$res_email||!$correctemail||!$valid){
+        $res_email = email_exists( $email_new_user );
+        $res_login = username_exists($email_new_user);
+        $correctemail = is_email($email_new_user);
+        $valid = validate_username($email_new_user);
 
-			if(!$valid||!$correctemail){
-				$log['error'] .= __('You have entered an invalid email!','wp-recall');
-			}
-			if($res_login||$res_email){
-				$log['error'] .= __('This email is already used!','wp-recall').'<br>'
-						.__('If this is your email, then log in and publish your post','wp-recall');
-			}
-		}
-	}
+        if($res_login||$res_email||!$correctemail||!$valid){
 
-	if(!$_POST['post_content']) $log['error'] = __('Add contents of the publication!','wp-recall');
-
-	if($log['error']){
-		echo json_encode($log);
-		exit;
-	}
-
-	$post_content = '';
-
-	if(is_array($_POST['post_content'])){
-            foreach($_POST['post_content'] as $contents){
-                foreach($contents as $type=>$content){
-                    if($type=='text') $content = strip_tags($content);
-                    if($type=='header') $content = sanitize_text_field($content);
-                    if($type=='html') $content = str_replace('\'','"',$content);
-                    $post_content .= "[rcl-box type='$type' content='$content']";
-                }
+            if(!$valid||!$correctemail){
+                    $log['error'] .= __('You have entered an invalid email!','wp-recall');
             }
-	}else{
-                $post_content = stripslashes_deep($_POST['post_content']);
-	}
+            if($res_login||$res_email){
+                    $log['error'] .= __('This email is already used!','wp-recall').'<br>'
+                                    .__('If this is your email, then log in and publish your post','wp-recall');
+            }
+        }
+    }
 
-	$post_content = rcl_get_editor_content($post_content,'preview');
+    if(!$_POST['post_content']) $log['error'] = __('Add contents of the publication!','wp-recall');
 
-	$preview = '<h2>'.$_POST['post_title'].'</h2>
-		'.$post_content;
+    if($log['error']){
+            echo json_encode($log);
+            exit;
+    }
 
-	$preview .= '<div class="rcl-notice-preview">
-			<p>'.__('If everything is correct – publish it! If not, you can go back to editing.','wp-recall').'</p>
-		</div>';
+    $post_content = '';
 
-	$log['content'] = $preview;
-	echo json_encode($log);
-	exit;
+    if(is_array($_POST['post_content'])){
+        foreach($_POST['post_content'] as $contents){
+            foreach($contents as $type=>$content){
+                if($type=='text') $content = strip_tags($content);
+                if($type=='header') $content = sanitize_text_field($content);
+                if($type=='html') $content = str_replace('\'','"',$content);
+                $post_content .= "[rcl-box type='$type' content='$content']";
+            }
+        }
+    }else{
+            $post_content = stripslashes_deep($_POST['post_content']);
+    }
+
+    $post_content = rcl_get_editor_content($post_content,'preview');
+
+    $preview = '<h2>'.$_POST['post_title'].'</h2>
+            '.$post_content;
+
+    $preview .= '<div class="rcl-notice-preview">
+                    <p>'.__('If everything is correct – publish it! If not, you can go back to editing.','wp-recall').'</p>
+            </div>';
+
+    $log['content'] = $preview;
+    echo json_encode($log);
+    exit;
 }
 
 function rcl_get_editor_content($post_content,$type='editor'){

@@ -242,75 +242,93 @@ function rcl_init_upload_box(idbox){
 
 function rcl_preview(e){
 
-	var submit = jQuery(e);
-	var formblock = submit.parents('form');
-        var post_type = formblock.data('post_type');
-        
-        if(!rcl_check_required_fields(formblock)) return false;
+    var submit = jQuery(e);
+    var formblock = submit.parents('form');
+    var post_type = formblock.data('post_type');
 
-        submit.attr('disabled',true).val(Rcl.local.wait+'...');
-	
-	var iframe = jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html();
-	if(iframe){
-            tinyMCE.triggerSave();
-            formblock.find('textarea[name="post_content"]').html(iframe);
-        }
-	
-        var string   = formblock.serialize();
+    if(!rcl_check_required_fields(formblock)) return false;
 
-	var dataString = 'action=rcl_preview_post&'+string;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-	jQuery.ajax({
-            type: 'POST', 
-            data: dataString, 
-            dataType: 'json', 
-            url: Rcl.ajaxurl,
-            success: function(data){
+    submit.attr('disabled',true).val(Rcl.local.wait+'...');
 
-                if(data['error']){
-                    rcl_notice(data['error'],'error',10000);
-                    submit.attr('disabled',false).val(Rcl.local.preview);
-                    return false;
-                }
+    var iframe = jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html();
+    if(iframe){
+        tinyMCE.triggerSave();
+        formblock.find('textarea[name="post_content"]').html(iframe);
+    }
 
-                if(data['content']){
-                    
-                    ssi_modal.show({
-                        sizeClass: 'small',
-                        title: Rcl.local.preview,
-                        className: 'rcl-preview-post',
-                        buttons: [{
-                            className: 'btn btn-primary',
-                            label: Rcl.local.edit,
-                            closeAfter: true,
-                            method: function () {
-                                submit.attr('disabled',false).val(Rcl.local.preview);
-                            }
-                        }, {
-                            className: 'btn btn-danger',
-                            label: Rcl.local.publish,
-                            closeAfter: false,
-                            method: function () {
-                                jQuery('form.rcl-public-form').submit();
-                            }
-                        }],
-                        content: '<div id="rcl-preview">'+data['content']+'</div>'
-                    });
+    var string   = formblock.serialize();
 
-                    submit.attr('disabled',false).val(Rcl.local.preview);
-                    return true;
-                }
+    var dataString = 'action=rcl_preview_post&'+string;
+    dataString += '&ajax_nonce='+Rcl.nonce;
+    jQuery.ajax({
+        type: 'POST', 
+        data: dataString, 
+        dataType: 'json', 
+        url: Rcl.ajaxurl,
+        success: function(data){
+
+            if(data['error']){
+                rcl_notice(data['error'],'error',10000);
+                submit.attr('disabled',false).val(Rcl.local.preview);
+                return false;
+            }
+
+            if(data['content']){
+
+                ssi_modal.show({
+                    sizeClass: 'small',
+                    title: Rcl.local.preview,
+                    className: 'rcl-preview-post',
+                    buttons: [{
+                        className: 'btn btn-primary',
+                        label: Rcl.local.edit,
+                        closeAfter: true,
+                        method: function () {
+                            submit.attr('disabled',false).val(Rcl.local.preview);
+                        }
+                    }, {
+                        className: 'btn btn-danger',
+                        label: Rcl.local.save_draft,
+                        closeAfter: false,
+                        method: function () {
+                            rcl_save_draft();
+                        }
+                    }, {
+                        className: 'btn btn-danger',
+                        label: Rcl.local.publish,
+                        closeAfter: false,
+                        method: function () {
+                            rcl_publish();
+                        }
+                    }],
+                    content: '<div id="rcl-preview">'+data['content']+'</div>'
+                });
 
                 submit.attr('disabled',false).val(Rcl.local.preview);
-                rcl_notice(Rcl.local.error,'error',10000);
-
+                return true;
             }
-	}); 
-	return false;
+
+            submit.attr('disabled',false).val(Rcl.local.preview);
+            rcl_notice(Rcl.local.error,'error',10000);
+
+        }
+    }); 
+    return false;
 
 }
 
-function rcl_publish(e){
+function rcl_save_draft(e){
+    
+    if(!e) e = jQuery('#save-draft-rcl');
+    
+    if(!rcl_check_publish(e)) return false;
+    
+    jQuery(e).after('<input type="hidden" name="save-as-draft" value=1>');
+
+    rcl_publish(e);
+}
+
+function rcl_check_publish(e){
     
     var submit = jQuery(e);
     var formblock = submit.parents('form');
@@ -318,6 +336,15 @@ function rcl_publish(e){
     if(!rcl_check_required_fields(formblock)) return false;
     
     return true; 
+}
+
+function rcl_publish(e){
+    
+    if(e && !rcl_check_publish(e)) 
+        return false;
+    
+    jQuery('form.rcl-public-form').submit();
+    
 }
 
 function rcl_check_required_fields(form){
@@ -351,7 +378,7 @@ function rcl_check_required_fields(form){
         }
 
     });
-
+    
     if(form.find( 'input[name="cats[]"]' ).length > 0){             
         if(form.find('input[name="cats[]"]:checked').length == 0){
             form.find( 'input[name="cats[]"]' ).css('box-shadow','0px 0px 1px 1px red');
@@ -379,7 +406,14 @@ function rcl_preview_close(e){
     ssi_modal.close();	
 }
 
-function rcl_init_public_form(post_type,post_id){
+function rcl_init_public_form(post){
+    
+    var post_id = post.post_id;
+    var post_type = post.post_type;
+    var post_status = 'new';
+    
+    if(post.post_status)
+        post_status = post.post_status;
     
     jQuery('form.rcl-public-form').find(':required').each(function(){
         var i = rcl_public_form.required.length;

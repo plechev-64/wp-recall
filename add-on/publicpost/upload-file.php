@@ -10,12 +10,15 @@ function rcl_imagepost_upload(){
     require_once(ABSPATH . "wp-admin" . '/includes/image.php');
     require_once(ABSPATH . "wp-admin" . '/includes/file.php');
     require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+    
+    $id_post = false;
 
-    if(isset($_POST['post_id'])&&$_POST['post_id']!='undefined') $id_post = intval($_POST['post_id']);
-    
+    if(isset($_POST['post_id']) && $_POST['post_id']!='undefined' && $_POST['post_id']){
+        $id_post = intval($_POST['post_id']);
+        $post = get_post($id_post);
+    }
+        
     $post_type = $_POST['post_type'];
-    
-    $post = get_post($id_post);
 
     $valid_types = apply_filters('rcl_upload_valid_types',array('gif', 'jpg', 'png', 'jpeg'),$post_type);
 
