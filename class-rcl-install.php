@@ -280,10 +280,7 @@ class RCL_Install {
         update_option('rcl_footer_link',1);
         update_option('rcl_global_options', $rcl_options );
         update_option('rcl_version',VER_RCL);
-        
-        //позже удалить
-        rcl_update_dinamic_files();
-        
+
         rcl_remove_dir(RCL_UPLOAD_PATH.'js');
         rcl_remove_dir(RCL_UPLOAD_PATH.'css');
 
