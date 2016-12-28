@@ -64,7 +64,7 @@ class Rcl_EditPost {
 
         do_action('init_update_post_rcl',$this);
 
-        add_filter('pre_update_postdata_rcl',array(&$this,'add_data_post'),10,2);
+        add_filter('pre_update_postdata_rcl',array(&$this,'add_data_post'),5,2);
 
         $this->update_post();
     }

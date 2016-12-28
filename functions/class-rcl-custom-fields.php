@@ -27,7 +27,7 @@ class Rcl_Custom_Fields{
 
         if(!$field['type']) return false;
 
-        if(!is_admin()&&isset($field['admin'])&&$field['admin']==1&&$user_ID){
+        if(isset($field['admin']) && $field['admin']==1 &&  !rcl_is_user_role($user_ID, array('administrator'))){
             $value = get_user_meta($user_LK,$this->slug,1);
             if($value){
                 $html = $this->get_field_value($field,$value,false);               

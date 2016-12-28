@@ -1,4 +1,4 @@
-<?php global $posts,$ratings; ?>
+<?php global $post,$posts,$ratings; ?>
 
 <table class="publics-table-rcl">
 

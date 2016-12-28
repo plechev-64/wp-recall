@@ -276,16 +276,21 @@ function rcl_get_time_user_action($user_id){
     return $action;
 }
 
-function rcl_get_miniaction($action,$user_id=false){
-    global $wpdb;
-    if(!$action) $action = rcl_get_time_user_action($user_id);
+function rcl_get_miniaction($action){
+    global $rcl_user;
+    
+    if(!$action) 
+        $action = rcl_get_time_user_action($rcl_user->ID);
+    
     $last_action = rcl_get_useraction($action);
-    $class = (!$last_action&&$action)?'online':'offline';
+    
+    $class = (!$last_action&&$action)? 'online': 'offline';
 
-    $content = '<div class="status_author_mess '.$class.'">';
-    if(!$last_action&&$action) $content .= '<i class="fa fa-circle"></i>';
-    else $content .= __('offline','wp-recall').' '.$last_action;
-    $content .= '</div>';
+    $content = apply_filters('rcl_before_miniaction', '');
+    
+    $content .= (!$last_action&&$action)? '<i class="fa fa-circle"></i>': __('offline','wp-recall').' '.$last_action;
+    
+    $content = sprintf('<div class="status_author_mess %s">%s</div>',$class,$content);
 
     return $content;
 }

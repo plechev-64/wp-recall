@@ -1,7 +1,7 @@
 <?php
 
 if (!is_admin()):
-    add_action('rcl_enqueue_scripts','rcl_feed_scripts',10);
+    //add_action('rcl_enqueue_scripts','rcl_feed_scripts',10);
 endif;
 
 function rcl_feed_scripts(){
