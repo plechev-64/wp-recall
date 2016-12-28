@@ -153,7 +153,7 @@ function rcl_user_description(){
     
     if($rcl_user->description){
         echo '<div class="ballun-status">';
-            echo '<p class="status-user-rcl">'.nl2br(esc_textarea($rcl_user->description)).'</p>
+            echo '<p class="status-user-rcl">'.nl2br(esc_html($rcl_user->description)).'</p>
         </div>';
     }
         
