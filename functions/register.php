@@ -47,9 +47,11 @@ function rcl_insert_user($data){
 //подтверждаем регистрацию пользователя по ссылке
 function rcl_confirm_user_registration(){
     global $wpdb,$rcl_options;
-    $reglogin = $_GET['rglogin'];
-    $regpass = $_GET['rgpass'];
+    
+    $reglogin = urldecode($_GET['rglogin']);
+    $regpass = urldecode($_GET['rgpass']);
     $regcode = md5($reglogin);
+    
     if($regcode==$_GET['rgcode']){
         if ( $user = get_user_by('login', $reglogin) ){
 
@@ -88,10 +90,11 @@ function rcl_confirm_user_registration(){
 //принимаем данные для подтверждения регистрации
 add_action('init', 'rcl_confirm_user_resistration_activate');
 function rcl_confirm_user_resistration_activate(){
-global $rcl_options;
-  if (isset($_GET['rgcode'])&&isset($_GET['rglogin'])){
-	if($rcl_options['confirm_register_recall']==1) add_action( 'wp', 'rcl_confirm_user_registration' );
-  }
+    global $rcl_options;
+    if (isset($_GET['rgcode'])&&isset($_GET['rglogin'])){
+          if($rcl_options['confirm_register_recall']==1) 
+              add_action( 'wp', 'rcl_confirm_user_registration' );
+    }
 }
 
 //добавляем коды ошибок для тряски формы ВП
@@ -224,7 +227,7 @@ function rcl_register_mail($userdata){
 
     if($rcl_options['confirm_register_recall']==1){
 
-        $url = get_bloginfo('wpurl').'/?rglogin='.$userdata['user_login'].'&rgpass='.$userdata['user_pass'].'&rgcode='.md5($userdata['user_login']);
+        $url = get_bloginfo('wpurl').'/?rglogin='.urlencode($userdata['user_login']).'&rgpass='.urlencode($userdata['user_pass']).'&rgcode='.md5($userdata['user_login']);
 
         $textmail .= '<p>'.__('If it was you, then confirm your registration by clicking on the link below','wp-recall').':</p>
         <p><a href="'.$url.'">'.$url.'</a></p>

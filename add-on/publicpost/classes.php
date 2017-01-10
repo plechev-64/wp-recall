@@ -164,6 +164,10 @@ class Rcl_List_Terms{
     function get_options_list($term_ids = false){
 
         $terms_data = ($term_ids)? $this->get_terms_data($term_ids): $this->datalist;
+        
+        if(!$terms_data) return false;
+        
+        $options = array();
 
         foreach($terms_data as $term_id=>$term){
 
@@ -187,6 +191,8 @@ class Rcl_List_Terms{
             $options[] = '<option '.selected($this->selected_term,$term_id,false).' value="'.$term_id.'">'.$term['name'].'</option>';
 
         }
+        
+        if(!$options) return false;
 
         return implode('',$options);
 

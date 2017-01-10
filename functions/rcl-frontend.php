@@ -548,7 +548,3 @@ function rcl_beat(){
     
 }
 
-/*function rcl_test_beat($data){
-    return $data;
-}*/
-
