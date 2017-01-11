@@ -394,3 +394,14 @@ function rcl_get_feed_array($user_id,$type_feed='author'){
     return $feeds;
 }
 
+function rcl_feed_title(){
+    global $rcl_feed;
+    echo apply_filters('rcl_feed_title',$rcl_feed->feed_title);
+}
+
+add_filter('rcl_feed_title','rcl_add_link_feed_title',10);
+function rcl_add_link_feed_title($feed_title){
+    global $rcl_feed;
+    $feed_title = ($rcl_feed->feed_permalink)? sprintf('<a href="%s">%s</a>',$rcl_feed->feed_permalink,$feed_title):$feed_title;
+    return $feed_title;
+}

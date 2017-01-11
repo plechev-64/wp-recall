@@ -22,15 +22,7 @@
 <div class="feed-content">
 
     <?php if($rcl_feed->feed_title): ?>
-        <h3 class="feed-title">
-            <?php if($rcl_feed->feed_permalink): ?>
-            <a href="<?php echo $rcl_feed->feed_permalink; ?>">
-            <?php endif; ?>
-                <?php echo $rcl_feed->feed_title; ?>
-            <?php if($rcl_feed->feed_permalink): ?>
-            </a>
-            <?php endif; ?>
-        </h3>
+        <h3 class="feed-title"><?php rcl_feed_title(); ?></h3>
      <?php endif; ?>
 
     <?php rcl_feed_content(); ?>
