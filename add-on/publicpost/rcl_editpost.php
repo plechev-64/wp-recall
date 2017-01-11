@@ -159,9 +159,7 @@ class Rcl_EditPost {
         if(isset($_POST['save-as-draft']))
             return 'draft';
         
-        $user_info = get_userdata($user_ID);
-        
-        if($user_info->user_level==10)
+        if(rcl_is_user_role($user_ID,array('administrator','editor')))
             return 'publish';
         
         $post_status = ($moderation==1)? 'pending': 'publish';

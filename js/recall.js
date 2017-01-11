@@ -716,6 +716,21 @@ function rcl_add_beat(beat_name,delay){
     
 }
 
+function rcl_exist_beat(beat_name){
+    
+    if(!rcl_beats) return false;
+    
+    var exist = false;
+    
+    rcl_beats.forEach(function(beat, index, rcl_beats){
+        if(beat.beat_name != beat_name) return;
+            exist = true;
+    });
+    
+    return exist;
+    
+}
+
 rcl_add_action('rcl_footer','rcl_beat');
 function rcl_beat(){
     
@@ -774,23 +789,3 @@ function rcl_get_actual_beats_data(beats){
     return beats_actual;
     
 }
-
-/*rcl_add_beat('rcl_test_form_beat',10);
-function rcl_test_form_beat(){
-    
-    var i = Date();
-    
-    beat = {
-        action:'rcl_test_beat',
-        success:'rcl_test_beat_success',
-        data:{
-            formdata:i
-        }
-    };
-    
-    return beat;
-}
-
-function rcl_test_beat_success(data){
-    console.log(data);
-}*/
