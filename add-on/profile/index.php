@@ -458,12 +458,14 @@ function rcl_tab_profile_content($master_id){
                     if(!$custom_field||!$slug) continue;
 
                     $value = (isset($userdata->$slug))? $userdata->$slug: '';
-
-                    $class = (isset($custom_field['class']))? $custom_field['class']: '';
+                    
+                    $classes = array('field-'.$slug,'form-block-rcl');
+                    $classes[] = (isset($custom_field['class']))? $custom_field['class']: '';
+                    
                     $id = (isset($custom_field['id']))? 'id='.$custom_field['id']: '';
                     $attr = (isset($custom_field['attr']))? ''.$custom_field['attr']: '';
 
-                    $field .= '<tr class="form-block-rcl '.$class.'" '.$id.' '.$attr.'>';
+                    $field .= '<tr class="'.implode(' ',$classes).'" '.$id.' '.$attr.'>';
 
                     $star = (isset($custom_field['requared'])&&$custom_field['requared']==1)? ' <span class="required">*</span> ': '';
                     $field .= '<th>'
@@ -525,7 +527,7 @@ function rcl_manage_profile_fields(){
 	if ( ! class_exists( 'Rcl_EditFields' ) ) 
             include_once RCL_PATH.'functions/class-rcl-editfields.php';
 
-	$f_edit = new Rcl_EditFields('profile');
+	$f_edit = new Rcl_EditFields('profile',array('custom-slug'=>1));
 
 	$default_form = '';
 	$profile_default_fields = rcl_get_default_fields_profile();

@@ -277,10 +277,13 @@ class Rcl_Chat {
     }
 
     function get_chat(){
+        global $rcl_chat;
         
         if($this->chat_id&&$this->chat_status=='private'){
             $this->read_chat($this->chat_id);
         }
+        
+        $rcl_chat = $this;
         
         $content = '<script>'
                 . 'rcl_init_chat({token:"'.$this->chat_token.'",file_upload:'.$this->file_upload.',max_words:'.$this->max_words.'});'
@@ -296,6 +299,8 @@ class Rcl_Chat {
  
                                 . '</div>'
                             . '</div>';
+                    
+        $rcl_chat = false;
         
         return $content;
         
