@@ -1,5 +1,5 @@
 <?php global $rcl_user,$rcl_users_set; ?>
-<div class="user-single">
+<div class="user-single" data-user-id="<?php echo $rcl_user->ID; ?>">
     <div class="userlist_top">
         <?php rcl_user_action(2); ?>
         <h3 class="user-name">

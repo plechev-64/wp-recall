@@ -23,7 +23,7 @@ $up_count = '';
     $style = (isset($rcl_users_set->width))? 'style="width:'.$rcl_users_set->width.'px"': '';
     
 ?>
-<div class="user-single" <?php echo $style; ?>>
+<div class="user-single" <?php echo $style; ?> data-user-id="<?php echo $rcl_user->ID; ?>">
     <div class="u_card_top">
         <?php rcl_user_rayting(); ?>
         <?php rcl_user_action(2); ?>

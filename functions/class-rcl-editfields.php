@@ -396,7 +396,7 @@ class Rcl_EditFields {
                 if($key=='slug'){
                     
                     if(!$value)
-                        $value = str_replace('-','_',rcl_sanitize_title($POST['field']['title'][$a]).'-'.rand(10,100));
+                        $value = str_replace('-','_',rcl_sanitize_string($POST['field']['title'][$a]).'-'.rand(10,100));
 
                     $value = str_replace(' ','_',$value);
                     

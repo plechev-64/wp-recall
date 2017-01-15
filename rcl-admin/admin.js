@@ -85,7 +85,7 @@ jQuery(function($){
     $('#rcl-custom-fields-editor .field-delete').click(function(){
         var id_item = $(this).parents('.rcl-custom-field').data('slug');
         var item = id_item;
-        $('#field-'+id_item).remove();
+        $(this).parents('li.rcl-custom-field').remove();
         var val = $('#rcl-deleted-fields').val();
         if(val) item += ',';
         item += val;

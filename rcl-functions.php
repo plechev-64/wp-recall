@@ -503,7 +503,7 @@ function rcl_decode_post($string){
 function rcl_ajax_tab($post){
     global $user_LK,$rcl_tabs;
 
-    $id_tab = rcl_sanitize_title($post->tab_id);
+    $id_tab = rcl_sanitize_string($post->tab_id);
     $user_LK = intval($post->user_LK);
     
     $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
@@ -700,8 +700,10 @@ function rcl_get_url_avatar($url_image,$user_id,$size){
     return $url_image;
 }
 
-add_action('rcl_sanitize_title', 'rcl_sanitize_string', 0);
 function rcl_sanitize_string($title) {
+    
+    $title = mb_strtolower($title);
+    
     $gost = array(
         "Є"=>"EH","І"=>"I","і"=>"i","№"=>"#","є"=>"eh",
         "А"=>"A","Б"=>"B","В"=>"V","Г"=>"G","Д"=>"D",
@@ -750,23 +752,6 @@ function rcl_sanitize_string($title) {
                 return strtr($title, $iso);
     }
 }
-
-
-function rcl_sanitize_title( $title, $fallback_title = '', $context = 'save' ) {
-    $raw_title = $title;
-
-    if ( 'save' == $context )
-            $title = remove_accents($title);
-
-    $title = apply_filters( 'sanitize_title', $title, $raw_title, $context );
-    $title = apply_filters( 'rcl_sanitize_title', $title, $raw_title, $context );
-
-    if ( '' === $title || false === $title )
-            $title = $fallback_title;
-
-    return $title;
-}
-
 
 add_filter('author_link','rcl_author_link',999,2);
 function rcl_author_link($link, $author_id){
