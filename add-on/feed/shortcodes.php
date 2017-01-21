@@ -5,7 +5,7 @@ function rcl_feed_shortcode($atts){
     global $wpdb,$user_ID,$rcl_feed;
 
     if(!$user_ID){
-        return '<p class="aligncenter">'
+        return '<p class="aligncenter rcl-feed-notice">'
                 .__('Login or register to view the latest publications and comments from users for which you have subscribed.','wp-recall')
                 .'</p>';
     }

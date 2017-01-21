@@ -1,5 +1,5 @@
 var rcl_public_form = {
-    required: new Array
+    required: new Array()
 };
 
 jQuery(document).ready(function($) {
@@ -350,6 +350,11 @@ function rcl_publish(e){
 function rcl_check_required_fields(form){
     
     var required = true;
+    
+    jQuery('form.rcl-public-form').find(':required').each(function(){
+        var i = rcl_public_form.required.length;
+        rcl_public_form.required[i] = jQuery(this).attr('name');
+    });
 
     var requireds = rcl_public_form.required;
 

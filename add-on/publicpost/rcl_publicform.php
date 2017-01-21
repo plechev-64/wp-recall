@@ -9,6 +9,7 @@ class Rcl_PublicForm {
     public $form_id; //идентификатор формы
     public $id_upload;
     public $accept;
+    public $draft;
     public $type_editor;
     public $wp_editor;
     public $can_edit;
@@ -32,7 +33,8 @@ class Rcl_PublicForm {
             'wp_editor'=> null,
             'select_amount'=> false,
             'select_type'=> false,
-            'group_id'=>$group_id
+            'group_id'=>$group_id,
+            'draft'=>1
         ),
         $atts));
 
@@ -41,6 +43,7 @@ class Rcl_PublicForm {
         $this->terms = $cats;
         $this->form_id = $id;
         $this->accept = $accept;
+        $this->draft = $draft;
         
         $this->preview = (isset($rcl_options['public_preview'])&&!$rcl_options['public_preview'])? 1: 0;
 
@@ -143,7 +146,8 @@ class Rcl_PublicForm {
 			array('type'=>'hidden','value'=>base64_encode($formData->form_id),'name'=>'id_form'),
 		);
                 
-                $inputs[] = array('type'=>'button','value'=>__('Save as Draft','wp-recall'),'onclick'=>'rcl_save_draft(this);','id'=>'save-draft-rcl','class'=>'recall-button');
+                if($this->draft)
+                    $inputs[] = array('type'=>'button','value'=>__('Save as Draft','wp-recall'),'onclick'=>'rcl_save_draft(this);','id'=>'save-draft-rcl','class'=>'recall-button');
 
                 if(!$this->preview){
                     $inputs[] = array('type'=>'button','value'=>__('Publish','wp-recall'),'onclick'=>'rcl_publish(this);','id'=>'edit-post-rcl','class'=>'recall-button');
@@ -246,7 +250,7 @@ class Rcl_PublicForm {
         global $user_ID,$formFields,$formData;
 
             if(!$formData->can_edit) 
-                return '<p align="center">'.__('You can not edit this publication :(','wp-recall').'</p>';
+                return '<p align="center" class="rcl-public-notice">'.__('You can not edit this publication :(','wp-recall').'</p>';
 
             if(!$this->user_can()){
                 if($formData->post_type=='post-group') return '<div class="public-post-group">'
