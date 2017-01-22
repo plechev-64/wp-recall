@@ -50,21 +50,22 @@ class Rcl_Includer{
         if(!isset($rcl_styles[$this->place])) return false;
         
         $styles = array();
-        foreach($rcl_styles[$this->place] as $key => $value) {
+        foreach($rcl_styles[$this->place] as $key => $url) {
             
             //Если минификация не используется, то подключаем файлы как обычно
             if(!$this->is_minify){
-                wp_enqueue_style( $key, rcl_path_to_url($value) );
+                wp_enqueue_style( $key, $url );
                 continue;
             }
 
-            $this->files['css'][$key] = $value;
+            $this->files['css'][$key]['path'] = rcl_path_by_url($url);
+            $this->files['css'][$key]['url'] = $url;
         }
 
         if(!isset($this->files['css'])||!$this->files['css']) return false;
 
-        foreach($this->files['css'] as $id=>$url){
-            $ids[] = $id;
+        foreach($this->files['css'] as $id=>$file){
+            $ids[] = $id.':'.filesize($file['path']);
         }
 
         $filename = md5(implode(',',$ids)).'.css';
@@ -97,25 +98,25 @@ class Rcl_Includer{
         if(!isset($rcl_scripts[$this->place])) return false;
         
         $in_footer = ($this->place=='footer')? true: false;
-        
-        $scripts = array();
+
         foreach($rcl_scripts[$this->place] as $key => $url) {
             
             //Если минификация не используется, то подключаем файлы как обычно
             if(!$this->is_minify){ 
                 $parents = (isset($rcl_scripts['parents'][$key]))? $parents = array_merge($rcl_scripts['parents'][$key],array('jquery')): array('jquery');
-                wp_enqueue_script( $key, rcl_path_to_url($url),$parents,VER_RCL,$in_footer );
+                wp_enqueue_script( $key, $url, $parents, VER_RCL, $in_footer );
                 continue;
             }
 
-            $this->files['js'][$key] = $url;
+            $this->files['js'][$key]['path'] = rcl_path_by_url($url);
+            $this->files['js'][$key]['url'] = $url;
         }
 
         if(!isset($this->files['js'])||!$this->files['js']) return false;
         
         $parents = array('jquery');
-        foreach($this->files['js'] as $key=>$url){
-            $ids[] = $key;
+        foreach($this->files['js'] as $key=>$file){
+            $ids[] = $key.':'.filesize($file['path']);
             if((isset($rcl_scripts['parents'][$key]))){
                 $parents = array_merge($rcl_scripts['parents'][$key],$parents);
             }
@@ -151,18 +152,18 @@ class Rcl_Includer{
         $f = fopen($filepath, 'w');
 
         $string = '';
-        foreach($this->files[$type] as $id=>$url){
+        foreach($this->files[$type] as $id=>$file){
             
-            $file_string = file_get_contents(rcl_path_by_url($url));
+            $file_string = file_get_contents($file['path']);
             
             if($type=='css'){
                 $urls = '';
                 preg_match_all('/(?<=url\()[A-zА-я0-9\-\_\/\"\'\.\?\s]*(?=\))/iu', $file_string, $urls);
-                $addon = (rcl_addon_path($url))? true: false;
+                $addon = (rcl_addon_path($file['url']))? true: false;
 
                 if($urls[0]){
                     foreach($urls[0] as $u){
-                        $imgs[] = ($addon)? rcl_addon_url(trim($u,'\',\"'),$url): RCL_URL.'css/'.trim($u,'\',\"');
+                        $imgs[] = ($addon)? rcl_addon_url(trim($u,'\',\"'),$file['url']): RCL_URL.'css/'.trim($u,'\',\"');
                         $us[] = $u;
                     }
 

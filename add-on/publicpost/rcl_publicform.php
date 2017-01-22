@@ -258,11 +258,9 @@ class Rcl_PublicForm {
                         . '</div>';
                 else{
 
-                    if(!$user_ID) return '<p align="center">'.__('You must be logged in to post. Login or register','wp-recall').'</p>';
+                    if(!$user_ID) return '<p align="center" class="rcl-public-notice">'.__('You must be logged in to post. Login or register','wp-recall').'</p>';
 
-                    return '<h3 class="aligncenter">'
-                        . __('Sorry, but you have no right to post on this site :(','wp-recall')
-                            . '</h3>';
+                    return '<p align="center" class="rcl-public-notice">'. __('Sorry, but you have no right to post on this site :(','wp-recall') . '</p>';
                 }
             }
             
