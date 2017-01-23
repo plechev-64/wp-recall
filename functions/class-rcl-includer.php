@@ -65,7 +65,7 @@ class Rcl_Includer{
         if(!isset($this->files['css'])||!$this->files['css']) return false;
 
         foreach($this->files['css'] as $id=>$file){
-            $ids[] = $id.':'.filesize($file['path']);
+            $ids[] = $id.':'.filemtime($file['path']);
         }
 
         $filename = md5(implode(',',$ids)).'.css';
@@ -116,7 +116,7 @@ class Rcl_Includer{
         
         $parents = array('jquery');
         foreach($this->files['js'] as $key=>$file){
-            $ids[] = $key.':'.filesize($file['path']);
+            $ids[] = $key.':'.filemtime($file['path']);
             if((isset($rcl_scripts['parents'][$key]))){
                 $parents = array_merge($rcl_scripts['parents'][$key],$parents);
             }

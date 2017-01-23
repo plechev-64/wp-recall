@@ -742,11 +742,11 @@ function rcl_beat(){
     var beats = rcl_apply_filters('rcl_beats',rcl_beats);
 
     var DataBeat = rcl_get_actual_beats_data(beats);
-    
-    DataBeat = JSON.stringify(DataBeat);
-    
-    if(rcl_beats_delay && DataBeat != '[]'){
 
+    if(rcl_beats_delay && DataBeat.length){
+        
+        DataBeat = JSON.stringify(DataBeat);
+        
         var dataString = 'action=rcl_beat&databeat='+DataBeat;
         dataString += '&ajax_nonce='+Rcl.nonce;
         jQuery.ajax({
@@ -772,7 +772,7 @@ function rcl_beat(){
 
 function rcl_get_actual_beats_data(beats){
     
-    var beats_actual = [];
+    var beats_actual = new Array();
     
     if(beats){
 
