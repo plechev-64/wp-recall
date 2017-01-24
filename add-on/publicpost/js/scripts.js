@@ -130,7 +130,9 @@ function rcl_delete_editor_box(e){
 }
 
 function rcl_delete_post(element){
-    rcl_preloader_show(element);
+    
+    rcl_preloader_show(jQuery(element).parents('li'));
+    
     var post_id = jQuery(element).data('post');
     var post_type = jQuery(element).parents('form').data('post_type');
     var dataString = 'action=rcl_ajax_delete_post&post_id='+post_id;

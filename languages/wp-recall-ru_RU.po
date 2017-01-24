@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2016-12-28 16:19+0300\n"
+"POT-Creation-Date: 2017-01-24 20:51+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -334,7 +334,7 @@ msgstr "Смотреть"
 
 #: add-on/groups/groups-init.php:15 add-on/magazin/activate.php:67
 #: add-on/magazin/functions/init.php:70
-#: add-on/publicpost/rcl_publicform.php:719
+#: add-on/publicpost/rcl_publicform.php:721
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -527,7 +527,7 @@ msgstr "Форма публикации"
 
 #: add-on/groups/groups-widgets.php:202 add-on/groups/groups-widgets.php:210
 #: add-on/groups/index.php:233 add-on/groups/index.php:410
-#: add-on/publicpost/rcl_publicform.php:401
+#: add-on/publicpost/rcl_publicform.php:403
 msgid "Group categories"
 msgstr "Категории группы"
 
@@ -659,7 +659,7 @@ msgstr "Отклонить запрос"
 msgid "Delete"
 msgstr "Удалить"
 
-#: add-on/groups/index.php:468 add-on/profile/index.php:736
+#: add-on/groups/index.php:468 add-on/profile/index.php:738
 msgid "User status"
 msgstr "Статус пользователя"
 
@@ -887,7 +887,7 @@ msgstr "Форма заказа"
 msgid "Store settings"
 msgstr "Настройки магазина"
 
-#: add-on/magazin/admin-pages.php:26 add-on/profile/index.php:604
+#: add-on/magazin/admin-pages.php:26 add-on/profile/index.php:606
 #: add-on/publicpost/addon-options.php:11
 #: add-on/publicpost/addon-options.php:216 add-on/publicpost/classes.php:53
 #: add-on/user-account/addon-options.php:87
@@ -1030,15 +1030,15 @@ msgstr ""
 msgid "Order Form Field Management"
 msgstr "Управление полями формы заказа"
 
-#: add-on/magazin/admin-pages.php:155 add-on/profile/index.php:621
+#: add-on/magazin/admin-pages.php:155 add-on/profile/index.php:623
 #: add-on/publicpost/index.php:253
 msgid "required field"
 msgstr "обязательное поле"
 
 #: add-on/magazin/admin-pages.php:156 add-on/profile/index.php:229
-#: add-on/profile/index.php:622 add-on/profile/index.php:627
-#: add-on/profile/index.php:632 add-on/profile/index.php:637
-#: add-on/profile/index.php:642 add-on/profile/index.php:647
+#: add-on/profile/index.php:624 add-on/profile/index.php:629
+#: add-on/profile/index.php:634 add-on/profile/index.php:639
+#: add-on/profile/index.php:644 add-on/profile/index.php:649
 #: add-on/publicpost/addon-options.php:51
 #: add-on/publicpost/addon-options.php:263 add-on/publicpost/index.php:254
 #: add-on/rating-system/addon-options.php:78
@@ -1051,9 +1051,9 @@ msgid "No"
 msgstr "Нет"
 
 #: add-on/magazin/admin-pages.php:156 add-on/profile/index.php:229
-#: add-on/profile/index.php:622 add-on/profile/index.php:627
-#: add-on/profile/index.php:632 add-on/profile/index.php:637
-#: add-on/profile/index.php:642 add-on/profile/index.php:647
+#: add-on/profile/index.php:624 add-on/profile/index.php:629
+#: add-on/profile/index.php:634 add-on/profile/index.php:639
+#: add-on/profile/index.php:644 add-on/profile/index.php:649
 #: add-on/publicpost/addon-options.php:51
 #: add-on/publicpost/addon-options.php:263 add-on/publicpost/index.php:254
 #: add-on/rating-system/addon-options.php:78
@@ -1090,7 +1090,7 @@ msgid "Sum"
 msgstr "Сумма"
 
 #: add-on/magazin/admin-pages.php:193 add-on/magazin/orders-history.php:76
-#: add-on/profile/index.php:433 add-on/profile/index.php:733
+#: add-on/profile/index.php:433 add-on/profile/index.php:735
 #: add-on/publicpost/templates/posts-list.php:8
 #: rcl-admin/add-on-manager.php:130 rcl-admin/templates-manager.php:140
 msgid "Status"
@@ -1175,7 +1175,7 @@ msgid ""
 "This letter has been generated automatically and you don`t need to answer it"
 msgstr "Это письмо было сформировано автоматически, не надо отвечать на него"
 
-#: add-on/magazin/admin-pages.php:281 add-on/rcl-chat/class-rcl-chat.php:335
+#: add-on/magazin/admin-pages.php:281 add-on/rcl-chat/class-rcl-chat.php:340
 msgid "Send"
 msgstr "Отправить"
 
@@ -1513,15 +1513,15 @@ msgid "Required data for authorization in your personal account"
 msgstr "Данные необходимые для авторизации в вашем личном кабинете"
 
 #: add-on/magazin/functions/class-rcl-order.php:395
-#: add-on/profile/index.php:322 add-on/profile/index.php:698
-#: functions/register.php:222 templates/form-register.php:18
-#: templates/form-sign.php:18
+#: add-on/profile/index.php:322 add-on/profile/index.php:700
+#: functions/register.php:225 templates/form-register.php:18
+#: templates/form-sign.php:20
 msgid "Login"
 msgstr "Логин"
 
-#: add-on/magazin/functions/class-rcl-order.php:396 functions/register.php:223
-#: functions/register.php:409 functions/register.php:411
-#: templates/form-sign.php:23
+#: add-on/magazin/functions/class-rcl-order.php:396 functions/register.php:226
+#: functions/register.php:412 functions/register.php:414
+#: templates/form-sign.php:25
 msgid "Password"
 msgstr "Пароль"
 
@@ -1914,16 +1914,16 @@ msgstr "обязательно"
 msgid "E-mail"
 msgstr "E-mail"
 
-#: add-on/profile/index.php:328 add-on/profile/index.php:705
+#: add-on/profile/index.php:328 add-on/profile/index.php:707
 msgid "Firstname"
 msgstr "Имя"
 
-#: add-on/profile/index.php:334 add-on/profile/index.php:712
+#: add-on/profile/index.php:334 add-on/profile/index.php:714
 msgid "Surname"
 msgstr "Фамилия"
 
-#: add-on/profile/index.php:341 add-on/profile/index.php:719
-#: add-on/profile/index.php:722
+#: add-on/profile/index.php:341 add-on/profile/index.php:721
+#: add-on/profile/index.php:724
 msgid "Name to be displayed"
 msgstr "Отображаемое имя"
 
@@ -1943,11 +1943,11 @@ msgstr "Если вы хотите сменить пароль - введите 
 msgid "Repeat the new password"
 msgstr "Повтор нового пароля"
 
-#: add-on/profile/index.php:418 functions/register.php:419
+#: add-on/profile/index.php:418 functions/register.php:422
 msgid "Password strength indicator"
 msgstr "Индикатор сложности пароля"
 
-#: add-on/profile/index.php:420 functions/register.php:421
+#: add-on/profile/index.php:420 functions/register.php:424
 msgid "A password has not been entered"
 msgstr "Пароль не введен"
 
@@ -1968,94 +1968,94 @@ msgstr ""
 msgid "Use symbols"
 msgstr "Используйте символы"
 
-#: add-on/profile/index.php:506
+#: add-on/profile/index.php:508
 msgid "Update profile"
 msgstr "Обновить профиль"
 
-#: add-on/profile/index.php:510
+#: add-on/profile/index.php:512
 msgid "Are you sure? It can’t be restaured!"
 msgstr "Вы серьезно? Восстановить не получиться!"
 
-#: add-on/profile/index.php:512
+#: add-on/profile/index.php:514
 msgid "Delete your profile"
 msgstr "Удаление вашего профиля"
 
-#: add-on/profile/index.php:581
+#: add-on/profile/index.php:583
 msgid "Profile fields by default"
 msgstr "Поля профиля по-умолчанию"
 
-#: add-on/profile/index.php:583
+#: add-on/profile/index.php:585
 msgid "Fields to be displayed in the profile."
 msgstr "Поля отображаемые в профиле"
 
-#: add-on/profile/index.php:591
+#: add-on/profile/index.php:593
 #, php-format
 msgid "<td><input type=\"%s\" name=\"%s\" %s /></td><td>%s</td>"
 msgstr "<td><input type=\"%s\" name=\"%s\" %s /></td><td>%s</td>"
 
-#: add-on/profile/index.php:599
+#: add-on/profile/index.php:601
 msgid "Users page"
 msgstr "Страница вывода пользователей"
 
-#: add-on/profile/index.php:608
+#: add-on/profile/index.php:610
 msgid "This page is required to filter users by value of profile fields"
 msgstr ""
 "Указание данной страницы требуется для фильтрации пользователей по значению "
 "произвольного поля"
 
-#: add-on/profile/index.php:610
+#: add-on/profile/index.php:612
 msgid "Custom profile fields"
 msgstr "Произвольные поля профиля"
 
-#: add-on/profile/index.php:612
+#: add-on/profile/index.php:614
 msgid "Manage profile fields"
 msgstr "Управление полями профиля"
 
-#: add-on/profile/index.php:617 add-on/publicpost/index.php:249
+#: add-on/profile/index.php:619 add-on/publicpost/index.php:249
 msgid "field description"
 msgstr "подпись к полю"
 
-#: add-on/profile/index.php:626
+#: add-on/profile/index.php:628
 msgid "display in registration form"
 msgstr "отображать в форме регистрации"
 
-#: add-on/profile/index.php:631
+#: add-on/profile/index.php:633
 msgid "display at checkout for guests"
 msgstr "отображать при оформлении заказа для гостей"
 
-#: add-on/profile/index.php:636
+#: add-on/profile/index.php:638
 msgid "show the content to other users"
 msgstr "отображать для других пользователей"
 
-#: add-on/profile/index.php:641
+#: add-on/profile/index.php:643
 msgid "can be changed only by the site administration"
 msgstr "редактируется только администрацией сайта"
 
-#: add-on/profile/index.php:646
+#: add-on/profile/index.php:648
 msgid "Filter users by this field"
 msgstr "Фильтровать пользователей по значению этого поля"
 
-#: add-on/profile/index.php:679
+#: add-on/profile/index.php:681
 msgid "Custom Profile Fields"
 msgstr "Произвольные поля профиля"
 
-#: add-on/profile/index.php:701
+#: add-on/profile/index.php:703
 msgid "User login"
 msgstr "Логин пользователя"
 
-#: add-on/profile/index.php:708
+#: add-on/profile/index.php:710
 msgid "Username"
 msgstr "Логин"
 
-#: add-on/profile/index.php:715
+#: add-on/profile/index.php:717
 msgid "User name"
 msgstr "Имя пользователя"
 
-#: add-on/profile/index.php:726
+#: add-on/profile/index.php:728
 msgid "Website"
 msgstr "Вебсайт"
 
-#: add-on/profile/index.php:729
+#: add-on/profile/index.php:731
 msgid "User website"
 msgstr "Сайт пользователя"
 
@@ -2325,23 +2325,23 @@ msgstr "Над контентом публикации"
 msgid "On content recording"
 msgstr "Под контентом публикации"
 
-#: add-on/publicpost/classes.php:311
+#: add-on/publicpost/classes.php:317
 msgid "Click on the image to add it to the publication"
 msgstr "Нажмите на загруженное изображение, чтобы добавить его в контент"
 
-#: add-on/publicpost/classes.php:320
+#: add-on/publicpost/classes.php:326
 msgid "Display all attached images in the gallery."
 msgstr "Отображать прикрепленные изображения в галерее"
 
-#: add-on/publicpost/classes.php:330
+#: add-on/publicpost/classes.php:336
 msgid "Add files to the download queue"
 msgstr "Добавить файлы в очередь загрузки"
 
-#: add-on/publicpost/classes.php:334
+#: add-on/publicpost/classes.php:340
 msgid "Add"
 msgstr "Добавить"
 
-#: add-on/publicpost/classes.php:337
+#: add-on/publicpost/classes.php:343
 msgid "Allowed extensions"
 msgstr "Разрешенные типы файлов"
 
@@ -2390,8 +2390,8 @@ msgid "Changes to be saved not found"
 msgstr "Изменения не найдены для сохранения"
 
 #: add-on/publicpost/fast-editor.php:172
-#: add-on/publicpost/rcl_publicform.php:192
-#: add-on/publicpost/rcl_publicform.php:201
+#: add-on/publicpost/rcl_publicform.php:196
+#: add-on/publicpost/rcl_publicform.php:205
 #: add-on/publicpost/templates/editor-header-box.php:4
 #: add-on/publicpost/templates/editor-html-box.php:4
 #: add-on/publicpost/templates/editor-image-box.php:4
@@ -2399,17 +2399,17 @@ msgstr "Изменения не найдены для сохранения"
 msgid "Are you sure?"
 msgstr "Вы серьезно?"
 
-#: add-on/publicpost/index.php:24 add-on/publicpost/rcl_publicform.php:152
+#: add-on/publicpost/index.php:24 add-on/publicpost/rcl_publicform.php:156
 #: functions/enqueue-scripts.php:110
 msgid "Preview"
 msgstr "Предпросмотр"
 
-#: add-on/publicpost/index.php:25 add-on/publicpost/rcl_publicform.php:149
+#: add-on/publicpost/index.php:25 add-on/publicpost/rcl_publicform.php:153
 #: functions/class-rcl-custom-fields.php:352
 msgid "Publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/index.php:26 add-on/publicpost/rcl_publicform.php:146
+#: add-on/publicpost/index.php:26 add-on/publicpost/rcl_publicform.php:150
 msgid "Save as Draft"
 msgstr "Сохранить как черновик"
 
@@ -2515,7 +2515,7 @@ msgstr "Запрещенный тип файла. Используйте тол�
 
 #: add-on/publicpost/rcl_editpost.php:32 add-on/publicpost/rcl_editpost.php:37
 #: add-on/publicpost/rcl_editpost.php:45 add-on/publicpost/rcl_editpost.php:50
-#: add-on/publicpost/rcl_editpost.php:59 add-on/publicpost/rcl_editpost.php:216
+#: add-on/publicpost/rcl_editpost.php:59 add-on/publicpost/rcl_editpost.php:214
 msgid "Error publishing!"
 msgstr "Ошибка публикации!"
 
@@ -2527,103 +2527,103 @@ msgstr "пока не было опубликовано"
 msgid "Published"
 msgstr "Опубликованные"
 
-#: add-on/publicpost/rcl_publicform.php:194
-#: add-on/publicpost/rcl_publicform.php:199
-#: add-on/publicpost/rcl_publicform.php:207
+#: add-on/publicpost/rcl_publicform.php:198
+#: add-on/publicpost/rcl_publicform.php:203
+#: add-on/publicpost/rcl_publicform.php:211
 msgid "Delete post"
 msgstr "Удалить публикацию"
 
-#: add-on/publicpost/rcl_publicform.php:204
+#: add-on/publicpost/rcl_publicform.php:208
 msgid "or enter your own"
 msgstr "или введите свое"
 
-#: add-on/publicpost/rcl_publicform.php:206
+#: add-on/publicpost/rcl_publicform.php:210
 msgid "Without notice"
 msgstr "Без уведомления"
 
-#: add-on/publicpost/rcl_publicform.php:220
+#: add-on/publicpost/rcl_publicform.php:224
 msgid "Does not correspond the topic"
 msgstr "Н/с тематике сайта"
 
-#: add-on/publicpost/rcl_publicform.php:221
+#: add-on/publicpost/rcl_publicform.php:225
 msgid "The publication does not correspond to the site topic"
 msgstr "Публикация не соответствует тематике сайта"
 
-#: add-on/publicpost/rcl_publicform.php:224
+#: add-on/publicpost/rcl_publicform.php:228
 msgid "Not completed"
 msgstr "Не оформлен"
 
-#: add-on/publicpost/rcl_publicform.php:225
+#: add-on/publicpost/rcl_publicform.php:229
 msgid "Publication does not correspond the rules"
 msgstr "Публикация не оформлена согласно правил"
 
-#: add-on/publicpost/rcl_publicform.php:228
+#: add-on/publicpost/rcl_publicform.php:232
 msgid "Advertising/Spam"
 msgstr "Реклама/Спам"
 
-#: add-on/publicpost/rcl_publicform.php:229
+#: add-on/publicpost/rcl_publicform.php:233
 msgid "Publication labeled as advertising or spam"
 msgstr "Публикация помечена как реклама или спам"
 
-#: add-on/publicpost/rcl_publicform.php:237
+#: add-on/publicpost/rcl_publicform.php:241
 msgid "Use blank notice"
 msgstr "Используйте заготовку уведомления"
 
-#: add-on/publicpost/rcl_publicform.php:249
+#: add-on/publicpost/rcl_publicform.php:253
 msgid "You can not edit this publication :("
 msgstr "Вы не можете редактировать эту публикацию :("
 
-#: add-on/publicpost/rcl_publicform.php:253
+#: add-on/publicpost/rcl_publicform.php:257
 msgid "Sorry, but you have no rights to publish in this group :("
 msgstr "Извините, но вы не можете публиковать в этой группе :("
 
-#: add-on/publicpost/rcl_publicform.php:257
+#: add-on/publicpost/rcl_publicform.php:261
 msgid "You must be logged in to post. Login or register"
 msgstr ""
 "Вы должны быть авторизованы для публикации. Войдите или зарегистрируйтесь."
 
-#: add-on/publicpost/rcl_publicform.php:260
+#: add-on/publicpost/rcl_publicform.php:263
 msgid "Sorry, but you have no right to post on this site :("
 msgstr "Извините, но вы не можете публиковать на этом сайте :("
 
-#: add-on/publicpost/rcl_publicform.php:320
+#: add-on/publicpost/rcl_publicform.php:322
 msgid "Being sent, please wait..."
 msgstr "Идет отправка, подождите..."
 
-#: add-on/publicpost/rcl_publicform.php:327
+#: add-on/publicpost/rcl_publicform.php:329
 msgid "Your Name"
 msgstr "Ваше имя"
 
-#: add-on/publicpost/rcl_publicform.php:331
+#: add-on/publicpost/rcl_publicform.php:333
 msgid "Your E-mail"
 msgstr "Ваш E-mail"
 
-#: add-on/publicpost/rcl_publicform.php:560
+#: add-on/publicpost/rcl_publicform.php:562
 msgid "Text Box"
 msgstr "Текстовый блок"
 
-#: add-on/publicpost/rcl_publicform.php:561
+#: add-on/publicpost/rcl_publicform.php:563
 #: add-on/publicpost/templates/editor-header-box.php:7
 msgid "Subtitle"
 msgstr "Подзаголовок"
 
-#: add-on/publicpost/rcl_publicform.php:562
+#: add-on/publicpost/rcl_publicform.php:564
 msgid "Image"
 msgstr "Изображение"
 
-#: add-on/publicpost/rcl_publicform.php:563
+#: add-on/publicpost/rcl_publicform.php:565
 msgid "HTML- code"
 msgstr "HTML- код"
 
-#: add-on/publicpost/rcl_publicform.php:708
+#: add-on/publicpost/rcl_publicform.php:710
 msgid "Enter your tags"
 msgstr "Введите свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:709
+#: add-on/publicpost/rcl_publicform.php:711
 msgid "Add your tags"
 msgstr "Добавьте свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:709
+#: add-on/publicpost/rcl_publicform.php:711
 msgid "Each tag is separated with Enter"
 msgstr "каждый тег разделяется нажатием на кнопку Enter"
 
@@ -2986,19 +2986,19 @@ msgstr "Сообщение не было добавлено"
 msgid "Chat was not created"
 msgstr "Чат не был создан"
 
-#: add-on/rcl-chat/class-rcl-chat.php:309
+#: add-on/rcl-chat/class-rcl-chat.php:314
 msgid "To post messages in the chat you need to login"
 msgstr "Для публикации сообщений в чате необходимо авторизоваться"
 
-#: add-on/rcl-chat/class-rcl-chat.php:343
+#: add-on/rcl-chat/class-rcl-chat.php:348
 msgid "In chat"
 msgstr "В чате"
 
-#: add-on/rcl-chat/class-rcl-chat.php:391
+#: add-on/rcl-chat/class-rcl-chat.php:396
 msgid "No important messages in this chat"
 msgstr "Важных сообщений в этом чате нет"
 
-#: add-on/rcl-chat/class-rcl-chat.php:393
+#: add-on/rcl-chat/class-rcl-chat.php:398
 msgid "Chat history will be displayed here"
 msgstr "Здесь будет отображаться история переписки"
 
@@ -3259,7 +3259,7 @@ msgstr ""
 "Ваш аккаунт не подтвержден! Подтвердите свой аккаунт перейдя по ссылке в "
 "письме"
 
-#: functions/authorize.php:40 functions/register.php:158
+#: functions/authorize.php:40 functions/register.php:161
 msgid "Fill in the required fields!"
 msgstr "Заполните обязательные поля!"
 
@@ -3407,10 +3407,10 @@ msgstr "Всего пользователей"
 msgid "Activity"
 msgstr "Активности"
 
-#: functions/class-rcl-users.php:547 functions/loginform.php:51
-#: functions/loginform.php:59 functions/loginform.php:75
+#: functions/class-rcl-users.php:547 functions/loginform.php:56
+#: functions/loginform.php:67 functions/loginform.php:90
 #: functions/shortcodes.php:169 templates/form-register.php:8
-#: templates/form-remember.php:6 templates/form-sign.php:8
+#: templates/form-remember.php:6 templates/form-sign.php:9
 msgid "Registration"
 msgstr "Регистрация"
 
@@ -3482,21 +3482,21 @@ msgstr "Надежный"
 msgid "Strong"
 msgstr "Сильный"
 
-#: functions/loginform.php:23
+#: functions/loginform.php:26
 msgid "Hi"
 msgstr "Привет"
 
-#: functions/loginform.php:25 functions/loginform.php:34
+#: functions/loginform.php:28 functions/loginform.php:37
 #: functions/recallbar.php:23
 msgid "To personal account"
 msgstr "В личный кабинет"
 
-#: functions/loginform.php:35 templates/recallbar.php:71
+#: functions/loginform.php:38 templates/recallbar.php:73
 msgid "Exit"
 msgstr "Выход"
 
-#: functions/loginform.php:50 functions/loginform.php:58
-#: functions/loginform.php:74 templates/form-sign.php:38
+#: functions/loginform.php:52 functions/loginform.php:63
+#: functions/loginform.php:86 templates/form-sign.php:40
 #: templates/recallbar.php:43 templates/recallbar.php:44
 msgid "Entry"
 msgstr "Вход"
@@ -3566,29 +3566,29 @@ msgstr "Не удалось открыть полученный архив об�
 msgid "To admin area"
 msgstr "В админку"
 
-#: functions/register.php:219
+#: functions/register.php:222
 msgid "Confirm your registration!"
 msgstr "Подтвердите свою регистрацию!"
 
-#: functions/register.php:221
+#: functions/register.php:224
 msgid "You or someone else signed up on our website"
 msgstr "Вы или кто то другой зарегистрировались на сайте"
 
-#: functions/register.php:221
+#: functions/register.php:224
 msgid "with the following data:"
 msgstr "со следующими данными:"
 
-#: functions/register.php:229
+#: functions/register.php:232
 msgid ""
 "If it was you, then confirm your registration by clicking on the link below"
 msgstr ""
 "Если это были вы, то подтвердите свою регистрацию перейдя по ссылке ниже"
 
-#: functions/register.php:231
+#: functions/register.php:234
 msgid "Unable to activate the account?"
 msgstr "Не получается активировать аккаунт?"
 
-#: functions/register.php:232
+#: functions/register.php:235
 msgid ""
 "Copy the link below, paste it into the address bar of your browser and hit "
 "Enter"
@@ -3596,47 +3596,47 @@ msgstr ""
 "Скопируйте текст ссылки ниже, вставьте его в адресную строку браузера и "
 "нажмите Enter"
 
-#: functions/register.php:235
+#: functions/register.php:238
 msgid "If it wasn’t you, then just ignore this email"
 msgstr "Если это были не вы, то просто проигнорируйте это письмо"
 
-#: functions/register.php:289
+#: functions/register.php:292
 msgid "Registration completed!"
 msgstr "Регистрация успешно завершена!"
 
-#: functions/register.php:290
+#: functions/register.php:293
 msgid "Registration is completed! Check your email."
 msgstr "Регистрация завершена! Проверьте свой E-mail."
 
-#: functions/register.php:295
+#: functions/register.php:298
 msgid "Your email is not confirmed!"
 msgstr "Ваш E-mail не подтвержден!"
 
-#: functions/register.php:298 functions/register.php:299
+#: functions/register.php:301 functions/register.php:302
 msgid "Registration completed! Check your email"
 msgstr "Регистрация завершена! Проверьте свой E-mail"
 
-#: functions/register.php:305
+#: functions/register.php:308
 msgid "Your password has been sent!<br>Check your email."
 msgstr "Новый пароль был сформирован! Проверьте свою почту."
 
-#: functions/register.php:330
+#: functions/register.php:333
 msgid "Input error!"
 msgstr "Ошибка заполнения!"
 
-#: functions/register.php:352
+#: functions/register.php:355
 msgid "Repeated password not correct!"
 msgstr "Повтор пароля не верный!"
 
-#: functions/register.php:436
+#: functions/register.php:439
 msgid "Repeat the password"
 msgstr "Повтор пароля"
 
-#: functions/register.php:446
+#: functions/register.php:449
 msgid "The passwords do not match!"
 msgstr "Пароли не совпадают!"
 
-#: functions/register.php:447
+#: functions/register.php:450
 msgid "The passwords match"
 msgstr "Пароли совпадают"
 
@@ -4297,16 +4297,16 @@ msgstr "Подключить"
 msgid "Error! Perhaps this add-on does not support ajax loading"
 msgstr "Ошибка! Данное дополнениене поддерживает ajax-загрузку"
 
-#: rcl-functions.php:980
+#: rcl-functions.php:965
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Это сообщение было сформировано автоматически, не надо отвечать на него."
 
-#: rcl-functions.php:1007
+#: rcl-functions.php:992
 msgid "long ago"
 msgstr "давно"
 
-#: rcl-functions.php:1104
+#: rcl-functions.php:1089
 msgid "Signature verification failed"
 msgstr "Проверка подписи не пройдена"
 
@@ -4394,11 +4394,11 @@ msgstr "Логин или E-mail"
 msgid "Get New Password"
 msgstr "Получить новый пароль"
 
-#: templates/form-sign.php:33
+#: templates/form-sign.php:35
 msgid "Remember"
 msgstr "Запомнить"
 
-#: templates/form-sign.php:39
+#: templates/form-sign.php:41
 msgid "Lost your Password"
 msgstr "Потеряли пароль"
 
@@ -4406,7 +4406,7 @@ msgstr "Потеряли пароль"
 msgid "Homepage"
 msgstr "Главная"
 
-#: templates/recallbar.php:49 templates/recallbar.php:50
+#: templates/recallbar.php:50 templates/recallbar.php:51
 msgid "Register"
 msgstr "Регистрация"
 

@@ -5,7 +5,9 @@ if(!$typeform||$typeform=='sign') $f_sign = 'style="display:block;"'; ?>
 <div class="form-tab-rcl" id="login-form-rcl" <?php echo $f_sign; ?>>
     <div class="form_head">
         <div class="form_auth form_active"><?php _e('Authorization','wp-recall'); ?></div>
-        <div class="form_reg"><?php if(!$typeform){ ?><a href="#" class="link-register-rcl link-tab-rcl "><?php _e('Registration','wp-recall'); ?></a><?php } ?></div>
+        <?php if(rcl_is_register_open()): ?>
+            <div class="form_reg"><?php if(!$typeform){ ?><a href="#" class="link-register-rcl link-tab-rcl "><?php _e('Registration','wp-recall'); ?></a><?php } ?></div>
+        <?php endif; ?>
     </div>
 
     <div class="form-block-rcl"><?php rcl_notice_form('login'); ?></div>

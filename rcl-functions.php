@@ -1165,3 +1165,8 @@ function rcl_check_jpeg($f, $fix=false ){
         return false;
     }
 }
+
+function rcl_is_register_open(){
+    $users_can = apply_filters('rcl_users_can_register',get_option('users_can_register'));
+    return $users_can;
+}

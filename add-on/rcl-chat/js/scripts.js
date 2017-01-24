@@ -5,6 +5,7 @@ var rcl_chat_contact_token = 0; //открытый контакт
 var rcl_chat_inactive_counter = 0; //счетчик простоя пользователя
 var rcl_chat_important = 0; 
 var rcl_chat_max_words = 300;
+var rcl_chat_sound = {};
 
 jQuery(function($){
     
@@ -23,9 +24,9 @@ function rcl_chat_init_sound(){
         volume: '0.5'
     };
     
-    options = rcl_apply_filters('rcl_chat_sound_options',options);
+    rcl_chat_sound = rcl_apply_filters('rcl_chat_sound_options',options);
     
-    jQuery.ionSound(options);
+    jQuery.ionSound(rcl_chat_sound);
 }
 
 function rcl_chat_inactivity_cancel(){
@@ -262,7 +263,7 @@ function rcl_chat_get_new_messages(token){
                     }
                     
                     if(data['content']){
-                        jQuery.ionSound.play('e-oh');
+                        jQuery.ionSound.play(rcl_chat_sound.sounds[0]);
                         chat.find('.chat-messages').append(data['content']);
                         rcl_chat_scroll_bottom(token);
                     }else{

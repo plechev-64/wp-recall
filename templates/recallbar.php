@@ -44,12 +44,14 @@
                 <div class="rcb_hiden"><span><?php _e('Entry','wp-recall'); ?></span></div>
             </a>
         </div>
-        <div class="rcb_icon">
-            <a href="<?php echo $urls[1]; ?>" class="rcl-register">
-                <i class="fa fa-book" aria-hidden="true"></i><span><?php _e('Register','wp-recall'); ?></span>
-                <div class="rcb_hiden"><span><?php _e('Register','wp-recall'); ?></span></div>
-            </a>
-        </div>
+            <?php if(rcl_is_register_open()): ?>
+                <div class="rcb_icon">
+                    <a href="<?php echo $urls[1]; ?>" class="rcl-register">
+                        <i class="fa fa-book" aria-hidden="true"></i><span><?php _e('Register','wp-recall'); ?></span>
+                        <div class="rcb_hiden"><span><?php _e('Register','wp-recall'); ?></span></div>
+                    </a>
+                </div>
+            <?php endif; ?>
         <?php } ?>
         
         <?php endif; ?>

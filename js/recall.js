@@ -139,8 +139,17 @@ function rcl_ajax_tab(e,data){
     if(box_id){
     
         jQuery(box_id).html(data.result);
-        var offsetTop = jQuery(box_id).offset().top;
-        jQuery('body,html').animate({scrollTop:offsetTop -100}, 1000);
+        
+        var options = {
+            scroll:1
+        };
+
+        options = rcl_apply_filters('rcl_options_url_params',options);
+        
+        if(options.scroll == 1){
+            var offsetTop = jQuery(box_id).offset().top;
+            jQuery('body,html').animate({scrollTop:offsetTop -100}, 1000);
+        }
     
     }
 
@@ -267,7 +276,7 @@ function rcl_preloader_show(e,size){
     var margin = font_size/2;
     var style = 'style="font-size:'+font_size+'px;margin: -'+margin+'px 0 0 -'+margin+'px;"';   
     
-    if(typeof( e ) == 'string')
+    if(typeof( e ) === 'string')
         jQuery(e).after('<div class="rcl_preloader"><i class="fa fa-spinner fa-pulse" '+style+'></i></div>');
     else
         e.append('<div class="rcl_preloader"><i class="fa fa-spinner fa-pulse" '+style+'></i></div>');
@@ -552,7 +561,7 @@ function rcl_init_check_url_params(){
 
     if(rcl_url_params['tab']){		
 
-        if(options.scroll){
+        if(options.scroll == 0){
             var offsetTop = jQuery("#lk-content").offset().top;
             jQuery('body,html').animate({scrollTop:offsetTop -50}, 1000);
         }
