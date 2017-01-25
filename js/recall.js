@@ -165,13 +165,6 @@ function rcl_update_history_url(url){
     
 }
 
-function rcl_close_notice(e){
-    jQuery(e).animate({
-        opacity: 0,
-        height: 'hide'
-    }, 300);
-}
-
 function rcl_add_dropzone(idzone){
 
     jQuery(document.body).bind("drop", function(e){
@@ -252,10 +245,18 @@ function passwordStrength(password){
 function rcl_notice(text,type,time_close){
 
     time_close = time_close || false;
+    
+    var options = {
+        text: text,
+        type: type,
+        time_close: time_close
+    };
+    
+    options = rcl_apply_filters('rcl_notice_options',options);
 
     var notice_id = rcl_rand(1, 1000);
 
-    var html = '<div id="notice-'+notice_id+'" class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
+    var html = '<div id="notice-'+notice_id+'" class="notice-window type-'+options.type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+options.text+'</div>';	
     if(!jQuery('#rcl-notice').size()){
             jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
     }else{
@@ -266,20 +267,39 @@ function rcl_notice(text,type,time_close){
     if(time_close){
         setTimeout(function () {
             rcl_close_notice('#rcl-notice #notice-'+notice_id)
-        }, time_close);
+        }, options.time_close);
     }
+}
+
+function rcl_close_notice(e){
+    jQuery(e).animate({
+        opacity: 0,
+        height: 'hide'
+    }, 300);
 }
 
 function rcl_preloader_show(e,size){
     
     var font_size = (size)? size: 80;
     var margin = font_size/2;
-    var style = 'style="font-size:'+font_size+'px;margin: -'+margin+'px 0 0 -'+margin+'px;"';   
+    
+    var options = {
+        size: font_size,
+        margin: margin,
+        icon: 'fa-spinner',
+        class: 'rcl_preloader'
+    };
+    
+    options = rcl_apply_filters('rcl_preloader_options',options);
+    
+    var style = 'style="font-size:'+options.size+'px;margin: -'+options.margin+'px 0 0 -'+options.margin+'px;"';
+    
+    var html = '<div class="'+options.class+'"><i class="fa '+options.icon+' fa-pulse" '+style+'></i></div>';
     
     if(typeof( e ) === 'string')
-        jQuery(e).after('<div class="rcl_preloader"><i class="fa fa-spinner fa-pulse" '+style+'></i></div>');
+        jQuery(e).after(html);
     else
-        e.append('<div class="rcl_preloader"><i class="fa fa-spinner fa-pulse" '+style+'></i></div>');
+        e.append(html);
 }
 
 function rcl_preloader_hide(){
@@ -561,7 +581,7 @@ function rcl_init_check_url_params(){
 
     if(rcl_url_params['tab']){		
 
-        if(options.scroll == 0){
+        if(options.scroll == 1){
             var offsetTop = jQuery("#lk-content").offset().top;
             jQuery('body,html').animate({scrollTop:offsetTop -50}, 1000);
         }
