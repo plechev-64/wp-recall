@@ -292,3 +292,51 @@ function rcl_chat_count_important_messages($user_id){
     return $amount;
 }
 
+function rcl_chat_get_new_messages($post){
+    global $user_ID;
+
+    $chat_room = rcl_chat_token_decode($post->token);
+    
+    if(!rcl_get_chat_by_room($chat_room)) 
+        return false;
+    
+    $content = '';
+    
+    require_once 'class-rcl-chat.php';
+    $chat = new Rcl_Chat(array(
+                'chat_room'=>$chat_room,
+                'user_write'=> $post->user_write
+            ));
+    
+    if($post->last_activity){
+
+        $chat->query['where'][] = "message_time > '$post->last_activity'";
+        if($user_ID) $chat->query['where'][] = "user_id != '$user_ID'";
+
+        $messages = $chat->get_messages();
+
+        if($messages){
+
+            krsort($messages);
+
+            foreach($messages as $k=>$message){
+                $content .= $chat->get_message_box($message);
+            }
+            
+            $chat->read_chat($chat->chat_id);
+
+        }
+
+        $res['content'] = $content;
+
+    }
+
+    if($activity = $chat->get_current_activity()) 
+            $res['users'] = $activity;    
+    
+    $res['success'] = true;
+    $res['token'] = $post->token;    
+    $res['current_time'] = current_time('mysql');
+
+    return $res;
+}

@@ -80,7 +80,7 @@ function rcl_get_user_details($user_id){
     $desc = get_the_author_meta('description',$user_LK);
     if($desc) 
         $content .= '<div class="ballun-status">'
-        . '<p class="status-user-rcl">'.nl2br(esc_textarea($desc)).'</p>'
+        . '<p class="status-user-rcl">'.nl2br(esc_html($desc)).'</p>'
         . '</div>';
     
     if($rcl_blocks&&(isset($rcl_blocks['details'])||isset($rcl_blocks['content']))){

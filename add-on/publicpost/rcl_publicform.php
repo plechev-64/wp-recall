@@ -9,14 +9,15 @@ class Rcl_PublicForm {
     public $form_id; //идентификатор формы
     public $id_upload;
     public $accept;
-    public $draft;
     public $type_editor;
     public $wp_editor;
     public $can_edit;
     public $select_amount;
     public $select_type;
-    public $preview;
     public $taxonomy;
+    public $button_draft;
+    public $button_preview;
+    public $button_delete;
 
     function __construct($atts){
         global $editpost,$group_id,$rcl_options,$user_ID,$formData;
@@ -34,7 +35,9 @@ class Rcl_PublicForm {
             'select_amount'=> false,
             'select_type'=> false,
             'group_id'=>$group_id,
-            'draft'=>1
+            'button_draft'=>1,
+            'button_delete'=>1,
+            'button_preview'=>1
         ),
         $atts));
 
@@ -43,9 +46,10 @@ class Rcl_PublicForm {
         $this->terms = $cats;
         $this->form_id = $id;
         $this->accept = $accept;
-        $this->draft = $draft;
+        $this->button_draft = $button_draft;
+        $this->button_delete = $button_delete;
         
-        $this->preview = (isset($rcl_options['public_preview'])&&!$rcl_options['public_preview'])? 1: 0;
+        $this->button_preview = (isset($rcl_options['public_preview'])&&!$rcl_options['public_preview'])? 1: 0;
 
         if(!isset($wp_editor)){
             if(isset($rcl_options['wp_editor'])){
@@ -108,7 +112,7 @@ class Rcl_PublicForm {
         if($this->user_can()){
             rcl_fileupload_scripts();
             add_action('wp_footer',array(&$this,'init_form_scripts'),999);
-            if($this->post_id) add_filter('after_public_form_rcl',array(&$this,'delete_button'),10,2);
+            if($this->post_id && $this->button_delete) add_filter('after_public_form_rcl',array(&$this,'delete_button'),10,2);
         }
 
     }
@@ -142,14 +146,14 @@ class Rcl_PublicForm {
         global $group_id,$post,$rcl_options,$formData;
 
 		$inputs = array(
-			array('type'=>'hidden','value'=>1,'name'=>'edit-post-rcl'),
-			array('type'=>'hidden','value'=>base64_encode($formData->form_id),'name'=>'id_form'),
+                    array('type'=>'hidden','value'=>1,'name'=>'edit-post-rcl'),
+                    array('type'=>'hidden','value'=>base64_encode($formData->form_id),'name'=>'id_form'),
 		);
                 
-                if($this->draft)
+                if($formData->button_draft)
                     $inputs[] = array('type'=>'button','value'=>__('Save as Draft','wp-recall'),'onclick'=>'rcl_save_draft(this);','id'=>'save-draft-rcl','class'=>'recall-button');
 
-                if(!$this->preview){
+                if(!$formData->button_preview){
                     $inputs[] = array('type'=>'button','value'=>__('Publish','wp-recall'),'onclick'=>'rcl_publish(this);','id'=>'edit-post-rcl','class'=>'recall-button');
                 }else{
                     rcl_dialog_scripts();
@@ -158,7 +162,7 @@ class Rcl_PublicForm {
                 
                 $inputs[] = array('type'=>'hidden','value'=>$formData->post_id,'name'=>'post-rcl');
 
-		if(!$this->post_id) 
+		if(!$formData->post_id) 
                     $inputs[] = array('type'=>'hidden','value'=>base64_encode($formData->post_type),'name'=>'posttype');
                 else
                     $inputs[] = array('type'=>'hidden','value'=>$formData->post_status,'name'=>'post_status');

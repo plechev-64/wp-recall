@@ -77,24 +77,6 @@ function rcl_can_user_edit_post_group($post_id){
     return false;
 }
 
-add_filter('pre_update_postdata_rcl','rcl_publicdata_group',10,2);
-function rcl_publicdata_group($postdata,$data){
-    global $rcl_options,$user_ID;
-    if($data->post_type!='post-group') return $postdata;
-
-    if($rcl_options['moderation_public_group']==1) $post_status = 'pending';
-    else $post_status = 'publish';
-
-    if(isset($rcl_options['nomoder_rayt'])&&$rcl_options['nomoder_rayt']){
-            $all_r = rcl_get_all_rating_user(0,$user_ID);
-            if($all_r >= $rcl_options['nomoder_rayt']) $post_status = 'publish';
-    }
-    $postdata['post_status'] = $post_status;
-
-    return $postdata;
-
-}
-
 function rcl_post_group_edit_button($content){
 	global $post,$user_ID,$rcl_group,$rcl_options;
 	if(!is_tax('groups')) return $content;

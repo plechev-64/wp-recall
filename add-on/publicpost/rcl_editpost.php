@@ -104,9 +104,9 @@ class Rcl_EditPost {
                 $child = get_children($args);
 
                 if($child){
-                        foreach($child as $ch){
-                            update_post_meta($this->post_id, '_thumbnail_id',$ch->ID);
-                        }
+                    foreach($child as $ch){
+                        update_post_meta($this->post_id, '_thumbnail_id',$ch->ID);
+                    }
                 }
             }
         }

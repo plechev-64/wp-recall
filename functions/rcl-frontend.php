@@ -540,6 +540,7 @@ function rcl_beat(){
             $callback = $data->action;
             $result['result'] = $callback($data->data);
             $result['success'] = $data->success;
+            $result['beat_name'] = $data->beat_name;
             $return[] = $result;
         }
     }

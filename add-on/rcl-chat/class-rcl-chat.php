@@ -55,7 +55,8 @@ class Rcl_Chat {
         $this->chat_token = rcl_chat_token_encode($this->chat_room);
         $this->chat = $this->get_chat_data($this->chat_room);
         
-        $this->user_write = (isset($_POST['chat']['message'])&&$_POST['chat']['message'])? 1: 0;
+        if(!$this->user_write)
+            $this->user_write = (isset($_POST['chat']['message'])&&$_POST['chat']['message'])? 1: 0;
         
         if(!$this->chat){
             $this->setup_chat();

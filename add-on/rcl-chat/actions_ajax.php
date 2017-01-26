@@ -16,58 +16,6 @@ function rcl_chat_remove_contact(){
     
 }
 
-add_action('wp_ajax_nopriv_rcl_chat_get_new_messages','rcl_chat_get_new_messages',10);
-add_action('wp_ajax_rcl_chat_get_new_messages','rcl_chat_get_new_messages',10);
-function rcl_chat_get_new_messages(){
-    global $user_ID;
-    
-    rcl_verify_ajax_nonce();
-    
-    $chat_token = $_POST['chat']['token'];
-    $last_activity = $_POST['last_activity'];
-    $chat_room = rcl_chat_token_decode($chat_token);
-    
-    if(!rcl_get_chat_by_room($chat_room)) 
-        return false;
-    
-    $content = '';
-    
-    require_once 'class-rcl-chat.php';
-    $chat = new Rcl_Chat(array('chat_room'=>$chat_room));
-    
-    if($last_activity){
-
-        $chat->query['where'][] = "message_time > '$last_activity'";
-        if($user_ID) $chat->query['where'][] = "user_id != '$user_ID'";
-
-        $messages = $chat->get_messages();
-
-        if($messages){
-
-            krsort($messages);
-
-            foreach($messages as $k=>$message){
-                $content .= $chat->get_message_box($message);
-            }
-            
-            $chat->read_chat($chat->chat_id);
-
-        }
-
-        $res['content'] = $content;
-
-    }
-
-    if($activity = $chat->get_current_activity()) 
-            $res['users'] = $activity;    
-    
-    $res['success'] = true;    
-    $res['current_time'] = current_time('mysql');
-
-    echo json_encode($res);
-    exit;
-}
-
 add_action('wp_ajax_rcl_get_chat_page','rcl_get_chat_page',10);
 add_action('wp_ajax_nopriv_rcl_get_chat_page','rcl_get_chat_page',10);
 function rcl_get_chat_page(){

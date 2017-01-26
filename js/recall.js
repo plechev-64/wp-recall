@@ -139,20 +139,28 @@ function rcl_ajax_tab(e,data){
     if(box_id){
     
         jQuery(box_id).html(data.result);
-        
-        var options = {
-            scroll:1
-        };
 
-        options = rcl_apply_filters('rcl_options_url_params',options);
+        var options = rcl_get_options_url_params();
         
         if(options.scroll == 1){
             var offsetTop = jQuery(box_id).offset().top;
-            jQuery('body,html').animate({scrollTop:offsetTop -100}, 1000);
+            jQuery('body,html').animate({scrollTop:offsetTop - options.offset}, 1000);
         }
     
     }
 
+}
+
+function rcl_get_options_url_params(){
+    
+    var options = {
+        scroll:1,
+        offset:100
+    };
+
+    options = rcl_apply_filters('rcl_options_url_params',options);
+    
+    return options;
 }
 
 function rcl_update_history_url(url){
@@ -573,17 +581,13 @@ function rcl_init_loginform_shift_tabs(){
 rcl_add_action('rcl_init','rcl_init_check_url_params');
 function rcl_init_check_url_params(){
     
-    var options = {
-        scroll:1
-    };
-    
-    options = rcl_apply_filters('rcl_options_url_params',options);
+    var options = rcl_get_options_url_params();
 
     if(rcl_url_params['tab']){		
 
         if(options.scroll == 1){
             var offsetTop = jQuery("#lk-content").offset().top;
-            jQuery('body,html').animate({scrollTop:offsetTop -50}, 1000);
+            jQuery('body,html').animate({scrollTop:offsetTop - options.offset}, 1000);
         }
         
         var id_block = rcl_url_params['tab'];
@@ -739,13 +743,16 @@ function rcl_setup_position_float_form(){
     jQuery('.panel_lk_recall.floatform').css('top', screen_top+'px');
 }
 
-function rcl_add_beat(beat_name,delay){
+function rcl_add_beat(beat_name,delay,data){
+    
+    var data = (data)? data: false;
     
     var i = rcl_beats.length;
 
     rcl_beats[i] = {
-        beat_name:beat_name,
-        delay:delay
+        beat_name: beat_name,
+        delay :delay,
+        data: data
     };
     
 }
@@ -786,7 +793,11 @@ function rcl_beat(){
             success: function(data){
 
                 data.forEach(function(result, i, data) {
+                    
+                    rcl_do_action('rcl_beat_success_'+result['beat_name']);
+                    
                     new (window[result['success']])(result['result']);
+                    
                 });
 
             }			
@@ -806,15 +817,20 @@ function rcl_get_actual_beats_data(beats){
     if(beats){
 
         beats.forEach(function(beat, i, beats) {
-            var rest = rcl_beats_delay%beat.delay;
+            var rest = rcl_beats_delay % beat.delay;
             if(rest == 0){
 
-                var object = new (window[beat.beat_name])();
+                var object = new (window[beat.beat_name])(beat.data);
+                
+                if(object.data){
 
-                object = rcl_apply_filters('rcl_beat_' + beat.beat_name,object);
+                    object = rcl_apply_filters('rcl_beat_' + beat.beat_name,object);
 
-                var k = beats_actual.length;
-                beats_actual[k] = object;
+                    object.beat_name = beat.beat_name;
+
+                    var k = beats_actual.length;
+                    beats_actual[k] = object;
+                }
             }
         });
     
