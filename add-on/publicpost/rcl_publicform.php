@@ -157,7 +157,7 @@ class Rcl_PublicForm {
                     $inputs[] = array('type'=>'button','value'=>__('Publish','wp-recall'),'onclick'=>'rcl_publish(this);','id'=>'edit-post-rcl','class'=>'recall-button');
                 }else{
                     rcl_dialog_scripts();
-                    $inputs[] = array('type'=>'button','value'=>__('Preview','wp-recall'),'onclick'=>'rcl_preview(this);','class'=>'rcl-preview-post recall-button');
+                    $inputs[] = array('type'=>'button','value'=>__('Preview','wp-recall'),'onclick'=>'rcl_preview(this);','id'=>'edit-post-rcl','class'=>'rcl-preview-post recall-button');
                 }
                 
                 $inputs[] = array('type'=>'hidden','value'=>$formData->button_draft,'name'=>'button-draft');
