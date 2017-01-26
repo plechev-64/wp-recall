@@ -745,6 +745,8 @@ function rcl_setup_position_float_form(){
 
 function rcl_add_beat(beat_name,delay,data){
     
+    delay = (delay < 10)? 10: delay;
+    
     var data = (data)? data: false;
     
     var i = rcl_beats.length;

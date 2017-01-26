@@ -160,6 +160,10 @@ class Rcl_PublicForm {
                     $inputs[] = array('type'=>'button','value'=>__('Preview','wp-recall'),'onclick'=>'rcl_preview(this);','class'=>'rcl-preview-post recall-button');
                 }
                 
+                $inputs[] = array('type'=>'hidden','value'=>$formData->button_draft,'name'=>'button-draft');
+                $inputs[] = array('type'=>'hidden','value'=>$formData->button_delete,'name'=>'button-delete');
+                $inputs[] = array('type'=>'hidden','value'=>$formData->button_preview,'name'=>'button-preview');
+
                 $inputs[] = array('type'=>'hidden','value'=>$formData->post_id,'name'=>'post-rcl');
 
 		if(!$formData->post_id) 

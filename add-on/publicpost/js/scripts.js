@@ -257,6 +257,10 @@ function rcl_preview(e){
         tinyMCE.triggerSave();
         formblock.find('textarea[name="post_content"]').html(iframe);
     }
+    
+    var button_draft = formblock.find('input[name="button-draft"]').val();
+    var button_delete = formblock.find('input[name="button-delete"]').val();
+    var button_preview = formblock.find('input[name="button-preview"]').val();
 
     var string   = formblock.serialize();
 
@@ -276,33 +280,44 @@ function rcl_preview(e){
             }
 
             if(data['content']){
-
-                ssi_modal.show({
-                    sizeClass: 'small',
-                    title: Rcl.local.preview,
-                    className: 'rcl-preview-post',
-                    buttons: [{
+                
+                var buttons = [];
+                
+                buttons[0] = {
                         className: 'btn btn-primary',
                         label: Rcl.local.edit,
                         closeAfter: true,
                         method: function () {
                             submit.attr('disabled',false).val(Rcl.local.preview);
                         }
-                    }, {
+                    };
+                    
+                if(button_draft){
+                    buttons[1] = {
                         className: 'btn btn-danger',
                         label: Rcl.local.save_draft,
                         closeAfter: false,
                         method: function () {
                             rcl_save_draft();
                         }
-                    }, {
+                    };
+                }
+                
+                var i = buttons.length;
+                buttons[i] = {
                         className: 'btn btn-danger',
                         label: Rcl.local.publish,
                         closeAfter: false,
                         method: function () {
                             rcl_publish();
                         }
-                    }],
+                    };
+
+                ssi_modal.show({
+                    sizeClass: 'small',
+                    title: Rcl.local.preview,
+                    className: 'rcl-preview-post',
+                    buttons: buttons,
                     content: '<div id="rcl-preview">'+data['content']+'</div>'
                 });
 
