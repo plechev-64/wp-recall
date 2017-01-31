@@ -1,5 +1,5 @@
 Name: Rcl Chat (Чат);
-Version: 1.0.2;
+Version: 1.0.3;
 Support Core: 15.0.0;
 Description: Приватные сообщения wp-recall и общий чат;
 Author: Плечев Андрей;
