@@ -20,6 +20,8 @@ class Rcl_Chat {
     public $offset;
     public $in_page;
     public $office_id;
+    public $delay = 0;
+    public $timeout = 1;
     public $user_write;
     public $max_words;
     public $user_can;
@@ -287,7 +289,13 @@ class Rcl_Chat {
         $rcl_chat = $this;
         
         $content = '<script>'
-                . 'rcl_init_chat({token:"'.$this->chat_token.'",file_upload:'.$this->file_upload.',max_words:'.$this->max_words.'});'
+                . 'rcl_init_chat({'
+                    . 'token:"'.$this->chat_token.'",'
+                    . 'file_upload:'.$this->file_upload.','
+                    . 'max_words:'.$this->max_words.','
+                    . 'delay:'.$this->delay.','
+                    . 'timeout:'.$this->timeout
+                . '});'
                 . '</script>';
 
         $content .= '<div class="rcl-chat chat-'.$this->chat_status.'" data-token="'.$this->chat_token.'" data-in_page="'.$this->in_page.'">';

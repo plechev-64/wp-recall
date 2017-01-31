@@ -96,7 +96,7 @@ function rcl_init_chat(chat){
         rcl_chat_max_words = chat.max_words;
         
         var i = rcl_chat_beat.length;
-        rcl_chat_beat[i] = chat.token
+        rcl_chat_beat[i] = chat.token;
         
         rcl_do_action('rcl_init_chat',chat);
         
@@ -524,14 +524,17 @@ function rcl_chat_shift_contact_panel(){
 
 rcl_add_action('rcl_init_chat','rcl_chat_init_beat');
 function rcl_chat_init_beat(chat){
-    rcl_add_beat('rcl_chat_beat_core',Rcl.chat.delay,chat);
+    var delay = (chat.delay!=0)? chat.delay: Rcl.chat.delay,chat;
+    rcl_add_beat('rcl_chat_beat_core',delay,chat);
 }
 
 function rcl_chat_beat_core(chat){
     
-    if(rcl_chat_inactive_counter>=Rcl.chat.inactivity){
-        console.log('inactive:'+rcl_chat_inactive_counter);
-        return false;
+    if(chat.timeout == 1){
+        if(rcl_chat_inactive_counter>=Rcl.chat.inactivity){
+            console.log('inactive:'+rcl_chat_inactive_counter);
+            return false;
+        }
     }
     
     var chatBox = jQuery('.rcl-chat[data-token="'+chat.token+'"]');

@@ -741,3 +741,42 @@ function rcl_get_default_fields_profile() {
 
 	return apply_filters('rcl_profile_default_fields', $default_fields );
 }
+
+add_filter( 'rcl_custom_tab_content', 'rcl_filter_usermetas_custom_tab', 5 );
+function rcl_filter_usermetas_custom_tab($content){
+    global $rcl_office;
+    
+    preg_match_all('/{RCL-UM:([^}]+)}/', $content, $metas);
+    
+    if(!$metas[1]) return $content;
+        
+    $profileFields = get_option( 'rcl_profile_fields' );
+
+    if($profileFields){
+
+        $customFields = new Rcl_Custom_Fields();
+
+        foreach($profileFields as $field){
+
+            $slug = false;
+
+            foreach( $metas[1] as $meta ){
+
+                if($field['slug'] != $meta) continue;
+
+                $slug = $field['slug']; break;
+
+            }
+
+            if(!$slug) continue;
+
+            $value = $customFields->get_field_value($field,get_the_author_meta($slug,$rcl_office),false);
+
+            $content = str_replace('{RCL-UM:'.$slug.'}',$value,$content);
+        }
+
+    }
+    
+    return $content;
+
+}

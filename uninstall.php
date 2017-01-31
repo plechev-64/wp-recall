@@ -55,3 +55,10 @@ if($tables){
 $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '%rcl%'" );
 $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE '%rmag%'" );
 $wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key LIKE '%rcl%'" );
+
+//включаем всем пользователям сайта показ админ панели
+$wpdb->update(
+    $wpdb->prefix.'usermeta',
+    array('meta_value'=>'true'),
+    array('meta_key'=>'show_admin_bar_front')
+);

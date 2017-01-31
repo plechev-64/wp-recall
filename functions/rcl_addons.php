@@ -265,4 +265,10 @@ function rcl_search_templates(){
     return $templates;
 }
 
+function rcl_exist_addon($addon_id){
+    global $active_addons;
+    if(isset($active_addons[$addon_id])) return true;
+    return false;
+}
+
 require_once("rcl_update.php");
