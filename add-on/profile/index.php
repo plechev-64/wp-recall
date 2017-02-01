@@ -768,9 +768,11 @@ function rcl_filter_usermetas_custom_tab($content){
 
             }
 
-            if(!$slug) continue;
-
-            $value = $customFields->get_field_value($field,get_the_author_meta($slug,$rcl_office),false);
+            if($slug){
+                $value = $customFields->get_field_value($field,get_the_author_meta($slug,$rcl_office),false);
+            }else{
+                $value = 'не указано';
+            }
 
             $content = str_replace('{RCL-UM:'.$slug.'}',$value,$content);
         }

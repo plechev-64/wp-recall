@@ -759,6 +759,23 @@ function rcl_add_beat(beat_name,delay,data){
     
 }
 
+function rcl_remove_beat(beat_name){
+    
+    if(!rcl_beats) return false;
+    
+    var remove = false;
+    var all_beats = rcl_beats;
+
+    all_beats.forEach(function(beat, index, all_beats){
+        if(beat.beat_name != beat_name) return;
+            delete rcl_beats[index];
+            remove = true;
+    });
+    
+    return remove;
+    
+}
+
 function rcl_exist_beat(beat_name){
     
     if(!rcl_beats) return false;
@@ -783,8 +800,10 @@ function rcl_beat(){
 
     if(rcl_beats_delay && DataBeat.length){
         
-        DataBeat = JSON.stringify(DataBeat);
+        rcl_do_action('rcl_beat');
         
+        DataBeat = JSON.stringify(DataBeat);
+
         var dataString = 'action=rcl_beat&databeat='+DataBeat;
         dataString += '&ajax_nonce='+Rcl.nonce;
         jQuery.ajax({

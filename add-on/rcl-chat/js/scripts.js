@@ -544,7 +544,7 @@ function rcl_chat_beat_core(chat){
     var beat = {
         action:     'rcl_chat_get_new_messages',
         success:    'rcl_chat_beat_success',
-        data:       {
+        data:{
             last_activity: rcl_chat_last_activity,
             token: chat.token,
             user_write: (chat_form.find('textarea').val())? 1: 0
