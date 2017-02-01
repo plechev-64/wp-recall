@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2017-01-24 20:51+0300\n"
+"POT-Creation-Date: 2017-02-01 11:36+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -313,7 +313,7 @@ msgid "Add entry"
 msgstr "Добавить"
 
 #: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
-#: add-on/groups/groups-public.php:105 add-on/magazin/activate.php:63
+#: add-on/groups/groups-public.php:87 add-on/magazin/activate.php:63
 #: add-on/magazin/activate.php:142 add-on/magazin/functions/init.php:66
 #: add-on/magazin/functions/init.php:148 add-on/publicpost/index.php:27
 #: add-on/publicpost/index.php:706 add-on/publicpost/index.php:736
@@ -334,7 +334,7 @@ msgstr "Смотреть"
 
 #: add-on/groups/groups-init.php:15 add-on/magazin/activate.php:67
 #: add-on/magazin/functions/init.php:70
-#: add-on/publicpost/rcl_publicform.php:721
+#: add-on/publicpost/rcl_publicform.php:729
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -527,7 +527,7 @@ msgstr "Форма публикации"
 
 #: add-on/groups/groups-widgets.php:202 add-on/groups/groups-widgets.php:210
 #: add-on/groups/index.php:233 add-on/groups/index.php:410
-#: add-on/publicpost/rcl_publicform.php:403
+#: add-on/publicpost/rcl_publicform.php:411
 msgid "Group categories"
 msgstr "Категории группы"
 
@@ -1175,7 +1175,7 @@ msgid ""
 "This letter has been generated automatically and you don`t need to answer it"
 msgstr "Это письмо было сформировано автоматически, не надо отвечать на него"
 
-#: add-on/magazin/admin-pages.php:281 add-on/rcl-chat/class-rcl-chat.php:340
+#: add-on/magazin/admin-pages.php:281 add-on/rcl-chat/class-rcl-chat.php:349
 msgid "Send"
 msgstr "Отправить"
 
@@ -2059,6 +2059,10 @@ msgstr "Вебсайт"
 msgid "User website"
 msgstr "Сайт пользователя"
 
+#: add-on/profile/index.php:774
+msgid "not specified"
+msgstr "не указано"
+
 #: add-on/publicpost/addon-options.php:30
 msgid "Guests and users"
 msgstr "Гостям и пользователям"
@@ -2390,8 +2394,8 @@ msgid "Changes to be saved not found"
 msgstr "Изменения не найдены для сохранения"
 
 #: add-on/publicpost/fast-editor.php:172
-#: add-on/publicpost/rcl_publicform.php:196
-#: add-on/publicpost/rcl_publicform.php:205
+#: add-on/publicpost/rcl_publicform.php:204
+#: add-on/publicpost/rcl_publicform.php:213
 #: add-on/publicpost/templates/editor-header-box.php:4
 #: add-on/publicpost/templates/editor-html-box.php:4
 #: add-on/publicpost/templates/editor-image-box.php:4
@@ -2399,17 +2403,17 @@ msgstr "Изменения не найдены для сохранения"
 msgid "Are you sure?"
 msgstr "Вы серьезно?"
 
-#: add-on/publicpost/index.php:24 add-on/publicpost/rcl_publicform.php:156
+#: add-on/publicpost/index.php:24 add-on/publicpost/rcl_publicform.php:160
 #: functions/enqueue-scripts.php:110
 msgid "Preview"
 msgstr "Предпросмотр"
 
-#: add-on/publicpost/index.php:25 add-on/publicpost/rcl_publicform.php:153
+#: add-on/publicpost/index.php:25 add-on/publicpost/rcl_publicform.php:157
 #: functions/class-rcl-custom-fields.php:352
 msgid "Publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/index.php:26 add-on/publicpost/rcl_publicform.php:150
+#: add-on/publicpost/index.php:26 add-on/publicpost/rcl_publicform.php:154
 msgid "Save as Draft"
 msgstr "Сохранить как черновик"
 
@@ -2527,103 +2531,103 @@ msgstr "пока не было опубликовано"
 msgid "Published"
 msgstr "Опубликованные"
 
-#: add-on/publicpost/rcl_publicform.php:198
-#: add-on/publicpost/rcl_publicform.php:203
+#: add-on/publicpost/rcl_publicform.php:206
 #: add-on/publicpost/rcl_publicform.php:211
+#: add-on/publicpost/rcl_publicform.php:219
 msgid "Delete post"
 msgstr "Удалить публикацию"
 
-#: add-on/publicpost/rcl_publicform.php:208
+#: add-on/publicpost/rcl_publicform.php:216
 msgid "or enter your own"
 msgstr "или введите свое"
 
-#: add-on/publicpost/rcl_publicform.php:210
+#: add-on/publicpost/rcl_publicform.php:218
 msgid "Without notice"
 msgstr "Без уведомления"
 
-#: add-on/publicpost/rcl_publicform.php:224
+#: add-on/publicpost/rcl_publicform.php:232
 msgid "Does not correspond the topic"
 msgstr "Н/с тематике сайта"
 
-#: add-on/publicpost/rcl_publicform.php:225
+#: add-on/publicpost/rcl_publicform.php:233
 msgid "The publication does not correspond to the site topic"
 msgstr "Публикация не соответствует тематике сайта"
 
-#: add-on/publicpost/rcl_publicform.php:228
+#: add-on/publicpost/rcl_publicform.php:236
 msgid "Not completed"
 msgstr "Не оформлен"
 
-#: add-on/publicpost/rcl_publicform.php:229
+#: add-on/publicpost/rcl_publicform.php:237
 msgid "Publication does not correspond the rules"
 msgstr "Публикация не оформлена согласно правил"
 
-#: add-on/publicpost/rcl_publicform.php:232
+#: add-on/publicpost/rcl_publicform.php:240
 msgid "Advertising/Spam"
 msgstr "Реклама/Спам"
 
-#: add-on/publicpost/rcl_publicform.php:233
+#: add-on/publicpost/rcl_publicform.php:241
 msgid "Publication labeled as advertising or spam"
 msgstr "Публикация помечена как реклама или спам"
 
-#: add-on/publicpost/rcl_publicform.php:241
+#: add-on/publicpost/rcl_publicform.php:249
 msgid "Use blank notice"
 msgstr "Используйте заготовку уведомления"
 
-#: add-on/publicpost/rcl_publicform.php:253
+#: add-on/publicpost/rcl_publicform.php:261
 msgid "You can not edit this publication :("
 msgstr "Вы не можете редактировать эту публикацию :("
 
-#: add-on/publicpost/rcl_publicform.php:257
+#: add-on/publicpost/rcl_publicform.php:265
 msgid "Sorry, but you have no rights to publish in this group :("
 msgstr "Извините, но вы не можете публиковать в этой группе :("
 
-#: add-on/publicpost/rcl_publicform.php:261
+#: add-on/publicpost/rcl_publicform.php:269
 msgid "You must be logged in to post. Login or register"
 msgstr ""
 "Вы должны быть авторизованы для публикации. Войдите или зарегистрируйтесь."
 
-#: add-on/publicpost/rcl_publicform.php:263
+#: add-on/publicpost/rcl_publicform.php:271
 msgid "Sorry, but you have no right to post on this site :("
 msgstr "Извините, но вы не можете публиковать на этом сайте :("
 
-#: add-on/publicpost/rcl_publicform.php:322
+#: add-on/publicpost/rcl_publicform.php:330
 msgid "Being sent, please wait..."
 msgstr "Идет отправка, подождите..."
 
-#: add-on/publicpost/rcl_publicform.php:329
+#: add-on/publicpost/rcl_publicform.php:337
 msgid "Your Name"
 msgstr "Ваше имя"
 
-#: add-on/publicpost/rcl_publicform.php:333
+#: add-on/publicpost/rcl_publicform.php:341
 msgid "Your E-mail"
 msgstr "Ваш E-mail"
 
-#: add-on/publicpost/rcl_publicform.php:562
+#: add-on/publicpost/rcl_publicform.php:570
 msgid "Text Box"
 msgstr "Текстовый блок"
 
-#: add-on/publicpost/rcl_publicform.php:563
+#: add-on/publicpost/rcl_publicform.php:571
 #: add-on/publicpost/templates/editor-header-box.php:7
 msgid "Subtitle"
 msgstr "Подзаголовок"
 
-#: add-on/publicpost/rcl_publicform.php:564
+#: add-on/publicpost/rcl_publicform.php:572
 msgid "Image"
 msgstr "Изображение"
 
-#: add-on/publicpost/rcl_publicform.php:565
+#: add-on/publicpost/rcl_publicform.php:573
 msgid "HTML- code"
 msgstr "HTML- код"
 
-#: add-on/publicpost/rcl_publicform.php:710
+#: add-on/publicpost/rcl_publicform.php:718
 msgid "Enter your tags"
 msgstr "Введите свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:711
+#: add-on/publicpost/rcl_publicform.php:719
 msgid "Add your tags"
 msgstr "Добавьте свои теги"
 
-#: add-on/publicpost/rcl_publicform.php:711
+#: add-on/publicpost/rcl_publicform.php:719
 msgid "Each tag is separated with Enter"
 msgstr "каждый тег разделяется нажатием на кнопку Enter"
 
@@ -2849,11 +2853,11 @@ msgstr "Вы не можете голосовать!"
 msgid "Go to comment"
 msgstr "Перейти к комментарию"
 
-#: add-on/rcl-chat/actions.php:83 add-on/rcl-chat/class-rcl-chat.php:214
+#: add-on/rcl-chat/actions.php:83 add-on/rcl-chat/class-rcl-chat.php:217
 msgid "You have been blocked on this chat"
 msgstr "Вы были заблокированы в чате"
 
-#: add-on/rcl-chat/actions_ajax.php:271
+#: add-on/rcl-chat/actions_ajax.php:219
 msgid "Forbidden file extension. Allowed:"
 msgstr "Запрещенное расширение файла. Разрешено:"
 
@@ -2973,32 +2977,32 @@ msgstr "Справа"
 msgid "Left"
 msgstr "Слева"
 
-#: add-on/rcl-chat/class-rcl-chat.php:142
+#: add-on/rcl-chat/class-rcl-chat.php:145
 msgid "Guest"
 msgstr "Гость"
 
-#: add-on/rcl-chat/class-rcl-chat.php:231
-#: add-on/rcl-chat/class-rcl-chat.php:241
+#: add-on/rcl-chat/class-rcl-chat.php:234
+#: add-on/rcl-chat/class-rcl-chat.php:244
 msgid "The message was not added"
 msgstr "Сообщение не было добавлено"
 
-#: add-on/rcl-chat/class-rcl-chat.php:267
+#: add-on/rcl-chat/class-rcl-chat.php:270
 msgid "Chat was not created"
 msgstr "Чат не был создан"
 
-#: add-on/rcl-chat/class-rcl-chat.php:314
+#: add-on/rcl-chat/class-rcl-chat.php:323
 msgid "To post messages in the chat you need to login"
 msgstr "Для публикации сообщений в чате необходимо авторизоваться"
 
-#: add-on/rcl-chat/class-rcl-chat.php:348
+#: add-on/rcl-chat/class-rcl-chat.php:357
 msgid "In chat"
 msgstr "В чате"
 
-#: add-on/rcl-chat/class-rcl-chat.php:396
+#: add-on/rcl-chat/class-rcl-chat.php:405
 msgid "No important messages in this chat"
 msgstr "Важных сообщений в этом чате нет"
 
-#: add-on/rcl-chat/class-rcl-chat.php:398
+#: add-on/rcl-chat/class-rcl-chat.php:407
 msgid "Chat history will be displayed here"
 msgstr "Здесь будет отображаться история переписки"
 

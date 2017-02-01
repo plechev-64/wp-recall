@@ -771,7 +771,7 @@ function rcl_filter_usermetas_custom_tab($content){
             if($slug){
                 $value = $customFields->get_field_value($field,get_the_author_meta($slug,$rcl_office),false);
             }else{
-                $value = 'не указано';
+                $value = __('not specified','wp-recall');
             }
 
             $content = str_replace('{RCL-UM:'.$slug.'}',$value,$content);
