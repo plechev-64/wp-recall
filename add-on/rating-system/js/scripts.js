@@ -15,24 +15,28 @@ function rcl_edit_rating(e){
 
     jQuery.ajax({
         type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-        success: function(data){
+        success: function(result){
             
             rcl_preloader_hide();
             
-            if(data['error']){
-                rcl_notice(data['error'],'error',10000);
+            if(result['error']){
+                rcl_notice(result['error'],'error',10000);
                 return false;
             }
-            if(data['result']==100){
+            
+            if(result['result']==100){
                 var val = jQuery('#' + idbox + ' .rating-value');
-                val.empty().text(data['rating']);
-                if(data['rating']<0){
+                val.empty().text(result['rating']);
+                if(result['rating']<0){
                     val.parent().css('color','#FF0000');
                 }else{
                     val.parent().css('color','#008000');
                 }
                 block.parent().remove();
             }
+            
+            rcl_do_action('rcl_edit_rating',{data:rating,result:result});
+            
         }
     });
     return false;

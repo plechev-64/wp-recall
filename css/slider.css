@@ -101,7 +101,7 @@ body #bx-pager a.active img {
 }
 
 body .bx-wrapper div.bx-controls-direction a {
-    z-index: 999;
+    z-index: 9;
 }
 /* slider End */
 

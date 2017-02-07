@@ -105,7 +105,7 @@ function rcl_related_products($content){
     return $content;
 }
 
-add_filter('the_content','rcl_gallery_product',1);
+add_filter('the_content','rcl_gallery_product',6);
 function rcl_gallery_product($content){
 global $post;
 	if(get_post_type($post->ID)=='products'){

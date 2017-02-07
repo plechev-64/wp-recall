@@ -70,7 +70,7 @@ span.ruble-symbol{
     top: 70px;
     left: 10px;
     width: 210px;
-    z-index: 999999;
+    z-index: 999;
 }
 #rcl-notice .notice-window {
     line-height: 1.2;

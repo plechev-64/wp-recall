@@ -23,24 +23,29 @@ function rcl_add_admin_rating_scripts(){
 if(!is_admin()) add_action('init','rcl_register_rating_base_type',30);
 if(is_admin()) add_action('admin_init','rcl_register_rating_base_type',30);
 function rcl_register_rating_base_type(){
+    
     rcl_register_rating_type(
-		array(
-		'post_type'=>'post',
-		'type_name'=>__('Posts','wp-recall'),
-		'style'=>true,
-		'data_type'=>true,
-		'limit_votes'=>true,
-		'icon'=>'fa-thumbs-o-up'
-	));
+        array(
+            'post_type'=>'post',
+            'type_name'=>__('Posts','wp-recall'),
+            'style'=>true,
+            'data_type'=>true,
+            'limit_votes'=>true,
+            'icon'=>'fa-thumbs-o-up'
+	)
+    );
+    
     rcl_register_rating_type(
-		array(
-		'rating_type'=>'comment',
-		'type_name'=>__('Comments','wp-recall'),
-		'style'=>true,
-		'data_type'=>true,
-		'limit_votes'=>true,
-		'icon'=>'fa-thumbs-o-up'
-	));
+        array(
+            'rating_type'=>'comment',
+            'type_name'=>__('Comments','wp-recall'),
+            'style'=>true,
+            'data_type'=>true,
+            'limit_votes'=>true,
+            'icon'=>'fa-thumbs-o-up'
+        )
+    );
+    
 }
 
 add_filter('rcl_post_options','rcl_get_post_rating_options',10,2);
@@ -336,6 +341,7 @@ if(!is_admin()):
 endif;
 function rcl_comment_content_rating($content){
     global $comment;
+    if(!$comment) return $content;
     $content .= rcl_get_html_post_rating($comment->comment_ID,'comment');
     return $content;
 }
@@ -483,36 +489,38 @@ function rcl_edit_rating_post(){
     rcl_verify_ajax_nonce();
 
     $args = rcl_decode_data_rating(sanitize_text_field($_POST['rating']));
+    
+    do_action('rcl_pre_edit_rating_post',$args);
 
     if($rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
-            $timelimit = ($rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']])? $rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']]: 3600;
-            $votes = rcl_count_votes_time($args,$timelimit);
-            if($votes>=$rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
-                    $log['error'] = sprintf(__('exceeded the limit of votes for the period - %d seconds','wp-recall'),$timelimit);
-                    echo json_encode($log);
-                    exit;
-            }
+        $timelimit = ($rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']])? $rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']]: 3600;
+        $votes = rcl_count_votes_time($args,$timelimit);
+        if($votes>=$rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
+            $log['error'] = sprintf(__('exceeded the limit of votes for the period - %d seconds','wp-recall'),$timelimit);
+            echo json_encode($log);
+            exit;
+        }
     }
 
     $value = rcl_get_vote_value($args);
 
     if($value){
 
-            if($args['rating_status']=='cancel'){
+        if($args['rating_status']=='cancel'){
 
-                $rating = rcl_delete_rating($args);
+            $rating = rcl_delete_rating($args);
 
-            }else{
-                $log['error'] = __('You can not vote!','wp-recall');
-                echo json_encode($log);
-                exit;
-            }
+        }else{
+            $log['error'] = __('You can not vote!','wp-recall');
+            echo json_encode($log);
+            exit;
+        }
 
     }else{
 
-            $args['rating_value'] = rcl_get_rating_value($args['rating_type']);
+        $args['rating_value'] = rcl_get_rating_value($args['rating_type']);
 
-            $rating = rcl_insert_rating($args);
+        $rating = rcl_insert_rating($args);
 
     }
 

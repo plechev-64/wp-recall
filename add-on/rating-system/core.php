@@ -140,6 +140,8 @@ function rcl_register_rating_type($args){
     $args['rating_type'] = (isset($args['post_type']))? $args['post_type']: $args['rating_type'];
 
     if(!isset($args['rating_type'])) return false;
+    
+    $args['comment_type'] = (isset($args['comment_type']))? $args['comment_type']: 'comment';
 
     $type = $args['rating_type'];
 
@@ -548,10 +550,12 @@ function rcl_delete_rating($args){
 	if(isset($args['ID'])){
 
             $data = rcl_get_rating_by_id($args['ID']);
+            
             $query = $wpdb->prepare(
                     "DELETE FROM ".RCL_PREF."rating_values WHERE ID = '%d'",
                     $args['ID']
             );
+            
             $args = array(
                     'object_id'=>$data->object_id,
                     'object_author'=>$data->object_author,
