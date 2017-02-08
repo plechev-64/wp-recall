@@ -48,12 +48,15 @@ function rcl_insert_user($data){
 function rcl_confirm_user_registration(){
     global $wpdb,$rcl_options;
     
-    $reglogin = urldecode($_GET['rglogin']);
-    $regpass = urldecode($_GET['rgpass']);
-    $regcode = md5($reglogin);
+    $confirmdata = urldecode($_GET['rcl-confirmdata']);
     
-    if($regcode==$_GET['rgcode']){
-        if ( $user = get_user_by('login', $reglogin) ){
+    if($confirmdata){
+        
+        $confirmdata = explode('{rcl}',base64_decode(strtr($confirmdata, '-_,', '+/=')));
+        
+        if ( $user = get_user_by('login', $confirmdata[0]) ){
+            
+            if(md5($user->ID) != $confirmdata[2]) return false;
 
             if(!rcl_is_user_role($user->ID, 'need-confirm')) return false;
             
@@ -65,8 +68,8 @@ function rcl_confirm_user_registration(){
                 $wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => $time_action ) );
 
             $creds = array();
-            $creds['user_login'] = $reglogin;
-            $creds['user_password'] = $regpass;
+            $creds['user_login'] = $confirmdata[0];
+            $creds['user_password'] = $confirmdata[1];
             $creds['remember'] = true;
             $sign = wp_signon( $creds, false );
 
@@ -91,10 +94,12 @@ function rcl_confirm_user_registration(){
 add_action('init', 'rcl_confirm_user_resistration_activate');
 function rcl_confirm_user_resistration_activate(){
     global $rcl_options;
-    if (isset($_GET['rgcode'])&&isset($_GET['rglogin'])){
-          if($rcl_options['confirm_register_recall']==1) 
-              add_action( 'wp', 'rcl_confirm_user_registration' );
-    }
+    
+    if (!isset($_GET['rcl-confirmdata'])) return false;
+    
+    if($rcl_options['confirm_register_recall']==1) 
+        add_action( 'wp', 'rcl_confirm_user_registration' );
+    
 }
 
 //добавляем коды ошибок для тряски формы ВП
@@ -217,7 +222,7 @@ function rcl_get_register_user_activate ( ) {
 
 //письмо высылаемое при регистрации
 function rcl_register_mail($userdata){
-    global $rcl_options;
+    global $rcl_options,$wp_hasher;
 
     $subject = __('Confirm your registration!','wp-recall');
     $textmail = '
@@ -226,8 +231,10 @@ function rcl_register_mail($userdata){
     <p>'.__('Password','wp-recall').': '.$userdata['user_pass'].'</p>';
 
     if($rcl_options['confirm_register_recall']==1){
+        
+        $confirmstr = strtr(base64_encode(implode('{rcl}',array($userdata['user_login'],$userdata['user_pass'],md5($userdata['user_id'])))), '+/=', '-_,');
 
-        $url = get_bloginfo('wpurl').'/?rglogin='.urlencode($userdata['user_login']).'&rgpass='.urlencode($userdata['user_pass']).'&rgcode='.md5($userdata['user_login']);
+        $url = get_bloginfo('wpurl').'/?rcl-confirmdata='.urlencode($confirmstr);
 
         $textmail .= '<p>'.__('If it was you, then confirm your registration by clicking on the link below','wp-recall').':</p>
         <p><a href="'.$url.'">'.$url.'</a></p>

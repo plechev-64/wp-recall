@@ -12,7 +12,7 @@ class Rcl_EditPost {
         $user_can = $rcl_options['user_public_access_recall'];
 
         if($user_can&&!$user_ID) return false;
-        
+
         if(isset($_FILES)){
             require_once(ABSPATH . "wp-admin" . '/includes/image.php');
             require_once(ABSPATH . "wp-admin" . '/includes/file.php');

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2017-02-01 11:36+0300\n"
+"POT-Creation-Date: 2017-02-08 13:31+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -62,7 +62,7 @@ msgstr "Отписаться"
 msgid "News"
 msgstr "Новости"
 
-#: add-on/feed/classes/class-rcl-feed.php:331 add-on/rating-system/index.php:38
+#: add-on/feed/classes/class-rcl-feed.php:331 add-on/rating-system/index.php:41
 #: functions/class-rcl-users.php:546 functions/shortcodes.php:125
 msgid "Comments"
 msgstr "Комментарии"
@@ -721,7 +721,7 @@ msgid "Groups not found"
 msgstr "Группы не найдены"
 
 #: add-on/groups/templates/group-list.php:12 add-on/publicpost/index.php:104
-#: add-on/rating-system/index.php:29
+#: add-on/rating-system/index.php:30
 msgid "Posts"
 msgstr "Публикации"
 
@@ -1042,7 +1042,7 @@ msgstr "обязательное поле"
 #: add-on/publicpost/addon-options.php:51
 #: add-on/publicpost/addon-options.php:263 add-on/publicpost/index.php:254
 #: add-on/rating-system/addon-options.php:78
-#: add-on/rating-system/addon-options.php:134 add-on/rating-system/index.php:50
+#: add-on/rating-system/addon-options.php:134 add-on/rating-system/index.php:55
 #: add-on/rcl-chat/addon-options.php:51 add-on/rcl-chat/addon-options.php:62
 #: add-on/rcl-chat/addon-options.php:106 rcl-admin/pages/custom-tabs.php:35
 #: rcl-admin/pages/custom-tabs.php:40 rcl-admin/pages/custom-tabs.php:45
@@ -1057,7 +1057,7 @@ msgstr "Нет"
 #: add-on/publicpost/addon-options.php:51
 #: add-on/publicpost/addon-options.php:263 add-on/publicpost/index.php:254
 #: add-on/rating-system/addon-options.php:78
-#: add-on/rating-system/addon-options.php:134 add-on/rating-system/index.php:51
+#: add-on/rating-system/addon-options.php:134 add-on/rating-system/index.php:56
 #: add-on/rcl-chat/addon-options.php:52 add-on/rcl-chat/addon-options.php:63
 #: add-on/rcl-chat/addon-options.php:107 rcl-admin/pages/custom-tabs.php:35
 #: rcl-admin/pages/custom-tabs.php:40 rcl-admin/pages/custom-tabs.php:45
@@ -1514,13 +1514,13 @@ msgstr "Данные необходимые для авторизации в в�
 
 #: add-on/magazin/functions/class-rcl-order.php:395
 #: add-on/profile/index.php:322 add-on/profile/index.php:700
-#: functions/register.php:225 templates/form-register.php:18
+#: functions/register.php:230 templates/form-register.php:18
 #: templates/form-sign.php:20
 msgid "Login"
 msgstr "Логин"
 
-#: add-on/magazin/functions/class-rcl-order.php:396 functions/register.php:226
-#: functions/register.php:412 functions/register.php:414
+#: add-on/magazin/functions/class-rcl-order.php:396 functions/register.php:231
+#: functions/register.php:419 functions/register.php:421
 #: templates/form-sign.php:25
 msgid "Password"
 msgstr "Пароль"
@@ -1622,7 +1622,7 @@ msgstr "Галерея товара"
 msgid "Attach image or download it"
 msgstr "Выбрать изображение или загрузить"
 
-#: add-on/magazin/functions/init.php:217 add-on/rating-system/index.php:65
+#: add-on/magazin/functions/init.php:217 add-on/rating-system/index.php:70
 msgid "OK"
 msgstr "Ок"
 
@@ -1943,11 +1943,11 @@ msgstr "Если вы хотите сменить пароль - введите 
 msgid "Repeat the new password"
 msgstr "Повтор нового пароля"
 
-#: add-on/profile/index.php:418 functions/register.php:422
+#: add-on/profile/index.php:418 functions/register.php:429
 msgid "Password strength indicator"
 msgstr "Индикатор сложности пароля"
 
-#: add-on/profile/index.php:420 functions/register.php:424
+#: add-on/profile/index.php:420 functions/register.php:431
 msgid "A password has not been entered"
 msgstr "Пароль не введен"
 
@@ -2702,7 +2702,7 @@ msgstr "Тип рейтинга для"
 msgid "Plus/minus"
 msgstr "Плюс/Минус"
 
-#: add-on/rating-system/addon-options.php:27 add-on/rating-system/index.php:317
+#: add-on/rating-system/addon-options.php:27 add-on/rating-system/index.php:322
 msgid "I like"
 msgstr "Мне нравится"
 
@@ -2758,8 +2758,8 @@ msgstr ""
 "укажите значение рейтинга для положительного или отрицательного голоса за "
 "публикацию"
 
-#: add-on/rating-system/addon-options.php:58 add-on/rating-system/index.php:57
-#: add-on/rating-system/index.php:88 add-on/rating-system/index.php:273
+#: add-on/rating-system/addon-options.php:58 add-on/rating-system/index.php:62
+#: add-on/rating-system/index.php:93 add-on/rating-system/index.php:278
 msgid "Rating"
 msgstr "Рейтинг"
 
@@ -2772,7 +2772,7 @@ msgstr "Влияние рейтинга %s на общий рейтинг пол
 msgid "Template of history output in the overall ranking"
 msgstr "Шаблон вывода истории в общем рейтинге пользователя"
 
-#: add-on/rating-system/addon-options.php:87 add-on/rating-system/core.php:436
+#: add-on/rating-system/addon-options.php:87 add-on/rating-system/core.php:438
 msgid "has voted"
 msgstr "голосовал"
 
@@ -2804,48 +2804,48 @@ msgstr "укажите группу пользователей имеющих д
 msgid "Delete your vote"
 msgstr "Удаление своего голоса"
 
-#: add-on/rating-system/core.php:325
+#: add-on/rating-system/core.php:327
 msgid "Correction"
 msgstr "Корректировка"
 
-#: add-on/rating-system/core.php:462
+#: add-on/rating-system/core.php:464
 msgid "comment"
 msgstr "комментарий"
 
-#: add-on/rating-system/core.php:475
+#: add-on/rating-system/core.php:477
 msgid "No changes to rating"
 msgstr "Изменение рейтинга не производилось"
 
-#: add-on/rating-system/core.php:794
+#: add-on/rating-system/core.php:798
 msgid "Data not found"
 msgstr "Данные не найдены"
 
-#: add-on/rating-system/index.php:49
+#: add-on/rating-system/index.php:54
 msgid "Disable rating for publication"
 msgstr "Отключить рейтинг для публикации"
 
-#: add-on/rating-system/index.php:201
+#: add-on/rating-system/index.php:206
 msgid "rating"
 msgstr "рейтинг"
 
-#: add-on/rating-system/index.php:310
+#: add-on/rating-system/index.php:315
 msgid "Remove your vote"
 msgstr "Удалить голос"
 
-#: add-on/rating-system/index.php:319
+#: add-on/rating-system/index.php:324
 msgid "minus"
 msgstr "минус"
 
-#: add-on/rating-system/index.php:320
+#: add-on/rating-system/index.php:325
 msgid "plus"
 msgstr "плюс"
 
-#: add-on/rating-system/index.php:491
+#: add-on/rating-system/index.php:499
 #, php-format
 msgid "exceeded the limit of votes for the period - %d seconds"
 msgstr "превышение ограничения голосов в течении %d секунд"
 
-#: add-on/rating-system/index.php:506
+#: add-on/rating-system/index.php:514
 msgid "You can not vote!"
 msgstr "Вы не можете голосовать!"
 
@@ -3263,15 +3263,15 @@ msgstr ""
 "Ваш аккаунт не подтвержден! Подтвердите свой аккаунт перейдя по ссылке в "
 "письме"
 
-#: functions/authorize.php:40 functions/register.php:161
+#: functions/authorize.php:40 functions/register.php:166
 msgid "Fill in the required fields!"
 msgstr "Заполните обязательные поля!"
 
-#: functions/captcha.php:29
+#: functions/captcha.php:65 functions/captcha.php:100
 msgid "Enter characters"
 msgstr "Введите символы"
 
-#: functions/captcha.php:51
+#: functions/captcha.php:82 functions/captcha.php:118
 msgid "Incorrect CAPTCHA!"
 msgstr "Не верно заполнено поле CAPTCHA!"
 
@@ -3570,29 +3570,29 @@ msgstr "Не удалось открыть полученный архив об�
 msgid "To admin area"
 msgstr "В админку"
 
-#: functions/register.php:222
+#: functions/register.php:227
 msgid "Confirm your registration!"
 msgstr "Подтвердите свою регистрацию!"
 
-#: functions/register.php:224
+#: functions/register.php:229
 msgid "You or someone else signed up on our website"
 msgstr "Вы или кто то другой зарегистрировались на сайте"
 
-#: functions/register.php:224
+#: functions/register.php:229
 msgid "with the following data:"
 msgstr "со следующими данными:"
 
-#: functions/register.php:232
+#: functions/register.php:239
 msgid ""
 "If it was you, then confirm your registration by clicking on the link below"
 msgstr ""
 "Если это были вы, то подтвердите свою регистрацию перейдя по ссылке ниже"
 
-#: functions/register.php:234
+#: functions/register.php:241
 msgid "Unable to activate the account?"
 msgstr "Не получается активировать аккаунт?"
 
-#: functions/register.php:235
+#: functions/register.php:242
 msgid ""
 "Copy the link below, paste it into the address bar of your browser and hit "
 "Enter"
@@ -3600,47 +3600,47 @@ msgstr ""
 "Скопируйте текст ссылки ниже, вставьте его в адресную строку браузера и "
 "нажмите Enter"
 
-#: functions/register.php:238
+#: functions/register.php:245
 msgid "If it wasn’t you, then just ignore this email"
 msgstr "Если это были не вы, то просто проигнорируйте это письмо"
 
-#: functions/register.php:292
+#: functions/register.php:299
 msgid "Registration completed!"
 msgstr "Регистрация успешно завершена!"
 
-#: functions/register.php:293
+#: functions/register.php:300
 msgid "Registration is completed! Check your email."
 msgstr "Регистрация завершена! Проверьте свой E-mail."
 
-#: functions/register.php:298
+#: functions/register.php:305
 msgid "Your email is not confirmed!"
 msgstr "Ваш E-mail не подтвержден!"
 
-#: functions/register.php:301 functions/register.php:302
+#: functions/register.php:308 functions/register.php:309
 msgid "Registration completed! Check your email"
 msgstr "Регистрация завершена! Проверьте свой E-mail"
 
-#: functions/register.php:308
+#: functions/register.php:315
 msgid "Your password has been sent!<br>Check your email."
 msgstr "Новый пароль был сформирован! Проверьте свою почту."
 
-#: functions/register.php:333
+#: functions/register.php:340
 msgid "Input error!"
 msgstr "Ошибка заполнения!"
 
-#: functions/register.php:355
+#: functions/register.php:362
 msgid "Repeated password not correct!"
 msgstr "Повтор пароля не верный!"
 
-#: functions/register.php:439
+#: functions/register.php:446
 msgid "Repeat the password"
 msgstr "Повтор пароля"
 
-#: functions/register.php:449
+#: functions/register.php:456
 msgid "The passwords do not match!"
 msgstr "Пароли не совпадают!"
 
-#: functions/register.php:450
+#: functions/register.php:457
 msgid "The passwords match"
 msgstr "Пароли совпадают"
 
@@ -4273,7 +4273,7 @@ msgstr "Использовать вывод изображений публик�
 msgid "Settings saved!"
 msgstr "Настройки сохранены!"
 
-#: rcl-admin/tabs_options.php:17 rcl-admin/tabs_options.php:65
+#: rcl-admin/tabs_options.php:17 rcl-admin/tabs_options.php:66
 msgid "Setting tabs"
 msgstr "Настройки вкладок"
 
@@ -4289,7 +4289,7 @@ msgstr "Сортируйте вкладки перетаскиванием"
 msgid "Area"
 msgstr "Область"
 
-#: rcl-admin/tabs_options.php:75
+#: rcl-admin/tabs_options.php:76
 msgid "Name tab"
 msgstr "Имя вкладки"
 

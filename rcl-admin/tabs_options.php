@@ -3,7 +3,7 @@
 add_filter('admin_options_wprecall','rcl_get_tablist_options',100);
 function rcl_get_tablist_options($content){
     global $rcl_tabs,$rcl_order_tabs;
-
+    
     rcl_sortable_scripts();
     
     $rcl_order_tabs = get_option('rcl_order_tabs');
@@ -24,13 +24,13 @@ function rcl_get_tablist_options($content){
         foreach($rcl_order_tabs as $area_id=>$tabs){
             foreach($tabs as $id_tab=>$tab){
                 if(!isset($rcl_tabs[$id_tab])) continue;
-                if(isset($rcl_tabs[$id_tab]['args']['output'])&&$rcl_tabs[$id_tab]['args']['output']!=$area_id) continue;
+                if(isset($rcl_tabs[$id_tab]['output'])&&$rcl_tabs[$id_tab]['output']!=$area_id) continue;
                 $areas[$area_id][$id_tab] = $tab;
             }
         }
         
         foreach($rcl_tabs as $id_tab=>$tab){
-            $area = isset($tab['args']['output'])? $tab['args']['output']: 'menu';
+            $area = isset($tab['output'])? $tab['output']: 'menu';
             if(isset($rcl_order_tabs[$area][$id_tab])) continue;
             $areas[$area][$id_tab] = $tab;
         }
@@ -38,7 +38,7 @@ function rcl_get_tablist_options($content){
     }else{
         
         foreach($rcl_tabs as $id_tab=>$tab){
-            $area = isset($tab['args']['output'])? $tab['args']['output']: 'menu';
+            $area = isset($tab['output'])? $tab['output']: 'menu';
             $areas[$area][$id_tab] = $tab;
         }
     }
@@ -55,6 +55,7 @@ function rcl_get_tablist_options($content){
         $tab_content .= '</ul>';
         $tab_content .= '</div>';
     }
+    
     $tab_content .= '<script>jQuery(function(){'
             . 'jQuery(".sortable").sortable({'
             . 'containment: "parent",'
