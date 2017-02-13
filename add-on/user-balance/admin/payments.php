@@ -47,10 +47,12 @@ class Rcl_Payments_List_Table extends WP_List_Table {
         return;
         echo '<style type="text/css">';
         echo '.wp-list-table .column-payment_number { width: 5%; }';
-        echo '.wp-list-table .column-payment_user { width: 40%; }';
+        echo '.wp-list-table .column-payment_user { width: 30%; }';
         echo '.wp-list-table .column-payment_id { width: 15%; }';
-        echo '.wp-list-table .column-payment_sum { width: 20%;}';
-        echo '.wp-list-table .column-payment_date { width: 20%;}';
+        echo '.wp-list-table .column-payment_sum { width: 10%;}';
+        echo '.wp-list-table .column-payment_date { width: 15%;}';
+        echo '.wp-list-table .column-pay_system { width: 15%;}';
+        echo '.wp-list-table .column-pay_type { width: 10%;}';
         echo '</style>';
     }
 
@@ -59,17 +61,22 @@ class Rcl_Payments_List_Table extends WP_List_Table {
     }
 
     function column_default( $item, $column_name ) {
+
         switch( $column_name ) { 
             case 'payment_number':
                 return $item[ 'ID' ];
             case 'payment_user':
-                return $item[ 'user' ].': '.get_the_author_meta('user_login',$item[ 'user' ]);
+                return $item[ 'user_id' ].': '.get_the_author_meta('user_login',$item[ 'user_id' ]);
             case 'payment_id':
-                return $item[ 'inv_id' ];
+                return $item[ 'payment_id' ];
             case 'payment_sum':
-                return $item[ 'count' ];
+                return $item[ 'pay_amount' ];
             case 'payment_date':
                 return $item[ 'time_action' ];
+            case 'pay_system':
+                return $item[ 'pay_system' ];
+            case 'pay_type':
+                return $item[ 'pay_type' ];
             default:
                 return print_r( $item, true ) ;
         }
@@ -82,7 +89,9 @@ class Rcl_Payments_List_Table extends WP_List_Table {
             'payment_user' => __( 'Users', 'wp-recall' ),
             'payment_id'    => __( 'Payments ID', 'wp-recall' ),
             'payment_sum'    => __( 'Sum', 'wp-recall' ),
-            'payment_date'      => __( 'Date', 'wp-recall' )
+            'payment_date'      => __( 'Date', 'wp-recall' ),
+            'pay_system'      => __( 'Payment system', 'wp-recall' ),
+            'pay_type'      => __( 'Payment type', 'wp-recall' )
         );
          return $columns;
     }
@@ -90,9 +99,9 @@ class Rcl_Payments_List_Table extends WP_List_Table {
     function column_payment_user($item){
       $actions = array(				
             'delete'    => sprintf('<a href="?page=%s&action=%s&payment=%s">'.__( 'Delete payment', 'wp-recall' ).'</a>',$_REQUEST['page'],'delete',$item['ID']),
-            'all-payments'    => sprintf('<a href="?page=%s&action=%s&user=%s">'.__( 'All user payments', 'wp-recall' ).'</a>',$_REQUEST['page'],'all-payments',$item['user']),
+            'all-payments'    => sprintf('<a href="?page=%s&action=%s&user_id=%s">'.__( 'All user payments', 'wp-recall' ).'</a>',$_REQUEST['page'],'all-payments',$item['user_id']),
         );
-      return sprintf('%1$s %2$s', $item[ 'user' ].': '.get_the_author_meta('user_login',$item[ 'user' ]), $this->row_actions($actions) );
+      return sprintf('%1$s %2$s', $item[ 'user_id' ].': '.get_the_author_meta('user_login',$item[ 'user_id' ]), $this->row_actions($actions) );
     }
 
     function get_bulk_actions() {
@@ -196,7 +205,7 @@ class Rcl_Payments_List_Table extends WP_List_Table {
         }else if($count=='sum'){
 
             $this->query['select'] = array(
-                "SUM(payments.count)"
+                "SUM(payments.payment_amount)"
             );
 
         }else{
@@ -237,7 +246,7 @@ class Rcl_Payments_List_Table extends WP_List_Table {
 
         if(isset($_POST['s'])){
 
-            $this->query['where'][] = "(user = '".$_POST['s']."' OR inv_id = '".$_POST['s']."')";
+            $this->query['where'][] = "(user_id = '".$_POST['s']."' OR payment_id = '".$_POST['s']."')";
             
             if(isset($_GET['m'])&&$_GET['m']){ 
             
@@ -249,9 +258,9 @@ class Rcl_Payments_List_Table extends WP_List_Table {
             
             $this->query['where'][] = "time_action LIKE '".$_GET['m']."-%'";
             
-        }else if($_GET['user']){
+        }else if($_GET['user_id']){
             
-            $this->query['where'][] = "user = '".$_GET['user']."'";
+            $this->query['where'][] = "user_id = '".$_GET['user_id']."'";
             
         }
         

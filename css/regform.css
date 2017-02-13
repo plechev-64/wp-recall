@@ -45,11 +45,12 @@ div.panel_lk_recall .form-tab-rcl a {
 }
 .panel_lk_recall .form_head {
     display: inline-block;
-	overflow: hidden;
+    overflow: hidden;
     width: 100%;
 }
 .panel_lk_recall .form-tab-rcl .form_head a {
     border-bottom: 1px solid #ccc;
+    text-align:center;
 }
 .panel_lk_recall .form_reg,
 .panel_lk_recall .form_auth {
@@ -139,8 +140,9 @@ div.panel_lk_recall .form-tab-rcl a {
 .panel_lk_recall .rcl-checkbox-box {
     display: block;
 }
-.panel_lk_recall .block-label {
+.panel_lk_recall form-tab-rcl .block-label {
     font-weight: normal;
+    text-align:left;
 }
 /* END корректировки для полей*/
 
@@ -160,6 +162,7 @@ div.panel_lk_recall .form-tab-rcl a {
     opacity: 0.4;
     position: absolute;
     top: 12px;
+    width: auto;
 }
 .panel_lk_recall input[type="text"]:focus + .fa,
 .panel_lk_recall input[type="email"]:focus + .fa,

@@ -309,7 +309,7 @@ function rcl_preview(e){
                         label: Rcl.local.publish,
                         closeAfter: false,
                         method: function () {
-                            rcl_publish();
+                            jQuery('form.rcl-public-form').submit();
                         }
                     };
 
@@ -342,7 +342,7 @@ function rcl_save_draft(e){
     
     jQuery(e).after('<input type="hidden" name="save-as-draft" value=1>');
 
-    rcl_publish(e);
+    jQuery('form.rcl-public-form').submit();
 }
 
 function rcl_check_publish(e){
@@ -357,10 +357,41 @@ function rcl_check_publish(e){
 
 function rcl_publish(e){
     
-    if(e && !rcl_check_publish(e)) 
-        return false;
-    
-    jQuery('form.rcl-public-form').submit();
+    var submit = jQuery(e);
+    var formblock = submit.parents('form');
+    var post_type = formblock.data('post_type');
+
+    if(!rcl_check_required_fields(formblock)) return false;
+
+    submit.attr('disabled',true).val(Rcl.local.wait+'...');
+
+    var iframe = jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html();
+    if(iframe){
+        tinyMCE.triggerSave();
+        formblock.find('textarea[name="post_content"]').html(iframe);
+    }
+
+    var string   = formblock.serialize();
+
+    var dataString = 'action=rcl_preview_post&'+string;
+    dataString += '&ajax_nonce='+Rcl.nonce;
+    jQuery.ajax({
+        type: 'POST', 
+        data: dataString, 
+        dataType: 'json', 
+        url: Rcl.ajaxurl,
+        success: function(data){
+
+            if(data['error']){
+                rcl_notice(data['error'],'error',10000);
+                submit.attr('disabled',false).val(Rcl.local.publish);
+                return false;
+            }
+            
+            jQuery('form.rcl-public-form').submit();
+            
+        }
+    }); 
     
 }
 

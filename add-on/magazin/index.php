@@ -113,28 +113,38 @@ function rcl_single_order_tab($order_id){
     
     if($status == 1||$status == 5) 
         $block .= '<div class="remove-order">'
-            . '<a href="#" class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'"><i class="fa fa-trash" aria-hidden="true"></i> '.__('Delete','wp-recall').'</a>'
-            . '</div>';
+                . '<a href="#" class="remove_order recall-button rcl-ajax" data-post="'.$postdata.'"><i class="fa fa-trash" aria-hidden="true"></i> '.__('Delete','wp-recall').'</a>'
+                . '</div>';
     
-    if($status==1&&function_exists('rcl_payform')){
+    if($status==1 && function_exists('rcl_payform')){
 
         $type_pay = $rmag_options['type_order_payment'];
+        
+        $dataPay = array(
+            'baggage_data' => array(
+                'order_id' => $order_id
+            ),
+            'pay_id' => $order_id,
+            'pay_summ' => $price,
+            'pay_type' => 2,
+            'description' => sprintf(__('Payment order №%s dated %s','wp-recall'),$order->order_id,get_the_author_meta('user_email',$order->order_author)),
+            'merchant_icon' => 1
+        );
 
-        $payment = new Rcl_Payment();
+        if(!$type_pay){
+            $dataPay['pay_systems'] = 'user_balance';
+        }
+        
+        if($type_pay == 1){
+            $dataPay['pay_systems_not_in'] = 'user_balance';
+        }
 
         $block .= '<div class="rcl-types-paeers">';
-
-        if($type_pay==1||$type_pay==2){
-            $block .= $payment->get_form(array('id_pay'=>$order_id,'summ'=>$price,'type'=>2));
-        }
-
-        if(!$type_pay||$type_pay==2){
-            $block .= $payment->personal_account_pay_form($order_id);
-        }
-
+        $block .= rcl_get_pay_form($dataPay);
         $block .= '</div>';
 
     }
+    
     $block .= '</div>';
 
     $block .= '<div id="rcl-cart-notice" class="redirectform"></div>';

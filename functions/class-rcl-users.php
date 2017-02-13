@@ -532,7 +532,7 @@ class Rcl_Users{
 
         $rqst = ($s_array)? implode('&',$s_array).'&' :'';
 
-        if($user_LK){
+        if(rcl_is_office()){
             $url = (isset($_POST['tab_url']))? $_POST['tab_url']: get_author_posts_url($user_LK);
         }else{
             $url = get_permalink($post->ID);

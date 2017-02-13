@@ -4,7 +4,8 @@ jQuery(function(){
         
         var dataString = 'action=rcl_confirm_order&'+jQuery('#rcl-cart').serialize();
         dataString += '&ajax_nonce='+Rcl.nonce;
-        rcl_preloader_show('#cart-form > div');
+        
+        rcl_preloader_show(jQuery('#rcl-cart'));
         
         jQuery.ajax({
             type: 'POST',
@@ -26,10 +27,9 @@ jQuery(function(){
                     return false;
                 }
 
-                //jQuery('#rcl-cart').submit();
-
                 jQuery('#rcl-cart-notice').html(data['success']);
                 jQuery('#rcl-cart .rcl-cart-fields').remove();
+                jQuery('#rcl-cart a.edit-num').remove();
                 jQuery('#rcl-cart .add_remove').empty();
 
             }
@@ -151,33 +151,18 @@ function rcl_add_cart(e){
     return false;
 }
 
-function rcl_pay_order_private_account(e){
-    var idorder = jQuery(e).data('order');
-    var dataString = 'action=rcl_pay_order_private_account&idorder='+ idorder;
-    dataString += '&ajax_nonce='+Rcl.nonce;
+//получаем и обрабатываем данные полученные после оплаты заказа
+rcl_add_action('rcl_pay_order_user_balance','rmag_pay_order_with_balance');
+function rmag_pay_order_with_balance(data){
+
+    if(data['otvet']==100){
+        jQuery('.order_block').find('.pay_order').each(function() {
+                if(jQuery(e).attr('name')==data['idorder']) jQuery(e).remove();
+        });
+        jQuery('#rcl-cart-notice').html(data['recall']);
+        jQuery('.usercount').html(data['count']);
+        jQuery('.order-'+data['idorder']+' .remove_order').remove();
+        jQuery('#manage-order').remove();
+    }
     
-    rcl_preloader_show('#cart-form > table');
-    
-    jQuery.ajax({
-        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-        success: function(data){
-            rcl_preloader_hide();
-            
-            if(data['error']){
-                rcl_notice(data['error'],'error',10000);
-                return false;
-            }
-            
-            if(data['otvet']==100){
-                jQuery('.order_block').find('.pay_order').each(function() {
-                        if(jQuery(e).attr('name')==data['idorder']) jQuery(e).remove();
-                });
-                jQuery('#rcl-cart-notice').html(data['recall']);
-                jQuery('.usercount').html(data['count']);
-                jQuery('.order-'+data['idorder']+' .remove_order').remove();
-                jQuery('#manage-order').remove();
-            }
-        }
-    });
-    return false;
 }

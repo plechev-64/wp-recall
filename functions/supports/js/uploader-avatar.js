@@ -110,6 +110,9 @@ function rcl_avatar_uploader(){
             jQuery('#avatar-upload-progress').hide().empty();
             jQuery( '#rcl-preview' ).remove();
             rcl_notice(data.result['success'],'success',10000);
+            
+            rcl_do_action('rcl_success_upload_avatar');
+            
         }
     });
 

@@ -124,3 +124,24 @@ function rcl_get_primary_widget_buttons($buttons){
     
     return $content;
 }
+
+function rcl_get_loginform_url($type){
+    global $rcl_options;
+
+    if($type=='login'){
+        switch($rcl_options['login_form_recall']){
+            case 1: return rcl_format_url(get_permalink($rcl_options['page_login_form_recall'])).'action-rcl=login'; break;
+            case 2: return wp_login_url(get_permalink($rcl_options['page_login_form_recall'])); break;
+            default: return '#'; break;
+        }
+    }
+
+    if($type=='register'){
+       switch($rcl_options['login_form_recall']){
+            case 1: return rcl_format_url(get_permalink($rcl_options['page_login_form_recall'])).'action-rcl=register'; break;
+            case 2: return wp_registration_url(); break;
+            default: return '#'; break;
+        }
+    }
+
+}

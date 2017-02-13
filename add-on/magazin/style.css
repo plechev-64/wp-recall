@@ -59,9 +59,6 @@ table.order-data tbody tr:nth-child(even):not(:first-child):not(:last-child) {
 .wprecallblock .order-data .product-number {
 	width: 115px;
 }
-.wprecallblock .orders_block input.recall-button[type="button"] {
-	margin: 0 3px;
-}
 .wprecallblock .cart-data th:nth-child(2) {
     width: 75px;
 }
@@ -137,9 +134,12 @@ table.order-data tbody tr th:nth-child(1) {
     box-sizing: border-box;
     position:relative;
 }
+#rcl-cart{
+    position:relative;				/*++Twenty16++*/
+}
 #rcl-cart a {
-	border: none;					/*++Twenty15++*/
-	box-shadow: none;				/*++Twenty16++*/
+    border: none;					/*++Twenty15++*/
+    box-shadow: none;				/*++Twenty16++*/
 }
 
 #rcl-cart .rcl-cart-fields {

@@ -46,7 +46,7 @@ class Rcl_PublicForm {
         $this->terms = $cats;
         $this->form_id = $id;
         $this->accept = $accept;
-        $this->button_draft = $button_draft;
+        $this->button_draft = ($user_ID)? $button_draft: false;
         $this->button_delete = $button_delete;
         
         $this->button_preview = (isset($rcl_options['public_preview'])&&!$rcl_options['public_preview'])? 1: 0;

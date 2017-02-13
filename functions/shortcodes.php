@@ -179,23 +179,33 @@ function rcl_filter_user_description(){
 
 add_filter('users_search_form_rcl','rcl_default_search_form');
 function rcl_default_search_form($form){
+    global $user_LK,$rcl_tab,$rcl_options;
 
-        $search_text = ((isset($_GET['search_text'])))? $_GET['search_text']: '';
-        $search_field = (isset($_GET['search_field']))? $_GET['search_field']: '';
+    $search_text = ((isset($_GET['search_text'])))? $_GET['search_text']: '';
+    $search_field = (isset($_GET['search_field']))? $_GET['search_field']: '';
 
-	$form .='<div class="rcl-search-form">
-                <form method="get" action="">
-                    <p>'.__('Search users','wp-recall').'</p>
-                    <input type="text" name="search_text" value="'.$search_text.'">
-                    <select name="search_field">
-                        <option '.selected($search_field,'display_name',false).' value="display_name">'.__('by name','wp-recall').'</option>
-                        <option '.selected($search_field,'user_login',false).' value="user_login">'.__('by login','wp-recall').'</option>
-                    </select>
-                    <input type="submit" class="recall-button" name="search-user" value="'.__('Search','wp-recall').'">
-                    <input type="hidden" name="default-search" value="1">
-                </form>
-            </div>';
-	return $form;
+    $form .='<div class="rcl-search-form">
+            <form method="get">
+                <p>'.__('Search users','wp-recall').'</p>
+                <input type="text" name="search_text" value="'.$search_text.'">
+                <select name="search_field">
+                    <option '.selected($search_field,'display_name',false).' value="display_name">'.__('by name','wp-recall').'</option>
+                    <option '.selected($search_field,'user_login',false).' value="user_login">'.__('by login','wp-recall').'</option>
+                </select>
+                <input type="submit" class="recall-button" name="search-user" value="'.__('Search','wp-recall').'">
+                <input type="hidden" name="default-search" value="1">';
+    
+    if($user_LK && $rcl_tab){
+        
+        $get = (isset($rcl_options['link_user_lk_rcl'])&&$rcl_options['link_user_lk_rcl']!='')? $rcl_options['link_user_lk_rcl']: 'user';
+        
+        $form .='<input type="hidden" name="'.$get.'" value="'.$user_LK.'">';
+        $form .='<input type="hidden" name="tab" value="'.$rcl_tab->id.'">';
+    }
+    
+    $form .='</form>
+        </div>';
+    return $form;
 }
 
 add_shortcode('wp-recall','rcl_get_shortcode_wp_recall');

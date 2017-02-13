@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2017-02-08 13:31+0300\n"
+"POT-Creation-Date: 2017-02-12 14:59+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -102,9 +102,9 @@ msgstr "Подписка оформлена"
 #: add-on/feed/index.php:182 add-on/feed/index.php:195
 #: add-on/feed/index.php:203 add-on/groups/groups-core.php:717
 #: add-on/groups/groups-core.php:733 add-on/groups/upload-avatar.php:78
-#: add-on/magazin/functions/ajax-func.php:373
-#: add-on/magazin/functions/ajax-func.php:435 add-on/publicpost/index.php:753
-#: add-on/user-account/index.php:154 functions/enqueue-scripts.php:111
+#: add-on/magazin/functions/ajax-func.php:374
+#: add-on/magazin/functions/ajax-func.php:422 add-on/publicpost/index.php:753
+#: add-on/user-account/index.php:143 functions/enqueue-scripts.php:111
 #: rcl-admin/pages/repository.php:45 rcl-admin/rcl-admin.php:106
 #: rcl-functions.php:536
 msgid "Error"
@@ -152,7 +152,7 @@ msgstr "Поиск групп"
 #: add-on/magazin/activate.php:97 add-on/magazin/activate.php:137
 #: add-on/magazin/functions/init.php:69 add-on/magazin/functions/init.php:107
 #: add-on/magazin/functions/init.php:143 add-on/magazin/orders-history.php:301
-#: add-on/user-account/payments.php:328 functions/shortcodes.php:194
+#: add-on/user-account/payments.php:337 functions/shortcodes.php:195
 msgid "Search"
 msgstr "Поиск"
 
@@ -162,7 +162,7 @@ msgstr "Всего групп"
 
 #: add-on/groups/classes/rcl-groups.php:285 add-on/magazin/admin-pages.php:242
 #: add-on/magazin/functions/class-rcl-order.php:354
-#: add-on/magazin/functions/core.php:443 add-on/magazin/functions/core.php:464
+#: add-on/magazin/functions/core.php:450 add-on/magazin/functions/core.php:471
 #: add-on/publicpost/fast-editor.php:126 functions/class-rcl-editfields.php:226
 msgid "Name"
 msgstr "Имя"
@@ -170,7 +170,7 @@ msgstr "Имя"
 #: add-on/groups/classes/rcl-groups.php:286
 #: add-on/magazin/orders-history.php:77
 #: add-on/publicpost/templates/posts-list.php:6
-#: add-on/user-account/payments.php:85 functions/class-rcl-editfields.php:186
+#: add-on/user-account/payments.php:92 functions/class-rcl-editfields.php:186
 msgid "Date"
 msgstr "Дата"
 
@@ -181,7 +181,7 @@ msgstr "Публикациям"
 #: add-on/groups/classes/rcl-groups.php:288
 #: add-on/groups/groups-widgets.php:108 add-on/groups/groups-widgets.php:131
 #: add-on/groups/templates/group-list.php:11
-#: add-on/magazin/orders-history.php:73 add-on/user-account/payments.php:82
+#: add-on/magazin/orders-history.php:73 add-on/user-account/payments.php:89
 #: class-rcl-install.php:102
 msgid "Users"
 msgstr "Пользователи"
@@ -480,7 +480,7 @@ msgstr "Панель управления"
 #: add-on/magazin/functions/shortcodes.php:126
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/publicpost/templates/public-form.php:5
-#: add-on/user-account/index.php:324 functions/class-rcl-editfields.php:150
+#: add-on/user-account/index.php:261 functions/class-rcl-editfields.php:150
 #: rcl-widgets.php:48 rcl-widgets.php:111 rcl-widgets.php:164
 msgid "Title"
 msgstr "Заголовок"
@@ -653,7 +653,7 @@ msgstr "Отклонить запрос"
 
 #: add-on/groups/index.php:464 add-on/magazin/index.php:116
 #: add-on/magazin/orders-history.php:107 add-on/magazin/orders-history.php:124
-#: add-on/user-account/payments.php:100 functions/class-rcl-editfields.php:215
+#: add-on/user-account/payments.php:109 functions/class-rcl-editfields.php:215
 #: rcl-admin/add-on-manager.php:146 rcl-admin/add-on-manager.php:157
 #: rcl-admin/templates-manager.php:158
 msgid "Delete"
@@ -1085,7 +1085,7 @@ msgstr "Цена"
 #: add-on/magazin/admin-pages.php:192 add-on/magazin/templates/cart.php:12
 #: add-on/magazin/templates/order.php:14
 #: add-on/magazin/templates/orders-history.php:12
-#: add-on/user-account/payments.php:84
+#: add-on/user-account/payments.php:91
 msgid "Sum"
 msgstr "Сумма"
 
@@ -1122,14 +1122,14 @@ msgstr "Информация о пользователе"
 
 #: add-on/magazin/admin-pages.php:243
 #: add-on/magazin/functions/class-rcl-order.php:355
-#: add-on/magazin/functions/core.php:444 add-on/magazin/functions/core.php:465
+#: add-on/magazin/functions/core.php:451 add-on/magazin/functions/core.php:472
 msgid "Email"
 msgstr "Email"
 
 #: add-on/magazin/admin-pages.php:244 add-on/magazin/admin-pages.php:257
 #: add-on/magazin/functions/class-rcl-order.php:359
 #: add-on/magazin/functions/class-rcl-order.php:402
-#: add-on/magazin/functions/core.php:447 add-on/magazin/functions/core.php:467
+#: add-on/magazin/functions/core.php:454 add-on/magazin/functions/core.php:474
 msgid "Order details"
 msgstr "Детали заказа"
 
@@ -1338,23 +1338,23 @@ msgstr "Заказ поступил в обработку."
 msgid "The order contained only free items"
 msgstr "Заказ содержал только бесплатные товары"
 
-#: add-on/magazin/functions/ajax-func.php:228
+#: add-on/magazin/functions/ajax-func.php:230 add-on/magazin/index.php:130
 #, php-format
 msgid "Payment order №%s dated %s"
 msgstr "Оплата заказа №%s от %s"
 
-#: add-on/magazin/functions/ajax-func.php:254
+#: add-on/magazin/functions/ajax-func.php:255
 msgid ""
 "All necessary data for authorization on the site have been sent to the "
 "specified e-mail"
 msgstr ""
 "Все необходимые для авторизации данные были отправлены на указанный email"
 
-#: add-on/magazin/functions/ajax-func.php:255
+#: add-on/magazin/functions/ajax-func.php:256
 msgid "In your personal account you can find out the status of your order."
 msgstr "В своем личном кабинете вы можете отслеживать статус своего заказа."
 
-#: add-on/magazin/functions/ajax-func.php:256
+#: add-on/magazin/functions/ajax-func.php:257
 msgid ""
 "You can top up your personal account on the site in your back office and in "
 "the future pay for orders with it"
@@ -1362,19 +1362,19 @@ msgstr ""
 "Вы можете пополнить свой личный счет в своем личном кабинете и в будущем "
 "оплачивать заказы через него"
 
-#: add-on/magazin/functions/ajax-func.php:260
+#: add-on/magazin/functions/ajax-func.php:261
 msgid "To monitor the order status please confirm the specified email!"
 msgstr "Для отслеживания статуса своего заказа подтвердите свой email!"
 
-#: add-on/magazin/functions/ajax-func.php:261
+#: add-on/magazin/functions/ajax-func.php:262
 msgid "Follow the link in the letter sent to your email"
 msgstr "Перейдите по ссылке в полученном письме"
 
-#: add-on/magazin/functions/ajax-func.php:272
+#: add-on/magazin/functions/ajax-func.php:273
 msgid "Go to your personal cabinet"
 msgstr "Перейти в личный кабинет"
 
-#: add-on/magazin/functions/ajax-func.php:286
+#: add-on/magazin/functions/ajax-func.php:287
 msgid ""
 "You can pay for it now or from your personal account. There you can find the "
 "status of your order."
@@ -1382,26 +1382,16 @@ msgstr ""
 "Вы можете оплатить его сейчас или из своего личного кабинета. Там же вы "
 "можете отслеживать статус своего заказа."
 
-#: add-on/magazin/functions/ajax-func.php:292
+#: add-on/magazin/functions/ajax-func.php:293
 msgid "You can monitor the status of your order in your personal account."
 msgstr "Вы можете отслеживать статус своего заказа из своего личного кабинета."
 
-#: add-on/magazin/functions/ajax-func.php:369
+#: add-on/magazin/functions/ajax-func.php:370
 #, php-format
 msgid "Order №%s was deleted"
 msgstr "Заказ №%s был удален"
 
-#: add-on/magazin/functions/ajax-func.php:425
-#, php-format
-msgid "Insufficient funds in your personal account!<br>Order price: %d %s"
-msgstr "Недостаточно средств на личном счету!<br>Стоимость заказа: %d %s"
-
-#: add-on/magazin/functions/ajax-func.php:430
-#, php-format
-msgid "Payment for order №%d"
-msgstr "Оплата заказа №%d"
-
-#: add-on/magazin/functions/ajax-func.php:444
+#: add-on/magazin/functions/ajax-func.php:431
 msgid ""
 "Your order has been successfully paid! A notification has been sent to the "
 "administration."
@@ -1452,7 +1442,7 @@ msgid "This user has formed an order"
 msgstr "Пользователь сформировал заказ в магазине"
 
 #: add-on/magazin/functions/class-rcl-order.php:353
-#: add-on/magazin/functions/core.php:442 add-on/magazin/functions/core.php:463
+#: add-on/magazin/functions/core.php:449 add-on/magazin/functions/core.php:470
 msgid "Information about the customer"
 msgstr "Информация о покупателе"
 
@@ -1462,7 +1452,7 @@ msgstr "Данные полученные при оформлении"
 
 #: add-on/magazin/functions/class-rcl-order.php:358
 #: add-on/magazin/functions/class-rcl-order.php:403
-#: add-on/magazin/functions/core.php:446 add-on/magazin/functions/core.php:466
+#: add-on/magazin/functions/core.php:453 add-on/magazin/functions/core.php:473
 #, php-format
 msgid "Order №%d received status \"%s\""
 msgstr "Заказ №%d получил статус \"%s\""
@@ -1593,20 +1583,20 @@ msgstr "Платежи (шт.)"
 msgid "Income (tsd.)"
 msgstr "Доход (тыс.)"
 
-#: add-on/magazin/functions/core.php:441
+#: add-on/magazin/functions/core.php:448
 msgid "User has paid for the order"
 msgstr "Пользователь оплатил заказ в магазине"
 
-#: add-on/magazin/functions/core.php:450
+#: add-on/magazin/functions/core.php:457
 msgid "Link for managing the order"
 msgstr "Ссылка для управления заказом"
 
-#: add-on/magazin/functions/core.php:462
+#: add-on/magazin/functions/core.php:469
 #, php-format
 msgid "You paid for the order %s with funds from your personal account."
 msgstr "Вы оплатили заказ %s средствами со своего личного счета."
 
-#: add-on/magazin/functions/core.php:470
+#: add-on/magazin/functions/core.php:477
 msgid ""
 "Your order has been paid and is being processied. You can monitor its status "
 "in your personal cabinet"
@@ -1784,7 +1774,7 @@ msgstr "Сумма заказа"
 msgid "Details"
 msgstr "Детали"
 
-#: add-on/magazin/orders-history.php:151 add-on/user-account/payments.php:127
+#: add-on/magazin/orders-history.php:151 add-on/user-account/payments.php:136
 msgid "Filter by date"
 msgstr "Фильтр по дате"
 
@@ -1793,11 +1783,11 @@ msgstr "Фильтр по дате"
 msgid "All"
 msgstr "Все"
 
-#: add-on/magazin/orders-history.php:164 add-on/user-account/payments.php:129
+#: add-on/magazin/orders-history.php:164 add-on/user-account/payments.php:138
 msgid "All dates"
 msgstr "Все даты"
 
-#: add-on/magazin/orders-history.php:174 add-on/user-account/payments.php:139
+#: add-on/magazin/orders-history.php:174 add-on/user-account/payments.php:148
 #, php-format
 msgid "%1$s %2$d"
 msgstr ""
@@ -1806,7 +1796,7 @@ msgstr ""
 msgid "Order history"
 msgstr "История заказов"
 
-#: add-on/magazin/orders-history.php:296 add-on/user-account/payments.php:323
+#: add-on/magazin/orders-history.php:296 add-on/user-account/payments.php:332
 msgid "Filter"
 msgstr "Фильтр"
 
@@ -3055,7 +3045,7 @@ msgid "Not used"
 msgstr "Не используется"
 
 #: add-on/user-account/addon-options.php:15
-#: add-on/user-account/payments.php:287
+#: add-on/user-account/payments.php:296
 msgid "Payment systems"
 msgstr "Платежные системы"
 
@@ -3115,61 +3105,75 @@ msgstr "Страница FAIL"
 msgid "Successful payment page"
 msgstr "Страница успешного платежа"
 
-#: add-on/user-account/index.php:102
+#: add-on/user-account/index.php:90
 msgid "Balance"
 msgstr "Баланс"
 
-#: add-on/user-account/index.php:132 add-on/user-account/index.php:241
+#: add-on/user-account/index.php:120 add-on/user-account/index.php:304
 msgid "Enter the amount to top up"
 msgstr "Укажите сумму для пополнения"
 
-#: add-on/user-account/index.php:144
+#: add-on/user-account/index.php:130
 msgid "Top up personal account from"
 msgstr "Пополнение личного счета от"
 
-#: add-on/user-account/index.php:169
+#: add-on/user-account/index.php:134
+msgid "Make payment"
+msgstr "Провести платеж"
+
+#: add-on/user-account/index.php:158
 msgid "Balance changed"
 msgstr "Изменение баланса"
 
-#: add-on/user-account/index.php:198
+#: add-on/user-account/index.php:186
 msgid "Top up"
 msgstr "Изменение баланса"
 
-#: add-on/user-account/index.php:214
-msgid "please log in to make a payment"
-msgstr "Для совершения платежа необходимо авторизоваться"
-
-#: add-on/user-account/index.php:231
-msgid "Payment via"
-msgstr "Оплата через"
-
-#: add-on/user-account/index.php:263
+#: add-on/user-account/index.php:205
 msgid "Income dynamics"
 msgstr "Динамика платежей"
 
-#: add-on/user-account/index.php:264
+#: add-on/user-account/index.php:206
 msgid "Time period"
 msgstr "Период времени"
 
-#: add-on/user-account/index.php:266
+#: add-on/user-account/index.php:208
 msgid "\"Days/Months\""
 msgstr "\"Дни/Месяцы\""
 
-#: add-on/user-account/index.php:266
+#: add-on/user-account/index.php:208
 msgid "\"Payments (PCs.)\""
 msgstr "\"Платежи (шт.)\""
 
-#: add-on/user-account/index.php:266
+#: add-on/user-account/index.php:208
 msgid "\"Income (thousands)\""
 msgstr "\"Доход (тыс.)\""
 
-#: add-on/user-account/index.php:291
+#: add-on/user-account/index.php:228
 msgid "Personal user account"
 msgstr "Личный счет пользователя"
 
-#: add-on/user-account/index.php:293 add-on/user-account/index.php:321
+#: add-on/user-account/index.php:230 add-on/user-account/index.php:258
 msgid "Personal account"
 msgstr "Личный счет"
+
+#: add-on/user-account/index.php:277
+msgid "please log in to make a payment"
+msgstr "Для совершения платежа необходимо авторизоваться"
+
+#: add-on/user-account/index.php:294
+msgid "Payment via"
+msgstr "Оплата через"
+
+#: add-on/user-account/index.php:368
+#, php-format
+msgid "Insufficient funds in your personal account!<br>Order price: %d %s"
+msgstr "Недостаточно средств на личном счету!<br>Стоимость заказа: %d %s"
+
+#: add-on/user-account/index.php:373
+#, php-format
+msgid "Payment for order №%d"
+msgstr "Оплата заказа №%d"
 
 #: add-on/user-account/payments.php:32
 msgid "payment"
@@ -3179,69 +3183,73 @@ msgstr "платеж"
 msgid "payments"
 msgstr "платежи"
 
-#: add-on/user-account/payments.php:58
+#: add-on/user-account/payments.php:60
 msgid "No payments found."
 msgstr "Платежи не найдены"
 
-#: add-on/user-account/payments.php:83
+#: add-on/user-account/payments.php:90
 msgid "Payments ID"
 msgstr "ID платежа"
 
-#: add-on/user-account/payments.php:92
+#: add-on/user-account/payments.php:93
+msgid "Payment system"
+msgstr "Платежные системы"
+
+#: add-on/user-account/payments.php:94
+msgid "Payment type"
+msgstr "Тип платежа"
+
+#: add-on/user-account/payments.php:101
 msgid "Delete payment"
 msgstr "Удалить платеж"
 
-#: add-on/user-account/payments.php:93
+#: add-on/user-account/payments.php:102
 msgid "All user payments"
 msgstr "Все платежи пользователя"
 
-#: add-on/user-account/payments.php:290 add-on/user-account/payments.php:298
+#: add-on/user-account/payments.php:299 add-on/user-account/payments.php:307
 msgid "Payments"
 msgstr "Платежи"
 
-#: add-on/user-account/payments.php:312
+#: add-on/user-account/payments.php:321
 msgid "Payment history"
 msgstr "История платежей"
 
-#: add-on/user-account/payments.php:314
+#: add-on/user-account/payments.php:323
 msgid "All payments"
 msgstr "Все платежи"
 
-#: add-on/user-account/payments.php:314
+#: add-on/user-account/payments.php:323
 msgid "for the amount of"
 msgstr "на сумму"
 
-#: add-on/user-account/payments.php:314
+#: add-on/user-account/payments.php:323
 msgid "Average check"
 msgstr "Средний чек"
 
-#: add-on/user-account/payments.php:315
+#: add-on/user-account/payments.php:324
 msgid "Total in the system"
 msgstr "Всего в системе"
 
-#: add-on/user-account/rcl_payment.php:64
+#: add-on/user-account/rcl_payment.php:177
 msgid "No record of the payment in the database was found"
 msgstr "Платеж не найден в базе данных"
 
-#: add-on/user-account/rcl_payment.php:103
-msgid "Top up personal account"
-msgstr "Пополнение личного счета"
-
-#: add-on/user-account/rcl_payment.php:142
+#: add-on/user-account/rcl_payment.php:249
 msgid "Error! Connection to payment aggregator not set."
 msgstr "Ошибка! Не настроено подключение к платежному агрегатору."
 
-#: add-on/user-account/rcl_payment.php:158
-msgid "Confirm the operation"
-msgstr "Подтвердить операцию"
-
-#: add-on/user-account/rcl_payment.php:158
+#: add-on/user-account/rcl_payment.php:268
 msgid "Pay via"
 msgstr "Оплатить через"
 
-#: add-on/user-account/rcl_payment.php:181
+#: add-on/user-account/rcl_payment.php:305
 msgid "Pay from personal account"
 msgstr "Оплатить с личного счета"
+
+#: add-on/user-account/rcl_payment.php:340
+msgid "Top up personal account"
+msgstr "Пополнение личного счета"
 
 #: class-rcl-install.php:92 rcl-admin/pages/options.php:43
 msgid "Personal cabinet"
@@ -3505,7 +3513,7 @@ msgstr "Выход"
 msgid "Entry"
 msgstr "Вход"
 
-#: functions/rcl-frontend.php:48 functions/rcl-frontend.php:291
+#: functions/rcl-frontend.php:48 functions/rcl-frontend.php:289
 #: functions/shortcodes.php:145
 msgid "offline"
 msgstr "не в сети"
@@ -3514,35 +3522,35 @@ msgstr "не в сети"
 msgid "online"
 msgstr "в сети"
 
-#: functions/rcl-frontend.php:237
+#: functions/rcl-frontend.php:235
 msgid "The site uses plugin functionality"
 msgstr "Сайт использует функционал плагина"
 
-#: functions/rcl-frontend.php:245
+#: functions/rcl-frontend.php:243
 msgid "Publiction author"
 msgstr "Автор публикации"
 
-#: functions/rcl-frontend.php:329
+#: functions/rcl-frontend.php:327
 msgid "Congratulations! You have been banned."
 msgstr "Поздравляем! Вы были заблокированы на этом сайте."
 
-#: functions/rcl-frontend.php:337
+#: functions/rcl-frontend.php:335
 msgid "Publication pending approval!"
 msgstr "Публикация ожидает утверждения!"
 
-#: functions/rcl-frontend.php:342
+#: functions/rcl-frontend.php:340
 msgid "Draft of a post"
 msgstr "Черновик публикации"
 
-#: functions/rcl-frontend.php:400 functions/rcl-frontend.php:426
+#: functions/rcl-frontend.php:398 functions/rcl-frontend.php:424
 msgid "Unblock"
 msgstr "Разблокировать"
 
-#: functions/rcl-frontend.php:400 functions/rcl-frontend.php:426
+#: functions/rcl-frontend.php:398 functions/rcl-frontend.php:424
 msgid "Blacklist"
 msgstr "Черный список"
 
-#: functions/rcl-frontend.php:445
+#: functions/rcl-frontend.php:443
 msgid "The user has restricted access to their page"
 msgstr "Пользователь ограничил доступ к своей странице"
 
@@ -3652,19 +3660,19 @@ msgstr "Пользователи не найдены"
 msgid "Publics"
 msgstr "Публикации"
 
-#: functions/shortcodes.php:188
+#: functions/shortcodes.php:189
 msgid "Search users"
 msgstr "Поиск пользователей"
 
-#: functions/shortcodes.php:191
+#: functions/shortcodes.php:192
 msgid "by name"
 msgstr "по имени"
 
-#: functions/shortcodes.php:192
+#: functions/shortcodes.php:193
 msgid "by login"
 msgstr "по логину"
 
-#: functions/shortcodes.php:206 functions/shortcodes.php:365
+#: functions/shortcodes.php:216 functions/shortcodes.php:375
 msgid "To use your personal account, please log in or register on this site"
 msgstr ""
 "Начните пользоваться возможностями своего личного кабинета, войдите или "
@@ -4417,6 +4425,9 @@ msgstr "Регистрация"
 #: wp-recall.php:40 wp-recall.php:44
 msgid "Читеришь, гадёныш?"
 msgstr ""
+
+#~ msgid "Confirm the operation"
+#~ msgstr "Подтвердить операцию"
 
 #~ msgid "Personal office"
 #~ msgstr "Личный кабинет"
@@ -6774,9 +6785,6 @@ msgstr ""
 
 #~ msgid "cancel"
 #~ msgstr "отмена"
-
-#~ msgid "Payment system"
-#~ msgstr "Платежные системы"
 
 #~ msgid "The number of purse"
 #~ msgstr "Номер кошелька"

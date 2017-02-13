@@ -392,13 +392,20 @@ function rcl_setup_cartdata($productdata){
 	return $product;
 }
 
-add_action('insert_pay_rcl','rcl_add_payment_order');
+add_action('rcl_success_pay','rcl_add_payment_order');
 function rcl_add_payment_order($pay){
-    if($pay->pay_type!=2) return false;
-    rcl_payment_order($pay->pay_id);
+    
+    if($pay->pay_type != 2) return false;
+    
+    $order = rcl_get_order($pay->pay_id);
+    
+    if($order && $order->order_price == $pay->pay_summ && $order->order_status == 1){
+        rcl_payment_order($pay->pay_id);
+    }
+    
 }
 
-function rcl_payment_order($order_id,$user_id=false){
+function rcl_payment_order($order_id,$user_id = false){
     global $wpdb,$order,$rmag_options;
 
     $order = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".$wpdb->prefix."rmag_orders_history WHERE order_id='%d'",$order_id));

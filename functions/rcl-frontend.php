@@ -126,8 +126,25 @@ function rcl_inline_styles(){
     global $rcl_options;
 
     list($r, $g, $b) = (isset($rcl_options['primary-color'])&&$rcl_options['primary-color'])? sscanf($rcl_options['primary-color'], "#%02x%02x%02x"): array(76, 140, 189);
+
+    $styles = apply_filters('rcl_inline_styles','',array($r, $g, $b));
+
+    if(!$styles) return false;
     
-    $styles = 'a.recall-button,
+    // удаляем пробелы, переносы, табуляцию
+    $styles =  preg_replace('/ {2,}/','',str_replace(array("\r\n", "\r", "\n", "\t"), '', $styles));
+
+    echo '<style>'.$styles.'</style>';
+
+}
+
+add_filter('rcl_inline_styles','rcl_default_inline_styles',5,2);
+function rcl_default_inline_styles($styles,$rgb){
+    global $rcl_options;
+ 
+    list($r, $g, $b) = $rgb;
+
+    $styles .= 'a.recall-button,
     .recall-button.rcl-upload-button,
     input[type="submit"].recall-button,
     input[type="submit"] .recall-button,
@@ -166,13 +183,7 @@ function rcl_inline_styles(){
         background: rgb('.$r.', '.$g.', '.$b.');
     }';
     
-    $styles = apply_filters('rcl_inline_styles',$styles,array($r, $g, $b));
-
-    // удаляем пробелы, переносы, табуляцию
-    $styles =  preg_replace('/ {2,}/','',str_replace(array("\r\n", "\r", "\n", "\t"), '', $styles));
-
-    echo '<style>'.$styles.'</style>';
-
+    return $styles;
 }
 
 add_action('rcl_init','init_user_lk',1);
@@ -180,12 +191,10 @@ function init_user_lk(){
     global $wpdb,$user_LK,$rcl_userlk_action,$rcl_options,$user_ID,$rcl_office;
 
     $user_LK = false;
-    $userLK = false;
-    $get='user';
     $nicename = false;
     
-    if(isset($rcl_options['link_user_lk_rcl'])&&$rcl_options['link_user_lk_rcl']!='') $get = $rcl_options['link_user_lk_rcl'];
-    if(isset($_GET[$get])) $userLK = $_GET[$get];
+    $get = (isset($rcl_options['link_user_lk_rcl'])&&$rcl_options['link_user_lk_rcl']!='')? $rcl_options['link_user_lk_rcl']: 'user';
+    $userLK = (isset($_GET[$get]))? $_GET[$get]: false;
 
     if(!$userLK){
         if($rcl_options['view_user_lk_rcl']==1){
@@ -264,6 +273,10 @@ function rcl_get_author_block(){
 function rcl_get_time_user_action($user_id){
     global $wpdb;
     
+    $expire = (isset($rcl_options['timeout']) && $rcl_options['timeout'])? $rcl_options['timeout']: 10;
+    
+    $expire *= 60;
+    
     $cachekey = json_encode(array('rcl_get_time_user_action',$user_id));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
@@ -271,7 +284,7 @@ function rcl_get_time_user_action($user_id){
     
     $action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_id));
 
-    wp_cache_add( $cachekey, $action );
+    wp_cache_add( $cachekey, $action, '', $expire );
     
     return $action;
 }

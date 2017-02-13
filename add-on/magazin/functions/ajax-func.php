@@ -218,28 +218,29 @@ function rcl_confirm_order(){
     }
     
     if(function_exists('rcl_payform')){
+        
         $type_pay = $rmag_options['type_order_payment'];
         
-        $args_pay = array(
-                'id_pay'=>$order->order_id,
-                'summ'=>$order->order_price,
-                'user_id'=>$order->order_author,
-                'type'=>2,
-                'description'=>sprintf(__('Payment order №%s dated %s','wp-recall'),$order->order_id,get_the_author_meta('user_email',$order->order_author))
-            );
-                    
-        $payment = new Rcl_Payment();
-
-        $payment_form = '<div class="rcl-types-paeers">';
-
-        if($type_pay==1||$type_pay==2){
-            $payment_form .= $payment->get_form($args_pay);
+        $dataPay = array(
+            'baggage_data' => array(
+                'order_id' => $order->order_id
+            ),
+            'pay_id' => $order->order_id,
+            'pay_summ' => $order->order_price,
+            'description' => sprintf(__('Payment order №%s dated %s','wp-recall'),$order->order_id,get_the_author_meta('user_email',$order->order_author)),
+            'merchant_icon' => 1
+        );
+        
+        if(!$type_pay){
+            $dataPay['pay_systems'] = 'user_balance';
+        }
+        
+        if($type_pay == 1){
+            $dataPay['pay_systems_not_in'] = 'user_balance';
         }
 
-        if(!$type_pay||$type_pay==2){
-            $payment_form .= $payment->personal_account_pay_form($order->order_id);
-        }
-
+        $payment_form = '<div class="rcl-types-paeers">';        
+        $payment_form .= rcl_get_pay_form($dataPay);
         $payment_form .= '</div>';
     }
     
@@ -402,57 +403,45 @@ add_action('wp_ajax_rcl_all_delete_order', 'rcl_all_delete_order');
 /*************************************************
 Оплата заказа средствами с личного счета
 *************************************************/
-function rcl_pay_order_private_account(){
-    global $user_ID,$wpdb,$rmag_options,$order;
+add_action('rcl_success_pay_balance','rmag_pay_order_with_balance');
+function rmag_pay_order_with_balance($data){
+    
+    if($data->pay_type != 2) return false;
+    
+    $baggageData = $data->baggage_data;
+    
+    if(!$baggageData->order_id) return false;
+    
+    $order = rcl_get_order($baggageData->order_id);
+    
+    if($order && $order->order_price == $data->pay_summ && $order->order_status == 1){
+    
+        $result = rcl_update_status_order($baggageData->order_id,2);
 
-    rcl_verify_ajax_nonce();
+        if(!$result){
+            $log['error'] = __('Error','wp-recall');
+            echo json_encode($log);
+            exit;
+        }
 
-    $order_id = intval($_POST['idorder']);
+        rcl_payment_order($baggageData->order_id,$baggageData->user_id);
 
-    if(!$order_id||!$user_ID){
-        $log['otvet']=1;
+        do_action('payment_rcl',$baggageData->user_id,$data->pay_summ,$baggageData->order_id,2);
+
+        $text = "<p>".__('Your order has been successfully paid! A notification has been sent to the administration.','wp-recall')."</p>";
+
+        $text = apply_filters('payment_order_text',$text);
+
+        $log['recall'] = "<div style='clear: both;color:green;font-weight:bold;padding:10px; border:2px solid green;'>".$text."</div>";
+        $log['count'] = rcl_get_user_balance($baggageData->user_id);
+        $log['idorder']= $baggageData->order_id;
+        $log['otvet'] =100;
         echo json_encode($log);
         exit;
-    }
-
-    $order = rcl_get_order($order_id);
-
-    $oldusercount = rcl_get_user_balance();
     
-    $newusercount = $oldusercount - $order->order_price;
-
-    if(!$oldusercount||$newusercount<0){
-        $log['error'] = sprintf(__('Insufficient funds in your personal account!<br>Order price: %d %s','wp-recall'),$order->order_price,rcl_get_primary_currency(1));
-        echo json_encode($log);
-        exit;
-    }
-
-    rcl_update_user_balance($newusercount,$user_ID,sprintf(__('Payment for order №%d','wp-recall'),$order_id));
-
-    $result = rcl_update_status_order($order_id,2);
-
-    if(!$result){
-        $log['error'] = __('Error','wp-recall');
-        echo json_encode($log);
-        exit;
     }
     
-    rcl_payment_order($order_id,$user_ID);
-    
-    do_action('payment_rcl',$user_ID,$order->order_price,$order_id,2);
-
-    $text = "<p>".__('Your order has been successfully paid! A notification has been sent to the administration.','wp-recall')."</p>";
-
-    $text = apply_filters('payment_order_text',$text);
-
-    $log['recall'] = "<div style='clear: both;color:green;font-weight:bold;padding:10px; border:2px solid green;'>".$text."</div>";
-    $log['count'] = $newusercount;
-    $log['idorder']=$order_id;
-    $log['otvet']=100;
-    echo json_encode($log);
-    exit;
 }
-add_action('wp_ajax_rcl_pay_order_private_account', 'rcl_pay_order_private_account');
 
 function rcl_edit_price_product(){
 
