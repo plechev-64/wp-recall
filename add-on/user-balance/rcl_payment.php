@@ -140,15 +140,20 @@ class Rcl_Payment{
     function get_result($pay_system){
         global $rmag_options,$rcl_payments;
         
-        if(!$pay_system) $pay_system = $rmag_options['connect_sale'];
+        if(!$pay_system) 
+            $pay_system = $rmag_options['connect_sale'];
         
         $this->current_connect = $pay_system;
         $this->current_step = 'result';
 
         if(isset($rcl_payments[$pay_system])){
-            $obj = new $rcl_payments[$pay_system]->class;
+            
+            $className = $rcl_payments[$pay_system];
+            
+            $obj = new $className->class;
             $method = 'result';
             $obj->$method($this);
+            
         }else{
             return false;
         }
@@ -164,9 +169,13 @@ class Rcl_Payment{
         $this->current_step = 'success';
 
         if(isset($rcl_payments[$pay_system])){
-            $obj = new $rcl_payments[$connect]->class;
+            
+            $className = $rcl_payments[$pay_system];
+            
+            $obj = new $className->class;
             $method = 'success';
             $obj->$method();
+            
         }else{
             return false;
         }
