@@ -51,8 +51,8 @@ function rcl_confirm_user_registration(){
     $confirmdata = urldecode($_GET['rcl-confirmdata']);
     
     if($confirmdata){
-        
-        $confirmdata = explode('{rcl}',base64_decode(strtr($confirmdata, '-_,', '+/=')));
+
+        $confirmdata = json_decode(str_replace(AUTH_SALT,'',base64_decode(rcl_hash($confirmdata,1))));
         
         if ( $user = get_user_by('login', $confirmdata[0]) ){
             
@@ -232,7 +232,16 @@ function rcl_register_mail($userdata){
 
     if($rcl_options['confirm_register_recall']==1){
         
-        $confirmstr = strtr(base64_encode(implode('{rcl}',array($userdata['user_login'],$userdata['user_pass'],md5($userdata['user_id'])))), '+/=', '-_,');
+        $confirmstr = rcl_hash(
+            base64_encode(
+                json_encode(
+                array(
+                    $userdata['user_login'],
+                    $userdata['user_pass'],
+                    md5($userdata['user_id'])
+                )
+            ).AUTH_SALT)
+        );
 
         $url = get_bloginfo('wpurl').'/?rcl-confirmdata='.urlencode($confirmstr);
 
