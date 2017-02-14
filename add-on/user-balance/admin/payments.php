@@ -205,7 +205,7 @@ class Rcl_Payments_List_Table extends WP_List_Table {
         }else if($count=='sum'){
 
             $this->query['select'] = array(
-                "SUM(payments.payment_amount)"
+                "SUM(payments.pay_amount)"
             );
 
         }else{

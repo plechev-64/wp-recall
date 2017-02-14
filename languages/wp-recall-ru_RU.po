@@ -4307,7 +4307,7 @@ msgstr "Подключить"
 
 #: rcl-functions.php:520
 msgid "Error! Perhaps this add-on does not support ajax loading"
-msgstr "Ошибка! Данное дополнениене поддерживает ajax-загрузку"
+msgstr "Ошибка! Данное дополнение не поддерживает ajax-загрузку"
 
 #: rcl-functions.php:965
 msgid "This letter was created automatically, no need to answer it."

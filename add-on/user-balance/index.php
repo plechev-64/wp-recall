@@ -35,6 +35,25 @@ function rmag_get_global_unit_wallet(){
     
 }
 
+add_action('wp', 'rcl_payments',10);
+function rcl_payments(){
+    global $rmag_options,$rcl_payments;
+
+    if(!isset($rmag_options['connect_sale'])||!$rmag_options['connect_sale']) return false;
+    if(!isset($rcl_payments[$rmag_options['connect_sale']])||is_array($rmag_options['connect_sale'])) return false;
+
+    if (isset($_REQUEST[$rcl_payments[$rmag_options['connect_sale']]->request])){
+        $payment = new Rcl_Payment();
+        $payment->payment_process();
+    }
+}
+
+add_action('rcl_success_pay_system','rcl_success_pay',10);
+add_action('rcl_success_pay_balance','rcl_success_pay',10);
+function rcl_success_pay($dataPay){
+    do_action('rcl_success_pay',$dataPay);
+}
+
 function rcl_payform($attr){
     return rcl_get_pay_form($attr);
 }
@@ -169,6 +188,7 @@ function rcl_pay_order_user_balance(){
         'pay_type' => $pay_type,
         'pay_id' => $pay_id,
         'pay_summ' => $pay_summ,
+        'current_connect' => 'user_balance',
         'baggage_data' => $baggage_data
     );
     
@@ -192,6 +212,51 @@ function rcl_pay_order_user_balance(){
     $log['redirect'] = get_permalink($rmag_options['page_successfully_pay']);
     echo json_encode($log);
     exit;
+}
+
+//пополнение баланса пользователя
+add_action('rcl_success_pay_system','rcl_pay_user_balance',10);
+function rcl_pay_user_balance($data){
+
+    if($data->pay_type!=1) return false;
+
+    $oldcount = rcl_get_user_balance($data->user_id);
+
+    if($oldcount) $newcount = $oldcount + $data->pay_summ;
+    else $newcount = $data->pay_summ;
+
+    rcl_update_user_balance($newcount,$data->user_id,__('Top up personal account','wp-recall'));
+
+}
+
+function rcl_mail_payment_error($hash=false,$other=false){
+    global $rmag_options,$post;
+    
+    if($other){
+        foreach($other as $k=>$v){
+            $textmail .= $k.' - '.$v.'<br>';
+        }
+    }
+
+    foreach($_REQUEST as $key=>$R){
+        $textmail .= $key.' - '.$R.'<br>';
+    }
+
+    if($hash){
+        $textmail .= 'Cформированный хеш - '.$hash.'<br>';
+        $title = 'Неудачная оплата';
+    }else{
+        $title = 'Данные платежа';
+    }
+
+    $textmail .= 'Текущий пост - '.$post->ID.'<br>';
+    $textmail .= 'RESULT - '.$rmag_options['page_result_pay'].'<br>';
+    $textmail .= 'SUCCESS - '.$rmag_options['page_success_pay'].'<br>';
+
+    $email = $rmag_options['admin_email_magazin_recall'];
+    if(!$email) $email = get_option( 'admin_email' );
+
+    rcl_mail($email, $title, $textmail);
 }
 
 add_action( 'widgets_init', 'rcl_widget_usercount' );
