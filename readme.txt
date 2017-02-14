@@ -1,10 +1,10 @@
-=== Wp-Recall ===
+=== WP-Recall ===
 Contributors: wppost
 Donate link: http://codeseller.ru/
 Tags: группы, интернет магазин, личные сообщения, личный кабинет, магазин, онлайн магазин, пользователи, продажи, профиль, профиль пользователя, рейтинг, сообщество, социальная сеть, уведомления, электронная коммерция, author, author profile, authors, activity, cart, commerce, community, custom fields, e-commerce, ecommerce, file uploads, free-kassa, friends, front-end login, front-end registration, groups, interkassa, member, messaging, networking, networks, online shop, online store, personal account, private message, notifications, payeer, pay2pay, perfect money, profiles, ratings, robokassa, sales, sell, shop, shopping cart, social, social network, social networking, unitpay, user profile, users community, wallet one, webmoney, yandexKassa
 Requires at least: 4.4.0
-Tested up to: 4.6.0
-Stable tag: 12.0.7
+Tested up to: 4.7.1
+Stable tag: 15.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

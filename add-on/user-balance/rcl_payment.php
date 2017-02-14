@@ -201,7 +201,9 @@ class Rcl_Payment{
 
         if(!$data->pay_status) exit;
         
-        $data->baggage_data = ($data->baggage_data)? json_decode(base64_decode($data->baggage_data)): false;
+        $baggage_data = ($data->baggage_data)? json_decode(base64_decode($data->baggage_data)): false;
+        
+        $data->baggage_data = (array)$baggage_data;
 
         do_action('rcl_success_pay_system',$data);
         
