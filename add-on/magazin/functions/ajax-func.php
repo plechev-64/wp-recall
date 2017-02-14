@@ -400,49 +400,6 @@ function rcl_all_delete_order(){
 }
 add_action('wp_ajax_rcl_all_delete_order', 'rcl_all_delete_order');
 
-/*************************************************
-Оплата заказа средствами с личного счета
-*************************************************/
-add_action('rcl_success_pay_balance','rmag_pay_order_with_balance');
-function rmag_pay_order_with_balance($data){
-    
-    if($data->pay_type != 2) return false;
-    
-    $baggageData = $data->baggage_data;
-    
-    if(!$baggageData->order_id) return false;
-    
-    $order = rcl_get_order($baggageData->order_id);
-    
-    if($order && $order->order_price == $data->pay_summ && $order->order_status == 1){
-    
-        $result = rcl_update_status_order($baggageData->order_id,2);
-
-        if(!$result){
-            $log['error'] = __('Error','wp-recall');
-            echo json_encode($log);
-            exit;
-        }
-
-        rcl_payment_order($baggageData->order_id,$baggageData->user_id);
-
-        do_action('payment_rcl',$baggageData->user_id,$data->pay_summ,$baggageData->order_id,2);
-
-        $text = "<p>".__('Your order has been successfully paid! A notification has been sent to the administration.','wp-recall')."</p>";
-
-        $text = apply_filters('payment_order_text',$text);
-
-        $log['recall'] = "<div style='clear: both;color:green;font-weight:bold;padding:10px; border:2px solid green;'>".$text."</div>";
-        $log['count'] = rcl_get_user_balance($baggageData->user_id);
-        $log['idorder']= $baggageData->order_id;
-        $log['otvet'] =100;
-        echo json_encode($log);
-        exit;
-    
-    }
-    
-}
-
 function rcl_edit_price_product(){
 
     $id_post = intval($_POST['id_post']);

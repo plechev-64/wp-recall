@@ -97,7 +97,7 @@ class Rcl_Payment{
         $this->baggage_data['pay_type'] = $this->pay_type;
         $this->baggage_data['user_id'] = $this->user_id;
         
-        $this->baggage_data = json_encode($this->baggage_data);
+        $this->baggage_data = base64_encode(json_encode($this->baggage_data));
 
     }
     
@@ -199,7 +199,7 @@ class Rcl_Payment{
 
         if(!$data->pay_status) exit;
         
-        $data->baggage_data = ($data->baggage_data)? json_decode(wp_unslash($data->baggage_data)): false;
+        $data->baggage_data = ($data->baggage_data)? json_decode(base64_decode($data->baggage_data)): false;
 
         do_action('rcl_success_pay_system',$data);
         
@@ -229,7 +229,7 @@ class Rcl_Payment{
                         'pay_id' => $this->pay_id,
                         'pay_summ' => $this->pay_summ,
                         'pay_callback' => $this->pay_callback,
-                        'baggage_data' => json_decode($this->baggage_data)
+                        'baggage_data' => $this->baggage_data
                     )
                 );
                 

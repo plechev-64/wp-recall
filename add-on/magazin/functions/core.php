@@ -392,7 +392,8 @@ function rcl_setup_cartdata($productdata){
 	return $product;
 }
 
-add_action('rcl_success_pay','rcl_add_payment_order');
+//Оплата заказа
+add_action('rcl_success_pay','rcl_add_payment_order',50);
 function rcl_add_payment_order($pay){
     
     if($pay->pay_type != 2) return false;
@@ -400,7 +401,26 @@ function rcl_add_payment_order($pay){
     $order = rcl_get_order($pay->pay_id);
     
     if($order && $order->order_price == $pay->pay_summ && $order->order_status == 1){
+        
         rcl_payment_order($pay->pay_id);
+        
+        if($pay->current_connect == 'user_balance'){
+            //если оплата с баланса пользователя
+            
+            do_action('payment_rcl',$pay->user_id,$pay->pay_summ,$pay->pay_id,2);
+            
+            $text = "<p>".__('Your order has been successfully paid! A notification has been sent to the administration.','wp-recall')."</p>";
+
+            $text = apply_filters('payment_order_text',$text);
+
+            $log['recall'] = "<div style='clear: both;color:green;font-weight:bold;padding:10px; border:2px solid green;'>".$text."</div>";
+            $log['count'] = rcl_get_user_balance($pay->user_id);
+            $log['idorder']= $pay->pay_id;
+            $log['otvet'] =100;
+            echo json_encode($log);
+            exit;
+            
+        }
     }
     
 }

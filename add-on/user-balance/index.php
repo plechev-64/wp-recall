@@ -177,7 +177,7 @@ function rcl_pay_order_user_balance(){
     $pay_id = intval($_POST['pay_id']);
     $pay_type = $_POST['pay_type'];
     $pay_summ = $_POST['pay_summ'];
-    $baggage_data = json_decode(wp_unslash($_POST['baggage_data']));
+    $baggage_data = json_decode(base64_decode($_POST['baggage_data']));
 
     if(!$pay_id){
         return false;
