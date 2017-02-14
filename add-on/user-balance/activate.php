@@ -35,7 +35,7 @@ if($wpdb->get_var("show tables like '". $table . "'") != $table) {
             ID bigint (20) NOT NULL AUTO_INCREMENT,
             payment_id INT(20) NOT NULL,
             user_id INT(20) NOT NULL,
-            pay_amount INT(20) NOT NULL,
+            pay_amount VARCHAR(20) NOT NULL,
             time_action DATETIME NOT NULL,
             pay_system VARCHAR(100) NOT NULL,
             pay_type VARCHAR(100) NOT NULL,
@@ -50,7 +50,7 @@ if($wpdb->get_var("show tables like '". $table . "'") != $table) {
     
     $wpdb->query("ALTER TABLE `$table` CHANGE `inv_id` `payment_id` INT( 20 ) NOT NULL");
     $wpdb->query("ALTER TABLE `$table` CHANGE `user` `user_id` INT( 20 ) NOT NULL");
-    $wpdb->query("ALTER TABLE `$table` CHANGE `count` `pay_amount` INT( 20 ) NOT NULL");
+    $wpdb->query("ALTER TABLE `$table` CHANGE `count` `pay_amount` VARCHAR( 20 ) NOT NULL");
     $wpdb->query("ALTER TABLE ". $table . " ADD pay_system VARCHAR( 100 ) AFTER time_action");
     $wpdb->query("ALTER TABLE ". $table . " ADD pay_type VARCHAR( 100 ) AFTER time_action");
     
