@@ -332,7 +332,7 @@ function rcl_checkemail_success($errors){
     if(isset($_GET['success']) && $_GET['success'] == 'checkemail'){ 
     
         $errors = new WP_Error();
-        $errors->add( 'checkemail', __('Ваш E-mail успешно подтвержден! Авторизуйтесь, указав свой логин и пароль.','wp-recall'), 'message' );
+        $errors->add( 'checkemail', __('Your email has been successfully confirmed! Log in using your username and password','wp-recall'), 'message' );
 
     }
     
