@@ -69,7 +69,7 @@ div.panel_lk_recall .form-tab-rcl a {
     color: #555;
 }
 .panel_lk_recall .form-block-rcl {
-	line-height: 1.4;
+    line-height: 1.4;
     margin: 0 17px 15px;
     position: relative;
 }
@@ -80,20 +80,20 @@ div.panel_lk_recall .form-tab-rcl a {
 .panel_lk_recall .form-tab-rcl input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]) {
     background: #F2F2F2;
     border: 1px solid rgba(0, 0, 0, 0.03);
-	border-radius: 0;
-	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.05) inset;
+    border-radius: 0;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.05) inset;
     box-sizing: border-box;
     color: #303030;
     display: block;
-	font-family: Verdana,Tahoma,sans-serif;
+    font-family: Verdana,Tahoma,sans-serif;
     font-size: 15px;
     font-weight: 300;
-	height: auto;
-	line-height: normal;
+    height: auto;
+    line-height: normal;
     margin: 5px auto;
-	max-width: none;
-	outline: none;
-	text-transform: none;
+    max-width: none;
+    outline: none;
+    text-transform: none;
     width: 100%;
 	-webkit-box-shadow: 0 0 0px 1000px #F2F2F2 inset !important; /* chrome banana fix */
 }
@@ -112,14 +112,14 @@ div.panel_lk_recall .form-tab-rcl a {
 #register-form-rcl .default-field input[type="text"],
 #register-form-rcl .default-field input[type="password"],
 #register-form-rcl .default-field input[type="email"] {
-	padding: 10px 12px 10px 32px;
+    padding: 10px 12px 10px 32px;
 }
 #register-form-rcl .form-block-rcl textarea {
-	padding: 3px 5px;
+    padding: 3px 5px;
 }
 #register-form-rcl .form_extend .rcl-field-input select {
-	overflow: hidden;
-	padding: 6px 3px;
+    overflow: hidden;
+    padding: 6px 3px;
 }
 #register-form-rcl .form_extend input[type="text"],
 #register-form-rcl .form_extend input[type="email"],
@@ -233,23 +233,23 @@ div.panel_lk_recall .form-tab-rcl a {
     color: rgb(76, 140, 189);
     display: inline;
 }
-.panel_lk_recall span.error a:hover,
+.panel_lk_recall span.login-error a:hover,
 .panel_lk_recall .form-block-rcl label a:hover {
-	color: #000;
-	text-decoration: underline;
+    color: #000;
+    text-decoration: underline;
 }
 .panel_lk_recall span.error a {
     color: rgb(76, 140, 189);
     font-size: 14px;
 }
-.panel_lk_recall .form-tab-rcl .error {
-	background: rgb(255, 207, 207);
+.panel_lk_recall .form-tab-rcl .login-error {
+    background: rgb(255, 207, 207);
 }
-.panel_lk_recall .form-tab-rcl .success {
-	background: #bfffbd;
+.panel_lk_recall .form-tab-rcl .login-message {
+    background: #bfffbd;
 }
-.panel_lk_recall .form-tab-rcl .error,
-.panel_lk_recall .form-tab-rcl .success {
+.panel_lk_recall .form-tab-rcl .login-error,
+.panel_lk_recall .form-tab-rcl .login-message {
     display: block;
     font-size: 12px;
     margin: 5px 0;
@@ -305,3 +305,52 @@ div.panel_lk_recall .form-tab-rcl a {
 }
 /* END панель управления */
 /* END Вход и регистрация */
+
+#registerform .form-block-rcl{
+    margin-bottom: 15px;
+    position: relative;
+}
+#registerform .form-block-rcl label{
+    display:block;
+    margin-bottom:5px;
+}
+#registerform .form-block-rcl .required{
+    position: absolute;
+    left: -15px;
+    top: 5px;
+    color:red;
+    font-size: 20px;
+}
+#registerform .rcl-checkbox-box,
+#registerform .rcl-radio-box{
+    display: block;
+    padding: 3px 0 3px 20px;
+}
+#registerform .rcl-checkbox-box label,
+#registerform .rcl-radio-box label{
+    display:inline-block;
+}
+#registerform .form-block-rcl textarea,
+#registerform .form-block-rcl select,
+#registerform .form-block-rcl input:not([type="checkbox"]):not([type="radio"]){
+    padding: 10px;
+    width: 100%;
+}
+#registerform .form-block-rcl input[type="checkbox"],
+#registerform .form-block-rcl input[type="radio"]{
+    
+}
+#registerform .form-block-rcl .login-error,
+#registerform .form-block-rcl .login-message {
+    display: block;
+    font-size: 12px;
+    margin: 5px 0;
+    padding: 8px 5px;
+    text-align: center;
+}
+#registerform .form-block-rcl .login-error {
+    background: rgb(255, 207, 207);
+}
+#registerform .form-block-rcl .login-message {
+    background: #bfffbd;
+}

@@ -79,9 +79,8 @@ function rcl_font_awesome_style(){
 add_action('login_enqueue_scripts','rcl_enqueue_wp_form_scripts',1);
 function rcl_enqueue_wp_form_scripts(){
     wp_enqueue_script( 'jquery' );
-    //wp_enqueue_style( 'rcl-form', RCL_URL.'css/regform.css' );
-    echo '<link rel="stylesheet" id="rcl-form-css" href="'.RCL_URL.'css/regform.css" type="text/css" media="all">'
-            . '<script type="text/javascript" src="'.RCL_URL.'js/recall.js"></script>';
+    wp_enqueue_script( 'rcl-primary-scripts', RCL_URL.'js/recall.js', array('jquery') );
+    wp_enqueue_style( 'rcl-regform-style', RCL_URL.'css/regform.css' );
 }
 
 function rcl_frontend_scripts(){
