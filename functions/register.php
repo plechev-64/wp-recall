@@ -65,23 +65,7 @@ function rcl_confirm_user_registration(){
             $action = rcl_get_time_user_action($user->ID);
             
             if(!$action)
-                $wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => $time_action ) );
-
-            /*$creds = array();
-            $creds['user_login'] = $confirmdata[0];
-            $creds['user_password'] = $confirmdata[1];
-            $creds['remember'] = true;
-            $sign = wp_signon( $creds, false );
-
-            /*if ( !is_wp_error($sign) ){
-                rcl_update_timeaction_user();
-                do_action('rcl_confirm_registration',$user->ID);
-                wp_redirect(rcl_get_authorize_url($user->ID) ); exit;
-            }*/
-            
-            /*$errors = new WP_Error();
-            $errors->add('checkemail', __('Ваш E-mail успешно подтвержден.'), 'message');
-            return $errors;*/
+                $wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => '0000-00-00 00:00:00' ) );
             
             if($rcl_options['login_form_recall']==2){
                 wp_safe_redirect( 'wp-login.php?success=checkemail' );
