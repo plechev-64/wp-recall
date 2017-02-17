@@ -4,7 +4,7 @@ jQuery(function($){
         var id = jQuery(this).parents('.rcl-form-add-user-count').attr('id');
         rcl_preloader_show('#'+id+' .rcl-form-input');
         var dataform   = jQuery('#'+id+' form').serialize();
-        var dataString = 'action=rcl_add_count_user&id_form='+id+'&'+dataform;
+        var dataString = 'action=rcl_add_count_user&'+dataform;
         dataString += '&ajax_nonce='+Rcl.nonce;
         jQuery.ajax({
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,

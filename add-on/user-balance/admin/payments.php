@@ -70,7 +70,7 @@ class Rcl_Payments_List_Table extends WP_List_Table {
             case 'payment_id':
                 return $item[ 'payment_id' ];
             case 'payment_sum':
-                return $item[ 'pay_amount' ];
+                return $item[ 'pay_amount' ] .' ' . rcl_get_primary_currency(2);
             case 'payment_date':
                 return $item[ 'time_action' ];
             case 'pay_system':

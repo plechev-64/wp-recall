@@ -138,32 +138,38 @@ function rcl_add_count_user(){
 
     rcl_verify_ajax_nonce();
     
-    if(!$_POST['count']){
-        $log['error'] = __('Enter the amount to top up','wp-recall');
+    if(!intval($_POST['pay_summ'])){
+        $log['error'] = __('Enter the amount','wp-recall');
         echo json_encode($log);
         exit;
     }
 
     if($user_ID){
 
-        $amount = intval($_POST['count']);
+        $pay_summ = intval($_POST['pay_summ']);
+        $pay_type = (isset($_POST['pay_type']))? $_POST['pay_type']: 1;
+        $description = (isset($_POST['description']))? $_POST['description']: '';
+        $merchant_icon = (isset($_POST['merchant_icon']))? $_POST['merchant_icon']: 1;
+        $submit_value = (isset($_POST['submit_value']))? $_POST['submit_value']: __('Make payment','wp-recall');
         
         $args = array(
-            'description'=>__("Top up personal account from",'wp-recall').' '.get_the_author_meta('user_email',$user_ID),
-            'id_form'=>$_POST['id_form'],
+            'pay_summ' => $pay_summ,
+            'pay_type' => $pay_type,
+            'description' => $description,
+            'merchant_icon'=> $merchant_icon,
+            'submit_value'=> $submit_value,
             'pay_systems_not_in'=> array('user_balance'),
-            'merchant_icon'=> 1,
-            'submit_value'=> __('Make payment','wp-recall'),
-            'pay_summ'=>$amount,
-            'pay_type'=>1
         );
 
         $log['redirectform'] = rcl_get_pay_form($args);
         $log['otvet']=100;
 
     } else {
+        
         $log['error'] = __('Error','wp-recall');
+        
     }
+    
     echo json_encode($log);
     exit;
 }

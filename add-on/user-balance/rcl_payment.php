@@ -202,8 +202,6 @@ class Rcl_Payment{
         if(!$data->pay_status) exit;
         
         $baggage_data = ($data->baggage_data)? json_decode(base64_decode($data->baggage_data)): false;
-        
-        $data->baggage_data = (array)$baggage_data;
 
         do_action('rcl_success_pay_system',$data);
         
@@ -221,6 +219,8 @@ class Rcl_Payment{
         $content = '<div class="'.implode(' ',$this->box_class).'" '.$box_id.' style="max-width:'.$this->box_width.'px">';
         
         foreach($this->pay_systems as $type){
+            
+            $this->current_connect = $type;
             
             if($type == 'user_balance'){
                 
@@ -277,7 +277,7 @@ class Rcl_Payment{
         
         $class_icon = ($background)? 'exist-merchant-icon': '';
         
-        $form = '<div class="rcl-pay-form">';
+        $form = '<div class="rcl-pay-form '.$data->current_connect.'-pay-form">';
 
         $form .= "<div class='rcl-pay-button'>";
         
