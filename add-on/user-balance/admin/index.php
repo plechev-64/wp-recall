@@ -1,6 +1,6 @@
 <?php
 
-require_once 'payments.php';
+require_once 'class-rcl-payments-history.php';
 require_once 'settings.php';
 
 add_action('admin_head','rcl_admin_user_account_scripts');
@@ -74,3 +74,57 @@ function rcl_edit_balance_user(){
     echo json_encode($log);
     exit;
 }
+
+add_action('admin_menu', 'rcl_statistic_user_pay_page',25);
+function rcl_statistic_user_pay_page(){
+    $prim = 'manage-rmag';
+    if(!function_exists('wpmagazin_options_panel')){
+            $prim = 'manage-wpm-options';
+            add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', $prim, 'rmag_global_options');
+            add_submenu_page( $prim, __('Payment systems','wp-recall'), __('Payment systems','wp-recall'), 'manage_options', $prim, 'rmag_global_options');
+    }
+
+    $hook = add_submenu_page( $prim, __('Payments','wp-recall'), __('Payments','wp-recall'), 'manage_options', 'manage-wpm-cashe', 'rcl_admin_statistic_cashe');
+    add_action( "load-$hook", 'rcl_payments_page_options' );
+}
+
+function rcl_payments_page_options() {
+    global $Rcl_Payments_History;
+    $option = 'per_page';
+    $args = array(
+        'label' => __( 'Payments', 'wp-recall' ),
+        'default' => 50,
+        'option' => 'rcl_payments_per_page'
+    );
+    add_screen_option( $option, $args );
+    $Rcl_Payments_History = new Rcl_Payments_History();
+}
+
+function rcl_admin_statistic_cashe(){
+  global $Rcl_Payments_History;
+  
+  $Rcl_Payments_History->prepare_items();
+  $sr = ($Rcl_Payments_History->sum)? floor($Rcl_Payments_History->sum/$Rcl_Payments_History->total_items): 0;
+  
+  echo '</pre><div class="wrap"><h2>'.__('Payment history','wp-recall').'</h2>';
+
+  echo '<p>'.__('All payments','wp-recall').': '.$Rcl_Payments_History->total_items.' '.__('for the amount of','wp-recall').' '.$Rcl_Payments_History->sum.' '.rcl_get_primary_currency(1).' ('.__('Average check','wp-recall').': '.$sr.' '.rcl_get_primary_currency(1).')</p>';
+  echo '<p>'.__('Total in the system','wp-recall').': '.$Rcl_Payments_History->sum_balance.' '.rcl_get_primary_currency(1).'</p>';
+  //echo '<p>Средняя выручка за сутки: '.$day_pay.' '.rcl_get_primary_currency(1).'</p>';
+  echo rcl_get_chart_payments($Rcl_Payments_History->items);
+   ?>
+    <form method="get"> 
+    <input type="hidden" name="page" value="manage-wpm-cashe">    
+    <?php
+    $Rcl_Payments_History->months_dropdown('rcl_payments'); 
+    submit_button( __( 'Filter', 'wp-recall' ), 'button', '', false, array('id' => 'search-submit') ); ?>
+    </form>
+    <form method="post">
+    <input type="hidden" name="page" value="manage-wpm-cashe">    
+    <?php
+    $Rcl_Payments_History->search_box( __( 'Search', 'wp-recall' ), 'search_id' );
+    
+    $Rcl_Payments_History->display(); ?>
+  </form>
+</div>
+<?php }

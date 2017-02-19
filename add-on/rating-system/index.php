@@ -2,6 +2,9 @@
 require_once 'core.php';
 require_once 'addon-options.php';
 
+if (is_admin())
+    require_once 'admin/index.php';
+
 if (!is_admin()):
     add_action('rcl_enqueue_scripts','rcl_rating_scripts',10);
 endif;
@@ -9,15 +12,6 @@ endif;
 function rcl_rating_scripts(){
     rcl_enqueue_style('rcl-rating-system',rcl_addon_url('style.css', __FILE__));
     rcl_enqueue_script( 'rcl-rating-system', rcl_addon_url('js/scripts.js', __FILE__) );
-}
-
-if (is_admin()):
-    add_action('admin_head','rcl_add_admin_rating_scripts');
-endif;
-
-function rcl_add_admin_rating_scripts(){
-    wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'rcl_admin_rating_scripts', plugins_url('js/admin.js', __FILE__) );
 }
 
 if(!is_admin()) add_action('init','rcl_register_rating_base_type',30);
@@ -46,37 +40,6 @@ function rcl_register_rating_base_type(){
         )
     );
     
-}
-
-add_filter('rcl_post_options','rcl_get_post_rating_options',10,2);
-function rcl_get_post_rating_options($options,$post){
-    $mark_v = get_post_meta($post->ID, 'rayting-none', 1);
-    $options .= '<p>'.__('Disable rating for publication','wp-recall').':
-        <label><input type="radio" name="wprecall[rayting-none]" value="" '.checked( $mark_v, '',false ).' />'.__('No','wp-recall').'</label>
-        <label><input type="radio" name="wprecall[rayting-none]" value="1" '.checked( $mark_v, '1',false ).' />'.__('Yes','wp-recall').'</label>
-    </p>';
-    return $options;
-}
-
-function rcl_get_rating_admin_column( $columns ){
-	return array_merge( $columns,array( 'user_rating_admin' => __('Rating','wp-recall') ));
-}
-add_filter( 'manage_users_columns', 'rcl_get_rating_admin_column' );
-
-function rcl_get_rating_column_content( $custom_column, $column_name, $user_id ){
-	  switch( $column_name ){
-		case 'user_rating_admin':
-			$custom_column = '<input type="text" class="raytinguser-'.$user_id.'" size="4" value="'.rcl_get_user_rating($user_id).'">
-			<input type="button" class="recall-button edit_rayting" id="user-'.$user_id.'" value="'.__('OK','wp-recall').'">';
-		break;
-	  }
-	  return $custom_column;
-}
-add_filter( 'manage_users_custom_column', 'rcl_get_rating_column_content', 10, 3 );
-
-//if(function_exists('rcl_block')) rcl_block('sidebar','rcl_get_content_rating',array('id'=>'rt-block','order'=>2));
-function rcl_get_content_rating($master_id){
-    return rcl_rating_block(array('value'=>rcl_get_user_rating($master_id)));
 }
 
 add_action('init','rcl_add_rating_tab');
@@ -132,16 +95,155 @@ function rcl_rating_tab_add_types_data($tabs){
     return $tabs;
 }
 
+add_action( 'wp', 'rcl_add_data_rating_posts');
+function rcl_add_data_rating_posts(){
+    global $wp_query,$wpdb;
+
+    if(!is_admin()&&$wp_query->is_tax){
+
+        $users = array();
+        $posts = array();
+        $posttypes = array();
+        $ratingsnone = array();
+
+        foreach($wp_query->posts as $post){
+            $users[$post->post_author] = $post->post_author;
+            $posttypes[$post->post_type] = $post->post_type;
+            $posts[] = $post->ID;
+        }
+
+        if($posts){
+            
+            $ratingsnone = $wpdb->get_results("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='rayting-none' AND post_id IN (".implode(',',$posts).")");
+
+            foreach($ratingsnone as $val){
+                $none[$val->post_id] = $val->meta_value;
+            }
+            
+        }
+
+        $rating_authors = rcl_get_rating_users(array(
+            'include_user_id' => $users
+        ));
+        
+        $rating_comments = rcl_get_rating_totals(array(
+            'rating_type' => $posttypes,
+            'include_object_id' => $posts,
+            'fields' => array(
+                'rating_total',
+                'object_id'
+            )
+        ));
+
+        if($rating_authors){
+            foreach($rating_authors as $rating){
+                $rt_authors[$rating->user_id] = $rating->rating_total;
+            }
+        }
+        
+        if($rating_posts){
+            foreach($rating_posts as $rating){
+                $rt_posts[$rating->object_id] = $rating->rating_total;
+            }
+        }
+
+        foreach($wp_query->posts as $post){
+            $post->rating_author = (isset($rt_authors[$post->post_author]))? $rt_authors[$post->post_author]: 0;
+            $post->rating_total = (isset($rt_posts[$post->ID]))? $rt_posts[$post->ID]: 0;
+            $post->rating_none = (isset($none[$post->ID]))? $none[$post->ID]: 0;
+        }
+
+    }
+}
+
+add_filter('comments_array','rcl_add_data_rating_comments');
+function rcl_add_data_rating_comments($comments){
+
+    if(!$comments) return $comments;
+
+    $users = array();
+    $comms = array();
+
+    foreach($comments as $comment){
+        $users[$comment->user_id] = $comment->user_id;
+        $comms[] = $comment->comment_ID;
+    }
+
+    $rating_authors = rcl_get_rating_users(array(
+        'include_user_id' => $users
+    ));
+
+    $rating_comments = rcl_get_rating_totals(array(
+        'rating_type' => 'comment',
+        'include_object_id' => $comms,
+        'fields' => array(
+            'rating_total',
+            'object_id'
+        )
+    ));
+
+    $rating_values = rcl_get_rating_values(array(
+        'rating_type' => 'comment',
+        'include_object_id' => $comms,
+        'fields' => array(
+            'rating_value',
+            'object_id'
+        )
+    ));
+    
+    if($rating_authors){
+        foreach($rating_authors as $rating){
+            $rt_authors[$rating->user_id] = $rating->rating_total;
+        }
+    }
+
+    if($rating_comments){
+        foreach($rating_comments as $rating){
+            $rt_comments[$rating->object_id] = $rating->rating_total;
+        }
+    }
+
+    if($rating_values){
+        foreach($rating_values as $rating){
+            
+            if(!isset($rt_values[$rating->object_id])) 
+                $rt_values[$rating->object_id] = 0;
+            
+            if($rating->rating_value>0){
+                $rt_values[$rating->object_id] += 1;
+            }else{
+                $rt_values[$rating->object_id] -= 1;
+            }
+            
+        }
+    }
+
+    foreach($comments as $comment){
+        $comment->rating_author = (isset($rt_authors[$comment->user_id]))? $rt_authors[$comment->user_id]: 0;
+        $comment->rating_total = (isset($rt_comments[$comment->comment_ID]))? $rt_comments[$comment->comment_ID]: 0;
+        $comment->rating_votes = (isset($rt_values[$comment->comment_ID]))? $rt_values[$comment->comment_ID]: 0;
+    }
+    
+    
+    return $comments;
+}
+
 function rcl_rating_get_list_votes_content($args){
     global $user_LK;
     
     $args['object_author'] = $user_LK;
     
-    $amount = rcl_count_votes($user_LK,$args['rating_type']);
+    $amount = rcl_count_rating_values(array(
+        'object_author' => $user_LK,
+        'rating_type' => $args['rating_type']
+    ));
     
     $pagenavi = new Rcl_PageNavi('rcl-rating',$amount,array('in_page'=>50));
     
-    $votes = rcl_get_rating_votes($args,array($pagenavi->offset,50));
+    $args['in_page'] = 50;
+    $args['offset'] = $pagenavi->offset;
+    
+    $votes = rcl_get_rating_values($args);
     
     $content = $pagenavi->pagenavi();
     
@@ -163,26 +265,23 @@ function rcl_rating_class($value){
 }
 
 function rcl_format_value($value){
-	if(!$value) $value = 0;
+    
+    if(!$value) $value = 0;
 
-	$cnt = strlen(round($value));
-	if($cnt>4){
-		$th = $cnt-3;
-		$value = substr($value, 0, $th).'k';//1452365 - 1452k
-	}else{
-		$val = explode('.',$value);
-		$fl = (isset($val[1])&&$val[1])? strlen($val[1]): 0;
-		$fl = ($fl>2)?2:$fl;
-		$value = number_format($value, $fl, ',', ' ');
+    $cnt = strlen(round($value));
+    if($cnt>4){
+        $th = $cnt-3;
+        $value = substr($value, 0, $th).'k';//1452365 - 1452k
+    }else{
+        $val = explode('.',$value);
+        $fl = (isset($val[1])&&$val[1])? strlen($val[1]): 0;
+        $fl = ($fl>2)?2:$fl;
+        $value = number_format($value, $fl, ',', ' ');
 
-	}
-	/*if($value>0){
-        return "+".$value;
-    }elseif($value<0){
-        return $value;
-    }else{*/
+    }
+
     return $value;
-    //}
+
 }
 
 function rcl_format_rating($value){
@@ -299,7 +398,7 @@ function rcl_get_buttons_rating($args){
 
     $args['user_id'] = $user_ID;
 
-    $rating_value = rcl_get_vote_value($args);
+    $rating_value = rcl_get_rating_value($user_ID,$args['object_id'],$args['rating_type']);
 
     if($rating_value&&!$rcl_options['rating_delete_voice']) return false;
 
@@ -374,39 +473,6 @@ function rcl_decode_data_rating($data){
     return $args;
 }
 
-function rcl_edit_rating_user(){
-	global $wpdb,$user_ID;
-        
-	$user_id = intval($_POST['user']);
-	$new_rating = floatval($_POST['rayting']);
-
-	if(isset($new_rating)){
-
-		$rating = rcl_get_user_rating($user_id);
-
-		$val = $new_rating - $rating;
-
-		$args = array(
-			'user_id' => $user_ID,
-			'object_id' => $user_id,
-			'object_author' => $user_id,
-			'rating_value' => $val,
-			'rating_type' => 'edit-admin'
-		);
-
-		rcl_insert_rating($args);
-
-		$log['otvet']=100;
-
-	}else {
-		$log['otvet']=1;
-	}
-	echo json_encode($log);
-    exit;
-}
-if(is_admin()) add_action('wp_ajax_rcl_edit_rating_user', 'rcl_edit_rating_user');
-
-
 add_action('wp_ajax_rcl_view_rating_votes', 'rcl_view_rating_votes');
 add_action('wp_ajax_nopriv_rcl_view_rating_votes', 'rcl_view_rating_votes');
 function rcl_view_rating_votes(){
@@ -446,11 +512,23 @@ function rcl_view_rating_votes(){
 }
 
 function rcl_rating_window_content($string){
+    
     $navi = false;
+    
     $args = rcl_decode_data_rating($string);
-    if($args['rating_status']=='user') $navi = rcl_rating_navi($args);
-    $votes = rcl_get_rating_votes($args,array(0,100));
+
+    if($args['rating_status']=='user') 
+        $navi = rcl_rating_navi($args);
+    
+    $args['in_page'] = 100;
+    $args['offset'] = 0;
+    
+    unset($args['user_id']);
+    
+    $votes = rcl_get_rating_values($args);
+
     $content = rcl_get_votes_window($args,$votes,$navi);
+    
     return $content;
 }
 
@@ -502,7 +580,7 @@ function rcl_edit_rating_post(){
         }
     }
 
-    $value = rcl_get_vote_value($args);
+    $value = rcl_get_rating_value($args['user_id'],$args['object_id'],$args['rating_type']);
 
     if($value){
 
@@ -517,8 +595,12 @@ function rcl_edit_rating_post(){
         }
 
     }else{
-
-        $args['rating_value'] = rcl_get_rating_value($args['rating_type']);
+        
+        global $rcl_rating_types;
+        
+        $type = $args['rating_type'];
+        
+        $args['rating_value'] = (isset($rcl_rating_types[$type]['type_point']))? $rcl_rating_types[$type]['type_point']: 1;
 
         $rating = rcl_insert_rating($args);
 

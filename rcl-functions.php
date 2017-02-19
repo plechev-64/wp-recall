@@ -642,28 +642,43 @@ function rcl_init_avatar_sizes(){
 //Функция вывода своего аватара
 add_filter('get_avatar','rcl_avatar_replacement', 20, 5);
 function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
-
+    global $rcl_user;
+    
     $user_id = 0;
-
-    if (is_numeric($id_or_email)){
-        $user_id = $id_or_email;
-    }elseif( is_object($id_or_email)){
-        $user_id = $id_or_email->user_id;
-    }elseif(is_email($id_or_email)){
-        if ( $user = get_user_by('email', $id_or_email) ) $user_id = $user->ID;
+    $avatar_data = false;
+    
+    if($rcl_user && $rcl_user->ID == $id_or_email){
+        
+        $user_id = $rcl_user->ID;
+        
+        if(isset($rcl_user->avatar_data) && $rcl_user->avatar_data){
+            $avatar_data = $rcl_user->avatar_data;
+        }
+        
+    }else{
+        
+        if (is_numeric($id_or_email)){
+            $user_id = $id_or_email;
+        }elseif( is_object($id_or_email)){
+            $user_id = $id_or_email->user_id;
+        }elseif(is_email($id_or_email)){
+            if ( $user = get_user_by('email', $id_or_email) ) $user_id = $user->ID;
+        }
+        
     }
 
     if($user_id){
 
-        $avatar_data = get_user_meta($user_id,'rcl_avatar',1);
+        if(!$avatar_data)
+            $avatar_data = get_user_meta($user_id,'rcl_avatar',1);
 
         if($avatar_data){
 
             if(is_numeric($avatar_data)){
-                    $image_attributes = wp_get_attachment_image_src($avatar_data);
-                    if($image_attributes) $url = $image_attributes[0];
+                $image_attributes = wp_get_attachment_image_src($avatar_data);
+                if($image_attributes) $url = $image_attributes[0];
             }else if(is_string($avatar_data)){
-                    $url = rcl_get_url_avatar($avatar_data,$user_id,$size);
+                $url = rcl_get_url_avatar($avatar_data,$user_id,$size);
             }
 
             if($url&&file_exists(rcl_path_by_url($url))){
@@ -671,6 +686,7 @@ function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
             }
 
         }
+        
     }
 
     if ( !empty($id_or_email->user_id)) $avatar = '<a height="'.$size.'" width="'.$size.'" href="'.get_author_posts_url($id_or_email->user_id).'">'.$avatar.'</a>';

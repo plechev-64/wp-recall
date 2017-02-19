@@ -1,139 +1,6 @@
 <?php
 
-function rcl_count_votes_time($args,$second){
-    global $wpdb;
-
-    $cachekey = json_encode(array('rcl_count_votes_time',$args,$second));
-    $cache = wp_cache_get( $cachekey );
-    if ( $cache )
-        return $cache;
-
-    $now = current_time('mysql');
-    $mark = ($args['rating_status']=='plus')? ">": "<";
-    $result = $wpdb->get_var(
-            $wpdb->prepare("
-                    SELECT COUNT(ID) FROM ".RCL_PREF."rating_values
-                    WHERE user_id='%d' AND object_author='%d' AND rating_type='%s' AND rating_value $mark 0 AND rating_date >= DATE_SUB('%s', INTERVAL %d SECOND)",
-                    $args['user_id'],$args['object_author'],$args['rating_type'],$now,$second)
-    );
-
-    wp_cache_add( $cachekey, $result );
-
-    return $result;
-}
-
-function rcl_count_votes($user_id,$rating_type){
-    global $wpdb;
-    
-    $amount = $wpdb->get_var(
-            $wpdb->prepare("
-                    SELECT COUNT(ID) FROM ".RCL_PREF."rating_values
-                    WHERE object_author='%d' AND rating_type='%s'",
-                    $user_id,$rating_type)
-    );
-    
-    return $amount;
-}
-
-function rcl_get_rating_by_id($rating_id){
-    global $wpdb;
-
-    $cachekey = json_encode(array('rcl_get_rating_by_id',$rating_id));
-    $cache = wp_cache_get( $cachekey );
-    if ( $cache )
-        return $cache;
-
-    $result = $wpdb->get_row("SELECT * FROM ".RCL_PREF."rating_values WHERE ID='$rating_id'");
-
-    wp_cache_add( $cachekey, $result );
-
-    return $result;
-}
-
-function rcl_get_ratings($args){
-    global $wpdb;
-
-    /*$args = array(
-            'rating_type'=>array(),
-            'object_id'=>array(),
-            'object_author'=>array()
-    );*/
-
-    $cachekey = json_encode(array('rcl_get_ratings',$args));
-    $cache = wp_cache_get( $cachekey );
-    if ( $cache )
-        return $cache;
-
-    $fields = "*";
-    $object_id = 'object_id';
-    $query = '';
-
-    if(isset($args['fields'])){
-            $fields = implode(',',$args['fields']);
-    }
-
-    $table = RCL_PREF."rating_totals";
-
-    $where = array();
-
-    if(isset($args['data_type'])&&$args['data_type']=='values'||isset($args['days'])){
-            $table = RCL_PREF."rating_values";
-    }
-
-    if(isset($args['rating_type'])){
-            if($args['rating_type']=='users'){
-                    $object_id = 'user_id';
-                    $table = RCL_PREF."rating_users";
-            }else{
-                    $where[] = "rating_type IN ('".implode("','",$args['rating_type'])."')";
-            }
-    }
-    if(isset($args['object_id'])&&$args['object_id']){
-            $where[] = "$object_id IN (".implode(",",$args['object_id']).")";
-    }
-    if(isset($args['object_author'])){
-            $where[] = "object_author IN (".implode(",",$args['object_author']).")";
-    }
-
-    if(isset($args['days'])){
-            $where[] = "rating_date > '".current_time('mysql')."' - INTERVAL ".$args['days']." DAY";
-    }
-
-    if($where) $query = "WHERE ".implode(' AND ',$where);
-
-    if(isset($args['order'])){
-
-            $query .= " ORDER BY";
-
-            if($args['order']=='rating_total') $query .= " CAST(".$args['order']." AS DECIMAL) ";
-            else $query .= " ".$args['order']." ";
-
-            if(isset($args['order_by'])){
-                    $query .= $args['order_by'];
-            }else{
-                    $query .= "DESC";
-            }
-    }
-
-    if(isset($args['group_by'])&&$args['group_by']){
-            $query .= " GROUP BY ".$args['group_by'];
-    }
-
-    if(isset($args['limit'])&&$args['limit']){
-            $query .= " LIMIT ".implode(',',$args['limit']);
-    }
-
-    if(!$query) return false;
-
-    $query = "SELECT $fields FROM $table $query";
-    //echo $query;
-    $result = $wpdb->get_results($query);
-
-    wp_cache_add( $cachekey, $result );
-
-    return $result;
-}
-
+//регистрация типа рейтинга
 function rcl_register_rating_type($args){
     global $rcl_rating_types,$rcl_options;
 
@@ -151,10 +18,95 @@ function rcl_register_rating_type($args){
     $rcl_rating_types[$type] = $args;
 }
 
-function rcl_get_rating_value($type){
-    global $rcl_rating_types;
-    $value = (isset($rcl_rating_types[$type]['type_point']))? $rcl_rating_types[$type]['type_point']: 1;
-    return $value;
+//получение данных полного рейтинга пользователей
+function rcl_get_rating_users($args = false){
+    require_once 'class-rcl-rating-users.php';
+    $users = new Rcl_Rating_Users();
+    return $users->get_results($args);
+}
+
+//получение данных полного рейтинга произвольных сущностей
+function rcl_get_rating_totals($args = false){
+    require_once 'class-rcl-rating-totals.php';
+    $totals = new Rcl_Rating_Totals();
+    return $totals->get_results($args);
+}
+
+//подсчет количества значений
+function rcl_count_rating_values($args = false){
+    require_once 'class-rcl-rating-values.php';
+    $rating = new Rcl_Rating_Values();
+    $rating->set_query($args);
+    return $rating->count();
+}
+
+function rcl_get_rating_values($args = false){
+    require_once 'class-rcl-rating-values.php';
+    $rating = new Rcl_Rating_Values();
+    return $rating->get_results($args);
+}
+
+function rcl_get_rating_value($user_id,$object_id,$rating_type){
+
+    require_once 'class-rcl-rating-values.php';
+    
+    $rating = new Rcl_Rating_Values();
+
+    return $rating->get_var(array(
+        'object_id' => $object_id,
+        'user_id' => $user_id,
+        'rating_type' => $rating_type,
+        'fields' => array('rating_value')
+    ));
+
+}
+
+function rcl_count_votes_time($args,$second){
+
+    $cachekey = json_encode(array('rcl_count_votes_time',$args,$second));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    require_once 'class-rcl-rating-values.php';
+    
+    $rating = new Rcl_Rating_Values();
+    
+    $rating->set_query(array(
+        'user_id' => $args['user_id'],
+        'object_author' => $args['object_author'],
+        'rating_type' => $args['rating_type']
+    ));
+    
+    $rating->query['where'][] = "rating_value $mark 0";
+    $rating->query['where'][] = "rating_date >= DATE_SUB('$now', INTERVAL $second SECOND)";
+    
+    $result = $rating->count();
+
+    wp_cache_add( $cachekey, $result );
+
+    return $result;
+}
+
+function rcl_get_rating_by_id($rating_id){
+    global $wpdb;
+
+    $cachekey = json_encode(array('rcl_get_rating_by_id',$rating_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    require_once 'class-rcl-rating-values.php';
+    
+    $rating = new Rcl_Rating_Values();
+    
+    $result = $rating->get_row(array(
+        'ID' => $rating_id
+    ));
+
+    wp_cache_add( $cachekey, $result );
+
+    return $result[0];
 }
 
 //добавляем голос пользователя к публикации
@@ -213,33 +165,14 @@ function rcl_insert_user_rating($user_id,$point=0){
     );
 }
 
-//Получаем значение голоса пользователя к публикации
-function rcl_get_vote_value($args){
-    global $wpdb;
-    
-    $cachekey = json_encode(array('rcl_get_vote_value',$args));
-    $cache = wp_cache_get( $cachekey );
-    if ( $cache )
-        return $cache;
-    
-    $result = $wpdb->get_var(
-            $wpdb->prepare(
-                    "SELECT rating_value FROM ".RCL_PREF."rating_values "
-                    . "WHERE object_id = '%d' AND rating_type='%s' AND user_id='%d'",
-                    $args['object_id'],$args['rating_type'],$args['user_id']
-            ));
-    
-    wp_cache_add( $cachekey, $result );
-    
-    return $result;
-}
-
 //Получаем значение рейтинга публикации
 function rcl_get_total_rating($object_id,$rating_type){
     global $wpdb,$rcl_options;
     $total = 0;
 
     if(!isset($rcl_options['rating_overall_'.$rating_type])||!$rcl_options['rating_overall_'.$rating_type]){
+        
+        
         
         $total = rcl_get_rating_sum($object_id,$rating_type);
         
@@ -253,18 +186,20 @@ function rcl_get_total_rating($object_id,$rating_type){
 }
 
 function rcl_get_rating_sum($object_id,$rating_type){
-    global $wpdb;
     
     $cachekey = json_encode(array('rcl_get_rating_sum',$object_id,$rating_type));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
         return $cache;
     
-    $total =  $wpdb->get_var(
-        $wpdb->prepare(
-            "SELECT rating_total FROM ".RCL_PREF."rating_totals "
-            . "WHERE object_id = '%d' AND rating_type='%s'",
-            $object_id,$rating_type
+    require_once 'class-rcl-rating-totals.php';
+    
+    $totals = new Rcl_Rating_Totals();
+    
+    $total = $totals->get_var(array(
+        'object_id' => $object_id,
+        'rating_type' => $rating_type,
+        'fields' => array('rating_total')
     ));
     
     wp_cache_add( $cachekey, $total );
@@ -273,29 +208,20 @@ function rcl_get_rating_sum($object_id,$rating_type){
 }
 
 function rcl_get_votes_sum($object_id,$rating_type){
-    global $wpdb;
     
     $cachekey = json_encode(array('rcl_get_votes_sum',$object_id,$rating_type));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
         return $cache;
     
-    $total = 0;
-    $values =  $wpdb->get_results(
-        $wpdb->prepare(
-            "SELECT rating_value FROM ".RCL_PREF."rating_values "
-            . "WHERE object_id = '%d' AND rating_type='%s'",
-    $object_id,$rating_type));
-
-    if($values){
-        foreach($values as $value){
-            if($value->rating_value>0){
-                $total ++;
-            }else{
-                $total --;
-            }
-        }
-    }
+    require_once 'class-rcl-rating-values.php';
+    
+    $rating = new Rcl_Rating_Values();
+    
+    $total = $rating->get_sum_values(array(
+        'object_id' => $object_id,
+        'rating_type' => $rating_type
+    ));
     
     wp_cache_add( $cachekey, $total );
     
@@ -304,17 +230,18 @@ function rcl_get_votes_sum($object_id,$rating_type){
 
 //Получаем значение рейтинга пользователя
 function rcl_get_user_rating($user_id){
-    $value = rcl_get_user_rating_value($user_id);
-    if(!$value) $value = 0;
-    return $value;
+    return ($value = rcl_get_user_rating_value($user_id))? $value: 0;
 }
 
 function rcl_get_user_rating_value($user_id){
-    global $wpdb;
-    
-    $result = $wpdb->get_var("SELECT rating_total FROM ".RCL_PREF."rating_users WHERE user_id = '$user_id'");
-    
-    return $result;
+
+    require_once 'class-rcl-rating-users.php';
+    $users = new Rcl_Rating_Users();
+    return $users->get_var(array(
+        'user_id' => $user_id,
+        'fields' => array('rating_total')
+    ));
+
 }
 
 function rcl_rating_navi($args){
@@ -322,9 +249,9 @@ function rcl_rating_navi($args){
     $navi = false;
 
     $rcl_rating_types['edit-admin'] = array(
-            'rating_type'=>'edit-admin',
-            'icon'=>'fa-cogs',
-            'type_name'=>__('Correction','wp-recall')
+        'rating_type'=>'edit-admin',
+        'icon'=>'fa-cogs',
+        'type_name'=>__('Correction','wp-recall')
     );
 
     foreach($rcl_rating_types as $type){
@@ -340,53 +267,8 @@ function rcl_rating_navi($args){
     return $navi;
 }
 
-function rcl_get_rating_votes($args,$diap=false){
-    global $wpdb;
-
-    if(!$args) return false;
-    
-    $cachekey = json_encode(array('rcl_get_rating_votes',$args,$diap));
-    $cache = wp_cache_get( $cachekey );
-    if ( $cache )
-        return $cache;
-
-    $cols = array(
-        'object_id',
-        'rating_type',
-        'object_author'
-    );
-
-    $wheres = array();
-
-    foreach($cols as $col){
-        if(isset($args[$col])){
-            $wheres[$col] = $args[$col];
-        }
-    }
-
-    foreach($wheres as $key=>$val){
-        $where[] = $key."='$val'";
-    }
-
-    if(!$where) return false;
-
-    $limit = '';
-
-    if($diap){
-        $limit = " LIMIT ".implode(',',$diap);
-    }
-
-    $query = "SELECT * FROM ".RCL_PREF."rating_values WHERE ".implode(' AND ',$where)." ORDER BY rating_date DESC ".$limit;
-
-    $result = $wpdb->get_results($query);
-    
-    wp_cache_add( $cachekey, $result );
-    
-    return $result;
-}
-
 function rcl_get_votes_window($args,$votes,$navi=false){
-    global $wpdb,$rcl_rating_types;
+    global $rcl_rating_types;
 
     $list_votes = rcl_get_list_votes($args,$votes);
 
@@ -396,9 +278,9 @@ function rcl_get_votes_window($args,$votes,$navi=false){
 
     if($navi) $window .= $navi;
 
-            $window .= '<a href="#" onclick="rcl_close_votes_window(this);return false;" class="close">'
-                . '<i class="fa fa-times-circle"></i>'
-            . '</a>';
+    $window .= '<a href="#" onclick="rcl_close_votes_window(this);return false;" class="close">'
+        . '<i class="fa fa-times-circle"></i>'
+    . '</a>';
 
     $window .= $list_votes;
 
@@ -416,26 +298,49 @@ function rcl_get_usernames($objects,$name_data){
 
     $display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($userslst).")",$userslst));
 
+    if(!$display_names)
+        return false;
+    
     foreach((array)$display_names as $name){
-            $names[$name->ID] = $name->display_name;
+        $names[$name->ID] = $name->display_name;
     }
+    
     return $names;
 }
 
 function rcl_get_list_votes($args,$votes){
-    global $rcl_rating_types,$rcl_options;
+    global $rcl_rating_types,$rcl_options,$wpdb;
 
     $list = '<ul class="votes-list">';
 
     if($votes){
-        $names = rcl_get_usernames($votes,'user_id');
+        
+        $userslst = array();
+        
+        foreach($votes as $vote){ 
+            $userslst[] = $vote->user_id; 
+        }
+
+        $display_names = $wpdb->get_results($wpdb->prepare("SELECT ID,display_name FROM ".$wpdb->prefix."users WHERE ID IN (".rcl_format_in($userslst).")",$userslst));
+
+        if($display_names){
+            $names = array();
+            foreach($display_names as $name){
+                $names[$name->ID] = $name->display_name;
+            }
+        }
+
         foreach($votes as $vote){
 
             if(isset($rcl_options['rating_temp_'.$vote->rating_type])&&$args['rating_status']=='user'){
-                    $row = $rcl_options['rating_temp_'.$vote->rating_type];
+                
+                $row = $rcl_options['rating_temp_'.$vote->rating_type];
+                
             }else{
+                
                 $row = ($vote->rating_date!='0000-00-00 00:00:00')? mysql2date('d.m.Y',$vote->rating_date).' ': '';
                 $row .= '%USER% '.__('has voted','wp-recall').': %VALUE%';
+                
             }
 
             $temps = array(
@@ -443,14 +348,17 @@ function rcl_get_list_votes($args,$votes){
                 '%VALUE%'
             );
             
+            $user_name = (isset($names[$vote->user_id]))? $names[$vote->user_id]: '';
+            
             $reps = array(
-                '<a class="" target="_blank" href="'.get_author_posts_url($vote->user_id).'">'.$names[$vote->user_id].'</a>',
+                '<a class="" target="_blank" href="'.get_author_posts_url($vote->user_id).'">'.$user_name.'</a>',
                 rcl_format_rating($vote->rating_value)
             );
 
             $row = str_replace($temps,$reps,$row);
 
             if($args['rating_status']=='user'){
+                
                 $temps = array(
                     '%DATE%',
                     '%COMMENT%',
@@ -473,8 +381,11 @@ function rcl_get_list_votes($args,$votes){
             $class = ( $vote->rating_value > 0 ) ? 'fa-thumbs-o-up' : 'fa-thumbs-o-down';
             $list .= '<li><i class="fa '.$class.'"></i> '.$row.'</li>';
         }
+        
     }else{
-		$list .= '<li><b>'.$rcl_rating_types[$args['rating_type']]['type_name'].'</b>: '.__('No changes to rating','wp-recall').'</li>';
+        
+        $list .= '<li><b>'.$rcl_rating_types[$args['rating_type']]['type_name'].'</b>: '.__('No changes to rating','wp-recall').'</li>';
+
     }
 
     $list .= '</ul>';
@@ -547,36 +458,38 @@ function rcl_update_user_rating($args){
 function rcl_delete_rating($args){
     global $wpdb;
 
-	if(isset($args['ID'])){
+    if(isset($args['ID'])){
 
-            $data = rcl_get_rating_by_id($args['ID']);
-            
-            $query = $wpdb->prepare(
-                    "DELETE FROM ".RCL_PREF."rating_values WHERE ID = '%d'",
-                    $args['ID']
-            );
-            
-            $args = array(
-                    'object_id'=>$data->object_id,
-                    'object_author'=>$data->object_author,
-                    'rating_type'=>$data->rating_type,
-                    'rating_value'=>$data->rating_value,
-            );
+        $data = rcl_get_rating_values(array(
+            'ID' => $args['ID']
+        ));
 
-	}else{
+        $query = $wpdb->prepare(
+            "DELETE FROM ".RCL_PREF."rating_values WHERE ID = '%d'",
+            $args['ID']
+        );
 
-            $rating = rcl_get_vote_value($args);
+        $args = array(
+            'object_id'=>$data->object_id,
+            'object_author'=>$data->object_author,
+            'rating_type'=>$data->rating_type,
+            'rating_value'=>$data->rating_value,
+        );
 
-            if(!isset($rating)) return false;
+    }else{
 
-            $args['rating_value'] = (isset($args['rating_value']))? $args['rating_value']: $rating;
+        $rating = rcl_get_rating_value($args['user_id'],$args['object_id'],$args['rating_type']);
 
-            $query = $wpdb->prepare(
-                    "DELETE FROM ".RCL_PREF."rating_values WHERE object_id = '%d' AND rating_type='%s' AND user_id='%s'",
-                    $args['object_id'],$args['rating_type'],$args['user_id']
-            );
+        if(!isset($rating)) return false;
 
-	}
+        $args['rating_value'] = (isset($args['rating_value']))? $args['rating_value']: $rating;
+
+        $query = $wpdb->prepare(
+            "DELETE FROM ".RCL_PREF."rating_values WHERE object_id = '%d' AND rating_type='%s' AND user_id='%s'",
+            $args['object_id'],$args['rating_type'],$args['user_id']
+        );
+
+    }
 
     $res = $wpdb->query($query);
 
@@ -593,16 +506,16 @@ function rcl_delete_rating_with_post($args){
     $args['rating_value'] = rcl_get_rating_sum($args['object_id'],$args['rating_type']);
 
     $wpdb->query(
-            $wpdb->prepare(
-                    "DELETE FROM ".RCL_PREF."rating_values "
-                    . "WHERE object_id = '%d' AND rating_type='%s'",
-                    $args['object_id'],$args['rating_type']));
+        $wpdb->prepare(
+            "DELETE FROM ".RCL_PREF."rating_values "
+            . "WHERE object_id = '%d' AND rating_type='%s'",
+            $args['object_id'],$args['rating_type']));
 
     $wpdb->query(
-            $wpdb->prepare(
-                    "DELETE FROM ".RCL_PREF."rating_totals "
-                    . "WHERE object_id = '%d' AND rating_type='%s'",
-                    $args['object_id'],$args['rating_type']));
+        $wpdb->prepare(
+            "DELETE FROM ".RCL_PREF."rating_totals "
+            . "WHERE object_id = '%d' AND rating_type='%s'",
+            $args['object_id'],$args['rating_type']));
 
     $args['rating_value'] = -1 * $args['rating_value'];
 
@@ -622,109 +535,16 @@ function rcl_delete_rating_comment($comment_id){
     rcl_delete_rating_with_post(array('object_id'=>$comment_id,'object_author'=>$comment->user_id,'rating_type'=>'comment'));
 }
 
-add_filter('comments_array','rcl_add_data_rating_comments');
-function rcl_add_data_rating_comments($comments){
-
-	if(!$comments) return $comments;
-
-	$users = array();
-	$comms = array();
-
-	foreach($comments as $comment){
-		$users[$comment->user_id] = $comment->user_id;
-		$comms[] = $comment->comment_ID;
-	}
-
-	$rating_authors = rcl_get_ratings(array('rating_type'=>'users','object_id'=>$users));
-	$rating_comments = rcl_get_ratings(array('rating_type'=>array('comment'),'object_id'=>$comms));
-	$rating_values = rcl_get_ratings(array('rating_type'=>array('comment'),'object_id'=>$comms,'data_type'=>'values'));
-
-	if($rating_authors){
-		foreach($rating_authors as $rating){
-			$rt_authors[$rating->user_id] = $rating->rating_total;
-		}
-	}
-	if($rating_comments){
-		foreach($rating_comments as $rating){
-			$rt_comments[$rating->object_id] = $rating->rating_total;
-		}
-	}
-	if($rating_values){
-		foreach($rating_values as $rating){
-			if(!isset($rt_values[$rating->object_id])) $rt_values[$rating->object_id] = 0;
-			if($rating->rating_value>0){
-				$rt_values[$rating->object_id] += 1;
-			}else{
-				$rt_values[$rating->object_id] -= 1;
-			}
-		}
-	}
-
-	foreach($comments as $comment){
-		$comment->rating_author = (isset($rt_authors[$comment->user_id]))? $rt_authors[$comment->user_id]: 0;
-		$comment->rating_total = (isset($rt_comments[$comment->comment_ID]))? $rt_comments[$comment->comment_ID]: 0;
-		$comment->rating_votes = (isset($rt_values[$comment->comment_ID]))? $rt_values[$comment->comment_ID]: 0;
-	}
-
-	return $comments;
-}
-
-add_action( 'wp', 'rcl_add_data_rating_posts');
-function rcl_add_data_rating_posts(){
-	global $wp_query,$wpdb;
-
-	if(!is_admin()&&$wp_query->is_tax){
-
-		$users = array();
-		$posts = array();
-		$posttypes = array();
-		$ratingsnone = array();
-
-		foreach($wp_query->posts as $post){
-			$users[$post->post_author] = $post->post_author;
-			$posttypes[$post->post_type] = $post->post_type;
-			$posts[] = $post->ID;
-		}
-
-		if($posts){
-			$ratingsnone = $wpdb->get_results("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='rayting-none' AND post_id IN (".implode(',',$posts).")");
-
-			foreach($ratingsnone as $val){
-				$none[$val->post_id] = $val->meta_value;
-			}
-		}
-
-		$rating_authors = rcl_get_ratings(array('rating_type'=>'users','object_id'=>$users));
-		$rating_posts = rcl_get_ratings(array('rating_type'=>$posttypes,'object_id'=>$posts));
-
-		if($rating_authors){
-			foreach($rating_authors as $rating){
-				$rt_authors[$rating->user_id] = $rating->rating_total;
-			}
-		}
-		if($rating_posts){
-			foreach($rating_posts as $rating){
-				$rt_posts[$rating->object_id] = $rating->rating_total;
-			}
-		}
-
-		foreach($wp_query->posts as $post){
-			$post->rating_author = (isset($rt_authors[$post->post_author]))? $rt_authors[$post->post_author]: 0;
-			$post->rating_total = (isset($rt_posts[$post->ID]))? $rt_posts[$post->ID]: 0;
-                        $post->rating_none = (isset($none[$post->ID]))? $none[$post->ID]: 0;
-		}
-
-	}
-}
-
 //Удаляем из БД всю информацию об активности пользователя на сайте
 //Корректируем рейтинг других пользователей
 function rcl_delete_ratingdata_user($user_id){
     global  $wpdb;
 
     $datas = array();
-
-    $r_posts = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".RCL_PREF."rating_values WHERE user_id = '%d'",$user_id));
+    
+    $r_posts = rcl_get_rating_values(array(
+        'user_id' => $user_id
+    ));
 
     if($r_posts){
         foreach($r_posts as $r_post){
@@ -760,19 +580,74 @@ add_shortcode('ratinglist','rcl_rating_shortcode');
 function rcl_rating_shortcode($atts){
     global $rating;
     
-    require_once 'class-rcl-rayting.php';
+    /*$atts
+    array(
+        'ID',
+        'object_id',
+        'object_author',
+        'rating_total',
+        'rating_type',
+     * 
+     * 'include_ID',
+     * 'include_object_id',
+     * 'include_object_author',
+     * 'include_rating_type'
+     * 
+     * 'exclude_ID',
+     * 'exclude_object_id',
+     * 'exclude_object_author',
+     * 'exclude_rating_type'
+     * 
+     * 'offset',
+     * 'number',
+     * 'orderby',
+     * 'order'
+     * 
+     * 'fields' => array(
+     *      'ID',
+            'object_id',
+            'object_author',
+            'rating_total',
+            'rating_type',
+     * )
+     * )
+    */
+    
+    require_once 'class-rcl-rating-totals.php';
 
-    $rcl_rating = new Rcl_Rating($atts);
+    $rcl_rating = new Rcl_Rating_Totals();
+    
+    $atts['fields'] = array(
+        'object_id',
+        'object_author',
+        'rating_total',
+        'rating_type'
+    );
+
+    $rcl_rating->set_query($atts);
+    
+    if(isset($atts['days'])){
+
+        $rcl_rating->query['select'][] = "SUM(rating_values.rating_value) AS days_value_sum";
+        $rcl_rating->query['orderby'] = (isset($atts['orderby']))? $rcl_rating->query['orderby']: "days_value_sum";
+        $rcl_rating->query['join'][] = "INNER JOIN ".RCL_PREF."rating_values AS rating_values ON $rcl_rating->table_as.object_id = rating_values.object_id";
+        $rcl_rating->query['where'][] = "rating_values.rating_date > ('".current_time('mysql')."' - INTERVAL ".$atts['days']." DAY)";
+        $rcl_rating->query['where'][] = "$rcl_rating->table_as.rating_type = rating_values.rating_type";
+        $rcl_rating->query['where'][] = "$rcl_rating->table_as.object_author = rating_values.object_author";
+        $rcl_rating->query['groupby'] = "$rcl_rating->table_as.object_id";
+        
+    }
+    
+    $template = (isset($atts['template']))? $atts['template']: 'post';
     
     $count_users = false;
 
-    if(!$rcl_rating->number){
+    if(!isset($atts['number'])){
 
-        $count_values = $rcl_rating->count_values();
-
-        $rclnavi = new Rcl_PageNavi('rcl-rating',$count_values,array('in_page'=>$rcl_rating->per_page));
-        $rcl_rating->offset = $rclnavi->offset;
-        $rcl_rating->per_page = $rclnavi->in_page;
+        $count_values = $rcl_rating->count();
+        $rclnavi = new Rcl_PageNavi('rcl-rating',$count_values,array('in_page'=>$rcl_rating->query['number']));
+        $rcl_rating->query['offset'] = $rclnavi->offset;
+        
     }
     
     $rcl_cache = new Rcl_Cache();
@@ -785,40 +660,36 @@ function rcl_rating_shortcode($atts){
         
         if(!$file->need_update){
 
-            $rcl_rating->remove_data();
-
             return $rcl_cache->get_cache();
 
         }
     }
 
-    $ratings = $rcl_rating->get_values();
+    $ratings = $rcl_rating->get_data();
     
     if(!$ratings){
+        
         $content = '<p align="center">'.__('Data not found','wp-recall').'</p>';
-        $rcl_rating->remove_data();
 
         return $content;
     }
 
-    $content ='<div class="ratinglist rating-'.$rcl_rating->template.'">';
+    $content ='<div class="ratinglist rating-'.$template.'">';
+    
     foreach($ratings as $rating){
         $rating = (object)$rating;
-        $rating->time_sum = ($rating->time_sum>0)? '+'.$rating->time_sum: $rating->time_sum;
-        $content .= rcl_get_include_template('rating-'.$rcl_rating->template.'.php',__FILE__);
+        $rating->days_value_sum = ($rating->days_value_sum>0)? '+'.$rating->days_value_sum: $rating->days_value_sum;
+        $content .= rcl_get_include_template('rating-'.$template.'.php',__FILE__);
     }
 
     $content .='</div>';
     
-    if(isset($rclnavi->in_page)&&$rclnavi->in_page)
+    if(!isset($atts['number']))
         $content .= $rclnavi->pagenavi();
     
     if($rcl_cache->is_cache){
-        //print_r($rcl_cache);
         $rcl_cache->update_cache($content);        
     }
-    
-    $rcl_rating->remove_data();
 
     return $content;
 

@@ -290,7 +290,8 @@ class Rcl_PublicForm {
 
             $formFields = apply_filters('fields_public_form_rcl',$formfields,$formData);
 
-            if(!$formFields['tags']) remove_filter('public_form_rcl','rcl_add_tags_input',10);
+            if(!$formFields['tags']) 
+                remove_filter('public_form_rcl','rcl_add_non_hierarchical_tags_field',100);
 
             $form = '<div class="public_block">';
 

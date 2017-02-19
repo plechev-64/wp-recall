@@ -47,6 +47,8 @@ class Rcl_Users{
         if($this->paged){
             $this->offset = $this->paged*$this->inpage - $this->inpage;
         }
+        
+        //add_filter('rcl_users',array($this,'add_avatar_data'));
 
         if($this->data('description'))
             add_filter('rcl_users',array($this,'add_descriptions'));
@@ -325,7 +327,6 @@ class Rcl_Users{
 
     //добавляем выборку данных активности пользователей в основной запрос
     function add_query_time_action($query){
-        global $wpdb;
 
         if(!$this->is_count){
             $query->query['select'][] = "actions.time_action";
@@ -334,6 +335,27 @@ class Rcl_Users{
 
         $query->query['join'][] = "RIGHT JOIN ".RCL_PREF."user_action AS actions ON users.ID=actions.user";
         return $query;
+    }
+    
+    function add_avatar_data($users){
+        global $wpdb;
+
+        if(!$users) return $users;
+
+        $ids = $this->get_users_ids($users);
+
+        $query = "SELECT meta_value AS avatar_data, user_id AS ID "
+                . "FROM $wpdb->usermeta "
+                . "WHERE meta_key IN ('rcl_avatar','ulogin_photo') AND user_id IN (".implode(',',$ids).") "
+                . "GROUP BY user_id";
+
+        $data = $wpdb->get_results($query);
+
+        if($data)
+            $users = $this->merge_objects($users,$data,'avatar_data');
+
+        return $users;
+        
     }
 
     //добавление данных активности пользователей после основного запроса

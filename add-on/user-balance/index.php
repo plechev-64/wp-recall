@@ -1,6 +1,6 @@
 <?php
 
-require_once "rcl_payment.php";
+require_once "class-rcl-payment.php";
 require_once "shortcodes.php";
 
 if(is_admin()) 
@@ -98,6 +98,13 @@ function rcl_add_user_balance($money,$user_id,$comment=''){
     do_action('rcl_add_user_balance',$money,$user_id,$comment);
     
     return $result;
+}
+
+function rcl_get_payments($args = false){
+    require_once 'class-rcl-payments.php';
+    $payments = new Rcl_Payments();
+    $payments->set_query($args);
+    return $payments->get_data();
 }
 
 function rcl_get_html_usercount(){

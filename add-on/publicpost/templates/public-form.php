@@ -7,11 +7,11 @@
     </div>
 <?php endif; ?>
 
-<?php //if($formFields['termlist']): ?>
+<?php if($formFields['termlist']): ?>
     <div class="rcl-form-field">
-            <?php rcl_publication_termlist(); ?>
+        <?php rcl_publication_termlist(); ?>
     </div>
-<?php //endif; ?>
+<?php endif; ?>
 
 <?php if(isset($formFields['excerpt'])&&$formFields['excerpt']): ?>
     <div class="rcl-form-field">

@@ -3,7 +3,7 @@
 	<div class="object-rating">
 			<i class="fa fa-star"></i>
 			<span class="rtng-ttl"><?php echo $rating->rating_total; ?></span>
-			<span class="rtng-time"><?php if($rating->time_sum) echo '('.$rating->time_sum.')'; ?></span>
+			<span class="rtng-time"><?php if($rating->days_value_sum) echo '('.$rating->days_value_sum.')'; ?></span>
 	</div>
 	<div class="rating-sidebar">
 		<a title="<?php echo get_the_author_meta('display_name',$rating->object_author); ?>" href="<?php echo get_author_posts_url($rating->object_author); ?>">
