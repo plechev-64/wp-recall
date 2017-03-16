@@ -281,7 +281,7 @@ class Rcl_Payment{
 
         $form .= "<div class='rcl-pay-button'>";
         
-        if($user_ID){
+        if($data->user_id){
             
             $form .= "<form action='".$formaction."' method=$data->method>"
             . $this->get_hiddens( $fields )

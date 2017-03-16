@@ -110,7 +110,7 @@
     margin-right: 10px;
     color: #4c8cbd;
     position: absolute;
-    left: 12px;
+    left: 8px;
     top: 50%;
     margin-top: -23px;
 }
@@ -123,6 +123,7 @@
 .rcl-pay-form .rcl-pay-button .rcl-connect-submit .recall-button{
     font-size: 15px;
     padding: 7px 5px;
+    margin: 0;
 }
 .rcl-form-add-user-count .rcl-result-box .rcl-pay-form{
     margin-top: 20px;

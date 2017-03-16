@@ -4,7 +4,7 @@
  * @author Андрей
  */
 
-class Rcl_Chat {
+class Rcl_Chat extends Rcl_Chat_Messages_Query{
     
     public $chat_id = 0;
     public $chat = array();
@@ -17,8 +17,6 @@ class Rcl_Chat {
     public $paged = 1;
     public $userslist = false;
     public $avatar_size = 50;
-    public $offset;
-    public $in_page;
     public $office_id;
     public $delay = 0;
     public $timeout = 1;
@@ -26,17 +24,23 @@ class Rcl_Chat {
     public $max_words;
     public $user_can;
     public $errors = array();
-    public $query = array(
-            'select'=>array('chat_messages.*'),
-            'where'=>array(),
-            'orderby'=>'chat_messages.message_time',
-            'order'=>'DESC'           
-        );
 
     function __construct($args = array()){
         global $user_ID,$rcl_options;
         
+        parent::__construct();
+        
+        $args['return_as'] = ARRAY_A;
+        
+        if(!isset($args['per_page']))
+            $args['per_page'] = (isset($rcl_options['chat']['in_page']))? $rcl_options['chat']['in_page']: 50;
+        
+        if(!isset($args['orderby']))
+            $args['orderby'] = 'message_time';            
+            
         $this->init_properties($args);
+
+        $this->set_query($args);
 
         add_filter( 'rcl_chat_message', 'wpautop', 11 );
         
@@ -48,13 +52,11 @@ class Rcl_Chat {
         
         if(!$this->max_words)
             $this->max_words = (isset($rcl_options['chat']['words']))? $rcl_options['chat']['words']: 300;
-        
-        if(!$this->in_page)
-            $this->in_page = (isset($rcl_options['chat']['in_page']))? $rcl_options['chat']['in_page']: 50;
-        
+
         if(!$this->chat_room) return;
         
         $this->chat_token = rcl_chat_token_encode($this->chat_room);
+        
         $this->chat = $this->get_chat_data($this->chat_room);
         
         if(!$this->user_write)
@@ -68,13 +70,15 @@ class Rcl_Chat {
         
         $this->set_activity();
         
-        $this->query['where'][] =  "chat_messages.chat_id = '$this->chat_id'";
+        $this->query['where'][] =  "rcl_chat_messages.chat_id = '$this->chat_id'";
         
         if($this->important){
             add_filter('rcl_chat_query',array(&$this,'add_important_query'),10);
         }
         
         $this->user_can = ($this->is_user_can())? 1: 0;
+        
+        $this->query = apply_filters('rcl_chat_query',$this->query);
         
         do_action('rcl_chat',$this);
 
@@ -220,13 +224,13 @@ class Rcl_Chat {
         }
 
         $message = array(
-                'chat_id'=>$chat_id,
-                'user_id'=>$user_id,
-                'message_content'=>$message_text,
-                'message_time'=>current_time('mysql'),
-                'private_key'=>$private_key,
-                'message_status'=>0,
-            );
+            'chat_id'=>$chat_id,
+            'user_id'=>$user_id,
+            'message_content'=>$message_text,
+            'message_time'=>current_time('mysql'),
+            'private_key'=>$private_key,
+            'message_status'=>0,
+        );
         
         $message = apply_filters('rcl_pre_insert_chat_message',$message);
         
@@ -245,10 +249,10 @@ class Rcl_Chat {
             return $this->errors();
         }
         
-        do_action('rcl_chat_insert_message',$chat_id);
-        
         $message['message_id'] = $wpdb->insert_id;
         
+        do_action('rcl_chat_insert_message',$message);
+
         $message = stripslashes_deep($message);
         
         return $message;
@@ -298,7 +302,7 @@ class Rcl_Chat {
                 . '});'
                 . '</script>';
 
-        $content .= '<div class="rcl-chat chat-'.$this->chat_status.'" data-token="'.$this->chat_token.'" data-in_page="'.$this->in_page.'">';
+        $content .= '<div class="rcl-chat chat-'.$this->chat_status.'" data-token="'.$this->chat_token.'" data-in_page="'.$this->query['number'].'">';
                     
                     $content .= $this->get_messages_box();
                         
@@ -341,7 +345,7 @@ class Rcl_Chat {
                     . '<textarea maxlength="'.$this->max_words.'" onkeyup="rcl_chat_words_count(event,this);" id="chat-area-'.$this->chat_id.'" name="chat[message]"></textarea>'
                     . '<span class="words-counter">'.$this->max_words.'</span>'
                     . '<input type="hidden" name="chat[token]" value="'.$this->chat_token.'">'
-                    . '<input type="hidden" name="chat[in_page]" value="'.$this->in_page.'">'
+                    . '<input type="hidden" name="chat[in_page]" value="'.$this->query['number'].'">'
                     . '<input type="hidden" name="chat[status]" value="'.$this->chat_status.'">'
                     . '<input type="hidden" name="chat[userslist]" value="'.$this->userslist.'">'
                     . '<input type="hidden" name="chat[file_upload]" value="'.$this->file_upload.'">'
@@ -384,9 +388,9 @@ class Rcl_Chat {
             
             add_filter('rcl_page_link_attributes','rcl_chat_add_page_link_attributes',100);
 
-            $pagenavi = new Rcl_PageNavi('rcl-chat',$amount_messages,array('in_page'=>$this->in_page,'ajax'=>true,'current_page'=>$this->paged));
+            $pagenavi = new Rcl_PageNavi('rcl-chat',$amount_messages,array('in_page'=>$this->query['number'],'ajax'=>true,'current_page'=>$this->paged));
 
-            $this->offset = $pagenavi->offset;
+            $this->query['offset'] = $pagenavi->offset;
 
             $messages = $this->get_messages();
 
@@ -427,48 +431,10 @@ class Rcl_Chat {
         
         return $content;
     }
-    
-    function query(){
 
-        $this->query['from'] =  RCL_PREF."chat_messages AS chat_messages";  
-        $this->query['offset']  =  $this->offset;
-        $this->query['inpage']  =  $this->in_page;
-
-        $query = apply_filters('rcl_chat_query',$this->query);
-        
-        return $query;
-    }
-    
-    function get_sql($query){
-        
-        $sql[] = "SELECT ".implode(',',$query['select']);
-        
-        $sql[] = "FROM ".$query['from'];
-        
-        if($query['join']){
-            $sql[] = implode(' ',$query['join']);
-        }
-        
-        if($query['where']){
-            $sql[] = "WHERE ".implode(' AND ',$query['where']);
-        }
-        if(isset($query['orderby'])){
-            $sql[] = "ORDER BY ".$query['orderby']." ".$query['order'];
-        }
-        if(isset($query['offset'])){
-            $sql[] = "LIMIT ".$query['offset'].",".$query['inpage'];
-        }
-        
-        return implode(' ',$sql);
-    }
-    
     function get_messages(){
-        
-        global $wpdb;
 
-        $messages = $wpdb->get_results($this->get_sql($this->query()),ARRAY_A);
-        
-        $messages = stripslashes_deep($messages);
+        $messages = stripslashes_deep($this->get_data());
         
         $messages = apply_filters('rcl_chat_messages',$messages);
         
@@ -476,18 +442,8 @@ class Rcl_Chat {
     }
     
     function count_messages(){
-        
-        global $wpdb;
-        
-        $query = $this->query();
 
-        unset($query['select']);
-        unset($query['offset']);
-        unset($query['orderby']);
-        
-        $query['select'][] = 'COUNT(chat_messages.message_id)';
-
-        $count = $wpdb->get_var($this->get_sql($query));
+        $count = $this->count();
 
         return $count;
     }
@@ -659,7 +615,7 @@ class Rcl_Chat {
     }
     
     function add_important_query($query){
-        $query['join'][] = "INNER JOIN ".RCL_PREF."chat_messagemeta AS chat_messagemeta ON chat_messages.message_id=chat_messagemeta.message_id";
+        $query['join'][] = "INNER JOIN ".RCL_PREF."chat_messagemeta AS chat_messagemeta ON rcl_chat_messages.message_id=chat_messagemeta.message_id";
         $query['where'][] = "chat_messagemeta.meta_key='important:$this->user_id'";
         return $query;
     }

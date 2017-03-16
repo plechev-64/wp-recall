@@ -28,7 +28,7 @@ class Rcl_Includer{
             
             if(!$rcl_styles) $rcl_styles = array();
 
-            $css_dir = RCL_URL.'css/';
+            $css_dir = RCL_URL.'assets/css/';
 
             $primary = array(
                 'rcl-primary'           =>  $css_dir.'style.css',
@@ -69,7 +69,7 @@ class Rcl_Includer{
         }
 
         $filename = md5(implode(',',$ids)).'.css';
-        $filepath = RCL_UPLOAD_PATH.'css/'.$filename;
+        $filepath = RCL_UPLOAD_PATH.'assets/css/'.$filename;
         
         if(!file_exists($filepath)){
             $this->create_file($filename,'css');

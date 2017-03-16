@@ -197,26 +197,36 @@ span.ruble-symbol{
     left: 0;
 }
 
-#rcl-custom-fields-editor{
-    width: 500px;
+
+.rcl-custom-fields-box{
+    width:520px;
+    padding: 10px;
+    background: #f7fcff;
+    margin: 10px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    vertical-align: top;
 }
-#rcl-custom-fields-editor input,
-#rcl-custom-fields-editor textarea,
-#rcl-custom-fields-editor select{
+.rcl-custom-fields-box .rcl-sortable-fields{
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    min-height: 30px;
+}
+.rcl-custom-fields-box input,
+.rcl-custom-fields-box textarea,
+.rcl-custom-fields-box select{
     width: 100%; 
     box-sizing: border-box;
 }
-#rcl-custom-fields-editor input[type="checkbox"],
-#rcl-custom-fields-editor input[type="radio"]{
+.rcl-custom-fields-box input[type="checkbox"],
+.rcl-custom-fields-box input[type="radio"]{
     width: initial;
 }
-#rcl-custom-fields-editor #rcl-sortable-fileds{
-    
-}
-#rcl-custom-fields-editor .rcl-custom-field{
+.rcl-custom-fields-box .rcl-custom-field{
     margin-bottom: 10px;
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-header{
+.rcl-custom-fields-box .rcl-custom-field .field-header{
     padding: 10px;
     background: #E4E4E4;
     border: 1px solid #ccc;
@@ -225,93 +235,98 @@ span.ruble-symbol{
 .ui-sortable .rcl-custom-field .field-header{
     cursor:move;
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-header .field-title{
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-title{
     font-weight: bold;
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-header .field-controls{
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-controls{
     font-family: dashicons;
     float: right;
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-header .field-control{
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-control{
     font-size: 25px;
     text-decoration: none;
     vertical-align: middle;
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-header .field-type{
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-type{
     margin: 0 20px;
     font-family: arial;
     display: inline-block;
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-header .field-delete:before{
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-delete:before{
     color: rgba(229, 57, 53, 0.7);
     content: "\f158";
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-header .field-edit:before{
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-edit:before{
     content: "\f140";
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-settings{
+.rcl-custom-fields-box .rcl-custom-field .field-settings{
     border: 1px solid #ccc;
     padding: 10px;
     background: #F9F9F9;
     display: none;
 }
-#rcl-custom-fields-editor .rcl-custom-field.new-field .field-settings{
+.rcl-custom-fields-box .rcl-custom-field.new-field .field-settings{
     display: block;
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-options-box{
+.rcl-custom-fields-box .rcl-custom-field .field-options-box{
     padding: 5px;
     border: 1px solid #ccc;
     margin-bottom: 5px;
     overflow: hidden;
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-label{
+.rcl-custom-fields-box .rcl-custom-field .field-options-box .field-label{
     font-weight:bold;
     display: block;
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-option{
+.rcl-custom-fields-box .rcl-custom-field .field-options-box .field-option{
     margin: 5px 0;
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-option .field-notice{
+.rcl-custom-fields-box .rcl-custom-field .field-options-box .field-option .field-notice{
     
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-option select{
+.rcl-custom-fields-box .rcl-custom-field .field-options-box .field-option select{
     width: 70px;
 }
-#rcl-custom-fields-editor .rcl-custom-field .field-options-box .field-option select[multiple]{
+.rcl-custom-fields-box .rcl-custom-field .field-options-box .field-option select[multiple]{
     width: 100%;
 }
-#rcl-custom-fields-editor .rcl-custom-field .half-width{
+.rcl-custom-fields-box .rcl-custom-field .half-width{
     width: 47%;
     display: inline-block;
     float: left;
     margin: 0 5px;
 }
-#rcl-custom-fields-editor .add-new-field{
-    margin: 15px 0;
-    overflow: hidden;
-}
-#rcl-custom-fields-editor .fields-submit{
-    
-}
-#rcl-custom-fields-editor .fields-submit input[type="submit"]{
-    
+.rcl-custom-fields-box .fields-submit input{
+    width: 100%;
+    box-sizing: border-box;
+    margin:10px 0;
 }
 
-#rcl-custom-fields-editor .ui-sortable-placeholder{
+.rcl-custom-fields-box .ui-sortable-placeholder{
     border:2px dashed #ccc;
     height:45px;
     width:100%;
     box-sizing:border-box;
     background:#fff;
 }
-#rcl-sortable-fileds .new-field .field-header .field-control{
+.rcl-custom-fields-box .new-field .field-header .field-control{
     float: right;
     margin-top: 20px;
 }
-#rcl-sortable-fileds .new-field .field-header .field-type{
+.rcl-custom-fields-box .new-field .field-header .field-type{
     float: left;
     margin: 0;
     width: 190px;
+}
+
+#rcl-inactive-profile-fields{
+    width:350px;
+}
+#rcl-inactive-profile-fields .rcl-custom-field{
+    opacity:0.6;
+}
+#rcl-inactive-profile-fields .rcl-custom-field .field-control{
+    display:none;
 }
 
 #rcl-options-form .submit-block > p {
@@ -385,7 +400,7 @@ span.ruble-symbol{
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.4);
 }
 .rcl-navi a:link,
-.rcl-pager .pager-item a:link{										/*++hueman++ добавил :link для перевеса*/
+.rcl-pager .pager-item a:link{										/*++hueman++ Ð´Ð¾Ð±Ð°Ð²Ð¸Ð» :link Ð´Ð»Ñ Ð¿ÐµÑ€ÐµÐ²ÐµÑÐ°*/
     background: #e4e4e4;
     border: none;										/*++Twenty15++*/
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);

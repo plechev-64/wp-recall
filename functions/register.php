@@ -27,7 +27,7 @@ function rcl_insert_user($data){
 
     if(!$user_id) return false;
 
-    $wpdb->insert( RCL_PREF .'user_action', array( 'user' => $user_id, 'time_action' => current_time('mysql') ));
+    $wpdb->insert( RCL_PREF .'user_action', array( 'user' => $user_id, 'time_action' => '0000-00-00 00:00:00' ));
 
     if($rcl_options['confirm_register_recall']==1)
         wp_update_user( array ('ID' => $user_id, 'role' => 'need-confirm') ) ;
@@ -65,7 +65,9 @@ function rcl_confirm_user_registration(){
             $action = rcl_get_time_user_action($user->ID);
             
             if(!$action)
-                $wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => '0000-00-00 00:00:00' ) );
+                $wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => current_time('mysql') ) );
+            
+            do_action('rcl_confirm_registration',$user->ID);
             
             if($rcl_options['login_form_recall']==2){
                 wp_safe_redirect( 'wp-login.php?success=checkemail' );
@@ -128,8 +130,8 @@ function rcl_get_register_user($errors){
 
     $ref = ($_POST['redirect_to'])? apply_filters('url_after_register_rcl',esc_url($_POST['redirect_to'])): wp_registration_url();
 
-    $get_fields = get_option( 'rcl_profile_fields' );
-    $requared = true;
+    $get_fields = rcl_get_profile_fields();
+    $required = true;
     if($get_fields){
         foreach((array)$get_fields as $custom_field){
 
@@ -137,29 +139,29 @@ function rcl_get_register_user($errors){
             if(!$custom_field) continue;
 
             $slug = $custom_field['slug'];
-            if($custom_field['requared']==1&&$custom_field['register']==1){
+            if($custom_field['required']==1&&$custom_field['register']==1){
 
                 if($custom_field['type']=='checkbox'){
                     $chek = explode('#',$custom_field['field_select']);
                     $count_field = count($chek);
                     for($a=0;$a<$count_field;$a++){
                         if(!isset($_POST[$slug][$a])){
-                            $requared = false;
+                            $required = false;
                         }else{
-                            $requared = true;
+                            $required = true;
                             break;
                         }
                     }
                 }else if($custom_field['type']=='file'){
-                    if(!isset($_FILES[$slug])) $requared = false;
+                    if(!isset($_FILES[$slug])) $required = false;
                 }else{
-                    if(!$_POST[$slug]) $requared = false;
+                    if(!$_POST[$slug]) $required = false;
                 }
             }
         }
     }
 
-    if(!$pass||!$email||!$login||!$requared){
+    if(!$pass||!$email||!$login||!$required){
         $wp_errors->add( 'rcl_register_empty', __('Fill in the required fields!','wp-recall') );
         return $wp_errors;
     }
@@ -255,8 +257,8 @@ function rcl_register_user_data($user_id){
 
     update_user_meta($user_id, 'show_admin_bar_front', 'false');
 
-    $cf = new Rcl_Custom_Fields();
-    $cf->register_user_metas($user_id);
+    rcl_update_profile_fields($user_id);
+    
 }
 
 //Формируем массив сервисных сообщений формы регистрации и входа
@@ -366,7 +368,7 @@ function rcl_checkemail_success($errors){
 }
 
 function rcl_referer_url($typeform=false){
-	echo rcl_get_current_url($typeform);
+    echo rcl_get_current_url($typeform);
 }
 
 function rcl_get_current_url($typeform=false,$urlform = 0){
@@ -466,7 +468,8 @@ function rcl_secondary_password($fields){
 //Вывод произвольных полей профиля в форме регистрации
 add_filter('regform_fields_rcl','rcl_custom_fields_regform',20);
 function rcl_custom_fields_regform($field){
-    $get_fields = get_option( 'rcl_profile_fields' );
+    
+    $get_fields = rcl_get_profile_fields();
 
     if($get_fields){
         $get_fields = stripslashes_deep($get_fields);
@@ -483,7 +486,7 @@ function rcl_custom_fields_regform($field){
             $attr = (isset($custom_field['attr']))? ''.$custom_field['attr']: '';
 
             $field .= '<div class="form-block-rcl '.$class.'" '.$id.' '.$attr.'>';
-            $star = ($custom_field['requared']==1)? ' <span class="required">*</span> ': '';
+            $star = ($custom_field['required']==1)? ' <span class="required">*</span> ': '';
             $field .= '<label>'.$cf->get_title($custom_field).$star.'';
             if($custom_field['type']) $field .= '<span class="colon">:</span>';
             $field .= '</label>';

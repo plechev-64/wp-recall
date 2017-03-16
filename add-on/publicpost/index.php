@@ -249,7 +249,7 @@ function rcl_manage_publicform(){
             'label'=>__('field description','wp-recall')
         )),
         $f_edit->option('select',array(
-            'name'=>'requared',
+            'name'=>'required',
             'notice'=>__('required field','wp-recall'),
             'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
         ))
@@ -634,7 +634,7 @@ function rcl_get_list_custom_fields($post_id, $post_type=false, $id_form=false){
 
         $custom_field = apply_filters('custom_field_public_form',$custom_field,$data);
 
-        $star = ($custom_field['requared']==1)? '<span class="required">*</span> ': '';
+        $star = ($custom_field['required']==1)? '<span class="required">*</span> ': '';
         $postmeta = ($post_id)? get_post_meta($post_id,$custom_field['slug'],1):'';
 
         $fields .= '<tr><th><label>'.$cf->get_title($custom_field).$star.':</label></th>';
@@ -774,10 +774,10 @@ function rcl_preview_post(){
         $name_new_user = $_POST['name-user'];
 
         if(!$email_new_user){
-                $log['error'] = __('Enter your e-mail!','wp-recall');
+            $log['error'] = __('Enter your e-mail!','wp-recall');
         }
         if(!$name_new_user){
-                $log['error'] = __('Enter your name!','wp-recall');
+            $log['error'] = __('Enter your name!','wp-recall');
         }
 
         $res_email = email_exists( $email_new_user );
@@ -788,41 +788,40 @@ function rcl_preview_post(){
         if($res_login||$res_email||!$correctemail||!$valid){
 
             if(!$valid||!$correctemail){
-                    $log['error'] .= __('You have entered an invalid email!','wp-recall');
+                $log['error'] .= __('You have entered an invalid email!','wp-recall');
             }
             if($res_login||$res_email){
-                    $log['error'] .= __('This email is already used!','wp-recall').'<br>'
-                                    .__('If this is your email, then log in and publish your post','wp-recall');
+                $log['error'] .= __('This email is already used!','wp-recall').'<br>'
+                              .__('If this is your email, then log in and publish your post','wp-recall');
             }
         }
     }
-
-    if(!$_POST['post_content']) $log['error'] = __('Add contents of the publication!','wp-recall');
-
-    if($log['error']){
-            echo json_encode($log);
-            exit;
-    }
-
+    
+    
     $post_content = '';
 
-    if(is_array($_POST['post_content'])){
-        foreach($_POST['post_content'] as $contents){
-            foreach($contents as $type=>$content){
-                if($type=='text') $content = strip_tags($content);
-                if($type=='header') $content = sanitize_text_field($content);
-                if($type=='html') $content = str_replace('\'','"',$content);
-                $post_content .= "[rcl-box type='$type' content='$content']";
+    if(isset($_POST['post_content'])){
+        
+        $postContent = $_POST['post_content'];
+        
+        if(!$postContent){
+            $log['error'] = __('Add contents of the publication!','wp-recall');
+
+            if($log['error']){
+                echo json_encode($log);
+                exit;
             }
         }
-    }else{
-            $post_content = stripslashes_deep($_POST['post_content']);
+
+        $post_content = stripslashes_deep($postContent);
+        
+        $post_content = rcl_get_editor_content($post_content,'preview');
+        
     }
 
-    $post_content = rcl_get_editor_content($post_content,'preview');
-
-    $preview = '<h2>'.$_POST['post_title'].'</h2>
-            '.$post_content;
+    $preview = '<h2>'.$_POST['post_title'].'</h2>';
+	
+    $preview .= $post_content;
 
     $preview .= '<div class="rcl-notice-preview">
                     <p>'.__('If everything is correct – publish it! If not, you can go back to editing.','wp-recall').'</p>

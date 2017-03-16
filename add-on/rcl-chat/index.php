@@ -1,5 +1,6 @@
 <?php
 
+include_once 'chats-query.php';
 include_once 'core.php';
 
 if (!is_admin()):
@@ -317,11 +318,11 @@ function rcl_get_tab_user_important($user_id){
 
                 $content .= '<div class="chat-messages">';
 
-                $pagenavi = new Rcl_PageNavi('rcl-chat',$amount_messages,array('in_page'=>$chat->in_page));
+                $pagenavi = new Rcl_PageNavi('rcl-chat',$amount_messages,array('in_page'=>$chat->query['number']));
 
                 $chat->offset = $pagenavi->offset;
 
-                $messages = rcl_chat_get_important_messages($user_id,array($pagenavi->offset,$chat->in_page));
+                $messages = rcl_chat_get_important_messages($user_id,array($pagenavi->offset,$chat->query['number']));
 
                 $messages = rcl_chat_messages_add_important_meta($messages);
 

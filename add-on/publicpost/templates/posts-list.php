@@ -1,6 +1,6 @@
 <?php global $post,$posts,$ratings; ?>
 
-<table class="publics-table-rcl">
+<table class="publics-table-rcl rcl-table">
 
 	<tr>
 		<td><?php _e('Date','wp-recall'); ?></td>

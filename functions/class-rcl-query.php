@@ -8,86 +8,160 @@
 
 class Rcl_Query {
     
-    public $table;
-    public $table_as;
-    public $table_cols = array();
     public $fields = array();
     public $query = array(
-            'select'=>array(),
-            'where'=>array(),
-            'join'=>array(),
+            'table' => array(),
+            'select' => array(),
+            'where' => array(),
+            'join' => array(),
             'offset' => 0,
             'number' => 30
         );
             
     function __construct() {
-        
+
+    }
+    
+    function init_properties($args){
+        $properties = get_class_vars(get_class($this));
+
+        foreach ($properties as $name=>$val){
+            if(isset($args[$name])) $this->$name = $args[$name];
+        }
     }
     
     function set_query($args = false){
         
+        if(!$this->query['table']){
+            
+            if(isset($args['table'])){
+
+                $this->query['table'] = $args['table'];
+
+            }
+            
+        }
+
+        //получаем устаревшие указания кол-ва значений на странице
+        //и приводим к number
         if(isset($args['per_page'])){
             $args['number'] = $args['per_page'];
+        }else if(isset($args['inpage'])){
+            $args['number'] = $args['inpage'];
+        }else if(isset($args['in_page'])){
+            $args['number'] = $args['in_page'];
         }
 
         if(isset($args['fields'])){
             
             $fields = array();
             foreach($args['fields'] as $field){
-                $fields[] = $this->table_as.'.'.$field;
+                if(!in_array($field,$this->query['table']['cols'])) continue;
+                $fields[] = $this->query['table']['as'].'.'.$field;
             }
             
-            $this->query['select'] = $fields;
+            if($fields)
+                $this->query['select'] = $fields;
             
         }
         
         if(!$this->query['select']){
-            $this->query['select'][] = $this->table_as.'.*';
+            $this->query['select'][] = $this->query['table']['as'].'.*';
         }
 
-        if($this->table_cols){
+        if($this->query['table']['cols']){
             
-            foreach($this->table_cols as $col_name){
+            if(isset($args['include'])){
+                    
+                $this->query['where'][] = $this->query['table']['as'].".".$this->query['table']['cols'][0]." IN (".$this->get_string_in($args['include']).")";
+
+            }
+            
+            if(isset($args['exclude'])){
+                    
+                $this->query['where'][] = $this->query['table']['as'].".".$this->query['table']['cols'][0]." NOT IN (".$this->get_string_in($args['exclude']).")";
+
+            }
+            
+            foreach($this->query['table']['cols'] as $col_name){
                 
                 if(isset($args[$col_name])){
                     
-                    $this->query['where'][] = $this->table_as.".$col_name = '$args[$col_name]'";
+                    $this->query['where'][] = $this->query['table']['as'].".$col_name = '$args[$col_name]'";
+                
+                }
+                
+                if(isset($args[$col_name.'_not_in'])){
+                    
+                    $this->query['where'][] = $this->query['table']['as'].".$col_name != '$args[$col_name]'";
                 
                 }
                 
                 if(isset($args['include_'.$col_name])){
                     
-                    $include = (is_array($args['include_'.$col_name]))? implode(',',$args['include_'.$col_name]): $args['include_'.$col_name];
-            
-                    $this->query['where'][] = $this->table_as.".$col_name IN ('".implode("','",explode(',',$include))."')";
+                    $this->query['where'][] = $this->query['table']['as'].".$col_name IN (".$this->get_string_in($args['include_'.$col_name]).")";
 
                 }
                 
                 if(isset($args['exclude_'.$col_name])){
-                    
-                    $exclude = (is_array($args['exclude_'.$col_name]))? implode(',',$args['exclude_'.$col_name]): $args['exclude_'.$col_name];
-            
-                    $this->query['where'][] = $this->table_as.".$col_name NOT IN ('".implode("','",explode(',',$exclude))."')";
+
+                    $this->query['where'][] = $this->query['table']['as'].".$col_name NOT IN (".$this->get_string_in($args['exclude_'.$col_name]).")";
 
                 }
 
+            }
+            
+            if(isset($args['date_query'])){
+                
+                foreach($args['date_query'] as $date){
+                    
+                    if(!isset($date['column'])) continue;
+                    
+                    if(!isset($date['compare']))
+                        $date['compare'] = '=';
+                        
+                    if($date['compare'] == '='){
+
+                        $datetime = array();
+
+                        if(isset($date['year'])) 
+                            $this->query['where'][] = "YEAR(".$this->query['table']['as'].".".$date['column'].") = '".$date['year']."'";
+
+                        if(isset($date['month'])) 
+                            $this->query['where'][] = "MONTH(".$this->query['table']['as'].".".$date['column'].") = '".$date['month']."'";
+
+                        if(isset($date['day'])) 
+                            $this->query['where'][] = "DAY(".$this->query['table']['as'].".".$date['column'].") = '".$date['day']."'";
+
+                    }
+                    
+                    if($date['compare'] == 'BETWEEN'){
+                        
+                        if(!isset($date['value'])) continue;
+                        
+                        $this->query['where'][] = "(".$this->query['table']['as'].".".$date['column']." BETWEEN CAST('".$date['value'][0]."' AS DATE) AND CAST('".$date['value'][1]."' AS DATE))";
+                        
+                    }
+
+                }
+                
             }
             
         }
         
         if(isset($args['orderby'])){
             
-            $this->query['orderby'] = $this->table_as.'.'.$args['orderby'];
+            $this->query['orderby'] = $this->query['table']['as'].'.'.$args['orderby'];
             $this->query['order'] = (isset($args['order']) && $args['order'])? $args['order']: 'DESC';
             
         }else if(isset($args['orderby_as_decimal'])){
             
-            $this->query['orderby'] = 'CAST('.$this->table_as.'.'.$args['orderby_as_decimal'].' AS DECIMAL)';
+            $this->query['orderby'] = 'CAST('.$this->query['table']['as'].'.'.$args['orderby_as_decimal'].' AS DECIMAL)';
             $this->query['order'] = (isset($args['order']) && $args['order'])? $args['order']: 'DESC';
             
         }else{
             
-            $this->query['orderby'] = $this->table_as.'.'.$this->table_cols[0];
+            $this->query['orderby'] = $this->query['table']['as'].'.'.$this->query['table']['cols'][0];
             $this->query['order'] = 'DESC';
             
         }
@@ -101,12 +175,38 @@ class Rcl_Query {
         if(isset($args['groupby'])) 
             $this->query['groupby'] = $args['groupby'];
         
+        if(isset($args['return_as']))
+            $this->query['return_as'] = $args['return_as'];
+
+    }
+    
+    function get_string_in($data){
+        
+        $vars = (is_array($data))? $data: explode(',',$data);
+            
+        $vars = array_map('trim',$vars);
+
+        $array = array();
+        foreach($vars as $var){
+            if(is_numeric($var))
+                $array[] = $var;
+            else
+                $array[] = "'$var'";
+        }
+        
+        return implode(',',$array);
     }
     
     function reset_query(){
         $this->query = array(
+            'table' => array(
+                'name' => $this->query['table']['name'],
+                'as' => $this->query['table']['as'],
+                'cols' => $this->query['table']['cols']
+            ),
             'select'=>array(),
             'where'=>array(),
+            'where_or'=>array(),
             'join'=>array(),
             'offset' => 0,
             'number' => 30
@@ -115,11 +215,14 @@ class Rcl_Query {
     
     function get_query(){
 
-        return apply_filters($this->table_as.'_query',$this->query);
+        return apply_filters('rcl_get_'.$this->query['table']['as'].'_query',$this->query);
 
     }
     
-    function get_sql($query, $method = 'get'){
+    function get_sql($query = false, $method = 'get'){
+        
+        if(!$query)
+            $query = $this->get_query();
         
         if($method == 'get')
             $sql[] = "SELECT ".implode(',',$query['select']);
@@ -127,15 +230,30 @@ class Rcl_Query {
         if($method == 'delete')
             $sql[] = "DELETE";
         
-        $sql[] = "FROM $this->table AS $this->table_as";
+        $sql[] = "FROM ".$this->query['table']['name']." AS ".$this->query['table']['as'];
         
         if($query['join']){
             $sql[] = implode(' ',$query['join']);
         }
         
+        $where = array();
+        
         if($query['where']){
-            $sql[] = "WHERE ".implode(' AND ',$query['where']);
+            $where[] = implode(' AND ',$query['where']);
         }
+        
+        if($query['where_or']){
+            
+            if($query['where']) 
+                $where_or[] = 'OR'; 
+            
+            $where_or[] = implode(' OR ',$query['where_or']);
+
+            $where[] = implode(' ',$where_or);
+        }
+        
+        if($where)
+            $sql[] = "WHERE ".implode(' ',$where);
         
         if(isset($query['groupby'])) 
             $sql[] = "GROUP BY ".$query['groupby'];
@@ -144,10 +262,14 @@ class Rcl_Query {
             $sql[] = "ORDER BY ".$query['orderby']." ".$query['order'];
         }
 
-        if(isset($query['offset'])){
-            $sql[] = "LIMIT ".$query['offset'].",".$query['number'];
-        }else if(isset($query['number'])){
-            $sql[] = "LIMIT ".$query['number'];
+        if($query['number'] > 0){
+            
+            if(isset($query['offset'])){
+                $sql[] = "LIMIT ".$query['offset'].",".$query['number'];
+            }else if(isset($query['number'])){
+                $sql[] = "LIMIT ".$query['number'];
+            }
+            
         }
         
         $sql = implode(' ',$sql);
@@ -160,11 +282,16 @@ class Rcl_Query {
         global $wpdb;
         
         $query = $this->get_query();
+        
+        $return_as = (isset($query['return_as']))? $query['return_as']: false;     
 
         $sql = $this->get_sql($query);
         
-        $data = $wpdb->$method($sql);
-        
+        if(isset($query['return_as']))
+            $data = $wpdb->$method($sql,$query['return_as']);
+        else
+            $data = $wpdb->$method($sql);
+
         $data = stripslashes_deep($data);
         
         return $data;
@@ -174,7 +301,11 @@ class Rcl_Query {
         
         $this->set_query($args);
         
-        return $this->get_data('get_var');
+        $result = $this->get_data('get_var');
+        
+        $this->reset_query();
+        
+        return $result;
         
     }
     
@@ -182,7 +313,11 @@ class Rcl_Query {
         
         $this->set_query($args);
 
-        return $this->get_data('get_results');
+        $result = $this->get_data('get_results');
+        
+        $this->reset_query();
+        
+        return $result;
         
     }
     
@@ -190,15 +325,34 @@ class Rcl_Query {
         
         $this->set_query($args);
         
-        return $this->get_data('get_row');
+        $result = $this->get_data('get_row');
+        
+        $this->reset_query();
+        
+        return $result;
         
     }
     
-    function count($field_name = false){
+    function get_col($args){
+        
+        $this->set_query($args);
+        
+        $result = $this->get_data('get_col');
+        
+        $this->reset_query();
+        
+        return $result;
+        
+    }
+    
+    function count($args = false, $field_name = false){
         
         global $wpdb;
         
-        $field_name = ($field_name)? $field_name: $this->table_cols[0];
+        if($args)
+            $this->set_query($args);
+        
+        $field_name = ($field_name)? $field_name: $this->query['table']['cols'][0];
         
         $query = $this->get_query();
 
@@ -208,31 +362,17 @@ class Rcl_Query {
         unset($query['order']);
         unset($query['number']);
 
-        $query['select'] = array('COUNT('.$this->table_as.'.'.$field_name.')');
+        $query['select'] = array('COUNT('.$query['table']['as'].'.'.$field_name.')');
         
         $sql = $this->get_sql($query);
-        
-        if($query['join'])
+        //print_r($sql);   
+        /*if($query['join'])
             $result = $wpdb->query($sql);
-        else
+        else*/
             $result = $wpdb->get_var($sql);
-
+        
         return $result;
 
-    }
-    
-    function detele(){
-        
-        global $wpdb;
-        
-        $query = $this->get_query();
-
-        unset($query['select']);
-        
-        $sql = $this->get_sql($query,'delete');
-
-        return $wpdb->query($sql);
-        
     }
     
     function insert($args){

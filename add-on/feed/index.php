@@ -1,5 +1,10 @@
 <?php
 
+require_once 'classes/class-rcl-feed-query.php';
+
+require_once 'addon-core.php';
+require_once 'shortcodes.php';
+
 if (!is_admin()):
     add_action('rcl_enqueue_scripts','rcl_feed_scripts',10);
 endif;
@@ -8,9 +13,6 @@ function rcl_feed_scripts(){
     rcl_enqueue_style('rcl-feed',rcl_addon_url('style.css', __FILE__));
     rcl_enqueue_script( 'rcl-feed', rcl_addon_url('js/scripts.js', __FILE__) );
 }
-
-require_once 'addon-core.php';
-require_once 'shortcodes.php';
 
 add_action('init','rcl_add_block_feed_button');
 function rcl_add_block_feed_button(){
@@ -102,7 +104,7 @@ function rcl_followers_tab($user_id){
         add_filter('rcl_users_query','rcl_feed_subsribers_query_userlist',10);
         $content .= rcl_get_userlist(array(
             'templates' => 'rows',
-            'inpage'=>20,
+            'per_page'=>20,
             'orderby'=>'user_registered',
             'filters'=>1,
             'search_form'=>0,
@@ -124,7 +126,7 @@ function rcl_subscriptions_tab($user_id){
         $content .= rcl_get_userlist(array(
             'template' => 'rows',
             'orderby'=>'user_registered',
-            'inpage'=>20,
+            'per_page'=>20,
             'filters'=>1,
             'search_form'=>0,
             'data'=>'rating_total,description,posts_count,comments_count',
@@ -138,23 +140,22 @@ function rcl_subscriptions_tab($user_id){
 
 function rcl_feed_authors_query_userlist($query){
     global $user_LK;
-    $query->query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON users.ID=feeds.object_id";
-    $query->query['where'][] = "feeds.user_id='$user_LK'";
-    $query->query['where'][] = "feeds.feed_type='author'";
-    $query->query['where'][] = "feeds.feed_status='1'";
-    $query->query['relation'] = "AND";
-    $query->query['group'] = false;
+    $query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON wp_users.ID = feeds.object_id";
+    $query['where'][] = "feeds.user_id='$user_LK'";
+    $query['where'][] = "feeds.feed_type='author'";
+    $query['where'][] = "feeds.feed_status='1'";
+    $query['relation'] = "AND";
+    //$query['groupby'] = false;
     return $query;
 }
 
 function rcl_feed_subsribers_query_userlist($query){
     global $user_LK;
-    $query->query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON users.ID=feeds.user_id";
-    $query->query['where'][] = "feeds.object_id='$user_LK'";
-    $query->query['where'][] = "feeds.feed_type='author'";
-    $query->query['where'][] = "feeds.feed_status='1'";
-    $query->query['relation'] = "AND";
-    $query->query['group'] = false;
+    $query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS feeds ON wp_users.ID = feeds.user_id";
+    $query['where'][] = "feeds.object_id='$user_LK'";
+    $query['where'][] = "feeds.feed_type='author'";
+    $query['where'][] = "feeds.feed_status='1'";
+    //$query['groupby'] = false;
     return $query;
 }
 
@@ -179,7 +180,7 @@ function rcl_update_feed_current_user($author_id){
             $data['success'] = __('Signed up for a subscription','wp-recall');
             $data['this'] = __('Unsubscribe','wp-recall');
         }else{
-            $data['error'] = __('Error','wp-recall');
+            $data['error'] = __('Error','wp-recall') . ' 100';
         }
 
     }else{
@@ -192,7 +193,7 @@ function rcl_update_feed_current_user($author_id){
                 $data['success'] = __('Subscription has been cancelled','wp-recall');
                 $data['this'] = __('Subscribe','wp-recall');
             }else{
-                $data['error'] = __('Error','wp-recall');
+                $data['error'] = __('Error','wp-recall') . ' 101';
             }
         }else{
             $result = rcl_add_feed_author($author_id);
@@ -200,7 +201,7 @@ function rcl_update_feed_current_user($author_id){
                 $data['success'] = __('Signed up for a subscription','wp-recall');
                 $data['this'] = __('Unsubscribe','wp-recall');
             }else{
-                $data['error'] = __('Error','wp-recall');
+                $data['error'] = __('Error','wp-recall') . ' 102';
             }
         }
     }
@@ -216,22 +217,29 @@ function rcl_feed_progress(){
     
     rcl_verify_ajax_nonce();
 
-    $content = $_POST['content'];
-    $paged = $_POST['paged'];
+    $customData = json_decode(base64_decode($_POST['custom']));
+    
+    $customData = (array)$customData;
+    
+    $customData['paged'] = intval($_POST['paged']);
+    $customData['content'] = $_POST['content'];
+    $customData['filters'] = 0;
 
-    include_once 'classes/class-rcl-feed.php';
-    $list = new Rcl_Feed(array('paged'=>$paged,'content'=>$content,'filters'=>0));
+    include_once 'classes/class-rcl-feed-list.php';
+    $list = new Rcl_Feed_List($customData);
 
-    $count = false;
+    $count = $list->count_feed();
 
-    if(!$list->number){
-
-        $count = $list->count_feed_posts();
-
-        $rclnavi = new Rcl_PageNavi('rcl-feed',$count,array('in_page'=>$list->inpage,'current_page'=>$list->paged));
-        $list->offset = $rclnavi->offset;
-        $list->number = $rclnavi->in_page;
-    }
+    $rclnavi = new Rcl_PageNavi(
+            'rcl-feed',
+            $count,
+            array(
+                'in_page'=>$list->query['number'],
+                'current_page'=>$list->paged
+            )
+        );
+    
+    $list->query['offset'] = $rclnavi->offset;
 
     $feedsdata = $list->get_feed();
 

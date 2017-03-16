@@ -61,7 +61,7 @@ class Rcl_Sub_Tabs {
             
             if(!$tab['name']) continue;
 
-            $classes = ($this->active_tab==$tab['id'])? array('active','rcl-subtab-button'): array('rcl-subtab-button');
+            $classes = ($this->active_tab == $tab['id'])? array('active','rcl-subtab-button'): array('rcl-subtab-button');
             
             if(isset($this->parent_tab['supports'])){
                 if(in_array('ajax',$this->parent_tab['supports'])){
@@ -69,7 +69,7 @@ class Rcl_Sub_Tabs {
                 }
             }
 
-            $button_args = array('class'=>implode(' ',$classes));
+            $button_args = array('class' => implode(' ',$classes));
 
             if(isset($tab['icon'])){
                 $button_args['icon'] = $tab['icon'];

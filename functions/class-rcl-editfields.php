@@ -7,6 +7,7 @@ class Rcl_EditFields {
     public $options;
     public $options_html;
     public $vals;
+    public $fields;
     public $status;
     public $primary;
     public $select_type;
@@ -17,10 +18,11 @@ class Rcl_EditFields {
 
     function __construct($post_type,$primary=false){
 
-        $this->select_type = (isset($primary['select-type']))? $primary['select-type']:true;
-        $this->meta_key = (isset($primary['meta-key']))? $primary['meta-key']:true;
-        $this->placeholder = (isset($primary['placeholder']))? $primary['placeholder']:true;
-        $this->sortable = (isset($primary['sortable']))? $primary['sortable']:true;
+        $this->select_type = (isset($primary['select-type']))? $primary['select-type']: true;
+        $this->meta_key = (isset($primary['meta-key']))? $primary['meta-key']: true;
+        $this->placeholder = (isset($primary['placeholder']))? $primary['placeholder']: true;
+        $this->sortable = (isset($primary['sortable']))? $primary['sortable']: true;
+        $this->fields = (isset($primary['fields']))? $primary['fields']: array();
         $this->primary = $primary;
         $this->post_type = $post_type;
 
@@ -32,6 +34,7 @@ class Rcl_EditFields {
         }
 
         $this->fieldsData = apply_filters('rcl_edit_custom_fields_data',stripslashes_deep(get_option( $name_option )));
+        
         $this->name_option = $name_option;
         
     }
@@ -40,10 +43,16 @@ class Rcl_EditFields {
         
         $this->options = apply_filters('rcl_custom_fields_options',$this->options,$this->post_type);
 
-        $form = '<div id="rcl-custom-fields-editor">
+        $form = '<div id="rcl-custom-fields-editor" class="rcl-custom-fields-box">
+            
             <form action="" method="post">
+
+            '.$more.'
+            <h3>'.__('Активные поля','wp-recall').'</h3>
+             
             '.wp_nonce_field('rcl-update-custom-fields','_wpnonce',true,false).'
-            '.$more;
+            <input type="hidden" name="rcl-fields-options[name-option]" value="'.$this->name_option.'">
+            <input type="hidden" name="rcl-fields-options[placeholder]" value="'.$this->placeholder.'">';
         
             if(isset($this->primary['terms'])&&$this->primary['terms'])
                 $form .= $this->option('options',array(
@@ -53,11 +62,16 @@ class Rcl_EditFields {
                     'pattern'=>'^([0-9,])*$'
                 ));
 
-                $form .= '<ul id="rcl-sortable-fileds">'.$this->loop().'</ul>
-                <div class="add-new-field">
+                $form .= '<ul id="rcl-fields-list" class="rcl-sortable-fields">';
+                
+                $form .= $this->loop();
+                
+                $form .= $this->empty_field();
+                
+                $form .= '</ul>';
+                
+                $form .= '<div class="fields-submit">
                     <input type="button" class="add-field-button button-secondary right" value="+ '.__('Add field','wp-recall').'">
-                </div>
-                <div class="fields-submit">
                     <input class="button button-primary" type="submit" value="'.__('Save','wp-recall').'" name="rcl_save_custom_fields">
                     <input type="hidden" id="rcl-deleted-fields" name="rcl_deleted_custom_fields" value="">
                 </div>
@@ -66,13 +80,17 @@ class Rcl_EditFields {
             if($this->sortable){
                 $form .= '<script>
                     jQuery(function(){
-                        jQuery("#rcl-sortable-fileds").sortable({
-                            connectWith: "#rcl-sortable-fileds",
-                            containment: "parent",
+                        jQuery(".rcl-sortable-fields").sortable({
+                            connectWith: ".rcl-sortable-fields",
+                            /*containment: "parent",*/
                             handle: ".field-header",
                             cursor: "move",
                             placeholder: "ui-sortable-placeholder",
-                            distance: 15
+                            distance: 15,
+                            receive: function(ev, ui) {
+                                if(!ui.item.hasClass("must-receive"))
+                                  ui.sender.sortable("cancel");
+                            }
                         });
                         return false;
                     });
@@ -84,16 +102,22 @@ class Rcl_EditFields {
         return $form;
     }
 
-    function loop(){
+    function loop($fields = null){
         
         $form = '';
-        if($this->fieldsData){
-            foreach($this->fieldsData as $key=>$vals){
+        
+        if(!isset($fields))
+            $fields = $this->fieldsData;
+        
+        if($fields){
+            
+            foreach($fields as $key=>$vals){
                 if($key==='options') continue;
                 $form .= $this->field($vals);
             }
+            
         }
-        $form .= $this->empty_field();
+
         return $form;
     }
 
@@ -101,6 +125,11 @@ class Rcl_EditFields {
 
         $this->vals = $vals;
         $this->status = true;
+        
+        $classes = array('rcl-custom-field');
+        
+        if(isset($this->vals['class']))
+            $classes[] = $this->vals['class'];
 
         $types = array(
             'select'=>1,
@@ -110,6 +139,8 @@ class Rcl_EditFields {
             'radio'=>1,
             'file'=>1
         );
+        
+        $typeEdit = (isset($this->vals['type-edit']))? $this->vals['type-edit']: true;
         
         switch($this->vals['type']=='file'){
             case 'agree': $notice = __('Enter the text of the link to User agreement','wp-recall'); break;
@@ -130,7 +161,7 @@ class Rcl_EditFields {
             $textarea_select .= "<div class='field-option placeholder-field'><input type=text name='field[placeholder][]' value='".$placeholder."'><br>placeholder</div>";
         }
 
-        $field = '<li id="field-'.$this->vals['slug'].'" data-slug="'.$this->vals['slug'].'" data-type="'.$this->vals['type'].'" class="rcl-custom-field">
+        $field = '<li id="field-'.$this->vals['slug'].'" data-slug="'.$this->vals['slug'].'" data-type="'.$this->vals['type'].'" class="'.implode(' ',$classes).'">
                 '.$this->header_field().'
                 <div class="field-settings">';
                     if($this->meta_key){
@@ -147,13 +178,17 @@ class Rcl_EditFields {
                         <div class="half-width">
                             '.$this->option('text',array(
                                 'name'=>'title',
-                                'label'=>__('Title','wp-recall').'<br>'
+                                'label'=>__('Title','wp-recall').'<br>',
+                                'required'=>true
                             )).'
-                        </div>
-                        <div class="half-width">
-                            '.$this->get_types().'
-                        </div>
-                    </div>
+                        </div>';
+                    
+                    if($typeEdit)
+                        $field .= '<div class="half-width">'.$this->get_types().'</div>';
+                    else
+                        $field .= '<input type="hidden" name="field[type][]" value="'.$this->vals['type'].'">';
+                        
+                    $field .= '</div>
                     <div class="field-options-box secondary-settings">'
                         .$textarea_select
                         .$this->get_options()
@@ -169,27 +204,45 @@ class Rcl_EditFields {
         
         if(!$this->select_type) return false;
         
+        $fields = array(
+                    'text'=>__('Text','wp-recall'),
+                    'textarea'=>__('Multiline text area','wp-recall'),
+                    'select'=>__('Select','wp-recall'),
+                    'multiselect'=>__('MultiSelect','wp-recall'),
+                    'checkbox'=>__('Checkbox','wp-recall'),
+                    'radio'=>__('Radiobutton','wp-recall'),
+                    'email'=>__('E-mail','wp-recall'),
+                    'tel'=>__('Phone','wp-recall'),
+                    'number'=>__('Number','wp-recall'),
+                    'date'=>__('Date','wp-recall'),
+                    'time'=>__('Time','wp-recall'),
+                    'url'=>__('Url','wp-recall'),
+                    'agree'=>__('Agreement','wp-recall'),
+                    'file'=>__('File','wp-recall'),
+                    'dynamic'=>__('Dynamic','wp-recall')
+                );
+        
+        if($this->fields){
+            
+            $newFields = array();
+            
+            foreach($fields as $key => $fieldname){
+                
+                if(!in_array($key,$this->fields)) continue;
+                
+                $newFields[$key] = $fieldname;
+                
+            }
+            
+            $fields = $newFields;
+            
+        }
+        
         return $this->option('select',array(
             'label'=>__('Field type','wp-recall'),
-            'name'=>'type',
-            'class'=>'typefield',
-            'value'=>array(
-                'text'=>__('Text','wp-recall'),
-                'textarea'=>__('Multiline text area','wp-recall'),
-                'select'=>__('Select','wp-recall'),
-                'multiselect'=>__('MultiSelect','wp-recall'),
-                'checkbox'=>__('Checkbox','wp-recall'),
-                'radio'=>__('Radiobutton','wp-recall'),
-                'email'=>__('E-mail','wp-recall'),
-                'tel'=>__('Phone','wp-recall'),
-                'number'=>__('Number','wp-recall'),
-                'date'=>__('Date','wp-recall'),
-                'time'=>__('Time','wp-recall'),
-                'url'=>__('Url','wp-recall'),
-                'agree'=>__('Agreement','wp-recall'),
-                'file'=>__('File','wp-recall'),
-                'dynamic'=>__('Dynamic','wp-recall')
-            )
+            'name' => 'type',
+            'class' => 'typefield',
+            'value' => $fields
         ));
     }
 
@@ -208,14 +261,22 @@ class Rcl_EditFields {
     }
 
     function header_field(){
-        return '<div class="field-header">
+        
+        $delete = (isset($this->vals['delete']))? $this->vals['delete']: true;
+        
+        $content = '<div class="field-header">
                     <span class="field-title">'.$this->vals['title'].'</span>                           
                     <span class="field-controls">
-                        <span class="field-type">'.$this->vals['type'].'</span>   
-                        <a class="field-delete field-control" title="'.__('Delete','wp-recall').'" href="#"></a>
-                        <a class="field-edit field-control" href="#" title="'.__('Edit','wp-recall').'"></a>
+                        <span class="field-type">'.$this->vals['type'].'</span>';
+        
+        if($delete)
+            $content .= '<a class="field-delete field-control" title="'.__('Delete','wp-recall').'" href="#"></a>';
+                                
+        $content .= '<a class="field-edit field-control" href="#" title="'.__('Edit','wp-recall').'"></a>
                     </span>
                 </div>';
+        
+        return $content;
     }
 
     function empty_field(){
@@ -322,11 +383,16 @@ class Rcl_EditFields {
     }
 
     function text($args,$edit){
+        
+        $required = (isset($args['required']) && $args['required'])? 'required': '';
 	$val = ($this->vals)? esc_textarea( str_replace("'",'"',$this->vals[$args['name']] )): '';
-        if(!$edit) return $val.'<input type="hidden" name="field['.$args['name'].'][]" value="'.$val.'">';
+        
+        if(!$edit) 
+            return $val.'<input type="hidden" '.$required.' name="field['.$args['name'].'][]" value="'.$val.'">';
+        
         $ph = (isset($args['placeholder']))? $args['placeholder']: '';
         $pattern = (isset($args['pattern']))? 'pattern="'.$args['pattern'].'"': '';
-        $field = "<input type=text placeholder='".$ph."' ".$pattern." name=field[".$args['name']."][] value='".$val."'> ";
+        $field = "<input type=text ".$required." placeholder='".$ph."' ".$pattern." name=field[".$args['name']."][] value='".$val."'> ";
         
         return $field;
     }
@@ -350,90 +416,10 @@ class Rcl_EditFields {
     }
 
     function verify(){
-        if(!isset($_POST['rcl_save_custom_fields'])||!wp_verify_nonce( $_POST['_wpnonce'], 'rcl-update-custom-fields' )) return false;
-        return true;
-    }
-
-    function delete($slug,$table){
-        global $wpdb;
-        if($slug) $res = $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->prefix."$table WHERE meta_key = '%s'",$slug));
-        if($res) echo __('All values of a custom field with this meta_key','wp-recall').' "'.$slug.'" '.__('were removed from the Database','wp-recall').'<br/>';
+        
     }
 
     function update_fields($table='postmeta'){
-
-        $fields = array();
-
-	//$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         
-        $POST = apply_filters('rcl_pre_update_custom_fields_options',$_POST);
-        
-        if(isset($POST['options'])){
-            foreach($POST['options'] as $key=>$val){
-                $fields['options'][$key] = $val;
-            }
-        }
-
-        $fs = 0;
-        $placeholder_id = 0;
-        $tps = array('select'=>1,'multiselect'=>1,'radio'=>1,'checkbox'=>1,'agree'=>1,'file'=>1);
-        
-        foreach($POST['field'] as $key=>$data){
-            
-            if($key=='placeholder'||$key=='field_select'||$key=='sizefile') continue;
-            
-            foreach($data as $a=>$value){
-                
-                if(!$POST['field']['title'][$a]) break;
-                
-                if($table&&!$POST['field']['title'][$a]){
-                    if($POST['field']['slug'][$a]){
-                        $this->delete($POST['field']['slug'][$a],$table);
-                    }
-                    continue;
-                }
-                
-                if($key=='slug'){
-                    
-                    if(!$value)
-                        $value = str_replace('-','_',rcl_sanitize_string($POST['field']['title'][$a]).'-'.rand(10,100));
-
-                    $value = str_replace(' ','_',$value);
-                    
-                }
-                
-                if($key=='type'){
-
-                    if($POST['field']['type'][$a]=='file'){
-                        $fields[$a]['sizefile'] = $POST['field']['sizefile'][$POST['field']['slug'][$a]];
-                    }
-                    if($POST['field']['type'][$a]=='agree'){
-                        $fields[$a]['url-agreement'] = $POST['field']['url-agreement'][$POST['field']['slug'][$a]];
-                    }
-                    
-                    if(isset($tps[$POST['field']['type'][$a]])){
-                        $fields[$a]['field_select'] = $POST['field']['field_select'][$fs++];
-                    }else{
-                        if($this->placeholder)
-                            $fields[$a]['placeholder'] = $_POST['field']['placeholder'][$placeholder_id++];
-                    }
-
-                }
-                $fields[$a][$key] = $value;
-            }
-        }
-
-        if($table&&$_POST['deleted']){
-            $dels = explode(',',$_POST['deleted']);
-            foreach($dels as $del){
-                $this->delete($del,$table);
-            }
-        }
-
-        $res = update_option( $this->name_option, $fields );
-
-        if($res) $this->fieldsData = stripslashes_deep($fields);
-
-        return $res;
     }
 }

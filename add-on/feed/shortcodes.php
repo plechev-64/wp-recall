@@ -1,7 +1,20 @@
 <?php
 
-add_shortcode('feed','rcl_feed_shortcode');
-function rcl_feed_shortcode($atts){
+/*$atts
+array(
+ * 'filters',
+ * 'load',
+ * 'user_feed',
+ * 'content',
+ * 'number',
+ * 'per_page',
+ * 'offset',
+ * 'orderby',
+ * 'order'
+ * ) */
+
+add_shortcode('feed','rcl_get_feed_list');
+function rcl_get_feed_list($atts){
     global $wpdb,$user_ID,$rcl_feed;
 
     if(!$user_ID){
@@ -10,23 +23,26 @@ function rcl_feed_shortcode($atts){
                 .'</p>';
     }
 
-    include_once 'classes/class-rcl-feed.php';
-    $list = new Rcl_Feed($atts);
+    include_once 'classes/class-rcl-feed-list.php';
+    $list = new Rcl_Feed_List($atts);
 
-    $count = false;
+    if(!isset($atts['number'])){
 
-    if(!$list->number){
-
-        $count = $list->count_feed_posts();
-
-        $rclnavi = new Rcl_PageNavi('rcl-feed',$count,array('in_page'=>$list->inpage));
-        $list->offset = $rclnavi->offset;
-        $list->number = $rclnavi->in_page;
+        $rclnavi = new Rcl_PageNavi(
+                'rcl-feed',
+                $list->count_feed(),
+                array(
+                    'in_page'=>$list->query['number']
+                )
+            );
+        
+        $list->query['offset'] = $rclnavi->offset;
+        
     }
 
+    $content = $list->get_filters();
+    
     $feedsdata = $list->get_feed();
-
-    $content = $list->get_filters($count);
 
     if(!$feedsdata){
         $content .= '<p align="center">'.__('No news found','wp-recall').'</p>';
@@ -35,7 +51,7 @@ function rcl_feed_shortcode($atts){
 
     $load = ($rclnavi->in_page)? 'data-load="'.$list->load.'"': '';
 
-    $content .= '<div id="rcl-feed" data-feed="'.$list->content.'" '.$load.'>';
+    $content .= '<div id="rcl-feed" data-custom="'.base64_encode(json_encode($atts)).'" data-feed="'.$list->content.'" '.$load.'>';
 
     foreach($feedsdata as $rcl_feed){ $list->setup_data($rcl_feed);
         $content .= '<div id="feed-'.$rcl_feed->feed_type.'-'.$rcl_feed->feed_ID.'" class="feed-box feed-user-'.$rcl_feed->feed_author.' feed-'.$rcl_feed->feed_type.'">';

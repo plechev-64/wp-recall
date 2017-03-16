@@ -338,10 +338,7 @@ div p.post-group-meta {
     background: #fff;
     box-sizing: border-box;
     padding: 10px 5px 50px;
-    position: absolute;
     width: 100%;
-	height: 100%;
-    z-index: 9;
 }
 #group-link-content .close-content {
     background: rgba(219, 219, 219, 0.6);
@@ -378,7 +375,8 @@ div p.post-group-meta {
 .group-request .group-user-option select{
     width: 100px;
 }
-#group-popup .group-request .apply-request{
+.group-dialog .group-request .apply-request,
+.group-dialog .group-request .success{
     float: right;
     margin: 1px 2px;
     padding: 7px;
@@ -480,8 +478,10 @@ div p.post-group-meta {
     padding: 5px;
     border: 1px solid #ccc;
 }
-#widgets-options .widgets-zone input {
-	width: 96%;
+#widgets-options .widgets-zone input,
+#widgets-options .widgets-zone select{
+    width: 100%;
+    box-sizing: border-box;
 }
 #widgets-options #unuses-zone li{
     float:left;
@@ -490,7 +490,7 @@ div p.post-group-meta {
     background: rgba(219, 219, 219, 0.6);
     margin: 5px;
     height: 40px;
-	width: 240px;
+    width: 240px;
 }
 
 

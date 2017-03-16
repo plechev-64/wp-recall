@@ -13,9 +13,9 @@ function rcl_admin_user_account_scripts(){
 add_filter( 'manage_users_columns', 'rcl_balance_user_admin_column' );
 function rcl_balance_user_admin_column( $columns ){
 
-  return array_merge( $columns,
-    array( 'balance_user_recall' => __("Balance",'wp-recall') )
-  );
+    return array_merge( $columns,
+        array( 'balance_user_recall' => __("Balance",'wp-recall') )
+    );
 
 }
 
@@ -78,10 +78,10 @@ function rcl_edit_balance_user(){
 add_action('admin_menu', 'rcl_statistic_user_pay_page',25);
 function rcl_statistic_user_pay_page(){
     $prim = 'manage-rmag';
-    if(!function_exists('wpmagazin_options_panel')){
-            $prim = 'manage-wpm-options';
-            add_menu_page('Recall Commerce', 'Recall Commerce', 'manage_options', $prim, 'rmag_global_options');
-            add_submenu_page( $prim, __('Payment systems','wp-recall'), __('Payment systems','wp-recall'), 'manage_options', $prim, 'rmag_global_options');
+    if(!function_exists('rcl_commerce_menu')){
+        $prim = 'manage-wpm-options';
+        add_menu_page('Rcl Commerce', 'Rcl Commerce', 'manage_options', $prim, 'rmag_global_options');
+        add_submenu_page( $prim, __('Payment systems','wp-recall'), __('Payment systems','wp-recall'), 'manage_options', $prim, 'rmag_global_options');
     }
 
     $hook = add_submenu_page( $prim, __('Payments','wp-recall'), __('Payments','wp-recall'), 'manage_options', 'manage-wpm-cashe', 'rcl_admin_statistic_cashe');

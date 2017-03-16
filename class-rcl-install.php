@@ -276,8 +276,6 @@ class RCL_Install {
 
         }
 
-	//устанавливаем показ ссылки на сайт автора плагина
-        update_option('rcl_footer_link',1);
         update_option('rcl_global_options', $rcl_options );
         update_option('rcl_version',VER_RCL);
 

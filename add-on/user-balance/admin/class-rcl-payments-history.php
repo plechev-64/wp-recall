@@ -180,38 +180,40 @@ class Rcl_Payments_History extends WP_List_Table {
             'number' => $this->per_page
         ));
         
+        $tableAs = $payments->query['table']['as'];
+        
         if(isset($_POST['s'])){
 
-            $payments->query['where'][] = "($payments->table_as.user_id = '".$_POST['s']."' OR $payments->table_as.payment_id = '".$_POST['s']."')";
+            $payments->query['where'][] = "($tableAs.user_id = '".$_POST['s']."' OR $tableAs.payment_id = '".$_POST['s']."')";
             
             if(isset($_GET['m'])&&$_GET['m']){ 
             
-                $payments->query['where'][] = "$payments->table_as.time_action LIKE '".$_GET['m']."-%'";
+                $payments->query['where'][] = "$tableAs.time_action LIKE '".$_GET['m']."-%'";
 
             }
             
         }else if(isset($_GET['m'])&&$_GET['m']){ 
             
-            $payments->query['where'][] = "$payments->table_as.time_action LIKE '".$_GET['m']."-%'";
+            $payments->query['where'][] = "$tableAs.time_action LIKE '".$_GET['m']."-%'";
             
         }else if($_GET['user_id']){
             
-            $payments->query['where'][] = "$payments->table_as.user_id = '".$_GET['user_id']."'";
+            $payments->query['where'][] = "$tableAs.user_id = '".$_GET['user_id']."'";
             
         }
 
         $items = $payments->get_data();
-        
-        $this->total_items = $payments->count();
-        
-        $payments->reset_query();
-        
+
         $payments->query['select'] = array(
-            "SUM($payments->table_as.pay_amount)"
+            "SUM($tableAs.pay_amount)"
         );
         
         $this->sum = $payments->get_data('get_var');
         
+        //$payments->reset_query();
+        
+        $this->total_items = $payments->count();
+
         $this->sum_balance = $this->get_sum_balance();
 
         return $items;

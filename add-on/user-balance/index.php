@@ -54,6 +54,13 @@ function rcl_success_pay($dataPay){
     do_action('rcl_success_pay',$dataPay);
 }
 
+//получение данных из таблицы произведенных платежей
+function rcl_get_payments($args = false){
+    require_once 'class-rcl-payments.php';
+    $payments = new Rcl_Payments();
+    return $payments->get_results($args);
+}
+
 function rcl_payform($attr){
     return rcl_get_pay_form($attr);
 }
@@ -98,13 +105,6 @@ function rcl_add_user_balance($money,$user_id,$comment=''){
     do_action('rcl_add_user_balance',$money,$user_id,$comment);
     
     return $result;
-}
-
-function rcl_get_payments($args = false){
-    require_once 'class-rcl-payments.php';
-    $payments = new Rcl_Payments();
-    $payments->set_query($args);
-    return $payments->get_data();
 }
 
 function rcl_get_html_usercount(){

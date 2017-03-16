@@ -1,5 +1,19 @@
 <?php
 
+if (is_admin())
+    require_once 'admin/index.php';
+
+require_once 'classes/rcl-groups-query.php';
+require_once 'groups-init.php';
+require_once 'groups-core.php';
+require_once 'shortcodes.php';
+require_once 'groups-widgets.php';
+
+if(!is_admin()||defined( 'DOING_AJAX' )) 
+    require_once 'groups-public.php';
+
+require_once 'upload-avatar.php';
+
 if (!is_admin()):
     add_action('rcl_enqueue_scripts','rcl_groups_scripts',10);
 endif;
@@ -16,21 +30,18 @@ function rcl_init_js_groups_variables($data){
     return $data;
 }
 
-require_once 'groups-init.php';
-require_once 'groups-core.php';
-require_once 'shortcodes.php';
-if(is_admin()) require_once 'groups-options.php';
-require_once 'groups-widgets.php';
-if(!is_admin()||defined( 'DOING_AJAX' )) 
-    require_once 'groups-public.php';
-require_once 'upload-avatar.php';
-
-if(function_exists('rcl_register_rating_type')){
-    if(!is_admin()) add_action('init','rcl_register_rating_group_type');
-    if(is_admin()) add_action('admin_init','rcl_register_rating_group_type');
-    function rcl_register_rating_group_type(){
-        rcl_register_rating_type(array('post_type'=>'post-group','type_name'=>__('Groups records','wp-recall'),'style'=>true));
-    }
+add_action('init','rcl_register_rating_group_type');
+function rcl_register_rating_group_type(){
+    
+    if(!function_exists('rcl_register_rating_type')) 
+        return false;
+    
+    rcl_register_rating_type(array(
+        'post_type'=>'post-group',
+        'type_name'=>__('Groups records','wp-recall'),
+        'style'=>true
+        )
+    );
 }
 
 //обновление кеша вкладки групп ее админа
@@ -175,6 +186,8 @@ function rcl_register_default_group_sidebars(){
 function rcl_group(){
     global $rcl_group;
     
+    rcl_dialog_scripts();
+    
     if(rcl_is_group_can('admin')){
         rcl_fileupload_scripts();
         rcl_enqueue_script( 'groups-image-uploader', rcl_addon_url('js/groups-image-uploader.js', __FILE__),false,true);
@@ -203,36 +216,36 @@ function add_post_in_group(){
 }
 
 function rcl_get_link_group_tag($content){
-	global $post,$user_ID,$rcl_group;
-	if($post->post_type!='post-group') return $content;
+    global $post,$user_ID,$rcl_group;
+    if($post->post_type!='post-group') return $content;
 
-	$group_data = get_the_terms( $post->ID, 'groups' );
+    $group_data = get_the_terms( $post->ID, 'groups' );
 
-	foreach((array)$group_data as $data){
-		if($data->parent==0) $group_id = $data->term_id;
-		else $tag = $data;
-	}
+    foreach((array)$group_data as $data){
+            if($data->parent==0) $group_id = $data->term_id;
+            else $tag = $data;
+    }
 
-	if(!isset($tag)||!$tag) return $content;
+    if(!isset($tag)||!$tag) return $content;
 
-        if( doing_filter('the_excerpt') ){
+    if( doing_filter('the_excerpt') ){
 
-            if(!$rcl_group) $rcl_group = rcl_get_group($group_id);
+        if(!$rcl_group) $rcl_group = rcl_get_group($group_id);
 
-            if($rcl_group->group_status=='closed'){
-                if($rcl_group->admin_id!=$user_ID){
+        if($rcl_group->group_status=='closed'){
+            if($rcl_group->admin_id!=$user_ID){
 
-                    $user_status = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
+                $user_status = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
 
-                    if(!$user_status) $content = rcl_close_group_post_content();
+                if(!$user_status) $content = rcl_close_group_post_content();
 
-                }
             }
         }
+    }
 
-	$cat = '<p class="post-group-meta"><i class="fa fa-folder-open rcl-icon"></i>'.__('Group categories','wp-recall').': <a href="'. get_term_link( (int)$group_id, 'groups' ) .'?group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
+    $cat = '<p class="post-group-meta"><i class="fa fa-folder-open rcl-icon"></i>'.__('Group categories','wp-recall').': <a href="'. get_term_link( (int)$group_id, 'groups' ) .'?group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
 
-	return $cat.$content;
+    return $cat.$content;
 }
 
 function rcl_init_get_link_group_tag(){
@@ -242,8 +255,8 @@ function rcl_init_get_link_group_tag(){
 add_action('wp','rcl_init_get_link_group_tag',10);
 
 function rcl_init_namegroup(){
-	if(is_single()) add_filter('the_content','rcl_add_namegroup',80);
-        if(is_search()) add_filter('the_excerpt','rcl_add_namegroup',80);
+    if(is_single()) add_filter('the_content','rcl_add_namegroup',80);
+    if(is_search()) add_filter('the_excerpt','rcl_add_namegroup',80);
 }
 add_action('wp','rcl_init_namegroup',10);
 
@@ -259,33 +272,6 @@ function rcl_add_namegroup($content){
 
     $content = $group_link.$content;
     return $content;
-}
-
-if(is_admin())
-    add_action('created_groups','rcl_groups_admin_create',10);
-function rcl_groups_admin_create($term_id){
-   global $user_ID,$wpdb;
-   
-   $term = get_term( $term_id, 'groups' );
-   
-   if($term->parent) return false;
-   
-   $result = $wpdb->insert(
-        RCL_PREF.'groups',
-        array(
-            'ID'=>$term_id,
-            'admin_id'=>$user_ID,
-            'group_status'=>'open',
-            'group_date'=>current_time('mysql')
-        )
-    );
-
-    if(!$result) return false;
-
-    rcl_update_group_option($term_id,'can_register',1);
-    rcl_update_group_option($term_id,'default_role','author');
-
-    do_action('rcl_create_group',$term_id);
 }
 
 //Создаем новую группу
@@ -360,24 +346,6 @@ function rcl_get_group_options($group_id){
     $category = rcl_get_group_option($group_id,'category');
 
     $category = (is_array($category))? implode(', ',$category): $category;
-
-    /*$data = array( 'wpautop' => 1
-        ,'media_buttons' => 0
-        ,'textarea_name' => 'group-options[description]'
-        ,'textarea_rows' => 10
-        ,'tabindex' => null
-        ,'editor_css' => ''
-        ,'editor_class' => 'autosave'
-        ,'teeny' => 0
-        ,'dfw' => 0
-        ,'tinymce' => 1
-        ,'quicktags' => 1
-    );
-
-    ob_start();
-    wp_editor( esc_textarea(strip_tags(rcl_get_group_description($group_id))), 'contentarea', $data );
-    $editor = ob_get_contents();
-    ob_end_clean();*/
 
     $content = '<div id="group-options">'
         . '<h3>'.__('Group settings','wp-recall').'</h3>'
@@ -565,49 +533,52 @@ function rcl_search_filter_closed_posts($query) {
 }
 
 //исключаем из фида комментарии из закрытых групп
-add_filter('rcl_feed_ignored_posts_in_comments','rcl_add_feed_ignored_posts_in_comments',10);
-function rcl_add_feed_ignored_posts_in_comments($posts){
+add_filter('rcl_feed_comments_query','rcl_add_feed_ignored_posts_in_comments',10);
+function rcl_add_feed_ignored_posts_in_comments($query){
     global $user_ID;
     
     $ignored_posts = rcl_get_closed_group_posts($user_ID);
+
+    if($ignored_posts)
+        $query['where'][] = "wp_comments.comment_post_ID NOT IN (".implode(',',$ignored_posts).")";
     
-    return $ignored_posts;
+    return $query;
 }
 
 //исключаем из фида публикации из закрытых групп
-add_filter('rcl_feed_posts_array','rcl_add_feed_group_posts',10);
-function rcl_add_feed_group_posts($posts){
-    global $wpdb,$user_ID;
-    
-    $cachekey = json_encode(array('rcl_add_feed_group_posts',$posts));
-    $cache = wp_cache_get( $cachekey );
-    if ( $cache )
-        return $cache;
-    
-    $ignored_posts = rcl_get_closed_group_posts($user_ID);
-
-    if($ignored_posts) $posts = array_diff($posts,$ignored_posts);
+add_filter('rcl_feed_posts_query','rcl_add_feed_group_query',10,2);
+function rcl_add_feed_group_query($query,$user_id){
+    global $wpdb;
 
     $groups = $wpdb->get_col("SELECT groups_users.group_id, groups.ID "
             . "FROM ".RCL_PREF."groups_users AS groups_users "
             . "INNER JOIN ".RCL_PREF."groups AS groups ON groups_users.user_id=groups.admin_id "
-            . "WHERE (groups_users.user_id='$user_ID' OR groups.admin_id='$user_ID') "
+            . "WHERE (groups_users.user_id='$user_id' OR groups.admin_id='$user_id') "
             . "GROUP BY groups_users.group_id, groups.ID");
 
     if($groups){
        
         $groups = array_unique($groups);
-
+        
+        $feeds = new Rcl_Feed_Query();
+        
+        $authors_ignor = $feeds->get_col(array(
+            'feed_type' => 'author',
+            'user_id' => $user_id,
+            'feed_status' => 0,
+            'fields' => array('object_id')
+        ));
+        
+        $authors_ignor[] = $user_id;
+        
         $objects = $wpdb->get_col("SELECT term_relationships.object_id "
             . "FROM $wpdb->term_relationships AS term_relationships "
             . "INNER JOIN $wpdb->term_taxonomy AS term_taxonomy ON term_relationships.term_taxonomy_id=term_taxonomy.term_taxonomy_id "
             . "WHERE term_taxonomy.term_id IN (".implode(',',$groups).")");
-
-        if($objects) $posts = array_unique(array_merge($posts,$objects));
+        
+        $query['where_or'][] = "(wp_posts.ID IN (".implode(',',$objects).") AND wp_posts.post_author NOT IN (".implode(',',$authors_ignor)."))";
 
     }
-    
-    wp_cache_add( $cachekey, $posts );
 
-    return $posts;
+    return $query;
 }

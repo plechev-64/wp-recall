@@ -7,22 +7,41 @@ class Rcl_Custom_Fields{
     public $required;
     public $files;
     public $placeholder;
+    public $rand;
 
     function __construct(){
         $this->files = array();
+        $this->rand = rand(0,100);
     }
 
     function get_title($field){
-        if($field['type']=='agree'&&$field['url-agreement']) return '<a target="_blank" href="'.$field['url-agreement'].'">'.$field['title'].'</a>';
+        
+        if($field['type']=='agree'&&$field['url-agreement']) 
+            return '<a target="_blank" href="'.$field['url-agreement'].'">'.$field['title'].'</a>';
+        
         return $field['title'];
+        
     }
 
     function get_input($field,$value=false){
         global $user_LK,$user_ID;
 
+        if(isset($field['field_select'])){
+            
+            $field['values'] = array();
+            
+            foreach(explode('#',$field['field_select']) as $k => $val){
+                $field['values'][$val] = $val;
+            }
+            
+        }
+
+        if(isset($field['requared']))
+            $field['required'] = $field['requared'];
+
         $this->value = (isset($field['default'])&&!$value)? $field['default']: stripslashes_deep($value);
         $this->slug = $field['slug'];
-        $this->required = ($field['requared']==1)? 'required': '';
+        $this->required = ($field['required']==1)? 'required': '';
         $this->placeholder = (isset($field['placeholder'])&&$field['placeholder'])? "placeholder='".str_replace("'",'"',$field['placeholder'])."'": '';
 
         if(!$field['type']) return false;
@@ -81,6 +100,10 @@ class Rcl_Custom_Fields{
     function get_type_text($field){
         return '<input type="text" '.$this->required.' '.$this->placeholder.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
     }
+    
+    function get_type_password($field){
+        return '<input type="password" '.$this->required.' '.$this->placeholder.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+    }
 
     function get_type_tel($field){
         return '<input type="tel" '.$this->required.' '.$this->placeholder.' name="'.$this->slug.'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
@@ -119,7 +142,7 @@ class Rcl_Custom_Fields{
         
         if($this->value){
             $input .= $this->get_field_value($field,$this->value,0);
-            if(!$field['requared']) $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a></span>';
+            if(!$field['required']) $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a></span>';
             $input = '<span class="file-manage-box">'.$input.'</span>';
         }
 
@@ -142,20 +165,25 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_agree($field){
-        return '<input type="checkbox" '.checked($this->value,1,false).' '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'" value="1"/> '
-                . '<label class="block-label" for="'.$this->slug.'">'.$field['field_select'].'</label>';
+        return '<input type="checkbox" '.checked($this->value,1,false).' '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.$this->rand.'" value="1"/> '
+                . '<label class="block-label" for="'.$this->slug.$this->rand.'">'.$field['field_select'].'</label>';
     }
 
     function get_type_select($field){
-        $fields = explode('#',$field['field_select']);
-        $count_field = count($fields);
-        $field_select = '';
-        for($a=0;$a<$count_field;$a++){
-            $field_select .='<option '.selected($this->value,$fields[$a],false).' value="'.trim($fields[$a]).'">'.$fields[$a].'</option>';
+        
+        $values = $field['values'];
+        
+        if(!$values) return false;
+        
+        $content = '<select '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'">';
+        
+        foreach($values as $k => $value){
+            $content .= '<option '.selected($this->value,$k,false).' value="'.trim($k).'">'.$value.'</option>';
         }
-        return '<select '.$this->required.' name="'.$this->slug.'" id="'.$this->slug.'">
-        '.$field_select.'
-        </select>';
+        
+        $content .= '</select>';
+
+        return $content;
     }
 
     function get_type_multiselect($field){
@@ -180,29 +208,27 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_checkbox($field){
-        $chek = explode('#',$field['field_select']);
-        $count_field = count($chek);
-        $input = '';
-        $class = ($this->required) ? 'class="requared-checkbox"':'';
-        for($a=0;$a<$count_field;$a++){
-            $sl = '';
-            if($this->value){
-                foreach((array)$this->value as $meta){
-                    if($chek[$a]!=$meta) continue;
-                    $sl = 'checked=checked';
-                    break;
-                }
-            }
+        
+        $values = $field['values'];
+        
+        if(!$values) return false;
+        
+        $currentValues = (is_array($this->value))? $this->value: array();
+        
+        $class = ($this->required) ? 'class="required-checkbox"':'';
+        
+        foreach($values as $k => $value){
             
             $input .='<span class="rcl-checkbox-box">'
-                    . '<input '.$this->required.' '.$sl.' id="'.$this->slug.'_'.$a.'" type="checkbox" '.$class.' name="'.$this->slug.'[]" value="'.trim($chek[$a]).'"> ';
-            $input .='<label class="block-label" for="'.$this->slug.'_'.$a.'">';
+                    . '<input '.$this->required.' '.checked(in_array($k,$currentValues),true,false).' id="'.$this->slug.'_'.$k.$this->rand.'" type="checkbox" '.$class.' name="'.$this->slug.'[]" value="'.trim($k).'"> ';
+            $input .='<label class="block-label" for="'.$this->slug.'_'.$k.$this->rand.'">';
             $input .= (!isset($field['before']))? '': $field['before'];
-            $input .= $chek[$a]
+            $input .= $value
                     .'</label>'
                     . '</span>';
             $input .= (!isset($field['after']))? '': $field['after'];
         }
+        
         return $input;
     }
 
@@ -213,11 +239,12 @@ class Rcl_Custom_Fields{
         for($a=0;$a<$count_field;$a++){
             
             $input .='<span class="rcl-radio-box">'
-                    . '<input '.$this->required.' '.checked($this->value,$radio[$a],false).' type="radio" '.checked($a,0,false).' id="'.$this->slug.'_'.$a.'" name="'.$this->slug.'" value="'.trim($radio[$a]).'"> ';
-            $input .='<label class="block-label" for="'.$this->slug.'_'.$a.'">';        
+                    . '<input '.$this->required.' '.checked($this->value,$radio[$a],false).' type="radio" '.checked($a,0,false).' id="'.$this->slug.'_'.$a.$this->rand.'" name="'.$this->slug.'" value="'.trim($radio[$a]).'"> ';
+            $input .='<label class="block-label" for="'.$this->slug.'_'.$a.$this->rand.'">';        
             $input .= $radio[$a]
                     .'</label>'
                     . '</span>';
+            
         }
         return $input;
     }
@@ -275,6 +302,8 @@ class Rcl_Custom_Fields{
                 $show = '<a rel="nofollow" target="_blank" href="'.$value.'">'.$value.'</a>';            
         if($field['type']=='textarea')
                 $show = nl2br($value);
+        if($field['type']=='agree')
+                $show = __('Принято','wp-recall');
         
         $show = '<span class="rcl-field-value type-'.$field['type'].'-value">'.$show.'</span>';
         
@@ -293,43 +322,7 @@ class Rcl_Custom_Fields{
 
     function register_user_metas($user_id){
 
-        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-        require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-        require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-
-        $get_fields = get_option( 'rcl_profile_fields' );
-
-        if(!$get_fields) return false;
-
-	$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-        foreach((array)$get_fields as $custom_field){
-            $slug = $custom_field['slug'];
-            if($custom_field['type']=='checkbox'){
-                $select = explode('#',$custom_field['field_select']);
-                $count_field = count($select);
-                if(isset($_POST[$slug])){
-                    foreach($_POST[$slug] as $val){
-                        for($a=0;$a<$count_field;$a++){
-                            if(trim($select[$a])==$val){
-                                $vals[] = $val;
-                            }
-                        }
-                    }
-
-                    if($vals) update_usermeta($user_id, $slug, $vals);
-                }
-
-            }else if($custom_field['type']=='file'){
-
-                $attach_id = rcl_upload_meta_file($custom_field,$user_id);
-                if($attach_id) update_user_meta($user_id, $slug, $attach_id);
-
-
-            }else{
-                if($_POST[$slug]) update_usermeta($user_id, $slug, $_POST[$slug]);
-            }
-        }
+        rcl_update_profile_fields($user_id);
 
     }
 
@@ -338,7 +331,7 @@ class Rcl_Custom_Fields{
         if($this->files) return false;
         return '<script type="text/javascript">
             jQuery(function(){
-                jQuery("#profile-page form#your-profile").attr("enctype","multipart/form-data");
+                jQuery("#rcl-order-form, #profile-page, form#your-profile").attr("enctype","multipart/form-data");
                 jQuery("form").submit(function(event){
                     var error = false;
                     jQuery(this).find(".meta-file").each(function(){
@@ -356,6 +349,7 @@ class Rcl_Custom_Fields{
                         }
                     });
                     if(error){
+                        rcl_preloader_hide();
                         alert("'.__('File size exceedes maximum!','wp-recall').'");
                         return false;
                     }
@@ -367,6 +361,10 @@ class Rcl_Custom_Fields{
 }
 
 function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
+    
+    require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
     $slug = $custom_field['slug'];
     $maxsize = ($custom_field['sizefile'])? $custom_field['sizefile']: 2;

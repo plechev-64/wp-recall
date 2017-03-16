@@ -13,7 +13,8 @@ if (!class_exists('reg_core')){
             $host = str_replace('www.','',$_SERVER['HTTP_HOST']);
             $dm = explode('.',$host);
             $cnt = count($dm);
-            if($cnt==3&&$dm[2]!='ua') $sn_nm = $dm[1].'.'.$dm[2];
+            $ignors = array('ua','es');
+            if($cnt==3&&!in_array($dm[2],$ignors)) $sn_nm = $dm[1].'.'.$dm[2];
             else $sn_nm = $host;
             define('WP_HOST',md5($sn_nm));
             define('WP_PREFIX', $wpdb->prefix . substr(WP_HOST, -4) . '_');

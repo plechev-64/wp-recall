@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 15.10.0
+    Version: 16.a.0
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '15.10.0';
+	public $version = '16.a.0';
 
 	protected static $_instance = null;
 
@@ -141,21 +141,21 @@ final class WP_Recall {
 
             require_once 'functions/rcl_activate.php';
             require_once 'functions/class-rcl-query.php';
-            require_once("functions/class-rcl-includer.php");
-            require_once('functions/enqueue-scripts.php');
-            require_once('functions/rcl-cron.php');
+            require_once 'functions/class-rcl-includer.php';
+            require_once 'functions/enqueue-scripts.php';
+            require_once 'functions/rcl-cron.php';
             require_once 'functions/class-rcl-cache.php';
             require_once 'functions/class-rcl-ajax.php';
-            require_once('functions/class-rcl-custom-fields.php');
-            require_once('functions/loginform.php');
-            require_once('functions/rcl_currency.php');
-            require_once('functions/class-rcl-pagenavi.php');
-            require_once("rcl-functions.php");
-            require_once("functions/deprecated.php");
-            require_once("functions/shortcodes.php");
-            require_once("rcl-widgets.php"); 
+            require_once 'functions/class-rcl-custom-fields.php';
+            require_once 'functions/loginform.php';
+            require_once 'functions/rcl_currency.php';
+            require_once 'functions/class-rcl-pagenavi.php';
+            require_once 'rcl-functions.php';
+            require_once 'functions/deprecated.php';
+            require_once 'functions/shortcodes.php';
+            require_once 'rcl-widgets.php'; 
 
-            require_once('class-rcl-install.php');
+            require_once 'class-rcl-install.php';
 
             if ( $this->is_request( 'admin' ) ) {
                     $this->admin_includes();
@@ -176,7 +176,7 @@ final class WP_Recall {
 	 * Сюда складываем все файлы для админки
 	 */
 	public function admin_includes() {
-            require_once("rcl-admin/rcl-admin.php");
+            require_once 'rcl-admin/index.php';
 	}
 
 	/*

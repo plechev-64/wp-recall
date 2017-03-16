@@ -55,7 +55,10 @@ class Rcl_Postlist {
                     }
                 }
 
-                $rayt_p = rcl_get_ratings(array('object_id'=>$p_list,'rating_type'=>array($this->post_type)));
+                $rayt_p = rcl_get_rating_totals(array(
+                        'include_object_id' => $p_list,
+                        'rating_type' => $this->post_type
+                    ));
 
                 foreach((array)$rayt_p as $r){
                     if(!isset($r->object_id)) continue;

@@ -1,5 +1,5 @@
 jQuery(function($){
-    jQuery('#rcl-group').on('click','a.rcl-group-link',function(){
+    jQuery('body').on('click','a.rcl-group-link',function(){
         var callback = jQuery(this).data('callback');
         var group_id = jQuery(this).data('group');
         var value = jQuery(this).data('value');
@@ -7,20 +7,31 @@ jQuery(function($){
         var dataString = 'action=rcl_get_group_link_content&group_id='+group_id+'&callback='+callback;
         if(value) dataString += '&value='+value;
         dataString += '&ajax_nonce='+Rcl.nonce;
-        rcl_preloader_show('#rcl-group > div');
+        
+        if(jQuery('#ssi-modalContent').size()) 
+            rcl_preloader_show(jQuery('#ssi-modalContent'));
+        else
+            rcl_preloader_show(jQuery('#rcl-group'));
+        
         jQuery.ajax({
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
             success: function(data){
                 if(data){
-                    jQuery('#group-popup').html(data);
-
-                    var height = jQuery('#group-link-content').height();
-                    jQuery('#group-popup').height(height);
-                    var offsetTop = jQuery('#group-link-content').offset().top;
-                    jQuery('body,html').animate({scrollTop:offsetTop -70}, 500);
+                    
+                    if(jQuery('#ssi-modalContent').size()) ssi_modal.close();
+                    
+                    ssi_modal.show({
+                        className: 'rcl-dialog-tab group-dialog',
+                        sizeClass: 'small',
+                        buttons: [{
+                            label: Rcl.local.close,
+                            closeAfter: true
+                        }],
+                        content: data
+                    });
 
                 } else {
-                    rcl_notice('Error','error');
+                    rcl_notice('Error','error',10000);
                 }
                 rcl_preloader_hide();
             }
@@ -28,7 +39,7 @@ jQuery(function($){
         return false;
     });
 
-    jQuery('#rcl-group').on('click','.rcl-group-callback',function(){
+    jQuery('body').on('click','.rcl-group-callback',function(){
         var callback = jQuery(this).data('callback');
         var group_id = jQuery(this).data('group');
         var name = jQuery(this).data('name');
@@ -39,18 +50,27 @@ jQuery(function($){
         var dataString = 'action=rcl_group_callback&group_id='+group_id+'&callback='+callback+'&user_id='+user_id;
         dataString += '&ajax_nonce='+Rcl.nonce;
         if(name) dataString += '&'+name+'='+valname;
-        rcl_preloader_show('#rcl-group > div');
+        
+        if(jQuery('#ssi-modalContent').size()) 
+            rcl_preloader_show(jQuery('#ssi-modalContent'));
+        else
+            rcl_preloader_show(jQuery('#rcl-group'));
+        
         jQuery.ajax({
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
             success: function(data){
+                
                 if(data['success']){
                     var type = 'success';
                 } else {
                     var type = 'error';
                 }
 
-                if(data['place']=='notice') rcl_notice(data[type],type);
-                if(data['place']=='buttons') jQuery('#options-user-'+user_id).html('<span class=\''+type+'\'>'+data[type]+'</span>');
+                if(data['place']=='notice') 
+                    rcl_notice(data[type],type,10000);
+                
+                if(data['place']=='buttons') 
+                    jQuery('#options-user-'+user_id).html('<span class=\''+type+'\'>'+data[type]+'</span>');
 
                 rcl_preloader_hide();
             }
@@ -58,14 +78,16 @@ jQuery(function($){
         return false;
     });
     
-    jQuery('#group-popup').on('click','.group-request .apply-request',function(){
+    jQuery('body').on('click','.group-request .apply-request',function(){
         var button = jQuery(this);
         var user_id = button.parent().data('user');
         var apply = button.data('request');
-        var group_id = button.parents('#rcl-group').data('group');
+        var group_id = jQuery('#rcl-group').data('group');
         var dataString = 'action=rcl_apply_group_request&group_id='+group_id+'&user_id='+user_id+'&apply='+apply;
         dataString += '&ajax_nonce='+Rcl.nonce;
-        rcl_preloader_show('#group-popup > div');
+        
+        rcl_preloader_show(jQuery('#ssi-modalContent'));
+        
         jQuery.ajax({
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
             success: function(data){

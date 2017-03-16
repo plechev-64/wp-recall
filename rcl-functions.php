@@ -44,8 +44,11 @@ function rcl_tab($tab_data,$deprecated_callback=false ,$deprecated_name='',$depr
     if(!isset($tab_data['content'][0]['id']))
         $tab_data['content'][0]['id'] = $tab_data['id'];
     
-    if(!isset($tab_data['content'][0]['id']))
+    if(!isset($tab_data['content'][0]['name']))
         $tab_data['content'][0]['name'] = $tab_data['name'];
+    
+    if(!isset($tab_data['content'][0]['icon']))
+        $tab_data['content'][0]['icon'] = $tab_data['icon'];
 
     $tab_data = apply_filters('rcl_tab',$tab_data);
     
@@ -117,10 +120,10 @@ function rcl_setup_tabs(){
 
     if(is_admin()||!$user_LK) return false;
     
-    $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
-    
     do_action('rcl_setup_tabs');
     
+    $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
+
     if(!$rcl_tabs) return false;
     
     if (!class_exists('Rcl_Tabs')) 
@@ -333,16 +336,16 @@ function rcl_get_template_path($filename,$path=false){
 }
 
 //подключение указанного файла шаблона с выводом
-function rcl_include_template($file_temp,$path=false){
+function rcl_include_template($file_temp, $path=false, $data = false){
     $pathfile = rcl_get_template_path($file_temp,$path);
     if(!$pathfile) return false;
     include $pathfile;
 }
 
 //подключение указанного файла шаблона без вывода
-function rcl_get_include_template($file_temp,$path=false){
+function rcl_get_include_template($file_temp, $path=false, $data = false){
     ob_start();
-    rcl_include_template($file_temp,$path);
+    rcl_include_template($file_temp, $path, $data);
     $content = ob_get_contents();
     ob_end_clean();
     return $content;
@@ -1185,4 +1188,145 @@ function rcl_check_jpeg($f, $fix=false ){
 function rcl_is_register_open(){
     $users_can = apply_filters('rcl_users_can_register',get_option('users_can_register'));
     return $users_can;
+}
+
+/*16.0.0*/
+function rcl_update_profile_fields($user_id){
+
+    require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+    require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+
+    $profileFields = rcl_get_profile_fields();
+
+    if($profileFields){
+        
+        $defaultFields = array(
+            'user_email',
+            'description',
+            'url',
+            'first_name',
+            'last_name',
+            'display_name',
+            'user_pass',
+            'repeat_pass'
+        );
+        
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        
+        foreach($profileFields as $field){
+            
+            $field = apply_filters('rcl_pre_update_profile_field', $field);
+
+            if(!$field || !$field['slug']) continue;
+
+            $slug = $field['slug'];
+            
+            $value = (isset($_POST[$slug]))? $_POST[$slug]: false;
+            
+            if(in_array($slug,$defaultFields)){
+                
+                if($slug == 'repeat_pass') continue;
+
+                if($slug == 'user_pass' && $value){
+                    
+                    if($value != $_POST['repeat_pass']) continue;
+                    
+                }
+
+                wp_update_user( array( 'ID' => $user_id, $slug => $value ) );
+                
+                continue;
+                
+            }
+            
+            if($field['admin']==1&&!is_admin()){
+                if(get_user_meta($user_id, $slug, $value))
+                    continue;
+            }
+
+            if($field['type']=='checkbox'){
+                
+                $vals = array();
+                
+                if(is_array($value)){
+
+                    $cntVals = count($field['values']);
+                    
+                    foreach($value as $val){
+                        for($a=0;$a<$cntVals;$a++){
+                            if($field['values'][$a]==$val){
+                                $vals[] = $val;
+                            }
+                        }
+                    }
+                    
+                }
+                
+                if($vals){
+                    update_user_meta($user_id, $slug, $vals);
+                }else{
+                    delete_user_meta($user_id, $slug);
+                }
+                
+            }else if($field['type']=='file'){
+
+                $attach_id = rcl_upload_meta_file($field,$user_id);
+                
+                if($attach_id) 
+                    update_user_meta($user_id, $slug, $attach_id);
+
+            }else{
+
+                if($value){
+                    
+                    update_user_meta($user_id, $slug, $value);
+                    
+                }else{
+                    
+                    if(get_user_meta($user_id, $slug, $value)) 
+                        delete_user_meta($user_id, $slug, $value);
+                    
+                }
+            }
+        }
+    }
+
+    do_action('rcl_update_profile_fields',$user_id);
+
+}
+
+/*16.0.0*/
+function rcl_get_profile_fields($args = false){
+    
+    $fields = get_option( 'rcl_profile_fields' );
+    
+    $fields = apply_filters('rcl_profile_fields',$fields);
+    
+    $profileFields = array();
+    
+    foreach($fields as $k => $field){
+        
+        if(isset($args['exclude']) && in_array($field['slug'],$args['exclude'])){
+            
+            continue;
+            
+        }
+        
+        if(isset($field['field_select'])){
+            
+            $field['values'] = array();
+            
+            foreach(explode('#',$field['field_select']) as $val){
+                $field['values'][$val] = $val;
+            }
+            
+        }
+        
+        $profileFields[] = $field;
+        
+    }
+    
+    return $profileFields;
+    
 }

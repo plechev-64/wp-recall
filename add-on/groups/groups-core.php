@@ -1,4 +1,21 @@
 <?php
+
+function rcl_get_groups($args){   
+    $groups = new Rcl_Groups_Query();
+    $groups->setup_termdata();
+    return $groups->get_results($args);
+}
+
+function rcl_get_groups_users($args){
+    $users = new Rcl_Groups_Users_Query();
+    return $users->get_results($args);
+}
+
+function rcl_get_groups_options($args){
+    $options = new Rcl_Groups_Options_Query();
+    return $options->get_results($args);
+}
+
 function rcl_group_init(){
     global $wp_query,$wpdb,$rcl_group,$user_ID;
 
@@ -83,12 +100,14 @@ function rcl_update_group($args){
             array( 'term_id' => $args['group_id'] )
          );
      }
+     
      if(isset($args['description'])){
         $res = $wpdb->update(  $wpdb->prefix.'term_taxonomy',
             array( 'description' => esc_html(stripslashes_deep($args['description']))),
             array( 'term_id' => $args['group_id'] )
          );
      }
+     
      if(isset($args['status'])){
         $res = $wpdb->update(  RCL_PREF.'groups',
             array( 'group_status' => $args['status'] ),
@@ -100,10 +119,8 @@ function rcl_update_group($args){
         rcl_update_group_option($args['group_id'],'default_role',$args['default_role']);
      }
 
-     if($args['category']){
-        $category = array_map('trim', explode(',',$args['category']));
-        rcl_update_group_option($args['group_id'],'category',$category);
-     }
+    $category = array_map('trim', explode(',',$args['category']));
+    rcl_update_group_option($args['group_id'],'category',$category);
 
      $can_register = (!isset($args['can_register']))? 0: 1;
      rcl_update_group_option($args['group_id'],'can_register',$can_register);
@@ -309,18 +326,16 @@ function rcl_group_add_users_query($query){
     $role_query = ($role&&$role!='all')? "='".$role."'": "NOT IN ('admin','moderator')";
 
 
-    $query->query['select'][] = "groups_users.user_role";
+    $query['select'][] = "groups_users.user_role";
 
     if($role=='admin'){
-        $query->query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
-        $query->query['where'][] = "(groups_users.user_role = 'admin' AND groups_users.group_id='$rcl_group->term_id') OR (users.ID='$rcl_group->admin_id')";
-        $query->query['group'] = "users.ID";
+        $query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON wp_users.ID=groups_users.user_id";
+        $query['where'][] = "(groups_users.user_role = 'admin' AND groups_users.group_id='$rcl_group->term_id') OR (wp_users.ID='$rcl_group->admin_id')";
+        $query['groupby'] = "wp_users.ID";
     }else{
-        $query->query['join'][] = "INNER JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
-        $query->query['where'][] = "groups_users.group_id = '$rcl_group->term_id' AND groups_users.user_role $role_query";
+        $query['join'][] = "INNER JOIN ".RCL_PREF."groups_users AS groups_users ON wp_users.ID=groups_users.user_id";
+        $query['where'][] = "groups_users.group_id = '$rcl_group->term_id' AND groups_users.user_role $role_query";
     }
-    
-    //print_r($query);exit;
 
     return $query;
 }
@@ -404,8 +419,14 @@ function rcl_get_group_option($group_id,$option_key){
     if ( $cache )
         return $cache;
     
-    $value = $wpdb->get_var("SELECT option_value FROM ".RCL_PREF."groups_options WHERE group_id='$group_id' AND option_key='$option_key'");
+    $options = new Rcl_Groups_Options_Query();
     
+    $value = $options->get_var(array(
+        'group_id' => $group_id,
+        'option_key' => $option_key,
+        'fields' => array('option_value')  
+    ));
+
     wp_cache_add( $cachekey, maybe_unserialize( $value ) );
     
     return maybe_unserialize( $value );
@@ -453,26 +474,18 @@ function rcl_get_group($group_id){
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
         return $cache;
-
-    $group = rcl_get_groups(array('include'=>$group_id));
     
-    wp_cache_add( $cachekey, $group[0] );
+    $groups = new Rcl_Groups_Query();
+    
+    $groups->setup_termdata();
+    
+    $group = $groups->get_row(array(
+        'ID' => $group_id
+    ));
+    
+    wp_cache_add( $cachekey, $group );
 
-    return $group[0];
-}
-
-function rcl_get_groups($args){
-
-    include_once 'classes/rcl-groups.php';
-    $groups = new Rcl_Groups($args);
-
-    $groupsdata = $groups->get_groups();
-
-    if(!$groupsdata){
-        return false;
-    }
-
-    return $groupsdata;
+    return $group;
 }
 
 function rcl_update_group_user_role($user_id,$group_id,$new_role){
@@ -548,8 +561,12 @@ function rcl_group_remove_user($user_id,$group_id){
 
 function rcl_group_update_users_count($group_id){
     global $wpdb;
-
-    $amount = $wpdb->get_var("SELECT COUNT(ID) FROM ".RCL_PREF."groups_users WHERE group_id='$group_id'");
+    
+    $users = new Rcl_Groups_Users_Query();
+    
+    $amount = $users->count(array(
+        'group_id' => $group_id
+    ));
 
     $result = $wpdb->update(
         RCL_PREF."groups",
@@ -687,7 +704,6 @@ function rcl_get_group_link_content(){
     $rcl_group = rcl_get_group($group_id);
 
     $content = '<div id="group-link-content">';
-    $content .= '<a href="#" class="close-content" onclick="jQuery(\'#group-link-content\').remove();jQuery(\'#group-popup\').removeAttr(\'style\');return false;"><i class="fa fa-reply"></i>'.__('Return to the group','wp-recall').'</a>';
     $content .= $callback($group_id);
     $content .= '</div>';
 
@@ -802,84 +818,84 @@ function rcl_group_admin_panel(){
 
 add_action('pre_get_posts','rcl_edit_group_pre_get_posts',10);
 function rcl_edit_group_pre_get_posts($query){
-	global $wpdb,$user_ID,$post,$rcl_group;
+    global $wpdb,$user_ID,$post,$rcl_group;
 
-        if(!$query->is_main_query()) return $query;
+    if(!$query->is_main_query()) return $query;
 
-        if($query->is_tax&&isset($query->query['groups'])){
-            $rcl_group = rcl_group_init();
-	}
+    if($query->is_tax&&isset($query->query['groups'])){
+        $rcl_group = rcl_group_init();
+    }
 
-	if(isset($query->query['post_type'])&&$query->is_single&&$query->query['post_type']=='post-group'&&$query->query['name']){
+    if(isset($query->query['post_type'])&&$query->is_single&&$query->query['post_type']=='post-group'&&$query->query['name']){
 
-            if(!$post) $post_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."posts WHERE post_name='%s'",$query->query['name']));
-            else $post_id = $post->ID;
+        if(!$post) $post_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."posts WHERE post_name='%s'",$query->query['name']));
+        else $post_id = $post->ID;
 
-            $cur_terms = get_the_terms( $post_id, 'groups' );
+        $cur_terms = get_the_terms( $post_id, 'groups' );
 
-            foreach((array)$cur_terms as $cur_term){
-                if($cur_term->parent!=0) continue;
-                $term_id = $cur_term->term_id; break;
-            }
+        foreach((array)$cur_terms as $cur_term){
+            if($cur_term->parent!=0) continue;
+            $term_id = $cur_term->term_id; break;
+        }
 
-            $rcl_group = rcl_get_group($term_id);
+        $rcl_group = rcl_get_group($term_id);
 
-	}
+    }
 
-	if($rcl_group){
+    if($rcl_group){
 
-            if(isset($_GET['group-tag'])&&$_GET['group-tag']!=''){
+        if(isset($_GET['group-tag'])&&$_GET['group-tag']!=''){
 
-                if(!$_GET['search-p']){
+            if(!$_GET['search-p']){
 
-                    $query->set( 'groups', $_GET['group-tag'] );
+                $query->set( 'groups', $_GET['group-tag'] );
 
-                    return $query;
-                }else{
-                    wp_redirect(get_term_link( (int)$_GET['search-p'], 'groups' ).'/?group-tag='.$_GET['group-tag']);exit;
-                }
-
-            }
-
-            if(isset($_GET['group-page'])&&$_GET['group-page']!=''){
-                     $query->set( 'posts_per_page', 1 );
-            }
-
-            if($rcl_group->admin_id==$user_ID) return $query;
-
-            if(!$rcl_group->current_user&&$user_ID) $in_group = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
-            else $in_group = $rcl_group->current_user;
-
-            if($rcl_group->group_status=='closed'){
-
-                if(!$in_group||$in_group=='banned'){
-                        if($query->is_single){
-                            global $comments_array;
-
-                            add_filter('the_content','rcl_close_group_post_content');
-                            add_filter('the_content','rcl_get_link_group_tag',80);
-                            add_filter('the_content','rcl_add_namegroup',80);
-                            add_filter('comments_array','rcl_close_group_comments_content');
-                            add_filter( 'comments_open', 'rcl_close_group_comments', 10 );
-                            remove_filter('rating_block_content','rcl_add_buttons_rating',10);
-                        }else{
-                            add_filter('the_content','rcl_close_group_post_content');
-                        }
-                }else{
-
-                }
+                return $query;
             }else{
-                if($in_group=='banned'){
+                wp_redirect(get_term_link( (int)$_GET['search-p'], 'groups' ).'/?group-tag='.$_GET['group-tag']);exit;
+            }
+
+        }
+
+        if(isset($_GET['group-page'])&&$_GET['group-page']!=''){
+                 $query->set( 'posts_per_page', 1 );
+        }
+
+        if($rcl_group->admin_id==$user_ID) return $query;
+
+        if(!$rcl_group->current_user&&$user_ID) $in_group = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
+        else $in_group = $rcl_group->current_user;
+
+        if($rcl_group->group_status=='closed'){
+
+            if(!$in_group||$in_group=='banned'){
                     if($query->is_single){
+                        global $comments_array;
+
+                        add_filter('the_content','rcl_close_group_post_content');
+                        add_filter('the_content','rcl_get_link_group_tag',80);
+                        add_filter('the_content','rcl_add_namegroup',80);
+                        add_filter('comments_array','rcl_close_group_comments_content');
                         add_filter( 'comments_open', 'rcl_close_group_comments', 10 );
                         remove_filter('rating_block_content','rcl_add_buttons_rating',10);
+                    }else{
+                        add_filter('the_content','rcl_close_group_post_content');
                     }
+            }else{
+
+            }
+        }else{
+            if($in_group=='banned'){
+                if($query->is_single){
+                    add_filter( 'comments_open', 'rcl_close_group_comments', 10 );
+                    remove_filter('rating_block_content','rcl_add_buttons_rating',10);
                 }
             }
-	}
-
-	return $query;
+        }
     }
+
+    return $query;
+}
 
 function rcl_close_group_post_content(){
     global $rcl_group;
@@ -902,20 +918,25 @@ function rcl_close_group_comments( $open ) {
 }
 
 function rcl_get_closed_groups($user_id){
-    global $wpdb,$user_ID;
+    global $user_ID;
     
     $cachekey = json_encode(array('rcl_get_closed_groups',$user_id));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
         return $cache;
     
-    $sql = "SELECT groups.ID FROM ".RCL_PREF."groups AS groups "
-            . "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON groups.ID=groups_users.group_id "
-            . "WHERE groups.group_status = 'closed' "
-            . "AND (groups_users.user_id != '$user_id' OR groups_users.user_id IS NULL) "
-            . "AND groups.admin_id != '$user_id'";
+    $groups = new Rcl_Groups_Query();
     
-    $groups = $wpdb->get_col($sql);
+    $groups->set_query(array(
+        'fields' => array('ID'),
+        'group_status' => 'closed',
+        'exclude_admin_id' => $user_id
+    ));
+    
+    $groups->query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON ".$groups->query['table']['as'].".ID=groups_users.group_id";
+    $groups->query['where'][] = "(groups_users.user_id != '$user_id' OR groups_users.user_id IS NULL)";
+    
+    $groups = $groups->get_data('get_col');
     
     wp_cache_add( $cachekey, $groups );
     

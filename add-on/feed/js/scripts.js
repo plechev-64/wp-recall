@@ -14,7 +14,8 @@ jQuery(function($){
             rcl_preloader_show('#feed-preloader > div');
             feed_progress = true;
             var feed_type = jQuery('#rcl-feed').data('feed');
-            var dataString = 'action=rcl_feed_progress&paged='+feed_page+'&content='+feed_type;
+            var customData = jQuery('#rcl-feed').data('custom');
+            var dataString = 'action=rcl_feed_progress&paged='+feed_page+'&content='+feed_type+'&custom='+customData;
             dataString += '&ajax_nonce='+Rcl.nonce;
             jQuery.ajax({
                 type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,

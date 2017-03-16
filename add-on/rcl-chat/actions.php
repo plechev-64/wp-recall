@@ -55,9 +55,9 @@ function rcl_chat_messages_add_attachments_meta($messages){
 }
 
 add_action('rcl_chat_insert_message','rcl_chat_add_user_contact',10);
-function rcl_chat_add_user_contact($chat_id){
+function rcl_chat_add_user_contact($message){
     global $wpdb;
-    $chat = rcl_get_chat($chat_id);
+    $chat = rcl_get_chat($message['chat_id']);
     if($chat->chat_status=='private'){
         $result = $wpdb->update(
             RCL_PREF.'chat_users',
@@ -65,7 +65,7 @@ function rcl_chat_add_user_contact($chat_id){
                 'user_status'=>1
             ),
             array(
-                'chat_id'=>$chat_id,
+                'chat_id'=>$message['chat_id'],
                 'user_status'=>0
             )
         );

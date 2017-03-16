@@ -5,10 +5,10 @@ function rcl_close_votes_window(e){
 
 function rcl_edit_rating(e){
     var block = jQuery(e);
-    var idbox = block.parents('.rcl-box-rating').attr('id');
+    var parent = block.parents('.rcl-rating-box');
     var rating = block.data('rating');
     
-    rcl_preloader_show('#' + idbox + ' .buttons-rating > a ',25);
+    rcl_preloader_show(jQuery(e).parents('.rating-wrapper').children('.rating-value'),30);
 
     var dataString = 'action=rcl_edit_rating_post&rating='+rating;
     dataString += '&ajax_nonce='+Rcl.nonce;
@@ -25,14 +25,25 @@ function rcl_edit_rating(e){
             }
             
             if(result['result']==100){
-                var val = jQuery('#' + idbox + ' .rating-value');
+                
+                parent.find('.rating-value').html(result['rating']);
+                
+                if(!block.hasClass('user-vote')){
+    
+                    parent.find('.rating-vote').removeClass('user-vote');
+                    
+                }
+                
+                block.toggleClass('user-vote');
+
+                /*var val = jQuery('#' + idbox + ' .rating-value');
                 val.empty().text(result['rating']);
                 if(result['rating']<0){
                     val.parent().css('color','#FF0000');
                 }else{
                     val.parent().css('color','#008000');
                 }
-                block.parent().remove();
+                block.parent().remove();*/
             }
             
             rcl_do_action('rcl_edit_rating',{data:rating,result:result});
@@ -70,6 +81,8 @@ function rcl_view_list_votes(e){
     jQuery('.rating-value-block .votes-window').remove();
     var block = jQuery(e);
     var rating = block.data('rating');
+    
+    rcl_preloader_show(jQuery(e),30);
 
     var dataString = 'action=rcl_view_rating_votes&rating='+rating;
     dataString += '&ajax_nonce='+Rcl.nonce;
@@ -77,6 +90,9 @@ function rcl_view_list_votes(e){
     jQuery.ajax({
         type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
         success: function(data){
+            
+            rcl_preloader_hide();
+            
             if(data['result']==100){
                 block.after(data['window']);
                 block.next().slideDown();

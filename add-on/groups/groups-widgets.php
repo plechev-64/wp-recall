@@ -1,5 +1,5 @@
 <?php
-include_once 'classes/rcl-group-widget.php';
+include_once 'classes/class-rcl-group-widget.php';
 
 add_action('init','rcl_group_add_primary_widget',10);
 function rcl_group_add_primary_widget(){
@@ -31,7 +31,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
         extract( $args );
 
         global $rcl_group,$user_ID;
-
+        
         if(!$user_ID||rcl_is_group_can('admin')) return false;
 
         //if($rcl_group->current_user=='banned') return false;
@@ -264,10 +264,11 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 
     function add_admins_query($query){
         global $rcl_group;
-        $query->query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON users.ID=groups_users.user_id";
-        $query->query['where'][] = "(groups_users.user_role IN ('admin','moderator') AND groups_users.group_id='$rcl_group->term_id') OR (users.ID='$rcl_group->admin_id')";
-        $query->query['group'] = "users.ID";
-
+        
+        $query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON wp_users.ID = groups_users.user_id";
+        $query['where'][] = "(groups_users.user_role IN ('admin','moderator') AND groups_users.group_id='$rcl_group->term_id') OR (wp_users.ID='$rcl_group->admin_id')";
+        $query['groupby'] = "wp_users.ID";
+        
         return $query;
     }
 
@@ -282,6 +283,7 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
         }
 
         add_filter('rcl_users_query',array($this,'add_admins_query'));
+        
         return rcl_get_userlist(array('number'=>$number,'template'=>$template,'data'=>$data));
     }
 

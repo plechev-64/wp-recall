@@ -269,20 +269,6 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                 )
             );
 
-            $content .= $fields->option_block(
-                array(
-                    $fields->extend(array(
-                        $fields->title(__('Your gratitude','wp-recall')),
-                        $fields->option('select',array(
-                            'name'=>'rcl_footer_link',
-                            'label'=>__('To display a link to the developer`s site (Thank you, if you decide to show)','wp-recall'),
-                            'type'=>'local',
-                            'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-                        ))
-                    ))
-                )
-            );
-
 $content .= '</div>';
 
 $content = apply_filters('admin_options_wprecall',$content);
