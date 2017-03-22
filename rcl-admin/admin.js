@@ -1,3 +1,5 @@
+var RclFields = {};
+
 function rcl_get_value_url_params(){
     var tmp_1 = new Array();
     var tmp_2 = new Array();
@@ -24,6 +26,14 @@ jQuery(function($){
         return false;
     }
     
+    $('.rcl-custom-fields-box').find('.required-checkbox').each(function(){
+        rcl_update_require_checkbox(this);
+    });
+    
+    $('body').on('click','.required-checkbox',function(){
+        rcl_update_require_checkbox(this);
+    });
+    
     $("input[name='global[primary-color]']").wpColorPicker({
         defaultColor: '#4c8cbd'
     });
@@ -41,48 +51,11 @@ jQuery(function($){
         $('#'+id+'-'+val).slideDown();		
     });
     
-    $("#rcl-custom-fields-editor").on('click','.add-field-button',function() {
-        var html = $("#rcl-custom-fields-editor ul li").last().html();
-        $("#rcl-custom-fields-editor ul").append('<li class="rcl-custom-field new-field">'+html+'</li>');
-        return false;
+    $('#rcl-custom-fields-editor').on('change','.select-type-field', function (){
+        rcl_get_custom_field_options(this);
     });
     
-    $('#rcl-custom-fields-editor').on('change','.typefield', function (){
-        var val = $(this).val();
-        var parent = $(this).parents('.rcl-custom-field');
-        var textarea = parent.find('.field-select');
-        
-        var option_box = parent.find('.secondary-settings');
-        var placeholder = parent.find('.placeholder-field');
-        
-        if(val!='select'&&val!='multiselect'&&val!='radio'&&val!='checkbox'&&val!='agree'&&val!='file'){
-            textarea.attr('disabled',true);
-            if(!placeholder.size())
-                option_box.prepend('<div class="field-option placeholder-field"><input type="text" name="field[placeholder][]"><br>placeholder</div>');
-        }else{ 
-            
-            parent.find('.placeholder-field').remove();
-            
-            if(textarea.size()){              
-                textarea.attr('disabled',false);
-            }else{
-                option_box.prepend('<span class="textarea-notice"></span><textarea rows="1" style="height:50px" class="field-select" name="field[field_select][]"></textarea>');
-            }
-
-            var notice_box = option_box.children('.textarea-notice');
-            
-            if(val=='agree'){
-                notice_box.text('Укажите текст ссылки на соглашение');
-            }else if(val=='file'){
-                notice_box.text('Разрешенные типы файлов разделяются запятой, например: pdf, zip, jpg');
-            }else{
-                notice_box.text('Перечень вариантов разделять знаком #');
-            }
-
-        }
-    });
-    
-    $('#rcl-custom-fields-editor .field-delete').click(function(){
+    $('#rcl-custom-fields-editor').on('click','.field-delete',function(){
         var id_item = $(this).parents('.rcl-custom-field').data('slug');
         var item = id_item;
         $(this).parents('li.rcl-custom-field').remove();
@@ -179,6 +152,89 @@ jQuery(function($){
 
 });
 
+function rcl_update_require_checkbox(e){
+    var name = jQuery(e).attr('name');
+    var chekval = jQuery('form input[name="'+name+'"]:checked').val();
+    if(chekval) jQuery('form input[name="'+name+'"]').attr('required',false);
+    else jQuery('form input[name="'+name+'"]').attr('required',true);
+}
+
+function rcl_init_custom_fields(fields_type,primaryOptions,defaultOptions){
+    
+    RclFields = {
+        'type': fields_type,
+        'primary': primaryOptions,
+        'default': defaultOptions
+    };
+    
+}
+
+function rcl_get_custom_field_options(e){
+    
+    var typeField = jQuery(e).val();
+    var boxField = jQuery(e).parents('.rcl-custom-field');
+    var slugField = boxField.data('slug');
+    
+    rcl_preloader_show(boxField);
+    
+    var dataString = 'action=rcl_get_custom_field_options&type_field='+typeField+'&post_type='+RclFields.type+'&primary_options='+RclFields.primary+'&default_options='+RclFields.default+'&slug='+slugField;
+    
+    jQuery.ajax({
+        type: 'POST',
+        data: dataString,
+        dataType: 'json',
+        url: ajaxurl,
+        success: function(data){
+            
+            rcl_preloader_hide();
+
+            if(data['success']){
+                
+                boxField.find('.options-custom-field').html(data['content']);
+                
+            } 
+            
+            if(data['error']){
+                rcl_notice(data['error'],'error',10000);
+            }
+
+        } 
+    });
+    
+    return false;
+    
+}
+
+function rcl_get_new_custom_field(){
+    
+    rcl_preloader_show(jQuery('#rcl-custom-fields-editor'));
+    
+    var dataString = 'action=rcl_get_new_custom_field&post_type='+RclFields.type+'&options='+RclFields.default;
+    
+    jQuery.ajax({
+        type: 'POST',
+        data: dataString,
+        dataType: 'json',
+        url: ajaxurl,
+        success: function(data){
+            
+            rcl_preloader_hide();
+
+            if(data['success']){
+                jQuery("#rcl-custom-fields-editor ul").append(data['content']);
+            } 
+            
+            if(data['error']){
+                rcl_notice(data['error'],'error',10000);
+            }
+
+        } 
+    });
+    
+    return false;
+    
+}
+
 function rcl_enable_extend_options(e){
     var extend = e.checked? 1: 0;
     jQuery.cookie('rcl_extends',extend);
@@ -247,8 +303,26 @@ function rcl_notice(text,type,time_close){
     }
 }
 
-function rcl_preloader_show(e){
-    jQuery(e).after('<div class="rcl_preloader"><i class="fa fa-spinner fa-pulse"></i></div>');
+function rcl_preloader_show(e,size){
+    
+    var font_size = (size)? size: 80;
+    var margin = font_size/2;
+    
+    var options = {
+        size: font_size,
+        margin: margin,
+        icon: 'fa-circle-o-notch',
+        class: 'rcl_preloader'
+    };
+    
+    var style = 'style="font-size:'+options.size+'px;margin: -'+options.margin+'px 0 0 -'+options.margin+'px;"';
+    
+    var html = '<div class="'+options.class+'"><i class="fa '+options.icon+' fa-spin" '+style+'></i></div>';
+    
+    if(typeof( e ) === 'string')
+        jQuery(e).after(html);
+    else
+        e.append(html);
 }
 
 function rcl_preloader_hide(){

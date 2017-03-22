@@ -167,10 +167,12 @@ class Rcl_Cart_Button_Form{
         $content = '<div id="cart-box-'.$box_id.'" class="product-variations">';
         
         $content .= '<input type="hidden" name="cart[isset][variations]" value="1">';
-
+        
         foreach($productVars as $vars){
             
             $variation = $PrVars->get_variation($vars['slug']);
+            
+            $variation['value_in_key'] = true;
 
             $variation['slug'] = 'cart[variations]['.$variation['slug'].']';
 

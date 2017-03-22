@@ -13,8 +13,6 @@ $f_edit = new Rcl_EditFields('custom_tabs',
             )
         );
 
-if($f_edit->verify()) $fields = $f_edit->update_fields(false);
-
 $content = '<h2>'.__('Custom tabs of the personal account','wp-recall').'</h2>';
 
 $content .= $f_edit->edit_form(array(

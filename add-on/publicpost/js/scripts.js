@@ -31,39 +31,7 @@ jQuery(document).ready(function($) {
             })
         }
     });
-    
-    jQuery('.rcl-public-editor .rcl-upload-box .upload-image-url').live('keyup',function(){        
-        var content = jQuery(this).val();
-        
-        var idbox = jQuery(this).parents('.rcl-upload-box').attr('id');
-        var res = rcl_is_valid_url(content);
-        if(!res) return false;
 
-        rcl_preloader_show('#'+idbox);
-        var parent = jQuery(this).parent();
-        var dataString = 'action=rcl_upload_box&url_image='+content;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        jQuery.ajax({
-            type: 'POST', 
-            data: dataString, 
-            dataType: 'json', 
-            url: Rcl.ajaxurl,
-            success: function(data){
-
-                if(data['error']){
-                    rcl_notice(data['error'],'error',10000);
-                    rcl_preloader_hide();
-                    return false;
-                }
-
-                jQuery('#'+idbox).html(data[0]['content']);
-                rcl_preloader_hide();
-
-            }			
-        });
-        return false;
-    });
-    
     jQuery('#rcl-delete-post .delete-toggle').click(function() {
         jQuery(this).next().toggle('fast');
         return false;
@@ -95,38 +63,6 @@ function rcl_init_click_post_thumbnail(){
         jQuery(".rcl-public-form .thumb-foto").removeAttr("checked");
         jQuery(this).attr("checked",'checked');			
     });
-}
-
-function rcl_add_editor_box(e,type,idbox,content){
-    rcl_preloader_show(e);
-    var dataString = 'action=rcl_add_editor_box';
-    if(type) dataString += '&type='+type;
-    if(idbox) dataString += '&idbox='+idbox;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST', 
-        data: dataString, 
-        dataType: 'json', 
-        url: Rcl.ajaxurl,
-        success: function(data){
-            if(data['error']){
-                rcl_notice(data['error'],'error',10000);
-                return false;
-            }
-            var editor = jQuery(e).parents('.rcl-public-editor');
-            editor.children('.rcl-editor-content').append(data['content']);
-            if(content) jQuery('#rcl-upload-'+idbox).html(content);
-            rcl_preloader_hide();
-            return true;
-        }			
-    }); 
-    return false;
-}
-	
-function rcl_delete_editor_box(e){
-	var box = jQuery(e).parents('.rcl-content-box');
-	box.remove();
-	return false;
 }
 
 function rcl_delete_post(element){
@@ -204,44 +140,6 @@ function rcl_edit_post(element){
     });
 }
 
-function rcl_init_upload_box(idbox){
-	
-    rcl_add_dropzone('#rcl-upload-'+idbox);
-
-    var cntFiles = 0;
-
-    jQuery('#rcl-upload-'+idbox+' .rcl-box-uploader').fileupload({
-        dataType: 'json',
-        type: 'POST',
-        singleFileUploads:false,
-        url: Rcl.ajaxurl,
-        formData:{action:'rcl_upload_box',ajax_nonce:Rcl.nonce},
-        dropZone: jQuery('#rcl-upload-'+idbox),
-        change: function (e, data){				
-                rcl_preloader_show('#rcl-upload-'+idbox);
-        },
-        done: function (e, data) {				
-            if(data.result['error']){
-                rcl_notice(data.result['error'],'error',10000);
-                rcl_preloader_hide();
-                return false;
-            }
-            var id = idbox;
-            jQuery.each(data.files, function (index, file) {
-                if(cntFiles>=1){
-                        id++;
-                        rcl_add_editor_box('#rcl-upload-'+idbox,'image',id,data.result[cntFiles]['content']);					
-                }else{
-                        jQuery('#rcl-upload-'+idbox).html(data.result[cntFiles]['content']);
-                }
-                cntFiles++;
-            });
-            rcl_preloader_hide();
-        }
-    });
-	
-}
-
 function rcl_preview(e){
 
     var submit = jQuery(e);
@@ -249,8 +147,8 @@ function rcl_preview(e){
     var post_type = formblock.data('post_type');
 
     if(!rcl_check_required_fields(formblock)) return false;
-
-    submit.attr('disabled',true).val(Rcl.local.wait+'...');
+    
+    rcl_preloader_show(formblock);
 
     var iframe = jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html();
     if(iframe){
@@ -272,6 +170,8 @@ function rcl_preview(e){
         dataType: 'json', 
         url: Rcl.ajaxurl,
         success: function(data){
+            
+            rcl_preloader_hide();
 
             if(data['error']){
                 rcl_notice(data['error'],'error',10000);
@@ -321,11 +221,9 @@ function rcl_preview(e){
                     content: '<div id="rcl-preview">'+data['content']+'</div>'
                 });
 
-                submit.attr('disabled',false).val(Rcl.local.preview);
                 return true;
             }
 
-            submit.attr('disabled',false).val(Rcl.local.preview);
             rcl_notice(Rcl.local.error,'error',10000);
 
         }
@@ -336,7 +234,7 @@ function rcl_preview(e){
 
 function rcl_save_draft(e){
     
-    if(!e) e = jQuery('#save-draft-rcl');
+    if(!e) e = jQuery('#rcl-draft-post');
     
     if(!rcl_check_publish(e)) return false;
     
@@ -362,8 +260,8 @@ function rcl_publish(e){
     var post_type = formblock.data('post_type');
 
     if(!rcl_check_required_fields(formblock)) return false;
-
-    submit.attr('disabled',true).val(Rcl.local.wait+'...');
+    
+    rcl_preloader_show(formblock);
 
     var iframe = jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html();
     if(iframe){
@@ -381,6 +279,8 @@ function rcl_publish(e){
         dataType: 'json', 
         url: Rcl.ajaxurl,
         success: function(data){
+            
+            rcl_preloader_hide();
 
             if(data['error']){
                 rcl_notice(data['error'],'error',10000);
@@ -396,7 +296,7 @@ function rcl_publish(e){
 }
 
 function rcl_check_required_fields(form){
-    
+
     var required = true;
     
     jQuery('form.rcl-public-form').find(':required').each(function(){
@@ -493,7 +393,7 @@ function rcl_init_public_form(post){
         },
         send:function (e, data) {
             var error = false;
-            rcl_preloader_show('.public_block form');                   
+            rcl_preloader_show('form.rcl-public-form');                   
             var cnt_now = jQuery('#temp-files-'+post_type+' li').length;                    
             jQuery.each(data.files, function (index, file) {
                 cnt_now++;

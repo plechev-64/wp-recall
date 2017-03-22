@@ -133,17 +133,21 @@ function rcl_get_register_user($errors){
     $get_fields = rcl_get_profile_fields();
     $required = true;
     if($get_fields){
-        foreach((array)$get_fields as $custom_field){
+        foreach((array)$get_fields as $field){
 
-            $custom_field = apply_filters('chek_custom_field_regform',$custom_field);
-            if(!$custom_field) continue;
+            $field = apply_filters('chek_custom_field_regform',$field);
+            if(!$field) continue;
 
-            $slug = $custom_field['slug'];
-            if($custom_field['required']==1&&$custom_field['register']==1){
+            $slug = $field['slug'];
+            if($field['required']==1&&$field['register']==1){
 
-                if($custom_field['type']=='checkbox'){
-                    $chek = explode('#',$custom_field['field_select']);
-                    $count_field = count($chek);
+                if($field['type']=='checkbox'){
+                    
+                    if(isset($field['field_select']))
+                        $field['values'] = rcl_edit_old_option_fields($field['field_select'], $field['type']);
+                    
+                    $count_field = count($field['values']);
+                    
                     for($a=0;$a<$count_field;$a++){
                         if(!isset($_POST[$slug][$a])){
                             $required = false;
@@ -152,7 +156,7 @@ function rcl_get_register_user($errors){
                             break;
                         }
                     }
-                }else if($custom_field['type']=='file'){
+                }else if($field['type']=='file'){
                     if(!isset($_FILES[$slug])) $required = false;
                 }else{
                     if(!$_POST[$slug]) $required = false;

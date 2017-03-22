@@ -3,6 +3,7 @@
 class Rcl_List_Terms{
 	
     public $taxonomy;
+    public $required;
     public $terms;
     public $selected_term;
     public $datalist;
@@ -12,16 +13,17 @@ class Rcl_List_Terms{
     public $type_output;
     public $first_option;
 	
-    function __construct($taxonomy = false, $type_output = 'select'){
+    function __construct($taxonomy = false, $type_output = 'select', $required = false){
 
         $this->taxonomy = $taxonomy;
         $this->type_output = $type_output;
+        $this->required = $required;
 
     }
 	
     function get_select_list($terms, $post_terms, $select_amount, $include_terms = false, $type_output = false, $first = false){
         
-        $this->include_terms = ($include_terms)? array_map('trim',explode(',', $include_terms)): false;
+        $this->include_terms = ($include_terms)? $include_terms: false;
 
         $this->terms = $terms;
         $this->datalist = $this->setup_data($terms);
@@ -222,12 +224,26 @@ class Rcl_List_Terms{
                             .'</div>';
                 continue;
             }
+            
+            $args = array(
+                'type' => 'checkbox',
+                'id' => 'category-'.$term_id,
+                'name' => 'cats['.$this->taxonomy.'][]',
+                'checked' => checked(isset($this->post_terms[$term_id]),true,false),
+                'label' => $term['name'],
+                'value' => $term_id
+            );
 
-            $options[] = '<span class="rcl-checkbox-box">'
-                        . '<input '.checked(isset($this->post_terms[$term_id]),true,false).' id="category-'.$term_id.'" type="checkbox" name="cats['.$this->taxonomy.'][]" value="'.$term_id.'">'
-                        . '<label class="block-label" for="category-'.$term_id.'">'.$term['name'].'</label>'
-                        . '</span>';
+            if($this->required){                   
+                $args['required'] = true;
+                $args['class'] = 'required-checkbox';
+            }
+
+            $options[] = rcl_form_field($args);
+
         }
+        
+        if(!$options) return false;
 
         return implode('',$options);
 
@@ -235,125 +251,3 @@ class Rcl_List_Terms{
 
 }
 
-class Rcl_Edit_Terms_List{
-
-    public $cats;
-    public $new_cat = array();
-
-    function get_terms_list($cats,$post_cat){
-        $this->cats = $cats;
-        $this->new_cat = $post_cat;
-        $cnt = count($post_cat);
-        for($a=0;$a<$cnt;$a++){
-            foreach((array)$cats as $cat){
-                if($cat->term_id!=$post_cat[$a]) continue;
-                if($cat->parent==0) continue;
-                $this->new_cat = $this->get_parents($cat->term_id);
-            }
-        }
-        return $this->new_cat;
-    }
-	
-    function get_parents($term_id){
-        foreach($this->cats as $cat){
-            if($cat->term_id!=$term_id) continue;
-            if($cat->parent==0) continue;
-            $this->new_cat[] = $cat->parent;
-            $this->new_cat = $this->get_parents($cat->parent);
-        }
-        return $this->new_cat;
-    }
-}
-
-class Rcl_Thumb_Form{
-
-    public $post_id;
-    public $thumb = 0;
-    public $id_upload;
-
-    function __construct($p_id=false,$id_upload='upload-public-form') {
-        global $user_ID,$formData;
-        
-        if(!$user_ID) return false;
-
-        $this->post_id = $p_id;
-        $this->id_upload = ($id_upload)? $id_upload: $formData->id_upload;
-        
-        if($this->post_id) 
-            $this->thumb = get_post_meta($this->post_id, '_thumbnail_id',1);
-
-    }
-
-    function get_gallery($accept='image/*'){
-        global $user_ID,$formData;
-        
-        $accept = ($formData->accept)? $formData->accept: $accept;
-        if(!$this->id_upload) $this->id_upload = $formData->id_upload;
-
-        if($this->post_id) $gal = get_post_meta($this->post_id, 'recall_slider', 1);
-        else $gal = 0;
-
-        if($this->post_id){
-            $args = array(
-                'post_parent' => $this->post_id,
-                'post_type'   => 'attachment',
-                'numberposts' => -1,
-                'post_status' => 'any'
-            );
-            $child = get_children( $args );
-            if($child){ foreach($child as $ch){$temp_gal[]['ID']=$ch->ID;} }
-
-        }else{
-            $user_id = ($user_ID)? $user_ID: $_COOKIE['PHPSESSID'];
-            $temps = get_option('rcl_tempgallery');            
-            $temp_gal = $temps[$user_id];
-        }
-
-        $attachlist = '';
-        if($temp_gal){
-            $attachlist = $this->get_gallery_list($temp_gal);
-        }
-
-        if($formData) $content = '<small class="notice-upload">'.__('Click on the image to add it to the publication','wp-recall').'</small>';
-
-        $content .= '<ul id="temp-files-'.$formData->post_type.'" class="attachments-post">'.$attachlist.'</ul>';
-		
-        if($formData){
-            $content .= '<div class="rcl-form-field">'
-                . '<span class="rcl-field-input type-checkbox-input">'
-                . '<span class="rcl-checkbox-box">'
-                . '<input id="rcl-gallery" type="checkbox" '.checked($gal,1,false).' name="add-gallery-rcl" value="1">'
-                . '<label for="rcl-gallery" class="block-label"> - '.__('Display all attached images in the gallery.','wp-recall').'</label>'
-                . '</span>'
-                . '</span>'
-                . '</div>';
-        }
-	
-        $content .= '<div id="status-temp"></div>
-        <div>
-            <div id="rcl-public-dropzone-'.$formData->post_type.'" class="rcl-dropzone mass-upload-box">
-                <div class="mass-upload-area">
-                        '.__('Add files to the download queue','wp-recall').'
-                </div>
-                <hr>
-                <div class="recall-button rcl-upload-button">
-                        <span>'.__('Add','wp-recall').'</span>
-                        <input id="'.$this->id_upload.'-'.$formData->post_type.'" name="uploadfile[]" type="file" accept="'.$accept.'" multiple>
-                </div>
-                <small class="notice">'.__('Allowed extensions','wp-recall').': '.$accept.'</small>
-            </div>
-        </div>';
-        
-        return $content;
-    }
-
-    function get_gallery_list($temp_gal){
-        $attachlist = '';
-        foreach((array)$temp_gal as $attach){
-            $mime_type = get_post_mime_type( $attach['ID'] );
-            $attachlist .= rcl_get_html_attachment($attach['ID'],$mime_type);
-        }
-        return $attachlist;
-    }
-
-}

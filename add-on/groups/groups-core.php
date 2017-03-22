@@ -31,7 +31,7 @@ function rcl_group_init(){
     if(!$group_id) return false;
 
     $rcl_group = rcl_get_group($group_id);
-
+    
     $rcl_group->current_user = rcl_group_current_user_status();
 
     $rcl_group->single_group = 1;
@@ -620,50 +620,58 @@ function rcl_get_options_group($group_id){
     return array('tags'=>$category);
 }
 
-function rcl_get_tags_list_group($tags,$post_id=null,$first=null){
-	$tg_lst = '';
-    if(isset($tags)){
-        $name = '';
-        if($post_id){
+function rcl_get_tags_list_group($tags, $post_id = null, $first = null){
 
-            $group_data = get_the_terms( $post_id, 'groups' );
-            foreach($group_data as $data){
-                if($data->parent==0) $group_id = $data->term_id;
-                else $name = $data->name;
-            }
+    if(!$tags) return false;
+    
+    $tg_lst = '';
+    $name = '';
+    
+    if($post_id){
 
-        }else{
-            if(isset($_GET['group-tag'])) $name = $_GET['group-tag'];
+        $group_data = get_the_terms( $post_id, 'groups' );
+        foreach($group_data as $data){
+            if($data->parent==0) $group_id = $data->term_id;
+            else $name = $data->name;
         }
 
-        $tg_lst = '<select name="group-tag">';
-        if($first) $tg_lst .= '<option value="">'.$first.'</option>';
-
-        if(!is_object($tags)){
-            $ar_tags = explode(',',$tags);
-            $i=0;
-            foreach($ar_tags as $tag){
-                $ob_tags[++$i] = new stdClass();
-                $ob_tags[$i]->name = trim($tag);
-            }
-        }else{
-            $a=0;
-            foreach($tags as $tag){
-                $ob_tags[++$a] = new stdClass();
-                $ob_tags[$a]->name =$tag->name;
-                $ob_tags[$a]->slug =$tag->slug;
-            }
-        }
-
-        foreach($ob_tags as $gr_tag){
-            if(!$gr_tag->name) continue;
-            if(!isset($gr_tag->slug)) $slug = $gr_tag->name;
-            else $slug = $gr_tag->slug;
-            $tg_lst .= '<option '.selected($name,$slug,false).' value="'.$slug.'">'.trim($gr_tag->name).'</option>';
-        }
-        $tg_lst .= '</select>';
+    }else{
+        
+        if(isset($_GET['group-tag'])) $name = $_GET['group-tag'];
+        
     }
+
+    $tg_lst = '<select name="group-tag">';
+
+    if($first) $tg_lst .= '<option value="">'.$first.'</option>';
+
+    if(!is_object($tags)){
+        $ar_tags = explode(',',$tags);
+        $i=0;
+        foreach($ar_tags as $tag){
+            $ob_tags[++$i] = new stdClass();
+            $ob_tags[$i]->name = trim($tag);
+        }
+    }else{
+        $a=0;
+        foreach($tags as $tag){
+            $ob_tags[++$a] = new stdClass();
+            $ob_tags[$a]->name =$tag->name;
+            $ob_tags[$a]->slug =$tag->slug;
+        }
+    }
+
+    foreach($ob_tags as $gr_tag){
+        if(!$gr_tag->name) continue;
+        if(!isset($gr_tag->slug)) $slug = $gr_tag->name;
+        else $slug = $gr_tag->slug;
+        $tg_lst .= '<option '.selected($name,$slug,false).' value="'.$slug.'">'.trim($gr_tag->name).'</option>';
+    }
+    
+    $tg_lst .= '</select>';
+
     return $tg_lst;
+    
 }
 
 function rcl_get_group_link($callback,$name,$args=false){

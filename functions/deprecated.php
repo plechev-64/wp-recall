@@ -1,5 +1,31 @@
 <?php
 
+//выправляем ситуацию со старым хранением 
+//данных в опциях произвольных полей
+function rcl_edit_old_option_fields($option, $type = false){
+    
+    $types = array(
+        'select',
+        'multiselect',
+        'checkbox',
+        'radio',
+    );
+    
+    if($type && !in_array($type,$types)) return $option;
+    
+    if($option && !is_array($option)){
+            
+        $array = explode('#',$option);
+
+        if($array && is_array($array)){
+            $option = $array;
+        }
+
+    }
+    
+    return $option;
+}
+
 /*15.0.0*/
 class RCL_navi{
 

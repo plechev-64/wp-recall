@@ -1,0 +1,29 @@
+.rcl-public-form-navi{
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 10px;
+    background: #fff;
+}
+.rcl-public-form-navi .rcl-types-list{
+    margin: 0;
+    padding: 0;
+}
+.rcl-public-form-navi .rcl-types-list li{
+    display: inline-block;
+    border: 1px solid #ccc;
+    margin: 5px;
+}
+.rcl-public-form-navi .rcl-types-list li a{
+    display: inline-block;
+    padding: 5px 15px;
+    text-decoration: none;
+    background: #ccc;
+    color: #333;
+}
+.rcl-public-form-navi .rcl-types-list li.current-item{
+    
+}
+.rcl-public-form-navi .rcl-types-list li.current-item a{
+    background: #fff;
+    font-weight: bold;
+}

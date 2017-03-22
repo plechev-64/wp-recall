@@ -61,8 +61,11 @@ function rcl_metabox_products( $post ){
                     $content .= '<input type="checkbox" class="variation-checkbox" name="product-variations['.$variation['slug'].'][status]" '.checked($PrVars->product_exist_variation($variation['slug']),true,false).' value="1" id="variation-'.$variation['slug'].'"><label class="variation-title" for="variation-'.$variation['slug'].'">'.$variation['title'].'</label>';
                     
                     $content .= '<div class="variation-values">';
+                    
+                    if(isset($variation['field_select']))
+                        $variation['values'] = rcl_edit_old_option_fields($variation['field_select'],$variation['type']);
 
-                    foreach(explode('#',$variation['field_select']) as $k => $value){
+                    foreach($variation['values'] as $k => $value){
 
                         $productVal = $PrVars->get_product_variation_value($variation['slug'],$value);
 

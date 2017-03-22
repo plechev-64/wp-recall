@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 16.a.0
+    Version: 16.a.1
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -80,7 +80,7 @@ final class WP_Recall {
 
             if(is_admin()){
                 add_action('save_post', 'rcl_postmeta_update', 0);
-                add_action('admin_head','rcl_admin_scrips',10);
+                add_action('admin_init','rcl_admin_scrips',10);
                 
             }else{
                  add_action('rcl_enqueue_scripts', 'rcl_frontend_scripts',1);

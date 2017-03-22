@@ -373,6 +373,19 @@ function rcl_manage_user_black_list(e,user_id){
     return false;   
 }
 
+rcl_add_action('rcl_init','rcl_init_update_requared_checkbox');
+function rcl_init_update_requared_checkbox(){
+    
+    jQuery('.public_block form.edit-form').find('.required-checkbox').each(function(){
+        rcl_update_require_checkbox(this);
+    });
+    
+    jQuery('body').on('click','.required-checkbox',function(){
+        rcl_update_require_checkbox(this);
+    });
+    
+}
+
 function rcl_update_require_checkbox(e){
     var name = jQuery(e).attr('name');
     var chekval = jQuery('form input[name="'+name+'"]:checked').val();
@@ -598,19 +611,6 @@ function rcl_init_check_url_params(){
         var id_block = rcl_url_params['tab'];
         rcl_show_tab(id_block);
     }
-    
-}
-
-rcl_add_action('rcl_init','rcl_init_update_requared_checkbox');
-function rcl_init_update_requared_checkbox(){
-    
-    jQuery('.public_block form.edit-form').find('.required-checkbox').each(function(){
-        rcl_update_require_checkbox(this);
-    });
-    
-    jQuery('body').on('click','.required-checkbox',function(){
-        rcl_update_require_checkbox(this);
-    });
     
 }
 

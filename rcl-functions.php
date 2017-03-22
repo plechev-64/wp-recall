@@ -119,10 +119,10 @@ function rcl_setup_tabs(){
     global $rcl_tabs,$user_LK;
 
     if(is_admin()||!$user_LK) return false;
+
+    $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
     
     do_action('rcl_setup_tabs');
-    
-    $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
 
     if(!$rcl_tabs) return false;
     
@@ -863,6 +863,8 @@ class Rcl_Form_Fields{
 	public $placeholder;
 	public $label;
 	public $name;
+        public $id;
+        public $class;
 	public $value;
 	public $maxlength;
 	public $checked;
@@ -871,6 +873,7 @@ class Rcl_Form_Fields{
 	function get_field($args){
             $this->type = (isset($args['type']))? $args['type']: 'text';
             $this->id = (isset($args['id']))? $args['id']: false;
+            $this->class = (isset($args['class']))? $args['class']: false;
             $this->placeholder = (isset($args['placeholder']))? $args['placeholder']: false;
             $this->label = (isset($args['label']))? $args['label']: false;
             $this->name = (isset($args['name']))? $args['name']: false;
@@ -903,34 +906,41 @@ class Rcl_Form_Fields{
 
 	function get_type_field(){
 
-		switch($this->type){
-			case 'textarea': $field = sprintf('<textarea name="%s" placeholder="%s" '.$this->required().' %s>%s</textarea>',$this->name,$this->placeholder,$this->id,$this->value); break;
-			default: $field = sprintf('<input type="%s" name="%s" value="%s" placeholder="%s" maxlength="%s" '.$this->selected().' '.$this->required().' id="%s">',$this->type,$this->name,$this->value,$this->placeholder,$this->maxlength,$this->id);
-		}
+            switch($this->type){
+                case 'textarea': $field = sprintf('<textarea name="%s" placeholder="%s" '.$this->required().' %s>%s</textarea>',$this->name,$this->placeholder,$this->id,$this->value); break;
+                default: $field = sprintf('<input type="%s" name="%s" value="%s" placeholder="%s" maxlength="%s" '.$this->get_class().' '.$this->selected().' '.$this->required().' id="%s">',$this->type,$this->name,$this->value,$this->placeholder,$this->maxlength,$this->id);
+            }
 
-		if($this->label) $field = $this->add_label($field);
+            if($this->label) $field = $this->add_label($field);
 
-		return $field;
+            return $field;
 
 	}
+        
+        function get_class(){
+            
+            if($this->class)
+                return 'class="'.$this->class.'"';
+            
+        }
 
 	function selected(){
-		if(!$this->checked) return false;
-		switch($this->type){
-			case 'radio': return 'checked=checked'; break;
-			case 'checkbox': return 'checked=checked'; break;
-		}
+            if(!$this->checked) return false;
+            switch($this->type){
+                case 'radio': return 'checked=checked'; break;
+                case 'checkbox': return 'checked=checked'; break;
+            }
 	}
 
 	function required(){
-		if(!$this->required) return false;
-		return 'required=required';
+            if(!$this->required) return false;
+            return 'required=required';
 	}
 }
 
 function rcl_form_field($args){
-	$field = new Rcl_Form_Fields();
-	return $field->get_field($args);
+    $field = new Rcl_Form_Fields();
+    return $field->get_field($args);
 }
 
 function rcl_get_smiles($id_area){
@@ -1198,7 +1208,7 @@ function rcl_update_profile_fields($user_id){
     require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
     $profileFields = rcl_get_profile_fields();
-
+    
     if($profileFields){
         
         $defaultFields = array(
@@ -1215,6 +1225,9 @@ function rcl_update_profile_fields($user_id){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         
         foreach($profileFields as $field){
+            
+            if(isset($field['field_select']))
+                $field['values'] = $field['field_select'];
             
             $field = apply_filters('rcl_pre_update_profile_field', $field);
 
@@ -1250,15 +1263,18 @@ function rcl_update_profile_fields($user_id){
                 $vals = array();
                 
                 if(is_array($value)){
-
-                    $cntVals = count($field['values']);
                     
-                    foreach($value as $val){
-                        for($a=0;$a<$cntVals;$a++){
-                            if($field['values'][$a]==$val){
+                    $vals = array();
+                    
+                    /*foreach($field['values'] as $k => $val){
+                        if(in_array($k,$value))
                                 $vals[] = $val;
-                            }
-                        }
+                    }*/
+
+                    foreach($value as $val){
+                        if(in_array($val,$field['values']))
+                            $vals[] = $val;
+                        
                     }
                     
                 }
@@ -1315,11 +1331,7 @@ function rcl_get_profile_fields($args = false){
         
         if(isset($field['field_select'])){
             
-            $field['values'] = array();
-            
-            foreach(explode('#',$field['field_select']) as $val){
-                $field['values'][$val] = $val;
-            }
+            $field['field_select'] = rcl_edit_old_option_fields($field['field_select']);
             
         }
         

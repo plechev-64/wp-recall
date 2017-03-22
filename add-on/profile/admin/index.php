@@ -9,6 +9,7 @@ function rcl_profile_admin_menu(){
 
 add_action('rcl_update_custom_fields','rcl_update_page_users',10);
 function rcl_update_page_users(){
+    global $rcl_options;
     
     if(!isset($_POST['users_page_rcl'])) return false;
     

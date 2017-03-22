@@ -13,11 +13,14 @@ class Rcl_Profile_Fileds extends Rcl_EditFields{
         
         $this->inactive_fields = $this->get_inactive_fields();
         
+        add_filter('rcl_custom_fields_form',array($this, 'add_users_page_option'));
+        add_filter('rcl_custom_field_options', array($this, 'edit_field_options'), 10, 3);
+        
     }
     
     function inactive_fields_box(){
 
-        $content = '<div id="rcl-inactive-profile-fields" class="rcl-custom-fields-box">';
+        $content = '<div id="rcl-inactive-profile-fields" class="rcl-inactive-fields-box rcl-custom-fields-box">';
         
         $content .= '<h3>'.__('Неактивные поля','wp-recall').'</h3>';
         
@@ -90,64 +93,105 @@ class Rcl_Profile_Fileds extends Rcl_EditFields{
             
             array(
         
-                $this->option('textarea',array(
-                    'name'=>'notice',
-                    'label'=>__('field description','wp-recall')
-                )),
+                array(
+                    'type' => 'textarea',
+                    'slug'=>'notice',
+                    'title'=>__('field description','wp-recall')
+                ),
 
-                $this->option('select',array(
-                    'name'=>'required',
-                    'notice'=>__('required field','wp-recall'),
-                    'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-                )),
+                array(
+                    'type' => 'select',
+                    'slug'=>'required',
+                    'title'=>__('required field','wp-recall'),
+                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                ),
 
-                $this->option('select',array(
-                    'name'=>'register',
-                    'notice'=>__('display in registration form','wp-recall'),
-                    'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-                )),
+                array(
+                    'type' => 'select',
+                    'slug'=>'register',
+                    'title'=>__('display in registration form','wp-recall'),
+                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                ),
 
-                $this->option('select',array(
-                    'name'=>'order',
-                    'notice'=>__('display at checkout for guests','wp-recall'),
-                    'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-                )),
+                array(
+                    'type' => 'select',
+                    'slug'=>'order',
+                    'title'=>__('display at checkout for guests','wp-recall'),
+                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                ),
 
-                $this->option('select',array(
-                    'name'=>'req',
-                    'notice'=>__('show the content to other users','wp-recall'),
-                    'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-                )),
+                array(
+                    'type' => 'select',
+                    'slug'=>'req',
+                    'title'=>__('show the content to other users','wp-recall'),
+                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                ),
 
-                $this->option('select',array(
-                    'name'=>'admin',
-                    'notice'=>__('can be changed only by the site administration','wp-recall'),
-                    'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-                )),
+                array(
+                    'type' => 'select',
+                    'slug'=>'admin',
+                    'title'=>__('can be changed only by the site administration','wp-recall'),
+                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                ),
 
-                $this->option('select',array(
-                    'name'=>'filter',
-                    'notice'=>__('Filter users by this field','wp-recall'),
-                    'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-                ))
+                array(
+                    'type' => 'select',
+                    'slug'=>'filter',
+                    'title'=>__('Filter users by this field','wp-recall'),
+                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                )
 
-            ),
-            
-            '<h4>'.__('Users page','wp-recall').'</h4>'
-            . wp_dropdown_pages( array(
-                'selected'   => $rcl_options['users_page_rcl'],
-                'name'       => 'users_page_rcl',
-                'show_option_none' => __('Not selected','wp-recall'),
-                'echo'             => 0 )
             )
-            .'<p>'.__('This page is required to filter users by value of profile fields','wp-recall').'</p>'       
+  
         );
         
         return $content;
         
     }
     
+    function edit_field_options($options, $field, $type){
+        
+        if($type != $this->post_type) return $options;
+        
+        $defaultFields = array(
+            'first_name',
+            'last_name',
+            'display_name',
+            'url',
+            'description'
+        );
+        
+        if(in_array($field['slug'],$defaultFields)){
+            
+            foreach($options as $k => $option){
+                
+                if($option['slug'] == 'filter'){
+                    unset($options[$k]);
+                }
+ 
+            }
+            
+        }
+        
+        return $options;
+        
+    }
     
+    function add_users_page_option($content){
+        global $rcl_options;
+        
+        $content .= '<h4>'.__('Users page','wp-recall').'</h4>'
+            . wp_dropdown_pages( array(
+                'selected'   => $rcl_options['users_page_rcl'],
+                'name'       => 'users_page_rcl',
+                'show_option_none' => __('Not selected','wp-recall'),
+                'echo'             => 0 )
+            )
+            .'<p>'.__('This page is required to filter users by value of profile fields','wp-recall').'</p>';
+        
+        return $content;
+        
+    }
     
 }
 

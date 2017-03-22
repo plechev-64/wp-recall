@@ -177,81 +177,84 @@ function rcl_update_custom_fields(){
     
     $table = 'postmeta';
     
-    $fs = 0;
-    $placeholder_id = 0;
-    $tps = array('select'=>1,'multiselect'=>1,'radio'=>1,'checkbox'=>1,'agree'=>1,'file'=>1);
-    
     if($_POST['rcl-fields-options']['name-option'] == 'rcl_profile_fields')
         $table = 'usermeta';
 
-    $POST = apply_filters('rcl_pre_update_custom_fields_options',$_POST);
-
-    if(isset($POST['options'])){
-        foreach($POST['options'] as $key=>$val){
-            $fields['options'][$key] = $val;
+    $POSTDATA = apply_filters('rcl_pre_update_custom_fields_options',$_POST);
+    
+    if(!$POSTDATA) return false;
+    
+    if(isset($POSTDATA['rcl_deleted_custom_fields'])){
+        
+        $deleted = explode(',',$POSTDATA['rcl_deleted_custom_fields']);
+        
+        if($deleted){
+            
+            foreach($deleted as $slug){
+                $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->$table." WHERE meta_key = '%s'",$slug));
+            }
+            
+        }
+        
+    }
+    
+    $newFields = array();
+    
+    if(isset($POSTDATA['new-field'])){
+        foreach($POSTDATA['new-field'] as $optionSlug => $values){
+            foreach($values as $key => $value){
+                $newFields[$key][$optionSlug] = $value;
+            }
         }
     }
-
-    foreach($POST['field'] as $key=>$data){
-
-        if($key=='placeholder'||$key=='field_select'||$key=='sizefile') continue;
-
-        foreach($data as $a=>$value){
-
-            if(!$POST['field']['title'][$a]) break;
-
-            if($table&&!$POST['field']['title'][$a]){
-                
-                if($POST['field']['slug'][$a]){
-                    
-                    $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->$table." WHERE meta_key = '%s'",$POST['field']['slug'][$a]));
-
-                }
-                
-                continue;
-            }
-
-            if($key=='slug'){
-
-                if(!$value)
-                    $value = str_replace('-','_',rcl_sanitize_string($POST['field']['title'][$a]).'-'.rand(10,100));
-
-                $value = str_replace(' ','_',$value);
-
-            }
-
-            if($key=='type'){
-
-                if($POST['field']['type'][$a]=='file'){
-                    $fields[$a]['sizefile'] = $POST['field']['sizefile'][$POST['field']['slug'][$a]];
-                }
-                if($POST['field']['type'][$a]=='agree'){
-                    $fields[$a]['url-agreement'] = $POST['field']['url-agreement'][$POST['field']['slug'][$a]];
-                }
-
-                if(isset($tps[$POST['field']['type'][$a]])){
-                    $fields[$a]['field_select'] = $POST['field']['field_select'][$fs++];
-                }else{
-                    if($POST['rcl-fields-options']['placeholder'])
-                        $fields[$a]['placeholder'] = $_POST['field']['placeholder'][$placeholder_id++];
-                }
-
-            }
+    
+    $fields = array();
+    $nKey = 0;
+    
+    foreach($POSTDATA['fields'] as $k => $slug){
+        
+        if(!$slug){
             
-            $fields[$a][$key] = $value;
+            if(!isset($newFields[$nKey]) || !$newFields[$nKey]['title']) continue;
+            
+            $slug = str_replace('-','_',rcl_sanitize_string($newFields[$nKey]['title']).'-'.rand(10,100));
+            
+            $field = $newFields[$nKey];
+            
+            $nKey++;
+            
+        }else{
+            
+            if(!isset($POSTDATA['field'][$slug])) continue;
+        
+            $field = $POSTDATA['field'][$slug];
             
         }
+
+        $field['slug'] = $slug;
+        
+        $fields[] = $field;
+        
     }
-
-    if($table && $_POST['deleted']){
+    
+    foreach($fields as $k => $field){
         
-        $dels = explode(',',$_POST['deleted']);
-        
-        foreach($dels as $del){
+        if(isset($field['values']) && $field['values'] && is_array($field['values'])){
             
-            $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->$table." WHERE meta_key = '%s'",$slug));
+            $values = array();
+            foreach($field['values'] as $val){
+                if(!$val) continue;
+                $values[] = $val;
+            }
+            
+            $fields[$k]['values'] = $values;
             
         }
+        
+    }
+    
+    if(isset($POSTDATA['options'])){
+        $fields['options'] = $POSTDATA['options'];
     }
 
     update_option( $_POST['rcl-fields-options']['name-option'], $fields );
@@ -262,3 +265,68 @@ function rcl_update_custom_fields(){
     
 }
 
+add_action('wp_ajax_rcl_get_new_custom_field','rcl_get_new_custom_field');
+function rcl_get_new_custom_field(){
+    
+    $post_type = $_POST['post_type'];
+    $options = (array)json_decode(wp_unslash($_POST['options']));
+    
+    $manageFields = new Rcl_EditFields($post_type);
+    
+    if($options){
+        
+        $manageFields->defaultOptions = array();
+        
+        foreach($options as $option){
+            $manageFields->defaultOptions[] = (array)$option;
+        }
+        
+    }
+    
+    $content = $manageFields->empty_field();
+
+    echo json_encode(array(
+        'success' => true,
+        'content' => $content
+    ));
+    
+    exit;
+    
+}
+
+add_action('wp_ajax_rcl_get_custom_field_options','rcl_get_custom_field_options');
+function rcl_get_custom_field_options(){
+    
+    $type_field = $_POST['type_field'];
+    $post_type = $_POST['post_type'];
+    $slug_field = $_POST['slug'];
+    $primary = (array)json_decode(wp_unslash($_POST['primary_options']));
+    $default = (array)json_decode(wp_unslash($_POST['default_options']));
+    
+    $manageFields = new Rcl_EditFields($post_type,$primary);
+    
+    if($default){
+        
+        $manageFields->defaultOptions = array();
+        
+        foreach($default as $option){
+            $manageFields->defaultOptions[] = (array)$option;
+        }
+        
+    }
+    
+    $manageFields->field = array(
+        'type' => $type_field,
+        'slug' => $slug_field
+    );
+    
+    $content = $manageFields->get_options();
+
+    echo json_encode(array(
+        'success' => true,
+        'content' => $content
+    ));
+    
+    exit;
+    
+}

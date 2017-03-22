@@ -4277,7 +4277,7 @@ msgstr "Авторизация"
 
 #: templates/form-remember.php:9
 msgid "Password generation"
-msgstr "Перейти на страницу"
+msgstr "Генерация пароля"
 
 #: templates/form-remember.php:16
 msgid "Username or e-mail"

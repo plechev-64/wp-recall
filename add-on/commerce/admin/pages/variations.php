@@ -4,7 +4,8 @@ global $wpdb;
 
 rcl_sortable_scripts();
 
-include_once RCL_PATH.'functions/class-rcl-editfields.php';
+if ( ! class_exists( 'Rcl_EditFields' ) ) 
+    include_once RCL_PATH.'functions/class-rcl-editfields.php';
 
 $f_edit = new Rcl_EditFields(
         'products-variations',
@@ -18,8 +19,6 @@ $f_edit = new Rcl_EditFields(
                 'radio'
             )
         ));
-
-if($f_edit->verify()) $fields = $f_edit->update_fields();
 
 $content = '<h2>'.__('Products variations management','wp-recall').'</h2>';
 

@@ -72,40 +72,6 @@ function rcl_get_publics_options_page($content){
 
         $opt->option_block(
             array(
-                $opt->title(__('Category','wp-recall')),
-                $opt->extend(array(
-                    $opt->label(__('Categories to choose from','wp-recall')),
-                    $opt->option('text',array('name'=>'id_parent_category')),
-                    $opt->notice(__('ID columns should be separated by commas. '
-                            . 'This setting by default is applied to all posts, but it is possible to '
-                            . 'specify category in shortcode, for example: [public-form cats="72,149"]','wp-recall')),
-                    $opt->notice(__('It is recommended to specify parent category, then their child category will be withdrawn automatically.','wp-recall')),
-                )),
-                $opt->label(__('Output category list','wp-recall')),
-                $opt->option('select',array(
-                    'name'=>'output_category_list',
-                    'parent'=>true,
-                    'options'=>array(
-                        'select'=>__('select','wp-recall'),
-                        'checkbox'=>__('checkbox','wp-recall')
-                    )
-                )),
-		$opt->child(
-                    array('name'=>'output_category_list','value'=>'select'),
-                    array(
-                        $opt->label(__('Number of columns to select','wp-recall')),
-                        $opt->option('select',array(
-                            'name'=>'count_category_post',
-                            'default'=>1,
-                            'options'=>array(1=>1,2=>2,3=>3,4=>4,5=>5)
-                        ))
-                    )
-                )
-                
-            )
-        ),
-        $opt->option_block(
-            array(
                 $opt->title(__('Form of publication','wp-recall')),
 
                 $opt->label(__('Text editor','wp-recall')),
@@ -117,28 +83,6 @@ function rcl_get_publics_options_page($content){
                         1=>__('WordPress editor','wp-recall')
                     )
                 )),
-		$opt->child(
-                    array('name'=>'type_text_editor','value'=>0),
-                    array(
-                        $opt->label(__('Images sizes','wp-recall')),
-                        $opt->option('text',array(
-                                'name'=>'max_sizes_attachment',
-                                'default'=>'800,600'
-                        )),
-                        $opt->notice(__('Default: 800,600','wp-recall')),
-
-			$opt->label(__('Available Editor buttons','wp-recall')),
-                        $opt->option('checkbox',array(
-                            'name'=>'rcl_editor_buttons',
-                            'options'=>array(
-                                'header'=>__('Subheader','wp-recall'),
-                                'text'=>__('Text','wp-recall'),
-                                'image'=>__('Upload images','wp-recall'),
-                                'html'=>__('HTML','wp-recall')
-                               )
-                        ))
-                    )
-                ),
 		$opt->child(
                     array('name'=>'type_text_editor','value'=>1),
                     array(

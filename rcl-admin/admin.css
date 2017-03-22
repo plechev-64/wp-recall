@@ -206,12 +206,8 @@ span.ruble-symbol{
     border: 1px solid #ccc;
     display: inline-block;
     vertical-align: top;
-}
-.rcl-custom-fields-box .rcl-sortable-fields{
-    padding: 10px;
-    background: #fff;
-    border: 1px solid #ccc;
-    min-height: 30px;
+    max-width:500px;
+    position:relative;
 }
 .rcl-custom-fields-box input,
 .rcl-custom-fields-box textarea,
@@ -225,6 +221,84 @@ span.ruble-symbol{
 }
 .rcl-custom-fields-box .rcl-custom-field{
     margin-bottom: 10px;
+    position:relative;
+}
+.rcl-custom-fields-box .rcl-custom-field label{
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.rcl-custom-fields-box .rcl-custom-field{
+    
+}
+.rcl-custom-fields-box .rcl-custom-field i{
+    font-family: dashicons;
+    font-style: normal;
+    color: #333;
+    font-size: 18px;
+    vertical-align: middle;
+    margin: 0 5px;
+}
+.rcl-custom-fields-box .rcl-custom-field a{
+    text-decoration: none;
+    font-style: normal;
+}
+.rcl-custom-fields-box .rcl-custom-field input[type="text"],
+.rcl-custom-fields-box .rcl-custom-field select,
+.rcl-custom-fields-box .rcl-custom-field textarea{
+    width: 100%;
+}
+.rcl-custom-fields-box .rcl-custom-field .dynamic-values{
+    
+}
+.rcl-custom-fields-box .rcl-custom-field .dynamic-values .dynamic-value{
+    clear: both;
+    display: block;
+}
+.rcl-custom-fields-box .rcl-custom-field .dynamic-value input{
+    width: 80%;
+}
+.rcl-custom-fields-box .rcl-custom-field .dynamic-values a{
+    margin-left: 5px;
+}
+.rcl-custom-fields-box .rcl-custom-field a .fa-minus:before{
+    content: "\f153";
+}
+.rcl-custom-fields-box .rcl-custom-field a .fa-plus:before{
+    content: "\f502";
+}
+.rcl-custom-fields-box .type-file-input{
+    padding: 10px;
+    display: block;
+    background: #fff;
+}
+.rcl-custom-fields-box .rcl-custom-field .file-manage-box{
+    
+}
+.rcl-custom-fields-box .rcl-custom-field .file-manage-box .rcl-field-value{
+    margin-right: 15px;
+}
+.rcl-custom-fields-box .rcl-custom-field .file-manage-box i{
+    
+}
+.rcl-custom-fields-box .rcl-custom-field .file-manage-box .fa-upload:before{
+    content: "\f501";
+}
+.rcl-custom-fields-box .rcl-custom-field .file-manage-box .delete-file-url{
+    
+}
+.rcl-custom-fields-box .rcl-custom-field .file-manage-box .delete-file-url .fa-times-circle-o:before{
+    content: "\f153";
+}
+.rcl-custom-fields-box .rcl-sortable-fields{
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    min-height: 30px;
+}
+.rcl-custom-fields-box .rcl-custom-field .fa-info:before{
+    content: "\f534";
 }
 .rcl-custom-fields-box .rcl-custom-field .field-header{
     padding: 10px;
@@ -237,6 +311,7 @@ span.ruble-symbol{
 }
 .rcl-custom-fields-box .rcl-custom-field .field-header .field-title{
     font-weight: bold;
+    vertical-align: middle;
 }
 .rcl-custom-fields-box .rcl-custom-field .field-header .field-controls{
     font-family: dashicons;
@@ -248,9 +323,65 @@ span.ruble-symbol{
     vertical-align: middle;
 }
 .rcl-custom-fields-box .rcl-custom-field .field-header .field-type{
-    margin: 0 20px;
-    font-family: arial;
+    font-size: 20px;
     display: inline-block;
+    font-family: dashicons;
+    vertical-align: middle;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    padding: 3px;
+    background: #fff;
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-text:before{
+    content: "\f464";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-textarea:before{
+    content: "\f119";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-select:before{
+    content: "\f203";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-multiselect:before{
+    content: "\f163";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-checkbox:before{
+    content: "\f147";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-radio:before{
+    content: "\f159";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-email:before{
+    content: "\f466";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-tel:before{
+    content: "\f525";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-number:before{
+    content: "123";
+    font-size: 14px;
+    font-weight: bold;
+    vertical-align: super;
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-date:before{
+    content: "\f508";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-time:before{
+    content: "\f469";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-url:before{
+    content: "\f103";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-agree:before{
+    content: "\f491";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-file:before{
+    content: "\f501";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-dynamic:before{
+    content: "\f502";
+}
+.rcl-custom-fields-box .rcl-custom-field .field-header .type-custom:before{
+    content: "\f111";
 }
 .rcl-custom-fields-box .rcl-custom-field .field-header .field-delete:before{
     color: rgba(229, 57, 53, 0.7);
@@ -262,8 +393,50 @@ span.ruble-symbol{
 .rcl-custom-fields-box .rcl-custom-field .field-settings{
     border: 1px solid #ccc;
     padding: 10px;
-    background: #F9F9F9;
+    background: #f7f7f7;
     display: none;
+}
+.rcl-custom-fields-box .rcl-custom-field .field-settings .option-content{
+    padding: 5px 10px;
+    background: #ffffff;
+    margin: 5px 0;
+}
+.rcl-custom-fields-box .rcl-custom-field label{
+    font-weight: bold;
+    display: block;
+    background: #e4e4e4;
+    padding: 3px 10px;
+    margin-bottom: 5px;
+}
+.rcl-custom-fields-box .rcl-custom-field textarea{
+    height:50px;
+}
+.rcl-custom-fields-box .rcl-custom-field .field-settings .option-content .option-input{
+    
+}
+.rcl-custom-fields-box .rcl-custom-field .field-settings .option-content .rcl-field-input{
+    
+}
+.rcl-custom-fields-box .rcl-custom-field .rcl-checkbox-box{
+    display: inline-block;
+    padding: 5px;
+    background: #e4e4e4;
+    margin: 5px;
+}
+.rcl-custom-fields-box .rcl-custom-field .rcl-checkbox-box label{
+    display: inline;
+    background: none;
+    padding: 0;
+    font-weight: normal;
+}
+.rcl-custom-fields-box .rcl-custom-field .rcl-radio-box{
+    
+}
+.rcl-custom-fields-box .rcl-custom-field .rcl-radio-box label{
+    
+}
+.rcl-custom-fields-box .rcl-custom-field .field-settings{
+    
 }
 .rcl-custom-fields-box .rcl-custom-field.new-field .field-settings{
     display: block;
@@ -301,7 +474,14 @@ span.ruble-symbol{
     box-sizing: border-box;
     margin:10px 0;
 }
-
+.rcl-custom-fields-box .rcl-field-notice{
+    display:block;
+    clear:both;
+    font-size: 12px;
+}
+.rcl-custom-fields-box .rcl-field-notice i{
+    font-size: 14px;
+}
 .rcl-custom-fields-box .ui-sortable-placeholder{
     border:2px dashed #ccc;
     height:45px;
@@ -317,16 +497,31 @@ span.ruble-symbol{
     float: left;
     margin: 0;
     width: 190px;
+    font-family: arial;
+    font-size: inherit;
+    background: none;
+    padding: 0;
+    border: 0;
+}
+.rcl-custom-fields-box .new-field .field-header .field-label{
+    font-weight:bold;
 }
 
-#rcl-inactive-profile-fields{
+.rcl-inactive-fields-box{
     width:350px;
 }
-#rcl-inactive-profile-fields .rcl-custom-field{
+.rcl-inactive-fields-box .rcl-custom-field{
     opacity:0.6;
 }
-#rcl-inactive-profile-fields .rcl-custom-field .field-control{
-    display:none;
+.rcl-inactive-fields-box .rcl-custom-field .field-control,
+.rcl-inactive-fields-box .rcl-custom-field .field-settings{
+    display:none!important;
+}
+
+#custom_fields_editor_post .rcl-custom-fields-box .rcl-custom-field{
+    padding: 10px;
+    background: #f5f5f5;
+    margin: 5px 0;
 }
 
 #rcl-options-form .submit-block > p {
@@ -400,7 +595,7 @@ span.ruble-symbol{
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.4);
 }
 .rcl-navi a:link,
-.rcl-pager .pager-item a:link{										/*++hueman++ Ð´Ð¾Ð±Ð°Ð²Ð¸Ð» :link Ð´Ð»Ñ Ð¿ÐµÑ€ÐµÐ²ÐµÑÐ°*/
+.rcl-pager .pager-item a:link{										/*++hueman++ ÃƒÂÃ‚Â´ÃƒÂÃ‚Â¾ÃƒÂÃ‚Â±ÃƒÂÃ‚Â°ÃƒÂÃ‚Â²ÃƒÂÃ‚Â¸ÃƒÂÃ‚Â» :link ÃƒÂÃ‚Â´ÃƒÂÃ‚Â»Ãƒâ€˜Ã‚Â ÃƒÂÃ‚Â¿ÃƒÂÃ‚ÂµÃƒâ€˜Ã¢â€šÂ¬ÃƒÂÃ‚ÂµÃƒÂÃ‚Â²ÃƒÂÃ‚ÂµÃƒâ€˜Ã‚ÂÃƒÂÃ‚Â°*/
     background: #e4e4e4;
     border: none;										/*++Twenty15++*/
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);

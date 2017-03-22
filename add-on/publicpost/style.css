@@ -1,5 +1,5 @@
-/*Публикация*/
-/* Блок публикации Start */
+/*ÐŸÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ñ*/
+/* Ð‘Ð»Ð¾Ðº Ð¿ÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ð¸ Start */
 .public_block {
     background: rgba(243, 243, 243, 0.6);
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
@@ -77,14 +77,14 @@
     font-weight: normal;
     line-height: 1;
 }
-.rcl-public-form .attachments-post {
+.rcl-public-box .attachments-post {
     list-style: none;
     margin: 5px 0;
     overflow: hidden;
     padding: 0!important;
     width: 100%;
 }
-.rcl-public-form .attachments-post li {
+.rcl-public-box .attachments-post li {
     background: rgba(219, 219, 219, 0.6);
     box-sizing: border-box;
     float: left;
@@ -95,10 +95,10 @@
     width: 23%;
     list-style: none!important;
 }
-.rcl-public-form .attachments-post li:first-child {
+.rcl-public-box .attachments-post li:first-child {
     margin: 1% 1% 1% 0;
 }
-.rcl-public-form .attachments-post li .rcl-service-button {
+.rcl-public-box .attachments-post li .rcl-service-button {
     background: rgba(30, 56, 75, 0.7);
     color: rgb(229, 57, 53);
     cursor: pointer;
@@ -110,76 +110,26 @@
     top: 0;
 	z-index: 2;
 }
-.rcl-public-form .attachments-post li .rcl-service-button i:hover {
+.rcl-public-box .attachments-post li .rcl-service-button i:hover {
 	opacity: 0.8;
 }
-.rcl-public-form .attachments-post li img {
+.rcl-public-box .attachments-post li img {
     cursor: pointer;
     margin-bottom: 7px;
     width: 100%;
 }
-.rcl-public-form .attachments-post li img:hover {
+.rcl-public-box .attachments-post li img:hover {
 	box-shadow: 0 0 1px 1px rgb(30, 56, 75);
 }
-.rcl-public-form .attachments-post label span {
+.rcl-public-box .attachments-post label span {
 	cursor: pointer;
     display: inline-flex;
     font-size: 12px;
 }
-.rcl-public-form .attachments-post label span input {
+.rcl-public-box .attachments-post label span input {
     margin: 0 5px 0 0;
 }
-#rcl-tags-list .rcl-tags-list{
-	overflow:hidden;
-	clear:both;
-}
-.public_block  td label,
-#rcl-tags-list .rcl-tags-list label {
-    background: rgba(237, 237, 237, 0.5);
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
-    float: left;
-    font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.6;
-    margin: 2px 5px;
-    padding: 4px 7px;
-}
-#rcl-tags-list .rcl-tags-list label input {
-    height: 13px;
-    margin: 0 4px 1px 0;
-    padding: 0;
-    position: relative;
-    vertical-align: bottom;
-    width: 13px;
-}
-#rcl-tags-list .ms-ctn {
-    background: #fff;
-    border: medium none;
-    box-shadow: 0 0 1px 1px #ddd;
-    box-sizing: border-box;
-    margin: 10px 0.5%;
-    width: 99%;
-}
 
-#rcl-tags-list .ms-sel-item {
-    padding: 2px 3px 4px 7px;
-}
-#rcl-tags-list .ms-sel-ctn input {
-    margin: 3px 5px;
-}
-#rcl-tags-list .ms-ctn .ms-trigger{
-	display:none;
-}
-#rcl-tags-list .ms-helper {
-    bottom: -20px;
-    color: #000;
-    font-size: 12px;
-    top: unset;
-}
-#rcl-tags-list .ms-res-ctn .ms-res-item em {
-    padding: 1px 3px;
-}
 .rcl-form-field table tbody th,
 .rcl-form-field table tbody td {
     border: 1px solid rgba(219, 219, 219, 0.5);
@@ -200,8 +150,8 @@
     position: relative;
 }
 
-/* START собираю формы */
-/* START общие формы */
+/* START ÑÐ¾Ð±Ð¸Ñ€Ð°ÑŽ Ñ„Ð¾Ñ€Ð¼Ñ‹ */
+/* START Ð¾Ð±Ñ‰Ð¸Ðµ Ñ„Ð¾Ñ€Ð¼Ñ‹ */
 .public_block form .rcl-form-field select,
 .public_block form .rcl-form-field textarea,
 .public_block form .rcl-form-field input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
@@ -227,9 +177,9 @@
     color: #000;
     outline: none;
 }
-/* END общие формы */
+/* END Ð¾Ð±Ñ‰Ð¸Ðµ Ñ„Ð¾Ñ€Ð¼Ñ‹ */
 
-/* START корректировки к формам */
+/* START ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð¸Ñ€Ð¾Ð²ÐºÐ¸ Ðº Ñ„Ð¾Ñ€Ð¼Ð°Ð¼ */
 .public_block form .rcl-form-field select:not(.postform),
 .public_block form .rcl-form-field textarea,
 .public_block form .rcl-form-field input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="time"]):not([type="number"]):not(.rcl-datepicker) {
@@ -282,8 +232,8 @@
     background: rgba(237, 237, 237, 0.5);
     cursor: pointer;
 }
-/* END корректировки к формам */
-/* END собираю формы */
+/* END ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð¸Ñ€Ð¾Ð²ÐºÐ¸ Ðº Ñ„Ð¾Ñ€Ð¼Ð°Ð¼ */
+/* END ÑÐ¾Ð±Ð¸Ñ€Ð°ÑŽ Ñ„Ð¾Ñ€Ð¼Ñ‹ */
 
 .public_block .type-dynamic-input .dynamic-values .dynamic-value .fa {
     box-sizing: initial;
@@ -359,12 +309,12 @@ h3.pending-message{
 	border: none;								/*++Twenty15++*/
 	box-shadow: none;							/*++Twenty16++*/
 }
-/* Блок публикации End */
+/* Ð‘Ð»Ð¾Ðº Ð¿ÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ð¸ End */
 
 
 
 
-/* блок О Авторе Start */
+/* Ð±Ð»Ð¾Ðº Ðž ÐÐ²Ñ‚Ð¾Ñ€Ðµ Start */
 #block_author-rcl {
     background: rgba(243, 243, 243, 0.3);
     box-shadow: 0 0 1px 1px rgb(243, 243, 243);
@@ -385,12 +335,12 @@ h3.pending-message{
     box-shadow: none;
     margin: 0;
 }
-/* блок О Авторе End */
+/* Ð±Ð»Ð¾Ðº Ðž ÐÐ²Ñ‚Ð¾Ñ€Ðµ End */
 
 
 
 
-/* форма WP-Recall start */
+/* Ñ„Ð¾Ñ€Ð¼Ð° WP-Recall start */
 .rcl-public-editor  {
     background: rgba(243, 243, 243, 0.3);
     box-shadow: 0 0 1px 1px rgb(243, 243, 243);
@@ -440,9 +390,7 @@ h3.pending-message{
     border: none;
     min-height: 150px;
 }
-.rcl-public-editor .rcl-upload-box {
-    padding: 20px;
-}
+
 .rcl-public-editor .rcl-icon-upload {
     font-size: 56px;
     padding: 0 0 10px;
@@ -461,10 +409,6 @@ h3.pending-message{
     font-weight:bold;
     font-size:18px;
     box-sizing: border-box;
-}
-.rcl-content-box .rcl-upload-box input[type="url"]{
-    border:1px solid #ccc;
-	font: 14px/1.4 Tahoma,arial;
 }
 .rcl-public-editor .rcl-tools-panel {
     clear: both;
@@ -489,12 +433,12 @@ h3.pending-message{
 .rcl-tools-panel li a:hover {
     color: rgba(76, 140, 189, 0.6);
 }
-/* форма WP-Recall End */
+/* Ñ„Ð¾Ñ€Ð¼Ð° WP-Recall End */
 
 
 
 
-/* Пользовательская медиабиблиотека Start (пока висит мертвым грузом) */
+/* ÐŸÐ¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒÑÐºÐ°Ñ Ð¼ÐµÐ´Ð¸Ð°Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÐ° Start (Ð¿Ð¾ÐºÐ° Ð²Ð¸ÑÐ¸Ñ‚ Ð¼ÐµÑ€Ñ‚Ð²Ñ‹Ð¼ Ð³Ñ€ÑƒÐ·Ð¾Ð¼) */
 #rcl-popup #custom-image-url{
     padding:10px;
     float:left;
@@ -531,12 +475,12 @@ h3.pending-message{
 #rcl-popup-content label{
     font-weight: bold;
 }
-/* Пользовательская медиабиблиотека End */
+/* ÐŸÐ¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒÑÐºÐ°Ñ Ð¼ÐµÐ´Ð¸Ð°Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÐ° End */
 
 
 
 
-/* В профиле список записей start */
+/* Ð’ Ð¿Ñ€Ð¾Ñ„Ð¸Ð»Ðµ ÑÐ¿Ð¸ÑÐ¾Ðº Ð·Ð°Ð¿Ð¸ÑÐµÐ¹ start */
 .rcl-form-field table,
 .wprecallblock .publics_block table {
     background: rgba(243, 243, 243, 0.3);
@@ -578,7 +522,7 @@ h3.pending-message{
 	float:right;
 }
 
-/* Навигация Start вроде тоже устарело */
+/* ÐÐ°Ð²Ð¸Ð³Ð°Ñ†Ð¸Ñ Start Ð²Ñ€Ð¾Ð´Ðµ Ñ‚Ð¾Ð¶Ðµ ÑƒÑÑ‚Ð°Ñ€ÐµÐ»Ð¾ */
 .wprecallblock .publics_block .bx-viewport {
     box-sizing: unset;
     display: table;
@@ -597,10 +541,10 @@ h3.pending-message{
 #tab-publics .bx-wrapper .bx-controls-direction .bx-next{
     right: -43px;
 }
-/* Навигация End */
-/* В профиле список записей End */
+/* ÐÐ°Ð²Ð¸Ð³Ð°Ñ†Ð¸Ñ End */
+/* Ð’ Ð¿Ñ€Ð¾Ñ„Ð¸Ð»Ðµ ÑÐ¿Ð¸ÑÐ¾Ðº Ð·Ð°Ð¿Ð¸ÑÐµÐ¹ End */
 
-/* Корректировка виз редактора Start */
+/* ÐšÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð¸Ñ€Ð¾Ð²ÐºÐ° Ð²Ð¸Ð· Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¾Ñ€Ð° Start */
 .wp-switch-editor.switch-html,
 .wp-switch-editor.switch-tmce {									/*++hueman++*/
     box-sizing: content-box;
@@ -615,15 +559,15 @@ h3.pending-message{
     border-radius: 2px;
     box-shadow: 0 0 1px #ccc;
 }
-/* Корректировка виз редактора End */
+/* ÐšÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð¸Ñ€Ð¾Ð²ÐºÐ° Ð²Ð¸Ð· Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¾Ñ€Ð° End */
 
-/* Форма удаления публикации Start */
+/* Ð¤Ð¾Ñ€Ð¼Ð° ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ Ð¿ÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ð¸ Start */
 .delete-form-contayner textarea{   
     width:100%;
 }
-/* Форма удаления публикации End */
+/* Ð¤Ð¾Ñ€Ð¼Ð° ÑƒÐ´Ð°Ð»ÐµÐ½Ð¸Ñ Ð¿ÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ð¸ End */
 
-/* add correcting popup jquery-UI start - вроде устарело */
+/* add correcting popup jquery-UI start - Ð²Ñ€Ð¾Ð´Ðµ ÑƒÑÑ‚Ð°Ñ€ÐµÐ»Ð¾ */
 .ui-dialog.rcl-edit-post-form .ui-dialog-titlebar {
     background: none;
     border: none;
@@ -724,7 +668,7 @@ h3.pending-message{
             max-width: none !important;		/* Author & some themes */
             width: 100% !important;			/* Author & some themes */
     }
-    .rcl-public-form .attachments-post li {
+    .rcl-public-box .attachments-post li {
             width: 31%;
     }
 }
@@ -758,3 +702,118 @@ h3.pending-message{
             width: 90%;
     }
 }
+
+/*Ð½Ð¾Ð²Ð°Ñ Ð¿ÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ð¸ Ñ„Ð¾Ñ€Ð¼Ð°*/
+.rcl-public-box{
+    position:relative;
+}
+.rcl-public-box label{
+    
+}
+.rcl-public-box .rcl-field-notice{
+    display:block;
+    clear:both;
+}
+.rcl-public-box .rcl-field-notice i{
+    margin-right:5px;
+}
+.rcl-public-box .rcl-form-field{
+    padding: 10px;
+    background: #f9f9f9;
+    margin: 5px 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+.rcl-public-box .rcl-form-field > label{
+    font-size: 18px;
+    display: block;
+}
+.rcl-public-box .rcl-form-field .rcl-field-input{
+    
+}
+.rcl-public-box .rcl-form-field .rcl-terms-select{
+    
+}
+.rcl-public-box .rcl-form-field .rcl-terms-select select{
+    float: none;
+    width: auto;
+    display: inline-block;
+    margin: 0 10px 10px 0;
+}
+.rcl-public-box .rcl-form-field .rcl-terms-select .rcl-tags-list{
+    overflow: hidden;
+}
+.rcl-public-box .rcl-tags-list > .block-label{
+    display: block;
+    clear: both;
+    float: none;
+    margin: 0;
+    padding: 10px;
+    box-shadow: none;
+    cursor: default;
+    background: #fff;
+}
+.rcl-public-box .rcl-tags-list .ms-ctn{
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    padding: 5px 5px;
+    box-shadow: none;
+}
+.rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn{
+    margin: 0;
+}
+.rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn .ms-sel-item{
+    margin:5px;
+    padding: 5px;
+    font-size: 14px;
+    color: #7a7a7a;
+    border-radius: 0;
+    float: none;
+    display: inline-block;
+}
+.rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn input{
+    border: 1px solid #ccc;
+    padding: 5px;
+    float: none;
+    clear: both;
+    display: block;
+    width: 100%!important;
+    margin-top: 5px;
+}
+.rcl-public-box .rcl-tags-list .ms-ctn .ms-trigger{
+    background: #fff;
+}
+.rcl-public-box .rcl-tags-list .ms-ctn .dropdown-menu{
+}
+.rcl-public-box .rcl-tags-list .ms-ctn .dropdown-menu .ms-res-item{
+    
+}
+.rcl-public-box .rcl-tags-list .ms-ctn .dropdown-menu .ms-res-item-active{
+    
+}
+.rcl-public-box .rcl-tags-list .ms-ctn .ms-helper{
+    top: 15px;
+    font-size: 14px;
+    color: red;
+    right: 42px;
+    padding: 0px 10px;
+    background: #ffe2e2;
+    border-radius: 2px;
+}
+.rcl-public-box .submit-public-form{
+    margin: 10px 0;
+    text-align: right;
+    padding-bottom: 0;
+}
+.rcl-public-box .public-form-button{
+    display: inline-block;
+    width: auto;
+    padding: 10px 15px;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+.rcl-public-box .public-form-button > i{
+    margin-right: 10px;
+}
+/*Ð½Ð¾Ð²Ð°Ñ Ñ„Ð¾Ñ€Ð¼Ð° ÐºÐ¾Ð½ÐµÑ†*/

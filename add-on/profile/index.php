@@ -13,7 +13,14 @@ function rcl_profile_scripts(){
     global $user_ID;   
     if(rcl_is_office($user_ID)){
         rcl_enqueue_style( 'rcl-profile', rcl_addon_url('style.css', __FILE__) );
+        rcl_enqueue_script( 'rcl-profile-scripts', rcl_addon_url('js/scripts.js', __FILE__) );
     }
+}
+
+add_filter('rcl_init_js_variables','rcl_init_js_profile_variables',10);
+function rcl_init_js_profile_variables($data){
+    $data['local']['no_repeat_pass'] = __('Repeated password not correct!','wp-recall');        
+    return $data;
 }
 
 add_action('init','rcl_tab_profile');
@@ -150,7 +157,7 @@ function rcl_add_office_profile_fields($fields){
     
     $profileFields[] = array(
         'slug' => 'repeat_pass',
-        'title' => __('Repeat password','wp-recall'),
+        'title' => __('Повтор пароля','wp-recall'),
         'type' => 'password',
         'required' => 0,
         'notice' => __('Repeat the new password','wp-recall')
@@ -174,7 +181,7 @@ function rcl_tab_profile_content($master_id){
     $CF = new Rcl_Custom_Fields();
 
     $profileFields = stripslashes_deep($profileFields);
-
+    
     foreach($profileFields as $field){
 
         $field = apply_filters('custom_field_profile',$field);
@@ -211,15 +218,18 @@ function rcl_tab_profile_content($master_id){
         if(isset($field['attr'])){
             $attrs[] = $field['attr'];
         }
+        
+        if($field['slug'] != 'show_admin_bar_front')
+            $field['value_in_key'] = true;
 
         $content .= '<tr '.implode(' ',$attrs).'>';
 
         $star = (isset($field['required'])&&$field['required']==1)? ' <span class="required">*</span> ': '';
         
         $label = sprintf('<label>%s%s:</label>',$CF->get_title($field),$star);
-        
+
         $content .= '<td><label>'.$label.'</label></td>';
-        $content .= '<td>'.$CF->get_input($field,$value).'</td>';
+        $content .= '<td>'.$CF->get_input($field, $value).'</td>';
         
         $content .= '</tr>';
     }
@@ -241,7 +251,7 @@ function rcl_tab_profile_content($master_id){
 
     $content .= wp_nonce_field( 'update-profile_' . $user_ID,'_wpnonce',true,false ).'
         <div style="text-align:right;">'
-            . '<input type="submit" id="cpsubmit" class="recall-button" value="'.__('Update profile','wp-recall').'" name="submit_user_profile" />
+            . '<input type="submit" id="cpsubmit" class="recall-button" value="'.__('Update profile','wp-recall').'" onclick="return rcl_check_profile_form();" name="submit_user_profile" />
         </div>
     </form>';
 

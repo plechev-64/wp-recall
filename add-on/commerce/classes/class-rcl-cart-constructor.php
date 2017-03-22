@@ -63,8 +63,10 @@ class Rcl_Cart_Constructor {
                 $content .= '<div class="cart-fields-title">'.__('To place an order fill out the form below','wp-recall').'</div>';
             
                 $content .= '<table class="table-fields rcl-table">';
-
+                
                 foreach($this->fields as $field){
+                    
+                    $field['value_in_key'] = true;
 
                     $required = ($field['required'] == 1)? '<span class="required">*</span>': '';
 

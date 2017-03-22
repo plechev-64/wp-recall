@@ -1,5 +1,15 @@
 <?php
 
+function rcl_insert_attachment($attachment,$image,$id_post=false){
+    $attach_id = wp_insert_attachment( $attachment, $image['file'], $id_post );
+    $attach_data = wp_generate_attachment_metadata( $attach_id, $image['file'] );
+    wp_update_attachment_metadata( $attach_id, $attach_data );
+
+    if(!$id_post) rcl_update_tempgallery($attach_id,$image['url']);
+
+    return rcl_get_html_attachment($attach_id,$attachment['post_mime_type']);
+}
+
 add_action('wp_ajax_rcl_imagepost_upload', 'rcl_imagepost_upload');
 add_action('wp_ajax_nopriv_rcl_imagepost_upload', 'rcl_imagepost_upload');
 function rcl_imagepost_upload(){

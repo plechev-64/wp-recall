@@ -54,7 +54,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
         if($this->filters)
             add_filter('rcl_users_query',array($this,'add_query_search'));
         
-        if($this->data('user_registered') || $orderby == 'user_registered')
+        if($this->data('user_registered') || $this->orderby == 'user_registered')
             add_filter('rcl_users_query',array($this,'add_query_user_registered'));
 
         //получаем данные рейитнга
@@ -236,6 +236,9 @@ class Rcl_Users_List extends Rcl_Users_Query{
     function add_query_user_registered($query){
         
         $query['select'][] = "wp_users.user_registered";
+        
+        if($this->orderby)
+            $query['orderby'] = "wp_users.user_registered";
         
         return $query;
     }
