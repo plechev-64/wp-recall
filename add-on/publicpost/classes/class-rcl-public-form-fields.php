@@ -274,7 +274,9 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
         
         if($type != $this->post_type) return $options;
         
-        if($taxonomy = $this->is_taxonomy_field($field['slug']) && $field['slug'] != 'taxonomy-groups'){
+        $taxonomy = $this->is_taxonomy_field($field['slug']);
+        
+        if($taxonomy && $field['slug'] != 'taxonomy-groups'){
             
             if($this->is_hierarchical_tax($taxonomy)){
                 
@@ -290,8 +292,8 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
                     'slug' => 'type-select',
                     'title' => __('Вариант вывода','wp-recall'),
                     'values' => array(
-                        __('Select','wp-recall'),
-                        __('Checkbox','wp-recall')
+                        'select' => __('Select','wp-recall'),
+                        'checkbox' => __('Checkbox','wp-recall')
                     )
                 );
                 

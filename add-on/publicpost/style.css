@@ -30,42 +30,6 @@
     margin: 10px 0;
     text-transform: none;
 }
-.public_block .category-list label {
-	font-weight: normal;
-}
-.public_block .category-list span.parent-category {
-	font-weight: bold;
-}
-.public_block label span.required {
-    color: rgb(229, 57, 53);
-    font: bold 15px/1 Verdana,arial;
-}
-.public_block .category-list {
-    background: rgba(243, 243, 243, 0.3);
-    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
-    margin: 10px 2px;
-    overflow: hidden;
-    padding: 5px;
-}
-.public_block .category-list span{
-    display: block;
-}
-.public_block input[type="radio"],
-.public_block input[type="checkbox"] {
-    left: 17px;
-    top: 10px;
-}
-.public_block .category-list .child-list-category{
-    padding: 5px 5px 5px 10px;
-}
-.public_block .category-list .child-list-category .parent-category{
-    background: rgba(219, 219, 219, 0.3);
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
-    padding: 7px;
-}
-.public_block .category-list .child-list-category span{
-    padding-left: 5px;
-}
 .public_block #wp-contentarea-wrap {
     background: rgba(219, 219, 219, 0.3);
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
@@ -815,5 +779,36 @@ h3.pending-message{
 }
 .rcl-public-box .public-form-button > i{
     margin-right: 10px;
+}
+.rcl-public-form .category-list label {
+	
+}
+.rcl-public-form .category-list span.parent-category {
+	
+}
+.rcl-public-form label span.required {
+    
+}
+.rcl-public-form .category-list {
+    
+}
+.rcl-public-form .category-list span{
+    
+}
+.rcl-public-form .category-list .child-list-category{
+    background: #fff;
+    padding: 5px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+.rcl-public-form .category-list .child-list-category .parent-category{
+    display: block;
+    padding: 5px;
+    background: #f0f0f0;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.rcl-public-form .category-list .child-list-category span{
+    
 }
 /*Ð½Ð¾Ð²Ð°Ñ Ñ„Ð¾Ñ€Ð¼Ð° ÐºÐ¾Ð½ÐµÑ†*/
