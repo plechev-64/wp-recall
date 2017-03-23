@@ -290,8 +290,6 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
         if(isset($this->field['class']))
             $classes[] = $this->field['class'];
 
-        $typeEdit = (isset($this->field['type-edit']))? $this->field['type-edit']: true;
-
         $field = '<li id="field-'.$this->field['slug'].'" data-slug="'.$this->field['slug'].'" data-type="'.$this->field['type'].'" class="'.implode(' ',$classes).'">
                     '.$this->header_field().'
                     <div class="field-settings">';
@@ -312,18 +310,28 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
                             ),
                             $this->field['title']  
                         );
+                        
+                        if($this->select_type){
+                        
+                            $typeEdit = (isset($this->field['type-edit']))? $this->field['type-edit']: true;
 
-                        if($typeEdit)
-                            $field .= $this->get_types();
-                        else
-                            $field .= '<input type="hidden" name="field['.$this->field['slug'].'][type]" value="'.$this->field['type'].'">';
+                            if($typeEdit)
+                                $field .= $this->get_types();
+                            else
+                                $field .= '<input type="hidden" name="field['.$this->field['slug'].'][type]" value="'.$this->field['type'].'">';
+
+                        }else{
+
+                            $field .= '<input type="hidden" name="field['.$this->field['slug'].'][type]" value="custom">';
+
+                        }
 
                         $field .= '<div class="options-custom-field">';
                         $field .= $this->get_options();
                         $field .= '</div>';
 
                     $field .= '</div>';
-                    
+
                     $field .= '<input type="hidden" name="fields[]" value="'.$this->field['slug'].'">';
                     
                 $field .= '</li>';
@@ -368,6 +376,9 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
                     $field .= '</div>';
                     
                 $field .= '</div>';
+                
+                if(!$this->select_type)
+                    $field .= '<input type="hidden" name="new-field[type][]" value="custom">';
                 
                 $field .= '<input type="hidden" name="fields[]" value="">';
                 

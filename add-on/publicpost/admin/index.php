@@ -20,46 +20,30 @@ function rcl_public_form_manager(){
     global $wpdb;
     
     $post_type = (isset($_GET['post-type']))? $_GET['post-type']: 'post';
+    $form_id = (isset($_GET['form-id']))? $_GET['form-id']: 1;
+    
+    $shortCode = 'public-form post_type="'.$post_type.'"';
+    
+    if($post_type == 'post' && $form_id > 1){
+        $shortCode .= ' form_id="'.$form_id.'"';
+    }
 
     rcl_sortable_scripts();
 
-    $publicFields = new Rcl_Public_Form_Fields(array('post_type'=>$post_type));
+    $publicFields = new Rcl_Public_Form_Fields(array('post_type' => $post_type, 'form_id' => $form_id));
     
     $content = '<h2>'.__('Управление формами публикации','wp-recall').'</h2>';
     
     $content .= $publicFields->form_navi();
     
+    $content .= '<div class="rcl-public-form-navi">';
+    $content .= '<p>'.__('Use shortcode for publication form','wp-recall').' ['.$shortCode.']</p>';
+    $content .= '</div>';
+    
     $content .= $publicFields->active_fields_box();
 
     $content .= $publicFields->inactive_fields_box();
 
-    /*$users_fields = '<h2>'.__('Arbitrary fields of  publication','wp-recall').'</h2>
-    <small>'.__('Use shortcode for publication form','wp-recall').' [public-form]</small><br>
-    <small>'.__('You can create a different set of custom fields for different forms','wp-recall').'.<br>
-    Чтобы вывести определенный набор полей через шорткод следует указать идентификатор формы, например, [public-form id="2"]</small><br>
-    <small>Форма публикации уже содержит обязательные поля для заголовка записи, контента, ее категории и указания метки.</small><br>
-
-    '.$f_edit->edit_form(array(
-        $f_edit->option('textarea',array(
-            'name'=>'notice',
-            'label'=>__('field description','wp-recall')
-        )),
-        $f_edit->option('select',array(
-            'name'=>'required',
-            'notice'=>__('required field','wp-recall'),
-            'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-        ))
-    )).'
-        
-    <p>Чтобы вывести все данные занесенные в созданные произвольные поля формы публикации внутри опубликованной записи можно воспользоваться функцией<br />
-    <b>rcl_get_custom_post_meta($post_id)</b><br />
-    Разместите ее внутри цикла и передайте ей идентификатор записи первым аргументом<br />
-    Также можно вывести каждое произвольное поле в отдельности через функцию<br />
-    <b>get_post_meta($post_id,$slug,1)</b><br />
-    где<br />
-    $post_id - идентификатор записи<br />
-    $slug - ярлык произвольного поля формы</p>';*/
-    
     echo $content;
 }
 
@@ -84,4 +68,37 @@ function rcl_custom_fields_update( $post_id ){
 	rcl_update_post_custom_fields($post_id);
 
 	return $post_id;
+}
+
+add_action('admin_init','rcl_public_form_admin_actions', 10);
+function rcl_public_form_admin_actions(){
+    
+    if(!isset($_GET['page']) || $_GET['page'] != 'manage-public-form') return false;
+    
+    if(!isset($_GET['form-action']) || !wp_verify_nonce( $_GET['_wpnonce'], 'rcl-form-action')) return false;
+    
+    switch($_GET['form-action']){
+        
+        case 'new-form':
+            
+            $newFormId = $_GET['form-id'];
+            
+            add_option('rcl_fields_post_'.$newFormId, array());
+            
+            wp_redirect(admin_url('admin.php?page=manage-public-form&post-type=post&form-id='.$newFormId)); exit;
+            
+        break;
+    
+        case 'delete-form':
+            
+            $delFormId = $_GET['form-id'];
+            
+            delete_option('rcl_fields_post_'.$delFormId);
+            
+            wp_redirect(admin_url('admin.php?page=manage-public-form&post-type=post')); exit;
+            
+        break;
+        
+    }
+    
 }

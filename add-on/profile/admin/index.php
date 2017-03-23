@@ -55,13 +55,29 @@ function rcl_add_default_profile_fields($fields){
     return $fields;
     
 }
+ 
+add_filter('rcl_custom_field_options','rcl_add_register_profile_field_option',10,3);
+function rcl_add_register_profile_field_option($options, $field, $type){
+    
+    if($type != 'profile' || !rcl_is_register_open()) return $options;
+    
+    $options[] = array(
+        'type' => 'select',
+        'slug'=>'register',
+        'title'=>__('display in registration form','wp-recall'),
+        'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+    );
+    
+    return $options;
+    
+}
 
 function rcl_profile_fields_manager(){
     global $rcl_options;
 
     rcl_sortable_scripts();
 
-    $profileFields = new Rcl_Profile_Fileds('profile',array('custom-slug'=>1));
+    $profileFields = new Rcl_Profile_Fields('profile',array('custom-slug'=>1));
     
     $content = '<h2>'.__('Manage profile fields','wp-recall').'</h2>';
     

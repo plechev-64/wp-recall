@@ -5,8 +5,10 @@ class Rcl_Public_Form{
     public $post_id = 0;
     public $post_type = 'post';
     public $form_id = 1;
+    public $form_object;
     public $taxonomies;
     public $fields;
+    public $fields_options;
     public $post;
     public $current_field = array();
     public $options = array(
@@ -43,6 +45,8 @@ class Rcl_Public_Form{
             unset($this->taxonomies['post_format']);
         }
         
+        $this->form_object = $this->get_object_form();
+        
         $this->fields = $this->get_fields();
 
         do_action('rcl_public_form_init', $this->get_object_form());
@@ -74,6 +78,7 @@ class Rcl_Public_Form{
         $dataForm['post_content'] = ($this->post_id)? $this->post->post_content: '';
         $dataForm['post_excerpt'] = ($this->post_id)? $this->post->post_excerpt: '';
         $dataForm['post_title'] = ($this->post_id)? $this->post->post_title: '';
+        $dataForm['ext_types'] = 'jpg, png, gif';
         $dataForm = (object)$dataForm;
         return $dataForm;
     }
@@ -131,7 +136,7 @@ class Rcl_Public_Form{
         global $user_ID;
         
         if($this->post_type == 'post')
-            $fields = get_option('rcl_fields_'.$this->post_type.'_1');
+            $fields = get_option('rcl_fields_'.$this->post_type.'_'.$this->form_id);
         else
             $fields = get_option('rcl_fields_'.$this->post_type);
 		
@@ -171,7 +176,18 @@ class Rcl_Public_Form{
         
         if(isset($fields['options'])){
             
+            $this->fields_options = $fields['options'];
+            
             unset($fields['options']);
+            
+        }
+        
+        foreach($fields as $field){
+            
+            if($field['slug'] == 'post_uploader'){
+                if(isset($field['ext-types']) && $field['ext-types'])
+                $this->form_object->ext_types = $field['ext-types'];
+            }
             
         }
 
@@ -270,10 +286,11 @@ class Rcl_Public_Form{
                         }
                         
                         if($this->current_field['slug'] == 'post_uploader'){
-
+                            
                             $postUploder = new Rcl_Public_Form_Uploader(array(
                                 'post_id' => $this->post_id,
-                                'post_type' => $this->post_type
+                                'post_type' => $this->post_type,
+                                'ext_types' => $this->form_object->ext_types
                             ));
                             
                             $contentField = $postUploder->get_uploader();
@@ -414,17 +431,25 @@ class Rcl_Public_Form{
         $wp_uploader = false;
         $quicktags = false;
         $tinymce = false;
+
+        if(isset($this->fields_options['user-edit'])){
         
-        if(isset($args['options'])){
+            if(isset($args['options'])){
+
+                if(in_array('media',$args['options']))
+                        $wp_uploader = true;
+
+                if(in_array('html',$args['options']))
+                        $quicktags = true;
+
+                if(in_array('editor',$args['options']))
+                        $tinymce = true;
+
+            }
             
-            if(in_array('media',$args['options']))
-                    $wp_uploader = true;
+        }else{
             
-            if(in_array('html',$args['options']))
-                    $quicktags = true;
-            
-            if(in_array('editor',$args['options']))
-                    $tinymce = true;
+            $tinymce = true;
             
         }
 
@@ -759,393 +784,16 @@ class Rcl_Public_Form{
     
     function init_form_scripts(){
         
-        $obj = $this->get_object_form();
+        $obj = $this->form_object;
 
         echo '<script type="text/javascript">'
                 . 'rcl_init_public_form({'
                 . 'post_type:"'.$obj->post_type.'",'
                 . 'post_id:"'.$obj->post_id.'",'
-                . 'post_status:"'.$obj->post_status.'"'
+                . 'post_status:"'.$obj->post_status.'",'
+                . 'ext_types:"'.$obj->ext_types.'"'
             . '});</script>';
         
     }
     
 }
-
-class Rcl_PublicForm {
-
-    public $post_id;//идентификатор записи
-    public $post_type; //тип записи
-    public $post_status; //тип записи
-    public $terms; //список категорий доступных для выбора
-    public $form_id; //идентификатор формы
-    public $id_upload;
-    public $accept;
-    public $type_editor;
-    public $wp_editor;
-    public $can_edit;
-    public $select_amount;
-    public $select_type;
-    public $taxonomy;
-    public $button_draft;
-    public $button_preview;
-    public $button_delete;
-
-    function __construct($atts){
-        global $editpost,$group_id,$rcl_options,$user_ID,$formData;
-
-        $editpost = false;
-        $this->can_edit = true;
-
-        extract(shortcode_atts(array(
-            'cats' => false,
-            'id' => 1,
-            'id_upload' => 'upload-public-form',
-            'accept' => 'image/*',
-            'post_type'=> 'post',
-            'wp_editor'=> null,
-            'select_amount'=> false,
-            'select_type'=> false,
-            'group_id'=>$group_id,
-            'button_draft'=>1,
-            'button_delete'=>1,
-            'button_preview'=>1
-        ),
-        $atts));
-
-        $this->post_type = $post_type;
-        $this->id_upload = $id_upload;
-        $this->terms = $cats;
-        $this->form_id = $id;
-        $this->accept = $accept;
-        $this->button_draft = ($user_ID)? $button_draft: false;
-        $this->button_delete = $button_delete;
-        
-        $this->button_preview = (isset($rcl_options['public_preview'])&&!$rcl_options['public_preview'])? 1: 0;
-
-        if(!isset($wp_editor)){
-            if(isset($rcl_options['wp_editor'])){
-                $cnt = count($rcl_options['wp_editor']);
-                if($cnt==1){
-                        $type = $rcl_options['wp_editor'][0];
-                }else{
-                        $type=3;
-                }
-            }
-            $this->wp_editor = (isset($type))? $type: 0;
-        }else 
-            $this->wp_editor = $wp_editor;
-
-        $this->type_editor = null;
-
-        if(isset($_GET['rcl-post-edit'])){
-
-            $this->post_id = $_GET['rcl-post-edit'];
-            $editpost = get_post($this->post_id);
-            $this->post_type = $editpost->post_type;
-            $this->post_status = $editpost->post_status;
-
-            if($this->post_type=='post-group'){
-                
-                if(!$group_id) 
-                    $group_id = rcl_get_group_id_by_post($this->post_id);
-
-                if(!rcl_can_user_edit_post_group($this->post_id)&&!current_user_can('edit_post', $this->post_id)) 
-                        $this->can_edit = false;
-
-            }else if(!current_user_can('edit_post', $this->post_id)){
-                $this->can_edit = false;
-            }
-
-            $form_id = get_post_meta($this->post_id,'publicform-id',1);
-
-            if($form_id) $this->form_id = $form_id;
-        }
-
-        $post_types = get_post_types( array('public' => true,'_builtin' => false), 'objects', 'and' );
-
-        $this->taxonomy = array('post'=>array('category','post_tag'));
-        foreach($post_types as $p_type=>$p_data){
-            $this->taxonomy[$p_type] = $p_data->taxonomies;
-        }
-
-        if(isset($rcl_options['accept-'.$this->post_type])) $this->accept = $rcl_options['accept-'.$this->post_type];
-
-        $this->select_type = (isset($rcl_options['output_category_list']))? $rcl_options['output_category_list']: 'select';
-        if($select_type) $this->select_type = $select_type;
-        
-        if($this->select_type=='select'){
-            $this->select_amount = (isset($rcl_options['count_category_post'])&&$rcl_options['output_category_list']=='select')? $rcl_options['count_category_post']:0;
-            if($select_amount) $this->select_amount = $select_amount;
-        }
-        
-        $formData = apply_filters('rcl_public_form_object',$this);
-
-        if($this->user_can()){
-            rcl_fileupload_scripts();
-            add_action('wp_footer',array(&$this,'init_form_scripts'),999);
-            if($this->post_id && $this->button_delete) add_filter('after_public_form_rcl',array(&$this,'delete_button'),10,2);
-        }
-
-    }
-
-    function user_can(){
-        global $rcl_options,$user_ID,$formData;
-
-        $user_can = $rcl_options['user_public_access_recall'];
-		
-        if($user_can){
-
-            if($user_ID){
-                $userinfo = get_userdata( $user_ID );
-
-                if($userinfo->user_level>=$user_can) $can = true;
-                else $can = false;
-            }else{
-                $can = false;
-            }
-
-        }else{
-            $can = true;
-        }
-        
-        $can = apply_filters('rcl_user_can_public',$can,$formData);
-
-        return $can;
-    }
-
-    function submit_and_hidden(){
-        global $group_id,$post,$rcl_options,$formData;
-
-		$inputs = array(
-                    array('type'=>'hidden','value'=>1,'name'=>'edit-post-rcl'),
-                    array('type'=>'hidden','value'=>base64_encode($formData->form_id),'name'=>'id_form'),
-		);
-                
-                if($formData->button_draft)
-                    $inputs[] = array('type'=>'button','value'=>__('Save as Draft','wp-recall'),'onclick'=>'rcl_save_draft(this);','id'=>'save-draft-rcl','class'=>'recall-button');
-
-                if(!$formData->button_preview){
-                    $inputs[] = array('type'=>'button','value'=>__('Publish','wp-recall'),'onclick'=>'rcl_publish(this);','id'=>'edit-post-rcl','class'=>'recall-button');
-                }else{
-                    rcl_dialog_scripts();
-                    $inputs[] = array('type'=>'button','value'=>__('Preview','wp-recall'),'onclick'=>'rcl_preview(this);','id'=>'edit-post-rcl','class'=>'rcl-preview-post recall-button');
-                }
-                
-                $inputs[] = array('type'=>'hidden','value'=>$formData->button_draft,'name'=>'button-draft');
-                $inputs[] = array('type'=>'hidden','value'=>$formData->button_delete,'name'=>'button-delete');
-                $inputs[] = array('type'=>'hidden','value'=>$formData->button_preview,'name'=>'button-preview');
-
-                $inputs[] = array('type'=>'hidden','value'=>$formData->post_id,'name'=>'post-rcl');
-
-		if(!$formData->post_id) 
-                    $inputs[] = array('type'=>'hidden','value'=>base64_encode($formData->post_type),'name'=>'posttype');
-                else
-                    $inputs[] = array('type'=>'hidden','value'=>$formData->post_status,'name'=>'post_status');
-
-		$post_id = (isset($post))? $post->ID: 0;
-
-		$hiddens = array(
-                    'post-group' => array('term_id'=>base64_encode($group_id)),
-                    'products' => array('formpage'=>$post_id),
-                    'task' => array('formpage'=>$post_id)
-                );
-
-		if(isset($hiddens[$this->post_type])){
-			foreach($hiddens[$this->post_type] as $name=>$val){
-				$inputs[] = array('type'=>'hidden','value'=>$val,'name'=>$name);
-			}
-		}
-
-		$inputs = apply_filters('rcl_submit_hiddens_form',$inputs);
-
-		foreach($inputs as $input){
-			$attrs = array();
-			foreach($input as $attr=>$val){
-				$attrs[] = $attr."='$val'";
-			}
-			$html[] = "<input ".implode(' ',$attrs).">";
-		}
-
-        return '<div class="submit-public-form">'.implode('',$html).'</div>';
-    }
-
-    function delete_button($cnt,$data){
-        global $user_ID,$editpost,$formData;
-        
-        if($editpost->post_author==$user_ID){
-            $cnt .= '<form method="post" action="" onsubmit="return confirm(\''.__('Are you sure?','wp-recall').'\');">
-            '.wp_nonce_field('delete-post-rcl','_wpnonce',true,false).'
-            <input class="alignleft recall-button delete-post-submit" type="submit" name="delete-post-rcl" value="'.__('Delete post','wp-recall').'">
-            <input type="hidden" name="post-rcl" value="'.$formData->post_id.'"></form>';
-        }else{
-
-            $cnt .= '<div id="rcl-delete-post">
-                        <a href="#" class="recall-button delete-toggle">'.__('Delete post','wp-recall').'</a>
-                        <div class="delete-form-contayner">
-                            <form action="" method="post"  onsubmit="return confirm(\''.__('Are you sure?','wp-recall').'\');">
-                            '.wp_nonce_field('delete-post-rcl','_wpnonce',true,false).'
-                            '.$this->reasons_delete().'
-                            <label>'.__('or enter your own','wp-recall').'</label>
-                            <textarea required id="reason_content" name="reason_content"></textarea>
-                            <p><input type="checkbox" name="no-reason" onclick="(!document.getElementById(\'reason_content\').getAttribute(\'disabled\')) ? document.getElementById(\'reason_content\').setAttribute(\'disabled\', \'disabled\') : document.getElementById(\'reason_content\').removeAttribute(\'disabled\')" value="1"> '.__('Without notice','wp-recall').'</p>
-                            <input class="floatright recall-button delete-post-submit" type="submit" name="delete-post-rcl" value="'.__('Delete post','wp-recall').'">
-                            <input type="hidden" name="post-rcl" value="'.$formData->post_id.'">
-                            </form>
-                        </div>
-                    </div>';
-        }
-        return $cnt;
-    }
-
-    function reasons_delete(){
-
-        $reasons = array(
-                array(
-                        'value'=>__('Does not correspond the topic','wp-recall'),
-                        'content'=>__('The publication does not correspond to the site topic','wp-recall'),
-                ),
-                array(
-                        'value'=>__('Not completed','wp-recall'),
-                        'content'=>__('Publication does not correspond the rules','wp-recall'),
-                ),
-                array(
-                        'value'=>__('Advertising/Spam','wp-recall'),
-                        'content'=>__('Publication labeled as advertising or spam','wp-recall'),
-                )
-        );
-
-        $reasons = apply_filters('rcl_reasons_delete',$reasons);
-
-        if(!$reasons) return false;
-
-        $content = '<label>'.__('Use blank notice','wp-recall').':</label>';
-        foreach($reasons as $reason){
-                $content .= '<input type="button" class="recall-button reason-delete" onclick="document.getElementById(\'reason_content\').value=\''.$reason['content'].'\'" value="'.$reason['value'].'">';
-        }
-
-        return $content;
-    }
-
-    function public_form(){
-        global $user_ID,$formFields,$formData;
-
-            if(!$formData->can_edit) 
-                return '<p align="center" class="rcl-public-notice">'.__('You can not edit this publication :(','wp-recall').'</p>';
-
-            if(!$this->user_can()){
-                if($formData->post_type=='post-group') return '<div class="public-post-group">'
-                    . '<h3 >'.__('Sorry, but you have no rights to publish in this group :(','wp-recall').'</h3>'
-                        . '</div>';
-                else{
-
-                    if(!$user_ID) return '<p align="center" class="rcl-public-notice">'.__('You must be logged in to post. Login or register','wp-recall').'</p>';
-
-                    return '<p align="center" class="rcl-public-notice">'. __('Sorry, but you have no right to post on this site :(','wp-recall') . '</p>';
-                }
-            }
-            
-            $no_view = apply_filters('rcl_public_form_check_view',false,$formData);
-            
-            if($no_view){
-                return '<div class="rcl-warning-form">' . $no_view . '</div>';
-            }
-
-            $formfields = array(
-            	'title'=>true,
-            	'termlist'=>true,
-            	'editor'=>true,
-                'excerpt'=>false,
-            	'custom_fields'=>true,
-                'upload'=>true,
-                'tags'=>true
-            );
-
-            $formFields = apply_filters('fields_public_form_rcl',$formfields,$formData);
-
-            if(!$formFields['tags']) 
-                remove_filter('public_form_rcl','rcl_add_non_hierarchical_tags_field',100);
-
-            $form = '<div class="public_block">';
-
-                $id_post = ($formData->post_id)? $formData->post_id : 0;
-
-                $id_form = 'form-'.$formData->post_type.'-'.$id_post;
-                
-                $classes = array('rcl-public-form');
-                
-                $classes[] = ($formData->post_id)? 'edit-form' : 'public-form';
-                
-                $data_form_id = ($this->form_id)? $this->form_id: 0;
-                $data_post_id = ($this->post_id)? $this->post_id: 0;
-                
-                $attrs_form = array(
-                    'id'=>$id_form,
-                    'data-form_id'=>$data_form_id,
-                    'data-post_id'=>$data_post_id,
-                    'data-post_type'=>$formData->post_type,
-                    'class'=>$classes
-                );
-                
-                $attrs_form = apply_filters('rcl_public_form_attributes', $attrs_form, $formData);
-                
-                $attrs = array();
-                foreach($attrs_form as $k=>$v){
-                    if(is_array($v)){
-                        $attrs[] = $k.'="'.implode(' ',$v).'"';
-                        continue;
-                    }
-                    $attrs[] = $k.'="'.$v.'"';
-                }
-
-                $form .= '<form '.implode(' ',$attrs).' ';
-
-                if(!$formData->preview){
-                    $form .= ' onsubmit="document.getElementById(\'edit-post-rcl\').disabled=true;document.getElementById(\'edit-post-rcl\').value=\''.__('Being sent, please wait...','wp-recall').'\';"';  
-                }
-                
-                $form .= 'action="" method="post" enctype="multipart/form-data">'
-                 .wp_nonce_field('edit-post-rcl','_wpnonce',true,false);
-
-                    if(!$user_ID) $form .= '<div class="rcl-form-field">
-                            <label>'.__('Your Name','wp-recall').' <span class="required">*</span></label>
-                            <input required type="text" value="" name="name-user">
-                    </div>
-                    <div class="rcl-form-field">
-                            <label>'.__('Your E-mail','wp-recall').' <span class="required">*</span></label>
-                            <input required type="text" value="" name="email-user">
-                    </div>';
-
-                    if(rcl_get_template_path($formData->post_type.'-form.php',__FILE__)) 
-                        $form .= rcl_get_include_template($formData->post_type.'-form.php',__FILE__);
-                    else 
-                        $form .= rcl_get_include_template('public-form.php',__FILE__);
-
-                    $fields = '';
-
-                    $form .= apply_filters('rcl_public_form',$fields,$formData);
-
-                    $form .= $this->submit_and_hidden()
-
-               . '</form>';
-
-               $after = '';
-               $form .= apply_filters('after_public_form_rcl',$after,$formData);
-
-           $form .= '</div>';
-
-        return $form;
-    }
-    
-    function init_form_scripts(){
-        global $formData;
-        $id_post = ($formData->post_id)? $formData->post_id : 0;
-        echo '<script type="text/javascript">'
-                . 'rcl_init_public_form({'
-                . 'post_type:"'.$formData->post_type.'",'
-                . 'post_id:"'.$id_post.'",'
-                . 'post_status:"'.$formData->post_status.'"'
-            . '});</script>';
-    }
-}
-

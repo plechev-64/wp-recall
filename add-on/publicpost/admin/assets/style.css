@@ -27,3 +27,18 @@
     background: #fff;
     font-weight: bold;
 }
+.rcl-public-form-navi i{
+    font-family: dashicons;
+    font-style: normal;
+    font-size: 22px;
+    vertical-align: middle;
+}
+.rcl-public-form-navi .rcl-types-list li a.action-form{
+    
+}
+.rcl-public-form-navi .fa-plus:before{
+    content: "\f502";
+}
+.rcl-public-form-navi .fa-trash:before{
+    content: "\f182";
+}

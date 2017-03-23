@@ -81,7 +81,7 @@ function rcl_delete_post(element){
                 rcl_notice(data['error'],'error',10000);
                 return false;
             }
-            jQuery('.'+data['post_type']+'-'+post_id).remove();
+            jQuery('#'+data['post_type']+'-'+post_id).remove();
             rcl_notice(data['success'],'success',10000);
         }
     });
@@ -363,6 +363,7 @@ function rcl_init_public_form(post){
     
     var post_id = post.post_id;
     var post_type = post.post_type;
+    var ext_types = post.ext_types;
     var post_status = 'new';
     
     if(post.post_status)
@@ -384,7 +385,13 @@ function rcl_init_public_form(post){
         type: 'POST',
         dropZone: jQuery('#rcl-public-dropzone-'+post_type),
         url: Rcl.ajaxurl,
-        formData:{action:'rcl_imagepost_upload',post_type:post_type,post_id:post_id,ajax_nonce:Rcl.nonce},
+        formData:{
+            action: 'rcl_imagepost_upload',
+            post_type: post_type,
+            post_id: post_id,
+            ext_types: ext_types,
+            ajax_nonce: Rcl.nonce
+        },
         singleFileUploads:false,
         autoUpload:true,
         progressall: function (e, data) {

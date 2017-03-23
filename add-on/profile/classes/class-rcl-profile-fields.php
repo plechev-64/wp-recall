@@ -3,7 +3,7 @@
 if ( ! class_exists( 'Rcl_EditFields' ) ) 
         include_once RCL_PATH.'functions/class-rcl-editfields.php';
 
-class Rcl_Profile_Fileds extends Rcl_EditFields{
+class Rcl_Profile_Fields extends Rcl_EditFields{
     
     public $inactive_fields;
     
@@ -103,20 +103,6 @@ class Rcl_Profile_Fileds extends Rcl_EditFields{
                     'type' => 'select',
                     'slug'=>'required',
                     'title'=>__('required field','wp-recall'),
-                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-                ),
-
-                array(
-                    'type' => 'select',
-                    'slug'=>'register',
-                    'title'=>__('display in registration form','wp-recall'),
-                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-                ),
-
-                array(
-                    'type' => 'select',
-                    'slug'=>'order',
-                    'title'=>__('display at checkout for guests','wp-recall'),
                     'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
                 ),
 

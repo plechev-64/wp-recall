@@ -74,52 +74,19 @@ function rcl_get_publics_options_page($content){
             array(
                 $opt->title(__('Form of publication','wp-recall')),
 
-                $opt->label(__('Text editor','wp-recall')),
+                $opt->label(__('Number of images in Wp-Recall gallery','wp-recall')),
+                $opt->option('number',array('name'=>'count_image_gallery','default'=>10)),
+
+                $opt->label(__('The maximum image size, Mb','wp-recall')),
+                $opt->option('number',array('name'=>'public_gallery_weight','default'=>2)),
+                $opt->notice(__('Maximum image size in megabytes. By default, 2MB','wp-recall')),
+
+                $opt->label(__('The image size in editor by default','wp-recall')),
                 $opt->option('select',array(
-                    'name'=>'type_text_editor',
-                    'parent'=>true,
-                    'options'=>array(
-                        //__('WP-RECALL editor','wp-recall'),
-                        1=>__('WordPress editor','wp-recall')
-                    )
+                    'name'=>'default_size_thumb',
+                    'options'=>$d_sizes
                 )),
-		$opt->child(
-                    array('name'=>'type_text_editor','value'=>1),
-                    array(
-                        $opt->label(__('View editor WP','wp-recall')),
-                        $opt->option('checkbox',array(
-                            'name'=>'wp_editor',
-                            'options'=>array(1=>__('Visual Editor','wp-recall'),2=>__('HTML-Editor','wp-recall'))
-                        )),
-                        $opt->label(__('Media Uploader','wp-recall')),
-                        $opt->option('select',array(
-                            'name'=>'media_uploader',
-                            'parent'=>true,
-                            'options'=>array(
-                                __('WP-RECALL Uploader','wp-recall'),
-                                __('WordPress Uploader','wp-recall')
-                            )
-                        )),
-                        $opt->child(
-                        array('name'=>'media_uploader','value'=>0),
-                            array(
-                                $opt->label(__('Number of images in Wp-Recall gallery','wp-recall')),
-                                $opt->option('number',array('name'=>'count_image_gallery','default'=>10)),
-
-                                $opt->label(__('The maximum image size, Mb','wp-recall')),
-                                $opt->option('number',array('name'=>'public_gallery_weight','default'=>2)),
-                                $opt->notice(__('Maximum image size in megabytes. By default, 2MB','wp-recall')),
-
-                                $opt->label(__('The image size in editor by default','wp-recall')),
-                                $opt->option('select',array(
-                                    'name'=>'default_size_thumb',
-                                    'options'=>$d_sizes
-                                )),
-                                $opt->notice(__('Select image size for the visual editor during publishing','wp-recall'))
-                            )
-                        )
-                    )
-                ),
+                $opt->notice(__('Select image size for the visual editor during publishing','wp-recall')),
 
                 $opt->label(__('Form of publication output in the personal cabinet','wp-recall')),
                 $opt->option('select',array(
@@ -131,11 +98,11 @@ function rcl_get_publics_options_page($content){
                 $opt->child(
                     array('name'=>'output_public_form_rcl','value'=>1),
                     array(
-                        $opt->extend(array(
+
                         $opt->label(__('The form ID','wp-recall')),
                         $opt->option('number',array('name'=>'form-lk')),
                         $opt->notice(__('Enter the form ID according to the personal Cabinet. The default is 1','wp-recall'))
-                    ))
+
                     )
                 )
             )

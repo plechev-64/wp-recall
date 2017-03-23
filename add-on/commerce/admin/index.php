@@ -201,3 +201,19 @@ function rcl_get_chart_orders($orders){
 
     return rcl_get_chart($chartArgs);
 }
+
+add_filter('rcl_custom_field_options','rcl_add_cart_profile_field_option',10,3);
+function rcl_add_cart_profile_field_option($options, $field, $type){
+    
+    if($type != 'profile') return $options;
+    
+    $options[] = array(
+        'type' => 'select',
+        'slug'=>'order',
+        'title'=>__('display at checkout for guests','wp-recall'),
+        'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+    );
+    
+    return $options;
+    
+}

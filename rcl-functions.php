@@ -67,11 +67,13 @@ function rcl_init_custom_tabs(){
     if(!$custom_tabs) return false;
     
     foreach($custom_tabs as $tab){
-
+        
+        $options = (isset($tab['options-tab']))? $tab['options-tab']: array();
+        
         $tab_data = array(
             'id'=> $tab['slug'], 
             'name'=> $tab['title'],
-            'public'=> $tab['public'],
+            'public'=> in_array('public', $options),
             'icon'=> ($tab['icon'])? $tab['icon']: 'fa-cog',
             'output'=> 'menu',
             'content'=> array(
@@ -87,11 +89,11 @@ function rcl_init_custom_tabs(){
             )
         );
         
-        if($tab['cache']){
+        if(in_array('cache', $options)){
             $tab_data['supports'][] = 'cache';
         }
         
-        if($tab['ajax']){
+        if(in_array('ajax', $options)){
             $tab_data['supports'][] = 'ajax';
         }
 
@@ -1341,4 +1343,14 @@ function rcl_get_profile_fields($args = false){
     
     return $profileFields;
     
+}
+
+function rcl_get_mime_type_by_ext($file_ext){
+    $mimes = get_allowed_mime_types();
+    foreach ($mimes as $type => $mime) {
+        if (strpos($type, $file_ext) !== false) {
+            return $mime;
+        }
+    }
+    return false;
 }

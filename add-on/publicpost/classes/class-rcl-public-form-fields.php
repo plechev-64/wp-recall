@@ -7,12 +7,14 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
     
     public $inactive_fields;
     public $taxonomies;
+    public $form_id;
     
     function __construct($args = false) {
         
         $this->post_type = (isset($args['post_type']))? $args['post_type']: 'post';
+        $this->form_id = (isset($args['form_id']))? $args['form_id']: 1;
         
-        parent::__construct($this->post_type,array('id'=>1, 'custom-slug'=>1, 'terms'=>1));
+        parent::__construct($this->post_type,array('id'=>$this->form_id, 'custom-slug'=>1, 'terms'=>1));
         
         $this->taxonomies = get_object_taxonomies( $this->post_type, 'objects' );
 
@@ -63,8 +65,49 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
             }
 
             $content .= '</ul>';
-        
+
         $content .= '</div>';
+        
+        if($this->post_type == 'post'){
+            
+            global $wpdb;
+            
+            $postForms = $wpdb->get_col("SELECT option_name FROM ".$wpdb->options." WHERE option_name LIKE 'rcl_fields_post_%' ORDER BY option_id ASC");
+                
+            $content .= '<div class="rcl-public-form-navi">';
+        
+                $content .= '<ul class="rcl-types-list">';
+                
+                foreach($postForms as $name){
+                    
+                    $form_id = preg_replace("/[a-z_]+/", '', $name);
+                    
+                    $class = ($this->form_id == $form_id)? 'class="current-item"': '';
+                    
+                    $content .= '<li '.$class.'><a href="'.admin_url('admin.php?page=manage-public-form&post-type='.$this->post_type.'&form-id='.$form_id).'">'.__('Форма','wp-recall').' ID: '.$form_id.'</a></li>';
+                }
+                
+                $content .= '<li><a class="action-form" href="'.wp_nonce_url(admin_url('admin.php?page=manage-public-form&form-action=new-form&form-id='.($form_id + 1)),'rcl-form-action').'"><i class="fa fa-plus"></i> '.__('Добавить форму','wp-recall').'</a></li>';
+            
+                $content .= '</ul>';
+
+            $content .= '</div>';
+            
+            if($this->form_id != 1){
+                
+                $content .= '<div class="rcl-public-form-navi">';
+        
+                    $content .= '<ul class="rcl-types-list">';
+
+                    $content .= '<li><a class="action-form" href="'.wp_nonce_url(admin_url('admin.php?page=manage-public-form&form-action=delete-form&form-id='.$this->form_id),'rcl-form-action').'" onclick="return confirm(\''.__('Are you sure?','wp-recall').'\');"><i class="fa fa-trash"></i> '.__('Удалить форму','wp-recall').'</a></li>';
+
+                    $content .= '</ul>';
+
+                $content .= '</div>';
+                
+            }
+                
+        }
         
         return $content;
         
@@ -160,7 +203,7 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
         
         $defaultFields[] = array(
             'slug' => 'post_uploader',
-            'title' => __('Медиазагрузчик','wp-recall'),
+            'title' => __('Медиа-загрузчик','wp-recall'),
             'type' => 'custom'
         );
         
@@ -350,6 +393,17 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
             
         }
         
+        if($field['slug'] == 'post_uploader'){
+            
+            $options[] = array(
+                'type' => 'text',
+                'slug' => 'ext-types',
+                'title' => __('Допустимые разрешения файлов','wp-recall'),
+                'notice' => __('Через запятую, например: jpg, zip, pdf. По-умолчанию: png, gif, jpg','wp-recall')
+            );
+            
+        }
+
         if($field['slug'] == 'taxonomy-groups'){
             
             foreach($options as $k => $option){

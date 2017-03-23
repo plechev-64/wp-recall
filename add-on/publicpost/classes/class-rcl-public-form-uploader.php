@@ -5,7 +5,7 @@ class Rcl_Public_Form_Uploader{
     public $post_id = 0;
     public $post_type;
     public $thumbnail_id = 0;
-    public $accept = 'image/*';
+    public $ext_types;
     public $view_gallery = false;
 
     function __construct($args = false) {
@@ -18,8 +18,9 @@ class Rcl_Public_Form_Uploader{
             $this->view_gallery = get_post_meta($this->post_id, 'recall_slider', 1);
         }
         
-        if(isset($rcl_options['accept-'.$this->post_type])) 
-                $this->accept = $rcl_options['accept-'.$this->post_type];
+        if(!$this->ext_types){
+            $this->ext_types = 'jpg,png,jpeg';
+        }
 
     }
     
@@ -106,6 +107,15 @@ class Rcl_Public_Form_Uploader{
     
     function get_dropzone(){
         
+        if($this->ext_types){
+            $mTypes = array();
+            foreach(array_map('trim',explode(',',$this->ext_types)) as $ext){
+                $mTypes[] = rcl_get_mime_type_by_ext($ext);
+            }
+        }else{
+            $mTypes = array('image/*');
+        }
+        
         $content = '<div>
             <div id="rcl-public-dropzone-'.$this->post_type.'" class="rcl-dropzone mass-upload-box">
                 <div class="mass-upload-area">
@@ -114,9 +124,9 @@ class Rcl_Public_Form_Uploader{
                 <hr>
                 <div class="recall-button rcl-upload-button">
                         <span>'.__('Add','wp-recall').'</span>
-                        <input id="upload-public-form-'.$this->post_type.'" name="uploadfile[]" type="file" accept="'.$this->accept.'" multiple>
+                        <input id="upload-public-form-'.$this->post_type.'" name="uploadfile[]" type="file" accept="'.implode(',',$mTypes).'" multiple>
                 </div>
-                <small class="notice">'.__('Allowed extensions','wp-recall').': '.$this->accept.'</small>
+                <small class="notice">'.__('Allowed extensions','wp-recall').': '.$this->ext_types.'</small>
             </div>
         </div>';
         

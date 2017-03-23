@@ -29,8 +29,10 @@ function rcl_imagepost_upload(){
     }
         
     $post_type = $_POST['post_type'];
+    
+    $valid_types = (isset($_POST['ext_types']) && $_POST['ext_types'])? array_map('trim',explode(',',$_POST['ext_types'])): array('jpeg', 'jpg', 'png', 'gif');
 
-    $valid_types = apply_filters('rcl_upload_valid_types',array('gif', 'jpg', 'png', 'jpeg'),$post_type);
+    $valid_types = apply_filters('rcl_upload_valid_types',$valid_types,$post_type);
 
     $files = array();
     foreach($_FILES['uploadfile'] as $key=>$fls){
