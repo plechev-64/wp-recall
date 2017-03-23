@@ -114,7 +114,7 @@ function rcl_is_limit_editing($post_date){
     return false;
 }
 
-function rcl_get_custom_fields_edit_box($post_id, $post_type = false, $form_id = false){
+function rcl_get_custom_fields_edit_box($post_id, $post_type = false, $form_id = 1){
 
     $post = get_post($post_id);
 

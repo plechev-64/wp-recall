@@ -12,7 +12,6 @@ class Rcl_Custom_Fields{
 
     function __construct($args = false){
         $this->files = array();
-        $this->rand = rand(0,100);
     }
 
     function get_title($field){
@@ -26,6 +25,8 @@ class Rcl_Custom_Fields{
 
     function get_input($field, $value = false){
         global $user_LK,$user_ID;
+        
+        $this->rand = rand(0,100);
         
         if(isset($field['field_select'])){
             

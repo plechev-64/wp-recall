@@ -7,12 +7,12 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
     
     public $inactive_fields;
     public $taxonomies;
-    public $form_id;
+    public $form_id = 1;
     
     function __construct($args = false) {
         
         $this->post_type = (isset($args['post_type']))? $args['post_type']: 'post';
-        $this->form_id = (isset($args['form_id']))? $args['form_id']: 1;
+        $this->form_id = (isset($args['form_id']) && $args['form_id'])? $args['form_id']: 1;
         
         parent::__construct($this->post_type,array('id'=>$this->form_id, 'custom-slug'=>1, 'terms'=>1));
         

@@ -52,9 +52,16 @@ function custom_fields_editor_post_rcl() {
     add_meta_box( 'custom_fields_editor_post', __('Arbitrary fields of  publication','wp-recall'), 'custom_fields_list_posteditor_rcl', 'post', 'normal', 'high'  );
 }
 
-function custom_fields_list_posteditor_rcl($post){    
-    echo rcl_get_custom_fields_edit_box($post->ID); ?>
+function custom_fields_list_posteditor_rcl($post){ 
+    $form_id = 1;
+    
+    if($post->ID && $post->post_type == 'post')
+        $form_id = get_post_meta($post->ID, 'publicform-id', $id_form);
+    
+    echo rcl_get_custom_fields_edit_box($post->ID,$post->post_type,$form_id); ?>
+
     <input type="hidden" name="custom_fields_nonce_rcl" value="<?php echo wp_create_nonce(__FILE__); ?>" />
+    
     <?php
 }
 
