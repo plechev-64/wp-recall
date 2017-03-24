@@ -30,39 +30,54 @@ function rcl_public_form_manager(){
 
     rcl_sortable_scripts();
 
-    $publicFields = new Rcl_Public_Form_Fields(array('post_type' => $post_type, 'form_id' => $form_id));
+    $formManager = new Rcl_Public_Form_Manager(array(
+        'post_type' => $post_type, 
+        'form_id' => $form_id
+    ));
     
     $content = '<h2>'.__('Управление формами публикации','wp-recall').'</h2>';
     
-    $content .= $publicFields->form_navi();
+    $content .= $formManager->form_navi();
     
     $content .= '<div class="rcl-public-form-navi">';
     $content .= '<p>'.__('Use shortcode for publication form','wp-recall').' ['.$shortCode.']</p>';
     $content .= '</div>';
     
-    $content .= $publicFields->active_fields_box();
+    $content .= $formManager->active_fields_box();
 
-    $content .= $publicFields->inactive_fields_box();
+    $content .= $formManager->inactive_fields_box();
 
     echo $content;
 }
 
 add_action('admin_init', 'custom_fields_editor_post_rcl', 1);
 function custom_fields_editor_post_rcl() {
-    add_meta_box( 'custom_fields_editor_post', __('Arbitrary fields of  publication','wp-recall'), 'custom_fields_list_posteditor_rcl', 'post', 'normal', 'high'  );
+    
+    $post_id = ( isset( $_GET['post'] ) )? $_GET['post']: false;
+    $post_type = ( isset( $_GET['post_type'] ) )? $_GET['post_type']: false;
+        
+    if($post_id){
+        $post_type = get_post_type($post_id);
+    }
+    
+    if(!$post_type) return;
+    
+    add_meta_box( 'custom_fields_editor_post', __('Arbitrary fields of  publication','wp-recall'), 'custom_fields_list_posteditor_rcl', $post_type, 'normal', 'high'  );
 }
 
 function custom_fields_list_posteditor_rcl($post){ 
     $form_id = 1;
     
     if($post->ID && $post->post_type == 'post')
-        $form_id = get_post_meta($post->ID, 'publicform-id', $id_form);
+        $form_id = get_post_meta($post->ID, 'publicform-id');
     
-    echo rcl_get_custom_fields_edit_box($post->ID,$post->post_type,$form_id); ?>
-
-    <input type="hidden" name="custom_fields_nonce_rcl" value="<?php echo wp_create_nonce(__FILE__); ?>" />
+    $content = rcl_get_custom_fields_edit_box($post->ID,$post->post_type,$form_id); 
     
-    <?php
+    if(!$content) return false;
+    
+    echo $content; 
+    
+    echo '<input type="hidden" name="custom_fields_nonce_rcl" value="'.wp_create_nonce(__FILE__).'" />';
 }
 
 add_action('save_post', 'rcl_custom_fields_update', 0);

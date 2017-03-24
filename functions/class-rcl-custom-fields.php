@@ -106,14 +106,28 @@ class Rcl_Custom_Fields{
     function get_type_file($field){
         global $user_ID;
         $input = '';
-        
-        $user_id = (is_admin())? $_GET['user_id']: $user_ID;
-        if(!$user_id) $user_id = $user_ID;
 
-        $url = (is_admin()&&!(defined( 'DOING_AJAX' ) && DOING_AJAX))? 
-                admin_url('?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value).'&user_id='.$user_id): 
-                get_bloginfo('wpurl').'/?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value);
-        
+        if(is_admin()&&!(defined( 'DOING_AJAX' ) && DOING_AJAX)){
+            
+            $post_id = (isset($_GET['post']))? $_GET['post']: false;
+            $user_id = (isset($_GET['user_id']))? $_GET['user_id']: false;
+            
+            $url = admin_url('?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value));
+            
+            if($post_id){
+                $url .= '&post_id='.$post_id;
+            }else if($user_id){
+                $url .= '&user_id='.$user_id;
+            }else{
+                $url .= '&user_id='.$user_ID;
+            }
+            
+        }else{
+            
+            $url = get_bloginfo('wpurl').'/?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value);
+            
+        }
+
         if($this->value){
             $input .= $this->get_field_value($field,$this->value,0);
             if(!$field['required']) $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a></span>';
@@ -141,7 +155,7 @@ class Rcl_Custom_Fields{
         if(!$values) return false;
         
         $content = '<select '.$this->required.' name="'.$field['name'].'" id="'.$this->slug.'" class="select-'.$field['slug'].'-field">';
-        
+
         foreach($values as $k => $value){
             
             if($this->value_in_key) $k = $value;
@@ -244,8 +258,11 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_agree($field){
-        return '<input type="checkbox" '.checked($this->value,1,false).' '.$this->required.' name="'.$field['name'].'" id="'.$this->slug.$this->rand.'" value="1"/> '
+        $input .= '<span class="rcl-checkbox-box">';
+        $input .= '<input type="checkbox" '.checked($this->value,1,false).' '.$this->required.' name="'.$field['name'].'" id="'.$this->slug.$this->rand.'" value="1"/> '
                 . '<label class="block-label" for="'.$this->slug.$this->rand.'">'.$field['field_select'].'</label>';
+        $input .= '</span>';
+        return $input;
     }
     
     function get_type_text($field){
@@ -507,7 +524,8 @@ function rcl_download_file(){
     exit;
 }
 
-if(!is_admin()) add_action('wp','rcl_delete_file');
+if(!is_admin()) 
+    add_action('wp','rcl_delete_file');
 function rcl_delete_file(){
     global $user_ID,$rcl_options;
 
@@ -531,7 +549,8 @@ function rcl_delete_file(){
     exit;
 }
 
-if(is_admin()) add_action('admin_init','rcl_delete_file_admin');
+if(is_admin()) 
+    add_action('admin_init','rcl_delete_file_admin');
 function rcl_delete_file_admin(){
     global $user_ID,$rcl_options;
 
@@ -539,14 +558,25 @@ function rcl_delete_file_admin(){
     $id_file = base64_decode($_GET['rcl-delete-file']);
 
     if ( !$user_ID||!wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
+    
+    $post_id = (isset($_GET['post_id']))? $_GET['post_id']: false;
+    $user_id = (isset($_GET['user_id']))? $_GET['user_id']: false;
 
     $file = get_post($id_file);
 
     if(!$file) wp_die(__('File does not exist on the server!','wp-recall'));
 
     wp_delete_attachment($file->ID);
+    
+    if($post_id){
+        $url = admin_url('post.php?post='.$post_id.'&action=edit');
+    }else if($user_id){
+        $url = admin_url('user-edit.php?user_id='.$user_id);
+    }else{
+        $url = admin_url('profile.php');
+    }
 
-    wp_redirect(admin_url('user-edit.php?user_id='.$_GET['user_id']));
+    wp_redirect($url);
 
     exit;
 }

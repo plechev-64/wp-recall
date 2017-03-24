@@ -1,13 +1,8 @@
 <?php
 
-class Rcl_Public_Form{
+class Rcl_Public_Form extends Rcl_Public_Form_Fields{
     
     public $post_id = 0;
-    public $post_type = 'post';
-    public $form_id = 1;
-    public $form_object;
-    public $taxonomies;
-    public $fields;
     public $fields_options;
     public $post;
     public $current_field = array();
@@ -25,8 +20,12 @@ class Rcl_Public_Form{
     );
     
     function __construct($args = false){
+        global $user_ID;
         
         $this->init_properties($args);
+        
+        if(!$this->form_id) 
+            $this->form_id = 1;
         
         if(isset($_GET['rcl-post-edit'])){
 
@@ -37,28 +36,28 @@ class Rcl_Public_Form{
             
         }
         
+        parent::__construct(array(
+            'post_type' => $this->post_type,
+            'form_id' => $this->form_id
+        ));
+        
         $this->init_user_can();
-        
-        $this->taxonomies = get_object_taxonomies( $this->post_type, 'objects' );
-        
-        if($this->post_type == 'post'){
-            unset($this->taxonomies['post_format']);
-        }
-        
-        $this->form_object = $this->get_object_form();
-        
-        $this->fields = $this->get_fields();
 
         do_action('rcl_public_form_init', $this->get_object_form());
 
         $this->options = apply_filters('rcl_public_form_options', $this->options, $this->get_object_form());
-        
+
         if($this->options['preview']) rcl_dialog_scripts();
         
         if($this->user_can['upload']){
             rcl_fileupload_scripts();
             add_action('wp_footer', array($this, 'init_form_scripts'), 100);
         }
+        
+        if($this->user_can['publish'] && !$user_ID)
+            add_filter('rcl_public_form_fields',array($this,'add_guest_fields'), 10);
+        
+        $this->fields = $this->get_public_fields();
         
     }
     
@@ -70,19 +69,35 @@ class Rcl_Public_Form{
         }
     }
     
-    function get_object_form(){
-        $dataForm = array();
-        $dataForm['post_id'] = $this->post_id;
-        $dataForm['post_type'] = $this->post_type;
-        $dataForm['post_status'] = ($this->post_id)? $this->post->post_type: 'new';
-        $dataForm['post_content'] = ($this->post_id)? $this->post->post_content: '';
-        $dataForm['post_excerpt'] = ($this->post_id)? $this->post->post_excerpt: '';
-        $dataForm['post_title'] = ($this->post_id)? $this->post->post_title: '';
-        $dataForm['ext_types'] = 'jpg, png, gif';
-        $dataForm = (object)$dataForm;
-        return $dataForm;
+    function get_public_fields(){
+        
+        return apply_filters('rcl_public_form_fields', $this->fields, $this->get_object_form());
+        
     }
     
+    function add_guest_fields($fields){
+        
+        $guestFields = array(
+            array(
+                'slug' => 'name-user',
+                'title' => __('Your Name','wp-recall'),
+                'required' => 1,
+                'type' => 'text'
+            ),
+            array(
+                'slug' => 'email-user',
+                'title' => __('Your E-mail','wp-recall'),
+                'required' => 1,
+                'type' => 'email'
+            )
+        );
+
+        $fields = array_merge($guestFields, $fields);
+        
+        return $fields;
+        
+    }
+
     function init_user_can(){
         global $user_ID,$rcl_options;
 
@@ -131,70 +146,7 @@ class Rcl_Public_Form{
                 
         
     }
-    
-    function get_fields(){
-        global $user_ID;
-        
-        if($this->post_type == 'post')
-            $fields = get_option('rcl_fields_'.$this->post_type.'_'.$this->form_id);
-        else
-            $fields = get_option('rcl_fields_'.$this->post_type);
-		
-        if(!$fields)
-            $fields = array();
-        
-        $fields = apply_filters('rcl_public_form_fields', $fields, $this->get_object_form());
-        
-        $fields = apply_filters('rcl_'.$this->post_type.'_form_fields', $fields, $this->get_object_form());
-        
-        if(!isset($fields['options']['user-edit']) || !$fields['options']['user-edit']){
 
-            $fields = array_merge($this->get_default_fields(), $fields);
-
-        }
-        
-        if(!$user_ID){
-            
-            $guestFields = array(
-                array(
-                    'slug' => 'name-user',
-                    'title' => __('Your Name','wp-recall'),
-                    'required' => 1,
-                    'type' => 'text'
-                ),
-                array(
-                    'slug' => 'email-user',
-                    'title' => __('Your E-mail','wp-recall'),
-                    'required' => 1,
-                    'type' => 'email'
-                )
-            );
-            
-            $fields = array_merge($guestFields, $fields);
-
-        }
-        
-        if(isset($fields['options'])){
-            
-            $this->fields_options = $fields['options'];
-            
-            unset($fields['options']);
-            
-        }
-        
-        foreach($fields as $field){
-            
-            if($field['slug'] == 'post_uploader'){
-                if(isset($field['ext-types']) && $field['ext-types'])
-                $this->form_object->ext_types = $field['ext-types'];
-            }
-            
-        }
-
-        return $fields;
-        
-    }
-    
     function get_form(){
 
         if(!$this->user_can['publish']){
@@ -243,12 +195,10 @@ class Rcl_Public_Form{
         $content .= '<form action="" method="post" class="rcl-public-form" data-post_id="'.$this->post_id.'" data-post_type="'.$this->post_type.'">';
         
         if($this->fields){
-                
+            
             $CF = new Rcl_Custom_Fields();
 
             foreach($this->fields as $this->current_field){
-                
-                $this->current_field['value_in_key'] = true;
 
                 $required = ($this->current_field['required'] == 1)? '<span class="required">*</span>': '';
 
@@ -479,30 +429,6 @@ class Rcl_Public_Form{
         return $content;
     }
     
-    function is_taxonomy_field($slug){
-        
-        if(!$this->taxonomies) return false;
-        
-        foreach($this->taxonomies as $taxname => $object){
-            
-            if($slug == 'taxonomy-'.$taxname) return $taxname;
-            
-        }
-        
-        return false;
-        
-    }
-    
-    function is_hierarchical_tax($taxonomy){
-        
-        if(!$this->taxonomies || !isset($this->taxonomies[$taxonomy])) return false;
-        
-        if($this->taxonomies[$taxonomy]->hierarchical) return true;
-        
-        return false;
-        
-    }
-    
     function get_tags_checklist($taxonomy, $t_args = array()){
 
         if(!is_array($t_args) || $t_args === false) return false;
@@ -705,18 +631,6 @@ class Rcl_Public_Form{
         }
 
         return $post_terms;
-    }
-    
-    function get_default_fields(){
-        
-        $formFields = new Rcl_Public_Form_Fields(array(
-            'post_type' => $this->post_type
-        ));
-        
-        $defaultFields = $formFields->get_default_fields();
-        
-        return $defaultFields;
-        
     }
     
     function get_delete_box(){

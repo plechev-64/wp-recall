@@ -9,15 +9,19 @@ if ( ! class_exists( 'Rcl_EditFields' ) )
 
 $f_edit = new Rcl_EditFields('orderform');
 
-$content = '<h2>'.__('Order Form Field Management','wp-recall').'</h2>
+$content = '<h2>'.__('Order Form Field Management','wp-recall').'</h2>';
 
-'.$f_edit->edit_form(array(
-    $f_edit->option('select',array(
-        'name'=>'required',
-        'notice'=>__('required field','wp-recall'),
-        'value'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-    ))
-));
+$content .= $f_edit->edit_form(array(
+                array(
+                    'type' => 'select',
+                    'slug'=>'required',
+                    'title'=>__('required field','wp-recall'),
+                    'values'=>array(
+                        __('No','wp-recall'),
+                        __('Yes','wp-recall'
+                    )
+                ))
+            ));
 
 echo $content;
 

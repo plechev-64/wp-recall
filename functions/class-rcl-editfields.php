@@ -7,14 +7,14 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
     public $options;
     public $options_html;
     public $field;
-    public $fields;
+    public $types;
     public $status;
     public $primary;
     public $select_type;
     public $meta_key;
     public $exist_placeholder;
     public $sortable;
-    public $fieldsData;
+    public $fields;
     public $name_field;
     
     public $defaultOptions = array();
@@ -25,7 +25,7 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
         $this->meta_key = (isset($options['meta-key']))? $options['meta-key']: true;
         $this->exist_placeholder = (isset($options['placeholder']))? $options['placeholder']: true;
         $this->sortable = (isset($options['sortable']))? $options['sortable']: true;
-        $this->fields = (isset($options['fields']))? $options['fields']: array();
+        $this->types = (isset($options['types']))? $options['types']: array();
         $this->primary = $options;
         $this->post_type = $post_type;
 
@@ -35,12 +35,14 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
             case 'profile': $name_option = 'rcl_profile_fields'; break;
             default: $name_option = 'rcl_fields_'.$this->post_type;
         }
-
-        $fieldsData = apply_filters('rcl_edit_custom_fields_data',stripslashes_deep(get_option( $name_option )));
         
-        if($fieldsData){
+        $this->name_option = $name_option;
 
-            foreach($fieldsData as $k => $field){
+        $fields = stripslashes_deep(get_option( $name_option ));
+        
+        if($fields){
+
+            foreach($fields as $k => $field){
                 
                 if(isset($field['field_select'])){
                     
@@ -48,7 +50,7 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
                     
                     if(is_array($field['field_select'])){
                         
-                        $fieldsData[$k]['values'] = $field['field_select'];
+                        $fields[$k]['values'] = $field['field_select'];
                         
                     }
                     
@@ -58,10 +60,8 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
             
         }
         
-        $this->fieldsData = $fieldsData;
-        
-        $this->name_option = $name_option;
-        
+        $this->fields = apply_filters('rcl_custom_fields', $fields, $this->post_type);
+
     }
 
     function edit_form($defaultOptions = false){
@@ -125,7 +125,7 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
         $form = '';
         
         if(!isset($fields))
-            $fields = $this->fieldsData;
+            $fields = $this->fields;
         
         if($fields){
             
@@ -150,7 +150,7 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
             'file'
         );
         
-        $options = array();
+        $options = (isset($this->field['options-field']))? $this->field['options-field']: array();
 
         if(in_array($this->field['type'],$types)){
             
@@ -198,7 +198,7 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
             
         }else{
             
-            if($this->exist_placeholder){
+            if($this->exist_placeholder && $this->field['type'] != 'custom'){
                 
                 $options[] = array(
                     'type' => 'text',
@@ -409,13 +409,13 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
             'dynamic'=>__('Dynamic','wp-recall')
         );
         
-        if($this->fields){
+        if($this->types){
             
             $newFields = array();
             
             foreach($fields as $key => $fieldname){
                 
-                if(!in_array($key,$this->fields)) continue;
+                if(!in_array($key,$this->types)) continue;
                 
                 $newFields[$key] = $fieldname;
                 
@@ -438,7 +438,7 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
     }
 
     function get_vals($name){
-        foreach($this->fieldsData as $field){
+        foreach($this->fields as $field){
             if($field[$name]) return $field;
         }
     }
@@ -462,7 +462,7 @@ class Rcl_EditFields extends Rcl_Custom_Fields{
 
     function options($args){
         
-        $val = ($this->fieldsData['options']) ? $this->fieldsData['options'][$args['name']]: '';
+        $val = ($this->fields['options']) ? $this->fields['options'][$args['name']]: '';
         $ph = (isset($args['placeholder']))? $args['placeholder']: '';
         $pattern = (isset($args['pattern']))? 'pattern="'.$args['pattern'].'"': '';
         $field = '<input type="text" placeholder="'.$ph.'" title="'.$ph.'" '.$pattern.' name="options['.$args['name'].']" value="'.$val.'"> ';

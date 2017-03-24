@@ -417,13 +417,15 @@ span.ruble-symbol{
 .rcl-custom-fields-box .rcl-custom-field .field-settings .option-content .rcl-field-input{
     
 }
-.rcl-custom-fields-box .rcl-custom-field .rcl-checkbox-box{
+.rcl-custom-fields-box .rcl-custom-field .rcl-checkbox-box,
+.rcl-custom-fields-box .rcl-custom-field .rcl-radio-box{
     display: inline-block;
     padding: 5px;
     background: #e4e4e4;
     margin: 5px;
 }
-.rcl-custom-fields-box .rcl-custom-field .rcl-checkbox-box label{
+.rcl-custom-fields-box .rcl-custom-field .rcl-checkbox-box label,
+.rcl-custom-fields-box .rcl-custom-field .rcl-radio-box label{
     display: inline;
     background: none;
     padding: 0;

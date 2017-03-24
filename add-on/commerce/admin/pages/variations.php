@@ -13,7 +13,7 @@ $f_edit = new Rcl_EditFields(
             //'sortable'=>false,
             //'meta-key'=>false,
             'custom-slug'=>1,
-            'fields' => array(
+            'types' => array(
                 'select',
                 'checkbox',
                 'radio'
@@ -23,10 +23,11 @@ $f_edit = new Rcl_EditFields(
 $content = '<h2>'.__('Products variations management','wp-recall').'</h2>';
 
 $content .= $f_edit->edit_form(array(
-                $f_edit->option('textarea',array(
-                    'name'=>'notice',
-                    'label'=>__('field description','wp-recall')
-                ))
+                array(
+                    'type' => 'textarea',
+                    'slug'=>'notice',
+                    'title'=>__('field description','wp-recall')
+                )
             ));
 
 echo $content;

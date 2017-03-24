@@ -3,24 +3,21 @@
 require_once 'classes/class-rcl-edit-terms-list.php';
 require_once 'classes/class-rcl-list-terms.php';
 require_once 'classes/class-rcl-public-form-uploader.php';
-require_once 'classes/class-rcl-public-form.php';
 require_once 'classes/class-rcl-public-form-fields.php';
+require_once 'classes/class-rcl-public-form.php';
 require_once 'classes/class-rcl-post-list.php';
 require_once 'classes/class-rcl-edit-post.php';
-
 require_once 'core.php';
-
 require_once 'shortcodes.php';
 require_once 'functions-ajax.php';
-
 require_once 'init.php';
+require_once 'upload-file.php';
 
-include_once('upload-file.php');
 
-
-if(is_admin)
+if(is_admin){
+    require_once 'classes/class-rcl-public-form-manager.php';
     require_once 'admin/index.php';
-
+}
 
 if (!is_admin()):
     add_action('rcl_enqueue_scripts','rcl_publics_scripts',10);

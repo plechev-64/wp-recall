@@ -1,5 +1,10 @@
 <?php
 
+add_filter('rcl_public_form','rcl_edit_old_filter_public_form',10,2);
+function rcl_edit_old_filter_public_form($content,$formdata){
+    return apply_filters('public_form_rcl',$content,$formdata);
+}
+
 //выправляем ситуацию со старым хранением 
 //данных в опциях произвольных полей
 function rcl_edit_old_option_fields($option, $type = false){

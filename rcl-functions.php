@@ -73,7 +73,7 @@ function rcl_init_custom_tabs(){
         $tab_data = array(
             'id'=> $tab['slug'], 
             'name'=> $tab['title'],
-            'public'=> in_array('public', $options),
+            'public'=> (in_array('public', $options))? 1: 0,
             'icon'=> ($tab['icon'])? $tab['icon']: 'fa-cog',
             'output'=> 'menu',
             'content'=> array(

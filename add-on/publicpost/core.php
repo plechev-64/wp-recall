@@ -118,15 +118,16 @@ function rcl_get_custom_fields_edit_box($post_id, $post_type = false, $form_id =
 
     $post = get_post($post_id);
 
-    $formFields = new Rcl_Public_Form_Fields(array(
+    $RclForm = new Rcl_Public_Form(array(
         'post_type' => $post->post_type,
+        'post_id' => $post_id,
         'form_id' => $form_id
     ));
     
-    $fields = $formFields->get_custom_fields();
-
+    $fields = $RclForm->get_custom_fields();
+    
     if(!$fields) return false;
-
+    
     $CF = new Rcl_Custom_Fields();
     
     $content = '<div class="rcl-custom-fields-box">';
@@ -134,8 +135,6 @@ function rcl_get_custom_fields_edit_box($post_id, $post_type = false, $form_id =
     foreach($fields as $key => $field){
         
         if($key === 'options' || !isset($field['slug'])) continue;
-        
-        $field['value_in_key'] = true;
 
         $star = ($field['required']==1)? '<span class="required">*</span> ': '';
         $postmeta = ($post_id)? get_post_meta($post_id,$field['slug'],1):'';

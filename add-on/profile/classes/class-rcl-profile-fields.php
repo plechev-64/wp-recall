@@ -67,14 +67,14 @@ class Rcl_Profile_Fields extends Rcl_EditFields{
     
     function exist_active_field($slug){
         
-        if(!$this->fieldsData) return false;
+        if(!$this->fields) return false;
         
-        foreach($this->fieldsData as $k => $field){
+        foreach($this->fields as $k => $field){
             
             if($field['slug'] == $slug){
                 
-                $this->fieldsData[$k]['class'] = 'must-receive';
-                $this->fieldsData[$k]['type-edit'] = false;
+                $this->fields[$k]['class'] = 'must-receive';
+                $this->fields[$k]['type-edit'] = false;
                 
                 return true;
                 
