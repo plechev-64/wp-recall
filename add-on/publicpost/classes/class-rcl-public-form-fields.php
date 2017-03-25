@@ -1,9 +1,6 @@
 <?php
 
-if ( ! class_exists( 'Rcl_EditFields' ) ) 
-    include_once RCL_PATH.'functions/class-rcl-editfields.php';
-
-class Rcl_Public_Form_Fields extends Rcl_EditFields{
+class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
 
     public $taxonomies;
     public $form_id = 1;
@@ -14,7 +11,11 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
         $this->post_type = (isset($args['post_type']))? $args['post_type']: 'post';
         $this->form_id = (isset($args['form_id']) && $args['form_id'])? $args['form_id']: 1;
         
-        parent::__construct($this->post_type,array('id'=>$this->form_id, 'custom-slug'=>1, 'terms'=>1));
+        parent::__construct($this->post_type,array(
+            'id'=>$this->form_id, 
+            'custom-slug'=>1, 
+            'terms'=>1)
+        );
         
         $this->taxonomies = get_object_taxonomies( $this->post_type, 'objects' );
         
@@ -25,8 +26,9 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
         $this->form_object = $this->get_object_form();
         
         $this->fields = $this->get_fields();
-
-        $this->init_active_fields();
+        
+        add_filter('rcl_default_custom_fields',array($this, 'add_default_public_fields'));
+        add_filter('rcl_custom_field_options', array($this, 'edit_field_options'), 10, 3);
         
     }
 
@@ -81,91 +83,9 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
         
     }
     
-    function get_custom_fields(){
+    function add_default_public_fields($fields){
         
-        if(!$this->fields) return false;
-        
-        $defaultSlugs = $this->get_default_slugs();
-        
-        $customFields = array();
-        
-        foreach($this->fields as $k => $field){
-            
-            if(in_array($field['slug'],$defaultSlugs)) continue;
-            
-            $customFields[] = $field;
-            
-        }
-        
-        return $customFields;
-        
-    }
-    
-    //добавляем к активным полям опции зарегистрированных дефолтных полей
-    function init_active_fields(){
-        
-        if(!$this->fields) return false;
-        
-        $options = $this->get_default_fields_options();
-
-        foreach($this->fields as $k => $field){
-            
-            if($this->is_default_field($field['slug'])){
-                
-                if(isset($options[$field['slug']])){
-                    $this->fields[$k]['options-field'] = $options[$field['slug']];
-                }
-                
-                $this->fields[$k]['type-edit'] = false;
-                $this->fields[$k]['class'] = 'must-receive';
-                
-            }
-            
-        }
-        
-    }
-    
-    function is_default_field($slug){
-        
-        $fields = $this->get_default_fields();
-        
-        foreach($fields as $field){
-            
-            if($field['slug'] == $slug) return true;
-            
-        }
-        
-        return false;
-        
-    }
-
-    function is_taxonomy_field($slug){
-        
-        if(!$this->taxonomies) return false;
-        
-        foreach($this->taxonomies as $taxname => $object){
-            
-            if($slug == 'taxonomy-'.$taxname) return $taxname;
-            
-        }
-        
-        return false;
-        
-    }
-    
-    function is_hierarchical_tax($taxonomy){
-        
-        if(!$this->taxonomies || !isset($this->taxonomies[$taxonomy])) return false;
-        
-        if($this->taxonomies[$taxonomy]->hierarchical) return true;
-        
-        return false;
-        
-    }
-    
-    function get_default_fields(){
-        
-        $defaultFields[] = array(
+        $fields[] = array(
             'slug' => 'post_title',
             'title' => __('Заголовок','wp-recall'),
             'type' => 'text'
@@ -206,7 +126,7 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
                         
                     }
 
-                    $defaultFields[] = array(
+                    $fields[] = array(
                         'slug' => 'taxonomy-'.$taxonomy,
                         'title' => $label,
                         'type' => 'select',
@@ -219,13 +139,13 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
             
         }
         
-        $defaultFields[] = array(
+        $fields[] = array(
             'slug' => 'post_excerpt',
             'title' => __('Краткая запись','wp-recall'),
             'type' => 'textarea'
         );
 
-        $defaultFields[] = array(
+        $fields[] = array(
             'slug' => 'post_content',
             'title' => __('Содержание','wp-recall'),
             'type' => 'textarea',
@@ -243,7 +163,7 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
             )
         );
         
-        $defaultFields[] = array(
+        $fields[] = array(
             'slug' => 'post_uploader',
             'title' => __('Медиа-загрузчик','wp-recall'),
             'type' => 'custom',
@@ -265,7 +185,7 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
                 
                     $label = $object->labels->name;
 
-                    $defaultFields[] = array(
+                    $fields[] = array(
                         'slug' => 'taxonomy-'.$taxonomy,
                         'title' => $label,
                         'type' => 'select',
@@ -293,30 +213,103 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
             
         }
         
-        $defaultFields = apply_filters('rcl_default_public_form_fields',$defaultFields,$this->post_type);
+        $fields = apply_filters('rcl_default_public_form_fields', $fields, $this->post_type);
 
-        return $defaultFields;
+        return $fields;
         
     }
     
-    function get_default_fields_options(){
+    function edit_field_options($options, $field, $type){
         
-        $fields = $this->get_default_fields();
+        if($type != $this->post_type) return $options;
         
-        if(!$fields) return $fields;
-        
-        $options = array();
-        foreach($fields as $field){
+        if($field['slug'] == 'post_uploader' || $field['slug'] == 'post_content'){
             
-            if(!isset($field['options-field'])) continue;
+            foreach($options as $k => $option){
+                
+                if($option['slug'] == 'placeholder'){
+                    unset($options[$k]);
+                }
+                
+                if($option['slug'] == 'required'){
+                    unset($options[$k]);
+                }
+                
+            }
             
-            $slug = $field['slug'];
+        }
+
+        if($this->is_taxonomy_field($field['slug'])){
             
-            $options[$slug] = $field['options-field'];
+            foreach($options as $k => $option){
+
+                if($field['slug'] == 'taxonomy-groups'){
+
+                    if($option['slug'] == 'required'){
+                        unset($options[$k]);
+                    }
+
+                    if($option['slug'] == 'values'){
+                        unset($options[$k]);
+                    }
+
+                }else{
+                    
+                    if($option['slug'] == 'values'){
+                        $options[$k]['title'] = __('Указание term_ID к выбору','wp-recall');
+                    }
+                    
+                }
+                
+            }
             
         }
         
         return $options;
+        
+    }
+    
+    function get_custom_fields(){
+        
+        if(!$this->fields) return false;
+        
+        $defaultSlugs = $this->get_default_slugs();
+        
+        $customFields = array();
+        
+        foreach($this->fields as $k => $field){
+            
+            if(in_array($field['slug'],$defaultSlugs)) continue;
+            
+            $customFields[] = $field;
+            
+        }
+        
+        return $customFields;
+        
+    }
+
+    function is_taxonomy_field($slug){
+        
+        if(!$this->taxonomies) return false;
+        
+        foreach($this->taxonomies as $taxname => $object){
+            
+            if($slug == 'taxonomy-'.$taxname) return $taxname;
+            
+        }
+        
+        return false;
+        
+    }
+    
+    function is_hierarchical_tax($taxonomy){
+        
+        if(!$this->taxonomies || !isset($this->taxonomies[$taxonomy])) return false;
+        
+        if($this->taxonomies[$taxonomy]->hierarchical) return true;
+        
+        return false;
         
     }
     
@@ -344,52 +337,8 @@ class Rcl_Public_Form_Fields extends Rcl_EditFields{
             }
             
         }
-
+        
         return $slugs;
-        
-    }
-    
-    function get_inactive_fields(){
-
-        $fields = $this->get_default_fields();
-        
-        if($fields){
-            
-            foreach($fields as $k => $field){
-                
-                if($this->exist_active_field($field['slug'])){
-                    unset($fields[$k]); continue;
-                }
-                
-                $fields[$k]['class'] = 'must-receive';
-                $fields[$k]['type-edit'] = false;
-                
-            }
-            
-        }
-        
-        return $fields;
-        
-    }
-    
-    function exist_active_field($slug){
-        
-        if(!$this->fields) return false;
-        
-        foreach($this->fields as $k => $field){
-            
-            if($field['slug'] == $slug){
-                
-                $this->fields[$k]['class'] = 'must-receive';
-                $this->fields[$k]['type-edit'] = false;
-                
-                return true;
-                
-            }
-            
-        }
-        
-        return false;
         
     }
  

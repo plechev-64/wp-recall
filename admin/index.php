@@ -1,9 +1,8 @@
 <?php
 
-require_once("admin-menu.php");
-require_once("tabs_options.php");
-require_once("add-on-manager.php");
-require_once("templates-manager.php");
+require_once "admin-menu.php";
+require_once "add-on-manager.php";
+require_once "templates-manager.php";
 
 function rmag_global_options(){
     $content = ' <div id="recall" class="left-sidebar wrap">
@@ -151,19 +150,6 @@ function wp_enqueue_theme_rcl($url){
     wp_enqueue_style( 'theme_rcl', $url );
 }
 
-add_action('admin_notices', 'my_plugin_admin_notices');
-function my_plugin_admin_notices() {
-    
-    if(isset($_GET['page'])&&(
-            $_GET['page']=='manage-wprecall'||
-            $_GET['page']=='rcl-repository'||
-            $_GET['page']=='manage-doc-recall'||
-            $_GET['page']=='manage-addon-recall'
-    ))
-        
-    echo "<div class='updated is-dismissible notice'><p>Понравился плагин WP-Recall? Поддержите развитие плагина, оставив положительный отзыв на его странице в <a target='_blank' href='https://wordpress.org/plugins/wp-recall/'>репозитории</a>!</p></div>";
-}
-
 /*16.0.0*/
 add_action( 'admin_init', 'rcl_update_custom_fields', 10);
 function rcl_update_custom_fields(){
@@ -271,7 +257,7 @@ function rcl_get_new_custom_field(){
     $post_type = $_POST['post_type'];
     $options = (array)json_decode(wp_unslash($_POST['options']));
     
-    $manageFields = new Rcl_EditFields($post_type);
+    $manageFields = new Rcl_Custom_Fields_Manager($post_type);
     
     if($options){
         
@@ -303,7 +289,7 @@ function rcl_get_custom_field_options(){
     $primary = (array)json_decode(wp_unslash($_POST['primary_options']));
     $default = (array)json_decode(wp_unslash($_POST['default_options']));
     
-    $manageFields = new Rcl_EditFields($post_type,$primary);
+    $manageFields = new Rcl_Custom_Fields_Manager($post_type,$primary);
     
     if($default){
         

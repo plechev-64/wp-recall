@@ -1,95 +1,55 @@
 <?php
 
-if ( ! class_exists( 'Rcl_EditFields' ) ) 
-        include_once RCL_PATH.'functions/class-rcl-editfields.php';
-
-class Rcl_Profile_Fields extends Rcl_EditFields{
-    
-    public $inactive_fields;
+class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
     
     function __construct($typeFields,$args) {
         
         parent::__construct($typeFields,$args);
         
-        $this->inactive_fields = $this->get_inactive_fields();
-        
+        add_filter('rcl_default_custom_fields',array($this, 'add_default_profile_fields'));
         add_filter('rcl_custom_fields_form',array($this, 'add_users_page_option'));
         add_filter('rcl_custom_field_options', array($this, 'edit_field_options'), 10, 3);
         
     }
     
-    function inactive_fields_box(){
+    function add_default_profile_fields($fields){
+        
+        $fields[] = array(
+            'slug' => 'first_name',
+            'title' => __('Firstname','wp-recall'),
+            'type' => 'text'
+        );
 
-        $content = '<div id="rcl-inactive-profile-fields" class="rcl-inactive-fields-box rcl-custom-fields-box">';
+        $fields[] = array(
+            'slug' => 'last_name',
+            'title' => __('Surname','wp-recall'),
+            'type' => 'text'
+        );
+
+        $fields[] = array(
+            'slug' => 'display_name', 
+            'title' => __('Name to be displayed','wp-recall'),
+            'type' => 'text'
+        );
+
+        $fields[] = array(
+            'slug' => 'url',
+            'title' => __('Website','wp-recall'),
+            'type' => 'url'
+        );
+
+        $fields[] = array(
+            'slug' => 'description',
+            'title' => __('Status','wp-recall'),
+            'type' => 'textarea'
+        );
         
-        $content .= '<h3>'.__('Неактивные поля','wp-recall').'</h3>';
-        
-        $content .= '<form>';
-        
-        $content .= '<ul class="rcl-sortable-fields">';
-        
-        $content .= $this->loop($this->inactive_fields);
-        
-        $content .= '</ul>';
-        
-        $content .= '</form>';
-        
-        $content .= '</div>';
-        
-        return $content;
-        
+        return apply_filters('rcl_default_profile_fields', $fields);
     }
-    
-    function get_inactive_fields(){
-        
-        $inactive_fields = get_option('rcl_inactive_profile_fields');
-        
-        $inactive_fields = apply_filters('rcl_inactive_profile_fields',$inactive_fields);
-        
-        if($inactive_fields){
-            
-            foreach($inactive_fields as $k => $field){
-                
-                if($this->exist_active_field($field['slug'])){
-                    unset($inactive_fields[$k]); continue;
-                }
-                
-                $inactive_fields[$k]['class'] = 'must-receive';
-                $inactive_fields[$k]['type-edit'] = false;
-                
-            }
-            
-        }
-        
-        return $inactive_fields;
-        
-    }
-    
-    function exist_active_field($slug){
-        
-        if(!$this->fields) return false;
-        
-        foreach($this->fields as $k => $field){
-            
-            if($field['slug'] == $slug){
-                
-                $this->fields[$k]['class'] = 'must-receive';
-                $this->fields[$k]['type-edit'] = false;
-                
-                return true;
-                
-            }
-            
-        }
-        
-        return false;
-        
-    }
-    
+
     function active_fields_box(){
-        global $rcl_options;
         
-        $content = $this->edit_form(
+        $content = $this->manager_form(
             
             array(
         
@@ -153,6 +113,14 @@ class Rcl_Profile_Fields extends Rcl_EditFields{
                 
                 if($option['slug'] == 'filter'){
                     unset($options[$k]);
+                }
+                
+                if($field['slug'] == 'description'){
+                    
+                    if($option['slug'] == 'req'){
+                        unset($options[$k]);
+                    }
+                    
                 }
  
             }

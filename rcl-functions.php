@@ -62,43 +62,52 @@ function rcl_tab($tab_data,$deprecated_callback=false ,$deprecated_name='',$depr
 add_action('init','rcl_init_custom_tabs',10);
 function rcl_init_custom_tabs(){
     
-    $custom_tabs = get_option('rcl_fields_custom_tabs');
+    $areas = rcl_get_area_options();
     
-    if(!$custom_tabs) return false;
-    
-    foreach($custom_tabs as $tab){
+    foreach($areas as $area_id => $tabs){
         
-        $options = (isset($tab['options-tab']))? $tab['options-tab']: array();
+        if(!$tabs) continue;
         
-        $tab_data = array(
-            'id'=> $tab['slug'], 
-            'name'=> $tab['title'],
-            'public'=> (in_array('public', $options))? 1: 0,
-            'icon'=> ($tab['icon'])? $tab['icon']: 'fa-cog',
-            'output'=> 'menu',
-            'content'=> array(
-                array(
-                    'id'=> 'subtab-1',
-                    'name'=> $tab['title'],
-                    'icon'=> ($tab['icon'])? $tab['icon']: 'fa-cog',
-                    'callback'=> array(
-                        'name'=>'rcl_custom_tab_content',
-                        'args'=> array($tab['content'])
+        foreach($tabs as $tab){
+            
+            if(isset($tab['default-tab'])) continue;
+        
+            $options = (isset($tab['options-tab']))? $tab['options-tab']: array();
+
+            $tab_data = array(
+                'id'=> $tab['slug'], 
+                'name'=> $tab['title'],
+                'public'=> (in_array('public', $options))? 1: 0,
+                'icon'=> ($tab['icon'])? $tab['icon']: 'fa-cog',
+                'output'=> $area_id,
+                'custom-tab'=> true,
+                'content'=> array(
+                    array(
+                        'id'=> 'subtab-1',
+                        'name'=> $tab['title'],
+                        'icon'=> ($tab['icon'])? $tab['icon']: 'fa-cog',
+                        'callback'=> array(
+                            'name'=>'rcl_custom_tab_content',
+                            'args'=> array($tab['content'])
+                        )
                     )
                 )
-            )
-        );
-        
-        if(in_array('cache', $options)){
-            $tab_data['supports'][] = 'cache';
-        }
-        
-        if(in_array('ajax', $options)){
-            $tab_data['supports'][] = 'ajax';
-        }
+            );
 
-        rcl_tab($tab_data);
+            if(in_array('cache', $options)){
+                $tab_data['supports'][] = 'cache';
+            }
+
+            if(in_array('ajax', $options)){
+                $tab_data['supports'][] = 'ajax';
+            }
+
+            rcl_tab($tab_data);
+        
+        }
+        
     }
+
 }
 
 //регистрация дочерней вкладки
@@ -129,8 +138,8 @@ function rcl_setup_tabs(){
     if(!$rcl_tabs) return false;
     
     if (!class_exists('Rcl_Tabs')) 
-        include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-tabs.php';
-
+        require_once RCL_PATH.'classes/class-rcl-tabs.php';
+    
     foreach($rcl_tabs as $tab){
         $Rcl_Tabs = new Rcl_Tabs($tab);
         $Rcl_Tabs->add_tab();
@@ -138,26 +147,31 @@ function rcl_setup_tabs(){
     
 }
 
-//сортируем вкладки согласно настроек
-add_filter('rcl_tabs','rcl_edit_options_tab',5);
-function rcl_edit_options_tab($rcl_tabs){
-
-    $rcl_order_tabs = get_option('rcl_order_tabs');
+//сортируем вкладки и изменяем их данные согласно настроек
+add_filter('rcl_tabs','rcl_add_custom_tabs',5);
+function rcl_add_custom_tabs($tabs){
     
-    if(!$rcl_order_tabs) return $rcl_tabs;
+    $areas = rcl_get_area_options();
+    
+    foreach($tabs as $tab_id => $tab){
+        
+        $tabArea = (isset($tab['output']))? $tab['output']: 'menu';
+        
+        if(!isset($areas[$tabArea]) || !$areas[$tabArea]) continue;
+        
+        foreach($areas[$tabArea] as $k => $field){
+            
+            if($field['slug'] != $tab_id) continue;
+                
+            $tabs[$tab_id]['icon'] = $field['icon'];
+            $tabs[$tab_id]['name'] = $field['title'];
+            $tabs[$tab_id]['order'] = ++$k;
 
-    foreach($rcl_order_tabs as $area_id=>$tabs){
-        $a=0;
-        foreach($tabs as $tab_id=>$tab){
-            if(isset($rcl_tabs[$tab_id])){
-                $rcl_tabs[$tab_id]['order'] = ++$a;
-                if(isset($tab['name'])) 
-                    $rcl_tabs[$tab_id]['name'] = $tab['name'];
-            }
         }
+        
     }
     
-    return $rcl_tabs;
+    return $tabs;
 }
 
 //выясняем какую вкладку ЛК показывать пользователю, 
@@ -221,7 +235,7 @@ function rcl_setup_blocks(){
     if(!$rcl_blocks) return false;
 
     if (!class_exists('Rcl_Blocks')) 
-        include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-blocks.php';
+        require_once RCL_PATH.'classes/class-rcl-blocks.php';
 
     foreach($rcl_blocks as $place_id=>$blocks){
         if(!$blocks) continue;
@@ -516,7 +530,7 @@ function rcl_ajax_tab($post){
     if(!isset($rcl_tabs[$id_tab])) return false;
 
     if (!class_exists('Rcl_Tabs')) 
-        include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-tabs.php';
+        require_once RCL_PATH.'classes/class-rcl-tabs.php';
     
     $ajax = (in_array('ajax',$rcl_tabs[$id_tab]['supports']))? 1: 0;
     
@@ -550,7 +564,7 @@ function rcl_get_tab_button($tab_id, $user_id = false){
     if(!$user_id) $user_id = $user_LK;
    
     if (!class_exists('Rcl_Tabs'))
-        include_once plugin_dir_path( __FILE__ ).'functions/class-rcl-tabs.php';
+        require_once RCL_PATH.'classes/class-rcl-tabs.php';
    
     $data = $rcl_tabs[$tab_id];
     $tab = new Rcl_Tabs($data);
@@ -855,7 +869,7 @@ function rcl_remove_dir($dir){
 function rcl_notice_text($text,$type='warning'){
     if(is_admin())return false;
     if (!class_exists('Rcl_Notify'))
-        include_once RCL_PATH.'functions/rcl_notify.php';
+        include_once RCL_PATH.'functions/notify.php';
     $block = new Rcl_Notify($text,$type);
 }
 
@@ -1353,4 +1367,15 @@ function rcl_get_mime_type_by_ext($file_ext){
         }
     }
     return false;
+}
+
+function rcl_get_area_options(){
+    
+    $areas = array(
+        'menu'      =>  get_option('rcl_fields_area-menu'),
+        'counters'  =>  get_option('rcl_fields_area-counters'),
+        'actions'   =>  get_option('rcl_fields_area-actions'),
+    );
+    
+    return $areas;
 }

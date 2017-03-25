@@ -62,7 +62,7 @@ class Rcl_Custom_Fields{
         $callback = 'get_type_'.$field['type'];
 
         $html_field = $this->$callback($field);
-        
+
         if(isset($field['notice'])&&$field['notice']) 
             $html_field .= '<span class="rcl-field-notice"><i class="fa fa-info" aria-hidden="true"></i>'.$field['notice'].'</span>';
         
@@ -258,10 +258,14 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_agree($field){
-        $input .= '<span class="rcl-checkbox-box">';
+        
+        $text = (isset($field['text-confirm']) && $field['text-confirm'])? $field['text-confirm']: __('Я согласен с текстом соглашения','wp-recall');
+        
+        $input = '<span class="rcl-checkbox-box">';
         $input .= '<input type="checkbox" '.checked($this->value,1,false).' '.$this->required.' name="'.$field['name'].'" id="'.$this->slug.$this->rand.'" value="1"/> '
-                . '<label class="block-label" for="'.$this->slug.$this->rand.'">'.$field['field_select'].'</label>';
+                . '<label class="block-label" for="'.$this->slug.$this->rand.'">'.$text.'</label>';
         $input .= '</span>';
+        
         return $input;
     }
     
@@ -295,6 +299,10 @@ class Rcl_Custom_Fields{
 
     function get_type_number($field){
         return '<input type="number" '.$this->required.' '.$this->placeholder.' name="'.$field['name'].'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+    }
+    
+    function get_type_hidden($field){
+        return '<input type="hidden" name="'.$field['name'].'" value="'.$field['value'].'"/>';
     }
 
     function get_field_value($field,$value=false,$title=true){

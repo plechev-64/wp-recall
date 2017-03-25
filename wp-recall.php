@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 16.a.3
+    Version: 16.a.4
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '16.a.3';
+	public $version = '16.a.4';
 
 	protected static $_instance = null;
 
@@ -138,24 +138,26 @@ final class WP_Recall {
              * Здесь подключим те фалы которые нужны глобально для плагина
              * Остальные распихаем по соответсвующим функциям
              */
+            
+            require_once 'classes/class-rcl-cache.php';
+            require_once 'classes/class-rcl-ajax.php';
+            require_once 'classes/class-rcl-custom-fields.php';
+            require_once 'classes/class-rcl-custom-fields-manager.php';
+            require_once 'classes/class-rcl-query.php';
+            require_once 'classes/class-rcl-includer.php';
+            require_once 'classes/class-rcl-pagenavi.php';
+            require_once 'classes/class-rcl-install.php';
 
-            require_once 'functions/rcl_activate.php';
-            require_once 'functions/class-rcl-query.php';
-            require_once 'functions/class-rcl-includer.php';
+            require_once 'functions/activate.php';
             require_once 'functions/enqueue-scripts.php';
-            require_once 'functions/rcl-cron.php';
-            require_once 'functions/class-rcl-cache.php';
-            require_once 'functions/class-rcl-ajax.php';
-            require_once 'functions/class-rcl-custom-fields.php';
+            require_once 'functions/cron.php';
             require_once 'functions/loginform.php';
-            require_once 'functions/rcl_currency.php';
-            require_once 'functions/class-rcl-pagenavi.php';
-            require_once 'rcl-functions.php';
+            require_once 'functions/currency.php';
             require_once 'functions/deprecated.php';
             require_once 'functions/shortcodes.php';
+            
+            require_once 'rcl-functions.php';
             require_once 'rcl-widgets.php'; 
-
-            require_once 'class-rcl-install.php';
 
             if ( $this->is_request( 'admin' ) ) {
                     $this->admin_includes();
@@ -176,7 +178,7 @@ final class WP_Recall {
 	 * Сюда складываем все файлы для админки
 	 */
 	public function admin_includes() {
-            require_once 'rcl-admin/index.php';
+            require_once 'admin/index.php';
 	}
 
 	/*
@@ -190,8 +192,7 @@ final class WP_Recall {
 	 * Сюда складываем все файлы для фронт-энда
 	 */
 	public function frontend_includes() {
-            require_once("functions/rcl-frontend.php");
-
+            require_once "functions/frontend.php";
 	}
 
 	public function init() {
@@ -232,7 +233,7 @@ final class WP_Recall {
         function rcl_include_addons(){
             global $active_addons,$rcl_options,$rcl_template;
 
-            require_once("functions/rcl_addons.php");
+            require_once("functions/addons.php");
             
             if(is_admin()){
                 global $rcl_error;

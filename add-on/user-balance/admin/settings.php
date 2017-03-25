@@ -6,7 +6,7 @@ function rcl_user_account_options($content){
         global $rcl_options;
 	$rcl_options = get_option('primary-rmag-options');
 
-        include_once RCL_PATH.'functions/rcl_options.php';
+        require_once RCL_PATH.'classes/class-rcl-options.php';
 
         $opt = new Rcl_Options(rcl_key_addon(pathinfo(__FILE__)));
 

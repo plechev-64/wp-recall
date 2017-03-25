@@ -2,11 +2,12 @@
 
 global $rcl_options;
     
-wp_enqueue_script( 'jquery' );
-wp_enqueue_script( 'jquery-ui-dialog' );
+wp_enqueue_script('jquery');
+wp_enqueue_script('jquery-ui-dialog');
 wp_enqueue_style('wp-jquery-ui-dialog');
 
-include_once RCL_PATH.'functions/rcl_options.php';
+require_once RCL_PATH.'classes/class-rcl-options.php';
+
 $fields = new Rcl_Options();
 
 $rcl_options = get_option('rcl_global_options');

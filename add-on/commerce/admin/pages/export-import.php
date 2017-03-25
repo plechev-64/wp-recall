@@ -12,14 +12,14 @@ $table_price .='<h2>'.__('Export/import data','wp-recall').'</h2><form method="p
 <h3>'.__('Optional fields','wp-recall').':</h3><table><tr>';
 
 $fields = array(
-        'price-products'=>__('The price of the product in the main currency','wp-recall'),
-        'amount_product'=>__('The quantity of goods in stock','wp-recall'),
-        'reserve_product'=>__('The goods reserved','wp-recall'),
-        'type_currency'=>__('The currency value of goods','wp-recall'),
-        'curse_currency'=>__('The additional currency rate for the product','wp-recall'),
-        'margin_product'=>__('Product surcharge','wp-recall'),
-        'outsale'=>'1 - '.__('the item is no longer available','wp-recall'),
-        'related_products_recall'=>__('product category ID for display of recommended or similar products','wp-recall'),
+    'price-products'=>__('The price of the product in the main currency','wp-recall'),
+    'amount_product'=>__('The quantity of goods in stock','wp-recall'),
+    'reserve_product'=>__('The goods reserved','wp-recall'),
+    'type_currency'=>__('The currency value of goods','wp-recall'),
+    'curse_currency'=>__('The additional currency rate for the product','wp-recall'),
+    'margin_product'=>__('Product surcharge','wp-recall'),
+    'outsale'=>'1 - '.__('the item is no longer available','wp-recall'),
+    'related_products_recall'=>__('product category ID for display of recommended or similar products','wp-recall'),
 );
 
 $fields = apply_filters('products_field_list',$fields);
@@ -29,16 +29,16 @@ foreach($fields as $key=>$name){
 }
 
 if($postmeta){
-        $n=1;
-        foreach ($postmeta as $key){
-                if(!isset($fields[$key->meta_key])) continue;
-                if (strpos($key->meta_key, "goods_id") === FALSE && strpos($key->meta_key , "_") !== 0){
-                        $n++;
-                        $check = (isset($fields[$key->meta_key]))?1:0;
-                        $table_price .= '<td><input '.checked($check,1,false).' type="checkbox" name="'.$key->meta_key.'" value="1"> '.$key->meta_key.'</td>';
-                        if($n%2) $table_price .= '</tr><tr>';
-                }
+    $n=1;
+    foreach ($postmeta as $key){
+        if(!isset($fields[$key->meta_key])) continue;
+        if (strpos($key->meta_key, "goods_id") === FALSE && strpos($key->meta_key , "_") !== 0){
+            $n++;
+            $check = (isset($fields[$key->meta_key]))?1:0;
+            $table_price .= '<td><input '.checked($check,1,false).' type="checkbox" name="'.$key->meta_key.'" value="1"> '.$key->meta_key.'</td>';
+            if($n%2) $table_price .= '</tr><tr>';
         }
+    }
 }
 
 $table_price .='</tr><tr><td colspan="2" align="right">'

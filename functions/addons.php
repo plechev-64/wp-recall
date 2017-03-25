@@ -271,4 +271,4 @@ function rcl_exist_addon($addon_id){
     return false;
 }
 
-require_once("rcl_update.php");
+require_once "addons-update.php";

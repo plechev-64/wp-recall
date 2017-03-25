@@ -1,5 +1,6 @@
 <?php
 class Rcl_Options {
+    
     public $key;
     public $type;
 

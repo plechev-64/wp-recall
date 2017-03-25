@@ -4,10 +4,7 @@ global $wpdb;
 
 rcl_sortable_scripts();
 
-if ( ! class_exists( 'Rcl_EditFields' ) ) 
-    include_once RCL_PATH.'functions/class-rcl-editfields.php';
-
-$f_edit = new Rcl_EditFields(
+$f_edit = new Rcl_Custom_Fields_Manager(
         'products-variations',
         array(
             //'sortable'=>false,
@@ -22,7 +19,7 @@ $f_edit = new Rcl_EditFields(
 
 $content = '<h2>'.__('Products variations management','wp-recall').'</h2>';
 
-$content .= $f_edit->edit_form(array(
+$content .= $f_edit->manager_form(array(
                 array(
                     'type' => 'textarea',
                     'slug'=>'notice',

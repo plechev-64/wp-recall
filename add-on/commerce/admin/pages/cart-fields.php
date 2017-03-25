@@ -4,14 +4,11 @@ global $wpdb;
 
 rcl_sortable_scripts();
 
-if ( ! class_exists( 'Rcl_EditFields' ) ) 
-    include_once RCL_PATH.'functions/class-rcl-editfields.php';
-
-$f_edit = new Rcl_EditFields('orderform');
+$f_edit = new Rcl_Custom_Fields_Manager('orderform');
 
 $content = '<h2>'.__('Order Form Field Management','wp-recall').'</h2>';
 
-$content .= $f_edit->edit_form(array(
+$content .= $f_edit->manager_form(array(
                 array(
                     'type' => 'select',
                     'slug'=>'required',

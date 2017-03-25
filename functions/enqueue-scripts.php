@@ -140,8 +140,8 @@ function rcl_frontend_scripts(){
 }
 
 function rcl_admin_scrips(){
-    wp_enqueue_style( 'rcl-admin-style', RCL_URL.'rcl-admin/admin.css' );
+    wp_enqueue_style( 'rcl-admin-style', RCL_URL.'admin/assets/style.css' );
     wp_enqueue_style( 'wp-color-picker' ); 
     wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'rcl-admin-scripts', RCL_URL.'rcl-admin/admin.js', array('wp-color-picker'), VER_RCL );
+    wp_enqueue_script( 'rcl-admin-scripts', RCL_URL.'admin/assets/scripts.js', array('wp-color-picker'), VER_RCL );
 }

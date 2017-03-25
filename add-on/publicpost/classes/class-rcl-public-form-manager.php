@@ -7,56 +7,31 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
         parent::__construct($args);
         
         add_filter('rcl_custom_fields_form', array($this, 'add_content_form'),10);
-        add_filter('rcl_custom_field_options', array($this, 'edit_field_options'), 10, 3);
     }
     
     function active_fields_box(){
         
-        $content = $this->edit_form(
-            
-            array(
+        $defaultOptions = array(
         
-                array(
-                    'type' => 'textarea',
-                    'slug' => 'notice',
-                    'title' => __('field description','wp-recall')
-                ),
-                
-                array(
-                    'type' => 'select',
-                    'slug' => 'required',
-                    'title' =>__('required field','wp-recall'),
-                    'values'  => array(
-                        __('No','wp-recall'),
-                        __('Yes','wp-recall')
-                    )
-                )
+            array(
+                'type' => 'textarea',
+                'slug' => 'notice',
+                'title' => __('field description','wp-recall')
+            ),
 
+            array(
+                'type' => 'select',
+                'slug' => 'required',
+                'title' =>__('required field','wp-recall'),
+                'values'  => array(
+                    __('No','wp-recall'),
+                    __('Yes','wp-recall')
+                )
             )
-                
+
         );
         
-        return $content;
-        
-    }
-    
-    function inactive_fields_box(){
-
-        $content = '<div id="rcl-inactive-public-form-fields" class="rcl-inactive-fields-box rcl-custom-fields-box">';
-        
-            $content .= '<h3>'.__('Неактивные поля','wp-recall').'</h3>';
-
-            $content .= '<form>';
-
-                $content .= '<ul class="rcl-sortable-fields">';
-
-                    $content .= $this->loop($this->get_inactive_fields());
-
-                $content .= '</ul>';
-
-            $content .= '</form>';
-        
-        $content .= '</div>';
+        $content = $this->manager_form($defaultOptions);
         
         return $content;
         
@@ -136,7 +111,7 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
         return $content;
         
     }
-    
+
     function add_content_form($content){
         
         $content .= '<input type="hidden" name="options[user-edit]" value="1">';
@@ -144,56 +119,6 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
         return $content;
         
     }
-    
-    function edit_field_options($options, $field, $type){
-        
-        if($type != $this->post_type) return $options;
-        
-        if($field['slug'] == 'post_uploader' || $field['slug'] == 'post_content'){
-            
-            foreach($options as $k => $option){
-                
-                if($option['slug'] == 'placeholder'){
-                    unset($options[$k]);
-                }
-                
-                if($option['slug'] == 'required'){
-                    unset($options[$k]);
-                }
-                
-            }
-            
-        }
-
-        if($this->is_taxonomy_field($field['slug'])){
-            
-            foreach($options as $k => $option){
-
-                if($field['slug'] == 'taxonomy-groups'){
-
-                    if($option['slug'] == 'required'){
-                        unset($options[$k]);
-                    }
-
-                    if($option['slug'] == 'values'){
-                        unset($options[$k]);
-                    }
-
-                }else{
-                    
-                    if($option['slug'] == 'values'){
-                        $options[$k]['title'] = __('Указание term_ID к выбору','wp-recall');
-                    }
-                    
-                }
-                
-            }
-            
-        }
-        
-        return $options;
-        
-    }
-    
+ 
 }
 

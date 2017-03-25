@@ -23,7 +23,7 @@ add_shortcode('userlist','rcl_get_userlist');
 function rcl_get_userlist($atts){
     global $rcl_user,$rcl_users_set,$rcl_options,$user_ID;
     
-    require_once 'class-rcl-users-list.php';
+    require_once RCL_PATH.'classes/class-rcl-users-list.php';
 
     $users = new Rcl_Users_List($atts);
     
@@ -251,7 +251,7 @@ function rcl_tab_shortcode($atts){
         return '<p>Такой вкладки не найдено!</p>';
     
     if (!class_exists('Rcl_Tabs')) 
-        include_once RCL_PATH.'functions/class-rcl-tabs.php';
+        require_once RCL_PATH.'classes/class-rcl-tabs.php';
 
     $Rcl_Tab = new Rcl_Tabs($rcl_tabs[$tab_id]);
     

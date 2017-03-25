@@ -54,7 +54,7 @@ function rcl_get_user_details($user_id){
     $user_LK = $user_id;
     
     if (!class_exists('Rcl_Blocks')) 
-        include_once RCL_PATH.'functions/class-rcl-blocks.php';
+        require_once RCL_PATH.'classes/class-rcl-blocks.php';
 
     $content = '<div id="rcl-user-details">';
     

@@ -81,7 +81,7 @@ class Rcl_Tabs{
 
         $subtabs = apply_filters('rcl_subtabs',$this->content,$this->id);
     
-        include_once 'class-rcl-sub-tabs.php';
+        require_once 'class-rcl-sub-tabs.php';
 
         $subtab = new Rcl_Sub_Tabs($subtabs,$this->id);
         

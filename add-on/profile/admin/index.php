@@ -18,43 +18,6 @@ function rcl_update_page_users(){
     update_option('rcl_global_options', $rcl_options );
     
 }
-
-add_filter('rcl_inactive_profile_fields','rcl_add_default_profile_fields',10);
-function rcl_add_default_profile_fields($fields){
-    
-    $fields[] = array(
-        'slug' => 'first_name',
-        'title' => __('Firstname','wp-recall'),
-        'type' => 'text'
-    );
-    
-    $fields[] = array(
-        'slug' => 'last_name',
-        'title' => __('Surname','wp-recall'),
-        'type' => 'text'
-    );
-    
-    $fields[] = array(
-        'slug' => 'display_name', 
-        'title' => __('Name to be displayed','wp-recall'),
-        'type' => 'text'
-    );
-    
-    $fields[] = array(
-        'slug' => 'url',
-        'title' => __('Website','wp-recall'),
-        'type' => 'url'
-    );
-    
-    $fields[] = array(
-        'slug' => 'description',
-        'title' => __('Status','wp-recall'),
-        'type' => 'textarea'
-    );
-    
-    return $fields;
-    
-}
  
 add_filter('rcl_custom_field_options','rcl_add_register_profile_field_option',10,3);
 function rcl_add_register_profile_field_option($options, $field, $type){
@@ -65,7 +28,10 @@ function rcl_add_register_profile_field_option($options, $field, $type){
         'type' => 'select',
         'slug'=>'register',
         'title'=>__('display in registration form','wp-recall'),
-        'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+        'values'=> array(
+            __('No','wp-recall'),
+            __('Yes','wp-recall')
+        )
     );
     
     return $options;
