@@ -197,6 +197,12 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
  
             }
             
+            $options[] = array(
+                'type' => 'hidden',
+                'slug' => 'default-tab',
+                'value' => 1
+            );
+            
         }
         
         return $options;
