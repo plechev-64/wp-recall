@@ -205,10 +205,10 @@ function rcl_update_custom_fields(){
             $POSTDATA['new-field']['values'] = $values;
         }
         
-        foreach($POSTDATA['new-field'] as $optionSlug => $values){
-            foreach($values as $key => $value){
+        foreach($POSTDATA['new-field'] as $optionSlug => $vals){
+            foreach($vals as $key => $val){
                 if($optionSlug == 'values') continue;
-                $newFields[$key][$optionSlug] = $value;
+                $newFields[$key][$optionSlug] = $val;
             }
         }
         
