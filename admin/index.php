@@ -187,16 +187,44 @@ function rcl_update_custom_fields(){
     $newFields = array();
     
     if(isset($POSTDATA['new-field'])){
+        
+        $nKey = 0;
+        
+        $types = array(
+            'select',
+            'multiselect',
+            'checkbox',
+            'radio'
+        );
+        
+        if(isset($POSTDATA['new-field']['values'])){
+            $values = array();
+            foreach($POSTDATA['new-field']['values'] as $val){
+                $values[] = $val;
+            }
+            $POSTDATA['new-field']['values'] = $values;
+        }
+        
         foreach($POSTDATA['new-field'] as $optionSlug => $values){
             foreach($values as $key => $value){
+                if($optionSlug == 'values') continue;
                 $newFields[$key][$optionSlug] = $value;
             }
+        }
+        
+        foreach($newFields as $k => $field){
+            
+            if(in_array($field['type'],$types)){
+                $newFields[$k]['values'] = $values[$nKey];
+                $nKey++;
+            }
+            
         }
     }
     
     $fields = array();
     $nKey = 0;
-    
+
     foreach($POSTDATA['fields'] as $k => $slug){
         
         if(!$slug){

@@ -6,7 +6,7 @@ add_action('admin_init','rcl_public_admin_scripts');
 function rcl_public_admin_scripts(){
     
     wp_enqueue_script( 'jquery' );
-    wp_enqueue_script( 'rcl_public_admin_scripts', rcl_addon_url('admin/assets/scripts.js', __FILE__) );
+    //wp_enqueue_script( 'rcl_public_admin_scripts', rcl_addon_url('admin/assets/scripts.js', __FILE__) );
     wp_enqueue_style( 'rcl_public_admin_style', rcl_addon_url('admin/assets/style.css', __FILE__) );
 
 }

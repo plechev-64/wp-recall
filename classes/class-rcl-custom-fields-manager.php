@@ -219,10 +219,20 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         
         $value = (isset($this->field[$option['slug']]))? $this->field[$option['slug']]: $value;
         
-        if($this->field['slug'])
+        if($this->field['slug']){
+            
             $option['name'] = 'field['.$this->field['slug'].']['.$option['slug'].']';
-        else
-            $option['name'] = 'new-field['.$option['slug'].'][]';
+            
+        }else{
+
+            if($option['type'] == 'dynamic'){
+                $option['name'] = 'new-field['.$option['slug'].'][new-'.rand(0,100).']';
+            }else{
+                $option['name'] = 'new-field['.$option['slug'].'][]';
+            }
+            
+            
+        }
         
         return $this->get_input($option, $value);
         

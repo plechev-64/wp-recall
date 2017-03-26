@@ -152,6 +152,19 @@ jQuery(function($){
 
 });
 
+function rcl_add_dynamic_field(e){
+    var parent = jQuery(e).parents('.dynamic-value');
+    var box = parent.parent('.dynamic-values');
+    var html = parent.html();
+    box.append('<span class="dynamic-value">'+html+'</span>');
+    jQuery(e).attr('onclick','rcl_remove_dynamic_field(this);return false;').children('i').toggleClass("fa-plus fa-minus");
+    box.children('span').last().children('input').val('').focus();
+}
+
+function rcl_remove_dynamic_field(e){
+    jQuery(e).parents('.dynamic-value').remove();
+}
+
 function rcl_update_require_checkbox(e){
     var name = jQuery(e).attr('name');
     var chekval = jQuery('form input[name="'+name+'"]:checked').val();
