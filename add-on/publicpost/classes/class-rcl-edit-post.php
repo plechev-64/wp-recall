@@ -179,22 +179,17 @@ class Rcl_EditPost {
     function update_post(){
         global $rcl_options,$user_ID;
 
-        $post_content = '';
-        $post_excerpt = (isset($_POST['post_excerpt']))? $_POST['post_excerpt']: '';
-
-        if(!is_array($_POST['post_content'])) $post_content = $_POST['post_content'];
-
         $postdata = array(
-            'post_type'=>$this->post_type,
-            'post_title'=>sanitize_text_field($_POST['post_title']),
-            'post_excerpt'=> $post_excerpt,
-            'post_content'=> $post_content
+            'post_type' => $this->post_type,
+            'post_title' => sanitize_text_field($_POST['post_title']),
+            'post_excerpt' => (isset($_POST['post_excerpt']))? $_POST['post_excerpt']: '',
+            'post_content' => (isset($_POST['post_content']))? $_POST['post_content']: ''
         );
 
-        $id_form = intval($_POST['public_form_id']);
-
-        if($this->post_id) $postdata['ID'] = $this->post_id;
-        else $postdata['post_author'] = $user_ID;
+        if($this->post_id) 
+            $postdata['ID'] = $this->post_id;
+        else 
+            $postdata['post_author'] = $user_ID;
 
         $postdata = apply_filters('pre_update_postdata_rcl',$postdata,$this);
         
@@ -207,6 +202,8 @@ class Rcl_EditPost {
 
             if(!$this->post_id) 
                 $this->error(__('Error publishing!','wp-recall').' Error 101');
+            
+            $id_form = intval($_POST['public_form_id']);
             
             if($id_form>1) 
                 add_post_meta($this->post_id, 'publicform-id', $id_form);
@@ -227,8 +224,10 @@ class Rcl_EditPost {
         do_action('update_post_rcl',$this->post_id,$postdata,$this->update);
 
         if($postdata['post_status'] == 'pending'){
-            if($user_ID) $redirect_url = get_bloginfo('wpurl').'/?p='.$this->post_id.'&preview=true';
-            else $redirect_url = get_permalink($rcl_options['guest_post_redirect']);
+            if($user_ID) 
+                $redirect_url = get_bloginfo('wpurl').'/?p='.$this->post_id.'&preview=true';
+            else 
+                $redirect_url = get_permalink($rcl_options['guest_post_redirect']);
         }else{
             $redirect_url = get_permalink($this->post_id);
         }
