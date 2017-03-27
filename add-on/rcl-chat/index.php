@@ -113,7 +113,7 @@ function rcl_add_chat_tab(){
     $tab_data = array(
         'id'=>'chat', 
         'name'=>__('Chat','wp-recall'),
-        'supports'=>array('ajax','cache'),
+        'supports'=>array('ajax'),
         'public'=>1,
         'icon'=>'fa-comments-o',
         'output'=>'menu',

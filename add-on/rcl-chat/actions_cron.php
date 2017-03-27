@@ -18,7 +18,7 @@ function rcl_chat_daily_delete_messages(){
             . "GROUP BY chats.chat_id "
             . "HAVING COUNT(chat_messages.message_id) > '$max'"
     );
-
+    
     if(!$chats) return false;
     
     foreach($chats as $chat){

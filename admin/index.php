@@ -189,39 +189,14 @@ function rcl_update_custom_fields(){
     if(isset($POSTDATA['new-field'])){
         
         $nKey = 0;
-        
-        $types = array(
-            'select',
-            'multiselect',
-            'checkbox',
-            'radio'
-        );
-        
-        if(isset($POSTDATA['new-field']['values'])){
-            $values = array();
-            foreach($POSTDATA['new-field']['values'] as $val){
-                $values[] = $val;
-            }
-            $POSTDATA['new-field']['values'] = $values;
-        }
-        
+
         foreach($POSTDATA['new-field'] as $optionSlug => $vals){
-            foreach($vals as $key => $val){
-                if($optionSlug == 'values') continue;
-                $newFields[$key][$optionSlug] = $val;
-            }
+            $newFields[$nKey] = $vals;
+            $nKey++;
         }
-        
-        foreach($newFields as $k => $field){
-            
-            if(in_array($field['type'],$types)){
-                $newFields[$k]['values'] = $values[$nKey];
-                $nKey++;
-            }
-            
-        }
+
     }
-    
+
     $fields = array();
     $nKey = 0;
 
@@ -283,15 +258,16 @@ add_action('wp_ajax_rcl_get_new_custom_field','rcl_get_new_custom_field');
 function rcl_get_new_custom_field(){
     
     $post_type = $_POST['post_type'];
-    $options = (array)json_decode(wp_unslash($_POST['options']));
+    $primary = (array)json_decode(wp_unslash($_POST['primary_options']));
+    $default = (array)json_decode(wp_unslash($_POST['default_options']));
     
-    $manageFields = new Rcl_Custom_Fields_Manager($post_type);
+    $manageFields = new Rcl_Custom_Fields_Manager($post_type,$primary);
     
-    if($options){
+    if($default){
         
         $manageFields->defaultOptions = array();
         
-        foreach($options as $option){
+        foreach($default as $option){
             $manageFields->defaultOptions[] = (array)$option;
         }
         
@@ -329,11 +305,19 @@ function rcl_get_custom_field_options(){
         
     }
     
-    $manageFields->field = array(
-        'type' => $type_field,
-        'slug' => $slug_field
-    );
+    $manageFields->field = array( 'type' => $type_field );
     
+    if(strpos($slug_field,'$$new$$') === false){
+
+        $manageFields->field['slug'] = $slug_field;
+
+    }else{
+        
+        $manageFields->field['slug'] = '';
+        $manageFields->new_slug = $slug_field;
+        
+    }
+
     $content = $manageFields->get_options();
 
     echo json_encode(array(

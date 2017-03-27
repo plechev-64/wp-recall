@@ -190,7 +190,12 @@ function rcl_get_custom_field_options(e){
     
     rcl_preloader_show(boxField);
     
-    var dataString = 'action=rcl_get_custom_field_options&type_field='+typeField+'&post_type='+RclFields.type+'&primary_options='+RclFields.primary+'&default_options='+RclFields.default+'&slug='+slugField;
+    var dataString = 'action=rcl_get_custom_field_options'
+            +'&type_field='+typeField
+            +'&post_type='+RclFields.type
+            +'&primary_options='+RclFields.primary
+            +'&default_options='+RclFields.default
+            +'&slug='+slugField;
     
     jQuery.ajax({
         type: 'POST',
@@ -222,7 +227,10 @@ function rcl_get_new_custom_field(){
     
     rcl_preloader_show(jQuery('#rcl-custom-fields-editor'));
     
-    var dataString = 'action=rcl_get_new_custom_field&post_type='+RclFields.type+'&options='+RclFields.default;
+    var dataString = 'action=rcl_get_new_custom_field'
+            +'&post_type='+RclFields.type
+            +'&primary_options='+RclFields.primary
+            +'&default_options='+RclFields.default;
     
     jQuery.ajax({
         type: 'POST',

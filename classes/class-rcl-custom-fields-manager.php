@@ -16,6 +16,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
     public $sortable;
     public $fields;
     public $name_field;
+    public $new_slug;
     
     public $defaultOptions = array();
 
@@ -224,14 +225,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             $option['name'] = 'field['.$this->field['slug'].']['.$option['slug'].']';
             
         }else{
-
-            if($option['type'] == 'dynamic'){
-                $option['name'] = 'new-field['.$option['slug'].'][new-'.rand(0,100).']';
-            }else{
-                $option['name'] = 'new-field['.$option['slug'].'][]';
-            }
             
-            
+            $option['name'] = 'new-field['.$this->new_slug.']['.$option['slug'].']';
         }
         
         return $this->get_input($option, $value);
@@ -357,8 +352,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
     function empty_field(){
         
         $this->status = false;
+        $this->new_slug = '$$new$$'.rand(10,100);
 
-        $field = '<li data-slug="" data-type="" class="rcl-custom-field new-field">
+        $field = '<li data-slug="'.$this->new_slug.'" data-type="" class="rcl-custom-field new-field">
                     <div class="field-header">
                         <span class="field-title half-width">'.$this->get_option(array('type'=>'text','slug'=>'title','title'=>__('Name','wp-recall'))).'</span>
                         <span class="field-controls half-width">
@@ -390,7 +386,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                 $field .= '</div>';
                 
                 if(!$this->select_type)
-                    $field .= '<input type="hidden" name="new-field[type][]" value="custom">';
+                    $field .= '<input type="hidden" name="new-field['.$this->new_slug.'][type]" value="custom">';
                 
                 $field .= '<input type="hidden" name="fields[]" value="">';
                 

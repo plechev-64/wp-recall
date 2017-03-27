@@ -365,10 +365,10 @@ class Rcl_Query {
         $query['select'] = array('COUNT('.$query['table']['as'].'.'.$field_name.')');
         
         $sql = $this->get_sql($query);
-        //print_r($sql);   
-        /*if($query['join'])
+        
+        if($query['groupby'])
             $result = $wpdb->query($sql);
-        else*/
+        else
             $result = $wpdb->get_var($sql);
         
         return $result;
