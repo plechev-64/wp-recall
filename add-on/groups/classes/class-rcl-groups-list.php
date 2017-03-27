@@ -79,6 +79,8 @@ class Rcl_Groups_List extends Rcl_Groups_Query{
 
     function add_query_user_id($query){
         
+        $where = "rcl_groups.admin_id='$this->user_id'";
+        
         $users = new Rcl_Groups_Users_Query();
         
         $groups_ids = $users->get_col(array(
@@ -86,7 +88,10 @@ class Rcl_Groups_List extends Rcl_Groups_Query{
             'fields' => array('group_id')
         ));
 
-        $query['where'][] = "(rcl_groups.admin_id='$this->user_id' OR rcl_groups.ID IN (".implode(',',$groups_ids)."))";
+        if($groups_ids)
+            $where = "($where OR rcl_groups.ID IN (".implode(',',$groups_ids)."))";
+        
+        $query['where'][] = $where;  
 
         return $query;
     }

@@ -30,18 +30,18 @@ final class WP_Recall {
 	 * Основной экземпляр класса WP_Recall
 	 */
 	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
-		}
-		return self::$_instance;
+            if ( is_null( self::$_instance ) ) {
+                    self::$_instance = new self();
+            }
+            return self::$_instance;
 	}
 
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Читеришь, гадёныш?' ), $this->version );
+            _doing_it_wrong( __FUNCTION__, __( 'Читеришь, гадёныш?' ), $this->version );
 	}
 
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Читеришь, гадёныш?' ), $this->version );
+            _doing_it_wrong( __FUNCTION__, __( 'Читеришь, гадёныш?' ), $this->version );
 	}
 
 	/*

@@ -44,6 +44,12 @@ class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
             'type' => 'textarea'
         );
         
+        $fields[] = array(
+            'slug' => 'rcl_birthday',
+            'title' => __('Birthday','wp-recall'),
+            'type' => 'date'
+        );
+        
         return apply_filters('rcl_default_profile_fields', $fields);
     }
 
