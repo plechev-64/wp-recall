@@ -526,7 +526,7 @@ function rcl_bar_add_menu_item($id_item,$args){
 }
 
 add_action('init','rcl_add_block_black_list_button',10);
-function rcl_add_block_black_list_button(){
+function rcl_add_block_black_list_button(){  
     rcl_block('actions','rcl_user_black_list_button',array('id'=>'bl-block','order'=>50,'public'=>-1));
 }
 

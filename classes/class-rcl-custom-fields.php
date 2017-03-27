@@ -253,6 +253,34 @@ class Rcl_Custom_Fields{
         return $input;
     }
     
+    function get_type_editor($field){
+        
+        $editor_id = ($this->field)? 'editor-'.$this->field['slug']: 'editor-'.$this->new_slug;
+
+        $data = array( 'wpautop' => 1
+            ,'media_buttons' => false
+            ,'textarea_name' => $field['name']
+            ,'textarea_rows' => 10
+            ,'tabindex' => null
+            ,'editor_css' => ''
+            ,'editor_class' => 'autosave'
+            ,'teeny' => 0
+            ,'dfw' => 0
+            ,'tinymce' => false
+            ,'quicktags' => true
+        );
+
+        ob_start();
+
+        wp_editor( $this->value, $editor_id, $data );
+        
+        $content = ob_get_contents();
+        
+        ob_end_clean();
+        
+        return $content;
+    }
+    
     function get_type_textarea($field){
         return '<textarea name="'.$field['name'].'" '.$this->required.' '.$this->placeholder.' id="'.$this->slug.'" rows="5" cols="50">'.$this->value.'</textarea>';
     }

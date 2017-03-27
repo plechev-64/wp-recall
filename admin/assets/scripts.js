@@ -187,11 +187,31 @@ function rcl_get_custom_field_options(e){
     var typeField = jQuery(e).val();
     var boxField = jQuery(e).parents('.rcl-custom-field');
     var slugField = boxField.data('slug');
+    var oldType = boxField.attr('data-type');
+    
+    var multiVals = ['select','multiselect','checkbox','radio'];
+
+    if(jQuery.inArray( typeField, multiVals ) >= 0 && jQuery.inArray( oldType, multiVals ) >= 0){
+        
+        boxField.attr('data-type',typeField);
+        return;
+        
+    }
+    
+    var singleVals = ['text','textarea','date','time','email','number','url','dynamic','tel'];
+    
+    if(jQuery.inArray( typeField, singleVals ) >= 0 && jQuery.inArray( oldType, singleVals ) >= 0){
+        
+        boxField.attr('data-type',typeField);
+        return;
+        
+    }
     
     rcl_preloader_show(boxField);
     
     var dataString = 'action=rcl_get_custom_field_options'
             +'&type_field='+typeField
+            +'&old_type='+oldType
             +'&post_type='+RclFields.type
             +'&primary_options='+RclFields.primary
             +'&default_options='+RclFields.default
@@ -209,6 +229,8 @@ function rcl_get_custom_field_options(e){
             if(data['success']){
                 
                 boxField.find('.options-custom-field').html(data['content']);
+                
+                boxField.attr('data-type',typeField);
                 
             } 
             

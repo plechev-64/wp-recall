@@ -72,12 +72,12 @@ function rcl_init_custom_tabs(){
             
             if(isset($tab['default-tab'])) continue;
         
-            $options = (isset($tab['options-tab']))? $tab['options-tab']: array();
+            $supports = (isset($tab['supports-tab']))? $tab['supports-tab']: array();
 
             $tab_data = array(
                 'id'=> $tab['slug'], 
                 'name'=> $tab['title'],
-                'public'=> (in_array('public', $options))? 1: 0,
+                'public'=> ($tab['public-tab'])? 1: 0,
                 'icon'=> ($tab['icon'])? $tab['icon']: 'fa-cog',
                 'output'=> $area_id,
                 'custom-tab'=> true,
@@ -94,12 +94,16 @@ function rcl_init_custom_tabs(){
                 )
             );
 
-            if(in_array('cache', $options)){
+            if(in_array('cache', $supports)){
                 $tab_data['supports'][] = 'cache';
             }
 
-            if(in_array('ajax', $options)){
+            if(in_array('ajax', $supports)){
                 $tab_data['supports'][] = 'ajax';
+            }
+            
+            if(in_array('dialog', $supports)){
+                $tab_data['supports'][] = 'dialog';
             }
 
             rcl_tab($tab_data);
@@ -162,7 +166,7 @@ function rcl_add_custom_tabs($tabs){
         foreach($areas[$tabArea] as $k => $field){
             
             if($field['slug'] != $tab_id) continue;
-                
+
             $tabs[$tab_id]['icon'] = $field['icon'];
             $tabs[$tab_id]['name'] = $field['title'];
             $tabs[$tab_id]['order'] = ++$k;
@@ -212,8 +216,6 @@ function rcl_block($place,$callback,$args=false){
     );
 
     $data = apply_filters('block_data_rcl',$data);
-
-    //if(is_admin())return false;
 
     if($user_LK&&isset($data['args']['gallery'])){
         rcl_bxslider_scripts();

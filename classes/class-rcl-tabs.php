@@ -9,6 +9,7 @@ class Rcl_Tabs{
     public $order = 10;
     public $first = false;
     public $counter = null;
+    public $onclick = false;
     public $output = 'menu';
     public $supports = array();
     public $content = array();
@@ -132,25 +133,42 @@ class Rcl_Tabs{
             case -2: if($user_ID&&$user_ID==$master_id) return false; break;
         }
 
-        $link = rcl_format_url(get_author_posts_url($master_id),$this->id);
-        
-        $datapost = array(
-            'callback'=>'rcl_ajax_tab',
-            'tab_id'=>$this->id,
-            'user_LK'=>$master_id
-        );
-        
         $name = (isset($this->counter))? sprintf('%s <span class="rcl-menu-notice">%s</span>',$this->name,$this->counter): $this->name;
-        
-        $html_button = rcl_get_button(
-                $name,$link,
+
+        if($this->onclick){
+            
+            $html_button = rcl_get_button(
+                $name,
+                '#',
+                array(
+                    'class'=>'recall-button',
+                    'icon'=> ($this->icon)? $this->icon:'fa-cog',
+                    'attr'=> 'onclick="'.$this->onclick.';return false;"'
+                )
+            );
+            
+        }else{
+            
+            $link = rcl_format_url(get_author_posts_url($master_id),$this->id);
+            
+            $datapost = array(
+                'callback'=>'rcl_ajax_tab',
+                'tab_id'=>$this->id,
+                'user_LK'=>$master_id
+            );
+            
+            $html_button = rcl_get_button(
+                $name,
+                $link,
                 array(
                     'class'=>$this->get_class_button(),
                     'icon'=> ($this->icon)? $this->icon:'fa-cog',
                     'attr'=>'data-post='.rcl_encode_post($datapost)
                 )
-        );
-        
+            );
+            
+        }
+
 	return sprintf('<span class="rcl-tab-button" data-tab="%s" id="tab-button-%s">%s</span>',$this->id,$this->id,$html_button);
 
     }

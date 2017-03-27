@@ -288,8 +288,10 @@ add_action('wp_ajax_rcl_get_custom_field_options','rcl_get_custom_field_options'
 function rcl_get_custom_field_options(){
     
     $type_field = $_POST['type_field'];
+    $old_type = $_POST['old_type'];
     $post_type = $_POST['post_type'];
-    $slug_field = $_POST['slug'];
+    $slug_field = $_POST['slug'];   
+    
     $primary = (array)json_decode(wp_unslash($_POST['primary_options']));
     $default = (array)json_decode(wp_unslash($_POST['default_options']));
     

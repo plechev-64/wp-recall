@@ -57,20 +57,30 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
                 'placeholder'=>__('Example , fa-user','wp-recall'),
                 'notice'=>__('Источник <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/</a>','wp-recall')
             ),
-
+            
             array(
-                'type' => 'checkbox',
-                'slug'=>'options-tab',
-                'title'=>__('Options tab','wp-recall'),
+                'type' => 'select',
+                'slug'=>'public-tab',
+                'title'=>__('Приватность вкладки','wp-recall'),
                 'values'=>array(
-                    'public' => __('public tab','wp-recall'),
-                    'ajax' => __('ajax-loading','wp-recall'),
-                    'cache' => __('caching support','wp-recall')
+                    __('Приватная','wp-recall'),
+                    __('Публичная','wp-recall')
                 )
             ),
 
             array(
-                'type' => 'textarea',
+                'type' => 'checkbox',
+                'slug'=>'supports-tab',
+                'title'=>__('Поддержка функций','wp-recall'),
+                'values'=>array(
+                    'ajax' => __('ajax-загрузка','wp-recall'),
+                    'cache' => __('caching','wp-recall'),
+                    'dialog' => __('диалоговое окно','wp-recall')
+                )
+            ),
+
+            array(
+                'type' => 'editor',
                 'slug'=>'content',
                 'title'=>__('Content tab','wp-recall'),
                 'notice'=>__('supported shortcodes and HTML-code','wp-recall')
@@ -122,7 +132,7 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
             $this->fields = $defaultTabs;
             
         }
-
+        
     }
     
     function get_default_tabs(){
@@ -140,19 +150,6 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
             
             if('area-'.$tabArea != $this->post_type) continue;
             
-            $supports = (isset($tab['supports']))? $tab['supports']: array();
-            
-            $options = array();
-            
-            if(in_array('ajax',$supports))
-                   $options[] = 'ajax'; 
-            
-            if(in_array('cache',$supports))
-                   $options[] = 'cache'; 
-            
-            if(isset($tab['public']) && $tab['public'])
-                   $options[] = 'public'; 
-            
             $fields[] = array(
                 'type-edit' => false,
                 'slug' => $tab_id,
@@ -160,15 +157,7 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
                 'default-tab' => true,
                 'type' => 'custom',
                 'title' => $tab['name'],
-                'icon' => $tab['icon'],
-                'options-tab' => $options,
-                'options-field' => array(
-                    array(
-                        'type' => 'hidden',
-                        'slug' => 'default-tab',
-                        'value' => 1
-                    )
-                )
+                'icon' => $tab['icon']
             );
             
         }
@@ -183,7 +172,11 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
             
             foreach($options as $k => $option){
                 
-                if($option['slug'] == 'options-tab'){
+                if($option['slug'] == 'public-tab'){
+                    unset($options[$k]);
+                }
+                
+                if($option['slug'] == 'supports-tab'){
                     unset($options[$k]);
                 }
                 

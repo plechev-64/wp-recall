@@ -332,55 +332,55 @@ span.ruble-symbol{
     padding: 3px;
     background: #fff;
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-text:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="text"] .field-header .field-type:before{
     content: "\f464";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-textarea:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="textarea"] .field-header .field-type:before{
     content: "\f119";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-select:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="select"] .field-header .field-type:before{
     content: "\f203";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-multiselect:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="multiselect"] .field-header .field-type:before{
     content: "\f163";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-checkbox:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="checkbox"] .field-header .field-type:before{
     content: "\f147";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-radio:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="radio"] .field-header .field-type:before{
     content: "\f159";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-email:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="email"] .field-header .field-type:before{
     content: "\f466";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-tel:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="tel"] .field-header .field-type:before{
     content: "\f525";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-number:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="number"] .field-header .field-type:before{
     content: "123";
     font-size: 14px;
     font-weight: bold;
     vertical-align: super;
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-date:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="date"] .field-header .field-type:before{
     content: "\f508";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-time:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="time"] .field-header .field-type:before{
     content: "\f469";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-url:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="url"] .field-header .field-type:before{
     content: "\f103";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-agree:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="agree"] .field-header .field-type:before{
     content: "\f491";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-file:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="file"] .field-header .field-type:before{
     content: "\f501";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-dynamic:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="dynamic"] .field-header .field-type:before{
     content: "\f502";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .type-custom:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="custom"] .field-header .field-type:before{
     content: "\f111";
 }
 .rcl-custom-fields-box .rcl-custom-field .field-header .field-delete:before{
@@ -430,6 +430,15 @@ span.ruble-symbol{
     background: none;
     padding: 0;
     font-weight: normal;
+}
+.rcl-custom-fields-box .rcl-custom-field .type-editor-input{
+    
+}
+.rcl-custom-fields-box .rcl-custom-field .type-editor-input textarea{
+    height: 150px;
+}
+.rcl-custom-fields-box .rcl-custom-field .type-editor-input input[type="button"]{
+    width:auto;
 }
 .rcl-custom-fields-box .rcl-custom-field .rcl-radio-box{
     
