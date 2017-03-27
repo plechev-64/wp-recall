@@ -31,14 +31,20 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         $this->data = ($this->data)? array_map('trim', explode(',',$this->data)): array();
         
-        if(isset($_GET['usergroup']))
-            $this->usergroup = $_GET['usergroup'];
-
-        if(isset($_GET['users-filter'])&&$this->filters) 
-            $this->orderby = $_GET['users-filter'];
+        if($this->filters){
         
-        if(isset($_GET['users-order'])&&$this->filters) 
-            $this->query['order'] = $_GET['users-order'];
+            if(isset($_GET['usergroup']))
+                $this->usergroup = $_GET['usergroup'];
+
+            if(isset($_GET['users-filter'])) 
+                $this->orderby = $_GET['users-filter'];
+
+            if(isset($_GET['users-order'])) 
+                $this->query['order'] = $_GET['users-order'];
+            
+            add_filter('rcl_users_query',array($this,'add_query_search'));
+        
+        }
 
         $this->add_uri['users-filter'] = $this->query['order'];
 
@@ -51,9 +57,6 @@ class Rcl_Users_List extends Rcl_Users_Query{
         if($this->usergroup)
             add_filter('rcl_users_query',array($this,'add_query_usergroup'));
 
-        if($this->filters)
-            add_filter('rcl_users_query',array($this,'add_query_search'));
-        
         if($this->data('user_registered') || $this->orderby == 'user_registered')
             add_filter('rcl_users_query',array($this,'add_query_user_registered'));
 
