@@ -309,7 +309,7 @@ function rcl_get_custom_field_options(){
     
     $manageFields->field = array( 'type' => $type_field );
     
-    if(strpos($slug_field,'$$new$$') === false){
+    if(strpos($slug_field,'CreateNewField') === false){
 
         $manageFields->field['slug'] = $slug_field;
 
@@ -321,6 +321,39 @@ function rcl_get_custom_field_options(){
     }
 
     $content = $manageFields->get_options();
+    
+    $multiVars = array(
+        'select',
+        'radio',
+        'checkbox',
+        'multiselect'
+    );
+    
+    if(in_array($type_field,$multiVars)){
+        
+       $content .= '<script>'
+               . "jQuery('#field-".$slug_field." .rcl-field-input .dynamic-values').sortable({
+                    containment: 'parent',
+                    cursor: 'move',
+                    placeholder: 'ui-sortable-placeholder',
+                    distance: 15,
+                    stop: function( event, ui ) {
+
+                        var items = ui.item.parents('.dynamic-values').find('.dynamic-value');
+
+                        items.each(function(f){
+                            if(items.length == (f+1)){
+                                jQuery(this).children('a').attr('onclick','rcl_add_dynamic_field(this);return false;').children('i').attr('class','fa-plus');
+                            }else{
+                                jQuery(this).children('a').attr('onclick','rcl_remove_dynamic_field(this);return false;').children('i').attr('class','fa-minus');
+                            }
+                        });
+
+                    }
+                });"
+               . '</script>'; 
+        
+    }
 
     echo json_encode(array(
         'success' => true,

@@ -282,7 +282,11 @@ span.ruble-symbol{
     width: 80%;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values a{
-    margin-left: 5px;
+    padding: 3px;
+    background: #f5f5f5;
+    position: absolute;
+    right: 40px;
+    top: 2px;
 }
 .rcl-custom-fields-box .rcl-custom-field a .fa-minus:before{
     content: "\f153";

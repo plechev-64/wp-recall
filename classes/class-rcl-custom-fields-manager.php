@@ -365,10 +365,10 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
     function empty_field(){
         
         $this->status = false;
-        $this->new_slug = '$$new$$'.rand(10,100);
+        $this->new_slug = 'CreateNewField'.rand(10,100);
         $this->field['type'] = ($this->types)? $this->types[0]: 'text';
 
-        $field = '<li data-slug="'.$this->new_slug.'" data-type="'.$this->field['type'].'" class="rcl-custom-field new-field">
+        $field = '<li id="field-'.$this->new_slug.'" data-slug="'.$this->new_slug.'" data-type="'.$this->field['type'].'" class="rcl-custom-field new-field">
                     <div class="field-header">
                         <span class="field-title half-width">'.$this->get_option(array('type'=>'text','slug'=>'title','title'=>__('Name','wp-recall'))).'</span>
                         <span class="field-controls half-width">
