@@ -206,7 +206,7 @@ function rcl_update_custom_fields(){
             
             if(!isset($newFields[$nKey]) || !$newFields[$nKey]['title']) continue;
             
-            $slug = str_replace('-','_',rcl_sanitize_string($newFields[$nKey]['title']).'-'.rand(10,100));
+            $slug = str_replace(array('-',' '),'_',rcl_sanitize_string($newFields[$nKey]['title']).'-'.rand(10,100));
             
             $field = $newFields[$nKey];
             

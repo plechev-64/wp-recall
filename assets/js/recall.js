@@ -752,12 +752,11 @@ function rcl_init_field_maxlength(fieldID){
     
     var field = jQuery('#'+fieldID);
     var maxlength = field.attr('maxlength');
-
+    
     if(!field.parent().find('.maxlength').size()){
-        var word = field.val().length;
-
-        if(word){ 
-            maxlength = maxlength - word;
+        
+        if(field.val()){ 
+            maxlength = maxlength - field.val().length;
         }
         
         field.after('<span class="maxlength">'+maxlength+'</span>');
