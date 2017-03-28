@@ -603,6 +603,9 @@ a.data-filter.filter-active:hover {
     border: 1px solid #ccc;
     max-height: 100%;
 }
+.rcl-field-input.type-text-input .maxlength{
+    height: 100%;
+}
 .rcl-field-input input[type='text']{
     margin:0;
 }

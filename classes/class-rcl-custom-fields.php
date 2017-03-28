@@ -186,24 +186,18 @@ class Rcl_Custom_Fields{
         if(isset($field['field_select']))
             $field['values'] = rcl_edit_old_option_fields($field['field_select'], $field['type']);
 
-        $count_field = count($field['values']);
-        
-        $field_select = '';
+        $content = '<select '.$this->required.' name="'.$field['name'].'[]" id="'.$this->slug.'" multiple>';
 
-        for($a=0;$a<$count_field;$a++){
-            if(!is_array($this->value)) $selected = selected($this->value,$field['field_select'][$a],false);
-            else {
-                $arrValue = $this->value;
-                for($ttt = 0; $ttt < count($arrValue); $ttt++) {
-                    $selected = selected($arrValue[$ttt],$field['field_select'][$a],false);
-                    if(strlen($selected) > 3) break;
-                }
-            }
-            $field_select .='<option '.$selected.' value="'.trim($field['field_select'][$a]).'">'.$field['field_select'][$a].'</option>';
+        foreach($field['values'] as $k => $value){
+            
+            if($this->value_in_key) $k = $value;
+            
+            $content .= '<option '.selected($this->value,$k,false).' value="'.trim($k).'">'.$value.'</option>';
         }
-        return '<select '.$this->required.' name="'.$field['name'].'[]" id="'.$this->slug.'" multiple>
-        '.$field_select.'
-        </select>';
+        
+        $content .= '</select>';
+        
+        return $content;
     }
 
     function get_type_checkbox($field){
