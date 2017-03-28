@@ -48,6 +48,8 @@ class Rcl_List_Terms{
         for($a=0;$a<$this->select_amount;$a++){
 
             $this->selected_term = false;
+            
+            $content .= '<div class="category-list rcl-field-input type-select-input">'; 
 
             $content .= '<select class="postform" name="cats['.$this->taxonomy.'][]">';
 
@@ -57,6 +59,8 @@ class Rcl_List_Terms{
             $content .= $this->get_options_list();
 
             $content .= '</select>';
+            
+            $content .= '</div>';
 
         }
 

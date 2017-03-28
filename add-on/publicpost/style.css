@@ -698,11 +698,14 @@ h3.pending-message{
 .rcl-public-box .rcl-form-field .rcl-terms-select{
     
 }
-.rcl-public-box .rcl-form-field .rcl-terms-select select{
+.rcl-public-box .rcl-form-field .rcl-terms-select .rcl-field-input{
     float: none;
     width: auto;
     display: inline-block;
     margin: 0 10px 10px 0;
+}
+.rcl-public-box .rcl-form-field .rcl-terms-select select{
+    
 }
 .rcl-public-box .rcl-form-field .rcl-terms-select .rcl-tags-list{
     overflow: hidden;

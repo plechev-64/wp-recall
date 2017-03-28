@@ -147,7 +147,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
 
         $fields[] = array(
             'slug' => 'post_content',
-            'title' => __('Содержание','wp-recall'),
+            'title' => __('Содержание публикации','wp-recall'),
             'type' => 'textarea',
             'options-field' => array(
                 array(
@@ -165,7 +165,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
         
         $fields[] = array(
             'slug' => 'post_uploader',
-            'title' => __('Медиа-загрузчик','wp-recall'),
+            'title' => __('Медиа-загрузчик WP-Recall','wp-recall'),
             'type' => 'custom',
             'options-field' => array(
                 array(

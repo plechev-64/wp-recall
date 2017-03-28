@@ -200,9 +200,27 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             
         }
         
+        $attrs = array(
+            'data-form_id'=> $this->form_id,
+            'data-post_id'=> $this->post_id,
+            'data-post_type'=> $this->post_type,
+            'class'=> array('rcl-public-form')
+        );
+
+        $attrs = apply_filters('rcl_public_form_attributes', $attrs, $dataPost);
+        
+        $attrsForm = array();
+        foreach($attrs as $k=>$v){
+            if(is_array($v)){
+                $attrsForm[] = $k.'="'.implode(' ',$v).'"';
+                continue;
+            }
+            $attrsForm[] = $k.'="'.$v.'"';
+        }
+        
         $content = '<div class="rcl-public-box rcl-table">';
         
-        $content .= '<form action="" method="post" class="rcl-public-form" data-post_id="'.$this->post_id.'" data-post_type="'.$this->post_type.'">';
+        $content .= '<form action="" method="post" '.implode(' ',$attrsForm).'>';
         
         if($this->fields){
             
@@ -295,7 +313,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $content .= '</div>';
         
         if($this->form_id)
-            $content .= '<input type="hidden" name="public_form_id" value="'.$this->form_id.'">';
+            $content .= '<input type="hidden" name="form_id" value="'.$this->form_id.'">';
         
         $content .= '<input type="hidden" name="post_id" value="'.$this->post_id.'">';
         $content .= '<input type="hidden" name="post_type" value="'.$this->post_type.'">';

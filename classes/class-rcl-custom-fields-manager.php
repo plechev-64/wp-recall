@@ -223,6 +223,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         
         $options = array_merge($options, $this->defaultOptions);
         
+        $options = apply_filters('rcl_custom_fields_options',$options,$this->post_type);
+        
         return $options;
         
     }

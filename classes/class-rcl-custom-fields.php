@@ -185,6 +185,10 @@ class Rcl_Custom_Fields{
         
         if(isset($field['field_select']))
             $field['values'] = rcl_edit_old_option_fields($field['field_select'], $field['type']);
+        
+        if(!$field['values']) return false;
+        
+        $this->value = ($this->value)? $this->value: array();
 
         $content = '<select '.$this->required.' name="'.$field['name'].'[]" id="'.$this->slug.'" multiple>';
 
@@ -192,7 +196,7 @@ class Rcl_Custom_Fields{
             
             if($this->value_in_key) $k = $value;
             
-            $content .= '<option '.selected($this->value,$k,false).' value="'.trim($k).'">'.$value.'</option>';
+            $content .= '<option '.selected(in_array($k,$this->value),true,false).' value="'.trim($k).'">'.$value.'</option>';
         }
         
         $content .= '</select>';

@@ -229,7 +229,7 @@ class Rcl_EditPost {
             if(!$this->post_id) 
                 $this->error(__('Error publishing!','wp-recall').' Error 101');
             
-            $id_form = intval($_POST['public_form_id']);
+            $id_form = intval($_POST['form_id']);
             
             if($id_form>1) 
                 add_post_meta($this->post_id, 'publicform-id', $id_form);
