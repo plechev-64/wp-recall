@@ -25,6 +25,26 @@ jQuery(function($){
         $('#options-'+rcl_url_params['options']).slideDown();
         return false;
     }
+
+    $(".rcl-field-input .dynamic-values").sortable({
+        containment: "parent",
+        cursor: "move",
+        placeholder: "ui-sortable-placeholder",
+        distance: 15,
+        stop: function( event, ui ) {
+
+            var items = ui.item.parents('.dynamic-values').find(".dynamic-value");
+
+            items.each(function(f){
+                if(items.length == (f+1)){
+                    jQuery(this).children('a').attr('onclick','rcl_add_dynamic_field(this);return false;').children('i').attr('class',"fa-plus");
+                }else{
+                    jQuery(this).children('a').attr('onclick','rcl_remove_dynamic_field(this);return false;').children('i').attr('class',"fa-minus");
+                }
+            });
+            
+        }
+    });
     
     $('.rcl-custom-fields-box').find('.required-checkbox').each(function(){
         rcl_update_require_checkbox(this);
