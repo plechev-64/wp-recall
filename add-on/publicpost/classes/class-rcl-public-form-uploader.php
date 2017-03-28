@@ -108,10 +108,7 @@ class Rcl_Public_Form_Uploader{
     function get_dropzone(){
         
         if($this->ext_types){
-            $mTypes = array();
-            foreach(array_map('trim',explode(',',$this->ext_types)) as $ext){
-                $mTypes[] = rcl_get_mime_type_by_ext($ext);
-            }
+            $mTypes = rcl_get_mime_types(array_map('trim',explode(',',$this->ext_types)));
         }else{
             $mTypes = array('image/*');
         }

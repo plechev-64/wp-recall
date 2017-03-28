@@ -231,6 +231,10 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                     unset($options[$k]);
                 }
                 
+                if($option['slug'] == 'maxlength'){
+                    unset($options[$k]);
+                }
+                
                 if($option['slug'] == 'required'){
                     unset($options[$k]);
                 }

@@ -198,9 +198,18 @@ function rcl_get_custom_field_options(e){
         
     }
     
-    var singleVals = ['text','textarea','date','time','email','number','url','dynamic','tel'];
+    var singleVals = ['date','time','email','number','url','dynamic','tel'];
     
     if(jQuery.inArray( typeField, singleVals ) >= 0 && jQuery.inArray( oldType, singleVals ) >= 0){
+        
+        boxField.attr('data-type',typeField);
+        return;
+        
+    }
+    
+    var textVals = ['text','textarea'];
+    
+    if(jQuery.inArray( typeField, textVals ) >= 0 && jQuery.inArray( oldType, textVals ) >= 0){
         
         boxField.attr('data-type',typeField);
         return;

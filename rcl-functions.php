@@ -1362,13 +1362,32 @@ function rcl_get_profile_fields($args = false){
 }
 
 function rcl_get_mime_type_by_ext($file_ext){
+    
+    if(!$file_ext) return false;
+    
     $mimes = get_allowed_mime_types();
+    
     foreach ($mimes as $type => $mime) {
         if (strpos($type, $file_ext) !== false) {
             return $mime;
         }
     }
+    
     return false;
+}
+
+function rcl_get_mime_types($ext_array){
+    
+    if(!$ext_array) return false;
+    
+    $mTypes = array();
+    
+    foreach($ext_array as $ext){
+        if(!$ext) continue;
+        $mTypes[] = rcl_get_mime_type_by_ext($ext);
+    }
+    
+    return $mTypes;
 }
 
 function rcl_get_area_options(){

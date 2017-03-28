@@ -42,10 +42,10 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         ));
         
         $this->init_user_can();
+        
+        $this->init_options();
 
         do_action('rcl_public_form_init', $this->get_object_form());
-
-        $this->options = apply_filters('rcl_public_form_options', $this->options, $this->get_object_form());
 
         if($this->options['preview']) rcl_dialog_scripts();
         
@@ -96,6 +96,16 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         
         return $fields;
         
+    }
+    
+    function init_options(){
+        global $rcl_options;
+        
+        $this->options['preview'] = (isset($rcl_options['public_preview']) && $rcl_options['public_preview'])? true: false;
+        $this->options['draft'] = (isset($rcl_options['public_draft']) && $rcl_options['public_draft'])? true: false;
+        
+        $this->options = apply_filters('rcl_public_form_options', $this->options, $this->get_object_form());
+
     }
 
     function init_user_can(){
@@ -293,7 +303,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $content .= wp_nonce_field('rcl-edit-post','_wpnonce',true,false);
         $content .= '</form>';
         
-        if($this->user_can['delete']){
+        if($this->user_can['delete'] && $this->options['delete']){
             
             $content .= '<div id="form-field-delete" class="rcl-form-field">';
             
@@ -302,6 +312,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             $content .= '</div>';
             
         }
+        
+        $content .= apply_filters('after_public_form_rcl','',$this->get_object_form());
 
         $content .= '</div>';
         

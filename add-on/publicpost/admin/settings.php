@@ -45,12 +45,6 @@ function rcl_get_publics_options_page($content){
                     'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
                 )),
 
-                $opt->label(__('Use preview','wp-recall')),
-                $opt->option('select',array(
-                    'name'=>'public_preview',
-                    'options'=>array(__('Yes','wp-recall'),__('No','wp-recall'))
-                )),
-
                 $opt->label(__('List of publications tab','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'publics_block_rcl',
@@ -73,6 +67,18 @@ function rcl_get_publics_options_page($content){
         $opt->option_block(
             array(
                 $opt->title(__('Form of publication','wp-recall')),
+                
+                $opt->label(__('Use preview','wp-recall')),
+                $opt->option('select',array(
+                    'name'=>'public_preview',
+                    'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                )),
+                
+                $opt->label(__('Use draft','wp-recall')),
+                $opt->option('select',array(
+                    'name'=>'public_draft',
+                    'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                )),
 
                 $opt->label(__('Number of images in Wp-Recall gallery','wp-recall')),
                 $opt->option('number',array('name'=>'count_image_gallery','default'=>10)),

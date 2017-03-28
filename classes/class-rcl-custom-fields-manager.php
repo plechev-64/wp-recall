@@ -208,6 +208,17 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                 
             }
             
+            if($this->field['type'] == 'text' || $this->field['type'] == 'textarea'){
+                
+                $options[] = array(
+                    'type' => 'number',
+                    'slug' => 'maxlength',
+                    'title' => __('Maxlength','wp-recall'),
+                    'notice' => __('максимальное количество символов в поле','wp-recall')
+                );
+                
+            }
+            
         }
         
         $options = array_merge($options, $this->defaultOptions);
@@ -353,8 +364,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         
         $this->status = false;
         $this->new_slug = '$$new$$'.rand(10,100);
+        $this->field['type'] = ($this->types)? $this->types[0]: 'text';
 
-        $field = '<li data-slug="'.$this->new_slug.'" data-type="" class="rcl-custom-field new-field">
+        $field = '<li data-slug="'.$this->new_slug.'" data-type="'.$this->field['type'].'" class="rcl-custom-field new-field">
                     <div class="field-header">
                         <span class="field-title half-width">'.$this->get_option(array('type'=>'text','slug'=>'title','title'=>__('Name','wp-recall'))).'</span>
                         <span class="field-controls half-width">

@@ -7,6 +7,7 @@ class Rcl_Custom_Fields{
     public $required;
     public $files;
     public $placeholder;
+    public $maxlength;
     public $rand;
     public $value_in_key;
 
@@ -42,6 +43,7 @@ class Rcl_Custom_Fields{
         $this->value_in_key = (isset($field['value_in_key']))? $field['value_in_key']: false;
         $this->required = ($field['required']==1)? 'required': '';
         $this->placeholder = (isset($field['placeholder'])&&$field['placeholder'])? "placeholder='".str_replace("'",'"',$field['placeholder'])."'": '';
+        $this->maxlength = (isset($field['maxlength'])&&$field['maxlength'])? "maxlength='".$field['maxlength']."'": '';
         
         if(!$field['type']) return false;
         
@@ -62,6 +64,10 @@ class Rcl_Custom_Fields{
         $callback = 'get_type_'.$field['type'];
 
         $html_field = $this->$callback($field);
+        
+        if($this->maxlength){
+            $html_field .= '<script>rcl_init_field_maxlength("'.$this->slug.'");</script>';
+        }
 
         if(isset($field['notice'])&&$field['notice']) 
             $html_field .= '<span class="rcl-field-notice"><i class="fa fa-info" aria-hidden="true"></i>'.$field['notice'].'</span>';
@@ -70,6 +76,11 @@ class Rcl_Custom_Fields{
     }
     
     function get_type_custom($args){
+        
+        if(isset($args['content'])){
+            return $args['content'];
+        }
+        
         return;
     }
     
@@ -133,8 +144,10 @@ class Rcl_Custom_Fields{
             if(!$field['required']) $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a></span>';
             $input = '<span class="file-manage-box">'.$input.'</span>';
         }
+        
+        $mTypes = rcl_get_mime_types(array_map('trim',explode(',',$field['field_select'])));
 
-        $accept = ($field['field_select'])? 'accept=".'.implode(',.',array_map('trim',explode(',',$field['field_select']))).'"': '';
+        $accept = ($mTypes)? 'accept="'.implode(',',$mTypes).'"': '';
         $required = (!$this->value)? $this->required: '';
         
         $size = ($field['sizefile'])? $field['sizefile']: 2;
@@ -282,7 +295,7 @@ class Rcl_Custom_Fields{
     }
     
     function get_type_textarea($field){
-        return '<textarea name="'.$field['name'].'" '.$this->required.' '.$this->placeholder.' id="'.$this->slug.'" rows="5" cols="50">'.$this->value.'</textarea>';
+        return '<textarea name="'.$field['name'].'" '.$this->maxlength.' '.$this->required.' '.$this->placeholder.' id="'.$this->slug.'" rows="5" cols="50">'.$this->value.'</textarea>';
     }
 
     function get_type_agree($field){
@@ -298,7 +311,7 @@ class Rcl_Custom_Fields{
     }
     
     function get_type_text($field){
-        return '<input type="text" '.$this->required.' '.$this->placeholder.' name="'.$field['name'].'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="text" '.$this->maxlength.' '.$this->required.' '.$this->placeholder.' name="'.$field['name'].'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
     }
     
     function get_type_password($field){
@@ -436,7 +449,6 @@ class Rcl_Custom_Fields{
                         filesize = filesize.size/1024/1024;
                         if(filesize>maxsize){
                             jQuery(this).parent().css("border","1px solid red").css("padding","2px");
-                            jQuery("#edit-post-rcl").attr("disabled",false).attr("value","'.__('Publish','wp-recall').'");
                             error = true;
                         }else{
                             jQuery(this).parent().removeAttr("style");

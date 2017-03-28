@@ -586,6 +586,22 @@ a.data-filter.filter-active:hover {
 /*Произвольные поля плагина*/
 .rcl-field-input{
     display: block;
+    position:relative;
+}
+.rcl-field-input .maxlength{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-weight: bold;
+    background: #e5e5e5;
+    display: inline-block;
+    padding: 2px 5px;
+    min-width: 30px;
+    text-align: center;
+    box-sizing: border-box;
+    z-index: 10;
+    border: 1px solid #ccc;
+    max-height: 100%;
 }
 .rcl-field-input input[type='text']{
     margin:0;
@@ -614,12 +630,14 @@ a.data-filter.filter-active:hover {
     min-width: initial;
     vertical-align: middle;
     width: auto;
+    display: inline-block;
 }
 .type-dynamic-input .dynamic-values .dynamic-value .fa{ 
     padding: 5px;
     margin: 5px 10px;
     border: 1px solid #ccc;
     vertical-align: middle;
+    background: #fff;
 }
 .type-dynamic-input .dynamic-values .dynamic-value input{
     width: 78%!important;

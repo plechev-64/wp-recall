@@ -79,29 +79,42 @@ class Rcl_EditPost {
 
         $thumb = (isset($_POST['thumb']))? $_POST['thumb']: false;
         if(isset($rcl_options['media_downloader_recall'])&&$rcl_options['media_downloader_recall']==1){
-            if($thumb) update_post_meta($this->post_id, '_thumbnail_id', $thumb);
-            else delete_post_meta($this->post_id, '_thumbnail_id');
+            
+            if($thumb) 
+                update_post_meta($this->post_id, '_thumbnail_id', $thumb);
+            else 
+                delete_post_meta($this->post_id, '_thumbnail_id');
+            
         }else{
-            if(!$this->update) return $this->rcl_add_attachments_in_temps($postdata);
+            
+            if(!$this->update) 
+                
+                return $this->rcl_add_attachments_in_temps($postdata);
+            
             if($thumb){
+                
                 foreach($thumb as $key=>$gal){
-                        update_post_meta($this->post_id, '_thumbnail_id', $key);
+                    update_post_meta($this->post_id, '_thumbnail_id', $key);
                 }
+                
             }else{
+                
                 $args = array(
-                'post_parent' => $this->post_id,
-                'post_type'   => 'attachment',
-                'numberposts' => 1,
-                'post_status' => 'any',
-                'post_mime_type'=> 'image'
+                    'post_parent' => $this->post_id,
+                    'post_type'   => 'attachment',
+                    'numberposts' => 1,
+                    'post_status' => 'any',
+                    'post_mime_type'=> 'image'
                 );
 
                 $child = get_children($args);
 
                 if($child){
+                    
                     foreach($child as $ch){
                         update_post_meta($this->post_id, '_thumbnail_id',$ch->ID);
                     }
+                    
                 }
             }
         }
@@ -114,7 +127,9 @@ class Rcl_EditPost {
         $temp_gal = (isset($temps[$user_id]))? $temps[$user_id]: 0;
         
         if($temp_gal){
+            
             $thumb = $_POST['thumb'];
+            
             foreach($temp_gal as $key=>$gal){
                 
                 if($thumb[$gal['ID']]==1) 
@@ -128,21 +143,32 @@ class Rcl_EditPost {
 
                 wp_update_post( $post_upd );
             }
-            if($_POST['add-gallery-rcl']==1) add_post_meta($this->post_id, 'recall_slider', 1);
+            
+            if($_POST['add-gallery-rcl']==1) 
+                add_post_meta($this->post_id, 'recall_slider', 1);
             
             unset($temps[$user_id]);
+            
             update_option('rcl_tempgallery',$temps);
 
             if(!$thumb){
+                
                 $args = array(
-                'post_parent' => $this->post_id,
-                'post_type'   => 'attachment',
-                'numberposts' => 1,
-                'post_status' => 'any',
-                'post_mime_type'=> 'image'
+                    'post_parent' => $this->post_id,
+                    'post_type'   => 'attachment',
+                    'numberposts' => 1,
+                    'post_status' => 'any',
+                    'post_mime_type'=> 'image'
                 );
+                
                 $child = get_children($args);
-                if($child){ foreach($child as $ch){add_post_meta($this->post_id, '_thumbnail_id',$ch->ID);} }
+                
+                if($child){ 
+                    foreach($child as $ch){
+                        add_post_meta($this->post_id, '_thumbnail_id',$ch->ID);
+                    } 
+                }
+                
             }
         }
         return $temp_gal;
