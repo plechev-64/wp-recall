@@ -100,8 +100,7 @@ body .rcl_preloader{
     border-radius: 2px;
     margin: 8px 0;
     padding: 5px 15px;
-    width: 500px;
-    /* float: left; */
+    max-width: 500px;
 }
 .wrap-recall-options .option-block h3 {
     text-transform: uppercase;
@@ -464,7 +463,9 @@ span.ruble-symbol{
     height: 150px;
 }
 .rcl-custom-fields-box .rcl-custom-field .type-editor-input input[type="button"]{
-    width:auto;
+    width: auto;
+    padding: 0 3px;
+    font-size: 11px!important;
 }
 .rcl-custom-fields-box .rcl-custom-field .rcl-radio-box{
     
@@ -651,4 +652,19 @@ span.ruble-symbol{
 .wrap input[name="rcl-key"]:not([value=""]) {
     filter: blur(3px) invert(0.4) opacity(0.3);
     transition: all 0.15s linear 0s;
+}
+
+@media screen and (max-width:480px) {
+    #recall.left-sidebar .title-option {
+        width: auto;
+        padding: 10px;
+    }
+    #recall.left-sidebar .wrap-recall-options{
+        position: static;
+        width: auto;
+    }
+    #recall .shift-extend-options > label {
+        width: auto;
+        display:block;
+    }
 }

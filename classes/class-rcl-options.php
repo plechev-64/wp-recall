@@ -5,13 +5,26 @@ class Rcl_Options {
     public $type;
 
     function __construct($key=false){
-        $this->key=rcl_key_addon(pathinfo($key));
+        if($key)
+            $this->key = rcl_key_addon(pathinfo($key));
+        else
+            $this->key = false;
     }
 
     function options($title,$conts){
-        $return = '<span class="title-option"><span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '.$title.'</span>
+        $return = '<span ';
+        
+        if($this->key) 
+            $return .= 'id="title-'.$this->key.'" data-addon="'.$this->key.'" data-url="'.admin_url('admin.php?page=manage-wprecall&rcl-addon-options='.$this->key).'" ';
+        else
+            $return .= 'data-url="'.admin_url('admin.php?page=manage-wprecall').'" ';
+        
+        $return .= 'class="title-option"><span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '.$title.'</span>
 	<div ';
-        if($this->key) $return .= 'id="options-'.$this->key.'" ';
+        
+        if($this->key) 
+            $return .= 'id="options-'.$this->key.'" ';
+        
         $return .= 'class="wrap-recall-options">';
         if(is_array($conts)){
             foreach($conts as $content){

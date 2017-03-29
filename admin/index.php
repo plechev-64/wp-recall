@@ -232,7 +232,7 @@ function rcl_update_custom_fields(){
             
             $values = array();
             foreach($field['values'] as $val){
-                if(!$val) continue;
+                if($val == '') continue;
                 $values[] = $val;
             }
             
@@ -332,26 +332,23 @@ function rcl_get_custom_field_options(){
     if(in_array($type_field,$multiVars)){
         
        $content .= '<script>'
-               . "jQuery('#field-".$slug_field." .rcl-field-input .dynamic-values').sortable({
-                    containment: 'parent',
-                    cursor: 'move',
-                    placeholder: 'ui-sortable-placeholder',
-                    distance: 15,
-                    stop: function( event, ui ) {
+        . "jQuery('#field-".$slug_field." .rcl-field-input .dynamic-values').sortable({
+             containment: 'parent',
+             placeholder: 'ui-sortable-placeholder',
+             distance: 15,
+             stop: function( event, ui ) {
+                 var items = ui.item.parents('.dynamic-values').find('.dynamic-value');
+                 items.each(function(f){
+                     if(items.length == (f+1)){
+                         jQuery(this).children('a').attr('onclick','rcl_add_dynamic_field(this);return false;').children('i').attr('class','fa-plus');
+                     }else{
+                         jQuery(this).children('a').attr('onclick','rcl_remove_dynamic_field(this);return false;').children('i').attr('class','fa-minus');
+                     }
+                 });
 
-                        var items = ui.item.parents('.dynamic-values').find('.dynamic-value');
-
-                        items.each(function(f){
-                            if(items.length == (f+1)){
-                                jQuery(this).children('a').attr('onclick','rcl_add_dynamic_field(this);return false;').children('i').attr('class','fa-plus');
-                            }else{
-                                jQuery(this).children('a').attr('onclick','rcl_remove_dynamic_field(this);return false;').children('i').attr('class','fa-minus');
-                            }
-                        });
-
-                    }
-                });"
-               . '</script>'; 
+             }
+         });"
+        . '</script>'; 
         
     }
 

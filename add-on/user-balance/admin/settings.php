@@ -8,7 +8,7 @@ function rcl_user_account_options($content){
 
         require_once RCL_PATH.'classes/class-rcl-options.php';
 
-        $opt = new Rcl_Options(rcl_key_addon(pathinfo(__FILE__)));
+        $opt = new Rcl_Options(__FILE__);
 
         $pay_options = array( __('Not used','wp-recall') );
 

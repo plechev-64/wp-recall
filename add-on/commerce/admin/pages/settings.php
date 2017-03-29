@@ -7,7 +7,7 @@ function rcl_commerce_options(){
 
     require_once RCL_PATH.'classes/class-rcl-options.php';
 
-    $opt = new Rcl_Options(rcl_key_addon(pathinfo(__FILE__)));
+    $opt = new Rcl_Options(__FILE__);
 
     $args = array(
         'selected'   => $rcl_options['basket_page_rmag'],

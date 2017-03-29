@@ -8,7 +8,7 @@ wp_enqueue_style('wp-jquery-ui-dialog');
 
 require_once RCL_PATH.'classes/class-rcl-options.php';
 
-$fields = new Rcl_Options();
+$fields = new Rcl_Options(__FILE__);
 
 $rcl_options = get_option('rcl_global_options');
 

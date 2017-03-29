@@ -329,7 +329,7 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_date($field){
-        return '<input type="text" '.$this->required.' '.$this->placeholder.' class="rcl-datepicker" name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        return '<input type="text" title="'.__('Используйте формат','wp-recall').': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})" '.$this->required.' '.$this->placeholder.' class="rcl-datepicker" name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
     }
 
     function get_type_time($field){
@@ -422,7 +422,7 @@ class Rcl_Custom_Fields{
     function get_filter_url($slug,$value){
         global $rcl_options;
         if(!isset($rcl_options['users_page_rcl'])||!$rcl_options['users_page_rcl']) return false;
-        return rcl_format_url(get_permalink($rcl_options['users_page_rcl'])).'usergroup='.$slug.':'.$value;
+        return urlencode( rcl_format_url(get_permalink($rcl_options['users_page_rcl'])).'usergroup='.$slug.':'.$value );
     }
 
     function register_user_metas($user_id){

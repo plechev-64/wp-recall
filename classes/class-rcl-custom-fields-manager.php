@@ -109,10 +109,32 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                               ui.sender.sortable("cancel");
                         }
                     });
-                    return false;
                 });
             </script>';
         }
+        
+        $form .= '<script>
+                jQuery(function(){
+                    jQuery(".rcl-field-input .dynamic-values").sortable({
+                        containment: "parent",
+                        placeholder: "ui-sortable-placeholder",
+                        distance: 15,
+                        stop: function( event, ui ) {
+
+                            var items = ui.item.parents(".dynamic-values").find(".dynamic-value");
+
+                            items.each(function(f){
+                                if(items.length == (f+1)){
+                                    jQuery(this).children("a").attr("onclick","rcl_add_dynamic_field(this);return false;").children("i").attr("class","fa-plus");
+                                }else{
+                                    jQuery(this).children("a").attr("onclick","rcl_remove_dynamic_field(this);return false;").children("i").attr("class","fa-minus");
+                                }
+                            });
+
+                        }
+                    });
+                });
+            </script>';
         
         $form .= "<script>rcl_init_custom_fields(\"".$this->post_type."\",\"".wp_slash(json_encode($this->primary))."\",\"".wp_slash(json_encode($this->defaultOptions))."\");</script>";
 
