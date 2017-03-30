@@ -430,7 +430,7 @@ class Rcl_Custom_Fields{
     function get_filter_url($slug,$value){
         global $rcl_options;
         if(!isset($rcl_options['users_page_rcl'])||!$rcl_options['users_page_rcl']) return false;
-        return urlencode( rcl_format_url(get_permalink($rcl_options['users_page_rcl'])).'usergroup='.$slug.':'.$value );
+        return rcl_format_url(get_permalink($rcl_options['users_page_rcl'])).'usergroup='.$slug.':'.urlencode($value) ;
     }
 
     function register_user_metas($user_id){

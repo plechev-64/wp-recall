@@ -1,4 +1,4 @@
-Name: User Profile (Профиль пользователя);
+Name: Profile (Профиль пользователя);
 Version: 2.0.0;
 Support Core: 15.0.0;
 Description: Расширение настроек профиля пользователя для wp-recall;

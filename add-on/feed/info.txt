@@ -1,4 +1,4 @@
-Name: Feed Wp-Recall (Подписки);
+Name: Feed (Подписки);
 Version: 3.0.0;
 Support Core: 15.0.0;
 Description: Формирование и вывод новостной ленты пользователя;

@@ -1,4 +1,4 @@
-Name: Public Wp-Recall (Публикация);
+Name: PublicPost (Публикация);
 Version: 3.2.0;
 Support Core: 15.0.0;
 Description: Дайте возможность посетителям вашего сайта публиковать свои записи с помощью плагина wp-recall;

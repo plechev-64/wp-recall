@@ -163,7 +163,7 @@ function rcl_add_office_profile_fields($fields){
         'notice' => __('Repeat the new password','wp-recall')
     );
 
-    $fields = array_merge($profileFields, $fields);
+    $fields = ($fields)? array_merge($profileFields, $fields): $profileFields;
     
     return $fields;
     
