@@ -183,36 +183,13 @@ function rcl_register_default_group_sidebars(){
 
 }
 
-function rcl_group(){
-    global $rcl_group;
-    
-    rcl_dialog_scripts();
-    
-    if(rcl_is_group_can('admin')){
-        rcl_fileupload_scripts();
-        rcl_enqueue_script( 'groups-image-uploader', rcl_addon_url('js/groups-image-uploader.js', __FILE__),false,true);
-    }
-
-    $admin = (rcl_is_group_can('admin')||rcl_check_access_console())? 1: 0;
-
-    $class = ($admin)? 'class="admin-view"': '';
-
-    echo '<div id="rcl-group" data-group="'.$rcl_group->term_id.'" '.$class.'>';
-
-    if($admin)
-        echo rcl_group_admin_panel();
-
-    echo '<div id="group-popup"></div>';
-
-    rcl_include_template('single-group.php',__FILE__);
-
-    echo '</div>';
-
+function rcl_single_group(){
+    echo rcl_get_single_group();
 }
 
 /*deprecated*/
 function add_post_in_group(){
-    rcl_group();
+    rcl_single_group();
 }
 
 function rcl_get_link_group_tag($content){
@@ -243,7 +220,7 @@ function rcl_get_link_group_tag($content){
         }
     }
 
-    $cat = '<p class="post-group-meta"><i class="fa fa-folder-open rcl-icon"></i>'.__('Group categories','wp-recall').': <a href="'. get_term_link( (int)$group_id, 'groups' ) .'?group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
+    $cat = '<p class="post-group-meta"><i class="fa fa-folder-open rcl-icon"></i>'.__('Group categories','wp-recall').': <a href="'. rcl_get_group_permalink( $group_id ) .'&group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
 
     return $cat.$content;
 }
@@ -268,7 +245,7 @@ function rcl_add_namegroup($content){
     
     if(!$group) return $content;
 
-    $group_link = '<p class="post-group-meta"><i class="fa fa-users rcl-icon"></i><span>'.__('Published in group','wp-recall').'</span>: <a href="'. get_term_link( (int)$group->term_id, 'groups' ) .'">'. $group->name .'</a></p>';
+    $group_link = '<p class="post-group-meta"><i class="fa fa-users rcl-icon"></i><span>'.__('Published in group','wp-recall').'</span>: <a href="'. rcl_get_group_permalink( $group->term_id ) .'">'. $group->name .'</a></p>';
 
     $content = $group_link.$content;
     return $content;
@@ -285,7 +262,7 @@ function rcl_new_group(){
     if(!$group_id){
         rcl_notice_text(__('Group creation failed','wp-recall'),'error');
     }else{
-        wp_redirect(get_term_link( (int)$group_id, 'groups' ));
+        wp_redirect(rcl_get_group_permalink( $group_id ));
         exit;
     }
 
@@ -473,7 +450,7 @@ function rcl_apply_group_request(){
                 <p>%s</p>
                 <p>%s.</p>
                 <p>%s:</p>
-                <p>'.get_term_link( (int)$group_id, 'groups' ).'</p>',
+                <p>'.rcl_get_group_permalink( $group_id ).'</p>',
                 __('Welcome to the group','wp-recall'),
                 sprintf(__('Congratulations , your access request to a private group on "%s" website has been approved','wp-recall'),get_bloginfo('name')),
                 __('Now you can take part in the life of the group as its full participant.','wp-recall'),

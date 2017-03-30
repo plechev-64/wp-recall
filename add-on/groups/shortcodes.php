@@ -59,3 +59,32 @@ function rcl_get_grouplist($atts){
     return $content;
 }
 
+add_shortcode('rcl-group','rcl_get_single_group');
+function rcl_get_single_group(){
+    global $rcl_group;
+    
+    rcl_dialog_scripts();
+    
+    if(rcl_is_group_can('admin')){
+        rcl_fileupload_scripts();
+        rcl_enqueue_script( 'groups-image-uploader', rcl_addon_url('js/groups-image-uploader.js', __FILE__),false,true);
+    }
+
+    $admin = (rcl_is_group_can('admin')||rcl_check_access_console())? 1: 0;
+
+    $class = ($admin)? 'class="admin-view"': '';
+
+    $content = '<div id="rcl-group" data-group="'.$rcl_group->term_id.'" '.$class.'>';
+
+    if($admin)
+        $content .= rcl_group_admin_panel();
+
+    $content .= '<div id="group-popup"></div>';
+
+    $content .= rcl_get_include_template('single-group.php',__FILE__);
+
+    $content .= '</div>';
+    
+    return $content;
+}
+

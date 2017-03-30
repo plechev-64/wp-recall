@@ -17,16 +17,24 @@ function rcl_get_groups_options($args){
 }
 
 function rcl_group_init(){
-    global $wp_query,$wpdb,$rcl_group,$user_ID;
+    global $wp_query,$wpdb,$rcl_group,$user_ID,$rcl_options;
+    
+    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
+    
+    if($output){
+        
+        $group_id = (isset($_GET['group-id']))? $_GET['group-id']: false;
+        
+    }else{
+        
+        if(!isset($wp_query->query_vars['groups'])) return false;
 
-    if(!isset($wp_query->query_vars['groups'])) return false;
+        $curent_term = get_term_by('slug', $wp_query->query_vars['groups'], 'groups');
 
-    $group_id = 0;
+        if($curent_term->parent!=0) $group_id = $curent_term->parent;
+        else $group_id = $curent_term->term_id;
 
-    $curent_term = get_term_by('slug', $wp_query->query_vars['groups'], 'groups');
-
-    if($curent_term->parent!=0) $group_id = $curent_term->parent;
-    else $group_id = $curent_term->term_id;
+    }
 
     if(!$group_id) return false;
 
@@ -230,6 +238,17 @@ function rcl_is_group_can($role){
 }
 
 function rcl_get_group_permalink($term_id){
+    global $rcl_options;
+    
+    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
+    
+    if($output){
+        
+        $page_id = $rcl_options['group-page'];
+        
+        return rcl_format_url (get_the_permalink($page_id)).'group-id='.$term_id;
+    }
+    
     return get_term_link( (int)$term_id,'groups');
 }
 
@@ -607,7 +626,7 @@ function rcl_group_add_request_for_membership($user_id,$group_id){
                     __('Profile','wp-recall')
                     ),
             __('You can approve or reject the request by clicking on the link','wp-recall'),
-            get_term_link( (int)$group_id, 'groups' )
+            rcl_get_group_permalink( $group_id )
           );
     $admin_email = get_the_author_meta('user_email',$rcl_group->admin_id);
     rcl_mail($admin_email, $subject, $textmail);
@@ -778,7 +797,7 @@ function rcl_get_group_category_list(){
     if($tags) return '<div class="search-form-rcl">
             <form method="get">
                     '.rcl_get_tags_list_group((object)$tags,'',__('Display all records','wp-recall')).'
-                    <input type="hidden" name="search-p" value="'.$rcl_group->term_id.'">
+                    <input type="hidden" name="group-id" value="'.$rcl_group->term_id.'">
                     <input type="submit" class="recall-button" value="'.__('Show','wp-recall').'">
             </form>
     </div>';
@@ -829,6 +848,18 @@ function rcl_edit_group_pre_get_posts($query){
     global $wpdb,$user_ID,$post,$rcl_group;
 
     if(!$query->is_main_query()) return $query;
+    
+    global $rcl_options;
+    
+    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
+    
+    if($output){
+        
+        $rcl_group = rcl_group_init();
+        
+        return $query;
+        
+    }
 
     if($query->is_tax&&isset($query->query['groups'])){
         $rcl_group = rcl_group_init();
@@ -854,19 +885,20 @@ function rcl_edit_group_pre_get_posts($query){
 
         if(isset($_GET['group-tag'])&&$_GET['group-tag']!=''){
 
-            if(!$_GET['search-p']){
+            if(!$_GET['group-id']){
 
                 $query->set( 'groups', $_GET['group-tag'] );
 
                 return $query;
+                
             }else{
-                wp_redirect(get_term_link( (int)$_GET['search-p'], 'groups' ).'/?group-tag='.$_GET['group-tag']);exit;
+                wp_redirect(rcl_get_group_permalink( (int)$_GET['group-id'] ).'&group-tag='.$_GET['group-tag']);exit;
             }
 
         }
 
         if(isset($_GET['group-page'])&&$_GET['group-page']!=''){
-                 $query->set( 'posts_per_page', 1 );
+            $query->set( 'posts_per_page', 1 );
         }
 
         if($rcl_group->admin_id==$user_ID) return $query;

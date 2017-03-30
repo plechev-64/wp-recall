@@ -308,7 +308,12 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 add_action('init','rcl_group_add_posts_widget',10);
 function rcl_group_add_posts_widget(){
     global $rcl_options;
-    if(!isset($rcl_options['groups_posts_widget'])||!$rcl_options['groups_posts_widget']) return false;
+    
+    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
+    $widget = (isset($rcl_options['groups_posts_widget']) && $rcl_options['groups_posts_widget'])? 1: 0;
+    
+    if(!$output && !$widget) return false;
+    
     rcl_group_register_widget('Group_Posts_Widget');
 }
 
@@ -325,7 +330,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
     function widget($args,$instance) {
 
-        global $rcl_group,$user_ID,$rcl_options,$wp_query;
+        global $rcl_group,$user_ID,$rcl_options,$post;
 
         extract( $args );
 
@@ -338,30 +343,49 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
         $instance = wp_parse_args( (array) $instance, $defaults );
         
-        /*$rcl_cache = new Rcl_Cache();
+        $term_id = (isset($_GET['group-tag'])&&$_GET['group-tag']!='')? $_GET['group-tag']: $rcl_group->term_id;
+
+        $args = array(
+            'post_type' => 'post-group',
+            'numberposts' => -1,
+            'fields' => 'ids',
+            'tax_query' => array(
+		array(
+                    'taxonomy' => 'groups',
+                    'field' => ($term_id == $rcl_group->term_id)? 'id': 'slug',
+                    'terms' => $term_id
+		)
+            )
+        );
         
-        if($rcl_cache->is_cache){
+        $groupPosts = get_posts($args);
 
-            $string = json_encode($wp_query->query_vars);
+        $pagenavi = new Rcl_PageNavi('rcl-group',count($groupPosts),array('in_page'=>$instance['count']));
 
-            $file = $rcl_cache->get_file($string);
-
-            if(!$file->need_update){
-
-                echo $rcl_cache->get_cache();
-                return;
-
-            }
+        $args = array(
+            'post_type' => 'post-group',
+            'numberposts' => $instance['count'],
+            'offset' => $pagenavi->offset,
+            'tax_query' => array(
+		array(
+                    'taxonomy' => 'groups',
+                    'field' => ($term_id == $rcl_group->term_id)? 'id': 'slug',
+                    'terms' => $term_id
+		)
+            )
+        );
         
-        }
-        
-        ob_start();*/
+        $posts = get_posts($args);
 
         echo $before;
 
-        if(have_posts()){ ?>
+        if($posts){ ?>
 
-            <?php while ( have_posts() ): the_post(); ?>
+            <nav class="pagination group">
+                <?php echo $pagenavi->pagenavi(); ?>
+            </nav>
+
+            <?php foreach($posts as $post): setup_postdata($post); ?>
                 <div class="post-group">
                     <div class="postdata-header">
                         <div class="post-meta">
@@ -386,17 +410,12 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
                     </div>
                     <?php } ?>
                 </div>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
+
+            <?php wp_reset_postdata(); ?>
 
             <nav class="pagination group">
-                <?php if ( function_exists('wp_pagenavi') ): ?>
-                    <?php wp_pagenavi(); ?>
-                <?php else: ?>
-                    <ul class="group">
-                        <li class="prev left"><?php previous_posts_link(); ?></li>
-                        <li class="next right"><?php next_posts_link(); ?></li>
-                    </ul>
-                <?php endif; ?>
+                <?php echo $pagenavi->pagenavi(); ?>
             </nav>
 
         <?php }else{ ?>
@@ -405,14 +424,6 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
         echo $after;
         
-        /*$content = ob_get_contents();
-        ob_end_clean();
-        
-        if($rcl_cache->is_cache){
-            $rcl_cache->update_cache($content);
-        }
-        
-        echo $content;*/
     }
 
     function options($instance){
