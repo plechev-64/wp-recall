@@ -24,11 +24,11 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
         }
         
         $this->form_object = $this->get_object_form();
+
+        add_filter('rcl_default_custom_fields',array($this, 'add_default_public_form_fields'));
+        add_filter('rcl_custom_field_options', array($this, 'edit_field_options'), 10, 3);
         
         $this->fields = $this->get_fields();
-        
-        add_filter('rcl_default_custom_fields',array($this, 'add_default_public_fields'));
-        add_filter('rcl_custom_field_options', array($this, 'edit_field_options'), 10, 3);
         
     }
 
@@ -55,8 +55,8 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
         
         if(!isset($fields['options']['user-edit']) || !$fields['options']['user-edit']){
 
-            $fields = array_merge($this->get_default_fields(), $fields);
-
+            $fields = array_merge($this->get_default_public_form_fields(), $fields);
+            
         }
 
         if(isset($fields['options'])){
@@ -83,10 +83,15 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
         
     }
     
-    function add_default_public_fields($fields){
+    function add_default_public_form_fields($fields){
+        return array_merge($fields,$this->get_default_public_form_fields());
+    }
+    
+    function get_default_public_form_fields(){
         
         $fields[] = array(
             'slug' => 'post_title',
+            'maxlength' => 100,
             'title' => __('Заголовок','wp-recall'),
             'type' => 'text'
         );
@@ -141,6 +146,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
         
         $fields[] = array(
             'slug' => 'post_excerpt',
+            'maxlength' => 200,
             'title' => __('Краткая запись','wp-recall'),
             'type' => 'textarea'
         );
@@ -149,6 +155,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
             'slug' => 'post_content',
             'title' => __('Содержание публикации','wp-recall'),
             'type' => 'textarea',
+            'post-editor' => array('html','editor'),
             'options-field' => array(
                 array(
                     'type' => 'checkbox',
@@ -167,6 +174,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
             'slug' => 'post_uploader',
             'title' => __('Медиа-загрузчик WP-Recall','wp-recall'),
             'type' => 'custom',
+            'ext-types' => 'png, gif, jpg',
             'options-field' => array(
                 array(
                     'type' => 'text',
@@ -189,6 +197,8 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                         'slug' => 'taxonomy-'.$taxonomy,
                         'title' => $label,
                         'type' => 'select',
+                        'number-tags' => 20,
+                        'input-tags' => 1,
                         'options-field' => array(
                             array(
                                 'type' => 'number',

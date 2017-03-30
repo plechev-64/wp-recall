@@ -236,6 +236,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
 
                         $contentField = $this->get_terms_list($taxonomy);
                         
+                        $contentField .= $CF->get_notice($this->current_field);
+                        
                     }
                     
                 }else{
@@ -248,6 +250,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                                 'post_content' => $dataPost->post_content, 
                                 'options' => $this->current_field['post-editor']
                             ));
+                            
+                            $contentField .= $CF->get_notice($this->current_field);
                             
                         }
                         
@@ -273,8 +277,10 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                             
                             $contentField = $postUploder->get_uploader();
                             
+                            $contentField .= $CF->get_notice($this->current_field);
+                            
                         }
-                        
+
                     }else{
                         
                         $postmeta = ($this->post_id)? get_post_meta($this->post_id,$this->current_field['slug'],1): '';
@@ -412,25 +418,17 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $quicktags = false;
         $tinymce = false;
 
-        if(isset($this->fields_options['user-edit'])){
-        
-            if(isset($args['options'])){
+        if(isset($args['options'])){
 
-                if(in_array('media',$args['options']))
-                        $wp_uploader = true;
+            if(in_array('media',$args['options']))
+                    $wp_uploader = true;
 
-                if(in_array('html',$args['options']))
-                        $quicktags = true;
+            if(in_array('html',$args['options']))
+                    $quicktags = true;
 
-                if(in_array('editor',$args['options']))
-                        $tinymce = true;
+            if(in_array('editor',$args['options']))
+                    $tinymce = true;
 
-            }
-            
-        }else{
-            
-            $tinymce = true;
-            
         }
 
         $data = array( 'wpautop' => 1
@@ -545,15 +543,12 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
     function tags_field($taxonomy, $terms){
 
         if(!$this->taxonomies || !isset($this->taxonomies[$taxonomy])) return false;
-        
-        $number = (isset($this->current_field['number-tags']) && $this->current_field['number-tags'])? $this->current_field['number-tags']: 20;
-        $input = (isset($this->current_field['input-tags']))? $this->current_field['input-tags']: true;
 
         $args = array(
-            'input_field' => $input,
+            'input_field' => $this->current_field['input-tags'],
             'terms_cloud' => array(
                 'hide_empty' => false,
-                'number' => $number,
+                'number' => $this->current_field['number-tags'],
                 'orderby' => 'count',
                 'order' => 'DESC',
                 'include' => $terms

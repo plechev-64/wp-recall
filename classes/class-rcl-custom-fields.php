@@ -69,10 +69,18 @@ class Rcl_Custom_Fields{
             $html_field .= '<script>rcl_init_field_maxlength("'.$this->slug.'");</script>';
         }
 
-        if(isset($field['notice'])&&$field['notice']) 
-            $html_field .= '<span class="rcl-field-notice"><i class="fa fa-info" aria-hidden="true"></i>'.$field['notice'].'</span>';
+        $html_field .= $this->get_notice($field);
         
         return '<span class="rcl-field-input type-'.$field['type'].'-input">'.$html_field.'</span>';
+    }
+    
+    function get_notice($field){
+        
+        if(isset($field['notice']) && $field['notice']) 
+            return '<span class="rcl-field-notice"><i class="fa fa-info" aria-hidden="true"></i>'.$field['notice'].'</span>';
+        
+        return false;
+        
     }
     
     function get_type_custom($args){

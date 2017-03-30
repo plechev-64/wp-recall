@@ -157,6 +157,8 @@ function rcl_add_custom_tabs($tabs){
     
     $areas = rcl_get_area_options();
     
+    if(!$areas) return $tabs;
+    
     foreach($tabs as $tab_id => $tab){
         
         $tabArea = (isset($tab['output']))? $tab['output']: 'menu';
@@ -184,20 +186,22 @@ add_filter('rcl_tabs','rcl_get_order_tabs',10);
 function rcl_get_order_tabs($rcl_tabs){
     global $user_ID,$user_LK;
     
-    if(isset($_GET['tab'])||!$rcl_tabs) return $rcl_tabs;
+    if(isset($_GET['tab']) || !$rcl_tabs) return $rcl_tabs;
     
     $counter = array();
-    foreach($rcl_tabs as $id=>$data){
+    $a = 10;
+    foreach($rcl_tabs as $id => $data){
         if(isset($data['output'])&&$data['output']!='menu') continue;
         
         if(!isset($data['public'])||$data['public']!=1){
             if(!$user_ID||$user_ID!=$user_LK) continue;
         }
         
-        $order = (isset($data['order']))? $data['order']: 10;
-        
+        $order = (isset($data['order']))? $data['order']: ++$a;
+        $rcl_tabs[$id]['order'] = $order;
         $counter[$order] = $id;
     }
+    
     ksort($counter);
     $id_first = array_shift($counter);
     $rcl_tabs[$id_first]['first'] = 1;

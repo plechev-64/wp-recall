@@ -118,4 +118,6 @@
     padding: 5px 10px;
     background: #dbdbdb;
 }
-/*Ð²Ð°Ñ€Ð¸Ð°Ñ†Ð¸Ð¸ Ñ‚Ð¾Ð²Ð°Ñ€Ð¾Ð² ÐºÐ¾Ð½ÐµÑ†*/
+.wp-admin #rcl-order .order-table {
+    background: #fff;
+}

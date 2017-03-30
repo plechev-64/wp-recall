@@ -69,6 +69,8 @@ class Rcl_Product_Variations {
     
     function get_product_variations($product_id = false){
         
+        if(!$this->variations) return false;
+        
         if(!$product_id || $product_id == $this->product_id)
             return $this->product_variations;
         
