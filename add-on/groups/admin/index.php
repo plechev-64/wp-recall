@@ -30,6 +30,22 @@ function rcl_admin_groups_page_content($content){
                 $opt->child(
                     array(
                         'name' => 'group-output',
+                        'value' => 0
+                    ),
+                    array(
+                        $opt->label(__('Group contents widget','wp-recall')),
+                        $opt->option('select',array(
+                            'name'=>'groups_posts_widget',
+                            'options'=>array(
+                                __('Disabled','wp-recall'),
+                                __('Enabled','wp-recall'))
+                        )),
+                        $opt->notice(__('enable if publication loop within the group has been removed from the template','wp-recall'))
+                    )
+                ),
+                $opt->child(
+                    array(
+                        'name' => 'group-output',
                         'value' => 1
                     ),
                     array(
@@ -57,14 +73,6 @@ function rcl_admin_groups_page_content($content){
                 )),
                 $opt->notice(__('If subject to moderation: To allow the user to see their publication before moderation has been completed, the user should be classifies as Author or higher','wp-recall')),
 
-                $opt->label(__('Group contents widget','wp-recall')),
-                $opt->option('select',array(
-                    'name'=>'groups_posts_widget',
-                    'options'=>array(
-                        __('Disabled','wp-recall'),
-                        __('Enabled','wp-recall'))
-                )),
-                $opt->notice(__('enable if publication loop within the group has been removed from the template','wp-recall'))
             )
         )
     );
