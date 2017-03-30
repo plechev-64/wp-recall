@@ -343,87 +343,114 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
         $instance = wp_parse_args( (array) $instance, $defaults );
         
-        $term_id = (isset($_GET['group-tag'])&&$_GET['group-tag']!='')? $_GET['group-tag']: $rcl_group->term_id;
+        $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
 
-        $args = array(
-            'post_type' => 'post-group',
-            'numberposts' => -1,
-            'fields' => 'ids',
-            'tax_query' => array(
-		array(
-                    'taxonomy' => 'groups',
-                    'field' => ($term_id == $rcl_group->term_id)? 'id': 'slug',
-                    'terms' => $term_id
-		)
-            )
-        );
-        
-        $groupPosts = get_posts($args);
+        echo $before; ?>
 
-        $pagenavi = new Rcl_PageNavi('rcl-group',count($groupPosts),array('in_page'=>$instance['count']));
+        <?php if($output){ //если вывод через шорткод на странице
 
-        $args = array(
-            'post_type' => 'post-group',
-            'numberposts' => $instance['count'],
-            'offset' => $pagenavi->offset,
-            'tax_query' => array(
-		array(
-                    'taxonomy' => 'groups',
-                    'field' => ($term_id == $rcl_group->term_id)? 'id': 'slug',
-                    'terms' => $term_id
-		)
-            )
-        );
-        
-        $posts = get_posts($args);
+            $term_id = (isset($_GET['group-tag'])&&$_GET['group-tag']!='')? $_GET['group-tag']: $rcl_group->term_id;
 
-        echo $before;
+            $args = array(
+                'post_type' => 'post-group',
+                'numberposts' => -1,
+                'fields' => 'ids',
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'groups',
+                        'field' => ($term_id == $rcl_group->term_id)? 'id': 'slug',
+                        'terms' => $term_id
+                    )
+                )
+            );
 
-        if($posts){ ?>
+            $groupPosts = get_posts($args);
 
-            <nav class="pagination group">
-                <?php echo $pagenavi->pagenavi(); ?>
-            </nav>
+            $numberPosts = count($groupPosts);
 
-            <?php foreach($posts as $post): setup_postdata($post); ?>
-                <div class="post-group">
-                    <div class="postdata-header">
-                        <div class="post-meta">
-                            <span class="post-date">
-                                <i class="fa fa-clock-o"></i><?php echo get_the_date(); ?>                             
-                            </span>
-                            <span class="post-comments-number">
-                                <i class="fa fa-comments-o"></i><?php comments_number('0', '1', '%'); ?>
-                            </span>
-                        </div>    
-                        <h3>
-                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>                         
-                        </h3>                                          
-                    </div>
-                    <?php if($instance['thumbnail']&&has_post_thumbnail()){ ?>
-                        <div class="post-group-thumb"><?php the_post_thumbnail('thumbnail'); ?></div>
-                    <?php } ?>
-                    <?php if($instance['excerpt']){ ?>
-                    <div class="post-group-content">
+            $pagenavi = new Rcl_PageNavi('rcl-group',$numberPosts,array('in_page'=>$instance['count']));
 
-                        <?php the_excerpt(); ?>
-                    </div>
-                    <?php } ?>
-                </div>
-            <?php endforeach; ?>
+            $args = array(
+                'post_type' => 'post-group',
+                'numberposts' => $instance['count'],
+                'offset' => $pagenavi->offset,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'groups',
+                        'field' => ($term_id == $rcl_group->term_id)? 'id': 'slug',
+                        'terms' => $term_id
+                    )
+                )
+            );
 
-            <?php wp_reset_postdata(); ?>
+            $posts = get_posts($args); 
 
-            <nav class="pagination group">
-                <?php echo $pagenavi->pagenavi(); ?>
-            </nav>
+            if($posts){ ?>
 
-        <?php }else{ ?>
-            <p><?php _e("You do not have any publications","wp-recall"); ?></p>
-        <?php }
+                <nav class="pagination group">
+                    <?php echo $pagenavi->pagenavi(); ?>
+                </nav>
 
-        echo $after;
-        
+                <?php foreach($posts as $post): setup_postdata($post); ?>
+
+                    <?php rcl_include_template('group-posts.php', __FILE__, $instance); ?>
+
+                <?php endforeach; ?>
+
+                <?php wp_reset_postdata(); ?>
+
+                <nav class="pagination group">
+                    <?php echo $pagenavi->pagenavi(); ?>
+                </nav>
+
+            <?php }else{ ?>
+
+                <p><?php _e("You do not have any publications","wp-recall"); ?></p>
+
+            <?php } ?>
+
+        <?php }else{ //если вывод на архивной странице ?>
+
+            <?php if(have_posts()){ ?>
+
+                <nav class="pagination group">
+                    <?php if ( function_exists('wp_pagenavi') ): ?>
+                        <?php wp_pagenavi(); ?>
+                    <?php else: ?>
+                        <ul class="group">
+                            <li class="prev left"><?php previous_posts_link(); ?></li>
+                            <li class="next right"><?php next_posts_link(); ?></li>
+                        </ul>
+                    <?php endif; ?>
+                </nav>
+
+                <?php while ( have_posts() ): the_post(); ?>
+
+                    <?php rcl_include_template('group-posts.php', __FILE__, $instance); ?>
+
+                <?php endwhile; ?>
+
+                <nav class="pagination group">
+                    <?php if ( function_exists('wp_pagenavi') ): ?>
+                        <?php wp_pagenavi(); ?>
+                    <?php else: ?>
+                        <ul class="group">
+                            <li class="prev left"><?php previous_posts_link(); ?></li>
+                            <li class="next right"><?php next_posts_link(); ?></li>
+                        </ul>
+                    <?php endif; ?>
+                </nav>
+
+            <?php }else{ ?>
+
+                <p><?php _e("You do not have any publications","wp-recall"); ?></p>
+
+            <?php } ?>
+
+        <?php } ?>
+
+        <?php echo $after;
+           
     }
 
     function options($instance){

@@ -359,9 +359,14 @@ function rcl_get_template_path($filename,$path=false){
 
 //подключение указанного файла шаблона с выводом
 function rcl_include_template($file_temp, $path=false, $data = false){
-    $pathfile = rcl_get_template_path($file_temp,$path);
-    if(!$pathfile) return false;
+    
+    $pathfile = rcl_get_template_path($file_temp, $path);
+    
+    if(!$pathfile) 
+        return false;
+    
     include $pathfile;
+    
 }
 
 //подключение указанного файла шаблона без вывода

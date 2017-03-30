@@ -892,12 +892,12 @@ function rcl_edit_group_pre_get_posts($query){
                 return $query;
                 
             }else{
-                wp_redirect(rcl_get_group_permalink( (int)$_GET['group-id'] ).'&group-tag='.$_GET['group-tag']);exit;
+                wp_redirect(rcl_format_url(rcl_get_group_permalink( (int)$_GET['group-id'] )).'group-tag='.$_GET['group-tag']);exit;
             }
 
         }
 
-        if(isset($_GET['group-page'])&&$_GET['group-page']!=''){
+        if(isset($_GET['group-page']) && $_GET['group-page']!=''){
             $query->set( 'posts_per_page', 1 );
         }
 
