@@ -970,9 +970,10 @@ function rcl_edit_group_pre_get_posts($query){
         else 
             $in_group = $rcl_group->current_user;
 
-        if($rcl_group->group_status=='closed'){
+        if($rcl_group->group_status == 'closed'){
 
-            if(!$in_group||$in_group=='banned'){
+            if(!$in_group || $in_group == 'banned'){
+                
                 if($query->is_single){
                     global $comments_array;
 
@@ -983,12 +984,9 @@ function rcl_edit_group_pre_get_posts($query){
                     add_filter( 'comments_open', 'rcl_close_group_comments', 10 );
                     remove_filter('rating_block_content','rcl_add_buttons_rating',10);
                     
-                }else{
-                    add_filter('the_content','rcl_close_group_post_content');
                 }
-            }else{
-
             }
+            
         }else{
             if($in_group=='banned'){
                 if($query->is_single){
