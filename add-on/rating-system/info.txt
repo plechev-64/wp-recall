@@ -1,6 +1,6 @@
 Name: Rating System (Система рейтинга);
-Version: 2.2.0;
-Support Core: 15.0.0;
+Version: 3.0.0;
+Support Core: 16.0.0;
 Description: Рейтинговая система для wp-recall;
 Author: Плечев Андрей;
 Url: http://codeseller.ru;

@@ -112,8 +112,7 @@ class Rcl_Group_Widget {
         $rcl_group_widgets = apply_filters('rcl_group_widgets',$rcl_group_widgets);
 
         $content = '<div id="widgets-options">';
-        $content .= '<form method="post">'
-        . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Save changes','wp-recall').'">';
+        $content .= '<form method="post">';
 
         $zones = array();
 
@@ -169,6 +168,8 @@ class Rcl_Group_Widget {
 
         $content .= '<input type="hidden" name="group-action" value="update-widgets">'
                 . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false );
+        
+        $content .= '<input type="submit" class="recall-button" name="group-submit" value="'.__('Save changes','wp-recall').'">';
 
         $content .= '</form>';
 

@@ -54,3 +54,21 @@ $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
       ) $collate;";
 
 dbDelta( $sql );
+
+if(!isset($rcl_options['moderation_public_group'])){
+    
+    $rcl_options['public_group_access_recall'] = 2;
+    $rcl_options['moderation_public_group'] = 0;
+    $rcl_options['group-output'] = 1;
+    
+    $rcl_options['group-page'] = wp_insert_post(array(
+        'post_title'=>__('Groups','wp-recall'),
+        'post_content'=>'[grouplist]',
+        'post_status' => 'publish',
+        'post_author' => 1,
+        'post_type' => 'page',
+        'post_name' => 'rcl-groups'
+    ));
+    
+    update_option('rcl_global_options',$rcl_options);
+}

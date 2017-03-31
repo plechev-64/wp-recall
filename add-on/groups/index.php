@@ -30,27 +30,6 @@ function rcl_init_js_groups_variables($data){
     return $data;
 }
 
-add_action('wp','rcl_init_group_data');
-function rcl_init_group_data(){
-    global $rcl_options,$post,$rcl_group,$wp_query;
-    
-    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
-    
-    if($output){
-        
-        if($post->ID == $rcl_options['group-page']) $rcl_group = rcl_group_init();
-        
-    }else{
-        
-        if($wp_query->is_tax && isset($wp_query->query['groups'])){
-            
-            $rcl_group = rcl_group_init();
-            
-        }
-        
-    }
-}
-
 add_action('init','rcl_register_rating_group_type');
 function rcl_register_rating_group_type(){
     
@@ -204,43 +183,6 @@ function rcl_register_default_group_sidebars(){
 
 }
 
-function rcl_single_group(){
-    echo rcl_get_single_group();
-}
-
-function rcl_get_single_group(){
-    global $rcl_group;
-    
-    rcl_dialog_scripts();
-    
-    if(rcl_is_group_can('admin')){
-        rcl_fileupload_scripts();
-        rcl_enqueue_script( 'groups-image-uploader', rcl_addon_url('js/groups-image-uploader.js', __FILE__),false,true);
-    }
-
-    $admin = (rcl_is_group_can('admin')||rcl_check_access_console())? 1: 0;
-
-    $class = ($admin)? 'class="admin-view"': '';
-
-    $content = '<div id="rcl-group" data-group="'.$rcl_group->term_id.'" '.$class.'>';
-
-    if($admin)
-        $content .= rcl_group_admin_panel();
-
-    $content .= '<div id="group-popup"></div>';
-
-    $content .= rcl_get_include_template('single-group.php',__FILE__);
-
-    $content .= '</div>';
-    
-    return $content;
-}
-
-/*deprecated*/
-function add_post_in_group(){
-    rcl_single_group();
-}
-
 function rcl_get_link_group_tag($content){
     global $post,$user_ID,$rcl_group;
     if($post->post_type!='post-group') return $content;
@@ -269,7 +211,7 @@ function rcl_get_link_group_tag($content){
         }
     }
 
-    $cat = '<p class="post-group-meta"><i class="fa fa-folder-open rcl-icon"></i>'.__('Group categories','wp-recall').': <a href="'. rcl_get_group_permalink( $group_id ) .'&group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
+    $cat = '<p class="post-group-meta"><i class="fa fa-folder-open rcl-icon"></i>'.__('Group categories','wp-recall').': <a href="'. rcl_format_url( rcl_get_group_permalink( $group_id ) ) .'group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
 
     return $cat.$content;
 }

@@ -1,6 +1,6 @@
 Name: Feed (Подписки);
-Version: 3.0.0;
-Support Core: 15.0.0;
+Version: 4.0.0;
+Support Core: 16.0.0;
 Description: Формирование и вывод новостной ленты пользователя;
 Author: Плечев Андрей;
 Author URI: http://codeseller.ru/;

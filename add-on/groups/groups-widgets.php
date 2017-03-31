@@ -387,7 +387,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
             if($posts){ ?>
 
-                <nav class="pagination group">
+                <nav class="rcl-group-pagination">
                     <?php echo $pagenavi->pagenavi(); ?>
                 </nav>
 
@@ -399,7 +399,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
                 <?php wp_reset_postdata(); ?>
 
-                <nav class="pagination group">
+                <nav class="rcl-group-pagination">
                     <?php echo $pagenavi->pagenavi(); ?>
                 </nav>
 
@@ -413,7 +413,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
             <?php if(have_posts()){ ?>
 
-                <nav class="pagination group">
+                <nav class="rcl-group-pagination">
                     <?php if ( function_exists('wp_pagenavi') ): ?>
                         <?php wp_pagenavi(); ?>
                     <?php else: ?>
@@ -430,7 +430,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
                 <?php endwhile; ?>
 
-                <nav class="pagination group">
+                <nav class="rcl-group-pagination">
                     <?php if ( function_exists('wp_pagenavi') ): ?>
                         <?php wp_pagenavi(); ?>
                     <?php else: ?>

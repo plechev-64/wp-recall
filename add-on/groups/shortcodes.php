@@ -21,8 +21,19 @@ array(
 
 add_shortcode('grouplist','rcl_get_grouplist');
 function rcl_get_grouplist($atts = false){
+    global $rcl_options,$post;
+    
+    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
+    
+    if($output && $post->ID == $rcl_options['group-page']){
+        
+        if(isset($_GET['group-id']) && $_GET['group-id'])
+            return rcl_get_single_group();
+        
+    }
 
     include_once 'classes/class-rcl-groups-list.php';
+    
     $list = new Rcl_Groups_List($atts);
 
     $count = $list->count();
@@ -58,14 +69,3 @@ function rcl_get_grouplist($atts = false){
 
     return $content;
 }
-
-add_shortcode('rcl-group','rcl_get_single_group_shortcode');
-function rcl_get_single_group_shortcode(){
-    
-    if(isset($_GET['group-id']) && $_GET['group-id'])
-        return rcl_get_single_group();
-    
-    return rcl_get_grouplist();
-    
-}
-

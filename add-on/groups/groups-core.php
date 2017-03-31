@@ -16,25 +16,8 @@ function rcl_get_groups_options($args){
     return $options->get_results($args);
 }
 
-function rcl_group_init(){
-    global $wp_query,$wpdb,$rcl_group,$user_ID,$rcl_options;
-    
-    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
-    
-    if($output){
-        
-        $group_id = (isset($_GET['group-id']))? $_GET['group-id']: false;
-        
-    }else{
-        
-        if(!isset($wp_query->query_vars['groups'])) return false;
-
-        $curent_term = get_term_by('slug', $wp_query->query_vars['groups'], 'groups');
-
-        if($curent_term->parent!=0) $group_id = $curent_term->parent;
-        else $group_id = $curent_term->term_id;
-
-    }
+function rcl_group_init($group_id = false){
+    global $rcl_group;
 
     if(!$group_id) return false;
 
@@ -44,11 +27,50 @@ function rcl_group_init(){
 
     $rcl_group->single_group = 1;
 
-    if(rcl_is_group_can('admin')||current_user_can('edit_others_posts'))
+    if(rcl_is_group_can('admin') || current_user_can('edit_others_posts'))
         rcl_sortable_scripts();
+    
+    do_action('rcl_group_init',$rcl_group);
 
     return $rcl_group;
 
+}
+
+/*deprecated*/
+function add_post_in_group(){
+    rcl_single_group();
+}
+
+function rcl_single_group(){
+    echo rcl_get_single_group();
+}
+
+function rcl_get_single_group(){
+    global $rcl_group;
+    
+    rcl_dialog_scripts();
+    
+    if(rcl_is_group_can('admin')){
+        rcl_fileupload_scripts();
+        rcl_enqueue_script( 'groups-image-uploader', rcl_addon_url('js/groups-image-uploader.js', __FILE__),false,true);
+    }
+
+    $admin = (rcl_is_group_can('admin')||rcl_check_access_console())? 1: 0;
+
+    $class = ($admin)? 'class="admin-view"': '';
+
+    $content = '<div id="rcl-group" data-group="'.$rcl_group->term_id.'" '.$class.'>';
+
+    if($admin)
+        $content .= rcl_group_admin_panel();
+
+    $content .= '<div id="group-popup"></div>';
+
+    $content .= rcl_get_include_template('single-group.php',__FILE__);
+
+    $content .= '</div>';
+    
+    return $content;
 }
 
 function rcl_create_group($groupdata){
@@ -843,47 +865,86 @@ function rcl_group_admin_panel(){
 
 }
 
-add_action('pre_get_posts','rcl_edit_group_pre_get_posts',10);
+add_action('pre_get_posts','rcl_init_group_data',10);
+function rcl_init_group_data($query){
+    global $rcl_options,$post,$rcl_group,$wpdb;
+    
+    if(!$query->is_main_query()) return $query;
+    
+    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
+    
+    if($output){
+        
+        if($query->is_page && $query->queried_object_id == $rcl_options['group-page']){
+
+            $group_id = (isset($_GET['group-id']))? $_GET['group-id']: false;
+
+            $rcl_group = rcl_group_init($group_id);
+
+        }
+        
+    }else{
+
+        if($query->is_tax && isset($query->query['groups'])){
+            
+            if(!isset($query->query_vars['groups'])) return false;
+
+            $curent_term = get_term_by('slug', $query->query_vars['groups'], 'groups');
+
+            if($curent_term->parent!=0) 
+                $group_id = $curent_term->parent;
+            else 
+                $group_id = $curent_term->term_id;
+            
+            $rcl_group = rcl_group_init($group_id);
+            
+        }
+        
+    }
+    
+    if($query->is_single){
+        
+        if(isset($query->query['post_type']) && $query->query['post_type']=='post-group' && $query->query['name']){
+
+            if(!$post) 
+                $post_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."posts WHERE post_name='%s'",$query->query['name']));
+            else 
+                $post_id = $post->ID;
+
+            $cur_terms = get_the_terms( $post_id, 'groups' );
+
+            foreach((array)$cur_terms as $cur_term){
+
+                if($cur_term->parent!=0)  continue;
+
+                $term_id = $cur_term->term_id; break;
+
+            }
+
+            $rcl_group = rcl_get_group($term_id);
+
+        }
+        
+    }
+    
+    return $query;
+    
+}
+
+add_action('pre_get_posts','rcl_edit_group_pre_get_posts',20);
 function rcl_edit_group_pre_get_posts($query){
     global $wpdb,$user_ID,$post,$rcl_group;
 
     if(!$query->is_main_query()) return $query;
-    
-    global $rcl_options;
-    
-    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
-    
-    /*if($output && $post->ID == $rcl_options['group-page']){
-        
-        $rcl_group = rcl_group_init();
-        
-        return $query;
-        
-    }*/
-
-    /*if($query->is_tax&&isset($query->query['groups'])){
-        $rcl_group = rcl_group_init();
-    }*/
-
-    if(isset($query->query['post_type'])&&$query->is_single&&$query->query['post_type']=='post-group'&&$query->query['name']){
-
-        if(!$post) $post_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."posts WHERE post_name='%s'",$query->query['name']));
-        else $post_id = $post->ID;
-
-        $cur_terms = get_the_terms( $post_id, 'groups' );
-
-        foreach((array)$cur_terms as $cur_term){
-            if($cur_term->parent!=0) continue;
-            $term_id = $cur_term->term_id; break;
-        }
-
-        $rcl_group = rcl_get_group($term_id);
-
-    }
 
     if($rcl_group){
 
-        if(isset($_GET['group-tag'])&&$_GET['group-tag']!=''){
+        if(isset($_GET['group-tag'])){
+            
+            if(!$_GET['group-tag']){
+                wp_redirect( rcl_get_group_permalink( $rcl_group->term_id ) );
+                exit;
+            }
 
             if(!$_GET['group-id']){
 
@@ -892,7 +953,8 @@ function rcl_edit_group_pre_get_posts($query){
                 return $query;
                 
             }else{
-                wp_redirect(rcl_format_url(rcl_get_group_permalink( (int)$_GET['group-id'] )).'group-tag='.$_GET['group-tag']);exit;
+                wp_redirect(rcl_format_url(rcl_get_group_permalink( $rcl_group->term_id )).'group-tag='.$_GET['group-tag']);
+                exit;
             }
 
         }
@@ -903,24 +965,27 @@ function rcl_edit_group_pre_get_posts($query){
 
         if($rcl_group->admin_id==$user_ID) return $query;
 
-        if(!$rcl_group->current_user&&$user_ID) $in_group = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
-        else $in_group = $rcl_group->current_user;
+        if(!$rcl_group->current_user && $user_ID) 
+            $in_group = rcl_get_group_user_status($user_ID,$rcl_group->term_id);
+        else 
+            $in_group = $rcl_group->current_user;
 
         if($rcl_group->group_status=='closed'){
 
             if(!$in_group||$in_group=='banned'){
-                    if($query->is_single){
-                        global $comments_array;
+                if($query->is_single){
+                    global $comments_array;
 
-                        add_filter('the_content','rcl_close_group_post_content');
-                        add_filter('the_content','rcl_get_link_group_tag',80);
-                        add_filter('the_content','rcl_add_namegroup',80);
-                        add_filter('comments_array','rcl_close_group_comments_content');
-                        add_filter( 'comments_open', 'rcl_close_group_comments', 10 );
-                        remove_filter('rating_block_content','rcl_add_buttons_rating',10);
-                    }else{
-                        add_filter('the_content','rcl_close_group_post_content');
-                    }
+                    add_filter('the_content','rcl_close_group_post_content');
+                    add_filter('the_content','rcl_get_link_group_tag',80);
+                    add_filter('the_content','rcl_add_namegroup',80);
+                    add_filter('comments_array','rcl_close_group_comments_content');
+                    add_filter( 'comments_open', 'rcl_close_group_comments', 10 );
+                    remove_filter('rating_block_content','rcl_add_buttons_rating',10);
+                    
+                }else{
+                    add_filter('the_content','rcl_close_group_post_content');
+                }
             }else{
 
             }
