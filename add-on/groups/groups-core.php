@@ -853,17 +853,17 @@ function rcl_edit_group_pre_get_posts($query){
     
     $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
     
-    if($output){
+    /*if($output && $post->ID == $rcl_options['group-page']){
         
         $rcl_group = rcl_group_init();
         
         return $query;
         
-    }
+    }*/
 
-    if($query->is_tax&&isset($query->query['groups'])){
+    /*if($query->is_tax&&isset($query->query['groups'])){
         $rcl_group = rcl_group_init();
-    }
+    }*/
 
     if(isset($query->query['post_type'])&&$query->is_single&&$query->query['post_type']=='post-group'&&$query->query['name']){
 
