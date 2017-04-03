@@ -271,4 +271,77 @@ function rcl_exist_addon($addon_id){
     return false;
 }
 
-require_once "addons-update.php";
+//получение урла до папки текущего дополнения
+function rcl_get_url_current_addon($path){
+    
+    $cachekey = json_encode(array('rcl_url_current_addon',$path));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
+    
+    $array = explode('/',$path);
+    $url = '';
+    $content_dir = basename(content_url());
+    
+    foreach($array as $key=>$ar){
+        if($array[$key]==$content_dir){
+            $url = get_bloginfo('wpurl').'/'.$array[$key].'/';
+            continue;
+        }
+        if($url){
+            $url .= $ar.'/';
+            if($array[$key-1]=='add-on') break;
+        }
+    }
+    
+    $url = untrailingslashit($url);
+    
+    wp_cache_add( $cachekey, $url );
+    
+    return $url;
+}
+
+//получение урла до указанного файла текущего дополнения
+function rcl_addon_url($file,$path){
+    return rcl_get_url_current_addon($path).'/'.$file;
+}
+
+//получение абсолютного пути до папки текущего дополнения
+function rcl_addon_path($path){
+    
+    $cachekey = json_encode(array('rcl_addon_path',$path));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
+    $array = explode('/',$path);
+    $addon_path = '';
+    $ad_path = false;
+    
+    foreach($array as $key=>$ar){
+        $addon_path .= $ar.'/';
+        if(!$key) continue;
+        if($array[$key-1]=='add-on'){
+            $ad_path =  $addon_path;
+            break;
+        }
+    }
+    
+    wp_cache_add( $cachekey, $ad_path );
+    
+    return $ad_path;
+}
+
+function rcl_get_addon_dir($path){
+    if(function_exists('wp_normalize_path')) 
+        $path = wp_normalize_path($path);
+    $dir = false;
+    $ar_dir = explode('/',$path);
+    if(!isset($ar_dir[1])) $ar_dir = explode('\\',$path);
+    $cnt = count($ar_dir)-1;
+    for($a=$cnt;$a>=0;$a--){if($ar_dir[$a]=='add-on'){$dir=$ar_dir[$a+1];break;}}
+    return $dir;
+}

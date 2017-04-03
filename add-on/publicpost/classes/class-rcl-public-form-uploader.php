@@ -97,7 +97,7 @@ class Rcl_Public_Form_Uploader{
                                 . '<label for="rcl-gallery" class="block-label"> - '.__('Display all attached images in the gallery.','wp-recall').'</label>'
                             . '</span>'
                         . '</span>'
-                    . '</div>';
+                    . '</div>';	
 
 	
         $content .= $this->get_dropzone();

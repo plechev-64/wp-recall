@@ -4,6 +4,19 @@ var rcl_public_form = {
 
 jQuery(document).ready(function($) {
     
+    $('.rcl-public-form #insert-media-button').click(function(e) {
+        
+        var button = $(this);
+        
+        wp.media.featuredImage.set = function(b){
+            console.log(b);
+        }
+
+        wp.media.editor.open(button);
+        return false;
+        
+    });
+
     $.fn.extend({
         insertAtCaret: function(myValue){
             return this.each(function(i) {

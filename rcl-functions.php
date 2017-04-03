@@ -277,17 +277,6 @@ function rcl_is_office($user_id=null){
     return false;
 }
 
-function rcl_get_addon_dir($path){
-    if(function_exists('wp_normalize_path')) 
-        $path = wp_normalize_path($path);
-    $dir = false;
-    $ar_dir = explode('/',$path);
-    if(!isset($ar_dir[1])) $ar_dir = explode('\\',$path);
-    $cnt = count($ar_dir)-1;
-    for($a=$cnt;$a>=0;$a--){if($ar_dir[$a]=='add-on'){$dir=$ar_dir[$a+1];break;}}
-    return $dir;
-}
-
 //регистрируем список публикаций указанного типа записи
 function rcl_postlist($id,$post_type,$name='',$args=false){
     global $rcl_options,$rcl_postlist;
@@ -338,175 +327,6 @@ function rcl_crop($filesource,$width,$height,$file){
     }
     
     return $image;
-}
-
-//получение абсолютного пути до указанного файла шаблона
-function rcl_get_template_path($filename,$path=false){
-    
-    if(file_exists(RCL_TAKEPATH.'templates/'.$filename)) 
-            return RCL_TAKEPATH.'templates/'.$filename;
-    
-    $path = ($path)? rcl_addon_path($path).'templates/': RCL_PATH.'templates/';
-    
-    $filepath = $path.$filename;
-
-    $filepath = apply_filters('rcl_template_path',$filepath,$filename);
-    
-    if(!file_exists($filepath)) return false;
-
-    return $filepath;
-}
-
-//подключение указанного файла шаблона с выводом
-function rcl_include_template($file_temp, $path=false, $data = false){
-    
-    $pathfile = rcl_get_template_path($file_temp, $path);
-    
-    if(!$pathfile) 
-        return false;
-    
-    include $pathfile;
-    
-}
-
-//подключение указанного файла шаблона без вывода
-function rcl_get_include_template($file_temp, $path=false, $data = false){
-    ob_start();
-    rcl_include_template($file_temp, $path, $data);
-    $content = ob_get_contents();
-    ob_end_clean();
-    return $content;
-}
-
-//получение урла до папки текущего дополнения
-function rcl_get_url_current_addon($path){
-    
-    $cachekey = json_encode(array('rcl_url_current_addon',$path));
-    $cache = wp_cache_get( $cachekey );
-    if ( $cache )
-        return $cache;
-    
-    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
-    
-    $array = explode('/',$path);
-    $url = '';
-    $content_dir = basename(content_url());
-    
-    foreach($array as $key=>$ar){
-        if($array[$key]==$content_dir){
-            $url = get_bloginfo('wpurl').'/'.$array[$key].'/';
-            continue;
-        }
-        if($url){
-            $url .= $ar.'/';
-            if($array[$key-1]=='add-on') break;
-        }
-    }
-    
-    $url = untrailingslashit($url);
-    
-    wp_cache_add( $cachekey, $url );
-    
-    return $url;
-}
-
-//получение урла до указанного файла текущего дополнения
-function rcl_addon_url($file,$path){
-    return rcl_get_url_current_addon($path).'/'.$file;
-}
-
-//получение абсолютного пути до папки текущего дополнения
-function rcl_addon_path($path){
-    
-    $cachekey = json_encode(array('rcl_addon_path',$path));
-    $cache = wp_cache_get( $cachekey );
-    if ( $cache )
-        return $cache;
-    
-    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
-    $array = explode('/',$path);
-    $addon_path = '';
-    $ad_path = false;
-    
-    foreach($array as $key=>$ar){
-        $addon_path .= $ar.'/';
-        if(!$key) continue;
-        if($array[$key-1]=='add-on'){
-            $ad_path =  $addon_path;
-            break;
-        }
-    }
-    
-    wp_cache_add( $cachekey, $ad_path );
-    
-    return $ad_path;
-}
-
-//форматирование абсолютного пути в урл
-function rcl_path_to_url($path,$dir=false){
-    if(!$dir) $dir = basename(content_url());
-    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
-    $array = explode('/',$path);
-    $cnt = count($array);
-    $url = '';
-	$content_dir = $dir;
-    foreach($array as $key=>$ar){
-        if($array[$key]==$content_dir){
-            $url = get_bloginfo('wpurl').'/'.$array[$key].'/';
-            continue;
-        }
-        if($url){
-            $url .= $ar;
-            if($cnt>$key+1) $url .= '/';
-        }
-    }
-    return $url;
-}
-
-//получение абсолютного пути из указанного урла
-function rcl_path_by_url($url,$dir=false){
-    if(!$dir) $dir = basename(content_url());
-    if(function_exists('wp_normalize_path')) $url = wp_normalize_path($url);
-    $array = explode('/',$url);
-    $cnt = count($array);
-    $path = '';
-    $content_dir = $dir;
-    foreach($array as $key=>$ar){
-        if($array[$key]==$content_dir){
-            $path = untrailingslashit(rcl_get_home_path()).'/'.$array[$key].'/';
-            continue;
-        }
-        if($path){
-            $path .= $ar;
-            if($cnt>$key+1) $path .= '/';
-        }
-    }
-    return $path;
-}
-
-function rcl_get_home_path() {
-    $home    = set_url_scheme( get_option( 'home' ), 'http' );
-    $siteurl = set_url_scheme( get_option( 'siteurl' ), 'http' );
-    if ( ! empty( $home ) && 0 !== strcasecmp( $home, $siteurl ) ) {
-        $wp_path_rel_to_home = str_ireplace( $home, '', $siteurl ); /* $siteurl - $home */
-        $pos = strripos( str_replace( '\\', '/', $_SERVER['SCRIPT_FILENAME'] ), trailingslashit( $wp_path_rel_to_home ) );
-        $home_path = substr( $_SERVER['SCRIPT_FILENAME'], 0, $pos );
-        $home_path = trailingslashit( $home_path );
-    } else {
-        $home_path = ABSPATH;
-    }	
-    return str_replace( '\\', '/', $home_path );
-}
-
-function rcl_format_url($url, $tab_id = false, $subtab_id = false){
-    $ar_perm = explode('?',$url);
-    $cnt = count($ar_perm);
-    if($cnt>1) $a = '&';
-    else $a = '?';
-    $url = $url.$a;
-    if($tab_id) $url .= 'tab='.$tab_id;
-    if($subtab_id) $url .= '&subtab='.$subtab_id;
-    return $url;
 }
 
 if (! function_exists('get_called_class')) :
@@ -864,18 +684,6 @@ function rcl_get_chart($arr=false){
     return rcl_get_include_template('chart.php');
 }
 
-/*22-06-2015 Удаление папки с содержимым*/
-function rcl_remove_dir($dir){
-    $dir = untrailingslashit($dir);
-    if(!is_dir($dir)) return false;
-    if ($objs = glob($dir."/*")) {
-       foreach($objs as $obj) {
-             is_dir($obj) ? rcl_remove_dir($obj) : unlink($obj);
-       }
-    }
-    rmdir($dir);
-}
-
 //добавляем уведомление в личном кабинете
 function rcl_notice_text($text,$type='warning'){
     if(is_admin())return false;
@@ -1202,26 +1010,6 @@ function rcl_is_user_role($user_id,$role){
     return false;
 }
 
-function rcl_check_jpeg($f, $fix=false ){
-# [070203]
-# check for jpeg file header and footer - also try to fix it
-    if ( false !== (@$fd = fopen($f, 'r+b' )) ){
-        if ( fread($fd,2)==chr(255).chr(216) ){
-            fseek ( $fd, -2, SEEK_END );
-            if ( fread($fd,2)==chr(255).chr(217) ){
-                fclose($fd);
-                return true;
-            }else{
-                if ( $fix && fwrite($fd,chr(255).chr(217)) ){return true;}
-                fclose($fd);
-                return false;
-            }
-        }else{fclose($fd); return false;}
-    }else{
-        return false;
-    }
-}
-
 function rcl_is_register_open(){
     $users_can = apply_filters('rcl_users_can_register',get_option('users_can_register'));
     return $users_can;
@@ -1292,11 +1080,6 @@ function rcl_update_profile_fields($user_id){
                 if(is_array($value)){
                     
                     $vals = array();
-                    
-                    /*foreach($field['values'] as $k => $val){
-                        if(in_array($k,$value))
-                                $vals[] = $val;
-                    }*/
 
                     foreach($value as $val){
                         if(in_array($val,$field['values']))
@@ -1368,35 +1151,6 @@ function rcl_get_profile_fields($args = false){
     
     return $profileFields;
     
-}
-
-function rcl_get_mime_type_by_ext($file_ext){
-    
-    if(!$file_ext) return false;
-    
-    $mimes = get_allowed_mime_types();
-    
-    foreach ($mimes as $type => $mime) {
-        if (strpos($type, $file_ext) !== false) {
-            return $mime;
-        }
-    }
-    
-    return false;
-}
-
-function rcl_get_mime_types($ext_array){
-    
-    if(!$ext_array) return false;
-    
-    $mTypes = array();
-    
-    foreach($ext_array as $ext){
-        if(!$ext) continue;
-        $mTypes[] = rcl_get_mime_type_by_ext($ext);
-    }
-    
-    return $mTypes;
 }
 
 function rcl_get_area_options(){

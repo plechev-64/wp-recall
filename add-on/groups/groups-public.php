@@ -84,6 +84,8 @@ function rcl_group_setup_post_status($postdata){
     
     if($postdata['post_type'] != 'post-group') return $postdata;
     
+    if(isset($postdata['post_status']) && $postdata['post_status'] == 'draft') return $postdata;
+    
     $moderation = (isset($rcl_options['moderation_public_group']))? $rcl_options['moderation_public_group']: 0;
     $postdata['post_status'] = ($moderation)? 'pending': 'publish';
     
