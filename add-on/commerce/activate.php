@@ -62,11 +62,18 @@ if($update_table) {
 
 $rmag_options = get_option('primary-rmag-options');
 
-if(!isset($rmag_options['products_warehouse_recall'])) $rmag_options['products_warehouse_recall']=0;
-if(!isset($rmag_options['sistem_related_products'])) $rmag_options['sistem_related_products']=1;
-if(!isset($rmag_options['title_related_products_recall'])) $rmag_options['title_related_products_recall']='Рекомендуем';
-if(!isset($rmag_options['size_related_products'])) $rmag_options['size_related_products']=3;
-if(!isset($rmag_options['primary_cur'])) $rmag_options['primary_cur']='RUB';
+if(!isset($rmag_options['sistem_related_products'])) 
+    $rmag_options['sistem_related_products']=1;
+
+if(!isset($rmag_options['title_related_products_recall'])) 
+    $rmag_options['title_related_products_recall']='Рекомендуем';
+
+if(!isset($rmag_options['size_related_products'])) 
+    $rmag_options['size_related_products']=3;
+
+if(!isset($rmag_options['primary_cur'])) 
+    $rmag_options['primary_cur']='RUB';
+
 if(!isset($rmag_options['basket_page_rmag'])){
     
     $labels = array(

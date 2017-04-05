@@ -26,6 +26,7 @@ function rcl_shortcode_gallery($atts, $content = null){
         'post_status' => 'any',
         'post_mime_type'=> 'image'
     );
+    
     $childrens = get_children($args);
 
     if( $childrens ){

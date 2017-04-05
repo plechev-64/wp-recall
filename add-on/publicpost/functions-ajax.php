@@ -174,9 +174,27 @@ function rcl_preview_post(){
                               .__('If this is your email, then log in and publish your post','wp-recall');
             }
         }
+        
+        if($log['error']){
+            echo json_encode($log);
+            exit;
+        }
     }
     
+    $formFields = new Rcl_Public_Form_Fields(array('post_type' => $_POST['post_type']));
     
+    if($formFields->exist_active_field('post_thumbnail')){
+        
+        $thumbnail_id = (isset($_POST['post-thumbnail']))? $_POST['post-thumbnail']: 0;
+        
+        $field = $formFields->get_field('post_thumbnail');
+        
+        if($field['required'] && !$thumbnail_id){
+            echo json_encode(array('error' => __('Загрузите или укажите изображение в качестве миниатюры!','wp-recall')));
+            exit;
+        }
+    }
+
     $post_content = '';
 
     if(isset($_POST['post_content'])){
@@ -211,3 +229,18 @@ function rcl_preview_post(){
     exit;
 }
 
+add_action('wp_ajax_rcl_get_post_thumbnail_html','rcl_get_post_thumbnail_html');
+add_action('wp_ajax_nopriv_rcl_get_post_thumbnail_html','rcl_get_post_thumbnail_html');
+function rcl_get_post_thumbnail_html(){
+
+    $thumbnail_id = intval($_POST['thumbnail_id']);
+    
+    $result = array(
+        'success' => true,
+        'thumbnail_image' => wp_get_attachment_image( $thumbnail_id, 'thumbnail')
+    );
+    
+    echo json_encode($result); 
+    exit;
+    
+}

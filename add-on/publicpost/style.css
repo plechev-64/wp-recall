@@ -2,6 +2,21 @@
 .rcl-public-box{
     position:relative;
 }
+.rcl-public-box .rcl-service-button {
+    background: rgba(30, 56, 75, 0.7);
+    color: rgb(229, 57, 53);
+    cursor: pointer;
+    font-size: 24px;
+	line-height: 1;							/*++Twenty16++*/
+    padding: 6px;
+    position: absolute;
+    right: 0;
+    top: 0;
+	z-index: 2;
+}
+.rcl-public-box .rcl-service-button i:hover {
+	opacity: 0.8;
+}
 .rcl-public-box label{
     
 }
@@ -145,6 +160,34 @@
 .rcl-public-form .category-list .child-list-category span{
     
 }
+.rcl-public-form .attachments-post .set-thumbnail-post{
+    display: block;
+    width: 100%;
+}
+.rcl-public-form .attachments-post .set-thumbnail-post a{
+    font-size: 14px;
+    padding: 5px 15px;
+    display: block;
+    text-align: center;
+    color: #fff;
+    font-weight: normal;
+}
+#rcl-thumbnail-post{
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+}
+#rcl-thumbnail-post .delete-post-thumbnail{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#rcl-thumbnail-post .thumbnail-image{
+    
+}
+#rcl-thumbnail-post .thumbnail-image img{
+    
+}
 /*Ð½Ð¾Ð²Ð°Ñ Ñ„Ð¾Ñ€Ð¼Ð° ÐºÐ¾Ð½ÐµÑ†*/
 
 /*ÐŸÑƒÐ±Ð»Ð¸ÐºÐ°Ñ†Ð¸Ñ*/
@@ -162,28 +205,13 @@
     float: left;
     list-style: outside none none;
     margin: 1%;
-    padding: 0 8px 0 7px;
+    padding: 10px;
     position: relative;
     width: 23%;
     list-style: none!important;
 }
 .rcl-public-box .attachments-post li:first-child {
     margin: 1% 1% 1% 0;
-}
-.rcl-public-box .attachments-post li .rcl-service-button {
-    background: rgba(30, 56, 75, 0.7);
-    color: rgb(229, 57, 53);
-    cursor: pointer;
-    font-size: 24px;
-	line-height: 1;							/*++Twenty16++*/
-    padding: 6px;
-    position: absolute;
-    right: 0;
-    top: 0;
-	z-index: 2;
-}
-.rcl-public-box .attachments-post li .rcl-service-button i:hover {
-	opacity: 0.8;
 }
 .rcl-public-box .attachments-post li img {
     cursor: pointer;

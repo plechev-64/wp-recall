@@ -50,7 +50,7 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
             $types[$post_type->name] = $post_type->label;
         }
 
-        $content = '<div class="rcl-public-form-navi">';
+        $content = '<div class="rcl-custom-fields-navi">';
         
             $content .= '<ul class="rcl-types-list">';
 
@@ -71,7 +71,7 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
             
             $postForms = $wpdb->get_col("SELECT option_name FROM ".$wpdb->options." WHERE option_name LIKE 'rcl_fields_post_%' ORDER BY option_id ASC");
                 
-            $content .= '<div class="rcl-public-form-navi">';
+            $content .= '<div class="rcl-custom-fields-navi">';
         
                 $content .= '<ul class="rcl-types-list">';
                 
@@ -94,7 +94,7 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
             
             if($this->form_id != 1){
                 
-                $content .= '<div class="rcl-public-form-navi">';
+                $content .= '<div class="rcl-custom-fields-menu">';
         
                     $content .= '<ul class="rcl-types-list">';
 

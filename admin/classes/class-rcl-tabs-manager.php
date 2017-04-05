@@ -20,7 +20,7 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
             'area-counters' => __('Область "Counters"','wp-recall')
         );
 
-        $content = '<div class="rcl-public-form-navi">';
+        $content = '<div class="rcl-custom-fields-navi">';
         
             $content .= '<ul class="rcl-types-list">';
 

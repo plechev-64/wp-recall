@@ -8,8 +8,10 @@ jQuery(document).ready(function($) {
         
         var button = $(this);
         
-        wp.media.featuredImage.set = function(b){
-            console.log(b);
+        wp.media.featuredImage.set = function(thumbnail_id){
+            
+            rcl_get_post_thumbnail_html(thumbnail_id);
+    
         }
 
         wp.media.editor.open(button);
@@ -76,6 +78,35 @@ function rcl_init_click_post_thumbnail(){
         jQuery(".rcl-public-form .thumb-foto").removeAttr("checked");
         jQuery(this).attr("checked",'checked');			
     });
+}
+
+function rcl_get_post_thumbnail_html(thumbnail_id){
+    
+    rcl_preloader_show(jQuery('.rcl-public-form'));
+            
+    var dataString = 'action=rcl_get_post_thumbnail_html&thumbnail_id='+thumbnail_id;
+    dataString += '&ajax_nonce='+Rcl.nonce;
+    jQuery.ajax({
+        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+        success: function(result){
+
+            rcl_preloader_hide();
+
+            if(result['error']){
+                rcl_notice(result['error'],'error',10000);
+                return false;
+            }
+
+            jQuery('#rcl-thumbnail-post .thumbnail-image').html(result['thumbnail_image']);
+            jQuery('#rcl-thumbnail-post .thumbnail-id').val(thumbnail_id);
+        }
+    });
+    
+}
+
+function rcl_remove_post_thumbnail(){
+    jQuery('#rcl-thumbnail-post .thumbnail-image').empty();
+    jQuery('#rcl-thumbnail-post .thumbnail-id').val('0');
 }
 
 function rcl_delete_post(element){

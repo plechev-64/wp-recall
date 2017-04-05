@@ -1,44 +1,27 @@
-.rcl-public-form-navi{
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin: 10px;
-    background: #fff;
-}
-.rcl-public-form-navi .rcl-types-list{
+.rcl-custom-fields-menu li {
+    display: inline-block;
     margin: 0;
-    padding: 0;
 }
-.rcl-public-form-navi .rcl-types-list li{
-    display: inline-block;
+.rcl-custom-fields-menu a {
+    background-color: #e5e5e5;
     border: 1px solid #ccc;
-    margin: 5px;
-}
-.rcl-public-form-navi .rcl-types-list li a{
-    display: inline-block;
-    padding: 5px 15px;
+    color: #555;
+    display: flex;
+    margin: 0 0 0 10px;
+    padding: 8px 10px;
     text-decoration: none;
-    background: #ccc;
-    color: #333;
 }
-.rcl-public-form-navi .rcl-types-list li.current-item{
-    
+.rcl-custom-fields-menu a:hover {
+    background-color: #eee;
+    color: #000;
 }
-.rcl-public-form-navi .rcl-types-list li.current-item a{
-    background: #fff;
-    font-weight: bold;
-}
-.rcl-public-form-navi i{
+.rcl-custom-fields-menu .fa-trash {
+    color: #e53935;
     font-family: dashicons;
-    font-style: normal;
     font-size: 22px;
-    vertical-align: middle;
+    font-style: normal;
+    margin: 0 5px 0 0;
 }
-.rcl-public-form-navi .rcl-types-list li a.action-form{
-    
-}
-.rcl-public-form-navi .fa-plus:before{
-    content: "\f502";
-}
-.rcl-public-form-navi .fa-trash:before{
+.rcl-custom-fields-menu .fa-trash:before {
     content: "\f182";
 }

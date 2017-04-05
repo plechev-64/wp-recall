@@ -21,8 +21,8 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
     </span>
     <form method="post" id="rcl-options-form" onsubmit="rcl_update_options();return false;" action="">
     '.wp_nonce_field('update-options-rcl','_wpnonce',true,false).'
-    <span class="title-option active"><span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '.__('General settings','wp-recall').'</span>
-    <div class="wrap-recall-options" style="display:block;">';
+    <span id="title-primary" data-addon="primary" data-url="'.admin_url('admin.php?page='.$_GET['page'].'&rcl-addon-options=primary').'" class="title-option active"><span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '.__('General settings','wp-recall').'</span>
+    <div class="wrap-recall-options" id="options-primary" style="display:block;">';
 
             $args = array(
                 'selected'   => $rcl_options['lk_page_rcl'],
@@ -275,7 +275,7 @@ $content .= '</div>';
 $content = apply_filters('admin_options_wprecall',$content);
 
 $content .= '<div class="submit-block">
-<p><input type="submit" class="button button-primary button-large right" name="rcl_global_options" value="'.__('Save settings','wp-recall').'" /></p>
+<input type="submit" class="rcl-save-button" name="rcl_global_options" value="'.__('Save settings','wp-recall').'" />
 </div></form></div>';
 
 echo $content;

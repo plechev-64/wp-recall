@@ -46,18 +46,6 @@ function rcl_commerce_options(){
         ),
         $opt->option_block(
             array(
-                $opt->title(__('Inventory','wp-recall')),
-
-                $opt->label(__('Stock inventory','wp-recall')),
-                $opt->option('select',array(
-                    'name'=>'products_warehouse_recall',
-                    'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
-                )),
-                $opt->notice(__('If enabled, the number of goods in stock will be checked. If the goods are not available, the product can’t be added to cart','wp-recall'))
-            )
-        ),
-        $opt->option_block(
-            array(
                 $opt->title(__('Cart','wp-recall')),
 
                 $opt->label(__('Display button "Add to Cart"','wp-recall')),

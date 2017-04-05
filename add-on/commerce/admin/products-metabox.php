@@ -90,25 +90,6 @@ function rcl_metabox_products( $post ){
 
     endif;
 
-    if($rmag_options['products_warehouse_recall']==1):
-
-        $avb_product = get_post_meta($post->ID, 'availability_product', 1);
-
-        $content .= '<div class="rcl-product-meta">';
-
-        $content .= '<label class="meta-title">'.__('Product availability','wp-recall').'</label>';
-
-        $content .= '<div class="meta-content">';
-
-            $content .= '<p><input type="radio" name="wprecall[availability_product]" value="1" '.checked($avb_product, 0, false).'> '.__('in stock','wp-recall').'</p>';
-            $content .= '<p><input type="radio" name="wprecall[availability_product]" value="0" '.checked($avb_product, 1, false).'> '.__('Digital goods','wp-recall').'</p>';
-
-        $content .= '</div>';
-
-        $content .= '</div>';
-
-    endif;
-
     $content .= '<div class="rcl-product-meta">';
 
     $content .= '<div class="meta-content">';

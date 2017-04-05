@@ -17,27 +17,34 @@ echo '<div id="icon-plugins" class="icon32"><br></div>
             echo '<div id="message" class="'.$type.'"><p>'.__('Key has been saved','wp-recall').'!</p></div>';
         }
     }
+    
+    echo '<div class="rcl-admin-service-box rcl-key-box">';
 
     echo '<h4>'.__('RCLKEY','wp-recall').'</h4>
     <form action="" method="post">
-            '.__('Enter RCLKEY','wp-recall').' <input type="text" name="rcl-key" value="'.get_option('rcl-key').'">
-            <input class="button" type="submit" value="'.__('Save','wp-recall').'" name="save-rcl-key">
-            '.wp_nonce_field('add-rcl-key','_wpnonce',true,false).'
+        '.__('Enter RCLKEY','wp-recall').' <input type="text" name="rcl-key" value="'.get_option('rcl-key').'">
+        <input class="button" type="submit" value="'.__('Save','wp-recall').'" name="save-rcl-key">
+        '.wp_nonce_field('add-rcl-key','_wpnonce',true,false).'
     </form>
     <p class="install-help">'.__('Required to update the templates here. Get it  in  your account online <a href="http://codeseller.ru/" target="_blank">http://"codeseller.ru</a>','wp-recall').'</p>';
 
-echo '
-    <h4>'.__('Install the add-on to WP-Recall format .ZIP','wp-recall').'</h4>
+    echo '</div>';
+    
+    echo '<div class="rcl-admin-service-box rcl-upload-form-box upload-theme">';
+    
+    echo '<h4>'.__('Install the add-on to WP-Recall format .ZIP','wp-recall').'</h4>
     <p class="install-help">'.__('If you have an archive template for wp-recall format .zip, here you can upload and install it','wp-recall').'</p>
     <form class="wp-upload-form" action="" enctype="multipart/form-data" method="post">
-            <label class="screen-reader-text" for="addonzip">'.__('Add-on archive','wp-recall').'</label>
-            <input id="addonzip" type="file" name="addonzip">
-            <input id="install-plugin-submit" class="button" type="submit" value="'.__('Install','wp-recall').'" name="install-template-submit">
-            '.wp_nonce_field('install-template-rcl','_wpnonce',true,false).'
+        <label class="screen-reader-text" for="addonzip">'.__('Add-on archive','wp-recall').'</label>
+        <input id="addonzip" type="file" name="addonzip">
+        <input id="install-plugin-submit" class="button" type="submit" value="'.__('Install','wp-recall').'" name="install-template-submit">
+        '.wp_nonce_field('install-template-rcl','_wpnonce',true,false).'
     </form>
+    
+    </div>
 
     <ul class="subsubsub">
-            <li class="all"><b>'.__('All','wp-recall').'<span class="count">('.$cnt_all.')</span></b></li>
+        <li class="all"><b>'.__('All','wp-recall').'<span class="count">('.$cnt_all.')</span></b></li>
     </ul>';
 
 $Rcl_Templates_Manager->prepare_items(); ?>

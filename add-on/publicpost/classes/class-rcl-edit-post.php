@@ -77,47 +77,27 @@ class Rcl_EditPost {
     function update_thumbnail($postdata){
         global $rcl_options;
 
-        $thumb = (isset($_POST['thumb']))? $_POST['thumb']: false;
-        if(isset($rcl_options['media_downloader_recall'])&&$rcl_options['media_downloader_recall']==1){
+        $thumbnail_id = (isset($_POST['post-thumbnail']))? $_POST['post-thumbnail']: 0;
             
-            if($thumb) 
-                update_post_meta($this->post_id, '_thumbnail_id', $thumb);
-            else 
-                delete_post_meta($this->post_id, '_thumbnail_id');
+        if(!$this->update) 
+
+            return $this->rcl_add_attachments_in_temps($postdata);
+        
+        $currentThID = get_post_meta($this->post_id, '_thumbnail_id');
+
+        if($thumbnail_id){
             
+            if($currentThID == $thumbnail_id) return false;
+
+            update_post_meta($this->post_id, '_thumbnail_id', $thumbnail_id);
+
         }else{
             
-            if(!$this->update) 
-                
-                return $this->rcl_add_attachments_in_temps($postdata);
+            if($currentThID)
+                delete_post_meta($this->post_id, '_thumbnail_id');
             
-            if($thumb){
-                
-                foreach($thumb as $key=>$gal){
-                    update_post_meta($this->post_id, '_thumbnail_id', $key);
-                }
-                
-            }else{
-                
-                $args = array(
-                    'post_parent' => $this->post_id,
-                    'post_type'   => 'attachment',
-                    'numberposts' => 1,
-                    'post_status' => 'any',
-                    'post_mime_type'=> 'image'
-                );
-
-                $child = get_children($args);
-
-                if($child){
-                    
-                    foreach($child as $ch){
-                        update_post_meta($this->post_id, '_thumbnail_id',$ch->ID);
-                    }
-                    
-                }
-            }
         }
+            
     }
 
     function rcl_add_attachments_in_temps($postdata){
@@ -128,11 +108,11 @@ class Rcl_EditPost {
         
         if($temp_gal){
             
-            $thumb = $_POST['thumb'];
+            $thumbnail_id = (isset($_POST['post-thumbnail']))? $_POST['post-thumbnail']: 0;
             
             foreach($temp_gal as $key=>$gal){
                 
-                if($thumb[$gal['ID']]==1) 
+                if($thumbnail_id && $thumbnail_id == $gal['ID']) 
                     add_post_meta($this->post_id, '_thumbnail_id', $gal['ID']);
 
                 $post_upd = array(
@@ -151,27 +131,10 @@ class Rcl_EditPost {
             
             update_option('rcl_tempgallery',$temps);
 
-            if(!$thumb){
-                
-                $args = array(
-                    'post_parent' => $this->post_id,
-                    'post_type'   => 'attachment',
-                    'numberposts' => 1,
-                    'post_status' => 'any',
-                    'post_mime_type'=> 'image'
-                );
-                
-                $child = get_children($args);
-                
-                if($child){ 
-                    foreach($child as $ch){
-                        add_post_meta($this->post_id, '_thumbnail_id',$ch->ID);
-                    } 
-                }
-                
-            }
         }
+        
         return $temp_gal;
+        
     }
 
     function get_status_post($moderation){

@@ -12,8 +12,11 @@ function rcl_user_account_options($content){
 
         $pay_options = array( __('Not used','wp-recall') );
 
-        $content .= '<span class="title-option active">'.__('Payment systems','wp-recall').'</span>
-	<div id="options-'.rcl_key_addon(pathinfo(__FILE__)).'" style="display:block" class="wrap-recall-options">';
+        $content .= '<span id="title-user-balance" data-addon="user-balance" data-url="'.admin_url('admin.php?page='.$_GET['page'].'&rcl-addon-options=user-balance').'" class="title-option active">'
+                . '<span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '
+                . __('Payment systems','wp-recall')
+                .'</span>
+	<div id="options-user-balance" style="display:block" class="wrap-recall-options">';
 
         $content .= $opt->option_block(
             array(

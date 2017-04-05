@@ -16,7 +16,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
             'custom-slug'=>1, 
             'terms'=>1)
         );
-        
+
         $this->taxonomies = get_object_taxonomies( $this->post_type, 'objects' );
         
         if($this->post_type == 'post'){
@@ -169,6 +169,16 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                 )
             )
         );
+        
+        if(post_type_supports($this->post_type,'thumbnail')){
+            
+            $fields[] = array(
+                'slug' => 'post_thumbnail',
+                'title' => __('Миниатюра публикации','wp-recall'),
+                'type' => 'custom'
+            );
+            
+        }
         
         $fields[] = array(
             'slug' => 'post_uploader',
@@ -338,6 +348,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
             'post_content',
             'post_excerpt',
             'post_uploader',
+            'post_thumbnail'
         );
         
         $slugs = array();

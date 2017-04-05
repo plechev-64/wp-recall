@@ -58,49 +58,59 @@ body .rcl_preloader{
     animation:rotation 2s infinite linear;
 }
 #recall .title-option {
-    border: 1px solid #AAAAAA;
-    box-shadow: 0 0 50px #CCCCCC inset;
+    background-color: #e6e6e6;
+    border: 1px solid #d4d4d4;
     cursor: pointer;
+    display: flex;
     margin: 5px 0 0;
     padding: 5px 8px;
     width: 600px;
-    display:block;
 }
-#recall.left-sidebar form{
-    height:870px;
+#recall .title-option > span {
+    color: rgb(76, 140, 189);
+    margin: 0 5px 0 0;
 }
-#recall.left-sidebar .title-option{
-    width: 220px;
-    font-size: 16px;
-}
-#recall.left-sidebar .active{
-    background: #2ea2cc;
+#recall .title-option.active > span {
     color: #fff;
-    font-weight: bold;
-    box-shadow:none;
+}
+#recall.left-sidebar form {
+    height: 870px;
+}
+#recall.left-sidebar .title-option {
+    font-size: 16px;
+    transform: translate3d(0px, 0px, 0px);
+    width: 220px;
+}
+#recall.left-sidebar .title-option:hover:not(.active) {
+    background-color: #eee;
+    border-left: 3px solid rgb(76, 140, 189);
+    transform: translateX(-2px);
+}
+#recall.left-sidebar .active {
+    background-color: rgb(76, 140, 189);
+    border: 1px solid #266697;
+    color: #fff;
 }
 .wrap-recall-options {
-    border: 1px solid #ccc;
-    box-shadow: 0 0 50px #F0F0F0 inset;
+    border: 1px solid #ddd;
     display: none;
     margin: 0 0 5px;
-    padding: 15px;
-    /* width: 600px; */   
+    padding: 15px; 
 }
-.left-sidebar .wrap-recall-options{
-    position: absolute;
+.left-sidebar .wrap-recall-options {
     left: 250px;
-    top: 0;
     max-height: 800px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
 }
 .wrap-recall-options .option-block {
-    background: #eee none repeat scroll 0 0;
-    border: 1px solid #dadada;
+    background-color: #eee;
+    border: 1px solid #ddd;
     border-radius: 2px;
-    margin: 8px 0;
-    padding: 5px 15px;
+    margin: 0 0 14px;
     max-width: 500px;
+    padding: 5px 15px;
 }
 .wrap-recall-options .option-block h3 {
     text-transform: uppercase;
@@ -118,10 +128,12 @@ body .rcl_preloader{
 .wrap-recall-options .option-block select, 
 .wrap-recall-options .option-block input[type="text"],
 .wrap-recall-options .option-block input[type="number"]{
-    height: 28px;
+    box-sizing: border-box;
+    height: auto;
+    line-height: normal;
+    margin: 2px 0;
     padding: 5px;
     width: 300px;
-    height: 30px;
 }
 .wrap-recall-options .option-block input[type="number"]{
     width: 100px;
@@ -149,11 +161,11 @@ body .rcl_preloader{
     font: bold 18px Arial,Georgia,Verdana;
 }
 .shift-extend-options > label {
-    background: #f5c0c0;
-    border: 1px solid #ccc;
+    background-color: #f5c0c0;
+    border: 1px solid #cd9898;
     display: inline-block;
     font-size: 14px;
-    padding: 8px 8px 7px;
+    padding: 8px;
     width: 220px;
 }
 .wrap-recall-options .extend-options.hidden-option{
@@ -167,12 +179,10 @@ body .rcl_preloader{
     width:70px;
     height:70px;
 }
-.wrap .submit-block{
-    width: 600px;
-}
+
 .left-sidebar .submit-block{
-    width: 200px;
-    margin-top:50px;
+    margin-top: 50px;
+    width: 236px;
 }
 #rcl-options-form .tabs-list-rcl{
     
@@ -197,16 +207,17 @@ span.ruble-symbol{
 }
 
 
-.rcl-custom-fields-box{
-    width:520px;
-    padding: 10px;
-    background: #f7fcff;
-    margin: 10px;
-    border: 1px solid #ccc;
+.rcl-custom-fields-box {
+    background-color: #f5f5f5;
+    border: 1px solid #d5d5d5;
+    box-sizing: border-box;
     display: inline-block;
+    margin: 10px;
+    max-width: 500px;
+    padding: 10px;
+    position: relative;
     vertical-align: top;
-    max-width:500px;
-    position:relative;
+    width: calc(100% - 20px);
 }
 .rcl-custom-fields-box input,
 .rcl-custom-fields-box textarea,
@@ -214,30 +225,35 @@ span.ruble-symbol{
     width: 100%; 
     box-sizing: border-box;
 }
-.rcl-custom-fields-box input[type="checkbox"],
+
 .rcl-custom-fields-box input[type="radio"]{
     width: initial;
 }
-.rcl-custom-fields-box .rcl-custom-field{
-    margin-bottom: 10px;
-    position:relative;
+
+.rcl-custom-fields-box > h3 {
+    font-size: 18px;
+    margin: 0;
+    padding: 5px 15px;
 }
-.rcl-custom-fields-box .rcl-custom-field label{
-    font-weight: bold;
-    margin-bottom: 5px;
+.rcl-custom-fields-box .rcl-custom-field {
+    margin-bottom: 10px;
+    position: relative;
+}
+.rcl-custom-fields-box .rcl-custom-field label {
     display: block;
+    font-weight: bold;
+    margin: 0;
 }
 
-.rcl-custom-fields-box .rcl-custom-field{
-    
-}
-.rcl-custom-fields-box .rcl-custom-field i{
+.rcl-custom-fields-box .rcl-custom-field i {
     font-family: dashicons;
+    font-size: 20px;
     font-style: normal;
-    color: #333;
-    font-size: 18px;
+    margin: 0 2px;
     vertical-align: middle;
-    margin: 0 5px;
+}
+.rcl-custom-fields-box .rcl-custom-field i:hover {
+    opacity: 0.7;
 }
 .rcl-custom-fields-box .rcl-custom-field a{
     text-decoration: none;
@@ -248,49 +264,56 @@ span.ruble-symbol{
 .rcl-custom-fields-box .rcl-custom-field textarea{
     width: 100%;
 }
-.rcl-custom-fields-box .rcl-custom-field .dynamic-values{
+.rcl-custom-fields-box .rcl-custom-field .dynamic-values {
     display: block;
     padding: 10px;
     background: #f5f5f5;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values .dynamic-value,
-.rcl-custom-fields-box .rcl-custom-field .dynamic-values .ui-sortable-placeholder{
+.rcl-custom-fields-box .rcl-custom-field .dynamic-values .ui-sortable-placeholder {
+    background-color: #ebebeb;
+    border: 1px solid #dbdbdb;
     clear: both;
     display: block;
-    border: 2px solid #ccc;
-    background: #e4e4e4;
+    line-height: normal;
     margin: 3px 0;
-    position:relative;
+    padding: 2px;
+    position: relative;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values .ui-sortable-placeholder{
     height:30px;
     background:#fff;
 }
-.rcl-custom-fields-box .rcl-custom-field .dynamic-values .dynamic-value:before{
-    font-family: dashicons;
+.rcl-custom-fields-box .rcl-custom-field .dynamic-values .dynamic-value::before {
+    background-color: #f5f5f5;
+    color: rgb(76, 140, 189);
     content: "\f545";
-    font-size: 20px;
-    position: absolute;
-    right: 2px;
-    background: #f5f5f5;
-    padding: 4px;
-    top: 2px;
     cursor: move;
+    font-family: dashicons;
+    font-size: 20px;
+    height: 20px;
+    padding: 3px;
+    position: absolute;
+    right: 4px;
+    top: 4px;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-value input{
     width: 80%;
 }
-.rcl-custom-fields-box .rcl-custom-field .dynamic-values a{
-    padding: 3px;
-    background: #f5f5f5;
+.rcl-custom-fields-box .rcl-custom-field .dynamic-values a {
+    background-color: #f5f5f5;
+    height: 22px;
+    padding: 2px;
     position: absolute;
     right: 40px;
-    top: 2px;
+    top: 4px;
 }
-.rcl-custom-fields-box .rcl-custom-field a .fa-minus:before{
+.rcl-custom-fields-box .rcl-custom-field a .fa-minus::before {
+    color: rgb(229, 57, 53);
     content: "\f153";
 }
-.rcl-custom-fields-box .rcl-custom-field a .fa-plus:before{
+.rcl-custom-fields-box .rcl-custom-field a .fa-plus::before {
+    color: #008000;
     content: "\f502";
 }
 .rcl-custom-fields-box .type-file-input{
@@ -316,149 +339,198 @@ span.ruble-symbol{
 .rcl-custom-fields-box .rcl-custom-field .file-manage-box .delete-file-url .fa-times-circle-o:before{
     content: "\f153";
 }
-.rcl-custom-fields-box .rcl-sortable-fields{
-    padding: 10px;
-    background: #fff;
-    border: 1px solid #ccc;
+.rcl-custom-fields-box .rcl-sortable-fields {
     min-height: 30px;
+    padding: 0;
 }
 .rcl-custom-fields-box .rcl-custom-field .fa-info:before{
     content: "\f534";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header{
-    padding: 10px;
-    background: #E4E4E4;
-    border: 1px solid #ccc;
+.rcl-custom-fields-box .rcl-custom-field .field-header {
+    align-items: center;
+    background: #eee linear-gradient(to top, #f5f5f5, #eee);
+    border: 1px solid #ddd;
+    display: flex;
     overflow: hidden;
+    padding: 5px;
 }
 .ui-sortable .rcl-custom-field .field-header{
     cursor:move;
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .field-title{
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-title {
+    flex-grow: 1;
+    font-size: 14px;
     font-weight: bold;
-    vertical-align: middle;
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .field-controls{
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-controls {
+    display: flex;
     font-family: dashicons;
-    float: right;
+    justify-content: flex-end;
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .field-control{
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-control {
     font-size: 25px;
-    text-decoration: none;
-    vertical-align: middle;
+    margin: 0 0 0 3px;
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .field-type{
-    font-size: 20px;
-    display: inline-block;
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-type {
+    background-color: #f6f6f6;
+    border: 1px solid #e5e5e5;
+    color: rgb(76, 140, 189);
     font-family: dashicons;
-    vertical-align: middle;
-    margin-right: 5px;
-    border: 1px solid #ccc;
-    padding: 3px;
-    background: #fff;
+    font-size: 20px;
+    margin-right: 10px;
+    padding: 5px;
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="text"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="text"] .field-header .field-type::before {
     content: "\f464";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="textarea"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="textarea"] .field-header .field-type::before {
     content: "\f119";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="select"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="select"] .field-header .field-type::before {
     content: "\f203";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="multiselect"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="multiselect"] .field-header .field-type::before {
     content: "\f163";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="checkbox"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="checkbox"] .field-header .field-type::before {
     content: "\f147";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="radio"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="radio"] .field-header .field-type::before {
     content: "\f159";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="email"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="email"] .field-header .field-type::before {
     content: "\f466";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="tel"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="tel"] .field-header .field-type::before {
     content: "\f525";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="number"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="number"] .field-header .field-type::before {
     content: "123";
     font-size: 14px;
     font-weight: bold;
     vertical-align: super;
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="date"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="date"] .field-header .field-type::before {
     content: "\f508";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="time"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="time"] .field-header .field-type::before {
     content: "\f469";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="url"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="url"] .field-header .field-type::before {
     content: "\f103";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="agree"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="agree"] .field-header .field-type::before {
     content: "\f491";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="file"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="file"] .field-header .field-type::before {
     content: "\f501";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="dynamic"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="dynamic"] .field-header .field-type::before {
     content: "\f502";
 }
-.rcl-custom-fields-box .rcl-custom-field[data-type="custom"] .field-header .field-type:before{
+.rcl-custom-fields-box .rcl-custom-field[data-type="custom"] .field-header .field-type::before {
     content: "\f111";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .field-delete:before{
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-delete::before {
     color: rgba(229, 57, 53, 0.7);
     content: "\f158";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-header .field-edit:before{
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-edit::before {
+    color: rgb(76, 140, 189);
     content: "\f140";
 }
-.rcl-custom-fields-box .rcl-custom-field .field-settings{
-    border: 1px solid #ccc;
-    padding: 10px;
-    background: #f7f7f7;
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-edit:hover::before,
+.rcl-custom-fields-box .rcl-custom-field .field-header .field-delete:hover::before {
+    opacity: 0.7;
+}
+
+.rcl-custom-fields-box .rcl-custom-field .field-settings {
+    background-color: #fff;
+    border: 1px solid #ddd;
     display: none;
+    margin: 0 0 25px;
+    padding: 5px;
 }
-.rcl-custom-fields-box .rcl-custom-field .field-settings .option-content{
+.rcl-custom-fields-box .field-settings p {
+    background-color: rgba(224, 248, 201, 0.6);
+    color: #555;
+    float: right;
+    margin: -5px -5px 0 0;
     padding: 5px 10px;
-    background: #ffffff;
-    margin: 5px 0;
 }
-.rcl-custom-fields-box .rcl-custom-field label{
-    font-weight: bold;
-    display: block;
-    background: #e4e4e4;
-    padding: 3px 10px;
-    margin-bottom: 5px;
+.rcl-custom-fields-box .rcl-custom-field .field-settings .option-content {
+    margin: 5px 0 0;
+    padding: 5px 10px;
 }
+
 .rcl-custom-fields-box .rcl-custom-field textarea{
     height:50px;
 }
-.rcl-custom-fields-box .rcl-custom-field .field-settings .option-content .option-input{
-    
-}
-.rcl-custom-fields-box .rcl-custom-field .field-settings .option-content .rcl-field-input{
-    
-}
-.rcl-custom-fields-box .rcl-custom-field .rcl-checkbox-box,
+
+
 .rcl-custom-fields-box .rcl-custom-field .rcl-radio-box{
     display: inline-block;
     padding: 5px;
     background: #e4e4e4;
     margin: 5px;
 }
-.rcl-custom-fields-box .rcl-custom-field .rcl-checkbox-box label,
+
+
+
+/* START checkbox stylization */
+.rcl-custom-fields-box .rcl-checkbox-box {
+    background-color: #f5f5f5;
+    border: 1px solid #e5e5e5;
+    display: inline-block;
+    margin: 3px 5px 3px 0;
+    padding: 5px;
+    position: relative;
+}
+.rcl-custom-fields-box input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+.rcl-field-input input[type="checkbox"]:checked + label.block-label::before {
+    color: rgb(76, 140, 189);
+    content: "\f147";
+    font-family: dashicons;
+    font-size: 22px;
+    left: 3px;
+    position: absolute;
+    top: 4px;
+    z-index: 3;
+}
+.rcl-field-input label.block-label::after {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    content: "";
+    height: 20px;
+    left: 5px;
+    padding: 0px 2px 0px;
+    display: block;
+    position: absolute;
+    top: 4px;
+    width: 20px;
+}
+.rcl-custom-fields-box .rcl-custom-field .rcl-checkbox-box label {
+    font-weight: normal;
+    line-height: normal;
+    padding: 0 0 0 24px;
+}
+/* END checkbox stylization */
+
+
+
+
 .rcl-custom-fields-box .rcl-custom-field .rcl-radio-box label{
     display: inline;
     background: none;
     padding: 0;
     font-weight: normal;
 }
-.rcl-custom-fields-box .rcl-custom-field .type-editor-input{
-    
-}
+
 .rcl-custom-fields-box .rcl-custom-field .type-editor-input textarea{
     height: 150px;
 }
@@ -467,15 +539,7 @@ span.ruble-symbol{
     padding: 0 3px;
     font-size: 11px!important;
 }
-.rcl-custom-fields-box .rcl-custom-field .rcl-radio-box{
-    
-}
-.rcl-custom-fields-box .rcl-custom-field .rcl-radio-box label{
-    
-}
-.rcl-custom-fields-box .rcl-custom-field .field-settings{
-    
-}
+
 .rcl-custom-fields-box .rcl-custom-field.new-field .field-settings{
     display: block;
 }
@@ -492,9 +556,7 @@ span.ruble-symbol{
 .rcl-custom-fields-box .rcl-custom-field .field-options-box .field-option{
     margin: 5px 0;
 }
-.rcl-custom-fields-box .rcl-custom-field .field-options-box .field-option .field-notice{
-    
-}
+
 .rcl-custom-fields-box .rcl-custom-field .field-options-box .field-option select{
     width: 70px;
 }
@@ -512,13 +574,43 @@ span.ruble-symbol{
     box-sizing: border-box;
     margin:10px 0;
 }
-.rcl-custom-fields-box .rcl-field-notice{
-    display:block;
-    clear:both;
+.rcl-custom-fields-box .fields-submit .button-primary {
+    background-color: rgb(76, 140, 189);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    font-size: 16px;
+    height: auto;
+    padding: 5px;
+    text-shadow: none;
+}
+.rcl-custom-fields-box .fields-submit .button-primary:hover {
+    background-color: rgb(76, 140, 189);
+    opacity: 0.9;
+}
+
+.rcl-custom-fields-box .fields-submit .button-secondary {
+    background-color: #e6e6e6;
+    border: 1px solid #d4d4d4;
+    border-radius: 0;
+    box-shadow: none;
+    height: auto;
+    padding: 4px;
+}
+.rcl-custom-fields-box .fields-submit .button-secondary:hover {
+    background-color: #eee;
+    border-color: #d4d4d4;
+}
+.rcl-custom-fields-box .rcl-field-notice {
+    clear: both;
+    color: #777;
+    display: block;
     font-size: 12px;
 }
-.rcl-custom-fields-box .rcl-field-notice i{
+.rcl-custom-fields-box .rcl-field-notice i {
+    color: #ffae19;
     font-size: 14px;
+    opacity: 0.8;
 }
 .rcl-custom-fields-box .ui-sortable-placeholder{
     border:2px dashed #ccc;
@@ -546,10 +638,11 @@ span.ruble-symbol{
 }
 
 .rcl-inactive-fields-box{
-    width:350px;
+    opacity: 0.8;
+    width: 350px;
 }
 .rcl-inactive-fields-box .rcl-custom-field{
-    opacity:0.6;
+    opacity:0.7;
 }
 .rcl-inactive-fields-box .rcl-custom-field .field-control,
 .rcl-inactive-fields-box .rcl-custom-field .field-settings{
@@ -562,20 +655,27 @@ span.ruble-symbol{
     margin: 5px 0;
 }
 
-#rcl-options-form .submit-block > p {
-    margin: 0;
-    width: 236px;
-}
 
-#rcl-options-form .button-large.right {
+#recall .rcl-save-button {
+    background-color: rgb(76, 140, 189);
+    border: medium none;
+    border-radius: 0;
+    box-shadow: none;
+    color: #fff;
+    cursor: pointer;
     float: right;
-    font-size: 15px;
-    padding: 0 14px;
-    width: 236px;
+    font-size: 16px;
+    height: auto;
+    padding: 5px;
+    text-shadow: none;
+    width: 100%;
+}
+#recall .rcl-save-button:hover {
+    opacity: 0.9;
 }
 
 #rcl-options-form .extend-options {
-    background: #f5f5f5 none repeat scroll 0 0;
+    background-color: #f5f5f5;
     border-left: 2px solid #f8d3d3;
     margin: 5px 0;
     padding: 5px 8px;
@@ -584,9 +684,12 @@ span.ruble-symbol{
     display: inline-block;
 }
 #rcl-options-form .help-option .dashicons{
-    color: #2ea2cc;
+    color: rgb(76, 140, 189);
     cursor: pointer;
-    font-size: 18px;
+    margin: 0 0 0 4px;
+}
+#rcl-options-form .help-option .dashicons:hover {
+    opacity: 0.8;
 }
 #rcl-options-form .help-option .help-content{
     display: none;
@@ -597,10 +700,18 @@ span.ruble-symbol{
     margin: 20px 0;
 }
 .rcl-help-dialog .help-content{
-    display:block;
+    display: block;
+    font-size: 14px;
 }
 .rcl-help-dialog .ui-dialog-titlebar {
-    font-size:14px;
+    font-size: 15px;
+}
+.rcl-help-dialog .ui-dialog-titlebar-close::before {
+    color: #d32723;
+    font-size: 26px;
+}
+.rcl-help-dialog .ui-dialog-titlebar-close:hover::before {
+    color: #e53935;
 }
 .wp-list-table .addon_screen img{
     width:200px;
@@ -645,6 +756,89 @@ span.ruble-symbol{
 }
 /* navigation End */
 
+.rcl-custom-fields-navi {
+    margin: 10px 10px 10px 0;
+    padding: 10px;
+}
+.rcl-custom-fields-navi .rcl-types-list {
+    border-bottom: 1px solid #ccc;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.rcl-custom-fields-navi .rcl-types-list li {
+    border-color: #ccc #ccc currentcolor;
+    border-style: solid solid none;
+    border-width: 1px 1px medium;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0 0 0 0.5em;
+}
+.rcl-custom-fields-navi li.current-item {
+    border-bottom: 1px solid #f1f1f1;
+    margin-bottom: -1px;
+}
+.rcl-custom-fields-navi .rcl-types-list li a {
+    background-color: #e5e5e5;
+    color: #555;
+    display: inline-block;
+    height: 26px;
+    padding: 5px 12px;
+    text-decoration: none;
+}
+.rcl-custom-fields-navi .rcl-types-list li a:hover {
+    background-color: #eee;
+    color: #000;
+}
+.rcl-custom-fields-navi .rcl-types-list li.current-item a {
+    background-color: #f1f1f1;
+    color: #000;
+    font-weight: bold;
+}
+.rcl-custom-fields-navi i {
+    color: #008000;
+    font: 22px dashicons;
+    margin: 0 3px 0 0;
+    vertical-align: middle;
+}
+.rcl-custom-fields-navi .fa-plus:before{
+    content: "\f502";
+}
+.rcl-custom-fields-navi + .rcl-custom-fields-navi .rcl-types-list {
+    padding: 0 30px;
+}
+.rcl-custom-fields-navi > p {
+    background-color: #eee;
+    border: 1px solid #ddd;
+    display: inline-block;
+    font-size: 14px;
+    line-height: normal;
+    margin: 0;
+    padding: 10px 30px 10px 40px;
+    position: relative;
+}
+.rcl-custom-fields-navi > p::before {
+    color: #ffae19;
+    content: "\f534";
+    font-family: dashicons;
+    font-size: 30px;
+    left: 5px;
+    opacity: 0.4;
+    position: absolute;
+    top: 4px;
+}
+.options-custom-field .option-content .option-input .quicktags-toolbar .button-small {
+    border-radius: 1px;
+    height: auto;
+    line-height: normal;
+    margin: 2px 2px 3px;
+    min-height: 24px;
+    min-width: 58px;
+    padding: 4px;
+    text-align: center;
+}
+
 .wrap input[name="rcl-key"]:hover:not([value=""]) {
     filter: none;
     transition: all 0.15s linear 0s;
@@ -654,10 +848,11 @@ span.ruble-symbol{
     transition: all 0.15s linear 0s;
 }
 
-@media screen and (max-width:480px) {
+
+@media screen and (max-width:568px) {
     #recall.left-sidebar .title-option {
-        width: auto;
         padding: 10px;
+        width: 95%;
     }
     #recall.left-sidebar .wrap-recall-options{
         position: static;
@@ -666,5 +861,14 @@ span.ruble-symbol{
     #recall .shift-extend-options > label {
         width: auto;
         display:block;
+    }
+    .left-sidebar .submit-block {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:375px) {
+    .wrap-recall-options .option-block select {
+        max-width: 260px;
     }
 }

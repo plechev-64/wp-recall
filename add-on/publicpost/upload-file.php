@@ -10,6 +10,18 @@ function rcl_insert_attachment($attachment,$image,$id_post=false){
     return rcl_get_html_attachment($attach_id,$attachment['post_mime_type']);
 }
 
+function rcl_add_attachment_thumbnail_button($content,$attachment_id,$mime){
+        
+    if($mime[0] != 'image') return $content;
+
+    $content .= '<span class="set-thumbnail-post">'
+             . '<a class="recall-button" href="#" onclick="rcl_get_post_thumbnail_html('.$attachment_id.');return false;">'.__('Назначить главной','wp-recall').'</a>'
+             . '</span>';
+
+    return $content;
+
+}
+
 add_action('wp_ajax_rcl_imagepost_upload', 'rcl_imagepost_upload');
 add_action('wp_ajax_nopriv_rcl_imagepost_upload', 'rcl_imagepost_upload');
 function rcl_imagepost_upload(){
@@ -29,6 +41,11 @@ function rcl_imagepost_upload(){
     }
         
     $post_type = $_POST['post_type'];
+    
+    $formFields = new Rcl_Public_Form_Fields(array('post_type' => $post_type));
+    
+    if($formFields->exist_active_field('post_thumbnail'))
+        add_filter('rcl_post_attachment_html','rcl_add_attachment_thumbnail_button', 10, 3);
     
     $valid_types = (isset($_POST['ext_types']) && $_POST['ext_types'])? array_map('trim',explode(',',$_POST['ext_types'])): array('jpeg', 'jpg', 'png', 'gif');
 

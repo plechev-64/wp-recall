@@ -22,10 +22,6 @@ function rcl_init_product_columns( $columns ){
     
     $out['product-category']    = __('Category','wp-recall');
 
-    if($rmag_options['products_warehouse_recall'] == 1){
-        $out['product-availability'] = __('Availability','wp-recall');
-    }
-
     return $out;
     
 }

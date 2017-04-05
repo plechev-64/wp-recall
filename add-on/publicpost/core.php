@@ -247,21 +247,11 @@ function rcl_get_html_attachment($attach_id,$mime_type){
 
     $mime = explode('/',$mime_type);
 
-    $content = "<li id='attachment-$attach_id' class='post-attachment attachment-$mime[0]' data-mime='$mime[0]'>"
+    $content = "<li id='attachment-$attach_id' class='post-attachment attachment-$mime[0]' data-mime='$mime[0]' data-attachment-id='$attach_id'>"
             . rcl_button_fast_delete_post($attach_id)
             . "<label>"
-            . rcl_get_insert_image($attach_id,$mime[0]);
-    
-            if($mime[0]=='image'){ 
-                $content .=    '<span class="rcl-field-input type-checkbox-input">'
-                        . '<span class="rcl-checkbox-box">'
-                        . '<input class="thumb-foto" id="thumb-'.$attach_id.'" type="checkbox" '.checked(get_post_thumbnail_id( $editpost ),$attach_id,false).' name="thumb['.$attach_id.']" value="1">'
-                        . '<label for="thumb-'.$attach_id.'" class="block-label"> - '.__('featured','wp-recall').'</label>'
-                        . '</span>'
-                        . '</span>';
-                
-            }
-            
+            . rcl_get_insert_image($attach_id,$mime[0])
+            . apply_filters('rcl_post_attachment_html','',$attach_id,$mime); 
     $content .= "</label>
             </li>";
             

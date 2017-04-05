@@ -5,16 +5,19 @@ require_once "add-on-manager.php";
 require_once "templates-manager.php";
 
 function rmag_global_options(){
+    
     $content = ' <div id="recall" class="left-sidebar wrap">
-    <form method="post" action="">
-            '.wp_nonce_field('update-options-rmag','_wpnonce',true,false);
+        <form method="post" action="">
+        '.wp_nonce_field('update-options-rmag','_wpnonce',true,false);
 
-    $content = apply_filters('admin_options_rmag',$content);
+        $content = apply_filters('admin_options_rmag',$content);
 
-    $content .= '<div class="submit-block">
-    <p><input type="submit" class="button button-primary button-large right" name="primary-rmag-options" value="'.__('Save settings','wp-recall').'" /></p>
-    </form></div>
+        $content .= '<div class="submit-block">
+                <input type="submit" class="rcl-save-button" name="primary-rmag-options" value="'.__('Save settings','wp-recall').'" />
+            </div>
+        </form>
     </div>';
+        
     echo $content;
 }
 

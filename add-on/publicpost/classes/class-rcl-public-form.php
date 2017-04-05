@@ -56,8 +56,11 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         
         if($this->user_can['publish'] && !$user_ID)
             add_filter('rcl_public_form_fields',array($this,'add_guest_fields'), 10);
-        
+
         $this->fields = $this->get_public_fields();
+        
+        if($this->exist_active_field('post_thumbnail'))
+            add_filter('rcl_post_attachment_html','rcl_add_attachment_thumbnail_button', 10, 3);
         
     }
     
@@ -185,7 +188,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             'post_content',
             'post_title',
             'post_uploader',
-            'post_excerpt'
+            'post_excerpt',
+            'post_thumbnail'
         );
         
         $taxField = array();
@@ -267,6 +271,14 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                             
                         }
                         
+                        if($this->current_field['slug'] == 'post_thumbnail'){
+                            
+                            $contentField = $this->get_thumbnail_box();
+                            
+                            $contentField .= $CF->get_notice($this->current_field);
+                            
+                        }
+                        
                         if($this->current_field['slug'] == 'post_uploader'){
                             
                             $postUploder = new Rcl_Public_Form_Uploader(array(
@@ -344,6 +356,36 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         return $content;
         
     }
+    
+    function get_thumbnail_box(){
+        
+        $content = '<div id="rcl-thumbnail-post">';
+        
+        $content .= '<a href="#" class="rcl-service-button delete-post-thumbnail" onclick="rcl_remove_post_thumbnail();return false;"><i class="fa fa-trash"></i></a>';
+        
+        $content .= '<div class="thumbnail-image">';
+        
+        if($this->post_id){
+            
+            if(has_post_thumbnail($this->post_id)){
+                
+                $content .= get_the_post_thumbnail( $this->post_id, 'thumbnail');
+                
+            }
+            
+        }
+        
+        $content .= '</div>';
+
+        $thumbnail_id = ($this->post_id)? get_post_thumbnail_id( $this->post_id ): 0;
+        
+        $content .= '<input class="thumbnail-id" type="hidden" name="post-thumbnail" value="'.$thumbnail_id.'">';
+        
+        $content .= '</div>';
+        
+        return $content;
+        
+    }
 
     function get_terms_list($taxonomy){
         
@@ -412,7 +454,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
     }
     
     function get_editor($args = false){
-        global $rcl_options;
+        global $rcl_options,$user_ID;
         
         $wp_uploader = false;
         $quicktags = false;
@@ -426,7 +468,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             if(in_array('html',$args['options']))
                     $quicktags = true;
 
-            if(in_array('editor',$args['options']))
+            if($user_ID && in_array('editor',$args['options']))
                     $tinymce = true;
 
         }

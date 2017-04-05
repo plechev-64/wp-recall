@@ -1,5 +1,5 @@
 <?php
-class Rcl_Options {
+class Rcl_Options extends Rcl_Custom_Fields{
     
     public $key;
     public $type;
@@ -15,7 +15,7 @@ class Rcl_Options {
         $return = '<span ';
         
         if($this->key) 
-            $return .= 'id="title-'.$this->key.'" data-addon="'.$this->key.'" data-url="'.admin_url('admin.php?page=manage-wprecall&rcl-addon-options='.$this->key).'" ';
+            $return .= 'id="title-'.$this->key.'" data-addon="'.$this->key.'" data-url="'.admin_url('admin.php?page='.$_GET['page'].'&rcl-addon-options='.$this->key).'" ';
         else
             $return .= 'data-url="'.admin_url('admin.php?page=manage-wprecall').'" ';
         
@@ -130,7 +130,20 @@ class Rcl_Options {
             $content .= $this->label($args['label']);
         }
         
-        $content .= $this->$type($args,$value);
+        $methodName = 'get_type_'.$type;
+        
+        $field = array(
+            'type' => $type,
+            'slug' => $args['name'],
+            'classes' => (isset($args['parent']))? 'parent-select': '',
+            'name' => $this->attr_name($args),
+            'values' => $args['options']
+        );
+        
+        $this->value = $value;
+        $this->slug = $args['name'];
+        
+        $content .= $this->$methodName($field,$value);
         
         if(isset($args['help'])&&$args['help']){
             $content .= $this->help($args['help']);
@@ -149,97 +162,6 @@ class Rcl_Options {
         $content = '<span class="'.implode(' ',$classes).'">'.$content.'</span>';
         
         return $content;
-    }
-
-    function select($args,$value){
-        global $rcl_options;
-        
-        if(!isset($args['options'])) return false;
-
-        $content = '<select id="'.$args['name'].'"';
-        if(isset($args['parent'])) $content .= 'class="parent-select" ';
-        $content .= 'name="'.$this->attr_name($args).'" size="1">';
-            foreach($args['options'] as $val=>$name){
-               $content .= '<option value="'.$val.'" '.selected($value,$val,false).'>'
-                       . $name
-                       .'</option>';
-            }
-        $content .= '</select>';
-        return $content;
-    }
-
-    function checkbox($args,$value){
-        global $rcl_options;
-
-        $a = 0;
-        $key = false;
-        $content = '';
-
-        foreach($args['options'] as $val=>$name){
-           $a++;
-           if($value&&is_array($value)){
-                foreach($value as $v){
-                    if($val!=$v) continue;
-                        $key = $v;
-                        break;
-                }
-           }
-
-           $content .= '<label for="'.$args['name'].'_'.$a.'">';
-           $content .= '<input id="'.$args['name'].'_'.$a.'" type="checkbox" name="'.$this->attr_name($args).'[]" value="'.trim($val).'" '.checked($key,$val,false).'> '.$name;
-           $content .= '</label>';
-        }
-
-        return $content;
-    }
-
-    function text($args,$value){
-        return '<input type="text" name="'.$this->attr_name($args).'" value="'.$value.'" size="60">';
-    }
-
-    function password($args,$value){
-        return '<input type="password" name="'.$this->attr_name($args).'" value="'.$value.'" size="60">';
-    }
-
-    function number($args,$value){
-        
-        $atts = array();
-        $atts[] = (isset($args['min']))? 'min="'.$args['min'].'"': '';
-        $atts[] = (isset($args['max']))? 'max="'.$args['max'].'"': '';
-        $atts[] = (isset($args['step']))? 'step="'.$args['step'].'"': '';
-        
-        return '<input type="number" name="'.$this->attr_name($args).'" value="'.$value.'" '.implode(' ',$atts).' size="60">';
-    }
-    
-    function range($args,$value){
-        
-        $atts = array();
-        $atts[] = (isset($args['min']))? 'min="'.$args['min'].'"': '';
-        $atts[] = (isset($args['max']))? 'max="'.$args['max'].'"': '';
-        $atts[] = (isset($args['step']))? 'step="'.$args['step'].'"': '';
-        
-        return '<input type="range" name="'.$this->attr_name($args).'" value="'.$value.'" '.implode(' ',$atts).'>';
-    }
-    
-    function date($args,$value){
-        
-        $atts = array();
-        $atts[] = (isset($args['min']))? 'min="'.$args['min'].'"': '';
-        $atts[] = (isset($args['max']))? 'max="'.$args['max'].'"': '';
-        
-        return '<input type="date" name="'.$this->attr_name($args).'" value="'.$value.'" '.implode(' ',$atts).'>';
-    }
-
-    function email($args,$value){
-        return '<input type="email" name="'.$this->attr_name($args).'" value="'.$value.'" size="60">';
-    }
-
-    function url($args,$value){
-        return '<input type="url" name="'.$this->attr_name($args).'" value="'.$value.'" size="60">';
-    }
-
-    function textarea($args,$value){
-        return '<textarea name="'.$this->attr_name($args).'">'.$value.'</textarea>';
     }
 
     function get_value($args){
