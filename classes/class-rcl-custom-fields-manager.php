@@ -477,7 +477,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             'title'=>__('Field type','wp-recall'),
             'slug' => 'type',
             'type' => 'select',
-            'class' => 'typefield',
+            'classes' => 'select-type-field',
             'values' => $fields
         ));
         
