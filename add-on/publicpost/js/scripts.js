@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
             
             rcl_get_post_thumbnail_html(thumbnail_id);
     
-        }
+        };
 
         wp.media.editor.open(button);
         return false;
@@ -459,10 +459,6 @@ function rcl_init_public_form(post){
         },
         singleFileUploads:false,
         autoUpload:true,
-        progressall: function (e, data) {
-            /*var progress = parseInt(data.loaded / data.total * 100, 10);
-            jQuery('#upload-box-message .progress-bar').show().css('width',progress+'px');*/
-        },
         send:function (e, data) {
             var error = false;
             rcl_preloader_show('form.rcl-public-form');                   
@@ -525,10 +521,6 @@ function rcl_init_thumbnail_uploader(e){
         },
         singleFileUploads:true,
         autoUpload:true,
-        progressall: function (e, data) {
-            /*var progress = parseInt(data.loaded / data.total * 100, 10);
-            jQuery('#upload-box-message .progress-bar').show().css('width',progress+'px');*/
-        },
         send:function (e, data) {
             var error = false;
             rcl_preloader_show('form.rcl-public-form');                   
