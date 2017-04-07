@@ -169,17 +169,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                 )
             )
         );
-        
-        if(post_type_supports($this->post_type,'thumbnail')){
-            
-            $fields[] = array(
-                'slug' => 'post_thumbnail',
-                'title' => __('Миниатюра публикации','wp-recall'),
-                'type' => 'custom'
-            );
-            
-        }
-        
+
         $fields[] = array(
             'slug' => 'post_uploader',
             'title' => __('Медиа-загрузчик WP-Recall','wp-recall'),
@@ -194,6 +184,16 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                 )
             )
         );
+        
+        if(post_type_supports($this->post_type,'thumbnail')){
+            
+            $fields[] = array(
+                'slug' => 'post_thumbnail',
+                'title' => __('Миниатюра публикации','wp-recall'),
+                'type' => 'custom'
+            );
+            
+        }
         
         if($this->taxonomies){
             
