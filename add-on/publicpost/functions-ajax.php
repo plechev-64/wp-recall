@@ -196,20 +196,18 @@ function rcl_preview_post(){
     }
 
     $post_content = '';
-
-    if(isset($_POST['post_content'])){
+    
+    if($formFields->exist_active_field('post_content')){
         
         $postContent = $_POST['post_content'];
+
+        $field = $formFields->get_field('post_content');
         
-        if(!$postContent){
-            $log['error'] = __('Add contents of the publication!','wp-recall');
-
-            if($log['error']){
-                echo json_encode($log);
-                exit;
-            }
+        if($field['required'] && !$postContent){
+            echo json_encode(array('error' => __('Add contents of the publication!','wp-recall')));
+            exit;
         }
-
+        
         $post_content = stripslashes_deep($postContent);
         
         $post_content = rcl_get_editor_content($post_content,'preview');

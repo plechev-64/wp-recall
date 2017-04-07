@@ -155,6 +155,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
             'slug' => 'post_content',
             'title' => __('Содержание публикации','wp-recall'),
             'type' => 'textarea',
+            'required' => 1,
             'post-editor' => array('html','editor'),
             'options-field' => array(
                 array(
@@ -255,7 +256,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                     unset($options[$k]);
                 }
                 
-                if($option['slug'] == 'required'){
+                if($field['slug'] == 'post_uploader' && $option['slug'] == 'required'){
                     unset($options[$k]);
                 }
                 
