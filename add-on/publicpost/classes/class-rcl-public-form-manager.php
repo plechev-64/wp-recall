@@ -77,9 +77,11 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
                 
                 foreach($postForms as $name){
                     
-                    $form_id = intval(preg_replace("/[a-z_]+/", '', $name));
+                    $id = intval(preg_replace("/[a-z_]+/", '', $name));
                     
-                    if(!$form_id) continue;
+                    if(!$id) continue;
+                    
+                    $form_id = $id;
                     
                     $class = ($this->form_id == $form_id)? 'class="current-item"': '';
                     

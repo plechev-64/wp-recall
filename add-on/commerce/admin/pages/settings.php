@@ -15,9 +15,11 @@ function rcl_commerce_options(){
         'show_option_none' => __('Not selected','wp-recall'),
         'echo'       => 0
     );
+    
+    $content = '<h2>'.__('Settings','wp-recall').' Recall Commerce</h2>';
 
-    $content = $opt->options(
-        __('Settings','wp-recall').' WP-RECALL-MAGAZIN',array(
+    $content .= $opt->options(
+        __('General settings','wp-recall'),array(
         $opt->option_block(
             array(
                 $opt->title(__('General settings','wp-recall')),

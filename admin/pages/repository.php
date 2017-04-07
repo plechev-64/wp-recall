@@ -67,6 +67,6 @@ $content .= '</div>'
 
 $content .= $navi->pagenavi();
 
-echo '<h1>'.__('Repository for WP-Recall add-ons','wp-recall').'</h1>';
+echo '<h2>'.__('Repository for WP-Recall add-ons','wp-recall').'</h2>';
 //echo '<p>На этой странице отображаются доступные на данный момент дополнения, но не установленные на вашем сайте.</p>';
 echo $content;

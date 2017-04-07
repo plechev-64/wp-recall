@@ -84,8 +84,8 @@ if (!class_exists('reg_core')){
                     <input type="submit" value="Отправить на проверку">
                     </form>';
 
-            }
-            return $form;
+        }
+        return $form;
     }
 }
 

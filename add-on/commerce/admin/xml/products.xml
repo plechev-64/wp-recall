@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <posts>
 <post>
+<ID>12927</ID>
+<post_title><![CDATA[Черновик]]></post_title>
+<post_content><![CDATA[]]></post_content>
+<post_status><![CDATA[auto-draft]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
+<amount_product><![CDATA[]]></amount_product>
+<outsale><![CDATA[]]></outsale>
+<price-products><![CDATA[]]></price-products>
+<related_products_recall><![CDATA[]]></related_products_recall>
+<reserve_product><![CDATA[]]></reserve_product>
+<prodcat><![CDATA[0]]></prodcat>
+<product_tag><![CDATA[0]]></product_tag>
+</post><post>
 <ID>7068</ID>
 <post_title><![CDATA[Groups Recall]]></post_title>
 <post_content><![CDATA[Данное дополнение позволяет пользователям создавать свои группы по интересам на вашем сайте.
@@ -33,6 +46,7 @@
 <h3 style="text-align: center;"><span style="color: #ff6600;">Данное дополнение распространяется в составе</span></h3>
 <h3 style="text-align: center;"><span style="color: #ff6600;"> <span style="color: #3366ff;"><a style="color: #3366ff;" title="Wp-Recall" href="http://wppost.loc/lichnyj-kabinet-polzovatelya-lichnye-soobshheniya-i-sistema-rejtinga-polzovatelej-dlya-wordpress/">базовый версии Wp-Recall</a></span></span></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[1]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -71,6 +85,7 @@
 <h3 style="text-align: center;"><span style="color: #ff6600;">Данное дополнение распространяется в составе</span></h3>
 <h3 style="text-align: center;"><span style="color: #ff6600;"> <span style="color: #3366ff;"><a style="color: #3366ff;" title="Wp-Recall" href="http://wppost.loc/lichnyj-kabinet-polzovatelya-lichnye-soobshheniya-i-sistema-rejtinga-polzovatelej-dlya-wordpress/">базовый версии Wp-Recall</a></span></span></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[1]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -102,6 +117,7 @@
 <h3 style="text-align: center;"><span style="color: #ff6600;">Данное дополнение распространяется в составе</span></h3>
 <h3 style="text-align: center;"><span style="color: #ff6600;"> <span style="color: #3366ff;"><a style="color: #3366ff;" title="Wp-Recall" href="http://wppost.loc/lichnyj-kabinet-polzovatelya-lichnye-soobshheniya-i-sistema-rejtinga-polzovatelej-dlya-wordpress/">базовый версии Wp-Recall</a></span></span></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[1]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -192,6 +208,7 @@ $summ_order - полная сумма оформляемого заказа.
 
 <span style="color: #ff0000;"><strong>Акция!</strong></span> При приобретении двух экземпляров плагина к заказу <span style="color: #ff0000;">прилагается <strong><span style="font-size: 25px;">3</span></strong> активационных ключа</span>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[rfrl]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[1000]]></price-products>
@@ -279,6 +296,7 @@ foreach($gallery as $image){
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[200]]></price-products>
@@ -301,6 +319,7 @@ foreach($gallery as $image){
 <p style="text-align: right;">[file id="6975" time="86400" count="3" price="0"]</p>
 <p style="text-align: right;"><span style="color: #ff0000;"><strong>Версия Pro - без ограничений</strong></span></p>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[100]]></price-products>
@@ -353,6 +372,7 @@ foreach($gallery as $image){
 
 <strong>Вот и все. Можно организовывать продажи секретной информации на своих скрытых страницах.</strong>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[200]]></price-products>
@@ -398,6 +418,7 @@ foreach($gallery as $image){
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[100]]></price-products>
@@ -426,6 +447,7 @@ foreach($gallery as $image){
 
 Просто установите себе на сайт плагин <strong>Justclick Access</strong> и мотивируйте пользователей к регистрации на сайте различными "плюшками")]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[100]]></price-products>
@@ -497,6 +519,7 @@ foreach($gallery as $image){
 <h3 style="text-align: center;"><span style="color: #ff6600;">Данное дополнение распространяется в составе</span></h3>
 <h3 style="text-align: center;"><span style="color: #ff6600;"> <span style="color: #3366ff;"><a style="color: #3366ff;" title="Wp-Recall" href="http://wppost.loc/lichnyj-kabinet-polzovatelya-lichnye-soobshheniya-i-sistema-rejtinga-polzovatelej-dlya-wordpress/">базовый версии Wp-Recall</a></span></span></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[1]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -553,6 +576,7 @@ $slug - ярлык произвольного поля формы
 <h3 style="text-align: center;"><span style="color: #ff6600;">Данное дополнение распространяется в составе</span></h3>
 <h3 style="text-align: center;"><span style="color: #ff6600;"> <span style="color: #3366ff;"><a style="color: #3366ff;" title="Wp-Recall" href="http://wppost.loc/lichnyj-kabinet-polzovatelya-lichnye-soobshheniya-i-sistema-rejtinga-polzovatelej-dlya-wordpress/">базовый версии Wp-Recall</a></span></span></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[1]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -662,6 +686,7 @@ $slug - ярлык произвольного поля формы
 
 <span style="color: #ff0000;"><strong>Акция!</strong></span> При приобретении двух экземпляров плагина к заказу <span style="color: #ff0000;">прилагается <strong><span style="font-size: 25px;">6</span></strong> активационных ключей</span>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[wppay]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[2500]]></price-products>
@@ -766,6 +791,7 @@ $slug - ярлык произвольного поля формы
 
 <span style="color: #ff0000;"><strong>Акция!</strong></span> При приобретении двух экземпляров плагина к заказу <span style="color: #ff0000;">прилагается <strong><span style="font-size: 25px;">5</span></strong> активационных ключей</span>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[wprp]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[2200]]></price-products>
@@ -912,6 +938,7 @@ function rcl_get_task_form(){
 
 <span style="color: #ff0000;"><strong>Акция!</strong></span> При приобретении двух экземпляров плагина к заказу <span style="color: #ff0000;">прилагается <strong><span style="font-size: 25px;">5</span></strong> активационных ключей</span>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[frlnce]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[3000]]></price-products>
@@ -958,6 +985,7 @@ function rcl_get_task_form(){
 
 <a href="http://wppost.loc/wp-content/uploads/2013/10/17.01.png"><img class="aligncenter size-full wp-image-4256" src="http://wppost.loc/wp-content/uploads/2013/10/17.01.png" alt="17.01" width="489" height="303" /></a>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[400]]></price-products>
@@ -1032,6 +1060,7 @@ http://www.youtube.com/watch?v=EZFU7x_Mns4
 
 <span style="color: #ff0000;"><strong>Акция!</strong></span> При приобретении двух экземпляров плагина к заказу <span style="color: #ff0000;">прилагается <strong><span style="font-size: 25px;">5</span></strong> активационных ключей</span>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[pfg]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[800]]></price-products>
@@ -1099,6 +1128,7 @@ http://www.youtube.com/watch?v=EZFU7x_Mns4
 <em>Внимание! Атрибуты h и w не указывают точные размеры вывода изображений, а лишь устанавливают предельные значения ширины и высоты. Размер миниатюр будет подбираться исходя  из указанных значений среди существующих миниатюр в папке uploads на сервере вашего сайта.</em>
 <h3 style="text-align: center;"></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1136,6 +1166,7 @@ http://www.youtube.com/watch?v=EZFU7x_Mns4
 <a href="http://wppost.loc/wp-content/uploads/2014/01/14.013.png"><img class="aligncenter size-full wp-image-4232" src="http://wppost.loc/wp-content/uploads/2014/01/14.013.png" alt="14.013" width="696" height="437" /></a>
 <h3 style="text-align: center;"></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1158,6 +1189,7 @@ http://www.youtube.com/watch?v=EZFU7x_Mns4
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1215,6 +1247,7 @@ http://www.youtube.com/watch?v=EZFU7x_Mns4
 В данный момент, данное дополнение работает на этом сайте и вы можете его пощупать из своего профиля.
 <h3 style="text-align: center;"></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1268,6 +1301,7 @@ http://www.youtube.com/watch?v=EZFU7x_Mns4
 <a href="http://wppost.loc/wp-content/uploads/2014/03/21.034.png"><img class="aligncenter size-full wp-image-4792" src="http://wppost.loc/wp-content/uploads/2014/03/21.034.png" alt="21.034" width="651" height="621" /></a>
 <h3 style="text-align: center;"></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1328,6 +1362,7 @@ http://www.youtube.com/watch?v=EZFU7x_Mns4
 2 - массив(содержащий выборку из БД по даной таксономии)
 3 - id таксономии]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[150]]></price-products>
@@ -1416,6 +1451,7 @@ function rcl_get_products_form(){
 
 <span style="color: #ff0000;"><strong>Акция!</strong></span> При приобретении двух экземпляров плагина к заказу <span style="color: #ff0000;">прилагается <strong><span style="font-size: 25px;">5</span></strong> активационных ключей</span>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[ufm]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[2000]]></price-products>
@@ -1434,6 +1470,7 @@ function rcl_get_products_form(){
 
 Немаловажным фактором является и то, что плагин MobiDevices Translate URL не «ломает» функцию single_cat_title(), правильно форматирует переведенный URL и не требует ключей API, в отличии от других плагинов с подобным функционалом.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1485,6 +1522,7 @@ num — предельное количество выводимых видео
 Ну и на десерт новость о том, что данное дополнение также поддерживается при выводе фида пользователя. Видео пользователей на которых пользователь подписан будет выводится в его фиде, где он сможет его сразу просмотреть.
 <h3 style="text-align: center;"></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1522,6 +1560,7 @@ http://youtu.be/Yhipblun0jo
 
 Раскраску можно использовать на одном домене для нескольких сайтов.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[990]]></price-products>
@@ -1563,6 +1602,7 @@ http://youtu.be/Yhipblun0jo
 &nbsp;
 <h3 style="text-align: center;"></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1589,6 +1629,7 @@ Quick Chat - один из самых популярных плагинов дл
 
 <img class="aligncenter size-full wp-image-7044" src="http://wppost.loc/wp-content/uploads/2014/09/2014-09-17-00-50-49-quick-chat-wordpress-Поиск-в-Google-Google-Chrome.png" alt="2014-09-17 00-50-49 quick chat wordpress - Поиск в Google - Google Chrome" width="514" height="500" />]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[30]]></price-products>
@@ -1684,6 +1725,7 @@ padding: 4px 8px;
 
 <div style="width: 90%;background-color: #fdffe1;margin: 0px auto;padding: 5px 4px 7px 16px;border: 4px double #daf6f6;font-size: 17px"><a href="http://wppost.loc/groups/otshelnik-fm-moi-raboty-kod-plaginy-dopolneniya-stati-i-rukovodstva/" title="Перейти к группе" target="_blank"><i class="fa fa-external-link-square fa-3x pull-right"></i></a>Вступайте в мою группу: <a href="http://wppost.loc/groups/otshelnik-fm-moi-raboty-kod-plaginy-dopolneniya-stati-i-rukovodstva/" title="Перейти к группе" target="_blank">&quot;<strong>Otshelnik-Fm - мои работы (код, плагины, дополнения, статьи и руководства)</strong>&quot;</a><br />для уведомления о обновлениях и новостях в вашем фиде</div>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1698,6 +1740,7 @@ padding: 4px 8px;
 
 10-ть картинок-подарков в виде мимики лимона, размер картинок 250-250px, формат картинок PNG, прозрачный фон, в архиве так же лежит картинка из 16-ти лимонов, можно вырезать и сделать те, что нравятся!]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1766,6 +1809,7 @@ padding: 4px 8px;
 
 <span style="color: #ff0000;"><strong>Акция!</strong></span> При приобретении двух экземпляров плагина к заказу <span style="color: #ff0000;">прилагается <strong><span style="font-size: 25px;">5</span></strong> активационных ключей</span>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[jst]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[400]]></price-products>
@@ -1814,6 +1858,7 @@ padding: 4px 8px;
 </ol>
 В общем жду ваших отзывов и предложений по функционалу. Буду благодарен за любую критику.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[150]]></price-products>
@@ -1848,6 +1893,7 @@ padding: 4px 8px;
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1868,6 +1914,7 @@ padding: 4px 8px;
 
 LastPage не требует настроек, работает по принципу "включил и забыл".]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1886,6 +1933,7 @@ LastPage не требует настроек, работает по принц�
 
 Дополнение поддерживает ajax-загрузку своей вкладки в ЛК и минимизацию стилевого файла.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1941,6 +1989,7 @@ v1.2. Совместимость с Wp-Recall 13.2.6 (обновление из 
 <div style="width: 90%; background-color: #fdffe1; margin: 0px auto; padding: 5px 4px 7px 16px; border: 4px double #daf6f6; font-size: 17px;"><i class="fa fa-external-link-square fa-3x pull-right"></i>Вступайте в мою группу: <a title="Перейти к группе" href="http://wppost.loc/groups/otshelnik-fm-moi-raboty-kod-plaginy-dopolneniya-stati-i-rukovodstva/" target="_blank">"<strong>Otshelnik-Fm - мои работы (код, плагины, дополнения, статьи и руководства)</strong>"</a>
 для уведомления о обновлениях и новостях в вашем фиде</div>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -1997,6 +2046,7 @@ v1.2. Совместимость с Wp-Recall 13.2.6 (обновление из 
 для уведомления о обновлениях и новостях в вашем фиде</div>
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[100]]></price-products>
@@ -2048,6 +2098,7 @@ v 1.2 Совместимость с Wp-Recall 12.0.10
 <div style="width: 90%; background-color: #fdffe1; margin: 0px auto; padding: 5px 4px 7px 16px; border: 4px double #daf6f6; font-size: 17px;"><i class="fa fa-external-link-square fa-3x pull-right"></i>Вступайте в мою группу: <a title="Перейти к группе" href="http://wppost.loc/groups/otshelnik-fm-moi-raboty-kod-plaginy-dopolneniya-stati-i-rukovodstva/" target="_blank">"<strong>Otshelnik-Fm - мои работы (код, плагины, дополнения, статьи и руководства)</strong>"</a>
 для уведомления о обновлениях и новостях в вашем фиде</div>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[100]]></price-products>
@@ -2095,6 +2146,7 @@ v 1.2 Совместимость с Wp-Recall 12.0.10
 	<li>Что бы начать отправлять/получать смс сообщения с сайта, нужно так же пополнить личный счёт на сайте <a href="http://kalbac.sms.ru/pay.php" target="_blank">sms.ru</a></li>
 </ul>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[1000]]></price-products>
@@ -2166,6 +2218,7 @@ Donate можно опубликовать как через администр
 
 Дополнение можно пощупать на этом сайте.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[400]]></price-products>
@@ -2226,6 +2279,7 @@ Donate можно опубликовать как через администр
 </div>
 </div>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[800]]></price-products>
@@ -2252,6 +2306,7 @@ Donate можно опубликовать как через администр
 
 Нормальная работа дополнения гарантируется при соблюдении условий совместимости с версией Wp-Recall]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2294,6 +2349,7 @@ v 1.1
 <div style="width: 90%; background-color: #fdffe1; margin: 0px auto; padding: 5px 4px 7px 16px; border: 4px double #daf6f6; font-size: 17px;"><i class="fa fa-external-link-square fa-3x pull-right"></i>Вступайте в мою группу: <a title="Перейти к группе" href="http://wppost.loc/groups/otshelnik-fm-moi-raboty-kod-plaginy-dopolneniya-stati-i-rukovodstva/" target="_blank">"<strong>Otshelnik-Fm - мои работы (код, плагины, дополнения, статьи и руководства)</strong>"</a>
 для уведомления о обновлениях и новостях в вашем фиде</div>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[100]]></price-products>
@@ -2360,6 +2416,7 @@ v2.0. Совместимость с Wp-Recall 13.2.3 (обновление из 
 для уведомления о обновлениях и новостях в вашем фиде</div>
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2378,6 +2435,7 @@ v2.0. Совместимость с Wp-Recall 13.2.3 (обновление из 
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[1]]></price-products>
@@ -2418,6 +2476,7 @@ v2.0. Совместимость с Wp-Recall 13.2.3 (обновление из 
 
 Буду рад услышать мнение относительно дальнейшего развития данного дополнения.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[500]]></price-products>
@@ -2432,6 +2491,7 @@ v2.0. Совместимость с Wp-Recall 13.2.3 (обновление из 
 
 в архиве картинки в формате JPG 256x256]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2448,6 +2508,7 @@ v2.0. Совместимость с Wp-Recall 13.2.3 (обновление из 
 
 Для проверки данных используются методы Wargaming Public API или OpenID. Cсылка для аутентификации будет добавлена в форму добавления комментариев а так же на страницу авторизации. Возможна работа во всех игровых регионах ([RU] Россия, [NA] America, [EU] Europe, [ASIA] Asia, [KR] 대한민국).]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[250]]></price-products>
@@ -2470,6 +2531,7 @@ v2.0. Совместимость с Wp-Recall 13.2.3 (обновление из 
 </ul>
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[500]]></price-products>
@@ -2536,6 +2598,7 @@ v2.0. Совместимость с Wp-Recall 13.2.3 (обновление из 
 
 <span style="color: #ff0000;"><strong>Внимание, если вы используете плагин </strong><strong>WP-</strong><strong>Recall, убедитесь, что у вас установлена последняя версия плагина!</strong></span>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[110]]></price-products>
@@ -2568,6 +2631,7 @@ v2.0. Совместимость с Wp-Recall 13.2.3 (обновление из 
 
 Сейчас данный функционал работает на этом сайте, так что можно при желании потестировать. Стоит заметить, что, возможно, для лучшего отображения фоновых изображений стоит внести некоторые изменения в стилевой шаблон плагина, но это по желанию и если есть соответствующие навыки.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2590,6 +2654,7 @@ v2.0. Совместимость с Wp-Recall 13.2.3 (обновление из 
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[100]]></price-products>
@@ -2625,6 +2690,7 @@ v2.0. Совместимость с Wp-Recall 13.2.3 (обновление из 
 
 Новые уведомления, не прочитанные ранее выделяются цветом.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2674,6 +2740,7 @@ IE11
 <div style="width: 90%; background-color: #fdffe1; margin: 0px auto; padding: 5px 4px 7px 16px; border: 4px double #daf6f6; font-size: 17px;"><i class="fa fa-external-link-square fa-3x pull-right"></i>Вступайте в мою группу: <a title="Перейти к группе" href="http://wppost.loc/groups/otshelnik-fm-moi-raboty-kod-plaginy-dopolneniya-stati-i-rukovodstva/" target="_blank">"<strong>Otshelnik-Fm - мои работы (код, плагины, дополнения, статьи и руководства)</strong>"</a>
 для уведомления о обновлениях и новостях в вашем фиде</div>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2719,6 +2786,7 @@ SoundPlay позволяет пользователю не только загр
 <em>orderby</em> - сортировать по указанному полю. Поддерживаемые значения: sound_name, sound_id
 <em>order</em> - направление сортировки. Может быть DESC, ASC.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2743,6 +2811,7 @@ SoundPlay позволяет пользователю не только загр
 
 Не важно в каком меню будут выводится указанные кнопки, они будут выводятся в том же стиле, что и другие кнопки и ссылки используемого меню, будь то горизонтальное или боковое меню.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2776,6 +2845,7 @@ SoundPlay позволяет пользователю не только загр
 В полях FAIL и SUCCESS указываем URL страниц созданных на сайте с текстом о неудачной оплате и удачной оплате соотвественно.
 <h3 style="text-align: center;"><a href="https://unitpay.ru/?ref=61311" target="_blank">Зарегистрироваться в Unitpay</a></h3>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2811,6 +2881,7 @@ SoundPlay позволяет пользователю не только загр
 
 <em><span style="color: #ff0000;"><strong>Внимание!</strong></span> Данное подключение не было протестировано, возможны ошибки в работе. Устанавливайте дополнение только в том случае, если готовы предоставить доступ на свой сервер для проведения необходимых тестов и доработки дополнения при необходимости.</em>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2831,6 +2902,7 @@ SoundPlay позволяет пользователю не только загр
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[10]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2876,6 +2948,7 @@ SoundPlay позволяет пользователю не только загр
 </strong></span></h4>
 <a href="http://wppost.loc/wp-content/uploads/2015/12/add_315-1.jpg"><img class="aligncenter" src="http://wppost.loc/wp-content/uploads/2015/12/add_315-1.jpg" alt="" width="490" height="245" /></a>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[250]]></price-products>
@@ -2928,6 +3001,7 @@ v1.1 - Возможно вписывать город и на латинице.
 <div style="width: 90%; background-color: #fdffe1; margin: 0px auto; padding: 5px 4px 7px 16px; border: 4px double #daf6f6; font-size: 17px;"><i class="fa fa-external-link-square fa-3x pull-right"></i>Вступайте в мою группу: <a title="Перейти к группе" href="http://wppost.loc/groups/otshelnik-fm-moi-raboty-kod-plaginy-dopolneniya-stati-i-rukovodstva/" target="_blank">"<strong>Otshelnik-Fm - мои работы (код, плагины, дополнения, статьи и руководства)</strong>"</a>
 для уведомления о обновлениях и новостях в вашем фиде</div>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -2954,6 +3028,7 @@ v1.1 - Возможно вписывать город и на латинице.
 
 <a href="http://wppost.loc/groups/web-blog-blog-o-bloge-na-wordpress/" target="_blank"><img class="aligncenter" src="http://web-blog.su/content/themes/Web-Blog/inc/img/wppost-group-banner.gif" alt="" border="0" /></a>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[50]]></price-products>
@@ -2987,6 +3062,7 @@ Payeer поддерживает возможность оплаты из бол�
 
 Если при работе дополнения возникнут проблемы просьба отписать о них на форуме сайта.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -3023,6 +3099,7 @@ GeoWeather определяет IP-адрес текущего пользова�
 
 При первой активации плагина на сайте будет производится установка данных плагина, что может занять некоторое время.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[300]]></price-products>
@@ -3096,6 +3173,7 @@ Comments Tuner позволяет пользователям вашего сай
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[500]]></price-products>
@@ -3178,6 +3256,7 @@ v2.0 - Иконки от Font Awesome. Избавился от закодиро�
 <div style="width: 90%; background-color: #fdffe1; margin: 0px auto; padding: 5px 4px 7px 16px; border: 4px double #daf6f6; font-size: 17px;"><i class="fa fa-external-link-square fa-3x pull-right"></i>Вступайте в мою группу: <a title="Перейти к группе" href="http://wppost.loc/groups/otshelnik-fm-moi-raboty-kod-plaginy-dopolneniya-stati-i-rukovodstva/" target="_blank">"<strong>Otshelnik-Fm - мои работы (код, плагины, дополнения, статьи и руководства)</strong>"</a>
 для уведомления о обновлениях и новостях в вашем фиде</div>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -3245,6 +3324,7 @@ https://youtu.be/Go1hd1FbGCg
 
 <a href="http://wppost.loc/groups/web-blog-blog-o-bloge-na-wordpress/" target="_blank"><img class="aligncenter" src="http://web-blog.su/content/themes/Web-Blog/inc/img/wppost-group-banner.gif" alt="" border="0" /></a>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[75]]></price-products>
@@ -3263,6 +3343,7 @@ https://youtu.be/Go1hd1FbGCg
 
 Благодаря новому функционалу группу администратор группы может выводить виджет в любой из доступных областей вывода внутри группы.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -3288,6 +3369,7 @@ https://youtu.be/Go1hd1FbGCg
 
 Плагин работает на всех версиях WP]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[150]]></price-products>
@@ -3311,6 +3393,7 @@ https://youtu.be/Go1hd1FbGCg
 <div style="width: 90%; background-color: #fdffe1; margin: 0px auto; padding: 5px 4px 7px 16px; border: 4px double #daf6f6; font-size: 17px;"><i class="fa fa-external-link-square fa-3x pull-right"></i>Вступайте в мою группу: <a target="_blank" href="http://wppost.loc/groups/otshelnik-fm-moi-raboty-kod-plaginy-dopolneniya-stati-i-rukovodstva/" title="Перейти к группе">"<strong>Otshelnik-Fm - мои работы (код, плагины, дополнения, статьи и руководства)</strong>"</a><br>
 для уведомления о обновлениях и новостях в вашем фиде</div>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -3358,6 +3441,7 @@ https://youtu.be/Go1hd1FbGCg
 
 Внимание! Прежде чем оплачивать данную услугу, рекомендую перед этим уточнить, в общих чертах, свою задачу и возможность оказания помощи по ней через Skype в комментарии ниже.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[800]]></price-products>
@@ -3419,6 +3503,7 @@ https://youtu.be/Go1hd1FbGCg
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[200]]></price-products>
@@ -3486,6 +3571,7 @@ https://youtu.be/Go1hd1FbGCg
 Добавлены настройки по доступу к контенту рубрики корзины (которую Вы назначили) и возможность блокировать комментарии и рейтинг постов перенесенных в рубрику корзины.
 Исправлены мелкие баги.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[220]]></price-products>
@@ -3514,6 +3600,7 @@ https://youtu.be/Go1hd1FbGCg
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -3559,6 +3646,7 @@ URL неуспешной оплаты - созданная страница с 
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -3603,6 +3691,7 @@ Fail Url - созданная страница с текстом о неудач
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -3659,6 +3748,7 @@ Fail Url - созданная страница с текстом о неудач
 [/wpa]
 <p style="text-align: left;">в этом случае, комиссия сервиса для вас будет еще ниже, а действующий <a href="https://www.walletone.com/ru/merchant/pricing/#country=RU&amp;tariff=middle&amp;currency=643" target="_blank">тарифный план еще привлекательнее!</a></p>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -3691,6 +3781,7 @@ Fail Url - созданная страница с текстом о неудач
 
 Это дает возможность, например, понизить рейтинг отзыва, если он несправедлив и тем самым повлиять на общий рейтинг автора этого отзыва]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -3771,6 +3862,7 @@ v.1.1.
 <div style="width: 90%; background-color: #fdffe1; margin: 0px auto; padding: 5px 4px 7px 16px; border: 4px double #daf6f6; font-size: 17px;"><i class="fa fa-external-link-square fa-3x pull-right"></i>Вступайте в мою группу: <a title="Перейти к группе" href="http://wppost.loc/groups/otshelnik-fm-moi-raboty-kod-plaginy-dopolneniya-stati-i-rukovodstva/" target="_blank">"<strong>Otshelnik-Fm - мои работы (код, плагины, дополнения, статьи и руководства)</strong>"</a>
 для уведомления о обновлениях и новостях в вашем фиде</div>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[49]]></price-products>
@@ -3785,6 +3877,7 @@ v.1.1.
 14 анимационных GIF изображений с прозрачным фоном, размером 200x200 и 11 размером 128Х128 + в придачу 60 PNG изображение с прозрачным фоном и тематическими подписями, размером 92x92.
 Пример отображения данных подарков на сайте см. видео у меня в ЛК - http://wppost.loc?post_type=video&amp;p=11799]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[1]]></price-products>
@@ -3819,6 +3912,7 @@ v.1.1.
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -3853,6 +3947,7 @@ v.1.1.
 Результат:
 <img class="aligncenter" src="http://i.imgur.com/9aZLLrR.png" alt="" />]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[150]]></price-products>
@@ -3899,6 +3994,7 @@ v.1.1.
 Результат (при нажатии видео запускается в главном окне):
 <img class="aligncenter" src="http://i.imgur.com/wgOrzx5.png" alt="" />]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[200]]></price-products>
@@ -3923,6 +4019,7 @@ v.1.1.
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[180]]></price-products>
@@ -3952,6 +4049,7 @@ v.1.1.
 
 <a href="http://wppost.loc/wp-content/uploads/2016/03/2016-03-15-13-25-57-Настройки-магазина-‹-WPPOST-продажа-цифровых-товаров-—-WordPress-Google-Chrome.png" rel="attachment wp-att-11875"><img class="aligncenter size-full wp-image-11875" src="http://wppost.loc/wp-content/uploads/2016/03/2016-03-15-13-25-57-Настройки-магазина-‹-WPPOST-продажа-цифровых-товаров-—-WordPress-Google-Chrome.png" alt="2016-03-15 13-25-57 Настройки магазина ‹ WPPOST - продажа цифровых товаров — WordPress - Google Chrome" width="344" height="253" /></a>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -3993,6 +4091,7 @@ v1.1. исправлен баг с возвратом в фильтр.
 <div style="width: 90%; background-color: #fdffe1; margin: 0px auto; padding: 5px 4px 7px 16px; border: 4px double #daf6f6; font-size: 17px;"><i class="fa fa-external-link-square fa-3x pull-right"></i>Вступайте в мою группу: <a title="Перейти к группе" href="http://wppost.loc/groups/otshelnik-fm-moi-raboty-kod-plaginy-dopolneniya-stati-i-rukovodstva/" target="_blank">"<strong>Otshelnik-Fm - мои работы (код, плагины, дополнения, статьи и руководства)</strong>"</a>
 для уведомления о обновлениях и новостях в вашем фиде</div>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -4036,6 +4135,7 @@ v1.1. исправлен баг с возвратом в фильтр.
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[200]]></price-products>
@@ -4052,6 +4152,7 @@ v1.1. исправлен баг с возвратом в фильтр.
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[3]]></price-products>
@@ -4072,6 +4173,7 @@ v1.1. исправлен баг с возвратом в фильтр.
 
 Тема Contango подходит для любого делового или личного сайта и может использоваться в разных областях. Готова к переводу.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -4121,6 +4223,7 @@ Wordpress плагин для скачивания (парсинга) конте
 
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[600]]></price-products>
@@ -4156,6 +4259,7 @@ Version: 0.1
 
 Codeseller Updater, на данном этапе, проходит тестирование, если будут возникать проблемы, то прошу писать на форум поддержи плагина.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[1]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -4177,6 +4281,7 @@ Codeseller Updater, на данном этапе, проходит тестир
 </a>
 <img src="http://luzinama.ru/wp-content/uploads/2016/03/inf_scroll_j.png" alt="Настройки" />]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[70]]></price-products>
@@ -4189,6 +4294,7 @@ Codeseller Updater, на данном этапе, проходит тестир
 <post_title><![CDATA[ывыв]]></post_title>
 <post_content><![CDATA[вававаапап]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[34]]></price-products>
@@ -4201,6 +4307,7 @@ Codeseller Updater, на данном этапе, проходит тестир
 <post_title><![CDATA[sdsd]]></post_title>
 <post_content><![CDATA[dfdff]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[45]]></price-products>
@@ -4233,6 +4340,7 @@ Codeseller Updater, на данном этапе, проходит тестир
 
 Внимание! Для работы данного дополнения требуется обязательная активация дополнения личного счета и настройках каждого из выбранных подключений в отдельности, просьба следовать инструкции подключения плагина WP-Recall к платежным системам на страницах соответствующих дополнений.]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[300]]></price-products>
@@ -4243,7 +4351,7 @@ Codeseller Updater, на данном этапе, проходит тестир
 </post><post>
 <ID>12030</ID>
 <post_title><![CDATA[Smartresponder manager]]></post_title>
-<post_content><![CDATA[<img class="aligncenter size-full wp-image-12031" src="http://wppost.loc/wp-content/uploads/2016/03/smart-illus-1.png" alt="smart-illus-1" width="865" height="242" />
+<post_content><![CDATA[&nbsp;
 
 Smartresponder manager - дополнение, позволяющее пользователям гибко настраивать свою подписку на рассылки вашего сайта.
 
@@ -4267,8 +4375,8 @@ Smartresponder manager - дополнение, позволяющее польз
 
 <a href="http://wppost.loc/wp-content/uploads/2016/03/2016-03-23-20-37-28-НАСТРОЙКИ-‹-WPPOST-продажа-цифровых-товаров-—-WordPress-Google-Chrome-2.png" rel="attachment wp-att-12033"><img class="aligncenter wp-image-12033" src="http://wppost.loc/wp-content/uploads/2016/03/2016-03-23-20-37-28-НАСТРОЙКИ-‹-WPPOST-продажа-цифровых-товаров-—-WordPress-Google-Chrome-2.png" alt="2016-03-23 20-37-28 НАСТРОЙКИ ‹ WPPOST - продажа цифровых товаров — WordPress - Google Chrome (2)" width="444" height="184" /></a>
 <ol>
-	<li>Укажите свой ключ API для подключения вашего сайта к сервису Smartresponder</li>
-	<li>Разрешите или запретите автоматическую подписку пользователей на определенную рассылку при регистрации</li>
+ 	<li>Укажите свой ключ API для подключения вашего сайта к сервису Smartresponder</li>
+ 	<li>Разрешите или запретите автоматическую подписку пользователей на определенную рассылку при регистрации</li>
 </ol>
 Все, на этом настройки закончились!
 
@@ -4311,9 +4419,10 @@ Smartresponder manager - дополнение, позволяющее польз
 </div>
 &nbsp;]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
-<price-products><![CDATA[457]]></price-products>
+<price-products><![CDATA[400]]></price-products>
 <related_products_recall><![CDATA[Array]]></related_products_recall>
 <reserve_product><![CDATA[]]></reserve_product>
 <prodcat><![CDATA[396,457]]></prodcat>
@@ -4351,13 +4460,73 @@ Smartresponder manager - дополнение, позволяющее польз
 
 <span style="color: #ff0000;"><strong>Акция!</strong></span> При приобретении двух экземпляров плагина к заказу <span style="color: #ff0000;">прилагается <strong><span style="font-size: 25px;">5</span></strong> активационных ключей</span>]]></post_content>
 <post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[gr_manager]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
-<outsale><![CDATA[]]></outsale>
-<price-products><![CDATA[0]]></price-products>
+<outsale><![CDATA[1]]></outsale>
+<price-products><![CDATA[400]]></price-products>
 <related_products_recall><![CDATA[Array]]></related_products_recall>
 <reserve_product><![CDATA[]]></reserve_product>
 <prodcat><![CDATA[396,457]]></prodcat>
 <product_tag><![CDATA[подписка]]></product_tag>
+</post><post>
+<ID>12869</ID>
+<post_title><![CDATA[Новый товар]]></post_title>
+<post_content><![CDATA[<p class="text-justify">С другой стороны реализация намеченных плановых заданий играет важную роль в формировании форм развития. Значимость этих проблем настолько очевидна, что реализация намеченных плановых заданий требуют определения и уточнения позиций, занимаемых участниками в отношении поставленных задач.</p>
+<p class="text-justify">Задача организации, в особенности же дальнейшее развитие различных форм деятельности способствует подготовки и реализации соответствующий условий активизации. Не следует, однако забывать, что укрепление и развитие структуры влечет за собой процесс внедрения и модернизации позиций, занимаемых участниками в отношении поставленных задач.</p>]]></post_content>
+<post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
+<amount_product><![CDATA[]]></amount_product>
+<outsale><![CDATA[]]></outsale>
+<price-products><![CDATA[10]]></price-products>
+<related_products_recall><![CDATA[Array]]></related_products_recall>
+<reserve_product><![CDATA[]]></reserve_product>
+<prodcat><![CDATA[569,570]]></prodcat>
+<product_tag><![CDATA[0]]></product_tag>
+</post><post>
+<ID>12871</ID>
+<post_title><![CDATA[Новейший товар]]></post_title>
+<post_content><![CDATA[<p class="text-justify">С другой стороны реализация намеченных плановых заданий играет важную роль в формировании форм развития. Значимость этих проблем настолько очевидна, что реализация намеченных плановых заданий требуют определения и уточнения позиций, занимаемых участниками в отношении поставленных задач.</p>
+<p class="text-justify">Задача организации, в особенности же дальнейшее развитие различных форм деятельности способствует подготовки и реализации соответствующий условий активизации. Не следует, однако забывать, что укрепление и развитие структуры влечет за собой процесс внедрения и модернизации позиций, занимаемых участниками в отношении поставленных задач.</p>]]></post_content>
+<post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
+<amount_product><![CDATA[]]></amount_product>
+<outsale><![CDATA[]]></outsale>
+<price-products><![CDATA[1500]]></price-products>
+<related_products_recall><![CDATA[Array]]></related_products_recall>
+<reserve_product><![CDATA[]]></reserve_product>
+<prodcat><![CDATA[569,570]]></prodcat>
+<product_tag><![CDATA[0]]></product_tag>
+</post><post>
+<ID>12873</ID>
+<post_title><![CDATA[Новый товар 2]]></post_title>
+<post_content><![CDATA[<p class="text-justify">С другой стороны реализация намеченных плановых заданий играет важную роль в формировании форм развития. Значимость этих проблем настолько очевидна, что реализация намеченных плановых заданий требуют определения и уточнения позиций, занимаемых участниками в отношении поставленных задач.</p>
+<p class="text-justify">Задача организации, в особенности же дальнейшее развитие различных форм деятельности способствует подготовки и реализации соответствующий условий активизации. Не следует, однако забывать, что укрепление и развитие структуры влечет за собой процесс внедрения и модернизации позиций, занимаемых участниками в отношении поставленных задач.</p>
+<p class="text-justify">С другой стороны реализация намеченных плановых заданий играет важную роль в формировании форм развития. Значимость этих проблем настолько очевидна, что реализация намеченных плановых заданий требуют определения и уточнения позиций, занимаемых участниками в отношении поставленных задач.</p>
+<p class="text-justify">Задача организации, в особенности же дальнейшее развитие различных форм деятельности способствует подготовки и реализации соответствующий условий активизации. Не следует, однако забывать, что укрепление и развитие структуры влечет за собой процесс внедрения и модернизации позиций, занимаемых участниками в отношении поставленных задач.</p>]]></post_content>
+<post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
+<amount_product><![CDATA[]]></amount_product>
+<outsale><![CDATA[]]></outsale>
+<price-products><![CDATA[300]]></price-products>
+<related_products_recall><![CDATA[Array]]></related_products_recall>
+<reserve_product><![CDATA[]]></reserve_product>
+<prodcat><![CDATA[569,570]]></prodcat>
+<product_tag><![CDATA[0]]></product_tag>
+</post><post>
+<ID>12875</ID>
+<post_title><![CDATA[Новый товар 3]]></post_title>
+<post_content><![CDATA[<p class="text-justify">С другой стороны реализация намеченных плановых заданий играет важную роль в формировании форм развития. Значимость этих проблем настолько очевидна, что реализация намеченных плановых заданий требуют определения и уточнения позиций, занимаемых участниками в отношении поставленных задач.</p>
+<p class="text-justify">Задача организации, в особенности же дальнейшее развитие различных форм деятельности способствует подготовки и реализации соответствующий условий активизации. Не следует, однако забывать, что укрепление и развитие структуры влечет за собой процесс внедрения и модернизации позиций, занимаемых участниками в отношении поставленных задач.</p>
+<p class="text-justify">С другой стороны реализация намеченных плановых заданий играет важную роль в формировании форм развития. Значимость этих проблем настолько очевидна, что реализация намеченных плановых заданий требуют определения и уточнения позиций, занимаемых участниками в отношении поставленных задач.</p>]]></post_content>
+<post_status><![CDATA[publish]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
+<amount_product><![CDATA[]]></amount_product>
+<outsale><![CDATA[]]></outsale>
+<price-products><![CDATA[10]]></price-products>
+<related_products_recall><![CDATA[Array]]></related_products_recall>
+<reserve_product><![CDATA[]]></reserve_product>
+<prodcat><![CDATA[569,570]]></prodcat>
+<product_tag><![CDATA[0]]></product_tag>
 </post><post>
 <ID>7020</ID>
 <post_title><![CDATA[Profile Search]]></post_title>
@@ -4402,6 +4571,7 @@ horizontal - горизонтальный вывод
 Список найденных в результате поискового запроса пользователей будет выводится через шорткод userlist
 <h3 style="text-align: center;"></h3>]]></post_content>
 <post_status><![CDATA[trash]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>
@@ -4422,6 +4592,7 @@ horizontal - горизонтальный вывод
 2. Активировать аддон Kos theme.
 3. Радоваться красивому и аккуратному дизайну сайта]]></post_content>
 <post_status><![CDATA[trash]]></post_status>
+<activation_key><![CDATA[]]></activation_key>
 <amount_product><![CDATA[]]></amount_product>
 <outsale><![CDATA[]]></outsale>
 <price-products><![CDATA[0]]></price-products>

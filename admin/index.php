@@ -76,9 +76,9 @@ function rcl_gallery_options($options,$post){
 
 function rcl_options_box( $post ){
     $content = '';
-	echo apply_filters('rcl_post_options',$content,$post); ?>
-	<input type="hidden" name="rcl_fields_nonce" value="<?php echo wp_create_nonce(__FILE__); ?>" />
-	<?php
+    echo apply_filters('rcl_post_options',$content,$post); ?>
+    <input type="hidden" name="rcl_fields_nonce" value="<?php echo wp_create_nonce(__FILE__); ?>" />
+    <?php
 }
 
 function rcl_postmeta_update( $post_id ){
@@ -118,7 +118,7 @@ function rcl_update_options(){
     });
 
     if($POST['global']['login_form_recall']==1&&!isset($POST['global']['page_login_form_recall'])){
-            $POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
+        $POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
     }
 
     foreach((array)$POST['global'] as $key => $value){

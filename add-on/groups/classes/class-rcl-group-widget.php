@@ -196,8 +196,11 @@ function rcl_group_register_widget($child_class){
     $widgets->register($child_class);
 }
 
-function rcl_group_area($place=false){
+function rcl_group_area($place = 'sidebar'){
     global $rcl_group,$rcl_group_widgets;
+    
+    do_action('rcl_group_'.$place.'_area');
+    
     $widgets = new Rcl_Group_Widget();
     echo $widgets->loop($place);
 }

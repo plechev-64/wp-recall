@@ -143,7 +143,7 @@ class Rcl_Options extends Rcl_Custom_Fields{
         $this->value = $value;
         $this->slug = $args['name'];
         
-        $content .= $this->$methodName($field,$value);
+        $content .= $this->$methodName($field);
         
         if(isset($args['help'])&&$args['help']){
             $content .= $this->help($args['help']);

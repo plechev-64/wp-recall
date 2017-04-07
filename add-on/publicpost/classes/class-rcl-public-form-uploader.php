@@ -106,29 +106,47 @@ class Rcl_Public_Form_Uploader{
     }
     
     function get_dropzone(){
-        
-        if($this->ext_types){
-            $mTypes = rcl_get_mime_types(array_map('trim',explode(',',$this->ext_types)));
-        }else{
-            $mTypes = array('image/*');
-        }
-        
+
         $content = '<div>
             <div id="rcl-public-dropzone-'.$this->post_type.'" class="rcl-dropzone mass-upload-box">
                 <div class="mass-upload-area">
-                        '.__('Add files to the download queue','wp-recall').'
+                    '.__('Add files to the download queue','wp-recall').'
                 </div>
                 <hr>
-                <div class="recall-button rcl-upload-button">
-                        <span>'.__('Add','wp-recall').'</span>
-                        <input id="upload-public-form-'.$this->post_type.'" name="uploadfile[]" type="file" accept="'.implode(',',$mTypes).'" multiple>
-                </div>
+                '.$this->get_upload_button().'
                 <small class="notice">'.__('Allowed extensions','wp-recall').': '.$this->ext_types.'</small>
             </div>
         </div>';
         
         return $content;
         
+    }
+    
+    function get_upload_button($args = false){
+        
+        $defaults = array(
+            'title' => __('Add','wp-recall'),
+            'ext_types' => $this->ext_types,
+            'id' => 'upload-public-form-'.$this->post_type,
+            'name' => 'uploadfile[]',
+            'multiple' => true,
+            'onclick' => false
+        );
+        
+        $args = wp_parse_args( $args, $defaults );
+        
+        if($args['ext_types']){
+            $mTypes = rcl_get_mime_types(array_map('trim',explode(',',$args['ext_types'])));
+        }else{
+            $mTypes = array('image/*');
+        }
+        
+        $content = '<div class="recall-button rcl-upload-button">
+                        <span>'.$args['title'].'</span>
+                        <input id="'.$args['id'].'" name="'.$args['name'].'" type="file" '.($args['onclick']? 'onclick="'.$args['onclick'].'"': '').' accept="'.implode(',',$mTypes).'" '.($args['multiple']? 'multiple': '').'>
+                    </div>';
+        
+        return $content;
     }
 
     function get_thumbs_list(){

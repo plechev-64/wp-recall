@@ -63,15 +63,20 @@ class Rcl_Custom_Fields{
 
         $callback = 'get_type_'.$field['type'];
 
-        $html_field = $this->$callback($field);
+        $fieldHtml = $this->$callback($field);
         
         if($this->maxlength){
-            $html_field .= '<script>rcl_init_field_maxlength("'.$this->slug.'");</script>';
+            $fieldHtml .= '<script>rcl_init_field_maxlength("'.$this->slug.'");</script>';
         }
-
-        $html_field .= $this->get_notice($field);
         
-        return '<span class="rcl-field-input type-'.$field['type'].'-input">'.$html_field.'</span>';
+        $content = '<div class="rcl-field-input type-'.$field['type'].'-input">'
+                        . '<div class="rcl-field-core">'
+                            . $fieldHtml
+                        . '</div>'
+                        . $this->get_notice($field)
+                    . '</div>';
+        
+        return $content;
     }
     
     function get_notice($field){

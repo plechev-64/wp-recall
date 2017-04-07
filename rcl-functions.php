@@ -913,20 +913,6 @@ function rcl_delete_user_action($user_id){
     return $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_id));
 }
 
-function rcl_get_insert_image($image_id,$mime='image'){
-    global $rcl_options;
-    if($mime=='image'){
-        $small_url = wp_get_attachment_image_src( $image_id, 'thumbnail' );
-        $full_url = wp_get_attachment_image_src( $image_id, 'full' );
-        if($rcl_options['default_size_thumb']) $sizes = wp_get_attachment_image_src( $image_id, $rcl_options['default_size_thumb'] );
-        else $sizes = $small_url;
-        $act_sizes = wp_constrain_dimensions($full_url[1],$full_url[2],$sizes[1],$sizes[2]);
-        return '<a onclick="rcl_add_image_in_form(this,\'<a href='.$full_url[0].'><img height='.$act_sizes[1].' width='.$act_sizes[0].' class=aligncenter  src='.$full_url[0].'></a>\');return false;" href="#"><img src="'.$small_url[0].'"></a>';
-    }else{
-        return wp_get_attachment_link( $image_id, array(100,100),false,true );
-    }
-}
-
 function rcl_get_button($ancor,$url,$args=false){
     $button = '<a href="'.$url.'" ';
     if(isset($args['attr'])&&$args['attr']) $button .= $args['attr'].' ';

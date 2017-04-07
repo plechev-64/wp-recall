@@ -83,8 +83,17 @@ function rcl_imagepost_upload(){
             if(!$user_ID){   
                 $attachment['post_content'] = $_COOKIE['PHPSESSID'];
             }
+            
+            $attach_id = wp_insert_attachment( $attachment, $image['file'], $id_post );
+            $attach_data = wp_generate_attachment_metadata( $attach_id, $image['file'] );
+            wp_update_attachment_metadata( $attach_id, $attach_data );
 
-            $res[$k]['string'] = rcl_insert_attachment($attachment,$image,$id_post);
+            if(!$id_post) 
+                rcl_update_tempgallery($attach_id,$image['url']);
+
+            $res[$k]['string'] = rcl_get_html_attachment($attach_id,$attachment['post_mime_type']);
+            $res[$k]['thumbnail_image'] = wp_get_attachment_image( $attach_id, 'thumbnail');
+            $res[$k]['attachment_id'] = $attach_id;
         }
 
     }

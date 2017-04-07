@@ -55,8 +55,7 @@ function rcl_chat_delete_unattached_attachments(){
         . "AND post_excerpt='rcl_chat_attachment:unattached'"
     );
     
-    if(!$unattaches)
-		return;
+    if(!$unattaches) return;
 
     foreach( $unattaches as $attachment_id )
         wp_delete_attachment( $attachment_id );
@@ -97,11 +96,8 @@ function rcl_chat_send_notify_messages(){
                 $content .= '<p>'.__('You can read the message by clicking on the link:','wp-recall').' <a href="'.$url.'">'.$url.'</a></p>'
                 . '</div>';
         }
-        
-        if($cnt==1) 
-            $title = __('For you','wp-recall').' '.$cnt.' '.__('new message','wp-recall');
-        else 
-            $title = __('For you','wp-recall').' '.$cnt.' '.__('new messages','wp-recall');
+
+        $title = __('For you','wp-recall').' '.$cnt.' '.__('new messages','wp-recall');
         
         rcl_mail($to, $title, $content);
     }

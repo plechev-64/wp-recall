@@ -20,6 +20,23 @@ class Rcl_Rating_Box {
         'view_history' => false,
         'vote' => false
     );
+    public $buttons = array(
+        'plus' => array(
+            'type' => 'plus',
+            'class' => 'vote-plus',
+            'icon' => 'fa-thumbs-up'
+        ),
+        'minus' => array(
+            'type' => 'minus',
+            'class' => 'vote-minus',
+            'icon' => 'fa-thumbs-down'
+        ),
+        'like' => array(
+            'type' => 'plus',
+            'class' => 'vote-heart',
+            'icon' => 'fa-heart'
+        )
+    );
 
     function __construct($args) {
         global $rcl_options;
@@ -41,6 +58,8 @@ class Rcl_Rating_Box {
         );
         
         $this->user_can = apply_filters('rcl_rating_user_can', $this->user_can, $data);
+        
+        $this->buttons = apply_filters('rcl_rating_buttons', $this->buttons, $data);
 
     }
     
@@ -172,11 +191,7 @@ class Rcl_Rating_Box {
     
     function get_box_like(){
         
-        $content = $this->get_html_button(array(
-            'button_type' => 'plus',
-            'button_class' => 'vote-heart',
-            'button_icon' => 'fa-heart'
-        ));
+        $content = $this->get_html_button($this->buttons['like']);
 
         $content .= $this->get_html_total_rating();
         
@@ -185,19 +200,11 @@ class Rcl_Rating_Box {
     
     function get_box_default(){
         
-        $content = $this->get_html_button(array(
-            'button_type' => 'minus',
-            'button_class' => 'vote-minus',
-            'button_icon' => 'fa-thumbs-down'
-        ));
+        $content = $this->get_html_button($this->buttons['minus']);
 
         $content .= $this->get_html_total_rating();
 
-        $content .= $this->get_html_button(array(
-            'button_type' => 'plus',
-            'button_class' => 'vote-plus',
-            'button_icon' => 'fa-thumbs-up'
-        ));
+        $content .= $this->get_html_button($this->buttons['plus']);
         
         return $content;
         
@@ -306,8 +313,8 @@ class Rcl_Rating_Box {
         
         if(!$this->user_can['vote']) return false;
         
-        return '<span class="'.$this->get_class_vote_button($args['button_type']).' '.$args['button_class'].'" data-rating="'.$this->get_encode_string($args['button_type']).'" onclick="rcl_edit_rating(this);">'
-                    . '<i class="fa '.$args['button_icon'].'" aria-hidden="true"></i>'
+        return '<span class="'.$this->get_class_vote_button($args['type']).' '.$args['class'].'" data-rating="'.$this->get_encode_string($args['type']).'" onclick="rcl_edit_rating(this);">'
+                    . '<i class="fa '.$args['icon'].'" aria-hidden="true"></i>'
                 . '</span>';
         
     }

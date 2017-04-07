@@ -50,19 +50,11 @@ function rcl_public_form_manager(){
     echo $content;
 }
 
-add_action('admin_init', 'custom_fields_editor_post_rcl', 1);
+add_action('dbx_post_advanced', 'custom_fields_editor_post_rcl', 1);
 function custom_fields_editor_post_rcl() {
+    global $post;
     
-    $post_id = ( isset( $_GET['post'] ) )? $_GET['post']: false;
-    $post_type = ( isset( $_GET['post_type'] ) )? $_GET['post_type']: false;
-        
-    if($post_id){
-        $post_type = get_post_type($post_id);
-    }
-    
-    if(!$post_type) return;
-    
-    add_meta_box( 'custom_fields_editor_post', __('Arbitrary fields of  publication','wp-recall'), 'custom_fields_list_posteditor_rcl', $post_type, 'normal', 'high'  );
+    add_meta_box( 'custom_fields_editor_post', __('Arbitrary fields of  publication','wp-recall'), 'custom_fields_list_posteditor_rcl', $post->post_type, 'normal', 'high'  );
 }
 
 function custom_fields_list_posteditor_rcl($post){ 

@@ -239,9 +239,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                     if($taxonomy = $this->is_taxonomy_field($this->current_field['slug'])){
 
                         $contentField = $this->get_terms_list($taxonomy);
-                        
-                        $contentField .= $CF->get_notice($this->current_field);
-                        
+
                     }
                     
                 }else{
@@ -361,6 +359,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         
         $content = '<div id="rcl-thumbnail-post">';
         
+        $content .= '<div class="thumbnail-wrapper">';
+        
         $content .= '<a href="#" class="rcl-service-button delete-post-thumbnail" onclick="rcl_remove_post_thumbnail();return false;"><i class="fa fa-trash"></i></a>';
         
         $content .= '<div class="thumbnail-image">';
@@ -380,6 +380,21 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $thumbnail_id = ($this->post_id)? get_post_thumbnail_id( $this->post_id ): 0;
         
         $content .= '<input class="thumbnail-id" type="hidden" name="post-thumbnail" value="'.$thumbnail_id.'">';
+        
+        $content .= '</div>';
+        
+        $postUploder = new Rcl_Public_Form_Uploader(array(
+            'post_id' => $this->post_id,
+            'post_type' => $this->post_type,
+            'ext_types' => 'jpg,png,jpeg'
+        ));
+
+        $content .= $postUploder->get_upload_button(array(
+            'multiple' => false,
+            'id' => 'rcl-thumbnail-uploader',
+            'title' => __('Загрузить миниатюру','wp-recall'),
+            'onclick' => 'rcl_init_thumbnail_uploader(this);'
+        ));
         
         $content .= '</div>';
         
@@ -437,19 +452,6 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $content .= '</div>';
         
         return $content;
-        
-    }
-    
-    function upload_box(){
-        global $rcl_options;
-        
-        $wp_uploader = (isset($rcl_options['media_uploader']))? $rcl_options['media_uploader']: 0;
-        
-        if($wp_uploader) return false;
-        
-        $uploader = new Rcl_Public_Form_Uploader(array('post_id'=>$this->post_id));
-        
-        echo $uploader->get_gallery();
         
     }
     

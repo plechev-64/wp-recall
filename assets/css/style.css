@@ -584,26 +584,30 @@ a.data-filter.filter-active:hover {
 /* END аватар и элементы управления внутри него */
 
 /*Произвольные поля плагина*/
-.rcl-field-input{
+.rcl-field-input {
     display: block;
-    position:relative;
 }
-.rcl-field-input .maxlength{
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-weight: bold;
-    background: #e5e5e5;
-    display: inline-block;
-    padding: 2px 5px;
-    min-width: 30px;
-    text-align: center;
-    box-sizing: border-box;
-    z-index: 10;
+.rcl-field-core {
+    position: relative;
+}
+.rcl-field-input .maxlength {
+    align-items: center;
+    background-color: #e5e5e5;
     border: 1px solid #ccc;
+    box-sizing: border-box;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
     max-height: 100%;
+    min-width: 30px;
+    padding: 2px 5px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    z-index: 10;
 }
-.rcl-field-input.type-text-input .maxlength{
+.rcl-field-input.type-text-input .maxlength {
     height: 100%;
 }
 .rcl-field-input input[type='text']{
@@ -624,11 +628,14 @@ a.data-filter.filter-active:hover {
 .type-dynamic-input .dynamic-values{
     display: block;
 }
-.type-dynamic-input .dynamic-values .dynamic-value{
-    display: block;
-    margin-bottom: 10px;
+.type-dynamic-input .dynamic-values .dynamic-value {
+    align-items: center;
+    display: flex;
+    margin: 0 0 2px;
 }
 .type-dynamic-input .dynamic-values .dynamic-value a {
+    border: none;
+    box-shadow: none;
     color: #797979;
     min-width: initial;
     vertical-align: middle;
@@ -649,10 +656,10 @@ a.data-filter.filter-active:hover {
     margin-bottom: 0px;
 }
 .rcl-field-input .rcl-checkbox-box,
-.rcl-field-input .rcl-radio-box{
-    display:inline-block;
+.rcl-field-input .rcl-radio-box {
+    display: inline-flex;
+    margin-right: 2px;
     position: relative;
-    margin-right: 10px;
 }
 p.rcl-custom-fields{
     clear:both;
@@ -788,13 +795,15 @@ div.ssi-backdrop {
 }
 .rcl-field-input input[type="radio"],
 .rcl-field-input input[type="checkbox"] {
+    left: 10px;
     opacity: 0;
     position: absolute;
-	z-index: -1;
+    top: 10px;
+    z-index: -1;
 }
 .rcl-field-input label.block-label::before {
-    background: #fff none repeat scroll 0 0;
-    border: 2px solid #ddd;
+    background-color: #fff;
+    border: 1px solid #ccc;
     box-sizing: content-box;
     content: "";
     display: inline-block;
@@ -1126,9 +1135,16 @@ div.ssi-backdrop {
 .rcl-table input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
 .rcl-table textarea {
     background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    box-shadow: none;
     box-sizing: border-box;
+    height: auto;
+    line-height: normal;
+    max-width: 100%;
+    outline: 0;
+    padding: 5px 7px;
     width: 100%;
-    padding:5px 10px;
 }
 .rcl-table input:focus:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
 .rcl-table textarea:focus {
@@ -1144,15 +1160,21 @@ div.ssi-backdrop {
 }
 .rcl-table select {
     background-color: #fff;
-	box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    box-shadow: none;
+    box-sizing: border-box;
     float: left;
+    height: auto;
+    line-height: normal;
     max-width: 99%;
+    outline: 0;
     padding: 5px 7px;
     width: 100%;
 }
 .rcl-table .block-label {
-    background: rgba(219, 219, 219, 0.3);
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
+    background-color: #f2f2f2;
+    border: 1px solid #e2e2e2;
     cursor: pointer;
     display: inline-block;
     float: left;
@@ -1160,7 +1182,7 @@ div.ssi-backdrop {
     font-size: 12px;
     line-height: 1;
     margin: 4px;
-    padding: 5px 9px 4px 8px;
+    padding: 5px 8px 4px 6px;
 }
 .rcl-table .block-label input[type="checkbox"] {
     margin: 0 6px 0 0;

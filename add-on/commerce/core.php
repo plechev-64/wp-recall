@@ -421,7 +421,7 @@ function rcl_get_product_excerpt($post_id){
     
     $excerpt = ($post->post_excerpt)? $post->post_excerpt: wp_trim_words( $post->post_content, 20, '...' );
     
-    return '<p>'.$excerpt.'</p>';
+    return '<span class="product-excerpt">'.$excerpt.'</span>';
     
 }
 

@@ -445,6 +445,9 @@ body .rcl-product-gallery ul.images-list {
 #rcl-order .order-table .column-product-name{
     
 }
+#rcl-order .order-table .product-excerpt{
+    display:block;
+}
 #rcl-order .order-table .column-product-price{
     text-align: center;
     vertical-align: middle;

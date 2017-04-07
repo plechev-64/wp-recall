@@ -125,11 +125,32 @@ function rcl_delete_post(element){
                 rcl_notice(data['error'],'error',10000);
                 return false;
             }
+
             jQuery('#'+data['post_type']+'-'+post_id).remove();
+            
+            data.post_id = post_id;
+            
+            rcl_do_action('rcl_delete_post',data);
+            
             rcl_notice(data['success'],'success',10000);
         }
     });
     return false;
+}
+
+rcl_add_action('rcl_delete_post','rcl_delete_thumbnail_attachment');
+function rcl_delete_thumbnail_attachment(data){
+    
+    if(data['post_type'] != 'attachment') return false;
+    
+    if(jQuery('#rcl-thumbnail-post').size()){
+        
+        var currentThumbId = jQuery('#rcl-thumbnail-post .thumbnail-id').val();
+        
+        if(currentThumbId == data['post_id'])
+            rcl_remove_post_thumbnail();
+    }
+    
 }
 
 function rcl_edit_post(element){	
@@ -479,10 +500,86 @@ function rcl_init_public_form(post){
     });
 }
 
-function rcl_add_image_in_form(e,$file){
+function rcl_init_thumbnail_uploader(e){
+    
+    var form = jQuery(e).parents('form');
+    
+    var post_id = form.data('post_id');
+    var post_type = form.data('post_type');
+    var ext_types = 'jpg,png,jpeg';
+
+    var maxcnt = Rcl.public.maxcnt;
+    var maxsize_mb = Rcl.public.maxsize_mb;
+    var maxsize = maxsize_mb*1024*1024;
+    
+    jQuery('#rcl-thumbnail-uploader').fileupload({
+        dataType: 'json',
+        type: 'POST',
+        url: Rcl.ajaxurl,
+        formData:{
+            action: 'rcl_imagepost_upload',
+            post_type: post_type,
+            post_id: post_id,
+            ext_types: ext_types,
+            ajax_nonce: Rcl.nonce
+        },
+        singleFileUploads:true,
+        autoUpload:true,
+        progressall: function (e, data) {
+            /*var progress = parseInt(data.loaded / data.total * 100, 10);
+            jQuery('#upload-box-message .progress-bar').show().css('width',progress+'px');*/
+        },
+        send:function (e, data) {
+            var error = false;
+            rcl_preloader_show('form.rcl-public-form');                   
+            var cnt_now = jQuery('#temp-files-'+post_type+' li').length;                    
+            jQuery.each(data.files, function (index, file) {
+                cnt_now++;
+                if(cnt_now>Rcl.public.maxcnt){
+                    rcl_notice(Rcl.local.allowed_downloads,'error',10000);
+                    error = true;
+                }                       
+                if(file['size']>maxsize){
+                    rcl_notice(Rcl.local.upload_size_public,'error',10000);                            
+                    error = true;
+                }                       
+            });
+            if(error){
+                rcl_preloader_hide();
+                return false;
+            }
+        },
+        done: function (e, data) {
+            jQuery.each(data.result, function (index, file) {
+                
+                rcl_preloader_hide();
+                
+                if(data.result['error']){
+                    rcl_notice(data.result['error'],'error',10000);
+                    return false;
+                }
+
+                if(file['string']){
+                    jQuery('#temp-files-'+post_type).append(file['string']);
+
+                    jQuery('#rcl-thumbnail-post .thumbnail-image').html(file['thumbnail_image']);
+                    jQuery('#rcl-thumbnail-post .thumbnail-id').val(file['attachment_id']);
+                }
+            });
+            
+            
+        }
+    });
+    
+}
+
+function rcl_add_image_in_form(e,content){
+    
     var post_type = jQuery(e).parents("form").data("post_type");           
-    var ifr = jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html();
-    jQuery("#contentarea-"+post_type+"").insertAtCaret($file+"&nbsp;");
-    jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html(ifr+$file+"&nbsp;");
+
+    jQuery("#contentarea-" + post_type).insertAtCaret(content + "&nbsp;");
+    
+    tinyMCE.execCommand("mceInsertRawHTML", false, content);
+    
     return false;
 }

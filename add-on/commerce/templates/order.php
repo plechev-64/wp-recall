@@ -27,7 +27,7 @@
         <tr id="product-<?php the_ID(); ?>" class="product-box">
             <td class="column-product-name">
                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                <?php rcl_product_excerpt($post->ID); ?>
+                <p><?php rcl_product_excerpt($post->ID); ?></p>
                 <?php rcl_product_variation_list($product->variations); ?>
             </td>
             <td class="column-product-price">

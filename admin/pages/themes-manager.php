@@ -30,7 +30,7 @@ echo '<div id="icon-plugins" class="icon32"><br></div>
 
     echo '</div>';
     
-    echo '<div class="rcl-admin-service-box rcl-upload-form-box upload-theme">';
+    echo '<div class="rcl-admin-service-box rcl-upload-form-box upload-template">';
     
     echo '<h4>'.__('Install the add-on to WP-Recall format .ZIP','wp-recall').'</h4>
     <p class="install-help">'.__('If you have an archive template for wp-recall format .zip, here you can upload and install it','wp-recall').'</p>
