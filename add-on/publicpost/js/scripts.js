@@ -344,10 +344,11 @@ function rcl_publish(e){
         dataType: 'json', 
         url: Rcl.ajaxurl,
         success: function(data){
-            
-            rcl_preloader_hide();
 
             if(data['error']){
+                
+                rcl_preloader_hide();
+                
                 rcl_notice(data['error'],'error',10000);
                 submit.attr('disabled',false).val(Rcl.local.publish);
                 return false;

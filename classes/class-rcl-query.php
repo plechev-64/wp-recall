@@ -71,13 +71,13 @@ class Rcl_Query {
 
         if($this->query['table']['cols']){
             
-            if(isset($args['include'])){
+            if(isset($args['include']) && $args['include']){
                     
                 $this->query['where'][] = $this->query['table']['as'].".".$this->query['table']['cols'][0]." IN (".$this->get_string_in($args['include']).")";
 
             }
             
-            if(isset($args['exclude'])){
+            if(isset($args['exclude']) && $args['exclude']){
                     
                 $this->query['where'][] = $this->query['table']['as'].".".$this->query['table']['cols'][0]." NOT IN (".$this->get_string_in($args['exclude']).")";
 
@@ -97,13 +97,13 @@ class Rcl_Query {
                 
                 }
                 
-                if(isset($args['include_'.$col_name])){
+                if(isset($args['include_'.$col_name]) && $args['include_'.$col_name]){
                     
                     $this->query['where'][] = $this->query['table']['as'].".$col_name IN (".$this->get_string_in($args['include_'.$col_name]).")";
 
                 }
                 
-                if(isset($args['exclude_'.$col_name])){
+                if(isset($args['exclude_'.$col_name]) && $args['exclude_'.$col_name]){
 
                     $this->query['where'][] = $this->query['table']['as'].".$col_name NOT IN (".$this->get_string_in($args['exclude_'.$col_name]).")";
 

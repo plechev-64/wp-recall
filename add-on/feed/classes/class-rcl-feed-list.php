@@ -38,7 +38,6 @@ class Rcl_Feed_List extends Rcl_Query{
     
     function setup_feed_query($args){
         $this->query = apply_filters('rcl_feed_query',$this->query, $args);
-        
     }
 
     function init_properties($args){
