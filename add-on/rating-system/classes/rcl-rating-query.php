@@ -63,7 +63,7 @@ class Rcl_Rating_Values_Query extends Rcl_Query {
             "SUM(".$this->query['table']['as'].".rating_value)"
         );
         
-        return $rating->get_var($args);
+        return $this->get_var($args);
         
     }
     
