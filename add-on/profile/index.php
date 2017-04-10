@@ -148,7 +148,7 @@ function rcl_add_office_profile_fields($fields){
     );
     
     $profileFields[] = array(
-        'slug' => 'user_pass',
+        'slug' => 'primary_pass',
         'title' => __('New password','wp-recall'),
         'type' => 'password',
         'required' => 0,

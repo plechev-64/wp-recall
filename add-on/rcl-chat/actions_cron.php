@@ -6,6 +6,8 @@ function rcl_chat_daily_delete_messages(){
     
     $max = (isset($rcl_options['chat']['messages_amount']))? $rcl_options['chat']['messages_amount']: 100;
     
+    if(!$max) return false;
+    
     $chats = $wpdb->get_results(
             "SELECT chats.*, COUNT(chat_messages.message_id) AS amount_messages "
             . "FROM ".RCL_PREF."chats AS chats "
@@ -21,11 +23,15 @@ function rcl_chat_daily_delete_messages(){
     
     if(!$chats) return false;
     
+    rcl_add_log(__('Чаты, выбранные на очищение','wp-recall'), $chats);
+    
     foreach($chats as $chat){
+        
+        if($chat->amount_messages <= $max) continue;
         
         $amount_delete = $chat->amount_messages - $max;
         
-        $messages = $wpdb->get_col("SELECT message_id FROM ".RCL_PREF."chat_messages "
+        $messages = $wpdb->get_results("SELECT message_id,message_status,private_key FROM ".RCL_PREF."chat_messages "
                 . "WHERE message_id NOT IN ("
                     . "SELECT message_id FROM ".RCL_PREF."chat_messagemeta "
                     . "WHERE meta_key LIKE 'important:%'"
@@ -37,8 +43,13 @@ function rcl_chat_daily_delete_messages(){
         
         if(!$messages) continue;
         
-        foreach($messages as $message_id){
-            rcl_chat_delete_message($message_id);
+        rcl_add_log(__('Сообщения, выбранные на удаление','wp-recall'), $messages);
+        
+        foreach($messages as $message){
+            
+            if($message->private_key && !$message->message_status) continue;
+            
+            rcl_chat_delete_message($message->message_id);
         }
         
     }
@@ -56,6 +67,8 @@ function rcl_chat_delete_unattached_attachments(){
     );
     
     if(!$unattaches) return;
+    
+    rcl_add_log(__('Файлы сообщений, выбранные на удаление','wp-recall'), $unattaches);
 
     foreach( $unattaches as $attachment_id )
         wp_delete_attachment( $attachment_id );
@@ -75,6 +88,8 @@ function rcl_chat_send_notify_messages(){
     foreach($mess as $m){
         $messages[$m->private_key][$m->user_id][] = $m->message_content;
     }
+    
+    rcl_add_log(__('Отправка уведомлений о непрочитанных сообщениях','wp-recall'), $messages);
 
     foreach($messages as $addressat_id=>$data){
         $content = '';

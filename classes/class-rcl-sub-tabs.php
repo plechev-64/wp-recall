@@ -110,7 +110,16 @@ class Rcl_Sub_Tabs {
                 $args = array($master_id);
             }
 
-            $content .= call_user_func_array($this->callback['name'],$args);
+            $funcContent = call_user_func_array($this->callback['name'],$args);
+            
+            if(!$funcContent){
+                rcl_add_log(
+                    'get_subtab: '.__('Не удалось загрузить контент вкладки','wp-recall'),
+                    $this->callback
+                );
+            }
+            
+            $content .= $funcContent;
             
         }
 

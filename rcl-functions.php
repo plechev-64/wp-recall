@@ -380,7 +380,11 @@ function rcl_ajax_tab($post){
         $data['first'] = 1;
 
         $tab = new Rcl_Tabs($data);
-        return $tab->get_tab($user_LK,$subtab_id);
+        
+        $content = $tab->get_tab($user_LK,$subtab_id);
+        
+        return $content;
+        
     }
     
     return array('error'=>__('Error','wp-recall').'!');
@@ -1019,7 +1023,7 @@ function rcl_update_profile_fields($user_id){
             'first_name',
             'last_name',
             'display_name',
-            'user_pass',
+            'primary_pass',
             'repeat_pass'
         );
         
@@ -1042,7 +1046,7 @@ function rcl_update_profile_fields($user_id){
                 
                 if($slug == 'repeat_pass') continue;
 
-                if($slug == 'user_pass' && $value){
+                if($slug == 'primary_pass' && $value){
                     
                     if($value != $_POST['repeat_pass']) continue;
                     
@@ -1148,4 +1152,18 @@ function rcl_get_area_options(){
     );
     
     return $areas;
+}
+
+function rcl_add_log($title, $data = false){
+    global $rcl_options;
+    
+    if(!isset($rcl_options['rcl-log']) || !$rcl_options['rcl-log']) return false;
+    
+    $RclLog = new Rcl_Log();
+    
+    if($title)
+        $RclLog->insert_title($title);
+    
+    $RclLog->insert_log($data);
+    
 }

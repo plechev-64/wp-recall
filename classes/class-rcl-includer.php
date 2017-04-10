@@ -206,11 +206,152 @@ class Rcl_Includer{
         
         return $array;
     }
+    
+    function get_ajax_includes(){
+        
+        $content = '';
+        
+        $styles = $this->get_ajax_styles();
+        
+        if($styles)
+            $content .= $styles;
+        
+        $scripts = $this->get_ajax_scripts();
+        
+        if($scripts)
+            $content .= $scripts;
+        
+        return $content;
+        
+    }
+    
+    function get_ajax_scripts(){
+
+        $wp_scripts = wp_scripts();
+    
+        $remove = array(
+            'jquery'
+        );
+
+        $scriptsArray = array();
+        foreach($wp_scripts->queue as $k => $script_id){
+
+            if(in_array($script_id, $remove)) continue;
+
+            if(strpos($script_id, 'admin') !== false) continue;
+
+            $scriptsArray[] = $script_id;
+
+        }
+
+        if(!$scriptsArray) return false;
+
+        ob_start();
+
+        $wp_scripts->do_items($scriptsArray);
+
+        $scripts = ob_get_contents();
+
+        ob_end_clean();
+        
+        return $scripts;
+        
+    }
+    
+    function get_ajax_styles(){
+        
+        $wp_scripts = wp_styles();
+
+        $scriptsArray = array();
+        foreach($wp_scripts->queue as $k => $script_id){
+
+            if(strpos($script_id, 'admin') !== false) continue;
+
+            $scriptsArray[] = $script_id;
+
+        }
+
+        if(!$scriptsArray) return false;
+
+        ob_start();
+
+        $wp_scripts->do_items($scriptsArray);
+
+        $scripts = ob_get_contents();
+
+        ob_end_clean();
+        
+        return $scripts;
+        
+    }
+    
+    function get_ajax_src_list_includes(){
+
+        $styles = $this->get_ajax_src_list_styles();
+
+        $scripts = $this->get_ajax_src_list_scripts();
+
+        return array_merge($styles,$scripts);
+        
+    }
+    
+    function get_ajax_src_list_scripts(){
+        
+        $wp_scripts = wp_scripts();
+    
+        $remove = array(
+            'jquery'
+        );
+
+        $scriptsArray = array();
+        
+        foreach($wp_scripts->queue as $k => $script_id){
+
+            if(in_array($script_id, $remove)) continue;
+
+            if(strpos($script_id, 'admin') !== false) continue;
+
+            $obj = $wp_scripts->registered[$script_id];
+
+            $scriptsArray[] = $obj->src;
+
+        }
+        
+        return $scriptsArray;
+        
+    }
+    
+    function get_ajax_src_list_styles(){
+        
+        $wp_scripts = wp_styles();
+
+        $scriptsArray = array();
+        foreach($wp_scripts->queue as $k => $script_id){
+
+            if(strpos($script_id, 'admin') !== false) continue;
+
+            $obj = $wp_scripts->registered[$script_id];
+
+            $scriptsArray[] = $obj->src;
+
+        }
+        
+        return $scriptsArray;
+        
+    }
 }
 
 //подключаем стилевой файл дополнения
-function rcl_enqueue_style($id,$url,$footer=false){
+function rcl_enqueue_style($id, $url, $footer = false){
     global $rcl_styles;
+    
+    if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+        
+        wp_enqueue_style( $id, $url);
+        
+        return;
+        
+    }
     
     $search = str_replace('\\','/',ABSPATH);
     $url = str_replace('\\','/',$url);
@@ -230,11 +371,19 @@ function rcl_enqueue_style($id,$url,$footer=false){
     }  
 }
 
-function rcl_enqueue_script($id,$url,$parents=array(),$footer=false){
+function rcl_enqueue_script($id, $url, $parents = array(), $in_footer=false){
     global $rcl_scripts;
     
+    if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+        
+        wp_enqueue_script( $id, $url, $parents, false, $in_footer);
+        
+        return;
+        
+    }
+    
     //если скрипт выводим в футере
-    if($footer||isset($rcl_scripts['header'])){
+    if($in_footer||isset($rcl_scripts['header'])){
         //если не обнаружен дубль скрипта в хедере
         if(!isset($rcl_scripts['header'][$id]))
             $rcl_scripts['footer'][$id] = $url;
@@ -255,4 +404,44 @@ function rcl_include_scripts(){
     $Rcl_Include = new Rcl_Includer();
     $Rcl_Include->include_styles();
     $Rcl_Include->include_scripts();
+}
+
+//сбрасываем массивы зарегистрированных скриптов и стилей при вызове вкладки через ajax
+add_action('rcl_init_ajax_tab','rcl_reset_wp_dependencies');
+function rcl_reset_wp_dependencies(){
+    global $wp_scripts, $wp_styles;
+
+    $wp_scripts->queue = array();
+    $wp_styles->queue = array();
+    
+}
+
+//цепляем код подключения скриптов и стилей вызванных внутри вкладки
+add_filter('rcl_ajax_tab_content','rcl_add_registered_scripts');
+function rcl_add_registered_scripts($content){
+    
+    $Rcl_Include = new Rcl_Includer();
+    
+    add_filter('script_loader_src','rcl_ajax_edit_version_scripts');
+    
+    $content .= $Rcl_Include->get_ajax_includes();
+    
+    return $content;
+    
+}
+
+//генерируем свою версию подключаемых скриптов при ajax-вызове вкладки
+function rcl_ajax_edit_version_scripts($src){
+    
+    $srcData = explode('?',$src);
+    
+    if(isset($srcData[1])){
+        
+        $str = 'ver='.md5(current_time('mysql'));
+        
+        $src = str_replace($srcData[1], $str, $src);
+        
+    }
+
+    return $src;
 }

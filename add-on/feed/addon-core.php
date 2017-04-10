@@ -15,10 +15,14 @@ function rcl_get_feeds($args = false){
 function rcl_insert_feed_data($args){
     global $wpdb;
 
-    $wpdb->insert(
+    $result = $wpdb->insert(
         RCL_PREF."feeds",
         $args
     );
+    
+    if(!$result){
+        rcl_add_log('rcl_insert_feed_data: '.__('Не удалось добавить новую подписку','wp-recall'), $args);
+    }
 
     $feed_id = $wpdb->insert_id;
 
@@ -41,6 +45,10 @@ function rcl_update_feed_data($args){
         $args,
         array('feed_id'=>$feed_id)
     );
+    
+    if(!$result){
+        rcl_add_log('rcl_update_feed_data: '.__('Не удалось изменить данные фида','wp-recall'), $args);
+    }
 
     if(!$result) return false;
 
@@ -76,9 +84,15 @@ add_action('delete_user','rcl_remove_user_feed',10);
 function rcl_remove_user_feed($user_id){
     global $wpdb;
     
-    return $wpdb->query(
+    $result = $wpdb->query(
         $wpdb->prepare("DELETE FROM ".RCL_PREF."feeds WHERE user_id='%d'",$user_id)
     );
+    
+    if(!$result){
+        rcl_add_log('rcl_remove_user_feed: '.__('Не удалось удалить фид пользователя','wp-recall'), $user_id);
+    }
+    
+    return $result;
 }
 
 //получаем данные фида по ИД
@@ -113,6 +127,10 @@ function rcl_remove_feed($feed_id){
     $result = $wpdb->query(
         $wpdb->prepare("DELETE FROM ".RCL_PREF."feeds WHERE feed_id='%d'",$feed_id)
     );
+    
+    if(!$result){
+        rcl_add_log('rcl_remove_feed: '.__('Не удалось удалить фид','wp-recall'), $feed_id);
+    }
 
     return $result;
 }

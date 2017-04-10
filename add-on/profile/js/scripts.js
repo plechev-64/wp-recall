@@ -2,9 +2,9 @@ function rcl_check_profile_form(){
     
     var form = jQuery('form#your-profile');
     
-    if(form.find('#user_pass').val()){
+    if(form.find('#primary_pass').val()){
         
-        var user_pass = form.find('#user_pass');
+        var user_pass = form.find('#primary_pass');
         var repeat_pass = form.find('#repeat_pass');
         
         if(user_pass.val() != repeat_pass.val()){

@@ -568,6 +568,7 @@ body .rcl-product-gallery ul.images-list {
 }
 #rcl-order .order-manage-box .manager-item{
     display: inline-block;
+    margin-left: 10px;
 }
 #rcl-order .order-manage-box .manager-item a{
     display: inline-block;

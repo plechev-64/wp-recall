@@ -117,7 +117,11 @@ function rcl_insert_rating($args){
         'rating_date' => $rating_date
     );
 
-    $wpdb->insert( RCL_PREF.'rating_values',  $data );
+    $result = $wpdb->insert( RCL_PREF.'rating_values',  $data );
+    
+    if(!$result){
+        rcl_add_log('rcl_insert_rating: '.__('Не удалось добавить голос пользователя','wp-recall'), $data);
+    }
 
     $value_id = $wpdb->insert_id;
 
@@ -139,7 +143,11 @@ function rcl_insert_total_rating($args){
         'rating_type' => $args['rating_type']
     );
 
-    $wpdb->insert( RCL_PREF.'rating_totals',  $data );
+    $result = $wpdb->insert( RCL_PREF.'rating_totals',  $data );
+    
+    if(!$result){
+        rcl_add_log('rcl_insert_total_rating: '.__('Не удалось добавить общий рейтинг объекта','wp-recall'), $data);
+    }
 
     do_action('rcl_insert_total_rating',$data);
 }
@@ -148,10 +156,15 @@ function rcl_insert_total_rating($args){
 add_action('user_register','rcl_insert_user_rating');
 function rcl_insert_user_rating($user_id,$point=0){
     global $wpdb;
-    $wpdb->insert(
+    
+    $result = $wpdb->insert(
         RCL_PREF.'rating_users',
         array( 'user_id' => $user_id, 'rating_total' => $point )
     );
+    
+    if(!$result){
+        rcl_add_log('rcl_insert_user_rating: '.__('Не удалось добавить общий рейтинг пользвоателя','wp-recall'), array($user_id,$point));
+    }
 }
 
 //Получаем значение рейтинга публикации
@@ -382,7 +395,7 @@ function rcl_update_total_rating($args){
         
         $total += $args['rating_value'];
         
-        $wpdb->update(
+        $result = $wpdb->update(
             RCL_PREF.'rating_totals',
             array(
                 'rating_total'=>$total
@@ -392,6 +405,10 @@ function rcl_update_total_rating($args){
                 'rating_type' => $args['rating_type']
             )
         );
+        
+        if(!$result){
+            rcl_add_log('rcl_update_total_rating: '.__('Не удалось изменить общий рейтинг объекта','wp-recall'), array($total,$args));
+        }
         
     }else{
         
@@ -425,11 +442,16 @@ function rcl_update_user_rating($args){
 
     if(isset($total)){
         $total += $args['rating_value'];
-        $wpdb->update(
+        $result = $wpdb->update(
             RCL_PREF.'rating_users',
             array('rating_total'=>$total),
             array('user_id' => $args['object_author'])
         );
+        
+        if(!$result){
+            rcl_add_log('rcl_update_user_rating: '.__('Не удалось изменить общий рейтинг пользователя','wp-recall'), array($user_id,$point));
+        }
+        
     }else{
         $total = $args['rating_value'];
         rcl_insert_user_rating($args['object_author'],$args['rating_value']);
@@ -483,7 +505,11 @@ function rcl_delete_rating($args){
 
     }
 
-    $res = $wpdb->query($query);
+    $result = $wpdb->query($query);
+    
+    if(!$result){
+        rcl_add_log('rcl_delete_rating: '.__('Не удалось удалить голос пользователя','wp-recall'), $query);
+    }
 
     $args['rating_value'] = -1 * $args['rating_value'];
 

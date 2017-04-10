@@ -1,24 +1,8 @@
 var RclFields = {};
 
-function rcl_get_value_url_params(){
-    var tmp_1 = new Array();
-    var tmp_2 = new Array();
-    var rcl_url_params = new Array();
-    var get = location.search;
-    if(get !== ''){
-        tmp_1 = (get.substr(1)).split('&');
-        for(var i=0; i < tmp_1.length; i++) {
-            tmp_2 = tmp_1[i].split('=');
-            rcl_url_params[tmp_2[0]] = tmp_2[1];
-        }
-    }
-    
-    return rcl_url_params;
-}
-
-var rcl_url_params = rcl_get_value_url_params();
-
 jQuery(function($){
+    
+    rcl_init_cookie();
 
     if(rcl_url_params['rcl-addon-options']){
         $('.wrap-recall-options').hide();
@@ -117,44 +101,6 @@ jQuery(function($){
         rcl_close_notice(jQuery(this).parent());
         return false;
     });
-    
-    $.cookie = function(name, value, options) {
-        if (typeof value !== 'undefined') { 
-                options = options || {};
-                if (value === null) {
-                        value = '';
-                        options.expires = -1;
-                }
-                var expires = '';
-                if (options.expires && (typeof options.expires === 'number' || options.expires.toUTCString)) {
-                        var date;
-                        if (typeof options.expires === 'number') {
-                                date = new Date();
-                                date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
-                        } else {
-                                date = options.expires;
-                        }
-                        expires = '; expires=' + date.toUTCString();
-                }
-                var path = options.path ? '; path=' + (options.path) : '';
-                var domain = options.domain ? '; domain=' + (options.domain) : '';
-                var secure = options.secure ? '; secure' : '';
-                document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
-        } else {
-                var cookieValue = null;
-                if (document.cookie && document.cookie !== '') {
-                        var cookies = document.cookie.split(';');
-                        for (var i = 0; i < cookies.length; i++) {
-                                var cookie = $.trim(cookies[i]);
-                                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                        break;
-                                }
-                        }
-                }
-                return cookieValue;
-        }
-    };
 
 });
 
@@ -166,26 +112,6 @@ function rcl_update_history_url(url){
         }
     }
     
-}
-
-function rcl_add_dynamic_field(e){
-    var parent = jQuery(e).parents('.dynamic-value');
-    var box = parent.parent('.dynamic-values');
-    var html = parent.html();
-    box.append('<span class="dynamic-value">'+html+'</span>');
-    jQuery(e).attr('onclick','rcl_remove_dynamic_field(this);return false;').children('i').toggleClass("fa-plus fa-minus");
-    box.children('span').last().children('input').val('').focus();
-}
-
-function rcl_remove_dynamic_field(e){
-    jQuery(e).parents('.dynamic-value').remove();
-}
-
-function rcl_update_require_checkbox(e){
-    var name = jQuery(e).attr('name');
-    var chekval = jQuery('form input[name="'+name+'"]:checked').val();
-    if(chekval) jQuery('form input[name="'+name+'"]').attr('required',false);
-    else jQuery('form input[name="'+name+'"]').attr('required',true);
 }
 
 function rcl_init_custom_fields(fields_type,primaryOptions,defaultOptions){
@@ -333,68 +259,6 @@ function rcl_update_options(){
         } 
     });	  	
     return false;
-}
-
-function rcl_rand( min, max ) {
-    if( max ) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-    } else {
-            return Math.floor(Math.random() * (min + 1));
-    }
-}
-
-function rcl_close_notice(e){
-    jQuery(e).animate({
-        opacity: 0,
-        height: 'hide'
-    }, 300);
-}
-
-function rcl_notice(text,type,time_close){
-        
-    time_close = time_close || false;
-
-    var notice_id = rcl_rand(1, 1000);
-
-    var html = '<div id="notice-'+notice_id+'" class="notice-window type-'+type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+text+'</div>';	
-    if(!jQuery('#rcl-notice').size()){
-            jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
-    }else{
-            if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
-            else jQuery('#rcl-notice').html(html);
-    }
-
-    if(time_close){
-        setTimeout(function () {
-            rcl_close_notice('#rcl-notice #notice-'+notice_id)
-        }, time_close);
-    }
-}
-
-function rcl_preloader_show(e,size){
-    
-    var font_size = (size)? size: 80;
-    var margin = font_size/2;
-    
-    var options = {
-        size: font_size,
-        margin: margin,
-        icon: 'fa-circle-o-notch',
-        class: 'rcl_preloader'
-    };
-    
-    var style = 'style="font-size:'+options.size+'px;margin: -'+options.margin+'px 0 0 -'+options.margin+'px;"';
-    
-    var html = '<div class="'+options.class+'"><i class="fa '+options.icon+' fa-spin" '+style+'></i></div>';
-    
-    if(typeof( e ) === 'string')
-        jQuery(e).after(html);
-    else
-        e.append(html);
-}
-
-function rcl_preloader_hide(){
-    jQuery('.rcl_preloader').remove();
 }
 
 function rcl_get_option_help(elem){

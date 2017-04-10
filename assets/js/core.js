@@ -1,0 +1,249 @@
+var rcl_actions = [];
+var rcl_filters = [];
+var rcl_beats = [];
+var rcl_beats_delay = 0;
+var rcl_url_params = rcl_get_value_url_params();
+
+function rcl_do_action(action_name,args){
+    
+    var callbacks_action = rcl_actions[action_name];
+    
+    if(!callbacks_action) return false;
+    
+    callbacks_action.forEach(function(callback, i, callbacks_action) {
+        new (window[callback])(args);
+    });
+}
+
+function rcl_add_action(action_name,callback){
+    if(!rcl_actions[action_name]){
+        rcl_actions[action_name] = [callback];
+    }else{
+        var i = rcl_actions[action_name].length;
+        rcl_actions[action_name][i] = callback;
+    }
+}
+
+function rcl_apply_filters(filter_name,args){
+    
+    var callbacks_filter = rcl_filters[filter_name];
+    
+    if(!callbacks_filter) return args;
+    
+    callbacks_filter.forEach(function(callback, i, callbacks_filter) {
+        args = new (window[callback])(args);
+    });
+    return args;
+}
+
+function rcl_add_filter(filter_name,callback){
+    if(!rcl_filters[filter_name]){
+        rcl_filters[filter_name] = [callback];
+    }else{
+        var i = rcl_filters[filter_name].length;
+        rcl_filters[filter_name][i] = callback;
+    }
+}
+
+function rcl_get_value_url_params(){
+    var tmp_1 = new Array();
+    var tmp_2 = new Array();
+    var rcl_url_params = new Array();
+    var get = location.search;
+    if(get !== ''){
+        tmp_1 = (get.substr(1)).split('&');
+        for(var i=0; i < tmp_1.length; i++) {
+            tmp_2 = tmp_1[i].split('=');
+            rcl_url_params[tmp_2[0]] = tmp_2[1];
+        }
+    }
+    
+    return rcl_url_params;
+}
+
+function rcl_is_valid_url(url){
+  var objRE = /http(s?):\/\/[-\w\.]{3,}\.[A-Za-z]{2,3}/;
+  return objRE.test(url);
+}
+
+function setAttr_rcl(prmName,val){
+    var res = '';
+    var d = location.href.split("#")[0].split("?");  
+    var base = d[0];
+    var query = d[1];
+    if(query) {
+        var params = query.split("&");  
+        for(var i = 0; i < params.length; i++) {  
+                var keyval = params[i].split("=");  
+                if(keyval[0] !== prmName) {  
+                        res += params[i] + '&';
+                }
+        }
+    }
+    res += prmName + '=' + val;
+    return base + '?' + res;
+}
+
+function rcl_init_cookie(){
+    
+    jQuery.cookie = function(name, value, options) {
+        if (typeof value !== 'undefined') { 
+            options = options || {};
+            if (value === null) {
+                value = '';
+                options.expires = -1;
+            }
+            var expires = '';
+            if (options.expires && (typeof options.expires === 'number' || options.expires.toUTCString)) {
+                var date;
+                if (typeof options.expires === 'number') {
+                    date = new Date();
+                    date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+                } else {
+                    date = options.expires;
+                }
+                expires = '; expires=' + date.toUTCString();
+            }
+            var path = options.path ? '; path=' + (options.path) : '';
+            var domain = options.domain ? '; domain=' + (options.domain) : '';
+            var secure = options.secure ? '; secure' : '';
+            document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+        } else {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    };
+    
+}
+
+function rcl_add_dynamic_field(e){
+    var parent = jQuery(e).parents('.dynamic-value');
+    var box = parent.parent('.dynamic-values');
+    var html = parent.html();
+    box.append('<span class="dynamic-value">'+html+'</span>');
+    jQuery(e).attr('onclick','rcl_remove_dynamic_field(this);return false;').children('i').toggleClass("fa-plus fa-minus");
+    box.children('span').last().children('input').val('').focus();
+}
+
+function rcl_remove_dynamic_field(e){
+    jQuery(e).parents('.dynamic-value').remove();
+}
+
+function rcl_update_require_checkbox(e){
+    var name = jQuery(e).attr('name');
+    var chekval = jQuery('form input[name="'+name+'"]:checked').val();
+    if(chekval) jQuery('form input[name="'+name+'"]').attr('required',false);
+    else jQuery('form input[name="'+name+'"]').attr('required',true);
+}
+
+function rcl_rand( min, max ) {
+    if( max ) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+    } else {
+            return Math.floor(Math.random() * (min + 1));
+    }
+}
+
+function rcl_notice(text,type,time_close){
+
+    time_close = time_close || false;
+    
+    var options = {
+        text: text,
+        type: type,
+        time_close: time_close
+    };
+    
+    options = rcl_apply_filters('rcl_notice_options',options);
+
+    var notice_id = rcl_rand(1, 1000);
+
+    var html = '<div id="notice-'+notice_id+'" class="notice-window type-'+options.type+'"><a href="#" class="close-notice"><i class="fa fa-times"></i></a>'+options.text+'</div>';	
+    if(!jQuery('#rcl-notice').size()){
+            jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
+    }else{
+            if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
+            else jQuery('#rcl-notice').html(html);
+    }
+
+    if(time_close){
+        setTimeout(function () {
+            rcl_close_notice('#rcl-notice #notice-'+notice_id)
+        }, options.time_close);
+    }
+}
+
+function rcl_close_notice(e){
+    jQuery(e).animate({
+        opacity: 0,
+        height: 'hide'
+    }, 300);
+}
+
+function rcl_preloader_show(e,size){
+    
+    var font_size = (size)? size: 80;
+    var margin = font_size/2;
+    
+    var options = {
+        size: font_size,
+        margin: margin,
+        icon: 'fa-circle-o-notch',
+        class: 'rcl_preloader'
+    };
+    
+    options = rcl_apply_filters('rcl_preloader_options',options);
+    
+    var style = 'style="font-size:'+options.size+'px;margin: -'+options.margin+'px 0 0 -'+options.margin+'px;"';
+    
+    var html = '<div class="'+options.class+'"><i class="fa '+options.icon+' fa-spin" '+style+'></i></div>';
+    
+    if(typeof( e ) === 'string')
+        jQuery(e).after(html);
+    else
+        e.append(html);
+}
+
+function rcl_preloader_hide(){
+    jQuery('.rcl_preloader').remove();
+}
+
+function rcl_setup_datepicker_options(){
+    
+    jQuery.datepicker.setDefaults(jQuery.extend(jQuery.datepicker.regional["ru"]));
+    
+    var options = {
+        monthNames: [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" ],
+        dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+        firstDay: 1,
+        dateFormat: 'yy-mm-dd',
+        yearRange: "1950:c+3",
+        changeYear: true
+    };
+    
+    options = rcl_apply_filters('rcl_datepicker_options',options);
+    
+    return options;
+    
+}
+
+function rcl_show_datepicker(e){
+    jQuery(e).datepicker(rcl_setup_datepicker_options());
+    jQuery(e).datepicker( "show" );
+    rcl_add_action('rcl_upload_tab','rcl_remove_datepicker_box');
+}
+
+function rcl_remove_datepicker_box(){
+    jQuery('#ui-datepicker-div').remove();
+}
+

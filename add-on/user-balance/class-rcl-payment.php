@@ -198,6 +198,12 @@ class Rcl_Payment{
                 'pay_type' => $data->pay_type
             )
         );
+        
+        if(!$data->pay_status){
+            rcl_add_log(
+                'insert_pay: '.__('Не удалось добавить платеж пользователя','wp-recall'), $data
+            );
+        }
 
         if(!$data->pay_status) exit;
         

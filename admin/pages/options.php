@@ -86,6 +86,19 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                         'options'=>$roles
                     ))
             ))));
+            
+            $content .= $fields->option_block(array(
+                $fields->extend(array(
+                    $fields->title(__('Режим логирования','wp-recall')),
+                    $fields->option('select',array(
+                        'name'=>'rcl-log',
+                        'label'=>__('Запись в лог-файл фоновых событий и ошибок работы','wp-recall'),
+                        'options'=> array(
+                            __('Disabled','wp-recall'),
+                            __('Enabled','wp-recall')
+                        )
+                    ))
+            ))));
 
             $content .= $fields->option_block(
                 array(

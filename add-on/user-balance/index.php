@@ -86,10 +86,19 @@ function rcl_update_user_balance($newmoney,$user_id,$comment=''){
         
         do_action('rcl_pre_update_user_balance',$newmoney,$user_id,$comment);
         
-        return $wpdb->update(RMAG_PREF .'users_balance',
+        $result = $wpdb->update(RMAG_PREF .'users_balance',
             array( 'user_balance' => $newmoney ),
             array( 'user_id' => $user_id )
         );
+        
+        if(!$result){
+            rcl_add_log(
+                'rcl_update_user_balance: '.__('Не удалось обновить баланс пользователя','wp-recall'),
+                array($newmoney,$user_id,$comment)
+            );
+        }
+        
+        return $result;
         
     }
 
@@ -101,6 +110,13 @@ function rcl_add_user_balance($money,$user_id,$comment=''){
 
     $result =  $wpdb->insert( RMAG_PREF .'users_balance',
 	array( 'user_id' => $user_id, 'user_balance' => $money ));
+    
+    if(!$result){
+        rcl_add_log(
+            'rcl_add_user_balance: '.__('Не удалось добавить баланс пользователя','wp-recall'),
+            array($money,$user_id,$comment)
+        );
+    }
     
     do_action('rcl_add_user_balance',$money,$user_id,$comment);
     

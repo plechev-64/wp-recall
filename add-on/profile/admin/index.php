@@ -75,13 +75,13 @@ function rcl_get_custom_fields_profile($user){
     
     $args = array(
         'exclude' => array(
-            'user_pass',
             'first_name',
             'last_name',
             'description',
             'url',
             'display_name',
             'user_email',
+            'primary_pass',
             'repeat_pass',
             'show_admin_bar_front'
         )

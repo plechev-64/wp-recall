@@ -352,7 +352,12 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_date($field){
-        return '<input type="text" '.$this->get_class($field).' title="'.__('Используйте формат','wp-recall').': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})" '.$this->required.' '.$this->placeholder.' class="rcl-datepicker" name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        
+        $field['classes'] = 'rcl-datepicker';
+        
+        $content = '<input type="text" '.$this->get_class($field).' onclick="rcl_show_datepicker(this);" title="'.__('Используйте формат','wp-recall').': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})" '.$this->required.' '.$this->placeholder.' class="rcl-datepicker" name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        
+        return $content;
     }
 
     function get_type_time($field){

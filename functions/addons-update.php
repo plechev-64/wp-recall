@@ -40,8 +40,11 @@ function rcl_check_addon_update(){
     $xml_array = @simplexml_load_file($url);
     
     if(!$xml_array){
-        $log['error'] = __('Unable to retrieve the file from the server!','wp-recall');
-        echo json_encode($log); exit;
+        rcl_add_log(
+            __('Не удалось открыть файл с данными дополнений для проверки обновлений','wp-recall'),
+            $url
+        ); 
+        exit;
     }
 
     $need_update = array(); $ver = 0;

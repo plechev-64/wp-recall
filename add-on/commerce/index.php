@@ -289,7 +289,7 @@ function rcl_add_payment_order($pay){
 }
 
 function rcl_get_order_manager(){
-    global $user_ID;
+    global $user_ID,$rclOrder;
     
     $args = array(
         array(
@@ -297,6 +297,15 @@ function rcl_get_order_manager(){
             'title' => __('See all orders','wp-recall')
         )
     );
+    
+    if($rclOrder->order_status == 1){
+        
+        $args[] = array(
+            'href' => wp_nonce_url( rcl_format_url(get_author_posts_url($user_ID),'orders').'&order-action=trash&order-id='.$rclOrder->order_id, 'order-action' ),
+            'title' => __('Удалить заказ','wp-recall')
+        );
+        
+    }
     
     $args = apply_filters('rcl_order_manager_args',$args);
     
@@ -315,5 +324,28 @@ function rcl_get_order_manager(){
     $content .= '</div>';
     
     return $content;
+    
+}
+
+add_action('wp','rcl_commerce_setup_order_actions');
+function rcl_commerce_setup_order_actions(){
+    global $user_ID;
+    
+    if(!isset($_GET['order-action']) || !isset($_GET['order-id'])) return false;
+    
+    if(!wp_verify_nonce( $_GET['_wpnonce'], 'order-action' )) return false;
+    
+    $order_id = $_GET['order-id'];
+    $order_action = $_GET['order-action'];
+
+    switch($order_action){
+        
+        case 'trash':
+            rcl_update_status_order($order_id, 6);
+        break;
+    
+    }
+    
+    wp_redirect(rcl_format_url(get_author_posts_url($user_ID),'orders')); exit;
     
 }
