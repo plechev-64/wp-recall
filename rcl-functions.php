@@ -1019,7 +1019,7 @@ function rcl_update_profile_fields($user_id){
         $defaultFields = array(
             'user_email',
             'description',
-            'url',
+            'user_url',
             'first_name',
             'last_name',
             'display_name',

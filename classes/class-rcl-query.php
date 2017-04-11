@@ -263,7 +263,7 @@ class Rcl_Query {
     
     function get_query(){
 
-        return apply_filters('rcl_get_'.$this->query['table']['as'].'_query',$this->query);
+        return apply_filters('rcl_table_'.$this->query['table']['as'].'_query',$this->query);
 
     }
     

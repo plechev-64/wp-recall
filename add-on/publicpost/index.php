@@ -96,21 +96,35 @@ function rcl_post_gallery($content){
 add_filter('the_content','rcl_author_info',70);
 function rcl_author_info($content){
     global $post,$rcl_options;
-    if($rcl_options['info_author_recall']!=1) return $content;
-    if(!is_single()) return $content;
-    if($post->post_type=='page') return $content;
-    $out = rcl_get_author_block();
-    //if($post->post_type=='task') return $out.$content;
-    return $content.$out;
+    
+    if($rcl_options['info_author_recall']!=1) 
+        return $content;
+    
+    if(!is_single()) 
+        return $content;
+    
+    if($post->post_type=='page') 
+        return $content;
+    
+    $content .= rcl_get_author_block();
+
+    return $content;
 }
 
 add_filter('the_content','rcl_concat_post_meta',10);
 function rcl_concat_post_meta($content){
     global $post,$rcl_options;
-    if(!isset($rcl_options['pm_rcl'])||!$rcl_options['pm_rcl'])return $content;
+    
+    if(!isset($rcl_options['pm_rcl']) || !$rcl_options['pm_rcl'])
+        return $content;
+    
     $pm = rcl_get_custom_post_meta($post->ID);
-    if(!$rcl_options['pm_place']) $content .= $pm;
-    else $content = $pm.$content;
+    
+    if($rcl_options['pm_place'] == 1) 
+        $content .= $pm;
+    else 
+        $content = $pm.$content;
+    
     return $content;
 }
 

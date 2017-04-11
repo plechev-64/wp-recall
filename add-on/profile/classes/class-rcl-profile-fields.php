@@ -33,7 +33,7 @@ class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
         );
 
         $fields[] = array(
-            'slug' => 'url',
+            'slug' => 'user_url',
             'title' => __('Website','wp-recall'),
             'type' => 'url'
         );
