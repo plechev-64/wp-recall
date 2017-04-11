@@ -1161,9 +1161,9 @@ function rcl_add_log($title, $data = false){
     
     $RclLog = new Rcl_Log();
     
-    if($title)
-        $RclLog->insert_title($title);
+    $RclLog->insert_title($title);
     
-    $RclLog->insert_log($data);
+    if($data)
+        $RclLog->insert_log($data);
     
 }

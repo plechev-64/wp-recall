@@ -4,7 +4,7 @@ class Rcl_Chats_Query extends Rcl_Query{
     
     function __construct() {
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."chats",
             'as' => 'rcl_chats',
             'cols' => array(
@@ -13,6 +13,8 @@ class Rcl_Chats_Query extends Rcl_Query{
                 'chat_status'
             )
         );
+        
+        parent::__construct($table);
 
     }
     
@@ -22,7 +24,7 @@ class Rcl_Chat_Users_Query extends Rcl_Query{
     
     function __construct() {
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."chat_users",
             'as' => 'rcl_chat_users',
             'cols' => array(
@@ -34,6 +36,8 @@ class Rcl_Chat_Users_Query extends Rcl_Query{
                 'user_status'
             )
         );
+        
+        parent::__construct($table);
 
     }
     
@@ -43,7 +47,7 @@ class Rcl_Chat_Messages_Query extends Rcl_Query{
     
     function __construct() {
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."chat_messages",
             'as' => 'rcl_chat_messages',
             'cols' => array(
@@ -56,6 +60,8 @@ class Rcl_Chat_Messages_Query extends Rcl_Query{
                 'message_status'
             )
         );
+        
+        parent::__construct($table);
 
     }
     
@@ -65,7 +71,7 @@ class Rcl_Chat_Messagemeta_Query extends Rcl_Query{
     
     function __construct() {
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."chat_messagemeta",
             'as' => 'rcl_chat_messagemeta',
             'cols' => array(
@@ -75,6 +81,8 @@ class Rcl_Chat_Messagemeta_Query extends Rcl_Query{
                 'meta_value'
             )
         );
+        
+        parent::__construct($table);
 
     }
     

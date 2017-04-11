@@ -430,6 +430,15 @@ function rcl_add_registered_scripts($content){
     
 }
 
+//добавление массива подключаемых скриптов к возвращаемому результату вызова вкладки через ajax
+//для их подключения через функцию getScripts
+//add_filter('rcl_ajax_tab_result','rcl_add_src_list_includes');
+function rcl_add_src_list_includes($result){
+    $Rcl_Include = new Rcl_Includer();
+    $result['includes'] = $Rcl_Include->get_ajax_src_list_includes();
+    return $result;
+}
+
 //генерируем свою версию подключаемых скриптов при ajax-вызове вкладки
 function rcl_ajax_edit_version_scripts($src){
     

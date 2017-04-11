@@ -5,7 +5,7 @@ class Rcl_Users_Query extends Rcl_Query{
     function __construct() {
         global $wpdb;
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => $wpdb->users,
             'as' => 'wp_users',
             'cols' => array(
@@ -16,6 +16,8 @@ class Rcl_Users_Query extends Rcl_Query{
                 'display_name'
             )
         );
+        
+        parent::__construct($table);
 
     }
 

@@ -4,7 +4,7 @@ class Rcl_Groups_Query extends Rcl_Query {
     
     function __construct() { 
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."groups",
             'as' => 'rcl_groups',
             'cols' => array(
@@ -15,6 +15,8 @@ class Rcl_Groups_Query extends Rcl_Query {
                 'group_date'
             )
         );
+        
+        parent::__construct($table);
         
     }
     
@@ -41,7 +43,7 @@ class Rcl_Groups_Users_Query extends Rcl_Query {
     
     function __construct() {       
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."groups_users",
             'as' => 'rcl_groups_users',
             'cols' => array(
@@ -54,6 +56,8 @@ class Rcl_Groups_Users_Query extends Rcl_Query {
             )
         );
         
+        parent::__construct($table);
+        
     }
     
 }
@@ -62,7 +66,7 @@ class Rcl_Groups_Options_Query extends Rcl_Query {
     
     function __construct() {       
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."groups_options",
             'as' => 'rcl_groups_options',
             'cols' => array(
@@ -72,6 +76,8 @@ class Rcl_Groups_Options_Query extends Rcl_Query {
                 'option_value'
             )
         );
+        
+        parent::__construct($table);
         
     }
     

@@ -10,7 +10,7 @@ class Rcl_Payments extends Rcl_Query {
     
     function __construct() {       
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => RMAG_PREF ."pay_results",
             'as' => 'rcl_payments',
             'cols' => array(
@@ -23,6 +23,8 @@ class Rcl_Payments extends Rcl_Query {
                 'pay_type'
             )
         );
+        
+        parent::__construct($table);
         
     }
     

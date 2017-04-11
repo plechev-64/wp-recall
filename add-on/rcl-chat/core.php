@@ -272,27 +272,46 @@ function rcl_chat_noread_messages_amount($user_id){
 function rcl_chat_get_important_messages($user_id,$limit){
     
     $messages = new Rcl_Chat_Messages_Query();
+    $meta = new Rcl_Chat_Messagemeta_Query();
     
-    $messages->set_query();
+    $args = array(
+        'join_query' => array(
+            array(
+                'join' => 'INNER',
+                'table' => $meta->query['table'],
+                'on_message_id' => 'message_id',
+                'meta_key' => 'important:'.$user_id,
+                'fields' => false
+            )
+        ),
+        'orderby' => 'message_time',
+        'offset' => $limit[0],
+        'number' => $limit[1],
+        'return_as' => ARRAY_A
+    );
     
-    $messages->query['join'][] = "INNER JOIN ".RCL_PREF."chat_messagemeta AS chat_messagemeta ON rcl_chat_messages.message_id=chat_messagemeta.message_id";
-    $messages->query['where'][] = "chat_messagemeta.meta_key='important:$user_id'";
-    $messages->query['orderby'] = "rcl_chat_messages.message_time";
-    $messages->query['offset'] = $limit[0];
-    $messages->query['number'] = $limit[1];
-    $messages->query['return_as'] = ARRAY_A;
-    
-    $messagesData = stripslashes_deep($messages->get_data());
+    $messagesData = stripslashes_deep($messages->get_results($args));
 
     return $messagesData;
 }
 
 function rcl_chat_count_important_messages($user_id){
+    
     $messages = new Rcl_Chat_Messages_Query();
-    $messages->set_query();
-    $messages->query['join'][] = "INNER JOIN ".RCL_PREF."chat_messagemeta AS chat_messagemeta ON rcl_chat_messages.message_id=chat_messagemeta.message_id";
-    $messages->query['where'][] = "chat_messagemeta.meta_key='important:$user_id'";
-    return $messages->count();
+    $meta = new Rcl_Chat_Messagemeta_Query();
+    
+    $args = array(
+        'join_query' => array(
+            array(
+                'join' => 'INNER',
+                'table' => $meta->query['table'],
+                'on_message_id' => 'message_id',
+                'meta_key' => 'important:'.$user_id
+            )
+        )
+    );
+
+    return $messages->count($args);
 }
 
 function rcl_chat_get_new_messages($post){

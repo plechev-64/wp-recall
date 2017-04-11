@@ -84,6 +84,16 @@ function setAttr_rcl(prmName,val){
     return base + '?' + res;
 }
 
+function rcl_update_history_url(url){
+
+    if(url != window.location){
+        if ( history.pushState ){
+            window.history.pushState(null, null, url);
+        }
+    }
+    
+}
+
 function rcl_init_cookie(){
     
     jQuery.cookie = function(name, value, options) {

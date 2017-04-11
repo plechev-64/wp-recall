@@ -4,7 +4,7 @@ class Rcl_Feed_Query extends Rcl_Query {
     
     function __construct() { 
         
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."feeds",
             'as' => 'rcl_feeds',
             'cols' => array(
@@ -15,6 +15,8 @@ class Rcl_Feed_Query extends Rcl_Query {
                 'feed_status'
             )
         );
+        
+        parent::__construct($table);
         
     }
 

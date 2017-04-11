@@ -18,18 +18,13 @@ class Rcl_Query {
             'number' => 30
         );
             
-    function __construct() {
-
+    function __construct($table = false) {
+        
+        if($table)
+            $this->query['table'] = $table;
+        
     }
-    
-    function init_properties($args){
-        $properties = get_class_vars(get_class($this));
 
-        foreach ($properties as $name=>$val){
-            if(isset($args[$name])) $this->$name = $args[$name];
-        }
-    }
-    
     function set_query($args = false){
         
         if(!$this->query['table']){
@@ -54,19 +49,14 @@ class Rcl_Query {
 
         if(isset($args['fields'])){
             
-            $fields = array();
-            foreach($args['fields'] as $field){
-                if(!in_array($field,$this->query['table']['cols'])) continue;
-                $fields[] = $this->query['table']['as'].'.'.$field;
+            $this->set_fields($args['fields']);
+            
+        }else{
+            
+            if(!$this->query['select']){
+                $this->query['select'][] = $this->query['table']['as'].'.*';
             }
             
-            if($fields)
-                $this->query['select'] = $fields;
-            
-        }
-        
-        if(!$this->query['select']){
-            $this->query['select'][] = $this->query['table']['as'].'.*';
         }
 
         if($this->query['table']['cols']){
@@ -110,41 +100,17 @@ class Rcl_Query {
                 }
 
             }
-            
+
             if(isset($args['date_query'])){
                 
-                foreach($args['date_query'] as $date){
-                    
-                    if(!isset($date['column'])) continue;
-                    
-                    if(!isset($date['compare']))
-                        $date['compare'] = '=';
-                        
-                    if($date['compare'] == '='){
-
-                        $datetime = array();
-
-                        if(isset($date['year'])) 
-                            $this->query['where'][] = "YEAR(".$this->query['table']['as'].".".$date['column'].") = '".$date['year']."'";
-
-                        if(isset($date['month'])) 
-                            $this->query['where'][] = "MONTH(".$this->query['table']['as'].".".$date['column'].") = '".$date['month']."'";
-
-                        if(isset($date['day'])) 
-                            $this->query['where'][] = "DAY(".$this->query['table']['as'].".".$date['column'].") = '".$date['day']."'";
-
-                    }
-                    
-                    if($date['compare'] == 'BETWEEN'){
-                        
-                        if(!isset($date['value'])) continue;
-                        
-                        $this->query['where'][] = "(".$this->query['table']['as'].".".$date['column']." BETWEEN CAST('".$date['value'][0]."' AS DATE) AND CAST('".$date['value'][1]."' AS DATE))";
-                        
-                    }
-
-                }
+                $this->set_date_query($args['date_query']);
                 
+            }
+            
+            if(isset($args['join_query'])){
+                
+                $this->set_join_query($args['join_query']);
+
             }
             
         }
@@ -178,6 +144,88 @@ class Rcl_Query {
         if(isset($args['return_as']))
             $this->query['return_as'] = $args['return_as'];
 
+    }
+    
+    function set_fields($fields){
+        
+        if(!$fields) return false;
+
+        foreach($fields as $field){
+            if(!in_array($field,$this->query['table']['cols'])) continue;
+            $this->query['select'][] = $this->query['table']['as'].'.'.$field;
+        }
+        
+    }
+    
+    function set_date_query($date_query){
+        
+        foreach($date_query as $date){
+                    
+            if(!isset($date['column'])) continue;
+
+            if(!isset($date['compare']))
+                $date['compare'] = '=';
+
+            if($date['compare'] == '='){
+
+                $datetime = array();
+
+                if(isset($date['year'])) 
+                    $this->query['where'][] = "YEAR(".$this->query['table']['as'].".".$date['column'].") = '".$date['year']."'";
+
+                if(isset($date['month'])) 
+                    $this->query['where'][] = "MONTH(".$this->query['table']['as'].".".$date['column'].") = '".$date['month']."'";
+
+                if(isset($date['day'])) 
+                    $this->query['where'][] = "DAY(".$this->query['table']['as'].".".$date['column'].") = '".$date['day']."'";
+
+            }
+
+            if($date['compare'] == 'BETWEEN'){
+
+                if(!isset($date['value'])) continue;
+
+                $this->query['where'][] = "(".$this->query['table']['as'].".".$date['column']." BETWEEN CAST('".$date['value'][0]."' AS DATE) AND CAST('".$date['value'][1]."' AS DATE))";
+
+            }
+
+        }
+        
+    }
+    
+    function set_join_query($joins){
+                
+        foreach($joins as $join){
+
+            $joinTable = $join['table'];
+
+            if(!$joinTable) continue;
+
+            $joinOn = false;
+            foreach($this->query['table']['cols'] as $col_name){
+
+                if(isset($join['on_'.$col_name])){
+                    $joinOn = $col_name; break;
+                }
+
+            }
+
+            if(!$joinOn) continue;
+
+            $joinType = (isset($join['join']))? $join['join']: 'INNER';
+
+            $this->query['join'][] = $joinType." JOIN ".$joinTable['name']." AS ".$joinTable['as']." ON ".$this->query['table']['as'].".".$joinOn." = ".$joinTable['as'].".".$join['on_'.$joinOn];
+
+            $joinQuery = new Rcl_Query();
+
+            $joinQuery->set_query($join);
+
+            $this->query['select'] = array_merge($this->query['select'], $joinQuery->query['select']);
+            $this->query['where'] = array_merge($this->query['where'], $joinQuery->query['where']);
+            $this->query['join'] = array_merge($this->query['join'], $joinQuery->query['join']);
+
+        }
+        
     }
     
     function get_string_in($data){

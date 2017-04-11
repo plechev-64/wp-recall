@@ -90,16 +90,6 @@ function rcl_get_options_url_params(){
     return options;
 }
 
-function rcl_update_history_url(url){
-
-    if(url != window.location){
-        if ( history.pushState ){
-            window.history.pushState(null, null, url);
-        }
-    }
-    
-}
-
 function rcl_add_dropzone(idzone){
 
     jQuery(document.body).bind("drop", function(e){

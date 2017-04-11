@@ -163,7 +163,7 @@ function rcl_insert_user_rating($user_id,$point=0){
     );
     
     if(!$result){
-        rcl_add_log('rcl_insert_user_rating: '.__('Не удалось добавить общий рейтинг пользвоателя','wp-recall'), array($user_id,$point));
+        rcl_add_log('rcl_insert_user_rating: '.__('Не удалось добавить общий рейтинг пользователя','wp-recall'), array($user_id,$point));
     }
 }
 

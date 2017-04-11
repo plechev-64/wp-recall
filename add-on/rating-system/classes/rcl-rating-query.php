@@ -4,7 +4,7 @@ class Rcl_Rating_Users_Query extends Rcl_Query {
 
     function __construct() {       
         
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."rating_users",
             'as' => 'rcl_rating_users',
             'cols' => array(
@@ -12,6 +12,8 @@ class Rcl_Rating_Users_Query extends Rcl_Query {
                 'rating_total'
             )
         );
+        
+        parent::__construct($table);
         
     }
     
@@ -21,7 +23,7 @@ class Rcl_Rating_Totals_Query extends Rcl_Query {
 
     function __construct() {       
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."rating_totals",
             'as' => 'rcl_rating_totals',
             'cols' => array(
@@ -33,6 +35,8 @@ class Rcl_Rating_Totals_Query extends Rcl_Query {
             )
         );
         
+        parent::__construct($table);
+        
     }
     
 }
@@ -41,7 +45,7 @@ class Rcl_Rating_Values_Query extends Rcl_Query {
     
     function __construct() {       
         
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."rating_values",
             'as' => 'rcl_rating_values',
             'cols' => array(
@@ -54,6 +58,8 @@ class Rcl_Rating_Values_Query extends Rcl_Query {
                 'rating_type'
             )
         );
+        
+        parent::__construct($table);
         
     }
     

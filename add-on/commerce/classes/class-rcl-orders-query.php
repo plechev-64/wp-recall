@@ -4,7 +4,7 @@ class Rcl_Orders_Query extends Rcl_Query {
     
     function __construct() { 
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."orders",
             'as' => 'rcl_orders',
             'cols' => array(
@@ -17,6 +17,9 @@ class Rcl_Orders_Query extends Rcl_Query {
                 'order_status'
             )
         );
+        
+        parent::__construct($table);
+        
     }
 
 }
@@ -25,7 +28,7 @@ class Rcl_Order_Items_Query extends Rcl_Query {
     
     function __construct() { 
 
-        $this->query['table'] = array(
+        $table = array(
             'name' => RCL_PREF ."order_items",
             'as' => 'rcl_order_items',
             'cols' => array(
@@ -36,6 +39,9 @@ class Rcl_Order_Items_Query extends Rcl_Query {
                 'variations'
             )
         );
+        
+        parent::__construct($table);
+        
     }
 
 }
