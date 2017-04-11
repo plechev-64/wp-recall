@@ -148,21 +148,28 @@ class Rcl_Feed_List extends Rcl_Query{
         
         $authors_ignor[] = $this->user_feed;
         
-        //формируем запрос на получение первого уровня авторов
-        $feeds->set_query(array(
+        $authors_feed = array();
+        
+        $usersFeed1 = $feeds->get_col(array(
             'feed_type' => 'author',
             'user_id' => $this->user_feed,
             'feed_status' => 1,
             'fields' => array('object_id')
         ));
         
-        //добавляем в запрос выборку второго уровня авторов
-        $feeds->query['join'][] = "INNER JOIN ".$feeds->query['table']['name']." AS rcl_feeds2 ON ".$feeds->query['table']['as'].".object_id=rcl_feeds2.user_id";
-        $feeds->query['select'][] = "rcl_feeds2.object_id";
-        $feeds->query['where'][] = "rcl_feeds2.object_id NOT IN (".implode(',',$authors_ignor).")";
+        if($usersFeed1){
         
-        $authors_feed = array_unique($feeds->get_data('get_col'));
-
+            $usersFeed2 = $feeds->get_col(array(
+                'feed_type' => 'author',
+                'include_user_id' => $usersFeed1,
+                'feed_status' => 1,
+                'fields' => array('object_id')
+            ));
+            
+            $authors_feed = array_unique(array_merge($usersFeed1,$usersFeed2));
+        
+        }
+        
         $defaults = array(
             'table' => array(
                 'name' => $wpdb->posts,
@@ -201,7 +208,7 @@ class Rcl_Feed_List extends Rcl_Query{
         $args = wp_parse_args( $args, $defaults );
 
         $this->set_query($args);
-        
+        //print_r($this->get_sql());
         return apply_filters('rcl_feed_posts_query',$this->query,$this->user_feed);
 
     }

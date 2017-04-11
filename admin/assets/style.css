@@ -612,7 +612,6 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     padding: 5px 10px;
 }
 .rcl-custom-fields-box .rcl-custom-field .option-content {
-    margin: 5px 0 0;
     padding: 5px 10px;
 }
 .rcl-custom-fields-box .rcl-custom-field label:not(.block-label) {

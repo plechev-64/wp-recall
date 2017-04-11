@@ -207,7 +207,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                     $fields[] = array(
                         'slug' => 'taxonomy-'.$taxonomy,
                         'title' => $label,
-                        'type' => 'select',
+                        'type' => 'checkbox',
                         'number-tags' => 20,
                         'input-tags' => 1,
                         'options-field' => array(
@@ -284,6 +284,10 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                         $options[$k]['title'] = __('Указание term_ID к выбору','wp-recall');
                     }
                     
+                }
+                
+                if($option['slug'] == 'empty-first'){
+                    unset($options[$k]);
                 }
                 
             }

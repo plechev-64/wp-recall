@@ -158,7 +158,10 @@ class Rcl_Custom_Fields{
             $input = '<span class="file-manage-box">'.$input.'</span>';
         }
         
-        $mTypes = rcl_get_mime_types(array_map('trim',explode(',',$field['field_select'])));
+        $mTypes = false;
+        
+        if($field['field_select'])
+            $mTypes = rcl_get_mime_types(array_map('trim',explode(',',$field['field_select'])));
 
         $accept = ($mTypes)? 'accept="'.implode(',',$mTypes).'"': '';
         $required = (!$this->value)? $this->required: '';
@@ -190,8 +193,13 @@ class Rcl_Custom_Fields{
         
         if(!$values) return false;
         
+        $emptyFirst = (isset($field['empty-first']))? $field['empty-first']: false;
+        
         $content = '<select '.$this->required.' name="'.$field['name'].'" id="'.$this->slug.'" '.$this->get_class($field).'>';
 
+        if($emptyFirst)
+            $content .= '<option value="">'.$emptyFirst.'</option>';
+        
         foreach($values as $k => $value){
             
             if($this->value_in_key) $k = $value;

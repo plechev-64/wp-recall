@@ -209,6 +209,17 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                 
             }else{
                 
+                if($this->field['type']=='select'){
+                    
+                    $options[] = array(
+                        'type' => 'text',
+                        'slug' => 'empty-first',
+                        'title' => __('Первое значение','wp-recall'),
+                        'notice' => __('Имя первого пустого значения, например: "Не выбрано"','wp-recall')
+                    );
+                    
+                }
+                
                 $options[] = array(
                     'type' => 'dynamic',
                     'slug' => 'values',

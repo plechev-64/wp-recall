@@ -131,7 +131,7 @@ function rcl_get_custom_field_options(e){
     var slugField = boxField.data('slug');
     var oldType = boxField.attr('data-type');
     
-    var multiVals = ['select','multiselect','checkbox','radio'];
+    var multiVals = ['multiselect','checkbox','radio'];
 
     if(jQuery.inArray( typeField, multiVals ) >= 0 && jQuery.inArray( oldType, multiVals ) >= 0){
         
