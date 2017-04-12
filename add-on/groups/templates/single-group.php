@@ -1,4 +1,9 @@
 <?php global $rcl_group,$rcl_group_widgets; ?>
+<?php if(rcl_is_group_area('header')): ?>
+    <div class="group-header">
+        <?php rcl_group_area('header'); ?>
+    </div>
+<?php endif; ?>
 <?php if(rcl_is_group_area('sidebar')): ?>
     <div class="group-sidebar">
         <div class="group-avatar">

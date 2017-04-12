@@ -68,18 +68,17 @@ class Rcl_Rating_Box {
         
         if(!isset($args['user_id']))
             $args['user_id'] = $user_ID;
-            
-        
+
         if(!isset($args['object_author']) || !$args['object_author']){
+
+            if($comment && is_object($comment) || $args['rating_type'] == 'comment'){
             
-            if($comment && is_object($comment)){
-            
-                $object = ($comment)? $comment: get_comment($this->object_id);
+                $object = ($comment)? $comment: get_comment($args['object_id']);
                 $args['object_author'] = $object->user_id;
 
             }else if($post && is_object($post)){
                 
-                $object = ($post)? $post: get_post($this->object_id);
+                $object = ($post)? $post: get_post($args['object_id']);
                 $args['object_author'] = $object->post_author;
 
             }
@@ -306,14 +305,16 @@ class Rcl_Rating_Box {
             return '<span class="rating-value">'.rcl_format_rating($this->total_rating).'</span>';
         }
         
-        return '<span class="rating-value rating-value-view" data-rating="'.$this->get_encode_string('view').'" onclick="rcl_view_list_votes(this);">'.rcl_format_rating($this->total_rating).'</span>';
+        return '<span class="rating-value rating-value-view" title="'.__('Смотреть историю','wp-recall').'" data-rating="'.$this->get_encode_string('view').'" onclick="rcl_view_list_votes(this);">'.rcl_format_rating($this->total_rating).'</span>';
     }
     
     function get_html_button($args){
         
         if(!$this->user_can['vote']) return false;
         
-        return '<span class="'.$this->get_class_vote_button($args['type']).' '.$args['class'].'" data-rating="'.$this->get_encode_string($args['type']).'" onclick="rcl_edit_rating(this);">'
+        $title = ($this->user_vote)? __('Отменить голос','wp-recall'): __('Голосовать','wp-recall');
+        
+        return '<span class="'.$this->get_class_vote_button($args['type']).' '.$args['class'].'" data-rating="'.$this->get_encode_string($args['type']).'" onclick="rcl_edit_rating(this);" title="'.$title.'">'
                     . '<i class="fa '.$args['icon'].'" aria-hidden="true"></i>'
                 . '</span>';
         

@@ -24,7 +24,7 @@ function rcl_datepicker_scripts(){
 }
 
 function rcl_bxslider_scripts(){
-    wp_enqueue_style( 'bx-slider', RCL_URL.'assets/js/jquery.bxslider/jquery.bxslider.css' );
+    wp_enqueue_style( 'bx-slider', RCL_URL.'assets/js/jquery.bxslider/jquery.bxslider.min.css' );
     wp_enqueue_script( 'jquery' );
     rcl_enqueue_script( 'bx-slider', RCL_URL.'assets/js/jquery.bxslider/jquery.bxslider.min.js' );
 }
@@ -57,11 +57,7 @@ function rcl_crop_scripts(){
 }
 
 function rcl_rangyinputs_scripts(){
-    if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-        return '<script type="text/javascript" src="'.RCL_URL.'assets/js/rangyinputs.js"></script>';
-    }else{
-        rcl_enqueue_script( 'rangyinputs', RCL_URL.'assets/js/rangyinputs.js' );
-    }
+    rcl_enqueue_script( 'rangyinputs', RCL_URL.'assets/js/rangyinputs.js' );
 }
 
 function rcl_font_awesome_style(){
@@ -82,6 +78,7 @@ function rcl_enqueue_wp_form_scripts(){
 
 function rcl_frontend_scripts(){
     global $rcl_options,$user_LK,$user_ID,$post;
+    
     if(!isset($rcl_options['font_icons']))  $rcl_options['font_icons']=1;
     
     wp_enqueue_script( 'jquery' );

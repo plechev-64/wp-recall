@@ -1,18 +1,19 @@
 /* slider start */
 body .bx-wrapper{
-	clear: both;
-	margin: 24px auto 22px;
+    clear: both;
+    margin: 24px auto 22px;
+    box-shadow: none;
 }
 body .bx-wrapper a:link {
-	border: none;					/*++Twenty15++*/
+    border: none;					/*++Twenty15++*/
     box-shadow: none;				/*++Twenty16++*/
 }
 body .bx-wrapper .bx-viewport {
     box-sizing: border-box;
     left: 0;
     margin: 0 auto;
-	max-width: 99%; /*old browsers*/
-	max-width: calc(100% - 10px);
+    max-width: 99%; /*old browsers*/
+    max-width: calc(100% - 10px);
 }
 .rcl-gallery,
 .slider-rcl{
@@ -97,7 +98,7 @@ body #bx-pager a.active img {
 }
 .rcl-gallery .content-slide p,
 .slider-rcl .content-slide p{
-	margin:0 0;
+    margin:0 0;
 }
 
 body .bx-wrapper div.bx-controls-direction a {
@@ -106,19 +107,19 @@ body .bx-wrapper div.bx-controls-direction a {
 /* slider End */
 
 @media screen and (max-width:380px) {
-	body .bx-wrapper .bx-viewport .rcl-gallery {
-		height: 200px !important;
-	}
-	.rcl-gallery img {
-		height: auto;
-		max-height: 200px;
-	}
-	body #bx-pager a {
-		width: 31%;
-	}
-	body .bx-wrapper .bx-pager.bx-default-pager a {
-		border-radius: 7px;
-		height: 14px;
-		width: 14px;
-	}
+    body .bx-wrapper .bx-viewport .rcl-gallery {
+        height: 200px !important;
+    }
+    .rcl-gallery img {
+        height: auto;
+        max-height: 200px;
+    }
+    body #bx-pager a {
+        width: 31%;
+    }
+    body .bx-wrapper .bx-pager.bx-default-pager a {
+        border-radius: 7px;
+        height: 14px;
+        width: 14px;
+    }
 }

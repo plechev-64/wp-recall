@@ -135,6 +135,8 @@ class Rcl_Tabs{
 
         $name = (isset($this->counter))? sprintf('%s <span class="rcl-menu-notice">%s</span>',$this->name,$this->counter): $this->name;
 
+        $icon = ($this->icon)? $this->icon: 'fa-cog';
+        
         if($this->onclick){
             
             $html_button = rcl_get_button(
@@ -142,7 +144,7 @@ class Rcl_Tabs{
                 '#',
                 array(
                     'class'=>'recall-button',
-                    'icon'=> ($this->icon)? $this->icon:'fa-cog',
+                    'icon'=> $icon,
                     'attr'=> 'onclick="'.$this->onclick.';return false;"'
                 )
             );
@@ -162,7 +164,7 @@ class Rcl_Tabs{
                 $link,
                 array(
                     'class'=>$this->get_class_button(),
-                    'icon'=> ($this->icon)? $this->icon:'fa-cog',
+                    'icon'=> $icon,
                     'attr'=>'data-post='.rcl_encode_post($datapost)
                 )
             );

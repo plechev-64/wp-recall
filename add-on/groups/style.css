@@ -434,10 +434,11 @@ div p.post-group-meta {
     background: rgba(243, 243, 243, 0.5);
     box-shadow: 0 0 1px 1px rgb(219, 219, 219);
     box-sizing: border-box;
-    float: right;
     margin: 1%;
     padding: 5px;
     width: 48%;
+    display: inline-block;
+    vertical-align: top;
 }
 #widgets-options #unuses-zone{
     box-sizing: border-box;

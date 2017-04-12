@@ -270,17 +270,12 @@ function rcl_get_attachment_box($attachment_id, $mime = 'image'){
 
 function rcl_get_html_attachment($attach_id,$mime_type){
 
-    $editpost = $_GET['rcl-post-edit'];
-
     $mime = explode('/',$mime_type);
 
-    $content = "<li id='attachment-$attach_id' class='post-attachment attachment-$mime[0]' data-mime='$mime[0]' data-attachment-id='$attach_id'>"
-            . rcl_button_fast_delete_post($attach_id)
-            . "<label>"
-            . rcl_get_attachment_box($attach_id,$mime[0])
-            . apply_filters('rcl_post_attachment_html','',$attach_id,$mime); 
-    $content .= "</label>
-            </li>";
+    $content = "<li id='attachment-$attach_id' class='post-attachment attachment-$mime[0]' data-mime='$mime[0]' data-attachment-id='$attach_id'>";
+    $content .= rcl_button_fast_delete_post($attach_id);
+    $content .= sprintf("<label>%s</label>",apply_filters('rcl_post_attachment_html',rcl_get_attachment_box($attach_id,$mime[0]),$attach_id,$mime));
+    $content .= "</li>";
             
     return $content;
 }

@@ -159,6 +159,13 @@ function rcl_tab_groups($type_account = 'user_id'){
 
 add_action('init','rcl_register_default_group_sidebars',10);
 function rcl_register_default_group_sidebars(){
+    
+    rcl_register_group_area(
+        array(
+            'name'=>__('Header','wp-recall'),
+            'id'=>'header'
+        )
+    );
 
     rcl_register_group_area(
         array(

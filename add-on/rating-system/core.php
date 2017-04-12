@@ -449,7 +449,7 @@ function rcl_update_user_rating($args){
         );
         
         if(!$result){
-            rcl_add_log('rcl_update_user_rating: '.__('Не удалось изменить общий рейтинг пользователя','wp-recall'), array($user_id,$point));
+            rcl_add_log('rcl_update_user_rating: '.__('Не удалось изменить общий рейтинг пользователя','wp-recall'), $args);
         }
         
     }else{

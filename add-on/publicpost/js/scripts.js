@@ -156,11 +156,17 @@ function rcl_delete_thumbnail_attachment(data){
 function rcl_edit_post(element){	
 
     var post_id = jQuery(element).data('post');
+    
+    rcl_preloader_show(jQuery('#lk-content'));
+    
     var dataString = 'action=rcl_get_edit_postdata&post_id='+post_id;
     dataString += '&ajax_nonce='+Rcl.nonce;
     jQuery.ajax({
             type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-            success: function(data){                                   
+            success: function(data){ 
+                
+                rcl_preloader_hide();
+                
                 if(data['error']){
                     rcl_notice(data['error'],'error',10000);
                     return false;
@@ -175,7 +181,7 @@ function rcl_edit_post(element){
                             label: Rcl.local.save,
                             closeAfter: false,
                             method: function () {
-                                rcl_preloader_show('#rcl-popup-content > form');
+                                rcl_preloader_show('#rcl-popup-content form');
                                 var postdata   = jQuery('#rcl-popup-content form').serialize();
                                 var dataString = 'action=rcl_edit_postdata&'+postdata;
                                 dataString += '&ajax_nonce='+Rcl.nonce;
