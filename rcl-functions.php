@@ -1051,6 +1051,14 @@ function rcl_update_profile_fields($user_id){
                     if($value != $_POST['repeat_pass']) continue;
                     
                 }
+                
+                if($slug == 'user_email'){
+                    
+                    $currentEmail = get_the_author_meta('user_email',$user_id);
+                    
+                    if($currentEmail == $value) continue;
+                    
+                }
 
                 wp_update_user( array( 'ID' => $user_id, $slug => $value ) );
                 

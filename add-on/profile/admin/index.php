@@ -93,7 +93,7 @@ function rcl_get_custom_fields_profile($user){
 
     if($get_fields){
         $field = '<h3>'.__('Custom Profile Fields','wp-recall').':</h3>
-        <table class="form-table rcl-table">';
+        <table class="form-table rcl-form">';
         foreach($get_fields as $custom_field){
             $slug = $custom_field['slug'];
             $meta = get_the_author_meta($slug,$user->ID);

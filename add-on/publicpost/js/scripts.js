@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
     
     $('.rcl-public-form #insert-media-button').click(function(e) {
         
-        var button = $(this);
+        var editor = $(this).data('editor');
         
         wp.media.featuredImage.set = function(thumbnail_id){
             
@@ -14,7 +14,8 @@ jQuery(document).ready(function($) {
     
         };
 
-        wp.media.editor.open(button);
+        wp.media.editor.open(editor);
+        
         return false;
         
     });
@@ -356,7 +357,7 @@ function rcl_publish(e){
                 rcl_preloader_hide();
                 
                 rcl_notice(data['error'],'error',10000);
-                submit.attr('disabled',false).val(Rcl.local.publish);
+                
                 return false;
             }
             

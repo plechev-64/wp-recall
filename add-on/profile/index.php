@@ -176,7 +176,7 @@ function rcl_tab_profile_content($master_id){
 
     $content = '<h3>'.__('User profile','wp-recall').' '.$userdata->user_login.'</h3>
     <form name="profile" id="your-profile" action="" method="post"  enctype="multipart/form-data">
-    <table class="rcl-table">';
+    <table class="rcl-form">';
 
     $CF = new Rcl_Custom_Fields();
 

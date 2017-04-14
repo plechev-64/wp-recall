@@ -153,24 +153,30 @@ class Rcl_Custom_Fields{
         }
 
         if($this->value){
+            
             $input .= $this->get_field_value($field,$this->value,0);
-            if(!$field['required']) $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a></span>';
+            
+            if(!$field['required']) 
+                $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a></span>';
+            
             $input = '<span class="file-manage-box">'.$input.'</span>';
+            
         }
-        
+
         $mTypes = false;
-        
-        if($field['field_select'])
-            $mTypes = rcl_get_mime_types(array_map('trim',explode(',',$field['field_select'])));
+
+        if($field['ext-files'])
+            $mTypes = rcl_get_mime_types(array_map('trim',explode(',',$field['ext-files'])));
 
         $accept = ($mTypes)? 'accept="'.implode(',',$mTypes).'"': '';
         $required = (!$this->value)? $this->required: '';
         
         $size = ($field['sizefile'])? $field['sizefile']: 2;
 
-        $input .= '<span id="'.$this->slug.'-content" class="file-field-upload"><input data-size="'.$size.'" type="file" '.$required.' '.$accept.' name="'.$field['name'].'" '.$this->get_class($field).' id="'.$this->slug.'" value=""/> ('.__('Max size','wp-recall').': '.$size.'MB)</span>';
-
-        $input .= $this->get_files_scripts();
+        $input .= '<span id="'.$this->slug.'-content" class="file-field-upload">';
+        $input .= '<input data-size="'.$size.'" type="file" '.$required.' '.$accept.' name="'.$field['name'].'" '.$this->get_class($field).' id="'.$this->slug.'" value=""/> ('.__('Max size','wp-recall').': '.$size.'MB)';
+        $input .= '<script type="text/javascript">rcl_file_field_init("'.$this->slug.'");</script>';
+        $input .= '</span>';
 
         $this->files[$this->slug] = $size;
 
@@ -465,37 +471,6 @@ class Rcl_Custom_Fields{
 
         rcl_update_profile_fields($user_id);
 
-    }
-
-    function get_files_scripts(){
-
-        if($this->files) return false;
-        return '<script type="text/javascript">
-            jQuery(function(){
-                jQuery("#rcl-order-form, #profile-page, form#your-profile, form.rcl-public-form, .wp-admin #post").attr("enctype","multipart/form-data");
-                jQuery("form").submit(function(event){
-                    var error = false;
-                    jQuery(this).find(".file-field").each(function(){
-                        var maxsize = jQuery(this).data("size");
-                        var fileInput = jQuery(this)[0];
-                        var filesize = fileInput.files[0];
-                        if(!filesize) return;
-                        filesize = filesize.size/1024/1024;
-                        if(filesize>maxsize){
-                            jQuery(this).parent().css("border","1px solid red").css("padding","2px");
-                            error = true;
-                        }else{
-                            jQuery(this).parent().removeAttr("style");
-                        }
-                    });
-                    if(error){
-                        rcl_preloader_hide();
-                        alert("'.__('File size exceedes maximum!','wp-recall').'");
-                        return false;
-                    }
-                });
-            });
-        </script>';
     }
 
 }

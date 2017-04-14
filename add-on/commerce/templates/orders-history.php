@@ -3,7 +3,7 @@
     /*Данный шаблон можно разместить в папке используемого шаблона /wp-content/wp-recall/templates/ и он будет подключаться оттуда*/
 ?>
 <?php global $rcl_orders; ?>
-<div class="order-data rcl-table">
+<div class="order-data rcl-form">
     <table>
         <tr>
             <th><?php _e('Order number','wp-recall'); ?></th>

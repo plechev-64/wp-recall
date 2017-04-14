@@ -188,7 +188,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                 
                 $options[] = array(
                     'type' => 'textarea',
-                    'slug' => 'field_select',
+                    'slug' => 'ext-files',
                     'title' => __('Разрешенные типы файлов','wp-recall'),
                     'notice' => __('allowed types of files are divided by comma, for example: pdf, zip, jpg','wp-recall')
                 );

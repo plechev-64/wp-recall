@@ -222,7 +222,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             $attrsForm[] = $k.'="'.$v.'"';
         }
         
-        $content = '<div class="rcl-public-box rcl-table">';
+        $content = '<div class="rcl-public-box rcl-form">';
         
         $content .= '<form action="" method="post" '.implode(' ',$attrsForm).'>';
         

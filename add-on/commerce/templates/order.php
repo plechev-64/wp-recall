@@ -8,7 +8,7 @@
 
 <?php do_action('rcl_order_before'); ?>
 
-<table bordercolor="сссссс" border="1" cellpadding="5" class="order-table rcl-table">
+<table bordercolor="сссссс" border="1" cellpadding="5" class="order-table rcl-form">
     <tr>
         <th class="column-product-name">
             <?php _e('Product','wp-recall'); ?>

@@ -62,7 +62,7 @@ class Rcl_Cart_Constructor {
                 
                 $content .= '<div class="cart-fields-title">'.__('To place an order fill out the form below','wp-recall').'</div>';
             
-                $content .= '<table class="table-fields rcl-table">';
+                $content .= '<table class="table-fields rcl-form">';
                 
                 foreach($this->fields as $field){
                     

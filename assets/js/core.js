@@ -257,3 +257,37 @@ function rcl_remove_datepicker_box(){
     jQuery('#ui-datepicker-div').remove();
 }
 
+function rcl_file_field_init(field_id){
+    
+    var field = jQuery("form #"+field_id);
+    var form = field.parents('form');
+    
+    field.attr("enctype","multipart/form-data");
+    
+    form.submit(function(event){
+        
+        var error = false;
+        
+        field.each(function(){
+            var maxsize = jQuery(this).data("size");
+            var fileInput = jQuery(this)[0];
+            var filesize = fileInput.files[0];
+            if(!filesize) return;
+            filesize = filesize.size/1024/1024;
+            if(filesize>maxsize){
+                jQuery(this).parent().css("border","1px solid red").css("padding","2px");
+                error = true;
+            }else{
+                jQuery(this).parent().removeAttr("style");
+            }
+        });
+        
+        if(error){
+            rcl_preloader_hide();
+            rcl_notice("Размер файла превышен!");
+            return false;
+        }
+        
+    });
+
+}

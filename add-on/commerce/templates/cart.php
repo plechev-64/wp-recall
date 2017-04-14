@@ -7,7 +7,7 @@
 
 <?php do_action('rcl_cart_before'); ?>
 
-<table class="order-table rcl-table">
+<table class="order-table rcl-form">
     <tr>
         <th class="column-product-name">
             <?php _e('Product','wp-recall'); ?>

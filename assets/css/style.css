@@ -1102,7 +1102,7 @@ div.ssi-backdrop {
 }
 
 /*Таблица*/
-.rcl-table {
+.rcl-form {
     border: none;
     border-collapse: collapse;
     border-spacing: 0;
@@ -1113,27 +1113,27 @@ div.ssi-backdrop {
     width: 100%;
     box-sizing: border-box;
 }
-.rcl-table tr {
+.rcl-form tr {
     background: #fff;
 }
-.rcl-table th,
-.rcl-table td {
+.rcl-form th,
+.rcl-form td {
     border: 1px solid rgb(243, 243, 243);
     padding: 5px;
     text-align: left;
     text-transform: none;					/*++Twenty14++*/
     vertical-align: middle;
 }
-.rcl-table tr th {
+.rcl-form tr th {
     overflow: hidden;
 }
-.rcl-table input[type="checkbox"] {
+.rcl-form input[type="checkbox"] {
     margin: 4px 2px 0;
     width: 15px;
     float: none;
 }
-.rcl-table input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-.rcl-table textarea {
+.rcl-form input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.rcl-form textarea {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 0;
@@ -1146,19 +1146,19 @@ div.ssi-backdrop {
     padding: 5px 7px;
     width: 100%;
 }
-.rcl-table input:focus:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-.rcl-table textarea:focus {
+.rcl-form input:focus:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.rcl-form textarea:focus {
     background: #fff;
     border: 1px solid #ccc;
     box-shadow: 0 0 1px 0 #ddd;
     color: #000;
     outline: medium none;
 }
-.rcl-table input[disabled] {
+.rcl-form input[disabled] {
     background-color: #eee;
     opacity: 0.6;
 }
-.rcl-table select {
+.rcl-form select {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 0;
@@ -1167,12 +1167,11 @@ div.ssi-backdrop {
     float: left;
     height: auto;
     line-height: normal;
-    max-width: 99%;
     outline: 0;
     padding: 5px 7px;
     width: 100%;
 }
-.rcl-table .block-label {
+.rcl-form .block-label {
     background-color: #f2f2f2;
     border: 1px solid #e2e2e2;
     cursor: pointer;
@@ -1184,10 +1183,10 @@ div.ssi-backdrop {
     margin: 4px;
     padding: 5px 8px 4px 6px;
 }
-.rcl-table .block-label input[type="checkbox"] {
+.rcl-form .block-label input[type="checkbox"] {
     margin: 0 6px 0 0;
 }
-.rcl-table .block-label input[type="radio"] {
+.rcl-form .block-label input[type="radio"] {
     border: 1px solid #d1d1d1;
     color: #b1b1b1;
     float: none;
@@ -1195,11 +1194,11 @@ div.ssi-backdrop {
     padding: 8px 12px;
     width: auto;
 }
-.rcl-table .required {
+.rcl-form .required {
     color: rgb(229, 57, 53);
     font: bold 15px/1 Verdana,arial;
 }
-.rcl-table label a {
+.rcl-form label a {
     color: rgb(76, 140, 189);
     display: inline;
     font-weight: bold;
@@ -1207,57 +1206,57 @@ div.ssi-backdrop {
     padding: 0 1px 0 0;
 }
 
-.rcl-table label a:hover,
-.rcl-table td span a:hover {
+.rcl-form label a:hover,
+.rcl-form td span a:hover {
     color: #000;
     text-decoration: underline;
 }
 
-.rcl-table td a:hover {
+.rcl-form td a:hover {
 	color: #000;
 }
-.rcl-table td a:hover i {
+.rcl-form td a:hover i {
 	color: red;
 }
-.rcl-table .file-manage-box{
+.rcl-form .file-manage-box{
     display: block;
     overflow: hidden;
     margin-bottom: 5px;
 }
-.rcl-table .file-manage-box .fa {
+.rcl-form .file-manage-box .fa {
     color: rgb(229, 57, 53);
     font-size: 16px;
     margin-right: 5px;
 }
-.rcl-table .file-manage-box .delete-file-url{
+.rcl-form .file-manage-box .delete-file-url{
     float: right;
 }
-.rcl-table .file-manage-box .delete-file-url a{
+.rcl-form .file-manage-box .delete-file-url a{
     display: inline-block;
 }
-.rcl-table .file-field-upload{
+.rcl-form .file-field-upload{
     display: block;
     padding: 5px;
     background: #f4f4f4;
     font-size: 11px;
 }
-.rcl-table .file-field-upload input{
+.rcl-form .file-field-upload input{
     width: auto;
 }
 
 @media screen and (max-width:360px) {
-    .rcl-table tr th {
+    .rcl-form tr th {
         max-width: 107px;
         -webkit-hyphens: auto;
         hyphens: auto;
         word-wrap: break-word;
     }
-    .rcl-table td a {
+    .rcl-form td a {
         font-size: 13px;
         margin: 3px 0;
         width: 83px;
     }
-    .rcl-table .file-field-upload {
+    .rcl-form .file-field-upload {
         width: 205px;
     }
 }
