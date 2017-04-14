@@ -78,7 +78,7 @@ function rcl_get_custom_fields_profile($user){
             'first_name',
             'last_name',
             'description',
-            'url',
+            'user_url',
             'display_name',
             'user_email',
             'primary_pass',

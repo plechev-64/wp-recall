@@ -1054,6 +1054,8 @@ function rcl_update_profile_fields($user_id){
                 
                 if($slug == 'user_email'){
                     
+                    if(!$value) continue;
+                    
                     $currentEmail = get_the_author_meta('user_email',$user_id);
                     
                     if($currentEmail == $value) continue;
