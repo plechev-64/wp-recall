@@ -532,30 +532,6 @@ function rcl_setup_position_float_form(){
     jQuery('.panel_lk_recall.floatform').css('top', screen_top+'px');
 }
 
-function rcl_init_field_maxlength(fieldID){
-    
-    var field = jQuery('#'+fieldID);
-    var maxlength = field.attr('maxlength');
-    
-    if(!field.parent().find('.maxlength').size()){
-        
-        if(field.val()){ 
-            maxlength = maxlength - field.val().length;
-        }
-        
-        field.after('<span class="maxlength">'+maxlength+'</span>');
-    }
-    
-    field.on('keyup', function(){
-        var maxlength = jQuery(this).attr('maxlength');
-        if(!maxlength) return false;
-        var word = jQuery(this);
-        var count = maxlength - word.val().length;
-        jQuery(this).next().text(count);
-        if(word.val().length > maxlength) word.val(word.val().substr(0, maxlength));
-    });
-}
-
 function rcl_add_beat(beat_name,delay,data){
     
     delay = (delay < 10)? 10: delay;

@@ -175,7 +175,7 @@ class Rcl_Custom_Fields{
 
         $input .= '<span id="'.$this->slug.'-content" class="file-field-upload">';
         $input .= '<input data-size="'.$size.'" type="file" '.$required.' '.$accept.' name="'.$field['name'].'" '.$this->get_class($field).' id="'.$this->slug.'" value=""/> ('.__('Max size','wp-recall').': '.$size.'MB)';
-        $input .= '<script type="text/javascript">rcl_file_field_init("'.$this->slug.'");</script>';
+        $input .= '<script type="text/javascript">rcl_init_field_file("'.$this->slug.'");</script>';
         $input .= '</span>';
 
         $this->files[$this->slug] = $size;

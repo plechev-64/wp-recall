@@ -257,7 +257,7 @@ function rcl_remove_datepicker_box(){
     jQuery('#ui-datepicker-div').remove();
 }
 
-function rcl_file_field_init(field_id){
+function rcl_init_field_file(field_id){
     
     var field = jQuery("form #"+field_id);
     var form = field.parents('form');
@@ -290,4 +290,28 @@ function rcl_file_field_init(field_id){
         
     });
 
+}
+
+function rcl_init_field_maxlength(fieldID){
+    
+    var field = jQuery('#'+fieldID);
+    var maxlength = field.attr('maxlength');
+    
+    if(!field.parent().find('.maxlength').size()){
+        
+        if(field.val()){ 
+            maxlength = maxlength - field.val().length;
+        }
+        
+        field.after('<span class="maxlength">'+maxlength+'</span>');
+    }
+    
+    field.on('keyup', function(){
+        var maxlength = jQuery(this).attr('maxlength');
+        if(!maxlength) return false;
+        var word = jQuery(this);
+        var count = maxlength - word.val().length;
+        jQuery(this).next().text(count);
+        if(word.val().length > maxlength) word.val(word.val().substr(0, maxlength));
+    });
 }
