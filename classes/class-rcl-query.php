@@ -77,7 +77,7 @@ class Rcl_Query {
                 
                 if(isset($args[$col_name])){
                     
-                    if($args[$col_name] == 'is_null'){
+                    if($args[$col_name] === 'is_null'){
                         $this->query['where'][] = $this->query['table']['as'].".$col_name IS NULL";
                     }else{
                         $this->query['where'][] = $this->query['table']['as'].".$col_name = '$args[$col_name]'";
