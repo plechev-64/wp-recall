@@ -36,7 +36,7 @@ class Rcl_Query {
             }
             
         }
-
+        
         //получаем устаревшие указания кол-ва значений на странице
         //и приводим к number
         if(isset($args['per_page'])){
@@ -77,8 +77,12 @@ class Rcl_Query {
                 
                 if(isset($args[$col_name])){
                     
-                    $this->query['where'][] = $this->query['table']['as'].".$col_name = '$args[$col_name]'";
-                
+                    if($args[$col_name] == 'is_null'){
+                        $this->query['where'][] = $this->query['table']['as'].".$col_name IS NULL";
+                    }else{
+                        $this->query['where'][] = $this->query['table']['as'].".$col_name = '$args[$col_name]'";
+                    }
+
                 }
                 
                 if(isset($args[$col_name.'_not_in'])){
@@ -117,9 +121,14 @@ class Rcl_Query {
         
         if(isset($args['orderby'])){
             
-            $this->query['orderby'] = $this->query['table']['as'].'.'.$args['orderby'];
-            $this->query['order'] = (isset($args['order']) && $args['order'])? $args['order']: 'DESC';
-            
+            if($args['orderby'] == 'rand'){
+                $this->query['orderby'] = $this->query['table']['as'].'.'.$this->query['table']['cols'][0];
+                $this->query['order'] = 'RAND()';
+            }else{
+                $this->query['orderby'] = $this->query['table']['as'].'.'.$args['orderby'];
+                $this->query['order'] = (isset($args['order']) && $args['order'])? $args['order']: 'DESC';
+            }
+
         }else if(isset($args['orderby_as_decimal'])){
             
             $this->query['orderby'] = 'CAST('.$this->query['table']['as'].'.'.$args['orderby_as_decimal'].' AS DECIMAL)';
@@ -149,7 +158,7 @@ class Rcl_Query {
     function set_fields($fields){
         
         if(!$fields) return false;
-
+        
         foreach($fields as $field){
             if(!in_array($field,$this->query['table']['cols'])) continue;
             $this->query['select'][] = $this->query['table']['as'].'.'.$field;
