@@ -5,7 +5,7 @@ add_shortcode('rcl-pay-form','rcl_get_pay_form');
 function rcl_get_pay_form($attr){
     
     $form_type = (isset($attr['form_type']) && $attr['form_type'])? $attr['form_type']: 'frozen';
-    
+
     if($form_type == 'dynamic'){
         
         return rcl_form_user_balance($attr);

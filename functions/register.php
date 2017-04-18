@@ -70,7 +70,7 @@ function rcl_confirm_user_registration(){
             do_action('rcl_confirm_registration',$user->ID);
             
             if($rcl_options['login_form_recall']==2){
-                wp_safe_redirect( 'wp-login.php?success=checkemail' );
+                wp_safe_redirect( wp_login_url().'?success=checkemail' );
             }else{
                 wp_redirect( get_bloginfo('wpurl').'?action-rcl=login&success=checkemail' );
             }
@@ -80,7 +80,7 @@ function rcl_confirm_user_registration(){
     }
 
     if($rcl_options['login_form_recall']==2){
-        wp_safe_redirect( 'wp-login.php?checkemail=confirm' );
+        wp_safe_redirect( wp_login_url().'?checkemail=confirm' );
     }else{
         wp_redirect( get_bloginfo('wpurl').'?action-rcl=login&login=checkemail' );
     }
@@ -189,12 +189,12 @@ function rcl_get_register_user($errors){
 
     if($user_id){
 
-        if($rcl_options['login_form_recall']==2||false !== strpos($ref, 'wp-login.php')){
+        if($rcl_options['login_form_recall']==2||false !== strpos($ref, wp_login_url())){
             //если форма ВП, то возвращаем на login с нужными GET-параметрами
             if($rcl_options['confirm_register_recall']==1)
-                wp_safe_redirect( 'wp-login.php?checkemail=confirm' );
+                wp_safe_redirect( wp_login_url().'?checkemail=confirm' );
             else
-                wp_safe_redirect( 'wp-login.php?checkemail=registered' );
+                wp_safe_redirect( wp_login_url().'?checkemail=registered' );
 
         }else{
 

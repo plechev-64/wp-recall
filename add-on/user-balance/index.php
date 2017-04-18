@@ -183,9 +183,11 @@ function rcl_add_count_user(){
             'submit_value'=> $submit_value,
             'pay_systems_not_in'=> array('user_balance'),
         );
+        
+        $args = apply_filters('rcl_ajax_pay_form_args',$args);
 
-        $log['redirectform'] = rcl_get_pay_form($args);
-        $log['otvet']=100;
+        $log['redirectform'] = rcl_get_pay_form($args);;
+        $log['otvet']=100; 
 
     } else {
         
