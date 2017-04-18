@@ -223,15 +223,16 @@ function rcl_get_register_user_activate ( ) {
 
 //письмо высылаемое при регистрации
 function rcl_register_mail($userdata){
-    global $rcl_options,$wp_hasher;
+    global $rcl_options;
 
-    $subject = __('Confirm your registration!','wp-recall');
     $textmail = '
     <p>'.__('You or someone else signed up on our website','wp-recall').' "'.get_bloginfo('name').'" '.__('with the following data:','wp-recall').'</p>
     <p>'.__('Login','wp-recall').': '.$userdata['user_login'].'</p>
     <p>'.__('Password','wp-recall').': '.$userdata['user_pass'].'</p>';
 
     if($rcl_options['confirm_register_recall']==1){
+        
+        $subject = __('Confirm your registration!','wp-recall');
         
         $confirmstr = base64_encode(
                         json_encode(
@@ -248,9 +249,15 @@ function rcl_register_mail($userdata){
         <p><a href="'.$url.'">'.$url.'</a></p>
         <p>'.__('Unable to activate the account?','wp-recall').'</p>
         <p>'.__('Copy the link below, paste it into the address bar of your browser and hit Enter','wp-recall').'</p>';
+        
+    }else{
+        
+        $subject = __('Регистрация завершена','wp-recall');
+        
     }
 
     $textmail .= '<p>'.__('If it wasn’t you, then just ignore this email','wp-recall').'</p>';
+    
     rcl_mail($userdata['user_email'], $subject, $textmail);
 
 }

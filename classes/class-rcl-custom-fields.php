@@ -475,16 +475,16 @@ class Rcl_Custom_Fields{
 
 }
 
-function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
+function rcl_upload_meta_file($field, $user_id, $post_id = 0){
     
     require_once(ABSPATH . "wp-admin" . '/includes/image.php');
     require_once(ABSPATH . "wp-admin" . '/includes/file.php');
     require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
-    $slug = $custom_field['slug'];
-    $maxsize = ($custom_field['sizefile'])? $custom_field['sizefile']: 2;
+    $slug = $field['slug'];
+    $maxsize = ($field['sizefile'])? $field['sizefile']: 2;
     
-    if(!isset($_FILES[$slug])){
+    if(!isset($_FILES[$slug]) && $post_id){
         delete_post_meta($post_id, $slug);
         return false;
     }
@@ -496,11 +496,13 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
     if ($_FILES[$slug]["size"] > $maxsize*1024*1024){
         wp_die( __('File size exceedes maximum!','wp-recall'));
     }
-
+    
     $accept = array();
     $attachment = array();
-    if($custom_field['field_select']){
-        $valid_types = array_map('trim',explode(',',$custom_field['field_select']));
+    
+    if($field['ext-files']){
+        
+        $valid_types = array_map('trim',explode(',',$field['ext-files']));
         $filetype = wp_check_filetype_and_ext( $_FILES[$slug]['tmp_name'], $_FILES[$slug]['name'] );
 
         if (!in_array($filetype['ext'], $valid_types)){ 
@@ -512,9 +514,13 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
 
     if($file['url']){
 
-        if($post_id) $file_id = get_post_meta($post_id,$slug,1);
-        else $file_id = get_user_meta($user_id,$slug,1);
-        if($file_id) wp_delete_attachment($file_id);
+        if($post_id) 
+            $file_id = get_post_meta($post_id,$slug,1);
+        else 
+            $file_id = get_user_meta($user_id,$slug,1);
+        
+        if($file_id) 
+            wp_delete_attachment($file_id);
 
         $attachment = array(
             'post_mime_type' => $file['type'],
@@ -526,9 +532,10 @@ function rcl_upload_meta_file($custom_field,$user_id,$post_id=0){
             'post_author' => $user_id,
             'post_status' => 'inherit'
         );
-
+        
         $attach_id = wp_insert_attachment( $attachment, $file['file'], $post_id );
         $attach_data = wp_generate_attachment_metadata( $attach_id, $file['file'] );
+        
         wp_update_attachment_metadata( $attach_id, $attach_data );
 
         return $attach_id;

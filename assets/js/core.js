@@ -262,7 +262,7 @@ function rcl_init_field_file(field_id){
     var field = jQuery("form #"+field_id);
     var form = field.parents('form');
     
-    field.attr("enctype","multipart/form-data");
+    form.attr("enctype","multipart/form-data");
     
     form.submit(function(event){
         

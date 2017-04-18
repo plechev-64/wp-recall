@@ -28,9 +28,6 @@ function rcl_commerce_options(){
                 $opt->option('email',array('name'=>'admin_email_magazin_recall')),
                 $opt->notice(__('If email is not specified, a notification will be sent to all users of the website with "Administrator" rights','wp-recall')),
 
-                $opt->label(__('Goods surcharge (%)','wp-recall')),
-                $opt->option('number',array('name'=>'margin_product')),
-                $opt->notice(__('If zero or not specified, the goods’ surplus will not be applied','wp-recall'))
             )
         ),
         $opt->option_block(
@@ -49,14 +46,6 @@ function rcl_commerce_options(){
         $opt->option_block(
             array(
                 $opt->title(__('Cart','wp-recall')),
-
-                $opt->label(__('Display button "Add to Cart"','wp-recall')),
-                $opt->option('select',array(
-                    'name'=>'add_basket_button_recall',
-                    'options'=>array(__('Automatically','wp-recall'),__('Through shortcode','wp-recall'))
-                )),
-                $opt->notice(__('On the product page. If through shortcode, use [add-basket]','wp-recall')),
-
                 $opt->label(__('Checkout page','wp-recall')),
                 wp_dropdown_pages( $args ),
                 $opt->notice(__('Specify the page with the shortcode [basket]','wp-recall')),

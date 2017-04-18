@@ -141,13 +141,14 @@ class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
         global $rcl_options;
         
         $content .= '<h4>'.__('Users page','wp-recall').'</h4>'
-            . wp_dropdown_pages( array(
-                'selected'   => $rcl_options['users_page_rcl'],
-                'name'       => 'users_page_rcl',
-                'show_option_none' => __('Not selected','wp-recall'),
-                'echo'             => 0 )
-            )
-            .'<p>'.__('This page is required to filter users by value of profile fields','wp-recall').'</p>';
+                . '<style>#users_page_rcl{max-width:100%;}</style>'
+                . wp_dropdown_pages( array(
+                    'selected'   => $rcl_options['users_page_rcl'],
+                    'name'       => 'users_page_rcl',
+                    'show_option_none' => __('Not selected','wp-recall'),
+                    'echo'             => 0 )
+                )
+                .'<p>'.__('This page is required to filter users by value of profile fields','wp-recall').'</p>';
         
         return $content;
         

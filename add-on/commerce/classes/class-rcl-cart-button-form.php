@@ -112,6 +112,12 @@ class Rcl_Cart_Button_Form{
 
         if(!$this->output) return false;
         
+        $PrVars = new Rcl_Product_Variations();
+        
+        if($PrVars->get_product_variations($this->product_id)){
+            rcl_dialog_scripts();
+        }
+        
         $content = '<div class="rcl-cart-box">';
         
         $content .= rcl_get_include_template('cart-button-form.php', __FILE__, $this);

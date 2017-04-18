@@ -261,7 +261,7 @@ function rcl_payment_order($order_id){
 
 add_action('rcl_create_order', 'rcl_create_order_send_mail',10,2);
 function rcl_create_order_send_mail($order_id, $register_data){
-    global $rclOrder,$rcl_options;
+    global $rclOrder,$rcl_options,$rmag_options;
     
     $rclOrder = rcl_get_order($order_id);
     
@@ -323,7 +323,6 @@ function rcl_create_order_send_mail($order_id, $register_data){
             <p>'.__('Copy the text of the link below , paste it into the address bar of your browser and press Enter','wp-recall').'</p>';
         }
 
-        
     }
 
     $textmail .= '

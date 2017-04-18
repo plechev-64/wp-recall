@@ -13,11 +13,8 @@ $table_price .='<h2>'.__('Export/import data','wp-recall').'</h2><form method="p
 
 $fields = array(
     'price-products'=>__('The price of the product in the main currency','wp-recall'),
-    'amount_product'=>__('The quantity of goods in stock','wp-recall'),
-    'reserve_product'=>__('The goods reserved','wp-recall'),
     'type_currency'=>__('The currency value of goods','wp-recall'),
     'curse_currency'=>__('The additional currency rate for the product','wp-recall'),
-    'margin_product'=>__('Product surcharge','wp-recall'),
     'outsale'=>'1 - '.__('the item is no longer available','wp-recall'),
     'related_products_recall'=>__('product category ID for display of recommended or similar products','wp-recall'),
 );

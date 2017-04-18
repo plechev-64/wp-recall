@@ -91,6 +91,7 @@
     border: 0;
     width: 30px;
     text-align: center;
+    display:inline-block;
 }
 .rcl-cart-box .quantity-field input,
 .rcl-cart-box .quantity-field input::-webkit-inner-spin-button, 
@@ -443,7 +444,7 @@ body .rcl-product-gallery ul.images-list {
     
 }
 #rcl-order .order-table .column-product-name{
-    
+    text-align: left;
 }
 #rcl-order .order-table .product-excerpt{
     display:block;
@@ -470,7 +471,7 @@ body .rcl-product-gallery ul.images-list {
     
 }
 #rcl-order .order-table .product-box{
-    
+    background: #fff;
 }
 #rcl-order .order-table .product-box .edit-amount{
     border: 1px solid #ccc;
@@ -635,6 +636,7 @@ body .rcl-product-gallery ul.images-list {
     border: 0;
     width: 50px;
     text-align: center;
+    display:inline-block;
 }
 #rcl-product-box .rcl-cart-box .product-price{
     font-size: 40px;
