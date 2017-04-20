@@ -31,7 +31,7 @@ function rcl_insert_chat($chat_room,$chat_status){
     );
     
     if(!$result){
-        rcl_add_log('rcl_insert_chat: '.__('Не удалось добавить чат','wp-recall'), array($chat_room,$chat_status));
+        rcl_add_log('rcl_insert_chat: '.__('Failed to add chat','wp-recall'), array($chat_room,$chat_status));
     }
     
     $chat_id = $wpdb->insert_id;
@@ -47,10 +47,6 @@ function rcl_delete_chat($chat_id){
     
     $result = $wpdb->query("DELETE FROM ".RCL_PREF."chats WHERE chat_id='$chat_id'");
     
-    if(!$result){
-        rcl_add_log('rcl_delete_chat: '.__('Не удалось удалить чат','wp-recall'), array($chat_id));
-    }
-    
     do_action('rcl_delete_chat',$chat_id);
     
     return $result;
@@ -61,10 +57,6 @@ function rcl_chat_remove_users($chat_id){
     global $wpdb;
     
     $result = $wpdb->query("DELETE FROM ".RCL_PREF."chat_users WHERE chat_id='$chat_id'");
-    
-    if(!$result){
-        rcl_add_log('rcl_chat_remove_users: '.__('Не удалось удалить пользователей из чата','wp-recall'), array($chat_id));
-    }
     
     do_action('rcl_chat_remove_users',$chat_id);
     
@@ -101,10 +93,6 @@ function rcl_chat_delete_user($chat_id,$user_id){
     global $wpdb;
     
     $result = $wpdb->query("DELETE FROM ".RCL_PREF."chat_users WHERE chat_id='$chat_id' AND user_id='$user_id'");
-    
-    if(!$result){
-        rcl_add_log('rcl_chat_delete_user: '.__('Не удалось удалить пользователя из чата','wp-recall'), array($chat_id,$user_id));
-    }
     
     do_action('rcl_chat_delete_user',$chat_id,$user_id);
     
@@ -152,7 +140,7 @@ function rcl_chat_insert_user($chat_id, $user_id, $status = 1, $activity = 1){
     );
     
     if(!$result){
-        rcl_add_log('rcl_chat_insert_user: '.__('Не удалось добавить пользователя в чат','wp-recall'), $args);
+        rcl_add_log('rcl_chat_insert_user: '.__('Failed to add user to the chat','wp-recall'), $args);
     }
 
     return $result;
@@ -162,10 +150,6 @@ function rcl_chat_delete_message($message_id){
     global $wpdb;
     
     $result = $wpdb->query("DELETE FROM ".RCL_PREF."chat_messages WHERE message_id='$message_id'");
-    
-    if(!$result){
-        rcl_add_log('rcl_chat_delete_message: '.__('Не удалось удалить сообщение','wp-recall'), $message_id);
-    }
     
     do_action('rcl_chat_delete_message',$message_id);
     
@@ -203,7 +187,7 @@ function rcl_chat_add_message_meta($message_id,$meta_key,$meta_value){
     );
     
     if(!$result){
-        rcl_add_log('rcl_chat_add_message_meta: '.__('Не удалось добавить метаданные сообщения','wp-recall'), $args);
+        rcl_add_log('rcl_chat_add_message_meta: '.__('Failed to send mets data of the message','wp-recall'), $args);
     }
     
     return $result;
@@ -218,10 +202,6 @@ function rcl_chat_delete_message_meta($message_id,$meta_key = false){
     
     $result = $wpdb->query($sql);
     
-    if(!$result){
-        rcl_add_log('rcl_chat_delete_message_meta: '.__('Не удалось удалить метаданные сообщения','wp-recall'), $sql);
-    }
-    
     return $result;
 }
 
@@ -234,7 +214,7 @@ function rcl_chat_update_user_status($chat_id,$user_id,$status){
         . "ON DUPLICATE KEY UPDATE user_status='$status'");
     
     if(!$result){
-        rcl_add_log('rcl_chat_update_user_status: '.__('Не удалось обновить статус пользователя в чате','wp-recall'), array($chat_id,$user_id,$status));
+        rcl_add_log('rcl_chat_update_user_status: '.__('Failed to refresh user status in the chat','wp-recall'), array($chat_id,$user_id,$status));
     }
 
     return $result;

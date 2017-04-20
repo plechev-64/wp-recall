@@ -14,7 +14,7 @@ require_once 'init.php';
 require_once 'upload-file.php';
 
 
-if(is_admin){
+if(is_admin()){
     require_once 'classes/class-rcl-public-form-manager.php';
     require_once 'admin/index.php';
 }
@@ -196,9 +196,9 @@ add_action('rcl_post_bar_setup','rcl_setup_edit_post_button',10);
 function rcl_setup_edit_post_button(){
     global $post,$user_ID,$current_user,$rcl_options;
     
-    if(!is_user_logged_in()) return false;
+    if(!is_user_logged_in() || !$post) return false;
     
-    if(is_front_page()||is_tax('groups')||$post->post_type=='page') return false;
+    if(is_front_page() || is_tax('groups') || $post->post_type=='page') return false;
 
     if(!current_user_can('edit_post', $post->ID)) return false;
 
@@ -216,7 +216,7 @@ function rcl_setup_edit_post_button(){
     if( false!==array_search($user_info->user_level, $rcl_options['front_editing']) || $user_info->user_level >= $access ) {
 
         if($post->post_type=='task'){
-                if(get_post_meta($post->ID,'step_order',1)!=1) return false;
+            if(get_post_meta($post->ID,'step_order',1)!=1) return false;
         }
 
         if($user_info->user_level<10&&rcl_is_limit_editing($post->post_date)) return false;

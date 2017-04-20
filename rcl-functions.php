@@ -660,6 +660,7 @@ function rcl_setup_chartdata($mysqltime,$data){
     global $chartArgs;
     
     $day = date("Y.m.j", strtotime($mysqltime));
+
     $price = $data/1000;
 
     $chartArgs[$day]['summ'] += $price;
@@ -1164,10 +1165,10 @@ function rcl_get_area_options(){
     return $areas;
 }
 
-function rcl_add_log($title, $data = false){
+function rcl_add_log($title, $data = false, $force = false){
     global $rcl_options;
     
-    if(!isset($rcl_options['rcl-log']) || !$rcl_options['rcl-log']) return false;
+    if(!$force && (!isset($rcl_options['rcl-log']) || !$rcl_options['rcl-log'])) return false;
     
     $RclLog = new Rcl_Log();
     

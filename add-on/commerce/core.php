@@ -158,11 +158,11 @@ function rcl_get_orders($args = array()){
     foreach($orders as $k=>$order){
         
         $orders[$k]->order_details = maybe_unserialize($order->order_details);
-        $args['include_order_id'][] = $order->order_id;
+        $args['order_id__in'][] = $order->order_id;
         
     }
 
-    $args['include_order_id'] = array_unique($args['include_order_id']);
+    $args['order_id__in'] = array_unique($args['order_id__in']);
     $args['number'] = -1; //снимаем ограничение выборки товаров
     
     $productsQuery = new Rcl_Order_Items_Query();
@@ -350,7 +350,7 @@ function rcl_payment_order_send_mail($order_id){
     $userName = get_the_author_meta('display_name',$rclOrder->user_id);
     $userEmail = get_the_author_meta('user_email',$rclOrder->user_id);
 
-    $subject = sprintf(__('Заказ №%d оплачен','wp-recall'),$rclOrder->order_id);
+    $subject = sprintf(__('Order №%d has been paid','wp-recall'),$rclOrder->order_id);
 
     $textmail = '
     <p>'.__('User has paid for the order','wp-recall').' "'.get_bloginfo('name').'".</p>
@@ -391,7 +391,7 @@ function rcl_get_product_variation_list($variations){
     
     $content = '<div class="product-variations">';
     
-    $content .= '<div class="variations-title"><strong>'.__('Вариация товара','wp-recall').'</strong></div>';
+    $content .= '<div class="variations-title"><strong>'.__('Product variation','wp-recall').'</strong></div>';
     
     foreach($variations as $variation){
         

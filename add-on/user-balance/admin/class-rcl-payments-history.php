@@ -146,7 +146,7 @@ class Rcl_Payments_History extends WP_List_Table {
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
         if( 'manage-wpm-cashe' != $page ) return;
         
-        if($_REQUEST['action']=='delete'){
+        if(isset($_REQUEST['action']) && $_REQUEST['action']=='delete'){
             
             if(isset($_REQUEST['payment'])){
                 $payment = $_REQUEST['payment'];
@@ -196,7 +196,7 @@ class Rcl_Payments_History extends WP_List_Table {
             
             $payments->query['where'][] = "$tableAs.time_action LIKE '".$_GET['m']."-%'";
             
-        }else if($_GET['user_id']){
+        }else if(isset($_GET['user_id'])){
             
             $payments->query['where'][] = "$tableAs.user_id = '".$_GET['user_id']."'";
             

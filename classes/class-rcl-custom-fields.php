@@ -41,7 +41,7 @@ class Rcl_Custom_Fields{
         $this->value = (isset($field['default'])&&!$value)? $field['default']: stripslashes_deep($value);
         $this->slug = $field['slug'];
         $this->value_in_key = (isset($field['value_in_key']))? $field['value_in_key']: false;
-        $this->required = ($field['required']==1)? 'required': '';
+        $this->required = (isset($field['required']) && $field['required'] == 1)? 'required': '';
         $this->placeholder = (isset($field['placeholder'])&&$field['placeholder'])? "placeholder='".str_replace("'",'"',$field['placeholder'])."'": '';
         $this->maxlength = (isset($field['maxlength'])&&$field['maxlength'])? "maxlength='".$field['maxlength']."'": '';
         
@@ -163,18 +163,31 @@ class Rcl_Custom_Fields{
             
         }
 
-        $mTypes = false;
+        $accTypes = false;
+        $extTypes = isset($field['ext-files'])? $field['ext-files']: false;
 
-        if($field['ext-files'])
-            $mTypes = rcl_get_mime_types(array_map('trim',explode(',',$field['ext-files'])));
+        if($extTypes)
+            $accTypes = rcl_get_mime_types(array_map('trim',explode(',',$field['ext-files'])));
 
-        $accept = ($mTypes)? 'accept="'.implode(',',$mTypes).'"': '';
+        $accept = ($accTypes)? 'accept="'.implode(',',$accTypes).'"': '';
         $required = (!$this->value)? $this->required: '';
         
         $size = ($field['sizefile'])? $field['sizefile']: 2;
 
         $input .= '<span id="'.$this->slug.'-content" class="file-field-upload">';
-        $input .= '<input data-size="'.$size.'" type="file" '.$required.' '.$accept.' name="'.$field['name'].'" '.$this->get_class($field).' id="'.$this->slug.'" value=""/> ('.__('Max size','wp-recall').': '.$size.'MB)';
+        $input .= '<input data-size="'.$size.'" type="file" '.$required.' '.$accept.' name="'.$field['name'].'" '.$this->get_class($field).' id="'.$this->slug.'" value=""/> ';
+        
+        $notice = '(';
+        
+        if($extTypes)
+            $notice .= '<span class="allowed-types">'.__('Allowed extensions','wp-recall').': '.$extTypes.'<span>. ';
+        
+        $notice .= __('Max size','wp-recall').': '.$size.'MB';
+        
+        $notice .= ')';
+        
+        $input .= $notice;
+        
         $input .= '<script type="text/javascript">rcl_init_field_file("'.$this->slug.'");</script>';
         $input .= '</span>';
 
@@ -303,7 +316,7 @@ class Rcl_Custom_Fields{
     
     function get_type_editor($field){
         
-        $editor_id = ($this->field)? 'editor-'.$this->field['slug']: 'editor-'.$this->new_slug;
+        $editor_id = ($this->field && isset($this->field['slug']))? 'editor-'.$this->field['slug']: 'editor-'.$this->new_slug;
 
         $data = array( 'wpautop' => 1
             ,'media_buttons' => false
@@ -335,7 +348,7 @@ class Rcl_Custom_Fields{
 
     function get_type_agree($field){
         
-        $text = (isset($field['text-confirm']) && $field['text-confirm'])? $field['text-confirm']: __('Я согласен с текстом соглашения','wp-recall');
+        $text = (isset($field['text-confirm']) && $field['text-confirm'])? $field['text-confirm']: __('I agree with the text of the agreement','wp-recall');
         
         $input = '<span class="rcl-checkbox-box">';
         $input .= '<input type="checkbox" '.checked($this->value,1,false).' '.$this->required.' name="'.$field['name'].'" id="'.$this->slug.$this->rand.'" value="1"/> '
@@ -369,7 +382,7 @@ class Rcl_Custom_Fields{
         
         $field['classes'] = 'rcl-datepicker';
         
-        $content = '<input type="text" '.$this->get_class($field).' onclick="rcl_show_datepicker(this);" title="'.__('Используйте формат','wp-recall').': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})" '.$this->required.' '.$this->placeholder.' class="rcl-datepicker" name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        $content = '<input type="text" '.$this->get_class($field).' onclick="rcl_show_datepicker(this);" title="'.__('Use the format','wp-recall').': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})" '.$this->required.' '.$this->placeholder.' class="rcl-datepicker" name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
         
         return $content;
     }
@@ -446,7 +459,7 @@ class Rcl_Custom_Fields{
         if($field['type']=='textarea')
                 $show = nl2br($value);
         if($field['type']=='agree')
-                $show = __('Принято','wp-recall');
+                $show = __('Accepted','wp-recall');
         
         if(!$show) return false;
             

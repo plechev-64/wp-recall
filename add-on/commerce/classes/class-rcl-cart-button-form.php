@@ -131,9 +131,9 @@ class Rcl_Cart_Button_Form{
     function cart_button(){
 
         if($this->product_status){
-            $content = '<a href="#" onclick="rcl_add_to_cart(this);return false;" class="recall-button"><i class="fa fa-shopping-cart" aria-hidden="true"></i>'.__('В корзину','wp-recall').'</a>';
+            $content = '<a href="#" onclick="rcl_add_to_cart(this);return false;" class="recall-button"><i class="fa fa-shopping-cart" aria-hidden="true"></i>'.__('To cart','wp-recall').'</a>';
         }else{
-            $content = '<span class="recall-button outsale-product"><i class="fa fa-refresh" aria-hidden="true"></i>'.__('Не доступен','wp-recall').'</a>';
+            $content = '<span class="recall-button outsale-product"><i class="fa fa-refresh" aria-hidden="true"></i>'.__('Not available','wp-recall').'</a>';
         }
         
         $content = '<span class="cart-button">'.$content.'</span>';

@@ -29,7 +29,7 @@ function rcl_admin_menu(){
     add_action( "load-$hook", 'rcl_add_options_templates_manager' );
     add_submenu_page( 'manage-wprecall', __('Repository','wp-recall'), __('Repository','wp-recall'), 'manage_options', 'rcl-repository', 'rcl_repository_page');
     add_submenu_page( 'manage-wprecall', __('Documentation','wp-recall'), __('Documentation','wp-recall'), 'manage_options', 'manage-doc-recall', 'rcl_doc_manage');
-    add_submenu_page( 'manage-wprecall', __('Менеджер вкладок','wp-recall'), __('Менеджер вкладок','wp-recall'), 'manage_options', 'rcl-tabs-manager', 'rcl_admin_tabs_manager');
+    add_submenu_page( 'manage-wprecall', __('Tabs manager','wp-recall'), __('Tabs manager','wp-recall'), 'manage_options', 'rcl-tabs-manager', 'rcl_admin_tabs_manager');
 }
 
 function rcl_doc_manage(){

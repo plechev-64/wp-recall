@@ -107,7 +107,7 @@ function rcl_check_cart_data(){
     if(!$user_ID){
         
         if(!isset($_POST['user_email']) || !$_POST['user_email']){
-            echo json_encode(array('error'=>__('Заполните обязательные поля!','wp-recall')));
+            echo json_encode(array('error'=>__('Please fill in required fields!','wp-recall')));
             exit;
         }
         

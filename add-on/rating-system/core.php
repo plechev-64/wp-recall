@@ -120,7 +120,7 @@ function rcl_insert_rating($args){
     $result = $wpdb->insert( RCL_PREF.'rating_values',  $data );
     
     if(!$result){
-        rcl_add_log('rcl_insert_rating: '.__('Не удалось добавить голос пользователя','wp-recall'), $data);
+        rcl_add_log('rcl_insert_rating: '.__('Failed to add user vote','wp-recall'), $data);
     }
 
     $value_id = $wpdb->insert_id;
@@ -146,7 +146,7 @@ function rcl_insert_total_rating($args){
     $result = $wpdb->insert( RCL_PREF.'rating_totals',  $data );
     
     if(!$result){
-        rcl_add_log('rcl_insert_total_rating: '.__('Не удалось добавить общий рейтинг объекта','wp-recall'), $data);
+        rcl_add_log('rcl_insert_total_rating: '.__('Failed to add general rating of the object','wp-recall'), $data);
     }
 
     do_action('rcl_insert_total_rating',$data);
@@ -163,7 +163,7 @@ function rcl_insert_user_rating($user_id,$point=0){
     );
     
     if(!$result){
-        rcl_add_log('rcl_insert_user_rating: '.__('Не удалось добавить общий рейтинг пользователя','wp-recall'), array($user_id,$point));
+        rcl_add_log('rcl_insert_user_rating: '.__('Failed to add general rating of the user','wp-recall'), array($user_id,$point));
     }
 }
 
@@ -407,7 +407,7 @@ function rcl_update_total_rating($args){
         );
         
         if(!$result){
-            rcl_add_log('rcl_update_total_rating: '.__('Не удалось изменить общий рейтинг объекта','wp-recall'), array($total,$args));
+            rcl_add_log('rcl_update_total_rating: '.__('Failed to change general rating of the object','wp-recall'), array($total,$args));
         }
         
     }else{
@@ -449,7 +449,7 @@ function rcl_update_user_rating($args){
         );
         
         if(!$result){
-            rcl_add_log('rcl_update_user_rating: '.__('Не удалось изменить общий рейтинг пользователя','wp-recall'), $args);
+            rcl_add_log('rcl_update_user_rating: '.__('Failed to change general rating of the user','wp-recall'), $args);
         }
         
     }else{
@@ -506,10 +506,6 @@ function rcl_delete_rating($args){
     }
 
     $result = $wpdb->query($query);
-    
-    if(!$result){
-        rcl_add_log('rcl_delete_rating: '.__('Не удалось удалить голос пользователя','wp-recall'), $query);
-    }
 
     $args['rating_value'] = -1 * $args['rating_value'];
 
@@ -600,12 +596,12 @@ array(
  * 'object_author',
  * 'rating_type',
  * 'days',
- * 'include_object_id',
- * 'include_object_author',
- * 'include_rating_type'
- * 'exclude_object_id',
- * 'exclude_object_author',
- * 'exclude_rating_type',
+ * 'object_id__in',
+ * 'object_author__in',
+ * 'rating_type__in'
+ * 'object_id__not_in',
+ * 'object_author__not_in',
+ * 'rating_type__not_in',
  * 'number',
  * 'per_page',
  * 'offset',

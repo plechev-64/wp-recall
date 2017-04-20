@@ -4,7 +4,6 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
 
     public $taxonomies;
     public $form_id = 1;
-    public $form_object;
     
     function __construct($args = false) {
         
@@ -22,8 +21,6 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
         if($this->post_type == 'post'){
             unset($this->taxonomies['post_format']);
         }
-        
-        $this->form_object = $this->get_object_form();
 
         add_filter('rcl_default_custom_fields',array($this, 'add_default_public_form_fields'));
         add_filter('rcl_custom_field_options', array($this, 'edit_field_options'), 10, 3);
@@ -32,19 +29,6 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
         
     }
 
-    function get_object_form(){
-        $dataForm = array();
-        $dataForm['post_id'] = $this->post_id;
-        $dataForm['post_type'] = $this->post_type;
-        $dataForm['post_status'] = ($this->post_id)? $this->post->post_type: 'new';
-        $dataForm['post_content'] = ($this->post_id)? $this->post->post_content: '';
-        $dataForm['post_excerpt'] = ($this->post_id)? $this->post->post_excerpt: '';
-        $dataForm['post_title'] = ($this->post_id)? $this->post->post_title: '';
-        $dataForm['ext_types'] = 'jpg, png, gif';
-        $dataForm = (object)$dataForm;
-        return $dataForm;
-    }
-    
     function get_fields(){
         global $user_ID;
 
@@ -72,11 +56,6 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
             if(!isset($field['value_in_key']))
                 $fields[$k]['value_in_key'] = true;
             
-            if($field['slug'] == 'post_uploader'){
-                if(isset($field['ext-types']) && $field['ext-types'])
-                $this->form_object->ext_types = $field['ext-types'];
-            }
-            
         }
 
         return $fields;
@@ -92,7 +71,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
         $fields[] = array(
             'slug' => 'post_title',
             'maxlength' => 100,
-            'title' => __('Заголовок','wp-recall'),
+            'title' => __('Title','wp-recall'),
             'type' => 'text'
         );
         
@@ -105,7 +84,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                     $label = $object->labels->name;
 
                     if($taxonomy == 'groups')
-                        $label = __('Категории группы','wp-recall');
+                        $label = __('Group category','wp-recall');
                     
                     $options = array();
                     
@@ -115,13 +94,13 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                             array(
                                 'type' => 'number',
                                 'slug' => 'number-select',
-                                'title' => __('Кол-во к выбору','wp-recall'),
-                                'notice' => __('только при выводе через select','wp-recall')
+                                'title' => __('Amount to choose','wp-recall'),
+                                'notice' => __('only when output through select','wp-recall')
                             ),
                             array(
                                 'type' => 'select',
                                 'slug' => 'type-select',
-                                'title' => __('Вариант вывода','wp-recall'),
+                                'title' => __('Output option','wp-recall'),
                                 'values' => array(
                                     'select' => __('Select','wp-recall'),
                                     'checkbox' => __('Checkbox','wp-recall')
@@ -147,13 +126,13 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
         $fields[] = array(
             'slug' => 'post_excerpt',
             'maxlength' => 200,
-            'title' => __('Краткая запись','wp-recall'),
+            'title' => __('Short entry','wp-recall'),
             'type' => 'textarea'
         );
 
         $fields[] = array(
             'slug' => 'post_content',
-            'title' => __('Содержание публикации','wp-recall'),
+            'title' => __('Content of the publication','wp-recall'),
             'type' => 'textarea',
             'required' => 1,
             'post-editor' => array('html','editor'),
@@ -161,11 +140,11 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                 array(
                     'type' => 'checkbox',
                     'slug' => 'post-editor',
-                    'title' => __('Настройки редактора','wp-recall'),
+                    'title' => __('Editor settings','wp-recall'),
                     'values' => array(
-                        'media' => __('Медиазагрузчик','wp-recall'),
-                        'html' => __('HTML редактор','wp-recall'),
-                        'editor' => __('Визуальный редактор','wp-recall')
+                        'media' => __('Media loader','wp-recall'),
+                        'html' => __('HTML editor','wp-recall'),
+                        'editor' => __('Visual editor','wp-recall')
                     )
                 )
             )
@@ -173,15 +152,15 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
 
         $fields[] = array(
             'slug' => 'post_uploader',
-            'title' => __('Медиа-загрузчик WP-Recall','wp-recall'),
+            'title' => __('WP-Recall media loader','wp-recall'),
             'type' => 'custom',
             'ext-types' => 'png, gif, jpg',
             'options-field' => array(
                 array(
                     'type' => 'text',
                     'slug' => 'ext-types',
-                    'title' => __('Допустимые разрешения файлов','wp-recall'),
-                    'notice' => __('Через запятую, например: jpg, zip, pdf. По-умолчанию: png, gif, jpg','wp-recall')
+                    'title' => __('Valid file extensions','wp-recall'),
+                    'notice' => __('Separated by comma, for example: jpg, zip, pdf. By default: png, gif, jpg','wp-recall')
                 )
             )
         );
@@ -190,7 +169,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
             
             $fields[] = array(
                 'slug' => 'post_thumbnail',
-                'title' => __('Миниатюра публикации','wp-recall'),
+                'title' => __('Thumbnail of the publication','wp-recall'),
                 'type' => 'custom'
             );
             
@@ -214,15 +193,15 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                             array(
                                 'type' => 'number',
                                 'slug' => 'number-tags',
-                                'title' => __('Максимально к выводу','wp-recall')
+                                'title' => __('Maximum output','wp-recall')
                             ),
                             array(
                                 'type' => 'select',
                                 'slug' => 'input-tags',
-                                'title' => __('Поле ввода новых значений','wp-recall'),
+                                'title' => __('New values entry field','wp-recall'),
                                 'values' => array(
-                                    __('Отключить','wp-recall'),
-                                    __('Включить','wp-recall')
+                                    __('Disable','wp-recall'),
+                                    __('Enable','wp-recall')
                                 )
                             )
                         )
@@ -242,7 +221,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
     
     function edit_field_options($options, $field, $type){
         
-        if($type != $this->post_type) return $options;
+        if(!isset($field['slug']) || $type != $this->post_type) return $options;
         
         if($field['slug'] == 'post_uploader' || $field['slug'] == 'post_content'){
             
@@ -281,7 +260,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                 }else{
                     
                     if($option['slug'] == 'values'){
-                        $options[$k]['title'] = __('Указание term_ID к выбору','wp-recall');
+                        $options[$k]['title'] = __('Specify term_ID to be selected','wp-recall');
                     }
                     
                 }

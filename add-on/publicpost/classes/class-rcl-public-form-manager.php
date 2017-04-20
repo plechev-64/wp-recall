@@ -44,7 +44,7 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
                 '_builtin' => false
             ), 'objects');
         
-        $types = array('post' => __('Записи','wp-recall'));
+        $types = array('post' => __('Records','wp-recall'));
         
         foreach ($post_types  as $post_type ) {
             $types[$post_type->name] = $post_type->label;
@@ -85,10 +85,10 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
                     
                     $class = ($this->form_id == $form_id)? 'class="current-item"': '';
                     
-                    $content .= '<li '.$class.'><a href="'.admin_url('admin.php?page=manage-public-form&post-type='.$this->post_type.'&form-id='.$form_id).'">'.__('Форма','wp-recall').' ID: '.$form_id.'</a></li>';
+                    $content .= '<li '.$class.'><a href="'.admin_url('admin.php?page=manage-public-form&post-type='.$this->post_type.'&form-id='.$form_id).'">'.__('Form','wp-recall').' ID: '.$form_id.'</a></li>';
                 }
                 
-                $content .= '<li><a class="action-form" href="'.wp_nonce_url(admin_url('admin.php?page=manage-public-form&form-action=new-form&form-id='.($form_id + 1)),'rcl-form-action').'"><i class="fa fa-plus"></i> '.__('Добавить форму','wp-recall').'</a></li>';
+                $content .= '<li><a class="action-form" href="'.wp_nonce_url(admin_url('admin.php?page=manage-public-form&form-action=new-form&form-id='.($form_id + 1)),'rcl-form-action').'"><i class="fa fa-plus"></i> '.__('Add form','wp-recall').'</a></li>';
             
                 $content .= '</ul>';
 
@@ -100,7 +100,7 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
         
                     $content .= '<ul class="rcl-types-list">';
 
-                    $content .= '<li><a class="action-form" href="'.wp_nonce_url(admin_url('admin.php?page=manage-public-form&form-action=delete-form&form-id='.$this->form_id),'rcl-form-action').'" onclick="return confirm(\''.__('Are you sure?','wp-recall').'\');"><i class="fa fa-trash"></i> '.__('Удалить форму','wp-recall').'</a></li>';
+                    $content .= '<li><a class="action-form" href="'.wp_nonce_url(admin_url('admin.php?page=manage-public-form&form-action=delete-form&form-id='.$this->form_id),'rcl-form-action').'" onclick="return confirm(\''.__('Are you sure?','wp-recall').'\');"><i class="fa fa-trash"></i> '.__('Delete form','wp-recall').'</a></li>';
 
                     $content .= '</ul>';
 

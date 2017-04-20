@@ -137,7 +137,7 @@ class Rcl_Options extends Rcl_Custom_Fields{
             'slug' => $args['name'],
             'classes' => (isset($args['parent']))? 'parent-select': '',
             'name' => $this->attr_name($args),
-            'values' => $args['options']
+            'values' => isset($args['options'])? $args['options']: array()
         );
         
         $this->value = $value;

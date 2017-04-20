@@ -82,25 +82,23 @@ class Rcl_Query {
                     }else{
                         $this->query['where'][] = $this->query['table']['as'].".$col_name = '$args[$col_name]'";
                     }
-
-                }
-                
-                if(isset($args[$col_name.'_not_in'])){
                     
-                    $this->query['where'][] = $this->query['table']['as'].".$col_name != '$args[$col_name]'";
-                
+                    continue;
+
                 }
                 
-                if(isset($args['include_'.$col_name]) && $args['include_'.$col_name]){
+                if(isset($args[$col_name.'__in']) && $args[$col_name.'__in']){
                     
-                    $this->query['where'][] = $this->query['table']['as'].".$col_name IN (".$this->get_string_in($args['include_'.$col_name]).")";
-
+                    $this->query['where'][] = $this->query['table']['as'].".$col_name IN (".$this->get_string_in($args[$col_name.'__in']).")";
+                    continue;
+                    
                 }
                 
-                if(isset($args['exclude_'.$col_name]) && $args['exclude_'.$col_name]){
+                if(isset($args[$col_name.'__not_in']) && $args[$col_name.'__not_in']){
 
-                    $this->query['where'][] = $this->query['table']['as'].".$col_name NOT IN (".$this->get_string_in($args['exclude_'.$col_name]).")";
-
+                    $this->query['where'][] = $this->query['table']['as'].".$col_name NOT IN (".$this->get_string_in($args[$col_name.'__not_in']).")";
+                    continue;
+                    
                 }
 
             }
@@ -299,7 +297,7 @@ class Rcl_Query {
             $where[] = implode(' AND ',$query['where']);
         }
         
-        if($query['where_or']){
+        if(isset($query['where_or'])){
             
             if($query['where']) 
                 $where_or[] = 'OR'; 
@@ -319,7 +317,7 @@ class Rcl_Query {
             $sql[] = "ORDER BY ".$query['orderby']." ".$query['order'];
         }
 
-        if($query['number'] > 0){
+        if(isset($query['number']) && $query['number'] > 0){
             
             if(isset($query['offset'])){
                 $sql[] = "LIMIT ".$query['offset'].",".$query['number'];
@@ -423,7 +421,7 @@ class Rcl_Query {
         
         $sql = $this->get_sql($query);
         
-        if($query['groupby'])
+        if(isset($query['groupby']) && $query['groupby'])
             $result = $wpdb->query($sql);
         else
             $result = $wpdb->get_var($sql);

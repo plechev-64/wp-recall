@@ -20,6 +20,10 @@ class Rcl_Cart {
     }
     
     function get_cookie(){
+        
+        if(!isset($_COOKIE['rcl_cart'])) 
+            return array();
+        
         return json_decode(wp_unslash($_COOKIE['rcl_cart']));
     }
     

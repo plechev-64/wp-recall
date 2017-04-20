@@ -191,7 +191,7 @@ function rcl_tab_orders(){
         
         $tab_data['content'][] = array(
             'id' => 'all-orders',
-            'name' => __('Все заказы','wp-recall'),
+            'name' => __('All orders','wp-recall'),
             'icon' => 'fa-shopping-bag',
             'callback' => array(
                 'name' => 'rcl_orders_tab',
@@ -302,7 +302,7 @@ function rcl_get_order_manager(){
         
         $args[] = array(
             'href' => wp_nonce_url( rcl_format_url(get_author_posts_url($user_ID),'orders').'&order-action=trash&order-id='.$rclOrder->order_id, 'order-action' ),
-            'title' => __('Удалить заказ','wp-recall')
+            'title' => __('Delete order','wp-recall')
         );
         
     }

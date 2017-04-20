@@ -85,7 +85,7 @@ function rcl_user_account_options($content){
 
                     $opt->label(__('RESULT Page','wp-recall')),
                     wp_dropdown_pages( array(
-                            'selected'   => $rcl_options['page_result_pay'],
+                            'selected'   => isset($rcl_options['page_result_pay'])? $rcl_options['page_result_pay']: '',
                             'name'       => 'global[page_result_pay]',
                             'show_option_none' => __('Not selected','wp-recall'),
                             'echo'             => 0 )
@@ -93,7 +93,7 @@ function rcl_user_account_options($content){
                     
                     $opt->label(__('SUCCESS Page','wp-recall')),
                     wp_dropdown_pages( array(
-                            'selected'   => $rcl_options['page_success_pay'],
+                            'selected'   => isset($rcl_options['page_success_pay'])? $rcl_options['page_success_pay']: '',
                             'name'       => 'global[page_success_pay]',
                             'show_option_none' => __('Not selected','wp-recall'),
                             'echo'             => 0 )
@@ -101,7 +101,7 @@ function rcl_user_account_options($content){
                     
                     $opt->label(__('FAIL Page','wp-recall')),
                     wp_dropdown_pages( array(
-                            'selected'   => $rcl_options['page_fail_pay'],
+                            'selected'   => isset($rcl_options['page_fail_pay'])? $rcl_options['page_fail_pay']: '',
                             'name'       => 'global[page_fail_pay]',
                             'show_option_none' => __('Not selected','wp-recall'),
                             'echo'             => 0 )
@@ -109,7 +109,7 @@ function rcl_user_account_options($content){
                     
                     $opt->label(__('Successful payment page','wp-recall')),
                     wp_dropdown_pages( array(
-                            'selected'   => $rcl_options['page_successfully_pay'],
+                            'selected'   => isset($rcl_options['page_successfully_pay'])? $rcl_options['page_successfully_pay']: '',
                             'name'       => 'global[page_successfully_pay]',
                             'show_option_none' => __('Not selected','wp-recall'),
                             'echo'             => 0 )

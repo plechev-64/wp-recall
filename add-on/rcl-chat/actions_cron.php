@@ -23,7 +23,7 @@ function rcl_chat_daily_delete_messages(){
     
     if(!$chats) return false;
     
-    rcl_add_log(__('Чаты, выбранные на очищение','wp-recall'), $chats);
+    rcl_add_log(__('Chats, selected to be cleared','wp-recall'), $chats);
     
     foreach($chats as $chat){
         
@@ -43,7 +43,7 @@ function rcl_chat_daily_delete_messages(){
         
         if(!$messages) continue;
         
-        rcl_add_log(__('Сообщения, выбранные на удаление','wp-recall'), $messages);
+        rcl_add_log(__('Messages, selected to be deleted','wp-recall'), $messages);
         
         foreach($messages as $message){
             
@@ -68,7 +68,7 @@ function rcl_chat_delete_unattached_attachments(){
     
     if(!$unattaches) return;
     
-    rcl_add_log(__('Файлы сообщений, выбранные на удаление','wp-recall'), $unattaches);
+    rcl_add_log(__('Message files, selected to be deleted','wp-recall'), $unattaches);
 
     foreach( $unattaches as $attachment_id )
         wp_delete_attachment( $attachment_id );
@@ -89,7 +89,7 @@ function rcl_chat_send_notify_messages(){
         $messages[$m->private_key][$m->user_id][] = $m->message_content;
     }
     
-    rcl_add_log(__('Отправка уведомлений о непрочитанных сообщениях','wp-recall'), $messages);
+    rcl_add_log(__('Send notifications on unread messages','wp-recall'));
 
     foreach($messages as $addressat_id=>$data){
         $content = '';

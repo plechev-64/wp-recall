@@ -71,7 +71,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
 
         $form = '<div id="rcl-custom-fields-editor" data-type="'.$this->post_type.'" class="rcl-custom-fields-box">
             
-            <h3>'.__('Активные поля','wp-recall').'</h3>
+            <h3>'.__('Active fields','wp-recall').'</h3>
             
             <form action="" method="post">
             '.wp_nonce_field('rcl-update-custom-fields','_wpnonce',true,false).'
@@ -182,14 +182,14 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                 $options[] = array(
                     'type' => 'number',
                     'slug' => 'sizefile',
-                    'title' => __('Размер файла','wp-recall'),
+                    'title' => __('File size','wp-recall'),
                     'notice' => __('maximum size of uploaded file, MB (Default - 2)','wp-recall')
                 );
                 
                 $options[] = array(
                     'type' => 'textarea',
                     'slug' => 'ext-files',
-                    'title' => __('Разрешенные типы файлов','wp-recall'),
+                    'title' => __('Allowed file types','wp-recall'),
                     'notice' => __('allowed types of files are divided by comma, for example: pdf, zip, jpg','wp-recall')
                 );
                 
@@ -204,7 +204,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                 $options[] = array(
                     'type' => 'textarea',
                     'slug' => 'text-confirm',
-                    'title' => __('Текст подтверждения согласия','wp-recall')
+                    'title' => __('Consent confirmation text','wp-recall')
                 );
                 
             }else{
@@ -214,8 +214,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                     $options[] = array(
                         'type' => 'text',
                         'slug' => 'empty-first',
-                        'title' => __('Первое значение','wp-recall'),
-                        'notice' => __('Имя первого пустого значения, например: "Не выбрано"','wp-recall')
+                        'title' => __('First value','wp-recall'),
+                        'notice' => __('Name of the first blank value, for example: "Not selected"','wp-recall')
                     );
                     
                 }
@@ -223,8 +223,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                 $options[] = array(
                     'type' => 'dynamic',
                     'slug' => 'values',
-                    'title' => __('Указание опций','wp-recall'),
-                    'notice' => __('указывайте каждую опцию в отдельном поле','wp-recall')
+                    'title' => __('Specify options','wp-recall'),
+                    'notice' => __('specify each option in a separate field','wp-recall')
                 );
                 
             }
@@ -247,7 +247,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                     'type' => 'number',
                     'slug' => 'maxlength',
                     'title' => __('Maxlength','wp-recall'),
-                    'notice' => __('максимальное количество символов в поле','wp-recall')
+                    'notice' => __('maximum number of symbols per field','wp-recall')
                 );
                 
             }
@@ -266,7 +266,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         
         $value = (isset($this->field[$option['slug']]))? $this->field[$option['slug']]: $value;
         
-        if($this->field['slug']){
+        if(isset($this->field['slug']) && $this->field['slug']){
             
             $option['name'] = 'field['.$this->field['slug'].']['.$option['slug'].']';
             
@@ -484,7 +484,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             
         }
         
-        $content .= $this->get_option(array(
+        $content = $this->get_option(array(
             'title'=>__('Field type','wp-recall'),
             'slug' => 'type',
             'type' => 'select',
@@ -533,7 +533,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
 
         $content = '<div id="rcl-inactive-fields" class="rcl-inactive-fields-box rcl-custom-fields-box">';
         
-            $content .= '<h3>'.__('Неактивные поля','wp-recall').'</h3>';
+            $content .= '<h3>'.__('Inactive fields','wp-recall').'</h3>';
 
             $content .= '<form>';
 

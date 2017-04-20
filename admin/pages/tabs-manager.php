@@ -15,7 +15,7 @@ $tabsManager = new Rcl_Tabs_Manager($areaType,
                     )
                 );
 
-$content = '<h2>'.__('Менеджер вкладок личного кабинета','wp-recall').'</h2>';
+$content = '<h2>'.__('Personal account tabs manager','wp-recall').'</h2>';
 
 $content .= $tabsManager->form_navi();
 

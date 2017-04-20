@@ -305,14 +305,14 @@ class Rcl_Rating_Box {
             return '<span class="rating-value">'.rcl_format_rating($this->total_rating).'</span>';
         }
         
-        return '<span class="rating-value rating-value-view" title="'.__('Смотреть историю','wp-recall').'" data-rating="'.$this->get_encode_string('view').'" onclick="rcl_view_list_votes(this);">'.rcl_format_rating($this->total_rating).'</span>';
+        return '<span class="rating-value rating-value-view" title="'.__('See history','wp-recall').'" data-rating="'.$this->get_encode_string('view').'" onclick="rcl_view_list_votes(this);">'.rcl_format_rating($this->total_rating).'</span>';
     }
     
     function get_html_button($args){
         
         if(!$this->user_can['vote']) return false;
         
-        $title = ($this->user_vote)? __('Отменить голос','wp-recall'): __('Голосовать','wp-recall');
+        $title = ($this->user_vote)? __('Cancel vote','wp-recall'): __('Vote','wp-recall');
         
         return '<span class="'.$this->get_class_vote_button($args['type']).' '.$args['class'].'" data-rating="'.$this->get_encode_string($args['type']).'" onclick="rcl_edit_rating(this);" title="'.$title.'">'
                     . '<i class="fa '.$args['icon'].'" aria-hidden="true"></i>'

@@ -157,7 +157,7 @@ function rcl_add_office_profile_fields($fields){
     
     $profileFields[] = array(
         'slug' => 'repeat_pass',
-        'title' => __('Повтор пароля','wp-recall'),
+        'title' => __('Repeat password','wp-recall'),
         'type' => 'password',
         'required' => 0,
         'notice' => __('Repeat the new password','wp-recall')

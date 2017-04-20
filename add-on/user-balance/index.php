@@ -93,7 +93,7 @@ function rcl_update_user_balance($newmoney,$user_id,$comment=''){
         
         if(!$result){
             rcl_add_log(
-                'rcl_update_user_balance: '.__('Не удалось обновить баланс пользователя','wp-recall'),
+                'rcl_update_user_balance: '.__('Failed to refresh user balance','wp-recall'),
                 array($newmoney,$user_id,$comment)
             );
         }
@@ -113,7 +113,7 @@ function rcl_add_user_balance($money,$user_id,$comment=''){
     
     if(!$result){
         rcl_add_log(
-            'rcl_add_user_balance: '.__('Не удалось добавить баланс пользователя','wp-recall'),
+            'rcl_add_user_balance: '.__('Failed to add user balance','wp-recall'),
             array($money,$user_id,$comment)
         );
     }

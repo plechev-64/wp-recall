@@ -128,12 +128,12 @@ function rcl_add_data_rating_posts(){
     }
 
     $rating_authors = rcl_get_rating_users(array(
-        'include_user_id' => $users
+        'user_id__in' => $users
     ));
 
     $rating_posts = rcl_get_rating_totals(array(
-        'include_rating_type' => $post_types,
-        'include_object_id' => $posts,
+        'rating_type__in' => $post_types,
+        'object_id__in' => $posts,
         'fields' => array(
             'rating_total',
             'object_id'
@@ -176,12 +176,12 @@ function rcl_add_data_rating_comments($comments){
     $users = array_unique($users);
 
     $rating_authors = rcl_get_rating_users(array(
-        'include_user_id' => $users
+        'user_id__in' => $users
     ));
 
     $rating_comments = rcl_get_rating_totals(array(
         'rating_type' => 'comment',
-        'include_object_id' => $comms,
+        'object_id__in' => $comms,
         'fields' => array(
             'rating_total',
             'object_id'
@@ -190,7 +190,7 @@ function rcl_add_data_rating_comments($comments){
 
     $rating_values = rcl_get_vote_values(array(
         'rating_type' => 'comment',
-        'include_object_id' => $comms,
+        'object_id__in' => $comms,
         'fields' => array(
             'rating_value',
             'object_id'

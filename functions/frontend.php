@@ -115,7 +115,7 @@ function rcl_user_action($type=1){
 function rcl_user_description(){
     global $rcl_user;
     
-    if($rcl_user->description){
+    if(isset($rcl_user->description) && $rcl_user->description){
         echo '<div class="ballun-status">';
             echo '<p class="status-user-rcl">'.nl2br(esc_html($rcl_user->description)).'</p>
         </div>';

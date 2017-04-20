@@ -15,7 +15,7 @@ function rcl_add_attachment_thumbnail_button($content,$attachment_id,$mime){
     if($mime[0] != 'image') return $content;
 
     $content .= '<span class="set-thumbnail-post">'
-             . '<a class="recall-button" href="#" onclick="rcl_get_post_thumbnail_html('.$attachment_id.');return false;">'.__('Назначить главной','wp-recall').'</a>'
+             . '<a class="recall-button" href="#" onclick="rcl_get_post_thumbnail_html('.$attachment_id.');return false;">'.__('Make thumbnail','wp-recall').'</a>'
              . '</span>';
 
     return $content;

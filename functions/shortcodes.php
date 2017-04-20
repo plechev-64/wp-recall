@@ -248,7 +248,7 @@ function rcl_tab_shortcode($atts){
     }
     
     if(!$tab_id||!isset($rcl_tabs[$tab_id])) 
-        return '<p>'.__('Такой вкладки не найдено!','wp-recall').'</p>';
+        return '<p>'.__('Such tab was not found!','wp-recall').'</p>';
     
     if (!class_exists('Rcl_Tabs')) 
         require_once RCL_PATH.'classes/class-rcl-tabs.php';

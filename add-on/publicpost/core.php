@@ -179,7 +179,7 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
         foreach($fields as $field){
             
             $slug = $field['slug'];
-            $value = $POST[$slug];
+            $value = isset($POST[$slug])? $POST[$slug]: false;
 
             if($field['type']=='checkbox'){
                 $vals = array();
@@ -189,7 +189,7 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
 
                 $count_field = count($field['values']);
                 
-                if(isset($value)){
+                if($value && is_array($value)){
                     foreach($value as $val){
                         for($a=0;$a<$count_field;$a++){
                             if($field['values'][$a]==$val){
@@ -198,8 +198,9 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
                         }
                     }
                 }
+                
                 if($vals){
-                    $res = update_post_meta($post_id, $slug, $vals);
+                    update_post_meta($post_id, $slug, $vals);
                 }else{
                     delete_post_meta($post_id, $slug);
                 }
@@ -211,10 +212,11 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
 
             }else{
 
-                if($POST[$slug]){
+                if($value){
                     update_post_meta($post_id, $slug, $value);
                 }else{
-                    if(get_post_meta($post_id, $slug, 1)) delete_post_meta($post_id, $slug);
+                    if(get_post_meta($post_id, $slug, 1)) 
+                            delete_post_meta($post_id, $slug);
                 }
 
             }

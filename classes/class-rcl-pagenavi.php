@@ -19,7 +19,8 @@ class Rcl_PageNavi{
         $this->pager_id = $pager_id;
         
         if(isset($_REQUEST['pager-id'])&&$_REQUEST['pager-id']==$this->pager_id){
-            $this->current_page = $_REQUEST[$this->key];
+            if(isset($_REQUEST[$this->key]))
+                $this->current_page = $_REQUEST[$this->key];
         }
         
         if(defined( 'DOING_AJAX' ) && DOING_AJAX && isset($_POST['tab_url'])){
@@ -86,7 +87,7 @@ class Rcl_PageNavi{
         
         $str = array('pager-id='.$this->pager_id);
         
-        if($this->uri['args']){
+        if(isset($this->uri['args']) && $this->uri['args']){
             foreach($this->uri['args'] as $k=>$val){
                 $str[] = $k.'='.$val;
             }

@@ -21,11 +21,11 @@ function rcl_admin_groups_page_content($content){
 
                 $opt->option('select',array(
                     'name'=>'group-output',
-                    'label'=>__('Вывод группы','wp-recall'),
+                    'label'=>__('Group output','wp-recall'),
                     'parent'=>true,
                     'options'=>array(
-                        __('На архивной странице записей post-groups','wp-recall'),
-                        __('На произвольной странице сайта','wp-recall'))
+                        __('On the archive page of post-groups entries','wp-recall'),
+                        __('On an arbitrary page of the website','wp-recall'))
                 )),
                 $opt->child(
                     array(
@@ -51,7 +51,7 @@ function rcl_admin_groups_page_content($content){
                     array(
                         $opt->label(__('Shortcode host page','wp-recall')),
                         wp_dropdown_pages( $args ),
-                        $opt->notice(__('укажите страницу на которой размещен шорткод [grouplist]','wp-recall'))
+                        $opt->notice(__('please specify the page where the [grouplist] shortcode is placed','wp-recall'))
                     )
                 ),
 

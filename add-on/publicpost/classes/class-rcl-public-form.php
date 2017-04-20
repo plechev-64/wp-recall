@@ -4,6 +4,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
     
     public $post_id = 0;
     public $fields_options;
+    public $form_object;
     public $post;
     public $current_field = array();
     public $options = array(
@@ -53,11 +54,13 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             rcl_fileupload_scripts();
             add_action('wp_footer', array($this, 'init_form_scripts'), 100);
         }
-        
+
         if($this->user_can['publish'] && !$user_ID)
             add_filter('rcl_public_form_fields',array($this,'add_guest_fields'), 10);
 
         $this->fields = $this->get_public_fields();
+        
+        $this->form_object = $this->get_object_form();
         
         if($this->exist_active_field('post_thumbnail'))
             add_filter('rcl_post_attachment_html','rcl_add_attachment_thumbnail_button', 10, 3);
@@ -70,6 +73,33 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         foreach ($properties as $name=>$val){
             if(isset($args[$name])) $this->$name = $args[$name];
         }
+    }
+    
+    function get_object_form(){
+        
+        $dataForm = array();
+        
+        $dataForm['post_id'] = $this->post_id;
+        $dataForm['post_type'] = $this->post_type;
+        $dataForm['post_status'] = ($this->post_id)? $this->post->post_type: 'new';
+        $dataForm['post_content'] = ($this->post_id)? $this->post->post_content: '';
+        $dataForm['post_excerpt'] = ($this->post_id)? $this->post->post_excerpt: '';
+        $dataForm['post_title'] = ($this->post_id)? $this->post->post_title: '';
+        $dataForm['ext_types'] = 'jpg, png, gif';
+        
+        foreach($this->fields as $k => $field){
+            
+            if($field['slug'] == 'post_uploader'){
+                if(isset($field['ext-types']) && $field['ext-types'])
+                $dataForm['ext_types'] = $field['ext-types'];
+                break;
+            }
+            
+        }
+
+        $dataForm = (object)$dataForm;
+        
+        return $dataForm;
     }
     
     function get_public_fields(){
@@ -232,7 +262,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
 
             foreach($this->fields as $this->current_field){
 
-                $required = ($this->current_field['required'] == 1)? '<span class="required">*</span>': '';
+                $required = (isset($this->current_field['required']) && $this->current_field['required'] == 1)? '<span class="required">*</span>': '';
 
                 if($this->taxonomies && in_array($this->current_field['slug'],$taxField)){
 
@@ -392,7 +422,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $content .= $postUploder->get_upload_button(array(
             'multiple' => false,
             'id' => 'rcl-thumbnail-uploader',
-            'title' => __('Загрузить миниатюру','wp-recall'),
+            'title' => __('Upload thumbnail','wp-recall'),
             'onclick' => 'rcl_init_thumbnail_uploader(this);'
         ));
         
@@ -406,7 +436,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         
         $content = '<div class="rcl-terms-select taxonomy-'.$taxonomy.'">';
         
-        $terms = $this->current_field['values']? $this->current_field['values']: array();
+        $terms = isset($this->current_field['values'])? $this->current_field['values']: array();
         
         if($this->is_hierarchical_tax($taxonomy)){
             

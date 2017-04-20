@@ -252,7 +252,7 @@ function rcl_register_mail($userdata){
         
     }else{
         
-        $subject = __('Регистрация завершена','wp-recall');
+        $subject = __('Registration completed','wp-recall');
         
     }
 

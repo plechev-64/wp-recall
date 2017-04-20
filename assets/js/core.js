@@ -259,7 +259,7 @@ function rcl_remove_datepicker_box(){
 
 function rcl_init_field_file(field_id){
     
-    var field = jQuery("form #"+field_id);
+    var field = jQuery("#"+field_id);
     var form = field.parents('form');
     
     form.attr("enctype","multipart/form-data");
@@ -269,13 +269,40 @@ function rcl_init_field_file(field_id){
         var error = false;
         
         field.each(function(){
+            
             var maxsize = jQuery(this).data("size");
             var fileInput = jQuery(this)[0];
-            var filesize = fileInput.files[0];
-            if(!filesize) return;
-            filesize = filesize.size/1024/1024;
-            if(filesize>maxsize){
+            var file = fileInput.files[0];
+            var accept = fileInput.accept.split(',');
+            
+            if(!file) return;
+            
+            if(accept){
+                
+                var fileType = false;
+                
+                for(var i in accept){
+                    if(accept[i] == file.type){
+                        fileType = true;
+                        return;
+                    }
+                }
+                
+                if(!fileType){
+                    rcl_preloader_hide();
+                    rcl_notice("Некорректный тип файла!",'error',5000);
+                    error = true;
+                    return;
+                }
+                
+            }
+            
+            var filesize = file.size/1024/1024;
+            
+            if(filesize > maxsize){
                 jQuery(this).parent().css("border","1px solid red").css("padding","2px");
+                rcl_preloader_hide();
+                rcl_notice("Размер файла превышен!",'error',5000);
                 error = true;
             }else{
                 jQuery(this).parent().removeAttr("style");
@@ -283,8 +310,6 @@ function rcl_init_field_file(field_id){
         });
         
         if(error){
-            rcl_preloader_hide();
-            rcl_notice("Размер файла превышен!");
             return false;
         }
         

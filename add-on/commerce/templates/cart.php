@@ -54,7 +54,7 @@
         </tr>
     <?php endforeach; wp_reset_postdata(); ?>
     <tr>
-        <th colspan="2"><?php _e('Итого','wp-recall'); ?></th>
+        <th colspan="2"><?php _e('Total','wp-recall'); ?></th>
         <th class="column-product-amount total-amount">
             <span class="rcl-order-amount">
                 <?php echo $Cart->products_amount; ?>

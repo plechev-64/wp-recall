@@ -179,9 +179,9 @@ class Rcl_List_Terms{
 
             if($term['parent']) continue;
 
-            if($term['childrens']){
-                    $options[] = '<optgroup label="'.$term['name'].'">'.$this->get_options_list($term['childrens']).'</optgroup>';
-                    continue;
+            if(isset($term['childrens']) && $term['childrens']){
+                $options[] = '<optgroup label="'.$term['name'].'">'.$this->get_options_list($term['childrens']).'</optgroup>';
+                continue;
             }
 
             if($this->post_terms){

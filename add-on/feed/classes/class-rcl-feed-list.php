@@ -161,7 +161,7 @@ class Rcl_Feed_List extends Rcl_Query{
         
             $usersFeed2 = $feeds->get_col(array(
                 'feed_type' => 'author',
-                'include_user_id' => $usersFeed1,
+                'user_id__in' => $usersFeed1,
                 'feed_status' => 1,
                 'fields' => array('object_id')
             ));
@@ -188,9 +188,9 @@ class Rcl_Feed_List extends Rcl_Query{
             ),
             'post_status' => 'publish',
             'post_parent' => 0,
-            'exclude_post_author' => $authors_ignor,
-            'include_post_author' => $authors_feed,
-            'exclude_post_type' => array(
+            'post_author__not_in' => $authors_ignor,
+            'post_author__in' => $authors_feed,
+            'post_type__not_in' => array(
                 'page',
                 'nav_menu_item'
             ),
@@ -238,7 +238,7 @@ class Rcl_Feed_List extends Rcl_Query{
         $defaults = array(
             'table' => $this->get_comments_table(),
             'comment_approved' => 1,
-            'exclude_user_id' => $this->user_feed,
+            'user_id__not_in' => $this->user_feed,
             'fields' => array(
                 'comment_ID',
                 'comment_post_ID',
@@ -270,8 +270,8 @@ class Rcl_Feed_List extends Rcl_Query{
         $defaults = array(
             'table' => $this->get_comments_table(),
             'comment_approved' => 1,
-            'exclude_user_id' => $this->user_feed,
-            'exclude_comment_parent' => 0,
+            'user_id__not_in' => $this->user_feed,
+            'comment_parent__not_in' => 0,
             'fields' => array(
                 'comment_ID',
                 'comment_post_ID',

@@ -17,7 +17,7 @@ add_action('rcl_cron_hourly_schedule','rcl_cron_hourly');
 function rcl_cron_hourly(){
     
     rcl_add_log(
-        __('Запуск событий крона','wp-recall'). ' rcl_cron_hourly'
+        __('Launch cron events','wp-recall'). ' rcl_cron_hourly'
     );
     
     do_action('rcl_cron_hourly');
@@ -27,7 +27,7 @@ add_action('rcl_cron_twicedaily_schedule','rcl_cron_twicedaily');
 function rcl_cron_twicedaily(){
     
     rcl_add_log(
-        __('Запуск событий крона','wp-recall'). ' rcl_cron_twicedaily'
+        __('Launch cron events','wp-recall'). ' rcl_cron_twicedaily'
     );
     
     do_action('rcl_cron_twicedaily');
@@ -37,7 +37,7 @@ add_action('rcl_cron_daily_schedule','rcl_cron_daily');
 function rcl_cron_daily(){
     
     rcl_add_log(
-        __('Запуск событий крона','wp-recall'). ' rcl_cron_daily'
+        __('Launch cron events','wp-recall'). ' rcl_cron_daily'
     );
     
     do_action('rcl_cron_daily');

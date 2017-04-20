@@ -190,7 +190,7 @@ function rcl_preview_post(){
         $field = $formFields->get_field('post_thumbnail');
         
         if($field['required'] && !$thumbnail_id){
-            echo json_encode(array('error' => __('Загрузите или укажите изображение в качестве миниатюры!','wp-recall')));
+            echo json_encode(array('error' => __('Upload or specify an image as a thumbnail','wp-recall')));
             exit;
         }
     }

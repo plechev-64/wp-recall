@@ -182,7 +182,7 @@ class Rcl_History_Orders extends WP_List_Table {
             }elseif(isset($_GET['user'])&&$_GET['user']){
                 $args['user_id'] = intval($_GET['user']);
             }else{
-                $args['exclude_order_status'] = 6;
+                $args['order_status__not_in'] = 6;
             }
         }
 

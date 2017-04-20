@@ -114,7 +114,7 @@ class Rcl_Sub_Tabs {
             
             if(!$funcContent){
                 rcl_add_log(
-                    'get_subtab: '.__('Не удалось загрузить контент вкладки','wp-recall'),
+                    'get_subtab: '.__('Failed to load tab content','wp-recall'),
                     $this->callback
                 );
             }

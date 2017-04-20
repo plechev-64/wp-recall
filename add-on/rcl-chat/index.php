@@ -18,7 +18,7 @@ function rcl_chat_scripts(){
 
     $file_upload = (isset($rcl_options['chat']['file_upload']))? $rcl_options['chat']['file_upload']: 0;
     
-    if($user_ID&&$file_upload){
+    if($user_ID && $file_upload){
         
         $contact_panel = (isset($rcl_options['chat']['contact_panel']))? $rcl_options['chat']['contact_panel']: 0;
         

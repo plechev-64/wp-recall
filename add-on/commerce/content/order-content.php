@@ -109,7 +109,7 @@ function rcl_add_order_pay_form(){
         }
 
         $content = '<div class="rcl-order-pay-form order-before-box">';
-        $content .= '<span class="title-before-box">'.__('Оплатите созданный заказ одним из предложенных способов','wp-recall').'</span>';
+        $content .= '<span class="title-before-box">'.__('Pay for the created order by one of the proposed methods','wp-recall').'</span>';
             $content .= '<div class="content-before-box">'; 
                 $content .= rcl_get_pay_form($dataPay);
             $content .= '</div>';
@@ -131,7 +131,7 @@ function rcl_add_order_details(){
     
     $content = '<div class="rcl-order-details order-before-box">'; 
     
-        $content .= '<span class="title-before-box">'.__('Данные заказа','wp-recall').'</span>';
+        $content .= '<span class="title-before-box">'.__('Order data','wp-recall').'</span>';
     
         $content .= '<div class="content-before-box">';
 
@@ -141,7 +141,7 @@ function rcl_add_order_details(){
 
         $content .= '</div>';
     
-        $content .= '<span class="title-before-box">'.__('Данные указанные при оформлении заказа','wp-recall').'</span>';
+        $content .= '<span class="title-before-box">'.__('Data specified when placing the order','wp-recall').'</span>';
     
         $content .= '<div class="content-before-box">'; 
 

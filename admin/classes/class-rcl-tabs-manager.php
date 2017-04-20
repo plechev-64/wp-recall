@@ -15,9 +15,9 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
     function form_navi(){
         
         $areas = array(
-            'area-menu'     => __('Область "Menu"','wp-recall'),
-            'area-actions'  => __('Область "Actions"','wp-recall'),
-            'area-counters' => __('Область "Counters"','wp-recall')
+            'area-menu'     => __('"Menu" area','wp-recall'),
+            'area-actions'  => __('"Actions" area','wp-recall'),
+            'area-counters' => __('"Counters" area','wp-recall')
         );
 
         $content = '<div class="rcl-custom-fields-navi">';
@@ -55,27 +55,27 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
                 'slug'=>'icon',
                 'title'=>__('Icon class of  font-awesome','wp-recall'),
                 'placeholder'=>__('Example , fa-user','wp-recall'),
-                'notice'=>__('Источник <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/</a>','wp-recall')
+                'notice'=>__('Source','wp-recall').' <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/</a>'
             ),
             
             array(
                 'type' => 'select',
                 'slug'=>'public-tab',
-                'title'=>__('Приватность вкладки','wp-recall'),
+                'title'=>__('Tab privacy','wp-recall'),
                 'values'=>array(
-                    __('Приватная','wp-recall'),
-                    __('Публичная','wp-recall')
+                    __('Private','wp-recall'),
+                    __('Public','wp-recall')
                 )
             ),
 
             array(
                 'type' => 'checkbox',
                 'slug'=>'supports-tab',
-                'title'=>__('Поддержка функций','wp-recall'),
+                'title'=>__('Support of the functions','wp-recall'),
                 'values'=>array(
-                    'ajax' => __('ajax-загрузка','wp-recall'),
+                    'ajax' => __('ajax-loading','wp-recall'),
                     'cache' => __('caching','wp-recall'),
-                    'dialog' => __('диалоговое окно','wp-recall')
+                    'dialog' => __('dialog box','wp-recall')
                 )
             ),
 
@@ -167,6 +167,9 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
     }
     
     function edit_tab_options($options, $field, $type){
+        global $rcl_tabs;
+        
+        if(!isset($field['slug'])) return $options;
 
         if($this->is_default_tab($field['slug'])){
             
@@ -186,6 +189,10 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
                 
                 if($option['slug'] == 'slug'){
                     unset($options[$k]);
+                }
+                
+                if($option['slug'] == 'icon'){
+                    $options[$k]['placeholder'] = $rcl_tabs[$field['slug']]['icon'];
                 }
  
             }

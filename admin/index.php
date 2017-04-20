@@ -254,7 +254,7 @@ function rcl_update_custom_fields(){
 
     update_option( $_POST['rcl-fields-options']['name-option'], $fields );
     
-    do_action('rcl_update_custom_fields',$fields,$POST);
+    do_action('rcl_update_custom_fields', $fields, $POSTDATA);
 
     wp_redirect( $_POST['_wp_http_referer'] ); exit;
     

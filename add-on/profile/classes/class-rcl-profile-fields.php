@@ -103,7 +103,7 @@ class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
     
     function edit_field_options($options, $field, $type){
         
-        if($type != $this->post_type) return $options;
+        if(!isset($field['slug']) || $type != $this->post_type) return $options;
         
         $defaultFields = array(
             'first_name',

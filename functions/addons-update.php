@@ -34,6 +34,8 @@ function rcl_check_addon_update(){
     }
     
     if(!$addons_data) return false;
+    
+    rcl_add_log(__('Sending request to the update server to get the latest versions of the installed add-ons','wp-recall'));
 
     $url = RCL_SERVICE_HOST."/products-files/info/light-info.xml";
 
@@ -41,7 +43,7 @@ function rcl_check_addon_update(){
     
     if(!$xml_array){
         rcl_add_log(
-            __('Не удалось открыть файл с данными дополнений для проверки обновлений','wp-recall'),
+            __('Failed to open file with add-ons data to check for updates','wp-recall'),
             $url
         ); 
         exit;

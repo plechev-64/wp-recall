@@ -82,16 +82,16 @@ class Rcl_Payment{
         if(!$this->user_id)
             $this->user_id = $user_ID;
 
-        if(!$this->page_result)
+        if(!$this->page_result && isset($rmag_options['page_result_pay']))
             $this->page_result = $rmag_options['page_result_pay'];
         
-        if(!$this->page_success)
+        if(!$this->page_success && isset($rmag_options['page_success_pay']))
             $this->page_success = $rmag_options['page_success_pay'];
         
-        if(!$this->page_fail)
+        if(!$this->page_fail && isset($rmag_options['page_fail_pay']))
             $this->page_fail = $rmag_options['page_fail_pay'];
         
-        if(!$this->page_successfully)
+        if(!$this->page_successfully && isset($rmag_options['page_successfully_pay']))
             $this->page_successfully = $rmag_options['page_successfully_pay'];
         
         $this->pay_summ = round(str_replace(',','.',$this->pay_summ), 2);
@@ -201,7 +201,7 @@ class Rcl_Payment{
         
         if(!$data->pay_status){
             rcl_add_log(
-                'insert_pay: '.__('Не удалось добавить платеж пользователя','wp-recall'), $data
+                'insert_pay: '.__('Failed to add user payment','wp-recall'), $data
             );
         }
 

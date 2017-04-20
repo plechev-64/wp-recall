@@ -1033,7 +1033,7 @@ function rcl_get_closed_groups($user_id){
     $groups->set_query(array(
         'fields' => array('ID'),
         'group_status' => 'closed',
-        'exclude_admin_id' => $user_id
+        'admin_id__not_in' => $user_id
     ));
     
     $groups->query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON ".$groups->query['table']['as'].".ID=groups_users.group_id";

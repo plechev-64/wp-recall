@@ -35,7 +35,7 @@ function rcl_public_form_manager(){
         'form_id' => $form_id
     ));
     
-    $content = '<h2>'.__('Управление формами публикации','wp-recall').'</h2>';
+    $content = '<h2>'.__('Manage publication forms','wp-recall').'</h2>';
     
     $content .= $formManager->form_navi();
     
