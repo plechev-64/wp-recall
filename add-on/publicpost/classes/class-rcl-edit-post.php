@@ -26,7 +26,10 @@ class Rcl_EditPost {
         if(isset($_POST['post_id'])&&$_POST['post_id']){
 
             $this->post_id = intval($_POST['post_id']);
-            $this->post_type = get_post_type($this->post_id);
+            
+            $post = get_post($this->post_id);
+            
+            $this->post_type = $post->post_type;
 
             if($this->post_type == 'post-group'){
                 
@@ -186,16 +189,18 @@ class Rcl_EditPost {
 
         do_action('pre_update_post_rcl',$postdata);
         
+        if(isset($_POST['form_id'])){
+            $formID = intval($_POST['form_id']);
+        }
+        
         if(!$this->post_id){
             $this->post_id = wp_insert_post( $postdata );
 
             if(!$this->post_id) 
                 $this->error(__('Error publishing!','wp-recall').' Error 101');
-            
-            $id_form = intval($_POST['form_id']);
-            
-            if($id_form>1) 
-                add_post_meta($this->post_id, 'publicform-id', $id_form);
+
+            if($formID > 1) 
+                add_post_meta($this->post_id, 'publicform-id', $formID);
             
         }else{
             wp_update_post( $postdata );
@@ -208,7 +213,7 @@ class Rcl_EditPost {
         else 
             delete_post_meta($this->post_id, 'recall_slider');
 
-        rcl_update_post_custom_fields($this->post_id,$id_form);
+        rcl_update_post_custom_fields($this->post_id,$formID);
 
         do_action('update_post_rcl',$this->post_id,$postdata,$this->update);
 

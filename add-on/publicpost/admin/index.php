@@ -52,8 +52,7 @@ function rcl_public_form_manager(){
 
 add_action('dbx_post_advanced', 'custom_fields_editor_post_rcl', 1);
 function custom_fields_editor_post_rcl() {
-    global $post;
-    
+    global $post;   
     add_meta_box( 'custom_fields_editor_post', __('Arbitrary fields of  publication','wp-recall'), 'custom_fields_list_posteditor_rcl', $post->post_type, 'normal', 'high'  );
 }
 
@@ -61,7 +60,7 @@ function custom_fields_list_posteditor_rcl($post){
     $form_id = 1;
     
     if($post->ID && $post->post_type == 'post')
-        $form_id = get_post_meta($post->ID, 'publicform-id');
+        $form_id = get_post_meta($post->ID, 'publicform-id', 1);
     
     $content = rcl_get_custom_fields_edit_box($post->ID,$post->post_type,$form_id); 
     

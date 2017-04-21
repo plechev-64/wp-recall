@@ -25,17 +25,23 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         
         $this->init_properties($args);
         
+        if(isset($_GET['rcl-post-edit'])){
+            $this->post_id = $_GET['rcl-post-edit'];
+        }
+        
+        if($this->post_id){
+			
+            $this->post = get_post($this->post_id);
+            $this->post_type = $this->post->post_type;
+			
+            if($this->post_type == 'post'){
+                $this->form_id = get_post_meta($this->post_id, 'publicform-id', 1);
+            }
+			
+        }
+		
         if(!$this->form_id) 
             $this->form_id = 1;
-        
-        if(isset($_GET['rcl-post-edit'])){
-
-            $this->post_id = $_GET['rcl-post-edit'];
-            $this->post = get_post($this->post_id);
-            
-            $this->post_type = $this->post->post_type;
-            
-        }
         
         parent::__construct(array(
             'post_type' => $this->post_type,
@@ -655,7 +661,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             'label' => '<span>'.__('Add your tags','wp-recall').'</span><br><small>'.__('Each tag is separated with Enter','wp-recall').'</small>'
         );
 
-        $fields .= rcl_form_field($args);
+        $fields = rcl_form_field($args);
 
         $fields .= "<script>
         jQuery(function($){
