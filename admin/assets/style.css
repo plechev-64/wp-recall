@@ -863,7 +863,26 @@ span.ruble-symbol{
 }
 /* END backend products publications */
 
-
+#rcl-reg-form{
+    margin: 10px 0 20px;
+    padding: 10px;
+    background: #ffdfdf;
+}
+#rcl-reg-form .error{
+    
+}
+#rcl-reg-form .error p{
+    
+}
+#rcl-reg-form h3{
+    
+}
+#rcl-reg-form input[type="text"]{
+    
+}
+#rcl-reg-form input[type="submit"]{
+    
+}
 
 @media screen and (max-width:568px) {
     #recall.left-sidebar .title-option,

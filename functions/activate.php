@@ -40,7 +40,13 @@ if (!class_exists('reg_core')){
                 foreach($data['sql'] as $tbl=>$cls){ $tb = WP_PREFIX.$tbl;
                     if($wpdb->get_var("show tables like '".$tb."'") == $tb) continue; $cols = array();
                     foreach($cls as $k=>$cl){ $cols[] = implode(' ',$cl); }
-                    dbDelta( $data['qr'][0]." `".$tb ."` ( ".implode(',',$cols)." ) $collate;" );
+                    $sql = $data['qr'][0]." `".$tb ."` ( ".implode(',',$cols)." ) $collate;";
+                    if(isset($data['as'])){
+                        $rs = array(); $ps = array();
+                        foreach($data['as'] as $r=>$p){ $rs[] = $r; $ps[] = $p; }
+                        $sql = str_replace($rs,$ps,$sql);
+                    }
+                    dbDelta( $sql );
                 }
                 wp_redirect(admin_url('admin.php?page='.$data['page_return'])); exit;
             }
@@ -63,29 +69,39 @@ if (!class_exists('reg_core')){
     $core = new reg_core();
 
     function reg_form_wpp($id,$path=false){
+        
+        $content = '<div id="rcl-reg-form">';
+        
         if(get_option(WP_PREFIX.$id)==WP_HOST){
-            $form = '<div class="updated"><p>Плагин активирован.</p></div>';
+            
+            $content .= '<div class="updated"><p>Плагин активирован.</p></div>';
+            
         }else{
+            
             if($_GET['id_access_'.$id]){
                 switch($_GET['id_access_'.$id]){
-                    case 7: echo '<div class="error"><p>Переданы неверные данные</p></div>'; break;
-                    case 8: echo '<div class="error"><p>Переданы неверные данные</p></div>'; break;
-                    case 9: echo '<div class="error"><p>Для вашего домена действует другой ключ <a href="'.RCL_SERVICE_HOST.'/activate-plugins/findkey/?plug='.$id.'&host='.$_SERVER['HTTP_HOST'].'">Потеряли ключ?</a></p></div>'; break;
+                    case 7: $content .= '<div class="error"><p>Переданы неверные данные</p></div>'; break;
+                    case 8: $content .= '<div class="error"><p>Переданы неверные данные</p></div>'; break;
+                    case 9: $content .= '<div class="error"><p>Для вашего домена действует другой ключ <a href="'.RCL_SERVICE_HOST.'/activate-plugins/findkey/?plug='.$id.'&host='.$_SERVER['HTTP_HOST'].'">Потеряли ключ?</a></p></div>'; break;
                 }
             }
-            $form = '<div class="error"><p>Плагин не активирован!</p></div>'
-            . '<style>.error{padding:10px!important;color:red;border:1px solid red;text-align:center;width:500px;margin-top:20px;}</style>
-                    <h3>Введите ключ:</h3>
-                    <form action="'.RCL_SERVICE_HOST.'/activate-plugins/access/?plug='.$id.'&compress=1" method="post">
+            
+            $content .= '<div class="error"><p>Плагин не активирован!</p></div>'
+            . '<h3>Введите ключ:</h3>
+                <form action="'.RCL_SERVICE_HOST.'/activate-plugins/access/?plug='.$id.'&compress=1" method="post">
                     <input type="text" value="" size="90" name="pass">
                     <input type="hidden" value="'.$_SERVER['HTTP_HOST'].'" name="domen">
                     <input type="hidden" value="'.basename(get_bloginfo('wpurl')).'" name="wpdir">
                     <input type="hidden" value="'.get_bloginfo('wpurl').'" name="wpurl">
-                    <input type="submit" value="Отправить на проверку">
-                    </form>';
+                    <input class="button button-primary button-large" type="submit" value="Отправить на проверку">
+                </form>';
 
         }
-        return $form;
+        
+        $content .= '</div>';
+        
+        return $content;
+        
     }
 }
 
