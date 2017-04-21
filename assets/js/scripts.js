@@ -208,11 +208,11 @@ function rcl_manage_user_black_list(e,user_id){
 rcl_add_action('rcl_init','rcl_init_update_requared_checkbox');
 function rcl_init_update_requared_checkbox(){
     
-    jQuery('.public_block form.edit-form').find('.required-checkbox').each(function(){
+    jQuery('body form').find('.required-checkbox').each(function(){
         rcl_update_require_checkbox(this);
     });
     
-    jQuery('body').on('click','.required-checkbox',function(){
+    jQuery('body form').on('click','.required-checkbox',function(){
         rcl_update_require_checkbox(this);
     });
     

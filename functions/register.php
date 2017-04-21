@@ -478,35 +478,41 @@ function rcl_secondary_password($fields){
 
 //Вывод произвольных полей профиля в форме регистрации
 add_filter('regform_fields_rcl','rcl_custom_fields_regform',20);
-function rcl_custom_fields_regform($field){
+function rcl_custom_fields_regform($content){
     
-    $get_fields = rcl_get_profile_fields();
+    $fields = rcl_get_profile_fields();
 
-    if($get_fields){
-        $get_fields = stripslashes_deep($get_fields);
+    if($fields){
+        
+        $fields = stripslashes_deep($fields);
 
         $cf = new Rcl_Custom_Fields();
 
-        foreach((array)$get_fields as $custom_field){
-            if($custom_field['register']!=1) continue;
+        foreach($fields as $field){
+            
+            if($field['register']!=1) continue;
+            
+            $field['value_in_key'] = true;
 
-            $custom_field = apply_filters('custom_field_regform',$custom_field);
+            $field = apply_filters('custom_field_regform',$field);
 
-            $class = (isset($custom_field['class']))? $custom_field['class']: '';
-            $id = (isset($custom_field['id']))? 'id='.$custom_field['id']: '';
-            $attr = (isset($custom_field['attr']))? ''.$custom_field['attr']: '';
+            $class = (isset($field['class']))? $field['class']: '';
+            $id = (isset($field['id']))? 'id='.$field['id']: '';
+            $attr = (isset($field['attr']))? ''.$field['attr']: '';
 
-            $field .= '<div class="form-block-rcl '.$class.'" '.$id.' '.$attr.'>';
-            $star = ($custom_field['required']==1)? ' <span class="required">*</span> ': '';
-            $field .= '<label>'.$cf->get_title($custom_field).$star.'';
-            if($custom_field['type']) $field .= '<span class="colon">:</span>';
-            $field .= '</label>';
+            $content .= '<div class="form-block-rcl '.$class.'" '.$id.' '.$attr.'>';
+            $star = ($field['required']==1)? ' <span class="required">*</span> ': '';
+            $content .= '<label>'.$cf->get_title($field).$star;
+            if($field['type']) 
+                $content .= '<span class="colon">:</span>';
+            $content .= '</label>';
 
-            $field .= $cf->get_input($custom_field,$_POST[$custom_field['slug']]);
-            $field .= '</div>';
+            $content .= $cf->get_input($field,$_POST[$field['slug']]);
+            $content .= '</div>';
 
         }
     }
-    return $field;
+    
+    return $content;
 }
 

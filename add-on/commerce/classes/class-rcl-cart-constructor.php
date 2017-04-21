@@ -102,8 +102,8 @@ class Rcl_Cart_Constructor {
         
         if(!$user_ID)
             $this->init_guest_fields();
-        
-        $fields = array_merge($this->fields, $this->get_cart_fields());
+
+        $fields = ($cartFields = $this->get_cart_fields())? array_merge($this->fields, $cartFields): $this->fields;
         
         $this->fields = apply_filters('rcl_cart_fields', $fields);
 
