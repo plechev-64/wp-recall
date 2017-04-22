@@ -47,8 +47,10 @@ function rcl_get_userlist($atts){
     $rcl_cache = new Rcl_Cache($timecache);
         
     if($rcl_cache->is_cache){
-        if(isset($users->id) && $users->id=='rcl-online-users') $string = json_encode($users);
-        else $string = json_encode($users->query());
+        if(isset($users->id) && $users->id=='rcl-online-users') 
+            $string = json_encode($users);
+        else 
+            $string = json_encode($users->query);
 
         $file = $rcl_cache->get_file($string);
 
