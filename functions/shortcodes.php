@@ -56,7 +56,7 @@ function rcl_get_userlist($atts){
 
         if(!$file->need_update){
             
-            $users->remove_data();
+            $users->remove_filters();
             
             return $rcl_cache->get_cache();
 
