@@ -208,7 +208,7 @@ class Rcl_Feed_List extends Rcl_Query{
         $args = wp_parse_args( $args, $defaults );
 
         $this->set_query($args);
-        //print_r($this->get_sql());
+        
         return apply_filters('rcl_feed_posts_query',$this->query,$this->user_feed);
 
     }

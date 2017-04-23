@@ -82,22 +82,18 @@ class Rcl_Query {
                     }else{
                         $this->query['where'][] = $this->query['table']['as'].".$col_name = '$args[$col_name]'";
                     }
-                    
-                    continue;
 
                 }
                 
                 if(isset($args[$col_name.'__in']) && $args[$col_name.'__in']){
                     
                     $this->query['where'][] = $this->query['table']['as'].".$col_name IN (".$this->get_string_in($args[$col_name.'__in']).")";
-                    continue;
                     
                 }
                 
                 if(isset($args[$col_name.'__not_in']) && $args[$col_name.'__not_in']){
 
                     $this->query['where'][] = $this->query['table']['as'].".$col_name NOT IN (".$this->get_string_in($args[$col_name.'__not_in']).")";
-                    continue;
                     
                 }
 
@@ -297,7 +293,7 @@ class Rcl_Query {
             $where[] = implode(' AND ',$query['where']);
         }
         
-        if(isset($query['where_or'])){
+        if(isset($query['where_or']) && $query['where_or']){
             
             if($query['where']) 
                 $where_or[] = 'OR'; 

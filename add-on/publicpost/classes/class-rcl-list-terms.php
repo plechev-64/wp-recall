@@ -97,24 +97,28 @@ class Rcl_List_Terms{
         }
 
         $datalist = array();
-        foreach($newterms as $term_id=>$term){
+        
+        if($this->include_terms){
             
-            if($this->include_terms){
-                if(in_array($term_id,$this->include_terms)){
-                    
+            foreach($this->include_terms as $incID){
+            
+                foreach($newterms as $term_id=>$term){
+
+                    if($term_id != $incID) continue;
+
                     $datalist[$term_id] = $term;
                     $datalist[$term_id]['parent'] = 0;
-                    
+
                     $childrens = $this->get_childrens($term_id);
 
                     if($childrens){
 
                         $datalist[$term_id]['childrens'] = $childrens;
-                        
+
                         $childs_tree = $this->get_childrens_tree($term_id);
-                        
+
                         if($childs_tree){
-                        
+
                             foreach($childs_tree as $child_id){
 
                                 $datalist[$child_id] = $newterms[$child_id];
@@ -125,24 +129,29 @@ class Rcl_List_Terms{
                                     $datalist[$child_id]['childrens'] = $childs;
                                 }
                             }
-                        
+
                         }
-                        
+
                     }
 
                 }
-                
-                continue;
+            
             }
+            
+        }else{
+            
+            foreach($newterms as $term_id=>$term){
 
-            $datalist[$term_id] = $term;
+                $datalist[$term_id] = $term;
 
-            $childrens = $this->get_childrens($term_id,$newterms);
+                $childrens = $this->get_childrens($term_id,$newterms);
 
-            if($childrens){
-                $datalist[$term_id]['childrens'] = $childrens;
+                if($childrens){
+                    $datalist[$term_id]['childrens'] = $childrens;
+                }
+
             }
-
+            
         }
 
         return $datalist;
