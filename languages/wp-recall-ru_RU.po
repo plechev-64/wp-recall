@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2017-04-20 15:20+0300\n"
+"POT-Creation-Date: 2017-04-23 19:34+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -48,7 +48,7 @@ msgstr "Добавить новый товар"
 #: add-on/commerce/index.php:45 add-on/commerce/index.php:125
 #: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
 #: add-on/groups/groups-public.php:53 add-on/publicpost/core.php:81
-#: add-on/publicpost/index.php:228 add-on/publicpost/init.php:26
+#: add-on/publicpost/index.php:228 add-on/publicpost/init.php:23
 #: classes/class-rcl-custom-fields-manager.php:328
 #: classes/class-rcl-custom-fields-manager.php:412
 msgid "Edit"
@@ -76,7 +76,7 @@ msgstr "Поиск"
 
 #: add-on/commerce/activate.php:88 add-on/commerce/index.php:49
 #: add-on/groups/groups-init.php:15
-#: add-on/publicpost/classes/class-rcl-public-form.php:665
+#: add-on/publicpost/classes/class-rcl-public-form.php:683
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -372,7 +372,7 @@ msgstr "отображать при оформлении заказа для г�
 #: add-on/profile/classes/class-rcl-profile-fields.php:93
 #: add-on/publicpost/admin/settings.php:74
 #: add-on/publicpost/admin/settings.php:80
-#: add-on/publicpost/admin/settings.php:180
+#: add-on/publicpost/admin/settings.php:173
 #: add-on/publicpost/classes/class-rcl-public-form-manager.php:27
 #: add-on/rating-system/admin/index.php:16
 #: add-on/rating-system/admin/settings.php:78
@@ -391,7 +391,7 @@ msgstr "Нет"
 #: add-on/profile/classes/class-rcl-profile-fields.php:93
 #: add-on/publicpost/admin/settings.php:74
 #: add-on/publicpost/admin/settings.php:80
-#: add-on/publicpost/admin/settings.php:180
+#: add-on/publicpost/admin/settings.php:173
 #: add-on/publicpost/classes/class-rcl-public-form-manager.php:28
 #: add-on/rating-system/admin/index.php:17
 #: add-on/rating-system/admin/settings.php:78
@@ -532,7 +532,7 @@ msgstr "Фильтр"
 #: add-on/commerce/admin/pages/settings.php:15 add-on/groups/admin/index.php:12
 #: add-on/profile/classes/class-rcl-profile-fields.php:148
 #: add-on/publicpost/admin/settings.php:11
-#: add-on/publicpost/admin/settings.php:133
+#: add-on/publicpost/admin/settings.php:126
 #: add-on/publicpost/classes/class-rcl-list-terms.php:57
 #: add-on/user-balance/admin/settings.php:90
 #: add-on/user-balance/admin/settings.php:98
@@ -1241,15 +1241,15 @@ msgstr "Участникам и старше"
 msgid "Group publication moderation"
 msgstr "Модерация публикаций группы"
 
-#: add-on/groups/admin/index.php:72 add-on/publicpost/admin/settings.php:143
+#: add-on/groups/admin/index.php:72 add-on/publicpost/admin/settings.php:136
 msgid "Publish now"
 msgstr "Публиковать сразу"
 
-#: add-on/groups/admin/index.php:73 add-on/publicpost/admin/settings.php:143
+#: add-on/groups/admin/index.php:73 add-on/publicpost/admin/settings.php:136
 msgid "Send for moderation"
 msgstr "Отправлять на модерацию"
 
-#: add-on/groups/admin/index.php:75 add-on/publicpost/admin/settings.php:145
+#: add-on/groups/admin/index.php:75 add-on/publicpost/admin/settings.php:138
 msgid ""
 "If subject to moderation: To allow the user to see their publication before "
 "moderation has been completed, the user should be classifies as Author or "
@@ -1439,7 +1439,7 @@ msgstr "Панель управления"
 #: add-on/groups/groups-widgets.php:25 add-on/groups/groups-widgets.php:134
 #: add-on/groups/groups-widgets.php:185 add-on/groups/groups-widgets.php:213
 #: add-on/groups/groups-widgets.php:295 add-on/groups/groups-widgets.php:466
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:74
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:75
 #: add-on/publicpost/templates/posts-list.php:7
 #: add-on/user-balance/index.php:334
 #: classes/class-rcl-custom-fields-manager.php:361 rcl-widgets.php:54
@@ -1505,7 +1505,7 @@ msgid "Summary"
 msgstr "Краткое описание"
 
 #: add-on/groups/groups-widgets.php:470 add-on/groups/groups-widgets.php:475
-#: add-on/publicpost/admin/settings.php:102
+#: add-on/publicpost/admin/settings.php:95
 msgid "Do not display"
 msgstr "Не выводить"
 
@@ -1668,7 +1668,7 @@ msgstr ""
 msgid "Groups not found"
 msgstr "Группы не найдены"
 
-#: add-on/groups/templates/group-list.php:12 add-on/publicpost/init.php:75
+#: add-on/groups/templates/group-list.php:12 add-on/publicpost/init.php:69
 #: add-on/rating-system/index.php:26
 msgid "Posts"
 msgstr "Публикации"
@@ -1843,7 +1843,7 @@ msgstr "Управление формами публикации"
 msgid "Use shortcode for publication form"
 msgstr "Для размещения формы публикации используйте шорткод"
 
-#: add-on/publicpost/admin/index.php:57
+#: add-on/publicpost/admin/index.php:56
 msgid "Arbitrary fields of  publication"
 msgstr "Произвольные поля формы публикации"
 
@@ -1897,58 +1897,46 @@ msgid "Use draft"
 msgstr "Использовать черновик"
 
 #: add-on/publicpost/admin/settings.php:83
-msgid "Number of images in Wp-Recall gallery"
-msgstr "Кол-во изображений в галерее Wp-Recall"
-
-#: add-on/publicpost/admin/settings.php:86
-msgid "The maximum image size, Mb"
-msgstr "Максимальный размер изображений, Mb"
-
-#: add-on/publicpost/admin/settings.php:88
-msgid "Maximum image size in megabytes. By default, 2MB"
-msgstr "Ограничение размера загружаемого изображения, по-умолчанию 2МБ"
-
-#: add-on/publicpost/admin/settings.php:90
 msgid "The image size in editor by default"
 msgstr "Размер изображений в редакторе по-умолчанию"
 
-#: add-on/publicpost/admin/settings.php:95
+#: add-on/publicpost/admin/settings.php:88
 msgid "Select image size for the visual editor during publishing"
 msgstr ""
 "Выберите размер изображений при их размещении в контенте визуального "
 "редактора"
 
-#: add-on/publicpost/admin/settings.php:97
+#: add-on/publicpost/admin/settings.php:90
 msgid "Form of publication output in the personal cabinet"
 msgstr "Вывод формы публикации в личном кабинете"
 
-#: add-on/publicpost/admin/settings.php:102
+#: add-on/publicpost/admin/settings.php:95
 msgid "Output"
 msgstr "Выводить"
 
-#: add-on/publicpost/admin/settings.php:108
+#: add-on/publicpost/admin/settings.php:101
 msgid "The form ID"
 msgstr "Идентификатор формы"
 
-#: add-on/publicpost/admin/settings.php:110
+#: add-on/publicpost/admin/settings.php:103
 msgid "Enter the form ID according to the personal Cabinet. The default is 1"
 msgstr ""
 "Введите идентификатор формы публикации выводимой в личном кабинете. По-"
 "умолчанию 1"
 
-#: add-on/publicpost/admin/settings.php:118
+#: add-on/publicpost/admin/settings.php:111
 msgid "Publication of records"
 msgstr "Публикация записей"
 
-#: add-on/publicpost/admin/settings.php:120
+#: add-on/publicpost/admin/settings.php:113
 msgid "Publication is allowed"
 msgstr "Публикация разрешена"
 
-#: add-on/publicpost/admin/settings.php:129
+#: add-on/publicpost/admin/settings.php:122
 msgid "Redirect to"
 msgstr "Перенаправление на страницу"
 
-#: add-on/publicpost/admin/settings.php:136
+#: add-on/publicpost/admin/settings.php:129
 msgid ""
 "Select the page to which the visitors will be redirected after a successful "
 "publication, if email authorization is included in the registration precess"
@@ -1956,68 +1944,68 @@ msgstr ""
 "Выберите страницу на которую гости будут перенаправляться после удачной "
 "публикации, если на сайте включено подтверждение email при регистрации"
 
-#: add-on/publicpost/admin/settings.php:140
+#: add-on/publicpost/admin/settings.php:133
 msgid "Moderation of publications"
 msgstr "Модерация публикаций"
 
-#: add-on/publicpost/admin/settings.php:152
+#: add-on/publicpost/admin/settings.php:145
 msgid "Editing"
 msgstr "Редактирование"
 
-#: add-on/publicpost/admin/settings.php:154
+#: add-on/publicpost/admin/settings.php:147
 msgid "Frontend editing"
 msgstr "Фронтэнд редактирование"
 
-#: add-on/publicpost/admin/settings.php:158
+#: add-on/publicpost/admin/settings.php:151
 msgid "Administrators"
 msgstr "Администраторы"
 
-#: add-on/publicpost/admin/settings.php:159
+#: add-on/publicpost/admin/settings.php:152
 msgid "Editors"
 msgstr "Редакторы"
 
-#: add-on/publicpost/admin/settings.php:160
+#: add-on/publicpost/admin/settings.php:153
 msgid "Authors"
 msgstr "Авторы"
 
-#: add-on/publicpost/admin/settings.php:163
+#: add-on/publicpost/admin/settings.php:156
 msgid "Ограничение времени редактирования"
 msgstr "Ограничение времени редактирования"
 
-#: add-on/publicpost/admin/settings.php:165
+#: add-on/publicpost/admin/settings.php:158
 msgid "Limit editing time of publication in hours, by default: unlimited"
 msgstr "Ограничение времени публикации в часах, по-умолчанию: без ограничений"
 
-#: add-on/publicpost/admin/settings.php:172
+#: add-on/publicpost/admin/settings.php:165
 msgid "Custom fields"
 msgstr "Произвольные поля"
 
-#: add-on/publicpost/admin/settings.php:173
+#: add-on/publicpost/admin/settings.php:166
 msgid ""
 "Settings only for fields created using the form of the publication wp-recall"
 msgstr "Настройки только для полей созданных для формы публикации Wp-Recall"
 
-#: add-on/publicpost/admin/settings.php:175
+#: add-on/publicpost/admin/settings.php:168
 msgid "Automatic output"
 msgstr "Автоматический вывод"
 
-#: add-on/publicpost/admin/settings.php:185
+#: add-on/publicpost/admin/settings.php:178
 msgid "Output fields location"
 msgstr "Место вывода полей"
 
-#: add-on/publicpost/admin/settings.php:188
+#: add-on/publicpost/admin/settings.php:181
 msgid "Above publication content"
 msgstr "Над контентом публикации"
 
-#: add-on/publicpost/admin/settings.php:188
+#: add-on/publicpost/admin/settings.php:181
 msgid "On content recording"
 msgstr "Под контентом публикации"
 
-#: add-on/publicpost/classes/class-rcl-edit-post.php:34
-#: add-on/publicpost/classes/class-rcl-edit-post.php:39
-#: add-on/publicpost/classes/class-rcl-edit-post.php:47
-#: add-on/publicpost/classes/class-rcl-edit-post.php:52
-#: add-on/publicpost/classes/class-rcl-edit-post.php:193
+#: add-on/publicpost/classes/class-rcl-edit-post.php:37
+#: add-on/publicpost/classes/class-rcl-edit-post.php:42
+#: add-on/publicpost/classes/class-rcl-edit-post.php:50
+#: add-on/publicpost/classes/class-rcl-edit-post.php:55
+#: add-on/publicpost/classes/class-rcl-edit-post.php:200
 msgid "Error publishing!"
 msgstr "Ошибка публикации!"
 
@@ -2029,95 +2017,113 @@ msgstr "пока не было опубликовано"
 msgid "Published"
 msgstr "Опубликованные"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:87
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:88
 msgid "Group category"
 msgstr "Категории группы"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:97
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:98
 msgid "Amount to choose"
 msgstr "Кол-во к выбору"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:98
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:99
 msgid "only when output through select"
 msgstr "только при выводе через select"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:103
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:104
 msgid "Output option"
 msgstr "Вариант вывода"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:105
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:106
 #: classes/class-rcl-custom-fields-manager.php:456
 msgid "Select"
 msgstr "Выпадающий список"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:106
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:107
 #: classes/class-rcl-custom-fields-manager.php:458
 msgid "Checkbox"
 msgstr "Чекбоксы"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:129
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:130
 msgid "Short entry"
 msgstr "Краткая запись"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:135
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:136
 msgid "Content of the publication"
 msgstr "Содержание публикации"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:143
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:144
 msgid "Editor settings"
 msgstr "Настройки редактора"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:145
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:146
 msgid "Media loader"
 msgstr "Медиазагрузчик"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:146
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:147
 msgid "HTML editor"
 msgstr "HTML редактор"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:147
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:148
 msgid "Visual editor"
 msgstr "Визуальный редактор"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:155
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:156
 msgid "WP-Recall media loader"
 msgstr "Медиа-загрузчик WP-Recall"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:162
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:163
 msgid "Valid file extensions"
 msgstr "Допустимые разрешения файлов"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:163
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:164
 msgid ""
 "Separated by comma, for example: jpg, zip, pdf. By default: png, gif, jpg"
 msgstr "Через запятую, например: jpg, zip, pdf. По-умолчанию: png, gif, jpg"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:172
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:169
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:191
+msgid "The maximum file size, Mb"
+msgstr "Максимальный размер файла, Мб"
+
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:170
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:192
+msgid "Maximum file size in megabytes. By default, 2MB"
+msgstr "Максимальный размер файла в мегабайтах. По умолчанию, 2Мб"
+
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:175
+msgid "Number of files"
+msgstr "Количество файлов"
+
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:176
+msgid "By default, 10"
+msgstr "По-умолчанию, 10"
+
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:185
 msgid "Thumbnail of the publication"
 msgstr "Миниатюра публикации"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:196
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:217
 msgid "Maximum output"
 msgstr "Максимально к выводу"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:201
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:222
 msgid "New values entry field"
 msgstr "Поле ввода новых значений"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:203
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:224
 msgid "Disable"
 msgstr "Отключить"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:204
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:225
 msgid "Enable"
 msgstr "Включить"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:263
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:284
 msgid "Specify term_ID to be selected"
 msgstr "Указание term_ID к выбору"
 
 #: add-on/publicpost/classes/class-rcl-public-form-manager.php:47
-#: add-on/publicpost/init.php:62
+#: add-on/publicpost/init.php:56
 msgid "Records"
 msgstr "Записи"
 
@@ -2130,8 +2136,8 @@ msgid "Add form"
 msgstr "Добавить форму"
 
 #: add-on/publicpost/classes/class-rcl-public-form-manager.php:103
-#: add-on/publicpost/classes/class-rcl-public-form.php:740
-#: add-on/publicpost/classes/class-rcl-public-form.php:751
+#: add-on/publicpost/classes/class-rcl-public-form.php:758
+#: add-on/publicpost/classes/class-rcl-public-form.php:769
 #: add-on/publicpost/core.php:290
 msgid "Are you sure?"
 msgstr "Вы серьезно?"
@@ -2161,101 +2167,101 @@ msgstr "Разрешенные типы файлов"
 msgid "Add"
 msgstr "Добавить"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:116
+#: add-on/publicpost/classes/class-rcl-public-form.php:132
 msgid "Your Name"
 msgstr "Ваше имя"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:122
+#: add-on/publicpost/classes/class-rcl-public-form.php:138
 msgid "Your E-mail"
 msgstr "Ваш E-mail"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:198
+#: add-on/publicpost/classes/class-rcl-public-form.php:214
 msgid "You must be logged in to post. Login or register"
 msgstr ""
 "Вы должны быть авторизованы для публикации. Войдите или зарегистрируйтесь."
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:202
+#: add-on/publicpost/classes/class-rcl-public-form.php:218
 msgid "Sorry, but you have no rights to publish in this group :("
 msgstr "Извините, но вы не можете публиковать в этой группе :("
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:207
+#: add-on/publicpost/classes/class-rcl-public-form.php:223
 msgid "Sorry, but you have no right to post on this site :("
 msgstr "Извините, но вы не можете публиковать на этом сайте :("
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:212
+#: add-on/publicpost/classes/class-rcl-public-form.php:228
 msgid "You can not edit this publication :("
 msgstr "Вы не можете редактировать эту публикацию :("
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:352
-#: add-on/publicpost/init.php:25
+#: add-on/publicpost/classes/class-rcl-public-form.php:368
+#: add-on/publicpost/init.php:22
 msgid "Save as Draft"
 msgstr "Сохранить как черновик"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:355
-#: add-on/publicpost/init.php:23 functions/enqueue-scripts.php:102
+#: add-on/publicpost/classes/class-rcl-public-form.php:371
+#: add-on/publicpost/init.php:20 functions/enqueue-scripts.php:102
 msgid "Preview"
 msgstr "Предпросмотр"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:357
-#: add-on/publicpost/init.php:24
+#: add-on/publicpost/classes/class-rcl-public-form.php:373
+#: add-on/publicpost/init.php:21
 msgid "Publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:425
+#: add-on/publicpost/classes/class-rcl-public-form.php:443
 msgid "Upload thumbnail"
 msgstr "Загрузить миниатюру"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:654
+#: add-on/publicpost/classes/class-rcl-public-form.php:672
 msgid "Enter your tags"
 msgstr "Введите свои теги"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:655
+#: add-on/publicpost/classes/class-rcl-public-form.php:673
 msgid "Add your tags"
 msgstr "Добавьте свои теги"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:655
+#: add-on/publicpost/classes/class-rcl-public-form.php:673
 msgid "Each tag is separated with Enter"
 msgstr "каждый тег разделяется нажатием на кнопку Enter"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:742
-#: add-on/publicpost/classes/class-rcl-public-form.php:749
-#: add-on/publicpost/classes/class-rcl-public-form.php:757
+#: add-on/publicpost/classes/class-rcl-public-form.php:760
+#: add-on/publicpost/classes/class-rcl-public-form.php:767
+#: add-on/publicpost/classes/class-rcl-public-form.php:775
 msgid "Delete post"
 msgstr "Удалить публикацию"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:754
+#: add-on/publicpost/classes/class-rcl-public-form.php:772
 msgid "or enter your own"
 msgstr "или введите свое"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:756
+#: add-on/publicpost/classes/class-rcl-public-form.php:774
 msgid "Without notice"
 msgstr "Без уведомления"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:771
+#: add-on/publicpost/classes/class-rcl-public-form.php:789
 msgid "Does not correspond the topic"
 msgstr "Н/с тематике сайта"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:772
+#: add-on/publicpost/classes/class-rcl-public-form.php:790
 msgid "The publication does not correspond to the site topic"
 msgstr "Публикация не соответствует тематике сайта"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:775
+#: add-on/publicpost/classes/class-rcl-public-form.php:793
 msgid "Not completed"
 msgstr "Не оформлен"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:776
+#: add-on/publicpost/classes/class-rcl-public-form.php:794
 msgid "Publication does not correspond the rules"
 msgstr "Публикация не оформлена согласно правил"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:779
+#: add-on/publicpost/classes/class-rcl-public-form.php:797
 msgid "Advertising/Spam"
 msgstr "Реклама/Спам"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:780
+#: add-on/publicpost/classes/class-rcl-public-form.php:798
 msgid "Publication labeled as advertising or spam"
 msgstr "Публикация помечена как реклама или спам"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:788
+#: add-on/publicpost/classes/class-rcl-public-form.php:806
 msgid "Use blank notice"
 msgstr "Используйте заготовку уведомления"
 
@@ -2313,25 +2319,23 @@ msgstr "Если все верно - публикуйте! Если нет, то
 msgid "The publication has been successfully removed!"
 msgstr "Публикация была успешно удалена!"
 
-#: add-on/publicpost/init.php:27
+#: add-on/publicpost/init.php:24
 msgid "Quick edit"
 msgstr "Быстрое редактирование"
 
-#: add-on/publicpost/init.php:28
+#: add-on/publicpost/init.php:25
 msgid "Fill in all required fields"
 msgstr "Заполните все обязательные поля"
 
-#: add-on/publicpost/init.php:29
-#, php-format
-msgid "You have exceeded the allowed number of downloads! Max. %d"
-msgstr "Превышено разрешенное количество загрузок! Макс. %d"
+#: add-on/publicpost/init.php:26
+msgid "You have exceeded the allowed number of downloads! Max:"
+msgstr "Превышено масимальное кол-во файлов для загрузки! Макс:"
 
-#: add-on/publicpost/init.php:30 add-on/rcl-chat/index.php:62
-#, php-format
-msgid "Exceeds the maximum file size! Max. %d MB"
-msgstr "Превышен масимальный размер файла! Макс. %d МБ"
+#: add-on/publicpost/init.php:27
+msgid "Exceeds the maximum file size! Max:"
+msgstr "Превышен максимальный размер файла! Макс:"
 
-#: add-on/publicpost/init.php:90
+#: add-on/publicpost/init.php:84
 msgid "Publication"
 msgstr "Публикация"
 
@@ -2759,6 +2763,11 @@ msgstr "Напишите хоть что-то"
 #: add-on/rcl-chat/index.php:61
 msgid "Exceeds the maximum message size"
 msgstr "Превышен максимальный размер сообщения"
+
+#: add-on/rcl-chat/index.php:62
+#, php-format
+msgid "Exceeds the maximum file size! Max. %d MB"
+msgstr "Превышен масимальный размер файла! Макс. %d МБ"
 
 #: add-on/rcl-chat/index.php:115
 msgid "Chat"
@@ -3948,15 +3957,15 @@ msgstr "Публикация ожидает утверждения!"
 msgid "Draft of a post"
 msgstr "Черновик публикации"
 
-#: functions/frontend.php:538 functions/frontend.php:564
+#: functions/frontend.php:538 functions/frontend.php:566
 msgid "Unblock"
 msgstr "Разблокировать"
 
-#: functions/frontend.php:538 functions/frontend.php:564
+#: functions/frontend.php:538 functions/frontend.php:566
 msgid "Blacklist"
 msgstr "Черный список"
 
-#: functions/frontend.php:583
+#: functions/frontend.php:585
 msgid "The user has restricted access to their page"
 msgstr "Пользователь ограничил доступ к своей странице"
 
@@ -4067,17 +4076,17 @@ msgstr "Пароли не совпадают!"
 msgid "The passwords match"
 msgstr "Пароли совпадают"
 
-#: functions/shortcodes.php:8 functions/shortcodes.php:246
+#: functions/shortcodes.php:8 functions/shortcodes.php:248
 msgid "To use your personal account, please log in or register on this site"
 msgstr ""
 "Начните пользоваться возможностями своего личного кабинета, войдите или "
 "зарегистрируйтесь на сайте"
 
-#: functions/shortcodes.php:70
+#: functions/shortcodes.php:72
 msgid "Users not found"
 msgstr "Пользователи не найдены"
 
-#: functions/shortcodes.php:251
+#: functions/shortcodes.php:253
 msgid "Such tab was not found!"
 msgstr "Такой вкладки не найдено!"
 
@@ -4271,6 +4280,18 @@ msgstr "Регистрация"
 #: wp-recall.php:40 wp-recall.php:44
 msgid "Are you cheating, bastard?"
 msgstr "Читеришь, гадёныш?"
+
+#~ msgid "Number of images in Wp-Recall gallery"
+#~ msgstr "Кол-во изображений в галерее Wp-Recall"
+
+#~ msgid "The maximum image size, Mb"
+#~ msgstr "Максимальный размер изображений, Mb"
+
+#~ msgid "Maximum image size in megabytes. By default, 2MB"
+#~ msgstr "Ограничение размера загружаемого изображения, по-умолчанию 2МБ"
+
+#~ msgid "You have exceeded the allowed number of downloads! Max. %d"
+#~ msgstr "Превышено разрешенное количество загрузок! Макс. %d"
 
 #~ msgid "The additional currency rate for the product"
 #~ msgstr "Курс дополнительной валюты товара"

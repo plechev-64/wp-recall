@@ -41,17 +41,7 @@ class Rcl_EditPost {
                 if(!current_user_can('edit_post', $this->post_id)) 
                     $this->error(__('Error publishing!','wp-recall').' Error 103');
 
-                $user_info = get_userdata($user_ID);
-
-                if($post->post_author!=$user_ID){
-                    $author_info = get_userdata($post->post_author);
-
-                    if($user_info->user_level < $author_info->user_level) 
-                        $this->error(__('Error publishing!','wp-recall').' Error 104');
-
-                }
-
-                if($user_info->user_level<10&&rcl_is_limit_editing($post->post_date)) 
+                if(!rcl_is_user_role($user_ID,array('administrator','editor')) && rcl_is_limit_editing($post->post_date)) 
                     $this->error(__('Error publishing!','wp-recall').' Error 105');
             }
             

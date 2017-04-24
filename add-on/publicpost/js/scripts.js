@@ -437,6 +437,8 @@ function rcl_init_public_form(post){
     var post_id = post.post_id;
     var post_type = post.post_type;
     var ext_types = post.ext_types;
+    var size_files = post.size_files;
+    var max_files = post.max_files;
     var post_status = 'new';
     
     if(post.post_status)
@@ -446,10 +448,8 @@ function rcl_init_public_form(post){
         var i = rcl_public_form.required.length;
         rcl_public_form.required[i] = jQuery(this).attr('name');
     });
-    
-    var maxcnt = Rcl.public.maxcnt;
-    var maxsize_mb = Rcl.public.maxsize_mb;
-    var maxsize = maxsize_mb*1024*1024;
+
+    var maxsize = size_files*1024*1024;
 
     rcl_add_dropzone('#rcl-public-dropzone-'+post_type);
     
@@ -463,6 +463,8 @@ function rcl_init_public_form(post){
             post_type: post_type,
             post_id: post_id,
             ext_types: ext_types,
+            size_files: size_files,
+            max_files: max_files,
             ajax_nonce: Rcl.nonce
         },
         singleFileUploads:false,
@@ -473,12 +475,12 @@ function rcl_init_public_form(post){
             var cnt_now = jQuery('#temp-files-'+post_type+' li').length;                    
             jQuery.each(data.files, function (index, file) {
                 cnt_now++;
-                if(cnt_now>Rcl.public.maxcnt){
-                    rcl_notice(Rcl.local.allowed_downloads,'error',10000);
+                if(cnt_now>max_files){
+                    rcl_notice(Rcl.local.allowed_downloads+' '+max_files,'error',10000);
                     error = true;
                 }                       
                 if(file['size']>maxsize){
-                    rcl_notice(Rcl.local.upload_size_public,'error',10000);                            
+                    rcl_notice(Rcl.local.upload_size_public+' '+size_files+' MB','error',10000);                            
                     error = true;
                 }                       
             });
@@ -504,16 +506,15 @@ function rcl_init_public_form(post){
     });
 }
 
-function rcl_init_thumbnail_uploader(e){
+function rcl_init_thumbnail_uploader(e,options){
     
     var form = jQuery(e).parents('form');
     
     var post_id = form.data('post_id');
     var post_type = form.data('post_type');
     var ext_types = 'jpg,png,jpeg';
+    var maxsize_mb = options.size;
 
-    var maxcnt = Rcl.public.maxcnt;
-    var maxsize_mb = Rcl.public.maxsize_mb;
     var maxsize = maxsize_mb*1024*1024;
     
     jQuery('#rcl-thumbnail-uploader').fileupload({
@@ -530,24 +531,25 @@ function rcl_init_thumbnail_uploader(e){
         singleFileUploads:true,
         autoUpload:true,
         send:function (e, data) {
+            
             var error = false;
+            
             rcl_preloader_show('form.rcl-public-form');                   
-            var cnt_now = jQuery('#temp-files-'+post_type+' li').length;                    
+                  
             jQuery.each(data.files, function (index, file) {
-                cnt_now++;
-                if(cnt_now>Rcl.public.maxcnt){
-                    rcl_notice(Rcl.local.allowed_downloads,'error',10000);
-                    error = true;
-                }                       
+                      
                 if(file['size']>maxsize){
-                    rcl_notice(Rcl.local.upload_size_public,'error',10000);                            
+                    rcl_notice(Rcl.local.upload_size_public+' '+maxsize_mb+' MB','error',10000);                            
                     error = true;
-                }                       
+                } 
+                
             });
+            
             if(error){
                 rcl_preloader_hide();
                 return false;
             }
+            
         },
         done: function (e, data) {
             jQuery.each(data.result, function (index, file) {

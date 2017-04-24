@@ -152,7 +152,7 @@ function rcl_chat_delete_userdata($user_id){
             array(
                 'table' => $Users->query['table'],
                 'on_chat_id' => 'chat_id',
-                'user_id' => 1,
+                'user_id' => $user_id,
                 'fields' => false
             )
         )

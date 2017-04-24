@@ -554,8 +554,10 @@ function rcl_manage_user_black_list(){
     
     if($user_block){
         delete_user_meta($user_ID,'rcl_black_list:'.$user_id);
+        do_action('remove_user_blacklist',$user_id);
     }else{
         add_user_meta($user_ID,'rcl_black_list:'.$user_id,1);
+        do_action('add_user_blacklist',$user_id);
     }
     
     $new_status = $user_block? 0: 1;

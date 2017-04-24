@@ -80,13 +80,6 @@ function rcl_get_publics_options_page($content){
                     'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
                 )),
 
-                $opt->label(__('Number of images in Wp-Recall gallery','wp-recall')),
-                $opt->option('number',array('name'=>'count_image_gallery','default'=>10)),
-
-                $opt->label(__('The maximum image size, Mb','wp-recall')),
-                $opt->option('number',array('name'=>'public_gallery_weight','default'=>2)),
-                $opt->notice(__('Maximum image size in megabytes. By default, 2MB','wp-recall')),
-
                 $opt->label(__('The image size in editor by default','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'default_size_thumb',

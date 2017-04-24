@@ -16,21 +16,15 @@ function rcl_delete_post_activate ( ) {
 add_filter('rcl_init_js_variables','rcl_init_js_public_variables',10);
 function rcl_init_js_public_variables($data){
     global $rcl_options;
-    
-    $max_downloads = (isset($rcl_options['count_image_gallery'])&&$rcl_options['count_image_gallery'])? $rcl_options['count_image_gallery']: 1;
-    $max_size = (isset($rcl_options['public_gallery_weight'])&&$rcl_options['public_gallery_weight'])? $rcl_options['public_gallery_weight']: 2;
-    
+
     $data['local']['preview'] = __('Preview','wp-recall');
     $data['local']['publish'] = __('Publish','wp-recall');
     $data['local']['save_draft'] = __('Save as Draft','wp-recall');
     $data['local']['edit'] = __('Edit','wp-recall');
     $data['local']['edit_box_title'] = __('Quick edit','wp-recall');   
     $data['local']['requared_fields_empty'] = __('Fill in all required fields','wp-recall');
-    $data['local']['allowed_downloads'] = sprintf(__('You have exceeded the allowed number of downloads! Max. %d','wp-recall'),$max_downloads);
-    $data['local']['upload_size_public'] = sprintf(__('Exceeds the maximum file size! Max. %d MB','wp-recall'),(int)$max_size);
-    
-    $data['public']['maxsize_mb'] = $max_size;
-    $data['public']['maxcnt'] = $max_downloads;
+    $data['local']['allowed_downloads'] = __('You have exceeded the allowed number of downloads! Max:','wp-recall');
+    $data['local']['upload_size_public'] = __('Exceeds the maximum file size! Max:','wp-recall');
     
     return $data;
 }

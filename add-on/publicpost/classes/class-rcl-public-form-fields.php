@@ -162,6 +162,18 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                     'slug' => 'ext-types',
                     'title' => __('Valid file extensions','wp-recall'),
                     'notice' => __('Separated by comma, for example: jpg, zip, pdf. By default: png, gif, jpg','wp-recall')
+                ),
+                array(
+                    'type' => 'number',
+                    'slug' => 'size-files',
+                    'title' => __('The maximum file size, Mb','wp-recall'),
+                    'notice' => __('Maximum file size in megabytes. By default, 2MB','wp-recall')
+                ),
+                array(
+                    'type' => 'number',
+                    'slug' => 'max-files',
+                    'title' => __('Number of files','wp-recall'),
+                    'notice' => __('By default, 10','wp-recall')
                 )
             )
         );
@@ -171,7 +183,15 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
             $fields[] = array(
                 'slug' => 'post_thumbnail',
                 'title' => __('Thumbnail of the publication','wp-recall'),
-                'type' => 'custom'
+                'type' => 'custom',
+                'options-field' => array(
+                    array(
+                        'type' => 'number',
+                        'slug' => 'size-files',
+                        'title' => __('The maximum file size, Mb','wp-recall'),
+                        'notice' => __('Maximum file size in megabytes. By default, 2MB','wp-recall')
+                    )
+                )
             );
             
         }

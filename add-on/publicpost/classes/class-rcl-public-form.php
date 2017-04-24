@@ -92,12 +92,22 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $dataForm['post_excerpt'] = ($this->post_id)? $this->post->post_excerpt: '';
         $dataForm['post_title'] = ($this->post_id)? $this->post->post_title: '';
         $dataForm['ext_types'] = 'jpg, png, gif';
+        $dataForm['size_files'] = 2;
+        $dataForm['max_files'] = 10;
         
         foreach($this->fields as $k => $field){
             
             if($field['slug'] == 'post_uploader'){
+                
                 if(isset($field['ext-types']) && $field['ext-types'])
                 $dataForm['ext_types'] = $field['ext-types'];
+                
+                if(isset($field['size-files']) && $field['size-files'])
+                $dataForm['size_files'] = $field['size-files'];
+                
+                if(isset($field['max-files']) && $field['max-files'])
+                $dataForm['max_files'] = $field['max-files'];
+                
                 break;
             }
             
@@ -393,6 +403,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
     
     function get_thumbnail_box(){
         
+        $sizeFile = (isset($this->current_field['size-files']))? $this->current_field['size-files']: 2;
+        
         $content = '<div id="rcl-thumbnail-post">';
         
         $content .= '<div class="thumbnail-wrapper">';
@@ -429,7 +441,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             'multiple' => false,
             'id' => 'rcl-thumbnail-uploader',
             'title' => __('Upload thumbnail','wp-recall'),
-            'onclick' => 'rcl_init_thumbnail_uploader(this);'
+            'onclick' => 'rcl_init_thumbnail_uploader(this,{size:\''.$sizeFile.'\'});'
         ));
         
         $content .= '</div>';
@@ -810,7 +822,9 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                 . 'post_type:"'.$obj->post_type.'",'
                 . 'post_id:"'.$obj->post_id.'",'
                 . 'post_status:"'.$obj->post_status.'",'
-                . 'ext_types:"'.$obj->ext_types.'"'
+                . 'ext_types:"'.$obj->ext_types.'",'
+                . 'size_files:"'.$obj->size_files.'",'
+                . 'max_files:"'.$obj->max_files.'"'
             . '});</script>';
         
     }
