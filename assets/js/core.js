@@ -290,7 +290,9 @@ function rcl_init_field_file(field_id){
                         }
                     }
                 
-                }else{
+                }
+                
+                if(!fileType){
                     
                     var exts = jQuery(this).data("ext").split(',');
                     var filename = file.name;
