@@ -276,16 +276,32 @@ function rcl_init_field_file(field_id){
             var accept = fileInput.accept.split(',');
             
             if(!file) return;
-            
+            console.log(file);
             if(accept){
-                
+
                 var fileType = false;
                 
-                for(var i in accept){
-                    if(accept[i] == file.type){
-                        fileType = true;
-                        return;
+                if(file.type){
+                
+                    for(var i in accept){
+                        if(accept[i] == file.type){
+                            fileType = true;
+                            return;
+                        }
                     }
+                
+                }else{
+                    
+                    var exts = jQuery(this).data("ext").split(',');
+                    var filename = file.name;
+                    
+                    for(var i in exts){
+                        if(filename.indexOf('.'+exts[i]) + 1) {
+                            fileType = true;
+                            return;
+                        }
+                    }
+                    
                 }
                 
                 if(!fileType){
@@ -304,9 +320,11 @@ function rcl_init_field_file(field_id){
                 rcl_preloader_hide();
                 rcl_notice("Размер файла превышен!",'error',5000);
                 error = true;
+                return;
             }else{
                 jQuery(this).parent().removeAttr("style");
             }
+            
         });
         
         if(error){
@@ -314,7 +332,7 @@ function rcl_init_field_file(field_id){
         }
         
     });
-
+    
 }
 
 function rcl_init_field_maxlength(fieldID){

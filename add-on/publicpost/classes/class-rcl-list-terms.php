@@ -29,7 +29,8 @@ class Rcl_List_Terms{
         $this->datalist = $this->setup_data($terms);
         
         $this->first_option = ($first)? true: false;
-        $this->post_terms = ($post_terms)? $this->setup_data($post_terms): 0;
+        $this->post_terms = ($post_terms)? $this->setup_data($post_terms, false): 0;
+        
         $this->select_amount = $select_amount;
 
         if($type_output) 
@@ -84,7 +85,7 @@ class Rcl_List_Terms{
         return $content;
     }
 	
-    function setup_data($terms){
+    function setup_data($terms, $forInc = true){
 
         $newterms = array();
         foreach($terms as $term){
@@ -98,7 +99,7 @@ class Rcl_List_Terms{
 
         $datalist = array();
         
-        if($this->include_terms){
+        if($forInc && $this->include_terms){
             
             foreach($this->include_terms as $incID){
             
@@ -192,8 +193,9 @@ class Rcl_List_Terms{
                 $options[] = '<optgroup label="'.$term['name'].'">'.$this->get_options_list($term['childrens']).'</optgroup>';
                 continue;
             }
-
+            
             if($this->post_terms){
+
                 if(!$this->selected_term&&selected(isset($this->post_terms[$term_id]),true,false)){
 
                     unset($this->post_terms[$term_id]);

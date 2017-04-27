@@ -482,7 +482,9 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                 $type = (isset($this->current_field['type-select']) && $this->current_field['type-select'])? $this->current_field['type-select']: 'select';
                 $number = (isset($this->current_field['number-select']) && $this->current_field['number-select'])? $this->current_field['number-select']: 1;
 
-                $termList = new Rcl_List_Terms($taxonomy, $type, $this->current_field['required']);
+                $req = isset($this->current_field['required'])? $this->current_field['required']: false;
+                
+                $termList = new Rcl_List_Terms($taxonomy, $type, $req);
 
                 $content .= $termList->get_select_list($this->get_allterms($taxonomy),$this->get_post_terms($taxonomy),$number,$terms);
                 

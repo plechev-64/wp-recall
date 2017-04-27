@@ -164,10 +164,10 @@ class Rcl_Custom_Fields{
         }
 
         $accTypes = false;
-        $extTypes = isset($field['ext-files'])? $field['ext-files']: false;
+        $extTypes = isset($field['ext-files'])? array_map('trim',explode(',',$field['ext-files'])): array();
 
         if($extTypes)
-            $accTypes = rcl_get_mime_types(array_map('trim',explode(',',$field['ext-files'])));
+            $accTypes = rcl_get_mime_types($extTypes);
 
         $accept = ($accTypes)? 'accept="'.implode(',',$accTypes).'"': '';
         $required = (!$this->value)? $this->required: '';
@@ -175,12 +175,12 @@ class Rcl_Custom_Fields{
         $size = ($field['sizefile'])? $field['sizefile']: 2;
 
         $input .= '<span id="'.$this->slug.'-content" class="file-field-upload">';
-        $input .= '<input data-size="'.$size.'" type="file" '.$required.' '.$accept.' name="'.$field['name'].'" '.$this->get_class($field).' id="'.$this->slug.'" value=""/> ';
+        $input .= '<input data-size="'.$size.'" '.($extTypes? 'data-ext="'.implode(',',$extTypes).'"': '').' type="file" '.$required.' '.$accept.' name="'.$field['name'].'" '.$this->get_class($field).' id="'.$this->slug.'" value=""/> ';
         
         $notice = '(';
         
         if($extTypes)
-            $notice .= '<span class="allowed-types">'.__('Allowed extensions','wp-recall').': '.$extTypes.'<span>. ';
+            $notice .= '<span class="allowed-types">'.__('Allowed extensions','wp-recall').': '.$field['ext-files'].'<span>. ';
         
         $notice .= __('Max size','wp-recall').': '.$size.'MB';
         

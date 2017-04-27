@@ -212,7 +212,11 @@ function rcl_tab_profile_content($master_id){
         }
         
         foreach($trAttrs as $k => $attr){
-            $attrs[] = $k.'="'.implode(' ',$attr).'"';
+            if(is_array($attr)){
+                $attrs[] = $k.'="'.implode(' ',$attr).'"';
+            }else{
+                $attrs[] = $k.'="'.$attr.'"';
+            }
         }
         
         if(isset($field['attr'])){

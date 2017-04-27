@@ -208,7 +208,9 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
             }else if($field['type']=='file'){
 
                 $attach_id = rcl_upload_meta_file($field,$post->post_author,$post_id);
-                if($attach_id) update_post_meta($post_id, $slug, $attach_id);
+                
+                if($attach_id) 
+                    update_post_meta($post_id, $slug, $attach_id);
 
             }else{
 
