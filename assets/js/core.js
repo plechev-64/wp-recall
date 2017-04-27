@@ -276,7 +276,7 @@ function rcl_init_field_file(field_id){
             var accept = fileInput.accept.split(',');
             
             if(!file) return;
-            console.log(file);
+            
             if(accept){
 
                 var fileType = false;
