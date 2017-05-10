@@ -112,7 +112,7 @@ class Rcl_Feed_List extends Rcl_Query{
             'feed_author'=>$data->user_id,
             'feed_title'=>'',
             'feed_date'=>$data->comment_date,
-            'feed_parent'=>$data->comment_post_ID,
+            'feed_parent'=> ($this->content == 'answers')? $data->comment_parent: $data->comment_post_ID,
             'post_type'=>'',
             'feed_excerpt'=>'',
             'feed_permalink'=>''

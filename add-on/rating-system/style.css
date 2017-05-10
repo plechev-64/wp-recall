@@ -66,6 +66,7 @@
     text-align: left;
     z-index: 999;
     right: 0;
+    bottom: 0;
 }
 .votes-window .close {
     color: rgb(229, 57, 53);

@@ -452,6 +452,10 @@ body audio {
     overflow: hidden;
     padding: 0 20px 0 8px;
 }
+#rcl-office .rcl-chat-contacts .chat-contact .message-content .message-text .master-avatar{
+    margin-right:10px;
+    vertical-align: middle;
+}
 #rcl-office .rcl-chat-contacts .noread-message{
     background: rgba(229, 57, 53, 0.1);
 }

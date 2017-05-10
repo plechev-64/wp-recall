@@ -426,6 +426,36 @@ class Rcl_Query {
 
     }
     
+    function sum($args = false, $field_name = false){
+        
+        global $wpdb;
+        
+        if($args)
+            $this->set_query($args);
+        
+        $field_name = ($field_name)? $field_name: $this->query['table']['cols'][0];
+        
+        $query = $this->get_query();
+
+        unset($query['select']);
+        unset($query['offset']);
+        unset($query['orderby']);
+        unset($query['order']);
+        unset($query['number']);
+
+        $query['select'] = array('SUM('.$query['table']['as'].'.'.$field_name.')');
+        
+        $sql = $this->get_sql($query);
+        
+        if(isset($query['groupby']) && $query['groupby'])
+            $result = $wpdb->query($sql);
+        else
+            $result = $wpdb->get_var($sql);
+        
+        return $result;
+
+    }
+    
     function insert($args){
         
         global $wpdb;

@@ -246,7 +246,7 @@ function rcl_feed_content(){
 add_filter('rcl_feed_content','rcl_add_feed_content_meta',10);
 function rcl_add_feed_content_meta($content){
     global $rcl_feed;
-
+    
     switch($rcl_feed->feed_type){
         case 'posts':
             return $content;

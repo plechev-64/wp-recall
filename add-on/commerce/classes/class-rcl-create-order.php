@@ -61,7 +61,6 @@ class Rcl_Create_Order{
     }
     
     function insert_order(){
-        global $user_ID;
         
         if(!$this->user_id){
             $result = $this->register_user();

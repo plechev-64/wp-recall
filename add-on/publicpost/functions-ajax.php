@@ -181,7 +181,10 @@ function rcl_preview_post(){
         }
     }
     
-    $formFields = new Rcl_Public_Form_Fields(array('post_type' => $_POST['post_type']));
+    $formFields = new Rcl_Public_Form_Fields(array(
+        'post_type' => $_POST['post_type'],
+        'form_id' => isset($_POST['form_id'])? $_POST['form_id']: 1
+    ));
     
     if($formFields->exist_active_field('post_thumbnail')){
         

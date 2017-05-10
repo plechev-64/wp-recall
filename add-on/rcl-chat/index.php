@@ -256,6 +256,7 @@ function rcl_get_user_contacts_list($user_id){
     
     foreach($messages as $k=>$message){
         $messages[$k]['user_id'] = ($message['user_id']==$user_id)? $message['private_key']: $message['user_id'];
+        $messages[$k]['author_id'] = $message['user_id'];
     }
 
     $content = '<div class="rcl-chat-contacts">';
@@ -279,7 +280,10 @@ function rcl_get_user_contacts_list($user_id){
                     . '<span class="author-name">'.get_the_author_meta('display_name',$message['user_id']).'</span>'
                     . '<span class="time-message">'.rcl_human_time_diff($message['message_time']).' '.__('ago','wp-recall').'</span>'
                 . '</div>'
-                . '<div class="message-text">'.rcl_chat_excerpt($message['message_content']).'</div>'
+                . '<div class="message-text">'
+                . (($user_id == $message['author_id'])? '<span class="master-avatar">'.get_avatar($user_id,25).'</span>': '')
+                . rcl_chat_excerpt($message['message_content'])
+                . '</div>'
                 . '</div>';
         
         $content .= '</a>';

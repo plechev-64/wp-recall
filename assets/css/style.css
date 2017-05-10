@@ -1243,6 +1243,9 @@ div.ssi-backdrop {
 .rcl-form .file-field-upload input{
     width: auto;
 }
+.rcl-form .aligncenter{
+    text-align:center;
+}
 
 @media screen and (max-width:360px) {
     .rcl-form tr th {

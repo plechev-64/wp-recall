@@ -570,7 +570,7 @@ function rcl_delete_ratingdata_user($user_id){
         foreach($datas as $object_author=>$val){
             foreach($val as $type=>$data){
                 foreach($data as $object_id=>$value){
-                    $rayt = -1*$rayt;
+                    $value = -1*$value;
                     $args = array(
                         'user_id' => $user_id,
                         'object_id' => $object_id,
