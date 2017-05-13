@@ -128,13 +128,23 @@ class Rcl_Cart {
         
         if(!$this->products) return false;
         
-        if($vars)
+        $Vars = new Rcl_Product_Variations(array('product_id'=>$product_id));
+
+        $productVars = $Vars->get_product_variations();
+        
+        if($productVars)
             $varsHash = md5(json_encode($vars));
         
         foreach($this->products as $key => $product){
 
             if($product->product_id == $product_id){
 
+                if(!$productVars)
+                    return $key;
+                
+               if(!$vars && !$product->variations)
+                   return $key;
+                
                 $productHash = md5(json_encode((array)$product->variations));
                 
                 if($productHash == $varsHash) 

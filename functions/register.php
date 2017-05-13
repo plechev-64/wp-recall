@@ -27,10 +27,15 @@ function rcl_insert_user($data){
 
     if(!$user_id) return false;
 
-    $wpdb->insert( RCL_PREF .'user_action', array( 'user' => $user_id, 'time_action' => '0000-00-00 00:00:00' ));
+    $timeAction = '0000-00-00 00:00:00';
 
-    if($rcl_options['confirm_register_recall']==1)
-        wp_update_user( array ('ID' => $user_id, 'role' => 'need-confirm') ) ;
+    if($rcl_options['confirm_register_recall']==1){
+        wp_update_user( array ('ID' => $user_id, 'role' => 'need-confirm') ) ;       
+    }else{
+        $timeAction = current_time('mysql');
+    }
+    
+    $wpdb->insert( RCL_PREF .'user_action', array( 'user' => $user_id, 'time_action' => $timeAction ));
 
     rcl_register_mail(array(
         'user_id'=>$user_id,

@@ -377,6 +377,7 @@ body .rcl-product-gallery ul.images-list {
 /*Похожие товары*/
 .rcl-related-products{
     margin: 10px 0;
+    clear: both;
 }
 .rcl-related-products .related-title{
     font-size: 18px;

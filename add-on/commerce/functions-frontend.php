@@ -11,7 +11,7 @@ function rcl_bar_add_cart(){
             'icon' => 'fa-shopping-cart',
             'url' => $Cart->cart_url,
             'label' => __('Cart','wp-recall'),
-            'counter' => '<span class="cart-numbers">'.$Cart->products_amount.'</span>'
+            'counter' => '<span class="cart-numbers rcl-order-amount">'.$Cart->products_amount.'</span>'
         )
     );
     

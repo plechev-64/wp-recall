@@ -456,6 +456,7 @@ div p.post-group-meta {
 #widgets-options .widgets-zone ul {
     margin: 0;
     padding: 10px 0;
+    list-style: none;
 }
 #widgets-options .widgets-zone .widget-box{
     background: rgba(219, 219, 219, 0.3);

@@ -506,7 +506,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
     }
     
     function get_editor($args = false){
-        global $rcl_options,$user_ID;
+        global $rcl_options;
         
         $wp_uploader = false;
         $quicktags = false;
@@ -520,7 +520,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             if(in_array('html',$args['options']))
                     $quicktags = true;
 
-            if($user_ID && in_array('editor',$args['options']))
+            if(in_array('editor',$args['options']))
                     $tinymce = true;
 
         }

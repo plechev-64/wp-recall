@@ -227,6 +227,9 @@ function rcl_update_cart_content(){
 
             if(data['success']){
                 
+                jQuery('.rcl-order-price').html(Rcl.Cart.order_price);
+                jQuery('.rcl-order-amount').html(Rcl.Cart.products_amount);
+                
                 jQuery('#rcl-order').html(data['content']);
 
             }

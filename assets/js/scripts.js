@@ -426,7 +426,9 @@ function rcl_init_check_url_params(){
     
     var options = rcl_get_options_url_params();
 
-    if(rcl_url_params['tab']){		
+    if(rcl_url_params['tab']){
+        
+        if(!jQuery("#lk-content").size()) return false;
 
         if(options.scroll == 1){
             var offsetTop = jQuery("#lk-content").offset().top;

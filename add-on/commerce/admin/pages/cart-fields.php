@@ -10,6 +10,11 @@ $content = '<h2>'.__('Order Form Field Management','wp-recall').'</h2>';
 
 $content .= $f_edit->manager_form(array(
                 array(
+                    'type' => 'textarea',
+                    'slug' => 'notice',
+                    'title' => __('field description','wp-recall')
+                ),
+                array(
                     'type' => 'select',
                     'slug'=>'required',
                     'title'=>__('required field','wp-recall'),
