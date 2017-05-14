@@ -128,6 +128,10 @@ class Rcl_Query {
             $this->query['orderby'] = 'CAST('.$this->query['table']['as'].'.'.$args['orderby_as_decimal'].' AS DECIMAL)';
             $this->query['order'] = (isset($args['order']) && $args['order'])? $args['order']: 'DESC';
             
+        }else if(isset($args['order'])){
+            
+            $this->query['order'] = $args['order'];
+            
         }else{
             
             $this->query['orderby'] = $this->query['table']['as'].'.'.$this->query['table']['cols'][0];
