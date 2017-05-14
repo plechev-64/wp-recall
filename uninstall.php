@@ -13,7 +13,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 global $wpdb, $rcl_options;
 
-include_once( 'class-rcl-install.php' );
+include_once( 'classes/class-rcl-install.php' );
 include_once( 'rcl-functions.php' );
 
 $upload_dir = rcl_get_wp_upload_dir();
