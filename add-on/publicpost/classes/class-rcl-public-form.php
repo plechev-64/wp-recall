@@ -207,6 +207,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
     }
 
     function get_form(){
+        global $user_ID;
 
         if(!$this->user_can['publish']){
             

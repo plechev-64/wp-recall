@@ -96,21 +96,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         </form>";
                 
         if($this->sortable){
-            $form .= '<script>
-                jQuery(function(){
-                    jQuery(".rcl-sortable-fields").sortable({
-                        connectWith: ".rcl-sortable-fields",
-                        handle: ".field-header",
-                        cursor: "move",
-                        placeholder: "ui-sortable-placeholder",
-                        distance: 15,
-                        receive: function(ev, ui) {
-                            if(!ui.item.hasClass("must-receive"))
-                              ui.sender.sortable("cancel");
-                        }
-                    });
-                });
-            </script>';
+            $form .= $this->sortable_fields_script();
         }
         
         $form .= '<script>
@@ -141,6 +127,24 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         $form .= '</div>';
 
         return $form;
+    }
+    
+    function sortable_fields_script(){
+        return '<script>
+                jQuery(function(){
+                    jQuery(".rcl-sortable-fields").sortable({
+                        connectWith: ".rcl-sortable-fields",
+                        handle: ".field-header",
+                        cursor: "move",
+                        placeholder: "ui-sortable-placeholder",
+                        distance: 15,
+                        receive: function(ev, ui) {
+                            if(!ui.item.hasClass("must-receive"))
+                              ui.sender.sortable("cancel");
+                        }
+                    });
+                });
+            </script>';
     }
 
     function loop($fields = null){
@@ -338,6 +342,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         
         $this->status = true;
         
+        $form = (isset($this->field['form']))? $this->field['form']: false;
+        
         $classes = array('rcl-custom-field');
            
         if(isset($this->field['class']))
@@ -346,6 +352,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         $field = '<li id="field-'.$this->field['slug'].'" data-slug="'.$this->field['slug'].'" data-type="'.$this->field['type'].'" class="'.implode(' ',$classes).'">
                     '.$this->header_field().'
                     <div class="field-settings">';
+        
+                        if($form)
+                            $field .= '<form method="'.$form['method'].'" action="'.$form['action'].'">';
         
                         $field .= $this->get_field_value(array(
                                 'type' => 'text',
@@ -382,6 +391,17 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                         $field .= '<div class="options-custom-field">';
                         $field .= $this->get_options();
                         $field .= '</div>';
+
+                        if($form){
+                            
+                            if($form['submit']){
+                                $field .= '<input type="submit" class="button-primary" value="'.$form['submit']['label'].'">';
+                                $field .= '<input type="hidden" name="'.$form['submit']['name'].'" value="'.$form['submit']['value'].'">';
+                            }
+                            
+                            $field .= '</form>';
+                            
+                        }
 
                     $field .= '</div>';
 

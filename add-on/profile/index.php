@@ -128,7 +128,7 @@ function rcl_add_office_profile_fields($fields){
     
     $profileFields = array();
     
-    if($userdata->user_level >= $access){
+    if(isset($userdata) && $userdata->user_level >= $access){
         $profileFields[] = array(
             'slug' => 'show_admin_bar_front',
             'title' => __('Admin toolbar','wp-recall'),

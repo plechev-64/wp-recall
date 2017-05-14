@@ -475,7 +475,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
 
                                 $content .= $this->the_content($message['message_content']);
                                 
-                                if($message['attachment'])
+                                if(isset($message['attachment']) && $message['attachment'])
                                     $content .= $this->the_attachment($message['attachment']);
                                 
                             $content .= '</div>'
@@ -490,11 +490,13 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
     function message_manager($message){
         global $rcl_options;
         
-        $class = ($message['important'])? 'active-important': '';
+        $class = array('message-important');
         
-        $content .= '<div class="message-manager">';
+        if(isset($message['important']) && $message['important']) $class[] = 'active-important';
         
-            $content .= '<span class="message-important '.$class.'">'
+        $content = '<div class="message-manager">';
+        
+            $content .= '<span class="'.implode(' ', $class).'">'
                             . '<a href="#" onclick="rcl_chat_message_important('.$message['message_id'].'); return false;">'
                                 . '<i class="fa fa-star" aria-hidden="true"></i>'
                             . '</a>'
@@ -529,7 +531,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
 
         $content = esc_textarea($content);
         
-        $content = popuplinks(make_clickable($content));
+        $content = links_add_target(make_clickable($content));
         
         $oembed = (isset($rcl_options['chat']['oembed']))? $rcl_options['chat']['oembed']: 0;
         

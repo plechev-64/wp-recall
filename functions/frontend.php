@@ -435,11 +435,10 @@ function rcl_get_miniaction($action){
 
 //заменяем ссылку автора комментария на ссылку его ЛК
 add_filter('get_comment_author_url', 'rcl_get_link_author_comment', 10);
-function rcl_get_link_author_comment($href){
+function rcl_get_link_author_comment($url){
     global $comment;
-    if($comment->user_id==0) return $href;
-    $href = get_author_posts_url($comment->user_id);
-    return $href;
+    if(!isset($comment) || $comment->user_id == 0) return $url;
+    return get_author_posts_url($comment->user_id);
 }
 
 add_action('wp_head','rcl_hidden_admin_panel');

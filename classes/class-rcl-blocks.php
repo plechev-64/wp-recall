@@ -58,8 +58,7 @@ class Rcl_Blocks {
         $cl_content = $this->get_callback_content($user_lk);
         if(!$cl_content) return false;
 
-        
-        $content .= '<div';
+        $content = '<div';
         if($this->args['id']) $content .= ' id="'.$this->args['id'].'"';
         $content .= ' class="'.$this->place.'-block-rcl block-rcl';
         if($this->args['class']) $content .= ' '.$this->args['class'];

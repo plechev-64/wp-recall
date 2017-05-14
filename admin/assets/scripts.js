@@ -51,7 +51,7 @@ jQuery(function($){
         return false;
     });
     
-    $('#rcl-custom-fields-editor').on('click','.field-edit',function() {
+    $('.rcl-custom-fields-box').on('click','.field-edit',function() {
         $(this).parents('.rcl-custom-field').find('.field-settings').slideToggle();	
         return false;
     });
