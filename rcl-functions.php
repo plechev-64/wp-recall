@@ -592,6 +592,7 @@ function rcl_sanitize_string($title) {
         "ы"=>"y","ь"=>"","э"=>"eh","ю"=>"yu","я"=>"ya",
         "—"=>"-","«"=>"","»"=>"","…"=>""
     );
+    
     $iso = array(
         "Є"=>"YE","І"=>"I","Ѓ"=>"G","і"=>"i","№"=>"#","є"=>"ye","ѓ"=>"g",
         "А"=>"A","Б"=>"B","В"=>"V","Г"=>"G","Д"=>"D",
@@ -614,12 +615,12 @@ function rcl_sanitize_string($title) {
     $rtl_standard = get_option('rtl_standard');
 
     switch ($rtl_standard) {
-            case 'off':
-                return $title;
-            case 'gost':
-                return strtr($title, $gost);
-            default:
-                return strtr($title, $iso);
+        case 'off':
+            return $title;
+        case 'gost':
+            return strtr($title, $gost);
+        default:
+            return strtr($title, $iso);
     }
 }
 

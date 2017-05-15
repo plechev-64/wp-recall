@@ -15,6 +15,7 @@ global $wpdb, $rcl_options;
 
 include_once( 'classes/class-rcl-install.php' );
 include_once( 'rcl-functions.php' );
+include_once( 'functions/files.php' );
 
 $upload_dir = rcl_get_wp_upload_dir();
 define('RCL_UPLOAD_PATH', $upload_dir['basedir'] . '/rcl-uploads/' );

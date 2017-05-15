@@ -396,7 +396,7 @@ class Rcl_Custom_Fields{
     }
     
     function get_type_hidden($field){
-        return '<input type="hidden" name="'.$field['name'].'" value="'.$field['value'].'"/>';
+        return '<input type="hidden" name="'.$field['name'].'" id="'.$this->slug.'" value="'.$field['value'].'"/>';
     }
 
     function get_field_value($field,$value=false,$title=true){
