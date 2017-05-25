@@ -388,7 +388,7 @@ function rcl_referer_url($typeform=false){
 }
 
 function rcl_get_current_url($typeform=false,$urlform = 0){
-	$protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://':  'https://';
+    $protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://':  'https://';
     $url = $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 
     if ( false !== strpos($url, '?action-rcl') ){

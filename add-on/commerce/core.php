@@ -290,7 +290,7 @@ function rcl_create_order_send_mail($order_id, $register_data){
 
     $email = get_the_author_meta('user_email',$rclOrder->user_id);
     
-    $link = rcl_format_url(get_author_posts_url($rclOrder->user_id),'orders');
+    $link = rcl_get_tab_permalink($rclOrder->user_id,'orders');
 
     $textmail = '';
 

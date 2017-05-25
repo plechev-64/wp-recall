@@ -10,7 +10,7 @@ add_action('rcl_cron_twicedaily','rcl_check_addon_update',10);
 function rcl_check_addon_update(){
     global $active_addons;
     
-    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on') ;
+    $paths = rcl_get_addon_paths();
 
     foreach($paths as $path){
         if(file_exists($path)){
@@ -77,7 +77,7 @@ add_action('rcl_cron_daily','rcl_send_addons_data',10);
 function rcl_send_addons_data(){
     global $active_addons;
     
-    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on') ;
+    $paths = rcl_get_addon_paths();
 
     foreach($paths as $path){
         if(file_exists($path)){
@@ -214,7 +214,7 @@ function rcl_update_addon(){
             exit;
         }
         
-        $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+        $paths = rcl_get_addon_paths();
         
         foreach($paths as $path){
             if(file_exists($path.'/'.$addon.'/')){

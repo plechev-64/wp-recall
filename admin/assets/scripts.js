@@ -57,7 +57,7 @@ jQuery(function($){
     });
 	
     $('#recall').on('click','.title-option',function(){  
-        console.log($(this));
+        
         if($(this).hasClass('active')) return false;
         
         var titleSpan = $(this);

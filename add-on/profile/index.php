@@ -53,7 +53,7 @@ function rcl_bar_add_profile_link(){
     
     rcl_bar_add_menu_item('profile-link',
         array(                
-            'url'=>rcl_format_url(get_author_posts_url($user_ID),'profile'),
+            'url'=> rcl_get_tab_permalink($user_ID,'profile'),
             'icon'=>'fa-user-secret',
             'label'=>__('Profile settings','wp-recall')
         )
@@ -113,7 +113,7 @@ function rcl_edit_profile(){
 
     do_action( 'personal_options_update', $user_ID );
     
-    $redirect_url = rcl_format_url(get_author_posts_url($user_ID),'profile').'&updated=true';
+    $redirect_url = rcl_get_tab_permalink($user_ID,'profile').'&updated=true';
 
     wp_redirect( $redirect_url );
     

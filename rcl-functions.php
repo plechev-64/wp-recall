@@ -1052,6 +1052,8 @@ function rcl_update_profile_fields($user_id){
                     
                     if($value != $_POST['repeat_pass']) continue;
                     
+                    $slug = 'user_pass';
+                    
                 }
                 
                 if($slug == 'user_email'){
@@ -1178,4 +1180,21 @@ function rcl_add_log($title, $data = false, $force = false){
     if($data)
         $RclLog->insert_log($data);
     
+}
+
+function rcl_get_addon_paths(){
+    
+    $paths = array(
+        RCL_TAKEPATH.'add-on',
+        RCL_PATH.'add-on'
+    );
+    
+    $paths = apply_filters('rcl_addon_paths',$paths);
+    
+    return $paths;
+    
+}
+
+function rcl_get_tab_permalink($user_id,$tab_id,$subtab_id = false){
+    return rcl_format_url(get_author_posts_url($user_id),$tab_id,$subtab_id);
 }

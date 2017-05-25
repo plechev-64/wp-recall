@@ -9,7 +9,7 @@ function rcl_get_template_path($filename,$path=false){
     $path = ($path)? rcl_addon_path($path).'templates/': RCL_PATH.'templates/';
     
     $filepath = $path.$filename;
-
+    
     $filepath = apply_filters('rcl_template_path',$filepath,$filename);
     
     if(!file_exists($filepath)) return false;
@@ -39,44 +39,29 @@ function rcl_get_include_template($file_temp, $path=false, $data = false){
 }
 
 //форматирование абсолютного пути в урл
-function rcl_path_to_url($path,$dir=false){
+function rcl_path_to_url($path, $dir = false){
+    
     if(!$dir) $dir = basename(content_url());
-    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
-    $array = explode('/',$path);
-    $cnt = count($array);
-    $url = '';
-	$content_dir = $dir;
-    foreach($array as $key=>$ar){
-        if($array[$key]==$content_dir){
-            $url = get_bloginfo('wpurl').'/'.$array[$key].'/';
-            continue;
-        }
-        if($url){
-            $url .= $ar;
-            if($cnt>$key+1) $url .= '/';
-        }
-    }
+    
+    $DirTail = stristr($path,$dir);
+    
+    $url = untrailingslashit(get_bloginfo('wpurl').'/'.$DirTail);
+    
     return $url;
 }
 
 //получение абсолютного пути из указанного урла
-function rcl_path_by_url($url,$dir=false){
+function rcl_path_by_url($url, $dir = false){
+    
     if(!$dir) $dir = basename(content_url());
-    if(function_exists('wp_normalize_path')) $url = wp_normalize_path($url);
-    $array = explode('/',$url);
-    $cnt = count($array);
-    $path = '';
-    $content_dir = $dir;
-    foreach($array as $key=>$ar){
-        if($array[$key]==$content_dir){
-            $path = untrailingslashit(rcl_get_home_path()).'/'.$array[$key].'/';
-            continue;
-        }
-        if($path){
-            $path .= $ar;
-            if($cnt>$key+1) $path .= '/';
-        }
-    }
+    
+    if(function_exists('wp_normalize_path')) 
+        $url = wp_normalize_path($url);
+    
+    $string = stristr($url,$dir);
+
+    $path = untrailingslashit(rcl_get_home_path()).'/'.$string;
+    
     return $path;
 }
 

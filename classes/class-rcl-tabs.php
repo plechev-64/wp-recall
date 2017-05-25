@@ -151,7 +151,7 @@ class Rcl_Tabs{
             
         }else{
             
-            $link = rcl_format_url(get_author_posts_url($master_id),$this->id);
+            $link = rcl_get_tab_permalink($master_id,$this->id);
             
             $datapost = array(
                 'callback'=>'rcl_ajax_tab',
@@ -197,7 +197,7 @@ class Rcl_Tabs{
             $protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://':  'https://';
 
             if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-                $string = rcl_format_url(get_author_posts_url($master_id),$this->id,$subtab_id);
+                $string = rcl_get_tab_permalink($master_id,$this->id,$subtab_id);
             }else{                   
                 $string = $protocol.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
             }

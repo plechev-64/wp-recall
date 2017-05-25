@@ -62,7 +62,7 @@ function rcl_tab_groups_remove_cache($groupdata){
             $user_id = $group->admin_id;
         }
 
-        $string = rcl_format_url(get_author_posts_url($user_id),'groups');
+        $string = rcl_get_tab_permalink($user_id,'groups');
         
         rcl_delete_file_cache($string);       
     }

@@ -94,7 +94,7 @@ function rcl_get_chat_private_ajax(){
     $chatdata = rcl_get_chat_private($user_id,array('avatar_size'=>30,'userslist'=>0));
     
     $chat = '<div class="rcl-chat-panel">'
-            . '<a href="'.rcl_format_url(get_author_posts_url($user_id),'chat').'"><i class="fa fa-search-plus" aria-hidden="true"></i></a>'
+            . '<a href="'.rcl_get_tab_permalink($user_id,'chat').'"><i class="fa fa-search-plus" aria-hidden="true"></i></a>'
             . '<a href="#" onclick="rcl_chat_close(this);return false;"><i class="fa fa-times" aria-hidden="true"></i></a>'
             . '</div>';
     $chat .= $chatdata['content'];

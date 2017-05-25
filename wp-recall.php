@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 16.1.1
+    Version: 16.2.0
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -16,7 +16,10 @@
 
 final class WP_Recall {
 
-	public $version = '16.1.1';
+	public $version = '16.2.0';
+        
+        public $child_addons = array();
+        public $need_update = false;
 
 	protected static $_instance = null;
 
@@ -249,11 +252,27 @@ final class WP_Recall {
             do_action('rcl_before_include_addons');
             
             if($active_addons){
+
                 $addons = array();
+                
                 foreach($active_addons as $addon=>$data){
+                    
                     if(!$addon) continue;
                     
-                    if(isset($data['template'])&&$rcl_template!=$addon) continue;
+                    if(isset($data['template']) && $rcl_template != $addon) continue;
+                    
+                    if(isset($data['parent-addon'])){
+                        
+                        if(isset($active_addons[$data['parent-addon']])){
+                            $this->child_addons[$data['parent-addon']][] = $addon;
+                        }else{
+                            unset($active_addons[$addon]);
+                            $this->need_update = true;
+                        }
+                        
+                        continue;
+                        
+                    }
                     
                     if(isset($data['priority']))
                         $addons[$data['priority']][$addon] = $data;
@@ -262,26 +281,73 @@ final class WP_Recall {
                 }
                 
                 ksort($addons);
-                $unset = false;
+                
                 foreach($addons as $priority=>$adds){
+                    
                     foreach($adds as $addon=>$data){
+                        
                         if(!$addon) continue;
+                        
+                        if(isset($data['parent-addon']))continue;
 
-                        $path = untrailingslashit( $data['path'] );
-                        if(file_exists($path.'/index.php')){                            
-                            rcl_include_addon($path.'/index.php',$addon);
-                        }else{                            
-                            unset($active_addons[$addon]);
-                            $unset = true;
-                        }
+                        $this->include_addon($addon, $data['path']);
+ 
                     }
+                    
                 }
                 
-                if($unset) update_site_option('rcl_active_addons',$active_addons);
+                
+                $this->update_active_addons();
                 
             }
             
             do_action('rcl_addons_included');
+        }
+        
+        function update_active_addons(){
+            global $active_addons;
+            
+            if($this->need_update) 
+                update_site_option('rcl_active_addons',$active_addons);
+            
+        }
+        
+        function include_child_addons($parenID){
+            global $active_addons;
+            
+            if(!isset($this->child_addons[$parenID])) return false;
+                                
+            foreach($this->child_addons[$parenID] as $addonID){
+
+                $child = $active_addons[$addonID];
+
+                $this->include_addon($addonID, $child['path']);
+
+            }
+            
+            return true;
+            
+        }
+        
+        function include_addon($addonID, $path){
+            global $active_addons;
+            
+            $path = untrailingslashit( $path );
+            
+            if(file_exists($path.'/index.php')){
+                
+                rcl_include_addon($path.'/index.php',$addonID);
+                
+                $this->include_child_addons($addonID);
+                
+                return true;
+                
+            }  
+            
+            unset($active_addons[$addonID]);
+            $this->need_update = true;
+
+            return false;
         }
 
 	public function load_plugin_textdomain() {

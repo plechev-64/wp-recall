@@ -106,7 +106,7 @@ class Rcl_Templates_Manager extends WP_List_Table {
         switch( $column_name ) { 
             case 'addon_screen':
                 if(file_exists($item['addon_path'].'/screenshot.jpg')){
-                   return '<img src="'.rcl_addon_url('screenshot.jpg',$item['addon_path']).'">';
+                   return '<img src="'.rcl_path_to_url($item['addon_path'].'/screenshot.jpg').'">';
                 }
                 break;
             case 'addon_name':
@@ -275,7 +275,7 @@ function rcl_init_upload_template ( ) {
 
 function rcl_upload_template(){
 
-    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+    $paths = rcl_get_addon_paths();
 
     $filename = $_FILES['addonzip']['tmp_name'];
     $arch = current(wp_upload_dir()) . "/" . basename($filename);

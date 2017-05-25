@@ -1,15 +1,23 @@
 <?php
 
+function rcl_get_addon($addon_id){
+    
+    if(!rcl_exist_addon($addon_id)) return false;
+    
+    global $active_addons;
+    
+    return $active_addons[$addon_id];
+    
+}
+
 //активация указанного дополнения
 function rcl_activate_addon($addon,$activate=true,$dirpath=false){
-    //global $active_addons;
     
-    //if(!$active_addons) 
-        $active_addons = get_site_option('rcl_active_addons');
+    $active_addons = get_site_option('rcl_active_addons');
     
     if(isset($active_addons[$addon])) return false;
     
-    $paths = ($dirpath)? array($dirpath): array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+    $paths = ($dirpath)? array($dirpath): rcl_get_addon_paths();
 
     foreach($paths as $k=>$path){
         if ( false !== strpos($path, '\\') ) $path = str_replace('\\','/',$path);
@@ -18,7 +26,7 @@ function rcl_activate_addon($addon,$activate=true,$dirpath=false){
         if(!is_readable($index_src)) continue;
 
         if(file_exists($index_src)){
-            $addon_headers = rcl_get_addon_headers($addon);
+            $addon_headers = rcl_get_addon_headers($addon, $path);
             
             $active_addons[$addon] = $addon_headers;
             $active_addons[$addon]['path'] = $path.'/'.$addon;
@@ -31,8 +39,10 @@ function rcl_activate_addon($addon,$activate=true,$dirpath=false){
             update_site_option('rcl_active_addons',$active_addons);
             
             do_action('rcl_activate_'.$addon,$active_addons[$addon]);
-            //print_r($active_addons);exit;
+            
             return true;
+            
+            exit;
 
         }
     }
@@ -41,8 +51,9 @@ function rcl_activate_addon($addon,$activate=true,$dirpath=false){
 }
 //деактивация указанного дополнения
 function rcl_deactivate_addon($addon,$deactivate=true){
+    
     $active_addons = get_site_option('rcl_active_addons');
-    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+    $paths = rcl_get_addon_paths();
 
     foreach($paths as $path){
         if($deactivate&&is_readable($path.'/'.$addon.'/deactivate.php')){
@@ -59,8 +70,9 @@ function rcl_deactivate_addon($addon,$deactivate=true){
 }
 //удаление дополнения
 function rcl_delete_addon($addon,$delete=true){
+    
     $active_addons = get_site_option('rcl_active_addons');
-    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+    $paths = rcl_get_addon_paths();
 
     foreach($paths as $path){
         if($delete&&is_readable($path.'/'.$addon.'/delete.php')) include_once($path.'/'.$addon.'/delete.php');
@@ -129,9 +141,9 @@ function rcl_parse_addon_info($info){
     return $addon_data;
 }
 
-function rcl_get_addon_headers($addon_name){
+function rcl_get_addon_headers($addon_name, $path = false){
     
-    $paths = array(RCL_PATH.'add-on',RCL_TAKEPATH.'add-on') ;
+    $paths = ($path)? array($path): array(RCL_PATH.'add-on',RCL_TAKEPATH.'add-on') ;
     
     $data = array();
     foreach($paths as $path){
@@ -279,24 +291,9 @@ function rcl_get_url_current_addon($path){
     if ( $cache )
         return $cache;
     
-    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
+    $path = rcl_addon_path($path);
     
-    $array = explode('/',$path);
-    $url = '';
-    $content_dir = basename(content_url());
-    
-    foreach($array as $key=>$ar){
-        if($array[$key]==$content_dir){
-            $url = get_bloginfo('wpurl').'/'.$array[$key].'/';
-            continue;
-        }
-        if($url){
-            $url .= $ar.'/';
-            if($array[$key-1]=='add-on') break;
-        }
-    }
-    
-    $url = untrailingslashit($url);
+    $url = rcl_path_to_url($path);
     
     wp_cache_add( $cachekey, $url );
     
@@ -310,38 +307,43 @@ function rcl_addon_url($file,$path){
 
 //получение абсолютного пути до папки текущего дополнения
 function rcl_addon_path($path){
+    global $active_addons;
     
     $cachekey = json_encode(array('rcl_addon_path',$path));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
         return $cache;
     
-    if(function_exists('wp_normalize_path')) $path = wp_normalize_path($path);
-    $array = explode('/',$path);
-    $addon_path = '';
-    $ad_path = false;
+    if(function_exists('wp_normalize_path')) 
+        $path = wp_normalize_path($path);
     
-    foreach($array as $key=>$ar){
-        $addon_path .= $ar.'/';
-        if(!$key) continue;
-        if($array[$key-1]=='add-on'){
-            $ad_path =  $addon_path;
-            break;
+    $paths = array(); $addonPath = false;
+    foreach($active_addons as $addonID => $addon){
+        
+        if($path == $addon['path']){
+            $addonPath = $addon['path']; break;
         }
+        
+        if($string = stristr($path,$addon['path'])){
+            $paths[strlen($string)] = $addon['path'];
+        }
+        
     }
     
-    wp_cache_add( $cachekey, $ad_path );
+    if(!$addonPath && $paths){
+        ksort($paths);
+        $addonPath = reset($paths);
+    }
     
-    return $ad_path;
+    $addonPath .= '/';
+    
+    if(!$addonPath) return false;
+    
+    wp_cache_add( $cachekey, $addonPath );
+    
+    return $addonPath;
 }
 
 function rcl_get_addon_dir($path){
-    if(function_exists('wp_normalize_path')) 
-        $path = wp_normalize_path($path);
-    $dir = false;
-    $ar_dir = explode('/',$path);
-    if(!isset($ar_dir[1])) $ar_dir = explode('\\',$path);
-    $cnt = count($ar_dir)-1;
-    for($a=$cnt;$a>=0;$a--){if($ar_dir[$a]=='add-on'){$dir=$ar_dir[$a+1];break;}}
-    return $dir;
+    return basename(rcl_addon_path($path));
 }

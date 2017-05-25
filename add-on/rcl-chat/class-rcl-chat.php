@@ -154,7 +154,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
         $write = ($user->user_id==$this->user_id)? 0: $user->user_write;
         
         return array(
-                'link'  =>   '<a href="'.rcl_format_url(get_author_posts_url($user->user_id),'chat').'">'.get_the_author_meta('display_name', $user->user_id).'</a>',
+                'link'  =>   '<a href="'.rcl_get_tab_permalink($user->user_id,'chat').'">'.get_the_author_meta('display_name', $user->user_id).'</a>',
                 'write' =>   $write
             );
     }
@@ -456,7 +456,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
             . '<span class="user-avatar">';
         
             if($message['user_id']!=$this->user_id) 
-                $content .= '<a href="'.rcl_format_url(get_author_posts_url($message['user_id']),'chat').'">';
+                $content .= '<a href="'.rcl_get_tab_permalink($message['user_id'],'chat').'">';
             
                 $content .= get_avatar($message['user_id'],$this->avatar_size);
                 

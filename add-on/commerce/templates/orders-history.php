@@ -15,7 +15,7 @@
         <?php foreach($rcl_orders as $order){ ?>
             <tr>
                 <td>
-                    <a href="<?php echo rcl_format_url(get_author_posts_url($order->user_id),'orders'); ?>&order-id=<?php echo $order->order_id; ?>">
+                    <a href="<?php echo rcl_get_tab_permalink($order->user_id,'orders'); ?>&order-id=<?php echo $order->order_id; ?>">
                         <?php echo $order->order_id; ?>
                     </a>
                 </td>

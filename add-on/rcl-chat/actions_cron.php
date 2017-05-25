@@ -98,7 +98,7 @@ function rcl_chat_send_notify_messages(){
         $cnt = count($data);
 
         foreach($data as $author_id=>$array_messages){
-            $url = rcl_format_url(get_author_posts_url($author_id),'chat');
+            $url = rcl_get_tab_permalink($author_id,'chat');
             $content .= '<div style="overflow:hidden;clear:both;">
                 <p>'.__('You were sent a private message','wp-recall').'</p>
                 <div style="float:left;margin-right:15px;">'.get_avatar($author_id,60).'</div>'

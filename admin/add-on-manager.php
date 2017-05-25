@@ -48,6 +48,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
                         $info = file($info_src);
                         $data = rcl_parse_addon_info($info);
                         if(isset($data['template'])) continue;
+                        if(isset($data['custom-manager'])) continue;
                         if(isset($_POST['s'])&&$_POST['s']){
                             if (strpos(strtolower(trim($data['name'])), strtolower(trim($_POST['s']))) !== false) {
                                 $this->addons_data[$namedir] = $data;
@@ -279,7 +280,7 @@ function rcl_update_status_addon ( ) {
 
         $action = rcl_wp_list_current_action();
 
-        $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+        $paths = rcl_get_addon_paths();
 
         if($action=='activate'){
             foreach($_POST['addons'] as $addon){
@@ -334,7 +335,7 @@ function rcl_update_status_addon ( ) {
 
 function rcl_upload_addon(){
 
-    $paths = array(RCL_TAKEPATH.'add-on',RCL_PATH.'add-on');
+    $paths = rcl_get_addon_paths();
 
     $filename = $_FILES['addonzip']['tmp_name'];
     $arch = current(wp_upload_dir()) . "/" . basename($filename);

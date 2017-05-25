@@ -284,8 +284,7 @@ function rcl_mail_payment_error($hash=false,$other=false){
     $textmail .= 'RESULT - '.$rmag_options['page_result_pay'].'<br>';
     $textmail .= 'SUCCESS - '.$rmag_options['page_success_pay'].'<br>';
 
-    $email = $rmag_options['admin_email_magazin_recall'];
-    if(!$email) $email = get_option( 'admin_email' );
+    $email = get_option( 'admin_email' );
 
     rcl_mail($email, $title, $textmail);
 }

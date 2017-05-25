@@ -293,7 +293,7 @@ function rcl_get_order_manager(){
     
     $args = array(
         array(
-            'href' => rcl_format_url(get_author_posts_url($user_ID),'orders'),
+            'href' => rcl_get_tab_permalink($user_ID,'orders'),
             'title' => __('See all orders','wp-recall')
         )
     );
@@ -301,7 +301,7 @@ function rcl_get_order_manager(){
     if($rclOrder->order_status == 1){
         
         $args[] = array(
-            'href' => wp_nonce_url( rcl_format_url(get_author_posts_url($user_ID),'orders').'&order-action=trash&order-id='.$rclOrder->order_id, 'order-action' ),
+            'href' => wp_nonce_url(rcl_get_tab_permalink($user_ID,'orders').'&order-action=trash&order-id='.$rclOrder->order_id, 'order-action' ),
             'title' => __('Delete order','wp-recall')
         );
         
@@ -346,6 +346,6 @@ function rcl_commerce_setup_order_actions(){
     
     }
     
-    wp_redirect(rcl_format_url(get_author_posts_url($user_ID),'orders')); exit;
+    wp_redirect(rcl_get_tab_permalink($user_ID,'orders')); exit;
     
 }

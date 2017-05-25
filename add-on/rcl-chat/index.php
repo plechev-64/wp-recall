@@ -41,7 +41,7 @@ function rcl_bar_add_chat_icon(){
     rcl_bar_add_icon('rcl-messages',
         array(
             'icon'=>'fa-envelope',
-            'url'=>rcl_format_url(get_author_posts_url($user_ID),'chat'),
+            'url'=>rcl_get_tab_permalink($user_ID,'chat'),
             'label'=>__('Messages','wp-recall'),
             'counter'=>rcl_chat_noread_messages_amount($user_ID)
         )
@@ -269,7 +269,7 @@ function rcl_get_user_contacts_list($user_id){
         
         $content .= '<div class="contact-box" data-contact="'.$message['user_id'].'">';
         $content .= '<a href="#" title="'.__('Delete contact','wp-recall').'" onclick="rcl_chat_remove_contact(this,'.$message['chat_id'].');return false;"><i class="fa fa-times" aria-hidden="true"></i></a>';
-        $content .= '<a class="chat-contact '.$class.'" href="'.rcl_format_url(get_author_posts_url($message['user_id']),'chat').'">';
+        $content .= '<a class="chat-contact '.$class.'" href="'.rcl_get_tab_permalink($message['user_id'],'chat').'">';
         
         $content .= '<div class="avatar-contact">'
                         . get_avatar($message['user_id'],50)
@@ -380,7 +380,7 @@ function rcl_get_last_chats_box(){
 
         echo '<div class="rcl-noread-users">';
             echo '<span class="messages-icon">'
-                    . '<a href="'.rcl_format_url(get_author_posts_url($user_ID),'chat').'" onclick="return rcl_chat_shift_contact_panel();">'
+                    . '<a href="'.rcl_get_tab_permalink($user_ID,'chat').'" onclick="return rcl_chat_shift_contact_panel();">'
                     . '<i class="fa fa-envelope" aria-hidden="true"></i>';
             
                     if($new_counter){
@@ -406,7 +406,7 @@ function rcl_get_last_chats_box(){
         }
         
         echo '<span class="more-contacts">'
-            . '<a href="'.rcl_format_url(get_author_posts_url($user_ID),'chat').'">'
+            . '<a href="'.rcl_get_tab_permalink($user_ID,'chat').'">'
             . '. . .';
             echo '</a>'
         . '</span>';

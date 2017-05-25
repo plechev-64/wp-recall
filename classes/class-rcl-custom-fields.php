@@ -620,7 +620,7 @@ function rcl_delete_file(){
     if($file->post_parent){
         wp_redirect(rcl_format_url(get_permalink($rcl_options['public_form_page_rcl'])).'rcl-post-edit='.$file->post_parent);
     }else{
-        wp_redirect(rcl_format_url(get_author_posts_url($user_ID),'profile').'&file=deleted');
+        wp_redirect(rcl_get_tab_permalink($user_ID,'profile').'&file=deleted');
     }
 
     exit;
