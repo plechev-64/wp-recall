@@ -535,7 +535,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
         
         $oembed = (isset($rcl_options['chat']['oembed']))? $rcl_options['chat']['oembed']: 0;
         
-        if($oembed&&function_exists('wp_oembed_get')){
+        if($oembed && function_exists('wp_oembed_get')){
             $links='';
             preg_match_all('/href="([^"]+)"/', $content, $links);
             foreach( $links[1] as $link ){

@@ -316,7 +316,12 @@ class Rcl_Custom_Fields{
     
     function get_type_editor($field){
         
-        $editor_id = ($this->field && isset($this->field['slug']))? 'editor-'.$this->field['slug']: 'editor-'.$this->new_slug;
+        $editor_id = ($this->field && isset($this->field['slug']))? $this->field['slug']: $this->new_slug;
+        
+        if(!$editor_id)
+            $editor_id = $field['slug'];
+        
+        $editor_id = 'editor-'.$editor_id;
 
         $data = array( 'wpautop' => 1
             ,'media_buttons' => false
