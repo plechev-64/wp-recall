@@ -368,7 +368,7 @@ class Rcl_Custom_Fields{
     }
     
     function get_type_password($field){
-        return '<input type="password" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="password" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
     }
 
     function get_type_tel($field){

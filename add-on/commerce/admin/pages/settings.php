@@ -51,7 +51,26 @@ function rcl_commerce_options(){
                 $opt->notice(__('Specify the page with the shortcode [basket]','wp-recall')),
             )
         ),
-         $opt->option_block(
+        $opt->option_block(
+            array(
+                $opt->title(__('Вывод кнопки "В корзину"','wp-recall')),
+                $opt->label(__('На странице товара','wp-recall')),
+                $opt->option('checkbox',array(
+                    'name'=>'cart_button_single_page',
+                    'default' => array('top','bottom'),
+                    'options'=> array(
+                        'top' => __('Над описанием','wp-recall'),
+                        'bottom' => __('Под описанием','wp-recall'))
+                )),
+                $opt->label(__('На архивной странице','wp-recall')),
+                $opt->option('select',array(
+                    'name'=>'cart_button_archive_page',
+                    'default' => 1,
+                    'options'=> array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
+                ))
+            )
+        ),
+        $opt->option_block(
             array(
                 $opt->title(__('Similar or recommended goods','wp-recall')),
 

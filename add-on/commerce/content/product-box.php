@@ -2,9 +2,17 @@
 
 add_filter('the_content','rcl_add_product_box',10);
 function rcl_add_product_box($content){
-    global $post;
+    global $post, $rmag_options;
     
     if($post->post_type != 'products' || doing_filter('get_the_excerpt')) return $content;
+    
+    if(doing_filter('the_content')){
+        
+        $productCart = (isset($rmag_options['cart_button_single_page']))? $rmag_options['cart_button_single_page']: array('top','bottom');
+        
+        if(!in_array('top',$productCart)) return $content;
+        
+    }
     
     $content = rcl_get_product_box($post->ID).$content;
     

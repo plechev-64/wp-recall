@@ -8,12 +8,12 @@ jQuery(document).ready(function($) {
         
         var editor = $(this).data('editor');
         
-        if(rcl_url_params['rcl-post-edit']){
-            wp.media.model.settings.post.id = rcl_url_params['rcl-post-edit'];
-        }
+        var parent_id = ((rcl_url_params['rcl-post-edit']))? rcl_url_params['rcl-post-edit']: 0;
+        
+        wp.media.model.settings.post.id = parent_id;
         
         wp.media.featuredImage.set = function(thumbnail_id){
-            
+
             rcl_get_post_thumbnail_html(thumbnail_id);
     
         };
