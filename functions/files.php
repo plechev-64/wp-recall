@@ -39,44 +39,26 @@ function rcl_get_include_template($file_temp, $path=false, $data = false){
 }
 
 //форматирование абсолютного пути в урл
-function rcl_path_to_url($path, $dir = false){
+function rcl_path_to_url($path){
+
+    $DirTail = stristr($path,basename(content_url()));
     
-    if(!$dir) $dir = basename(content_url());
-    
-    $DirTail = stristr($path,$dir);
-    
-    $url = untrailingslashit(get_bloginfo('wpurl').'/'.$DirTail);
+    $url = untrailingslashit(dirname(WP_CONTENT_URL).'/'.$DirTail);
     
     return $url;
 }
 
 //получение абсолютного пути из указанного урла
-function rcl_path_by_url($url, $dir = false){
-    
-    if(!$dir) $dir = basename(content_url());
-    
+function rcl_path_by_url($url){
+
     if(function_exists('wp_normalize_path')) 
         $url = wp_normalize_path($url);
     
-    $string = stristr($url,$dir);
+    $string = stristr($url,basename(content_url()));
 
-    $path = untrailingslashit(rcl_get_home_path()).'/'.$string;
+    $path = untrailingslashit(dirname(WP_CONTENT_DIR).'/'.$string);
     
     return $path;
-}
-
-function rcl_get_home_path() {
-    $home    = set_url_scheme( get_option( 'home' ), 'http' );
-    $siteurl = set_url_scheme( get_option( 'siteurl' ), 'http' );
-    if ( ! empty( $home ) && 0 !== strcasecmp( $home, $siteurl ) ) {
-        $wp_path_rel_to_home = str_ireplace( $home, '', $siteurl ); /* $siteurl - $home */
-        $pos = strripos( str_replace( '\\', '/', $_SERVER['SCRIPT_FILENAME'] ), trailingslashit( $wp_path_rel_to_home ) );
-        $home_path = substr( $_SERVER['SCRIPT_FILENAME'], 0, $pos );
-        $home_path = trailingslashit( $home_path );
-    } else {
-        $home_path = ABSPATH;
-    }	
-    return str_replace( '\\', '/', $home_path );
 }
 
 function rcl_format_url($url, $tab_id = false, $subtab_id = false){

@@ -57,7 +57,7 @@ function rcl_insert_order($args,$products){
     );
     
     if(!$result){
-        wp_die(__('Ошибка создания заказа'));
+        wp_die(__('Error creating order'));
     }
     
     $order_id = $wpdb->insert_id;

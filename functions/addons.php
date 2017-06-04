@@ -335,10 +335,10 @@ function rcl_addon_path($path){
         $addonPath = reset($paths);
     }
     
-    $addonPath .= '/';
-    
     if(!$addonPath) return false;
     
+    $addonPath .= '/';
+
     wp_cache_add( $cachekey, $addonPath );
     
     return $addonPath;

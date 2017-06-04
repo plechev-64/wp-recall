@@ -316,12 +316,18 @@ class Rcl_Custom_Fields{
     
     function get_type_editor($field){
         
-        $editor_id = ($this->field && isset($this->field['slug']))? $this->field['slug']: $this->new_slug;
+        if(isset($field['editor-id']))
+            $editor_id = $field['editor-id'];
         
+        if(!$editor_id)
+            $editor_id = ($this->field && isset($this->field['slug']))? $this->field['slug']: $this->new_slug;
+
         if(!$editor_id)
             $editor_id = $field['slug'];
         
         $editor_id = 'editor-'.$editor_id;
+        
+        $tinymce = (isset($field['tinymce']))? $field['tinymce']: false;
 
         $data = array( 'wpautop' => 1
             ,'media_buttons' => false
@@ -332,10 +338,10 @@ class Rcl_Custom_Fields{
             ,'editor_class' => 'autosave'
             ,'teeny' => 0
             ,'dfw' => 0
-            ,'tinymce' => false
-            ,'quicktags' => true
+            ,'tinymce' => $tinymce
+            ,'quicktags' => (isset($field['quicktags']))? array('buttons'=>$field['quicktags']): true
         );
-
+        
         ob_start();
 
         wp_editor( $this->value, $editor_id, $data );
@@ -344,6 +350,12 @@ class Rcl_Custom_Fields{
         
         ob_end_clean();
         
+        if(defined( 'DOING_AJAX' )){
+            $content .= '<script>rcl_init_wp_editor("'.$editor_id.'",'.json_encode(array(
+                'tinymce' => $tinymce,
+                'qt_buttons' => (isset($field['quicktags']))? $field['quicktags']: false
+            )).');</script>';
+        }
         return $content;
     }
     

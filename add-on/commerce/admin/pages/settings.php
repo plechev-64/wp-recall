@@ -53,16 +53,16 @@ function rcl_commerce_options(){
         ),
         $opt->option_block(
             array(
-                $opt->title(__('Вывод кнопки "В корзину"','wp-recall')),
-                $opt->label(__('На странице товара','wp-recall')),
+                $opt->title(__('The output of the button "Add to cart"','wp-recall')),
+                $opt->label(__('On the product page','wp-recall')),
                 $opt->option('checkbox',array(
                     'name'=>'cart_button_single_page',
                     'default' => array('top','bottom'),
                     'options'=> array(
-                        'top' => __('Над описанием','wp-recall'),
-                        'bottom' => __('Под описанием','wp-recall'))
+                        'top' => __('On the description','wp-recall'),
+                        'bottom' => __('Under the description','wp-recall'))
                 )),
-                $opt->label(__('На архивной странице','wp-recall')),
+                $opt->label(__('On the archive page','wp-recall')),
                 $opt->option('select',array(
                     'name'=>'cart_button_archive_page',
                     'default' => 1,

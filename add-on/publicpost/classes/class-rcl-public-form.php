@@ -312,7 +312,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                         
                         if($this->current_field['slug'] == 'post_title'){
                             
-                            $contentField = $CF->get_input($this->current_field,$dataPost->post_title);
+                            $contentField = $CF->get_input($this->current_field,esc_textarea($dataPost->post_title));
                             
                         }
                         

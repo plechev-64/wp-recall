@@ -81,6 +81,7 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
 
             array(
                 'type' => 'editor',
+                'tinymce' => true,
                 'slug'=>'content',
                 'title'=>__('Content tab','wp-recall'),
                 'notice'=>__('supported shortcodes and HTML-code','wp-recall')

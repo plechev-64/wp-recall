@@ -360,3 +360,39 @@ function rcl_init_field_maxlength(fieldID){
         if(word.val().length > maxlength) word.val(word.val().substr(0, maxlength));
     });
 }
+
+function rcl_init_wp_editor(fullId,options){
+
+    tinyMCEPreInit.qtInit[fullId] = {
+        id: fullId,
+        buttons: (options.qt_buttons)? options.qt_buttons: "strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"
+    };
+    
+    if(options.tinymce){
+        tinyMCEPreInit.mceInit[fullId] = {
+            body_class: fullId,
+            selector: '#'+fullId,
+            menubar: false,
+            skin: "lightgray",
+            theme: 'modern',
+            toolbar1: "formatselect,bold,italic,bullist,numlist,blockquote,alignleft,aligncenter,alignright,link,unlink,wp_more,spellchecker,fullscreen,wp_adv",
+            toolbar2: "strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help",
+            wpautop: true
+        };
+    }
+
+    QTags( tinyMCEPreInit.qtInit[ fullId ] );
+    QTags._buttonsInit();
+    
+    if(options.tinymce){
+        
+        tinymce.init(tinyMCEPreInit.mceInit[fullId]);   
+        tinyMCE.execCommand('mceAddEditor', false, fullId); 
+        
+        switchEditors.go(fullId, 'html');
+
+    }
+    
+    
+
+}
