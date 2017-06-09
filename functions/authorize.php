@@ -45,7 +45,7 @@ function rcl_get_login_user(){
     $creds['user_login'] = $login;
     $creds['user_password'] = $pass;
     $creds['remember'] = $member;
-    $userdata = wp_signon( $creds, false );
+    $userdata = wp_signon( $creds );
     
     if ( is_wp_error($userdata) ){
         $wp_errors = $userdata;

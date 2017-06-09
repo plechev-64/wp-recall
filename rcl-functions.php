@@ -868,6 +868,30 @@ function rcl_get_useraction($user_action=false){
     }
 }
 
+function rcl_get_useraction_html($user_id, $type = 1){
+    
+    $action = rcl_get_time_user_action($user_id);
+
+    switch($type){
+        case 1:
+            
+            $last_action = rcl_get_useraction($action);
+            
+            if(!$last_action) 
+                return '<span class="status_user online"><i class="fa fa-circle"></i></span>';
+            else 
+                return '<span class="status_user offline" title="'.__('offline','wp-recall').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
+        
+        break;
+        case 2:
+            
+            return rcl_get_miniaction($action);
+            
+        break;
+    
+    }
+}
+
 function rcl_human_time_diff($time_action){
     $unix_current_time = strtotime(current_time('mysql'));
     $unix_time_action = strtotime($time_action);
@@ -1132,25 +1156,29 @@ function rcl_get_profile_fields($args = false){
     $fields = get_option( 'rcl_profile_fields' );
     
     $fields = apply_filters('rcl_profile_fields',$fields);
-    
+
     $profileFields = array();
     
-    foreach($fields as $k => $field){
-        
-        if(isset($args['exclude']) && in_array($field['slug'],$args['exclude'])){
-            
-            continue;
-            
+    if($fields){
+    
+        foreach($fields as $k => $field){
+
+            if(isset($args['exclude']) && in_array($field['slug'],$args['exclude'])){
+
+                continue;
+
+            }
+
+            if(isset($field['field_select'])){
+
+                $field['field_select'] = rcl_edit_old_option_fields($field['field_select']);
+
+            }
+
+            $profileFields[] = $field;
+
         }
-        
-        if(isset($field['field_select'])){
-            
-            $field['field_select'] = rcl_edit_old_option_fields($field['field_select']);
-            
-        }
-        
-        $profileFields[] = $field;
-        
+    
     }
     
     return $profileFields;

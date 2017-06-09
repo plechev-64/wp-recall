@@ -357,7 +357,7 @@ function rcl_register_author_post($postdata){
                     $creds['user_login'] = $email_new_user;
                     $creds['user_password'] = $random_password;
                     $creds['remember'] = true;
-                    $user = wp_signon( $creds, false );
+                    $user = wp_signon( $creds );
                     $user_ID = $user_id;
                 }
 

@@ -192,7 +192,7 @@ class Rcl_Create_Order{
                     'remember' => true
                 );
 
-                wp_signon( $creds, false );
+                wp_signon( $creds );
 
             }
         }
