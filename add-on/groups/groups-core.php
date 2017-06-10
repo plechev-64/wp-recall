@@ -816,13 +816,24 @@ function rcl_get_group_category_list(){
 
     $tags = get_terms('groups', $targs);
 
-    if($tags) return '<div class="search-form-rcl">
-            <form method="get">
-                    '.rcl_get_tags_list_group((object)$tags,'',__('Display all records','wp-recall')).'
-                    <input type="hidden" name="group-id" value="'.$rcl_group->term_id.'">
-                    <input type="submit" class="recall-button" value="'.__('Show','wp-recall').'">
-            </form>
-    </div>';
+    if(!$tags) return false;
+    
+    global $rcl_options;
+    
+    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
+        
+    $content .= '<div class="search-form-rcl">';
+        $content .= '<form method="get">';
+            $content .= rcl_get_tags_list_group((object)$tags,'',__('Display all records','wp-recall'));
+            
+            if($output) 
+                $content .= '<input type="hidden" name="group-id" value="'.$rcl_group->term_id.'">';
+            
+            $content .= '<input type="submit" class="recall-button" value="'.__('Show','wp-recall').'">';
+        $content .= '</form>';
+    $content .= '</div>';
+    
+    return $content;
 }
 
 function rcl_group_admin_panel(){
@@ -952,9 +963,6 @@ function rcl_edit_group_pre_get_posts($query){
 
                 return $query;
                 
-            }else{
-                wp_redirect(rcl_format_url(rcl_get_group_permalink( $rcl_group->term_id )).'group-tag='.$_GET['group-tag']);
-                exit;
             }
 
         }

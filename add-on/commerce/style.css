@@ -243,6 +243,7 @@ body .rcl-product-gallery ul.images-list {
 }
 .products-box.type-slab .products-list .product .product-content .product-metas{
     position: relative;
+    display: flex;
 }
 .products-box.type-slab .products-list .product .product-content .product-meta .meta-name{
 	
