@@ -159,22 +159,26 @@ function rcl_add_custom_tabs($tabs){
     
     if(!$areas) return $tabs;
     
-    foreach($tabs as $tab_id => $tab){
-        
-        $tabArea = (isset($tab['output']))? $tab['output']: 'menu';
-        
-        if(!isset($areas[$tabArea]) || !$areas[$tabArea]) continue;
-        
-        foreach($areas[$tabArea] as $k => $field){
-            
-            if($field['slug'] != $tab_id) continue;
+    if($tabs){
 
-            $tabs[$tab_id]['icon'] = $field['icon'];
-            $tabs[$tab_id]['name'] = $field['title'];
-            $tabs[$tab_id]['order'] = ++$k;
+        foreach($tabs as $tab_id => $tab){
+
+            $tabArea = (isset($tab['output']))? $tab['output']: 'menu';
+
+            if(!isset($areas[$tabArea]) || !$areas[$tabArea]) continue;
+
+            foreach($areas[$tabArea] as $k => $field){
+
+                if($field['slug'] != $tab_id) continue;
+
+                $tabs[$tab_id]['icon'] = $field['icon'];
+                $tabs[$tab_id]['name'] = $field['title'];
+                $tabs[$tab_id]['order'] = ++$k;
+
+            }
 
         }
-        
+    
     }
     
     return $tabs;
@@ -462,9 +466,23 @@ function rcl_check_access_console(){
     $need_access = (isset($rcl_options['consol_access_rcl']))? $rcl_options['consol_access_rcl']: 7;
 
     if($current_user->user_level){
+		
         $access = ( $current_user->user_level < $need_access )? false: true;
+		
+    }else if(isset($current_user->allcaps['level_'.$need_access])){
+		
+        $access = ( $current_user->allcaps['level_'.$need_access] == 1 )? true: false;
+		
     }else{
-        $access = ( isset($current_user->allcaps['level_'.$need_access]) && $current_user->allcaps['level_'.$need_access] == 1 )? true: false;
+		
+        $roles = array(
+            10 => 'administrator',
+            7 => 'editor',
+            2 => 'author',
+            1 => 'contributor'
+        );
+
+        $access = (isset($roles[$need_access]) && current_user_can($roles[$need_access]))? true: false;
     }
     
     return $access;
@@ -618,10 +636,14 @@ function rcl_sanitize_string($title) {
         case 'off':
             return $title;
         case 'gost':
-            return strtr($title, $gost);
+            $title = strtr($title, $gost);
+            break;
         default:
-            return strtr($title, $iso);
+            $title = strtr($title, $iso);
     }
+    
+    return sanitize_title_with_dashes($title,'','save');
+    
 }
 
 add_filter('author_link','rcl_author_link',999,2);

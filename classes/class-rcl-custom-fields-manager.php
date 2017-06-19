@@ -129,7 +129,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         return $form;
     }
     
-    function sortable_fields_script(){
+    function sortable_fields_script($args = false){
         return '<script>
                 jQuery(function(){
                     jQuery(".rcl-sortable-fields").sortable({
@@ -246,6 +246,16 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             }
             
             if($this->field['type'] == 'text' || $this->field['type'] == 'textarea'){
+                
+                if($this->field['type'] == 'text'){
+                
+                    $options[] = array(
+                        'type' => 'text',
+                        'slug' => 'pattern',
+                        'title' => __('Pattern','wp-recall')
+                    );
+
+                }
                 
                 $options[] = array(
                     'type' => 'number',

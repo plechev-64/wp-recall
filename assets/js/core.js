@@ -363,12 +363,19 @@ function rcl_init_field_maxlength(fieldID){
 
 function rcl_init_wp_editor(fullId,options){
 
-    tinyMCEPreInit.qtInit[fullId] = {
+    var qt_options = {
         id: fullId,
         buttons: (options.qt_buttons)? options.qt_buttons: "strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"
     };
     
+    QTags( qt_options );
+    
+    QTags._buttonsInit();
+
     if(options.tinymce){
+        
+        tinyMCEPreInit.qtInit[fullId] = qt_options;
+        
         tinyMCEPreInit.mceInit[fullId] = {
             body_class: fullId,
             selector: '#'+fullId,
@@ -379,20 +386,11 @@ function rcl_init_wp_editor(fullId,options){
             toolbar2: "strikethrough,hr,forecolor,pastetext,removeformat,charmap,outdent,indent,undo,redo,wp_help",
             wpautop: true
         };
-    }
-
-    QTags( tinyMCEPreInit.qtInit[ fullId ] );
-    QTags._buttonsInit();
-    
-    if(options.tinymce){
         
         tinymce.init(tinyMCEPreInit.mceInit[fullId]);   
         tinyMCE.execCommand('mceAddEditor', false, fullId); 
         
         switchEditors.go(fullId, 'html');
-
     }
-    
-    
 
 }

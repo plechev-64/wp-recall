@@ -259,7 +259,9 @@ function rcl_orders_tab($status_id){
 /*ниже рассортировать*/
 
 //Оплата заказа
-add_action('rcl_success_pay','rcl_add_payment_order',50);
+//add_action('rcl_success_pay','rcl_add_payment_order',50);
+add_action('rcl_success_pay_system','rcl_add_payment_order',10);
+add_action('rcl_success_pay_balance','rcl_add_payment_order',10);
 function rcl_add_payment_order($pay){
     
     if($pay->pay_type != 2) return false;

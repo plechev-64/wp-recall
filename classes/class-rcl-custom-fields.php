@@ -346,8 +346,18 @@ class Rcl_Custom_Fields{
 
         wp_editor( $this->value, $editor_id, $data );
         
-        $content = ob_get_contents();
+        if(defined( 'DOING_AJAX' )){
+            global $wp_scripts;
+            
+            $scripts = array(
+                'quicktags'
+            );
+            
+            $wp_scripts->do_items($scripts);
+        }
         
+        $content = ob_get_contents();
+
         ob_end_clean();
         
         if(defined( 'DOING_AJAX' )){
@@ -376,7 +386,10 @@ class Rcl_Custom_Fields{
     }
     
     function get_type_text($field){
-        return '<input type="text" '.$this->maxlength.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        
+        $pattern = (isset($field['pattern']))? 'pattern="'.$field['pattern'].'"': '';
+        
+        return '<input type="text" '.$pattern.' '.$this->maxlength.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
     }
     
     function get_type_password($field){

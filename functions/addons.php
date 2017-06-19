@@ -34,8 +34,11 @@ function rcl_activate_addon($addon,$activate=true,$dirpath=false){
             
             $install_src = $path.'/'.$addon.'/activate.php';
             
-            if($activate&&file_exists($install_src)) include_once($install_src);
+            if($activate&&file_exists($install_src)) 
+                include_once($install_src);
+            
             include_once($index_src);
+            
             update_site_option('rcl_active_addons',$active_addons);
             
             do_action('rcl_activate_'.$addon,$active_addons[$addon]);
@@ -324,7 +327,7 @@ function rcl_addon_path($path){
             $addonPath = $addon['path']; break;
         }
         
-        if($string = stristr($path,$addon['path'])){
+        if($string = stristr($path,trailingslashit($addon['path']))){
             $paths[strlen($string)] = $addon['path'];
         }
         

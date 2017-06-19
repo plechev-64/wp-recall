@@ -149,14 +149,14 @@ function rcl_get_custom_field_options(e){
         
     }
     
-    var textVals = ['text','textarea'];
+    /*var textVals = ['text','textarea'];
     
     if(jQuery.inArray( typeField, textVals ) >= 0 && jQuery.inArray( oldType, textVals ) >= 0){
         
         boxField.attr('data-type',typeField);
         return;
         
-    }
+    }*/
     
     rcl_preloader_show(boxField);
     
