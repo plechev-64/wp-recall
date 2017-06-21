@@ -1,0 +1,151 @@
+<?php
+
+function pfm_get_post_content($post_id){
+    global $PrimePost;
+    
+    if($PrimePost && isset($PrimePost->post_content)){
+        $content = $PrimePost->post_content;
+    }else{
+        $content = pfm_get_post_field($post_id,'post_content');
+    }
+
+    return apply_filters('pfm_get_post_content', $content, $post_id);
+}
+
+function pfm_the_post_content(){
+    global $PrimePost;
+    
+    $content = pfm_get_post_content($PrimePost->post_id);
+
+    echo apply_filters('pfm_the_post_content',$content);
+}
+
+function pfm_post_field($field_name, $echo = 1){
+    global $PrimePost;
+    
+    if(isset($PrimePost->$field_name)){
+        if($echo)
+            echo $PrimePost->$field_name;
+        else
+            return $PrimePost->$field_name;
+    }
+    
+    return false;
+    
+}
+
+function pfm_the_post_classes(){
+    global $PrimeTopic,$PrimePost;
+    
+    $classes = array(
+        'prime-post',
+        'prime-post-index-'.$PrimePost->post_index
+    );
+    
+    if($PrimeTopic->user_id == $PrimePost->user_id){
+        $classes[] = 'topic-author';
+    }
+    
+    if($PrimePost->post_fix){
+        $classes[] = 'post-fixed';
+    }
+    
+    if($PrimePost->post_closed){
+        $classes[] = 'post-closed';
+    }
+    
+    echo implode(' ',$classes);
+    
+}
+
+function pfm_the_post_bottom(){
+    global $PrimePost;
+    echo apply_filters('pfm_the_post_bottom','');
+}
+
+add_filter('pfm_the_post_bottom','pfm_add_rating_post',10,2);
+function pfm_add_rating_post($content){
+    global $PrimePost;
+    
+    if(function_exists('rcl_get_html_post_rating')) 
+        $content .= rcl_get_html_post_rating($PrimePost->post_id,'forum-post',$PrimePost->user_id);
+    
+    return $content;
+}
+
+add_action('pfm_add_post','pfm_update_post_count',10);
+function pfm_update_post_count($post_id){
+    
+    $post = pfm_get_post($post_id);
+    
+    if(!$post) return false;
+    
+    pfm_update_topic_data($post->topic_id);
+
+}
+
+add_action('pfm_pre_delete_post','pfm_update_post_author_count',10);
+add_action('pfm_add_post','pfm_update_post_author_count',10);
+function pfm_update_post_author_count($post_id){
+    
+    $post = pfm_get_post($post_id);
+    
+    if(!$post) return false;
+    
+    $Posts = new PrimePosts();
+    
+    $postCount = $Posts->count(array('user_id' => $post->user_id));
+    
+    pfm_update_meta($post->user_id,'author','post_count',$postCount);
+
+}
+
+function pfm_the_author_name(){
+    global $PrimePost;
+    echo ($PrimePost->user_id)? $PrimePost->display_name: $PrimePost->guest_name;
+}
+
+function pfm_author_avatar(){
+    global $PrimePost;
+    $data = ($PrimePost->user_id)? $PrimePost->user_id: $PrimePost->guest_email;
+    echo get_avatar($data,50);
+}
+
+add_action('pfm_post_author_metabox','pfm_add_author_action_status',10);
+function pfm_add_author_action_status(){
+    global $PrimePost,$PrimeUser; 
+    if(!$PrimePost->user_id) return false; ?>
+    <div class="prime-author-meta prime-author-status"><?php echo rcl_get_useraction_html($PrimePost->user_id,2); ?></div>
+<?php }
+
+add_action('pfm_post_author_metabox','pfm_add_author_registered_data',12);
+function pfm_add_author_registered_data(){
+    global $PrimePost; 
+    if(!$PrimePost->user_registered) return false; ?>
+    <div class="prime-author-meta prime-author-register"><?php echo __('На сайте с').' '.mysql2date('d.m.Y', $PrimePost->user_registered); ?></div>
+<?php }
+
+add_action('pfm_post_author_metabox','pfm_add_author_role_meta',14);
+function pfm_add_author_role_meta(){
+    global $PrimePost,$PrimeUser; ?>
+    <div class="prime-author-meta prime-author-role"><?php echo $PrimeUser->get_user_rolename($PrimePost->user_id); ?></div>
+<?php }
+
+add_action('pfm_post_author_metabox','pfm_add_author_counters',20);
+function pfm_add_author_counters(){
+    global $PrimePost; 
+    if(!$PrimePost->user_id) return false; 
+    
+    if($tcount = pfm_get_meta($PrimePost->user_id,'author','topic_count')){ ?>
+    <div class="prime-author-meta prime-author-topics">
+        <span><?php echo __('Тем'); ?></span>
+        <span><?php echo $tcount; ?></span>
+    </div>
+    <?php }
+    if($pcount = pfm_get_meta($PrimePost->user_id,'author','post_count')){ ?>
+    <div class="prime-author-meta prime-author-posts">
+        <span><?php echo __('Сообщений'); ?></span>
+        <span><?php echo $pcount; ?></span>
+    </div>
+<?php }
+}

@@ -1,0 +1,8 @@
+Name: PrimeFirst;
+Version: 1.0;
+Support Core: 16.0.0;
+Parent Addon: prime-forum;
+Custom Manager: prime-forum;
+Description: Первая тема форума PrimeForum;
+Author: Плечёв Андрей;
+Author URI: https://codeseller.ru/;

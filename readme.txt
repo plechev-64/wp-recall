@@ -1,7 +1,7 @@
 === WP-Recall ===
 Contributors: wppost
 Donate link: http://codeseller.ru/
-Tags: группы, интернет магазин, личные сообщения, личный кабинет, магазин, онлайн магазин, пользователи, продажи, профиль, профиль пользователя, рейтинг, сообщество, социальная сеть, уведомления, электронная коммерция, author, author profile, authors, activity, cart, commerce, community, custom fields, e-commerce, ecommerce, file uploads, free-kassa, friends, front-end login, front-end registration, groups, interkassa, member, messaging, networking, networks, online shop, online store, personal account, private message, notifications, payeer, pay2pay, perfect money, profiles, ratings, robokassa, sales, sell, shop, shopping cart, social, social network, social networking, unitpay, user profile, users community, wallet one, webmoney, yandexKassa
+Tags: author profile, commerce, groups, private message, forum
 Requires at least: 4.4.0
 Tested up to: 4.7.4
 License: GPLv2 or later
@@ -26,6 +26,9 @@ https://codeseller.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/
 Плагин расширяет свой функционал через дополнения. Основная информация о дополнениях плагина:
 https://codeseller.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/
 
+Description of the functionality of the forum
+https://codeseller.ru/products/primeforum/
+
 If you wish, you can very easily write its complement and bring any information in your personal account user.
 Example of creating add-ons:
 http://codeseller.ru/post-group/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/
@@ -33,6 +36,9 @@ http://codeseller.ru/post-group/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-s
 Если хотите, то вы можете создать свое дополнение и вывести любую информацию в личном кабинете пользователя.
 Пример создания дополнения к плагину:
 https://codeseller.ru/post-group/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/
+
+Описание функционала форума
+https://codeseller.ru/products/primeforum/
 
 You can share your additions with other users or download new additions here:
 https://codeseller.ru/products/

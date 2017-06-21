@@ -1,0 +1,7 @@
+Name: PrimeForum;
+Version: 1.0.0;
+Support Core: 16.0.0;
+Item ID: 0;
+Description: Дополнение для организации полноценного легкого и функционального форума на базе плагина WP-Recall;
+Author: Плечёв Андрей;
+Author URI: http://codeseller.ru/;

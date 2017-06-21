@@ -1,0 +1,85 @@
+#tab-button-prime-forum .fa-sitemap::before { /*stupid Twenty Fourteen fix*/
+    content: "\f0e8";
+    display: inline-block;
+}
+#prime-forum {
+    font-size: 15px;
+    line-height: normal;
+    position: relative;
+}
+#prime-forum a {
+    border: none;
+    box-shadow: none;
+    text-decoration: none;
+}
+#prime-forum h3 {
+    color: #000;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: normal;
+    margin: 10px 0 5px;
+    padding: 0;
+    text-transform: none;
+}
+#prime-forum p {
+    line-height: normal;
+    margin: 5px 0;
+    padding: 0;
+}
+#prime-forum blockquote::before {
+    color: #cfd4d8;
+    content: "\f10e";
+    font-family: fontawesome;
+    font-size: 20px;
+    left: 5px;
+    position: absolute;
+    top: 5px;
+}
+#prime-forum blockquote {
+    background-color: #f2f2f2;
+    border-bottom: none;
+    border-left: 5px solid #e3e8ec;
+    border-top: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: 14px;
+    font-style: normal;
+    hyphens: auto;
+    line-height: normal;
+    margin: 15px 8px;
+    overflow-wrap: break-word;
+    padding: 20px 10px 15px 30px;
+    position: relative;
+}
+#prime-forum blockquote p {
+    font-size: initial;
+}
+#prime-forum code::before,
+#prime-forum pre::before {
+    background-color: transparent;
+    color: #ffae19;
+    content: "\f120";
+    font-family: fontawesome;
+    font-size: 20px;
+    height: auto;
+    left: 10px;
+    line-height: 1;
+    position: absolute;
+    top: 3px;
+}
+#prime-forum code,
+#prime-forum pre{
+    background-color: #ffffff;
+    background-image: none !important;
+    border: 2px solid #e3e8ec;
+    color: #1f7ca9 !important;
+    font-size: inherit;
+    display: block;
+    line-height: normal;
+    margin: 10px 0;
+    overflow: auto;
+    padding: 35px 10px 20px 20px !important;
+    position: relative;
+    white-space: pre;
+    word-wrap: normal;
+}

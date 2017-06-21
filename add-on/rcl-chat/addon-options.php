@@ -98,6 +98,13 @@ function rcl_chat_options($content){
                         'notice'=>__('The maximum number of messages in the conversation between two users. Default: 100','wp-recall')
                     )),
                     $opt->option('select',array(
+                        'name'=>'messages_mail',
+                        'label'=>__('Mail alert','wp-recall'),
+                        'options'=>array(
+                            __('Without the text of the message','wp-recall'),
+                            __('Full text of the message','wp-recall'))
+                    )),
+                    $opt->option('select',array(
                         'label'=>__('Contacts bar','wp-recall'),
                         'name'=>'contact_panel',
                         'group'=>'chat',
