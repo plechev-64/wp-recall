@@ -387,7 +387,7 @@ class Rcl_Custom_Fields{
     
     function get_type_text($field){
         
-        $pattern = (isset($field['pattern']))? 'pattern="'.$field['pattern'].'"': '';
+        $pattern = (isset($field['pattern']) && $field['pattern'])? 'pattern="'.$field['pattern'].'"': '';
         
         return '<input type="text" '.$pattern.' '.$this->maxlength.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
     }
