@@ -15,6 +15,7 @@ class PrimeQuery{
     public $topics;
     public $posts;
     public $authors;
+    public $canonical = '';
     public $errors = array();
     public $groups_query;
     public $forums_query;

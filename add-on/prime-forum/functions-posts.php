@@ -100,6 +100,28 @@ function pfm_update_post_author_count($post_id){
 
 }
 
+add_action('pfm_add_post','pfm_send_mail_topic_author',10);
+function pfm_send_mail_topic_author($post_id){
+    
+    $post = pfm_get_post($post_id);    
+    $topic = pfm_get_topic($post->topic_id);
+
+    //Если автор топика отвечает сам, то не шлем письмо иначе шлем
+    if($topic->user_id == $post->user_id) return false;
+    
+    $title = 'Новый комментарий к вашей теме';
+    $to = get_the_author_meta('user_email',$topic->user_id);
+    $mess = '
+    <p>Добавлен новый ответ к вашей теме "'.$topic->topic_name.'".</p>
+    <div style="float:left;margin-right:15px;">'.get_avatar($post->user_id,60).'</div>
+    <p><b>ответил:</b></p>
+    <p>'.$post->post_content.'</p>
+    <p><a href="'.pfm_get_post_permalink($post->post_id).'">Ответить на комментарий</a></p>';
+
+    rcl_mail($to, $title, $mess);
+
+}
+
 function pfm_the_author_name(){
     global $PrimePost;
     echo ($PrimePost->user_id)? $PrimePost->display_name: $PrimePost->guest_name;

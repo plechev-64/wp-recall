@@ -27,7 +27,7 @@ require_once 'functions-post-content.php';
 require_once 'functions-query.php';
 require_once 'functions-templates.php';
 require_once 'functions-permalink.php';
-
+require_once 'functions-seo.php';
 
 if (is_admin())
     require_once 'admin/index.php';
@@ -201,39 +201,6 @@ function pfm_user_topics_start($master_id){
     
 }
 
-add_filter('page_rewrite_rules', 'pfm_set_rewrite_rules');
-function pfm_set_rewrite_rules($rules) {
-    global $wp_rewrite;
-
-    if(!pfm_get_option('home-page')) return $rules;
-    
-    $page = get_post(pfm_get_option('home-page'));
-
-    $rules[$page->post_name.'/forum-group/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-group=$matches[1]';
-    $rules[$page->post_name.'/forum-group/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-group=$matches[1]&pfm-page=$matches[2]';
-    
-    $rules[$page->post_name.'/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]';
-    $rules[$page->post_name.'/([^/]+)/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-topic=$matches[2]';
-
-    $rules[$page->post_name.'/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-page=$matches[2]';
-    $rules[$page->post_name.'/([^/]+)/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-topic=$matches[2]&pfm-page=$matches[3]';
-
-    return $rules;
-}
-
-add_filter('query_vars', 'pfm_set_query_vars');
-function pfm_set_query_vars($vars) {
-	
-    $vars[] = 'pfm-group';
-    $vars[] = 'pfm-forum';
-    $vars[] = 'pfm-topic';
-    $vars[] = 'pfm-page';
-
-    $vars = apply_filters('pfm_query_vars', $vars);
-
-    return $vars;
-}
-
 add_action('wp','pfm_init_query',10);
 function pfm_init_query(){
     global $post,$PrimeQuery,$PrimeGroup,$PrimeForum,$PrimeTopic,$PrimePost,$PrimeUser;
@@ -246,6 +213,34 @@ function pfm_init_query(){
     
     do_action('pfm_init');
 
+}
+
+add_action('pfm_init','pfm_redirect_short_url');
+function pfm_redirect_short_url(){
+    global $PrimeQuery;
+    
+    if ( '' == get_option('permalink_structure') ) return false;
+    
+    if($PrimeQuery->is_search) return false;
+    
+    if($PrimeQuery->is_group && isset($_GET['pfm-group']) ){
+        if($group_id = pfm_get_group_field($PrimeQuery->vars['pfm-group'], 'group_id')){
+            wp_redirect(pfm_get_group_permalink($group_id));exit;
+        }
+    }
+    
+    if($PrimeQuery->is_forum && isset($_GET['pfm-forum']) ){
+        if($forum_id = pfm_get_forum_field($PrimeQuery->vars['pfm-forum'], 'forum_id')){
+            wp_redirect(pfm_get_forum_permalink($forum_id));exit;
+        }
+    }
+    
+    if($PrimeQuery->is_topic && isset($_GET['pfm-topic']) ){
+        if($topic_id = pfm_get_topic_field($PrimeQuery->vars['pfm-topic'], 'topic_id')){
+            wp_redirect(pfm_get_topic_permalink($topic_id));exit;
+        }
+    }
+    
 }
 
 add_action('pfm_init','pfm_update_current_visitor',10);
@@ -273,62 +268,57 @@ function pfm_update_current_visitor(){
     
 }
 
-add_filter('wp_title','pfm_setup_title',10);
-function pfm_setup_title($title){
-    global $PrimeQuery;
-    
-    if($PrimeQuery){
-        
-        $object = $PrimeQuery->object;
-        
-        if(!$object) return $title;
-        
-        if($PrimeQuery->is_topic){
-            $title = $object->topic_name.' | '.__('Форум').' '.$object->forum_name;
-        }else if($PrimeQuery->is_forum){
-            $title = __('Форум').' '.$object->forum_name;
-        }else if($PrimeQuery->is_group){
-            $title = __('Группа форумов').' '.$object->group_name;
-        }
-        
-        if($PrimeQuery->is_page){
-            $title .= ' | '.__('Страница').' '.$PrimeQuery->current_page;
-        }
-        
-    }
-    
-    return $title;
-}
-
-add_filter('the_title','pfm_setup_page_title',10);
-function pfm_setup_page_title($title){
-    global $PrimeQuery;
-    
-    if($PrimeQuery && in_the_loop()){
-        
-        $object = $PrimeQuery->object;
-        
-        if(!$object) return $title;
-        
-        if($PrimeQuery->is_topic){
-            $title = $object->topic_name;
-        }else if($PrimeQuery->is_forum){
-            $title = __('Форум').' '.$object->forum_name;
-        }else if($PrimeQuery->is_group){
-            $title = __('Группа форумов').' '.$object->group_name;
-        }
-        
-        if($PrimeQuery->is_page){
-            $title .= ' | '.__('Страница').' '.$PrimeQuery->current_page;
-        }
-        
-    }
-    
-    return $title;
-}
-
 function pfm_get_option($name){
     $PfmOptions = get_option('rcl_pforum_options');
     if(!isset($PfmOptions[$name])) return false;
     return $PfmOptions[$name];
+}
+
+function pfm_get_title_tag(){
+    global $PrimeQuery;
+    
+    if(!$PrimeQuery) return false;
+        
+    $object = $PrimeQuery->object;
+
+    if(!$object) return $title;
+
+    if($PrimeQuery->is_topic){
+        $title = $object->topic_name.' | '.__('Форум').' '.$object->forum_name;
+    }else if($PrimeQuery->is_forum){
+        $title = __('Форум').' '.$object->forum_name;
+    }else if($PrimeQuery->is_group){
+        $title = __('Группа форумов').' '.$object->group_name;
+    }
+
+    if($PrimeQuery->is_page){
+        $title .= ' | '.__('Страница').' '.$PrimeQuery->current_page;
+    }
+
+    return $title;
+
+}
+
+function pfm_get_title_page(){
+    global $PrimeQuery;
+    
+    if(!$PrimeQuery || !in_the_loop())return false;
+        
+    $object = $PrimeQuery->object;
+
+    if(!$object) return $title;
+
+    if($PrimeQuery->is_topic){
+        $title = $object->topic_name;
+    }else if($PrimeQuery->is_forum){
+        $title = __('Форум').' '.$object->forum_name;
+    }else if($PrimeQuery->is_group){
+        $title = __('Группа форумов').' '.$object->group_name;
+    }
+
+    if($PrimeQuery->is_page){
+        $title .= ' | '.__('Страница').' '.$PrimeQuery->current_page;
+    }
+        
+    return $title;
 }

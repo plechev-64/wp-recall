@@ -1,0 +1,134 @@
+<?php
+
+add_filter('page_rewrite_rules', 'pfm_set_rewrite_rules');
+function pfm_set_rewrite_rules($rules) {
+    global $wp_rewrite;
+
+    if(!pfm_get_option('home-page')) return $rules;
+    
+    $page = get_post(pfm_get_option('home-page'));
+
+    $rules[$page->post_name.'/forum-group/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-group=$matches[1]';
+    $rules[$page->post_name.'/forum-group/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-group=$matches[1]&pfm-page=$matches[2]';
+    
+    $rules[$page->post_name.'/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]';
+    $rules[$page->post_name.'/([^/]+)/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-topic=$matches[2]';
+
+    $rules[$page->post_name.'/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-page=$matches[2]';
+    $rules[$page->post_name.'/([^/]+)/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-topic=$matches[2]&pfm-page=$matches[3]';
+
+    return $rules;
+}
+
+add_filter('query_vars', 'pfm_set_query_vars');
+function pfm_set_query_vars($vars) {
+	
+    $vars[] = 'pfm-group';
+    $vars[] = 'pfm-forum';
+    $vars[] = 'pfm-topic';
+    $vars[] = 'pfm-page';
+
+    $vars = apply_filters('pfm_query_vars', $vars);
+
+    return $vars;
+}
+
+add_action('pfm_init_canonical_url','pfm_add_seo_filters',10);
+function pfm_add_seo_filters(){
+    
+    add_filter('the_title','pfm_setup_page_title',99);
+    add_filter('document_title_parts','pfm_replace_title',99);
+    add_filter('wp_title','pfm_replace_title',99);
+
+    add_filter('get_canonical_url', 'pfm_replace_canonical_url',10);
+    add_filter('get_shortlink', 'pfm_replace_shortlink',10);
+    
+    add_filter('aioseop_canonical_url', 'pfm_replace_canonical_url',10);
+    add_filter('aioseop_description', 'pfm_replace_description',10);
+    add_filter('aioseop_title_page', 'pfm_replace_title',10);
+    
+}
+
+
+function pfm_replace_title($title){
+    
+    $pfmTitle = pfm_get_title_tag();
+    
+    if($pfmTitle){
+        if(has_filter('wp_title')){
+            $title = $pfmTitle;
+        }else if(has_filter('document_title_parts')){
+            $title = array('title' => $pfmTitle);
+        }
+    }
+    
+    return $title;
+}
+
+function pfm_setup_page_title($title){
+    
+    $pfmTitle = pfm_get_title_page();
+    
+    if($pfmTitle)
+        $title = $pfmTitle;
+    
+    return $title;
+}
+
+function pfm_replace_shortlink($url){
+    global $PrimeQuery;
+    
+    if($PrimeQuery->is_group){
+            
+        $object_id = $PrimeQuery->object->group_id;
+        $object_type = 'group';
+
+    }else if($PrimeQuery->is_forum){
+
+        $object_id = $PrimeQuery->object->forum_id;
+        $object_type = 'forum';
+
+    }else if($PrimeQuery->is_topic){
+
+        $object_id = $PrimeQuery->object->topic_id;
+        $object_type = 'topic';
+
+    }
+    
+    $pfmUrl = pfm_get_shortlink($object_id, $object_type);
+    
+    if($pfmUrl)
+        $url = $pfmUrl;
+    
+    return $url;
+}
+
+function pfm_replace_canonical_url($url){
+    
+    $pfmUrl = pfm_get_canonical_url();
+    
+    if($pfmUrl)
+        $url = $pfmUrl;
+    
+    return $url;
+}
+
+function pfm_replace_description($aioseo_descr) {
+    global $PrimeQuery;
+    
+    if($PrimeQuery->is_group){
+            
+        $aioseo_descr = $PrimeQuery->object->group_desc;
+
+    }else if($PrimeQuery->is_forum){
+
+        $aioseo_descr = $PrimeQuery->object->forum_desc;
+
+    }else if($PrimeQuery->is_topic){
+
+        $aioseo_descr = wp_trim_words($PrimeQuery->posts[0]->post_content,50);
+
+    }
+    
+    return $aioseo_descr;
+}
