@@ -55,10 +55,11 @@ function pfm_replace_title($title){
     $pfmTitle = pfm_get_title_tag();
     
     if($pfmTitle){
-        if(has_filter('wp_title')){
-            $title = $pfmTitle;
-        }else if(has_filter('document_title_parts')){
+        
+        if(is_array($title)){
             $title = array('title' => $pfmTitle);
+        }else{
+            $title = $pfmTitle;
         }
     }
     
