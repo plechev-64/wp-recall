@@ -83,6 +83,7 @@ class PrimeQuery{
             
             add_action('pfm_query_init',array($this,'add_forums_data_in_home'));
             add_action('pfm_query_init',array($this,'add_child_forums'));
+            add_action('pfm_query_init',array($this,'init_canonical_url'));
             
             $this->setup_page_data();
             
@@ -588,6 +589,24 @@ class PrimeQuery{
         );
 
         $this->forums = $this->forums_query->get_data('get_results');
+
+    }
+
+    function init_canonical_url(){
+
+        if($this->is_group){
+
+            $this->canonical = pfm_get_group_permalink($this->object->group_id);
+
+        }else if($this->is_forum){
+
+            $this->canonical = pfm_get_forum_permalink($this->object->forum_id);
+
+        }else if($this->is_topic){
+
+            $this->canonical = pfm_get_topic_permalink($this->object->topic_id);
+
+        }
 
     }
     

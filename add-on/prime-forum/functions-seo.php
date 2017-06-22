@@ -33,19 +33,23 @@ function pfm_set_query_vars($vars) {
     return $vars;
 }
 
-add_action('pfm_init_canonical_url','pfm_add_seo_filters',10);
+add_action('pfm_init','pfm_add_seo_filters',10);
 function pfm_add_seo_filters(){
     
-    add_filter('the_title','pfm_setup_page_title',99);
-    add_filter('document_title_parts','pfm_replace_title',99);
-    add_filter('wp_title','pfm_replace_title',99);
+    add_filter('the_title','pfm_setup_page_title',30);
+    add_filter('document_title_parts','pfm_replace_title',30);
+    add_filter('wp_title','pfm_replace_title',30);
 
-    add_filter('get_canonical_url', 'pfm_replace_canonical_url',10);
-    add_filter('get_shortlink', 'pfm_replace_shortlink',10);
+    add_filter('get_canonical_url', 'pfm_replace_canonical_url',30);
+    add_filter('get_shortlink', 'pfm_replace_shortlink',30);
     
-    add_filter('aioseop_canonical_url', 'pfm_replace_canonical_url',10);
-    add_filter('aioseop_description', 'pfm_replace_description',10);
-    add_filter('aioseop_title_page', 'pfm_replace_title',10);
+    add_filter('aioseop_canonical_url', 'pfm_replace_canonical_url',30);
+    add_filter('aioseop_description', 'pfm_replace_description',30);
+    add_filter('aioseop_title_page', 'pfm_replace_title',30);
+    
+    add_filter('wpseo_title','pfm_replace_title',30);
+    add_filter('wpseo_canonical','pfm_replace_canonical_url',30);
+    add_filter('wpseo_metadesc','pfm_replace_description',30);
     
 }
 

@@ -311,6 +311,12 @@ function pfm_the_breadcrumbs(){
                     <span><a href="<?php echo pfm_get_group_permalink($object->group_id); ?>"><?php echo $object->group_name; ?></a></span>
 
                     <?php if(pfm_is_forum()): ?>
+                    
+                        <?php if($object->parent_id): ?>
+                    
+                            <span><a href="<?php echo pfm_get_forum_permalink($object->parent_id); ?>"><?php echo pfm_get_forum_field($object->parent_id,'forum_name'); ?></a></span>
+                    
+                        <?php endif; ?>
 
                         <span><?php echo $object->forum_name; ?></span>
 

@@ -2,14 +2,17 @@
     
     <?php if(pfm_have_forums()): ?>
     
-        <div class="prime-subforums">
-            
-            <?php while ( pfm_get_next('forum') ) : ?>
+        <div class="prime-subforums prime-parent-box">
+            <div class="prime-item-label"><span><?php _e('Дочерние форумы'); ?></span></div>
+            <div class="prime-subforums-list prime-loop-list">
 
-                <?php pfm_the_template('pfm-single-forum'); ?>
+                <?php while ( pfm_get_next('forum') ) : ?>
 
-            <?php endwhile; ?>
+                    <?php pfm_the_template('pfm-single-forum'); ?>
 
+                <?php endwhile; ?>
+
+            </div>
         </div>
     
         <?php pfm_reset_forumdata(); ?>
@@ -18,17 +21,24 @@
     
     <?php if(pfm_have_topics()): ?>
     
-        <?php pfm_page_navi(); ?>
+        <div class="prime-topics prime-parent-box">
+            <div class="prime-item-label"><span><?php _e('Темы форума'); ?></span></div>
+            <div class="prime-topics-list prime-loop-list">
     
-        <?php do_action('pfm_forum_loop_before'); ?>
-    
-        <?php while ( pfm_get_next('topic') ) : ?>
-    
-            <?php pfm_the_template('pfm-single-topic'); ?>
-    
-        <?php endwhile; ?>
-    
-        <?php pfm_page_navi(); ?>
+            <?php pfm_page_navi(); ?>
+
+            <?php do_action('pfm_forum_loop_before'); ?>
+
+            <?php while ( pfm_get_next('topic') ) : ?>
+
+                <?php pfm_the_template('pfm-single-topic'); ?>
+
+            <?php endwhile; ?>
+
+            <?php pfm_page_navi(); ?>
+                
+            </div>
+        </div>
     
     <?php else: ?>
     

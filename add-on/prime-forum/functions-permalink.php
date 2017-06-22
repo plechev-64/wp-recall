@@ -5,28 +5,6 @@ function pfm_get_canonical_url() {
     return $PrimeQuery->canonical;
 }
 
-add_action('pfm_init','pfm_init_canonical_url',10);
-function pfm_init_canonical_url(){
-    global $PrimeQuery;
-    
-    if($PrimeQuery->is_group){
-            
-        $PrimeQuery->canonical = pfm_get_group_permalink($PrimeQuery->object->group_id);
-
-    }else if($PrimeQuery->is_forum){
-
-        $PrimeQuery->canonical = pfm_get_forum_permalink($PrimeQuery->object->forum_id);
-
-    }else if($PrimeQuery->is_topic){
-
-        $PrimeQuery->canonical = pfm_get_topic_permalink($PrimeQuery->object->topic_id);
-
-    }
-    
-    do_action('pfm_init_canonical_url');
-    
-}
-
 function pfm_get_home_url(){
 
     if(!pfm_get_option('home-page')) return false;
@@ -38,7 +16,7 @@ function pfm_get_shortlink($object_id, $object_type){
     
     if(!pfm_get_option('home-page')) return false;
     
-    $url = home_url( '?page_id=' . pfm_get_option('home-page'). '&pfm-' . $object_type . '=' . $object_id);
+    $url = home_url( '?p=' . pfm_get_option('home-page'). '&pfm-' . $object_type . '=' . $object_id);
     
     return $url;
     

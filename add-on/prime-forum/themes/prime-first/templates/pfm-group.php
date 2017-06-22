@@ -2,15 +2,22 @@
     
     <?php if(pfm_have_forums()): ?>
     
-        <?php pfm_page_navi(); ?>
+        <div class="prime-forums prime-parent-box">
+            <div class="prime-item-label"><span><?php _e('Список форумов'); ?></span></div>
+            <div class="prime-forums-list prime-loop-list">
     
-        <?php while ( pfm_get_next('forum') ) : ?>
-    
-             <?php pfm_the_template('pfm-single-forum'); ?>
-    
-        <?php endwhile; ?>
-    
-        <?php pfm_page_navi(); ?>
+                <?php pfm_page_navi(); ?>
+
+                <?php while ( pfm_get_next('forum') ) : ?>
+
+                     <?php pfm_the_template('pfm-single-forum'); ?>
+
+                <?php endwhile; ?>
+
+                <?php pfm_page_navi(); ?>
+                
+            </div>
+        </div>
     
     <?php else: ?>
     
