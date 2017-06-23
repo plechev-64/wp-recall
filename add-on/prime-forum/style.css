@@ -85,7 +85,7 @@
 }
 #prime-forum .prime-spoiler{
     padding: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #e5e5e5;
     clear:both;
 }
 #prime-forum .prime-spoiler .prime-spoiler-link{
@@ -101,7 +101,7 @@
 }
 #prime-forum .prime-offtop{
     padding: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #e5e5e5;
     clear:both;
 }
 #prime-forum .prime-offtop .prime-offtop-title{
