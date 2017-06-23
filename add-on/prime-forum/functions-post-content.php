@@ -36,7 +36,7 @@ function pfm_filter_tags_post_content($content){
     $content = preg_replace('/&lt;pre[\s]class=&quot;(.+)&quot;&gt;(.+)&lt;\/pre&gt;/Uuis', '<pre>$2</pre>', $content);
     $content = preg_replace('/&lt;div[\s]class=&quot;sfcode&quot;&gt;(.+)&lt;\/div&gt;/Uuis', '<pre>$1</pre>', $content);
 
-    $content = preg_replace('/&lt;code&gt;(.+)&lt;\/code&gt;/Uuis', '<pre>$1</pre>', $content);
+    $content = preg_replace('/&lt;code&gt;(.+)&lt;\/code&gt;/Uuis', "'<code>$1</code>'", $content);
     $content = preg_replace('/&lt;pre&gt;(.+)&lt;\/pre&gt;/Uuis', '<pre>$1</pre>', $content);
     
     $content = preg_replace('/&lt;del(.+)&gt;(.+)&lt;\/del&gt;/Uuis', '<del>$2</del>', $content);
