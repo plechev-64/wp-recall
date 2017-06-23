@@ -361,10 +361,12 @@ function rcl_init_field_maxlength(fieldID){
     });
 }
 
-function rcl_init_wp_editor(fullId,options){
+function rcl_init_ajax_editor(id,options){
+    
+    rcl_do_action('rcl_pre_init_ajax_editor',{id:id,options:options});
 
     var qt_options = {
-        id: fullId,
+        id: id,
         buttons: (options.qt_buttons)? options.qt_buttons: "strong,em,link,block,del,ins,img,ul,ol,li,code,more,close"
     };
     
@@ -374,11 +376,11 @@ function rcl_init_wp_editor(fullId,options){
 
     if(options.tinymce){
         
-        tinyMCEPreInit.qtInit[fullId] = qt_options;
+        tinyMCEPreInit.qtInit[id] = qt_options;
         
-        tinyMCEPreInit.mceInit[fullId] = {
-            body_class: fullId,
-            selector: '#'+fullId,
+        tinyMCEPreInit.mceInit[id] = {
+            body_class: id,
+            selector: '#'+id,
             menubar: false,
             skin: "lightgray",
             theme: 'modern',
@@ -387,10 +389,46 @@ function rcl_init_wp_editor(fullId,options){
             wpautop: true
         };
         
-        tinymce.init(tinyMCEPreInit.mceInit[fullId]);   
-        tinyMCE.execCommand('mceAddEditor', false, fullId); 
+        tinymce.init(tinyMCEPreInit.mceInit[id]);   
+        tinyMCE.execCommand('mceAddEditor', false, id); 
         
         switchEditors.go(fullId, 'html');
     }
+
+}
+
+function rcl_setup_quicktags(newTags){
+    
+    newTags.forEach(function(tagArray, i, newTags) {
+
+        QTags.addButton( 
+            tagArray[0], 
+            tagArray[1], 
+            tagArray[2], 
+            tagArray[3], 
+            tagArray[4], 
+            tagArray[5], 
+            tagArray[6]
+        );
+
+    });
+    
+}
+
+rcl_add_action('rcl_pre_init_ajax_editor','rcl_add_ajax_quicktags');
+function rcl_add_ajax_quicktags(editor){
+
+    if(!Rcl.QTags) return false;
+    
+    rcl_setup_quicktags(Rcl.QTags);
+
+}
+
+rcl_add_action('rcl_footer','rcl_add_quicktags');
+function rcl_add_quicktags(){
+
+    if(!Rcl.QTags) return false;
+    
+    rcl_setup_quicktags(Rcl.QTags);
 
 }

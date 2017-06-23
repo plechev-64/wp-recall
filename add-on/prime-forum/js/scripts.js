@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-
+    
 });
 
 function pfm_getSelectedText(){
@@ -118,4 +118,11 @@ function pfm_ajax_action(object){
         }
     });
     
+}
+
+function pfm_spoiler(e){
+    var link = jQuery(e);
+    var icon = link.children('i');
+    link.parent().children('div').slideToggle();
+    icon.toggleClass('fa-plus-square-o fa-minus-square-o');
 }

@@ -361,11 +361,12 @@ class Rcl_Custom_Fields{
         ob_end_clean();
         
         if(defined( 'DOING_AJAX' )){
-            $content .= '<script>rcl_init_wp_editor("'.$editor_id.'",'.json_encode(array(
+            $content .= '<script>rcl_init_ajax_editor("'.$editor_id.'",'.json_encode(array(
                 'tinymce' => $tinymce,
                 'qt_buttons' => (isset($field['quicktags']))? $field['quicktags']: false
             )).');</script>';
         }
+        
         return $content;
     }
     

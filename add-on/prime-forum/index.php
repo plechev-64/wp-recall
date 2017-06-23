@@ -28,6 +28,7 @@ require_once 'functions-query.php';
 require_once 'functions-templates.php';
 require_once 'functions-permalink.php';
 require_once 'functions-seo.php';
+require_once 'functions-shortcodes.php';
 
 if (is_admin())
     require_once 'admin/index.php';
@@ -201,11 +202,11 @@ function pfm_user_topics_start($master_id){
     
 }
 
-add_action('wp','pfm_init_query',10);
+add_action('parse_query','pfm_init_query',10);
 function pfm_init_query(){
-    global $post,$PrimeQuery,$PrimeGroup,$PrimeForum,$PrimeTopic,$PrimePost,$PrimeUser;
+    global $PrimeQuery,$PrimeGroup,$PrimeForum,$PrimeTopic,$PrimePost,$PrimeUser,$wp_query;
 
-    if($post->ID != pfm_get_option('home-page')) return;
+    if($wp_query->queried_object->ID != pfm_get_option('home-page')) return;
     
     $PrimeUser = new PrimeUser();
     
@@ -266,6 +267,18 @@ function pfm_update_current_visitor(){
     
     pfm_update_visit($args);
     
+}
+
+add_filter('rcl_init_js_variables','pfm_init_js_variables',10);
+function pfm_init_js_variables($data){
+    global $PrimeQuery;
+    
+    if(!$PrimeQuery->is_forum && !$PrimeQuery->is_topic) return $data;
+    
+    $data['QTags'][] = array('pfm_spoiler', __('спойлер'), '[spoiler]', '[/spoiler]', 'h', 'Спойлер', 120);
+    $data['QTags'][] = array('pfm_offtop', __('оффтоп'), '[offtop]', '[/offtop]', 'h', 'Оффтоп', 110);
+
+    return $data;
 }
 
 function pfm_get_option($name){

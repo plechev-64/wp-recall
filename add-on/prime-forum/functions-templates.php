@@ -1,15 +1,5 @@
 <?php
 
-add_shortcode('prime-forum','pfm_get_forum_content');
-function pfm_get_forum_content(){
-    global $active_addons;
-    
-    $content = pfm_get_template_content();
-    
-    return $content;
-    
-}
-
 function pfm_get_template_content(){
 
     $ThemeID = get_option('rcl_pforum_template');
@@ -264,39 +254,55 @@ function pfm_the_breadcrumbs(){
     
     $object = $PrimeQuery->object; ?>
 
-    <div class="prime-breadcrumbs">
+    <div class="prime-breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">
         
         <?php if(pfm_is_home()): ?>
         
-            <span>Главная</span>
+            <span property="itemListElement" typeof="ListItem">
+                <span property="position" content="1"></span>
+                <span property="name">Главная</span>
+            </span>
             
         <?php else: ?>
 
             <?php $homeUrl = pfm_get_home_url(); ?>
 
-            <span><a href="<?php echo $homeUrl; ?>">Главная</a></span>
+            <span property="itemListElement" typeof="ListItem">
+                <span property="position" content="1"></span>
+                <a href="<?php echo $homeUrl; ?>" property="item" typeof="WebPage">
+                    <span property="name">Главная</span>
+                </a>
+            </span>
 
             <?php if(pfm_is_search()): ?>
             
                 <?php if($PrimeQuery->vars['pfm-group']): ?>
             
-                    <span>
-                        <a href="<?php echo pfm_get_group_permalink($PrimeQuery->vars['pfm-group']); ?>">
-                            <?php  echo pfm_get_group_field($PrimeQuery->vars['pfm-group'],'group_name'); ?>
+                    <span property="itemListElement" typeof="ListItem">
+                        <span property="position" content="2"></span>
+                        <a href="<?php echo pfm_get_group_permalink($PrimeQuery->vars['pfm-group']); ?>" property="item" typeof="WebPage">
+                            <span property="name">
+                                <?php  echo pfm_get_group_field($PrimeQuery->vars['pfm-group'],'group_name'); ?>
+                            </span>
                         </a>
                     </span>
             
                  <?php elseif($PrimeQuery->vars['pfm-forum']): ?>
             
-                    <span>
-                        <a href="<?php echo pfm_get_forum_permalink($PrimeQuery->vars['pfm-forum']); ?>">
-                            <?php  echo pfm_get_forum_field($PrimeQuery->vars['pfm-forum'],'forum_name'); ?>
+                    <span property="itemListElement" typeof="ListItem">
+                        <span property="position" content="2"></span>
+                        <a href="<?php echo pfm_get_forum_permalink($PrimeQuery->vars['pfm-forum']); ?>" property="item" typeof="WebPage">
+                            <span property="name">
+                                <?php  echo pfm_get_forum_field($PrimeQuery->vars['pfm-forum'],'forum_name'); ?>
+                            </span>
                         </a>
                     </span>
             
                  <?php endif; ?>
 
-                <span>Поиск: <?php echo $PrimeQuery->vars['search_vars'] ?></span>
+                <span>
+                    Поиск: <?php echo $PrimeQuery->vars['search_vars'] ?>
+                </span>
 
             <?php else: ?>
                 
@@ -304,33 +310,76 @@ function pfm_the_breadcrumbs(){
 
                 <?php if(pfm_is_group()): ?>
 
-                    <span><?php echo $object->group_name; ?></span>
+                    <span property="itemListElement" typeof="ListItem">
+                        <span property="position" content="2"></span>
+                        <span property="name">
+                            <?php echo $object->group_name; ?>
+                        </span>
+                    </span>
 
                 <?php else: ?>
 
-                    <span><a href="<?php echo pfm_get_group_permalink($object->group_id); ?>"><?php echo $object->group_name; ?></a></span>
+                    <span property="itemListElement" typeof="ListItem">
+                        <span property="position" content="2"></span>
+                        <a href="<?php echo pfm_get_group_permalink($object->group_id); ?>" property="item" typeof="WebPage">
+                            <span property="name">
+                                <?php echo $object->group_name; ?>
+                            </span>
+                        </a>
+                    </span>
 
                     <?php if(pfm_is_forum()): ?>
                     
                         <?php if($object->parent_id): ?>
                     
-                            <span><a href="<?php echo pfm_get_forum_permalink($object->parent_id); ?>"><?php echo pfm_get_forum_field($object->parent_id,'forum_name'); ?></a></span>
+                            <span property="itemListElement" typeof="ListItem">
+                                <span property="position" content="3"></span>
+                                <a href="<?php echo pfm_get_forum_permalink($object->parent_id); ?>" property="item" typeof="WebPage">
+                                    <span property="name">
+                                        <?php echo pfm_get_forum_field($object->parent_id,'forum_name'); ?>
+                                    </span>
+                                </a>
+                            </span>
                     
                         <?php endif; ?>
 
-                        <span><?php echo $object->forum_name; ?></span>
+                        <span property="itemListElement" typeof="ListItem">
+                            <span property="position" content="3"></span>
+                            <span property="name">
+                                <?php echo $object->forum_name; ?>
+                            </span>
+                        </span>
 
                     <?php else: ?>
 
-                        <span><a href="<?php echo pfm_get_forum_permalink($object->forum_id); ?>"><?php echo $object->forum_name; ?></a></span>
+                        <span property="itemListElement" typeof="ListItem">
+                            <span property="position" content="3"></span>
+                            <a href="<?php echo pfm_get_forum_permalink($object->forum_id); ?>" property="item" typeof="WebPage">
+                                <span property="name">
+                                    <?php echo $object->forum_name; ?>
+                                </span>
+                            </a>
+                        </span>
 
                         <?php if(pfm_is_topic()): ?>
 
-                            <span><?php echo $object->topic_name; ?></span>
+                            <span property="itemListElement" typeof="ListItem">
+                                <span property="position" content="4"></span>
+                                <span property="name">
+                                    <?php echo $object->topic_name; ?>
+                                </span>
+                            </span>
 
                         <?php else: ?>
 
-                            <span><a href="<?php echo pfm_get_topic_permalink($object->topic_id); ?>"><?php echo $object->topic_name; ?></a></span>
+                            <span property="itemListElement" typeof="ListItem">
+                                <span property="position" content="4"></span>
+                                <a href="<?php echo pfm_get_topic_permalink($object->topic_id); ?>" property="item" typeof="WebPage">
+                                    <span property="name">
+                                        <?php echo $object->topic_name; ?>
+                                    </span>
+                                </a>
+                            </span>
 
                         <?php endif; ?>
 

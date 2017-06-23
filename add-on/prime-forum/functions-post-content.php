@@ -81,8 +81,6 @@ function pfm_add_smilies_post_content($content){
     return $content;
 }
 
-add_filter('pfm_the_post_content','wpautop',13);
-
 add_filter('pfm_filter_content_without_pretags','pfm_filter_imgs',10);
 function pfm_filter_imgs($content){
 
@@ -160,7 +158,7 @@ function pfm_filter_links($content){
     return $content;
 }
 
-add_filter('pfm_the_post_content','pfm_add_oembed_post_content',14);
+add_filter('pfm_filter_content_without_pretags','pfm_add_oembed_post_content',13);
 function pfm_add_oembed_post_content($content){
     
     if(pfm_get_option('support-oembed') && function_exists('wp_oembed_get')){
@@ -174,6 +172,16 @@ function pfm_add_oembed_post_content($content){
             }
         }
     }
+    
+    return $content;
+}
+
+add_filter('pfm_filter_content_without_pretags','wpautop',14);
+
+add_filter('pfm_filter_content_without_pretags','pfm_add_shortcode_content',15);
+function pfm_add_shortcode_content($content){
+    
+    $content = pfm_do_shortcode($content);
     
     return $content;
 }

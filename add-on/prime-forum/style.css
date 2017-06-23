@@ -83,3 +83,35 @@
     white-space: pre;
     word-wrap: normal;
 }
+#prime-forum .prime-spoiler{
+    padding: 5px;
+    border: 1px solid #ccc;
+    clear:both;
+}
+#prime-forum .prime-spoiler .prime-spoiler-link{
+    color: #4d78af;
+    display: block;
+    padding: 5px 10px;
+    background: #f1f1f1;
+}
+#prime-forum .prime-spoiler .prime-spoiler-content{
+    background: #ffffff;
+    padding: 5px;
+    display: none;
+}
+#prime-forum .prime-offtop{
+    padding: 5px;
+    border: 1px solid #ccc;
+    clear:both;
+}
+#prime-forum .prime-offtop .prime-offtop-title{
+    font-size:12px;
+    display: block;
+    padding: 5px 10px;
+    background: #f1f1f1;
+}
+#prime-forum .prime-offtop .prime-offtop-content{
+    background: #ffffff;
+    padding: 5px;
+    font-size:10px;
+}

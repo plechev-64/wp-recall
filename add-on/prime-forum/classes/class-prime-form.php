@@ -29,7 +29,7 @@ class PrimeForm extends Rcl_Custom_Fields{
         
         if($this->post_id)
             add_filter('pfm_form_fields', array($this, 'add_post_field'));
-        
+               
         $this->fields = $this->setup_fields();
 
     }
