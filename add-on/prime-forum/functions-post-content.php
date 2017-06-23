@@ -102,12 +102,25 @@ function pfm_filter_imgs($content){
 
 add_filter('pfm_filter_content_without_pretags','pfm_filter_urls',11);
 function pfm_filter_urls($content){
-    
+
     preg_match_all("/(\s|^|>)(https?:[_a-z0-9\/\.\-#?=&]+)/ui", $content, $urls);
     
     if($urls[0]){
+        
+        $oembedSupport = (pfm_get_option('support-oembed') && function_exists('wp_oembed_get'))? true: false;
 
         foreach( $urls[0] as $k => $url ){
+            
+            if($oembedSupport){
+            
+                $oembed = wp_oembed_get($urls[2][$k],array('width'=>400,'height'=>400));
+                
+                if($oembed){
+                    $content = str_replace($urls[2][$k],$oembed,$content);
+                    continue;
+                }
+            
+            }
             
             if(pfm_is_can('post_create')){
 
@@ -153,24 +166,6 @@ function pfm_filter_links($content){
 
         }
     
-    }
-    
-    return $content;
-}
-
-add_filter('pfm_filter_content_without_pretags','pfm_add_oembed_post_content',13);
-function pfm_add_oembed_post_content($content){
-    
-    if(pfm_get_option('support-oembed') && function_exists('wp_oembed_get')){
-        $links='';
-        preg_match_all('/href="([^"]+)"/', $content, $links);
-        foreach( $links[1] as $link ){
-            $m_lnk = wp_oembed_get($link,array('width'=>400,'height'=>400));
-            if($m_lnk){
-                $content = str_replace($link,'',$content);
-                $content .= $m_lnk;
-            }
-        }
     }
     
     return $content;
