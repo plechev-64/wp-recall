@@ -522,6 +522,8 @@ function pfm_add_post($args){
     if(!$result)
         return false;
     
+    pfm_update_topic_data($args['topic_id']);
+    
     $post_id = $wpdb->insert_id;
     
     do_action('pfm_add_post',$post_id);

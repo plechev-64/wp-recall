@@ -957,7 +957,7 @@ function pfm_action_get_post_excerpt($post_id){
 
         if(isset($_POST['excerpt']) && $_POST['excerpt']){
 
-            $content = $_POST['excerpt'];
+            $content = wp_unslash($_POST['excerpt']);
 
             if(strpos($post->post_content, $content) !== false){
                 $content = '<blockquote><strong>'.$author_name.' сказал(а) </strong><br />'.$content.'</blockquote><br />';
@@ -967,7 +967,7 @@ function pfm_action_get_post_excerpt($post_id){
 
         }else{
 
-            $content = $post->post_content;
+            $content = wp_unslash($post->post_content);
 
             $content = '<blockquote><strong>'.$author_name.' сказал(а) </strong><br />'.$content.'</blockquote><br />';
 

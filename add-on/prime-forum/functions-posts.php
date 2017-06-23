@@ -73,17 +73,6 @@ function pfm_add_rating_post($content){
     return $content;
 }
 
-add_action('pfm_add_post','pfm_update_post_count',10);
-function pfm_update_post_count($post_id){
-    
-    $post = pfm_get_post($post_id);
-    
-    if(!$post) return false;
-    
-    pfm_update_topic_data($post->topic_id);
-
-}
-
 add_action('pfm_pre_delete_post','pfm_update_post_author_count',10);
 add_action('pfm_add_post','pfm_update_post_author_count',10);
 function pfm_update_post_author_count($post_id){
