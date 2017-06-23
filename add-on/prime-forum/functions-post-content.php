@@ -103,7 +103,7 @@ function pfm_filter_imgs($content){
 add_filter('pfm_filter_content_without_pretags','pfm_filter_urls',11);
 function pfm_filter_urls($content){
 
-    preg_match_all("/(\s|^|>)(https?:[_a-z0-9\/\.\-#?=&]+)/ui", $content, $urls);
+    preg_match_all("/(\s|^|>|])(https?:[_a-z0-9\/\.\-#?=&]+)/ui", $content, $urls);
     
     if($urls[0]){
         
