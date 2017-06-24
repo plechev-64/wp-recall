@@ -159,9 +159,9 @@
     
 }
 #prime-forum .prime-parent-box .prime-item-label span::before{
-    border-width: 15px 5px;
+    border-width: 15px 5px 13px;
     left: -10px;
-    top: -2px;
+    top: 0px;
 }
 #prime-forum .prime-parent-box .prime-item-label span::after{
     border-width: 16px 10px 10px 16px;
@@ -550,7 +550,6 @@
 #manager-migrate .fields-submit {
     text-align: right;
 }
-
 
 @media screen and (max-width:640px){
     #prime-forum .prime-forum-activity {
