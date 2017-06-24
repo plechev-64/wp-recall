@@ -177,7 +177,7 @@ class PrimeForm extends Rcl_Custom_Fields{
     function get_form($args = false){
 
         $content = '<div id="prime-topic-form" class="rcl-form">';
-
+            
             $content .= '<form method="post" action="">';
             
                 $content .= '<div class="post-form-top">';
@@ -215,7 +215,7 @@ class PrimeForm extends Rcl_Custom_Fields{
                 $content .= wp_nonce_field('pfm-action','_wpnonce',true,false);
 
             $content .= '</form>';
-
+            
         $content .= '</div>';
         
         return $content;

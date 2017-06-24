@@ -355,10 +355,8 @@ class Rcl_Custom_Fields{
             
             $wp_scripts->do_items($scripts);
         }
-        
-        $content = ob_get_contents();
 
-        ob_end_clean();
+        $content = ob_get_contents();
         
         if(defined( 'DOING_AJAX' )){
             $content .= '<script>rcl_init_ajax_editor("'.$editor_id.'",'.json_encode(array(
@@ -366,7 +364,9 @@ class Rcl_Custom_Fields{
                 'qt_buttons' => (isset($field['quicktags']))? $field['quicktags']: false
             )).');</script>';
         }
-        
+
+        ob_end_clean();
+
         return $content;
     }
     

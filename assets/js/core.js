@@ -363,6 +363,8 @@ function rcl_init_field_maxlength(fieldID){
 
 function rcl_init_ajax_editor(id,options){
     
+    if(typeof QTags === 'undefined') return false;
+    
     rcl_do_action('rcl_pre_init_ajax_editor',{id:id,options:options});
 
     var qt_options = {
@@ -392,12 +394,14 @@ function rcl_init_ajax_editor(id,options){
         tinymce.init(tinyMCEPreInit.mceInit[id]);   
         tinyMCE.execCommand('mceAddEditor', false, id); 
         
-        switchEditors.go(fullId, 'html');
+        switchEditors.go(id, 'html');
     }
 
 }
 
 function rcl_setup_quicktags(newTags){
+    
+    if(typeof QTags === 'undefined') return false;
     
     newTags.forEach(function(tagArray, i, newTags) {
 
@@ -418,7 +422,7 @@ function rcl_setup_quicktags(newTags){
 rcl_add_action('rcl_pre_init_ajax_editor','rcl_add_ajax_quicktags');
 function rcl_add_ajax_quicktags(editor){
 
-    if(!Rcl.QTags) return false;
+    if(typeof Rcl === 'undefined' || !Rcl.QTags) return false;
     
     rcl_setup_quicktags(Rcl.QTags);
 
@@ -427,7 +431,7 @@ function rcl_add_ajax_quicktags(editor){
 rcl_add_action('rcl_footer','rcl_add_quicktags');
 function rcl_add_quicktags(){
 
-    if(!Rcl.QTags) return false;
+    if(typeof Rcl === 'undefined' || !Rcl.QTags) return false;
     
     rcl_setup_quicktags(Rcl.QTags);
 
