@@ -121,3 +121,97 @@
     padding: 5px;
     font-size:11px;
 }
+
+
+/* START quicktags editor */
+#prime-topic-form-box .wp-editor-container {
+    border: none;
+}
+#prime-topic-form-box .quicktags-toolbar {
+    border: none;
+    padding: 3px 0;
+}
+#prime-topic-form-box .quicktags-toolbar > span {
+    display: inline-block;
+    position: relative;
+}
+#prime-topic-form-box #qt_button_strong input,
+#prime-topic-form-box #qt_button_em input,
+#prime-topic-form-box #qt_button_link input,
+#prime-topic-form-box #qt_button_block input,
+#prime-topic-form-box #qt_button_del input,
+#prime-topic-form-box #qt_button_pfm_pre input,
+#prime-topic-form-box #qt_button_code input,
+#prime-topic-form-box #qt_button_pfm_offtop input,
+#prime-topic-form-box #qt_button_pfm_spoiler input,
+#prime-topic-form-box #qt_button_close input {
+    height: auto;
+    line-height: 24px;
+    margin: 0 4px 4px 0;
+    opacity: 0;
+    padding: 0;
+    width: 40px;
+}
+#prime-topic-form-box .quicktags-toolbar > span::before {
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    color: #555;
+    font-family: fontawesome;
+    font-size: 17px;
+    left: 0;
+    line-height: 17px;
+    padding: 5px 11px;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 40px;
+    z-index: 2;
+}
+#prime-topic-form-box .quicktags-toolbar > span:hover::before {
+    border: 1px solid #d5d5d5;
+    color: #000;
+}
+#prime-topic-form-box #qt_button_strong::before {
+    content: "\f032";
+    padding-left: 13px;
+}
+#prime-topic-form-box #qt_button_em::before {
+    content: "\f033";
+    padding-left: 14px;
+}
+#prime-topic-form-box #qt_button_link::before {
+    content: "\f0c1";
+}
+#prime-topic-form-box #qt_button_block::before {
+    content: "\f10e";
+}
+#prime-topic-form-box #qt_button_del::before {
+    content: "\f0cc";
+}
+#prime-topic-form-box #qt_button_pfm_pre::before {
+    content: "\f120";
+}
+#prime-topic-form-box #qt_button_code::before {
+    content: "\f121";
+    padding-left: 10px;
+}
+#prime-topic-form-box #qt_button_pfm_offtop::before {
+    content: "\f0f4";
+}
+#prime-topic-form-box #qt_button_pfm_spoiler::before {
+    content: "\f070";
+}
+#prime-topic-form-box #qt_button_close::before {
+    content: "\f0d0";
+}
+#prime-topic-form-box .wp-editor-wrap .wp-editor-area {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+#prime-topic-form-box .wp-editor-wrap .wp-editor-area:focus {
+    border-color: #ccc;
+}
+/* END quicktags editor */
+
+
+

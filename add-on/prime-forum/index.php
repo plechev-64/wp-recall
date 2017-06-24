@@ -274,7 +274,7 @@ function pfm_init_js_variables($data){
     global $PrimeQuery;
     
     if(!$PrimeQuery->is_forum && !$PrimeQuery->is_topic) return $data;
-    
+
     $data['QTags'][] = array('pfm_pre', __('pre'), '<pre>', '</pre>', 'h', 'Многострочный код', 100);
     $data['QTags'][] = array('pfm_spoiler', __('спойлер'), '[spoiler]', '[/spoiler]', 'h', 'Спойлер', 120);
     $data['QTags'][] = array('pfm_offtop', __('оффтоп'), '[offtop]', '[/offtop]', 'h', 'Оффтоп', 110);

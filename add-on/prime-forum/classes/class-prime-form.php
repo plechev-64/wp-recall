@@ -176,9 +176,9 @@ class PrimeForm extends Rcl_Custom_Fields{
     
     function get_form($args = false){
 
-        $content = '<div id="prime-topic-form" class="rcl-form">';
+        $content = '<div id="prime-topic-form-box" class="rcl-form">';
             
-            $content .= '<form method="post" action="">';
+            $content .= '<form id="prime-topic-form" method="post" action="">';
             
                 $content .= '<div class="post-form-top">';
                 $content .= apply_filters('pfm_form_top','');
@@ -207,8 +207,21 @@ class PrimeForm extends Rcl_Custom_Fields{
                 $content .= '<div class="post-form-bottom">';
                 $content .= apply_filters('pfm_form_bottom','',$this->action);
                 $content .= '</div>';
+                
+                $args = array(
+                    'method' => 'get_preview',
+                    'serialize_form' => 'prime-topic-form',
+                    'item_id' => $this->action
+                );
 
                 $content .= '<div class="submit-box">';
+                
+                if(!defined( 'DOING_AJAX' )){
+                    $content .= '<a href="#" title="'.__('Предпросмотр').'" class="recall-button" onclick=\'pfm_ajax_action('.json_encode($args).');return false;\'>';
+                    $content .= '<i class="fa fa-eye" aria-hidden="true"></i> '.__('Предпросмотр');
+                    $content .= '</a>';
+                }
+                
                 $content .= '<input type="submit" name="Submit" class="recall-button" value="'.$this->submit.'" />';
                 $content .= '</div>';
                 $content .= '<input type="hidden" name="pfm-data[action]" value="'.$this->action.'">';

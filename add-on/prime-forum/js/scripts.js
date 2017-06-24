@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-      
+    
 });
 
 rcl_add_action('rcl_pre_init_ajax_editor','pfm_wrap_input_quicktags_editor');
@@ -12,7 +12,7 @@ function pfm_wrap_input_quicktags_editor(){
         
         var active, on, wp,
                 title = this.title ? ' title="' + pfm_escape( this.title ) + '"' : '',
-                ariaLabel = this.attr && this.attr.ariaLabel ? ' aria-label="' + pfm_escape( this.attr.ariaLabel ) + '"' : '',
+                ariaLabel = this.attr && this.attr.ariaLabel ? ' title="' + pfm_escape( this.attr.ariaLabel ) + '"' : '',
                 val = this.display ? ' value="' + pfm_escape( this.display ) + '"' : '',
                 id = this.id ? ' id="' + pfm_escape( idPrefix + this.id ) + '"' : '',
                 dfw = ( wp = window.wp ) && wp.editor && wp.editor.dfw;

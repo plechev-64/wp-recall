@@ -88,6 +88,8 @@ function pfm_get_primary_manager(){
 
 function pfm_the_post_manager(){
     global $PrimePost,$PrimeTopic;
+    
+    if(!$PrimePost->post_id) return false;
 
     $actions = array();
     
@@ -146,6 +148,8 @@ function pfm_the_post_manager(){
 
 function pfm_the_topic_manager(){
     global $PrimeTopic;
+    
+    if(!$PrimeTopic->topic_id) return false;
     
     $actions = array();
     
@@ -995,6 +999,7 @@ function pfm_action_get_post_excerpt($post_id){
     return $result;
 }
 
+//получение списка форумов
 pfm_add_ajax_action('get_structure','pfm_action_get_structure');
 function pfm_action_get_structure(){
 
@@ -1017,6 +1022,7 @@ function pfm_action_get_structure(){
     return $result;
 }
 
+//получение обновленных тем
 pfm_add_ajax_action('get_last_updated_topics','pfm_action_get_last_updated_topics');
 function pfm_action_get_last_updated_topics(){
     global $wpdb,$PrimeTopic;
@@ -1060,6 +1066,7 @@ function pfm_action_get_last_updated_topics(){
     return $result;
 }
 
+//получение приватного чата
 pfm_add_ajax_action('get_private_chat','pfm_action_get_private_chat');
 function pfm_action_get_private_chat($user_id){
     
@@ -1074,6 +1081,7 @@ function pfm_action_get_private_chat($user_id){
     return $result;
 }
 
+//получение информации о пользователе
 pfm_add_ajax_action('get_author_info','pfm_action_get_author_info');
 function pfm_action_get_author_info($user_id){
     
@@ -1082,6 +1090,59 @@ function pfm_action_get_author_info($user_id){
     $result['dialog-width'] = 'auto';
     $result['dialog-class'] = 'rcl-user-getails';
     $result['title'] = __('Подробная информация');
+    
+    return $result;
+}
+
+//предпросмотр сообщения
+pfm_add_ajax_action('get_preview','pfm_action_get_preview');
+function pfm_action_get_preview($action){
+    
+    if(isset($_POST['formdata'])){
+        
+        $formdata = array();
+        foreach($_POST['formdata'] as $data){
+            $formdata[$data['name']] = $data['value'];
+        }
+        
+    }
+    
+    $postContent = wp_unslash($formdata['pfm-data[post_content]']);
+    
+    if(!$postContent){
+        
+        $result['error'] = __('Пустое сообщение!');
+    
+        return $result;
+        
+    }
+    
+    global $PrimeShorts,$PrimePost,$PrimeUser,$user_ID;
+    
+    $PrimeUser = new PrimeUser();
+    $PrimeShorts = pfm_get_shortcodes();   
+
+    $theme = rcl_get_addon(get_option('rcl_pforum_template'));
+    
+    $PrimePost = array(
+        'post_id' => 0,
+        'user_id' => $user_ID,
+        'post_content' => $postContent,
+        'post_date' => current_time('mysql')
+    );
+    
+    $PrimePost = (object)$PrimePost;
+
+    $content = '<div id="prime-forum">';
+
+    $content .= rcl_get_include_template('pfm-single-post.php',$theme['path']);
+        
+    $content .= '</div>';
+    
+    $result['content'] = $content;
+    $result['dialog'] = true;
+    $result['dialog-width'] = 'small';
+    $result['title'] = __('Предпросмотр');
     
     return $result;
 }
