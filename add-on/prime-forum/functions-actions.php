@@ -451,6 +451,8 @@ function pfm_ajax_action(){
     
     if(!isset($PrimeActions[$method])) exit;
     
+    do_action('pfm_pre_ajax_action');
+    
     $funcName = $PrimeActions[$method];
     
     $result = $funcName($itemID);
@@ -1128,7 +1130,9 @@ function pfm_action_get_preview($action){
         'post_id' => 0,
         'user_id' => $user_ID,
         'post_content' => $postContent,
-        'post_date' => current_time('mysql')
+        'post_date' => current_time('mysql'),
+        'display_name' => get_the_author_meta('display_name',$user_ID),
+        'user_registered' => get_the_author_meta('user_registered',$user_ID)
     );
     
     $PrimePost = (object)$PrimePost;

@@ -1,5 +1,11 @@
 <?php
 
+add_action('pfm_init','pfm_reset_oembed_filter');
+add_action('pfm_pre_ajax_action','pfm_reset_oembed_filter');
+function pfm_reset_oembed_filter(){
+    remove_filter( 'pre_oembed_result', 'wp_filter_pre_oembed_result', 10 );
+}
+
 add_filter('pfm_the_post_content','pfm_filter_tags_post_content',10);
 function pfm_filter_tags_post_content($content){
     
@@ -112,8 +118,8 @@ function pfm_filter_urls($content){
         foreach( $urls[0] as $k => $url ){
             
             if($oembedSupport){
-            
-                $oembed = wp_oembed_get($urls[2][$k],array('width'=>400,'height'=>400));
+                
+                $oembed = wp_oembed_get($urls[2][$k],array('width'=>400,'height'=>400,'discover' => false));
                 
                 if($oembed){
                     $content = str_replace($urls[2][$k],$oembed,$content);

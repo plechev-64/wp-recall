@@ -593,19 +593,35 @@ class PrimeQuery{
     }
 
     function init_canonical_url(){
+        
+        $url = false;
 
         if($this->is_group){
-
-            $this->canonical = pfm_get_group_permalink($this->object->group_id);
+            
+            $url = pfm_get_group_permalink($this->object->group_id);
 
         }else if($this->is_forum){
 
-            $this->canonical = pfm_get_forum_permalink($this->object->forum_id);
+            $url = pfm_get_forum_permalink($this->object->forum_id);
 
         }else if($this->is_topic){
 
-            $this->canonical = pfm_get_topic_permalink($this->object->topic_id);
+            $url = pfm_get_topic_permalink($this->object->topic_id);
 
+        }
+        
+        if($url){
+            
+            if($this->is_page){
+                if ( '' != get_option('permalink_structure') ) {
+                    $url .= 'page/'.$this->current_page.'/';
+                }else{
+                    $url = add_query_arg(array('pfm-page' => $this->current_page), $url);
+                }
+            }
+            
+            $this->canonical = $url;
+        
         }
 
     }

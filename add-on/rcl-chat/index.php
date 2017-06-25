@@ -441,6 +441,11 @@ function rcl_chat_shortcode($atts){
     return $chat->get_chat();
 }
 
+add_action('rcl_chat','rcl_chat_reset_oembed_filter');
+function rcl_chat_reset_oembed_filter(){
+    remove_filter( 'pre_oembed_result', 'wp_filter_pre_oembed_result', 10 );
+}
+
 include_once 'actions.php';
 include_once 'actions_cron.php';
 include_once 'actions_ajax.php';

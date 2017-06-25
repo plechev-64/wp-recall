@@ -207,7 +207,7 @@ function pfm_init_query(){
     global $PrimeQuery,$PrimeGroup,$PrimeForum,$PrimeTopic,$PrimePost,$PrimeUser,$wp_query;
 
     if($wp_query->queried_object->ID != pfm_get_option('home-page')) return;
-    
+
     $PrimeUser = new PrimeUser();
     
     $PrimeQuery = new PrimeQuery();

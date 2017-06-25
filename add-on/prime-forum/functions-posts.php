@@ -13,7 +13,7 @@ function pfm_get_post_content($post_id){
 }
 
 function pfm_the_post_content(){
-    global $PrimePost;
+    global $PrimePost,$PrimeQuery;
     
     $content = pfm_get_post_content($PrimePost->post_id);
 

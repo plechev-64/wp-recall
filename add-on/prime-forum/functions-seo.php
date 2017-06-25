@@ -83,6 +83,8 @@ function pfm_setup_page_title($title){
 function pfm_replace_shortlink($url){
     global $PrimeQuery;
     
+    if($PrimeQuery->is_page) return $url;
+    
     if($PrimeQuery->is_group){
             
         $object_id = $PrimeQuery->object->group_id;

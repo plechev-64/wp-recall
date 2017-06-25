@@ -53,7 +53,7 @@ function rcl_avatar_uploader(){
                         });
                         
                         ssi_modal.show({
-                            sizeClass: 'auto',
+                            sizeClass: 'smallToMedium',
                             title: Rcl.local.title_image_upload,
                             className: 'rcl-hand-uploader',
                             buttons: [{
