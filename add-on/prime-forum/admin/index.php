@@ -270,8 +270,8 @@ function pfm_page_themes(){
         <form class="wp-upload-form" action="" enctype="multipart/form-data" method="post">
             <label class="screen-reader-text" for="addonzip">'.__('Add-on archive','wp-recall').'</label>
             <input id="addonzip" type="file" name="addonzip">
-            <input id="install-plugin-submit" class="button" type="submit" value="'.__('Install','wp-recall').'" name="install-template-submit">
-            '.wp_nonce_field('install-template-rcl','_wpnonce',true,false).'
+            <input id="install-plugin-submit" class="button" type="submit" value="'.__('Install','wp-recall').'" name="pfm-install-template-submit">
+            '.wp_nonce_field('install-template-pfm','_wpnonce',true,false).'
         </form>
 
         </div>
@@ -581,6 +581,42 @@ function pfm_get_manager_item_delete_form($fields){
 
     return $content;
     
+}
+
+function pfm_get_templates(){
+        
+    $paths = array(
+        rcl_addon_path(__FILE__).'themes',
+        RCL_PATH.'add-on',
+        RCL_TAKEPATH.'add-on'
+    ) ;
+
+    $add_ons = array();
+    foreach($paths as $path){
+        if(file_exists($path)){
+            $addons = scandir($path,1);
+
+            foreach((array)$addons as $namedir){
+                $addon_dir = $path.'/'.$namedir;
+                $index_src = $addon_dir.'/index.php';
+                if(!is_dir($addon_dir)||!file_exists($index_src)) continue;
+                $info_src = $addon_dir.'/info.txt';
+                if(file_exists($info_src)){
+                    $info = file($info_src);
+                    $data = rcl_parse_addon_info($info);
+
+                    if(!isset($data['custom-manager']) || $data['custom-manager'] != 'prime-forum') continue;
+
+                    $add_ons[$namedir] = $data;
+                    $add_ons[$namedir]['path'] = $addon_dir;
+                }
+
+            }
+        }
+    }
+
+    return $add_ons;
+
 }
 
 add_action('pfm_deleted_group','pfm_delete_group_custom_fields',10);

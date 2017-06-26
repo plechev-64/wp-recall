@@ -83,7 +83,9 @@ function pfm_setup_page_title($title){
 function pfm_replace_shortlink($url){
     global $PrimeQuery;
     
-    if($PrimeQuery->is_page) return $url;
+    if($PrimeQuery->is_frontpage) return $url;
+    
+    if($PrimeQuery->is_page) return false;
     
     if($PrimeQuery->is_group){
             

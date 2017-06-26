@@ -245,7 +245,7 @@ class Prime_Themes_Manager extends WP_List_Table {
     }
 
     static function update_status ( ) {
-        global $rcl_options;
+        global $rcl_options,$Prime_Themes_Manager;
         
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
         if( 'pfm-themes' != $page ) return;
@@ -264,8 +264,14 @@ class Prime_Themes_Manager extends WP_List_Table {
                     header("Location: ".admin_url('admin.php?page=pfm-themes&action='.$action.'&template='.$addon), true, 302);
                     exit;
                 }
+                
+                $templates = pfm_get_templates();
 
-                rcl_activate_addon($addon,true,rcl_addon_path(__FILE__).'themes');
+                if(!isset($templates[$addon])) return false;
+                
+                $template = $templates[$addon];
+                
+                rcl_activate_addon($addon,true,dirname($template['path']));
 
                 update_option('rcl_pforum_template',$addon);
                 header("Location: ".admin_url('admin.php?page=pfm-themes&update-template=activate'), true, 302);
@@ -284,8 +290,8 @@ class Prime_Themes_Manager extends WP_List_Table {
 } //class
 
 function pfm_init_upload_template ( ) {
-    if ( isset( $_POST['install-template-submit'] ) ) {
-        if( !wp_verify_nonce( $_POST['_wpnonce'], 'install-template-rcl' ) ) return false;
+    if ( isset( $_POST['pfm-install-template-submit'] ) ) {
+        if( !wp_verify_nonce( $_POST['_wpnonce'], 'install-template-pfm' ) ) return false;
         pfm_upload_template();
     }
 }

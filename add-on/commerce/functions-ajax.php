@@ -33,7 +33,7 @@ function rcl_add_to_cart(){
     
     $args = array();
     
-    $args['quantity'] = isset($cart['quantity'])? $cart['quantity']: false;
+    $args['quantity'] = isset($cart['quantity'])? absint($cart['quantity']): false;
     $args['variations'] = isset($cart['variations'])? $cart['variations']: false;
 
     if(!isset($cart['isset']['variations'])){
