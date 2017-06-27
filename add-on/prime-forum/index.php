@@ -219,7 +219,7 @@ function pfm_init_query($wp_query){
     $PrimeQuery = new PrimeQuery();
     
     $PrimeQuery->init_query();
-    
+
     do_action('pfm_init');
 
 }

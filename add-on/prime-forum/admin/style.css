@@ -4,6 +4,9 @@
 #prime-options select{
     width: 100%;
 }
+#prime-options .rcl-field-notice{
+    font-size:12px;
+}
 #prime-forum-manager{
     
 }

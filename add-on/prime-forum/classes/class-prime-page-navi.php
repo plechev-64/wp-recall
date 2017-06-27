@@ -24,12 +24,15 @@ class PrimePageNavi extends Rcl_PageNavi{
         }else if($PrimeQuery->is_group){
             $url = pfm_get_group_permalink($PrimeQuery->object->group_id);
         }else if($PrimeQuery->is_search){
-            $url = pfm_get_home_url().'/search/';
+            $url = untrailingslashit(pfm_get_home_url()).'/search/';
         }
         
         if($page_id != 1){
             if ( '' != get_option('permalink_structure') ) {
-                $url .= 'page/'.$page_id.'/';
+                $url .= '/page/'.$page_id;
+                if(preg_match("/\/$/",get_option('permalink_structure'))){
+                    $url .= '/';
+                }
             }else{
                 $url = add_query_arg(array('pfm-page' => $page_id));
             }

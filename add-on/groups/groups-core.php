@@ -272,6 +272,10 @@ function rcl_get_group_permalink($term_id){
             $term = get_term( $term_id, 'groups' );
 
             $url = $homeUrl.'/'.$term->slug;
+            
+            if(preg_match("/\/$/",get_option('permalink_structure'))){
+                $url .= '/';
+            } 
 
         } else {
             

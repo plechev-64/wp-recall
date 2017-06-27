@@ -26,6 +26,14 @@ function pfm_get_shortcodes(){
             
 }
 
+add_filter('pfm_whitelist_shortcodes','pfm_add_admin_support_shortcodes',10);
+function pfm_add_admin_support_shortcodes($whiteList){
+    $adminShorts = explode("\n",pfm_get_option('support-shortcodes'));
+    if(!$adminShorts) return $whiteList;
+    $whiteList = array_merge($whiteList,$adminShorts);
+    return $whiteList;
+}
+
 function pfm_do_shortcode( $content, $ignore_html = false ) {
     global $PrimeShorts;
 

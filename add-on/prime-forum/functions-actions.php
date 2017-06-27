@@ -441,7 +441,7 @@ function pfm_init_actions(){
 add_action('wp_ajax_pfm_ajax_action','pfm_ajax_action');
 add_action('wp_ajax_nopriv_pfm_ajax_action','pfm_ajax_action');
 function pfm_ajax_action(){
-    global $PrimeActions;
+    global $PrimeActions,$PrimeQuery;
     
     rcl_verify_ajax_nonce();
     
@@ -450,6 +450,8 @@ function pfm_ajax_action(){
     $itemID = (isset($_POST['item_id']))? $_POST['item_id']: null;
     
     if(!isset($PrimeActions[$method])) exit;
+    
+    $PrimeQuery = new PrimeQuery();
     
     do_action('pfm_pre_ajax_action');
     
@@ -1043,9 +1045,7 @@ function pfm_action_get_last_updated_topics(){
         . "ORDER BY MAX(pfm_posts.post_date)DESC "
         . "LIMIT 20"
     );
-    
-    $PrimeQuery = new PrimeQuery();
-    
+
     $PrimeQuery->last['posts'] = $PrimeQuery->get_topics_last_post($topics);
 
     $content = '<div id="prime-forum">';

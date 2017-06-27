@@ -157,7 +157,7 @@ function pfm_the_last_topic(){
 function pfm_the_last_post(){
     global $PrimeForum,$PrimeTopic,$PrimeQuery;
     
-    if(pfm_is_home() || pfm_is_group()){
+    if(pfm_is_home() || pfm_is_group() ||$PrimeForum->parent_id){
         $lastPost = $PrimeQuery->search_forum_last_post($PrimeForum->forum_id);
     }else{
         $lastPost = $PrimeQuery->search_topic_last_post($PrimeTopic->topic_id);

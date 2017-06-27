@@ -261,7 +261,8 @@
 #prime-forum .prime-last-items > span{
     display:block;
 }
-#prime-forum .prime-forums-list .prime-last-items{
+#prime-forum .prime-forums-list .prime-last-items,
+#prime-forum .prime-subforums-list .prime-last-items{
     max-width: 400px;
     min-width: 200px;
     width: 40%;

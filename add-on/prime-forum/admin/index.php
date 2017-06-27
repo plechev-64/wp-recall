@@ -99,6 +99,13 @@ function pfm_page_options(){
             )
         ),
         array(
+            'type' => 'textarea',
+            'slug' => 'support-shortcodes',
+            'name' => 'rcl_pforum_options[support-shortcodes]',
+            'title' => __('Поддерживаемые шорткоды'),
+            'notice' => __('Укажите нужные шорткоды для их поддержки в сообщениях форума, каждый с новой строки. Указывать без скобок, например: custom-shortcod')
+        ),
+        array(
             'type' => 'select',
             'slug' => 'view-forums-home',
             'name' => 'rcl_pforum_options[view-forums-home]',
