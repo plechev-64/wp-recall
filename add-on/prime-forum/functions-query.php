@@ -164,10 +164,12 @@ function pfm_the_last_post(){
     }
 
     if(!$lastPost){
-        echo 'Сообщений нет'; return;
+        echo __('не найдено'); return;
     }
     
-    echo '<a href="'.pfm_get_post_permalink($lastPost->post_id).'">'
+    $name = $lastPost->user_id? get_the_author_meta('display_name',$lastPost->user_id): __('Гость');
+    
+    echo __('от').' '.$name.': <a href="'.pfm_get_post_permalink($lastPost->post_id).'">'
             . human_time_diff( strtotime($lastPost->post_date), current_time('timestamp') ). ' назад'
         .'</a>';
 

@@ -10,7 +10,7 @@
         <span>Сообщений:</span><span><?php pfm_the_post_count(); ?></span>
     </div>
     <div class="prime-last-items">
-        <span>Последнее сообщение:</span>
+        <span>Последнее сообщение</span>
         <span><?php pfm_the_last_post(); ?></span>
     </div>
 </div>

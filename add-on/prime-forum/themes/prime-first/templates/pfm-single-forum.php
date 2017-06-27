@@ -20,7 +20,7 @@
         </div>
         <div class="prime-last-items">
             <span>Последняя тема: <?php pfm_the_last_topic(); ?></span>
-            <span>Последнее сообщение: <?php pfm_the_last_post(); ?></span>
+            <span>Последнее сообщение <?php pfm_the_last_post(); ?></span>
         </div>
     </div>
 </div>

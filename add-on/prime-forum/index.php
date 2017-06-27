@@ -183,6 +183,8 @@ function pfm_user_topics_start($master_id){
     $TopicsQuery->query['orderby'] = "MAX(pfm_posts.post_date)";
 
     $topics = $TopicsQuery->get_data('get_results');
+    
+    $PrimeQuery->last['posts'] = $PrimeQuery->get_topics_last_post($topics);
 
     $theme = pfm_get_current_theme();
     
