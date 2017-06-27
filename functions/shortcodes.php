@@ -21,7 +21,7 @@ function rcl_get_shortcode_wp_recall(){
 
 add_shortcode('userlist','rcl_get_userlist');
 function rcl_get_userlist($atts){
-    global $rcl_user,$rcl_users_set,$rcl_options,$user_ID;
+    global $rcl_user,$rcl_users_set,$user_ID;
     
     require_once RCL_PATH.'classes/class-rcl-users-list.php';
 
@@ -40,9 +40,7 @@ function rcl_get_userlist($atts){
         $users->query['offset'] = $pagenavi->offset;
     }
 
-    $timeout = (isset($rcl_options['timeout'])&&$rcl_options['timeout'])? $rcl_options['timeout']: 600;
-
-    $timecache = ($user_ID && $users->query['number']=='time_action')? $timeout: 0;
+    $timecache = ($user_ID && $users->query['number']=='time_action')? rcl_get_option('timeout',600): 0;
 
     $rcl_cache = new Rcl_Cache($timecache);
         

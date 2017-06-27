@@ -106,7 +106,6 @@ function rcl_print_bar_right_menu(){
 
 add_filter('rcl_inline_styles','rcl_bar_add_inline_styles',10,2);
 function rcl_bar_add_inline_styles($styles,$rgb){
-    global $rcl_options;
     
     if (is_admin_bar_showing()){ 
         // 68 = 32 админбар + 36 реколлбар
@@ -124,7 +123,7 @@ function rcl_bar_add_inline_styles($styles,$rgb){
         * html body {margin-top:36px !important;}';
     }
     
-    if(isset($rcl_options['rcb_color'])&&$rcl_options['rcb_color']){
+    if(rcl_get_option('rcb_color')){
         
         list($r, $g, $b) = $rgb;
 

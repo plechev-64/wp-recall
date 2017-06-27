@@ -15,9 +15,9 @@ class Rcl_Includer{
     }
     
     function include_styles(){
-        global $rcl_styles,$rcl_options,$user_ID;
+        global $rcl_styles;
         
-        $this->is_minify = (isset($rcl_options['minify_css']))? $rcl_options['minify_css']: 0;
+        $this->is_minify = rcl_get_option('minify_css');
         
         $this->minify_dir = RCL_UPLOAD_PATH.'css';
         
@@ -38,7 +38,7 @@ class Rcl_Includer{
             );
             
             //если используем recallbar, то подключаем его стили
-            if(isset($rcl_options['view_recallbar'])&&$rcl_options['view_recallbar']){
+            if(rcl_get_option('view_recallbar')){
                 $primary['rcl-bar'] = $css_dir.'recallbar.css';
             }
 
@@ -80,9 +80,9 @@ class Rcl_Includer{
     }
     
     function include_scripts(){
-        global $rcl_scripts,$rcl_options,$user_ID;
+        global $rcl_scripts;
         
-        $this->is_minify = (isset($rcl_options['minify_js']))? $rcl_options['minify_js']: 0;
+        $this->is_minify = rcl_get_option('minify_js');
         
         $this->minify_dir = RCL_UPLOAD_PATH.'js';
         

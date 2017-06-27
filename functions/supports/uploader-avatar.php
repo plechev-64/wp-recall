@@ -15,12 +15,10 @@ function rcl_support_avatar_uploader_scripts(){
 
 add_filter('rcl_init_js_variables','rcl_init_js_avatar_variables',10);
 function rcl_init_js_avatar_variables($data){
-    global $rcl_options,$user_ID;
+    global $user_ID;
 
     if(rcl_is_office($user_ID)){
-        $size_ava = (isset($rcl_options['avatar_weight'])&&$rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: 2;
-    
-        $data['profile']['avatar_size'] = $size_ava;
+        $data['profile']['avatar_size'] = rcl_get_option('avatar_weight',2);
         $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum image size! Max. %s MB','wp-recall'),$size_ava);
         $data['local']['title_image_upload'] = __('Image being loaded','wp-recall');
         $data['local']['title_webcam_upload'] = __('Image from camera','wp-recall');
@@ -108,14 +106,11 @@ function rcl_avatar_upload(){
 	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
 	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
-	global $user_ID, $rcl_options, $rcl_avatar_sizes;
-
-	if(!$user_ID) return false;
+	global $rcl_avatar_sizes, $user_ID;
 
 	$upload = array();
 	$coord = array();
-
-	$maxsize = ($rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: $maxsize = 2;
+        
 	$tmpname = current_time('timestamp').'.jpg';
 
 	$dir_path = RCL_UPLOAD_PATH.'avatars/';
@@ -137,43 +132,43 @@ function rcl_avatar_upload(){
 	}
 
 	if($_POST['src']){
-		$data = $_POST['src'];
-		$data = str_replace('data:image/png;base64,', '', $data);
-		$data = str_replace(' ', '+', $data);
-		$data = base64_decode($data);
-		$upload['file']['type'] = 'image/png';
-		$upload['file']['name'] = $tmpname;
-		$upload['file']['tmp_name'] = $tmp_path.$tmpname;
-		$upload['file']['size'] = file_put_contents($upload['file']['tmp_name'], $data);
-                $mime = explode('/',$upload['file']['type']);
+            $data = $_POST['src'];
+            $data = str_replace('data:image/png;base64,', '', $data);
+            $data = str_replace(' ', '+', $data);
+            $data = base64_decode($data);
+            $upload['file']['type'] = 'image/png';
+            $upload['file']['name'] = $tmpname;
+            $upload['file']['tmp_name'] = $tmp_path.$tmpname;
+            $upload['file']['size'] = file_put_contents($upload['file']['tmp_name'], $data);
+            $mime = explode('/',$upload['file']['type']);
 	}else{
-		if($_FILES['userpicupload']){
-			foreach($_FILES['userpicupload'] as $key => $data){
-				$upload['file'][$key] = $data;
-			}
-		}
+            if($_FILES['userpicupload']){
+                    foreach($_FILES['userpicupload'] as $key => $data){
+                            $upload['file'][$key] = $data;
+                    }
+            }
 
-		if($_POST['coord']){
-			$viewimg = array();
-			list($coord['x'],$coord['y'],$coord['w'],$coord['h']) =  explode(',',$_POST['coord']);
-			list($viewimg['width'],$viewimg['height']) =  explode(',',$_POST['image']);
-		}
+            if($_POST['coord']){
+                    $viewimg = array();
+                    list($coord['x'],$coord['y'],$coord['w'],$coord['h']) =  explode(',',$_POST['coord']);
+                    list($viewimg['width'],$viewimg['height']) =  explode(',',$_POST['image']);
+            }
 
-                $mime = explode('/',$upload['file']['type']);
+            $mime = explode('/',$upload['file']['type']);
 
-		$tps = explode('.',$upload['file']['name']);
-		$cnt = count($tps);
-		if($cnt>2){
-			$type = $mime[$cnt-1];
-			$filename = str_replace('.','',$filename);
-			$filename = str_replace($type,'',$filename).'.'.$type;
-		}
-		$filename = str_replace(' ','',$filename);
+            $tps = explode('.',$upload['file']['name']);
+            $cnt = count($tps);
+            if($cnt>2){
+                    $type = $mime[$cnt-1];
+                    $filename = str_replace('.','',$filename);
+                    $filename = str_replace($type,'',$filename).'.'.$type;
+            }
+            $filename = str_replace(' ','',$filename);
 	}
 
 	$mb = $upload['file']['size']/1024/1024;
 
-	if($mb>$maxsize){
+	if($mb > rcl_get_option('avatar_weight',2)){
 		$res['error'] = __('Size exceeded','wp-recall');
 		echo json_encode($res);
 		exit;

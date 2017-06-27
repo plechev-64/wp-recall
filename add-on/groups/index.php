@@ -25,8 +25,7 @@ function rcl_groups_scripts(){
 
 add_filter('rcl_init_js_variables','rcl_init_js_groups_variables',10);
 function rcl_init_js_groups_variables($data){
-    global $rcl_options;
-    $data['groups']['avatar_size'] = (isset($rcl_options['avatar_weight']))? $rcl_options['avatar_weight']: 2;
+    $data['groups']['avatar_size'] = rcl_get_option('avatar_weight',2);
     return $data;
 }
 
@@ -44,14 +43,138 @@ function rcl_register_rating_group_type(){
     );
 }
 
+add_filter('page_rewrite_rules', 'rcl_group_set_rewrite_rules');
+function rcl_group_set_rewrite_rules($rules) {
+
+    if(!rcl_get_option('group-output')) return $rules;
+    
+    $page = get_post(rcl_get_option('group-page'));
+    
+    if(!$page) return $rules;
+
+    $rules[$page->post_name.'/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&group-id=$matches[1]';
+
+    return $rules;
+}
+
+add_filter('query_vars', 'rcl_group_set_query_vars');
+function rcl_group_set_query_vars($vars) {
+	
+    $vars[] = 'group-id';
+
+    $vars = apply_filters('rcl_group_query_vars', $vars);
+
+    return $vars;
+}
+
+add_action('parse_query','rcl_group_add_seo_filters',10);
+function rcl_group_add_seo_filters(){
+    global $wp_query;
+    
+    if(!rcl_get_option('group-output')) return false;
+
+    $groupPage = rcl_get_option('group-page');
+
+    $isGroupPage = (get_query_var('page_id') == $groupPage || $wp_query->queried_object_id == $groupPage)? true: false;
+    
+    if(!$wp_query->is_page || !$isGroupPage) return false;
+    
+    add_filter('the_title','rcl_group_setup_page_title',30);
+    add_filter('document_title_parts','rcl_group_replace_title',30);
+    add_filter('wp_title','rcl_group_replace_title',30);
+
+    add_filter('get_canonical_url', 'rcl_group_replace_canonical_url',30);
+    add_filter('get_shortlink', 'rcl_group_replace_shortlink',30);
+    
+    add_filter('aioseop_canonical_url', 'rcl_group_replace_canonical_url',30);
+    add_filter('aioseop_description', 'rcl_group_replace_description',30);
+    add_filter('aioseop_title_page', 'rcl_group_replace_title',30);
+    
+    add_filter('wpseo_title','rcl_group_replace_title',30);
+    add_filter('wpseo_canonical','rcl_group_replace_canonical_url',30);
+    add_filter('wpseo_metadesc','rcl_group_replace_description',30);
+    
+}
+
+function rcl_group_replace_title($title){
+    global $rcl_group;
+    
+    if(!$rcl_group) return $title;
+    
+    if($rcl_group->name){
+        
+        if(is_array($title)){
+            $title = array('title' => $rcl_group->name);
+        }else{
+            $title = $rcl_group->name;
+        }
+    }
+    
+    return $title;
+}
+
+function rcl_group_setup_page_title($title){
+    global $rcl_group;
+    
+    if(!$rcl_group || !in_the_loop())return $title;
+
+    $groupName = $rcl_group->name;
+    
+    if($rcl_group->name)
+        $title = $rcl_group->name;
+    
+    return $title;
+}
+
+function rcl_group_replace_shortlink($url){
+    global $rcl_group;
+    
+    if(!$rcl_group) return $url;
+    
+    $groupPage = rcl_get_option('group-page');
+    
+    $shortUrl = home_url( '?p=' . $groupPage. '&group-id=' . $rcl_group->term_id );
+    
+    if($shortUrl)
+        $url = $shortUrl;
+    
+    return $url;
+}
+
+function rcl_group_replace_canonical_url($url){
+    global $rcl_group;
+    
+    if(!$rcl_group) return $url;
+    
+    $groupUrl = rcl_get_group_permalink($rcl_group->term_id);
+    
+    if($groupUrl)
+        $url = $groupUrl;
+    
+    return $url;
+}
+
+function rcl_group_replace_description($descr) {
+    global $rcl_group;
+    
+    if(!$rcl_group) return $descr;
+    
+    $description = get_term_field( 'description', $rcl_group->term_id, 'groups' ); 
+    
+    if($description)
+        $descr = $description;
+    
+    return $descr;
+}
+
 //обновление кеша вкладки групп ее админа
 add_action('rcl_create_group','rcl_tab_groups_remove_cache',10);
 add_action('rcl_pre_delete_group','rcl_tab_groups_remove_cache',10);
 add_action('rcl_group_add_user','rcl_tab_groups_remove_cache',10);
 add_action('rcl_group_remove_user','rcl_tab_groups_remove_cache',10);
 function rcl_tab_groups_remove_cache($groupdata){
-    global $rcl_options;
-    if(isset($rcl_options['use_cache'])&&$rcl_options['use_cache']){
+
+    if(rcl_get_option('use_cache')){
         
         if(is_array($groupdata)){
             $group_id = $groupdata['group_id'];
@@ -66,6 +189,7 @@ function rcl_tab_groups_remove_cache($groupdata){
         
         rcl_delete_file_cache($string);       
     }
+    
 }
 
 /*add_action('update_post_rcl','rcl_groups_widget_posts_remove_cache',10,2);
@@ -121,13 +245,13 @@ function rcl_add_tab_groups(){
 
 function rcl_tab_groups($type_account = 'user_id'){
 
-    global $wpdb,$user_ID,$rcl_options,$user_LK;
+    global $user_ID,$user_LK;
     
     $content = '';
 
     if(rcl_is_office($user_ID)){
 
-        $group_can_public = (isset($rcl_options['public_group_access_recall']))? $rcl_options['public_group_access_recall']: false;
+        $group_can_public = rcl_get_option('public_group_access_recall');
         if($group_can_public){
                 $userdata = get_userdata( $user_ID );
                 if($userdata->user_level>=$group_can_public){

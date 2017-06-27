@@ -307,12 +307,8 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 
 add_action('init','rcl_group_add_posts_widget',10);
 function rcl_group_add_posts_widget(){
-    global $rcl_options;
-    
-    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
-    $widget = (isset($rcl_options['groups_posts_widget']) && $rcl_options['groups_posts_widget'])? 1: 0;
-    
-    if(!$output && !$widget) return false;
+
+    if(!rcl_get_option('group-output') && !rcl_get_option('groups_posts_widget')) return false;
     
     rcl_group_register_widget('Group_Posts_Widget');
 }
@@ -330,7 +326,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
     function widget($args,$instance) {
 
-        global $rcl_group,$user_ID,$rcl_options,$post;
+        global $rcl_group,$post;
 
         extract( $args );
 
@@ -342,12 +338,10 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
         );
 
         $instance = wp_parse_args( (array) $instance, $defaults );
-        
-        $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
 
         echo $before; ?>
 
-        <?php if($output){ //если вывод через шорткод на странице
+        <?php if(rcl_get_option('group-output')){ //если вывод через шорткод на странице
 
             $term_id = (isset($_GET['group-tag'])&&$_GET['group-tag']!='')? $_GET['group-tag']: $rcl_group->term_id;
 

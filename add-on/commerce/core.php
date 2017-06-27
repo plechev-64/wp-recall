@@ -262,7 +262,7 @@ function rcl_payment_order($order_id){
 
 add_action('rcl_create_order', 'rcl_create_order_send_mail',10,2);
 function rcl_create_order_send_mail($order_id, $register_data){
-    global $rclOrder,$rcl_options,$rmag_options;
+    global $rclOrder,$rmag_options;
     
     $rclOrder = rcl_get_order($order_id);
     
@@ -305,7 +305,7 @@ function rcl_create_order_send_mail($order_id, $register_data){
             <p>'.__('Password','wp-recall').': '.$register_data['user_pass'].'</p>
             <p>'.__('Next time use your personal cabinet for placing new orders on our website','wp-recall').'.</p>';
 
-        if($rcl_options['confirm_register_recall']==1){
+        if(rcl_get_option('confirm_register_recall')){
             
             $confirmstr = base64_encode(
                         json_encode(

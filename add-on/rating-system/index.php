@@ -46,7 +46,7 @@ function rcl_register_rating_base_type(){
 
 add_action('init','rcl_add_rating_tab');
 function rcl_add_rating_tab(){
-    global $user_LK,$rcl_options;
+    global $user_LK;
     
     $count = 0;
     if(!is_admin()){
@@ -68,7 +68,7 @@ function rcl_add_rating_tab(){
 
 add_filter('rcl_tabs','rcl_rating_tab_add_types_data',10);
 function rcl_rating_tab_add_types_data($tabs){
-    global $rcl_rating_types,$rcl_options;
+    global $rcl_rating_types;
     
     if(!isset($tabs['rating'])) return $tabs;
     
@@ -76,7 +76,7 @@ function rcl_rating_tab_add_types_data($tabs){
     
     foreach($rcl_rating_types as $type){
 
-        if(!isset($rcl_options['rating_user_'.$type['rating_type']])||!$rcl_options['rating_user_'.$type['rating_type']])continue;
+        if(!rcl_get_option('rating_user_'.$type['rating_type'])) continue;
 
         $args = array(
             'rating_type'=>$type['rating_type'],
@@ -406,8 +406,8 @@ function rcl_rating_window_content($string){
 
 add_action('rcl_edit_rating_post','rcl_remove_cashe_rating_post',10);
 function rcl_remove_cashe_rating_post($args){
-    global $rcl_options;
-    if(isset($rcl_options['use_cache'])&&$rcl_options['use_cache']){
+    
+    if(rcl_get_option('use_cache')){
 
         $array = $args;
         
@@ -503,13 +503,12 @@ function rcl_edit_rating_post(){
 add_action('wp_ajax_rcl_view_rating_votes', 'rcl_view_rating_votes');
 add_action('wp_ajax_nopriv_rcl_view_rating_votes', 'rcl_view_rating_votes');
 function rcl_view_rating_votes(){
-    global $rcl_options;
     
     rcl_verify_ajax_nonce();
 
     $string = sanitize_text_field($_POST['rating']);
     
-    if(isset($rcl_options['use_cache'])&&$rcl_options['use_cache']){
+    if(rcl_get_option('use_cache')){
            
         $rcl_cache = new Rcl_Cache();
     

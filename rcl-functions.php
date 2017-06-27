@@ -283,9 +283,9 @@ function rcl_is_office($user_id=null){
 
 //регистрируем список публикаций указанного типа записи
 function rcl_postlist($id,$post_type,$name='',$args=false){
-    global $rcl_options,$rcl_postlist;
+    global $rcl_postlist;
 
-    if(!isset($rcl_options['publics_block_rcl'])||$rcl_options['publics_block_rcl']!=1) return false;
+    if(!rcl_get_option('publics_block_rcl')) return false;
     
     $rcl_postlist[$post_type] = array('id'=>$id,'post_type'=>$post_type,'name'=>$name,'args'=>$args);
 
@@ -294,8 +294,8 @@ function rcl_postlist($id,$post_type,$name='',$args=false){
 //регистрация recalolbar`a
 add_action('after_setup_theme','rcl_register_recallbar');
 function rcl_register_recallbar(){
-    global $rcl_options;
-    if( isset( $rcl_options['view_recallbar'] ) && $rcl_options['view_recallbar'] != 1 ) return false;
+
+    if( !rcl_get_option('view_recallbar') ) return false;
     
     register_nav_menus(array( 'recallbar' => __('Recallbar','wp-recall') ));
 
@@ -458,12 +458,9 @@ function rcl_admin_access(){
 }
 
 function rcl_check_access_console(){
-    global $current_user,$rcl_options;
-     
-    if(!$rcl_options)
-        $rcl_options = get_option('rcl_global_options');
+    global $current_user;
 
-    $need_access = (isset($rcl_options['consol_access_rcl']))? $rcl_options['consol_access_rcl']: 7;
+    $need_access = rcl_get_option('consol_access_rcl',7);
 
     if($current_user->user_level){
 		
@@ -648,10 +645,16 @@ function rcl_sanitize_string($title) {
 
 add_filter('author_link','rcl_author_link',999,2);
 function rcl_author_link($link, $author_id){
-    global $rcl_options;
-    if(!isset($rcl_options['view_user_lk_rcl'])||$rcl_options['view_user_lk_rcl']!=1) return $link;
-    $get = ! empty( $rcl_options['link_user_lk_rcl'] ) ? $rcl_options['link_user_lk_rcl'] : 'user';
-    return add_query_arg( array( $get => $author_id ), get_permalink( $rcl_options['lk_page_rcl'] ) );	
+
+    if(rcl_get_option('view_user_lk_rcl') != 1) return $link;
+    
+    return add_query_arg(
+        array( 
+            rcl_get_option('link_user_lk_rcl') => $author_id 
+        ), 
+        get_permalink( rcl_get_option('lk_page_rcl') ) 
+    );
+    
 }
 
 function rcl_format_in($array){
@@ -871,11 +874,11 @@ function rcl_a_active($param1,$param2){
 }
 
 function rcl_get_useraction($user_action=false){
-    global $rcl_options,$rcl_userlk_action;
+    global $rcl_userlk_action;
 
     if(!$user_action) $user_action = $rcl_userlk_action;
 
-    $timeout = (isset($rcl_options['timeout'])&&$rcl_options['timeout'])? $rcl_options['timeout']*60: 600;
+    $timeout = ($time = rcl_get_option('timeout'))? $time*60: 600;
 
     $unix_time_action = strtotime(current_time('mysql'));
     $unix_time_user = strtotime($user_action);
@@ -994,7 +997,7 @@ function rcl_verify_ajax_nonce(){
 }
 
 function rcl_office_class(){
-    global $rcl_options,$active_addons,$user_LK,$user_ID;
+    global $active_addons,$user_LK,$user_ID;
     
     $class = array('wprecallblock','rcl-office');
     
@@ -1011,7 +1014,7 @@ function rcl_office_class(){
         $class[] = 'visitor-guest';
     }
     
-    $class[] = (isset($rcl_options['buttons_place'])&&$rcl_options['buttons_place']==1)? "vertical-menu":"horizontal-menu";
+    $class[] = (rcl_get_option('buttons_place') == 1)? "vertical-menu":"horizontal-menu";
     
     echo 'class="'.implode(' ',$class).'"';
 }
@@ -1219,9 +1222,8 @@ function rcl_get_area_options(){
 }
 
 function rcl_add_log($title, $data = false, $force = false){
-    global $rcl_options;
     
-    if(!$force && (!isset($rcl_options['rcl-log']) || !$rcl_options['rcl-log'])) return false;
+    if(!$force && !rcl_get_option('rcl-log')) return false;
     
     $RclLog = new Rcl_Log();
     
@@ -1247,4 +1249,40 @@ function rcl_get_addon_paths(){
 
 function rcl_get_tab_permalink($user_id,$tab_id,$subtab_id = false){
     return rcl_format_url(get_author_posts_url($user_id),$tab_id,$subtab_id);
+}
+
+function rcl_get_option($name, $default = false){
+    global $rcl_options;
+    
+    if(!$rcl_options)
+        $rcl_options = get_option('rcl_global_options');
+    
+    if(isset($rcl_options[$name]))
+        return $rcl_options[$name];
+    
+    return $default;
+}
+
+function rcl_update_option($name, $value){
+    global $rcl_options;
+    
+    if(!$rcl_options)
+        $rcl_options = get_option('rcl_global_options');
+    
+    $rcl_options[$name] = $value;
+    
+    return update_option('rcl_global_options',$rcl_options);
+
+}
+
+function rcl_delete_option($name){
+    global $rcl_options;
+    
+    if(!$rcl_options)
+        $rcl_options = get_option('rcl_global_options');
+    
+    unset($rcl_options[$name]);
+    
+    return update_option('rcl_global_options',$rcl_options);
+
 }

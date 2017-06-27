@@ -506,9 +506,8 @@ class Rcl_Custom_Fields{
     }
     
     function get_filter_url($slug,$value){
-        global $rcl_options;
-        if(!isset($rcl_options['users_page_rcl'])||!$rcl_options['users_page_rcl']) return false;
-        return rcl_format_url(get_permalink($rcl_options['users_page_rcl'])).'usergroup='.$slug.':'.urlencode($value) ;
+        if(!rcl_get_option('users_page_rcl')) return false;
+        return rcl_format_url(get_permalink(rcl_get_option('users_page_rcl'))).'usergroup='.$slug.':'.urlencode($value) ;
     }
 
     function register_user_metas($user_id){
@@ -635,7 +634,7 @@ function rcl_download_file(){
 if(!is_admin()) 
     add_action('wp','rcl_delete_file');
 function rcl_delete_file(){
-    global $user_ID,$rcl_options;
+    global $user_ID;
 
     if ( !isset( $_GET['rcl-delete-file'] ) ) return false;
     $id_file = base64_decode($_GET['rcl-delete-file']);
@@ -649,7 +648,7 @@ function rcl_delete_file(){
     wp_delete_attachment($file->ID);
 
     if($file->post_parent){
-        wp_redirect(rcl_format_url(get_permalink($rcl_options['public_form_page_rcl'])).'rcl-post-edit='.$file->post_parent);
+        wp_redirect(rcl_format_url(get_permalink(rcl_get_option('public_form_page_rcl'))).'rcl-post-edit='.$file->post_parent);
     }else{
         wp_redirect(rcl_get_tab_permalink($user_ID,'profile').'&file=deleted');
     }
@@ -660,7 +659,7 @@ function rcl_delete_file(){
 if(is_admin()) 
     add_action('admin_init','rcl_delete_file_admin');
 function rcl_delete_file_admin(){
-    global $user_ID,$rcl_options;
+    global $user_ID;
 
     if ( !isset( $_GET['rcl-delete-file'] ) ) return false;
     $id_file = base64_decode($_GET['rcl-delete-file']);

@@ -41,8 +41,6 @@ class RCL_Install {
     }
 
     public static function init_global() {
-        global $wpdb, $user_ID, $rcl_current_action, $rcl_user_URL, $rcl_options;
-
         $upload_dir = rcl_get_wp_upload_dir();
         wp_mkdir_p(($upload_dir['basedir']));
     }

@@ -12,12 +12,11 @@ function rcl_add_order_manager(){
 
 add_action('rcl_order_before','rcl_add_order_notices',10);
 function rcl_add_order_notices(){
-    global $rclOrder,$rmag_options,$rcl_options,$user_ID,$rcl_user_URL;
+    global $rclOrder,$rmag_options,$user_ID,$rcl_user_URL;
     
     if(!isset($_GET['order-status'])) return false;
         
     $buyer_register = (isset($rmag_options['buyer_register']))? $rmag_options['buyer_register']: 1;
-    $confirm = (isset($rcl_options['confirm_register_recall']))? $rcl_options['confirm_register_recall']: 0;
 
     $status = $_GET['order-status'];
 
@@ -56,7 +55,7 @@ function rcl_add_order_notices(){
                 $notice .= __('In your personal account you can find out the status of your order.','wp-recall').'<br>';
                 $notice .= __('You can top up your personal account on the site in your back office and in the future pay for orders with it','wp-recall')."<br />";
 
-                if($confirm){
+                if(rcl_get_option('confirm_register_recall')){
 
                     $notice .= __('To monitor the order status please confirm the specified email!','wp-recall').'<br>';
                     $notice .= __('Follow the link in the letter sent to your email','wp-recall').'<br>';

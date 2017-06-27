@@ -89,11 +89,10 @@ function rcl_add_cover_inline_styles($styles){
 
 add_filter('rcl_inline_styles','rcl_add_colors_inline_styles',10);
 function rcl_add_colors_inline_styles($styles){
-    global $rcl_options;
     
     if(!rcl_is_office()) return $styles;
     
-    $lca_hex = $rcl_options['primary-color']; // достаем оттуда наш цвет
+    $lca_hex = rcl_get_option('primary-color'); // достаем оттуда наш цвет
     list($r, $g, $b) = sscanf($lca_hex, "#%02x%02x%02x"); 
 
     $rp = round($r * 0.90);

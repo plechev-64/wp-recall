@@ -30,12 +30,8 @@ function rcl_get_postslist($post_type,$type_name){
     
 }
 
-function rcl_tab_postform($master_id){
-    global $rcl_options;
-
-    $id_form = (isset($rcl_options['form-lk'])&&$rcl_options['form-lk'])? $rcl_options['form-lk']: 1;
-    
-    return do_shortcode('[public-form id="'.$id_form.'"]');
+function rcl_tab_postform($master_id){    
+    return do_shortcode('[public-form id="'.rcl_get_option('form-lk',1).'"]');
 }
 
 //Прикрепление новой миниатюры к публикации из произвольного места на сервере
@@ -100,15 +96,12 @@ function rcl_get_editor_content($post_content){
 }
 
 function rcl_is_limit_editing($post_date){
-    global $rcl_options;
-
-    $timelimit = (isset($rcl_options['time_editing'])&&$rcl_options['time_editing'])? $rcl_options['time_editing']: false;
-
-    $timelimit = apply_filters('rcl_time_editing',$timelimit);
+    
+    $timelimit = apply_filters('rcl_time_editing',rcl_get_option('time_editing'));
 
     if($timelimit){
         $hours = (strtotime(current_time('mysql')) - strtotime($post_date))/3600;
-        if($hours>$timelimit) return true;
+        if($hours > $timelimit) return true;
     }
 
     return false;
@@ -246,15 +239,14 @@ function rcl_update_tempgallery($attach_id,$attach_url){
 }
 
 function rcl_get_attachment_box($attachment_id, $mime = 'image'){
-    global $rcl_options;
     
     if($mime=='image'){
         
         $small_url = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
         $full_url = wp_get_attachment_image_src( $attachment_id, 'full' );
         
-        if($rcl_options['default_size_thumb']) 
-            $sizes = wp_get_attachment_image_src( $attachment_id, $rcl_options['default_size_thumb'] );
+        if($default = rcl_get_option('default_size_thumb')) 
+            $sizes = wp_get_attachment_image_src( $attachment_id, $default );
         else 
             $sizes = $small_url;
         

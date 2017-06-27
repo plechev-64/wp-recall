@@ -44,11 +44,11 @@ function rcl_can_user_edit_post_group($post_id){
 add_filter('the_content','rcl_post_group_edit_button',999);
 add_filter('the_excerpt','rcl_post_group_edit_button',999);
 function rcl_post_group_edit_button($content){
-	global $post,$user_ID,$rcl_group,$rcl_options;
+	global $post,$user_ID,$rcl_group;
 	if(!is_tax('groups')) return $content;
 
 	if(rcl_is_group_can('moderator')){
-            $edit_url = rcl_format_url(get_permalink($rcl_options['public_form_page_rcl']));
+            $edit_url = rcl_format_url(get_permalink(rcl_get_option('public_form_page_rcl')));
             $content = '<p class="post-edit-button">'
                 . '<a title="'.__('Edit','wp-recall').'" object-id="none" href="'. $edit_url.'rcl-post-edit='.$post->ID .'">'
                     . '<i class="fa fa-pencil-square-o"></i>'
@@ -80,14 +80,12 @@ function rcl_add_group_id_in_form($content, $formData){
 
 add_filter('pre_update_postdata_rcl','rcl_group_setup_post_status',10);
 function rcl_group_setup_post_status($postdata){
-    global $rcl_options;
     
     if($postdata['post_type'] != 'post-group') return $postdata;
     
     if(isset($postdata['post_status']) && $postdata['post_status'] == 'draft') return $postdata;
-    
-    $moderation = (isset($rcl_options['moderation_public_group']))? $rcl_options['moderation_public_group']: 0;
-    $postdata['post_status'] = ($moderation)? 'pending': 'publish';
+
+    $postdata['post_status'] = (rcl_get_option('moderation_public_group'))? 'pending': 'publish';
     
     return $postdata;
 }

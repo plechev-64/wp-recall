@@ -66,7 +66,6 @@ function rcl_init_js_chat_variables($data){
 
 add_filter('rcl_inline_styles','rcl_chat_add_inline_styles',10,2);
 function rcl_chat_add_inline_styles($styles,$rgb){
-    global $rcl_options;
  
     list($r, $g, $b) = $rgb;
 

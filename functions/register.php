@@ -6,7 +6,7 @@ if(!function_exists('wp_send_new_user_notifications')){
 }
 
 function rcl_insert_user($data){
-    global $wpdb,$rcl_options;
+    global $wpdb;
 
     if ( get_user_by('email', $data['user_email']) )
         return false;
@@ -29,7 +29,7 @@ function rcl_insert_user($data){
 
     $timeAction = '0000-00-00 00:00:00';
 
-    if($rcl_options['confirm_register_recall']==1){
+    if(rcl_get_option('confirm_register_recall')){
         wp_update_user( array ('ID' => $user_id, 'role' => 'need-confirm') ) ;       
     }else{
         $timeAction = current_time('mysql');
@@ -51,7 +51,7 @@ function rcl_insert_user($data){
 
 //подтверждаем регистрацию пользователя по ссылке
 function rcl_confirm_user_registration(){
-    global $wpdb,$rcl_options;
+    global $wpdb;
     
     $confirmdata = urldecode($_GET['rcl-confirmdata']);
     
@@ -74,7 +74,7 @@ function rcl_confirm_user_registration(){
             
             do_action('rcl_confirm_registration',$user->ID);
             
-            if($rcl_options['login_form_recall']==2){
+            if(rcl_get_option('login_form_recall') == 2){
                 wp_safe_redirect( wp_login_url().'?success=checkemail' );
             }else{
                 wp_redirect( get_bloginfo('wpurl').'?action-rcl=login&success=checkemail' );
@@ -84,7 +84,7 @@ function rcl_confirm_user_registration(){
         }
     }
 
-    if($rcl_options['login_form_recall']==2){
+    if(rcl_get_option('login_form_recall') == 2){
         wp_safe_redirect( wp_login_url().'?checkemail=confirm' );
     }else{
         wp_redirect( get_bloginfo('wpurl').'?action-rcl=login&login=checkemail' );
@@ -96,11 +96,10 @@ function rcl_confirm_user_registration(){
 //принимаем данные для подтверждения регистрации
 add_action('init', 'rcl_confirm_user_resistration_activate');
 function rcl_confirm_user_resistration_activate(){
-    global $rcl_options;
     
     if (!isset($_GET['rcl-confirmdata'])) return false;
     
-    if($rcl_options['confirm_register_recall']==1) 
+    if(rcl_get_option('confirm_register_recall')) 
         add_action( 'wp', 'rcl_confirm_user_registration' );
     
 }
@@ -120,7 +119,7 @@ function rcl_add_shake_error_codes($codes){
 //регистрация пользователя на сайте
 add_filter('registration_errors','rcl_get_register_user',90);
 function rcl_get_register_user($errors){
-    global $wpdb,$rcl_options,$wp_errors;
+    global $wp_errors;
 
     $wp_errors = new WP_Error();
 
@@ -194,7 +193,7 @@ function rcl_get_register_user($errors){
 
     if($user_id){
 
-        if($rcl_options['login_form_recall']==2||false !== strpos($ref, wp_login_url())){
+        if(rcl_get_option('login_form_recall') == 2 || false !== strpos($ref, wp_login_url())){
             //если форма ВП, то возвращаем на login с нужными GET-параметрами
             if($rcl_options['confirm_register_recall']==1)
                 wp_safe_redirect( wp_login_url().'?checkemail=confirm' );
@@ -204,7 +203,7 @@ function rcl_get_register_user($errors){
         }else{
 
             //иначе возвращаем на ту же страницу
-            if($rcl_options['confirm_register_recall']==1)
+            if(rcl_get_option('confirm_register_recall'))
                 wp_redirect(rcl_format_url($ref).'action-rcl=login&register=checkemail');
             else
                 wp_redirect(rcl_format_url($ref).'action-rcl=login&register=success');
@@ -228,14 +227,13 @@ function rcl_get_register_user_activate ( ) {
 
 //письмо высылаемое при регистрации
 function rcl_register_mail($userdata){
-    global $rcl_options;
 
     $textmail = '
     <p>'.__('You or someone else signed up on our website','wp-recall').' "'.get_bloginfo('name').'" '.__('with the following data:','wp-recall').'</p>
     <p>'.__('Login','wp-recall').': '.$userdata['user_login'].'</p>
     <p>'.__('Password','wp-recall').': '.$userdata['user_pass'].'</p>';
 
-    if($rcl_options['confirm_register_recall']==1){
+    if(rcl_get_option('confirm_register_recall')){
         
         $subject = __('Confirm your registration!','wp-recall');
         
@@ -318,12 +316,14 @@ function rcl_notice_form($form='login'){
 //Проверяем заполненность поля повтора пароля
 add_filter('rcl_registration_errors','rcl_chek_repeat_pass');
 function rcl_chek_repeat_pass($errors){
-    global $rcl_options;
-    if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return false;
-    if($_POST['user_secondary_pass']!=$_POST['user_pass']){
+
+    if(!rcl_get_option('repeat_pass')) return false;
+    
+    if($_POST['user_secondary_pass'] != $_POST['user_pass']){
         $errors = new WP_Error();
         $errors->add( 'rcl_register_repeat_pass', __('Repeated password not correct!','wp-recall') );
     }
+    
     return $errors;
 }
 
@@ -428,9 +428,8 @@ function rcl_filters_regform(){
 
 add_filter('regform_fields_rcl','rcl_password_regform',5);
 function rcl_password_regform($content){
-    global $rcl_options;
 
-    $difficulty = (isset($rcl_options['difficulty_parole']))? $rcl_options['difficulty_parole']: false;
+    $difficulty = rcl_get_option('repeat_pass');
     $user_pass = (isset($_REQUEST['user_pass']))? $_REQUEST['user_pass']: '';
 
     $content .= '<div class="form-block-rcl default-field">';
@@ -458,8 +457,8 @@ function rcl_password_regform($content){
 //Добавляем поле повтора пароля в форму регистрации
 add_filter('regform_fields_rcl','rcl_secondary_password',10);
 function rcl_secondary_password($fields){
-    global $rcl_options;
-    if(!isset($rcl_options['repeat_pass'])||!$rcl_options['repeat_pass']) return $fields;
+
+    if(!rcl_get_option('repeat_pass')) return $fields;
 
     $fields .= '<div class="form-block-rcl default-field">
                     <input placeholder="'.__('Repeat the password','wp-recall').'" required id="secondary-pass-user" type="password" value="'.$_REQUEST['user_secondary_pass'].'" name="user_secondary_pass">

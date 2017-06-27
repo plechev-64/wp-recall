@@ -39,7 +39,6 @@ class Rcl_Rating_Box {
     );
 
     function __construct($args) {
-        global $rcl_options;
         
         $args = apply_filters('rcl_rating_box_args',$args);
         
@@ -49,7 +48,7 @@ class Rcl_Rating_Box {
         
         $this->setup_user_can();
         
-        $this->output_type = (isset($rcl_options['rating_type_'.$this->rating_type]))? $rcl_options['rating_type_'.$this->rating_type]: 0;
+        $this->output_type = rcl_get_option('rating_type_'.$this->rating_type,0);
         
         $data = array(
             'object_id' => $this->object_id,
@@ -94,9 +93,8 @@ class Rcl_Rating_Box {
     }
     
     function setup_user_can(){
-        global $rcl_options;
         
-        $access = (isset($rcl_options['rating_results_can']))? $rcl_options['rating_results_can']: false;
+        $access = rcl_get_option('rating_results_can');
 
         $can = true;
 
@@ -117,19 +115,15 @@ class Rcl_Rating_Box {
         
         $this->user_vote = rcl_get_vote_value($this->user_id,$this->object_id,$this->rating_type);
         
-        if($this->user_vote && !$rcl_options['rating_delete_voice']) return;
+        if($this->user_vote && !rcl_get_option('rating_delete_voice')) return;
         
         $this->user_can['vote'] = true;
         
     }
     
     function rating_type_exist($type){
-        global $rcl_options;
         
-        if(!isset($rcl_options['rating_'.$type]))
-            return false;
-        
-        if(!$rcl_options['rating_'.$type])
+        if(!rcl_get_option('rating_'.$type))
             return false;
         
         return true;
@@ -274,8 +268,8 @@ class Rcl_Rating_Box {
     }
     
     function get_comment_total(){
-        global $rcl_options,$comment;  
-        return ($rcl_options['rating_overall_comment']==1)? $comment->rating_votes: $comment->rating_total;
+        global $comment;  
+        return (rcl_get_option('rating_overall_comment'))? $comment->rating_votes: $comment->rating_total;
     }
     
     function get_post_total(){

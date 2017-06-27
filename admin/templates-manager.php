@@ -234,7 +234,6 @@ class Rcl_Templates_Manager extends WP_List_Table {
     }
 
     static function update_status ( ) {
-        global $rcl_options;
         
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
         if( 'manage-templates-recall' != $page ) return;

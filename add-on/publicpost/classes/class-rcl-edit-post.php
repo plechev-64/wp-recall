@@ -7,11 +7,9 @@ class Rcl_EditPost {
     public $update = false; //действие
 
     function __construct(){
-        global $user_ID,$rcl_options;
-        
-        $user_can = $rcl_options['user_public_access_recall'];
+        global $user_ID;
 
-        if($user_can&&!$user_ID) return false;
+        if(rcl_get_option('user_public_access_recall') && !$user_ID) return false;
 
         if(isset($_FILES)){
             require_once(ABSPATH . "wp-admin" . '/includes/image.php');
@@ -68,7 +66,6 @@ class Rcl_EditPost {
     }
 
     function update_thumbnail($postdata){
-        global $rcl_options;
 
         $thumbnail_id = (isset($_POST['post-thumbnail']))? $_POST['post-thumbnail']: 0;
             
@@ -131,7 +128,7 @@ class Rcl_EditPost {
     }
 
     function get_status_post($moderation){
-        global $user_ID,$rcl_options;
+        global $user_ID;
         
         if(isset($_POST['save-as-draft']))
             return 'draft';
@@ -140,26 +137,27 @@ class Rcl_EditPost {
             return 'publish';
         
         $post_status = ($moderation==1)? 'pending': 'publish';
+        
+        $rating = rcl_get_option('rating_no_moderation');
 
-        if($rcl_options['rating_no_moderation']){
+        if($rating){
             $all_r = rcl_get_user_rating($user_ID);
-            if($all_r >= $rcl_options['rating_no_moderation']) $post_status = 'publish';
+            if($all_r >= $rating) $post_status = 'publish';
         }
 
         return $post_status;
     }
 
     function add_data_post($postdata,$data){
-        global $rcl_options;
 
-        $postdata['post_status'] = $this->get_status_post($rcl_options['moderation_public_post']);
+        $postdata['post_status'] = $this->get_status_post(rcl_get_option('moderation_public_post'));
 
         return $postdata;
 
     }
 
     function update_post(){
-        global $rcl_options,$user_ID;
+        global $user_ID;
 
         $postdata = array(
             'post_type' => $this->post_type,
@@ -211,7 +209,7 @@ class Rcl_EditPost {
             if($user_ID) 
                 $redirect_url = get_bloginfo('wpurl').'/?p='.$this->post_id.'&preview=true';
             else 
-                $redirect_url = get_permalink($rcl_options['guest_post_redirect']);
+                $redirect_url = get_permalink(rcl_get_option('guest_post_redirect'));
         }else{
             $redirect_url = get_permalink($this->post_id);
         }

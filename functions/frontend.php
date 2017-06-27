@@ -143,7 +143,7 @@ function rcl_filter_user_description(){
 
 add_filter('users_search_form_rcl','rcl_default_search_form');
 function rcl_default_search_form($form){
-    global $user_LK,$rcl_tab,$rcl_options;
+    global $user_LK,$rcl_tab;
 
     $search_text = ((isset($_GET['search_text'])))? $_GET['search_text']: '';
     $search_field = (isset($_GET['search_field']))? $_GET['search_field']: '';
@@ -161,7 +161,7 @@ function rcl_default_search_form($form){
     
     if($user_LK && $rcl_tab){
         
-        $get = (isset($rcl_options['link_user_lk_rcl'])&&$rcl_options['link_user_lk_rcl']!='')? $rcl_options['link_user_lk_rcl']: 'user';
+        $get = rcl_get_option('link_user_lk_rcl','user');
         
         $form .='<input type="hidden" name="'.$get.'" value="'.$user_LK.'">';
         $form .='<input type="hidden" name="tab" value="'.$rcl_tab->id.'">';
@@ -255,9 +255,8 @@ function rcl_notice(){
 //добавляем стили колорпикера и другие в хеадер
 add_action('wp_head','rcl_inline_styles',100);
 function rcl_inline_styles(){
-    global $rcl_options;
 
-    list($r, $g, $b) = (isset($rcl_options['primary-color'])&&$rcl_options['primary-color'])? sscanf($rcl_options['primary-color'], "#%02x%02x%02x"): array(76, 140, 189);
+    list($r, $g, $b) = ($color = rcl_get_option('primary-color'))? sscanf($color, "#%02x%02x%02x"): array(76, 140, 189);
 
     $styles = apply_filters('rcl_inline_styles','',array($r, $g, $b));
 
@@ -272,7 +271,6 @@ function rcl_inline_styles(){
 
 add_filter('rcl_inline_styles','rcl_default_inline_styles',5,2);
 function rcl_default_inline_styles($styles,$rgb){
-    global $rcl_options;
  
     list($r, $g, $b) = $rgb;
 
@@ -321,18 +319,18 @@ function rcl_default_inline_styles($styles,$rgb){
 
 add_action('rcl_init','init_user_lk',1);
 function init_user_lk(){
-    global $wpdb,$user_LK,$rcl_userlk_action,$rcl_options,$user_ID,$rcl_office;
+    global $wpdb,$user_LK,$rcl_userlk_action,$user_ID,$rcl_office;
 
     $user_LK = false;
     $nicename = false;
     
-    $get = (isset($rcl_options['link_user_lk_rcl'])&&$rcl_options['link_user_lk_rcl']!='')? $rcl_options['link_user_lk_rcl']: 'user';
+    $get = rcl_get_option('link_user_lk_rcl','user');
     $userLK = (isset($_GET[$get]))? $_GET[$get]: false;
 
     if(!$userLK){
-        if($rcl_options['view_user_lk_rcl']==1){
+        if(rcl_get_option('view_user_lk_rcl')==1){
                 $post_id = url_to_postid($_SERVER['REQUEST_URI']);
-                if($rcl_options['lk_page_rcl']==$post_id) $user_LK = $user_ID;
+                if(rcl_get_option('lk_page_rcl')==$post_id) $user_LK = $user_ID;
         }else {
             if(isset($_GET['author'])) $user_LK = $_GET['author'];
             else{
@@ -512,14 +510,14 @@ function rcl_sort_gallery($attaches,$key,$user_id=false){
 }
 
 function rcl_bar_add_icon($id_icon,$args){
-    global $rcl_bar,$rcl_options;
-    if(!isset($rcl_options['view_recallbar'])||!$rcl_options['view_recallbar']) return false;
+    global $rcl_bar;
+    if(!rcl_get_option('view_recallbar')) return false;
     $rcl_bar['icons'][$id_icon] = $args;
     return true;
 }
 function rcl_bar_add_menu_item($id_item,$args){
-    global $rcl_bar,$rcl_options;
-    if(!isset($rcl_options['view_recallbar'])||!$rcl_options['view_recallbar']) return false;
+    global $rcl_bar;
+    if(!rcl_get_option('view_recallbar')) return false;
     $rcl_bar['menu'][$id_item] = $args;
     return true;
 }

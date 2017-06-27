@@ -863,9 +863,9 @@ function pfm_delete_visit($user_id){
 }
 
 function pfm_get_visitors(){
-    global $PrimeQuery,$wpdb,$rcl_options;
+    global $PrimeQuery,$wpdb;
     
-    $timeout = ($rcl_options['timeout'])? $rcl_options['timeout']: 10;
+    $timeout = rcl_get_option('timeout',10);
     
     $args = array(
         'fields' => array('user_id'),

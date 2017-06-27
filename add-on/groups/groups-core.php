@@ -260,18 +260,33 @@ function rcl_is_group_can($role){
 }
 
 function rcl_get_group_permalink($term_id){
-    global $rcl_options;
-    
-    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
-    
-    if($output){
+
+    if(rcl_get_option('group-output')){
         
-        $page_id = $rcl_options['group-page'];
+        $page_id = rcl_get_option('group-page');
         
-        return rcl_format_url (get_the_permalink($page_id)).'group-id='.$term_id;
+        $homeUrl = untrailingslashit(get_the_permalink($page_id));
+        
+        if ( '' != get_option('permalink_structure') ) {
+            
+            $term = get_term( $term_id, 'groups' );
+
+            $url = $homeUrl.'/'.$term->slug;
+
+        } else {
+            
+            $url = $homeUrl.'&group-id='.$term_id;
+
+        }
+        
+    }else{
+    
+        $url = get_term_link( (int)$term_id,'groups');
+    
     }
     
-    return get_term_link( (int)$term_id,'groups');
+    return $url;
+    
 }
 
 function rcl_group_permalink(){
@@ -817,18 +832,17 @@ function rcl_get_group_category_list(){
     $tags = get_terms('groups', $targs);
 
     if(!$tags) return false;
-    
-    global $rcl_options;
-    
-    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
-        
+
     $content .= '<div class="search-form-rcl">';
         $content .= '<form method="get">';
-            $content .= rcl_get_tags_list_group((object)$tags,'',__('Display all records','wp-recall'));
-            
-            if($output) 
+        
+            if(rcl_get_option('group-output') && '' == get_option('permalink_structure') ){
+                $content .= '<input type="hidden" name="page_id" value="'.rcl_get_option('group-page').'">';
                 $content .= '<input type="hidden" name="group-id" value="'.$rcl_group->term_id.'">';
+            }
             
+            $content .= rcl_get_tags_list_group((object)$tags,'',__('Display all records','wp-recall'));
+
             $content .= '<input type="submit" class="recall-button" value="'.__('Show','wp-recall').'">';
         $content .= '</form>';
     $content .= '</div>';
@@ -878,17 +892,31 @@ function rcl_group_admin_panel(){
 
 add_action('pre_get_posts','rcl_init_group_data',10);
 function rcl_init_group_data($query){
-    global $rcl_options,$post,$rcl_group,$wpdb;
+    global $post,$rcl_group,$wpdb;
     
     if(!$query->is_main_query()) return $query;
-    
-    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
-    
-    if($output){
-        
-        if($query->is_page && $query->queried_object_id == $rcl_options['group-page']){
 
-            $group_id = (isset($_GET['group-id']))? $_GET['group-id']: false;
+    if(rcl_get_option('group-output')){
+
+        $groupPage = rcl_get_option('group-page');
+        
+        $isGroupPage = (get_query_var('page_id') == $groupPage || $query->queried_object_id == $groupPage)? true: false;
+        
+        if($query->is_page && $isGroupPage){
+            
+            $group_var = get_query_var('group-id');
+            
+            if ( '' != get_option('permalink_structure') ) {
+
+                $term = get_term_by('slug', $group_var, 'groups');
+                
+                $group_id = $term->term_id;
+                
+            }else{
+                
+                $group_id = ($group_var)? $group_var: false;
+                
+            }
 
             $rcl_group = rcl_group_init($group_id);
 

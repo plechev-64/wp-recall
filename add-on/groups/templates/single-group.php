@@ -22,7 +22,10 @@
             </div>
         <?php endif; ?>
         <div class="group-metadata">
+            
+            <?php if(!rcl_get_option('group-output')): ?>
             <h1 class="group-name"><?php rcl_group_name(); ?></h1>
+            <?php endif; ?>
 
             <div class="group-description">
                 <?php rcl_group_description(); ?>

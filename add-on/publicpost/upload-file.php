@@ -25,7 +25,7 @@ function rcl_add_attachment_thumbnail_button($content,$attachment_id,$mime){
 add_action('wp_ajax_rcl_imagepost_upload', 'rcl_imagepost_upload');
 add_action('wp_ajax_nopriv_rcl_imagepost_upload', 'rcl_imagepost_upload');
 function rcl_imagepost_upload(){
-    global $rcl_options,$user_ID;
+    global $user_ID;
 
     rcl_verify_ajax_nonce();
 

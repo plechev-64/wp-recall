@@ -148,21 +148,20 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
     }
     
     function init_options(){
-        global $rcl_options;
         
-        $this->options['preview'] = (isset($rcl_options['public_preview']) && $rcl_options['public_preview'])? true: false;
-        $this->options['draft'] = (isset($rcl_options['public_draft']) && $rcl_options['public_draft'])? true: false;
+        $this->options['preview'] = rcl_get_option('public_preview');
+        $this->options['draft'] = rcl_get_option('public_draft');
         
         $this->options = apply_filters('rcl_public_form_options', $this->options, $this->get_object_form());
 
     }
 
     function init_user_can(){
-        global $user_ID,$rcl_options;
+        global $user_ID;
 
         $this->user_can['publish'] = true;
         
-        $user_can = $rcl_options['user_public_access_recall'];
+        $user_can = rcl_get_option('user_public_access_recall');
 		
         if($user_can){
 
@@ -507,7 +506,6 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
     }
     
     function get_editor($args = false){
-        global $rcl_options;
         
         $wp_uploader = false;
         $quicktags = false;

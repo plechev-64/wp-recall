@@ -150,9 +150,8 @@ class Rcl_Users_List extends Rcl_Users_Query{
     }
     
     function add_query_only_actions_users($query){
-        global $rcl_options;
         
-        $timeout = ($rcl_options['timeout'])? $rcl_options['timeout']: 10;
+        $timeout = rcl_get_option('timeout',10);
         $query['where'][] = "actions.time_action > date_sub('".current_time('mysql')."', interval $timeout minute)";
         
         if($this->orderby != 'time_action'){

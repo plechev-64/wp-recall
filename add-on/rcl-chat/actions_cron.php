@@ -76,9 +76,9 @@ function rcl_chat_delete_unattached_attachments(){
 
 add_action('rcl_cron_hourly','rcl_chat_send_notify_messages',10);
 function rcl_chat_send_notify_messages(){
-    global $wpdb,$rcl_options;
+    global $wpdb;
     
-    $mailtext = (isset($rcl_options['messages_mail'])&&$rcl_options['messages_mail'])? $rcl_options['messages_mail']: 0;
+    $mailtext = rcl_get_option('messages_mail');
 
     $mess = $wpdb->get_results("SELECT * FROM ".RCL_PREF."chat_messages WHERE message_status='0' && private_key!='0' && message_time  > date_sub('".current_time('mysql')."', interval 1 hour)");
     

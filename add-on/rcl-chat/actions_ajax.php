@@ -178,16 +178,14 @@ function rcl_chat_delete_attachment(){
 
 add_action('wp_ajax_rcl_chat_ajax_delete_message','rcl_chat_ajax_delete_message');
 function rcl_chat_ajax_delete_message(){
-    global $rcl_options,$current_user;
+    global $current_user;
     
     rcl_verify_ajax_nonce();
     
     if(!$message_id = intval($_POST['message_id']))
             return false;
-    
-    $access = (isset($rcl_options['consol_access_rcl']))? $rcl_options['consol_access_rcl']: 7;
 
-    if ( $current_user->user_level >= $access ){
+    if ( $current_user->user_level >= rcl_get_option('consol_access_rcl',7) ){
         rcl_chat_delete_message($message_id);
     }
     
@@ -198,7 +196,7 @@ function rcl_chat_ajax_delete_message(){
 
 add_action('wp_ajax_rcl_chat_upload', 'rcl_chat_upload');
 function rcl_chat_upload(){
-    global $user_ID,$wpdb,$rcl_options;
+    global $rcl_options;
 
     rcl_verify_ajax_nonce();
     

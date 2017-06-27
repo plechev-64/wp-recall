@@ -35,7 +35,7 @@ function rcl_autocomplete_scripts(){
 
 add_filter('rcl_tabs','rcl_postlist_tab_add_types_data',10);
 function rcl_postlist_tab_add_types_data($tabs){
-    global $rcl_postlist,$rcl_options;
+    global $rcl_postlist;
     
     if(!isset($tabs['publics'])) return $tabs;
     
@@ -95,13 +95,14 @@ function rcl_post_gallery($content){
 //Выводим инфу об авторе записи в конце поста
 add_filter('the_content','rcl_author_info',70);
 function rcl_author_info($content){
-    global $post,$rcl_options;
-    
-    if($rcl_options['info_author_recall']!=1) 
+
+    if(!rcl_get_option('info_author_recall')) 
         return $content;
     
     if(!is_single()) 
         return $content;
+    
+    global $post;
     
     if($post->post_type=='page') 
         return $content;
@@ -113,14 +114,16 @@ function rcl_author_info($content){
 
 add_filter('the_content','rcl_concat_post_meta',10);
 function rcl_concat_post_meta($content){
-    global $post,$rcl_options;
+    global $post;
     
-    if(!isset($rcl_options['pm_rcl']) || !$rcl_options['pm_rcl'])
+    $option = rcl_get_option('pm_rcl');
+    
+    if(!$option)
         return $content;
     
     $pm = rcl_get_custom_post_meta($post->ID);
     
-    if($rcl_options['pm_place'] == 1) 
+    if($option == 1) 
         $content .= $pm;
     else 
         $content = $pm.$content;
@@ -153,7 +156,7 @@ function rcl_clear_temps_gallery(){
 }
 
 function rcl_delete_post(){
-    global $rcl_options,$user_ID;
+    global $user_ID;
     $post_id = wp_update_post( array('ID'=>intval($_POST['post-rcl']),'post_status'=>'trash'));
     do_action('after_delete_post_rcl',$post_id);
     wp_redirect(rcl_format_url(get_author_posts_url($user_ID)).'&public=deleted');
@@ -177,24 +180,23 @@ function rcl_delete_notice_author_post($post_id){
 if(!is_admin())
     add_filter('get_edit_post_link','rcl_edit_post_link',100,2);
 function rcl_edit_post_link($admin_url, $post_id){
-    global $user_ID,$rcl_options;
+    global $user_ID;
 
-    if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
+    $frontEdit = rcl_get_option('front_editing',array(0));
 
-    $access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;
     $user_info = get_userdata($user_ID);
 
-    if ( array_search($user_info->user_level, $rcl_options['front_editing'])!==false ||$user_info->user_level < $access ){
-            $edit_url = rcl_format_url(get_permalink($rcl_options['public_form_page_rcl']));
-            return $edit_url.'rcl-post-edit='.$post_id;
+    if ( array_search($user_info->user_level, $frontEdit)!==false ||$user_info->user_level < rcl_get_option('consol_access_rcl',7) ){
+        $edit_url = rcl_format_url(get_permalink(rcl_get_option('public_form_page_rcl')));
+        return $edit_url.'rcl-post-edit='.$post_id;
     }else{
-            return $admin_url;
+        return $admin_url;
     }
 }
 
 add_action('rcl_post_bar_setup','rcl_setup_edit_post_button',10);
 function rcl_setup_edit_post_button(){
-    global $post,$user_ID,$current_user,$rcl_options;
+    global $post,$user_ID,$current_user;
     
     if(!is_user_logged_in() || !$post) return false;
     
@@ -209,11 +211,9 @@ function rcl_setup_edit_post_button(){
         if($user_info->user_level < $author_info->user_level) return false;
     }
 
-    if(!isset($rcl_options['front_editing'])) $rcl_options['front_editing'] = array(0);
+    $frontEdit = rcl_get_option('front_editing',array(0));
 
-    $access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;
-
-    if( false!==array_search($user_info->user_level, $rcl_options['front_editing']) || $user_info->user_level >= $access ) {
+    if( false!==array_search($user_info->user_level, $frontEdit) || $user_info->user_level >= rcl_get_option('consol_access_rcl',7) ) {
 
         if($post->post_type=='task'){
             if(get_post_meta($post->ID,'step_order',1)!=1) return false;
@@ -316,9 +316,9 @@ function rcl_set_object_terms_post($post_id,$postdata,$update){
 
 add_filter('pre_update_postdata_rcl','rcl_register_author_post',10);
 function rcl_register_author_post($postdata){
-    global $user_ID,$rcl_options,$wpdb;
-    $user_can = $rcl_options['user_public_access_recall'];
-    if($user_can||$user_ID) return $postdata;
+    global $user_ID;
+    
+    if(rcl_get_option('user_public_access_recall')||$user_ID) return $postdata;
 
     if(!$postdata['post_author']){
 
@@ -352,7 +352,7 @@ function rcl_register_author_post($postdata){
                 }
 
                 //Сразу авторизуем пользователя
-                if(!$rcl_options['confirm_register_recall']){
+                if(!rcl_get_option('confirm_register_recall')){
                     $creds = array();
                     $creds['user_login'] = $email_new_user;
                     $creds['user_password'] = $random_password;

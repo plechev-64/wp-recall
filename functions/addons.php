@@ -166,7 +166,7 @@ function rcl_get_addon_headers($addon_name, $path = false){
 
 add_action('rcl_before_include_addons','rcl_check_active_template',10);
 function rcl_check_active_template(){
-    global $active_addons,$rcl_options,$rcl_template;
+    global $active_addons,$rcl_template;
     
     $templates = rcl_get_active_template();
     
@@ -224,7 +224,7 @@ function rcl_check_active_template(){
 
 //Подключаем шаблон личного кабинета
 function rcl_include_template_office(){
-    global $rcl_options,$active_addons,$rcl_template;
+    global $active_addons,$rcl_template;
     
     //Если ни один шаблон не активен
     if(!$rcl_template){
@@ -237,7 +237,7 @@ function rcl_include_template_office(){
 }
 
 function rcl_get_active_template(){
-    global $rcl_options,$active_addons;
+    global $active_addons;
     
     $list = array();
     

@@ -11,7 +11,7 @@ function rcl_get_login_form($atts){
 }
 
 function rcl_get_authorize_form($type=false,$form=false){
-    global $user_ID,$rcl_user_URL,$rcl_options,$typeform;
+    global $user_ID,$rcl_user_URL,$typeform;
     $typeform = $form;
     
     $can_register = rcl_is_register_open();
@@ -42,11 +42,11 @@ function rcl_get_authorize_form($type=false,$form=false){
 
         }else{
 
-            $login_form = (isset($rcl_options['login_form_recall']))? $rcl_options['login_form_recall']: 0;
+            $login_form = rcl_get_option('login_form_recall');
 
             if($login_form==1&&$type!='pageform'){
 
-                $redirect_url = rcl_format_url(get_permalink($rcl_options['page_login_form_recall']));
+                $redirect_url = rcl_format_url(get_permalink(rcl_get_option('page_login_form_recall')));
                 
                 $buttons = array(
                     rcl_get_button(__('Entry','wp-recall'),$redirect_url.'action-rcl=login',array('icon'=>'fa-sign-in'))
@@ -126,19 +126,18 @@ function rcl_get_primary_widget_buttons($buttons){
 }
 
 function rcl_get_loginform_url($type){
-    global $rcl_options;
 
     if($type=='login'){
-        switch($rcl_options['login_form_recall']){
-            case 1: return rcl_format_url(get_permalink($rcl_options['page_login_form_recall'])).'action-rcl=login'; break;
-            case 2: return wp_login_url(get_permalink($rcl_options['page_login_form_recall'])); break;
+        switch(rcl_get_option('login_form_recall')){
+            case 1: return rcl_format_url(get_permalink(rcl_get_option('page_login_form_recall'))).'action-rcl=login'; break;
+            case 2: return wp_login_url(get_permalink(rcl_get_option('page_login_form_recall'))); break;
             default: return '#'; break;
         }
     }
 
     if($type=='register'){
-       switch($rcl_options['login_form_recall']){
-            case 1: return rcl_format_url(get_permalink($rcl_options['page_login_form_recall'])).'action-rcl=register'; break;
+       switch(rcl_get_option('login_form_recall')){
+            case 1: return rcl_format_url(get_permalink(rcl_get_option('page_login_form_recall'))).'action-rcl=register'; break;
             case 2: return wp_registration_url(); break;
             default: return '#'; break;
         }

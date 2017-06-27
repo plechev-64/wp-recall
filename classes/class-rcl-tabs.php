@@ -19,7 +19,6 @@ class Rcl_Tabs{
     public $active_subtab;
     
     function __construct($args){
-        global $rcl_options;
         
         $args = apply_filters('rcl_pre_output_tab',$args);
         
@@ -27,7 +26,7 @@ class Rcl_Tabs{
         
         $this->tab_active = $this->is_view_tab();
         $this->tab_upload = ($this->tab_active)? true: false;
-        $this->use_cache = (isset($rcl_options['use_cache'])&&$rcl_options['use_cache'])? 1: 0;
+        $this->use_cache = rcl_get_option('use_cache');
 
         do_action('rcl_construct_'.$this->id.'_tab');
 
@@ -106,7 +105,6 @@ class Rcl_Tabs{
     }
     
     function get_class_button(){
-        global $rcl_options;
 
         $classes = array();
         
@@ -176,7 +174,7 @@ class Rcl_Tabs{
     }
     
     function get_tab($master_id, $subtab_id = false){
-        global $user_ID,$rcl_options;
+        global $user_ID;
         
         switch($this->public){
             case 0: if(!$user_ID||$user_ID!=$master_id) return false; break;

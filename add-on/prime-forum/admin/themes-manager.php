@@ -245,7 +245,6 @@ class Prime_Themes_Manager extends WP_List_Table {
     }
 
     static function update_status ( ) {
-        global $rcl_options,$Prime_Themes_Manager;
         
         $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
         if( 'pfm-themes' != $page ) return;

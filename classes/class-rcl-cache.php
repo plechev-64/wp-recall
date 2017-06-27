@@ -11,13 +11,19 @@ class Rcl_Cache{
     public $file_exists;
     
     function __construct($timecache=0,$only_guest=false){
-        global $rcl_options,$user_ID;
-        $this->inc_cache = (isset($rcl_options['use_cache']))? $rcl_options['use_cache']: 0;
+        global $user_ID;
+        
+        $this->inc_cache = rcl_get_option('use_cache');
         $this->only_guest = $only_guest;
-        if(!$this->only_guest) $this->only_guest = (isset($rcl_options['cache_output']))? $rcl_options['cache_output']: 0;
+        
+        if(!$this->only_guest) 
+            $this->only_guest = rcl_get_option('cache_output');
+        
         $this->is_cache = ($this->inc_cache&&(!$this->only_guest||$this->only_guest&&!$user_ID))? 1: 0;
-        $this->time_cache = (isset($rcl_options['cache_time'])&&$rcl_options['cache_time'])? $rcl_options['cache_time']: 3600;
-        if($timecache) $this->time_cache = $timecache;
+        $this->time_cache = rcl_get_option('cache_time',3600);
+        
+        if($timecache) 
+            $this->time_cache = $timecache;
     }
     
     function get_file($string){

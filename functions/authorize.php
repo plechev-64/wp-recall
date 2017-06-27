@@ -4,11 +4,8 @@ add_filter('wp_authenticate_user','rcl_chek_user_authenticate',10);
  * проверяем подтверждение емейла, если такая настройка включена
  */
 function rcl_chek_user_authenticate($user){
-    global $rcl_options;
-    
-    $confirm = (isset($rcl_options['confirm_register_recall']))? $rcl_options['confirm_register_recall']: 0;
-    
-    if(isset($user->ID) && $confirm == 1){
+
+    if(isset($user->ID) && rcl_get_option('confirm_register_recall') == 1){
         
         if(rcl_is_user_role($user->ID, 'need-confirm')){
 
@@ -72,14 +69,15 @@ function rcl_get_login_user_activate ( ) {
  * @param int $user_id идентификатор пользователя
  */
 function rcl_get_authorize_url($user_id){
-    global $rcl_options;
-    if(isset($rcl_options['authorize_page'])&&$rcl_options['authorize_page']){
-        if($rcl_options['authorize_page']==1) $redirect = $_POST['redirect_to'];
-        if($rcl_options['authorize_page']==2) $redirect = $rcl_options['custom_authorize_page'];
+
+    if($autPage = rcl_get_option('authorize_page')){
+        if($autPage==1) $redirect = $_POST['redirect_to'];
+        if($autPage==2) $redirect = $rcl_options['custom_authorize_page'];
         if(!$redirect) $redirect = get_author_posts_url($user_id);
     }else{
         $redirect = get_author_posts_url($user_id);
     }
+    
     return $redirect;
 }
 

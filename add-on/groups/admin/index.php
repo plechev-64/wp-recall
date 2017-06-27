@@ -2,12 +2,11 @@
 
 add_filter('admin_options_wprecall','rcl_admin_groups_page_content');
 function rcl_admin_groups_page_content($content){
-    global $rcl_options;
     
     $opt = new Rcl_Options(__FILE__);
 
     $args = array(
-        'selected'   => $rcl_options['group-page'],
+        'selected'   => rcl_get_option('group-page'),
         'name'       => 'global[group-page]',
         'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
         'echo'       => 0

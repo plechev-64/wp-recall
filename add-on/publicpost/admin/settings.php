@@ -1,18 +1,16 @@
 <?php
 add_filter('admin_options_wprecall','rcl_get_publics_options_page');
 function rcl_get_publics_options_page($content){
-    global $rcl_options,$_wp_additional_image_sizes;
+    global $_wp_additional_image_sizes;
 
     $opt = new Rcl_Options(__FILE__);
 
     $args = array(
-        'selected'   => $rcl_options['public_form_page_rcl'],
+        'selected'   => rcl_get_option('public_form_page_rcl'),
         'name'       => 'global[public_form_page_rcl]',
         'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
         'echo'             => 0
     );
-
-    $guest_redirect = (isset($rcl_options['guest_post_redirect']))? $rcl_options['guest_post_redirect']: false;
 
     $_wp_additional_image_sizes['thumbnail'] = 1;
     $_wp_additional_image_sizes['medium'] = 1;
@@ -121,7 +119,7 @@ function rcl_get_publics_options_page($content){
                     array(
                         $opt->label(__('Redirect to','wp-recall')),
                         wp_dropdown_pages( array(
-                            'selected'   => $guest_redirect,
+                            'selected'   => rcl_get_option('guest_post_redirect'),
                             'name'       => 'global[guest_post_redirect]',
                             'show_option_none' => __('Not selected','wp-recall'),
                             'echo'             => 0 )

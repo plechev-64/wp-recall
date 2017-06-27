@@ -138,12 +138,11 @@ class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
     }
     
     function add_users_page_option($content){
-        global $rcl_options;
         
         $content .= '<h4>'.__('Users page','wp-recall').'</h4>'
                 . '<style>#users_page_rcl{max-width:100%;}</style>'
                 . wp_dropdown_pages( array(
-                    'selected'   => $rcl_options['users_page_rcl'],
+                    'selected'   => rcl_get_option('users_page_rcl'),
                     'name'       => 'users_page_rcl',
                     'show_option_none' => __('Not selected','wp-recall'),
                     'echo'             => 0 )

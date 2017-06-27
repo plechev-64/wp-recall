@@ -21,13 +21,10 @@ array(
 
 add_shortcode('grouplist','rcl_get_grouplist');
 function rcl_get_grouplist($atts = false){
-    global $rcl_options,$post;
+    global $post,$rcl_group;
     
-    $output = (isset($rcl_options['group-output']) && $rcl_options['group-output'])? 1: 0;
-    
-    if($output && $post->ID == $rcl_options['group-page']){
-        
-        if(isset($_GET['group-id']) && $_GET['group-id'])
+    if(rcl_get_option('group-output') && $post->ID == rcl_get_option('group-page')){
+        if($rcl_group)
             return rcl_get_single_group();
         
     }

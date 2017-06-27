@@ -21,7 +21,7 @@ class Rcl_Sub_Tabs {
     public $callback;
     
     function __construct($subtabs,$parent_id = false){
-        global $rcl_tabs,$rcl_options;
+        global $rcl_tabs;
 
         $this->subtabs = $subtabs;
         $this->parent_id = $parent_id;

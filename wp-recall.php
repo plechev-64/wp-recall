@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 16.3.9
+    Version: 16.4.0
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '16.3.9';
+	public $version = '16.4.0';
         
         public $child_addons = array();
         public $need_update = false;
@@ -203,7 +203,7 @@ final class WP_Recall {
 	}
 
 	public function init() {
-            global $wpdb,$rcl_options,$user_ID,$rcl_current_action,$rcl_user_URL;
+            global $user_ID,$rcl_current_action,$rcl_user_URL;
 
             do_action( 'wp_recall_before_init' );
 
@@ -217,7 +217,7 @@ final class WP_Recall {
                     require_once 'functions/captcha.php';
                 }
                 
-                if(!isset($rcl_options['login_form_recall'])||!$rcl_options['login_form_recall']){
+                if(!rcl_get_option('login_form_recall')){
                     add_action('wp_footer', 'rcl_login_form',5);
                 } 
                 
@@ -225,7 +225,7 @@ final class WP_Recall {
 
             if ( $this->is_request( 'frontend' ) ) {
                 
-                if(isset($rcl_options['view_recallbar'])&&$rcl_options['view_recallbar']){
+                if(rcl_get_option('view_recallbar')){
                     require_once('functions/recallbar.php');
                 }
                 
@@ -238,7 +238,7 @@ final class WP_Recall {
 	}
 
         function rcl_include_addons(){
-            global $active_addons,$rcl_options,$rcl_template;
+            global $active_addons,$rcl_template;
 
             if(is_admin()){
                 global $rcl_error;
@@ -405,7 +405,7 @@ function RCL() {
 $GLOBALS['wprecall'] = RCL();
 
 function wp_recall(){
-    global $rcl_options,$user_LK;
+    global $user_LK;
     
     do_action('rcl_area_before'); ?>
 

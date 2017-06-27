@@ -9,13 +9,10 @@ function rcl_profile_admin_menu(){
 
 add_action('rcl_update_custom_fields','rcl_update_page_users',10);
 function rcl_update_page_users(){
-    global $rcl_options;
     
     if(!isset($_POST['users_page_rcl'])) return false;
     
-    $rcl_options['users_page_rcl'] = $_POST['users_page_rcl'];
-    
-    update_option('rcl_global_options', $rcl_options );
+    rcl_update_option('users_page_rcl',$_POST['users_page_rcl']);
     
 }
  
@@ -39,7 +36,6 @@ function rcl_add_register_profile_field_option($options, $field, $type){
 }
 
 function rcl_profile_fields_manager(){
-    global $rcl_options;
 
     rcl_sortable_scripts();
 

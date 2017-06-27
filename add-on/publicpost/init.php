@@ -15,7 +15,6 @@ function rcl_delete_post_activate ( ) {
 
 add_filter('rcl_init_js_variables','rcl_init_js_public_variables',10);
 function rcl_init_js_public_variables($data){
-    global $rcl_options;
 
     $data['local']['preview'] = __('Preview','wp-recall');
     $data['local']['publish'] = __('Publish','wp-recall');
@@ -58,17 +57,14 @@ function rcl_add_postlist_posts(){
 
 add_action('init','rcl_init_publics_block');
 function rcl_init_publics_block(){
-    global $rcl_options,$user_ID,$user_LK;
     
-    if($rcl_options['publics_block_rcl']==1){
+    if(rcl_get_option('publics_block_rcl') == 1){
 
-        $view = ($rcl_options['view_publics_block_rcl'])? $rcl_options['view_publics_block_rcl']: 0;
-        
         $tab_data = array(
             'id'=>'publics', 
             'name'=>__('Posts','wp-recall'),
             'supports'=>array('ajax','cache'),
-            'public'=>$view,
+            'public'=>rcl_get_option('view_publics_block_rcl'),
             'icon'=>'fa-list',
             'output'=>'menu'
         );
@@ -76,7 +72,7 @@ function rcl_init_publics_block(){
         rcl_tab($tab_data);
     }
     
-    if($rcl_options['output_public_form_rcl']==1){
+    if(rcl_get_option('output_public_form_rcl') == 1){
         
         rcl_tab(
             array(

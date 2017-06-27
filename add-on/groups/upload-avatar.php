@@ -8,15 +8,11 @@ function rcl_group_avatar_upload(){
     require_once(ABSPATH . "wp-admin" . '/includes/file.php');
     require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
-    global $user_ID, $rcl_options, $rcl_avatar_sizes;
-
-    if(!$user_ID) return false;
-
     $upload = array();
 
     $group_id = $_POST['group_id'];
 
-    $maxsize = ($rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: $maxsize = 2;
+    $maxsize = rcl_get_option('avatar_weight',2);
     $tmpname = current_time('timestamp').'.jpg';
 
     if($_FILES['uploadfile']){

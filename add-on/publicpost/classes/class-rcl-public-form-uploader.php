@@ -9,7 +9,6 @@ class Rcl_Public_Form_Uploader{
     public $view_gallery = false;
 
     function __construct($args = false) {
-        global $rcl_options;
         
         $this->init_properties($args);
         

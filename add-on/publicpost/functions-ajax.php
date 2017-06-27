@@ -139,15 +139,13 @@ function rcl_get_like_tags(){
 add_action('wp_ajax_rcl_preview_post','rcl_preview_post');
 add_action('wp_ajax_nopriv_rcl_preview_post','rcl_preview_post');
 function rcl_preview_post(){
-    global $user_ID,$rcl_options;
+    global $user_ID;
 
     rcl_verify_ajax_nonce();
 
     $log = array();
 
-    $user_can = $rcl_options['user_public_access_recall'];
-
-    if(!$user_can&&!$user_ID){
+    if(!rcl_get_option('user_public_access_recall') && !$user_ID){
 
         $email_new_user = sanitize_email($_POST['email-user']);
         $name_new_user = $_POST['name-user'];

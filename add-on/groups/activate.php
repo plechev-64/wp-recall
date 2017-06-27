@@ -71,4 +71,7 @@ if(!isset($rcl_options['moderation_public_group'])){
     ));
     
     update_option('rcl_global_options',$rcl_options);
+    
+    flush_rewrite_rules();
+    
 }

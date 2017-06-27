@@ -122,13 +122,11 @@ function rcl_edit_profile(){
 
 add_filter('rcl_profile_fields','rcl_add_office_profile_fields',10);
 function rcl_add_office_profile_fields($fields){
-    global $rcl_options,$userdata;
-    
-    $access = (isset($rcl_options['consol_access_rcl'])&&$rcl_options['consol_access_rcl'])? $rcl_options['consol_access_rcl']: 7;
-    
+    global $userdata;
+
     $profileFields = array();
     
-    if(isset($userdata) && $userdata->user_level >= $access){
+    if(isset($userdata) && $userdata->user_level >= rcl_get_option('consol_access_rcl',7)){
         $profileFields[] = array(
             'slug' => 'show_admin_bar_front',
             'title' => __('Admin toolbar','wp-recall'),
@@ -170,7 +168,7 @@ function rcl_add_office_profile_fields($fields){
 }
 
 function rcl_tab_profile_content($master_id){
-    global $userdata, $user_ID, $rcl_options;
+    global $userdata, $user_ID;
 
     $profileFields = rcl_get_profile_fields();
 
@@ -259,7 +257,7 @@ function rcl_tab_profile_content($master_id){
         </div>
     </form>';
 
-    if($rcl_options['delete_user_account']==1){
+    if(rcl_get_option('delete_user_account')){
         $content .= '
         <form method="post" action="" name="delete_account" onsubmit="return confirm(\''.__('Are you sure? It can’t be restaured!','wp-recall').'\');">
         '.wp_nonce_field('delete-user-'.$user_ID,'_wpnonce',true,false).'

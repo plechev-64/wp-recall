@@ -15,7 +15,8 @@ function rcl_support_cover_uploader_scripts(){
 
 add_filter('rcl_init_js_variables','rcl_init_js_cover_variables',10);
 function rcl_init_js_cover_variables($data){
-    global $rcl_options,$user_ID;
+    global $user_ID;
+    
     if(rcl_is_office($user_ID)){
         $data['profile']['cover_size'] = 1;
         $data['local']['upload_size_cover'] = sprintf(__('Exceeds the maximum image size! Max. %s MB','wp-recall'),1);
@@ -44,36 +45,34 @@ function rcl_cover_upload(){
     require_once(ABSPATH . "wp-admin" . '/includes/image.php');
     require_once(ABSPATH . "wp-admin" . '/includes/file.php');
     require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-
-    global $user_ID, $rcl_options;
-
-    if(!$user_ID) return false;
+    
+    global $user_ID;
 
     $upload = array();
     $coord = array();
 
-    $maxsize = ($rcl_options['avatar_weight'])? $rcl_options['avatar_weight']: $maxsize = 2;
     $tmpname = current_time('timestamp').'.jpg';
 
     $dir_path = RCL_UPLOAD_PATH.'covers/';
     $dir_url = RCL_UPLOAD_URL.'covers/';
     if(!is_dir($dir_path)){
-            mkdir($dir_path);
-            chmod($dir_path, 0755);
+        mkdir($dir_path);
+        chmod($dir_path, 0755);
     }
 
     $tmp_path = $dir_path.'tmp/';
     $tmp_url = $dir_url.'tmp/';
     if(!is_dir($tmp_path)){
-            mkdir($tmp_path);
-            chmod($tmp_path, 0755);
+        mkdir($tmp_path);
+        chmod($tmp_path, 0755);
     }else{
-            foreach (glob($tmp_path.'*') as $file){
-                    unlink($file);
-            }
+        foreach (glob($tmp_path.'*') as $file){
+            unlink($file);
+        }
     }
 
     if($_POST['src']){
+        
         $data = $_POST['src'];
         $data = str_replace('data:image/png;base64,', '', $data);
         $data = str_replace(' ', '+', $data);
@@ -83,17 +82,19 @@ function rcl_cover_upload(){
         $upload['file']['tmp_name'] = $tmp_path.$tmpname;
         $upload['file']['size'] = file_put_contents($upload['file']['tmp_name'], $data);
         $mime = explode('/',$upload['file']['type']);
+        
     }else{
+        
         if($_FILES['cover-file']){
-                foreach($_FILES['cover-file'] as $key => $data){
-                        $upload['file'][$key] = $data;
-                }
+            foreach($_FILES['cover-file'] as $key => $data){
+                $upload['file'][$key] = $data;
+            }
         }
 
         if($_POST['coord']){
-                $viewimg = array();
-                list($coord['x'],$coord['y'],$coord['w'],$coord['h']) =  explode(',',$_POST['coord']);
-                list($viewimg['width'],$viewimg['height']) =  explode(',',$_POST['image']);
+            $viewimg = array();
+            list($coord['x'],$coord['y'],$coord['w'],$coord['h']) =  explode(',',$_POST['coord']);
+            list($viewimg['width'],$viewimg['height']) =  explode(',',$_POST['image']);
         }
 
         $mime = explode('/',$upload['file']['type']);
@@ -101,16 +102,16 @@ function rcl_cover_upload(){
         $tps = explode('.',$upload['file']['name']);
         $cnt = count($tps);
         if($cnt>2){
-                $type = $mime[$cnt-1];
-                $filename = str_replace('.','',$filename);
-                $filename = str_replace($type,'',$filename).'.'.$type;
+            $type = $mime[$cnt-1];
+            $filename = str_replace('.','',$filename);
+            $filename = str_replace($type,'',$filename).'.'.$type;
         }
         $filename = str_replace(' ','',$filename);
     }
 
     $mb = $upload['file']['size']/1024/1024;
 
-    if($mb>$maxsize){
+    if($mb > rcl_get_option('avatar_weight',2)){
         $res['error'] = __('Size exceeded','wp-recall');
         echo json_encode($res);
         exit;

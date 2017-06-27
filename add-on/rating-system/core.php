@@ -12,7 +12,7 @@ function rcl_register_rating_type($args){
 
     $type = $args['rating_type'];
 
-    if(!isset($rcl_options['rating_'.$type])||!$rcl_options['rating_'.$type]) $rcl_options['rating_point_'.$type] = 0;
+    if(!rcl_get_option('rating_'.$type)) $rcl_options['rating_point_'.$type] = 0;
 
     $args['type_point'] = $rcl_options['rating_point_'.$type];
     $rcl_rating_types[$type] = $args;
@@ -169,11 +169,10 @@ function rcl_insert_user_rating($user_id,$point=0){
 
 //Получаем значение рейтинга публикации
 function rcl_get_total_rating($object_id,$rating_type){
-    global $rcl_options;
     
     $total = 0;
 
-    if(!isset($rcl_options['rating_overall_'.$rating_type])||!$rcl_options['rating_overall_'.$rating_type]){
+    if(!rcl_get_option('rating_overall_'.$rating_type)){
 
         $total = rcl_get_rating_sum($object_id,$rating_type);
         
@@ -234,7 +233,7 @@ function rcl_get_user_rating_value($user_id){
 }
 
 function rcl_rating_navi($args){
-    global $rcl_rating_types,$rcl_options;
+    global $rcl_rating_types;
     $navi = false;
 
     $rcl_rating_types['edit-admin'] = array(
@@ -245,7 +244,7 @@ function rcl_rating_navi($args){
 
     foreach($rcl_rating_types as $type){
 
-        if(!isset($rcl_options['rating_user_'.$type['rating_type']])||!$rcl_options['rating_user_'.$type['rating_type']])continue;
+        if(!rcl_get_option('rating_user_'.$type['rating_type']))continue;
 
         $args['rating_type'] = $type['rating_type'];
         $active = (!$navi)? 'active' : '';
@@ -427,10 +426,9 @@ function rcl_update_total_rating($args){
 add_action('rcl_update_total_rating','rcl_post_update_user_rating');
 add_action('rcl_delete_rating_with_post','rcl_post_update_user_rating');
 function rcl_post_update_user_rating($args){
-    global $rcl_options;
     
     if(!isset($args['object_author'])||!$args['object_author']) return false;
-    if($rcl_options['rating_user_'.$args['rating_type']]==1||$args['rating_type']=='edit-admin'||isset($args['user_overall']))
+    if(rcl_get_option('rating_user_'.$args['rating_type'])==1||$args['rating_type']=='edit-admin'||isset($args['user_overall']))
         rcl_update_user_rating($args);
 }
 

@@ -124,7 +124,6 @@ class Rcl_Create_Order{
     }
     
     function register_user(){
-        global $rcl_options;
         
         $user_email = sanitize_text_field($_POST['user_email']);
 
@@ -180,11 +179,9 @@ class Rcl_Create_Order{
         if($this->user_id){
 
             rcl_update_profile_fields($this->user_id);
-            
-            $confirm = (isset($rcl_options['confirm_register_recall']))? $rcl_options['confirm_register_recall']: false;
-            
+
             //Сразу авторизуем пользователя, если не требуется подтверждение почты
-            if($this->buyer_register && !$confirm){
+            if($this->buyer_register && !rcl_get_option('confirm_register_recall')){
 
                 $creds = array(
                     'user_login' => $user_email,

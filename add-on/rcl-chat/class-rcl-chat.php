@@ -488,7 +488,6 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
     }
     
     function message_manager($message){
-        global $rcl_options;
         
         $class = array('message-important');
         
@@ -517,10 +516,9 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
     }
     
     function is_user_can(){
-        global $current_user,$rcl_options;
-        
-        $access = (isset($rcl_options['consol_access_rcl']))? $rcl_options['consol_access_rcl']: 7;
-        $user_can = ($current_user->user_level >= $access)? 1: 0;
+        global $current_user;
+
+        $user_can = ($current_user->user_level >= rcl_get_option('consol_access_rcl',7))? 1: 0;
         
         return apply_filters('rcl_chat_check_user_can',$user_can);
         
