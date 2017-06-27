@@ -46,11 +46,11 @@ function pfm_the_post_classes(){
         $classes[] = 'topic-author';
     }
     
-    if($PrimePost->post_fix){
+    if(isset($PrimePost->post_fix) && $PrimePost->post_fix){
         $classes[] = 'post-fixed';
     }
     
-    if($PrimePost->post_closed){
+    if(isset($PrimePost->post_closed) && $PrimePost->post_closed){
         $classes[] = 'post-closed';
     }
     

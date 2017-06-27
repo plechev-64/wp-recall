@@ -15,7 +15,7 @@
     
     <?php if(pfm_get_option('view-forums-home')): ?>
     
-        <div class="prime-child-forums">
+        <div class="prime-forums-list prime-loop-list prime-child-forums">
 
             <?php while ( pfm_get_next('forum') ) : ?>
 

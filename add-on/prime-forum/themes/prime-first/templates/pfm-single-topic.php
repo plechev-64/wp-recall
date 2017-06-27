@@ -9,7 +9,8 @@
     <div class="prime-forum-topics">
         <span>Сообщений:</span><span><?php pfm_the_post_count(); ?></span>
     </div>
-    <div class="prime-forum-activity">
-        <span class="prime-forum-last-message">Последнее сообщение:</span><span class="prime-forum-time-ago"><?php pfm_time_diff_last_post(); ?> назад</span>
+    <div class="prime-last-items">
+        <span>Последнее сообщение:</span>
+        <span><?php pfm_the_last_post(); ?></span>
     </div>
 </div>

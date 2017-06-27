@@ -246,12 +246,31 @@
     font-size: 12px;
     margin: 8px 0 4px;
 }
-#prime-forum .prime-last-topic {
+#prime-forum .prime-last-topic{
     font-size: 12px;
     max-width: 300px;
     min-width: 180px;
     padding: 5px 10px;
     width: 30%;
+}
+#prime-forum .prime-last-items{
+    font-size: 12px;
+    padding: 5px 10px;
+    width: 15%;
+}
+#prime-forum .prime-last-items > span{
+    display:block;
+}
+#prime-forum .prime-forums-list .prime-last-items{
+    max-width: 400px;
+    min-width: 200px;
+    width: 40%;
+}
+#prime-forum .prime-topics-list .prime-last-items{
+    max-width: 300px;
+    min-width: 180px;
+    width: 15%;
+    text-align:center;
 }
 #prime-forum .prime-forum-footer {
     margin: 10px 0;

@@ -58,6 +58,10 @@ class Rcl_Query {
             }
             
         }
+        
+        if(isset($args['distinct'])){
+            $this->query['select'][0] = 'DISTINCT '.$this->query['select'][0];
+        }
 
         if($this->query['table']['cols']){
             

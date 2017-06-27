@@ -26,6 +26,10 @@ class PrimeQuery{
     public $all_items = 0;
     public $current_page = 1;
     public $parent_groups = array();
+    public $last = array(
+        'topics' => array(),
+        'posts' => array()
+    );
     public $next = array(
         'group' => 0,
         'forum' => 0,
@@ -34,17 +38,13 @@ class PrimeQuery{
     );
     
     function __construct() {
-
-        $this->init_query();
-        
+        $this->init_table_query();
     }
     
     function init_query(){
         
         $this->init_vars();
-        
-        $this->init_table_query();
-        
+
         $this->init_conditions();
         
         if(!$this->is_frontpage && !$this->is_search){
@@ -81,9 +81,11 @@ class PrimeQuery{
             
         }else{
             
-            add_action('pfm_query_init',array($this,'add_forums_data_in_home'));
-            add_action('pfm_query_init',array($this,'add_child_forums'));
-            add_action('pfm_query_init',array($this,'init_canonical_url'));
+            add_action('pfm_query_init',array($this,'add_forums_data_in_home'),10);
+            add_action('pfm_query_init',array($this,'add_child_forums'),10);
+            add_action('pfm_query_init',array($this,'init_canonical_url'),10);
+            
+            add_action('pfm_query_init',array($this,'setup_last_items'),15);
             
             $this->setup_page_data();
             
@@ -478,7 +480,7 @@ class PrimeQuery{
         }else if($this->object && $this->is_topic){
 
             $this->posts = $this->posts_query->get_results($args);
- 
+            
         }
         
     }
@@ -590,6 +592,146 @@ class PrimeQuery{
 
         $this->forums = $this->forums_query->get_data('get_results');
 
+    }
+    
+    function setup_last_items(){
+        global $wpdb;
+        
+        if($this->is_frontpage || $this->is_group || $this->is_forum){
+            
+            if($this->forums){
+
+                $this->last['topics'] = $this->get_forums_last_topic($this->forums);
+
+                $this->last['posts'] = $this->get_forums_last_post($this->forums);
+                
+            }
+            
+            if($this->topics){
+                
+                $posts = $this->get_topics_last_post($this->topics);
+
+                $this->last['posts'] = $this->last['posts']? array_merge($this->last['posts'],$posts): $posts;
+
+            }
+            
+        }
+        
+    }
+    
+    function get_forums_last_post($forums){
+        global $wpdb;
+        
+        $forumIDs = array();
+                
+        foreach($forums as $forum){
+            $forumIDs[] = $forum->forum_id;
+        }
+
+        $sql = "SELECT "
+                . "posts.post_id,"
+                . "posts.post_date,"
+                . "posts.topic_id,"
+                . "posts.user_id, "
+                . "posts.forum_id "
+                . "FROM ("
+                    . "SELECT p.*,t.forum_id FROM ".RCL_PREF."pforum_posts AS p "
+                . "INNER JOIN  ".RCL_PREF."pforum_topics AS t ON p.topic_id=t.topic_id "
+                    . "WHERE t.forum_id IN (".implode(',',$forumIDs).")"
+                    . "ORDER BY p.post_id DESC "
+                . ") as posts "
+                . "GROUP BY posts.forum_id ";
+
+        $posts = $wpdb->get_results($sql);
+        
+        return $posts;
+    }
+    
+    function get_topics_last_post($topics){
+        global $wpdb;
+        
+        $topicIDs = array();
+
+        foreach($topics as $topic){
+            $topicIDs[] = $topic->topic_id;
+        }
+
+        $sql = "SELECT "
+                . "posts.post_id,"
+                . "posts.post_date,"
+                . "posts.topic_id,"
+                . "posts.user_id "
+                . "FROM ("
+                    . "SELECT * FROM ".RCL_PREF."pforum_posts "
+                    . "WHERE topic_id IN (".implode(',',$topicIDs).")"
+                    . "ORDER BY post_id DESC "
+                . ") as posts "
+                . "GROUP BY posts.topic_id ";
+
+        $posts = $wpdb->get_results($sql);
+
+        return $posts;
+    }
+    
+    function get_forums_last_topic($forums){
+        global $wpdb;
+        
+        $forumIDs = array();
+                
+        foreach($forums as $forum){
+            $forumIDs[] = $forum->forum_id;
+        }
+
+        $sql = "SELECT "
+                . "topics.topic_id,"
+                . "topics.topic_name,"
+                . "topics.forum_id,"
+                . "topics.user_id "
+                . "FROM ("
+                    . "SELECT * FROM ".RCL_PREF."pforum_topics "
+                    . "WHERE forum_id IN (".implode(',',$forumIDs).")"
+                    . "ORDER BY topic_id DESC "
+                . ") as topics "
+                . "GROUP BY topics.forum_id ";
+
+        $topics = $wpdb->get_results($sql);
+        
+        return $topics;
+        
+    }
+    
+    function search_forum_last_topic($forum_id){
+        
+        if(!$this->last['topics']) return false;
+        
+        foreach($this->last['topics'] as $topic){
+            if($forum_id == $topic->forum_id) return $topic;
+        }
+
+        return false;
+    }
+    
+    function search_forum_last_post($forum_id){
+        
+        if(!$this->last['posts']) return false;
+        
+        foreach($this->last['posts'] as $post){
+            if(!isset($post->forum_id)) continue;
+            if($forum_id == $post->forum_id) return $post;
+        }
+
+        return false;
+    }
+    
+    function search_topic_last_post($topic_id){
+        
+        if(!$this->last['posts']) return false;
+        
+        foreach($this->last['posts'] as $post){
+            if($topic_id == $post->topic_id) return $post;
+        }
+
+        return false;
     }
 
     function init_canonical_url(){

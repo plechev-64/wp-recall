@@ -1,10 +1,8 @@
 <?php
 
 function pfm_get_template_content(){
-
-    $ThemeID = get_option('rcl_pforum_template');
     
-    $theme = rcl_get_addon($ThemeID);
+    $theme = pfm_get_current_theme();
     
     if(!$theme) return false;
     
@@ -103,9 +101,7 @@ function pfm_class_forum(){
 
 function pfm_the_template($name){
     
-    $ThemeID = get_option('rcl_pforum_template');
-    
-    $theme = rcl_get_addon($ThemeID);
+    $theme = pfm_get_current_theme($ThemeID);
     
     rcl_include_template($name.'.php',$theme['path']);
 }

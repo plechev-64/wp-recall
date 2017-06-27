@@ -1257,7 +1257,7 @@ function rcl_get_option($name, $default = false){
     if(!$rcl_options)
         $rcl_options = get_option('rcl_global_options');
     
-    if(isset($rcl_options[$name]))
+    if(isset($rcl_options[$name]) && $rcl_options[$name] != '')
         return $rcl_options[$name];
     
     return $default;

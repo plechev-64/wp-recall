@@ -18,8 +18,9 @@
         <div class="prime-forum-topics">
             <span>Тем:</span><span><?php pfm_the_topic_count(); ?></span>
         </div>
-        <div class="prime-last-topic">
-            <span>Последняя тема: </span><span><?php pfm_the_last_topic(); ?></span>
+        <div class="prime-last-items">
+            <span>Последняя тема: <?php pfm_the_last_topic(); ?></span>
+            <span>Последнее сообщение: <?php pfm_the_last_post(); ?></span>
         </div>
     </div>
 </div>

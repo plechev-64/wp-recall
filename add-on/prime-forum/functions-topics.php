@@ -88,6 +88,11 @@ function pfm_get_topic_meta_box($topic_id){
     
 }
 
+function pfm_the_last_post_url(){
+    global $PrimeTopic;
+    echo pfm_get_post_permalink($PrimeTopic->last_post_id);
+}
+
 function pfm_update_topic_custom_fields($topic_id){
 
     require_once(ABSPATH . "wp-admin" . '/includes/image.php');

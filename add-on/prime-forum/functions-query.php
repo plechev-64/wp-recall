@@ -86,7 +86,14 @@ function pfm_get_next($type){
             
             if(isset($PrimeQuery->forums[$nextID])){
                 
-                if($PrimeQuery->forums[$nextID]->group_id == $PrimeQuery->object->group_id || $PrimeQuery->forums[$nextID]->group_id == $PrimeGroup->group_id){
+                if(isset($PrimeQuery->object->group_id))
+                    $groupID = $PrimeQuery->object->group_id;
+                else if(isset($PrimeGroup->group_id))
+                    $groupID = $PrimeGroup->group_id;
+                else
+                    return;
+                
+                if($PrimeQuery->forums[$nextID]->group_id == $groupID){
                 
                     $PrimeForum = $PrimeQuery->forums[$nextID];
 
@@ -132,3 +139,37 @@ function pfm_get_next($type){
     
 }
 
+function pfm_the_last_topic(){
+    global $PrimeForum,$PrimeQuery;
+    
+    $lastTopic = $PrimeQuery->search_forum_last_topic($PrimeForum->forum_id);
+    
+    if(!$lastTopic){
+        echo 'Тем нет'; return;
+    }
+    
+    echo '<a href="'.pfm_get_topic_permalink($lastTopic->topic_id).'">'
+            .$lastTopic->topic_name
+        .'</a>';
+    
+}
+
+function pfm_the_last_post(){
+    global $PrimeForum,$PrimeTopic,$PrimeQuery;
+    
+    if(pfm_is_home() || pfm_is_group()){
+        $lastPost = $PrimeQuery->search_forum_last_post($PrimeForum->forum_id);
+    }else{
+        $lastPost = $PrimeQuery->search_topic_last_post($PrimeTopic->topic_id);
+    }
+
+    if(!$lastPost){
+        echo 'Сообщений нет'; return;
+    }
+    
+    echo '<a href="'.pfm_get_post_permalink($lastPost->post_id).'">'
+            . human_time_diff( strtotime($lastPost->post_date), current_time('timestamp') ). ' назад'
+        .'</a>';
+
+    
+}

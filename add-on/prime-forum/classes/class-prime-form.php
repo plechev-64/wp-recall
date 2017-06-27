@@ -188,7 +188,7 @@ class PrimeForm extends Rcl_Custom_Fields{
 
                     $value = (isset($this->values[$field['slug']]))? $this->values[$field['slug']]: false;
 
-                    $required = ($field['required'] == 1)? '<span class="required">*</span>': '';
+                    $required = (isset($field['required']) && $field['required'] == 1)? '<span class="required">*</span>': '';
 
                     $content .= '<div id="field-'.$field['slug'].'" class="form-field rcl-option">';
 

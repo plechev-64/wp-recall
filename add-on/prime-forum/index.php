@@ -77,10 +77,12 @@ function pfm_init_tab(){
 }
 
 function pfm_user_posts_other_topics($master_id){
-    global $PrimeTopic;
+    global $PrimeTopic,$PrimeQuery;
     
-    $TopicsQuery = new PrimeTopics();
-    $PostsQuery = new PrimePosts();
+    $PrimeQuery = new PrimeQuery();
+    
+    $TopicsQuery = $PrimeQuery->topics_query;
+    $PostsQuery = $PrimeQuery->posts_query;
     
     $args = array(
         'user_id__not_in' => array($master_id),
@@ -116,10 +118,10 @@ function pfm_user_posts_other_topics($master_id){
     $TopicsQuery->query['orderby'] = "MAX(pfm_posts.post_date)";
     
     $topics = $TopicsQuery->get_data('get_results');
+
+    $PrimeQuery->last['posts'] = $PrimeQuery->get_topics_last_post($topics);
     
-    $ThemeID = get_option('rcl_pforum_template');
-    
-    $theme = rcl_get_addon($ThemeID);
+    $theme = pfm_get_current_theme();
     
     $content = '<h3>'.__('Сообщения в чужих темах на форуме').'</h3>';
 
@@ -127,10 +129,11 @@ function pfm_user_posts_other_topics($master_id){
     
     $content .= $pageNavi->pagenavi();
     
+    $content .= '<div class="prime-topics-list prime-loop-list">';
     foreach(wp_unslash($topics) as $PrimeTopic){
-        
         $content .= rcl_get_include_template('pfm-single-topic.php',$theme['path']);
     }
+    $content .= '</div>';
     
     $content .= $pageNavi->pagenavi();
     
@@ -140,10 +143,12 @@ function pfm_user_posts_other_topics($master_id){
 }
 
 function pfm_user_topics_start($master_id){
-    global $PrimeTopic;
+    global $PrimeTopic,$PrimeQuery;
     
-    $TopicsQuery = new PrimeTopics();
-    $PostsQuery = new PrimePosts();
+    $PrimeQuery = new PrimeQuery();
+    
+    $TopicsQuery = $PrimeQuery->topics_query;
+    $PostsQuery = $PrimeQuery->posts_query;
     
     $countTopics = $TopicsQuery->count(array(
         'user_id' => $master_id
@@ -178,10 +183,8 @@ function pfm_user_topics_start($master_id){
     $TopicsQuery->query['orderby'] = "MAX(pfm_posts.post_date)";
 
     $topics = $TopicsQuery->get_data('get_results');
-    
-    $ThemeID = get_option('rcl_pforum_template');
-    
-    $theme = rcl_get_addon($ThemeID);
+
+    $theme = pfm_get_current_theme();
     
     $content = '<h3>'.__('Начатые темы на форуме').'</h3>';
 
@@ -189,10 +192,11 @@ function pfm_user_topics_start($master_id){
     
     $content .= $pageNavi->pagenavi();
     
+    $content .= '<div class="prime-topics-list prime-loop-list">';
     foreach(wp_unslash($topics) as $PrimeTopic){
-        
         $content .= rcl_get_include_template('pfm-single-topic.php',$theme['path']);
     }
+    $content .= '</div>';
     
     $content .= $pageNavi->pagenavi();
     
@@ -202,15 +206,19 @@ function pfm_user_topics_start($master_id){
     
 }
 
-add_action('parse_query','pfm_init_query',10);
-function pfm_init_query(){
-    global $PrimeQuery,$PrimeGroup,$PrimeForum,$PrimeTopic,$PrimePost,$PrimeUser,$wp_query;
-
+add_action('pre_get_posts','pfm_init_query',10);
+function pfm_init_query($wp_query){
+    global $PrimeQuery,$PrimeGroup,$PrimeForum,$PrimeTopic,$PrimePost,$PrimeUser;
+    
+    if(!$wp_query->is_main_query()) return;
+    
     if($wp_query->queried_object->ID != pfm_get_option('home-page')) return;
 
     $PrimeUser = new PrimeUser();
     
     $PrimeQuery = new PrimeQuery();
+    
+    $PrimeQuery->init_query();
     
     do_action('pfm_init');
 
@@ -295,7 +303,7 @@ function pfm_get_title_tag(){
         
     $object = $PrimeQuery->object;
 
-    if(!$object) return $title;
+    if(!$object) return false;
 
     if($PrimeQuery->is_topic){
         $title = $object->topic_name.' | '.__('Форум').' '.$object->forum_name;
@@ -320,7 +328,7 @@ function pfm_get_title_page(){
         
     $object = $PrimeQuery->object;
 
-    if(!$object) return $title;
+    if(!$object) return false;
 
     if($PrimeQuery->is_topic){
         $title = $object->topic_name;
@@ -335,4 +343,8 @@ function pfm_get_title_page(){
     }
         
     return $title;
+}
+
+function pfm_get_current_theme(){
+    return rcl_get_addon(get_option('rcl_pforum_template'));
 }

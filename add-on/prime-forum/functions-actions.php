@@ -1027,32 +1027,35 @@ function pfm_action_get_structure(){
 //получение обновленных тем
 pfm_add_ajax_action('get_last_updated_topics','pfm_action_get_last_updated_topics');
 function pfm_action_get_last_updated_topics(){
-    global $wpdb,$PrimeTopic;
+    global $wpdb,$PrimeTopic,$PrimeQuery;
     
-    $ThemeID = get_option('rcl_pforum_template');
-    
-    $theme = rcl_get_addon($ThemeID);
+    $theme = pfm_get_current_theme();
     
     $topics = $wpdb->get_results(
         "SELECT "
             . "ptopics.*, "
-            . "MAX(pposts.post_date) AS last_post_date "
+            . "MAX(pfm_posts.post_date) AS last_post_date, "
+            . "MAX(pfm_posts.post_id) AS last_post_id "
         . "FROM "
         . RCL_PREF."pforum_topics AS ptopics "
-        . "INNER JOIN ".RCL_PREF."pforum_posts AS pposts ON ptopics.topic_id = pposts.topic_id "
+        . "INNER JOIN ".RCL_PREF."pforum_posts AS pfm_posts ON ptopics.topic_id = pfm_posts.topic_id "
             . "GROUP BY ptopics.topic_id "
-        . "ORDER BY MAX(pposts.post_date)DESC "
+        . "ORDER BY MAX(pfm_posts.post_date)DESC "
         . "LIMIT 20"
     );
+    
+    $PrimeQuery = new PrimeQuery();
+    
+    $PrimeQuery->last['posts'] = $PrimeQuery->get_topics_last_post($topics);
 
     $content = '<div id="prime-forum">';
     
     if($topics){
-        
+        $content .= '<div class="prime-topics-list prime-loop-list">';
         foreach(wp_unslash($topics) as $PrimeTopic){
             $content .= rcl_get_include_template('pfm-single-topic.php',$theme['path']);
         }
-        
+        $content .= '</div>';
     }else{
         
         $content .= pfm_get_notice(__('Ничего не найдено'));

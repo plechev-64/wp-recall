@@ -93,7 +93,7 @@ function pfm_the_forum_icons(){
     
     if(!$icons) return false;
     
-    $content .= '<div class="prime-topic-icons">';
+    $content = '<div class="prime-topic-icons">';
     
     foreach($icons as $icon){
         $content .= '<div class="topic-icon">';
@@ -104,19 +104,6 @@ function pfm_the_forum_icons(){
     $content .= '</div>';  
     
     echo $content;
-}
-
-function pfm_the_last_topic(){
-    global $PrimeForum;
-    
-    if(!$PrimeForum->last_topic_id){
-        echo 'Тем нет'; return;
-    }
-    
-    echo '<a href="'.pfm_get_topic_permalink($PrimeForum->last_topic_id).'">'
-            .pfm_get_topic_field($PrimeForum->last_topic_id,'topic_name')
-        .'</a>';
-    
 }
 
 function pfm_subforums_list(){
