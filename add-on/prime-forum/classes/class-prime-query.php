@@ -317,12 +317,6 @@ class PrimeQuery{
                 'orderby' => 'forum_seq',
                 'join_query' => array(
                     array(
-                        'table' => $this->topics_query->query['table'],
-                        'on_forum_id' => 'forum_id',
-                        'fields' => false,
-                        'join' => 'LEFT'
-                    ),
-                    array(
                         'table' => array(
                             'name' => $this->forums_query->query['table']['name'],
                             'as' => $this->forums_query->query['table']['as'].'2',
@@ -456,8 +450,7 @@ class PrimeQuery{
             
             $this->forums_query->query['select'] = array(
                 "pfm_forums.*",
-                "COUNT(DISTINCT pfm_forums2.forum_id) AS subforum_count",
-                "MAX(pfm_topics.topic_id) AS last_topic_id"
+                "COUNT(DISTINCT pfm_forums2.forum_id) AS subforum_count"
             );
             
             $this->forums = $this->forums_query->get_data('get_results');
@@ -509,12 +502,6 @@ class PrimeQuery{
             'order' => 'ASC',
             'join_query' => array(
                 array(
-                    'table' => $this->topics_query->query['table'],
-                    'on_forum_id' => 'forum_id',
-                    'fields' => false,
-                    'join' => 'LEFT'
-                ),
-                array(
                     'table' => $this->groups_query->query['table'],
                     'on_group_id' => 'group_id',
                     'fields' => false,
@@ -541,8 +528,7 @@ class PrimeQuery{
         $this->forums_query->query['orderby'] = "pfm_groups.group_seq ASC, pfm_forums.forum_seq";
         $this->forums_query->query['select'] = array(
             "pfm_forums.*",
-            "COUNT(DISTINCT pfm_forums2.forum_id) AS subforum_count",
-            "MAX(pfm_topics.topic_id) AS last_topic_id"
+            "COUNT(DISTINCT pfm_forums2.forum_id) AS subforum_count"
         );
 
         $this->forums = $this->forums_query->get_data('get_results');
@@ -560,12 +546,6 @@ class PrimeQuery{
             'order' => 'ASC',
             'orderby' => 'forum_seq',
             'join_query' => array(
-                array(
-                    'table' => $this->topics_query->query['table'],
-                    'on_forum_id' => 'forum_id',
-                    'fields' => false,
-                    'join' => 'LEFT'
-                ),
                 array(
                     'table' => array(
                         'name' => $this->forums_query->query['table']['name'],
@@ -586,8 +566,7 @@ class PrimeQuery{
             
         $this->forums_query->query['select'] = array(
             "pfm_forums.*",
-            "COUNT(DISTINCT pfm_forums2.forum_id) AS subforum_count",
-            "MAX(pfm_topics.topic_id) AS last_topic_id"
+            "COUNT(DISTINCT pfm_forums2.forum_id) AS subforum_count"
         );
 
         $this->forums = $this->forums_query->get_data('get_results');
@@ -597,7 +576,7 @@ class PrimeQuery{
     function setup_last_items(){
         global $wpdb;
         
-        if($this->is_frontpage || $this->is_group || $this->is_forum){
+        if(!$this->is_topic){
             
             if($this->forums){
 

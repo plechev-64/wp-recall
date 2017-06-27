@@ -144,7 +144,8 @@
 #prime-topic-form-box #qt_button_code input,
 #prime-topic-form-box #qt_button_pfm_offtop input,
 #prime-topic-form-box #qt_button_pfm_spoiler input,
-#prime-topic-form-box #qt_button_close input {
+#prime-topic-form-box #qt_button_close input,
+#prime-topic-form-box #qt_button_img input{
     height: auto;
     line-height: 24px;
     margin: 0 4px 4px 0;
@@ -203,6 +204,9 @@
 }
 #prime-topic-form-box #qt_button_close::before {
     content: "\f0d0";
+}
+#prime-topic-form-box #qt_button_img::before {
+    content: "\f03e";
 }
 #prime-topic-form-box .wp-editor-wrap .wp-editor-area {
     border: 1px solid #ddd;

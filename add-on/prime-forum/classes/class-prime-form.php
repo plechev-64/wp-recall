@@ -122,7 +122,7 @@ class PrimeForm extends Rcl_Custom_Fields{
             'name' => 'pfm-data[post_content]',
             'title' => __('Текст сообщения'),
             'required' => 1,
-            'quicktags' => 'strong,em,link,code,close,block,del'
+            'quicktags' => 'strong,img,em,link,code,close,block,del'
         );
         
         if($this->exclude_fields){
