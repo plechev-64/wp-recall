@@ -650,7 +650,7 @@ function rcl_author_link($link, $author_id){
     
     return add_query_arg(
         array( 
-            rcl_get_option('link_user_lk_rcl') => $author_id 
+            rcl_get_option('link_user_lk_rcl','user') => $author_id 
         ), 
         get_permalink( rcl_get_option('lk_page_rcl') ) 
     );
