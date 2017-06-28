@@ -1,8 +1,14 @@
 #prime-options{
     width:400px;
 }
+#prime-options h3{
+    margin: 5px 0;
+}
 #prime-options select{
     width: 100%;
+}
+#prime-options .rcl-option{
+    margin-bottom:15px;
 }
 #prime-options .rcl-field-notice{
     font-size:12px;

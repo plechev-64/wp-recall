@@ -165,6 +165,58 @@ function pfm_page_options(){
                 __('Запрещена'),
                 __('Разрешена')
             )
+        ),
+        array(
+            'type' => 'custom',
+            'title' => __('Шаблоны для формирования тега title и наименования страницы'),
+            'content' => __(
+                '<p>В шаблонах можно указывать следующие маски:<br>'
+                . '%GROUPNAME% - имя текущей группы форумов<br>'
+                . '%FORUMNAME% - имя текущего форума<br>'
+                . '%TOPICNAME% - имя текущей темы</p>'
+            )
+        ),
+        array(
+            'type' => 'text',
+            'slug' => 'mask-tag-group',
+            'name' => 'rcl_pforum_options[mask-tag-group]',
+            'notice' => __('Тег title в группе форумов'),
+            'default' => __('Группа форумов').' %GROUPNAME%'
+        ),
+        array(
+            'type' => 'text',
+            'slug' => 'mask-page-group',
+            'name' => 'rcl_pforum_options[mask-page-group]',
+            'notice' => __('Наименование страницы в группе форумов'),
+            'default' => __('Группа форумов').' %GROUPNAME%'
+        ),
+        array(
+            'type' => 'text',
+            'slug' => 'mask-tag-forum',
+            'name' => 'rcl_pforum_options[mask-tag-forum]',
+            'notice' => __('Тег title на странице форума'),
+            'default' => __('Форум').' %FORUMNAME%'
+        ),
+        array(
+            'type' => 'text',
+            'slug' => 'mask-page-forum',
+            'name' => 'rcl_pforum_options[mask-page-forum]',
+            'notice' => __('Наименование страницы отдельного форума'),
+            'default' => __('Форум').' %FORUMNAME%'
+        ),
+        array(
+            'type' => 'text',
+            'slug' => 'mask-tag-topic',
+            'name' => 'rcl_pforum_options[mask-tag-topic]',
+            'notice' => __('Тег title на странице темы'),
+            'default' => '%TOPICNAME% | '. __('Форум').' %FORUMNAME%'
+        ),
+        array(
+            'type' => 'text',
+            'slug' => 'mask-page-topic',
+            'name' => 'rcl_pforum_options[mask-page-topic]',
+            'notice' => __('Наименование страницы отдельной темы'),
+            'default' => '%TOPICNAME%'
         )
     );
     

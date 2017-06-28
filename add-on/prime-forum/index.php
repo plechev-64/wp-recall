@@ -284,17 +284,30 @@ function pfm_init_js_variables($data){
     global $PrimeQuery;
     
     if(!$PrimeQuery->is_forum && !$PrimeQuery->is_topic) return $data;
+    
+    $tags = array(
+        array('pfm_pre', __('pre'), '<pre>', '</pre>', 'h', __('Многострочный код'), 100),
+        array('pfm_spoiler', __('спойлер'), '[spoiler]', '[/spoiler]', 'h', __('Спойлер'), 120),
+        array('pfm_offtop', __('оффтоп'), '[offtop]', '[/offtop]', 'h', __('Оффтоп'), 110),
+    );
+    
+    $tags = apply_filters('pfm_gtags',$tags);
+    
+    if(!$tags) return $data;
 
-    $data['QTags'][] = array('pfm_pre', __('pre'), '<pre>', '</pre>', 'h', __('Многострочный код'), 100);
-    $data['QTags'][] = array('pfm_spoiler', __('спойлер'), '[spoiler]', '[/spoiler]', 'h', __('Спойлер'), 120);
-    $data['QTags'][] = array('pfm_offtop', __('оффтоп'), '[offtop]', '[/offtop]', 'h', __('Оффтоп'), 110);
+    $data['QTags'] = $tags;
 
     return $data;
 }
 
-function pfm_get_option($name){
+function pfm_get_option($name, $default = false){
+    
     $PfmOptions = get_option('rcl_pforum_options');
-    if(!isset($PfmOptions[$name])) return false;
+    
+    if(!isset($PfmOptions[$name]) || $PfmOptions[$name] == ''){
+        return $default;
+    }
+    
     return $PfmOptions[$name];
 }
 
@@ -306,13 +319,13 @@ function pfm_get_title_tag(){
     $object = $PrimeQuery->object;
 
     if(!$object) return false;
-
+    
     if($PrimeQuery->is_topic){
-        $title = $object->topic_name.' | '.__('Форум').' '.$object->forum_name;
+        $title = pfm_replace_mask_title(pfm_get_option('mask-tag-topic', $object->topic_name.' | '.__('Форум').' '.$object->forum_name));
     }else if($PrimeQuery->is_forum){
-        $title = __('Форум').' '.$object->forum_name;
+        $title = pfm_replace_mask_title(pfm_get_option('mask-tag-forum', __('Форум').' '.$object->forum_name));
     }else if($PrimeQuery->is_group){
-        $title = __('Группа форумов').' '.$object->group_name;
+        $title = pfm_replace_mask_title(pfm_get_option('mask-tag-group', __('Группа форумов').' '.$object->group_name));
     }
 
     if($PrimeQuery->is_page){
@@ -333,11 +346,11 @@ function pfm_get_title_page(){
     if(!$object) return false;
 
     if($PrimeQuery->is_topic){
-        $title = $object->topic_name;
+        $title = pfm_replace_mask_title(pfm_get_option('mask-page-topic', $object->topic_name));
     }else if($PrimeQuery->is_forum){
-        $title = __('Форум').' '.$object->forum_name;
+        $title = pfm_replace_mask_title(pfm_get_option('mask-page-forum', __('Форум').' '.$object->forum_name));
     }else if($PrimeQuery->is_group){
-        $title = __('Группа форумов').' '.$object->group_name;
+        $title = pfm_replace_mask_title(pfm_get_option('mask-page-group', __('Группа форумов').' '.$object->group_name));
     }
 
     if($PrimeQuery->is_page){
@@ -345,6 +358,35 @@ function pfm_get_title_page(){
     }
         
     return $title;
+}
+
+function pfm_replace_mask_title($string){
+    global $PrimeQuery;
+    
+    $object = $PrimeQuery->object;
+    
+    $mask = array();
+    $replace = array();
+    
+    if(isset($object->group_name)){
+        $mask[] = '%GROUPNAME%';
+        $replace[] = $object->group_name;
+    }
+    
+    if(isset($object->forum_name)){
+        $mask[] = '%FORUMNAME%';
+        $replace[] = $object->forum_name;
+    }
+    
+    if(isset($object->topic_name)){
+        $mask[] = '%TOPICNAME%';
+        $replace[] = $object->topic_name;
+    }
+    
+    if(!$mask || !$replace) return $string;
+    
+    return str_replace($mask, $replace, $string);
+    
 }
 
 function pfm_get_current_theme(){

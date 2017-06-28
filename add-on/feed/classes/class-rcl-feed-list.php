@@ -9,7 +9,7 @@ class Rcl_Feed_List extends Rcl_Query{
     public $paged;
     public $add_uri;
 
-    function __construct($args){
+    function __construct($args = array()){
         global $user_ID;
         
         if(!isset($args['user_feed']))

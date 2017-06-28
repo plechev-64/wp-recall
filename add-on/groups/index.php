@@ -675,7 +675,8 @@ function rcl_add_feed_group_query($query,$user_id){
             . "INNER JOIN $wpdb->term_taxonomy AS term_taxonomy ON term_relationships.term_taxonomy_id=term_taxonomy.term_taxonomy_id "
             . "WHERE term_taxonomy.term_id IN (".implode(',',$groups).")");
         
-        $query['where_or'][] = "(wp_posts.ID IN (".implode(',',$objects).") AND wp_posts.post_author NOT IN (".implode(',',$authors_ignor)."))";
+        if($objects)
+            $query['where_or'][] = "(wp_posts.ID IN (".implode(',',$objects).") AND wp_posts.post_author NOT IN (".implode(',',$authors_ignor)."))";
 
     }
 

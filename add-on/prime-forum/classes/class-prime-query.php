@@ -716,6 +716,8 @@ class PrimeQuery{
     function init_canonical_url(){
         
         $url = false;
+        
+        $isSlash = preg_match("/\/$/",get_option('permalink_structure'))? true: false;
 
         if($this->is_group){
             
@@ -732,10 +734,12 @@ class PrimeQuery{
         }
         
         if($url){
-            
+
             if($this->is_page){
                 if ( '' != get_option('permalink_structure') ) {
-                    $url .= 'page/'.$this->current_page.'/';
+                    $url = untrailingslashit($url);
+                    $url .= '/page/'.$this->current_page;
+                    if(preg_match("/\/$/",get_option('permalink_structure'))) $url .= '/';
                 }else{
                     $url = add_query_arg(array('pfm-page' => $this->current_page), $url);
                 }
