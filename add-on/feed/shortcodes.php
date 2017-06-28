@@ -14,7 +14,7 @@ array(
  * ) */
 
 add_shortcode('feed','rcl_get_feed_list');
-function rcl_get_feed_list($atts){
+function rcl_get_feed_list($atts = array()){
     global $wpdb,$user_ID,$rcl_feed;
 
     if(!$user_ID){
@@ -22,8 +22,11 @@ function rcl_get_feed_list($atts){
                 .__('Login or register to view the latest publications and comments from users for which you have subscribed.','wp-recall')
                 .'</p>';
     }
+    
+    if(!$atts) $atts = array();
 
     include_once 'classes/class-rcl-feed-list.php';
+    
     $list = new Rcl_Feed_List($atts);
 
     if(!isset($atts['number'])){

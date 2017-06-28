@@ -12,6 +12,8 @@ class Rcl_Feed_List extends Rcl_Query{
     function __construct($args = array()){
         global $user_ID;
         
+        if(!$args) $args = array();
+        
         if(!isset($args['user_feed']))
             $args['user_feed'] = $user_ID;
         
