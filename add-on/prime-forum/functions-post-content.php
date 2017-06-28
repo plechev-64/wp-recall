@@ -178,14 +178,7 @@ function pfm_filter_links($content){
 }
 
 add_filter('pfm_filter_content_without_pretags','wpautop',14);
-
-add_filter('pfm_filter_content_without_pretags','pfm_add_shortcode_content',15);
-function pfm_add_shortcode_content($content){
-    
-    $content = pfm_do_shortcode($content);
-    
-    return $content;
-}
+add_filter('pfm_filter_content_without_pretags','do_shortcode',15);
 
 add_filter('pfm_the_post_content','pfm_add_topic_meta_box',20);
 function pfm_add_topic_meta_box($content){
