@@ -69,14 +69,20 @@ function rcl_get_login_user_activate ( ) {
  * @param int $user_id идентификатор пользователя
  */
 function rcl_get_authorize_url($user_id){
+    
+    $redirect = false;
 
     if($autPage = rcl_get_option('authorize_page')){
-        if($autPage==1) $redirect = $_POST['redirect_to'];
-        if($autPage==2) $redirect = $rcl_options['custom_authorize_page'];
-        if(!$redirect) $redirect = get_author_posts_url($user_id);
-    }else{
-        $redirect = get_author_posts_url($user_id);
+        
+        if($autPage==1) 
+            $redirect = $_POST['redirect_to'];
+        else if($autPage==2) 
+            $redirect = rcl_get_option('custom_authorize_page');
+
     }
+    
+    if(!$redirect) 
+        $redirect = get_author_posts_url($user_id);
     
     return $redirect;
 }
