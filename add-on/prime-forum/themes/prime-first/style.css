@@ -217,6 +217,9 @@
     color: #777;
     font-size: 12px;
 }
+#prime-forum .prime-forum-description:empty {
+    display: none;
+}
 #prime-forum .prime-forum-topics {
     align-items: center;
     align-self: center;

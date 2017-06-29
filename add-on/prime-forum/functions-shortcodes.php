@@ -17,8 +17,8 @@ function pfm_get_shortcodes(){
     $whiteList = apply_filters('pfm_whitelist_shortcodes',$whiteList);
     
     $PrimeShorts = array();
-    foreach($shortcode_tags as $tag => $function){
-        if(!in_array($tag,$whiteList)) continue;
+    foreach($shortcode_tags as $tag => $function){       
+        if(!in_array($tag,$whiteList)) continue;       
         $PrimeShorts[$tag] = $function;
     }
     
@@ -28,7 +28,7 @@ function pfm_get_shortcodes(){
 
 add_filter('pfm_whitelist_shortcodes','pfm_add_admin_support_shortcodes',10);
 function pfm_add_admin_support_shortcodes($whiteList){
-    $adminShorts = explode("\n",pfm_get_option('support-shortcodes'));
+    $adminShorts = array_map('trim',explode("\n",pfm_get_option('support-shortcodes')));
     if(!$adminShorts) return $whiteList;
     $whiteList = array_merge($whiteList,$adminShorts);
     return $whiteList;
@@ -47,7 +47,7 @@ function pfm_do_shortcode( $content, $ignore_html = false ) {
     // Find all registered tag names in $content.
     preg_match_all( '@\[([^<>&/\[\]\x00-\x20=]++)@', $content, $matches );
     $tagnames = array_intersect( array_keys( $PrimeShorts ), $matches[1] );
-
+    
     if ( empty( $tagnames ) ) {
             return $content;
     }

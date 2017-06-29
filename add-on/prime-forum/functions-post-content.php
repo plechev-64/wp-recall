@@ -112,17 +112,21 @@ function pfm_filter_urls($content){
     preg_match_all("/(\s|^|>|])(https?:[_a-z0-9\/\.\-#?=&]+)/ui", $content, $urls);
     
     if($urls[0]){
-        
-        $oembedSupport = (pfm_get_option('support-oembed') && function_exists('wp_oembed_get'))? true: false;
 
-        foreach( $urls[0] as $k => $url ){
+        $oembedSupport = (pfm_get_option('support-oembed') && function_exists('wp_oembed_get'))? true: false;
+        
+        $sortStrings = $urls[2];
+        
+        usort($sortStrings, 'pfm_sort_array_by_string');
+
+        foreach( $sortStrings as $k => $url ){
             
             if($oembedSupport){
                 
-                $oembed = wp_oembed_get($urls[2][$k],array('width'=>400,'height'=>400,'discover' => false));
+                $oembed = wp_oembed_get($url,array('width'=>400,'height'=>400,'discover' => false));
                 
                 if($oembed){
-                    $content = str_replace($urls[2][$k],$oembed,$content);
+                    $content = str_replace($url,$oembed,$content);
                     continue;
                 }
             
@@ -130,21 +134,26 @@ function pfm_filter_urls($content){
             
             if(pfm_is_can('post_create')){
 
-                $replace = ' <a href="'.$urls[2][$k].'" target="_blank" rel="nofollow">'.$urls[2][$k].'</a>';
+                $replace = ' <a href="'.$url.'" target="_blank" rel="nofollow">'.$url.'</a>';
 
             }else{
 
                 $replace = pfm_get_notice(__('Вы не можете просматривать опубликованные ссылки'),'warning');
 
             }
-            
-            $content = str_replace($url, $replace, $content);
+
+            $content = preg_replace('|[^">]'.$url.'|u', ' <a href="'.$url.'" target="_blank" rel="nofollow">'.$url.'</a>', $content);
 
         }
     
     }
     
+    
     return $content;
+}
+
+function pfm_sort_array_by_string($a, $b){
+    if (strlen($a) < strlen($b)) { return 1; } elseif (strlen($a) == strlen($b)) { return 0; } else { return -1; }
 }
 
 add_filter('pfm_filter_content_without_pretags','pfm_filter_links',12);
@@ -178,7 +187,7 @@ function pfm_filter_links($content){
 }
 
 add_filter('pfm_filter_content_without_pretags','wpautop',14);
-add_filter('pfm_filter_content_without_pretags','do_shortcode',15);
+add_filter('pfm_filter_content_without_pretags','pfm_do_shortcode',15);
 
 add_filter('pfm_the_post_content','pfm_add_topic_meta_box',20);
 function pfm_add_topic_meta_box($content){

@@ -574,7 +574,6 @@ class PrimeQuery{
     }
     
     function setup_last_items(){
-        global $wpdb;
         
         if(!$this->is_topic){
             
