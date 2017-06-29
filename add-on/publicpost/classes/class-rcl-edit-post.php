@@ -161,7 +161,7 @@ class Rcl_EditPost {
 
         $postdata = array(
             'post_type' => $this->post_type,
-            'post_title' => (isset($_POST['post_excerpt']))? sanitize_text_field($_POST['post_title']): '',
+            'post_title' => (isset($_POST['post_title']))? sanitize_text_field($_POST['post_title']): '',
             'post_excerpt' => (isset($_POST['post_excerpt']))? $_POST['post_excerpt']: '',
             'post_content' => (isset($_POST['post_content']))? $_POST['post_content']: ''
         );
