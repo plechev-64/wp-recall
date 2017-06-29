@@ -403,7 +403,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
     
     function get_thumbnail_box(){
         
-        $sizeFile = (isset($this->current_field['size-files']))? $this->current_field['size-files']: 2;
+        $sizeFile = (isset($this->current_field['size-files']) && $this->current_field['size-files'])? $this->current_field['size-files']: 2;
         
         $content = '<div id="rcl-thumbnail-post">';
         

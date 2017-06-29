@@ -441,8 +441,8 @@ function rcl_init_public_form(post){
     var post_id = post.post_id;
     var post_type = post.post_type;
     var ext_types = post.ext_types;
-    var size_files = post.size_files;
-    var max_files = post.max_files;
+    var size_files = parseInt(post.size_files,10);
+    var max_files = parseInt(post.max_files,10);
     var post_status = 'new';
     
     if(post.post_status)
@@ -454,7 +454,7 @@ function rcl_init_public_form(post){
     });
 
     var maxsize = size_files*1024*1024;
-
+    
     rcl_add_dropzone('#rcl-public-dropzone-'+post_type);
     
     jQuery('#upload-public-form-'+post_type).fileupload({
