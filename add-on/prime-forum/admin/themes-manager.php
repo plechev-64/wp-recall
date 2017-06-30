@@ -258,9 +258,9 @@ class Prime_Themes_Manager extends WP_List_Table {
               
               if($action=='connect'){
                   
-                if(rcl_exist_addon(get_option('rcl_pforum_template'))){
+                if(rcl_exist_addon(get_option('rcl_pforum_template')) && !isset($_GET['redirect'])){
                     rcl_deactivate_addon(get_option('rcl_pforum_template'));
-                    header("Location: ".admin_url('admin.php?page=pfm-themes&action='.$action.'&template='.$addon), true, 302);
+                    header("Location: ".admin_url('admin.php?page=pfm-themes&action='.$action.'&template='.$addon.'&redirect=1'), true, 302);
                     exit;
                 }
                 

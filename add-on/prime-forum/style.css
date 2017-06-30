@@ -34,6 +34,9 @@
     left: 5px;
     position: absolute;
     top: 5px;
+    line-height: normal;
+    margin: 0;
+    width: auto;
 }
 #prime-forum blockquote {
     background-color: #f2f2f2;
@@ -50,6 +53,7 @@
     overflow-wrap: break-word;
     padding: 20px 10px 15px 30px;
     position: relative;
+    min-height: inherit; 
 }
 #prime-forum blockquote p {
     font-size: initial;

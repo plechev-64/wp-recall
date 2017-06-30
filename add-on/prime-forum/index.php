@@ -59,7 +59,7 @@ function pfm_init_tab(){
                     'icon' => 'fa-folder',
                     'name'=>__('Начатые темы'),
                     'callback' => array(
-                        'name'=>'pfm_user_topics_start'
+                        'name'=>'pfm_get_user_topics_list'
                     )
                 ),
                 array(
@@ -142,7 +142,7 @@ function pfm_user_posts_other_topics($master_id){
     return $content;
 }
 
-function pfm_user_topics_start($master_id){
+function pfm_get_user_topics_list($master_id, $navi = true){
     global $PrimeTopic,$PrimeQuery;
     
     $PrimeQuery = new PrimeQuery();
@@ -157,7 +157,8 @@ function pfm_user_topics_start($master_id){
     if(!$countTopics)
         return pfm_get_notice(__('Начатых тем на форуме пока нет.'));
     
-    $pageNavi = new Rcl_PageNavi('forum',$countTopics,array('in_page'=>20));
+    if($navi)
+        $pageNavi = new Rcl_PageNavi('forum',$countTopics,array('in_page'=>20));
     
     $args = array(
         'user_id' => $master_id,
@@ -192,15 +193,17 @@ function pfm_user_topics_start($master_id){
 
     $content .= '<div id="prime-forum">';
     
-    $content .= $pageNavi->pagenavi();
+    if($navi)
+        $content .= $pageNavi->pagenavi();
     
     $content .= '<div class="prime-topics-list prime-loop-list">';
     foreach(wp_unslash($topics) as $PrimeTopic){
         $content .= rcl_get_include_template('pfm-single-topic.php',$theme['path']);
     }
     $content .= '</div>';
-    
-    $content .= $pageNavi->pagenavi();
+
+    if($navi)
+        $content .= $pageNavi->pagenavi();
     
     $content .= '</div>';
     

@@ -159,7 +159,7 @@ function pfm_sort_array_by_string($a, $b){
 add_filter('pfm_filter_content_without_pretags','pfm_filter_links',12);
 function pfm_filter_links($content){
     
-    preg_match_all('/&lt;a(.+)href=([^"\s]+)(.+)&gt;(.+)&lt;\/a&gt;/iUus', $content, $links);
+    preg_match_all('/&lt;a(.+)href=([^\s].+)&gt;(.+)&lt;\/a&gt;/iUus', $content, $links);
     
     if($links[0]){
         
@@ -167,9 +167,9 @@ function pfm_filter_links($content){
             
             if(pfm_is_can('post_create')){
                 
-                $href = trim(str_replace(array('"','quot;'),'',$links[3][$k]),'&');
+                $href = trim(str_replace(array('&quot;'),'"',$links[2][$k]),'&');
                 
-                $replace = '<a href="'.$href.'" target="_blank" rel="nofollow">'.$links[4][$k].'</a>';
+                $replace = '<a href='.$href.' target="_blank" rel="nofollow">'.$links[3][$k].'</a>';
 
             }else{
 

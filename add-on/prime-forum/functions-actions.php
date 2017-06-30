@@ -69,11 +69,19 @@ function pfm_the_author_manager(){
 }
 
 function pfm_get_primary_manager(){
+    global $user_ID;
     
     $actions['get_last_updated_topics'] = array(
         'name' => __('Получить список обновленных тем'),
         'icon' => 'fa-bell-o'
     );
+    
+    if($user_ID){
+        $actions['get_author_topics'] = array(
+            'name' => __('Получить свои начатые темы'),
+            'icon' => 'fa-address-book'
+        );
+    }
     
     $actions['get_structure'] = array(
         'name' => __('Быстрый переход на нужный форум'),
@@ -1022,6 +1030,18 @@ function pfm_action_get_structure(){
     $result['content'] = $content;
     $result['dialog'] = true;
     $result['title'] = __('Быстрый переход на форум');
+
+    return $result;
+}
+
+//получение списка форумов
+pfm_add_ajax_action('get_author_topics','pfm_action_get_author_topics');
+function pfm_action_get_author_topics(){
+    global $user_ID;
+
+    $result['content'] = pfm_get_user_topics_list($user_ID, false);
+    $result['dialog'] = true;
+    $result['title'] = __('Последние начатые темы');
 
     return $result;
 }

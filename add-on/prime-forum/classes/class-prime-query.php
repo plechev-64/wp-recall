@@ -593,6 +593,8 @@ class PrimeQuery{
 
             }
             
+            $this->last = wp_unslash($this->last);
+            
         }
         
     }
