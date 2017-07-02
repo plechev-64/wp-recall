@@ -109,16 +109,16 @@ function pfm_filter_imgs($content){
 add_filter('pfm_filter_content_without_pretags','pfm_filter_urls',11);
 function pfm_filter_urls($content){
 
-    preg_match_all("/(\s|^|>|])(https?:[_a-z0-9\/\.\-#?=&]+)/ui", $content, $urls);
+    preg_match_all("/(\s|^|>|])(https?:[_a-z0-9\/\.%+\-#?=&]+)/ui", $content, $urls);
     
     if($urls[0]){
-
+        
         $oembedSupport = (pfm_get_option('support-oembed') && function_exists('wp_oembed_get'))? true: false;
         
         $sortStrings = $urls[2];
         
         usort($sortStrings, 'pfm_sort_array_by_string');
-
+        
         foreach( $sortStrings as $k => $url ){
             
             if($oembedSupport){
@@ -142,7 +142,7 @@ function pfm_filter_urls($content){
 
             }
 
-            $content = preg_replace('|[^">]'.$url.'|u', ' <a href="'.$url.'" target="_blank" rel="nofollow">'.$url.'</a>', $content);
+            $content = preg_replace('/(\s|^|>|])('.str_replace('/','\/',$url).')/ui', ' <a href="'.$url.'" target="_blank" rel="nofollow">'.$url.'</a>', $content);
 
         }
     

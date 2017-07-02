@@ -1,6 +1,6 @@
 <?php
 
-require_once 'settings.php';
+require_once 'addon-settings.php';
 
 add_action('admin_menu', 'rcl_profile_admin_menu',30);
 function rcl_profile_admin_menu(){

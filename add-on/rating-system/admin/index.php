@@ -1,6 +1,6 @@
 <?php
 
-require_once 'settings.php';
+require_once 'addon-settings.php';
 
 add_action('admin_head','rcl_add_admin_rating_scripts');
 

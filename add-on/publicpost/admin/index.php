@@ -1,6 +1,6 @@
 <?php
 
-require_once 'settings.php';
+require_once 'addon-settings.php';
 
 add_action('admin_init','rcl_public_admin_scripts');
 function rcl_public_admin_scripts(){

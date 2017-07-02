@@ -31,7 +31,7 @@ function rcl_commerce_menu(){
 
 add_filter('admin_options_rmag','rcl_commerce_page_options',5);
 function rcl_commerce_page_options($content){
-    require_once 'pages/settings.php';
+    require_once 'pages/addon-settings.php';
     $content .= rcl_commerce_options();
     return $content;
 }

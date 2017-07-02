@@ -1,7 +1,7 @@
 <?php
 
 require_once 'class-rcl-payments-history.php';
-require_once 'settings.php';
+require_once 'addon-settings.php';
 
 add_action('admin_head','rcl_admin_user_account_scripts');
 function rcl_admin_user_account_scripts(){
