@@ -10,7 +10,7 @@
             </span>
         </div>    
         <h3>
-            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>                         
+            <a href="<?php the_permalink(); ?>"><?php echo $post->post_title; ?></a>                         
         </h3>                                          
     </div>
     

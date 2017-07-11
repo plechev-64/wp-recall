@@ -126,6 +126,7 @@ class Rcl_Create_Order{
     function register_user(){
         
         $user_email = sanitize_text_field($_POST['user_email']);
+        $user_name = sanitize_text_field($_POST['first_name']);
 
         $isEmail = is_email($user_email);
         $validName = validate_username($user_email);
@@ -142,9 +143,8 @@ class Rcl_Create_Order{
             }
             
             if(!$this->user_id){
-
+                
                 $user_password = wp_generate_password( 12, false );
-                $user_name = sanitize_text_field($_POST['first_name']);
 
                 $this->register_data = array(
                     'user_pass'=>   $user_password,
@@ -171,27 +171,44 @@ class Rcl_Create_Order{
             
             $user = get_user_by('email', $user_email);
             
-            if($user) 
+            if($user){
+                
                 $this->user_id = $user->ID;
+                
+            }else{
+                
+                $data = array(
+                    'user_pass'=>   $user_password,
+                    'user_login'=>  $user_email,
+                    'user_email'=>  $user_email,
+                    'display_name'=>$user_name,
+                    'user_nicename' => '',
+                    'nickname' => $user_email,
+                    'first_name' => $user_name,
+                    'rich_editing' => 'true'
+                );
+
+                $this->user_id = wp_insert_user( $data );
+                
+            }
             
         }
         
-        if($this->user_id){
+        if(!$this->user_id) return false;
 
-            rcl_update_profile_fields($this->user_id);
+        rcl_update_profile_fields($this->user_id);
 
-            //Сразу авторизуем пользователя, если не требуется подтверждение почты
-            if($this->buyer_register && !rcl_get_option('confirm_register_recall')){
+        //Сразу авторизуем пользователя, если не требуется подтверждение почты
+        if($this->buyer_register && !rcl_get_option('confirm_register_recall')){
 
-                $creds = array(
-                    'user_login' => $user_email,
-                    'user_password' => $user_password,
-                    'remember' => true
-                );
+            $creds = array(
+                'user_login' => $user_email,
+                'user_password' => $user_password,
+                'remember' => true
+            );
 
-                wp_signon( $creds );
+            wp_signon( $creds );
 
-            }
         }
         
         return $this->user_id;

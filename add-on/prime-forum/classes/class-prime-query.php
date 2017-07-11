@@ -265,6 +265,8 @@ class PrimeQuery{
         if($this->is_search){
             
             $args = array(
+                'number' => $this->number,
+                'offset' => $this->offset,
                 'join_query' => array(
                     array(
                         'table' => $this->posts_query->query['table'],
@@ -717,8 +719,6 @@ class PrimeQuery{
     function init_canonical_url(){
         
         $url = false;
-        
-        $isSlash = preg_match("/\/$/",get_option('permalink_structure'))? true: false;
 
         if($this->is_group){
             
