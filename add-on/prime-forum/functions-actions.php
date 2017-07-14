@@ -283,6 +283,10 @@ function pfm_init_actions(){
             
             if(!pfm_is_can('topic_create') || !$pfmData['forum_id']) return false;
             
+            if(!$pfmData['post_content']){
+                wp_die(__('Пустое сообщение! Вернитесь назад и напишите хоть что то.'));
+            }
+            
             $topic_id = pfm_add_topic(
                 array(
                     'topic_name' => $pfmData['topic_name'],
@@ -303,6 +307,10 @@ function pfm_init_actions(){
             $topic = pfm_get_topic($pfmData['topic_id']);
             
             if($topic->topic_closed) return false;
+            
+            if(!$pfmData['post_content']){
+                wp_die(__('Пустое сообщение! Вернитесь назад и напишите хоть что то.'));
+            }
             
             $args = array(
                 'post_content' => $pfmData['post_content'],

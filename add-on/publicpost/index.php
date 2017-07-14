@@ -157,10 +157,30 @@ function rcl_clear_temps_gallery(){
 
 function rcl_delete_post(){
     global $user_ID;
-    $post_id = wp_update_post( array('ID'=>intval($_POST['post-rcl']),'post_status'=>'trash'));
+    
+    $post_id = intval($_POST['post-rcl']);
+    
+    $post = get_post($post_id);
+
+    if($post->post_type == 'post-group'){
+
+        if(!rcl_can_user_edit_post_group($post_id)) return false;
+
+    }else{
+
+        if(!current_user_can('edit_post', $post_id)) return false;
+
+    }
+            
+    $post_id = wp_update_post( array(
+        'ID' => $post_id,
+        'post_status' => 'trash'
+    ));
+    
     do_action('after_delete_post_rcl',$post_id);
-    wp_redirect(rcl_format_url(get_author_posts_url($user_ID)).'&public=deleted');
-    exit;
+    
+    wp_redirect(rcl_format_url(get_author_posts_url($user_ID)).'&public=deleted'); exit;
+    
 }
 
 add_action('after_delete_post_rcl','rcl_delete_notice_author_post');

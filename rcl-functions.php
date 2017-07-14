@@ -1093,6 +1093,22 @@ function rcl_update_profile_fields($user_id){
             
             $value = (isset($_POST[$slug]))? $_POST[$slug]: false;
             
+            if($field['admin']==1&&!is_admin()){
+                
+                if(in_array($slug,array('display_name','user_url'))){
+                    
+                    if(get_the_author_meta($slug, $user_id))
+                        continue;
+                    
+                }else{
+                    
+                    if(get_user_meta($user_id, $slug, $value))
+                        continue;
+                    
+                }
+
+            }
+            
             if(in_array($slug,$defaultFields)){
                 
                 if($slug == 'repeat_pass') continue;
@@ -1119,11 +1135,6 @@ function rcl_update_profile_fields($user_id){
                 
                 continue;
                 
-            }
-            
-            if($field['admin']==1&&!is_admin()){
-                if(get_user_meta($user_id, $slug, $value))
-                    continue;
             }
 
             if($field['type']=='checkbox'){
