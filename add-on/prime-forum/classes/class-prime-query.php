@@ -609,23 +609,30 @@ class PrimeQuery{
         foreach($forums as $forum){
             $forumIDs[] = $forum->forum_id;
         }
-
+        
         $sql = "SELECT "
-                . "posts.post_id,"
-                . "posts.post_date,"
-                . "posts.topic_id,"
-                . "posts.user_id, "
-                . "posts.forum_id "
-                . "FROM ("
-                    . "SELECT p.*,t.forum_id FROM ".RCL_PREF."pforum_posts AS p "
-                . "INNER JOIN  ".RCL_PREF."pforum_topics AS t ON p.topic_id=t.topic_id "
-                    . "WHERE t.forum_id IN (".implode(',',$forumIDs).")"
-                    . "ORDER BY p.post_id DESC "
-                . ") as posts "
-                . "GROUP BY posts.forum_id ";
+                . "MAX(p.post_id) AS post_id "
+                . "FROM ".RCL_PREF."pforum_posts AS p "
+                . "INNER JOIN  ".RCL_PREF."pforum_topics AS t ON p.topic_id = t.topic_id "
+                    . "WHERE t.forum_id IN (".implode(',',$forumIDs).") "
+                    . "GROUP BY t.forum_id";
+
+        $postIdx = $wpdb->get_col($sql);
+
+        if(!$postIdx) return false;
+        
+        $sql = "SELECT "
+                . "p.post_id,"
+                . "p.post_date,"
+                . "p.topic_id,"
+                . "p.user_id,"
+                . "t.forum_id "
+                . "FROM ".RCL_PREF."pforum_posts AS p "
+                . "INNER JOIN  ".RCL_PREF."pforum_topics AS t ON p.topic_id = t.topic_id "
+                    . "WHERE p.post_id IN (".implode(',',$postIdx).")";
 
         $posts = $wpdb->get_results($sql);
-        
+
         return $posts;
     }
     
