@@ -1070,7 +1070,7 @@ function pfm_action_get_last_updated_topics(){
         . RCL_PREF."pforum_topics AS ptopics "
         . "INNER JOIN ".RCL_PREF."pforum_posts AS pfm_posts ON ptopics.topic_id = pfm_posts.topic_id "
             . "GROUP BY ptopics.topic_id "
-        . "ORDER BY MAX(pfm_posts.post_date)DESC "
+        . "ORDER BY MAX(pfm_posts.post_date) DESC "
         . "LIMIT 20"
     );
 

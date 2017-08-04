@@ -429,7 +429,7 @@ function rcl_filters_regform(){
 add_filter('regform_fields_rcl','rcl_password_regform',5);
 function rcl_password_regform($content){
 
-    $difficulty = rcl_get_option('repeat_pass');
+    $difficulty = rcl_get_option('difficulty_parole');
     $user_pass = (isset($_REQUEST['user_pass']))? $_REQUEST['user_pass']: '';
 
     $content .= '<div class="form-block-rcl default-field">';

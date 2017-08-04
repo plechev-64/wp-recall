@@ -21,7 +21,6 @@ function rcl_init_js_public_variables($data){
     $data['local']['save_draft'] = __('Save as Draft','wp-recall');
     $data['local']['edit'] = __('Edit','wp-recall');
     $data['local']['edit_box_title'] = __('Quick edit','wp-recall');   
-    $data['local']['requared_fields_empty'] = __('Fill in all required fields','wp-recall');
     $data['local']['allowed_downloads'] = __('You have exceeded the allowed number of downloads! Max:','wp-recall');
     $data['local']['upload_size_public'] = __('Exceeds the maximum file size! Max:','wp-recall');
     

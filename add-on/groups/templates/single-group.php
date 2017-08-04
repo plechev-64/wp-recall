@@ -30,6 +30,9 @@
             <div class="group-description">
                 <?php rcl_group_description(); ?>
             </div>
+            
+            <?php do_action('rcl_group_description_after'); ?>
+            
             <div class="group-meta">
                 <p><b><?php _e('Group status','wp-recall') ?>:</b> <?php rcl_group_status(); ?></p>
             </div>

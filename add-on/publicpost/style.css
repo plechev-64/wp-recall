@@ -2,6 +2,9 @@
 .rcl-public-box{
     position:relative;
 }
+.rcl-public-box .edit-form-link{
+    text-align:right;
+}
 .rcl-public-box .rcl-service-button {
     background-color: rgba(30, 56, 75, 0.7);
     border: none;

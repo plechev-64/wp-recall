@@ -37,6 +37,10 @@ function rcl_public_form_manager(){
     
     $content = '<h2>'.__('Manage publication forms','wp-recall').'</h2>';
     
+    $content .= '<p>'.__('On this page you can manage the creation of '
+            . 'publications for registered record types. Create custom '
+            . 'fields for the form of publication of various types and manage').'</p>';
+    
     $content .= $formManager->form_navi();
     
     $content .= '<div class="rcl-custom-fields-navi">';

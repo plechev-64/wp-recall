@@ -101,7 +101,7 @@ function rcl_update_profile_notice(){
 }
 
 //Обновляем профиль пользователя
-add_action( 'wp', 'rcl_edit_profile' );
+add_action('wp', 'rcl_edit_profile', 10);
 function rcl_edit_profile(){
     global $user_ID;
     

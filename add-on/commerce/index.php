@@ -270,15 +270,15 @@ function rcl_add_payment_order($pay){
     
     if($order && $order->order_price == $pay->pay_summ && $order->order_status == 1){
         
-        rcl_payment_order($pay->pay_id);
+        rcl_payment_order($order->order_id);
         
         if($pay->current_connect == 'user_balance'){
             //если оплата с баланса пользователя
             
             $result = array(
                 'success' => __('Your order has been successfully paid! A notification has been sent to the administration.','wp-recall'),
-                'user_balance' => rcl_get_user_balance($pay->user_id),
-                'order_id' => $pay->pay_id,
+                'user_balance' => rcl_get_user_balance($order->user_id),
+                'order_id' => $order->order_id,
                 'pay_balance' => 1
             );
 
@@ -349,5 +349,19 @@ function rcl_commerce_setup_order_actions(){
     }
     
     wp_redirect(rcl_get_tab_permalink($user_ID,'orders')); exit;
+    
+}
+
+//удаляем метаданные товара
+add_action('delete_post','rcl_commerce_delete_productmeta');
+function rcl_commerce_delete_productmeta($post_id){
+    
+    $post = get_post($post_id);
+    
+    if($post->post_type != 'products') return false;
+    
+    global $wpdb;
+    
+    $wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id = '$post_id'");
     
 }

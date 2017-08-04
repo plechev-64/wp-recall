@@ -71,7 +71,7 @@ function pfm_the_forum_icons(){
     
     $icons = array();
     
-    if(pfm_is_forum()){
+    if($PrimeTopic){
     
         if($PrimeTopic->topic_closed){
             $icons[] = 'fa-lock';

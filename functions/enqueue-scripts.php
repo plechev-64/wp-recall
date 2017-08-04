@@ -130,6 +130,7 @@ function rcl_frontend_scripts(){
     $data['mobile'] = (wp_is_mobile())? (int)1: (int)0;
     $data['https'] = @( !isset($_SERVER["HTTPS"])||$_SERVER["HTTPS"] != 'on' ) ? (int)0:  (int)1;
     $data['slider'] = (isset($rcl_options['slide-pause'])&&$rcl_options['slide-pause'])? "{auto:true,pause:".($rcl_options['slide-pause']*1000)."}": "''";
+    $data['local']['requared_fields_empty'] = __('Fill in all required fields','wp-recall');
     
     $data = apply_filters('rcl_init_js_variables',$data);
 

@@ -31,10 +31,10 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         $this->data = ($this->data)? array_map('trim', explode(',',$this->data)): array();
         
-        if($this->filters){
+        if(isset($_GET['usergroup']))
+            $this->usergroup = $_GET['usergroup'];
         
-            if(isset($_GET['usergroup']))
-                $this->usergroup = $_GET['usergroup'];
+        if($this->filters){
 
             if(isset($_GET['users-filter'])) 
                 $this->orderby = $_GET['users-filter'];
@@ -262,14 +262,18 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         $ids = $this->get_users_ids($users);
 
-        $query = "SELECT time_action, user AS ID "
+        if($ids){
+            
+            $query = "SELECT time_action, user AS ID "
                 . "FROM ".RCL_PREF."user_action "
                 . "WHERE user IN (".implode(',',$ids).")";
 
-        $posts = $wpdb->get_results($query);
+            $posts = $wpdb->get_results($query);
 
-        if($posts)
-            $users = $this->merge_objects($users,$posts,'time_action');
+            if($posts)
+                $users = $this->merge_objects($users,$posts,'time_action');
+            
+        }
 
         return $users;
     }

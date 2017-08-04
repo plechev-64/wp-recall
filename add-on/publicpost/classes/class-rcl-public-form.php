@@ -168,7 +168,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             if($user_ID){
                 
                 $userinfo = get_userdata( $user_ID );
-
+                
                 if($userinfo->user_level >= $user_can) 
                     $this->user_can['publish'] = true;
                 else 
@@ -201,8 +201,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         }
         
         $this->user_can = apply_filters('rcl_public_form_user_can', $this->user_can, $this->get_object_form());
-                
-        
+
     }
 
     function get_form(){
@@ -269,6 +268,14 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         }
         
         $content = '<div class="rcl-public-box rcl-form">';
+        
+        if(rcl_check_access_console()){
+            $content .= '<div class="edit-form-link">'
+                            . '<a target="_blank" href="'.admin_url('admin.php?page=manage-public-form&post-type=').$this->post_type.'">'
+                                . '<i class="fa fa-list" aria-hidden="true"></i> ' . __('Edit this form')
+                            . '</a>'
+                        . '</div>';
+        }
         
         $content .= '<form action="" method="post" '.implode(' ',$attrsForm).'>';
         

@@ -645,8 +645,8 @@ class PrimeQuery{
                 . "posts.user_id "
                 . "FROM ("
                     . "SELECT * FROM ".RCL_PREF."pforum_posts "
-                    . "WHERE topic_id IN (".implode(',',$topicIDs).")"
-                    . "ORDER BY post_id DESC "
+                    . "WHERE topic_id IN (".implode(',',$topicIDs).") "
+                    . "ORDER BY post_id DESC"
                 . ") as posts "
                 . "GROUP BY posts.topic_id ";
 

@@ -253,9 +253,9 @@ function rcl_get_price($product_id){
 
 //оплата заказа
 function rcl_payment_order($order_id){
-
+    
     rcl_update_status_order($order_id,2);
-
+    
     do_action('rcl_payment_order',$order_id);
     
 }
@@ -341,7 +341,7 @@ function rcl_create_order_send_mail($order_id, $register_data){
 add_action('rcl_payment_order','rcl_payment_order_send_mail',10);
 function rcl_payment_order_send_mail($order_id){
     global $rclOrder,$rmag_options;
-
+    
     $rclOrder = rcl_get_order($order_id);
     
     remove_action('rcl_order_before','rcl_add_order_pay_form',30);

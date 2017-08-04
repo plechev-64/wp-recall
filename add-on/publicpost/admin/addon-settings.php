@@ -151,7 +151,7 @@ function rcl_get_publics_options_page($content){
                                 2=>__('Authors','wp-recall')
                         )
                     )),
-                    $opt->label(__('Ограничение времени редактирования','wp-recall')),
+                    $opt->label(__('The time limit edit','wp-recall')),
                     $opt->option('number',array('name'=>'time_editing')),
                     $opt->notice(__('Limit editing time of publication in hours, by default: unlimited','wp-recall'))
                 ))

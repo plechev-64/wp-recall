@@ -17,7 +17,7 @@ $extends = isset($_COOKIE['rcl_extends'])? $_COOKIE['rcl_extends']: 0;
 $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2>
     <div id="recall" class="left-sidebar wrap">
     <span class="shift-extend-options">
-        <label><input type="checkbox" name="extend_options" '.checked($extends,1,false).' onclick="return rcl_enable_extend_options(this);" value="1"> Расширенные настройки</label>
+        <label><input type="checkbox" name="extend_options" '.checked($extends,1,false).' onclick="return rcl_enable_extend_options(this);" value="1"> '.__('Advanced settings').'</label>
     </span>
     <form method="post" id="rcl-options-form" onsubmit="rcl_update_options();return false;" action="">
     '.wp_nonce_field('update-options-rcl','_wpnonce',true,false).'
