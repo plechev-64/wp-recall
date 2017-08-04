@@ -351,17 +351,3 @@ function rcl_commerce_setup_order_actions(){
     wp_redirect(rcl_get_tab_permalink($user_ID,'orders')); exit;
     
 }
-
-//удаляем метаданные товара
-add_action('delete_post','rcl_commerce_delete_productmeta');
-function rcl_commerce_delete_productmeta($post_id){
-    
-    $post = get_post($post_id);
-    
-    if($post->post_type != 'products') return false;
-    
-    global $wpdb;
-    
-    $wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id = '$post_id'");
-    
-}

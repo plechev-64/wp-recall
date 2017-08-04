@@ -202,7 +202,7 @@ function rcl_add_count_user(){
 add_action('wp_ajax_rcl_pay_order_user_balance', 'rcl_pay_order_user_balance');
 function rcl_pay_order_user_balance(){
     global $user_ID,$rmag_options;
-    //print_r($_POST);exit;
+    
     rcl_verify_ajax_nonce();
     
     $pay_id = intval($_POST['pay_id']);
