@@ -644,21 +644,28 @@ class PrimeQuery{
         foreach($topics as $topic){
             $topicIDs[] = $topic->topic_id;
         }
+        
+        $sql = "SELECT "
+                . "MAX(post_id) AS post_id "
+                . "FROM ".RCL_PREF."pforum_posts "
+                    . "WHERE topic_id IN (".implode(',',$topicIDs).") "
+                    . "GROUP BY topic_id";
+
+        $postIdx = $wpdb->get_col($sql);
+        
+        if(!$postIdx) return false;
 
         $sql = "SELECT "
-                . "posts.post_id,"
-                . "posts.post_date,"
-                . "posts.topic_id,"
-                . "posts.user_id "
-                . "FROM ("
-                    . "SELECT * FROM ".RCL_PREF."pforum_posts "
-                    . "WHERE topic_id IN (".implode(',',$topicIDs).") "
-                    . "ORDER BY post_id DESC"
-                . ") as posts "
-                . "GROUP BY posts.topic_id ";
+                . "post_id,"
+                . "post_date,"
+                . "topic_id,"
+                . "user_id "
+                . "FROM ".RCL_PREF."pforum_posts "
+                    . "WHERE post_id IN (".implode(',',$postIdx).") "
+                    . "ORDER BY post_id DESC";
 
         $posts = $wpdb->get_results($sql);
-
+        
         return $posts;
     }
     
@@ -670,18 +677,24 @@ class PrimeQuery{
         foreach($forums as $forum){
             $forumIDs[] = $forum->forum_id;
         }
+        
+        $sql = "SELECT "
+                . "MAX(topic_id) AS post_id "
+                . "FROM ".RCL_PREF."pforum_topics "
+                    . "WHERE forum_id IN (".implode(',',$forumIDs).") "
+                    . "GROUP BY forum_id";
+
+        $topicIdx = $wpdb->get_col($sql);
+        
+        if(!$topicIdx) return false;
 
         $sql = "SELECT "
-                . "topics.topic_id,"
-                . "topics.topic_name,"
-                . "topics.forum_id,"
-                . "topics.user_id "
-                . "FROM ("
-                    . "SELECT * FROM ".RCL_PREF."pforum_topics "
-                    . "WHERE forum_id IN (".implode(',',$forumIDs).")"
-                    . "ORDER BY topic_id DESC "
-                . ") as topics "
-                . "GROUP BY topics.forum_id ";
+                . "topic_id,"
+                . "topic_name,"
+                . "forum_id,"
+                . "user_id "
+                . "FROM ".RCL_PREF."pforum_topics "
+                    . "WHERE topic_id IN (".implode(',',$topicIdx).") ";
 
         $topics = $wpdb->get_results($sql);
         

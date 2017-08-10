@@ -92,6 +92,7 @@
     width: 30px;
     text-align: center;
     display:inline-block;
+    background: none;
 }
 .rcl-cart-box .quantity-field input,
 .rcl-cart-box .quantity-field input::-webkit-inner-spin-button, 
@@ -639,6 +640,7 @@ body .rcl-product-gallery ul.images-list {
     width: 50px;
     text-align: center;
     display:inline-block;
+    background: none;
 }
 #rcl-product-box .rcl-cart-box .product-price{
     font-size: 40px;

@@ -124,16 +124,7 @@ function rcl_send_addons_data(){
         'host' => $_SERVER['SERVER_NAME']
     );
     
-    $options = array(
-        'http' => array(
-            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'POST',
-            'content' => http_build_query($data),
-        ),
-    );
-    
-    $context  = stream_context_create($options);
-    file_get_contents($url, false, $context);
+    wp_remote_post( $url, array('body' => $data) );
 
 }
 
@@ -146,6 +137,14 @@ function rcl_update_addon(){
 
     $activeaddons = get_site_option('rcl_active_addons');
 
+    $pathdir = RCL_TAKEPATH.'update/';
+    $new_addon = $pathdir.$addon.'.zip';
+
+    if(!file_exists($pathdir)){
+        mkdir($pathdir);
+        chmod($pathdir, 0755);
+    }
+    
     $url = RCL_SERVICE_HOST.'/products-files/api/update.php'
             . '?rcl-addon-action=update';
 
@@ -156,37 +155,21 @@ function rcl_update_addon(){
         'addon-version' => $need_update[$addon]['version'],
         'host' => $_SERVER['SERVER_NAME']
     );
+    
+    $response = wp_remote_post( $url, array('body' => $data) );
 
-    $pathdir = RCL_TAKEPATH.'update/';
-    $new_addon = $pathdir.$addon.'.zip';
-
-    if(!file_exists($pathdir)){
-        mkdir($pathdir);
-        chmod($pathdir, 0755);
+    if ( is_wp_error( $response ) ) {
+       $error_message = $response->get_error_message();
+       echo __('Error').': '.$error_message; exit;
     }
 
-    $options = array(
-        'http' => array(
-            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method'  => 'POST',
-            'content' => http_build_query($data),
-        ),
-    );
-    $context  = stream_context_create($options);
-    $archive = file_get_contents($url, false, $context);
-
-    if(!$archive){
-        $log['error'] = __('Unable to retrieve the file from the server!','wp-recall');
-        echo json_encode($log); exit;
-    }
-
-    $result = json_decode($archive, true);
+    $result = json_decode($response['body'], true);
 
     if(is_array($result)&&isset($result['error'])){
         echo json_encode($result); exit;
     }
 
-    $put = file_put_contents($new_addon, $archive);
+    $put = file_put_contents($new_addon, $response['body']);
     
     if($put===false){
         $log['error'] = __('The files failed to be uploaded!','wp-recall');

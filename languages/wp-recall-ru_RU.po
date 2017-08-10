@@ -771,7 +771,7 @@ msgstr "В корзину"
 
 #: add-on/commerce/classes/class-rcl-cart-button-form.php:136
 msgid "Not available"
-msgstr "Не доступен"
+msgstr "Недоступен"
 
 #: add-on/commerce/classes/class-rcl-cart-constructor.php:35
 msgid "Your shopping cart is empty"

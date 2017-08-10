@@ -25,17 +25,14 @@ $page = (isset($_GET['paged']))? $_GET['paged']: 1;
     'host' => $_SERVER['SERVER_NAME']
 );
 
-$options = array(
-    'http' => array(
-        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-        'method'  => 'POST',
-        'content' => http_build_query($data),
-    )
-);
+$result = wp_remote_post( $url, array('body' => $data) );
 
-$context  = stream_context_create($options);
-$result = file_get_contents($url, false, $context);
-$result =  json_decode($result);
+if ( is_wp_error( $response ) ) {
+   $error_message = $response->get_error_message();
+   echo __('Error').': '.$error_message; exit;
+}
+
+$result =  json_decode($result['body']);
 
 if(!$result){
     echo '<h2>'.__('Failed to get data','wp-recall').'.</h2>'; exit;

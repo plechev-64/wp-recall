@@ -89,13 +89,13 @@ class Rcl_Query {
 
                 }
                 
-                if(isset($args[$col_name.'__in'])  && $args[$col_name.'__in'] || $args[$col_name.'__in'] === 0){
+                if(isset($args[$col_name.'__in'])  && ($args[$col_name.'__in'] || $args[$col_name.'__in'] === 0)){
                     
                     $this->query['where'][] = $this->query['table']['as'].".$col_name IN (".$this->get_string_in($args[$col_name.'__in']).")";
                     
                 }
                 
-                if(isset($args[$col_name.'__not_in'])  && $args[$col_name.'__not_in'] || $args[$col_name.'__not_in'] === 0){
+                if(isset($args[$col_name.'__not_in'])  && ($args[$col_name.'__not_in'] || $args[$col_name.'__not_in'] === 0)){
 
                     $this->query['where'][] = $this->query['table']['as'].".$col_name NOT IN (".$this->get_string_in($args[$col_name.'__not_in']).")";
                     

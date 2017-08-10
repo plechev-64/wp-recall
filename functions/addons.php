@@ -15,6 +15,8 @@ function rcl_activate_addon($addon,$activate=true,$dirpath=false){
     
     $active_addons = get_site_option('rcl_active_addons');
     
+    if(!$active_addons) $active_addons = array();
+    
     if(isset($active_addons[$addon])) return false;
     
     $paths = ($dirpath)? array($dirpath): rcl_get_addon_paths();
@@ -311,6 +313,8 @@ function rcl_addon_url($file,$path){
 //получение абсолютного пути до папки текущего дополнения
 function rcl_addon_path($path){
     global $active_addons;
+    
+    if(!$active_addons) return false;
     
     $cachekey = json_encode(array('rcl_addon_path',$path));
     $cache = wp_cache_get( $cachekey );
