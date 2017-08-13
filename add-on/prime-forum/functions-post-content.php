@@ -138,7 +138,7 @@ function pfm_filter_urls($content){
 
             }else{
 
-                $replace = pfm_get_notice(__('Вы не можете просматривать опубликованные ссылки'),'warning');
+                $replace = pfm_get_notice(__('You are unable to view published links','wp-recall'),'warning');
 
             }
 
@@ -173,7 +173,7 @@ function pfm_filter_links($content){
 
             }else{
 
-                $replace = pfm_get_notice(__('Вы не можете просматривать опубликованные ссылки'),'warning');
+                $replace = pfm_get_notice(__('You are unable to view published links','wp-recall'),'warning');
 
             }
 

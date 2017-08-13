@@ -15,7 +15,7 @@ function pfm_the_topic_form(){
     
     if($PrimeForum->forum_closed){
         
-        echo pfm_get_notice(__('Форум закрыт. Создание новых тем невозможно.'));
+        echo pfm_get_notice(__('The forum is closed. It is impossible to create new topics.','wp-recall'));
         
         return;
         
@@ -23,7 +23,7 @@ function pfm_the_topic_form(){
 
     if(!pfm_is_can('topic_create')){
         
-        echo apply_filters('pfm_notice_noaccess_topic_form', pfm_get_notice(__('Вы не имеете права на публикацию новых тем на этом форуме'),'warning'));
+        echo apply_filters('pfm_notice_noaccess_topic_form', pfm_get_notice(__('You are not authorised to publish new topics in this forum','wp-recall'),'warning'));
         
         return;
         
@@ -32,7 +32,7 @@ function pfm_the_topic_form(){
     echo pfm_get_form(array(
         'forum_id' => $PrimeForum->forum_id,
         'action' => 'topic_create',
-        'submit' => __('Создать тему')
+        'submit' => __('Create topic','wp-recall')
     ));
     
 }
@@ -44,7 +44,7 @@ function pfm_the_post_form(){
     
     if($PrimeTopic->forum_closed){
         
-        echo pfm_get_notice(__('Форум закрыт. Создание новых тем невозможно.'));
+        echo pfm_get_notice(__('The forum is closed. It is impossible to create new topics.','wp-recall'));
         
         return;
         
@@ -52,7 +52,7 @@ function pfm_the_post_form(){
     
     if($PrimeTopic->topic_closed){
         
-        echo pfm_get_notice(__('Тема закрыта. Публикация новых сообщений запрещена.'));
+        echo pfm_get_notice(__('The topic is closed. It is prohibited to publish new topics.','wp-recall'));
         
         return;
         
@@ -60,7 +60,7 @@ function pfm_the_post_form(){
 
     if(!pfm_is_can('post_create')){
         
-        echo apply_filters('pfm_notice_noaccess_post_form', pfm_get_notice(__('Вы не имеете права на публикацию сообщений в этой теме'),'warning'));
+        echo apply_filters('pfm_notice_noaccess_post_form', pfm_get_notice(__('You are not authorised to publish messages in this topic','wp-recall'),'warning'));
         
         return;
         
@@ -69,7 +69,7 @@ function pfm_the_post_form(){
     echo pfm_get_form(array(
         'topic_id' => $PrimeTopic->topic_id,
         'action' => 'post_create',
-        'submit' => __('Добавить сообщение')
+        'submit' => __('Add message','wp-recall')
     ));
     
 }
@@ -88,7 +88,7 @@ function pfm_add_manager_fields_post_form($content,$action){
             'slug' => 'close-topic',
             'name' => 'pfm-data[close-topic]',
             'values' => array(
-                1 => __('Закрыть тему')
+                1 => __('Close topic','wp-recall')
             )
         )
     );

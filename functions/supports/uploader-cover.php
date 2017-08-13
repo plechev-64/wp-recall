@@ -117,8 +117,6 @@ function rcl_cover_upload(){
         exit;
     }
 
-    //print_r($upload);exit;
-
     $ext = explode('.',$filename);
 
     if($mime[0]!='image'){
@@ -131,50 +129,52 @@ function rcl_cover_upload(){
 
     if($coord){
 
-            //Отображаемые размеры
-            $view_width = $viewimg['width'];
-            $view_height = $viewimg['height'];
+        //Отображаемые размеры
+        $view_width = $viewimg['width'];
+        $view_height = $viewimg['height'];
 
-            //Получаем значение коэфф. увеличения и корректируем значения окна crop
-            $pr = 1;
-            if($view_width<$width){
-                    $pr = $width/$view_width;
-            }
+        //Получаем значение коэфф. увеличения и корректируем значения окна crop
+        $pr = 1;
+        if($view_width<$width){
+                $pr = $width/$view_width;
+        }
 
-            $left = $pr*$coord['x'];
-            $top = $pr*$coord['y'];
+        $left = $pr*$coord['x'];
+        $top = $pr*$coord['y'];
 
-            $thumb_width = $pr*$coord['w'];
-            $thumb_height = $pr*$coord['h'];
+        $thumb_width = $pr*$coord['w'];
+        $thumb_height = $pr*$coord['h'];
 
-            $thumb = imagecreatetruecolor($thumb_width, $thumb_height);
+        $thumb = imagecreatetruecolor($thumb_width, $thumb_height);
 
-            if($ext[1]=='gif'){
-                    $image = imageCreateFromGif($upload['file']['tmp_name']);
-                    imagecopy($thumb, $image, 0, 0, $left, $top, $width, $height);
-            }else{
-                if($mime[1]=='png'){
-                    $image = imageCreateFromPng($upload['file']['tmp_name']);
-                }else{
-                    $jpg = rcl_check_jpeg($upload['file']['tmp_name'], true );
-                    if(!$jpg){
-                            $res['error'] = __('The downloaded image is incorrect','wp-recall');
-                            echo json_encode($res);
-                            exit;
-                    }
-                    $image = imagecreatefromjpeg($upload['file']['tmp_name']);
-                }
-
+        if($ext[1]=='gif'){
+                $image = imageCreateFromGif($upload['file']['tmp_name']);
                 imagecopy($thumb, $image, 0, 0, $left, $top, $width, $height);
+        }else{
+            if($mime[1]=='png'){
+                $image = imageCreateFromPng($upload['file']['tmp_name']);
+            }else{
+                $jpg = rcl_check_jpeg($upload['file']['tmp_name'], true );
+                if(!$jpg){
+                    $res['error'] = __('The downloaded image is incorrect','wp-recall');
+                    echo json_encode($res);
+                    exit;
+                }
+                $image = imagecreatefromjpeg($upload['file']['tmp_name']);
             }
-            imagejpeg($thumb, $tmp_path.$tmpname, 100);
-    }
 
+            imagecopy($thumb, $image, 0, 0, $left, $top, $width, $height);
+        }
+        imagejpeg($thumb, $tmp_path.$tmpname, 100);
+        
+    }
 
     $filename = $user_ID.'.jpg';
     $srcfile_url = $dir_url.$filename;
 
     $file_src = $dir_path.$filename;
+    
+    do_action('rcl_before_cover_upload');
 
     if($coord){
         $rst = rcl_crop($tmp_path.$tmpname,$thumb_width,$thumb_height,$file_src);
@@ -190,6 +190,8 @@ function rcl_cover_upload(){
     }
 
     update_user_meta( $user_ID,'rcl_cover',$srcfile_url );
+    
+    do_action('rcl_cover_upload');
 
     if(!$coord) copy($file_src,$tmp_path.$tmpname);
 

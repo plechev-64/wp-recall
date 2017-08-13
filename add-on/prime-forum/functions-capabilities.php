@@ -142,7 +142,7 @@ function pfm_check_access_global_view($errors){
     global $PrimeUser;
     
     if(!$PrimeUser->is_can('forum_view'))
-        $errors['error'][] = __('Вам не разрешено просматривать содержимое форума');
+        $errors['error'][] = __('You are not allowed to view contents of the forum','wp-recall');
     
     return $errors;
 }

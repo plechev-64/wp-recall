@@ -17,7 +17,7 @@ class PrimeForm extends Rcl_Custom_Fields{
         $this->init_properties($args);
         
         if(!$this->action) $this->action = 'topic_create';
-        if(!$this->submit) $this->submit = __('Создать топик');
+        if(!$this->submit) $this->submit = __('Create topic','wp-recall');
         
         if($this->forum_id){
             add_filter('pfm_form_fields', array($this, 'add_forum_field'));
@@ -72,7 +72,7 @@ class PrimeForm extends Rcl_Custom_Fields{
             
             $fields[] = array(
                 'type' => 'custom',
-                'title' => __('Выберите форум'),
+                'title' => __('Choose forum','wp-recall'),
                 'content' => pfm_get_forums_list()
             );
             
@@ -84,7 +84,7 @@ class PrimeForm extends Rcl_Custom_Fields{
                 'type' => 'text',
                 'slug' => 'topic_name',
                 'name' => 'pfm-data[topic_name]',
-                'title' => __('Заголовок темы'),
+                'title' => __('Heading of the topic','wp-recall'),
                 'required' => 1
             );
             
@@ -96,15 +96,15 @@ class PrimeForm extends Rcl_Custom_Fields{
                     'type' => 'text',
                     'slug' => 'guest_name',
                     'name' => 'pfm-data[guest_name]',
-                    'title' => __('Ваше имя'),
+                    'title' => __('Your name','wp-recall'),
                     'required' => 1
                 );
                 $fields[] = array(
                     'type' => 'email',
                     'slug' => 'guest_email',
                     'name' => 'pfm-data[guest_email]',
-                    'title' => __('Ваш E-mail'),
-                    'notice' => __('не публикуется'),
+                    'title' => __('Your E-mail','wp-recall'),
+                    'notice' => __('not published','wp-recall'),
                     'required' => 1
                 );
             }
@@ -120,7 +120,7 @@ class PrimeForm extends Rcl_Custom_Fields{
             'editor-id' => 'action_'.$this->action,
             'slug' => 'post_content',
             'name' => 'pfm-data[post_content]',
-            'title' => __('Текст сообщения'),
+            'title' => __('Message text','wp-recall'),
             'required' => 1,
             'quicktags' => 'strong,img,em,link,code,close,block,del'
         );
@@ -217,8 +217,8 @@ class PrimeForm extends Rcl_Custom_Fields{
                 $content .= '<div class="submit-box">';
                 
                 if(!defined( 'DOING_AJAX' )){
-                    $content .= '<a href="#" title="'.__('Предпросмотр').'" class="recall-button" onclick=\'pfm_ajax_action('.json_encode($args).');return false;\'>';
-                    $content .= '<i class="fa fa-eye" aria-hidden="true"></i> '.__('Предпросмотр');
+                    $content .= '<a href="#" title="'.__('Preview','wp-recall').'" class="recall-button" onclick=\'pfm_ajax_action('.json_encode($args).');return false;\'>';
+                    $content .= '<i class="fa fa-eye" aria-hidden="true"></i> '.__('Preview','wp-recall');
                     $content .= '</a>';
                 }
                 

@@ -3,7 +3,7 @@
     <?php if(pfm_have_forums()): ?>
     
         <div class="prime-subforums prime-parent-box">
-            <div class="prime-item-label"><span><?php _e('Дочерние форумы'); ?></span></div>
+            <div class="prime-item-label"><span><?php _e('Child forums'); ?></span></div>
             <div class="prime-subforums-list prime-loop-list">
 
                 <?php while ( pfm_get_next('forum') ) : ?>
@@ -22,7 +22,7 @@
     <?php if(pfm_have_topics()): ?>
     
         <div class="prime-topics prime-parent-box">
-            <div class="prime-item-label"><span><?php _e('Темы форума'); ?></span></div>
+            <div class="prime-item-label"><span><?php _e('Forum topics'); ?></span></div>
             <div class="prime-topics-list prime-loop-list">
     
             <?php pfm_page_navi(); ?>

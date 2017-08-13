@@ -32,12 +32,12 @@ class PrimeRoles{
         );
         
         $this->add_role('ban',array(
-            'name' => __('Бан'),
+            'name' => __('Ban','wp-recall'),
             'capabilities' => array()
         ));
         
         $this->add_role('guest',array(
-            'name' => __('Гость'),
+            'name' => __('Guest','wp-recall'),
             'capabilities' => array(
                 'forum_view' => true,
                 'post_create' => (pfm_get_option('guest-post-create'))? true: false
@@ -45,7 +45,7 @@ class PrimeRoles{
         ));
         
         $this->add_role('member',array(
-            'name' => __('Участник'),
+            'name' => __('Member','wp-recall'),
             'capabilities' => array_merge( 
                 $this->roles['guest']['capabilities'],
                 array(
@@ -58,7 +58,7 @@ class PrimeRoles{
         ));
         
         $this->add_role('moderator',array(
-            'name' => __('Модератор'),
+            'name' => __('Moderator','wp-recall'),
             'capabilities' => array_merge( 
                 $this->roles['member']['capabilities'],
                 array(
@@ -74,7 +74,7 @@ class PrimeRoles{
         ));
         
         $this->add_role('administrator',array(
-            'name' => __('Администратор'),
+            'name' => __('Administrator','wp-recall'),
             'capabilities' => array_merge( 
                 $this->roles['moderator']['capabilities'],
                 array(

@@ -133,7 +133,7 @@ add_action('pfm_post_author_metabox','pfm_add_author_registered_data',12);
 function pfm_add_author_registered_data(){
     global $PrimePost; 
     if(!$PrimePost->user_registered) return false; ?>
-    <div class="prime-author-meta prime-author-register"><?php echo __('На сайте с').' '.mysql2date('d.m.Y', $PrimePost->user_registered); ?></div>
+    <div class="prime-author-meta prime-author-register"><?php echo __('On the website since','wp-recall').' '.mysql2date('d.m.Y', $PrimePost->user_registered); ?></div>
 <?php }
 
 add_action('pfm_post_author_metabox','pfm_add_author_role_meta',14);
@@ -149,13 +149,13 @@ function pfm_add_author_counters(){
     
     if($tcount = pfm_get_meta($PrimePost->user_id,'author','topic_count')){ ?>
     <div class="prime-author-meta prime-author-topics">
-        <span><?php echo __('Тем'); ?></span>
+        <span><?php echo __('Topics','wp-recall'); ?></span>
         <span><?php echo $tcount; ?></span>
     </div>
     <?php }
     if($pcount = pfm_get_meta($PrimePost->user_id,'author','post_count')){ ?>
     <div class="prime-author-meta prime-author-posts">
-        <span><?php echo __('Сообщений'); ?></span>
+        <span><?php echo __('Messages','wp-recall'); ?></span>
         <span><?php echo $pcount; ?></span>
     </div>
 <?php }

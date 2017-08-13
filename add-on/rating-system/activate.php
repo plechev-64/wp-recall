@@ -16,14 +16,14 @@ if ( $wpdb->has_cap( 'collation' ) ) {
 
 $table = RCL_PREF ."rating_values";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-	  ID bigint (20) NOT NULL AUTO_INCREMENT,
-	  user_id INT(20) NOT NULL,
-	  object_id INT(20) NOT NULL,
-	  object_author INT(20) NOT NULL,
+	  ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+	  user_id BIGINT(20) UNSIGNED NOT NULL,
+	  object_id BIGINT(20) UNSIGNED NOT NULL,
+	  object_author BIGINT(20) UNSIGNED NOT NULL,
 	  rating_value VARCHAR(5) NOT NULL,
           rating_date DATETIME NOT NULL,
           rating_type VARCHAR(20) NOT NULL,
-	  PRIMARY KEY id (id),
+	  PRIMARY KEY  id (id),
             KEY user_id (user_id),
             KEY object_id (object_id),
             KEY rating_value (rating_value),
@@ -34,12 +34,12 @@ dbDelta( $sql );
 
 $table = RCL_PREF ."rating_totals";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-	  ID bigint (20) NOT NULL AUTO_INCREMENT,
-	  object_id INT(20) NOT NULL,
-          object_author INT(20) NOT NULL,
+	  ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+	  object_id BIGINT(20) UNSIGNED NOT NULL,
+          object_author BIGINT(20) UNSIGNED NOT NULL,
 	  rating_total VARCHAR(10) NOT NULL,
           rating_type VARCHAR(20) NOT NULL,
-	  PRIMARY KEY id (id),
+	  PRIMARY KEY  id (id),
             KEY object_id (object_id),
             KEY object_author (object_author),
             KEY rating_type (rating_type),
@@ -50,9 +50,9 @@ dbDelta( $sql );
 
 $table = RCL_PREF ."rating_users";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-	  user_id INT(20) NOT NULL,
+	  user_id BIGINT(20) UNSIGNED NOT NULL,
 	  rating_total VARCHAR(10) NOT NULL,
-	  PRIMARY KEY id (user_id),
+	  PRIMARY KEY  id (user_id),
             KEY rating_total (rating_total)
 	) $collate;";
 

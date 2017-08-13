@@ -1,5 +1,6 @@
 <?php
 
+require_once 'classes/class-rcl-form-fields.php';
 require_once 'classes/class-rcl-edit-terms-list.php';
 require_once 'classes/class-rcl-list-terms.php';
 require_once 'classes/class-rcl-public-form-uploader.php';
@@ -450,4 +451,10 @@ add_action('delete_post','rcl_delete_tempdir_attachments');
 function rcl_delete_tempdir_attachments($postid){
     $dir_path = RCL_UPLOAD_PATH.'post-media/'.$postid;
     rcl_remove_dir($dir_path);
+}
+
+/*deprecated*/
+function rcl_form_field($args){
+    $field = new Rcl_Form_Fields();
+    return $field->get_field($args);
 }

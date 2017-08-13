@@ -16,12 +16,12 @@ if ( $wpdb->has_cap( 'collation' ) ) {
 
 $table = RCL_PREF ."feeds";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-    feed_id INT(20) NOT NULL AUTO_INCREMENT,
-    user_id INT(20) NOT NULL,
-    object_id INT(20) NOT NULL,
+    feed_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id BIGINT(20) UNSIGNED NOT NULL,
+    object_id BIGINT(20) UNSIGNED NOT NULL,
     feed_type VARCHAR(20) NOT NULL,
-    feed_status INT(10) NOT NULL,
-    PRIMARY KEY feed_id (feed_id),
+    feed_status TINYINT(2) NOT NULL,
+    PRIMARY KEY  feed_id (feed_id),
     KEY user_id (user_id),
     KEY object_id (object_id),
     KEY feed_type (feed_type)

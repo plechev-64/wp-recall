@@ -164,13 +164,13 @@ function pfm_the_last_post(){
     }
 
     if(!$lastPost){
-        echo __('не найдено'); return;
+        echo __('not found','wp-recall'); return;
     }
     
-    $name = $lastPost->user_id? get_the_author_meta('display_name',$lastPost->user_id): __('Гость');
+    $name = $lastPost->user_id? get_the_author_meta('display_name',$lastPost->user_id): __('Guest','wp-recall');
     
-    echo __('от').' '.$name.': <a href="'.pfm_get_post_permalink($lastPost->post_id).'">'
-            . human_time_diff( strtotime($lastPost->post_date), current_time('timestamp') ). ' назад'
+    echo __('from','wp-recall').' '.$name.': <a href="'.pfm_get_post_permalink($lastPost->post_id).'">'
+            . human_time_diff( strtotime($lastPost->post_date), current_time('timestamp') ). ' '.__('ago','wp-recall')
         .'</a>';
 
     

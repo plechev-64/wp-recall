@@ -73,12 +73,11 @@ class RCL_Install {
 
         return "
         CREATE TABLE IF NOT EXISTS `". $user_action_table . "` (
-		  ID bigint (20) NOT NULL AUTO_INCREMENT,
-		  user INT(20) NOT NULL,
-		  time_action DATETIME NOT NULL,
-		  UNIQUE KEY id (id)
-		  ) $collate
-        ";
+            ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            user BIGINT(20) UNSIGNED NOT NULL,
+            time_action DATETIME NOT NULL,
+            UNIQUE KEY id (id)
+        ) $collate";
     }
 
     private static function create_pages() {

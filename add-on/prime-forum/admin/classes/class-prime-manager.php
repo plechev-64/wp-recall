@@ -41,7 +41,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
         
         $fields = $this->get_fields_form_group();
         
-        $content = $this->get_form_box($fields,'group_create',__('Создать группу'));
+        $content = $this->get_form_box($fields,'group_create',__('Create group','wp-recall'));
         
         return $content;
 
@@ -53,7 +53,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
         
         if(!$fields) return false;
         
-        $content = $this->get_form_box($fields,'forum_create',__('Создать форум'));
+        $content = $this->get_form_box($fields,'forum_create',__('Create forum','wp-recall'));
         
         return $content;
 
@@ -102,20 +102,20 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
                 'type' => 'text',
                 'slug' => 'group-title',
                 'name' => 'pfm-data[group_name]',
-                'title' => __('Название группы форумов'),
+                'title' => __('Name of the group of forums','wp-recall'),
                 'required' => 1
             ),
             array(
                 'type' => 'text',
                 'slug' => 'group-slug',
                 'name' => 'pfm-data[group_slug]',
-                'title' => __('Slug группы')
+                'title' => __('Slug of the group','wp-recall')
             ),
             array(
                 'type' => 'textarea',
                 'slug' => 'group-desc',
                 'name' => 'pfm-data[group_desc]',
-                'title' => __('Описание группы')
+                'title' => __('Description of the group','wp-recall')
             )
         );
         
@@ -126,7 +126,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
         
         if(!$this->forum_groups) return false;
         
-        $groups = array('' => 'Выберите группу форума');
+        $groups = array('' => __('Select the group forum','wp-recall'));
         
         foreach($this->forum_groups as $group){
             $groups[$group->group_id] = $group->group_name;
@@ -137,7 +137,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
                 'type' => 'select',
                 'slug' => 'forum-group',
                 'name' => 'pfm-data[group_id]',
-                'title' => __('Группа форума'),
+                'title' => __('Forum group','wp-recall'),
                 'required' => 1,
                 'default' => $this->group_id,
                 'values' => $groups
@@ -146,20 +146,20 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
                 'type' => 'text',
                 'slug' => 'forum-name',
                 'name' => 'pfm-data[forum_name]',
-                'title' => __('Название форума'),
+                'title' => __('Name of the forum','wp-recall'),
                 'required' => 1
             ),
             array(
                 'type' => 'text',
                 'slug' => 'forum-slug',
                 'name' => 'pfm-data[forum_slug]',
-                'title' => __('Slug форума')
+                'title' => __('Slug of the forum','wp-recall')
             ),
             array(
                 'type' => 'textarea',
                 'slug' => 'forum-desc',
                 'name' => 'pfm-data[forum_desc]',
-                'title' => __('Описание форума')
+                'title' => __('Description of the forum','wp-recall')
             )
         );
         
@@ -171,7 +171,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
         
         $content = '<div class="manager-box manage-groups rcl-custom-fields-box">';
         
-        $content .= '<h3>'.__('Управление группами').'</h3>';
+        $content .= '<h3>'.__('Manage groups','wp-recall').'</h3>';
 
         $content .= $this->get_groups_list();    
 
@@ -186,7 +186,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
     function get_groups_list(){
 
         if(!$this->forum_groups) 
-            return '<p>'.__('Группы пока не созданы.').'</p>';
+            return '<p>'.__('No groups are created yet','wp-recall').'</p>';
 
         $content = '<div class="groups-list">';
 
@@ -204,17 +204,17 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
                         array(
                             'type' => 'text',
                             'slug' => 'group_name',
-                            'title' => __('Название группы')
+                            'title' => __('Name of the group','wp-recall')
                         ),
                         array(
                             'type' => 'text',
                             'slug' => 'group_slug',
-                            'title' => __('Slug группы')
+                            'title' => __('Slug of the group','wp-recall')
                         ),
                         array(
                             'type' => 'textarea',
                             'slug' => 'group_desc',
-                            'title' => __('Описание группы')
+                            'title' => __('Description of the group','wp-recall')
                         )
                     )
                 );
@@ -238,7 +238,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
     function get_forums_list(){
         
         if(!$this->forums) 
-            return '<p>'.__('Форумы пока не создавались.').'</p>';
+            return '<p>'.__('Forums were not created yet','wp-recall').'</p>';
 
         $groups = array();
         foreach($this->forum_groups as $group){
@@ -247,7 +247,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
 
         $content = '<div class="forums-list">';
         
-            $content .= '<p>Форумы группы "'.$this->current_group->group_name.'"</p>';
+            $content .= '<p>'.__('Group forums','wp-recall').' "'.$this->current_group->group_name.'"</p>';
 
             foreach($this->forums as $forum){
                 
@@ -266,33 +266,33 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
                         array(
                             'type' => 'select',
                             'slug' => 'group_id',
-                            'title' => __('Группа форума'),
+                            'title' => __('Forum group','wp-recall'),
                             'values' => $groups
                         ),
                         array(
                             'type' => 'text',
                             'slug' => 'forum_name',
-                            'title' => __('Название форума')
+                            'title' => __('Name of the forum','wp-recall')
                         ),
                         array(
                             'type' => 'text',
                             'slug' => 'forum_slug',
-                            'title' => __('Slug форума')
+                            'title' => __('Slug of the forum','wp-recall')
                         ),
                         array(
                             'type' => 'select',
                             'slug' => 'forum_closed',
-                            'title' => __('Статус форума'),
+                            'title' => __('Forum status','wp-recall'),
                             'values' => array(
-                                __('Открытый форум'),
-                                __('Закрытый форум')
+                                __('Open forum','wp-recall'),
+                                __('Closed forum','wp-recall')
                             ),
-                            'notice' => __('В закрытом форуме невозможна публикация новых топиков и сообщений')
+                            'notice' => __('It is impossible to publish new topics and messages in a closed forum','wp-recall')
                         ),
                         array(
                             'type' => 'textarea',
                             'slug' => 'forum_desc',
-                            'title' => __('Описание форума')
+                            'title' => __('Description of the forum','wp-recall')
                         )
                     )
                 );
@@ -331,7 +331,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
         
         $content = '<div class="manager-box manage-forums rcl-custom-fields-box">';
         
-        $content .= '<h3>'.__('Управление форумами').'</h3>';
+        $content .= '<h3>'.__('Manage forums','wp-recall').'</h3>';
         
         $content .= $this->get_forums_list();    
 
@@ -392,7 +392,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
                     <a class="field-edit field-control" href="#" title="'.__('Edit','wp-recall').'"></a>';
         
                 if($this->field['type'] == 'groups')
-                    $content .= '<a class="get-forums field-control" href="'.admin_url('admin.php?page=pfm-forums&group-id='.$this->field['slug']).'" title="'.__('Получить форумы').'"></a>';
+                    $content .= '<a class="get-forums field-control" href="'.admin_url('admin.php?page=pfm-forums&group-id='.$this->field['slug']).'" title="'.__('Get forums','wp-recall').'"></a>';
                 
                 $content .= '</span>
             </div>
@@ -405,7 +405,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
                     $content .= '</div>';
 
                     $content .= '<div class="form-buttons">';
-                    $content .= '<input type="submit" class="button-primary" value="'.__('Сохранить изменения').'">';
+                    $content .= '<input type="submit" class="button-primary" value="'.__('Save changes','wp-recall').'">';
                     $content .= '<input type="hidden" name="'.$this->field['type_id'].'" value="'.$this->field['slug'].'">';
                     $content .= '</div>';
 

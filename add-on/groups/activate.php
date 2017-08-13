@@ -16,12 +16,12 @@ if ( $wpdb->has_cap( 'collation' ) ) {
 
 $table = RCL_PREF ."groups";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-        ID INT(20) NOT NULL,
-        admin_id INT(20) NOT NULL,
-        group_users INT(20) NOT NULL,
+        ID BIGINT(20) UNSIGNED NOT NULL,
+        admin_id BIGINT(20) UNSIGNED NOT NULL,
+        group_users MEDIUMINT(7) UNSIGNED NOT NULL,
         group_status VARCHAR(20) NOT NULL,
         group_date DATETIME NOT NULL,
-        PRIMARY KEY id (id),
+        PRIMARY KEY  id (id),
         KEY admin_id (admin_id)
       ) $collate;";
 
@@ -29,13 +29,13 @@ dbDelta( $sql );
 
 $table = RCL_PREF ."groups_users";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-        ID bigint (20) NOT NULL AUTO_INCREMENT,
-        group_id INT(20) NOT NULL,
-        user_id INT(20) NOT NULL,
+        ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        group_id BIGINT(20) UNSIGNED NOT NULL,
+        user_id BIGINT(20) UNSIGNED NOT NULL,
         user_role VARCHAR(20) NOT NULL,
-        status_time INT(20) NOT NULL,
+        status_time TINYINT(2) UNSIGNED NOT NULL,
         user_date DATETIME NOT NULL,
-        PRIMARY KEY id (id),
+        PRIMARY KEY  id (id),
         KEY group_id (group_id),
         KEY user_id (user_id)
       ) $collate;";
@@ -44,11 +44,11 @@ dbDelta( $sql );
 
 $table = RCL_PREF ."groups_options";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-        ID bigint (20) NOT NULL AUTO_INCREMENT,
-        group_id INT(20) NOT NULL,
+        ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        group_id BIGINT(20) UNSIGNED NOT NULL,
         option_key VARCHAR( 255 ) NOT NULL,
         option_value LONGTEXT NOT NULL,
-        PRIMARY KEY id (id),
+        PRIMARY KEY  id (id),
         KEY group_id (group_id),
         KEY option_key (option_key)
       ) $collate;";

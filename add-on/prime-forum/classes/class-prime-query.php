@@ -53,15 +53,15 @@ class PrimeQuery{
             
             if($this->is_group && !$this->object->group_id){
 
-                $this->errors['notice'][] = __('Группа не найдена');
+                $this->errors['notice'][] = __('Group not found','wp-recall');
 
             }else if($this->is_forum && !$this->object->forum_id){
 
-                $this->errors['notice'][] = __('Форум не найден');
+                $this->errors['notice'][] = __('Forum not found','wp-recall');
 
             }else if($this->is_topic && !$this->object->topic_id){
 
-                $this->errors['notice'][] = __('Тема не найдена');
+                $this->errors['notice'][] = __('Topic not found','wp-recall');
 
             }
             

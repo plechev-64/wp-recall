@@ -4,6 +4,7 @@
     text-align: right;
     margin: 10px 0;
     position:relative;
+    clear: both;
 }
 .rcl-cart-box .product-price{
     display: inline-block;

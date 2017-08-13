@@ -10,6 +10,8 @@
     display: inline-block;
     list-style: none;
     margin: 0 10px;
+    background: none;
+    padding: 0;
 }
 #prime-forum .prime-manager ul li a {
     display: inline-block;

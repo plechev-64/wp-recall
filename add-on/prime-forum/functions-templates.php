@@ -121,38 +121,38 @@ function pfm_the_notices(){
         
         if($PrimeQuery->is_search){
             
-            echo pfm_get_notice(__('Ничего не найдено'));
+            echo pfm_get_notice(__('Nothing found','wp-recall'));
             
         }else if($PrimeQuery->is_frontpage){
             
-            echo pfm_get_notice(__('Группы не были найдены'));
+            echo pfm_get_notice(__('Groups were not found','wp-recall'));
 
         }else if($PrimeQuery->is_group){
             
             if(!$PrimeQuery->object){
-                echo pfm_get_notice(__('Группа не найдена'));
+                echo pfm_get_notice(__('Group not found','wp-recall'));
                 return;
             }
             
-            echo pfm_get_notice(__('Форумы не были найдены'));
+            echo pfm_get_notice(__('Forums were not found','wp-recall'));
             
         }else if($PrimeQuery->is_forum){
             
             if(!$PrimeQuery->object){
-                echo pfm_get_notice(__('Форум не найден'));
+                echo pfm_get_notice(__('Forum not found','wp-recall'));
                 return;
             }
             
-            echo pfm_get_notice(__('Пока не создано ни одной темы'));
+            echo pfm_get_notice(__('No topics were created yet','wp-recall'));
             
         }else if($PrimeQuery->is_topic){
             
             if(!$PrimeQuery->object){
-                echo pfm_get_notice(__('Тема не найдена'));
+                echo pfm_get_notice(__('Topic not found','wp-recall'));
                 return;
             }
             
-            echo pfm_get_notice(__('Тема не содержит ни одного сообщения'));
+            echo pfm_get_notice(__('The topic does not contain any messages','wp-recall'));
             
         }
         
@@ -186,13 +186,13 @@ function pfm_the_vititors(){
     $content = '<div class="prime-visitors">';
     
         if($PrimeQuery->is_group){
-            $content .= __('Группу просматривают');
+            $content .= __('The group is viewed by','wp-recall');
         }else if($PrimeQuery->is_forum){
-            $content .= __('Форум просматривают');
+            $content .= __('The forum is viewed by','wp-recall');
         }else if($PrimeQuery->is_topic){
-            $content .= __('Тему просматривают');
+            $content .= __('The topic is viewed by','wp-recall');
         }else{
-            $content .= __('Сейчас на форуме');
+            $content .= __('Currently on the forum','wp-recall');
         }
         
         $content .= ': ';
@@ -200,7 +200,7 @@ function pfm_the_vititors(){
         if($visits)
             $content .= implode(', ',$visits);
         else
-            $content .= __('Никого нет');
+            $content .= __('Nobody is here','wp-recall');
 
     $content .= '</div>';
     

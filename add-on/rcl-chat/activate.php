@@ -16,10 +16,10 @@ if ( $wpdb->has_cap( 'collation' ) ) {
 
 $table = RCL_PREF ."chats";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-    chat_id bigint (20) NOT NULL AUTO_INCREMENT,
+    chat_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     chat_room VARCHAR(100) NOT NULL,
     chat_status VARCHAR(20) NOT NULL,
-    PRIMARY KEY chat_id (chat_id)
+    PRIMARY KEY  chat_id (chat_id)
 ) $collate;";
 
 dbDelta( $sql );
@@ -27,11 +27,11 @@ dbDelta( $sql );
 $table = RCL_PREF ."chat_users";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
     room_place VARCHAR(20) NOT NULL,
-    chat_id INT (20) NOT NULL,
-    user_id INT(20) NOT NULL,
+    chat_id BIGINT(20) UNSIGNED NOT NULL,
+    user_id BIGINT(20) UNSIGNED NOT NULL,
     user_activity DATETIME NOT NULL,
-    user_write INT(10) NOT NULL,
-    user_status INT(10) NOT NULL,
+    user_write TINYINT(1) UNSIGNED NOT NULL,
+    user_status TINYINT(1) UNSIGNED NOT NULL,
     UNIQUE KEY room_place (room_place),
     KEY chat_id (chat_id),
     KEY user_id (user_id)
@@ -41,14 +41,14 @@ dbDelta( $sql );
 
 $table = RCL_PREF ."chat_messages";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-    message_id bigint (20) NOT NULL AUTO_INCREMENT,
-    chat_id INT(20) NOT NULL,
-    user_id INT(20) NOT NULL,
+    message_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    chat_id  BIGINT(20) UNSIGNED NOT NULL,
+    user_id  BIGINT(20) UNSIGNED NOT NULL,
     message_content LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     message_time DATETIME NOT NULL,
-    private_key INT(20) NOT NULL,
-    message_status INT(20) NOT NULL,
-    PRIMARY KEY message_id (message_id),
+    private_key BIGINT(20) UNSIGNED NOT NULL,
+    message_status TINYINT(1) UNSIGNED NOT NULL,
+    PRIMARY KEY  message_id (message_id),
     KEY chat_id (chat_id),
     KEY user_id (user_id),
     KEY message_status (message_status)
@@ -58,11 +58,11 @@ dbDelta( $sql );
 
 $table = RCL_PREF ."chat_messagemeta";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-    meta_id bigint (20) NOT NULL AUTO_INCREMENT,
-    message_id INT (20) NOT NULL,
+    meta_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+    message_id BIGINT(20) UNSIGNED NOT NULL,
     meta_key VARCHAR(255) NOT NULL,
     meta_value LONGTEXT NOT NULL,
-    PRIMARY KEY meta_id (meta_id),
+    PRIMARY KEY  meta_id (meta_id),
     KEY message_id (message_id),
     KEY meta_key (meta_key)
 ) $collate;";

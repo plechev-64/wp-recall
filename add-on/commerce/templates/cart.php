@@ -43,7 +43,7 @@
                     <a class="edit-amount remove-product" onclick="rcl_cart_remove_product(<?php echo $product->product_id; ?>,<?php echo $k; ?>);return false;" href="#">
                         <i class="fa fa-minus"></i>
                     </a>
-                </span>
+                </div>
             </td>
             <td class="column-product-sumprice">
                 <span class="product-sumprice">

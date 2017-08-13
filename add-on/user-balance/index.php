@@ -211,7 +211,7 @@ function rcl_pay_order_user_balance(){
     $baggage_data = json_decode(base64_decode($_POST['baggage_data']));
 
     if(!$pay_id){
-        $log['error'] = __('Заказ не найден!');
+        $log['error'] = __('Order not found!','wp-recall');
         echo json_encode($log);
         exit;
     }

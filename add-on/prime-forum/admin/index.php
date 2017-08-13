@@ -13,11 +13,11 @@ function pfm_admin_scripts(){
 add_action('admin_menu', 'pfm_init_admin_menu',10);
 function pfm_init_admin_menu(){
     add_menu_page('PrimeForum', 'PrimeForum', 'manage_options', 'pfm-menu', 'pfm_page_options');
-    add_submenu_page( 'pfm-menu', __('Настройки'), __('Настройки'), 'manage_options', 'pfm-menu', 'pfm_page_options');
-    add_submenu_page( 'pfm-menu', __('Структура'), __('Структура'), 'manage_options', 'pfm-forums', 'pfm_page_forums');
-    $hook = add_submenu_page( 'pfm-menu', __('Темы'), __('Templates','wp-recall'), 'manage_options', 'pfm-themes', 'pfm_page_themes');
+    add_submenu_page( 'pfm-menu', __('Settings','wp-recall'), __('Settings','wp-recall'), 'manage_options', 'pfm-menu', 'pfm_page_options');
+    add_submenu_page( 'pfm-menu', __('Structure','wp-recall'), __('Structure','wp-recall'), 'manage_options', 'pfm-forums', 'pfm_page_forums');
+    $hook = add_submenu_page( 'pfm-menu', __('Templates','wp-recall'), __('Templates','wp-recall'), 'manage_options', 'pfm-themes', 'pfm_page_themes');
     add_action( "load-$hook", 'pfm_add_options_themes_manager' );
-    add_submenu_page( 'pfm-menu', __('Форма топика'), __('Форма топика'), 'manage_options', 'manage-topic-form', 'pfm_page_topic_form');
+    add_submenu_page( 'pfm-menu', __('Topic form','wp-recall'), __('Topic form','wp-recall'), 'manage_options', 'manage-topic-form', 'pfm_page_topic_form');
 }
 
 function pfm_page_topic_form(){
@@ -36,18 +36,19 @@ function pfm_page_topic_form(){
         
     }
     
-    if(!$group_id)
-        return '<p>На форуме пока не создано ни одной группы форумов.</p>'
-        . '<p>Создайте группу форумов для управления полями формы публикации топика.</p>';
-
+    if(!$group_id){
+        echo '<p>'.__('The forum is not yet created any groups of forums','wp-recall').'.</p>'
+        . '<p>'.__('Create a group of forums for managing the form fields of the publication of a topic','wp-recall').'.</p>';
+        return;
+    }
     rcl_sortable_scripts();
 
     $formManager = new Prime_Form_Manager(array(
         'form_slug' => 'pfm_group_'.$group_id
     ));
     
-    $content = '<h2>'.__('Управление формой топика').'</h2>'
-            . '<p>Выберите группу форума и управляйте произвольными полями формы публикации топика внутри этой группы</p>';
+    $content = '<h2>'.__('Manage topic form','wp-recall').'</h2>'
+            . '<p>'.__('Select a forum group and manage custom fields form of publication of a topic within this group','wp-recall').'</p>';
     
     $content .= $formManager->form_navi();
     
@@ -65,7 +66,7 @@ function pfm_page_options(){
         'numberposts'=>-1
     ));
     
-    $pagelist = array('Страниц не найдено');
+    $pagelist = array(__('Pages not found','wp-recall'));
     
     if($pages){
         
@@ -84,36 +85,39 @@ function pfm_page_options(){
             'type' => 'select',
             'slug' => 'home-page',
             'name' => 'rcl_pforum_options[home-page]',
-            'title' => __('Страница форума'),
-            'notice' => __('Выберите нужную страницу из списка и разместите на ней шорткод [prime-forum]'),
+            'title' => __('Forum page','wp-recall'),
+            'notice' => __('Select the needed page from the list and place the '
+                    . '[prime-forum] shortcode on it','wp-recall'),
             'values' => $pagelist
         ),
         array(
             'type' => 'select',
             'slug' => 'forum-colors',
             'name' => 'rcl_pforum_options[forum-colors]',
-            'title' => __('Цвета форума'),
+            'title' => __('Forum colours','wp-recall'),
             'values' => array(
-                __('По-умолчанию'),
-                __('Основные цвета WP-Recall')
+                __('By default','wp-recall'),
+                __('Primary colours of WP-Recall','wp-recall')
             )
         ),
         array(
             'type' => 'textarea',
             'slug' => 'support-shortcodes',
             'name' => 'rcl_pforum_options[support-shortcodes]',
-            'title' => __('Поддерживаемые шорткоды'),
-            'notice' => __('Укажите нужные шорткоды для их поддержки в сообщениях форума, каждый с новой строки. Указывать без скобок, например: custom-shortcod')
+            'title' => __('Supported shortcodes','wp-recall'),
+            'notice' => __('Specify the necessary shortcodes to support them in '
+                    . 'forum messages, each should start from a new line. '
+                    . 'Specify without brackets, for example: custom-shortcode','wp-recall')
         ),
         array(
             'type' => 'select',
             'slug' => 'view-forums-home',
             'name' => 'rcl_pforum_options[view-forums-home]',
-            'title' => __('Вывод всех форумов группы на главной странице'),
-            'notice' => __('Если выбрано, то на главной странице будут выводится все форумы'),
+            'title' => __('Output all forums of the group on the homepage'),
+            'notice' => __('If selected, all forums will be displayed on the homepage','wp-recall'),
             'values' => array(
-                __('Не выводить'),
-                __('Выводить')
+                __('Do not output','wp-recall'),
+                __('Output','wp-recall')
             )
         ),
         array(
@@ -121,101 +125,102 @@ function pfm_page_options(){
             'slug' => 'forums-home-list',
             'pattern' => '([0-9,\s]+)',
             'name' => 'rcl_pforum_options[forums-home-list]',
-            'title' => __('Выводить форумы только для указанных групп'),
-            'notice' => __('Если включен вывод форумов на главной, то можно через запятую '
-                    . 'указать идентификаторы групп чьи форумы выводить')
+            'title' => __('Output forums only for the specified groups','wp-recall'),
+            'notice' => __('If output of forums on the homepage is turned on, you may specify IDs of the groups, '
+                    . 'whose forums should be output, space separated','wp-recall')
         ),
         array(
             'type' => 'number',
             'slug' => 'forums-per-page',
             'name' => 'rcl_pforum_options[forums-per-page]',
-            'title' => __('Форумов на странице группы'),
+            'title' => __('Forums on the group page','wp-recall'),
             'default' => 20
         ),
         array(
             'type' => 'number',
             'slug' => 'topics-per-page',
             'name' => 'rcl_pforum_options[topics-per-page]',
-            'title' => __('Топиков на странице форума'),
+            'title' => __('Topics on the forum page','wp-recall'),
             'default' => 20
         ),
         array(
             'type' => 'number',
             'slug' => 'posts-per-page',
             'name' => 'rcl_pforum_options[posts-per-page]',
-            'title' => __('Сообщений на странице топика'),
+            'title' => __('Messages on the topic page','wp-recall'),
             'default' => 20
         ),
         array(
             'type' => 'select',
             'slug' => 'guest-post-create',
             'name' => 'rcl_pforum_options[guest-post-create]',
-            'title' => __('Публикация сообщений в теме гостям'),
+            'title' => __('Publishing of messages in the topic by guests','wp-recall'),
             'values' => array(
-                __('Запрещена'),
-                __('Разрешена')
+                __('Forbidden','wp-recall'),
+                __('Allowed','wp-recall')
             )
         ),
         array(
             'type' => 'select',
             'slug' => 'support-oembed',
             'name' => 'rcl_pforum_options[support-oembed]',
-            'title' => __('Поддержка OEMBED в сообщениях'),
+            'title' => __('Support of OEMBED in messages','wp-recall'),
             'values' => array(
-                __('Запрещена'),
-                __('Разрешена')
+                __('Forbidden','wp-recall'),
+                __('Allowed','wp-recall')
             )
         ),
         array(
             'type' => 'custom',
-            'title' => __('Шаблоны для формирования тега title и наименования страницы'),
+            'title' => __('Templates to form the title tag and name of the page','wp-recall'),
             'content' => __(
-                '<p>В шаблонах можно указывать следующие маски:<br>'
-                . '%GROUPNAME% - имя текущей группы форумов<br>'
-                . '%FORUMNAME% - имя текущего форума<br>'
-                . '%TOPICNAME% - имя текущей темы</p>'
+                '<p>The following masks may be specified in templates:<br>'
+                . '%GROUPNAME% - name of the current group of forums<br>'
+                . '%FORUMNAME% - name of the current forum<br>'
+                . '%TOPICNAME% - name of the current topic</p>'
+                , 'wp-recall'
             )
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-tag-group',
             'name' => 'rcl_pforum_options[mask-tag-group]',
-            'notice' => __('Тег title в группе форумов'),
-            'default' => __('Группа форумов').' %GROUPNAME%'
+            'notice' => __('Title tag in the group of forums','wp-recall'),
+            'default' => __('Group of forums','wp-recall').' %GROUPNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-page-group',
             'name' => 'rcl_pforum_options[mask-page-group]',
-            'notice' => __('Наименование страницы в группе форумов'),
-            'default' => __('Группа форумов').' %GROUPNAME%'
+            'notice' => __('Name of the page in the group of forums','wp-recall'),
+            'default' => __('Group of forums','wp-recall').' %GROUPNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-tag-forum',
             'name' => 'rcl_pforum_options[mask-tag-forum]',
-            'notice' => __('Тег title на странице форума'),
-            'default' => __('Форум').' %FORUMNAME%'
+            'notice' => __('Title tag on the forum page','wp-recall'),
+            'default' => __('Forum','wp-recall').' %FORUMNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-page-forum',
             'name' => 'rcl_pforum_options[mask-page-forum]',
-            'notice' => __('Наименование страницы отдельного форума'),
-            'default' => __('Форум').' %FORUMNAME%'
+            'notice' => __('Name of the page of the separate forum','wp-recall'),
+            'default' => __('Forum','wp-recall').' %FORUMNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-tag-topic',
             'name' => 'rcl_pforum_options[mask-tag-topic]',
-            'notice' => __('Тег title на странице темы'),
-            'default' => '%TOPICNAME% | '. __('Форум').' %FORUMNAME%'
+            'notice' => __('Title tag on the topic page','wp-recall'),
+            'default' => '%TOPICNAME% | '. __('Forum','wp-recall').' %FORUMNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-page-topic',
             'name' => 'rcl_pforum_options[mask-page-topic]',
-            'notice' => __('Наименование страницы отдельной темы'),
+            'notice' => __('Name of the page of the separate topic','wp-recall'),
             'default' => '%TOPICNAME%'
         )
     );
@@ -223,7 +228,7 @@ function pfm_page_options(){
     $CF = new Rcl_Custom_Fields();
     
     ?>   
-    <h2>Настройки PrimeForum</h2>
+    <h2><?php _e('Settings PrimeForum','wp-recall'); ?></h2>
 
     <div id="prime-options" class="rcl-form wrap-recall-options" style="display:block;">
 
@@ -253,7 +258,7 @@ function pfm_page_options(){
             ?>
 
             <p align="right">
-                <input type="submit" name="Submit" class="button button-primary button-large" value="Сохранить" />
+                <input type="submit" name="Submit" class="button button-primary button-large" value="<?php _e('Save','wp-recall'); ?>" />
             </p>
             <input type="hidden" name="action" value="update" />
             <input type="hidden" name="page_options" value="rcl_pforum_options" />
@@ -280,7 +285,7 @@ function pfm_page_forums(){
     
     ?>
 
-    <h2><?php _e('Управление форумами'); ?></h2>
+    <h2><?php _e('Manage forums','wp-recall'); ?></h2>
     
     <?php
     
@@ -366,7 +371,7 @@ function pfm_admin_role_field($user){
     $fields = array(
         array(
             'type' => 'select',
-            'title' => __('Текущая роль'),
+            'title' => __('Current role','wp-recall'),
             'slug' => 'pfm_role',
             'values' => $values
         )
@@ -376,7 +381,7 @@ function pfm_admin_role_field($user){
 
     if($fields){
         
-        $content = '<h3>'.__('Роль пользователя на форуме').':</h3>
+        $content = '<h3>'.__('Role of the user on the forum','wp-recall').':</h3>
         <table class="form-table rcl-form">';
         
         foreach($fields as $field){
@@ -435,7 +440,7 @@ function pfm_manager_update_group($group_id,$options){
     ));
     
     return array(
-        'success' => __('Изменение сохранены!'),
+        'success' => __('Changes saved!','wp-recall'),
         'title' => $options['group_name']
     );
     
@@ -455,7 +460,7 @@ function pfm_manager_update_forum($forum_id,$options){
     ));
     
     $result = array(
-        'success' => __('Изменение сохранены!'),
+        'success' => __('Changes saved!','wp-recall'),
         'title' => $options['forum_name']
     );
     
@@ -482,7 +487,7 @@ function pfm_ajax_update_sort_groups(){
     }
     
     echo json_encode(array(
-        'success' => __('Изменение сохранены!')
+        'success' => __('Changes saved!','wp-recall')
     )); exit;
     
 }
@@ -501,7 +506,7 @@ function pfm_ajax_update_sort_forums(){
     }
     
     echo json_encode(array(
-        'success' => __('Изменение сохранены!')
+        'success' => __('Changes saved!','wp-recall')
     )); exit;
     
 }
@@ -520,7 +525,7 @@ function pfm_ajax_get_manager_item_delete_form(){
             'group_id__not_in' => array($itemID)
         ));
         
-        $values = array('' => __('Удалить все форумы внутри группы'));
+        $values = array('' => __('Delete all forums inside the group','wp-recall'));
         
         if($groups){
             
@@ -535,9 +540,9 @@ function pfm_ajax_get_manager_item_delete_form(){
                 'type' => 'select',
                 'slug' => 'migrate-group',
                 'name' => 'pfm-data[migrate_group]',
-                'title' => __('Новая группа для дочерних форумов'),
-                'notice' => __('Если при удалении выбранной группы для дочерних форумов не '
-                        . 'будет назначена новая группа, то форумы будут также удалены'),
+                'title' => __('New group for child forums','wp-recall'),
+                'notice' => __('If new group is not assigned for child forums, when deleting the selected '
+                        . 'group, the forums will also be deleted','wp-recall'),
                 'values' => $values
             ),
             array(
@@ -562,7 +567,7 @@ function pfm_ajax_get_manager_item_delete_form(){
             'forum_id__not_in' => array($itemID)
         ));
         
-        $values = array('' => __('Удалить все топики внутри форума'));
+        $values = array('' => __('Delete all topic inside the forum','wp-recall'));
         
         if($forums){
             
@@ -577,9 +582,9 @@ function pfm_ajax_get_manager_item_delete_form(){
                 'type' => 'select',
                 'slug' => 'migrate-group',
                 'name' => 'pfm-data[migrate_forum]',
-                'title' => __('Новый форум для дочерних топиков'),
-                'notice' => __('Если при удалении выбранного форума для дочерних топиков не '
-                        . 'будет назначен новый форум, то топики будут также удалены'),
+                'title' => __('New forum for child topics','wp-recall'),
+                'notice' => __('If new forum is not assigned for child forums, when deleting the selected '
+                        . 'forum, the topics will also be deleted','wp-recall'),
                 'values' => $values
             ),
             array(
@@ -632,7 +637,7 @@ function pfm_get_manager_item_delete_form($fields){
             }
 
             $content .= '<div class="form-field fields-submit">';
-                $content .= '<input type="submit" class="button-primary" value="Подтвердить удаление">';
+                $content .= '<input type="submit" class="button-primary" value="'.__('Confirm the deletion','wp-recall').'">';
             $content .= '</div>';
             $content .= wp_nonce_field('pfm-action','_wpnonce',true,false);
         $content .= '</form>';

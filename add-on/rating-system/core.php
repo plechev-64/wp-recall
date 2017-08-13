@@ -651,10 +651,8 @@ function rcl_rating_shortcode($atts){
     $rcl_cache = new Rcl_Cache();
     
     if($rcl_cache->is_cache){
-        $obj = $rcl_rating;
-        $obj->query = array();
-        $string = json_encode($obj);
-        $file = $rcl_cache->get_file($string);
+
+        $file = $rcl_cache->get_file($rcl_rating->get_sql());
         
         if(!$file->need_update){
 
@@ -662,7 +660,7 @@ function rcl_rating_shortcode($atts){
 
         }
     }
-
+    
     $ratings = $rcl_rating->get_data();
     
     if(!$ratings){

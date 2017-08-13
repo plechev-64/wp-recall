@@ -27,14 +27,14 @@ if($wpdb->get_var("show tables like '". $table . "'") != $table) {
 }
 
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-        order_id BIGINT (20) NOT NULL AUTO_INCREMENT,
-        user_id INT(20) NOT NULL,
+        order_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        user_id BIGINT(20) UNSIGNED NOT NULL,
         order_price VARCHAR(20) NOT NULL,
-        products_amount INT(20) NOT NULL,
+        products_amount SMALLINT(5) UNSIGNED NOT NULL,
         order_details LONGTEXT NOT NULL,
         order_date DATETIME NOT NULL,
-        order_status INT(10) NOT NULL,
-        PRIMARY KEY order_id (order_id),
+        order_status TINYINT(2) UNSIGNED NOT NULL,
+        PRIMARY KEY  order_id (order_id),
           KEY user_id (user_id),
           KEY order_status (order_status)
       ) $collate;";
@@ -43,13 +43,13 @@ dbDelta( $sql );
 
 $table = RCL_PREF ."order_items";
 $sql = "CREATE TABLE IF NOT EXISTS ". $table . " (
-        item_id BIGINT (20) NOT NULL AUTO_INCREMENT,
-        order_id INT(20) NOT NULL,
-        product_id INT(20) NOT NULL,
+        item_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        order_id BIGINT(20) UNSIGNED NOT NULL,
+        product_id BIGINT(20) UNSIGNED NOT NULL,
         product_price VARCHAR(20) NOT NULL,
-        product_amount INT(20) NOT NULL,
+        product_amount SMALLINT(5) UNSIGNED NOT NULL,
         variations LONGTEXT NOT NULL,
-        PRIMARY KEY item_id (item_id),
+        PRIMARY KEY  item_id (item_id),
           KEY order_id (order_id),
           KEY product_id (product_id)
       ) $collate;";

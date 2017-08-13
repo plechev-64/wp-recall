@@ -67,7 +67,7 @@ add_shortcode('spoiler','pfm_get_spoiler_content');
 function pfm_get_spoiler_content($attrs, $content){   
     return '<div class="prime-spoiler">'
         . '<a href="#" class="prime-spoiler-link" onclick="pfm_spoiler(this); return false;">'
-            . '<i class="fa fa-plus-square-o"></i> '.__('Спойлер')
+            . '<i class="fa fa-plus-square-o"></i> '.__('Spoiler','wp-recall')
         . '</a>'
         . '<div class="prime-spoiler-content">'
             .$content
@@ -79,7 +79,7 @@ add_shortcode('offtop','pfm_get_offtop_content');
 function pfm_get_offtop_content($attrs, $content){   
     return '<div class="prime-offtop">'
         . '<span class="prime-offtop-title">'
-            . '<i class="fa fa-coffee"></i> '.__('Оффтоп')
+            . '<i class="fa fa-coffee"></i> '.__('Off-topic','wp-recall')
         . '</span>'
         . '<div class="prime-offtop-content">'
             .$content

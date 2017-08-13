@@ -49,7 +49,7 @@ function pfm_init_tab(){
         array(
             'id'=>'prime-forum',
             'supports' => array('ajax'),
-            'name'=>__('Форум'),
+            'name'=>__('Forum','wp-recall'),
             'public'=>0,
             'icon'=>'fa-sitemap',
             'output'=>'menu',
@@ -57,7 +57,7 @@ function pfm_init_tab(){
                 array(
                     'id'=>'my-topics',
                     'icon' => 'fa-folder',
-                    'name'=>__('Начатые темы'),
+                    'name'=>__('Started topics','wp-recall'),
                     'callback' => array(
                         'name'=>'pfm_get_user_topics_list'
                     )
@@ -65,7 +65,7 @@ function pfm_init_tab(){
                 array(
                     'id'=>'my-posts',
                     'icon' => 'fa-folder',
-                    'name'=>__('Сообщения в чужих темах'),
+                    'name'=>__('Messages in topics created by other users','wp-recall'),
                     'callback' => array(
                         'name'=>'pfm_user_posts_other_topics'
                     )
@@ -99,7 +99,7 @@ function pfm_user_posts_other_topics($master_id){
     $countTopics = $TopicsQuery->count($args);
     
     if(!$countTopics)
-        return pfm_get_notice(__('Сообщений в чужих темах пока нет.'));
+        return pfm_get_notice(__('There are no messages in topics created by other users.','wp-recall'));
     
     $pageNavi = new Rcl_PageNavi('forum',$countTopics,array('in_page'=>20));
     
@@ -123,7 +123,7 @@ function pfm_user_posts_other_topics($master_id){
     
     $theme = pfm_get_current_theme();
     
-    $content = '<h3>'.__('Сообщения в чужих темах на форуме').'</h3>';
+    $content = '<h3>'.__('Messaged in topics on the forum created by other users','wp-recall').'</h3>';
 
     $content .= '<div id="prime-forum">';
     
@@ -155,7 +155,7 @@ function pfm_get_user_topics_list($master_id, $navi = true){
     ));
     
     if(!$countTopics)
-        return pfm_get_notice(__('Начатых тем на форуме пока нет.'));
+        return pfm_get_notice(__('There are no started topics on the forum yet.','wp-recall'));
     
     if($navi)
         $pageNavi = new Rcl_PageNavi('forum',$countTopics,array('in_page'=>20));
@@ -189,7 +189,7 @@ function pfm_get_user_topics_list($master_id, $navi = true){
 
     $theme = pfm_get_current_theme();
     
-    $content = '<h3>'.__('Начатые темы на форуме').'</h3>';
+    $content = '<h3>'.__('Started topics on the forum','wp-recall').'</h3>';
 
     $content .= '<div id="prime-forum">';
     
@@ -289,9 +289,9 @@ function pfm_init_js_variables($data){
     if(!$PrimeQuery->is_forum && !$PrimeQuery->is_topic) return $data;
     
     $tags = array(
-        array('pfm_pre', __('pre'), '<pre>', '</pre>', 'h', __('Многострочный код'), 100),
-        array('pfm_spoiler', __('спойлер'), '[spoiler]', '[/spoiler]', 'h', __('Спойлер'), 120),
-        array('pfm_offtop', __('оффтоп'), '[offtop]', '[/offtop]', 'h', __('Оффтоп'), 110),
+        array('pfm_pre', __('pre','wp-recall'), '<pre>', '</pre>', 'h', __('Multiline code','wp-recall'), 100),
+        array('pfm_spoiler', __('Spoiler','wp-recall'), '[spoiler]', '[/spoiler]', 'h', __('Spoiler','wp-recall'), 120),
+        array('pfm_offtop', __('Off-topic','wp-recall'), '[offtop]', '[/offtop]', 'h', __('Off-topic','wp-recall'), 110),
     );
     
     $tags = apply_filters('pfm_gtags',$tags);
@@ -324,15 +324,15 @@ function pfm_get_title_tag(){
     if(!$object) return false;
     
     if($PrimeQuery->is_topic){
-        $title = pfm_replace_mask_title(pfm_get_option('mask-tag-topic', $object->topic_name.' | '.__('Форум').' '.$object->forum_name));
+        $title = pfm_replace_mask_title(pfm_get_option('mask-tag-topic', $object->topic_name.' | '.__('Forum','wp-recall').' '.$object->forum_name));
     }else if($PrimeQuery->is_forum){
-        $title = pfm_replace_mask_title(pfm_get_option('mask-tag-forum', __('Форум').' '.$object->forum_name));
+        $title = pfm_replace_mask_title(pfm_get_option('mask-tag-forum', __('Forum','wp-recall').' '.$object->forum_name));
     }else if($PrimeQuery->is_group){
-        $title = pfm_replace_mask_title(pfm_get_option('mask-tag-group', __('Группа форумов').' '.$object->group_name));
+        $title = pfm_replace_mask_title(pfm_get_option('mask-tag-group', __('Group of forums','wp-recall').' '.$object->group_name));
     }
 
     if($PrimeQuery->is_page){
-        $title .= ' | '.__('Страница').' '.$PrimeQuery->current_page;
+        $title .= ' | '.__('Page','wp-recall').' '.$PrimeQuery->current_page;
     }
 
     return $title;
@@ -351,13 +351,13 @@ function pfm_get_title_page(){
     if($PrimeQuery->is_topic){
         $title = pfm_replace_mask_title(pfm_get_option('mask-page-topic', $object->topic_name));
     }else if($PrimeQuery->is_forum){
-        $title = pfm_replace_mask_title(pfm_get_option('mask-page-forum', __('Форум').' '.$object->forum_name));
+        $title = pfm_replace_mask_title(pfm_get_option('mask-page-forum', __('Forum','wp-recall').' '.$object->forum_name));
     }else if($PrimeQuery->is_group){
-        $title = pfm_replace_mask_title(pfm_get_option('mask-page-group', __('Группа форумов').' '.$object->group_name));
+        $title = pfm_replace_mask_title(pfm_get_option('mask-page-group', __('Group of forums','wp-recall').' '.$object->group_name));
     }
 
     if($PrimeQuery->is_page){
-        $title .= ' | '.__('Страница').' '.$PrimeQuery->current_page;
+        $title .= ' | '.__('Page','wp-recall').' '.$PrimeQuery->current_page;
     }
         
     return $title;

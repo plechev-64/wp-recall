@@ -85,7 +85,7 @@ function rcl_remove_user_feed($user_id){
     global $wpdb;
     
     $result = $wpdb->query(
-        $wpdb->prepare("DELETE FROM ".RCL_PREF."feeds WHERE user_id='%d'",$user_id)
+        $wpdb->prepare("DELETE FROM ".RCL_PREF."feeds WHERE user_id='%d' OR object_id='%d'",$user_id)
     );
     
     return $result;
