@@ -101,7 +101,7 @@ function pfm_class_forum(){
 
 function pfm_the_template($name){
     
-    $theme = pfm_get_current_theme($ThemeID);
+    $theme = pfm_get_current_theme();
     
     rcl_include_template($name.'.php',$theme['path']);
 }

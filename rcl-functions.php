@@ -542,6 +542,8 @@ function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
             $avatar_data = get_user_meta($user_id,'rcl_avatar',1);
 
         if($avatar_data){
+            
+            $url = false;
 
             if(is_numeric($avatar_data)){
                 $image_attributes = wp_get_attachment_image_src($avatar_data);
@@ -550,7 +552,7 @@ function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
                 $url = rcl_get_url_avatar($avatar_data,$user_id,$size);
             }
 
-            if($url&&file_exists(rcl_path_by_url($url))){
+            if($url && file_exists(rcl_path_by_url($url))){
                 $avatar = "<img class='avatar' src='".$url."' alt='".$alt."' height='".$size."' width='".$size."' />";
             }
 

@@ -217,7 +217,7 @@ function pfm_init_query($wp_query){
     
     if(!$wp_query->is_main_query()) return;
     
-    if($wp_query->queried_object->ID != pfm_get_option('home-page')) return;
+    if(isset($wp_query->queried_object) && $wp_query->queried_object->ID != pfm_get_option('home-page')) return;
 
     $PrimeUser = new PrimeUser();
     
@@ -285,6 +285,8 @@ function pfm_update_current_visitor(){
 add_filter('rcl_init_js_variables','pfm_init_js_variables',10);
 function pfm_init_js_variables($data){
     global $PrimeQuery;
+    
+    if(!$PrimeQuery) return $data;
     
     if(!$PrimeQuery->is_forum && !$PrimeQuery->is_topic) return $data;
     

@@ -43,9 +43,11 @@ function rcl_get_related_products($product_id){
 
     if(!$related_products) return false;
     
+    $title_related = (isset($rmag_options['title_related_products_recall']) && $rmag_options['title_related_products_recall'])? $rmag_options['title_related_products_recall']: '';
+    
     $content ='<div class="rcl-related-products">';
 
-        $content .= ($title_related)? '': '<span class="related-title">'.$rmag_options['title_related_products_recall'].'</span>';
+        $content .= ($title_related)? '': '<span class="related-title">'.$title_related.'</span>';
 
         $content .='<div class="products-box type-slab">';
 

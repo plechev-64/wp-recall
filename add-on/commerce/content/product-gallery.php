@@ -4,13 +4,9 @@ add_action('wp','rcl_init_gallery_product');
 function rcl_init_gallery_product(){
     global $post;
     
-    if($post->post_type != 'products') return false;
-    
-    //if(!get_post_meta($post->ID, 'recall_slider', 1)) return $content;
+    if(!$post || $post->post_type != 'products') return false;
     
     rcl_bxslider_scripts();
-    
-    //add_filter('the_content','rcl_add_gallery_product',10);
     
 }
 
