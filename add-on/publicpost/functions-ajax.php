@@ -144,11 +144,12 @@ function rcl_preview_post(){
     rcl_verify_ajax_nonce();
 
     $log = array();
+    $postdata = $_POST;
 
     if(!rcl_get_option('user_public_access_recall') && !$user_ID){
 
-        $email_new_user = sanitize_email($_POST['email-user']);
-        $name_new_user = $_POST['name-user'];
+        $email_new_user = sanitize_email($postdata['email-user']);
+        $name_new_user = $postdata['name-user'];
 
         if(!$email_new_user){
             $log['error'] = __('Enter your e-mail!','wp-recall');
@@ -180,13 +181,13 @@ function rcl_preview_post(){
     }
     
     $formFields = new Rcl_Public_Form_Fields(array(
-        'post_type' => $_POST['post_type'],
-        'form_id' => isset($_POST['form_id'])? $_POST['form_id']: 1
+        'post_type' => $postdata['post_type'],
+        'form_id' => isset($postdata['form_id'])? $postdata['form_id']: 1
     ));
     
     if($formFields->exist_active_field('post_thumbnail')){
         
-        $thumbnail_id = (isset($_POST['post-thumbnail']))? $_POST['post-thumbnail']: 0;
+        $thumbnail_id = (isset($postdata['post-thumbnail']))? $postdata['post-thumbnail']: 0;
         
         $field = $formFields->get_field('post_thumbnail');
         
@@ -200,7 +201,7 @@ function rcl_preview_post(){
     
     if($formFields->exist_active_field('post_content')){
         
-        $postContent = $_POST['post_content'];
+        $postContent = $postdata['post_content'];
 
         $field = $formFields->get_field('post_content');
         
@@ -214,8 +215,10 @@ function rcl_preview_post(){
         $post_content = rcl_get_editor_content($post_content,'preview');
         
     }
+    
+    do_action('rcl_preview_post', $postdata);
 
-    $preview = '<h2>'.$_POST['post_title'].'</h2>';
+    $preview = '<h2>'.$postdata['post_title'].'</h2>';
 	
     $preview .= $post_content;
 

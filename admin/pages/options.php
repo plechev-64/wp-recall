@@ -135,7 +135,7 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                         $fields->option('select',array(
                             'name'=>'use_cache',
                             'label'=>__('Cache','wp-recall'),
-                            'help'=>__('Use the functionality of the caching WP-Recall plugin. <a href="https://"codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/" target="_blank">read More</a>','wp-recall'),
+                            'help'=>__('Use the functionality of the caching WP-Recall plugin. <a href="https://codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/" target="_blank">read More</a>','wp-recall'),
                             'parent'=>true,
                             'options'=>array(
                                 __('Disabled','wp-recall'),

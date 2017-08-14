@@ -222,4 +222,33 @@
 /* END quicktags editor */
 
 
-
+.prime-last-posts{
+    line-height: 1;
+}
+.prime-last-posts a{
+    
+}
+body .prime-last-posts ul.last-post-list{
+    padding-left:0;
+}
+.prime-last-posts .last-post-box{
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.prime-last-posts .last-post-author-avatar{
+    float: left;
+    margin-right: 10px;
+}
+.prime-last-posts .last-post-author-avatar img{
+    
+}
+.prime-last-posts .last-post-title{
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.prime-last-posts .last-post-content{
+    overflow: hidden;
+}
+.prime-last-posts .last-post-more{
+    
+}

@@ -9,7 +9,7 @@
             
             <?php if(pfm_have_subforums()): ?>         
                 <div class="prime-subforums-list">
-                    <?php _e('Subforums:'); ?> <?php pfm_subforums_list(); ?>
+                    <?php _e('Subforums:','wp-recall'); ?> <?php pfm_subforums_list(); ?>
                 </div>
             <?php endif; ?>
             

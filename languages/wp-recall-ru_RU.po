@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2017-08-13 12:43+0300\n"
+"POT-Creation-Date: 2017-08-14 10:46+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -78,6 +78,7 @@ msgstr "Поиск"
 
 #: add-on/commerce/activate.php:88 add-on/commerce/index.php:49
 #: add-on/groups/groups-init.php:15
+#: add-on/prime-forum/functions-shortcodes.php:108
 #: add-on/publicpost/classes/class-rcl-public-form.php:691
 msgid "Not found"
 msgstr "Не найдено"
@@ -799,7 +800,7 @@ msgstr "Ваше имя"
 #: add-on/commerce/classes/class-rcl-create-order.php:138
 #: add-on/commerce/classes/class-rcl-create-order.php:169
 #: add-on/commerce/functions-ajax.php:124
-#: add-on/publicpost/functions-ajax.php:168
+#: add-on/publicpost/functions-ajax.php:169
 msgid "You have entered an invalid email!"
 msgstr "Вы указали некорректный email!"
 
@@ -1133,6 +1134,7 @@ msgid "your comment"
 msgstr "ваш комментарий"
 
 #: add-on/feed/addon-core.php:311
+#: add-on/prime-forum/classes/class-prime-last-posts.php:127
 msgid "Read more"
 msgstr "Читать полностью"
 
@@ -1201,8 +1203,8 @@ msgid "Subscription has been cancelled"
 msgstr "Подписка отменена"
 
 #: add-on/feed/index.php:249
-msgid "News not found"
-msgstr "Новости не найдены"
+msgid "News no more"
+msgstr "Новостей больше нет"
 
 #: add-on/feed/shortcodes.php:22
 msgid ""
@@ -1668,8 +1670,8 @@ msgstr "Отклонить запрос"
 msgid "User status"
 msgstr "Статус пользователя"
 
-#: add-on/groups/index.php:540 add-on/prime-forum/admin/index.php:260
-#: add-on/prime-forum/admin/index.php:322 admin/pages/addons-manager.php:40
+#: add-on/groups/index.php:540 add-on/prime-forum/admin/index.php:261
+#: add-on/prime-forum/admin/index.php:323 admin/pages/addons-manager.php:40
 #: admin/pages/themes-manager.php:26
 #: classes/class-rcl-custom-fields-manager.php:93
 #: functions/enqueue-scripts.php:99
@@ -1737,8 +1739,8 @@ msgid "File size exceeds maximum size"
 msgstr "Размер файла превышен"
 
 #: add-on/groups/upload-avatar.php:49
-#: functions/supports/uploader-avatar.php:180
-#: functions/supports/uploader-cover.php:125
+#: functions/supports/uploader-avatar.php:183
+#: functions/supports/uploader-cover.php:123
 msgid "The file is not an image"
 msgstr "Файл не является изображением"
 
@@ -1746,11 +1748,12 @@ msgstr "Файл не является изображением"
 msgid "Avatar has been successfully uploaded"
 msgstr "Аватар успешно загружен"
 
-#: add-on/prime-forum/activate.php:149 add-on/prime-forum/admin/index.php:202
-#: add-on/prime-forum/admin/index.php:209
-#: add-on/prime-forum/admin/index.php:216 add-on/prime-forum/index.php:52
-#: add-on/prime-forum/index.php:327 add-on/prime-forum/index.php:329
-#: add-on/prime-forum/index.php:354
+#: add-on/prime-forum/activate.php:149 add-on/prime-forum/admin/index.php:203
+#: add-on/prime-forum/admin/index.php:210
+#: add-on/prime-forum/admin/index.php:217
+#: add-on/prime-forum/functions-compatibility.php:10
+#: add-on/prime-forum/index.php:52 add-on/prime-forum/index.php:327
+#: add-on/prime-forum/index.php:329 add-on/prime-forum/index.php:354
 msgid "Forum"
 msgstr "Форум"
 
@@ -1837,7 +1840,7 @@ msgid "It is impossible to publish new topics and messages in a closed forum"
 msgstr "В закрытом форуме невозможна публикация новых топиков и сообщений"
 
 #: add-on/prime-forum/admin/classes/class-prime-manager.php:334
-#: add-on/prime-forum/admin/index.php:287
+#: add-on/prime-forum/admin/index.php:288
 msgid "Manage forums"
 msgstr "Управление форумами"
 
@@ -1849,7 +1852,7 @@ msgstr "Получить форумы"
 msgid "Structure"
 msgstr "Структура"
 
-#: add-on/prime-forum/admin/index.php:18 add-on/prime-forum/admin/index.php:308
+#: add-on/prime-forum/admin/index.php:18 add-on/prime-forum/admin/index.php:309
 #: add-on/prime-forum/admin/themes-manager.php:150
 #: add-on/prime-forum/admin/themes-manager.php:351 admin/admin-menu.php:28
 #: admin/pages/themes-manager.php:12 admin/templates-manager.php:139
@@ -1871,11 +1874,11 @@ msgid ""
 "a topic"
 msgstr "Создайте группу форумов для управления полями формы публикации темы"
 
-#: add-on/prime-forum/admin/index.php:49
+#: add-on/prime-forum/admin/index.php:50
 msgid "Manage topic form"
 msgstr "Управление формой темы"
 
-#: add-on/prime-forum/admin/index.php:50
+#: add-on/prime-forum/admin/index.php:51
 msgid ""
 "Select a forum group and manage custom fields form of publication of a topic "
 "within this group"
@@ -1883,38 +1886,38 @@ msgstr ""
 "Выберите группу форума и управляйте произвольными полями формы публикации "
 "топика внутри этой группы"
 
-#: add-on/prime-forum/admin/index.php:68
+#: add-on/prime-forum/admin/index.php:69
 msgid "Pages not found"
 msgstr "Страницы не найдены"
 
-#: add-on/prime-forum/admin/index.php:87
+#: add-on/prime-forum/admin/index.php:88
 msgid "Forum page"
 msgstr "Страница форума"
 
-#: add-on/prime-forum/admin/index.php:88
+#: add-on/prime-forum/admin/index.php:89
 msgid ""
 "Select the needed page from the list and place the [prime-forum] shortcode "
 "on it"
 msgstr ""
 "Выберите нужную страницу из списка и разместите на ней шорткод [prime-forum]"
 
-#: add-on/prime-forum/admin/index.php:96
+#: add-on/prime-forum/admin/index.php:97
 msgid "Forum colours"
 msgstr "Цвета форума"
 
-#: add-on/prime-forum/admin/index.php:98
+#: add-on/prime-forum/admin/index.php:99
 msgid "By default"
 msgstr "По-умолчанию"
 
-#: add-on/prime-forum/admin/index.php:99
+#: add-on/prime-forum/admin/index.php:100
 msgid "Primary colours of WP-Recall"
 msgstr "Основные цвета WP-Recall"
 
-#: add-on/prime-forum/admin/index.php:106
+#: add-on/prime-forum/admin/index.php:107
 msgid "Supported shortcodes"
 msgstr "Поддерживаемые шорткоды"
 
-#: add-on/prime-forum/admin/index.php:107
+#: add-on/prime-forum/admin/index.php:108
 msgid ""
 "Specify the necessary shortcodes to support them in forum messages, each "
 "should start from a new line. Specify without brackets, for example: custom-"
@@ -1923,28 +1926,28 @@ msgstr ""
 "Укажите нужные шорткоды для их поддержки в сообщениях форума, каждый с новой "
 "строки. Указывать без скобок, например: custom-shortcod"
 
-#: add-on/prime-forum/admin/index.php:115
+#: add-on/prime-forum/admin/index.php:116
 msgid "Output all forums of the group on the homepage"
 msgstr "Вывод всех форумов группы на главной странице"
 
-#: add-on/prime-forum/admin/index.php:116
+#: add-on/prime-forum/admin/index.php:117
 msgid "If selected, all forums will be displayed on the homepage"
 msgstr "Если выбрано, то на главной странице будут выводится все форумы"
 
-#: add-on/prime-forum/admin/index.php:118
+#: add-on/prime-forum/admin/index.php:119
 msgid "Do not output"
 msgstr "Не выводить"
 
-#: add-on/prime-forum/admin/index.php:119
+#: add-on/prime-forum/admin/index.php:120
 #: add-on/publicpost/admin/addon-settings.php:93
 msgid "Output"
 msgstr "Выводить"
 
-#: add-on/prime-forum/admin/index.php:127
+#: add-on/prime-forum/admin/index.php:128
 msgid "Output forums only for the specified groups"
 msgstr "Выводить форумы только для указанных групп"
 
-#: add-on/prime-forum/admin/index.php:128
+#: add-on/prime-forum/admin/index.php:129
 msgid ""
 "If output of forums on the homepage is turned on, you may specify IDs of the "
 "groups, whose forums should be output, space separated"
@@ -1952,41 +1955,41 @@ msgstr ""
 "Если включен вывод форумов на главной, то можно через запятую указать "
 "идентификаторы групп чьи форумы выводить"
 
-#: add-on/prime-forum/admin/index.php:135
+#: add-on/prime-forum/admin/index.php:136
 msgid "Forums on the group page"
 msgstr "Форумов на странице группы"
 
-#: add-on/prime-forum/admin/index.php:142
+#: add-on/prime-forum/admin/index.php:143
 msgid "Topics on the forum page"
 msgstr "Тем на странице форума"
 
-#: add-on/prime-forum/admin/index.php:149
+#: add-on/prime-forum/admin/index.php:150
 msgid "Messages on the topic page"
 msgstr "Сообщений на странице темы"
 
-#: add-on/prime-forum/admin/index.php:156
+#: add-on/prime-forum/admin/index.php:157
 msgid "Publishing of messages in the topic by guests"
 msgstr "Публикация сообщений в теме гостям"
 
-#: add-on/prime-forum/admin/index.php:158
-#: add-on/prime-forum/admin/index.php:168
+#: add-on/prime-forum/admin/index.php:159
+#: add-on/prime-forum/admin/index.php:169
 msgid "Forbidden"
 msgstr "Запрещено"
 
-#: add-on/prime-forum/admin/index.php:159
-#: add-on/prime-forum/admin/index.php:169
+#: add-on/prime-forum/admin/index.php:160
+#: add-on/prime-forum/admin/index.php:170
 msgid "Allowed"
 msgstr "Разрешено"
 
-#: add-on/prime-forum/admin/index.php:166
+#: add-on/prime-forum/admin/index.php:167
 msgid "Support of OEMBED in messages"
 msgstr "Поддержка OEMBED в сообщениях"
 
-#: add-on/prime-forum/admin/index.php:174
+#: add-on/prime-forum/admin/index.php:175
 msgid "Templates to form the title tag and name of the page"
 msgstr "Шаблоны для формирования тега title и наименования страницы"
 
-#: add-on/prime-forum/admin/index.php:176
+#: add-on/prime-forum/admin/index.php:177
 msgid ""
 "<p>The following masks may be specified in templates:<br>%GROUPNAME% - name "
 "of the current group of forums<br>%FORUMNAME% - name of the current forum<br>"
@@ -1996,70 +1999,70 @@ msgstr ""
 "группы форумов<br>%FORUMNAME% - имя текущего форума<br>%TOPICNAME% - имя "
 "текущей темы</p>"
 
-#: add-on/prime-forum/admin/index.php:187
+#: add-on/prime-forum/admin/index.php:188
 msgid "Title tag in the group of forums"
 msgstr "Тег title в группе форумов"
 
-#: add-on/prime-forum/admin/index.php:188
-#: add-on/prime-forum/admin/index.php:195 add-on/prime-forum/index.php:331
+#: add-on/prime-forum/admin/index.php:189
+#: add-on/prime-forum/admin/index.php:196 add-on/prime-forum/index.php:331
 #: add-on/prime-forum/index.php:356
 msgid "Group of forums"
 msgstr "Группа форумов"
 
-#: add-on/prime-forum/admin/index.php:194
+#: add-on/prime-forum/admin/index.php:195
 msgid "Name of the page in the group of forums"
 msgstr "Наименование страницы в группе форумов"
 
-#: add-on/prime-forum/admin/index.php:201
+#: add-on/prime-forum/admin/index.php:202
 msgid "Title tag on the forum page"
 msgstr "Тег title на странице форума"
 
-#: add-on/prime-forum/admin/index.php:208
+#: add-on/prime-forum/admin/index.php:209
 msgid "Name of the page of the separate forum"
 msgstr "Наименование страницы отдельного форума"
 
-#: add-on/prime-forum/admin/index.php:215
+#: add-on/prime-forum/admin/index.php:216
 msgid "Title tag on the topic page"
 msgstr "Тег title на странице темы"
 
-#: add-on/prime-forum/admin/index.php:222
+#: add-on/prime-forum/admin/index.php:223
 msgid "Name of the page of the separate topic"
 msgstr "Наименование страницы отдельной темы"
 
-#: add-on/prime-forum/admin/index.php:230
+#: add-on/prime-forum/admin/index.php:231
 msgid "Settings PrimeForum"
 msgstr "Настройки PrimeForum"
 
-#: add-on/prime-forum/admin/index.php:313 admin/pages/addons-manager.php:31
+#: add-on/prime-forum/admin/index.php:314 admin/pages/addons-manager.php:31
 #: admin/pages/themes-manager.php:17
 msgid "Key has been saved"
 msgstr "Ключ сохранен"
 
-#: add-on/prime-forum/admin/index.php:319 admin/pages/addons-manager.php:37
+#: add-on/prime-forum/admin/index.php:320 admin/pages/addons-manager.php:37
 #: admin/pages/themes-manager.php:23
 msgid "RCLKEY"
 msgstr "RCLKEY"
 
-#: add-on/prime-forum/admin/index.php:321 admin/pages/addons-manager.php:39
+#: add-on/prime-forum/admin/index.php:322 admin/pages/addons-manager.php:39
 #: admin/pages/themes-manager.php:25
 msgid "Enter RCLKEY"
 msgstr "Введите RCLKEY"
 
-#: add-on/prime-forum/admin/index.php:325 admin/pages/themes-manager.php:29
+#: add-on/prime-forum/admin/index.php:326
 msgid ""
 "Required to update the templates here. Get it  in  your account online <a "
-"href=\"http://codeseller.ru/\" target=\"_blank\">http://\"codeseller.ru</a>"
+"href=\"http://codeseller.ru/\" target=\"_blank\">http://codeseller.ru</a>"
 msgstr ""
 "Необходим для обновления шаблонов тут. Получите его в своем личном кабинете "
 "на странице настроек профиля на сайте <a href=\"http://codeseller.ru/\" "
 "target=\"_blank\">http://codeseller.ru</a>"
 
-#: add-on/prime-forum/admin/index.php:331 admin/pages/addons-manager.php:49
+#: add-on/prime-forum/admin/index.php:332 admin/pages/addons-manager.php:49
 #: admin/pages/themes-manager.php:35
 msgid "Install the add-on to WP-Recall format .ZIP"
 msgstr "Загрузить дополнение для WP-Recall в формате .zip"
 
-#: add-on/prime-forum/admin/index.php:332 admin/pages/themes-manager.php:36
+#: add-on/prime-forum/admin/index.php:333 admin/pages/themes-manager.php:36
 msgid ""
 "If you have an archive template for wp-recall format .zip, here you can "
 "upload and install it"
@@ -2067,45 +2070,45 @@ msgstr ""
 "Если у вас есть архив шаблона для wp-recall в формате zip, вы можете "
 "загрузить его тут."
 
-#: add-on/prime-forum/admin/index.php:334 admin/pages/addons-manager.php:52
+#: add-on/prime-forum/admin/index.php:335 admin/pages/addons-manager.php:52
 #: admin/pages/themes-manager.php:38
 msgid "Add-on archive"
 msgstr "Архив дополнения"
 
-#: add-on/prime-forum/admin/index.php:336 admin/pages/addons-manager.php:54
+#: add-on/prime-forum/admin/index.php:337 admin/pages/addons-manager.php:54
 #: admin/pages/themes-manager.php:40
 msgid "Install"
 msgstr "Установить"
 
-#: add-on/prime-forum/admin/index.php:343 admin/pages/addons-manager.php:61
+#: add-on/prime-forum/admin/index.php:344 admin/pages/addons-manager.php:61
 #: admin/pages/themes-manager.php:47
 msgid "All"
 msgstr "Все"
 
-#: add-on/prime-forum/admin/index.php:373
+#: add-on/prime-forum/admin/index.php:374
 msgid "Current role"
 msgstr "Текущая роль"
 
-#: add-on/prime-forum/admin/index.php:383
+#: add-on/prime-forum/admin/index.php:384
 msgid "Role of the user on the forum"
 msgstr "Роль пользователя на форуме"
 
-#: add-on/prime-forum/admin/index.php:442
-#: add-on/prime-forum/admin/index.php:462
-#: add-on/prime-forum/admin/index.php:489
-#: add-on/prime-forum/admin/index.php:508
+#: add-on/prime-forum/admin/index.php:443
+#: add-on/prime-forum/admin/index.php:463
+#: add-on/prime-forum/admin/index.php:490
+#: add-on/prime-forum/admin/index.php:509
 msgid "Changes saved!"
 msgstr "Изменения сохранены!"
 
-#: add-on/prime-forum/admin/index.php:527
+#: add-on/prime-forum/admin/index.php:528
 msgid "Delete all forums inside the group"
 msgstr "Удалить все форумы внутри группы"
 
-#: add-on/prime-forum/admin/index.php:542
+#: add-on/prime-forum/admin/index.php:543
 msgid "New group for child forums"
 msgstr "Новая группа для дочерних форумов"
 
-#: add-on/prime-forum/admin/index.php:543
+#: add-on/prime-forum/admin/index.php:544
 msgid ""
 "If new group is not assigned for child forums, when deleting the selected "
 "group, the forums will also be deleted"
@@ -2113,15 +2116,15 @@ msgstr ""
 "Если при удалении выбранной группы для дочерних форумов не будет назначена "
 "новая группа, то форумы будут также удалены"
 
-#: add-on/prime-forum/admin/index.php:569
+#: add-on/prime-forum/admin/index.php:570
 msgid "Delete all topic inside the forum"
 msgstr "Удалить все темы внутри форума"
 
-#: add-on/prime-forum/admin/index.php:584
+#: add-on/prime-forum/admin/index.php:585
 msgid "New forum for child topics"
 msgstr "Новый форум для дочерних тем"
 
-#: add-on/prime-forum/admin/index.php:585
+#: add-on/prime-forum/admin/index.php:586
 msgid ""
 "If new forum is not assigned for child forums, when deleting the selected "
 "forum, the topics will also be deleted"
@@ -2129,7 +2132,7 @@ msgstr ""
 "Если при удалении выбранного форума для дочерних топиков не будет назначен "
 "новый форум, то топики будут также удалены"
 
-#: add-on/prime-forum/admin/index.php:639
+#: add-on/prime-forum/admin/index.php:640
 msgid "Confirm the deletion"
 msgstr "Подтвердить удаление"
 
@@ -2485,6 +2488,10 @@ msgstr "Пустое сообщение!"
 #: add-on/prime-forum/functions-capabilities.php:145
 msgid "You are not allowed to view contents of the forum"
 msgstr "Вам не разрешено просматривать содержимое форума"
+
+#: add-on/prime-forum/functions-compatibility.php:19
+msgid "The answers on the forum"
+msgstr "Ответы на форуме"
 
 #: add-on/prime-forum/functions-forms.php:18
 #: add-on/prime-forum/functions-forms.php:47
@@ -3240,31 +3247,31 @@ msgstr "Публикация обновлена"
 msgid "Changes to be saved not found"
 msgstr "Изменения не найдены для сохранения"
 
-#: add-on/publicpost/functions-ajax.php:154
+#: add-on/publicpost/functions-ajax.php:155
 msgid "Enter your e-mail!"
 msgstr "Укажите свой e-mail!"
 
-#: add-on/publicpost/functions-ajax.php:157
+#: add-on/publicpost/functions-ajax.php:158
 msgid "Enter your name!"
 msgstr "Укажите свое имя!"
 
-#: add-on/publicpost/functions-ajax.php:171
+#: add-on/publicpost/functions-ajax.php:172
 msgid "This email is already used!"
 msgstr "Этот email уже используется!"
 
-#: add-on/publicpost/functions-ajax.php:172
+#: add-on/publicpost/functions-ajax.php:173
 msgid "If this is your email, then log in and publish your post"
 msgstr "Если это ваш email, то авторизуйтесь и опубликуйте запись"
 
-#: add-on/publicpost/functions-ajax.php:194
+#: add-on/publicpost/functions-ajax.php:195
 msgid "Upload or specify an image as a thumbnail"
 msgstr "Загрузите или укажите изображение в качестве миниатюры"
 
-#: add-on/publicpost/functions-ajax.php:208
+#: add-on/publicpost/functions-ajax.php:209
 msgid "Add contents of the publication!"
 msgstr "Добавьте содержимое публикации!"
 
-#: add-on/publicpost/functions-ajax.php:223
+#: add-on/publicpost/functions-ajax.php:226
 msgid ""
 "If everything is correct – publish it! If not, you can go back to editing."
 msgstr "Если все верно - публикуйте! Если нет, то вернитесь в редактор."
@@ -4293,7 +4300,7 @@ msgstr "Кеш"
 #: admin/pages/options.php:138
 msgid ""
 "Use the functionality of the caching WP-Recall plugin. <a href=\"https://"
-"\"codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
+"codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
 "target=\"_blank\">read More</a>"
 msgstr ""
 "Используется функционал кеширования от плагина WP-Recall. <a href=\"https://"
@@ -4457,6 +4464,15 @@ msgstr ""
 "На этой странице вы можете создавать новые вкладки личного кабинета с "
 "произвольным контентом и управлять уже созданными  вкладками в различных "
 "областях личного кабинета"
+
+#: admin/pages/themes-manager.php:29
+msgid ""
+"Required to update the templates here. Get it  in  your account online <a "
+"href=\"http://codeseller.ru/\" target=\"_blank\">http://\"codeseller.ru</a>"
+msgstr ""
+"Необходим для обновления шаблонов тут. Получите его в своем личном кабинете "
+"на странице настроек профиля на сайте <a href=\"http://codeseller.ru/\" "
+"target=\"_blank\">http://codeseller.ru</a>"
 
 #: classes/class-rcl-custom-fields-manager.php:74
 msgid "Active fields"
@@ -4981,26 +4997,26 @@ msgstr "Удалить аватар"
 msgid "Webcam screen"
 msgstr "Снимок с веб-камеры"
 
-#: functions/supports/uploader-avatar.php:97
+#: functions/supports/uploader-avatar.php:100
 msgid "Your avatar has been deleted"
 msgstr "Ваш аватар был удален!"
 
-#: functions/supports/uploader-avatar.php:172
+#: functions/supports/uploader-avatar.php:175
 #: functions/supports/uploader-cover.php:115
 msgid "Size exceeded"
 msgstr "Размер превышен"
 
-#: functions/supports/uploader-avatar.php:216
-#: functions/supports/uploader-cover.php:161
+#: functions/supports/uploader-avatar.php:219
+#: functions/supports/uploader-cover.php:159
 msgid "The downloaded image is incorrect"
 msgstr "Загружаемое изображение некорректно"
 
-#: functions/supports/uploader-avatar.php:256
+#: functions/supports/uploader-avatar.php:261
 #: functions/supports/uploader-cover.php:187
 msgid "Download error"
 msgstr "Ошибка загрузки"
 
-#: functions/supports/uploader-avatar.php:270
+#: functions/supports/uploader-avatar.php:277
 msgid "Avatar successfully uploaded"
 msgstr "Аватар успешно загружен"
 
@@ -5008,7 +5024,7 @@ msgstr "Аватар успешно загружен"
 msgid "Upload background"
 msgstr "Загрузка фона"
 
-#: functions/supports/uploader-cover.php:197
+#: functions/supports/uploader-cover.php:199
 msgid "Image successfully uploaded"
 msgstr "Изображение успешно загружено"
 
@@ -5132,6 +5148,18 @@ msgstr "Регистрация"
 #: wp-recall.php:43 wp-recall.php:47
 msgid "Are you cheating, bastard?"
 msgstr "Читеришь, гадёныш?"
+
+#~ msgid "News not found"
+#~ msgstr "Новости не найдены"
+
+#~ msgid ""
+#~ "Use the functionality of the caching WP-Recall plugin. <a href=\"https://"
+#~ "\"codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
+#~ "target=\"_blank\">read More</a>"
+#~ msgstr ""
+#~ "Используется функционал кеширования от плагина WP-Recall. <a href="
+#~ "\"https://codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-"
+#~ "recall/\" target=\"_blank\">Подробнее</a>"
 
 #~ msgid "Вы уверены?"
 #~ msgstr "Вы уверены?"

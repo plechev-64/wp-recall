@@ -246,7 +246,7 @@ function rcl_feed_progress(){
     $content = '';
 
     if(!$feedsdata){
-        $content .= '<p align="center">'.__('News not found','wp-recall').'</p>';
+        $content .= '<p align="center">'.__('News no more','wp-recall').'</p>';
 
         $result['content'] = $content;
         $result['code'] = 0;

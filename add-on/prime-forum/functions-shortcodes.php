@@ -96,3 +96,20 @@ function pfm_get_forum_content(){
     return $content;
     
 }
+
+add_shortcode('prime-posts','pfm_get_posts_shortcode');
+function pfm_get_posts_shortcode($attrs){
+    
+    require_once 'classes/class-prime-last-posts.php';
+    
+    $LastPosts = new PrimeLastPosts($attrs);
+    
+    if(!$LastPosts->posts){
+        return '<p>'.__('Not found','wp-recall').'</p>';
+    }
+
+    $content = $LastPosts->get_content();
+    
+    return $content;
+    
+}

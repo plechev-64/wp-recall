@@ -7,7 +7,7 @@ function pfm_register_rating_type(){
     
     rcl_register_rating_type(array(
         'rating_type'=>'forum-post',
-        'type_name'=>'Форум',
+        'type_name'=>__('Forum','wp-recall'),
         'style'=>true,
         'icon'=>'fa-weixin'
     ));
@@ -16,7 +16,7 @@ function pfm_register_rating_type(){
 add_filter('rcl_feed_filter','pfm_add_feed_filter');
 function pfm_add_feed_filter($filter){
 
-    $filter['pfm_forum'] = 'Ответы на форуме';
+    $filter['pfm_forum'] = __('The answers on the forum');
     
     return $filter;
 }
