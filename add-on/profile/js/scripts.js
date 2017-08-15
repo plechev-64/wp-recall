@@ -9,8 +9,8 @@ function rcl_check_profile_form(){
         
         if(user_pass.val() != repeat_pass.val()){
             
-            user_pass.css('box-shadow','red 0px 0px 5px 1px inset');
-            repeat_pass.css('box-shadow','red 0px 0px 5px 1px inset');
+            user_pass.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
+            repeat_pass.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
             
             rcl_notice(Rcl.local.no_repeat_pass,'error',10000);
             
@@ -44,14 +44,14 @@ function rcl_check_profile_form(){
                 value = true;
                 field.next('label').css('box-shadow','none');
             }else {
-                field.next('label').css('box-shadow','red 0px 0px 5px 1px inset');
+                field.next('label').css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
             }
         }else{
             if(field.val()) value = true;
         }
 
         if(!value){
-            field.css('box-shadow','red 0px 0px 5px 1px inset');
+            field.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
             required = false;
         }else{
             field.css('box-shadow','none');

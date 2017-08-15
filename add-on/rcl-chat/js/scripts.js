@@ -325,7 +325,9 @@ function rcl_chat_remove_contact(e,chat_id){
             }
 
             if(data['success']){
-                jQuery('[data-contact="'+contact+'"]').remove();
+                jQuery('[data-contact="'+contact+'"]').animateCss('flipOutX',function(e){
+                    jQuery(e).remove();
+                });
                 
                 rcl_do_action('rcl_chat_remove_contact',chat_id);
                 

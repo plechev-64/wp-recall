@@ -74,7 +74,7 @@ function rcl_get_post_thumbnail_html(thumbnail_id){
                 return false;
             }
 
-            jQuery('#rcl-thumbnail-post .thumbnail-image').html(result['thumbnail_image']);
+            jQuery('#rcl-thumbnail-post .thumbnail-image').html(result['thumbnail_image']).animateCss('flipInX');
             jQuery('#rcl-thumbnail-post .thumbnail-id').val(thumbnail_id);
         }
     });
@@ -82,7 +82,9 @@ function rcl_get_post_thumbnail_html(thumbnail_id){
 }
 
 function rcl_remove_post_thumbnail(){
-    jQuery('#rcl-thumbnail-post .thumbnail-image').empty();
+    jQuery('#rcl-thumbnail-post .thumbnail-image').animateCss('flipOutX',function(e){
+        jQuery(e).empty();
+    });
     jQuery('#rcl-thumbnail-post .thumbnail-id').val('0');
 }
 
@@ -103,7 +105,9 @@ function rcl_delete_post(element){
                 return false;
             }
 
-            jQuery('#'+data['post_type']+'-'+post_id).remove();
+            jQuery('#'+data['post_type']+'-'+post_id).animateCss('flipOutX',function(e){
+                jQuery(e).remove();
+            });
             
             data.post_id = post_id;
             
@@ -268,6 +272,8 @@ function rcl_preview(e){
                     buttons: buttons,
                     content: '<div id="rcl-preview">'+data['content']+'</div>'
                 });
+                
+                jQuery('.rcl-preview-post .ssi-modalWindow').animateCss('slideInDown');
 
                 return true;
             }
@@ -366,14 +372,14 @@ function rcl_check_required_fields(form){
                 value = true;
                 field.next('label').css('box-shadow','none');
             }else {
-                field.next('label').css('box-shadow','red 0px 0px 5px 1px inset');
+                field.next('label').css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
             }
         }else{
             if(field.val()) value = true;
         }
 
         if(!value){
-            field.css('box-shadow','red 0px 0px 5px 1px inset');
+            field.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
             required = false;
         }else{
             field.css('box-shadow','none');
@@ -383,7 +389,7 @@ function rcl_check_required_fields(form){
     
     if(form.find( 'input[name="cats[]"]' ).length > 0){             
         if(form.find('input[name="cats[]"]:checked').length == 0){
-            form.find( 'input[name="cats[]"]' ).css('box-shadow','0px 0px 1px 1px red');
+            form.find( 'input[name="cats[]"]' ).css('box-shadow','0px 0px 1px 1px red').animateCss('shake');
             required = false;
         }else{
             form.find( 'input[name="cats[]"]' ).css('box-shadow','none');
@@ -475,6 +481,7 @@ function rcl_init_public_form(post){
 
                 if(file['string']){
                     jQuery('#temp-files-'+post_type).append(file['string']);
+                    jQuery('#temp-files-'+post_type+' li').last().animateCss('flipInX');
                 }
             });
             rcl_preloader_hide();
@@ -539,8 +546,8 @@ function rcl_init_thumbnail_uploader(e,options){
 
                 if(file['string']){
                     jQuery('#temp-files-'+post_type).append(file['string']);
-
-                    jQuery('#rcl-thumbnail-post .thumbnail-image').html(file['thumbnail_image']);
+                    jQuery('#temp-files-'+post_type+' li').last().animateCss('flipInX');
+                    jQuery('#rcl-thumbnail-post .thumbnail-image').html(file['thumbnail_image']).animateCss('flipInX');
                     jQuery('#rcl-thumbnail-post .thumbnail-id').val(file['attachment_id']);
                 }
             });

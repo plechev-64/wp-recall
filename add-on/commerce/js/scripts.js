@@ -483,14 +483,14 @@ function rcl_cart_check_required(){
                 value = true;
                 field.next('label').css('box-shadow','none');
             }else {
-                field.next('label').css('box-shadow','red 0px 0px 5px 1px inset');
+                field.next('label').css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
             }
         }else{
             if(field.val()) value = true;
         }
 
         if(!value){
-            field.css('box-shadow','red 0px 0px 5px 1px inset');
+            field.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
             required = false;
         }else{
             field.css('box-shadow','none');

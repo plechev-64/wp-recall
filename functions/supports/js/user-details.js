@@ -6,6 +6,7 @@ function rcl_zoom_avatar(e){
         className: 'rcl-user-avatar-zoom',
         content: '<div id="rcl-preview"><img class=aligncenter src=\''+src+'\'></div>'
     });
+    jQuery('.rcl-user-avatar-zoom .ssi-modalWindow').animateCss('zoomIn');
 }
 
 function rcl_get_user_info(element){
@@ -38,6 +39,8 @@ function rcl_get_user_info(element){
                     }],
                     content: '<div id="rcl-popup-content">'+data['content']+'</div>'
                 });
+                
+                jQuery('.rcl-user-getails').animateCss('slideInDown');
                 
             }
         }
