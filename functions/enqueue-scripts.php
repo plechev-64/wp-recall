@@ -68,6 +68,10 @@ function rcl_font_awesome_style(){
     wp_enqueue_style( 'font-awesome', RCL_URL.'assets/css/font-awesome/css/font-awesome.min.css' );
 }
 
+function rcl_animate_css(){   
+    wp_enqueue_style( 'animate-css', RCL_URL.'assets/css/animate-css/animate.min.css' );
+}
+
 add_action('login_enqueue_scripts','rcl_enqueue_wp_form_scripts',1);
 function rcl_enqueue_wp_form_scripts(){
     wp_enqueue_script( 'jquery' );
@@ -91,6 +95,7 @@ function rcl_frontend_scripts(){
     }
 
     rcl_font_awesome_style();
+    rcl_animate_css();
 
     rcl_enqueue_script( 'rcl-core-scripts', RCL_URL.'assets/js/core.js' );
     rcl_enqueue_script( 'rcl-primary-scripts', RCL_URL.'assets/js/scripts.js' );

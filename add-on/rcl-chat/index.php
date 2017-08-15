@@ -365,13 +365,13 @@ function rcl_get_last_chats_box(){
         $users[$user_id]['chat_id'] = $message['chat_id'];
     }
     
+    $new_counter = rcl_chat_noread_messages_amount($user_ID);
+    
     $class = array();
     
     $class[] = (!isset($rcl_options['chat']['place_contact_panel'])||!$rcl_options['chat']['place_contact_panel'])? 'right-panel': 'left-panel';
     
     $class[] = (isset($_COOKIE['rcl_chat_contact_panel'])&&$_COOKIE['rcl_chat_contact_panel'])? '': 'hidden-contacts';
-    
-    $new_counter = rcl_chat_noread_messages_amount($user_ID);
 
     echo '<div id="rcl-chat-noread-box" class="'.implode(' ',$class).'">';
     

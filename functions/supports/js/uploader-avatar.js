@@ -106,7 +106,7 @@ function rcl_avatar_uploader(){
                 rcl_notice(data.result['error'],'error',10000);
                 return false;
             }
-            jQuery('#rcl-avatar .avatar-image img').attr('src',data.result['avatar_url']);
+            jQuery('#rcl-avatar .avatar-image img').attr('src',data.result['avatar_url']).animateCss('flipInX');
             jQuery('#avatar-upload-progress').hide().empty();
             jQuery( '#rcl-preview' ).remove();
             rcl_notice(data.result['success'],'success',10000);

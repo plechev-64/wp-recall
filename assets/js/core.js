@@ -182,9 +182,11 @@ function rcl_notice(text,type,time_close){
     if(!jQuery('#rcl-notice').size()){
             jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
     }else{
-            if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
-            else jQuery('#rcl-notice').html(html);
+        if(jQuery('#rcl-notice > div').size()) jQuery('#rcl-notice > div:last-child').after(html);
+        else jQuery('#rcl-notice').html(html);
     }
+    
+    jQuery('#rcl-notice > div').last().animateCss('slideInLeft');
 
     if(time_close){
         setTimeout(function () {
@@ -194,10 +196,9 @@ function rcl_notice(text,type,time_close){
 }
 
 function rcl_close_notice(e){
-    jQuery(e).animate({
-        opacity: 0,
-        height: 'hide'
-    }, 300);
+    jQuery(e).animateCss('flipOutX',function(e){
+        jQuery(e).hide();
+    });
 }
 
 function rcl_preloader_show(e,size){

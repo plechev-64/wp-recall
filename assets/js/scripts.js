@@ -29,6 +29,24 @@ jQuery(function($){
         }
     });
     
+    $.fn.extend({
+        animateCss: function (animationNameStart,functionEnd) {
+            var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+            this.addClass('animated ' + animationNameStart).one(animationEnd, function() {
+                $(this).removeClass('animated ' + animationNameStart);
+                
+                if(functionEnd){
+                    if(typeof functionEnd == 'function'){
+                        functionEnd(this);
+                    }else{
+                        $(this).animateCss(functionEnd);
+                    }
+                }
+            });
+            return this;
+        }
+    });
+    
     rcl_do_action('rcl_init');
 });
 
@@ -104,7 +122,7 @@ function rcl_ajax_tab(e,data){
         }
     
     }
-    
+       
 }
 
 function rcl_get_options_url_params(){
@@ -271,7 +289,7 @@ function rcl_init_ajax_tab(){
         var e = jQuery(this);
         
         if(e.hasClass('tab-upload')) return false;
-        
+
         rcl_do_action('rcl_before_upload_tab',e);
 
         var post = e.data('post');
@@ -303,6 +321,12 @@ function rcl_init_ajax_tab(){
                 
                 var funcname = data.post.callback;              
                 new (window[funcname])(e,data);
+
+                if(!data.post.subtab_id){
+                    jQuery('#lk-content').animateCss('fadeIn');
+                }else{
+                    jQuery('#lk-content .rcl-subtab-content').animateCss('fadeIn');
+                }
                 
                 rcl_do_action('rcl_upload_tab',{element:e,result:data});
                 
@@ -680,4 +704,3 @@ function rcl_get_actual_beats_data(beats){
     return beats_actual;
     
 }
-

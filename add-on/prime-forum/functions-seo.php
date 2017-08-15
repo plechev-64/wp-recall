@@ -3,20 +3,22 @@
 add_filter('page_rewrite_rules', 'pfm_set_rewrite_rules');
 function pfm_set_rewrite_rules($rules) {
     global $wp_rewrite;
-
+    
     if(!pfm_get_option('home-page')) return $rules;
     
     $page = get_post(pfm_get_option('home-page'));
+    $slugmatch = $page->post_name;
+    if ($wp_rewrite->using_index_permalinks() && $wp_rewrite->root == 'index.php/') $slugmatch = 'index.php/'.$slugmatch;
 
-    $rules[$page->post_name.'/forum-group/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-group=$matches[1]';
-    $rules[$page->post_name.'/forum-group/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-group=$matches[1]&pfm-page=$matches[2]';
+    $rules[$slugmatch.'/forum-group/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-group=$matches[1]';
+    $rules[$slugmatch.'/forum-group/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-group=$matches[1]&pfm-page=$matches[2]';
     
-    $rules[$page->post_name.'/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]';
-    $rules[$page->post_name.'/([^/]+)/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-topic=$matches[2]';
+    $rules[$slugmatch.'/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]';
+    $rules[$slugmatch.'/([^/]+)/([^/]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-topic=$matches[2]';
 
-    $rules[$page->post_name.'/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-page=$matches[2]';
-    $rules[$page->post_name.'/([^/]+)/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-topic=$matches[2]&pfm-page=$matches[3]';
-
+    $rules[$slugmatch.'/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-page=$matches[2]';
+    $rules[$slugmatch.'/([^/]+)/([^/]+)/page/([0-9]+)/?$'] = 'index.php?pagename='.$page->post_name.'&pfm-forum=$matches[1]&pfm-topic=$matches[2]&pfm-page=$matches[3]';
+    
     return $rules;
 }
 

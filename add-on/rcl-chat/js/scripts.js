@@ -13,6 +13,8 @@ jQuery(function($){
     
     rcl_chat_inactivity_counter();
     
+    jQuery('.chat-new-messages').parents('#rcl-chat-noread-box').animateCss('tada');
+    
 });
 
 function rcl_chat_init_sound(){
@@ -110,8 +112,9 @@ function rcl_chat_close(e){
     rcl_chat_clear_beat(token);
     var minichat_box = jQuery('#rcl-chat-noread-box');
     minichat_box.removeClass('active-chat');
-    minichat_box.children('.rcl-mini-chat').empty();
-    
+    minichat_box.children('.rcl-mini-chat').animateCss('fadeOutRight',function(e){
+        jQuery(e).empty();
+    });
     rcl_do_action('rcl_chat_close',token);
     
 }
@@ -176,7 +179,7 @@ function rcl_chat_add_new_message(form){
             if(data['success']){
                 form.find('textarea').val('');
                 
-                chat.find('.chat-messages').append(data['content']);
+                chat.find('.chat-messages').append(data['content']).find('.chat-message').last().animateCss('flipInX');
                 chat.find('.rcl-chat-uploader').show();
                 chat.find('.chat-preloader-file').empty();
                 
@@ -217,8 +220,13 @@ function rcl_chat_navi(e){
             }
             
             if(data['success']){
-                jQuery(e).parents('.chat-messages-box').html(data['content']);
+                
+                jQuery(e).parents('.chat-messages-box').animateCss('fadeOut',function(e){
+                    jQuery(e).html(data['content']).animateCss('fadeIn');
+                });
+                
                 rcl_chat_scroll_bottom(token);
+                
             }
         } 
     });	  	
@@ -252,7 +260,7 @@ function rcl_get_mini_chat(e,user_id){
 
             if(data['success']){
                 var minichat_box = jQuery('#rcl-chat-noread-box');
-                minichat_box.children('.rcl-mini-chat').html(data['content']);
+                minichat_box.children('.rcl-mini-chat').html(data['content']).animateCss('fadeInRight');
                 minichat_box.addClass('active-chat');
                 rcl_chat_contact_token = data['chat_token'];
                 rcl_set_active_mini_chat(e);
@@ -382,8 +390,13 @@ function rcl_chat_important_manager_shift(e,status){
             }
 
             if(data['success']){
-                jQuery(e).parents('.chat-messages-box').html(data['content']);
+                
+                jQuery(e).parents('.chat-messages-box').animateCss('fadeOut',function(e){
+                    jQuery(e).html(data['content']).animateCss('fadeIn');
+                });
+                
                 rcl_chat_scroll_bottom(token);
+                
             }
 
         } 
@@ -413,7 +426,9 @@ function rcl_chat_delete_message(message_id){
             }
 
             if(data['success']){
-                jQuery('.chat-message[data-message="'+message_id+'"]').remove();
+                jQuery('.chat-message[data-message="'+message_id+'"]').animateCss('flipOutX',function(e){
+                    jQuery(e).remove();
+                });
                 
                 rcl_do_action('rcl_chat_delete_message',message_id);
                 
@@ -516,7 +531,14 @@ function rcl_chat_shift_contact_panel(){
     
     var view = (jQuery.cookie('rcl_chat_contact_panel')==1)? 0: 1;
     
-    jQuery('#rcl-chat-noread-box').toggleClass('hidden-contacts');
+    if(view){
+        box.toggleClass('hidden-contacts').animateCss('slideInUp');
+    }else{
+        box.animateCss('slideOutDown',function(e){
+            jQuery(e).toggleClass('hidden-contacts');
+        });
+    }
+    
     jQuery.cookie('rcl_chat_contact_panel', view, { expires: 30, path: '/'});
     
     return false;
