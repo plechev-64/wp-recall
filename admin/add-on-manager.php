@@ -92,7 +92,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
         
         echo '<style type="text/css">';
         echo '.wp-list-table .column-id { width: 5%; }';
-        echo '.wp-list-table .column-addon_icon { width: 30px; }';
+        echo '.wp-list-table .column-addon_icon { width: 35px; }';
         echo '.wp-list-table .column-addon_name { width: 25%; }';
         echo '.wp-list-table .column-addon_status { width: 10%; }';
         echo '.wp-list-table .column-addon_description { width: 60%;}';
