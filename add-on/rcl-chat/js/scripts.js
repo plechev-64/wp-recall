@@ -112,7 +112,8 @@ function rcl_chat_close(e){
     rcl_chat_clear_beat(token);
     var minichat_box = jQuery('#rcl-chat-noread-box');
     minichat_box.removeClass('active-chat');
-    minichat_box.children('.rcl-mini-chat').animateCss('fadeOutRight',function(e){
+    var animationName = minichat_box.hasClass('left-panel')? 'fadeOutLeft': 'fadeOutRight';
+    minichat_box.children('.rcl-mini-chat').animateCss(animationName,function(e){
         jQuery(e).empty();
     });
     rcl_do_action('rcl_chat_close',token);
@@ -179,7 +180,7 @@ function rcl_chat_add_new_message(form){
             if(data['success']){
                 form.find('textarea').val('');
                 
-                chat.find('.chat-messages').append(data['content']).find('.chat-message').last().animateCss('flipInX');
+                chat.find('.chat-messages').append(data['content']).find('.chat-message').last().animateCss('zoomIn');
                 chat.find('.rcl-chat-uploader').show();
                 chat.find('.chat-preloader-file').empty();
                 
@@ -221,9 +222,7 @@ function rcl_chat_navi(e){
             
             if(data['success']){
                 
-                jQuery(e).parents('.chat-messages-box').animateCss('fadeOut',function(e){
-                    jQuery(e).html(data['content']).animateCss('fadeIn');
-                });
+                jQuery(e).parents('.chat-messages-box').html(data['content']).animateCss('fadeIn');
                 
                 rcl_chat_scroll_bottom(token);
                 
@@ -260,7 +259,8 @@ function rcl_get_mini_chat(e,user_id){
 
             if(data['success']){
                 var minichat_box = jQuery('#rcl-chat-noread-box');
-                minichat_box.children('.rcl-mini-chat').html(data['content']).animateCss('fadeInRight');
+                var animationName = minichat_box.hasClass('left-panel')? 'fadeInLeft': 'fadeInRight';
+                minichat_box.children('.rcl-mini-chat').html(data['content']).animateCss(animationName);
                 minichat_box.addClass('active-chat');
                 rcl_chat_contact_token = data['chat_token'];
                 rcl_set_active_mini_chat(e);
@@ -393,9 +393,7 @@ function rcl_chat_important_manager_shift(e,status){
 
             if(data['success']){
                 
-                jQuery(e).parents('.chat-messages-box').animateCss('fadeOut',function(e){
-                    jQuery(e).html(data['content']).animateCss('fadeIn');
-                });
+                jQuery(e).parents('.chat-messages-box').html(data['content']).animateCss('fadeIn');
                 
                 rcl_chat_scroll_bottom(token);
                 

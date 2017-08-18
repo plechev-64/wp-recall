@@ -217,3 +217,37 @@ function rcl_add_cart_profile_field_option($options, $field, $type){
     return $options;
     
 }
+
+add_action('rcl_add_dashboard_metabox', 'rcl_add_commerce_metabox');
+function rcl_add_commerce_metabox($screen){
+    add_meta_box( 'rcl-commerce-metabox', __('Last orders','wp-recall'), 'rcl_commerce_metabox', $screen->id, 'side' );
+}
+
+function rcl_commerce_metabox(){
+    
+    $orders = rcl_get_orders(array('number'=>5));
+    
+    if(!$orders){
+        echo '<p>'.__('No orders yet','wp-recall').'</p>'; return;
+    }
+    
+    echo '<table class="wp-list-table widefat fixed striped">';
+    echo '<tr>'
+        . '<th>'.__('Order','wp-recall').'</th>'
+        . '<th>'.__('Buyer','wp-recall').'</th>'
+        . '<th>'.__('Q-ty','wp-recall').'</th>'
+        . '<th>'.__('Amount','wp-recall').'</th>'
+        . '<th>'.__('Status','wp-recall').'</th>'
+        . '</tr>';
+    foreach($orders as $order){
+        echo '<tr>'
+        . '<td><a href="'.admin_url('admin.php?page=manage-rmag&action=order-details&order-id='.$order->order_id).'" target="_blank">'.$order->order_id.'</a></td>'
+        . '<td>'.get_the_author_meta('user_login',$order->user_id).'</td>'
+        . '<td>'.$order->products_amount.'</td>'
+        . '<td>'.$order->order_price.' '.rcl_get_primary_currency(2).'</td>'
+        . '<td>'.rcl_get_status_name_order($order->order_status).'</td>'
+        . '</tr>';
+    }
+    echo '</table>';
+    echo '<p><a href="'.admin_url('admin.php?page=manage-rmag').'" target="_blank">'.__('Go to orders manager','wp-recall').'</a></p>';
+}

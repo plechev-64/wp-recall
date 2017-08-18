@@ -36,6 +36,9 @@ class Rcl_Addons_Manager extends WP_List_Table {
         
         $add_ons = array();
         foreach($paths as $path){
+            
+            $path = wp_normalize_path($path);
+            
             if(file_exists($path)){
                 $addons = scandir($path,1);
 
@@ -52,10 +55,12 @@ class Rcl_Addons_Manager extends WP_List_Table {
                         if(isset($_POST['s'])&&$_POST['s']){
                             if (strpos(strtolower(trim($data['name'])), strtolower(trim($_POST['s']))) !== false) {
                                 $this->addons_data[$namedir] = $data;
+                                $this->addons_data[$namedir]['path'] = $addon_dir;
                             }
                             continue;
                         }
                         $this->addons_data[$namedir] = $data;
+                        $this->addons_data[$namedir]['path'] = $addon_dir;
                     }
                     
                 }
@@ -65,13 +70,14 @@ class Rcl_Addons_Manager extends WP_List_Table {
     
     function get_addons_content(){
         global $active_addons;
-
+        
         $add_ons = array();
         foreach($this->addons_data as $namedir=>$data){
             $desc = $this->get_description_column($data);
             $add_ons[$namedir]['ID'] = $namedir;
             if(isset($data['template'])) $add_ons[$namedir]['template'] = $data['template'];
             $add_ons[$namedir]['addon_name'] = $data['name'];
+            $add_ons[$namedir]['addon_path'] = $data['path'];
             $add_ons[$namedir]['addon_status'] = ($active_addons&&isset($active_addons[$namedir]))? 1: 0;
             $add_ons[$namedir]['addon_description'] = $desc;           
         }
@@ -86,6 +92,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
         
         echo '<style type="text/css">';
         echo '.wp-list-table .column-id { width: 5%; }';
+        echo '.wp-list-table .column-addon_icon { width: 30px; }';
         echo '.wp-list-table .column-addon_name { width: 25%; }';
         echo '.wp-list-table .column-addon_status { width: 10%; }';
         echo '.wp-list-table .column-addon_description { width: 60%;}';
@@ -99,7 +106,12 @@ class Rcl_Addons_Manager extends WP_List_Table {
 
     function column_default( $item, $column_name ) {
         
-        switch( $column_name ) { 
+        switch( $column_name ) {
+            case 'addon_icon':
+                if(file_exists($item['addon_path'].'/icon.jpg')){
+                   return '<img src="'.rcl_path_to_url($item['addon_path'].'/icon.jpg').'">';
+                }
+                break;
             case 'addon_name':
                 $name = (isset($item['template']))? $item[ 'addon_name' ].' ('.__('Template','wp-recall').')': $item[ 'addon_name' ];
                 return '<strong>'.$name.'</strong>';
@@ -127,6 +139,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
     function get_columns(){
         $columns = array(
             'cb'        => '<input type="checkbox" />',
+            'addon_icon' => '',
             'addon_name' => __( 'Add-ons', 'wp-recall' ),
             'addon_status'    => __( 'Status', 'wp-recall' ),
             'addon_description'      => __( 'Description', 'wp-recall' )
@@ -197,7 +210,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
         echo '</tr>';
         
         if($ver>0){
-            $colspan = ($hidden = count($this->column_info[1]))? 4-$hidden: 4;
+            $colspan = ($hidden = count($this->column_info[1]))? 5-$hidden: 5;
             
             echo '<tr class="plugin-update-tr '.$status.'" id="'.$item['ID'].'-update" data-slug="'.$item['ID'].'">'
                 . '<td colspan="'.$colspan.'" class="plugin-update colspanchange">'

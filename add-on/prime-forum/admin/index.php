@@ -687,3 +687,33 @@ add_action('pfm_deleted_group','pfm_delete_group_custom_fields',10);
 function pfm_delete_group_custom_fields($group_id){
     delete_option('rcl_fields_pfm_group_'.$group_id);
 }
+
+add_action('rcl_add_dashboard_metabox', 'rcl_add_forum_metabox');
+function rcl_add_forum_metabox($screen){
+    add_meta_box( 'rcl-forum-metabox', __('Last forum topics','wp-recall'), 'rcl_forum_metabox', $screen->id, 'side' );
+}
+
+function rcl_forum_metabox(){
+    
+    $topics = pfm_get_topics(array('number'=>5));
+    
+    if(!$topics){
+        echo '<p>'.__('No topics on the forum yet','wp-recall').'</p>'; return;
+    }
+    
+    echo '<table class="wp-list-table widefat fixed striped">';
+    echo '<tr>'
+        . '<th>'.__('Topic','wp-recall').'</th>'
+        . '<th>'.__('Messages','wp-recall').'</th>'
+        . '<th>'.__('Author','wp-recall').'</th>'
+        . '</tr>';
+    foreach($topics as $topic){
+        echo '<tr>'
+        . '<td><a href="'.pfm_get_topic_permalink($topic->topic_id).'" target="_blank">'.$topic->topic_name.'</a></td>'
+        . '<td>'.$topic->post_count.'</td>'
+        . '<td>'.get_the_author_meta('user_login',$topic->user_id).'</td>'
+        . '</tr>';
+    }
+    echo '</table>';
+    echo '<p><a href="'.pfm_get_home_url().'" target="_blank">'.__('Go to forum','wp-recall').'</a></p>';
+}

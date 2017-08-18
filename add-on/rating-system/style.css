@@ -272,6 +272,7 @@
     opacity:0.5;
     cursor: pointer;
     color: #696969;
+    display: inline-block;
 }
 .rcl-rating-box .rating-wrapper > span:hover,
 .rcl-rating-box .rating-wrapper .user-vote{

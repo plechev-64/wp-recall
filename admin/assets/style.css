@@ -349,6 +349,9 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
 .wp-list-table .addon_screen img {
     width: 200px;
 }
+.wp-list-table .addon_icon img {
+    width: 40px;
+}
 
 
 /* navigation Start */

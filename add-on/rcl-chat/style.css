@@ -22,12 +22,15 @@ body audio {
     overflow: hidden;
     padding-left: 15px;
 }
+.rcl-chat .chat-messages-box{
+    animation-duration:0.5s;
+}
 .rcl-chat .chat-messages{
     background: #fff;
     border: 1px solid #ddd;
     max-height: 500px;
     min-height: 200px;
-    overflow: auto;
+    overflow-x: hidden;
     padding: 10px 10px 30px;
 }
 .rcl-chat .chat-messages .anons-message{
@@ -39,6 +42,7 @@ body audio {
     margin: 10px 0;
     overflow: hidden;
     position: relative;
+    animation-duration:0.5s;
 }
 .rcl-chat .chat-message .message-meta{
     font-size: 12px;
@@ -201,7 +205,7 @@ body audio {
     line-height: 1.5;
     position: fixed;
     right: 5px;
-    z-index: 101;
+    z-index: 101; 
 }
 
 #rcl-chat-noread-box a{
@@ -299,6 +303,7 @@ body audio {
 #rcl-chat-noread-box .rcl-mini-chat{
     float: left;
     background: #fff;
+    animation-duration: 0.5s;
 }
 #rcl-chat-noread-box.hidden-contacts .chat-contacts{
     display:none;

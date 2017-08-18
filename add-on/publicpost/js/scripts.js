@@ -272,8 +272,6 @@ function rcl_preview(e){
                     buttons: buttons,
                     content: '<div id="rcl-preview">'+data['content']+'</div>'
                 });
-                
-                jQuery('.rcl-preview-post .ssi-modalWindow').animateCss('slideInDown');
 
                 return true;
             }

@@ -21,19 +21,26 @@ function rcl_admin_menu(){
     $notice_t = ($cnt_t)? ' <span class="update-plugins count-'.$cnt_t.'"><span class="plugin-count">'.$cnt_t.'</span></span>': '';
     $notice_a = ($cnt_a)? ' <span class="update-plugins count-'.$cnt_a.'"><span class="plugin-count">'.$cnt_a.'</span></span>': '';
     
-    add_menu_page(__('WP-RECALL','wp-recall').$notice_all, __('WP-RECALL','wp-recall').$notice_all, 'manage_options', 'manage-wprecall', 'rcl_global_options');
-    add_submenu_page( 'manage-wprecall', __('SETTINGS','wp-recall'), __('SETTINGS','wp-recall'), 'manage_options', 'manage-wprecall', 'rcl_global_options');
+    add_menu_page(__('WP-RECALL','wp-recall').$notice_all, __('WP-RECALL','wp-recall').$notice_all, 'manage_options', 'manage-wprecall', 'rcl_dashboard');
+    add_submenu_page( 'manage-wprecall', __('Dashboard','wp-recall'), __('Dashboard','wp-recall'), 'manage_options', 'manage-wprecall', 'rcl_dashboard');
+    add_submenu_page( 'manage-wprecall', __('SETTINGS','wp-recall'), __('SETTINGS','wp-recall'), 'manage_options', 'rcl-options', 'rcl_global_options');
     $hook = add_submenu_page( 'manage-wprecall', __('Add-ons','wp-recall').$notice_a, __('Add-ons','wp-recall').$notice_a, 'manage_options', 'manage-addon-recall', 'rcl_render_addons_manager');
     add_action( "load-$hook", 'rcl_add_options_addons_manager' );
     $hook = add_submenu_page( 'manage-wprecall', __('Templates','wp-recall').$notice_t, __('Templates','wp-recall').$notice_t, 'manage_options', 'manage-templates-recall', 'rcl_render_templates_manager');
     add_action( "load-$hook", 'rcl_add_options_templates_manager' );
     add_submenu_page( 'manage-wprecall', __('Repository','wp-recall'), __('Repository','wp-recall'), 'manage_options', 'rcl-repository', 'rcl_repository_page');
-    add_submenu_page( 'manage-wprecall', __('Documentation','wp-recall'), __('Documentation','wp-recall'), 'manage_options', 'manage-doc-recall', 'rcl_doc_manage');
     add_submenu_page( 'manage-wprecall', __('Tabs manager','wp-recall'), __('Tabs manager','wp-recall'), 'manage_options', 'rcl-tabs-manager', 'rcl_admin_tabs_manager');
 }
 
-function rcl_doc_manage(){
-    require_once 'pages/documentation.php';
+function rcl_dashboard(){
+    /** Load WordPress dashboard API */
+    require_once(ABSPATH . 'wp-admin/includes/dashboard.php');
+    
+    wp_enqueue_script( 'dashboard' );
+    
+    do_action('rcl_add_dashboard_metabox',get_current_screen());
+    
+    require_once 'pages/dashboard.php';
 }
 
 //Настройки плагина в админке

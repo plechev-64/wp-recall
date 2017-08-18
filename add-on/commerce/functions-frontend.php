@@ -6,13 +6,19 @@ function rcl_bar_add_cart(){
     
     $Cart = new Rcl_Cart();
     
+    $args = array(
+        'icon' => 'fa-shopping-cart',
+        'url' => $Cart->cart_url,
+        'label' => __('Cart','wp-recall'),
+        'counter' => '<span class="cart-numbers rcl-order-amount">'.$Cart->products_amount.'</span>'
+    );
+    
+    if($Cart->products_amount){
+        $args['class'] = 'animated shake';
+    }
+    
     rcl_bar_add_icon('rcl-cart',
-        array(
-            'icon' => 'fa-shopping-cart',
-            'url' => $Cart->cart_url,
-            'label' => __('Cart','wp-recall'),
-            'counter' => '<span class="cart-numbers rcl-order-amount">'.$Cart->products_amount.'</span>'
-        )
+        $args
     );
     
 }

@@ -119,3 +119,33 @@ function rcl_public_form_admin_actions(){
     }
     
 }
+
+add_action('rcl_add_dashboard_metabox', 'rcl_add_publicpost_metabox');
+function rcl_add_publicpost_metabox($screen){
+    add_meta_box( 'rcl-publicpost-metabox', __('Posts awaiting approval','wp-recall'), 'rcl_publicpost_metabox', $screen->id, 'column3' );
+}
+
+function rcl_publicpost_metabox(){
+    
+    $posts = get_posts(array('numberposts'=>-1,'post_type'=>'any','post_status'=>'pending'));
+    
+    if(!$posts){
+        echo '<p>'.__('No posts under moderation','wp-recall').'</p>'; return;
+    }
+    
+    echo '<table class="wp-list-table widefat fixed striped">';
+    echo '<tr>'
+        . '<th>'.__('Header','wp-recall').'</th>'
+        . '<th>'.__('Author','wp-recall').'</th>'
+        . '<th>'.__('Type','wp-recall').'</th>'
+        . '</tr>';
+    foreach($posts as $post){
+        echo '<tr>'
+        . '<td><a href="'.get_edit_post_link($post->ID).'" target="_blank">'.$post->post_title.'</a></td>'
+        . '<td>'.$post->post_author.': '.get_the_author_meta('user_login',$post->post_author).'</td>'
+        . '<td>'.$post->post_type.'</td>'
+        . '</tr>';
+    }
+    echo '</table>';
+
+}

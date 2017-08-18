@@ -107,7 +107,7 @@ function rcl_cover_uploader(){
                 rcl_notice(data.result['error'],'error',10000);
                 return false;
             }
-            jQuery('#lk-conteyner').css('background-image','url('+data.result['cover_url']+')').animateCss('flipInX');
+            jQuery('#lk-conteyner').css('background-image','url('+data.result['cover_url']+')').animateCss('fadeIn');
             jQuery('#avatar-upload-progress').hide().empty();
             jQuery( '#rcl-preview' ).remove();
             rcl_notice(data.result['success'],'success',10000);

@@ -1,70 +1,55 @@
 === WP-Recall ===
 Contributors: wppost
 Donate link: http://codeseller.ru/
-Tags: author profile, commerce, groups, private message, forum
+Tags: user profile, members, community, private message, forum
 Requires at least: 4.4.0
 Tested up to: 4.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress personal user profile. Login form and registration, edit profile, private messages, rating system, form of publication, and more.
-
 == Description ==
 
-WordPress plugin to create a personal user profile. The plugin creates a personal account of the user, user group, reviews. 
-The plugin allows you to exchange private messages and more. Plug-in extends its functionality through its supplements.
+The plugin forms a flexible and functional personal account, allows users of your website to easily communicate, customize their profile, launch interest groups, interact on the forum, pay for orders in your online store and much more.
 
-WordPress плагин для создания личного кабинета пользователя. Кроме этого плагин добавляет личные сообщения, пользовательские группы, систему рейтинга, подписок и многое другое.
-Плагин расширяет свой функционал за счет своих дополнений. Дополнения плагина имеют функционал автоматического обновления.
-
+Check out all beauty and power of the plugin by watching this video:
 [youtube https://www.youtube.com/watch?v=vXVKI8Ie0lY]
 
-To expand its functional plugin uses supplements.
-General information about the plug-ons:
-https://codeseller.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/
+The base part of the plugin already includes a wide range of features, which you can use right after activation:
 
-Плагин расширяет свой функционал через дополнения. Основная информация о дополнениях плагина:
-https://codeseller.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/
+- User profile
+- Personal messages
+- Rating system
+- Publication form
+- Personal balance
+- Store
+- Groups
+- Forum
 
-Description of the functionality of the forum
-https://codeseller.ru/products/primeforum/
+You can easily expand the personal account features through the existing numerous add-ons:
+https://codeseller.ru/prodcat/wp-recall/
 
-If you wish, you can very easily write its complement and bring any information in your personal account user.
-Example of creating add-ons:
+The plugin allows you to change the template of your personal account, choosing from two supplied ones or by installing a new template:
+https://codeseller.ru/prodcat/stilevoj-shablon-wp-recall/
+
+If you want, you can easily add a tab with the necessary content to your personal account by creating it in the administrator part or by writing your add-on by following a simple instruction:
 http://codeseller.ru/post-group/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/
-
-Если хотите, то вы можете создать свое дополнение и вывести любую информацию в личном кабинете пользователя.
-Пример создания дополнения к плагину:
-https://codeseller.ru/post-group/sozdaem-svoe-dopolnenie-dlya-wp-recall-vyvodim-svoyu-vkladku-v-lichnom-kabinete/
-
-Описание функционала форума
-https://codeseller.ru/products/primeforum/
-
-You can share your additions with other users or download new additions here:
-https://codeseller.ru/products/
-
-Вы можете поделиться своим дополнением или скачать дополнения других пользователей здесь:
-https://codeseller.ru/products/
-
-Документация плагина 
-https://codeseller.ru/dokumentaciya-wp-recall/
 
 == Installation ==
 
 1. Upload dir `wp-recall` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
-When you first activate the plugin will create necessary for its operation and activates the basic page supplement.
+When you first activate the plugin, it will create everything necessary for its operation and will activate the basic page add-on.
 
 == Screenshots ==
 
-1. A personal account of the user, tab chat history with other users (Личный кабинет пользователя, вкладка истории переписки с другими пользователями)
-2. Tab personal correspondence with another user (Переписка с другим пользователем)
-3. The edit tab of your profile (Вкладка редактирования своего профиля)
-4. The form of publication in the personal Cabinet (Форма публикации в личном кабинете)
-5. The authorization form (Форма входа/авторизации)
-6. Registration form (Форма регистрации)
-7. Page the add-ons Manager plugin (Страница менеджера дополнений плагина)
-8. Main settings of the plugin. (Основные настройки плагина)
-9. Create and edit profile fields (Создание и редактирование полей профиля)
-10. Creating and editing form fields publishing (Создание и редактирование полей формы публикации)
+1. Personal account of the user, tab with chat history (chat with other users)
+2. Personal correspondence with another user
+3. The tab to edit your profile
+4. Publication form in your personal account
+5. Login/authorization form
+6. Registration form
+7. Plugin addons manager page
+8. Main settings of the plugin
+9. Creating and edit profile fields
+10. Creating and editing publishing form fields

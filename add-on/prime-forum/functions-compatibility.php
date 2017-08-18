@@ -16,7 +16,7 @@ function pfm_register_rating_type(){
 add_filter('rcl_feed_filter','pfm_add_feed_filter');
 function pfm_add_feed_filter($filter){
 
-    $filter['pfm_forum'] = __('The answers on the forum');
+    $filter['pfm_forum'] = __('The answers on the forum','wp-recall');
     
     return $filter;
 }

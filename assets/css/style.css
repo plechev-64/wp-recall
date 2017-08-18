@@ -78,6 +78,7 @@ span.ruble-symbol{
     margin: 5px 0;
     padding: 8px 2px 8px 10px;
     word-wrap: break-word;
+    animation-duration: 0.3s;
 }
 .notify-lk .error,
 #rcl-notice .type-error{
@@ -346,6 +347,13 @@ body #rcl-office .ballun-status p.status-user-rcl {
 #lk-menu,
 #rcl-tabs {    
     overflow: hidden;
+}
+#rcl-office.horizontal-tabs #rcl-tabs {   
+    opacity:0;
+    animation-delay:1s;
+    animation-name: fadeIn;
+    animation-duration:1s;
+    animation-fill-mode:both;
 }
 #lk-content {
     margin: 3px;
@@ -723,6 +731,10 @@ p.rcl-custom-fields .rcl-field-value .fa-upload{
 
 
 /* START ssi-modal */
+#ssi-modalWindow{
+    animation-duration:0.5s;
+    animation-name: slideInDown;
+}
 div.ssi-backdrop {
     background: rgba(0, 0, 0, 0.7);
 }

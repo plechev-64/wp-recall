@@ -69,7 +69,7 @@ function rcl_font_awesome_style(){
 }
 
 function rcl_animate_css(){   
-    wp_enqueue_style( 'animate-css', RCL_URL.'assets/css/animate-css/animate.min.css' );
+    rcl_enqueue_style( 'animate-css', RCL_URL.'assets/css/animate-css/animate.min.css' );
 }
 
 add_action('login_enqueue_scripts','rcl_enqueue_wp_form_scripts',1);

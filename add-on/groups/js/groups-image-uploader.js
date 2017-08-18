@@ -28,7 +28,7 @@ jQuery(function($){
                 return false;
             }
 
-            $('#rcl-group .group-avatar img').attr('src',data.result['avatar_url']);
+            $('#rcl-group .group-avatar img').attr('src',data.result['avatar_url']).animateCss('zoomIn');
             $('#avatar-upload-progress').hide().empty();
             rcl_notice(data.result['success'],'success',10000);
 

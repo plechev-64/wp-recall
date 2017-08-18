@@ -3,6 +3,7 @@
 require_once "admin-menu.php";
 require_once "add-on-manager.php";
 require_once "templates-manager.php";
+require_once "metaboxes.php";
 
 function rmag_global_options(){
     

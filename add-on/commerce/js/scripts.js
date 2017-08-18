@@ -230,7 +230,7 @@ function rcl_update_cart_content(){
                 jQuery('.rcl-order-price').html(Rcl.Cart.order_price);
                 jQuery('.rcl-order-amount').html(Rcl.Cart.products_amount);
                 
-                jQuery('#rcl-order').html(data['content']);
+                jQuery('#rcl-order').html(data['content']).animateCss('fadeIn');
 
             }
 
@@ -380,6 +380,8 @@ function rcl_add_to_cart(e){
 
                 jQuery('.rcl-order-price').html(data.cart.order_price);
                 jQuery('.rcl-order-amount').html(data.cart.products_amount);
+                
+                jQuery('#recallbar #rcl-cart').animateCss('shake');
 
                 Rcl.Cart = data.cart;
                 

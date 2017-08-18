@@ -36,15 +36,9 @@ function rcl_edit_rating(e){
                 
                 block.toggleClass('user-vote');
 
-                /*var val = jQuery('#' + idbox + ' .rating-value');
-                val.empty().text(result['rating']);
-                if(result['rating']<0){
-                    val.parent().css('color','#FF0000');
-                }else{
-                    val.parent().css('color','#008000');
-                }
-                block.parent().remove();*/
             }
+            
+            block.animateCss('zoomIn');
             
             rcl_do_action('rcl_edit_rating',{data:rating,result:result});
             
