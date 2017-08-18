@@ -106,7 +106,12 @@ function rcl_avatar_uploader(){
                 rcl_notice(data.result['error'],'error',10000);
                 return false;
             }
-            jQuery('#rcl-avatar .avatar-image img').attr('src',data.result['avatar_url']).animateCss('zoomIn');
+            
+            var image = jQuery('#rcl-avatar .avatar-image img').attr('src',data.result['avatar_url']);
+            image.load(function(){
+                image.animateCss('zoomIn');
+            });
+
             jQuery('#avatar-upload-progress').hide().empty();
             jQuery( '#rcl-preview' ).remove();
             rcl_notice(data.result['success'],'success',10000);
@@ -168,7 +173,12 @@ function rcl_avatar_uploader(){
                             rcl_notice(data['error'],'error',10000);
                             return false;
                         }
-                        jQuery('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data['avatar_url']);
+                        
+                        var image = jQuery('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data.result['avatar_url']);
+                        image.load(function(){
+                            image.animateCss('zoomIn');
+                        });
+                        
                         jQuery( '#rcl-preview' ).remove();
                         rcl_notice(data['success'],'success',10000);
                     }

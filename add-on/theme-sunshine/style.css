@@ -217,10 +217,14 @@
     width: 99%;
 }
 .cab_sidebar {
-    background: rgba(219, 219, 219, 0.3);
+    border-left: 1px solid #e5e5e5;
     margin: 0;
     max-width: 280px;
-    padding: 0 2px;
+    padding: 5px;
+    flex-shrink: 0;
+}
+.cab_sidebar .panel_lk_recall .rcl-widget-buttons {
+    overflow: hidden;
 }
 .vertical-menu .cab_content_blk .recall_content_block.active {
     min-width: 380px;
@@ -356,8 +360,7 @@
 	.cab_sidebar,
 	.rcl-content {
 		max-width: none;
-		padding: 1px 2px;
-		width: 99%;
+        border: none;
 	}
 	.vertical-menu .cab_content_blk .recall_content_block.active {
 		min-width: auto;

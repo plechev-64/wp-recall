@@ -40,8 +40,6 @@ function rcl_get_user_info(element){
                     content: '<div id="rcl-popup-content">'+data['content']+'</div>'
                 });
                 
-                jQuery('.rcl-user-getails').animateCss('slideInDown');
-                
             }
         }
     });
