@@ -223,12 +223,21 @@ function rcl_get_user_rating($user_id){
 }
 
 function rcl_get_user_rating_value($user_id){
+    
+    $cachekey = json_encode(array('rcl_get_user_rating_value',$user_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
 
     $users = new Rcl_Rating_Users_Query();
-    return $users->get_var(array(
+    $value = $users->get_var(array(
         'user_id' => $user_id,
         'fields' => array('rating_total')
     ));
+    
+    wp_cache_add( $cachekey, $value );
+    
+    return $value;
 
 }
 
@@ -435,6 +444,8 @@ function rcl_post_update_user_rating($args){
 //Обновляем общий рейтинг пользователя
 function rcl_update_user_rating($args){
     global $wpdb;
+    
+    wp_cache_delete(json_encode(array('rcl_get_user_rating_value',$args['object_author'])));
 
     $total = rcl_get_user_rating_value($args['object_author']);
 

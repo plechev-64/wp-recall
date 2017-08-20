@@ -260,6 +260,7 @@
     margin: 5px;
     font-size: 18px;
     position: relative;
+    clear: both;
 }
 .rcl-rating-box .rating-wrapper{
     display: inline-block;

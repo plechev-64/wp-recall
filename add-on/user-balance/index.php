@@ -70,13 +70,22 @@ function rcl_get_user_balance($user_id=false){
     
     if(!$user_id) $user_id = $user_ID;
     
+    $cachekey = json_encode(array('rcl_get_user_balance',$user_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
     $balance = $wpdb->get_var($wpdb->prepare("SELECT user_balance FROM ".RMAG_PREF."users_balance WHERE user_id='%d'",$user_id));
+    
+    wp_cache_add( $cachekey, $balance );
     
     return $balance;
 }
 
 function rcl_update_user_balance($newmoney,$user_id,$comment=''){
     global $wpdb;
+    
+    wp_cache_delete(json_encode(array('rcl_get_user_balance',$user_id)));
     
     $newmoney = round(str_replace(',','.',$newmoney), 2);
 
@@ -90,7 +99,7 @@ function rcl_update_user_balance($newmoney,$user_id,$comment=''){
             array( 'user_balance' => $newmoney ),
             array( 'user_id' => $user_id )
         );
-        
+
         if(!$result){
             rcl_add_log(
                 'rcl_update_user_balance: '.__('Failed to refresh user balance','wp-recall'),

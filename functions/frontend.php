@@ -374,7 +374,7 @@ function rcl_get_author_block(){
     global $post;
 
     $content = "<div id=block_author-rcl>";
-    $content .= "<h3>".__('Publiction author','wp-recall')."</h3>";
+    $content .= "<h3>".__('Publication author','wp-recall')."</h3>";
 
     if(function_exists('rcl_add_userlist_follow_button')) add_filter('rcl_user_description','rcl_add_userlist_follow_button',90);
 
@@ -407,7 +407,7 @@ function rcl_get_time_user_action($user_id){
     
     $action = $wpdb->get_var($wpdb->prepare("SELECT time_action FROM ".RCL_PREF."user_action WHERE user='%d'",$user_id));
 
-    wp_cache_add( $cachekey, $action, '', $expire );
+    wp_cache_add( $cachekey, $action, 'default', $expire );
     
     return $action;
 }

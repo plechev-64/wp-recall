@@ -532,11 +532,9 @@ function rcl_chat_shift_contact_panel(){
     var view = (jQuery.cookie('rcl_chat_contact_panel')==1)? 0: 1;
     
     if(view){
-        box.toggleClass('hidden-contacts').animateCss('slideInUp');
+        box.removeClass('hidden-contacts').animateCss('slideInUp');
     }else{
-        box.animateCss('slideOutDown',function(e){
-            jQuery(e).toggleClass('hidden-contacts');
-        });
+        box.addClass('hidden-contacts');
     }
     
     jQuery.cookie('rcl_chat_contact_panel', view, { expires: 30, path: '/'});

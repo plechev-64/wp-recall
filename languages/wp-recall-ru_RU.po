@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2017-08-18 12:09+0300\n"
+"POT-Creation-Date: 2017-08-19 13:29+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -433,10 +433,12 @@ msgstr "Пок-тель"
 msgid "Q-ty"
 msgstr "Кол-во"
 
-#: add-on/commerce/admin/index.php:239 add-on/commerce/templates/cart.php:19
-#: add-on/commerce/templates/order.php:20 add-on/groups/groups-widgets.php:136
-msgid "Amount"
-msgstr "Количество"
+#: add-on/commerce/admin/index.php:239 add-on/commerce/templates/cart.php:22
+#: add-on/commerce/templates/order.php:23
+#: add-on/commerce/templates/orders-history.php:12
+#: add-on/user-balance/admin/class-rcl-payments-history.php:81
+msgid "Sum"
+msgstr "Сумма"
 
 #: add-on/commerce/admin/index.php:252
 msgid "Go to orders manager"
@@ -1113,11 +1115,10 @@ msgstr "Общая сумма"
 msgid "Empty"
 msgstr "Пока пусто"
 
-#: add-on/commerce/templates/cart.php:22 add-on/commerce/templates/order.php:23
-#: add-on/commerce/templates/orders-history.php:12
-#: add-on/user-balance/admin/class-rcl-payments-history.php:81
-msgid "Sum"
-msgstr "Сумма"
+#: add-on/commerce/templates/cart.php:19 add-on/commerce/templates/order.php:20
+#: add-on/groups/groups-widgets.php:136
+msgid "Amount"
+msgstr "Количество"
 
 #: add-on/commerce/templates/cart.php:57 add-on/commerce/templates/order.php:50
 msgid "Total"
@@ -4903,7 +4904,7 @@ msgid "online"
 msgstr "в сети"
 
 #: functions/frontend.php:377
-msgid "Publiction author"
+msgid "Publication author"
 msgstr "Автор публикации"
 
 #: functions/frontend.php:464
@@ -5237,6 +5238,9 @@ msgstr "Регистрация"
 #: wp-recall.php:43 wp-recall.php:47
 msgid "Are you cheating, bastard?"
 msgstr "Читеришь, гадёныш?"
+
+#~ msgid "Publiction author"
+#~ msgstr "Автор публикации"
 
 #~ msgid "Documentation"
 #~ msgstr "Документация"

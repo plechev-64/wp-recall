@@ -236,7 +236,7 @@ function rcl_commerce_metabox(){
         . '<th>'.__('Order','wp-recall').'</th>'
         . '<th>'.__('Buyer','wp-recall').'</th>'
         . '<th>'.__('Q-ty','wp-recall').'</th>'
-        . '<th>'.__('Amount','wp-recall').'</th>'
+        . '<th>'.__('Sum','wp-recall').'</th>'
         . '<th>'.__('Status','wp-recall').'</th>'
         . '</tr>';
     foreach($orders as $order){

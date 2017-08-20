@@ -31,6 +31,11 @@ class PrimeLastPosts{
     function get_topics(){
         global $wpdb;
         
+        $cachekey = 'pfm_last_topics';
+        $cache = wp_cache_get( $cachekey );
+        if ( $cache )
+            return $cache;
+        
         $topics = $wpdb->get_results(
             "SELECT "
                 . "ptopics.* "
@@ -41,21 +46,23 @@ class PrimeLastPosts{
             . "LIMIT $this->number"
         );
         
+        $topics = wp_unslash($topics);
+        
+        wp_cache_add( $cachekey, $topics );
+        
         if(!$topics) return false;
         
-        return wp_unslash($topics);
+        return $topics;
         
     }
     
     function get_posts(){
         global $wpdb;
         
-        $topics = $this->get_topics();
-        
-        if(!$topics) return false;
+        if(!$this->topics) return false;
         
         $tIDs = array();
-        foreach($topics as $topic){
+        foreach($this->topics as $topic){
             $tIDs[] = $topic->topic_id;
         }
 
