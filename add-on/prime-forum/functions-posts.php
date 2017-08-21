@@ -111,6 +111,33 @@ function pfm_send_mail_topic_author($post_id){
 
 }
 
+function pfm_get_post_box($post_id){
+    global $PrimeShorts,$PrimePost,$PrimeUser;
+    
+    $post = pfm_get_post($post_id);
+    
+    $PrimeUser = new PrimeUser();
+    $PrimeShorts = pfm_get_shortcodes();   
+
+    $theme = rcl_get_addon(get_option('rcl_pforum_template'));
+
+    $PrimePost = array(
+        'post_id' => $post_id,
+        'user_id' => $post->user_id,
+        'post_content' => $post->post_content,
+        'post_index' => $post->post_index,
+        'post_date' => $post->post_date,
+        'display_name' => get_the_author_meta('display_name',$post->user_id),
+        'user_registered' => get_the_author_meta('user_registered',$post->user_id)
+    );
+
+    $PrimePost = (object)$PrimePost;
+
+    $content = rcl_get_include_template('pfm-single-post.php',$theme['path']);
+    
+    return $content;
+}
+
 function pfm_the_author_name(){
     global $PrimePost;
     echo ($PrimePost->user_id)? $PrimePost->display_name: $PrimePost->guest_name;

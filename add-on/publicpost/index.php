@@ -124,7 +124,7 @@ function rcl_concat_post_meta($content){
     
     $pm = rcl_get_custom_post_meta($post->ID);
     
-    if($option == 1) 
+    if(rcl_get_option('pm_place') == 1) 
         $content .= $pm;
     else 
         $content = $pm.$content;

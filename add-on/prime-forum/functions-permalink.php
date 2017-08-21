@@ -200,7 +200,7 @@ function pfm_get_topic_permalink($topic_id){
 
 }
 
-function pfm_get_post_permalink($post_id){
+function pfm_get_post_page_permalink($post_id){
     
     $post = pfm_get_post($post_id);
     
@@ -231,6 +231,15 @@ function pfm_get_post_permalink($post_id){
     }else{
         if($isSlash) $url .= '/';
     }
+    
+    return $url;
+}
+
+function pfm_get_post_permalink($post_id){
+    
+    $url = pfm_get_post_page_permalink($post_id);
+    
+    if(!$url) return false;
 
     $url .= '#topic-post-'.$post_id;
 

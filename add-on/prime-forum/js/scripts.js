@@ -67,7 +67,7 @@ function pfm_ajax_action(object){
     }
     
     if(object['serialize_form']){
-        object.formdata = jQuery('#'+object['serialize_form']).serializeArray();
+        object.formdata = jQuery('#'+object['serialize_form']).serialize();
     }
     
     object.action = 'pfm_ajax_action';
@@ -126,7 +126,19 @@ function pfm_ajax_action(object){
             }else{
 
                 if(data['content']){
-                    if(data['place-id']){
+                    
+                    if(data['append']){
+                        
+                        if(object['method'] == 'post_create'){
+                            jQuery(data['append']).append(data['content']).find('.prime-post').last().animateCss('slideInUp');
+                            jQuery('#editor-action_post_create').val('');
+                            //var offsetTop = jQuery('#topic-post-'+data['post_id']).offset().top;
+                            //jQuery('body,html').animate({scrollTop:offsetTop - 160}, 1000);
+                        }else{
+                            jQuery(data['append']).append(data['content']);
+                        }
+                        
+                    }else if(data['place-id']){
                         
                         if(object['method'] == 'get_post_excerpt'){             
                             jQuery(data['place-id']).insertAtCaret(data['content']);

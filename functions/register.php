@@ -461,7 +461,7 @@ function rcl_secondary_password($fields){
     if(!rcl_get_option('repeat_pass')) return $fields;
 
     $fields .= '<div class="form-block-rcl default-field">
-                    <input placeholder="'.__('Repeat the password','wp-recall').'" required id="secondary-pass-user" type="password" value="'.$_REQUEST['user_secondary_pass'].'" name="user_secondary_pass">
+                    <input placeholder="'.__('Repeat the password','wp-recall').'" required id="secondary-pass-user" type="password" value="'.(isset($_REQUEST['user_secondary_pass'])? $_REQUEST['user_secondary_pass']:'').'" name="user_secondary_pass">
                     <i class="fa fa-lock"></i>
                     <span class="required">*</span>
                 <div id="notice-chek-password"></div>

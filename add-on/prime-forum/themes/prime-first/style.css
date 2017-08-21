@@ -130,7 +130,6 @@
 #prime-forum .prime-forum-content {
     overflow: hidden;
 }
-
 #prime-forum .prime-parent-box{
     border-left: 2px solid;
     padding-left: 10px;
@@ -381,6 +380,9 @@
 }
 #prime-forum .topic_count {
     flex-shrink: 0;
+}
+#prime-forum .prime-posts{
+    overflow: hidden;
 }
 #prime-forum .prime-post {
     background-color: #fafafa;

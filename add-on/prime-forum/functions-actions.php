@@ -494,12 +494,8 @@ function pfm_action_confirm_migrate_post($post_id){
     if(!pfm_is_can('post_migrate')) return false;
     
     if(isset($_POST['formdata'])){
-        
         $formdata = array();
-        foreach($_POST['formdata'] as $data){
-            $formdata[$data['name']] = $data['value'];
-        }
-        
+        parse_str($_POST['formdata'], $formdata);
     }
     
     $migrateData = array(
@@ -507,7 +503,7 @@ function pfm_action_confirm_migrate_post($post_id){
         'next_posts' => 0
     );
     
-    if(isset($formdata['next_posts_migrate[]']) && $formdata['next_posts_migrate[]']){
+    if(isset($formdata['next_posts_migrate'][0]) && $formdata['next_posts_migrate'][0]){
         
         $migrateData['next_posts'] = 1;
         
@@ -1127,15 +1123,13 @@ pfm_add_ajax_action('get_preview','pfm_action_get_preview');
 function pfm_action_get_preview($action){
     
     if(isset($_POST['formdata'])){
-        
         $formdata = array();
-        foreach($_POST['formdata'] as $data){
-            $formdata[$data['name']] = $data['value'];
-        }
-        
+        parse_str($_POST['formdata'], $formdata);
     }
     
-    $postContent = wp_unslash($formdata['pfm-data[post_content]']);
+    $pfmData = $formdata['pfm-data'];
+    
+    $postContent = wp_unslash($pfmData['post_content']);
     
     if(!$postContent){
         
@@ -1175,4 +1169,70 @@ function pfm_action_get_preview($action){
     $result['title'] = __('Preview','wp-recall');
     
     return $result;
+}
+
+pfm_add_ajax_action('post_create','pfm_action_post_create');
+function pfm_action_post_create(){
+    global $user_ID;
+
+    if(isset($_POST['formdata'])){
+        $formdata = array();
+        parse_str($_POST['formdata'], $formdata);
+    }
+    
+    $pfmData = $formdata['pfm-data'];
+    
+    if(!pfm_is_can('post_create') || !$pfmData['topic_id']){
+        return array('error' => __('Недостаточно прав для публикации','wp-recall'));
+    }
+            
+    $topic = pfm_get_topic($pfmData['topic_id']);
+
+    if($topic->topic_closed){
+        return array('error' => __('Тема закрыта','wp-recall'));
+    }
+
+    if(!$pfmData['post_content']){
+        return array('error' => __('Empty message! Go back and write something.','wp-recall'));
+    }
+
+    $args = array(
+        'post_content' => $pfmData['post_content'],
+        'topic_id' => $pfmData['topic_id']
+    );
+
+    if(!$user_ID){
+
+        if(!$pfmData['guest_mail'] || !$pfmData['guest_name']){
+            return array('error' => __('Error','wp-recall'));
+        }
+
+        $args['guest_email'] = $pfmData['guest_mail'];
+        $args['guest_name'] = $pfmData['guest_name'];
+    }
+
+    $post_id = pfm_add_post($args);
+
+    $topicClose = false;
+    if(pfm_is_can('topic_close')){
+        if(isset($pfmData['close-topic'][0]) && $pfmData['close-topic'][0]){
+            $topicClose = pfm_update_topic(array(
+                'topic_id' => $pfmData['topic_id'],
+                'topic_closed' => 1
+            ));
+        }
+    }
+    
+    $postPageUrl = pfm_get_post_page_permalink($post_id);
+    
+    if($topicClose || home_url().$formdata['_wp_http_referer'] != $postPageUrl){
+        $result['url-redirect'] = $postPageUrl.'#topic-post-'.$post_id;
+    }else{
+        $result['post_id'] = $post_id;
+        $result['content'] = pfm_get_post_box($post_id);
+        $result['append'] = '#prime-forum .prime-posts';
+    }
+
+    return $result;
+    
 }

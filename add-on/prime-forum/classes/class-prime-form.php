@@ -5,6 +5,7 @@ class PrimeForm extends Rcl_Custom_Fields{
     public $forum_id;
     public $topic_id;
     public $post_id;
+    public $onclick;
     public $action;
     public $submit;
     public $fields;
@@ -222,7 +223,7 @@ class PrimeForm extends Rcl_Custom_Fields{
                     $content .= '</a>';
                 }
                 
-                $content .= '<input type="submit" name="Submit" class="recall-button" value="'.$this->submit.'" />';
+                $content .= '<input type="submit" name="Submit" class="recall-button" value="'.$this->submit.'" '.($this->onclick? 'onclick=\''.$this->onclick.'\'': '').'/>';
                 $content .= '</div>';
                 $content .= '<input type="hidden" name="pfm-data[action]" value="'.$this->action.'">';
                 $content .= wp_nonce_field('pfm-action','_wpnonce',true,false);
