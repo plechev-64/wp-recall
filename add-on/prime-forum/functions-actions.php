@@ -300,7 +300,7 @@ function pfm_init_actions(){
             wp_redirect(pfm_get_topic_permalink($topic_id)); exit;
             
         break;
-        case 'post_create': //сооздение поста
+        /*case 'post_create': //сооздение поста
             
             if(!pfm_is_can('post_create') || !$pfmData['topic_id']) return false;
             
@@ -338,7 +338,7 @@ function pfm_init_actions(){
             
             wp_redirect(pfm_get_post_permalink($post_id)); exit;
             
-        break;
+        break;*/
         case 'post_edit': //редактирование поста
             
             if(!pfm_is_can_post_edit($pfmData['post_id']) || !$pfmData['topic_id'] || !$pfmData['post_id']) return false;
@@ -1228,8 +1228,31 @@ function pfm_action_post_create(){
     if($topicClose || home_url().$formdata['_wp_http_referer'] != $postPageUrl){
         $result['url-redirect'] = $postPageUrl.'#topic-post-'.$post_id;
     }else{
+        
+        $posts = new PrimePosts();
+    
+        $lastPosts = $posts->get_col(array(
+            'topic_id' => $pfmData['topic_id'],
+            'fields' => array('post_id'),
+            'orderby' => 'post_id',
+            'order' => 'ASC',
+            'date_query' => array(
+                array(
+                    'column' => 'post_date',
+                    'value' => $pfmData['form_load'],
+                    'compare' => '>'
+                )
+            )
+        ));
+
+        if($lastPosts){
+            foreach($lastPosts as $lastPost){
+                $result['content'][] = pfm_get_post_box($lastPost);
+            }
+        }
+        
         $result['post_id'] = $post_id;
-        $result['content'] = pfm_get_post_box($post_id);
+        $result['form_load'] = current_time('mysql');
         $result['append'] = '#prime-forum .prime-posts';
     }
 

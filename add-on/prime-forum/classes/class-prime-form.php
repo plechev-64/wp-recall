@@ -226,6 +226,7 @@ class PrimeForm extends Rcl_Custom_Fields{
                 $content .= '<input type="submit" name="Submit" class="recall-button" value="'.$this->submit.'" '.($this->onclick? 'onclick=\''.$this->onclick.'\'': '').'/>';
                 $content .= '</div>';
                 $content .= '<input type="hidden" name="pfm-data[action]" value="'.$this->action.'">';
+                $content .= '<input type="hidden" name="pfm-data[form_load]" value="'.current_time('mysql').'">';
                 $content .= wp_nonce_field('pfm-action','_wpnonce',true,false);
 
             $content .= '</form>';

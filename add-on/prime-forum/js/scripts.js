@@ -136,10 +136,17 @@ function pfm_ajax_action(object,e){
                     if(data['append']){
                         
                         if(object['method'] == 'post_create'){
-                            jQuery(data['append']).append(data['content']).find('.prime-post').last().animateCss('slideInUp');
+                            
+                            data['content'].forEach(function(content,i){
+                                jQuery(data['append']).append(content).find('.prime-post').last().animateCss('slideInUp');
+                            });
+
                             jQuery('#editor-action_post_create').val('');
+                            jQuery('#prime-topic-form-box input[name="pfm-data[form_load]"]').val(data['form_load']);
+                            
                             //var offsetTop = jQuery('#topic-post-'+data['post_id']).offset().top;
                             //jQuery('body,html').animate({scrollTop:offsetTop - 160}, 1000);
+                            
                         }else{
                             jQuery(data['append']).append(data['content']);
                         }

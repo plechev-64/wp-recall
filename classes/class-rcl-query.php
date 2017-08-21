@@ -190,14 +190,16 @@ class Rcl_Query {
                 if(isset($date['day'])) 
                     $this->query['where'][] = "DAY(".$this->query['table']['as'].".".$date['column'].") = '".$date['day']."'";
 
-            }
-
-            if($date['compare'] == 'BETWEEN'){
+            }else if($date['compare'] == 'BETWEEN'){
 
                 if(!isset($date['value'])) continue;
 
                 $this->query['where'][] = "(".$this->query['table']['as'].".".$date['column']." BETWEEN CAST('".$date['value'][0]."' AS DATE) AND CAST('".$date['value'][1]."' AS DATE))";
 
+            }else{
+                
+                $this->query['where'][] = $this->query['table']['as'].".".$date['column']." ".$date['compare']." '".$date['value']."'";
+                
             }
 
         }
