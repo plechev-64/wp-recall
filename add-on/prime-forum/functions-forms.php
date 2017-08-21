@@ -74,7 +74,7 @@ function pfm_the_post_form(){
     echo pfm_get_form(array(
         'topic_id' => $PrimeTopic->topic_id,
         'action' => 'post_create',
-        'onclick' => 'pfm_ajax_action('.json_encode($args).');return false;',
+        'onclick' => 'pfm_ajax_action('.json_encode($args).',this);return false;',
         'submit' => __('Add message','wp-recall')
     ));
     

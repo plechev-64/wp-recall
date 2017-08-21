@@ -177,7 +177,7 @@ class PrimeForm extends Rcl_Custom_Fields{
     
     function get_form($args = false){
 
-        $content = '<div id="prime-topic-form-box" class="rcl-form">';
+        $content = '<div id="prime-topic-form-box" class="rcl-form preloader-box">';
             
             $content .= '<form id="prime-topic-form" method="post" action="">';
             
@@ -218,7 +218,7 @@ class PrimeForm extends Rcl_Custom_Fields{
                 $content .= '<div class="submit-box">';
                 
                 if(!defined( 'DOING_AJAX' )){
-                    $content .= '<a href="#" title="'.__('Preview','wp-recall').'" class="recall-button" onclick=\'pfm_ajax_action('.json_encode($args).');return false;\'>';
+                    $content .= '<a href="#" title="'.__('Preview','wp-recall').'" class="recall-button" onclick=\'pfm_ajax_action('.json_encode($args).',this);return false;\'>';
                     $content .= '<i class="fa fa-eye" aria-hidden="true"></i> '.__('Preview','wp-recall');
                     $content .= '</a>';
                 }

@@ -93,6 +93,9 @@
     border-bottom: 0;
     border-radius: 2px;
 }
+#prime-forum .preloader-box{
+    position:relative;
+}
 #prime-forum .prime-spoiler{
     padding: 5px;
     border: 1px solid #e5e5e5;

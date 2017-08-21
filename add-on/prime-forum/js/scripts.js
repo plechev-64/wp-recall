@@ -49,17 +49,23 @@ function pfm_getSelectedText(){
     return text.toString();
 }
 
-function pfm_ajax_action(object){
+function pfm_ajax_action(object,e){
     
     if(object['confirm']){
         if(!confirm(object['confirm'])) return false;
     }
     
-    if(object.item_type == 'post'){
-        rcl_preloader_show(jQuery('#topic-post-'+object['item_id']));
-        rcl_preloader_show(jQuery('#post-manager'));
+    if(e && jQuery(e).parents('.preloader-box')){
+        rcl_preloader_show(jQuery(e).parents('.preloader-box'));
     }else{
-        rcl_preloader_show(jQuery('#prime-forum'));
+    
+        if(object.item_type == 'post'){
+            rcl_preloader_show(jQuery('#topic-post-'+object['item_id']));
+            rcl_preloader_show(jQuery('#post-manager'));
+        }else{
+            rcl_preloader_show(jQuery('#prime-forum'));
+        }
+    
     }
     
     if(object.method == 'get_post_excerpt'){
