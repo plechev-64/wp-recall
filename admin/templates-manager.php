@@ -4,7 +4,7 @@ if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-add_action('rcl_before_include_addons',array('Rcl_Templates_Manager','update_status'));
+add_action('rcl_before_include_addons','rcl_template_update_status');
 add_action('admin_init','rcl_init_upload_template');
 
 class Rcl_Templates_Manager extends WP_List_Table {
@@ -233,37 +233,37 @@ class Rcl_Templates_Manager extends WP_List_Table {
 
     }
 
-    static function update_status ( ) {
-        
-        $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-        if( 'manage-templates-recall' != $page ) return;
-        
-        if ( isset($_GET['template'])&&isset($_GET['action']) ) {
-
-              global $wpdb, $user_ID, $active_addons;
-              
-              $addon = $_GET['template'];
-              $action = rcl_wp_list_current_action();
-
-              if($action=='connect'){
-                  rcl_deactivate_addon(get_option('rcl_active_template'));
-                  
-                  rcl_activate_addon($addon);
-                  
-                  update_option('rcl_active_template',$addon);
-                  header("Location: ".admin_url('admin.php?page=manage-templates-recall&update-template=activate'), true, 302);
-                  exit;
-              }
-
-              if($action=='delete'){
-                 rcl_delete_addon($addon);
-                 header("Location: ".admin_url('admin.php?page=manage-templates-recall&update-template=delete'), true, 302);
-                 exit;
-              }
-        }
-    }
-
 } //class
+
+function rcl_template_update_status ( ) {
+        
+    $page = ( isset($_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+    if( 'manage-templates-recall' != $page ) return;
+
+    if ( isset($_GET['template'])&&isset($_GET['action']) ) {
+
+          global $wpdb, $user_ID, $active_addons;
+
+          $addon = $_GET['template'];
+          $action = rcl_wp_list_current_action();
+
+          if($action=='connect'){
+              rcl_deactivate_addon(get_option('rcl_active_template'));
+
+              rcl_activate_addon($addon);
+
+              update_option('rcl_active_template',$addon);
+              header("Location: ".admin_url('admin.php?page=manage-templates-recall&update-template=activate'), true, 302);
+              exit;
+          }
+
+          if($action=='delete'){
+             rcl_delete_addon($addon);
+             header("Location: ".admin_url('admin.php?page=manage-templates-recall&update-template=delete'), true, 302);
+             exit;
+          }
+    }
+}
 
 function rcl_init_upload_template ( ) {
     if ( isset( $_POST['install-template-submit'] ) ) {

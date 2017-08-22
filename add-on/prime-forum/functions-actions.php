@@ -1222,39 +1222,33 @@ function pfm_action_post_create(){
             ));
         }
     }
-    
-    $postPageUrl = pfm_get_post_page_permalink($post_id);
-    
-    if($topicClose || home_url().$formdata['_wp_http_referer'] != $postPageUrl){
-        $result['url-redirect'] = $postPageUrl.'#topic-post-'.$post_id;
-    }else{
-        
-        $posts = new PrimePosts();
-    
-        $lastPosts = $posts->get_col(array(
-            'topic_id' => $pfmData['topic_id'],
-            'fields' => array('post_id'),
-            'orderby' => 'post_id',
-            'order' => 'ASC',
-            'date_query' => array(
-                array(
-                    'column' => 'post_date',
-                    'value' => $pfmData['form_load'],
-                    'compare' => '>'
-                )
-            )
-        ));
 
-        if($lastPosts){
-            foreach($lastPosts as $lastPost){
-                $result['content'][] = pfm_get_post_box($lastPost);
-            }
+    $posts = new PrimePosts();
+
+    $lastPosts = $posts->get_col(array(
+        'topic_id' => $pfmData['topic_id'],
+        'fields' => array('post_id'),
+        'orderby' => 'post_id',
+        'order' => 'ASC',
+        'date_query' => array(
+            array(
+                'column' => 'post_date',
+                'value' => $pfmData['form_load'],
+                'compare' => '>'
+            )
+        )
+    ));
+
+    if($lastPosts){
+        foreach($lastPosts as $lastPost){
+            $result['content'][] = pfm_get_post_box($lastPost);
         }
-        
-        $result['post_id'] = $post_id;
-        $result['form_load'] = current_time('mysql');
-        $result['append'] = '#prime-forum .prime-posts';
     }
+
+    $result['post_id'] = $post_id;
+    $result['current_url'] = pfm_get_post_permalink($post_id);
+    $result['form_load'] = current_time('mysql');
+    $result['append'] = '#prime-forum .prime-posts';
 
     return $result;
     
