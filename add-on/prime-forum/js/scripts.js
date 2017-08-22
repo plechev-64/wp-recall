@@ -1,6 +1,4 @@
-jQuery(document).ready(function($) {
-    
-});
+var PFM = {};
 
 rcl_add_action('rcl_pre_init_ajax_editor','pfm_wrap_input_quicktags_editor');
 rcl_add_action('rcl_init','pfm_wrap_input_quicktags_editor');
@@ -188,7 +186,8 @@ function pfm_ajax_action(object,e){
 
 function pfm_animate_new_posts(contents,i){
     if(!contents[i]) return false;
-    jQuery('#prime-forum .prime-posts').append(contents[i]).find('.prime-post').last().addClass('new-post').animateCss('slideInUp',function(e){
+    jQuery('#prime-forum .prime-posts').append(contents[i]).find('.prime-post').last().animateCss('slideInUp',function(e){
+        jQuery(e).addClass('new-post');
         i++;
         if(!contents[i]) return false;
         return pfm_animate_new_posts(contents,i);
@@ -200,4 +199,38 @@ function pfm_spoiler(e){
     var icon = link.children('i');
     link.parent().children('div').slideToggle();
     icon.toggleClass('fa-plus-square-o fa-minus-square-o');
+}
+
+function pfm_beat(initData){
+    
+    if(!PFM.last_beat)
+        PFM.last_beat = initData.start_beat;
+
+    var beat = {
+        action:     'pfm_beat',
+        success:    'pfm_beat_success',
+        data: {
+            last_beat: PFM.last_beat,
+            topic_id: initData.topic_id
+        }
+    };
+    
+    return beat;
+    
+}
+
+function pfm_beat_success(result){
+    
+    PFM.last_beat = result.last_beat;
+    
+    jQuery('#prime-topic-form-box input[name="pfm-data[form_load]"]').val(result.last_beat);
+    
+    if(result.content){
+    
+        jQuery('#prime-forum .prime-posts .new-post').removeClass('new-post');
+
+        pfm_animate_new_posts(result.content,0);
+    
+    }
+    
 }

@@ -255,3 +255,12 @@ body .prime-last-posts ul.last-post-list{
 .prime-last-posts .last-post-more{
     
 }
+#prime-forum .prime-post.new-post {
+    -webkit-animation: rcl-blink 2s linear both;
+    animation: rcl-blink 2s linear both;
+}
+@keyframes rcl-blink {
+    50% {
+        background-color: #ffffd7;
+    }
+}

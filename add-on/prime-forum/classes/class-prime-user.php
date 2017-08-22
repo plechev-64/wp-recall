@@ -64,5 +64,21 @@ class PrimeUser extends PrimeRoles{
         
     }
     
+    function is_can_posts($topic_id){
+        
+        $posts = new PrimePosts();
+
+        $post_id = $posts->get_var(array(
+            'topic_id' => $topic_id,
+            'fields' => array('post_id'),
+            'orderby' => 'post_id',
+            'order' => 'ASC',
+            'user_id' => $this->user_id
+        ));
+        
+        return $post_id? true: false;
+        
+    }
+    
 }
 

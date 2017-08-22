@@ -6,6 +6,8 @@ function pfm_get_template_content(){
     
     if(!$theme) return false;
     
+    global $PrimeQuery,$PrimeUser;
+    
     rcl_dialog_scripts();
     
     $content = '<div id="prime-forum" class="'.pfm_class_forum().'">';
@@ -39,6 +41,20 @@ function pfm_get_template_content(){
     $content .= rcl_get_include_template('pfm-footer.php',$theme['path']);
     
     $content .= '</div>';
+    
+    if(pfm_is_topic() 
+        && $PrimeUser->user_id 
+        && pfm_is_can('post_create') 
+        && $PrimeUser->is_can_posts($PrimeQuery->object->topic_id)){
+
+        $args = array(
+            'topic_id' => $PrimeQuery->object->topic_id,
+            'start_beat' => current_time('mysql')
+        );
+        
+        $content .= '<script>rcl_add_beat("pfm_beat",30,'.json_encode($args).');</script>';
+        
+    }
     
     return $content;
 }

@@ -397,3 +397,39 @@ function pfm_replace_mask_title($string){
 function pfm_get_current_theme(){
     return rcl_get_addon(get_option('rcl_pforum_template'));
 }
+
+function pfm_beat($beat){
+    global $user_ID;
+
+    $posts = new PrimePosts();
+
+    $lastPosts = $posts->get_col(array(
+        'topic_id' => $beat->topic_id,
+        'fields' => array('post_id'),
+        'orderby' => 'post_id',
+        'order' => 'ASC',
+        'user_id__not_in' => array($user_ID),
+        'date_query' => array(
+            array(
+                'column' => 'post_date',
+                'value' => $beat->last_beat,
+                'compare' => '>'
+            )
+        )
+    ));
+
+    if($lastPosts){ 
+    
+        foreach($lastPosts as $lastPost){
+            $result['content'][] = pfm_get_post_box($lastPost);
+        }
+
+        $result['current_url'] = pfm_get_post_permalink($lastPosts[0]);
+    
+    }
+    
+    $result['last_beat'] = current_time('mysql');
+    
+    return $result;
+    
+}
