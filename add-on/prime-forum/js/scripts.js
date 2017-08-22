@@ -149,6 +149,12 @@ function pfm_ajax_action(object,e){
                             //var offsetTop = jQuery('#topic-post-'+data['post_id']).offset().top;
                             //jQuery('body,html').animate({scrollTop:offsetTop - 160}, 1000);
                             
+                            PFM.last_beat = data.form_load;
+                            
+                            if(!rcl_exist_beat('pfm_beat')){
+                                rcl_add_beat("pfm_beat",30,{topic_id:data.topic_id,start_beat:data.form_load});
+                            }
+                            
                         }else{
                             jQuery(data['append']).append(data['content']);
                         }

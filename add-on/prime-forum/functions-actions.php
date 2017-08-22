@@ -1246,6 +1246,7 @@ function pfm_action_post_create(){
     }
 
     $result['post_id'] = $post_id;
+    $result['topic_id'] = $pfmData['topic_id'];
     $result['current_url'] = pfm_get_post_permalink($post_id);
     $result['form_load'] = current_time('mysql');
     $result['append'] = '#prime-forum .prime-posts';
