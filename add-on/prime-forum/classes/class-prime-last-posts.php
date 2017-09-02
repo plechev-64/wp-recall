@@ -86,6 +86,8 @@ class PrimeLastPosts{
     
     function string_trim($string,$length){
         
+        $string = strip_shortcodes($string);
+        
         if( iconv_strlen($string = strip_tags($string), 'utf-8') > $length ) {
             $string = iconv_substr($string, 0, $length, 'utf-8');
             $string = preg_replace('@(.*)\s[^\s]*$@s', '\\1', $string).'...';

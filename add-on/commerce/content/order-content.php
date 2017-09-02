@@ -18,7 +18,7 @@ function rcl_add_order_notices(){
         
     $buyer_register = (isset($rmag_options['buyer_register']))? $rmag_options['buyer_register']: 1;
 
-    $status = $_GET['order-status'];
+    $status = intval($_GET['order-status']);
 
     $notice = '<div class="rcl-order-notices order-before-box">';
 

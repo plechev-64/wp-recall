@@ -223,7 +223,14 @@ class PrimeForm extends Rcl_Custom_Fields{
                     $content .= '</a>';
                 }
                 
-                $content .= '<input type="submit" name="Submit" class="recall-button" value="'.$this->submit.'" '.($this->onclick? 'onclick=\''.$this->onclick.'\'': '').'/>';
+                if($this->onclick){
+                    $content .= '<a href="#" title="'.$this->submit.'" class="recall-button" onclick=\''.$this->onclick.'\'>';
+                    $content .= '<i class="fa fa-check-circle" aria-hidden="true"></i> '.$this->submit;
+                    $content .= '</a>';
+                }else{
+                    $content .= '<input type="submit" name="Submit" class="recall-button" value="'.$this->submit.'"/>';
+                }
+
                 $content .= '</div>';
                 $content .= '<input type="hidden" name="pfm-data[action]" value="'.$this->action.'">';
                 $content .= '<input type="hidden" name="pfm-data[form_load]" value="'.current_time('mysql').'">';

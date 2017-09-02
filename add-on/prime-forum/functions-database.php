@@ -299,6 +299,8 @@ function pfm_update_topic_counter($topic_id){
         'topic_id' => $topic_id,
         'post_count' => $counter
     ));
+    
+    return $counter;
 
 }
 
@@ -499,6 +501,14 @@ function pfm_add_post($args){
         
     }
     
+    $PostQuery = new PrimePosts();
+    
+    $postCount = $PostQuery->count(array(
+        'topic_id' => $args['topic_id']
+    ));
+    
+    $postCount++;
+
     if(!isset($args['post_status']))
         $args['post_status'] = 'open';
     
@@ -514,15 +524,19 @@ function pfm_add_post($args){
     if(!isset($args['guest_email']))
         $args['guest_email'] = '';
     
-    if(!isset($args['post_index']))
-        $args['post_index'] = 0;
+    if(!isset($args['post_index'])){
+        $args['post_index'] = $postCount;
+    }
     
     $result = $wpdb->insert(RCL_PREF.'pforum_posts',$args);
     
     if(!$result)
         return false;
     
-    pfm_update_topic_data($args['topic_id']);
+    pfm_update_topic(array(
+        'topic_id' => $args['topic_id'],
+        'post_count' => $postCount
+    ));
     
     $post_id = $wpdb->insert_id;
     
@@ -862,12 +876,13 @@ function pfm_delete_visit($user_id){
     return $result;
 }
 
-function pfm_get_visitors(){
-    global $PrimeQuery,$wpdb;
+function pfm_get_visitors_data($args, $timeout = false){
+    global $wpdb;
     
-    $timeout = rcl_get_option('timeout',10);
+    if(!$timeout)
+        $timeout = rcl_get_option('timeout',10);
     
-    $args = array(
+    $args = array_merge($args, array(
         'fields' => array('user_id'),
         'join_query' => array(
             array(
@@ -883,18 +898,7 @@ function pfm_get_visitors(){
                 'fields' => array('display_name')
             )
         )
-    );
-    
-    if($PrimeQuery->is_group){
-        $args['group_id'] = $PrimeQuery->object->group_id;
-    }else if($PrimeQuery->is_forum){
-        $args['group_id'] = $PrimeQuery->object->group_id;
-        $args['forum_id'] = $PrimeQuery->object->forum_id;
-    }else if($PrimeQuery->is_topic){
-        $args['group_id'] = $PrimeQuery->object->group_id;
-        $args['forum_id'] = $PrimeQuery->object->forum_id;
-        $args['topic_id'] = $PrimeQuery->object->topic_id;
-    }
+    ));
     
     $Visits = new PrimeVisits();
     
@@ -903,6 +907,25 @@ function pfm_get_visitors(){
     $Visits->query['where'][] = $Visits->query['table']['as'].".visit_date > date_sub('".current_time('mysql')."', interval $timeout minute)";
     
     $visitors = $Visits->get_data();
+    
+    return $visitors;
+    
+}
+
+function pfm_get_visitors(){
+    global $PrimeQuery;
+    
+    $args = array();
+    
+    if($PrimeQuery->is_group){
+        $args['group_id'] = $PrimeQuery->object->group_id;
+    }else if($PrimeQuery->is_forum){
+        $args['forum_id'] = $PrimeQuery->object->forum_id;
+    }else if($PrimeQuery->is_topic){
+        $args['topic_id'] = $PrimeQuery->object->topic_id;
+    }
+    
+    $visitors = pfm_get_visitors_data($args);
     
     return $visitors;
     

@@ -791,16 +791,16 @@ function rcl_a_active($param1,$param2){
 
 function rcl_get_useraction($user_action=false){
     global $rcl_userlk_action;
-
+    
     if(!$user_action) $user_action = $rcl_userlk_action;
 
-    $timeout = ($time = rcl_get_option('timeout'))? $time*60: 600;
-
-    $unix_time_action = strtotime(current_time('mysql'));
     $unix_time_user = strtotime($user_action);
 
-    if(!$user_action)
-            return $last_go = __('long ago','wp-recall');
+    if(!$unix_time_user || $user_action == '0000-00-00 00:00:00')
+        return __('long ago','wp-recall');
+    
+    $timeout = ($time = rcl_get_option('timeout'))? $time*60: 600;
+    $unix_time_action = strtotime(current_time('mysql'));
 
     if($unix_time_action > $unix_time_user+$timeout){
             return human_time_diff($unix_time_user,$unix_time_action );

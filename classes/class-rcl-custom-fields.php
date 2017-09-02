@@ -133,8 +133,8 @@ class Rcl_Custom_Fields{
 
         if(is_admin()&&!(defined( 'DOING_AJAX' ) && DOING_AJAX)){
             
-            $post_id = (isset($_GET['post']))? $_GET['post']: false;
-            $user_id = (isset($_GET['user_id']))? $_GET['user_id']: false;
+            $post_id = (isset($_GET['post']))? intval($_GET['post']): false;
+            $user_id = (isset($_GET['user_id']))? intval($_GET['user_id']): false;
             
             $url = admin_url('?meta='.$this->slug.'&rcl-delete-file='.base64_encode($this->value));
             
@@ -610,7 +610,7 @@ function rcl_download_file(){
     global $user_ID,$wpdb;
 
     if ( !isset( $_GET['rcl-download-file'] ) ) return false;
-    $id_file = base64_decode($_GET['rcl-download-file']);
+    $id_file = intval(base64_decode($_GET['rcl-download-file']));
 
     if ( !$user_ID||!wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
 
@@ -637,7 +637,7 @@ function rcl_delete_file(){
     global $user_ID;
 
     if ( !isset( $_GET['rcl-delete-file'] ) ) return false;
-    $id_file = base64_decode($_GET['rcl-delete-file']);
+    $id_file = intval(base64_decode($_GET['rcl-delete-file']));
 
     if ( !$user_ID||!wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
 
@@ -662,12 +662,12 @@ function rcl_delete_file_admin(){
     global $user_ID;
 
     if ( !isset( $_GET['rcl-delete-file'] ) ) return false;
-    $id_file = base64_decode($_GET['rcl-delete-file']);
+    $id_file = intval(base64_decode($_GET['rcl-delete-file']));
 
     if ( !$user_ID||!wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
     
-    $post_id = (isset($_GET['post_id']))? $_GET['post_id']: false;
-    $user_id = (isset($_GET['user_id']))? $_GET['user_id']: false;
+    $post_id = (isset($_GET['post_id']))? intval($_GET['post_id']): false;
+    $user_id = (isset($_GET['user_id']))? intval($_GET['user_id']): false;
 
     $file = get_post($id_file);
 

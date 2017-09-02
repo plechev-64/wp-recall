@@ -16,7 +16,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
             'orderby' => 'group_seq'
         ));
         
-        $this->group_id = (isset($_GET['group-id']))? $_GET['group-id']: 0;
+        $this->group_id = (isset($_GET['group-id']))? intval($_GET['group-id']): 0;
         
         if($this->forum_groups && !$this->group_id){
             $this->group_id = $this->forum_groups[0]->group_id;

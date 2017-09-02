@@ -22,7 +22,7 @@ function pfm_init_admin_menu(){
 
 function pfm_page_topic_form(){
     
-    $group_id = (isset($_GET['group-id']))? $_GET['group-id']: 0;
+    $group_id = (isset($_GET['group-id']))? intval($_GET['group-id']): 0;
     
     if(!$group_id){
         
@@ -113,7 +113,7 @@ function pfm_page_options(){
             'type' => 'select',
             'slug' => 'view-forums-home',
             'name' => 'rcl_pforum_options[view-forums-home]',
-            'title' => __('Output all forums of the group on the homepage'),
+            'title' => __('Output all forums of the group on the homepage','wp-recall'),
             'notice' => __('If selected, all forums will be displayed on the homepage','wp-recall'),
             'values' => array(
                 __('Do not output','wp-recall'),
@@ -222,6 +222,16 @@ function pfm_page_options(){
             'name' => 'rcl_pforum_options[mask-page-topic]',
             'notice' => __('Name of the page of the separate topic','wp-recall'),
             'default' => '%TOPICNAME%'
+        ),
+        array(
+            'type' => 'select',
+            'slug' => 'admin-notes',
+            'name' => 'rcl_pforum_options[admin-notes]',
+            'title' => __('Уведомления администратору о новых темах','wp-recall'),
+            'values' => array(
+                __('Disabled','wp-recall'),
+                __('Enabled','wp-recall')
+            )
         )
     );
     

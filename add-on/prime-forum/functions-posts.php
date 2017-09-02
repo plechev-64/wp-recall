@@ -98,6 +98,13 @@ function pfm_send_mail_topic_author($post_id){
     //Если автор топика отвечает сам, то не шлем письмо иначе шлем
     if($topic->user_id == $post->user_id) return false;
     
+    $actionData = pfm_get_visitors_data(array(
+        'user_id' => $topic->user_id,
+        'topic_id' => $post->topic_id
+    ),1);
+    
+    if($actionData) return false;
+    
     $title = 'Новый комментарий к вашей теме';
     $to = get_the_author_meta('user_email',$topic->user_id);
     $mess = '

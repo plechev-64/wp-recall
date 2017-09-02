@@ -49,10 +49,12 @@ function pfm_get_template_content(){
 
         $args = array(
             'topic_id' => $PrimeQuery->object->topic_id,
+            'forum_id' => $PrimeQuery->object->forum_id,
+            'group_id' => $PrimeQuery->object->group_id,
             'start_beat' => current_time('mysql')
         );
         
-        $content .= '<script>rcl_add_beat("pfm_beat",30,'.json_encode($args).');</script>';
+        $content .= '<script>rcl_add_beat("pfm_topic_beat",30,'.json_encode($args).');</script>';
         
     }
     
@@ -187,16 +189,17 @@ function pfm_get_notice($notice, $type = 'notice'){
     
 }
 
-function pfm_the_vititors(){
+function pfm_the_visitors(){
     global $PrimeQuery;
     
     $visitors = pfm_get_visitors();
-    
-    if(!$visitors) return false;
 
     $visits = array();
-    foreach($visitors as $visitor){
-        $visits[] = '<a href="'.get_author_posts_url($visitor->user_id).'">'.$visitor->display_name.'</a>';
+    
+    if($visitors){
+        foreach($visitors as $visitor){
+            $visits[] = '<a href="'.get_author_posts_url($visitor->user_id).'">'.$visitor->display_name.'</a>';
+        }
     }
     
     $content = '<div class="prime-visitors">';
@@ -213,10 +216,14 @@ function pfm_the_vititors(){
         
         $content .= ': ';
 
+        $content .= '<span class="visitors-list">';
+        
         if($visits)
             $content .= implode(', ',$visits);
         else
             $content .= __('Nobody is here','wp-recall');
+        
+        $content .= '</span>';
 
     $content .= '</div>';
     

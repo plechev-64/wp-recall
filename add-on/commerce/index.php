@@ -180,7 +180,7 @@ function rcl_tab_orders(){
             'name' => $name,
             'callback' => array(
                 'name' => 'rcl_single_order_tab',
-                'args' => array($_GET['order-id'])
+                'args' => array(intval($_GET['order-id']))
             )
         );
 
@@ -337,7 +337,7 @@ function rcl_commerce_setup_order_actions(){
     
     if(!wp_verify_nonce( $_GET['_wpnonce'], 'order-action' )) return false;
     
-    $order_id = $_GET['order-id'];
+    $order_id = intval($_GET['order-id']);
     $order_action = $_GET['order-action'];
 
     switch($order_action){

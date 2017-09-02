@@ -140,19 +140,18 @@ function pfm_ajax_action(object,e){
                         if(object['method'] == 'post_create'){
                             
                             jQuery('#prime-forum .prime-posts .new-post').removeClass('new-post');
-                            
-                            pfm_animate_new_posts(data['content'],0);
-
                             jQuery('#editor-action_post_create').val('');
                             jQuery('#prime-topic-form-box input[name="pfm-data[form_load]"]').val(data['form_load']);
                             
                             //var offsetTop = jQuery('#topic-post-'+data['post_id']).offset().top;
                             //jQuery('body,html').animate({scrollTop:offsetTop - 160}, 1000);
                             
+                            pfm_animate_new_posts(data['content']);
+                            
                             PFM.last_beat = data.form_load;
                             
-                            if(!rcl_exist_beat('pfm_beat')){
-                                rcl_add_beat("pfm_beat",30,{topic_id:data.topic_id,start_beat:data.form_load});
+                            if(!rcl_exist_beat('pfm_topic_beat')){
+                                rcl_add_beat("pfm_topic_beat",30,{topic_id:data.topic_id,start_beat:data.form_load});
                             }
                             
                         }else{
@@ -190,13 +189,12 @@ function pfm_ajax_action(object,e){
     
 }
 
-function pfm_animate_new_posts(contents,i){
-    if(!contents[i]) return false;
-    jQuery('#prime-forum .prime-posts').append(contents[i]).find('.prime-post').last().animateCss('slideInUp',function(e){
+function pfm_animate_new_posts(contents){
+    if(!contents.length) return false;
+    var content = contents.shift();
+    jQuery('#prime-forum .prime-posts').append(content).find('.prime-post').last().animateCss('slideInUp',function(e){
         jQuery(e).addClass('new-post');
-        i++;
-        if(!contents[i]) return false;
-        return pfm_animate_new_posts(contents,i);
+        pfm_animate_new_posts(contents);
     });
 }
 
@@ -207,17 +205,19 @@ function pfm_spoiler(e){
     icon.toggleClass('fa-plus-square-o fa-minus-square-o');
 }
 
-function pfm_beat(initData){
+function pfm_topic_beat(initData){
     
     if(!PFM.last_beat)
         PFM.last_beat = initData.start_beat;
 
     var beat = {
-        action:     'pfm_beat',
-        success:    'pfm_beat_success',
+        action:     'pfm_topic_beat',
+        success:    'pfm_topic_beat_success',
         data: {
             last_beat: PFM.last_beat,
-            topic_id: initData.topic_id
+            topic_id: initData.topic_id,
+            forum_id: initData.forum_id,
+            group_id: initData.group_id
         }
     };
     
@@ -225,17 +225,19 @@ function pfm_beat(initData){
     
 }
 
-function pfm_beat_success(result){
+function pfm_topic_beat_success(result){
     
     PFM.last_beat = result.last_beat;
     
     jQuery('#prime-topic-form-box input[name="pfm-data[form_load]"]').val(result.last_beat);
     
+    jQuery('#prime-forum .prime-visitors .visitors-list').html(result.visitors);
+    
     if(result.content){
     
         jQuery('#prime-forum .prime-posts .new-post').removeClass('new-post');
 
-        pfm_animate_new_posts(result.content,0);
+        pfm_animate_new_posts(result.content);
     
     }
     

@@ -334,6 +334,7 @@
 #prime-topic-form-box .submit-box .recall-button{
     display:inline-block;
     margin-left:10px;
+    line-height: 1;
 }
 /* END forum form */
 

@@ -8,12 +8,8 @@ function pfm_get_canonical_url() {
 function pfm_get_home_url(){
 
     if(!pfm_get_option('home-page')) return false;
-    
-    $url = untrailingslashit(get_permalink(pfm_get_option('home-page')));
-    
-    if(preg_match("/\/$/",get_option('permalink_structure'))){
-        $url .= '/';
-    }
+
+    $url = user_trailingslashit(get_permalink(pfm_get_option('home-page')));
     
     return $url;
 }
@@ -51,9 +47,7 @@ function pfm_get_group_permalink($group_id){
 
         $url = untrailingslashit(pfm_get_home_url()).'/forum-group/'.$slug;
         
-        if(preg_match("/\/$/",get_option('permalink_structure'))){
-            $url .= '/';
-        }
+        $url = user_trailingslashit($url);
 
     } else {
 
@@ -95,9 +89,7 @@ function pfm_get_forum_permalink($forum_id){
 
         $url = untrailingslashit(pfm_get_home_url()).'/'.$slug;
         
-        if(preg_match("/\/$/",get_option('permalink_structure'))){
-            $url .= '/';
-        }
+        $url = user_trailingslashit($url);
 
     } else {
 
@@ -173,9 +165,7 @@ function pfm_get_topic_permalink($topic_id){
 
         $url = untrailingslashit(pfm_get_home_url()).'/'.$forum_slug.'/'.$topic_slug;
         
-        if(preg_match("/\/$/",get_option('permalink_structure'))){
-            $url .= '/';
-        }
+        $url = user_trailingslashit($url);
 
     } else {
         
@@ -206,8 +196,6 @@ function pfm_get_post_page_permalink($post_id){
     
     if(!$post) return false;
     
-    $isSlash = preg_match("/\/$/",get_option('permalink_structure'))? true: false;
-    
     $topic = pfm_get_topic($post->topic_id);
     
     $PostsQuery = new PrimePosts();
@@ -224,12 +212,12 @@ function pfm_get_post_page_permalink($post_id){
     if($page != 1){
         if ( '' != get_option('permalink_structure') ) {
             $url .= '/page/'.$page;
-            if($isSlash) $url .= '/';
+            $url = user_trailingslashit($url);
         }else{
             $url = add_query_arg(array('pfm-page' => $page), $url);
         }
     }else{
-        if($isSlash) $url .= '/';
+        $url = user_trailingslashit($url);
     }
     
     return $url;

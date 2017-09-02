@@ -26,7 +26,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $this->init_properties($args);
         
         if(isset($_GET['rcl-post-edit'])){
-            $this->post_id = $_GET['rcl-post-edit'];
+            $this->post_id = intval($_GET['rcl-post-edit']);
         }
         
         if($this->post_id){

@@ -141,8 +141,8 @@ function pfm_filter_urls($content){
                 $replace = pfm_get_notice(__('You are unable to view published links','wp-recall'),'warning');
 
             }
-
-            $content = preg_replace('/(\s|^|>|])('.str_replace('/','\/',$url).')/ui', ' <a href="'.$url.'" target="_blank" rel="nofollow">'.$url.'</a>', $content);
+            
+            $content = preg_replace('/(\s|^|>|])('.str_replace(array('/','?'),array('\/','\?'),$url).')/ui', ' <a href="'.$url.'" target="_blank" rel="nofollow">'.$url.'</a>', $content);
 
         }
     

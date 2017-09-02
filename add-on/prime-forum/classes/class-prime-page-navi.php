@@ -30,9 +30,7 @@ class PrimePageNavi extends Rcl_PageNavi{
         if($page_id != 1){
             if ( '' != get_option('permalink_structure') ) {
                 $url .= '/page/'.$page_id;
-                if(preg_match("/\/$/",get_option('permalink_structure'))){
-                    $url .= '/';
-                }
+                $url = user_trailingslashit($url);
             }else{
                 $url = add_query_arg(array('pfm-page' => $page_id));
             }

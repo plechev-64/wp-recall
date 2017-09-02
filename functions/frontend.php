@@ -89,6 +89,7 @@ function rcl_user_comments(){
         echo '<span class="filter-data"><i class="fa fa-comment"></i>'.__('Comments','wp-recall').': '.$rcl_user->comments_count.'</span>';
     }
 }
+
 add_action('rcl_user_description','rcl_user_posts',20);
 function rcl_user_posts(){
     global $rcl_user,$rcl_users_set;
@@ -321,41 +322,56 @@ add_action('rcl_init','init_user_lk',1);
 function init_user_lk(){
     global $wpdb,$user_LK,$rcl_userlk_action,$user_ID,$rcl_office;
 
-    $user_LK = false;
-    $nicename = false;
+    $user_LK = 0;
     
-    $get = rcl_get_option('link_user_lk_rcl','user');
-    $userLK = (isset($_GET[$get]))? $_GET[$get]: false;
-
-    if(!$userLK){
-        if(rcl_get_option('view_user_lk_rcl')==1){
-                $post_id = url_to_postid($_SERVER['REQUEST_URI']);
-                if(rcl_get_option('lk_page_rcl')==$post_id) $user_LK = $user_ID;
-        }else {
-            if(isset($_GET['author'])) $user_LK = $_GET['author'];
-            else{
-                $url = (isset($_SERVER['SCRIPT_URL']))? $_SERVER['SCRIPT_URL']: $_SERVER['REQUEST_URI'];
-                $url = preg_replace('/\?.*/', '', $url);
-                $url_ar = explode('/',$url);
-                foreach($url_ar as $key=>$u){
-                    if($u!='author') continue;
-                    $nicename = $url_ar[$key+1];
-                    break;
-                }
-                if(!$nicename) return false;
-                $user_LK = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."users WHERE user_nicename='%s'",$nicename));
+    //если вывод ЛК через шорткод
+    if(rcl_get_option('view_user_lk_rcl')==1){
+        
+        $get = rcl_get_option('link_user_lk_rcl','user');
+        $user_LK = (isset($_GET[$get]))? intval($_GET[$get]): false;
+        
+        if(!$user_LK){
+            $post_id = url_to_postid($_SERVER['REQUEST_URI']);
+            if(rcl_get_option('lk_page_rcl') == $post_id){
+                $user_LK = $user_ID;
             }
         }
-    }else{
-        $user = get_user_by('id', $userLK);
-	$user_LK = ($user)? $userLK: 0;
-    }
+        
+    }else{ //если ЛК выводим через author.php
+        
+        if ( '' == get_option('permalink_structure') ){
+            
+            if(isset($_GET['author'])) $user_LK = intval($_GET['author']);
+            
+        }else{
+            
+            $nicename = false;
+            
+            $url = (isset($_SERVER['SCRIPT_URL']))? $_SERVER['SCRIPT_URL']: $_SERVER['REQUEST_URI'];
+            $url = preg_replace('/\?.*/', '', $url);
+            $url_ar = explode('/',$url);
+            
+            foreach($url_ar as $key=>$u){
+                if($u!='author') continue;
+                $nicename = $url_ar[$key+1];
+                break;
+            }
+            
+            if(!$nicename) return false;
 
+            $user_LK = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."users WHERE user_nicename='%s'",$nicename));
+            
+        }
+        
+    }
+    
+    $user_LK = $user_LK && get_user_by('id', $user_LK)? $user_LK: 0;
+ 
+    $rcl_office = $user_LK;
+    
     if($user_LK){
         $rcl_userlk_action = rcl_get_time_user_action($user_LK);
     }
-    
-    $rcl_office = ($user_LK)? $user_LK: 0;
     
 }
 
@@ -380,10 +396,10 @@ function rcl_get_author_block(){
 
     $content .= rcl_get_userlist(array(
             'template' => 'rows',
+            'orderby' => 'display_name',
             'include' => $post->post_author,
             'filter' => 0,
             'data'=>'rating_total,description,posts_count,user_registered,comments_count'
-            //'orderby'=>'time_action'
         ));
 
     if(function_exists('rcl_add_userlist_follow_button')) remove_filter('rcl_user_description','rcl_add_userlist_follow_button',90);

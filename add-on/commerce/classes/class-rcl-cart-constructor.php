@@ -8,7 +8,7 @@ class Rcl_Cart_Constructor {
     function __construct() {
         
         if(isset($_GET['order-id']))
-            $this->order_id = $_GET['order-id'];
+            $this->order_id = intval($_GET['order-id']);
         
         $this->init_fields();
 

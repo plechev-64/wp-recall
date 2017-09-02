@@ -758,9 +758,8 @@ class PrimeQuery{
 
             if($this->is_page){
                 if ( '' != get_option('permalink_structure') ) {
-                    $url = untrailingslashit($url);
-                    $url .= '/page/'.$this->current_page;
-                    if(preg_match("/\/$/",get_option('permalink_structure'))) $url .= '/';
+                    $url = untrailingslashit($url).'/page/'.$this->current_page;
+                    $url = user_trailingslashit($url);
                 }else{
                     $url = add_query_arg(array('pfm-page' => $this->current_page), $url);
                 }

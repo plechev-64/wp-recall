@@ -27,6 +27,8 @@ class Rcl_Query {
 
     function set_query($args = false){
         
+        $args = esc_sql($args);
+        
         if(!$this->query['table']){
             
             if(isset($args['table'])){

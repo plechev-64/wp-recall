@@ -717,12 +717,11 @@ function pfm_action_post_delete($post_id){
     $res = pfm_delete_post($post_id);
 
     if($res){
+        
         $result['remove-item'] = 'topic-post-'.$post_id;
 
         if($topic->post_count == 1){
             $result['url-redirect'] = pfm_get_forum_permalink($topic->forum_id);
-        }else{
-            $result['dialog-close'] = true;
         }
 
     }else{
@@ -1213,14 +1212,21 @@ function pfm_action_post_create(){
 
     $post_id = pfm_add_post($args);
 
-    $topicClose = false;
     if(pfm_is_can('topic_close')){
+        
         if(isset($pfmData['close-topic'][0]) && $pfmData['close-topic'][0]){
+            
             $topicClose = pfm_update_topic(array(
                 'topic_id' => $pfmData['topic_id'],
                 'topic_closed' => 1
             ));
+            
+            if($topicClose){
+                return array('url-redirect' => pfm_get_post_permalink($post_id));
+            }
+            
         }
+        
     }
 
     $posts = new PrimePosts();

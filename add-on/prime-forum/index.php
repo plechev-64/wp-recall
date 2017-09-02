@@ -217,14 +217,18 @@ function pfm_init_query($wp_query){
     
     if(!$wp_query->is_main_query()) return;
     
-    if(!isset($wp_query->queried_object) || $wp_query->queried_object->ID != pfm_get_option('home-page')) return;
+    if(isset($wp_query->queried_object)){
+        if($wp_query->queried_object->ID != pfm_get_option('home-page')) return;
+    }else if(isset($wp_query->query)){
+        if($wp_query->query['page_id'] != pfm_get_option('home-page')) return;
+    }
     
     $PrimeUser = new PrimeUser();
     
     $PrimeQuery = new PrimeQuery();
     
     $PrimeQuery->init_query();
-
+    
     do_action('pfm_init');
 
 }
@@ -398,8 +402,15 @@ function pfm_get_current_theme(){
     return rcl_get_addon(get_option('rcl_pforum_template'));
 }
 
-function pfm_beat($beat){
+function pfm_topic_beat($beat){
     global $user_ID;
+    
+    pfm_update_visit(array(
+        'user_id' => $user_ID,
+        'topic_id' => $beat->topic_id,
+        'forum_id' => $beat->forum_id,
+        'group_id' => $beat->group_id
+    ));
 
     $posts = new PrimePosts();
 
@@ -417,6 +428,8 @@ function pfm_beat($beat){
             )
         )
     ));
+    
+    $lastPosts = array_unique($lastPosts);
 
     if($lastPosts){ 
     
@@ -424,11 +437,24 @@ function pfm_beat($beat){
             $result['content'][] = pfm_get_post_box($lastPost);
         }
 
-        $result['current_url'] = pfm_get_post_permalink($lastPosts[0]);
+        $result['current_url'] = pfm_get_post_permalink($lastPosts[ count($lastPosts)-1 ]);
     
     }
     
+    $visitors = pfm_get_visitors_data(array('topic_id'=>$beat->topic_id),1);
+    
+    if($visitors){
+        $visits = array();
+        foreach($visitors as $visitor){
+            $visits[] = '<a href="'.get_author_posts_url($visitor->user_id).'">'.$visitor->display_name.'</a>';
+        }
+        $visitsList = implode(', ',$visits);
+    }else{
+        $visitsList = __('Nobody is here','wp-recall');
+    }
+    
     $result['last_beat'] = current_time('mysql');
+    $result['visitors'] = $visitsList;
     
     return $result;
     

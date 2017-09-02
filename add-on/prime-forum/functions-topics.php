@@ -158,6 +158,27 @@ function pfm_update_topic_custom_fields($topic_id){
     }
 }
 
+add_action('pfm_add_topic','pfm_send_admin_mail_new_topic',10);
+function pfm_send_admin_mail_new_topic($topic_id){
+    global $user_ID;
+    
+    if(!pfm_get_option('admin-notes') || rcl_is_user_role($user_ID, 'administrator')) return false;
+
+    $topic = pfm_get_topic($topic_id);
+    
+    if(!$topic) return false;
+    
+    $email = get_option('admin_email');
+    $subject = __('Новая тема на форуме','wp-recall');
+    
+    $textmail = '<p>'.sprintf(__('На форуме сайта "%s" была создана новая тема!','wp-recall'),get_bloginfo('name')).'</p>';
+    $textmail .= '<p>'.__('Наименование темы','wp-recall').': <a href="'.pfm_get_topic_permalink($topic_id).'">'.$topic->topic_name.'</a>'.'</p>';
+    $textmail .= '<p>'.__('Автор темы','wp-recall').': '.( $topic->user_id? get_the_author_meta('display_name',$topic->user_id): __('Guest','wp-recall') ).'</p>';
+    
+    rcl_mail($email, $subject, $textmail);
+    
+}
+
 add_action('pfm_add_topic','pfm_add_topic_form_custom_meta',10);
 add_action('pfm_update_topic','pfm_add_topic_form_custom_meta',10);
 function pfm_add_topic_form_custom_meta($topic_id){
