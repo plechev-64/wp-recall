@@ -486,7 +486,7 @@
     box-sizing: border-box;
 }
 #prime-forum .prime-post-content img {
-    margin:5px 0;
+    margin: 10px 0;
 }
 #prime-forum .prime-post-bottom {
     align-self: flex-end;

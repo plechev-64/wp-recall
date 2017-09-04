@@ -478,10 +478,14 @@ function pfm_ajax_action(){
     if(!$result){
         $result['error'] = __('Unable to perform action','wp-recall');
     }
+    
+    do_action('pfm_ajax_action', $method, $itemID);
 
     if(!isset($result['error'])){
         $result['success'] = true;
     }
+    
+    $result = apply_filters('pfm_action_result',$result, $method, $itemID);
     
     echo json_encode($result); exit;
 
@@ -1145,7 +1149,7 @@ function pfm_action_get_preview($action){
 
     $theme = rcl_get_addon(get_option('rcl_pforum_template'));
     
-    $PrimePost = array(
+    $postData = array(
         'post_id' => 0,
         'user_id' => $user_ID,
         'post_content' => $postContent,
@@ -1153,6 +1157,8 @@ function pfm_action_get_preview($action){
         'display_name' => get_the_author_meta('display_name',$user_ID),
         'user_registered' => get_the_author_meta('user_registered',$user_ID)
     );
+    
+    $PrimePost = apply_filters('pfm_preview_postdata', $postData);
     
     $PrimePost = (object)$PrimePost;
 

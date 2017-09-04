@@ -54,7 +54,7 @@ function rcl_chat_add_message(){
     
     rcl_verify_ajax_nonce();
     
-    $POST = $_POST['chat'];
+    $POST = wp_unslash($_POST['chat']);
 
     $chat_room = rcl_chat_token_decode($POST['token']);
     

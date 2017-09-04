@@ -245,7 +245,7 @@ class Rcl_Includer{
         }
 
         if(!$scriptsArray) return false;
-
+        
         ob_start();
 
         $wp_scripts->do_items($scriptsArray);
@@ -441,6 +441,8 @@ function rcl_add_src_list_includes($result){
 
 //генерируем свою версию подключаемых скриптов при ajax-вызове вкладки
 function rcl_ajax_edit_version_scripts($src){
+    
+    if(strpos($src,'wp-includes/js/jquery/jquery.js')) return false;
     
     $srcData = explode('?',$src);
     

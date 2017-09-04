@@ -528,6 +528,8 @@ function pfm_add_post($args){
         $args['post_index'] = $postCount;
     }
     
+    $args = apply_filters('pfm_pre_save_postdata', $args);
+    
     $result = $wpdb->insert(RCL_PREF.'pforum_posts',$args);
     
     if(!$result)
@@ -799,14 +801,20 @@ function pfm_update_meta($object_id,$object_type,$meta_key,$meta_value){
     return $result;
 }
 
-function pfm_delete_meta($object_id,$object_type,$meta_key){
+function pfm_delete_meta($object_id, $object_type, $meta_key, $meta_value = false){
     global $wpdb;
     
-    $result = $wpdb->query("DELETE FROM ".RCL_PREF."pforum_meta "
+    $sql = "DELETE FROM ".RCL_PREF."pforum_meta "
             . "WHERE "
-            . "object_id='$group_id' "
+            . "object_id='$object_id' "
             . "AND object_type='$object_type' "
-            . "AND meta_key='$meta_key'");
+            . "AND meta_key='$meta_key'";
+    
+    if($meta_value){
+        $sql .= " AND meta_value='$meta_value'";
+    }
+    
+    $result = $wpdb->query($sql);
     
     return $result;
 }

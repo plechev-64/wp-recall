@@ -118,6 +118,12 @@ function pfm_send_mail_topic_author($post_id){
 
 }
 
+add_action('pfm_delete_post','pfm_delete_post_metas',10);
+function pfm_delete_post_metas($post_id){
+    global $wpdb;
+    return $wpdb->query("DELETE FROM ".RCL_PREF."pforum_meta WHERE object_type='post' AND object_id='$post_id'");
+}
+
 function pfm_get_post_box($post_id){
     global $PrimeShorts,$PrimePost,$PrimeUser;
     

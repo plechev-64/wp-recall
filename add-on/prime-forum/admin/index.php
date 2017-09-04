@@ -80,7 +80,6 @@ function pfm_page_options(){
     }
     
     $options = array(
-        
         array(
             'type' => 'select',
             'slug' => 'home-page',
@@ -234,6 +233,8 @@ function pfm_page_options(){
             )
         )
     );
+    
+    $options = apply_filters('pfm_options_array', $options);
     
     $CF = new Rcl_Custom_Fields();
     

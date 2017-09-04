@@ -209,6 +209,8 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
     function insert_message($chat_id,$user_id,$message_text){
         global $wpdb;
         
+        $message_text = wp_slash($message_text);
+        
         $private_key = 0;
                 
         if($this->chat['chat_status']=='private'){
@@ -252,8 +254,8 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
         $message['message_id'] = $wpdb->insert_id;
         
         do_action('rcl_chat_insert_message',$message);
-
-        $message = stripslashes_deep($message);
+        
+        $message = wp_unslash($message);
         
         return $message;
 
@@ -434,7 +436,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
 
     function get_messages(){
 
-        $messages = stripslashes_deep($this->get_data());
+        $messages = $this->get_data();
         
         $messages = apply_filters('rcl_chat_messages',$messages);
         

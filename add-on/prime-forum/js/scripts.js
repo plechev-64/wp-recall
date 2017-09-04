@@ -81,7 +81,7 @@ function pfm_ajax_action(object,e){
         type: 'POST', data: object, dataType: 'json', url: Rcl.ajaxurl,
         success: function(data){
             
-            rcl_do_action('pfm_ajax_action_success',data);
+            rcl_do_action('pfm_ajax_action_success',{result: data, object: object});
             
             if(data['url-redirect']){
 

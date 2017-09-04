@@ -206,7 +206,7 @@ class PrimeForm extends Rcl_Custom_Fields{
                 }
 
                 $content .= '<div class="post-form-bottom">';
-                $content .= apply_filters('pfm_form_bottom','',$this->action);
+                $content .= apply_filters('pfm_form_bottom', '', $this->action, array('topic_id'=>$this->topic_id, 'post_id'=>$this->post_id));
                 $content .= '</div>';
                 
                 $args = array(
