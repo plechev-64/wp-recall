@@ -27,8 +27,8 @@ $page = (isset($_GET['paged']))? $_GET['paged']: 1;
 
 $result = wp_remote_post( $url, array('body' => $data) );
 
-if ( is_wp_error( $response ) ) {
-   $error_message = $response->get_error_message();
+if ( is_wp_error( $result ) ) {
+   $error_message = $result->get_error_message();
    echo __('Error').': '.$error_message; exit;
 }
 

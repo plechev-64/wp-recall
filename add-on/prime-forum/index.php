@@ -220,7 +220,7 @@ function pfm_init_query($wp_query){
     if(isset($wp_query->queried_object)){
         if($wp_query->queried_object->ID != pfm_get_option('home-page')) return;
     }else if(isset($wp_query->query)){
-        if($wp_query->query['page_id'] != pfm_get_option('home-page')) return;
+        if(!isset($wp_query->query['page_id']) || $wp_query->query['page_id'] != pfm_get_option('home-page')) return;
     }
     
     $PrimeUser = new PrimeUser();

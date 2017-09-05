@@ -494,7 +494,7 @@ function rcl_custom_fields_regform($content){
 
         foreach($fields as $field){
             
-            if($field['register']!=1) continue;
+            if(!isset($field['register']) || $field['register']!=1) continue;
             
             $field['value_in_key'] = true;
 
@@ -510,8 +510,10 @@ function rcl_custom_fields_regform($content){
             if($field['type']) 
                 $content .= '<span class="colon">:</span>';
             $content .= '</label>';
+            
+            $value = (isset($_POST[$field['slug']]))? $_POST[$field['slug']]: false;
 
-            $content .= $cf->get_input($field,$_POST[$field['slug']]);
+            $content .= $cf->get_input($field, $value);
             $content .= '</div>';
 
         }

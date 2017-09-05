@@ -316,6 +316,8 @@ class Rcl_Custom_Fields{
     
     function get_type_editor($field){
         
+        $editor_id = false;
+        
         if(isset($field['editor-id']))
             $editor_id = $field['editor-id'];
         

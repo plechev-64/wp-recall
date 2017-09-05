@@ -77,7 +77,7 @@ function rcl_init_custom_tabs(){
             $tab_data = array(
                 'id'=> $tab['slug'], 
                 'name'=> $tab['title'],
-                'public'=> ($tab['public-tab'])? 1: 0,
+                'public'=> (isset($tab['public-tab']) && $tab['public-tab'])? 1: 0,
                 'icon'=> ($tab['icon'])? $tab['icon']: 'fa-cog',
                 'output'=> $area_id,
                 'custom-tab'=> true,
@@ -954,8 +954,11 @@ function rcl_template_support($support){
 
 function rcl_is_user_role($user_id,$role){
     $user_data = get_userdata( $user_id );
+    
+    if(!isset($user_data->roles) || !$user_data->roles) return false;
+    
     $roles = $user_data->roles;
-    if(!$roles) return false;
+    
     $current_role = array_shift($roles);
     
     if(is_array($role)){

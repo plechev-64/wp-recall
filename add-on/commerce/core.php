@@ -173,10 +173,12 @@ function rcl_get_orders($args = array()){
     $Orders = array();
     foreach($orders as $order){
         
+        if(!isset($order->order_id) || !$order->order_id) continue;
+        
         $Products = array();
         foreach($products as $product){
             
-            if($order->order_id != $product->order_id) continue;
+            if(!isset($product->order_id) || $order->order_id != $product->order_id) continue;
             
             unset($product->order_id);
             

@@ -19,7 +19,7 @@ function rcl_init_js_avatar_variables($data){
 
     if(rcl_is_office($user_ID)){
         $data['profile']['avatar_size'] = rcl_get_option('avatar_weight',2);
-        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum image size! Max. %s MB','wp-recall'),$size_ava);
+        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum image size! Max. %s MB','wp-recall'), rcl_get_option('avatar_weight',2));
         $data['local']['title_image_upload'] = __('Image being loaded','wp-recall');
         $data['local']['title_webcam_upload'] = __('Image from camera','wp-recall');
     }
