@@ -81,8 +81,6 @@ function pfm_ajax_action(object,e){
         type: 'POST', data: object, dataType: 'json', url: Rcl.ajaxurl,
         success: function(data){
             
-            rcl_do_action('pfm_ajax_action_success',{result: data, object: object});
-            
             if(data['url-redirect']){
 
                 var url = data['url-redirect'].split('#');
@@ -183,6 +181,8 @@ function pfm_ajax_action(object,e){
             if(data['dialog-close']){
                 ssi_modal.close();
             }
+            
+            rcl_do_action('pfm_ajax_action_success',{result: data, object: object});
 
         }
     });

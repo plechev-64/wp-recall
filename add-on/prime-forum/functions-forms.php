@@ -9,9 +9,9 @@ function pfm_get_form($args = false){
 }
 
 function pfm_the_topic_form(){
-    global $PrimeForum,$user_ID;
+    global $PrimeForum, $PrimeQuery, $user_ID;
     
-    if(!$PrimeForum || !$PrimeForum->forum_id) return;
+    if(!$PrimeForum || !$PrimeForum->forum_id || $PrimeQuery->errors) return;
     
     if($PrimeForum->forum_closed){
         
@@ -38,9 +38,9 @@ function pfm_the_topic_form(){
 }
 
 function pfm_the_post_form(){
-    global $PrimeTopic,$user_ID;
+    global $PrimeTopic, $PrimeQuery, $user_ID;
     
-    if(!$PrimeTopic || !$PrimeTopic->topic_id) return;
+    if(!$PrimeTopic || !$PrimeTopic->topic_id || $PrimeQuery->errors) return;
     
     if($PrimeTopic->forum_closed){
         

@@ -85,8 +85,7 @@ class PrimeRoles{
                 )
             )
         ));
-        
-        
+
         $this->roles = apply_filters('pfm_setup_roles',$this->roles);
         
         foreach($this->roles as $role => $prop){

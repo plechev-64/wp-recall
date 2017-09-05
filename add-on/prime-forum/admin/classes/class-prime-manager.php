@@ -39,7 +39,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
     
     function get_form_group(){
         
-        $fields = $this->get_fields_form_group();
+        $fields = $this->get_options_group();
         
         $content = $this->get_form_box($fields,'group_create',__('Create group','wp-recall'));
         
@@ -49,7 +49,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
     
     function get_form_forum(){
         
-        $fields = $this->get_fields_form_forum();
+        $fields = $this->get_options_forum();
         
         if(!$fields) return false;
         
@@ -95,34 +95,33 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
         
     }
     
-    function get_fields_form_group(){
+    function get_options_group($group = false){
         
-        $fields = array(
+        $options = array(
             array(
                 'type' => 'text',
-                'slug' => 'group-title',
-                'name' => 'pfm-data[group_name]',
+                'slug' => 'group_name',
                 'title' => __('Name of the group of forums','wp-recall'),
                 'required' => 1
             ),
             array(
                 'type' => 'text',
-                'slug' => 'group-slug',
-                'name' => 'pfm-data[group_slug]',
+                'slug' => 'group_slug',
                 'title' => __('Slug of the group','wp-recall')
             ),
             array(
                 'type' => 'textarea',
-                'slug' => 'group-desc',
-                'name' => 'pfm-data[group_desc]',
+                'slug' => 'group_desc',
                 'title' => __('Description of the group','wp-recall')
             )
         );
         
-        return $fields;
+        $options = apply_filters('pfm_options_group', $options, $group);
+        
+        return $options;
     }
     
-    function get_fields_form_forum(){
+    function get_options_forum($forum = false){
         
         if(!$this->forum_groups) return false;
         
@@ -132,11 +131,10 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
             $groups[$group->group_id] = $group->group_name;
         }
 
-        $fields = array(
+        $options = array(
             array(
                 'type' => 'select',
-                'slug' => 'forum-group',
-                'name' => 'pfm-data[group_id]',
+                'slug' => 'group_id',
                 'title' => __('Forum group','wp-recall'),
                 'required' => 1,
                 'default' => $this->group_id,
@@ -144,26 +142,35 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
             ),
             array(
                 'type' => 'text',
-                'slug' => 'forum-name',
-                'name' => 'pfm-data[forum_name]',
+                'slug' => 'forum_name',
                 'title' => __('Name of the forum','wp-recall'),
                 'required' => 1
             ),
             array(
                 'type' => 'text',
-                'slug' => 'forum-slug',
-                'name' => 'pfm-data[forum_slug]',
+                'slug' => 'forum_slug',
                 'title' => __('Slug of the forum','wp-recall')
             ),
             array(
+                'type' => 'select',
+                'slug' => 'forum_closed',
+                'title' => __('Forum status','wp-recall'),
+                'values' => array(
+                    __('Open forum','wp-recall'),
+                    __('Closed forum','wp-recall')
+                ),
+                'notice' => __('It is impossible to publish new topics and messages in a closed forum','wp-recall')
+            ),
+            array(
                 'type' => 'textarea',
-                'slug' => 'forum-desc',
-                'name' => 'pfm-data[forum_desc]',
+                'slug' => 'forum_desc',
                 'title' => __('Description of the forum','wp-recall')
             )
         );
         
-        return $fields;
+        $options = apply_filters('pfm_options_forum', $options, $forum);
+        
+        return $options;
         
     }
     
@@ -200,23 +207,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
                     'title' => $group->group_name,
                     'group_slug' => $group->group_slug,
                     'group_desc' => $group->group_desc,
-                    'options-field' => array(
-                        array(
-                            'type' => 'text',
-                            'slug' => 'group_name',
-                            'title' => __('Name of the group','wp-recall')
-                        ),
-                        array(
-                            'type' => 'text',
-                            'slug' => 'group_slug',
-                            'title' => __('Slug of the group','wp-recall')
-                        ),
-                        array(
-                            'type' => 'textarea',
-                            'slug' => 'group_desc',
-                            'title' => __('Description of the group','wp-recall')
-                        )
-                    )
+                    'options-field' => $this->get_options_group($group)
                 );
 
             }
@@ -262,39 +253,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
                     'forum_closed' => $forum->forum_closed,
                     'group_id' => $forum->group_id,
                     'parent_id' => $forum->parent_id,
-                    'options-field' => array(
-                        array(
-                            'type' => 'select',
-                            'slug' => 'group_id',
-                            'title' => __('Forum group','wp-recall'),
-                            'values' => $groups
-                        ),
-                        array(
-                            'type' => 'text',
-                            'slug' => 'forum_name',
-                            'title' => __('Name of the forum','wp-recall')
-                        ),
-                        array(
-                            'type' => 'text',
-                            'slug' => 'forum_slug',
-                            'title' => __('Slug of the forum','wp-recall')
-                        ),
-                        array(
-                            'type' => 'select',
-                            'slug' => 'forum_closed',
-                            'title' => __('Forum status','wp-recall'),
-                            'values' => array(
-                                __('Open forum','wp-recall'),
-                                __('Closed forum','wp-recall')
-                            ),
-                            'notice' => __('It is impossible to publish new topics and messages in a closed forum','wp-recall')
-                        ),
-                        array(
-                            'type' => 'textarea',
-                            'slug' => 'forum_desc',
-                            'title' => __('Description of the forum','wp-recall')
-                        )
-                    )
+                    'options-field' => $this->get_options_forum($forum)
                 );
 
             }
@@ -360,7 +319,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager{
         
         $value = (isset($this->field[$option['slug']]))? $this->field[$option['slug']]: $value;
 
-        $option['name'] = 'options['.$option['slug'].']';
+        $option['name'] = $option['slug'];
         
         return $this->get_input($option, $value);
         

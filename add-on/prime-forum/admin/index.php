@@ -430,21 +430,24 @@ function pfm_ajax_manager_update_data(){
     $post = $_POST;
     
     if(isset($post['group_id'])){
-        $result = pfm_manager_update_group(intval($post['group_id']),$post['options']);
+        
+        if(isset($post['forum_id']))
+            $result = pfm_manager_update_forum($post);
+        else
+            $result = pfm_manager_update_group($post);
+        
+        echo json_encode($result);
+        
     }
     
-    if(isset($post['forum_id'])){
-        $result = pfm_manager_update_forum(intval($post['forum_id']),$post['options']);
-    }
-    
-    echo json_encode($result); exit;
+    exit;
     
 }
 
-function pfm_manager_update_group($group_id,$options){
+function pfm_manager_update_group($options){
     
     pfm_update_group(array(
-        'group_id' => $group_id,
+        'group_id' => $options['group_id'],
         'group_name' => $options['group_name'],
         'group_slug' => $options['group_slug'],
         'group_desc' => $options['group_desc']
@@ -457,12 +460,12 @@ function pfm_manager_update_group($group_id,$options){
     
 }
 
-function pfm_manager_update_forum($forum_id,$options){
+function pfm_manager_update_forum($options){
     
-    $forum = pfm_get_forum($forum_id);
+    $forum = pfm_get_forum($options['forum_id']);
     
     pfm_update_forum(array(
-        'forum_id' => $forum_id,
+        'forum_id' => $options['forum_id'],
         'forum_name' => $options['forum_name'],
         'forum_desc' => $options['forum_desc'],
         'forum_slug' => $options['forum_slug'],

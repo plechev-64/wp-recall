@@ -263,19 +263,19 @@ function pfm_init_actions(){
         case 'group_create': //добавление группы
             
             pfm_add_group(array(
-                'group_name' => $pfmData['group_name'],
-                'group_slug' => $pfmData['group_slug'],
-                'group_desc' => $pfmData['group_desc']
+                'group_name' => $_REQUEST['group_name'],
+                'group_slug' => $_REQUEST['group_slug'],
+                'group_desc' => $_REQUEST['group_desc']
             ));
             
         break;
         case 'forum_create': //создание форума
             
             pfm_add_forum(array(
-                'forum_name' => $pfmData['forum_name'],
-                'forum_desc' => $pfmData['forum_desc'],
-                'forum_slug' => $pfmData['forum_slug'],
-                'group_id' => $pfmData['group_id']
+                'forum_name' => $_REQUEST['forum_name'],
+                'forum_desc' => $_REQUEST['forum_desc'],
+                'forum_slug' => $_REQUEST['forum_slug'],
+                'group_id' => $_REQUEST['group_id']
             ));
             
         break;

@@ -91,6 +91,8 @@ function pfm_the_forum_icons(){
     
     }
     
+    $icons = apply_filters('pfm_icons', $icons);
+    
     if(!$icons) return false;
     
     $content = '<div class="prime-topic-icons">';

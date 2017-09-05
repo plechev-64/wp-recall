@@ -650,8 +650,10 @@ function pfm_update_forum($args){
             }
 
         }
-    
+
     }
+    
+    do_action('pfm_update_forum', $forum_id);
     
     return $result;
 
