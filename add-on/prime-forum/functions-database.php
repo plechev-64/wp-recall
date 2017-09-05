@@ -719,6 +719,8 @@ function pfm_update_post($args){
         )
     );
     
+    do_action('pfm_after_update_post', $post_id);
+    
     if(!$result) return false;
     
     $PostQuery = new PrimePosts();
@@ -726,6 +728,8 @@ function pfm_update_post($args){
     $post = $PostQuery->get_row(array('post_id' => $post_id));
 
     $cache = wp_cache_replace( json_encode(array('pfm_get_post',$post_id)), $post );
+    
+    do_action('pfm_update_post', $post_id);
     
     return $result;
     
