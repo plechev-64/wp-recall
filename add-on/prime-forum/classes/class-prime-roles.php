@@ -10,7 +10,71 @@ class PrimeRoles{
         
     }
     
-    function setup_roles(){
+    function get_default_roles(){
+        
+        $defaultRoles = array();
+        
+        $defaultRoles['ban'] = array(
+            'name' => __('Ban','wp-recall'),
+            'capabilities' => array()
+        );
+
+        $defaultRoles['guest'] = array(
+            'name' => __('Guest','wp-recall'),
+            'capabilities' => array(
+                'forum_view' => true,
+                'post_create' => (pfm_get_option('guest-post-create'))? true: false
+            )
+        );
+        
+        $defaultRoles['member'] = array(
+            'name' => __('Member','wp-recall'),
+            'capabilities' => array_merge( 
+                $defaultRoles['guest']['capabilities'],
+                array(
+                    'topic_create' => true,
+                    'post_create' => true,
+                    'post_edit' => true,
+                    'topic_edit' => true
+                )
+            )
+        );
+
+        $defaultRoles['moderator'] = array(
+            'name' => __('Moderator','wp-recall'),
+            'capabilities' => array_merge( 
+                $defaultRoles['member']['capabilities'],
+                array(
+                    'topic_other_edit' => true,
+                    'topic_fix' => true,
+                    'topic_close' => true,
+                    'topic_migrate' => true,
+                    'post_other_edit' => true,
+                    'post_migrate' => true,
+                    'post_delete' => true
+                )
+            )
+        );
+        
+        $defaultRoles['administrator'] = array(
+            'name' => __('Administrator','wp-recall'),
+            'capabilities' => array_merge( 
+                $defaultRoles['moderator']['capabilities'],
+                array(
+                    'topic_delete' => true,
+                    'topic_other_delete' => true,
+                    'post_other_delete' => true
+                )
+            )
+        );
+        
+        $defaultRoles = apply_filters('pfm_default_roles', $defaultRoles);
+
+        return $defaultRoles;
+        
+    }
+    
+    function get_capabilities(){
         
         $capabilities = array(
             'forum_view' => false,
@@ -27,66 +91,22 @@ class PrimeRoles{
             'post_delete' => false,
             'post_other_edit' => false,
             'post_other_delete' => false,
-            'post_migrate' => false,
-            'member_edit' => false
+            'post_migrate' => false
         );
         
-        $this->add_role('ban',array(
-            'name' => __('Ban','wp-recall'),
-            'capabilities' => array()
-        ));
+        $capabilities = apply_filters('pfm_capabilities', $capabilities);
         
-        $this->add_role('guest',array(
-            'name' => __('Guest','wp-recall'),
-            'capabilities' => array(
-                'forum_view' => true,
-                'post_create' => (pfm_get_option('guest-post-create'))? true: false
-            )
-        ));
+        return $capabilities;
         
-        $this->add_role('member',array(
-            'name' => __('Member','wp-recall'),
-            'capabilities' => array_merge( 
-                $this->roles['guest']['capabilities'],
-                array(
-                    'topic_create' => true,
-                    'post_create' => true,
-                    'post_edit' => true,
-                    'topic_edit' => true
-                )
-            )
-        ));
+    }
+    
+    function setup_roles(){
         
-        $this->add_role('moderator',array(
-            'name' => __('Moderator','wp-recall'),
-            'capabilities' => array_merge( 
-                $this->roles['member']['capabilities'],
-                array(
-                    'topic_other_edit' => true,
-                    'topic_fix' => true,
-                    'topic_close' => true,
-                    'topic_migrate' => true,
-                    'post_other_edit' => true,
-                    'post_migrate' => true,
-                    'post_delete' => true
-                )
-            )
-        ));
+        $capabilities = $this->get_capabilities();
         
-        $this->add_role('administrator',array(
-            'name' => __('Administrator','wp-recall'),
-            'capabilities' => array_merge( 
-                $this->roles['moderator']['capabilities'],
-                array(
-                    'topic_delete' => true,
-                    'topic_other_delete' => true,
-                    'post_other_delete' => true,
-                    'member_edit' => true
-                )
-            )
-        ));
+        $defaultRoles = $this->get_default_roles();
 
-        $this->roles = apply_filters('pfm_setup_roles',$this->roles);
+        $this->roles = apply_filters('pfm_roles',$defaultRoles);
         
         foreach($this->roles as $role => $prop){
             $this->roles[$role]['capabilities'] = wp_parse_args( $prop['capabilities'], $capabilities );
@@ -94,7 +114,7 @@ class PrimeRoles{
         
     }
     
-    function get_capabilities($role_name){
+    function get_role_capabilities($role_name){
         
         $role = $this->get_role($role_name);
         

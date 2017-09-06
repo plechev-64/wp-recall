@@ -19,7 +19,7 @@ class PrimeUser extends PrimeRoles{
 
         $this->user_role = $this->user_id? $this->get_user_role($this->user_id): 'guest';
         
-        $this->user_capabilities = $this->get_capabilities($this->user_role);
+        $this->user_capabilities = $this->get_role_capabilities($this->user_role);
         
     }
     
@@ -35,7 +35,8 @@ class PrimeUser extends PrimeRoles{
     
     function get_user_role($user_id){
         if(!$user_id) return 'guest';
-        return ($role = get_user_meta($user_id, 'pfm_role', 1))? $role: $this->default_role;
+        $role = get_user_meta($user_id, 'pfm_role', 1);
+        return ($this->get_role($role))? $role: $this->default_role;
     }
     
     function is_can($action){

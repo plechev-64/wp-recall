@@ -28,25 +28,7 @@ jQuery(function($){
             })
         }
     });
-    
-    $.fn.extend({
-        animateCss: function (animationNameStart,functionEnd) {
-            var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-            this.addClass('animated ' + animationNameStart).one(animationEnd, function() {
-                $(this).removeClass('animated ' + animationNameStart);
-                
-                if(functionEnd){
-                    if(typeof functionEnd == 'function'){
-                        functionEnd(this);
-                    }else{
-                        $(this).animateCss(functionEnd);
-                    }
-                }
-            });
-            return this;
-        }
-    });
-    
+
     rcl_do_action('rcl_init');
 });
 

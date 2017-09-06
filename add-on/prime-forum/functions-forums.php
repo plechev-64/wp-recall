@@ -178,3 +178,9 @@ function pfm_get_forums_list(){
     return $content;
     
 }
+
+add_action('pfm_delete_forum','pfm_delete_forum_metas',10);
+function pfm_delete_forum_metas($forum_id){
+    global $wpdb;
+    return $wpdb->query("DELETE FROM ".RCL_PREF."pforum_meta WHERE object_type='forum' AND object_id='$forum_id'");
+}

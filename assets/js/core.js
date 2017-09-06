@@ -4,6 +4,28 @@ var rcl_beats = [];
 var rcl_beats_delay = 0;
 var rcl_url_params = rcl_get_value_url_params();
 
+jQuery(function($){
+    
+    $.fn.extend({
+        animateCss: function (animationNameStart,functionEnd) {
+            var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+            this.addClass('animated ' + animationNameStart).one(animationEnd, function() {
+                $(this).removeClass('animated ' + animationNameStart);
+                
+                if(functionEnd){
+                    if(typeof functionEnd == 'function'){
+                        functionEnd(this);
+                    }else{
+                        $(this).animateCss(functionEnd);
+                    }
+                }
+            });
+            return this;
+        }
+    });
+    
+});
+
 function rcl_do_action(action_name,args){
     
     var callbacks_action = rcl_actions[action_name];
