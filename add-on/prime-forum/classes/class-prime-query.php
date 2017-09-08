@@ -101,7 +101,7 @@ class PrimeQuery{
         
         $vars = array(
             'pfm-group' => get_query_var('pfm-group'),
-            'pfm-forum' => get_query_var('pfm-forum'),
+            'pfm-forum' => (get_query_var('page'))? get_query_var('page'): get_query_var('pfm-forum'),
             'pfm-topic' => get_query_var('pfm-topic'),
             'pfm-page' => get_query_var('pfm-page'),
             'search_vars' => isset($_GET['fs'])? $_GET['fs']: ''

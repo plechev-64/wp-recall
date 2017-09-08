@@ -213,7 +213,7 @@ function pfm_get_user_topics_list($master_id, $navi = true){
 
 add_action('pre_get_posts','pfm_init',10);
 function pfm_init($wp_query){
-    global $PrimeQuery,$PrimeGroup,$PrimeForum,$PrimeTopic,$PrimePost,$PrimeUser;
+    global $PrimeQuery,$PrimeUser;
     
     if(!$wp_query->is_main_query()) return;
     
@@ -230,6 +230,8 @@ function pfm_init($wp_query){
     $PrimeQuery->init_query();
     
     do_action('pfm_after_init_query');
+    
+    global $PrimeGroup,$PrimeForum,$PrimeTopic,$PrimePost;
 
     if($PrimeQuery->is_group){
             

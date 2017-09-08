@@ -74,9 +74,11 @@ function pfm_ajax_action(object,e){
         object.formdata = jQuery('#'+object['serialize_form']).serialize();
     }
     
-    object.group_id = Rcl.PForum.group_id;
-    object.forum_id = Rcl.PForum.forum_id;
-    object.topic_id = Rcl.PForum.topic_id;
+    if(Rcl.PForum){
+        object.group_id = Rcl.PForum.group_id;
+        object.forum_id = Rcl.PForum.forum_id;
+        object.topic_id = Rcl.PForum.topic_id;
+    }
     
     object.action = 'pfm_ajax_action';
     object.ajax_nonce = Rcl.nonce;
