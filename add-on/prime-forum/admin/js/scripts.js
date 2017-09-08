@@ -26,7 +26,7 @@ jQuery(document).ready(function($) {
 
                 rcl_notice(result['success'],'success',10000);
                 
-                form.parents('li').find('.field-title').text(result['title']);
+                form.parents('li#field-' + result.id).find('.field-title').text(result['title']);
             }
         });
         

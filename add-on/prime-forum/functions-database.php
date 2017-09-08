@@ -698,6 +698,9 @@ function pfm_update_topic($args){
         )
     );
     
+    if($result)
+        wp_cache_delete( json_encode(array('pfm_topic_permalink',$topic_id)) );
+    
     do_action('pfm_update_topic',$topic_id);
     
     return $result;

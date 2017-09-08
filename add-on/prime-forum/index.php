@@ -211,8 +211,8 @@ function pfm_get_user_topics_list($master_id, $navi = true){
     
 }
 
-add_action('pre_get_posts','pfm_init_query',10);
-function pfm_init_query($wp_query){
+add_action('pre_get_posts','pfm_init',10);
+function pfm_init($wp_query){
     global $PrimeQuery,$PrimeGroup,$PrimeForum,$PrimeTopic,$PrimePost,$PrimeUser;
     
     if(!$wp_query->is_main_query()) return;
@@ -228,6 +228,22 @@ function pfm_init_query($wp_query){
     $PrimeQuery = new PrimeQuery();
     
     $PrimeQuery->init_query();
+    
+    do_action('pfm_after_init_query');
+
+    if($PrimeQuery->is_group){
+            
+        $PrimeGroup = $PrimeQuery->object;
+
+    }else if($PrimeQuery->is_forum){
+
+        $PrimeForum = $PrimeQuery->object;
+
+    }else if($PrimeQuery->is_topic){
+
+        $PrimeTopic = $PrimeQuery->object;
+
+    }
     
     do_action('pfm_init');
 

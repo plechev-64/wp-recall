@@ -247,7 +247,7 @@ function pfm_the_topic_manager(){
     
 }
 
-add_action('init','pfm_init_actions');
+add_action('pfm_after_init_query', 'pfm_init_actions', 30);
 function pfm_init_actions(){
     global $user_ID;
     
@@ -260,25 +260,6 @@ function pfm_init_actions(){
     $action = $pfmData['action'];
     
     switch($action){
-        case 'group_create': //добавление группы
-            
-            pfm_add_group(array(
-                'group_name' => $_REQUEST['group_name'],
-                'group_slug' => $_REQUEST['group_slug'],
-                'group_desc' => $_REQUEST['group_desc']
-            ));
-            
-        break;
-        case 'forum_create': //создание форума
-            
-            pfm_add_forum(array(
-                'forum_name' => $_REQUEST['forum_name'],
-                'forum_desc' => $_REQUEST['forum_desc'],
-                'forum_slug' => $_REQUEST['forum_slug'],
-                'group_id' => $_REQUEST['group_id']
-            ));
-            
-        break;
         case 'topic_create': //создание топика
             
             if(!pfm_is_can('topic_create') || !$pfmData['forum_id']) return false;
@@ -351,26 +332,7 @@ function pfm_init_actions(){
             wp_redirect(pfm_get_post_permalink($pfmData['post_id'])); exit;
             
         break;
-        case 'group_delete': //удаление группы
-            
-            if(!$pfmData['group_id']) return false;
-            
-            pfm_delete_group($pfmData['group_id'], $pfmData['migrate_group']);
-            
-            wp_redirect(admin_url('admin.php?page=pfm-forums')); exit;
-            
-        break;
-        case 'forum_delete': //удаление форума
-            
-            if(!$pfmData['forum_id']) return false;
-            
-            $group = pfm_get_forum($pfmData['forum_id']);
-            
-            pfm_delete_forum($pfmData['forum_id'], $pfmData['migrate_forum']);
-            
-            wp_redirect(admin_url('admin.php?page=pfm-forums&group-id='.$group->group_id)); exit;
-            
-        break;
+        
         case 'topic_from_post_create': //создание топика из поста
             
             if(!pfm_is_can('post_migrate') || !$pfmData['forum_id']) return false;
@@ -420,7 +382,7 @@ function pfm_init_actions(){
             
             $migratedTopic = pfm_get_topic($pfmData['topic_id']);
             
-            $topic_id = pfm_update_topic(array(
+            pfm_update_topic(array(
                 'topic_id' => $pfmData['topic_id'],
                 'forum_id' => $pfmData['forum_id']
             ));

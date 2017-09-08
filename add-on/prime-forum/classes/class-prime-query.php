@@ -81,17 +81,17 @@ class PrimeQuery{
             
         }else{
             
-            add_action('pfm_query_init',array($this,'add_forums_data_in_home'),10);
-            add_action('pfm_query_init',array($this,'add_child_forums'),10);
-            add_action('pfm_query_init',array($this,'init_canonical_url'),10);
+            add_action('pfm_init_query',array($this,'add_forums_data_in_home'),10);
+            add_action('pfm_init_query',array($this,'add_child_forums'),10);
+            add_action('pfm_init_query',array($this,'init_canonical_url'),10);
             
-            add_action('pfm_query_init',array($this,'setup_last_items'),15);
+            add_action('pfm_init_query',array($this,'setup_last_items'),15);
             
             $this->setup_page_data();
             
             $this->init_child_items();
             
-            do_action('pfm_query_init',$this);
+            do_action('pfm_init_query',$this);
             
         }
 
@@ -99,13 +99,17 @@ class PrimeQuery{
     
     function init_vars(){
         
-        $this->vars = array(
+        $vars = array(
             'pfm-group' => get_query_var('pfm-group'),
             'pfm-forum' => get_query_var('pfm-forum'),
             'pfm-topic' => get_query_var('pfm-topic'),
             'pfm-page' => get_query_var('pfm-page'),
             'search_vars' => isset($_GET['fs'])? $_GET['fs']: ''
         );
+        
+        $this->vars = apply_filters('pfm_vars', $vars);
+        
+        do_action('pfm_init_vars', $this->vars);
 
     }
     
@@ -222,7 +226,6 @@ class PrimeQuery{
     }
     
     function init_queried_object(){
-        global $PrimeGroup,$PrimeForum,$PrimeTopic;
         
         $args = $this->get_args_object();
         
@@ -249,21 +252,7 @@ class PrimeQuery{
         }
         
         $this->object = apply_filters('pfm_query_object', $object[0]);
-        
-        if($this->is_group){
-            
-            $PrimeGroup = $this->object;
-        
-        }else if($this->is_forum){
-            
-            $PrimeForum = $this->object;
-            
-        }else if($this->is_topic){
-            
-            $PrimeTopic = $this->object;
-            
-        }
-        
+
     }
     
     function get_args_child_items(){

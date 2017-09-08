@@ -455,7 +455,8 @@ function pfm_manager_update_group($options){
     
     return array(
         'success' => __('Changes saved!','wp-recall'),
-        'title' => $options['group_name']
+        'title' => $options['group_name'],
+        'id' => $options['group_id']
     );
     
 }
@@ -475,7 +476,8 @@ function pfm_manager_update_forum($options){
     
     $result = array(
         'success' => __('Changes saved!','wp-recall'),
-        'title' => $options['forum_name']
+        'title' => $options['forum_name'],
+        'id' => $options['forum_id']
     );
     
     if(isset($options['group_id']) && $forum->group_id != $options['group_id']){
@@ -730,4 +732,63 @@ function rcl_forum_metabox(){
     }
     echo '</table>';
     echo '<p><a href="'.pfm_get_home_url().'" target="_blank">'.__('Go to forum','wp-recall').'</a></p>';
+}
+
+add_action('admin_init','pfm_init_admin_actions');
+function pfm_init_admin_actions(){
+    global $user_ID;
+    
+    if(!isset($_REQUEST['pfm-data']) || !isset($_REQUEST['pfm-data']['action'])) return;
+    
+    if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'],'pfm-action')) return;
+    
+    $pfmData = $_REQUEST['pfm-data'];
+    
+    $action = $pfmData['action'];
+    
+    switch($action){
+        case 'group_create': //добавление группы
+            
+            pfm_add_group(array(
+                'group_name' => $_REQUEST['group_name'],
+                'group_slug' => $_REQUEST['group_slug'],
+                'group_desc' => $_REQUEST['group_desc']
+            ));
+            
+        break;
+        case 'forum_create': //создание форума
+            
+            pfm_add_forum(array(
+                'forum_name' => $_REQUEST['forum_name'],
+                'forum_desc' => $_REQUEST['forum_desc'],
+                'forum_slug' => $_REQUEST['forum_slug'],
+                'group_id' => $_REQUEST['group_id']
+            ));
+            
+        break;
+        case 'group_delete': //удаление группы
+            
+            if(!$pfmData['group_id']) return false;
+            
+            pfm_delete_group($pfmData['group_id'], $pfmData['migrate_group']);
+            
+            wp_redirect(admin_url('admin.php?page=pfm-forums')); exit;
+            
+        break;
+        case 'forum_delete': //удаление форума
+            
+            if(!$pfmData['forum_id']) return false;
+            
+            $group = pfm_get_forum($pfmData['forum_id']);
+            
+            pfm_delete_forum($pfmData['forum_id'], $pfmData['migrate_forum']);
+            
+            wp_redirect(admin_url('admin.php?page=pfm-forums&group-id='.$group->group_id)); exit;
+            
+        break;
+        
+    }
+    
+    wp_redirect($_POST['_wp_http_referer']); exit;
+    
 }
