@@ -457,7 +457,7 @@ function pfm_init_actions(){
 add_action('wp_ajax_pfm_ajax_action','pfm_ajax_action');
 add_action('wp_ajax_nopriv_pfm_ajax_action','pfm_ajax_action');
 function pfm_ajax_action(){
-    global $PrimeActions,$PrimeQuery;
+    global $PrimeActions, $PrimeQuery, $PrimeUser;
     
     rcl_verify_ajax_nonce();
     
@@ -466,6 +466,8 @@ function pfm_ajax_action(){
     $itemID = (isset($_POST['item_id']))? $_POST['item_id']: null;
     
     if(!isset($PrimeActions[$method])) exit;
+    
+    $PrimeUser = new PrimeUser();
     
     $PrimeQuery = new PrimeQuery();
     
@@ -1143,8 +1145,7 @@ function pfm_action_get_preview($action){
     }
     
     global $PrimeShorts,$PrimePost,$PrimeUser,$user_ID;
-    
-    $PrimeUser = new PrimeUser();
+
     $PrimeShorts = pfm_get_shortcodes();   
 
     $theme = rcl_get_addon(get_option('rcl_pforum_template'));

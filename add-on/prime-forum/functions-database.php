@@ -575,13 +575,17 @@ function pfm_update_group($args){
         
     }
     
-    return $wpdb->update(
+    $result = $wpdb->update(
         RCL_PREF.'pforum_groups',
         $args,
         array(
             'group_id' => $group_id
         )
     );
+    
+    do_action('pfm_update_group', $group_id);
+    
+    return $result;
     
 }
 

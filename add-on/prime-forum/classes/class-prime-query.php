@@ -230,18 +230,12 @@ class PrimeQuery{
 
         if($this->is_group){
             
-            $this->object = $this->groups_query->get_row($args);
-            
-            $PrimeGroup = $this->object;
+            $object = $this->groups_query->get_results($args);
         
         }else if($this->is_forum){
             
             $object = $this->forums_query->get_results($args);
-            
-            $this->object = $object[0];
-            
-            $PrimeForum = $this->object;
-            
+
         }else if($this->is_topic){
             
             $this->topics_query->reset_query();
@@ -252,7 +246,19 @@ class PrimeQuery{
             
             $object = $this->topics_query->get_data('get_results');
             
-            $this->object = $object[0];
+        }
+        
+        $this->object = apply_filters('pfm_query_object', $object[0]);
+        
+        if($this->is_group){
+            
+            $PrimeGroup = $this->object;
+        
+        }else if($this->is_forum){
+            
+            $PrimeForum = $this->object;
+            
+        }else if($this->is_topic){
             
             $PrimeTopic = $this->object;
             

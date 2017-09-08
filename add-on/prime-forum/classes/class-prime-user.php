@@ -17,7 +17,8 @@ class PrimeUser extends PrimeRoles{
         
         parent::__construct();
 
-        $this->user_role = $this->user_id? $this->get_user_role($this->user_id): 'guest';
+        if(!$this->user_role)
+            $this->user_role = $this->user_id? $this->get_user_role($this->user_id): 'guest';
         
         $this->user_capabilities = $this->get_role_capabilities($this->user_role);
         
@@ -34,8 +35,18 @@ class PrimeUser extends PrimeRoles{
     }
     
     function get_user_role($user_id){
+        global $PrimeUser;
+        
         if(!$user_id) return 'guest';
-        $role = get_user_meta($user_id, 'pfm_role', 1);
+        
+        if($PrimeUser && $PrimeUser->user_id == $user_id){
+            $role = $PrimeUser->user_role;
+        }else{
+            $role = get_user_meta($user_id, 'pfm_role', 1);
+        }
+        
+        $role = apply_filters('pfm_user_role', $role, $user_id);
+        
         return ($this->get_role($role))? $role: $this->default_role;
     }
     
