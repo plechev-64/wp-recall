@@ -7,11 +7,13 @@ class PrimeUser extends PrimeRoles{
     public $default_role = 'member';
     public $user_capabilities;
     
-    function __construct($args = false) {
+    function __construct($args = array()) {
         global $user_ID;
-        
+
         if(!isset($args['user_id']))
             $args['user_id'] = $user_ID;
+        
+        $args = apply_filters('pfm_setup_user', $args);
         
         $this->init_properties($args);
         

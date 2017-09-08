@@ -294,6 +294,14 @@ function pfm_init_js_variables($data){
     
     if(!$PrimeQuery->is_forum && !$PrimeQuery->is_topic) return $data;
     
+    $pfm = array(
+        'group_id' => $PrimeQuery->object->group_id,
+        'forum_id' => $PrimeQuery->object->forum_id,
+        'topic_id' => $PrimeQuery->object->topic_id
+    );
+    
+    $data['PForum'] = $pfm;
+    
     $tags = array(
         array('pfm_pre', __('pre','wp-recall'), '<pre>', '</pre>', 'h', __('Multiline code','wp-recall'), 100),
         array('pfm_spoiler', __('Spoiler','wp-recall'), '[spoiler]', '[/spoiler]', 'h', __('Spoiler','wp-recall'), 120),

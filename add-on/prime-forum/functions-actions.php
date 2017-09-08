@@ -1145,7 +1145,7 @@ function pfm_action_get_preview($action){
     }
     
     global $PrimeShorts,$PrimePost,$PrimeUser,$user_ID;
-
+    
     $PrimeShorts = pfm_get_shortcodes();   
 
     $theme = rcl_get_addon(get_option('rcl_pforum_template'));
