@@ -6,7 +6,7 @@
         <div class="prime-forum-title">
             <div class="prime-general-title"><a class="" title="Перейти в форум" href="<?php pfm_the_forum_permalink(); ?>"><?php pfm_the_forum_name(); ?></a></div>
             <div class="prime-forum-description"><?php pfm_the_forum_description(); ?></div>
-            
+            <?php pfm_page_navi(array('type'=>'forum')); ?>
             <?php if(pfm_have_subforums()): ?>         
                 <div class="prime-subforums-list">
                     <?php _e('Subforums:','wp-recall'); ?> <?php pfm_subforums_list(); ?>

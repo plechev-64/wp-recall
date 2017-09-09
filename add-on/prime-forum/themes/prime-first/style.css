@@ -188,6 +188,19 @@
     padding: 5px;
     width: 100%;
 }
+#prime-forum .prime-forum-item .rcl-pager{
+    text-align: left;
+    font-size: 12px;
+}
+#prime-forum .prime-forum-item .rcl-pager .pager-item{
+    
+}
+#prime-forum .prime-forum-item .rcl-pager .pager-item > span,
+#prime-forum .prime-forum-item .rcl-pager .pager-item > a{
+    margin: 0;
+    padding: 2px 7px;
+    background: none;
+}
 #prime-forum .prime-group-box .prime-group.view-children-forums {
     line-height: 1;
     margin: 0;

@@ -163,7 +163,7 @@ function pfm_get_user_topics_list($master_id, $navi = true){
     $args = array(
         'user_id' => $master_id,
         'offset' => $pageNavi->offset,
-        'number' => $pageNavi->in_page,
+        'number' => $navi? $pageNavi->in_page: 50,
         'join_query' => array(
             array(
                 'table' => $PostsQuery->query['table'],

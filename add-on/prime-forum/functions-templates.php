@@ -417,9 +417,9 @@ function pfm_the_breadcrumbs(){
     <?php
 }
 
-function pfm_page_navi(){
+function pfm_page_navi($args = array()){
     
-    $Navi = new PrimePageNavi();
+    $Navi = new PrimePageNavi($args);
         
     echo $Navi->pagenavi();
  
