@@ -175,6 +175,9 @@ function pfm_the_notices(){
         }
         
     }
+    
+    do_action('pfm_the_notices');
+    
 }
 
 function pfm_get_notice($notice, $type = 'notice'){
