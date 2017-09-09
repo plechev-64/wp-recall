@@ -161,8 +161,7 @@ function pfm_get_user_topics_list($master_id, $navi = true){
         $pageNavi = new Rcl_PageNavi('forum',$countTopics,array('in_page'=>20));
     
     $args = array(
-        'user_id' => $master_id,
-        'offset' => $pageNavi->offset,
+        'offset' => $navi? $pageNavi->offset: 0,
         'number' => $navi? $pageNavi->in_page: 50,
         'join_query' => array(
             array(
@@ -182,7 +181,7 @@ function pfm_get_user_topics_list($master_id, $navi = true){
     );
 
     $TopicsQuery->query['orderby'] = "MAX(pfm_posts.post_date)";
-
+    
     $topics = $TopicsQuery->get_data('get_results');
     
     $PrimeQuery->last['posts'] = $PrimeQuery->get_topics_last_post($topics);
