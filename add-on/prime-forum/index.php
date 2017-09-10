@@ -18,6 +18,7 @@ require_once 'functions-actions.php';
 require_once 'functions-capabilities.php';
 require_once 'functions-compatibility.php';
 require_once 'functions-database.php';
+require_once 'functions-meta.php';
 require_once 'functions-forms.php';
 require_once 'functions-groups.php';
 require_once 'functions-forums.php';

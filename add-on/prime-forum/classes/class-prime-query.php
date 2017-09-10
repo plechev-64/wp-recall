@@ -25,6 +25,7 @@ class PrimeQuery{
     public $number = 20;
     public $all_items = 0;
     public $current_page = 1;
+    public $meta = array();
     public $parent_groups = array();
     public $last = array(
         'topics' => array(),
@@ -86,6 +87,7 @@ class PrimeQuery{
             add_action('pfm_init_query',array($this,'init_canonical_url'),10);
             
             add_action('pfm_init_query',array($this,'setup_last_items'),15);
+            add_action('pfm_init_query',array($this,'setup_meta'), 17);
             
             $this->setup_page_data();
             
@@ -764,6 +766,118 @@ class PrimeQuery{
         
         }
 
+    }
+    
+    function setup_meta(){
+        global $wpdb;
+        
+        $PrimeMeta = new PrimeMeta();
+        
+        $table = $PrimeMeta->query['table']['name'];
+        $as = $PrimeMeta->query['table']['as'];
+        
+        $childrens = array();
+        
+        if($this->is_group){
+
+            if($this->forums){
+                foreach($this->forums as $forum){
+                    $childrens[] = $forum->forum_id;
+                }
+            }
+            
+            $parentID = $this->object->group_id;
+            $parentType = 'group';
+            $childrenType = 'forum';
+            
+        }else if($this->is_forum){
+
+            if($this->topics){
+                foreach($this->topics as $topic){
+                    $childrens[] = $topic->topic_id;
+                }
+            }
+            
+            $parentID = $this->object->forum_id;
+            $parentType = 'forum';
+            $childrenType = 'topic';
+            
+        }else if($this->is_topic){
+
+            $authors = array();
+            
+            if($this->posts){
+                
+                foreach($this->posts as $post){
+                    $childrens[] = $post->post_id;
+                    $authors[] = $post->user_id;
+                }
+                
+                $authors = array_unique($authors);
+                
+            }
+
+            $parentID = $this->object->topic_id;
+            $parentType = 'topic';
+            $childrenType = 'post';
+
+        }
+        
+        $sql = "SELECT "
+                . "$as.object_id, "
+                . "$as.object_type, "
+                . "$as.object_meta_key, "
+                . "$as.meta_value 
+                FROM $table AS $as 
+                WHERE $as.object_type = '$parentType' 
+                    AND $as.object_id = '$parentID'";
+
+        if($childrens){
+            $sql .= " UNION 
+                    SELECT ".
+                    $as."2.object_id, "
+                    .$as."2.object_type, "
+                    .$as."2.object_meta_key, "
+                    .$as."2.meta_value 
+                    FROM $table AS ".$as."2 
+                    WHERE ".$as."2.object_type = '$childrenType' 
+                        AND ".$as."2.object_id IN (".implode(',',$childrens).")";
+        }
+        
+        if($this->is_topic && $authors){
+            $sql .= " UNION 
+                    SELECT "
+                    .$as."3.object_id, "
+                    .$as."3.object_type, "
+                    .$as."3.object_meta_key, "
+                    .$as."3.meta_value 
+                    FROM $table AS ".$as."3 
+                    WHERE ".$as."3.object_type = 'author' 
+                        AND ".$as."3.object_id IN (".implode(',',$authors).")";
+        }
+        
+        $this->meta = $wpdb->get_results($sql);
+        
+    }
+    
+    function search_meta_value($object_id,$object_type,$meta_key){
+        
+        if(!$this->meta) return false;
+        
+        foreach($this->meta as $meta){
+            
+            if(
+                $object_id == $meta->object_id
+                && $object_type == $meta->object_type
+                && $meta_key == $meta->meta_key
+            ){
+                return $meta->meta_value;
+            }
+            
+        }
+        
+        return false;
+        
     }
     
 }

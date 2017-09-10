@@ -75,7 +75,7 @@ function pfm_get_topic_meta_box($topic_id){
     
     foreach($fields as $field){
 
-        $value = pfm_get_meta($topic_id,'topic',$field['slug']);
+        $value = pfm_get_topic_meta($topic_id,$field['slug']);
         
         $content .= $CF->get_field_value($field,$value);
     }
@@ -132,9 +132,9 @@ function pfm_update_topic_custom_fields($topic_id){
                 }
                 
                 if($vals){
-                    pfm_update_meta($topic_id, 'topic', $slug, $vals);
+                    pfm_update_topic_meta($topic_id, $slug, $vals);
                 }else{
-                    pfm_delete_meta($topic_id, 'topic', $slug);
+                    pfm_delete_topic_meta($topic_id, $slug);
                 }
 
             }else if($field['type']=='file'){
@@ -142,15 +142,15 @@ function pfm_update_topic_custom_fields($topic_id){
                 $attach_id = rcl_upload_meta_file($field,$topic->user_id,0);
                 
                 if($attach_id) 
-                    pfm_update_meta($topic_id, 'topic', $slug, $attach_id);
+                    pfm_update_topic_meta($topic_id, $slug, $attach_id);
 
             }else{
 
                 if($value){
-                    pfm_update_meta($topic_id, 'topic', $slug, $value);
+                    pfm_update_topic_meta($topic_id, $slug, $value);
                 }else{
-                    if(pfm_get_meta($topic_id, 'topic', $slug, 1)) 
-                            pfm_delete_meta($topic_id, 'topic', $slug);
+                    if(pfm_get_topic_meta($topic_id, $slug, 1)) 
+                            pfm_delete_topic_meta($topic_id, $slug);
                 }
 
             }
@@ -205,7 +205,7 @@ function pfm_delete_topic_form_custom_meta($topic_id){
     if(!$metas) return false;
     
     foreach($metas as $meta){
-        pfm_delete_meta($topic_id,'topic',$meta->meta_key);
+        pfm_delete_topic_meta($topic_id,$meta->meta_key);
     }
     
 }
@@ -233,6 +233,6 @@ function pfm_update_topic_author_count($topic_id){
     
     $topicCount = $Topics->count(array('user_id' => $topic->user_id));
     
-    pfm_update_meta($topic->user_id,'author','topic_count',$topicCount);
+    pfm_update_author_meta($topic->user_id,'topic_count',$topicCount);
 
 }

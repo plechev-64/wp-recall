@@ -85,7 +85,7 @@ function pfm_update_post_author_count($post_id){
     
     $postCount = $Posts->count(array('user_id' => $post->user_id));
     
-    pfm_update_meta($post->user_id,'author','post_count',$postCount);
+    pfm_update_author_meta($post->user_id,'post_count',$postCount);
 
 }
 
@@ -187,13 +187,13 @@ function pfm_add_author_counters(){
     global $PrimePost; 
     if(!$PrimePost->user_id) return false; 
     
-    if($tcount = pfm_get_meta($PrimePost->user_id,'author','topic_count')){ ?>
+    if($tcount = pfm_get_author_meta($PrimePost->user_id,'topic_count')){ ?>
     <div class="prime-author-meta prime-author-topics">
         <span><?php echo __('Topics','wp-recall'); ?></span>
         <span><?php echo $tcount; ?></span>
     </div>
     <?php }
-    if($pcount = pfm_get_meta($PrimePost->user_id,'author','post_count')){ ?>
+    if($pcount = pfm_get_author_meta($PrimePost->user_id,'post_count')){ ?>
     <div class="prime-author-meta prime-author-posts">
         <span><?php echo __('Messages','wp-recall'); ?></span>
         <span><?php echo $pcount; ?></span>

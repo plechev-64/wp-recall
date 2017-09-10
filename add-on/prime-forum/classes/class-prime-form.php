@@ -164,7 +164,7 @@ class PrimeForm extends Rcl_Custom_Fields{
     }
     
     function add_post_field($fields){
-
+        
         $fields[] = array(
             'type' => 'hidden',
             'slug' => 'post_id',

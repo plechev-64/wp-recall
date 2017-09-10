@@ -288,6 +288,7 @@ function pfm_update_topic_data($topic_id){
 }
 
 function pfm_update_topic_counter($topic_id){
+    global $wpdb;
     
     $PostQuery = new PrimePosts();
     
@@ -295,10 +296,15 @@ function pfm_update_topic_counter($topic_id){
         'topic_id' => $topic_id
     ));
     
-    pfm_update_topic(array(
-        'topic_id' => $topic_id,
-        'post_count' => $counter
-    ));
+    $wpdb->update(
+        RCL_PREF.'pforum_topics',
+        array(
+            'post_count' => $counter
+        ),
+        array(
+            'topic_id' => $topic_id
+        )
+    );
     
     return $counter;
 
@@ -535,10 +541,15 @@ function pfm_add_post($args){
     if(!$result)
         return false;
     
-    pfm_update_topic(array(
-        'topic_id' => $args['topic_id'],
-        'post_count' => $postCount
-    ));
+    $wpdb->update(
+        RCL_PREF.'pforum_topics',
+        array(
+            'post_count' => $postCount
+        ),
+        array(
+            'topic_id' => $args['topic_id']
+        )
+    );
     
     $post_id = $wpdb->insert_id;
     
@@ -756,17 +767,24 @@ function pfm_get_meta($object_id,$object_type,$meta_key){
     if ( $cache )
         return $cache;
     
-    $Meta = new PrimeMeta();
-    $value = maybe_unserialize(
-        $Meta->get_var(
-            array(
-                'object_id' => $object_id,
-                'object_type' => $object_type,
-                'meta_key' => $meta_key,
-                'fields' => array('meta_value')
-            )
-        )      
-    );
+    $value = pfm_get_query_meta_value($object_id,$object_type,$meta_key);
+
+    if(!$value){
+    
+        $Meta = new PrimeMeta();
+        
+        $value = maybe_unserialize(
+            $Meta->get_var(
+                array(
+                    'object_id' => $object_id,
+                    'object_type' => $object_type,
+                    'meta_key' => $meta_key,
+                    'fields' => array('meta_value')
+                )
+            )      
+        );
+    
+    }
     
     wp_cache_add( $cachekey, $value );
     

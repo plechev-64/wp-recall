@@ -107,7 +107,7 @@ class Rcl_Custom_Fields{
             $cnt = count($this->value);
             foreach((array)$this->value as $k=>$val){
                 $field .= '<span class="dynamic-value">';
-                $field .= '<input type="text" '.$this->required.' '.$this->placeholder.' name="'.$args['name'].'[]" maxlength="50" value="'.$val.'"/>';
+                $field .= '<input type="text" '.$this->required.' '.$this->placeholder.' name="'.$args['name'].'[]" value="'.$val.'"/>';
                 if($cnt==($k+1)){
                     $field .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="fa fa-plus" aria-hidden="true"></i></a>';
                 }else{
@@ -117,7 +117,7 @@ class Rcl_Custom_Fields{
             }
         }else{
             $field .= '<span class="dynamic-value">';
-            $field .= '<input type="text" '.$this->required.' '.$this->placeholder.' name="'.$args['name'].'[]" maxlength="50" value=""/>';
+            $field .= '<input type="text" '.$this->required.' '.$this->placeholder.' name="'.$args['name'].'[]" value=""/>';
             $field .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="fa fa-plus" aria-hidden="true"></i></a>';
             $field .= '</span>';
         }
