@@ -1,4 +1,5 @@
 <div class="prime-forum-item <?php pfm_the_topic_classes(); ?>">
+    <?php pfm_the_topic_manager(); ?>
     <div class="prime-forum-icon">
         <i class="fa fa-circle" aria-hidden="true"></i>
     </div>

@@ -758,7 +758,7 @@ pfm_add_ajax_action('topic_delete','pfm_action_topic_delete');
 function pfm_action_topic_delete($topic_id){
     
     if(!pfm_is_can_topic_delete($topic_id)) return false;
-            
+       
     $topic = pfm_get_topic($topic_id);
 
     if(!$topic){ 
@@ -768,8 +768,13 @@ function pfm_action_topic_delete($topic_id){
     }else{
 
         pfm_delete_topic($topic_id);
+        
+        $url = pfm_get_forum_permalink($topic->forum_id);
 
-        $result['url-redirect'] = pfm_get_forum_permalink($topic->forum_id);
+        if(isset($_POST['topic_id']) && $_POST['topic_id'])
+            $result['url-redirect'] = $url;
+        else
+            $result['url-redirect'] = pfm_add_number_page($url, $_POST['current_page']);
 
     }
     

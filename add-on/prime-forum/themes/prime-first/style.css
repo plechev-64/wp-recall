@@ -187,6 +187,8 @@
     margin: 10px 0;
     padding: 5px;
     width: 100%;
+    position:relative;
+    overflow: hidden;
 }
 #prime-forum .prime-forum-item .rcl-pager{
     text-align: left;
@@ -201,6 +203,31 @@
     margin: 0;
     padding: 2px 7px;
     background: none;
+}
+#prime-forum .prime-forum-item .prime-manager ul{
+    padding: 4px 2px 2px;
+    background: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+#prime-forum .prime-forum-item .prime-manager li{
+    margin: 0px 5px;
+}
+#prime-forum .prime-forum-item .prime-manager li a{
+    font-size: 13px;
+}
+#prime-forum .prime-forum-item .topic-manager{
+    position: absolute;
+    top: -2px;
+    left: 0;
+    box-shadow: 1px 1px 1px #ccc;
+    display: none;
+}
+#prime-forum .prime-forum-item:hover .topic-manager{
+    animation-duration:.5s;
+    animation-delay:.5s;
+    animation-fill-mode:both;
+    animation-name: slideInDown;
+    display: block;
 }
 #prime-forum .prime-group-box .prime-group.view-children-forums {
     line-height: 1;

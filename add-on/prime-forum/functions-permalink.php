@@ -210,12 +210,7 @@ function pfm_get_post_page_permalink($post_id){
     $url = untrailingslashit(pfm_get_topic_permalink($post->topic_id));
     
     if($page != 1){
-        if ( '' != get_option('permalink_structure') ) {
-            $url .= '/page/'.$page;
-            $url = user_trailingslashit($url);
-        }else{
-            $url = add_query_arg(array('pfm-page' => $page), $url);
-        }
+        $url = pfm_add_number_page($url, $page_id);
     }else{
         $url = user_trailingslashit($url);
     }
@@ -233,4 +228,14 @@ function pfm_get_post_permalink($post_id){
 
     return $url;
     
+}
+
+function pfm_add_number_page($url,$page_id){
+    if ( '' != get_option('permalink_structure') ) {
+        $url = untrailingslashit($url).'/page/'.$page_id;
+        $url = user_trailingslashit($url);
+    }else{
+        $url = add_query_arg(array('pfm-page' => $page_id));
+    }
+    return $url;
 }

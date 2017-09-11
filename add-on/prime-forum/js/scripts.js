@@ -78,6 +78,7 @@ function pfm_ajax_action(object,e){
         object.group_id = Rcl.PForum.group_id;
         object.forum_id = Rcl.PForum.forum_id;
         object.topic_id = Rcl.PForum.topic_id;
+        object.current_page = Rcl.PForum.current_page;
     }
     
     object.action = 'pfm_ajax_action';

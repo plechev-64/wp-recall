@@ -66,12 +66,7 @@ class PrimePageNavi extends Rcl_PageNavi{
         }
         
         if($page_id != 1){
-            if ( '' != get_option('permalink_structure') ) {
-                $url = untrailingslashit($url).'/page/'.$page_id;
-                $url = user_trailingslashit($url);
-            }else{
-                $url = add_query_arg(array('pfm-page' => $page_id));
-            }
+            $url = pfm_add_number_page($url,$page_id);
         }
         
         if($PrimeQuery->is_search){

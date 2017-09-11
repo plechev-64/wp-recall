@@ -315,7 +315,8 @@ function pfm_init_js_variables($data){
     $pfm = array(
         'group_id' => $PrimeQuery->object->group_id,
         'forum_id' => $PrimeQuery->object->forum_id,
-        'topic_id' => $PrimeQuery->object->topic_id
+        'topic_id' => $PrimeQuery->object->topic_id,
+        'current_page' => $PrimeQuery->current_page
     );
     
     $data['PForum'] = $pfm;

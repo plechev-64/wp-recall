@@ -14,7 +14,6 @@ class PrimeQuery{
     public $forums;
     public $topics;
     public $posts;
-    public $authors;
     public $canonical = '';
     public $errors = array();
     public $groups_query;
@@ -826,7 +825,7 @@ class PrimeQuery{
         $sql = "SELECT "
                 . "$as.object_id, "
                 . "$as.object_type, "
-                . "$as.object_meta_key, "
+                . "$as.meta_key, "
                 . "$as.meta_value 
                 FROM $table AS $as 
                 WHERE $as.object_type = '$parentType' 
@@ -837,7 +836,7 @@ class PrimeQuery{
                     SELECT ".
                     $as."2.object_id, "
                     .$as."2.object_type, "
-                    .$as."2.object_meta_key, "
+                    .$as."2.meta_key, "
                     .$as."2.meta_value 
                     FROM $table AS ".$as."2 
                     WHERE ".$as."2.object_type = '$childrenType' 
@@ -849,7 +848,7 @@ class PrimeQuery{
                     SELECT "
                     .$as."3.object_id, "
                     .$as."3.object_type, "
-                    .$as."3.object_meta_key, "
+                    .$as."3.meta_key, "
                     .$as."3.meta_value 
                     FROM $table AS ".$as."3 
                     WHERE ".$as."3.object_type = 'author' 
