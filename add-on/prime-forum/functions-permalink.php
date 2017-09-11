@@ -202,14 +202,14 @@ function pfm_get_post_page_permalink($post_id){
     
     $lastPage = ceil($topic->post_count / $PostsQuery->number);
     
-    for($page = 1; $page <= $lastPage; $page++){
-        $lastIndex = $PostsQuery->number * $page;
+    for($page_id = 1; $page_id <= $lastPage; $page_id++){
+        $lastIndex = $PostsQuery->number * $page_id;
         if($post->post_index <= $lastIndex) break;
     }
     
     $url = untrailingslashit(pfm_get_topic_permalink($post->topic_id));
     
-    if($page != 1){
+    if($page_id != 1){
         $url = pfm_add_number_page($url, $page_id);
     }else{
         $url = user_trailingslashit($url);
