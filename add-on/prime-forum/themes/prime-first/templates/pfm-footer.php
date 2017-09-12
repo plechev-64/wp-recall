@@ -1,4 +1,6 @@
 <div class="prime-forum-footer">
-    <?php pfm_the_visitors(); ?>
+
+    <?php do_action('pfm_footer'); ?>
+    
 </div>
 

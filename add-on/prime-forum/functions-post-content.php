@@ -1,56 +1,16 @@
 <?php
 
+function pfm_sort_array_by_string($a, $b){
+    if (strlen($a) < strlen($b)) { return 1; } elseif (strlen($a) == strlen($b)) { return 0; } else { return -1; }
+}
+
 add_action('pfm_init','pfm_reset_oembed_filter');
 add_action('pfm_pre_ajax_action','pfm_reset_oembed_filter');
 function pfm_reset_oembed_filter(){
     remove_filter( 'pre_oembed_result', 'wp_filter_pre_oembed_result', 10 );
 }
 
-add_filter('pfm_the_post_content','pfm_filter_tags_post_content',10);
-function pfm_filter_tags_post_content($content){
-    
-    //$content = force_balance_tags($content);
-    
-    $content = esc_html($content);
-    
-    $content = str_replace(
-        array(
-            '&lt;blockquote&gt;',
-            '&lt;/blockquote&gt;',
-            '&lt;strong&gt;',
-            '&lt;/strong&gt;',
-            '&lt;b&gt;',
-            '&lt;/b&gt;',
-            '&lt;em&gt;',
-            '&lt;/em&gt;',
-            '&lt;s&gt;',
-            '&lt;/s&gt;',
-        ), 
-        array(
-            '<blockquote>',
-            '</blockquote>',
-            '<strong>',
-            '</strong>',
-            '<b>',
-            '</b>',
-            '<em>',
-            '</em>',
-            '<s>',
-            '</s>',
-        ), $content);
-    
-    $content = preg_replace('/&lt;pre[\s]class=&quot;(.+)&quot;&gt;(.+)&lt;\/pre&gt;/Uuis', '<pre>$2</pre>', $content);
-    $content = preg_replace('/&lt;div[\s]class=&quot;sfcode&quot;&gt;(.+)&lt;\/div&gt;/Uuis', '<pre>$1</pre>', $content);
-
-    $content = preg_replace('/&lt;code&gt;(.+)&lt;\/code&gt;/Uuis', '<code>$1</code>', $content);
-    $content = preg_replace('/&lt;pre&gt;(.+)&lt;\/pre&gt;/Uuis', '<pre>$1</pre>', $content);
-    
-    $content = preg_replace('/&lt;del(.+)&gt;(.+)&lt;\/del&gt;/Uuis', '<del>$2</del>', $content);
-
-    return $content;
-}
-
-add_filter('pfm_the_post_content','pfm_filter_content',11);
+add_filter('pfm_the_post_content','pfm_filter_content',10);
 function pfm_filter_content($content){
 
     preg_match_all('/<pre>(.+)<\/pre>/Uuis', $content, $pres);
@@ -64,52 +24,91 @@ function pfm_filter_content($content){
         }
     }
     
-    $content = apply_filters('pfm_filter_content_without_pretags',$content);
+    preg_match_all('/<code>(.+)<\/code>/Uuis', $content, $codes);
+    
+    if($codes){
+        
+        foreach( $codes[0] as $k=>$code ){
 
+            $content = str_replace($code, '<!--code'.$k.'-->', $content);
+
+        }
+    }
+    
+    $content = apply_filters('pfm_content_without_code',$content);
+
+    if($codes){
+        
+        foreach( $codes[1] as $k=>$codeContent ){
+
+            $content = str_replace('<!--code'.$k.'-->', '<code>'.esc_html($codeContent).'</code>', $content);
+
+        }
+    }
+    
     if($pres){
         
-        foreach( $pres[0] as $k=>$pre ){
-
-            $content = str_replace('<!--pre'.$k.'-->', $pre, $content);
-
-        }
-    }
-    
-    return $content;
-}
-
-add_filter('pfm_the_post_content','pfm_add_smilies_post_content',12);
-function pfm_add_smilies_post_content($content){
-    
-    if(function_exists('convert_smilies')) 
-        $content = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $content ) );
-    
-    return $content;
-}
-
-add_filter('pfm_filter_content_without_pretags','pfm_filter_imgs',10);
-function pfm_filter_imgs($content){
-
-    preg_match_all('/&lt;img(.+)src=&quot;(.+)&quot;(.+)&gt;/Ui', $content, $imgs);
-
-    if($imgs[0]){
-
-        foreach( $imgs[2] as $k => $url ){
+        foreach( $pres[1] as $k=>$preContent ){
             
-            $content = str_replace($imgs[0][$k], '<img src="'.trim($url,'&quot;').'">', $content);
+            $content = str_replace(
+            array(
+                '<!--pre'.$k.'-->',
+                '&lt;!--pre'.$k.'--&gt;'
+            ), 
+            array(
+                '<pre>'.esc_html($preContent).'</pre>',
+                esc_html('<pre>'.$preContent.'</pre>')
+            ), $content);
 
         }
-    
     }
+    
+    return $content;
+}
+
+add_filter('pfm_content_without_code','pfm_filter_allowed_tags',10);
+function pfm_filter_allowed_tags($content){
+    
+    $allowed_tags = apply_filters('pfm_content_allowed_tags', array(
+        'a' => array(
+            'href' => true,
+            'title' => true,
+	),
+        'img' => array(
+            'src' => true,
+            'alt' => true,
+            'class' => true,
+	),
+        'p' => array(
+            'style' => true
+        ),
+        'blockquote' => array(),
+        'h1' => array(),
+        'h2' => array(),
+        'h3' => array(),
+        'code' => array(),
+        'pre' => array(),
+        'del' => array(),
+        'b' => array(),
+        's' => array(),
+        's' => array(),
+	'br' => array(),
+	'em' => array(),
+	'strong' => array(),
+        'details' => array(),
+        'summary' => array()
+    ));
+    
+    $content = wp_kses($content, $allowed_tags);
     
     return $content;
     
 }
 
-add_filter('pfm_filter_content_without_pretags','pfm_filter_urls',11);
+add_filter('pfm_content_without_code','pfm_filter_urls',11);
 function pfm_filter_urls($content){
 
-    preg_match_all("/(\s|^|>|])(https?:[_a-z0-9\/\.%+\-#?=&]+)/ui", $content, $urls);
+    preg_match_all("/(\s|^|])(https?:[_a-z0-9\/\.%+\-#?=&]+)/ui", $content, $urls);
     
     if($urls[0]){
         
@@ -123,7 +122,7 @@ function pfm_filter_urls($content){
             
             if($oembedSupport){
                 
-                $oembed = wp_oembed_get($url,array('width'=>400,'height'=>400,'discover' => false));
+                $oembed = wp_oembed_get($url, array('width'=>400, 'height'=>400, 'discover'=>false));
                 
                 if($oembed){
                     $content = str_replace($url,$oembed,$content);
@@ -142,7 +141,7 @@ function pfm_filter_urls($content){
 
             }
             
-            $content = preg_replace('/(\s|^|>|])('.str_replace(array('/','?'),array('\/','\?'),$url).')/ui', ' <a href="'.$url.'" target="_blank" rel="nofollow">'.$url.'</a>', $content);
+            $content = preg_replace('/(\s|^|])('.str_replace(array('/','?'),array('\/','\?'),$url).')/ui', $replace, $content);
 
         }
     
@@ -152,14 +151,10 @@ function pfm_filter_urls($content){
     return $content;
 }
 
-function pfm_sort_array_by_string($a, $b){
-    if (strlen($a) < strlen($b)) { return 1; } elseif (strlen($a) == strlen($b)) { return 0; } else { return -1; }
-}
-
-add_filter('pfm_filter_content_without_pretags','pfm_filter_links',12);
+add_filter('pfm_content_without_code','pfm_filter_links',12);
 function pfm_filter_links($content){
     
-    preg_match_all('/&lt;a(.+)href=([^\s].+)&gt;(.+)&lt;\/a&gt;/iUus', $content, $links);
+    preg_match_all('/<a(.+)href=([^\s].+)>(.+)<\/a>/iUus', $content, $links);
     
     if($links[0]){
         
@@ -167,9 +162,7 @@ function pfm_filter_links($content){
             
             if(pfm_is_can('post_create')){
                 
-                $href = trim(str_replace(array('&quot;'),'"',$links[2][$k]),'&');
-                
-                $replace = '<a href='.$href.' target="_blank" rel="nofollow">'.$links[3][$k].'</a>';
+                $replace = '<a href='.$links[2][$k].' target="_blank" rel="nofollow">'.$links[3][$k].'</a>';
 
             }else{
 
@@ -186,8 +179,17 @@ function pfm_filter_links($content){
     return $content;
 }
 
-add_filter('pfm_filter_content_without_pretags','wpautop',14);
-add_filter('pfm_filter_content_without_pretags','pfm_do_shortcode',15);
+add_filter('pfm_content_without_code','pfm_add_smilies_post_content',13);
+function pfm_add_smilies_post_content($content){
+    
+    if(function_exists('convert_smilies')) 
+        $content = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $content ) );
+    
+    return $content;
+}
+
+add_filter('pfm_content_without_code','wpautop',14);
+add_filter('pfm_content_without_code','pfm_do_shortcode',15);
 
 add_filter('pfm_the_post_content','pfm_add_topic_meta_box',20);
 function pfm_add_topic_meta_box($content){

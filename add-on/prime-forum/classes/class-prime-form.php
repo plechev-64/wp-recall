@@ -119,6 +119,7 @@ class PrimeForm extends Rcl_Custom_Fields{
         $fields[] = array(
             'type' => 'editor',
             'editor-id' => 'action_'.$this->action,
+            //'tinymce' => true,
             'slug' => 'post_content',
             'name' => 'pfm-data[post_content]',
             'title' => __('Message text','wp-recall'),

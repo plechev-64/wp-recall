@@ -1,4 +1,6 @@
 <div class="prime-forum-header">
+    
+    <?php do_action('pfm_header'); ?>
 
     <?php pfm_the_breadcrumbs(); ?>
 

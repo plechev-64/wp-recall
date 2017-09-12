@@ -66,21 +66,37 @@ function pfm_ajax_action(object,e){
     
     }
     
-    if(object.method == 'get_post_excerpt'){
-        object.excerpt = pfm_getSelectedText();
-    }
-    
-    if(object['serialize_form']){
-        object.formdata = jQuery('#'+object['serialize_form']).serialize();
-    }
-    
     if(Rcl.PForum){
         object.group_id = Rcl.PForum.group_id;
         object.forum_id = Rcl.PForum.forum_id;
         object.topic_id = Rcl.PForum.topic_id;
         object.current_page = Rcl.PForum.current_page;
     }
+
+    if(object.method == 'get_post_excerpt'){
+        object.excerpt = pfm_getSelectedText();
+    }
     
+    if(object['serialize_form']){
+        
+        var form = jQuery('#'+object['serialize_form']);
+        
+        if(tinyMCE){
+            
+            var formAction = form.find('input[name="pfm-data[action]"]').val();
+
+            var iframe = jQuery("#editor-action_"+formAction+"_ifr").contents().find("#tinymce").html();
+
+            if(iframe){
+                tinyMCE.triggerSave();
+                form.find('textarea[name="pfm-data[post_content]"]').html(iframe);
+            }
+        
+        }
+        
+        object.formdata = form.serialize();
+    }
+
     object.action = 'pfm_ajax_action';
     object.ajax_nonce = Rcl.nonce;
     
@@ -148,9 +164,6 @@ function pfm_ajax_action(object,e){
                             jQuery('#editor-action_post_create').val('');
                             jQuery('#prime-topic-form-box input[name="pfm-data[form_load]"]').val(data['form_load']);
                             
-                            //var offsetTop = jQuery('#topic-post-'+data['post_id']).offset().top;
-                            //jQuery('body,html').animate({scrollTop:offsetTop - 160}, 1000);
-                            
                             pfm_animate_new_posts(data['content']);
                             
                             PFM.last_beat = data.form_load;
@@ -167,6 +180,8 @@ function pfm_ajax_action(object,e){
                         
                         if(object['method'] == 'get_post_excerpt'){             
                             jQuery(data['place-id']).insertAtCaret(data['content']);
+                            if(tinyMCE) 
+                                tinyMCE.execCommand("mceInsertRawHTML", false, data['content']);
                         }else{
                             jQuery(data['place-id']).text(data['content']);
                         }
