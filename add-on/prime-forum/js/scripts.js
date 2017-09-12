@@ -81,7 +81,7 @@ function pfm_ajax_action(object,e){
         
         var form = jQuery('#'+object['serialize_form']);
         
-        if(tinyMCE){
+        if(typeof tinyMCE != 'undefined'){
             
             var formAction = form.find('input[name="pfm-data[action]"]').val();
 
@@ -180,7 +180,7 @@ function pfm_ajax_action(object,e){
                         
                         if(object['method'] == 'get_post_excerpt'){             
                             jQuery(data['place-id']).insertAtCaret(data['content']);
-                            if(tinyMCE) 
+                            if(typeof tinyMCE != 'undefined')
                                 tinyMCE.execCommand("mceInsertRawHTML", false, data['content']);
                         }else{
                             jQuery(data['place-id']).text(data['content']);

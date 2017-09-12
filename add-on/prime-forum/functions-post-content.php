@@ -179,8 +179,8 @@ function pfm_filter_links($content){
     return $content;
 }
 
-add_filter('pfm_content_without_code','pfm_add_smilies_post_content',13);
-function pfm_add_smilies_post_content($content){
+add_filter('pfm_content_without_code','pfm_filter_smilies',13);
+function pfm_filter_smilies($content){
     
     if(function_exists('convert_smilies')) 
         $content = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $content ) );
