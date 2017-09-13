@@ -486,3 +486,8 @@ function pfm_topic_beat($beat){
     return $result;
     
 }
+
+function is_prime_forum(){
+    global $PrimeQuery;
+    return ($PrimeQuery)? true: false;
+}

@@ -83,8 +83,6 @@ function pfm_filter_allowed_tags($content){
             'style' => true
         ),
         'blockquote' => array(),
-        'h1' => array(),
-        'h2' => array(),
         'h3' => array(),
         'code' => array(),
         'pre' => array(),

@@ -102,6 +102,22 @@ class Rcl_Query {
                     $this->query['where'][] = $this->query['table']['as'].".$col_name NOT IN (".$this->get_string_in($args[$col_name.'__not_in']).")";
                     
                 }
+                
+                if(isset($args[$col_name.'__from'])  && ($args[$col_name.'__from'] || $args[$col_name.'__from'] === 0)){
+                    
+                    $colName = is_numeric($args[$col_name.'__from'])? "CAST(".$this->query['table']['as'].".$col_name AS DECIMAL)": $this->query['table']['as'].".".$col_name;
+                    
+                    $this->query['where'][] = $colName." >= '".$args[$col_name.'__from']."'";
+                    
+                }
+                
+                if(isset($args[$col_name.'__to'])  && ($args[$col_name.'__to'] || $args[$col_name.'__to'] === 0)){
+                    
+                    $colName = is_numeric($args[$col_name.'__to'])? "CAST(".$this->query['table']['as'].".$col_name AS DECIMAL)": $this->query['table']['as'].".".$col_name;
+
+                    $this->query['where'][] = $colName." <= '".$args[$col_name.'__to']."'";
+                    
+                }
 
             }
 

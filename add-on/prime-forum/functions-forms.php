@@ -116,6 +116,8 @@ function pfm_add_manager_fields_post_form($content,$action){
 
 add_filter('pfm_form_bottom','pfm_add_smilies_post_form', 10, 2);
 function pfm_add_smilies_post_form($content, $action){
+    
+    if($action == 'topic_migrate') return $content;
 
     $content .= rcl_get_smiles('editor-action_'.$action);
     
