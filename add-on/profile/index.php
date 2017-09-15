@@ -275,7 +275,7 @@ function rcl_filter_usermetas_custom_tab($content){
     preg_match_all('/{RCL-UM:([^}]+)}/', $content, $metas);
     
     if(!$metas[1]) return $content;
-        
+    
     $profileFields = rcl_get_profile_fields();
 
     if($profileFields){

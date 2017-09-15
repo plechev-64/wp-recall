@@ -587,7 +587,7 @@ function rcl_get_url_avatar($url_image,$user_id,$size){
     return $url_image;
 }
 
-function rcl_sanitize_string($title) {
+function rcl_sanitize_string($title, $sanitize = true) {
     
     $title = mb_strtolower($title);
     
@@ -640,8 +640,8 @@ function rcl_sanitize_string($title) {
         default:
             $title = strtr($title, $iso);
     }
-    
-    return sanitize_title_with_dashes($title,'','save');
+
+    return $sanitize? sanitize_title_with_dashes($title,'','save'): $title;
     
 }
 

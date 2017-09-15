@@ -190,24 +190,38 @@ function pfm_get_topic_permalink($topic_id){
 
 }
 
-function pfm_get_post_page_permalink($post_id){
+function pfm_get_post_page_number($post_id){
     
     $post = pfm_get_post($post_id);
     
     if(!$post) return false;
     
-    $topic = pfm_get_topic($post->topic_id);
+    $post_count = pfm_get_topic_field($post->topic_id,'post_count');
     
     $PostsQuery = new PrimePosts();
     
-    $lastPage = ceil($topic->post_count / $PostsQuery->number);
+    $lastPage = ceil($post_count / $PostsQuery->number);
     
     for($page_id = 1; $page_id <= $lastPage; $page_id++){
         $lastIndex = $PostsQuery->number * $page_id;
         if($post->post_index <= $lastIndex) break;
     }
     
-    $url = untrailingslashit(pfm_get_topic_permalink($post->topic_id));
+    return $page_id;
+    
+}
+
+function pfm_get_post_page_permalink($post_id){
+    
+    $topic_id = pfm_get_post_field($post_id, 'topic_id');
+    
+    if(!$topic_id) return false;
+    
+    $page_id = pfm_get_post_page_number($post_id);
+    
+    if(!$page_id) return false;
+    
+    $url = untrailingslashit(pfm_get_topic_permalink($topic_id));
     
     if($page_id != 1){
         $url = pfm_add_number_page($url, $page_id);

@@ -36,15 +36,29 @@ class PrimeLastPosts{
         if ( $cache )
             return $cache;
         
-        $topics = $wpdb->get_results(
-            "SELECT "
-                . "ptopics.* "
-            . "FROM ".RCL_PREF."pforum_topics AS ptopics "
-            . "INNER JOIN ".RCL_PREF."pforum_posts AS pposts ON ptopics.topic_id = pposts.topic_id "
-            . "GROUP BY ptopics.topic_id "
-            . "ORDER BY MAX(pposts.post_date) DESC "
-            . "LIMIT $this->number"
+        $PrimeTopics = new PrimeTopics();
+        $PrimePosts = new PrimePosts();
+        
+        $args = array(
+            'number' => $this->number,
+            'join_query' => array(
+                array(
+                    'table' => $PrimePosts->query['table'],
+                    'on_topic_id' => 'topic_id',
+                    'fields' => false,
+                    'join' => 'INNER'
+                )
+            ),
+            'groupby' => $PrimeTopics->query['table']['as'].'.topic_id'
         );
+        
+        $args = apply_filters('pfm_last_topics_query_args', $args);
+        
+        $PrimeTopics->set_query($args);
+        
+        $PrimeTopics->query['orderby'] = "MAX(".$PrimePosts->query['table']['as'].".post_date)";
+        
+        $topics = $PrimeTopics->get_data();
         
         $topics = wp_unslash($topics);
         
@@ -65,19 +79,23 @@ class PrimeLastPosts{
         foreach($this->topics as $topic){
             $tIDs[] = $topic->topic_id;
         }
-
-        $posts = $wpdb->get_results(
-            "SELECT "
-                . "posts.topic_id,"
-                . "posts.post_id,"
-                . "posts.post_content,"
-                . "posts.user_id "
-            . "FROM "
-            . RCL_PREF."pforum_posts AS posts "
-            . "WHERE "
-                . "posts.topic_id IN (".implode(",",$tIDs).") "
-            . "ORDER BY posts.post_date DESC"
+        
+        $PrimePosts = new PrimePosts();
+        
+        $args = array(
+            'fields' => array(
+                'topic_id',
+                'post_id',
+                'post_content',
+                'user_id'
+            ),
+            'topic_id__in' => $tIDs,
+            'orderby' => 'post_date'
         );
+        
+        $args = apply_filters('pfm_last_posts_query_args', $args);
+
+        $posts = $PrimePosts->get_results($args);
         
         if(!$posts) return false;
         

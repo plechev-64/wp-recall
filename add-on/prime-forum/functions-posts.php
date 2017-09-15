@@ -140,8 +140,10 @@ function pfm_get_post_box($post_id){
         'post_content' => $post->post_content,
         'post_index' => $post->post_index,
         'post_date' => $post->post_date,
-        'display_name' => get_the_author_meta('display_name',$post->user_id),
-        'user_registered' => get_the_author_meta('user_registered',$post->user_id)
+        'display_name' => $post->user_id? get_the_author_meta('display_name',$post->user_id): $post->guest_name,
+        'guest_name' => $post->guest_name,
+        'guest_email' => $post->guest_email,
+        'user_registered' => $post->user_id? get_the_author_meta('user_registered',$post->user_id): ''
     );
 
     $PrimePost = (object)$PrimePost;

@@ -56,6 +56,8 @@
         
         <?php endif; ?>
         
+        <?php do_action('rcl_bar_left_icons'); ?>
+        
     </div>
 
     <div class="rcb_right">

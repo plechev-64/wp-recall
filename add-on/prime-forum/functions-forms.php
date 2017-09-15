@@ -70,13 +70,25 @@ function pfm_the_post_form(){
         'method' => 'post_create',
         'serialize_form' => 'prime-topic-form'
     );
-    
-    echo pfm_get_form(array(
+
+    $formArgs = array(
         'topic_id' => $PrimeTopic->topic_id,
         'action' => 'post_create',
         'onclick' => 'pfm_ajax_action('.json_encode($args).',this);return false;',
         'submit' => __('Add message','wp-recall')
-    ));
+    );
+
+    $pageAmount = ceil($PrimeTopic->post_count/$PrimeQuery->number);
+    
+    if($PrimeQuery->current_page < $pageAmount){
+        $formArgs['fields'][] = array(
+            'type' => 'hidden',
+            'slug' => 'redirect',
+            'value' => 'post-url'
+        );
+    }
+    
+    echo pfm_get_form($formArgs);
     
 }
 

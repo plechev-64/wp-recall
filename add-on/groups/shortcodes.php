@@ -12,6 +12,8 @@ array(
  * 'admin_id__in',
  * 'exclude',
  * 'admin_id__not_in',
+ * 'group_users__from',
+ * 'group_users__to',
  * 'number',
  * 'per_page',
  * 'offset',

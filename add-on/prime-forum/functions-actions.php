@@ -1122,8 +1122,10 @@ function pfm_action_get_preview($action){
         'user_id' => $user_ID,
         'post_content' => $postContent,
         'post_date' => current_time('mysql'),
-        'display_name' => get_the_author_meta('display_name',$user_ID),
-        'user_registered' => get_the_author_meta('user_registered',$user_ID)
+        'display_name' => $user_ID? get_the_author_meta('display_name',$user_ID): '',
+        'guest_name' => !$user_ID? $pfmData['guest_name']: '',
+        'guest_email' => !$user_ID? $pfmData['guest_email']: '',
+        'user_registered' => $user_ID? get_the_author_meta('user_registered',$user_ID): ''
     );
     
     $PrimePost = apply_filters('pfm_preview_postdata', $postData);
@@ -1175,12 +1177,12 @@ function pfm_action_post_create(){
     );
 
     if(!$user_ID){
-
-        if(!$pfmData['guest_mail'] || !$pfmData['guest_name']){
+        
+        if(!$pfmData['guest_email'] || !$pfmData['guest_name']){
             return array('error' => __('Error','wp-recall'));
         }
 
-        $args['guest_email'] = $pfmData['guest_mail'];
+        $args['guest_email'] = $pfmData['guest_email'];
         $args['guest_name'] = $pfmData['guest_name'];
     }
 
@@ -1201,6 +1203,10 @@ function pfm_action_post_create(){
             
         }
         
+    }
+
+    if(isset($formdata['redirect']) && $formdata['redirect'] == 'post-url'){
+        return array('url-redirect' => pfm_get_post_permalink($post_id));
     }
 
     $posts = new PrimePosts();
