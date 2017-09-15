@@ -4,7 +4,13 @@
         <?php pfm_the_author_manager(); ?>
 
         <div class="prime-author-avatar">
-            <a href="<?php echo get_author_posts_url(pfm_post_field('user_id',0)); ?>" title="В кабинет"><?php pfm_author_avatar(); ?></a>
+            <?php if(pfm_post_field('user_id',0)): ?>
+            <a href="<?php echo get_author_posts_url(pfm_post_field('user_id',0)); ?>" title="В кабинет">
+                <?php pfm_author_avatar(); ?>
+            </a>
+            <?php else: ?>
+                <?php pfm_author_avatar(); ?>
+            <?php endif; ?>
         </div>
         <div class="prime-author-metabox">
             <div class="prime-author-meta prime-author-name"><?php pfm_the_author_name(); ?></div>
