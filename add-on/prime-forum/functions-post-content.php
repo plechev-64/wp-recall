@@ -200,8 +200,8 @@ function pfm_add_topic_meta_box($content){
     return $content;
 }
 
-add_filter('pfm_the_post_content','pfm_add_edit_reasons',25);
-function pfm_add_edit_reasons($content){
+add_filter('pfm_the_post_content','pfm_add_post_edition',25);
+function pfm_add_post_edition($content){
     global $PrimePost;
 
     if(!$PrimePost->post_edit) return $content;

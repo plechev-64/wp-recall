@@ -142,9 +142,10 @@ function pfm_add_post_reason_edit_field($fields, $action){
     if($action != 'post_edit') return $fields;
 
     $fields[] = array(
-        'type' => 'textarea',
-        'title' => __('Причина изменения','wp-recall'),
-        'slug' => 'reason_edit'
+        'type' => 'text',
+        'title' => __('Причина редактирования','wp-recall'),
+        'slug' => 'reason_edit',
+        'maxlength' => 70
     );
     
     return $fields;
