@@ -58,6 +58,19 @@ function pfm_the_post_classes(){
     
 }
 
+function pfm_get_post_edition($post_id = false){
+    global $PrimePost;
+    
+    if(!$post_id || $post_id == $PrimePost->post_id){
+        $postEdition = maybe_unserialize($PrimePost->post_edit);
+    }else{
+        $postEdition = maybe_unserialize(pfm_get_post_field($post_id, 'post_edit'));
+    }
+    
+    return $postEdition;
+    
+}
+
 function pfm_the_post_bottom(){
     global $PrimePost;
     echo apply_filters('pfm_the_post_bottom','');

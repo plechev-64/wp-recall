@@ -200,3 +200,30 @@ function pfm_add_topic_meta_box($content){
     return $content;
 }
 
+add_filter('pfm_the_post_content','pfm_add_edit_reasons',25);
+function pfm_add_edit_reasons($content){
+    global $PrimePost;
+
+    if(!$PrimePost->post_edit) return $content;
+    
+    $postEdition = pfm_get_post_edition();
+    
+    if(!$postEdition) return $content;
+    
+    $content .= '<div class="post-edit-list">';
+    
+    $content .= '<div class="post-edit-title">'.__('Редакции сообщения','wp-recall').'</div>';
+    
+    foreach($postEdition as $edit){
+        $content .= '<div class="post-edit-item">'
+                . '<span class="edit-time">'.mysql2date('d.m.Y H:i', $edit['time']).'</span>'
+                . '<span class="edit-author">'.$edit['author'].'</span>'
+                . '<span class="edit-reason">'.__('Причина','wp-recall').': '.($edit['reason']? $edit['reason']: __('Не указана','wp-recall')).'</span>'
+                . '</div>';
+    }
+    
+    $content .= '</div>';
+
+    return $content;
+}
+

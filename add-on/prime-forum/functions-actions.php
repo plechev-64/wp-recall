@@ -324,9 +324,25 @@ function pfm_init_actions(){
             
             if(!pfm_is_can_post_edit($pfmData['post_id']) || !$pfmData['topic_id'] || !$pfmData['post_id']) return false;
             
+            $post_edit = maybe_unserialize(pfm_get_post_field($pfmData['post_id'], 'post_edit'));
+
+            $reasonEdit = '';
+            if(isset($_POST['reason_edit']) && $_POST['reason_edit']){
+                
+                $reasonEdit = $_POST['reason_edit'];
+                
+            }
+            
+            $post_edit[] = array(
+                'time' => current_time('mysql'),
+                'author' => get_the_author_meta('display_name',$user_ID),
+                'reason' => $reasonEdit
+            );
+            
             pfm_update_post(array(
                 'post_content' => $pfmData['post_content'],
-                'post_id' => $pfmData['post_id']
+                'post_id' => $pfmData['post_id'],
+                'post_edit' => $post_edit
             ));
             
             wp_redirect(pfm_get_post_permalink($pfmData['post_id'])); exit;

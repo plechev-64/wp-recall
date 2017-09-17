@@ -135,3 +135,17 @@ function pfm_add_smilies_post_form($content, $action){
     
     return $content;
 }
+
+add_filter('pfm_form_fields','pfm_add_post_reason_edit_field', 10, 2);
+function pfm_add_post_reason_edit_field($fields, $action){
+    
+    if($action != 'post_edit') return $fields;
+
+    $fields[] = array(
+        'type' => 'textarea',
+        'title' => __('Причина изменения','wp-recall'),
+        'slug' => 'reason_edit'
+    );
+    
+    return $fields;
+}

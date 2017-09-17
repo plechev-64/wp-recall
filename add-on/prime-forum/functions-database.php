@@ -729,6 +729,10 @@ function pfm_update_post($args){
     
     if(!$post) return false;
     
+    if(isset($args['post_edit'])){
+        $args['post_edit'] = maybe_serialize($args['post_edit']);
+    }
+    
     unset($args['post_id']);
     
     $result = $wpdb->update(

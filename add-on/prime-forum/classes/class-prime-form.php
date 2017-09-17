@@ -111,7 +111,7 @@ class PrimeForm extends Rcl_Custom_Fields{
             }
         }
 
-        $fields = apply_filters('pfm_form_fields', $fields);
+        $fields = apply_filters('pfm_form_fields', $fields, $this->action);
         
         if($this->fields)
             $fields = array_merge($fields,$this->fields);

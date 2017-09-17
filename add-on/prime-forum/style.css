@@ -259,6 +259,35 @@ body .prime-last-posts ul.last-post-list{
     -webkit-animation: rcl-blink 2s linear both;
     animation: rcl-blink 2s linear both;
 }
+/*post edit list*/
+.post-edit-list{
+    clear: both;
+    background: #fff;
+    padding: 5px;
+    font-size: 12px;
+    line-height: 1;
+}
+.post-edit-list .post-edit-title{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.post-edit-list .post-edit-item{
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 3px;
+}
+.post-edit-list .post-edit-item > span{
+    margin-right: 15px;
+}
+.post-edit-list .post-edit-item .edit-time{
+    
+}
+.post-edit-list .post-edit-item .edit-author{
+    
+}
+.post-edit-list .post-edit-item .edit-reason{
+    
+}
+/**/
 @keyframes rcl-blink {
     50% {
         background-color: #ffffd7;
