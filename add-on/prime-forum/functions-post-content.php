@@ -212,13 +212,13 @@ function pfm_add_post_edition($content){
     
     $content .= '<div class="post-edit-list">';
     
-    $content .= '<div class="post-edit-title">'.__('Редакции сообщения','wp-recall').'</div>';
+    $content .= '<div class="post-edit-title">'.__('The wording of the message','wp-recall').'</div>';
     
     foreach($postEdition as $edit){
         $content .= '<div class="post-edit-item">'
                 . '<span class="edit-time">'.mysql2date('d.m.Y H:i', $edit['time']).'</span>'
                 . '<span class="edit-author">'.$edit['author'].'</span>'
-                . '<span class="edit-reason">'.__('Причина','wp-recall').': '.($edit['reason']? $edit['reason']: __('Не указана','wp-recall')).'</span>'
+                . '<span class="edit-reason">'.__('The reason','wp-recall').': '.($edit['reason']? $edit['reason']: __('not specified','wp-recall')).'</span>'
                 . '</div>';
     }
     

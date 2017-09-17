@@ -226,7 +226,7 @@ function pfm_page_options(){
             'type' => 'select',
             'slug' => 'admin-notes',
             'name' => 'rcl_pforum_options[admin-notes]',
-            'title' => __('Уведомления администратору о новых темах','wp-recall'),
+            'title' => __('Notification to the administrator about new topics','wp-recall'),
             'values' => array(
                 __('Disabled','wp-recall'),
                 __('Enabled','wp-recall')

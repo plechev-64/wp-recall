@@ -169,11 +169,11 @@ function pfm_send_admin_mail_new_topic($topic_id){
     if(!$topic) return false;
     
     $email = get_option('admin_email');
-    $subject = __('Новая тема на форуме','wp-recall');
+    $subject = __('New forum topic','wp-recall');
     
-    $textmail = '<p>'.sprintf(__('На форуме сайта "%s" была создана новая тема!','wp-recall'),get_bloginfo('name')).'</p>';
-    $textmail .= '<p>'.__('Наименование темы','wp-recall').': <a href="'.pfm_get_topic_permalink($topic_id).'">'.$topic->topic_name.'</a>'.'</p>';
-    $textmail .= '<p>'.__('Автор темы','wp-recall').': '.( $topic->user_id? get_the_author_meta('display_name',$topic->user_id): __('Guest','wp-recall') ).'</p>';
+    $textmail = '<p>'.sprintf(__('On the forum of the site "%s" created a new topic!','wp-recall'),get_bloginfo('name')).'</p>';
+    $textmail .= '<p>'.__('The name of the topic','wp-recall').': <a href="'.pfm_get_topic_permalink($topic_id).'">'.$topic->topic_name.'</a>'.'</p>';
+    $textmail .= '<p>'.__('The topic author','wp-recall').': '.( $topic->user_id? get_the_author_meta('display_name',$topic->user_id): __('Guest','wp-recall') ).'</p>';
     
     rcl_mail($email, $subject, $textmail);
     

@@ -1174,13 +1174,13 @@ function pfm_action_post_create(){
     $pfmData = $formdata['pfm-data'];
     
     if(!pfm_is_can('post_create') || !$pfmData['topic_id']){
-        return array('error' => __('Недостаточно прав для публикации','wp-recall'));
+        return array('error' => __('Insufficient rights to publish','wp-recall'));
     }
             
     $topic = pfm_get_topic($pfmData['topic_id']);
 
     if($topic->topic_closed){
-        return array('error' => __('Тема закрыта','wp-recall'));
+        return array('error' => __('Topic closed','wp-recall'));
     }
 
     if(!$pfmData['post_content']){
