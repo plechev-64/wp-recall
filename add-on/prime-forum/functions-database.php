@@ -18,97 +18,38 @@ function pfm_get_group_field($group_id,$fieldName){
     ));
 }
 
-function pfm_get_forums($args = false){
-    $forums = new PrimeForums();
-    return $forums->get_results($args);
-}
-
-function pfm_get_forum($forum_id){
-    $forums = new PrimeForums();
-    return $forums->get_row(array('forum_id' => $forum_id));
-}
-
-function pfm_get_forum_field($forum_id,$fieldName){
-    $forums = new PrimeForums();
-    return $forums->get_var(array(
-        'forum_id' => $forum_id,
-        'fields' => array($fieldName)
-    ));
-}
-
-function pfm_subforums_topic_count($forum_id){
+function pfm_add_group($args){
     global $wpdb;
     
-    $sql = "SELECT SUM(topic_count) "
-            . "FROM ".RCL_PREF."pforums "
-                . "WHERE parent_id='$forum_id'";
-    
-    return $wpdb->get_var($sql);
-}
+    if(!isset($args['group_seq'])){
+        
+        $groups = new PrimeGroups();
+        $seq = $groups->count() + 1;
 
-function pfm_get_topics($args = false){
-    $topics = new PrimeTopics();
-    return $topics->get_results($args);
-}
-
-function pfm_get_topic($topic_id){
+        $args['group_seq'] = $seq;
     
-    $topics = new PrimeTopics();
-    $posts = new PrimePosts();
+    }
     
-    $topics->set_query(array(
-        'topic_id' => $topic_id,
-        'join_query' => array(
-            array(
-                'table' => $posts->query['table'],
-                'on_topic_id' => 'topic_id',
-                'fields' => false
-            )
-        )
-    ));
-            
-    $topics->query['select'][] = "MAX(pfm_posts.post_date) AS last_post_date";
+    if(!isset($args['group_slug']) || !$args['group_slug']){
+        
+        $args['group_slug'] = str_replace(array('_',' '),'-',rcl_sanitize_string($args['group_name']));
+        
+    }else{
+        
+        $args['group_slug'] = str_replace(array(' '),'-',$args['group_slug']);
+        
+    }
     
-    $topic = $topics->get_data('get_row');
+    $result = $wpdb->insert(RCL_PREF.'pforum_groups',$args);
     
-    return $topic;
-}
-
-function pfm_get_topic_field($topic_id,$fieldName){
-    $topics = new PrimeTopics();
-    return $topics->get_var(array(
-        'topic_id' => $topic_id,
-        'fields' => array($fieldName)
-    ));
-}
-
-function pfm_get_posts($args = false){
-    $posts = new PrimePosts();
-    return $posts->get_results($args);
-}
-
-function pfm_get_post($post_id){
+    if(!$result)
+        return false;
     
-    $cachekey = json_encode(array('pfm_get_post',$post_id));
-    $cache = wp_cache_get( $cachekey );
-    if ( $cache )
-        return $cache;
+    $group_id = $wpdb->insert_id;
     
-    $posts = new PrimePosts();
+    do_action('pfm_add_group',$group_id);
     
-    $post = $posts->get_row(array('post_id' => $post_id));
-    
-    wp_cache_add( $cachekey, $post );
-    
-    return $post;
-}
-
-function pfm_get_post_field($post_id,$fieldName){
-    $posts = new PrimePosts();
-    return $posts->get_var(array(
-        'post_id' => $post_id,
-        'fields' => array($fieldName)
-    ));
+    return $group_id;
 }
 
 function pfm_delete_group($group_id, $group_new = false){
@@ -154,6 +95,189 @@ function pfm_delete_group($group_id, $group_new = false){
     }
     
     return $result;
+}
+
+function pfm_update_group($args){
+    global $wpdb;
+    
+    if(!isset($args['group_id'])) return false;
+    
+    $group_id = $args['group_id'];
+    
+    $group = pfm_get_group($group_id);
+    
+    if(!$group) return false;
+    
+    unset($args['group_id']);
+    
+    if(isset($args['group_slug'])){
+        
+        if(!$args['group_slug']){
+        
+            $group_name = (isset($args['group_name']) && $args['group_name'])? $args['group_name']: $group->group_name;
+
+            $args['group_slug'] = str_replace(array('_',' '),'-',rcl_sanitize_string($group_name));
+        
+        }else{
+            $args['group_slug'] = str_replace(array(' '),'-',$args['group_slug']);
+        }
+        
+    }
+    
+    $result = $wpdb->update(
+        RCL_PREF.'pforum_groups',
+        $args,
+        array(
+            'group_id' => $group_id
+        )
+    );
+    
+    do_action('pfm_update_group', $group_id);
+    
+    return $result;
+    
+}
+
+function pfm_get_forums($args = false){
+    $forums = new PrimeForums();
+    return $forums->get_results($args);
+}
+
+function pfm_get_forum($forum_id){
+    $forums = new PrimeForums();
+    return $forums->get_row(array('forum_id' => $forum_id));
+}
+
+function pfm_get_forum_field($forum_id,$fieldName){
+    $forums = new PrimeForums();
+    return $forums->get_var(array(
+        'forum_id' => $forum_id,
+        'fields' => array($fieldName)
+    ));
+}
+
+function pfm_add_forum($args){
+    global $wpdb;
+    
+    if(!isset($args['group_id']) || !$args['group_id']) return false;
+    
+    if(!isset($args['forum_seq'])){
+        
+        $forums = new PrimeForums();
+        $seq = $forums->count(array('group_id' => $args['group_id'])) + 1;
+
+        $args['forum_seq'] = $seq;
+    
+    }
+    
+    if(!isset($args['forum_slug']) || !$args['forum_slug']){
+        
+        $args['forum_slug'] = str_replace(array('_',' '),'-',rcl_sanitize_string($args['forum_name']));
+        
+    }else{
+        
+        $args['forum_slug'] = str_replace(array(' '),'-',$args['forum_slug']);
+        
+    }
+    
+    if(!isset($args['forum_desc']))
+        $args['forum_desc'] = '';
+    
+    $args['forum_status'] = 'open';
+    
+    if(!isset($args['parent_id']))
+        $args['parent_id'] = 0;
+    
+    if(!isset($args['topic_count']))
+        $args['topic_count'] = 0;
+    
+    if(!isset($args['forum_closed']))
+        $args['forum_closed'] = 0;
+    
+    $result = $wpdb->insert(RCL_PREF.'pforums',$args);
+    
+    if(!$result)
+        return false;
+    
+    $forum_id = $wpdb->insert_id;
+    
+    do_action('pfm_add_forum',$forum_id);
+    
+    return $forum_id;
+}
+
+function pfm_update_forum($args){
+    global $wpdb;
+    
+    if(!isset($args['forum_id'])) return false;
+    
+    $forum_id = $args['forum_id'];
+    
+    $forum = pfm_get_forum($forum_id);
+    
+    if(!$forum) return false;
+    
+    unset($args['forum_id']);
+    
+    if(isset($args['forum_slug'])){
+        
+        if(!$args['forum_slug']){
+        
+            $forum_name = (isset($args['forum_name']) && $args['forum_name'])? $args['forum_name']: $forum->forum_name;
+
+            $args['forum_slug'] = str_replace(array('_',' '),'-',rcl_sanitize_string($forum_name));
+        
+        }else{
+            $args['forum_slug'] = str_replace(array(' '),'-',$args['forum_slug']);
+        }
+        
+    }
+    
+    if(isset($args['group_id']) && $forum->group_id != $args['group_id']){
+        
+        $args['parent_id'] = 0;
+        
+    }
+    
+    $result = $wpdb->update(
+        RCL_PREF.'pforums',
+        $args,
+        array(
+            'forum_id' => $forum_id
+        )
+    );
+    
+    if($result){
+        
+        //если был перенос в другую группу, то также переносим и все дочерние форумы
+        if(isset($args['group_id']) && $forum->group_id != $args['group_id']){
+
+            $childForums = pfm_get_forums(array(
+                'parent_id' => $forum_id,
+                'fields' => array(
+                    'forum_id'
+                )
+            ));
+
+            if($childForums){
+
+                foreach($childForums as $chForum){
+                    pfm_update_forum(array(
+                        'forum_id' => $chForum->forum_id,
+                        'group_id' => $args['group_id']
+                    ));
+                }
+
+            }
+
+        }
+
+    }
+    
+    do_action('pfm_update_forum', $forum_id);
+    
+    return $result;
+
 }
 
 function pfm_delete_forum($forum_id, $forum_new = false){
@@ -214,70 +338,6 @@ function pfm_delete_forum($forum_id, $forum_new = false){
     
 }
 
-function pfm_delete_topic($topic_id){
-    global $wpdb;
-    
-    $topic = pfm_get_topic($topic_id);
-    
-    if(!$topic) return false;
-    
-    do_action('pfm_pre_delete_topic',$topic_id);
-
-    $result = $wpdb->query("DELETE FROM ".RCL_PREF."pforum_topics WHERE topic_id='$topic_id'");
-    
-    if($result){
-    
-        $posts = pfm_get_posts(array(
-            'topic_id' => $topic_id,
-            'fields' => array('post_id')
-        ));
-
-        if($posts){
-            foreach($posts as $post){
-                pfm_delete_post($post->post_id);
-            }
-        }
-        
-        pfm_update_forum_counter($topic->forum_id);
-
-        do_action('pfm_delete_topic',$topic_id);
-    
-    }
-    
-    return $result;
-}
-
-function pfm_delete_post($post_id){
-    global $wpdb;
-    
-    $post = pfm_get_post($post_id);
-    
-    if(!$post) return false;
-    
-    do_action('pfm_pre_delete_post',$post_id);
-    
-    $result = $wpdb->query("DELETE FROM ".RCL_PREF."pforum_posts WHERE post_id='$post_id'");
-    
-    if($result){
-        
-        $post_count = pfm_get_topic_field($post->topic_id,'post_count');
-        
-        if($post_count == 1){
-            
-            pfm_delete_topic($post->topic_id);
-            
-        }else{
-            
-            pfm_update_topic_data($post->topic_id);
-            
-        }
-
-        do_action('pfm_delete_post',$post_id);
-    }
-    
-    return $result;
-}
-
 function pfm_update_forum_counter($forum_id){
     
     $TopicQuery = new PrimeTopics();
@@ -292,132 +352,42 @@ function pfm_update_forum_counter($forum_id){
     ));
 }
 
-function pfm_update_topic_data($topic_id){
-    pfm_update_topic_counter($topic_id);
-    pfm_update_topic_indexes($topic_id);
-}
-
-function pfm_update_topic_counter($topic_id){
+function pfm_subforums_topic_count($forum_id){
     global $wpdb;
     
-    $PostQuery = new PrimePosts();
+    $sql = "SELECT SUM(topic_count) "
+            . "FROM ".RCL_PREF."pforums "
+                . "WHERE parent_id='$forum_id'";
     
-    $counter = $PostQuery->count(array(
-        'topic_id' => $topic_id
-    ));
+    return $wpdb->get_var($sql);
+}
+
+function pfm_get_topics($args = false){
+    $topics = new PrimeTopics();
+    return $topics->get_results($args);
+}
+
+function pfm_get_topic($topic_id){
     
-    $wpdb->update(
-        RCL_PREF.'pforum_topics',
-        array(
-            'post_count' => $counter
-        ),
-        array(
-            'topic_id' => $topic_id
+    $topics = new PrimeTopics();
+    $posts = new PrimePosts();
+    
+    $topics->set_query(array(
+        'topic_id' => $topic_id,
+        'join_query' => array(
+            array(
+                'table' => $posts->query['table'],
+                'on_topic_id' => 'topic_id',
+                'fields' => false
+            )
         )
-    );
+    ));
+            
+    $topics->query['select'][] = "MAX(pfm_posts.post_date) AS last_post_date";
     
-    return $counter;
-
-}
-
-function pfm_update_topic_indexes($topic_id){
-    global $wpdb;
+    $topic = $topics->get_data('get_row');
     
-    $wpdb->query(
-        "UPDATE 
-            ".RCL_PREF."pforum_posts 
-        SET
-            post_index =(SELECT @a:= @a + 1 FROM (SELECT @a:= 0) s) 
-        WHERE
-            topic_id = '$topic_id' 
-        ORDER BY 
-            post_date ASC"
-    );
-    
-}
-
-function pfm_add_group($args){
-    global $wpdb;
-    
-    if(!isset($args['group_seq'])){
-        
-        $groups = new PrimeGroups();
-        $seq = $groups->count() + 1;
-
-        $args['group_seq'] = $seq;
-    
-    }
-    
-    if(!isset($args['group_slug']) || !$args['group_slug']){
-        
-        $args['group_slug'] = str_replace(array('_',' '),'-',rcl_sanitize_string($args['group_name']));
-        
-    }else{
-        
-        $args['group_slug'] = str_replace(array(' '),'-',$args['group_slug']);
-        
-    }
-    
-    $result = $wpdb->insert(RCL_PREF.'pforum_groups',$args);
-    
-    if(!$result)
-        return false;
-    
-    $group_id = $wpdb->insert_id;
-    
-    do_action('pfm_add_group',$group_id);
-    
-    return $group_id;
-}
-
-function pfm_add_forum($args){
-    global $wpdb;
-    
-    if(!isset($args['group_id']) || !$args['group_id']) return false;
-    
-    if(!isset($args['forum_seq'])){
-        
-        $forums = new PrimeForums();
-        $seq = $forums->count(array('group_id' => $args['group_id'])) + 1;
-
-        $args['forum_seq'] = $seq;
-    
-    }
-    
-    if(!isset($args['forum_slug']) || !$args['forum_slug']){
-        
-        $args['forum_slug'] = str_replace(array('_',' '),'-',rcl_sanitize_string($args['forum_name']));
-        
-    }else{
-        
-        $args['forum_slug'] = str_replace(array(' '),'-',$args['forum_slug']);
-        
-    }
-    
-    if(!isset($args['forum_desc']))
-        $args['forum_desc'] = '';
-    
-    $args['forum_status'] = 'open';
-    
-    if(!isset($args['parent_id']))
-        $args['parent_id'] = 0;
-    
-    if(!isset($args['topic_count']))
-        $args['topic_count'] = 0;
-    
-    if(!isset($args['forum_closed']))
-        $args['forum_closed'] = 0;
-    
-    $result = $wpdb->insert(RCL_PREF.'pforums',$args);
-    
-    if(!$result)
-        return false;
-    
-    $forum_id = $wpdb->insert_id;
-    
-    do_action('pfm_add_forum',$forum_id);
-    
-    return $forum_id;
+    return $topic;
 }
 
 function pfm_add_topic($args, $postdata = array()){
@@ -504,6 +474,202 @@ function pfm_add_topic($args, $postdata = array()){
     
 }
 
+function pfm_delete_topic($topic_id){
+    global $wpdb;
+    
+    $topic = pfm_get_topic($topic_id);
+    
+    if(!$topic) return false;
+    
+    do_action('pfm_pre_delete_topic',$topic_id);
+
+    $result = $wpdb->query("DELETE FROM ".RCL_PREF."pforum_topics WHERE topic_id='$topic_id'");
+    
+    if($result){
+    
+        $posts = pfm_get_posts(array(
+            'topic_id' => $topic_id,
+            'fields' => array('post_id')
+        ));
+
+        if($posts){
+            foreach($posts as $post){
+                pfm_delete_post($post->post_id);
+            }
+        }
+        
+        pfm_update_forum_counter($topic->forum_id);
+
+        do_action('pfm_delete_topic',$topic_id);
+    
+    }
+    
+    return $result;
+}
+
+function pfm_update_topic($args){
+    global $wpdb;
+    
+    if(!isset($args['topic_id'])) return false;
+    
+    $topic_id = $args['topic_id'];
+    
+    $topic = pfm_get_topic($topic_id);
+    
+    if(!$topic) return false;
+    
+    unset($args['topic_id']);
+    
+    if(isset($args['topic_slug'])){
+        
+        if(!$args['topic_slug']){
+        
+            $forum_name = (isset($args['topic_name']) && $args['topic_name'])? $args['topic_name']: $topic->topic_name;
+
+            $args['topic_slug'] = str_replace(array('_',' '),'-',rcl_sanitize_string($forum_name));
+        
+        }else{
+            $args['topic_slug'] = str_replace(array(' '),'-',$args['topic_slug']);
+        }
+        
+    }
+    
+    $result = $wpdb->update(
+        RCL_PREF.'pforum_topics',
+        $args,
+        array(
+            'topic_id' => $topic_id
+        )
+    );
+    
+    if($result)
+        wp_cache_delete( json_encode(array('pfm_topic_permalink',$topic_id)) );
+    
+    do_action('pfm_update_topic',$topic_id);
+    
+    return $result;
+    
+}
+
+function pfm_update_topic_data($topic_id){
+    pfm_update_topic_counter($topic_id);
+    pfm_update_topic_indexes($topic_id);
+}
+
+function pfm_update_topic_counter($topic_id){
+    global $wpdb;
+    
+    $PostQuery = new PrimePosts();
+    
+    $counter = $PostQuery->count(array(
+        'topic_id' => $topic_id
+    ));
+    
+    $wpdb->update(
+        RCL_PREF.'pforum_topics',
+        array(
+            'post_count' => $counter
+        ),
+        array(
+            'topic_id' => $topic_id
+        )
+    );
+    
+    return $counter;
+
+}
+
+function pfm_update_topic_indexes($topic_id){
+    global $wpdb;
+    
+    $wpdb->query(
+        "UPDATE 
+            ".RCL_PREF."pforum_posts 
+        SET
+            post_index =(SELECT @a:= @a + 1 FROM (SELECT @a:= 0) s) 
+        WHERE
+            topic_id = '$topic_id' 
+        ORDER BY 
+            post_date ASC"
+    );
+    
+}
+
+function pfm_get_topic_field($topic_id,$fieldName){
+    $topics = new PrimeTopics();
+    return $topics->get_var(array(
+        'topic_id' => $topic_id,
+        'fields' => array($fieldName)
+    ));
+}
+
+function get_topic_last_post($topic_id){
+    $posts = new PrimePosts();
+    return $posts->get_row(array(
+        'topic_id' => $topic_id
+    ));
+}
+
+function pfm_get_posts($args = false){
+    $posts = new PrimePosts();
+    return $posts->get_results($args);
+}
+
+function pfm_get_post($post_id){
+    
+    $cachekey = json_encode(array('pfm_get_post',$post_id));
+    $cache = wp_cache_get( $cachekey );
+    if ( $cache )
+        return $cache;
+    
+    $posts = new PrimePosts();
+    
+    $post = $posts->get_row(array('post_id' => $post_id));
+    
+    wp_cache_add( $cachekey, $post );
+    
+    return $post;
+}
+
+function pfm_get_post_field($post_id,$fieldName){
+    $posts = new PrimePosts();
+    return $posts->get_var(array(
+        'post_id' => $post_id,
+        'fields' => array($fieldName)
+    ));
+}
+
+function pfm_delete_post($post_id){
+    global $wpdb;
+    
+    $post = pfm_get_post($post_id);
+    
+    if(!$post) return false;
+    
+    do_action('pfm_pre_delete_post',$post_id);
+    
+    $result = $wpdb->query("DELETE FROM ".RCL_PREF."pforum_posts WHERE post_id='$post_id'");
+    
+    if($result){
+        
+        $post_count = pfm_get_topic_field($post->topic_id,'post_count');
+        
+        if($post_count == 1){
+            
+            pfm_delete_topic($post->topic_id);
+            
+        }else{
+            
+            pfm_update_topic_data($post->topic_id);
+            
+        }
+
+        do_action('pfm_delete_post',$post_id);
+    }
+    
+    return $result;
+}
+
 function pfm_add_post($args){
     global $user_ID,$wpdb;
     
@@ -566,165 +732,6 @@ function pfm_add_post($args){
     do_action('pfm_add_post',$post_id);
     
     return $post_id;
-    
-}
-
-function pfm_update_group($args){
-    global $wpdb;
-    
-    if(!isset($args['group_id'])) return false;
-    
-    $group_id = $args['group_id'];
-    
-    $group = pfm_get_group($group_id);
-    
-    if(!$group) return false;
-    
-    unset($args['group_id']);
-    
-    if(isset($args['group_slug'])){
-        
-        if(!$args['group_slug']){
-        
-            $group_name = (isset($args['group_name']) && $args['group_name'])? $args['group_name']: $group->group_name;
-
-            $args['group_slug'] = str_replace(array('_',' '),'-',rcl_sanitize_string($group_name));
-        
-        }else{
-            $args['group_slug'] = str_replace(array(' '),'-',$args['group_slug']);
-        }
-        
-    }
-    
-    $result = $wpdb->update(
-        RCL_PREF.'pforum_groups',
-        $args,
-        array(
-            'group_id' => $group_id
-        )
-    );
-    
-    do_action('pfm_update_group', $group_id);
-    
-    return $result;
-    
-}
-
-function pfm_update_forum($args){
-    global $wpdb;
-    
-    if(!isset($args['forum_id'])) return false;
-    
-    $forum_id = $args['forum_id'];
-    
-    $forum = pfm_get_forum($forum_id);
-    
-    if(!$forum) return false;
-    
-    unset($args['forum_id']);
-    
-    if(isset($args['forum_slug'])){
-        
-        if(!$args['forum_slug']){
-        
-            $forum_name = (isset($args['forum_name']) && $args['forum_name'])? $args['forum_name']: $forum->forum_name;
-
-            $args['forum_slug'] = str_replace(array('_',' '),'-',rcl_sanitize_string($forum_name));
-        
-        }else{
-            $args['forum_slug'] = str_replace(array(' '),'-',$args['forum_slug']);
-        }
-        
-    }
-    
-    if(isset($args['group_id']) && $forum->group_id != $args['group_id']){
-        
-        $args['parent_id'] = 0;
-        
-    }
-    
-    $result = $wpdb->update(
-        RCL_PREF.'pforums',
-        $args,
-        array(
-            'forum_id' => $forum_id
-        )
-    );
-    
-    if($result){
-        
-        //если был перенос в другую группу, то также переносим и все дочерние форумы
-        if(isset($args['group_id']) && $forum->group_id != $args['group_id']){
-
-            $childForums = pfm_get_forums(array(
-                'parent_id' => $forum_id,
-                'fields' => array(
-                    'forum_id'
-                )
-            ));
-
-            if($childForums){
-
-                foreach($childForums as $chForum){
-                    pfm_update_forum(array(
-                        'forum_id' => $chForum->forum_id,
-                        'group_id' => $args['group_id']
-                    ));
-                }
-
-            }
-
-        }
-
-    }
-    
-    do_action('pfm_update_forum', $forum_id);
-    
-    return $result;
-
-}
-
-function pfm_update_topic($args){
-    global $wpdb;
-    
-    if(!isset($args['topic_id'])) return false;
-    
-    $topic_id = $args['topic_id'];
-    
-    $topic = pfm_get_topic($topic_id);
-    
-    if(!$topic) return false;
-    
-    unset($args['topic_id']);
-    
-    if(isset($args['topic_slug'])){
-        
-        if(!$args['topic_slug']){
-        
-            $forum_name = (isset($args['topic_name']) && $args['topic_name'])? $args['topic_name']: $topic->topic_name;
-
-            $args['topic_slug'] = str_replace(array('_',' '),'-',rcl_sanitize_string($forum_name));
-        
-        }else{
-            $args['topic_slug'] = str_replace(array(' '),'-',$args['topic_slug']);
-        }
-        
-    }
-    
-    $result = $wpdb->update(
-        RCL_PREF.'pforum_topics',
-        $args,
-        array(
-            'topic_id' => $topic_id
-        )
-    );
-    
-    if($result)
-        wp_cache_delete( json_encode(array('pfm_topic_permalink',$topic_id)) );
-    
-    do_action('pfm_update_topic',$topic_id);
-    
-    return $result;
     
 }
 

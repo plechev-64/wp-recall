@@ -270,6 +270,13 @@ body .prime-last-posts ul.last-post-list{
 .post-edit-list .post-edit-item > span {
     margin-right: 15px;
 }
+#prime-forum .post-separator{
+    display: block;
+    font-size: 12px;
+    border-bottom: 1px solid #ccc;
+    margin: 15px 0 5px 0;
+    text-align: right;
+}
 @media screen and (max-width:640px) {
     .post-edit-list .post-edit-item:not(:last-child) {
         margin-bottom: 8px;

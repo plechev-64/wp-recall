@@ -1201,6 +1201,8 @@ function pfm_action_post_create(){
         $args['guest_email'] = $pfmData['guest_email'];
         $args['guest_name'] = $pfmData['guest_name'];
     }
+    
+    do_action('pfm_before_add_post', $args);
 
     $post_id = pfm_add_post($args);
 

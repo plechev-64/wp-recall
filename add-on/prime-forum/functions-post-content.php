@@ -94,7 +94,10 @@ function pfm_filter_allowed_tags($content){
 	'em' => array(),
 	'strong' => array(),
         'details' => array(),
-        'summary' => array()
+        'summary' => array(),
+        'span' => array(
+            'class' => true
+        )
     ));
     
     $content = wp_kses($content, $allowed_tags);

@@ -31,7 +31,7 @@ function rcl_get_postslist($post_type,$type_name){
 }
 
 function rcl_tab_postform($master_id){    
-    return do_shortcode('[public-form id="'.rcl_get_option('form-lk',1).'"]');
+    return do_shortcode('[public-form form_id="'.rcl_get_option('form-lk',1).'"]');
 }
 
 //Прикрепление новой миниатюры к публикации из произвольного места на сервере

@@ -6,6 +6,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
     public $fields_options;
     public $form_object;
     public $post;
+    public $form_id;
     public $current_field = array();
     public $options = array(
         'preview' => 1,

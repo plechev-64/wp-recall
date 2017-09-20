@@ -197,7 +197,11 @@ function pfm_ajax_action(object,e){
             }
             
             if(data['remove-item']){
-                jQuery('#' + data['remove-item']).slideUp();
+                jQuery('#' + data['remove-item']).remove();
+            }
+            
+            if(data['hide-item']){
+                jQuery('#' + data['hide-item']).slideUp();
             }
 
             if(data['dialog-close']){
