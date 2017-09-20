@@ -214,10 +214,13 @@ function rcl_pay_order_user_balance(){
     
     rcl_verify_ajax_nonce();
     
-    $pay_id = intval($_POST['pay_id']);
-    $pay_type = $_POST['pay_type'];
-    $pay_summ = $_POST['pay_summ'];
-    $baggage_data = json_decode(base64_decode($_POST['baggage_data']));
+    $POST = wp_unslash($_POST);
+    
+    $pay_id = intval($POST['pay_id']);
+    $pay_type = $POST['pay_type'];
+    $pay_summ = $POST['pay_summ'];
+    $description = $POST['description'];
+    $baggage_data = json_decode(base64_decode($POST['baggage_data']));
 
     if(!$pay_id){
         $log['error'] = __('Order not found!','wp-recall');
@@ -246,7 +249,7 @@ function rcl_pay_order_user_balance(){
         exit;
     }
 
-    rcl_update_user_balance($newBalance,$user_ID,sprintf(__('Payment for order №%d','wp-recall'),$pay_id));
+    rcl_update_user_balance($newBalance,$user_ID,$description);
 
     do_action('rcl_success_pay_balance',(object)$data);
 

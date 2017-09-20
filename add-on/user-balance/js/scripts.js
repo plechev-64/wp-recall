@@ -33,19 +33,21 @@ jQuery(function($){
 });
 
 function rcl_pay_order_user_balance(e,data){
-    
-    var pay_id = data.pay_id;
-    var pay_type = data.pay_type;
-    var pay_summ = data.pay_summ;
-    var baggage_data = JSON.stringify(data.baggage_data);
-    
+
     rcl_preloader_show(jQuery('.rcl-payment-buttons'));
     
-    var dataString = 'action=rcl_pay_order_user_balance&pay_id='+pay_id+'&pay_type='+pay_type+'&pay_summ='+pay_summ+'&baggage_data='+baggage_data;
-    dataString += '&ajax_nonce='+Rcl.nonce;
+    var dataPost = {
+        action: 'rcl_pay_order_user_balance',
+        pay_id: data.pay_id,
+        pay_type: data.pay_type,
+        pay_summ: data.pay_summ,
+        description: data.description,
+        baggage_data: JSON.stringify(data.baggage_data),
+        ajax_nonce: Rcl.nonce
+    };
     
     jQuery.ajax({
-        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+        type: 'POST', data: dataPost, dataType: 'json', url: Rcl.ajaxurl,
         success: function(data){
             
             rcl_preloader_hide();

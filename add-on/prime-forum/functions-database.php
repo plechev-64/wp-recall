@@ -36,6 +36,16 @@ function pfm_get_forum_field($forum_id,$fieldName){
     ));
 }
 
+function pfm_subforums_topic_count($forum_id){
+    global $wpdb;
+    
+    $sql = "SELECT SUM(topic_count) "
+            . "FROM ".RCL_PREF."pforums "
+                . "WHERE parent_id='$forum_id'";
+    
+    return $wpdb->get_var($sql);
+}
+
 function pfm_get_topics($args = false){
     $topics = new PrimeTopics();
     return $topics->get_results($args);

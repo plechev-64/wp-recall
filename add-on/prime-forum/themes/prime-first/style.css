@@ -529,6 +529,9 @@
 #prime-forum .prime-post-content img {
     margin: 10px 0;
 }
+#prime-forum .prime-post-content img.wp-smiley {
+    margin: 0 0;
+}
 #prime-forum .prime-post-bottom {
     align-self: flex-end;
     border-top: 1px solid #eee;

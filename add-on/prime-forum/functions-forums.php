@@ -37,7 +37,16 @@ function pfm_get_forum_description($forum_id){
 
 function pfm_the_topic_count(){
     global $PrimeForum;
-    echo $PrimeForum->topic_count;
+    
+    $topic_count = $PrimeForum->topic_count;
+    
+    if(pfm_have_subforums()){
+
+        $topic_count += pfm_subforums_topic_count($PrimeForum->forum_id);
+
+    }
+    
+    echo $topic_count;
 }
 
 function pfm_forum_field($field_name, $echo = 1){
@@ -118,11 +127,15 @@ function pfm_subforums_list(){
     echo $content;
 }
 
-function pfm_get_subforums_list($forum_id){
-    
-    $childs = pfm_get_forums(array(
+function pfm_get_subforums($forum_id){
+    return pfm_get_forums(array(
         'parent_id' => $forum_id
     ));
+}
+
+function pfm_get_subforums_list($forum_id){
+    
+    $childs = pfm_get_subforums($forum_id);
     
     if(!$childs) return false;
     

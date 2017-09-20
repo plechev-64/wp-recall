@@ -106,6 +106,16 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                                     'select' => __('Select','wp-recall'),
                                     'checkbox' => __('Checkbox','wp-recall')
                                 )
+                            ),
+                            array(
+                                'type' => 'select',
+                                'slug' => 'only-child',
+                                'title' => __('Только дочерние термины','wp-recall'),
+                                'notice' => __('Прикреплять к публикации только выбранные дочерние термины, игнорируя родителей','wp-recall'),
+                                'values' => array(
+                                    __('Disable','wp-recall'),
+                                    __('Enable','wp-recall')
+                                )
                             )
                         );
                         
@@ -371,6 +381,6 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
         return $slugs;
         
     }
- 
+
 }
 

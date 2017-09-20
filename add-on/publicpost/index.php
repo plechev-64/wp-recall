@@ -275,16 +275,28 @@ function rcl_add_taxonomy_in_postdata($postdata,$data){
         }
         
     }
+    
+    $FormFields = new Rcl_Public_Form_Fields(array(
+        'post_type' => $data->post_type,
+        'form_id' => $_POST['form_id']
+    ));
 
     foreach($post_type[$data->post_type]->taxonomies as $taxonomy){
+
         if(!isset($_POST['cats'][$taxonomy])) continue;
 
-        $cats = get_terms($taxonomy);
+        $postCats = $_POST['cats'][$taxonomy];
 
-        $term_l = new Rcl_Edit_Terms_List();
-        $new_cat = $term_l->get_terms_list($cats,$_POST['cats'][$taxonomy]);
+        if(!$FormFields->get_field_option('taxonomy-'.$taxonomy, 'only-child')){
 
-        $postdata['tax_input'][$taxonomy] = $new_cat;
+            $allCats = get_terms($taxonomy);
+            
+            $RclTerms = new Rcl_Edit_Terms_List();
+            $postCats = $RclTerms->get_terms_list($allCats, $postCats);
+
+        }
+
+        $postdata['tax_input'][$taxonomy] = $postCats;
     }
 
     return $postdata;

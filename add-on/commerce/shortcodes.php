@@ -105,7 +105,7 @@ function rcl_shortcode_productlist($atts){
                     <div class="products-list">';
 
     foreach($products as $post){ setup_postdata($post);
-        $prodlist .= rcl_get_include_template('product-'.$type.'.php',__FILE__);
+        $prodlist .= rcl_get_include_template('product-'.$type.'.php',__FILE__,$atts);
     }
 
     wp_reset_query();

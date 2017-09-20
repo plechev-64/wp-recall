@@ -20,6 +20,10 @@ function rcl_get_template_path($filename,$path=false){
 //подключение указанного файла шаблона с выводом
 function rcl_include_template($file_temp, $path=false, $data = false){
     
+    if ( ! empty( $data ) && is_array( $data ) ) {
+        extract( $data );
+    }
+    
     $pathfile = rcl_get_template_path($file_temp, $path);
     
     if(!$pathfile) 

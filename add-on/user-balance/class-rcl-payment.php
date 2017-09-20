@@ -232,6 +232,8 @@ class Rcl_Payment{
                 
                 if($this->pay_type == 1)
                     continue;
+
+                $description = ($this->description)? $this->description: sprintf(__('Payment for order №%d','wp-recall'),$this->pay_id);
                 
                 $content .= $this->personal_account_pay_form($this->pay_id,
                     array(
@@ -239,7 +241,8 @@ class Rcl_Payment{
                         'pay_id' => $this->pay_id,
                         'pay_summ' => $this->pay_summ,
                         'pay_callback' => $this->pay_callback,
-                        'baggage_data' => $this->baggage_data
+                        'baggage_data' => $this->baggage_data,
+                        'description' => $description
                     )
                 );
                 

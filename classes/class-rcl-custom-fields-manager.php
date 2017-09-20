@@ -669,6 +669,19 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         
     }
     
+    function get_field_option($slug, $option){
+        
+        $field = $this->get_field($slug);
+        
+        if(!$field) return false;
+        
+        if(isset($field[$option]))
+            return $field[$option];
+        
+        return false;
+        
+    }
+    
     function get_default_fields_options(){
         
         $fields = $this->get_default_fields();

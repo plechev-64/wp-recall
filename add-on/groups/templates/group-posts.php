@@ -14,11 +14,11 @@
         </h3>                                          
     </div>
     
-    <?php if($data['thumbnail'] && has_post_thumbnail()){ ?>
+    <?php if($thumbnail && has_post_thumbnail()){ ?>
         <div class="post-group-thumb"><?php the_post_thumbnail('thumbnail'); ?></div>
     <?php } ?>
         
-    <?php if($data['excerpt']){ ?>
+    <?php if($excerpt){ ?>
         <div class="post-group-content">
             <?php the_excerpt(); ?>
         </div>
