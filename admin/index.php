@@ -105,7 +105,7 @@ function rcl_postmeta_update( $post_id ){
     return $post_id;
 }
 
-rcl_ajax('rcl_update_options', false);
+rcl_ajax_action('rcl_update_options', false);
 function rcl_update_options(){
     global $rcl_options;
     
@@ -263,7 +263,7 @@ function rcl_update_custom_fields(){
     
 }
 
-rcl_ajax('rcl_get_new_custom_field', false);
+rcl_ajax_action('rcl_get_new_custom_field', false);
 function rcl_get_new_custom_field(){
     
     $post_type = $_POST['post_type'];
@@ -290,7 +290,7 @@ function rcl_get_new_custom_field(){
     
 }
 
-rcl_ajax('rcl_get_custom_field_options', false);
+rcl_ajax_action('rcl_get_custom_field_options', false);
 function rcl_get_custom_field_options(){
     
     $type_field = $_POST['type_field'];

@@ -108,14 +108,13 @@ class Rcl_Tabs{
 
         $classes = array();
         
-        if(in_array('ajax',$this->supports)){
-            $classes[] = 'rcl-ajax';
-        }
-        
         if(in_array('dialog',$this->supports)){
             $classes[] = 'rcl-dialog';
+            $classes[] = 'rcl-ajax';
+        }else if(in_array('ajax',$this->supports)){
+            $classes[] = 'rcl-ajax';
         }
-        
+
         if($this->tab_active) 
             $classes[] = ' active';
         

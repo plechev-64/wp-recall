@@ -59,7 +59,7 @@ function rcl_get_chart_payments($pays){
 /*************************************************
 Меняем баланс пользователя из админки
 *************************************************/
-rcl_ajax('rcl_edit_balance_user', false);
+rcl_ajax_action('rcl_edit_balance_user', false);
 function rcl_edit_balance_user(){
 
     $user_id = intval($_POST['user']);

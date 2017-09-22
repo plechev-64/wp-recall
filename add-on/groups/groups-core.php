@@ -760,7 +760,7 @@ function rcl_get_group_callback($callback,$name,$args=false){
     return $content;
 }
 
-rcl_ajax('rcl_get_group_link_content', true);
+rcl_ajax_action('rcl_get_group_link_content', true);
 function rcl_get_group_link_content(){
     global $rcl_group;
     
@@ -783,7 +783,7 @@ function rcl_get_group_link_content(){
     ));
 }
 
-rcl_ajax('rcl_group_callback', false);
+rcl_ajax_action('rcl_group_callback', false);
 function rcl_group_callback(){
     global $rcl_group;
     $group_id = intval($_POST['group_id']);

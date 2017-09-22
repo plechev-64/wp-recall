@@ -211,7 +211,7 @@ function rcl_update_feed_current_user($author_id){
     return $data;
 }
 
-rcl_ajax('rcl_feed_progress', false);
+rcl_ajax_action('rcl_feed_progress', false);
 function rcl_feed_progress(){
     global $rcl_feed;
     

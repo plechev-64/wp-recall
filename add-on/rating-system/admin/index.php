@@ -35,7 +35,7 @@ function rcl_get_rating_column_content( $custom_column, $column_name, $user_id )
     return $custom_column;
 }
 
-rcl_ajax('rcl_edit_rating_user', false);
+rcl_ajax_action('rcl_edit_rating_user', false);
 function rcl_edit_rating_user(){
     global $wpdb,$user_ID;
 

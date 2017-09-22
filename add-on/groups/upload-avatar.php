@@ -1,6 +1,6 @@
 <?php
 
-rcl_ajax('rcl_group_avatar_upload', false);
+rcl_ajax_action('rcl_group_avatar_upload', false);
 function rcl_group_avatar_upload(){
     
     rcl_verify_ajax_nonce();

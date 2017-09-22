@@ -432,7 +432,7 @@ function rcl_remove_cashe_rating_post($args){
     }
 }
 
-rcl_ajax('rcl_edit_rating_post', false);
+rcl_ajax_action('rcl_edit_rating_post', false);
 function rcl_edit_rating_post(){
     global $rcl_options,$rcl_rating_types;
     
@@ -500,7 +500,7 @@ function rcl_edit_rating_post(){
 
 }
 
-rcl_ajax('rcl_edit_rating_post', true);
+rcl_ajax_action('rcl_view_rating_votes', true);
 function rcl_view_rating_votes(){
     
     rcl_verify_ajax_nonce();

@@ -38,7 +38,7 @@ function rcl_add_user_info_button($icons){
     return $icons;
 }
 
-rcl_ajax('rcl_return_user_details', true);
+rcl_ajax_action('rcl_return_user_details', true);
 function rcl_return_user_details(){
 
     wp_send_json(array(

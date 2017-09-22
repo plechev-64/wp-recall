@@ -70,7 +70,7 @@ function rcl_commerce_options_orders() {
     $Rcl_History_Orders = new Rcl_History_Orders();
 }
 
-rcl_ajax('rcl_edit_admin_price_product', false);
+rcl_ajax_action('rcl_edit_admin_price_product', false);
 function rcl_edit_admin_price_product(){
 
     $id_post = intval($_POST['id_post']);

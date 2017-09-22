@@ -41,6 +41,51 @@ jQuery(window).load(function() {
     }); 
 }); 
 
+rcl_add_action('rcl_init','rcl_init_ajax_tab');
+function rcl_init_ajax_tab(){
+    jQuery('body').on('click','.rcl-ajax',function(){
+        
+        var e = jQuery(this);
+        
+        if(e.hasClass('tab-upload')) return false;
+
+        rcl_do_action('rcl_before_upload_tab',e);
+
+        rcl_ajax({
+            data:{
+                action: 'rcl_ajax',
+                post: e.data('post'),
+                tab_url: e.attr('href') //encodeURIComponent(e.attr('href'))
+            },
+            success: function(data){
+
+                e.removeClass('tab-upload');
+
+                data = rcl_apply_filters('rcl_upload_tab',data);
+
+                if(data.result.error){
+                    rcl_notice(data.result.error,'error',10000);
+                    return false;
+                }
+                
+                var funcname = data.post.callback;              
+                new (window[funcname])(e,data);
+
+                if(!data.post.subtab_id){
+                    jQuery('#lk-content').animateCss('fadeIn');
+                }else{
+                    jQuery('#lk-content .rcl-subtab-content').animateCss('fadeIn');
+                }
+                
+                rcl_do_action('rcl_upload_tab',{element:e,result:data});
+                
+            }
+        });
+         
+        return false;
+    });
+}
+
 function rcl_ajax_tab(e,data){
 
     var url = data.post.tab_url;
@@ -250,51 +295,6 @@ function rcl_init_recallbar_hover(){
         jQuery(this).children(".sub-menu").css({'visibility': 'visible'});
     }, function() {
         jQuery(this).children(".sub-menu").css({'visibility': ''});
-    });
-}
-
-rcl_add_action('rcl_init','rcl_init_ajax_tab');
-function rcl_init_ajax_tab(){
-    jQuery('body').on('click','.rcl-ajax',function(){
-        
-        var e = jQuery(this);
-        
-        if(e.hasClass('tab-upload')) return false;
-
-        rcl_do_action('rcl_before_upload_tab',e);
-
-        rcl_ajax({
-            data:{
-                action: 'rcl_ajax',
-                post: e.data('post'),
-                tab_url: encodeURIComponent(e.attr('href'))
-            },
-            success: function(data){
-
-                e.removeClass('tab-upload');
-
-                data = rcl_apply_filters('rcl_upload_tab',data);
-
-                if(data.result.error){
-                    rcl_notice(data.result.error,'error',10000);
-                    return false;
-                }
-                
-                var funcname = data.post.callback;              
-                new (window[funcname])(e,data);
-
-                if(!data.post.subtab_id){
-                    jQuery('#lk-content').animateCss('fadeIn');
-                }else{
-                    jQuery('#lk-content .rcl-subtab-content').animateCss('fadeIn');
-                }
-                
-                rcl_do_action('rcl_upload_tab',{element:e,result:data});
-                
-            }
-        });
-         
-        return false;
     });
 }
 

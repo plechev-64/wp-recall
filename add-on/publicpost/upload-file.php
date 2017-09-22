@@ -22,7 +22,7 @@ function rcl_add_attachment_thumbnail_button($content,$attachment_id,$mime){
 
 }
 
-rcl_ajax('rcl_imagepost_upload', true);
+rcl_ajax_action('rcl_imagepost_upload', true);
 function rcl_imagepost_upload(){
     global $user_ID;
 

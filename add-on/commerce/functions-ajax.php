@@ -1,6 +1,6 @@
 <?php
 
-rcl_ajax('rcl_update_cart_content', true);
+rcl_ajax_action('rcl_update_cart_content', true);
 function rcl_update_cart_content(){
     
     $cartProducts = json_decode(wp_unslash($_POST['cart']));
@@ -13,7 +13,7 @@ function rcl_update_cart_content(){
     
 }
 
-rcl_ajax('rcl_add_to_cart', true);
+rcl_ajax_action('rcl_add_to_cart', true);
 function rcl_add_to_cart(){
     global $Cart;
     
@@ -91,7 +91,7 @@ function rcl_add_to_cart(){
     
 }
 
-rcl_ajax('rcl_check_cart_data', true);
+rcl_ajax_action('rcl_check_cart_data', true);
 function rcl_check_cart_data(){
     global $user_ID,$rmag_options;
     

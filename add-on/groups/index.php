@@ -543,7 +543,7 @@ function rcl_add_group_user_options(){
     echo '</div>';
 }
 
-rcl_ajax('rcl_apply_group_request', false);
+rcl_ajax_action('rcl_apply_group_request', false);
 function rcl_apply_group_request(){
     global $rcl_group,$user_ID;
     

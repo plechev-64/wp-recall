@@ -107,7 +107,7 @@ function setAttr_rcl(prmName,val){
 }
 
 function rcl_update_history_url(url){
-
+    
     if(url != window.location){
         if ( history.pushState ){
             window.history.pushState(null, null, url);
@@ -532,11 +532,11 @@ function rcl_ajax(prop){
         type: 'POST', 
         data: prop.data, 
         dataType: 'json', 
-        url: (ajaxurl)? ajaxurl: Rcl.ajaxurl,
+        url: (typeof ajaxurl !== 'undefined')? ajaxurl: Rcl.ajaxurl,
         success: function(result){
             
             if(!result){
-                rcl_notice('Error', 'error');
+                rcl_notice('Error', 'error', 5000);
                 return false;
             }
             
@@ -556,6 +556,7 @@ function rcl_ajax(prop){
                     prop.error(result);
                 
                 return false;
+                
             }
             
             if(!result.preloader_live){

@@ -226,7 +226,7 @@ function rcl_feed_count_subscribers($user_id){
     return $result;
 }
 
-rcl_ajax('rcl_feed_callback', false);
+rcl_ajax_action('rcl_feed_callback', false);
 function rcl_feed_callback(){
     
     rcl_verify_ajax_nonce();

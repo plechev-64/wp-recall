@@ -1,7 +1,7 @@
 <?php
 
 //удаление фото приложенных к публикации через загрузчик плагина
-rcl_ajax('rcl_ajax_delete_post', true);
+rcl_ajax_action('rcl_ajax_delete_post', true);
 function rcl_ajax_delete_post(){
     global $user_ID;
 
@@ -46,7 +46,7 @@ function rcl_ajax_delete_post(){
 }
 
 //вызов быстрой формы редактирования публикации
-rcl_ajax('rcl_get_edit_postdata', false);
+rcl_ajax_action('rcl_get_edit_postdata', false);
 function rcl_get_edit_postdata(){
     global $user_ID;
 
@@ -74,7 +74,7 @@ function rcl_get_edit_postdata(){
 }
 
 //сохранение изменений в быстрой форме редактирования
-rcl_ajax('rcl_edit_postdata', false);
+rcl_ajax_action('rcl_edit_postdata', false);
 function rcl_edit_postdata(){
     global $wpdb;
 
@@ -109,7 +109,7 @@ function rcl_edit_post(){
 }
 
 //выборка меток по введенным значениям
-rcl_ajax('rcl_get_like_tags', true);
+rcl_ajax_action('rcl_get_like_tags', true);
 function rcl_get_like_tags(){
     global $wpdb;
 
@@ -134,7 +134,7 @@ function rcl_get_like_tags(){
 
 }
 
-rcl_ajax('rcl_preview_post', true);
+rcl_ajax_action('rcl_preview_post', true);
 function rcl_preview_post(){
     global $user_ID;
 
@@ -226,7 +226,7 @@ function rcl_preview_post(){
 
 }
 
-rcl_ajax('rcl_get_post_thumbnail_html', true);
+rcl_ajax_action('rcl_get_post_thumbnail_html', true);
 function rcl_get_post_thumbnail_html(){
 
     $thumbnail_id = intval($_POST['thumbnail_id']);

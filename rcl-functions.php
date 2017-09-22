@@ -367,7 +367,7 @@ function rcl_ajax_tab($post){
     if (!class_exists('Rcl_Tabs')) 
         require_once RCL_PATH.'classes/class-rcl-tabs.php';
     
-    $ajax = (in_array('ajax',$rcl_tabs[$id_tab]['supports']))? 1: 0;
+    $ajax = (in_array('ajax',$rcl_tabs[$id_tab]['supports']) || in_array('dialog',$rcl_tabs[$id_tab]['supports']))? 1: 0;
     
     if(!$ajax){
         
@@ -740,7 +740,7 @@ function rcl_get_smiles($id_area){
     return $smiles;
 }
 
-rcl_ajax('rcl_get_smiles_ajax', false);
+rcl_ajax_action('rcl_get_smiles_ajax', false);
 function rcl_get_smiles_ajax(){
     global $wpsmiliestrans;
 

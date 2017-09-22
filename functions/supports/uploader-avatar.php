@@ -100,7 +100,7 @@ function rcl_notice_avatar_deleted(){
         rcl_notice_text(__('Your avatar has been deleted','wp-recall'),'success');
 }
 
-rcl_ajax('rcl_avatar_upload', false);
+rcl_ajax_action('rcl_avatar_upload', false);
 function rcl_avatar_upload(){
     
     rcl_verify_ajax_nonce();

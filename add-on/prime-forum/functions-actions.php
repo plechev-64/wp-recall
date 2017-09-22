@@ -432,7 +432,7 @@ function pfm_init_actions(){
     
 }
 
-rcl_ajax('pfm_ajax_action', true);
+rcl_ajax_action('pfm_ajax_action', true);
 function pfm_ajax_action(){
     global $PrimeActions, $PrimeQuery, $PrimeUser;
     

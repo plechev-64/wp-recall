@@ -1,6 +1,6 @@
 <?php
 
-rcl_ajax('rcl_chat_remove_contact', false);
+rcl_ajax_action('rcl_chat_remove_contact', false);
 function rcl_chat_remove_contact(){
     global $user_ID;
     
@@ -16,7 +16,7 @@ function rcl_chat_remove_contact(){
     
 }
 
-rcl_ajax('rcl_get_chat_page', true);
+rcl_ajax_action('rcl_get_chat_page', true);
 function rcl_get_chat_page(){
     
     rcl_verify_ajax_nonce();
@@ -47,7 +47,7 @@ function rcl_get_chat_page(){
 
 }
 
-rcl_ajax('rcl_chat_add_message', false);
+rcl_ajax_action('rcl_chat_add_message', false);
 function rcl_chat_add_message(){
     global $user_ID;
     
@@ -80,7 +80,7 @@ function rcl_chat_add_message(){
 
 }
 
-rcl_ajax('rcl_get_chat_private_ajax', false);
+rcl_ajax_action('rcl_get_chat_private_ajax', false);
 function rcl_get_chat_private_ajax(){
     
     rcl_verify_ajax_nonce();
@@ -102,7 +102,7 @@ function rcl_get_chat_private_ajax(){
 
 }
 
-rcl_ajax('rcl_chat_message_important', false);
+rcl_ajax_action('rcl_chat_message_important', false);
 function rcl_chat_message_important(){
     global $user_ID;
     
@@ -124,7 +124,7 @@ function rcl_chat_message_important(){
 
 }
 
-rcl_ajax('rcl_chat_important_manager_shift', false);
+rcl_ajax_action('rcl_chat_important_manager_shift', false);
 function rcl_chat_important_manager_shift(){
     global $user_ID;
     
@@ -146,7 +146,7 @@ function rcl_chat_important_manager_shift(){
 
 }
 
-rcl_ajax('rcl_chat_delete_attachment', false);
+rcl_ajax_action('rcl_chat_delete_attachment', false);
 function rcl_chat_delete_attachment(){
     global $user_ID;
     
@@ -170,7 +170,7 @@ function rcl_chat_delete_attachment(){
 
 }
 
-rcl_ajax('rcl_chat_ajax_delete_message', false);
+rcl_ajax_action('rcl_chat_ajax_delete_message', false);
 function rcl_chat_ajax_delete_message(){
     global $current_user;
     
@@ -189,7 +189,7 @@ function rcl_chat_ajax_delete_message(){
 
 }
 
-rcl_ajax('rcl_chat_upload', false);
+rcl_ajax_action('rcl_chat_upload', false);
 function rcl_chat_upload(){
     global $rcl_options;
 

@@ -283,6 +283,7 @@ function rcl_publish(e){
     rcl_ajax({
         data: 'action=rcl_preview_post&' + formblock.serialize(),
         success: function(data){
+            rcl_preloader_show(formblock);
             jQuery('form.rcl-public-form').submit();
         }
     }); 

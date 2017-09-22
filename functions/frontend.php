@@ -555,7 +555,7 @@ function rcl_user_black_list_button($office_id){
     return $button;
 }
 
-rcl_ajax('rcl_manage_user_black_list', false);
+rcl_ajax_action('rcl_manage_user_black_list', false);
 function rcl_manage_user_black_list(){
     global $user_ID;
     
@@ -676,7 +676,7 @@ function rcl_post_bar($content){
     
 }
 
-rcl_ajax('rcl_beat', true);
+rcl_ajax_action('rcl_beat', true);
 function rcl_beat(){
     
     rcl_verify_ajax_nonce();

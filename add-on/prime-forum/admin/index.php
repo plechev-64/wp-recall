@@ -424,7 +424,7 @@ function pfm_update_user_role($user_id) {
     update_user_meta($user_id, 'pfm_role', $_POST['pfm_role']);
 }
 
-rcl_ajax('pfm_ajax_manager_update_data', false);
+rcl_ajax_action('pfm_ajax_manager_update_data', false);
 function pfm_ajax_manager_update_data(){
     
     $post = $_POST;
@@ -491,7 +491,7 @@ function pfm_manager_update_forum($options){
     
 }
 
-rcl_ajax('pfm_ajax_update_sort_groups', false);
+rcl_ajax_action('pfm_ajax_update_sort_groups', false);
 function pfm_ajax_update_sort_groups(){
     
     $sort = json_decode(wp_unslash($_POST['sort']));
@@ -509,7 +509,7 @@ function pfm_ajax_update_sort_groups(){
     
 }
 
-rcl_ajax('pfm_ajax_update_sort_forums', false);
+rcl_ajax_action('pfm_ajax_update_sort_forums', false);
 function pfm_ajax_update_sort_forums(){
     
     $sort = json_decode(wp_unslash($_POST['sort']));
@@ -528,7 +528,7 @@ function pfm_ajax_update_sort_forums(){
     
 }
 
-rcl_ajax('pfm_ajax_get_manager_item_delete_form', false);
+rcl_ajax_action('pfm_ajax_get_manager_item_delete_form', false);
 function pfm_ajax_get_manager_item_delete_form(){
     
     $itemType = $_POST['item-type'];

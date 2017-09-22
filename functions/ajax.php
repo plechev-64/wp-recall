@@ -1,6 +1,6 @@
 <?php
 
-function rcl_ajax($function_name, $guest_access = false){
+function rcl_ajax_action($function_name, $guest_access = false){
     
     add_action('wp_ajax_'.$function_name, $function_name);
     

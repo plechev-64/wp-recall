@@ -128,7 +128,7 @@ function rcl_send_addons_data(){
 
 }
 
-rcl_ajax('rcl_update_addon', false);
+rcl_ajax_action('rcl_update_addon', false);
 function rcl_update_addon(){
 
     $addon = $_POST['addon'];

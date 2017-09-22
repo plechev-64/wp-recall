@@ -164,7 +164,7 @@ function rcl_get_html_usercount(){
 /*************************************************
 Пополнение личного счета пользователя
 *************************************************/
-rcl_ajax('rcl_add_count_user', false);
+rcl_ajax_action('rcl_add_count_user', false);
 function rcl_add_count_user(){
     global $user_ID;
 
@@ -206,7 +206,7 @@ function rcl_add_count_user(){
 
 }
 
-rcl_ajax('rcl_pay_order_user_balance', false);
+rcl_ajax_action('rcl_pay_order_user_balance', false);
 function rcl_pay_order_user_balance(){
     global $user_ID,$rmag_options;
     

@@ -37,7 +37,7 @@ function rcl_add_cover_uploader_button(){
     }
 }
 
-rcl_ajax('rcl_cover_upload', false);
+rcl_ajax_action('rcl_cover_upload', false);
 function rcl_cover_upload(){
     
     rcl_verify_ajax_nonce();
