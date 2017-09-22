@@ -282,8 +282,7 @@ function rcl_add_payment_order($pay){
                 'pay_balance' => 1
             );
 
-            echo json_encode($result);
-            exit;
+            wp_send_json($result);
             
         }
     }

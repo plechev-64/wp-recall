@@ -59,20 +59,24 @@ function rcl_get_chart_payments($pays){
 /*************************************************
 Меняем баланс пользователя из админки
 *************************************************/
-add_action('wp_ajax_rcl_edit_balance_user', 'rcl_edit_balance_user');
+rcl_ajax('rcl_edit_balance_user', false);
 function rcl_edit_balance_user(){
 
     $user_id = intval($_POST['user']);
     $balance = floatval(str_replace(',','.',$_POST['balance']));
+    
+    if(!$user_id){
+        wp_send_json(array('error'=>__('Баланс не был изменен','wp-recall')));
+    }
 
     rcl_update_user_balance($balance,$user_id,__('Balance changed','wp-recall'));
 
-    $log['otvet']=100;
-    $log['user']=$user_id;
-    $log['balance']=$balance;
+    wp_send_json(array(
+        'success' => __('Баланс успешно изменен','wp-recall'),
+        'user_id' => $user_id,
+        'balance' => $balance
+    ));
 
-    echo json_encode($log);
-    exit;
 }
 
 add_action('admin_menu', 'rcl_statistic_user_pay_page',25);

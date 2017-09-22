@@ -432,8 +432,7 @@ function pfm_init_actions(){
     
 }
 
-add_action('wp_ajax_pfm_ajax_action','pfm_ajax_action');
-add_action('wp_ajax_nopriv_pfm_ajax_action','pfm_ajax_action');
+rcl_ajax('pfm_ajax_action', true);
 function pfm_ajax_action(){
     global $PrimeActions, $PrimeQuery, $PrimeUser;
     
@@ -467,7 +466,7 @@ function pfm_ajax_action(){
     
     $result = apply_filters('pfm_action_result',$result, $method, $itemID);
     
-    echo json_encode($result); exit;
+    wp_send_json($result);
 
 }
 
@@ -569,6 +568,7 @@ pfm_add_ajax_action('cancel_post_migrate','pfm_action_cancel_post_migrate');
 function pfm_action_cancel_post_migrate($topic_id){
     setcookie('pfm_migrate_post','', time()+3600, '/', $_SERVER['HOST']);
     $result['update-page'] = true;
+    $result['preloader_live'] = 1;
     return $result;
 }
 
@@ -622,6 +622,7 @@ function pfm_action_end_post_migrate($topic_id){
         pfm_update_topic_data($topic_id);
 
         $result['url-redirect'] = pfm_get_post_permalink($post_id);
+        $result['preloader_live'] = 1;
 
     }
     
@@ -706,6 +707,7 @@ function pfm_action_post_delete($post_id){
 
         if($topic->post_count == 1){
             $result['url-redirect'] = pfm_get_forum_permalink($topic->forum_id);
+            $result['preloader_live'] = 1;
         }
 
     }else{
@@ -736,6 +738,7 @@ function pfm_action_topic_close($topic_id){
         ));
 
         $result['update-page'] = true;
+        $result['preloader_live'] = 1;
 
     }
     
@@ -762,6 +765,7 @@ function pfm_action_topic_unclose($topic_id){
         ));
 
         $result['update-page'] = true;
+        $result['preloader_live'] = 1;
 
     }
     
@@ -791,6 +795,8 @@ function pfm_action_topic_delete($topic_id){
             $result['url-redirect'] = $url;
         else
             $result['url-redirect'] = pfm_add_number_page($url, $_POST['current_page']);
+        
+        $result['preloader_live'] = 1;
 
     }
     
@@ -910,6 +916,7 @@ function pfm_action_topic_fix($topic_id){
         ));
 
         $result['update-page'] = true;
+        $result['preloader_live'] = 1;
 
     }
     
@@ -936,6 +943,7 @@ function pfm_action_topic_unfix($topic_id){
         ));
 
         $result['update-page'] = true;
+        $result['preloader_live'] = 1;
 
     }
 
@@ -1216,7 +1224,10 @@ function pfm_action_post_create(){
             ));
             
             if($topicClose){
-                return array('url-redirect' => pfm_get_post_permalink($post_id));
+                return array(
+                    'url-redirect' => pfm_get_post_permalink($post_id),
+                    'preloader_live' => 1
+                );
             }
             
         }
@@ -1224,7 +1235,10 @@ function pfm_action_post_create(){
     }
 
     if(isset($formdata['redirect']) && $formdata['redirect'] == 'post-url'){
-        return array('url-redirect' => pfm_get_post_permalink($post_id));
+        return array(
+            'url-redirect' => pfm_get_post_permalink($post_id),
+            'preloader_live' => 1
+        );
     }
 
     $posts = new PrimePosts();

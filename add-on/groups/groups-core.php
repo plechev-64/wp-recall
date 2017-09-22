@@ -760,8 +760,7 @@ function rcl_get_group_callback($callback,$name,$args=false){
     return $content;
 }
 
-add_action('wp_ajax_rcl_get_group_link_content','rcl_get_group_link_content');
-add_action('wp_ajax_nopriv_rcl_get_group_link_content','rcl_get_group_link_content');
+rcl_ajax('rcl_get_group_link_content', true);
 function rcl_get_group_link_content(){
     global $rcl_group;
     
@@ -775,11 +774,16 @@ function rcl_get_group_link_content(){
     $content .= $callback($group_id);
     $content .= '</div>';
 
-    echo json_encode($content);exit;
+    wp_send_json(array(
+        'dialog' => array(
+            'content' => $content,
+            'class' => 'group-dialog',
+            'size' => 'small'
+        )
+    ));
 }
 
-
-add_action('wp_ajax_rcl_group_callback','rcl_group_callback');
+rcl_ajax('rcl_group_callback', false);
 function rcl_group_callback(){
     global $rcl_group;
     $group_id = intval($_POST['group_id']);
@@ -788,8 +792,8 @@ function rcl_group_callback(){
     $rcl_group = rcl_get_group($group_id);
 
     $result = $callback($group_id,$user_id);
-
-    echo json_encode($result);exit;
+    
+    wp_send_json($result);
 }
 
 function rcl_group_ajax_delete_user($group_id,$user_id){

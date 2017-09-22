@@ -226,7 +226,7 @@ function rcl_feed_count_subscribers($user_id){
     return $result;
 }
 
-add_action('wp_ajax_rcl_feed_callback','rcl_feed_callback');
+rcl_ajax('rcl_feed_callback', false);
 function rcl_feed_callback(){
     
     rcl_verify_ajax_nonce();
@@ -234,8 +234,8 @@ function rcl_feed_callback(){
     $data = $_POST['data'];
     $callback = $_POST['callback'];
     $content = $callback($data);
-    echo json_encode($content);
-    exit;
+    wp_send_json($content);
+
 }
 
 function rcl_feed_content(){

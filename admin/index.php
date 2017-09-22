@@ -5,6 +5,11 @@ require_once "add-on-manager.php";
 require_once "templates-manager.php";
 require_once "metaboxes.php";
 
+add_action('admin_init','rcl_admin_scripts', 10);
+function rcl_admin_scripts(){
+    wp_enqueue_style( 'animate-css', RCL_URL.'assets/css/animate-css/animate.min.css' );   
+}
+
 function rmag_global_options(){
     
     $content = ' <div id="recall" class="left-sidebar wrap">
@@ -100,15 +105,14 @@ function rcl_postmeta_update( $post_id ){
     return $post_id;
 }
 
-add_action('wp_ajax_rcl_update_options', 'rcl_update_options');
+rcl_ajax('rcl_update_options', false);
 function rcl_update_options(){
     global $rcl_options;
     
     if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rcl' ) ){
-        $result['result'] = 0;
-        $result['notice'] = __('Error','wp-recall');
-        echo json_encode($result);
-        exit;
+        wp_send_json(array(
+            'error' => __('Error','wp-recall')
+        ));
     }
 
     $POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -142,11 +146,9 @@ function rcl_update_options(){
 
     $rcl_options = $options;
 
-    $result['result'] = 1;
-    $result['notice'] = __('Settings saved!','wp-recall');
-
-    echo json_encode($result);
-    exit;
+    wp_send_json(array(
+        'success' => __('Settings saved!','wp-recall')
+    ));
 
 }
 
@@ -261,7 +263,7 @@ function rcl_update_custom_fields(){
     
 }
 
-add_action('wp_ajax_rcl_get_new_custom_field','rcl_get_new_custom_field');
+rcl_ajax('rcl_get_new_custom_field', false);
 function rcl_get_new_custom_field(){
     
     $post_type = $_POST['post_type'];
@@ -282,16 +284,13 @@ function rcl_get_new_custom_field(){
     
     $content = $manageFields->empty_field();
 
-    echo json_encode(array(
-        'success' => true,
+    wp_send_json(array(
         'content' => $content
     ));
     
-    exit;
-    
 }
 
-add_action('wp_ajax_rcl_get_custom_field_options','rcl_get_custom_field_options');
+rcl_ajax('rcl_get_custom_field_options', false);
 function rcl_get_custom_field_options(){
     
     $type_field = $_POST['type_field'];
@@ -359,11 +358,8 @@ function rcl_get_custom_field_options(){
         
     }
 
-    echo json_encode(array(
-        'success' => true,
+    wp_send_json(array(
         'content' => $content
     ));
-    
-    exit;
     
 }

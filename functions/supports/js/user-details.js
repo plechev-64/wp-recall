@@ -12,23 +12,16 @@ function rcl_zoom_avatar(e){
 function rcl_get_user_info(element){
     
     rcl_preloader_show('#lk-conteyner > div');
-
-    var post_id = jQuery(element).data('post');
     
-    var dataString = 'action=rcl_return_user_details&user_id='+jQuery(element).parents('.wprecallblock').data('account');
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-        success: function(data){                                   
-            if(data['error']){
-                rcl_preloader_hide();
-                rcl_notice(data['error'],'error',10000);
-                return false;
-            }                                   
-            if(data['success']){
-                
-                rcl_preloader_hide();
-                
+    rcl_ajax({
+        data: {
+            action: 'rcl_return_user_details',
+            user_id: jQuery(element).parents('.wprecallblock').data('account')
+        },
+        success: function(data){  
+            
+            if(data['content']){
+
                 ssi_modal.show({
                     title: Rcl.local.title_user_info,
                     sizeClass: 'auto',
@@ -43,6 +36,5 @@ function rcl_get_user_info(element){
             }
         }
     });
-    
-    
+
 }

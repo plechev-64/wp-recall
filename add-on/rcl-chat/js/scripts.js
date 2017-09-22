@@ -159,76 +159,58 @@ function rcl_chat_add_new_message(form){
     }
     
     rcl_preloader_show('.rcl-chat .chat-form > form');
-    
-    var dataString = 'action=rcl_chat_add_message&'+form.serialize();
-    dataString += '&office_ID='+Rcl.office_ID+'&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: Rcl.ajaxurl,
+
+    rcl_ajax({
+        data: 'action=rcl_chat_add_message&' + form.serialize() + '&office_ID='+Rcl.office_ID,
         success: function(data){
-            
-            rcl_preloader_hide();
-            
-            if(data['errors']){
-                jQuery.each(data['errors'], function( index, error ) {
-                    rcl_notice(error,'error',10000);
-                });
-            }
-            
-            if(data['success']){
+
+            if(data['content']){
                 form.find('textarea').val('');
-                
+
                 chat.find('.chat-messages').append(data['content']).find('.chat-message').last().animateCss('zoomIn');
                 chat.find('.rcl-chat-uploader').show();
                 chat.find('.chat-preloader-file').empty();
-                
+
                 rcl_chat_scroll_bottom(token);
                 rcl_chat_counter_reset(form);
-                
+
                 rcl_do_action('rcl_chat_add_message',{token:token,result:data});
             }
-        } 
-    });	  	
+        }
+    });
+      	
     return false;
 }
 
 function rcl_chat_navi(e){
     
     rcl_chat_inactivity_cancel();
-    
-    var page = jQuery(e).data('page');
-    var pager = jQuery(e).data('pager-id');
+
     var token = jQuery(e).parents('.rcl-chat').data('token');
-    var in_page = jQuery(e).parents('.rcl-chat').data('in_page');
+
     rcl_preloader_show('.rcl-chat .chat-form > form');
-    var dataString = 'action=rcl_get_chat_page&page='+page+'&token='+token+'&pager-id='+pager+'&in_page='+in_page+'&important='+rcl_chat_important;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: Rcl.ajaxurl,
+
+    rcl_ajax({
+        data: {
+            action: 'rcl_get_chat_page',
+            token: token,
+            page: jQuery(e).data('page'),
+            'pager-id': jQuery(e).data('pager-id'),
+            in_page: jQuery(e).parents('.rcl-chat').data('in_page'),
+            important: rcl_chat_important
+        }, 
         success: function(data){
-            
-            rcl_preloader_hide();
-            
-            if(data['errors']){
-                jQuery.each(data['errors'], function( index, error ) {
-                    rcl_notice(error,'error',10000);
-                });
-            }
-            
-            if(data['success']){
-                
+
+            if(data['content']){
+
                 jQuery(e).parents('.chat-messages-box').html(data['content']).animateCss('fadeIn');
-                
+
                 rcl_chat_scroll_bottom(token);
-                
+
             }
-        } 
-    });	  	
+        }  
+    });
+	  	
     return false;
 }
 
@@ -239,25 +221,15 @@ function rcl_get_mini_chat(e,user_id){
     }
     
     rcl_preloader_show('#rcl-chat-noread-box > div');
-    
-    var dataString = 'action=rcl_get_chat_private_ajax&user_id='+user_id;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: Rcl.ajaxurl,				
+
+    rcl_ajax({
+        data: {
+            action: 'rcl_get_chat_private_ajax',
+            user_id: user_id
+        }, 
         success: function(data){
-            
-            rcl_preloader_hide();
 
-            if(data['errors']){
-                jQuery.each(data['errors'], function( index, error ) {
-                    rcl_notice(error,'error',10000);
-                });
-            }
-
-            if(data['success']){
+            if(data['content']){
                 var minichat_box = jQuery('#rcl-chat-noread-box');
                 var animationName = minichat_box.hasClass('left-panel')? 'fadeInLeft': 'fadeInRight';
                 minichat_box.children('.rcl-mini-chat').html(data['content']).animateCss(animationName);
@@ -266,9 +238,9 @@ function rcl_get_mini_chat(e,user_id){
                 rcl_set_active_mini_chat(e);
                 rcl_chat_scroll_bottom(rcl_chat_contact_token);
             }
-
-        } 
+        }
     });
+    
     return false;  
 }
 
@@ -303,66 +275,48 @@ function rcl_chat_words_count(e,elem){
 }
 
 function rcl_chat_remove_contact(e,chat_id){
+    
     rcl_preloader_show('.rcl-chat-contacts');
     
     var contact = jQuery(e).parents('.contact-box').data('contact');
     
-    var dataString = 'action=rcl_chat_remove_contact&chat_id='+chat_id;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: Rcl.ajaxurl,				
+    rcl_ajax({
+        data: {
+            action: 'rcl_chat_remove_contact',
+            chat_id: chat_id
+        }, 
         success: function(data){
-            
-            rcl_preloader_hide();
 
-            if(data['errors']){
-                jQuery.each(data['errors'], function( index, error ) {
-                    rcl_notice(error,'error',10000);
-                });
-            }
-
-            if(data['success']){
+            if(data['remove']){
                 jQuery('[data-contact="'+contact+'"]').animateCss('flipOutX',function(e){
                     jQuery(e).remove();
                 });
-                
-                rcl_do_action('rcl_chat_remove_contact',chat_id);
-                
-            }
 
-        } 
+                rcl_do_action('rcl_chat_remove_contact',chat_id);
+
+            }
+        }
     });
+
     return false; 
 }
 
 function rcl_chat_message_important(message_id){
+    
     rcl_preloader_show('.chat-message[data-message="'+message_id+'"] > div');
-    var dataString = 'action=rcl_chat_message_important&message_id='+message_id;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: Rcl.ajaxurl,				
+    
+    rcl_ajax({
+        data: {
+            action: 'rcl_chat_message_important',
+            message_id: message_id
+        }, 
         success: function(data){
-            
-            rcl_preloader_hide();
 
-            if(data['errors']){
-                jQuery.each(data['errors'], function( index, error ) {
-                    rcl_notice(error,'error',10000);
-                });
-            }
+            jQuery('.chat-message[data-message="'+message_id+'"]').find('.message-important').toggleClass('active-important');
 
-            if(data['success']){
-                jQuery('.chat-message[data-message="'+message_id+'"]').find('.message-important').toggleClass('active-important');
-            }
-
-        } 
+        }
     });
+
     return false; 
 }
 
@@ -374,100 +328,71 @@ function rcl_chat_important_manager_shift(e,status){
     
     var token = jQuery(e).parents('.rcl-chat').data('token');
     
-    var dataString = 'action=rcl_chat_important_manager_shift&token='+token+'&status_important='+status;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: Rcl.ajaxurl,				
+    rcl_ajax({
+        data: {
+            action: 'rcl_chat_important_manager_shift',
+            token: token,
+            status_important: status
+        }, 
         success: function(data){
-            
-            rcl_preloader_hide();
 
-            if(data['errors']){
-                jQuery.each(data['errors'], function( index, error ) {
-                    rcl_notice(error,'error',10000);
-                });
-            }
+            if(data['content']){
 
-            if(data['success']){
-                
                 jQuery(e).parents('.chat-messages-box').html(data['content']).animateCss('fadeIn');
-                
-                rcl_chat_scroll_bottom(token);
-                
-            }
 
-        } 
+                rcl_chat_scroll_bottom(token);
+
+            }
+        }
     });
+    
     return false; 
 }
 
 function rcl_chat_delete_message(message_id){
     
     rcl_preloader_show('.chat-message[data-message="'+message_id+'"] > div');
-    
-    var dataString = 'action=rcl_chat_ajax_delete_message&message_id='+message_id;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: Rcl.ajaxurl,				
+
+    rcl_ajax({
+        data: {
+            action: 'rcl_chat_ajax_delete_message',
+            message_id: message_id
+        }, 
         success: function(data){
-            
-            rcl_preloader_hide();
 
-            if(data['errors']){
-                jQuery.each(data['errors'], function( index, error ) {
-                    rcl_notice(error,'error',10000);
-                });
-            }
-
-            if(data['success']){
+            if(data['remove']){
                 jQuery('.chat-message[data-message="'+message_id+'"]').animateCss('flipOutX',function(e){
                     jQuery(e).remove();
                 });
-                
-                rcl_do_action('rcl_chat_delete_message',message_id);
-                
-            }
 
-        } 
+                rcl_do_action('rcl_chat_delete_message',message_id);
+
+            }
+        }
     });
+
     return false; 
 }
 
 function rcl_chat_delete_attachment(e,attachment_id){
     
     rcl_preloader_show('.chat-form > form');
-    
-    var dataString = 'action=rcl_chat_delete_attachment&attachment_id='+attachment_id;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: Rcl.ajaxurl,				
+
+    rcl_ajax({
+        data: {
+            action: 'rcl_chat_delete_attachment',
+            attachment_id: attachment_id
+        }, 
         success: function(data){
-            
-            rcl_preloader_hide();
 
-            if(data['errors']){
-                jQuery.each(data['errors'], function( index, error ) {
-                    rcl_notice(error,'error',10000);
-                });
-            }
-
-            if(data['success']){
+            if(data['remove']){
                 var form = jQuery(e).parents('form');
                 form.find('.rcl-chat-uploader').show();
                 form.find('.chat-preloader-file').empty();
             }
-
-        } 
+        }
     });
+    
     return false; 
 }
 

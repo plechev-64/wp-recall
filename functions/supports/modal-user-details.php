@@ -38,15 +38,13 @@ function rcl_add_user_info_button($icons){
     return $icons;
 }
 
-add_action('wp_ajax_rcl_return_user_details','rcl_return_user_details',10);
-add_action('wp_ajax_nopriv_rcl_return_user_details','rcl_return_user_details',10);
+rcl_ajax('rcl_return_user_details', true);
 function rcl_return_user_details(){
+
+    wp_send_json(array(
+        'content' => rcl_get_user_details(intval($_POST['user_id']))
+    ));
     
-    $content = rcl_get_user_details(intval($_POST['user_id']));
-    
-    $result['content'] = $content;
-    $result['success'] = 1;
-    echo json_encode($result); exit;
 }
 
 function rcl_get_user_details($user_id, $args = false){

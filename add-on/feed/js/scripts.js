@@ -12,13 +12,16 @@ jQuery(function($){
             }
 
             rcl_preloader_show('#feed-preloader > div');
+            
             feed_progress = true;
-            var feed_type = jQuery('#rcl-feed').data('feed');
-            var customData = jQuery('#rcl-feed').data('custom');
-            var dataString = 'action=rcl_feed_progress&paged='+feed_page+'&content='+feed_type+'&custom='+customData;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            jQuery.ajax({
-                type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+            
+            rcl_ajax({
+                data: {
+                    action: 'rcl_feed_progress',
+                    paged: feed_page,
+                    content: jQuery('#rcl-feed').data('feed'),
+                    custom: jQuery('#rcl-feed').data('custom')
+                }, 
                 success: function(result){
 
                     if(result['code']){
@@ -27,9 +30,10 @@ jQuery(function($){
                     }
 
                     jQuery('#rcl-feed .feed-box').last().after(result['content']);
-                    rcl_preloader_hide();
+
                 }
             });
+            
             return false;
         }
     });
@@ -40,13 +44,15 @@ jQuery(function($){
         link.removeClass('feed-callback');
         var class_i = link.children('i').attr('class');
         link.children('i').attr('class','fa fa-refresh fa-spin');
-        var data = link.data('feed');
-        var callback = link.data('callback');
-        var dataString = 'action=rcl_feed_callback&data='+data+'&callback='+callback;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        jQuery.ajax({
-            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+
+        rcl_ajax({
+            data: {
+                action: 'rcl_feed_callback',
+                data: link.data('feed'),
+                callback: link.data('callback')
+            }, 
             success: function(result){
+
                 if(result['success']){
                     var type = 'success';
                 } else {
@@ -63,10 +69,9 @@ jQuery(function($){
 
                 link.addClass('feed-callback');
                 link.children('i').attr('class',class_i);
-
-                rcl_preloader_hide();
             }
         });
+
         return false;
     });
     

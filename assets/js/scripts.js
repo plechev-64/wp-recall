@@ -204,33 +204,22 @@ function rcl_manage_user_black_list(e,user_id){
     
     jQuery(e).children('i').attr('class','fa fa-refresh fa-spin');
     
-    var office_id = jQuery(e).parents('#rcl-office').data('account');
-    
-    var dataString = 'action=rcl_manage_user_black_list&user_id='+user_id;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: Rcl.ajaxurl,				
+    rcl_ajax({
+        data: {
+            action: 'rcl_manage_user_black_list',
+            user_id: user_id
+        }, 
         success: function(data){
-            
+
             jQuery(e).children('i').attr('class',class_i);
 
-            if(data['errors']){
-                jQuery.each(data['errors'], function( index, value ) {
-                    rcl_notice(value[1],'error',10000);
-                });
-            }
-
-            if(data['success']){
+            if(data['label']){
                 jQuery(e).find('span').text(data['label']);
             }
-            
-            rcl_do_action('rcl_manage_user_black_list',{element:e,result:data});
 
-        } 
+        }
     });
+
     return false;   
 }
 
@@ -274,27 +263,17 @@ function rcl_init_ajax_tab(){
 
         rcl_do_action('rcl_before_upload_tab',e);
 
-        var post = e.data('post');
-        var tab_url = encodeURIComponent(e.attr('href'));
-        var dataString = 'action=rcl_ajax&post='+post+'&tab_url='+tab_url;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        jQuery.ajax({
-            type: 'POST', 
-            data: dataString, 
-            dataType: 'json', 
-            url: Rcl.ajaxurl, 
+        rcl_ajax({
+            data:{
+                action: 'rcl_ajax',
+                post: e.data('post'),
+                tab_url: encodeURIComponent(e.attr('href'))
+            },
             success: function(data){
-                
-                rcl_preloader_hide();
-                
+
                 e.removeClass('tab-upload');
 
                 data = rcl_apply_filters('rcl_upload_tab',data);
-                
-                if(data.error){
-                    rcl_notice(data.error,'error',10000);
-                    return false;
-                }
 
                 if(data.result.error){
                     rcl_notice(data.result.error,'error',10000);
@@ -312,8 +291,9 @@ function rcl_init_ajax_tab(){
                 
                 rcl_do_action('rcl_upload_tab',{element:e,result:data});
                 
-            }			
-        }); 
+            }
+        });
+         
         return false;
     });
 }
@@ -339,23 +319,20 @@ function rcl_init_get_smilies(){
             if(block.html()) return false;
             block.html(Rcl.local.loading+'...');
             var dir = jQuery(this).data('dir');
-            var area = jQuery(this).parent().data('area');
-            var dataString = 'action=rcl_get_smiles_ajax&area='+area;
-            if(dir) dataString += '&dir='+dir;
-            dataString += '&ajax_nonce='+Rcl.nonce;
-            jQuery.ajax({
-                type: 'POST', 
-                data: dataString, 
-                dataType: 'json', 
-                url: Rcl.ajaxurl,
+            
+            rcl_ajax({
+                data: {
+                    action: 'rcl_get_smiles_ajax',
+                    area: jQuery(this).parent().data('area'),
+                    dir: dir? dir: 0
+                },
                 success: function(data){				
-                        if(data['result']==1){
-                                block.html(data['content']);
-                        }else{
-                                rcl_notice(Rcl.local.error,'error',10000);
-                        }					
-                }			
-            }); 
+                    if(data['content']){
+                        block.html(data['content']);
+                    }					
+                }
+            });
+ 
         },
         mouseleave: function () {
             jQuery(this).next().hide();
@@ -380,23 +357,20 @@ function rcl_init_hover_smilies(){
         if(block.html()) return false;
         block.html(Rcl.local.loading+'...');
         var dir = jQuery(this).data('dir');
-        var area = jQuery(this).parent().data('area');
-        var dataString = 'action=rcl_get_smiles_ajax&area='+area;
-        if(dir) dataString += '&dir='+dir;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        jQuery.ajax({
-            type: 'POST', 
-            data: dataString, 
-            dataType: 'json', 
-            url: Rcl.ajaxurl,
+        
+        rcl_ajax({
+            data: {
+                action: 'rcl_get_smiles_ajax',
+                area: jQuery(this).parent().data('area'),
+                dir: dir? dir: 0
+            },
             success: function(data){				
-                    if(data['result']==1){
-                            block.html(data['content']);
-                    }else{
-                            rcl_notice(Rcl.local.error,'error',10000);
-                    }					
-            }			
-        }); 
+                if(data['content']){
+                    block.html(data['content']);
+                }					
+            }
+        });
+ 
         return false;
     });
 }
@@ -627,16 +601,12 @@ function rcl_beat(){
     if(rcl_beats_delay && DataBeat.length){
         
         rcl_do_action('rcl_beat');
-        
-        DataBeat = JSON.stringify(DataBeat);
 
-        var dataString = 'action=rcl_beat&databeat='+DataBeat;
-        dataString += '&ajax_nonce='+Rcl.nonce;
-        jQuery.ajax({
-            type: 'POST', 
-            data: dataString, 
-            dataType: 'json', 
-            url: Rcl.ajaxurl, 
+        rcl_ajax({
+            data: {
+                action: 'rcl_beat',
+                databeat: JSON.stringify(DataBeat)
+            },
             success: function(data){
 
                 data.forEach(function(result, i, data) {
@@ -647,7 +617,7 @@ function rcl_beat(){
                     
                 });
 
-            }			
+            }
         }); 
     
     }

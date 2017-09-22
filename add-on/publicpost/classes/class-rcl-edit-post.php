@@ -57,8 +57,7 @@ class Rcl_EditPost {
     
     function error($error){
         if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-            echo json_encode(array('error'=>$error));
-            exit;
+            wp_send_json(array('error'=>$error));
         }else{
             wp_die($error);
         }
@@ -215,8 +214,7 @@ class Rcl_EditPost {
         }
 
         if(defined( 'DOING_AJAX' ) && DOING_AJAX){
-            echo json_encode(array('redirect'=>$redirect_url));
-            exit;
+            wp_send_json(array('redirect'=>$redirect_url));
         }
 
         wp_redirect($redirect_url);  exit;

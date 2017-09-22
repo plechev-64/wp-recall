@@ -60,20 +60,13 @@ function rcl_init_click_post_thumbnail(){
 function rcl_get_post_thumbnail_html(thumbnail_id){
     
     rcl_preloader_show(jQuery('.rcl-public-form'));
-            
-    var dataString = 'action=rcl_get_post_thumbnail_html&thumbnail_id='+thumbnail_id;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+    
+    rcl_ajax({
+        data: {
+            action: 'rcl_get_post_thumbnail_html',
+            thumbnail_id: thumbnail_id
+        }, 
         success: function(result){
-
-            rcl_preloader_hide();
-
-            if(result['error']){
-                rcl_notice(result['error'],'error',10000);
-                return false;
-            }
-
             jQuery('#rcl-thumbnail-post .thumbnail-image').html(result['thumbnail_image']).animateCss('flipInX');
             jQuery('#rcl-thumbnail-post .thumbnail-id').val(thumbnail_id);
         }
@@ -92,30 +85,26 @@ function rcl_delete_post(element){
     
     rcl_preloader_show(jQuery(element).parents('li'));
     
-    var post_id = jQuery(element).data('post');
-    var post_type = jQuery(element).parents('form').data('post_type');
-    var dataString = 'action=rcl_ajax_delete_post&post_id='+post_id;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-        success: function(data){
-            rcl_preloader_hide();
-            if(data['error']){
-                rcl_notice(data['error'],'error',10000);
-                return false;
-            }
+    var objectData = {
+        action: 'rcl_ajax_delete_post',
+        post_id: jQuery(element).data('post')
+    };
 
-            jQuery('#'+data['post_type']+'-'+post_id).animateCss('flipOutX',function(e){
+    rcl_ajax({
+        data: objectData, 
+        success: function(data){
+
+            jQuery('#' + data['post_type'] + '-' + objectData.post_id).animateCss('flipOutX',function(e){
                 jQuery(e).remove();
             });
-            
-            data.post_id = post_id;
-            
+
+            data.post_id = objectData.post_id;
+
             rcl_do_action('rcl_delete_post',data);
-            
-            rcl_notice(data['success'],'success',10000);
+
         }
     });
+
     return false;
 }
 
@@ -136,60 +125,43 @@ function rcl_delete_thumbnail_attachment(data){
 
 function rcl_edit_post(element){	
 
-    var post_id = jQuery(element).data('post');
-    
     rcl_preloader_show(jQuery('#lk-content'));
     
-    var dataString = 'action=rcl_get_edit_postdata&post_id='+post_id;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-            type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-            success: function(data){ 
-                
-                rcl_preloader_hide();
-                
-                if(data['error']){
-                    rcl_notice(data['error'],'error',10000);
-                    return false;
-                }                                   
-                if(data['result']==100){
-                    
-                    ssi_modal.show({
-                        title: Rcl.local.edit_box_title,
-                        className: 'rcl-edit-post-form',
-                        sizeClass: 'small',
-                        buttons: [{
-                            label: Rcl.local.save,
-                            closeAfter: false,
-                            method: function () {
-                                rcl_preloader_show('#rcl-popup-content form');
-                                var postdata   = jQuery('#rcl-popup-content form').serialize();
-                                var dataString = 'action=rcl_edit_postdata&'+postdata;
-                                dataString += '&ajax_nonce='+Rcl.nonce;
-                                jQuery.ajax({
-                                    type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
-                                    success: function(data){
-                                        if(data['error']){
-                                            rcl_notice(data['error'],'warning',10000);
-                                        }  
-                                        if(data['result']==100){
-                                            rcl_notice(data['content'],'success',10000);
-                                            ssi_modal.close();
-                                        }
-                                        rcl_preloader_hide();
-                                    }
-                                });
-                            }
-                        }, {
-                            label: Rcl.local.close,
-                            closeAfter: true
-                        }],
-                        content: '<div id="rcl-popup-content">'+data['content']+'</div>'
-                    });
+    rcl_ajax({
+        data: {
+            action: 'rcl_get_edit_postdata',
+            post_id: jQuery(element).data('post')
+        }, 
+        success: function(data){ 
+                                 
+            if(data['result']==100){
 
-                }
+                ssi_modal.show({
+                    title: Rcl.local.edit_box_title,
+                    className: 'rcl-edit-post-form',
+                    sizeClass: 'small',
+                    buttons: [{
+                        label: Rcl.local.save,
+                        closeAfter: false,
+                        method: function () {
+
+                            rcl_preloader_show('#rcl-popup-content form');
+
+                            rcl_ajax({
+                                data: 'action=rcl_edit_postdata&' + jQuery('#rcl-popup-content form').serialize()
+                            });
+
+                        }
+                    }, {
+                        label: Rcl.local.close,
+                        closeAfter: true
+                    }],
+                    content: '<div id="rcl-popup-content">'+data['content']+'</div>'
+                });
             }
+        }
     });
+
 }
 
 function rcl_preview(e){
@@ -211,30 +183,18 @@ function rcl_preview(e){
     var button_draft = formblock.find('input[name="button-draft"]').val();
     var button_delete = formblock.find('input[name="button-delete"]').val();
     var button_preview = formblock.find('input[name="button-preview"]').val();
-
-    var string   = formblock.serialize();
-
-    var dataString = 'action=rcl_preview_post&'+string;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST', 
-        data: dataString, 
-        dataType: 'json', 
-        url: Rcl.ajaxurl,
+    
+    rcl_ajax({
+        data: 'action=rcl_preview_post&' + formblock.serialize(),
+        error: function(data){
+            submit.attr('disabled',false).val(Rcl.local.preview);
+        },
         success: function(data){
-            
-            rcl_preloader_hide();
-
-            if(data['error']){
-                rcl_notice(data['error'],'error',10000);
-                submit.attr('disabled',false).val(Rcl.local.preview);
-                return false;
-            }
 
             if(data['content']){
-                
+
                 var buttons = [];
-                
+
                 buttons[0] = {
                         className: 'btn btn-primary',
                         label: Rcl.local.edit,
@@ -243,7 +203,7 @@ function rcl_preview(e){
                             submit.attr('disabled',false).val(Rcl.local.preview);
                         }
                     };
-                    
+
                 if(button_draft){
                     buttons[1] = {
                         className: 'btn btn-danger',
@@ -254,7 +214,7 @@ function rcl_preview(e){
                         }
                     };
                 }
-                
+
                 var i = buttons.length;
                 buttons[i] = {
                         className: 'btn btn-danger',
@@ -276,10 +236,9 @@ function rcl_preview(e){
                 return true;
             }
 
-            rcl_notice(Rcl.local.error,'error',10000);
-
         }
-    }); 
+    });
+
     return false;
 
 }
@@ -321,28 +280,10 @@ function rcl_publish(e){
         formblock.find('textarea[name="post_content"]').html(iframe);
     }
 
-    var string   = formblock.serialize();
-
-    var dataString = 'action=rcl_preview_post&'+string;
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    jQuery.ajax({
-        type: 'POST', 
-        data: dataString, 
-        dataType: 'json', 
-        url: Rcl.ajaxurl,
+    rcl_ajax({
+        data: 'action=rcl_preview_post&' + formblock.serialize(),
         success: function(data){
-
-            if(data['error']){
-                
-                rcl_preloader_hide();
-                
-                rcl_notice(data['error'],'error',10000);
-                
-                return false;
-            }
-            
             jQuery('form.rcl-public-form').submit();
-            
         }
     }); 
     
@@ -470,6 +411,9 @@ function rcl_init_public_form(post){
             }
         },
         done: function (e, data) {
+            
+            rcl_preloader_hide();
+            
             jQuery.each(data.result, function (index, file) {
                 if(data.result['error']){
                     rcl_notice(data.result['error'],'error',10000);
@@ -482,7 +426,7 @@ function rcl_init_public_form(post){
                     jQuery('#temp-files-'+post_type+' li').last().animateCss('flipInX');
                 }
             });
-            rcl_preloader_hide();
+            
         }
     });
 }

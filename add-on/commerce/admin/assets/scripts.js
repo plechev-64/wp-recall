@@ -1,25 +1,17 @@
+jQuery(function($){
+    jQuery('.edit-price-product').click(function(){
 
-jQuery('.edit-price-product').click(function(){
-    var id_post = jQuery(this).data('product');	
-    var price = jQuery('#price-product-'+id_post).attr('value');
-    var dataString_count = 'action=rcl_edit_admin_price_product&id_post='+id_post+'&price='+price;
+        var id_post = jQuery(this).data('product');
+        
+        rcl_ajax({
+            data: {
+                action: 'rcl_edit_admin_price_product',
+                id_post: id_post,
+                price: jQuery('#price-product-'+id_post).attr('value')
+            }
+        });
 
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString_count,
-        dataType: 'json',
-        url: ajaxurl,
-        success: function(data){
-            
-            if(data.error){
-                alert(data.error);
-            }
-            
-            if(data.success){
-               alert(data.success);
-            }
-            
-        } 
-    });				
-    return false;
+        return false;
+
+    });
 });

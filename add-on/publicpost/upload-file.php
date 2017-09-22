@@ -22,8 +22,7 @@ function rcl_add_attachment_thumbnail_button($content,$attachment_id,$mime){
 
 }
 
-add_action('wp_ajax_rcl_imagepost_upload', 'rcl_imagepost_upload');
-add_action('wp_ajax_nopriv_rcl_imagepost_upload', 'rcl_imagepost_upload');
+rcl_ajax('rcl_imagepost_upload', true);
 function rcl_imagepost_upload(){
     global $user_ID;
 
@@ -63,8 +62,7 @@ function rcl_imagepost_upload(){
         $filetype = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
 
         if (!in_array(strtolower($filetype['ext']), $valid_types)){ 
-            echo json_encode(array('error'=>__('Banned file extension. Resolved:','wp-recall').' '.implode(', ',$valid_types)));
-            exit;
+            wp_send_json(array('error'=>__('Banned file extension. Resolved:','wp-recall').' '.implode(', ',$valid_types)));
         }
 
         $image = wp_handle_upload( $file, array('test_form' => FALSE) );
@@ -100,6 +98,6 @@ function rcl_imagepost_upload(){
     
     do_action('rcl_post_upload',$post);
 
-    echo json_encode($res);
-    exit;
+    wp_send_json($res);
+
 }

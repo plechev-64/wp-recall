@@ -211,28 +211,16 @@ function rcl_update_cart_content(){
     
     rcl_preloader_show(jQuery('#rcl-order'));
     
-    var dataString = 'action=rcl_update_cart_content&cart='+JSON.stringify(Rcl.Cart.products);
-        dataString += '&ajax_nonce='+Rcl.nonce;
-    
-    jQuery.ajax({
-        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+    rcl_ajax({
+        data: {
+            action: 'rcl_update_cart_content',
+            cart: JSON.stringify(Rcl.Cart.products)
+        },
         success: function(data){
-            
-            rcl_preloader_hide();
 
-            if(data['error']){
-                rcl_notice(data['error'],'error',10000);
-                return false;
-            }
-
-            if(data['success']){
-                
-                jQuery('.rcl-order-price').html(Rcl.Cart.order_price);
-                jQuery('.rcl-order-amount').html(Rcl.Cart.products_amount);
-                
-                jQuery('#rcl-order').html(data['content']).animateCss('fadeIn');
-
-            }
+            jQuery('.rcl-order-price').html(Rcl.Cart.order_price);
+            jQuery('.rcl-order-amount').html(Rcl.Cart.products_amount);
+            jQuery('#rcl-order').html(data['content']).animateCss('fadeIn');
 
         }
     });
@@ -263,8 +251,6 @@ function rcl_cart_add_product(product_id, key){
     
     jQuery('.rcl-order-price').html(Rcl.Cart.order_price);
     jQuery('.rcl-order-amount').html(Rcl.Cart.products_amount);
-    
-    //rcl_update_cart_content();
 
     return false;
 }
@@ -285,14 +271,6 @@ function rcl_cart_remove_product(product_id, key){
     if(product.product_amount <= 0){
         
         delete Rcl.Cart.products[key];
-
-        //productBox.remove();
-        
-        /*var products = Rcl.Cart.products;
-
-        if(products.length == 1){
-            jQuery('#rcl-order').html('Ваша корзина пуста.');
-        }*/
         
         rcl_cart_update_data(Rcl.Cart.products);
         
@@ -324,29 +302,21 @@ function rcl_add_to_cart(e){
     var box = jQuery(e).parents('.rcl-cart-box');
     
     var product_id = jQuery(e).parents('.rcl-cart-form').data('product');
-    
-    var formData = box.find('form').serialize();
-    
+
     if(jQuery('#product-'+product_id).size()){
         rcl_preloader_show(jQuery('#product-'+product_id));
     }else{
         rcl_preloader_show(box);
     }
 
-    var dataString = 'action=rcl_add_to_cart&'+formData;
-    
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    
-    jQuery.ajax({
-        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+    rcl_ajax({
+        data: 'action=rcl_add_to_cart&' + box.find('form').serialize(), 
         success: function(data){
-            
-            rcl_preloader_hide();
-            
+
             if(data.modal){
-                
+
                 if(jQuery('#ssi-modalContent').size()) ssi_modal.close();
-                    
+
                 ssi_modal.show({
                     className: 'rcl-dialog-tab product-dialog',
                     sizeClass: 'auto',
@@ -354,44 +324,35 @@ function rcl_add_to_cart(e){
                         label: Rcl.local.close,
                         closeAfter: true
                     }],
-                    beforeClose:function(modal){
-                        /*rcl_init_variations(Rcl.VariationsData);*/
-                    },
                     content: data.content
                 });
-                
-                return;
-                
-            }
 
-            if(data.error){
-                rcl_notice(data.error,'error',10000);
-                return false;
+                return;
+
             }
 
             if(data.success){
-                
+
                 rcl_close_notice('#rcl-notice > div');
                 rcl_notice(data.success,'success');
-                
+
                 jQuery('.rcl-mini-cart').removeClass('empty-cart');
                 jQuery('.rcl-order-price').html(data.cart.order_price);
                 jQuery('.rcl-order-amount').html(data.cart.products_amount);
 
                 jQuery('.rcl-order-price').html(data.cart.order_price);
                 jQuery('.rcl-order-amount').html(data.cart.products_amount);
-                
+
                 jQuery('#recallbar #rcl-cart').animateCss('shake');
 
                 Rcl.Cart = data.cart;
-                
+
                 jQuery.cookie('rcl_cart', JSON.stringify(data.cart.products),{path:'/'});
 
             }
-
         }
     });
-    
+
     return false;
     
 }
@@ -431,33 +392,17 @@ function rcl_cart_submit(){
     
     var form = jQuery('#rcl-order-form');
     
-    var formData = form.serialize();
-    
-    var dataString = 'action=rcl_check_cart_data&'+formData;
-    
-    dataString += '&ajax_nonce='+Rcl.nonce;
-    
-    jQuery.ajax({
-        type: 'POST', data: dataString, dataType: 'json', url: Rcl.ajaxurl,
+    rcl_ajax({
+        data: 'action=rcl_check_cart_data&' + form.serialize(),
         success: function(data){
 
-            if(data.error){
-                
-                rcl_preloader_hide();
-                
-                rcl_notice(data.error,'error',10000);
-                
-                return false;
-            }
+            if(data.submit){
 
-            if(data.success){
-                
                 rcl_do_action('rcl_cart_submit');
-        
+
                 form.submit();
 
             }
-
         }
     });
     

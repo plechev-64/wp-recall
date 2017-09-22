@@ -70,7 +70,7 @@ function rcl_commerce_options_orders() {
     $Rcl_History_Orders = new Rcl_History_Orders();
 }
 
-add_action('wp_ajax_rcl_edit_admin_price_product', 'rcl_edit_admin_price_product');
+rcl_ajax('rcl_edit_admin_price_product', false);
 function rcl_edit_admin_price_product(){
 
     $id_post = intval($_POST['id_post']);
@@ -88,8 +88,7 @@ function rcl_edit_admin_price_product(){
         
     }
     
-    echo json_encode($log);
-    exit;
+    wp_send_json($log);
     
 }
 

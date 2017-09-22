@@ -35,36 +35,35 @@ function rcl_get_rating_column_content( $custom_column, $column_name, $user_id )
     return $custom_column;
 }
 
-add_action('wp_ajax_rcl_edit_rating_user', 'rcl_edit_rating_user');
+rcl_ajax('rcl_edit_rating_user', false);
 function rcl_edit_rating_user(){
-	global $wpdb,$user_ID;
-        
-	$user_id = intval($_POST['user']);
-	$new_rating = floatval($_POST['rayting']);
+    global $wpdb,$user_ID;
 
-	if(isset($new_rating)){
+    $user_id = intval($_POST['user']);
+    $new_rating = floatval($_POST['rayting']);
 
-		$rating = rcl_get_user_rating($user_id);
+    if(!isset($new_rating)){
+        wp_send_json(array('error'=>__('Рейтинг не был обновлен','wp-recall')));
+    }
 
-		$val = $new_rating - $rating;
+    $rating = rcl_get_user_rating($user_id);
 
-		$args = array(
-			'user_id' => $user_ID,
-			'object_id' => $user_id,
-			'object_author' => $user_id,
-			'rating_value' => $val,
-			'rating_type' => 'edit-admin'
-		);
+    $val = $new_rating - $rating;
 
-		rcl_insert_rating($args);
+    $args = array(
+        'user_id' => $user_ID,
+        'object_id' => $user_id,
+        'object_author' => $user_id,
+        'rating_value' => $val,
+        'rating_type' => 'edit-admin'
+    );
 
-		$log['otvet']=100;
+    rcl_insert_rating($args);
 
-	}else {
-		$log['otvet']=1;
-	}
-	echo json_encode($log);
-    exit;
+    wp_send_json(array(
+        'success' => __('Рейтинг успешно обновлен','wp-recall')
+    ));
+
 }
 
 

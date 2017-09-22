@@ -37,7 +37,7 @@ function rcl_add_cover_uploader_button(){
     }
 }
 
-add_action('wp_ajax_rcl_cover_upload', 'rcl_cover_upload',10);
+rcl_ajax('rcl_cover_upload', false);
 function rcl_cover_upload(){
     
     rcl_verify_ajax_nonce();
@@ -112,17 +112,21 @@ function rcl_cover_upload(){
     $mb = $upload['file']['size']/1024/1024;
 
     if($mb > rcl_get_option('avatar_weight',2)){
-        $res['error'] = __('Size exceeded','wp-recall');
-        echo json_encode($res);
-        exit;
+        
+        wp_send_json(array(
+            'error' => __('Size exceeded','wp-recall')
+        ));
+
     }
 
     $ext = explode('.',$filename);
 
     if($mime[0]!='image'){
-        $res['error'] = __('The file is not an image','wp-recall');
-        echo json_encode($res);
-        exit;
+
+        wp_send_json(array(
+            'error' => __('The file is not an image','wp-recall')
+        ));
+
     }
 
     list($width,$height) = getimagesize($upload['file']['tmp_name']);
@@ -156,9 +160,11 @@ function rcl_cover_upload(){
             }else{
                 $jpg = rcl_check_jpeg($upload['file']['tmp_name'], true );
                 if(!$jpg){
-                    $res['error'] = __('The downloaded image is incorrect','wp-recall');
-                    echo json_encode($res);
-                    exit;
+
+                    wp_send_json(array(
+                        'error' => __('The downloaded image is incorrect','wp-recall')
+                    ));
+
                 }
                 $image = imagecreatefromjpeg($upload['file']['tmp_name']);
             }
@@ -184,9 +190,11 @@ function rcl_cover_upload(){
 
 
     if ( is_wp_error( $rst )){
-        $res['error'] = __('Download error','wp-recall');
-        echo json_encode($res);
-        exit;
+
+        wp_send_json(array(
+            'error' => __('Download error','wp-recall')
+        ));
+
     }
 
     update_user_meta( $user_ID,'rcl_cover',$srcfile_url );
@@ -195,9 +203,9 @@ function rcl_cover_upload(){
 
     if(!$coord) copy($file_src,$tmp_path.$tmpname);
 
-    $res['cover_url'] = $tmp_url.$tmpname;
-    $res['success'] = __('Image successfully uploaded','wp-recall');
+    wp_send_json(array(
+        'cover_url' => $tmp_url.$tmpname,
+        'success' => __('Image successfully uploaded','wp-recall')
+    ));
 
-    echo json_encode($res);
-    exit;
 }

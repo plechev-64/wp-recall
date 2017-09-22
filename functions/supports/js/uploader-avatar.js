@@ -157,22 +157,19 @@ function rcl_avatar_uploader(){
 
             webCam.on('snapshot', function(snapshot) {
                 var img = document.createElement('img');
+                
                 jQuery(img).on('load', function() {
                     jQuery('#rcl-preview').html(img);
                 });
+                
                 img.src = snapshot.toDataURL('image/png');
-                var dataString = 'action=rcl_avatar_upload&src='+img.src;
-                dataString += '&ajax_nonce='+Rcl.nonce;
-                jQuery.ajax({
-                    type: 'POST',
-                    data: dataString,
-                    dataType: 'json',
-                    url: Rcl.ajaxurl,
+                
+                rcl_ajax({
+                    data: {
+                        action: 'rcl_avatar_upload',
+                        src: img.src
+                    },
                     success: function(data){
-                        if(data['error']){
-                            rcl_notice(data['error'],'error',10000);
-                            return false;
-                        }
                         
                         var image = jQuery('#rcl-contayner-avatar .rcl-user-avatar img').attr('src',data.result['avatar_url']);
                         image.load(function(){
@@ -180,9 +177,10 @@ function rcl_avatar_uploader(){
                         });
                         
                         jQuery( '#rcl-preview' ).remove();
-                        rcl_notice(data['success'],'success',10000);
+                        
                     }
                 });
+
             });
         });
     }

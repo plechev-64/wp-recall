@@ -98,16 +98,15 @@ function pfm_ajax_action(object,e){
     }
 
     object.action = 'pfm_ajax_action';
-    object.ajax_nonce = Rcl.nonce;
     
-    jQuery.ajax({
-        type: 'POST', data: object, dataType: 'json', url: Rcl.ajaxurl,
+    rcl_ajax({
+        data: object, 
         success: function(data){
             
             if(data['url-redirect']){
 
                 var url = data['url-redirect'].split('#');
-                
+
                 if(window.location.origin + window.location.pathname === url[0]){
                     location.reload();
                 }else{
@@ -116,27 +115,20 @@ function pfm_ajax_action(object,e){
 
                 return;
             }
-            
+
             if(data['update-page']){
                 location.reload();
                 return;
             }
-            
-            rcl_preloader_hide();
 
-            if(data['error']){
-                rcl_notice(data['error'],'error',10000);
-                return false;
-            }
-            
             if(data['current_url']){
                 rcl_update_history_url(data['current_url']);
             }
-            
+
             if(data['dialog']){
-                
+
                 if(jQuery('#ssi-modalContent').size()) ssi_modal.close();
-                
+
                 var ssiOptions = {
                     className: 'rcl-dialog-tab forum-manager-dialog' + (data['dialog-class']? ' '+data['dialog-class']: ''),
                     sizeClass: data['dialog-width']? data['dialog-width']: 'auto',
@@ -146,38 +138,38 @@ function pfm_ajax_action(object,e){
                     }],
                     content: data['content']
                 };
-                
+
                 if(data['title'])
                     ssiOptions.title = data['title'];
-                
+
                 ssi_modal.show(ssiOptions);
-                
+
             }else{
 
                 if(data['content']){
-                    
+
                     if(data['append']){
-                        
+
                         if(object['method'] == 'post_create'){
-                            
+
                             jQuery('#prime-forum .prime-posts .new-post').removeClass('new-post');
                             jQuery('#editor-action_post_create').val('');
                             jQuery('#prime-topic-form-box input[name="pfm-data[form_load]"]').val(data['form_load']);
-                            
+
                             pfm_animate_new_posts(data['content']);
-                            
+
                             PFM.last_beat = data.form_load;
-                            
+
                             if(!rcl_exist_beat('pfm_topic_beat')){
                                 rcl_add_beat("pfm_topic_beat",30,{topic_id:data.topic_id,start_beat:data.form_load});
                             }
-                            
+
                         }else{
                             jQuery(data['append']).append(data['content']);
                         }
-                        
+
                     }else if(data['place-id']){
-                        
+
                         if(object['method'] == 'get_post_excerpt'){             
                             jQuery(data['place-id']).insertAtCaret(data['content']);
                             if(typeof tinyMCE != 'undefined')
@@ -188,18 +180,18 @@ function pfm_ajax_action(object,e){
 
                         var offsetTop = jQuery(data['place-id']).offset().top;
                         jQuery('body,html').animate({scrollTop:offsetTop - 100}, 1000);
-                        
+
                     }else{
                         jQuery('#post-manager').html(data['content']);
                     }
                 }
 
             }
-            
+
             if(data['remove-item']){
                 jQuery('#' + data['remove-item']).remove();
             }
-            
+
             if(data['hide-item']){
                 jQuery('#' + data['hide-item']).slideUp();
             }
@@ -207,9 +199,8 @@ function pfm_ajax_action(object,e){
             if(data['dialog-close']){
                 ssi_modal.close();
             }
-            
-            rcl_do_action('pfm_ajax_action_success',{result: data, object: object});
 
+            rcl_do_action('pfm_ajax_action_success',{result: data, object: object});
         }
     });
     

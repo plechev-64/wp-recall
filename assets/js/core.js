@@ -459,3 +459,132 @@ function rcl_add_quicktags(){
     rcl_setup_quicktags(Rcl.QTags);
 
 }
+
+function rcl_proccess_result_ajax(result){
+    
+    var methods = {
+        redirect: function(url){
+            
+            var urlData = url.split('#');
+
+            if(window.location.origin + window.location.pathname === urlData[0]){
+                location.reload();
+            }else{
+                location.replace(url);
+            }
+            
+        },
+        reload: function(){
+            location.reload();
+        },
+        current_url: function(url){
+            rcl_update_history_url(url);
+        },
+        dialog: function(dialog){
+            
+            if(dialog.content){
+            
+                if(jQuery('#ssi-modalContent').size()) ssi_modal.close();
+
+                var ssiOptions = {
+                    className: 'rcl-dialog-tab ' + (dialog.class? ' ' + dialog.class: ''),
+                    sizeClass: dialog.size? dialog.size: 'auto',
+                    buttons: [{
+                        label: Rcl.local.close,
+                        closeAfter: true
+                    }],
+                    content: dialog.content
+                };
+
+                if(dialog.title)
+                    ssiOptions.title = dialog.title;
+
+                ssi_modal.show(ssiOptions);
+            
+            }
+            
+            if(dialog.close){
+                ssi_modal.close();
+            }
+            
+        }
+    };
+    
+    for(var method in result){                  
+        if(methods[method]){
+            methods[method](result[method]);
+        }
+    }
+    
+}
+
+function rcl_ajax(prop){
+      
+    if(typeof Rcl != 'undefined'){
+        if(typeof prop.data === 'string'){
+            prop.data += '&ajax_nonce=' + Rcl.nonce;
+        }else if(typeof prop.data === 'object'){
+            prop.data.ajax_nonce = Rcl.nonce;
+        }
+    }
+
+    jQuery.ajax({
+        type: 'POST', 
+        data: prop.data, 
+        dataType: 'json', 
+        url: (ajaxurl)? ajaxurl: Rcl.ajaxurl,
+        success: function(result){
+            
+            if(!result){
+                rcl_notice('Error', 'error');
+                return false;
+            }
+            
+            if(result.error || result.errors){
+                
+                rcl_preloader_hide();
+                
+                if(result.errors){
+                    jQuery.each(result.errors, function( index, error ) {
+                        rcl_notice(error, 'error', 5000);
+                    });
+                }else{
+                    rcl_notice(result.error, 'error', 5000);
+                }
+
+                if(prop.error)
+                    prop.error(result);
+                
+                return false;
+            }
+            
+            if(!result.preloader_live){
+                rcl_preloader_hide();
+            }
+            
+            if(result.success){
+                rcl_notice(result.success, 'success', 5000);
+            }
+            
+            if(result.warning){
+                rcl_notice(result.warning, 'warning', 5000);
+            }
+
+            rcl_do_action('rcl_ajax_success', result);
+            
+            if(prop.success){
+                
+                prop.success(result);
+                
+            }else{
+                
+                rcl_proccess_ajax_return(result);
+                
+            }
+            
+            rcl_do_action(prop.data.action, result);
+            
+        }
+    });
+    
+}

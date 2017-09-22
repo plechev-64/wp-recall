@@ -555,7 +555,7 @@ function rcl_user_black_list_button($office_id){
     return $button;
 }
 
-add_action('wp_ajax_rcl_manage_user_black_list','rcl_manage_user_black_list');
+rcl_ajax('rcl_manage_user_black_list', false);
 function rcl_manage_user_black_list(){
     global $user_ID;
     
@@ -574,11 +574,11 @@ function rcl_manage_user_black_list(){
     }
     
     $new_status = $user_block? 0: 1;
-    
-    $res['success'] = true;
-    $res['label'] = ($new_status)? __('Unblock','wp-recall'): __('Blacklist','wp-recall');
-    echo json_encode($res);
-    exit;
+
+    wp_send_json(array(
+        'label' => ($new_status)? __('Unblock','wp-recall'): __('Blacklist','wp-recall')
+    ));
+
 }
 
 add_filter('rcl_tabs','rcl_check_user_blocked',10);
@@ -676,8 +676,7 @@ function rcl_post_bar($content){
     
 }
 
-add_action('wp_ajax_rcl_beat','rcl_beat');
-add_action('wp_ajax_nopriv_rcl_beat','rcl_beat');
+rcl_ajax('rcl_beat', true);
 function rcl_beat(){
     
     rcl_verify_ajax_nonce();
@@ -698,7 +697,7 @@ function rcl_beat(){
         }
     }
 
-    echo json_encode($return); exit;
+    wp_send_json($return);
     
 }
 

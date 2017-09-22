@@ -432,7 +432,7 @@ function rcl_remove_cashe_rating_post($args){
     }
 }
 
-add_action('wp_ajax_rcl_edit_rating_post', 'rcl_edit_rating_post');
+rcl_ajax('rcl_edit_rating_post', false);
 function rcl_edit_rating_post(){
     global $rcl_options,$rcl_rating_types;
     
@@ -446,9 +446,9 @@ function rcl_edit_rating_post(){
         $timelimit = ($rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']])? $rcl_options['rating_'.$args['rating_status'].'_time_'.$args['rating_type']]: 3600;
         $votes = rcl_count_votes_time($args,$timelimit);
         if($votes>=$rcl_options['rating_'.$args['rating_status'].'_limit_'.$args['rating_type']]){
-            $log['error'] = sprintf(__('exceeded the limit of votes for the period - %d seconds','wp-recall'),$timelimit);
-            echo json_encode($log);
-            exit;
+
+            wp_send_json(array('error'=>sprintf(__('exceeded the limit of votes for the period - %d seconds','wp-recall'),$timelimit)));
+
         }
     }
 
@@ -496,12 +496,11 @@ function rcl_edit_rating_post(){
     $log['rating_type'] = $args['rating_type'];
     $log['rating'] = rcl_format_rating($total);
 
-    echo json_encode($log);
-    exit;
+    wp_send_json($log);
+
 }
 
-add_action('wp_ajax_rcl_view_rating_votes', 'rcl_view_rating_votes');
-add_action('wp_ajax_nopriv_rcl_view_rating_votes', 'rcl_view_rating_votes');
+rcl_ajax('rcl_edit_rating_post', true);
 function rcl_view_rating_votes(){
     
     rcl_verify_ajax_nonce();
@@ -530,9 +529,15 @@ function rcl_view_rating_votes(){
         $content = rcl_rating_window_content($string);
         
     }
+    
+    if(!$content){
+        wp_send_json(array(
+            'error' => __('Данные не удалось получить','wp-recall')
+        ));
+    }
 
-    $log['result']=100;
-    $log['window']=$content;
-    echo json_encode($log);
-    exit;
+    wp_send_json(array(
+        'content' => $content
+    ));
+
 }

@@ -1,8 +1,7 @@
 <?php
 
 //удаление фото приложенных к публикации через загрузчик плагина
-add_action('wp_ajax_rcl_ajax_delete_post', 'rcl_ajax_delete_post');
-add_action('wp_ajax_nopriv_rcl_ajax_delete_post', 'rcl_ajax_delete_post');
+rcl_ajax('rcl_ajax_delete_post', true);
 function rcl_ajax_delete_post(){
     global $user_ID;
 
@@ -42,12 +41,12 @@ function rcl_ajax_delete_post(){
     
     }
 
-    echo json_encode($log);
-    exit;
+    wp_send_json($log);
+
 }
 
 //вызов быстрой формы редактирования публикации
-add_action('wp_ajax_rcl_get_edit_postdata', 'rcl_get_edit_postdata');
+rcl_ajax('rcl_get_edit_postdata', false);
 function rcl_get_edit_postdata(){
     global $user_ID;
 
@@ -69,12 +68,13 @@ function rcl_get_edit_postdata(){
     }else{
         $log['error']=__('Failed to get the data','wp-recall');
     }
-    echo json_encode($log);
-    exit;
+    
+    wp_send_json($log);
+
 }
 
 //сохранение изменений в быстрой форме редактирования
-add_action('wp_ajax_rcl_edit_postdata', 'rcl_edit_postdata');
+rcl_ajax('rcl_edit_postdata', false);
 function rcl_edit_postdata(){
     global $wpdb;
 
@@ -91,15 +91,16 @@ function rcl_edit_postdata(){
         $post_array,
         array('ID'=>intval($_POST['post_id']))
     );
-    if($result){
-        $log['result']=100;
-        $log['content']=__('Publication updated','wp-recall');;
-    }else{
-        $log['error']=__('Changes to be saved not found','wp-recall');
+    
+    if(!$result){
+        wp_send_json(array('error'=>__('Changes to be saved not found','wp-recall')));
     }
 
-    echo json_encode($log);
-    exit;
+    wp_send_json(array(
+        'success' => __('Publication updated','wp-recall'),
+        'dialog' => array('close')
+    ));
+
 }
 
 function rcl_edit_post(){
@@ -108,16 +109,14 @@ function rcl_edit_post(){
 }
 
 //выборка меток по введенным значениям
-add_action('wp_ajax_rcl_get_like_tags','rcl_get_like_tags');
-add_action('wp_ajax_nopriv_rcl_get_like_tags','rcl_get_like_tags');
+rcl_ajax('rcl_get_like_tags', true);
 function rcl_get_like_tags(){
     global $wpdb;
 
     rcl_verify_ajax_nonce();
 
     if(!$_POST['query']){
-        echo json_encode(array(array('id'=>'')));
-        exit;
+        wp_send_json(array(array('id'=>'')));
     };
 
     $query = $_POST['query'];
@@ -131,13 +130,11 @@ function rcl_get_like_tags(){
         $tags[$key]['name'] = $term->name;
     }
 
-    echo json_encode($tags);
-    exit;
+    wp_send_json($tags);
+
 }
 
-
-add_action('wp_ajax_rcl_preview_post','rcl_preview_post');
-add_action('wp_ajax_nopriv_rcl_preview_post','rcl_preview_post');
+rcl_ajax('rcl_preview_post', true);
 function rcl_preview_post(){
     global $user_ID;
 
@@ -175,8 +172,7 @@ function rcl_preview_post(){
         }
         
         if($log['error']){
-            echo json_encode($log);
-            exit;
+            wp_send_json($log);
         }
     }
     
@@ -192,8 +188,7 @@ function rcl_preview_post(){
         $field = $formFields->get_field('post_thumbnail');
         
         if($field['required'] && !$thumbnail_id){
-            echo json_encode(array('error' => __('Upload or specify an image as a thumbnail','wp-recall')));
-            exit;
+            wp_send_json(array('error' => __('Upload or specify an image as a thumbnail','wp-recall')));
         }
     }
 
@@ -206,8 +201,7 @@ function rcl_preview_post(){
         $field = $formFields->get_field('post_content');
         
         if($field['required'] && !$postContent){
-            echo json_encode(array('error' => __('Add contents of the publication!','wp-recall')));
-            exit;
+            wp_send_json(array('error' => __('Add contents of the publication!','wp-recall')));
         }
         
         $post_content = stripslashes_deep($postContent);
@@ -227,12 +221,12 @@ function rcl_preview_post(){
             </div>';
 
     $log['content'] = $preview;
-    echo json_encode($log);
-    exit;
+    
+    wp_send_json($log);
+
 }
 
-add_action('wp_ajax_rcl_get_post_thumbnail_html','rcl_get_post_thumbnail_html');
-add_action('wp_ajax_nopriv_rcl_get_post_thumbnail_html','rcl_get_post_thumbnail_html');
+rcl_ajax('rcl_get_post_thumbnail_html', true);
 function rcl_get_post_thumbnail_html(){
 
     $thumbnail_id = intval($_POST['thumbnail_id']);
@@ -242,7 +236,6 @@ function rcl_get_post_thumbnail_html(){
         'thumbnail_image' => wp_get_attachment_image( $thumbnail_id, 'thumbnail')
     );
     
-    echo json_encode($result); 
-    exit;
+    wp_send_json($result); 
     
 }

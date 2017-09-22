@@ -164,16 +164,14 @@ function rcl_get_html_usercount(){
 /*************************************************
 Пополнение личного счета пользователя
 *************************************************/
-add_action('wp_ajax_rcl_add_count_user', 'rcl_add_count_user');
+rcl_ajax('rcl_add_count_user', false);
 function rcl_add_count_user(){
     global $user_ID;
 
     rcl_verify_ajax_nonce();
     
     if(!intval($_POST['pay_summ'])){
-        $log['error'] = __('Enter the amount','wp-recall');
-        echo json_encode($log);
-        exit;
+        wp_send_json(array('error'=>__('Enter the amount','wp-recall')));
     }
 
     if($user_ID){
@@ -204,11 +202,11 @@ function rcl_add_count_user(){
         
     }
     
-    echo json_encode($log);
-    exit;
+    wp_send_json($log);
+
 }
 
-add_action('wp_ajax_rcl_pay_order_user_balance', 'rcl_pay_order_user_balance');
+rcl_ajax('rcl_pay_order_user_balance', false);
 function rcl_pay_order_user_balance(){
     global $user_ID,$rmag_options;
     
@@ -223,9 +221,7 @@ function rcl_pay_order_user_balance(){
     $baggage_data = json_decode(base64_decode($POST['baggage_data']));
 
     if(!$pay_id){
-        $log['error'] = __('Order not found!','wp-recall');
-        echo json_encode($log);
-        exit;
+        wp_send_json(array('error'=>__('Order not found!','wp-recall')));
     }
     
     $data = array(
@@ -244,19 +240,17 @@ function rcl_pay_order_user_balance(){
     $newBalance = $userBalance - $pay_summ;
 
     if(!$userBalance || $newBalance < 0){
-        $log['error'] = sprintf(__('Insufficient funds in your personal account!<br>Order price: %d %s','wp-recall'),$pay_summ,rcl_get_primary_currency(1));
-        echo json_encode($log);
-        exit;
+        wp_send_json(array('error'=>sprintf(__('Insufficient funds in your personal account!<br>Order price: %d %s','wp-recall'),$pay_summ,rcl_get_primary_currency(1))));
     }
 
     rcl_update_user_balance($newBalance,$user_ID,$description);
 
     do_action('rcl_success_pay_balance',(object)$data);
 
-    $log['success'] = true;
-    $log['redirect'] = get_permalink($rmag_options['page_successfully_pay']);
-    echo json_encode($log);
-    exit;
+    wp_send_json(array(
+        'redirect' => get_permalink($rmag_options['page_successfully_pay'])
+    ));
+
 }
 
 //пополнение баланса пользователя

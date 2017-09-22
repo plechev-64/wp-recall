@@ -543,7 +543,7 @@ function rcl_add_group_user_options(){
     echo '</div>';
 }
 
-add_action('wp_ajax_rcl_apply_group_request','rcl_apply_group_request');
+rcl_ajax('rcl_apply_group_request', false);
 function rcl_apply_group_request(){
     global $rcl_group,$user_ID;
     
@@ -599,10 +599,10 @@ function rcl_apply_group_request(){
 
     rcl_update_group_option($group_id,'requests_group_access',$requests);
 
-
     $log['user_id']=$user_id;
-    echo json_encode($log);
-    exit;
+    
+    wp_send_json($log);
+
 }
 
 //исключаем из поиска публикации из закрытых групп 

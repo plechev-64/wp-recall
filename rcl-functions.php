@@ -740,6 +740,7 @@ function rcl_get_smiles($id_area){
     return $smiles;
 }
 
+rcl_ajax('rcl_get_smiles_ajax', false);
 function rcl_get_smiles_ajax(){
     global $wpsmiliestrans;
 
@@ -756,13 +757,18 @@ function rcl_get_smiles_ajax(){
         if(!$emo) continue;
         $content[] = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $emo ) );
     }
+    
+    if(!$content){
+        wp_send_json(array(
+            'error' => __('Не удалось загрузить смайлы','wp-recall')
+        ));
+    }
 
-    $log['result'] = ($content)? 1: 0;
-    $log['content'] = implode('',$content);
-    echo json_encode($log);
-    exit;
+    wp_send_json(array(
+        'content' => implode('',$content)
+    ));
+
 }
-add_action('wp_ajax_rcl_get_smiles_ajax','rcl_get_smiles_ajax');
 
 function rcl_mail($email, $title, $text, $from = false, $attach = false){
     
@@ -907,8 +913,7 @@ function rcl_add_balloon_menu($data,$args){
 function rcl_verify_ajax_nonce(){
     if(!defined( 'DOING_AJAX' ) || !DOING_AJAX) return false;
     if ( ! wp_verify_nonce( $_POST['ajax_nonce'], 'rcl-post-nonce' ) ){
-        echo json_encode(array('error'=>__('Signature verification failed','wp-recall').'!'));
-        exit;
+        wp_send_json(array('error'=>__('Signature verification failed','wp-recall').'!'));
     }
 }
 

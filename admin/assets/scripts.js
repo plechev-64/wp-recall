@@ -128,7 +128,6 @@ function rcl_get_custom_field_options(e){
     
     var typeField = jQuery(e).val();
     var boxField = jQuery(e).parents('.rcl-custom-field');
-    var slugField = boxField.data('slug');
     var oldType = boxField.attr('data-type');
     
     var multiVals = ['multiselect','checkbox','radio'];
@@ -149,47 +148,29 @@ function rcl_get_custom_field_options(e){
         
     }
     
-    /*var textVals = ['text','textarea'];
-    
-    if(jQuery.inArray( typeField, textVals ) >= 0 && jQuery.inArray( oldType, textVals ) >= 0){
-        
-        boxField.attr('data-type',typeField);
-        return;
-        
-    }*/
-    
     rcl_preloader_show(boxField);
     
-    var dataString = 'action=rcl_get_custom_field_options'
-            +'&type_field='+typeField
-            +'&old_type='+oldType
-            +'&post_type='+RclFields.type
-            +'&primary_options='+RclFields.primary
-            +'&default_options='+RclFields.default
-            +'&slug='+slugField;
-    
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: ajaxurl,
+    rcl_ajax({
+        data: {
+            action: 'rcl_get_custom_field_options',
+            type_field: typeField,
+            old_type: oldType,
+            post_type: RclFields.type,
+            primary_options: RclFields.primary,
+            default_options: RclFields.default,
+            slug: boxField.data('slug')
+        }, 
         success: function(data){
-            
-            rcl_preloader_hide();
 
-            if(data['success']){
-                
+            if(data['content']){
+
                 boxField.find('.options-custom-field').html(data['content']);
-                
-                boxField.attr('data-type',typeField);
-                
-            } 
-            
-            if(data['error']){
-                rcl_notice(data['error'],'error',10000);
-            }
 
-        } 
+                boxField.attr('data-type',typeField);
+
+            } 
+
+        }
     });
     
     return false;
@@ -200,29 +181,20 @@ function rcl_get_new_custom_field(){
     
     rcl_preloader_show(jQuery('#rcl-custom-fields-editor'));
     
-    var dataString = 'action=rcl_get_new_custom_field'
-            +'&post_type='+RclFields.type
-            +'&primary_options='+RclFields.primary
-            +'&default_options='+RclFields.default;
-    
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: ajaxurl,
+    rcl_ajax({
+        data: {
+            action: 'rcl_get_new_custom_field',
+            post_type: RclFields.type,
+            primary_options: RclFields.primary,
+            default_options: RclFields.default
+        }, 
         success: function(data){
-            
-            rcl_preloader_hide();
 
-            if(data['success']){
+            if(data['content']){
                 jQuery("#rcl-custom-fields-editor ul").append(data['content']);
             } 
-            
-            if(data['error']){
-                rcl_notice(data['error'],'error',10000);
-            }
 
-        } 
+        }
     });
     
     return false;
@@ -238,26 +210,13 @@ function rcl_enable_extend_options(e){
 }
 
 function rcl_update_options(){
+    
     rcl_preloader_show('#rcl-options-form > div:last-child');
-    var form = jQuery('#rcl-options-form');
-    var dataString = 'action=rcl_update_options&'+form.serialize();
-    jQuery.ajax({
-        type: 'POST',
-        data: dataString,
-        dataType: 'json',
-        url: ajaxurl,
-        success: function(data){
-            rcl_preloader_hide();
 
-            if(data['result']==1){
-                var type = 'success';
-            } else {
-                var type = 'error';
-            }
-
-            rcl_notice(data['notice'],type,3000);
-        } 
-    });	  	
+    rcl_ajax({
+        data: 'action=rcl_update_options&' + jQuery('#rcl-options-form').serialize()
+    });
+      	
     return false;
 }
 

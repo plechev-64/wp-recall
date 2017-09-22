@@ -1,6 +1,6 @@
 <?php
 
-add_action('wp_ajax_rcl_chat_remove_contact','rcl_chat_remove_contact',10);
+rcl_ajax('rcl_chat_remove_contact', false);
 function rcl_chat_remove_contact(){
     global $user_ID;
     
@@ -10,14 +10,13 @@ function rcl_chat_remove_contact(){
     
     rcl_chat_update_user_status($chat_id,$user_ID,0);
     
-    $res['success'] = true;
-    echo json_encode($res);
-    exit;
+    $res['remove'] = true;
+    
+    wp_send_json($res);
     
 }
 
-add_action('wp_ajax_rcl_get_chat_page','rcl_get_chat_page',10);
-add_action('wp_ajax_nopriv_rcl_get_chat_page','rcl_get_chat_page',10);
+rcl_ajax('rcl_get_chat_page', true);
 function rcl_get_chat_page(){
     
     rcl_verify_ajax_nonce();
@@ -32,23 +31,23 @@ function rcl_get_chat_page(){
         return false;
     
     require_once 'class-rcl-chat.php';
-    $chat = new Rcl_Chat(
-                array(
-                    'chat_room'=>$chat_room,
-                    'paged'=>$chat_page,
-                    'important'=>$important,
-                    'in_page'=>$in_page
-                )
-            );
     
-    $res['success'] = true;    
+    $chat = new Rcl_Chat(
+        array(
+            'chat_room'=>$chat_room,
+            'paged'=>$chat_page,
+            'important'=>$important,
+            'in_page'=>$in_page
+        )
+    );
+  
     $res['content'] = $chat->get_messages_box();
 
-    echo json_encode($res);
-    exit;
+    wp_send_json($res);
+
 }
 
-add_action('wp_ajax_rcl_chat_add_message','rcl_chat_add_message',10);
+rcl_ajax('rcl_chat_add_message', false);
 function rcl_chat_add_message(){
     global $user_ID;
     
@@ -68,23 +67,20 @@ function rcl_chat_add_message(){
     
     if ( $result->errors ){
         $res['errors'] = $result->errors;    
-        echo json_encode($res);
-        exit;
+        wp_send_json($res);
     }
 
     if(isset($result['errors'])){
-        echo json_encode($result);
-        exit;
+        wp_send_json($result);
     }
 
-    $res['success'] = true;    
     $res['content'] = $chat->get_message_box($result);
 
-    echo json_encode($res);
-    exit;
+    wp_send_json($res);
+
 }
 
-add_action('wp_ajax_rcl_get_chat_private_ajax','rcl_get_chat_private_ajax',10);
+rcl_ajax('rcl_get_chat_private_ajax', false);
 function rcl_get_chat_private_ajax(){
     
     rcl_verify_ajax_nonce();
@@ -99,15 +95,14 @@ function rcl_get_chat_private_ajax(){
             . '</div>';
     $chat .= $chatdata['content'];
 
-    $result['success'] = true;
     $result['content'] = $chat;
     $result['chat_token'] = $chatdata['token'];
     
-    echo json_encode($result);
-    exit;
+    wp_send_json($result);
+
 }
 
-add_action('wp_ajax_rcl_chat_message_important','rcl_chat_message_important');
+rcl_ajax('rcl_chat_message_important', false);
 function rcl_chat_message_important(){
     global $user_ID;
     
@@ -122,15 +117,14 @@ function rcl_chat_message_important(){
     }else{
         rcl_chat_add_message_meta($message_id,'important:'.$user_ID,1);
     }
-    
-    $result['success'] = true;
+
     $result['important'] = ($important)? 0: 1;
     
-    echo json_encode($result);
-    exit;
+    wp_send_json($result);
+
 }
 
-add_action('wp_ajax_rcl_chat_important_manager_shift','rcl_chat_important_manager_shift',10);
+rcl_ajax('rcl_chat_important_manager_shift', false);
 function rcl_chat_important_manager_shift(){
     global $user_ID;
     
@@ -145,15 +139,14 @@ function rcl_chat_important_manager_shift(){
     
     require_once 'class-rcl-chat.php';
     $chat = new Rcl_Chat(array('chat_room'=>$chat_room,'important'=>$status_important));
-    
-    $res['success'] = true;   
+ 
     $res['content'] = $chat->get_messages_box();
 
-    echo json_encode($res);
-    exit;
+    wp_send_json($res);
+
 }
 
-add_action('wp_ajax_rcl_chat_delete_attachment','rcl_chat_delete_attachment');
+rcl_ajax('rcl_chat_delete_attachment', false);
 function rcl_chat_delete_attachment(){
     global $user_ID;
     
@@ -171,12 +164,13 @@ function rcl_chat_delete_attachment(){
     
     wp_delete_attachment($attachment_id);
     
-    $result['success'] = true;
-    echo json_encode($result);
-    exit;
+    $result['remove'] = true;
+    
+    wp_send_json($result);
+
 }
 
-add_action('wp_ajax_rcl_chat_ajax_delete_message','rcl_chat_ajax_delete_message');
+rcl_ajax('rcl_chat_ajax_delete_message', false);
 function rcl_chat_ajax_delete_message(){
     global $current_user;
     
@@ -189,12 +183,13 @@ function rcl_chat_ajax_delete_message(){
         rcl_chat_delete_message($message_id);
     }
     
-    $result['success'] = true;
-    echo json_encode($result);
-    exit;
+    $result['remove'] = true;
+    
+    wp_send_json($result);
+
 }
 
-add_action('wp_ajax_rcl_chat_upload', 'rcl_chat_upload');
+rcl_ajax('rcl_chat_upload', false);
 function rcl_chat_upload(){
     global $rcl_options;
 
@@ -214,8 +209,7 @@ function rcl_chat_upload(){
     $type = $filetype['ext'];
     
     if (!in_array($type, $valid_types)){ 
-        echo json_encode(array('error'=>__('Forbidden file extension. Allowed:','wp-recall').' '.implode(', ',$valid_types)));
-        exit;
+        wp_send_json(array('error'=>__('Forbidden file extension. Allowed:','wp-recall').' '.implode(', ',$valid_types)));
     }
     
     if($upload = wp_handle_upload( $file, array('test_form' => FALSE) )){
@@ -250,7 +244,7 @@ function rcl_chat_upload(){
         
     }
 
-    echo json_encode($result);
-    exit;
+    wp_send_json($result);
+
 }
 

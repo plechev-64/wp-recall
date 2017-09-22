@@ -211,7 +211,7 @@ function rcl_update_feed_current_user($author_id){
     return $data;
 }
 
-add_action('wp_ajax_rcl_feed_progress','rcl_feed_progress');
+rcl_ajax('rcl_feed_progress', false);
 function rcl_feed_progress(){
     global $rcl_feed;
     
@@ -251,8 +251,8 @@ function rcl_feed_progress(){
         $result['content'] = $content;
         $result['code'] = 0;
 
-        echo json_encode($result);
-        exit;
+        wp_send_json($result);
+
     }
 
     foreach($feedsdata as $rcl_feed){ $list->setup_data($rcl_feed);
@@ -266,6 +266,6 @@ function rcl_feed_progress(){
     $result['content'] = $content;
     $result['code'] = 100;
 
-    echo json_encode($result);
-    exit;
+    wp_send_json($result);
+
 }

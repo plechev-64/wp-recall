@@ -1,6 +1,6 @@
 <?php
 
-class Rcl_Ajax{
+class Rcl_Tab_Ajax{
     
     function __construct(){
         add_action('wp_ajax_rcl_ajax',array($this,'rcl_ajax'));
@@ -29,8 +29,9 @@ class Rcl_Ajax{
         
         $result = apply_filters('rcl_ajax_tab_result', $result);
         
-        echo json_encode($result); exit;
+        wp_send_json($result);
     }
     
 }
-new Rcl_Ajax();
+
+new Rcl_Tab_Ajax();

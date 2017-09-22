@@ -100,7 +100,7 @@ function rcl_notice_avatar_deleted(){
         rcl_notice_text(__('Your avatar has been deleted','wp-recall'),'success');
 }
 
-add_action('wp_ajax_rcl_avatar_upload', 'rcl_avatar_upload');
+rcl_ajax('rcl_avatar_upload', false);
 function rcl_avatar_upload(){
     
     rcl_verify_ajax_nonce();
@@ -172,17 +172,21 @@ function rcl_avatar_upload(){
     $mb = $upload['file']['size']/1024/1024;
 
     if($mb > rcl_get_option('avatar_weight',2)){
-        $res['error'] = __('Size exceeded','wp-recall');
-        echo json_encode($res);
-        exit;
+
+        wp_send_json(array(
+            'error' => __('Size exceeded','wp-recall')
+        ));
+
     }
 
     $ext = explode('.',$filename);
 
     if($mime[0]!='image'){
-        $res['error'] = __('The file is not an image','wp-recall');
-        echo json_encode($res);
-        exit;
+
+        wp_send_json(array(
+            'error' => __('The file is not an image','wp-recall')
+        ));
+
     }
 
     list($width,$height) = getimagesize($upload['file']['tmp_name']);
@@ -216,9 +220,11 @@ function rcl_avatar_upload(){
             }else{
                 $jpg = rcl_check_jpeg($upload['file']['tmp_name'], true );
                 if(!$jpg){
-                        $res['error'] = __('The downloaded image is incorrect','wp-recall');
-                        echo json_encode($res);
-                        exit;
+                        
+                    wp_send_json(array(
+                        'error' => __('The downloaded image is incorrect','wp-recall')
+                    ));
+                        
                 }
                 $image = imagecreatefromjpeg($upload['file']['tmp_name']);
             }
@@ -258,9 +264,11 @@ function rcl_avatar_upload(){
     }
 
     if ( is_wp_error( $rst )){
-        $res['error'] = __('Download error','wp-recall');
-        echo json_encode($res);
-        exit;
+        
+        wp_send_json(array(
+            'error' => __('Download error','wp-recall')
+        ));
+
     }
 
     if(function_exists('ulogin_get_avatar')){
@@ -273,9 +281,9 @@ function rcl_avatar_upload(){
 
     if(!$coord) copy($file_src,$tmp_path.$tmpname);
 
-    $res['avatar_url'] = $tmp_url.$tmpname;
-    $res['success'] = __('Avatar successfully uploaded','wp-recall');
+    wp_send_json(array(
+        'avatar_url' => $tmp_url.$tmpname,
+        'success' => __('Avatar successfully uploaded','wp-recall')
+    ));
 
-    echo json_encode($res);
-    exit;
 }

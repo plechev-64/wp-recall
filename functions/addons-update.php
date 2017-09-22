@@ -128,7 +128,7 @@ function rcl_send_addons_data(){
 
 }
 
-add_action('wp_ajax_rcl_update_addon','rcl_update_addon');
+rcl_ajax('rcl_update_addon', false);
 function rcl_update_addon(){
 
     $addon = $_POST['addon'];
@@ -166,15 +166,13 @@ function rcl_update_addon(){
     $result = json_decode($response['body'], true);
 
     if(is_array($result)&&isset($result['error'])){
-        echo json_encode($result); exit;
+        wp_send_json($result);
     }
 
     $put = file_put_contents($new_addon, $response['body']);
     
-    if($put===false){
-        $log['error'] = __('The files failed to be uploaded!','wp-recall');
-        echo json_encode($log);
-        exit;
+    if($put === false){
+        wp_send_json(array('error'=>__('The files failed to be uploaded!','wp-recall')));
     }
 
     $zip = new ZipArchive;
@@ -192,9 +190,7 @@ function rcl_update_addon(){
 
         if(!$info){
             $zip->close();
-            $log['error'] = __('Update has incorrect title!','wp-recall');
-            echo json_encode($log);
-            exit;
+            wp_send_json(array('error'=>__('Update has incorrect title!','wp-recall')));
         }
         
         $paths = rcl_get_addon_paths();
@@ -226,14 +222,16 @@ function rcl_update_addon(){
         unset($need_update[$addon]);
         update_option('rcl_addons_need_update',$need_update);
 
-        $log['success'] = $addon;
-        echo json_encode($log);
-        exit;
+        wp_send_json(array(
+            'success' => $addon
+        ));
 
     }else{
-        $log['error'] = __('Unable to open update archive!','wp-recall');
-        echo json_encode($log);
-        exit;
+
+        wp_send_json(array(
+            'error' => __('Unable to open update archive!','wp-recall')
+        ));
+
     }
 }
 
