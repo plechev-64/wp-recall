@@ -460,7 +460,7 @@ function rcl_add_quicktags(){
 
 }
 
-function rcl_proccess_result_ajax(result){
+function rcl_proccess_ajax_return(result){
     
     var methods = {
         redirect: function(url){
