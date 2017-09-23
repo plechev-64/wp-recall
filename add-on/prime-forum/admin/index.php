@@ -623,7 +623,6 @@ function pfm_ajax_get_manager_item_delete_form(){
     $form = pfm_get_manager_item_delete_form($fields);
     
     wp_send_json(array(
-        'success' => true,
         'form' => $form
     ));
     

@@ -459,10 +459,6 @@ function pfm_ajax_action(){
     }
     
     do_action('pfm_ajax_action', $method, $itemID);
-
-    if(!isset($result['error'])){
-        $result['success'] = true;
-    }
     
     $result = apply_filters('pfm_action_result',$result, $method, $itemID);
     

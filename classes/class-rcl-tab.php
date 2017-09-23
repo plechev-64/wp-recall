@@ -1,6 +1,6 @@
 <?php
 
-class Rcl_Tabs{
+class Rcl_Tab{
     
     public $id;//идентификатор вкладки
     public $name;//имя вкладки
@@ -42,7 +42,7 @@ class Rcl_Tabs{
         }
     }
 
-    function add_tab(){
+    function register_tab(){
         add_filter('rcl_content_area_tabs',array($this,'print_tab'),$this->order);
         if($this->output)
             add_filter('rcl_content_area_'.$this->output,array($this,'print_tab_button'),$this->order);
@@ -121,14 +121,22 @@ class Rcl_Tabs{
         return implode(' ',$classes);
     }
     
-    function get_tab_button($master_id){
+    function is_user_access($master_id){
         global $user_ID;
         
         switch($this->public){
-            case 0: if(!$user_ID||$user_ID!=$master_id) return false; break;
-            case -1: if(!$user_ID||$user_ID==$master_id) return false; break;
-            case -2: if($user_ID&&$user_ID==$master_id) return false; break;
+            case 0: if(!$user_ID || $user_ID != $master_id) return false; break;
+            case -1: if(!$user_ID || $user_ID == $master_id) return false; break;
+            case -2: if($user_ID && $user_ID == $master_id) return false; break;
         }
+        
+        return true;
+    }
+    
+    function get_tab_button($master_id){
+        global $user_ID;
+        
+        if(!$this->is_user_access($master_id)) return false;
 
         $name = (isset($this->counter))? sprintf('%s <span class="rcl-menu-notice">%s</span>',$this->name,$this->counter): $this->name;
 
@@ -151,9 +159,8 @@ class Rcl_Tabs{
             $link = rcl_get_tab_permalink($master_id,$this->id);
             
             $datapost = array(
-                'callback'=>'rcl_ajax_tab',
                 'tab_id'=>$this->id,
-                'user_LK'=>$master_id
+                'master_id'=>$master_id
             );
             
             $html_button = rcl_get_button(
@@ -175,11 +182,7 @@ class Rcl_Tabs{
     function get_tab($master_id, $subtab_id = false){
         global $user_ID;
         
-        switch($this->public){
-            case 0: if(!$user_ID||$user_ID!=$master_id) return false; break;
-            case -1: if(!$user_ID||$user_ID==$master_id) return false; break;
-            case -2: if($user_ID&&$user_ID==$master_id) return false; break;
-        }
+        if(!$this->is_user_access($master_id)) return false;
         
         if(!$this->tab_upload) return false;
         

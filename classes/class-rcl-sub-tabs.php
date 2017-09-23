@@ -21,11 +21,10 @@ class Rcl_Sub_Tabs {
     public $callback;
     
     function __construct($subtabs,$parent_id = false){
-        global $rcl_tabs;
 
         $this->subtabs = $subtabs;
         $this->parent_id = $parent_id;
-        $this->parent_tab = $rcl_tabs[$parent_id];
+        $this->parent_tab = rcl_get_tab($parent_id);
         
         if(isset($_GET['subtab'])){
             
@@ -76,10 +75,9 @@ class Rcl_Sub_Tabs {
             }
             
             $button_args['attr'] = 'data-post='.rcl_encode_post(array(
-                                            'callback'=>'rcl_ajax_tab',
                                             'tab_id'=>$this->parent_id,
                                             'subtab_id'=>$tab['id'],
-                                            'user_LK'=>$master_id
+                                            'master_id'=>$master_id
                                         ));
 
             $content .= rcl_get_button($tab['name'], $this->url_string($master_id,$tab['id']), $button_args);

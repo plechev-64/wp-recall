@@ -531,6 +531,7 @@ function rcl_bar_add_icon($id_icon,$args){
     $rcl_bar['icons'][$id_icon] = $args;
     return true;
 }
+
 function rcl_bar_add_menu_item($id_item,$args){
     global $rcl_bar;
     if(!rcl_get_option('view_recallbar')) return false;
@@ -553,32 +554,6 @@ function rcl_user_black_list_button($office_id){
     $button = rcl_get_button($title,'#',array('class'=>'rcl-manage-blacklist','icon'=>'fa-bug','attr'=>'onclick="rcl_manage_user_black_list(this,'.$office_id.');return false;"'));
 
     return $button;
-}
-
-rcl_ajax_action('rcl_manage_user_black_list', false);
-function rcl_manage_user_black_list(){
-    global $user_ID;
-    
-    rcl_verify_ajax_nonce();
-    
-    $user_id = intval($_POST['user_id']);
-    
-    $user_block = get_user_meta($user_ID,'rcl_black_list:'.$user_id);
-    
-    if($user_block){
-        delete_user_meta($user_ID,'rcl_black_list:'.$user_id);
-        do_action('remove_user_blacklist',$user_id);
-    }else{
-        add_user_meta($user_ID,'rcl_black_list:'.$user_id,1);
-        do_action('add_user_blacklist',$user_id);
-    }
-    
-    $new_status = $user_block? 0: 1;
-
-    wp_send_json(array(
-        'label' => ($new_status)? __('Unblock','wp-recall'): __('Blacklist','wp-recall')
-    ));
-
 }
 
 add_filter('rcl_tabs','rcl_check_user_blocked',10);
@@ -675,29 +650,3 @@ function rcl_post_bar($content){
     return $content;
     
 }
-
-rcl_ajax_action('rcl_beat', true);
-function rcl_beat(){
-    
-    rcl_verify_ajax_nonce();
-    
-    $databeat = json_decode(wp_unslash($_POST['databeat']));
-    $return = array();
-    
-    if($databeat){
-        foreach($databeat as $data){
-            
-            $result = array();
-            
-            $callback = $data->action;
-            $result['result'] = $callback($data->data);
-            $result['success'] = $data->success;
-            $result['beat_name'] = $data->beat_name;
-            $return[] = $result;
-        }
-    }
-
-    wp_send_json($return);
-    
-}
-

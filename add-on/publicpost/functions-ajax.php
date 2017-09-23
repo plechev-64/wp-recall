@@ -232,7 +232,6 @@ function rcl_get_post_thumbnail_html(){
     $thumbnail_id = intval($_POST['thumbnail_id']);
     
     $result = array(
-        'success' => true,
         'thumbnail_image' => wp_get_attachment_image( $thumbnail_id, 'thumbnail')
     );
     

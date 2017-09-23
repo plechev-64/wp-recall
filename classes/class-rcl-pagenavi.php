@@ -211,11 +211,10 @@ class Rcl_PageNavi{
         if($rcl_tab){
             if($this->ajax){
                 $attrs['data']['post'] = rcl_encode_post(array(
-                    'callback'=>'rcl_ajax_tab',
                     'tab_id'=>$rcl_tab->id,
                     'subtab_id'=>$rcl_tab->active_subtab,
-                    'user_LK'=>$user_LK,
-                    'page'=>$attrs['data']['page']
+                    'master_id'=>$user_LK,
+                    'page'=>$attrs['data']['page'],
                 ));
                 $attrs['class'] = 'rcl-ajax';
             }

@@ -53,7 +53,7 @@ function rcl_init_ajax_tab(){
 
         rcl_ajax({
             data:{
-                action: 'rcl_ajax',
+                action: 'rcl_ajax_tab',
                 post: e.data('post'),
                 tab_url: e.attr('href') //encodeURIComponent(e.attr('href'))
             },
@@ -68,8 +68,67 @@ function rcl_init_ajax_tab(){
                     return false;
                 }
                 
-                var funcname = data.post.callback;              
-                new (window[funcname])(e,data);
+                var url = data.post.tab_url;
+                var supports = data.post.supports;
+                var subtab_id = data.post.subtab_id;
+
+                if(supports && supports.indexOf('dialog')>=0){ //если вкладка поддерживает диалог
+
+                    if(!subtab_id){ //если загружается основная вкладка
+
+                        ssi_modal.show({
+                            className: 'rcl-dialog-tab '+data.post.tab_id,
+                            sizeClass: 'small',
+                            buttons: [{
+                                label: Rcl.local.close,
+                                closeAfter: true
+                            }],
+                            content: data.result
+                        });
+
+                    }else{
+
+                        var box_id = '#ssi-modalContent';
+
+                    }
+
+                }else{
+
+                    rcl_update_history_url(url);
+
+                    if(!subtab_id)
+                        jQuery('.rcl-tab-button .recall-button').removeClass('active');
+
+                    e.addClass('active');
+
+                    var box_id = '#lk-content';
+
+                }
+
+                if(box_id){
+
+                    jQuery(box_id).html(data.result);
+
+                    var options = rcl_get_options_url_params();
+
+                    if(options.scroll == 1){
+                        var offsetTop = jQuery(box_id).offset().top;
+                        jQuery('body,html').animate({scrollTop:offsetTop - options.offset}, 1000);
+                    }
+
+                    if(data.includes){
+
+                        var includes = data.includes;
+
+                        includes.forEach(function(src, i, includes) {
+
+                            jQuery.getScript(src);
+
+                        });
+
+                    }
+
+                }
 
                 if(!data.post.subtab_id){
                     jQuery('#lk-content').animateCss('fadeIn');
@@ -83,73 +142,8 @@ function rcl_init_ajax_tab(){
         });
          
         return false;
+        
     });
-}
-
-function rcl_ajax_tab(e,data){
-
-    var url = data.post.tab_url;
-    var supports = data.post.supports;
-    var subtab_id = data.post.subtab_id;
-
-    if(supports && supports.indexOf('dialog')>=0){ //если вкладка поддерживает диалог
-        
-        if(!subtab_id){ //если загружается основная вкладка
-        
-            ssi_modal.show({
-                className: 'rcl-dialog-tab '+data.post.tab_id,
-                sizeClass: 'small',
-                buttons: [{
-                    label: Rcl.local.close,
-                    closeAfter: true
-                }],
-                content: data.result
-            });
-        
-        }else{
-
-            var box_id = '#ssi-modalContent';
-            
-        }
-        
-    }else{
-        
-        rcl_update_history_url(url);
-        
-        if(!subtab_id)
-            jQuery('.rcl-tab-button .recall-button').removeClass('active');
-        
-        e.addClass('active');
-
-        var box_id = '#lk-content';
-
-    }
-    
-    if(box_id){
-    
-        jQuery(box_id).html(data.result);
-
-        var options = rcl_get_options_url_params();
-        
-        if(options.scroll == 1){
-            var offsetTop = jQuery(box_id).offset().top;
-            jQuery('body,html').animate({scrollTop:offsetTop - options.offset}, 1000);
-        }
-        
-        if(data.includes){
-        
-            var includes = data.includes;
-
-            includes.forEach(function(src, i, includes) {
-
-                jQuery.getScript(src);
-
-            });
-
-        }
-    
-    }
-       
 }
 
 function rcl_get_options_url_params(){

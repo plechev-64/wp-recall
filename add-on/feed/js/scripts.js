@@ -59,7 +59,6 @@ jQuery(function($){
                     var type = 'error';
                 }
 
-                if(result['return']=='notice') rcl_notice(result[type],type);
                 if(result['return']=='this') link.parent().html('<span class=\''+type+'\'>'+result[type]+'</span>');
                 if(result['this']) link.children('span').html(result['this']);
                 if(result['all']){

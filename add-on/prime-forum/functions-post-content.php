@@ -96,7 +96,8 @@ function pfm_filter_allowed_tags($content){
         'details' => array(),
         'summary' => array(),
         'span' => array(
-            'class' => true
+            'class' => true,
+            'style' => true
         )
     ));
     

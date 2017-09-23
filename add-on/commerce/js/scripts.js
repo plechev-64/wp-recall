@@ -333,9 +333,6 @@ function rcl_add_to_cart(e){
 
             if(data.success){
 
-                rcl_close_notice('#rcl-notice > div');
-                rcl_notice(data.success,'success');
-
                 jQuery('.rcl-mini-cart').removeClass('empty-cart');
                 jQuery('.rcl-order-price').html(data.cart.order_price);
                 jQuery('.rcl-order-amount').html(data.cart.products_amount);

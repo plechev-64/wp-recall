@@ -121,34 +121,84 @@ function rcl_add_sub_tab($tab_id,$subtab){
     $rcl_tabs[$tab_id]['content'][] = $subtab;
 }
 
+function rcl_get_tabs(){
+    global $rcl_tabs;
+    return $rcl_tabs;    
+}
+
+function rcl_get_tab($tab_id){
+    $rcl_tabs = rcl_get_tabs();
+    return isset($rcl_tabs[$tab_id])? $rcl_tabs[$tab_id]: false;
+}
+
+function rcl_get_tab_button($tab_id, $master_id){
+    
+    $tab = rcl_get_tab($tab_id);
+
+    if (!class_exists('Rcl_Tab'))
+        require_once RCL_PATH.'classes/class-rcl-tab.php';
+
+    $Rcl_Tab = new Rcl_Tab($tab);
+   
+    return $Rcl_Tab->get_tab_button($master_id);
+}
+
+function rcl_get_tab_content($tab_id, $master_id, $subtab_id = ''){
+
+    if (!class_exists('Rcl_Tab')) 
+        require_once RCL_PATH.'classes/class-rcl-tab.php';
+
+    $tab = rcl_get_tab($tab_id);
+    
+    if(!$tab) return false;
+
+    $tab['first'] = 1;
+
+    $Rcl_Tab = new Rcl_Tab($tab);
+
+    $content = $Rcl_Tab->get_tab($master_id, $subtab_id);
+
+    return $content;
+
+}
+
+//приводим структуру вкладки к окончательному виду
+add_action('wp_loaded','rcl_setup_tabs',10);
+function rcl_setup_tabs(){
+    
+    do_action('rcl_setup_tabs');
+    
+    global $rcl_tabs;
+    
+    $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
+      
+}
+
+//регистрируем вкладки для вывода в личном кабинете
+add_action('wp','rcl_register_tabs',10);
+function rcl_register_tabs(){
+
+    if(is_admin()||!rcl_is_office()) return false;
+
+    $rcl_tabs = rcl_get_tabs();
+
+    if(!$rcl_tabs) return false;
+    
+    if (!class_exists('Rcl_Tab')) 
+        require_once RCL_PATH.'classes/class-rcl-tab.php';
+    
+    foreach($rcl_tabs as $tab){
+        $Rcl_Tab = new Rcl_Tab($tab);
+        $Rcl_Tab->register_tab();
+    }
+    
+}
+
 //вывод контента произвольной вкладки
 add_filter( 'rcl_custom_tab_content', 'do_shortcode', 11 );
 add_filter( 'rcl_custom_tab_content', 'wpautop', 10 );
 function rcl_custom_tab_content($content){
     return apply_filters('rcl_custom_tab_content',stripslashes_deep($content));
-}
-
-//выводим все зарегистрированные вкладки в личном кабинете
-add_action('wp','rcl_setup_tabs',10);
-function rcl_setup_tabs(){
-    global $rcl_tabs,$user_LK;
-
-    if(is_admin()||!$user_LK) return false;
-
-    $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
-    
-    do_action('rcl_setup_tabs');
-
-    if(!$rcl_tabs) return false;
-    
-    if (!class_exists('Rcl_Tabs')) 
-        require_once RCL_PATH.'classes/class-rcl-tabs.php';
-    
-    foreach($rcl_tabs as $tab){
-        $Rcl_Tabs = new Rcl_Tabs($tab);
-        $Rcl_Tabs->add_tab();
-    }
-    
 }
 
 //сортируем вкладки и изменяем их данные согласно настроек
@@ -261,11 +311,11 @@ function rcl_setup_blocks(){
 function rcl_is_office($user_id=null){
     global $rcl_office;
     
-    if(isset($_POST['action'])&&$_POST['action']=='rcl_ajax'){
+    if(isset($_POST['action'])&&$_POST['action']=='rcl_ajax_tab'){
         $post = rcl_decode_post($_POST['post']);
         
-        if($post->user_LK) 
-            $rcl_office = $post->user_LK;
+        if($post->master_id) 
+            $rcl_office = $post->master_id;
     }
     
     if($rcl_office){
@@ -352,63 +402,6 @@ function rcl_encode_post($array){
 
 function rcl_decode_post($string){
     return json_decode(base64_decode($string));
-}
-
-function rcl_ajax_tab($post){
-    global $user_LK,$rcl_tabs;
-
-    $id_tab = rcl_sanitize_string($post->tab_id);
-    $user_LK = intval($post->user_LK);
-    
-    $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
-    
-    if(!isset($rcl_tabs[$id_tab])) return false;
-
-    if (!class_exists('Rcl_Tabs')) 
-        require_once RCL_PATH.'classes/class-rcl-tabs.php';
-    
-    $ajax = (in_array('ajax',$rcl_tabs[$id_tab]['supports']) || in_array('dialog',$rcl_tabs[$id_tab]['supports']))? 1: 0;
-    
-    if(!$ajax){
-        
-        return __('Error! Perhaps this add-on does not support ajax loading','wp-recall');
-        
-    }else{
-        
-        $subtab_id = (isset($post->subtab_id))? $post->subtab_id: false;
-
-        do_action('rcl_setup_tabs');
-        
-        $data = $rcl_tabs[$id_tab];
-        
-        $data['first'] = 1;
-
-        $tab = new Rcl_Tabs($data);
-        
-        $content = $tab->get_tab($user_LK,$subtab_id);
-        
-        return $content;
-        
-    }
-    
-    return array('error'=>__('Error','wp-recall').'!');
-
-}
-
-function rcl_get_tab_button($tab_id, $user_id = false){
-    global $rcl_tabs,$user_LK;
-   
-    if(!isset($rcl_tabs[$tab_id])) return false;
-    
-    if(!$user_id) $user_id = $user_LK;
-   
-    if (!class_exists('Rcl_Tabs'))
-        require_once RCL_PATH.'classes/class-rcl-tabs.php';
-   
-    $data = $rcl_tabs[$tab_id];
-    $tab = new Rcl_Tabs($data);
-   
-    return $tab->get_tab_button($user_id);
 }
 
 function rcl_get_wp_upload_dir(){
@@ -738,36 +731,6 @@ function rcl_get_smiles($id_area){
     $smiles .= '</div>';
 
     return $smiles;
-}
-
-rcl_ajax_action('rcl_get_smiles_ajax', false);
-function rcl_get_smiles_ajax(){
-    global $wpsmiliestrans;
-
-    rcl_verify_ajax_nonce();
-
-    $content = array();
-    
-    $smilies = array();
-    foreach($wpsmiliestrans as $emo=>$smilie){
-        $smilies[$smilie] = $emo;
-    }
-
-    foreach($smilies as $smilie=>$emo){
-        if(!$emo) continue;
-        $content[] = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $emo ) );
-    }
-    
-    if(!$content){
-        wp_send_json(array(
-            'error' => __('Не удалось загрузить смайлы','wp-recall')
-        ));
-    }
-
-    wp_send_json(array(
-        'content' => implode('',$content)
-    ));
-
 }
 
 function rcl_mail($email, $title, $text, $from = false, $attach = false){

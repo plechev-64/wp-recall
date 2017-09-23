@@ -233,12 +233,13 @@ function rcl_cache_shortcode($atts,$content = null){
 
 add_shortcode('rcl-tab','rcl_tab_shortcode');
 function rcl_tab_shortcode($atts){
-    global $rcl_tabs,$user_ID,$user_LK;
+    global $user_ID,$user_LK;
     
     $user_LK = $user_ID;
     
     extract(shortcode_atts(array(
-	'tab_id' => ''
+	'tab_id' => '',
+        'subtab_id' => ''
 	),
     $atts));
     
@@ -247,23 +248,22 @@ function rcl_tab_shortcode($atts){
         <div class="authorize-form-rcl">'.rcl_get_authorize_form().'</div>';
     }
     
-    if(!$tab_id||!isset($rcl_tabs[$tab_id])) 
+    $tab = rcl_get_tab($tab_id);
+    
+    if(!$tab_id||!$tab) 
         return '<p>'.__('Such tab was not found!','wp-recall').'</p>';
     
-    if (!class_exists('Rcl_Tabs')) 
-        require_once RCL_PATH.'classes/class-rcl-tabs.php';
+    if (!class_exists('Rcl_Tab')) 
+        require_once RCL_PATH.'classes/class-rcl-tab.php';
 
-    $Rcl_Tab = new Rcl_Tabs($rcl_tabs[$tab_id]);
+    $Rcl_Tab = new Rcl_Tab($tab);
     
-    switch($Rcl_Tab->public){
-        case -1: return false;
-        case -2: return false;
-    }
+    if(!$Rcl_Tab->is_user_access($user_ID)) return false;
     
     $content = '<div id="rcl-office" class="wprecallblock" data-account="'.$user_ID.'">';   
         $content .= '<div id="lk-content">';
             
-            $content .= sprintf('<div id="tab-%s" class="%s_block recall_content_block %s">%s</div>',$tab_id,$tab_id,'active',$Rcl_Tab->get_tab_content($user_ID));
+            $content .= sprintf('<div id="tab-%s" class="%s_block recall_content_block %s">%s</div>',$tab_id,$tab_id,'active',$Rcl_Tab->get_tab_content($user_ID, $subtab_id));
 
         $content .= '</div>';    
     $content .= '</div>';
