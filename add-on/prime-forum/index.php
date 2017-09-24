@@ -143,6 +143,28 @@ function pfm_user_posts_other_topics($master_id){
     return $content;
 }
 
+/*function pfm_get_user_topics_list($master_id, $navi = true){
+    
+    if(defined( 'DOING_AJAX' ) && DOING_AJAX)
+        $post = (isset($_POST['post']))? rcl_decode_post($_POST['post']): array();
+    
+    pfm_init_forum(array(
+        'pfm-author' => $master_id,
+        'pfm-page' => 1
+    ));
+    
+    $theme = pfm_get_current_theme();
+
+    $content .= '<div id="prime-forum">';
+
+        $content .= rcl_get_include_template('pfm-author.php',$theme['path']);
+    
+    $content .= '</div>';
+    
+    return $content;
+    
+}*/
+
 function pfm_get_user_topics_list($master_id, $navi = true){
     global $PrimeTopic,$PrimeQuery;
     
@@ -213,8 +235,7 @@ function pfm_get_user_topics_list($master_id, $navi = true){
 
 add_action('pre_get_posts','pfm_init',10);
 function pfm_init($wp_query){
-    global $PrimeQuery,$PrimeUser;
-    
+
     if(!$wp_query->is_main_query()) return;
     
     if(isset($wp_query->queried_object)){
@@ -223,9 +244,19 @@ function pfm_init($wp_query){
         if(!isset($wp_query->query['page_id']) || $wp_query->query['page_id'] != pfm_get_option('home-page')) return;
     }
     
+    pfm_init_forum();
+
+}
+
+function pfm_init_forum($vars = false){
+    global $PrimeQuery,$PrimeUser;
+    
     $PrimeUser = new PrimeUser();
     
     $PrimeQuery = new PrimeQuery();
+    
+    if($vars)
+        $PrimeQuery->setup_vars($vars);
     
     $PrimeQuery->init_query();
     
@@ -248,7 +279,6 @@ function pfm_init($wp_query){
     }
     
     do_action('pfm_init');
-
 }
 
 add_action('pfm_init','pfm_redirect_short_url');

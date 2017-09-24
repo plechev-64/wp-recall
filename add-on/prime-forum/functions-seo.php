@@ -35,6 +35,19 @@ function pfm_set_query_vars($vars) {
     return $vars;
 }
 
+add_action('pfm_init', 'pfm_init_noindex_meta_tag', 10);
+function pfm_init_noindex_meta_tag(){
+    
+    if(pfm_is_search() || pfm_is_author()){
+        add_action('wp_head', 'pfm_print_noindex_meta_tag', 10);
+    }
+    
+}
+
+function pfm_print_noindex_meta_tag(){
+    echo '<meta name="robots" content="noindex, nofollow" />'."\n";
+}
+
 add_action('pfm_init','pfm_add_seo_filters',10);
 function pfm_add_seo_filters(){
     

@@ -89,11 +89,8 @@ function pfm_get_offtop_content($attrs, $content){
 
 add_shortcode('prime-forum','pfm_get_forum_content');
 function pfm_get_forum_content(){
-    global $active_addons;
     
-    $content = pfm_get_template_content();
-    
-    return $content;
+    return pfm_get_template_content();
     
 }
 

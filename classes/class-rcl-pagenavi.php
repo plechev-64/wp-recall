@@ -85,7 +85,7 @@ class Rcl_PageNavi{
         unset($this->uri['args'][$this->key]);
         unset($this->uri['args']['pager-id']);
         
-        $str = array('pager-id='.$this->pager_id);
+        $str = ($this->pager_id)? array('pager-id='.$this->pager_id): array();
         
         if(isset($this->uri['args']) && $this->uri['args']){
             foreach($this->uri['args'] as $k=>$val){
@@ -145,7 +145,6 @@ class Rcl_PageNavi{
     }
     
     function get_url($page_id){ 
-        //if($this->ajax) return '#';
         return rcl_format_url($this->uri['current']).$this->uri['string'].'&'.$this->key.'='.$page_id;
     }
     

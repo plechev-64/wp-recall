@@ -5,7 +5,7 @@
             <i class="fa fa-database" aria-hidden="true"></i>
         </div>
         <div class="prime-forum-title">
-            <div class="prime-general-title"><a class="" title="Перейти в группу" href="<?php pfm_the_group_permalink(); ?>"><?php pfm_the_group_name(); ?></a></div>
+            <div class="prime-general-title"><a class="" title="<?php _e('Перейти в группу','wp-recall'); ?>" href="<?php pfm_the_group_permalink(); ?>"><?php pfm_the_group_name(); ?></a></div>
             <div class="prime-forum-description"><?php pfm_the_group_description(); ?></div>
         </div>
         <div class="prime-forum-topics">

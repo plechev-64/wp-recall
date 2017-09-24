@@ -5,7 +5,7 @@
 
         <div class="prime-author-avatar">
             <?php if(pfm_post_field('user_id',0)): ?>
-            <a href="<?php echo get_author_posts_url(pfm_post_field('user_id',0)); ?>" title="В кабинет">
+            <a href="<?php echo get_author_posts_url(pfm_post_field('user_id',0)); ?>" title="<?php _e('В кабинет','wp-recall'); ?>">
                 <?php pfm_author_avatar(); ?>
             </a>
             <?php else: ?>
@@ -21,7 +21,7 @@
         <div class="prime-post-top">
             <div class="prime-count">
                 <span><?php pfm_post_field('post_index'); ?></span>
-                <a href="#topic-post-<?php pfm_post_field('post_id'); ?>" title="Ссылка на сообщение">
+                <a href="#topic-post-<?php pfm_post_field('post_id'); ?>" title="<?php _e('Ссылка на сообщение','wp-recall'); ?>">
                     <i class="fa fa-link" aria-hidden="true"></i>
                 </a>
             </div>

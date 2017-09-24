@@ -46,16 +46,22 @@ class PrimePageNavi extends Rcl_PageNavi{
     
     function get_url($page_id){ 
         global $PrimeQuery;
-    
-        if($this->type == 'global'){
+
+        if($PrimeQuery->is_search || $PrimeQuery->is_author){
+
+            if($PrimeQuery->is_search)
+                return add_query_arg(array('pfm-page' => $page_id, 'fs' => $PrimeQuery->vars['pfm-search']));
+            
+            if($PrimeQuery->is_author)
+                return add_query_arg(array('pfm-page' => $page_id, 'pfm-author' => $PrimeQuery->vars['pfm-author']));
+            
+        }else if($this->type == 'global'){
             if($PrimeQuery->is_topic){
                 $url = pfm_get_topic_permalink($PrimeQuery->object->topic_id);
             }else if($PrimeQuery->is_forum){
                 $url = pfm_get_forum_permalink($PrimeQuery->object->forum_id);
             }else if($PrimeQuery->is_group){
                 $url = pfm_get_group_permalink($PrimeQuery->object->group_id);
-            }else if($PrimeQuery->is_search){
-                $url = untrailingslashit(pfm_get_home_url()).'/search/';
             }
         }else if($this->type == 'topic'){
             global $PrimeTopic;
@@ -67,10 +73,6 @@ class PrimePageNavi extends Rcl_PageNavi{
         
         if($page_id != 1){
             $url = pfm_add_number_page($url,$page_id);
-        }
-        
-        if($PrimeQuery->is_search){
-            $url = add_query_arg(array('pfm-page' => $page_id, 'fs' => $PrimeQuery->vars['search_vars']));
         }
 
         return $url;

@@ -20,6 +20,10 @@ function pfm_get_template_content(){
         
         $content .= rcl_get_include_template('pfm-search.php',$theme['path']);
         
+    }if(pfm_is_author()){
+        
+        $content .= rcl_get_include_template('pfm-author.php',$theme['path']);
+        
     }else if(pfm_is_home()){
         
         $content .= rcl_get_include_template('pfm-home.php',$theme['path']);
@@ -238,7 +242,7 @@ function pfm_the_search_form(){
     global $PrimeQuery;?>
 
     <form action="<?php echo pfm_get_home_url() ?>">
-        <input name="fs" value="<?php echo ($PrimeQuery->vars['search_vars'])? $PrimeQuery->vars['search_vars']: 'Поиск по форуму'; ?>" onblur="if (this.value == '') {this.value = 'Поиск по форуму';}" onfocus="if (this.value == 'Поиск по форуму') {this.value = '';}" type="text">
+        <input name="fs" value="<?php echo ($PrimeQuery->vars['pfm-search'])? $PrimeQuery->vars['pfm-search']: 'Поиск по форуму'; ?>" onblur="if (this.value == '') {this.value = 'Поиск по форуму';}" onfocus="if (this.value == 'Поиск по форуму') {this.value = '';}" type="text">
         <?php if(pfm_is_search()): ?>
         
             <?php if($PrimeQuery->vars['pfm-group']): ?>
@@ -323,7 +327,7 @@ function pfm_the_breadcrumbs(){
                  <?php endif; ?>
 
                 <span>
-                    Поиск: <?php echo $PrimeQuery->vars['search_vars'] ?>
+                    Поиск: <?php echo $PrimeQuery->vars['pfm-search'] ?>
                 </span>
 
             <?php else: ?>

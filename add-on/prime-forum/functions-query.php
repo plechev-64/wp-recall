@@ -5,6 +5,11 @@ function pfm_is_search(){
     return ($PrimeQuery->is_search)? true: false;
 }
 
+function pfm_is_author(){
+    global $PrimeQuery;
+    return ($PrimeQuery->is_author)? true: false;
+}
+
 function pfm_is_home(){
     global $PrimeQuery;
     return ($PrimeQuery->is_frontpage)? true: false;

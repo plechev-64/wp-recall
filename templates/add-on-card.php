@@ -1,4 +1,4 @@
-<?php global $addon,$active_addons;?>
+<?php global $addon,$active_addons,$wprecall; ?>
 <div class="plugin-card plugin-card-<?php echo $addon->slug; ?>">
     <div class="plugin-card-top">
         <div class="name column-name">
@@ -16,13 +16,32 @@
                 <?php else: ?>
                     <li><a class="button" target="_blank" data-slug="<?php echo $addon->slug; ?>" href="<?php echo $addon->add_on_uri; ?>" aria-label="<?php _e('Go to page','wp-recall') ?> <?php echo $addon->name; ?> <?php echo $addon->version; ?>" data-name="<?php echo $addon->name; ?> <?php echo $addon->version; ?>"><?php _e('Go to','wp-recall') ?></a></li>
                 <?php endif; ?>
-                <!--<li><a href="<?php echo $addon->add_on_uri; ?>" class="thickbox" aria-label="Подробности о <?php echo $addon->name; ?> <?php echo $addon->version; ?>" data-title="<?php echo $addon->add_on_uri; ?> <?php echo $addon->version; ?>">Детали</a></li>-->
-            </ul>
         </div>
         <div class="desc column-description">
             <p><?php print_r($addon->description); ?></p>
             <p class="authors"> <cite><?php _e('Author','wp-recall') ?>: <a href="<?php echo $addon->author_uri; ?>" target="_blank" ><?php echo $addon->author; ?></a></cite></p>
         </div>
+        <div class="addon-terms">
+            <?php if($addon->terms):
+                
+                foreach($addon->terms as $taxonomy => $terms){ $html = array(); ?>
+                
+                    <p><cite><?php echo ($taxonomy == 'prodcat')? __('Category','wp-recall'): __('Tags','wp-recall') ?>: 
+            
+                    <?php foreach($terms as $slug => $name){ 
+                            
+                            $html[] = '<a href="'.admin_url('admin.php?page=rcl-repository&type=tag&s='.$name).'">'.$name.'</a>';
+                        
+                     } ?>
+                            
+                    <?php echo implode(', ', $html); ?>
+                            
+                    </cite></p>
+                    
+                <?php }
+            
+            endif; ?>
+        </div>           
     </div>
     <div class="plugin-card-bottom">
         <!--<div class="vers column-rating">
@@ -36,6 +55,7 @@
             </div>
             <span class="num-ratings">(428)</span>
         </div>-->
+        
         <div class="column-updated">
             <strong><?php _e('Updated','wp-recall') ?>:</strong> <span title="<?php echo $addon->update; ?>">
                 <?php echo human_time_diff(strtotime($addon->update),time() ).' '.__('ago','wp-recall'); ?>
@@ -46,9 +66,9 @@
             <?php if($addon->support_core){ ?>
             <span class="compatibility-compatible"><strong><?php _e('Compatible','wp-recall') ?></strong> с WP-Recall <?php echo $addon->support_core; ?> и выше</span>
             <?php }
-             /* else{ ?>
-                <span class="compatibility-compatible">Поддержка Wp-Recall вашей версии не гарантируется</span>
-            <?php } */ ?>
+             if(version_compare($addon->support_core, $wprecall->version) > 0){ ?>
+                <span class="compatibility-untested"><?php _e('C вашей версией WP-Recall работа не гарантируется','wp-recall') ?></span>
+            <?php }  ?>
         </div>
     </div>
 </div>

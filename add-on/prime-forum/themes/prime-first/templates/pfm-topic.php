@@ -5,7 +5,7 @@
         <?php pfm_the_topic_manager(); ?>
     
         <div class="prime-topics-header">
-            <span class="topic_count"><?php pfm_the_post_count(); ?> ответ(a) в теме</span>
+            <span class="topic_count"><?php pfm_the_post_count(); ?> <?php _e('ответ(ов) в теме','wp-recall'); ?></span>
             <?php pfm_page_navi(); ?>
         </div>
     

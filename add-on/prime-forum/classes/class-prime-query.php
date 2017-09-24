@@ -10,6 +10,7 @@ class PrimeQuery{
     public $is_topic = false;
     public $is_search = false;
     public $is_page = false;
+    public $is_author = false;
     public $groups;
     public $forums;
     public $topics;
@@ -41,13 +42,57 @@ class PrimeQuery{
         $this->init_table_query();
     }
     
+    function setup_vars($vars = false){
+        
+        if($vars){
+        
+            $defaults = array(
+                'pfm-group' => '',
+                'pfm-forum' => '',
+                'pfm-topic' => '',
+                'pfm-page' => '',
+                'pfm-author' => '',
+                'pfm-search' => ''
+            );
+            
+            $vars = wp_parse_args( $vars, $defaults );
+        
+        }else{
+            
+            $vars = array(
+                'pfm-group' => get_query_var('pfm-group'),
+                'pfm-forum' => (get_query_var('page'))? get_query_var('page'): get_query_var('pfm-forum'),
+                'pfm-topic' => get_query_var('pfm-topic'),
+                'pfm-page' => get_query_var('pfm-page'),
+                'pfm-author' => isset($_GET['pfm-author'])? $_GET['pfm-author']: '',
+                'pfm-search' => isset($_GET['fs'])? $_GET['fs']: ''
+            );
+            
+        }
+
+        $this->vars = apply_filters('pfm_vars', $vars);
+        
+        do_action('pfm_init_vars', $this->vars);
+
+    }
+    
+    function init_table_query(){
+        
+        $this->groups_query = new PrimeGroups();
+        $this->forums_query = new PrimeForums();
+        $this->topics_query = new PrimeTopics();
+        $this->posts_query = new PrimePosts();
+        
+    }
+    
     function init_query(){
         
-        $this->init_vars();
+        if(!$this->vars)
+            $this->setup_vars();
 
         $this->init_conditions();
         
-        if(!$this->is_frontpage && !$this->is_search){
+        if(!$this->is_frontpage && !$this->is_search && !$this->is_author){
             
             $this->init_queried_object();
             
@@ -70,7 +115,7 @@ class PrimeQuery{
             }
             
         }
-
+        
         $errors = apply_filters('pfm_check_forum_errors',$this->errors,$this);
         
         if($errors && is_array($errors)){
@@ -97,37 +142,16 @@ class PrimeQuery{
         }
 
     }
-    
-    function init_vars(){
-        
-        $vars = array(
-            'pfm-group' => get_query_var('pfm-group'),
-            'pfm-forum' => (get_query_var('page'))? get_query_var('page'): get_query_var('pfm-forum'),
-            'pfm-topic' => get_query_var('pfm-topic'),
-            'pfm-page' => get_query_var('pfm-page'),
-            'search_vars' => isset($_GET['fs'])? $_GET['fs']: ''
-        );
-        
-        $this->vars = apply_filters('pfm_vars', $vars);
-        
-        do_action('pfm_init_vars', $this->vars);
 
-    }
-    
-    function init_table_query(){
-        
-        $this->groups_query = new PrimeGroups();
-        $this->forums_query = new PrimeForums();
-        $this->topics_query = new PrimeTopics();
-        $this->posts_query = new PrimePosts();
-        
-    }
-    
     function init_conditions(){
 
-        if($this->vars['search_vars']){
+        if($this->vars['pfm-search']){
             
             $this->is_search = true;
+            
+        }else if($this->vars['pfm-author']){
+            
+            $this->is_author = true;
             
         }else if($this->vars['pfm-group']){
             
@@ -286,6 +310,22 @@ class PrimeQuery{
                 );
             }
             
+        }if($this->is_author){
+            
+            $args = array(
+                'number' => $this->number,
+                'offset' => $this->offset,
+                'user_id' => $this->vars['pfm-author'],
+                'join_query' => array(
+                    array(
+                        'table' => $this->posts_query->query['table'],
+                        'on_topic_id' => 'topic_id',
+                        'fields' => false
+                    )
+                ),
+                'groupby' => $this->topics_query->query['table']['as'].'.topic_id'
+            );
+            
         }else if($this->is_frontpage){
             
             $args = array(
@@ -415,8 +455,23 @@ class PrimeQuery{
             
             $this->topics_query->set_query($args);
             
-            $this->topics_query->query['where'][] = "(pfm_topics.topic_name LIKE '%".$this->vars['search_vars']."%' "
-                . "OR pfm_posts.post_content LIKE '%".$this->vars['search_vars']."%')";
+            $this->topics_query->query['where'][] = "(pfm_topics.topic_name LIKE '%".$this->vars['pfm-search']."%' "
+                . "OR pfm_posts.post_content LIKE '%".$this->vars['pfm-search']."%')";
+            
+            $this->all_items = $this->topics_query->count();
+            
+            $this->topics_query->query['select'] = array(
+                "pfm_topics.*",
+                "MAX(pfm_posts.post_date) AS last_post_date"
+            );
+            
+            $this->topics = $this->topics_query->get_data('get_results');
+            
+        }if($this->is_author){
+            
+            $this->topics_query->reset_query();
+
+            $this->topics_query->set_query($args);
             
             $this->all_items = $this->topics_query->count();
             
