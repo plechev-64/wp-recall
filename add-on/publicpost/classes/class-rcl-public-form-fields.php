@@ -110,8 +110,8 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                             array(
                                 'type' => 'select',
                                 'slug' => 'only-child',
-                                'title' => __('Только дочерние термины','wp-recall'),
-                                'notice' => __('Прикреплять к публикации только выбранные дочерние термины, игнорируя родителей','wp-recall'),
+                                'title' => __('Only child terms','wp-recall'),
+                                'notice' => __('Attach only the selected child terms to the post, ignoring parents','wp-recall'),
                                 'values' => array(
                                     __('Disable','wp-recall'),
                                     __('Enable','wp-recall')

@@ -66,13 +66,13 @@ function rcl_edit_balance_user(){
     $balance = floatval(str_replace(',','.',$_POST['balance']));
     
     if(!$user_id){
-        wp_send_json(array('error'=>__('Баланс не был изменен','wp-recall')));
+        wp_send_json(array('error'=>__('Balance was not changed','wp-recall')));
     }
 
     rcl_update_user_balance($balance,$user_id,__('Balance changed','wp-recall'));
 
     wp_send_json(array(
-        'success' => __('Баланс успешно изменен','wp-recall'),
+        'success' => __('Balance successfully changed','wp-recall'),
         'user_id' => $user_id,
         'balance' => $balance
     ));

@@ -156,6 +156,9 @@ function pfm_ajax_action(object,e){
                             jQuery('#editor-action_post_create').val('');
                             jQuery('#prime-topic-form-box input[name="pfm-data[form_load]"]').val(data['form_load']);
 
+                            //if(data['content'].length > 1)
+                                rcl_do_action('pfm_new_post','r','e','re');
+
                             pfm_animate_new_posts(data['content']);
 
                             PFM.last_beat = data.form_load;
@@ -253,6 +256,8 @@ function pfm_topic_beat_success(result){
     if(result.content){
     
         jQuery('#prime-forum .prime-posts .new-post').removeClass('new-post');
+        
+        rcl_do_action('pfm_new_post');
 
         pfm_animate_new_posts(result.content);
     

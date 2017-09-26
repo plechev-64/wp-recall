@@ -532,7 +532,7 @@ function rcl_view_rating_votes(){
     
     if(!$content){
         wp_send_json(array(
-            'error' => __('Данные не удалось получить','wp-recall')
+            'error' => __('Unable to obtain data','wp-recall')
         ));
     }
 

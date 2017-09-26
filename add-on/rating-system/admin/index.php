@@ -43,7 +43,7 @@ function rcl_edit_rating_user(){
     $new_rating = floatval($_POST['rayting']);
 
     if(!isset($new_rating)){
-        wp_send_json(array('error'=>__('Рейтинг не был обновлен','wp-recall')));
+        wp_send_json(array('error'=>__('Rating was not updated','wp-recall')));
     }
 
     $rating = rcl_get_user_rating($user_id);
@@ -61,7 +61,7 @@ function rcl_edit_rating_user(){
     rcl_insert_rating($args);
 
     wp_send_json(array(
-        'success' => __('Рейтинг успешно обновлен','wp-recall')
+        'success' => __('Rating updated successfully','wp-recall')
     ));
 
 }

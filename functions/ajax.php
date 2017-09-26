@@ -23,7 +23,7 @@ function rcl_ajax_tab(){
     $tab = rcl_get_tab($post->tab_id);
     
     if(!$tab){
-        wp_send_json(array('error'=>__('Данные запрашиваемой вкладки не были найдены.','wp-recall')));
+        wp_send_json(array('error'=>__('Data of the requested tab was not found.','wp-recall')));
     }
 
     $ajax = (in_array('ajax',$tab['supports']) || in_array('dialog',$tab['supports']))? 1: 0;
@@ -37,7 +37,7 @@ function rcl_ajax_tab(){
     $content = rcl_get_tab_content($post->tab_id, $post->master_id, $post->subtab_id);
     
     if(!$content){
-        wp_send_json(array('error'=>__('Не удалось получить контент запрашиваемой вкладки','wp-recall')));
+        wp_send_json(array('error'=>__('Unable to obtain content of the requested tab','wp-recall')));
     }
 
     $content = apply_filters('rcl_ajax_tab_content', $content);
@@ -134,7 +134,7 @@ function rcl_get_smiles_ajax(){
     
     if(!$content){
         wp_send_json(array(
-            'error' => __('Не удалось загрузить смайлы','wp-recall')
+            'error' => __('Failed to load emoticons','wp-recall')
         ));
     }
 

@@ -67,7 +67,7 @@
             <span class="compatibility-compatible"><strong><?php _e('Compatible','wp-recall') ?></strong> с WP-Recall <?php echo $addon->support_core; ?> и выше</span>
             <?php }
              if(version_compare($addon->support_core, $wprecall->version) > 0){ ?>
-                <span class="compatibility-untested"><?php _e('C вашей версией WP-Recall работа не гарантируется','wp-recall') ?></span>
+                <span class="compatibility-untested"><?php _e('Operation is not guaranteed with your version of WP-Recall','wp-recall') ?></span>
             <?php }  ?>
         </div>
     </div>

@@ -4,36 +4,34 @@ var rcl_beats = [];
 var rcl_beats_delay = 0;
 var rcl_url_params = rcl_get_value_url_params();
 
-jQuery(function($){
-    
-    $.fn.extend({
-        animateCss: function (animationNameStart,functionEnd) {
-            var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-            this.addClass('animated ' + animationNameStart).one(animationEnd, function() {
-                $(this).removeClass('animated ' + animationNameStart);
-                
-                if(functionEnd){
-                    if(typeof functionEnd == 'function'){
-                        functionEnd(this);
-                    }else{
-                        $(this).animateCss(functionEnd);
-                    }
+jQuery.fn.extend({
+    animateCss: function (animationNameStart,functionEnd) {
+        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        this.addClass('animated ' + animationNameStart).one(animationEnd, function() {
+            jQuery(this).removeClass('animated ' + animationNameStart);
+
+            if(functionEnd){
+                if(typeof functionEnd == 'function'){
+                    functionEnd(this);
+                }else{
+                    jQuery(this).animateCss(functionEnd);
                 }
-            });
-            return this;
-        }
-    });
-    
+            }
+        });
+        return this;
+    }
 });
 
-function rcl_do_action(action_name,args){
+function rcl_do_action(action_name){
     
     var callbacks_action = rcl_actions[action_name];
     
     if(!callbacks_action) return false;
     
+    var args = [].slice.call(arguments, 1);
+    
     callbacks_action.forEach(function(callback, i, callbacks_action) {
-        new (window[callback])(args);
+        window[callback].apply(this, args);
     });
 }
 
@@ -46,15 +44,18 @@ function rcl_add_action(action_name,callback){
     }
 }
 
-function rcl_apply_filters(filter_name,args){
+function rcl_apply_filters(filter_name){
+    
+    var args = [].slice.call(arguments, 1);
     
     var callbacks_filter = rcl_filters[filter_name];
     
-    if(!callbacks_filter) return args;
-    
+    if(!callbacks_filter) return args[0];
+
     callbacks_filter.forEach(function(callback, i, callbacks_filter) {
-        args = new (window[callback])(args);
+        args[0] = window[callback].apply(this, args);
     });
+    
     return args;
 }
 
@@ -536,7 +537,7 @@ function rcl_ajax(prop){
         success: function(result){
             
             if(!result){
-                rcl_notice('Error', 'error', 5000);
+                rcl_notice(Rcl.local.error, 'error', 5000);
                 return false;
             }
             

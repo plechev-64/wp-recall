@@ -143,28 +143,6 @@ function pfm_user_posts_other_topics($master_id){
     return $content;
 }
 
-/*function pfm_get_user_topics_list($master_id, $navi = true){
-    
-    if(defined( 'DOING_AJAX' ) && DOING_AJAX)
-        $post = (isset($_POST['post']))? rcl_decode_post($_POST['post']): array();
-    
-    pfm_init_forum(array(
-        'pfm-author' => $master_id,
-        'pfm-page' => 1
-    ));
-    
-    $theme = pfm_get_current_theme();
-
-    $content .= '<div id="prime-forum">';
-
-        $content .= rcl_get_include_template('pfm-author.php',$theme['path']);
-    
-    $content .= '</div>';
-    
-    return $content;
-    
-}*/
-
 function pfm_get_user_topics_list($master_id, $navi = true){
     global $PrimeTopic,$PrimeQuery;
     
