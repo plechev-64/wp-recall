@@ -925,7 +925,7 @@ class PrimeQuery{
                 && $object_type == $meta->object_type
                 && $meta_key == $meta->meta_key
             ){
-                return $meta->meta_value;
+                return maybe_unserialize($meta->meta_value);
             }
             
         }
