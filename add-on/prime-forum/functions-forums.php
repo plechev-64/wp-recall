@@ -70,6 +70,8 @@ function pfm_the_forum_classes(){
         'prime-forum',
         'prime-forum-'.$PrimeForum->forum_id
     );
+    
+    $classes = apply_filters('pfm_forum_classes', $classes);
 
     echo implode(' ',$classes);
     

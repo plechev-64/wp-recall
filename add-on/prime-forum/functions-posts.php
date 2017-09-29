@@ -54,6 +54,8 @@ function pfm_the_post_classes(){
         $classes[] = 'post-closed';
     }
     
+    $classes = apply_filters('pfm_post_classes', $classes);
+    
     echo implode(' ',$classes);
     
 }

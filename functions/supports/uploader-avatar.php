@@ -146,15 +146,15 @@ function rcl_avatar_upload(){
         $mime = explode('/',$upload['file']['type']);
     }else{
         if($_FILES['userpicupload']){
-                foreach($_FILES['userpicupload'] as $key => $data){
-                        $upload['file'][$key] = $data;
-                }
+            foreach($_FILES['userpicupload'] as $key => $data){
+                $upload['file'][$key] = $data;
+            }
         }
 
         if($_POST['coord']){
-                $viewimg = array();
-                list($coord['x'],$coord['y'],$coord['w'],$coord['h']) =  explode(',',$_POST['coord']);
-                list($viewimg['width'],$viewimg['height']) =  explode(',',$_POST['image']);
+            $viewimg = array();
+            list($coord['x'],$coord['y'],$coord['w'],$coord['h']) =  explode(',',$_POST['coord']);
+            list($viewimg['width'],$viewimg['height']) =  explode(',',$_POST['image']);
         }
 
         $mime = explode('/',$upload['file']['type']);

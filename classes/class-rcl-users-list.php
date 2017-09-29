@@ -168,7 +168,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
         $usergroup = explode('|',$this->usergroup);
         foreach($usergroup as $k=>$filt){
             $f = explode(':',$filt);
-            $n = 'metas_'.$f[0];
+            $n = 'metas_'.str_replace('-','_',$f[0]);
             $query['join'][] = "INNER JOIN $wpdb->usermeta AS $n ON wp_users.ID=$n.user_id";
             $query['where'][] = "($n.meta_key='$f[0]' AND $n.meta_value LIKE '%$f[1]%')";
         }

@@ -71,9 +71,11 @@ function pfm_the_author_manager(){
 function pfm_get_primary_manager(){
     global $user_ID;
     
-    $actions['get_last_updated_topics'] = array(
-        'name' => __('Get the list of updated topics','wp-recall'),
-        'icon' => 'fa-bell-o'
+    $actions = array(
+        'get_last_updated_topics' => array(
+            'name' => __('Get the list of updated topics','wp-recall'),
+            'icon' => 'fa-bell-o'
+        )
     );
     
     if($user_ID){
@@ -489,12 +491,12 @@ function pfm_action_confirm_migrate_post($post_id){
     }
     
     setcookie('pfm_migrate_post',json_encode($migrateData), time()+3600, '/', $_SERVER['HOST']);
-
-    $result['content'] = pfm_get_notice(__('Go to the page of the necessary topic and press the "Transfer to this topic" button to end message transfer','wp-recall'),'warning');
-    $result['dialog'] = true;
-    $result['title'] = __('Data is ready to be transferred','wp-recall');
     
-    return $result;
+    return array(
+        'content' => pfm_get_notice(__('Go to the page of the necessary topic and press the "Transfer to this topic" button to end message transfer','wp-recall'),'warning'),
+        'title' => __('Data is ready to be transferred','wp-recall'),
+        'dialog' => true
+    );
     
 }
 
@@ -552,20 +554,21 @@ function pfm_action_start_post_migrate($post_id){
         $content .= '</form>';
     $content .= '</div>';
 
-    $result['content'] = $content;
-    $result['dialog'] = true;
-    $result['title'] = __('Transfer messages to another topic','wp-recall');
-    
-    return $result;
+    return array(
+        'content' => $content,
+        'title' => __('Transfer messages to another topic','wp-recall'),
+        'dialog' => true
+    );
     
 }
 
 pfm_add_ajax_action('cancel_post_migrate','pfm_action_cancel_post_migrate');
 function pfm_action_cancel_post_migrate($topic_id){
     setcookie('pfm_migrate_post','', time()+3600, '/', $_SERVER['HOST']);
-    $result['update-page'] = true;
-    $result['preloader_live'] = 1;
-    return $result;
+    return array(
+        'update-page' => true,
+        'preloader_live' => true
+    );
 }
 
 //перенос поста в другой топик
@@ -577,52 +580,51 @@ function pfm_action_end_post_migrate($topic_id){
     $migrateData = json_decode(wp_unslash($_COOKIE['pfm_migrate_post']));
     
     $post_id = intval($migrateData->post_id);
-    
+
     if(!$migrateData || !$post_id){
-        $result['error'] = __('Unsuccessful transfer','wp-recall');
-    }else{
+        return array('error' => __('Unsuccessful transfer','wp-recall'));
+    }
 
-        $post = pfm_get_post($post_id);
+    $post = pfm_get_post($post_id);
 
-        if(!$post) return false;
-        
-        $topicOld = $post->topic_id;
-        
-        if(isset($migrateData->next_posts) && $migrateData->next_posts){
-        
-            global $wpdb;
+    if(!$post) return false;
 
-            $posts = $wpdb->get_results("SELECT * FROM ".RCL_PREF."pforum_posts "
-                    . "WHERE topic_id='$topicOld' "
-                    . "AND post_index >= '$post->post_index'");
+    $topicOld = $post->topic_id;
 
-            foreach($posts as $post){
-                pfm_update_post(array(
-                    'post_id' => $post->post_id,
-                    'topic_id' => $topic_id
-                ));
-            }
-        
-        }else{
+    if(isset($migrateData->next_posts) && $migrateData->next_posts){
 
+        global $wpdb;
+
+        $posts = $wpdb->get_results("SELECT * FROM ".RCL_PREF."pforum_posts "
+                . "WHERE topic_id='$topicOld' "
+                . "AND post_index >= '$post->post_index'");
+
+        foreach($posts as $post){
             pfm_update_post(array(
-                'post_id' => $post_id,
+                'post_id' => $post->post_id,
                 'topic_id' => $topic_id
             ));
-        
         }
 
-        setcookie('pfm_migrate_post','', time()+3600, '/', $_SERVER['HOST']);
+    }else{
 
-        pfm_update_topic_data($topicOld);
-        pfm_update_topic_data($topic_id);
-
-        $result['url-redirect'] = pfm_get_post_permalink($post_id);
-        $result['preloader_live'] = 1;
+        pfm_update_post(array(
+            'post_id' => $post_id,
+            'topic_id' => $topic_id
+        ));
 
     }
-    
-    return $result;
+
+    setcookie('pfm_migrate_post','', time()+3600, '/', $_SERVER['HOST']);
+
+    pfm_update_topic_data($topicOld);
+    pfm_update_topic_data($topic_id);
+
+    return array(
+        'url-redirect' => pfm_get_post_permalink($post_id),
+        'preloader_live' => 1
+    );
+
 }
 
 //вызов формы создания топика из поста
@@ -633,28 +635,27 @@ function pfm_action_get_form_topic_create($post_id){
             
     $post = pfm_get_post($post_id);
 
-    $result['content'] = pfm_get_form(array(
-        'action' => 'topic_from_post_create',
-        'submit' => __('Save changes','wp-recall'),
-        'forum_list' => true,
-        'post_id' => $post_id,
-        'values' => array(
-            'post_content' => $post->post_content
-        ),
-        'fields' => array(
-            array(
-                'type' => 'checkbox',
-                'slug' => 'next_posts',
-                'name' => 'pfm-data[next_posts]',
-                'values' => array(1 => __('Also transfer all subsequent messages','wp-recall'))
+    return array(
+        'content' => pfm_get_form(array(
+            'action' => 'topic_from_post_create',
+            'submit' => __('Save changes','wp-recall'),
+            'forum_list' => true,
+            'post_id' => $post_id,
+            'values' => array(
+                'post_content' => $post->post_content
+            ),
+            'fields' => array(
+                array(
+                    'type' => 'checkbox',
+                    'slug' => 'next_posts',
+                    'name' => 'pfm-data[next_posts]',
+                    'values' => array(1 => __('Also transfer all subsequent messages','wp-recall'))
+                )
             )
-        )
-    ));
-
-    $result['dialog'] = true;
-    $result['title'] = __('Transfer message to a new topic','wp-recall');
-    
-    return $result;
+        )),
+        'title' => __('Transfer message to a new topic','wp-recall'),
+        'dialog' => true
+    );
     
 }
 
@@ -666,22 +667,21 @@ function pfm_action_get_form_post_edit($post_id){
             
     $post = pfm_get_post($post_id);
 
-    $result['content'] = pfm_get_form(
-        array(
-            'action' => 'post_edit',
-            'submit' => __('Save changes','wp-recall'),
-            'post_id' => $post_id,
-            'topic_id' => $post->topic_id,
-            'values' => array(
-                'post_content' => $post->post_content
+    return array(
+        'content' => pfm_get_form(
+            array(
+                'action' => 'post_edit',
+                'submit' => __('Save changes','wp-recall'),
+                'post_id' => $post_id,
+                'topic_id' => $post->topic_id,
+                'values' => array(
+                    'post_content' => $post->post_content
+                )
             )
-        )
+        ),
+        'title' => __('Edit messages','wp-recall'),
+        'dialog' => true
     );
-
-    $result['dialog'] = true;
-    $result['title'] = __('Edit messages','wp-recall');
-    
-    return $result;
     
 }
 
@@ -697,17 +697,17 @@ function pfm_action_post_delete($post_id){
 
     $res = pfm_delete_post($post_id);
 
-    if($res){
+    if(!$res){
+        return array('error' => __('Unsuccessful deletion','wp-recall'));
+    }
         
-        $result['remove-item'] = 'topic-post-'.$post_id;
+    $result = array(
+        'remove-item' => 'topic-post-'.$post_id
+    );
 
-        if($topic->post_count == 1){
-            $result['url-redirect'] = pfm_get_forum_permalink($topic->forum_id);
-            $result['preloader_live'] = 1;
-        }
-
-    }else{
-        $result['error'] = __('Unsuccessful deletion','wp-recall');
+    if($topic->post_count == 1){
+        $result['url-redirect'] = pfm_get_forum_permalink($topic->forum_id);
+        $result['preloader_live'] = 1;
     }
     
     return $result;
@@ -723,22 +723,19 @@ function pfm_action_topic_close($topic_id){
     $topic = pfm_get_topic($topic_id);
 
     if(!$topic){ 
-
-        $result['error'] = __('Unable to close topic','wp-recall');
-
-    }else{
-
-        pfm_update_topic(array(
-            'topic_id' => $topic_id,
-            'topic_closed' => 1
-        ));
-
-        $result['update-page'] = true;
-        $result['preloader_live'] = 1;
-
+        return array('error' => __('Unable to close topic','wp-recall'));
     }
-    
-    return $result;
+
+    pfm_update_topic(array(
+        'topic_id' => $topic_id,
+        'topic_closed' => 1
+    ));
+
+    return array(
+        'update-page' => true,
+        'preloader_live' => 1
+    );
+
 }
 
 //открытие топика
@@ -750,22 +747,18 @@ function pfm_action_topic_unclose($topic_id){
     $topic = pfm_get_topic($topic_id);
 
     if(!$topic){ 
-
-        $result['error'] = __('Unable to open topic','wp-recall');
-
-    }else{
-
-        pfm_update_topic(array(
-            'topic_id' => $topic_id,
-            'topic_closed' => 0
-        ));
-
-        $result['update-page'] = true;
-        $result['preloader_live'] = 1;
-
+        return array('error' => __('Unable to open topic','wp-recall'));
     }
-    
-    return $result;
+
+    pfm_update_topic(array(
+        'topic_id' => $topic_id,
+        'topic_closed' => 0
+    ));
+
+    return array(
+        'update-page' => 1,
+        'preloader_live' => 1
+    );
     
 }
 
@@ -778,23 +771,19 @@ function pfm_action_topic_delete($topic_id){
     $topic = pfm_get_topic($topic_id);
 
     if(!$topic){ 
-
-        $result['error'] = __('Unable to delete topic','wp-recall');
-
-    }else{
-
-        pfm_delete_topic($topic_id);
-        
-        $url = pfm_get_forum_permalink($topic->forum_id);
-
-        if(isset($_POST['topic_id']) && $_POST['topic_id'])
-            $result['url-redirect'] = $url;
-        else
-            $result['url-redirect'] = pfm_add_number_page($url, $_POST['current_page']);
-        
-        $result['preloader_live'] = 1;
-
+        return array('error' => __('Unable to delete topic','wp-recall'));
     }
+
+    pfm_delete_topic($topic_id);
+
+    $url = pfm_get_forum_permalink($topic->forum_id);
+
+    if(isset($_POST['topic_id']) && $_POST['topic_id'])
+        $result = array('url-redirect' => $url);
+    else
+        $result = array('url-redirect' => pfm_add_number_page($url, $_POST['current_page']));
+
+    $result['preloader_live'] = 1;
     
     return $result;
 }
@@ -808,30 +797,28 @@ function pfm_action_get_form_topic_migrate($topic_id){
     $topic = pfm_get_topic($topic_id);
 
     if(!$topic){ 
-
-        $result['error'] = __('Unable to get topic','wp-recall');
-
-    }else{
-
-        $content = '<div id="post-manager" class="manager-box">';
-        $content .= pfm_get_form(array(
-            'action' => 'topic_migrate',
-            'submit' => __('Transfer topic','wp-recall'),
-            'topic_id' => $topic_id,
-            'forum_list' => true,
-            'exclude_fields' => array(
-                'topic_name',
-                'post_content'
-            )
-        ));
-        $content .= '</div>';
-
-        $result['content'] = $content;
-        $result['dialog'] = true;
-        $result['title'] = __('Transfer topic to another forum','wp-recall');
+        return array('error' => __('Unable to get topic','wp-recall'));
     }
-    
-    return $result;
+
+    $content = '<div id="post-manager" class="manager-box">';
+    $content .= pfm_get_form(array(
+        'action' => 'topic_migrate',
+        'submit' => __('Transfer topic','wp-recall'),
+        'topic_id' => $topic_id,
+        'forum_list' => true,
+        'exclude_fields' => array(
+            'topic_name',
+            'post_content'
+        )
+    ));
+    $content .= '</div>';
+
+    return array(
+        'content' => $content,
+        'dialog' => true,
+        'title' => __('Transfer topic to another forum','wp-recall')
+    );
+
 }
 
 //вызов формы изменения названия топика
@@ -843,52 +830,49 @@ function pfm_action_get_form_topic_edit($topic_id){
     $topic = pfm_get_topic($topic_id);
 
     if(!$topic){ 
-
-        $result['error'] = __('Unable to get topic','wp-recall');
-
-    }else{
-        
-        $args = array(
-            'action' => 'topic_edit',
-            'submit' => __('Save changes','wp-recall'),
-            'forum_id' => $topic->forum_id,
-            'topic_id' => $topic_id,
-            'values' => array(
-                'topic_name' => $topic->topic_name
-            ),
-            'exclude_fields' => array(
-                'post_content'
-            )
-        );
-        
-        $Meta = new PrimeMeta();
-        
-        $metas = $Meta->get_results(array(
-            'object_id' => $topic_id,
-            'object_type' => 'topic',
-            'fields' => array(
-                'meta_key',
-                'meta_value'
-            )
-        ));
-        
-        if($metas){
-            $metadata = array();
-            foreach($metas as $meta){
-                $args['values'][$meta->meta_key] = maybe_unserialize($meta->meta_value);
-            }
-        }
-
-        $content = '<div id="post-manager" class="manager-box">';
-        $content .= pfm_get_form($args);
-        $content .= '</div>';
-
-        $result['content'] = $content;
-        $result['dialog'] = true;
-        $result['title'] = __('Edit topic','wp-recall');
+        return array('error' => __('Unable to get topic','wp-recall'));
     }
-    
-    return $result;
+        
+    $args = array(
+        'action' => 'topic_edit',
+        'submit' => __('Save changes','wp-recall'),
+        'forum_id' => $topic->forum_id,
+        'topic_id' => $topic_id,
+        'values' => array(
+            'topic_name' => $topic->topic_name
+        ),
+        'exclude_fields' => array(
+            'post_content'
+        )
+    );
+
+    $Meta = new PrimeMeta();
+
+    $metas = $Meta->get_results(array(
+        'object_id' => $topic_id,
+        'object_type' => 'topic',
+        'fields' => array(
+            'meta_key',
+            'meta_value'
+        )
+    ));
+
+    if($metas){
+        $metadata = array();
+        foreach($metas as $meta){
+            $args['values'][$meta->meta_key] = maybe_unserialize($meta->meta_value);
+        }
+    }
+
+    $content = '<div id="post-manager" class="manager-box">';
+    $content .= pfm_get_form($args);
+    $content .= '</div>';
+
+    return array(
+        'content' => $content,
+        'dialog' => true,
+        'title' => __('Edit topic','wp-recall')
+    );
     
 }
 
@@ -901,22 +885,19 @@ function pfm_action_topic_fix($topic_id){
     $topic = pfm_get_topic($topic_id);
 
     if(!$topic){ 
-
-        $result['error'] = __('Unable to pin topic','wp-recall');
-
-    }else{
-
-        pfm_update_topic(array(
-            'topic_id' => $topic_id,
-            'topic_fix' => 1
-        ));
-
-        $result['update-page'] = true;
-        $result['preloader_live'] = 1;
-
+        return array('error' => __('Unable to pin topic','wp-recall'));
     }
-    
-    return $result;
+
+    pfm_update_topic(array(
+        'topic_id' => $topic_id,
+        'topic_fix' => 1
+    ));
+
+    return array(
+        'update-page' => true,
+        'preloader_live' => 1
+    );
+
 }
 
 //открепление топика
@@ -928,22 +909,19 @@ function pfm_action_topic_unfix($topic_id){
     $topic = pfm_get_topic($topic_id);
 
     if(!$topic){ 
-
-        $result['error'] = __('Unable to unpin topic','wp-recall');
-
-    }else{
-
-        pfm_update_topic(array(
-            'topic_id' => $topic_id,
-            'topic_fix' => 0
-        ));
-
-        $result['update-page'] = true;
-        $result['preloader_live'] = 1;
-
+        return array('error' => __('Unable to unpin topic','wp-recall'));
     }
 
-    return $result;
+    pfm_update_topic(array(
+        'topic_id' => $topic_id,
+        'topic_fix' => 0
+    ));
+
+    return array(
+        'update-page' => true,
+        'preloader_live' => 1
+    );
+
 }
 
 //получение цитаты публикации
@@ -955,51 +933,48 @@ function pfm_action_get_post_excerpt($post_id){
     $post = pfm_get_post($post_id);
 
     if(!$post){ 
+        return array('error' => __('Unable to get the message quote','wp-recall'));
+    }
+        
+    $author_name = $post->user_id? get_the_author_meta('display_name',$post->user_id): $post->guest_name;
 
-        $result['error'] = __('Unable to get the message quote','wp-recall');
+    if(isset($_POST['excerpt']) && $_POST['excerpt']){
+
+        $content = wp_unslash($_POST['excerpt']);
+
+        if(strpos($post->post_content, $content) !== false){
+            $content = '<blockquote><strong>'.$author_name.' '.__('said','wp-recall').' </strong><br />'.$content.'</blockquote><br />';
+        }else{
+            $content = '<blockquote>'.$content.'</blockquote><br />';
+        }
 
     }else{
-        
-        $author_name = $post->user_id? get_the_author_meta('display_name',$post->user_id): $post->guest_name;
 
-        if(isset($_POST['excerpt']) && $_POST['excerpt']){
+        $content = wp_unslash($post->post_content);
 
-            $content = wp_unslash($_POST['excerpt']);
-
-            if(strpos($post->post_content, $content) !== false){
-                $content = '<blockquote><strong>'.$author_name.' '.__('said','wp-recall').' </strong><br />'.$content.'</blockquote><br />';
-            }else{
-                $content = '<blockquote>'.$content.'</blockquote><br />';
-            }
-
-        }else{
-
-            $content = wp_unslash($post->post_content);
-
-            $content = '<blockquote><strong>'.$author_name.' '.__('said','wp-recall').' </strong><br />'.$content.'</blockquote><br />';
-
-        }
-        
-        $content = str_replace(array(
-            '<br />'.chr(13).chr(10),
-            '<br />',
-            '<br/>',
-            '<br>'
-            ), "\n", $content);
-
-        $content = str_replace('<p></p>', "\n\n", $content);
-        $content = str_replace('<p> </p>', "\n\n", $content);
-        $content = str_replace('<p>', '', $content);
-        $content = str_replace('</p>', chr(13).chr(10), $content);
-
-        $content = htmlspecialchars_decode($content, ENT_COMPAT);
-
-        $result['content'] = $content;
-        $result['place-id'] = '#editor-action_post_create';
+        $content = '<blockquote><strong>'.$author_name.' '.__('said','wp-recall').' </strong><br />'.$content.'</blockquote><br />';
 
     }
-    
-    return $result;
+
+    $content = str_replace(array(
+        '<br />'.chr(13).chr(10),
+        '<br />',
+        '<br/>',
+        '<br>'
+        ), "\n", $content);
+
+    $content = str_replace('<p></p>', "\n\n", $content);
+    $content = str_replace('<p> </p>', "\n\n", $content);
+    $content = str_replace('<p>', '', $content);
+    $content = str_replace('</p>', chr(13).chr(10), $content);
+
+    $content = htmlspecialchars_decode($content, ENT_COMPAT);
+
+    return array(
+        'content' => $content,
+        'place-id' => '#editor-action_post_create'
+    );
+
 }
 
 //получение списка форумов
@@ -1018,23 +993,24 @@ function pfm_action_get_structure(){
     ));
     $content .= '</div>';
 
-    $result['content'] = $content;
-    $result['dialog'] = true;
-    $result['title'] = __('Jump to the forum','wp-recall');
+    return array(
+        'content' => $content,
+        'dialog' => true,
+        'title' => __('Jump to the forum','wp-recall')
+    );
 
-    return $result;
 }
 
 //получение списка форумов
 pfm_add_ajax_action('get_author_topics','pfm_action_get_author_topics');
 function pfm_action_get_author_topics(){
     global $user_ID;
-
-    $result['content'] = pfm_get_user_topics_list($user_ID, false);
-    $result['dialog'] = true;
-    $result['title'] = __('Last started topics','wp-recall');
-
-    return $result;
+    
+    return array(
+        'content' => pfm_get_user_topics_list($user_ID, false),
+        'dialog' => true,
+        'title' => __('Last started topics','wp-recall')
+    );
 }
 
 //получение обновленных тем
@@ -1075,11 +1051,11 @@ function pfm_action_get_last_updated_topics(){
     
     $content .= '</div>';
 
-    $result['content'] = $content;
-    $result['dialog'] = true;
-    $result['title'] = __('Updated forum topics','wp-recall');
-    
-    return $result;
+    return array(
+        'content' => $content,
+        'dialog' => true,
+        'title' => __('Updated forum topics','wp-recall')
+    );
 }
 
 //получение приватного чата
@@ -1087,27 +1063,25 @@ pfm_add_ajax_action('get_private_chat','pfm_action_get_private_chat');
 function pfm_action_get_private_chat($user_id){
     
     $chatdata = rcl_get_chat_private($user_id);
-    $chat = $chatdata['content'];
-    
-    $result['content'] = $chatdata['content'];
-    $result['dialog'] = true;
-    $result['dialog-width'] = 'small';
-    $result['title'] = __('Chat with','wp-recall').' '.get_the_author_meta('display_name',$user_id);
-    
-    return $result;
+
+    return array(
+        'content' => $chatdata['content'],
+        'dialog' => true,
+        'dialog-width' => 'small',
+        'title' => __('Chat with','wp-recall').' '.get_the_author_meta('display_name',$user_id)
+    );
 }
 
 //получение информации о пользователе
 pfm_add_ajax_action('get_author_info','pfm_action_get_author_info');
 function pfm_action_get_author_info($user_id){
-    
-    $result['content'] = rcl_get_user_details($user_id,array('zoom'=>false));
-    $result['dialog'] = true;
-    $result['dialog-width'] = 'auto';
-    $result['dialog-class'] = 'rcl-user-getails';
-    $result['title'] = __('Detailed information','wp-recall');
-    
-    return $result;
+    return array(
+        'content' => rcl_get_user_details($user_id,array('zoom'=>false)),
+        'dialog' => true,
+        'dialog-width' => 'auto',
+        'dialog-class' => 'rcl-user-getails',
+        'title' => __('Detailed information','wp-recall')
+    );
 }
 
 //предпросмотр сообщения
@@ -1124,10 +1098,8 @@ function pfm_action_get_preview($action){
     $postContent = wp_unslash($pfmData['post_content']);
     
     if(!$postContent){
-        
-        $result['error'] = __('Empty message!','wp-recall');
-    
-        return $result;
+
+        return array('error' => __('Empty message!','wp-recall'));
         
     }
     
@@ -1157,13 +1129,13 @@ function pfm_action_get_preview($action){
     $content .= rcl_get_include_template('pfm-single-post.php',$theme['path']);
         
     $content .= '</div>';
-    
-    $result['content'] = $content;
-    $result['dialog'] = true;
-    $result['dialog-width'] = 'small';
-    $result['title'] = __('Preview','wp-recall');
-    
-    return $result;
+
+    return array(
+        'content' => $content,
+        'dialog' => true,
+        'dialog-width' => 'small',
+        'title' => __('Preview','wp-recall')
+    );
 }
 
 pfm_add_ajax_action('post_create','pfm_action_post_create');
@@ -1252,6 +1224,8 @@ function pfm_action_post_create(){
             )
         )
     ));
+    
+    $result = array();
 
     if($lastPosts){
         foreach($lastPosts as $lastPost){

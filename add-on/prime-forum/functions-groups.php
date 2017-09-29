@@ -61,6 +61,8 @@ function pfm_the_group_classes(){
         $classes[] = 'view-children-forums';
     }
     
+    $classes = apply_filters('pfm_group_classes', $classes);
+    
     echo implode(' ',$classes);
     
 }

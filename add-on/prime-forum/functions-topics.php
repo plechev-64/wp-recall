@@ -55,6 +55,8 @@ function pfm_the_topic_classes(){
         $classes[] = 'topic-closed';
     }
     
+    $classes = apply_filters('pfm_topic_classes', $classes);
+    
     echo implode(' ',$classes);
     
 }

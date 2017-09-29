@@ -9,19 +9,19 @@ function pfm_wrap_input_quicktags_editor(){
     QTags.Button.prototype.html = function(idPrefix) {
         
         var active, on, wp,
-                title = this.title ? ' title="' + pfm_escape( this.title ) + '"' : '',
-                ariaLabel = this.attr && this.attr.ariaLabel ? ' title="' + pfm_escape( this.attr.ariaLabel ) + '"' : '',
-                val = this.display ? ' value="' + pfm_escape( this.display ) + '"' : '',
-                id = this.id ? ' id="' + pfm_escape( idPrefix + this.id ) + '"' : '',
-                dfw = ( wp = window.wp ) && wp.editor && wp.editor.dfw;
+            title = this.title ? ' title="' + pfm_escape( this.title ) + '"' : '',
+            ariaLabel = this.attr && this.attr.ariaLabel ? ' title="' + pfm_escape( this.attr.ariaLabel ) + '"' : '',
+            val = this.display ? ' value="' + pfm_escape( this.display ) + '"' : '',
+            id = this.id ? ' id="' + pfm_escape( idPrefix + this.id ) + '"' : '',
+            dfw = ( wp = window.wp ) && wp.editor && wp.editor.dfw;
 
         if ( this.id === 'fullscreen' ) {
-                return '<button type="button"' + id + ' class="ed_button qt-dfw qt-fullscreen"' + title + ariaLabel + '></button>';
+            return '<button type="button"' + id + ' class="ed_button qt-dfw qt-fullscreen"' + title + ariaLabel + '></button>';
         } else if ( this.id === 'dfw' ) {
-                active = dfw && dfw.isActive() ? '' : ' disabled="disabled"';
-                on = dfw && dfw.isOn() ? ' active' : '';
+            active = dfw && dfw.isActive() ? '' : ' disabled="disabled"';
+            on = dfw && dfw.isOn() ? ' active' : '';
 
-                return '<button type="button"' + id + ' class="ed_button qt-dfw' + on + '"' + title + ariaLabel + active + '></button>';
+            return '<button type="button"' + id + ' class="ed_button qt-dfw' + on + '"' + title + ariaLabel + active + '></button>';
         }
 
         return '<span id="qt_button_' + this.id + '"><input type="button"' + id + ' class="ed_button button button-small"' + title + ariaLabel + val + ' /></span>';
