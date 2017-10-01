@@ -65,7 +65,16 @@ function rcl_init_publics_block(){
             'supports'=>array('ajax','cache'),
             'public'=>rcl_get_option('view_publics_block_rcl'),
             'icon'=>'fa-list',
-            'output'=>'menu'
+            'output'=>'menu',
+            'content' => array(
+                array(
+                    'callback' => array(
+                        'id' => 'type-post',
+                        'name'=>'rcl_get_postslist',
+                        'args'=>array('post',__('Posts','wp-recall'))
+                    )
+                )
+            )
         );
 
         rcl_tab($tab_data);

@@ -181,7 +181,7 @@ function rcl_register_tabs(){
     if(is_admin()||!rcl_is_office()) return false;
 
     $rcl_tabs = rcl_get_tabs();
-
+    
     if(!$rcl_tabs) return false;
     
     if (!class_exists('Rcl_Tab')) 

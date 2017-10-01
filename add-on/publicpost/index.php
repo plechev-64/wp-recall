@@ -34,18 +34,17 @@ function rcl_autocomplete_scripts(){
     rcl_enqueue_script( 'magicsuggest', rcl_addon_url('js/magicsuggest/magicsuggest-min.js', __FILE__) );
 }
 
-add_filter('rcl_tabs','rcl_postlist_tab_add_types_data',10);
-function rcl_postlist_tab_add_types_data($tabs){
+add_action('rcl_setup_tabs','rcl_postlist_tab_add_types_data',10);
+function rcl_postlist_tab_add_types_data(){
     global $rcl_postlist;
-    
-    if(!isset($tabs['publics'])) return $tabs;
-    
-    $tabs['publics']['content'] = array();
     
     if($rcl_postlist){
 
         foreach($rcl_postlist as $post_type=>$data){
-            $tabs['publics']['content'][] = array(
+            
+            if($post_type == 'post') continue;
+            
+            $subtab = array(
                 'id' => 'type-'.$post_type,
                 'name' => $data['name'],
                 'icon' => 'fa-list',
@@ -54,11 +53,13 @@ function rcl_postlist_tab_add_types_data($tabs){
                     'args'=>array($post_type,$data['name'])
                 )
             );
+
+            rcl_add_sub_tab('publics',$subtab);
+            
         }
 
     }
-    
-    return $tabs;
+
 }
 
 //выводим в медиабиблиотеке только медиафайлы текущего автора
