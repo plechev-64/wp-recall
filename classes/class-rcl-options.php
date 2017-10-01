@@ -159,7 +159,7 @@ class Rcl_Options extends Rcl_Custom_Fields{
             $classes[] = 'extend-option';
         }
 
-        $content = '<span class="'.implode(' ',$classes).'">'.$content.'</span>';
+        $content = '<span class="'.implode(' ',$classes).' rcl-custom-field">'.$content.'</span>';
         
         return $content;
     }

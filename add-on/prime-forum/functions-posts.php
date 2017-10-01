@@ -170,7 +170,11 @@ function pfm_get_post_box($post_id){
 
 function pfm_the_author_name(){
     global $PrimePost;
-    echo ($PrimePost->user_id)? $PrimePost->display_name: $PrimePost->guest_name;
+    if($PrimePost->user_id){
+        echo ($PrimePost->display_name)? $PrimePost->display_name: get_the_author_meta('display_name',$PrimePost->user_id);
+    }else{
+        echo $PrimePost->guest_name;
+    }
 }
 
 function pfm_author_avatar(){
@@ -189,8 +193,9 @@ function pfm_add_author_action_status(){
 add_action('pfm_post_author_metabox','pfm_add_author_registered_data',12);
 function pfm_add_author_registered_data(){
     global $PrimePost; 
-    if(!$PrimePost->user_registered) return false; ?>
-    <div class="prime-author-meta prime-author-register"><?php echo __('On the website since','wp-recall').' '.mysql2date('d.m.Y', $PrimePost->user_registered); ?></div>
+    if(!$PrimePost->user_id) return false; 
+    $user_registered = $PrimePost->user_registered? $PrimePost->user_registered: get_the_author_meta('user_registered',$PrimePost->user_id); ?>
+    <div class="prime-author-meta prime-author-register"><?php echo __('On the website since','wp-recall').' '.mysql2date('d.m.Y', $user_registered); ?></div>
 <?php }
 
 add_action('pfm_post_author_metabox','pfm_add_author_role_meta',14);

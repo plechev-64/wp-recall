@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2017-09-26 10:20+0300\n"
+"POT-Creation-Date: 2017-09-30 11:03+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -343,7 +343,7 @@ msgstr "Данные сохранены"
 #: add-on/feed/index.php:196 add-on/feed/index.php:204
 #: add-on/groups/groups-core.php:805 add-on/groups/groups-core.php:821
 #: add-on/groups/upload-avatar.php:71
-#: add-on/prime-forum/functions-actions.php:1202
+#: add-on/prime-forum/functions-actions.php:1174
 #: add-on/user-balance/index.php:201 admin/index.php:114
 #: admin/pages/repository.php:50 admin/pages/repository.php:64
 #: functions/addons-update.php:163 functions/ajax.php:95
@@ -1346,9 +1346,9 @@ msgstr "Неиспользуемые"
 
 #: add-on/groups/classes/class-rcl-group-widget.php:172
 #: add-on/prime-forum/admin/classes/class-prime-manager.php:367
-#: add-on/prime-forum/functions-actions.php:638
-#: add-on/prime-forum/functions-actions.php:672
-#: add-on/prime-forum/functions-actions.php:853
+#: add-on/prime-forum/functions-actions.php:641
+#: add-on/prime-forum/functions-actions.php:674
+#: add-on/prime-forum/functions-actions.php:838
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
@@ -2171,7 +2171,7 @@ msgid "Topic"
 msgstr "Тема"
 
 #: add-on/prime-forum/admin/index.php:723
-#: add-on/prime-forum/functions-posts.php:213
+#: add-on/prime-forum/functions-posts.php:220
 #: add-on/prime-forum/themes/prime-first/templates/pfm-single-topic.php:12
 #: add-on/rcl-chat/index.php:45
 msgid "Messages"
@@ -2286,7 +2286,7 @@ msgstr "Текст сообщения"
 
 #: add-on/prime-forum/classes/class-prime-form.php:222
 #: add-on/prime-forum/classes/class-prime-form.php:223
-#: add-on/prime-forum/functions-actions.php:1164
+#: add-on/prime-forum/functions-actions.php:1137
 #: add-on/publicpost/classes/class-rcl-public-form.php:379
 #: add-on/publicpost/init.php:19 functions/enqueue-scripts.php:107
 msgid "Preview"
@@ -2309,7 +2309,7 @@ msgstr "Тема не найдена"
 
 #: add-on/prime-forum/classes/class-prime-roles.php:23
 #: add-on/prime-forum/functions-query.php:175
-#: add-on/prime-forum/functions-topics.php:176
+#: add-on/prime-forum/functions-topics.php:178
 #: add-on/rcl-chat/class-rcl-chat.php:149
 msgid "Guest"
 msgstr "Гость"
@@ -2326,24 +2326,24 @@ msgstr "Подробно об авторе"
 msgid "Go to the private chat"
 msgstr "Перейти в приватный чат"
 
-#: add-on/prime-forum/functions-actions.php:75
+#: add-on/prime-forum/functions-actions.php:76
 msgid "Get the list of updated topics"
 msgstr "Получить список обновленных тем"
 
-#: add-on/prime-forum/functions-actions.php:81
+#: add-on/prime-forum/functions-actions.php:83
 msgid "Get your started topics"
 msgstr "Получить свои начатые темы"
 
-#: add-on/prime-forum/functions-actions.php:87
+#: add-on/prime-forum/functions-actions.php:89
 msgid "Jump to the needed forum"
 msgstr "Быстрый переход на нужный форум"
 
-#: add-on/prime-forum/functions-actions.php:107
+#: add-on/prime-forum/functions-actions.php:109
 msgid "Delete message"
 msgstr "Удалить сообщение"
 
-#: add-on/prime-forum/functions-actions.php:110
-#: add-on/prime-forum/functions-actions.php:184
+#: add-on/prime-forum/functions-actions.php:112
+#: add-on/prime-forum/functions-actions.php:186
 #: add-on/publicpost/classes/class-rcl-public-form-manager.php:103
 #: add-on/publicpost/classes/class-rcl-public-form.php:767
 #: add-on/publicpost/classes/class-rcl-public-form.php:778
@@ -2351,70 +2351,70 @@ msgstr "Удалить сообщение"
 msgid "Are you sure?"
 msgstr "Вы серьезно?"
 
-#: add-on/prime-forum/functions-actions.php:119
+#: add-on/prime-forum/functions-actions.php:121
 msgid "Transfer to the existing topic"
 msgstr "Перенести в существующую тему"
 
-#: add-on/prime-forum/functions-actions.php:124
+#: add-on/prime-forum/functions-actions.php:126
 msgid "Transfer to the new topic"
 msgstr "Перенести в новую тему"
 
-#: add-on/prime-forum/functions-actions.php:133
+#: add-on/prime-forum/functions-actions.php:135
 msgid "Edit message"
 msgstr "Редактировать сообщение"
 
-#: add-on/prime-forum/functions-actions.php:141
+#: add-on/prime-forum/functions-actions.php:143
 msgid "Quote message"
 msgstr "Цитировать сообщение"
 
-#: add-on/prime-forum/functions-actions.php:168
+#: add-on/prime-forum/functions-actions.php:170
 msgid "Transfer to this topic"
 msgstr "Перенести в эту тему"
 
-#: add-on/prime-forum/functions-actions.php:171
+#: add-on/prime-forum/functions-actions.php:173
 msgid "Cancel transfer"
 msgstr "Отменить перенос"
 
-#: add-on/prime-forum/functions-actions.php:181
+#: add-on/prime-forum/functions-actions.php:183
 msgid "Delete topic"
 msgstr "Удалить тему"
 
-#: add-on/prime-forum/functions-actions.php:193
-#: add-on/prime-forum/functions-actions.php:819
+#: add-on/prime-forum/functions-actions.php:195
+#: add-on/prime-forum/functions-actions.php:806
 msgid "Transfer topic"
 msgstr "Перенести тему"
 
-#: add-on/prime-forum/functions-actions.php:203
+#: add-on/prime-forum/functions-actions.php:205
 msgid "Unpin topic"
 msgstr "Открепить тему"
 
-#: add-on/prime-forum/functions-actions.php:208
+#: add-on/prime-forum/functions-actions.php:210
 msgid "Pin topic"
 msgstr "Закрепить тему"
 
-#: add-on/prime-forum/functions-actions.php:219
+#: add-on/prime-forum/functions-actions.php:221
 msgid "Open topic"
 msgstr "Открыть тему"
 
-#: add-on/prime-forum/functions-actions.php:224
+#: add-on/prime-forum/functions-actions.php:226
 #: add-on/prime-forum/functions-forms.php:109
 msgid "Close topic"
 msgstr "Закрыть тему"
 
-#: add-on/prime-forum/functions-actions.php:234
+#: add-on/prime-forum/functions-actions.php:236
 msgid "Change name"
 msgstr "Изменить наименование"
 
-#: add-on/prime-forum/functions-actions.php:268
-#: add-on/prime-forum/functions-actions.php:1191
+#: add-on/prime-forum/functions-actions.php:270
+#: add-on/prime-forum/functions-actions.php:1163
 msgid "Empty message! Go back and write something."
 msgstr "Пустое сообщение! Вернитесь назад и напишите хоть что то."
 
-#: add-on/prime-forum/functions-actions.php:458
+#: add-on/prime-forum/functions-actions.php:460
 msgid "Unable to perform action"
 msgstr "Не удалось выполнить действие"
 
-#: add-on/prime-forum/functions-actions.php:493
+#: add-on/prime-forum/functions-actions.php:496
 msgid ""
 "Go to the page of the necessary topic and press the \"Transfer to this topic"
 "\" button to end message transfer"
@@ -2422,29 +2422,29 @@ msgstr ""
 "Перейдите на страницу нужного топика и нажмите на кнопку \"Перенести в этот "
 "топик\" для окончания переноса сообщения"
 
-#: add-on/prime-forum/functions-actions.php:495
+#: add-on/prime-forum/functions-actions.php:497
 msgid "Data is ready to be transferred"
 msgstr "Данные готовы для переноса"
 
-#: add-on/prime-forum/functions-actions.php:513
-#: add-on/prime-forum/functions-actions.php:649
+#: add-on/prime-forum/functions-actions.php:515
+#: add-on/prime-forum/functions-actions.php:652
 msgid "Also transfer all subsequent messages"
 msgstr "Перенести также все последующие сообщения"
 
-#: add-on/prime-forum/functions-actions.php:547
-#: add-on/prime-forum/functions-actions.php:548
+#: add-on/prime-forum/functions-actions.php:549
+#: add-on/prime-forum/functions-actions.php:550
 msgid "Confirm transfer"
 msgstr "Подтвердить перенос"
 
-#: add-on/prime-forum/functions-actions.php:557
+#: add-on/prime-forum/functions-actions.php:559
 msgid "Transfer messages to another topic"
 msgstr "Перенос сообщения в другую тему"
 
-#: add-on/prime-forum/functions-actions.php:582
+#: add-on/prime-forum/functions-actions.php:585
 msgid "Unsuccessful transfer"
 msgstr "Перенос не удался"
 
-#: add-on/prime-forum/functions-actions.php:655
+#: add-on/prime-forum/functions-actions.php:656
 msgid "Transfer message to a new topic"
 msgstr "Перенос сообщения в новую тему"
 
@@ -2452,91 +2452,91 @@ msgstr "Перенос сообщения в новую тему"
 msgid "Edit messages"
 msgstr "Редактировать сообщение"
 
-#: add-on/prime-forum/functions-actions.php:710
+#: add-on/prime-forum/functions-actions.php:701
 msgid "Unsuccessful deletion"
 msgstr "Удаление не удалось"
 
-#: add-on/prime-forum/functions-actions.php:727
+#: add-on/prime-forum/functions-actions.php:726
 msgid "Unable to close topic"
 msgstr "Не удалось закрыть тему"
 
-#: add-on/prime-forum/functions-actions.php:754
+#: add-on/prime-forum/functions-actions.php:750
 msgid "Unable to open topic"
 msgstr "Не удалось открыть тему"
 
-#: add-on/prime-forum/functions-actions.php:782
+#: add-on/prime-forum/functions-actions.php:774
 msgid "Unable to delete topic"
 msgstr "Не удалось удалить тему"
 
-#: add-on/prime-forum/functions-actions.php:812
-#: add-on/prime-forum/functions-actions.php:847
+#: add-on/prime-forum/functions-actions.php:800
+#: add-on/prime-forum/functions-actions.php:833
 msgid "Unable to get topic"
 msgstr "Не удалось получить тему"
 
-#: add-on/prime-forum/functions-actions.php:831
+#: add-on/prime-forum/functions-actions.php:819
 msgid "Transfer topic to another forum"
 msgstr "Перенос темы в другой форум"
 
-#: add-on/prime-forum/functions-actions.php:888
+#: add-on/prime-forum/functions-actions.php:874
 msgid "Edit topic"
 msgstr "Редактирование темы"
 
-#: add-on/prime-forum/functions-actions.php:905
+#: add-on/prime-forum/functions-actions.php:888
 msgid "Unable to pin topic"
 msgstr "Не удалось закрепить тему"
 
-#: add-on/prime-forum/functions-actions.php:932
+#: add-on/prime-forum/functions-actions.php:912
 msgid "Unable to unpin topic"
 msgstr "Не удалось открепить тему"
 
-#: add-on/prime-forum/functions-actions.php:959
+#: add-on/prime-forum/functions-actions.php:936
 msgid "Unable to get the message quote"
 msgstr "Не удалось получить цитату сообщения"
 
-#: add-on/prime-forum/functions-actions.php:970
-#: add-on/prime-forum/functions-actions.php:979
+#: add-on/prime-forum/functions-actions.php:946
+#: add-on/prime-forum/functions-actions.php:955
 msgid "said"
 msgstr "сказал(а)"
 
-#: add-on/prime-forum/functions-actions.php:1012
+#: add-on/prime-forum/functions-actions.php:987
 msgid "Go to the selected forum"
 msgstr "Перейти в выбранный форум"
 
-#: add-on/prime-forum/functions-actions.php:1023
+#: add-on/prime-forum/functions-actions.php:999
 msgid "Jump to the forum"
 msgstr "Быстрый переход на форум"
 
-#: add-on/prime-forum/functions-actions.php:1035
+#: add-on/prime-forum/functions-actions.php:1012
 msgid "Last started topics"
 msgstr "Последние начатые темы"
 
-#: add-on/prime-forum/functions-actions.php:1072
+#: add-on/prime-forum/functions-actions.php:1048
 #: add-on/prime-forum/functions-templates.php:146 admin/pages/repository.php:92
 msgid "Nothing found"
 msgstr "Ничего не найдено"
 
-#: add-on/prime-forum/functions-actions.php:1080
+#: add-on/prime-forum/functions-actions.php:1057
 msgid "Updated forum topics"
 msgstr "Обновленные темы форума"
 
-#: add-on/prime-forum/functions-actions.php:1095
+#: add-on/prime-forum/functions-actions.php:1071
 msgid "Chat with"
 msgstr "Чат с"
 
-#: add-on/prime-forum/functions-actions.php:1108
+#: add-on/prime-forum/functions-actions.php:1083
 #: functions/supports/modal-user-details.php:18
 msgid "Detailed information"
 msgstr "Подробная информация"
 
-#: add-on/prime-forum/functions-actions.php:1128
+#: add-on/prime-forum/functions-actions.php:1102
 msgid "Empty message!"
 msgstr "Пустое сообщение!"
 
-#: add-on/prime-forum/functions-actions.php:1181
+#: add-on/prime-forum/functions-actions.php:1153
 msgid "Insufficient rights to publish"
 msgstr "Недостаточно прав для публикации"
 
-#: add-on/prime-forum/functions-actions.php:1187
+#: add-on/prime-forum/functions-actions.php:1159
 msgid "Topic closed"
 msgstr "Тема закрыта"
 
@@ -2591,14 +2591,18 @@ msgstr "Причина"
 msgid "not specified"
 msgstr "не указано"
 
-#: add-on/prime-forum/functions-posts.php:191
+#: add-on/prime-forum/functions-posts.php:198
 msgid "On the website since"
 msgstr "На сайте с"
 
-#: add-on/prime-forum/functions-posts.php:207
+#: add-on/prime-forum/functions-posts.php:214
 #: add-on/prime-forum/themes/prime-first/templates/pfm-single-forum.php:19
 msgid "Topics"
 msgstr "Тем"
+
+#: add-on/prime-forum/functions-query.php:153
+msgid "Topics yet"
+msgstr "Тем пока нет"
 
 #: add-on/prime-forum/functions-query.php:172
 msgid "not found"
@@ -2660,20 +2664,20 @@ msgstr "Сейчас на форуме"
 msgid "Nobody is here"
 msgstr "Никого нет"
 
-#: add-on/prime-forum/functions-topics.php:172
+#: add-on/prime-forum/functions-topics.php:174
 msgid "New forum topic"
 msgstr "Новая тема на форуме"
 
-#: add-on/prime-forum/functions-topics.php:174
+#: add-on/prime-forum/functions-topics.php:176
 #, php-format
 msgid "On the forum of the site \"%s\" created a new topic!"
 msgstr "На форуме сайта \"%s\" создана новая тема!"
 
-#: add-on/prime-forum/functions-topics.php:175
+#: add-on/prime-forum/functions-topics.php:177
 msgid "The name of the topic"
 msgstr "Наименование темы"
 
-#: add-on/prime-forum/functions-topics.php:176
+#: add-on/prime-forum/functions-topics.php:178
 msgid "The topic author"
 msgstr "Автор темы"
 

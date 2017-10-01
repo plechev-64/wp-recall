@@ -456,8 +456,6 @@ function rcl_pay_order_with_balance(data){
 
     if(data.pay_balance){
         
-        rcl_notice(data.success,'success');
-        
         var orderBox = jQuery('#rcl-order');
         
         orderBox.find('.rcl-order-pay-form').html(data.success);

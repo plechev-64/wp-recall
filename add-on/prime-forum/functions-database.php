@@ -425,7 +425,7 @@ function pfm_add_topic($args, $postdata = array()){
     if($topic_slug){
         
         $suffix = $TopicQuery->count(array(
-            'topic_slug' => $args['topic_slug'].'-'
+            'topic_slug__like' => $args['topic_slug']
         ));
         
         ++$suffix;

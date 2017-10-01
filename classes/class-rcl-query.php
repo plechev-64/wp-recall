@@ -118,6 +118,12 @@ class Rcl_Query {
                     $this->query['where'][] = $colName." <= '".$args[$col_name.'__to']."'";
                     
                 }
+                
+                if(isset($args[$col_name.'__like'])  && ($args[$col_name.'__like'] || $args[$col_name.'__like'] === 0)){
+
+                    $this->query['where'][] = $col_name." LIKE '%".$args[$col_name.'__like']."%'";
+                    
+                }
 
             }
 

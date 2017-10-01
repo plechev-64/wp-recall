@@ -64,11 +64,37 @@ if(is_array($result)&&isset($result['error'])){
     echo '<h2>'.__('Error','wp-recall').'! '.$result['error'].'</h2>'; exit;
 }
 
+$navi = new Rcl_PageNavi('rcl-addons',$result->count,array('key'=>'paged','in_page'=>$result->number));
+
+$content = '<h2>'.__('Repository for WP-Recall add-ons','wp-recall').'</h2>';
+
+$content .= '<div class="wp-filter">
+    <ul class="filter-links">
+        <li class="plugin-install-featured"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=update" class="'.($sort == 'update'? 'current': '').'">По обновлению</a></li>
+        <li class="plugin-install-popular"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=active-installs" class="'.($sort == 'active-installs'? 'current': '').'">По популярности</a></li>
+    </ul>
+
+    <form class="search-form search-plugins" method="get">
+        <input type="hidden" name="page" value="rcl-repository">
+        <input type="hidden" name="sort" value="'.$sort.'">
+        <label class="screen-reader-text" for="typeselector">Критерий поиска:</label>
+        <select name="type" id="typeselector">
+            <option value="term" '.selected($type,'term',false).'>Слово</option>
+            <option value="author" '.selected($type,'author',false).'>Автор</option>
+            <option value="tag" '.selected($type,'tag',false).'>Метка</option>
+        </select>
+        <label><span class="screen-reader-text">Поиск дополнений</span>
+            <input type="search" name="s" value="'.($s? $s: '').'" class="wp-filter-search" placeholder="Поиск дополнений..." aria-describedby="live-search-desc">
+        </label>
+        <input type="submit" id="search-submit" class="button hide-if-js" value="Поиск дополнений">	
+    </form>
+</div>';
+
 if($result->count && $result->addons){
     
-    $navi = new Rcl_PageNavi('rcl-addons',$result->count,array('key'=>'paged','in_page'=>$result->number));
+    $content .= '<p class="rcl-search-results">'.__('Найдено результатов','wp-recall').': '.$result->count.'</p>';
 
-    $content = $navi->pagenavi();
+    $content .= $navi->pagenavi();
 
     $content .= '<div class="wp-list-table widefat plugin-install">
         <div id="the-list">';
@@ -91,28 +117,5 @@ if($result->count && $result->addons){
 }else{
     $content .= '<h3>'.__('Nothing found','wp-recall').'</h3>';
 }
-
-echo '<h2>'.__('Repository for WP-Recall add-ons','wp-recall').'</h2>';
-
-echo '<div class="wp-filter">
-    <ul class="filter-links">
-        <li class="plugin-install-featured"><a href="'.admin_url('admin.php?page=rcl-repository').'&sort=update" class="'.($sort == 'update'? 'current': '').'">По обновлению</a></li>
-        <li class="plugin-install-popular"><a href="'.  admin_url('admin.php?page=rcl-repository').'&sort=active-installs" class="'.($sort == 'active-installs'? 'current': '').'">По популярности</a></li>
-    </ul>
-
-    <form class="search-form search-plugins" method="get">
-        <input type="hidden" name="page" value="rcl-repository">
-        <label class="screen-reader-text" for="typeselector">Критерий поиска:</label>
-        <select name="type" id="typeselector">
-            <option value="term" '.selected($type,'term',false).'>Слово</option>
-            <option value="author" '.selected($type,'author',false).'>Автор</option>
-            <option value="tag" '.selected($type,'tag',false).'>Метка</option>
-        </select>
-        <label><span class="screen-reader-text">Поиск дополнений</span>
-            <input type="search" name="s" value="'.($s? $s: '').'" class="wp-filter-search" placeholder="Поиск дополнений..." aria-describedby="live-search-desc">
-        </label>
-        <input type="submit" id="search-submit" class="button hide-if-js" value="Поиск дополнений">	
-    </form>
-</div>';
 
 echo $content;

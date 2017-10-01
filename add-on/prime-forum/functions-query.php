@@ -150,7 +150,7 @@ function pfm_the_last_topic(){
     $lastTopic = $PrimeQuery->search_forum_last_topic($PrimeForum->forum_id);
     
     if(!$lastTopic){
-        echo 'Тем нет'; return;
+        echo __('Topics yet','wp-recall'); return;
     }
     
     echo '<a href="'.pfm_get_topic_permalink($lastTopic->topic_id).'">'

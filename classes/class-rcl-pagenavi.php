@@ -96,6 +96,21 @@ class Rcl_PageNavi{
         $this->uri['string'] = implode('&',$str);
     }
     
+    function get_string($params = array()){
+        
+        if(!$params) return $this->uri['string'];
+        
+        if(isset($this->uri['args']) && $this->uri['args']){
+            foreach($this->uri['args'] as $k=>$val){
+                if(!in_array($k, $params)) continue;
+                $str[] = $k.'='.$val;
+            }
+        }
+        
+        return implode('&',$str);
+        
+    }
+    
     function limit(){
         return $this->offset.','.$this->in_page;
     }

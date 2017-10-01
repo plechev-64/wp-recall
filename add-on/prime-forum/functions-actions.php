@@ -365,12 +365,12 @@ function pfm_init_actions(){
             );
 
             if(isset($pfmData['next_posts']) && $pfmData['next_posts']){
-        
-                global $wpdb;
 
-                $posts = $wpdb->get_results("SELECT * FROM ".RCL_PREF."pforum_posts "
-                        . "WHERE topic_id='$migratedPost->topic_id' "
-                        . "AND post_index >= '$migratedPost->post_index'");
+                $posts = pfm_get_posts(array(
+                    'topic_id' => $migratedPost->topic_id,
+                    'post_index__from' => $migratedPost->post_index,
+                    'number' => -1
+                ));
 
                 foreach($posts as $post){
                     pfm_update_post(array(
@@ -593,11 +593,11 @@ function pfm_action_end_post_migrate($topic_id){
 
     if(isset($migrateData->next_posts) && $migrateData->next_posts){
 
-        global $wpdb;
-
-        $posts = $wpdb->get_results("SELECT * FROM ".RCL_PREF."pforum_posts "
-                . "WHERE topic_id='$topicOld' "
-                . "AND post_index >= '$post->post_index'");
+        $posts = pfm_get_posts(array(
+            'topic_id' => $topicOld,
+            'post_index__from' => $post->post_index,
+            'number' => -1
+        ));
 
         foreach($posts as $post){
             pfm_update_post(array(
@@ -693,8 +693,6 @@ function pfm_action_post_delete($post_id){
             
     $post = pfm_get_post($post_id);
 
-    $topic = pfm_get_topic($post->topic_id);
-
     $res = pfm_delete_post($post_id);
 
     if(!$res){
@@ -704,6 +702,8 @@ function pfm_action_post_delete($post_id){
     $result = array(
         'remove-item' => 'topic-post-'.$post_id
     );
+    
+    $topic = pfm_get_topic($post->topic_id);
 
     if($topic->post_count == 1){
         $result['url-redirect'] = pfm_get_forum_permalink($topic->forum_id);

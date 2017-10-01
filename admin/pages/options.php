@@ -1,6 +1,8 @@
 <?php
 
 global $rcl_options;
+
+rcl_font_awesome_style();
     
 wp_enqueue_script('jquery');
 wp_enqueue_script('jquery-ui-dialog');

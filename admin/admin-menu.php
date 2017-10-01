@@ -45,7 +45,6 @@ function rcl_dashboard(){
 
 //Настройки плагина в админке
 function rcl_global_options(){
-    rcl_font_awesome_style();
     require_once 'pages/options.php';
 }
 
