@@ -40,15 +40,6 @@ function rcl_tab($tab_data,$deprecated_callback=false ,$deprecated_name='',$depr
         $tab_data = $args_tab;
 
     }
-    
-    if(!isset($tab_data['content'][0]['id']))
-        $tab_data['content'][0]['id'] = $tab_data['id'];
-    
-    if(!isset($tab_data['content'][0]['name']))
-        $tab_data['content'][0]['name'] = $tab_data['name'];
-    
-    if(!isset($tab_data['content'][0]['icon']))
-        $tab_data['content'][0]['icon'] = $tab_data['icon'];
 
     $tab_data = apply_filters('rcl_tab',$tab_data);
     
@@ -169,6 +160,17 @@ function rcl_setup_tabs(){
     do_action('rcl_setup_tabs');
     
     global $rcl_tabs;
+    
+    foreach($rcl_tabs as $k=>$rcl_tab){
+        if(!isset($rcl_tab['content'][0]['id']))
+            $rcl_tabs[$k]['content'][0]['id'] = $rcl_tab['id'];
+
+        if(!isset($rcl_tab['content'][0]['name']))
+            $rcl_tabs[$k]['content'][0]['name'] = $rcl_tab['name'];
+
+        if(!isset($tab_data['content'][0]['icon']))
+            $rcl_tabs[$k]['content'][0]['icon'] = $rcl_tab['icon'];
+    }
     
     $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
       

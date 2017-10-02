@@ -66,24 +66,20 @@ function rcl_add_rating_tab(){
     rcl_tab($tab_data);
 }
 
-add_filter('rcl_tabs','rcl_rating_tab_add_types_data',10);
-function rcl_rating_tab_add_types_data($tabs){
+add_action('rcl_setup_tabs','rcl_rating_tab_add_types_data',10);
+function rcl_rating_tab_add_types_data(){
     global $rcl_rating_types;
-    
-    if(!isset($tabs['rating'])) return $tabs;
-    
-    $tabs['rating']['content'] = array();
     
     foreach($rcl_rating_types as $type){
 
         if(!rcl_get_option('rating_user_'.$type['rating_type'])) continue;
-
+        
         $args = array(
             'rating_type'=>$type['rating_type'],
             'rating_status'=>'user'
         );
-    
-        $tabs['rating']['content'][] = array(
+        
+        $subtab = array(
             'id' => $type['rating_type'],
             'name' => $type['type_name'],
             'icon' => (isset($type['icon']))? $type['icon']: 'fa-list-ul',
@@ -92,9 +88,11 @@ function rcl_rating_tab_add_types_data($tabs){
                 'args'=>array($args)
             )
         );
+
+        rcl_add_sub_tab('rating',$subtab);
+
     }
-    
-    return $tabs;
+
 }
 
 add_action( 'wp', 'rcl_add_data_rating_posts');
