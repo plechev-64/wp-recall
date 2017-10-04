@@ -287,7 +287,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         $query['join'][] = "INNER JOIN (SELECT COUNT(post_author) AS posts_count, post_author "
                 . "FROM $wpdb->posts "
-                . "WHERE post_status='publish' "
+                . "WHERE post_status='publish' AND post_type NOT IN ('page') "
                 . "GROUP BY post_author) posts "
                 . "ON wp_users.ID = posts.post_author";
 
@@ -304,7 +304,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         $query = "SELECT COUNT(post_author) AS posts_count, post_author AS ID "
                 . "FROM $wpdb->posts "
-                . "WHERE post_status = 'publish' AND post_author IN (".implode(',',$ids).") "
+                . "WHERE post_status = 'publish' AND post_type NOT IN ('page') AND post_author IN (".implode(',',$ids).") "
                 . "GROUP BY post_author";
 
         $posts = $wpdb->get_results($query);

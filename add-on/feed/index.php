@@ -103,7 +103,7 @@ function rcl_followers_tab($user_id){
         add_filter('rcl_user_description','rcl_add_userlist_follow_button',90);
         add_filter('rcl_users_query','rcl_feed_subsribers_query_userlist',10);
         $content .= rcl_get_userlist(array(
-            'templates' => 'rows',
+            'template' => 'rows',
             'per_page'=>20,
             'orderby'=>'user_registered',
             'filters'=>1,

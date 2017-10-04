@@ -151,14 +151,15 @@ function rcl_get_orders($args = array()){
     
     $ordersQuery = new Rcl_Orders_Query();
     
+    $args['unserialise'] = 'order_details';
+    
     $orders = $ordersQuery->get_results($args);
     
     if(!$orders) return array();
 
     //указываем для получения товары только из полученных заказов
     foreach($orders as $k=>$order){
-        
-        $orders[$k]->order_details = maybe_unserialize($order->order_details);
+
         $args['order_id__in'][] = $order->order_id;
         
     }

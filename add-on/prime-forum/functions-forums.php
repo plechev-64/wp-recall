@@ -152,45 +152,11 @@ function pfm_get_subforums_list($forum_id){
 
 function pfm_get_forums_list(){
     
-    $groups = pfm_get_groups(array(
-        'fields' => array(
-            'group_id',
-            'group_name'
-        ),
-        'order' => 'ASC',
-        'orderby' => 'group_seq'
-    ));
+    require_once 'classes/class-prime-forums-list.php';
     
-    $content = '<select name="pfm-data[forum_id]">';
+    $List = new PrimeForumsList();
     
-    foreach($groups as $group){
-        
-        $forums = pfm_get_forums(array(
-            'group_id' => $group->group_id,
-            'fields' => array(
-                'forum_id',
-                'forum_name'
-            ),
-            'number' => -1,
-            'order' => 'ASC',
-            'orderby' => 'forum_name'
-        ));
-        
-        if(!$forums) continue;
-        
-        $content .= '<optgroup label="'.$group->group_name.'">';
-        
-        foreach($forums as $forum){
-            $content .= '<option value="'.$forum->forum_id.'">'.$forum->forum_name.'</option>';
-        }
-        
-        $content .= '</optgroup>';
-        
-    }
-    
-    $content .= '</select>';
-    
-    return $content;
+    return $List->get_list();
     
 }
 

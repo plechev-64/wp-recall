@@ -642,7 +642,7 @@ function pfm_action_get_form_topic_create($post_id){
             'forum_list' => true,
             'post_id' => $post_id,
             'values' => array(
-                'post_content' => $post->post_content
+                'post_content' => wp_slash($post->post_content)
             ),
             'fields' => array(
                 array(
@@ -675,7 +675,7 @@ function pfm_action_get_form_post_edit($post_id){
                 'post_id' => $post_id,
                 'topic_id' => $post->topic_id,
                 'values' => array(
-                    'post_content' => $post->post_content
+                    'post_content' => wp_slash($post->post_content)
                 )
             )
         ),
@@ -950,7 +950,7 @@ function pfm_action_get_post_excerpt($post_id){
 
     }else{
 
-        $content = wp_unslash($post->post_content);
+        $content = $post->post_content;
 
         $content = '<blockquote><strong>'.$author_name.' '.__('said','wp-recall').' </strong><br />'.$content.'</blockquote><br />';
 

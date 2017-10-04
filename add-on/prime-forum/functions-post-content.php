@@ -120,6 +120,8 @@ function pfm_filter_urls($content){
         
         usort($sortStrings, 'pfm_sort_array_by_string');
         
+        $replace = array();
+        
         foreach( $sortStrings as $k => $url ){
             
             if($oembedSupport){
@@ -127,7 +129,8 @@ function pfm_filter_urls($content){
                 $oembed = wp_oembed_get($url, array('width'=>400, 'height'=>400, 'discover'=>false));
                 
                 if($oembed){
-                    $content = str_replace($url,$oembed,$content);
+                    $replace[] = $oembed;
+                    //$content = str_replace($url,$oembed,$content);
                     continue;
                 }
             
@@ -135,17 +138,19 @@ function pfm_filter_urls($content){
             
             if(pfm_is_can('post_create')){
 
-                $replace = ' <a href="'.$url.'" target="_blank" rel="nofollow">'.$url.'</a>';
+                $replace[] = ' <a href="'.$url.'" target="_blank" rel="nofollow">'.$url.'</a>';
 
             }else{
 
-                $replace = pfm_get_notice(__('You are unable to view published links','wp-recall'),'warning');
+                $replace[] = pfm_get_notice(__('You are unable to view published links','wp-recall'),'warning');
 
             }
             
-            $content = preg_replace('/(\s|^|])('.str_replace(array('/','?'),array('\/','\?'),$url).')/ui', $replace, $content);
+            //$content = preg_replace('/(\s|^|])('.str_replace(array('/','?'),array('\/','\?'),$url).')/ui', $replace, $content);
 
         }
+        
+        if($replace) $content = str_replace($sortStrings,$replace,$content);
     
     }
     
