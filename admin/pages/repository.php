@@ -92,7 +92,7 @@ $content .= '<div class="wp-filter">
 
 if($result->count && $result->addons){
     
-    $content .= '<p class="rcl-search-results">'.__('Найдено результатов','wp-recall').': '.$result->count.'</p>';
+    $content .= '<p class="rcl-search-results">'.__('Results found','wp-recall').': '.$result->count.'</p>';
 
     $content .= $navi->pagenavi();
 

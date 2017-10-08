@@ -560,6 +560,7 @@ function rcl_delete_rating_comment($comment_id){
 
 //Удаляем из БД всю информацию об активности пользователя на сайте
 //Корректируем рейтинг других пользователей
+add_action('delete_user','rcl_delete_ratingdata_user');
 function rcl_delete_ratingdata_user($user_id){
     global  $wpdb;
 
@@ -594,10 +595,9 @@ function rcl_delete_ratingdata_user($user_id){
     }
 
     $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rating_values WHERE user_id = '%d' OR object_author='%d'",$user_id,$user_id));
-    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rating_totals WHERE user_id = '%d' OR object_author='%d'",$user_id,$user_id));
+    $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rating_totals WHERE object_author='%d'",$user_id));
     $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."rating_users WHERE user_id = '%d'",$user_id));
 }
-add_action('delete_user','rcl_delete_ratingdata_user');
 
 /*$atts
 array(

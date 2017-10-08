@@ -177,10 +177,10 @@ function pfm_the_author_name(){
     }
 }
 
-function pfm_author_avatar(){
+function pfm_author_avatar($size = 50){
     global $PrimePost;
     $data = ($PrimePost->user_id)? $PrimePost->user_id: $PrimePost->guest_email;
-    echo get_avatar($data,50);
+    echo get_avatar($data, $size);
 }
 
 add_action('pfm_post_author_metabox','pfm_add_author_action_status',10);

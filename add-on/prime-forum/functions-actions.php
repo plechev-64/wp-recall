@@ -1162,6 +1162,12 @@ function pfm_action_post_create(){
     if(!$pfmData['post_content']){
         return array('error' => __('Empty message! Go back and write something.','wp-recall'));
     }
+    
+    $lastPost = get_topic_last_post($pfmData['topic_id']);
+    
+    if($lastPost->post_content == wp_unslash($pfmData['post_content'])){
+        return array('error' => __('Repeat the last message!','wp-recall'));
+    }
 
     $args = array(
         'post_content' => $pfmData['post_content'],

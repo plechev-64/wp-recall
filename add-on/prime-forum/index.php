@@ -94,17 +94,17 @@ function pfm_user_posts_other_topics($master_id){
                 'fields' => false,
                 'user_id' => $master_id
             )
-        )
+        ),
+        'groupby' => $TopicsQuery->query['table']['as'].'.topic_id'
     );
-    
+
     $countTopics = $TopicsQuery->count($args);
     
     if(!$countTopics)
         return pfm_get_notice(__('There are no messages in topics created by other users.','wp-recall'));
     
     $pageNavi = new Rcl_PageNavi('forum',$countTopics,array('in_page'=>20));
-    
-    $args['groupby'] = $TopicsQuery->query['table']['as'].'.topic_id';
+
     $args['offset'] = $pageNavi->offset;
     $args['number'] = $pageNavi->in_page;
     

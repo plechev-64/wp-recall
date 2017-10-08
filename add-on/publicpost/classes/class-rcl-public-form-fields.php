@@ -13,7 +13,8 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
         parent::__construct($this->post_type,array(
             'id'=>$this->form_id, 
             'custom-slug'=>1, 
-            'terms'=>1
+            'terms'=>1,
+            'meta_delete'=>true
             )
         );
 

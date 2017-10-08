@@ -41,13 +41,22 @@ jQuery(function($){
     });
     
     $('#rcl-custom-fields-editor').on('click','.field-delete',function(){
-        var id_item = $(this).parents('.rcl-custom-field').data('slug');
-        var item = id_item;
-        $(this).parents('li.rcl-custom-field').remove();
-        var val = $('#rcl-deleted-fields').val();
-        if(val) item += ',';
-        item += val;
-        $('#rcl-deleted-fields').val(item);
+        var field = $(this).parents('.rcl-custom-field');
+        
+        if(field.hasClass('must-meta-delete')){
+            
+            if(confirm($('#field-delete-confirm').text())){
+                var itemID = field.data('slug');
+                var val = $('#rcl-deleted-fields').val();
+                if(val) itemID += ',';
+                itemID += val;
+                $('#rcl-deleted-fields').val(itemID);
+            }
+            
+        }
+
+        field.remove();
+        
         return false;
     });
     

@@ -17,6 +17,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
     public $fields;
     public $name_field;
     public $new_slug;
+    public $meta_delete = false;
     
     public $defaultOptions = array();
 
@@ -27,6 +28,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         $this->exist_placeholder = (isset($options['placeholder']))? $options['placeholder']: true;
         $this->sortable = (isset($options['sortable']))? $options['sortable']: true;
         $this->types = (isset($options['types']))? $options['types']: array();
+        $this->meta_delete = (isset($options['meta_delete']))? $options['meta_delete']: false;
         $this->primary = $options;
         $this->post_type = $post_type;
 
@@ -90,9 +92,14 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
 
         $form .= "<div class=fields-submit>
                 <input type=button onclick='rcl_get_new_custom_field();' class='add-field-button button-secondary right' value='+ ".__('Add field','wp-recall')."'>
-                <input class='button button-primary' type=submit value='".__('Save','wp-recall')."' name='rcl_save_custom_fields'>
-                <input type=hidden id=rcl-deleted-fields name=rcl_deleted_custom_fields value=''>
-            </div>
+                <input class='button button-primary' type=submit value='".__('Save','wp-recall')."' name='rcl_save_custom_fields'>";
+        
+        if($this->meta_delete){    
+            $form .= "<input type=hidden id=rcl-deleted-fields name=rcl_deleted_custom_fields value=''>"
+                    . "<div id='field-delete-confirm' style='display:none;'>".__('To remove the data added to this field?','wp-recall')."</div>";
+        }
+        
+        $form .= "</div>
         </form>";
                 
         if($this->sortable){
@@ -336,7 +343,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                     <span class="field-controls">
                     ';
         
-        if($delete)
+        if($delete && !$this->is_default_field($this->field['slug']))
             $content .= '<a class="field-delete field-control" title="'.__('Delete','wp-recall').'" href="#"></a>';
                                 
         $content .= '<a class="field-edit field-control" href="#" title="'.__('Edit','wp-recall').'"></a>
@@ -355,9 +362,18 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         $form = (isset($this->field['form']))? $this->field['form']: false;
         
         $classes = array('rcl-custom-field');
+        
+        if($this->is_default_field($this->field['slug'])){
+            $classes[] = 'default-field';
+        }else{
+            if($this->meta_delete){
+                $classes[] = 'must-meta-delete';
+            }
+        }
            
-        if(isset($this->field['class']))
+        if(isset($this->field['class'])){
             $classes[] = $this->field['class'];
+        }
 
         $field = '<li id="field-'.$this->field['slug'].'" data-slug="'.$this->field['slug'].'" data-type="'.$this->field['type'].'" class="'.implode(' ',$classes).'">
                     '.$this->header_field().'

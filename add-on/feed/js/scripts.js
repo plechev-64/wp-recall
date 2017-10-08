@@ -44,11 +44,13 @@ jQuery(function($){
         link.removeClass('feed-callback');
         var class_i = link.children('i').attr('class');
         link.children('i').attr('class','fa fa-refresh fa-spin');
+        
+        var userID = link.data('feed');
 
         rcl_ajax({
             data: {
                 action: 'rcl_feed_callback',
-                data: link.data('feed'),
+                data: userID,
                 callback: link.data('callback')
             }, 
             success: function(result){
@@ -62,8 +64,8 @@ jQuery(function($){
                 if(result['return']=='this') link.parent().html('<span class=\''+type+'\'>'+result[type]+'</span>');
                 if(result['this']) link.children('span').html(result['this']);
                 if(result['all']){
-                    jQuery('#rcl-feed .user-link-'+data+' a').children('span').html(result['all']);
-                    jQuery('#rcl-feed .feed-user-'+data).hide();
+                    jQuery('#rcl-feed .user-link-'+userID+' a').children('span').html(result['all']);
+                    jQuery('#rcl-feed .feed-user-'+userID).hide();
                 }
 
                 link.addClass('feed-callback');

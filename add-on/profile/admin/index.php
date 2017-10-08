@@ -39,7 +39,7 @@ function rcl_profile_fields_manager(){
 
     rcl_sortable_scripts();
 
-    $profileFields = new Rcl_Profile_Fields('profile',array('custom-slug'=>1));
+    $profileFields = new Rcl_Profile_Fields('profile',array('custom-slug'=>1,'meta_delete'=>true));
     
     $content = '<h2>'.__('Manage profile fields','wp-recall').'</h2>';
     

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2017-09-30 11:03+0300\n"
+"POT-Creation-Date: 2017-10-07 14:45+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -49,10 +49,10 @@ msgstr "Добавить новый товар"
 #: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
 #: add-on/groups/groups-public.php:53
 #: add-on/prime-forum/admin/classes/class-prime-manager.php:351
-#: add-on/publicpost/core.php:77 add-on/publicpost/index.php:249
+#: add-on/publicpost/core.php:77 add-on/publicpost/index.php:250
 #: add-on/publicpost/init.php:22
-#: classes/class-rcl-custom-fields-manager.php:342
-#: classes/class-rcl-custom-fields-manager.php:442
+#: classes/class-rcl-custom-fields-manager.php:349
+#: classes/class-rcl-custom-fields-manager.php:458
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -260,7 +260,7 @@ msgstr "Статус"
 #: add-on/groups/classes/class-rcl-groups-list.php:203
 #: add-on/publicpost/templates/posts-list.php:6
 #: add-on/user-balance/admin/class-rcl-payments-history.php:82
-#: classes/class-rcl-custom-fields-manager.php:493
+#: classes/class-rcl-custom-fields-manager.php:509
 msgid "Date"
 msgstr "Дата"
 
@@ -269,32 +269,32 @@ msgid "Details"
 msgstr "Детали"
 
 #: add-on/commerce/admin/class-rcl-history-orders.php:101
-#: add-on/commerce/core.php:222
+#: add-on/commerce/core.php:223
 msgid "Not paid"
 msgstr "Неоплачен"
 
 #: add-on/commerce/admin/class-rcl-history-orders.php:102
-#: add-on/commerce/core.php:223
+#: add-on/commerce/core.php:224
 msgid "Paid"
 msgstr "Оплачен"
 
 #: add-on/commerce/admin/class-rcl-history-orders.php:103
-#: add-on/commerce/core.php:224
+#: add-on/commerce/core.php:225
 msgid "Sent"
 msgstr "Отправлен"
 
 #: add-on/commerce/admin/class-rcl-history-orders.php:104
-#: add-on/commerce/core.php:225
+#: add-on/commerce/core.php:226
 msgid "Received"
 msgstr "Получен"
 
 #: add-on/commerce/admin/class-rcl-history-orders.php:105
-#: add-on/commerce/core.php:226
+#: add-on/commerce/core.php:227
 msgid "Closed"
 msgstr "Закрыт"
 
 #: add-on/commerce/admin/class-rcl-history-orders.php:106
-#: add-on/commerce/core.php:227
+#: add-on/commerce/core.php:228
 msgid "Trash"
 msgstr "Корзина"
 
@@ -306,7 +306,7 @@ msgstr "Корзина"
 #: add-on/user-balance/admin/class-rcl-payments-history.php:99
 #: admin/add-on-manager.php:160 admin/add-on-manager.php:171
 #: admin/templates-manager.php:158
-#: classes/class-rcl-custom-fields-manager.php:340
+#: classes/class-rcl-custom-fields-manager.php:347
 msgid "Delete"
 msgstr "Удалить"
 
@@ -343,8 +343,8 @@ msgstr "Данные сохранены"
 #: add-on/feed/index.php:196 add-on/feed/index.php:204
 #: add-on/groups/groups-core.php:805 add-on/groups/groups-core.php:821
 #: add-on/groups/upload-avatar.php:71
-#: add-on/prime-forum/functions-actions.php:1174
-#: add-on/user-balance/index.php:201 admin/index.php:114
+#: add-on/prime-forum/functions-actions.php:1180
+#: add-on/user-balance/index.php:192 admin/index.php:114
 #: admin/pages/repository.php:50 admin/pages/repository.php:64
 #: functions/addons-update.php:163 functions/ajax.php:95
 #: functions/enqueue-scripts.php:108
@@ -456,8 +456,8 @@ msgstr "Перейти в менеджер заказов"
 #: add-on/user-balance/admin/addon-settings.php:90
 #: add-on/user-balance/admin/addon-settings.php:98
 #: add-on/user-balance/admin/addon-settings.php:106
-#: add-on/user-balance/admin/addon-settings.php:114 admin/pages/options.php:30
-#: admin/pages/options.php:210 rcl-widgets.php:65 rcl-widgets.php:124
+#: add-on/user-balance/admin/addon-settings.php:114 admin/pages/options.php:32
+#: admin/pages/options.php:212 rcl-widgets.php:65 rcl-widgets.php:124
 msgid "Not selected"
 msgstr "Не выбрано"
 
@@ -469,7 +469,7 @@ msgstr "Настройки"
 #: add-on/commerce/admin/pages/addon-settings.php:22
 #: add-on/commerce/admin/pages/addon-settings.php:25
 #: add-on/publicpost/admin/addon-settings.php:34
-#: add-on/rcl-chat/addon-options.php:13 admin/pages/options.php:24
+#: add-on/rcl-chat/addon-options.php:13 admin/pages/options.php:26
 msgid "General settings"
 msgstr "Общие настройки"
 
@@ -499,10 +499,10 @@ msgstr "Регистрация при оформлении"
 #: add-on/groups/admin/index.php:39 add-on/prime-forum/admin/index.php:231
 #: add-on/publicpost/admin/addon-settings.php:43
 #: add-on/publicpost/admin/addon-settings.php:50
-#: add-on/rating-system/admin/addon-settings.php:63 admin/pages/options.php:97
-#: admin/pages/options.php:141 admin/pages/options.php:170
-#: admin/pages/options.php:178 admin/pages/options.php:249
-#: admin/pages/options.php:254 admin/pages/options.php:268
+#: add-on/rating-system/admin/addon-settings.php:63 admin/pages/options.php:99
+#: admin/pages/options.php:143 admin/pages/options.php:172
+#: admin/pages/options.php:180 admin/pages/options.php:251
+#: admin/pages/options.php:256 admin/pages/options.php:270
 msgid "Disabled"
 msgstr "Отключено"
 
@@ -512,9 +512,9 @@ msgstr "Отключено"
 #: add-on/groups/admin/index.php:40 add-on/prime-forum/admin/index.php:232
 #: add-on/publicpost/admin/addon-settings.php:43
 #: add-on/publicpost/admin/addon-settings.php:50
-#: add-on/rating-system/admin/addon-settings.php:63 admin/pages/options.php:98
-#: admin/pages/options.php:142 admin/pages/options.php:171
-#: admin/pages/options.php:179 admin/pages/options.php:268
+#: add-on/rating-system/admin/addon-settings.php:63 admin/pages/options.php:100
+#: admin/pages/options.php:144 admin/pages/options.php:173
+#: admin/pages/options.php:181 admin/pages/options.php:270
 msgid "Enabled"
 msgstr "Подключено"
 
@@ -676,7 +676,7 @@ msgid "Invalid format of the downloaded file! Only XML valid"
 msgstr "Неверный формат загружаемого файла! Поддерживается только XML"
 
 #: add-on/commerce/admin/pages/order.php:9
-#: add-on/commerce/content/order-content.php:133 add-on/commerce/core.php:275
+#: add-on/commerce/content/order-content.php:133 add-on/commerce/core.php:276
 msgid "Order data"
 msgstr "Данные заказа"
 
@@ -684,16 +684,16 @@ msgstr "Данные заказа"
 msgid "Buyer data"
 msgstr "Данные покупателя"
 
-#: add-on/commerce/admin/pages/order.php:19 add-on/commerce/core.php:280
-#: add-on/commerce/core.php:361 add-on/commerce/core.php:377
+#: add-on/commerce/admin/pages/order.php:19 add-on/commerce/core.php:281
+#: add-on/commerce/core.php:362 add-on/commerce/core.php:378
 #: add-on/groups/classes/class-rcl-groups-list.php:202
 #: add-on/publicpost/functions-ajax.php:62
-#: classes/class-rcl-custom-fields-manager.php:440
+#: classes/class-rcl-custom-fields-manager.php:456
 msgid "Name"
 msgstr "Имя"
 
 #: add-on/commerce/admin/pages/order.php:20 add-on/profile/index.php:143
-#: classes/class-rcl-custom-fields-manager.php:490
+#: classes/class-rcl-custom-fields-manager.php:506
 #: templates/form-register.php:23
 msgid "E-mail"
 msgstr "E-mail"
@@ -943,44 +943,44 @@ msgstr "Метки"
 msgid "Error creating order"
 msgstr "Ошибка создания заказа"
 
-#: add-on/commerce/core.php:278
+#: add-on/commerce/core.php:279
 msgid "This user has formed an order"
 msgstr "Пользователь сформировал заказ в магазине"
 
-#: add-on/commerce/core.php:279 add-on/commerce/core.php:360
-#: add-on/commerce/core.php:376
+#: add-on/commerce/core.php:280 add-on/commerce/core.php:361
+#: add-on/commerce/core.php:377
 msgid "Information about the customer"
 msgstr "Информация о покупателе"
 
-#: add-on/commerce/core.php:281 add-on/commerce/core.php:362
-#: add-on/commerce/core.php:378
+#: add-on/commerce/core.php:282 add-on/commerce/core.php:363
+#: add-on/commerce/core.php:379
 msgid "Email"
 msgstr "Email"
 
-#: add-on/commerce/core.php:282 add-on/commerce/core.php:334
-#: add-on/commerce/core.php:363 add-on/commerce/core.php:379
+#: add-on/commerce/core.php:283 add-on/commerce/core.php:335
+#: add-on/commerce/core.php:364 add-on/commerce/core.php:380
 #, php-format
 msgid "Order №%d received status \"%s\""
 msgstr "Заказ №%d получил статус \"%s\""
 
-#: add-on/commerce/core.php:283 add-on/commerce/core.php:333
-#: add-on/commerce/core.php:364 add-on/commerce/core.php:380
+#: add-on/commerce/core.php:284 add-on/commerce/core.php:334
+#: add-on/commerce/core.php:365 add-on/commerce/core.php:381
 msgid "Order details"
 msgstr "Детали заказа"
 
-#: add-on/commerce/core.php:285 add-on/commerce/core.php:336
+#: add-on/commerce/core.php:286 add-on/commerce/core.php:337
 msgid "Link to managing your order"
 msgstr "Ссылка для управления заказом"
 
-#: add-on/commerce/core.php:301
+#: add-on/commerce/core.php:302
 msgid "Your account and order information"
 msgstr "Данные аккаунта и заказа"
 
-#: add-on/commerce/core.php:303
+#: add-on/commerce/core.php:304
 msgid "You have been registered"
 msgstr "Вы были зарегистрированы"
 
-#: add-on/commerce/core.php:304
+#: add-on/commerce/core.php:305
 msgid ""
 "Personal account has been created, you can monitor the status of your "
 "orders , create new orders and pay for them by available means through it"
@@ -988,37 +988,37 @@ msgstr ""
 "Для вас был создан личный кабинет, в котором вы сможете отслеживать статус "
 "своего заказа, создавать новые заказы и оплачивать их доступными способами"
 
-#: add-on/commerce/core.php:305
+#: add-on/commerce/core.php:306
 msgid "Required data for authorization in your personal account"
 msgstr "Данные необходимые для авторизации в вашем личном кабинете"
 
-#: add-on/commerce/core.php:306 functions/register.php:233
+#: add-on/commerce/core.php:307 functions/register.php:233
 #: templates/form-register.php:18 templates/form-sign.php:20
 msgid "Login"
 msgstr "Логин"
 
-#: add-on/commerce/core.php:307 functions/register.php:234
+#: add-on/commerce/core.php:308 functions/register.php:234
 #: functions/register.php:437 functions/register.php:439
 #: templates/form-sign.php:25
 msgid "Password"
 msgstr "Пароль"
 
-#: add-on/commerce/core.php:308
+#: add-on/commerce/core.php:309
 msgid ""
 "Next time use your personal cabinet for placing new orders on our website"
 msgstr ""
 "В дальнейшем, используйте свой личный кабинет для создания новых заказов на "
 "нашем сайте"
 
-#: add-on/commerce/core.php:323
+#: add-on/commerce/core.php:324
 msgid "Confirm your email on the site by clicking on the link below"
 msgstr "Подтвердите свою эл.почту нажав на ссылку ниже"
 
-#: add-on/commerce/core.php:325
+#: add-on/commerce/core.php:326
 msgid "Can’t activate your account?"
 msgstr "Не получается активировать аккаунт?"
 
-#: add-on/commerce/core.php:326
+#: add-on/commerce/core.php:327
 msgid ""
 "Copy the text of the link below , paste it into the address bar of your "
 "browser and press Enter"
@@ -1026,29 +1026,29 @@ msgstr ""
 "Скопируйте текст ссылки ниже, вставьте ее в адресную строку браузера и "
 "нажмите Enter"
 
-#: add-on/commerce/core.php:332
+#: add-on/commerce/core.php:333
 msgid "You have formed an order"
 msgstr "Вы сформировали заказ в магазине"
 
-#: add-on/commerce/core.php:356
+#: add-on/commerce/core.php:357
 #, php-format
 msgid "Order №%d has been paid"
 msgstr "Заказ №%d оплачен"
 
-#: add-on/commerce/core.php:359
+#: add-on/commerce/core.php:360
 msgid "User has paid for the order"
 msgstr "Пользователь оплатил заказ в магазине"
 
-#: add-on/commerce/core.php:366
+#: add-on/commerce/core.php:367
 msgid "Link for managing the order"
 msgstr "Ссылка для управления заказом"
 
-#: add-on/commerce/core.php:375
+#: add-on/commerce/core.php:376
 #, php-format
 msgid "You paid for the order %s with funds from your personal account."
 msgstr "Вы оплатили заказ %s средствами со своего личного счета."
 
-#: add-on/commerce/core.php:382
+#: add-on/commerce/core.php:383
 msgid ""
 "Your order has been paid and is being processied. You can monitor its status "
 "in your personal cabinet"
@@ -1056,7 +1056,7 @@ msgstr ""
 "Ваш заказ оплачен и поступил в обработку. Вы можете отслеживать статус "
 "заказа в своем личном кабинете"
 
-#: add-on/commerce/core.php:397
+#: add-on/commerce/core.php:398
 msgid "Product variation"
 msgstr "Вариация товара"
 
@@ -1276,7 +1276,7 @@ msgid ""
 "template"
 msgstr "Подключить, если цикл публикаций внутри группы был удален из шаблона"
 
-#: add-on/groups/admin/index.php:51 admin/pages/options.php:62
+#: add-on/groups/admin/index.php:51 admin/pages/options.php:64
 msgid "Shortcode host page"
 msgstr "Страница размещения шорткода"
 
@@ -1290,24 +1290,24 @@ msgstr "Создание групп разрешено"
 
 #: add-on/groups/admin/index.php:61
 #: add-on/publicpost/admin/addon-settings.php:25
-#: add-on/rating-system/admin/addon-settings.php:122 admin/pages/options.php:35
+#: add-on/rating-system/admin/addon-settings.php:122 admin/pages/options.php:37
 msgid "only Administrators"
 msgstr "Только администраторам"
 
 #: add-on/groups/admin/index.php:62
 #: add-on/publicpost/admin/addon-settings.php:26
-#: add-on/rating-system/admin/addon-settings.php:121 admin/pages/options.php:36
+#: add-on/rating-system/admin/addon-settings.php:121 admin/pages/options.php:38
 msgid "Editors and higher"
 msgstr "Редакторам и старше"
 
 #: add-on/groups/admin/index.php:63
 #: add-on/publicpost/admin/addon-settings.php:27
-#: add-on/rating-system/admin/addon-settings.php:120 admin/pages/options.php:37
+#: add-on/rating-system/admin/addon-settings.php:120 admin/pages/options.php:39
 msgid "Authors and higher"
 msgstr "Авторам и старше"
 
 #: add-on/groups/admin/index.php:64
-#: add-on/rating-system/admin/addon-settings.php:119 admin/pages/options.php:38
+#: add-on/rating-system/admin/addon-settings.php:119 admin/pages/options.php:40
 msgid "Participants and higher"
 msgstr "Участникам и старше"
 
@@ -1526,10 +1526,10 @@ msgstr "Панель управления"
 #: add-on/groups/groups-widgets.php:25 add-on/groups/groups-widgets.php:134
 #: add-on/groups/groups-widgets.php:185 add-on/groups/groups-widgets.php:213
 #: add-on/groups/groups-widgets.php:295 add-on/groups/groups-widgets.php:460
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:75
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:76
 #: add-on/publicpost/templates/posts-list.php:7
-#: add-on/user-balance/index.php:341
-#: classes/class-rcl-custom-fields-manager.php:380 rcl-widgets.php:54
+#: add-on/user-balance/index.php:332
+#: classes/class-rcl-custom-fields-manager.php:396 rcl-widgets.php:54
 #: rcl-widgets.php:117 rcl-widgets.php:170
 msgid "Title"
 msgstr "Заголовок"
@@ -1555,8 +1555,8 @@ msgid "Apply for membership"
 msgstr "Заявка на доступ"
 
 #: add-on/groups/groups-widgets.php:124
-#: add-on/rating-system/admin/addon-settings.php:118 admin/pages/options.php:39
-#: admin/pages/options.php:161 rcl-widgets.php:38 rcl-widgets.php:102
+#: add-on/rating-system/admin/addon-settings.php:118 admin/pages/options.php:41
+#: admin/pages/options.php:163 rcl-widgets.php:38 rcl-widgets.php:102
 msgid "All users"
 msgstr "Все пользователи"
 
@@ -1674,7 +1674,7 @@ msgstr "Посетитель"
 msgid "separate by commas"
 msgstr "разделять запятыми"
 
-#: add-on/groups/index.php:484 admin/index.php:22 admin/pages/options.php:291
+#: add-on/groups/index.php:484 admin/index.php:22 admin/pages/options.php:293
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
@@ -1701,7 +1701,7 @@ msgstr "Статус пользователя"
 #: add-on/groups/index.php:540 add-on/prime-forum/admin/index.php:272
 #: add-on/prime-forum/admin/index.php:334 admin/pages/addons-manager.php:40
 #: admin/pages/themes-manager.php:26
-#: classes/class-rcl-custom-fields-manager.php:93
+#: classes/class-rcl-custom-fields-manager.php:95
 #: functions/enqueue-scripts.php:104
 msgid "Save"
 msgstr "Сохранить"
@@ -1758,7 +1758,7 @@ msgid "Groups not found"
 msgstr "Группы не найдены"
 
 #: add-on/groups/templates/group-list.php:12 add-on/publicpost/init.php:64
-#: add-on/rating-system/index.php:26
+#: add-on/publicpost/init.php:74 add-on/rating-system/index.php:26
 msgid "Posts"
 msgstr "Публикации"
 
@@ -2452,7 +2452,7 @@ msgstr "Перенос сообщения в новую тему"
 msgid "Edit messages"
 msgstr "Редактировать сообщение"
 
-#: add-on/prime-forum/functions-actions.php:701
+#: add-on/prime-forum/functions-actions.php:699
 msgid "Unsuccessful deletion"
 msgstr "Удаление не удалось"
 
@@ -2511,7 +2511,8 @@ msgid "Last started topics"
 msgstr "Последние начатые темы"
 
 #: add-on/prime-forum/functions-actions.php:1048
-#: add-on/prime-forum/functions-templates.php:146 admin/pages/repository.php:92
+#: add-on/prime-forum/functions-templates.php:146
+#: admin/pages/repository.php:118
 msgid "Nothing found"
 msgstr "Ничего не найдено"
 
@@ -2539,6 +2540,10 @@ msgstr "Недостаточно прав для публикации"
 #: add-on/prime-forum/functions-actions.php:1159
 msgid "Topic closed"
 msgstr "Тема закрыта"
+
+#: add-on/prime-forum/functions-actions.php:1169
+msgid "Repeat the last message!"
+msgstr "Повтор последнего сообщения!"
 
 #: add-on/prime-forum/functions-capabilities.php:145
 msgid "You are not allowed to view contents of the forum"
@@ -2573,20 +2578,20 @@ msgstr "Добавить сообщение"
 msgid "The reason for the edit"
 msgstr "Причина редактирования"
 
-#: add-on/prime-forum/functions-post-content.php:142
-#: add-on/prime-forum/functions-post-content.php:171
+#: add-on/prime-forum/functions-post-content.php:145
+#: add-on/prime-forum/functions-post-content.php:176
 msgid "You are unable to view published links"
 msgstr "Вы не можете просматривать опубликованные ссылки"
 
-#: add-on/prime-forum/functions-post-content.php:219
+#: add-on/prime-forum/functions-post-content.php:224
 msgid "The wording of the message"
 msgstr "Редакции сообщения"
 
-#: add-on/prime-forum/functions-post-content.php:225
+#: add-on/prime-forum/functions-post-content.php:230
 msgid "The reason"
 msgstr "Причина"
 
-#: add-on/prime-forum/functions-post-content.php:225
+#: add-on/prime-forum/functions-post-content.php:230
 #: add-on/profile/index.php:300
 msgid "not specified"
 msgstr "не указано"
@@ -2689,7 +2694,7 @@ msgstr "Начатые темы"
 msgid "Messages in topics created by other users"
 msgstr "Сообщения в чужих темах"
 
-#: add-on/prime-forum/index.php:103
+#: add-on/prime-forum/index.php:104
 msgid "There are no messages in topics created by other users."
 msgstr "Сообщений в чужих темах пока нет"
 
@@ -3124,120 +3129,120 @@ msgstr "пока не было опубликовано"
 msgid "Published"
 msgstr "Опубликованные"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:88
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:89
 msgid "Group category"
 msgstr "Категории группы"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:98
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:99
 msgid "Amount to choose"
 msgstr "Кол-во к выбору"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:99
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:100
 msgid "only when output through select"
 msgstr "только при выводе через select"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:104
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:105
 msgid "Output option"
 msgstr "Вариант вывода"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:106
-#: classes/class-rcl-custom-fields-manager.php:486
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:107
+#: classes/class-rcl-custom-fields-manager.php:502
 msgid "Select"
 msgstr "Выпадающий список"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:107
-#: classes/class-rcl-custom-fields-manager.php:488
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:108
+#: classes/class-rcl-custom-fields-manager.php:504
 msgid "Checkbox"
 msgstr "Чекбоксы"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:113
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:114
 msgid "Only child terms"
 msgstr "Только дочерние термины"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:114
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:115
 msgid "Attach only the selected child terms to the post, ignoring parents"
 msgstr ""
 "Прикреплять к публикации только выбранные дочерние термины, игнорируя "
 "родителей"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:116
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:234
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:117
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:235
 msgid "Disable"
 msgstr "Отключить"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:117
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:235
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:118
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:236
 msgid "Enable"
 msgstr "Включить"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:140
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:141
 msgid "Short entry"
 msgstr "Краткая запись"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:146
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:147
 msgid "Content of the publication"
 msgstr "Содержание публикации"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:154
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:155
 msgid "Editor settings"
 msgstr "Настройки редактора"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:156
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:157
 msgid "Media loader"
 msgstr "Медиазагрузчик"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:157
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:158
 msgid "HTML editor"
 msgstr "HTML редактор"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:158
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:159
 msgid "Visual editor"
 msgstr "Визуальный редактор"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:166
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:167
 msgid "WP-Recall media loader"
 msgstr "Медиа-загрузчик WP-Recall"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:173
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:174
 msgid "Valid file extensions"
 msgstr "Допустимые разрешения файлов"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:174
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:175
 msgid ""
 "Separated by comma, for example: jpg, zip, pdf. By default: png, gif, jpg"
 msgstr "Через запятую, например: jpg, zip, pdf. По-умолчанию: png, gif, jpg"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:179
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:201
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:180
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:202
 msgid "The maximum file size, Mb"
 msgstr "Максимальный размер файла, Мб"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:180
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:202
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:181
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:203
 msgid "Maximum file size in megabytes. By default, 2MB"
 msgstr "Максимальный размер файла в мегабайтах. По умолчанию, 2Мб"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:185
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:186
 msgid "Number of files"
 msgstr "Количество файлов"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:186
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:187
 msgid "By default, 10"
 msgstr "По-умолчанию, 10"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:195
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:196
 msgid "Thumbnail of the publication"
 msgstr "Миниатюра публикации"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:227
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:228
 msgid "Maximum output"
 msgstr "Максимально к выводу"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:232
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:233
 msgid "New values entry field"
 msgstr "Поле ввода новых значений"
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:294
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:295
 msgid "Specify term_ID to be selected"
 msgstr "Указание term_ID к выбору"
 
@@ -3438,7 +3443,7 @@ msgstr "Превышено масимальное кол-во файлов дл�
 msgid "Exceeds the maximum file size! Max:"
 msgstr "Превышен максимальный размер файла! Макс:"
 
-#: add-on/publicpost/init.php:79
+#: add-on/publicpost/init.php:88
 msgid "Publication"
 msgstr "Публикация"
 
@@ -3524,13 +3529,13 @@ msgstr "Положительные голоса"
 
 #: add-on/rating-system/admin/addon-settings.php:42
 #: add-on/rating-system/admin/addon-settings.php:45
-#: classes/class-rcl-custom-fields-manager.php:492
+#: classes/class-rcl-custom-fields-manager.php:508
 msgid "Number"
 msgstr "Кол-во"
 
 #: add-on/rating-system/admin/addon-settings.php:43
 #: add-on/rating-system/admin/addon-settings.php:46
-#: classes/class-rcl-custom-fields-manager.php:494
+#: classes/class-rcl-custom-fields-manager.php:510
 msgid "Time"
 msgstr "Время"
 
@@ -3661,16 +3666,16 @@ msgstr "Не удалось изменить общий рейтинг поль�
 msgid "Data not found"
 msgstr "Данные не найдены"
 
-#: add-on/rating-system/index.php:315
+#: add-on/rating-system/index.php:313
 msgid "rating"
 msgstr "рейтинг"
 
-#: add-on/rating-system/index.php:450
+#: add-on/rating-system/index.php:448
 #, php-format
 msgid "exceeded the limit of votes for the period - %d seconds"
 msgstr "превышение ограничения голосов в течении %d секунд"
 
-#: add-on/rating-system/index.php:535
+#: add-on/rating-system/index.php:533
 msgid "Unable to obtain data"
 msgstr "Данные не удалось получить"
 
@@ -3771,7 +3776,7 @@ msgid "Attaching files"
 msgstr "Прикрепление файлов"
 
 #: add-on/rcl-chat/addon-options.php:72
-#: classes/class-rcl-custom-fields-manager.php:196
+#: classes/class-rcl-custom-fields-manager.php:203
 msgid "Allowed file types"
 msgstr "Разрешенные типы файлов"
 
@@ -3823,7 +3828,7 @@ msgstr "Место вывода"
 msgid "Right"
 msgstr "Справа"
 
-#: add-on/rcl-chat/addon-options.php:129 admin/pages/options.php:116
+#: add-on/rcl-chat/addon-options.php:129 admin/pages/options.php:118
 msgid "Left"
 msgstr "Слева"
 
@@ -3913,7 +3918,7 @@ msgstr "Удалить контакт"
 msgid "No important messages yet"
 msgstr "Важных сообщений пока нет"
 
-#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:221
+#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:223
 msgid "Not used"
 msgstr "Не используется"
 
@@ -4109,44 +4114,44 @@ msgstr "Оплатить через"
 msgid "Pay from personal account"
 msgstr "Оплатить с личного счета"
 
-#: add-on/user-balance/index.php:105
+#: add-on/user-balance/index.php:96
 msgid "Failed to refresh user balance"
 msgstr "Не удалось обновить баланс пользователя"
 
-#: add-on/user-balance/index.php:125
+#: add-on/user-balance/index.php:116
 msgid "Failed to add user balance"
 msgstr "Не удалось добавить баланс пользователя"
 
-#: add-on/user-balance/index.php:152
+#: add-on/user-balance/index.php:143
 msgid "Top up"
 msgstr "Изменение баланса"
 
-#: add-on/user-balance/index.php:174 add-on/user-balance/shortcodes.php:74
+#: add-on/user-balance/index.php:165 add-on/user-balance/shortcodes.php:74
 msgid "Enter the amount"
 msgstr "Укажите сумму платежа"
 
-#: add-on/user-balance/index.php:183 add-on/user-balance/shortcodes.php:43
+#: add-on/user-balance/index.php:174 add-on/user-balance/shortcodes.php:43
 msgid "Make payment"
 msgstr "Провести платеж"
 
-#: add-on/user-balance/index.php:224
+#: add-on/user-balance/index.php:215
 msgid "Order not found!"
 msgstr "Заказ не найден!"
 
-#: add-on/user-balance/index.php:243
+#: add-on/user-balance/index.php:234
 #, php-format
 msgid "Insufficient funds in your personal account!<br>Order price: %d %s"
 msgstr "Недостаточно средств на личном счету!<br>Стоимость заказа: %d %s"
 
-#: add-on/user-balance/index.php:267
+#: add-on/user-balance/index.php:258
 msgid "Top up personal account"
 msgstr "Пополнение личного счета"
 
-#: add-on/user-balance/index.php:308
+#: add-on/user-balance/index.php:299
 msgid "Personal user account"
 msgstr "Личный счет пользователя"
 
-#: add-on/user-balance/index.php:310 add-on/user-balance/index.php:338
+#: add-on/user-balance/index.php:301 add-on/user-balance/index.php:329
 msgid "Personal account"
 msgstr "Личный счет"
 
@@ -4275,7 +4280,7 @@ msgstr "поддерживаются шорткоды и HTML-код"
 msgid "Output images via Wp-Recall gallery?"
 msgstr "Использовать вывод изображений публикации через галерею Wp-Recall?"
 
-#: admin/index.php:126 admin/pages/options.php:189
+#: admin/index.php:126 admin/pages/options.php:191
 msgid "Login and register"
 msgstr "Вход и регистрация"
 
@@ -4365,31 +4370,31 @@ msgstr ""
 msgid "Dashboard WP-Recall"
 msgstr "Панель управления WP-Recall"
 
-#: admin/pages/options.php:17
+#: admin/pages/options.php:19
 msgid "Configure Wp-Recall plugin and add-ons"
 msgstr "Настройка плагина Wp-Recall и его дополнений"
 
-#: admin/pages/options.php:20
+#: admin/pages/options.php:22
 msgid "Advanced settings"
 msgstr "Расширенные настройки"
 
-#: admin/pages/options.php:44 classes/class-rcl-install.php:89
+#: admin/pages/options.php:46 classes/class-rcl-install.php:89
 msgid "Personal cabinet"
 msgstr "Личный кабинет"
 
-#: admin/pages/options.php:48
+#: admin/pages/options.php:50
 msgid "Personal Cabinet output"
 msgstr "Порядок вывода личного кабинета"
 
-#: admin/pages/options.php:51
+#: admin/pages/options.php:53
 msgid "On the author’s archive page"
 msgstr "На странице архива автора"
 
-#: admin/pages/options.php:52
+#: admin/pages/options.php:54
 msgid "Using shortcode [wp-recall]"
 msgstr "Через шорткод [wp-recall]"
 
-#: admin/pages/options.php:53
+#: admin/pages/options.php:55
 msgid ""
 "Attention! Changing this parameter is not required. Detailed instructions on "
 "personal account output using author.php file can be received here <a href="
@@ -4401,7 +4406,7 @@ msgstr ""
 "\"https://codeseller.ru/ustanovka-plagina-wp-recall-na-sajt/\" target="
 "\"_blank\">здесь</a>"
 
-#: admin/pages/options.php:54
+#: admin/pages/options.php:56
 msgid ""
 "If author archive page is selected, the template author.php should contain "
 "the code if(function_exists('wp_recall')) wp_recall();"
@@ -4409,11 +4414,11 @@ msgstr ""
 "Если выбрана страница архива автора, то внутри шаблона archive.php "
 "необходимо разместить функцию if(function_exists('wp_recall')) wp_recall();"
 
-#: admin/pages/options.php:66
+#: admin/pages/options.php:68
 msgid "Link format to personal account"
 msgstr "Формат ссылки на личный кабинет"
 
-#: admin/pages/options.php:67
+#: admin/pages/options.php:69
 msgid ""
 "The link is formed according to principle \"/slug_page/?get=ID\". The "
 "parameter \"get\" can be set here. By default user"
@@ -4421,7 +4426,7 @@ msgstr ""
 "Ссылка формируется по принципу \"/slug_page/?get=ID\". Параметр \"get\" "
 "можно указать здесь. По-умолчанию user"
 
-#: admin/pages/options.php:73
+#: admin/pages/options.php:75
 msgid ""
 "This value sets the maximum time a user is considered \"online\" in the "
 "absence of activity"
@@ -4429,53 +4434,53 @@ msgstr ""
 "Это значение устанавливает максимальное время до истечения которого "
 "пользователь будет иметь статус \"в сети\" при отсутствии активности"
 
-#: admin/pages/options.php:74
+#: admin/pages/options.php:76
 msgid "Inactivity timeout"
 msgstr "Таймаут активности"
 
-#: admin/pages/options.php:75
+#: admin/pages/options.php:77
 msgid ""
 "Specify the time in minutes after which the user will be considered offline "
 "if you did not show activity on the website. The default is 10 minutes."
 msgstr "По-умолчанию 10 минут."
 
-#: admin/pages/options.php:81
+#: admin/pages/options.php:83
 msgid "Access to the console"
 msgstr "Доступ в консоль сайта"
 
-#: admin/pages/options.php:85
+#: admin/pages/options.php:87
 msgid "Access to the console is allowed"
 msgstr "Доступ к консоли сайта разрешен"
 
-#: admin/pages/options.php:92
+#: admin/pages/options.php:94
 msgid "Logging mode"
 msgstr "Режим логирования"
 
-#: admin/pages/options.php:95
+#: admin/pages/options.php:97
 msgid "Write background events and errors to the log-file"
 msgstr "Запись в лог-файл фоновых событий и ошибок работы"
 
-#: admin/pages/options.php:105
+#: admin/pages/options.php:107
 msgid "Design"
 msgstr "Оформление"
 
-#: admin/pages/options.php:108
+#: admin/pages/options.php:110
 msgid "Primary color"
 msgstr "Основной цвет"
 
-#: admin/pages/options.php:113
+#: admin/pages/options.php:115
 msgid "The location of the section buttons"
 msgstr "Размещение кнопок вывода вкладок"
 
-#: admin/pages/options.php:115
+#: admin/pages/options.php:117
 msgid "Top"
 msgstr "Сверху"
 
-#: admin/pages/options.php:121
+#: admin/pages/options.php:123
 msgid "Pause Slider"
 msgstr "Пауза слайдера"
 
-#: admin/pages/options.php:122
+#: admin/pages/options.php:124
 msgid ""
 "Only applied for slider via shortcode publications <a href=\"https://"
 "codeseller.ru/api-rcl/slider-rcl/\" target=\"_blank\">[slider-rcl]</a>"
@@ -4484,22 +4489,22 @@ msgstr ""
 "\"https://codeseller.ru/api-rcl/slider-rcl/\" target=\"_blank\">[slider-"
 "rcl]</a>"
 
-#: admin/pages/options.php:123
+#: admin/pages/options.php:125
 msgid ""
 "The value of the pause between slide transitions in seconds. Default value "
 "is 0 - the slide show is not made"
 msgstr ""
 "Значение паузы для слайдера в секундах. По-умолчанию 0 - слайды не сменяются"
 
-#: admin/pages/options.php:133
+#: admin/pages/options.php:135
 msgid "Caching"
 msgstr "Кеширование"
 
-#: admin/pages/options.php:137
+#: admin/pages/options.php:139
 msgid "Cache"
 msgstr "Кеш"
 
-#: admin/pages/options.php:138
+#: admin/pages/options.php:140
 msgid ""
 "Use the functionality of the caching WP-Recall plugin. <a href=\"https://"
 "codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
@@ -4509,27 +4514,27 @@ msgstr ""
 "codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
 "target=\"_blank\">Подробнее</a>"
 
-#: admin/pages/options.php:153
+#: admin/pages/options.php:155
 msgid "Time cache (seconds)"
 msgstr "Время жизни кеша (в секундах)"
 
-#: admin/pages/options.php:154 admin/pages/options.php:279
+#: admin/pages/options.php:156 admin/pages/options.php:281
 msgid "Default"
 msgstr "По-умолчанию"
 
-#: admin/pages/options.php:159
+#: admin/pages/options.php:161
 msgid "Cache output"
 msgstr "Вывод кеша"
 
-#: admin/pages/options.php:162
+#: admin/pages/options.php:164
 msgid "Only guests"
 msgstr "Только гостям"
 
-#: admin/pages/options.php:168
+#: admin/pages/options.php:170
 msgid "Minimization of file styles"
 msgstr "Минимизация стилевых файлов"
 
-#: admin/pages/options.php:172
+#: admin/pages/options.php:174
 msgid ""
 "Minimization of file styles only works in correlation with Wp-Recall style "
 "files and add-ons that support this feature"
@@ -4537,35 +4542,35 @@ msgstr ""
 "Минимизация стилевых файлов работает только со стилевыми файлами плагина WP-"
 "Recall и его дополнений, которые поддерживают этот функционал"
 
-#: admin/pages/options.php:176
+#: admin/pages/options.php:178
 msgid "Minimization of scripts"
 msgstr "Минимизация скриптов"
 
-#: admin/pages/options.php:192
+#: admin/pages/options.php:194
 msgid "Output procedure"
 msgstr "Порядок вывода"
 
-#: admin/pages/options.php:195
+#: admin/pages/options.php:197
 msgid "Floating form"
 msgstr "Всплывающая форма"
 
-#: admin/pages/options.php:196
+#: admin/pages/options.php:198
 msgid "On a separate page"
 msgstr "На отдельной странице"
 
-#: admin/pages/options.php:197
+#: admin/pages/options.php:199
 msgid "Wordpress Forms"
 msgstr "Формы Wordpress"
 
-#: admin/pages/options.php:198
+#: admin/pages/options.php:200
 msgid "Widget form"
 msgstr "Форма в виджете"
 
-#: admin/pages/options.php:206
+#: admin/pages/options.php:208
 msgid "ID of the shortcode page [loginform]"
 msgstr "Идентификатор страницы с шорткодом [loginform]"
 
-#: admin/pages/options.php:218
+#: admin/pages/options.php:220
 msgid ""
 "If you are using the registration confirmation, after registration, the user "
 "will need to confirm your email by clicking on the link in the sent email"
@@ -4574,59 +4579,59 @@ msgstr ""
 "будет необходимо подтвердить свой email, перейдя по ссылке в присланном "
 "письме"
 
-#: admin/pages/options.php:219
+#: admin/pages/options.php:221
 msgid "Registration confirmation by the user"
 msgstr "Подтверждение регистрации пользователя"
 
-#: admin/pages/options.php:222
+#: admin/pages/options.php:224
 msgid "Used"
 msgstr "Используется"
 
-#: admin/pages/options.php:226
+#: admin/pages/options.php:228
 msgid "Redirect user after login"
 msgstr "Перенаправление после авторизации"
 
-#: admin/pages/options.php:229
+#: admin/pages/options.php:231
 msgid "The user profile"
 msgstr "Профиль пользователя"
 
-#: admin/pages/options.php:230
+#: admin/pages/options.php:232
 msgid "Current page"
 msgstr "Текущая страница"
 
-#: admin/pages/options.php:231
+#: admin/pages/options.php:233
 msgid "Arbitrary URL"
 msgstr "Произвольный URL"
 
-#: admin/pages/options.php:241
+#: admin/pages/options.php:243
 msgid "URL"
 msgstr "URL"
 
-#: admin/pages/options.php:242
+#: admin/pages/options.php:244
 msgid "Enter your URL below, if you select an arbitrary URL after login"
 msgstr "Введите URL, если выбран произвольный URL после авторизации"
 
-#: admin/pages/options.php:248
+#: admin/pages/options.php:250
 msgid "repeat password field"
 msgstr "Поле повтора пароля"
 
-#: admin/pages/options.php:249 admin/pages/options.php:254
+#: admin/pages/options.php:251 admin/pages/options.php:256
 msgid "Displaye"
 msgstr "Отображать"
 
-#: admin/pages/options.php:253
+#: admin/pages/options.php:255
 msgid "Indicator of password complexity"
 msgstr "Индикатор сложности пароля"
 
-#: admin/pages/options.php:262 rcl-functions.php:350
+#: admin/pages/options.php:264 rcl-functions.php:356
 msgid "Recallbar"
 msgstr "Recallbar"
 
-#: admin/pages/options.php:265
+#: admin/pages/options.php:267
 msgid "Output of recallbar panel"
 msgstr "Вывод панели recallbar"
 
-#: admin/pages/options.php:266
+#: admin/pages/options.php:268
 msgid ""
 "Recallbar – is he top panel WP-Recall plugin through which the plugin and "
 "its add-ons can output their data and the administrator can make his menu, "
@@ -4638,11 +4643,11 @@ msgstr ""
 "сформировав его на <a href=\"/wp-admin/nav-menus.php\" target=\"_blank"
 "\">странице управления меню сайта</a>"
 
-#: admin/pages/options.php:278
+#: admin/pages/options.php:280
 msgid "Color"
 msgstr "Цвет"
 
-#: admin/pages/options.php:279
+#: admin/pages/options.php:281
 msgid "Primary colors of WP-Recall"
 msgstr "Основные цвета WP-Recall"
 
@@ -4650,9 +4655,13 @@ msgstr "Основные цвета WP-Recall"
 msgid "Failed to get data"
 msgstr "Данные не были получены"
 
-#: admin/pages/repository.php:95
+#: admin/pages/repository.php:69
 msgid "Repository for WP-Recall add-ons"
 msgstr "Репозиторий дополнений WP-Recall"
+
+#: admin/pages/repository.php:95
+msgid "Results found"
+msgstr "Найдено результатов"
 
 #: admin/pages/tabs-manager.php:18
 msgid "Personal account tabs manager"
@@ -4676,124 +4685,128 @@ msgstr ""
 "на странице настроек профиля на сайте <a href=\"http://codeseller.ru/\" "
 "target=\"_blank\">http://codeseller.ru</a>"
 
-#: classes/class-rcl-custom-fields-manager.php:74
+#: classes/class-rcl-custom-fields-manager.php:76
 msgid "Active fields"
 msgstr "Активные поля"
 
-#: classes/class-rcl-custom-fields-manager.php:92
+#: classes/class-rcl-custom-fields-manager.php:94
 msgid "Add field"
 msgstr "Добавить поле"
 
-#: classes/class-rcl-custom-fields-manager.php:189
+#: classes/class-rcl-custom-fields-manager.php:99
+msgid "To remove the data added to this field?"
+msgstr "Удалить данные добавленные этим полем?"
+
+#: classes/class-rcl-custom-fields-manager.php:196
 msgid "File size"
 msgstr "Размер файла"
 
-#: classes/class-rcl-custom-fields-manager.php:190
+#: classes/class-rcl-custom-fields-manager.php:197
 msgid "maximum size of uploaded file, MB (Default - 2)"
 msgstr "макс. размер загружаемого файла, МБ (по-умолчанию - 2)"
 
-#: classes/class-rcl-custom-fields-manager.php:197
+#: classes/class-rcl-custom-fields-manager.php:204
 msgid "allowed types of files are divided by comma, for example: pdf, zip, jpg"
 msgstr "разрешенные типы файлов разделяются запятой, например: pdf, zip, jpg"
 
-#: classes/class-rcl-custom-fields-manager.php:205
+#: classes/class-rcl-custom-fields-manager.php:212
 msgid "Agreement URL"
 msgstr "URL Соглашения"
 
-#: classes/class-rcl-custom-fields-manager.php:211
+#: classes/class-rcl-custom-fields-manager.php:218
 msgid "Consent confirmation text"
 msgstr "Текст подтверждения согласия"
 
-#: classes/class-rcl-custom-fields-manager.php:221
+#: classes/class-rcl-custom-fields-manager.php:228
 msgid "First value"
 msgstr "Первое значение"
 
-#: classes/class-rcl-custom-fields-manager.php:222
+#: classes/class-rcl-custom-fields-manager.php:229
 msgid "Name of the first blank value, for example: \"Not selected\""
 msgstr "Имя первого пустого значения, например: \"Не выбрано\""
 
-#: classes/class-rcl-custom-fields-manager.php:230
+#: classes/class-rcl-custom-fields-manager.php:237
 msgid "Specify options"
 msgstr "Указание опций"
 
-#: classes/class-rcl-custom-fields-manager.php:231
+#: classes/class-rcl-custom-fields-manager.php:238
 msgid "specify each option in a separate field"
 msgstr "указывайте каждую опцию в отдельном поле"
 
-#: classes/class-rcl-custom-fields-manager.php:243
+#: classes/class-rcl-custom-fields-manager.php:250
 msgid "Placeholder"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:255
+#: classes/class-rcl-custom-fields-manager.php:262
 msgid "Pattern"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:263
+#: classes/class-rcl-custom-fields-manager.php:270
 msgid "Maxlength"
 msgstr "Макс. кол-во знаков"
 
-#: classes/class-rcl-custom-fields-manager.php:264
+#: classes/class-rcl-custom-fields-manager.php:271
 msgid "maximum number of symbols per field"
 msgstr "максимальное количество символов в поле"
 
-#: classes/class-rcl-custom-fields-manager.php:372
+#: classes/class-rcl-custom-fields-manager.php:388
 msgid "Meta-key"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:454
+#: classes/class-rcl-custom-fields-manager.php:470
 msgid "MetaKey"
 msgstr "MetaKey"
 
-#: classes/class-rcl-custom-fields-manager.php:455
+#: classes/class-rcl-custom-fields-manager.php:471
 msgid "not required, but you can list your own meta_key in this field"
 msgstr ""
 "не обязательно, но вы можете указать свое значение meta_key в этом поле"
 
-#: classes/class-rcl-custom-fields-manager.php:456
+#: classes/class-rcl-custom-fields-manager.php:472
 msgid "Latin letters and numbers"
 msgstr "латиница и числа"
 
-#: classes/class-rcl-custom-fields-manager.php:484
+#: classes/class-rcl-custom-fields-manager.php:500
 msgid "Text"
 msgstr "Текстовое поле"
 
-#: classes/class-rcl-custom-fields-manager.php:485
+#: classes/class-rcl-custom-fields-manager.php:501
 msgid "Multiline text area"
 msgstr "Многострочное поле"
 
-#: classes/class-rcl-custom-fields-manager.php:487
+#: classes/class-rcl-custom-fields-manager.php:503
 msgid "MultiSelect"
 msgstr "Множественный выбор"
 
-#: classes/class-rcl-custom-fields-manager.php:489
+#: classes/class-rcl-custom-fields-manager.php:505
 msgid "Radiobutton"
 msgstr "Радиокнопки"
 
-#: classes/class-rcl-custom-fields-manager.php:491
+#: classes/class-rcl-custom-fields-manager.php:507
 msgid "Phone"
 msgstr "Телефон"
 
-#: classes/class-rcl-custom-fields-manager.php:495
+#: classes/class-rcl-custom-fields-manager.php:511
 msgid "Url"
 msgstr "Ссылка"
 
-#: classes/class-rcl-custom-fields-manager.php:496
+#: classes/class-rcl-custom-fields-manager.php:512
 msgid "Agreement"
 msgstr "Соглашение"
 
-#: classes/class-rcl-custom-fields-manager.php:497
+#: classes/class-rcl-custom-fields-manager.php:513
 msgid "File"
 msgstr "Файл"
 
-#: classes/class-rcl-custom-fields-manager.php:498
+#: classes/class-rcl-custom-fields-manager.php:514
 msgid "Dynamic"
 msgstr "Динамическое"
 
-#: classes/class-rcl-custom-fields-manager.php:518
+#: classes/class-rcl-custom-fields-manager.php:534
 msgid "Field type"
 msgstr "Тип поля"
 
-#: classes/class-rcl-custom-fields-manager.php:566
+#: classes/class-rcl-custom-fields-manager.php:582
 msgid "Inactive fields"
 msgstr "Неактивные поля"
 
@@ -5019,7 +5032,7 @@ msgid "Publics"
 msgstr "Публикации"
 
 #: functions/frontend.php:110 functions/frontend.php:181
-#: functions/frontend.php:443 rcl-functions.php:793
+#: functions/frontend.php:443 rcl-functions.php:799
 msgid "offline"
 msgstr "не в сети"
 
@@ -5241,16 +5254,16 @@ msgstr "Загрузка фона"
 msgid "Image successfully uploaded"
 msgstr "Изображение успешно загружено"
 
-#: rcl-functions.php:745
+#: rcl-functions.php:751
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Это сообщение было сформировано автоматически, не надо отвечать на него."
 
-#: rcl-functions.php:769
+#: rcl-functions.php:775
 msgid "long ago"
 msgstr "давно"
 
-#: rcl-functions.php:879
+#: rcl-functions.php:885
 msgid "Signature verification failed"
 msgstr "Проверка подписи не пройдена"
 
