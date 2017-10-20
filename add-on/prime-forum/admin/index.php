@@ -493,14 +493,23 @@ function pfm_manager_update_forum($options){
 
 rcl_ajax_action('pfm_ajax_update_sort_groups', false);
 function pfm_ajax_update_sort_groups(){
+    global $wpdb;
     
     $sort = json_decode(wp_unslash($_POST['sort']));
     
     foreach($sort as $s => $group){
-        pfm_update_group(array(
-            'group_id' => $group->id,
-            'group_seq' => $s + 1
-        ));
+        //убрал функции допа на апдейт группы, 
+        //ибо срабатывают хуки, а тут они ни к чему
+        $wpdb->update(
+            RCL_PREF.'pforum_groups',
+            array(
+                'group_seq' => $s + 1
+            ),
+            array(
+                'group_id' => $group->id
+            )
+        );
+        
     }
     
     wp_send_json(array(
@@ -511,15 +520,24 @@ function pfm_ajax_update_sort_groups(){
 
 rcl_ajax_action('pfm_ajax_update_sort_forums', false);
 function pfm_ajax_update_sort_forums(){
+    global $wpdb;
     
     $sort = json_decode(wp_unslash($_POST['sort']));
     
     foreach($sort as $s => $forum){
-        pfm_update_forum(array(
-            'forum_id' => $forum->id,
-            'parent_id' => $forum->parent,
-            'forum_seq' => $s + 1
-        ));
+        //убрал функции допа на апдейт форума, 
+        //ибо срабатывают хуки, а тут они ни к чему
+        $wpdb->update(
+            RCL_PREF.'pforums',
+            array(
+                'parent_id' => $forum->parent,
+                'forum_seq' => $s + 1
+            ),
+            array(
+                'forum_id' => $forum->id
+            )
+        );
+
     }
     
     wp_send_json(array(

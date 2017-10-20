@@ -221,7 +221,7 @@ function rcl_tab_profile_content($master_id){
             $attrs[] = $field['attr'];
         }
         
-        if($field['slug'] != 'show_admin_bar_front')
+        if($field['slug'] != 'show_admin_bar_front' && !isset($field['value_in_key']) )
             $field['value_in_key'] = true;
 
         $content .= '<tr '.implode(' ',$attrs).'>';

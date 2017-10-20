@@ -8,13 +8,11 @@ jQuery(function($){
         else
             rcl_preloader_show(jQuery('#rcl-group'));
         
+        var dataString = 'action=rcl_get_group_link_content&group_id='+jQuery(this).data('group')+'&callback='+jQuery(this).data('callback');
+        if(value) dataString += '&value='+value;
+        
         rcl_ajax({
-            data: {
-                action: 'rcl_get_group_link_content',
-                group_id: jQuery(this).data('group'),
-                callback: jQuery(this).data('callback'),
-                value: (value)? value: 0
-            }
+            data: dataString
         });
 
         return false;

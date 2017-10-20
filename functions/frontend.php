@@ -593,6 +593,8 @@ function rcl_post_bar($content){
     if(is_array($rcl_post_bar['items'])){
         
         $rcl_bar_items = apply_filters('rcl_post_bar_items',$rcl_post_bar['items']);
+        
+        if(!$rcl_bar_items) return $content;
 
         $bar = '<div id="rcl-post-bar">';
         

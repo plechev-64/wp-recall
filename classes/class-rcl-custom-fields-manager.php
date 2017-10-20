@@ -181,7 +181,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             'checkbox',
             'agree',
             'radio',
-            'file'
+            'file',
+            'editor'
         );
         
         $options = (isset($this->field['options-field']))? $this->field['options-field']: array();
@@ -216,6 +217,16 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                     'type' => 'textarea',
                     'slug' => 'text-confirm',
                     'title' => __('Consent confirmation text','wp-recall')
+                );
+                
+            }else if($this->field['type']=='editor'){
+                
+                $options[] = array(
+                    'type' => 'checkbox',
+                    'slug' => 'tinymce',
+                    'title' => __('TinyMCE','wp-recall'),
+                    'values' => array( 1 => __('Использовать TinyMCE','wp-recall')),
+                    'notece' => __('Может не загружаться при AJAX')
                 );
                 
             }else{

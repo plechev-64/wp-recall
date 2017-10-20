@@ -339,6 +339,7 @@ function pfm_delete_forum($forum_id, $forum_new = false){
 }
 
 function pfm_update_forum_counter($forum_id){
+    global $wpdb;
     
     $TopicQuery = new PrimeTopics();
     
@@ -346,10 +347,16 @@ function pfm_update_forum_counter($forum_id){
         'forum_id' => $forum_id
     ));
     
-    pfm_update_forum(array(
-        'forum_id' => $forum_id,
-        'topic_count' => $counter
-    ));
+    $wpdb->update(
+        RCL_PREF.'pforums',
+        array(
+            'topic_count' => $counter
+        ),
+        array(
+            'forum_id' => $forum_id
+        )
+    );
+
 }
 
 function pfm_subforums_topic_count($forum_id){

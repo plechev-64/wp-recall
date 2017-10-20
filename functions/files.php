@@ -1,16 +1,16 @@
 <?php
 
 //получение абсолютного пути до указанного файла шаблона
-function rcl_get_template_path($filename,$path=false){
+function rcl_get_template_path($temp_name,$path=false){
     
-    if(file_exists(RCL_TAKEPATH.'templates/'.$filename)) 
-            return RCL_TAKEPATH.'templates/'.$filename;
+    if(file_exists(RCL_TAKEPATH.'templates/'.$temp_name)) 
+            return RCL_TAKEPATH.'templates/'.$temp_name;
     
     $path = ($path)? rcl_addon_path($path).'templates/': RCL_PATH.'templates/';
     
-    $filepath = $path.$filename;
+    $filepath = $path.$temp_name;
     
-    $filepath = apply_filters('rcl_template_path',$filepath,$filename);
+    $filepath = apply_filters('rcl_template_path',$filepath,$temp_name);
     
     if(!file_exists($filepath)) return false;
 
@@ -18,25 +18,29 @@ function rcl_get_template_path($filename,$path=false){
 }
 
 //подключение указанного файла шаблона с выводом
-function rcl_include_template($file_temp, $path=false, $data = false){
+function rcl_include_template($temp_name, $path = false, $data = false){
     
     if ( ! empty( $data ) && is_array( $data ) ) {
         extract( $data );
     }
     
-    $pathfile = rcl_get_template_path($file_temp, $path);
+    $pathfile = rcl_get_template_path($temp_name, $path);
     
     if(!$pathfile) 
         return false;
     
+    do_action('rcl_include_'.$temp_name.'_before', $path);
+    
     include $pathfile;
+    
+    do_action('rcl_include_'.$temp_name.'_after', $path);
     
 }
 
 //подключение указанного файла шаблона без вывода
-function rcl_get_include_template($file_temp, $path=false, $data = false){
+function rcl_get_include_template($temp_name, $path=false, $data = false){
     ob_start();
-    rcl_include_template($file_temp, $path, $data);
+    rcl_include_template($temp_name, $path, $data);
     $content = ob_get_contents();
     ob_end_clean();
     return $content;

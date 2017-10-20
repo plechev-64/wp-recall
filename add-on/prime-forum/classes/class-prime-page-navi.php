@@ -29,7 +29,8 @@ class PrimePageNavi extends Rcl_PageNavi{
         parent::__construct(false,$itemsAmount,
             array(
                 'in_page' => $inPage,
-                'current_page' => $currentPage
+                'current_page' => $currentPage,
+                'ajax' => false
             )
         );
     }

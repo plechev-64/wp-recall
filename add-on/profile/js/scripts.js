@@ -29,6 +29,7 @@ function rcl_check_profile_form(){
     var requireds = new Array;
     
     form.find(':required').each(function(){
+        if(jQuery(this).is(':disabled')) return;
         var i = requireds.length;
         requireds[i] = jQuery(this).attr('name');
     });

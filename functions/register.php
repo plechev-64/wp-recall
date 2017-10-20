@@ -484,39 +484,50 @@ function rcl_secondary_password($fields){
 add_filter('regform_fields_rcl','rcl_custom_fields_regform',20);
 function rcl_custom_fields_regform($content){
     
+    $regFields = array();
+    
     $fields = rcl_get_profile_fields();
 
     if($fields){
-        
-        $fields = stripslashes_deep($fields);
-
-        $cf = new Rcl_Custom_Fields();
 
         foreach($fields as $field){
             
             if(!isset($field['register']) || $field['register']!=1) continue;
             
-            $field['value_in_key'] = true;
-
-            $field = apply_filters('custom_field_regform',$field);
-
-            $class = (isset($field['class']))? $field['class']: '';
-            $id = (isset($field['id']))? 'id='.$field['id']: '';
-            $attr = (isset($field['attr']))? ''.$field['attr']: '';
-
-            $content .= '<div class="form-block-rcl '.$class.'" '.$id.' '.$attr.'>';
-            $star = ($field['required']==1)? ' <span class="required">*</span> ': '';
-            $content .= '<label>'.$cf->get_title($field).$star;
-            if($field['type']) 
-                $content .= '<span class="colon">:</span>';
-            $content .= '</label>';
+            if(!isset($field['value_in_key'])) $field['value_in_key'] = true;
             
-            $value = (isset($_POST[$field['slug']]))? $_POST[$field['slug']]: false;
-
-            $content .= $cf->get_input($field, $value);
-            $content .= '</div>';
+            $regFields[] = $field;
 
         }
+        
+    }
+    
+    $regFields = apply_filters('rcl_register_form_fields', stripslashes_deep($regFields));
+    
+    if(!$regFields) return $content;
+
+    $cf = new Rcl_Custom_Fields();
+
+    foreach($regFields as $field){
+
+        $field = apply_filters('custom_field_regform',$field);
+
+        $class = (isset($field['class']))? $field['class']: '';
+        $id = (isset($field['id']))? 'id='.$field['id']: '';
+        $attr = (isset($field['attr']))? ''.$field['attr']: '';
+
+        $content .= '<div class="form-block-rcl '.$class.'" '.$id.' '.$attr.'>';
+        $star = ($field['required']==1)? ' <span class="required">*</span> ': '';
+        $content .= '<label>'.$cf->get_title($field).$star;
+        if($field['type']) 
+            $content .= '<span class="colon">:</span>';
+        $content .= '</label>';
+
+        $value = (isset($_POST[$field['slug']]))? $_POST[$field['slug']]: false;
+
+        $content .= $cf->get_input($field, $value);
+        $content .= '</div>';
+
     }
     
     return $content;

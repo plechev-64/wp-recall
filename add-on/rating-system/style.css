@@ -280,7 +280,7 @@
     opacity:1;
 }
 .rcl-rating-box .rating-wrapper > span i{
-    color:inherit!important;
+    color:inherit;
     padding: 0!important;
 }
 .rcl-rating-box .rating-wrapper .rating-value{
@@ -309,6 +309,9 @@
 .rcl-rating-box .rating-wrapper .rating-value .rating-plus{
     color: #3ad11f;
 }
+.rcl-rating-box.box-stars .rating-wrapper .rating-value .rating-plus{
+    color: #787878;
+}
 .rcl-rating-box .rating-wrapper .rating-value .rating-minus{
     color: #ff6262;
 }
@@ -325,4 +328,38 @@
 .rcl-rating-box .rating-wrapper .vote-minus:hover,
 .rcl-rating-box .rating-wrapper .user-vote.vote-minus{
     color: #ff6262;
+}
+.rcl-rating-box.box-stars .rating-value{
+    font-size: 20px;
+}
+.rcl-rating-box.box-stars .stars-wrapper .stars__out {
+    color: #d5d5d5;
+    font-size: 22px;
+    margin-right: 1px;
+    position: relative;
+    z-index: 1;
+}
+.rcl-rating-box.box-stars .stars-wrapper .stars__in {
+    color: orange;
+    display: block;
+    font-size: inherit;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    width: 0;
+    z-index: 2;
+}
+.rcl-rating-box.box-stars .must-vote:hover span{
+    opacity:1;
+}
+.rcl-rating-box.box-stars .must-vote:hover span.stars__out{
+    color: orange;  
+}
+.rcl-rating-box.box-stars .must-vote:hover span.stars__in{
+    color: inherit;
+}
+.rcl-rating-box.box-stars .must-vote .rating-vote:hover ~ .rating-vote > span.stars__out{
+    color: #ccc;
 }

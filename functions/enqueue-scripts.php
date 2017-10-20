@@ -99,7 +99,29 @@ function rcl_frontend_scripts(){
 
     rcl_enqueue_script( 'rcl-core-scripts', RCL_URL.'assets/js/core.js' );
     rcl_enqueue_script( 'rcl-primary-scripts', RCL_URL.'assets/js/scripts.js' );
+    
+    $locData = rcl_get_localize_data();
+    
+    if(isset($rcl_options['difficulty_parole'])){
+        if($rcl_options['difficulty_parole']&&(!$user_ID||$user_LK==$user_ID)){
+            $locData['local']['pass0'] = __('Very weak','wp-recall');
+            $locData['local']['pass1'] = __('Weak','wp-recall');
+            $locData['local']['pass2'] = __('Worse than average','wp-recall');
+            $locData['local']['pass3'] = __('Average','wp-recall');
+            $locData['local']['pass4'] = __('Reliable','wp-recall');
+            $locData['local']['pass5'] = __('Strong','wp-recall');
+        }
+    }
 
+    $locData['post_ID'] = (isset($post->ID)&&$post->ID)? (int)$post->ID: (int)0;
+    $locData['office_ID'] = ($user_LK)? (int)$user_LK: (int)0;
+
+    wp_localize_script( 'jquery', 'Rcl', $locData);
+
+}
+
+function rcl_get_localize_data(){
+    
     $local = array(
         'save' => __('Save','wp-recall'),
         'close' =>__('Close','wp-recall'),
@@ -109,17 +131,6 @@ function rcl_frontend_scripts(){
         'loading' => __('Loading','wp-recall'),
         'upload' => __('Upload','wp-recall')
     );
-    
-    if(isset($rcl_options['difficulty_parole'])){
-        if($rcl_options['difficulty_parole']&&(!$user_ID||$user_LK==$user_ID)){
-            $local['pass0'] = __('Very weak','wp-recall');
-            $local['pass1'] = __('Weak','wp-recall');
-            $local['pass2'] = __('Worse than average','wp-recall');
-            $local['pass3'] = __('Average','wp-recall');
-            $local['pass4'] = __('Reliable','wp-recall');
-            $local['pass5'] = __('Strong','wp-recall');
-        }
-    }
 
     $data = array(
         'ajaxurl' => admin_url('admin-ajax.php'),
@@ -130,20 +141,19 @@ function rcl_frontend_scripts(){
         'local' => apply_filters('rcl_js_localize',$local)
     );
 
-    $data['post_ID'] = (isset($post->ID)&&$post->ID)? (int)$post->ID: (int)0;
-    $data['office_ID'] = ($user_LK)? (int)$user_LK: (int)0;
     $data['mobile'] = (wp_is_mobile())? (int)1: (int)0;
     $data['https'] = @( !isset($_SERVER["HTTPS"])||$_SERVER["HTTPS"] != 'on' ) ? (int)0:  (int)1;
     $data['slider'] = (isset($rcl_options['slide-pause'])&&$rcl_options['slide-pause'])? "{auto:true,pause:".($rcl_options['slide-pause']*1000)."}": "''";
     $data['local']['requared_fields_empty'] = __('Fill in all required fields','wp-recall');
     
-    $data = apply_filters('rcl_init_js_variables',$data);
-
-    wp_localize_script( 'jquery', 'Rcl', $data);
-
+    return apply_filters('rcl_init_js_variables',$data);
+ 
 }
 
 function rcl_admin_scrips(){
+    
+    wp_localize_script( 'jquery', 'Rcl', rcl_get_localize_data());
+    
     wp_enqueue_style( 'rcl-admin-style', RCL_URL.'admin/assets/style.css' );
     wp_enqueue_style( 'wp-color-picker' ); 
     wp_enqueue_script( 'jquery' );

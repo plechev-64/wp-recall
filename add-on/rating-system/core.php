@@ -266,7 +266,7 @@ function rcl_rating_navi($args){
 
 function rcl_get_votes_window($args,$votes,$navi=false){
     global $rcl_rating_types;
-
+    
     $list_votes = rcl_get_list_votes($args,$votes);
 
     if(isset($_POST['content'])&&$_POST['content']=='list-votes') return $list_votes;
@@ -307,7 +307,7 @@ function rcl_get_usernames($objects,$name_data){
 
 function rcl_get_list_votes($args,$votes){
     global $rcl_rating_types,$rcl_options,$wpdb;
-
+    
     $list = '<ul class="votes-list">';
 
     if($votes){
@@ -326,7 +326,7 @@ function rcl_get_list_votes($args,$votes){
                 $names[$name->ID] = $name->display_name;
             }
         }
-
+        
         foreach($votes as $vote){
 
             if(isset($rcl_options['rating_temp_'.$vote->rating_type])&&$args['rating_status']=='user'){
@@ -351,7 +351,7 @@ function rcl_get_list_votes($args,$votes){
                 '<a class="" target="_blank" href="'.get_author_posts_url($vote->user_id).'">'.$user_name.'</a>',
                 rcl_format_rating($vote->rating_value)
             );
-
+            
             $row = str_replace($temps,$reps,$row);
 
             if($args['rating_status']=='user'){
@@ -372,9 +372,9 @@ function rcl_get_list_votes($args,$votes){
 
                 $row = str_replace($temps,$reps,$row);
             }
-
+            
             $row = apply_filters('rcl_list_votes',$row,$vote);
-
+            
             $class = ( $vote->rating_value > 0 ) ? 'fa-thumbs-o-up' : 'fa-thumbs-o-down';
             $list .= '<li><i class="fa '.$class.'"></i> '.$row.'</li>';
         }

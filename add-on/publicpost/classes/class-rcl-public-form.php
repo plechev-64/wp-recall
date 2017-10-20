@@ -204,29 +204,52 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $this->user_can = apply_filters('rcl_public_form_user_can', $this->user_can, $this->get_object_form());
 
     }
-
-    function get_form(){
+    
+    function get_errors(){
         global $user_ID;
+        
+        $errors = array();
 
         if(!$this->user_can['publish']){
             
             if(!$user_ID)
-                return '<p align="center" class="rcl-public-notice">'.__('You must be logged in to post. Login or register','wp-recall').'</p>';
-            
-            if($this->post_type == 'post-group'){
-                return '<div class="public-post-group">'
-                            . '<h3 >'.__('Sorry, but you have no rights to publish in this group :(','wp-recall').'</h3>'
-                        . '</div>';
-                
+                $errors[] = __('You must be logged in to post. Login or register','wp-recall');
+            else if($this->post_type == 'post-group'){
+                $errors[] = __('Sorry, but you have no rights to publish in this group :(','wp-recall'); 
+            }else{
+                $errors[] = __('Sorry, but you have no right to post on this site :(','wp-recall');
             }
             
-            return '<p align="center" class="rcl-public-notice">'. __('Sorry, but you have no right to post on this site :(','wp-recall') . '</p>';
-            
+        }else if($this->post_id && !$this->user_can['edit']){
+            $errors[] = __('You can not edit this publication :(','wp-recall');
         }
         
-        if($this->post_id && !$this->user_can['edit'])
-            return '<p align="center" class="rcl-public-notice">'.__('You can not edit this publication :(','wp-recall').'</p>';
+        $errors = apply_filters('rcl_public_form_errors', $errors, $this);
+        
+        return $errors;
+        
+    }
+    
+    function get_errors_content(){
+        
+        $errorContent = '';
+            
+        foreach($this->get_errors() as $error){
+            $errorContent .= '<p align="center" class="rcl-public-notice">'.$error.'</p>';
+        }
+        
+        return $errorContent;
+        
+    }
 
+    function get_form(){
+        global $user_ID;
+        
+        if($this->get_errors()){
+
+            return $this->get_errors_content();
+            
+        }
         
         $dataPost = $this->get_object_form();
         

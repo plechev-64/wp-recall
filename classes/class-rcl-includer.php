@@ -345,7 +345,7 @@ class Rcl_Includer{
 function rcl_enqueue_style($id, $url, $footer = false){
     global $rcl_styles;
     
-    if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+    if(is_admin()){
         
         wp_enqueue_style( $id, $url);
         
@@ -374,7 +374,7 @@ function rcl_enqueue_style($id, $url, $footer = false){
 function rcl_enqueue_script($id, $url, $parents = array(), $in_footer=false){
     global $rcl_scripts;
     
-    if(defined( 'DOING_AJAX' ) && DOING_AJAX){
+    if(is_admin()){
         
         wp_enqueue_script( $id, $url, $parents, false, $in_footer);
         

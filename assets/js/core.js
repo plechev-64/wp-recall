@@ -416,7 +416,7 @@ function rcl_init_ajax_editor(id,options){
         };
         
         tinymce.init(tinyMCEPreInit.mceInit[id]);   
-        tinyMCE.execCommand('mceAddEditor', false, id); 
+        tinyMCE.execCommand('mceAddEditor', true, id); 
         
         switchEditors.go(id, 'html');
     }

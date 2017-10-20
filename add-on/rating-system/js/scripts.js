@@ -32,6 +32,12 @@ function rcl_edit_rating(e){
             }
 
             block.animateCss('zoomIn');
+            
+            if(result.replace_box){
+                
+                parent.replaceWith(result.replace_box);
+                
+            }
 
             rcl_do_action('rcl_edit_rating',{
                 data:block.data('rating'),

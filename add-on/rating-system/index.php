@@ -384,8 +384,6 @@ function rcl_rating_window_content($string){
     $navi = false;
     
     $args = rcl_decode_data_rating($string);
-    
-    //print_r($args);
 
     if($args['rating_status']=='user') 
         $navi = rcl_rating_navi($args);
@@ -394,9 +392,9 @@ function rcl_rating_window_content($string){
     $args['offset'] = 0;
     
     unset($args['user_id']);
-    
-    $votes = rcl_get_vote_values($args);
 
+    $votes = rcl_get_vote_values($args);
+    
     $content = rcl_get_votes_window($args,$votes,$navi);
     
     return $content;
@@ -449,6 +447,8 @@ function rcl_edit_rating_post(){
 
         }
     }
+    
+    $output_type = rcl_get_option('rating_type_'.$args['rating_type'],0);
 
     $value = rcl_get_vote_value($args['user_id'],$args['object_id'],$args['rating_type']);
 
@@ -476,7 +476,8 @@ function rcl_edit_rating_post(){
         
         $type = $args['rating_type'];
         
-        $args['rating_value'] = (isset($rcl_rating_types[$type]['type_point']))? $rcl_rating_types[$type]['type_point']: 1;
+        if(!isset($args['rating_value']) && !$args['rating_value'])
+            $args['rating_value'] = (isset($rcl_rating_types[$type]['type_point']))? $rcl_rating_types[$type]['type_point']: 1;
 
         rcl_insert_rating($args);
 
@@ -486,6 +487,26 @@ function rcl_edit_rating_post(){
     wp_cache_delete(json_encode(array('rcl_get_votes_sum',$args['object_id'],$args['rating_type'])));
     
     $total = rcl_get_total_rating($args['object_id'],$args['rating_type']);
+    
+    if($output_type == 2){ //если звезды
+        
+        $vote_count = rcl_count_rating_values(array(
+            'object_id' => $args['object_id'],
+            'object_author' => $args['object_author'],
+            'rating_type' => $args['rating_type']
+        )); 
+        
+        $item_count = rcl_get_option('rating_item_amount_'.$args['rating_type'], 1);
+        $vote_max = rcl_get_option('rating_point_'.$args['rating_type'], 1);
+        
+        $average_rating = $vote_count? $total / $vote_count: 0;
+        $item_value = $vote_max / $item_count;
+        
+        $total = $average_rating / $item_value;
+        
+        $log['replace_box'] = rcl_get_html_post_rating($args['object_id'],$args['rating_type'],$args['object_author']);
+        
+    }
 
     do_action('rcl_edit_rating_post',$args);
 
@@ -493,6 +514,7 @@ function rcl_edit_rating_post(){
     $log['object_id'] = $args['object_id'];
     $log['rating_type'] = $args['rating_type'];
     $log['rating'] = rcl_format_rating($total);
+    $log['output_type'] = $output_type;
 
     wp_send_json($log);
 

@@ -349,13 +349,15 @@ class Rcl_Custom_Fields{
         wp_editor( $this->value, $editor_id, $data );
         
         if(defined( 'DOING_AJAX' )){
-            global $wp_scripts;
+            global $wp_scripts, $wp_styles;
             
-            $scripts = array(
+            $wp_scripts->do_items(array(
                 'quicktags'
-            );
+            ));
             
-            $wp_scripts->do_items($scripts);
+            $wp_styles->do_items(array(
+                'buttons'
+            ));
         }
 
         $content = ob_get_contents();
@@ -467,6 +469,10 @@ class Rcl_Custom_Fields{
                 }
             }
             
+        }else if($field['type'] == 'editor'){
+            
+            $value = $value;
+            
         }else{
             
             $value = esc_html($value);
@@ -489,7 +495,7 @@ class Rcl_Custom_Fields{
                 $show = '<a rel="nofollow" target="_blank" href="mailto:'.$value.'">'.$value.'</a>';
         if($field['type']=='url')
                 $show = '<a rel="nofollow" target="_blank" href="'.$value.'">'.$value.'</a>';            
-        if($field['type']=='textarea')
+        if($field['type']=='textarea' || $field['type']=='editor')
                 $show = nl2br($value);
         if($field['type']=='agree')
                 $show = __('Accepted','wp-recall');
@@ -588,12 +594,12 @@ function rcl_upload_meta_file($field, $user_id, $post_id = 0){
     }
 }
 
-function rcl_get_custom_fields($post_id,$post_type=false,$id_form=false){
+function rcl_get_custom_fields($post_id, $post_type = false, $id_form = false){
 
     if($post_id){
-            $post = get_post($post_id);
-            $post_type = $post->post_type;
-        }
+        $post = get_post($post_id);
+        $post_type = $post->post_type;
+    }
 
     switch($post_type){
         case 'post':
@@ -604,7 +610,8 @@ function rcl_get_custom_fields($post_id,$post_type=false,$id_form=false){
         default: $id_field = 'rcl_fields_'.$post_type;
     }
 
-    return get_option($id_field);
+    return apply_filters('rcl_custom_fields_post', get_option($id_field), $post_id, $post_type);
+    
 }
 
 add_action('wp','rcl_download_file');

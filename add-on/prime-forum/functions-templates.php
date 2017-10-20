@@ -118,6 +118,8 @@ function pfm_class_forum(){
         
     }
     
+    $classes = apply_filters('pfm_classes', $classes);
+    
     return implode(' ',$classes);
 } 
 

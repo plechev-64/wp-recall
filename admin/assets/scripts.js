@@ -26,14 +26,14 @@ jQuery(function($){
     $("#recall").find(".parent-select").each(function(){
         var id = $(this).attr('id');
         var val = $(this).val();
-        $('#'+id+'-'+val).show();
+        $('.child-select.'+id+'-'+val).show();
     });
 
     $('.parent-select').change(function(){
         var id = $(this).attr('id');
         var val = $(this).val();
         $('.'+id).slideUp();
-        $('#'+id+'-'+val).slideDown();		
+        $('.child-select.'+id+'-'+val).slideDown();		
     });
     
     $('#rcl-custom-fields-editor').on('change','.select-type-field', function (){

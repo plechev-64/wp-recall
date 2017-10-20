@@ -970,23 +970,31 @@ function rcl_update_profile_fields($user_id){
             'primary_pass',
             'repeat_pass'
         );
-        
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-        
+ 
         foreach($profileFields as $field){
-            
+
             if(isset($field['field_select']))
                 $field['values'] = $field['field_select'];
             
-            $field = apply_filters('rcl_pre_update_profile_field', $field);
+            $field = apply_filters('rcl_pre_update_profile_field', $field, $user_id);
 
             if(!$field || !$field['slug']) continue;
 
             $slug = $field['slug'];
-            
+
             $value = (isset($_POST[$slug]))? $_POST[$slug]: false;
             
-            if($field['admin']==1&&!is_admin()){
+            if($field['type'] != 'editor'){
+                
+                if(is_array($value)){
+                    $value = array_map('esc_html',$value);
+                }else{
+                    $value = esc_html($value);
+                }
+
+            }
+            
+            if($field['admin'] == 1 && !is_admin()){
                 
                 if(in_array($slug,array('display_name','user_url'))){
                     

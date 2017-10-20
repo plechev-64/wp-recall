@@ -566,6 +566,9 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
 .rcl-custom-fields-box [data-type="dynamic"] .field-type::before {
     content: "\f502";
 }
+.rcl-custom-fields-box [data-type="editor"] .field-type::before {
+    content: "\f212";
+}
 .rcl-custom-fields-box [data-type="custom"] .field-type::before {
     content: "\f111";
 }
@@ -697,7 +700,6 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     height: 22px;
     padding: 2px;
     position: absolute;
-    right: 40px;
     top: 4px;
 }
 .rcl-custom-fields-box .rcl-custom-field a .fa-minus::before {

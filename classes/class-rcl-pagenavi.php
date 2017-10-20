@@ -15,6 +15,7 @@ class Rcl_PageNavi{
     public $ajax = false;//указание использования ajax
     
     function __construct($pager_id,$data_amount,$custom = array()){
+        global $rcl_tab;
         
         $this->pager_id = $pager_id;
         
@@ -26,6 +27,12 @@ class Rcl_PageNavi{
         if(defined( 'DOING_AJAX' ) && DOING_AJAX && isset($_POST['tab_url'])){
             $post = rcl_decode_post($_POST['post']);
             $this->current_page = $post->page;
+        }
+        
+        if($rcl_tab){
+            if(in_array('ajax',$rcl_tab->supports)){
+                $this->ajax = true;
+            }
         }
         
         $this->data_amount = $data_amount;        
@@ -51,8 +58,6 @@ class Rcl_PageNavi{
                 $this->ajax = $this->custom['ajax'];
         }
         
-        add_filter('rcl_page_link_attributes',array($this,'add_ajax_tab_attributes'));
-        
         if($this->current_page==0)
             $this->current_page = 1;
 
@@ -60,6 +65,10 @@ class Rcl_PageNavi{
         $this->pages_amount = ceil($this->data_amount/$this->in_page);
         
         $this->uri_data_init();
+    }
+    
+    function __destruct() {
+        remove_all_filters('rcl_page_link_attributes');
     }
     
     function uri_data_init(){
@@ -164,7 +173,7 @@ class Rcl_PageNavi{
     }
     
     function pagenavi($classes = ''){
-        global $rcl_tab;
+        global $rcl_tab, $user_LK;
         
         if(!$this->data_amount||$this->pages_amount==1) return false;
         
@@ -173,12 +182,6 @@ class Rcl_PageNavi{
         $class = 'rcl-pager';
         
         if($classes) $class .= $class.' '.$classes;
-        
-        if($rcl_tab){
-            if(in_array('ajax',$rcl_tab->supports)){
-                $this->ajax = true;
-            }
-        }
 
         if($this->ajax){
             $class = $class.' rcl-ajax-navi';
@@ -199,6 +202,19 @@ class Rcl_PageNavi{
                                 'pager-id'=>$this->pager_id
                             )
                         );
+                        
+                        if($this->ajax && rcl_is_office()){
+
+                            $attrs['data']['post'] = rcl_encode_post(array(
+                                'tab_id'=>$rcl_tab->id,
+                                'subtab_id'=>$rcl_tab->active_subtab,
+                                'master_id'=>$user_LK,
+                                'page'=>$attrs['data']['page'],
+                            ));
+
+                            $attrs['class'] = 'rcl-ajax';
+
+                        }
 
                         $attrs = apply_filters('rcl_page_link_attributes',$attrs);
                         
@@ -217,24 +233,6 @@ class Rcl_PageNavi{
         $content .= '</div>';
         
         return $content;
-    }
-    
-    function add_ajax_tab_attributes($attrs){
-        global $rcl_tab,$user_LK;
-        
-        if($rcl_tab){
-            if($this->ajax){
-                $attrs['data']['post'] = rcl_encode_post(array(
-                    'tab_id'=>$rcl_tab->id,
-                    'subtab_id'=>$rcl_tab->active_subtab,
-                    'master_id'=>$user_LK,
-                    'page'=>$attrs['data']['page'],
-                ));
-                $attrs['class'] = 'rcl-ajax';
-            }
-        }
-        
-        return $attrs;
     }
     
     function get_string_attributes($attrs){

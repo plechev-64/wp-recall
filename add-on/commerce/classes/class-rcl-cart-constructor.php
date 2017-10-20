@@ -66,7 +66,7 @@ class Rcl_Cart_Constructor {
                 
                 foreach($this->fields as $field){
                     
-                    $field['value_in_key'] = true;
+                    if(!isset($field['value_in_key'])) $field['value_in_key'] = true;
 
                     $required = ($field['required'] == 1)? '<span class="required">*</span>': '';
 

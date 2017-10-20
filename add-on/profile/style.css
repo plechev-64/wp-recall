@@ -29,6 +29,9 @@
     max-width: 100%;
     width: 100%;
 }
+#tab-profile .wp-editor-container input{
+    width:auto;
+}
 #tab-profile table input:focus:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
 #tab-profile table textarea:focus {
     background: #fff;

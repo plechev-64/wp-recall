@@ -47,7 +47,18 @@ class Rcl_Options extends Rcl_Custom_Fields{
     }
 
     function child($args,$conts){
-        $return = '<div class="child-select '.$args['name'].'" id="'.$args['name'].'-'.$args['value'].'">';
+        
+        $childClass = array('child-select',$args['name']);
+        
+        if(is_array($args['value'])){
+            foreach($args['value'] as $val){
+                $childClass[] = $args['name'].'-'.$val;
+            }
+        }else{
+            $childClass[] = $args['name'].'-'.$args['value'];
+        }
+        
+        $return = '<div class="'.implode(' ', $childClass).'">';
         foreach($conts as $content){
             $return .= $content;
         }

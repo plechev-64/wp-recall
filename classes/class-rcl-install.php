@@ -258,6 +258,7 @@ class RCL_Install {
             );
 
             update_option('default_role','author');
+            update_option('users_can_register',1);
 
         }else{
 
