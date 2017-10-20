@@ -48,6 +48,7 @@
     padding: 0;
     text-transform: none;
     vertical-align: middle;
+    width: 60px;
 }
 #ui-datepicker-div .ui-datepicker-calendar {
     background: #f3f3f3;

@@ -361,6 +361,51 @@ function rcl_init_field_file(field_id){
     
 }
 
+function rcl_init_runner(props){
+
+    var box = jQuery( '#rcl-runner-' + props.id );
+    
+    box.children('.rcl-runner-box').slider({
+        value : parseInt(props.value),
+        min : parseInt(props.min),
+        max : parseInt(props.max),
+        step : parseInt(props.step),
+        create: function( event, ui ) {
+            var value = box.children('.rcl-runner-box').slider( 'value' );
+            box.children('.rcl-runner-value').text( value );
+            box.children('.rcl-runner-field').val( value );
+        },
+        slide: function( event, ui ) {
+            box.children('.rcl-runner-value').text( ui.value );
+            box.children('.rcl-runner-field').val( ui.value );
+        }
+    });
+}
+
+function rcl_init_range(props){
+
+    var box = jQuery( '#rcl-range-' + props.id );
+    
+    box.children('.rcl-range-box').slider({
+        range: true,
+        values : [ parseInt(props.values[0]), parseInt(props.values[1]) ],
+        min : parseInt(props.min),
+        max : parseInt(props.max),
+        step : parseInt(props.step),
+        create: function( event, ui ) {
+            var values = box.children('.rcl-range-box').slider( 'values' );
+            box.children('.rcl-range-value').text( values[0] + ' - ' + values[1]);
+            box.children('.rcl-range-min').val( values[0] );
+            box.children('.rcl-range-max').val( values[1] );
+        },
+        slide: function( event, ui ) {
+            box.children('.rcl-range-value').text( ui.values[0] + ' - ' + ui.values[1] );
+            box.children('.rcl-range-min').val( ui.values[0] );
+            box.children('.rcl-range-max').val( ui.values[1] );
+        }
+    });
+}
+
 function rcl_init_field_maxlength(fieldID){
     
     var field = jQuery('#'+fieldID);

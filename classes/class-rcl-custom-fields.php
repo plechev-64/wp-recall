@@ -374,8 +374,59 @@ class Rcl_Custom_Fields{
         return $content;
     }
     
-    function get_type_textarea($field){
-        return '<textarea name="'.$field['name'].'" '.$this->maxlength.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' id="'.$this->slug.'" rows="5" cols="50">'.$this->value.'</textarea>';
+    function get_type_runner($field){
+        
+        rcl_slider_scripts();
+        
+        $content = '<div id="rcl-runner-'.$this->slug.'" class="rcl-runner">';
+            $content .= '<span class="rcl-runner-value"></span>';
+            $content .= '<div class="rcl-runner-box"></div>';
+            $content .= '<input type="hidden" class="rcl-runner-field" id="'.$this->slug.'" name="'.$field['name'].'" value="'.$field['runner_min'].'">';
+        $content .= '</div>';
+        
+        $init = 'rcl_init_runner('.json_encode(array(
+                'id' => $field['name'],
+                'value' => $this->value? $this->value: 0,
+                'min' => $field['runner_min'],
+                'max' => $field['runner_max'],
+                'step' => $field['runner_step']
+            )).');';
+        
+        if(!defined( 'DOING_AJAX' )){
+            $content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
+        }else{
+            $content .= '<script>' . $init . '</script>';
+        }
+        
+        return $content;
+    }
+    
+    function get_type_range($field){
+        
+        rcl_slider_scripts();
+        
+        $content = '<div id="rcl-range-'.$this->slug.'" class="rcl-range">';
+            $content .= '<span class="rcl-range-value">'.(implode(' - ', array($field['runner_min'], $field['runner_max']))).'</span>';
+            $content .= '<div class="rcl-range-box"></div>';
+            $content .= '<input type="hidden" class="rcl-range-min" name="'.$field['name'].'[]" value="'.$field['runner_min'].'">';
+            $content .= '<input type="hidden" class="rcl-range-max" name="'.$field['name'].'[]" value="'.$field['runner_max'].'">';
+        $content .= '</div>';
+        
+        $init = 'rcl_init_range('.json_encode(array(
+                'id' => $field['name'],
+                'values' => $this->value? $this->value: array($field['range_min'],$field['range_max']),
+                'min' => $field['range_min'],
+                'max' => $field['range_max'],
+                'step' => $field['range_step']
+            )).');';
+        
+        if(!defined( 'DOING_AJAX' )){
+            $content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
+        }else{
+            $content .= '<script>' . $init . '</script>';
+        }
+        
+        return $content;
     }
 
     function get_type_agree($field){
@@ -388,6 +439,10 @@ class Rcl_Custom_Fields{
         $input .= '</span>';
         
         return $input;
+    }
+    
+    function get_type_textarea($field){
+        return '<textarea name="'.$field['name'].'" '.$this->maxlength.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' id="'.$this->slug.'" rows="5" cols="50">'.$this->value.'</textarea>';
     }
     
     function get_type_text($field){
@@ -461,11 +516,16 @@ class Rcl_Custom_Fields{
                 $value = $links;
             }
             
-            $array_types = array('checkbox','multiselect','dynamic');
+            $array_types = array('checkbox','multiselect','dynamic','range');
             
             if(in_array($field['type'],$array_types)){
                 if($value){
-                    $show = implode(', ',$value);
+                    if($field['type'] == 'range'){
+                        $show = __('от','wp-recall').' '.$value[0].' '.__('до','wp-recall').' '.$value[1];
+                    }else{
+                        $show = implode(', ',$value);
+                    }
+                    
                 }
             }
             
@@ -483,7 +543,7 @@ class Rcl_Custom_Fields{
 
         }
         
-        $types = array('text','tel','time','date','number','select','radio');
+        $types = array('text','tel','time','date','number','select','radio','runner');
             
         if(in_array($field['type'],$types)){
             $show = $value;

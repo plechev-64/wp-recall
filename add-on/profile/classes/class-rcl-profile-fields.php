@@ -133,6 +133,23 @@ class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
             
         }
         
+        $types = array(
+            'range',
+            'runner'
+        );
+        
+        if(in_array($field['type'],$types)){
+            
+            foreach($options as $k => $option){
+                
+                if($option['slug'] == 'required'){
+                    unset($options[$k]);
+                }
+ 
+            }
+            
+        }
+        
         return $options;
         
     }

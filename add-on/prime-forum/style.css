@@ -142,17 +142,7 @@
     display: inline-block;
     position: relative;
 }
-#prime-topic-form-box #qt_button_strong input,
-#prime-topic-form-box #qt_button_em input,
-#prime-topic-form-box #qt_button_link input,
-#prime-topic-form-box #qt_button_block input,
-#prime-topic-form-box #qt_button_del input,
-#prime-topic-form-box #qt_button_pfm_pre input,
-#prime-topic-form-box #qt_button_code input,
-#prime-topic-form-box #qt_button_pfm_offtop input,
-#prime-topic-form-box #qt_button_pfm_spoiler input,
-#prime-topic-form-box #qt_button_close input,
-#prime-topic-form-box #qt_button_img input{
+#commentform span[id^="qt_button"] input{
     height: auto;
     line-height: 24px;
     margin: 0 4px 4px 0;

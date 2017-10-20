@@ -424,7 +424,7 @@ function rcl_add_registered_scripts($content){
     
     add_filter('script_loader_src','rcl_ajax_edit_version_scripts');
     
-    $content .= $Rcl_Include->get_ajax_includes();
+    $content = $Rcl_Include->get_ajax_includes() . $content;
     
     return $content;
     

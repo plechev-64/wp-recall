@@ -485,6 +485,9 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     vertical-align: top;
     width: calc(100% - 20px);
 }
+#profile-page .rcl-custom-fields-box{
+    max-width: 700px;
+}
 .rcl-custom-fields-box > h3 {
     font-size: 18px;
     margin: 0;
@@ -569,6 +572,12 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
 .rcl-custom-fields-box [data-type="editor"] .field-type::before {
     content: "\f212";
 }
+.rcl-custom-fields-box [data-type="runner"] .field-type::before {
+    content: "\f229";
+}
+.rcl-custom-fields-box [data-type="range"] .field-type::before {
+    content: "\f108";
+}
 .rcl-custom-fields-box [data-type="custom"] .field-type::before {
     content: "\f111";
 }
@@ -630,6 +639,9 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
 .rcl-custom-fields-box .rcl-custom-field textarea {
     box-sizing: border-box;
     width: 100%;
+}
+.rcl-custom-fields-box .wp-editor-container input{
+    width: auto;
 }
 .rcl-custom-fields-box input[type="radio"]{
     margin: 0 0 0 5px;
@@ -910,6 +922,54 @@ span.ruble-symbol{
 }
 #rcl-reg-form input[type="submit"]{
     
+}
+
+/*бегунок*/
+.rcl-runner,
+.rcl-range{
+    padding: 0 15px;
+}
+.rcl-runner .rcl-runner-value,
+.rcl-range .rcl-range-value{
+    font-weight: bold;
+    font-size: 18px;
+    vertical-align: middle;
+    display: inline-block;
+    min-width: 115px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.rcl-runner .rcl-runner-box,
+.rcl-range .rcl-range-box{
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
+                0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+    display: inline-block;
+    margin: 0;
+    height: 10px;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    width: 100%;
+    max-width: 500px;
+}
+.rcl-runner .rcl-runner-box .ui-slider-handle,
+.rcl-range .rcl-range-box .ui-slider-handle{
+    background: -webkit-linear-gradient(top, #fff, #ddd);
+    background: linear-gradient(to bottom, #fff, #ddd);
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4),
+                0 8px 6px rgba(0, 0, 0, 0.1);
+    cursor: ew-resize;
+    margin-left: -.6em;
+    position: absolute;
+    top: -4px;
+    -ms-touch-action: none;
+    touch-action: none;
+    height: 18px;
+    width: 18px;
+    z-index: 1;
 }
 
 @media screen and (max-width:568px) {
