@@ -1,5 +1,10 @@
+#options-prime-forum.wrap-recall-options{
+    display: block;
+    padding: 0;
+    border: none;
+}
 #prime-options{
-    width:400px;
+    max-width: 550px;
 }
 #prime-options h3{
     margin: 5px 0;

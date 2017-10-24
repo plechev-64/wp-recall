@@ -7,128 +7,121 @@ function rcl_chat_options($content){
     $content .= $opt->options(
         __('IM settings','wp-recall'),
         array(
-            $opt->option_block(
+            $opt->options_box(
+                __('General settings','wp-recall'),
                 array(
-
-                    $opt->title(__('General settings','wp-recall')),
-
-                    $opt->option('number',array(
-                        'label'=>__('Delay between requests','wp-recall'),
-                        'name'=>'delay',
+                    array(
+                        'type' => 'number',
+                        'title'=>__('Delay between requests','wp-recall'),
+                        'slug'=>'delay',
                         'group'=>'chat',
                         'default'=>15,
                         'notice'=>__('In seconds. It is recommended to choose at least 10 seconds','wp-recall'),
-                    )),
-
-                    $opt->option('number',array(
-                        'label'=>__('User Downtime','wp-recall'),
-                        'name'=>'inactivity',
+                    ),
+                    array(
+                        'type' => 'number',
+                        'title'=>__('User Downtime','wp-recall'),
+                        'slug'=>'inactivity',
                         'group'=>'chat',
                         'default'=>10,
-                        'notice'=>__('"In minutes. The time of user inactivity after which he ceases to receive new messages in chat','wp-recall'),
-                    )),
-
-                    $opt->option('number',array(
-                        'label'=>__('The number of characters in the message','wp-recall'),
-                        'name'=>'words',
+                        'notice'=>__('"In minutes. The time of user inactivity after which he ceases to receive new messages in chat','wp-recall')
+                    ),
+                    array(
+                        'type' => 'number',
+                        'title'=>__('The number of characters in the message','wp-recall'),
+                        'slug'=>'words',
                         'group'=>'chat',
                         'default'=>300
-                    )),
-
-                    $opt->option('number',array(
-                        'label'=>__('Posts per page','wp-recall'),
-                        'name'=>'in_page',
+                    ),
+                    array(
+                        'type' => 'number',
+                        'title'=>__('Posts per page','wp-recall'),
+                        'slug'=>'in_page',
                         'group'=>'chat',
                         'default'=>50
-                    )),
-                    
-                    $opt->option('select',array(
-                        'label'=>__('Using OEMBED','wp-recall'),
-                        'name'=>'oembed',
+                    ),
+                    array(
+                        'type' => 'select',
+                        'title'=>__('Using OEMBED','wp-recall'),
+                        'slug'=>'oembed',
                         'group'=>'chat',
-                        'parent'=>true,
-                        'options'=>array(
+                        'values'=>array(
                             __('No','wp-recall'),
                             __('Yes','wp-recall')),
                         'notice'=>__('Option is responsible for the incorporation of media content, such as from Youtube or Twitter from the link','wp-recall'),
-                    )),
-
-                    $opt->option('select',array(
-                        'label'=>__('Attaching files','wp-recall'),
-                        'name'=>'file_upload',
+                    ),
+                    array(
+                        'type' => 'select',
+                        'title'=>__('Attaching files','wp-recall'),
+                        'slug'=>'file_upload',
                         'group'=>'chat',
-                        'parent'=>true,
-                        'options'=>array(
+                        'child'=>true,
+                        'values'=>array(
                             __('No','wp-recall'),
-                            __('Yes','wp-recall'))
-                    )),
-                    $opt->child(
-                        array(
-                            'name'=>'file_upload',
-                            'value'=>1
-                        ),
-                        array(
-                            $opt->option('text',array(
-                                'label'=>__('Allowed file types','wp-recall'),
-                                'name'=>'file_types',
-                                'group'=>'chat',
-                                'default'=>'jpeg, jpg, png, zip, mp3',
-                                'notice'=>__('By default: jpeg, jpg, png, zip, mp3','wp-recall')
-                            )),
-                            $opt->option('number',array(
-                                'label'=>__('Maximum file size','wp-recall'),
-                                'name'=>'file_size',
-                                'group'=>'chat',
-                                'default'=>2
-                            ))
-                        )
+                            __('Yes','wp-recall')
+                        ) 
+                    ),
+                    array(
+                        'parent' => array( 'file_upload' => 1 ),
+                        'type' => 'text',
+                        'title'=>__('Allowed file types','wp-recall'),
+                        'slug'=>'file_types',
+                        'group'=>'chat',
+                        'default'=>'jpeg, jpg, png, zip, mp3',
+                        'notice'=>__('By default: jpeg, jpg, png, zip, mp3','wp-recall')
+                    ),
+                    array(
+                        'parent' => array( 'file_upload' => 1 ),
+                        'type' => 'runner',
+                        'value_min' => 1,
+                        'value_max' => 10,
+                        'value_step' => 1,
+                        'default' => 2,
+                        'title'=>__('Maximum file size, MB','wp-recall'),
+                        'slug'=>'file_size',
+                        'group'=>'chat',
+                        'default'=>2
                     )
                 )
             ),
-            $opt->option_block(
+            $opt->options_box(
+                __('Personal chat','wp-recall'),
                 array(
-
-                    $opt->title(__('Personal chat','wp-recall')),
-
-                    $opt->option('number',array(
-                        'label'=>__('Number of messages in the conversation','wp-recall'),
-                        'name'=>'messages_amount',
+                    array(
+                        'type' => 'number',
+                        'title'=>__('Number of messages in the conversation','wp-recall'),
+                        'slug'=>'messages_amount',
                         'group'=>'chat',
                         'default'=>100,
                         'notice'=>__('The maximum number of messages in the conversation between two users. Default: 100','wp-recall')
-                    )),
-                    $opt->option('select',array(
-                        'name'=>'messages_mail',
-                        'label'=>__('Mail alert','wp-recall'),
-                        'options'=>array(
+                    ),
+                    array(
+                        'type' => 'select',
+                        'slug'=>'messages_mail',
+                        'title'=>__('Mail alert','wp-recall'),
+                        'values'=>array(
                             __('Without the text of the message','wp-recall'),
                             __('Full text of the message','wp-recall'))
-                    )),
-                    $opt->option('select',array(
-                        'label'=>__('Contacts bar','wp-recall'),
-                        'name'=>'contact_panel',
+                    ),
+                    array(
+                        'type' => 'select',
+                        'title'=>__('Contacts bar','wp-recall'),
+                        'slug'=>'contact_panel',
                         'group'=>'chat',
-                        'parent'=>true,
-                        'options'=>array(
+                        'child'=>true,
+                        'values'=>array(
                             __('No','wp-recall'),
                             __('Yes','wp-recall'))
-                    )),
-                    $opt->child(
-                        array(
-                            'name'=>'contact_panel',
-                            'value'=>1
-                        ),
-                        array(
-                            $opt->option('select',array(
-                                'label'=>__('Output location','wp-recall'),
-                                'name'=>'place_contact_panel',
-                                'group'=>'chat',
-                                'parent'=>true,
-                                'options'=>array(
-                                    __('Right','wp-recall'),
-                                    __('Left','wp-recall'))
-                            ))
-                        )
+                    ),
+                    array(
+                        'type' => 'select',
+                        'parent' => array('contact_panel'=>1),
+                        'title'=>__('Output location','wp-recall'),
+                        'slug'=>'place_contact_panel',
+                        'group'=>'chat',
+                        'values'=>array(
+                            __('Right','wp-recall'),
+                            __('Left','wp-recall'))
                     )
                 )
             )

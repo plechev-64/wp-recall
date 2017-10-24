@@ -378,18 +378,24 @@ class Rcl_Custom_Fields{
         
         rcl_slider_scripts();
         
-        $content = '<div id="rcl-runner-'.$this->slug.'" class="rcl-runner">';
+        $idRunner = rand(0,10000);
+        
+        $min = isset($field['value_min'])? $field['value_min']: 0;
+        $max = isset($field['value_max'])? $field['value_max']: 100;
+        $step = isset($field['value_step'])? $field['value_step']: 1;
+        
+        $content = '<div id="rcl-runner-'.$idRunner.'" class="rcl-runner">';
             $content .= '<span class="rcl-runner-value"></span>';
             $content .= '<div class="rcl-runner-box"></div>';
-            $content .= '<input type="hidden" class="rcl-runner-field" id="'.$this->slug.'" name="'.$field['name'].'" value="'.$field['runner_min'].'">';
+            $content .= '<input type="hidden" class="rcl-runner-field" id="'.$this->slug.'" name="'.$field['name'].'" value="'.$min.'">';
         $content .= '</div>';
         
         $init = 'rcl_init_runner('.json_encode(array(
-                'id' => $field['name'],
+                'id' => $idRunner,
                 'value' => $this->value? $this->value: 0,
-                'min' => $field['runner_min'],
-                'max' => $field['runner_max'],
-                'step' => $field['runner_step']
+                'min' => $min,
+                'max' => $max,
+                'step' => $step,
             )).');';
         
         if(!defined( 'DOING_AJAX' )){
@@ -405,19 +411,25 @@ class Rcl_Custom_Fields{
         
         rcl_slider_scripts();
         
-        $content = '<div id="rcl-range-'.$this->slug.'" class="rcl-range">';
-            $content .= '<span class="rcl-range-value">'.(implode(' - ', array($field['runner_min'], $field['runner_max']))).'</span>';
+        $idRunner = rand(0,10000);
+        
+        $min = isset($field['value_min'])? $field['value_min']: 0;
+        $max = isset($field['value_max'])? $field['value_max']: 100;
+        $step = isset($field['value_step'])? $field['value_step']: 1;
+        
+        $content = '<div id="rcl-range-'.$idRunner.'" class="rcl-range">';
+            $content .= '<span class="rcl-range-value">'.(implode(' - ', array($min, $max))).'</span>';
             $content .= '<div class="rcl-range-box"></div>';
-            $content .= '<input type="hidden" class="rcl-range-min" name="'.$field['name'].'[]" value="'.$field['runner_min'].'">';
-            $content .= '<input type="hidden" class="rcl-range-max" name="'.$field['name'].'[]" value="'.$field['runner_max'].'">';
+            $content .= '<input type="hidden" class="rcl-range-min" name="'.$field['name'].'[]" value="'.$min.'">';
+            $content .= '<input type="hidden" class="rcl-range-max" name="'.$field['name'].'[]" value="'.$max.'">';
         $content .= '</div>';
         
         $init = 'rcl_init_range('.json_encode(array(
-                'id' => $field['name'],
-                'values' => $this->value? $this->value: array($field['range_min'],$field['range_max']),
-                'min' => $field['range_min'],
-                'max' => $field['range_max'],
-                'step' => $field['range_step']
+                'id' => $idRunner,
+                'values' => $this->value? $this->value: array($min,$field['value_max']),
+                'min' => $min,
+                'max' => $max,
+                'step' => $step,
             )).');';
         
         if(!defined( 'DOING_AJAX' )){

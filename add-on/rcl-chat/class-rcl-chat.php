@@ -342,16 +342,28 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
                                 . '<input name="chat-upload" type="file">'
                            . '</span>';
                 }
+                
+                $hiddens = apply_filters('rcl_chat_hidden_fields', array(
+                    'chat[token]' => $this->chat_token,
+                    'chat[in_page]' => $this->query['number'],
+                    'chat[status]' => $this->chat_status,
+                    'chat[userslist]' => $this->userslist,
+                    'chat[file_upload]' => $this->file_upload
+                ));
 
                 $content .= '</div>'
                     . '<textarea maxlength="'.$this->max_words.'" onkeyup="rcl_chat_words_count(event,this);" id="chat-area-'.$this->chat_id.'" name="chat[message]"></textarea>'
-                    . '<span class="words-counter">'.$this->max_words.'</span>'
-                    . '<input type="hidden" name="chat[token]" value="'.$this->chat_token.'">'
-                    . '<input type="hidden" name="chat[in_page]" value="'.$this->query['number'].'">'
-                    . '<input type="hidden" name="chat[status]" value="'.$this->chat_status.'">'
-                    . '<input type="hidden" name="chat[userslist]" value="'.$this->userslist.'">'
-                    . '<input type="hidden" name="chat[file_upload]" value="'.$this->file_upload.'">'
-                    . '<div class="chat-preloader-file"></div>'
+                    . '<span class="words-counter">'.$this->max_words.'</span>';
+                
+                if($hiddens){
+                    
+                    foreach($hiddens as $name => $val){
+                        $content .= '<input type="hidden" name="'.$name.'" value="'.$val.'">';
+                    }
+                    
+                }
+
+                $content .= '<div class="chat-preloader-file"></div>'
                     . '<a href="#" class="recall-button chat-submit" onclick="rcl_chat_add_message(this);return false;"><i class="fa fa-reply"></i> '.__('Send','wp-recall').'</a>'
                 . '</form>';
 

@@ -3,29 +3,42 @@ class Rcl_Options extends Rcl_Custom_Fields{
     
     public $key;
     public $type;
+    public $nameArray;
 
-    function __construct($key=false){
+    function __construct($key = false, $nameArray = 'global'){
         if($key)
             $this->key = rcl_key_addon(pathinfo($key));
         else
             $this->key = false;
+        
+        $this->nameArray = $nameArray;
     }
 
     function options($title,$conts){
-        $return = '<span ';
         
-        if($this->key) 
-            $return .= 'id="title-'.$this->key.'" data-addon="'.$this->key.'" data-url="'.admin_url('admin.php?page='.$_GET['page'].'&rcl-addon-options='.$this->key).'" ';
-        else
-            $return .= 'data-url="'.admin_url('admin.php?page=manage-wprecall').'" ';
+        $return = '';
         
-        $return .= 'class="title-option"><span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '.$title.'</span>
-	<div ';
+        if($title){
         
+            $return = '<span ';
+
+            if($this->key) 
+                $return .= 'id="title-'.$this->key.'" data-addon="'.$this->key.'" data-url="'.admin_url('admin.php?page='.$_GET['page'].'&rcl-addon-options='.$this->key).'" ';
+            else
+                $return .= 'data-url="'.admin_url('admin.php?page=manage-wprecall').'" ';
+
+            $return .= 'class="title-option"><span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '.$title.'</span>';
+            
+        
+        }
+        
+        $return .= '<div ';
+
         if($this->key) 
             $return .= 'id="options-'.$this->key.'" ';
-        
+
         $return .= 'class="wrap-recall-options">';
+        
         if(is_array($conts)){
             foreach($conts as $content){
                 $return .= $content;
@@ -71,7 +84,7 @@ class Rcl_Options extends Rcl_Custom_Fields{
     }
 
     function label($label){
-        return '<label>'.$label.'</label>';
+        return '<label class="option-title">'.$label.'</label>';
     }
     
     function help($content){
@@ -114,26 +127,9 @@ class Rcl_Options extends Rcl_Custom_Fields{
         
         $type = $optiondata[0];
         $args = $optiondata[1];
-        $value = '';
         $content = '';
         
-        if(isset($args['group'])){
-            if(isset($args['type'])&&$args['type']=='local'){
-                $value = get_option($args['group']);
-                $value = $value[$args['name']];
-            }else if(isset($rcl_options[$args['group']][$args['name']])){
-                $value = $rcl_options[$args['group']][$args['name']];
-            }else if(isset($args['default'])){
-                $value = $args['default'];
-            }
-        }else{
-            if(isset($args['type'])&&$args['type']=='local') 
-                $value = get_option($args['name']);
-            else if(isset($args['default'])&&!isset($rcl_options[$args['name']]))
-                $value = $args['default'];
-            else 
-                $value = isset($rcl_options[$args['name']])? $rcl_options[$args['name']]: '';
-        }
+        $value = $this->get_value($args);
         
         $this->type = (isset($args['type']))? $args['type']: 'global';
         
@@ -177,9 +173,117 @@ class Rcl_Options extends Rcl_Custom_Fields{
 
     function get_value($args){
         global $rcl_options;
-        $val = (isset($rcl_options[$args['name']]))?$rcl_options[$args['name']]:'';
-        if(!$val&&isset($args['default'])) $val = $args['default'];
-        return $val;
+        
+        $value = '';
+        
+        if(isset($args['group'])){
+            if(isset($args['type'])&&$args['type']=='local'){
+                $value = get_option($args['group']);
+                $value = $value[$args['name']];
+            }else if(isset($rcl_options[$args['group']][$args['name']])){
+                $value = $rcl_options[$args['group']][$args['name']];
+            }else if(isset($args['default'])){
+                $value = $args['default'];
+            }
+        }else{
+            if(isset($args['type'])&&$args['type']=='local') 
+                $value = get_option($args['name']);
+            else if(isset($args['default'])&&!isset($rcl_options[$args['name']]))
+                $value = $args['default'];
+            else 
+                $value = isset($rcl_options[$args['name']])? $rcl_options[$args['name']]: '';
+        }
+        
+        return $value;
+        
+    }
+    
+    function field_value($args){
+        global $rcl_options;
+        
+        if(isset($args['group'])){
+            
+            if(isset($rcl_options[$args['group']][$args['slug']])){
+                return $rcl_options[$args['group']][$args['slug']];
+            }
+            
+            return isset($args['default'])? $args['default']: '';
+            
+        }
+        
+        $value = rcl_get_option($args['slug'], $args['default']);
+        
+        return $value;
+        
+    }
+    
+    function field_name($field){
+        
+        if(isset($field['group'])){
+            $name = $this->nameArray.'['.$field['group'].']['.$field['slug'].']';
+        }else{
+            $name = $this->nameArray.'['.$field['slug'].']';
+        }
+        
+        return $name;
+    }
+    
+    function options_box($titleBox, $fields){
+        
+        $content = '<div class="option-block rcl-custom-fields-box">';
+        
+        $content .= $this->title($titleBox);
+        
+        foreach($fields as $field){
+            
+            $value = $this->field_value(array(
+                'slug' => $field['slug'],
+                'group' => isset($field['group'])? $field['group']: null,
+                'default' => isset($field['default'])? $field['default']: null
+            ));
+            
+            $classes = array('rcl-option rcl-custom-field');
+
+            if(isset($field['child'])) $classes[] = 'parent-option';
+            
+            if(isset($field['parent']) && is_array($field['parent'])){
+                
+                $classes[] = 'children-option';
+                
+                //$classes[] = 'option-hide';
+                
+                foreach($field['parent'] as $parent => $v){
+                    $classes[] = 'parent-'.$parent;
+                    $classes[] = $parent.'-'.$v;
+                }
+                
+            }
+            
+            $contentField = '<div class="'.implode(' ', $classes).'">';
+            
+            if(isset($field['title']))
+                $contentField .= $this->label($field['title']);
+            
+            if(isset($field['help']))
+                $contentField .= $this->help($field['help']);
+            
+            $field['name'] = $this->field_name($field);
+ 
+            $contentField .= $this->get_input($field, $value);
+            
+            $contentField .= '</div>';
+            
+            if(isset($field['extend']))
+                $contentField = $this->extend($contentField);
+            
+            $content .= $contentField;
+            
+        }
+        
+        $content .= '</div>';
+        
+        return $content;
+        
     }
 
 }

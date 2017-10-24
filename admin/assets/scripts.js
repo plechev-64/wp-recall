@@ -23,6 +23,22 @@ jQuery(function($){
         defaultColor: '#4c8cbd'
     });
 
+    /**/
+    $("#recall").find(".parent-option").each(function(){
+        $(this).find("input,select").each(function(){
+            var id = $(this).attr('id');
+            var val = $(this).val();
+            $('.'+id+'-'+val).show();
+        });
+    });
+
+    $('.parent-option select, .parent-option input').change(function(){
+        var id = $(this).attr('id');
+        $( '.parent-' + id ).hide();
+        $( '.' + id + '-' + $(this).val() ).show();
+    });
+    /**/
+
     $("#recall").find(".parent-select").each(function(){
         var id = $(this).attr('id');
         var val = $(this).val();
@@ -32,7 +48,7 @@ jQuery(function($){
     $('.parent-select').change(function(){
         var id = $(this).attr('id');
         var val = $(this).val();
-        $('.'+id).slideUp();
+        $('.child-select.'+id).slideUp();
         $('.child-select.'+id+'-'+val).slideDown();		
     });
     

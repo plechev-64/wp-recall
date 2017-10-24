@@ -194,7 +194,11 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             if($this->field['type']=='file'){
                 
                 $options[] = array(
-                    'type' => 'number',
+                    'type' => 'runner',
+                    'value_min' => 1,
+                    'value_max' => 100,
+                    'value_step' => 1,
+                    'default' => 2,
                     'slug' => 'sizefile',
                     'title' => __('File size','wp-recall'),
                     'notice' => __('maximum size of uploaded file, MB (Default - 2)','wp-recall')
@@ -231,48 +235,25 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                     'notice' => __('Может не загружаться при AJAX','wp-recall')
                 );
                 
-            }else if($this->field['type']=='runner'){
+            }else if($this->field['type']=='runner' || $this->field['type']=='range'){
                 
                 $options[] = array(
                     'type' => 'number',
-                    'slug' => 'runner_min',
+                    'slug' => 'value_min',
                     'title' => __('Min','wp-recall'),
                     'default' => 0
                 );
                 
                 $options[] = array(
                     'type' => 'number',
-                    'slug' => 'runner_max',
+                    'slug' => 'value_max',
                     'title' => __('Max','wp-recall'),
                     'default' => 100
                 );
                 
                 $options[] = array(
                     'type' => 'number',
-                    'slug' => 'runner_step',
-                    'title' => __('Step','wp-recall'),
-                    'default' => 1
-                );
-                
-            }else if($this->field['type']=='range'){
-                
-                $options[] = array(
-                    'type' => 'number',
-                    'slug' => 'range_min',
-                    'title' => __('Min','wp-recall'),
-                    'default' => 0
-                );
-                
-                $options[] = array(
-                    'type' => 'number',
-                    'slug' => 'range_max',
-                    'title' => __('Max','wp-recall'),
-                    'default' => 100
-                );
-                
-                $options[] = array(
-                    'type' => 'number',
-                    'slug' => 'range_step',
+                    'slug' => 'value_step',
                     'title' => __('Step','wp-recall'),
                     'default' => 1
                 );
@@ -322,14 +303,14 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                     );
 
                 }
-                
+
                 $options[] = array(
                     'type' => 'number',
                     'slug' => 'maxlength',
                     'title' => __('Maxlength','wp-recall'),
                     'notice' => __('maximum number of symbols per field','wp-recall')
                 );
-                
+
             }
             
         }

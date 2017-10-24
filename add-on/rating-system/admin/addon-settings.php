@@ -17,8 +17,12 @@ function rcl_admin_page_rating($content){
         . __('%USER% - name of the user who voted','wp-recall').', <br>'
         . __('%VALUE% - rated value','wp-recall').', <br>'
         . __('%DATE% - date of changing the rating','wp-recall').', <br>';
-        if($type=='comment') $notice_temp .= __('%COMMENT% - link to comment','wp-recall').', <br>';
-        if(isset($data['post_type'])) $notice_temp .= __('%POST% - link to publication','wp-recall');
+        
+        if($type=='comment') 
+            $notice_temp .= __('%COMMENT% - link to comment','wp-recall').', <br>';
+        
+        if(isset($data['post_type'])) 
+            $notice_temp .= __('%POST% - link to publication','wp-recall');
 
         if(isset($data['style'])){
             

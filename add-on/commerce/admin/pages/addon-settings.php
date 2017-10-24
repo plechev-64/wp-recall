@@ -8,93 +8,109 @@ function rcl_commerce_options(){
     require_once RCL_PATH.'classes/class-rcl-options.php';
 
     $opt = new Rcl_Options(__FILE__);
-
-    $args = array(
-        'selected'   => $rcl_options['basket_page_rmag'],
-        'name'       => 'global[basket_page_rmag]',
-        'show_option_none' => __('Not selected','wp-recall'),
-        'echo'       => 0
-    );
     
     $content = '<h2>'.__('Settings','wp-recall').' Recall Commerce</h2>';
 
     $content .= $opt->options(
         __('General settings','wp-recall'),array(
-        $opt->option_block(
+        $opt->options_box(
+            __('General settings','wp-recall'),    
             array(
-                $opt->title(__('General settings','wp-recall')),
-
-                $opt->label(__('Email for notifications','wp-recall')),
-                $opt->option('email',array('name'=>'admin_email_magazin_recall')),
-                $opt->notice(__('If email is not specified, a notification will be sent to all users of the website with "Administrator" rights','wp-recall')),
-
+                array(
+                    'type' => 'email',
+                    'title'=>__('Email for notifications','wp-recall'),
+                    'slug'=>'admin_email_magazin_recall',
+                    'notice'=>__('If email is not specified, a notification will be sent to all users of the website with "Administrator" rights','wp-recall')
+                )
             )
         ),
-        $opt->option_block(
+        $opt->options_box(
+            __('Currency and rates','wp-recall'),    
             array(
-                $opt->title(__('Check-out','wp-recall')),
-
-                $opt->label(__('Register at check-out','wp-recall')),
-                $opt->option('select',array(
-                    'name'=>'buyer_register',
-                    'default'=>1,
-                    'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
-                )),
-                $opt->notice(__('If enabled, the user will be automatically registered on the site after successfull check-out','wp-recall'))
+                array(
+                    'type' => 'select',
+                    'title'=>__('Basis currency','wp-recall'),
+                    'slug'=>'primary_cur',
+                    'values'=> rcl_get_currency()
+                )
             )
         ),
-        $opt->option_block(
+        $opt->options_box(
+            __('Cart','wp-recall'),    
             array(
-                $opt->title(__('Cart','wp-recall')),
-                $opt->label(__('Checkout page','wp-recall')),
-                wp_dropdown_pages( $args ),
-                $opt->notice(__('Specify the page with the shortcode [basket]','wp-recall')),
+                array(
+                    'type' => 'custom',
+                    'title'=>__('Checkout page','wp-recall'),
+                    'slug'=>'checkout_page',
+                    'content' => wp_dropdown_pages( array(
+                        'selected'   => $rcl_options['basket_page_rmag'],
+                        'name'       => 'global[basket_page_rmag]',
+                        'show_option_none' => __('Not selected','wp-recall'),
+                        'echo'       => 0
+                    )),
+                    'notice'=>__('Specify the page with the shortcode [basket]','wp-recall')
+                )
             )
         ),
-        $opt->option_block(
+        $opt->options_box(
+            __('Check-out','wp-recall'),    
             array(
-                $opt->title(__('The output of the button "Add to cart"','wp-recall')),
-                $opt->label(__('On the product page','wp-recall')),
-                $opt->option('checkbox',array(
-                    'name'=>'cart_button_single_page',
-                    'default' => array('top','bottom'),
-                    'options'=> array(
+                array(
+                    'type' => 'select',
+                    'title'=>__('Register at check-out','wp-recall'),
+                    'slug'=>'buyer_register',
+                    'values' => array(
+                        __('Disabled','wp-recall'),
+                        __('Enabled','wp-recall')
+                    ),
+                    'notice'=>__('If enabled, the user will be automatically registered on the site after successfull check-out','wp-recall')
+                )
+            )
+        ),
+        $opt->options_box(
+            __('The output of the button "Add to cart"','wp-recall'),    
+            array(
+                array(
+                    'type' => 'checkbox',
+                    'title'=>__('On the product page','wp-recall'),
+                    'slug'=>'cart_button_single_page',
+                    'values'=> array(
                         'top' => __('On the description','wp-recall'),
-                        'bottom' => __('Under the description','wp-recall'))
-                )),
-                $opt->label(__('On the archive page','wp-recall')),
-                $opt->option('select',array(
-                    'name'=>'cart_button_archive_page',
-                    'default' => 1,
-                    'options'=> array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
-                ))
+                        'bottom' => __('Under the description','wp-recall')
+                    ),
+                    'default' => array('top','bottom')
+                ),
+                array(
+                    'type' => 'select',
+                    'title'=>__('On the archive page','wp-recall'),
+                    'slug'=>'cart_button_archive_page',
+                    'values'=> array(__('Disabled','wp-recall'),__('Enabled','wp-recall')),
+                    'default' => 1
+                )
             )
         ),
-        $opt->option_block(
+        $opt->options_box(
+            __('Similar or recommended goods','wp-recall'),    
             array(
-                $opt->title(__('Similar or recommended goods','wp-recall')),
-
-                $opt->label(__('Output order','wp-recall')),
-                $opt->option('select',array(
-                    'name'=>'sistem_related_products',
-                    'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
-                )),
-
-                $opt->label(__('Block title for featured products','wp-recall')),
-                $opt->option('text',array('name'=>'title_related_products_recall')),
-
-                $opt->label(__('Number of featured products','wp-recall')),
-                $opt->option('number',array('name'=>'size_related_products'))
-            )
-        ),
-         $opt->option_block(
-            array(
-                $opt->title(__('Currency and rates','wp-recall')),
-                    $opt->label(__('Basis currency','wp-recall')),
-                    $opt->option('select',array(
-                    'name'=>'primary_cur',
-                    'options'=>rcl_get_currency()
-                )),
+                array(
+                    'type' => 'select',
+                    'child' => true,
+                    'title'=>__('Output order','wp-recall'),
+                    'slug'=>'sistem_related_products',
+                    'values'=> array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
+                ),
+                array(
+                    'parent' => array('sistem_related_products'=>1),
+                    'type' => 'text',
+                    'title'=>__('Block title for featured products','wp-recall'),
+                    'slug'=>'title_related_products_recal'
+                ),
+                array(
+                    'parent' => array('sistem_related_products'=>1),
+                    'type' => 'number',
+                    'title'=>__('Number of featured products','wp-recall'),
+                    'slug'=>'size_related_products'
+                )
             )
         ))
     );

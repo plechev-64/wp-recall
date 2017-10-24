@@ -175,13 +175,21 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                     'notice' => __('Separated by comma, for example: jpg, zip, pdf. By default: png, gif, jpg','wp-recall')
                 ),
                 array(
-                    'type' => 'number',
+                    'type' => 'runner',
+                    'value_min' => 1,
+                    'value_max' => 10,
+                    'value_step' => 1,
+                    'default' => 2,
                     'slug' => 'size-files',
                     'title' => __('The maximum file size, Mb','wp-recall'),
                     'notice' => __('Maximum file size in megabytes. By default, 2MB','wp-recall')
                 ),
                 array(
-                    'type' => 'number',
+                    'type' => 'runner',
+                    'value_min' => 1,
+                    'value_max' => 50,
+                    'value_step' => 1,
+                    'default' => 10,
                     'slug' => 'max-files',
                     'title' => __('Number of files','wp-recall'),
                     'notice' => __('By default, 10','wp-recall')
@@ -197,7 +205,11 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                 'type' => 'custom',
                 'options-field' => array(
                     array(
-                        'type' => 'number',
+                        'type' => 'runner',
+                        'value_min' => 1,
+                        'value_max' => 10,
+                        'value_step' => 1,
+                        'default' => 2,
                         'slug' => 'size-files',
                         'title' => __('The maximum file size, Mb','wp-recall'),
                         'notice' => __('Maximum file size in megabytes. By default, 2MB','wp-recall')

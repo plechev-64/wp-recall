@@ -5,78 +5,72 @@ function rcl_admin_groups_page_content($content){
     
     $opt = new Rcl_Options(__FILE__);
 
-    $args = array(
-        'selected'   => rcl_get_option('group-page'),
-        'name'       => 'global[group-page]',
-        'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
-        'echo'       => 0
-    );
-
     $content .= $opt->options(
         __('Group settings','wp-recall'),
-        $opt->option_block(
+        $opt->options_box(
+            __('Groups','wp-recall'),    
             array(
-                $opt->title(__('Groups','wp-recall')),
-
-                $opt->option('select',array(
-                    'name'=>'group-output',
-                    'label'=>__('Group output','wp-recall'),
-                    'parent'=>true,
-                    'options'=>array(
+                array(
+                    'child' => true,
+                    'type' => 'select',
+                    'title'=>__('Group output','wp-recall'),
+                    'slug'=>'group-output',
+                    'values'=>array(
                         __('On the archive page of post-groups entries','wp-recall'),
-                        __('On an arbitrary page of the website','wp-recall'))
-                )),
-                $opt->child(
-                    array(
-                        'name' => 'group-output',
-                        'value' => 0
-                    ),
-                    array(
-                        $opt->label(__('Group contents widget','wp-recall')),
-                        $opt->option('select',array(
-                            'name'=>'groups_posts_widget',
-                            'options'=>array(
-                                __('Disabled','wp-recall'),
-                                __('Enabled','wp-recall'))
-                        )),
-                        $opt->notice(__('enable if publication loop within the group has been removed from the template','wp-recall'))
+                        __('On an arbitrary page of the website','wp-recall')
                     )
                 ),
-                $opt->child(
-                    array(
-                        'name' => 'group-output',
-                        'value' => 1
+                array(
+                    'parent' => array('group-output'=>0),
+                    'type' => 'select',
+                    'title'=>__('Group contents widget','wp-recall'),
+                    'slug'=>'groups_posts_widget',
+                    'values'=>array(
+                        __('Disabled','wp-recall'),
+                        __('Enabled','wp-recall')
                     ),
-                    array(
-                        $opt->label(__('Shortcode host page','wp-recall')),
-                        wp_dropdown_pages( $args ),
-                        $opt->notice(__('please specify the page where the [grouplist] shortcode is placed','wp-recall'))
+                    'notice' => __('enable if publication loop within the group has been removed from the template','wp-recall')
+                ),
+                array(
+                    'parent' => array('group-output'=>1),
+                    'type' => 'custom',
+                    'title'=>__('Shortcode host page','wp-recall'),
+                    'slug'=>'groups-host-page',
+                    'content'=> wp_dropdown_pages(array(
+                        'selected'   => rcl_get_option('group-page'),
+                        'name'       => 'global[group-page]',
+                        'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
+                        'echo'       => 0
+                    )),
+                    'notice' => __('please specify the page where the [grouplist] shortcode is placed','wp-recall')
+                ),
+                array(
+                    'type' => 'select',
+                    'title'=> __('Group creation allowed','wp-recall'),
+                    'slug'=>'public_group_access_recall',
+                    'values'=>array(
+                        10  => __('only Administrators','wp-recall'),
+                        7   =>__('Editors and higher','wp-recall'),
+                        2   =>  __('Authors and higher','wp-recall'),
+                        1   => __('Participants and higher','wp-recall')
                     )
                 ),
-
-                $opt->label(__('Group creation allowed','wp-recall')),
-                $opt->option('select',array(
-                    'name'=>'public_group_access_recall',
-                    'options'=>array(
-                        10=>__('only Administrators','wp-recall'),
-                        7=>__('Editors and higher','wp-recall'),
-                        2=>__('Authors and higher','wp-recall'),
-                        1=>__('Participants and higher','wp-recall'))
-                )),
-
-                $opt->label(__('Group publication moderation','wp-recall')),
-                $opt->option('select',array(
-                    'name'=>'moderation_public_group',
-                    'options'=>array(
+                array(
+                    'type' => 'select',
+                    'title'=> __('Group publication moderation','wp-recall'),
+                    'slug'=>'moderation_public_group',
+                    'values'=>array(
                         __('Publish now','wp-recall'),
-                        __('Send for moderation','wp-recall'))
-                )),
-                $opt->notice(__('If subject to moderation: To allow the user to see their publication before moderation has been completed, the user should be classifies as Author or higher','wp-recall')),
-
+                        __('Send for moderation','wp-recall')
+                    ),
+                    'notice' => __('If subject to moderation: To allow the user to see their publication before moderation has been completed, the user should be classifies as Author or higher','wp-recall')
+                )
             )
         )
     );
+    
     return $content;
+    
 }
 
 function rcl_groups_admin_create($term_id){

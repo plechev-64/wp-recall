@@ -181,9 +181,9 @@ function rcl_update_require_checkbox(e){
 
 function rcl_rand( min, max ) {
     if( max ) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     } else {
-            return Math.floor(Math.random() * (min + 1));
+        return Math.floor(Math.random() * (min + 1));
     }
 }
 

@@ -1278,7 +1278,7 @@ div.ssi-backdrop {
 /*бегунок*/
 .rcl-runner,
 .rcl-range{
-    padding: 0 15px;
+    padding: 10px;
 }
 .rcl-runner .rcl-runner-value,
 .rcl-range .rcl-range-value{

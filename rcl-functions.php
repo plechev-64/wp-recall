@@ -251,10 +251,17 @@ function rcl_get_order_tabs($rcl_tabs){
     $counter = array();
     $a = 10;
     foreach($rcl_tabs as $id => $data){
-        if(isset($data['output'])&&$data['output']!='menu') continue;
         
-        if(!isset($data['public'])||$data['public']!=1){
-            if(!$user_ID||$user_ID!=$user_LK) continue;
+        if(isset($data['output']) && $data['output']!='menu') continue;
+        
+        if(!isset($data['public']) || $data['public']!=1){
+            
+            if(!$user_ID) continue;
+            
+            if($data['public'] < 0 && $user_ID == $user_LK) continue;
+            
+            if($data['public'] == 0 && $user_ID != $user_LK) continue;
+            
         }
         
         $order = (isset($data['order']))? $data['order']: ++$a;

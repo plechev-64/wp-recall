@@ -59,8 +59,12 @@ function pfm_page_topic_form(){
 
 function pfm_page_options(){
     
-    $PfmOptions = get_option('rcl_pforum_options');
+    require_once RCL_PATH.'classes/class-rcl-options.php';
     
+    $opt = new Rcl_Options(__FILE__, 'rcl_pforum_options');
+    
+    $PfmOptions = get_option('rcl_pforum_options');
+
     $pages = get_posts(array(
         'post_type'=>'page',
         'numberposts'=>-1
@@ -83,7 +87,6 @@ function pfm_page_options(){
         array(
             'type' => 'select',
             'slug' => 'home-page',
-            'name' => 'rcl_pforum_options[home-page]',
             'title' => __('Forum page','wp-recall'),
             'notice' => __('Select the needed page from the list and place the '
                     . '[prime-forum] shortcode on it','wp-recall'),
@@ -92,7 +95,6 @@ function pfm_page_options(){
         array(
             'type' => 'select',
             'slug' => 'forum-colors',
-            'name' => 'rcl_pforum_options[forum-colors]',
             'title' => __('Forum colours','wp-recall'),
             'values' => array(
                 __('By default','wp-recall'),
@@ -102,16 +104,15 @@ function pfm_page_options(){
         array(
             'type' => 'textarea',
             'slug' => 'support-shortcodes',
-            'name' => 'rcl_pforum_options[support-shortcodes]',
             'title' => __('Supported shortcodes','wp-recall'),
             'notice' => __('Specify the necessary shortcodes to support them in '
                     . 'forum messages, each should start from a new line. '
                     . 'Specify without brackets, for example: custom-shortcode','wp-recall')
         ),
         array(
+            'child' => true,
             'type' => 'select',
             'slug' => 'view-forums-home',
-            'name' => 'rcl_pforum_options[view-forums-home]',
             'title' => __('Output all forums of the group on the homepage','wp-recall'),
             'notice' => __('If selected, all forums will be displayed on the homepage','wp-recall'),
             'values' => array(
@@ -120,39 +121,44 @@ function pfm_page_options(){
             )
         ),
         array(
+            'parent' => array('view-forums-home'=>1),
             'type' => 'text',
             'slug' => 'forums-home-list',
             'pattern' => '([0-9,\s]+)',
-            'name' => 'rcl_pforum_options[forums-home-list]',
             'title' => __('Output forums only for the specified groups','wp-recall'),
             'notice' => __('If output of forums on the homepage is turned on, you may specify IDs of the groups, '
                     . 'whose forums should be output, space separated','wp-recall')
         ),
         array(
-            'type' => 'number',
+            'type' => 'runner',
             'slug' => 'forums-per-page',
-            'name' => 'rcl_pforum_options[forums-per-page]',
             'title' => __('Forums on the group page','wp-recall'),
+            'value_min' => 5,
+            'value_max' => 50,
+            'value_step' => 1,
             'default' => 20
         ),
         array(
-            'type' => 'number',
+            'type' => 'runner',
             'slug' => 'topics-per-page',
-            'name' => 'rcl_pforum_options[topics-per-page]',
             'title' => __('Topics on the forum page','wp-recall'),
+            'value_min' => 5,
+            'value_max' => 70,
+            'value_step' => 1,
             'default' => 20
         ),
         array(
-            'type' => 'number',
+            'type' => 'runner',
             'slug' => 'posts-per-page',
-            'name' => 'rcl_pforum_options[posts-per-page]',
             'title' => __('Messages on the topic page','wp-recall'),
+            'value_min' => 5,
+            'value_max' => 100,
+            'value_step' => 1,
             'default' => 20
         ),
         array(
             'type' => 'select',
             'slug' => 'guest-post-create',
-            'name' => 'rcl_pforum_options[guest-post-create]',
             'title' => __('Publishing of messages in the topic by guests','wp-recall'),
             'values' => array(
                 __('Forbidden','wp-recall'),
@@ -162,7 +168,6 @@ function pfm_page_options(){
         array(
             'type' => 'select',
             'slug' => 'support-oembed',
-            'name' => 'rcl_pforum_options[support-oembed]',
             'title' => __('Support of OEMBED in messages','wp-recall'),
             'values' => array(
                 __('Forbidden','wp-recall'),
@@ -183,49 +188,42 @@ function pfm_page_options(){
         array(
             'type' => 'text',
             'slug' => 'mask-tag-group',
-            'name' => 'rcl_pforum_options[mask-tag-group]',
             'notice' => __('Title tag in the group of forums','wp-recall'),
             'default' => __('Group of forums','wp-recall').' %GROUPNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-page-group',
-            'name' => 'rcl_pforum_options[mask-page-group]',
             'notice' => __('Name of the page in the group of forums','wp-recall'),
             'default' => __('Group of forums','wp-recall').' %GROUPNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-tag-forum',
-            'name' => 'rcl_pforum_options[mask-tag-forum]',
             'notice' => __('Title tag on the forum page','wp-recall'),
             'default' => __('Forum','wp-recall').' %FORUMNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-page-forum',
-            'name' => 'rcl_pforum_options[mask-page-forum]',
             'notice' => __('Name of the page of the separate forum','wp-recall'),
             'default' => __('Forum','wp-recall').' %FORUMNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-tag-topic',
-            'name' => 'rcl_pforum_options[mask-tag-topic]',
             'notice' => __('Title tag on the topic page','wp-recall'),
             'default' => '%TOPICNAME% | '. __('Forum','wp-recall').' %FORUMNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-page-topic',
-            'name' => 'rcl_pforum_options[mask-page-topic]',
             'notice' => __('Name of the page of the separate topic','wp-recall'),
             'default' => '%TOPICNAME%'
         ),
         array(
             'type' => 'select',
             'slug' => 'admin-notes',
-            'name' => 'rcl_pforum_options[admin-notes]',
             'title' => __('Notification to the administrator about new topics','wp-recall'),
             'values' => array(
                 __('Disabled','wp-recall'),
@@ -235,6 +233,19 @@ function pfm_page_options(){
     );
     
     $options = apply_filters('pfm_options_array', $options);
+    
+    if($PfmOptions){
+        foreach($options as $k => $option){
+            if(isset($PfmOptions[$option['slug']]))
+                $options[$k]['default'] = $PfmOptions[$option['slug']];
+        }
+    }
+
+    $content = $opt->options(
+        false, array(
+            $opt->options_box(__('General settings','wp-recall'), $options)
+        )
+    );
     
     $CF = new Rcl_Custom_Fields();
     
@@ -247,24 +258,7 @@ function pfm_page_options(){
 
             <?php
 
-            foreach($options as $option){
-
-                $value = isset($PfmOptions[$option['slug']])? $PfmOptions[$option['slug']]: false;
-
-                $required = (isset($option['required']) && $option['required'] == 1)? '<span class="required">*</span>': '';
-
-                echo '<div id="field-'.$option['slug'].'" class="form-field rcl-option">';
-
-                    if(isset($option['title'])){
-                        echo '<h3 class="field-title">';
-                        echo $CF->get_title($option).' '.$required;
-                        echo '</h3>';
-                    }
-
-                    echo $CF->get_input($option,$value);
-
-                echo '</div>';
-            }
+                echo $content;
 
             ?>
 
