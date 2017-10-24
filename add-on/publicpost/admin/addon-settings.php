@@ -41,18 +41,20 @@ function rcl_get_publics_options_page($content){
                     )
                 ),
                 array(
-                    'child' => true,
                     'type' => 'select',
                     'slug' => 'publics_block_rcl',
                     'title' => __('List of publications tab','wp-recall'),
-                    'values'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
-                ),
-                array(
-                    'parent' => array('publics_block_rcl'=>1),
-                    'type' => 'select',
-                    'slug' => 'view_publics_block_rcl',
-                    'title' => __('List of publications of the user','wp-recall'),
-                    'values' => array(__('Only owner of the account','wp-recall'),__('Show everyone including guests','wp-recall'))
+                    'values'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall')),
+                    'childrens' => array(
+                        1 => array(
+                            array(
+                                'type' => 'select',
+                                'slug' => 'view_publics_block_rcl',
+                                'title' => __('List of publications of the user','wp-recall'),
+                                'values' => array(__('Only owner of the account','wp-recall'),__('Show everyone including guests','wp-recall'))
+                            )
+                        )
+                    )
                 )
             )
         ), 
@@ -79,19 +81,21 @@ function rcl_get_publics_options_page($content){
                     'notice' => __('Select image size for the visual editor during publishing','wp-recall')
                 ),
                 array(
-                    'child' => true,
                     'type' => 'select',
                     'slug' => 'output_public_form_rcl',
                     'title' => __('Form of publication output in the personal cabinet','wp-recall'),
                     'values'=> array(__('Do not display','wp-recall'),__('Output','wp-recall')),
-                    'default' => 1
-                ),
-                array(
-                    'parent' => array('output_public_form_rcl'=>1),
-                    'type' => 'number',
-                    'slug' => 'form-lk',
-                    'title' => __('The form ID','wp-recall'),
-                    'notice'=> __('Enter the form ID according to the personal Cabinet. The default is 1','wp-recall')
+                    'default' => 1,
+                    'childrens' => array(
+                        1 => array(
+                            array(
+                                'type' => 'number',
+                                'slug' => 'form-lk',
+                                'title' => __('The form ID','wp-recall'),
+                                'notice'=> __('Enter the form ID according to the personal Cabinet. The default is 1','wp-recall')
+                            )
+                        )
+                    )
                 )
             )
         ),
@@ -99,7 +103,6 @@ function rcl_get_publics_options_page($content){
             __('Publication of records','wp-recall'),
             array(
                 array(
-                    'child' => true,
                     'type' => 'select',
                     'slug' => 'user_public_access_recall',
                     'title' => __('Publication is allowed','wp-recall'),
@@ -108,20 +111,23 @@ function rcl_get_publics_options_page($content){
                         7   => __('Editors and higher','wp-recall'),
                         2   => __('Authors and higher','wp-recall'),
                         0   => __('Guests and users','wp-recall')
-                    )
-                ),
-                array(
-                    'parent' => array('user_public_access_recall'=>0),
-                    'type' => 'custom',
-                    'slug' => 'redirect-to',
-                    'title' => __('Redirect to','wp-recall'),
-                    'content'=> wp_dropdown_pages( array(
-                        'selected'   => rcl_get_option('guest_post_redirect'),
-                        'name'       => 'global[guest_post_redirect]',
-                        'show_option_none' => __('Not selected','wp-recall'),
-                        'echo'             => 0 )
                     ),
-                    'notice' => __('Select the page to which the visitors will be redirected after a successful publication, if email authorization is included in the registration precess','wp-recall')
+                    'childrens' => array(
+                        array(
+                            array(
+                                'type' => 'custom',
+                                'slug' => 'redirect-to',
+                                'title' => __('Redirect to','wp-recall'),
+                                'content'=> wp_dropdown_pages( array(
+                                    'selected'   => rcl_get_option('guest_post_redirect'),
+                                    'name'       => 'global[guest_post_redirect]',
+                                    'show_option_none' => __('Not selected','wp-recall'),
+                                    'echo'             => 0 )
+                                ),
+                                'notice' => __('Select the page to which the visitors will be redirected after a successful publication, if email authorization is included in the registration precess','wp-recall')
+                            )
+                        )
+                    )
                 ),
                 array(
                     'type' => 'select',
@@ -159,20 +165,23 @@ function rcl_get_publics_options_page($content){
             __('Custom fields','wp-recall'),
             array(
                 array(
-                    'child' => true,
                     'type' => 'select',
                     'slug' => 'pm_rcl',
                     'title' => __('Automatic output','wp-recall'),
                     'values' => array(__('No','wp-recall'),__('Yes','wp-recall')),
-                    'notice' => __('Settings only for fields created using the form of the publication wp-recall','wp-recall')
+                    'notice' => __('Settings only for fields created using the form of the publication wp-recall','wp-recall'),
+                    'childrens' => array(
+                        1 => array(
+                            array(
+                                'type' => 'select',
+                                'slug' => 'pm_place',
+                                'title' => __('Output fields location','wp-recall'),
+                                'values' => array(__('Above publication content','wp-recall'),__('On content recording','wp-recall'))
+                            )
+                        )
+                    )
                 ),
-                array(
-                    'parent' => array('pm_rcl'=>1),
-                    'type' => 'select',
-                    'slug' => 'pm_place',
-                    'title' => __('Output fields location','wp-recall'),
-                    'values' => array(__('Above publication content','wp-recall'),__('On content recording','wp-recall'))
-                )
+                
             )
         ))
     );

@@ -34,34 +34,38 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                         'type'=>'select',
                         'slug'=>'view_user_lk_rcl',
                         'title'=>__('Personal Cabinet output','wp-recall'),
-                        'child'=>true,
                         'values'=>array(
                             __('On the author’s archive page','wp-recall'),
                             __('Using shortcode [wp-recall]','wp-recall')),
                         'help'=>__('Attention! Changing this parameter is not required. Detailed instructions on personal account output using author.php file can be received here <a href="https://codeseller.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank">here</a>','wp-recall'),
-                        'notice'=>__('If author archive page is selected, the template author.php should contain the code if(function_exists(\'wp_recall\')) wp_recall();','wp-recall')
-                    ),
-                    array(
-                        'parent' => array('view_user_lk_rcl'=>1),
-                        'type' => 'custom',
-                        'title' => __('Shortcode host page','wp-recall'),
-                        'content' => wp_dropdown_pages( array(
-                                'selected'   => $rcl_options['lk_page_rcl'],
-                                'name'       => 'global[lk_page_rcl]',
-                                'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
-                                'echo'       => 0
-                            ) 
+                        'notice'=>__('If author archive page is selected, the template author.php should contain the code if(function_exists(\'wp_recall\')) wp_recall();','wp-recall'),
+                        'childrens' => array(
+                            1 => array(
+                                array(
+                                    'type' => 'custom',
+                                    'title' => __('Shortcode host page','wp-recall'),
+                                    'content' => wp_dropdown_pages( array(
+                                            'selected'   => $rcl_options['lk_page_rcl'],
+                                            'name'       => 'global[lk_page_rcl]',
+                                            'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
+                                            'echo'       => 0
+                                        ) 
+                                    )
+                                ),
+                                array(
+                                    'type' => 'text',
+                                    'title' => __('Link format to personal account','wp-recall'),
+                                    'help' => __('The link is formed according to principle "/slug_page/?get=ID". The parameter "get" can be set here. By default user','wp-recall')
+                                )
+                            )
                         )
                     ),
                     array(
-                        'parent' => array('view_user_lk_rcl'=>1),
-                        'type' => 'text',
-                        'title' => __('Link format to personal account','wp-recall'),
-                        'help' => __('The link is formed according to principle "/slug_page/?get=ID". The parameter "get" can be set here. By default user','wp-recall')
-                    ),
-                    array(
-                        'parent' => array('view_user_lk_rcl'=>1),
+                        'type' => 'runner',
                         'slug'=>'timeout',
+                        'value_min' => 1,
+                        'value_max' => 20,
+                        'default' => 10,
                         'help'=>__('This value sets the maximum time a user is considered "online" in the absence of activity','wp-recall'),
                         'title'=>__('Inactivity timeout','wp-recall'),
                         'notice'=>__('Specify the time in minutes after which the user will be considered offline if you did not show activity on the website. The default is 10 minutes.','wp-recall') 
@@ -127,7 +131,7 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                 ),
                 array(
                     'extend' => true,
-                    'type' => 'number',
+                    'type' => 'runner',
                     'slug'=>'slide-pause',
                     'title'=>__('Pause Slider','wp-recall'),
                     'help'=>__('Only applied for slider via shortcode publications <a href="https://codeseller.ru/api-rcl/slider-rcl/" target="_blank">[slider-rcl]</a>','wp-recall'),
@@ -145,27 +149,28 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                         'slug'=>'use_cache',
                         'title'=>__('Cache','wp-recall'),
                         'help'=>__('Use the functionality of the caching WP-Recall plugin. <a href="https://codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/" target="_blank">read More</a>','wp-recall'),
-                        'child'=>true,
                         'values'=>array(
                             __('Disabled','wp-recall'),
-                            __('Enabled','wp-recall'))
-                    ),
-                    array(
-                        'parent' => array('use_cache'=>1),
-                        'type' => 'number',
-                        'slug'=>'cache_time',
-                        'default'=>3600,
-                        'latitlebel'=>__('Time cache (seconds)','wp-recall'),
-                        'notice'=>__('Default','wp-recall').': 3600'
-                    ),
-                    array(
-                        'parent' => array('use_cache'=>1),
-                        'type' => 'select',
-                        'slug'=>'cache_output',
-                        'title'=>__('Cache output','wp-recall'),
-                        'values'=>array(
-                            __('All users','wp-recall'),
-                            __('Only guests','wp-recall'))
+                            __('Enabled','wp-recall')),
+                        'childrens' => array(
+                            1 => array(
+                                array(
+                                    'type' => 'number',
+                                    'slug'=>'cache_time',
+                                    'default'=>3600,
+                                    'latitlebel'=>__('Time cache (seconds)','wp-recall'),
+                                    'notice'=>__('Default','wp-recall').': 3600'
+                                ),
+                                array(
+                                    'type' => 'select',
+                                    'slug'=>'cache_output',
+                                    'title'=>__('Cache output','wp-recall'),
+                                    'values'=>array(
+                                        __('All users','wp-recall'),
+                                        __('Only guests','wp-recall'))
+                                )
+                            )
+                        )
                     ),
                     array(
                         'type'=>'select',
@@ -195,22 +200,24 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                     'type' => 'select',
                     'slug'=>'login_form_recall',
                     'title'=>__('Output procedure','wp-recall'),
-                    'child'=>true,
                     'values'=>array(
                         __('Floating form','wp-recall'),
                         __('On a separate page','wp-recall'),
                         __('Wordpress Forms','wp-recall'),
-                        __('Widget form','wp-recall'))
-                ),
-                array(
-                    'parent' => array('login_form_recall'=>1),
-                    'type' => 'custom',
-                    'title' => __('ID of the shortcode page [loginform]','wp-recall'),
-                    'content' => wp_dropdown_pages( array(
-                        'selected'   => isset($rcl_options['page_login_form_recall'])? $rcl_options['page_login_form_recall']: '',
-                        'name'       => 'global[page_login_form_recall]',
-                        'show_option_none' => __('Not selected','wp-recall'),
-                        'echo'             => 0 )
+                        __('Widget form','wp-recall')),
+                    'childrens' => array(
+                        1 => array(
+                            array(
+                                'type' => 'custom',
+                                'title' => __('ID of the shortcode page [loginform]','wp-recall'),
+                                'content' => wp_dropdown_pages( array(
+                                    'selected'   => isset($rcl_options['page_login_form_recall'])? $rcl_options['page_login_form_recall']: '',
+                                    'name'       => 'global[page_login_form_recall]',
+                                    'show_option_none' => __('Not selected','wp-recall'),
+                                    'echo'             => 0 )
+                                )
+                            )
+                        )
                     )
                 ),
                 array(
@@ -228,19 +235,21 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                     'type' => 'select',
                     'slug'=>'authorize_page',
                     'title'=>__('Redirect user after login','wp-recall'),
-                    'child'=>1,
                     'values'=>array(
                         __('The user profile','wp-recall'),
                         __('Current page','wp-recall'),
-                        __('Arbitrary URL','wp-recall'))
-                ),
-                array(
-                    'extend' => true,
-                    'parent' => array('authorize_page'=>2),
-                    'type' => 'text',
-                    'slug'=>'custom_authorize_page',
-                    'title'=>__('URL','wp-recall'),
-                    'notice'=>__('Enter your URL below, if you select an arbitrary URL after login','wp-recall')
+                        __('Arbitrary URL','wp-recall')),
+                    'childrens' => array(
+                        2 => array(
+                            array(
+                                'extend' => true,
+                                'type' => 'text',
+                                'slug'=>'custom_authorize_page',
+                                'title'=>__('URL','wp-recall'),
+                                'notice'=>__('Enter your URL below, if you select an arbitrary URL after login','wp-recall')
+                            )
+                        )
+                    )
                 ),
                 array(
                     'extend' => true,
@@ -267,15 +276,17 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                     'slug'=>'view_recallbar',
                     'title'=>__('Output of recallbar panel','wp-recall'),
                     'help'=>__('Recallbar – is he top panel WP-Recall plugin through which the plugin and its add-ons can output their data and the administrator can make his menu, forming it on <a href="/wp-admin/nav-menus.php" target="_blank">page management menu of the website</a>','wp-recall'),
-                    'child'=>true,
-                    'values'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
-                ),
-                array(
-                    'parent' => array('view_recallbar'=>1),
-                    'type' => 'select',
-                    'slug'=>'rcb_color',
-                    'title'=>__('Color','wp-recall'),
-                    'values'=>array(__('Default','wp-recall'),__('Primary colors of WP-Recall','wp-recall'))
+                    'values'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall')),
+                    'childrens' => array(
+                        1 => array(
+                            array(
+                                'type' => 'select',
+                                'slug'=>'rcb_color',
+                                'title'=>__('Color','wp-recall'),
+                                'values'=>array(__('Default','wp-recall'),__('Primary colors of WP-Recall','wp-recall'))
+                            )
+                        )
+                    )
                 )
             )
         );

@@ -6,7 +6,7 @@ function rcl_admin_page_rating($content){
 
     $opt = new Rcl_Options(__FILE__);
 
-    $options = '';
+    $optionsContent = '';
 
     foreach($rcl_rating_types as $type=>$data){
 
@@ -23,52 +23,59 @@ function rcl_admin_page_rating($content){
         
         if(isset($data['post_type'])) 
             $notice_temp .= __('%POST% - link to publication','wp-recall');
+        
+        $options = array();
 
         if(isset($data['style'])){
             
-            $more .= $opt->label(__('Type of rating for','wp-recall').' '.$data['type_name']);
+            $options[] = array(
+                'child' => true,
+                'type' => 'select',
+                'slug' => 'rating_type_'.$type,
+                'title' => __('Type of rating for','wp-recall').' '.$data['type_name'],
+                'values' => array(
+                    __('Plus/minus','wp-recall'),
+                    __('I like','wp-recall'),
+                    __('Stars','wp-recall')
+                )
+            );
             
-            $more .= $opt->option('select',array(
-                    'name'=>'rating_type_'.$type,
-                    'parent' => true,
-                    'options'=>array(
-                        __('Plus/minus','wp-recall'),
-                        __('I like','wp-recall'),
-                        __('Stars','wp-recall'))
-                ));
-            
-            $more .= $opt->child(
-                    array(
-                        'name'=>'rating_type_'.$type,
-                        'value'=>2
-                    ),
-                    array(
+            $options[] = array(
+                'parent' => array('rating_type_'.$type => 2),
+                'type' => 'runner',
+                'slug' => 'rating_item_amount_'.$type,
+                'title' => __('Количество звезд','wp-recall'),
+                'value_min' => 1,
+                'value_max' => 20,
+                'default' => 5
+            );
 
-                        $opt->label(__('Количество звезд','wp-recall')),
-                        $opt->option('number',array(
-                            'name'=>'rating_item_amount_'.$type,
-                            'default'=>5
-                        ))
-                        
-                ));
         }
 
         if(isset($data['data_type'])){
-            $more .= $opt->child(
-                array(
-                    'name' => 'rating_type_'.$type,
-                    'value' => array(0,1)
-                ),
-                array(
-                    $opt->label(__('Overall rating','wp-recall').' '.$data['type_name']),
-                    $opt->option('select',array(
-                        'name'=>'rating_overall_'.$type,
-                        'options'=>array(__('Sum of votes','wp-recall'),__('Number of positive and negative votes','wp-recall'))
-                    ))
-            ));
+            
+            $options[] = array(
+                'parent' => array('rating_type_'.$type => array(0,1)),
+                'type' => 'select',
+                'slug' => 'rating_overall_'.$type,
+                'title' => __('Overall rating','wp-recall').' '.$data['type_name'],
+                'values' => array(__('Sum of votes','wp-recall'),__('Number of positive and negative votes','wp-recall'))
+            );
+
+        }
+        
+        if($points){
+            
+            $options[] = array(
+                'type' => 'text',
+                'slug' => 'rating_point_'.$type,
+                'title' => __('Points for ranking','wp-recall').' '.$data['type_name'],
+                'notice' => __('set how many points will be awarded for a positive or negative vote for the publication','wp-recall')
+            );
+            
         }
 
-        if(isset($data['limit_votes'])){
+        /*if(isset($data['limit_votes'])){
             $more .= $opt->label(__('Limit of one vote per user','wp-recall'));
             $more .= $opt->label(__('Positive votes','wp-recall'));
             $more .= __('Number','wp-recall').': '.$opt->option('number',array('name'=>'rating_plus_limit_'.$type));
@@ -77,94 +84,79 @@ function rcl_admin_page_rating($content){
             $more .= __('Number','wp-recall').': '.$opt->option('number',array('name'=>'rating_minus_limit_'.$type));
             $more .= ' '.__('Time','wp-recall').': '.$opt->option('number',array('name'=>'rating_minus_time_'.$type));
             $more .= $opt->notice(__('Note: Time in seconds','wp-recall'));
-        }
+        }*/
         
-        if($points){
-            $more .= $opt->label(__('Points for ranking','wp-recall').' '.$data['type_name']);
-            $more .= $opt->option('text',array('name'=>'rating_point_'.$type));
-            $more .= $opt->notice(__('set how many points will be awarded for a positive or negative vote for the publication','wp-recall'));
-        }
-
-        $options .= $opt->option_block(
-            array(
-                $opt->title(__('Rating','wp-recall').' '.$data['type_name']),
-
-                $opt->option('select',array(
-                    'name'=>'rating_'.$type,
-                    'parent'=>true,
-                    'options'=>array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
-                )),
-                $opt->child(
+        $options[] = array(
+            'type' => 'select',
+            'slug' => 'rating_user_'.$type,
+            'title' => sprintf(__('The influence of rating %s on the overall rating','wp-recall'),$data['type_name']),
+            'values' => array(__('No','wp-recall'),__('Yes','wp-recall')),
+            'childrens' => array(
+                1 => array(
                     array(
-                        'name'=>'rating_'.$type,
-                        'value'=>1
-                    ),
-                    array(
-                        
-                    $more,
-     
-                    $opt->label(sprintf(__('The influence of rating %s on the overall rating','wp-recall'),$data['type_name'])),
-                    $opt->option('select',array(
-                        'name'=>'rating_user_'.$type,
-                        'parent'=>true,
-                        'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-                    )),
-                    $opt->child(
-                        array(
-                            'name'=>'rating_user_'.$type,
-                            'value'=>1
-                        ),
-                        array(
-                        $opt->label(__('Template of history output in the overall ranking','wp-recall')),
-                        $opt->option('text',array('name'=>'rating_temp_'.$type,'default'=>'%DATE% %USER% '.__('has voted','wp-recall').': %VALUE%')),
-                        $opt->notice($notice_temp)
-                    ))
-                        
-                ))
+                        'type' => 'text',
+                        'slug' => 'rating_temp_'.$type,
+                        'title' => __('Template of history output in the overall ranking','wp-recall'),
+                        'default' => '%DATE% %USER% '.__('has voted','wp-recall').': %VALUE%',
+                        'notice' => $notice_temp
+                    )
+                )
             )
         );
+
+        $optionsContent .= $opt->options_box(
+            __('Rating','wp-recall').' '.$data['type_name'],
+            array(
+                array(
+                    'type' => 'select',
+                    'slug' => 'rating_'.$type,
+                    'values' => array(__('Disabled','wp-recall'),__('Enabled','wp-recall')),
+                    'childrens' => array(
+                        1 => $options
+                    )
+                )
+            )
+            
+        );
+
     }
 
     $content .= $opt->options(
+            
         __('Rating settings','wp-recall'),array(
 
-        $options,
+        $optionsContent,
             
         $opt->extend(array(
-
-            $opt->option_block(
+            
+            $opt->options_box(
+                __('Extends options','wp-recall'),
                 array(
-                    $opt->label(__('Influence of rationg on publication moderation','wp-recall')),
-                    $opt->option('number',array('name'=>'rating_no_moderation')),
-                    $opt->notice(__('specify the rating level at which the user will get the ability to post without moderation','wp-recall'))
-                )
-            ),
-
-            $opt->option_block(
-                array(
-                    $opt->label(__('View results','wp-recall')),
-                    $opt->option('select',array(
-                            'name'=>'rating_results_can',
-                            'default'=>0,
-                            'options'=>array(
-                                    0=>__('All users','wp-recall'),
-                                    1=>__('Participants and higher','wp-recall'),
-                                    2=>__('Authors and higher','wp-recall'),
-                                    7=>__('Editors and higher','wp-recall'),
-                                    10=>__('only Administrators','wp-recall')
-                            )
-                        )),
-                    $opt->notice(__('specify the user group which is allowed to view votes','wp-recall'))
-                )
-            ),
-
-            $opt->option_block(
-                array(
-                    $opt->label(__('Delete your vote','wp-recall')),
-                    $opt->option('select',array(
-                            'name'=>'rating_delete_voice',
-                            'options'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
-                    ))
+                    array(
+                        'type' => 'number',
+                        'slug' => 'rating_no_moderation',
+                        'title' => __('Influence of rationg on publication moderation','wp-recall'),
+                        'notice' => __('specify the rating level at which the user will get the ability to post without moderation','wp-recall')
+                    ),
+                    array(
+                        'type' => 'select',
+                        'slug' => 'rating_results_can',
+                        'title' => __('View results','wp-recall'),
+                        'values' => array(
+                            0   => __('All users','wp-recall'),
+                            1   => __('Participants and higher','wp-recall'),
+                            2   => __('Authors and higher','wp-recall'),
+                            7   => __('Editors and higher','wp-recall'),
+                            10  => __('only Administrators','wp-recall')
+                        ),
+                        'notice' => __('specify the user group which is allowed to view votes','wp-recall')
+                    ),
+                    array(
+                        'type' => 'select',
+                        'slug' => 'rating_delete_voice',
+                        'title' => __('Delete your vote','wp-recall'),
+                        'values' => array(__('No','wp-recall'),__('Yes','wp-recall'))
+                    )
                 )
             )
         ))

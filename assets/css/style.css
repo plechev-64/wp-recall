@@ -1322,6 +1322,11 @@ div.ssi-backdrop {
     width: 18px;
     z-index: 1;
 }
+.rcl-runner .rcl-runner-box .ui-slider-handle:focus, 
+.rcl-range .rcl-range-box .ui-slider-handle:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+}
 /* ** */
 
 /*таблица конец*/

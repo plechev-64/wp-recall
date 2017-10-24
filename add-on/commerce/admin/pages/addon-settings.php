@@ -94,22 +94,23 @@ function rcl_commerce_options(){
             array(
                 array(
                     'type' => 'select',
-                    'child' => true,
                     'title'=>__('Output order','wp-recall'),
                     'slug'=>'sistem_related_products',
-                    'values'=> array(__('Disabled','wp-recall'),__('Enabled','wp-recall'))
-                ),
-                array(
-                    'parent' => array('sistem_related_products'=>1),
-                    'type' => 'text',
-                    'title'=>__('Block title for featured products','wp-recall'),
-                    'slug'=>'title_related_products_recal'
-                ),
-                array(
-                    'parent' => array('sistem_related_products'=>1),
-                    'type' => 'number',
-                    'title'=>__('Number of featured products','wp-recall'),
-                    'slug'=>'size_related_products'
+                    'values'=> array(__('Disabled','wp-recall'),__('Enabled','wp-recall')),
+                    'childrens' => array(
+                        1 => array(
+                            array(
+                                'type' => 'text',
+                                'title'=>__('Block title for featured products','wp-recall'),
+                                'slug'=>'title_related_products_recal'
+                            ),
+                            array(
+                                'type' => 'number',
+                                'title'=>__('Number of featured products','wp-recall'),
+                                'slug'=>'size_related_products'
+                            )
+                        )
+                    )
                 )
             )
         ))

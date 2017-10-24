@@ -170,8 +170,12 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     font-weight: bold;
     margin-top: 5px;
 }
-.wrap-recall-options div.rcl-option label.option-title{
+.wrap-recall-options div.rcl-option label.option-title,
+.wrap-recall-options div.rcl-option .rcl-field-input label{
     display: inline-block;
+}
+.wrap-recall-options div.rcl-option .rcl-field-input label{
+    font-weight:normal;
 }
 .wrap-recall-options .option-block small {
     display: block;
@@ -984,6 +988,11 @@ span.ruble-symbol{
     height: 18px;
     width: 18px;
     z-index: 1;
+}
+.rcl-runner .rcl-runner-box .ui-slider-handle:focus, 
+.rcl-range .rcl-range-box .ui-slider-handle:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
 }
 
 @media screen and (max-width:568px) {

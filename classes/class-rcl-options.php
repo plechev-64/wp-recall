@@ -233,9 +233,21 @@ class Rcl_Options extends Rcl_Custom_Fields{
         $content = '<div class="option-block rcl-custom-fields-box">';
         
         $content .= $this->title($titleBox);
+
+        $content .= $this->options_loop($fields);
+        
+        $content .= '</div>';
+        
+        return $content;
+        
+    }
+    
+    function options_loop($fields){
+        
+        $content = '';
         
         foreach($fields as $field){
-            
+        
             $value = $this->field_value(array(
                 'slug' => $field['slug'],
                 'group' => isset($field['group'])? $field['group']: null,
@@ -244,17 +256,26 @@ class Rcl_Options extends Rcl_Custom_Fields{
             
             $classes = array('rcl-option rcl-custom-field');
 
-            if(isset($field['child'])) $classes[] = 'parent-option';
+            if(isset($field['child']) || isset($field['childrens'])) $classes[] = 'parent-option';
             
             if(isset($field['parent']) && is_array($field['parent'])){
                 
                 $classes[] = 'children-option';
-                
+
                 //$classes[] = 'option-hide';
                 
-                foreach($field['parent'] as $parent => $v){
+                foreach($field['parent'] as $parent => $val){
+                    
                     $classes[] = 'parent-'.$parent;
-                    $classes[] = $parent.'-'.$v;
+                    
+                    if(is_array($val)){
+                        foreach($val as $v){
+                            $classes[] = $parent.'-'.$v;
+                        }
+                    }else{
+                        $classes[] = $parent.'-'.$val;
+                    }
+ 
                 }
                 
             }
@@ -273,14 +294,22 @@ class Rcl_Options extends Rcl_Custom_Fields{
             
             $contentField .= '</div>';
             
+            if(isset($field['childrens'])){
+                
+                foreach($field['childrens'] as $parentValue => $childFields){
+                    $contentField .= '<div class="'.implode(' ', array('rcl-option', 'children-option', 'parent-'.$field['slug'], $field['slug'].'-'.$parentValue)).'">';
+                    $contentField .= $this->options_loop($childFields);
+                    $contentField .= '</div>';
+                }
+                
+                
+            }
+            
             if(isset($field['extend']))
                 $contentField = $this->extend($contentField);
             
             $content .= $contentField;
-            
         }
-        
-        $content .= '</div>';
         
         return $content;
         

@@ -110,7 +110,6 @@ function pfm_page_options(){
                     . 'Specify without brackets, for example: custom-shortcode','wp-recall')
         ),
         array(
-            'child' => true,
             'type' => 'select',
             'slug' => 'view-forums-home',
             'title' => __('Output all forums of the group on the homepage','wp-recall'),
@@ -118,16 +117,19 @@ function pfm_page_options(){
             'values' => array(
                 __('Do not output','wp-recall'),
                 __('Output','wp-recall')
+            ),
+            'childrens' => array(
+                1 => array(
+                    array(
+                        'type' => 'text',
+                        'slug' => 'forums-home-list',
+                        'pattern' => '([0-9,\s]+)',
+                        'title' => __('Output forums only for the specified groups','wp-recall'),
+                        'notice' => __('If output of forums on the homepage is turned on, you may specify IDs of the groups, '
+                                . 'whose forums should be output, space separated','wp-recall')
+                    )
+                )
             )
-        ),
-        array(
-            'parent' => array('view-forums-home'=>1),
-            'type' => 'text',
-            'slug' => 'forums-home-list',
-            'pattern' => '([0-9,\s]+)',
-            'title' => __('Output forums only for the specified groups','wp-recall'),
-            'notice' => __('If output of forums on the homepage is turned on, you may specify IDs of the groups, '
-                    . 'whose forums should be output, space separated','wp-recall')
         ),
         array(
             'type' => 'runner',

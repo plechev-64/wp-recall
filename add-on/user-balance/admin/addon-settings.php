@@ -37,9 +37,7 @@ function rcl_user_account_options($content){
             $pay_options_child = '<p style="color:red;">Похоже ни одного подключения не настроено. Скачайте <a href="https://codeseller.ru/product_tag/platezhnye-sistemy/" target="_blank">одно из доступных дополнений</a> для подключения к платежному агрегатору и настройте его</p>';
         }
         
-        $payment_opt = array(
-                        __('Payment from user’s personal account','wp-recall')                       
-                    );
+        $payment_opt = array( __('Payment from user’s personal account','wp-recall') );
         
         if($init_gateway){
             $payment_opt[] = __('Payment through payment systems','wp-recall');

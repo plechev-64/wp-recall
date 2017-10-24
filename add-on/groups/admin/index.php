@@ -11,38 +11,41 @@ function rcl_admin_groups_page_content($content){
             __('Groups','wp-recall'),    
             array(
                 array(
-                    'child' => true,
                     'type' => 'select',
                     'title'=>__('Group output','wp-recall'),
                     'slug'=>'group-output',
                     'values'=>array(
                         __('On the archive page of post-groups entries','wp-recall'),
                         __('On an arbitrary page of the website','wp-recall')
-                    )
-                ),
-                array(
-                    'parent' => array('group-output'=>0),
-                    'type' => 'select',
-                    'title'=>__('Group contents widget','wp-recall'),
-                    'slug'=>'groups_posts_widget',
-                    'values'=>array(
-                        __('Disabled','wp-recall'),
-                        __('Enabled','wp-recall')
                     ),
-                    'notice' => __('enable if publication loop within the group has been removed from the template','wp-recall')
-                ),
-                array(
-                    'parent' => array('group-output'=>1),
-                    'type' => 'custom',
-                    'title'=>__('Shortcode host page','wp-recall'),
-                    'slug'=>'groups-host-page',
-                    'content'=> wp_dropdown_pages(array(
-                        'selected'   => rcl_get_option('group-page'),
-                        'name'       => 'global[group-page]',
-                        'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
-                        'echo'       => 0
-                    )),
-                    'notice' => __('please specify the page where the [grouplist] shortcode is placed','wp-recall')
+                    'childrens' => array(
+                        0 => array(
+                            array(
+                                'type' => 'select',
+                                'title'=>__('Group contents widget','wp-recall'),
+                                'slug'=>'groups_posts_widget',
+                                'values'=>array(
+                                    __('Disabled','wp-recall'),
+                                    __('Enabled','wp-recall')
+                                ),
+                                'notice' => __('enable if publication loop within the group has been removed from the template','wp-recall')
+                            )
+                        ),
+                        1 => array(
+                            array(
+                                'type' => 'custom',
+                                'title'=>__('Shortcode host page','wp-recall'),
+                                'slug'=>'groups-host-page',
+                                'content'=> wp_dropdown_pages(array(
+                                    'selected'   => rcl_get_option('group-page'),
+                                    'name'       => 'global[group-page]',
+                                    'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
+                                    'echo'       => 0
+                                )),
+                                'notice' => __('please specify the page where the [grouplist] shortcode is placed','wp-recall')
+                            )
+                        )
+                    )
                 ),
                 array(
                     'type' => 'select',
