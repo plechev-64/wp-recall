@@ -233,6 +233,8 @@ class Rcl_Custom_Fields{
 
     function get_type_multiselect($field){
         
+        rcl_multiselect_scripts();
+        
         if(isset($field['field_select']))
             $field['values'] = rcl_edit_old_option_fields($field['field_select'], $field['type']);
         
@@ -250,6 +252,14 @@ class Rcl_Custom_Fields{
         }
         
         $content .= '</select>';
+        
+        $init = 'jQuery("#'.$this->slug.'").fSelect();';
+        
+        if(!defined( 'DOING_AJAX' )){
+            $content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
+        }else{
+            $content .= '<script>' . $init . '</script>';
+        }
         
         return $content;
     }

@@ -10,6 +10,12 @@ function rcl_resizable_scripts(){
     wp_enqueue_script('jquery-ui-resizable');
 }
 
+function rcl_multiselect_scripts(){
+    wp_enqueue_script( 'jquery' );
+    rcl_enqueue_style( 'f-select', RCL_URL.'assets/js/fselect/fSelect.css' );
+    rcl_enqueue_script( 'f-select', RCL_URL.'assets/js/fselect/fSelect.js' );
+}
+
 function rcl_slider_scripts(){
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-core');

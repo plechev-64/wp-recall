@@ -836,6 +836,21 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     top: 0;
     z-index: 10;
 }
+.type-multiselect-input .hidden {
+    display: none!important;
+}
+.type-multiselect-input .fs-wrap {
+    width: 100%;
+    max-width: 400px;
+}
+.type-multiselect-input .fs-dropdown {
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 4px 3px 3px 0px #929292;
+}
+.type-multiselect-input .fs-wrap.multiple .fs-option.selected .fs-checkbox i {
+    background-color: #888;
+}
 /* END custom fields box */
 
 /* START backend publications */

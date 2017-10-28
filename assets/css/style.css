@@ -633,6 +633,21 @@ a.data-filter.filter-active:hover {
 .rcl-field-input .rcl-field-notice .fa{
     margin-right:5px;
 }
+.type-multiselect-input .hidden {
+    display: none!important;
+}
+.type-multiselect-input .fs-wrap {
+    width: 100%;
+    max-width: 400px;
+}
+.type-multiselect-input .fs-dropdown {
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 4px 3px 3px 0px #929292;
+}
+.type-multiselect-input .fs-wrap.multiple .fs-option.selected .fs-checkbox i {
+    background-color: #888;
+}
 .type-dynamic-input .dynamic-values{
     display: block;
 }
@@ -1388,10 +1403,3 @@ div.ssi-backdrop {
     background: rgba(0,0,0,0.5);
 }
 /* Непроверенная секция End */
-
-#rcl-preview{
-    
-}
-#rcl-preview img{
-    
-}
