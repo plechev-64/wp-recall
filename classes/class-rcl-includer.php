@@ -69,9 +69,9 @@ class Rcl_Includer{
         }
 
         $filename = md5(implode(',',$ids)).'.css';
-        $filepath = RCL_UPLOAD_PATH.'assets/css/'.$filename;
+        $filepath = RCL_UPLOAD_PATH.'css/'.$filename;
         
-        if(!file_exists($filepath)){
+        if(!file_exists(wp_normalize_path($filepath))){
             $this->create_file($filename,'css');
         }
         
@@ -157,16 +157,17 @@ class Rcl_Includer{
             $file_string = file_get_contents($file['path']);
             
             if($type=='css'){
-                $urls = '';
+                $urls = array();
                 preg_match_all('/(?<=url\()[A-zА-я0-9\-\_\/\"\'\.\?\s]*(?=\))/iu', $file_string, $urls);
-                $addon = (rcl_addon_path($file['url']))? true: false;
+                $addon = (rcl_addon_path($file['path']))? true: false;
 
                 if($urls[0]){
+                    
                     foreach($urls[0] as $u){
-                        $imgs[] = ($addon)? rcl_addon_url(trim($u,'\',\"'),$file['url']): RCL_URL.'css/'.trim($u,'\',\"');
+                        $imgs[] = ($addon)? rcl_addon_url(trim($u,'\',\"'),$file['path']): RCL_URL.'css/'.trim($u,'\',\"');
                         $us[] = $u;
                     }
-
+                    
                     $file_string = str_replace($us, $imgs, $file_string);
                 }
             }

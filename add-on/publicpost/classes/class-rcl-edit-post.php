@@ -3,13 +3,16 @@
 class Rcl_EditPost {
 
     public $post_id; //идентификатор поста
+    public $post = array();
     public $post_type; //тип записи
     public $update = false; //действие
+    public $user_can = array(
+        'publish' => false, 
+        'edit' => false,
+        'upload' => false
+    );
 
     function __construct(){
-        global $user_ID;
-
-        if(rcl_get_option('user_public_access_recall') && !$user_ID) return false;
 
         if(isset($_FILES)){
             require_once(ABSPATH . "wp-admin" . '/includes/image.php');
@@ -27,25 +30,18 @@ class Rcl_EditPost {
             
             $post = get_post($this->post_id);
             
+            $this->post = $post;
+            
             $this->post_type = $post->post_type;
 
-            if($this->post_type == 'post-group'){
-                
-                if(!rcl_can_user_edit_post_group($this->post_id)) 
-                    $this->error(__('Error publishing!','wp-recall').' Error 102');
-                
-            }else{
-
-                if(!current_user_can('edit_post', $this->post_id)) 
-                    $this->error(__('Error publishing!','wp-recall').' Error 103');
-
-                if(!rcl_is_user_role($user_ID,array('administrator','editor')) && rcl_is_limit_editing($post->post_date)) 
-                    $this->error(__('Error publishing!','wp-recall').' Error 105');
-            }
-            
             $this->update = true;
             
         }
+        
+        $this->setup_user_can();
+        
+        if(!$this->user_can)
+            $this->error(__('Error publishing!','wp-recall').' Error 100');
 
         do_action('init_update_post_rcl',$this);
 
@@ -61,6 +57,54 @@ class Rcl_EditPost {
         }else{
             wp_die($error);
         }
+        
+    }
+    
+    function setup_user_can(){
+        global $user_ID;
+        
+        if($this->update){
+        
+            if($this->post_type == 'post-group'){
+
+                if(rcl_can_user_edit_post_group($this->post_id)) 
+                    $this->user_can['edit'] = true;
+
+            }else{
+
+                if(current_user_can('edit_post', $this->post_id)) 
+                    $this->user_can['edit'] = true;
+
+                if(rcl_is_user_role($user_ID, array('administrator','editor')) || !rcl_is_limit_editing($this->post->post_date)) 
+                    $this->user_can['edit'] = true;
+            }
+        
+        }else{
+            
+            $this->user_can['publish'] = true;
+            
+            $user_can = rcl_get_option('user_public_access_recall');
+            
+            if($user_can){
+
+                if($user_ID){
+
+                    $userinfo = get_userdata( $user_ID );
+
+                    if($userinfo->user_level < $user_can) 
+                        $this->user_can['publish'] = false;
+
+                }else{
+
+                    $this->user_can['publish'] = false;
+
+                }
+
+            }
+            
+        }
+        
+        $this->user_can = apply_filters('rcl_public_update_user_can', $this->user_can, $this);
         
     }
 

@@ -613,7 +613,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                     'value' => $tag->name
                 );
                 
-                if($this->current_field['required']){                   
+                if(isset($this->current_field['required']) && $this->current_field['required']){                   
                     $args['required'] = true;
                     $args['class'] = 'required-checkbox';
                 }

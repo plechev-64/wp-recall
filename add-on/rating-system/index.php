@@ -307,6 +307,8 @@ function rcl_rating_block($args){
     }else{
         $value = $args['value'];
     }
+    
+    $value = apply_filters('rcl_rating_block_value', $value, $args);
 
     $class = (isset($args['type']))? 'rating-type-'.$args['type']: '';
 

@@ -66,28 +66,28 @@ class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
                 ),
 
                 array(
-                    'type' => 'select',
+                    'type' => 'radio',
                     'slug'=>'required',
                     'title'=>__('required field','wp-recall'),
                     'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
                 ),
 
                 array(
-                    'type' => 'select',
+                    'type' => 'radio',
                     'slug'=>'req',
                     'title'=>__('show the content to other users','wp-recall'),
                     'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
                 ),
 
                 array(
-                    'type' => 'select',
+                    'type' => 'radio',
                     'slug'=>'admin',
                     'title'=>__('can be changed only by the site administration','wp-recall'),
                     'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
                 ),
 
                 array(
-                    'type' => 'select',
+                    'type' => 'radio',
                     'slug'=>'filter',
                     'title'=>__('Filter users by this field','wp-recall'),
                     'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
@@ -127,23 +127,6 @@ class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
                         unset($options[$k]);
                     }
                     
-                }
- 
-            }
-            
-        }
-        
-        $types = array(
-            'range',
-            'runner'
-        );
-        
-        if(in_array($field['type'],$types)){
-            
-            foreach($options as $k => $option){
-                
-                if($option['slug'] == 'required'){
-                    unset($options[$k]);
                 }
  
             }

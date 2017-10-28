@@ -1001,7 +1001,7 @@ function rcl_update_profile_fields($user_id){
 
             }
             
-            if($field['admin'] == 1 && !is_admin()){
+            if(isset($field['admin']) && $field['admin'] == 1 && !is_admin()){
                 
                 if(in_array($slug,array('display_name','user_url'))){
                     

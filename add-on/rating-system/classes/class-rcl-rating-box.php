@@ -14,6 +14,7 @@ class Rcl_Rating_Box {
     public $output_type = null;
     public $user_id;
     public $total_rating;
+    public $average_rating = 0;
     public $user_vote;
     public $vote_max = 1;
     public $vote_count = 0;
@@ -208,13 +209,13 @@ class Rcl_Rating_Box {
     
     function get_box_star(){
 
-        $average_rating = $this->vote_count? round( $this->total_rating / $this->vote_count, 1 ): 0;
+        $this->average_rating = $this->vote_count? round( $this->total_rating / $this->vote_count, 1 ): 0;
         $item_value = round( $this->vote_max / $this->item_count, 1 );
 
         $args = array(
-            'average_rating' => $average_rating,
+            'average_rating' => $this->average_rating,
             'item_value' => $item_value,
-            'rating_value' => round( $average_rating / $item_value, 1 )
+            'rating_value' => round( $this->average_rating / $item_value, 1 )
         );
         
         $content = $this->get_html_stars($args);

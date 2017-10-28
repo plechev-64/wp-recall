@@ -5,8 +5,8 @@
 
 global $post;
 
-$attrWidth = ($width && is_numeric($width))? 'style="width:'.$width.'px;"': '';
-$imagesize = ($width)? array($width,$width): 'thumbnail'; ?>
+$attrWidth = (isset($width) && is_numeric($width))? 'style="width:'.$width.'px;"': '';
+$imagesize = (isset($width))? array($width,$width): 'thumbnail'; ?>
 <div class="product" <?php echo $attrWidth; ?> id="product-<?php the_ID(); ?>" itemscope itemtype="http://schema.org/Product">
     <a class="product-thumbnail" href="<?php the_permalink(); ?>">
         <?php the_post_thumbnail($imagesize,array('alt'=>$post->post_title,'itemprop'=>'image')); ?>

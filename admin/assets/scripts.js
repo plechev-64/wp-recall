@@ -173,6 +173,15 @@ function rcl_get_custom_field_options(e){
         
     }
     
+    var sliderVals = ['runner','range'];
+    
+    if(jQuery.inArray( typeField, sliderVals ) >= 0 && jQuery.inArray( oldType, sliderVals ) >= 0){
+        
+        boxField.attr('data-type',typeField);
+        return;
+        
+    }
+    
     rcl_preloader_show(boxField);
     
     rcl_ajax({

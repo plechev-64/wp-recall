@@ -20,7 +20,7 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
             ),
 
             array(
-                'type' => 'select',
+                'type' => 'radio',
                 'slug' => 'required',
                 'title' =>__('required field','wp-recall'),
                 'values'  => array(

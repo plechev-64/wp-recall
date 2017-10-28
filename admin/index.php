@@ -10,6 +10,27 @@ function rcl_admin_scripts(){
     wp_enqueue_style( 'animate-css', RCL_URL.'assets/css/animate-css/animate.min.css' );   
 }
 
+add_filter('rcl_custom_field_options','rcl_edit_field_options',10,3);
+function rcl_edit_field_options($options, $field, $type){
+
+    $types = array( 'range', 'runner' );
+
+    if(in_array($field['type'],$types)){
+
+        foreach($options as $k => $option){
+
+            if($option['slug'] == 'required'){
+                unset($options[$k]);
+            }
+
+        }
+
+    }
+    
+    return $options;
+    
+}
+
 function rmag_global_options(){
     
     $content = ' <div id="recall" class="left-sidebar wrap">

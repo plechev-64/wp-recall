@@ -207,7 +207,7 @@ function rcl_add_cart_profile_field_option($options, $field, $type){
     if($type != 'profile') return $options;
     
     $options[] = array(
-        'type' => 'select',
+        'type' => 'radio',
         'slug'=>'order',
         'title'=>__('display at checkout for guests','wp-recall'),
         'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))

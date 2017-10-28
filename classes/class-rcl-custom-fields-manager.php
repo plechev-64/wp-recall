@@ -316,10 +316,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         }
         
         $options = array_merge($options, $this->defaultOptions);
-        
-        $options = apply_filters('rcl_custom_fields_options',$options,$this->post_type);
-        
-        return $options;
+
+        return apply_filters('rcl_custom_field_options', $options, $this->field, $this->post_type);
         
     }
     
@@ -342,7 +340,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
     
     function get_options(){
         
-        $options = apply_filters('rcl_custom_field_options', $this->get_options_field(), $this->field, $this->post_type);
+        $options = $this->get_options_field();
         
         if(!$options) return false;
         
@@ -379,7 +377,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         
         $content = '<div class="field-header">
                     <span class="field-type type-'.$this->field['type'].'"></span>
-                    <span class="field-title">'.$this->field['title'].'</span>                           
+                    <span class="field-title">'.$this->field['title'].(isset($this->field['required']) && $this->field['required']? ' <span class="required">*</span>': '').'</span>                           
                     <span class="field-controls">
                     ';
         
