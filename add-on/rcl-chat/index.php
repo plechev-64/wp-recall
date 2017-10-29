@@ -15,7 +15,7 @@ function rcl_chat_scripts(){
     rcl_enqueue_style('rcl-chat',rcl_addon_url('style.css', __FILE__));
     rcl_enqueue_script( 'rcl-chat-sounds', rcl_addon_url('js/ion.sound.min.js', __FILE__) );
     rcl_enqueue_script( 'rcl-chat', rcl_addon_url('js/scripts.js', __FILE__) ); 
-
+    
     $file_upload = (isset($rcl_options['chat']['file_upload']))? $rcl_options['chat']['file_upload']: 0;
     
     if($user_ID && $file_upload){

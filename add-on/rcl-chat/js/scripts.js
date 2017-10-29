@@ -84,7 +84,7 @@ function rcl_init_chat(chat){
     jQuery(function($){
         
         chat = rcl_apply_filters('rcl_init_chat',chat);
-
+        
         rcl_chat_scroll_bottom(chat.token);
         
         var user_id = parseInt(Rcl.user_ID);

@@ -127,6 +127,7 @@ function rcl_frontend_scripts(){
 }
 
 function rcl_get_localize_data(){
+    global $user_ID, $rcl_options;
     
     $local = array(
         'save' => __('Save','wp-recall'),

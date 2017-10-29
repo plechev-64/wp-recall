@@ -51,6 +51,9 @@
     margin: 0 10px 5px 0;
     width: auto;
 }
+.rcl-public-box .rcl-form-field .rcl-terms-select .type-multiselect-input{
+    display:block;
+}
 .rcl-public-box .rcl-form-field .rcl-terms-select .rcl-tags-list{
     overflow: hidden;
 }

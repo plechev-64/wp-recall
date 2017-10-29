@@ -35,6 +35,9 @@ class Rcl_List_Terms{
 
         if($type_output) 
             $this->type_output = $type_output;
+        
+        if($this->type_output == 'checkbox')
+            $this->type_output = 'multiselect';
 
         $method = 'get_'.$this->type_output;
 
@@ -66,6 +69,38 @@ class Rcl_List_Terms{
         }
 
         $content .= '</div>';
+
+        return $content;
+    }
+    
+    function get_multiselect(){
+        
+        rcl_multiselect_scripts();
+
+        $content = '<div class="rcl-terms-select">';
+
+        for($a=0;$a<$this->select_amount;$a++){
+
+            $this->selected_term = false;
+            
+            $content .= '<div class="category-list rcl-field-input type-multiselect-input">'; 
+
+            $content .= '<select id="taxonomy-field-'.$this->taxonomy.'" class="postform" name="cats['.$this->taxonomy.'][]" multiple>';
+
+            if($a>0||$this->first_option) 
+                $content .= '<option value="">'.__('Not selected','wp-recall').'</option>';			
+
+            $content .= $this->get_options_list();
+
+            $content .= '</select>';
+            
+            $content .= '</div>';
+
+        }
+
+        $content .= '</div>';
+        
+        $content .= '<script>jQuery(window).on("load", function() {jQuery("#taxonomy-field-'.$this->taxonomy.'").fSelect();});</script>';
 
         return $content;
     }
