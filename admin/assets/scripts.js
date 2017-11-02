@@ -24,7 +24,7 @@ jQuery(function($){
     });
 
     /**/
-    $("#recall").find(".parent-option").each(function(){
+    $(".wrap-recall-options").find(".parent-option").each(function(){
         $(this).find("input,select").each(function(){
             var id = $(this).attr('id');
             var val = $(this).val();
@@ -114,8 +114,22 @@ jQuery(function($){
                     $('#'+addon+'-update .update-message').toggleClass('updating-message updated-message').html('Успешно обновлено!');				
                 }
                 if(data['error']){
+                    
                     $('#'+addon+'-update .update-message').removeClass('updating-message');
-                    alert(data['error']);
+                    
+                    var ssiOptions = {
+                        className: 'rcl-dialog-tab rcl-update-error',
+                        sizeClass: 'auto',
+                        title: Rcl.local.error,
+                        buttons: [{
+                            label: Rcl.local.close,
+                            closeAfter: true
+                        }],
+                        content: data['error']
+                    };
+
+                    ssi_modal.show(ssiOptions);
+
                 }
             } 
         });	  	

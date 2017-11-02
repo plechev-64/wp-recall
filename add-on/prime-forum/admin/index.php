@@ -76,9 +76,7 @@ function pfm_page_options(){
         
         $pagelist = array();
         foreach($pages as $page){
-            
-            $pagelist[$page->ID] = $page->post_title;
-                    
+            $pagelist[$page->ID] = $page->post_title;   
         }
         
     }
@@ -117,19 +115,15 @@ function pfm_page_options(){
             'values' => array(
                 __('Do not output','wp-recall'),
                 __('Output','wp-recall')
-            ),
-            'childrens' => array(
-                1 => array(
-                    array(
-                        'type' => 'text',
-                        'slug' => 'forums-home-list',
-                        'pattern' => '([0-9,\s]+)',
-                        'title' => __('Output forums only for the specified groups','wp-recall'),
-                        'notice' => __('If output of forums on the homepage is turned on, you may specify IDs of the groups, '
-                                . 'whose forums should be output, space separated','wp-recall')
-                    )
-                )
             )
+        ),
+        array(
+            'type' => 'text',
+            'slug' => 'forums-home-list',
+            'pattern' => '([0-9,\s]+)',
+            'title' => __('Output forums only for the specified groups','wp-recall'),
+            'notice' => __('If output of forums on the homepage is turned on, you may specify IDs of the groups, '
+                    . 'whose forums should be output, space separated','wp-recall')
         ),
         array(
             'type' => 'runner',
@@ -238,31 +232,26 @@ function pfm_page_options(){
     
     if($PfmOptions){
         foreach($options as $k => $option){
+            
             if(isset($PfmOptions[$option['slug']]))
                 $options[$k]['default'] = $PfmOptions[$option['slug']];
+            
         }
     }
+    
+    ?>
 
-    $content = $opt->options(
-        false, array(
-            $opt->options_box(__('General settings','wp-recall'), $options)
-        )
-    );
-    
-    $CF = new Rcl_Custom_Fields();
-    
-    ?>   
     <h2><?php _e('Settings PrimeForum','wp-recall'); ?></h2>
 
     <div id="prime-options" class="rcl-form wrap-recall-options" style="display:block;">
 
         <form method="post" action="options.php">
 
-            <?php
-
-                echo $content;
-
-            ?>
+            <?php echo $opt->options(
+                    false, array(
+                        $opt->options_box(__('General settings','wp-recall'), $options)
+                    )
+                ); ?>
 
             <p align="right">
                 <input type="submit" name="Submit" class="button button-primary button-large" value="<?php _e('Save','wp-recall'); ?>" />

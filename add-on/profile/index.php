@@ -268,47 +268,6 @@ function rcl_tab_profile_content($master_id){
     return $content;
 }
 
-add_filter( 'rcl_custom_tab_content', 'rcl_filter_usermetas_custom_tab', 5 );
-function rcl_filter_usermetas_custom_tab($content){
-    global $rcl_office;
-    
-    preg_match_all('/{RCL-UM:([^}]+)}/', $content, $metas);
-    
-    if(!$metas[1]) return $content;
-    
-    $profileFields = rcl_get_profile_fields();
-
-    if($profileFields){
-
-        $customFields = new Rcl_Custom_Fields();
-
-        foreach($profileFields as $field){
-
-            $slug = false;
-
-            foreach( $metas[1] as $meta ){
-
-                if($field['slug'] != $meta) continue;
-
-                $slug = $field['slug']; break;
-
-            }
-
-            if($slug){
-                $value = $customFields->get_field_value($field,get_the_author_meta($slug,$rcl_office),false);
-            }else{
-                $value = __('not specified','wp-recall');
-            }
-
-            $content = str_replace('{RCL-UM:'.$slug.'}',$value,$content);
-        }
-
-    }
-    
-    return $content;
-
-}
-
 //Выводим возможность синхронизации соц.аккаунтов в его личном кабинете
 //при активированном плагине Ulogin
 if(function_exists('ulogin_profile_personal_options')){

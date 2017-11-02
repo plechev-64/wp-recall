@@ -13,7 +13,7 @@ function rcl_resizable_scripts(){
 function rcl_multiselect_scripts(){
     wp_enqueue_script( 'jquery' );
     rcl_enqueue_style( 'f-select', RCL_URL.'assets/js/fselect/fSelect.css' );
-    rcl_enqueue_script( 'f-select', RCL_URL.'assets/js/fselect/fSelect.js' );
+    wp_enqueue_script( 'f-select', RCL_URL.'assets/js/fselect/fSelect.js' );
 }
 
 function rcl_slider_scripts(){

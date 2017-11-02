@@ -176,12 +176,14 @@ class Rcl_Rating_Box {
     
     function box_content(){
         
+        $this->average_rating = $this->vote_count? round( $this->total_rating / $this->vote_count, 1 ): 0;
+        
         $class = 'box-default';
         
         if($this->output_type)
             $class = $this->output_type == 1? 'box-like': 'box-stars';
 
-        $content = '<div class="rcl-rating-box '.$class.'">';
+        $content = '<div class="rcl-rating-box rating-type-'.$this->rating_type.' '.$class.'">';
         
             $content .= '<div class="rating-wrapper">';
 
@@ -190,6 +192,10 @@ class Rcl_Rating_Box {
                 $content .= $this->get_box_like();
 
             }else if($this->output_type == 2){
+
+                if($this->object_id && is_single($this->object_id)){
+                    $content .= $this->get_stars_shema();
+                }
 
                 $content .= $this->get_box_star();
 
@@ -209,7 +215,6 @@ class Rcl_Rating_Box {
     
     function get_box_star(){
 
-        $this->average_rating = $this->vote_count? round( $this->total_rating / $this->vote_count, 1 ): 0;
         $item_value = round( $this->vote_max / $this->item_count, 1 );
 
         $args = array(
@@ -400,7 +405,7 @@ class Rcl_Rating_Box {
         }
         
         $content = '<span class="'.(implode(' ',$classes)).'">';
-        
+
         for($a = 1; $a <= $this->item_count; $a ++){
             
             $itemValue = round($a * $args['item_value'], 1);
@@ -432,6 +437,29 @@ class Rcl_Rating_Box {
                 
             }
             
+        }
+        
+        $content .= '</span>';
+        
+        return $content;
+        
+    }
+    
+    function get_stars_shema(){
+        global $post;
+        
+        $metatags = apply_filters('rcl_rating_shema_metatags', array(
+            'name' => $post->post_title,
+            'itemReviewed' => $post->post_title,
+            'bestRating' => $this->vote_max,
+            'ratingValue' => $this->average_rating,
+            'ratingCount' => $this->vote_count
+        ), $this);
+
+        $content = '<span itemscope="" itemtype="http://schema.org/AggregateRating">';
+            
+        foreach($metatags as $itemprop => $value){
+            $content .= '<meta itemprop="'.$itemprop.'" content="'.$value.'">';
         }
         
         $content .= '</span>';

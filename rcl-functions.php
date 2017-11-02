@@ -200,13 +200,6 @@ function rcl_register_tabs(){
     
 }
 
-//вывод контента произвольной вкладки
-add_filter( 'rcl_custom_tab_content', 'do_shortcode', 11 );
-add_filter( 'rcl_custom_tab_content', 'wpautop', 10 );
-function rcl_custom_tab_content($content){
-    return apply_filters('rcl_custom_tab_content',stripslashes_deep($content));
-}
-
 //сортируем вкладки и изменяем их данные согласно настроек
 add_filter('rcl_tabs','rcl_add_custom_tabs',5);
 function rcl_add_custom_tabs($tabs){
@@ -734,7 +727,7 @@ function rcl_notice_text($text,$type='warning'){
 function rcl_get_smiles($id_area){
     global $wpsmiliestrans;
     
-    if(!$wpsmiliestrans) return false;
+    //if(!$wpsmiliestrans) return false;
 
     $smiles = '<div class="rcl-smiles" data-area="'.$id_area.'">';
         $smiles .= '<i class="fa fa-smile-o" aria-hidden="true"></i>';
@@ -1205,3 +1198,57 @@ function rcl_delete_option($name){
     return update_option('rcl_global_options',$rcl_options);
 
 }
+
+//вывод контента произвольной вкладки
+add_filter( 'rcl_custom_tab_content', 'do_shortcode', 11 );
+add_filter( 'rcl_custom_tab_content', 'wpautop', 10 );
+
+function rcl_custom_tab_content($content){
+    return apply_filters('rcl_custom_tab_content',stripslashes_deep($content));
+}
+
+add_filter( 'rcl_custom_tab_content', 'rcl_filter_custom_tab_vars', 6 );
+function rcl_filter_custom_tab_vars($content){
+    global $user_ID, $user_LK;
+    
+    $matchs = array(
+        '{USERID}' => $user_ID, 
+        '{MASTERID}' => $user_LK
+    );
+    
+    $matchs = apply_filters('rcl_custom_tab_vars', $matchs);
+    
+    if(!$matchs) return $content;
+    
+    $vars = array(); $replaces = array();
+    
+    foreach($matchs as $var => $replace){
+        $vars[] = $var; $replaces[] = $replace;
+    }
+    
+    return str_replace($vars, $replaces, $content);
+    
+}
+
+add_filter( 'rcl_custom_tab_content', 'rcl_filter_custom_tab_usermetas', 5 );
+function rcl_filter_custom_tab_usermetas($content){
+    global $rcl_office;
+    
+    preg_match_all('/{RCL-UM:([^}]+)}/', $content, $metas);
+    
+    if(!$metas[1]) return $content;
+
+    $vars = array(); $replaces = array();
+    
+    foreach( $metas[1] as $meta ){
+
+        $vars[] = '{RCL-UM:'.$meta.'}';
+        
+        $replaces[] = ($value = get_the_author_meta($meta,$rcl_office))? $value: __('not specified','wp-recall');
+
+    }
+
+    return str_replace($vars, $replaces, $content);
+
+}
+/****/

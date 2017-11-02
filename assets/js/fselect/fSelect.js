@@ -51,7 +51,7 @@
                 }
                 this.idx = 0;
                 this.optgroup = 0;
-                this.selected = [].concat(this.$select.val()); // force an array
+                this.selected = [].concat(this.$select.val());
                 var choices = this.buildOptions(this.$select);
                 this.$wrap.find('.fs-options').html(choices);
                 this.reloadDropdownLabel();
@@ -78,7 +78,6 @@
                     else {
                         var val = $el.prop('value');
 
-                        // exclude the first option in multi-select mode
                         if (0 < $this.idx || '' != val || ! $this.settings.multiple) {
                             var disabled = $el.is(':disabled') ? ' disabled' : '';
                             var selected = -1 < $.inArray(val, $this.selected) ? ' selected' : '';
@@ -159,7 +158,6 @@
         if ($wrap.hasClass('multiple')) {
             var selected = [];
 
-            // shift + click support
             if (e.shiftKey && null != window.fSelect.last_choice) {
                 var current_choice = parseInt($(this).attr('data-index'));
                 var addOrRemove = ! $(this).hasClass('selected');
@@ -193,7 +191,6 @@
         $wrap.find('select').val(selected);
         $wrap.find('select').fSelect('reloadDropdownLabel');
 
-        // fire an event
         $(document).trigger('fs:changed', $wrap);
 
         if (do_close) {
@@ -202,7 +199,7 @@
     });
 
     $(document).on('keyup', '.fs-search input', function(e) {
-        if (40 == e.which) { // down
+        if (40 == e.which) {
             $(this).blur();
             return;
         }
@@ -239,12 +236,10 @@
 
         if (0 < $wrap.length) {
 
-            // user clicked another fSelect box
             if ($wrap.data('id') !== window.fSelect.active_id) {
                 closeDropdown();
             }
 
-            // fSelect box was toggled
             if ($el.hasClass('fs-label') || $el.hasClass('fs-arrow')) {
                 var is_hidden = $wrap.find('.fs-dropdown').hasClass('hidden');
 
@@ -256,7 +251,7 @@
                 }
             }
         }
-        // clicked outside, close all fSelect boxes
+
         else {
             closeDropdown();
         }
@@ -266,14 +261,13 @@
         var $wrap = window.fSelect.active_el;
         var $target = $(e.target);
 
-        // toggle the dropdown on space
         if ($target.hasClass('fs-wrap')) {
             if (32 == e.which) {
                 $target.find('.fs-label').trigger('click');
                 return;
             }
         }
-        // preserve spaces during search
+
         else if (0 < $target.closest('.fs-search').length) {
             if (32 == e.which) {
                 return;
@@ -283,7 +277,7 @@
             return;
         }
 
-        if (38 == e.which) { // up
+        if (38 == e.which) {
             e.preventDefault();
 
             $wrap.find('.fs-option.hl').removeClass('hl');
@@ -301,7 +295,7 @@
                 $wrap.find('.fs-search input').focus();
             }
         }
-        else if (40 == e.which) { // down
+        else if (40 == e.which) {
             e.preventDefault();
 
             var $current = $wrap.find('.fs-option[data-index=' + window.fSelect.idx + ']');
@@ -319,12 +313,12 @@
                 setScroll($wrap);
             }
         }
-        else if (32 == e.which || 13 == e.which) { // space, enter
+        else if (32 == e.which || 13 == e.which) {
             e.preventDefault();
 
             $wrap.find('.fs-option.hl').click();
         }
-        else if (27 == e.which) { // esc
+        else if (27 == e.which) {
             closeDropdown($wrap);
         }
     });
@@ -344,11 +338,11 @@
         var containerMin = $container.offset().top + $container.scrollTop();
         var containerMax = containerMin + $container.outerHeight();
 
-        if (itemMax > containerMax) { // scroll down
+        if (itemMax > containerMax) {
             var to = $container.scrollTop() + itemMax - containerMax;
             $container.scrollTop(to);
         }
-        else if (itemMin < containerMin) { // scroll up
+        else if (itemMin < containerMin) {
             var to = $container.scrollTop() - containerMin - itemMin;
             $container.scrollTop(to);
         }
@@ -368,7 +362,7 @@
             $wrap = window.fSelect.active_el;
         }
         if ('undefined' !== typeof $wrap) {
-            // only trigger if the values have changed
+            
             var initial_values = window.fSelect.initial_values;
             var current_values = $wrap.find('select').val();
             if (JSON.stringify(initial_values) != JSON.stringify(current_values)) {

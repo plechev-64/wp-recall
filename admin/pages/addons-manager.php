@@ -1,5 +1,7 @@
 <?php
 
+rcl_dialog_scripts();
+
 global $active_addons,$Rcl_Addons_Manager;
         
 $Rcl_Addons_Manager->get_addons_data();
