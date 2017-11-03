@@ -224,7 +224,7 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
 }
 .wrap-recall-options .option-block textarea {
     height: 80px;
-    width: 500px;
+    width: 100%;
 }
 
 

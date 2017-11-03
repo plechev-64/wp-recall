@@ -136,7 +136,7 @@ function pfm_filter_urls($content){
             
             }
             
-            if(pfm_is_can('post_create')){
+            if(pfm_get_option('view-links') || pfm_is_can('post_create')){
 
                 $replace[] = ' <a href="'.$url.'" target="_blank" rel="nofollow">'.$url.'</a>';
 
@@ -167,7 +167,7 @@ function pfm_filter_links($content){
         
         foreach( $links[0] as $k=>$link ){
             
-            if(pfm_is_can('post_create')){
+            if(pfm_get_option('view-links') || pfm_is_can('post_create')){
                 
                 $replace = '<a href='.$links[2][$k].' target="_blank" rel="nofollow">'.$links[3][$k].'</a>';
 

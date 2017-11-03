@@ -29,11 +29,11 @@ function rcl_include_template($temp_name, $path = false, $data = false){
     if(!$pathfile) 
         return false;
     
-    do_action('rcl_include_'.$temp_name.'_before', $path);
+    do_action('rcl_include_template_before', $temp_name, $path);
     
     include $pathfile;
     
-    do_action('rcl_include_'.$temp_name.'_after', $path);
+    do_action('rcl_include_template_after', $temp_name, $path);
     
 }
 

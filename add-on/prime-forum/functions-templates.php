@@ -241,7 +241,7 @@ function pfm_the_visitors(){
 }
 
 function pfm_the_search_form(){ 
-    global $PrimeQuery;?>
+    global $PrimeQuery; ?>
 
     <form action="<?php echo pfm_get_home_url() ?>">
         <input name="fs" value="<?php echo ($PrimeQuery->vars['pfm-search'])? $PrimeQuery->vars['pfm-search']: 'Поиск по форуму'; ?>" onblur="if (this.value == '') {this.value = 'Поиск по форуму';}" onfocus="if (this.value == 'Поиск по форуму') {this.value = '';}" type="text">
@@ -379,6 +379,19 @@ function pfm_the_breadcrumbs(){
                         </span>
 
                     <?php else: ?>
+        
+                        <?php if($object->parent_id): ?>
+                    
+                            <span property="itemListElement" typeof="ListItem">
+                                <span property="position" content="3"></span>
+                                <a href="<?php echo pfm_get_forum_permalink($object->parent_id); ?>" property="item" typeof="WebPage">
+                                    <span property="name">
+                                        <?php echo pfm_get_forum_field($object->parent_id,'forum_name'); ?>
+                                    </span>
+                                </a>
+                            </span>
+                    
+                        <?php endif; ?>
 
                         <span property="itemListElement" typeof="ListItem">
                             <span property="position" content="3"></span>

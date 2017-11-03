@@ -100,6 +100,15 @@ function pfm_page_options(){
             )
         ),
         array(
+            'type' => 'select',
+            'slug' => 'view-links',
+            'title' => __('Показ ссылок в сообщениях','wp-recall'),
+            'values' => array(
+                __('Скрывать для гостей','wp-recall'),
+                __('Показывать всем','wp-recall')
+            )
+        ),
+        array(
             'type' => 'textarea',
             'slug' => 'support-shortcodes',
             'title' => __('Supported shortcodes','wp-recall'),
