@@ -506,11 +506,16 @@ function rcl_custom_fields_regform($content){
     
     if(!$regFields) return $content;
 
-    $cf = new Rcl_Custom_Fields();
+    $CF = new Rcl_Custom_Fields();
 
+    $hiddens = array();
     foreach($regFields as $field){
 
         $field = apply_filters('custom_field_regform',$field);
+        
+        if($field['type'] == 'hidden'){
+            $hiddens[] = $field; continue;
+        }
 
         $class = (isset($field['class']))? $field['class']: '';
         $id = (isset($field['id']))? 'id='.$field['id']: '';
@@ -518,16 +523,20 @@ function rcl_custom_fields_regform($content){
 
         $content .= '<div class="form-block-rcl '.$class.'" '.$id.' '.$attr.'>';
         $star = ($field['required']==1)? ' <span class="required">*</span> ': '';
-        $content .= '<label>'.$cf->get_title($field).$star;
+        $content .= '<label>'.$CF->get_title($field).$star;
         if($field['type']) 
             $content .= '<span class="colon">:</span>';
         $content .= '</label>';
 
         $value = (isset($_POST[$field['slug']]))? $_POST[$field['slug']]: false;
 
-        $content .= $cf->get_input($field, $value);
+        $content .= $CF->get_input($field, $value);
         $content .= '</div>';
 
+    }
+    
+    foreach($hiddens as $field){
+        $content .= $CF->get_input($field, (isset($_POST[$field['slug']]))? $_POST[$field['slug']]: false);
     }
     
     return $content;

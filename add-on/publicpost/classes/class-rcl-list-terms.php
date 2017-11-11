@@ -35,9 +35,6 @@ class Rcl_List_Terms{
 
         if($type_output) 
             $this->type_output = $type_output;
-        
-        if($this->type_output == 'checkbox')
-            $this->type_output = 'multiselect';
 
         $method = 'get_'.$this->type_output;
 

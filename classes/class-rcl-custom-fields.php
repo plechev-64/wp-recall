@@ -10,6 +10,7 @@ class Rcl_Custom_Fields{
     public $maxlength;
     public $rand;
     public $value_in_key;
+    public $key_in_data;
 
     function __construct($args = false){
         $this->files = array();
@@ -38,9 +39,10 @@ class Rcl_Custom_Fields{
         if(isset($field['requared']))
             $field['required'] = $field['requared'];
 
-        $this->value = (isset($field['default'])&&!$value)? $field['default']: stripslashes_deep($value);
+        $this->value = (isset($field['default']) && $value === false)? $field['default']: stripslashes_deep($value);
         $this->slug = $field['slug'];
         $this->value_in_key = (isset($field['value_in_key']))? $field['value_in_key']: false;
+        $this->key_in_data = (isset($field['key_in_data']))? $field['key_in_data']: false;
         $this->required = (isset($field['required']) && $field['required'] == 1)? 'required': '';
         $this->placeholder = (isset($field['placeholder'])&&$field['placeholder'])? "placeholder='".str_replace("'",'"',$field['placeholder'])."'": '';
         $this->maxlength = (isset($field['maxlength'])&&$field['maxlength'])? "maxlength='".$field['maxlength']."'": '';
@@ -69,7 +71,7 @@ class Rcl_Custom_Fields{
             $fieldHtml .= '<script>rcl_init_field_maxlength("'.$this->slug.'");</script>';
         }
         
-        $content = '<div class="rcl-field-input type-'.$field['type'].'-input">'
+        $content = '<div id="rcl-field-'.$this->slug.'" class="rcl-field-input type-'.$field['type'].'-input">'
                         . '<div class="rcl-field-core">'
                             . $fieldHtml
                         . '</div>'
@@ -209,9 +211,7 @@ class Rcl_Custom_Fields{
     function get_type_select($field){
         
         $values = $field['values'];
-        
-        if(!$values) return false;
-        
+
         $emptyFirst = (isset($field['empty-first']))? $field['empty-first']: false;
         
         $content = '<select '.$this->required.' name="'.$field['name'].'" id="'.$this->slug.'" '.$this->get_class($field).'>';
@@ -219,11 +219,15 @@ class Rcl_Custom_Fields{
         if($emptyFirst)
             $content .= '<option value="">'.$emptyFirst.'</option>';
         
-        foreach($values as $k => $value){
-            
-            if($this->value_in_key) $k = $value;
-            
-            $content .= '<option '.selected($this->value,$k,false).' value="'.trim($k).'">'.$value.'</option>';
+        if($values){
+            foreach($values as $k => $value){
+
+                $data = ($this->key_in_data)? 'data-key="'.$k.'"': '';
+
+                if($this->value_in_key) $k = $value;
+
+                $content .= '<option '.selected($this->value,$k,false).' '.$data.' value="'.trim($k).'">'.$value.'</option>';
+            }
         }
         
         $content .= '</select>';
@@ -241,6 +245,9 @@ class Rcl_Custom_Fields{
         if(!$field['values']) return false;
         
         $this->value = ($this->value)? $this->value: array();
+        
+        if(!is_array($this->value))
+            $this->value = array($this->value);
 
         $content = '<select '.$this->required.' name="'.$field['name'].'[]" id="'.$this->slug.'" '.$this->get_class($field).' multiple>';
 

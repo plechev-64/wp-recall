@@ -14,7 +14,6 @@ require_once 'functions-ajax.php';
 require_once 'init.php';
 require_once 'upload-file.php';
 
-
 if(is_admin()){
     require_once 'classes/class-rcl-public-form-manager.php';
     require_once 'admin/index.php';

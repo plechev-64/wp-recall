@@ -1092,13 +1092,19 @@ function rcl_get_profile_fields($args = false){
     
     $fields = get_option( 'rcl_profile_fields' );
     
-    $fields = apply_filters('rcl_profile_fields',$fields);
+    $fields = apply_filters('rcl_profile_fields',$fields, $args);
 
     $profileFields = array();
     
     if($fields){
     
         foreach($fields as $k => $field){
+            
+            if(isset($args['include']) && !in_array($field['slug'],$args['include'])){
+
+                continue;
+
+            }
 
             if(isset($args['exclude']) && in_array($field['slug'],$args['exclude'])){
 
@@ -1119,6 +1125,14 @@ function rcl_get_profile_fields($args = false){
     }
     
     return $profileFields;
+    
+}
+
+function rcl_get_profile_field($field_id){
+    
+    $fields = rcl_get_profile_fields(array( 'include' => array($field_id) ));
+    
+    return $fields[0];
     
 }
 
@@ -1169,9 +1183,13 @@ function rcl_get_option($name, $default = false){
     if(!$rcl_options)
         $rcl_options = get_option('rcl_global_options');
     
-    if(isset($rcl_options[$name]) && $rcl_options[$name] != '')
-        return $rcl_options[$name];
-    
+    if(isset($rcl_options[$name])){
+        if($rcl_options[$name] || is_numeric($rcl_options[$name])){
+            return $rcl_options[$name];
+        }
+            
+    }
+
     return $default;
 }
 

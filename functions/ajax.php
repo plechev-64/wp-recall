@@ -16,10 +16,10 @@ function rcl_ajax_tab(){
 
     rcl_verify_ajax_nonce();
 
-    do_action('rcl_init_ajax_tab');
-    
     $post = rcl_decode_post($_POST['post']);
 
+    do_action('rcl_init_ajax_tab', $post->tab_id);
+    
     $tab = rcl_get_tab($post->tab_id);
     
     if(!$tab){

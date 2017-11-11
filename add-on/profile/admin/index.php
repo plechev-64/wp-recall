@@ -83,32 +83,42 @@ function rcl_get_custom_fields_profile($user){
             'primary_pass',
             'repeat_pass',
             'show_admin_bar_front'
-        )
+        ),
+        'user_id' => $user->ID
     );
 
     $fields = rcl_get_profile_fields($args);
 
-    $cf = new Rcl_Custom_Fields();
+    $CF = new Rcl_Custom_Fields();
 
     if($fields){
         
         $content = '<h3>'.__('Custom Profile Fields','wp-recall').':</h3>
         <table class="form-table rcl-form rcl-custom-fields-box">';
         
+        $hiddens = array();
         foreach($fields as $field){
+            
+            if($field['type'] == 'hidden'){
+                $hiddens[] = $field; continue;
+            }
             
             if(!isset($field['value_in_key'])) $field['value_in_key'] = true;
 
             $value = get_the_author_meta($field['slug'],$user->ID);
             
             $content .= '<tr class="rcl-custom-field">';
-            $content .= '<th><label>'.$cf->get_title($field).':</label></th>';
-            $content .= '<td>'.$cf->get_input($field,$value).'</td>';
+            $content .= '<th><label>'.$CF->get_title($field).':</label></th>';
+            $content .= '<td>'.$CF->get_input($field,$value).'</td>';
             $content .= '</tr>';
             
         }
         
         $content .= '</table>';
+        
+        foreach($hiddens as $field){
+            $content .= $CF->get_input($field, get_the_author_meta($field['slug'],$user->ID));
+        }
         
         echo $content;
         

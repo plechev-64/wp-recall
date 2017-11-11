@@ -616,7 +616,7 @@ body .rcl-product-gallery ul.images-list {
 }
 #rcl-product-box .product-metabox{
     overflow: hidden;
-    min-width: 350px;
+    min-width: 300px;
     padding: 10px;
 }
 #rcl-product-box .rcl-cart-box{

@@ -408,7 +408,7 @@ function rcl_include_scripts(){
 }
 
 //сбрасываем массивы зарегистрированных скриптов и стилей при вызове вкладки через ajax
-add_action('rcl_init_ajax_tab','rcl_reset_wp_dependencies');
+add_action('rcl_init_ajax_tab','rcl_reset_wp_dependencies', 10);
 function rcl_reset_wp_dependencies(){
     global $wp_scripts, $wp_styles;
 

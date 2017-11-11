@@ -81,7 +81,7 @@ function rcl_show_custom_fields_profile($master_id){
         foreach((array)$get_fields as $custom_field){
             $custom_field = apply_filters('custom_field_profile',$custom_field);
             if(!$custom_field) continue;
-            $slug = $custom_field['slug'];
+            $slug = isset($custom_field['name'])? $custom_field['name']: $custom_field['slug'];
             if(isset($custom_field['req'])&&$custom_field['req']==1){
                 $meta = get_the_author_meta($slug,$master_id);
                 $show_custom_field .= $cf->get_field_value($custom_field,$meta);
@@ -180,13 +180,18 @@ function rcl_tab_profile_content($master_id){
 
     $profileFields = stripslashes_deep($profileFields);
     
+    $hiddens = array();
     foreach($profileFields as $field){
 
         $field = apply_filters('custom_field_profile',$field);
 
-        $slug = $field['slug'];
+        $slug = isset($field['name'])? $field['name']: $field['slug'];
 
-        if(!$field||!$slug) continue;
+        if(!$field || !$slug) continue;
+        
+        if($field['type'] == 'hidden'){
+            $hiddens[] = $field; continue;
+        }
 
         $value = (isset($userdata->$slug))? $userdata->$slug: false;
         
@@ -237,6 +242,10 @@ function rcl_tab_profile_content($master_id){
     }
 
     $content .= '</table>';
+    
+    foreach($hiddens as $field){
+        $content .= $CF->get_input($field, $value = (isset($userdata->$slug))? $userdata->$slug: false);
+    }
 
     $content .= "<script>
                 jQuery(function(){

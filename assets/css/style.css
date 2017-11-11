@@ -899,7 +899,7 @@ div.ssi-backdrop {
     top: 10%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
-    width: 600px;
+    max-width: 600px;
     z-index: 999;
 }
 #rcl-popup h2 {

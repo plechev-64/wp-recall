@@ -105,7 +105,8 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                                 'title' => __('Output option','wp-recall'),
                                 'values' => array(
                                     'select' => __('Select','wp-recall'),
-                                    'checkbox' => __('Checkbox','wp-recall')
+                                    'checkbox' => __('Checkbox','wp-recall'),
+                                    'multiselect' => __('Multiselect','wp-recall')
                                 )
                             ),
                             array(
