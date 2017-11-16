@@ -247,11 +247,9 @@ class Rcl_Options extends Rcl_Custom_Fields{
         $content = '';
         
         foreach($fields as $field){
-            
-            if(!isset($field['slug'])) continue;
         
             $value = $this->field_value(array(
-                'slug' => $field['slug'],
+                'slug' => isset($field['slug'])? $field['slug']: '',
                 'group' => isset($field['group'])? $field['group']: null,
                 'default' => isset($field['default'])? $field['default']: null
             ));
