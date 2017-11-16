@@ -31,7 +31,7 @@ function rcl_add_cover_uploader_button(){
     global $user_ID;
     if(rcl_is_office($user_ID)){
         echo '<span class="rcl-cover-icon" title="'.__('Upload background','wp-recall').'">
-                <i class="fa fa-camera"></i>
+                <i class="fa fa-image"></i>
                 <input type="file" id="rcl-cover-upload" accept="image/*" name="cover-file">
             </span>';
     }

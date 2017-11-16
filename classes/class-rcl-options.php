@@ -243,10 +243,12 @@ class Rcl_Options extends Rcl_Custom_Fields{
     }
     
     function options_loop($fields){
-        
+
         $content = '';
         
         foreach($fields as $field){
+            
+            if(!isset($field['slug'])) continue;
         
             $value = $this->field_value(array(
                 'slug' => $field['slug'],

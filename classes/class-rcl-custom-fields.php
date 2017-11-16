@@ -40,7 +40,7 @@ class Rcl_Custom_Fields{
             $field['required'] = $field['requared'];
 
         $this->value = (isset($field['default']) && $value === false)? $field['default']: stripslashes_deep($value);
-        $this->slug = $field['slug'];
+        $this->slug = isset($field['slug'])? $field['slug']: '';
         $this->value_in_key = (isset($field['value_in_key']))? $field['value_in_key']: false;
         $this->key_in_data = (isset($field['key_in_data']))? $field['key_in_data']: false;
         $this->required = (isset($field['required']) && $field['required'] == 1)? 'required': '';
@@ -52,11 +52,13 @@ class Rcl_Custom_Fields{
         if(!isset($field['name']))
             $field['name'] = $this->slug;
         
-        if(isset($field['admin']) && $field['admin']==1 &&  !rcl_is_user_role($user_ID, array('administrator'))){
-            $value = get_user_meta($user_LK,$this->slug,1);
-            if($value){
-                $html = $this->get_field_value($field,$value,false);               
-                return $html;
+        if($user_ID){
+            if(isset($field['admin']) && $field['admin']==1 &&  !rcl_is_user_role($user_ID, array('administrator'))){
+                $value = get_user_meta($user_LK,$this->slug,1);
+                if($value){
+                    $html = $this->get_field_value($field,$value,false);               
+                    return $html;
+                }
             }
         }
 
@@ -596,10 +598,14 @@ class Rcl_Custom_Fields{
         if(isset($field['after'])) 
             $show .= ' '.$field['after'];
 
-        if($title && $show) 
-            $show = '<p class="rcl-custom-fields"><b>'.$field['title'].':</b> '.$show.'</p>';
+        $content = '<p class="rcl-custom-fields">';
 
-        return $show;
+        if(isset($field['title']) && $title) 
+            $content .= '<b>'.$field['title'].':</b> ';
+
+        $content .= $show.'</p>';
+
+        return $content;
     }
     
     function get_filter_url($slug,$value){

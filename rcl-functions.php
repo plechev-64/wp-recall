@@ -508,8 +508,8 @@ function rcl_init_avatar_sizes(){
 }
 
 //Функция вывода своего аватара
-add_filter('get_avatar','rcl_avatar_replacement', 20, 5);
-function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
+add_filter('get_avatar','rcl_avatar_replacement', 20, 6);
+function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt, $args){
     global $rcl_user;
     
     $user_id = 0;
@@ -552,7 +552,10 @@ function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt){
             }
 
             if($url && file_exists(rcl_path_by_url($url))){
-                $avatar = "<img class='avatar' src='".$url."' alt='".$alt."' height='".$size."' width='".$size."' />";
+                $classes = array('avatar');
+                if(isset($args['class']) && $args['class'])
+                    $classes = (is_array($args['class']))? array_merge($classes,$args['class']): array_merge($classes,array($args['class']));
+                $avatar = "<img class='".implode(' ',$classes)."' src='".$url."' alt='".$alt."' height='".$size."' width='".$size."' />";
             }
 
         }
@@ -950,13 +953,14 @@ function rcl_is_register_open(){
 }
 
 /*16.0.0*/
-function rcl_update_profile_fields($user_id){
+function rcl_update_profile_fields($user_id, $profileFields = false){
 
     require_once(ABSPATH . "wp-admin" . '/includes/image.php');
     require_once(ABSPATH . "wp-admin" . '/includes/file.php');
     require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
-    $profileFields = rcl_get_profile_fields();
+    if(!$profileFields)
+        $profileFields = rcl_get_profile_fields();
     
     if($profileFields){
         

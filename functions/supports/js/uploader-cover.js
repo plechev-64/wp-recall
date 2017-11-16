@@ -112,7 +112,7 @@ function rcl_cover_uploader(){
             jQuery( '#rcl-preview' ).remove();
             rcl_notice(data.result['success'],'success',10000);
             
-            rcl_do_action('rcl_success_upload_cover');
+            rcl_do_action('rcl_success_upload_cover', data);
         }
     });
 }

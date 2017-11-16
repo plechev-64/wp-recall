@@ -67,7 +67,7 @@ class Widget_new_author extends WP_Widget {
                 );
         ?>
         <p>
-                <label for="<?php echo $this->get_field_id( 'page_all_users' ); ?>"><?php _e('All users page','wp-recall'); ?>:</label>
+                <label><?php _e('All users page','wp-recall'); ?>:</label>
                 <?php echo wp_dropdown_pages( $args ); ?>
         </p>
     <?php
@@ -119,14 +119,14 @@ class Widget_online_users extends WP_Widget {
 		</p>
 		<?php
 			$args = array(
-				'selected'   => $instance['page_all_users'],
+				'selected'   => isset($instance['page_all_users'])? $instance['page_all_users']: '',
 				'name'       => $this->get_field_name( 'page_all_users' ),
 				'show_option_none' => __('Not selected','wp-recall'),
 				'echo'       => 0
 			);
 		?>
 		<p>
-			<label for="<?php echo $instance['page_all_users']; ?>"><?php _e('All users page','wp-recall'); ?>:</label>
+			<label><?php _e('All users page','wp-recall'); ?>:</label>
 			<?php echo wp_dropdown_pages( $args ); ?>
 		</p>
 	<?php

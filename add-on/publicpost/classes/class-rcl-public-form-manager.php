@@ -69,6 +69,8 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
             
             global $wpdb;
             
+            $form_id = false;
+            
             $postForms = $wpdb->get_col("SELECT option_name FROM ".$wpdb->options." WHERE option_name LIKE 'rcl_fields_post_%' ORDER BY option_id ASC");
                 
             $content .= '<div class="rcl-custom-fields-navi">';

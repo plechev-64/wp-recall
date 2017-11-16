@@ -22,7 +22,7 @@
             <p class="authors"> <cite><?php _e('Author','wp-recall') ?>: <a href="<?php echo $addon->author_uri; ?>" target="_blank" ><?php echo $addon->author; ?></a></cite></p>
         </div>
         <div class="addon-terms">
-            <?php if($addon->terms):
+            <?php if(isset($addon->terms) && $addon->terms):
                 
                 foreach($addon->terms as $taxonomy => $terms){ $html = array(); ?>
                 
