@@ -410,6 +410,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
         $ids = array();
 
         foreach($users as $user){
+            if(!isset($user->ID) || !$user->ID) continue;
             $ids[] = $user->ID;
         }
 

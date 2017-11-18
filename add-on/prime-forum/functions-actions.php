@@ -726,10 +726,7 @@ function pfm_action_topic_close($topic_id){
         return array('error' => __('Unable to close topic','wp-recall'));
     }
 
-    pfm_update_topic(array(
-        'topic_id' => $topic_id,
-        'topic_closed' => 1
-    ));
+    pfm_topic_close($topic_id);
 
     return array(
         'update-page' => true,
@@ -750,10 +747,7 @@ function pfm_action_topic_unclose($topic_id){
         return array('error' => __('Unable to open topic','wp-recall'));
     }
 
-    pfm_update_topic(array(
-        'topic_id' => $topic_id,
-        'topic_closed' => 0
-    ));
+    pfm_topic_unclose($topic_id);
 
     return array(
         'update-page' => 1,
@@ -1192,10 +1186,7 @@ function pfm_action_post_create(){
         
         if(isset($pfmData['close-topic'][0]) && $pfmData['close-topic'][0]){
             
-            $topicClose = pfm_update_topic(array(
-                'topic_id' => $pfmData['topic_id'],
-                'topic_closed' => 1
-            ));
+            $topicClose = pfm_topic_close($pfmData['topic_id']);
             
             if($topicClose){
                 return array(

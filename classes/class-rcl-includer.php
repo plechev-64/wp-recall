@@ -346,7 +346,7 @@ class Rcl_Includer{
 function rcl_enqueue_style($id, $url, $footer = false){
     global $rcl_styles;
     
-    if(is_admin()){
+    if(is_admin() || doing_action('login_enqueue_scripts')){
         
         wp_enqueue_style( $id, $url);
         
@@ -375,7 +375,7 @@ function rcl_enqueue_style($id, $url, $footer = false){
 function rcl_enqueue_script($id, $url, $parents = array(), $in_footer=false){
     global $rcl_scripts;
     
-    if(is_admin()){
+    if(is_admin() || doing_action('login_enqueue_scripts')){
         
         wp_enqueue_script( $id, $url, $parents, false, $in_footer);
         

@@ -18,20 +18,20 @@
             </a>
         </div>
 
-        <?php if(!is_user_logged_in()): ?>
+        <?php if(!is_user_logged_in()): $logIn = rcl_get_option('login_form_recall'); ?>
         
-        <?php if($logIn = rcl_get_option('login_form_recall')==1){
+        <?php if($logIn == 1){
             $page_in_out = rcl_format_url(get_permalink(rcl_get_option('page_login_form_recall')));
             $urls = array(
                 $page_in_out . 'action-rcl=login',
                 $page_in_out . 'action-rcl=register'
             );
-        }else if($logIn==2){
+        }else if($logIn == 2){
             $urls = array(
                 wp_login_url('/'),
                 wp_registration_url()
             );
-        }else if($logIn==3){ // Форма в виджете
+        }else if($logIn == 3){ // Форма в виджете
                 
         }else{
             $urls = array('#','#');

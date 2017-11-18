@@ -586,6 +586,34 @@ function pfm_update_topic_counter($topic_id){
 
 }
 
+function pfm_topic_close($topic_id){
+    global $wpdb;
+    
+    return $wpdb->update(
+        RCL_PREF.'pforum_topics',
+        array(
+            'topic_closed' => 1
+        ),
+        array(
+            'topic_id' => $topic_id
+        )
+    );
+}
+
+function pfm_topic_unclose($topic_id){
+    global $wpdb;
+    
+    return $wpdb->update(
+        RCL_PREF.'pforum_topics',
+        array(
+            'topic_closed' => 0
+        ),
+        array(
+            'topic_id' => $topic_id
+        )
+    );
+}
+
 function pfm_update_topic_indexes($topic_id){
     global $wpdb;
     
