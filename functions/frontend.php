@@ -184,11 +184,11 @@ function rcl_action(){
     echo sprintf('<span class="user-status %s">%s</span>',$class,$status);
 }
 
-function rcl_avatar($avatar_size = 120){
+function rcl_avatar($avatar_size = 120, $attr = false){
     global $user_LK; ?>
     <div id="rcl-avatar">
         <span class="avatar-image">
-            <?php echo get_avatar($user_LK,$avatar_size); ?>
+            <?php echo get_avatar($user_LK,$avatar_size, false, false, $attr); ?>
             <span id="avatar-upload-progress"><span></span></span>
         </span>
         <?php do_action('rcl_avatar'); ?>
@@ -316,63 +316,6 @@ function rcl_default_inline_styles($styles,$rgb){
     }';
     
     return $styles;
-}
-
-add_action('rcl_init','init_user_lk',1);
-function init_user_lk(){
-    global $wpdb,$user_LK,$rcl_userlk_action,$user_ID,$rcl_office;
-
-    $user_LK = 0;
-    
-    //если вывод ЛК через шорткод
-    if(rcl_get_option('view_user_lk_rcl')==1){
-        
-        $get = rcl_get_option('link_user_lk_rcl','user');
-        $user_LK = (isset($_GET[$get]))? intval($_GET[$get]): false;
-        
-        if(!$user_LK){
-            $post_id = url_to_postid($_SERVER['REQUEST_URI']);
-            if(rcl_get_option('lk_page_rcl') == $post_id){
-                $user_LK = $user_ID;
-            }
-        }
-        
-    }else{ //если ЛК выводим через author.php
-        
-        if ( '' == get_option('permalink_structure') ){
-            
-            if(isset($_GET['author'])) $user_LK = intval($_GET['author']);
-            
-        }else{
-            
-            $nicename = false;
-            
-            $url = (isset($_SERVER['SCRIPT_URL']))? $_SERVER['SCRIPT_URL']: $_SERVER['REQUEST_URI'];
-            $url = preg_replace('/\?.*/', '', $url);
-            $url_ar = explode('/',$url);
-            
-            foreach($url_ar as $key=>$u){
-                if($u!='author') continue;
-                $nicename = $url_ar[$key+1];
-                break;
-            }
-            
-            if(!$nicename) return false;
-
-            $user_LK = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."users WHERE user_nicename='%s'",$nicename));
-            
-        }
-        
-    }
-    
-    $user_LK = $user_LK && get_user_by('id', $user_LK)? $user_LK: 0;
- 
-    $rcl_office = $user_LK;
-    
-    if($user_LK){
-        $rcl_userlk_action = rcl_get_time_user_action($user_LK);
-    }
-    
 }
 
 add_action('wp_footer','rcl_init_footer_action',100);

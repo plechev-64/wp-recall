@@ -89,7 +89,6 @@ function pfm_filter_allowed_tags($content){
         'del' => array(),
         'b' => array(),
         's' => array(),
-        's' => array(),
 	'br' => array(),
 	'em' => array(),
 	'strong' => array(),

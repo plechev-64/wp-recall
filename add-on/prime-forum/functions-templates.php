@@ -439,6 +439,14 @@ function pfm_the_breadcrumbs(){
     <?php
 }
 
+function pfm_get_icon($icon_class = 'fa-folder'){
+    return apply_filters('pfm_icon', '<i class="fa '.$icon_class.'" aria-hidden="true"></i>');
+}
+
+function pfm_the_icon($icon_class = 'fa-folder'){
+    echo pfm_get_icon($icon_class);
+}
+
 function pfm_page_navi($args = array()){
     
     $Navi = new PrimePageNavi($args);

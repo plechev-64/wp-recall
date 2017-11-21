@@ -205,7 +205,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
         $class = $status;
         $class .= ($ver>0)? ' update': '';
 
-        echo '<tr class="'.$class.'">';
+        echo '<tr id="addon-'.$item['ID'].'" class="'.$class.'">';
         $this->single_row_columns( $item );
         echo '</tr>';
         

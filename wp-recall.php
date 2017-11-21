@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 16.8.7
+    Version: 16.8.8
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '16.8.7';
+	public $version = '16.8.8';
         
         public $child_addons = array();
         public $need_update = false;
@@ -203,7 +203,7 @@ final class WP_Recall {
 	}
 
 	public function init() {
-            global $user_ID,$rcl_current_action,$rcl_user_URL;
+            global $user_ID;
 
             do_action( 'wp_recall_before_init' );
 
@@ -229,16 +229,74 @@ final class WP_Recall {
                     require_once('functions/recallbar.php');
                 }
                 
-                if($user_ID){
-                    $rcl_user_URL = get_author_posts_url($user_ID);
-                }
+                $this->init_frontend_globals();
                 
-                $rcl_current_action = rcl_get_time_user_action($user_ID);
-
             }
 
             do_action( 'rcl_init' );
 	}
+        
+        function init_frontend_globals(){
+            global $wpdb,$user_LK,$rcl_userlk_action,$user_ID,$rcl_office,$rcl_user_URL,$rcl_current_action;
+            
+            if($user_ID){
+                $rcl_user_URL = get_author_posts_url($user_ID);
+            }
+
+            $rcl_current_action = rcl_get_time_user_action($user_ID);
+
+            $user_LK = 0;
+
+            //если вывод ЛК через шорткод
+            if(rcl_get_option('view_user_lk_rcl')==1){
+
+                $get = rcl_get_option('link_user_lk_rcl','user');
+                $user_LK = (isset($_GET[$get]))? intval($_GET[$get]): false;
+
+                if(!$user_LK){
+                    $post_id = url_to_postid($_SERVER['REQUEST_URI']);
+                    if(rcl_get_option('lk_page_rcl') == $post_id){
+                        $user_LK = $user_ID;
+                    }
+                }
+
+            }else{ //если ЛК выводим через author.php
+
+                if ( '' == get_option('permalink_structure') ){
+
+                    if(isset($_GET['author'])) $user_LK = intval($_GET['author']);
+
+                }else{
+
+                    $nicename = false;
+
+                    $url = (isset($_SERVER['SCRIPT_URL']))? $_SERVER['SCRIPT_URL']: $_SERVER['REQUEST_URI'];
+                    $url = preg_replace('/\?.*/', '', $url);
+                    $url_ar = explode('/',$url);
+
+                    foreach($url_ar as $key=>$u){
+                        if($u!='author') continue;
+                        $nicename = $url_ar[$key+1];
+                        break;
+                    }
+
+                    if(!$nicename) return false;
+
+                    $user_LK = $wpdb->get_var($wpdb->prepare("SELECT ID FROM ".$wpdb->prefix."users WHERE user_nicename='%s'",$nicename));
+
+                }
+
+            }
+
+            $user_LK = $user_LK && get_user_by('id', $user_LK)? $user_LK: 0;
+
+            $rcl_office = $user_LK;
+
+            if($user_LK){
+                $rcl_userlk_action = rcl_get_time_user_action($user_LK);
+            }
+
+        }
 
         function include_addons(){
             global $active_addons,$rcl_template;

@@ -8,7 +8,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
     
     public $chat_id = 0;
     public $chat = array();
-    public $chat_room = false;
+    public $chat_room = 'default';
     public $chat_token;
     public $chat_status = 'general';
     public $important = false;
@@ -24,6 +24,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
     public $max_words;
     public $user_can;
     public $errors = array();
+    public $allowed_tags;
 
     function __construct($args = array()){
         global $user_ID,$rcl_options;
@@ -79,6 +80,32 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
         $this->user_can = ($this->is_user_can())? 1: 0;
         
         $this->query = apply_filters('rcl_chat_query',$this->query);
+        
+        $this->allowed_tags = apply_filters('rcl_chat_message_allowed_tags', array(
+            'a' => array(
+                'href' => true,
+                'title' => true,
+                'target' => true
+            ),
+            'img' => array(
+                'src' => true,
+                'alt' => true,
+                'class' => true,
+            ),
+            'p' => array(
+                'class' => true
+            ),
+            'blockquote' => array(),
+            'del' => array(),
+            'em' => array(),
+            'strong' => array(),
+            'details' => array(),
+            'summary' => array(),
+            'span' => array(
+                'class' => true,
+                'style' => true
+            )
+        ));
         
         do_action('rcl_chat',$this);
 
@@ -540,10 +567,10 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
     
     function the_content($content){
         global $rcl_options;
-
-        $content = esc_textarea($content);
         
         $content = links_add_target(make_clickable($content));
+
+        $content = apply_filters('rcl_chat_message',wp_kses($content, $this->allowed_tags));
         
         $oembed = (isset($rcl_options['chat']['oembed']))? $rcl_options['chat']['oembed']: 0;
         
@@ -561,8 +588,6 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
         
         if(function_exists('convert_smilies')) 
             $content = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $content ) );
-        
-        $content = apply_filters('rcl_chat_message',$content);
 
         return $content;
 

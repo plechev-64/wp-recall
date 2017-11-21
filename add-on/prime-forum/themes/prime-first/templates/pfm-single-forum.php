@@ -1,7 +1,7 @@
 <div class="prime-forum-box">
     <div class="prime-forum-item <?php pfm_the_forum_classes(); ?>">
         <div class="prime-forum-icon">
-            <i class="fa fa-folder" aria-hidden="true"></i>
+            <?php pfm_the_icon('fa-folder'); ?>
         </div>
         <div class="prime-forum-title">
             <div class="prime-general-title"><a class="" title="<?php _e('Go to forum','wp-recall'); ?>" href="<?php pfm_the_forum_permalink(); ?>"><?php pfm_the_forum_name(); ?></a></div>

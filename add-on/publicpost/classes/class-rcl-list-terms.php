@@ -239,6 +239,10 @@ class Rcl_List_Terms{
 
             $options[] = '<option '.selected($this->selected_term,$term_id,false).' value="'.$term_id.'">'.$term['name'].'</option>';
 
+            if($this->type_output == 'multiselect'){
+                $this->selected_term = false;
+            }
+            
         }
         
         if(!$options) return false;

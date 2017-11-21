@@ -2,7 +2,7 @@
     
     <div class="prime-forum-item <?php pfm_the_group_classes(); ?>">
         <div class="prime-forum-icon">
-            <i class="fa fa-database" aria-hidden="true"></i>
+            <?php pfm_the_icon('fa-database'); ?>
         </div>
         <div class="prime-forum-title">
             <div class="prime-general-title"><a class="" title="<?php _e('Go to group','wp-recall'); ?>" href="<?php pfm_the_group_permalink(); ?>"><?php pfm_the_group_name(); ?></a></div>

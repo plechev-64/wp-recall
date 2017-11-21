@@ -231,9 +231,9 @@ function rcl_chat_token_decode($chat_token){
 function rcl_chat_excerpt($string){
     $max = 120;
     
-    $string = esc_textarea($string);
+    $string = wp_kses($string, array());
     
-    if(iconv_strlen($string, 'utf-8')<=$max) return $string;
+    if(iconv_strlen($string, 'utf-8') <= $max) return $string;
 
     $string = substr($string, 0, $max);
     $string = rtrim($string, "!,.-");

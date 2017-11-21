@@ -6,6 +6,7 @@ class Rcl_Custom_Fields{
     public $slug;
     public $required;
     public $files;
+    public $field_id;
     public $placeholder;
     public $maxlength;
     public $rand;
@@ -41,6 +42,7 @@ class Rcl_Custom_Fields{
 
         $this->value = (isset($field['default']) && $value === false)? $field['default']: stripslashes_deep($value);
         $this->slug = isset($field['slug'])? $field['slug']: '';
+        $this->field_id = (isset($field['field-id']))? $field['field-id']: $this->slug;
         $this->value_in_key = (isset($field['value_in_key']))? $field['value_in_key']: false;
         $this->key_in_data = (isset($field['key_in_data']))? $field['key_in_data']: false;
         $this->required = (isset($field['required']) && $field['required'] == 1)? 'required': '';
@@ -70,10 +72,10 @@ class Rcl_Custom_Fields{
         $fieldHtml = $this->$callback($field);
         
         if($this->maxlength){
-            $fieldHtml .= '<script>rcl_init_field_maxlength("'.$this->slug.'");</script>';
+            $fieldHtml .= '<script>rcl_init_field_maxlength("'.$this->field_id.'");</script>';
         }
         
-        $content = '<div id="rcl-field-'.$this->slug.'" class="rcl-field-input type-'.$field['type'].'-input">'
+        $content = '<div id="rcl-field-'.$this->field_id.'" class="rcl-field-input type-'.$field['type'].'-input">'
                         . '<div class="rcl-field-core">'
                             . $fieldHtml
                         . '</div>'
@@ -179,7 +181,7 @@ class Rcl_Custom_Fields{
         $size = ($field['sizefile'])? $field['sizefile']: 2;
 
         $input .= '<span id="'.$this->slug.'-content" class="file-field-upload">';
-        $input .= '<input data-size="'.$size.'" '.($extTypes? 'data-ext="'.implode(',',$extTypes).'"': '').' type="file" '.$required.' '.$accept.' name="'.$field['name'].'" '.$this->get_class($field).' id="'.$this->slug.'" value=""/> ';
+        $input .= '<input data-size="'.$size.'" '.($extTypes? 'data-ext="'.implode(',',$extTypes).'"': '').' type="file" '.$required.' '.$accept.' name="'.$field['name'].'" '.$this->get_class($field).' id="'.$this->field_id.'" value=""/> ';
         
         $notice = '(';
         
@@ -216,7 +218,7 @@ class Rcl_Custom_Fields{
 
         $emptyFirst = (isset($field['empty-first']))? $field['empty-first']: false;
         
-        $content = '<select '.$this->required.' name="'.$field['name'].'" id="'.$this->slug.'" '.$this->get_class($field).'>';
+        $content = '<select '.$this->required.' name="'.$field['name'].'" id="'.$this->field_id.'" '.$this->get_class($field).'>';
 
         if($emptyFirst)
             $content .= '<option value="">'.$emptyFirst.'</option>';
@@ -251,7 +253,7 @@ class Rcl_Custom_Fields{
         if(!is_array($this->value))
             $this->value = array($this->value);
 
-        $content = '<select '.$this->required.' name="'.$field['name'].'[]" id="'.$this->slug.'" '.$this->get_class($field).' multiple>';
+        $content = '<select '.$this->required.' name="'.$field['name'].'[]" id="'.$this->field_id.'" '.$this->get_class($field).' multiple>';
 
         foreach($field['values'] as $k => $value){
             
@@ -262,7 +264,7 @@ class Rcl_Custom_Fields{
         
         $content .= '</select>';
         
-        $init = 'jQuery("#'.$this->slug.'").fSelect();';
+        $init = 'jQuery("#'.$this->field_id.'").fSelect();';
         
         if(!defined( 'DOING_AJAX' )){
             $content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
@@ -292,7 +294,7 @@ class Rcl_Custom_Fields{
             $checked = checked(in_array($k,$currentValues),true,false);
             
             $input .='<span class="rcl-checkbox-box">'
-                    . '<input '.$this->required.' '.$checked.' id="'.$this->slug.'_'.$k.$this->rand.'" type="checkbox" '.$this->get_class($field).' name="'.$field['name'].'[]" value="'.trim($k).'"> ';
+                    . '<input '.$this->required.' '.$checked.' id="'.$this->field_id.'_'.$k.$this->rand.'" type="checkbox" '.$this->get_class($field).' name="'.$field['name'].'[]" value="'.trim($k).'"> ';
             $input .='<label class="block-label" for="'.$this->slug.'_'.$k.$this->rand.'">';
             $input .= (!isset($field['before']))? '': $field['before'];
             $input .= $value
@@ -320,7 +322,7 @@ class Rcl_Custom_Fields{
             if($this->value_in_key) $k = $value;
             
             $input .='<span class="rcl-radio-box">'
-                    . '<input '.$this->required.' '.checked($this->value,$k,false).' '.checked($a,0,false).' type="radio" '.$this->get_class($field).' id="'.$this->slug.'_'.$k.$this->rand.'" name="'.$field['name'].'" value="'.trim($k).'"> ';
+                    . '<input '.$this->required.' '.checked($this->value,$k,false).' '.checked($a,0,false).' type="radio" '.$this->get_class($field).' id="'.$this->field_id.'_'.$k.$this->rand.'" name="'.$field['name'].'" value="'.trim($k).'"> ';
             $input .='<label class="block-label" for="'.$this->slug.'_'.$k.$this->rand.'">';        
             $input .= $value
                     .'</label>'
@@ -406,7 +408,7 @@ class Rcl_Custom_Fields{
         $content = '<div id="rcl-runner-'.$idRunner.'" class="rcl-runner">';
             $content .= '<span class="rcl-runner-value"></span>';
             $content .= '<div class="rcl-runner-box"></div>';
-            $content .= '<input type="hidden" class="rcl-runner-field" id="'.$this->slug.'" name="'.$field['name'].'" value="'.$min.'">';
+            $content .= '<input type="hidden" class="rcl-runner-field" id="'.$this->field_id.'" name="'.$field['name'].'" value="'.$min.'">';
         $content .= '</div>';
         
         $init = 'rcl_init_runner('.json_encode(array(
@@ -465,7 +467,7 @@ class Rcl_Custom_Fields{
         $text = (isset($field['text-confirm']) && $field['text-confirm'])? $field['text-confirm']: __('I agree with the text of the agreement','wp-recall');
         
         $input = '<span class="rcl-checkbox-box">';
-        $input .= '<input type="checkbox" '.checked($this->value,1,false).' '.$this->required.' name="'.$field['name'].'" id="'.$this->slug.$this->rand.'" value="1"/> '
+        $input .= '<input type="checkbox" '.checked($this->value,1,false).' '.$this->required.' name="'.$field['name'].'" id="'.$this->field_id.$this->rand.'" value="1"/> '
                 . '<label class="block-label" for="'.$this->slug.$this->rand.'">'.$text.'</label>';
         $input .= '</span>';
         
@@ -473,51 +475,51 @@ class Rcl_Custom_Fields{
     }
     
     function get_type_textarea($field){
-        return '<textarea name="'.$field['name'].'" '.$this->maxlength.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' id="'.$this->slug.'" rows="5" cols="50">'.$this->value.'</textarea>';
+        return '<textarea name="'.$field['name'].'" '.$this->maxlength.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' id="'.$this->field_id.'" rows="5" cols="50">'.$this->value.'</textarea>';
     }
     
     function get_type_text($field){
         
         $pattern = (isset($field['pattern']) && $field['pattern'])? 'pattern="'.$field['pattern'].'"': '';
         
-        return '<input type="text" '.$pattern.' '.$this->maxlength.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        return '<input type="text" '.$pattern.' '.$this->maxlength.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" value="'.$this->value.'"/>';
     }
     
     function get_type_password($field){
-        return '<input type="password" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        return '<input type="password" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" value="'.$this->value.'"/>';
     }
 
     function get_type_tel($field){
-        return '<input type="tel" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="tel" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" maxlength="50" value="'.$this->value.'"/>';
     }
 
     function get_type_email($field){
-        return '<input type="email" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="email" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" maxlength="50" value="'.$this->value.'"/>';
     }
 
     function get_type_url($field){
-        return '<input type="url" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        return '<input type="url" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" value="'.$this->value.'"/>';
     }
 
     function get_type_date($field){
         
         $field['classes'] = 'rcl-datepicker';
         
-        $content = '<input type="text" '.$this->get_class($field).' onclick="rcl_show_datepicker(this);" title="'.__('Use the format','wp-recall').': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})" '.$this->required.' '.$this->placeholder.' class="rcl-datepicker" name="'.$field['name'].'" id="'.$this->slug.'" value="'.$this->value.'"/>';
+        $content = '<input type="text" '.$this->get_class($field).' onclick="rcl_show_datepicker(this);" title="'.__('Use the format','wp-recall').': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})" '.$this->required.' '.$this->placeholder.' class="rcl-datepicker" name="'.$field['name'].'" id="'.$this->field_id.'" value="'.$this->value.'"/>';
         
         return $content;
     }
 
     function get_type_time($field){
-        return '<input type="time" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="time" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" maxlength="50" value="'.$this->value.'"/>';
     }
 
     function get_type_number($field){
-        return '<input type="number" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->slug.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="number" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" maxlength="50" value="'.$this->value.'"/>';
     }
     
     function get_type_hidden($field){
-        return '<input type="hidden" name="'.$field['name'].'" id="'.$this->slug.'" value="'.$field['value'].'"/>';
+        return '<input type="hidden" name="'.$field['name'].'" id="'.$this->field_id.'" value="'.$field['value'].'"/>';
     }
 
     function get_field_value($field,$value=false,$title=true){

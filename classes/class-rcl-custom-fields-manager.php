@@ -325,6 +325,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         
         $value = (isset($this->field[$option['slug']]))? $this->field[$option['slug']]: $value;
         
+        $option['field-id'] = isset($this->field['slug'])? $this->field['slug'].'-'.$option['slug']: $this->new_slug.'-'.$option['slug'];
+        
         if(isset($this->field['slug']) && $this->field['slug']){
             
             $option['name'] = 'field['.$this->field['slug'].']['.$option['slug'].']';

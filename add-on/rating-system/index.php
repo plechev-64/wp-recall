@@ -49,7 +49,7 @@ function rcl_add_rating_tab(){
     global $user_LK;
     
     $count = 0;
-    if(!is_admin()){
+    if(!is_admin() && rcl_is_office()){
         $count = rcl_format_rating(rcl_get_user_rating($user_LK));
     }
     

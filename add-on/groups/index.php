@@ -167,6 +167,19 @@ function rcl_group_replace_description($descr) {
     return $descr;
 }
 
+add_action('delete_user', 'rcl_group_delete_user_in_groups');
+function rcl_group_delete_user_in_groups($user_id){
+    
+    $groups = rcl_get_groups_users(array('user_id' => $user_id, 'number' => -1));
+    
+    if(!$groups) return false;
+    
+    foreach($groups as $group){
+        rcl_group_remove_user($user_id, $group->group_id);
+    }
+    
+}
+
 //обновление кеша вкладки групп ее админа
 add_action('rcl_create_group','rcl_tab_groups_remove_cache',10);
 add_action('rcl_pre_delete_group','rcl_tab_groups_remove_cache',10);
