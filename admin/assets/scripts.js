@@ -45,11 +45,11 @@ jQuery(function($){
         $('.child-select.'+id+'-'+val).show();
     });
 
-    $('.parent-select').change(function(){
+    $('.wrap-recall-options .parent-select').change(function(){
         var id = $(this).attr('id');
         var val = $(this).val();
-        $('.child-select.'+id).slideUp();
-        $('.child-select.'+id+'-'+val).slideDown();		
+        $('.wrap-recall-options .child-select.'+id).slideUp();
+        $('.wrap-recall-options .child-select.'+id+'-'+val).slideDown();		
     });
     
     $('#rcl-custom-fields-editor').on('change','.select-type-field', function (){

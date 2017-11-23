@@ -80,6 +80,7 @@ class Rcl_Options extends Rcl_Custom_Fields{
     }
 
     function title($title){
+        if(!$title) return false;
         return '<h3>'.$title.'</h3>';
     }
 
@@ -149,6 +150,7 @@ class Rcl_Options extends Rcl_Custom_Fields{
         
         $this->value = $value;
         $this->slug = $args['name'];
+        $this->field_id = $this->slug;
         
         $content .= $this->$methodName($field);
         

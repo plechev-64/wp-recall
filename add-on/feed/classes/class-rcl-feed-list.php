@@ -208,6 +208,8 @@ class Rcl_Feed_List extends Rcl_Query{
         );
         
         $args = wp_parse_args( $args, $defaults );
+        
+        $args = apply_filters('rcl_feed_posts_args',$args,$this->user_feed);
 
         $this->set_query($args);
         
@@ -253,6 +255,8 @@ class Rcl_Feed_List extends Rcl_Query{
         );
         
         $args = wp_parse_args( $args, $defaults );
+        
+        $args = apply_filters('rcl_feed_comments_args',$args,$this->user_feed);
 
         $this->set_query($args);
         
@@ -286,6 +290,8 @@ class Rcl_Feed_List extends Rcl_Query{
         );
         
         $args = wp_parse_args( $args, $defaults );
+        
+        $args = apply_filters('rcl_feed_answers_args',$args,$this->user_feed);
 
         $this->set_query($args);
         
