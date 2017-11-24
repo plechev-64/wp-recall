@@ -914,8 +914,6 @@ function rcl_office_class(){
 
 function rcl_template_support($support){  
     
-    //if(!rcl_is_office()) return false;
-    
     switch($support){
         case 'avatar-uploader': 
             include_once 'functions/supports/uploader-avatar.php';
@@ -927,6 +925,7 @@ function rcl_template_support($support){
             include_once 'functions/supports/modal-user-details.php';
             break;
     }
+    
 }
 
 function rcl_is_user_role($user_id,$role){

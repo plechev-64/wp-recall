@@ -1,4 +1,6 @@
-var PFM = {};
+var PFM = {
+    inactive: 0
+};
 
 rcl_add_action('rcl_pre_init_ajax_editor','pfm_wrap_input_quicktags_editor');
 rcl_add_action('rcl_init','pfm_wrap_input_quicktags_editor');
@@ -151,20 +153,21 @@ function pfm_ajax_action(object,e){
                     if(data['append']){
 
                         if(object['method'] == 'post_create'){
+                            
+                            PFM.inactive = 0;
 
                             jQuery('#prime-forum .prime-posts .new-post').removeClass('new-post');
                             jQuery('#editor-action_post_create').val('');
                             jQuery('#prime-topic-form-box input[name="pfm-data[form_load]"]').val(data['form_load']);
 
-                            //if(data['content'].length > 1)
-                                rcl_do_action('pfm_new_post','r','e','re');
+                            rcl_do_action('pfm_new_post');
 
                             pfm_animate_new_posts(data['content']);
 
                             PFM.last_beat = data.form_load;
 
-                            if(!rcl_exist_beat('pfm_topic_beat')){
-                                rcl_add_beat("pfm_topic_beat",30,{topic_id:data.topic_id,start_beat:data.form_load});
+                            if(!rcl_exist_beat('pfm_topic_beat') && parseInt(Rcl.PForum.beat_time)){
+                                rcl_add_beat("pfm_topic_beat",parseInt(Rcl.PForum.beat_time),{topic_id:data.topic_id,start_beat:data.form_load});
                             }
 
                         }else{
@@ -227,6 +230,13 @@ function pfm_spoiler(e){
 
 function pfm_topic_beat(initData){
     
+    PFM.inactive++;
+    
+    if(PFM.inactive > Rcl.PForum.beat_inactive){
+        console.log('inactive:'+PFM.inactive);
+        return false;
+    }
+    
     if(!PFM.last_beat)
         PFM.last_beat = initData.start_beat;
 
@@ -246,7 +256,7 @@ function pfm_topic_beat(initData){
 }
 
 function pfm_topic_beat_success(result){
-    
+
     PFM.last_beat = result.last_beat;
     
     jQuery('#prime-topic-form-box input[name="pfm-data[form_load]"]').val(result.last_beat);

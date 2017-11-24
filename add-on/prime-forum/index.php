@@ -324,7 +324,9 @@ function pfm_init_js_variables($data){
         'group_id' => $PrimeQuery->object->group_id,
         'forum_id' => $PrimeQuery->object->forum_id,
         'topic_id' => $PrimeQuery->object->topic_id,
-        'current_page' => $PrimeQuery->current_page
+        'current_page' => $PrimeQuery->current_page,
+        'beat_time' => pfm_get_option('beat-time', 30),
+        'beat_inactive' => pfm_get_option('beat-inactive', 100)
     );
     
     $data['PForum'] = $pfm;

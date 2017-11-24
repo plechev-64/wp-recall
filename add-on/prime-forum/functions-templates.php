@@ -57,8 +57,9 @@ function pfm_get_template_content(){
             'group_id' => $PrimeQuery->object->group_id,
             'start_beat' => current_time('mysql')
         );
-        
-        $content .= '<script>rcl_add_beat("pfm_topic_beat",30,'.json_encode($args).');</script>';
+
+        if($beatTime = pfm_get_option('beat-time', 30))
+            $content .= '<script>rcl_add_beat("pfm_topic_beat",'.$beatTime.','.json_encode($args).');</script>';
         
     }
     

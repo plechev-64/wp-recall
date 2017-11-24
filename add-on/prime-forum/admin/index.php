@@ -180,6 +180,31 @@ function pfm_page_options(){
             )
         ),
         array(
+            'type' => 'runner',
+            'slug' => 'beat-time',
+            'title' => __('Задержка на получение нового сообщения через AJAX','wp-recall'),
+            'value_min' => 0,
+            'value_max' => 120,
+            'value_step' => 1,
+            'default' => 30,
+            'notice' => __('В секундах. Новые сообщения в теме форума подгружаются '
+                    . 'через AJAX только для тех, кто уже оставил ранее в этой теме сообщение. '
+                    . 'Если ноль, то AJAX-подгрузка отключена.','wp-recall')
+        ),
+        array(
+            'type' => 'runner',
+            'slug' => 'beat-inactive',
+            'title' => __('Предел кол-ва запросов на получение новых сообщений','wp-recall'),
+            'value_min' => 10,
+            'value_max' => 200,
+            'value_step' => 1,
+            'default' => 100,
+            'notice' => __('Если включена подгрузка новых сообщений через AJAX, '
+                    . 'то здесь устанавливаем максимальное кол-во запросов от '
+                    . 'одного пользователя, после достижения которого они прекращаются, '
+                    . 'после публикации нового сообщения запросы возобновляются.','wp-recall')
+        ),
+        array(
             'type' => 'custom',
             'title' => __('Templates to form the title tag and name of the page','wp-recall'),
             'content' => __(
