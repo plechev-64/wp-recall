@@ -742,6 +742,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             ,'child_of'     => 0
             ,'parent'       => ''
         );
+        
+        $args = apply_filters('rcl_public_form_hierarchical_terms', $args, $this->get_object_form());
 
         $allcats = get_terms($taxonomy, $args);
 
