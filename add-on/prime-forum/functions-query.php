@@ -15,19 +15,40 @@ function pfm_is_home(){
     return ($PrimeQuery->is_frontpage)? true: false;
 }
 
-function pfm_is_forum(){
+function pfm_is_group($group_id = false){
     global $PrimeQuery;
-    return ($PrimeQuery->is_forum)? true: false;
+    
+    if(pfm_is_home()){
+        global $PrimeGroup;
+        
+        if(!$group_id)
+            return false;
+        
+        return $PrimeGroup->group_id == $group_id? true: false;
+    }
+    
+    if(!$group_id)
+        return ($PrimeQuery->is_group)? true: false;
+    
+    return ($PrimeQuery->is_group && $PrimeQuery->object->group_id == $group_id)? true: false;
 }
 
-function pfm_is_group(){
+function pfm_is_forum($forum_id = false){
     global $PrimeQuery;
-    return ($PrimeQuery->is_group)? true: false;
+    
+    if(!$forum_id)
+        return ($PrimeQuery->is_forum)? true: false;
+    
+    return ($PrimeQuery->is_forum && $PrimeQuery->object->forum_id == $forum_id)? true: false;
 }
 
-function pfm_is_topic(){
+function pfm_is_topic($topic_id = false){
     global $PrimeQuery;
-    return ($PrimeQuery->is_topic)? true: false;
+    
+    if(!$topic_id)
+        return ($PrimeQuery->is_topic)? true: false;
+    
+    return ($PrimeQuery->is_topic && $PrimeQuery->object->topic_id == $topic_id)? true: false;
 }
 
 function pfm_have_groups(){
@@ -81,6 +102,8 @@ function pfm_get_next($type){
                 $PrimeGroup = $PrimeQuery->groups[$nextID];
                 
                 $PrimeQuery->next[$type] += 1;
+                
+                $PrimeForum = false;
                 
                 return $PrimeGroup;
                 

@@ -20,6 +20,7 @@ function rcl_slider_scripts(){
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-core');
     wp_enqueue_script('jquery-ui-slider');
+    wp_enqueue_script('jquery-touch-punch');
 }
 
 function rcl_datepicker_scripts(){

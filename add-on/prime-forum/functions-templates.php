@@ -441,7 +441,24 @@ function pfm_the_breadcrumbs(){
 }
 
 function pfm_get_icon($icon_class = 'fa-folder'){
-    return apply_filters('pfm_icon', '<i class="fa '.$icon_class.'" aria-hidden="true"></i>');
+    global $PrimeGroup,$PrimeForum,$PrimeTopic;
+    
+    $defaultIcon = '<i class="fa '.$icon_class.'" aria-hidden="true"></i>';
+    
+    if($PrimeGroup && !$PrimeForum){
+        return apply_filters('pfm_group_icon', $defaultIcon);
+    }
+    
+    if($PrimeGroup && $PrimeForum || $PrimeForum->parent_id){
+        return apply_filters('pfm_forum_icon', $defaultIcon);
+    }
+    
+    if($PrimeForum && $PrimeTopic){
+        return apply_filters('pfm_topic_icon', $defaultIcon);
+    }
+    
+    return apply_filters('pfm_icon', $defaultIcon);
+    
 }
 
 function pfm_the_icon($icon_class = 'fa-folder'){
