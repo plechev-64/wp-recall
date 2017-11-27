@@ -70,7 +70,7 @@ function rcl_print_bar_icons(){
             endif;
             
             if(isset($icon['counter'])):
-                echo '<div class="rcb_nmbr">'.$icon['counter'].'</div>';
+                echo '<div class="rcb_nmbr '.($icon['counter']>0?'counter_not_null':'').'">'.$icon['counter'].'</div>';
             endif;
 
             echo '</div>';

@@ -295,7 +295,7 @@ class Rcl_Custom_Fields{
             
             $input .='<span class="rcl-checkbox-box">'
                     . '<input '.$this->required.' '.$checked.' id="'.$this->field_id.'_'.$k.$this->rand.'" type="checkbox" '.$this->get_class($field).' name="'.$field['name'].'[]" value="'.trim($k).'"> ';
-            $input .='<label class="block-label" for="'.$this->slug.'_'.$k.$this->rand.'">';
+            $input .='<label class="block-label" for="'.$this->field_id.'_'.$k.$this->rand.'">';
             $input .= (!isset($field['before']))? '': $field['before'];
             $input .= $value
                     .'</label>'
@@ -323,7 +323,7 @@ class Rcl_Custom_Fields{
             
             $input .='<span class="rcl-radio-box">'
                     . '<input '.$this->required.' '.checked($this->value,$k,false).' '.checked($a,0,false).' type="radio" '.$this->get_class($field).' id="'.$this->field_id.'_'.$k.$this->rand.'" name="'.$field['name'].'" value="'.trim($k).'"> ';
-            $input .='<label class="block-label" for="'.$this->slug.'_'.$k.$this->rand.'">';        
+            $input .='<label class="block-label" for="'.$this->field_id.'_'.$k.$this->rand.'">';        
             $input .= $value
                     .'</label>'
                     . '</span>';
@@ -468,7 +468,7 @@ class Rcl_Custom_Fields{
         
         $input = '<span class="rcl-checkbox-box">';
         $input .= '<input type="checkbox" '.checked($this->value,1,false).' '.$this->required.' name="'.$field['name'].'" id="'.$this->field_id.$this->rand.'" value="1"/> '
-                . '<label class="block-label" for="'.$this->slug.$this->rand.'">'.$text.'</label>';
+                . '<label class="block-label" for="'.$this->field_id.$this->rand.'">'.$text.'</label>';
         $input .= '</span>';
         
         return $input;
