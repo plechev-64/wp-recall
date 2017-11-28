@@ -38,8 +38,14 @@ function rcl_add_order_notices(){
             }else{
 
                 if($rclOrder->order_status == 1 && function_exists('rcl_get_pay_form')){
-
-                    $notice .= __('You can pay for it now or from your personal account. There you can find the status of your order.','wp-recall');
+                    
+                    if($user_ID){
+                        $notice .= __('You can pay for it now or from your personal account.','wp-recall');
+                    }else{
+                        $notice .= __('You can pay for it from your personal account.','wp-recall');
+                    }
+                    
+                    $notice .= ' '.__('There you can find the status of your order.','wp-recall');
 
                 }else{
 

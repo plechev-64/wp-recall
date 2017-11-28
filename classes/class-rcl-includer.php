@@ -8,12 +8,14 @@ class Rcl_Includer{
     public $files = array();
     public $minify_dir;
     public $is_minify;
+    public $deregister_styles = array();
+    public $deregister_scripts = array();
     
     function __construct(){ 
         global $rcl_styles;
         $this->place = (!isset($rcl_styles['header']))? 'header': 'footer';
     }
-    
+
     function include_styles(){
         global $rcl_styles;
         
@@ -25,27 +27,11 @@ class Rcl_Includer{
 
         //Если место подключения header
         if($this->place=='header'){
-            
             if(!$rcl_styles) $rcl_styles = array();
-
-            $css_dir = RCL_URL.'assets/css/';
-
-            $primary = array(
-                'rcl-primary'           =>  $css_dir.'style.css',
-                'rcl-slider'            =>  $css_dir.'slider.css',
-                'rcl-users-list'        =>  $css_dir.'users.css',
-                'rcl-register-form'     =>  $css_dir.'regform.css'
-            );
-            
-            //если используем recallbar, то подключаем его стили
-            if(rcl_get_option('view_recallbar')){
-                $primary['rcl-bar'] = $css_dir.'recallbar.css';
-            }
-
-            $rcl_styles = array_merge($primary, $rcl_styles);
-            
             $rcl_styles = $this->regroup($rcl_styles);
         }
+        
+        $rcl_styles = $this->dequeue(apply_filters('rcl_pre_include_styles', $rcl_styles));
         
         if(!isset($rcl_styles[$this->place])) return false;
         
@@ -91,9 +77,10 @@ class Rcl_Includer{
         //Если место подключения header
         if($this->place=='header'){
             if(!$rcl_scripts) $rcl_scripts = array();
-            $rcl_scripts = $this->regroup($rcl_scripts);
-            
+            $rcl_scripts = $this->regroup($rcl_scripts); 
         }
+        
+        $rcl_scripts = $this->dequeue(apply_filters('rcl_pre_include_scripts', $rcl_scripts));
         
         if(!isset($rcl_scripts[$this->place])) return false;
         
@@ -195,6 +182,11 @@ class Rcl_Includer{
     
     function regroup($array){
         $new_array = array();
+        
+        if(isset($array['dequeue'])){
+            $new_array['dequeue'] = $array['dequeue'];
+            unset($array['dequeue']);
+        }
 
         $new_array[$this->place] = $array;
 
@@ -206,6 +198,25 @@ class Rcl_Includer{
         $array = $new_array;
         
         return $array;
+    }
+    
+    function dequeue($included){
+        
+        if(isset($included['dequeue'])){
+            
+            foreach($included['dequeue'] as $key){
+                
+                if(isset($included['header'][$key])){
+                    unset($included['header'][$key]);
+                }else if(isset($included['footer'][$key])){
+                    unset($included['footer'][$key]);
+                }
+                
+            }
+            
+        }
+        
+        return $included;
     }
     
     function get_ajax_includes(){
@@ -394,6 +405,34 @@ function rcl_enqueue_script($id, $url, $parents = array(), $in_footer=false){
     
     if($parents) 
         $rcl_scripts['parents'][$id] = $parents;
+}
+
+function rcl_dequeue_style($style){
+    global $rcl_styles;
+    
+    if(!isset($rcl_styles['dequeue']))
+        $rcl_styles['dequeue'] = array();
+    
+    if(is_array($style)){
+        $rcl_styles['dequeue'] = array_merge($rcl_styles['dequeue'], $style);
+    }else{
+        $rcl_styles['dequeue'][] = $style;
+    }
+
+}
+
+function rcl_dequeue_script($script){
+    global $rcl_scripts;
+    
+    if(!isset($rcl_scripts['dequeue']))
+        $rcl_scripts['dequeue'] = array();
+    
+    if(is_array($style)){
+        $rcl_scripts['dequeue'] = array_merge($rcl_scripts['dequeue'], $script);
+    }else{
+        $rcl_scripts['dequeue'][] = $script;
+    }
+
 }
 
 add_action('wp_enqueue_scripts','rcl_include_scripts',10);

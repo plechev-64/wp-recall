@@ -106,6 +106,15 @@ div.panel_lk_recall .form-tab-rcl a {
 
 
 /* START корректировки для полей*/
+#register-form-rcl .form_extend input[type="text"],
+#register-form-rcl .form_extend input[type="email"],
+#register-form-rcl .form_extend input[type="url"],
+#register-form-rcl .form_extend input[type="tel"],
+#register-form-rcl .form_extend input[type="file"],
+#register-form-rcl .form_extend input[type="time"],
+#register-form-rcl .form_extend input[type="number"] {
+    padding: 10px 8px;
+}
 #remember-form-rcl .default-field input[type="text"],
 #login-form-rcl .default-field input[type="text"],
 #login-form-rcl .default-field input[type="password"],
@@ -120,15 +129,6 @@ div.panel_lk_recall .form-tab-rcl a {
 #register-form-rcl .form_extend .rcl-field-input select {
     overflow: hidden;
     padding: 6px 3px;
-}
-#register-form-rcl .form_extend input[type="text"],
-#register-form-rcl .form_extend input[type="email"],
-#register-form-rcl .form_extend input[type="url"],
-#register-form-rcl .form_extend input[type="tel"],
-#register-form-rcl .form_extend input[type="file"],
-#register-form-rcl .form_extend input[type="time"],
-#register-form-rcl .form_extend input[type="number"] {
-    padding: 10px 8px;
 }
 #register-form-rcl .form-block-rcl .type-file-input {
     font-size: 10px;

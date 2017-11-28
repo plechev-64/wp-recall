@@ -90,10 +90,21 @@ function rcl_enqueue_wp_form_scripts(){
 }
 
 function rcl_frontend_scripts(){
-    global $rcl_options,$user_LK,$user_ID,$post;
+    global $user_ID,$user_LK,$post;
     
-    if(!isset($rcl_options['font_icons']))  $rcl_options['font_icons']=1;
+    rcl_font_awesome_style();
+    rcl_animate_css();
+
+    rcl_enqueue_style( 'rcl-primary', RCL_URL.'assets/css/style.css' );
+    rcl_enqueue_style( 'rcl-slider', RCL_URL.'assets/css/slider.css' );
+    rcl_enqueue_style( 'rcl-users-list', RCL_URL.'assets/css/users.css' );
+    rcl_enqueue_style( 'rcl-register-form', RCL_URL.'assets/css/regform.css' );
     
+    //если используем recallbar, то подключаем его стили
+    if(rcl_get_option('view_recallbar')){
+        rcl_enqueue_style( 'rcl-bar', RCL_URL.'assets/css/recallbar.css' );
+    }
+
     wp_enqueue_script( 'jquery' );
 
     if(rcl_is_office()){
@@ -103,16 +114,13 @@ function rcl_frontend_scripts(){
         }
     }
 
-    rcl_font_awesome_style();
-    rcl_animate_css();
-
     rcl_enqueue_script( 'rcl-core-scripts', RCL_URL.'assets/js/core.js' );
     rcl_enqueue_script( 'rcl-primary-scripts', RCL_URL.'assets/js/scripts.js' );
     
     $locData = rcl_get_localize_data();
     
-    if(isset($rcl_options['difficulty_parole'])){
-        if($rcl_options['difficulty_parole']&&(!$user_ID||$user_LK==$user_ID)){
+    if(rcl_get_option('difficulty_parole')){
+        if(!$user_ID || rcl_is_office($user_ID)){
             $locData['local']['pass0'] = __('Very weak','wp-recall');
             $locData['local']['pass1'] = __('Weak','wp-recall');
             $locData['local']['pass2'] = __('Worse than average','wp-recall');
@@ -130,7 +138,7 @@ function rcl_frontend_scripts(){
 }
 
 function rcl_get_localize_data(){
-    global $user_ID, $rcl_options;
+    global $user_ID;
     
     $local = array(
         'save' => __('Save','wp-recall'),
@@ -153,7 +161,7 @@ function rcl_get_localize_data(){
 
     $data['mobile'] = (wp_is_mobile())? (int)1: (int)0;
     $data['https'] = @( !isset($_SERVER["HTTPS"])||$_SERVER["HTTPS"] != 'on' ) ? (int)0:  (int)1;
-    $data['slider'] = (isset($rcl_options['slide-pause'])&&$rcl_options['slide-pause'])? "{auto:true,pause:".($rcl_options['slide-pause']*1000)."}": "''";
+    $data['slider'] = rcl_get_option('slide-pause')? "{auto:true,pause:".(rcl_get_option('slide-pause') * 1000)."}": "''";
     $data['local']['requared_fields_empty'] = __('Fill in all required fields','wp-recall');
     
     return apply_filters('rcl_init_js_variables',$data);

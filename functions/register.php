@@ -120,14 +120,14 @@ function rcl_add_shake_error_codes($codes){
 add_filter('registration_errors','rcl_get_register_user',90);
 function rcl_get_register_user($errors){
     global $wp_errors;
-
+    
     $wp_errors = new WP_Error();
 
     if( count( $errors->errors ) ) {
         $wp_errors = $errors;
         return $wp_errors;
     }
-
+    
     $pass = sanitize_text_field($_POST['user_pass']);
     $email = $_POST['user_email'];
     $login = sanitize_user($_POST['user_login']);
@@ -168,14 +168,14 @@ function rcl_get_register_user($errors){
             }
         }
     }
-
+    
     if(!$pass||!$email||!$login||!$required){
         $wp_errors->add( 'rcl_register_empty', __('Fill in the required fields!','wp-recall') );
         return $wp_errors;
     }
-
+    
     $wp_errors = apply_filters( 'rcl_registration_errors', $wp_errors, $login, $email );
-
+    
     if ( $wp_errors->errors ) return $wp_errors;
 
     do_action('pre_register_user_rcl',$ref);
@@ -215,7 +215,7 @@ function rcl_get_register_user($errors){
 }
 
 //принимаем данные с формы регистрации
-add_action('wp', 'rcl_get_register_user_activate');
+add_action('wp', 'rcl_get_register_user_activate',10);
 function rcl_get_register_user_activate ( ) {
     if ( isset( $_POST['submit-register'] ) ) { //если данные пришли с формы wp-recall
         if( !wp_verify_nonce( $_POST['_wpnonce'], 'register-key-rcl' ) ) return false;
