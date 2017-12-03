@@ -406,6 +406,10 @@ function rcl_init_range(props){
     });
 }
 
+function rcl_init_color(id, props){
+    jQuery("#"+id).wpColorPicker(props);
+}
+
 function rcl_init_field_maxlength(fieldID){
     
     var field = jQuery('#'+fieldID);

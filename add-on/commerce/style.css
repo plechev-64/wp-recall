@@ -113,6 +113,7 @@
 .rcl-product-gallery .bx-wrapper .bx-viewport{
     border: 1px solid #ccc;
     box-shadow: none;
+    height:auto!important;
 }
 body .rcl-product-gallery ul.images-list {
     clear: both;

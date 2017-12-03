@@ -116,7 +116,7 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
             __('Design','wp-recall'),
             array(
                 array(
-                    'type' => 'text',
+                    'type' => 'color',
                     'slug'=>'primary-color',
                     'title'=>__('Primary color','wp-recall'),
                     'default'=>'#4C8CBD'

@@ -18,10 +18,6 @@ jQuery(function($){
     $('body').on('click','.required-checkbox',function(){
         rcl_update_require_checkbox(this);
     });
-    
-    $("input[name='global[primary-color]']").wpColorPicker({
-        defaultColor: '#4c8cbd'
-    });
 
     /**/
     $(".wrap-recall-options").find(".parent-option").each(function(){

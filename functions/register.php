@@ -227,6 +227,11 @@ function rcl_get_register_user_activate ( ) {
 
 //письмо высылаемое при регистрации
 function rcl_register_mail($userdata){
+    
+    $user_login = $userdata['user_login'];
+    $user_id = $userdata['user_id'];
+    
+    $userdata = apply_filters('rcl_register_mail_data', $userdata);
 
     $textmail = '
     <p>'.__('You or someone else signed up on our website','wp-recall').' "'.get_bloginfo('name').'" '.__('with the following data:','wp-recall').'</p>
@@ -240,8 +245,8 @@ function rcl_register_mail($userdata){
         $confirmstr = base64_encode(
                         json_encode(
                             array(
-                                $userdata['user_login'],
-                                md5($userdata['user_id'])
+                                $user_login,
+                                md5($user_id)
                             )
                         )
                     );

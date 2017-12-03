@@ -93,7 +93,7 @@ function rcl_get_user_details($user_id, $args = false){
         $desc = get_the_author_meta('description',$user_LK);
         if($desc) 
             $content .= '<div class="ballun-status">'
-            . '<p class="status-user-rcl">'.nl2br(esc_html($desc)).'</p>'
+            . '<p class="status-user-rcl">'.nl2br(wp_strip_all_tags($desc)).'</p>'
             . '</div>';
     
     }

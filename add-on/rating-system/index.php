@@ -118,7 +118,7 @@ function rcl_add_data_rating_posts(){
     if($posts){
 
         $ratingsnone = $wpdb->get_results("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='rayting-none' AND post_id IN (".implode(',',$posts).")");
-
+        
         foreach($ratingsnone as $val){
             $none[$val->post_id] = $val->meta_value;
         }
@@ -155,7 +155,7 @@ function rcl_add_data_rating_posts(){
         $post->rating_total = (isset($rt_posts[$post->ID]))? $rt_posts[$post->ID]: 0;
         $post->rating_none = (isset($none[$post->ID]))? $none[$post->ID]: 0;
     }
-
+    
 }
 
 add_filter('comments_array','rcl_add_data_rating_comments');
@@ -317,15 +317,15 @@ function rcl_rating_block($args){
 
 function rcl_get_html_post_rating($object_id, $rating_type, $object_author = false){
 
-    $args = array(
+    $props = array(
         'object_id' => $object_id,
         'rating_type' => $rating_type
     );
     
     if($object_author)
-        $args['object_author'] = $object_author;
+        $props['object_author'] = $object_author;
     
-    $ratingBox = new Rcl_Rating_Box($args);
+    $ratingBox = new Rcl_Rating_Box($props);
 
     $content = $ratingBox->get_box();
 

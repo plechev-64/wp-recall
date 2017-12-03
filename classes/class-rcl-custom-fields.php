@@ -461,6 +461,27 @@ class Rcl_Custom_Fields{
         
         return $content;
     }
+    
+    function get_type_color($field){
+
+        wp_enqueue_style('wp-color-picker'); 
+        wp_enqueue_script( 'jquery' );
+        rcl_enqueue_script('wp-color-picker','http://wppost.loc/wp-admin/js/color-picker.js');
+        
+        $content = '<input type="text" '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" value="'.$this->value.'"/>';
+        
+        $init = 'rcl_init_color("'.$this->field_id.'",'.json_encode(array(
+            'defaultColor' => $this->value
+        )).')';
+        
+        if(!defined( 'DOING_AJAX' )){
+            $content .= '<script>jQuery(window).on("load", function() {' . $init . '});</script>';
+        }else{
+            $content .= '<script>' . $init . '</script>';
+        }
+        
+        return $content;
+    }
 
     function get_type_agree($field){
         

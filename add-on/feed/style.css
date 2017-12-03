@@ -18,9 +18,6 @@
     border: none;						/*++Twenty15++*/
     box-shadow:none;					/*++Twenty16++*/
 }
-#rcl-feed .feed-box span {
-    margin: 0 0 0 5px;
-}
 #rcl-feed .feed-box .feed-header {
     background: rgba(243, 243, 243, 0.5);
     font: 16px/1.4 Verdana,arial;

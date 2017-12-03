@@ -23,6 +23,8 @@ function rcl_get_feed_list($atts = array()){
                 .'</p>';
     }
     
+    add_filter('rcl_rating_user_can', 'rcl_feed_unset_can_vote', 10);
+    
     if(!$atts) $atts = array();
 
     include_once 'classes/class-rcl-feed-list.php';

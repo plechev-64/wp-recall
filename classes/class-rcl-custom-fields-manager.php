@@ -282,7 +282,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             
         }else{
             
-            if($this->exist_placeholder && $this->field['type'] != 'custom'){
+            if($this->exist_placeholder && !in_array($this->field['type'],array('custom','color'))){
                 
                 $options[] = array(
                     'type' => 'text',
@@ -553,7 +553,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             'file'=>__('File','wp-recall'),
             'dynamic'=>__('Dynamic','wp-recall'),
             'runner'=>__('Runner','wp-recall'),
-            'range'=>__('Range','wp-recall')
+            'range'=>__('Range','wp-recall'),
+            'color'=>__('Color','wp-recall')
         );
         
         if($this->types){

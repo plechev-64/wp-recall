@@ -60,15 +60,17 @@ class Rcl_Rating_Box {
 
         if(!$this->object_author){
 
-            if($comment && is_object($comment) || $this->rating_type == 'comment'){
+            if($this->rating_type == 'comment'){
             
-                $object = ($comment)? $comment: get_comment($this->object_id);
+                $object = ($comment && is_object($comment))? $comment: get_comment($this->object_id);
                 $this->object_author = $object->user_id;
 
-            }else if($post && is_object($post)){
-                
-                $object = ($post)? $post: get_post($this->object_id);
-                $this->object_author = $object->post_author;
+            }else{
+
+                if(in_array($this->rating_type, get_post_types())){
+                    $object = ($post && is_object($post) && $post->ID == $this->object_id)? $post: get_post($this->object_id);
+                    $this->object_author = $object->post_author;
+                }
 
             }
 
@@ -77,7 +79,9 @@ class Rcl_Rating_Box {
         if(!isset($this->output_type))
             $this->output_type = rcl_get_option('rating_type_'.$this->rating_type,0);
         
-        $this->setup_rating_allowed();
+        $this->setup_rating_allowed($object);
+        
+        if($this->rating_none) return false;
         
         $this->setup_user_can();
 
@@ -151,12 +155,12 @@ class Rcl_Rating_Box {
         
     }
     
-    function setup_rating_allowed(){
-        global $post,$comment;
+    function setup_rating_allowed($object){
+        global $post;
         
-        if($post && !$comment){
-            $this->rayting_none = (isset($post->rating_none))? $post->rating_none: get_post_meta($post->ID, 'rayting-none', 1);
-        }
+        if(!isset($object->post_type)) return false;
+        
+        $this->rating_none = ($object->ID == $post->ID && isset($post->rating_none))? $post->rating_none: get_post_meta($object->ID, 'rayting-none', 1);
         
     }
     

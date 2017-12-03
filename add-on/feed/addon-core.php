@@ -262,6 +262,21 @@ function rcl_add_feed_content_meta($content){
     return $content;
 }
 
+function rcl_feed_unset_can_vote($userCan){
+    
+    $userCan['vote'] = false;
+            
+    return $userCan;
+}
+
+add_filter('rcl_feed_excerpt', 'rcl_add_feed_rating',10);
+function rcl_add_feed_rating($content){
+    global $rcl_feed;
+    if(!function_exists('rcl_get_html_post_rating')) return $content;
+    $content .= rcl_get_html_post_rating($rcl_feed->feed_ID,$rcl_feed->post_type,$rcl_feed->feed_author);
+    return $content;
+}
+
 add_filter( 'rcl_feed_excerpt', 'wpautop', 11 );
 add_filter('rcl_feed_content','rcl_get_feed_excerpt',20);
 function rcl_get_feed_excerpt($content){

@@ -31,7 +31,7 @@ var SayCheese = (function() {
     var ERRORS = {
         NOT_SUPPORTED: 'NOT_SUPPORTED',
         AUDIO_NOT_SUPPORTED: 'AUDIO_NOT_SUPPORTED'
-    }
+    };
 
     SayCheese = function SayCheese(element, options) {
         this.snapshots = [],
@@ -55,7 +55,7 @@ var SayCheese = (function() {
             this.events[evt] = [];
         }
 
-        this.events[evt].push(handler)
+        this.events[evt].push(handler);
     };
 
     SayCheese.prototype.off = function off(evt, handler) {
@@ -79,7 +79,7 @@ var SayCheese = (function() {
         for (var opt in options) {
             this.options[opt] = options[opt];
         }
-    }
+    };
 
     SayCheese.prototype.getStreamUrl = function getStreamUrl() {
         if (window.URL && window.URL.createObjectURL) {
