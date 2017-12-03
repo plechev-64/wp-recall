@@ -554,7 +554,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             'dynamic'=>__('Dynamic','wp-recall'),
             'runner'=>__('Runner','wp-recall'),
             'range'=>__('Range','wp-recall'),
-            'color'=>__('Color','wp-recall')
+            //'color'=>__('Color','wp-recall')
         );
         
         if($this->types){
