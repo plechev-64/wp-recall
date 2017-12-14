@@ -26,6 +26,7 @@ class PrimeQuery{
     public $all_items = 0;
     public $current_page = 1;
     public $meta = array();
+    public $users_data = array();
     public $parent_groups = array();
     public $last = array(
         'topics' => array(),
@@ -126,17 +127,22 @@ class PrimeQuery{
             
         }else{
             
-            add_action('pfm_init_query',array($this,'add_forums_data_in_home'),10);
-            add_action('pfm_init_query',array($this,'add_child_forums'),10);
-            add_action('pfm_init_query',array($this,'init_canonical_url'),10);
-            
-            add_action('pfm_init_query',array($this,'setup_last_items'),15);
-            add_action('pfm_init_query',array($this,'setup_meta'), 17);
-            
             $this->setup_page_data();
             
             $this->init_child_items();
+
+            $this->add_forums_data_in_home();
             
+            $this->add_child_forums();
+            
+            $this->init_canonical_url();
+
+            $this->setup_last_items();
+            
+            $this->setup_meta();
+            
+            $this->setup_users_data();
+
             do_action('pfm_init_query',$this);
             
         }
@@ -417,26 +423,7 @@ class PrimeQuery{
                 'number' => $this->number,
                 'offset' => $this->offset,
                 'order' => 'ASC',
-                'orderby' => 'post_date',
-                'join_query' => array(
-                    array(
-                        'table' => array(
-                            'name' => $wpdb->users,
-                            'as' => 'wp_users',
-                            'cols' => array(
-                                'ID',
-                                'display_name',
-                                'user_registered'
-                            )
-                        ),
-                        'join' => 'LEFT',
-                        'on_user_id' => 'ID',
-                        'fields' => array(
-                            'display_name',
-                            'user_registered'
-                        )
-                    )
-                )
+                'orderby' => 'post_date'
             );
             
         }
@@ -675,6 +662,7 @@ class PrimeQuery{
         $sql = "SELECT "
                 . "p.post_id,"
                 . "p.post_date,"
+                . "p.post_index,"
                 . "p.topic_id,"
                 . "p.user_id,"
                 . "t.forum_id "
@@ -709,6 +697,7 @@ class PrimeQuery{
         $sql = "SELECT "
                 . "post_id,"
                 . "post_date,"
+                . "post_index,"
                 . "topic_id,"
                 . "user_id "
                 . "FROM ".RCL_PREF."pforum_posts "
@@ -743,6 +732,7 @@ class PrimeQuery{
                 . "topic_id,"
                 . "topic_name,"
                 . "forum_id,"
+                . "topic_slug,"
                 . "user_id "
                 . "FROM ".RCL_PREF."pforum_topics "
                     . "WHERE topic_id IN (".implode(',',$topicIdx).") ";
@@ -931,6 +921,76 @@ class PrimeQuery{
         }
         
         return false;
+        
+    }
+    
+    function setup_users_data(){
+        
+        $userIds = array();
+        
+        if($this->is_frontpage || $this->is_group || $this->is_forum || $this->is_topic){
+            
+            if($this->posts){
+                foreach($this->posts as $post){
+                    $userIds[] = $post->user_id;
+                }
+            }
+
+            if($this->last['topics']){
+                foreach($this->last['topics'] as $topic){
+                    $userIds[] = $topic->user_id;
+                }
+            }
+            
+            if($this->last['posts']){
+                foreach($this->last['posts'] as $post){
+                    $userIds[] = $post->user_id;
+                }
+            }
+            
+        }
+        
+        $userIds = array_unique(apply_filters('pfm_users', $userIds));
+        
+        if(!$userIds) return false;
+        
+        global $wpdb;
+        
+        $fields = array(
+            'ID',
+            'display_name'
+        );
+        
+        if($this->is_topic){
+            $fields[] = 'user_registered';
+        }
+                
+        $query = new Rcl_Query(array(
+            'name' => $wpdb->users,
+            'as' => 'wp_users',
+            'cols' => $fields
+        ));
+        
+        $argsQuery = apply_filters('pfm_users_data_query', array(
+            'ID__in' => $userIds,
+            'number' => -1,
+            'fields' => $fields
+        ));
+
+        $users = $query->get_results($argsQuery);
+        
+        $this->users_data = array();
+        foreach($users as $user){
+            $this->users_data[$user->ID] = $user;
+        }
+        
+    }
+    
+    function get_user_data($user_id, $dataName){
+        
+        if(!isset($this->users_data[$user_id])) return false;
+        
+        return (isset($this->users_data[$user_id]->$dataName))? $this->users_data[$user_id]->$dataName: false;
         
     }
     

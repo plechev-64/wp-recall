@@ -104,9 +104,15 @@ function rcl_author_info($content){
         return $content;
     
     global $post;
-    
+
     if($post->post_type=='page') 
         return $content;
+    
+    if(rcl_get_option('post_types_authbox')){
+        
+        if(!in_array($post->post_type,rcl_get_option('post_types_authbox'))) return $content;
+        
+    }
     
     $content .= rcl_get_author_block();
 

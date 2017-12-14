@@ -113,7 +113,7 @@ function pfm_the_topic_permalink(){
     echo pfm_get_topic_permalink($PrimeTopic->topic_id);
 }
 
-function pfm_get_topic_permalink($topic_id){
+function pfm_get_topic_permalink($topic_id, $args = false){
     global $PrimeTopic,$PrimeForum;
     
     $cachekey = json_encode(array('pfm_topic_permalink',$topic_id));
@@ -122,27 +122,50 @@ function pfm_get_topic_permalink($topic_id){
         return $cache;
     
     if ( '' != get_option('permalink_structure') ) {
-
-        if($PrimeTopic && $PrimeTopic->topic_id == $topic_id){
-            
-            $topic_slug = $PrimeTopic->topic_slug;
-            
-            if(isset($PrimeTopic->forum_slug)){
-                
-                $forum_slug = $PrimeTopic->forum_slug;
-                
-            }else if($PrimeForum){
-                
-                $forum_slug = $PrimeForum->forum_slug;
-                
-            }else{
         
-                $forum_slug = pfm_get_forum_field($PrimeTopic->forum_id,'forum_slug');
-                
+        $forum_slug = false;
+        $topic_slug = false;
+        
+        if(isset($args['forum_slug']))
+            $forum_slug = $args['forum_slug'];
+        
+        if(!$forum_slug){
+            
+            if($PrimeTopic && $PrimeTopic->topic_id == $topic_id){
+
+                if(isset($PrimeTopic->forum_slug)){
+
+                    $forum_slug = $PrimeTopic->forum_slug;
+
+                }else if($PrimeForum){
+
+                    $forum_slug = $PrimeForum->forum_slug;
+
+                }else{
+
+                    $forum_slug = pfm_get_forum_field($PrimeTopic->forum_id,'forum_slug');
+
+                }
+
             }
             
-        }else{
+        }
+        
+        if(isset($args['topic_slug']))
+            $topic_slug = $args['topic_slug'];
+        
+        if(!$topic_slug){
             
+            if($PrimeTopic && $PrimeTopic->topic_id == $topic_id){
+
+                $topic_slug = $PrimeTopic->topic_slug;
+
+            }
+            
+        }
+
+        if(!$topic_slug && !$forum_slug){
+
             $TopicQuery = new PrimeTopics();
             $ForumQuery = new PrimeForums();
 
@@ -161,6 +184,10 @@ function pfm_get_topic_permalink($topic_id){
             $topic_slug = $slugs[0]->topic_slug;
             $forum_slug = $slugs[0]->forum_slug;
             
+        }else if(!$topic_slug){
+            $topic_slug = pfm_get_topic_field($topic_id,'topic_slug');
+        }else if(!$forum_slug){
+            $forum_slug = pfm_get_forum_field($PrimeTopic->forum_id,'forum_slug');
         }
 
         $url = untrailingslashit(pfm_get_home_url()).'/'.$forum_slug.'/'.$topic_slug;
@@ -169,12 +196,20 @@ function pfm_get_topic_permalink($topic_id){
 
     } else {
         
-        $TopicQuery = new PrimeTopics();
+        if(isset($args['forum_id'])){
+            
+            $forum_id = $args['forum_id'];
+            
+        }else{
         
-        $forum_id = $TopicQuery->get_var(array(
-            'topic_id' => $topic_id,
-            'fields' => array('forum_id')
-        ));
+            $TopicQuery = new PrimeTopics();
+
+            $forum_id = $TopicQuery->get_var(array(
+                'topic_id' => $topic_id,
+                'fields' => array('forum_id')
+            ));
+        
+        }
 
         $url = home_url(add_query_arg(array(
             'pfm-forum' => $forum_id, 
@@ -190,34 +225,87 @@ function pfm_get_topic_permalink($topic_id){
 
 }
 
-function pfm_get_post_page_number($post_id){
+function pfm_get_post_page_number($post_id, $args = false){
+
+    $post_count = false;
+    $post_index = false;
     
-    $post = pfm_get_post($post_id);
+    if(isset($args['post_count']))
+        $post_count = $args['post_count'];
     
-    if(!$post) return false;
-    
-    $post_count = pfm_get_topic_field($post->topic_id,'post_count');
+    if(isset($args['post_index']))
+        $post_index = $args['post_index'];
     
     $PostsQuery = new PrimePosts();
     
-    $lastPage = ceil($post_count / $PostsQuery->number);
+    if($post_index && $PostsQuery->number >= $post_index){
+        
+        return 1;
+        
+    }
+
+    if(!$post_count && !$post_index){
+        
+        $TopicQuery = new PrimeTopics();
+
+        $data = $PostsQuery->get_results(array(
+            'post_id' => $post_id,
+            'fields' => array('post_index'),
+            'join_query' => array(
+                array(
+                    'table' => $TopicQuery->query['table'],
+                    'on_topic_id' => 'topic_id',
+                    'fields' => array('post_count')
+                )
+            )
+        ));
+        
+        $post_count = $data[0]->post_count;
+        $post_index = $data[0]->post_index;
+        
+    }else if(!$post_count){
+        
+        $TopicQuery = new PrimeTopics();
+        
+        $post_count = $PostsQuery->get_var(array(
+            'post_id' => $post_id,
+            'fields' => false,
+            'join_query' => array(
+                array(
+                    'table' => $TopicQuery->query['table'],
+                    'on_topic_id' => 'topic_id',
+                    'fields' => array('post_count')
+                )
+            )
+        ));
+        
+    }else{
+        
+        $post_index = $PostsQuery->get_var(array(
+            'post_id' => $post_id,
+            'fields' => array('post_index')
+        ));
+        
+    }
     
+    $lastPage = ceil($post_count / $PostsQuery->number);
+
     for($page_id = 1; $page_id <= $lastPage; $page_id++){
         $lastIndex = $PostsQuery->number * $page_id;
-        if($post->post_index <= $lastIndex) break;
+        if($post_index <= $lastIndex) break;
     }
     
     return $page_id;
     
 }
 
-function pfm_get_post_page_permalink($post_id){
+function pfm_get_post_page_permalink($post_id, $args = false){
     
-    $topic_id = pfm_get_post_field($post_id, 'topic_id');
+    $topic_id = isset($args['topic_id'])? $args['topic_id']: pfm_get_post_field($post_id, 'topic_id');
     
     if(!$topic_id) return false;
     
-    $page_id = pfm_get_post_page_number($post_id);
+    $page_id = pfm_get_post_page_number($post_id, $args);
     
     if(!$page_id) return false;
     
@@ -232,9 +320,9 @@ function pfm_get_post_page_permalink($post_id){
     return $url;
 }
 
-function pfm_get_post_permalink($post_id){
+function pfm_get_post_permalink($post_id, $args = false){
     
-    $url = pfm_get_post_page_permalink($post_id);
+    $url = pfm_get_post_page_permalink($post_id, $args);
     
     if(!$url) return false;
 

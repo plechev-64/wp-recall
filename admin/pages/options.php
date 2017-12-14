@@ -54,6 +54,7 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                                 ),
                                 array(
                                     'type' => 'text',
+                                    'slug' => 'link_user_lk_rcl',
                                     'title' => __('Link format to personal account','wp-recall'),
                                     'help' => __('The link is formed according to principle "/slug_page/?get=ID". The parameter "get" can be set here. By default user','wp-recall')
                                 )

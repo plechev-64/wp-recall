@@ -45,10 +45,14 @@ function pfm_the_author_manager(){
     
     if($user_ID && $PrimePost->user_id && $user_ID != $PrimePost->user_id){
         
-        $actions['get_author_info'] = array(
-            'name' => __('Details about the author','wp-recall'),
-            'icon' => 'fa-info-circle'
-        );
+        if(function_exists('rcl_get_user_details')){
+        
+            $actions['get_author_info'] = array(
+                'name' => __('Details about the author','wp-recall'),
+                'icon' => 'fa-info-circle'
+            );
+        
+        }
 
         if(rcl_exist_addon('rcl-chat')){
 
@@ -337,7 +341,7 @@ function pfm_init_actions(){
             
             $post_edit[] = array(
                 'time' => current_time('mysql'),
-                'author' => get_the_author_meta('display_name',$user_ID),
+                'author' => pfm_get_user_name($user_ID),
                 'reason' => $reasonEdit
             );
             
@@ -930,7 +934,7 @@ function pfm_action_get_post_excerpt($post_id){
         return array('error' => __('Unable to get the message quote','wp-recall'));
     }
         
-    $author_name = $post->user_id? get_the_author_meta('display_name',$post->user_id): $post->guest_name;
+    $author_name = $post->user_id? pfm_get_user_name($post->user_id): $post->guest_name;
 
     if(isset($_POST['excerpt']) && $_POST['excerpt']){
 

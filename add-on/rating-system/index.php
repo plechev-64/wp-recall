@@ -158,10 +158,23 @@ function rcl_add_data_rating_posts(){
     
 }
 
+add_filter('rcl_rating_user_vote', 'rcl_get_comment_user_vote', 10, 2);
+function rcl_get_comment_user_vote($user_vote, $rating){
+    if($rating->rating_type == 'comment'){
+        global $comment;
+        if($comment->comment_ID == $rating->object_id){
+            return $comment->user_vote;
+        }
+    }
+    
+    return $user_vote;
+}
+
 add_filter('comments_array','rcl_add_data_rating_comments');
 function rcl_add_data_rating_comments($comments){
+    global $user_ID;
 
-    if(!$comments) return $comments;
+    if(!$comments || !rcl_get_option('rating_comment')) return $comments;
 
     $users = array();
     $comms = array();
@@ -191,7 +204,8 @@ function rcl_add_data_rating_comments($comments){
         'object_id__in' => $comms,
         'fields' => array(
             'rating_value',
-            'object_id'
+            'object_id',
+            'user_id'
         )
     ));
     
@@ -207,8 +221,15 @@ function rcl_add_data_rating_comments($comments){
         }
     }
 
+    $user_votes = array();
+    
     if($rating_values){
+        
         foreach($rating_values as $rating){
+            
+            if($rating->user_id == $user_ID){
+                $user_votes[$rating->object_id] = $rating->rating_value;
+            }
             
             if(!isset($rt_values[$rating->object_id])) 
                 $rt_values[$rating->object_id] = 0;
@@ -224,6 +245,7 @@ function rcl_add_data_rating_comments($comments){
 
     foreach($comments as $comment){
         $comment->rating_author = (isset($rt_authors[$comment->user_id]))? $rt_authors[$comment->user_id]: 0;
+        $comment->user_vote = (isset($user_votes[$comment->comment_ID]))? $user_votes[$comment->comment_ID]: 0;
         $comment->rating_total = (isset($rt_comments[$comment->comment_ID]))? $rt_comments[$comment->comment_ID]: 0;
         $comment->rating_votes = (isset($rt_values[$comment->comment_ID]))? $rt_values[$comment->comment_ID]: 0;
     }

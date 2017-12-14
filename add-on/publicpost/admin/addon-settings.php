@@ -13,6 +13,17 @@ function rcl_get_publics_options_page($content){
         if($size!=1) $sh_name .= ' ('.$size['width'].'*'.$size['height'].')';
         $d_sizes[$name] = $sh_name;
     }
+    
+    $post_types = get_post_types(array(
+            'public'   => true,
+            '_builtin' => false
+        ), 'objects');
+
+    $types = array('post' => __('Records','wp-recall'));
+
+    foreach ($post_types  as $post_type ) {
+        $types[$post_type->name] = $post_type->label;
+    }
 
     $content .= $opt->options(
         __('Publication settings','wp-recall'),array(
@@ -38,6 +49,17 @@ function rcl_get_publics_options_page($content){
                     'values'=>array(
                         __('Disabled','wp-recall'),
                         __('Enabled','wp-recall')
+                    ),
+                    'childrens' => array(
+                        1 => array(
+                            array(
+                                'type' => 'multiselect',
+                                'slug' => 'post_types_authbox',
+                                'title' => __('Типы записей для вывода блока автора','wp-recall'),
+                                'values' => $types,
+                                'notice' => __('Укажите типы записей, где должен выводится блок автора. Если ничего не указано, то выводится везде.','wp-recall')
+                            )
+                        )
                     )
                 ),
                 array(

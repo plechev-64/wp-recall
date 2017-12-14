@@ -19,7 +19,7 @@ class Rcl_Rating_Box {
     public $vote_max = 1;
     public $vote_count = 0;
     public $item_count = 0;
-    public $item_vote;
+    public $item_value;
     public $rating_none = false;
     public $view_total_rating = true;
     public $user_can = array(
@@ -138,7 +138,9 @@ class Rcl_Rating_Box {
         
         if(!$this->user_id || $this->user_id == $this->object_author) return;
         
-        $this->user_vote = rcl_get_vote_value($this->user_id,$this->object_id,$this->rating_type);
+        $user_vote = apply_filters('rcl_rating_user_vote', false, $this);
+        
+        $this->user_vote = $user_vote !== false? $user_vote: rcl_get_vote_value($this->user_id,$this->object_id,$this->rating_type);
         
         if($this->user_vote && (!rcl_get_option('rating_delete_voice') || $this->output_type == 2)) return;
         
@@ -180,6 +182,10 @@ class Rcl_Rating_Box {
     
     function box_content(){
         
+        if($this->output_type == 2){
+            $this->item_value = round( $this->vote_max / $this->item_count, 1 );
+        }
+        
         $this->average_rating = $this->vote_count? round( $this->total_rating / $this->vote_count, 1 ): 0;
         
         $class = 'box-default';
@@ -197,7 +203,7 @@ class Rcl_Rating_Box {
 
             }else if($this->output_type == 2){
 
-                if($this->object_id && is_single($this->object_id)){
+                if($this->object_id && is_single($this->object_id) && rcl_get_option('rating_shema_'.$this->rating_type)){
                     $content .= $this->get_stars_shema();
                 }
 
@@ -219,12 +225,10 @@ class Rcl_Rating_Box {
     
     function get_box_star(){
 
-        $item_value = round( $this->vote_max / $this->item_count, 1 );
-
         $args = array(
             'average_rating' => $this->average_rating,
-            'item_value' => $item_value,
-            'rating_value' => round( $this->average_rating / $item_value, 1 )
+            'item_value' => $this->item_value,
+            'rating_value' => round( $this->average_rating / $this->item_value, 1 )
         );
         
         $content = $this->get_html_stars($args);
@@ -459,6 +463,8 @@ class Rcl_Rating_Box {
             'ratingValue' => $this->average_rating,
             'ratingCount' => $this->vote_count
         ), $this);
+        
+        if(!$metatags) return false;
 
         $content = '<span itemscope="" itemtype="http://schema.org/AggregateRating">';
             

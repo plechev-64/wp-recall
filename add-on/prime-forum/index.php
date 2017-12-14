@@ -501,3 +501,19 @@ function is_prime_forum(){
     global $PrimeQuery;
     return ($PrimeQuery)? true: false;
 }
+
+function pfm_get_user_name($user_id){
+    
+    if(!$user_id) return __('Guest','wp-recall');
+    
+    if($name = pfm_get_user_data($user_id,'display_name')){
+        return $name;
+    }
+    
+    return get_the_author_meta('display_name',$user_id);
+}
+
+function pfm_get_user_data($user_id, $dataName){
+    global $PrimeQuery;
+    return ($PrimeQuery)? $PrimeQuery->get_user_data($user_id,$dataName): false;     
+}

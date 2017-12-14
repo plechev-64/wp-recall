@@ -181,6 +181,22 @@ function rcl_preview_post(){
         'form_id' => isset($postdata['form_id'])? $postdata['form_id']: 1
     ));
     
+    foreach($formFields->fields as $field){
+        
+        if(in_array($field['type'],array('runner'))){
+            
+            $value = isset($postdata[$field['slug']])? $postdata[$field['slug']]: 0;
+            $min = isset($field['value_min'])? $field['value_min']: 0;
+            $max = isset($field['value_max'])? $field['value_max']: 100;
+            
+            if($value < $min || $value > $max){
+                wp_send_json(array('error' => __('Некорректные значения некоторых полей, выставите корректные значения!','wp-recall')));
+            }
+            
+        }
+        
+    }
+    
     if($formFields->exist_active_field('post_thumbnail')){
         
         $thumbnail_id = (isset($postdata['post-thumbnail']))? $postdata['post-thumbnail']: 0;

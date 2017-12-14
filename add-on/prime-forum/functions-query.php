@@ -176,7 +176,13 @@ function pfm_the_last_topic(){
         echo __('Topics yet','wp-recall'); return;
     }
     
-    echo '<a href="'.pfm_get_topic_permalink($lastTopic->topic_id).'">'
+    $permalink = pfm_get_topic_permalink($lastTopic->topic_id, array(
+        'forum_id' => $PrimeForum->forum_id,
+        'forum_slug' => $PrimeForum->forum_slug,
+        'topic_slug' => $lastTopic->topic_slug
+    ));
+    
+    echo '<a href="'.$permalink.'">'
             .$lastTopic->topic_name
         .'</a>';
     
@@ -195,9 +201,15 @@ function pfm_the_last_post(){
         echo __('not found','wp-recall'); return;
     }
     
-    $name = $lastPost->user_id? get_the_author_meta('display_name',$lastPost->user_id): __('Guest','wp-recall');
+    $name = $lastPost->user_id? pfm_get_user_name($lastPost->user_id): __('Guest','wp-recall');
     
-    echo __('from','wp-recall').' '.$name.': <a href="'.pfm_get_post_permalink($lastPost->post_id).'">'
+    $permalink = pfm_get_post_permalink($lastPost->post_id,array(
+        'topic_id' => $PrimeTopic->topic_id,
+        'post_count' => $PrimeTopic->post_count,
+        'post_index' => $lastPost->post_index
+    ));
+    
+    echo __('from','wp-recall').' '.$name.': <a href="'.$permalink.'">'
             . human_time_diff( strtotime($lastPost->post_date), current_time('timestamp') ). ' '.__('ago','wp-recall')
         .'</a>';
 

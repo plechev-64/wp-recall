@@ -78,6 +78,103 @@ function pfm_the_post_bottom(){
     echo apply_filters('pfm_the_post_bottom','');
 }
 
+add_filter('rcl_rating_user_vote', 'pfm_get_forum_post_user_vote', 10, 2);
+function pfm_get_forum_post_user_vote($user_vote, $rating){
+    if($rating->rating_type == 'forum-post'){
+        global $PrimePost;
+        if($PrimePost->post_id == $rating->object_id){
+            return $PrimePost->user_vote;
+        }
+    }
+    
+    return $user_vote;
+}
+
+add_filter('pfm_posts','pfm_add_data_rating_posts');
+function pfm_add_data_rating_posts($pfmPosts){
+    global $user_ID;
+
+    if(!$pfmPosts || !rcl_get_option('rating_forum-post')) return $pfmPosts;
+
+    $userIds = array();
+    $postIds = array();
+
+    foreach($pfmPosts as $post){
+        $userIds[] = $post->user_id;
+        $postIds[] = $post->post_id;
+    }
+    
+    $userIds = array_unique($userIds);
+
+    $rating_authors = rcl_get_rating_users(array(
+        'user_id__in' => $userIds
+    ));
+
+    $rating_posts = rcl_get_rating_totals(array(
+        'rating_type' => 'forum-post',
+        'object_id__in' => $postIds,
+        'fields' => array(
+            'rating_total',
+            'object_id'
+        )
+    ));
+
+    $rating_values = rcl_get_vote_values(array(
+        'rating_type' => 'forum-post',
+        'object_id__in' => $postIds,
+        'fields' => array(
+            'rating_value',
+            'object_id',
+            'user_id'
+        )
+    ));
+    
+    $ratingData = array();
+    
+    if($rating_authors){
+        foreach($rating_authors as $rating){
+            $ratingData['authors'][$rating->user_id] = $rating->rating_total;
+        }
+    }
+
+    if($rating_posts){
+        foreach($rating_posts as $rating){
+            $ratingData['posts'][$rating->object_id] = $rating->rating_total;
+        }
+    }
+    
+    $user_votes = array();
+
+    if($rating_values){
+        foreach($rating_values as $rating){
+            
+            if($rating->user_id == $user_ID){
+                $user_votes[$rating->object_id] = $rating->rating_value;
+            }
+            
+            if(!isset($ratingData['values'][$rating->object_id])) 
+                $ratingData['values'][$rating->object_id] = 0;
+            
+            if($rating->rating_value > 0){
+                $ratingData['values'][$rating->object_id] += 1;
+            }else{
+                $ratingData['values'][$rating->object_id] -= 1;
+            }
+            
+        }
+    }
+
+    foreach($pfmPosts as $k => $post){
+        $pfmPosts[$k]->rating_author = (isset($ratingData['authors'][$post->user_id]))? $ratingData['authors'][$post->user_id]: 0;
+        $pfmPosts[$k]->user_vote = (isset($user_votes[$post->post_id]))? $user_votes[$post->post_id]: 0;
+        $pfmPosts[$k]->rating_total = (isset($ratingData['posts'][$post->post_id]))? $ratingData['posts'][$post->post_id]: 0;
+        $pfmPosts[$k]->rating_votes = (isset($ratingData['values'][$post->post_id]))? $ratingData['values'][$post->post_id]: 0;
+    }
+    
+    
+    return $pfmPosts;
+}
+
 add_filter('pfm_the_post_bottom','pfm_add_rating_post',10,2);
 function pfm_add_rating_post($content){
     global $PrimePost;
@@ -170,11 +267,7 @@ function pfm_get_post_box($post_id){
 
 function pfm_the_author_name(){
     global $PrimePost;
-    if($PrimePost->user_id){
-        echo ($PrimePost->display_name)? $PrimePost->display_name: get_the_author_meta('display_name',$PrimePost->user_id);
-    }else{
-        echo $PrimePost->guest_name;
-    }
+    echo $PrimePost->user_id? pfm_get_user_name($PrimePost->user_id): $PrimePost->guest_name;
 }
 
 function pfm_author_avatar($size = 50){
@@ -194,7 +287,7 @@ add_action('pfm_post_author_metabox','pfm_add_author_registered_data',12);
 function pfm_add_author_registered_data(){
     global $PrimePost; 
     if(!$PrimePost->user_id) return false; 
-    $user_registered = $PrimePost->user_registered? $PrimePost->user_registered: get_the_author_meta('user_registered',$PrimePost->user_id); ?>
+    $user_registered = ($date = pfm_get_user_data($PrimePost->user_id,'user_registered'))? $date: get_the_author_meta('user_registered',$PrimePost->user_id); ?>
     <div class="prime-author-meta prime-author-register"><?php echo __('On the website since','wp-recall').' '.mysql2date('d.m.Y', $user_registered); ?></div>
 <?php }
 

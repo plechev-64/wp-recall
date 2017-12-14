@@ -194,7 +194,8 @@ class Rcl_Feed_List extends Rcl_Query{
             'post_author__in' => $authors_feed,
             'post_type__not_in' => array(
                 'page',
-                'nav_menu_item'
+                'nav_menu_item',
+                'oembed_cache'
             ),
             'fields' => array(
                 'ID',

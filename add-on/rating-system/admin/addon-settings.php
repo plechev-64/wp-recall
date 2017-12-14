@@ -3,6 +3,17 @@
 add_filter('admin_options_wprecall','rcl_admin_page_rating');
 function rcl_admin_page_rating($content){
     global $rcl_rating_types;
+    
+    $post_types = get_post_types(array(
+            'public'   => true,
+            '_builtin' => false
+        ), 'objects');
+
+    $types = array('post' => __('Records','wp-recall'));
+
+    foreach ($post_types  as $post_type ) {
+        $types[] = $post_type->name;
+    }
 
     $opt = new Rcl_Options(__FILE__);
 
@@ -49,6 +60,22 @@ function rcl_admin_page_rating($content){
                 'value_max' => 20,
                 'default' => 5
             );
+            
+            if(in_array($type,$types)){
+            
+                $options[] = array(
+                    'parent' => array('rating_type_'.$type => 2),
+                    'type' => 'select',
+                    'slug' => 'rating_shema_'.$type,
+                    'title' => __('Разметка рейтинга','wp-recall'),
+                    'values' => array(
+                        __('Отключено','wp-recall'),
+                        __('Включено','wp-recall')
+                    ),
+                    'notice' => __('Если включено, то на одиночных страницах вместе с рейтингом выводится разметка по стандарту <a href="http://schema.org" target="_blank">http://schema.org</a>','wp-recall')
+                );
+            
+            }
 
         }
 

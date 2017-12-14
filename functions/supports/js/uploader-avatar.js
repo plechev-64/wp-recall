@@ -126,33 +126,34 @@ function rcl_avatar_uploader(){
         jQuery('#webcamupload').click(function(){
             
             jQuery('body > div').last().after('<div id=rcl-preview></div>');
+
+            var webCam = new SayCheese('#rcl-preview', { audio: false });
             
-            var webCam;
-            
-            webCam = new SayCheese('#rcl-preview', { audio: true });
-            
-            ssi_modal.show({
-                title: Rcl.local.title_webcam_upload,
-                className: 'rcl-webcam-uploader',
-                sizeClass: 'auto',
-                beforeShow: function (modal) {
-                    webCam.start();
-                },
-                beforeClose:function(modal){
-                    webCam.stop();
-                },
-                buttons: [{
-                    label: 'Ok',
-                    closeAfter: true,
-                    method: function () {
-                        webCam.takeSnapshot(320, 240);
-                    }
-                }, {
-                    label: Rcl.local.close,
-                    closeAfter: true
-                }],
-                content: jQuery('#rcl-preview'),
-                extendOriginalContent:true
+            webCam.start();
+
+            webCam.on('start', function() {
+                
+                ssi_modal.show({
+                    title: Rcl.local.title_webcam_upload,
+                    className: 'rcl-webcam-uploader',
+                    sizeClass: 'auto',
+                    beforeClose:function(modal){
+                        webCam.stop();
+                    },
+                    buttons: [{
+                        label: 'Ok',
+                        closeAfter: true,
+                        method: function () {
+                            webCam.takeSnapshot(320, 240);
+                        }
+                    }, {
+                        label: Rcl.local.close,
+                        closeAfter: true
+                    }],
+                    content: jQuery('#rcl-preview'),
+                    extendOriginalContent:true
+                });
+                
             });
 
             webCam.on('snapshot', function(snapshot) {

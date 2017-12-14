@@ -184,7 +184,7 @@ function rcl_add_count_user(){
         
         $args = apply_filters('rcl_ajax_pay_form_args',$args);
 
-        $log['redirectform'] = rcl_get_pay_form($args);;
+        $log['redirectform'] = rcl_get_pay_form($args);
         $log['otvet']=100; 
 
     } else {
@@ -239,7 +239,7 @@ function rcl_pay_order_user_balance(){
     do_action('rcl_success_pay_balance',(object)$data);
 
     wp_send_json(array(
-        'redirect' => get_permalink($rmag_options['page_successfully_pay'])
+        'redirect' => rcl_format_url(get_permalink($rmag_options['page_successfully_pay'])).'payment-type='.$pay_type
     ));
 
 }
