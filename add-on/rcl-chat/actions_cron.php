@@ -23,8 +23,6 @@ function rcl_chat_daily_delete_messages(){
     
     if(!$chats) return false;
     
-    rcl_add_log(__('Chats, selected to be cleared','wp-recall'), $chats);
-    
     foreach($chats as $chat){
         
         if($chat->amount_messages <= $max) continue;
@@ -42,9 +40,7 @@ function rcl_chat_daily_delete_messages(){
         );
         
         if(!$messages) continue;
-        
-        rcl_add_log(__('Messages, selected to be deleted','wp-recall'), $messages);
-        
+
         foreach($messages as $message){
             
             if($message->private_key && !$message->message_status) continue;
@@ -67,8 +63,6 @@ function rcl_chat_delete_unattached_attachments(){
     );
     
     if(!$unattaches) return;
-    
-    rcl_add_log(__('Message files, selected to be deleted','wp-recall'), $unattaches);
 
     foreach( $unattaches as $attachment_id )
         wp_delete_attachment( $attachment_id );

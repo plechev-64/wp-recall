@@ -111,6 +111,8 @@ function rcl_register_shutdown(){
         unset($active_addons[$addon]);
         update_site_option('rcl_active_addons',$active_addons);
         
+        rcl_add_log("Fatal Error: ".$error['message']." in ".str_replace('\\','/',$error['file']).":".$error['line'], false, true);
+        
         $rcl_error .= sprintf("Add-on %s has caused an error and was disabled. The error text: %s","<b>".strtoupper($addon)."</b>","<br>Fatal Error: ".$error['message']." in ".str_replace('\\','/',$error['file']).":".$error['line']."<br>");
         echo '<script type="text/javascript">';
         echo 'window.location.href="'.admin_url('admin.php?page=manage-addon-recall&update-addon=error-activate&error-text='.$rcl_error).'";';
