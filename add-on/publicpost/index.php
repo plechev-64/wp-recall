@@ -128,6 +128,10 @@ function rcl_concat_post_meta($content){
     if(!$option)
         return $content;
     
+    if($types = rcl_get_option('pm_post_types')){
+        if(!in_array($post->post_type, $types)) return $content;
+    }
+    
     $pm = rcl_get_custom_post_meta($post->ID);
     
     if(rcl_get_option('pm_place') == 1) 

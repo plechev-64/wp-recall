@@ -53,7 +53,7 @@ function rcl_get_publics_options_page($content){
                     'childrens' => array(
                         1 => array(
                             array(
-                                'type' => 'multiselect',
+                                'type' => 'checkbox',
                                 'slug' => 'post_types_authbox',
                                 'title' => __('Типы записей для вывода блока автора','wp-recall'),
                                 'values' => $types,
@@ -199,6 +199,13 @@ function rcl_get_publics_options_page($content){
                                 'slug' => 'pm_place',
                                 'title' => __('Output fields location','wp-recall'),
                                 'values' => array(__('Above publication content','wp-recall'),__('On content recording','wp-recall'))
+                            ),
+                            array(
+                                'type' => 'checkbox',
+                                'slug' => 'pm_post_types',
+                                'title' => __('Типы записей для вывода произвольных полей','wp-recall'),
+                                'values' => $types,
+                                'notice' => __('Укажите типы записей, где будут выводится значения произвольных полей. Если ничего не указано, то выводятся везде.','wp-recall')
                             )
                         )
                     )
