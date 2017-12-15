@@ -129,13 +129,13 @@ class PrimeQuery{
             
             $this->setup_page_data();
             
-            $this->init_child_items();
+            $this->setup_child_items();
 
-            $this->add_forums_data_in_home();
+            $this->setup_forums_data_in_home();
             
-            $this->add_child_forums();
+            $this->setup_child_forums();
             
-            $this->init_canonical_url();
+            $this->setup_canonical_url();
 
             $this->setup_last_items();
             
@@ -432,7 +432,7 @@ class PrimeQuery{
         
     }
 
-    function init_child_items(){
+    function setup_child_items(){
 
         $args = $this->get_args_child_items();
         
@@ -518,7 +518,7 @@ class PrimeQuery{
         
     }
 
-    function add_forums_data_in_home(){
+    function setup_forums_data_in_home(){
 
         if(!pfm_get_option('view-forums-home')) return false;
         
@@ -575,7 +575,7 @@ class PrimeQuery{
 
     }
     
-    function add_child_forums(){
+    function setup_child_forums(){
 
         if(!$this->is_forum) return false;
 
@@ -777,7 +777,7 @@ class PrimeQuery{
         return false;
     }
 
-    function init_canonical_url(){
+    function setup_canonical_url(){
         
         $url = false;
 
