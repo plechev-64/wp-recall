@@ -376,6 +376,46 @@ function rcl_delete_file_cache($string){
     $rcl_cache->delete_file();
 }
 
+function rcl_cache_get($string){
+    
+    $cache = new Rcl_Cache();
+        
+    if($cache->is_cache){
+
+        $file = $cache->get_file($string);
+
+        if(!$file->need_update){
+            
+            return $cache->get_cache();
+
+        }
+        
+    }
+    
+    return false;
+    
+}
+
+function rcl_cache_add( $string, $content ){
+    
+    $cache = new Rcl_Cache();
+        
+    if($cache->is_cache){
+
+        $file = $cache->get_file($string);
+
+        if($file->need_update){
+            
+            return $cache->update_cache($content);
+
+        }
+        
+    }
+    
+    return false;
+    
+}
+
 //кроп изображений
 function rcl_crop($filesource,$width,$height,$file){
        

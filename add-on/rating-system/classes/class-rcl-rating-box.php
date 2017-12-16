@@ -104,6 +104,8 @@ class Rcl_Rating_Box {
         $this->user_can = apply_filters('rcl_rating_user_can', $this->user_can, $data);
         
         $this->buttons = apply_filters('rcl_rating_buttons', $this->buttons, $data);
+        
+        $this->total_rating = $this->get_total();
 
     }
     
@@ -173,8 +175,6 @@ class Rcl_Rating_Box {
         if(!$this->rating_type_exist($this->rating_type)) return false;
         
         if($this->rating_none) return false;
-        
-        $this->total_rating = $this->get_total();
 
         return $this->box_content();
         

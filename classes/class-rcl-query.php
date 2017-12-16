@@ -369,6 +369,13 @@ class Rcl_Query {
         
         $query = $this->get_query();
         
+        if(isset($this->args['cache'])){
+            $cachekey = json_encode($query);
+            $cache = wp_cache_get( $cachekey );
+            if ( $cache )
+                return $cache;
+        }
+        
         $return_as = (isset($query['return_as']))? $query['return_as']: false;     
 
         $sql = $this->get_sql($query);
@@ -398,6 +405,9 @@ class Rcl_Query {
 
         $data = wp_unslash($data);
         
+        if(isset($this->args['cache']))
+            wp_cache_add( $cachekey, $data );
+
         return $data;
     }
     
