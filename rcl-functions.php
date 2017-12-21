@@ -376,11 +376,11 @@ function rcl_delete_file_cache($string){
     $rcl_cache->delete_file();
 }
 
-function rcl_cache_get($string){
+function rcl_cache_get($string, $force = false){
     
     $cache = new Rcl_Cache();
         
-    if($cache->is_cache){
+    if($cache->is_cache || $force){
 
         $file = $cache->get_file($string);
 
@@ -396,11 +396,11 @@ function rcl_cache_get($string){
     
 }
 
-function rcl_cache_add( $string, $content ){
+function rcl_cache_add( $string, $content, $force = false ){
     
     $cache = new Rcl_Cache();
         
-    if($cache->is_cache){
+    if($cache->is_cache || $force){
 
         $file = $cache->get_file($string);
 

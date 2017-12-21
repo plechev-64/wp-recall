@@ -9,7 +9,6 @@
 class Rcl_Query {
     
     public $args = array();
-    public $fields = array();
     public $query = array(
             'table' => array(),
             'select' => array(),

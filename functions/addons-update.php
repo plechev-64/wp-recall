@@ -133,7 +133,13 @@ function rcl_update_addon(){
 
     $addon = $_POST['addon'];
     $need_update = get_option('rcl_addons_need_update');
-    if(!isset($need_update[$addon])) return false;
+    if(!isset($need_update[$addon])){
+        wp_send_json(array('error'=>__('Дополнение не требует обновления.','wp-recall')));
+    }
+    
+    if(!class_exists('ZipArchive')){
+        wp_send_json(array('error'=>__('Обновление невозможно! Не определен класс ZipArchive.','wp-recall')));
+    }
 
     $activeaddons = get_site_option('rcl_active_addons');
 

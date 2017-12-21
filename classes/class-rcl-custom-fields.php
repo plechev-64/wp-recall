@@ -819,8 +819,8 @@ add_action('delete_attachment','rcl_delete_file_meta');
 function rcl_delete_file_meta($post_id){
     $post = get_post($post_id);
     $slug = explode('-',$post->post_name);
-    if($post->post_parent) delete_post_meta($post->post_parent,$slug,$post_id);
-    else delete_user_meta($post->post_author,$slug,$post_id);
+    if($post->post_parent) delete_post_meta($post->post_parent,$slug[0],$post_id);
+    else delete_user_meta($post->post_author,$slug[0],$post_id);
 }
 
 add_action('wp','rcl_delete_file_notice');
