@@ -224,7 +224,7 @@ class Rcl_Options extends Rcl_Custom_Fields{
         if(isset($field['group'])){
             $name = $this->nameArray.'['.$field['group'].']['.$field['slug'].']';
         }else{
-            $name = $this->nameArray.'['.$field['slug'].']';
+            $name = isset($field['slug'])? $this->nameArray.'['.$field['slug'].']': $this->nameArray.'[]';
         }
         
         return $name;

@@ -242,15 +242,14 @@ function rcl_add_data_rating_comments($comments){
             
         }
     }
-
-    foreach($comments as $comment){
-        $comment->rating_author = (isset($rt_authors[$comment->user_id]))? $rt_authors[$comment->user_id]: 0;
-        $comment->user_vote = (isset($user_votes[$comment->comment_ID]))? $user_votes[$comment->comment_ID]: 0;
-        $comment->rating_total = (isset($rt_comments[$comment->comment_ID]))? $rt_comments[$comment->comment_ID]: 0;
-        $comment->rating_votes = (isset($rt_values[$comment->comment_ID]))? $rt_values[$comment->comment_ID]: 0;
+    
+    foreach($comments as $k => $comment){
+        $comments[$k]->rating_author = (isset($rt_authors[$comment->user_id]))? $rt_authors[$comment->user_id]: 0;
+        $comments[$k]->user_vote = (isset($user_votes[$comment->comment_ID]))? $user_votes[$comment->comment_ID]: 0;
+        $comments[$k]->rating_total = (isset($rt_comments[$comment->comment_ID]))? $rt_comments[$comment->comment_ID]: 0;
+        $comments[$k]->rating_votes = (isset($rt_values[$comment->comment_ID]))? $rt_values[$comment->comment_ID]: 0;
     }
-    
-    
+
     return $comments;
 }
 
@@ -299,7 +298,7 @@ function rcl_format_value($value = 0){
     if($cnt>4){
         
         $th = $cnt-3;
-        $value = substr($value, 0, $th).'k';//1452365 - 1452k
+        $value = substr($value, 0, $th).'K';//1452365 - 1452k
         
     }else{
         

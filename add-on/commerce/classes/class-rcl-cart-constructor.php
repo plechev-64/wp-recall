@@ -133,7 +133,7 @@ class Rcl_Cart_Constructor {
             
         }
         
-        $this->fields = array_merge($fields,$this->fields);
+        $this->fields = $this->fields? array_merge($fields,$this->fields): $fields;
 
     }
     

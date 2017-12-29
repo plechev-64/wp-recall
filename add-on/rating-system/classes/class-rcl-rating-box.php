@@ -313,16 +313,16 @@ class Rcl_Rating_Box {
     
     function is_comment(){
         global $comment;
-        
+
         if($this->rating_type != 'comment') 
             return false;
         
-        if(!$comment || !is_object($comment)) 
+        if(!$comment || !is_object($comment) || !isset($comment->rating_total)) 
             return false;
         
         if($this->object_id != $comment->comment_ID)
             return false;
-        
+
         return true;
     }
     

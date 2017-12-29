@@ -6,8 +6,6 @@ jQuery(document).ready(function($) {
     
         rcl_preloader_show(form);
 
-        var dataString = 'action=pfm_ajax_manager_update_data&' + form.serialize();
-        
         rcl_ajax({
             data: 'action=pfm_ajax_manager_update_data&' + form.serialize(), 
             success: function(result){

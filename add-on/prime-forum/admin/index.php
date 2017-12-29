@@ -259,6 +259,16 @@ function pfm_page_options(){
                 __('Disabled','wp-recall'),
                 __('Enabled','wp-recall')
             )
+        ),
+        array(
+            'type' => 'select',
+            'slug' => 'author-notes',
+            'title' => __('Уведомления автору темы о новых ответах','wp-recall'),
+            'values' => array(
+                __('Disabled','wp-recall'),
+                __('Enabled','wp-recall')
+            ),
+            'notice' => __('Уведомление высылается на каждое новое сообщение в теме только когда автор темы не находится на форуме','wp-recall')
         )
     );
     

@@ -204,6 +204,8 @@ function pfm_update_post_author_count($post_id){
 add_action('pfm_add_post','pfm_send_mail_topic_author',10);
 function pfm_send_mail_topic_author($post_id){
     
+    if(!pfm_get_option('author-notes')) return false;
+    
     $post = pfm_get_post($post_id);    
     $topic = pfm_get_topic($post->topic_id);
 

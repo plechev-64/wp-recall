@@ -577,7 +577,7 @@ function rcl_ajax(prop){
             prop.data.ajax_nonce = Rcl.nonce;
         }
     }
-
+    
     jQuery.ajax({
         type: 'POST', 
         data: prop.data, 
