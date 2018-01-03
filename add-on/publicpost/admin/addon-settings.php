@@ -171,7 +171,8 @@ function rcl_get_publics_options_page($content){
                         'values' => array(
                             10  => __('Administrators','wp-recall'),
                             7   => __('Editors','wp-recall'),
-                            2   => __('Authors','wp-recall')
+                            2   => __('Authors','wp-recall'),
+                            1   => __('Subscriber','wp-recall')
                         )
                     ),
                     array(
