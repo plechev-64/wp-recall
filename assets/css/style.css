@@ -809,6 +809,10 @@ div.ssi-backdrop {
     background: #e9e9e9;
     box-shadow: 0 0 1px 1px #aaa;
 }
+.ssi-modalOuter .ssi-modalContent {
+    max-height: 600px;
+    overflow-y: auto;
+}
 /* END ssi-modal */
 
 /* START checkbox-radio stilization */
