@@ -107,7 +107,7 @@ jQuery(function($){
             url: ajaxurl,
             success: function(data){
                 if(data['success']==addon){					
-                    $('#'+addon+'-update .update-message').toggleClass('updating-message updated-message').html('Успешно обновлено!');				
+                    $('#'+addon+'-update .update-message').toggleClass('updating-message updated-message').html('Успешно обновлен!');				
                 }
                 if(data['error']){
                     
@@ -136,8 +136,106 @@ jQuery(function($){
         rcl_close_notice(jQuery(this).parent());
         return false;
     });
+    
+    jQuery('body').on('click','#rcl-addon-details .sections-menu .no-active-section',function(){
+        var li = jQuery(this);
+        
+        li.parent().find('.active-section').each(function(){
+            var tab = jQuery(this).data('tab');
+            jQuery(this).removeClass('active-section');
+            jQuery(this).addClass('no-active-section');
+            
+            var box = jQuery('#rcl-addon-details .section-content [data-box="'+tab+'"]');
+            
+            box.removeClass('active-box');
+            box.addClass('no-active-box');
+        });
+        
+        var tab = li.data('tab');
+        
+        li.removeClass('no-active-section');
+        li.addClass('active-section');
+        
+        var box = jQuery('#rcl-addon-details .section-content [data-box="'+tab+'"]');
+        
+        box.removeClass('no-active-box');
+        box.addClass('active-box');
+        
+        return false;
+        
+    });
 
 });
+
+function rcl_get_details_addon(props,e){
+    
+    rcl_preloader_show(jQuery(e).parents('.plugin-card'));
+    
+    props.action = 'rcl_get_details_addon';
+    
+    rcl_ajax({
+        data: props, 
+        success: function(data){
+
+            ssi_modal.show({
+                className: 'rcl-dialog-tab rcl-addon-details',
+                sizeClass: 'medium',
+                title: data.title,
+                buttons: [{
+                    label: Rcl.local.close,
+                    closeAfter: true
+                }],
+                content: data.content
+            });
+
+        }
+    });
+    
+    return false;
+    
+}
+
+function rcl_update_addon(props,e){
+    
+    var button = jQuery(e);
+    
+    if(button.hasClass("updating-message") || button.hasClass("updated-message")) return false;
+
+    button.addClass('updating-message');
+    
+    var dataString = 'action=rcl_update_addon&addon='+props.slug;
+    jQuery.ajax({
+        type: 'POST',
+        data: dataString,
+        dataType: 'json',
+        url: ajaxurl,
+        success: function(data){
+            if(data['success']==props.slug){					
+                button.addClass('button-disabled').toggleClass('updating-message updated-message').html('Обновлен!');				
+            }
+            if(data['error']){
+
+                button.removeClass('updating-message');
+
+                var ssiOptions = {
+                    className: 'rcl-dialog-tab rcl-update-error',
+                    sizeClass: 'auto',
+                    title: Rcl.local.error,
+                    buttons: [{
+                        label: Rcl.local.close,
+                        closeAfter: true
+                    }],
+                    content: data['error']
+                };
+
+                ssi_modal.show(ssiOptions);
+
+            }
+        } 
+    });	  	
+    return false;
+    
+}
 
 function rcl_update_history_url(url){
 

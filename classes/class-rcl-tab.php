@@ -80,7 +80,7 @@ class Rcl_Tab{
         global $rcl_tab;
 
         $subtabs = apply_filters('rcl_subtabs',$this->content,$this->id);
-    
+        
         require_once 'class-rcl-sub-tabs.php';
 
         $subtab = new Rcl_Sub_Tabs($subtabs,$this->id);

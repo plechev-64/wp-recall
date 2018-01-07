@@ -9,7 +9,7 @@ function rcl_admin_page_rating($content){
             '_builtin' => false
         ), 'objects');
 
-    $types = array('post' => __('Records','wp-recall'));
+    $types = array('post');
 
     foreach ($post_types  as $post_type ) {
         $types[] = $post_type->name;
@@ -183,6 +183,16 @@ function rcl_admin_page_rating($content){
                         'slug' => 'rating_delete_voice',
                         'title' => __('Delete your vote','wp-recall'),
                         'values' => array(__('No','wp-recall'),__('Yes','wp-recall'))
+                    ),
+                    array(
+                        'type' => 'select',
+                        'slug' => 'rating_custom',
+                        'title' => __('Вкладка "Разное"','wp-recall'),
+                        'values' => array(
+                            __('Отключено','wp-recall'),
+                            __('Включено','wp-recall')
+                        ),
+                        'notice' => __('Если включено, то в истории рейтинга будет формироваться дополнительная вкладка "Разное", где будут выводится все изменения через незарегистрированные типы рейтинга','wp-recall')
                     )
                 )
             )

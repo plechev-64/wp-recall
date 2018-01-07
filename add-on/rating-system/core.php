@@ -376,7 +376,7 @@ function rcl_get_list_votes($args,$votes){
             $row = apply_filters('rcl_list_votes',$row,$vote);
             
             $class = ( $vote->rating_value > 0 ) ? 'fa-thumbs-o-up' : 'fa-thumbs-o-down';
-            $list .= '<li><i class="fa '.$class.'"></i> '.$row.'</li>';
+            $list .= '<li class="vote-type-'.$vote->rating_type.'"><i class="fa '.$class.'"></i> '.$row.'</li>';
         }
         
     }else{

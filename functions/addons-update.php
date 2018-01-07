@@ -128,6 +128,47 @@ function rcl_send_addons_data(){
 
 }
 
+rcl_ajax_action('rcl_get_details_addon', false);
+function rcl_get_details_addon(){
+    
+    $slug = $_POST['slug'];
+    
+    $url = RCL_SERVICE_HOST.'/products-files/api/add-ons.php'
+            . '?rcl-addon-info=get-details';
+
+    $data = array(
+        'addon' => $slug,
+        'rcl-key' => get_option('rcl-key'),
+        'rcl-version' => VER_RCL,
+        'host' => $_SERVER['SERVER_NAME']
+    );
+    
+    $response = wp_remote_post( $url, array('body' => $data) );
+
+    if ( is_wp_error( $response ) ) {
+       $error_message = $response->get_error_message();
+       echo __('Error').': '.$error_message; exit;
+    }
+
+    $result = json_decode($response['body'], true);
+
+    if(is_array($result)&&isset($result['error'])){
+        wp_send_json($result);
+    }
+    
+    $content = wpautop(
+        links_add_target(
+            str_replace(array('href="/','src="/'),array('href="https://codeseller.ru/','src="https://codeseller.ru/'),$result['content'])
+        )
+    );
+
+    wp_send_json(array(
+        'title' => $result['title'],
+        'content' => $content
+    ));
+    
+}
+
 rcl_ajax_action('rcl_update_addon', false);
 function rcl_update_addon(){
 

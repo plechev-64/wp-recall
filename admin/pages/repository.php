@@ -1,6 +1,12 @@
 <?php
 
-global $addon,$active_addons;
+global $addon,$active_addons,$need_update;
+
+rcl_dialog_scripts();
+
+wp_enqueue_style( 'rcl-admin-style', RCL_URL.'admin/assets/style.css' );
+
+$need_update = get_option('rcl_addons_need_update');
 
 $paths = array(RCL_PATH.'add-on',RCL_TAKEPATH.'add-on') ;
 
@@ -68,6 +74,25 @@ $navi = new Rcl_PageNavi('rcl-addons',$result->count,array('key'=>'paged','in_pa
 
 $content = '<h2>'.__('Repository for WP-Recall add-ons','wp-recall').'</h2>';
 
+if(isset($_POST['save-rcl-key'])){
+    if( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ){
+        update_option('rcl-key',$_POST['rcl-key']);
+        $content .= '<div id="message" class="updated"><p>'.__('Key has been saved','wp-recall').'!</p></div>';
+    }
+}
+
+$content .= '<div class="rcl-admin-service-box rcl-key-box">';
+
+$content .= '<h4>'.__('RCLKEY','wp-recall').'</h4>
+<form action="" method="post">
+    '.__('Enter RCLKEY','wp-recall').' <input type="text" name="rcl-key" value="'.get_option('rcl-key').'">
+    <input class="button" type="submit" value="'.__('Save','wp-recall').'" name="save-rcl-key">
+    '.wp_nonce_field('add-rcl-key','_wpnonce',true,false).'
+</form>
+<p class="install-help">'.__('The key is required to update the add-ons here. You can get it in your personal account online <a href="http://codeseller.ru/" target="_blank">http://codeseller.ru</a>','wp-recall').'</p>';
+
+$content .= '</div>';
+
 $content .= '<div class="wp-filter">
     <ul class="filter-links">
         <li class="plugin-install-featured"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=update" class="'.($sort == 'update'? 'current': '').'">По обновлению</a></li>
@@ -96,7 +121,7 @@ if($result->count && $result->addons){
 
     $content .= $navi->pagenavi();
 
-    $content .= '<div class="wp-list-table widefat plugin-install">
+    $content .= '<div class="wp-list-table widefat plugin-install rcl-repository-list">
         <div id="the-list">';
     foreach($result->addons as $add){
         if(!$add) continue;

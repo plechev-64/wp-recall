@@ -15,16 +15,20 @@ function rcl_get_currency_list(){
 }
 
 function rcl_get_currency($cur=false,$type=0){
+    
     $curs = rcl_get_currency_list();
+    
     $curs = apply_filters('currency_list',$curs);
+    
     if(!$cur){
-            foreach($curs as $cur => $nms){
-                    $crs[$cur] = $cur;
-            }
-            return $crs;
+        foreach($curs as $cur => $nms){
+            $crs[$cur] = $cur;
+        }
+        return $crs;
     }
 
     if(!isset($curs[$cur][$type])) return false;
+    
     return $curs[$cur][$type];
 }
 

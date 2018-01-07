@@ -321,7 +321,7 @@ class Rcl_Payment{
         
         $data = ($args)? json_encode($args): 'false';
         
-        $form .= '<div class="rcl-pay-form">';
+        $form = '<div class="rcl-pay-form">';
 
         $form .= '<div class="rcl-pay-button">'
                     . '<span class="rcl-connect-submit exist-merchant-icon">'
@@ -336,10 +336,11 @@ class Rcl_Payment{
     }
 
     function get_hiddens($args){
+        $content = '';
         foreach($args as $key=>$val){
-            $form .= "<input type=hidden name=$key value='$val'>";
+            $content .= "<input type=hidden name=$key value='$val'>";
         }
-        return $form;
+        return $content;
     }
 
 }

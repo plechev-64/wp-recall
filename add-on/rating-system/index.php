@@ -70,7 +70,11 @@ add_action('rcl_setup_tabs','rcl_rating_tab_add_types_data',10);
 function rcl_rating_tab_add_types_data(){
     global $rcl_rating_types;
     
+    $types = array();
+    
     foreach($rcl_rating_types as $type){
+        
+        $types[] = $type['rating_type'];
 
         if(!rcl_get_option('rating_user_'.$type['rating_type'])) continue;
         
@@ -91,6 +95,25 @@ function rcl_rating_tab_add_types_data(){
 
         rcl_add_sub_tab('rating',$subtab);
 
+    }
+    
+    if(rcl_get_option('rating_custom')){
+        
+        $subtab = array(
+            'id' => 'custom',
+            'name' => __('Разное','wp-recall'),
+            'icon' => 'fa-list-ul',
+            'callback' => array(
+                'name'=>'rcl_rating_get_list_votes_content',
+                'args'=>array(array(
+                    'rating_status' => 'user',
+                    'rating_type__not_in' => $types
+                ))
+            )
+        );
+
+        rcl_add_sub_tab('rating',$subtab);
+        
     }
 
 }
@@ -258,10 +281,19 @@ function rcl_rating_get_list_votes_content($args){
     
     $args['object_author'] = $user_LK;
     
-    $amount = rcl_count_rating_values(array(
-        'object_author' => $user_LK,
-        'rating_type' => $args['rating_type']
-    ));
+    $argsCount = array(
+        'object_author' => $user_LK
+    );
+    
+    if(isset($args['rating_type'])){
+        $argsCount['rating_type'] = $args['rating_type'];
+    }
+    
+    if(isset($args['rating_type__not_in'])){
+        $argsCount['rating_type__not_in'] = $args['rating_type__not_in'];
+    }
+    
+    $amount = rcl_count_rating_values($argsCount);
     
     $pagenavi = new Rcl_PageNavi('rcl-rating',$amount,array('in_page'=>50));
     

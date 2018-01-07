@@ -744,6 +744,10 @@ function rcl_download_file(){
     $file = get_post($id_file);
 
     if(!$file) wp_die(__('File does not exist on the server!','wp-recall'));
+    
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
 
     $path = get_attached_file($id_file);
 

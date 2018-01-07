@@ -21,7 +21,7 @@ class Rcl_Sub_Tabs {
     public $callback;
     
     function __construct($subtabs,$parent_id = false){
-
+        
         $this->subtabs = $subtabs;
         $this->parent_id = $parent_id;
         $this->parent_tab = rcl_get_tab($parent_id);
@@ -53,7 +53,7 @@ class Rcl_Sub_Tabs {
     }
     
     function get_submenu($master_id){
-
+        
         $content = '<div class="rcl-subtab-menu">';
 
         foreach($this->subtabs as $key=>$tab){
