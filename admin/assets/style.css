@@ -1137,6 +1137,36 @@ span.ruble-symbol{
     border-bottom: 2px solid rgb(175, 230, 255);
     overflow: auto;
 }
+.rcl-addon-details #ssi-modalWrapper {
+    overflow-y: auto;
+    height: calc(100vh - 40px);
+    overflow-x: hidden;
+}
+.rcl-addon-details #ssi-modalWindow {
+    border-radius: 0;
+    padding: 8px;
+    box-sizing: border-box;
+    border: none;
+}
+.rcl-addon-details #ssi-modalTitle {
+    font-style: normal;
+}
+.rcl-addon-details .ssi-topIcons .ssi-closeIcon {
+    padding: 8px;
+    visibility: hidden;
+}
+.rcl-addon-details .ssi-topIcons .ssi-closeIcon::after {
+    content: "\f335";
+    font: 400 32px/29px dashicons;
+    visibility: visible;
+}
+
+@media screen and (max-width:800px) {
+    .rcl-addon-details #ssi-modalWrapper {
+        width: 95%;
+        margin: 46px auto;
+    }
+}
 
 @media screen and (max-width:568px) {
     #recall.left-sidebar .title-option,
@@ -1151,6 +1181,18 @@ span.ruble-symbol{
     }
     .left-sidebar .submit-block {
         width: 100%;
+    }
+    .rcl-addon-details #ssi-modalWrapper {
+        margin: 8px auto;
+    }
+    #rcl-addon-details .details-sidebar {
+        width: 100%;
+        float: none;
+        display: flex;
+    }
+    #rcl-addon-details .details-sidebar .addon-thumbnail {
+        display: flex;
+        margin: 0 10px 0 0;
     }
 }
 

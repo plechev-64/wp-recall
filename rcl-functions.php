@@ -1220,15 +1220,19 @@ function rcl_get_tab_permalink($user_id,$tab_id,$subtab_id = false){
     return rcl_format_url(get_author_posts_url($user_id),$tab_id,$subtab_id);
 }
 
-function rcl_get_option($name, $default = false){
+function rcl_get_option($option, $default = false){
     global $rcl_options;
+    
+    $pre = apply_filters( "rcl_pre_option_{$option}", false, $option, $default );
+    
+    if ( false !== $pre ) return $pre;
     
     if(!$rcl_options)
         $rcl_options = get_option('rcl_global_options');
     
-    if(isset($rcl_options[$name])){
-        if($rcl_options[$name] || is_numeric($rcl_options[$name])){
-            return $rcl_options[$name];
+    if(isset($rcl_options[$option])){
+        if($rcl_options[$option] || is_numeric($rcl_options[$option])){
+            return $rcl_options[$option];
         }
             
     }
