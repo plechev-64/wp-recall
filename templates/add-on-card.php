@@ -1,5 +1,5 @@
-<?php global $addon,$active_addons,$need_update,$wprecall; ?>
-<div class="plugin-card plugin-card-<?php echo $addon->slug; ?>">
+<?php global $addon,$rcl_addons,$wprecall; ?>
+<div class="addon-box plugin-card plugin-card-<?php echo $addon->slug; ?>">
     <div class="plugin-card-top">
         <div class="name column-name">
             <h3>
@@ -11,9 +11,9 @@
         </div>
         <div class="action-links">
             <ul class="plugin-action-buttons">
-                <?php if(isset($need_update[$addon->slug])): ?>
+                <?php if(isset($rcl_addons[$addon->slug]) && $rcl_addons[$addon->slug]['need-update']): ?>
                     <li><a class="update-now button aria-button-if-js" data-addon="<?php echo $addon->slug; ?>" href="#" aria-label="Обновить сейчас" role="button" onclick='rcl_update_addon(<?php echo json_encode(array('slug'=>$addon->slug)); ?>,this);return false;'>Обновить</a></li>
-                <?php elseif(isset($active_addons[$addon->slug])): ?>
+                <?php elseif(isset($rcl_addons[$addon->slug])): ?>
                     <li><span class="button button-disabled" title="<?php _e('This add-on has already been installed','wp-recall') ?>"><?php _e('Installed','wp-recall') ?></span></li>
                 <?php else: ?>
                     <li><a class="button" target="_blank" data-slug="<?php echo $addon->slug; ?>" href="<?php echo $addon->add_on_uri; ?>" aria-label="<?php _e('Go to page','wp-recall') ?> <?php echo $addon->name; ?> <?php echo $addon->version; ?>" data-name="<?php echo $addon->name; ?> <?php echo $addon->version; ?>"><?php _e('Go to','wp-recall') ?></a></li>

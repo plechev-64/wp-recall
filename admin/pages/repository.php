@@ -1,6 +1,8 @@
 <?php
 
-global $addon,$active_addons,$need_update;
+global $addon,$rcl_addons;
+
+$rcl_addons = rcl_get_addons();
 
 rcl_dialog_scripts();
 

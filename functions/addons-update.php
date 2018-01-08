@@ -157,9 +157,7 @@ function rcl_get_details_addon(){
     }
     
     $content = wpautop(
-        links_add_target(
-            str_replace(array('href="/','src="/'),array('href="https://codeseller.ru/','src="https://codeseller.ru/'),$result['content'])
-        )
+        links_add_target($result['content'])
     );
 
     wp_send_json(array(

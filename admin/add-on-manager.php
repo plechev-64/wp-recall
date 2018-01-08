@@ -212,12 +212,12 @@ class Rcl_Addons_Manager extends WP_List_Table {
         if($ver>0){
             $colspan = ($hidden = count($this->column_info[1]))? 5-$hidden: 5;
             
-            echo '<tr class="plugin-update-tr '.$status.'" id="'.$item['ID'].'-update" data-slug="'.$item['ID'].'">'
+            echo '<tr class="addon-box plugin-update-tr '.$status.'" id="'.$item['ID'].'-update" data-slug="'.$item['ID'].'">'
                 . '<td colspan="'.$colspan.'" class="plugin-update colspanchange">'
                     . '<div class="update-message notice inline notice-warning notice-alt">'
                     . '<p>'
                         . __('New version available','wp-recall').' '.$this->addon['name'].' '.$this->need_update[$item['ID']]['new-version'].'. ';
-                        if(isset($this->addon['add-on-uri'])) echo ' <a href="'.$this->addon['add-on-uri'].'"  title="'.$this->addon['name'].'">'.__('view information about the version','wp-recall').'</a> или';
+                        if(isset($this->addon['add-on-uri'])) echo ' <a href="#"  onclick=\'rcl_get_details_addon('.json_encode(array('slug'=>$item['ID'])).',this);return false;\' title="'.$this->addon['name'].'">'.__('view information about the version','wp-recall').'</a> или';
                         echo ' <a class="update-add-on" data-addon="'.$item['ID'].'" href="#">'.__('update automatically','wp-recall').'</a></div>'
                     . '</p>'
                 . '</td>'

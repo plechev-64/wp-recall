@@ -67,7 +67,7 @@ echo '<div id="icon-plugins" class="icon32"><br></div>
 
 $Rcl_Addons_Manager->prepare_items(); ?>
 
-<form method="post">
+<form method="post" class="rcl-repository-list">
 <input type="hidden" name="page" value="manage-addon-recall">
 <?php
 $Rcl_Addons_Manager->search_box( 'Search by name', 'search_id' );

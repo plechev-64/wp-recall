@@ -10,6 +10,50 @@ function rcl_get_addon($addon_id){
     
 }
 
+function rcl_get_addons(){
+    global $active_addons;
+    
+    $need_update = get_option('rcl_addons_need_update');
+
+    $paths = array(RCL_PATH . 'add-on', RCL_TAKEPATH . 'add-on');
+
+    $add_ons = array();
+    
+    foreach ($paths as $path) {
+
+        $path = wp_normalize_path($path);
+
+        if (file_exists($path)) {
+            
+            $addons = scandir($path, 1);
+            
+            if(!$addons) continue;
+
+            foreach ($addons as $namedir) {
+                
+                $addon_dir = $path . '/' . $namedir;
+                
+                if (!is_dir($addon_dir) || !file_exists($addon_dir . '/index.php'))
+                    continue;
+                
+                $info_src = $addon_dir . '/info.txt';
+                
+                if (!file_exists($info_src)) 
+                    continue;
+
+                $add_ons[$namedir] = rcl_parse_addon_info(file($info_src));
+                $add_ons[$namedir]['path'] = $addon_dir;
+                $add_ons[$namedir]['status'] = (isset($active_addons[$namedir]))? 1: 0;
+                $add_ons[$namedir]['need-update'] = (isset($need_update[$namedir]))? 1: 0;
+
+            }
+        }
+    }
+    
+    return $add_ons;
+
+}
+
 //активация указанного дополнения
 function rcl_activate_addon($addon,$activate=true,$dirpath=false){
     

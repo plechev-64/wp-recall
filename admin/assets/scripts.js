@@ -169,7 +169,7 @@ jQuery(function($){
 
 function rcl_get_details_addon(props,e){
     
-    rcl_preloader_show(jQuery(e).parents('.plugin-card'));
+    rcl_preloader_show(jQuery(e).parents('.addon-box'));
     
     props.action = 'rcl_get_details_addon';
     

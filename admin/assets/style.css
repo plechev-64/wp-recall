@@ -1013,7 +1013,7 @@ span.ruble-symbol{
 .rcl-repository-list{
     
 }
-.rcl-repository-list .plugin-card{
+.rcl-repository-list .addon-box{
     overflow:hidden;
     position:relative;
 }
