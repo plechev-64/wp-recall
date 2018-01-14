@@ -2,22 +2,6 @@ var rcl_public_form = {
     required: new Array()
 };
 
-jQuery(function($){
-    jQuery.extend( wp.Uploader.prototype, {
-        success : function( attachment ){
-            if(attachment.uploadedTo) return false;
-            console.log( attachment );
-            rcl_ajax({
-                data: {
-                    action: 'rcl_save_temp_async_uploaded_thumbnail',
-                    attachment_id: attachment.id,
-                    attachment_url: attachment.attributes.url
-                }
-            });
-        }
-    });
-});
-
 jQuery(document).ready(function($) {
 
     $('.rcl-public-form #insert-media-button').click(function(e) {
@@ -64,6 +48,24 @@ jQuery(document).ready(function($) {
     });
 
 });
+
+rcl_add_action('rcl_init_public_form','rcl_setup_async_upload');
+function rcl_setup_async_upload(){
+    
+    jQuery.extend( wp.Uploader.prototype, {
+        success : function( attachment ){
+            if(attachment.uploadedTo) return false;
+            rcl_ajax({
+                data: {
+                    action: 'rcl_save_temp_async_uploaded_thumbnail',
+                    attachment_id: attachment.id,
+                    attachment_url: attachment.attributes.url
+                }
+            });
+        }
+    });
+    
+}
 
 rcl_add_action('rcl_init','rcl_init_click_post_thumbnail');
 function rcl_init_click_post_thumbnail(){
@@ -371,6 +373,8 @@ function rcl_preview_close(e){
 }
 
 function rcl_init_public_form(post){
+    
+    rcl_do_action('rcl_init_public_form',post);
     
     var post_id = post.post_id;
     var post_type = post.post_type;
