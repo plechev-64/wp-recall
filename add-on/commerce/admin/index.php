@@ -98,87 +98,262 @@ function rcl_read_exportfile(){
 
     if(!isset($_POST['_wpnonce'])||!wp_verify_nonce( $_POST['_wpnonce'], 'get-csv-file' )) return false;
 
-    $file_name = 'products.xml';
-    $file_src    = plugin_dir_path( __FILE__ ).'xml/'.$file_name;
-
-    $xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-
-    $sql_field = "ID";
-    if($_POST['post_title']==1) $sql_field .= ',post_title';
-    if($_POST['post_content']==1) $sql_field .= ',post_content';
-    if($_POST['post_excerpt']==1) $sql_field .= ',post_excerpt';
-    $sql_field .= ',post_status';
-
-    $posts = $wpdb->get_results("SELECT $sql_field FROM ".$wpdb->prefix ."posts WHERE post_type = 'products' AND post_status!='draft'");
-    $postmeta = $wpdb->get_results("SELECT meta_key FROM ".$wpdb->prefix ."postmeta GROUP BY meta_key ORDER BY meta_key");
-
-    $sql_field = explode(',',$sql_field);
-    $cnt = count($sql_field);
-
-    if($posts){
-    $xml .= "<posts>\n";
-            foreach($posts as $post){
-
-                    $xml .= "<post>\n";
-                    for($a=0;$a<$cnt;$a++){
-                            $xml .= "<".$sql_field[$a].">";
-                            if($a==0) $xml .= $post->$sql_field[$a];
-                            else $xml .= "<![CDATA[".$post->$sql_field[$a]."]]>";
-                            $xml .= "</".$sql_field[$a].">\n";
-                    }
-                    foreach ($postmeta as $key){
-                            if (strpos($key->meta_key, "goods_id") === FALSE && strpos($key->meta_key , "_") !== 0){
-                                    if($_POST[$key->meta_key]==1){
-                                            $xml .= "<".$key->meta_key.">";
-                                            $xml .= "<![CDATA[".get_post_meta($post->ID, $key->meta_key, true)."]]>";
-                                            $xml .= "</".$key->meta_key.">\n";
-                                    }
-                            }
-                    }
-
-                    $trms = array();
-                    $terms = get_the_terms( $post->ID, 'prodcat' );
-                    $xml .= "<prodcat>";
-                    if($terms){
-                            foreach($terms as $term){
-                                    $trms[] = $term->term_id;
-                            }
-                            $xml .= "<![CDATA[".implode(',',$trms)."]]>";
-                    }else{
-                            $xml .= "<![CDATA[0]]>";
-                    }
-                    $xml .= "</prodcat>\n";
-
-                    $trms = array();
-                    $terms = get_the_terms( $post->ID, 'product_tag' );
-                    $xml .= "<product_tag>";
-                    if($terms){
-                        foreach($terms as $term){
-                            $trms[] = $term->name;
-                        }
-                        $xml .= "<![CDATA[".implode(',',$trms)."]]>";
-                    }else{
-                        $xml .= "<![CDATA[0]]>";
-                    }
-                    $xml .= "</product_tag>\n";
-
-                    $xml .= "</post>\r";
-            }
-    $xml .= "</posts>";
+    $importData = array(
+        'fields' => array(
+            'ID',
+            'post_status'
+        ),
+        'taxonomies' => array(
+            'prodcat',
+            'product_tag'
+        ),
+        'meta' => array()
+    );
+    
+    if(isset($_POST['product']['fields'])){
+        
+        $importData['fields'] = array_merge($importData['fields'],$_POST['product']['fields']);
+        
     }
+    
+    if(isset($_POST['product']['meta'])){
+        
+        $importData['meta'] = $_POST['product']['meta'];
+        
+    }
+    
+    $posts = $wpdb->get_results("SELECT ".implode(',',$importData['fields'])." FROM $wpdb->posts WHERE post_type = 'products' AND post_status!='draft'");
+    
+    if(!$posts) return false;
+    
+    $xml = new DomDocument('1.0','utf-8');
+    $products = $xml->appendChild($xml->createElement('products'));
+    
+    foreach($posts as $post){
 
-    $f = fopen($file_src, 'w');
-    if(!$f)exit;
-    fwrite($f, $xml);
-    fclose($f);
+        $termData = array();
+        foreach($importData['taxonomies'] as $taxonomy){
+            $termData[$taxonomy] = get_the_terms( $post->ID, $taxonomy );
+        }
+        
+        if($importData['meta']){
+            $postmeta = $wpdb->get_results("SELECT meta_key,meta_value FROM $wpdb->postmeta WHERE post_id='$post->ID' AND meta_key IN ('".implode("','",$importData['meta'])."')");
+        
+            $metas = array();
+            foreach($postmeta as $meta){
+                $metas[$meta->meta_key] = maybe_unserialize($meta->meta_value);
+            }
+        }
+        
+        $product = $products->appendChild($xml->createElement('product'));
+        
+        foreach($importData as $k => $fields){
+            
+            if($k == 'fields'){
+                $data = $product->appendChild($xml->createElement($k));
+                foreach($fields as $field){
+                    if(isset($post->$field)){
+                        $pField = $data->appendChild($xml->createElement($field));
+                        $pField->appendChild($xml->createTextNode($post->$field));
+                    }
+                }
+
+                continue;
+            
+            }
+            
+            if($k == 'taxonomies'){
+                $data = $product->appendChild($xml->createElement($k));
+                foreach($termData as $taxonomy => $terms){
+                    if(!$terms) continue;
+                    $values = array();
+                    foreach($terms as $term) $values[] = ($taxonomy == 'prodcat')? $term->term_id: $term->name;
+                    $tax = $data->appendChild($xml->createElement($taxonomy));
+                    $tax->appendChild($xml->createTextNode(implode(',',$values)));
+                }
+
+            }
+            
+            if($k == 'meta'){
+                
+                if(!$fields) continue;
+                
+                $meta = $product->appendChild($xml->createElement('meta'));
+                
+                foreach($fields as $i => $metadata){
+            
+                    if(is_numeric($i)){
+                        $data = $meta->appendChild($xml->createElement($metadata));
+                        $data->appendChild($xml->createTextNode((isset($metas[$metadata])? $metas[$metadata]: '')));
+                        continue;
+                    }
+                    
+                    $parent = $meta->appendChild($xml->createElement($i));
+                    
+                    foreach($metadata as $metaKey){
+                        $child = $parent->appendChild($xml->createElement($metaKey));
+                        $child->appendChild($xml->createTextNode((isset($metas[$i][$metaKey])? $metas[$i][$metaKey]: '')));
+                    }
+                
+                }
+                
+            }
+            
+        }
+        
+    }
+    
+    $filename = 'products.xml';
+    $filepath = wp_normalize_path(plugin_dir_path( __FILE__ ).'xml/'.$filename);
+    
+    $xml->formatOutput = true;
+    $xml->save($filepath);
 
     header('Content-Description: File Transfer');
-    header('Content-Disposition: attachment; filename="'.$file_name.'"');
+    header('Content-Disposition: attachment; filename="'.$filename.'"');
     header('Content-Type: text/xml; charset=utf-8');
-    readfile($file_src);
+    readfile($filepath);
     exit;
     
 }
+
+function rcl_import_product($product){
+    
+    $fields = (array)$product->fields;
+    
+    $postData = array();
+    foreach($fields as $fieldName => $val){
+        $postData[$fieldName] = $val;
+    }
+
+    $postData['post_type'] = 'products';
+    
+    if($postData['ID']){
+        $postID = wp_update_post($postData);
+    }else{
+        $postData['post_author'] = 1;
+        $postID = wp_insert_post($postData);
+    }
+    
+    if(!$postID) return false;
+    
+    if($product->taxonomies){
+        $taxonomies = (array)$product->taxonomies;
+        foreach($taxonomies as $tax => $terms){
+            wp_set_post_terms( $postID, array_map('trim',explode(',',$terms)), $tax );
+        }
+    }
+    
+    $meta = (array)$product->meta;
+    
+    foreach($meta as $metaKey => $metaValue){
+        
+        if(is_object($metaValue)) $metaValue = (array)$metaValue;
+        
+        if($metaValue){
+
+            if(is_array($metaValue)){
+                
+                foreach($metaValue as $k=>$value) 
+                    if(is_object($value)) 
+                        $metaValue[$k] = array();
+                    
+            }
+            
+            update_post_meta($postID, $metaKey, $metaValue);
+            
+        }else
+            delete_post_meta($postID, $metaKey);
+        
+    }
+
+    return $postData['ID']? $postData['post_title']: true;
+    
+}
+
+rcl_ajax_action('rcl_ajax_import_products');
+function rcl_ajax_import_products(){
+    global $wpdb;
+    
+    rcl_verify_ajax_nonce();
+    
+    $path = $_POST['path'];
+    
+    $xml = simplexml_load_file($path);
+    
+    if(!$xml){
+        wp_send_json(array(
+            'error' => __('Файл не был найден!')
+        ));
+    }
+    
+    $status = $_POST['status'];
+    $page = $_POST['page'];
+    $number = $_POST['number'];
+    $count = $_POST['count']? $_POST['count']: count($xml->product); //$_POST['count'];
+    $progress = $_POST['progress'];
+    
+    $offset = ($page-1) * $number;
+    
+    $result = array(
+        'status' => 'work'
+    );
+
+    switch($status){
+        case 'work':
+            
+            $i = 0;
+            foreach($xml->product as $product){ 
+                
+                $i++;
+            
+                if($offset && $i <= $offset) continue;
+                
+                $postData = rcl_import_product($product);
+                
+                $logText = $postData === true? 'Создан новый продукт "'.$product->fields->post_title.'"': 'Обновлены данные "'.$product->fields->post_title.'"';
+                
+                $log[] = '<div>'.$i.' '.$logText.'</div>';
+                
+                if($i >= $offset + $number) break;
+                
+            }
+
+            $stepName = 'Импортировано '.$i.' из '.$count;
+            
+            $progress += 100/ceil($count/$number);
+
+            $page ++;
+
+        break;
+    }
+    
+    if($i >= $count){
+        $stepName = 'Процесс импорта завершен '.'Импортировано '.$i.' из '.$count;
+        $status = 'end';
+        unlink($path);
+    }
+
+    $result['status'] = $status;
+    $result['page'] = $page;
+    $result['count'] = $count;
+    $result['number'] = $number;
+    $result['path'] = $path;
+    
+    if(isset($progress) && $progress)
+        $result['progress'] = $progress;
+    
+    if(isset($stepName) && $stepName)
+        $result['name'] = $stepName;
+    
+    if(isset($log) && $log)
+        $result['log'] = $log;
+    
+    echo json_encode($result); exit;
+    
+}
+
+
 
 function rcl_get_chart_orders($orders){
     global $order,$chartData,$chartArgs;

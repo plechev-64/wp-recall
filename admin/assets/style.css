@@ -1038,6 +1038,10 @@ span.ruble-symbol{
     background: #fff;
     padding-right: 10px;
 }
+#rcl-addon-details .details-content ul{
+    padding-left: 20px;
+    list-style: disc;
+}
 #rcl-addon-details .details-content img{
     max-width: 100%;
 }
@@ -1067,7 +1071,7 @@ span.ruble-symbol{
     margin: 10px 0px 10px 10px;
 }
 #rcl-addon-details .details-content .inline-image{
-    display:inline-block;
+    display:inline-block!important;
 }
 #rcl-addon-details .details-content pre {
     background-color: #ffffff;
@@ -1083,6 +1087,10 @@ span.ruble-symbol{
     position: relative;
     white-space: pre;
     word-wrap: normal;
+}
+#rcl-addon-details .details-content iframe{
+    width:100%;
+    margin: 10px 0;
 }
 #rcl-addon-details .sections-content{
     margin-top: 20px;

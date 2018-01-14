@@ -179,7 +179,19 @@ class Rcl_EditPost {
         if(rcl_is_user_role($user_ID,array('administrator','editor')))
             return 'publish';
         
-        $post_status = ($moderation==1)? 'pending': 'publish';
+        if($moderation==1){
+            
+            $types = rcl_get_option('post_types_moderation');
+            
+            if($types){
+                $post_status = in_array($this->post_type,$types)? 'pending': 'publish';
+            }else{
+                $post_status = 'pending';
+            }
+            
+        }else{
+            $post_status = 'publish';
+        }
         
         $rating = rcl_get_option('rating_no_moderation');
 

@@ -2,8 +2,24 @@ var rcl_public_form = {
     required: new Array()
 };
 
+jQuery(function($){
+    jQuery.extend( wp.Uploader.prototype, {
+        success : function( attachment ){
+            if(attachment.uploadedTo) return false;
+            console.log( attachment );
+            rcl_ajax({
+                data: {
+                    action: 'rcl_save_temp_async_uploaded_thumbnail',
+                    attachment_id: attachment.id,
+                    attachment_url: attachment.attributes.url
+                }
+            });
+        }
+    });
+});
+
 jQuery(document).ready(function($) {
-    
+
     $('.rcl-public-form #insert-media-button').click(function(e) {
         
         var editor = $(this).data('editor');

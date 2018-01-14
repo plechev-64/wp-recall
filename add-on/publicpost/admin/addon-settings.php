@@ -156,7 +156,18 @@ function rcl_get_publics_options_page($content){
                     'slug' => 'moderation_public_post',
                     'title' => __('Moderation of publications','wp-recall'),
                     'values' => array(__('Publish now','wp-recall'),__('Send for moderation','wp-recall')),
-                    'notice' => __('If subject to moderation: To allow the user to see their publication before moderation has been completed, the user should be classifies as Author or higher','wp-recall')
+                    'notice' => __('If subject to moderation: To allow the user to see their publication before moderation has been completed, the user should be classifies as Author or higher','wp-recall'),
+                    'childrens' => array(
+                        1 => array(
+                            array(
+                                'type' => 'checkbox',
+                                'slug' => 'post_types_moderation',
+                                'title' => __('Тип записи','wp-recall'),
+                                'values' => $types,
+                                'notice' => __('Укажите типы записей, которые будут отправляться на модерацию. Если ничего не указано, то модерация действует для всех типов.','wp-recall')
+                            )
+                        )
+                    )
                 )
             )
         ),

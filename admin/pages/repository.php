@@ -8,18 +8,9 @@ rcl_dialog_scripts();
 
 wp_enqueue_style( 'rcl-admin-style', RCL_URL.'admin/assets/style.css' );
 
-$need_update = get_option('rcl_addons_need_update');
-
-$paths = array(RCL_PATH.'add-on',RCL_TAKEPATH.'add-on') ;
-
-foreach($paths as $path){
-    if(file_exists($path)){
-        $installs = scandir($path,1);
-        $a=0;
-        foreach($installs as $namedir){
-           $install_addons[$namedir] = 1;
-        }
-    }
+$addonIds = array();
+foreach($rcl_addons as $addonID => $addon){
+    $addonIds[] = $addonID;
 }
 
 $sort = isset($_GET['sort'])? $_GET['sort']: 'update';
@@ -45,13 +36,12 @@ if($s){
     $url .= '&s='.$s;
 }
 
-$data = array(
+$result = wp_remote_post( $url, array('body' =>  array(
     'rcl-key' => get_option('rcl-key'),
     'rcl-version' => VER_RCL,
+    'addonIds' => $sort == 'favorites'? $addonIds: false,
     'host' => $_SERVER['SERVER_NAME']
-);
-
-$result = wp_remote_post( $url, array('body' => $data) );
+)) );
 
 if ( is_wp_error( $result ) ) {
    $error_message = $result->get_error_message();
@@ -99,6 +89,7 @@ $content .= '<div class="wp-filter">
     <ul class="filter-links">
         <li class="plugin-install-featured"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=update" class="'.($sort == 'update'? 'current': '').'">По обновлению</a></li>
         <li class="plugin-install-popular"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=active-installs" class="'.($sort == 'active-installs'? 'current': '').'">По популярности</a></li>
+        <li class="plugin-install-favorites"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=favorites" class="'.($sort == 'favorites'? 'current': '').'">Рекомендации</a></li>
     </ul>
 
     <form class="search-form search-plugins" method="get">
