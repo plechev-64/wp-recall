@@ -734,14 +734,15 @@ function rcl_get_custom_fields($post_id, $post_type = false, $id_form = false){
 
 add_action('wp','rcl_download_file');
 function rcl_download_file(){
-    global $user_ID,$wpdb;
+    global $user_ID;
 
     if ( !isset( $_GET['rcl-download-file'] ) ) return false;
-    $id_file = intval(base64_decode($_GET['rcl-download-file']));
+    
+    $fileID = intval(base64_decode($_GET['rcl-download-file']));
 
-    if ( !$user_ID||!wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
+    if (!$fileID || !wp_verify_nonce( $_GET['_wpnonce'], 'user-'.$user_ID ) ) return false;
 
-    $file = get_post($id_file);
+    $file = get_post($fileID);
 
     if(!$file) wp_die(__('File does not exist on the server!','wp-recall'));
     
@@ -749,7 +750,7 @@ function rcl_download_file(){
         ob_end_clean();
     }
 
-    $path = get_attached_file($id_file);
+    $path = get_attached_file($fileID);
 
     header( 'Content-Disposition: attachment; filename="'.basename($path).'"' );
     header( "Content-Transfer-Encoding: binary");

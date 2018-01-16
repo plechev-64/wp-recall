@@ -176,8 +176,8 @@ function rcl_tab_orders(){
     if(isset($_GET['order-id'])){
 
         $tab_data['content'][] = array(
-            'id' => 'status-'.$k,
-            'name' => $name,
+            'id' => 'all-orders',
+            'name' => __('Orders','wp-recall'),
             'callback' => array(
                 'name' => 'rcl_single_order_tab',
                 'args' => array(intval($_GET['order-id']))
