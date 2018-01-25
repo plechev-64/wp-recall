@@ -208,13 +208,13 @@ class Rcl_Payments_History extends WP_List_Table {
             "SUM($tableAs.pay_amount)"
         );
         
-        $this->sum = $payments->get_data('get_var');
+        $this->sum = round($payments->get_data('get_var'),2);
         
         //$payments->reset_query();
         
         $this->total_items = $payments->count();
 
-        $this->sum_balance = $this->get_sum_balance();
+        $this->sum_balance = round($this->get_sum_balance(),2);
 
         return $items;
         

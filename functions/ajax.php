@@ -34,7 +34,7 @@ function rcl_ajax_tab(){
     
     $user_LK = intval($post->master_id);
 
-    $content = rcl_get_tab_content($post->tab_id, $post->master_id, $post->subtab_id);
+    $content = rcl_get_tab_content($post->tab_id, $post->master_id, isset($post->subtab_id)? $post->subtab_id: '');
     
     if(!$content){
         wp_send_json(array('error'=>__('Unable to obtain content of the requested tab','wp-recall')));
@@ -46,7 +46,7 @@ function rcl_ajax_tab(){
         'result' => $content,
         'post' => array(
             'tab_id' => $post->tab_id,
-            'subtab_id' => $post->subtab_id,
+            'subtab_id' => isset($post->subtab_id)? $post->subtab_id: '',
             'tab_url' => (isset($_POST['tab']))? $_POST['tab_url'].'&tab='.$_POST['tab']: $_POST['tab_url'],
             'supports' => $tab['supports'],
             'master_id' => $post->master_id

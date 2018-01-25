@@ -1317,3 +1317,8 @@ function rcl_filter_custom_tab_usermetas($content){
 
 }
 /****/
+
+function rcl_get_form($args){
+    $Form = new Rcl_Form($args);
+    return $Form->get_form();
+}

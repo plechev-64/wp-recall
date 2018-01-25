@@ -569,6 +569,10 @@ function rcl_proccess_ajax_return(result){
 }
 
 function rcl_ajax(prop){
+    
+    if(prop.data.ask){
+        if(!confirm(prop.data.ask)) return false;
+    }
       
     if(typeof Rcl != 'undefined'){
         if(typeof prop.data === 'string'){
@@ -637,5 +641,21 @@ function rcl_ajax(prop){
             
         }
     });
+    
+}
+
+function rcl_send_form_data(action,e){
+    
+    var form = jQuery(e).parents('form');
+    
+    if(e && jQuery(e).parents('.preloader-parent')){
+        rcl_preloader_show(jQuery(e).parents('.preloader-parent'));
+    }
+    
+    rcl_ajax({
+        data: form.serialize() + '&action=' + action
+    });
+    
+    
     
 }

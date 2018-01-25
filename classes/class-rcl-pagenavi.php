@@ -26,7 +26,7 @@ class Rcl_PageNavi{
         
         if(defined( 'DOING_AJAX' ) && DOING_AJAX && isset($_POST['tab_url'])){
             $post = rcl_decode_post($_POST['post']);
-            $this->current_page = $post->page;
+            $this->current_page = isset($post->page)? $post->page: false;
         }
         
         if($rcl_tab){

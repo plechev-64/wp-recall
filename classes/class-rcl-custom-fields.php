@@ -186,7 +186,7 @@ class Rcl_Custom_Fields{
         $notice = '(';
         
         if($extTypes)
-            $notice .= '<span class="allowed-types">'.__('Allowed extensions','wp-recall').': '.$field['ext-files'].'<span>. ';
+            $notice .= '<span class="allowed-types">'.__('Allowed extensions','wp-recall').': '.$field['ext-files'].'</span>. ';
         
         $notice .= __('Max size','wp-recall').': '.$size.'MB';
         
@@ -555,7 +555,7 @@ class Rcl_Custom_Fields{
         
         if(is_array($value)){
           
-            if($field['filter']){
+            if(isset($field['filter']) && $field['filter']){
                 
                 $links = array();
                 

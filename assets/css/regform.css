@@ -100,7 +100,10 @@ div.panel_lk_recall .form-tab-rcl a {
 .panel_lk_recall .form-tab-rcl input:focus:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]) {
     background-color: #EBEBEB;
     outline: none;
-	-webkit-box-shadow: 0 0 0px 1000px #EBEBEB inset !important; /* chrome banana fix */
+}
+.panel_lk_recall .form-tab-rcl textarea,
+.panel_lk_recall .form-tab-rcl input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]) {
+    -webkit-box-shadow: 0 0 0px 1000px #F2F2F2 inset !important; /* chrome banana fix */
 }
 /* END общие для полей*/
 
