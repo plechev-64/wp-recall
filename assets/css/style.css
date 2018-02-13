@@ -39,6 +39,9 @@ img.aligncenter{
     display:block;
     margin:0 auto;
 }
+body .preloader-parent{
+    position:relative;
+}
 .plugin-info{
     text-align:center;
     clear: both;
@@ -1271,6 +1274,27 @@ div.ssi-backdrop {
 }
 .rcl-form .aligncenter{
     text-align:center;
+}
+
+/*форма*/
+.rcl-form .form-field{
+    margin: 15px 0;
+}
+.rcl-form .form-field .field-title{
+    font-size: 18px;
+    line-height: 1;
+}
+.rcl-form .submit-box{
+    text-align: right;
+    background: #f3f3f3;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+.rcl-form .submit-box a{
+    font-size: 15px;
+    padding: 7px 10px;
+    display: inline-block;
 }
 
 @media screen and (max-width:360px) {

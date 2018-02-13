@@ -280,7 +280,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
         
         $message['message_id'] = $wpdb->insert_id;
         
-        do_action('rcl_chat_insert_message',$message);
+        do_action('rcl_chat_insert_message', $message, $this);
         
         $message = wp_unslash($message);
         

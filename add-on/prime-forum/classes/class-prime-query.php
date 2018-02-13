@@ -665,7 +665,8 @@ class PrimeQuery{
                 . "p.post_index,"
                 . "p.topic_id,"
                 . "p.user_id,"
-                . "t.forum_id "
+                . "t.forum_id, "
+                . "t.topic_slug "
                 . "FROM ".RCL_PREF."pforum_posts AS p "
                 . "INNER JOIN  ".RCL_PREF."pforum_topics AS t ON p.topic_id = t.topic_id "
                     . "WHERE p.post_id IN (".implode(',',$postIdx).")";

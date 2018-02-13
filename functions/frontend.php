@@ -47,7 +47,7 @@ function rcl_user_name(){
 
 function rcl_user_url(){
     global $rcl_user;
-    echo get_author_posts_url($rcl_user->ID);
+    echo get_author_posts_url($rcl_user->ID,$rcl_user->user_nicename);
 }
 
 function rcl_user_avatar($size=50){

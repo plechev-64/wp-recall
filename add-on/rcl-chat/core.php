@@ -149,6 +149,8 @@ function rcl_chat_insert_user($chat_id, $user_id, $status = 1, $activity = 1){
 function rcl_chat_delete_message($message_id){
     global $wpdb;
     
+    do_action('rcl_chat_pre_delete_message',$message_id);
+    
     $result = $wpdb->query("DELETE FROM ".RCL_PREF."chat_messages WHERE message_id='$message_id'");
     
     do_action('rcl_chat_delete_message',$message_id);
@@ -159,6 +161,18 @@ function rcl_chat_delete_message($message_id){
 function rcl_chat_get_messages($args){ 
     $messages = new Rcl_Chat_Messages_Query();
     return $messages->get_results($args);
+}
+
+function rcl_chat_count_messages($args){ 
+    $messages = new Rcl_Chat_Messages_Query();
+    return $messages->count($args);
+}
+
+function rcl_chat_get_message($message_id){ 
+    $messages = new Rcl_Chat_Messages_Query();
+    return $messages->get_row(array(
+        'message_id' => $message_id
+    ));
 }
 
 function rcl_chat_get_message_meta($message_id,$meta_key){

@@ -123,6 +123,8 @@ add_filter('the_content','rcl_concat_post_meta',10);
 function rcl_concat_post_meta($content){
     global $post;
     
+    if(doing_filter('the_excerpt')) return;
+    
     $option = rcl_get_option('pm_rcl');
     
     if(!$option)

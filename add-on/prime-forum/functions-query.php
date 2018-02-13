@@ -196,7 +196,7 @@ function pfm_the_last_post(){
     }else{
         $lastPost = $PrimeQuery->search_topic_last_post($PrimeTopic->topic_id);
     }
-
+    
     if(!$lastPost){
         echo __('not found','wp-recall'); return;
     }
@@ -204,7 +204,8 @@ function pfm_the_last_post(){
     $name = $lastPost->user_id? pfm_get_user_name($lastPost->user_id): __('Guest','wp-recall');
     
     $permalink = pfm_get_post_permalink($lastPost->post_id,array(
-        'topic_id' => $PrimeTopic->topic_id,
+        'topic_id' => $lastPost->topic_id,
+        'topic_slug' => $lastPost->topic_slug,
         'post_count' => $PrimeTopic->post_count,
         'post_index' => $lastPost->post_index
     ));

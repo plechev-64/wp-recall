@@ -571,7 +571,10 @@ function rcl_proccess_ajax_return(result){
 function rcl_ajax(prop){
     
     if(prop.data.ask){
-        if(!confirm(prop.data.ask)) return false;
+        if(!confirm(prop.data.ask)){
+            rcl_preloader_hide();
+            return false;
+        }
     }
       
     if(typeof Rcl != 'undefined'){
@@ -655,7 +658,5 @@ function rcl_send_form_data(action,e){
     rcl_ajax({
         data: form.serialize() + '&action=' + action
     });
-    
-    
-    
+  
 }

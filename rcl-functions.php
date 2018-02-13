@@ -122,6 +122,13 @@ function rcl_get_tab($tab_id){
     return isset($rcl_tabs[$tab_id])? $rcl_tabs[$tab_id]: false;
 }
 
+function rcl_get_subtab($tab_id,$subtab_id){
+    $tab = rcl_get_tab($tab_id);
+    if(!$tab) return false;
+    foreach($tab['content'] as $subtab) if($subtab['id'] == $subtab_id) return $subtab;
+    return false;
+}
+
 function rcl_get_tab_button($tab_id, $master_id){
     
     $tab = rcl_get_tab($tab_id);
@@ -547,11 +554,13 @@ function rcl_init_avatar_sizes(){
 
 }
 
-//Функция вывода своего аватара
-add_filter('get_avatar','rcl_avatar_replacement', 20, 6);
-function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt, $args){
+//указание url до загруженного изображения аватарки
+add_filter('pre_get_avatar_data','rcl_avatar_data_replacement', 20, 2);
+function rcl_avatar_data_replacement($args, $id_or_email){
     global $rcl_user;
     
+    $size = $args['size'];
+
     $user_id = 0;
     $avatar_data = false;
     
@@ -592,19 +601,14 @@ function rcl_avatar_replacement($avatar, $id_or_email, $size, $default, $alt, $a
             }
 
             if($url && file_exists(rcl_path_by_url($url))){
-                $classes = array('avatar');
-                if(isset($args['class']) && $args['class'])
-                    $classes = (is_array($args['class']))? array_merge($classes,$args['class']): array_merge($classes,array($args['class']));
-                $avatar = "<img class='".implode(' ',$classes)."' src='".$url."' alt='".$alt."' height='".$size."' width='".$size."' />";
+                $args['url'] = $url;
             }
 
         }
         
     }
 
-    if ( !empty($id_or_email->user_id)) $avatar = '<a height="'.$size.'" width="'.$size.'" href="'.get_author_posts_url($id_or_email->user_id).'">'.$avatar.'</a>';
-
-    return $avatar;
+    return $args;
 }
 
 function rcl_get_url_avatar($url_image,$user_id,$size){
@@ -1186,7 +1190,7 @@ function rcl_get_area_options(){
         'counters'  =>  get_option('rcl_fields_area-counters'),
         'actions'   =>  get_option('rcl_fields_area-actions'),
     );
-    
+
     return $areas;
 }
 
@@ -1319,6 +1323,7 @@ function rcl_filter_custom_tab_usermetas($content){
 /****/
 
 function rcl_get_form($args){
+    require_once 'classes/class-rcl-form.php';
     $Form = new Rcl_Form($args);
     return $Form->get_form();
 }

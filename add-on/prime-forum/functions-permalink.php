@@ -163,7 +163,7 @@ function pfm_get_topic_permalink($topic_id, $args = false){
             }
             
         }
-
+        
         if(!$topic_slug && !$forum_slug){
 
             $TopicQuery = new PrimeTopics();
@@ -309,7 +309,7 @@ function pfm_get_post_page_permalink($post_id, $args = false){
     
     if(!$page_id) return false;
     
-    $url = untrailingslashit(pfm_get_topic_permalink($topic_id));
+    $url = untrailingslashit(pfm_get_topic_permalink($topic_id, $args));
     
     if($page_id != 1){
         $url = pfm_add_number_page($url, $page_id);

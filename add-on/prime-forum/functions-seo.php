@@ -51,7 +51,7 @@ function pfm_print_noindex_meta_tag(){
 add_action('pfm_init','pfm_add_seo_filters',10);
 function pfm_add_seo_filters(){
     
-    add_filter('the_title','pfm_setup_page_title',30);
+    add_filter('the_title','pfm_setup_page_title',30, 2);
     add_filter('document_title_parts','pfm_replace_title',30);
     add_filter('wp_title','pfm_replace_title',30);
 
@@ -86,7 +86,11 @@ function pfm_replace_title($title){
     return $title;
 }
 
-function pfm_setup_page_title($title){
+function pfm_setup_page_title($title, $post_id){
+    
+    $post_type = get_post_type( $post_id );
+    
+    if($post_type == 'nav_menu_item') return $title;
     
     $pfmTitle = pfm_get_title_page();
     

@@ -13,7 +13,8 @@ class Rcl_Users_Query extends Rcl_Query{
                 'user_login',
                 'user_email',
                 'user_registered',
-                'display_name'
+                'display_name',
+                'user_nicename'
             )
         );
         

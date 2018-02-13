@@ -24,7 +24,8 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         $args['fields'] = array(
             'ID',
-            'display_name'
+            'display_name',
+            'user_nicename'
         );
 
         $this->set_query($args);
@@ -47,6 +48,8 @@ class Rcl_Users_List extends Rcl_Users_Query{
         }
 
         $this->add_uri['users-filter'] = $this->query['order'];
+        
+        add_filter('rcl_users',array($this,'add_avatar_data'));
 
         if($this->data('description'))
             add_filter('rcl_users',array($this,'add_descriptions'));
@@ -367,6 +370,25 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         if($descs)
             $users = $this->merge_objects($users,$descs,'description');
+
+        return $users;
+    }
+    
+    function add_avatar_data($users){
+        global $wpdb;
+
+	if(!$users) return $users;
+
+        $ids = $this->get_users_ids($users);        
+
+        $query = "SELECT meta_value AS avatar_data, user_id AS ID "
+                . "FROM $wpdb->usermeta "
+                . "WHERE user_id IN (".implode(',',$ids).") AND meta_key='rcl_avatar'";
+
+        $descs = $wpdb->get_results($query);
+
+        if($descs)
+            $users = $this->merge_objects($users,$descs,'avatar_data');
 
         return $users;
     }

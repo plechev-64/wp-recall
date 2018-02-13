@@ -79,7 +79,7 @@ function rcl_group_add_seo_filters(){
     
     if(!$wp_query->is_page || !$isGroupPage) return false;
     
-    add_filter('the_title','rcl_group_setup_page_title',30);
+    add_filter('the_title','rcl_group_setup_page_title', 30, 2);
     add_filter('document_title_parts','rcl_group_replace_title',30);
     add_filter('wp_title','rcl_group_replace_title',30);
 
@@ -96,10 +96,14 @@ function rcl_group_add_seo_filters(){
     
 }
 
-function rcl_group_replace_title($title){
+function rcl_group_replace_title($title, $post_id){
     global $rcl_group;
     
-    if(!$rcl_group) return $title;
+    $post_type = get_post_type( $post_id ); 
+
+    $forum_page = rcl_get_option('group-page','');
+    
+    if($post_type == 'nav_menu_item' || $post_id != $forum_page || !$rcl_group || !in_the_loop() ) return $title;
     
     if($rcl_group->name){
         

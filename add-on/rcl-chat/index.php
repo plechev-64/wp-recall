@@ -205,7 +205,7 @@ function rcl_get_tab_user_contacts(){
 
 function rcl_get_user_contacts($user_id,$limit){
     global $wpdb;
-
+    
     $messages = $wpdb->get_results(
             "SELECT t.* FROM ( "
             . "SELECT chat_messages.* FROM ".RCL_PREF."chat_messages AS chat_messages "
@@ -223,7 +223,7 @@ function rcl_get_user_contacts($user_id,$limit){
             . "LIMIT $limit[0],$limit[1]"
             ,
             ARRAY_A
-        );     
+        );
       
     $messages = stripslashes_deep($messages);
 
