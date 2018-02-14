@@ -93,6 +93,8 @@ function pfm_get_forum_post_user_vote($user_vote, $rating){
 add_filter('pfm_posts','pfm_add_data_rating_posts');
 function pfm_add_data_rating_posts($pfmPosts){
     global $user_ID;
+    
+    if(!rcl_exist_addon('rating-system')) return $pfmPosts;
 
     if(!$pfmPosts || !rcl_get_option('rating_forum-post')) return $pfmPosts;
 
