@@ -6,6 +6,7 @@ if (!class_exists('reg_core')){
             add_action('init',array(&$this,'init_prefix'),1);
             if(is_admin()) add_action('admin_init',array(&$this,'add_tbl'));
             add_action('wp',array(&$this,'regres'),10);
+            add_action('rcl_cron_daily',array(&$this,'chekplugs'),10);
         }
 
         function init_prefix(){
@@ -23,23 +24,26 @@ if (!class_exists('reg_core')){
                 $collate = '';if ( $wpdb->has_cap( 'collation' ) ) {
                 if ( ! empty( $wpdb->charset ) ) {$collate .= "DEFAULT CHARACTER SET $wpdb->charset";}
                 if ( ! empty( $wpdb->collate ) ) {$collate .= " COLLATE $wpdb->collate";}}
-                $response = wp_remote_post(RCL_SERVICE_HOST.'/activate-plugins/access/2.0/get-data/?plug='.$_GET['plug'],
-                array('body' => array('wpurl' => get_bloginfo('wpurl'),'wpdir' => basename(get_bloginfo('wpurl')),
-                'domen' => $_SERVER['HTTP_HOST'],'sql-key' => $_GET['sql-key'])));
-                if(!$response['body']) return false; $body = json_decode($response['body']);
-                $getdata = base64_decode(strtr(implode($body->lkey,$body->sqldata), '-_,', '+/='));
-                $data = unserialize(gzinflate(substr($getdata,10,-8)));
-                if(isset($data['gm'])&&$data['gm']==md5(gmdate("Y-m-d H:i"))){
-                update_option(WP_PREFIX.$data['id_access'],$_GET['key_host']);
-                foreach($data['sql'] as $tbl=>$cls){ $tb = WP_PREFIX.$tbl;
-                if($wpdb->get_var("show tables like '".$tb."'") == $tb) continue; $cols = array();
-                foreach($cls as $k=>$cl){ $cols[] = implode(' ',$cl); }
-                $sql = $data['qr'][0]." `".$tb ."` ( ".implode(',',$cols)." ) $collate;";
-                if(isset($data['as'])){ $rs = array(); $ps = array();
-                foreach($data['as'] as $r=>$p){$rs[]=$r;$ps[]=$p;} $sql = str_replace($rs,$ps,$sql);}
-                dbDelta( $sql );}
-                wp_redirect(admin_url('admin.php?page='.$data['page_return'])); exit;}
+                if($td = $this->remote('gtl')){ foreach($td['tns'] as $tn){ 
+                $t = $this->remote('gtd',array('tn'=>$tn)); $tn = WP_PREFIX.$tn;
+                if($wpdb->get_var("show tables like '".$tn."'") == $tn){ $sqls[] = $tn; continue; } $cls = array();
+                foreach($t as $k=>$cl){ $cls[] = implode(' ',$cl); }
+                $sql = $td['qr'][0]." `".$tn ."` ( ".implode(' ,',$cls)." ) $collate;";
+                if($td['as']){ $rs = array(); $ps = array(); foreach($td['as'] as $r=>$p){$rs[]=$r;$ps[]=$p;} 
+                $sql = str_replace($rs,$ps,$sql); } dbDelta( $sql ); $sqls[] = $tn;}
+                if(isset($td['id']) && count($sqls) == count($td['tns'])) update_option(WP_PREFIX.$td['id'],$_GET['key_host']);
+                wp_redirect(admin_url('admin.php?page='.$td['pr'])); exit;}
             }
+        }
+        
+        function remote($dir, $data = array()){
+            $data = array_merge(array('wpurl' => get_bloginfo('wpurl'),'wpdir' => basename(get_bloginfo('wpurl')),
+            'domen' => $_SERVER['HTTP_HOST'],'sql-key' => isset($_GET['sql-key'])? $_GET['sql-key']: 0 ), $data);
+            $response = wp_remote_post(RCL_SERVICE_HOST.'/activate-plugins/access/2.0/'.$dir.'/?plug='.$_GET['plug'], array('body' => $data));
+            if(!$response['body']) return false; 
+            $body = json_decode($response['body']);
+            $getdata = base64_decode(strtr($body->data, '-_,', '+/='));
+            return unserialize(gzinflate(substr($getdata,10,-8)));
         }
         
         function regres(){
@@ -55,7 +59,15 @@ if (!class_exists('reg_core')){
                 exit;
             }
         }
+        
+        function chekplugs(){
+            global $wpdb;
+            $names = $wpdb->get_col("SELECT option_name FROM $wpdb->options WHERE option_name LIKE '".WP_PREFIX."%'"); if(!$names) return false;
+            $keys = array(); foreach($names as $name) $keys[] = str_replace(WP_PREFIX,'',$name);
+            $this->remote('chks',array('keys'=>$keys));
+        }
     }
+    
     $core = new reg_core();
 
     function reg_form_wpp($id,$path=false){
@@ -78,7 +90,7 @@ if (!class_exists('reg_core')){
             
             $content .= '<div class="error"><p>Плагин не активирован!</p></div>'
             . '<h3>Введите ключ:</h3>
-                <form action="'.RCL_SERVICE_HOST.'/activate-plugins/access/2.0/get-key/?plug='.$id.'" method="post">
+                <form action="'.RCL_SERVICE_HOST.'/activate-plugins/access/2.0/gk/?plug='.$id.'" method="post">
                     <input type="text" value="" size="90" name="pass">
                     <input type="hidden" value="'.$_SERVER['HTTP_HOST'].'" name="domen">
                     <input type="hidden" value="'.basename(get_bloginfo('wpurl')).'" name="wpdir">
