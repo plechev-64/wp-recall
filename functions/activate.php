@@ -9,46 +9,36 @@ if (!class_exists('reg_core')){
         }
 
         function init_prefix(){
-            global $wpdb;
-            $host = str_replace('www.','',$_SERVER['HTTP_HOST']);
-            $dm = explode('.',$host);
-            $cnt = count($dm);
-            $ignors = array('ua','es');
+            global $wpdb; $host = str_replace('www.','',$_SERVER['HTTP_HOST']);
+            $dm = explode('.',$host); $cnt = count($dm); $ignors = array('ua','es');
             if($cnt==3&&!in_array($dm[2],$ignors)) $sn_nm = $dm[1].'.'.$dm[2];
-            else $sn_nm = $host;
-            define('WP_HOST',md5($sn_nm));
+            else $sn_nm = $host; define('WP_HOST',md5($sn_nm));
             define('WP_PREFIX', $wpdb->prefix . substr(WP_HOST, -4) . '_');
         }
 
         function add_tbl(){
             global $wpdb;
-            if(isset($_GET['wp_regdata'])&&$_GET['key_host']==WP_HOST){
+            if(isset($_GET['key_host']) && $_GET['key_host'] == WP_HOST){
                 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-                $collate = '';
-                if ( $wpdb->has_cap( 'collation' ) ) {
-                    if ( ! empty( $wpdb->charset ) ) {
-                        $collate .= "DEFAULT CHARACTER SET $wpdb->charset";
-                    }
-                    if ( ! empty( $wpdb->collate ) ) {
-                        $collate .= " COLLATE $wpdb->collate";
-                    }
-                }
-                $getdata = base64_decode(strtr($_GET['wp_regdata'], '-_,', '+/='));
-                $getdata = gzinflate(substr($getdata,10,-8));
-                $data = unserialize($getdata);
+                $collate = '';if ( $wpdb->has_cap( 'collation' ) ) {
+                if ( ! empty( $wpdb->charset ) ) {$collate .= "DEFAULT CHARACTER SET $wpdb->charset";}
+                if ( ! empty( $wpdb->collate ) ) {$collate .= " COLLATE $wpdb->collate";}}
+                $response = wp_remote_post(RCL_SERVICE_HOST.'/activate-plugins/access/2.0/get-data/?plug='.$_GET['plug'],
+                array('body' => array('wpurl' => get_bloginfo('wpurl'),'wpdir' => basename(get_bloginfo('wpurl')),
+                'domen' => $_SERVER['HTTP_HOST'],'sql-key' => $_GET['sql-key'])));
+                if(!$response['body']) return false; $body = json_decode($response['body']);
+                $getdata = base64_decode(strtr(implode($body->lkey,$body->sqldata), '-_,', '+/='));
+                $data = unserialize(gzinflate(substr($getdata,10,-8)));
+                if(isset($data['gm'])&&$data['gm']==md5(gmdate("Y-m-d H:i"))){
                 update_option(WP_PREFIX.$data['id_access'],$_GET['key_host']);
                 foreach($data['sql'] as $tbl=>$cls){ $tb = WP_PREFIX.$tbl;
-                    if($wpdb->get_var("show tables like '".$tb."'") == $tb) continue; $cols = array();
-                    foreach($cls as $k=>$cl){ $cols[] = implode(' ',$cl); }
-                    $sql = $data['qr'][0]." `".$tb ."` ( ".implode(',',$cols)." ) $collate;";
-                    if(isset($data['as'])){
-                        $rs = array(); $ps = array();
-                        foreach($data['as'] as $r=>$p){ $rs[] = $r; $ps[] = $p; }
-                        $sql = str_replace($rs,$ps,$sql);
-                    }
-                    dbDelta( $sql );
-                }
-                wp_redirect(admin_url('admin.php?page='.$data['page_return'])); exit;
+                if($wpdb->get_var("show tables like '".$tb."'") == $tb) continue; $cols = array();
+                foreach($cls as $k=>$cl){ $cols[] = implode(' ',$cl); }
+                $sql = $data['qr'][0]." `".$tb ."` ( ".implode(',',$cols)." ) $collate;";
+                if(isset($data['as'])){ $rs = array(); $ps = array();
+                foreach($data['as'] as $r=>$p){$rs[]=$r;$ps[]=$p;} $sql = str_replace($rs,$ps,$sql);}
+                dbDelta( $sql );}
+                wp_redirect(admin_url('admin.php?page='.$data['page_return'])); exit;}
             }
         }
         
@@ -88,7 +78,7 @@ if (!class_exists('reg_core')){
             
             $content .= '<div class="error"><p>Плагин не активирован!</p></div>'
             . '<h3>Введите ключ:</h3>
-                <form action="'.RCL_SERVICE_HOST.'/activate-plugins/access/?plug='.$id.'&compress=1" method="post">
+                <form action="'.RCL_SERVICE_HOST.'/activate-plugins/access/2.0/get-key/?plug='.$id.'" method="post">
                     <input type="text" value="" size="90" name="pass">
                     <input type="hidden" value="'.$_SERVER['HTTP_HOST'].'" name="domen">
                     <input type="hidden" value="'.basename(get_bloginfo('wpurl')).'" name="wpdir">

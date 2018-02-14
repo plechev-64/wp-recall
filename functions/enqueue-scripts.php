@@ -140,6 +140,8 @@ function rcl_frontend_scripts(){
 function rcl_get_localize_data(){
     global $user_ID;
     
+    if(!doing_action('wp_head')) return false;
+    
     $local = array(
         'save' => __('Save','wp-recall'),
         'close' =>__('Close','wp-recall'),

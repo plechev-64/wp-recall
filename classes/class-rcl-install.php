@@ -273,6 +273,9 @@ class RCL_Install {
             }          
 
         }
+        
+        if(!get_option('rtl_standard'))
+            update_option('rtl_standard','');
 
         update_option('rcl_global_options', $rcl_options );
         update_option('rcl_version',VER_RCL);
