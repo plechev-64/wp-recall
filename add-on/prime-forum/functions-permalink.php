@@ -134,11 +134,10 @@ function pfm_get_topic_permalink($topic_id, $args = false){
             if($PrimeTopic && $PrimeTopic->topic_id == $topic_id){
 
                 if(isset($PrimeTopic->forum_slug)){
-
+                    
                     $forum_slug = $PrimeTopic->forum_slug;
 
                 }else if($PrimeForum){
-
                     $forum_slug = $PrimeForum->forum_slug;
 
                 }else{
@@ -147,6 +146,8 @@ function pfm_get_topic_permalink($topic_id, $args = false){
 
                 }
 
+            }else if($PrimeForum && isset($args['forum_id']) && $PrimeForum->forum_id == $args['forum_id']){
+                $forum_slug = $PrimeForum->forum_slug;
             }
             
         }

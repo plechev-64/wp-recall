@@ -207,7 +207,8 @@ function pfm_the_last_post(){
         'topic_id' => $lastPost->topic_id,
         'topic_slug' => $lastPost->topic_slug,
         'post_count' => $PrimeTopic->post_count,
-        'post_index' => $lastPost->post_index
+        'post_index' => $lastPost->post_index,
+        'forum_id' => $lastPost->forum_id
     ));
     
     echo __('from','wp-recall').' '.$name.': <a href="'.$permalink.'">'

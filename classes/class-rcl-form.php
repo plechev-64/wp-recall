@@ -40,9 +40,9 @@ class Rcl_Form extends Rcl_Custom_Fields{
                     $content .= '<div id="field-'.$field['slug'].'" class="form-field rcl-option">';
 
                         if(isset($field['title'])){
-                            $content .= '<h3 class="field-title">';
+                            $content .= '<span class="field-title">';
                             $content .= $this->get_title($field).' '.$required;
-                            $content .= '</h3>';
+                            $content .= '</span>';
                         }
 
                         $content .= $this->get_input($field,$value);
