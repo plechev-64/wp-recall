@@ -362,6 +362,11 @@ class Rcl_Query {
         return $sql;
     }
     
+    function get_sql_string($args){
+        $this->set_query($args);
+        return $this->get_sql($this->get_query());
+    }
+    
     function get_data($method = 'get_results'){
         
         global $wpdb;

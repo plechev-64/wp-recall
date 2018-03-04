@@ -52,8 +52,13 @@ function rcl_print_bar_icons(){
         
             echo '<div id="'.$id_icon.'" class="rcb_icon '.$class.'">';
             
-            if(isset($icon['url'])):
-                echo '<a href="'.$icon['url'].'">';
+            if(isset($icon['url']) || isset($icon['onclick'])):
+                
+                $url = isset($icon['url'])? $icon['url']: '#';
+                $onclick = isset($icon['onclick'])? 'onclick="'.$icon['onclick'].';return false;"': '';
+            
+                echo '<a href="'.$url.'" '.$onclick.'>';
+                
             endif;
             
                 echo '<i class="fa '.$icon['icon'].'" aria-hidden="true"></i>';
@@ -65,7 +70,7 @@ function rcl_print_bar_icons(){
                 
                 echo '</span></div>';
                 
-            if(isset($icon['url'])):
+            if(isset($icon['url']) || isset($icon['onclick'])):
                 echo '</a>';
             endif;
             

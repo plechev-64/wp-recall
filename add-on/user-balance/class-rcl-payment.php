@@ -242,7 +242,8 @@ class Rcl_Payment{
                         'pay_summ' => $this->pay_summ,
                         'pay_callback' => $this->pay_callback,
                         'baggage_data' => $this->baggage_data,
-                        'description' => $description
+                        'description' => $description,
+                        'submit' => $this->submit_value
                     )
                 );
                 
@@ -317,7 +318,7 @@ class Rcl_Payment{
     function personal_account_pay_form($pay_id, $args = array()){
         
         $pay_callback = (isset($args['pay_callback']))? $args['pay_callback']: 'rcl_pay_order_user_balance';
-        $submit = (isset($args['submit']))? $args['submit']: __('Pay from personal account','wp-recall');
+        $submit = (isset($args['submit']) && $args['submit'])? $args['submit']: __('Pay from personal account','wp-recall');
         
         $data = ($args)? json_encode($args): 'false';
         

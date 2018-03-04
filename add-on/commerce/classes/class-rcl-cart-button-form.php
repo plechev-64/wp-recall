@@ -180,6 +180,13 @@ class Rcl_Cart_Button_Form{
             
             $variation = $PrVars->get_variation($vars['slug']);
             
+            /* перезаписываем доступные варианты вариации вариантами товара */
+            $variation['values'] = array();
+            foreach($vars['values'] as $val){
+                $variation['values'][] = $val['name'];
+            }
+            /**/
+                 
             $variation['value_in_key'] = true;
 
             $variation['slug'] = 'cart[variations]['.$variation['slug'].']';

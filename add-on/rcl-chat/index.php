@@ -353,6 +353,8 @@ add_action('wp_footer','rcl_get_last_chats_box',10);
 function rcl_get_last_chats_box(){
     global $user_ID,$user_LK,$rcl_options;
     
+    if(!$user_ID) return false;
+    
     if(!isset($rcl_options['chat']['contact_panel'])||!$rcl_options['chat']['contact_panel']) return false;
 
     $messages = rcl_get_user_contacts($user_ID,array(0,5));

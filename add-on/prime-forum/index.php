@@ -39,8 +39,12 @@ if (!is_admin()):
 endif;
 
 function pfm_scripts(){
+    
     rcl_enqueue_style('pfm-style', rcl_addon_url('style.css', __FILE__));
-    rcl_enqueue_script('pfm-scripts', rcl_addon_url('js/scripts.js', __FILE__));
+    
+    if(is_prime_forum())
+        rcl_enqueue_script('pfm-scripts', rcl_addon_url('js/scripts.js', __FILE__));
+    
 }
 
 add_action('init','pfm_init_tab',10);

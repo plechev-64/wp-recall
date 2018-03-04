@@ -177,7 +177,7 @@ function rcl_setup_tabs(){
             if(!isset($rcl_tab['content'][0]['name']))
                 $rcl_tabs[$k]['content'][0]['name'] = $rcl_tab['name'];
 
-            if(!isset($tab_data['content'][0]['icon']))
+            if(!isset($rcl_tab['content'][0]['icon']))
                 $rcl_tabs[$k]['content'][0]['icon'] = $rcl_tab['icon'];
         }
     

@@ -5,11 +5,10 @@ function pfm_add_ajax_action($action,$functionName){
     $PrimeActions[$action] = $functionName;
 }
 
-function pfm_get_manager($actions,$itemType,$itemID = false){
+function pfm_get_manager($actions, $itemType, $itemID = false){
     
-    $content = '<div class="'.$itemType.'-manager prime-manager">';
-        $content .= '<ul>';
-
+    $items = array();
+    
     foreach($actions as $action => $options){
         
         $args = array(
@@ -24,12 +23,21 @@ function pfm_get_manager($actions,$itemType,$itemID = false){
             $args = array_merge($args, $options['options']);
         }
 
-        $content .= '<li>';
-        $content .= '<a href="#" title="'.$options['name'].'" class="topic-action action-'.$action.'" onclick=\'pfm_ajax_action('.json_encode($args).');return false;\'>';
-        $content .= (isset($options['icon']))? '<i class="fa '.$options['icon'].'" aria-hidden="true"></i>': $options['name'];
-        $content .= '</a>';
-        $content .= '</li>';
+        
+        $item = '<a href="#" title="'.$options['name'].'" class="topic-action action-'.$action.'" onclick=\'pfm_ajax_action('.json_encode($args).');return false;\'>';
+        $item .= (isset($options['icon']))? '<i class="fa '.$options['icon'].'" aria-hidden="true"></i>': $options['name'];
+        $item .= '</a>';
+        
+        $items[] = $item;
+        
     }
+    
+    $items = apply_filters('pfm_manager_items', $items, $itemType, $itemID);
+    
+    $content = '<div class="'.$itemType.'-manager prime-manager">';
+        $content .= '<ul>';
+
+        $content .= '<li>'.implode('<li>',$items).'</li>';
     
         $content .= '</ul>';
     $content .= '</div>';

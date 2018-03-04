@@ -18,8 +18,12 @@ function rcl_user_account_scripts(){
 add_filter('rcl_init_js_variables','rcl_init_js_account_variables',10);
 function rcl_init_js_account_variables($data){
     global $user_ID;
+    
     $data['account']['currency'] = rcl_get_primary_currency(1);
-    $data['account']['balance'] = rcl_get_user_balance($user_ID);        
+    
+    if($user_ID)
+        $data['account']['balance'] = rcl_get_user_balance($user_ID); 
+    
     return $data;
 }
 

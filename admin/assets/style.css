@@ -1169,6 +1169,31 @@ span.ruble-symbol{
     visibility: visible;
 }
 
+/*форма*/
+.rcl-form .form-field{
+    margin: 15px 0;
+}
+.rcl-form .form-field .field-title{
+    font-size: 18px;
+    line-height: 1;
+    display:block;
+    font-weight:bold;
+    margin-bottom: 5px;
+}
+.rcl-form .submit-box{
+    text-align: right;
+    background: #eee;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+.rcl-form .submit-box a,
+.rcl-form .submit-box input[type="submit"]{
+    font-size: 15px;
+    padding: 7px 10px;
+    display: inline-block;
+}
+
 @media screen and (max-width:800px) {
     .rcl-addon-details #ssi-modalWrapper {
         width: 95%;

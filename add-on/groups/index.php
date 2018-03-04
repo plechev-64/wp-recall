@@ -96,14 +96,10 @@ function rcl_group_add_seo_filters(){
     
 }
 
-function rcl_group_replace_title($title, $post_id){
+function rcl_group_replace_title($title){
     global $rcl_group;
     
-    $post_type = get_post_type( $post_id ); 
-
-    $forum_page = rcl_get_option('group-page','');
-    
-    if($post_type == 'nav_menu_item' || $post_id != $forum_page || !$rcl_group || !in_the_loop() ) return $title;
+    if(!$rcl_group) return $title;
     
     if($rcl_group->name){
         
@@ -117,10 +113,14 @@ function rcl_group_replace_title($title, $post_id){
     return $title;
 }
 
-function rcl_group_setup_page_title($title){
+function rcl_group_setup_page_title($title, $post_id){
     global $rcl_group;
     
-    if(!$rcl_group || !in_the_loop())return $title;
+    $post_type = get_post_type( $post_id ); 
+
+    $forum_page = rcl_get_option('group-page','');
+    
+    if($post_type == 'nav_menu_item' || $post_id != $forum_page || !$rcl_group || !in_the_loop() ) return $title;
 
     $groupName = $rcl_group->name;
     

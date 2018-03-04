@@ -408,7 +408,7 @@ function rcl_init_click_float_window(){
 
 rcl_add_action('rcl_init','rcl_init_loginform_shift_tabs');
 function rcl_init_loginform_shift_tabs(){
-    jQuery('.form-tab-rcl .link-tab-rcl').click(function(){
+    jQuery('body').on('click','.form-tab-rcl .link-tab-rcl',function(){
         jQuery('.form-tab-rcl').hide();
         
         if(jQuery(this).hasClass('link-login-rcl')) 

@@ -358,8 +358,10 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
                     . '<form><input type="hidden" name="chat[token]" value="'.$this->chat_token.'"></form>';
             return $content;
         }
+        
+        $content = apply_filters('rcl_chat_before_form', '', $this->chat);
 
-        $content = '<form action="" method="post">'
+        $content .= '<form action="" method="post">'
                     . '<div class="chat-form-media">'
                     . rcl_get_smiles('chat-area-'.$this->chat_id);
 
@@ -393,6 +395,8 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
                 $content .= '<div class="chat-preloader-file"></div>'
                     . '<a href="#" class="recall-button chat-submit" onclick="rcl_chat_add_message(this);return false;"><i class="fa fa-reply"></i> '.__('Send','wp-recall').'</a>'
                 . '</form>';
+                
+                $content .= apply_filters('rcl_chat_after_form', '', $this->chat);
 
         return $content;
     }

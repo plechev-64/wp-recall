@@ -78,6 +78,17 @@ class Rcl_Product_Variations {
         
         if(!$productVars) return false;
         
+        /* удаляем вариации товара, в которых не указана стоимость */
+        foreach($productVars as $k => $prVar){
+            $values = array();
+            foreach($prVar['values'] as $x => $var){
+                if($var['price'] === '') continue;
+                $values[] = $var;
+            }
+            $productVars[$k]['values'] = $values;
+        }
+        /**/
+        
         $varsData = array();
 
         foreach($this->variations as $variation){
