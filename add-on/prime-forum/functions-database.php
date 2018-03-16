@@ -414,7 +414,7 @@ function pfm_add_topic($args, $postdata = array()){
     
     if(!isset($args['topic_slug']) || !$args['topic_slug']){
         
-        $args['topic_slug'] = str_replace(array('_',' '),'-',rcl_sanitize_string(trim($args['topic_name'],'\s\.')));
+        $args['topic_slug'] = substr(str_replace(array('_',' '),'-',rcl_sanitize_string(trim($args['topic_name'],'\s\.'))),0,70);
         
     }else{
         

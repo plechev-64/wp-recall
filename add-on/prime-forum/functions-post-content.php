@@ -115,10 +115,10 @@ function pfm_filter_urls($content){
         
         $oembedSupport = (pfm_get_option('support-oembed') && function_exists('wp_oembed_get'))? true: false;
         
-        $sortStrings = $urls[2];
+        $sortStrings = array_unique($urls[2]);
         
         usort($sortStrings, 'pfm_sort_array_by_string');
-        
+
         $replace = array();
         
         foreach( $sortStrings as $k => $url ){

@@ -1,4 +1,4 @@
-var rcl_chat_last_activity = 0; //последняя запрос новых сообщений
+var rcl_chat_last_activity = {}; //последняя запрос новых сообщений
 var rcl_chat_beat = new Array; //массив открытых чатов
 var rcl_chat_write = 0; //юзер пишет
 var rcl_chat_contact_token = 0; //открытый контакт
@@ -96,6 +96,7 @@ function rcl_init_chat(chat){
         }
 
         rcl_chat_max_words = chat.max_words;
+        rcl_chat_last_activity[chat.token] = chat.open_chat;
         
         var i = rcl_chat_beat.length;
         rcl_chat_beat[i] = chat.token;
@@ -161,7 +162,10 @@ function rcl_chat_add_new_message(form){
     rcl_preloader_show('.rcl-chat .chat-form > form');
 
     rcl_ajax({
-        data: 'action=rcl_chat_add_message&' + form.serialize() + '&office_ID='+Rcl.office_ID,
+        data: 'action=rcl_chat_add_message&' 
+                + form.serialize() 
+                + '&office_ID=' + Rcl.office_ID 
+                + '&last_activity=' + rcl_chat_last_activity[token],
         success: function(data){
 
             if(data['content']){
@@ -173,6 +177,12 @@ function rcl_chat_add_new_message(form){
 
                 rcl_chat_scroll_bottom(token);
                 rcl_chat_counter_reset(form);
+                
+                if(data.new_messages){
+                    jQuery.ionSound.play(rcl_chat_sound.sounds[0]);
+                }
+                
+                rcl_chat_last_activity[token] = data.last_activity;
 
                 rcl_do_action('rcl_chat_add_message',{token:token,result:data});
             }
@@ -490,8 +500,9 @@ function rcl_chat_beat_core(chat){
         action:     'rcl_chat_get_new_messages',
         success:    'rcl_chat_beat_success',
         data:{
-            last_activity: rcl_chat_last_activity,
+            last_activity: rcl_chat_last_activity[chat.token],
             token: chat.token,
+            update_activity: 1,
             user_write: (chat_form.find('textarea').val())? 1: 0
         }
     };
@@ -516,7 +527,7 @@ function rcl_chat_beat_success(data){
 
     if(data['success']){
 
-        rcl_chat_last_activity = data['current_time'];
+        rcl_chat_last_activity[data.token] = data['current_time'];
 
         if(data['users']){
             jQuery.each(data['users'], function( index, data ) {
@@ -536,5 +547,20 @@ function rcl_chat_beat_success(data){
     }
 
     rcl_do_action('rcl_chat_get_messages',{token:data.token,result:data});
+    
+}
+
+function rcl_get_chat_window(e, user_id){
+    
+    if(e && jQuery(e).parents('.preloader-parent')){
+        rcl_preloader_show(jQuery(e).parents('.preloader-parent'));
+    }
+    
+    rcl_ajax({
+        data: {
+            action: 'rcl_get_ajax_chat_window',
+            user_id: user_id
+        }
+    });
     
 }

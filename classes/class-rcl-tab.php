@@ -6,6 +6,7 @@ class Rcl_Tab{
     public $name;//имя вкладки
     public $icon = 'fa-cog';
     public $public = 0;
+    public $hidden = 0;
     public $order = 10;
     public $first = false;
     public $counter = null;
@@ -44,7 +45,7 @@ class Rcl_Tab{
 
     function register_tab(){
         add_filter('rcl_content_area_tabs',array($this,'print_tab'),$this->order);
-        if($this->output)
+        if($this->output && !$this->hidden)
             add_filter('rcl_content_area_'.$this->output,array($this,'print_tab_button'),$this->order);
     }
     

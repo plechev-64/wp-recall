@@ -11,7 +11,7 @@
         </div>
         <div class="action-links">
             <ul class="plugin-action-buttons">
-                <?php if(isset($rcl_addons[$addon->slug]) && $rcl_addons[$addon->slug]['need-update']): ?>
+                <?php if(isset($rcl_addons[$addon->slug]) && version_compare($addon->version,$rcl_addons[$addon->slug]['version']) > 0): ?>
                     <li><a class="update-now button aria-button-if-js" data-addon="<?php echo $addon->slug; ?>" href="#" aria-label="Обновить сейчас" role="button" onclick='rcl_update_addon(<?php echo json_encode(array('slug'=>$addon->slug)); ?>,this);return false;'>Обновить</a></li>
                 <?php elseif(isset($rcl_addons[$addon->slug])): ?>
                     <li><span class="button button-disabled" title="<?php _e('This add-on has already been installed','wp-recall') ?>"><?php _e('Installed','wp-recall') ?></span></li>

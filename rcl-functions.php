@@ -184,7 +184,7 @@ function rcl_setup_tabs(){
     }
     
     $rcl_tabs = apply_filters('rcl_tabs',$rcl_tabs);
-      
+
 }
 
 //регистрируем вкладки для вывода в личном кабинете
@@ -228,6 +228,7 @@ function rcl_add_custom_tabs($tabs){
                 if($field['slug'] != $tab_id) continue;
 
                 $tabs[$tab_id]['icon'] = $field['icon'];
+                $tabs[$tab_id]['hidden'] = isset($field['hidden'])? $field['hidden']: 0;
                 $tabs[$tab_id]['name'] = $field['title'];
                 $tabs[$tab_id]['order'] = ++$k;
 

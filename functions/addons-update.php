@@ -170,11 +170,11 @@ function rcl_get_details_addon(){
 rcl_ajax_action('rcl_update_addon', false);
 function rcl_update_addon(){
 
-    $addon = $_POST['addon'];
+    $addonID = $_POST['addon'];
+    
+    $addon = rcl_get_addon($addonID);
+
     $need_update = get_option('rcl_addons_need_update');
-    if(!isset($need_update[$addon])){
-        wp_send_json(array('error'=>__('Дополнение не требует обновления.','wp-recall')));
-    }
     
     if(!class_exists('ZipArchive')){
         wp_send_json(array('error'=>__('Обновление невозможно! Не определен класс ZipArchive.','wp-recall')));
@@ -183,7 +183,7 @@ function rcl_update_addon(){
     $activeaddons = get_site_option('rcl_active_addons');
 
     $pathdir = RCL_TAKEPATH.'update/';
-    $new_addon = $pathdir.$addon.'.zip';
+    $new_addon = $pathdir.$addonID.'.zip';
 
     if(!file_exists($pathdir)){
         mkdir($pathdir);
@@ -194,10 +194,10 @@ function rcl_update_addon(){
             . '?rcl-addon-action=update';
 
     $data = array(
-        'addon' => $addon,
+        'addon' => $addonID,
         'rcl-key' => get_option('rcl-key'),
         'rcl-version' => VER_RCL,
-        'addon-version' => $need_update[$addon]['version'],
+        'addon-version' => $addon['version'],
         'host' => $_SERVER['SERVER_NAME']
     );
     
@@ -241,7 +241,7 @@ function rcl_update_addon(){
         $paths = rcl_get_addon_paths();
         
         foreach($paths as $path){
-            if(file_exists($path.'/'.$addon.'/')){
+            if(file_exists($path.'/'.$addonID.'/')){
                 $dirpath = $path;
                 break;
             }
@@ -249,26 +249,28 @@ function rcl_update_addon(){
 
         if(file_exists($dirpath.'/')){
 
-            if(isset($activeaddons[$addon]))
-                rcl_deactivate_addon($addon);
+            if(isset($activeaddons[$addonID]))
+                rcl_deactivate_addon($addonID);
             
-            rcl_delete_addon($addon,false);
+            rcl_delete_addon($addonID,false);
 
             $rs = $zip->extractTo($dirpath.'/');
 
-            if(isset($activeaddons[$addon]))
-                rcl_activate_addon($addon,true,$dirpath);
+            if(isset($activeaddons[$addonID]))
+                rcl_activate_addon($addonID,true,$dirpath);
 
         }
 
         $zip->close();
         unlink($new_addon);
         
-        unset($need_update[$addon]);
-        update_option('rcl_addons_need_update',$need_update);
+        if(isset($need_update[$addonID])){
+            unset($need_update[$addonID]);
+            update_option('rcl_addons_need_update',$need_update);
+        }
 
         wp_send_json(array(
-            'success' => $addon
+            'success' => $addonID
         ));
 
     }else{

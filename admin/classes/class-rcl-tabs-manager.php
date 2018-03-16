@@ -49,6 +49,17 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
                 'title'=>__('Tab ID','wp-recall'),
                 'placeholder'=>__('Latin alphabet and numbers','wp-recall')
             ),
+            
+            array(
+                'type' => 'radio',
+                'slug' => 'hidden',
+                'title' => __('Скрытая вкладка','wp-recall'),
+                'notice' => __('Вкладка будет доступна только по ссылке','wp-recall'),
+                'values' => array(
+                    __('No','wp-recall'),
+                    __('Yes','wp-recall')
+                )
+            ),
 
             array(
                 'type' => 'text',
@@ -174,21 +185,16 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
 
         if($this->is_default_tab($field['slug'])){
             
+            $unsetOptions = array(
+                'public-tab',
+                'supports-tab',
+                'content',
+                'slug'
+            );
+            
             foreach($options as $k => $option){
                 
-                if($option['slug'] == 'public-tab'){
-                    unset($options[$k]);
-                }
-                
-                if($option['slug'] == 'supports-tab'){
-                    unset($options[$k]);
-                }
-                
-                if($option['slug'] == 'content'){
-                    unset($options[$k]);
-                }
-                
-                if($option['slug'] == 'slug'){
+                if(in_array($option['slug'], $unsetOptions)){
                     unset($options[$k]);
                 }
                 

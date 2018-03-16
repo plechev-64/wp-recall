@@ -420,13 +420,24 @@ body audio {
     padding: 0;
     position: relative;
 }
-#rcl-office .rcl-chat-contacts .fa-times{
-    position: absolute;
-    right: 10px;
-    top: 15px;
-    display:none;
+#rcl-office .rcl-chat-contacts .chat-window-restore,
+#rcl-office .rcl-chat-contacts .chat-remove{
+    position: absolute;  
 }
-#rcl-office .rcl-chat-contacts .contact-box:hover .fa-times{
+#rcl-office .rcl-chat-contacts .chat-remove{
+    display:none;
+    left: 70px;
+    bottom: 10px;
+    color: #ff4f44;
+    font-size: 12px;
+    line-height: 1;
+}
+#rcl-office .rcl-chat-contacts .chat-window-restore{
+    right: 10px;
+    top: 5px;
+    color: #4c8cbd;
+}
+#rcl-office .rcl-chat-contacts .contact-box:hover .chat-remove{
     display:block;
 }
 #rcl-office .rcl-chat-contacts .chat-contact .avatar-contact{

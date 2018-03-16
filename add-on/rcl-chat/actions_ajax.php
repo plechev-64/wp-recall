@@ -1,5 +1,26 @@
 <?php
 
+rcl_ajax_action('rcl_get_ajax_chat_window');
+function rcl_get_ajax_chat_window(){
+    global $user_ID;
+    
+    rcl_verify_ajax_nonce();
+    
+    $user_id = intval($_POST['user_id']);
+    
+    $chatdata = rcl_get_chat_private($user_id);
+    
+    wp_send_json(array(
+        'dialog' => array(
+            'content' => $chatdata['content'],
+            'title' => __('Chat with','wp-recall').' '.get_the_author_meta('display_name',$user_id),
+            'class' => 'rcl-chat-window',
+            'size' => 'small'
+        )
+    ));
+    
+}
+
 rcl_ajax_action('rcl_chat_remove_contact', false);
 function rcl_chat_remove_contact(){
     global $user_ID;
@@ -60,10 +81,26 @@ function rcl_chat_add_message(){
     if(!rcl_get_chat_by_room($chat_room)) 
         return false;
     
+    $attach = (isset($POST['attachment']))? $POST['attachment']: false;
+    
+    $content = '';
+    
+    $newMessages = rcl_chat_get_new_messages((object)array(
+        'last_activity' => $_POST['last_activity'],
+        'token' => $POST['token'],
+        'user_write'=> 0,
+        'update_activity' => 0
+    ));
+    
+    if(isset($newMessages['content']) && $newMessages['content']){
+        $res['new_messages'] = 1;
+        $content .= $newMessages['content'];
+    }
+
     require_once 'class-rcl-chat.php';
     $chat = new Rcl_Chat(array('chat_room'=>$chat_room));
-
-    $result = $chat->add_message($POST['message'],$POST['attachment']);
+    
+    $result = $chat->add_message($POST['message'], $attach);
     
     if ( $result->errors ){
         $res['errors'] = $result->errors;    
@@ -74,7 +111,8 @@ function rcl_chat_add_message(){
         wp_send_json($result);
     }
 
-    $res['content'] = $chat->get_message_box($result);
+    $res['content'] = $content . $chat->get_message_box($result);
+    $res['last_activity'] = current_time('mysql');
 
     wp_send_json($res);
 

@@ -188,7 +188,11 @@ function pfm_get_topic_permalink($topic_id, $args = false){
         }else if(!$topic_slug){
             $topic_slug = pfm_get_topic_field($topic_id,'topic_slug');
         }else if(!$forum_slug){
-            $forum_slug = pfm_get_forum_field($PrimeTopic->forum_id,'forum_slug');
+            
+            $forum_id = isset($args['forum_id'])? $args['forum_id']: $PrimeTopic->forum_id;
+            
+            $forum_slug = pfm_get_forum_field($forum_id,'forum_slug');
+            
         }
 
         $url = untrailingslashit(pfm_get_home_url()).'/'.$forum_slug.'/'.$topic_slug;

@@ -69,7 +69,9 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
             $this->chat_id = $this->chat['chat_id'];
         }
         
-        $this->set_activity();
+        $updateActivity = isset($args['update_activity'])? $args['update_activity']: 1;
+        
+        if($updateActivity) $this->set_activity();
         
         $this->query['where'][] =  "rcl_chat_messages.chat_id = '$this->chat_id'";
         
@@ -327,6 +329,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
                     . 'file_upload:'.$this->file_upload.','
                     . 'max_words:'.$this->max_words.','
                     . 'delay:'.$this->delay.','
+                    . 'open_chat:"'.current_time('mysql').'",'
                     . 'timeout:'.$this->timeout
                 . '});'
                 . '</script>';

@@ -247,6 +247,8 @@ function rcl_get_user_contacts_list($user_id){
         return '<p>'.__('No contacts yet. Start a chat with another user on his page','wp-recall').'</p>';
     }
     
+    rcl_dialog_scripts();
+    
     $inpage = 20;
     
     $pagenavi = new Rcl_PageNavi('chat-contacts',$amount,array('in_page'=>$inpage));
@@ -266,8 +268,9 @@ function rcl_get_user_contacts_list($user_id){
         
         $class = (!$message['message_status'])? 'noread-message': '';
         
-        $content .= '<div class="contact-box" data-contact="'.$message['user_id'].'">';
-        $content .= '<a href="#" title="'.__('Delete contact','wp-recall').'" onclick="rcl_chat_remove_contact(this,'.$message['chat_id'].');return false;"><i class="fa fa-times" aria-hidden="true"></i></a>';
+        $content .= '<div class="contact-box preloader-parent" data-contact="'.$message['user_id'].'">';
+        $content .= '<a href="#" title="'.__('Delete contact','wp-recall').'" onclick="rcl_chat_remove_contact(this,'.$message['chat_id'].');return false;" class="chat-remove"><i class="fa fa-times" aria-hidden="true"></i> '.__('Delete contact','wp-recall').'</a>';
+        $content .= '<a href="#" title="'.__('Открыть чат в окне','wp-recall').'" onclick="rcl_get_chat_window(this,'.$message['user_id'].');return false;" class="chat-window-restore"><i class="fa fa-window-restore" aria-hidden="true"></i></a>';
         $content .= '<a class="chat-contact '.$class.'" href="'.rcl_get_tab_permalink($message['user_id'],'chat').'">';
         
         $content .= '<div class="avatar-contact">'

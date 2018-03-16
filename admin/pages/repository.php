@@ -50,6 +50,8 @@ if ( is_wp_error( $result ) ) {
 
 $result =  json_decode($result['body']);
 
+//print_r($rcl_addons);
+
 if(!$result){
     echo '<h2>'.__('Failed to get data','wp-recall').'.</h2>'; exit;
 }

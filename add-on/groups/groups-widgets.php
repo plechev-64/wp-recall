@@ -376,6 +376,8 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
                     )
                 )
             );
+            
+            $args = apply_filters('rcl_group_pre_get_posts', $args);
 
             $posts = get_posts($args); 
 

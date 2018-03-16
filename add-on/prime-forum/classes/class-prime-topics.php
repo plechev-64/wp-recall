@@ -12,6 +12,7 @@ class PrimeTopics extends Rcl_Query{
                 'topic_name',
                 'topic_slug',
                 'topic_status',
+                'topic_closed',
                 'forum_id',
                 'user_id',
                 'post_count',

@@ -321,7 +321,8 @@ function rcl_chat_get_new_messages($post){
     require_once 'class-rcl-chat.php';
     $chat = new Rcl_Chat(array(
                 'chat_room'=>$chat_room,
-                'user_write'=> $post->user_write
+                'user_write'=> $post->user_write,
+                'update_activity' => $post->update_activity
             ));
     
     if($post->last_activity){

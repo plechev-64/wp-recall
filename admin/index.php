@@ -384,3 +384,25 @@ function rcl_get_custom_field_options(){
     ));
     
 }
+
+add_filter('admin_footer_text', 'rcl_admin_footer_text', 10);
+function rcl_admin_footer_text( $footer_text ) {
+    $current_screen = get_current_screen();
+
+    $dlm_page_ids = array(
+        'toplevel_page_manage-wprecall',
+        'wp-recall-5_page_rcl-options',
+        'wp-recall-5_page_rcl-repository',
+        'wp-recall-5_page_manage-addon-recall',
+        'wp-recall-5_page_manage-templates-recall',
+        'wp-recall-5_page_rcl-tabs-manager',
+        'wp-recall-5_page_manage-userfield',
+        'wp-recall-5_page_manage-public-form'
+    );
+    
+    if ( isset( $current_screen->id ) && in_array( $current_screen->id, $dlm_page_ids ) ) {
+        $footer_text = sprintf( __( 'Если Вам понравился плагин %sWP-Recall%s, пожалуйста, проголосуйте за него в репозитории %s★★★★★%s. Огромное вам спасибо заранее!', 'wp-recall' ), '<strong>', '</strong>', '<a href="https://wordpress.org/support/view/plugin-reviews/wp-recall?filter=5#new-post" target="_blank">', '</a>' );
+    }
+
+    return $footer_text;
+}
