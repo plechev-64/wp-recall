@@ -18,13 +18,14 @@ function rcl_profile_options($content){
                 ),
                 array(
                     'type' => 'runner',
-                    'value_min' => 1,
+                    'value_min' => 0,
                     'value_max' => 5,
                     'value_step' => 1,
                     'default' => 2,
                     'slug' => 'avatar_weight',
                     'title' => __('The maximum size of the avatar, Mb','wp-recall'),
-                    'notice' => __('To limit the size uploading of avatars images, the size in megabytes by default is set at 2MB','wp-recall')
+                    'notice' => __('To limit the size uploading of avatars images, the size in megabytes by default is set at 2MB','wp-recall').
+                    '. ' . __('Если указан 0, то загрузка запрещена.','wp-recall')
                 )
             )
         )

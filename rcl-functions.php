@@ -954,7 +954,10 @@ function rcl_template_support($support){
     
     switch($support){
         case 'avatar-uploader': 
-            include_once 'functions/supports/uploader-avatar.php';
+            
+            if(rcl_get_option('avatar_weight', 2) > 0)
+                include_once 'functions/supports/uploader-avatar.php';
+            
             break;
         case 'cover-uploader': 
             include_once 'functions/supports/uploader-cover.php';

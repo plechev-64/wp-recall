@@ -425,11 +425,14 @@ body audio {
     position: absolute;  
 }
 #rcl-office .rcl-chat-contacts .chat-remove{
-    display:none;
-    left: 70px;
-    bottom: 10px;
-    color: #ff4f44;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    display: none;
     font-size: 12px;
+    left: 5px;
+    padding: 2px;
+    position: absolute;
+    top: 10px;
     line-height: 1;
 }
 #rcl-office .rcl-chat-contacts .chat-window-restore{
@@ -520,6 +523,12 @@ body audio {
 @media screen and (max-width:800px) {
     #rcl-chat-noread-box .chat-delete-contact {
         display:none;
+    }
+}
+@media screen and (max-width:768px) {
+    #rcl-office .rcl-chat-contacts .chat-remove{
+        display: block;
+        font-size:18px;
     }
 }
 @media screen and (max-width:375px) {
