@@ -8,7 +8,7 @@ function rcl_avatar_uploader(){
         type: 'POST',
         url: Rcl.ajaxurl,
         formData:{action:'rcl_avatar_upload',ajax_nonce:Rcl.nonce},
-        loadImageMaxFileSize: Rcl.profile.avatar_size*1024*1024,
+        loadImageMaxFileSize: Rcl.avatar_size*1024,
         autoUpload:false,
         previewMaxWidth: 900,
         previewMaxHeight: 900,
@@ -23,7 +23,7 @@ function rcl_avatar_uploader(){
             if(!data.form) return false;
             jQuery.each(data.files, function (index, file) {
                 jQuery('#rcl-preview').remove();
-                if(file.size>Rcl.profile.avatar_size*1024*1024){
+                if(file.size>Rcl.avatar_size*1024){
                     rcl_notice(Rcl.local.upload_size_avatar,'error',10000);
                     return false;
                 }

@@ -67,6 +67,17 @@ function rcl_admin_groups_page_content($content){
                         __('Send for moderation','wp-recall')
                     ),
                     'notice' => __('If subject to moderation: To allow the user to see their publication before moderation has been completed, the user should be classifies as Author or higher','wp-recall')
+                ),
+                array(
+                    'type' => 'runner',
+                    'value_min' => 0,
+                    'value_max' => 5120,
+                    'value_step' => 256,
+                    'default' => 1024,
+                    'slug' => 'group_avatar_weight',
+                    'title' => __('Максимальный размер аватарки группы','wp-recall').', Kb',
+                    'notice' => __('Установите ограничение для загружаемого изображения в килобайтах, по-умолчанию','wp-recall'). ' 1024Kb' .
+                    '. ' . __('Если указан 0, то загрузка запрещена.','wp-recall')
                 )
             )
         )

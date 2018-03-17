@@ -18,8 +18,8 @@ function rcl_init_js_avatar_variables($data){
     global $user_ID;
 
     if(rcl_is_office($user_ID)){
-        $data['profile']['avatar_size'] = rcl_get_option('avatar_weight',2);
-        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum image size! Max. %s MB','wp-recall'), rcl_get_option('avatar_weight',2));
+        $data['avatar_size'] = rcl_get_option('avatar_weight', 1024);
+        $data['local']['upload_size_avatar'] = sprintf(__('Exceeds the maximum image size! Max. %s Kb','wp-recall'), rcl_get_option('avatar_weight', 1024));
         $data['local']['title_image_upload'] = __('Image being loaded','wp-recall');
         $data['local']['title_webcam_upload'] = __('Image from camera','wp-recall');
     }
@@ -169,9 +169,9 @@ function rcl_avatar_upload(){
         $filename = str_replace(' ','',$filename);
     }
 
-    $mb = $upload['file']['size']/1024/1024;
+    $kb = $upload['file']['size']/1024;
 
-    if($mb > rcl_get_option('avatar_weight',2)){
+    if($kb > rcl_get_option('avatar_weight', 1024)){
 
         wp_send_json(array(
             'error' => __('Size exceeded','wp-recall')

@@ -25,7 +25,7 @@ function rcl_groups_scripts(){
 
 add_filter('rcl_init_js_variables','rcl_init_js_groups_variables',10);
 function rcl_init_js_groups_variables($data){
-    $data['groups']['avatar_size'] = rcl_get_option('avatar_weight',2);
+    $data['groups']['avatar_size'] = rcl_get_option('group_avatar_weight', 1024);
     return $data;
 }
 
@@ -417,9 +417,8 @@ add_action('init', 'rcl_init_group_create');
 
 add_filter('rcl_group_thumbnail','rcl_group_add_thumb_buttons');
 function rcl_group_add_thumb_buttons($content){
-    $rcl_group;
 
-    if(!rcl_is_group_can('admin')) return $content;
+    if(!rcl_is_group_can('admin') || rcl_get_option('group_avatar_weight', 1024) <= 0) return $content;
 
     $content .= '<div id="group-avatar-upload">
             <span id="file-upload" class="fa fa-download">

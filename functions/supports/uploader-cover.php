@@ -18,8 +18,8 @@ function rcl_init_js_cover_variables($data){
     global $user_ID;
     
     if(rcl_is_office($user_ID)){
-        $data['profile']['cover_size'] = 1;
-        $data['local']['upload_size_cover'] = sprintf(__('Exceeds the maximum image size! Max. %s MB','wp-recall'),1);
+        $data['cover_size'] = rcl_get_option('cover_weight', 1024);
+        $data['local']['upload_size_cover'] = sprintf(__('Exceeds the maximum image size! Max. %s Kb','wp-recall'), rcl_get_option('cover_weight', 1024));
         $data['local']['title_image_upload'] = __('Image being loaded','wp-recall');
     }
     
@@ -111,7 +111,7 @@ function rcl_cover_upload(){
 
     $mb = $upload['file']['size']/1024/1024;
 
-    if($mb > rcl_get_option('avatar_weight',2)){
+    if($mb > rcl_get_option('cover_weight',2)){
         
         wp_send_json(array(
             'error' => __('Size exceeded','wp-recall')

@@ -8,7 +8,7 @@ function rcl_cover_uploader(){
         type: 'POST',
         url: Rcl.ajaxurl,
         formData:{action:'rcl_cover_upload',ajax_nonce:Rcl.nonce},
-        loadImageMaxFileSize: Rcl.profile.cover_size*1024*1024,
+        loadImageMaxFileSize: Rcl.cover_size*1024,
         autoUpload:false,
         previewMaxWidth: 900,
         previewMaxHeight: 900,
@@ -25,7 +25,7 @@ function rcl_cover_uploader(){
                 
                 jQuery('#rcl-preview').remove();
 
-                if(file.size>Rcl.profile.cover_size*1024*1024){
+                if(file.size>Rcl.cover_size*1024){
                     rcl_notice(Rcl.local.upload_size_cover,'error',10000);
                     return false;
                 }

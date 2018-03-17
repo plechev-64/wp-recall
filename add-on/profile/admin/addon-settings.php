@@ -15,17 +15,6 @@ function rcl_profile_options($content){
                     'slug' => 'delete_user_account',
                     'title' => __('Allow users to delete their account?','wp-recall'),
                     'values' => array(__('No','wp-recall'),__('Yes','wp-recall'))
-                ),
-                array(
-                    'type' => 'runner',
-                    'value_min' => 0,
-                    'value_max' => 5,
-                    'value_step' => 1,
-                    'default' => 2,
-                    'slug' => 'avatar_weight',
-                    'title' => __('The maximum size of the avatar, Mb','wp-recall'),
-                    'notice' => __('To limit the size uploading of avatars images, the size in megabytes by default is set at 2MB','wp-recall').
-                    '. ' . __('Если указан 0, то загрузка запрещена.','wp-recall')
                 )
             )
         )

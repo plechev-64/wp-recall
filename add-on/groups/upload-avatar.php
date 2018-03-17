@@ -13,7 +13,7 @@ function rcl_group_avatar_upload(){
 
     $group_id = $_POST['group_id'];
 
-    $maxsize = rcl_get_option('avatar_weight',2);
+    $maxsize = rcl_get_option('group_avatar_weight', 1024);
     $tmpname = current_time('timestamp').'.jpg';
 
     if($_FILES['uploadfile']){

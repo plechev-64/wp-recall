@@ -4,7 +4,7 @@ jQuery(function($){
         type: 'POST',
         url: Rcl.ajaxurl,
         formData:{action:'rcl_group_avatar_upload',ajax_nonce:Rcl.nonce},
-        loadImageMaxFileSize: Rcl.groups.avatar_size,
+        loadImageMaxFileSize: Rcl.groups.avatar_size * 1024,
         autoUpload:true,
         imageMinWidth:150,
         imageMinHeight:150,
