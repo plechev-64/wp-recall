@@ -334,7 +334,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
                 . '});'
                 . '</script>';
 
-        $content .= '<div class="rcl-chat chat-'.$this->chat_status.'" data-token="'.$this->chat_token.'" data-in_page="'.$this->query['number'].'">';
+        $content .= '<div class="rcl-chat chat-'.$this->chat_status.' chat-room-'.$this->chat_room.'" data-token="'.$this->chat_token.'" data-in_page="'.$this->query['number'].'">';
                     
                     $content .= $this->get_messages_box();
                         
