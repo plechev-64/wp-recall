@@ -391,13 +391,13 @@ function rcl_admin_footer_text( $footer_text ) {
 
     $dlm_page_ids = array(
         'toplevel_page_manage-wprecall',
-        'wp-recall-5_page_rcl-options',
-        'wp-recall-5_page_rcl-repository',
-        'wp-recall-5_page_manage-addon-recall',
-        'wp-recall-5_page_manage-templates-recall',
-        'wp-recall-5_page_rcl-tabs-manager',
-        'wp-recall-5_page_manage-userfield',
-        'wp-recall-5_page_manage-public-form'
+        'wp-recall_page_rcl-options',
+        'wp-recall_page_rcl-repository',
+        'wp-recall_page_manage-addon-recall',
+        'wp-recall_page_manage-templates-recall',
+        'wp-recall_page_rcl-tabs-manager',
+        'wp-recall_page_manage-userfield',
+        'wp-recall_page_manage-public-form'
     );
     
     if ( isset( $current_screen->id ) && in_array( $current_screen->id, $dlm_page_ids ) ) {

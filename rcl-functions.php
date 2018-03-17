@@ -900,13 +900,6 @@ function rcl_update_timeaction_user(){
 
 }
 
-//удаляем данные об активности юзера при удалении
-add_action('delete_user','rcl_delete_user_action');
-function rcl_delete_user_action($user_id){
-    global $wpdb;
-    return $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_id));
-}
-
 function rcl_get_button($ancor,$url,$args=false){
     $button = '<a href="'.$url.'" ';
     if(isset($args['attr'])&&$args['attr']) $button .= $args['attr'].' ';
@@ -1327,4 +1320,15 @@ function rcl_get_form($args){
     require_once 'classes/class-rcl-form.php';
     $Form = new Rcl_Form($args);
     return $Form->get_form();
+}
+
+add_action('delete_user','rcl_delete_user_action', 10);
+function rcl_delete_user_action($user_id){
+    global $wpdb;
+    return $wpdb->query($wpdb->prepare("DELETE FROM ".RCL_PREF."user_action WHERE user ='%d'",$user_id));
+}
+
+add_action('delete_user','rcl_delete_user_avatar', 10);
+function rcl_delete_user_avatar($user_id){
+    array_map("unlink", glob(RCL_UPLOAD_URL.'avatars/'.$user_id.'-*.jpg'));
 }

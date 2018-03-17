@@ -21,7 +21,7 @@ function rcl_admin_menu(){
     $notice_t = ($cnt_t)? ' <span class="update-plugins count-'.$cnt_t.'"><span class="plugin-count">'.$cnt_t.'</span></span>': '';
     $notice_a = ($cnt_a)? ' <span class="update-plugins count-'.$cnt_a.'"><span class="plugin-count">'.$cnt_a.'</span></span>': '';
     
-    add_menu_page(__('WP-RECALL','wp-recall').$notice_all, __('WP-RECALL','wp-recall').$notice_all, 'manage_options', 'manage-wprecall', 'rcl_dashboard');
+    add_menu_page(__('WP-RECALL','wp-recall'), __('WP-RECALL','wp-recall'), 'manage_options', 'manage-wprecall', 'rcl_dashboard');
     add_submenu_page( 'manage-wprecall', __('Dashboard','wp-recall'), __('Dashboard','wp-recall'), 'manage_options', 'manage-wprecall', 'rcl_dashboard');
     add_submenu_page( 'manage-wprecall', __('SETTINGS','wp-recall'), __('SETTINGS','wp-recall'), 'manage_options', 'rcl-options', 'rcl_global_options');
     add_submenu_page( 'manage-wprecall', __('Repository','wp-recall'), __('Repository','wp-recall'), 'manage_options', 'rcl-repository', 'rcl_repository_page');
