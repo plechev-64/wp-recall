@@ -272,8 +272,6 @@ function rcl_setup_edit_post_button(){
 add_filter('pre_update_postdata_rcl','rcl_add_taxonomy_in_postdata',50,2);
 function rcl_add_taxonomy_in_postdata($postdata,$data){
 
-    if(!isset($_POST['cats'])||!$_POST['cats']) return $postdata;
-
     $post_type = get_post_types( array('name' => $data->post_type), 'objects' );
     
     if(!$post_type) return false;
