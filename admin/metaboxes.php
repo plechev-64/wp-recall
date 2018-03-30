@@ -71,13 +71,13 @@ function rcl_docs_metabox(){
     echo '<ol>
             <li><a href="https://codeseller.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank" rel="noopener noreferrer">Установка плагина на сайт</a></li>
             <li><a href="https://codeseller.ru/srazu-posle-aktivacii-plagina-wp-recall/" target="_blank" rel="noopener">Сразу после активации</a></li>
-            <li>Административная часть:
-                - <a href="https://codeseller.ru/stranica-konsoli-plagina/" target="_blank" rel="noopener">Консоль плагина</a>
-                - <a href="https://codeseller.ru/stranica-nastroek-plagina-wp-recall/" target="_blank" rel="noopener">Настройки плагина</a>
-                - <a href="https://codeseller.ru/stranica-menedzhera-dopolnenij/" target="_blank" rel="noopener">Менеджер дополнений</a>
-                - <a href="https://codeseller.ru/stranica-repozitoriya-dopolnenij/" target="_blank" rel="noopener">Репозиторий дополнений</a>
-                - <a href="https://codeseller.ru/stranica-shablonov-lichnogo-kabineta/" target="_blank" rel="noopener">Шаблоны личного кабинета</a>
-                - <a href="https://codeseller.ru/proizvolnye-polya-wp-recall/" target="_blank" rel="noopener noreferrer">Произвольные поля профиля Wp-Recall</a>
+            <li>Административная часть:<br/>
+                - <a href="https://codeseller.ru/stranica-konsoli-plagina/" target="_blank" rel="noopener">Консоль плагина</a><br/>
+                - <a href="https://codeseller.ru/stranica-nastroek-plagina-wp-recall/" target="_blank" rel="noopener">Настройки плагина</a><br/>
+                - <a href="https://codeseller.ru/stranica-menedzhera-dopolnenij/" target="_blank" rel="noopener">Менеджер дополнений</a><br/>
+                - <a href="https://codeseller.ru/stranica-repozitoriya-dopolnenij/" target="_blank" rel="noopener">Репозиторий дополнений</a><br/>
+                - <a href="https://codeseller.ru/stranica-shablonov-lichnogo-kabineta/" target="_blank" rel="noopener">Шаблоны личного кабинета</a><br/>
+                - <a href="https://codeseller.ru/proizvolnye-polya-wp-recall/" target="_blank" rel="noopener noreferrer">Произвольные поля профиля Wp-Recall</a><br/>
                 - <a href="https://codeseller.ru/post-group/proizvolnye-polya-formy-publikacii-wp-recall/" target="_blank" rel="noopener noreferrer">Произвольные поля формы публикации Wp-Recall</a></li>
             <li><a href="https://codeseller.ru/post-group/ustanovka-plagina-wp-recall-na-sajt/" target="_blank" rel="noopener noreferrer">Варианты вывода личного кабинета</a></li>
             <li><a href="https://codeseller.ru/obshhie-svedeniya-o-dopolneniyax-wp-recall/" target="_blank" rel="noopener noreferrer">Общие сведения о дополнениях Wp-Recall</a></li>

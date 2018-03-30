@@ -92,8 +92,7 @@ function pfm_page_options(){
             'type' => 'select',
             'slug' => 'home-page',
             'title' => __('Forum page','wp-recall'),
-            'notice' => __('Select the needed page from the list and place the '
-                    . '[prime-forum] shortcode on it','wp-recall'),
+            'notice' => __('Select the needed page from the list and place the [prime-forum] shortcode on it','wp-recall'),
             'values' => $pagelist
         ),
         array(
@@ -118,9 +117,7 @@ function pfm_page_options(){
             'type' => 'textarea',
             'slug' => 'support-shortcodes',
             'title' => __('Supported shortcodes','wp-recall'),
-            'notice' => __('Specify the necessary shortcodes to support them in '
-                    . 'forum messages, each should start from a new line. '
-                    . 'Specify without brackets, for example: custom-shortcode','wp-recall')
+            'notice' => __('Specify the necessary shortcodes to support them in forum messages, each should start from a new line. Specify without brackets, for example: custom-shortcode','wp-recall')
         ),
         array(
             'type' => 'select',
@@ -137,8 +134,7 @@ function pfm_page_options(){
             'slug' => 'forums-home-list',
             'pattern' => '([0-9,\s]+)',
             'title' => __('Output forums only for the specified groups','wp-recall'),
-            'notice' => __('If output of forums on the homepage is turned on, you may specify IDs of the groups, '
-                    . 'whose forums should be output, space separated','wp-recall')
+            'notice' => __('If output of forums on the homepage is turned on, you may specify IDs of the groups, whose forums should be output, space separated','wp-recall')
         ),
         array(
             'type' => 'runner',
@@ -203,9 +199,7 @@ function pfm_page_options(){
             'value_max' => 120,
             'value_step' => 1,
             'default' => 30,
-            'notice' => __('В секундах. Новые сообщения в теме форума подгружаются '
-                    . 'через AJAX только для тех, кто уже оставил ранее в этой теме сообщение. '
-                    . 'Если ноль, то AJAX-подгрузка отключена.','wp-recall')
+            'notice' => __('В секундах. Новые сообщения в теме форума подгружаются через AJAX только для тех, кто уже оставил ранее в этой теме сообщение. Если ноль, то AJAX-подгрузка отключена.','wp-recall')
         ),
         array(
             'type' => 'runner',
@@ -215,10 +209,7 @@ function pfm_page_options(){
             'value_max' => 200,
             'value_step' => 1,
             'default' => 100,
-            'notice' => __('Если включена подгрузка новых сообщений через AJAX, '
-                    . 'то здесь устанавливаем максимальное кол-во запросов от '
-                    . 'одного пользователя, после достижения которого они прекращаются, '
-                    . 'после публикации нового сообщения запросы возобновляются.','wp-recall')
+            'notice' => __('Если включена подгрузка новых сообщений через AJAX, то здесь устанавливаем максимальное кол-во запросов от одного пользователя, после достижения которого они прекращаются, после публикации нового сообщения запросы возобновляются.','wp-recall')
         ),
         array(
             'type' => 'custom',
