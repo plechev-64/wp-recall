@@ -19,14 +19,14 @@ Check out all beauty and power of the plugin by watching this video:
 
 The base part of the plugin already includes a wide range of features, which you can use right after activation:
 
-- [Profile Recall](https://codeseller.ru/products/profile-recall-upravlenie-profilem-polzovatelya-na-sajte-s-pomoshhyu-wp-recall/) - User profile (Customizable Users Profile, Easy create and Drag & Drop to Reorder User Profile Fields)
+- [Profile Recall](https://codeseller.ru/products/profile-recall-upravlenie-profilem-polzovatelya-na-sajte-s-pomoshhyu-wp-recall/) - User profile (customizable users profile, easy create and drag & drop to reorder user profile fields)
 - [Rcl Chat](https://codeseller.ru/products/rcl-chat/) - Personal messages and global chats (easy & no limits chats on shortcodes)
 - [Rating system](https://codeseller.ru/products/rayting-recall-organizaciya-rejtingovoj-sistemy-wp-recall/) - stars, like/dislike or simple like. Ratings for commens, posts, and other type
 - [Public Recall](https://codeseller.ru/products/public-recall-publikaciya-zapisej-na-sajte-s-pomoshhyu-wp-recall/) - Front-end publisher with multi-photo uploader (The user can create a new post and edit it from the frontend).
 - User balance - Personal user balance
 - [Commerce](https://codeseller.ru/products/magazine-recall-organizaciya-internet-magazina-s-pomoshhyu-plagina-wp-recall/) - Store (free eCommerce add-on)
 - [Groups Recall](https://codeseller.ru/products/groups-recall-organizaciya-grupp-na-sajte-s-pomoshhyu-wp-recall/) - free solution for group-oriented memberships and content access control (closed groups)
-- [PrimeForum](https://codeseller.ru/products/primeforum/) - lightweight wordpress forum addo-on (Seo URLs)
+- [PrimeForum](https://codeseller.ru/products/primeforum/) - lightweight wordpress forum add-on (Seo URLs)
 
 = Features of the plugin include: =
 - Front-end user profiles
@@ -76,7 +76,7 @@ The base part of the plugin already includes a wide range of features, which you
 WP-Recall has a range of extensions that allow you to extend the power of the plugin
 
 - [ADV System](https://codeseller.ru/products/adv-system/) - advertising system for the site
-- [Achievement system](https://codeseller.ru/products/sistema-dostizhenij/) - advertising system for the site
+- [Achievement system](https://codeseller.ru/products/sistema-dostizhenij/) - achievement system with awards for user actions
 - [User Info Tab](https://codeseller.ru/products/user-info-tab/) - advanced profile tab
 - [Across Ocean Pro](https://codeseller.ru/products/across-ocean-pro/) - advanced personal account template
 - [Birthday in Profile](https://codeseller.ru/products/birthday-in-profile/) - the output of the user's birthday

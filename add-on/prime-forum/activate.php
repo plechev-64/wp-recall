@@ -164,3 +164,8 @@ if(!isset($PfmOptions['home-page'])){
 
 }
 
+$aioseop_options = get_option( 'aioseop_options' );
+if($aioseop_options){
+    unset($aioseop_options['aiosp_run_shortcodes']);
+    update_option( 'aioseop_options', $aioseop_options );
+}

@@ -74,7 +74,7 @@ function pfm_is_can_post_edit($post_id){
         global $PrimeTopic,$PrimePost,$user_ID;
         
         if($PrimeTopic->topic_closed) return false;
-    
+        
         $post = ($PrimePost && $PrimePost->post_id == $post_id)? $PrimePost: pfm_get_post($post_id);
 
         if($post->user_id == $user_ID){

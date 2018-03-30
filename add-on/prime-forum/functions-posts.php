@@ -255,6 +255,7 @@ function pfm_get_post_box($post_id){
         'user_id' => $post->user_id,
         'post_content' => $post->post_content,
         'post_index' => $post->post_index,
+        'topic_id' => $post->topic_id,
         'post_date' => $post->post_date,
         'display_name' => $post->user_id? get_the_author_meta('display_name',$post->user_id): $post->guest_name,
         'guest_name' => $post->guest_name,

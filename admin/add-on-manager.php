@@ -217,7 +217,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
                     . '<div class="update-message notice inline notice-warning notice-alt">'
                     . '<p>'
                         . __('New version available','wp-recall').' '.$this->addon['name'].' '.$this->need_update[$item['ID']]['new-version'].'. ';
-                        if(isset($this->addon['add-on-uri'])) echo ' <a href="#"  onclick=\'rcl_get_details_addon('.json_encode(array('slug'=>$item['ID'])).',this);return false;\' title="'.$this->addon['name'].'">'.__('view information about the version','wp-recall').'</a> или';
+                        echo ' <a href="#"  onclick=\'rcl_get_details_addon('.json_encode(array('slug'=>$item['ID'])).',this);return false;\' title="'.$this->addon['name'].'">'.__('view information about the version','wp-recall').'</a> или';
                         echo ' <a class="update-add-on" data-addon="'.$item['ID'].'" href="#">'.__('update automatically','wp-recall').'</a></div>'
                     . '</p>'
                 . '</td>'

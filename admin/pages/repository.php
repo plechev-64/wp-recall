@@ -8,9 +8,9 @@ rcl_dialog_scripts();
 
 wp_enqueue_style( 'rcl-admin-style', RCL_URL.'admin/assets/style.css' );
 
-$addonIds = array();
+$addonsData = array();
 foreach($rcl_addons as $addonID => $addon){
-    $addonIds[] = $addonID;
+    $addonsData[$addonID] = $addon['version'];
 }
 
 $sort = isset($_GET['sort'])? $_GET['sort']: 'update';
@@ -39,7 +39,7 @@ if($s){
 $result = wp_remote_post( $url, array('body' =>  array(
     'rcl-key' => get_option('rcl-key'),
     'rcl-version' => VER_RCL,
-    'addonIds' => $sort == 'favorites'? $addonIds: false,
+    'addons-data' => in_array($sort, array('favorites','has_updated'))? $addonsData: false,
     'host' => $_SERVER['SERVER_NAME']
 )) );
 
@@ -50,14 +50,8 @@ if ( is_wp_error( $result ) ) {
 
 $result =  json_decode($result['body']);
 
-//print_r($rcl_addons);
-
 if(!$result){
     echo '<h2>'.__('Failed to get data','wp-recall').'.</h2>'; exit;
-}
-
-if(!$result->count || !$result->addons){
-    
 }
 
 if(is_array($result)&&isset($result['error'])){
@@ -89,24 +83,25 @@ $content .= '</div>';
 
 $content .= '<div class="wp-filter">
     <ul class="filter-links">
-        <li class="plugin-install-featured"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=update" class="'.($sort == 'update'? 'current': '').'">По обновлению</a></li>
-        <li class="plugin-install-popular"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=active-installs" class="'.($sort == 'active-installs'? 'current': '').'">По популярности</a></li>
-        <li class="plugin-install-favorites"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=favorites" class="'.($sort == 'favorites'? 'current': '').'">Рекомендации</a></li>
+        <li class="plugin-install-featured"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=update" class="'.($sort == 'update'? 'current': '').'">'.__('Все', 'wp-recall').'</a></li>
+        <li class="plugin-install-popular"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=popular" class="'.($sort == 'popular'? 'current': '').'">'.__('Популярные', 'wp-recall').'</a></li>
+        <li class="plugin-install-favorites"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=favorites" class="'.($sort == 'favorites'? 'current': '').'">'.__('Рекомендации', 'wp-recall').'</a></li>
+        <li class="plugin-install-has-updated"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=has_updated" class="'.($sort == 'has_updated'? 'current': '').'">'.__('Обновления', 'wp-recall').'</a></li>
     </ul>
 
     <form class="search-form search-plugins" method="get">
         <input type="hidden" name="page" value="rcl-repository">
         <input type="hidden" name="sort" value="'.$sort.'">
-        <label class="screen-reader-text" for="typeselector">Критерий поиска:</label>
+        <label class="screen-reader-text" for="typeselector">'.__('Критерий поиска', 'wp-recall').':</label>
         <select name="type" id="typeselector">
-            <option value="term" '.selected($type,'term',false).'>Слово</option>
-            <option value="author" '.selected($type,'author',false).'>Автор</option>
-            <option value="tag" '.selected($type,'tag',false).'>Метка</option>
+            <option value="term" '.selected($type,'term',false).'>'.__('Слово', 'wp-recall').'</option>
+            <option value="author" '.selected($type,'author',false).'>'.__('Автор', 'wp-recall').'</option>
+            <option value="tag" '.selected($type,'tag',false).'>'.__('Метка', 'wp-recall').'</option>
         </select>
-        <label><span class="screen-reader-text">Поиск дополнений</span>
-            <input type="search" name="s" value="'.($s? $s: '').'" class="wp-filter-search" placeholder="Поиск дополнений..." aria-describedby="live-search-desc">
+        <label><span class="screen-reader-text">'.__('Поиск дополнений', 'wp-recall').'</span>
+            <input type="search" name="s" value="'.($s? $s: '').'" class="wp-filter-search" placeholder="'.__('Поиск дополнений', 'wp-recall').'..." aria-describedby="live-search-desc">
         </label>
-        <input type="submit" id="search-submit" class="button hide-if-js" value="Поиск дополнений">	
+        <input type="submit" id="search-submit" class="button hide-if-js" value="'.__('Поиск дополнений', 'wp-recall').'">	
     </form>
 </div>';
 

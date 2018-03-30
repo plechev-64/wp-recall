@@ -145,6 +145,8 @@ add_filter('pfm_form_fields','pfm_add_post_reason_edit_field', 10, 2);
 function pfm_add_post_reason_edit_field($fields, $action){
     
     if($action != 'post_edit') return $fields;
+    
+    if(!pfm_get_option('reason-edit', 1)) return $fields;
 
     $fields[] = array(
         'type' => 'text',

@@ -171,8 +171,6 @@ rcl_ajax_action('rcl_update_addon', false);
 function rcl_update_addon(){
 
     $addonID = $_POST['addon'];
-    
-    $addon = rcl_get_addon($addonID);
 
     $need_update = get_option('rcl_addons_need_update');
     
@@ -197,12 +195,11 @@ function rcl_update_addon(){
         'addon' => $addonID,
         'rcl-key' => get_option('rcl-key'),
         'rcl-version' => VER_RCL,
-        'addon-version' => $addon['version'],
         'host' => $_SERVER['SERVER_NAME']
     );
     
     $response = wp_remote_post( $url, array('body' => $data) );
-
+    
     if ( is_wp_error( $response ) ) {
        $error_message = $response->get_error_message();
        echo __('Error').': '.$error_message; exit;

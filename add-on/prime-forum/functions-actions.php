@@ -338,20 +338,26 @@ function pfm_init_actions(){
             
             if(!pfm_is_can_post_edit($pfmData['post_id']) || !$pfmData['topic_id'] || !$pfmData['post_id']) return false;
             
-            $post_edit = maybe_unserialize(pfm_get_post_field($pfmData['post_id'], 'post_edit'));
-
-            $reasonEdit = '';
-            if(isset($_POST['reason_edit']) && $_POST['reason_edit']){
-                
-                $reasonEdit = $_POST['reason_edit'];
-                
-            }
+            $post_edit = '';
             
-            $post_edit[] = array(
-                'time' => current_time('mysql'),
-                'author' => pfm_get_user_name($user_ID),
-                'reason' => $reasonEdit
-            );
+            if(pfm_get_option('reason-edit', 1)){
+                
+                $post_edit = maybe_unserialize(pfm_get_post_field($pfmData['post_id'], 'post_edit'));
+
+                $reasonEdit = '';
+                if(isset($_POST['reason_edit']) && $_POST['reason_edit']){
+
+                    $reasonEdit = $_POST['reason_edit'];
+
+                }
+
+                $post_edit[] = array(
+                    'time' => current_time('mysql'),
+                    'author' => pfm_get_user_name($user_ID),
+                    'reason' => $reasonEdit
+                );
+            
+            }
             
             pfm_update_post(array(
                 'post_content' => $pfmData['post_content'],
@@ -419,6 +425,8 @@ function pfm_init_actions(){
             
             pfm_update_forum_counter($migratedTopic->forum_id);
             pfm_update_forum_counter($pfmData['forum_id']);
+            
+            do_action('pfm_migrate_topic', $pfmData['topic_id'], $pfmData['forum_id']);
             
             wp_redirect(pfm_get_topic_permalink($pfmData['topic_id'])); exit;
             

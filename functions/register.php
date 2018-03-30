@@ -6,7 +6,6 @@ if(!function_exists('wp_send_new_user_notifications')){
 }
 
 function rcl_insert_user($data){
-    global $wpdb;
 
     if ( get_user_by('email', $data['user_email']) )
         return false;
@@ -14,18 +13,18 @@ function rcl_insert_user($data){
     if ( get_user_by('login', $data['user_login']) )
         return false;
 
-    $data2 = array(
+    $userdata = array_merge($data, array(
         'user_nicename' => ''
         ,'nickname' => $data['user_email']
         ,'first_name' => $data['display_name']
         ,'rich_editing' => 'true'  // false - выключить визуальный редактор для пользователя.
-    );
-
-    $userdata = array_merge($data,$data2);
+    ));
 
     $user_id = wp_insert_user( $userdata );
-
-    if(!$user_id) return false;
+    
+    if(!$user_id || is_wp_error( $user_id ) ) {
+        return false;
+    }
 
     $timeAction = '0000-00-00 00:00:00';
 
@@ -34,6 +33,8 @@ function rcl_insert_user($data){
     }else{
         $timeAction = current_time('mysql');
     }
+    
+    global $wpdb;
     
     $wpdb->insert( RCL_PREF .'user_action', array( 'user' => $user_id, 'time_action' => $timeAction ));
 
@@ -45,6 +46,8 @@ function rcl_insert_user($data){
     ));
 
     wp_send_new_user_notifications( $user_id, 'admin' );
+    
+    do_action('rcl_insert_user', $user_id, $userdata);
 
     return $user_id;
 }
@@ -53,9 +56,7 @@ function rcl_insert_user($data){
 function rcl_confirm_user_registration(){
     global $wpdb;
     
-    $confirmdata = urldecode($_GET['rcl-confirmdata']);
-    
-    if($confirmdata){
+    if($confirmdata = urldecode($_GET['rcl-confirmdata'])){
 
         $confirmdata = json_decode(base64_decode($confirmdata));
         
@@ -65,11 +66,15 @@ function rcl_confirm_user_registration(){
 
             if(!rcl_is_user_role($user->ID, 'need-confirm')) return false;
             
-            wp_update_user( array ('ID' => $user->ID, 'role' => get_option('default_role')) );
-            $time_action = current_time('mysql');
-            $action = rcl_get_time_user_action($user->ID);
+            $defaultRole = get_option('default_role');
+            if($defaultRole == 'need-confirm'){
+                update_option('default_role', 'author');
+                $defaultRole = 'author';
+            }
             
-            if(!$action)
+            wp_update_user( array ('ID' => $user->ID, 'role' => $defaultRole) );
+            
+            if(!rcl_get_time_user_action($user->ID))
                 $wpdb->insert( RCL_PREF.'user_action', array( 'user' => $user->ID, 'time_action' => current_time('mysql') ) );
             
             do_action('rcl_confirm_registration',$user->ID);

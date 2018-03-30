@@ -12,10 +12,16 @@ function pfm_admin_scripts(){
 
 add_action('admin_menu', 'pfm_init_admin_menu',10);
 function pfm_init_admin_menu(){
+    global $rcl_update_notice;
+    
+    $cnt = isset($rcl_update_notice['prime-forum'])? count($rcl_update_notice['prime-forum']): 0;
+    
+    $notice = ($cnt)? ' <span class="update-plugins count-'.$cnt.'"><span class="plugin-count">'.$cnt.'</span></span>': '';
+    
     add_menu_page('PrimeForum', 'PrimeForum', 'manage_options', 'pfm-menu', 'pfm_page_options');
     add_submenu_page( 'pfm-menu', __('Settings','wp-recall'), __('Settings','wp-recall'), 'manage_options', 'pfm-menu', 'pfm_page_options');
     add_submenu_page( 'pfm-menu', __('Structure','wp-recall'), __('Structure','wp-recall'), 'manage_options', 'pfm-forums', 'pfm_page_forums');
-    $hook = add_submenu_page( 'pfm-menu', __('Templates','wp-recall'), __('Templates','wp-recall'), 'manage_options', 'pfm-themes', 'pfm_page_themes');
+    $hook = add_submenu_page( 'pfm-menu', __('Templates','wp-recall').$notice, __('Templates','wp-recall').$notice, 'manage_options', 'pfm-themes', 'pfm_page_themes');
     add_action( "load-$hook", 'pfm_add_options_themes_manager' );
     add_submenu_page( 'pfm-menu', __('Topic form','wp-recall'), __('Topic form','wp-recall'), 'manage_options', 'manage-topic-form', 'pfm_page_topic_form');
 }
@@ -180,6 +186,16 @@ function pfm_page_options(){
             )
         ),
         array(
+            'type' => 'select',
+            'slug' => 'reason-edit',
+            'title' => __('Причина редактирования сообщения','wp-recall'),
+            'default' => 1,
+            'values' => array(
+                __('Forbidden','wp-recall'),
+                __('Allowed','wp-recall')
+            )
+        ),
+        array(
             'type' => 'runner',
             'slug' => 'beat-time',
             'title' => __('Задержка на получение нового сообщения через AJAX','wp-recall'),
@@ -338,6 +354,8 @@ function pfm_page_forums(){
 function pfm_page_themes(){
     
     global $active_addons,$Prime_Themes_Manager;
+    
+    rcl_dialog_scripts();
 
     $Prime_Themes_Manager->get_templates_data();
 

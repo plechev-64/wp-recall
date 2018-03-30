@@ -1,23 +1,40 @@
 <?php
 
-add_action('admin_menu', 'rcl_admin_menu',19);
-function rcl_admin_menu(){
+add_action('_admin_menu', 'rcl_init_update_notice', 10);
+function rcl_init_update_notice(){
+    global $rcl_update_notice;
+    
+    $rcl_update_notice = array();
     
     $need_update = get_option('rcl_addons_need_update');
     
-    $templates = array(); $addons = array();
+    if(!$need_update) return false;
     
-    if($need_update){
-        foreach($need_update as $addon_id=>$data){
-            if(isset($data['template'])) $templates[] = $addon_id;
-            else $addons[] = $addon_id;
+    foreach($need_update as $addon_id => $data){
+        
+        if(isset($data['template'])){
+            $update_notice['templates'][] = $addon_id; continue;
         }
+        
+        if(isset($data['custom-manager']) && $data['custom-manager'] == 'prime-forum'){
+            $update_notice['prime-forum'][] = $addon_id; continue;
+        }
+        
+        $update_notice['addons'][] = $addon_id;
+        
     }
 
-    $cnt_t = $templates? count($templates): 0;
-    $cnt_a = $addons? count($addons): 0;
-    
-    $notice_all = ($cnt_all=$cnt_a+$cnt_t)? ' <span class="update-plugins count-'.$cnt_all.'"><span class="plugin-count">'.$cnt_all.'</span></span>': '';
+    $rcl_update_notice = apply_filters('rcl_update_notice', $update_notice);
+
+}
+
+add_action('admin_menu', 'rcl_admin_menu',19);
+function rcl_admin_menu(){
+    global $rcl_update_notice;
+
+    $cnt_t = isset($rcl_update_notice['templates'])? count($rcl_update_notice['templates']): 0;
+    $cnt_a = isset($rcl_update_notice['addons'])? count($rcl_update_notice['addons']): 0;
+
     $notice_t = ($cnt_t)? ' <span class="update-plugins count-'.$cnt_t.'"><span class="plugin-count">'.$cnt_t.'</span></span>': '';
     $notice_a = ($cnt_a)? ' <span class="update-plugins count-'.$cnt_a.'"><span class="plugin-count">'.$cnt_a.'</span></span>': '';
     

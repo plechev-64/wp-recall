@@ -70,4 +70,5 @@
             <?php }  ?>
         </div>
     </div>
+    <!--<?php echo $addon->popular; ?>-->
 </div>

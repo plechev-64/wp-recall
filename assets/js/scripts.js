@@ -494,15 +494,15 @@ function rcl_init_login_form(type_form){
     }else{
         
         if(rcl_url_params['action-rcl']==='login'){
-            jQuery('.panel_lk_recall.'+type_form+' #register-form-rcl').hide();
+            jQuery('.rcl-loginform-full.'+type_form+' #register-form-rcl').hide();
         }
 
         if(rcl_url_params['action-rcl']==='register'){
-            jQuery('.panel_lk_recall.'+type_form+' #login-form-rcl').hide();
+            jQuery('.rcl-loginform-full.'+type_form+' #login-form-rcl').hide();
         }
 
         if(rcl_url_params['action-rcl']==='remember'){
-            jQuery('.panel_lk_recall.'+type_form+' #login-form-rcl').hide();
+            jQuery('.rcl-loginform.'+type_form+' #login-form-rcl').hide();
         }
         
     }

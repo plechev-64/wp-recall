@@ -56,7 +56,7 @@ function rcl_apply_filters(filter_name){
         args[0] = window[callback].apply(this, args);
     });
     
-    return args;
+    return args[0];
 }
 
 function rcl_add_filter(filter_name,callback){
