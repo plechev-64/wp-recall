@@ -373,7 +373,7 @@ function rcl_payment_order_send_mail($order_id){
 
     $email = get_the_author_meta('user_email',$rclOrder->user_id);
     $textmail = '
-    <p>'.sprintf(__('Вами был оплачен заказ на сайте "%s"','wp-recall'),get_bloginfo('name')).'</p>
+    <p>'.sprintf(__('You paid for the order on the website "%s"','wp-recall'),get_bloginfo('name')).'</p>
     <h3>'.__('Information about the customer','wp-recall').':</h3>
     <p><b>'.__('Name','wp-recall').'</b>: '.$userName.'</p>
     <p><b>'.__('Email','wp-recall').'</b>: '.$userEmail.'</p>

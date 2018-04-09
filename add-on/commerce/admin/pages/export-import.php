@@ -79,7 +79,7 @@ $content .='<form method="post" action="" enctype="multipart/form-data">
 <p>
 <input type="file" name="rcl-import-products" value="1">
 <input type="submit" value="'.__('Import products from a file','wp-recall').'"><br>
-<small><span style="color:red;">'.__('Attention','wp-recall').'!</span> '.__('Пустые значения произвольных полей в файле иморта удаляют их из базы данных','wp-recall').'</small>
+<small><span style="color:red;">'.__('Attention','wp-recall').'!</span> '.__('Empty values of arbitrary fields in the import file remove them from the database','wp-recall').'</small>
 </p>
 </form>';
 
@@ -107,7 +107,7 @@ if($_FILES['rcl-import-products'] && wp_verify_nonce( $_POST['_wpnonce'], 'rcl-i
         $content .= '</div>';
 
     }else{
-        echo '<div class="error">'.__('Неверное расширение загружаемого файла. Ожидается формат XML!').'</div>';
+        echo '<div class="error">'.__('Incorrect extension of the downloaded file. XML format expected!', 'wp-recall').'</div>';
     }
 }
     

@@ -57,6 +57,8 @@ class Rcl_Rating_Box {
         
         if(!$this->user_id)
             $this->user_id = $user_ID;
+        
+        $object = false;
 
         if(!$this->object_author){
 
@@ -162,7 +164,7 @@ class Rcl_Rating_Box {
     function setup_rating_allowed($object){
         global $post;
         
-        if(!isset($object->post_type)) return false;
+        if(!$object || !isset($object->post_type)) return false;
         
         $this->rating_none = ($object->ID == $post->ID && isset($post->rating_none))? $post->rating_none: get_post_meta($object->ID, 'rayting-none', 1);
         

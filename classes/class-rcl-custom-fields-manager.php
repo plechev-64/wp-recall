@@ -231,8 +231,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                     'type' => 'checkbox',
                     'slug' => 'tinymce',
                     'title' => __('TinyMCE','wp-recall'),
-                    'values' => array( 1 => __('Использовать TinyMCE','wp-recall')),
-                    'notice' => __('Может не загружаться при AJAX','wp-recall')
+                    'values' => array( 1 => __('Using TinyMCE','wp-recall')),
+                    'notice' => __('May not load with AJAX','wp-recall')
                 );
                 
             }else if($this->field['type']=='runner' || $this->field['type']=='range'){

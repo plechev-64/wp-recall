@@ -101,7 +101,7 @@ function rcl_rating_tab_add_types_data(){
         
         $subtab = array(
             'id' => 'custom',
-            'name' => __('Разное','wp-recall'),
+            'name' => __('Other','wp-recall'),
             'icon' => 'fa-list-ul',
             'callback' => array(
                 'name'=>'rcl_rating_get_list_votes_content',

@@ -175,7 +175,7 @@ function rcl_update_addon(){
     $need_update = get_option('rcl_addons_need_update');
     
     if(!class_exists('ZipArchive')){
-        wp_send_json(array('error'=>__('Обновление невозможно! Не определен класс ZipArchive.','wp-recall')));
+        wp_send_json(array('error'=>__('Update is impossible! ZipArchive class is not defined.','wp-recall')));
     }
 
     $activeaddons = get_site_option('rcl_active_addons');

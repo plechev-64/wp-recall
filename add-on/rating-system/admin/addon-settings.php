@@ -55,7 +55,7 @@ function rcl_admin_page_rating($content){
                 'parent' => array('rating_type_'.$type => 2),
                 'type' => 'runner',
                 'slug' => 'rating_item_amount_'.$type,
-                'title' => __('Количество звезд','wp-recall'),
+                'title' => __('Number of stars','wp-recall'),
                 'value_min' => 1,
                 'value_max' => 20,
                 'default' => 5
@@ -67,12 +67,12 @@ function rcl_admin_page_rating($content){
                     'parent' => array('rating_type_'.$type => 2),
                     'type' => 'select',
                     'slug' => 'rating_shema_'.$type,
-                    'title' => __('Разметка рейтинга','wp-recall'),
+                    'title' => __('Rating markup','wp-recall'),
                     'values' => array(
-                        __('Отключено','wp-recall'),
-                        __('Включено','wp-recall')
+                        __('Disable','wp-recall'),
+                        __('Enable','wp-recall')
                     ),
-                    'notice' => __('Если включено, то на одиночных страницах вместе с рейтингом выводится разметка по стандарту <a href="http://schema.org" target="_blank">http://schema.org</a>','wp-recall')
+                    'notice' => __('If enabled, the standard markup on single pages along with the rating is displayed as <a href="http://schema.org" target="_blank">http://schema.org</a>','wp-recall')
                 );
             
             }
@@ -187,12 +187,12 @@ function rcl_admin_page_rating($content){
                     array(
                         'type' => 'select',
                         'slug' => 'rating_custom',
-                        'title' => __('Вкладка "Разное"','wp-recall'),
+                        'title' => __('Tab "Other"','wp-recall'),
                         'values' => array(
-                            __('Отключено','wp-recall'),
-                            __('Включено','wp-recall')
+                            __('Disable','wp-recall'),
+                            __('Enable','wp-recall')
                         ),
-                        'notice' => __('Если включено, то в истории рейтинга будет формироваться дополнительная вкладка "Разное", где будут выводится все изменения через незарегистрированные типы рейтинга','wp-recall')
+                        'notice' => __('If enabled, an additional "Other" tab will be created in the rating history, where all changes will be displayed via unregistered rating types','wp-recall')
                     )
                 )
             )

@@ -131,23 +131,15 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                         __('Left','wp-recall'))
                 ),
                 array(
-                    'extend' => true,
-                    'type' => 'runner',
-                    'slug'=>'slide-pause',
-                    'title'=>__('Pause Slider','wp-recall'),
-                    'help'=>__('Only applied for slider via shortcode publications <a href="https://codeseller.ru/api-rcl/slider-rcl/" target="_blank">[slider-rcl]</a>','wp-recall'),
-                    'notice'=>__('The value of the pause between slide transitions in seconds. Default value is 0 - the slide show is not made','wp-recall')
-                ),
-                array(
                     'type' => 'runner',
                     'value_min' => 0,
                     'value_max' => 5120,
                     'value_step' => 256,
                     'default' => 1024,
                     'slug' => 'avatar_weight',
-                    'title' => __('Максимальный размер аватарки','wp-recall').', Kb',
-                    'notice' => __('Установите ограничение для загружаемого изображения в килобайтах, по-умолчанию','wp-recall'). ' 1024Kb' .
-                    '. ' . __('Если указан 0, то загрузка запрещена.','wp-recall')
+                    'title' => __('Max weight of avatars','wp-recall').', Kb',
+                    'notice' => __('Set the image upload limit in kb, by default','wp-recall'). ' 1024Kb' .
+                    '. ' . __('If 0 is specified, download is disallowed.','wp-recall')
                 ),
                 array(
                     'type' => 'runner',
@@ -156,9 +148,9 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                     'value_step' => 256,
                     'default' => 1024,
                     'slug' => 'cover_weight',
-                    'title' => __('Максимальный размер обложки','wp-recall').', Kb',
-                    'notice' => __('Установите ограничение для загружаемого изображения в килобайтах, по-умолчанию','wp-recall'). ' 1024Kb' .
-                    '. ' . __('Если указан 0, то загрузка запрещена.','wp-recall')
+                    'title' => __('Max weight of cover','wp-recall').', Kb',
+                    'notice' => __('Set the image upload limit in kb, by default','wp-recall'). ' 1024Kb' .
+                    '. ' . __('If 0 is specified, download is disallowed.','wp-recall')
                 )
             )
         );

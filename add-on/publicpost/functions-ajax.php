@@ -190,7 +190,7 @@ function rcl_preview_post(){
             $max = isset($field['value_max'])? $field['value_max']: 100;
             
             if($value < $min || $value > $max){
-                wp_send_json(array('error' => __('Некорректные значения некоторых полей, выставите корректные значения!','wp-recall')));
+                wp_send_json(array('error' => __('Incorrect values of some fields, enter the correct values!','wp-recall')));
             }
             
         }

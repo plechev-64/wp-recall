@@ -83,25 +83,25 @@ $content .= '</div>';
 
 $content .= '<div class="wp-filter">
     <ul class="filter-links">
-        <li class="plugin-install-featured"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=update" class="'.($sort == 'update'? 'current': '').'">'.__('Все', 'wp-recall').'</a></li>
-        <li class="plugin-install-popular"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=popular" class="'.($sort == 'popular'? 'current': '').'">'.__('Популярные', 'wp-recall').'</a></li>
-        <li class="plugin-install-favorites"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=favorites" class="'.($sort == 'favorites'? 'current': '').'">'.__('Рекомендации', 'wp-recall').'</a></li>
-        <li class="plugin-install-has-updated"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=has_updated" class="'.($sort == 'has_updated'? 'current': '').'">'.__('Обновления', 'wp-recall').'</a></li>
+        <li class="plugin-install-featured"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=update" class="'.($sort == 'update'? 'current': '').'">'.__('All', 'wp-recall').'</a></li>
+        <li class="plugin-install-popular"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=popular" class="'.($sort == 'popular'? 'current': '').'">'.__('Popular', 'wp-recall').'</a></li>
+        <li class="plugin-install-favorites"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=favorites" class="'.($sort == 'favorites'? 'current': '').'">'.__('Reference', 'wp-recall').'</a></li>
+        <li class="plugin-install-has-updated"><a href="'.admin_url('admin.php?').$navi->get_string(array('type','s','page')).'&sort=has_updated" class="'.($sort == 'has_updated'? 'current': '').'">'.__('Updates', 'wp-recall').'</a></li>
     </ul>
 
     <form class="search-form search-plugins" method="get">
         <input type="hidden" name="page" value="rcl-repository">
         <input type="hidden" name="sort" value="'.$sort.'">
-        <label class="screen-reader-text" for="typeselector">'.__('Критерий поиска', 'wp-recall').':</label>
+        <label class="screen-reader-text" for="typeselector">'.__('Search category', 'wp-recall').':</label>
         <select name="type" id="typeselector">
-            <option value="term" '.selected($type,'term',false).'>'.__('Слово', 'wp-recall').'</option>
-            <option value="author" '.selected($type,'author',false).'>'.__('Автор', 'wp-recall').'</option>
-            <option value="tag" '.selected($type,'tag',false).'>'.__('Метка', 'wp-recall').'</option>
+            <option value="term" '.selected($type,'term',false).'>'.__('Word', 'wp-recall').'</option>
+            <option value="author" '.selected($type,'author',false).'>'.__('Author', 'wp-recall').'</option>
+            <option value="tag" '.selected($type,'tag',false).'>'.__('Tag', 'wp-recall').'</option>
         </select>
-        <label><span class="screen-reader-text">'.__('Поиск дополнений', 'wp-recall').'</span>
-            <input type="search" name="s" value="'.($s? $s: '').'" class="wp-filter-search" placeholder="'.__('Поиск дополнений', 'wp-recall').'..." aria-describedby="live-search-desc">
+        <label><span class="screen-reader-text">'.__('Search add-ons', 'wp-recall').'</span>
+            <input type="search" name="s" value="'.($s? $s: '').'" class="wp-filter-search" placeholder="'.__('Search add-ons', 'wp-recall').'..." aria-describedby="live-search-desc">
         </label>
-        <input type="submit" id="search-submit" class="button hide-if-js" value="'.__('Поиск дополнений', 'wp-recall').'">	
+        <input type="submit" id="search-submit" class="button hide-if-js" value="'.__('Search add-ons', 'wp-recall').'">	
     </form>
 </div>';
 

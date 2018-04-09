@@ -255,6 +255,8 @@ function rcl_get_order_tabs($rcl_tabs){
         
         if(isset($data['output']) && $data['output']!='menu') continue;
         
+        if($data['hidden']) continue;
+        
         if(!isset($data['public']) || $data['public']!=1){
             
             if(!$user_ID) continue;
@@ -270,6 +272,8 @@ function rcl_get_order_tabs($rcl_tabs){
         $counter[$order] = $id;
     }
     
+    if(count($counter) < 2) return $rcl_tabs;
+    
     ksort($counter);
     $id_first = array_shift($counter);
     $rcl_tabs[$id_first]['first'] = 1;
@@ -280,20 +284,12 @@ function rcl_get_order_tabs($rcl_tabs){
 //регистрируем контентые блоки
 function rcl_block($place,$callback,$args=false){
     global $rcl_blocks,$user_LK;
-    
-    $data = array(
+
+    $rcl_blocks[$place][] = apply_filters('block_data_rcl',array(
         'place'=>$place,
         'callback'=>$callback,
         'args'=>$args
-    );
-
-    $data = apply_filters('block_data_rcl',$data);
-
-    if($user_LK&&isset($data['args']['gallery'])){
-        rcl_bxslider_scripts();
-    }
-    
-    $rcl_blocks[$place][] = $data;
+    ));
     
     $rcl_blocks = apply_filters('rcl_blocks',$rcl_blocks);
   
@@ -1337,4 +1333,10 @@ function rcl_delete_user_action($user_id){
 add_action('delete_user','rcl_delete_user_avatar', 10);
 function rcl_delete_user_avatar($user_id){
     array_map("unlink", glob(RCL_UPLOAD_URL.'avatars/'.$user_id.'-*.jpg'));
+}
+
+function rcl_get_image_gallery($args){
+    require_once 'classes/class-rcl-image-gallery.php';
+    $gallery = new Rcl_Image_Gallery($args);
+    return $gallery->get_gallery();
 }

@@ -53,8 +53,8 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
             array(
                 'type' => 'radio',
                 'slug' => 'hidden',
-                'title' => __('Скрытая вкладка','wp-recall'),
-                'notice' => __('Вкладка будет доступна только по ссылке','wp-recall'),
+                'title' => __('Hidden tab','wp-recall'),
+                'notice' => __('The tab will be available only by link','wp-recall'),
                 'values' => array(
                     __('No','wp-recall'),
                     __('Yes','wp-recall')

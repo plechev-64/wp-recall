@@ -30,10 +30,10 @@ function rcl_datepicker_scripts(){
     wp_enqueue_script('jquery-ui-datepicker');
 }
 
-function rcl_bxslider_scripts(){
-    wp_enqueue_style( 'bx-slider', RCL_URL.'assets/js/jquery.bxslider/jquery.bxslider.min.css' );
+function rcl_image_slider_scripts(){
+    rcl_enqueue_style( 'jssor-slider', RCL_URL.'assets/css/slider.css' );
     wp_enqueue_script( 'jquery' );
-    rcl_enqueue_script( 'bx-slider', RCL_URL.'assets/js/jquery.bxslider/jquery.bxslider.min.js' );
+    rcl_enqueue_script( 'jssor-slider', RCL_URL.'assets/js/jssor.slider/js/jssor.slider.min.js' );
 }
 
 function rcl_dialog_scripts(){  
@@ -96,7 +96,6 @@ function rcl_frontend_scripts(){
     rcl_animate_css();
 
     rcl_enqueue_style( 'rcl-primary', RCL_URL.'assets/css/style.css' );
-    rcl_enqueue_style( 'rcl-slider', RCL_URL.'assets/css/slider.css' );
     rcl_enqueue_style( 'rcl-users-list', RCL_URL.'assets/css/users.css' );
     rcl_enqueue_style( 'rcl-register-form', RCL_URL.'assets/css/regform.css' );
     

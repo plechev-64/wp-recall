@@ -5,6 +5,7 @@ class Rcl_Form extends Rcl_Custom_Fields{
     public $action = '';
     public $method = 'post';
     public $submit;
+    public $nonce_name = 'rcl-form-nonce';
     public $onclick;
     public $fields = array();
     public $values = array();
@@ -63,7 +64,7 @@ class Rcl_Form extends Rcl_Custom_Fields{
 
                 $content .= '</div>';
                 
-                $content .= wp_nonce_field('rcl-form-nonce','_wpnonce',true,false);
+                $content .= wp_nonce_field($this->nonce_name,'_wpnonce',true,false);
 
             $content .= '</form>';
             

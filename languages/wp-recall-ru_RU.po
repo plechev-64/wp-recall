@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2018-03-30 18:51+0300\n"
+"POT-Creation-Date: 2018-04-07 18:34+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -47,7 +47,7 @@ msgstr "Добавить новый товар"
 #: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
 #: add-on/groups/groups-public.php:53
 #: add-on/prime-forum/admin/classes/class-prime-manager.php:351
-#: add-on/publicpost/core.php:77 add-on/publicpost/index.php:261
+#: add-on/publicpost/core.php:77 add-on/publicpost/index.php:295
 #: add-on/publicpost/init.php:22
 #: classes/class-rcl-custom-fields-manager.php:389
 #: classes/class-rcl-custom-fields-manager.php:498
@@ -345,13 +345,13 @@ msgstr "Данные сохранены"
 #: add-on/user-balance/index.php:196 admin/index.php:135
 #: admin/pages/repository.php:48 admin/pages/repository.php:58
 #: functions/addons-update.php:150 functions/addons-update.php:205
-#: functions/ajax.php:95 functions/enqueue-scripts.php:150
+#: functions/ajax.php:95 functions/enqueue-scripts.php:148
 msgid "Error"
 msgstr "Ошибка"
 
 #: add-on/commerce/admin/index.php:286
-msgid "Файл не был найден!"
-msgstr ""
+msgid "File not found!"
+msgstr "Файл не был найден!"
 
 #: add-on/commerce/admin/index.php:365
 msgid "Finance"
@@ -497,7 +497,7 @@ msgstr "Страница оформления заказа"
 #: add-on/user-balance/admin/addon-settings.php:96
 #: add-on/user-balance/admin/addon-settings.php:104
 #: add-on/user-balance/admin/addon-settings.php:112 admin/pages/options.php:50
-#: admin/pages/options.php:239 rcl-widgets.php:65 rcl-widgets.php:124
+#: admin/pages/options.php:231 rcl-widgets.php:65 rcl-widgets.php:124
 msgid "Not selected"
 msgstr "Не выбрано"
 
@@ -521,10 +521,10 @@ msgstr "Регистрация при оформлении"
 #: add-on/publicpost/admin/addon-settings.php:50
 #: add-on/publicpost/admin/addon-settings.php:69
 #: add-on/rating-system/admin/addon-settings.php:140
-#: admin/pages/options.php:108 admin/pages/options.php:176
-#: admin/pages/options.php:203 admin/pages/options.php:212
-#: admin/pages/options.php:282 admin/pages/options.php:289
-#: admin/pages/options.php:302
+#: admin/pages/options.php:108 admin/pages/options.php:168
+#: admin/pages/options.php:195 admin/pages/options.php:204
+#: admin/pages/options.php:274 admin/pages/options.php:281
+#: admin/pages/options.php:294
 msgid "Disabled"
 msgstr "Отключено"
 
@@ -536,9 +536,9 @@ msgstr "Отключено"
 #: add-on/publicpost/admin/addon-settings.php:51
 #: add-on/publicpost/admin/addon-settings.php:69
 #: add-on/rating-system/admin/addon-settings.php:140
-#: admin/pages/options.php:109 admin/pages/options.php:177
-#: admin/pages/options.php:204 admin/pages/options.php:213
-#: admin/pages/options.php:302
+#: admin/pages/options.php:109 admin/pages/options.php:169
+#: admin/pages/options.php:196 admin/pages/options.php:205
+#: admin/pages/options.php:294
 msgid "Enabled"
 msgstr "Подключено"
 
@@ -647,12 +647,14 @@ msgstr "Внимание"
 
 #: add-on/commerce/admin/pages/export-import.php:82
 msgid ""
-"Пустые значения произвольных полей в файле иморта удаляют их из базы данных"
+"Empty values of arbitrary fields in the import file remove them from the "
+"database"
 msgstr ""
+"Пустые значения произвольных полей в файле иморта удаляют их из базы данных"
 
 #: add-on/commerce/admin/pages/export-import.php:110
-msgid "Неверное расширение загружаемого файла. Ожидается формат XML!"
-msgstr ""
+msgid "Incorrect extension of the downloaded file. XML format expected!"
+msgstr "Неверное расширение загружаемого файла. Ожидается формат XML!"
 
 #: add-on/commerce/admin/pages/order.php:9
 #: add-on/commerce/content/order-content.php:139 add-on/commerce/core.php:276
@@ -1028,8 +1030,8 @@ msgstr "Ссылка для управления заказом"
 
 #: add-on/commerce/core.php:376
 #, php-format
-msgid "Вами был оплачен заказ на сайте \"%s\""
-msgstr ""
+msgid "You paid for the order on the website \"%s\""
+msgstr "Вами был оплачен заказ на сайте \"%s\""
 
 #: add-on/commerce/core.php:383
 msgid ""
@@ -1319,20 +1321,20 @@ msgstr ""
 "на модерации, пользователь должен иметь роль не ниже Автора"
 
 #: add-on/groups/admin/index.php:78
-msgid "Максимальный размер аватарки группы"
-msgstr ""
+msgid "Max size of the group avatars"
+msgstr "Максимальный размер аватарки группы"
 
-#: add-on/groups/admin/index.php:79 admin/pages/options.php:149
-#: admin/pages/options.php:160
-msgid ""
+#: add-on/groups/admin/index.php:79 admin/pages/options.php:141
+#: admin/pages/options.php:152
+msgid "Set the image upload limit in kb, by default"
+msgstr ""
 "Установите ограничение для загружаемого изображения в килобайтах, по-"
 "умолчанию"
-msgstr ""
 
-#: add-on/groups/admin/index.php:80 admin/pages/options.php:150
-#: admin/pages/options.php:161
-msgid "Если указан 0, то загрузка запрещена."
-msgstr ""
+#: add-on/groups/admin/index.php:80 admin/pages/options.php:142
+#: admin/pages/options.php:153
+msgid "If 0 is specified, download is disallowed."
+msgstr "Если указан 0, то загрузка запрещена"
 
 #: add-on/groups/classes/class-rcl-group-widget.php:46
 msgid "Show all"
@@ -1383,7 +1385,8 @@ msgstr "Читатель"
 #: add-on/prime-forum/admin/index.php:780
 #: add-on/prime-forum/admin/themes-manager.php:188
 #: add-on/publicpost/admin/index.php:135 admin/add-on-manager.php:190
-#: admin/templates-manager.php:177 templates/add-on-card.php:25
+#: admin/pages/repository.php:98 admin/templates-manager.php:177
+#: templates/add-on-card.php:25
 msgid "Author"
 msgstr "Автор"
 
@@ -1555,7 +1558,7 @@ msgstr "Заявка на доступ"
 
 #: add-on/groups/groups-widgets.php:124
 #: add-on/rating-system/admin/addon-settings.php:173 admin/pages/options.php:92
-#: admin/pages/options.php:192 rcl-widgets.php:38 rcl-widgets.php:102
+#: admin/pages/options.php:184 rcl-widgets.php:38 rcl-widgets.php:102
 msgid "All users"
 msgstr "Все пользователи"
 
@@ -1673,7 +1676,7 @@ msgstr "Посетитель"
 msgid "separate by commas"
 msgstr "разделять запятыми"
 
-#: add-on/groups/index.php:500 admin/index.php:43 admin/pages/options.php:322
+#: add-on/groups/index.php:500 admin/index.php:43 admin/pages/options.php:314
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
@@ -1701,7 +1704,7 @@ msgstr "Статус пользователя"
 #: add-on/prime-forum/admin/index.php:372 admin/pages/addons-manager.php:42
 #: admin/pages/repository.php:77 admin/pages/themes-manager.php:26
 #: classes/class-rcl-custom-fields-manager.php:95
-#: functions/enqueue-scripts.php:146
+#: functions/enqueue-scripts.php:144
 msgid "Save"
 msgstr "Сохранить"
 
@@ -1931,16 +1934,16 @@ msgid "Primary colours of WP-Recall"
 msgstr "Основные цвета WP-Recall"
 
 #: add-on/prime-forum/admin/index.php:110
-msgid "Показ ссылок в сообщениях"
-msgstr ""
+msgid "The display of links in messages"
+msgstr "Показ ссылок в сообщениях"
 
 #: add-on/prime-forum/admin/index.php:112
-msgid "Скрывать для гостей"
-msgstr ""
+msgid "Hiding for guests"
+msgstr "Скрывать для гостей"
 
 #: add-on/prime-forum/admin/index.php:113
-msgid "Показывать всем"
-msgstr ""
+msgid "Show for all"
+msgstr "Показывать всем"
 
 #: add-on/prime-forum/admin/index.php:119
 msgid "Supported shortcodes"
@@ -2017,31 +2020,37 @@ msgid "Support of OEMBED in messages"
 msgstr "Поддержка OEMBED в сообщениях"
 
 #: add-on/prime-forum/admin/index.php:187
-msgid "Причина редактирования сообщения"
-msgstr ""
+msgid "Reason for editing a message"
+msgstr "Причина редактирования сообщения"
 
 #: add-on/prime-forum/admin/index.php:197
-msgid "Задержка на получение нового сообщения через AJAX"
-msgstr ""
+msgid "Delay on receiving a new message via AJAX"
+msgstr "Задержка на получение нового сообщения через AJAX"
 
 #: add-on/prime-forum/admin/index.php:202
 msgid ""
+"In seconds. New messages in the forum topic are loaded from AJAX only for "
+"those who have already left a message in this topic. If 0 is specified, the "
+"AJAX loading is disabled"
+msgstr ""
 "В секундах. Новые сообщения в теме форума подгружаются через AJAX только для "
 "тех, кто уже оставил ранее в этой теме сообщение. Если ноль, то AJAX-"
-"подгрузка отключена."
-msgstr ""
+"подгрузка отключена"
 
 #: add-on/prime-forum/admin/index.php:207
-msgid "Предел кол-ва запросов на получение новых сообщений"
-msgstr ""
+msgid "Limit of requests to receive new messages"
+msgstr "Предел кол-ва запросов на получение новых сообщений"
 
 #: add-on/prime-forum/admin/index.php:212
 msgid ""
+"If the loading of new messages via AJAX is enabled, here we set the maximum "
+"number of requests from one user, after which they are terminated, after the "
+"publication of a new message requests are resumed"
+msgstr ""
 "Если включена подгрузка новых сообщений через AJAX, то здесь устанавливаем "
 "максимальное кол-во запросов от одного пользователя, после достижения "
 "которого они прекращаются, после публикации нового сообщения запросы "
-"возобновляются."
-msgstr ""
+"возобновляются"
 
 #: add-on/prime-forum/admin/index.php:216
 msgid "Templates to form the title tag and name of the page"
@@ -2092,14 +2101,16 @@ msgid "Notification to the administrator about new topics"
 msgstr "Уведомление администратору о новых темах"
 
 #: add-on/prime-forum/admin/index.php:273
-msgid "Уведомления автору темы о новых ответах"
-msgstr ""
+msgid "Notice the author of the theme about new answers"
+msgstr "Уведомления автору темы о новых ответах"
 
 #: add-on/prime-forum/admin/index.php:278
 msgid ""
+"The notice sent for each new message in the topic only when the topic`s "
+"author is offline"
+msgstr ""
 "Уведомление высылается на каждое новое сообщение в теме только когда автор "
 "темы не находится на форуме"
-msgstr ""
 
 #: add-on/prime-forum/admin/index.php:295
 msgid "Settings PrimeForum"
@@ -2153,7 +2164,7 @@ msgid "Install"
 msgstr "Установить"
 
 #: add-on/prime-forum/admin/index.php:393 admin/pages/addons-manager.php:63
-#: admin/pages/themes-manager.php:47
+#: admin/pages/repository.php:86 admin/pages/themes-manager.php:47
 msgid "All"
 msgstr "Все"
 
@@ -2338,7 +2349,7 @@ msgstr "Текст сообщения"
 #: add-on/prime-forum/classes/class-prime-form.php:223
 #: add-on/prime-forum/functions-actions.php:1151
 #: add-on/publicpost/classes/class-rcl-public-form.php:402
-#: add-on/publicpost/init.php:19 functions/enqueue-scripts.php:149
+#: add-on/publicpost/init.php:19 functions/enqueue-scripts.php:147
 msgid "Preview"
 msgstr "Предпросмотр"
 
@@ -2634,15 +2645,15 @@ msgstr "Причина редактирования"
 msgid "You are unable to view published links"
 msgstr "Вы не можете просматривать опубликованные ссылки"
 
-#: add-on/prime-forum/functions-post-content.php:223
+#: add-on/prime-forum/functions-post-content.php:243
 msgid "The wording of the message"
 msgstr "Редакции сообщения"
 
-#: add-on/prime-forum/functions-post-content.php:229
+#: add-on/prime-forum/functions-post-content.php:249
 msgid "The reason"
 msgstr "Причина"
 
-#: add-on/prime-forum/functions-post-content.php:229 rcl-functions.php:1316
+#: add-on/prime-forum/functions-post-content.php:249 rcl-functions.php:1312
 msgid "not specified"
 msgstr "не указано"
 
@@ -2664,6 +2675,7 @@ msgid "not found"
 msgstr "не найдено"
 
 #: add-on/prime-forum/functions-query.php:214
+#: classes/class-rcl-custom-fields.php:578
 msgid "from"
 msgstr "от"
 
@@ -2993,14 +3005,16 @@ msgid "Display information about the author"
 msgstr "Отображать информацию об авторе"
 
 #: add-on/publicpost/admin/addon-settings.php:58
-msgid "Типы записей для вывода блока автора"
-msgstr ""
+msgid "Types of write for the author`s block output"
+msgstr "Типы записей для вывода блока автора"
 
 #: add-on/publicpost/admin/addon-settings.php:60
 msgid ""
-"Укажите типы записей, где должен выводится блок автора. Если ничего не "
-"указано, то выводится везде."
+"Select the types of writes where the author`s block should be displayed. If "
+"nothing is specified, it is displayed everywhere"
 msgstr ""
+"Укажите типы записей, где должен выводится блок автора. Если ничего не "
+"указано, то выводится везде"
 
 #: add-on/publicpost/admin/addon-settings.php:68
 msgid "List of publications tab"
@@ -3084,14 +3098,16 @@ msgid "Moderation of publications"
 msgstr "Модерация публикаций"
 
 #: add-on/publicpost/admin/addon-settings.php:165
-msgid "Тип записи"
-msgstr ""
+msgid "Type post"
+msgstr "Тип записи"
 
 #: add-on/publicpost/admin/addon-settings.php:167
 msgid ""
-"Укажите типы записей, которые будут отправляться на модерацию. Если ничего "
-"не указано, то модерация действует для всех типов."
+"Select the types of posts that will be sent for moderation. If nothing is "
+"specified, then the moderation is valid for all types"
 msgstr ""
+"Укажите типы записей, которые будут отправляться на модерацию. Если ничего "
+"не указано, то модерация действует для всех типов"
 
 #: add-on/publicpost/admin/addon-settings.php:176
 msgid "Editing"
@@ -3147,14 +3163,16 @@ msgid "On content recording"
 msgstr "Под контентом публикации"
 
 #: add-on/publicpost/admin/addon-settings.php:217
-msgid "Типы записей для вывода произвольных полей"
-msgstr ""
+msgid "Types of posts for the output of custom fields"
+msgstr "Типы записей для вывода произвольных полей"
 
 #: add-on/publicpost/admin/addon-settings.php:219
 msgid ""
-"Укажите типы записей, где будут выводится значения произвольных полей. Если "
-"ничего не указано, то выводятся везде."
+"Select types of posts where the values of arbitrary fields will be "
+"displayed. If nothing is specified, it is displayed everywhere"
 msgstr ""
+"Укажите типы записей, где будут выводится значения произвольных полей. Если "
+"ничего не указано, то выводятся везде"
 
 #: add-on/publicpost/admin/index.php:34
 msgid "Manage publication forms"
@@ -3245,11 +3263,15 @@ msgstr ""
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:118
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:248
+#: add-on/rating-system/admin/addon-settings.php:72
+#: add-on/rating-system/admin/addon-settings.php:192
 msgid "Disable"
 msgstr "Отключить"
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:119
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:249
+#: add-on/rating-system/admin/addon-settings.php:73
+#: add-on/rating-system/admin/addon-settings.php:193
 msgid "Enable"
 msgstr "Включить"
 
@@ -3488,8 +3510,8 @@ msgid "If this is your email, then log in and publish your post"
 msgstr "Если это ваш email, то авторизуйтесь и опубликуйте запись"
 
 #: add-on/publicpost/functions-ajax.php:193
-msgid "Некорректные значения некоторых полей, выставите корректные значения!"
-msgstr ""
+msgid "Incorrect values of some fields, enter the correct values!"
+msgstr "Некорректные значения некоторых полей, выставите корректные значения!"
 
 #: add-on/publicpost/functions-ajax.php:207
 msgid "Upload or specify an image as a thumbnail"
@@ -3589,29 +3611,22 @@ msgid "Stars"
 msgstr "Звезды"
 
 #: add-on/rating-system/admin/addon-settings.php:58
-msgid "Количество звезд"
-msgstr ""
+msgid "Number of stars"
+msgstr "Количество звезд"
 
 #: add-on/rating-system/admin/addon-settings.php:70
-msgid "Разметка рейтинга"
-msgstr ""
-
-#: add-on/rating-system/admin/addon-settings.php:72
-#: add-on/rating-system/admin/addon-settings.php:192
-msgid "Отключено"
-msgstr ""
-
-#: add-on/rating-system/admin/addon-settings.php:73
-#: add-on/rating-system/admin/addon-settings.php:193
-msgid "Включено"
-msgstr ""
+msgid "Rating markup"
+msgstr "Разметка рейтинга"
 
 #: add-on/rating-system/admin/addon-settings.php:75
 msgid ""
+"If enabled, the standard markup on single pages along with the rating is "
+"displayed as <a href=\"http://schema.org\" target=\"_blank\">http://schema."
+"org</a>"
+msgstr ""
 "Если включено, то на одиночных страницах вместе с рейтингом выводится "
 "разметка по стандарту <a href=\"http://schema.org\" target=\"_blank\">http://"
 "schema.org</a>"
-msgstr ""
 
 #: add-on/rating-system/admin/addon-settings.php:88
 msgid "Overall rating"
@@ -3689,15 +3704,17 @@ msgid "Delete your vote"
 msgstr "Удаление своего голоса"
 
 #: add-on/rating-system/admin/addon-settings.php:190
-msgid "Вкладка \"Разное\""
-msgstr ""
+msgid "Tab \"Other\""
+msgstr "Вкладка \"Разное\""
 
 #: add-on/rating-system/admin/addon-settings.php:195
 msgid ""
+"If enabled, an additional \"Other\" tab will be created in the rating "
+"history, where all changes will be displayed via unregistered rating types"
+msgstr ""
 "Если включено, то в истории рейтинга будет формироваться дополнительная "
 "вкладка \"Разное\", где будут выводится все изменения через "
 "незарегистрированные типы рейтинга"
-msgstr ""
 
 #: add-on/rating-system/admin/index.php:15
 msgid "Disable rating for publication"
@@ -3711,18 +3728,18 @@ msgstr "Рейтинг не был обновлен"
 msgid "Rating updated successfully"
 msgstr "Рейтинг успешно обновлен"
 
-#: add-on/rating-system/classes/class-rcl-rating-box.php:380
-#: add-on/rating-system/classes/class-rcl-rating-box.php:401
+#: add-on/rating-system/classes/class-rcl-rating-box.php:382
+#: add-on/rating-system/classes/class-rcl-rating-box.php:403
 msgid "See history"
 msgstr "Смотреть историю"
 
-#: add-on/rating-system/classes/class-rcl-rating-box.php:387
-#: add-on/rating-system/classes/class-rcl-rating-box.php:407
+#: add-on/rating-system/classes/class-rcl-rating-box.php:389
+#: add-on/rating-system/classes/class-rcl-rating-box.php:409
 msgid "Cancel vote"
 msgstr "Отменить голос"
 
-#: add-on/rating-system/classes/class-rcl-rating-box.php:387
-#: add-on/rating-system/classes/class-rcl-rating-box.php:407
+#: add-on/rating-system/classes/class-rcl-rating-box.php:389
+#: add-on/rating-system/classes/class-rcl-rating-box.php:409
 msgid "Vote"
 msgstr "Голосовать"
 
@@ -3763,8 +3780,8 @@ msgid "Data not found"
 msgstr "Данные не найдены"
 
 #: add-on/rating-system/index.php:104
-msgid "Разное"
-msgstr ""
+msgid "Other"
+msgstr "Разное"
 
 #: add-on/rating-system/index.php:368
 msgid "rating"
@@ -4003,14 +4020,14 @@ msgid "Delete contact"
 msgstr "Удалить контакт"
 
 #: add-on/rcl-chat/index.php:273
-msgid "Открыть чат в окне"
-msgstr ""
+msgid "Open chat in window"
+msgstr "Открыть чат в окне"
 
 #: add-on/rcl-chat/index.php:309
 msgid "No important messages yet"
 msgstr "Важных сообщений пока нет"
 
-#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:253
+#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:245
 msgid "Not used"
 msgstr "Не используется"
 
@@ -4321,12 +4338,12 @@ msgid "Latin alphabet and numbers"
 msgstr "Латиница и цифры"
 
 #: admin/classes/class-rcl-tabs-manager.php:56
-msgid "Скрытая вкладка"
-msgstr ""
+msgid "Hidden tab"
+msgstr "Скрытая вкладка"
 
 #: admin/classes/class-rcl-tabs-manager.php:57
-msgid "Вкладка будет доступна только по ссылке"
-msgstr ""
+msgid "The tab will be available only by link"
+msgstr "Вкладка будет доступна только по ссылке"
 
 #: admin/classes/class-rcl-tabs-manager.php:67
 msgid "Icon class of  font-awesome"
@@ -4380,7 +4397,7 @@ msgstr "поддерживаются шорткоды и HTML-код"
 msgid "Output images via Wp-Recall gallery?"
 msgstr "Использовать вывод изображений публикации через галерею Wp-Recall?"
 
-#: admin/index.php:147 admin/pages/options.php:220
+#: admin/index.php:147 admin/pages/options.php:212
 msgid "Login and register"
 msgstr "Вход и регистрация"
 
@@ -4389,11 +4406,12 @@ msgid "Settings saved!"
 msgstr "Настройки сохранены!"
 
 #: admin/index.php:404
-#, php-format
 msgid ""
+"If you liked plugin %wp-Recall%s, please vote for it in repository %s★★★★%s. "
+"Thank you so much!"
+msgstr ""
 "Если Вам понравился плагин %sWP-Recall%s, пожалуйста, проголосуйте за него в "
 "репозитории %s★★★★★%s. Огромное вам спасибо заранее!"
-msgstr ""
 
 #: admin/metaboxes.php:5
 msgid "WP-Recall statistics"
@@ -4583,43 +4601,23 @@ msgstr "Размещение кнопок вывода вкладок"
 msgid "Top"
 msgstr "Сверху"
 
-#: admin/pages/options.php:137
-msgid "Pause Slider"
-msgstr "Пауза слайдера"
+#: admin/pages/options.php:140
+msgid "Max weight of avatars"
+msgstr "Максимальный размер аватарки"
 
-#: admin/pages/options.php:138
-msgid ""
-"Only applied for slider via shortcode publications <a href=\"https://"
-"codeseller.ru/api-rcl/slider-rcl/\" target=\"_blank\">[slider-rcl]</a>"
-msgstr ""
-"Используется только при выводе слайдера публикаций через шоркод <a href="
-"\"https://codeseller.ru/api-rcl/slider-rcl/\" target=\"_blank\">[slider-"
-"rcl]</a>"
+#: admin/pages/options.php:151
+msgid "Max weight of cover"
+msgstr "Максимальный размер обложки"
 
-#: admin/pages/options.php:139
-msgid ""
-"The value of the pause between slide transitions in seconds. Default value "
-"is 0 - the slide show is not made"
-msgstr ""
-"Значение паузы для слайдера в секундах. По-умолчанию 0 - слайды не сменяются"
-
-#: admin/pages/options.php:148
-msgid "Максимальный размер аватарки"
-msgstr ""
-
-#: admin/pages/options.php:159
-msgid "Максимальный размер обложки"
-msgstr ""
-
-#: admin/pages/options.php:168
+#: admin/pages/options.php:160
 msgid "Caching"
 msgstr "Кеширование"
 
-#: admin/pages/options.php:173
+#: admin/pages/options.php:165
 msgid "Cache"
 msgstr "Кеш"
 
-#: admin/pages/options.php:174
+#: admin/pages/options.php:166
 msgid ""
 "Use the functionality of the caching WP-Recall plugin. <a href=\"https://"
 "codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
@@ -4629,27 +4627,27 @@ msgstr ""
 "codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
 "target=\"_blank\">Подробнее</a>"
 
-#: admin/pages/options.php:184
+#: admin/pages/options.php:176
 msgid "Time cache (seconds)"
 msgstr "Время жизни кеша (в секундах)"
 
-#: admin/pages/options.php:185 admin/pages/options.php:309
+#: admin/pages/options.php:177 admin/pages/options.php:301
 msgid "Default"
 msgstr "По-умолчанию"
 
-#: admin/pages/options.php:190
+#: admin/pages/options.php:182
 msgid "Cache output"
 msgstr "Вывод кеша"
 
-#: admin/pages/options.php:193
+#: admin/pages/options.php:185
 msgid "Only guests"
 msgstr "Только гостям"
 
-#: admin/pages/options.php:201
+#: admin/pages/options.php:193
 msgid "Minimization of file styles"
 msgstr "Минимизация стилевых файлов"
 
-#: admin/pages/options.php:205
+#: admin/pages/options.php:197
 msgid ""
 "Minimization of file styles only works in correlation with Wp-Recall style "
 "files and add-ons that support this feature"
@@ -4657,35 +4655,35 @@ msgstr ""
 "Минимизация стилевых файлов работает только со стилевыми файлами плагина WP-"
 "Recall и его дополнений, которые поддерживают этот функционал"
 
-#: admin/pages/options.php:210
+#: admin/pages/options.php:202
 msgid "Minimization of scripts"
 msgstr "Минимизация скриптов"
 
-#: admin/pages/options.php:225
+#: admin/pages/options.php:217
 msgid "Output procedure"
 msgstr "Порядок вывода"
 
-#: admin/pages/options.php:227
+#: admin/pages/options.php:219
 msgid "Floating form"
 msgstr "Всплывающая форма"
 
-#: admin/pages/options.php:228
+#: admin/pages/options.php:220
 msgid "On a separate page"
 msgstr "На отдельной странице"
 
-#: admin/pages/options.php:229
+#: admin/pages/options.php:221
 msgid "Wordpress Forms"
 msgstr "Формы Wordpress"
 
-#: admin/pages/options.php:230
+#: admin/pages/options.php:222
 msgid "Widget form"
 msgstr "Форма в виджете"
 
-#: admin/pages/options.php:235
+#: admin/pages/options.php:227
 msgid "ID of the shortcode page [loginform]"
 msgstr "Идентификатор страницы с шорткодом [loginform]"
 
-#: admin/pages/options.php:250
+#: admin/pages/options.php:242
 msgid ""
 "If you are using the registration confirmation, after registration, the user "
 "will need to confirm your email by clicking on the link in the sent email"
@@ -4694,59 +4692,59 @@ msgstr ""
 "будет необходимо подтвердить свой email, перейдя по ссылке в присланном "
 "письме"
 
-#: admin/pages/options.php:251
+#: admin/pages/options.php:243
 msgid "Registration confirmation by the user"
 msgstr "Подтверждение регистрации пользователя"
 
-#: admin/pages/options.php:254
+#: admin/pages/options.php:246
 msgid "Used"
 msgstr "Используется"
 
-#: admin/pages/options.php:260
+#: admin/pages/options.php:252
 msgid "Redirect user after login"
 msgstr "Перенаправление после авторизации"
 
-#: admin/pages/options.php:262
+#: admin/pages/options.php:254
 msgid "The user profile"
 msgstr "Профиль пользователя"
 
-#: admin/pages/options.php:263
+#: admin/pages/options.php:255
 msgid "Current page"
 msgstr "Текущая страница"
 
-#: admin/pages/options.php:264
+#: admin/pages/options.php:256
 msgid "Arbitrary URL"
 msgstr "Произвольный URL"
 
-#: admin/pages/options.php:271
+#: admin/pages/options.php:263
 msgid "URL"
 msgstr "URL"
 
-#: admin/pages/options.php:272
+#: admin/pages/options.php:264
 msgid "Enter your URL below, if you select an arbitrary URL after login"
 msgstr "Введите URL, если выбран произвольный URL после авторизации"
 
-#: admin/pages/options.php:281
+#: admin/pages/options.php:273
 msgid "repeat password field"
 msgstr "Поле повтора пароля"
 
-#: admin/pages/options.php:282 admin/pages/options.php:289
+#: admin/pages/options.php:274 admin/pages/options.php:281
 msgid "Displaye"
 msgstr "Отображать"
 
-#: admin/pages/options.php:288
+#: admin/pages/options.php:280
 msgid "Indicator of password complexity"
 msgstr "Индикатор сложности пароля"
 
-#: admin/pages/options.php:295 rcl-functions.php:364
+#: admin/pages/options.php:287 rcl-functions.php:360
 msgid "Recallbar"
 msgstr "Recallbar"
 
-#: admin/pages/options.php:300
+#: admin/pages/options.php:292
 msgid "Output of recallbar panel"
 msgstr "Вывод панели recallbar"
 
-#: admin/pages/options.php:301
+#: admin/pages/options.php:293
 msgid ""
 "Recallbar – is he top panel WP-Recall plugin through which the plugin and "
 "its add-ons can output their data and the administrator can make his menu, "
@@ -4758,11 +4756,11 @@ msgstr ""
 "сформировав его на <a href=\"/wp-admin/nav-menus.php\" target=\"_blank"
 "\">странице управления меню сайта</a>"
 
-#: admin/pages/options.php:308
+#: admin/pages/options.php:300
 msgid "Color"
 msgstr "Цвет"
 
-#: admin/pages/options.php:309
+#: admin/pages/options.php:301
 msgid "Primary colors of WP-Recall"
 msgstr "Основные цвета WP-Recall"
 
@@ -4774,42 +4772,34 @@ msgstr "Данные не были получены"
 msgid "Repository for WP-Recall add-ons"
 msgstr "Репозиторий дополнений WP-Recall"
 
-#: admin/pages/repository.php:86
-msgid "Все"
-msgstr ""
-
 #: admin/pages/repository.php:87
-msgid "Популярные"
-msgstr ""
+msgid "Popular"
+msgstr "Популярные"
 
 #: admin/pages/repository.php:88
-msgid "Рекомендации"
-msgstr ""
+msgid "Reference"
+msgstr "Рекомендации"
 
 #: admin/pages/repository.php:89
-msgid "Обновления"
-msgstr ""
+msgid "Updates"
+msgstr "Обновления"
 
 #: admin/pages/repository.php:95
-msgid "Критерий поиска"
-msgstr ""
+msgid "Search category"
+msgstr "Критерий поиска"
 
 #: admin/pages/repository.php:97
-msgid "Слово"
-msgstr ""
-
-#: admin/pages/repository.php:98
-msgid "Автор"
-msgstr ""
+msgid "Word"
+msgstr "Слово"
 
 #: admin/pages/repository.php:99
-msgid "Метка"
-msgstr ""
+msgid "Tag"
+msgstr "Метка"
 
 #: admin/pages/repository.php:101 admin/pages/repository.php:102
 #: admin/pages/repository.php:104
-msgid "Поиск дополнений"
-msgstr ""
+msgid "Search add-ons"
+msgstr "Поиск дополнений"
 
 #: admin/pages/repository.php:110
 msgid "Results found"
@@ -4874,12 +4864,12 @@ msgid "TinyMCE"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:234
-msgid "Использовать TinyMCE"
-msgstr ""
+msgid "Using TinyMCE"
+msgstr "Использовать TinyMCE"
 
 #: classes/class-rcl-custom-fields-manager.php:235
-msgid "Может не загружаться при AJAX"
-msgstr ""
+msgid "May not load with AJAX"
+msgstr "Может не загружаться при AJAX"
 
 #: classes/class-rcl-custom-fields-manager.php:243
 msgid "Min"
@@ -4915,7 +4905,7 @@ msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:302
 msgid "Pattern"
-msgstr ""
+msgstr "Шаблон"
 
 #: classes/class-rcl-custom-fields-manager.php:310
 msgid "Maxlength"
@@ -5019,12 +5009,8 @@ msgid "Use the format"
 msgstr "Используйте формат"
 
 #: classes/class-rcl-custom-fields.php:578
-msgid "от"
-msgstr ""
-
-#: classes/class-rcl-custom-fields.php:578
-msgid "до"
-msgstr ""
+msgid "for"
+msgstr "от"
 
 #: classes/class-rcl-custom-fields.php:607
 msgid "Upload the downloaded file"
@@ -5096,8 +5082,8 @@ msgid "Failed to open file with add-ons data to check for updates"
 msgstr "Не удалось открыть файл с данными дополнений для проверки обновлений"
 
 #: functions/addons-update.php:178
-msgid "Обновление невозможно! Не определен класс ZipArchive."
-msgstr ""
+msgid "Update is impossible! ZipArchive class is not defined."
+msgstr "Обновление невозможно! Не определен класс ZipArchive."
 
 #: functions/addons-update.php:217
 msgid "The files failed to be uploaded!"
@@ -5187,47 +5173,47 @@ msgstr "Перейти к последней странице"
 msgid "Go back"
 msgstr "Назад"
 
-#: functions/enqueue-scripts.php:124
+#: functions/enqueue-scripts.php:122
 msgid "Very weak"
 msgstr "Очень слабый"
 
-#: functions/enqueue-scripts.php:125
+#: functions/enqueue-scripts.php:123
 msgid "Weak"
 msgstr "Слабый"
 
-#: functions/enqueue-scripts.php:126
+#: functions/enqueue-scripts.php:124
 msgid "Worse than average"
 msgstr "Хуже среднего"
 
-#: functions/enqueue-scripts.php:127
+#: functions/enqueue-scripts.php:125
 msgid "Average"
 msgstr "Средний"
 
-#: functions/enqueue-scripts.php:128
+#: functions/enqueue-scripts.php:126
 msgid "Reliable"
 msgstr "Надежный"
 
-#: functions/enqueue-scripts.php:129
+#: functions/enqueue-scripts.php:127
 msgid "Strong"
 msgstr "Сильный"
 
-#: functions/enqueue-scripts.php:147
+#: functions/enqueue-scripts.php:145
 msgid "Close"
 msgstr "Закрыть"
 
-#: functions/enqueue-scripts.php:148
+#: functions/enqueue-scripts.php:146
 msgid "Please wait"
 msgstr "Подождите"
 
-#: functions/enqueue-scripts.php:151
+#: functions/enqueue-scripts.php:149
 msgid "Loading"
 msgstr "Загрузка"
 
-#: functions/enqueue-scripts.php:152
+#: functions/enqueue-scripts.php:150
 msgid "Upload"
 msgstr "Загрузить"
 
-#: functions/enqueue-scripts.php:167
+#: functions/enqueue-scripts.php:165
 msgid "Fill in all required fields"
 msgstr "Заполните все обязательные поля"
 
@@ -5236,7 +5222,7 @@ msgid "Publics"
 msgstr "Публикации"
 
 #: functions/frontend.php:110 functions/frontend.php:181
-#: functions/frontend.php:386 rcl-functions.php:847
+#: functions/frontend.php:386 rcl-functions.php:843
 msgid "offline"
 msgstr "не в сети"
 
@@ -5378,7 +5364,7 @@ msgstr "Пароли не совпадают!"
 msgid "The passwords match"
 msgstr "Пароли совпадают"
 
-#: functions/shortcodes.php:8 functions/shortcodes.php:247
+#: functions/shortcodes.php:8 functions/shortcodes.php:159
 msgid "To use your personal account, please log in or register on this site"
 msgstr ""
 "Начните пользоваться возможностями своего личного кабинета, войдите или "
@@ -5388,7 +5374,7 @@ msgstr ""
 msgid "Users not found"
 msgstr "Пользователи не найдены"
 
-#: functions/shortcodes.php:254
+#: functions/shortcodes.php:166
 msgid "Such tab was not found!"
 msgstr "Такой вкладки не найдено!"
 
@@ -5458,16 +5444,16 @@ msgstr "Загрузка фона"
 msgid "Image successfully uploaded"
 msgstr "Изображение успешно загружено"
 
-#: rcl-functions.php:799
+#: rcl-functions.php:795
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Это сообщение было сформировано автоматически, не надо отвечать на него."
 
-#: rcl-functions.php:823
+#: rcl-functions.php:819
 msgid "long ago"
 msgstr "давно"
 
-#: rcl-functions.php:926
+#: rcl-functions.php:922
 msgid "Signature verification failed"
 msgstr "Проверка подписи не пройдена"
 
@@ -5578,6 +5564,24 @@ msgstr "Регистрация"
 #: wp-recall.php:43 wp-recall.php:47
 msgid "Are you cheating, bastard?"
 msgstr "Читеришь, гадёныш?"
+
+#~ msgid "Pause Slider"
+#~ msgstr "Пауза слайдера"
+
+#~ msgid ""
+#~ "Only applied for slider via shortcode publications <a href=\"https://"
+#~ "codeseller.ru/api-rcl/slider-rcl/\" target=\"_blank\">[slider-rcl]</a>"
+#~ msgstr ""
+#~ "Используется только при выводе слайдера публикаций через шоркод <a href="
+#~ "\"https://codeseller.ru/api-rcl/slider-rcl/\" target=\"_blank\">[slider-"
+#~ "rcl]</a>"
+
+#~ msgid ""
+#~ "The value of the pause between slide transitions in seconds. Default "
+#~ "value is 0 - the slide show is not made"
+#~ msgstr ""
+#~ "Значение паузы для слайдера в секундах. По-умолчанию 0 - слайды не "
+#~ "сменяются"
 
 #~ msgid "The currency value of goods"
 #~ msgstr "Значение валюты товара"

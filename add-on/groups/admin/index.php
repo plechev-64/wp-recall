@@ -75,9 +75,9 @@ function rcl_admin_groups_page_content($content){
                     'value_step' => 256,
                     'default' => 1024,
                     'slug' => 'group_avatar_weight',
-                    'title' => __('Максимальный размер аватарки группы','wp-recall').', Kb',
-                    'notice' => __('Установите ограничение для загружаемого изображения в килобайтах, по-умолчанию','wp-recall'). ' 1024Kb' .
-                    '. ' . __('Если указан 0, то загрузка запрещена.','wp-recall')
+                    'title' => __('Max size of the group avatars','wp-recall').', Kb',
+                    'notice' => __('Set the image upload limit in kb, by default','wp-recall'). ' 1024Kb' .
+                    '. ' . __('If 0 is specified, download is disallowed.','wp-recall')
                 )
             )
         )

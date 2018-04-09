@@ -454,18 +454,6 @@ function rcl_init_close_notice(){
 
 rcl_add_action('rcl_init','rcl_init_cookie');
 
-rcl_add_action('rcl_slider','rcl_init_footer_slider');
-function rcl_init_footer_slider(){
-    rcl_add_action('rcl_footer','rcl_init_slider');
-}
-
-function rcl_init_slider(){
-    var slider_options = eval("("+Rcl.slider+")");
-    jQuery('.rcl-gallery').bxSlider({ pagerCustom: '#bx-pager' });    
-    jQuery('.slider-rcl').bxSlider( slider_options );    
-    jQuery('.slider-products').bxSlider({ auto:true, pause:10000 });
-}
-
 rcl_add_action('rcl_login_form','rcl_init_login_form');
 function rcl_init_login_form(type_form){
     

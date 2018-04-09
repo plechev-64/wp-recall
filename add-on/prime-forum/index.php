@@ -439,8 +439,8 @@ function pfm_replace_mask_title($string){
     
 }
 
-function pfm_get_current_theme(){
-    return rcl_get_addon(apply_filters('pfm_current_theme',get_option('rcl_pforum_template')));
+function pfm_get_current_theme(){   
+    return apply_filters('pfm_current_theme', rcl_get_addon($themeName = get_option('rcl_pforum_template')), $themeName);
 }
 
 function pfm_topic_beat($beat){

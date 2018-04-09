@@ -149,7 +149,7 @@ function pfm_the_post_manager(){
         );
     }
     
-    if(pfm_is_can('post_create') && !$PrimeTopic->topic_closed && !$PrimeTopic->forum_closed){
+    if(pfm_is_can('post_create') && $PrimeTopic && !$PrimeTopic->topic_closed && !$PrimeTopic->forum_closed){
         
         $actions['get_post_excerpt'] = array(
             'name' => __('Quote message','wp-recall'),
@@ -461,7 +461,7 @@ function pfm_ajax_action(){
     rcl_verify_ajax_nonce();
     
     $method = $_POST['method'];
-    $itemType = $_POST['item_type'];
+    $itemType = isset($_POST['item_type'])? $_POST['item_type']: false;
     $itemID = (isset($_POST['item_id']))? $_POST['item_id']: null;
     
     if(!isset($PrimeActions[$method])) exit;

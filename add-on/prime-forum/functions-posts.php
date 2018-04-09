@@ -42,7 +42,7 @@ function pfm_the_post_classes(){
         'prime-post-index-'.$PrimePost->post_index
     );
     
-    if($PrimeTopic->user_id == $PrimePost->user_id){
+    if($PrimeTopic && $PrimePost && $PrimeTopic->user_id == $PrimePost->user_id){
         $classes[] = 'topic-author';
     }
     

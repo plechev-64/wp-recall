@@ -575,7 +575,7 @@ class Rcl_Custom_Fields{
             if(in_array($field['type'],$array_types)){
                 if($value){
                     if($field['type'] == 'range'){
-                        $show = __('от','wp-recall').' '.$value[0].' '.__('до','wp-recall').' '.$value[1];
+                        $show = __('from','wp-recall').' '.$value[0].' '.__('for','wp-recall').' '.$value[1];
                     }else{
                         $show = implode(', ',$value);
                     }

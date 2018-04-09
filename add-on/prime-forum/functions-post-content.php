@@ -109,7 +109,7 @@ function pfm_filter_allowed_tags($content){
 add_filter('pfm_content_without_code','pfm_filter_urls',11);
 function pfm_filter_urls($content){
 
-    preg_match_all("/(\s|^|])(https?:[_a-z0-9\/\.%+\-#?=&]+)/ui", $content, $urls);
+    preg_match_all("/(\s|^|])(https?:[_a-zА-Я0-9\/\.%+\-\—#?=&]+)/ui", $content, $urls);
     
     if($urls[0]){
         
@@ -194,6 +194,26 @@ function pfm_filter_smilies($content){
     return $content;
 }
 
+add_filter('pfm_content_without_code','pfm_filter_imgs',16);
+function pfm_filter_imgs($content){
+
+    preg_match_all('/(\s|^|])<img(.+)src=([^\s].+)>/iUus', $content, $imgs);
+    
+    if($imgs[0]){
+        
+        foreach( $imgs[0] as $k=>$img ){
+            
+            $replace = '<a href='.$imgs[3][$k].' rel=fancybox class=fancybox>'.$img.'</a>';
+
+            $content = str_replace($img, $replace, $content);
+
+        }
+    
+    }
+    
+    return $content;
+}
+
 add_filter('pfm_content_without_code','wpautop',14);
 add_filter('pfm_content_without_code','pfm_do_shortcode',15);
 
@@ -212,7 +232,7 @@ add_filter('pfm_the_post_content','pfm_add_post_edition',25);
 function pfm_add_post_edition($content){
     global $PrimePost;
 
-    if(!$PrimePost->post_edit) return $content;
+    if(!$PrimePost || !$PrimePost->post_edit) return $content;
     
     $postEdition = pfm_get_post_edition();
     

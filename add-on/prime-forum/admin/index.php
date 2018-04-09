@@ -107,10 +107,10 @@ function pfm_page_options(){
         array(
             'type' => 'select',
             'slug' => 'view-links',
-            'title' => __('Показ ссылок в сообщениях','wp-recall'),
+            'title' => __('The display of links in messages','wp-recall'),
             'values' => array(
-                __('Скрывать для гостей','wp-recall'),
-                __('Показывать всем','wp-recall')
+                __('Hiding for guests','wp-recall'),
+                __('Show for all','wp-recall')
             )
         ),
         array(
@@ -184,7 +184,7 @@ function pfm_page_options(){
         array(
             'type' => 'select',
             'slug' => 'reason-edit',
-            'title' => __('Причина редактирования сообщения','wp-recall'),
+            'title' => __('Reason for editing a message','wp-recall'),
             'default' => 1,
             'values' => array(
                 __('Forbidden','wp-recall'),
@@ -194,22 +194,22 @@ function pfm_page_options(){
         array(
             'type' => 'runner',
             'slug' => 'beat-time',
-            'title' => __('Задержка на получение нового сообщения через AJAX','wp-recall'),
+            'title' => __('Delay on receiving a new message via AJAX','wp-recall'),
             'value_min' => 0,
             'value_max' => 120,
             'value_step' => 1,
             'default' => 30,
-            'notice' => __('В секундах. Новые сообщения в теме форума подгружаются через AJAX только для тех, кто уже оставил ранее в этой теме сообщение. Если ноль, то AJAX-подгрузка отключена.','wp-recall')
+            'notice' => __('In seconds. New messages in the forum topic are loaded from AJAX only for those who have already left a message in this topic. If 0 is specified, the AJAX loading is disabled','wp-recall')
         ),
         array(
             'type' => 'runner',
             'slug' => 'beat-inactive',
-            'title' => __('Предел кол-ва запросов на получение новых сообщений','wp-recall'),
+            'title' => __('Limit of requests to receive new messages','wp-recall'),
             'value_min' => 10,
             'value_max' => 200,
             'value_step' => 1,
             'default' => 100,
-            'notice' => __('Если включена подгрузка новых сообщений через AJAX, то здесь устанавливаем максимальное кол-во запросов от одного пользователя, после достижения которого они прекращаются, после публикации нового сообщения запросы возобновляются.','wp-recall')
+            'notice' => __('If the loading of new messages via AJAX is enabled, here we set the maximum number of requests from one user, after which they are terminated, after the publication of a new message requests are resumed','wp-recall')
         ),
         array(
             'type' => 'custom',
@@ -270,12 +270,12 @@ function pfm_page_options(){
         array(
             'type' => 'select',
             'slug' => 'author-notes',
-            'title' => __('Уведомления автору темы о новых ответах','wp-recall'),
+            'title' => __('Notice the author of the theme about new answers','wp-recall'),
             'values' => array(
                 __('Disabled','wp-recall'),
                 __('Enabled','wp-recall')
             ),
-            'notice' => __('Уведомление высылается на каждое новое сообщение в теме только когда автор темы не находится на форуме','wp-recall')
+            'notice' => __('The notice sent for each new message in the topic only when the topic`s author is offline','wp-recall')
         )
     );
     

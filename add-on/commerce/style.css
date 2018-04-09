@@ -141,6 +141,7 @@ body .rcl-product-gallery ul.images-list {
 /*Вывод товаров списка товаров*/
 .product-meta{
     margin-bottom: 5px;
+    text-align: left;
 }
 .products-box .products-list .product{
     position:relative;

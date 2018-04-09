@@ -283,7 +283,7 @@ function rcl_ajax_import_products(){
     
     if(!$xml){
         wp_send_json(array(
-            'error' => __('Файл не был найден!')
+            'error' => __('File not found!', 'wp-recall')
         ));
     }
     

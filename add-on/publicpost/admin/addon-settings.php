@@ -55,9 +55,9 @@ function rcl_get_publics_options_page($content){
                             array(
                                 'type' => 'checkbox',
                                 'slug' => 'post_types_authbox',
-                                'title' => __('Типы записей для вывода блока автора','wp-recall'),
+                                'title' => __('Types of write for the author`s block output','wp-recall'),
                                 'values' => $types,
-                                'notice' => __('Укажите типы записей, где должен выводится блок автора. Если ничего не указано, то выводится везде.','wp-recall')
+                                'notice' => __('Select the types of writes where the author`s block should be displayed. If nothing is specified, it is displayed everywhere','wp-recall')
                             )
                         )
                     )
@@ -162,9 +162,9 @@ function rcl_get_publics_options_page($content){
                             array(
                                 'type' => 'checkbox',
                                 'slug' => 'post_types_moderation',
-                                'title' => __('Тип записи','wp-recall'),
+                                'title' => __('Type post','wp-recall'),
                                 'values' => $types,
-                                'notice' => __('Укажите типы записей, которые будут отправляться на модерацию. Если ничего не указано, то модерация действует для всех типов.','wp-recall')
+                                'notice' => __('Select the types of posts that will be sent for moderation. If nothing is specified, then the moderation is valid for all types','wp-recall')
                             )
                         )
                     )
@@ -214,9 +214,9 @@ function rcl_get_publics_options_page($content){
                             array(
                                 'type' => 'checkbox',
                                 'slug' => 'pm_post_types',
-                                'title' => __('Типы записей для вывода произвольных полей','wp-recall'),
+                                'title' => __('Types of posts for the output of custom fields','wp-recall'),
                                 'values' => $types,
-                                'notice' => __('Укажите типы записей, где будут выводится значения произвольных полей. Если ничего не указано, то выводятся везде.','wp-recall')
+                                'notice' => __('Select types of posts where the values of arbitrary fields will be displayed. If nothing is specified, it is displayed everywhere','wp-recall')
                             )
                         )
                     )

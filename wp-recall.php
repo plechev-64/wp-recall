@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 16.13.0
+    Version: 16.14.0
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -16,11 +16,11 @@
 
 final class WP_Recall {
 
-	public $version = '16.13.0';
+	public $version = '16.14.0';
         
         public $child_addons = array();
         public $need_update = false;
-
+        public $exclude_addons = false;
 	protected static $_instance = null;
 
 	public $session = null; //На данный момент не используется, нужно будет все сессии сюда пихать
@@ -65,6 +65,8 @@ final class WP_Recall {
 	 * Конструктор нашего WP_Recall
 	 */
 	public function __construct() {
+            
+            $this->exclude_addons = $this->get_exclude_addons();
 
             add_action('plugins_loaded', array( $this, 'load_plugin_textdomain'),10);
 
@@ -307,6 +309,15 @@ final class WP_Recall {
             }
 
             $active_addons = get_site_option('rcl_active_addons');
+            
+            if($active_addons && $this->exclude_addons){
+                foreach($active_addons as $addon=>$data){
+                    if(in_array($addon, $this->exclude_addons)){
+                        unset($active_addons[$addon]);
+                    }
+                }
+            }
+            
             $rcl_template = get_site_option('rcl_active_template');
             
             do_action('rcl_before_include_addons');
@@ -409,45 +420,65 @@ final class WP_Recall {
 
             return false;
         }
+        
+        function get_exclude_addons(){
+            return isset($_COOKIE['rcl_exclude_addons'])? (array)json_decode($_COOKIE['rcl_exclude_addons']): array();
+        }
+
+        function get_exclude_addon($key){
+            return $this->exclude_addons[$key];
+        }
+
+        function set_exclude_addon($key, $addon_id){
+            $this->exclude_addons[$key] = $addon_id;
+            setcookie('rcl_exclude_addons', json_encode($this->exclude_addons), time() + 31104000, '/');
+        }
+
+        function unset_exclude_addon($key){
+            if(!isset($this->exclude_addons[$key])) return false;
+            unset($this->exclude_addons[$key]); 
+            setcookie('rcl_exclude_addons', json_encode($this->exclude_addons), time() + 31104000,'/');
+            return true;
+        }
 
 	public function load_plugin_textdomain() {
-                load_plugin_textdomain( 'wp-recall', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+            load_plugin_textdomain( 'wp-recall', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	public function plugin_url() {
-		return untrailingslashit( plugins_url( '/', __FILE__ ) );
+            return untrailingslashit( plugins_url( '/', __FILE__ ) );
 	}
 
 	public function plugin_path() {
-		return untrailingslashit( plugin_dir_path( __FILE__ ) );
+            return untrailingslashit( plugin_dir_path( __FILE__ ) );
 	}
 
 	public function ajax_url() {
-		return admin_url( 'admin-ajax.php', 'relative' );
+            return admin_url( 'admin-ajax.php', 'relative' );
 	}
 
 	public function mailer() {
-		/*
-		 * TODO: Сюда добавить подключение класса отправки сообщений
-		 */
+            /*
+             * TODO: Сюда добавить подключение класса отправки сообщений
+             */
 	}
 
-    public function upload_dir() {
+        public function upload_dir() {
 
-        if( defined( 'MULTISITE' ) ) {
-            $upload_dir = array(
-                'basedir' => WP_CONTENT_DIR.'/uploads',
-                'baseurl' => WP_CONTENT_URL.'/uploads'
-            );
-        } else {
-            $upload_dir = wp_upload_dir();
+            if( defined( 'MULTISITE' ) ) {
+                $upload_dir = array(
+                    'basedir' => WP_CONTENT_DIR.'/uploads',
+                    'baseurl' => WP_CONTENT_URL.'/uploads'
+                );
+            } else {
+                $upload_dir = wp_upload_dir();
+            }
+
+            if ( is_ssl() )
+                $upload_dir['baseurl'] = str_replace( 'http://', 'https://', $upload_dir['baseurl'] );
+
+            return apply_filters( 'wp_recall_upload_dir', $upload_dir, $this );
         }
-
-        if ( is_ssl() )
-            $upload_dir['baseurl'] = str_replace( 'http://', 'https://', $upload_dir['baseurl'] );
-
-        return apply_filters( 'wp_recall_upload_dir', $upload_dir, $this );
-    }
 }
 
 /*

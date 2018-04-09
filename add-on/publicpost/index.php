@@ -88,9 +88,43 @@ function rcl_update_postdata_excerpt($postdata){
 add_filter('the_content','rcl_post_gallery',10);
 function rcl_post_gallery($content){
     global $post;
+    
     if(get_post_meta($post->ID, 'recall_slider', 1)!=1||!is_single()||$post->post_type=='products') return $content;
-    $gallery = do_shortcode('[gallery-rcl post_id="'.$post->ID.'"]');
-    return $gallery.$content;
+    
+    $args = array(
+        'post_parent' => $post->ID,
+        'post_type'   => 'attachment',
+        'numberposts' => -1,
+        'post_status' => 'any',
+        'post_mime_type'=> 'image'
+    );
+    
+    $childrens = get_children($args);
+
+    if( $childrens ){
+        $attach_ids = array();
+        foreach((array) $childrens as $children ){
+            $attach_ids[] = $children->ID;
+        }
+        
+        $content = rcl_get_image_gallery(array(
+            'id' => 'rcl-post-gallery-'.$post->ID,
+            'attach_ids' => $attach_ids,
+            //'width' => 750,
+            'height' => 350,
+            'slides' => array(
+                'slide' => 'large',
+                'full' => 'large'
+            ),
+            'navigator' => array(
+                'width' => 70,
+                'height' => 50
+            )
+        )) . $content;
+        
+    }
+    
+    return $content;
 }
 
 //Выводим инфу об авторе записи в конце поста
