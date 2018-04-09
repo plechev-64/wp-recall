@@ -1,4 +1,7 @@
 /* slider start */
+.rcl-slider{
+    margin: 15px 0;
+}
 /* jssor slider loading skin spin css */
 .jssorl-009-spin img {
     animation-name: jssorl-009-spin;
