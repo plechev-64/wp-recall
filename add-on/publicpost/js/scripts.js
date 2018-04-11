@@ -406,6 +406,7 @@ function rcl_init_public_form(post){
             action: 'rcl_imagepost_upload',
             post_type: post_type,
             post_id: post_id,
+            form_id: post.form_id,
             ext_types: ext_types,
             size_files: size_files,
             max_files: max_files,

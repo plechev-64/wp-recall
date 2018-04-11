@@ -356,10 +356,19 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                         
                         if($this->current_field['slug'] == 'post_uploader'){
                             
+                            if(!isset($this->current_field['add-to-click'])){
+                                $this->current_field['add-to-click'] = 1;
+                            }
+                            
+                            if(!isset($this->current_field['gallery'])){
+                                $this->current_field['gallery'] = 1;
+                            }
+                            
                             $postUploder = new Rcl_Public_Form_Uploader(array(
                                 'post_id' => $this->post_id,
                                 'post_type' => $this->post_type,
-                                'ext_types' => $this->form_object->ext_types
+                                'ext_types' => $this->form_object->ext_types,
+                                'options' => $this->current_field,
                             ));
                             
                             $contentField = $postUploder->get_uploader();
@@ -858,7 +867,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                 . 'post_status:"'.$obj->post_status.'",'
                 . 'ext_types:"'.$obj->ext_types.'",'
                 . 'size_files:"'.$obj->size_files.'",'
-                . 'max_files:"'.$obj->max_files.'"'
+                . 'max_files:"'.$obj->max_files.'",'
+                . 'form_id:"'.$this->form_id.'"'
             . '});</script>';
         
     }

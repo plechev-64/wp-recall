@@ -258,39 +258,54 @@ function rcl_update_tempgallery($attach_id,$attach_url){
     return $temp_gal;
 }
 
-function rcl_get_attachment_box($attachment_id, $mime = 'image'){
+function rcl_get_attachment_box($attachment_id, $mime = 'image', $addToClick = true){
     
     if($mime=='image'){
         
         $small_url = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
-        $full_url = wp_get_attachment_image_src( $attachment_id, 'full' );
+
+        $image = '<img src="'.$small_url[0].'">';
         
-        if($default = rcl_get_option('default_size_thumb')) 
-            $sizes = wp_get_attachment_image_src( $attachment_id, $default );
-        else 
-            $sizes = $small_url;
-        
-        $act_sizes = wp_constrain_dimensions($full_url[1],$full_url[2],$sizes[1],$sizes[2]);
-        
-        return '<a onclick="rcl_add_image_in_form(this,\'<a href='.$full_url[0].'><img height='.$act_sizes[1].' width='.$act_sizes[0].' class=aligncenter  src='.$full_url[0].'></a>\');return false;" href="#"><img src="'.$small_url[0].'"></a>';
+        if($addToClick){
+            
+            if($default = rcl_get_option('default_size_thumb')) 
+                $sizes = wp_get_attachment_image_src( $attachment_id, $default );
+            else 
+                $sizes = $small_url;
+            
+            $full_url = wp_get_attachment_image_src( $attachment_id, 'full' );
+            $act_sizes = wp_constrain_dimensions($full_url[1],$full_url[2],$sizes[1],$sizes[2]);
+            
+            return '<a onclick="rcl_add_image_in_form(this,\'<a href='.$full_url[0].'><img height='.$act_sizes[1].' width='.$act_sizes[0].' class=aligncenter  src='.$full_url[0].'></a>\');return false;" href="#">'.$image.'</a>';
+        }else{
+            return $image;
+        }
 
     }else{
+
+        $image = wp_get_attachment_image( $attachment_id, array(100,100),true );
         
-        $_post = get_post( $attachment_id );
+        if($addToClick){
+            
+            $_post = get_post( $attachment_id );
         
-        $url = wp_get_attachment_url( $attachment_id );
-        
-        return '<a href="#" onclick="rcl_add_image_in_form(this,\'<a href='.$url.'>'.$_post->post_title.'</a>\');return false;">'.wp_get_attachment_image( $attachment_id, array(100,100),true ).'</a>';
+            $url = wp_get_attachment_url( $attachment_id );
+            
+            return '<a href="#" onclick="rcl_add_image_in_form(this,\'<a href='.$url.'>'.$_post->post_title.'</a>\');return false;">'.$image.'</a>';
+        }else{
+            return $image;
+        }
+
     }
 }
 
-function rcl_get_html_attachment($attach_id,$mime_type){
-
+function rcl_get_html_attachment($attach_id, $mime_type, $addToClick = true){
+    
     $mime = explode('/',$mime_type);
 
     $content = "<li id='attachment-$attach_id' class='post-attachment attachment-$mime[0]' data-mime='$mime[0]' data-attachment-id='$attach_id'>";
     $content .= rcl_button_fast_delete_post($attach_id);
-    $content .= sprintf("<label>%s</label>",apply_filters('rcl_post_attachment_html',rcl_get_attachment_box($attach_id,$mime[0]),$attach_id,$mime));
+    $content .= sprintf("<label>%s</label>",apply_filters('rcl_post_attachment_html',rcl_get_attachment_box($attach_id,$mime[0], $addToClick),$attach_id,$mime));
     $content .= "</li>";
             
     return $content;

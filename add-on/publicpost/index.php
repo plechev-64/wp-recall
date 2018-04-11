@@ -118,7 +118,7 @@ function rcl_post_gallery($content){
             ),
             'navigator' => array(
                 'width' => 70,
-                'height' => 50
+                'height' => 70
             )
         )) . $content;
         

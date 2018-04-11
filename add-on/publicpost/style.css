@@ -33,7 +33,6 @@
     background-color: #f7f7f7;
     border: 1px solid #e5e5e5;
     margin: 7px 0;
-    overflow: hidden;
     padding: 8px 8px 10px;
 }
 .rcl-public-box .rcl-form-field > label {
@@ -199,7 +198,6 @@
     width: 24%;
 }
 .rcl-public-box .attachments-post li img {
-    cursor: pointer;
     width: 100%;
 }
 .rcl-public-box .attachments-post li img:hover {

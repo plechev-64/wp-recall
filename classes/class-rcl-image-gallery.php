@@ -37,7 +37,7 @@ class Rcl_Image_Gallery{
                 '$ChanceToShow' => 2,
                 '$Loop' => 1,
                 '$SpacingX' => 3,
-                'SpacingY' => 3,
+                '$SpacingY' => 3,
                 '$ArrowNavigatorOptions' => array(
                     '$ChanceToShow' => 2,
                     '$Steps' => 6
@@ -121,6 +121,10 @@ class Rcl_Image_Gallery{
 
                 rcl_scale_slider();
                 
+                $Jssor$.$AddEvent(window, "load", rcl_scale_slider);
+                $Jssor$.$AddEvent(window, "resize", rcl_scale_slider);
+                $Jssor$.$AddEvent(window, "orientationchange", rcl_scale_slider);
+                
             });
         </script>';
         
@@ -178,7 +182,7 @@ class Rcl_Image_Gallery{
 
     function get_navigator(){
         
-        $content = '<!--#region Thumbnail Navigator Skin Begin -->
+        $content = '<!-- region Thumbnail Navigator Skin Begin -->
             <style>
                 .rcl-gallery-navigator {
                     width: '.$this->width.'px;
@@ -219,9 +223,9 @@ class Rcl_Image_Gallery{
                         <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
                     </svg>
                 </div>
-                <!--#endregion Arrow Navigator Skin End -->
+                <!-- endregion Arrow Navigator Skin End -->
             </div>
-            <!--#endregion Thumbnail Navigator Skin End -->';
+            <!-- endregion Thumbnail Navigator Skin End -->';
         
         return $content;
     }

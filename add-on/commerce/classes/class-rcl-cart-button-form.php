@@ -121,7 +121,7 @@ class Rcl_Cart_Button_Form{
         $content = '<div class="rcl-cart-box">';
         
         $content .= rcl_get_include_template('cart-button-form.php', __FILE__, array(
-            'Cart_Button' => $this
+            'Cart_Button' => apply_filters('rcl_cart_button_form', $this)
         ));
 
         $content .= '</div>';

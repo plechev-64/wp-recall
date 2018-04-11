@@ -7,6 +7,7 @@ class Rcl_Public_Form_Uploader{
     public $thumbnail_id = 0;
     public $ext_types;
     public $view_gallery = false;
+    public $options;
 
     function __construct($args = false) {
         
@@ -77,8 +78,10 @@ class Rcl_Public_Form_Uploader{
 
         $thumbList = $this->get_thumbs_list();
 
-        $content = '<small class="notice-upload">'.__('Click on the image to add it to the publication','wp-recall').'</small>';
-
+        if($this->options['add-to-click']){
+            $content = '<small class="notice-upload">'.__('Click on the image to add it to the publication','wp-recall').'</small>';
+        }
+        
         if($thumbList){
             
             $content .= $thumbList;
@@ -89,7 +92,8 @@ class Rcl_Public_Form_Uploader{
             
         }
 
-        $content .= '<div class="rcl-form-field">'
+        if($this->options['gallery']){
+            $content .= '<div class="rcl-form-field maybe-gallery-box">'
                         . '<span class="rcl-field-input type-checkbox-input">'
                             . '<span class="rcl-checkbox-box">'
                                 . '<input id="rcl-gallery" type="checkbox" '.checked($this->view_gallery,1,false).' name="add-gallery-rcl" value="1">'
@@ -97,6 +101,7 @@ class Rcl_Public_Form_Uploader{
                             . '</span>'
                         . '</span>'
                     . '</div>';	
+        }
 
 	
         $content .= $this->get_dropzone();
@@ -158,7 +163,7 @@ class Rcl_Public_Form_Uploader{
         
         foreach($attachs as $attach){
             
-            $content .= rcl_get_html_attachment($attach['ID'],get_post_mime_type( $attach['ID'] ));
+            $content .= rcl_get_html_attachment($attach['ID'],get_post_mime_type( $attach['ID'] ), $this->options['add-to-click']);
             
         }
         

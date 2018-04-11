@@ -40,6 +40,7 @@ function rcl_imagepost_upload(){
     }
         
     $post_type = $_POST['post_type'];
+    $form_id = isset($_POST['form_id'])? $_POST['form_id']: 1;
     
     $formFields = new Rcl_Public_Form_Fields(array('post_type' => $post_type));
     
@@ -49,6 +50,20 @@ function rcl_imagepost_upload(){
     $valid_types = (isset($_POST['ext_types']) && $_POST['ext_types'])? array_map('trim',explode(',',$_POST['ext_types'])): array('jpeg', 'jpg', 'png', 'gif');
 
     $valid_types = apply_filters('rcl_upload_valid_types',$valid_types,$post_type);
+    
+    $addToClick = true;
+    
+    $formFields = new Rcl_Public_Form_Fields(array(
+        'post_type' => $post_type,
+        'form_id' => $form_id
+    ));
+    
+    if($formFields->exist_active_field('post_uploader')){
+
+        $field = $formFields->get_field('post_uploader');
+        
+        if(isset($field['add-to-click'])) $addToClick = $field['add-to-click'];
+    }
 
     $files = array();
     foreach($_FILES['uploadfile'] as $key=>$fls){
@@ -89,7 +104,7 @@ function rcl_imagepost_upload(){
             if(!$id_post) 
                 rcl_update_tempgallery($attach_id,$image['url']);
 
-            $res[$k]['string'] = rcl_get_html_attachment($attach_id,$attachment['post_mime_type']);
+            $res[$k]['string'] = rcl_get_html_attachment($attach_id,$attachment['post_mime_type'], $addToClick);
             $res[$k]['thumbnail_image'] = wp_get_attachment_image( $attach_id, 'thumbnail');
             $res[$k]['attachment_id'] = $attach_id;
         }

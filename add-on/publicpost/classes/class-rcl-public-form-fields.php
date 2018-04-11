@@ -176,6 +176,26 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager{
                     'notice' => __('Separated by comma, for example: jpg, zip, pdf. By default: png, gif, jpg','wp-recall')
                 ),
                 array(
+                    'type' => 'radio',
+                    'slug' => 'add-to-click',
+                    'title' => __('Вставка изображения в форму по клику','wp-recall'),
+                    'values' => array(
+                        __('Disabled', 'wp-recall'),
+                        __('Enabled', 'wp-recall')
+                    ),
+                    'default' => 1
+                ),
+                array(
+                    'type' => 'radio',
+                    'slug' => 'gallery',
+                    'title' => __('Предлагать вывод изображений в галерее','wp-recall'),
+                    'values' => array(
+                        __('Disabled', 'wp-recall'),
+                        __('Enabled', 'wp-recall')
+                    ),
+                    'default' => 1
+                ),
+                array(
                     'type' => 'runner',
                     'value_min' => 1,
                     'value_max' => 10,
