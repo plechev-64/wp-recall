@@ -401,7 +401,7 @@ function rcl_admin_footer_text( $footer_text ) {
     );
     
     if ( isset( $current_screen->id ) && in_array( $current_screen->id, $dlm_page_ids ) ) {
-        $footer_text = sprintf( __( 'If you liked plugin %wp-Recall%s, please vote for it in repository %s★★★★%s. Thank you so much!', 'wp-recall' ), '<strong>', '</strong>', '<a href="https://wordpress.org/support/view/plugin-reviews/wp-recall?filter=5#new-post" target="_blank">', '</a>' );
+        $footer_text = sprintf( __( 'If you liked plugin %sWP-Recall%s, please vote for it in repository %s★★★★★%s. Thank you so much!', 'wp-recall' ), '<strong>', '</strong>', '<a href="https://wordpress.org/support/view/plugin-reviews/wp-recall?filter=5#new-post" target="_blank">', '</a>' );
     }
 
     return $footer_text;
