@@ -427,12 +427,12 @@ add_filter('the_content','rcl_message_post_moderation');
 function rcl_message_post_moderation($cont){
     global $post;
 
-    if($post->post_status=='pending'){
+    if( is_object($post) && $post->post_status=='pending'){
         $mess = '<h3 class="pending-message">'.__('Publication pending approval!','wp-recall').'</h3>';
         $cont = $mess.$cont;
     }
     
-    if($post->post_status=='draft'){
+    if(is_object($post) && $post->post_status=='draft'){
         $mess = '<h3 class="pending-message">'.__('Draft of a post','wp-recall').'</h3>';
         $cont = $mess.$cont;
     }
