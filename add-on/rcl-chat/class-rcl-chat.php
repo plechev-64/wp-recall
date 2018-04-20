@@ -23,6 +23,8 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
     public $user_write;
     public $max_words;
     public $user_can;
+    public $form = true;
+    public $beat = true;
     public $errors = array();
     public $allowed_tags;
 
@@ -323,7 +325,9 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
         
         $rcl_chat = $this;
         
-        $content = '<script>'
+        if($this->beat){
+        
+            $content = '<script>'
                 . 'rcl_init_chat({'
                     . 'token:"'.$this->chat_token.'",'
                     . 'file_upload:'.$this->file_upload.','
@@ -333,17 +337,18 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
                     . 'timeout:'.$this->timeout
                 . '});'
                 . '</script>';
+        
+        }
 
         $content .= '<div class="rcl-chat chat-'.$this->chat_status.' chat-room-'.$this->chat_room.'" data-token="'.$this->chat_token.'" data-in_page="'.$this->query['number'].'">';
                     
-                    $content .= $this->get_messages_box();
-                        
-                    $content .= '<div class="chat-form">'
-                            
-                                    . $this->get_form()
- 
-                                . '</div>'
-                            . '</div>';
+        $content .= $this->get_messages_box();
+        
+        if($this->form){
+            $content .= '<div class="chat-form">' . $this->get_form() . '</div>';
+        }
+                    
+        $content .= '</div>';
                     
         $rcl_chat = false;
         

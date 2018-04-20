@@ -66,8 +66,14 @@ function pfm_get_topic_meta_box($topic_id){
     $forum_id = pfm_get_topic_field($topic_id,'forum_id');
     
     $group_id = pfm_get_forum_field($forum_id,'group_id');
+
+    $fields = array();
     
-    $fields = get_option('rcl_fields_pfm_group_'.$group_id);
+    if($groupFields = get_option('rcl_fields_pfm_group_'.$group_id)) 
+        $fields = $groupFields;
+    
+    if($forumFields = get_option('rcl_fields_pfm_forum_'.$forum_id)) 
+        $fields = array_merge($fields, $forumFields);
     
     if(!$fields) return false;
     
@@ -105,7 +111,13 @@ function pfm_update_topic_custom_fields($topic_id){
     
     $group_id = pfm_get_forum_field($forum_id,'group_id');
 
-    $fields = get_option('rcl_fields_pfm_group_'.$group_id);
+    $fields = array();
+    
+    if($groupFields = get_option('rcl_fields_pfm_group_'.$group_id)) 
+        $fields = $groupFields;
+    
+    if($forumFields = get_option('rcl_fields_pfm_forum_'.$forum_id)) 
+        $fields = array_merge($fields, $forumFields);
     
     if(!$fields) return false;
 
@@ -189,6 +201,29 @@ function pfm_add_topic_form_custom_meta($topic_id){
     
     if(!$topic) return false;
     
+    if(isset($_REQUEST['pfm-data'])){
+        
+        $pfmData = $_REQUEST['pfm-data'];
+    
+        $actions = array(
+            'topic_migrate'
+        );
+        
+        if(in_array($pfmData['action'], $actions)) return false;
+
+    }
+    
+    if(defined( 'DOING_AJAX' ) && DOING_AJAX && $_REQUEST['method']){
+        
+        $actions = array(
+            'topic_fix',
+            'topic_unfix'
+        );
+        
+        if(in_array($_REQUEST['method'], $actions)) return false;
+        
+    }
+
     pfm_update_topic_custom_fields($topic_id);
 
 }

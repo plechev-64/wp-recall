@@ -22,7 +22,8 @@ class PrimeForm extends Rcl_Custom_Fields{
         
         if($this->forum_id){
             add_filter('pfm_form_fields', array($this, 'add_forum_field'));
-            add_filter('pfm_form_fields', array($this, 'add_topic_form_custom_fields'));
+            add_filter('pfm_form_fields', array($this, 'add_group_custom_fields'), 10);
+            add_filter('pfm_form_fields', array($this, 'add_forum_custom_fields'), 11);
         }
         
         if($this->topic_id)
@@ -31,7 +32,7 @@ class PrimeForm extends Rcl_Custom_Fields{
         if($this->post_id)
             add_filter('pfm_form_fields', array($this, 'add_post_field'));
         
-        $this->fields = $this->setup_fields();
+        $this->fields = wp_unslash($this->setup_fields());
 
     }
     
@@ -45,7 +46,24 @@ class PrimeForm extends Rcl_Custom_Fields{
         
     }
     
-    function add_topic_form_custom_fields($fields){
+    function add_forum_custom_fields($fields){
+
+        $customFields = get_option('rcl_fields_pfm_forum_'.$this->forum_id);
+        
+        if($customFields){
+            
+            foreach($customFields as $k => $field){
+                $customFields[$k]['value_in_key'] = true;
+            }
+            
+            $fields = array_merge($fields,$customFields);
+        }
+        
+        return $fields;
+        
+    }
+    
+    function add_group_custom_fields($fields){
         
         $group_id = pfm_get_forum_field($this->forum_id,'group_id');
         

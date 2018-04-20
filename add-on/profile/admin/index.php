@@ -43,8 +43,7 @@ function rcl_profile_fields_manager(){
     
     $content = '<h2>'.__('Manage profile fields','wp-recall').'</h2>';
     
-    $content .= '<p>'.__('On this page you can create custom fields of the '
-            . 'user profile, as well as to manage already created fields').'</p>';
+    $content .= '<p>'.__('On this page you can create custom fields of the user profile, as well as to manage already created fields').'</p>';
     
     $content .= $profileFields->active_fields_box();
 

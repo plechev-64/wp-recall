@@ -255,7 +255,7 @@ function rcl_get_order_tabs($rcl_tabs){
         
         if(isset($data['output']) && $data['output']!='menu') continue;
         
-        if($data['hidden']) continue;
+        if(isset($data['hidden']) && $data['hidden']) continue;
         
         if(!isset($data['public']) || $data['public']!=1){
             
@@ -1309,7 +1309,13 @@ function rcl_filter_custom_tab_usermetas($content){
 
         $vars[] = '{RCL-UM:'.$meta.'}';
         
-        $replaces[] = ($value = get_the_author_meta($meta,$rcl_office))? $value: __('not specified','wp-recall');
+        $value = ($value = get_the_author_meta($meta,$rcl_office))? $value: __('not specified','wp-recall');
+        
+        if(is_array($value)){
+            $value = implode(', ', $value);
+        }
+        
+        $replaces[] = $value;
 
     }
 

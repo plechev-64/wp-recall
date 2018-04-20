@@ -2,11 +2,21 @@
 
 class Prime_Form_Manager extends Rcl_Custom_Fields_Manager{
     
-    function __construct($args = false) {
+    public $group_id;
+    public $forum_id;
+    
+    function __construct($args) {
         
-        parent::__construct($args['form_slug']);
+        $this->group_id = $args['group_id'];
+        $this->forum_id = $args['forum_id'];
+
+        if($this->forum_id)
+            $form_slug = 'pfm_forum_'.$this->forum_id;
+        else
+            $form_slug = 'pfm_group_'.$this->group_id;
         
-        //add_filter('rcl_custom_fields_form', array($this, 'add_content_form'),10);
+        parent::__construct($form_slug);
+
     }
     
     function active_fields_box(){
@@ -41,21 +51,42 @@ class Prime_Form_Manager extends Rcl_Custom_Fields_Manager{
         
         $groups = pfm_get_groups(array(
             'order' => 'ASC',
-            'orderby' => 'group_seq'
+            'orderby' => 'group_seq',
+            'number' => -1,
+            'fields' => array(
+                'group_id',
+                'group_name'
+            )
         ));
 
-        $types = array();
+        $groupsList = array();
         foreach ($groups  as $group ) {
-            $types[$group->group_id] = $group->group_name;
+            $groupsList[$group->group_id] = $group->group_name;
+        }
+        
+        $forums = pfm_get_forums(array(
+            'order' => 'ASC',
+            'orderby' => 'forum_name',
+            'group_id' => $this->group_id,
+            'number' => -1,
+            'fields' => array(
+                'forum_id',
+                'forum_name'
+            )
+        ));
+
+        $forumsList = array();
+        foreach ($forums  as $forum ) {
+            $forumsList[$forum->forum_id] = $forum->forum_name;
         }
         
         $content = '<div class="rcl-custom-fields-navi">';
         
             $content .= '<ul class="rcl-types-list">';
 
-            foreach ($types  as $group_id => $name ) {
+            foreach ($groupsList  as $group_id => $name ) {
                 
-                $class = ($this->post_type == 'pfm_group_'.$group_id)? 'class="current-item"': '';
+                $class = ($this->group_id == $group_id)? 'class="current-item"': '';
                 
                 $content .= '<li '.$class.'><a href="'.admin_url('admin.php?page=manage-topic-form&group-id='.$group_id).'">'.$name.'</a></li>';
             }
@@ -63,7 +94,40 @@ class Prime_Form_Manager extends Rcl_Custom_Fields_Manager{
             $content .= '</ul>';
 
         $content .= '</div>';
+        
+        $content .= '<div class="rcl-custom-fields-navi">';
+        
+            $content .= '<form method="get" action="'.admin_url('admin.php').'">';
+            
+            $content .= '<input type="hidden" name="page" value="manage-topic-form">';
+            $content .= '<input type="hidden" name="group-id" value="'.$this->group_id.'">';
+        
+            $content .= '<select name="forum-id">';
+            
+            $content .= '<option value="">'.__('Все форумы группы', 'wp-recall').'</option>';
+            
+            foreach ($forumsList  as $forum_id => $name ) {
+                $content .= '<option value="'.$forum_id.'" '.selected($forum_id, $this->forum_id, false).'>'.__('Форум', 'wp-recall').': '.$name.'</option>';
+            }
+            
+            $content .= '</select>';
+ 
+            $content .= ' <input type="submit" class="button" value="'.__('Перейти к настройкам формы', 'wp-recall').'">';
+            
+            $content .= '</form>';
 
+        $content .= '</div>';
+        
+        $title = __('Настройка формы топика для', 'wp-recall').' ';
+        
+        $title .= $this->forum_id? __('форума', 'wp-recall').' "'.pfm_get_forum_field($this->forum_id, 'forum_name').'"': __('группы', 'wp-recall').' "'.pfm_get_group_field($this->group_id, 'group_name').'"';
+
+        $content .= '<div class="rcl-custom-fields-navi">';
+        
+            $content .= '<h3>'.$title.'</h3>';
+            
+        $content .= '</div>';
+        
         return $content;
         
     }
