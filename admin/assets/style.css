@@ -66,6 +66,11 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     content: "\f463";
     font: 120px/1 dashicons;
 }
+.wp-admin .ssi-modalWindow {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
 @-webkit-keyframes adm_rotation {
   0% {
     -webkit-transform: rotate(0deg);
