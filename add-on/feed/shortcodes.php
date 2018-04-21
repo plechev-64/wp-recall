@@ -22,13 +22,13 @@ function rcl_get_feed_list($atts = array()){
                 .__('Login or register to view the latest publications and comments from users for which you have subscribed.','wp-recall')
                 .'</p>';
     }
-    
+
     add_filter('rcl_rating_user_can', 'rcl_feed_unset_can_vote', 10);
-    
+
     if(!$atts) $atts = array();
 
     include_once 'classes/class-rcl-feed-list.php';
-    
+
     $list = new Rcl_Feed_List($atts);
 
     if(!isset($atts['number'])){
@@ -40,17 +40,17 @@ function rcl_get_feed_list($atts = array()){
                     'in_page'=>$list->query['number']
                 )
             );
-        
+
         $list->query['offset'] = $rclnavi->offset;
-        
+
     }
 
     $content = $list->get_filters();
-    
+
     $feedsdata = $list->get_feed();
 
     if(!$feedsdata){
-        $content .= '<p align="center">'.__('No news found','wp-recall').'</p>';
+        $content .= '<p class="feed_not_news" align="center">'.__('No news found','wp-recall').'</p>';
         return $content;
     }
 
