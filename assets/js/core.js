@@ -376,8 +376,8 @@ function rcl_init_runner(props){
             box.children('.rcl-runner-field').val( value );
         },
         slide: function( event, ui ) {
-            box.children('.rcl-runner-value').text( ui.value );
-            box.children('.rcl-runner-field').val( ui.value );
+            box.find('.rcl-runner-value').text( ui.value );
+            box.find('.rcl-runner-field').val( ui.value );
         }
     });
 }

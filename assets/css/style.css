@@ -1287,11 +1287,10 @@ div.ssi-backdrop {
     font-weight:bold;
     margin-bottom: 5px;
 }
-.rcl-form .submit-box{
+.rcl-form .submit-box {
     text-align: right;
-    background: #eee;
+    background: #f2f2f2;
     overflow: hidden;
-    border: 1px solid #ddd;
     padding: 5px;
 }
 .rcl-form .submit-box a,

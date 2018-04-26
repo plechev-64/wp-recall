@@ -66,7 +66,7 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
                 'slug'=>'icon',
                 'title'=>__('Icon class of  font-awesome','wp-recall'),
                 'placeholder'=>__('Example , fa-user','wp-recall'),
-                'notice'=>__('Source','wp-recall').' <a href="http://fontawesome.io/icons/" target="_blank">http://fontawesome.io/</a>'
+                'notice'=>__('Source','wp-recall').' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.io/</a>'
             ),
             
             array(
