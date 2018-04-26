@@ -702,7 +702,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             
         }
         
-        return apply_filters('rcl_inactive_custom_fields', $default_fields);
+        return apply_filters('rcl_inactive_custom_fields', $default_fields, $this->post_type);
         
     }
     
@@ -727,7 +727,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             
         }
         
-        return apply_filters('rcl_active_custom_fields', $this->fields);
+        return apply_filters('rcl_active_custom_fields', $this->fields, $this->post_type);
         
     }
     
