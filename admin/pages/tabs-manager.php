@@ -17,7 +17,7 @@ $tabsManager = new Rcl_Tabs_Manager($areaType,
 
 $content = '<h2>'.__('Personal account tabs manager','wp-recall').'</h2>';
 
-$content .= '<p>'.__('On this page you can create new tabs personal account with arbitrary content and manage existing tabs in different areas of the personal account').'</p>';
+$content .= '<p>'.__('On this page you can create new tabs personal account with arbitrary content and manage existing tabs in different areas of the personal account', 'wp-recall').'</p>';
 
 $content .= $tabsManager->form_navi();
 

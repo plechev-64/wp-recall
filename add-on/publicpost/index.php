@@ -514,3 +514,20 @@ function rcl_form_field($args){
     $field = new Rcl_Form_Fields();
     return $field->get_field($args);
 }
+
+add_action('update_post_rcl', 'rcl_send_mail_about_new_post', 10, 3);
+function rcl_send_mail_about_new_post($post_id, $postData, $update){
+    
+    if($update || rcl_check_access_console()) return false;
+    
+    $title = __('Новая публикация', 'wp-recall');
+    $email = get_option('admin_email');
+    
+    $textm = '<p>'.sprintf(__('На сайте "%s" пользователь добавил новую публикацию!','wp-recall'), get_bloginfo('name')).'</p>';
+    $textm .= '<p>'.__('Наименование публикации','wp-recall').': <a href="'.get_permalink($post_id).'">'.get_the_title($post_id).'</a>'.'</p>';
+    $textm .= '<p>'.__('Автор публикации','wp-recall').': <a href="'.get_author_posts_url($postData['post_author']).'">'.get_the_author_meta('display_name',$postData['post_author']).'</a>'.'</p>';
+    $textm .= '<p>'.__('Не забудьте проверить, возможно, публикация ожидает модерации').'</p>';
+    
+    rcl_mail($email, $title, $textm);
+    
+}

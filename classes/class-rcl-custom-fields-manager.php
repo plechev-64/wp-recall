@@ -239,14 +239,18 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             );
  
         }
-
-        $options[] = array(
-            'type' => 'text',
-            'slug' => 'title',
-            'title' => __('Title','wp-recall'),
-            'required' => 1,
-            'default' => $this->field['title']
-        );
+        
+        if(!$this->new_slug){
+            
+            $options[] = array(
+                'type' => 'text',
+                'slug' => 'title',
+                'title' => __('Title','wp-recall'),
+                //'required' => 1,
+                'default' => $this->field['title']
+            );
+            
+        }
 
         if($this->select_type){
                         

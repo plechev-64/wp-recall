@@ -214,12 +214,13 @@ $content = '<h2>'.__('Configure WP-Recall plugin and add-ons','wp-recall').'</h2
                 array(
                     'type' => 'select',
                     'slug'=>'login_form_recall',
-                    'title'=>__('Output procedure','wp-recall'),
+                    'title'=>__('Порядок вывода формы входа и регистрации','wp-recall'),
                     'values'=>array(
                         __('Floating form','wp-recall'),
                         __('On a separate page','wp-recall'),
                         __('Wordpress Forms','wp-recall'),
                         __('Widget form','wp-recall')),
+                    'notice' => __('Форма входа и регистации плагина может быть выведена через виджет "Панель управления", шорткод [loginform], а можете использовать стандартные формы WordPress', 'wp-recall'),
                     'childrens' => array(
                         1 => array(
                             array(
