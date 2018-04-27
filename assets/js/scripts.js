@@ -525,54 +525,6 @@ function rcl_setup_position_float_form(){
     jQuery('.panel_lk_recall.floatform').css('top', screen_top+'px');
 }
 
-function rcl_add_beat(beat_name,delay,data){
-    
-    delay = (delay < 10)? 10: delay;
-    
-    var data = (data)? data: false;
-    
-    var i = rcl_beats.length;
-
-    rcl_beats[i] = {
-        beat_name: beat_name,
-        delay :delay,
-        data: data
-    };
-    
-}
-
-function rcl_remove_beat(beat_name){
-    
-    if(!rcl_beats) return false;
-    
-    var remove = false;
-    var all_beats = rcl_beats;
-
-    all_beats.forEach(function(beat, index, all_beats){
-        if(beat.beat_name != beat_name) return;
-            delete rcl_beats[index];
-            remove = true;
-    });
-    
-    return remove;
-    
-}
-
-function rcl_exist_beat(beat_name){
-    
-    if(!rcl_beats) return false;
-    
-    var exist = false;
-    
-    rcl_beats.forEach(function(beat, index, rcl_beats){
-        if(beat.beat_name != beat_name) return;
-            exist = true;
-    });
-    
-    return exist;
-    
-}
-
 rcl_add_action('rcl_footer','rcl_beat');
 function rcl_beat(){
     

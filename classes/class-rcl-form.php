@@ -5,7 +5,7 @@ class Rcl_Form extends Rcl_Custom_Fields{
     public $action = '';
     public $method = 'post';
     public $submit;
-    public $nonce_name = 'rcl-form-nonce';
+    public $nonce_name = '';
     public $onclick;
     public $fields = array();
     public $values = array();
@@ -38,7 +38,7 @@ class Rcl_Form extends Rcl_Custom_Fields{
 
                     $required = (isset($field['required']) && $field['required'] == 1)? '<span class="required">*</span>': '';
 
-                    $content .= '<div id="field-'.$field['slug'].'" class="form-field rcl-option">';
+                    $content .= '<div id="field-'.$field['slug'].'" class="form-field field-type-'.$field['type'].' rcl-option">';
 
                         if(isset($field['title'])){
                             $content .= '<span class="field-title">';
@@ -64,7 +64,8 @@ class Rcl_Form extends Rcl_Custom_Fields{
 
                 $content .= '</div>';
                 
-                $content .= wp_nonce_field($this->nonce_name,'_wpnonce',true,false);
+                if($this->nonce_name)
+                    $content .= wp_nonce_field($this->nonce_name,'_wpnonce',true,false);
 
             $content .= '</form>';
             

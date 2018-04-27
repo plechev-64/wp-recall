@@ -29,6 +29,7 @@ function pfm_init_admin_menu(){
 function pfm_page_topic_form(){
     
     $group_id = (isset($_GET['group-id']))? intval($_GET['group-id']): 0;
+    $forum_id = (isset($_GET['forum-id']))? intval($_GET['forum-id']): 0;
     
     if(!$group_id){
         
@@ -47,10 +48,12 @@ function pfm_page_topic_form(){
         . '<p>'.__('Create a group of forums for managing the form fields of the publication of a topic','wp-recall').'.</p>';
         return;
     }
+    
     rcl_sortable_scripts();
 
     $formManager = new Prime_Form_Manager(array(
-        'form_slug' => 'pfm_group_'.$group_id
+        'forum_id' => $forum_id,
+        'group_id' => $group_id
     ));
     
     $content = '<h2>'.__('Manage topic form','wp-recall').'</h2>'
@@ -758,6 +761,11 @@ function pfm_get_templates(){
 add_action('pfm_deleted_group','pfm_delete_group_custom_fields',10);
 function pfm_delete_group_custom_fields($group_id){
     delete_option('rcl_fields_pfm_group_'.$group_id);
+}
+
+add_action('pfm_deleted_forum','pfm_delete_forum_custom_fields',10);
+function pfm_delete_forum_custom_fields($forum_id){
+    delete_option('rcl_fields_pfm_forum_'.$forum_id);
 }
 
 add_action('rcl_add_dashboard_metabox', 'rcl_add_forum_metabox');

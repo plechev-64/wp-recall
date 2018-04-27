@@ -138,11 +138,11 @@ class Rcl_Cart {
         foreach($this->products as $key => $product){
 
             if($product->product_id == $product_id){
-
+                
                 if(!$productVars)
                     return $key;
                 
-               if(!$vars && !$product->variations)
+               if(!$vars)
                    return $key;
                 
                 $productHash = md5(json_encode((array)$product->variations));

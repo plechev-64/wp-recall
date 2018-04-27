@@ -7,6 +7,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
     public $options;
     public $options_html;
     public $field;
+    public $create_field;
+    public $empty_field;
     public $types;
     public $status;
     public $primary;
@@ -22,7 +24,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
     public $defaultOptions = array();
 
     function __construct($post_type, $options = false){
-
+        
+        $this->create_field = (isset($options['create-field']))? $options['create-field']: true;
+        $this->empty_field = (isset($options['empty-field']))? $options['empty-field']: true;
         $this->select_type = (isset($options['select-type']))? $options['select-type']: true;
         $this->meta_key = (isset($options['meta-key']))? $options['meta-key']: true;
         $this->exist_placeholder = (isset($options['placeholder']))? $options['placeholder']: true;
@@ -66,6 +70,49 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         $this->fields = apply_filters('rcl_custom_fields', $fields, $this->post_type);
 
     }
+    
+    function get_field_types(){
+        
+        $fields = array(
+            'text'=>__('Text','wp-recall'),
+            'textarea'=>__('Multiline text area','wp-recall'),
+            'select'=>__('Select','wp-recall'),
+            'multiselect'=>__('MultiSelect','wp-recall'),
+            'checkbox'=>__('Checkbox','wp-recall'),
+            'radio'=>__('Radiobutton','wp-recall'),
+            'email'=>__('E-mail','wp-recall'),
+            'tel'=>__('Phone','wp-recall'),
+            'number'=>__('Number','wp-recall'),
+            'date'=>__('Date','wp-recall'),
+            'time'=>__('Time','wp-recall'),
+            'url'=>__('Url','wp-recall'),
+            'agree'=>__('Agreement','wp-recall'),
+            'file'=>__('File','wp-recall'),
+            'dynamic'=>__('Dynamic','wp-recall'),
+            'runner'=>__('Runner','wp-recall'),
+            'range'=>__('Range','wp-recall'),
+            //'color'=>__('Color','wp-recall')
+        );
+        
+        if($this->types){
+            
+            $newFields = array();
+            
+            foreach($fields as $key => $fieldname){
+                
+                if(!in_array($key,$this->types)) continue;
+                
+                $newFields[$key] = $fieldname;
+                
+            }
+            
+            $fields = $newFields;
+            
+        }
+        
+        return apply_filters('rcl_custom_field_types', $fields, $this->field);
+        
+    }
 
     function manager_form($defaultOptions = false){
 
@@ -86,13 +133,17 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
 
         $form .= $this->loop($this->get_active_fields());
 
-        $form .= $this->empty_field();
+        if($this->create_field && $this->empty_field) 
+            $form .= $this->empty_field();
 
         $form .= '</ul>';
 
-        $form .= "<div class=fields-submit>
-                <input type=button onclick='rcl_get_new_custom_field();' class='add-field-button button-secondary right' value='+ ".__('Add field','wp-recall')."'>
-                <input class='button button-primary' type=submit value='".__('Save','wp-recall')."' name='rcl_save_custom_fields'>";
+        $form .= "<div class=fields-submit>";
+         
+        if($this->create_field)
+            $form .= "<input type=button onclick='rcl_get_new_custom_field();' class='add-field-button button-secondary right' value='+ ".__('Add field','wp-recall')."'>";
+        
+        $form .= "<input class='button button-primary' type=submit value='".__('Save','wp-recall')."' name='rcl_save_custom_fields'>";
         
         if($this->meta_delete){    
             $form .= "<input type=hidden id=rcl-deleted-fields name=rcl_deleted_custom_fields value=''>"
@@ -171,6 +222,68 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         }
 
         return $form;
+    }
+    
+    function get_constant_options(){
+        
+        $options = array();
+        
+        if($this->new_slug && $this->meta_key){
+
+            $options[] = array(
+                'type' => 'text',
+                'slug'=>'slug',
+                'title'=>__('MetaKey','wp-recall'),
+                'notice'=>__('not required, but you can list your own meta_key in this field','wp-recall'),
+                'placeholder'=>__('Latin letters and numbers','wp-recall')
+            );
+ 
+        }
+
+        $options[] = array(
+            'type' => 'text',
+            'slug' => 'title',
+            'title' => __('Title','wp-recall'),
+            'required' => 1,
+            'default' => $this->field['title']
+        );
+
+        if($this->select_type){
+                        
+            $typeEdit = (isset($this->field['type-edit']))? $this->field['type-edit']: true;
+
+            if($typeEdit){
+                
+                $options[] = array(
+                    'title'=>__('Field type','wp-recall'),
+                    'slug' => 'type',
+                    'type' => 'select',
+                    'classes' => 'select-type-field',
+                    'values' => $this->get_field_types()
+                );
+                
+            }else{
+                
+                $options[] = array(
+                    'slug' => 'type',
+                    'type' => 'hidden',
+                    'value' => $this->field['type']
+                );
+                
+            }
+
+        }else{
+            
+            $options[] = array(
+                'slug' => 'type',
+                'type' => 'hidden',
+                'value' => 'custom'
+            );
+
+        }
+        
+        return apply_filters('rcl_custom_field_constant_options', $options, $this->field, $this->post_type);
+        
     }
     
     function get_options_field(){
@@ -260,7 +373,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                 
             }else{
                 
-                if($this->field['type']=='select'){
+                if(in_array($this->field['type'], array('select','radio'))){
                     
                     $options[] = array(
                         'type' => 'text',
@@ -337,6 +450,24 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         }
         
         return $this->get_input($option, $value);
+        
+    }
+    
+    function get_constant_options_content(){
+        
+        $options = $this->get_constant_options();
+        
+        if(!$options) return false;
+        
+        $content = '';
+        
+        foreach($options as $option){
+            
+            $content .= $this->get_option($option);
+            
+        }
+        
+        return $content;
         
     }
     
@@ -421,7 +552,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         
                         if($form)
                             $field .= '<form method="'.$form['method'].'" action="'.$form['action'].'">';
-        
+                        
                         $field .= $this->get_field_value(array(
                                 'type' => 'text',
                                 'slug' => 'slug',
@@ -429,30 +560,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                             ),
                             $this->field['slug']  
                         );
-
-                        $field .= $this->get_option(array(
-                                'type' => 'text',
-                                'slug' => 'title',
-                                'title' => __('Title','wp-recall'),
-                                'required' => 1,
-                            ),
-                            $this->field['title']  
-                        );
                         
-                        if($this->select_type){
-                        
-                            $typeEdit = (isset($this->field['type-edit']))? $this->field['type-edit']: true;
-
-                            if($typeEdit)
-                                $field .= $this->get_types();
-                            else
-                                $field .= '<input type="hidden" name="field['.$this->field['slug'].'][type]" value="'.$this->field['type'].'">';
-
-                        }else{
-
-                            $field .= '<input type="hidden" name="field['.$this->field['slug'].'][type]" value="custom">';
-
-                        }
+                        $field .= $this->get_constant_options_content();
 
                         $field .= '<div class="options-custom-field">';
                         $field .= $this->get_options();
@@ -480,7 +589,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         return $field;
 
     }
-
+    
     function empty_field(){
         
         $this->status = false;
@@ -500,89 +609,19 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                     </div>
                     <div class="field-settings">';
         
-                    if($this->meta_key){
-
-                        $edit = ($this->primary['custom-slug'])? true: false;
-
-                        $field .= $this->get_option(array(
-                            'type' => 'text',
-                            'slug'=>'slug',
-                            'title'=>__('MetaKey','wp-recall'),
-                            'notice'=>__('not required, but you can list your own meta_key in this field','wp-recall'),
-                            'placeholder'=>__('Latin letters and numbers','wp-recall')
-                        ));
-
-                    } 
-                    
-                    $field .= $this->get_types();
+                    $field .= $this->get_constant_options_content();
 
                     $field .= '<div class="options-custom-field">';
                     $field .= $this->get_options();
                     $field .= '</div>';
                     
                 $field .= '</div>';
-                
-                if(!$this->select_type)
-                    $field .= '<input type="hidden" name="new-field['.$this->new_slug.'][type]" value="custom">';
-                
+
                 $field .= '<input type="hidden" name="fields[]" value="">';
                 
             $field .= '</li>';
 
         return $field;
-    }
-    
-    function get_types(){
-        
-        if(!$this->select_type) return false;
-        
-        $fields = array(
-            'text'=>__('Text','wp-recall'),
-            'textarea'=>__('Multiline text area','wp-recall'),
-            'select'=>__('Select','wp-recall'),
-            'multiselect'=>__('MultiSelect','wp-recall'),
-            'checkbox'=>__('Checkbox','wp-recall'),
-            'radio'=>__('Radiobutton','wp-recall'),
-            'email'=>__('E-mail','wp-recall'),
-            'tel'=>__('Phone','wp-recall'),
-            'number'=>__('Number','wp-recall'),
-            'date'=>__('Date','wp-recall'),
-            'time'=>__('Time','wp-recall'),
-            'url'=>__('Url','wp-recall'),
-            'agree'=>__('Agreement','wp-recall'),
-            'file'=>__('File','wp-recall'),
-            'dynamic'=>__('Dynamic','wp-recall'),
-            'runner'=>__('Runner','wp-recall'),
-            'range'=>__('Range','wp-recall'),
-            //'color'=>__('Color','wp-recall')
-        );
-        
-        if($this->types){
-            
-            $newFields = array();
-            
-            foreach($fields as $key => $fieldname){
-                
-                if(!in_array($key,$this->types)) continue;
-                
-                $newFields[$key] = $fieldname;
-                
-            }
-            
-            $fields = $newFields;
-            
-        }
-        
-        $content = $this->get_option(array(
-            'title'=>__('Field type','wp-recall'),
-            'slug' => 'type',
-            'type' => 'select',
-            'classes' => 'select-type-field',
-            'values' => $fields
-        ));
-        
-        return $content;
-        
     }
 
     function get_vals($name){
@@ -663,7 +702,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             
         }
         
-        return $default_fields;
+        return apply_filters('rcl_inactive_custom_fields', $default_fields, $this->post_type);
         
     }
     
@@ -688,7 +727,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             
         }
         
-        return $this->fields;
+        return apply_filters('rcl_active_custom_fields', $this->fields, $this->post_type);
         
     }
     
@@ -789,5 +828,24 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
     /*depricated*/
     function edit_form($defaultOptions = false){
         return $this->manager_form($defaultOptions);
+    }
+    
+    /*depricated*/
+    function get_types(){
+        
+        if(!$this->select_type) return false;
+        
+        $fields = $this->get_field_types();
+        
+        $content = $this->get_option(array(
+            'title'=>__('Field type','wp-recall'),
+            'slug' => 'type',
+            'type' => 'select',
+            'classes' => 'select-type-field',
+            'values' => $fields
+        ));
+        
+        return $content;
+        
     }
 }

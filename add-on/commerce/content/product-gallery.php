@@ -28,8 +28,11 @@ function rcl_get_product_gallery($product_id, $size = 'rcl-product-thumb'){
             'full' => 'large'
         ),
         'navigator' => array(
-            'width' => 50,
-            'height' => 50
+            'thumbnails' => array(
+                'width' => 50,
+                'height' => 50,
+                'arrows' => true
+            )
         )
     ));
     

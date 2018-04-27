@@ -113,16 +113,20 @@ function rcl_post_gallery($content){
         
         $content = rcl_get_image_gallery(array(
             'id' => 'rcl-post-gallery-'.$post->ID,
+            'center_align' => true,
             'attach_ids' => $attach_ids,
-            //'width' => 750,
+            //'width' => 500,
             'height' => 350,
             'slides' => array(
                 'slide' => 'large',
                 'full' => 'large'
             ),
             'navigator' => array(
-                'width' => 70,
-                'height' => 70
+                'thumbnails' => array(
+                    'width' => 50,
+                    'height' => 50,
+                    'arrows' => true
+                )
             )
         )) . $content;
         
@@ -161,7 +165,7 @@ add_filter('the_content','rcl_concat_post_meta',10);
 function rcl_concat_post_meta($content){
     global $post;
     
-    if(doing_filter('the_excerpt')) return;
+    if(doing_filter('get_the_excerpt')) return $content;
     
     $option = rcl_get_option('pm_rcl');
     
@@ -289,10 +293,6 @@ function rcl_setup_edit_post_button(){
     $frontEdit = rcl_get_option('front_editing',array(0));
 
     if( false!==array_search($user_info->user_level, $frontEdit) || $user_info->user_level >= rcl_get_option('consol_access_rcl',7) ) {
-
-        if($post->post_type=='task'){
-            if(get_post_meta($post->ID,'step_order',1)!=1) return false;
-        }
 
         if($user_info->user_level<10&&rcl_is_limit_editing($post->post_date)) return false;
 

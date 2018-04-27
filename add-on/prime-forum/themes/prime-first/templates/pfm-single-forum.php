@@ -12,7 +12,6 @@
                     <?php _e('Subforums:','wp-recall'); ?> <?php pfm_subforums_list(); ?>
                 </div>
             <?php endif; ?>
-            
         </div>
         <?php pfm_the_forum_icons(); ?>
         <div class="prime-forum-topics">

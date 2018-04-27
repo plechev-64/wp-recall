@@ -396,7 +396,7 @@ add_action('rcl_delete_rating','rcl_update_total_rating');
 add_action('rcl_insert_rating','rcl_update_total_rating');
 function rcl_update_total_rating($args){
     global $wpdb;
-
+    
     $total = rcl_get_rating_sum($args['object_id'],$args['rating_type']);
 
     if(isset($total)){
@@ -446,7 +446,7 @@ function rcl_update_user_rating($args){
     global $wpdb;
     
     wp_cache_delete(json_encode(array('rcl_get_user_rating_value',$args['object_author'])));
-
+    
     $total = rcl_get_user_rating_value($args['object_author']);
 
     if(isset($total)){

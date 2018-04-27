@@ -161,11 +161,17 @@ function rcl_chat_tab($office_id){
     return $chat;
 }
 
-function rcl_get_chat_private($user_id,$args=array()){
-    global $user_ID,$rcl_options;
+function rcl_get_chat_private($user_id, $args = array()){
+    global $user_ID;
     
     $chat_room = rcl_get_private_chat_room($user_id,$user_ID);
     
+    return rcl_get_the_chat_by_room($chat_room, $args);
+}
+
+function rcl_get_the_chat_by_room($chat_room, $args = array()){
+    global $user_ID,$rcl_options;
+
     $file_upload = (isset($rcl_options['chat']['file_upload']))? $rcl_options['chat']['file_upload']: 0;
 
     $args = array_merge(array(
@@ -176,12 +182,13 @@ function rcl_get_chat_private($user_id,$args=array()){
     ),$args);
     
     require_once 'class-rcl-chat.php';
+    
     $chat = new Rcl_Chat($args);
 
     return array(
-                'content'=>$chat->get_chat(),
-                'token' =>$chat->chat_token
-            );
+        'content'=>$chat->get_chat(),
+        'token' =>$chat->chat_token
+    );
 }
 
 function rcl_chat_add_page_link_attributes($attrs){

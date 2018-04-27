@@ -7,7 +7,7 @@ require_once "metaboxes.php";
 
 add_action('admin_init','rcl_admin_scripts', 10);
 function rcl_admin_scripts(){
-    wp_enqueue_style( 'animate-css', RCL_URL.'assets/css/animate-css/animate.min.css' );   
+    wp_enqueue_style( 'animate-css', RCL_URL.'assets/css/animate-css/animate.min.css' );
 }
 
 add_filter('rcl_custom_field_options','rcl_edit_field_options',10,3);
@@ -26,13 +26,13 @@ function rcl_edit_field_options($options, $field, $type){
         }
 
     }
-    
+
     return $options;
-    
+
 }
 
 function rmag_global_options(){
-    
+
     $content = ' <div id="recall" class="left-sidebar wrap">
         <form method="post" action="">
         '.wp_nonce_field('update-options-rmag','_wpnonce',true,false);
@@ -44,7 +44,7 @@ function rmag_global_options(){
             </div>
         </form>
     </div>';
-        
+
     echo $content;
 }
 
@@ -58,14 +58,14 @@ function rmag_update_options ( ) {
         $options[$key]=$value;
     }
 
-    update_option('primary-rmag-options',$options);    
-    
+    update_option('primary-rmag-options',$options);
+
     if(isset($_POST['local'])){
         foreach((array)$_POST['local'] as $key => $value){
             update_option($key,$value);
         }
     }
-    
+
     wp_redirect(admin_url('admin.php?page=manage-wpm-options'));
     exit;
   }
@@ -87,14 +87,14 @@ function rcl_wp_list_current_action() {
 
 if (is_admin()) add_action('admin_init', 'rcl_postmeta_post');
 function rcl_postmeta_post() {
-    add_meta_box( 'recall_meta', __('Wp-Recall settings','wp-recall'), 'rcl_options_box', 'post', 'normal', 'high'  );
-    add_meta_box( 'recall_meta', __('Wp-Recall settings','wp-recall'), 'rcl_options_box', 'page', 'normal', 'high'  );
+    add_meta_box( 'recall_meta', __('WP-Recall settings','wp-recall'), 'rcl_options_box', 'post', 'normal', 'high'  );
+    add_meta_box( 'recall_meta', __('WP-Recall settings','wp-recall'), 'rcl_options_box', 'page', 'normal', 'high'  );
 }
 
 add_filter('rcl_post_options','rcl_gallery_options',10,2);
 function rcl_gallery_options($options,$post){
     $mark_v = get_post_meta($post->ID, 'recall_slider', 1);
-    $options .= '<p>'.__('Output images via Wp-Recall gallery?','wp-recall').':
+    $options .= '<p>'.__('Output images via WP-Recall gallery?','wp-recall').':
         <label><input type="radio" name="wprecall[recall_slider]" value="" '.checked( $mark_v, '',false ).' />'.__('No','wp-recall').'</label>
         <label><input type="radio" name="wprecall[recall_slider]" value="1" '.checked( $mark_v, '1',false ).' />'.__('Yes','wp-recall').'</label>
     </p>';
@@ -117,7 +117,7 @@ function rcl_postmeta_update( $post_id ){
     if( !isset($_POST['wprecall']) ) return false;
 
     $POST = $_POST['wprecall'];
-    
+
     foreach($POST as $key=>$value ){
         if(!is_array($value)) $value = trim($value);
         if($value=='') delete_post_meta($post_id, $key);
@@ -129,7 +129,7 @@ function rcl_postmeta_update( $post_id ){
 rcl_ajax_action('rcl_update_options', false);
 function rcl_update_options(){
     global $rcl_options;
-    
+
     if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rcl' ) ){
         wp_send_json(array(
             'error' => __('Error','wp-recall')
@@ -137,7 +137,7 @@ function rcl_update_options(){
     }
 
     $POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    
+
     array_walk_recursive(
     $POST, function(&$v, $k) {
       $v = trim($v);
@@ -152,8 +152,10 @@ function rcl_update_options(){
         $options[$key] = $value;
     }
 
-    if(isset($rcl_options['users_page_rcl'])) 
+    if(isset($rcl_options['users_page_rcl']))
         $options['users_page_rcl'] = $rcl_options['users_page_rcl'];
+    
+    $options = apply_filters('rcl_pre_update_options', $options);
 
     update_option('rcl_global_options',$options);
 
@@ -183,38 +185,38 @@ function rcl_update_custom_fields(){
     global $wpdb;
 
     if( !isset($_POST['rcl_save_custom_fields']) ) return false;
-    
+
     if( !wp_verify_nonce( $_POST['_wpnonce'], 'rcl-update-custom-fields' ) ) return false;
 
     $fields = array();
-    
+
     $table = 'postmeta';
-    
+
     if($_POST['rcl-fields-options']['name-option'] == 'rcl_profile_fields')
         $table = 'usermeta';
 
     $POSTDATA = apply_filters('rcl_pre_update_custom_fields_options',$_POST);
-    
+
     if(!$POSTDATA) return false;
-    
+
     if(isset($POSTDATA['rcl_deleted_custom_fields'])){
-        
+
         $deleted = explode(',',$POSTDATA['rcl_deleted_custom_fields']);
-        
+
         if($deleted){
-            
+
             foreach($deleted as $slug){
                 $wpdb->query($wpdb->prepare("DELETE FROM ".$wpdb->$table." WHERE meta_key = '%s'",$slug));
             }
-            
+
         }
-        
+
     }
-    
+
     $newFields = array();
-    
+
     if(isset($POSTDATA['new-field'])){
-        
+
         $nKey = 0;
 
         foreach($POSTDATA['new-field'] as $optionSlug => $vals){
@@ -228,136 +230,136 @@ function rcl_update_custom_fields(){
     $nKey = 0;
 
     foreach($POSTDATA['fields'] as $k => $slug){
-        
+
         if(!$slug){
-            
+
             if(!isset($newFields[$nKey]) || !$newFields[$nKey]['title']) continue;
-            
+
             if(isset($newFields[$nKey]['slug']) && $newFields[$nKey]['slug'])
                 $slug = $newFields[$nKey]['slug'];
             else
                 $slug = str_replace(array('-',' '),'_',rcl_sanitize_string($newFields[$nKey]['title']).'-'.rand(10,100));
-            
+
             $field = $newFields[$nKey];
-            
+
             $nKey++;
-            
+
         }else{
-            
+
             if(!isset($POSTDATA['field'][$slug])) continue;
-        
+
             $field = $POSTDATA['field'][$slug];
-            
+
         }
 
         $field['slug'] = $slug;
-        
+
         $fields[] = $field;
-        
+
     }
-    
+
     foreach($fields as $k => $field){
-        
+
         if(isset($field['values']) && $field['values'] && is_array($field['values'])){
-            
+
             $values = array();
             foreach($field['values'] as $val){
                 if($val == '') continue;
                 $values[] = $val;
             }
-            
+
             $fields[$k]['values'] = $values;
-            
+
         }
-        
+
     }
-    
+
     if(isset($POSTDATA['options'])){
         $fields['options'] = $POSTDATA['options'];
     }
 
     update_option( $_POST['rcl-fields-options']['name-option'], $fields );
-    
+
     do_action('rcl_update_custom_fields', $fields, $POSTDATA);
 
     wp_redirect( $_POST['_wp_http_referer'] ); exit;
-    
+
 }
 
 rcl_ajax_action('rcl_get_new_custom_field', false);
 function rcl_get_new_custom_field(){
-    
+
     $post_type = $_POST['post_type'];
     $primary = (array)json_decode(wp_unslash($_POST['primary_options']));
     $default = (array)json_decode(wp_unslash($_POST['default_options']));
-    
+
     $manageFields = new Rcl_Custom_Fields_Manager($post_type,$primary);
-    
+
     if($default){
-        
+
         $manageFields->defaultOptions = array();
-        
+
         foreach($default as $option){
             $manageFields->defaultOptions[] = (array)$option;
         }
-        
+
     }
-    
+
     $content = $manageFields->empty_field();
 
     wp_send_json(array(
         'content' => $content
     ));
-    
+
 }
 
 rcl_ajax_action('rcl_get_custom_field_options', false);
 function rcl_get_custom_field_options(){
-    
+
     $type_field = $_POST['type_field'];
     $old_type = $_POST['old_type'];
     $post_type = $_POST['post_type'];
-    $slug_field = $_POST['slug'];   
-    
+    $slug_field = $_POST['slug'];
+
     $primary = (array)json_decode(wp_unslash($_POST['primary_options']));
     $default = (array)json_decode(wp_unslash($_POST['default_options']));
-    
+
     $manageFields = new Rcl_Custom_Fields_Manager($post_type,$primary);
-    
+
     if($default){
-        
+
         $manageFields->defaultOptions = array();
-        
+
         foreach($default as $option){
             $manageFields->defaultOptions[] = (array)$option;
         }
-        
+
     }
-    
+
     $manageFields->field = array( 'type' => $type_field );
-    
+
     if(strpos($slug_field,'CreateNewField') === false){
 
         $manageFields->field['slug'] = $slug_field;
 
     }else{
-        
+
         $manageFields->field['slug'] = '';
         $manageFields->new_slug = $slug_field;
-        
+
     }
 
     $content = $manageFields->get_options();
-    
+
     $multiVars = array(
         'select',
         'radio',
         'checkbox',
         'multiselect'
     );
-    
+
     if(in_array($type_field,$multiVars)){
-        
+
        $content .= '<script>'
         . "jQuery('#field-".$slug_field." .rcl-field-input .dynamic-values').sortable({
              containment: 'parent',
@@ -375,14 +377,14 @@ function rcl_get_custom_field_options(){
 
              }
          });"
-        . '</script>'; 
-        
+        . '</script>';
+
     }
 
     wp_send_json(array(
         'content' => $content
     ));
-    
+
 }
 
 add_filter('admin_footer_text', 'rcl_admin_footer_text', 10);
@@ -399,7 +401,7 @@ function rcl_admin_footer_text( $footer_text ) {
         'wp-recall_page_manage-userfield',
         'wp-recall_page_manage-public-form'
     );
-    
+
     if ( isset( $current_screen->id ) && in_array( $current_screen->id, $dlm_page_ids ) ) {
         $footer_text = sprintf( __( 'If you liked plugin %sWP-Recall%s, please vote for it in repository %s★★★★★%s. Thank you so much!', 'wp-recall' ), '<strong>', '</strong>', '<a href="https://wordpress.org/support/view/plugin-reviews/wp-recall?filter=5#new-post" target="_blank">', '</a>' );
     }

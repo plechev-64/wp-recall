@@ -3,7 +3,7 @@
 global $rcl_options;
 
 rcl_font_awesome_style();
-    
+
 wp_enqueue_script('jquery');
 wp_enqueue_script('jquery-ui-dialog');
 wp_enqueue_style('wp-jquery-ui-dialog');
@@ -16,7 +16,7 @@ $rcl_options = get_option('rcl_global_options');
 
 $extends = isset($_COOKIE['rcl_extends'])? $_COOKIE['rcl_extends']: 0;
 
-$content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2>
+$content = '<h2>'.__('Configure WP-Recall plugin and add-ons','wp-recall').'</h2>
     <div id="recall" class="left-sidebar wrap">
     <span class="shift-extend-options">
         <label><input type="checkbox" name="extend_options" '.checked($extends,1,false).' onclick="return rcl_enable_extend_options(this);" value="1"> '.__('Advanced settings').'</label>
@@ -49,7 +49,7 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                                             'name'       => 'global[lk_page_rcl]',
                                             'show_option_none' => '<span style="color:red">'.__('Not selected','wp-recall').'</span>',
                                             'echo'       => 0
-                                        ) 
+                                        )
                                     )
                                 ),
                                 array(
@@ -69,7 +69,7 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                         'default' => 10,
                         'help'=>__('This value sets the maximum time a user is considered "online" in the absence of activity','wp-recall'),
                         'title'=>__('Inactivity timeout','wp-recall'),
-                        'notice'=>__('Specify the time in minutes after which the user will be considered offline if you did not show activity on the website. The default is 10 minutes.','wp-recall') 
+                        'notice'=>__('Specify the time in minutes after which the user will be considered offline if you did not show activity on the website. The default is 10 minutes.','wp-recall')
                     )
                 )
             )
@@ -194,7 +194,7 @@ $content = '<h2>'.__('Configure Wp-Recall plugin and add-ons','wp-recall').'</h2
                         'values'=>array(
                             __('Disabled','wp-recall'),
                             __('Enabled','wp-recall')),
-                        'notice'=>__('Minimization of file styles only works in correlation with Wp-Recall style files and add-ons that support this feature','wp-recall')
+                        'notice'=>__('Minimization of file styles only works in correlation with WP-Recall style files and add-ons that support this feature','wp-recall')
                     ),
                     array(
                         'type'=>'select',
