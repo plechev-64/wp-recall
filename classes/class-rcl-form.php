@@ -38,7 +38,7 @@ class Rcl_Form extends Rcl_Custom_Fields{
 
                     $required = (isset($field['required']) && $field['required'] == 1)? '<span class="required">*</span>': '';
 
-                    $content .= '<div id="field-'.$field['slug'].'" class="form-field rcl-option">';
+                    $content .= '<div id="field-'.$field['slug'].'" class="form-field field-type-'.$field['type'].' rcl-option">';
 
                         if(isset($field['title'])){
                             $content .= '<span class="field-title">';

@@ -263,7 +263,16 @@ function rcl_get_custom_field_options(e){
     var boxField = jQuery(e).parents('.rcl-custom-field');
     var oldType = boxField.attr('data-type');
     
-    var multiVals = ['multiselect','checkbox','radio'];
+    var multiVals = ['multiselect','checkbox'];
+
+    if(jQuery.inArray( typeField, multiVals ) >= 0 && jQuery.inArray( oldType, multiVals ) >= 0){
+        
+        boxField.attr('data-type',typeField);
+        return;
+        
+    }
+    
+    var multiVals = ['radio','select'];
 
     if(jQuery.inArray( typeField, multiVals ) >= 0 && jQuery.inArray( oldType, multiVals ) >= 0){
         

@@ -39,15 +39,20 @@ function rcl_profile_fields_manager(){
 
     rcl_sortable_scripts();
 
-    $profileFields = new Rcl_Profile_Fields('profile',array('custom-slug'=>1,'meta_delete'=>true));
+    $Manager = new Rcl_Profile_Fields('profile', array(
+        'custom-slug'=>1,
+        'meta_delete'=>true
+    ));
+    
+    $Manager->init_profile_manager_filters();
     
     $content = '<h2>'.__('Manage profile fields','wp-recall').'</h2>';
     
-    $content .= '<p>'.__('On this page you can create custom fields of the user profile, as well as to manage already created fields').'</p>';
+    $content .= '<p>'.__('On this page you can create custom fields of the user profile, as well as to manage already created fields', 'wp-recall').'</p>';
     
-    $content .= $profileFields->active_fields_box();
+    $content .= $Manager->active_fields_box();
 
-    $content .= $profileFields->inactive_fields_box();
+    $content .= $Manager->inactive_fields_box();
 
     echo $content;
     

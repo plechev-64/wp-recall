@@ -2,17 +2,21 @@
 
 class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
     
-    function __construct($typeFields,$args) {
+    function __construct($typeFields, $args = false) {
         
-        parent::__construct($typeFields,$args);
-        
+        parent::__construct($typeFields, $args);
+
+    }
+    
+    function init_profile_manager_filters(){
         add_filter('rcl_default_custom_fields',array($this, 'add_default_profile_fields'));
         add_filter('rcl_custom_fields_form',array($this, 'add_users_page_option'));
         add_filter('rcl_custom_field_options', array($this, 'edit_field_options'), 10, 3);
-        
     }
     
-    function add_default_profile_fields($fields){
+    function get_default_profile_fields(){
+        
+        $fields = array();
         
         $fields[] = array(
             'slug' => 'first_name',
@@ -51,6 +55,16 @@ class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
         );
         
         return apply_filters('rcl_default_profile_fields', $fields);
+        
+    }
+    
+    function add_default_profile_fields($fields){
+        
+        if($defFields = $this->get_default_profile_fields())
+            $fields = array_merge($fields, $defFields);
+        
+        return $fields;
+        
     }
 
     function active_fields_box(){

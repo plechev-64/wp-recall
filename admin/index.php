@@ -154,6 +154,8 @@ function rcl_update_options(){
 
     if(isset($rcl_options['users_page_rcl']))
         $options['users_page_rcl'] = $rcl_options['users_page_rcl'];
+    
+    $options = apply_filters('rcl_pre_update_options', $options);
 
     update_option('rcl_global_options',$options);
 

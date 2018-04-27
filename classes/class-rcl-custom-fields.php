@@ -313,26 +313,34 @@ class Rcl_Custom_Fields{
             $field['values'] = rcl_edit_old_option_fields($field['field_select'], $field['type']);
         
         if(!$field['values']) return false;
+        
+        $emptyFirst = (isset($field['empty-first']))? $field['empty-first']: false;
 
-        $input = '';
+        $content = '';
+
+        if($emptyFirst){
+            $content .= '<span class="rcl-radio-box">';
+            $content .= '<input type="radio" '.$this->required.' '.checked($this->value,'',false).' id="'.$this->field_id.'_'.$this->rand.'" name="'.$field['name'].'" value=""> ';
+            $content .= '<label class="block-label" for="'.$this->field_id.'_'.$this->rand.'">'.$emptyFirst.'</label>';
+            $content .= '</span>';
+        }
+        
         $a = 0;
         
         foreach($field['values'] as $k => $value){
             
             if($this->value_in_key) $k = $value;
             
-            $input .='<span class="rcl-radio-box">'
-                    . '<input '.$this->required.' '.checked($this->value,$k,false).' '.checked($a,0,false).' type="radio" '.$this->get_class($field).' id="'.$this->field_id.'_'.$k.$this->rand.'" name="'.$field['name'].'" value="'.trim($k).'"> ';
-            $input .='<label class="block-label" for="'.$this->field_id.'_'.$k.$this->rand.'">';        
-            $input .= $value
-                    .'</label>'
-                    . '</span>';
+            $content .= '<span class="rcl-radio-box">';
+            $content .= '<input type="radio" '.$this->required.' '.checked($this->value,$k,false).' '.checked($a,0,false).' '.$this->get_class($field).' id="'.$this->field_id.'_'.$k.$this->rand.'" name="'.$field['name'].'" value="'.trim($k).'"> ';
+            $content .= '<label class="block-label" for="'.$this->field_id.'_'.$k.$this->rand.'">'.$value.'</label>';
+            $content .= '</span>';
             
             $a++;
             
         }
         
-        return $input;
+        return $content;
     }
     
     function get_type_editor($field){
