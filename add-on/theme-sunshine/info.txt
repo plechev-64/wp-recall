@@ -1,5 +1,5 @@
 Name: Sunshine;
-Version: 0.1;
+Version: 0.2;
 Support Core: 15.0.0;
 Template: Sunshine;
 Description: Шаблон личного кабинета;
