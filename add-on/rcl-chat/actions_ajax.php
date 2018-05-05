@@ -15,7 +15,8 @@ function rcl_get_ajax_chat_window(){
             'content' => $chatdata['content'],
             'title' => __('Chat with','wp-recall').' '.get_the_author_meta('display_name',$user_id),
             'class' => 'rcl-chat-window',
-            'size' => 'small'
+            'size' => 'small',
+            'buttonClose' => false
         )
     ));
     
