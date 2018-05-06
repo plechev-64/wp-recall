@@ -539,12 +539,28 @@ function rcl_proccess_ajax_return(result){
                 var ssiOptions = {
                     className: 'rcl-dialog-tab ' + (dialog.class? ' ' + dialog.class: ''),
                     sizeClass: dialog.size? dialog.size: 'auto',
-                    buttons: [{
+                    content: dialog.content,
+                    buttons: []
+                };
+                
+                if(dialog.buttons){
+                    ssiOptions.buttons = dialog.buttons;
+                }
+                
+                var buttonClose = true;
+                
+                if ('buttonClose' in dialog) {
+                    buttonClose = dialog.buttonClose;
+                }
+                
+                if(buttonClose){
+                    
+                    ssiOptions.buttons.push({
                         label: Rcl.local.close,
                         closeAfter: true
-                    }],
-                    content: dialog.content
-                };
+                    });
+                    
+                }
 
                 if(dialog.title)
                     ssiOptions.title = dialog.title;

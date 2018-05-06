@@ -756,6 +756,9 @@ p.rcl-custom-fields .rcl-field-value .fa-upload{
 div.ssi-backdrop {
     background: rgba(0, 0, 0, 0.7);
 }
+body .ssi-modalOuter .ssi-modalTitle{
+    font-family: inherit;
+}
 .ssi-modalOuter .ssi-modalWindow {
     border: none;
     border-radius: 0;

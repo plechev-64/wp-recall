@@ -19,7 +19,7 @@ $extends = isset($_COOKIE['rcl_extends'])? $_COOKIE['rcl_extends']: 0;
 $content = '<h2>'.__('Configure WP-Recall plugin and add-ons','wp-recall').'</h2>
     <div id="recall" class="left-sidebar wrap">
     <span class="shift-extend-options">
-        <label><input type="checkbox" name="extend_options" '.checked($extends,1,false).' onclick="return rcl_enable_extend_options(this);" value="1"> '.__('Advanced settings').'</label>
+        <label><input type="checkbox" name="extend_options" '.checked($extends,1,false).' onclick="return rcl_enable_extend_options(this);" value="1"> '.__('Advanced settings', 'wp-recall').'</label>
     </span>
     <form method="post" id="rcl-options-form" onsubmit="rcl_update_options();return false;" action="">
     '.wp_nonce_field('update-options-rcl','_wpnonce',true,false).'
@@ -220,7 +220,7 @@ $content = '<h2>'.__('Configure WP-Recall plugin and add-ons','wp-recall').'</h2
                         __('On a separate page','wp-recall'),
                         __('Wordpress Forms','wp-recall'),
                         __('Widget form','wp-recall')),
-                    'notice' => __('Форма входа и регистации плагина может быть выведена через виджет "Панель управления", шорткод [loginform], а можете использовать стандартные формы WordPress', 'wp-recall'),
+                    'notice' => __('Форма входа и регистрации плагина может быть выведена через виджет "Панель управления", шорткод [loginform], а можете использовать стандартные формы WordPress', 'wp-recall'),
                     'childrens' => array(
                         1 => array(
                             array(

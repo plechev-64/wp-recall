@@ -73,7 +73,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
     
     function get_field_types(){
         
-        $fields = array(
+        $types = array(
             'text'=>__('Text','wp-recall'),
             'textarea'=>__('Multiline text area','wp-recall'),
             'select'=>__('Select','wp-recall'),
@@ -98,7 +98,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
             
             $newFields = array();
             
-            foreach($fields as $key => $fieldname){
+            foreach($types as $key => $fieldname){
                 
                 if(!in_array($key,$this->types)) continue;
                 
@@ -106,11 +106,11 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                 
             }
             
-            $fields = $newFields;
+            $types = $newFields;
             
         }
         
-        return apply_filters('rcl_custom_field_types', $fields, $this->field);
+        return apply_filters('rcl_custom_field_types', $types, $this->field, $this->post_type);
         
     }
 
@@ -224,7 +224,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         return $form;
     }
     
-    function get_constant_options(){
+    function get_constant_options($field){
         
         $options = array();
         
@@ -240,21 +240,19 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
  
         }
         
-        if(!$this->new_slug){
-            
+        if(!isset($field['newField'])){
             $options[] = array(
                 'type' => 'text',
                 'slug' => 'title',
                 'title' => __('Title','wp-recall'),
-                //'required' => 1,
-                'default' => $this->field['title']
+                'default' => $field['title']
             );
             
         }
 
         if($this->select_type){
                         
-            $typeEdit = (isset($this->field['type-edit']))? $this->field['type-edit']: true;
+            $typeEdit = (isset($field['type-edit']))? $field['type-edit']: true;
 
             if($typeEdit){
                 
@@ -271,7 +269,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                 $options[] = array(
                     'slug' => 'type',
                     'type' => 'hidden',
-                    'value' => $this->field['type']
+                    'value' => $field['type']
                 );
                 
             }
@@ -286,7 +284,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
 
         }
         
-        return apply_filters('rcl_custom_field_constant_options', $options, $this->field, $this->post_type);
+        return apply_filters('rcl_custom_field_constant_options', $options, $field, $this->post_type);
         
     }
     
@@ -457,9 +455,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         
     }
     
-    function get_constant_options_content(){
+    function get_constant_options_content($field){
         
-        $options = $this->get_constant_options();
+        $options = $this->get_constant_options($field);
         
         if(!$options) return false;
         
@@ -565,7 +563,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                             $this->field['slug']  
                         );
                         
-                        $field .= $this->get_constant_options_content();
+                        $field .= $this->get_constant_options_content($this->field);
 
                         $field .= '<div class="options-custom-field">';
                         $field .= $this->get_options();
@@ -598,6 +596,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
         
         $this->status = false;
         $this->new_slug = 'CreateNewField'.rand(10,100);
+        $this->field['newField'] = 1;
         
         if($this->select_type)
             $this->field['type'] = ($this->types)? $this->types[0]: 'text';
@@ -613,7 +612,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                     </div>
                     <div class="field-settings">';
         
-                    $field .= $this->get_constant_options_content();
+                    $field .= $this->get_constant_options_content($this->field);
 
                     $field .= '<div class="options-custom-field">';
                     $field .= $this->get_options();
