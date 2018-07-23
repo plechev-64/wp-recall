@@ -223,7 +223,7 @@ function rcl_get_register_user($errors){
 add_action('wp', 'rcl_get_register_user_activate',10);
 function rcl_get_register_user_activate ( ) {
     if ( isset( $_POST['submit-register'] ) ) { //если данные пришли с формы wp-recall
-        if( !wp_verify_nonce( $_POST['_wpnonce'], 'register-key-rcl' ) ) return false;
+        if( !wp_verify_nonce( $_POST['register_wpnonce'], 'register-key-rcl' ) ) return false;
         $email = $_POST['user_email'];
         $login = sanitize_user($_POST['user_login']);
         register_new_user($login,$email);       
