@@ -426,12 +426,12 @@ function rcl_banned_user_redirect(){
 add_filter('the_content','rcl_message_post_moderation');
 function rcl_message_post_moderation($content){
     global $post;
-
-    if( $post->post_status=='pending' ){
+  
+    if( is_object($post) && $post->post_status=='pending' ){
         $content = '<h3 class="pending-message">'.__('Publication pending approval!','wp-recall').'</h3>' . $content;
     }
     
-    if( $post->post_status=='draft' ){
+    if( is_object($post) && $post->post_status=='draft' ){
         $content = '<h3 class="pending-message">'.__('Draft of a post','wp-recall').'</h3>' . $content;
     }
     

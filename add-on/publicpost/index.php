@@ -88,7 +88,11 @@ function rcl_update_postdata_excerpt($postdata){
 add_filter('the_content','rcl_post_gallery',10);
 function rcl_post_gallery($content){
     global $post;
-    
+
+	if ( ! is_object( $post ) ) {
+		return $content;
+	}
+
     if(get_post_meta($post->ID, 'recall_slider', 1)!=1||!is_single()||$post->post_type=='products') return $content;
     
     $args = array(
@@ -171,6 +175,10 @@ function rcl_concat_post_meta($content){
     if($types = rcl_get_option('pm_post_types')){
         if(!in_array($post->post_type, $types)) return $content;
     }
+
+	if ( ! is_object( $post ) ) {
+		return $content;
+	}
     
     $pm = rcl_get_custom_post_meta($post->ID);
     

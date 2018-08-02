@@ -256,7 +256,7 @@ function rcl_get_order_tabs($rcl_tabs){
         if(isset($data['output']) && $data['output']!='menu') continue;
         
         if(isset($data['hidden']) && $data['hidden']) continue;
-        
+      
         if(!isset($data['public']) || $data['public']!=1){
             
             if(!$user_ID) continue;
