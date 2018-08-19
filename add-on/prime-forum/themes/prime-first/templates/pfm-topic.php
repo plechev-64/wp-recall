@@ -24,7 +24,7 @@
                     <meta itemprop="name" content="<?php echo pfm_get_user_name(pfm_topic_field('user_id')); ?>" />
                 </span>
 
-                <meta itemprop="description" content="<?php echo wp_trim_words($PrimeQuery->posts[0]->post_content,50); ?>" />
+                <meta itemprop="description" content="<?php echo wp_trim_words(esc_html($PrimeQuery->posts[0]->post_content),50); ?>" />
                 <meta itemprop="datePublished" content="<?php echo mysql2date('c', $PrimeQuery->posts[0]->post_date, false); ?>" />
                 <div style="display: none;" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
                     <img  itemprop="url contentUrl" src="<?php echo $thumb[0]; ?>" />
