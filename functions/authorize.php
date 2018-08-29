@@ -58,7 +58,7 @@ function rcl_get_login_user(){
 add_action('init', 'rcl_get_login_user_activate');
 function rcl_get_login_user_activate ( ) {
     if ( isset( $_POST['submit-login'] ) ) {
-        if( !wp_verify_nonce( $_POST['_wpnonce'], 'login-key-rcl' ) ) return false;
+        if( !wp_verify_nonce( $_POST['login_wpnonce'], 'login-key-rcl' ) ) return false;
         add_action( 'wp', 'rcl_get_login_user' );
     }
 }

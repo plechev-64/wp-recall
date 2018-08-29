@@ -132,8 +132,8 @@ function rcl_add_office_profile_fields($fields){
             'title' => __('Admin toolbar','wp-recall'),
             'type' => 'select',
             'values' => array(
-                'false' => 'Отключено',
-                'true' => 'Включено'
+                'false' => __('Disabled','wp-recall'),
+                'true' => __('Enabled','wp-recall')
             )
         );
     }

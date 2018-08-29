@@ -320,27 +320,30 @@ function rcl_add_taxonomy_in_postdata($postdata,$data){
         
     }
     
-    $FormFields = new Rcl_Public_Form_Fields(array(
-        'post_type' => $data->post_type,
-        'form_id' => $_POST['form_id']
-    ));
+    if(isset($_POST['cats']) && $_POST['cats']){
+		
+        $FormFields = new Rcl_Public_Form_Fields(array(
+            'post_type' => $data->post_type,
+            'form_id' => $_POST['form_id']
+        ));
 
-    foreach($post_type[$data->post_type]->taxonomies as $taxonomy){
+        foreach($_POST['cats'] as $taxonomy => $terms){
 
-        if(!isset($_POST['cats'][$taxonomy])) continue;
+            if(!isset($FormFields->taxonomies[$taxonomy])) continue;
 
-        $postCats = $_POST['cats'][$taxonomy];
+            if(!$FormFields->get_field_option('taxonomy-'.$taxonomy, 'only-child')){
 
-        if(!$FormFields->get_field_option('taxonomy-'.$taxonomy, 'only-child')){
+                $allCats = get_terms($taxonomy);
 
-            $allCats = get_terms($taxonomy);
-            
-            $RclTerms = new Rcl_Edit_Terms_List();
-            $postCats = $RclTerms->get_terms_list($allCats, $postCats);
+                $RclTerms = new Rcl_Edit_Terms_List();
+                $terms = $RclTerms->get_terms_list($allCats, $terms);
+
+            }
+
+            $postdata['tax_input'][$taxonomy] = $terms;
 
         }
 
-        $postdata['tax_input'][$taxonomy] = $postCats;
     }
 
     return $postdata;
