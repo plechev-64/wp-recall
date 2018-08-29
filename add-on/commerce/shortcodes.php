@@ -26,6 +26,7 @@ function rcl_shortcode_productlist($atts){
         'type' => 'list',
         'width' => 150,
         'cat' => false,
+        'cat__not_in' => false,
         'desc'=> 200,
         'tag'=> false,
         'include' => false,
@@ -51,6 +52,15 @@ function rcl_shortcode_productlist($atts){
                 'taxonomy'=>'prodcat',
                 'field'=>'id',
                 'terms'=> explode(',',$cat)
+            );
+    }
+    
+    if($cat__not_in){
+        $args['tax_query'][] = array(
+                'taxonomy'=>'prodcat',
+                'field' => 'id',
+                'terms'=> explode(',',$cat__not_in),
+                'operator' => 'NOT IN'
             );
     }
 
