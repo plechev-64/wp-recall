@@ -85,6 +85,10 @@ function rcl_activate_addon($addon,$activate=true,$dirpath=false){
             
             include_once($index_src);
             
+            if(isset($addon_headers['key-id'])){
+                rcl_send_addon_activation_notice($addon, $addon_headers);
+            }
+            
             update_site_option('rcl_active_addons',$active_addons);
             
             do_action('rcl_activate_'.$addon,$active_addons[$addon]);

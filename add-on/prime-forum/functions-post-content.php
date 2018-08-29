@@ -100,7 +100,7 @@ function pfm_filter_allowed_tags($content){
         )
     ));
     
-    $content = wp_kses($content, $allowed_tags);
+    $content = force_balance_tags(wp_kses($content, $allowed_tags));
     
     return $content;
     

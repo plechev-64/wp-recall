@@ -323,8 +323,10 @@ class Rcl_Query {
         
         $where = array();
         
+        $relation = isset($query['relation'])? $query['relation']: 'AND';
+        
         if($query['where']){
-            $where[] = implode(' AND ',$query['where']);
+            $where[] = implode(' '.$relation.' ',$query['where']);
         }
         
         if(isset($query['where_or']) && $query['where_or']){

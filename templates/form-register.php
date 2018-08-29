@@ -30,7 +30,7 @@ $f_reg = ($typeform=='register')? 'style="display:block;"': ''; ?>
         <div class="form-block-rcl">
             <input type="submit" class="recall-button" name="submit-register" value="<?php _e('Signup','wp-recall'); // Зарегистрироваться ?>">
             
-            <?php echo wp_nonce_field('register-key-rcl','_wpnonce',true,false); ?>
+            <?php echo wp_nonce_field('register-key-rcl','register_wpnonce',true,false); ?>
             <input type="hidden" name="redirect_to" value="<?php rcl_referer_url('register'); ?>">
         </div>
     </form>

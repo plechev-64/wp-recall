@@ -530,7 +530,7 @@ function rcl_add_image_in_form(e,content){
 
     jQuery("#contentarea-" + post_type).insertAtCaret(content + "&nbsp;");
     
-    tinyMCE.execCommand("mceInsertRawHTML", false, content);
+    tinyMCE.execCommand("mceInsertContent", false, content);
     
     return false;
 }

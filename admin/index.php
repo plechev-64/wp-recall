@@ -408,3 +408,19 @@ function rcl_admin_footer_text( $footer_text ) {
 
     return $footer_text;
 }
+
+function rcl_send_addon_activation_notice($addon_id, $addon_headers){
+    wp_remote_post( RCL_SERVICE_HOST.'/products-files/api/add-ons.php?rcl-addon-info=add-notice', 
+        array('body' =>  array(
+                'rcl-key' => get_option('rcl-key'),
+                'addon-id' => $addon_id,
+                'headers' => array(
+                    'version' => $addon_headers['version'],
+                    'item-id' => $addon_headers['item-id'],
+                    'key-id' => $addon_headers['key-id'],
+                ),
+                'host' => $_SERVER['SERVER_NAME']
+            )
+        ) 
+    );
+}

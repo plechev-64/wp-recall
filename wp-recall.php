@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 16.15.2
+    Version: 16.15.7
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '16.15.2';
+	public $version = '16.15.7';
         
         public $child_addons = array();
         public $need_update = false;
@@ -239,7 +239,7 @@ final class WP_Recall {
 	}
         
         function init_frontend_globals(){
-            global $wpdb,$user_LK,$rcl_userlk_action,$user_ID,$rcl_office,$rcl_user_URL,$rcl_current_action;
+            global $wpdb,$user_LK,$rcl_userlk_action,$user_ID,$rcl_office,$rcl_user_URL,$rcl_current_action,$wp_rewrite;
             
             if($user_ID){
                 $rcl_user_URL = get_author_posts_url($user_ID);
@@ -265,7 +265,7 @@ final class WP_Recall {
 
                 if ( '' == get_option('permalink_structure') ){
 
-                    if(isset($_GET['author'])) $user_LK = intval($_GET['author']);
+                    if(isset($_GET[$wp_rewrite->author_base])) $user_LK = intval($_GET[$wp_rewrite->author_base]);
 
                 }else{
 
@@ -276,7 +276,7 @@ final class WP_Recall {
                     $url_ar = explode('/',$url);
 
                     foreach($url_ar as $key=>$u){
-                        if($u!='author') continue;
+                        if($u != $wp_rewrite->author_base) continue;
                         $nicename = $url_ar[$key+1];
                         break;
                     }
