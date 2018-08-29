@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 16.15.7
+    Version: 16.15.8
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -16,8 +16,8 @@
 
 final class WP_Recall {
 
-	public $version = '16.15.7';
-        
+	public $version = '16.15.8';
+
         public $child_addons = array();
         public $need_update = false;
         public $exclude_addons = false;
@@ -65,7 +65,7 @@ final class WP_Recall {
 	 * Конструктор нашего WP_Recall
 	 */
 	public function __construct() {
-            
+
             $this->exclude_addons = $this->get_exclude_addons();
 
             add_action('plugins_loaded', array( $this, 'load_plugin_textdomain'),10);
@@ -86,7 +86,7 @@ final class WP_Recall {
             if(is_admin()){
                 add_action('save_post', 'rcl_postmeta_update', 0);
                 add_action('admin_init','rcl_admin_scrips',10);
-                
+
             }else{
                  add_action('rcl_enqueue_scripts', 'rcl_frontend_scripts',1);
                  add_action('wp_head','rcl_update_timeaction_user',10);
@@ -110,9 +110,9 @@ final class WP_Recall {
             $this->define('RCL_UPLOAD_URL', $upload_dir['baseurl'] . '/rcl-uploads/' );
 
             $this->define('RCL_TAKEPATH', WP_CONTENT_DIR . '/wp-recall/' );
-            
+
             $this->define('RCL_SERVICE_HOST', 'http://downloads.codeseller.ru' );
-            
+
             $rcl_options = get_option('rcl_global_options');
 	}
 
@@ -143,7 +143,7 @@ final class WP_Recall {
              * Здесь подключим те фалы которые нужны глобально для плагина
              * Остальные распихаем по соответсвующим функциям
              */
-            
+
             require_once 'classes/class-rcl-cache.php';
             require_once 'classes/class-rcl-custom-fields.php';
             require_once 'classes/class-rcl-custom-fields-manager.php';
@@ -164,9 +164,9 @@ final class WP_Recall {
             require_once 'functions/currency.php';
             require_once 'functions/deprecated.php';
             require_once 'functions/shortcodes.php';
-            
+
             require_once 'rcl-functions.php';
-            require_once 'rcl-widgets.php'; 
+            require_once 'rcl-widgets.php';
 
             if ( $this->is_request( 'admin' ) ) {
                 $this->admin_includes();
@@ -179,7 +179,7 @@ final class WP_Recall {
             if ( $this->is_request( 'frontend' ) ) {
                 $this->frontend_includes();
             }
-            
+
             $this->include_addons();
 	}
 
@@ -210,37 +210,37 @@ final class WP_Recall {
             do_action( 'wp_recall_before_init' );
 
             if(!$user_ID){
-                
+
                 //тут подключаем файлы необходимые для регистрации и авторизации
                 require_once 'functions/register.php';
                 require_once 'functions/authorize.php';
-                
+
                 if(class_exists('ReallySimpleCaptcha')){
                     require_once 'functions/captcha.php';
                 }
-                
+
                 if(!rcl_get_option('login_form_recall')){
                     add_action('wp_footer', 'rcl_login_form',5);
-                } 
-                
+                }
+
             }
 
             if ( $this->is_request( 'frontend' ) ) {
-                
+
                 if(rcl_get_option('view_recallbar')){
                     require_once('functions/recallbar.php');
                 }
-                
+
                 $this->init_frontend_globals();
-                
+
             }
 
             do_action( 'rcl_init' );
 	}
-        
+
         function init_frontend_globals(){
             global $wpdb,$user_LK,$rcl_userlk_action,$user_ID,$rcl_office,$rcl_user_URL,$rcl_current_action,$wp_rewrite;
-            
+
             if($user_ID){
                 $rcl_user_URL = get_author_posts_url($user_ID);
                 $rcl_current_action = rcl_get_time_user_action($user_ID);
@@ -309,7 +309,7 @@ final class WP_Recall {
             }
 
             $active_addons = get_site_option('rcl_active_addons');
-            
+
             if($active_addons && $this->exclude_addons){
                 foreach($active_addons as $addon=>$data){
                     if(in_array($addon, $this->exclude_addons)){
@@ -317,77 +317,77 @@ final class WP_Recall {
                     }
                 }
             }
-            
+
             $rcl_template = get_site_option('rcl_active_template');
-            
+
             do_action('rcl_before_include_addons');
-            
+
             if($active_addons){
 
                 $addons = array();
-                
+
                 foreach($active_addons as $addon=>$data){
-                    
+
                     if(!$addon) continue;
-                    
+
                     if(isset($data['template']) && $rcl_template != $addon) continue;
-                    
+
                     if(isset($data['parent-addon'])){
-                        
+
                         if(isset($active_addons[$data['parent-addon']])){
                             $this->child_addons[$data['parent-addon']][] = $addon;
                         }else{
                             unset($active_addons[$addon]);
                             $this->need_update = true;
                         }
-                        
+
                         continue;
-                        
+
                     }
-                    
+
                     if(isset($data['priority']))
                         $addons[$data['priority']][$addon] = $data;
-                    else 
+                    else
                         $addons[0][$addon] = $data;
                 }
-                
+
                 ksort($addons);
-                
+
                 foreach($addons as $priority=>$adds){
-                    
+
                     foreach($adds as $addon=>$data){
-                        
+
                         if(!$addon) continue;
-                        
+
                         if(isset($data['parent-addon']))continue;
 
                         $this->include_addon($addon, $data['path']);
- 
+
                     }
-                    
+
                 }
-                
-                
+
+
                 $this->update_active_addons();
-                
+
             }
-            
+
             do_action('rcl_addons_included');
         }
-        
+
         function update_active_addons(){
             global $active_addons;
-            
-            if($this->need_update) 
+
+            if($this->need_update)
                 update_site_option('rcl_active_addons',$active_addons);
-            
+
         }
-        
+
         function include_child_addons($parenID){
             global $active_addons;
-            
+
             if(!isset($this->child_addons[$parenID])) return false;
-                                
+
             foreach($this->child_addons[$parenID] as $addonID){
 
                 $child = $active_addons[$addonID];
@@ -395,32 +395,32 @@ final class WP_Recall {
                 $this->include_addon($addonID, $child['path']);
 
             }
-            
+
             return true;
-            
+
         }
-        
+
         function include_addon($addonID, $path){
             global $active_addons;
-            
+
             $path = untrailingslashit( $path );
-            
+
             if(file_exists($path.'/index.php')){
-                
+
                 rcl_include_addon($path.'/index.php',$addonID);
-                
+
                 $this->include_child_addons($addonID);
-                
+
                 return true;
-                
-            }  
-            
+
+            }
+
             unset($active_addons[$addonID]);
             $this->need_update = true;
 
             return false;
         }
-        
+
         function get_exclude_addons(){
             return isset($_COOKIE['rcl_exclude_addons'])? (array)json_decode($_COOKIE['rcl_exclude_addons']): array();
         }
@@ -436,7 +436,7 @@ final class WP_Recall {
 
         function unset_exclude_addon($key){
             if(!isset($this->exclude_addons[$key])) return false;
-            unset($this->exclude_addons[$key]); 
+            unset($this->exclude_addons[$key]);
             setcookie('rcl_exclude_addons', json_encode($this->exclude_addons), time() + 31104000,'/');
             return true;
         }
@@ -497,15 +497,15 @@ $GLOBALS['wprecall'] = RCL();
 
 function wp_recall(){
     global $user_LK;
-    
+
     do_action('rcl_area_before'); ?>
 
     <div id="rcl-office" <?php rcl_office_class(); ?> data-account="<?php echo $user_LK; ?>">
-        
+
         <?php rcl_notice(); ?>
 
         <?php rcl_include_template_office(); ?>
-        
+
     </div>
 
     <?php do_action('rcl_area_after');

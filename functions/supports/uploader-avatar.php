@@ -23,14 +23,14 @@ function rcl_init_js_avatar_variables($data){
         $data['local']['title_image_upload'] = __('Image being loaded','wp-recall');
         $data['local']['title_webcam_upload'] = __('Image from camera','wp-recall');
     }
-    
+
     return $data;
 }
 
 add_filter('rcl_avatar_icons','rcl_button_avatar_upload',10);
 function rcl_button_avatar_upload($icons){
     global $user_ID;
-    
+
     if(!rcl_is_office($user_ID)) return false;
 
     $icons['avatar-upload'] = array(
@@ -41,9 +41,9 @@ function rcl_button_avatar_upload($icons){
             'url' => '#'
         )
     );
-    
+
     if(get_user_meta($user_ID,'rcl_avatar',1)){
-    
+
         $icons['avatar-delete'] = array(
             'icon' => 'fa-times',
             'atts' => array(
@@ -51,13 +51,13 @@ function rcl_button_avatar_upload($icons){
                 'href' => wp_nonce_url( rcl_format_url(get_author_posts_url($user_ID)).'rcl-action=delete_avatar', $user_ID )
             )
         );
-    
+
     }
-    
+
     if( isset($_SERVER["HTTPS"])&&$_SERVER["HTTPS"] == 'on' ){
-        
+
         rcl_webcam_scripts();
-        
+
         $icons['webcam-upload'] = array(
             'icon' => 'fa-camera',
             'atts' => array(
@@ -66,9 +66,9 @@ function rcl_button_avatar_upload($icons){
                 'url' => '#'
             )
         );
-        
+
     }
-    
+
     return $icons;
 }
 
@@ -88,7 +88,7 @@ function rcl_delete_avatar_action(){
     }
 
     unlink($dir_path.$user_ID.'.jpg');
-    
+
     do_action('rcl_delete_avatar');
 
     wp_redirect( rcl_format_url(get_author_posts_url($user_ID)).'rcl-avatar=deleted' );  exit;
@@ -96,13 +96,13 @@ function rcl_delete_avatar_action(){
 
 add_action('wp','rcl_notice_avatar_deleted');
 function rcl_notice_avatar_deleted(){
-    if (isset($_GET['rcl-avatar'])&&$_GET['rcl-avatar']=='deleted') 
+    if (isset($_GET['rcl-avatar'])&&$_GET['rcl-avatar']=='deleted')
         rcl_notice_text(__('Your avatar has been deleted','wp-recall'),'success');
 }
 
 rcl_ajax_action('rcl_avatar_upload', false);
 function rcl_avatar_upload(){
-    
+
     rcl_verify_ajax_nonce();
 
     require_once(ABSPATH . "wp-admin" . '/includes/image.php');
@@ -220,11 +220,11 @@ function rcl_avatar_upload(){
             }else{
                 $jpg = rcl_check_jpeg($upload['file']['tmp_name'], true );
                 if(!$jpg){
-                        
+
                     wp_send_json(array(
                         'error' => __('The downloaded image is incorrect','wp-recall')
                     ));
-                        
+
                 }
                 $image = imagecreatefromjpeg($upload['file']['tmp_name']);
             }
@@ -240,7 +240,7 @@ function rcl_avatar_upload(){
         if($width>$height) $src_size = $height;
         else $src_size = $width;
     }
-    
+
     do_action('rcl_before_avatar_upload');
 
     array_map("unlink", glob($dir_path.$user_ID."-*.jpg"));
@@ -264,7 +264,7 @@ function rcl_avatar_upload(){
     }
 
     if ( is_wp_error( $rst )){
-        
+
         wp_send_json(array(
             'error' => __('Download error','wp-recall')
         ));
@@ -276,7 +276,7 @@ function rcl_avatar_upload(){
     }
 
     update_user_meta( $user_ID,'rcl_avatar',$srcfile_url );
-    
+
     do_action('rcl_avatar_upload');
 
     if(!$coord) copy($file_src,$tmp_path.$tmpname);
@@ -287,3 +287,13 @@ function rcl_avatar_upload(){
     ));
 
 }
+
+// disabling caching in chrome
+function rcl_add_avatar_time_creation($args, $id_or_email){
+    $path = wp_parse_url($args['url'])['path'];
+    $ava_path = untrailingslashit( ABSPATH ) . $path;
+
+    $args['url'] = $args['url'] . '?ver='. filemtime($ava_path);
+    return $args;
+}
+add_filter('get_avatar_data', 'rcl_add_avatar_time_creation',10,2);
