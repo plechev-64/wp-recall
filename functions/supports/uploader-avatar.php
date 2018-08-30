@@ -290,8 +290,8 @@ function rcl_avatar_upload(){
 
 // disabling caching in chrome
 function rcl_add_avatar_time_creation($args, $id_or_email){
-    $path = wp_parse_url($args['url'])['path'];
-    $ava_path = untrailingslashit( ABSPATH ) . $path;
+    $dataUrl = wp_parse_url($args['url']);
+    $ava_path = untrailingslashit( ABSPATH ) . $dataUrl['path'];
     if(!file_exists($ava_path)) return $args;
     $args['url'] = $args['url'] . '?ver='. filemtime($ava_path);
     return $args;
