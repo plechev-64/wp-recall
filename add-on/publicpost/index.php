@@ -36,13 +36,13 @@ function rcl_autocomplete_scripts(){
 add_action('rcl_setup_tabs','rcl_postlist_tab_add_types_data',10);
 function rcl_postlist_tab_add_types_data(){
     global $rcl_postlist;
-    
+
     if($rcl_postlist){
 
         foreach($rcl_postlist as $post_type=>$data){
-            
+
             if($post_type == 'post') continue;
-            
+
             $subtab = array(
                 'id' => 'type-'.$post_type,
                 'name' => $data['name'],
@@ -54,7 +54,7 @@ function rcl_postlist_tab_add_types_data(){
             );
 
             rcl_add_sub_tab('publics',$subtab);
-            
+
         }
 
     }
@@ -65,15 +65,15 @@ function rcl_postlist_tab_add_types_data(){
 add_action('pre_get_posts','rcl_restrict_media_library');
 function rcl_restrict_media_library( $wp_query_obj ) {
     global $current_user, $pagenow;
-	
+
     if( !is_a( $current_user, 'WP_User') ) return;
 
     if( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' ) return;
-	
+
     if(rcl_check_access_console()) return;
-	
+
     if( !current_user_can('manage_media_library') ) $wp_query_obj->set('author', $current_user->ID );
-	
+
     return;
 }
 
@@ -88,9 +88,9 @@ function rcl_update_postdata_excerpt($postdata){
 add_filter('the_content','rcl_post_gallery',10);
 function rcl_post_gallery($content){
     global $post;
-    
+
     if(get_post_meta($post->ID, 'recall_slider', 1)!=1||!is_single()||$post->post_type=='products') return $content;
-    
+
     $args = array(
         'post_parent' => $post->ID,
         'post_type'   => 'attachment',
@@ -98,7 +98,7 @@ function rcl_post_gallery($content){
         'post_status' => 'any',
         'post_mime_type'=> 'image'
     );
-    
+
     $childrens = get_children($args);
 
     if( $childrens ){
@@ -106,7 +106,7 @@ function rcl_post_gallery($content){
         foreach((array) $childrens as $children ){
             $attach_ids[] = $children->ID;
         }
-        
+
         $content = rcl_get_image_gallery(array(
             'id' => 'rcl-post-gallery-'.$post->ID,
             'center_align' => true,
@@ -125,9 +125,9 @@ function rcl_post_gallery($content){
                 )
             )
         )) . $content;
-        
+
     }
-    
+
     return $content;
 }
 
@@ -135,23 +135,23 @@ function rcl_post_gallery($content){
 add_filter('the_content','rcl_author_info',70);
 function rcl_author_info($content){
 
-    if(!rcl_get_option('info_author_recall')) 
+    if(!rcl_get_option('info_author_recall'))
         return $content;
-    
-    if(!is_single()) 
+
+    if(!is_single())
         return $content;
-    
+
     global $post;
 
-    if($post->post_type=='page') 
+    if($post->post_type=='page')
         return $content;
-    
+
     if(rcl_get_option('post_types_authbox')){
-        
+
         if(!in_array($post->post_type,rcl_get_option('post_types_authbox'))) return $content;
-        
+
     }
-    
+
     $content .= rcl_get_author_block();
 
     return $content;
@@ -160,38 +160,38 @@ function rcl_author_info($content){
 add_filter('the_content','rcl_concat_post_meta',10);
 function rcl_concat_post_meta($content){
     global $post;
-    
+
     if(doing_filter('get_the_excerpt')) return $content;
-    
+
     $option = rcl_get_option('pm_rcl');
-    
+
     if(!$option)
         return $content;
-    
+
     if($types = rcl_get_option('pm_post_types')){
         if(!in_array($post->post_type, $types)) return $content;
     }
-    
+
     $pm = rcl_get_custom_post_meta($post->ID);
-    
-    if(rcl_get_option('pm_place') == 1) 
+
+    if(rcl_get_option('pm_place') == 1)
         $content .= $pm;
-    else 
+    else
         $content = $pm.$content;
-    
+
     return $content;
 }
 
 /*14.2.0*/
-//очищаем временный массив загруженных изображений к публикациям 
+//очищаем временный массив загруженных изображений к публикациям
 //и удаляем все изображения к неопубликованным записям
 add_action('rcl_cron_daily','rcl_clear_temps_gallery',10);
 function rcl_clear_temps_gallery(){
-    
+
     $temps = get_option('rcl_tempgallery');
-    
+
     if(!$temps) return false;
-    
+
     foreach($temps as $user_id=>$usertemps){
         foreach($usertemps as $temp){
             $post_id = intval($temp['ID']);
@@ -199,18 +199,18 @@ function rcl_clear_temps_gallery(){
                 wp_delete_post( $post_id );
         }
     }
-    
+
     $temps = array();
-    
+
     update_option('rcl_tempgallery',$temps);
-    
+
 }
 
 function rcl_delete_post(){
     global $user_ID;
-    
+
     $post_id = intval($_POST['post-rcl']);
-    
+
     $post = get_post($post_id);
 
     if($post->post_type == 'post-group'){
@@ -222,16 +222,16 @@ function rcl_delete_post(){
         if(!current_user_can('edit_post', $post_id)) return false;
 
     }
-            
+
     $post_id = wp_update_post( array(
         'ID' => $post_id,
         'post_status' => 'trash'
     ));
-    
+
     do_action('after_delete_post_rcl',$post_id);
-    
+
     wp_redirect(rcl_format_url(get_author_posts_url($user_ID)).'&public=deleted'); exit;
-    
+
 }
 
 add_action('after_delete_post_rcl','rcl_delete_notice_author_post');
@@ -245,7 +245,7 @@ function rcl_delete_notice_author_post($post_id){
     $textmail = '<h3>Публикация "'.$post->post_title.'" была удалена</h3>
     <p>Примечание модератора: '.$_POST['reason_content'].'</p>';
     rcl_mail(get_the_author_meta('user_email',$post->post_author),$subject,$textmail);
-    
+
 }
 
 if(!is_admin())
@@ -268,9 +268,9 @@ function rcl_edit_post_link($admin_url, $post_id){
 add_action('rcl_post_bar_setup','rcl_setup_edit_post_button',10);
 function rcl_setup_edit_post_button(){
     global $post,$user_ID,$current_user;
-    
+
     if(!is_user_logged_in() || !$post) return false;
-    
+
     if(is_front_page() || is_tax('groups') || $post->post_type=='page') return false;
 
     if(!current_user_can('edit_post', $post->ID)) return false;
@@ -289,17 +289,17 @@ function rcl_setup_edit_post_button(){
         if($user_info->user_level<10&&rcl_is_limit_editing($post->post_date)) return false;
 
         rcl_post_bar_add_item('rcl-edit-post',
-            array(                
+            array(
                 'url'=>get_edit_post_link($post->ID),
-                'icon'=>'fa-pencil-square-o',
+                'icon'=>'fa-pen-square',
                 'title'=>__('Edit','wp-recall')
             )
         );
-        
+
         return true;
 
     }
-    
+
     return false;
 }
 
@@ -307,21 +307,21 @@ add_filter('pre_update_postdata_rcl','rcl_add_taxonomy_in_postdata',50,2);
 function rcl_add_taxonomy_in_postdata($postdata,$data){
 
     $post_type = get_post_types( array('name' => $data->post_type), 'objects' );
-    
+
     if(!$post_type) return false;
-    
+
     if($data->post_type == 'post'){
-        
-        $post_type['post']->taxonomies = array('category'); 
-        
+
+        $post_type['post']->taxonomies = array('category');
+
         if(isset($_POST['tags'])&&$_POST['tags']){
             $postdata['tags_input'] = $_POST['tags']['post_tag'];
         }
-        
+
     }
-    
+
     if(isset($_POST['cats']) && $_POST['cats']){
-		
+
         $FormFields = new Rcl_Public_Form_Fields(array(
             'post_type' => $data->post_type,
             'form_id' => $_POST['form_id']
@@ -354,7 +354,7 @@ add_action('update_post_rcl','rcl_update_postdata_product_tags',10,2);
 function rcl_update_postdata_product_tags($post_id,$postdata){
 
     if(!isset($_POST['tags'])||$postdata['post_type']=='post') return false;
-    
+
     foreach($_POST['tags'] as $taxonomy=>$terms){
         wp_set_object_terms( $post_id, $terms, $taxonomy );
     }
@@ -364,31 +364,31 @@ add_action('update_post_rcl','rcl_unset_postdata_tags',20,2);
 function rcl_unset_postdata_tags($post_id,$postdata){
 
     if(!isset($_POST['tags'])){
-        
+
         $obj = get_post_type_object( $postdata['post_type'] );
-        
+
         if($obj->taxonomies){
 
             foreach($obj->taxonomies as $taxonomy_name){
-                
+
                 $taxonomy = get_taxonomy( $taxonomy_name );
-                
+
                 if($taxonomy->hierarchical) continue;
-                
+
                 wp_set_object_terms( $post_id, NULL, $taxonomy_name );
-            } 
-            
+            }
+
         }
-        
+
     }
 
 }
 
 add_action('update_post_rcl','rcl_set_object_terms_post',10,3);
 function rcl_set_object_terms_post($post_id,$postdata,$update){
-    
+
     if($update||!isset($postdata['tax_input'])||!$postdata['tax_input']) return false;
-    
+
     foreach($postdata['tax_input'] as $taxonomy_name=>$terms){
         wp_set_object_terms( $post_id, array_map('intval', $terms), $taxonomy_name );
     }
@@ -397,7 +397,7 @@ function rcl_set_object_terms_post($post_id,$postdata,$update){
 add_filter('pre_update_postdata_rcl','rcl_register_author_post',10);
 function rcl_register_author_post($postdata){
     global $user_ID;
-    
+
     if(rcl_get_option('user_public_access_recall')||$user_ID) return $postdata;
 
     if(!$postdata['post_author']){
@@ -420,10 +420,10 @@ function rcl_register_author_post($postdata){
             $user_id = rcl_insert_user($userdata);
 
             if($user_id){
-                
+
                 //переназначаем временный массив изображений от гостя юзеру
                 $temp_id = $_COOKIE['PHPSESSID'];
-                $temps = get_option('rcl_tempgallery'); 
+                $temps = get_option('rcl_tempgallery');
                 if(isset($temps[$temp_id])){
                     $temp_gal = $temps[$temp_id];
                     unset($temps[$temp_id]);
@@ -520,17 +520,17 @@ function rcl_form_field($args){
 
 add_action('update_post_rcl', 'rcl_send_mail_about_new_post', 10, 3);
 function rcl_send_mail_about_new_post($post_id, $postData, $update){
-    
+
     if($update || rcl_check_access_console()) return false;
-    
+
     $title = __('Новая публикация', 'wp-recall');
     $email = get_option('admin_email');
-    
+
     $textm = '<p>'.sprintf(__('На сайте "%s" пользователь добавил новую публикацию!','wp-recall'), get_bloginfo('name')).'</p>';
     $textm .= '<p>'.__('Наименование публикации','wp-recall').': <a href="'.get_permalink($post_id).'">'.get_the_title($post_id).'</a>'.'</p>';
     $textm .= '<p>'.__('Автор публикации','wp-recall').': <a href="'.get_author_posts_url($postData['post_author']).'">'.get_the_author_meta('display_name',$postData['post_author']).'</a>'.'</p>';
     $textm .= '<p>'.__('Не забудьте проверить, возможно, публикация ожидает модерации').'</p>';
-    
+
     rcl_mail($email, $title, $textm);
-    
+
 }

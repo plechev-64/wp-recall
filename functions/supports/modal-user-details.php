@@ -80,7 +80,7 @@ function rcl_get_user_details($user_id, $args = false){
             }else{
                 $url_avatar = $avatar;
             }
-            $content .= '<a title="'.__('Zoom avatar','wp-recall').'" data-zoom="'.$url_avatar.'" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="fa fa-search-plus"></i></a>';
+            $content .= '<a title="'.__('Zoom avatar','wp-recall').'" data-zoom="'.$url_avatar.'" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="fa fas fa-search-plus"></i></a>';
 
         }
     

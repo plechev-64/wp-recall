@@ -237,7 +237,7 @@ class Rcl_Rating_Box {
         
         if($this->view_total_rating){
             
-            //$content .= '<span class="vote-heart"><i class="fa fa-heartbeat" aria-hidden="true"></i></span>';
+            //$content .= '<span class="vote-heart"><i class="fa fas fa-heartbeat" aria-hidden="true"></i></span>';
 
             $content .= $this->get_html_total_stars($args);
             
@@ -251,7 +251,7 @@ class Rcl_Rating_Box {
         $content = '';
         
         if($this->view_total_rating && !$this->user_can['vote'])
-            $content .= '<span class="vote-heart"><i class="fa fa-heartbeat" aria-hidden="true"></i></span>';
+            $content .= '<span class="vote-heart"><i class="fa fas fa-heartbeat" aria-hidden="true"></i></span>';
         
         $content .= $this->get_html_button($this->buttons['like']);
 
@@ -266,7 +266,7 @@ class Rcl_Rating_Box {
         $content = '';
         
         if($this->view_total_rating && !$this->user_can['vote'])
-            $content .= '<span class="vote-heart"><i class="fa fa-heartbeat" aria-hidden="true"></i></span>';
+            $content .= '<span class="vote-heart"><i class="fa fas fa-heartbeat" aria-hidden="true"></i></span>';
         
         $content .= $this->get_html_button($this->buttons['minus']);
 
@@ -389,7 +389,7 @@ class Rcl_Rating_Box {
         $title = ($this->user_vote)? __('Cancel vote','wp-recall'): __('Vote','wp-recall');
         
         return '<span class="'.$this->get_class_vote_button($args['type']).' '.$args['class'].'" data-rating="'.$this->get_encode_string($args['type']).'" onclick="rcl_edit_rating(this);" title="'.$title.'">'
-                    . '<i class="fa '.$args['icon'].'" aria-hidden="true"></i>'
+                    . '<i class="fa fas '.$args['icon'].'" aria-hidden="true"></i>'
                 . '</span>';
         
     }
@@ -429,8 +429,8 @@ class Rcl_Rating_Box {
                 if($procent < 0) $procent += 100;
             }
             
-            $stars = '<span class="fa fa-star stars__out" aria-hidden="true">'
-                        . '<span class="fa fa-star stars__in" style="width:'.$procent.'%;" aria-hidden="true"></span>'
+            $stars = '<span class="fa fas fa-star stars__out" aria-hidden="true">'
+                        . '<span class="fa fas fa-star stars__in" style="width:'.$procent.'%;" aria-hidden="true"></span>'
                     . '</span>';
             
             if($this->user_can['vote']){

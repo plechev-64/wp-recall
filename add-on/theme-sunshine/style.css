@@ -34,7 +34,7 @@
 .cab_bttn_lite .recall-button {
     padding: 0;
 }
-.cab_bttn_lite .fa {
+.cab_bttn_lite .fas{
     display: none;
 }
 .cab_bttn_lite .rcl-tab-button a > span {
@@ -238,7 +238,7 @@
     opacity: 1;
     padding: 0;
 }
-#lk-menu a .fa {
+#lk-menu a .fas{
     background: rgba(0, 0, 0, 0.1);
     font-size: 16px;
     padding: 7px;
@@ -264,7 +264,7 @@
     max-height: 30px;
     padding: 4px 7px;
 }
-#lk-menu a.bars .fa {
+#lk-menu a.bars .fas{
     font-size: 23px;
     background: transparent;
     padding: 0;
@@ -297,7 +297,7 @@
     white-space: normal;
     width: 100%;
 }
-#sunshine_ext_menu a .fa {
+#sunshine_ext_menu a .fas{
     background: rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
@@ -313,7 +313,7 @@
 /* END стили кнопок для скрипта */
 
 /* START left buttons */
-.vertical-menu #lk-menu a .fa {
+.vertical-menu #lk-menu a .fas{
     display: table-cell;
     width: 35px;
     box-sizing: border-box;
@@ -434,7 +434,7 @@
     .cab_content .cab_footer {
         text-align: center;
     }
-    .cab_bttn .fa {
+    .cab_bttn .fas{
         display: none;
     }
     .cab_bttn i + span {

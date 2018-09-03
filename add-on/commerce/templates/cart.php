@@ -35,13 +35,13 @@
             <td class="column-product-amount">
                 <div class="quantity-selector">
                     <a class="edit-amount add-product" onclick="rcl_cart_add_product(<?php echo $product->product_id; ?>,<?php echo $k; ?>);return false;" href="#">
-                        <i class="fa fa-plus"></i>
+                        <i class="fa fas fa-plus"></i>
                     </a>
                     <span class="product-amount">
                         <?php echo $product->product_amount; ?>
                     </span>
                     <a class="edit-amount remove-product" onclick="rcl_cart_remove_product(<?php echo $product->product_id; ?>,<?php echo $k; ?>);return false;" href="#">
-                        <i class="fa fa-minus"></i>
+                        <i class="fa fas fa-minus"></i>
                     </a>
                 </div>
             </td>

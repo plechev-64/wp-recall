@@ -29,7 +29,7 @@
 #prime-forum blockquote::before {
     color: #cfd4d8;
     content: "\f10e";
-    font-family: fontawesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 20px;
     left: 5px;
     position: absolute;
@@ -62,7 +62,7 @@
     background-color: transparent;
     color: #ffae19;
     content: "\f120";
-    font-family: fontawesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 20px;
     height: auto;
     left: 10px;
@@ -154,7 +154,7 @@
     border: 1px solid #e5e5e5;
     box-sizing: border-box;
     color: #555;
-    font-family: fontawesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 17px;
     left: 0;
     line-height: 17px;

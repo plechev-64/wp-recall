@@ -234,12 +234,12 @@ function rcl_add_tab_groups(){
             'name' => __('Groups','wp-recall'),
             'supports' => array('ajax','cache'),
             'public' => 1,
-            'icon' => 'fa-group',
+            'icon' => 'fa-users',
             'content' => array(
                 array(
                     'id' => 'all-groups',
                     'name' => __('All groups','wp-recall'),
-                    'icon' => 'fa-group',
+                    'icon' => 'fa-users',
                     'callback' => array(
                         'name' => 'rcl_tab_groups',
                         'args' => array('user_id')
@@ -359,7 +359,7 @@ function rcl_get_link_group_tag($content){
         }
     }
 
-    $cat = '<p class="post-group-meta"><i class="fa fa-folder-open rcl-icon"></i>'.__('Group categories','wp-recall').': <a href="'. rcl_format_url( rcl_get_group_permalink( $group_id ) ) .'group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
+    $cat = '<p class="post-group-meta"><i class="fa fas fa-folder-open rcl-icon"></i>'.__('Group categories','wp-recall').': <a href="'. rcl_format_url( rcl_get_group_permalink( $group_id ) ) .'group-tag='.$tag->slug.'">'. $tag->name .'</a></p>';
 
     return $cat.$content;
 }
@@ -384,7 +384,7 @@ function rcl_add_namegroup($content){
     
     if(!$group) return $content;
 
-    $group_link = '<p class="post-group-meta"><i class="fa fa-users rcl-icon"></i><span>'.__('Published in group','wp-recall').'</span>: <a href="'. rcl_get_group_permalink( $group->term_id ) .'">'. $group->name .'</a></p>';
+    $group_link = '<p class="post-group-meta"><i class="fa fas fa-users rcl-icon"></i><span>'.__('Published in group','wp-recall').'</span>: <a href="'. rcl_get_group_permalink( $group->term_id ) .'">'. $group->name .'</a></p>';
 
     $content = $group_link.$content;
     return $content;
@@ -421,7 +421,7 @@ function rcl_group_add_thumb_buttons($content){
     if(!rcl_is_group_can('admin') || rcl_get_option('group_avatar_weight', 1024) <= 0) return $content;
 
     $content .= '<div id="group-avatar-upload">
-            <span id="file-upload" class="fa fa-download">
+            <span id="file-upload" class="fa fas fa-download">
                 <input type="file" id="groupavatarupload" accept="image/*" name="uploadfile">
             </span>
 	</div>

@@ -238,13 +238,13 @@ class PrimeForm extends Rcl_Custom_Fields{
                 
                 if(!defined( 'DOING_AJAX' )){
                     $content .= '<a href="#" title="'.__('Preview','wp-recall').'" class="recall-button" onclick=\'pfm_ajax_action('.json_encode($args).',this);return false;\'>';
-                    $content .= '<i class="fa fa-eye" aria-hidden="true"></i> '.__('Preview','wp-recall');
+                    $content .= '<i class="fa fas fa-eye" aria-hidden="true"></i> '.__('Preview','wp-recall');
                     $content .= '</a>';
                 }
                 
                 if($this->onclick){
                     $content .= '<a href="#" title="'.$this->submit.'" class="recall-button" onclick=\''.$this->onclick.'\'>';
-                    $content .= '<i class="fa fa-check-circle" aria-hidden="true"></i> '.$this->submit;
+                    $content .= '<i class="fa fas fa-check-circle" aria-hidden="true"></i> '.$this->submit;
                     $content .= '</a>';
                 }else{
                     $content .= '<input type="submit" name="Submit" class="recall-button" value="'.$this->submit.'"/>';

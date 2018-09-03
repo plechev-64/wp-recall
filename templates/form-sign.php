@@ -18,12 +18,12 @@ if(!$typeform||$typeform=='sign') $f_sign = 'style="display:block;"'; ?>
     <form action="<?php rcl_form_action('login'); ?>" method="post">
         <div class="form-block-rcl default-field">
             <input required type="text" placeholder="<?php _e('Login','wp-recall'); ?>" value="<?php echo $user_login; ?>" name="user_login">
-            <i class="fa fa-user"></i>
+            <i class="fa fas fa-user"></i>
             <span class="required">*</span>
         </div>
         <div class="form-block-rcl default-field">
             <input required type="password" placeholder="<?php _e('Password','wp-recall'); ?>" value="<?php echo $user_pass; ?>" name="user_pass">
-            <i class="fa fa-lock"></i>
+            <i class="fa fas fa-lock"></i>
             <span class="required">*</span>
         </div>
         <div class="form-block-rcl">

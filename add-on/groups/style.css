@@ -3,7 +3,7 @@
 div p.post-group-meta {
     margin: 0 0 5px;
 }
-.post-group-meta .fa {
+.post-group-meta .fas{
     width: auto;
 }
 
@@ -55,7 +55,7 @@ div p.post-group-meta {
 #group-posts-widget .post-meta span .fa,
 #group-link-content .close-content .fa,
 #group-admin-panel .title-panel .fa-cogs,
-#widgets-options .widgets-zone .widget-box .widget-name .fa {
+#widgets-options .widgets-zone .widget-box .widget-name .fas{
 	margin: 0 5px 0 0;
 }
 #rcl-group ul {
@@ -245,8 +245,8 @@ div p.post-group-meta {
     padding: 5px;
     text-align: right;
 }
-#group-public-form-widget .fa-plus-square-o,
-#group-public-form-widget .fa-minus-square-o {
+#group-public-form-widget .fa-plus-square,
+#group-public-form-widget .fa-minus-square{
     display: inline-block;
     font-size: 19px;
 	margin: 0 5px 0 0;

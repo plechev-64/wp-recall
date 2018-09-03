@@ -258,7 +258,7 @@ function rcl_rating_navi($args){
         $args['rating_type'] = $type['rating_type'];
         $active = (!$navi)? 'active' : '';
         $icon = (isset($type['icon']))? $type['icon']: 'fa-list-ul';
-        $navi .= rcl_get_button($type['type_name'],'#',array('icon'=>'fa '.$icon,'class'=> 'get-list-votes '.$active,'attr'=>'onclick="rcl_get_list_votes(this);return false;" data-rating="'.rcl_encode_data_rating('user',$args).'"')).' ';
+        $navi .= rcl_get_button($type['type_name'],'#',array('icon'=>'fa fas '.$icon,'class'=> 'get-list-votes '.$active,'attr'=>'onclick="rcl_get_list_votes(this);return false;" data-rating="'.rcl_encode_data_rating('user',$args).'"')).' ';
     }
 
     return $navi;
@@ -276,7 +276,7 @@ function rcl_get_votes_window($args,$votes,$navi=false){
     if($navi) $window .= $navi;
 
     $window .= '<a href="#" onclick="rcl_close_votes_window(this);return false;" class="close">'
-        . '<i class="fa fa-times-circle"></i>'
+        . '<i class="fa fas fa-times-circle"></i>'
     . '</a>';
 
     $window .= $list_votes;
@@ -376,7 +376,7 @@ function rcl_get_list_votes($args,$votes){
             $row = apply_filters('rcl_list_votes',$row,$vote);
             
             $class = ( $vote->rating_value > 0 ) ? 'fa-thumbs-o-up' : 'fa-thumbs-o-down';
-            $list .= '<li class="vote-type-'.$vote->rating_type.'"><i class="fa '.$class.'"></i> '.$row.'</li>';
+            $list .= '<li class="vote-type-'.$vote->rating_type.'"><i class="fa fas '.$class.'"></i> '.$row.'</li>';
         }
         
     }else{

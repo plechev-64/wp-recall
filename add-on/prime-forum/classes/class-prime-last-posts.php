@@ -151,7 +151,7 @@ class PrimeLastPosts{
                     if($this->name_length){
                         $content .= '<div class="last-post-title">
                             <a href="'.$url.'">
-                                '.($topic->topic_closed? '<i class="fa fa-lock"></i>':'').' '.$this->string_trim($topic->topic_name,$this->name_length).'
+                                '.($topic->topic_closed? '<i class="fa fas fa-lock"></i>':'').' '.$this->string_trim($topic->topic_name,$this->name_length).'
                             </a>
                         </div>';
                     }

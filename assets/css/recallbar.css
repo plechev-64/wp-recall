@@ -13,13 +13,13 @@
     color: #e6e6e6;
     text-decoration: none;
 }
-#recallbar .fa {
+#recallbar .fas{
     color: #e6e6e6;
     font-size: 30px;
     line-height: 36px;
     width: 30px;
 }
-#recallbar .rcb_icon:hover .fa {
+#recallbar .rcb_icon:hover .fas{
     color: #d4d4d4;
 }
 #recallbar .rcb_icon {
@@ -127,7 +127,7 @@
 #recallbar .menu-item-has-children > a::after {
     color: inherit;
     content: "\f054"; /* fa-chevron-right */
-    font-family: fontawesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 11px;
     pointer-events: none;
     position: absolute;
@@ -217,7 +217,7 @@
 #recallbar .rcb_line {
     padding: 2px 5px 3px 5px;
 }
-#recallbar .pr_sub_menu .rcb_line .fa {
+#recallbar .pr_sub_menu .rcb_line .fas{
     color: #c8c8c8;
     font-size: 22px;
 }
@@ -253,7 +253,7 @@
 	}
 }
 @media screen and (max-width:480px) {
-	#recallbar .my_recallbar .fa {
+	#recallbar .my_recallbar .fas{
 		font-size: 26px;
 		width: 26px;
 	}
@@ -269,7 +269,7 @@
 	#recallbar .rcb_left {
 		margin: 0 0 0 4px;
 	}
-	#recallbar .fa {
+	#recallbar .fas{
 		font-size: 27px;
 	}
 	#recallbar .rcb_nmbr {

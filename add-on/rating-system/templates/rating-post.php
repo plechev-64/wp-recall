@@ -1,7 +1,7 @@
 <?php global $rating; ?>
 <div class="rating-single">
 	<div class="object-rating">
-		<i class="fa fa-star"></i> 
+		<i class="fa fas fa-star"></i> 
 		<span class="rtng-ttl"><?php echo $rating->rating_total; ?></span>
 		<span class="rtng-time"><?php if($rating->days_value_sum) echo '('.$rating->days_value_sum.')'; ?></span>
 	</div>

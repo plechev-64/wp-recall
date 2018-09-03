@@ -20,7 +20,7 @@ function rcl_get_authorize_form($type=false,$form=false){
 
     echo '<div class="rcl-loginform rcl-loginform-'.($form? $form: 'full').' panel_lk_recall '.$type.'">';
 
-        if($type=='floatform') echo '<a href="#" class="close-popup"><i class="fa fa-times-circle"></i></a>';
+        if($type=='floatform') echo '<a href="#" class="close-popup"><i class="fa fas fa-times-circle"></i></a>';
         if($user_ID){
 
             echo '<div class="username"><b>'.__('Hi','wp-recall').', '.get_the_author_meta('display_name', $user_ID).'!</b></div>

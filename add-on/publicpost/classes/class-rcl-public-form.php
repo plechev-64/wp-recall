@@ -296,7 +296,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         if(rcl_check_access_console()){
             $content .= '<div class="edit-form-link">'
                             . '<a target="_blank" href="'.admin_url('admin.php?page=manage-public-form&post-type=').$this->post_type.'">'
-                                . '<i class="fa fa-list" aria-hidden="true"></i> ' . __('Edit this form', 'wp-recall')
+                                . '<i class="fa fas fa-list" aria-hidden="true"></i> ' . __('Edit this form', 'wp-recall')
                             . '</a>'
                         . '</div>';
         }
@@ -405,12 +405,12 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $content .= '<div class="rcl-form-field submit-public-form">';
         
         if($this->options['draft'] && $this->user_can['draft'])
-            $content .= '<a href="#" onclick="rcl_save_draft(this); return false;" id="rcl-draft-post" class="public-form-button recall-button"><i class="fa fa-history" aria-hidden="true"></i>'.__('Save as Draft','wp-recall').'</a>';
+            $content .= '<a href="#" onclick="rcl_save_draft(this); return false;" id="rcl-draft-post" class="public-form-button recall-button"><i class="fa fas fa-history" aria-hidden="true"></i>'.__('Save as Draft','wp-recall').'</a>';
         
         if($this->options['preview'])
-            $content .= '<a href="#" onclick="rcl_preview(this); return false;" id="rcl-preview-post" class="public-form-button  recall-button"><i class="fa fa-eye" aria-hidden="true"></i>'.__('Preview','wp-recall').'</a>';
+            $content .= '<a href="#" onclick="rcl_preview(this); return false;" id="rcl-preview-post" class="public-form-button  recall-button"><i class="fa fas fa-eye" aria-hidden="true"></i>'.__('Preview','wp-recall').'</a>';
         
-        $content .= '<a href="#" onclick="rcl_publish(this); return false;" id="rcl-publish-post" class="public-form-button  recall-button"><i class="fa fa-print" aria-hidden="true"></i>'.__('Publish','wp-recall').'</a>';
+        $content .= '<a href="#" onclick="rcl_publish(this); return false;" id="rcl-publish-post" class="public-form-button  recall-button"><i class="fa fas fa-print" aria-hidden="true"></i>'.__('Publish','wp-recall').'</a>';
         
         $content .= '</div>';
         
@@ -449,7 +449,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         
         $content .= '<div class="thumbnail-wrapper">';
         
-        $content .= '<a href="#" class="rcl-service-button delete-post-thumbnail" onclick="rcl_remove_post_thumbnail();return false;"><i class="fa fa-trash"></i></a>';
+        $content .= '<a href="#" class="rcl-service-button delete-post-thumbnail" onclick="rcl_remove_post_thumbnail();return false;"><i class="fa fas fa-trash"></i></a>';
         
         $content .= '<div class="thumbnail-image">';
         
@@ -537,7 +537,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         }
 
         if(isset($this->current_field['notice']) && $this->current_field['notice']) 
-            $content .= '<span class="rcl-field-notice"><i class="fa fa-info" aria-hidden="true"></i>'.$this->current_field['notice'].'</span>';
+            $content .= '<span class="rcl-field-notice"><i class="fa fas fa-info" aria-hidden="true"></i>'.$this->current_field['notice'].'</span>';
 
         $content .= '</div>';
         
@@ -807,7 +807,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         }else{
 
             $content = '<div id="rcl-delete-post">
-                        <a href="#" class="public-form-button recall-button delete-toggle"><i class="fa fa-trash" aria-hidden="true"></i>'.__('Delete post','wp-recall').'</a>
+                        <a href="#" class="public-form-button recall-button delete-toggle"><i class="fa fas fa-trash" aria-hidden="true"></i>'.__('Delete post','wp-recall').'</a>
                         <div class="delete-form-contayner">
                             <form action="" method="post"  onsubmit="return confirm(\''.__('Are you sure?','wp-recall').'\');">
                             '.wp_nonce_field('delete-post-rcl','_wpnonce',true,false).'

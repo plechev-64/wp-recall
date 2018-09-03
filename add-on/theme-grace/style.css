@@ -20,7 +20,7 @@
 .cab_bttn_lite .recall-button {
 	padding: 0;
 }
-.cab_bttn_lite .fa {
+.cab_bttn_lite .fas{
     display: none;
 }
 .cab_bttn_lite .rcl-tab-button a > span {
@@ -203,7 +203,7 @@
 	background: rgba(0, 0, 0, 0.2);
 }
 .cab_lt_sidebar .recall-button .fa,
-.cab_lt_mobile#lk-menu .recall-button .fa {
+.cab_lt_mobile#lk-menu .recall-button .fas{
     background: rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     border-right: 1px solid rgba(0, 0, 0, 0.2);
@@ -240,7 +240,7 @@
 }
 .cab_lt_sidebar #lk-menu span span::after {
     content: "\f0da";			/* fa-caret-right */
-    font-family: fontawesome;
+    font-family: "Font Awesome 5 Free";
     position: absolute;
     right: 3px;
 }
@@ -250,7 +250,7 @@
     font-size: 30px;
     height: 40px;
 }
-.wprecallblock .cab_lt_menu .fa {
+.wprecallblock .cab_lt_menu .fas{
     display: table-cell;
     vertical-align: middle;
 }

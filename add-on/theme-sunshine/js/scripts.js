@@ -73,7 +73,7 @@ function alignMenu() {
     });
     LkMenu.append(
         '<span style="position:absolute;" class="rcl-tab-butt hideshow">'
-         + '<a class="recall-button block_button bars" ><i class="fa fa-bars"></i></a>'
+         + '<a class="recall-button block_button bars" ><i class="fa fas fa-bars"></i></a>'
          + '</span>'
     );
     // формируем в кнопке контент

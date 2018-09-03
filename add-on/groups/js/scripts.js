@@ -125,5 +125,5 @@ function rcl_more_view(e){
     var link = jQuery(e);
     var icon = link.children('i');
     link.parent().children('div').slideToggle();
-    icon.toggleClass('fa-plus-square-o fa-minus-square-o');
+    icon.toggleClass('fa-plus-square fa-minus-square');
 }

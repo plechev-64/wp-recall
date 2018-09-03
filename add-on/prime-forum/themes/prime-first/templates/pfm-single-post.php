@@ -22,7 +22,7 @@
             <div class="prime-count">
                 <span><?php pfm_post_field('post_index'); ?></span>
                 <a href="#topic-post-<?php pfm_post_field('post_id'); ?>" title="<?php _e('Link to the message','wp-recall'); ?>">
-                    <i class="fa fa-link" aria-hidden="true"></i>
+                    <i class="fa fas fa-link" aria-hidden="true"></i>
                 </a>
             </div>
             <div class="prime-date">

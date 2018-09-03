@@ -446,7 +446,7 @@ function rcl_chat_uploader(token){
             }
             
             if(result['success']){
-                preloader.html('<a href="#" class="chat-delete-attachment" onclick="rcl_chat_delete_attachment(this,'+result['attachment_id']+');return false;"><i class="fa fa-times" aria-hidden="true"></i></a>'+result['icon_html']+result['input_html']);
+                preloader.html('<a href="#" class="chat-delete-attachment" onclick="rcl_chat_delete_attachment(this,'+result['attachment_id']+');return false;"><i class="fa fas fa-times" aria-hidden="true"></i></a>'+result['icon_html']+result['input_html']);
                 uploader.hide();
                 
                 rcl_do_action('rcl_chat_upload',data);

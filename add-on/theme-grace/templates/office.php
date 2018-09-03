@@ -18,7 +18,7 @@
         </div>
         <div class="cab_bttn">
             <?php do_action('rcl_area_actions'); ?>
-            <a class="cab_lt_menu recall-button" style="display: none;"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+            <a class="cab_lt_menu recall-button" style="display: none;"><i class="fa fas fa-angle-double-right" aria-hidden="true"></i></a>
         </div>
     </div>
     

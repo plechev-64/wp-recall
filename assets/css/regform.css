@@ -159,7 +159,7 @@ div.panel_lk_recall .form-tab-rcl a {
     text-transform: uppercase;
     width: 100%;
 }
-.form-block-rcl.default-field .fa {
+.form-block-rcl.default-field .fas{
     color: #538a9a;
     left: 12px;
     opacity: 0.4;
@@ -169,7 +169,7 @@ div.panel_lk_recall .form-tab-rcl a {
 }
 .panel_lk_recall input[type="text"]:focus + .fa,
 .panel_lk_recall input[type="email"]:focus + .fa,
-.panel_lk_recall input[type="password"]:focus + .fa {
+.panel_lk_recall input[type="password"]:focus + .fas{
     opacity: 1;
 }
 .panel_lk_recall .form-block-rcl .required {

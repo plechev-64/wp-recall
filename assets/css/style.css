@@ -2,15 +2,17 @@
 
 
 /* общие стили start */
-[class^="fa fa-"]::before,
-[class*=" fa fa-"]::before{
+[class^="fa fas fa-"]::before,
+[class*=" fa fas fa-"]::before{
 	padding: 0;
 }
-i.fa, a.fa, p.fa,span.fa,div.fa{
+i.fas, a.fas, p.fas,span.fas, div.fas,
+i.fa, a.fa, p.fa,span.fa, div.fa{
     width:auto;
     text-align: center;
-    font-family: FontAwesome!important;
+    /*font-family: FontAwesome!important;*/
 }
+.fas.rcl-icon,
 .fa.rcl-icon{
     padding: 5px;
     background: #b9c9d6;
@@ -488,7 +490,7 @@ a.data-filter.filter-active:hover {
     padding: 7px;
     margin-right: 5px;
 }
-#rcl-office a.sec_block_button i.fa {
+#rcl-office a.sec_block_button i.fas{
 	margin: 0 5px 0 0;
 }
 
@@ -788,7 +790,7 @@ body .ssi-modalOuter .ssi-modalTitle{
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon::after {
     color: rgb(229, 57, 53);
     content: "\f00d";                /* fa-times */
-    font: 400 30px/30px fontawesome;
+    font-family:"Font Awesome 5 Free";
     margin: 0 7px 0 0;
 }
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon:hover::after {
@@ -870,7 +872,7 @@ body .ssi-modalOuter .ssi-modalTitle{
 		width: auto;
     }
     .vertical-menu #lk-menu .recall-button span,
-    .vertical-menu #lk-menu .recall-button .fa {
+    .vertical-menu #lk-menu .recall-button .fas{
         margin: 0 auto;
     }
 } */
@@ -1255,7 +1257,7 @@ body .ssi-modalOuter .ssi-modalTitle{
     overflow: hidden;
     margin-bottom: 5px;
 }
-.rcl-form .file-manage-box .fa {
+.rcl-form .file-manage-box .fas{
     color: rgb(229, 57, 53);
     font-size: 16px;
     margin-right: 5px;

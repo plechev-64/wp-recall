@@ -110,7 +110,7 @@ function pfm_the_forum_icons(){
     
     foreach($icons as $icon){
         $content .= '<div class="topic-icon">';
-            $content .= '<i class="fa '.$icon.'" aria-hidden="true"></i>';
+            $content .= '<i class="fa fas '.$icon.'" aria-hidden="true"></i>';
         $content .= '</div>';
     }
     

@@ -326,7 +326,7 @@ class Rcl_Payment{
 
         $form .= '<div class="rcl-pay-button">'
                     . '<span class="rcl-connect-submit exist-merchant-icon">'
-                        . '<i class="fa fa-credit-card" aria-hidden="true"></i>'
+                        . '<i class="fa fas fa-credit-card" aria-hidden="true"></i>'
                         . "<input class=recall-button type=button name=pay_order onclick='".$pay_callback."(this,".$data.");return false;' data-order=$pay_id value='$submit'>"
                     . '</span>'
                 . '</div>';

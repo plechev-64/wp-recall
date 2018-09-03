@@ -25,7 +25,7 @@
 .userlist .status_author_mess {
     float: right;
 }
-.userlist .status_author_mess.online .fa {
+.userlist .status_author_mess.online .fas{
     color: #89e535;
     font-size: 16px;
     line-height: normal;
@@ -144,7 +144,7 @@
     margin: 1px 10px 5px 0;
     padding: 6px 8px;
 }
-.userlist.rows-list .user-single .filter-data .fa {
+.userlist.rows-list .user-single .filter-data .fas{
     margin: 0 5px 0 0;
 }
 .userlist .user-profile-fields .rcl-custom-fields {
@@ -178,7 +178,7 @@
 	width:100%
 }
 .userlist .user-single .thumb-user .status_user {
-    font-family: fontawesome,arial,sans-serif;
+    font-family: "Font Awesome 5 Free",arial,sans-serif;
     font-size: 16px;
     position: absolute;
     right: 5px;
@@ -289,7 +289,7 @@
 		width: 19%;
 	}
 	.userlist .user-single .thumb-user .status_user,
-    .userlist .user-single .thumb-user .status_user .fa {
+    .userlist .user-single .thumb-user .status_user .fas{
 		font-size: 11px;
 	}
     .userlist.mini-list .user-single {

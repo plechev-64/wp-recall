@@ -14,7 +14,7 @@
         <form action="<?php echo wp_lostpassword_url(); ?>" method="post">
             <div class="form-block-rcl default-field">
                 <input required type="text" placeholder="<?php _e('Username or e-mail','wp-recall'); ?>" value="" name="user_login">
-                <i class="fa fa-key"></i>
+                <i class="fa fas fa-key"></i>
             </div>
             <div class="form-block-rcl">
                 <?php do_action( 'lostpassword_form' ); ?>

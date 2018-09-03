@@ -88,7 +88,7 @@ class Rcl_Custom_Fields{
     function get_notice($field){
         
         if(isset($field['notice']) && $field['notice']) 
-            return '<span class="rcl-field-notice"><i class="fa fa-info" aria-hidden="true"></i>'.$field['notice'].'</span>';
+            return '<span class="rcl-field-notice"><i class="fa fas fa-info" aria-hidden="true"></i>'.$field['notice'].'</span>';
         
         return false;
         
@@ -115,16 +115,16 @@ class Rcl_Custom_Fields{
                 $field .= '<span class="dynamic-value">';
                 $field .= '<input type="text" '.$this->required.' '.$this->placeholder.' name="'.$args['name'].'[]" value="'.$val.'"/>';
                 if($cnt==($k+1)){
-                    $field .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+                    $field .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="fa fas fa-plus" aria-hidden="true"></i></a>';
                 }else{
-                    $field .= '<a href="#" onclick="rcl_remove_dynamic_field(this);return false;"><i class="fa fa-minus" aria-hidden="true"></i></a>';
+                    $field .= '<a href="#" onclick="rcl_remove_dynamic_field(this);return false;"><i class="fa fas fa-minus" aria-hidden="true"></i></a>';
                 }
                 $field .= '</span>';
             }
         }else{
             $field .= '<span class="dynamic-value">';
             $field .= '<input type="text" '.$this->required.' '.$this->placeholder.' name="'.$args['name'].'[]" value=""/>';
-            $field .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="fa fa-plus" aria-hidden="true"></i></a>';
+            $field .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="fa fas fa-plus" aria-hidden="true"></i></a>';
             $field .= '</span>';
         }
         
@@ -163,7 +163,7 @@ class Rcl_Custom_Fields{
             $input .= $this->get_field_value($field,$this->value,0);
             
             if(!$field['required']) 
-                $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fa-times-circle-o"></i>'.__('delete','wp-recall').'</a></span>';
+                $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="fa fas fa-times-circle-o"></i>'.__('delete','wp-recall').'</a></span>';
             
             $input = '<span class="file-manage-box">'.$input.'</span>';
             
@@ -612,7 +612,7 @@ class Rcl_Custom_Fields{
         }
 
         if($field['type']=='file')
-                $show = '<i class="fa fa-upload" aria-hidden="true"></i><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($value), 'user-'.$user_ID ).'">'.__('Upload the downloaded file','wp-recall').'</a>';
+                $show = '<i class="fa fas fa-upload" aria-hidden="true"></i><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($value), 'user-'.$user_ID ).'">'.__('Upload the downloaded file','wp-recall').'</a>';
         if($field['type']=='email')
                 $show = '<a rel="nofollow" target="_blank" href="mailto:'.$value.'">'.$value.'</a>';
         if($field['type']=='url')

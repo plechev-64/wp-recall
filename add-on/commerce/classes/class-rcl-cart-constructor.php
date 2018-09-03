@@ -85,7 +85,7 @@ class Rcl_Cart_Constructor {
             }
             
             $content .= '<div class="submit-box">'
-                        . '<a href="#" class="recall-button" onclick="rcl_cart_submit();return false;"><i class="fa fa-shopping-bag" aria-hidden="true"></i>'.__('Checkout','wp-recall').'</a>'
+                        . '<a href="#" class="recall-button" onclick="rcl_cart_submit();return false;"><i class="fa fas fa-shopping-bag" aria-hidden="true"></i>'.__('Checkout','wp-recall').'</a>'
                         . '<input type="hidden" name="rcl-commerce-action" value="new-order">'
                     . '</div>';
             

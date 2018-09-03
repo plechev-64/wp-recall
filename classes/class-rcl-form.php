@@ -56,7 +56,7 @@ class Rcl_Form extends Rcl_Custom_Fields{
                 
                 if($this->onclick){
                     $content .= '<a href="#" title="'.$this->submit.'" class="recall-button" onclick=\''.$this->onclick.'\'>';
-                    $content .= '<i class="fa fa-check-circle" aria-hidden="true"></i> '.$this->submit;
+                    $content .= '<i class="fa fas fa-check-circle" aria-hidden="true"></i> '.$this->submit;
                     $content .= '</a>';
                 }else{
                     $content .= '<input type="submit" class="recall-button" value="'.$this->submit.'"/>';

@@ -86,7 +86,7 @@ function rcl_user_comments(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('comments_count', $rcl_users_set->data)||isset($rcl_user->comments_count)){
         if(!isset($rcl_user->comments_count)) $rcl_user->comments_count = 0;
-        echo '<span class="filter-data"><i class="fa fa-comment"></i>'.__('Comments','wp-recall').': '.$rcl_user->comments_count.'</span>';
+        echo '<span class="filter-data"><i class="fa fas fa-comment"></i>'.__('Comments','wp-recall').': '.$rcl_user->comments_count.'</span>';
     }
 }
 
@@ -95,7 +95,7 @@ function rcl_user_posts(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('posts_count', $rcl_users_set->data)||isset($rcl_user->posts_count)){
         if(!isset($rcl_user->posts_count)) $rcl_user->posts_count = 0;
-        echo '<span class="filter-data"><i class="fa fa-file-text-o"></i>'.__('Publics','wp-recall').': '.$rcl_user->posts_count.'</span>';
+        echo '<span class="filter-data"><i class="fa fas fa-file-text-o"></i>'.__('Publics','wp-recall').': '.$rcl_user->posts_count.'</span>';
     }
 }
 
@@ -106,8 +106,8 @@ function rcl_user_action($type=1){
 
     switch($type){
         case 1: $last_action = rcl_get_useraction($action);
-                if(!$last_action) echo '<span class="status_user online"><i class="fa fa-circle"></i></span>';
-                else echo '<span class="status_user offline" title="'.__('offline','wp-recall').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
+                if(!$last_action) echo '<span class="status_user online"><i class="fa fas fa-circle"></i></span>';
+                else echo '<span class="status_user offline" title="'.__('offline','wp-recall').' '.$last_action.'"><i class="fa fas fa-circle"></i></span>';
         break;
         case 2: echo rcl_get_miniaction($action); break;
     }
@@ -131,7 +131,7 @@ function rcl_user_register(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('user_registered', $rcl_users_set->data)||isset($rcl_user->user_registered)){
         if(!isset($rcl_user->user_registered)) return false;
-        echo '<span class="filter-data"><i class="fa fa-calendar-check-o"></i>'.__('Registration','wp-recall').': '.mysql2date('d-m-Y', $rcl_user->user_registered).'</span>';
+        echo '<span class="filter-data"><i class="fa fas fa-calendar-check-o"></i>'.__('Registration','wp-recall').': '.mysql2date('d-m-Y', $rcl_user->user_registered).'</span>';
     }
 }
 
@@ -217,7 +217,7 @@ function rcl_setup_avatar_icons(){
         $string = '<a '.implode(' ',$atts).'>';
         
         if(isset($icon['icon'])) 
-            $string .= '<i class="fa '.$icon['icon'].'"></i>';
+            $string .= '<i class="fa fas '.$icon['icon'].'"></i>';
         
         if(isset($icon['content'])) 
             $string .= $icon['content'];
@@ -383,7 +383,7 @@ function rcl_get_miniaction($action){
 
     $content = apply_filters('rcl_before_miniaction', '');
     
-    $content .= (!$last_action&&$action)? '<i class="fa fa-circle"></i>': __('offline','wp-recall').' '.$last_action;
+    $content .= (!$last_action&&$action)? '<i class="fa fas fa-circle"></i>': __('offline','wp-recall').' '.$last_action;
     
     $content = sprintf('<div class="status_author_mess %s">%s</div>',$class,$content);
 
@@ -567,7 +567,7 @@ function rcl_post_bar($content){
                 $bar .= '<a href="'.$link.'" class="recall-button" '.implode(' ',$attributs).' '.implode(' ',$datas).'>';
             
                 if(isset($item['icon'])):
-                    $bar .= '<i class="fa '.$item['icon'].'" aria-hidden="true"></i>';
+                    $bar .= '<i class="fa fas '.$item['icon'].'" aria-hidden="true"></i>';
                 endif;
 
                 if(isset($item['label'])):

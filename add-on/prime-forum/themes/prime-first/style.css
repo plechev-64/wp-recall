@@ -49,7 +49,7 @@
 .prime-breadcrumbs > span::before {
     color: #aaa;
     content: "\f105";
-    font-family: fontawesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 16px;
     font-weight: bold;
     margin: 0 5px 0 0;

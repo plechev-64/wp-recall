@@ -768,7 +768,7 @@ function rcl_get_smiles($id_area){
     //if(!$wpsmiliestrans) return false;
 
     $smiles = '<div class="rcl-smiles" data-area="'.$id_area.'">';
-        $smiles .= '<i class="fa fa-smile-o" aria-hidden="true"></i>';
+        $smiles .= '<i class="fa fas fa-smile-o" aria-hidden="true"></i>';
         $smiles .= '<div class="rcl-smiles-list">
                         <div class="smiles"></div>
                     </div>';
@@ -832,9 +832,9 @@ function rcl_get_useraction_html($user_id, $type = 1){
             $last_action = rcl_get_useraction($action);
             
             if(!$last_action) 
-                return '<span class="status_user online"><i class="fa fa-circle"></i></span>';
+                return '<span class="status_user online"><i class="fa fas fa-circle"></i></span>';
             else 
-                return '<span class="status_user offline" title="'.__('offline','wp-recall').' '.$last_action.'"><i class="fa fa-circle"></i></span>';
+                return '<span class="status_user offline" title="'.__('offline','wp-recall').' '.$last_action.'"><i class="fa fas fa-circle"></i></span>';
         
         break;
         case 2:
@@ -897,7 +897,7 @@ function rcl_get_button($ancor,$url,$args=false){
     $button .= 'class="recall-button ';
     if(isset($args['class'])&&$args['class']) $button .= $args['class'];
     $button .= '">';
-    if(isset($args['icon'])&&$args['icon']) $button .= '<i class="fa '.$args['icon'].'"></i>';
+    if(isset($args['icon'])&&$args['icon']) $button .= '<i class="fa fas '.$args['icon'].'"></i>';
     $button .= '<span>'.$ancor.'</span>';
     $button .= '</a>';
     return $button;
