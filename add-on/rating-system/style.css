@@ -299,12 +299,13 @@
 }
 .rcl-rating-box .rating-wrapper .rating-value-view:hover:before{
     content: "\f1da";
-    font-family: FontAwesome!important;
+    font-family: "Font Awesome 5 Free"!important;
     position: absolute;
     width: 100%;
     text-align: center;
     color: #b8b8b8;
     display: block;
+    font-weight: 900;
 }
 .rcl-rating-box .rating-wrapper .rating-value .rating-plus{
     color: #3ad11f;

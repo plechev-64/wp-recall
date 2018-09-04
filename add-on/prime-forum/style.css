@@ -164,6 +164,7 @@
     top: 0;
     width: 40px;
     z-index: 2;
+    font-weight: 900;
 }
 #prime-topic-form-box .quicktags-toolbar > span:hover::before {
     border: 1px solid #d5d5d5;

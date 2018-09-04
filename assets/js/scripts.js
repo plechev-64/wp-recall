@@ -331,7 +331,7 @@ function rcl_init_get_smilies(){
         mouseleave: function () {
             jQuery(this).next().hide();
         }
-    }, "body .rcl-smiles .fa-smile-o");
+    }, "body .rcl-smiles .fa-smile");
 }
 
 rcl_add_action('rcl_init','rcl_init_hover_smilies');

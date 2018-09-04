@@ -136,7 +136,7 @@ function pfm_the_post_manager(){
 
         $actions['get_form_topic_create'] = array(
             'name' => __('Transfer to the new topic','wp-recall'),
-            'icon' => 'fa-code-fork'
+            'icon' => 'fa-code-branch'
         );
 
     }
@@ -205,7 +205,7 @@ function pfm_the_topic_manager(){
 
         $actions['get_form_topic_migrate'] = array(
             'name' => __('Transfer topic','wp-recall'),
-            'icon' => 'fa-chain-broken'
+            'icon' => 'fa-unlink'
         );
 
     }

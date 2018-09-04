@@ -533,7 +533,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
 
                             $content .= '</div>'
                         . '</div>'
-                    . '<span class="message-time"><i class="fa fas fa-clock-o" aria-hidden="true"></i> '.$message['message_time'].'</span>'
+                    . '<span class="message-time"><i class="fa fas fa-clock" aria-hidden="true"></i> '.$message['message_time'].'</span>'
             . '</div>'
         . '</div>';
 

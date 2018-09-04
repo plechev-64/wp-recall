@@ -26,31 +26,31 @@
         </div>
         <div class="addon-terms">
             <?php if(isset($addon->terms) && $addon->terms):
-                
+
                 foreach($addon->terms as $taxonomy => $terms){ $html = array(); ?>
-                
-                    <p><cite><?php echo ($taxonomy == 'prodcat')? __('Category','wp-recall'): __('Tags','wp-recall') ?>: 
-            
-                    <?php foreach($terms as $slug => $name){ 
-                            
+
+                    <p><cite><?php echo ($taxonomy == 'prodcat')? __('Category','wp-recall'): __('Tags','wp-recall') ?>:
+
+                    <?php foreach($terms as $slug => $name){
+
                             $html[] = '<a href="'.admin_url('admin.php?page=rcl-repository&type=tag&s='.$name).'">'.$name.'</a>';
-                        
+
                      } ?>
-                            
+
                     <?php echo implode(', ', $html); ?>
-                            
+
                     </cite></p>
-                    
+
                 <?php }
-            
+
             endif; ?>
-        </div>           
+        </div>
     </div>
     <div class="plugin-card-bottom">
         <div class="vers column-rating">
             <?php wp_star_rating( array(
-                    'rating'=>$addon->rating->value, 
-                    'type'=>'rating', 
+                    'rating'=>$addon->rating->value,
+                    'type'=>'rating',
                     'number'=>$addon->rating->votes
                 )); ?>
             <span class="num-ratings">(<?php echo $addon->rating->votes; ?>)</span>
@@ -70,5 +70,4 @@
             <?php }  ?>
         </div>
     </div>
-    <!--<?php echo $addon->popular; ?>-->
 </div>

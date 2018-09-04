@@ -3,27 +3,27 @@
 add_action('pfm_init','pfm_setup_shortcodes',10);
 function pfm_setup_shortcodes(){
     global $PrimeShorts;
-    $PrimeShorts = pfm_get_shortcodes();   
+    $PrimeShorts = pfm_get_shortcodes();
 }
 
 function pfm_get_shortcodes(){
     global $shortcode_tags;
-    
+
     $whiteList = array(
         'spoiler',
         'offtop'
     );
-    
+
     $whiteList = apply_filters('pfm_whitelist_shortcodes',$whiteList);
-    
+
     $PrimeShorts = array();
-    foreach($shortcode_tags as $tag => $function){       
-        if(!in_array($tag,$whiteList)) continue;       
+    foreach($shortcode_tags as $tag => $function){
+        if(!in_array($tag,$whiteList)) continue;
         $PrimeShorts[$tag] = $function;
     }
-    
+
     return $PrimeShorts;
-            
+
 }
 
 add_filter('pfm_whitelist_shortcodes','pfm_add_admin_support_shortcodes',10);
@@ -47,7 +47,7 @@ function pfm_do_shortcode( $content, $ignore_html = false ) {
     // Find all registered tag names in $content.
     preg_match_all( '@\[([^<>&/\[\]\x00-\x20=]++)@', $content, $matches );
     $tagnames = array_intersect( array_keys( $PrimeShorts ), $matches[1] );
-    
+
     if ( empty( $tagnames ) ) {
             return $content;
     }
@@ -64,19 +64,19 @@ function pfm_do_shortcode( $content, $ignore_html = false ) {
 }
 
 add_shortcode('spoiler','pfm_get_spoiler_content');
-function pfm_get_spoiler_content($attrs, $content){   
+function pfm_get_spoiler_content($attrs, $content){
     return '<div class="prime-spoiler">'
         . '<a href="#" class="prime-spoiler-link" onclick="pfm_spoiler(this); return false;">'
-            . '<i class="fa fas fa-plus-square-o"></i> '.__('Spoiler','wp-recall')
+            . '<i class="fa fas fa-plus-square"></i> '.__('Spoiler','wp-recall')
         . '</a>'
         . '<div class="prime-spoiler-content">'
             .$content
         .'</div>'
-    . '</div>';  
+    . '</div>';
 }
 
 add_shortcode('offtop','pfm_get_offtop_content');
-function pfm_get_offtop_content($attrs, $content){   
+function pfm_get_offtop_content($attrs, $content){
     return '<div class="prime-offtop">'
         . '<span class="prime-offtop-title">'
             . '<i class="fa fas fa-coffee"></i> '.__('Off-topic','wp-recall')
@@ -84,29 +84,29 @@ function pfm_get_offtop_content($attrs, $content){
         . '<div class="prime-offtop-content">'
             .$content
         .'</div>'
-    . '</div>';  
+    . '</div>';
 }
 
 add_shortcode('prime-forum','pfm_get_forum_content');
 function pfm_get_forum_content(){
-    
+
     return pfm_get_template_content();
-    
+
 }
 
 add_shortcode('prime-posts','pfm_get_posts_shortcode');
 function pfm_get_posts_shortcode($attrs){
-    
+
     require_once 'classes/class-prime-last-posts.php';
-    
+
     $LastPosts = new PrimeLastPosts($attrs);
-    
+
     if(!$LastPosts->posts){
         return '<p>'.__('Not found','wp-recall').'</p>';
     }
 
     $content = $LastPosts->get_content();
-    
+
     return $content;
-    
+
 }

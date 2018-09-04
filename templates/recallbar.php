@@ -40,7 +40,7 @@
         <?php if(isset($urls)){ ?>
         <div class="rcb_icon">
             <a href="<?php echo $urls[0]; ?>" class="rcl-login">
-                <i class="fa fas fa-sign-in" aria-hidden="true"></i><span><?php _e('Entry','wp-recall'); ?></span>
+                <i class="fa fas fa-sign-in-alt" aria-hidden="true"></i><span><?php _e('Entry','wp-recall'); ?></span>
                 <div class="rcb_hiden"><span><?php _e('Entry','wp-recall'); ?></span></div>
             </a>
         </div>
