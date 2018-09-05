@@ -77,7 +77,7 @@ $content .= '<h4>'.__('RCLKEY','wp-recall').'</h4>
     <input class="button" type="submit" value="'.__('Save','wp-recall').'" name="save-rcl-key">
     '.wp_nonce_field('add-rcl-key','_wpnonce',true,false).'
 </form>
-<p class="install-help">'.__('The key is required to update the add-ons here. You can get it in your personal account online <a href="http://codeseller.ru/" target="_blank">http://codeseller.ru</a>','wp-recall').'</p>';
+<p class="install-help">'.__('The key is required to update the add-ons here. You can get it in your personal account online <a href="https://codeseller.ru/" target="_blank">https://codeseller.ru</a>','wp-recall').'</p>';
 
 $content .= '</div>';
 
@@ -101,12 +101,12 @@ $content .= '<div class="wp-filter">
         <label><span class="screen-reader-text">'.__('Search add-ons', 'wp-recall').'</span>
             <input type="search" name="s" value="'.($s? $s: '').'" class="wp-filter-search" placeholder="'.__('Search add-ons', 'wp-recall').'..." aria-describedby="live-search-desc">
         </label>
-        <input type="submit" id="search-submit" class="button hide-if-js" value="'.__('Search add-ons', 'wp-recall').'">	
+        <input type="submit" id="search-submit" class="button hide-if-js" value="'.__('Search add-ons', 'wp-recall').'">
     </form>
 </div>';
 
 if($result->count && $result->addons){
-    
+
     $content .= '<p class="rcl-search-results">'.__('Results found','wp-recall').': '.$result->count.'</p>';
 
     $content .= $navi->pagenavi();
@@ -119,7 +119,7 @@ if($result->count && $result->addons){
         foreach($add as $k=>$v){
             $key = str_replace('-','_',$k);
             $v = (isset($v))? $v: '';
-            $addon[$key] = $v;            
+            $addon[$key] = $v;
         }
         $addon = (object)$addon;
         $content .= rcl_get_include_template('add-on-card.php');

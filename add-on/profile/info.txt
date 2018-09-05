@@ -3,5 +3,5 @@ Version: 3.0.0;
 Support Core: 16.0.0;
 Description: Расширение настроек профиля пользователя для wp-recall;
 Author: Плечев Андрей;
-Author URI: http://codeseller.ru/;
-Add-on URI: http://codeseller.ru/products/profile-recall-upravlenie-profilem-polzovatelya-na-sajte-s-pomoshhyu-wp-recall/;
+Author URI: https://codeseller.ru/;
+Add-on URI: https://codeseller.ru/products/profile-recall-upravlenie-profilem-polzovatelya-na-sajte-s-pomoshhyu-wp-recall/;

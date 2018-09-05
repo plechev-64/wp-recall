@@ -3,5 +3,5 @@ Version: 4.0.0;
 Support Core: 16.0.0;
 Description: Формирование и вывод новостной ленты пользователя;
 Author: Плечев Андрей;
-Author URI: http://codeseller.ru/;
-Add-on URI: http://codeseller.ru/products/feed-recall-dopolnenie-wp-recall-dlya-formirovaniya-feed-lenty-novostej-polzovatelya/;
+Author URI: https://codeseller.ru/;
+Add-on URI: https://codeseller.ru/products/feed-recall-dopolnenie-wp-recall-dlya-formirovaniya-feed-lenty-novostej-polzovatelya/;

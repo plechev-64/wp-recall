@@ -3,14 +3,14 @@
 rcl_dialog_scripts();
 
 global $active_addons,$Rcl_Addons_Manager;
-        
+
 $Rcl_Addons_Manager->get_addons_data();
 
 $cnt_all = count($Rcl_Addons_Manager->addons_data);
 $cnt_act = count($active_addons);
 $cnt_inact = $cnt_all - $cnt_act;
 
-echo '</pre><div class="wrap">'; 
+echo '</pre><div class="wrap">';
 
 echo '<div id="icon-plugins" class="icon32"><br></div>
     <h2>'.__('WP-Recall Add-ons','wp-recall').'</h2>';
@@ -33,7 +33,7 @@ echo '<div id="icon-plugins" class="icon32"><br></div>
             echo '<div id="message" class="updated"><p>'.__('Key has been saved','wp-recall').'!</p></div>';
         }
     }
-    
+
     echo '<div class="rcl-admin-service-box rcl-key-box">';
 
     echo '<h4>'.__('RCLKEY','wp-recall').'</h4>
@@ -42,10 +42,10 @@ echo '<div id="icon-plugins" class="icon32"><br></div>
         <input class="button" type="submit" value="'.__('Save','wp-recall').'" name="save-rcl-key">
         '.wp_nonce_field('add-rcl-key','_wpnonce',true,false).'
     </form>
-    <p class="install-help">'.__('The key is required to update the add-ons here. You can get it in your personal account online <a href="http://codeseller.ru/" target="_blank">http://codeseller.ru</a>','wp-recall').'</p>';
+    <p class="install-help">'.__('The key is required to update the add-ons here. You can get it in your personal account online <a href="https://codeseller.ru/" target="_blank">https://codeseller.ru</a>','wp-recall').'</p>';
 
     echo '</div>';
-    
+
     echo '<div class="rcl-admin-service-box rcl-upload-form-box upload-addon">';
 
     echo '<h4>'.__('Install the add-on to WP-Recall format .ZIP','wp-recall').'</h4>
@@ -56,7 +56,7 @@ echo '<div id="icon-plugins" class="icon32"><br></div>
         <input id="install-plugin-submit" class="button" type="submit" value="'.__('Install','wp-recall').'" name="install-addon-submit">
         '.wp_nonce_field('install-addons-rcl','_wpnonce',true,false).'
     </form>
-    
+
     </div>
 
     <ul class="subsubsub">
@@ -71,6 +71,6 @@ $Rcl_Addons_Manager->prepare_items(); ?>
 <input type="hidden" name="page" value="manage-addon-recall">
 <?php
 $Rcl_Addons_Manager->search_box( 'Search by name', 'search_id' );
-$Rcl_Addons_Manager->display(); 
-echo '</form></div>'; 
+$Rcl_Addons_Manager->display();
+echo '</form></div>';
 
