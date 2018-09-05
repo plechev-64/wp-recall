@@ -144,7 +144,8 @@
     margin: 1px 10px 5px 0;
     padding: 6px 8px;
 }
-.userlist.rows-list .user-single .filter-data .fas{
+.userlist.rows-list .user-single .filter-data .fas,
+.userlist.rows-list .user-single .filter-data .far {
     margin: 0 5px 0 0;
 }
 .userlist .user-profile-fields .rcl-custom-fields {
@@ -248,7 +249,7 @@
 .userlist.cards-list a img {
     margin: calc(-50% + 80px) 0;
     transform: scale(1.05);
-    min-height: 205px; 
+    min-height: 205px;
 }
 
 .userlist.cards-list .u_card_name {

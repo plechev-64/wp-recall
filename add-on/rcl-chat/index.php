@@ -277,7 +277,7 @@ function rcl_get_user_contacts_list($user_id){
 
         $content .= '<div class="contact-box preloader-parent" data-contact="'.$message['user_id'].'">';
         $content .= '<a href="#" title="'.__('Delete contact','wp-recall').'" onclick="rcl_chat_remove_contact(this,'.$message['chat_id'].');return false;" class="chat-remove"><i class="fa fas fa-times" aria-hidden="true"></i></a>';
-        $content .= '<a href="#" title="'.__('Open chat in window','wp-recall').'" onclick="rcl_get_chat_window(this,'.$message['user_id'].');return false;" class="chat-window-restore"><i class="fa fas fa-window-restore" aria-hidden="true"></i></a>';
+        $content .= '<a href="#" title="'.__('Open chat in window','wp-recall').'" onclick="rcl_get_chat_window(this,'.$message['user_id'].');return false;" class="chat-window-restore"><i class="far fa-window-restore" aria-hidden="true"></i></a>';
         $content .= '<a class="chat-contact '.$class.'" href="'.rcl_get_tab_permalink($message['user_id'],'chat').'">';
 
         $content .= '<div class="avatar-contact">'
@@ -392,7 +392,7 @@ function rcl_get_last_chats_box(){
         echo '<div class="rcl-noread-users">';
             echo '<span class="messages-icon">'
                     . '<a href="'.rcl_get_tab_permalink($user_ID,'chat').'" onclick="return rcl_chat_shift_contact_panel();">'
-                    . '<i class="fa fas fa-envelope" aria-hidden="true"></i>';
+                    . '<i class="far fa-envelope" aria-hidden="true"></i>';
 
                     if($new_counter){
                         echo '<span class="chat-new-messages">'.$new_counter.'</span>';

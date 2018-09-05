@@ -53,7 +53,7 @@
     overflow-wrap: break-word;
     padding: 20px 10px 15px 30px;
     position: relative;
-    min-height: initial; 
+    min-height: initial;
 }
 #prime-forum blockquote p {
     font-size: initial;
@@ -153,7 +153,7 @@
 #prime-topic-form-box .quicktags-toolbar > span::before {
     border: 1px solid #e5e5e5;
     box-sizing: border-box;
-    color: #555;
+    color: #777;
     font-family: "Font Awesome 5 Free";
     font-size: 17px;
     left: 0;

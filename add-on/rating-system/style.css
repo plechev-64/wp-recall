@@ -18,7 +18,7 @@
     font-size: 24px;
 }
 .rcl-box-rating .buttons-rating .rating-minus{
-    margin: 0 2px 0 3px;  
+    margin: 0 2px 0 3px;
 }
 .rcl-box-rating .buttons-rating .rating-plus {
     float: left;
@@ -45,7 +45,7 @@
     color: #ff0000;
 }
 .rating-value-block .rating-minus{
-    
+
 }
 .rating-value-block .post-votes{
     color: #aaa;
@@ -96,11 +96,11 @@
     width: auto;
 }
 .votes-window .rating-plus,
-.votes-list .fa-thumbs-o-up{
+.votes-list .fa-thumbs-up{
     color: #008000;
 }
 .votes-window .rating-minus,
-.votes-list .fa-thumbs-o-down{
+.votes-list .fa-thumbs-down{
     color: red;
 }
 .rating-rcl span {
@@ -267,7 +267,7 @@
 }
 .rcl-rating-box .rating-wrapper > span{
     margin: 0 5px;
-    
+
 }
 .rcl-rating-box .rating-wrapper .rating-vote{
     opacity:0.5;
@@ -356,7 +356,7 @@
     opacity:1;
 }
 .rcl-rating-box.box-stars .must-vote:hover span.stars__out{
-    color: orange;  
+    color: orange;
 }
 .rcl-rating-box.box-stars .must-vote:hover span.stars__in{
     color: inherit;

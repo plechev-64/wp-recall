@@ -3,10 +3,10 @@
     <div class="postdata-header">
         <div class="post-meta">
             <span class="post-date">
-                <i class="fa fas fa-clock"></i><?php echo get_the_date(); ?>
+                <i class="far fa-clock"></i><?php echo get_the_date(); ?>
             </span>
             <span class="post-comments-number">
-                <i class="fa fas fa-comments"></i><?php comments_number('0', '1', '%'); ?>
+                <i class="far fa-comments"></i><?php comments_number('0', '1', '%'); ?>
             </span>
         </div>
         <h3>

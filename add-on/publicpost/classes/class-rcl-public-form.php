@@ -1,7 +1,7 @@
 <?php
 
 class Rcl_Public_Form extends Rcl_Public_Form_Fields{
-    
+
     public $post_id = 0;
     public $fields_options;
     public $form_object;
@@ -20,43 +20,43 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         'draft' => false,
         'edit' => false
     );
-    
+
     function __construct($args = false){
         global $user_ID;
-        
+
         $this->init_properties($args);
-        
+
         if(isset($_GET['rcl-post-edit'])){
             $this->post_id = intval($_GET['rcl-post-edit']);
         }
-        
+
         if($this->post_id){
-			
+
             $this->post = get_post($this->post_id);
             $this->post_type = $this->post->post_type;
-			
+
             if($this->post_type == 'post'){
                 $this->form_id = get_post_meta($this->post_id, 'publicform-id', 1);
             }
-			
+
         }
-		
-        if(!$this->form_id) 
+
+        if(!$this->form_id)
             $this->form_id = 1;
-        
+
         parent::__construct(array(
             'post_type' => $this->post_type,
             'form_id' => $this->form_id
         ));
-        
+
         $this->init_user_can();
-        
+
         $this->init_options();
 
         do_action('rcl_public_form_init', $this->get_object_form());
 
         if($this->options['preview']) rcl_dialog_scripts();
-        
+
         if($this->user_can['upload']){
             rcl_fileupload_scripts();
             add_action('wp_footer', array($this, 'init_form_scripts'), 100);
@@ -66,14 +66,14 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             add_filter('rcl_public_form_fields',array($this,'add_guest_fields'), 10);
 
         $this->fields = $this->get_public_fields();
-        
+
         $this->form_object = $this->get_object_form();
-        
+
         if($this->exist_active_field('post_thumbnail'))
             add_filter('rcl_post_attachment_html','rcl_add_attachment_thumbnail_button', 10, 3);
-        
+
     }
-    
+
     function init_properties($args){
         $properties = get_class_vars(get_class($this));
 
@@ -81,11 +81,11 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             if(isset($args[$name])) $this->$name = $args[$name];
         }
     }
-    
+
     function get_object_form(){
-        
+
         $dataForm = array();
-        
+
         $dataForm['post_id'] = $this->post_id;
         $dataForm['post_type'] = $this->post_type;
         $dataForm['post_status'] = ($this->post_id)? $this->post->post_type: 'new';
@@ -95,38 +95,38 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $dataForm['ext_types'] = 'jpg, png, gif';
         $dataForm['size_files'] = 2;
         $dataForm['max_files'] = 10;
-        
+
         foreach($this->fields as $k => $field){
-            
+
             if($field['slug'] == 'post_uploader'){
-                
+
                 if(isset($field['ext-types']) && $field['ext-types'])
                 $dataForm['ext_types'] = $field['ext-types'];
-                
+
                 if(isset($field['size-files']) && $field['size-files'])
                 $dataForm['size_files'] = $field['size-files'];
-                
+
                 if(isset($field['max-files']) && $field['max-files'])
                 $dataForm['max_files'] = $field['max-files'];
-                
+
                 break;
             }
-            
+
         }
 
         $dataForm = (object)$dataForm;
-        
+
         return $dataForm;
     }
-    
+
     function get_public_fields(){
-        
+
         return apply_filters('rcl_public_form_fields', $this->fields, $this->get_object_form());
-        
+
     }
-    
+
     function add_guest_fields($fields){
-        
+
         $guestFields = array(
             array(
                 'slug' => 'name-user',
@@ -143,16 +143,16 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         );
 
         $fields = array_merge($guestFields, $fields);
-        
+
         return $fields;
-        
+
     }
-    
+
     function init_options(){
-        
+
         $this->options['preview'] = rcl_get_option('public_preview');
         $this->options['draft'] = rcl_get_option('public_draft');
-        
+
         $this->options = apply_filters('rcl_public_form_options', $this->options, $this->get_object_form());
 
     }
@@ -161,98 +161,98 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         global $user_ID;
 
         $this->user_can['publish'] = true;
-        
+
         $user_can = rcl_get_option('user_public_access_recall');
-		
+
         if($user_can){
 
             if($user_ID){
-                
+
                 $userinfo = get_userdata( $user_ID );
-                
-                if($userinfo->user_level >= $user_can) 
+
+                if($userinfo->user_level >= $user_can)
                     $this->user_can['publish'] = true;
-                else 
+                else
                     $this->user_can['publish'] = false;
-                
+
             }else{
-                
+
                 $this->user_can['publish'] = false;
-                
+
             }
 
         }
-        
+
         $this->user_can['draft'] = $user_ID? true: false;
-        
+
         $this->user_can['upload'] = $this->user_can['publish'];
-        
+
         if($user_ID && $this->post_id){
-            
+
             $this->user_can['edit'] = (current_user_can('edit_post', $this->post_id))? true: false;
-            
+
             if(!$this->user_can['edit'] && $this->post_type == 'post-group'){
-                
+
                 $this->user_can['edit'] = (rcl_can_user_edit_post_group($this->post_id))? true: false;
 
             }
-            
+
             $this->user_can['delete'] = $this->user_can['edit'];
-            
+
         }
-        
+
         $this->user_can = apply_filters('rcl_public_form_user_can', $this->user_can, $this->get_object_form());
 
     }
-    
+
     function get_errors(){
         global $user_ID;
-        
+
         $errors = array();
 
         if(!$this->user_can['publish']){
-            
+
             if(!$user_ID)
                 $errors[] = __('You must be logged in to post. Login or register','wp-recall');
             else if($this->post_type == 'post-group'){
-                $errors[] = __('Sorry, but you have no rights to publish in this group :(','wp-recall'); 
+                $errors[] = __('Sorry, but you have no rights to publish in this group :(','wp-recall');
             }else{
                 $errors[] = __('Sorry, but you have no right to post on this site :(','wp-recall');
             }
-            
+
         }else if($this->post_id && !$this->user_can['edit']){
             $errors[] = __('You can not edit this publication :(','wp-recall');
         }
-        
+
         $errors = apply_filters('rcl_public_form_errors', $errors, $this);
-        
+
         return $errors;
-        
+
     }
-    
+
     function get_errors_content(){
-        
+
         $errorContent = '';
-            
+
         foreach($this->get_errors() as $error){
             $errorContent .= '<p align="center" class="rcl-public-notice">'.$error.'</p>';
         }
-        
+
         return $errorContent;
-        
+
     }
 
     function get_form(){
         global $user_ID;
-        
+
         if($this->get_errors()){
 
             return $this->get_errors_content();
-            
+
         }
-        
+
         $dataPost = $this->get_object_form();
-        
+
         $defaultFields = array(
             'post_content',
             'post_title',
@@ -260,19 +260,19 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             'post_excerpt',
             'post_thumbnail'
         );
-        
+
         $taxField = array();
-        
+
         if($this->taxonomies){
-            
+
             foreach($this->taxonomies as $taxname => $object){
 
                 $taxField[] = 'taxonomy-'.$taxname;
 
             }
-            
+
         }
-        
+
         $attrs = array(
             'data-form_id'=> $this->form_id,
             'data-post_id'=> $this->post_id,
@@ -281,7 +281,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         );
 
         $attrs = apply_filters('rcl_public_form_attributes', $attrs, $dataPost);
-        
+
         $attrsForm = array();
         foreach($attrs as $k=>$v){
             if(is_array($v)){
@@ -290,9 +290,9 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             }
             $attrsForm[] = $k.'="'.$v.'"';
         }
-        
+
         $content = '<div class="rcl-public-box rcl-form">';
-        
+
         if(rcl_check_access_console()){
             $content .= '<div class="edit-form-link">'
                             . '<a target="_blank" href="'.admin_url('admin.php?page=manage-public-form&post-type=').$this->post_type.'">'
@@ -300,11 +300,11 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                             . '</a>'
                         . '</div>';
         }
-        
+
         $content .= '<form action="" method="post" '.implode(' ',$attrsForm).'>';
-        
+
         if($this->fields){
-            
+
             $CF = new Rcl_Custom_Fields();
 
             foreach($this->fields as $this->current_field){
@@ -318,159 +318,159 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                         $contentField = $this->get_terms_list($taxonomy);
 
                     }
-                    
+
                 }else{
-                    
+
                     if(in_array($this->current_field['slug'],$defaultFields)){
-                        
+
                         if($this->current_field['slug'] == 'post_content'){
-                            
+
                             $contentField = $this->get_editor(array(
-                                'post_content' => $dataPost->post_content, 
+                                'post_content' => $dataPost->post_content,
                                 'options' => $this->current_field['post-editor']
                             ));
-                            
+
                             $contentField .= $CF->get_notice($this->current_field);
-                            
+
                         }
-                        
+
                         if($this->current_field['slug'] == 'post_excerpt'){
-                            
+
                             $contentField = $CF->get_input($this->current_field,$dataPost->post_excerpt);
-                            
+
                         }
-                        
+
                         if($this->current_field['slug'] == 'post_title'){
-                            
+
                             $contentField = $CF->get_input($this->current_field,esc_textarea($dataPost->post_title));
-                            
+
                         }
-                        
+
                         if($this->current_field['slug'] == 'post_thumbnail'){
-                            
+
                             $contentField = $this->get_thumbnail_box();
-                            
+
                             $contentField .= $CF->get_notice($this->current_field);
-                            
+
                         }
-                        
+
                         if($this->current_field['slug'] == 'post_uploader'){
-                            
+
                             if(!isset($this->current_field['add-to-click'])){
                                 $this->current_field['add-to-click'] = 1;
                             }
-                            
+
                             if(!isset($this->current_field['gallery'])){
                                 $this->current_field['gallery'] = 1;
                             }
-                            
+
                             $postUploder = new Rcl_Public_Form_Uploader(array(
                                 'post_id' => $this->post_id,
                                 'post_type' => $this->post_type,
                                 'ext_types' => $this->form_object->ext_types,
                                 'options' => $this->current_field,
                             ));
-                            
+
                             $contentField = $postUploder->get_uploader();
-                            
+
                             $contentField .= $CF->get_notice($this->current_field);
-                            
+
                         }
 
                     }else{
-                        
+
                         $postmeta = ($this->post_id)? get_post_meta($this->post_id,$this->current_field['slug'],1): '';
-                        
+
                         $contentField = $CF->get_input($this->current_field, $postmeta);
-                        
+
                     }
 
                 }
-                
+
                 if(!$contentField) continue;
-                
+
                 $content .= '<div id="form-field-'.$this->current_field['slug'].'" class="rcl-form-field field-'.$this->current_field['type'].'">';
-                
+
                 $content .= '<label>'.$CF->get_title($this->current_field).' '.$required.'</label>';
-                
+
                 $content .= $contentField;
 
                 $content .= '</div>';
             }
 
         }
-        
+
         $content .= apply_filters('rcl_public_form','',$this->get_object_form());
 
         $content .= '<div class="rcl-form-field submit-public-form">';
-        
+
         if($this->options['draft'] && $this->user_can['draft'])
             $content .= '<a href="#" onclick="rcl_save_draft(this); return false;" id="rcl-draft-post" class="public-form-button recall-button"><i class="fa fas fa-history" aria-hidden="true"></i>'.__('Save as Draft','wp-recall').'</a>';
-        
+
         if($this->options['preview'])
-            $content .= '<a href="#" onclick="rcl_preview(this); return false;" id="rcl-preview-post" class="public-form-button  recall-button"><i class="fa fas fa-eye" aria-hidden="true"></i>'.__('Preview','wp-recall').'</a>';
-        
+            $content .= '<a href="#" onclick="rcl_preview(this); return false;" id="rcl-preview-post" class="public-form-button  recall-button"><i class="far fa-eye" aria-hidden="true"></i>'.__('Preview','wp-recall').'</a>';
+
         $content .= '<a href="#" onclick="rcl_publish(this); return false;" id="rcl-publish-post" class="public-form-button  recall-button"><i class="fa fas fa-print" aria-hidden="true"></i>'.__('Publish','wp-recall').'</a>';
-        
+
         $content .= '</div>';
-        
+
         if($this->form_id)
             $content .= '<input type="hidden" name="form_id" value="'.$this->form_id.'">';
-        
+
         $content .= '<input type="hidden" name="post_id" value="'.$this->post_id.'">';
         $content .= '<input type="hidden" name="post_type" value="'.$this->post_type.'">';
         $content .= '<input type="hidden" name="rcl-edit-post" value="1">';
         $content .= wp_nonce_field('rcl-edit-post','_wpnonce',true,false);
         $content .= '</form>';
-        
+
         if($this->user_can['delete'] && $this->options['delete']){
-            
+
             $content .= '<div id="form-field-delete" class="rcl-form-field">';
-            
+
             $content .= $this->get_delete_box();
-            
+
             $content .= '</div>';
-            
+
         }
-        
+
         $content .= apply_filters('after_public_form_rcl','',$this->get_object_form());
 
         $content .= '</div>';
-        
+
         return $content;
-        
+
     }
-    
+
     function get_thumbnail_box(){
-        
+
         $sizeFile = (isset($this->current_field['size-files']) && $this->current_field['size-files'])? $this->current_field['size-files']: 2;
-        
+
         $content = '<div id="rcl-thumbnail-post">';
-        
+
         $content .= '<div class="thumbnail-wrapper">';
-        
+
         $content .= '<a href="#" class="rcl-service-button delete-post-thumbnail" onclick="rcl_remove_post_thumbnail();return false;"><i class="fa fas fa-trash"></i></a>';
-        
+
         $content .= '<div class="thumbnail-image">';
-        
+
         if($this->post_id){
-            
+
             if(has_post_thumbnail($this->post_id)){
-                
+
                 $content .= get_the_post_thumbnail( $this->post_id, 'thumbnail');
-                
+
             }
-            
+
         }
-        
+
         $content .= '</div>';
 
         $thumbnail_id = ($this->post_id)? get_post_thumbnail_id( $this->post_id ): 0;
-        
+
         $content .= '<input class="thumbnail-id" type="hidden" name="post-thumbnail" value="'.$thumbnail_id.'">';
-        
+
         $content .= '</div>';
-        
+
         $postUploder = new Rcl_Public_Form_Uploader(array(
             'post_id' => $this->post_id,
             'post_type' => $this->post_type,
@@ -483,25 +483,25 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             'title' => __('Upload thumbnail','wp-recall'),
             'onclick' => 'rcl_init_thumbnail_uploader(this,{size:\''.$sizeFile.'\'});'
         ));
-        
+
         $content .= '</div>';
-        
+
         return $content;
-        
+
     }
 
     function get_terms_list($taxonomy){
-        
+
         $content = '<div class="rcl-terms-select taxonomy-'.$taxonomy.'">';
-        
+
         $terms = isset($this->current_field['values'])? $this->current_field['values']: array();
-        
+
         if($this->is_hierarchical_tax($taxonomy)){
-            
+
             if($this->post_type == 'post-group'){
-                
+
                 global $rcl_group;
-                
+
                 if($rcl_group->term_id){
                     $group_id = $rcl_group->term_id;
                 }else if($this->post_id){
@@ -509,25 +509,25 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                 }
 
                 $options_gr = rcl_get_options_group($group_id);
-                
+
                 $termList = rcl_get_tags_list_group($options_gr['tags'],$this->post_id);
 
                 if(!$termList)
                     return false;
-                
+
                 $content .= $termList;
-                
+
             }else{
-                
+
                 $type = (isset($this->current_field['type-select']) && $this->current_field['type-select'])? $this->current_field['type-select']: 'select';
                 $number = (isset($this->current_field['number-select']) && $this->current_field['number-select'])? $this->current_field['number-select']: 1;
 
                 $req = isset($this->current_field['required'])? $this->current_field['required']: false;
-                
+
                 $termList = new Rcl_List_Terms($taxonomy, $type, $req);
 
                 $content .= $termList->get_select_list($this->get_allterms($taxonomy),$this->get_post_terms($taxonomy),$number,$terms);
-                
+
             }
 
         }else{
@@ -536,17 +536,17 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
 
         }
 
-        if(isset($this->current_field['notice']) && $this->current_field['notice']) 
+        if(isset($this->current_field['notice']) && $this->current_field['notice'])
             $content .= '<span class="rcl-field-notice"><i class="fa fas fa-info" aria-hidden="true"></i>'.$this->current_field['notice'].'</span>';
 
         $content .= '</div>';
-        
+
         return $content;
-        
+
     }
-    
+
     function get_editor($args = false){
-        
+
         $wp_uploader = false;
         $quicktags = false;
         $tinymce = false;
@@ -578,18 +578,18 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         );
 
         $post_content = (isset($args['post_content']))? $args['post_content']: false;
-        
+
         ob_start();
 
         wp_editor( $post_content, 'contentarea-'.$this->post_type, $data );
-        
+
         $content = ob_get_contents();
-        
+
         ob_end_clean();
-        
+
         return $content;
     }
-    
+
     function get_tags_checklist($taxonomy, $t_args = array()){
 
         if(!is_array($t_args) || $t_args === false) return false;
@@ -601,18 +601,18 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $content = '<div id="rcl-tags-list-'.$taxonomy.'" class="rcl-tags-list">';
 
         if($tags){
-            
+
             $content .= '<span class="rcl-field-input type-checkbox-input">';
-            
+
             foreach ($tags as $tag){
-                
+
                 $checked = false;
-                
+
                 if(isset($post_tags[$tag->slug]) && $tag->name == $post_tags[$tag->slug]->name){
                     $checked = true;
                     unset($post_tags[$tag->slug]);
                 }
-                
+
                 $args = array(
                     'type' => 'checkbox',
                     'id' => 'tag-'.$tag->slug,
@@ -621,25 +621,25 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                     'label' => $tag->name,
                     'value' => $tag->name
                 );
-                
-                if(isset($this->current_field['required']) && $this->current_field['required']){                   
+
+                if(isset($this->current_field['required']) && $this->current_field['required']){
                     $args['required'] = true;
                     $args['class'] = 'required-checkbox';
                 }
-                
+
                 $content .= rcl_form_field($args);
             }
-            
+
             $content .= '</span>';
-            
+
         }
 
         if($post_tags){
-            
+
             $content .= '<span class="rcl-field-input type-checkbox-input">';
-            
+
             foreach ($post_tags as $tag){
-                
+
                 $args = array(
                     'type' => 'checkbox',
                     'id' => 'tag-'.$tag->slug,
@@ -648,31 +648,31 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                     'label' => $tag->name,
                     'value' => $tag->name
                 );
-                
+
                 $content .= rcl_form_field($args);
-                
+
             }
-            
+
             $content .= '</span>';
         }
 
         $content .= '</div>';
-        
+
         return $content;
     }
-    
+
     function get_tags($post_id, $taxonomy='post_tag'){
-        
+
         $posttags = get_the_terms( $post_id, $taxonomy );
 
         $tags = array();
         if ($posttags) {
             foreach($posttags as $tag){ $tags[$tag->slug] = $tag; }
         }
-        
+
         return $tags;
     }
-    
+
     function tags_field($taxonomy, $terms){
 
         if(!$this->taxonomies || !isset($this->taxonomies[$taxonomy])) return false;
@@ -691,17 +691,17 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $args = apply_filters('rcl_public_form_tags',$args,$taxonomy,$this->get_object_form());
 
         $content = $this->get_tags_checklist($taxonomy, $args['terms_cloud']);
-        
-        if($args['input_field']) 
+
+        if($args['input_field'])
             $content .= $this->get_tags_input($taxonomy);
-        
+
         if(!$content) return false;
 
         $content = '<div class="rcl-tags-list">'.$content.'</div>';
-        
+
         return $content;
     }
-    
+
     function get_tags_input($taxonomy = 'post_tag'){
 
         rcl_autocomplete_scripts();
@@ -733,7 +733,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
 
         return $fields;
     }
-    
+
     function get_allterms($taxonomy){
 
         $args = array(
@@ -751,14 +751,14 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
             ,'child_of'     => 0
             ,'parent'       => ''
         );
-        
+
         $args = apply_filters('rcl_public_form_hierarchical_terms', $args, $taxonomy, $this->get_object_form());
 
         $allcats = get_terms($taxonomy, $args);
 
         return $allcats;
     }
-    
+
     function get_post_terms($taxonomy){
 
         if(!isset($this->taxonomies[$taxonomy])) return false;
@@ -774,36 +774,36 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         }
 
         if($post_terms){
-            
+
             foreach( $post_terms as $key => $term ){
-                
+
                 foreach($post_terms as $t){
-                    
+
                     if($t->parent == $term->term_id){
                         unset($post_terms[$key]);
                         break;
                     }
-                    
+
                 }
-                
+
             }
-            
+
         }
 
         return $post_terms;
     }
-    
+
     function get_delete_box(){
         global $user_ID;
-        
+
         if($this->post->post_author == $user_ID){
-            
+
             $content = '<form method="post" action="" onsubmit="return confirm(\''.__('Are you sure?','wp-recall').'\');">
                         '.wp_nonce_field('delete-post-rcl','_wpnonce',true,false).'
                         <input class="alignleft recall-button delete-post-submit public-form-button" type="submit" name="delete-post-rcl" value="'.__('Delete post','wp-recall').'">
                         <input type="hidden" name="post-rcl" value="'.$this->post_id.'">'
                     . '</form>';
-            
+
         }else{
 
             $content = '<div id="rcl-delete-post">
@@ -821,7 +821,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                         </div>
                     </div>';
         }
-        
+
         return $content;
     }
 
@@ -847,17 +847,17 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         if(!$reasons) return false;
 
         $content = '<label>'.__('Use blank notice','wp-recall').':</label>';
-        
+
         foreach($reasons as $reason){
             $content .= '<input type="button" class="recall-button reason-delete" onclick="document.getElementById(\'reason_content\').value=\''.$reason['content'].'\'" value="'.$reason['value'].'">';
         }
 
         return $content;
-        
+
     }
-    
+
     function init_form_scripts(){
-        
+
         $obj = $this->form_object;
 
         echo '<script type="text/javascript">'
@@ -870,7 +870,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                 . 'max_files:"'.$obj->max_files.'",'
                 . 'form_id:"'.$this->form_id.'"'
             . '});</script>';
-        
+
     }
-    
+
 }

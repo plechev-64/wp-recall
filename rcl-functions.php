@@ -768,7 +768,7 @@ function rcl_get_smiles($id_area){
     //if(!$wpsmiliestrans) return false;
 
     $smiles = '<div class="rcl-smiles" data-area="'.$id_area.'">';
-        $smiles .= '<i class="fa fas fa-smile" aria-hidden="true"></i>';
+        $smiles .= '<i class="far fa-smile" aria-hidden="true"></i>';
         $smiles .= '<div class="rcl-smiles-list">
                         <div class="smiles"></div>
                     </div>';
@@ -897,7 +897,16 @@ function rcl_get_button($ancor,$url,$args=false){
     $button .= 'class="recall-button ';
     if(isset($args['class'])&&$args['class']) $button .= $args['class'];
     $button .= '">';
-    if(isset($args['icon'])&&$args['icon']) $button .= '<i class="fa fas '.$args['icon'].'"></i>';
+    if(isset($args['icon'])&&$args['icon']){
+
+        if(stristr($args['icon'], 'far') !== FALSE || stristr($args['icon'], 'fal') !== FALSE){
+            $icon = $args['icon'];
+        }else{
+            $icon = 'fa fas '.$args['icon'];
+        }
+
+        $button .= '<i class="'.$icon.'"></i>';
+    }
     $button .= '<span>'.$ancor.'</span>';
     $button .= '</a>';
     return $button;

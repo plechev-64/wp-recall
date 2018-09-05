@@ -533,7 +533,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
 
                             $content .= '</div>'
                         . '</div>'
-                    . '<span class="message-time"><i class="fa fas fa-clock" aria-hidden="true"></i> '.$message['message_time'].'</span>'
+                    . '<span class="message-time"><i class="far fa-clock" aria-hidden="true"></i> '.$message['message_time'].'</span>'
             . '</div>'
         . '</div>';
 
@@ -550,7 +550,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
 
             $content .= '<span class="'.implode(' ', $class).'">'
                             . '<a href="#" onclick="rcl_chat_message_important('.$message['message_id'].'); return false;">'
-                                . '<i class="fa fas fa-star" aria-hidden="true"></i>'
+                                . '<i class="far fa-star" aria-hidden="true"></i>'
                             . '</a>'
                         . '</span>';
 
@@ -654,11 +654,11 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
     function important_manager(){
 
         $status = ($this->important)? 0: 1;
-        $class = ($this->important)? 'fa-star-half': 'fa-star';
+        $class = ($this->important)? 'fas fa-star-half-alt': 'far fa-star';
 
         $content = '<div class="important-manager">'
                     . '<a href="#" class="important-shift" onclick="rcl_chat_important_manager_shift(this,'.$status.');return false;">'
-                        . '<i class="fa fas '.$class.'" aria-hidden="true"></i>'
+                        . '<i class="'.$class.'" aria-hidden="true"></i>'
                     . '</a>'
                 . '</div>';
 

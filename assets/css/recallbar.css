@@ -15,7 +15,7 @@
 }
 #recallbar .fas{
     color: #e6e6e6;
-    font-size: 30px;
+    font-size: 26px;
     line-height: 36px;
     width: 30px;
 }
@@ -51,7 +51,7 @@
     width: 110px;
 }
 #recallbar .rcb_right{
-    
+
 }
 #recallbar .rcb_right .rcb_icons{
     display:inline-block;
@@ -117,7 +117,7 @@
     padding: 10px;
 }
 #recallbar .rcb_line:hover,
-#recallbar li:hover, 
+#recallbar li:hover,
 #recallbar .current-menu-item {
     background: rgba(0, 0, 0, 0.3);
 }

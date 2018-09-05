@@ -86,7 +86,7 @@ function rcl_user_comments(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('comments_count', $rcl_users_set->data)||isset($rcl_user->comments_count)){
         if(!isset($rcl_user->comments_count)) $rcl_user->comments_count = 0;
-        echo '<span class="filter-data"><i class="fa fas fa-comment"></i>'.__('Comments','wp-recall').': '.$rcl_user->comments_count.'</span>';
+        echo '<span class="filter-data"><i class="far fa-comment"></i>'.__('Comments','wp-recall').': '.$rcl_user->comments_count.'</span>';
     }
 }
 
@@ -95,7 +95,7 @@ function rcl_user_posts(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('posts_count', $rcl_users_set->data)||isset($rcl_user->posts_count)){
         if(!isset($rcl_user->posts_count)) $rcl_user->posts_count = 0;
-        echo '<span class="filter-data"><i class="fa fas fa-file-alt"></i>'.__('Publics','wp-recall').': '.$rcl_user->posts_count.'</span>';
+        echo '<span class="filter-data"><i class="far fa-file-alt"></i>'.__('Publics','wp-recall').': '.$rcl_user->posts_count.'</span>';
     }
 }
 
@@ -131,7 +131,7 @@ function rcl_user_register(){
     global $rcl_user,$rcl_users_set;
     if(false!==array_search('user_registered', $rcl_users_set->data)||isset($rcl_user->user_registered)){
         if(!isset($rcl_user->user_registered)) return false;
-        echo '<span class="filter-data"><i class="fa fas fa-calendar-check"></i>'.__('Registration','wp-recall').': '.mysql2date('d-m-Y', $rcl_user->user_registered).'</span>';
+        echo '<span class="filter-data"><i class="far fa-calendar-check"></i>'.__('Registration','wp-recall').': '.mysql2date('d-m-Y', $rcl_user->user_registered).'</span>';
     }
 }
 

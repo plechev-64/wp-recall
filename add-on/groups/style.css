@@ -53,10 +53,12 @@ div p.post-group-meta {
 }
 
 #group-posts-widget .post-meta span .fa,
+#group-posts-widget .post-meta span .far,
 #group-link-content .close-content .fa,
 #group-admin-panel .title-panel .fa-cogs,
-#widgets-options .widgets-zone .widget-box .widget-name .fas{
-	margin: 0 5px 0 0;
+#widgets-options .widgets-zone .widget-box .widget-name .fas,
+#widgets-options .widgets-zone .widget-box .widget-name .far {
+    margin: 0 5px 0 0;
 }
 #rcl-group ul {
     list-style: none;
@@ -99,7 +101,7 @@ div p.post-group-meta {
     display: inline-block;
     margin: 5px 5px 5px 0;
 }
-#rcl-group .group-sidebar .group-avatar{   
+#rcl-group .group-sidebar .group-avatar{
     margin: 0 0 5px;
     position: relative;
 }
@@ -153,8 +155,8 @@ div p.post-group-meta {
     margin: 5px 0;
     padding: 7px;
 }
-#rcl-group .group-sidebar .title-widget{     
-    text-align: center;   
+#rcl-group .group-sidebar .title-widget{
+    text-align: center;
 }
 #rcl-group .widget-content{
     overflow: hidden;
@@ -252,6 +254,9 @@ div p.post-group-meta {
 	margin: 0 5px 0 0;
     vertical-align: middle;
 }
+#rcl-group .rcl-wiget-spoiler-txt {
+    vertical-align: middle;
+}
 #rcl-group .group-content .public_block  select {
 	width:auto;
 }
@@ -270,7 +275,7 @@ div p.post-group-meta {
     margin: 15px 0;
     overflow: hidden;
 }
-#group-posts-widget .post-group .postdata-header{    
+#group-posts-widget .post-group .postdata-header{
 	background: rgba(219, 219, 219, 0.3);
 	box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
     margin: 5px 0;
@@ -416,7 +421,7 @@ div p.post-group-meta {
     padding: 10px 0;
     text-align: right;
 }
-#create-group input[type="text"] {	
+#create-group input[type="text"] {
     border: none;				/*++Twenty16++*/
     max-width: 300px;
     min-width: 170px;

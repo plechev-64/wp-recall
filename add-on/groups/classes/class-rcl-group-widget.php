@@ -43,7 +43,7 @@ class Rcl_Group_Widget {
 
         if($object->widget_type=='hidden')
             $before .= '<a href="#" onclick="rcl_more_view(this); return false;" class="manage-hidden-widget">'
-                . '<i class="fa fas fa-plus-square"></i>'.__('Show all','wp-recall')
+                . '<i class="far fa-plus-square"></i><span class="rcl-wiget-spoiler-txt">'.__('Show all','wp-recall').'</span>'
                 . '</a>';
 
         $before .= '<div class="widget-content">';
@@ -152,7 +152,7 @@ class Rcl_Group_Widget {
                 $content .= '<input type="hidden" name="data[][widget]['.$this->widget['widget_id'].'][id]" value="'.$widget->widget_id.'">';
 
                 if($options)
-                    $content .= '<span class="widget-name" onclick="rcl_more_view(this); return false;"><i class="fa fas fa-plus-square"></i>'.$widget->widget_title.'</span>';
+                    $content .= '<span class="widget-name" onclick="rcl_more_view(this); return false;"><i class="far fa-plus-square"></i>'.$widget->widget_title.'</span>';
                 else
                     $content .= '<span class="widget-name">'.$widget->widget_title.'</span>';
 

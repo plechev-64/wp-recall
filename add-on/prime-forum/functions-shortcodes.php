@@ -67,7 +67,7 @@ add_shortcode('spoiler','pfm_get_spoiler_content');
 function pfm_get_spoiler_content($attrs, $content){
     return '<div class="prime-spoiler">'
         . '<a href="#" class="prime-spoiler-link" onclick="pfm_spoiler(this); return false;">'
-            . '<i class="fa fas fa-plus-square"></i> '.__('Spoiler','wp-recall')
+            . '<i class="far fa-plus-square"></i> '.__('Spoiler','wp-recall')
         . '</a>'
         . '<div class="prime-spoiler-content">'
             .$content

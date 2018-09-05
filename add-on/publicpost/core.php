@@ -312,7 +312,7 @@ function rcl_get_html_attachment($attach_id, $mime_type, $addToClick = true){
 }
 
 function rcl_button_fast_edit_post($post_id){
-    return '<a class="rcl-edit-post rcl-service-button" data-post="'.$post_id.'" onclick="rcl_edit_post(this); return false;"><i class="fa fas fa-pen-square-o"></i></a>';
+    return '<a class="rcl-edit-post rcl-service-button" data-post="'.$post_id.'" onclick="rcl_edit_post(this); return false;"><i class="fa fas fa-pen-square"></i></a>';
 }
 
 function rcl_button_fast_delete_post($post_id){
