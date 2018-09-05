@@ -8,13 +8,15 @@
 }
 i.fas, a.fas, p.fas, span.fas, div.fas,
 i.far, a.far, p.far, span.far, div.far,
-i.fa, a.fa, p.fa, span.fa, div.fa {
+i.fa, a.fa, p.fa, span.fa, div.fa,
+.svg-inline--fa{
     width:auto;
     text-align: center;
     /*font-family: FontAwesome!important;*/
 }
 .fas.rcl-icon,
-.fa.rcl-icon{
+.fa.rcl-icon,
+.svg-inline--fa.rcl-icon{
     padding: 5px;
     background: #b9c9d6;
     color: #fff;
@@ -119,7 +121,8 @@ body .rcl_preloader{
     display: block!important;
     z-index: 99;
 }
-.rcl_preloader i {
+.rcl_preloader i,
+.rcl_preloader .svg-inline--fa{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -157,7 +160,8 @@ body .rcl_preloader{
 	float: right;
 	clear: both;
 }
-.rcl-smiles > i{
+.rcl-smiles > i,
+.rcl-smiles > .svg-inline--fa{
     cursor: pointer;
     font-size: 20px;
     color: #4c8cbd;
@@ -194,17 +198,20 @@ body .rcl_preloader{
     margin: 5px 0;
     padding: 0;
 }
-span i.fa.fa-circle {
+span i.fas.fa-circle,
+span .svg-inline--fa.fa-circle{
     font-size: 16px;
     padding: 0;
     vertical-align: inherit;
 }
-.online .fa.fa-circle {
+.online .fas.fa-circle,
+.online .svg-inline--fa.fa-circle{
     -webkit-animation: pulsate 2s linear infinite;
     animation: pulsate 2s linear infinite;
     color: #89e535;
 }
-.offline .fa.fa-circle {
+.offline .fas.fa-circle,
+.offline .svg-inline--fa.fa-circle{
     color: rgb(229, 57, 53);
     text-shadow: 0 0 1px #5a0d0c;
 }
@@ -369,7 +376,8 @@ body #rcl-office .ballun-status p.status-user-rcl {
 /* Группа кнопок Start */
     /* Основной стиль кнопок Start */
 
-.recall-button i + span {
+.recall-button i + span,
+.recall-button svg.svg-inline--fa + span{
     margin: 0 0 0 5px;
 }
 
@@ -491,7 +499,8 @@ a.data-filter.filter-active:hover {
     padding: 7px;
     margin-right: 5px;
 }
-#rcl-office a.sec_block_button i.fas{
+#rcl-office a.sec_block_button i.fas,
+#rcl-office a.sec_block_button .svg-inline--fa{
 	margin: 0 5px 0 0;
 }
 
@@ -627,7 +636,8 @@ a.data-filter.filter-active:hover {
 .rcl-field-input input[type='text']{
     margin:0;
 }
-.rcl-field-input .file-manage-box .fa{
+.rcl-field-input .file-manage-box .fa,
+.rcl-field-input .file-manage-box .svg-inline--fa{
     margin-right:5px;
 }
 .rcl-field-input .rcl-field-notice{
@@ -636,7 +646,8 @@ a.data-filter.filter-active:hover {
     margin: 5px 0 0;
     color:#797979;
 }
-.rcl-field-input .rcl-field-notice .fa{
+.rcl-field-input .rcl-field-notice .fa,
+.rcl-field-input .rcl-field-notice .svg-inline--fa{
     margin-right:5px;
 }
 .type-multiselect-input .hidden {
@@ -671,7 +682,8 @@ a.data-filter.filter-active:hover {
     width: auto;
     display: inline-block;
 }
-.type-dynamic-input .dynamic-values .dynamic-value .fa{
+.type-dynamic-input .dynamic-values .dynamic-value .fa,
+.type-dynamic-input .dynamic-values .dynamic-value .svg-inline--fa{
     padding: 5px;
     margin: 5px 10px;
     border: 1px solid #ccc;
@@ -693,7 +705,8 @@ a.data-filter.filter-active:hover {
 p.rcl-custom-fields{
     clear:both;
 }
-p.rcl-custom-fields .rcl-field-value .fa-upload{
+p.rcl-custom-fields .rcl-field-value .fa-upload,
+p.rcl-custom-fields .rcl-field-value .fa-upload.svg-inline--fa{
     margin-right:5px;
 }
 /**/
@@ -1124,13 +1137,16 @@ body .ssi-modalOuter .ssi-modalTitle{
     display: inline-block;
 }
 #rcl-post-bar .post-bar-item span,
-#rcl-post-bar .post-bar-item i {
+#rcl-post-bar .post-bar-item i,
+#rcl-post-bar .post-bar-item .svg-inline--fa{
     vertical-align: middle;
 }
-#rcl-post-bar .post-bar-item i{
+#rcl-post-bar .post-bar-item i,
+#rcl-post-bar .post-bar-item .svg-inline--fa{
     margin: 0 0 0 0;
 }
-#rcl-post-bar .post-bar-item i::before {
+#rcl-post-bar .post-bar-item i::before,
+#rcl-post-bar .post-bar-item .svg-inline--fa::before{
     padding: 0 5px;
 }
 #rcl-post-bar .post-bar-item .item-label{
@@ -1262,7 +1278,8 @@ body .ssi-modalOuter .ssi-modalTitle{
     overflow: hidden;
     margin-bottom: 5px;
 }
-.rcl-form .file-manage-box .fas{
+.rcl-form .file-manage-box .fas,
+.rcl-form .file-manage-box .svg-inline--fa{
     color: rgb(229, 57, 53);
     font-size: 16px;
     margin-right: 5px;

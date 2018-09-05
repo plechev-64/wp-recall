@@ -247,7 +247,8 @@ body audio {
     top: 8px;
     color: #fff;
 }
-#rcl-chat-noread-box .messages-icon .far {
+#rcl-chat-noread-box .messages-icon .far,
+#rcl-chat-noread-box .messages-icon .svg-inline--fa{
     color: #fff;
 }
 #rcl-chat-noread-box .messages-icon a:hover {

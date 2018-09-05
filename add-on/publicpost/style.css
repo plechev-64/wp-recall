@@ -19,14 +19,16 @@
     top: 5px;
     z-index: 2;
 }
-.rcl-public-box .rcl-service-button i:hover {
+.rcl-public-box .rcl-service-button i:hover,
+.rcl-public-box .rcl-service-button .svg-inline--fa{
 	opacity: 0.8;
 }
 .rcl-public-box .rcl-field-notice{
     display:block;
     clear:both;
 }
-.rcl-public-box .rcl-field-notice i{
+.rcl-public-box .rcl-field-notice i,
+.rcl-public-box .rcl-field-notice .svg-inline--fa{
     margin-right:5px;
 }
 .rcl-public-box .rcl-form-field {
@@ -119,7 +121,8 @@
     margin-left: 10px;
     margin-bottom: 10px;
 }
-.rcl-public-box .public-form-button > i{
+.rcl-public-box .public-form-button > i,
+.rcl-public-box .public-form-button > .svg-inline--fa{
     margin-right: 10px;
 }
 .rcl-public-form .category-list .child-list-category{
