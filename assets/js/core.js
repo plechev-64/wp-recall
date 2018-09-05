@@ -232,7 +232,7 @@ function rcl_preloader_show(e,size){
     var options = {
         size: font_size,
         margin: margin,
-        icon: 'fa-circle-o-notch',
+        icon: 'fa-circle-notch',
         class: 'rcl_preloader'
     };
     

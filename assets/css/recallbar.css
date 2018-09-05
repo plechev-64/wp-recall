@@ -13,7 +13,8 @@
     color: #e6e6e6;
     text-decoration: none;
 }
-#recallbar .fas{
+#recallbar .fas,
+#recallbar .svg-inline--fa{
     color: #e6e6e6;
     font-size: 26px;
     line-height: 36px;
@@ -217,7 +218,8 @@
 #recallbar .rcb_line {
     padding: 2px 5px 3px 5px;
 }
-#recallbar .pr_sub_menu .rcb_line .fas{
+#recallbar .pr_sub_menu .rcb_line .fas,
+#recallbar .pr_sub_menu .rcb_line .svg-inline--fa{
     color: #c8c8c8;
     font-size: 22px;
 }
@@ -253,7 +255,8 @@
 	}
 }
 @media screen and (max-width:480px) {
-	#recallbar .my_recallbar .fas{
+	#recallbar .my_recallbar .fas,
+        #recallbar .my_recallbar .svg-inline--fa{
 		font-size: 26px;
 		width: 26px;
 	}
