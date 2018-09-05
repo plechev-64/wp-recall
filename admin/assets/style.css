@@ -672,19 +672,12 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
 .rcl-custom-fields-box .rcl-custom-field .fa-info::before {
     content: "\f534";
 }
-.rcl-custom-fields-box .rcl-custom-field i {
+.rcl-custom-fields-box .rcl-custom-field i:not(.mce-ico) {
     font-family: dashicons;
     font-size: 20px;
     font-style: normal;
     margin: 0 2px;
     vertical-align: middle;
-}
-.rcl-custom-fields-box .rcl-custom-field .mce-resizehandle {
-    bottom: 7px;
-    transform: rotate(90deg);
-}
-.rcl-custom-fields-box .rcl-custom-field .mce-i-resize::before {
-    content: "\f229";
 }
 .rcl-custom-fields-box .rcl-custom-field i:hover {
     opacity: 0.7;
