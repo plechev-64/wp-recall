@@ -144,7 +144,7 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     border: 1px solid #ddd;
     display: none;
     margin: 0 0 5px;
-    padding: 15px; 
+    padding: 15px;
 }
 .left-sidebar .wrap-recall-options {
     left: 250px;
@@ -187,7 +187,7 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
 .wrap-recall-options .option-block small {
     display: block;
 }
-.wrap-recall-options .option-block select, 
+.wrap-recall-options .option-block select,
 .wrap-recall-options .option-block input[type="text"],
 .wrap-recall-options .option-block input[type="number"] {
     box-sizing: border-box;
@@ -679,6 +679,13 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     margin: 0 2px;
     vertical-align: middle;
 }
+.rcl-custom-fields-box .rcl-custom-field .mce-resizehandle {
+    bottom: 7px;
+    transform: rotate(90deg);
+}
+.rcl-custom-fields-box .rcl-custom-field .mce-i-resize::before {
+    content: "\f229";
+}
 .rcl-custom-fields-box .rcl-custom-field i:hover {
     opacity: 0.7;
 }
@@ -939,23 +946,23 @@ span.ruble-symbol{
     background: #ffdfdf;
 }
 #rcl-reg-form .error{
-    
+
 }
 #rcl-reg-form .error p{
-    
+
 }
 #rcl-reg-form h3{
-    
+
 }
 #rcl-reg-form input[type="text"]{
-    
+
 }
 #rcl-reg-form input[type="submit"]{
-    
+
 }
 
 .rcl-option{
-    
+
 }
 .rcl-option.children-option{
     display:none;
@@ -1011,14 +1018,14 @@ span.ruble-symbol{
     width: 18px;
     z-index: 1;
 }
-.rcl-runner .rcl-runner-box .ui-slider-handle:focus, 
+.rcl-runner .rcl-runner-box .ui-slider-handle:focus,
 .rcl-range .rcl-range-box .ui-slider-handle:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
 }
 
 .rcl-repository-list{
-    
+
 }
 .rcl-repository-list .addon-box{
     overflow:hidden;
@@ -1115,7 +1122,7 @@ span.ruble-symbol{
     border-top: 1px solid #4c8cbd;
     border-right: 1px solid #4c8cbd;
     border-left: 1px solid #4c8cbd;
-    
+
 }
 #rcl-addon-details .sections-content .sections-menu li a{
     color: #fff;
