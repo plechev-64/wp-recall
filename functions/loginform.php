@@ -53,7 +53,7 @@ function rcl_get_authorize_form($type=false,$form=false){
                 );
 
                 if($can_register)
-                    $buttons[] = rcl_get_button(__('Registration','wp-recall'),$redirect_url.'action-rcl=register',array('icon'=>'fa-book'));
+                    $buttons[] = rcl_get_button(__('Registration','wp-recall'),$redirect_url.'action-rcl=register',array('icon'=>'far fa-address-card'));
 
                 echo rcl_get_primary_widget_buttons($buttons);
 
@@ -64,7 +64,7 @@ function rcl_get_authorize_form($type=false,$form=false){
                 );
 
                 if($can_register)
-                    $buttons[] = rcl_get_button(__('Registration','wp-recall'),esc_url(wp_registration_url()),array('icon'=>'fa-book'));
+                    $buttons[] = rcl_get_button(__('Registration','wp-recall'),esc_url(wp_registration_url()),array('icon'=>'far fa-address-card'));
 
                 echo rcl_get_primary_widget_buttons($buttons);
 
@@ -87,7 +87,7 @@ function rcl_get_authorize_form($type=false,$form=false){
                 );
 
                 if($can_register)
-                    $buttons[] = rcl_get_button(__('Registration','wp-recall'),'#',array('icon'=>'fa-book','class'=>'rcl-register'));
+                    $buttons[] = rcl_get_button(__('Registration','wp-recall'),'#',array('icon'=>'far fa-address-card','class'=>'rcl-register'));
 
                 echo rcl_get_primary_widget_buttons($buttons);
 
