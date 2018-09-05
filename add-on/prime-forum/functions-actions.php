@@ -25,7 +25,21 @@ function pfm_get_manager($actions, $itemType, $itemID = false){
 
 
         $item = '<a href="#" title="'.$options['name'].'" class="topic-action action-'.$action.'" onclick=\'pfm_ajax_action('.json_encode($args).');return false;\'>';
-        $item .= (isset($options['icon']))? '<i class="fa fas '.$options['icon'].'" aria-hidden="true"></i>': $options['name'];
+
+        if(isset($options['icon']) && $options['icon']){
+
+            if(stristr($options['icon'], 'far') !== FALSE || stristr($options['icon'], 'fal') !== FALSE){
+                $icon = $options['icon'];
+            }else{
+                $icon = 'fa fas '.$options['icon'];
+            }
+
+            $item .= '<i class="'.$icon.'" aria-hidden="true"></i>';
+
+        }else{
+            $item .= $options['name'];
+        }
+
         $item .= '</a>';
 
         $items[] = $item;
