@@ -25,7 +25,8 @@
 .userlist .status_author_mess {
     float: right;
 }
-.userlist .status_author_mess.online .fas{
+.userlist .status_author_mess.online .fas,
+.userlist .status_author_mess.online .svg-inline--fa{
     color: #89e535;
     font-size: 16px;
     line-height: normal;
@@ -145,7 +146,8 @@
     padding: 6px 8px;
 }
 .userlist.rows-list .user-single .filter-data .fas,
-.userlist.rows-list .user-single .filter-data .far {
+.userlist.rows-list .user-single .filter-data .far,
+.userlist.rows-list .user-single .filter-data .svg-inline--fa{
     margin: 0 5px 0 0;
 }
 .userlist .user-profile-fields .rcl-custom-fields {
@@ -290,7 +292,8 @@
 		width: 19%;
 	}
 	.userlist .user-single .thumb-user .status_user,
-    .userlist .user-single .thumb-user .status_user .fas{
+    .userlist .user-single .thumb-user .status_user .fas,
+    .userlist .user-single .thumb-user .status_user .svg-inline--fa{
 		font-size: 11px;
 	}
     .userlist.mini-list .user-single {

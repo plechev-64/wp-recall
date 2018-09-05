@@ -14,7 +14,8 @@
     line-height: 1;
     position: relative;
 }
-.rcl-box-rating .buttons-rating a > i{
+.rcl-box-rating .buttons-rating a > i,
+.rcl-box-rating .buttons-rating a > .svg-inline--fa{
     font-size: 24px;
 }
 .rcl-box-rating .buttons-rating .rating-minus{
@@ -279,7 +280,8 @@
 .rcl-rating-box .rating-wrapper .user-vote{
     opacity:1;
 }
-.rcl-rating-box .rating-wrapper > span i{
+.rcl-rating-box .rating-wrapper > span i,
+.rcl-rating-box .rating-wrapper > span .svg-inline--fa{
     color:inherit;
     padding: 0!important;
 }

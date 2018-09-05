@@ -80,7 +80,8 @@
 .rcl-form-balance .rcl-form-add-user-count .rcl_preloader{
     font-size: 60px;
 }
-.rcl-form-balance .rcl-form-add-user-count .rcl_preloader i{
+.rcl-form-balance .rcl-form-add-user-count .rcl_preloader i,
+.rcl-form-balance .rcl-form-add-user-count .rcl_preloader .svg-inline--fa{
     margin: -30px 0 0 -30px;
 }
 .rcl-pay-form{
@@ -103,7 +104,8 @@
     width: 100%;
     box-sizing: border-box;
 }
-.rcl-pay-form .rcl-pay-button .rcl-connect-submit i{
+.rcl-pay-form .rcl-pay-button .rcl-connect-submit i,
+.rcl-pay-form .rcl-pay-button .rcl-connect-submit .svg-inline--fa{
     font-size: 46px;
     display: inline-block;
     vertical-align: middle;

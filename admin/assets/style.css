@@ -52,7 +52,8 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     width: 100%;
     z-index: 99;
 }
-.rcl_preloader i {
+.rcl_preloader i,
+.rcl_preloader .svg-inline--fa{
     -webkit-animation: adm_rotation 2s infinite linear;
             animation: adm_rotation 2s infinite linear;
     color: rgb(76, 140, 189);
@@ -62,7 +63,8 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     position: absolute;
     top: 50%;
 }
-.rcl_preloader i::before {
+.rcl_preloader i::before,
+.rcl_preloader .svg-inline--fa::before{
     content: "\f463";
     font: 120px/1 dashicons;
 }
