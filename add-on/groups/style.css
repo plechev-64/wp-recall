@@ -3,7 +3,8 @@
 div p.post-group-meta {
     margin: 0 0 5px;
 }
-.post-group-meta .fas{
+.post-group-meta .fas,
+.post-group-meta .svg-inline--fa{
     width: auto;
 }
 
@@ -54,10 +55,14 @@ div p.post-group-meta {
 
 #group-posts-widget .post-meta span .fa,
 #group-posts-widget .post-meta span .far,
+#group-posts-widget .post-meta span .svg-inline--fa,
 #group-link-content .close-content .fa,
+#group-link-content .close-content .fas,
+#group-link-content .close-content .svg-inline--fa,
 #group-admin-panel .title-panel .fa-cogs,
 #widgets-options .widgets-zone .widget-box .widget-name .fas,
-#widgets-options .widgets-zone .widget-box .widget-name .far {
+#widgets-options .widgets-zone .widget-box .widget-name .far,
+#widgets-options .widgets-zone .widget-box .widget-name .svg-inline--fa{
     margin: 0 5px 0 0;
 }
 #rcl-group ul {
@@ -133,7 +138,8 @@ div p.post-group-meta {
 #group-avatar-upload span:hover{
     opacity: 1;
 }
-#group-avatar-upload .fa input{
+#group-avatar-upload .fa input,
+#group-avatar-upload .svg-inline--fa input{
 	border: none;
     cursor: pointer;
     opacity: 0;
@@ -476,7 +482,8 @@ div p.post-group-meta {
     padding: 5px;
     cursor: move;
 }
-#widgets-options .widget-name i{
+#widgets-options .widget-name i,
+#widgets-options .widget-name .svg-inline--fa{
     cursor:pointer;
 }
 #widgets-options .widget-options{

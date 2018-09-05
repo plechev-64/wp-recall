@@ -63,7 +63,8 @@
     font-size: 14px;
     display: inline-block;
 }
-.rcl-cart-box .cart-button .fa{
+.rcl-cart-box .cart-button .fa,
+.rcl-cart-box .cart-button .svg-inline--fa{
     font-size: 16px;
     color: inherit;
     margin-right: 10px;
@@ -183,10 +184,12 @@ body .rcl-product-gallery ul.images-list {
 .products-box .view-switch a{
 	
 }
-.products-box .view-switch a:hover i{
+.products-box .view-switch a:hover i,
+.products-box .view-switch a:hover .svg-inline--fa{
     background:#d9e0e6;
 }
-.products-box .view-switch a:last-child i{
+.products-box .view-switch a:last-child i,
+.products-box .view-switch a:last-child .svg-inline--fa{
     margin-right:0;
 }
 .products-box .products-list .product .product-content .product-title{
@@ -357,7 +360,8 @@ body .rcl-product-gallery ul.images-list {
     clear: both;
     overflow: hidden;
 }
-.products-box.type-list .product .product-content .product-meta i{
+.products-box.type-list .product .product-content .product-meta i,
+products-box.type-list .product .product-content .product-meta .svg-inline--fa{
     float:left;
 }	
 .products-box.type-list .product .product-content .product-meta > span{
@@ -472,7 +476,8 @@ body .rcl-product-gallery ul.images-list {
     vertical-align: middle;
     min-width: 70px;
 }
-#rcl-order .order-table .column-product-amount .fa{
+#rcl-order .order-table .column-product-amount .fa,
+#rcl-order .order-table .column-product-amount .svg-inline--fa{
     vertical-align:middle;
 }
 #rcl-order .order-table .quantity-selector{
@@ -540,7 +545,8 @@ body .rcl-product-gallery ul.images-list {
     font-size: 14px;
     display: inline-block;
 }
-#rcl-order .submit-box .recall-button i{
+#rcl-order .submit-box .recall-button i,
+#rcl-order .submit-box .recall-button .svg-inline--fa{
     margin-right:10px;
     font-size: 20px;
 }
@@ -595,7 +601,8 @@ body .rcl-product-gallery ul.images-list {
 #rcl-product-box.modal-box{
     max-width:400px;
 }
-#rcl-product-box i.fa{
+#rcl-product-box i.fa,
+#rcl-product-box .svg-inline--fa{
     color: inherit;
 }
 #rcl-product-box .product-title{

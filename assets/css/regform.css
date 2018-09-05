@@ -159,7 +159,8 @@ div.panel_lk_recall .form-tab-rcl a {
     text-transform: uppercase;
     width: 100%;
 }
-.form-block-rcl.default-field .fas{
+.form-block-rcl.default-field .fas,
+.form-block-rcl.default-field .svg-inline--fa{
     color: #538a9a;
     left: 12px;
     opacity: 0.4;
@@ -167,9 +168,12 @@ div.panel_lk_recall .form-tab-rcl a {
     top: 12px;
     width: auto;
 }
-.panel_lk_recall input[type="text"]:focus + .fa,
-.panel_lk_recall input[type="email"]:focus + .fa,
-.panel_lk_recall input[type="password"]:focus + .fas{
+.panel_lk_recall input[type="text"]:focus + .fas,
+.panel_lk_recall input[type="text"]:focus + .svg-inline--fa,
+.panel_lk_recall input[type="email"]:focus + .fas,
+.panel_lk_recall input[type="email"]:focus + .svg-inline--fa,
+.panel_lk_recall input[type="password"]:focus + .fas,
+.panel_lk_recall input[type="password"]:focus + .svg-inline--fa{
     opacity: 1;
 }
 .panel_lk_recall .form-block-rcl .required {
@@ -280,7 +284,8 @@ div.panel_lk_recall .form-tab-rcl a {
 .panel_lk_recall .rcl-widget-buttons a.recall-button:hover {
     color: #fff;
 }
-.panel_lk_recall .buttons a .fa,
+.panel_lk_recall .buttons a .fas,
+.panel_lk_recall .buttons a .svg-inline--fa,
 .panel_lk_recall .buttons a span {
     vertical-align: middle;
 }
