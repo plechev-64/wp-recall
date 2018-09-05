@@ -1,4 +1,5 @@
 <?php
+
 add_filter('widget_text', 'do_shortcode');
 
 add_action( 'widgets_init', 'widget_new_author' );
@@ -28,9 +29,9 @@ class Widget_new_author extends WP_Widget {
         if ( $title ) echo $before_title . $title . $after_title;
 
         echo rcl_get_userlist(array(
-                'template' => 'mini', 
-                'number'=>$count_user, 
-                'filters'=>false, 
+                'template' => 'mini',
+                'number'=>$count_user,
+                'filters'=>false,
                 'id'=>'rcl-new-users',
                 'orderby' => 'user_registered'
             ));
