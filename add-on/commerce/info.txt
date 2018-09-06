@@ -3,5 +3,5 @@ Version: 6.0.0;
 Support Core: 16.0.0;
 Description: Расширение превращающее ваш сайт в интернет-магазин, а личный кабинет пользователя в личный кабинет покупателя. Может использовать дополнение личного счета пользователя;
 Author: Плечев Андрей;
-Author URI: http://codeseller.ru/;
-Add-on URI: http://codeseller.ru/products/magazine-recall-organizaciya-internet-magazina-s-pomoshhyu-plagina-wp-recall/;
+Author URI: https://codeseller.ru/;
+Add-on URI: https://codeseller.ru/products/magazine-recall-organizaciya-internet-magazina-s-pomoshhyu-plagina-wp-recall/;
