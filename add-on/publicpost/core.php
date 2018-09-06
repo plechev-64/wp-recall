@@ -75,7 +75,7 @@ function rcl_add_thumbnail_post($post_id,$filepath){
 function rcl_edit_post_button_html($post_id){
     return '<p class="post-edit-button">'
         . '<a title="'.__('Edit','wp-recall').'" object-id="none" href="'. get_edit_post_link($post_id) .'">'
-            . '<i class="fa fas fa-pen-square"></i>'
+            . '<i class="far fa-edit"></i>'
         . '</a>'
     . '</p>';
 }
@@ -312,7 +312,7 @@ function rcl_get_html_attachment($attach_id, $mime_type, $addToClick = true){
 }
 
 function rcl_button_fast_edit_post($post_id){
-    return '<a class="rcl-edit-post rcl-service-button" data-post="'.$post_id.'" onclick="rcl_edit_post(this); return false;"><i class="fa fas fa-pen-square"></i></a>';
+    return '<a class="rcl-edit-post rcl-service-button" data-post="'.$post_id.'" onclick="rcl_edit_post(this); return false;"><i class="far fa-edit"></i></a>';
 }
 
 function rcl_button_fast_delete_post($post_id){
