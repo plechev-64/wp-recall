@@ -51,7 +51,7 @@ function rcl_post_group_edit_button($content){
             $edit_url = rcl_format_url(get_permalink(rcl_get_option('public_form_page_rcl')));
             $content = '<p class="post-edit-button">'
                 . '<a title="'.__('Edit','wp-recall').'" object-id="none" href="'. $edit_url.'rcl-post-edit='.$post->ID .'">'
-                    . '<i class="fa fas fa-pen-square"></i>'
+                    . '<i class="far fa-edit"></i>'
                 . '</a>'
             . '</p>'.$content;
 	}

@@ -159,7 +159,7 @@ function pfm_the_post_manager(){
 
         $actions['get_form_post_edit'] = array(
             'name' => __('Edit message','wp-recall'),
-            'icon' => 'fa-pen-square'
+            'icon' => 'far fa-edit'
         );
     }
 
@@ -260,7 +260,7 @@ function pfm_the_topic_manager(){
 
         $actions['get_form_topic_edit'] = array(
             'name' => __('Change name','wp-recall'),
-            'icon' => 'fa-pen-square'
+            'icon' => 'far fa-edit'
         );
 
     }
