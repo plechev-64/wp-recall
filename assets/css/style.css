@@ -1131,27 +1131,27 @@ body .ssi-modalOuter .ssi-modalTitle{
 #rcl-post-bar .post-bar-item{
     display: inline-block;
 }
-#rcl-post-bar .post-bar-item a{
-    font-size: 14px;
+#rcl-post-bar .post-bar-item a {
+    font-size: 16px;
     margin: 0 0 0 5px;
     display: inline-block;
 }
-#rcl-post-bar .post-bar-item span,
+/*#rcl-post-bar .post-bar-item span,
 #rcl-post-bar .post-bar-item i,
 #rcl-post-bar .post-bar-item .svg-inline--fa{
     vertical-align: middle;
-}
+}*/
 #rcl-post-bar .post-bar-item i,
-#rcl-post-bar .post-bar-item .svg-inline--fa{
-    margin: 0 0 0 0;
+#rcl-post-bar .post-bar-item .svg-inline--fa {
+    margin: 0;
 }
 #rcl-post-bar .post-bar-item i::before,
 #rcl-post-bar .post-bar-item .svg-inline--fa::before{
     padding: 0 5px;
 }
-#rcl-post-bar .post-bar-item .item-label{
+#rcl-post-bar .post-bar-item .item-label {
     padding: 0 5px;
-    margin: 0 0 0 0;
+    margin: 0;
 }
 #rcl-post-bar .post-bar-item .item-counter{
 

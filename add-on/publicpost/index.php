@@ -291,7 +291,7 @@ function rcl_setup_edit_post_button(){
         rcl_post_bar_add_item('rcl-edit-post',
             array(
                 'url'=>get_edit_post_link($post->ID),
-                'icon'=>'fa-pen-square',
+                'icon'=>'far fa-edit',
                 'title'=>__('Edit','wp-recall')
             )
         );
