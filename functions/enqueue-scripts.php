@@ -74,9 +74,9 @@ function rcl_font_awesome_style(){
 
     //version 4
     //wp_enqueue_style( 'font-awesome', RCL_URL.'assets/css/font-awesome/css/font-awesome.min.css' );
-
+    wp_enqueue_style( 'font-awesome', RCL_URL.'assets/fontawesome/css/all.min.css' );
     //version 5 css
-    wp_enqueue_style( 'font-awesome', 'https://use.fontawesome.com/releases/v5.3.1/css/all.css' );
+    //wp_enqueue_style( 'font-awesome', 'https://use.fontawesome.com/releases/v5.3.1/css/all.css' );
     //version 5 svg
     //wp_enqueue_script( 'font-awesome', 'https://use.fontawesome.com/releases/v5.3.1/js/all.js' );
 

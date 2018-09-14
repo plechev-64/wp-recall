@@ -550,7 +550,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
 
             $content .= '<span class="'.implode(' ', $class).'">'
                             . '<a href="#" onclick="rcl_chat_message_important('.$message['message_id'].'); return false;">'
-                                . '<i class="far fa-star" aria-hidden="true"></i>'
+                                . '<i class="fas fa-star" aria-hidden="true"></i>'
                             . '</a>'
                         . '</span>';
 

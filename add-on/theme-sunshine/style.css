@@ -321,6 +321,7 @@
 #sunshine_ext_menu a .svg-inline--fa{
     font-size: 16px;
     margin: 10px;
+    min-width: 1em;
 }
 #sunshine_ext_menu a span {
     font-size: 14px;

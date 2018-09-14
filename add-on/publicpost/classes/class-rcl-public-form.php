@@ -121,7 +121,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
 
     function get_public_fields(){
 
-        return apply_filters('rcl_public_form_fields', $this->fields, $this->get_object_form());
+        return apply_filters('rcl_public_form_fields', $this->fields, $this->get_object_form(), $this);
 
     }
 
