@@ -52,7 +52,7 @@ body audio {
     display: inline-block;
     font-size: 12px;
     margin: 0 0 5px;
-}
+} 
 .rcl-chat .chat-message .message-time{
     float:right;
     font-size: 11px;
@@ -205,11 +205,11 @@ body audio {
     line-height: 1.5;
     position: fixed;
     right: 5px;
-    z-index: 101;
+    z-index: 101; 
 }
 
 #rcl-chat-noread-box a{
-   vertical-align: bottom;
+   vertical-align: bottom; 
 }
 
 #rcl-chat-noread-box .rcl-noread-users {
@@ -247,8 +247,7 @@ body audio {
     top: 8px;
     color: #fff;
 }
-#rcl-chat-noread-box .messages-icon .far,
-#rcl-chat-noread-box .messages-icon .svg-inline--fa{
+#rcl-chat-noread-box .messages-icon .rcli {
     color: #fff;
 }
 #rcl-chat-noread-box .messages-icon a:hover {
@@ -410,7 +409,7 @@ body audio {
     color: inherit;
     display: block;
     overflow: hidden;
-    padding: 10px 5px;
+    padding: 10px 5px; 
 }
 #rcl-office .contacts-counter {
     border-bottom: 1px solid #ddd;
@@ -423,7 +422,7 @@ body audio {
 }
 #rcl-office .rcl-chat-contacts .chat-window-restore,
 #rcl-office .rcl-chat-contacts .chat-remove{
-    position: absolute;
+    position: absolute;  
 }
 #rcl-office .rcl-chat-contacts .chat-remove{
     background: rgba(0, 0, 0, 0.6);

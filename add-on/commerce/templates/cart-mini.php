@@ -6,7 +6,7 @@
 <div class="rcl-mini-cart <?php echo ($Cart->products_amount)? 'not-empty': 'empty-cart'; ?>">
     
     <div class="cart-icon">
-        <i class="fa fas fa-shopping-cart"></i>
+        <i class="rcli fa-shopping-cart"></i>
     </div>
     <div><?php _e('In your cart','wp-recall'); ?>:</div>
     <div class="cart-content">

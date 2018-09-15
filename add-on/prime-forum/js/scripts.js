@@ -225,7 +225,7 @@ function pfm_spoiler(e){
     var link = jQuery(e);
     var icon = link.children('i');
     link.parent().children('div').slideToggle();
-    icon.toggleClass('fa-plus-square fa-minus-square');
+    icon.toggleClass('fa-plus-square-o fa-minus-square-o');
 }
 
 function pfm_topic_beat(initData){

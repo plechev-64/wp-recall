@@ -201,7 +201,7 @@ function rcl_notice(text,type,time_close){
 
     var notice_id = rcl_rand(1, 1000);
 
-    var html = '<div id="notice-'+notice_id+'" class="notice-window type-'+options.type+'"><a href="#" class="close-notice"><i class="fa fas fa-times"></i></a>'+options.text+'</div>';	
+    var html = '<div id="notice-'+notice_id+'" class="notice-window type-'+options.type+'"><a href="#" class="close-notice"><i class="rcli fa-times"></i></a>'+options.text+'</div>';	
     if(!jQuery('#rcl-notice').size()){
             jQuery('body > div').last().after('<div id="rcl-notice">'+html+'</div>');
     }else{
@@ -232,7 +232,7 @@ function rcl_preloader_show(e,size){
     var options = {
         size: font_size,
         margin: margin,
-        icon: 'fa-circle-notch',
+        icon: 'fa-circle-o-notch',
         class: 'rcl_preloader'
     };
     
@@ -240,7 +240,7 @@ function rcl_preloader_show(e,size){
     
     var style = 'style="font-size:'+options.size+'px;margin: -'+options.margin+'px 0 0 -'+options.margin+'px;"';
     
-    var html = '<div class="'+options.class+'"><i class="fa '+options.icon+' fa-spin" '+style+'></i></div>';
+    var html = '<div class="'+options.class+'"><i class="rcli '+options.icon+' fa-spin" '+style+'></i></div>';
     
     if(typeof( e ) === 'string')
         jQuery(e).after(html);

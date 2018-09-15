@@ -34,8 +34,7 @@
 .cab_bttn_lite .recall-button {
     padding: 0;
 }
-.cab_bttn_lite .fas,
-.cab_bttn_lite .svg-inline--fa{
+.cab_bttn_lite .rcli {
     display: none;
 }
 .cab_bttn_lite .rcl-tab-button a > span {
@@ -239,17 +238,10 @@
     opacity: 1;
     padding: 0;
 }
-#lk-menu a .fa,
-#lk-menu a .fas,
-#lk-menu a .far,
-#lk-menu a .fal{
+#lk-menu a .rcli {
     background: rgba(0, 0, 0, 0.1);
     font-size: 16px;
     padding: 7px;
-    vertical-align: middle;
-}
-#lk-menu a .svg-inline--fa{
-    margin: 7px;
     vertical-align: middle;
 }
 #lk-menu a span {
@@ -272,15 +264,10 @@
     max-height: 30px;
     padding: 4px 7px;
 }
-#lk-menu a.bars .fas{
+#lk-menu a.bars .rcli {
     font-size: 23px;
     background: transparent;
     padding: 0;
-}
-#lk-menu a.bars .svg-inline--fa{
-    font-size: 18px;
-    background: transparent;
-    margin: 0;
 }
 #sunshine_ext_menu {
     opacity: 0;
@@ -310,18 +297,13 @@
     white-space: normal;
     width: 100%;
 }
-#sunshine_ext_menu a .fas{
+#sunshine_ext_menu a .rcli {
     background: rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     font-size: 16px;
     justify-content: center;
     min-width: 35px;
-}
-#sunshine_ext_menu a .svg-inline--fa{
-    font-size: 16px;
-    margin: 10px;
-    min-width: 1em;
 }
 #sunshine_ext_menu a span {
     font-size: 14px;
@@ -331,8 +313,7 @@
 /* END стили кнопок для скрипта */
 
 /* START left buttons */
-.vertical-menu #lk-menu a .fas,
-.vertical-menu #lk-menu a .svg-inline--fa{
+.vertical-menu #lk-menu a .rcli {
     display: table-cell;
     width: 35px;
     box-sizing: border-box;
@@ -453,8 +434,7 @@
     .cab_content .cab_footer {
         text-align: center;
     }
-    .cab_bttn .fas,
-    .cab_bttn .svg-inline--fa{
+    .cab_bttn .rcli {
         display: none;
     }
     .cab_bttn i + span {

@@ -890,7 +890,7 @@ function rcl_group_admin_panel(){
     }
 
     $panel = '<div id="group-admin-panel">'
-            . '<span class="title-panel"><i class="fa fas fa-cogs"></i>'.__('Administration','wp-recall').'</span>'
+            . '<span class="title-panel"><i class="rcli fa-cogs"></i>'.__('Administration','wp-recall').'</span>'
             . '<ul>'.implode('',$buttons).'</ul>'
             . '</div>';
 

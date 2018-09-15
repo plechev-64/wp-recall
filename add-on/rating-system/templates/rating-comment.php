@@ -1,7 +1,7 @@
 <?php global $rating; ?>
 <div class="rating-single">
 	<div class="object-rating">
-			<i class="fa fas fa-star"></i>
+			<i class="rcli fa-star"></i>
 			<span class="rtng-ttl"><?php echo $rating->rating_total; ?></span>
 			<span class="rtng-time"><?php if($rating->days_value_sum) echo '('.$rating->days_value_sum.')'; ?></span>
 	</div>
@@ -13,7 +13,7 @@
 	<div class="rating-meta">		
 		<p>
 			<?php echo strip_tags(get_comment_text($rating->object_id)); ?>
-			<span class="comm-more"><a href="<?php echo get_comment_link($rating->object_id); ?>" title="<?php _e('Go to comment','wp-recall') ?>"><i class="fa fas fa-angle-double-right"></i></a></span>
+			<span class="comm-more"><a href="<?php echo get_comment_link($rating->object_id); ?>" title="<?php _e('Go to comment','wp-recall') ?>"><i class="rcli fa-angle-double-right"></i></a></span>
 		</p>	
 	</div>
 </div>

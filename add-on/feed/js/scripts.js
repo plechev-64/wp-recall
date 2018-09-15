@@ -43,7 +43,7 @@ jQuery(function($){
         var link = jQuery(this);
         link.removeClass('feed-callback');
         var class_i = link.children('i').attr('class');
-        link.children('i').attr('class','fa fas fa-refresh fa-spin');
+        link.children('i').attr('class','rcli fa-refresh fa-spin');
         
         var userID = link.data('feed');
 

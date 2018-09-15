@@ -17,10 +17,6 @@
     display: inline-block;
     font-size: 16px;
 }
-#prime-forum .prime-manager ul li a .fa-bell,
-#prime-forum .prime-manager ul li a .fa-address-book {
-    font-weight: normal;
-}
 #prime-forum .prime-manager.author-manager {
     text-align: left;
     width: 100%;
@@ -53,7 +49,7 @@
 .prime-breadcrumbs > span::before {
     color: #aaa;
     content: "\f105";
-    font-family: "Font Awesome 5 Free";
+    font-family: rcl-awesome;
     font-size: 16px;
     font-weight: bold;
     margin: 0 5px 0 0;
@@ -161,7 +157,7 @@
     height: 0;
     position: absolute;
     width: 0;
-
+    
 }
 #prime-forum .prime-parent-box .prime-item-label span::before{
     border-width: 15px 5px 13px;
@@ -200,7 +196,7 @@
     font-weight: normal;
 }
 #prime-forum .prime-forum-item .rcl-pager .pager-item{
-
+    
 }
 #prime-forum .prime-forum-item .rcl-pager .pager-item > span,
 #prime-forum .prime-forum-item .rcl-pager .pager-item > a{
@@ -396,16 +392,9 @@
 #prime-forum .topic-manager {
     margin: 0 0 15px;
 }
-#prime-forum .prime-manager ul li a .fa-comments,
-#prime-forum .prime-manager ul li a .fa-star {
-    font-weight: normal;
-}
-#prime-forum .prime-manager ul li a.action-topic_unfix .fa-star {
-    font-weight: 900;
-}
 #prime-forum .prime-topic-icons .topic-icon .fa-star,
-#prime-forum .prime-manager ul li a .fa-star:hover,
-#prime-forum .prime-manager ul li a .fa-star {
+#prime-forum .prime-manager ul li a .fa-star-o:hover,
+#prime-forum .prime-manager ul li a .fa-star{
     color: #ffae19;
 }
 #prime-forum .prime-topic-icons .topic-icon .fa-lock,

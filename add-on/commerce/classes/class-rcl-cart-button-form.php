@@ -133,9 +133,9 @@ class Rcl_Cart_Button_Form{
     function cart_button(){
 
         if($this->product_status){
-            $content = '<a href="#" onclick="rcl_add_to_cart(this);return false;" class="recall-button"><i class="fa fas fa-shopping-cart" aria-hidden="true"></i>'.__('To cart','wp-recall').'</a>';
+            $content = '<a href="#" onclick="rcl_add_to_cart(this);return false;" class="recall-button"><i class="rcli fa-shopping-cart" aria-hidden="true"></i>'.__('To cart','wp-recall').'</a>';
         }else{
-            $content = '<span class="recall-button outsale-product"><i class="fa fas fa-refresh" aria-hidden="true"></i>'.__('Not available','wp-recall').'</a>';
+            $content = '<span class="recall-button outsale-product"><i class="rcli fa-refresh" aria-hidden="true"></i>'.__('Not available','wp-recall').'</a>';
         }
         
         $content = '<span class="cart-button">'.$content.'</span>';
@@ -150,9 +150,9 @@ class Rcl_Cart_Button_Form{
         
         $content = '<span class="quantity-selector">';
 
-        $content .= '<a href="#" class="edit-quantity" onclick="rcl_add_product_quantity(this);return false;"><i class="fa fas fa-plus" aria-hidden="true"></i></a>';
+        $content .= '<a href="#" class="edit-quantity" onclick="rcl_add_product_quantity(this);return false;"><i class="rcli fa-plus" aria-hidden="true"></i></a>';
         $content .= '<span class="quantity-field"><input type="number" name="cart[quantity]" value="1"></span>';
-        $content .= '<a href="#" class="edit-quantity" onclick="rcl_remove_product_quantity(this);return false;"><i class="fa fas fa-minus" aria-hidden="true"></i></a>';
+        $content .= '<a href="#" class="edit-quantity" onclick="rcl_remove_product_quantity(this);return false;"><i class="rcli fa-minus" aria-hidden="true"></i></a>';
 
         $content .= '</span>';
         

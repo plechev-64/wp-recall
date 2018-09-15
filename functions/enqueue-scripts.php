@@ -69,17 +69,14 @@ function rcl_rangyinputs_scripts(){
 
 function rcl_font_awesome_style(){
 
-    if( wp_style_is( 'font-awesome' ) )
-        wp_deregister_style('font-awesome');
+    //if( wp_style_is( 'font-awesome' ) )
+        //wp_deregister_style('font-awesome');
 
-    //version 4
-    //wp_enqueue_style( 'font-awesome', RCL_URL.'assets/css/font-awesome/css/font-awesome.min.css' );
-    wp_enqueue_style( 'font-awesome', RCL_URL.'assets/fontawesome/css/all.min.css' );
-    //version 5 css
-    //wp_enqueue_style( 'font-awesome', 'https://use.fontawesome.com/releases/v5.3.1/css/all.css' );
-    //version 5 svg
-    //wp_enqueue_script( 'font-awesome', 'https://use.fontawesome.com/releases/v5.3.1/js/all.js' );
+    //load fonawesome 4 cdn
+    if(rcl_get_option('font-awesome',1))
+        wp_enqueue_style( 'font-awesome', 'https://use.fontawesome.com/5ca1160808.css' );
 
+    wp_enqueue_style( 'rcl-awesome', RCL_URL.'assets/rcl-awesome/style.css' );
 
 }
 

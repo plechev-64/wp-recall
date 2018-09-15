@@ -38,11 +38,11 @@ add_action('init','rcl_add_followers_tab',10);
 function rcl_add_followers_tab(){
     global $user_LK;
     $count = 0;
-
+    
     if(!is_admin() && $user_LK){
         $count = rcl_feed_count_subscribers($user_LK);
     }
-
+    
     rcl_tab(
         array(
             'id'=>'followers',
@@ -61,7 +61,7 @@ function rcl_add_followers_tab(){
             )
         )
     );
-
+    
 }
 
 add_action('init','rcl_add_subscriptions_tab',10);
@@ -71,14 +71,14 @@ function rcl_add_subscriptions_tab(){
     if(!is_admin() && $user_LK){
         $count = rcl_feed_count_authors($user_LK);
     }
-
+    
     rcl_tab(
         array(
             'id'=>'subscriptions',
             'name'=>__('Subscriptions','wp-recall'),
             'supports'=>array('ajax','cache'),
             'public'=>0,
-            'icon'=>'fa-bell',
+            'icon'=>'fa-bell-o',
             'output'=>'counters',
             'counter'=>$count,
             'content'=>array(
@@ -214,13 +214,13 @@ function rcl_update_feed_current_user($author_id){
 rcl_ajax_action('rcl_feed_progress', false);
 function rcl_feed_progress(){
     global $rcl_feed;
-
+    
     rcl_verify_ajax_nonce();
 
     $customData = json_decode(base64_decode($_POST['custom']));
-
+    
     $customData = (array)$customData;
-
+    
     $customData['paged'] = intval($_POST['paged']);
     $customData['content'] = $_POST['content'];
     $customData['filters'] = 0;
@@ -238,7 +238,7 @@ function rcl_feed_progress(){
                 'current_page'=>$list->paged
             )
         );
-
+    
     $list->query['offset'] = $rclnavi->offset;
 
     $feedsdata = $list->get_feed();

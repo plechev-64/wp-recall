@@ -37,7 +37,7 @@
 .feed-options .fa-times::before {
 	padding: 0;
 }
-.feed-header .feed-options > .fa:hover + .options-box,
+.feed-header .feed-options > .rcli:hover + .options-box,
 .feed-header .feed-options .options-box:hover{
 	display:block;
 }

@@ -52,8 +52,7 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     width: 100%;
     z-index: 99;
 }
-.rcl_preloader i,
-.rcl_preloader .svg-inline--fa{
+.rcl_preloader i {
     -webkit-animation: adm_rotation 2s infinite linear;
             animation: adm_rotation 2s infinite linear;
     color: rgb(76, 140, 189);
@@ -63,8 +62,7 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     position: absolute;
     top: 50%;
 }
-.rcl_preloader i::before,
-.rcl_preloader .svg-inline--fa::before{
+.rcl_preloader i::before {
     content: "\f463";
     font: 120px/1 dashicons;
 }
@@ -144,7 +142,7 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     border: 1px solid #ddd;
     display: none;
     margin: 0 0 5px;
-    padding: 15px;
+    padding: 15px; 
 }
 .left-sidebar .wrap-recall-options {
     left: 250px;
@@ -187,7 +185,7 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
 .wrap-recall-options .option-block small {
     display: block;
 }
-.wrap-recall-options .option-block select,
+.wrap-recall-options .option-block select, 
 .wrap-recall-options .option-block input[type="text"],
 .wrap-recall-options .option-block input[type="number"] {
     box-sizing: border-box;
@@ -672,7 +670,7 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
 .rcl-custom-fields-box .rcl-custom-field .fa-info::before {
     content: "\f534";
 }
-.rcl-custom-fields-box .rcl-custom-field i:not(.mce-ico) {
+.rcl-custom-fields-box .rcl-custom-field i {
     font-family: dashicons;
     font-size: 20px;
     font-style: normal;
@@ -939,23 +937,23 @@ span.ruble-symbol{
     background: #ffdfdf;
 }
 #rcl-reg-form .error{
-
+    
 }
 #rcl-reg-form .error p{
-
+    
 }
 #rcl-reg-form h3{
-
+    
 }
 #rcl-reg-form input[type="text"]{
-
+    
 }
 #rcl-reg-form input[type="submit"]{
-
+    
 }
 
 .rcl-option{
-
+    
 }
 .rcl-option.children-option{
     display:none;
@@ -1011,14 +1009,14 @@ span.ruble-symbol{
     width: 18px;
     z-index: 1;
 }
-.rcl-runner .rcl-runner-box .ui-slider-handle:focus,
+.rcl-runner .rcl-runner-box .ui-slider-handle:focus, 
 .rcl-range .rcl-range-box .ui-slider-handle:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
 }
 
 .rcl-repository-list{
-
+    
 }
 .rcl-repository-list .addon-box{
     overflow:hidden;
@@ -1115,7 +1113,7 @@ span.ruble-symbol{
     border-top: 1px solid #4c8cbd;
     border-right: 1px solid #4c8cbd;
     border-left: 1px solid #4c8cbd;
-
+    
 }
 #rcl-addon-details .sections-content .sections-menu li a{
     color: #fff;

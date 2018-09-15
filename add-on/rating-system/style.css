@@ -14,12 +14,11 @@
     line-height: 1;
     position: relative;
 }
-.rcl-box-rating .buttons-rating a > i,
-.rcl-box-rating .buttons-rating a > .svg-inline--fa{
+.rcl-box-rating .buttons-rating a > i{
     font-size: 24px;
 }
 .rcl-box-rating .buttons-rating .rating-minus{
-    margin: 0 2px 0 3px;
+    margin: 0 2px 0 3px;  
 }
 .rcl-box-rating .buttons-rating .rating-plus {
     float: left;
@@ -46,7 +45,7 @@
     color: #ff0000;
 }
 .rating-value-block .rating-minus{
-
+    
 }
 .rating-value-block .post-votes{
     color: #aaa;
@@ -97,11 +96,11 @@
     width: auto;
 }
 .votes-window .rating-plus,
-.votes-list .fa-thumbs-up{
+.votes-list .fa-thumbs-o-up{
     color: #008000;
 }
 .votes-window .rating-minus,
-.votes-list .fa-thumbs-down{
+.votes-list .fa-thumbs-o-down{
     color: red;
 }
 .rating-rcl span {
@@ -268,7 +267,7 @@
 }
 .rcl-rating-box .rating-wrapper > span{
     margin: 0 5px;
-
+    
 }
 .rcl-rating-box .rating-wrapper .rating-vote{
     opacity:0.5;
@@ -280,8 +279,7 @@
 .rcl-rating-box .rating-wrapper .user-vote{
     opacity:1;
 }
-.rcl-rating-box .rating-wrapper > span i,
-.rcl-rating-box .rating-wrapper > span .svg-inline--fa{
+.rcl-rating-box .rating-wrapper > span i{
     color:inherit;
     padding: 0!important;
 }
@@ -301,13 +299,12 @@
 }
 .rcl-rating-box .rating-wrapper .rating-value-view:hover:before{
     content: "\f1da";
-    font-family: "Font Awesome 5 Free"!important;
+    font-family: rcl-awesome!important;
     position: absolute;
     width: 100%;
     text-align: center;
     color: #b8b8b8;
     display: block;
-    font-weight: 900;
 }
 .rcl-rating-box .rating-wrapper .rating-value .rating-plus{
     color: #3ad11f;
@@ -358,7 +355,7 @@
     opacity:1;
 }
 .rcl-rating-box.box-stars .must-vote:hover span.stars__out{
-    color: orange;
+    color: orange;  
 }
 .rcl-rating-box.box-stars .must-vote:hover span.stars__in{
     color: inherit;

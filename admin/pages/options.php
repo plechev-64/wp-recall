@@ -123,6 +123,17 @@ $content = '<h2>'.__('Configure WP-Recall plugin and add-ons','wp-recall').'</h2
                     'default'=>'#4C8CBD'
                 ),
                 array(
+                    'type' => 'radio',
+                    'slug'=>'font-awesome',
+                    'title'=>__('Подключение шрифта Font Awesome','wp-recall'),
+                    'default'=>1,
+                    'values' => array(
+                        __('Нет', 'wp-recall'),
+                        __('Да', 'wp-recall')
+                    ),
+                    'notice' => __('Подключение необходимо для отображения иконок в дополнениях, использующих шрифт Font Awesome 4.7 и ниже. При отсутствии такой необходимости можно отключить.', 'wp-recall')
+                ),
+                array(
                     'type' => 'select',
                     'slug'=>'buttons_place',
                     'title'=>__('The location of the section buttons','wp-recall'),

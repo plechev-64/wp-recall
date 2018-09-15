@@ -272,7 +272,7 @@ function pfm_the_search_form(){
         
         <?php endif; ?>
         <button id="search-image" class="prime-search-button" type="submit" value="">
-            <i class="fa fas fa-search" aria-hidden="true"></i>
+            <i class="rcli fa-search" aria-hidden="true"></i>
         </button>
     </form>
 
@@ -443,7 +443,7 @@ function pfm_the_breadcrumbs(){
 function pfm_get_icon($icon_class = 'fa-folder'){
     global $PrimeGroup,$PrimeForum,$PrimeTopic;
     
-    $defaultIcon = '<i class="fa fas '.$icon_class.'" aria-hidden="true"></i>';
+    $defaultIcon = '<i class="rcli '.$icon_class.'" aria-hidden="true"></i>';
     
     if($PrimeGroup && !$PrimeForum){
         return apply_filters('pfm_group_icon', $defaultIcon);

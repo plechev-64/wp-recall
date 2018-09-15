@@ -366,7 +366,7 @@ function rcl_feed_options(){
     global $rcl_feed;
 
     $content = '<div class="feed-options">'
-            . '<i class="fa fas fa-times"></i>'
+            . '<i class="rcli fa-times"></i>'
             . '<div class="options-box">'
                 . rcl_get_feed_callback_link($rcl_feed->feed_author,__('Ignore publications','wp-recall').' '.get_the_author_meta('display_name',$rcl_feed->feed_author),'rcl_ignored_feed_author')
             . '</div>'

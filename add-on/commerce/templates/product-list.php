@@ -14,7 +14,7 @@
         <div class="product-metas">
             
             <div class="product-meta">
-                <i class="fa fas fa-info rcl-icon"></i>
+                <i class="rcli fa-info rcl-icon"></i>
                 <span class="meta-content-box">
                     <span class="meta-content"><?php rcl_product_excerpt($post->ID); ?></span>
                 </span>

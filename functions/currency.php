@@ -3,14 +3,14 @@
 //Перечень действующих валют
 function rcl_get_currency_list(){
     
-    $rub = (is_admin())? 'p': '<i class="fa fas fa-ruble-sign"></i>';
+    $rub = (is_admin())? 'p': '<i class="rcli fa-rub"></i>';
     
     return array(
         'RUB' => array('руб',$rub,'<span class="ruble-symbol">P<span>–</span></span>'),
         'UAH' => array('гривен','грн','грн'),
         'KZT' => array('тенге','тнг','тнг'),
-        'USD' => array('dollars','<i class="fa fas fa-usd"></i>','$'),
-        'EUR' => array('euro','<i class="fa fas fa-eur"></i>','€'),
+        'USD' => array('dollars','<i class="rcli fa-usd"></i>','$'),
+        'EUR' => array('euro','<i class="rcli fa-eur"></i>','€'),
     );
 }
 

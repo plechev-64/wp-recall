@@ -13,15 +13,13 @@
     color: #e6e6e6;
     text-decoration: none;
 }
-#recallbar .fas,
-#recallbar .far,
-#recallbar .svg-inline--fa{
+#recallbar .rcli {
     color: #e6e6e6;
-    font-size: 26px;
+    font-size: 30px;
     line-height: 36px;
     width: 30px;
 }
-#recallbar .rcb_icon:hover .fas{
+#recallbar .rcb_icon:hover .rcli {
     color: #d4d4d4;
 }
 #recallbar .rcb_icon {
@@ -53,7 +51,7 @@
     width: 110px;
 }
 #recallbar .rcb_right{
-
+    
 }
 #recallbar .rcb_right .rcb_icons{
     display:inline-block;
@@ -119,7 +117,7 @@
     padding: 10px;
 }
 #recallbar .rcb_line:hover,
-#recallbar li:hover,
+#recallbar li:hover, 
 #recallbar .current-menu-item {
     background: rgba(0, 0, 0, 0.3);
 }
@@ -129,7 +127,7 @@
 #recallbar .menu-item-has-children > a::after {
     color: inherit;
     content: "\f054"; /* fa-chevron-right */
-    font-family: "Font Awesome 5 Free";
+    font-family: rcl-awesome;
     font-size: 11px;
     pointer-events: none;
     position: absolute;
@@ -219,8 +217,7 @@
 #recallbar .rcb_line {
     padding: 2px 5px 3px 5px;
 }
-#recallbar .pr_sub_menu .rcb_line .fas,
-#recallbar .pr_sub_menu .rcb_line .svg-inline--fa{
+#recallbar .pr_sub_menu .rcb_line .rcli {
     color: #c8c8c8;
     font-size: 22px;
 }
@@ -256,8 +253,7 @@
 	}
 }
 @media screen and (max-width:480px) {
-	#recallbar .my_recallbar .fas,
-        #recallbar .my_recallbar .svg-inline--fa{
+	#recallbar .my_recallbar .rcli {
 		font-size: 26px;
 		width: 26px;
 	}
@@ -273,7 +269,7 @@
 	#recallbar .rcb_left {
 		margin: 0 0 0 4px;
 	}
-	#recallbar .fas{
+	#recallbar .rcli {
 		font-size: 27px;
 	}
 	#recallbar .rcb_nmbr {

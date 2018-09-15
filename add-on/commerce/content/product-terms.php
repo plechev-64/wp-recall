@@ -25,7 +25,7 @@ function rcl_get_product_terms($product_id){
 function rcl_get_product_term_list($product_id,$taxonomy,$name,$icon){
     
     $start = '<div class="product-meta">'
-            . '<i class="fa fas fa-%s rcl-icon"></i>'
+            . '<i class="rcli fa-%s rcl-icon"></i>'
             . '<span class="meta-content-box">'
             . '<span class="meta-content">%s: ';
     $end = '</span>'

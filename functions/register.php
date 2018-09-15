@@ -448,7 +448,7 @@ function rcl_password_regform($content){
     }else{
         $content .= '<input placeholder="'.__('Password','wp-recall').'" required type="password" value="'.$user_pass.'" id="primary-pass-user" name="user_pass">';
     }
-	$content .= '<i class="fa fas fa-lock"></i>';
+	$content .= '<i class="rcli fa-lock"></i>';
 	$content .= '<span class="required">*</span>';
     $content .= '</div>';
 
@@ -472,7 +472,7 @@ function rcl_secondary_password($fields){
 
     $fields .= '<div class="form-block-rcl default-field">
                     <input placeholder="'.__('Repeat the password','wp-recall').'" required id="secondary-pass-user" type="password" value="'.(isset($_REQUEST['user_secondary_pass'])? $_REQUEST['user_secondary_pass']:'').'" name="user_secondary_pass">
-                    <i class="fa fas fa-lock"></i>
+                    <i class="rcli fa-lock"></i>
                     <span class="required">*</span>
                 <div id="notice-chek-password"></div>
             </div>

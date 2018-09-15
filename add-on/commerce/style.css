@@ -14,7 +14,7 @@
     color: #5b91c0;
     vertical-align: middle;
 }
-.rcl-cart-box .product-price .fa{
+.rcl-cart-box .product-price .rcli{
     
 }
 .rcl-cart-box .product-old-price{
@@ -22,7 +22,7 @@
     font-size: 16px;
     text-decoration: line-through;
 }
-.rcl-cart-box .product-old-price .fa{
+.rcl-cart-box .product-old-price .rcli{
     
 }
 .rcl-cart-box .product-variations{
@@ -63,8 +63,7 @@
     font-size: 14px;
     display: inline-block;
 }
-.rcl-cart-box .cart-button .fa,
-.rcl-cart-box .cart-button .svg-inline--fa{
+.rcl-cart-box .cart-button .rcli{
     font-size: 16px;
     color: inherit;
     margin-right: 10px;
@@ -184,12 +183,10 @@ body .rcl-product-gallery ul.images-list {
 .products-box .view-switch a{
 	
 }
-.products-box .view-switch a:hover i,
-.products-box .view-switch a:hover .svg-inline--fa{
+.products-box .view-switch a:hover i{
     background:#d9e0e6;
 }
-.products-box .view-switch a:last-child i,
-.products-box .view-switch a:last-child .svg-inline--fa{
+.products-box .view-switch a:last-child i{
     margin-right:0;
 }
 .products-box .products-list .product .product-content .product-title{
@@ -360,8 +357,7 @@ body .rcl-product-gallery ul.images-list {
     clear: both;
     overflow: hidden;
 }
-.products-box.type-list .product .product-content .product-meta i,
-products-box.type-list .product .product-content .product-meta .svg-inline--fa{
+.products-box.type-list .product .product-content .product-meta i{
     float:left;
 }	
 .products-box.type-list .product .product-content .product-meta > span{
@@ -452,7 +448,7 @@ products-box.type-list .product .product-content .product-meta .svg-inline--fa{
 #rcl-order .order-table th{
     width:auto;
 }
-#rcl-order .order-table .fa{
+#rcl-order .order-table .rcli{
     
 }
 #rcl-order .order-table .column-product-name{
@@ -476,8 +472,7 @@ products-box.type-list .product .product-content .product-meta .svg-inline--fa{
     vertical-align: middle;
     min-width: 70px;
 }
-#rcl-order .order-table .column-product-amount .fa,
-#rcl-order .order-table .column-product-amount .svg-inline--fa{
+#rcl-order .order-table .column-product-amount .rcli{
     vertical-align:middle;
 }
 #rcl-order .order-table .quantity-selector{
@@ -545,8 +540,7 @@ products-box.type-list .product .product-content .product-meta .svg-inline--fa{
     font-size: 14px;
     display: inline-block;
 }
-#rcl-order .submit-box .recall-button i,
-#rcl-order .submit-box .recall-button .svg-inline--fa{
+#rcl-order .submit-box .recall-button i{
     margin-right:10px;
     font-size: 20px;
 }
@@ -601,8 +595,7 @@ products-box.type-list .product .product-content .product-meta .svg-inline--fa{
 #rcl-product-box.modal-box{
     max-width:400px;
 }
-#rcl-product-box i.fa,
-#rcl-product-box .svg-inline--fa{
+#rcl-product-box i.rcli{
     color: inherit;
 }
 #rcl-product-box .product-title{

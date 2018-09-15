@@ -13,7 +13,7 @@
 #ui-datepicker-div .ui-datepicker-header > a {
     color: #fff;
     cursor: pointer;
-    font: 25px/5px "Font Awesome 5 Free";
+    font: 25px/5px rcl-awesome;
     padding: 0 5px;
     position: absolute;
     top: 16px;
@@ -30,11 +30,9 @@
 }
 #ui-datepicker-div .ui-datepicker-header .ui-datepicker-prev:before {
     content: "\f0d9";
-    font-weight: bold;
 }
 #ui-datepicker-div .ui-datepicker-header .ui-datepicker-next:before {
     content: "\f0da";
-    font-weight: bold;
 }
 #ui-datepicker-div .ui-datepicker-header .ui-datepicker-title {
     text-align: center;

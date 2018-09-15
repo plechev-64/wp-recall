@@ -321,10 +321,9 @@ function rcl_check_required_fields(form){
 
     var requireds = rcl_public_form.required;
 
-    form.find(':required').each(function(){
-    //requireds.forEach(function(namefield, i, requireds) {
+    requireds.forEach(function(namefield, i, requireds) {
 
-        var field = jQuery(this);
+        var field = form.find('[name="'+namefield+'"]');
         var type = field.attr('type');
         var value = false;
 

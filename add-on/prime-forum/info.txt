@@ -3,5 +3,4 @@ Version: 1.5.0;
 Support Core: 16.0.0;
 Description: Дополнение для организации полноценного легкого и функционального форума на базе плагина WP-Recall;
 Author: Плечёв Андрей;
-Author URI: https://codeseller.ru/;
-Add-on URI: https://codeseller.ru/products/primeforum/;
+Author URI: http://codeseller.ru/;

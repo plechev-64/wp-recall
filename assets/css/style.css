@@ -2,21 +2,23 @@
 
 
 /* общие стили start */
-[class^="fa fas fa-"]::before,
-[class*=" fa fas fa-"]::before{
+[class^="rcli fa-"]::before,
+[class*=" rcli fa-"]::before{
     padding: 0;
 }
-i.fas, a.fas, p.fas, span.fas, div.fas,
-i.far, a.far, p.far, span.far, div.far,
-i.fa, a.fa, p.fa, span.fa, div.fa,
-.svg-inline--fa{
+.rcli {
+    display: inline-block;
+}
+i.rcli,
+a.rcli,
+p.rcli,
+span.rcli,
+div.rcli{
     width:auto;
     text-align: center;
-    /*font-family: FontAwesome!important;*/
+    font-family: rcl-awesome!important;
 }
-.fas.rcl-icon,
-.fa.rcl-icon,
-.svg-inline--fa.rcl-icon{
+.rcli.rcl-icon{
     padding: 5px;
     background: #b9c9d6;
     color: #fff;
@@ -121,8 +123,7 @@ body .rcl_preloader{
     display: block!important;
     z-index: 99;
 }
-.rcl_preloader i,
-.rcl_preloader .svg-inline--fa{
+.rcl_preloader i {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -143,7 +144,7 @@ body .rcl_preloader{
 #passwordStrength.strength1 {
 	background:#ff0000;
 }
-#passwordStrength.strength2 {
+#passwordStrength.strength2 {   
 	background:orange;
 }
 #passwordStrength.strength3 {
@@ -160,8 +161,7 @@ body .rcl_preloader{
 	float: right;
 	clear: both;
 }
-.rcl-smiles > i,
-.rcl-smiles > .svg-inline--fa{
+.rcl-smiles > i{
     cursor: pointer;
     font-size: 20px;
     color: #4c8cbd;
@@ -198,20 +198,17 @@ body .rcl_preloader{
     margin: 5px 0;
     padding: 0;
 }
-span i.fas.fa-circle,
-span .svg-inline--fa.fa-circle{
+span i.rcli.fa-circle {
     font-size: 16px;
     padding: 0;
     vertical-align: inherit;
 }
-.online .fas.fa-circle,
-.online .svg-inline--fa.fa-circle{
+.online .rcli.fa-circle {
     -webkit-animation: pulsate 2s linear infinite;
     animation: pulsate 2s linear infinite;
     color: #89e535;
 }
-.offline .fas.fa-circle,
-.offline .svg-inline--fa.fa-circle{
+.offline .rcli.fa-circle {
     color: rgb(229, 57, 53);
     text-shadow: 0 0 1px #5a0d0c;
 }
@@ -328,7 +325,7 @@ body .ballun-status{
     max-width: 350px;
 }
 
-body p.status-user-rcl::before {
+body p.status-user-rcl::before {    
     border-style: solid;
     border-width: 11px 0 0 11px;
     content: "";
@@ -358,10 +355,10 @@ body #rcl-office .ballun-status p.status-user-rcl {
 }
 
 #lk-menu,
-#rcl-tabs {
+#rcl-tabs {    
     overflow: hidden;
 }
-#rcl-office.horizontal-tabs #rcl-tabs {
+#rcl-office.horizontal-tabs #rcl-tabs {   
     opacity:0;
     animation-delay:1s;
     animation-name: fadeIn;
@@ -375,11 +372,10 @@ body #rcl-office .ballun-status p.status-user-rcl {
 }
 /* Группа кнопок Start */
     /* Основной стиль кнопок Start */
-
-.recall-button i + span,
-.recall-button svg.svg-inline--fa + span{
+        
+.recall-button i + span {
     margin: 0 0 0 5px;
-}
+}       
 
 body a.recall-button,
 span.recall-button,
@@ -484,7 +480,7 @@ a.data-filter.filter-active:hover {
 }
 .rcl-subtab-menu .rcl-subtab-button.active,
 .rcl-subtab-menu .rcl-subtab-button:hover{
-
+    
 }
 
 /*ниже устаревшие стили субвкладок, позднее удалить*/
@@ -499,8 +495,7 @@ a.data-filter.filter-active:hover {
     padding: 7px;
     margin-right: 5px;
 }
-#rcl-office a.sec_block_button i.fas,
-#rcl-office a.sec_block_button .svg-inline--fa{
+#rcl-office a.sec_block_button i.rcli {
 	margin: 0 5px 0 0;
 }
 
@@ -636,8 +631,7 @@ a.data-filter.filter-active:hover {
 .rcl-field-input input[type='text']{
     margin:0;
 }
-.rcl-field-input .file-manage-box .fa,
-.rcl-field-input .file-manage-box .svg-inline--fa{
+.rcl-field-input .file-manage-box .rcli{
     margin-right:5px;
 }
 .rcl-field-input .rcl-field-notice{
@@ -646,8 +640,7 @@ a.data-filter.filter-active:hover {
     margin: 5px 0 0;
     color:#797979;
 }
-.rcl-field-input .rcl-field-notice .fa,
-.rcl-field-input .rcl-field-notice .svg-inline--fa{
+.rcl-field-input .rcl-field-notice .rcli{
     margin-right:5px;
 }
 .type-multiselect-input .hidden {
@@ -682,8 +675,7 @@ a.data-filter.filter-active:hover {
     width: auto;
     display: inline-block;
 }
-.type-dynamic-input .dynamic-values .dynamic-value .fa,
-.type-dynamic-input .dynamic-values .dynamic-value .svg-inline--fa{
+.type-dynamic-input .dynamic-values .dynamic-value .rcli{ 
     padding: 5px;
     margin: 5px 10px;
     border: 1px solid #ccc;
@@ -705,8 +697,7 @@ a.data-filter.filter-active:hover {
 p.rcl-custom-fields{
     clear:both;
 }
-p.rcl-custom-fields .rcl-field-value .fa-upload,
-p.rcl-custom-fields .rcl-field-value .fa-upload.svg-inline--fa{
+p.rcl-custom-fields .rcl-field-value .fa-upload{
     margin-right:5px;
 }
 /**/
@@ -804,9 +795,8 @@ body .ssi-modalOuter .ssi-modalTitle{
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon::after {
     color: rgb(229, 57, 53);
     content: "\f00d";                /* fa-times */
-    font-family:"Font Awesome 5 Free";
+    font: 400 30px/30px rcl-awesome;
     margin: 0 7px 0 0;
-    font-weight: 900;
 }
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon:hover::after {
     color: rgb(192, 0, 0);
@@ -870,11 +860,10 @@ body .ssi-modalOuter .ssi-modalTitle{
 .rcl-field-input input[type="checkbox"]:checked + label.block-label::before {
     color: #fff;
     content: "\f00c";
-    font-family: "Font Awesome 5 Free";
+    font-family: "rcl-awesome";
     font-size: 12px;
     line-height: 1;
     padding: 2px;
-    font-weight: 900;
 }
 /* END checkbox-radio stilization */
 
@@ -888,7 +877,7 @@ body .ssi-modalOuter .ssi-modalTitle{
 		width: auto;
     }
     .vertical-menu #lk-menu .recall-button span,
-    .vertical-menu #lk-menu .recall-button .fas{
+    .vertical-menu #lk-menu .recall-button .rcli {
         margin: 0 auto;
     }
 } */
@@ -998,13 +987,11 @@ body .ssi-modalOuter .ssi-modalTitle{
 }
 #rcl-popup .next-attach::after {
     content: "\f138";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
+    font-family: rcl-awesome;
 }
 #rcl-popup .prev-attach::after {
     content: "\f137";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
+    font-family: rcl-awesome;
 }
 
 /* START upload cover */
@@ -1131,30 +1118,27 @@ body .ssi-modalOuter .ssi-modalTitle{
 #rcl-post-bar .post-bar-item{
     display: inline-block;
 }
-#rcl-post-bar .post-bar-item a {
-    font-size: 16px;
+#rcl-post-bar .post-bar-item a{
+    font-size: 14px;
     margin: 0 0 0 5px;
     display: inline-block;
 }
-/*#rcl-post-bar .post-bar-item span,
-#rcl-post-bar .post-bar-item i,
-#rcl-post-bar .post-bar-item .svg-inline--fa{
+#rcl-post-bar .post-bar-item span, 
+#rcl-post-bar .post-bar-item i {
     vertical-align: middle;
-}*/
-#rcl-post-bar .post-bar-item i,
-#rcl-post-bar .post-bar-item .svg-inline--fa {
-    margin: 0;
 }
-#rcl-post-bar .post-bar-item i::before,
-#rcl-post-bar .post-bar-item .svg-inline--fa::before{
+#rcl-post-bar .post-bar-item i{
+    margin: 0 0 0 0;
+}
+#rcl-post-bar .post-bar-item i::before {
     padding: 0 5px;
 }
-#rcl-post-bar .post-bar-item .item-label {
+#rcl-post-bar .post-bar-item .item-label{
     padding: 0 5px;
-    margin: 0;
+    margin: 0 0 0 0;
 }
 #rcl-post-bar .post-bar-item .item-counter{
-
+    
 }
 
 /*Таблица*/
@@ -1278,8 +1262,7 @@ body .ssi-modalOuter .ssi-modalTitle{
     overflow: hidden;
     margin-bottom: 5px;
 }
-.rcl-form .file-manage-box .fas,
-.rcl-form .file-manage-box .svg-inline--fa{
+.rcl-form .file-manage-box .rcli {
     color: rgb(229, 57, 53);
     font-size: 16px;
     margin-right: 5px;
@@ -1391,7 +1374,7 @@ body .ssi-modalOuter .ssi-modalTitle{
     width: 18px;
     z-index: 1;
 }
-.rcl-runner .rcl-runner-box .ui-slider-handle:focus,
+.rcl-runner .rcl-runner-box .ui-slider-handle:focus, 
 .rcl-range .rcl-range-box .ui-slider-handle:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
@@ -1429,7 +1412,7 @@ body .ssi-modalOuter .ssi-modalTitle{
 	display: block;
 	height: 31px;
 	width: 31px;
-
+	
 }
 #rcl-popup .popup-body{
     padding:10px;

@@ -43,7 +43,7 @@ class Rcl_Group_Widget {
 
         if($object->widget_type=='hidden')
             $before .= '<a href="#" onclick="rcl_more_view(this); return false;" class="manage-hidden-widget">'
-                . '<i class="far fa-plus-square"></i><span class="rcl-wiget-spoiler-txt">'.__('Show all','wp-recall').'</span>'
+                . '<i class="rcli fa-plus-square-o"></i>'.__('Show all','wp-recall')
                 . '</a>';
 
         $before .= '<div class="widget-content">';
@@ -152,7 +152,7 @@ class Rcl_Group_Widget {
                 $content .= '<input type="hidden" name="data[][widget]['.$this->widget['widget_id'].'][id]" value="'.$widget->widget_id.'">';
 
                 if($options)
-                    $content .= '<span class="widget-name" onclick="rcl_more_view(this); return false;"><i class="far fa-plus-square"></i>'.$widget->widget_title.'</span>';
+                    $content .= '<span class="widget-name" onclick="rcl_more_view(this); return false;"><i class="rcli fa-plus-square-o"></i>'.$widget->widget_title.'</span>';
                 else
                     $content .= '<span class="widget-name">'.$widget->widget_title.'</span>';
 
@@ -168,7 +168,7 @@ class Rcl_Group_Widget {
 
         $content .= '<input type="hidden" name="group-action" value="update-widgets">'
                 . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false );
-
+        
         $content .= '<input type="submit" class="recall-button" name="group-submit" value="'.__('Save changes','wp-recall').'">';
 
         $content .= '</form>';
@@ -198,9 +198,9 @@ function rcl_group_register_widget($child_class){
 
 function rcl_group_area($place = 'sidebar'){
     global $rcl_group,$rcl_group_widgets;
-
+    
     do_action('rcl_group_'.$place.'_area');
-
+    
     $widgets = new Rcl_Group_Widget();
     echo $widgets->loop($place);
 }
@@ -259,7 +259,7 @@ function rcl_edit_group_widgets($widgets){
     $group_widgets = rcl_get_group_option($rcl_group->term_id,'group_widgets');
 
     if(!$group_widgets) return $widgets;
-
+    
     //удаляем данные о виджетах в незарегистрированных областях
     foreach($group_widgets as $area_id=>$ws){
         if(!rcl_is_group_area($area_id)){
@@ -268,7 +268,7 @@ function rcl_edit_group_widgets($widgets){
     }
 
     array_unshift($rcl_group_area,array('id'=>'unuses','name'=>__('Unused','wp-recall')));
-
+    
     foreach($rcl_group_area as $zone){
 
         if(!isset($group_widgets[$zone['id']])) continue;

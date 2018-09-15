@@ -239,9 +239,9 @@ function rcl_manage_user_black_list(e,user_id){
     
     var class_i = jQuery(e).children('i').attr('class');
     
-    if(class_i=='fa fas fa-refresh fa-spin') return false;
+    if(class_i=='rcli fa-refresh fa-spin') return false;
     
-    jQuery(e).children('i').attr('class','fa fas fa-refresh fa-spin');
+    jQuery(e).children('i').attr('class','rcli fa-refresh fa-spin');
     
     rcl_ajax({
         data: {
@@ -331,7 +331,7 @@ function rcl_init_get_smilies(){
         mouseleave: function () {
             jQuery(this).next().hide();
         }
-    }, "body .rcl-smiles .fa-smile");
+    }, "body .rcl-smiles .fa-smile-o");
 }
 
 rcl_add_action('rcl_init','rcl_init_hover_smilies');
