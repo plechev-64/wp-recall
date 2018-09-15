@@ -1,56 +1,55 @@
 /* Личный кабинет разбиваем на блоки. Внутри этих блоков некоторые ключевые моменты тоже будут прокомментированы */
 
-
 /* общие стили start */
 [class^="rcli fa-"]::before,
-[class*=" rcli fa-"]::before{
+[class*=" rcli fa-"]::before {
     padding: 0;
 }
 .rcli.rcl-icon{
-    padding: 5px;
     background: #b9c9d6;
+    box-sizing: content-box;
     color: #fff;
     margin-right: 5px;
+    padding: 5px;
     text-align: center;
     width: 15px;
-    box-sizing: content-box;
 }
-.floatright{
-    float:right;
+.floatright {
+    float: right;
 }
-.floatleft{
-    float:left;
+.floatleft {
+    float: left;
 }
-.aligncenter{
-    text-align:center;
+.aligncenter {
+    text-align: center;
 }
-.alignleft{
-    text-align:left;
+.alignleft {
+    text-align: left;
 }
-.alignright{
-    text-align:right;
+.alignright {
+    text-align: right;
 }
-img.aligncenter{
-    display:block;
-    margin:0 auto;
+img.aligncenter {
+    display: block;
+    margin: 0 auto;
 }
-body .preloader-parent{
-    position:relative;
-}
-.plugin-info{
-    text-align:center;
-    clear: both;
-}
-span.ruble-symbol{
+body .preloader-parent {
     position: relative;
-    font-weight: normal;
-    font-family:Arial;
-    line-height: 1;
 }
-.ruble-symbol span{
+.plugin-info {
+    clear: both;
+    text-align: center;
+}
+span.ruble-symbol {
+    font-family: Arial;
+    font-weight: normal;
+    line-height: 1;
+    position: relative;
+}
+.ruble-symbol span {
+    left: 0;
     position: absolute;
     top: 55%;
-    left: 0;
 }
 
 .wprecallblock .notify-lk {
@@ -63,123 +62,123 @@ span.ruble-symbol{
 .wprecallblock .notify-lk div {
     padding: 6px 2px 6px 10px;
 }
-#rcl-notice{
+#rcl-notice {
+    left: 10px;
     position: fixed;
     top: 70px;
-    left: 10px;
     width: 210px;
     z-index: 1501;
 }
 #rcl-notice .notice-window {
-    line-height: 1.2;
+    animation-duration: 0.3s;
     font-size: 14px;
+    line-height: 1.2;
     margin: 5px 0;
     padding: 8px 2px 8px 10px;
     word-wrap: break-word;
-    animation-duration: 0.3s;
 }
 .notify-lk .error,
-#rcl-notice .type-error{
+#rcl-notice .type-error {
     background: rgb(255, 207, 207);
-    color: red;
     border-left: 3px solid red;
+    color: red;
 }
 .notify-lk .warning,
-#rcl-notice .type-warning{
+#rcl-notice .type-warning {
     background: #fff5ce;
-    color: #333;
     border-left: 3px solid #333;
+    color: #333;
 }
 .notify-lk .success,
-#rcl-notice .type-success{
+#rcl-notice .type-success {
     background: #bfffbd;
-    color: #008000;
     border-left: 3px solid #008000;
+    color: #008000;
 }
-#rcl-notice .notice-window .close-notice{
-    float:right;
-	color:inherit;
-	padding: 0 5px 0 4px;
+#rcl-notice .notice-window .close-notice {
+    color: inherit;
+    float: right;
+    padding: 0 5px 0 4px;
 }
-body .rcl_preloader{
-    position: absolute!important;
-    height: 100%!important;
-    width: 100%!important;
-    background: rgba(255,255,255,0.6)!important;
-    top: 0!important;
-    left: 0!important;
-    display: block!important;
+body .rcl_preloader {
+    background: rgba(255,255,255,0.6) !important;
+    display: block !important;
+    height: 100% !important;
+    left: 0 !important;
+    position: absolute !important;
+    top: 0 !important;
+    width: 100% !important;
     z-index: 99;
 }
 .rcl_preloader i {
+    left: 50%;
     position: absolute;
     top: 50%;
-    left: 50%;
 }
 #passwordStrength {
-	padding: 7px 15px 5px;
-	display: block;
-	max-width: 200px;
-	margin: 5px auto 0;
-	text-align: center;
-	color: #000;
-	font-size: 12px;
-	line-height: 1;
+    color: #000;
+    display: block;
+    font-size: 12px;
+    line-height: 1;
+    margin: 5px auto 0;
+    max-width: 200px;
+    padding: 7px 15px 5px;
+    text-align: center;
 }
-#passwordStrength.strength0{
-	background:#ccc;
+#passwordStrength.strength0 {
+    background: #ccc;
 }
 #passwordStrength.strength1 {
-	background:#ff0000;
+    background: #ff0000;
 }
 #passwordStrength.strength2 {
-	background:orange;
+    background: orange;
 }
 #passwordStrength.strength3 {
-	background:yellow;
+    background: yellow;
 }
 #passwordStrength.strength4 {
-	background:#43FF4C;
+    background: #43FF4C;
 }
 #passwordStrength.strength5 {
-	background:rgb(0, 184, 255);
+    background: rgb(0, 184, 255);
 }
-.rcl-smiles{
-	position: relative;
-	float: right;
-	clear: both;
+.rcl-smiles {
+    clear: both;
+    float: right;
+    position: relative;
 }
-.rcl-smiles > i{
+.rcl-smiles > i {
+    color: #4c8cbd;
     cursor: pointer;
     font-size: 20px;
-    color: #4c8cbd;
 }
-.rcl-smiles .smiles{
-    text-align: left;
+.rcl-smiles .smiles {
     background: #fff;
+    border-radius: 5px;
     box-shadow: 0 0 1px 1px #ccc;
     padding: 3px;
+    text-align: left;
     width: 350px;
-    border-radius: 5px;
 }
-.rcl-smiles .rcl-smiles-list{
+.rcl-smiles .rcl-smiles-list {
+    bottom: 0;
     display: none;
     padding: 0 15px 20px 0;
     position: absolute;
     right: 0;
-    bottom: 0;
     z-index: 9;
 }
 .rcl-smiles > img:hover +.rcl-smiles-list,
-.rcl-smiles .rcl-smiles-list:hover{
-    display:block;
+.rcl-smiles .rcl-smiles-list:hover {
+    display: block;
 }
-.rcl-smiles .smiles img{
-    cursor:pointer;
-    display:inline-block;
-    height: 18px!important;
-    margin: 3px!important;
-    width: auto!important;
+.rcl-smiles .smiles img {
+    cursor: pointer;
+    display: inline-block;
+    height: 18px !important;
+    margin: 3px !important;
+    width: auto !important;
 }
 .rcl-new-users p,
 .rcl-online-users p {
@@ -221,13 +220,13 @@ span i.rcli.fa-circle {
 #rcl-office {
     background: rgba(236, 240, 241, 0.3);
     box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
-	color: #333;				/*BlackTheme*/
+    color: #333;                    /*BlackTheme*/
     overflow: visible;
-	position: relative;
+    position: relative;
 }
 #rcl-office a:link {
-    border: none;				/*++Twenty15++*/
-    box-shadow: none;			/*++Twenty16++*/
+    border: none;                   /*++Twenty15++*/
+    box-shadow: none;               /*++Twenty16++*/
     text-decoration: none;
 }
 #rcl-office h2 {
@@ -245,13 +244,13 @@ span i.rcli.fa-circle {
 #rcl-office p {
     line-height: 1;
     margin: 0;
-	padding: 4px 0;
+    padding: 4px 0;
 }
 #rcl-office select,
 #rcl-office textarea,
 #rcl-office input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
-    border: 1px solid #ddd;
     border-radius: 0;
+    border: 1px solid #ddd;
     box-shadow: none;
     color: #000;
     display: inline-block;
@@ -262,12 +261,9 @@ span i.rcli.fa-circle {
     outline: none;
     padding: 5px 10px;
 }
-/* .wprecallblock input.recall-button {
-	color:#fff;
-} */
 #rcl-office input[type="checkbox"],
 #rcl-office input[type="radio"] {
-	box-shadow: none;
+    box-shadow: none;
 }
 #rcl-overlay {
     background: rgba(0, 0, 0, 0.7);
@@ -279,28 +275,28 @@ span i.rcli.fa-circle {
     top: 0;
     z-index: 999;
 }
-.mass-upload-box{
-    padding: 5px;
+.mass-upload-box {
     background: rgba(219, 219, 219, 0.3);
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
+    padding: 5px;
 }
 .rcl-dropzone {
-    overflow: hidden;
-    margin-bottom: 10px;
     font-size: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
 }
 .rcl-dropzone.mass-upload-box small {
     margin: 0 0 0 5px;
 }
-.mass-upload-box .mass-upload-area{
+.mass-upload-box .mass-upload-area {
+    background-color: #ccc;
     padding: 20px;
     text-align: center;
-    background-color: #ccc;
 }
-.mass-upload-box hr{
-    margin:3px;
+.mass-upload-box hr {
+    margin: 3px;
 }
-.mass-upload-box .rcl-upload-button{
+.mass-upload-box .rcl-upload-button {
     display: inline-block;
 }
 .rcl-tab-button .rcl-menu-notice {
@@ -308,11 +304,9 @@ span i.rcli.fa-circle {
     font-size: 12px;
     line-height: 1;
 }
-
-body .ballun-status{
+body .ballun-status {
     max-width: 350px;
 }
-
 body p.status-user-rcl::before {
     border-style: solid;
     border-width: 11px 0 0 11px;
@@ -327,11 +321,11 @@ body .ballun-status p.status-user-rcl,
 body #rcl-office .ballun-status p.status-user-rcl {
     background: #fff;
     border-radius: 3px;
-    color: #333;										/*++hueman++*/
+    color: #333;                                    /*++hueman++*/
     display: inline-block;
-    font-size: 14px;									/*++hueman++*/
-    font-weight: normal;								/*++hueman++*/
-    line-height: normal;								/*++hueman++*/
+    font-size: 14px;                                /*++hueman++*/
+    font-weight: normal;                            /*++hueman++*/
+    line-height: normal;                            /*++hueman++*/
     margin: 0 0 0 5px;
     max-width: 98%;
     min-width: 50px;
@@ -341,50 +335,48 @@ body #rcl-office .ballun-status p.status-user-rcl {
     hyphens: auto;
     word-wrap: break-word;
 }
-
 #lk-menu,
 #rcl-tabs {
     overflow: hidden;
 }
 #rcl-office.horizontal-tabs #rcl-tabs {
-    opacity:0;
-    animation-delay:1s;
+    animation-delay: 1s;
+    animation-duration: 1s;
+    animation-fill-mode: both;
     animation-name: fadeIn;
-    animation-duration:1s;
-    animation-fill-mode:both;
+    opacity: 0;
 }
 #lk-content {
     margin: 3px;
-    position: relative;
     overflow: hidden;
+    position: relative;
 }
 /* Группа кнопок Start */
     /* Основной стиль кнопок Start */
-
 .recall-button i + span {
     margin: 0 0 0 5px;
 }
 
 body a.recall-button,
 span.recall-button,
-.recall-button.rcl-upload-button,		/*input[type="file"]*/
+.recall-button.rcl-upload-button,           /*input[type="file"]*/
 input[type="submit"].recall-button,
 input[type="submit"] .recall-button,
 input[type="button"].recall-button,
 input[type="button"] .recall-button {
-    border-radius: 0;							/*++hueman++*/
+    border-radius: 0;                       /*++hueman++*/
+    border: none;
+    box-sizing: border-box;
     color: #fff;
     cursor:pointer;
-    padding: 5px 5px;
     font-size: 12px;
-    font-weight: normal;						/*++hueman++*/
-    letter-spacing: normal;						/*++Twenty16++*/
+    font-weight: normal;                    /*++hueman++*/
+    letter-spacing: normal;                 /*++Twenty16++*/
     line-height:1;
+    padding: 5px 5px;
     text-decoration: none;
+    text-transform: none;                   /*++Twenty16++*/
     white-space: nowrap;
-    box-sizing: border-box;
-    text-transform: none;						/*++Twenty16++*/
-    border: none;
 }
 /* Основной стиль кнопок End */
 
@@ -400,31 +392,28 @@ input[type="button"] .recall-button:hover {
     color: #fff;
     opacity: 0.8;
 }
-
 .rcl-search-form input[type="submit"]:hover,
 .rcl-upload-button input[type="file"]:hover {
     cursor: pointer;
 }
-
 a.recall-button.active,
 a.recall-button.active:hover,
 a.recall-button.filter-active,
 a.recall-button.filter-active:hover,
 a.data-filter.filter-active,
 a.data-filter.filter-active:hover {
-    box-shadow: none;							/*++Twenty16++*/
-    cursor: default;
+    box-shadow: none;                       /*++Twenty16++*/
     color: rgb(30, 56, 75);
+    cursor: default;
     opacity: 1;
 }
-
 #rcl-office #lk-menu a.recall-button.active {
     pointer-events: none;
 }
 /* Состояния кнопок End */
 
 /* Корректировки к кнопкам Start */
-#lk-menu a{
+#lk-menu a {
     display: block;
     float: left;
     margin: 5px 5px 0 0;
@@ -454,49 +443,44 @@ a.data-filter.filter-active:hover {
 /* Корректировки к кнопкам End */
 
 /*START Меню субвкладок ЛК*/
-.rcl-subtab-menu{
-    overflow: hidden;
+.rcl-subtab-menu {
     background: #f7f8f8;
-    padding: 10px 10px 5px;
     margin: 5px 0;
+    overflow: hidden;
+    padding: 10px 10px 5px;
 }
-.rcl-subtab-menu .rcl-subtab-button{
+.rcl-subtab-menu .rcl-subtab-button {
     display: inline-block;
-    padding: 7px;
-    margin-right: 5px;
     margin-bottom: 5px;
-}
-.rcl-subtab-menu .rcl-subtab-button.active,
-.rcl-subtab-menu .rcl-subtab-button:hover{
-
+    margin-right: 5px;
+    padding: 7px;
 }
 
 /*ниже устаревшие стили субвкладок, позднее удалить*/
 #rcl-office .rcl-sub-menu {
-    overflow: hidden;
     background: #f7f8f8;
-    padding: 10px;
     margin: 5px 0;
+    overflow: hidden;
+    padding: 10px;
 }
-#rcl-office .rcl-sub-menu .recall-button{
+#rcl-office .rcl-sub-menu .recall-button {
     display: inline-block;
-    padding: 7px;
     margin-right: 5px;
+    padding: 7px;
 }
 #rcl-office a.sec_block_button i.rcli {
-	margin: 0 5px 0 0;
+    margin: 0 5px 0 0;
 }
-
 /*END*/
 
 .rcl-data-filters {
-    margin:10px 0;
+    margin: 10px 0;
 }
-.rcl-data-filters a:link {			/*++Twenty15++*/
+.rcl-data-filters a:link {                      /*++Twenty15++*/
     border: none;
-	text-decoration: none;			/*++Twenty14++*/
+    text-decoration: none;                      /*++Twenty14++*/
 }
-.rcl-upload-button{
+.rcl-upload-button {
     position: relative;
 }
 .rcl-upload-button input[type="file"] {
@@ -509,14 +493,13 @@ a.data-filter.filter-active:hover {
     top: 0;
     width: 100%;
 }
-
 /* Кнопки End */
 
 /* фильтр поиск start */
 .rcl-search-form {
-    text-align: right;
     clear: both;
     margin-bottom: 10px;
+    text-align: right;
 }
 .rcl-search-form form p {
     margin-bottom: 5px;
@@ -524,8 +507,8 @@ a.data-filter.filter-active:hover {
 }
 .rcl-search-form form input[type="text"],
 .rcl-search-form form select {
-    border: 1px solid #ccc;
     border-radius: 0;
+    border: 1px solid #ccc;
     box-shadow: none;
     box-sizing: border-box;
     color: #000;
@@ -543,7 +526,7 @@ a.data-filter.filter-active:hover {
 .rcl-search-form form select {
     padding: 3px;
 }
-.rcl-search-form form input[type="submit"]{
+.rcl-search-form form input[type="submit"] {
     border-radius: 0;
     font-size: 14px;
     line-height: normal;
@@ -554,38 +537,38 @@ a.data-filter.filter-active:hover {
 /* фильтр поиск End */
 
 /* START аватар и элементы управления внутри него */
-#rcl-avatar{
+#rcl-avatar {
     position: relative;
 }
-#rcl-avatar .avatar-icons{
+#rcl-avatar .avatar-icons {
     display: block;
     line-height: 1;
 }
-#rcl-avatar .avatar-icons .rcl-avatar-icon{
-    cursor:pointer;
+#rcl-avatar .avatar-icons .rcl-avatar-icon {
+    cursor: pointer;
 }
-#rcl-avatar .avatar-icons .rcl-avatar-icon a{
+#rcl-avatar .avatar-icons .rcl-avatar-icon a {
     display: inline-block;
     position: relative;
 }
-#rcl-avatar .icon-avatar-upload span{
+#rcl-avatar .icon-avatar-upload span {
+    display: block;
+    height: 100%;
+    left: 0;
     overflow: hidden;
     position: absolute;
-    display: block;
+    top: 0;
     width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
 }
-#rcl-avatar .icon-avatar-upload input[type="file"]{
-    position: absolute;
-    top: 0;
-    right: 0;
+#rcl-avatar .icon-avatar-upload input[type="file"] {
+    cursor: pointer;
     display: block;
     height: 100%;
-    z-index: 9;
-    cursor: pointer;
     opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 9;
 }
 /* END аватар и элементы управления внутри него */
 
@@ -616,37 +599,37 @@ a.data-filter.filter-active:hover {
 .rcl-field-input.type-text-input .maxlength {
     height: 100%;
 }
-.rcl-field-input input[type='text']{
-    margin:0;
+.rcl-field-input input[type='text'] {
+    margin: 0;
 }
-.rcl-field-input .file-manage-box .rcli{
-    margin-right:5px;
+.rcl-field-input .file-manage-box .rcli {
+    margin-right: 5px;
 }
-.rcl-field-input .rcl-field-notice{
-    display:block;
+.rcl-field-input .rcl-field-notice {
     clear: both;
+    color: #797979;
+    display: block;
     margin: 5px 0 0;
-    color:#797979;
 }
-.rcl-field-input .rcl-field-notice .rcli{
-    margin-right:5px;
+.rcl-field-input .rcl-field-notice .rcli {
+    margin-right: 5px;
 }
 .type-multiselect-input .hidden {
-    display: none!important;
+    display: none !important;
 }
 .type-multiselect-input .fs-wrap {
-    width: 100%;
     max-width: 400px;
+    width: 100%;
 }
 .type-multiselect-input .fs-dropdown {
-    width: 100%;
+    box-shadow: 4px 3px 3px 0 #929292;
     max-width: 400px;
-    box-shadow: 4px 3px 3px 0px #929292;
+    width: 100%;
 }
 .type-multiselect-input .fs-wrap.multiple .fs-option.selected .fs-checkbox i {
     background-color: #888;
 }
-.type-dynamic-input .dynamic-values{
+.type-dynamic-input .dynamic-values {
     display: block;
 }
 .type-dynamic-input .dynamic-values .dynamic-value {
@@ -658,23 +641,23 @@ a.data-filter.filter-active:hover {
     border: none;
     box-shadow: none;
     color: #797979;
+    display: inline-block;
     min-width: initial;
     vertical-align: middle;
     width: auto;
-    display: inline-block;
 }
-.type-dynamic-input .dynamic-values .dynamic-value .rcli{
-    padding: 5px;
-    margin: 5px 10px;
-    border: 1px solid #ccc;
-    vertical-align: middle;
+.type-dynamic-input .dynamic-values .dynamic-value .rcli {
     background: #fff;
+    border: 1px solid #ccc;
+    margin: 5px 10px;
+    padding: 5px;
+    vertical-align: middle;
 }
-.type-dynamic-input .dynamic-values .dynamic-value input{
-    width: 78%!important;
+.type-dynamic-input .dynamic-values .dynamic-value input {
+    width: 78% !important;
 }
-#register-form-rcl .type-dynamic-input .dynamic-values .dynamic-value{
-    margin-bottom: 0px;
+#register-form-rcl .type-dynamic-input .dynamic-values .dynamic-value {
+    margin-bottom: 0;
 }
 .rcl-field-input .rcl-checkbox-box,
 .rcl-field-input .rcl-radio-box {
@@ -682,38 +665,38 @@ a.data-filter.filter-active:hover {
     margin-right: 2px;
     position: relative;
 }
-p.rcl-custom-fields{
-    clear:both;
+p.rcl-custom-fields {
+    clear: both;
 }
-p.rcl-custom-fields .rcl-field-value .fa-upload{
-    margin-right:5px;
+p.rcl-custom-fields .rcl-field-value .fa-upload {
+    margin-right: 5px;
 }
 /**/
 
 /* Контент лк Start */
 #rcl-office .recall_content_block {
     background: rgba(255, 255, 255, 0.7);
-    padding: 4px 5px;
-    overflow:hidden;
     display: none;
-    position:relative;
+    overflow: hidden;
+    padding: 4px 5px;
+    position: relative;
 }
 #rcl-office .recall_content_block.active {
-    display:block;
+    display: block;
 }
 /* Контент лк End */
 
 
 /* navigation Start */
 .rcl-navi,
-.rcl-pager{
+.rcl-pager {
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     box-sizing: border-box;
     clear: both;
     display: inline-block;
     font-size: 20px;
     font-weight: bold;
-	line-height: 1.4;
+    line-height: 1.4;
     margin: 10px 0.5%;
     padding: 6px 5px;
     width: 99%;
@@ -721,18 +704,18 @@ p.rcl-custom-fields .rcl-field-value .fa-upload{
 .rcl-navi a,
 .rcl-navi span,
 .rcl-pager .pager-item span,
-.rcl-pager .pager-item a{
-    display:inline-block;
+.rcl-pager .pager-item a {
+    display: inline-block;
     margin: 0 4px;
     padding: 2px 9px;
 }
-.rcl-navi span{
+.rcl-navi span {
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.4);
 }
 .rcl-navi a:link,
-.rcl-pager .pager-item a:link{										/*++hueman++ добавил :link для перевеса*/
+.rcl-pager .pager-item a:link {                         /*++hueman++ добавил :link для перевеса*/
     background: rgba(243, 243, 243, 0.5);
-	border: none;										/*++Twenty15++*/
+    border: none;                                       /*++Twenty15++*/
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     text-decoration: none;
 }
@@ -744,19 +727,19 @@ p.rcl-custom-fields .rcl-field-value .fa-upload{
 
 
 /* START ssi-modal */
-#ssi-modalWindow{
-    animation-duration:0.5s;
+#ssi-modalWindow {
+    animation-duration: 0.5s;
     animation-name: slideInDown;
 }
 div.ssi-backdrop {
     background: rgba(0, 0, 0, 0.7);
 }
-body .ssi-modalOuter .ssi-modalTitle{
+body .ssi-modalOuter .ssi-modalTitle {
     font-family: inherit;
 }
 .ssi-modalOuter .ssi-modalWindow {
-    border: none;
     border-radius: 0;
+    border: none;
     margin: 0 auto;
     max-width: 99%;
     min-width: 315px;
@@ -782,7 +765,7 @@ body .ssi-modalOuter .ssi-modalTitle{
 }
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon::after {
     color: rgb(229, 57, 53);
-    content: "\f00d";                /* fa-times */
+    content: "\f00d";                                   /* fa-times */
     font: 400 30px/30px rcl-awesome;
     margin: 0 7px 0 0;
 }
@@ -796,8 +779,8 @@ body .ssi-modalOuter .ssi-modalTitle{
 }
 .ssi-modalOuter .ssi-buttons .ssi-modalBtn {
     background: #eee;
-    border: medium none;
     border-radius: 0;
+    border: medium none;
     box-shadow: 0 0 1px 1px #ccc;
     color: #555;
     cursor: pointer;
@@ -855,21 +838,6 @@ body .ssi-modalOuter .ssi-modalTitle{
 }
 /* END checkbox-radio stilization */
 
-/* @media screen and (max-width:768px) {
-    .vertical-menu #lk-menu {
-		max-width: none;
-    }
-    .vertical-menu #lk-menu .recall-button {
-		display: inline-block;
-		float: left;
-		width: auto;
-    }
-    .vertical-menu #lk-menu .recall-button span,
-    .vertical-menu #lk-menu .recall-button .rcli {
-        margin: 0 auto;
-    }
-} */
-
 @media screen and (max-width:360px) {
     #userpic-upload #webcamupload {
         float: right;
@@ -895,12 +863,12 @@ body .ssi-modalOuter .ssi-modalTitle{
     display: block;
     left: 50%;
     line-height: 1.4;
+    max-width: 600px;
     max-width: 80%;
     position: absolute;
     top: 10%;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    max-width: 600px;
+            transform: translateX(-50%);
     z-index: 999;
 }
 #rcl-popup h2 {
@@ -942,7 +910,7 @@ body .ssi-modalOuter .ssi-modalTitle{
 }
 #rcl-popup #commentlist .comment-author::after,
 #rcl-popup #commentlist .comment-author::before {
-	display: none;
+    display: none;
 }
 #rcl-popup #commentlist .author-avatar {
     float: left;
@@ -959,7 +927,7 @@ body .ssi-modalOuter .ssi-modalTitle{
     position: absolute;
     top: 200px;
     -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+            transform: translateX(-50%);
     width: auto;
 }
 #rcl-popup .navi-gallery:hover {
@@ -970,8 +938,8 @@ body .ssi-modalOuter .ssi-modalTitle{
     margin-left: -54%;
 }
 #rcl-popup .next-attach {
-    margin-left: 54%;
     float: right;
+    margin-left: 54%;
 }
 #rcl-popup .next-attach::after {
     content: "\f138";
@@ -983,22 +951,22 @@ body .ssi-modalOuter .ssi-modalTitle{
 }
 
 /* START upload cover */
-#rcl-office .rcl-cover-icon{
+#rcl-office .rcl-cover-icon {
     line-height: 1;
     overflow: hidden;
     position: relative;
 }
-#rcl-office .rcl-cover-icon:hover{
+#rcl-office .rcl-cover-icon:hover {
     cursor: pointer;
 }
-#rcl-office .rcl-cover-icon input[type="file"]{
+#rcl-office .rcl-cover-icon input[type="file"] {
     cursor: pointer;
+    height: 100%;
     opacity: 0;
     position: absolute;
     right: 0;
     top: 0;
     z-index: 99;
-    height: 100%;
 }
 /* END upload cover */
 
@@ -1010,15 +978,15 @@ body .ssi-modalOuter .ssi-modalTitle{
     width: 100%;
 }
 .rcl-user-getails .rcl-user-avatar img {
-    border: 0;
     border-radius: 0;
+    border: 0;
     display: block;
     float: none;
+    height: auto;
     margin: 0 auto;
     max-width: 100%;
     padding: 0;
     width: 100%;
-    height: auto;
 }
 .rcl-user-getails .rcl-user-avatar .rcl-avatar-zoom {
     background: rgba(0, 0, 0, 0.5);
@@ -1028,7 +996,7 @@ body .ssi-modalOuter .ssi-modalTitle{
     height: 100%;
     opacity: 0.7;
     position: absolute;
-	text-decoration: none;
+    text-decoration: none;
     top: 0;
     width: 100%;
 }
@@ -1076,70 +1044,66 @@ body .ssi-modalOuter .ssi-modalTitle{
 }
 /* END Модальное окно с информацией о пользователе */
 
-#avatar-upload-progress{
-    position: absolute;
+#avatar-upload-progress {
     background: #ccc;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    text-align: center;
+    display: none;
     font-size: 40px;
-    opacity: 0.5;
     font-weight: bold;
-    display:none;
-}
-#avatar-upload-progress span{
+    height: 100%;
+    left: 0;
+    opacity: 0.5;
     position: absolute;
-    top: 50%;
-    margin-top: -20px;
+    text-align: center;
+    top: 0;
+    width: 100%;
+}
+#avatar-upload-progress span {
     left: 50%;
     margin-left: -30px;
+    margin-top: -20px;
+    position: absolute;
+    top: 50%;
 }
 
 /* Панель публикации */
-
-#rcl-post-bar{
-    text-align:right;
-    margin:10px 0;
+#rcl-post-bar {
+    margin: 10px 0;
+    text-align: right;
 }
-#rcl-post-bar .post-bar-item{
+#rcl-post-bar .post-bar-item {
     display: inline-block;
 }
-#rcl-post-bar .post-bar-item a{
+#rcl-post-bar .post-bar-item a {
+    display: inline-block;
     font-size: 14px;
     margin: 0 0 0 5px;
-    display: inline-block;
 }
 #rcl-post-bar .post-bar-item span,
 #rcl-post-bar .post-bar-item i {
     vertical-align: middle;
 }
-#rcl-post-bar .post-bar-item i{
-    margin: 0 0 0 0;
+#rcl-post-bar .post-bar-item i {
+    margin: 0;
 }
 #rcl-post-bar .post-bar-item i::before {
     padding: 0 5px;
 }
-#rcl-post-bar .post-bar-item .item-label{
+#rcl-post-bar .post-bar-item .item-label {
     padding: 0 5px;
-    margin: 0 0 0 0;
-}
-#rcl-post-bar .post-bar-item .item-counter{
-
+    margin: 0;
 }
 
 /*Таблица*/
 .rcl-form {
-    border: none;
     border-collapse: collapse;
     border-spacing: 0;
+    border: none;
+    box-sizing: border-box;
     font-size: 14px;
     line-height: 1.5;
     margin: 0 0 12px;
     text-align: left;
     width: 100%;
-    box-sizing: border-box;
 }
 .rcl-form tr {
     background: #fff;
@@ -1149,22 +1113,22 @@ body .ssi-modalOuter .ssi-modalTitle{
     border: 1px solid rgb(243, 243, 243);
     padding: 5px;
     text-align: left;
-    text-transform: none;					/*++Twenty14++*/
+    text-transform: none;                       /*++Twenty14++*/
     vertical-align: middle;
 }
 .rcl-form tr th {
     overflow: hidden;
 }
 .rcl-form input[type="checkbox"] {
+    float: none;
     margin: 4px 2px 0;
     width: 15px;
-    float: none;
 }
 .rcl-form input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
 .rcl-form textarea {
     background-color: #fff;
-    border: 1px solid #ddd;
     border-radius: 0;
+    border: 1px solid #ddd;
     box-shadow: none;
     box-sizing: border-box;
     height: auto;
@@ -1188,8 +1152,8 @@ body .ssi-modalOuter .ssi-modalTitle{
 }
 .rcl-form select {
     background-color: #fff;
-    border: 1px solid #ddd;
     border-radius: 0;
+    border: 1px solid #ddd;
     box-shadow: none;
     box-sizing: border-box;
     height: auto;
@@ -1229,80 +1193,78 @@ body .ssi-modalOuter .ssi-modalTitle{
     color: rgb(76, 140, 189);
     display: inline;
     font-weight: bold;
-	margin: 0;
+    margin: 0;
     padding: 0 1px 0 0;
 }
-
 .rcl-form label a:hover,
 .rcl-form td span a:hover {
     color: #000;
     text-decoration: underline;
 }
-
 .rcl-form td a:hover {
-	color: #000;
+    color: #000;
 }
 .rcl-form td a:hover i {
-	color: red;
+    color: red;
 }
-.rcl-form .file-manage-box{
+.rcl-form .file-manage-box {
     display: block;
-    overflow: hidden;
     margin-bottom: 5px;
+    overflow: hidden;
 }
 .rcl-form .file-manage-box .rcli {
     color: rgb(229, 57, 53);
     font-size: 16px;
     margin-right: 5px;
 }
-.rcl-form .file-manage-box .delete-file-url{
+.rcl-form .file-manage-box .delete-file-url {
     float: right;
 }
-.rcl-form .file-manage-box .delete-file-url a{
+.rcl-form .file-manage-box .delete-file-url a {
     display: inline-block;
 }
-.rcl-form .file-field-upload{
-    display: block;
-    padding: 5px;
+.rcl-form .file-field-upload {
     background: #f4f4f4;
+    display: block;
     font-size: 11px;
+    padding: 5px;
 }
-.rcl-form .file-field-upload input{
+.rcl-form .file-field-upload input {
     width: auto;
 }
-.rcl-form .aligncenter{
-    text-align:center;
+.rcl-form .aligncenter {
+    text-align: center;
 }
 
 /*форма*/
-.rcl-form .form-field{
+.rcl-form .form-field {
     margin: 15px 0;
 }
-.rcl-form .form-field .field-title{
+.rcl-form .form-field .field-title {
+    display: block;
     font-size: 18px;
+    font-weight: bold;
     line-height: 1;
-    display:block;
-    font-weight:bold;
     margin-bottom: 5px;
 }
 .rcl-form .submit-box {
-    text-align: right;
     background: #f2f2f2;
     overflow: hidden;
     padding: 5px;
+    text-align: right;
 }
 .rcl-form .submit-box a,
-.rcl-form .submit-box input[type="submit"]{
+.rcl-form .submit-box input[type="submit"] {
+    display: inline-block;
     font-size: 15px;
     padding: 7px 10px;
-    display: inline-block;
 }
 
 @media screen and (max-width:360px) {
     .rcl-form tr th {
-        max-width: 107px;
         -webkit-hyphens: auto;
-        hyphens: auto;
+                hyphens: auto;
+        max-width: 107px;
         word-wrap: break-word;
     }
     .rcl-form td a {
@@ -1317,74 +1279,71 @@ body .ssi-modalOuter .ssi-modalTitle{
 
 /*бегунок*/
 .rcl-runner,
-.rcl-range{
+.rcl-range {
     padding: 10px;
 }
 .rcl-runner .rcl-runner-value,
-.rcl-range .rcl-range-value{
-    font-weight: bold;
-    font-size: 18px;
-    vertical-align: middle;
+.rcl-range .rcl-range-value {
     display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
     min-width: 115px;
-    padding-right: 15px;
     padding-left: 15px;
+    padding-right: 15px;
+    vertical-align: middle;
 }
 .rcl-runner .rcl-runner-box,
-.rcl-range .rcl-range-box{
+.rcl-range .rcl-range-box {
     background: rgba(255, 255, 255, 0.8);
     border-radius: 5px;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
                 0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
     display: inline-block;
-    margin: 0;
     height: 10px;
+    margin: 0;
+    max-width: 500px;
     position: relative;
     text-align: left;
     vertical-align: middle;
     width: 100%;
-    max-width: 500px;
 }
 .rcl-runner .rcl-runner-box .ui-slider-handle,
-.rcl-range .rcl-range-box .ui-slider-handle{
+.rcl-range .rcl-range-box .ui-slider-handle {
     background: -webkit-linear-gradient(top, #fff, #ddd);
     background: linear-gradient(to bottom, #fff, #ddd);
     border-radius: 50%;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.4),
                 0 8px 6px rgba(0, 0, 0, 0.1);
     cursor: ew-resize;
+    height: 18px;
     margin-left: -.6em;
     position: absolute;
     top: -4px;
     -ms-touch-action: none;
-    touch-action: none;
-    height: 18px;
+        touch-action: none;
     width: 18px;
     z-index: 1;
 }
 .rcl-runner .rcl-runner-box .ui-slider-handle:focus,
 .rcl-range .rcl-range-box .ui-slider-handle:focus {
-    outline: none;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    outline: none;
 }
 /* ** */
-
 /*таблица конец*/
-
-
 
 @media screen and (max-width:480px) {
     #rcl-popup {
-     max-width: 95%;
+        max-width: 95%;
     }
     #rcl-popup .navi-gallery {
-     top: 25%;
+        top: 25%;
     }
     #rcl-popup .prev-attach {
-     margin-left: -47%;
+        margin-left: -47%;
     }
     #rcl-popup .next-attach {
-     margin-left: 47%;
+        margin-left: 47%;
     }
 }
 /* END галерея и видеогалерея - выделить в одно ядро */
@@ -1394,35 +1353,32 @@ body .ssi-modalOuter .ssi-modalTitle{
     position: fixed;
     top: 80px;
 }
-#rcl-popup .delete{
-	float: left;
-	margin: 5px 5px 10px;
-	display: block;
-	height: 31px;
-	width: 31px;
-
+#rcl-popup .delete {
+    display: block;
+    float: left;
+    height: 31px;
+    margin: 5px 5px 10px;
+    width: 31px;
 }
-#rcl-popup .popup-body{
-    padding:10px;
+#rcl-popup .popup-body {
+    padding: 10px;
 }
-.rcl-upload-button span.progress-bar{
-	position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
+.rcl-upload-button span.progress-bar {
     background: #36C515;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
     z-index: -99;
 }
-.prmess .rcl-upload-button{
-	float:right;
-}
-.rcl-dropzone .get-crop-image{
-	float:right;
+.rcl-dropzone .get-crop-image,
+.prmess .rcl-upload-button {
+    float:right;
 }
 .rcl-dropzone img,
-.rcl-dropzone .jcrop-holder{
-	margin:0 auto;
-	display: block;
+.rcl-dropzone .jcrop-holder {
+    display: block;
+    margin: 0 auto;
 }
 .rcl-dropzone.hover {
     background: rgba(0,0,0,0.5);

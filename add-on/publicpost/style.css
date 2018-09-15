@@ -1,9 +1,9 @@
 /*publicpost*/
-.rcl-public-box{
-    position:relative;
+.rcl-public-box {
+    position: relative;
 }
-.rcl-public-box .edit-form-link{
-    text-align:right;
+.rcl-public-box .edit-form-link {
+    text-align: right;
 }
 .rcl-public-box .rcl-service-button {
     background-color: rgba(30, 56, 75, 0.7);
@@ -20,14 +20,14 @@
     z-index: 2;
 }
 .rcl-public-box .rcl-service-button i:hover {
-	opacity: 0.8;
+    opacity: 0.8;
 }
-.rcl-public-box .rcl-field-notice{
-    display:block;
-    clear:both;
+.rcl-public-box .rcl-field-notice {
+    clear: both;
+    display: block;
 }
-.rcl-public-box .rcl-field-notice i{
-    margin-right:5px;
+.rcl-public-box .rcl-field-notice i {
+    margin-right: 5px;
 }
 .rcl-public-box .rcl-form-field {
     background-color: #f7f7f7;
@@ -50,21 +50,21 @@
     margin: 0 10px 5px 0;
     width: auto;
 }
-.rcl-public-box .rcl-form-field .rcl-terms-select .type-multiselect-input{
-    display:block;
+.rcl-public-box .rcl-form-field .rcl-terms-select .type-multiselect-input {
+    display: block;
 }
-.rcl-public-box .rcl-form-field .rcl-terms-select .rcl-tags-list{
+.rcl-public-box .rcl-form-field .rcl-terms-select .rcl-tags-list {
     overflow: hidden;
 }
-.rcl-public-box .rcl-tags-list > .block-label{
-    display: block;
+.rcl-public-box .rcl-tags-list > .block-label {
+    background: #fff;
+    box-shadow: none;
     clear: both;
+    cursor: default;
+    display: block;
     float: none;
     margin: 0;
     padding: 10px;
-    box-shadow: none;
-    cursor: default;
-    background: #fff;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn {
     border: 1px solid #ddd;
@@ -73,28 +73,28 @@
     margin-top: 5px;
     padding: 5px;
 }
-.rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn{
+.rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn {
     margin: 0;
 }
-.rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn .ms-sel-item{
-    margin:5px;
-    padding: 5px;
-    font-size: 14px;
-    color: #7a7a7a;
+.rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn .ms-sel-item {
     border-radius: 0;
-    float: none;
+    color: #7a7a7a;
     display: inline-block;
-}
-.rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn input{
-    border: 1px solid #ccc;
-    padding: 5px;
     float: none;
+    font-size: 14px;
+    margin: 5px;
+    padding: 5px;
+}
+.rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn input {
+    border: 1px solid #ccc;
     clear: both;
     display: block;
-    width: 100%!important;
+    float: none;
     margin-top: 5px;
+    padding: 5px;
+    width: 100% !important;
 }
-.rcl-public-box .rcl-tags-list .ms-ctn .ms-trigger{
+.rcl-public-box .rcl-tags-list .ms-ctn .ms-trigger {
     background: #fff;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn .ms-helper {
@@ -106,36 +106,36 @@
     right: 42px;
     top: 15px;
 }
-.rcl-public-box .submit-public-form{
+.rcl-public-box .submit-public-form {
     margin: 10px 0;
-    text-align: right;
     padding-bottom: 0;
+    text-align: right;
 }
-.rcl-public-box .public-form-button{
+.rcl-public-box .public-form-button {
     display: inline-block;
-    width: auto;
-    padding: 10px 15px;
     font-size: 14px;
-    margin-left: 10px;
     margin-bottom: 10px;
+    margin-left: 10px;
+    padding: 10px 15px;
+    width: auto;
 }
-.rcl-public-box .public-form-button > i{
+.rcl-public-box .public-form-button > i {
     margin-right: 10px;
 }
-.rcl-public-form .category-list .child-list-category{
+.rcl-public-form .category-list .child-list-category {
     background: #fff;
     padding: 5px;
     margin-left: 10px;
     margin-bottom: 5px;
 }
-.rcl-public-form .category-list .child-list-category .parent-category{
-    display: block;
-    padding: 5px;
+.rcl-public-form .category-list .child-list-category .parent-category {
     background: #f0f0f0;
-    margin-bottom: 5px;
+    display: block;
     font-weight: bold;
+    margin-bottom: 5px;
+    padding: 5px;
 }
-.rcl-public-form .attachments-post .set-thumbnail-post{
+.rcl-public-form .attachments-post .set-thumbnail-post {
     display: block;
     width: 100%;
 }
@@ -151,32 +151,27 @@
 .rcl-public-form .attachments-post .set-thumbnail-post a:hover {
     text-decoration: none;
 }
-#rcl-thumbnail-post{
-    max-width: 180px;
+#rcl-thumbnail-post {
     background: #e5e5e5;
+    max-width: 180px;
     padding: 10px;
     text-align: center;
 }
-#rcl-thumbnail-post .thumbnail-wrapper{
+#rcl-thumbnail-post .thumbnail-wrapper {
     overflow: hidden;
     position: relative;
 }
-#rcl-thumbnail-post .thumbnail-image{
-    
+#rcl-thumbnail-post .thumbnail-image img {
+    width: 100%;
 }
-#rcl-thumbnail-post .thumbnail-image img{
-    width:100%;
+#rcl-thumbnail-post #rcl-thumbnail-uploader {
+    cursor: pointer;
 }
-#rcl-thumbnail-post #rcl-thumbnail-uploader{
-    cursor:pointer;
-}
-#rcl-thumbnail-post .delete-post-thumbnail{
+#rcl-thumbnail-post .delete-post-thumbnail {
     position: absolute;
-    top: 0;
     right: 0;
+    top: 0;
 }
-
-/**/
 /*  Start */
 .rcl-public-box .attachments-post {
     display: flex;
@@ -184,7 +179,7 @@
     list-style: outside none none;
     margin: 5px 0;
     overflow: hidden;
-    padding: 0!important;
+    padding: 0 !important;
     width: 100%;
 }
 .rcl-public-box .attachments-post li {
@@ -205,14 +200,13 @@
     opacity: 0.8;
 }
 .rcl-public-box .attachments-post label span {
-	cursor: pointer;
+    cursor: pointer;
     display: inline-flex;
     font-size: 12px;
 }
 .rcl-public-box .attachments-post label span input {
     margin: 0 5px 0 0;
 }
-
 .rcl-form-field table tbody th,
 .rcl-form-field table tbody td {
     border: 1px solid rgba(219, 219, 219, 0.5);
@@ -220,17 +214,17 @@
     vertical-align: middle;
 }
 .rcl-form-field table th {
-	padding: 5px;
-	-webkit-hyphens: auto;
-	hyphens: auto;
-	width: 160px;
+    -webkit-hyphens: auto;
+            hyphens: auto;
+    padding: 5px;
+    width: 160px;
     word-wrap: break-word;
 }
 .rcl-form-field table tbody td {
-	padding: 5px 5px 0;
+    padding: 5px 5px 0;
 }
 .ssi-modalOuter.rcl-preview-post .rcl-notice-preview {
-	background: rgba(229, 57, 53, 0.15);
+    background: rgba(229, 57, 53, 0.15);
     display: block;
     text-align: center;
 }
@@ -251,17 +245,17 @@
     margin: 8px 0 0;
     padding: 7px;
 }
-#rcl-delete-post .delete-form-contayner label{
-	font-weight: normal;
+#rcl-delete-post .delete-form-contayner label {
+    font-weight: normal;
 }
-#rcl-delete-post .delete-form-contayner .reason-delete{
-	padding: 7px;
-	margin: 0 5px;
+#rcl-delete-post .delete-form-contayner .reason-delete {
+    padding: 7px;
+    margin: 0 5px;
 }
 #rcl-delete-post .delete-form-contayner .delete-post-submit {
     margin: -24px 0 0;
 }
-h3.pending-message{
+h3.pending-message {
     background: rgb(255, 207, 207);
     color: red;
     font-size: 19px;
@@ -272,13 +266,13 @@ h3.pending-message{
 }
 .post-edit-button {
     float: right;
-    margin: 0 5px;
     font-size: 20px;
     line-height: 1;
+    margin: 0 5px;
 }
 .post-edit-button a:link {
-	border: none;
-	box-shadow: none;
+    border: none;
+    box-shadow: none;
 }
 /*  End */
 
@@ -306,40 +300,40 @@ h3.pending-message{
 /*  End */
 
 /*  */
-#rcl-popup #custom-image-url{
-    padding:10px;
-    float:left;
+#rcl-popup #custom-image-url {
+    float: left;
+    padding: 10px;
 }
-#rcl-popup #custom-image-url input[type="text"]{
-    width:300px;
+#rcl-popup #custom-image-url input[type="text"] {
+    width: 300px;
 }
-#rcl-popup #user-medias{
-    padding:10px;
+#rcl-popup #user-medias {
+    padding: 10px;
 }
-#rcl-popup #user-medias h3{
+#rcl-popup #user-medias h3 {
     clear: both;
 }
-#rcl-popup #user-medias .media-list{
-    list-style:none;
-    overflow:hidden;
+#rcl-popup #user-medias .media-list {
     clear: both;
+    list-style: none;
+    overflow: hidden;
 }
-#rcl-popup #user-medias .media-list li{
-    float:left;
-    border:1px solid #ccc;
-    margin:5px;
+#rcl-popup #user-medias .media-list li {
+    border: 1px solid #ccc;
+    float: left;
+    margin: 5px;
 }
-#rcl-popup #user-medias .media-list img{
-    width:99px;
-    height:99px;
+#rcl-popup #user-medias .media-list img {
+    height: 99px;
+    width: 99px;
 }
 #rcl-popup-content input[type="text"],
-#rcl-popup-content textarea{
+#rcl-popup-content textarea {
+    margin: 5px 0;
     padding: 5px 0;
     width: 100%;
-    margin: 5px 0;
 }
-#rcl-popup-content label{
+#rcl-popup-content label {
     font-weight: bold;
 }
 /*  End */
@@ -352,9 +346,9 @@ h3.pending-message{
     border-spacing: 0;
     box-sizing: content-box;
     -webkit-hyphens: auto;
-    hyphens: auto;
+            hyphens: auto;
     table-layout: fixed;
-    width:100%;
+    width: 100%;
     word-wrap: break-word;
 }
 .wprecallblock #tab-publics table td {
@@ -383,7 +377,7 @@ h3.pending-message{
     width: 100px;
 }
 .wprecallblock .publics_block .rating-rcl {
-    float:right;
+    float: right;
 }
 .rcl-public-box #form-field-post_content .button-small {
     border-radius: 1px;
@@ -404,17 +398,16 @@ h3.pending-message{
     max-width: 100%;
     padding: 0 0 3px 4px;
 }
-.wprecallblock .publics_block .bx-viewport .pagenavi-rcl{
-    margin: 0;
+.wprecallblock .publics_block .bx-viewport .pagenavi-rcl {
     list-style-type: none;
+    margin: 0;
 }
-#tab-publics .bx-wrapper .bx-controls-direction .bx-prev{
+#tab-publics .bx-wrapper .bx-controls-direction .bx-prev {
     left: -30px;
 }
-#tab-publics .bx-wrapper .bx-controls-direction .bx-next{
+#tab-publics .bx-wrapper .bx-controls-direction .bx-next {
     right: -43px;
 }
-/*  End */
 /*  End */
 
 /*  Start */
@@ -425,25 +418,25 @@ h3.pending-message{
 /*  End */
 
 /*  Start */
-.delete-form-contayner textarea{   
-    width:100%;
+.delete-form-contayner textarea {
+    width: 100%;
 }
 /*  End */
 
 /* add correcting popup jquery-UI start */
 .ui-dialog.rcl-edit-post-form .ui-dialog-titlebar {
     background: none;
-    border: none;
     border-radius: 0;
+    border: none;
     font: 16px/32px Tahoma,arial;
     height: 34px;
     padding: 0 0 0 7px;
 }
 .ui-dialog.rcl-edit-post-form .ui-dialog-titlebar-close {
     background: none;
-    border: none;
     border-radius: 0;
-	margin: 0;
+    border: none;
+    margin: 0;
     padding: 0;
 }
 .ui-dialog.rcl-edit-post-form .ui-dialog-content {
@@ -464,8 +457,8 @@ h3.pending-message{
 }
 .ui-dialog.rcl-edit-post-form .ui-button-text-icon-primary {
     background: rgba(219, 219, 219, 0.3);
-    border: 1px solid #ccc;
     border-radius: 2px;
+    border: 1px solid #ccc;
     color: #000;
     font: 14px/1 Tahoma,arial;
     height: auto;
@@ -481,17 +474,17 @@ h3.pending-message{
 }
 .ui-dialog.rcl-edit-post-form #rcl-popup-content textarea,
 .ui-dialog.rcl-edit-post-form #rcl-popup-content input[type="text"] {
-    color: #000;
     box-sizing: border-box;
+    color: #000;
     padding: 5px;
 }
-.media-modal .screen-reader-text{
-    display:none;
+.media-modal .screen-reader-text {
+    display: none;
 }
 .media-modal .media-modal-content .media-frame select.attachment-filters,
-.media-modal .media-modal-content .attachments-browser .search{
-    max-width:200px;
+.media-modal .media-modal-content .attachments-browser .search {
     margin-left: 10px;
+    max-width: 200px;
 }
 @media screen and (max-width:480px) {
     .ui-dialog.rcl-edit-post-form {

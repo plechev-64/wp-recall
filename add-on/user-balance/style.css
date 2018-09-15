@@ -1,154 +1,143 @@
-.rcl-widget-balance{
-    max-width:400px;
+.rcl-widget-balance {
+    max-width: 400px;
 }
-.rcl-widget-balance .rcl-toggle-form-balance{
-    text-align:right;
+.rcl-widget-balance .rcl-toggle-form-balance {
+    text-align: right;
 }
-.rcl-widget-balance .rcl-toggle-form-link{
-    
-}
-.rcl-widget-balance .rcl-form-balance{
-    display:none;
+.rcl-widget-balance .rcl-form-balance {
     clear: both;
+    display: none;
 }
-.rcl-payment-buttons{
-    position:relative;
-}
-.rcl-form-add-user-count{
-    padding: 30px;
-    line-height: 1;
-    border: 2px solid #d9e0e6;
-    margin: 20px auto;
+.rcl-pay-form,
+.rcl-payment-buttons {
     position: relative;
-    background: rgba(217, 224, 230, 0.61);
 }
-.rcl-form-balance .rcl-form-add-user-count{
+.rcl-form-add-user-count {
+    background: rgba(217, 224, 230, 0.61);
+    border: 2px solid #d9e0e6;
+    line-height: 1;
+    margin: 20px auto;
+    padding: 30px;
+    position: relative;
+}
+.rcl-form-balance .rcl-form-add-user-count {
     padding: 5px;
 }
-.rcl-form-add-user-count .form-balance-notice{
-    text-align:center;
-    font-size: 16px;
-}
-.rcl-widget-balance .rcl-form-add-user-count .form-balance-notice{
-    font-size: 13px;
-}
-.rcl-form-add-user-count .rcl-form-input{
+.rcl-form-add-user-count .form-balance-notice {
     font-size: 16px;
     text-align: center;
 }
-.rcl-form-add-user-count .rcl-form-input .form-field{
-    display: block;
-    text-align: left;
-    font-size: 16px;
+.rcl-widget-balance .rcl-form-add-user-count .form-balance-notice {
+    font-size: 13px;
 }
-.rcl-form-add-user-count .rcl-form-input .form-submit{
-    text-align:right;
+.rcl-form-add-user-count .rcl-form-input {
+    font-size: 16px;
+    text-align: center;
+}
+.rcl-form-add-user-count .rcl-form-input .form-field {
+    display: block;
+    font-size: 16px;
+    text-align: left;
+}
+.rcl-form-add-user-count .rcl-form-input .form-submit {
     display: block;
     padding: 10px 0 0;
+    text-align: right;
 }
-.rcl-form-add-user-count .rcl-form-input .value-user-count{
-    width: 100%;
+.rcl-form-add-user-count .rcl-form-input .value-user-count {
+    box-sizing: border-box;
     display: block;
     padding: 5px;
-    vertical-align: bottom;  
     text-align: center;
-    box-sizing: border-box;
-}
-.rcl-form-balance .rcl-form-add-user-count .rcl-form-input .value-user-count{
-
-}
-.rcl-form-balance .rcl-form-add-user-count .rcl-form-input .rcl-get-form-pay{
-    font-size: 13px;
     vertical-align: bottom;
+    width: 100%;
+}
+.rcl-form-balance .rcl-form-add-user-count .rcl-form-input .rcl-get-form-pay {
+    font-size: 13px;
     padding: 5px;
+    vertical-align: bottom;
 }
-.rcl-form-balance .rcl-form-add-user-count .rcl-result-box{
-    text-align: center;
+.rcl-form-balance .rcl-form-add-user-count .rcl-result-box {
     margin: 10px 0;
+    text-align: center;
 }
-.rcl-form-balance .rcl-form-add-user-count .rcl-result-box form{
+.rcl-form-balance .rcl-form-add-user-count .rcl-result-box form {
     margin-top: 10px;
 }
 .rcl-pay-button .rcl-connect-submit .recall-button,
-.rcl-form-balance .rcl-form-add-user-count .recall-button{
+.rcl-form-balance .rcl-form-add-user-count .recall-button {
+    display: inline-block;
     font-size: 14px;
     padding: 5px 10px;
-    width: 100%;
-    display: inline-block;
     text-align: center;
+    width: 100%;
 }
-.rcl-form-balance .rcl-form-add-user-count .rcl_preloader{
+.rcl-form-balance .rcl-form-add-user-count .rcl_preloader {
     font-size: 60px;
 }
-.rcl-form-balance .rcl-form-add-user-count .rcl_preloader i{
+.rcl-form-balance .rcl-form-add-user-count .rcl_preloader i {
     margin: -30px 0 0 -30px;
 }
-.rcl-pay-form{
-    position: relative;
-}
-.rcl-pay-form .rcl-pay-button{
+.rcl-pay-form .rcl-pay-button {
+    background: #fff;
+    border: 1px solid #d6eeff;
+    box-sizing: border-box;
     display: inline-block;
     margin: 5px 0;
     padding: 5px;
-    border: 1px solid #d6eeff;
-    background: #ffffff;
     width: 100%;
-    box-sizing: border-box;
 }
-.rcl-pay-form .rcl-pay-button .rcl-connect-submit{
-    background-size: contain;
-    padding: 0;
+.rcl-pay-form .rcl-pay-button .rcl-connect-submit {
     background-repeat: no-repeat;
-    display: inline-block;
-    width: 100%;
+    background-size: contain;
     box-sizing: border-box;
-}
-.rcl-pay-form .rcl-pay-button .rcl-connect-submit i{
-    font-size: 46px;
     display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
+    padding: 0;
+    width: 100%;
+}
+.rcl-pay-form .rcl-pay-button .rcl-connect-submit i {
     color: #4c8cbd;
-    position: absolute;
+    display: inline-block;
+    font-size: 46px;
     left: 8px;
-    top: 50%;
+    margin-right: 10px;
     margin-top: -23px;
+    position: absolute;
+    top: 50%;
+    vertical-align: middle;
 }
-.rcl-types-connects .rcl-pay-form .rcl-pay-button .rcl-connect-submit{
-    padding: 10px 10px 10px 10px;
+.rcl-types-connects .rcl-pay-form .rcl-pay-button .rcl-connect-submit {
+    padding: 10px;
 }
-.rcl-types-connects .rcl-pay-form .rcl-pay-button .exist-merchant-icon{
+.rcl-types-connects .rcl-pay-form .rcl-pay-button .exist-merchant-icon {
     padding: 10px 10px 10px 60px;
 }
-.rcl-pay-form .rcl-pay-button .rcl-connect-submit .recall-button{
+.rcl-pay-form .rcl-pay-button .rcl-connect-submit .recall-button {
     font-size: 14px;
-    padding: 7px 5px;
     margin: 0;
+    padding: 7px 5px;
 }
-.rcl-form-add-user-count .rcl-result-box .rcl-pay-form{
+.rcl-form-add-user-count .rcl-result-box .rcl-pay-form {
     margin-top: 20px;
 }
-.rcl-form-add-user-count .form-notice{
+.rcl-form-add-user-count .form-notice {
     font-size: 14px;
 }
-.rcl-form-add-user-count .form-notice .thumb-connect{
+.rcl-form-add-user-count .form-notice .thumb-connect {
+    background-size: cover !important;
     display: inline-block;
-    width: 25px;
     height: 25px;
-    vertical-align: middle;
-    background-size: cover!important;
     margin: 5px;
+    vertical-align: middle;
+    width: 25px;
 }
-.rcl-types-paeers .rcl-account-pay .rcl-connect-submit input{
-    
-}
-#rcl-cart-notice .rcl-types-paeers{
-    text-align: left;
+#rcl-cart-notice .rcl-types-paeers {
     margin: 0 auto;
+    padding: 10px;
+    text-align: left;
     width: 300px;
-    padding: 10px;
 }
-.rcl-payment-button .recall-button{
+.rcl-payment-button .recall-button {
+    display: inline-block;
     padding: 10px;
-    display:inline-block;
 }

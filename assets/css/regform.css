@@ -1,8 +1,8 @@
 /* START Вход и регистрация */
 .panel_lk_recall {
-	color:#333;
+    color:#333;
     display: inline-block;
-    line-height: 1.5;					/*++Twenty16++*/
+    line-height: 1.5;                           /*++Twenty16++*/
     margin: 0 auto;
     max-width: 320px;
     width: 100%;
@@ -10,19 +10,19 @@
 .panel_lk_recall.pageform {
     display: block;
 }
-.panel_lk_recall.floatform{
-	display:none;
-	left: 50%;
-	margin-left: -160px;
-	position: absolute;
-	z-index: 9999;
+.panel_lk_recall.floatform {
+    display:none;
+    left: 50%;
+    margin-left: -160px;
+    position: absolute;
+    z-index: 9999;
 }
 .panel_lk_recall.floatform .close-popup {
     display: none;
 }
 div.panel_lk_recall a:not(.close-popup) {
-	border: none;							/*++Twenty15++*/
-	box-shadow: none;						/*++Twenty16++*/
+    border: none;                               /*++Twenty15++*/
+    box-shadow: none;                           /*++Twenty16++*/
     text-decoration: none;
 }
 div.panel_lk_recall .form-tab-rcl a {
@@ -32,16 +32,16 @@ div.panel_lk_recall .form-tab-rcl a {
 }
 .panel_lk_recall .form-tab-rcl {
     background: #fff;
-	border-radius: 2px;
+    border-radius: 2px;
     box-shadow: 0 0 1px 1px #bebebe;
-	display: none;
-	font: 16px/26px Verdana,Tahoma,sans-serif;
+    display: none;
+    font: 16px/26px Verdana,Tahoma,sans-serif;
     margin: 20px auto;
-	overflow: hidden;
+    overflow: hidden;
     width: 320px;
 }
 .panel_lk_recall.floatform .form-tab-rcl {
-	box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.5);
 }
 .panel_lk_recall .form_head {
     display: inline-block;
@@ -79,8 +79,8 @@ div.panel_lk_recall .form-tab-rcl a {
 .panel_lk_recall .form-tab-rcl  textarea,
 .panel_lk_recall .form-tab-rcl input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]) {
     background: #F2F2F2;
-    border: 1px solid rgba(0, 0, 0, 0.03);
     border-radius: 0;
+    border: 1px solid rgba(0, 0, 0, 0.03);
     box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.05) inset;
     box-sizing: border-box;
     color: #303030;
@@ -95,7 +95,7 @@ div.panel_lk_recall .form-tab-rcl a {
     outline: none;
     text-transform: none;
     width: 100%;
-	-webkit-box-shadow: 0 0 0px 1000px #F2F2F2 inset !important; /* chrome banana fix */
+    -webkit-box-shadow: 0 0 0px 1000px #F2F2F2 inset !important; /* chrome banana fix */
 }
 .panel_lk_recall .form-tab-rcl input:focus:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]) {
     background-color: #EBEBEB;
@@ -152,9 +152,9 @@ div.panel_lk_recall .form-tab-rcl a {
 .panel_lk_recall .form-tab-rcl input[type="submit"] {
     border: none;
     font-size: 16px;
-	margin: 0;
-	max-width: none;
-	outline: none;
+    margin: 0;
+    max-width: none;
+    outline: none;
     padding: 10px;
     text-transform: uppercase;
     width: 100%;
@@ -175,7 +175,7 @@ div.panel_lk_recall .form-tab-rcl a {
 .panel_lk_recall .form-block-rcl .required {
     color: rgb(229, 57, 53);
     font: bold 15px/1 Verdana,arial;
-	padding: 0;
+    padding: 0;
     position: absolute;
     right: 12px;
     top: 15px;
@@ -191,7 +191,6 @@ div.panel_lk_recall .form-tab-rcl a {
 .panel_lk_recall .form-block-rcl label .required {
     position: inherit;
 }
-
 .form_rmmbr a {
     background: #e6e7e8;
     float: left;
@@ -206,11 +205,11 @@ div.panel_lk_recall .form-tab-rcl a {
 .form-tab-rcl .form-title {
     display: block;
     font-size: 20px;
-	margin: 0 0 7px;
+    margin: 0 0 7px;
     text-align: center;
 }
 .form-block-rcl #passwordStrength {
-	max-width: 290px;
+    max-width: 290px;
     padding: 8px;
     width: 150px;
 }
@@ -226,7 +225,7 @@ div.panel_lk_recall .form-tab-rcl a {
 .form-block-rcl #passwordStrength.strength5 {
     width: 100%;
 }
-.form-block-rcl #notice-chek-password{
+.form-block-rcl #notice-chek-password {
     margin-top: 10px;
 }
 .form-block-rcl .rcl-field-notice {
@@ -284,17 +283,17 @@ div.panel_lk_recall .form-tab-rcl a {
 .panel_lk_recall .buttons a span {
     vertical-align: middle;
 }
-.panel_lk_recall .username{
-	margin: 0 0 5px;
+.panel_lk_recall .username {
+    margin: 0 0 5px;
 }
-.panel_lk_recall .author-avatar{
-	margin:0 5px 0 0;
-	float: left;
-	position: relative;
-	width: 67px;						/*++Twenty16++*/
+.panel_lk_recall .author-avatar {
+    float: left;
+    margin:0 5px 0 0;
+    position: relative;
+    width: 67px;                                /*++Twenty16++*/
 }
 .panel_lk_recall .author-avatar a {
-	display: inline-block;
+    display: inline-block;
     height: auto;
     width: 100%;
 }
@@ -309,39 +308,35 @@ div.panel_lk_recall .form-tab-rcl a {
 /* END панель управления */
 /* END Вход и регистрация */
 
-#registerform .form-block-rcl{
+#registerform .form-block-rcl {
     margin-bottom: 15px;
     position: relative;
 }
-#registerform .form-block-rcl label{
-    display:block;
-    margin-bottom:5px;
+#registerform .form-block-rcl label {
+    display: block;
+    margin-bottom: 5px;
 }
-#registerform .form-block-rcl .required{
-    position: absolute;
-    left: -15px;
-    top: 5px;
-    color:red;
+#registerform .form-block-rcl .required {
+    color: red;
     font-size: 20px;
+    left: -15px;
+    position: absolute;
+    top: 5px;
 }
 #registerform .rcl-checkbox-box,
-#registerform .rcl-radio-box{
+#registerform .rcl-radio-box {
     display: block;
     padding: 3px 0 3px 20px;
 }
 #registerform .rcl-checkbox-box label,
-#registerform .rcl-radio-box label{
-    display:inline-block;
+#registerform .rcl-radio-box label {
+    display: inline-block;
 }
 #registerform .form-block-rcl textarea,
 #registerform .form-block-rcl select,
-#registerform .form-block-rcl input:not([type="checkbox"]):not([type="radio"]){
+#registerform .form-block-rcl input:not([type="checkbox"]):not([type="radio"]) {
     padding: 10px;
     width: 100%;
-}
-#registerform .form-block-rcl input[type="checkbox"],
-#registerform .form-block-rcl input[type="radio"]{
-    
 }
 #registerform .form-block-rcl .login-error,
 #registerform .form-block-rcl .login-message {

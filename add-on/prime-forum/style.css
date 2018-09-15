@@ -32,10 +32,10 @@
     font-family: rcl-awesome;
     font-size: 20px;
     left: 5px;
-    position: absolute;
-    top: 5px;
     line-height: normal;
     margin: 0;
+    position: absolute;
+    top: 5px;
     width: auto;
 }
 #prime-forum blockquote {
@@ -50,10 +50,10 @@
     hyphens: auto;
     line-height: normal;
     margin: 15px 8px;
+    min-height: initial;
     overflow-wrap: break-word;
     padding: 20px 10px 15px 30px;
     position: relative;
-    min-height: initial; 
 }
 #prime-forum blockquote p {
     font-size: initial;
@@ -71,12 +71,12 @@
     top: 3px;
 }
 #prime-forum pre{
-    background-color: #ffffff;
+    background-color: #fff;
     background-image: none !important;
     border: 2px solid #e3e8ec;
     color: #1f7ca9 !important;
-    font-size: inherit;
     display: block;
+    font-size: inherit;
     line-height: normal;
     margin: 10px 0;
     overflow: auto;
@@ -86,49 +86,48 @@
     word-wrap: normal;
 }
 #prime-forum code{
-    padding: 0 .3em;
     background-color: rgba(0,0,0,.06);
-    border: 1px solid rgba(0,0,0,.08);
-    border-top: 0;
     border-bottom: 0;
     border-radius: 2px;
+    border-top: 0;
+    border: 1px solid rgba(0,0,0,.08);
+    padding: 0 .3em;
 }
-#prime-forum .preloader-box{
-    position:relative;
+#prime-forum .preloader-box {
+    position: relative;
 }
-#prime-forum .prime-spoiler{
-    padding: 5px;
+#prime-forum .prime-spoiler {
     border: 1px solid #e5e5e5;
-    clear:both;
+    clear: both;
+    padding: 5px;
 }
-#prime-forum .prime-spoiler .prime-spoiler-link{
+#prime-forum .prime-spoiler .prime-spoiler-link {
+    background: #f1f1f1;
     color: #4d78af;
     display: block;
     padding: 5px 10px;
-    background: #f1f1f1;
 }
-#prime-forum .prime-spoiler .prime-spoiler-content{
-    background: #ffffff;
-    padding: 5px;
+#prime-forum .prime-spoiler .prime-spoiler-content {
+    background: #fff;
     display: none;
-}
-#prime-forum .prime-offtop{
     padding: 5px;
+}
+#prime-forum .prime-offtop {
     border: 1px solid #e5e5e5;
-    clear:both;
-}
-#prime-forum .prime-offtop .prime-offtop-title{
-    font-size:12px;
-    display: block;
-    padding: 5px 10px;
-    background: #f1f1f1;
-}
-#prime-forum .prime-offtop .prime-offtop-content{
-    background: #ffffff;
+    clear: both;
     padding: 5px;
-    font-size:11px;
 }
-
+#prime-forum .prime-offtop .prime-offtop-title {
+    background: #f1f1f1;
+    display: block;
+    font-size: 12px;
+    padding: 5px 10px;
+}
+#prime-forum .prime-offtop .prime-offtop-content {
+    background: #fff;
+    font-size: 11px;
+    padding: 5px;
+}
 
 /* START quicktags editor */
 #prime-topic-form-box .wp-editor-container {
@@ -142,7 +141,7 @@
     display: inline-block;
     position: relative;
 }
-#prime-topic-form-box span[id^="qt_button"] input{
+#prime-topic-form-box span[id^="qt_button"] input {
     height: auto;
     line-height: 24px;
     margin: 0 4px 4px 0;
@@ -214,31 +213,30 @@
 }
 /* END quicktags editor */
 
-
-.prime-last-posts{
+.prime-last-posts {
     line-height: 1;
 }
-body .prime-last-posts ul.last-post-list{
-    padding-left:0;
+body .prime-last-posts ul.last-post-list {
+    padding-left: 0;
 }
-.prime-last-posts .last-post-box{
-    overflow: hidden;
+.prime-last-posts .last-post-box {
     margin-bottom: 10px;
+    overflow: hidden;
 }
-.prime-last-posts .last-post-author-avatar{
+.prime-last-posts .last-post-author-avatar {
     float: left;
     margin-right: 10px;
 }
-.prime-last-posts .last-post-title{
-    margin-bottom: 5px;
+.prime-last-posts .last-post-title {
     font-weight: bold;
+    margin-bottom: 5px;
 }
-.prime-last-posts .last-post-content{
+.prime-last-posts .last-post-content {
     overflow: hidden;
 }
 #prime-forum .prime-post.new-post {
     -webkit-animation: rcl-blink 2s linear both;
-    animation: rcl-blink 2s linear both;
+            animation: rcl-blink 2s linear both;
 }
 /*post edit list*/
 .post-edit-list {
@@ -261,9 +259,9 @@ body .prime-last-posts ul.last-post-list{
     margin-right: 15px;
 }
 #prime-forum .post-separator{
+    border-bottom: 1px solid #ccc;
     display: block;
     font-size: 12px;
-    border-bottom: 1px solid #ccc;
     margin: 15px 0 5px 0;
     text-align: right;
 }
