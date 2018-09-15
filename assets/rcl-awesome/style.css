@@ -2,8 +2,9 @@
   font-family: 'rcl-awesome';
   src:  url('fonts/rcl-awesome.eot?7jdlrg');
   src:  url('fonts/rcl-awesome.eot?7jdlrg#iefix') format('embedded-opentype'),
-    url('fonts/rcl-awesome.ttf?7jdlrg') format('truetype'),
+    url('fonts/rcl-awesome.woff2?7jdlrg') format('woff2'),
     url('fonts/rcl-awesome.woff?7jdlrg') format('woff'),
+    url('fonts/rcl-awesome.ttf?7jdlrg') format('truetype'),
     url('fonts/rcl-awesome.svg?7jdlrg#rcl-awesome') format('svg');
   font-weight: normal;
   font-style: normal;
