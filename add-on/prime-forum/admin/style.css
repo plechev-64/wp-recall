@@ -1,163 +1,110 @@
-#options-prime-forum.wrap-recall-options{
+#options-prime-forum.wrap-recall-options {
+    border: none;
     display: block;
     padding: 0;
-    border: none;
 }
-#prime-options{
+#prime-options {
     max-width: 550px;
 }
-#prime-options h3{
+#prime-options h3 {
     margin: 5px 0;
 }
-#prime-options select{
+#prime-options select {
     width: 100%;
 }
-#prime-options .rcl-option{
-    margin-bottom:15px;
+#prime-options .rcl-option {
+    margin-bottom: 15px;
 }
-#prime-options .rcl-field-notice{
-    font-size:12px;
+#prime-options .rcl-field-notice {
+    font-size: 12px;
 }
-#prime-forum-manager{
-    
-}
-#prime-forum-manager .manager-box{
-    
-}
-#prime-forum-manager .manage-groups{
+#prime-forum-manager .manage-groups {
     float: left;
     max-width: 500px;
 }
-#prime-forum-manager .manage-forums{
+#prime-forum-manager .manage-forums {
     border: 2px solid #4c8cbd;
-    overflow: hidden;
-    width: auto;
     display: block;
     max-width: 600px;
+    overflow: hidden;
+    width: auto;
 }
-#prime-forum-manager .manager-form{
-    padding: 10px;
+#prime-forum-manager .manager-form {
     background: #eaeaea;
     border: 1px solid #ccc;
+    padding: 10px;
 }
-#prime-forum-manager .manager-form .form-field{
-    
+#prime-forum-manager .manager-box .form-buttons {
+    text-align: right;
 }
-#prime-forum-manager .manager-box .form-buttons{
-    text-align:right;
+#prime-forum-manager .manager-box .form-buttons input {
+    width: auto;
 }
-#prime-forum-manager .manager-box .form-buttons input{
-    width:auto;
-}
-#prime-forum-manager .rcl-custom-fields-box .field-controls{
-    
-}
-#prime-forum-manager .rcl-custom-fields-box .field-controls a{
+#prime-forum-manager .rcl-custom-fields-box .field-controls a {
+    background: #f5f5f5;
     border: 1px solid #ccc;
     padding: 5px;
-    background: #f5f5f5;
 }
-#prime-forum-manager .rcl-custom-fields-box .field-controls .field-trash{
-    color:rgba(229, 57, 53, 0.7);
+#prime-forum-manager .rcl-custom-fields-box .field-controls .field-trash {
+    color: rgba(229, 57, 53, 0.7);
 }
-#prime-forum-manager .rcl-custom-fields-box .field-controls a:before{
-    
-}
-#prime-forum-manager .rcl-custom-fields-box .field-controls .field-edit:before{
+#prime-forum-manager .rcl-custom-fields-box .field-controls .field-edit:before {
     content: "\f107";
 }
-#prime-forum-manager .rcl-custom-fields-box .field-controls .field-trash:before{
+#prime-forum-manager .rcl-custom-fields-box .field-controls .field-trash:before {
     content: "\f182";
 }
-#prime-forum-manager .rcl-custom-fields-box .field-controls .get-forums:before{
+#prime-forum-manager .rcl-custom-fields-box .field-controls .get-forums:before {
     content: "\f325";
 }
-#prime-forum-manager .rcl-custom-fields-box .type-groups:before{
+#prime-forum-manager .rcl-custom-fields-box .type-groups:before {
     content: "\f318";
 }
-#prime-forum-manager .rcl-custom-fields-box .type-forums:before{
+#prime-forum-manager .rcl-custom-fields-box .type-forums:before {
     content: "\f203";
 }
-#prime-forum-manager .rcl-custom-fields-box .rcl-custom-field{
+#prime-forum-manager .rcl-custom-fields-box .rcl-custom-field {
     margin-bottom: 5px;
 }
-#prime-forum-manager .rcl-custom-fields-box .forums-list ul > .rcl-custom-field{
-    /*margin-bottom: 0px;*/
-}
-#prime-forum-manager .rcl-custom-fields-box .active-group{
-    
-}
-#prime-forum-manager .rcl-custom-fields-box .active-group .field-header:before{
+#prime-forum-manager .rcl-custom-fields-box .active-group .field-header:before {
+    border-color: transparent transparent transparent rgb(76, 140, 189);
     border-style: solid;
-    border-width: 22px 0px 22px 23px;
+    border-width: 22px 0 22px 23px;
     content: "";
     height: 0;
-    right: -23px;
     position: absolute;
-    top: 0px;
+    right: -23px;
+    top: 0;
     width: 0;
-    border-color: transparent transparent transparent rgb(76, 140, 189);
 }
-#prime-forum-manager .rcl-custom-fields-box .active-group .field-header{
+#prime-forum-manager .rcl-custom-fields-box .active-group .field-header {
     border: 2px solid rgb(76, 140, 189);
 }
-#prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .children-box{
-    min-height: 0px;
+#prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .children-box {
+    min-height: 0;
     margin-left:20px;
     margin-top: 5px;
 }
-#prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .must-receive{
-    min-height: 5px;
+#prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .must-receive {
     margin:2px 0 2px 20px;
-    /*border: 1px solid #fff;*/
-    /*background: rgb(234, 234, 234);*/
+    min-height: 5px;
     padding: 5px;
 }
-#prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .must-receive .children-box{
-    margin-top:0;
+#prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .must-receive .children-box {
+    margin-top: 0;
 }
-#prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .must-receive .rcl-custom-field{
-    margin-bottom:0;
+#prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .must-receive .rcl-custom-field {
+    margin-bottom: 0;
 }
-#prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .children-box li{
-    /*margin-bottom:0;*/
+#prime-forum-manager .forums-list {
+    position: relative;
 }
-#prime-forum-manager .forums-list{
-    position:relative;
-}
-
-#prime-forum-manager .forums-list .list-receive{
-    /*position:absolute;
-    top:0;
-    width:100%;*/
-    
-}
-#prime-forum-manager .forums-list .list-receive .rcl-custom-field .field-header{
-    /*padding:0;*/
-}
-#prime-forum-manager .forums-list .list-receive .rcl-custom-field .field-header .field-type{
-    /*display:none;*/
-}
-#prime-forum-manager .forums-list .list-receive .rcl-custom-field .field-header .field-controls{
-    /*display:none;*/
-}
-#pfm-forums-list{
-    /*max-height: 600px;
-    overflow: auto;
-    border: 2px solid #ccc;
-    padding: 10px;*/
-}
-#pfm-forums-list .field-header{
+#pfm-forums-list .field-header {
     border-color: #4c8cbd;
 }
-#pfm-forums-list ul{
-    /*position:absolute;
-    top:0;
-    width:100%;*/
-}
-#prime-forum-manager .ui-sortable-helper{
+#prime-forum-manager .ui-sortable-helper {
     box-shadow: 5px 5px 5px #797979;
 }
-#prime-forum-manager .ui-sortable-helper .field-header{
+#prime-forum-manager .ui-sortable-helper .field-header {
     background: #fff;
 }

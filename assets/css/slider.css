@@ -1,20 +1,18 @@
 /* slider start */
-.rcl-slider{
+.rcl-slider {
     margin: 15px 0;
 }
 /* jssor slider loading skin spin css */
 .jssorl-009-spin img {
-    animation-name: jssorl-009-spin;
     animation-duration: 1.6s;
     animation-iteration-count: infinite;
+    animation-name: jssorl-009-spin;
     animation-timing-function: linear;
 }
-
 @keyframes jssorl-009-spin {
     from {
         transform: rotate(0deg);
     }
-
     to {
         transform: rotate(360deg);
     }
@@ -23,84 +21,66 @@
 /* jssor slider thumbnail navigator skin 07 css
 region Thumbnail Navigator Skin Begin
 Help: https://www.jssor.com/development/slider-with-thumbnail-navigator.html
-
-.rcl-gallery-navigator .p            (normal)
-.rcl-gallery-navigator .p:hover      (normal mouseover)
-.rcl-gallery-navigator .pav          (active)
-.rcl-gallery-navigator .pav:hover    (active mouseover)
-.rcl-gallery-navigator .pdn          (mousedown)
 */
-
 .rcl-gallery-navigator {
-    position: absolute;
     /* size of thumbnail navigator container */
     background-color:rgb(232, 232, 232);
+    position: absolute;
 }
 .rcl-gallery-navigator .p {
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
 }
-
 .rcl-gallery-navigator .i {
-    position: absolute;
-    top: 0px;
-    left: 0px;
     filter: alpha(opacity=80);
+    left: 0;
     opacity: .8;
+    position: absolute;
+    top: 0;
 }
-
 .rcl-gallery-navigator .p:hover .i, .rcl-gallery-navigator .pav .i {
     filter: alpha(opacity=100);
     opacity: 1;
 }
-
 .rcl-gallery-navigator .o {
-    position: absolute;
-    top: 0px;
-    left: 0px;
     border: 1px solid #000;
     box-sizing: content-box;
-    transition: border-color .6s;
-    -moz-transition: border-color .6s;
+    left: 0;
+    position: absolute;
+    top: 0;
     -webkit-transition: border-color .6s;
-    -o-transition: border-color .6s;
+       -moz-transition: border-color .6s;
+         -o-transition: border-color .6s;
+            transition: border-color .6s;
 }
-
 .rcl-gallery-navigator .pav .o {
     border-color: #0099ff;
 }
-
 .rcl-gallery-navigator .p:hover .o {
     border-color: #fff;
-    transition: none;
-    -moz-transition: none;
     -webkit-transition: none;
-    -o-transition: none;
+       -moz-transition: none;
+         -o-transition: none;
+            transition: none;
 }
-
 .rcl-gallery-navigator .p.pdn .o {
     border-color: #0099ff;
 }
-
-* html .rcl-gallery-navigator .o {
-    /* ie quirks mode adjust */
-}
-
 /*
 #region Arrow Navigator Skin Begin
 Help: https://www.jssor.com/development/slider-with-arrow-navigator.html
 */
 .rcl-navigator-arrow {
-    display:block;
-    position:absolute;
-    cursor:pointer;
+    cursor: pointer;
+    display: block;
+    position: absolute;
 }
 .rcl-navigator-arrow .a {
-    fill:none;
-    stroke:#fff;
-    stroke-width:360;
-    stroke-miterlimit:10;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 360;
+    stroke-miterlimit: 10;
 }
 .rcl-navigator-arrow:hover {
     opacity:.8;

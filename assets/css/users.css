@@ -1,8 +1,8 @@
 /*Список пользователей*/
 /*общие стили*/
 .userlist {
-	clear: both;
-	overflow: hidden;
+    clear: both;
+    overflow: hidden;
 }
 .userlist .user-single {
     background: rgba(243, 243, 243, 0.3);
@@ -11,8 +11,8 @@
     line-height: 1.4;
 }
 .userlist .user-single a {
-	border: none;								/*++Twenty15++*/
-	box-shadow: none;							/*++Twenty16++*/
+    border: none;                                   /*++Twenty15++*/
+    box-shadow: none;                               /*++Twenty16++*/
     height: auto;
     margin: 0 0 3px;
     text-decoration: none;
@@ -33,13 +33,13 @@
 }
 .userlist .status_author_mess.offline {
     color: #888;
-	font-size: 12px;
+    font-size: 12px;
     margin: 4px 0 0;
 }
 .userlist .user-single .thumb-user {
     box-sizing: border-box;
     float: left;
-	line-height: 1;
+    line-height: 1;
     margin: 0;
     position: relative;
 }
@@ -47,8 +47,8 @@
     display: inline-block;
 }
 .userlist .thumb-user a img {
+    border-radius: 0;                               /*++Twenty16++*/
     border: none;
-	border-radius: 0;							/*++Twenty16++*/
     display: block;
     float: none;
     height: auto;
@@ -57,7 +57,6 @@
     padding: 0;
     width: 100%;
 }
-
 
 /*списком*/
 .userlist.rows-list .user-single {
@@ -75,9 +74,9 @@
 }
 .userlist.rows-list .userlist_top {
     background: #eee;
+    margin-bottom: 5px;
     overflow: hidden;
     padding: 5px 8px 5px 95px;
-    margin-bottom: 5px;
 }
 .userlist.rows-list .userlist_top h3 {
     clear: none;
@@ -154,7 +153,6 @@
     padding: 0 0 3px;
 }
 
-
 /* вывод аватарками и mini start */
 .userlist.avatars-list .user-single {
     float: left;
@@ -175,7 +173,7 @@
 }
 .userlist.mini-list .thumb-user,
 .userlist.avatars-list .thumb-user {
-	width:100%
+    width:100%
 }
 .userlist .user-single .thumb-user .status_user {
     font-family: rcl-awesome,arial,sans-serif;
@@ -186,7 +184,6 @@
 }
 /* вывод аватарками и mini end */
 
-
 /* Cards */
 .userlist.cards-list .user-single {
     animation: u_card_fade 800ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -196,9 +193,9 @@
     font-size: 14px;
     margin: 2%;
     overflow: hidden;
+    transform: translate3d(0px, 0px, 0px);
     transition: box-shadow 0.2s linear 0s;
     width: 46%;
-    transform: translate3d(0px, 0px, 0px);
 }
 @keyframes u_card_fade {
     0% {
@@ -247,10 +244,9 @@
 }
 .userlist.cards-list a img {
     margin: calc(-50% + 80px) 0;
+    min-height: 205px;
     transform: scale(1.05);
-    min-height: 205px; 
 }
-
 .userlist.cards-list .u_card_name {
     background: rgba(0, 0, 0, 0.4);
     bottom: 0;
@@ -282,16 +278,15 @@
 }
 /* END Cards */
 
-
 @media screen and (max-width:480px) {
-	.userlist.avatars-list .user-single {
-		padding: 1%;
-		width: 19%;
-	}
-	.userlist .user-single .thumb-user .status_user,
+    .userlist.avatars-list .user-single {
+        padding: 1%;
+        width: 19%;
+    }
+    .userlist .user-single .thumb-user .status_user,
     .userlist .user-single .thumb-user .status_user .rcli {
-		font-size: 11px;
-	}
+        font-size: 11px;
+    }
     .userlist.mini-list .user-single {
         max-width: 64px;
     }
@@ -321,9 +316,9 @@
         margin: 8px 0;
         max-width: 98%;
     }
-	.userlist.avatars-list .user-single {
-		width: 24%;
-	}
+    .userlist.avatars-list .user-single {
+        width: 24%;
+    }
     .userlist.cards-list .user-single {
         float: none;
         margin: 5px auto 20px;

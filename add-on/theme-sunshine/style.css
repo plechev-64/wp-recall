@@ -141,8 +141,8 @@
 }
 .cab_content {
     display: inline-block;
-    min-height: 230px;
     margin: 90px 0 0;
+    min-height: 230px;
     position: relative;
     width: 100%;
     z-index: 2;
@@ -218,10 +218,10 @@
 }
 .cab_sidebar {
     border-left: 1px solid #e5e5e5;
+    flex-shrink: 0;
     margin: 0;
     max-width: 280px;
     padding: 5px;
-    flex-shrink: 0;
 }
 .cab_sidebar .panel_lk_recall .rcl-widget-buttons {
     overflow: hidden;
@@ -230,7 +230,6 @@
     min-width: 380px;
 }
 /* END для сайдбара-виджета */
-
 
 /* START стили кнопок для скрипта */
 #lk-menu a {
@@ -265,8 +264,8 @@
     padding: 4px 7px;
 }
 #lk-menu a.bars .rcli {
-    font-size: 23px;
     background: transparent;
+    font-size: 23px;
     padding: 0;
 }
 #sunshine_ext_menu {
@@ -314,9 +313,9 @@
 
 /* START left buttons */
 .vertical-menu #lk-menu a .rcli {
+    box-sizing: border-box;
     display: table-cell;
     width: 35px;
-    box-sizing: border-box;
 }
 .vertical-menu #lk-menu a span {
     display: table-cell;

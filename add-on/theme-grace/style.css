@@ -18,13 +18,13 @@
     display: inline-block;
 }
 .cab_bttn_lite .recall-button {
-	padding: 0;
+    padding: 0;
 }
 .cab_bttn_lite .rcli {
     display: none;
 }
 .cab_bttn_lite .rcl-tab-button a > span {
-	color: #ccc;
+    color: #ccc;
     display: table;
     text-align: center;
 }
@@ -34,7 +34,7 @@
     display: table-caption;
     font-size: 20px;
     font-weight: bold;
-	padding: 0;
+    padding: 0;
     text-align: center;
 }
 #lk-conteyner .cab_bttn_lite .rcl-tab-button span span > span {
@@ -43,7 +43,7 @@
 /* END кнопки lite */
 
 /* START upload cover */
-#rcl-office .rcl-cover-icon{
+#rcl-office .rcl-cover-icon {
     background: rgba(0, 0, 0, 0.3);
     color: #ddd;
     float: right;
@@ -51,7 +51,7 @@
     padding: 4px 7px;
     z-index: 3;
 }
-#rcl-office .rcl-cover-icon:hover{
+#rcl-office .rcl-cover-icon:hover {
     color: #eee;
 }
 /* END upload cover */
@@ -68,45 +68,45 @@
     max-height: 100%;
     max-width: 100%;
 }
-#rcl-avatar .avatar-icons{
+#rcl-avatar .avatar-icons {
+    height: 100%;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
-    height: 100%;
     width: 100%;
 }
-#rcl-avatar .avatar-icons .rcl-avatar-icon{
+#rcl-avatar .avatar-icons .rcl-avatar-icon {
     position: absolute;
 }
-#rcl-avatar .avatar-icons .rcl-avatar-icon a{
-    font-size: 20px;
-    padding: 5px;
+#rcl-avatar .avatar-icons .rcl-avatar-icon a {
     background: rgb(216, 231, 238);
     color: rgb(229, 57, 53);
+    font-size: 20px;
     opacity: 0.7;
+    padding: 5px;
 }
-#rcl-avatar .avatar-icons .rcl-avatar-icon a:hover{
+#rcl-avatar .avatar-icons .rcl-avatar-icon a:hover {
     opacity: 1;
 }
-#rcl-avatar .icon-avatar-delete{
-    top: 0;
-    right: 0;
+#rcl-avatar .icon-avatar-delete {
     display: none;
+    right: 0;
+    top: 0;
 }
-#rcl-avatar:hover .icon-avatar-delete{
-    display:block
+#rcl-avatar:hover .icon-avatar-delete {
+    display: block
 }
-#rcl-avatar .icon-avatar-upload{
+#rcl-avatar .icon-avatar-upload {
     bottom: 0;
     left: 0;
 }
-#rcl-avatar .icon-webcam-upload{
+#rcl-avatar .icon-webcam-upload {
     bottom: 0;
     left: 35px;
 }
-#rcl-avatar .icon-user-info{
-    top: 0;
+#rcl-avatar .icon-user-info {
     left: 0;
+    top: 0;
 }
 /* END аватар и элементы управления внутри него */
 
@@ -121,8 +121,8 @@
     background-size: cover;
     margin: 0 auto;
     max-width: 1280px;
-	min-height: 190px;
-	padding: 0;
+    min-height: 190px;
+    padding: 0;
 }
 .wprecallblock .rcli.cab_cover_upl {
     margin: 0 8px 0 0;
@@ -132,9 +132,9 @@
     background: rgba(0, 0, 0, 0.4);
     box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.5);
     display: table;
-	line-height: 1.4;
-    margin: 105px 0 0;
     height: 55px;
+    line-height: 1.4;
+    margin: 105px 0 0;
     width: 100%;
 }
 .cab_lt_title {
@@ -147,12 +147,12 @@
     color: #eee;
     font-size: 24px;
     line-height: 1.1;
-	padding: 0;
+    padding: 0;
 }
 .wprecallblock .rcl-action {
-	color: #ccc;
-	font-size: 13px;
-	margin: 0 0 0 10px;
+    color: #ccc;
+    font-size: 13px;
+    margin: 0 0 0 10px;
 }
 .cab_bttn_lite {
     display: table-cell;
@@ -162,22 +162,22 @@
     vertical-align: middle;
 }
 .cab_bttn_lite > span {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 #rcl-office .cab_bttn_lite .rcl-tab-button .rcl-menu-notice span {
     display: inline-block;
 }
 .cab_lt_sidebar {
-	float: left;
-	width: 190px;
+    float: left;
+    width: 190px;
 }
 .cab_lt_sidebar .lk-sidebar {
     display: inline-block;
-	line-height: 1.4;
+    line-height: 1.4;
     margin: 0 0 15px;
 }
 .lk-sidebar .lk-avatar {
-	display: block;
+    display: block;
     height: 190px;
     width: 190px;
 }
@@ -188,7 +188,7 @@
 .cab_lt_mobile#lk-menu .recall-button {
     display: flex;
     font-size: 14px;
-	line-height: 1.1;
+    line-height: 1.1;
     margin: 3px 0 0;
     padding: 0;
     white-space: normal;
@@ -196,11 +196,11 @@
 }
 .cab_lt_sidebar .recall-button:hover {
     opacity: 1;
-	overflow: hidden;
+    overflow: hidden;
 }
 .cab_lt_sidebar .recall-button:hover .rcli,
 .cab_lt_sidebar .recall-button:hover span {
-	background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 .cab_lt_sidebar .recall-button .rcli,
 .cab_lt_mobile#lk-menu .recall-button .rcli {
@@ -214,8 +214,8 @@
     justify-content: center;
     min-width: 32px;
 }
-.cab_lt_sidebar .recall-button.active:hover .rcli{
-	background: rgba(0, 0, 0, 0.1);
+.cab_lt_sidebar .recall-button.active:hover .rcli {
+    background: rgba(0, 0, 0, 0.1);
 }
 .cab_lt_sidebar .recall-button.active:hover span {
     background: transparent;
@@ -235,8 +235,8 @@
     padding: 0;
 }
 .cab_lt_sidebar #lk-menu span span {
-	padding: 10px 10px 10px 5px;
-	position: relative;
+    padding: 10px 10px 10px 5px;
+    position: relative;
 }
 .cab_lt_sidebar #lk-menu span span::after {
     content: "\f0da";			/* fa-caret-right */
@@ -255,98 +255,97 @@
     vertical-align: middle;
 }
 #lk-menu.st_menu_moved  {
-	background: #fff;
+    background: #fff;
     border-bottom: 3px solid #fff;
     border-left: 3px solid #fff;
     border-right: 3px solid #fff;
-	height: 0;
-	left: -300px;
-	position: absolute;
-	top: 0;
-	visibility: hidden;
-	z-index: 2000;
+    height: 0;
+    left: -300px;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    z-index: 2000;
 }
 #lk-menu.st_menu_moved.cab_lt_mobile {
-	height: auto;
-	left: 0;
-	max-width: 200px;
-	min-width: 150px;
-	top: 0;
-	transition: left 0.25s ease-in-out 0s;
-	visibility: visible;
+    height: auto;
+    left: 0;
+    max-width: 200px;
+    min-width: 150px;
+    top: 0;
+    transition: left 0.25s ease-in-out 0s;
+    visibility: visible;
 }
 /* END мобильные кнопки */
 
-
 /* START responsive */
 @media screen and (max-width:768px) {
-	.cab_lt_sidebar,
-	.cab_lt_sidebar #lk-menu,
-	.cab_lt_sidebar .lk-sidebar {
-		width: 150px;
-	}
-	.lk-sidebar .lk-avatar {
-		height: 150px;
-		width: 150px;
-	}
+    .cab_lt_sidebar,
+    .cab_lt_sidebar #lk-menu,
+    .cab_lt_sidebar .lk-sidebar {
+        width: 150px;
+    }
+    .lk-sidebar .lk-avatar {
+        height: 150px;
+        width: 150px;
+    }
 }
 @media screen and (max-width:640px) {
-	.cab_lt_line {
-		display: block;
-		height: auto;
-		margin: 80px 0 0;
-	}
-	.cab_lt_title {
-		display: block;
-		max-width: none;
-		width: 100%;
-	}
-	.cab_bttn_lite {
-		display: block;
-		padding: 0 15px 2px;
-	}
+    .cab_lt_line {
+        display: block;
+        height: auto;
+        margin: 80px 0 0;
+    }
+    .cab_lt_title {
+        display: block;
+        max-width: none;
+        width: 100%;
+    }
+    .cab_bttn_lite {
+        display: block;
+        padding: 0 15px 2px;
+    }
 }
 @media screen and (max-width:568px) {
-	.wprecallblock #lk-conteyner {
-		float: right;
-		width: calc(100% - 150px);
-	}
-	.cab_lt_line,
-	.cab_lt_sidebar .lk-sidebar {
-		margin: 0;
-	}
-	.wprecallblock .rcli.cab_cover_upl {
-		margin: 0;
-		padding: 6px;
-		position: absolute;
-		right: 0;
-	}
-	.cab_lt_title {
-		width: calc(100% - 36px);
-	}
-	.wprecallblock .cab_lt_title h2 {
-		font-size: 20px;
-		padding: 7px 0 0;
-	}
-	#rcl-tabs {
-		width: 100%;
-	}
+    .wprecallblock #lk-conteyner {
+        float: right;
+        width: calc(100% - 150px);
+    }
+    .cab_lt_line,
+    .cab_lt_sidebar .lk-sidebar {
+        margin: 0;
+    }
+    .wprecallblock .rcli.cab_cover_upl {
+        margin: 0;
+        padding: 6px;
+        position: absolute;
+        right: 0;
+    }
+    .cab_lt_title {
+        width: calc(100% - 36px);
+    }
+    .wprecallblock .cab_lt_title h2 {
+        font-size: 20px;
+        padding: 7px 0 0;
+    }
+    #rcl-tabs {
+        width: 100%;
+    }
 }
 @media screen and (max-width:480px) {
-	.wprecallblock #lk-conteyner {
-		width: calc(100% - 120px);
-	}
-	.cab_lt_sidebar,
-	.cab_lt_sidebar #lk-menu,
-	.cab_lt_sidebar .lk-sidebar {
-		width: 120px;
-	}
-	.lk-sidebar .lk-avatar {
-		height: 120px;
-		width: 120px;
-	}
-	.cab_lt_sidebar .recall-button span {
-		font-size: 13px;
-		hyphens: auto;
-	}
+    .wprecallblock #lk-conteyner {
+        width: calc(100% - 120px);
+    }
+    .cab_lt_sidebar,
+    .cab_lt_sidebar #lk-menu,
+    .cab_lt_sidebar .lk-sidebar {
+        width: 120px;
+    }
+    .lk-sidebar .lk-avatar {
+        height: 120px;
+        width: 120px;
+    }
+    .cab_lt_sidebar .recall-button span {
+        font-size: 13px;
+        hyphens: auto;
+    }
 }

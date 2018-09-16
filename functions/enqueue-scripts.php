@@ -76,7 +76,7 @@ function rcl_font_awesome_style(){
     if(rcl_get_option('font-awesome',1))
         wp_enqueue_style( 'font-awesome', 'https://use.fontawesome.com/5ca1160808.css' );
 
-    wp_enqueue_style( 'rcl-awesome', RCL_URL.'assets/rcl-awesome/style.css' );
+    wp_enqueue_style( 'rcl-awesome', RCL_URL.'assets/rcl-awesome/rcl-awesome.min.css' );
 
 }
 
