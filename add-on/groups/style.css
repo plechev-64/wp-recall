@@ -255,6 +255,9 @@ div p.post-group-meta {
 #rcl-group .hidden-widget .widget-content {
     display: none;
 }
+#rcl-group .rcl-wiget-spoiler-txt {
+    vertical-align: middle;
+}
 .group-content {
     padding: 0 0.5%;
 }
