@@ -665,10 +665,11 @@ a.data-filter.filter-active:hover {
     margin-right: 2px;
     position: relative;
 }
-p.rcl-custom-fields {
-    clear: both;
+.rcl-cf-title {
+    font-weight: bold;
+    margin: 0 3px 0 0;
 }
-p.rcl-custom-fields .rcl-field-value .fa-upload {
+div.rcl-custom-fields .rcl-field-value .fa-upload {
     margin-right: 5px;
 }
 /**/
