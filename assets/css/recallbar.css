@@ -17,6 +17,7 @@
     color: #e6e6e6;
     font-size: 30px;
     line-height: 36px;
+    vertical-align: middle;
     width: 30px;
 }
 #recallbar .rcb_icon:hover .rcli {
@@ -35,7 +36,7 @@
 #recallbar .rcl-login span {
     color: #e6e6e6;
     margin: 0 0 0 7px;
-    vertical-align: super;
+    vertical-align: middle;
 }
 #recallbar .rcb_icon .rcb_hiden {
     margin: 0 0 0 -43px;
@@ -191,6 +192,7 @@
     display: none;
 }
 #recallbar .rcb_right_menu img {
+    border-radius: 0;
     border: none;
     height: 36px;
     max-width: 36px;
@@ -221,7 +223,8 @@
     vertical-align: text-top;
 }
 #recallbar .pr_sub_menu .rcb_line > a {
-    display: block;
+    align-items: center;
+    display: flex;
 }
 /* Меню справа END */
 /* Правая часть END */

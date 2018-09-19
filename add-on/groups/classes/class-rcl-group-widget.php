@@ -152,7 +152,7 @@ class Rcl_Group_Widget {
                 $content .= '<input type="hidden" name="data[][widget]['.$this->widget['widget_id'].'][id]" value="'.$widget->widget_id.'">';
 
                 if($options)
-                    $content .= '<span class="widget-name" onclick="rcl_more_view(this); return false;"><i class="rcli fa-plus-square-o"></i>'.$widget->widget_title.'</span>';
+                    $content .= '<span class="widget-name" onclick="rcl_more_view(this); return false;"><i class="rcli fa-plus-square-o"></i><span class="widget-name-title">'.$widget->widget_title.'</span></span>';
                 else
                     $content .= '<span class="widget-name">'.$widget->widget_title.'</span>';
 

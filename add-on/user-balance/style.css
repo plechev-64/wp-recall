@@ -1,8 +1,24 @@
 .rcl-widget-balance {
     max-width: 400px;
 }
+.rcl-usercount {
+    align-items: center;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    margin: 3px 0 8px;
+}
+.rcl-usercount-num {
+    padding: 0 3px;
+}
 .rcl-widget-balance .rcl-toggle-form-balance {
     text-align: right;
+}
+.rcl-widget-balance .rcl-toggle-form-balance > .rcl-toggle-form-link {
+    color: #fff;
+}
+.rcl-widget-balance .rcl-toggle-form-balance > .rcl-toggle-form-link:hover {
+    color: #eee;
 }
 .rcl-widget-balance .rcl-form-balance {
     clear: both;
@@ -15,6 +31,7 @@
 .rcl-form-add-user-count {
     background: rgba(217, 224, 230, 0.61);
     border: 2px solid #d9e0e6;
+    box-sizing: border-box;
     line-height: 1;
     margin: 20px auto;
     padding: 30px;
@@ -29,6 +46,7 @@
 }
 .rcl-widget-balance .rcl-form-add-user-count .form-balance-notice {
     font-size: 13px;
+    margin: 0 0 5px;
 }
 .rcl-form-add-user-count .rcl-form-input {
     font-size: 16px;
@@ -45,8 +63,11 @@
     text-align: right;
 }
 .rcl-form-add-user-count .rcl-form-input .value-user-count {
+    background-color: #fff;
+    border: 1px solid #ccc;
     box-sizing: border-box;
     display: block;
+    height: auto;
     padding: 5px;
     text-align: center;
     vertical-align: bottom;

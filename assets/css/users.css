@@ -49,6 +49,7 @@
 .userlist .thumb-user a img {
     border-radius: 0;                               /*++Twenty16++*/
     border: none;
+    box-shadow: none;
     display: block;
     float: none;
     height: auto;
@@ -89,7 +90,7 @@
 }
 .userlist.rows-list .userlist_cntr {
     display: block;
-    min-height: 75px;
+    min-height: 70px;
     width: 100%;
 }
 .userlist.rows-list .thumb-user {
@@ -127,7 +128,7 @@
     margin: 0 6px 8px;
     max-width: none;
 }
-.userlist.rows-list p.status-user-rcl::before {
+.userlist.rows-list div.status-user-rcl::before {
     border-color: rgb(99, 170, 0) transparent transparent;
     border-width: 13px 0 0 13px;
     left: -14px;

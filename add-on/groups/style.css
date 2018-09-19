@@ -1,4 +1,7 @@
 /* Group Start */
+#tab-groups h3 {
+    padding: 5px 10px 0;
+}
 div p.post-group-meta {
     margin: 0 0 5px;
 }
@@ -9,6 +12,7 @@ div p.post-group-meta {
 
     /* Start сумма 2х блоков 2x0.5 + 30% + 2x0.5% + 68% = 100% */
 #rcl-group .group-sidebar {
+    box-sizing: border-box;
     float: right;
     padding: 0 0.5%;
     width: 30%;
@@ -77,11 +81,11 @@ div p.post-group-meta {
     text-decoration: underline;
 }
 #group-admin-panel {
-    background: rgba(219, 219, 219, 0.3);
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
-    display: inline-block;
-    margin: 0 0 10px;
-    width: 100%;
+    background-color: #f5f5f5;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    margin: 0 0 15px;
+    overflow: hidden;
 }
 #group-admin-panel ul {
     display: inline-block;
@@ -90,7 +94,7 @@ div p.post-group-meta {
 }
 #group-admin-panel .title-panel {
     display: inline-block;
-    margin: 9px 0 8px 5px;
+    margin: 9px 0 8px 8px;
 }
 #group-admin-panel .admin-button {
     display: inline-block;
@@ -181,6 +185,9 @@ div p.post-group-meta {
     padding: 8px 6px;
     text-align: center;
 }
+#group-users-widget .rcl-group-link {
+    margin: 0 4px 4px;
+}
 .group-sidebar .widget-content input,
 .group-sidebar .rcl-group-link.recall-button {
     display: block;                                     /*++Twenty16++*/
@@ -207,6 +214,10 @@ div p.post-group-meta {
     outline: none;
     padding: 5px;
 }
+#rcl-group select {
+    background-color: #fff;
+    margin: 0 4px;
+}
 .group-wrapper p {
     margin: 5px 0;
     padding: 2px 4px;
@@ -220,7 +231,7 @@ div p.post-group-meta {
     font-size: 20px;
     line-height: 1;
     margin: 0 6px 8px;
-    padding-bottom: 8px;
+    padding: 8px 0;
     text-transform: none;
 }
 #rcl-group .group-content .sidebar-widget {
@@ -235,6 +246,7 @@ div p.post-group-meta {
     text-align:right;
 }
 #rcl-group .hidden-widget .manage-hidden-widget {
+    box-shadow: none;
     display: block;
     font-size: 18px;
     font-weight: bold;
@@ -335,7 +347,7 @@ div p.post-group-meta {
 #group-link-content {
     background: #fff;
     box-sizing: border-box;
-    padding: 10px 5px 50px;
+    padding: 30px 5px 10px;
     width: 100%;
 }
 #group-link-content .close-content {
@@ -383,8 +395,8 @@ div p.post-group-meta {
 }
 #widgets-options,
 #group-options {
-    background: rgba(243, 243, 243, 0.3);
-    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
+    background-color: #f5f5f5;
+    border: 1px solid #e5e5e5;
     padding: 5px 10px;
 }
 #group-options .group-option {
@@ -400,8 +412,24 @@ div p.post-group-meta {
 #group-link-content input[type="number"],
 #group-link-content input[type="url"],
 #group-link-content input[type="email"],
+#group-link-content select,
 #group-link-content textarea {
-    width: 98%;
+    background-color: #fff;
+    border: 1px solid #d5d5d5;
+    box-sizing: border-box;
+    height: auto;
+    line-height: 1.4;
+    margin: 0;
+    outline: none;
+    padding: 5px 8px;
+}
+#group-link-content input[type="text"],
+#group-link-content input[type="number"],
+#group-link-content input[type="url"],
+#group-link-content input[type="email"],
+#group-link-content textarea {
+    max-width: none;
+    width: 100%;
 }
 #group-link-content textarea {
     height: 100px;
@@ -409,7 +437,7 @@ div p.post-group-meta {
 #group-link-content input[type="submit"] {
     clear: both;
     float: right;
-    margin: 15px 0;
+    margin: 5px 0;
 }
 #create-group {
     background: rgba(219, 219, 219, 0.6);
@@ -417,11 +445,16 @@ div p.post-group-meta {
     text-align: right;
 }
 #create-group input[type="text"] {
+    background-color: #f5f5f5;
     border: none;                           /*++Twenty16++*/
     max-width: 300px;
     min-width: 170px;
     padding: 5px 10px;                      /*++Twenty16++*/
     width: 58%;
+}
+#rcl-office #create-group input[type="text"]:focus {
+    background-color: #fff;
+    border-color: #ccc;
 }
 #create-group input[type="submit"] {
     margin: 0 10px;
@@ -431,8 +464,9 @@ div p.post-group-meta {
     overflow: hidden;
 }
 #widgets-options .widgets-zone {
-    background: rgba(243, 243, 243, 0.5);
-    box-shadow: 0 0 1px 1px rgb(219, 219, 219);
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    box-shadow: 4px 4px 8px -4px rgb(219, 219, 219);
     box-sizing: border-box;
     display: inline-block;
     margin: 1%;
@@ -441,7 +475,6 @@ div p.post-group-meta {
     width: 48%;
 }
 #widgets-options #unuses-zone {
-    box-sizing: border-box;
     clear: both;
     margin: 0 0 15px;
     width: 100%;
@@ -454,6 +487,9 @@ div p.post-group-meta {
     text-align: center;
 }
 #widgets-options .widgets-zone ul {
+    background-color: transparent;
+    border: none;
+    float: none;
     list-style: none;
     margin: 0;
     padding: 10px 0;
@@ -462,13 +498,20 @@ div p.post-group-meta {
     background: rgba(219, 219, 219, 0.3);
     margin: 5px;
     padding: 5px;
+    transition: background-color .2s ease, box-shadow .2s ease;
+}
+#widgets-options .widgets-zone .widget-box:hover {
+    background-color: rgba(219, 219, 219, 0.1);
+    box-shadow: 3px 3px 6px -3px rgba(0, 0, 0, .5);
 }
 #widgets-options .widgets-zone .widget-box .widget-name {
+    align-items: center;
     background: #ccc;
     cursor: move;
-    display: block;
+    display: flex;
     font-size: 14px;
     font-weight: bold;
+    line-height: 1.4;
     padding: 5px;
 }
 #widgets-options .widget-name i {
@@ -487,10 +530,14 @@ div p.post-group-meta {
     float: left;
 }
 #widgets-options .ui-state-highlight {
-    background: rgba(219, 219, 219, 0.6);
+    background: #f5f5f5;
+    border: 2px dashed #ddd;
     height: 40px;
     margin: 5px;
     width: 240px;
+}
+.rcl-search-form form input[type="text"] {
+    background-color: #f5f5f5;
 }
 @media screen and (max-width:480px) {
     #group-admin-panel .title-panel {
