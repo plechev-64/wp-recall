@@ -157,6 +157,7 @@ body .rcl_preloader {
     background: #fff;
     border-radius: 5px;
     box-shadow: 0 0 1px 1px #ccc;
+    box-sizing: border-box;
     padding: 3px;
     text-align: left;
     width: 350px;
@@ -252,6 +253,7 @@ span i.rcli.fa-circle {
     border-radius: 0;
     border: 1px solid #ddd;
     box-shadow: none;
+    box-sizing: border-box;
     color: #000;
     display: inline-block;
     float: none;
@@ -307,7 +309,7 @@ span i.rcli.fa-circle {
 body .ballun-status {
     max-width: 350px;
 }
-body p.status-user-rcl::before {
+body div.status-user-rcl::before {
     border-style: solid;
     border-width: 11px 0 0 11px;
     content: "";
@@ -317,10 +319,11 @@ body p.status-user-rcl::before {
     top: -12px;
     width: 0;
 }
-body .ballun-status p.status-user-rcl,
-body #rcl-office .ballun-status p.status-user-rcl {
+body .ballun-status div.status-user-rcl,
+body #rcl-office .ballun-status div.status-user-rcl {
     background: #fff;
     border-radius: 3px;
+    box-sizing: border-box;
     color: #333;                                    /*++hueman++*/
     display: inline-block;
     font-size: 14px;                                /*++hueman++*/
@@ -366,6 +369,7 @@ input[type="button"].recall-button,
 input[type="button"] .recall-button {
     border-radius: 0;                       /*++hueman++*/
     border: none;
+    box-shadow: none !important;
     box-sizing: border-box;
     color: #fff;
     cursor:pointer;
@@ -501,8 +505,7 @@ a.data-filter.filter-active:hover {
     margin-bottom: 10px;
     text-align: right;
 }
-.rcl-search-form form p {
-    margin-bottom: 5px;
+.rcl-search-form-title {
     padding: 0 0 3px;
 }
 .rcl-search-form form input[type="text"],
@@ -517,11 +520,16 @@ a.data-filter.filter-active:hover {
     height: auto;
     line-height: normal;
     margin: 2px;
+    outline: none;
     vertical-align: middle;
     width: auto;
 }
 .rcl-search-form form input[type="text"] {
     padding: 4px 6px;
+}
+.rcl-search-form form input[type="text"]:focus {
+    background-color: #fff;
+    border-color: #bbb;
 }
 .rcl-search-form form select {
     padding: 3px;
@@ -529,6 +537,7 @@ a.data-filter.filter-active:hover {
 .rcl-search-form form input[type="submit"] {
     border-radius: 0;
     font-size: 14px;
+    font-weight: normal;
     line-height: normal;
     margin: 0;
     padding: 5px 14px;
@@ -548,6 +557,7 @@ a.data-filter.filter-active:hover {
     cursor: pointer;
 }
 #rcl-avatar .avatar-icons .rcl-avatar-icon a {
+    box-shadow: none;
     display: inline-block;
     position: relative;
 }
@@ -653,6 +663,12 @@ a.data-filter.filter-active:hover {
     padding: 5px;
     vertical-align: middle;
 }
+.type-dynamic-input .dynamic-value .fa-minus:hover {
+    color: rgb(229, 57, 53);
+}
+.type-dynamic-input .dynamic-value .fa-plus:hover {
+    color: #008000;
+}
 .type-dynamic-input .dynamic-values .dynamic-value input {
     width: 78% !important;
 }
@@ -665,10 +681,11 @@ a.data-filter.filter-active:hover {
     margin-right: 2px;
     position: relative;
 }
-p.rcl-custom-fields {
-    clear: both;
+.rcl-cf-title {
+    font-weight: bold;
+    margin: 0 3px 0 0;
 }
-p.rcl-custom-fields .rcl-field-value .fa-upload {
+div.rcl-custom-fields .rcl-field-value .fa-upload {
     margin-right: 5px;
 }
 /**/
@@ -1013,7 +1030,7 @@ body .ssi-modalOuter .ssi-modalTitle {
     margin: 5px auto 0;
     max-width: 425px;
 }
-.rcl-user-getails p.status-user-rcl::before {
+.rcl-user-getails div.status-user-rcl::before {
     left: 0;
     margin-left: 50%;
 }
@@ -1030,7 +1047,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 .rcl-user-avatar-zoom .ssi-topIcons {
     z-index: 1600;
 }
-.rcl-user-getails #ssi-modalWrapper{
+.rcl-user-getails #ssi-modalWrapper {
     max-width: 450px;
 }
 .ssi-modalOuter.rcl-hand-uploader .ssi-modalContent {
@@ -1043,6 +1060,15 @@ body .ssi-modalOuter .ssi-modalTitle {
     margin: 0;
 }
 /* END Модальное окно с информацией о пользователе */
+
+/* upload avatar very width fix */
+.ssi-modalOuter.rcl-hand-uploader {
+    overflow-x: hidden;
+}
+.rcl-hand-uploader #ssi-modalWindow {
+    max-width: 95%;
+}
+/**/
 
 #avatar-upload-progress {
     background: #ccc;
@@ -1110,7 +1136,8 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 .rcl-form th,
 .rcl-form td {
-    border: 1px solid rgb(243, 243, 243);
+    border: 1px solid #eee;
+    box-sizing: border-box;
     padding: 5px;
     text-align: left;
     text-transform: none;                       /*++Twenty14++*/
@@ -1118,6 +1145,12 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 .rcl-form tr th {
     overflow: hidden;
+}
+.rcl-form tr:nth-child(1) th {
+    background-color: #f5f5f5;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.4;
 }
 .rcl-form input[type="checkbox"] {
     float: none;
@@ -1131,8 +1164,10 @@ body .ssi-modalOuter .ssi-modalTitle {
     border: 1px solid #ddd;
     box-shadow: none;
     box-sizing: border-box;
+    font-size: 100%;
     height: auto;
     line-height: normal;
+    margin: 0;
     max-width: 100%;
     outline: 0;
     padding: 5px 7px;
@@ -1205,7 +1240,7 @@ body .ssi-modalOuter .ssi-modalTitle {
     color: #000;
 }
 .rcl-form td a:hover i {
-    color: red;
+    color: rgb(229, 57, 53);
 }
 .rcl-form .file-manage-box {
     display: block;

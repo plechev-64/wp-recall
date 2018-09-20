@@ -187,6 +187,9 @@
     position:relative;
     width: 100%;
 }
+.prime-forum-item > div {
+    box-sizing: border-box;
+}
 #prime-forum .prime-forum-item .rcl-pager {
     font-size: 12px;
     font-weight: normal;
@@ -364,6 +367,8 @@
 }
 #prime-topic-form-box .submit-box input {
     margin: 0;
+    max-width: none;
+    width: auto;
 }
 #prime-topic-form-box .submit-box .recall-button {
     display: inline-block;
@@ -430,6 +435,7 @@
 #prime-forum .prime-topic-left {
     align-items: center;
     border-right: 1px solid #eee;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     max-width: 130px;
@@ -610,21 +616,41 @@
     }
 }
 @media screen and (max-width:568px){
+    #prime-forum .prime-group-box .prime-child-forums .prime-forum {
+        padding: 0;
+    }
     #prime-forum .prime-forum-item {
         flex-wrap: wrap;
     }
-    #prime-forum .prime-forum-icon {
-        margin: 0 auto;
+    :not(.ssi-modalContent) > #prime-forum .prime-forum-icon {
+        width: 45px;
     }
     #prime-forum .prime-forum-title {
-        min-width: 51%;
+        width: calc(100% - 60px);
     }
-    .forum-manager-dialog #prime-forum .prime-forum-topics,
+    #prime-forum .prime-forum-topics {
+        border-left: none;
+    }
+    .ssi-modalContent #prime-forum .prime-forum-title {
+        margin: 10px;
+    }
+    #prime-forum .prime-last-items {
+        flex-grow: 1;
+    }
     .forum-manager-dialog #prime-forum .prime-forum-activity,
     #prime-forum.prime-forum-page .prime-forum-topics,
     #prime-forum.prime-forum-page .prime-forum-activity {
         border-left: none;
         width: 50%;
+    }
+    .ssi-modalContent #prime-forum .prime-forum-topics {
+        border-right: none;
+        width: auto;
+    }
+    #prime-forum .prime-forums-list .prime-last-items,
+    .ssi-modalContent #prime-forum .prime-topics-list .prime-last-items {
+        max-width: none;
+        text-align: right;
     }
     #prime-forum .prime-topic-left {
         width: 90px;
@@ -653,10 +679,6 @@
     }
     #prime-forum .prime-forum-search {
         margin: 5px 0 0;
-    }
-}
-@media screen and (max-width:375px){
-    #prime-forum .prime-forum-search {
         width: 100%;
     }
     #prime-forum .prime-post {

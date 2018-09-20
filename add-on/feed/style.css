@@ -52,13 +52,17 @@
     top: 0;
 }
 .feed-options .feed-callback {
-    background: rgba(0, 0, 0, 0);
+    align-items: center;
+    background: transparent;
     color: #333;
+    display: flex;
     font: 14px Georgia,arial;
 }
 .feed-options .feed-callback:hover {
-    background: rgba(0, 0, 0, 0);
+    background: transparent;
     color: #333;
+}
+.feed-options .feed-callback:hover > span {
     text-decoration: underline;
 }
 #rcl-feed .feed-box .feed-author-avatar {
@@ -95,6 +99,11 @@
 }
 .follow-button a.recall-button {
     color: #fff;
+}
+#tab-subscriptions .follow-button,
+#tab-followers .follow-button {
+    margin: 15px 2px 4px;
+    padding: 0;
 }
 @media screen and (max-width:480px) {
     .feed-header .feed-options .options-box {

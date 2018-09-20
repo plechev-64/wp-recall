@@ -93,8 +93,11 @@
 #tab-profile table td a:hover {
     color: #000;
 }
-#tab-profile table td a:hover i {
-    color: red;
+#tab-profile table td a:hover .fa-minus {
+    color: rgb(229, 57, 53);
+}
+#tab-profile table td a:hover .fa-plus {
+    color: #008000;
 }
 #tab-profile .file-manage-box {
     display: block;
@@ -122,19 +125,28 @@
     width: auto;
 }
 
-@media screen and (max-width:360px) {
-    #tab-profile table tr th {
-        -webkit-hyphens: auto;
-                hyphens: auto;
-        max-width: 107px;
-        word-wrap: break-word;
+@media screen and (max-width:480px) {
+    #tab-profile tr {
+        background-color: #fafafa;
+        border: 1px solid #eaeaea;
+        box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 0 auto 12px;
+        padding: 10px 0;
+        width: calc(100% - 6px);
     }
-    #tab-profile table td a {
-        font-size: 13px;
-        margin: 3px 0;
-        width: 83px;
+    #tab-profile td {
+        border: none;
+        display: block;
+        padding: 5px;
+        text-align: left;
     }
-    #tab-profile .file-field-upload {
-        width: 205px;
+    #tab-profile td:first-child {
+        padding: 0 0 3px 10px;
+    }
+    #tab-profile td:first-child label {
+        font-weight: bold;
+        margin: 0;
     }
 }
