@@ -3,7 +3,7 @@
 require_once "class-rcl-payment.php";
 require_once "shortcodes.php";
 
-if(is_admin()) 
+if(is_admin())
     require_once 'admin/index.php';
 
 if (!is_admin()):
@@ -18,25 +18,25 @@ function rcl_user_account_scripts(){
 add_filter('rcl_init_js_variables','rcl_init_js_account_variables',10);
 function rcl_init_js_account_variables($data){
     global $user_ID;
-    
+
     $data['account']['currency'] = rcl_get_primary_currency(1);
-    
+
     if($user_ID)
-        $data['account']['balance'] = rcl_get_user_balance($user_ID); 
-    
+        $data['account']['balance'] = rcl_get_user_balance($user_ID);
+
     return $data;
 }
 
 add_action('init','rmag_get_global_unit_wallet',10);
 function rmag_get_global_unit_wallet(){
-    
+
     if (defined('RMAG_PREF')) return false;
-    
+
     global $wpdb;
     global $rmag_options;
     $rmag_options = get_option('primary-rmag-options');
     define('RMAG_PREF', $wpdb->prefix."rmag_");
-    
+
 }
 
 add_action('wp', 'rcl_payments',10);
@@ -71,25 +71,25 @@ function rcl_payform($attr){
 
 function rcl_get_user_balance($user_id=false){
     global $wpdb,$user_ID;
-    
+
     if(!$user_id) $user_id = $user_ID;
-    
+
     $balance = $wpdb->get_var($wpdb->prepare("SELECT user_balance FROM ".RMAG_PREF."users_balance WHERE user_id='%d'",$user_id));
-    
+
     return $balance;
 }
 
 function rcl_update_user_balance($newmoney,$user_id,$comment=''){
     global $wpdb;
-    
+
     $newmoney = round(str_replace(',','.',$newmoney), 2);
 
     $money = rcl_get_user_balance($user_id);
 
     if(isset($money)){
-        
+
         do_action('rcl_pre_update_user_balance',$newmoney,$user_id,$comment);
-        
+
         $result = $wpdb->update(RMAG_PREF .'users_balance',
             array( 'user_balance' => $newmoney ),
             array( 'user_id' => $user_id )
@@ -101,9 +101,9 @@ function rcl_update_user_balance($newmoney,$user_id,$comment=''){
                 array($newmoney,$user_id,$comment)
             );
         }
-        
+
         return $result;
-        
+
     }
 
     return rcl_add_user_balance($newmoney,$user_id,$comment);
@@ -114,22 +114,22 @@ function rcl_add_user_balance($money,$user_id,$comment=''){
 
     $result =  $wpdb->insert( RMAG_PREF .'users_balance',
 	array( 'user_id' => $user_id, 'user_balance' => $money ));
-    
+
     if(!$result){
         rcl_add_log(
             'rcl_add_user_balance: '.__('Failed to add user balance','wp-recall'),
             array($money,$user_id,$comment)
         );
     }
-    
+
     do_action('rcl_add_user_balance',$money,$user_id,$comment);
-    
+
     return $result;
 }
 
 function rcl_get_html_usercount(){
     global $user_ID,$rmag_options;
-    
+
     $id = rand(1,100);
 
     $usercount = '<div class="rcl-widget-balance" id="rcl-widget-balance-'.$id.'">';
@@ -137,17 +137,17 @@ function rcl_get_html_usercount(){
     $user_count = rcl_get_user_balance();
     if(!$user_count) $user_count = 0;
 
-    $usercount .= '<div class="usercount" style="text-align:center;">'.$user_count.' '.rcl_get_primary_currency(1).'</div>';
+    $usercount .= '<div class="rcl-usercount usercount"><span class="rcl-usercount-num">'.$user_count.'</span>'.rcl_get_primary_currency(1).'</div>';
 
     $usercount = apply_filters('count_widget_rcl',$usercount);
 
-    if($rmag_options['connect_sale']!='') 
+    if($rmag_options['connect_sale']!='')
         $usercount .= "<div class='rcl-toggle-form-balance'>"
                 . "<a class='recall-button rcl-toggle-form-link' href='#'>"
                 .__("Top up",'wp-recall')
                 ."</a>
             </div>
-            <div class='rcl-form-balance'>               
+            <div class='rcl-form-balance'>
                 ".rcl_form_user_balance(array('idform'=>$id))."
             </div>";
 
@@ -164,7 +164,7 @@ function rcl_add_count_user(){
     global $user_ID;
 
     rcl_verify_ajax_nonce();
-    
+
     if(!intval($_POST['pay_summ'])){
         wp_send_json(array('error'=>__('Enter the amount','wp-recall')));
     }
@@ -176,7 +176,7 @@ function rcl_add_count_user(){
         $description = (isset($_POST['description']))? $_POST['description']: '';
         $merchant_icon = (isset($_POST['merchant_icon']))? $_POST['merchant_icon']: 1;
         $submit_value = (isset($_POST['submit_value']))? $_POST['submit_value']: __('Make payment','wp-recall');
-        
+
         $args = array(
             'pay_summ' => $pay_summ,
             'pay_type' => $pay_type,
@@ -185,18 +185,18 @@ function rcl_add_count_user(){
             'submit_value'=> $submit_value,
             'pay_systems_not_in'=> array('user_balance'),
         );
-        
+
         $args = apply_filters('rcl_ajax_pay_form_args',$args);
 
         $log['redirectform'] = rcl_get_pay_form($args);
-        $log['otvet']=100; 
+        $log['otvet']=100;
 
     } else {
-        
+
         $log['error'] = __('Error','wp-recall');
-        
+
     }
-    
+
     wp_send_json($log);
 
 }
@@ -204,11 +204,11 @@ function rcl_add_count_user(){
 rcl_ajax_action('rcl_pay_order_user_balance', false);
 function rcl_pay_order_user_balance(){
     global $user_ID,$rmag_options;
-    
+
     rcl_verify_ajax_nonce();
-    
+
     $POST = wp_unslash($_POST);
-    
+
     $pay_id = intval($POST['pay_id']);
     $pay_type = $POST['pay_type'];
     $pay_summ = $POST['pay_summ'];
@@ -218,7 +218,7 @@ function rcl_pay_order_user_balance(){
     if(!$pay_id){
         wp_send_json(array('error'=>__('Order not found!','wp-recall')));
     }
-    
+
     $data = array(
         'user_id' => $user_ID,
         'pay_type' => $pay_type,
@@ -227,7 +227,7 @@ function rcl_pay_order_user_balance(){
         'current_connect' => 'user_balance',
         'baggage_data' => $baggage_data
     );
-    
+
     do_action('rcl_pre_pay_balance',(object)$data);
 
     $userBalance = rcl_get_user_balance();
@@ -265,7 +265,7 @@ function rcl_pay_user_balance($data){
 
 function rcl_mail_payment_error($hash=false,$other=false){
     global $rmag_options,$post;
-    
+
     if($other){
         foreach($other as $k=>$v){
             $textmail .= $k.' - '.$v.'<br>';

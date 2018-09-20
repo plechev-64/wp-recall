@@ -28,6 +28,7 @@ body audio {
 .rcl-chat .chat-messages {
     background: #fff;
     border: 1px solid #ddd;
+    box-sizing: border-box;
     max-height: 500px;
     min-height: 200px;
     overflow-x: hidden;
@@ -403,19 +404,15 @@ body audio {
     margin: 10px 0;
 }
 #rcl-office .rcl-chat-contacts .chat-contact {
+    border: 1px solid #ddd;
     color: inherit;
     display: block;
+    margin: 5px 0 10px;
     overflow: hidden;
-    padding: 10px 5px;
+    padding: 8px;
 }
 #rcl-office .contacts-counter {
-    border-bottom: 1px solid #ddd;
     padding: 0 0 5px;
-}
-#rcl-office .rcl-chat-contacts .contact-box {
-    border-bottom: 1px solid #ddd;
-    padding: 0;
-    position: relative;
 }
 #rcl-office .rcl-chat-contacts .chat-window-restore,
 #rcl-office .rcl-chat-contacts .chat-remove {
@@ -425,17 +422,25 @@ body audio {
     background: rgba(0, 0, 0, 0.6);
     color: #fff;
     display: none;
-    font-size: 12px;
-    left: 5px;
+    font-size: 14px;
+    left: 9px;
     line-height: 1;
-    padding: 2px;
+    padding: 3px;
     position: absolute;
-    top: 10px;
+    top: 9px;
 }
 #rcl-office .rcl-chat-contacts .chat-window-restore {
     color: #4c8cbd;
     right: 10px;
     top: 5px;
+}
+.chat-remove,
+.chat-window-restore {
+    transition: opacity .2s ease;
+}
+.chat-remove:hover,
+.chat-window-restore:hover {
+    opacity: .7;
 }
 #rcl-office .rcl-chat-contacts .contact-box:hover .chat-remove {
     display: block;
@@ -472,8 +477,12 @@ body audio {
     margin-right: 10px;
     vertical-align: middle;
 }
+#rcl-office .rcl-chat-contacts .chat-contact .message-content .message-text .master-avatar img {
+    box-shadow: none;
+}
 #rcl-office .rcl-chat-contacts .noread-message {
     background: rgba(229, 57, 53, 0.1);
+    border-color: rgba(229, 57, 53, 0.15);
 }
 .rcl-chat .words-counter {
     font-size: 12px;
@@ -526,10 +535,23 @@ body audio {
         font-size: 18px;
     }
 }
-@media screen and (max-width:375px) {
+@media screen and (max-width:480px) {
     #rcl-office .rcl-chat-contacts .chat-contact .message-meta {
-        margin: 0 5px 0 0;
-        width: 100px;
+        display: block;
+        width: calc(100% - 25px);
+    }
+    #rcl-office .rcl-chat-contacts .chat-contact .message-content .message-text {
+        min-width: 80px;
+        padding: 10px 0 0 10px;
+    }
+    .ssi-modal.rcl-chat-window #ssi-modalWrapper {
+        width: 90%;
+    }
+    .ssi-modal.rcl-chat-window .ssi-modalContent {
+        padding: 5px;
+    }
+    .ssi-modal.rcl-chat-window .user-avatar {
+        width: 30px;
     }
 }
 @media screen and (max-width:320px) {
