@@ -296,7 +296,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         if(rcl_check_access_console()){
             $content .= '<div class="edit-form-link">'
                             . '<a target="_blank" href="'.admin_url('admin.php?page=manage-public-form&post-type=').$this->post_type.'">'
-                                . '<i class="rcli fa-list" aria-hidden="true"></i> ' . __('Edit this form', 'wp-recall')
+                                . '<i class="rcli fa-list" aria-hidden="true"></i><span class="edit-form-link-title">' . __('Edit this form', 'wp-recall').'</span>'
                             . '</a>'
                         . '</div>';
         }

@@ -3,9 +3,9 @@
 <table class="publics-table-rcl rcl-form">
 
 	<tr>
-		<td><?php _e('Date','wp-recall'); ?></td>
-		<td><?php _e('Title','wp-recall'); ?></td>
-		<td><?php _e('Status','wp-recall'); ?></td>
+            <th><?php _e('Date','wp-recall'); ?></th>
+            <th><?php _e('Title','wp-recall'); ?></th>
+            <th><?php _e('Status','wp-recall'); ?></th>
 	</tr>
 
 	<?php foreach($posts as $postdata){ ?>
@@ -19,7 +19,7 @@
 
 			<tr>
 
-				<td width="50"><?php echo mysql2date('d.m.y', $post->post_date); ?></td>
+				<td><?php echo mysql2date('d.m.y', $post->post_date); ?></td>
 
 				<td>
 
