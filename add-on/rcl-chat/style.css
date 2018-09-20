@@ -154,18 +154,20 @@ body audio {
     position: absolute;
     right: 0;
 }
-.rcl-chat .chat-form textarea {
+.rcl-chat .chat-form textarea,
+#rcl-office .rcl-chat .chat-form textarea {
     background: #f6f6f6;
     border: 1px solid #ddd;
     box-shadow: none;
     box-sizing: border-box;
     color: #000;
     height: auto;
+    line-height: 1.4;
     margin: 0;
     max-width: 100%;
-    min-height: 70px;
+    min-height: 95px;
     outline: none;
-    padding: 3px 5px;
+    padding: 3px 30px 3px 5px;
     width: 100%;
 }
 .rcl-chat .chat-form .chat-submit {
@@ -324,8 +326,7 @@ body audio {
     font-size: 12px;
 }
 .rcl-mini-chat .rcl-chat .chat-form textarea {
-    min-height: 65px;
-    padding: 3px 5px;
+    min-height: 70px;
     resize: none;
 }
 .rcl-mini-chat .rcl-chat-panel {
