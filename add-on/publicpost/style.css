@@ -41,6 +41,12 @@
     margin: 7px 0;
     padding: 8px 8px 10px;
 }
+.rcl-public-box #form-field-delete {
+    overflow: hidden;
+}
+.rcl-public-box #form-field-delete input {
+    margin: 0;
+}
 .rcl-public-box .rcl-form-field > label {
     display: block;
     font-size: 18px;
