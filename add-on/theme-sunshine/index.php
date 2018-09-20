@@ -4,7 +4,7 @@ if (!is_admin()):
     add_action('rcl_enqueue_scripts','rcl_cab_15_scripts',10);
 endif;
 
-function rcl_cab_15_scripts(){   
+function rcl_cab_15_scripts(){
     rcl_enqueue_style('cab_15',rcl_addon_url('style.css', __FILE__));
 }
 
@@ -12,7 +12,7 @@ function rcl_cab_15_scripts(){
 add_action('rcl_enqueue_scripts', 'cab_15_script_load' );
 function cab_15_script_load() {
     global $user_LK;
-    if($user_LK){       
+    if($user_LK){
         rcl_enqueue_script('theme-scripts', rcl_addon_url( 'js/scripts.js', __FILE__ ),false,true);
     }
 }
@@ -77,9 +77,9 @@ function rcl_add_sidebar_area_after(){
 // корректирующие стили
 add_filter('rcl_inline_styles','rcl_add_cover_inline_styles',10);
 function rcl_add_cover_inline_styles($styles){
-    
+
     if(!rcl_is_office()) return $styles;
-    
+
     global $user_LK;
     $cover_url = get_user_meta($user_LK,'rcl_cover',1);
     if(!$cover_url) $cover_url = rcl_addon_url('img/default-cover.jpg',__FILE__);
@@ -89,11 +89,11 @@ function rcl_add_cover_inline_styles($styles){
 
 add_filter('rcl_inline_styles','rcl_add_colors_inline_styles',10);
 function rcl_add_colors_inline_styles($styles){
-    
+
     if(!rcl_is_office()) return $styles;
-    
+
     $lca_hex = rcl_get_option('primary-color'); // достаем оттуда наш цвет
-    list($r, $g, $b) = sscanf($lca_hex, "#%02x%02x%02x"); 
+    list($r, $g, $b) = sscanf($lca_hex, "#%02x%02x%02x");
 
     $rp = round($r * 0.90);
     $gp = round($g * 0.90);
@@ -106,7 +106,7 @@ function rcl_add_colors_inline_styles($styles){
     #lk-menu a.active:hover {
         background: rgba('.$r.', '.$g.', '.$b.', 0.4);
     }';
-	
+
     return $styles;
 }
 

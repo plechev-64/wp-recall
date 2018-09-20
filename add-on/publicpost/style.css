@@ -2,8 +2,14 @@
 .rcl-public-box {
     position: relative;
 }
-.rcl-public-box .edit-form-link {
-    text-align: right;
+.rcl-public-box .edit-form-link > a {
+    align-items: center;
+    box-shadow: none !important;
+    display: flex;
+    justify-content: flex-end;
+}
+.edit-form-link .edit-form-link-title {
+    margin: 0 8px 0 5px;
 }
 .rcl-public-box .rcl-service-button {
     background-color: rgba(30, 56, 75, 0.7);
@@ -96,6 +102,7 @@
 }
 .rcl-public-box .rcl-tags-list .ms-ctn .ms-trigger {
     background: #fff;
+    box-sizing: border-box;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn .ms-helper {
     background-color: #ffe2e2;
@@ -153,6 +160,7 @@
 }
 #rcl-thumbnail-post {
     background: #e5e5e5;
+    box-sizing: border-box;
     max-width: 180px;
     padding: 10px;
     text-align: center;
@@ -342,38 +350,28 @@ h3.pending-message {
 .rcl-form-field table,
 .wprecallblock .publics_block table {
     background: rgba(243, 243, 243, 0.3);
-    border-collapse: collapse;
-    border-spacing: 0;
-    box-sizing: content-box;
     -webkit-hyphens: auto;
             hyphens: auto;
     table-layout: fixed;
-    width: 100%;
     word-wrap: break-word;
 }
 .wprecallblock #tab-publics table td {
     font-size: 14px;
     line-height: 1.4;
+    text-align: left;
 }
-.wprecallblock #tab-publics table tr:first-child {
-    background: rgba(216, 231, 238, 0.3);
+.wprecallblock #tab-publics table tr + tr:nth-child(2n+1) {
+    background-color: #fafafa;
 }
-.wprecallblock #tab-publics table tr:nth-child(2n+1):not(:first-child) {
-    background: rgba(243, 243, 243, 0.4);
-}
-.wprecallblock #tab-publics table tr:first-child td {
-    font-size: 16px;
-    font-weight: bold;
-}
+.wprecallblock #tab-publics table td:nth-child(1),
 .wprecallblock #tab-publics table td:nth-child(n + 3),
-.wprecallblock #tab-publics table tr:first-child td:nth-child(odd) {
+.wprecallblock #tab-publics table tr:first-child th:nth-child(odd) {
     text-align: center;
 }
-.wprecallblock #tab-publics table td:nth-child(1) {
-    text-align: center;
+.wprecallblock #tab-publics table th:nth-child(1) {
     width: 70px;
 }
-.wprecallblock #tab-publics table td:nth-child(3) {
+.wprecallblock #tab-publics table th:nth-child(3) {
     width: 100px;
 }
 .wprecallblock .publics_block .rating-rcl {
@@ -502,21 +500,9 @@ h3.pending-message {
     #temp-files li {
         width: 31%;
     }
-    .rcl-form-field table th {
-        font-size: 13px;
-        font-weight: bold;
-        max-width: 110px;
-        width: 110px;
-    }
-    .wprecallblock #tab-publics td:nth-child(1) {
-        font-size: 12px;
-    }
+    .wprecallblock #tab-publics td:nth-child(1),
     .wprecallblock #tab-publics td:nth-child(3) {
         font-size: 12px;
-        max-width: 62px;
-    }
-    .wprecallblock .publics-table-rcl span.rating-value {
-        display: inline;
     }
     .rcl-public-box .attachments-post li {
         width: 31%;
@@ -525,18 +511,6 @@ h3.pending-message {
 @media screen and (max-width:375px) {
     #temp-files li {
         width: 48%;
-    }
-    .wprecallblock #tab-publics table tr:first-child td {
-        font-size: 12px;
-    }
-    .wprecallblock #tab-publics td:nth-child(1) {
-        font-size: 11px;
-    }
-    .wprecallblock #tab-publics td:nth-child(3) {
-        max-width: 48px;
-    }
-    .wprecallblock .publics-table-rcl span.rating-value {
-        display: inline;
     }
     .rcl-public-box .attachments-post li {
         width: 49%;

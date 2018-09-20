@@ -66,6 +66,7 @@
     z-index: 999;
 }
 .votes-window .close {
+    box-shadow: none !important;
     color: rgb(229, 57, 53);
     font-size: 23px;
     position: absolute;
