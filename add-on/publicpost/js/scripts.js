@@ -320,7 +320,7 @@ function rcl_check_required_fields(form){
     });
 
     var requireds = rcl_public_form.required;
-
+    
     requireds.forEach(function(namefield, i, requireds) {
 
         var field = form.find('[name="'+namefield+'"]');
