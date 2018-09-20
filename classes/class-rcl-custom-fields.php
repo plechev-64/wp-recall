@@ -224,20 +224,13 @@ class Rcl_Custom_Fields{
             $content .= '<option value="">'.$emptyFirst.'</option>';
 
         if($values){
-
-            $fieldValue = $this->value;
-
-            if(!$fieldValue && isset($field['default'])){
-                $fieldValue = $field['default'];
-            }
-
             foreach($values as $k => $value){
 
                 $data = ($this->key_in_data)? 'data-key="'.$k.'"': '';
 
                 if($this->value_in_key) $k = $value;
 
-                $content .= '<option '.selected($fieldValue,$k,false).' '.$data.' value="'.trim($k).'">'.$value.'</option>';
+                $content .= '<option '.selected($this->value,$k,false).' '.$data.' value="'.trim($k).'">'.$value.'</option>';
             }
         }
 
@@ -289,10 +282,6 @@ class Rcl_Custom_Fields{
         if(!$values) return false;
 
         $currentValues = (is_array($this->value))? $this->value: array();
-
-        if(!$currentValues && isset($field['default'])){
-            $currentValues = $field['default'];
-        }
 
         $field['classes'] = ($this->required) ? 'required-checkbox':'';
 
@@ -640,12 +629,12 @@ class Rcl_Custom_Fields{
         if(isset($field['after']))
             $show .= ' '.$field['after'];
 
-        $content = '<p class="rcl-custom-fields">';
+        $content = '<div class="rcl-custom-fields rcl-cf-type-'.$field['type'].'">';
 
         if(isset($field['title']) && $title)
-            $content .= '<b>'.$field['title'].':</b> ';
+            $content .= '<span class="rcl-cf-title">'.$field['title'].':</span>';
 
-        $content .= $show.'</p>';
+        $content .= $show.'</div>';
 
         return $content;
     }
