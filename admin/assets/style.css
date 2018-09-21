@@ -62,7 +62,7 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     position: absolute;
     top: 50%;
 }
-.rcl_preloader i::before {
+.rcl_preloader i.rcli::before {
     content: "\f463";
     font: 120px/1 dashicons;
 }
