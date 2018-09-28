@@ -301,6 +301,18 @@ function rcl_init_field_file(field_id){
             
             if(!file) return;
             
+            var filesize = file.size/1024/1024;
+            
+            if(filesize > maxsize){
+                jQuery(this).parent().css("border","1px solid red").css("padding","2px");
+                rcl_preloader_hide();
+                rcl_notice("Размер файла превышен!",'error',5000);
+                error = true;
+                return;
+            }else{
+                jQuery(this).parent().removeAttr("style");
+            }
+            
             if(accept){
 
                 var fileType = false;
@@ -337,18 +349,6 @@ function rcl_init_field_file(field_id){
                     return;
                 }
                 
-            }
-            
-            var filesize = file.size/1024/1024;
-            
-            if(filesize > maxsize){
-                jQuery(this).parent().css("border","1px solid red").css("padding","2px");
-                rcl_preloader_hide();
-                rcl_notice("Размер файла превышен!",'error',5000);
-                error = true;
-                return;
-            }else{
-                jQuery(this).parent().removeAttr("style");
             }
             
         });
