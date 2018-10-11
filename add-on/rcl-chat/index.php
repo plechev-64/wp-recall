@@ -67,8 +67,6 @@ function rcl_init_js_chat_variables($data){
 add_filter('rcl_inline_styles','rcl_chat_add_inline_styles',10,2);
 function rcl_chat_add_inline_styles($styles,$rgb){
 
-    if( !is_user_logged_in() ) return $styles; // гостям не надо
-
     list($r, $g, $b) = $rgb;
 
     // разбиваем строку на нужный нам формат
@@ -79,13 +77,16 @@ function rcl_chat_add_inline_styles($styles,$rgb){
     // $r $g $b - родные цвета от кнопки
     // $rs $gs $bs - темный оттенок от кнопки
 
-    $panel = rcl_get_option('chat');
-
-    $styles .= '.rcl-chat .important-shift{background:rgba('.$rs.','.$gs.','.$bs.',0.85);}'
-             . '.rcl-chat .message-box::before{border-right-color:rgba('.$r.','.$g.','.$b.',0.15);}'
+    $styles .= '.rcl-chat .message-box::before{border-right-color:rgba('.$r.','.$g.','.$b.',0.15);}'
              . '.rcl-chat .message-box{background:rgba('.$r.','.$g.','.$b.',0.15);}'
              . '.rcl-chat .nth .message-box::before{border-right-color:rgba('.$r.','.$g.','.$b.',0.35);}'
              . '.rcl-chat .nth .message-box {background:rgba('.$r.','.$g.','.$b.',0.35);}';
+
+    if( !is_user_logged_in() ) return $styles; // гостям дальше не надо
+
+    $panel = rcl_get_option('chat');
+
+    $styles .= '.rcl-chat .important-shift{background:rgba('.$rs.','.$gs.','.$bs.',0.85);}';
 
     if($panel['contact_panel'] == 0) return $styles; // не выводим панель контактов
 
