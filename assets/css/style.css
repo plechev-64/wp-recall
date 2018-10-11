@@ -115,34 +115,6 @@ body .rcl_preloader {
     position: absolute;
     top: 50%;
 }
-#passwordStrength {
-    color: #000;
-    display: block;
-    font-size: 12px;
-    line-height: 1;
-    margin: 5px auto 0;
-    max-width: 200px;
-    padding: 7px 15px 5px;
-    text-align: center;
-}
-#passwordStrength.strength0 {
-    background: #ccc;
-}
-#passwordStrength.strength1 {
-    background: #ff0000;
-}
-#passwordStrength.strength2 {
-    background: orange;
-}
-#passwordStrength.strength3 {
-    background: yellow;
-}
-#passwordStrength.strength4 {
-    background: #43FF4C;
-}
-#passwordStrength.strength5 {
-    background: rgb(0, 184, 255);
-}
 .rcl-smiles {
     clear: both;
     float: right;
@@ -213,6 +185,45 @@ span i.rcli.fa-circle {
         transform: scale(1.025);
     }
 }
+/* START панель управления */
+.panel_lk_recall .rcl-widget-buttons .rcl-widget-button {
+    margin: 0 0 4px;
+    overflow: hidden;
+    padding: 0;
+}
+.panel_lk_recall .rcl-widget-buttons .recall-button {
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1;
+    padding: 8px;
+}
+.panel_lk_recall .rcl-widget-buttons a.recall-button:hover {
+    color: #fff;
+}
+.panel_lk_recall .username {
+    margin: 0 0 5px;
+}
+.panel_lk_recall .author-avatar {
+    float: left;
+    margin:0 5px 0 0;
+    position: relative;
+    width: 67px;                                /*++Twenty16++*/
+}
+.panel_lk_recall .author-avatar a {
+    display: inline-block;
+    height: auto;
+    width: 100%;
+}
+.panel_lk_recall .author-avatar a img {
+    border-radius: 0;
+    float: left;
+    height: auto;
+    margin: 0;
+    max-width: 100%;
+    width: 100%;
+}
+/* END панель управления */
 /* общие стили End */
 
 /* Личный кабинет start*/
