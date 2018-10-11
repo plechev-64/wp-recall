@@ -266,7 +266,7 @@ function rcl_inline_styles(){
     // удаляем пробелы, переносы, табуляцию
     $styles =  preg_replace('/ {2,}/','',str_replace(array("\r\n", "\r", "\n", "\t"), '', $styles));
 
-    echo "<style>'.$styles.'</style>\r\n";
+    echo '<style>'.$styles.'</style>';
 
 }
 
