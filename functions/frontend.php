@@ -299,20 +299,20 @@ function rcl_default_inline_styles($styles,$rgb){
         background: rgba('.$r.', '.$g.', '.$b.', 0.4);
     }
     .rcl_preloader i{
-        color: rgb('.$r.', '.$g.', '.$b.');
+        color:rgb('.$r.','.$g.','.$b.');
     }
-    div.status-user-rcl::before{
-        border-color: transparent transparent transparent rgb('.$r.', '.$g.', '.$b.');
+    .rcl-user-getails .status-user-rcl::before{
+        border-left-color:rgb('.$r.','.$g.','.$b.');
     }
-    .userlist.rows-list div.status-user-rcl::before{
-        border-color: rgb('.$r.', '.$g.', '.$b.') transparent transparent;
+    .rows-list .status-user-rcl::before{
+        border-top-color:rgb('.$r.','.$g.','.$b.');
     }
-    .ballun-status div.status-user-rcl{
-        border: 1px solid rgb('.$r.', '.$g.', '.$b.');
+    .status-user-rcl{
+        border-color:rgb('.$r.','.$g.','.$b.');
     }
     .rcl-field-input input[type="checkbox"]:checked + label.block-label::before,
     .rcl-field-input input[type="radio"]:checked + label.block-label::before{
-        background: rgb('.$r.', '.$g.', '.$b.');
+        background:rgb('.$r.','.$g.','.$b.');
     }';
 
     return $styles;

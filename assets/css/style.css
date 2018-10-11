@@ -306,10 +306,28 @@ span i.rcli.fa-circle {
     font-size: 12px;
     line-height: 1;
 }
-body .ballun-status {
+.ballun-status {
     max-width: 350px;
 }
-body div.status-user-rcl::before {
+.status-user-rcl {
+    background: #fff;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+    color: #333;                                    /*++hueman++*/
+    display: inline-block;
+    font-size: 14px;                                /*++hueman++*/
+    line-height: normal;                            /*++hueman++*/
+    min-width: 50px;
+    padding: 6px 8px;
+    position: relative;
+    -webkit-hyphens: auto;
+            hyphens: auto;
+    word-wrap: break-word;
+}
+.status-user-rcl::before {
+    border-color: transparent;
     border-style: solid;
     border-width: 11px 0 0 11px;
     content: "";
@@ -318,25 +336,6 @@ body div.status-user-rcl::before {
     position: absolute;
     top: -12px;
     width: 0;
-}
-body .ballun-status div.status-user-rcl,
-body #rcl-office .ballun-status div.status-user-rcl {
-    background: #fff;
-    border-radius: 3px;
-    box-sizing: border-box;
-    color: #333;                                    /*++hueman++*/
-    display: inline-block;
-    font-size: 14px;                                /*++hueman++*/
-    font-weight: normal;                            /*++hueman++*/
-    line-height: normal;                            /*++hueman++*/
-    margin: 0 0 0 5px;
-    max-width: 98%;
-    min-width: 50px;
-    padding: 6px 8px;
-    position: relative;
-    -webkit-hyphens: auto;
-    hyphens: auto;
-    word-wrap: break-word;
 }
 #lk-menu,
 #rcl-tabs {
@@ -1030,9 +1029,8 @@ body .ssi-modalOuter .ssi-modalTitle {
     margin: 5px auto 0;
     max-width: 425px;
 }
-.rcl-user-getails div.status-user-rcl::before {
-    left: 0;
-    margin-left: 50%;
+.rcl-user-getails .status-user-rcl::before {
+    margin-left: calc(50% - 8px);
 }
 .rcl-user-getails .block-rcl {
     padding: 5px;

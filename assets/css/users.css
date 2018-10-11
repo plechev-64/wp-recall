@@ -128,8 +128,7 @@
     margin: 0 6px 8px;
     max-width: none;
 }
-.userlist.rows-list div.status-user-rcl::before {
-    border-color: rgb(99, 170, 0) transparent transparent;
+.rows-list .status-user-rcl::before {
     border-width: 13px 0 0 13px;
     left: -14px;
     top: 8px;
