@@ -1,5 +1,7 @@
 <?php
 
+rcl_dialog_scripts();
+
 global $active_addons,$Rcl_Templates_Manager;
 
 $Rcl_Templates_Manager->get_templates_data();
