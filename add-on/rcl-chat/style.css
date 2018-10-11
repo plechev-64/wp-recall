@@ -70,6 +70,7 @@ body audio {
     position: relative;
 }
 .rcl-chat .message-box::before {
+    border-color: transparent;
     border-style: solid;
     border-width: 10px 10px 10px 0;
     content: "";
@@ -347,7 +348,7 @@ body audio {
 #rcl-chat-noread-box.left-panel .rcl-mini-chat {
     float: right;
 }
-#rcl-chat-noread-box.left-panel .rcl-noread-users a.active-chat::before {
+.left-panel .rcl-noread-users a.active-chat::before {
     border-width: 12px 0 12px 12px;
     left: 45px;
     right: initial;
@@ -373,7 +374,8 @@ body audio {
 .rcl-mini-chat .rcl-smiles .smiles {
     width: 245px;
 }
-#rcl-chat-noread-box .rcl-noread-users a.active-chat::before {
+.rcl-noread-users a.active-chat::before {
+    border-color: transparent;
     border-style: solid;
     border-width: 12px 12px 12px 0;
     content: "";
@@ -523,7 +525,8 @@ body audio {
 .rcl-chat .important-manager .important-shift {
     color: #fff;
     display: inline-block;
-    padding: 2px 15px;
+    font-size: 14px;
+    padding: 6px 15px;
 }
 @media screen and (max-width:800px) {
     #rcl-chat-noread-box .chat-delete-contact {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 global $typeform;
 $f_reg = ($typeform=='register')? 'style="display:block;"': ''; ?>
 
@@ -7,9 +7,9 @@ $f_reg = ($typeform=='register')? 'style="display:block;"': ''; ?>
             <div class="form_auth"><?php if(!$typeform){ ?><a href="#" class="link-login-rcl link-tab-rcl"><?php _e('Authorization ','wp-recall'); ?></a><?php } ?></div>
             <div class="form_reg form_active"><?php _e('Registration','wp-recall'); ?></div>
 	</div>
-	
+
     <div class="form-block-rcl"><?php rcl_notice_form('register'); ?></div>
-    
+
     <?php $user_login = (isset($_REQUEST['user_login']))? $_REQUEST['user_login']: ''; ?>
     <?php $user_email = (isset($_REQUEST['user_email']))? $_REQUEST['user_email']: ''; ?>
 
@@ -29,7 +29,7 @@ $f_reg = ($typeform=='register')? 'style="display:block;"': ''; ?>
             </div>
         <div class="form-block-rcl">
             <input type="submit" class="recall-button" name="submit-register" value="<?php _e('Signup','wp-recall'); // Зарегистрироваться ?>">
-            
+
             <?php echo wp_nonce_field('register-key-rcl','register_wpnonce',true,false); ?>
             <input type="hidden" name="redirect_to" value="<?php rcl_referer_url('register'); ?>">
         </div>
