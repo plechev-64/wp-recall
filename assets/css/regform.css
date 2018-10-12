@@ -225,6 +225,32 @@ div.panel_lk_recall .form-tab-rcl a {
 .form-block-rcl #passwordStrength.strength5 {
     width: 100%;
 }
+#passwordStrength {
+    color: #000;
+    display: block;
+    font-size: 12px;
+    line-height: 1;
+    margin: 5px auto 0;
+    text-align: center;
+}
+#passwordStrength.strength0 {
+    background: #ccc;
+}
+#passwordStrength.strength1 {
+    background: #ff0000;
+}
+#passwordStrength.strength2 {
+    background: orange;
+}
+#passwordStrength.strength3 {
+    background: yellow;
+}
+#passwordStrength.strength4 {
+    background: #43FF4C;
+}
+#passwordStrength.strength5 {
+    background: rgb(0, 184, 255);
+}
 .form-block-rcl #notice-chek-password {
     margin-top: 10px;
 }
@@ -258,54 +284,10 @@ div.panel_lk_recall .form-tab-rcl a {
     padding: 8px 5px;
     text-align: center;
 }
-
-/* START панель управления */
 .widget .panel_lk_recall .form-tab-rcl {
     margin: 3px auto;
     width: 99%;
 }
-.panel_lk_recall .rcl-widget-buttons .rcl-widget-button {
-    margin: 0 0 4px;
-    overflow: hidden;
-    padding: 0;
-}
-.panel_lk_recall .rcl-widget-buttons .recall-button {
-    color: #fff;
-    display: inline-block;
-    font-size: 14px;
-    line-height: 1;
-    padding: 8px;
-}
-.panel_lk_recall .rcl-widget-buttons a.recall-button:hover {
-    color: #fff;
-}
-.panel_lk_recall .buttons a .rcli,
-.panel_lk_recall .buttons a span {
-    vertical-align: middle;
-}
-.panel_lk_recall .username {
-    margin: 0 0 5px;
-}
-.panel_lk_recall .author-avatar {
-    float: left;
-    margin:0 5px 0 0;
-    position: relative;
-    width: 67px;                                /*++Twenty16++*/
-}
-.panel_lk_recall .author-avatar a {
-    display: inline-block;
-    height: auto;
-    width: 100%;
-}
-.panel_lk_recall .author-avatar a img {
-    border-radius: 0;
-    float: left;
-    height: auto;
-    margin: 0;
-    max-width: 100%;
-    width: 100%;
-}
-/* END панель управления */
 /* END Вход и регистрация */
 
 #registerform .form-block-rcl {

@@ -89,8 +89,10 @@ function rcl_enqueue_wp_form_scripts(){
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'rcl-core-scripts', RCL_URL.'assets/js/core.js', array('jquery') );
     wp_enqueue_script( 'rcl-primary-scripts', RCL_URL.'assets/js/scripts.js', array('jquery') );
-    wp_enqueue_style( 'rcl-regform-style', RCL_URL.'assets/css/regform.css' );
 
+    if( !is_user_logged_in() ){
+        wp_enqueue_style( 'rcl-regform-style', RCL_URL.'assets/css/regform.css' );
+    }
     wp_localize_script( 'jquery', 'Rcl', rcl_get_localize_data());
 }
 
@@ -102,7 +104,10 @@ function rcl_frontend_scripts(){
 
     rcl_enqueue_style( 'rcl-primary', RCL_URL.'assets/css/style.css' );
     rcl_enqueue_style( 'rcl-users-list', RCL_URL.'assets/css/users.css' );
-    rcl_enqueue_style( 'rcl-register-form', RCL_URL.'assets/css/regform.css' );
+
+    if( !is_user_logged_in() ){
+        rcl_enqueue_style( 'rcl-register-form', RCL_URL.'assets/css/regform.css' );
+    }
 
     //если используем recallbar, то подключаем его стили
     if(rcl_get_option('view_recallbar')){
