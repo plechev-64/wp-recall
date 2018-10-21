@@ -67,13 +67,13 @@ function rcl_rangyinputs_scripts(){
     rcl_enqueue_script( 'rangyinputs', RCL_URL.'assets/js/rangyinputs.js' );
 }
 
-function rcl_font_awesome_style(){
+function rcl_font_awesome_style($fontAwesome = true){
 
     //if( wp_style_is( 'font-awesome' ) )
         //wp_deregister_style('font-awesome');
 
     //load fonawesome 4 cdn
-    if(rcl_get_option('font-awesome',1))
+    if($fontAwesome && rcl_get_option('font-awesome',1))
         wp_enqueue_style( 'font-awesome', 'https://use.fontawesome.com/5ca1160808.css' );
 
     wp_enqueue_style( 'rcl-awesome', RCL_URL.'assets/rcl-awesome/rcl-awesome.min.css' );

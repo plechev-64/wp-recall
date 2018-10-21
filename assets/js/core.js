@@ -667,6 +667,8 @@ function rcl_send_form_data(action,e){
     
     var form = jQuery(e).parents('form');
     
+    if(!rcl_check_form(form)) return false;
+    
     if(e && jQuery(e).parents('.preloader-parent')){
         rcl_preloader_show(jQuery(e).parents('.preloader-parent'));
     }
@@ -675,6 +677,45 @@ function rcl_send_form_data(action,e){
         data: form.serialize() + '&action=' + action
     });
   
+}
+
+function rcl_check_form(form){
+
+    var required = true;
+
+    form.find(':required').each(function(){
+
+        var field = jQuery(this);
+        var type = field.attr('type');
+        var value = false;
+
+        if(type=='checkbox'){
+            if(field.is(":checked")){
+                value = true;
+                field.next('label').css('box-shadow','none');
+            }else {
+                field.next('label').css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
+            }
+        }else{
+            if(field.val()) value = true;
+        }
+
+        if(!value){
+            field.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
+            required = false;
+        }else{
+            field.css('box-shadow','none');
+        }
+
+    });
+
+    if(!required){
+        rcl_notice(Rcl.local.requared_fields_empty,'error',10000);
+        return false;
+    }
+    
+    return true;
+    
 }
 
 function rcl_add_beat(beat_name,delay,data){

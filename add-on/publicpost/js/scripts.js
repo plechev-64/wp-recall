@@ -313,17 +313,10 @@ function rcl_publish(e){
 function rcl_check_required_fields(form){
 
     var required = true;
-    
+
     jQuery('form.rcl-public-form').find(':required').each(function(){
-        var i = rcl_public_form.required.length;
-        rcl_public_form.required[i] = jQuery(this).attr('name');
-    });
 
-    var requireds = rcl_public_form.required;
-    
-    requireds.forEach(function(namefield, i, requireds) {
-
-        var field = form.find('[name="'+namefield+'"]');
+        var field = jQuery(this);
         var type = field.attr('type');
         var value = false;
 
@@ -355,6 +348,8 @@ function rcl_check_required_fields(form){
             form.find( 'input[name="cats[]"]' ).css('box-shadow','none');
         }
     }
+    
+    rcl_do_action('rcl_check_required_fields', form);
 
     if(!required){
         rcl_notice(Rcl.local.requared_fields_empty,'error',10000);

@@ -281,7 +281,11 @@ class Rcl_Custom_Fields{
 
         if(!$values) return false;
 
-        $currentValues = (is_array($this->value))? $this->value: array();
+        $currentValues = array();
+
+        if($this->value){
+            $currentValues = is_array($this->value)? $this->value: array($this->value);
+        }
 
         $field['classes'] = ($this->required) ? 'required-checkbox':'';
 
@@ -327,12 +331,15 @@ class Rcl_Custom_Fields{
 
         $a = 0;
 
+        if(!$this->value)
+            $this->value = 0;
+
         foreach($field['values'] as $k => $value){
 
             if($this->value_in_key) $k = $value;
 
             $content .= '<span class="rcl-radio-box">';
-            $content .= '<input type="radio" '.$this->required.' '.checked($this->value,$k,false).' '.checked($a,0,false).' '.$this->get_class($field).' id="'.$this->field_id.'_'.$k.$this->rand.'" name="'.$field['name'].'" value="'.trim($k).'"> ';
+            $content .= '<input type="radio" '.$this->required.' data="{'.$this->value.','.$k.'}" '.checked($this->value,$k,false).' '.$this->get_class($field).' id="'.$this->field_id.'_'.$k.$this->rand.'" name="'.$field['name'].'" value="'.trim($k).'"> ';
             $content .= '<label class="block-label" for="'.$this->field_id.'_'.$k.$this->rand.'">'.$value.'</label>';
             $content .= '</span>';
 
@@ -544,7 +551,7 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_number($field){
-        return '<input type="number" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" maxlength="50" value="'.$this->value.'"/>';
+        return '<input type="number" min="0" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" maxlength="50" value="'.$this->value.'"/>';
     }
 
     function get_type_hidden($field){
