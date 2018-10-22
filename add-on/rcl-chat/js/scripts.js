@@ -27,8 +27,9 @@ function rcl_chat_init_sound(){
     };
     
     rcl_chat_sound = rcl_apply_filters('rcl_chat_sound_options',options);
-    
-    jQuery.ionSound(rcl_chat_sound);
+    if (typeof jQuery.ionSound !== 'undefined') {
+        jQuery.ionSound(rcl_chat_sound);
+    }
 }
 
 function rcl_chat_inactivity_cancel(){
@@ -179,7 +180,9 @@ function rcl_chat_add_new_message(form){
                 rcl_chat_counter_reset(form);
                 
                 if(data.new_messages){
-                    jQuery.ionSound.play(rcl_chat_sound.sounds[0]);
+                    if (typeof jQuery.ionSound !== 'undefined') {
+                        jQuery.ionSound.play(rcl_chat_sound.sounds[0]);
+                    }
                 }
                 
                 rcl_chat_last_activity[token] = data.last_activity;
@@ -537,7 +540,9 @@ function rcl_chat_beat_success(data){
         }
 
         if(data['content']){
-            jQuery.ionSound.play(rcl_chat_sound.sounds[0]);
+            if (typeof jQuery.ionSound !== 'undefined') {
+                jQuery.ionSound.play(rcl_chat_sound.sounds[0]);
+            }
             chat.find('.chat-messages').append(data['content']);
             rcl_chat_scroll_bottom(data.token);
         }else{
