@@ -5076,7 +5076,7 @@ msgstr "Используйте формат"
 
 #: classes/class-rcl-custom-fields.php:586
 msgid "for"
-msgstr "для"
+msgstr "до"
 
 #: classes/class-rcl-custom-fields.php:615
 msgid "Upload the downloaded file"
