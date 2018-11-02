@@ -40,7 +40,7 @@ class Rcl_Custom_Fields{
         if(isset($field['requared']))
             $field['required'] = $field['requared'];
 
-        $this->value = (isset($field['default']) && $value === false)? $field['default']: stripslashes_deep($value);
+        $this->value = (isset($field['default']) && ($value === false || $value === ''))? $field['default']: stripslashes_deep($value);
         $this->slug = isset($field['slug'])? $field['slug']: '';
         $this->field_id = (isset($field['field-id']))? $field['field-id']: $this->slug;
         $this->value_in_key = (isset($field['value_in_key']))? $field['value_in_key']: false;
