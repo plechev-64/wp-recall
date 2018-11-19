@@ -19,7 +19,7 @@ function rcl_insert_feed_data($args){
         RCL_PREF."feeds",
         $args
     );
-    
+
     if(!$result){
         rcl_add_log('rcl_insert_feed_data: '.__('Failed to add new subscription','wp-recall'), $args);
     }
@@ -45,7 +45,7 @@ function rcl_update_feed_data($args){
         $args,
         array('feed_id'=>$feed_id)
     );
-    
+
     if(!$result){
         rcl_add_log('rcl_update_feed_data: '.__('Failed to change feed data','wp-recall'), $args);
     }
@@ -83,18 +83,13 @@ function rcl_remove_feed_author($author_id){
 add_action('delete_user','rcl_remove_user_feed',10);
 function rcl_remove_user_feed($user_id){
     global $wpdb;
-    
-    $result = $wpdb->query(
-        $wpdb->prepare("DELETE FROM ".RCL_PREF."feeds WHERE user_id='%d' OR object_id='%d'",$user_id)
-    );
-    
-    return $result;
+    return $wpdb->prepare("DELETE FROM ".RCL_PREF."feeds WHERE user_id='$user_id' OR object_id='$user_id'");
 }
 
 //получаем данные фида по ИД
 function rcl_get_feed_data($feed_id){
     global $wpdb;
-    
+
     $cachekey = json_encode(array('rcl_get_feed_data',$feed_id));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
@@ -104,7 +99,7 @@ function rcl_get_feed_data($feed_id){
     $result = $feeds->get_row(array(
         'feed_id' => $feed_id
     ));
-    
+
     wp_cache_add( $cachekey, $result );
 
     return $result;
@@ -129,14 +124,14 @@ function rcl_remove_feed($feed_id){
 
 function rcl_is_ignored_feed_author($author_id){
     global $user_ID;
-    
+
     $cachekey = json_encode(array('rcl_is_ignored_feed_author',$author_id));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
         return $cache;
 
     $feeds = new Rcl_Feed_Query();
-    
+
     $feed_id = $feeds->get_var(array(
         'user_id' => $user_ID,
         'object_id' => $author_id,
@@ -146,23 +141,23 @@ function rcl_is_ignored_feed_author($author_id){
             'feed_id'
         )
     ));
-    
+
     wp_cache_add( $cachekey, $feed_id );
-    
+
     return $feed_id;
 }
 
 //получаем ИД фида текущего пользователя по ИД автора
 function rcl_get_feed_author_current_user($author_id){
     global $user_ID;
-    
+
     $cachekey = json_encode(array('rcl_get_feed_author_current_user',$author_id));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
         return $cache;
 
     $feeds = new Rcl_Feed_Query();
-    
+
     $feed_id = $feeds->get_var(array(
         'user_id' => $user_ID,
         'object_id' => $author_id,
@@ -174,7 +169,7 @@ function rcl_get_feed_author_current_user($author_id){
     ));
 
     wp_cache_add( $cachekey, $feed_id );
-    
+
     return $feed_id;
 }
 
@@ -186,7 +181,7 @@ function rcl_get_feed_callback_link($user_id,$name,$callback){
 
 //считаем кол-во подписок указанного пользователя
 function rcl_feed_count_authors($user_id){
-    
+
     $cachekey = json_encode(array('rcl_feed_count_authors',$user_id));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
@@ -201,20 +196,20 @@ function rcl_feed_count_authors($user_id){
     ));
 
     wp_cache_add( $cachekey, $result );
-    
+
     return $result;
 }
 
 //считаем кол-во подписчиков указанного пользователя
 function rcl_feed_count_subscribers($user_id){
-    
+
     $cachekey = json_encode(array('rcl_feed_count_subscribers',$user_id));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
         return $cache;
 
     $feeds = new Rcl_Feed_Query();
-    
+
     $result = $feeds->count(array(
         'object_id' => $user_id,
         'feed_type' => 'author',
@@ -222,15 +217,15 @@ function rcl_feed_count_subscribers($user_id){
     ));
 
     wp_cache_add( $cachekey, $result );
-    
+
     return $result;
 }
 
 rcl_ajax_action('rcl_feed_callback', false);
 function rcl_feed_callback(){
-    
+
     rcl_verify_ajax_nonce();
-    
+
     $data = $_POST['data'];
     $callback = $_POST['callback'];
     $content = $callback($data);
@@ -246,7 +241,7 @@ function rcl_feed_content(){
 add_filter('rcl_feed_content','rcl_add_feed_content_meta',10);
 function rcl_add_feed_content_meta($content){
     global $rcl_feed;
-    
+
     switch($rcl_feed->feed_type){
         case 'posts':
             return $content;
@@ -263,9 +258,9 @@ function rcl_add_feed_content_meta($content){
 }
 
 function rcl_feed_unset_can_vote($userCan){
-    
+
     $userCan['vote'] = false;
-            
+
     return $userCan;
 }
 
@@ -283,27 +278,27 @@ function rcl_get_feed_excerpt($content){
     global $rcl_feed;
 
     if($rcl_feed->feed_type!='posts') return $content;
-    
+
     $content = strip_shortcodes( $content );
-    
+
     if ( preg_match( '/<!--more(.*?)?-->/', $content, $matches ) ) {
         $content = explode( $matches[0], $content, 2 );
         $content = $content[0];
     }else{
-        
+
         $content = wp_kses($content,array(
-                'b' => array(), 
-                'li' => array(), 
-                'ul' => array(), 
-                'strong' => array(), 
-                'br' => array(), 
-                'ol' => array(), 
-                'p' => array(), 
-                'span' => array(), 
-                'div' => array(), 
-                'i' => array(), 
-                'u' => array(), 
-                'pre' => array(), 
+                'b' => array(),
+                'li' => array(),
+                'ul' => array(),
+                'strong' => array(),
+                'br' => array(),
+                'ol' => array(),
+                'p' => array(),
+                'span' => array(),
+                'div' => array(),
+                'i' => array(),
+                'u' => array(),
+                'pre' => array(),
                 's' => array()
             )
         );
@@ -320,9 +315,9 @@ function rcl_get_feed_excerpt($content){
         $src = wp_get_attachment_image_src($thumb,'medium');
         $content = '<img class="aligncenter" src="' . $src[0] . '" alt="" />'.$content;
     }
-    
+
     $content = apply_filters('rcl_feed_excerpt',$content);
-    
+
     $content .= apply_filters( 'the_content_more_link', ' <a href="'.get_permalink( $rcl_feed->feed_ID ).'" class="more-link">'.__('Read more','wp-recall').'</a>', __('Read more','wp-recall') );
 
     return $content;
@@ -378,14 +373,14 @@ function rcl_feed_options(){
 
 function rcl_get_author_feed_data($author_id){
     global $user_ID;
-    
+
     $cachekey = json_encode(array('rcl_get_author_feed_data',$author_id));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
         return $cache;
 
     $feeds = new Rcl_Feed_Query();
-    
+
     $result = $feeds->get_row(array(
         'user_id' => $user_ID,
         'object_id' => $author_id,
@@ -393,7 +388,7 @@ function rcl_get_author_feed_data($author_id){
     ));
 
     wp_cache_add( $cachekey, $result );
-    
+
     return $result;
 }
 
@@ -439,14 +434,14 @@ function rcl_ignored_feed_author($author_id){
 
 function rcl_get_feed_array($user_id,$type_feed='author'){
     global $wpdb;
-    
+
     $cachekey = json_encode(array('rcl_get_feed_array',$user_id,$type_feed));
     $cache = wp_cache_get( $cachekey );
     if ( $cache )
         return $cache;
 
     $feeds = new Rcl_Feed_Query();
-    
+
     $users = $feeds->get_col(array(
         'user_id' => $user_id,
         'feed_type' => $type_feed,
@@ -455,7 +450,7 @@ function rcl_get_feed_array($user_id,$type_feed='author'){
     ));
 
     if($users){
-        
+
         $sec_feeds = $feeds->get_col(array(
             'user_id__in' => $users,
             'feed_type' => $type_feed,
@@ -465,9 +460,9 @@ function rcl_get_feed_array($user_id,$type_feed='author'){
 
         if($sec_feeds) $users = array_unique(array_merge($users,$sec_feeds));
     }
-    
+
     wp_cache_add( $cachekey, $users );
-    
+
     return $users;
 }
 

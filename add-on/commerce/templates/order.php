@@ -31,20 +31,21 @@
                 <?php rcl_product_variation_list($product->variations); ?>
             </td>
             <td class="column-product-price">
-                <div class="rcl-cart-subtitle"><?php _e('Price','wp-recall'); ?>:</div>
-                <span><?php echo $product->product_price; ?></span><?php echo rcl_get_primary_currency(0); ?>
+                <div class="rcl-cart-subtitle" style="display:none;"><?php _e('Price','wp-recall'); ?>:</div>
+                <span><?php echo $product->product_price; ?></span>
+                <?php echo rcl_get_primary_currency(0); ?>
             </td>
             <td class="column-product-amount">
-                <div class="rcl-cart-subtitle"><?php _e('Amount','wp-recall'); ?>:</div>
+                <div class="rcl-cart-subtitle" style="display:none;"><?php _e('Amount','wp-recall'); ?>:</div>
                 <span class="product-amount">
                     <?php echo $product->product_amount; ?>
                 </span>
             </td>
             <td class="column-product-sumprice">
-                <div class="rcl-cart-subtitle"><?php _e('Sum','wp-recall'); ?>:</div>
+                <div class="rcl-cart-subtitle" style="display:none;"><?php _e('Sum','wp-recall'); ?>:</div>
                 <span class="product-sumprice">
                     <?php echo $product->product_price * $product->product_amount; ?>
-                </span>
+                </span> 
                 <?php echo rcl_get_primary_currency(0); ?>
             </td>
         </tr>

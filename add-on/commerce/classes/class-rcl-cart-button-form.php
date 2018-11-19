@@ -176,7 +176,7 @@ class Rcl_Cart_Button_Form{
 
         $content .= '<input type="hidden" name="cart[isset][variations]" value="1">';
 
-        foreach($productVars as $vars){
+        foreach($productVars as $k => $vars){
 
             $variation = $PrVars->get_variation($vars['slug']);
 
@@ -186,6 +186,17 @@ class Rcl_Cart_Button_Form{
                 $variation['values'][] = $val['name'];
             }
             /**/
+
+            if(isset($variation['empty-first'])){
+
+                array_unshift($productVars[$k]['values'], array(
+                    'price' => "0",
+                    'name' => $variation['empty-first']
+                ));
+
+                $variation['empty-value'] = $variation['empty-first'];
+
+            }
 
             $variation['value_in_key'] = true;
 

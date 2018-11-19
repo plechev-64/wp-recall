@@ -319,20 +319,21 @@ class Rcl_Custom_Fields{
         if(!$field['values']) return false;
 
         $emptyFirst = (isset($field['empty-first']))? $field['empty-first']: false;
+        $emptyValue = (isset($field['empty-value']))? $field['empty-value']: '';
 
         $content = '';
 
         if($emptyFirst){
             $content .= '<span class="rcl-radio-box">';
-            $content .= '<input type="radio" '.$this->required.' '.checked($this->value,'',false).' id="'.$this->field_id.'_'.$this->rand.'" name="'.$field['name'].'" value=""> ';
+            $content .= '<input type="radio" '.$this->required.' '.checked($this->value,'',false).' id="'.$this->field_id.'_'.$this->rand.'" name="'.$field['name'].'" value="'.$emptyValue.'"> ';
             $content .= '<label class="block-label" for="'.$this->field_id.'_'.$this->rand.'">'.$emptyFirst.'</label>';
             $content .= '</span>';
         }
 
         $a = 0;
 
-        if(!$this->value)
-            $this->value = 0;
+        if(!$emptyFirst && !$this->value)
+            $this->value = ($this->value_in_key)? $field['values'][0]: 0;
 
         foreach($field['values'] as $k => $value){
 
@@ -551,7 +552,9 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_number($field){
-        return '<input type="number" min="0" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" maxlength="50" value="'.$this->value.'"/>';
+        $min = isset($field['value_min'])? 'min="'.$field['value_min'].'"': '';
+        $max = isset($field['value_max'])? 'max="'.$field['value_max'].'"': '';
+        return '<input type="number" '.$min.' '.$max.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" maxlength="50" value="'.$this->value.'"/>';
     }
 
     function get_type_hidden($field){

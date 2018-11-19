@@ -132,22 +132,25 @@ function rcl_add_data_rating_posts(){
     $ratingsnone = array();
 
     foreach($wp_query->posts as $post){
+
+        if(!rcl_get_option('rating_'.$post->post_type)) continue;
+
         $users[] = $post->post_author;
         $post_types[] = $post->post_type;
         $posts[] = $post->ID;
     }
 
+    if(!$posts) return;
+
     $users = array_unique($users);
     $post_types = array_unique($post_types);
 
-    if($posts){
+    $ratingsnone = $wpdb->get_results("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='rayting-none' AND post_id IN (".implode(',',$posts).")");
 
-        $ratingsnone = $wpdb->get_results("SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='rayting-none' AND post_id IN (".implode(',',$posts).")");
-
+    if($ratingsnone){
         foreach($ratingsnone as $val){
             $none[$val->post_id] = $val->meta_value;
         }
-
     }
 
     $rating_authors = rcl_get_rating_users(array(

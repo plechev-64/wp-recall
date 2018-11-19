@@ -127,6 +127,12 @@ function rcl_add_user_balance($money,$user_id,$comment=''){
     return $result;
 }
 
+add_action('delete_user','rcl_delete_user_balance', 10);
+function rcl_delete_user_balance($user_id){
+    global $wpdb;
+    return $wpdb->query($wpdb->prepare("DELETE FROM ".RMAG_PREF."users_balance WHERE user_id='%d'",$user_id));
+}
+
 function rcl_get_html_usercount(){
     global $user_ID,$rmag_options;
 

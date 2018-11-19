@@ -684,7 +684,7 @@ body .rcl-product-gallery ul.images-list {
         display: none;
     }
     #rcl-order .order-table .rcl-cart-subtitle {
-        display: block;
+        display: block!important;
     }
     #rcl-order .order-table tr {
         background-color: #fff;
