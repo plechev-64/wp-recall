@@ -1,5 +1,5 @@
 <?php
-
+ 
 require_once "admin-menu.php";
 require_once "add-on-manager.php";
 require_once "templates-manager.php";
@@ -154,7 +154,7 @@ function rcl_update_options(){
 
     if(isset($rcl_options['users_page_rcl']))
         $options['users_page_rcl'] = $rcl_options['users_page_rcl'];
-    
+
     $options = apply_filters('rcl_pre_update_options', $options);
 
     update_option('rcl_global_options',$options);
@@ -410,7 +410,7 @@ function rcl_admin_footer_text( $footer_text ) {
 }
 
 function rcl_send_addon_activation_notice($addon_id, $addon_headers){
-    wp_remote_post( RCL_SERVICE_HOST.'/products-files/api/add-ons.php?rcl-addon-info=add-notice', 
+    wp_remote_post( RCL_SERVICE_HOST.'/products-files/api/add-ons.php?rcl-addon-info=add-notice',
         array('body' =>  array(
                 'rcl-key' => get_option('rcl-key'),
                 'addon-id' => $addon_id,
@@ -421,6 +421,6 @@ function rcl_send_addon_activation_notice($addon_id, $addon_headers){
                 ),
                 'host' => $_SERVER['SERVER_NAME']
             )
-        ) 
+        )
     );
 }

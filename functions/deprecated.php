@@ -1,25 +1,25 @@
 <?php
-
+ 
 add_filter('rcl_public_form','rcl_edit_old_filter_public_form',10,2);
 function rcl_edit_old_filter_public_form($content,$formdata){
     return apply_filters('public_form_rcl',$content,$formdata);
 }
 
-//выправляем ситуацию со старым хранением 
+//выправляем ситуацию со старым хранением
 //данных в опциях произвольных полей
 function rcl_edit_old_option_fields($option, $type = false){
-    
+
     $types = array(
         'select',
         'multiselect',
         'checkbox',
         'radio',
     );
-    
+
     if($type && !in_array($type,$types)) return $option;
-    
+
     if($option && !is_array($option)){
-            
+
         $array = explode('#',$option);
 
         if($array && is_array($array)){
@@ -27,7 +27,7 @@ function rcl_edit_old_option_fields($option, $type = false){
         }
 
     }
-    
+
     return $option;
 }
 
@@ -111,7 +111,7 @@ function rcl_navi_admin($inpage,$cnt_data,$page,$page_id,$get_data){
 
     $prev = $page-1;
     $next = $page+1;
-    
+
     $pagination = '<div class="tablenav">
         <div class="tablenav-pages">
             <span class="pagination-links">';
