@@ -7,6 +7,7 @@ class Rcl_Cart_Button_Form{
     public $product_old_price;
     public $product_amount;
     public $product_status;
+    public $label;
     public $output = array(
             'price' => true,
             'old_price' => true,
@@ -17,7 +18,12 @@ class Rcl_Cart_Button_Form{
 
     function __construct($args) {
 
+        $args = apply_filters('rcl_cart_button_form_props', $args);
+
         $this->init_properties($args);
+
+        if(!$this->label)
+            $this->label = __('To cart','wp-recall');
 
     }
 
@@ -133,7 +139,7 @@ class Rcl_Cart_Button_Form{
     function cart_button(){
 
         if($this->product_status){
-            $content = '<a href="#" onclick="rcl_add_to_cart(this);return false;" class="recall-button"><i class="rcli fa-shopping-cart" aria-hidden="true"></i><span>'.__('To cart','wp-recall').'</span></a>';
+            $content = '<a href="#" onclick="rcl_add_to_cart(this);return false;" class="recall-button"><i class="rcli fa-shopping-cart" aria-hidden="true"></i><span>'.$this->label.'</span></a>';
         }else{
             $content = '<span class="recall-button outsale-product"><i class="rcli fa-refresh" aria-hidden="true"></i>'.__('Not available','wp-recall').'</a>';
         }

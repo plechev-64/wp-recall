@@ -88,7 +88,7 @@ function rcl_update_postdata_excerpt($postdata){
 add_filter('the_content','rcl_post_gallery',10);
 function rcl_post_gallery($content){
     global $post;
-
+    
     if(get_post_meta($post->ID, 'recall_slider', 1)!=1||!is_single()||$post->post_type=='products') return $content;
 
     $args = array(

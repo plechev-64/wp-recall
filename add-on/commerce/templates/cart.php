@@ -3,7 +3,7 @@
 /*Данный шаблон можно разместить в папке используемого шаблона /wp-content/wp-recall/templates/ и он будет подключаться оттуда*/
 ?>
 
-<?php global $post; $Cart = new Rcl_Cart(); ?>
+<?php global $post; ?>
 
 <?php do_action('rcl_cart_before'); ?>
 

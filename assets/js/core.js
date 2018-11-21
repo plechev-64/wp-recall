@@ -601,12 +601,25 @@ function rcl_ajax(prop){
         }
     }
     
+    var action = false;
+    if(typeof prop.data === 'string'){
+        var propData = prop.data.split('&');
+        var propObj={};
+        for(var key in propData)
+        {
+            propObj[propData[key].split("=")[0]] = propData[key].split("=")[1];
+        }
+        action = propObj.action;
+    }else if(typeof prop.data === 'object'){
+        action = prop.action;
+    }
+    
     jQuery.ajax({
         type: 'POST', 
         data: prop.data, 
         dataType: 'json', 
         url: (typeof ajaxurl !== 'undefined')? ajaxurl: Rcl.ajaxurl,
-        success: function(result){
+        success: function(result, post){
             
             if(!result){
                 rcl_notice(Rcl.local.error, 'error', 5000);
@@ -655,8 +668,8 @@ function rcl_ajax(prop){
                 rcl_proccess_ajax_return(result);
                 
             }
-            
-            rcl_do_action(prop.data.action, result);
+
+            rcl_do_action(action, result);
             
         }
     });

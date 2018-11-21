@@ -1,6 +1,6 @@
 <?php
 
-class Rcl_Cart_Constructor {
+class Rcl_Cart_Constructor{
 
     public $fields = array();
     public $order_id = false;
@@ -36,7 +36,9 @@ class Rcl_Cart_Constructor {
 
             }else{
 
-                $content .= rcl_get_include_template('cart.php',__FILE__);
+                $content .= rcl_get_include_template('cart.php',__FILE__, array(
+                    'Cart' => $Cart
+                ));
 
                 $content .= $this->get_form_fields();
 
