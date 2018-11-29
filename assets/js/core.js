@@ -611,7 +611,7 @@ function rcl_ajax(prop){
         }
         action = propObj.action;
     }else if(typeof prop.data === 'object'){
-        action = prop.action;
+        action = prop.data.action;
     }
     
     jQuery.ajax({
