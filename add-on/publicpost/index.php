@@ -33,34 +33,6 @@ function rcl_autocomplete_scripts(){
     rcl_enqueue_script( 'magicsuggest', rcl_addon_url('js/magicsuggest/magicsuggest-min.js', __FILE__) );
 }
 
-add_action('rcl_setup_tabs','rcl_postlist_tab_add_types_data',10);
-function rcl_postlist_tab_add_types_data(){
-    global $rcl_postlist;
-
-    if($rcl_postlist){
-
-        foreach($rcl_postlist as $post_type=>$data){
-
-            if($post_type == 'post') continue;
-
-            $subtab = array(
-                'id' => 'type-'.$post_type,
-                'name' => $data['name'],
-                'icon' => 'fa-list',
-                'callback' => array(
-                    'name'=>'rcl_get_postslist',
-                    'args'=>array($post_type,$data['name'])
-                )
-            );
-
-            rcl_add_sub_tab('publics',$subtab);
-
-        }
-
-    }
-
-}
-
 //выводим в медиабиблиотеке только медиафайлы текущего автора
 add_action('pre_get_posts','rcl_restrict_media_library');
 function rcl_restrict_media_library( $wp_query_obj ) {
@@ -88,7 +60,7 @@ function rcl_update_postdata_excerpt($postdata){
 add_filter('the_content','rcl_post_gallery',10);
 function rcl_post_gallery($content){
     global $post;
-    
+
     if(get_post_meta($post->ID, 'recall_slider', 1)!=1||!is_single()||$post->post_type=='products') return $content;
 
     $args = array(

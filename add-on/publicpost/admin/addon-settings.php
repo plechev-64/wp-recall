@@ -13,7 +13,7 @@ function rcl_get_publics_options_page($content){
         if($size!=1) $sh_name .= ' ('.$size['width'].'*'.$size['height'].')';
         $d_sizes[$name] = $sh_name;
     }
-    
+
     $post_types = get_post_types(array(
             'public'   => true,
             '_builtin' => false
@@ -70,6 +70,13 @@ function rcl_get_publics_options_page($content){
                     'childrens' => array(
                         1 => array(
                             array(
+                                'type' => 'checkbox',
+                                'slug' => 'post_types_list',
+                                'title' => __('Тип записи для вывода списка публикаций','wp-recall'),
+                                'values' => $types,
+                                'notice' => __('Отметьте тип записи, который будет выводить архив публикаций в этой вкладке. Если не указано ничего, то будут выводиться публикации всех типов.','wp-recall')
+                            ),
+                            array(
                                 'type' => 'select',
                                 'slug' => 'view_publics_block_rcl',
                                 'title' => __('List of publications of the user','wp-recall'),
@@ -79,7 +86,7 @@ function rcl_get_publics_options_page($content){
                     )
                 )
             )
-        ), 
+        ),
         $opt->options_box(
             __('Form of publication','wp-recall'),
             array(
@@ -171,7 +178,7 @@ function rcl_get_publics_options_page($content){
                 )
             )
         ),
-        $opt->extend(array(    
+        $opt->extend(array(
             $opt->options_box(
                 __('Editing','wp-recall'),
                 array(
@@ -221,7 +228,7 @@ function rcl_get_publics_options_page($content){
                         )
                     )
                 ),
-                
+
             )
         ))
     );

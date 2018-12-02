@@ -2,7 +2,7 @@
 
 add_action('wp','rcl_deleted_post_notice');
 function rcl_deleted_post_notice(){
-    if (isset($_GET['public'])&&$_GET['public']=='deleted') 
+    if (isset($_GET['public'])&&$_GET['public']=='deleted')
         rcl_notice_text(__('The publication has been successfully removed!','wp-recall'),'warning');
 }
 
@@ -20,10 +20,10 @@ function rcl_init_js_public_variables($data){
     $data['local']['publish'] = __('Publish','wp-recall');
     $data['local']['save_draft'] = __('Save as Draft','wp-recall');
     $data['local']['edit'] = __('Edit','wp-recall');
-    $data['local']['edit_box_title'] = __('Quick edit','wp-recall');   
+    $data['local']['edit_box_title'] = __('Quick edit','wp-recall');
     $data['local']['allowed_downloads'] = __('You have exceeded the allowed number of downloads! Max:','wp-recall');
     $data['local']['upload_size_public'] = __('Exceeds the maximum file size! Max:','wp-recall');
-    
+
     return $data;
 }
 
@@ -38,50 +38,75 @@ function rcl_edit_post_activate ( ) {
 add_action('init', 'rcl_setup_author_role', 10);
 function rcl_setup_author_role() {
     global $current_user;
-    
+
     if(!defined( 'DOING_AJAX' ) || !DOING_AJAX) return;
-    
+
     if ( isset( $_REQUEST['post_id'] ) ){
         $current_user->allcaps['edit_published_pages'] = 1;
         $current_user->allcaps['edit_others_pages'] = 1;
         $current_user->allcaps['edit_others_posts'] = 1;
     }
 
-} 
-
-add_action('init','rcl_add_postlist_posts',10);
-function rcl_add_postlist_posts(){
-    rcl_postlist('posts','post',__('Records','wp-recall'),array('order'=>30));
 }
 
-add_action('init','rcl_init_publics_block');
+add_action('init','rcl_init_publics_block',20);
 function rcl_init_publics_block(){
-    
+
     if(rcl_get_option('publics_block_rcl') == 1){
 
-        $tab_data = array(
-            'id'=>'publics', 
-            'name'=>__('Posts','wp-recall'),
-            'supports'=>array('ajax','cache'),
-            'public'=>rcl_get_option('view_publics_block_rcl'),
-            'icon'=>'fa-list',
-            'output'=>'menu',
-            'content' => array(
-                array(
-                    'callback' => array(
-                        'id' => 'type-post',
-                        'name'=>'rcl_get_postslist',
-                        'args'=>array('post',__('Posts','wp-recall'))
-                    )
-                )
-            )
-        );
+        $post_types = get_post_types(array(
+            'public'   => true,
+            '_builtin' => false
+        ), 'objects');
 
-        rcl_tab($tab_data);
+        $types = array('post' => __('Records','wp-recall'));
+
+        foreach ($post_types  as $post_type ) {
+            $types[$post_type->name] = $post_type->label;
+        }
+
+        if(rcl_get_option('post_types_list')){
+
+            foreach ($types  as $post_type => $name ) {
+                if(!in_array($post_type, rcl_get_option('post_types_list'))){
+                    unset($types[$post_type]);
+                }
+            }
+
+        }
+
+        if($types){
+
+            $tab_data = array(
+                'id'=>'publics',
+                'name'=>__('Posts','wp-recall'),
+                'supports'=>array('ajax','cache'),
+                'public'=>rcl_get_option('view_publics_block_rcl'),
+                'icon'=>'fa-list',
+                'output'=>'menu',
+                'content' => array()
+            );
+
+            foreach ($types  as $post_type => $name ) {
+                $tab_data['content'][] = array(
+                    'id' => 'type-' . $post_type,
+                    'name'=> $name,
+                    'icon' => 'fa-list',
+                    'callback' => array(
+                        'name' => 'rcl_get_postslist',
+                        'args' => array($post_type, $name)
+                    )
+                );
+            }
+
+            rcl_tab($tab_data);
+
+        }
+
     }
-    
+
     if(rcl_get_option('output_public_form_rcl') == 1){
-        
+
         rcl_tab(
             array(
                 'id'=>'postform',

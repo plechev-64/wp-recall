@@ -11,7 +11,7 @@ function rcl_insert_attachment($attachment,$image,$id_post=false){
 }
 
 function rcl_add_attachment_thumbnail_button($content,$attachment_id,$mime){
-        
+
     if($mime[0] != 'image') return $content;
 
     $content .= '<span class="set-thumbnail-post">'
@@ -31,37 +31,37 @@ function rcl_imagepost_upload(){
     require_once(ABSPATH . "wp-admin" . '/includes/image.php');
     require_once(ABSPATH . "wp-admin" . '/includes/file.php');
     require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-    
+
     $id_post = false;
 
     if(isset($_POST['post_id']) && $_POST['post_id']!='undefined' && $_POST['post_id']){
         $id_post = intval($_POST['post_id']);
         $post = get_post($id_post);
     }
-        
+
     $post_type = $_POST['post_type'];
     $form_id = isset($_POST['form_id'])? $_POST['form_id']: 1;
-    
+
     $formFields = new Rcl_Public_Form_Fields(array('post_type' => $post_type));
-    
+
     if($formFields->exist_active_field('post_thumbnail'))
         add_filter('rcl_post_attachment_html','rcl_add_attachment_thumbnail_button', 10, 3);
-    
+
     $valid_types = (isset($_POST['ext_types']) && $_POST['ext_types'])? array_map('trim',explode(',',$_POST['ext_types'])): array('jpeg', 'jpg', 'png', 'gif');
 
     $valid_types = apply_filters('rcl_upload_valid_types',$valid_types,$post_type);
-    
+
     $addToClick = true;
-    
+
     $formFields = new Rcl_Public_Form_Fields(array(
         'post_type' => $post_type,
         'form_id' => $form_id
     ));
-    
+
     if($formFields->exist_active_field('post_uploader')){
 
         $field = $formFields->get_field('post_uploader');
-        
+
         if(isset($field['add-to-click'])) $addToClick = $field['add-to-click'];
     }
 
@@ -71,12 +71,12 @@ function rcl_imagepost_upload(){
             $files[$k][$key] = $data;
         }
     }
-
+    print_r($files);
     foreach($files as $k=>$file){
 
         $filetype = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
 
-        if (!in_array(strtolower($filetype['ext']), $valid_types)){ 
+        if (!in_array(strtolower($filetype['ext']), $valid_types)){
             wp_send_json(array('error'=>__('Banned file extension. Resolved:','wp-recall').' '.implode(', ',$valid_types)));
         }
 
@@ -92,16 +92,16 @@ function rcl_imagepost_upload(){
                 'post_author' => $user_ID,
                 'post_status' => 'inherit'
             );
-            
-            if(!$user_ID){   
+
+            if(!$user_ID){
                 $attachment['post_content'] = $_COOKIE['PHPSESSID'];
             }
-            
+
             $attach_id = wp_insert_attachment( $attachment, $image['file'], $id_post );
             $attach_data = wp_generate_attachment_metadata( $attach_id, $image['file'] );
             wp_update_attachment_metadata( $attach_id, $attach_data );
 
-            if(!$id_post) 
+            if(!$id_post)
                 rcl_update_tempgallery($attach_id,$image['url']);
 
             $res[$k]['string'] = rcl_get_html_attachment($attach_id,$attachment['post_mime_type'], $addToClick);
@@ -110,7 +110,7 @@ function rcl_imagepost_upload(){
         }
 
     }
-    
+
     do_action('rcl_post_upload',$post);
 
     wp_send_json($res);

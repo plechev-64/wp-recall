@@ -7,41 +7,54 @@
 ?>
 <?php global $post,$posts,$ratings; ?>
 
-<table class="publics-table-rcl rcl-form">
-    <tr>
-        <th><?php _e('Date','wp-recall'); ?></th>
-        <th><?php _e('Title','wp-recall'); ?></th>
-        <th><?php _e('Status','wp-recall'); ?></th>
-    </tr>
+<?php
+    $Table = new Rcl_Table(array(
+        'cols' => array(
+            array(
+                'title' => __('Title','wp-recall')
+            ),
+            array(
+                'align' => 'center',
+                'title' => __('Date','wp-recall')
+            ),
+            array(
+                'align' => 'center',
+                'title' => __('Status','wp-recall')
+            )
+        ),
+        'zebra' => true,
+        'border' => array('table', 'cols', 'rows')
+    ));
+?>
 
-    <?php foreach($posts as $postdata){ ?>
-        <?php foreach($postdata as $post){ setup_postdata($post); ?>
-            <?php if($post->post_status=='pending') $status = '<span class="status-pending">'.__('to be approved','wp-recall').'</span>';
-            elseif($post->post_status=='trash') $status = '<span class="status-pending">'.__('deleted','wp-recall').'</span>';
-            elseif($post->post_status=='draft') $status = '<span class="status-draft">'.__('draft','wp-recall').'</span>';
-            else $status = '<span class="status-publish">'.__('published','wp-recall').'</span>'; ?>
 
-            <tr>
-                <td>
-                    <?php echo mysql2date('d.m.y', $post->post_date); ?>
-                </td>
+<?php foreach($posts as $postdata){ ?>
+    <?php foreach($postdata as $post){ setup_postdata($post); ?>
+        <?php if($post->post_status=='pending') $status = '<span class="status-pending">'.__('to be approved','wp-recall').'</span>';
+        elseif($post->post_status=='trash') $status = '<span class="status-pending">'.__('deleted','wp-recall').'</span>';
+        elseif($post->post_status=='draft') $status = '<span class="status-draft">'.__('draft','wp-recall').'</span>';
+        else $status = '<span class="status-publish">'.__('published','wp-recall').'</span>'; ?>
 
-                <td>
-                    <?php if(empty($post->post_title)) $post->post_title = "<i class='rcli fa-ellipsis-h' aria-hidden='true'></i>"; ?>
-                    <?php echo ($post->post_status=='trash')? $post->post_title: '<a target="_blank" href="'.$post->guid.'">'.$post->post_title.'</a>'; ?>
+        <?php $content = ''; ?>
+        <?php if(empty($post->post_title)) $post->post_title = "<i class='rcli fa-ellipsis-h' aria-hidden='true'></i>"; ?>
+        <?php $content .= ($post->post_status=='trash')? $post->post_title: '<a target="_blank" href="'.$post->guid.'">'.$post->post_title.'</a>'; ?>
 
-                    <?php if(function_exists('rcl_format_rating')) {
-                        $rtng = (isset($ratings[$post->ID]))? $ratings[$post->ID]: 0;
-                        echo rcl_rating_block(array('value'=>$rtng));
-                    } ?>
-                    <?php $content = ''; echo apply_filters('content_postslist',$content); ?>
-                </td>
+        <?php if(function_exists('rcl_format_rating')) {
+            $rtng = (isset($ratings[$post->ID]))? $ratings[$post->ID]: 0;
+            $content .= rcl_rating_block(array('value'=>$rtng));
+        } ?>
+        <?php $content .= apply_filters('content_postslist',''); ?>
 
-                <td>
-                    <?php echo $status ?>
-                </td>
-            </tr>
+        <?php
+            $Table->add_row(array(
+                $content,
+                mysql2date('d.m.y', $post->post_date),
+                $status
+            ));
+        ?>
 
-        <?php } ?>
     <?php } ?>
-</table>
+<?php } ?>
+
+<?php echo $Table->get_table(); ?>
+

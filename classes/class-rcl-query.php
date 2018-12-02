@@ -535,6 +535,9 @@ class Rcl_Query {
         else
             $result = $wpdb->get_var($sql);
 
+        if(!$result)
+            $result = 0;
+
         return $result;
 
     }
