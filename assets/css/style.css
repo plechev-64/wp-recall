@@ -1,12 +1,51 @@
-/* Личный кабинет разбиваем на блоки. Внутри этих блоков некоторые ключевые моменты тоже будут прокомментированы */
+/*----------------------
+>>> Table of contents
+------------------------
+  1. General
+  2. Ruble
+  3. Notify & RCL Notice
+  4. RCL preloader
+  5. RCL smiles
+  6. User online/offline
+  7. Dashboard WP-Recall
+  8. Private office general
+  9. WP-Recall buttons
+  10. WP-Recall buttons states
+  11. WP-Recall buttons adjustments
+  12. Private office subtabs
+  13. TODO: old submenu
+  14. TODO: data-filters buttons
+  15. TODO: upload buttons
+  16. Search filter
+  17. Avatar zone
+  18. RCL Custom fields API
+  19. Private office content
+  20. RCL pagenavi API
+  21. Ssi-modal API
+  22. Checkbox & radio stylization
+  23. TODO: media screen old
+  24. Gallery & Video Gallery core
+  25. Upload Cover
+  26. Detailed information
+  27. Upload avatar
+  28. Post bar
+  29. RCL Form & table
+  30. Runner & Range
+  31. RCL Tables API
+  32. TODO: old generation
 
-/* общие стили start */
+------------------------*/
+
+
+/*------------------------
+  1. General
+--------------------------*/
 [class^="rcli fa-"]::before,
 [class*=" rcli fa-"]::before {
     padding: 0;
 }
-.rcli.rcl-icon{
-    background: #b9c9d6;
+.rcli.rcl-icon {
+    background-color: #b9c9d6;
     box-sizing: content-box;
     color: #fff;
     margin-right: 5px;
@@ -40,6 +79,12 @@ body .preloader-parent {
     clear: both;
     text-align: center;
 }
+/*end*/
+
+
+/*------------------------
+  2. Ruble
+--------------------------*/
 span.ruble-symbol {
     font-family: Arial;
     font-weight: normal;
@@ -51,7 +96,12 @@ span.ruble-symbol {
     position: absolute;
     top: 55%;
 }
+/*end*/
 
+
+/*------------------------
+  3. Notify & RCL Notice
+--------------------------*/
 .wprecallblock .notify-lk {
     color: #000;
     font-size: 16px;
@@ -100,6 +150,12 @@ span.ruble-symbol {
     float: right;
     padding: 0 5px 0 4px;
 }
+/*end*/
+
+
+/*------------------------
+  4. RCL preloader
+--------------------------*/
 body .rcl_preloader {
     background: rgba(255,255,255,0.6) !important;
     display: block !important;
@@ -115,6 +171,12 @@ body .rcl_preloader {
     position: absolute;
     top: 50%;
 }
+/*end*/
+
+
+/*------------------------
+  5. RCL smiles
+--------------------------*/
 .rcl-smiles {
     clear: both;
     float: right;
@@ -153,6 +215,12 @@ body .rcl_preloader {
     margin: 3px !important;
     width: auto !important;
 }
+/*end*/
+
+
+/*------------------------
+  6. User online/offline
+--------------------------*/
 .rcl-new-users p,
 .rcl-online-users p {
     margin: 5px 0;
@@ -173,19 +241,16 @@ span i.rcli.fa-circle {
     text-shadow: 0 0 1px #5a0d0c;
 }
 @keyframes pulsate {
-    25% {
-        transform: scale(1.025);
-    }
-    50% {
-        color: #A3F558;
-        text-shadow: 0 0 3px #35e668;
-        transform: scale(1.05);
-    }
-    75% {
-        transform: scale(1.025);
-    }
+    25% {transform: scale(1.025);}
+    50% {color: #A3F558;text-shadow: 0 0 3px #35e668;transform: scale(1.05);}
+    75% {transform: scale(1.025);}
 }
-/* START панель управления */
+/*end*/
+
+
+/*------------------------
+  7. Dashboard WP-Recall
+--------------------------*/
 .panel_lk_recall .rcl-widget-buttons .rcl-widget-button {
     margin: 0 0 4px;
     overflow: hidden;
@@ -223,12 +288,12 @@ span i.rcli.fa-circle {
     max-width: 100%;
     width: 100%;
 }
-/* END панель управления */
-/* общие стили End */
+/*end*/
 
-/* Личный кабинет start*/
 
-/* общие стили start */
+/*-----------------------------
+  8. Private office general
+-------------------------------*/
 #rcl-office {
     background: rgba(236, 240, 241, 0.3);
     box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
@@ -364,8 +429,12 @@ span i.rcli.fa-circle {
     overflow: hidden;
     position: relative;
 }
-/* Группа кнопок Start */
-    /* Основной стиль кнопок Start */
+/*end*/
+
+
+/*-----------------------------
+  9. WP-Recall buttons
+-------------------------------*/
 .recall-button i + span {
     margin: 0 0 0 5px;
 }
@@ -392,9 +461,12 @@ input[type="button"] .recall-button {
     text-transform: none;                   /*++Twenty16++*/
     white-space: nowrap;
 }
-/* Основной стиль кнопок End */
+/*end*/
 
-/* Состояния кнопок Start */
+
+/*------------------------------------
+  10. WP-Recall buttons states
+--------------------------------------*/
 a.recall-button:hover,
 a.recall-button:visited,
 span.recall-button:hover,
@@ -424,9 +496,12 @@ a.data-filter.filter-active:hover {
 #rcl-office #lk-menu a.recall-button.active {
     pointer-events: none;
 }
-/* Состояния кнопок End */
+/*end*/
 
-/* Корректировки к кнопкам Start */
+
+/*----------------------------------------
+  11. WP-Recall buttons adjustments
+------------------------------------------*/
 #lk-menu a {
     display: block;
     float: left;
@@ -454,9 +529,12 @@ a.data-filter.filter-active:hover {
     white-space: normal;
     width: 100%;
 }
-/* Корректировки к кнопкам End */
+/*end*/
 
-/*START Меню субвкладок ЛК*/
+
+/*-----------------------------
+  12. Private office subtabs
+-------------------------------*/
 .rcl-subtab-menu {
     background: #f7f8f8;
     margin: 5px 0;
@@ -469,8 +547,12 @@ a.data-filter.filter-active:hover {
     margin-right: 5px;
     padding: 7px;
 }
+/*end*/
 
-/*ниже устаревшие стили субвкладок, позднее удалить*/
+
+/*--------------------------------------
+  13. TODO: old submenu
+----------------------------------------*/
 #rcl-office .rcl-sub-menu {
     background: #f7f8f8;
     margin: 5px 0;
@@ -485,8 +567,12 @@ a.data-filter.filter-active:hover {
 #rcl-office a.sec_block_button i.rcli {
     margin: 0 5px 0 0;
 }
-/*END*/
+/*end*/
 
+
+/*--------------------------------------
+  14. TODO: data-filters buttons
+----------------------------------------*/
 .rcl-data-filters {
     margin: 10px 0;
 }
@@ -494,6 +580,12 @@ a.data-filter.filter-active:hover {
     border: none;
     text-decoration: none;                      /*++Twenty14++*/
 }
+/*end*/
+
+
+/*--------------------------------------
+  15. TODO: upload buttons
+----------------------------------------*/
 .rcl-upload-button {
     position: relative;
 }
@@ -507,9 +599,12 @@ a.data-filter.filter-active:hover {
     top: 0;
     width: 100%;
 }
-/* Кнопки End */
+/*end*/
 
-/* фильтр поиск start */
+
+/*------------------
+  16. Search filter
+--------------------*/
 .rcl-search-form {
     clear: both;
     margin-bottom: 10px;
@@ -553,9 +648,12 @@ a.data-filter.filter-active:hover {
     padding: 5px 14px;
     vertical-align: middle;
 }
-/* фильтр поиск End */
+/*end*/
 
-/* START аватар и элементы управления внутри него */
+
+/*------------------
+  17. Avatar zone
+--------------------*/
 #rcl-avatar {
     position: relative;
 }
@@ -590,9 +688,12 @@ a.data-filter.filter-active:hover {
     top: 0;
     z-index: 9;
 }
-/* END аватар и элементы управления внутри него */
+/*end*/
 
-/*Произвольные поля плагина*/
+
+/*---------------------------
+  18. RCL Custom fields API
+-----------------------------*/
 .rcl-field-input {
     display: block;
 }
@@ -698,9 +799,12 @@ a.data-filter.filter-active:hover {
 div.rcl-custom-fields .rcl-field-value .fa-upload {
     margin-right: 5px;
 }
-/**/
+/*end*/
 
-/* Контент лк Start */
+
+/*-----------------------------
+  19. Private office content
+-------------------------------*/
 #rcl-office .recall_content_block {
     background: rgba(255, 255, 255, 0.7);
     display: none;
@@ -711,10 +815,12 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 #rcl-office .recall_content_block.active {
     display: block;
 }
-/* Контент лк End */
+/*end*/
 
 
-/* navigation Start */
+/*-----------------------
+  20. RCL pagenavi API
+-------------------------*/
 .rcl-navi,
 .rcl-pager {
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
@@ -750,10 +856,12 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 .rcl-pager .pager-item a:hover {
     box-shadow: 0 0 1px 2px rgb(219, 219, 219);
 }
-/* navigation End */
+/*end*/
 
 
-/* START ssi-modal */
+/*-------------------
+  21. Ssi-modal API
+---------------------*/
 #ssi-modalWindow {
     animation-duration: 0.5s;
     animation-name: slideInDown;
@@ -820,9 +928,12 @@ body .ssi-modalOuter .ssi-modalTitle {
     background: #e9e9e9;
     box-shadow: 0 0 1px 1px #aaa;
 }
-/* END ssi-modal */
+/*end*/
 
-/* START checkbox-radio stilization */
+
+/*----------------------------------
+  22. Checkbox & radio stylization
+------------------------------------*/
 .block-label {
     cursor: pointer;
     display: block;
@@ -863,8 +974,12 @@ body .ssi-modalOuter .ssi-modalTitle {
     line-height: 1;
     padding: 2px;
 }
-/* END checkbox-radio stilization */
+/*end*/
 
+
+/*--------------------------------------
+  23. TODO: media screen old
+----------------------------------------*/
 @media screen and (max-width:360px) {
     #userpic-upload #webcamupload {
         float: right;
@@ -880,8 +995,12 @@ body .ssi-modalOuter .ssi-modalTitle {
         padding: 4px 2px;
     }
 }
+/*end*/
 
-/* START галерея и видеогалерея - выделить в одно ядро */
+
+/*----------------------------------
+  24. Gallery & Video Gallery core
+------------------------------------*/
 #rcl-popup {
     background: #f8f8f8;
     border-radius: 3px;
@@ -976,8 +1095,26 @@ body .ssi-modalOuter .ssi-modalTitle {
     content: "\f137";
     font-family: rcl-awesome;
 }
+@media screen and (max-width:480px) {
+    #rcl-popup {
+        max-width: 95%;
+    }
+    #rcl-popup .navi-gallery {
+        top: 25%;
+    }
+    #rcl-popup .prev-attach {
+        margin-left: -47%;
+    }
+    #rcl-popup .next-attach {
+        margin-left: 47%;
+    }
+}
+/*end*/
 
-/* START upload cover */
+
+/*----------------------------------
+  25. Upload Cover
+------------------------------------*/
 #rcl-office .rcl-cover-icon {
     line-height: 1;
     overflow: hidden;
@@ -995,9 +1132,12 @@ body .ssi-modalOuter .ssi-modalTitle {
     top: 0;
     z-index: 99;
 }
-/* END upload cover */
+/*end*/
 
-/* START Модальное окно с информацией о пользователе */
+
+/*----------------------------------
+  26. Detailed information
+------------------------------------*/
 .rcl-user-getails .rcl-user-avatar {
     display: inline-block;
     position: relative;
@@ -1068,17 +1208,18 @@ body .ssi-modalOuter .ssi-modalTitle {
 .ssi-modalOuter.rcl-user-avatar-zoom img {
     margin: 0;
 }
-/* END Модальное окно с информацией о пользователе */
+/*end*/
 
-/* upload avatar very width fix */
+
+/*----------------------------------
+  27. Upload avatar
+------------------------------------*/
 .ssi-modalOuter.rcl-hand-uploader {
     overflow-x: hidden;
 }
 .rcl-hand-uploader #ssi-modalWindow {
     max-width: 95%;
 }
-/**/
-
 #avatar-upload-progress {
     background: #ccc;
     display: none;
@@ -1099,8 +1240,12 @@ body .ssi-modalOuter .ssi-modalTitle {
     position: absolute;
     top: 50%;
 }
+/*end*/
 
-/* Панель публикации */
+
+/*----------------------------------
+  28. Post bar
+------------------------------------*/
 #rcl-post-bar {
     margin: 10px 0;
     text-align: right;
@@ -1127,8 +1272,12 @@ body .ssi-modalOuter .ssi-modalTitle {
     padding: 0 5px;
     margin: 0;
 }
+/*end*/
 
-/*Таблица*/
+
+/*----------------------------------
+  29. RCL Form & table
+------------------------------------*/
 .rcl-form {
     border-collapse: collapse;
     border-spacing: 0;
@@ -1279,8 +1428,6 @@ body .ssi-modalOuter .ssi-modalTitle {
 .rcl-form .aligncenter {
     text-align: center;
 }
-
-/*форма*/
 .rcl-form .form-field {
     margin: 15px 0;
 }
@@ -1320,8 +1467,12 @@ body .ssi-modalOuter .ssi-modalTitle {
         width: 205px;
     }
 }
+/*end*/
 
-/*бегунок*/
+
+/*----------------------------------
+  30. Runner & Range
+------------------------------------*/
 .rcl-runner,
 .rcl-range {
     padding: 10px;
@@ -1373,65 +1524,12 @@ body .ssi-modalOuter .ssi-modalTitle {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
     outline: none;
 }
-/* ** */
-/*таблица конец*/
+/*end*/
 
-@media screen and (max-width:480px) {
-    #rcl-popup {
-        max-width: 95%;
-    }
-    #rcl-popup .navi-gallery {
-        top: 25%;
-    }
-    #rcl-popup .prev-attach {
-        margin-left: -47%;
-    }
-    #rcl-popup .next-attach {
-        margin-left: 47%;
-    }
-}
-/* END галерея и видеогалерея - выделить в одно ядро */
 
-/* Непроверенная секция Start */
-#rcl-popup.fixed {
-    position: fixed;
-    top: 80px;
-}
-#rcl-popup .delete {
-    display: block;
-    float: left;
-    height: 31px;
-    margin: 5px 5px 10px;
-    width: 31px;
-}
-#rcl-popup .popup-body {
-    padding: 10px;
-}
-.rcl-upload-button span.progress-bar {
-    background: #36C515;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    z-index: -99;
-}
-.rcl-dropzone .get-crop-image,
-.prmess .rcl-upload-button {
-    float:right;
-}
-.rcl-dropzone img,
-.rcl-dropzone .jcrop-holder {
-    display: block;
-    margin: 0 auto;
-}
-.rcl-dropzone.hover {
-    background: rgba(0,0,0,0.5);
-}
-/* Непроверенная секция End */
-
-/*********************
-*   Tables API   *
-**********************/
+/*----------------------------------
+  31. RCL Tables API
+------------------------------------*/
 .rcl-table {
     box-sizing: border-box;
     display: flex;
@@ -1503,6 +1601,26 @@ body .ssi-modalOuter .ssi-modalTitle {
 .rcl-table__cell.rcl-table__cell-w-80 {flex-basis: 80%;}
 .rcl-table__cell.rcl-table__cell-w-90 {flex-basis: 90%;}
 
+.rcl-table__not-header .rcl-field-input,
+.rcl-table__not-header .dynamic-values .dynamic-value input,
+.rcl-table__not-header input,
+.rcl-table__not-header textarea {
+    width: 100% !important;
+}
+.rcl-table__not-header .dynamic-values .dynamic-value .rcli {
+    margin-right: 0;
+}
+.rcl-table__not-header input,
+.rcl-table__not-header textarea {
+    background-color: #fff !important;
+    border: 1px solid #ddd;
+    max-width: unset !important;
+    outline: none;
+    padding: .4em .6em;
+}
+.rcl-table__not-header .rcl-table__row {
+    padding: .4em 0;
+}
 
 @media screen and (max-width: 768px) {
     .rcl-table__border {
@@ -1537,31 +1655,6 @@ body .ssi-modalOuter .ssi-modalTitle {
         padding-right: 10px;
         text-align: right;
     }
-}
-
-
-.rcl-table__not-header .rcl-field-input,
-.rcl-table__not-header .dynamic-values .dynamic-value input,
-.rcl-table__not-header input,
-.rcl-table__not-header textarea {
-    width: 100% !important;
-}
-.rcl-table__not-header .dynamic-values .dynamic-value .rcli {
-    margin-right: 0;
-}
-.rcl-table__not-header input,
-.rcl-table__not-header textarea {
-    background-color: #fff !important;
-    border: 1px solid #ddd;
-    max-width: unset !important;
-    outline: none;
-    padding: .4em .6em;
-}
-.rcl-table__not-header .rcl-table__row {
-    padding: .4em 0;
-}
-
-@media screen and (max-width: 768px) {
     .rcl-table__not-header .rcl-table__row {
         border: 1px solid #e5e5e5;
         background-color: #fafafa;
@@ -1573,3 +1666,45 @@ body .ssi-modalOuter .ssi-modalTitle {
         padding: .2em .6em;
     }
 }
+/*end*/
+
+
+/*-------------------------------------------
+  32. TODO: old generation
+---------------------------------------------*/
+#rcl-popup.fixed {
+    position: fixed;
+    top: 80px;
+}
+#rcl-popup .delete {
+    display: block;
+    float: left;
+    height: 31px;
+    margin: 5px 5px 10px;
+    width: 31px;
+}
+#rcl-popup .popup-body {
+    padding: 10px;
+}
+.rcl-upload-button span.progress-bar {
+    background: #36C515;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: -99;
+}
+.rcl-dropzone .get-crop-image,
+.prmess .rcl-upload-button {
+    float:right;
+}
+.rcl-dropzone img,
+.rcl-dropzone .jcrop-holder {
+    display: block;
+    margin: 0 auto;
+}
+.rcl-dropzone.hover {
+    background: rgba(0,0,0,0.5);
+}
+/*end*/
+
