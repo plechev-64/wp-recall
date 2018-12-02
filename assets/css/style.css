@@ -1538,3 +1538,38 @@ body .ssi-modalOuter .ssi-modalTitle {
         text-align: right;
     }
 }
+
+
+.rcl-table__not-header .rcl-field-input,
+.rcl-table__not-header .dynamic-values .dynamic-value input,
+.rcl-table__not-header input,
+.rcl-table__not-header textarea {
+    width: 100% !important;
+}
+.rcl-table__not-header .dynamic-values .dynamic-value .rcli {
+    margin-right: 0;
+}
+.rcl-table__not-header input,
+.rcl-table__not-header textarea {
+    background-color: #fff !important;
+    border: 1px solid #ddd;
+    max-width: unset !important;
+    outline: none;
+    padding: .4em .6em;
+}
+.rcl-table__not-header .rcl-table__row {
+    padding: .4em 0;
+}
+
+@media screen and (max-width: 768px) {
+    .rcl-table__not-header .rcl-table__row {
+        border: 1px solid #e5e5e5;
+        background-color: #fafafa;
+        display: block;
+        margin: 0 0 .8em;
+    }
+    .rcl-table__not-header .rcl-table__cell:nth-child(1) {
+        max-width: none;
+        padding: .2em .6em;
+    }
+}

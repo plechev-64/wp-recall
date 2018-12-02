@@ -623,6 +623,7 @@ body .rcl-product-gallery ul.images-list {
     font-weight: bold;
     line-height: 32px;
     margin-bottom: 10px;
+    display:block;
 }
 #rcl-product-box .product-variations {
     border-top: 1px solid #e5e5e5;

@@ -81,6 +81,10 @@ class Rcl_Table {
             $attrs['class'][] = 'rcl-table__zebra';
         }
 
+        if(!isset($this->cols[0]['title'])){
+            $attrs['class'][] = 'rcl-table__not-header';
+        }
+
         if($this->border){
 
             if(in_array('table', $this->border)){

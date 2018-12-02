@@ -175,12 +175,10 @@ function rcl_tab_profile_content($master_id){
     $Table = new Rcl_Table(array(
         'cols' => array(
             array(
-                'width' => 30,
-                'title' => __('Наименование', 'wp-recall')
+                'width' => 30
             ),
             array(
-                'width' => 70,
-                'title' => __('Настройка', 'wp-recall')
+                'width' => 70
             )
         ),
         'zebra' => true,

@@ -781,11 +781,11 @@ function rcl_exist_beat(beat_name){
 
 function rcl_init_table(table_id){
     
-    jQuery('#' + table_id).on('click','.osp-table__cell-must-sort',function(){
+    jQuery('#' + table_id).on('click','.rcl-table__cell-must-sort',function(){
         
         var sortby = jQuery(this).data('sort');
         
-        var list = jQuery('#' + table_id + ' .osp-table__row-must-sort');
+        var list = jQuery('#' + table_id + ' .rcl-table__row-must-sort');
         
         list.sort(function(a, b){
             var aVal = jQuery(a).find('[data-'+sortby+'-value]').data(sortby+'-value');
@@ -796,10 +796,10 @@ function rcl_init_table(table_id){
                 return (aVal > bVal) - (aVal < bVal); //по убыванию
         });
         
-        jQuery('#' + table_id + ' .osp-table__row-must-sort').remove();
+        jQuery('#' + table_id + ' .rcl-table__row-must-sort').remove();
 
         list.each(function(i,e){
-            jQuery('#' + table_id + ' .osp-table__row-header').after(jQuery(this));
+            jQuery('#' + table_id + ' .rcl-table__row-header').after(jQuery(this));
         });
 
     });
