@@ -21,12 +21,14 @@ class Rcl_Table {
     public $rows = array();
     public $total = false;
     public $table_id = 0;
+    public $class = array();
 
     function __construct($tableProps = false) {
 
         $this->init_properties($tableProps);
 
-        $this->table_id = 'rcl-table-'.current_time('timestamp');
+        if($this->table_id)
+            $this->table_id = 'rcl-table-'.current_time('timestamp');
 
         if(!$this->cols_number)
             $this->cols_number = count($this->cols);
@@ -72,6 +74,10 @@ class Rcl_Table {
             'class' => array('rcl-table preloader-parent'),
             'id' => $this->table_id
         );
+
+        if($this->class){
+            $attrs['class'][] = $this->class;
+        }
 
         if($this->cols_number){
             $attrs['class'][] = 'rcl-table__type-cell-'.$this->cols_number;
