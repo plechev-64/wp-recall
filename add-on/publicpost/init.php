@@ -66,10 +66,10 @@ function rcl_init_publics_block(){
         }
 
         if(rcl_get_option('post_types_list')){
-
-            foreach ($types  as $post_type => $name ) {
-                if(!in_array($post_type, rcl_get_option('post_types_list'))){
-                    unset($types[$post_type]);
+            foreach ($types  as $post_typen => $name ) {
+                $find = array_search($post_typen, rcl_get_option('post_types_list'));
+                if($find === false){
+                    unset($types[$post_typen]);
                 }
             }
 
