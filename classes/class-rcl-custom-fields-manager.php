@@ -428,6 +428,22 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
 
             }
 
+            if($this->field['type'] == 'number'){
+
+                $options[] = array(
+                    'type' => 'number',
+                    'slug' => 'value_min',
+                    'title' => __('Min','wp-recall')
+                );
+
+                $options[] = array(
+                    'type' => 'number',
+                    'slug' => 'value_max',
+                    'title' => __('Max','wp-recall')
+                );
+
+            }
+
         }
 
         $options = array_merge($options, $this->defaultOptions);

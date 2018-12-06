@@ -56,7 +56,7 @@ function rcl_setup_async_upload(){
     
     jQuery.extend( wp.Uploader.prototype, {
         success : function( attachment ){
-            if(attachment.uploadedTo) return false;
+            if(attachment.attributes.uploadedTo) return false;
             rcl_ajax({
                 data: {
                     action: 'rcl_save_temp_async_uploaded_thumbnail',
@@ -328,7 +328,9 @@ function rcl_check_required_fields(form){
                 field.next('label').css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
             }
         }else{
+
             if(field.val()) value = true;
+ 
         }
 
         if(!value){
@@ -338,6 +340,19 @@ function rcl_check_required_fields(form){
             field.css('box-shadow','none');
         }
 
+    });
+    
+    form.find('[type="number"]').each(function(){
+        
+        var field = jQuery(this);
+        var min = field.attr('min');
+        var max = field.attr('max');
+
+        if(min != 'undefined'&& min > field.val() || max != 'undefined' && max < field.val()){
+            field.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
+            required = false;
+        }
+        
     });
     
     if(form.find( 'input[name="cats[]"]' ).length > 0){             
