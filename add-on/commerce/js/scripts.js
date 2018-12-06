@@ -380,15 +380,15 @@ function rcl_cart_submit(){
     
     rcl_preloader_show(jQuery('#rcl-order'));
     
-    if(!rcl_cart_check_required()){
+    var form = jQuery('#rcl-order-form');
+    
+    if(!rcl_check_form(form)){
         
         rcl_preloader_hide();
         
         return false;
     }
-    
-    var form = jQuery('#rcl-order-form');
-    
+
     rcl_ajax({
         data: 'action=rcl_check_cart_data&' + form.serialize(),
         success: function(data){
@@ -402,52 +402,6 @@ function rcl_cart_submit(){
             }
         }
     });
-    
-}
-
-function rcl_cart_check_required(){
-    
-    var required = true;
-    var requireds = new Array;
-    var form = jQuery('#rcl-order-form');
-    
-    form.find(':required').each(function(){
-        var i = requireds.length;
-        requireds[i] = jQuery(this).attr('name');
-    });
-
-    requireds.forEach(function(name, i, requireds) {
-
-        var field = form.find('[name="'+name+'"]');
-        var type = field.attr('type');
-        var value = false;
-
-        if(type=='checkbox'){
-            if(field.is(":checked")){
-                value = true;
-                field.next('label').css('box-shadow','none');
-            }else {
-                field.next('label').css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
-            }
-        }else{
-            if(field.val()) value = true;
-        }
-
-        if(!value){
-            field.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
-            required = false;
-        }else{
-            field.css('box-shadow','none');
-        }
-
-    });
-
-    if(!required){
-        rcl_notice(Rcl.local.requared_fields_empty,'error',10000);
-        return false;
-    }
-    
-    return true;
     
 }
 

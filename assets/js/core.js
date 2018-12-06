@@ -694,40 +694,9 @@ function rcl_send_form_data(action,e){
 
 function rcl_check_form(form){
 
-    var required = true;
-
-    form.find(':required').each(function(){
-
-        var field = jQuery(this);
-        var type = field.attr('type');
-        var value = false;
-
-        if(type=='checkbox'){
-            if(field.is(":checked")){
-                value = true;
-                field.next('label').css('box-shadow','none');
-            }else {
-                field.next('label').css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
-            }
-        }else{
-            if(field.val()) value = true;
-        }
-
-        if(!value){
-            field.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
-            required = false;
-        }else{
-            field.css('box-shadow','none');
-        }
-
-    });
-
-    if(!required){
-        rcl_notice(Rcl.local.requared_fields_empty,'error',10000);
-        return false;
-    }
+    var rclFormFactory = new RclForm(form);
     
-    return true;
+    return rclFormFactory.validate();
     
 }
 
@@ -804,4 +773,197 @@ function rcl_init_table(table_id){
 
     });
     
+}
+
+function RclForm(form){
+    
+    this.form = form;
+    this.errors = {};
+    
+    this.validate = function(){
+        
+        var valid = true;
+
+        for(var objKey in this.checkForm){
+
+            var chekObject = this.checkForm[objKey];
+
+            if(!chekObject.isValid.call(this)){
+                
+                valid = false;
+
+                break;
+
+            }
+            
+        };
+        
+        if(this.errors){
+            for(var k in this.errors){
+                this.showError(this.errors[k]);
+            };
+        }
+        
+        return valid;
+        
+    }
+    
+    this.addChekForm = function(id, data){
+        this.checkForm[id] = data;
+    };
+    
+    this.addChekFields = function(id, data){
+        this.checkFields[id] = data;
+    };
+    
+    this.addError = function(id, error){
+        this.errors[id] = error;
+    };
+    
+    this.shake = function(shakeBox){
+        shakeBox.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
+    }
+    
+    this.noShake = function(shakeBox){
+        shakeBox.css('box-shadow','none');
+    }
+    
+    this.showError = function(error){
+        rcl_notice(error, 'error', 10000);
+    }
+    
+    this.checkForm = {
+        
+        checkFields: {
+
+            isValid: function(){
+                
+                var valid = true;
+                var parent = this;
+
+                this.form.find('input,select,textarea').each(function(){
+
+                    var field = jQuery(this);
+                    var typeField = field.attr('type');
+
+                    if(field.tagName && field.tagName.toLowerCase() == 'textarea') {
+                        typeField = 'textarea';
+                    }
+
+                    for(var objKey in parent.checkFields){
+
+                        var chekObject = parent.checkFields[objKey];
+
+                        if(chekObject.types.length && jQuery.inArray( typeField, chekObject.types ) < 0){
+                            continue;
+                        }
+
+                        var shakeBox = (typeField == 'checkbox')? field.next('label'): field;
+
+                        if(!chekObject.isValid(field)){
+
+                            parent.shake(shakeBox);
+                            parent.addError(objKey, chekObject.errorText());
+                            valid = false;
+                            return;
+
+                        }else{
+                            parent.noShake(shakeBox);
+                        }
+
+                    };
+
+                });
+
+                return valid;
+                
+            }
+
+        }
+        
+    };
+    
+    this.checkFields = {
+        
+        required: {
+            
+            types: [],
+
+            isValid: function(field){
+                
+                var required = true;
+
+                if(!field.is(":required")) return required;
+
+                var value = false;
+
+                if(field.attr('type') == 'checkbox'){
+                    if(field.is(":checked")){
+                        value = true;
+                    }
+                }else{
+                    if(field.val()) value = true;
+                }
+
+                if(!value){
+                    required = false;
+                }
+
+                return required;
+                
+            },
+            
+            errorText: function(){
+                return Rcl.errors.required;
+            }
+
+
+        },
+        numberRange: {
+            
+            types: ['number'],
+            
+            isValid: function(field){
+                var range = true;
+
+                var val = field.val();
+                
+                if(val === '') return true;
+                
+                val = parseInt(val);
+                var min = parseInt(field.attr('min'));
+                var max = parseInt(field.attr('max'));
+                
+                if(min != 'undefined' && min > val || max != 'undefined' && max < val){
+                    range = false;
+                }
+
+                return range;
+            },
+            
+            errorText: function(){
+                return Rcl.errors.number_range;
+            }
+
+        }
+    };
+    
+    this.send = function(action, success){
+
+        if(!this.validate()) return false;
+
+        rcl_preloader_show(form);
+        
+        var sendData = {
+            data: form.serialize() + '&action=' + action
+        };
+        
+        if(success){
+            sendData.success = success;
+        }
+
+        rcl_ajax(sendData);
+
+    }
+
 }
