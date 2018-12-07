@@ -1,4 +1,59 @@
-/*publicpost*/
+/* tab=publics */
+.rcl-table__cell {
+    min-width: 75px;
+}
+#tab-publics .rcl_author_postlist a:hover {
+    text-decoration: underline;
+}
+.rcl_author_postlist .rcl-table__row > div:nth-child(3) {
+    min-width: 100px;
+}
+.rcl_author_postlist .rcl-table__row:not(.rcl-table__row-header) > div:nth-child(2) {
+    justify-content: space-between;
+}
+.rcl_author_postlist .rating-rcl {
+    hyphens: none;
+    padding: 0 0 0 8px;
+    word-break: normal;
+    word-wrap: normal;
+}
+@media screen and (max-width:768px) {
+    .rcl_author_postlist .rcl-table__row-header ~ .rcl-table__row .rcl-table__cell::before {
+        flex-basis: auto;
+        min-width: 90px;
+    }
+    .rcl_author_postlist .rcl-table__cell > a {
+        flex-grow: 1;
+    }
+}
+/*end*/
+
+
+/* block author */
+#block_author-rcl {
+    background: rgba(243, 243, 243, 0.3);
+    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
+    clear: both;
+    margin: 15px 3px;
+    overflow: hidden;
+    padding: 2px;
+}
+#block_author-rcl > h3 {
+    font-size: 18px;
+    letter-spacing: normal;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0 0 5px 5px;
+}
+#block_author-rcl .userlist .user-single {
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
+}
+/*end*/
+
+
+/* publicpost */
 .rcl-public-box {
     position: relative;
 }
@@ -28,24 +83,12 @@
 .rcl-public-box .rcl-service-button i:hover {
     opacity: 0.8;
 }
-.rcl-public-box .rcl-field-notice {
-    clear: both;
-    display: block;
-}
-.rcl-public-box .rcl-field-notice i {
-    margin-right: 5px;
-}
 .rcl-public-box .rcl-form-field {
     background-color: #f7f7f7;
     border: 1px solid #e5e5e5;
+    box-sizing: border-box;
     margin: 7px 0;
-    padding: 8px 8px 10px;
-}
-.rcl-public-box #form-field-delete {
-    overflow: hidden;
-}
-.rcl-public-box #form-field-delete input {
-    margin: 0;
+    padding: 8px;
 }
 .rcl-public-box .rcl-form-field > label {
     display: block;
@@ -53,19 +96,26 @@
     line-height: normal;
     margin: 0 0 3px;
 }
+.rcl-public-box #form-field-post_content .button-small {
+    border-radius: 1px;
+    line-height: 1;
+    margin: 2px 5px 3px 0;
+    padding: 6px 10px;
+    width: auto;
+}
 #form-field-post_content textarea.wp-editor-area {
+    background-color: #fff;
     min-height: 300px;
 }
 .rcl-public-box .rcl-form-field .rcl-terms-select .rcl-field-input {
     display: inline-block;
-    float: none;
-    margin: 0 10px 5px 0;
     width: auto;
 }
 .rcl-public-box .rcl-form-field .rcl-terms-select .type-multiselect-input {
     display: block;
 }
 .rcl-public-box .rcl-form-field .rcl-terms-select .rcl-tags-list {
+    margin: 0 0 4px;
     overflow: hidden;
 }
 .rcl-public-box .rcl-tags-list > .block-label {
@@ -98,13 +148,18 @@
     padding: 5px;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn input {
-    border: 1px solid #ccc;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
     clear: both;
     display: block;
     float: none;
     margin-top: 5px;
     padding: 5px;
     width: 100% !important;
+}
+.rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn input:focus {
+    background-color: #fff;
+    border-color: #c5c5c5;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn .ms-trigger {
     background: #fff;
@@ -119,6 +174,14 @@
     right: 42px;
     top: 15px;
 }
+.rcl-form-field.maybe-gallery-box {
+    background-color: #f2f2f2;
+}
+.rcl-form-field.maybe-gallery-box .block-label {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
 .rcl-public-box .submit-public-form {
     margin: 10px 0;
     padding-bottom: 0;
@@ -127,10 +190,13 @@
 .rcl-public-box .public-form-button {
     display: inline-block;
     font-size: 14px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    padding: 10px 15px;
+    line-height: normal;
+    margin: 0 0 10px;
+    padding: 8px 12px;
     width: auto;
+}
+.rcl-public-box .public-form-button:not(:last-child) {
+    margin-right: 10px;
 }
 .rcl-public-box .public-form-button > i {
     margin-right: 10px;
@@ -146,7 +212,7 @@
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 5px 8px;
 }
 .rcl-public-form .attachments-post .set-thumbnail-post {
     display: block;
@@ -186,6 +252,8 @@
     right: 0;
     top: 0;
 }
+
+
 /*  Start */
 .rcl-public-box .attachments-post {
     display: flex;
@@ -221,22 +289,6 @@
 .rcl-public-box .attachments-post label span input {
     margin: 0 5px 0 0;
 }
-.rcl-form-field table tbody th,
-.rcl-form-field table tbody td {
-    border: 1px solid rgba(219, 219, 219, 0.5);
-    text-align: left;
-    vertical-align: middle;
-}
-.rcl-form-field table th {
-    -webkit-hyphens: auto;
-            hyphens: auto;
-    padding: 5px;
-    width: 160px;
-    word-wrap: break-word;
-}
-.rcl-form-field table tbody td {
-    padding: 5px 5px 0;
-}
 .ssi-modalOuter.rcl-preview-post .rcl-notice-preview {
     background: rgba(229, 57, 53, 0.15);
     display: block;
@@ -252,23 +304,6 @@
 .ssi-modalOuter.rcl-preview-post a {
     color: #38b7ee;
 }
-#rcl-delete-post .delete-form-contayner {
-    background: rgba(236, 240, 241, 0.7);
-    box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
-    display: none;
-    margin: 8px 0 0;
-    padding: 7px;
-}
-#rcl-delete-post .delete-form-contayner label {
-    font-weight: normal;
-}
-#rcl-delete-post .delete-form-contayner .reason-delete {
-    padding: 7px;
-    margin: 0 5px;
-}
-#rcl-delete-post .delete-form-contayner .delete-post-submit {
-    margin: -24px 0 0;
-}
 h3.pending-message {
     background: rgb(255, 207, 207);
     color: red;
@@ -278,252 +313,92 @@ h3.pending-message {
     text-align: center;
     width: 70%;
 }
-.post-edit-button {
-    float: right;
-    font-size: 20px;
-    line-height: 1;
-    margin: 0 5px;
-}
-.post-edit-button a:link {
-    border: none;
-    box-shadow: none;
-}
-/*  End */
+/*  end */
 
-/*  Start */
-#block_author-rcl {
-    background: rgba(243, 243, 243, 0.3);
-    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
-    clear: both;
-    margin: 15px 3px;
+
+/*delete-post form*/
+#form-field-delete {
     overflow: hidden;
-    padding: 2px;
+    padding-bottom: 0;
 }
-#block_author-rcl > h3 {
-    font-size: 18px;
-    letter-spacing: normal;
-    line-height: 1.4;
-    margin: 0;
-    padding: 0 0 5px 5px;
-}
-#block_author-rcl .userlist .user-single {
-    background: transparent;
-    box-shadow: none;
-    margin: 0;
-}
-/*  End */
-
-/*  */
-#rcl-popup #custom-image-url {
-    float: left;
-    padding: 10px;
-}
-#rcl-popup #custom-image-url input[type="text"] {
-    width: 300px;
-}
-#rcl-popup #user-medias {
-    padding: 10px;
-}
-#rcl-popup #user-medias h3 {
-    clear: both;
-}
-#rcl-popup #user-medias .media-list {
-    clear: both;
-    list-style: none;
-    overflow: hidden;
-}
-#rcl-popup #user-medias .media-list li {
-    border: 1px solid #ccc;
-    float: left;
-    margin: 5px;
-}
-#rcl-popup #user-medias .media-list img {
-    height: 99px;
-    width: 99px;
-}
-#rcl-popup-content input[type="text"],
-#rcl-popup-content textarea {
-    margin: 5px 0;
-    padding: 5px 0;
-    width: 100%;
-}
-#rcl-popup-content label {
-    font-weight: bold;
-}
-/*  End */
-
-/*  start */
-.rcl-form-field table,
-.wprecallblock .publics_block table {
-    background: rgba(243, 243, 243, 0.3);
-    -webkit-hyphens: auto;
-            hyphens: auto;
-    table-layout: fixed;
-    word-wrap: break-word;
-}
-.wprecallblock #tab-publics table td {
-    font-size: 14px;
-    line-height: 1.4;
-    text-align: left;
-}
-.wprecallblock #tab-publics table tr + tr:nth-child(2n+1) {
+#rcl-delete-post .delete-form-contayner {
     background-color: #fafafa;
+    border: 1px solid #ddd;
+    display: none;
+    margin-bottom: 7px;
+    padding: 7px;
 }
-.wprecallblock #tab-publics table td:nth-child(1),
-.wprecallblock #tab-publics table td:nth-child(n + 3),
-.wprecallblock #tab-publics table tr:first-child th:nth-child(odd) {
-    text-align: center;
+#rcl-delete-post label {
+    display: block;
+    font-weight: normal;
+    margin: 5px 10px;
 }
-.wprecallblock #tab-publics table th:nth-child(1) {
-    width: 70px;
+#rcl-delete-post .reason-delete {
+    margin: 0 0 8px 10px;
+    padding: 7px;
 }
-.wprecallblock #tab-publics table th:nth-child(3) {
-    width: 100px;
-}
-.wprecallblock .publics_block .rating-rcl {
-    float: right;
-}
-.rcl-public-box #form-field-post_content .button-small {
-    border-radius: 1px;
-    line-height: 1;
-    margin: 2px 5px 3px 0;
-    padding: 6px 10px;
-    width: auto;
-}
-.rcl-public-box #form-field-post_content .button-small:hover {
-    background-color: #f8f8f8;
-}
-/*  */
-.wprecallblock .publics_block .bx-viewport {
-    box-sizing: unset;
-    display: table;
-    font: 14px/1 helvetica,arial,serif;
-    margin: 6px auto;
+#rcl-delete-post textarea {
+    background-color: #fff;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    box-sizing: border-box;
+    float: none;
+    font-size: 100%;
+    height: auto;
+    line-height: 1.4;
+    margin: 0 0 10px;
     max-width: 100%;
-    padding: 0 0 3px 4px;
-}
-.wprecallblock .publics_block .bx-viewport .pagenavi-rcl {
-    list-style-type: none;
-    margin: 0;
-}
-#tab-publics .bx-wrapper .bx-controls-direction .bx-prev {
-    left: -30px;
-}
-#tab-publics .bx-wrapper .bx-controls-direction .bx-next {
-    right: -43px;
-}
-/*  End */
-
-/*  Start */
-.wp-switch-editor.switch-html,
-.wp-switch-editor.switch-tmce {
-    box-sizing: content-box;
-}
-/*  End */
-
-/*  Start */
-.delete-form-contayner textarea {
+    outline: 0;
+    padding: 5px 10px;
     width: 100%;
 }
-/*  End */
-
-/* add correcting popup jquery-UI start */
-.ui-dialog.rcl-edit-post-form .ui-dialog-titlebar {
-    background: none;
-    border-radius: 0;
-    border: none;
-    font: 16px/32px Tahoma,arial;
-    height: 34px;
-    padding: 0 0 0 7px;
-}
-.ui-dialog.rcl-edit-post-form .ui-dialog-titlebar-close {
-    background: none;
-    border-radius: 0;
-    border: none;
-    margin: 0;
+#rcl-delete-post p {
+    margin: 4px;
     padding: 0;
 }
-.ui-dialog.rcl-edit-post-form .ui-dialog-content {
-    background: #fff;
-    border: none;
-    box-sizing: border-box;
-    display: block;
-    font: 14px/1 Arial;
-    margin: 3px auto 0;
-    max-width: 96%;
-    padding: 5px 5px 2px;
+#rcl-delete-post .delete-post-submit {
+    margin: -24px 0 0;
 }
-.ui-dialog.rcl-edit-post-form .ui-dialog-buttonpane {
-    border: none;
-    font: 14px/1 Arial;
-    margin: 0;
-    padding: 0 10px 12px;
-}
-.ui-dialog.rcl-edit-post-form .ui-button-text-icon-primary {
+/*end*/
+
+
+/*mass uploader*/
+.mass-upload-box {
     background: rgba(219, 219, 219, 0.3);
-    border-radius: 2px;
-    border: 1px solid #ccc;
-    color: #000;
-    font: 14px/1 Tahoma,arial;
-    height: auto;
-    margin: 4px 5px 0;
-    padding: 5px;
-    vertical-align: middle;
-}
-.ui-dialog.rcl-edit-post-form .ui-button-text-icon-primary .ui-button-text {
-    padding: 0 5px;
-}
-.ui-dialog.rcl-edit-post-form .ui-button-text-icon-primary .ui-icon {
-    display: none;
-}
-.ui-dialog.rcl-edit-post-form #rcl-popup-content textarea,
-.ui-dialog.rcl-edit-post-form #rcl-popup-content input[type="text"] {
-    box-sizing: border-box;
-    color: #000;
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
     padding: 5px;
 }
-.media-modal .screen-reader-text {
-    display: none;
+.rcl-dropzone {
+    font-size: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
 }
-.media-modal .media-modal-content .media-frame select.attachment-filters,
-.media-modal .media-modal-content .attachments-browser .search {
-    margin-left: 10px;
-    max-width: 200px;
+.rcl-dropzone.mass-upload-box small {
+    margin: 0 0 0 5px;
 }
-@media screen and (max-width:480px) {
-    .ui-dialog.rcl-edit-post-form {
-        max-width: 475px;
-    }
+.mass-upload-box .mass-upload-area {
+    background-color: #ccc;
+    padding: 20px;
+    text-align: center;
 }
-@media screen and (max-width:360px) {
-    .ui-dialog.rcl-edit-post-form {
-        max-width: 355px;
-    }
+.mass-upload-box hr {
+    margin: 3px;
 }
-/* add correcting popup jquery-UI end */
+.mass-upload-box .rcl-upload-button {
+    display: inline-block;
+}
+/*end*/
+
 
 @media screen and (max-width:480px) {
-    #temp-files li {
-        width: 31%;
-    }
-    .wprecallblock #tab-publics td:nth-child(1),
-    .wprecallblock #tab-publics td:nth-child(3) {
-        font-size: 12px;
-    }
     .rcl-public-box .attachments-post li {
         width: 31%;
     }
 }
 @media screen and (max-width:375px) {
-    #temp-files li {
-        width: 48%;
-    }
     .rcl-public-box .attachments-post li {
         width: 49%;
     }
 }
-@media screen and (max-width:320px) {
-    #rcl_post_tags.ms-ctn {
-        width: 90%;
-    }
-}
+

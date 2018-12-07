@@ -28,6 +28,7 @@ class Rcl_Table {
         $this->init_properties($tableProps);
 
         if(!$this->table_id)
+
             $this->table_id = 'rcl-table-'.current_time('timestamp');
 
         if(!$this->cols_number)

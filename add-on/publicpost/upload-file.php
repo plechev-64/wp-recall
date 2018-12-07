@@ -71,7 +71,7 @@ function rcl_imagepost_upload(){
             $files[$k][$key] = $data;
         }
     }
-    print_r($files);
+
     foreach($files as $k=>$file){
 
         $filetype = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );

@@ -1,12 +1,50 @@
-/* Личный кабинет разбиваем на блоки. Внутри этих блоков некоторые ключевые моменты тоже будут прокомментированы */
+/*----------------------
+>>> Table of contents
+------------------------
+  1. General
+  2. Ruble
+  3. Notify & RCL Notice
+  4. RCL preloader
+  5. RCL smiles
+  6. User online/offline
+  7. Dashboard WP-Recall
+  8. Private office general
+  9. Ballun
+  10. RCL buttons
+  11. RCL buttons states
+  12. RCL buttons adjustments
+  13. Private office subtabs
+  14. TODO: old submenu
+  15. TODO: data-filters buttons
+  16. TODO: upload buttons
+  17. Search filter
+  18. Avatar zone
+  19. RCL Custom fields API
+  20. Checkbox & radio stylization
+  21. Runner & Range
+  22. RCL pagenavi API
+  23. Ssi-modal API
+  24. TODO: Gallery & Video Gallery core
+  25. Upload Cover
+  26. Detailed information
+  27. Upload avatar
+  28. Post bar
+  29. RCL Form
+  30. RCL Tables API
+  31. TODO: old generation
 
-/* общие стили start */
+------------------------*/
+
+
+/*-----------------------------
+  1. General
+-------------------------------*/
 [class^="rcli fa-"]::before,
 [class*=" rcli fa-"]::before {
     padding: 0;
 }
-.rcli.rcl-icon{
-    background: #b9c9d6;
+.rcli.rcl-icon {
+    background-color: #b9c9d6;
     box-sizing: content-box;
     color: #fff;
     margin-right: 5px;
@@ -33,13 +71,31 @@ img.aligncenter {
     display: block;
     margin: 0 auto;
 }
-body .preloader-parent {
-    position: relative;
-}
 .plugin-info {
     clear: both;
     text-align: center;
 }
+:root span.required {
+    color: rgb(229, 57, 53);
+    font: bold 15px/1 Verdana,arial;
+    padding: 0;
+}
+#rcl-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    bottom: 0;
+    display: none;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 999;
+}
+/*end*/
+
+
+/*------------------------
+  2. Ruble
+--------------------------*/
 span.ruble-symbol {
     font-family: Arial;
     font-weight: normal;
@@ -51,7 +107,12 @@ span.ruble-symbol {
     position: absolute;
     top: 55%;
 }
+/*end*/
 
+
+/*--------------------------
+  3. Notify & RCL Notice
+----------------------------*/
 .wprecallblock .notify-lk {
     color: #000;
     font-size: 16px;
@@ -100,6 +161,15 @@ span.ruble-symbol {
     float: right;
     padding: 0 5px 0 4px;
 }
+/*end*/
+
+
+/*------------------------
+  4. RCL preloader
+--------------------------*/
+body .preloader-parent {
+    position: relative;
+}
 body .rcl_preloader {
     background: rgba(255,255,255,0.6) !important;
     display: block !important;
@@ -115,6 +185,12 @@ body .rcl_preloader {
     position: absolute;
     top: 50%;
 }
+/*end*/
+
+
+/*------------------
+  5. RCL smiles
+--------------------*/
 .rcl-smiles {
     clear: both;
     float: right;
@@ -153,6 +229,12 @@ body .rcl_preloader {
     margin: 3px !important;
     width: auto !important;
 }
+/*end*/
+
+
+/*------------------------
+  6. User online/offline
+--------------------------*/
 .rcl-new-users p,
 .rcl-online-users p {
     margin: 5px 0;
@@ -173,19 +255,16 @@ span i.rcli.fa-circle {
     text-shadow: 0 0 1px #5a0d0c;
 }
 @keyframes pulsate {
-    25% {
-        transform: scale(1.025);
-    }
-    50% {
-        color: #A3F558;
-        text-shadow: 0 0 3px #35e668;
-        transform: scale(1.05);
-    }
-    75% {
-        transform: scale(1.025);
-    }
+    25% {transform: scale(1.025);}
+    50% {color: #A3F558;text-shadow: 0 0 3px #35e668;transform: scale(1.05);}
+    75% {transform: scale(1.025);}
 }
-/* START панель управления */
+/*end*/
+
+
+/*------------------------
+  7. Dashboard WP-Recall
+--------------------------*/
 .panel_lk_recall .rcl-widget-buttons .rcl-widget-button {
     margin: 0 0 4px;
     overflow: hidden;
@@ -223,15 +302,15 @@ span i.rcli.fa-circle {
     max-width: 100%;
     width: 100%;
 }
-/* END панель управления */
-/* общие стили End */
+/*end*/
 
-/* Личный кабинет start*/
 
-/* общие стили start */
+/*-----------------------------
+  8. Private office general
+-------------------------------*/
 #rcl-office {
     background: rgba(236, 240, 241, 0.3);
-    box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     color: #333;                    /*BlackTheme*/
     overflow: visible;
     position: relative;
@@ -258,65 +337,49 @@ span i.rcli.fa-circle {
     margin: 0;
     padding: 4px 0;
 }
-#rcl-office select,
-#rcl-office textarea,
-#rcl-office input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
-    border-radius: 0;
-    border: 1px solid #ddd;
-    box-shadow: none;
-    box-sizing: border-box;
-    color: #000;
-    display: inline-block;
-    float: none;
-    font-size: 14px;
-    height: auto;
-    line-height: 1.4;
-    outline: none;
-    padding: 5px 10px;
-}
-#rcl-office input[type="checkbox"],
-#rcl-office input[type="radio"] {
-    box-shadow: none;
-}
-#rcl-overlay {
-    background: rgba(0, 0, 0, 0.7);
-    bottom: 0;
-    display: none;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 999;
-}
-.mass-upload-box {
-    background: rgba(219, 219, 219, 0.3);
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
-    padding: 5px;
-}
-.rcl-dropzone {
-    font-size: 12px;
-    margin-bottom: 10px;
-    overflow: hidden;
-}
-.rcl-dropzone.mass-upload-box small {
-    margin: 0 0 0 5px;
-}
-.mass-upload-box .mass-upload-area {
-    background-color: #ccc;
-    padding: 20px;
-    text-align: center;
-}
-.mass-upload-box hr {
-    margin: 3px;
-}
-.mass-upload-box .rcl-upload-button {
-    display: inline-block;
-}
 .rcl-tab-button .rcl-menu-notice {
-    color: #fff;
-    font-size: 12px;
     line-height: 1;
 }
+#lk-menu,
+#rcl-tabs {
+    overflow: hidden;
+}
+#rcl-office.horizontal-tabs #rcl-tabs {
+    animation-delay: 1s;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-name: fadeIn;
+    opacity: 0;
+}
+#lk-content {
+    margin: 3px;
+    overflow: hidden;
+    position: relative;
+}
+#rcl-office .recall_content_block {
+    background: rgba(255, 255, 255, 0.7);
+    display: none;
+    overflow: hidden;
+    padding: 4px 5px;
+    position: relative;
+}
+#rcl-office .recall_content_block.active {
+    display: block;
+}
+@media screen and (max-width:360px) {
+    #userpic-upload #webcamupload {
+        float: right;
+    }
+    #rcl-office .recall_content_block {
+        padding: 2px;
+    }
+}
+/*end*/
+
+
+/*------------------
+  9. Ballun
+--------------------*/
 .ballun-status {
     max-width: 350px;
 }
@@ -348,24 +411,12 @@ span i.rcli.fa-circle {
     top: -12px;
     width: 0;
 }
-#lk-menu,
-#rcl-tabs {
-    overflow: hidden;
-}
-#rcl-office.horizontal-tabs #rcl-tabs {
-    animation-delay: 1s;
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    animation-name: fadeIn;
-    opacity: 0;
-}
-#lk-content {
-    margin: 3px;
-    overflow: hidden;
-    position: relative;
-}
-/* Группа кнопок Start */
-    /* Основной стиль кнопок Start */
+/*end*/
+
+
+/*--------------------------
+  10. RCL buttons
+----------------------------*/
 .recall-button i + span {
     margin: 0 0 0 5px;
 }
@@ -392,9 +443,12 @@ input[type="button"] .recall-button {
     text-transform: none;                   /*++Twenty16++*/
     white-space: nowrap;
 }
-/* Основной стиль кнопок End */
+/*end*/
 
-/* Состояния кнопок Start */
+
+/*--------------------------------
+  11. RCL buttons states
+----------------------------------*/
 a.recall-button:hover,
 a.recall-button:visited,
 span.recall-button:hover,
@@ -424,9 +478,12 @@ a.data-filter.filter-active:hover {
 #rcl-office #lk-menu a.recall-button.active {
     pointer-events: none;
 }
-/* Состояния кнопок End */
+/*end*/
 
-/* Корректировки к кнопкам Start */
+
+/*------------------------------------
+  12. RCL buttons adjustments
+--------------------------------------*/
 #lk-menu a {
     display: block;
     float: left;
@@ -454,9 +511,12 @@ a.data-filter.filter-active:hover {
     white-space: normal;
     width: 100%;
 }
-/* Корректировки к кнопкам End */
+/*end*/
 
-/*START Меню субвкладок ЛК*/
+
+/*-----------------------------
+  13. Private office subtabs
+-------------------------------*/
 .rcl-subtab-menu {
     background: #f7f8f8;
     margin: 5px 0;
@@ -469,8 +529,12 @@ a.data-filter.filter-active:hover {
     margin-right: 5px;
     padding: 7px;
 }
+/*end*/
 
-/*ниже устаревшие стили субвкладок, позднее удалить*/
+
+/*----------------------------
+  14. TODO: old submenu
+------------------------------*/
 #rcl-office .rcl-sub-menu {
     background: #f7f8f8;
     margin: 5px 0;
@@ -485,8 +549,12 @@ a.data-filter.filter-active:hover {
 #rcl-office a.sec_block_button i.rcli {
     margin: 0 5px 0 0;
 }
-/*END*/
+/*end*/
 
+
+/*---------------------------------
+  15. TODO: data-filters buttons
+-----------------------------------*/
 .rcl-data-filters {
     margin: 10px 0;
 }
@@ -494,6 +562,12 @@ a.data-filter.filter-active:hover {
     border: none;
     text-decoration: none;                      /*++Twenty14++*/
 }
+/*end*/
+
+
+/*----------------------------
+  16. TODO: upload buttons
+------------------------------*/
 .rcl-upload-button {
     position: relative;
 }
@@ -507,9 +581,12 @@ a.data-filter.filter-active:hover {
     top: 0;
     width: 100%;
 }
-/* Кнопки End */
+/*end*/
 
-/* фильтр поиск start */
+
+/*-------------------
+  17. Search filter
+---------------------*/
 .rcl-search-form {
     clear: both;
     margin-bottom: 10px;
@@ -553,9 +630,12 @@ a.data-filter.filter-active:hover {
     padding: 5px 14px;
     vertical-align: middle;
 }
-/* фильтр поиск End */
+/*end*/
 
-/* START аватар и элементы управления внутри него */
+
+/*------------------
+  18. Avatar zone
+--------------------*/
 #rcl-avatar {
     position: relative;
 }
@@ -590,20 +670,66 @@ a.data-filter.filter-active:hover {
     top: 0;
     z-index: 9;
 }
-/* END аватар и элементы управления внутри него */
+/*end*/
 
-/*Произвольные поля плагина*/
+
+/*---------------------------
+  19. RCL Custom fields API
+-----------------------------*/
+.rcl-cf-title {
+    font-weight: bold;
+    margin: 0 3px 0 0;
+}
 .rcl-field-input {
-    display: block;
+    width: 100%;
 }
 .rcl-field-core {
     position: relative;
 }
+.rcl-field-input input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.rcl-field-input textarea {
+    background-color: #fff;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    box-sizing: border-box;
+    float: none;
+    font-size: 100%;
+    height: auto;
+    line-height: 1.4;
+    margin: 0;
+    max-width: 100%;
+    outline: 0;
+    padding: 5px 10px;
+    width: 100%;
+}
+.rcl-field-input input:focus:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.rcl-field-input textarea:focus {
+    background-color: #fff;
+    border-color: #c5c5c5;
+    box-shadow: none;
+    color: #000;
+    outline: none;
+}
+.rcl-field-input select {
+    background-color: #fff;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    box-sizing: border-box;
+    float: none;
+    height: auto;
+    line-height: normal;
+    outline: 0;
+    padding: 5px 3px;
+    width: 100%;
+}
 .rcl-field-input .maxlength {
     align-items: center;
-    background-color: #e5e5e5;
+    background-color: #eaeaea;
     border: 1px solid #ccc;
     box-sizing: border-box;
+    cursor: default;
     display: flex;
     font-weight: bold;
     justify-content: center;
@@ -619,16 +745,12 @@ a.data-filter.filter-active:hover {
 .rcl-field-input.type-text-input .maxlength {
     height: 100%;
 }
-.rcl-field-input input[type='text'] {
-    margin: 0;
-}
-.rcl-field-input .file-manage-box .rcli {
-    margin-right: 5px;
-}
 .rcl-field-input .rcl-field-notice {
+    align-items: center;
     clear: both;
     color: #797979;
-    display: block;
+    display: flex;
+    font-size: .85em;
     margin: 5px 0 0;
 }
 .rcl-field-input .rcl-field-notice .rcli {
@@ -637,14 +759,13 @@ a.data-filter.filter-active:hover {
 .type-multiselect-input .hidden {
     display: none !important;
 }
-.type-multiselect-input .fs-wrap {
-    max-width: 400px;
+.type-multiselect-input .fs-wrap,
+.type-multiselect-input .fs-dropdown {
+    max-width: 410px;
     width: 100%;
 }
 .type-multiselect-input .fs-dropdown {
-    box-shadow: 4px 3px 3px 0 #929292;
-    max-width: 400px;
-    width: 100%;
+    box-shadow: 4px 4px 6px -3px #929292;
 }
 .type-multiselect-input .fs-wrap.multiple .fs-option.selected .fs-checkbox i {
     background-color: #888;
@@ -652,69 +773,194 @@ a.data-filter.filter-active:hover {
 .type-dynamic-input .dynamic-values {
     display: block;
 }
-.type-dynamic-input .dynamic-values .dynamic-value {
+.type-dynamic-input .dynamic-value {
     align-items: center;
     display: flex;
-    margin: 0 0 2px;
 }
-.type-dynamic-input .dynamic-values .dynamic-value a {
-    border: none;
+.type-dynamic-input .dynamic-value:not(:last-child) {
+    margin: 0 0 5px;
+}
+.type-dynamic-input .dynamic-value a {
+    background-color: #fafafa;
+    border: 1px solid #ddd !important;
     box-shadow: none;
     color: #797979;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    line-height: 1;
+    margin: 0 0 0 8px;
     min-width: initial;
+    padding: 6px;
+    text-decoration: none;
     vertical-align: middle;
     width: auto;
 }
-.type-dynamic-input .dynamic-values .dynamic-value .rcli {
-    background: #fff;
-    border: 1px solid #ccc;
-    margin: 5px 10px;
-    padding: 5px;
-    vertical-align: middle;
+.type-dynamic-input .dynamic-value a:hover {
+    background-color: #fff;
+    text-decoration: none !important;
 }
-.type-dynamic-input .dynamic-value .fa-minus:hover {
+.type-dynamic-input a:hover .fa-minus {
     color: rgb(229, 57, 53);
 }
-.type-dynamic-input .dynamic-value .fa-plus:hover {
+.type-dynamic-input a:hover .fa-plus {
     color: #008000;
 }
-.type-dynamic-input .dynamic-values .dynamic-value input {
-    width: 78% !important;
+div.rcl-custom-fields .rcl-field-value .fa-upload {
+    margin-right: 5px;
 }
-#register-form-rcl .type-dynamic-input .dynamic-values .dynamic-value {
-    margin-bottom: 0;
+.rcl-field-input .file-field-upload {
+    display: block;
+    font-size: 11px;
+    padding: 5px;
 }
+.rcl-field-input .file-manage-box {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px;
+    width: 100%;
+}
+.rcl-field-input .file-manage-box .rcl-field-value {
+    align-items: center;
+    display: flex;
+    margin: 0 15px 5px 0;
+}
+.rcl-field-input .delete-file-url a {
+    align-items: center;
+    display: flex;
+}
+.rcl-field-input .delete-file-url .rcli {
+    color: rgb(229, 57, 53);
+    font-size: 16px;
+    margin-right: 5px;
+}
+/*end*/
+
+
+/*----------------------------------
+  20. Checkbox & radio stylization
+------------------------------------*/
 .rcl-field-input .rcl-checkbox-box,
 .rcl-field-input .rcl-radio-box {
     display: inline-flex;
     margin-right: 2px;
     position: relative;
 }
-.rcl-cf-title {
-    font-weight: bold;
-    margin: 0 3px 0 0;
+.rcl-field-input input[type="radio"],
+.rcl-field-input input[type="checkbox"] {
+    left: 10px;
+    opacity: 0;
+    position: absolute;
+    top: 10px;
+    z-index: -1;
 }
-div.rcl-custom-fields .rcl-field-value .fa-upload {
-    margin-right: 5px;
-}
-/**/
-
-/* Контент лк Start */
-#rcl-office .recall_content_block {
-    background: rgba(255, 255, 255, 0.7);
-    display: none;
-    overflow: hidden;
-    padding: 4px 5px;
+.rcl-field-input .block-label {
+    background-color: #f2f2f2;
+    border: 1px solid #e2e2e2;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1;
+    margin: 4px;
+    padding: 5px 8px 4px 6px;
     position: relative;
+    vertical-align: middle;
 }
-#rcl-office .recall_content_block.active {
-    display: block;
+.rcl-field-input.type-agree-input .block-label {
+    background-color: transparent;
+    border: none;
+    padding: 0;
 }
-/* Контент лк End */
+.rcl-field-input label.block-label::before {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-sizing: content-box;
+    content: "";
+    display: inline-block;
+    height: 12px;
+    margin: 0 5px 2px 0;
+    padding: 0 2px 4px;
+    text-align: center;
+    vertical-align: middle;
+    width: 12px;
+}
+.rcl-field-input.type-radio-input label::before {
+    border-radius: 50%;
+}
+.rcl-field-input input[type="checkbox"]:checked + label.block-label::before {
+    color: #fff;
+    content: "\f00c";
+    font-family: "rcl-awesome";
+    font-size: 12px;
+    line-height: 1;
+    padding: 2px;
+}
+/*end*/
 
 
-/* navigation Start */
+/*---------------------
+  21. Runner & Range
+-----------------------*/
+.rcl-runner,
+.rcl-range {
+    padding: 10px;
+}
+.rcl-runner .rcl-runner-value,
+.rcl-range .rcl-range-value {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 115px;
+    padding-left: 15px;
+    padding-right: 15px;
+    vertical-align: middle;
+}
+.rcl-runner .rcl-runner-box,
+.rcl-range .rcl-range-box {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
+                0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+    display: inline-block;
+    height: 10px;
+    margin: 0;
+    max-width: 500px;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    width: 100%;
+}
+.rcl-runner .rcl-runner-box .ui-slider-handle,
+.rcl-range .rcl-range-box .ui-slider-handle {
+    background: -webkit-linear-gradient(top, #fff, #ddd);
+    background: linear-gradient(to bottom, #fff, #ddd);
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4),
+                0 8px 6px rgba(0, 0, 0, 0.1);
+    cursor: ew-resize;
+    height: 18px;
+    margin-left: -.6em;
+    position: absolute;
+    top: -4px;
+    -ms-touch-action: none;
+        touch-action: none;
+    width: 18px;
+    z-index: 1;
+}
+.rcl-runner .rcl-runner-box .ui-slider-handle:focus,
+.rcl-range .rcl-range-box .ui-slider-handle:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    outline: none;
+}
+/*end*/
+
+
+/*-----------------------
+  22. RCL pagenavi API
+-------------------------*/
 .rcl-navi,
 .rcl-pager {
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
@@ -750,10 +996,12 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 .rcl-pager .pager-item a:hover {
     box-shadow: 0 0 1px 2px rgb(219, 219, 219);
 }
-/* navigation End */
+/*end*/
 
 
-/* START ssi-modal */
+/*-------------------
+  23. Ssi-modal API
+---------------------*/
 #ssi-modalWindow {
     animation-duration: 0.5s;
     animation-name: slideInDown;
@@ -820,68 +1068,24 @@ body .ssi-modalOuter .ssi-modalTitle {
     background: #e9e9e9;
     box-shadow: 0 0 1px 1px #aaa;
 }
-/* END ssi-modal */
+/*end*/
 
-/* START checkbox-radio stilization */
-.block-label {
-    cursor: pointer;
-    display: block;
-    font-weight: normal;
-    margin: 0;
-    position: relative;
-    vertical-align: middle;
-}
-.rcl-field-input input[type="radio"],
-.rcl-field-input input[type="checkbox"] {
-    left: 10px;
-    opacity: 0;
-    position: absolute;
-    top: 10px;
-    z-index: -1;
-}
-.rcl-field-input label.block-label::before {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-sizing: content-box;
-    content: "";
-    display: inline-block;
-    height: 13px;
-    margin: 0 5px 2px 0;
-    padding: 0 2px 4px;
-    text-align: center;
-    vertical-align: middle;
-    width: 13px;
-}
-.rcl-field-input.type-radio-input label::before {
-    border-radius: 50%;
-}
-.rcl-field-input input[type="checkbox"]:checked + label.block-label::before {
-    color: #fff;
-    content: "\f00c";
-    font-family: "rcl-awesome";
-    font-size: 12px;
-    line-height: 1;
-    padding: 2px;
-}
-/* END checkbox-radio stilization */
 
-@media screen and (max-width:360px) {
-    #userpic-upload #webcamupload {
-        float: right;
-    }
-    #rcl-office .recall_content_block {
-        margin: 0;
-    }
-    #rcl-office .recall_content_block {
-        padding: 2px;
-    }
-    #rcl-office .recall_content_block th,
-    #rcl-office .recall_content_block td {
-        padding: 4px 2px;
-    }
+/*-----------------------------------------
+  24. TODO: Gallery & Video Gallery core
+-------------------------------------------*/
+#rcl-popup-content label { /*fast editor*/
+    font-weight: bold;
 }
-
-/* START галерея и видеогалерея - выделить в одно ядро */
+#rcl-popup-content input[type="text"],
+#rcl-popup-content textarea {
+    background-color: #f5f5f5;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    margin: 5px 0;
+    padding: 5px;
+    width: 100%;
+}
 #rcl-popup {
     background: #f8f8f8;
     border-radius: 3px;
@@ -976,8 +1180,26 @@ body .ssi-modalOuter .ssi-modalTitle {
     content: "\f137";
     font-family: rcl-awesome;
 }
+@media screen and (max-width:480px) {
+    #rcl-popup {
+        max-width: 95%;
+    }
+    #rcl-popup .navi-gallery {
+        top: 25%;
+    }
+    #rcl-popup .prev-attach {
+        margin-left: -47%;
+    }
+    #rcl-popup .next-attach {
+        margin-left: 47%;
+    }
+}
+/*end*/
 
-/* START upload cover */
+
+/*----------------------------------
+  25. Upload Cover
+------------------------------------*/
 #rcl-office .rcl-cover-icon {
     line-height: 1;
     overflow: hidden;
@@ -995,9 +1217,12 @@ body .ssi-modalOuter .ssi-modalTitle {
     top: 0;
     z-index: 99;
 }
-/* END upload cover */
+/*end*/
 
-/* START Модальное окно с информацией о пользователе */
+
+/*----------------------------------
+  26. Detailed information
+------------------------------------*/
 .rcl-user-getails .rcl-user-avatar {
     display: inline-block;
     position: relative;
@@ -1068,17 +1293,18 @@ body .ssi-modalOuter .ssi-modalTitle {
 .ssi-modalOuter.rcl-user-avatar-zoom img {
     margin: 0;
 }
-/* END Модальное окно с информацией о пользователе */
+/*end*/
 
-/* upload avatar very width fix */
+
+/*----------------------------------
+  27. Upload avatar
+------------------------------------*/
 .ssi-modalOuter.rcl-hand-uploader {
     overflow-x: hidden;
 }
 .rcl-hand-uploader #ssi-modalWindow {
     max-width: 95%;
 }
-/**/
-
 #avatar-upload-progress {
     background: #ccc;
     display: none;
@@ -1099,8 +1325,12 @@ body .ssi-modalOuter .ssi-modalTitle {
     position: absolute;
     top: 50%;
 }
+/*end*/
 
-/* Панель публикации */
+
+/*--------------------
+  28. Post bar
+----------------------*/
 #rcl-post-bar {
     margin: 10px 0;
     text-align: right;
@@ -1127,17 +1357,25 @@ body .ssi-modalOuter .ssi-modalTitle {
     padding: 0 5px;
     margin: 0;
 }
+/*end*/
 
-/*Таблица*/
+
+/*-------------------
+  29. RCL Form
+---------------------*/
 .rcl-form {
     border-collapse: collapse;
     border-spacing: 0;
     border: none;
     box-sizing: border-box;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: normal;
     margin: 0 0 12px;
     text-align: left;
+    width: 100%;
+}
+.rcl-form table {
+    line-height: normal;
     width: 100%;
 }
 .rcl-form tr {
@@ -1145,78 +1383,29 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 .rcl-form th,
 .rcl-form td {
-    border: 1px solid #eee;
+    border: 1px solid #eaeaea;
     box-sizing: border-box;
-    padding: 5px;
+    line-height: normal;
+    padding: 8px;
     text-align: left;
     text-transform: none;                       /*++Twenty14++*/
     vertical-align: middle;
+}
+.rcl-form th:first-child,
+.rcl-form td:first-child {
+    padding-left: 8px;                          /*++Twenty17++*/
 }
 .rcl-form tr th {
     overflow: hidden;
 }
 .rcl-form tr:nth-child(1) th {
     background-color: #f5f5f5;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
-    line-height: 1.4;
-}
-.rcl-form input[type="checkbox"] {
-    float: none;
-    margin: 4px 2px 0;
-    width: 15px;
-}
-.rcl-form input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-.rcl-form textarea {
-    background-color: #fff;
-    border-radius: 0;
-    border: 1px solid #ddd;
-    box-shadow: none;
-    box-sizing: border-box;
-    font-size: 100%;
-    height: auto;
-    line-height: normal;
-    margin: 0;
-    max-width: 100%;
-    outline: 0;
-    padding: 5px 7px;
-    width: 100%;
-}
-.rcl-form input:focus:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-.rcl-form textarea:focus {
-    background: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 1px 0 #ddd;
-    color: #000;
-    outline: medium none;
 }
 .rcl-form input[disabled] {
     background-color: #eee;
     opacity: 0.6;
-}
-.rcl-form select {
-    background-color: #fff;
-    border-radius: 0;
-    border: 1px solid #ddd;
-    box-shadow: none;
-    box-sizing: border-box;
-    height: auto;
-    line-height: normal;
-    outline: 0;
-    padding: 5px 7px;
-    width: 100%;
-}
-.rcl-form .block-label {
-    background-color: #f2f2f2;
-    border: 1px solid #e2e2e2;
-    cursor: pointer;
-    display: inline-block;
-    float: left;
-    font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
-    font-size: 12px;
-    line-height: 1;
-    margin: 4px;
-    padding: 5px 8px 4px 6px;
 }
 .rcl-form .block-label input[type="checkbox"] {
     margin: 0 6px 0 0;
@@ -1228,10 +1417,6 @@ body .ssi-modalOuter .ssi-modalTitle {
     font-size: 13px;
     padding: 8px 12px;
     width: auto;
-}
-.rcl-form .required {
-    color: rgb(229, 57, 53);
-    font: bold 15px/1 Verdana,arial;
 }
 .rcl-form label a {
     color: rgb(76, 140, 189);
@@ -1251,36 +1436,9 @@ body .ssi-modalOuter .ssi-modalTitle {
 .rcl-form td a:hover i {
     color: rgb(229, 57, 53);
 }
-.rcl-form .file-manage-box {
-    display: block;
-    margin-bottom: 5px;
-    overflow: hidden;
-}
-.rcl-form .file-manage-box .rcli {
-    color: rgb(229, 57, 53);
-    font-size: 16px;
-    margin-right: 5px;
-}
-.rcl-form .file-manage-box .delete-file-url {
-    float: right;
-}
-.rcl-form .file-manage-box .delete-file-url a {
-    display: inline-block;
-}
-.rcl-form .file-field-upload {
-    background: #f4f4f4;
-    display: block;
-    font-size: 11px;
-    padding: 5px;
-}
-.rcl-form .file-field-upload input {
-    width: auto;
-}
 .rcl-form .aligncenter {
     text-align: center;
 }
-
-/*форма*/
 .rcl-form .form-field {
     margin: 15px 0;
 }
@@ -1304,11 +1462,10 @@ body .ssi-modalOuter .ssi-modalTitle {
     padding: 7px 10px;
 }
 
-@media screen and (max-width:360px) {
+@media screen and (max-width:375px) {
     .rcl-form tr th {
         -webkit-hyphens: auto;
                 hyphens: auto;
-        max-width: 107px;
         word-wrap: break-word;
     }
     .rcl-form td a {
@@ -1320,118 +1477,12 @@ body .ssi-modalOuter .ssi-modalTitle {
         width: 205px;
     }
 }
+/*end*/
 
-/*бегунок*/
-.rcl-runner,
-.rcl-range {
-    padding: 10px;
-}
-.rcl-runner .rcl-runner-value,
-.rcl-range .rcl-range-value {
-    display: inline-block;
-    font-size: 18px;
-    font-weight: bold;
-    min-width: 115px;
-    padding-left: 15px;
-    padding-right: 15px;
-    vertical-align: middle;
-}
-.rcl-runner .rcl-runner-box,
-.rcl-range .rcl-range-box {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 5px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
-                0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
-    display: inline-block;
-    height: 10px;
-    margin: 0;
-    max-width: 500px;
-    position: relative;
-    text-align: left;
-    vertical-align: middle;
-    width: 100%;
-}
-.rcl-runner .rcl-runner-box .ui-slider-handle,
-.rcl-range .rcl-range-box .ui-slider-handle {
-    background: -webkit-linear-gradient(top, #fff, #ddd);
-    background: linear-gradient(to bottom, #fff, #ddd);
-    border-radius: 50%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4),
-                0 8px 6px rgba(0, 0, 0, 0.1);
-    cursor: ew-resize;
-    height: 18px;
-    margin-left: -.6em;
-    position: absolute;
-    top: -4px;
-    -ms-touch-action: none;
-        touch-action: none;
-    width: 18px;
-    z-index: 1;
-}
-.rcl-runner .rcl-runner-box .ui-slider-handle:focus,
-.rcl-range .rcl-range-box .ui-slider-handle:focus {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-    outline: none;
-}
-/* ** */
-/*таблица конец*/
 
-@media screen and (max-width:480px) {
-    #rcl-popup {
-        max-width: 95%;
-    }
-    #rcl-popup .navi-gallery {
-        top: 25%;
-    }
-    #rcl-popup .prev-attach {
-        margin-left: -47%;
-    }
-    #rcl-popup .next-attach {
-        margin-left: 47%;
-    }
-}
-/* END галерея и видеогалерея - выделить в одно ядро */
-
-/* Непроверенная секция Start */
-#rcl-popup.fixed {
-    position: fixed;
-    top: 80px;
-}
-#rcl-popup .delete {
-    display: block;
-    float: left;
-    height: 31px;
-    margin: 5px 5px 10px;
-    width: 31px;
-}
-#rcl-popup .popup-body {
-    padding: 10px;
-}
-.rcl-upload-button span.progress-bar {
-    background: #36C515;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    z-index: -99;
-}
-.rcl-dropzone .get-crop-image,
-.prmess .rcl-upload-button {
-    float:right;
-}
-.rcl-dropzone img,
-.rcl-dropzone .jcrop-holder {
-    display: block;
-    margin: 0 auto;
-}
-.rcl-dropzone.hover {
-    background: rgba(0,0,0,0.5);
-}
-/* Непроверенная секция End */
-
-/*********************
-*   Tables API   *
-**********************/
+/*-----------------------
+  30. RCL Tables API
+-------------------------*/
 .rcl-table {
     box-sizing: border-box;
     display: flex;
@@ -1440,7 +1491,7 @@ body .ssi-modalOuter .ssi-modalTitle {
     line-height: 1.4;
     word-break: break-word;
     word-wrap: break-word;
-    margin: 20px 0;
+    margin: 1.15em 0;
     -webkit-hyphens: auto;
         -ms-hyphens: auto;
             hyphens: auto;
@@ -1452,14 +1503,14 @@ body .ssi-modalOuter .ssi-modalTitle {
     align-content: stretch;
     align-items: stretch;
     display: flex;
-    overflow: hidden;
 }
 .rcl-table__row-header {
-    background-color: #f5f5f5;
+    background-color: #f2f2f2;
     font-weight: bold;
 }
 .rcl-table__cell {
     align-items: center;
+    box-sizing: border-box;
     display: flex;
     flex-basis: 100%;
     flex-grow: 1;
@@ -1491,18 +1542,29 @@ body .ssi-modalOuter .ssi-modalTitle {
     text-decoration:underline;
 }
 
-.rcl-table__cell.rcl-table__cell-w-5 {flex-basis: 5%;}
-.rcl-table__cell.rcl-table__cell-w-10 {flex-basis: 10%;}
-.rcl-table__cell.rcl-table__cell-w-15 {flex-basis: 15%;}
-.rcl-table__cell.rcl-table__cell-w-20 {flex-basis: 20%;}
-.rcl-table__cell.rcl-table__cell-w-30 {flex-basis: 30%;}
-.rcl-table__cell.rcl-table__cell-w-40 {flex-basis: 40%;}
-.rcl-table__cell.rcl-table__cell-w-50 {flex-basis: 50%;}
-.rcl-table__cell.rcl-table__cell-w-60 {flex-basis: 60%;}
-.rcl-table__cell.rcl-table__cell-w-70 {flex-basis: 70%;}
-.rcl-table__cell.rcl-table__cell-w-80 {flex-basis: 80%;}
-.rcl-table__cell.rcl-table__cell-w-90 {flex-basis: 90%;}
+.rcl-table__cell-w-5 {flex-basis: 5%;}
+.rcl-table__cell-w-10 {flex-basis: 10%;}
+.rcl-table__cell-w-15 {flex-basis: 15%;}
+.rcl-table__cell-w-20 {flex-basis: 20%;}
+.rcl-table__cell-w-25 {flex-basis: 25%;}
+.rcl-table__cell-w-30 {flex-basis: 30%;}
+.rcl-table__cell-w-35 {flex-basis: 35%;}
+.rcl-table__cell-w-40 {flex-basis: 40%;}
+.rcl-table__cell-w-45 {flex-basis: 45%;}
+.rcl-table__cell-w-50 {flex-basis: 50%;}
+.rcl-table__cell-w-55 {flex-basis: 55%;}
+.rcl-table__cell-w-60 {flex-basis: 60%;}
+.rcl-table__cell-w-65 {flex-basis: 65%;}
+.rcl-table__cell-w-70 {flex-basis: 70%;}
+.rcl-table__cell-w-75 {flex-basis: 75%;}
+.rcl-table__cell-w-80 {flex-basis: 80%;}
+.rcl-table__cell-w-85 {flex-basis: 85%;}
+.rcl-table__cell-w-90 {flex-basis: 90%;}
+.rcl-table__cell-w-95 {flex-basis: 95%;}
 
+.rcl-table__not-header .rcl-table__row {
+    padding: .4em 0;
+}
 
 @media screen and (max-width: 768px) {
     .rcl-table__border {
@@ -1537,39 +1599,43 @@ body .ssi-modalOuter .ssi-modalTitle {
         padding-right: 10px;
         text-align: right;
     }
-}
-
-
-.rcl-table__not-header .rcl-field-input,
-.rcl-table__not-header .dynamic-values .dynamic-value input,
-.rcl-table__not-header input,
-.rcl-table__not-header textarea {
-    width: 100% !important;
-}
-.rcl-table__not-header .dynamic-values .dynamic-value .rcli {
-    margin-right: 0;
-}
-.rcl-table__not-header input,
-.rcl-table__not-header textarea {
-    background-color: #fff !important;
-    border: 1px solid #ddd;
-    max-width: unset !important;
-    outline: none;
-    padding: .4em .6em;
-}
-.rcl-table__not-header .rcl-table__row {
-    padding: .4em 0;
-}
-
-@media screen and (max-width: 768px) {
     .rcl-table__not-header .rcl-table__row {
         border: 1px solid #e5e5e5;
         background-color: #fafafa;
         display: block;
-        margin: 0 0 .8em;
+        margin: 0 0 1em;
     }
     .rcl-table__not-header .rcl-table__cell:nth-child(1) {
         max-width: none;
         padding: .2em .6em;
     }
 }
+/*end*/
+
+
+/*---------------------------
+  31. TODO: old generation
+-----------------------------*/
+#rcl-popup.fixed {
+    position: fixed;
+    top: 80px;
+}
+#rcl-popup .delete {
+    display: block;
+    float: left;
+    height: 31px;
+    margin: 5px 5px 10px;
+    width: 31px;
+}
+#rcl-popup .popup-body {
+    padding: 10px;
+}
+.rcl-upload-button span.progress-bar {
+    background: #36C515;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: -99;
+}
+/*end*/

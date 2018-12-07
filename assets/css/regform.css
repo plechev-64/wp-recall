@@ -1,14 +1,11 @@
-/* START Вход и регистрация */
+/* RCL Login */
 .panel_lk_recall {
     color:#333;
-    display: inline-block;
+    display: block;
     line-height: 1.5;                           /*++Twenty16++*/
     margin: 0 auto;
     max-width: 320px;
     width: 100%;
-}
-.panel_lk_recall.pageform {
-    display: block;
 }
 .panel_lk_recall.floatform {
     display:none;
@@ -17,28 +14,22 @@
     position: absolute;
     z-index: 9999;
 }
-.panel_lk_recall.floatform .close-popup {
-    display: none;
-}
-div.panel_lk_recall a:not(.close-popup) {
+div.panel_lk_recall a {
     border: none;                               /*++Twenty15++*/
     box-shadow: none;                           /*++Twenty16++*/
     text-decoration: none;
 }
-div.panel_lk_recall .form-tab-rcl a {
-    color: #aaa;
-    display: block;
-    padding: 8px 0;
-}
 .panel_lk_recall .form-tab-rcl {
     background: #fff;
     border-radius: 2px;
-    box-shadow: 0 0 1px 1px #bebebe;
     display: none;
     font: 16px/26px Verdana,Tahoma,sans-serif;
-    margin: 20px auto;
+    margin: 3px auto;
     overflow: hidden;
-    width: 320px;
+    width: calc(100% - 2px);
+}
+.panel_lk_recall.pageform .form-tab-rcl {
+    box-shadow: 0 0 1px 1px #bebebe;
 }
 .panel_lk_recall.floatform .form-tab-rcl {
     box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.5);
@@ -50,6 +41,9 @@ div.panel_lk_recall .form-tab-rcl a {
 }
 .panel_lk_recall .form-tab-rcl .form_head a {
     border-bottom: 1px solid #ccc;
+    color: #aaa;
+    display: block;
+    padding: 8px 0;
     text-align:center;
 }
 .panel_lk_recall .form_reg,
@@ -69,88 +63,78 @@ div.panel_lk_recall .form-tab-rcl a {
     color: #555;
 }
 .panel_lk_recall .form-block-rcl {
+    clear: both;
     line-height: 1.4;
     margin: 0 17px 15px;
     position: relative;
 }
+/*end*/
 
-/* START общие для полей*/
+
+/*General*/
 .panel_lk_recall .rcl-field-input select,
-.panel_lk_recall .form-tab-rcl  textarea,
-.panel_lk_recall .form-tab-rcl input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]) {
-    background: #F2F2F2;
-    border-radius: 0;
-    border: 1px solid rgba(0, 0, 0, 0.03);
-    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.05) inset;
-    box-sizing: border-box;
-    color: #303030;
+.panel_lk_recall .rcl-field-input textarea,
+.panel_lk_recall .rcl-field-input input:not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
+    background-color: #fafafa;
     display: block;
-    font-family: Verdana,Tahoma,sans-serif;
     font-size: 15px;
-    font-weight: 300;
-    height: auto;
-    line-height: normal;
+    font-weight: normal;
     margin: 5px auto;
-    max-width: none;
+    text-transform: none;
+}
+.panel_lk_recall .rcl-field-input textarea,
+.panel_lk_recall .rcl-field-input input:not([type="checkbox"]):not([type="radio"]) {
+    -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;
+}
+.panel_lk_recall .rcl-field-input select:focus,
+.panel_lk_recall .rcl-field-input textarea:focus,
+.panel_lk_recall .rcl-field-input input:focus:not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
+    background-color: #f7f7f7;
     outline: none;
+}
+.panel_lk_recall .rcl-field-input .maxlength {
+    font-size: 13px;
+}
+/*end*/
+
+
+/* adjustments */
+.panel_lk_recall .default-field input {
+    background-color: #fafafa;
+    border-radius: 0;
+    border: 1px solid #e5e5e5;
+    box-shadow: none;
+    box-sizing: border-box;
+    display: block;
+    float: none;
+    font-size: 15px;
+    font-weight: normal;
+    height: auto;
+    line-height: 1.4;
+    margin: 5px auto;
+    max-width: 100%;
+    outline: 0;
+    padding: 6px 12px 6px 32px;
     text-transform: none;
     width: 100%;
-    -webkit-box-shadow: 0 0 0px 1000px #F2F2F2 inset !important; /* chrome banana fix */
-}
-.panel_lk_recall .form-tab-rcl input:focus:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]) {
-    background-color: #EBEBEB;
-    outline: none;
-}
-.panel_lk_recall .form-tab-rcl textarea,
-.panel_lk_recall .form-tab-rcl input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]) {
-    -webkit-box-shadow: 0 0 0px 1000px #F2F2F2 inset !important; /* chrome banana fix */
-}
-/* END общие для полей*/
-
-
-/* START корректировки для полей*/
-#register-form-rcl .form_extend input[type="text"],
-#register-form-rcl .form_extend input[type="email"],
-#register-form-rcl .form_extend input[type="url"],
-#register-form-rcl .form_extend input[type="tel"],
-#register-form-rcl .form_extend input[type="file"],
-#register-form-rcl .form_extend input[type="time"],
-#register-form-rcl .form_extend input[type="number"] {
-    padding: 10px 8px;
-}
-#remember-form-rcl .default-field input[type="text"],
-#login-form-rcl .default-field input[type="text"],
-#login-form-rcl .default-field input[type="password"],
-#register-form-rcl .default-field input[type="text"],
-#register-form-rcl .default-field input[type="password"],
-#register-form-rcl .default-field input[type="email"] {
-    padding: 10px 12px 10px 32px;
-}
-#register-form-rcl .form-block-rcl textarea {
-    padding: 3px 5px;
-}
-#register-form-rcl .form_extend .rcl-field-input select {
-    overflow: hidden;
-    padding: 6px 3px;
-}
-#register-form-rcl .form-block-rcl .type-file-input {
-    font-size: 10px;
-}
-#register-form-rcl .form-block-rcl .dynamic-value input {
-    float: left;
-}
-.panel_lk_recall .rcl-radio-box,
-.panel_lk_recall .rcl-checkbox-box {
-    display: block;
+    -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;  /*chrome banana fix*/
 }
 .panel_lk_recall form-tab-rcl .block-label {
     font-weight: normal;
     text-align:left;
 }
-/* END корректировки для полей*/
+.rcl-loginform label.block-label {
+    background-color: transparent;
+    border: none;
+    font-size: inherit;
+    margin: 4px 10px 4px 0;
+    padding: 0;
+    width: 100%;
+}
+/*end*/
+
 
 .panel_lk_recall .form-tab-rcl input[type="submit"] {
-    border: none;
     font-size: 16px;
     margin: 0;
     max-width: none;
@@ -161,11 +145,11 @@ div.panel_lk_recall .form-tab-rcl a {
 }
 .form-block-rcl.default-field .rcli {
     color: #538a9a;
+    font-size: 16px;
     left: 12px;
     opacity: 0.4;
     position: absolute;
-    top: 12px;
-    width: auto;
+    top: 10px;
 }
 .panel_lk_recall input[type="text"]:focus + .rcli,
 .panel_lk_recall input[type="email"]:focus + .rcli,
@@ -173,17 +157,18 @@ div.panel_lk_recall .form-tab-rcl a {
     opacity: 1;
 }
 .panel_lk_recall .form-block-rcl .required {
-    color: rgb(229, 57, 53);
-    font: bold 15px/1 Verdana,arial;
-    padding: 0;
+    font-size: 14px;
+    line-height: normal;
     position: absolute;
-    right: 12px;
-    top: 15px;
+    right: 8px;
+    top: 10px;
 }
 .form-tab-rcl .form-block-rcl a.link-remember-rcl {
+    color: #aaa;
     float: right;
     font-size: 12px;
     margin: 3px 0;
+    padding: 8px 0;
 }
 .form-block-rcl.form_extend .form-block-rcl {
     margin: 0 0 15px;
@@ -205,91 +190,76 @@ div.panel_lk_recall .form-tab-rcl a {
 .form-tab-rcl .form-title {
     display: block;
     font-size: 20px;
-    margin: 0 0 7px;
     text-align: center;
 }
-.form-block-rcl #passwordStrength {
-    max-width: 290px;
-    padding: 8px;
-    width: 150px;
-}
-.form-block-rcl #passwordStrength.strength2 {
-    width: 55%;
-}
-.form-block-rcl #passwordStrength.strength3 {
-    width: 60%;
-}
-.form-block-rcl #passwordStrength.strength4 {
-    width: 80%;
-}
-.form-block-rcl #passwordStrength.strength5 {
-    width: 100%;
-}
-#passwordStrength {
-    color: #000;
+.form-block-rcl .login-error,
+.form-block-rcl .login-message,
+.form-block-rcl [class^="strength"] {
     display: block;
     font-size: 12px;
-    line-height: 1;
-    margin: 5px auto 0;
+    margin: 8px auto 5px;
+    padding: 8px;
     text-align: center;
 }
-#passwordStrength.strength0 {
-    background: #ccc;
-}
-#passwordStrength.strength1 {
-    background: #ff0000;
-}
-#passwordStrength.strength2 {
-    background: orange;
-}
-#passwordStrength.strength3 {
-    background: yellow;
-}
-#passwordStrength.strength4 {
-    background: #43FF4C;
-}
-#passwordStrength.strength5 {
-    background: rgb(0, 184, 255);
-}
-.form-block-rcl #notice-chek-password {
-    margin-top: 10px;
-}
-.form-block-rcl .rcl-field-notice {
-    font-size: 13px;
-}
-.panel_lk_recall .form-block-rcl label a {
-    color: rgb(76, 140, 189);
-    display: inline;
-}
+.form-block-rcl .strength0 {background:#ccc;width:140px;}
+.form-block-rcl .strength1 {background:#fea6a6;width:140px;}
+.form-block-rcl .strength2 {background:orange;width:55%;}
+.form-block-rcl .strength3 {background:#efed6d;width:60%;}
+.form-block-rcl .strength4 {background:#8de991;width:80%;}
+.form-block-rcl .strength5 {background:#99e3ff;width:100%;}
+
 .panel_lk_recall span.login-error a:hover,
 .panel_lk_recall .form-block-rcl label a:hover {
-    color: #000;
     text-decoration: underline;
 }
-.panel_lk_recall span.error a {
-    color: rgb(76, 140, 189);
-    font-size: 14px;
-}
 .panel_lk_recall .form-tab-rcl .login-error {
-    background: rgb(255, 207, 207);
+    background: #ffcfcf;
 }
 .panel_lk_recall .form-tab-rcl .login-message {
     background: #bfffbd;
 }
-.panel_lk_recall .form-tab-rcl .login-error,
-.panel_lk_recall .form-tab-rcl .login-message {
-    display: block;
-    font-size: 12px;
-    margin: 5px 0;
-    padding: 8px 5px;
-    text-align: center;
-}
-.widget .panel_lk_recall .form-tab-rcl {
-    margin: 3px auto;
-    width: 99%;
-}
-/* END Вход и регистрация */
+/*end*/
 
+
+/* регистрация в wp-login.php */
+#registerform .rcl-field-core {
+    position: relative;
+}
+#registerform .maxlength {
+    align-items: center;
+    background-color: #eaeaea;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    cursor: default;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    max-height: 100%;
+    min-width: 30px;
+    padding: 2px 5px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    z-index: 10;
+}
+#registerform .type-text-input .maxlength {
+    height: 100%;
+}
+#registerform .rcl-field-notice {
+    clear: both;
+    font-size: .85em;
+}
+#registerform .form-block-rcl .required {
+    color: rgb(229, 57, 53);
+    font: bold 15px/normal Verdana,arial;
+    left: -15px;
+    position: absolute;
+    top: 10px;
+}
+#registerform .form-block-rcl label .required {
+    position: inherit;
+}
 #registerform .form-block-rcl {
     margin-bottom: 15px;
     position: relative;
@@ -298,39 +268,24 @@ div.panel_lk_recall .form-tab-rcl a {
     display: block;
     margin-bottom: 5px;
 }
-#registerform .form-block-rcl .required {
-    color: red;
-    font-size: 20px;
-    left: -15px;
-    position: absolute;
-    top: 5px;
-}
 #registerform .rcl-checkbox-box,
 #registerform .rcl-radio-box {
     display: block;
-    padding: 3px 0 3px 20px;
+    padding: 3px 0 0 20px;
 }
 #registerform .rcl-checkbox-box label,
 #registerform .rcl-radio-box label {
     display: inline-block;
 }
-#registerform .form-block-rcl textarea,
-#registerform .form-block-rcl select,
-#registerform .form-block-rcl input:not([type="checkbox"]):not([type="radio"]) {
-    padding: 10px;
+#registerform textarea,
+#registerform select,
+#registerform input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]) {
+    font-size: 18px;
+    padding: 5px 10px;
     width: 100%;
+    margin: 0 auto;
 }
-#registerform .form-block-rcl .login-error,
-#registerform .form-block-rcl .login-message {
-    display: block;
-    font-size: 12px;
-    margin: 5px 0;
-    padding: 8px 5px;
-    text-align: center;
+#registerform #user_email {
+    margin-bottom: 16px;
 }
-#registerform .form-block-rcl .login-error {
-    background: rgb(255, 207, 207);
-}
-#registerform .form-block-rcl .login-message {
-    background: #bfffbd;
-}
+/*end*/

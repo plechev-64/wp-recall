@@ -11,18 +11,22 @@
     $Table = new Rcl_Table(array(
         'cols' => array(
             array(
-                'title' => __('Title','wp-recall')
+                'align' => 'center',
+                'title' => __('Date','wp-recall'),
+                'width' => 15
+            ),
+            array(
+                'title' => __('Title','wp-recall'),
+                'width' => 65
             ),
             array(
                 'align' => 'center',
-                'title' => __('Date','wp-recall')
-            ),
-            array(
-                'align' => 'center',
-                'title' => __('Status','wp-recall')
+                'title' => __('Status','wp-recall'),
+                'width' => 20
             )
         ),
         'zebra' => true,
+        'class' => 'rcl_author_postlist',
         'border' => array('table', 'cols', 'rows')
     ));
 ?>
@@ -47,8 +51,8 @@
 
         <?php
             $Table->add_row(array(
-                $content,
                 mysql2date('d.m.y', $post->post_date),
+                $content,
                 $status
             ));
         ?>

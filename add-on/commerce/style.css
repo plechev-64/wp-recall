@@ -29,6 +29,7 @@
     margin: 0 0 25px;
 }
 .rcl-cart-box .product-variations .variation-box {
+    line-height: normal;
     margin: 25px 0 0;
 }
 .rcl-cart-box .product-variations .variation-box .variation-title {
@@ -37,20 +38,9 @@
     font-weight: bold;
     margin: 0 0 5px;
 }
-.rcl-cart-box .product-variations .rcl-checkbox-box,
-.rcl-cart-box .product-variations .rcl-radio-box,
-.rcl-cart-box .product-variations .type-select-input {
-    background-color: #fafafa;
-    border-radius: 2px;
-    border: 1px solid #e5e5e5;
-    display: inline-block;
-    margin: 0 2px 2px;
-    max-width: 300px;
-    padding: 5px 10px;
-}
 .rcl-cart-box .product-variations .type-select-input select {
-    border: 0;
-    width: 100%;
+    min-width: 60px;
+    width: auto;
 }
 .rcl-cart-box .cart-button {
     align-items: center;
@@ -410,17 +400,11 @@ body .rcl-product-gallery ul.images-list {
 #rcl-order .order-table .rcl-cart-subtitle {
     display: none;
 }
-#rcl-order .order-table td,
-#rcl-order .order-table th {
-    border-color: #ddd;
-    padding: 10px;
-}
 #rcl-order .order-table td > a {
     font-size: 115%;
 }
 #rcl-order .order-table .product-excerpt {
     font-size: 95%;
-    line-height: 1.4;
     margin: 5px 0 0;
 }
 #rcl-order .order-table .product-excerpt:empty {
@@ -432,23 +416,19 @@ body .rcl-product-gallery ul.images-list {
 #rcl-order .order-table .column-product-sumprice {
     min-width: 80px;
 }
+#rcl-order .order-table .column-product-amount,
 #rcl-order .order-table .column-product-sumprice,
 #rcl-order .order-table .column-product-price {
     text-align: center;
 }
-#rcl-order .order-table .column-product-sumprice > span,
-#rcl-order .order-table .column-product-price > span {
+#rcl-order .order-table th > span,
+#rcl-order .order-table td > span {
     margin: 0 3px 0 0;
     vertical-align: middle;
 }
-#rcl-order .order-table .column-product-sumprice > .rcli,
-#rcl-order .order-table .column-product-price > .rcli {
-    vertical-align: middle;
-}
-#rcl-order .order-table .column-product-amount {
-    text-align: center;
-}
-#rcl-order .order-table .column-product-amount .rcli {
+#rcl-order .order-table .column-product-amount .rcli,
+#rcl-order .order-table th > .rcli,
+#rcl-order .order-table td > .rcli {
     vertical-align: middle;
 }
 #rcl-order .order-table .column-product-amount .quantity-selector {
@@ -480,21 +460,6 @@ body .rcl-product-gallery ul.images-list {
     margin: 20px 0 10px;
     padding: 10px;
     text-align: center;
-}
-#rcl-order .cart-fields .table-fields {
-    margin: 10px 0;
-    width: 100%;
-}
-#rcl-order .cart-fields .table-fields td,
-#rcl-order .cart-fields .table-fields th {
-    border: 1px solid rgb(243, 243, 243);
-    padding: 10px;
-}
-#rcl-order .cart-fields .table-fields .cart-field .field-title {
-    padding: 10px;
-}
-#rcl-order .cart-fields .required {
-    color: red;
 }
 #rcl-order .submit-box {
     text-align: right;
@@ -629,9 +594,8 @@ body .rcl-product-gallery ul.images-list {
     border-top: 1px solid #e5e5e5;
 }
 #rcl-product-box .rcl-field-input .rcl-field-notice {
-    font-size: 95%;
+    display: block;
     margin: 0;
-    line-height: 1.4;
 }
 #rcl-product-box .rcl-cart-box .cart-button {
     vertical-align: middle;
@@ -670,22 +634,20 @@ body .rcl-product-gallery ul.images-list {
     background: #fff;
     padding: 5px;
 }
-/*блок вариаций товара конец*/
+/*end*/
 
 /*вкладка заказов*/
 #tab-orders .order-data {
     overflow-x: auto;
 }
-#tab-orders table {
-    width: 100%;
-}
-/*вкладка заказов конец*/
+/*end*/
 @media screen and (max-width:480px) {
     #rcl-order .order-table tr:first-child {
         display: none;
     }
     #rcl-order .order-table .rcl-cart-subtitle {
-        display: block!important;
+        display: block !important;
+        margin: 0 0 5px;
     }
     #rcl-order .order-table tr {
         background-color: #fff;
@@ -722,12 +684,14 @@ body .rcl-product-gallery ul.images-list {
         margin: 0 0 0 10px;
         padding: 10px 15px;
     }
-    #tab-orders tr > * {
-        text-align: center;
+    #rcl-order .cart-fields .field-title {
+        word-break: break-all;
+        word-wrap: break-word;
+        min-width: 100px;
     }
-    #tab-orders th {
-        line-height: normal;
-        font-size: 14px;
+    #tab-orders tr > * {
+        min-width: auto;
+        text-align: center;
     }
     #tab-orders td:nth-child(2) {
         font-size: 12px;
