@@ -56,7 +56,7 @@ function rcl_setup_async_upload(){
     
     jQuery.extend( wp.Uploader.prototype, {
         success : function( attachment ){
-            if(attachment.uploadedTo) return false;
+            if(attachment.attributes.uploadedTo) return false;
             rcl_ajax({
                 data: {
                     action: 'rcl_save_temp_async_uploaded_thumbnail',
@@ -311,52 +311,28 @@ function rcl_publish(e){
 }
 
 function rcl_check_required_fields(form){
-
-    var required = true;
-
-    jQuery('form.rcl-public-form').find(':required').each(function(){
-
-        var field = jQuery(this);
-        var type = field.attr('type');
-        var value = false;
-
-        if(type=='checkbox'){
-            if(field.is(":checked")){
-                value = true;
-                field.next('label').css('box-shadow','none');
-            }else {
-                field.next('label').css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
+    
+    var rclFormFactory = new RclForm(form);
+    
+    rclFormFactory.addChekForm('checkCats', {
+        
+        isValid: function(){
+            var valid = true;
+            if(this.form.find('input[name="cats[]"]').length > 0){             
+                if(form.find('input[name="cats[]"]:checked').length == 0){
+                    this.shake(form.find( 'input[name="cats[]"]' ));
+                    this.addError('checkCats','Укажите рубрику');
+                    valid = false;
+                }else{
+                    this.noShake(form.find( 'input[name="cats[]"]' ));
+                }
             }
-        }else{
-            if(field.val()) value = true;
+            return valid;
         }
-
-        if(!value){
-            field.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
-            required = false;
-        }else{
-            field.css('box-shadow','none');
-        }
-
+        
     });
     
-    if(form.find( 'input[name="cats[]"]' ).length > 0){             
-        if(form.find('input[name="cats[]"]:checked').length == 0){
-            form.find( 'input[name="cats[]"]' ).css('box-shadow','0px 0px 1px 1px red').animateCss('shake');
-            required = false;
-        }else{
-            form.find( 'input[name="cats[]"]' ).css('box-shadow','none');
-        }
-    }
-    
-    rcl_do_action('rcl_check_required_fields', form);
-
-    if(!required){
-        rcl_notice(Rcl.local.requared_fields_empty,'error',10000);
-        return false;
-    }
-    
-    return true;
+    return rclFormFactory.validate();
     
 }
 

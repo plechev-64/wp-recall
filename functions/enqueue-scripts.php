@@ -175,6 +175,9 @@ function rcl_get_localize_data(){
     $data['slider'] = rcl_get_option('slide-pause')? "{auto:true,pause:".(rcl_get_option('slide-pause') * 1000)."}": "''";
     $data['local']['requared_fields_empty'] = __('Fill in all required fields','wp-recall');
 
+    $data['errors']['required'] = __('Fill in all required fields','wp-recall');
+    $data['errors']['number_range'] = __('Укажите число в разрешенном диапазоне','wp-recall');
+
     return apply_filters('rcl_init_js_variables',$data);
 
 }

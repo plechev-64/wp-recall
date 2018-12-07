@@ -66,28 +66,33 @@ function rcl_get_userlist($atts){
 
     $userlist = $users->get_filters($count_users);
 
+    $userlist .= '<div class="rcl-userlist">';
+
     if(!$usersdata){
         $userlist .= '<p align="center">'.__('Users not found','wp-recall').'</p>';
-        $users->remove_filters();
+    }else{
 
-        return $userlist;
-    }
+        if(!isset($atts['number']) && $pagenavi->in_page){
+            $userlist .= $pagenavi->pagenavi();
+        }
 
-    if(!isset($atts['number']) && $pagenavi->in_page)
-        $userlist .= $pagenavi->pagenavi();
+        $userlist .= '<div class="userlist '.$users->template.'-list">';
 
-    $userlist .= '<div class="userlist '.$users->template.'-list">';
+        $rcl_users_set = $users;
 
-    $rcl_users_set = $users;
+        foreach($usersdata as $rcl_user){ $users->setup_userdata($rcl_user);
+            $userlist .= rcl_get_include_template('user-'.$users->template.'.php');
+        }
 
-    foreach($usersdata as $rcl_user){ $users->setup_userdata($rcl_user);
-        $userlist .= rcl_get_include_template('user-'.$users->template.'.php');
+        $userlist .= '</div>';
+
+        if(!isset($atts['number']) && $pagenavi->in_page){
+            $userlist .= $pagenavi->pagenavi();
+        }
+
     }
 
     $userlist .= '</div>';
-
-    if(!isset($atts['number']) && $pagenavi->in_page)
-        $userlist .= $pagenavi->pagenavi();
 
     $users->remove_filters();
 

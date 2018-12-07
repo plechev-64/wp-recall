@@ -281,7 +281,7 @@ function rcl_get_custom_field_options(e){
         
     }
     
-    var singleVals = ['date','time','email','number','url','dynamic','tel'];
+    var singleVals = ['date','time','email','url','dynamic','tel'];
     
     if(jQuery.inArray( typeField, singleVals ) >= 0 && jQuery.inArray( oldType, singleVals ) >= 0){
         

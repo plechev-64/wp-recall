@@ -28,7 +28,7 @@ jQuery(function($){
             })
         }
     });
-
+    
     rcl_do_action('rcl_init');
 });
 

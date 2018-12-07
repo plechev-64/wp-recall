@@ -146,6 +146,10 @@ class Rcl_Query {
             if($this->args['orderby'] == 'rand'){
                 $this->query['orderby'] = $this->query['table']['as'].'.'.$this->query['table']['cols'][0];
                 $this->query['order'] = 'RAND()';
+            }else if(is_array($this->args['orderby'])){
+                foreach($this->args['orderby'] as $orderby => $order){
+                    $this->query['orderby'][$this->query['table']['as'].'.'.$orderby] = $order;
+                }
             }else{
                 $this->query['orderby'] = $this->query['table']['as'].'.'.$this->args['orderby'];
                 $this->query['order'] = (isset($this->args['order']) && $this->args['order'])? $this->args['order']: 'DESC';
@@ -360,7 +364,15 @@ class Rcl_Query {
             $sql[] = "GROUP BY ".$query['groupby'];
 
         if(isset($query['orderby'])){
-            $sql[] = "ORDER BY ".$query['orderby']." ".$query['order'];
+            if(is_array($query['orderby'])){
+                $orders = array();
+                foreach($query['orderby'] as $orderby => $order){
+                    $orders[] = $orderby." ".$order;
+                }
+                $sql[] = "ORDER BY ".implode(",", $orders);
+            }else{
+                $sql[] = "ORDER BY ".$query['orderby']." ".$query['order'];
+            }
         }
 
         if(isset($query['number']) && $query['number'] > 0){
