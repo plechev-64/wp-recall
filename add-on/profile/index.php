@@ -217,7 +217,7 @@ function rcl_tab_profile_content($master_id){
 
         $label = sprintf('<label>%s%s:</label>',$CF->get_title($field),$star);
 
-        $Table->add_row(array($label, $CF->get_input($field, $value)));
+        $Table->add_row(array($label, $CF->get_input($field, $value)), array('id'=>array('profile-field-'.$slug)));
 
     }
 

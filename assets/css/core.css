@@ -686,7 +686,7 @@ a.data-filter.filter-active:hover {
 .rcl-field-core {
     position: relative;
 }
-.rcl-field-input input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.rcl-field-input input:not([type="file"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]),
 .rcl-field-input textarea {
     background-color: #fff;
     border-radius: 0;

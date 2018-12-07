@@ -102,7 +102,7 @@ function rcl_frontend_scripts(){
     rcl_font_awesome_style();
     rcl_animate_css();
 
-    rcl_enqueue_style( 'rcl-primary', RCL_URL.'assets/css/style.css' );
+    rcl_enqueue_style( 'rcl-core', RCL_URL.'assets/css/core.css' );
     rcl_enqueue_style( 'rcl-users-list', RCL_URL.'assets/css/users.css' );
 
     if( !is_user_logged_in() ){

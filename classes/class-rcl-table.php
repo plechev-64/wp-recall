@@ -22,6 +22,7 @@ class Rcl_Table {
     public $total = false;
     public $table_id = 0;
     public $class = array();
+    public $attr_rows = array();
 
     function __construct($tableProps = false) {
 
@@ -174,7 +175,8 @@ class Rcl_Table {
 
     }
 
-    function add_row($row){
+    function add_row($row, $attrs = array()){
+        $this->attr_rows[count($this->rows)] = $attrs;
         $this->rows[] = $row;
     }
 
@@ -206,8 +208,20 @@ class Rcl_Table {
 
         if(is_array($this->rows)){
 
-            foreach($this->rows as $cells){
-                $content .= $this->row($cells, array('class' => array('rcl-table__row-must-sort')));
+            foreach($this->rows as $k => $cells){
+
+                $attrs = array('class' => array('rcl-table__row-must-sort'));
+
+                if(isset($this->attr_rows[$k])){
+                    foreach($this->attr_rows[$k] as $attr => $value){
+                        if(isset($attrs[$attr]))
+                            $attrs[$attr] = array_merge($attrs[$attr], $value);
+                        else
+                           $attrs[$attr] = $value;
+                    }
+                }
+
+                $content .= $this->row($cells, $attrs);
             }
 
             if($this->total){

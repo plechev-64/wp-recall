@@ -806,7 +806,7 @@ function RclForm(form){
         
         return valid;
         
-    }
+    };
     
     this.addChekForm = function(id, data){
         this.checkForm[id] = data;
@@ -822,15 +822,15 @@ function RclForm(form){
     
     this.shake = function(shakeBox){
         shakeBox.css('box-shadow','red 0px 0px 5px 1px inset').animateCss('shake');
-    }
+    };
     
     this.noShake = function(shakeBox){
         shakeBox.css('box-shadow','none');
-    }
+    };
     
     this.showError = function(error){
         rcl_notice(error, 'error', 10000);
-    }
+    };
     
     this.checkForm = {
         
@@ -964,6 +964,6 @@ function RclForm(form){
 
         rcl_ajax(sendData);
 
-    }
+    };
 
 }
