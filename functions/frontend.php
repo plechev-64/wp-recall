@@ -313,6 +313,7 @@ function rcl_default_inline_styles($styles,$rgb){
     .rcl-field-input input[type="checkbox"]:checked + label.block-label::before,
     .rcl-field-input input[type="radio"]:checked + label.block-label::before{
         background:rgb('.$r.','.$g.','.$b.');
+        border-color:rgb('.$r.','.$g.','.$b.');
     }';
 
     return $styles;

@@ -1,152 +1,66 @@
+#tab-profile a:link:hover {
+    color: inherit;
+}
+#tab-profile #your-profile h3 {
+    margin: 15px 10px 10px;
+}
 #tab-profile table {
     border-collapse: collapse;
     border-spacing: 0;
     border: none;
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 0 0 12px;
+    display: table;
+    line-height: normal;
     text-align: left;
     width: 100%;
 }
+#tab-profile table th,
+#tab-profile table td {
+    border: 1px solid #eee;
+}
 #tab-profile table tr th {
-    border: 1px solid #e5e5e5;
     overflow: hidden;
     width: 32%;
 }
-#ulogin_synchronisation table tr th,
-#ulogin_synchronisation table tr td {
-    border: 1px solid rgb(243, 243, 243);
-}
-#tab-profile input[type="checkbox"] {
-    float: none;
-    margin: 4px 2px 0;
-    width: 15px;
-}
-#tab-profile .rcl-table input,
-#tab-profile .rcl-table textarea {
+#tab-profile table td input {
     background-color: #fff;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    box-shadow: none;
     box-sizing: border-box;
+    color: #000;
+    display: inline-block;
+    float: none;
+    font-size: 14px;
+    height: auto;
+    line-height: 1.4;
     max-width: 100%;
+    outline: none;
+    padding: 5px 10px;
     width: 100%;
 }
-#tab-profile .wp-editor-container input {
-    width: auto;
-}
-#tab-profile .rcl-table input:focus:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-#tab-profile .rcl-table textarea:focus {
-    background: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 1px 0 #ddd;
-    color: #000;
-    outline: medium none;
-}
-#tab-profile .rcl-table input[disabled] {
-    background-color: #eee;
-    opacity: 0.6;
-}
-#tab-profile .rcl-table select {
+#tab-profile table td input:focus {
     background-color: #fff;
-    box-sizing: border-box;
-    float: left;
-    max-width: 100%;
-    padding: 5px 7px;
-    width: 100%;
-}
-#tab-profile .rcl-table .block-label {
-    background: rgba(219, 219, 219, 0.3);
-    cursor: pointer;
-    display: inline-block;
-    float: left;
-    font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
-    font-size: 12px;
-    line-height: 1;
-    margin: 4px;
-    padding: 5px 9px 4px 8px;
-}
-#tab-profile .rcl-table .block-label input[type="checkbox"] {
-    margin: 0 6px 0 0;
-}
-#tab-profile .rcl-table .block-label input[type="radio"] {
-    border: 1px solid #d1d1d1;
-    color: #b1b1b1;
-    float: none;
-    font-size: 13px;
-    padding: 8px 12px;
-    width: auto;
-}
-#tab-profile .required {
-    color: rgb(229, 57, 53);
-    font: bold 15px/1 Verdana,arial;
-}
-#tab-profile .rcl-table label a {
-    color: rgb(76, 140, 189);
-    display: inline;
-    font-weight: bold;
-    margin: 0;
-    padding: 0 1px 0 0;
-}
-#tab-profile .rcl-table label a:hover,
-#tab-profile .rcl-table td span a:hover {
+    border-color: #c5c5c5;
+    box-shadow: none;
     color: #000;
-    text-decoration: underline;
+    outline: none;
 }
-#tab-profile .rcl-table a:hover {
-    color: #000;
-}
-#tab-profile .rcl-table a:hover .fa-minus {
-    color: rgb(229, 57, 53);
-}
-#tab-profile .rcl-table a:hover .fa-plus {
-    color: #008000;
-}
-#tab-profile .file-manage-box {
-    display: block;
-    margin-bottom: 5px;
-    overflow: hidden;
-}
-#tab-profile .file-manage-box .rcli {
-    color: rgb(229, 57, 53);
-    font-size: 16px;
-    margin-right: 5px;
-}
-#tab-profile .file-manage-box .delete-file-url {
-    float: right;
-}
-#tab-profile .file-manage-box .delete-file-url a {
-    display: inline-block;
-}
-#tab-profile .file-field-upload {
-    background: #f4f4f4;
-    display: block;
-    font-size: 11px;
-    padding: 5px;
-}
-#tab-profile .file-field-upload input {
-    width: auto;
-}
-
 @media screen and (max-width:480px) {
     #tab-profile tr {
         background-color: #fafafa;
         border: 1px solid #eaeaea;
-        box-shadow: 5px 5px 5px -5px rgba(0, 0, 0, 0.2);
         box-sizing: border-box;
         display: inline-block;
         margin: 0 auto 12px;
-        padding: 10px 0;
-        width: calc(100% - 6px);
+        width: 100%;
     }
-    #tab-profile td {
+    #tab-profile table tr th {
+        border: none;
+    }
+    #tab-profile table td {
         border: none;
         display: block;
-        padding: 5px;
+        padding: 5px 8px 8px;
         text-align: left;
-    }
-    #tab-profile td:first-child {
-        padding: 0 0 3px 10px;
-    }
-    #tab-profile td:first-child label {
-        font-weight: bold;
-        margin: 0;
     }
 }

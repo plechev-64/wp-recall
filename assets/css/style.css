@@ -9,37 +9,36 @@
   6. User online/offline
   7. Dashboard WP-Recall
   8. Private office general
-  9. WP-Recall buttons
-  10. WP-Recall buttons states
-  11. WP-Recall buttons adjustments
-  12. Private office subtabs
-  13. TODO: old submenu
-  14. TODO: data-filters buttons
-  15. TODO: upload buttons
-  16. Search filter
-  17. Avatar zone
-  18. RCL Custom fields API
-  19. Private office content
-  20. RCL pagenavi API
-  21. Ssi-modal API
-  22. Checkbox & radio stylization
-  23. TODO: media screen old
-  24. Gallery & Video Gallery core
+  9. Ballun
+  10. RCL buttons
+  11. RCL buttons states
+  12. RCL buttons adjustments
+  13. Private office subtabs
+  14. TODO: old submenu
+  15. TODO: data-filters buttons
+  16. TODO: upload buttons
+  17. Search filter
+  18. Avatar zone
+  19. RCL Custom fields API
+  20. Checkbox & radio stylization
+  21. Runner & Range
+  22. RCL pagenavi API
+  23. Ssi-modal API
+  24. TODO: Gallery & Video Gallery core
   25. Upload Cover
   26. Detailed information
   27. Upload avatar
   28. Post bar
-  29. RCL Form & table
-  30. Runner & Range
-  31. RCL Tables API
-  32. TODO: old generation
+  29. RCL Form
+  30. RCL Tables API
+  31. TODO: old generation
 
 ------------------------*/
 
 
-/*------------------------
+/*-----------------------------
   1. General
---------------------------*/
+-------------------------------*/
 [class^="rcli fa-"]::before,
 [class*=" rcli fa-"]::before {
     padding: 0;
@@ -72,12 +71,24 @@ img.aligncenter {
     display: block;
     margin: 0 auto;
 }
-body .preloader-parent {
-    position: relative;
-}
 .plugin-info {
     clear: both;
     text-align: center;
+}
+:root span.required {
+    color: rgb(229, 57, 53);
+    font: bold 15px/1 Verdana,arial;
+    padding: 0;
+}
+#rcl-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    bottom: 0;
+    display: none;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 999;
 }
 /*end*/
 
@@ -99,9 +110,9 @@ span.ruble-symbol {
 /*end*/
 
 
-/*------------------------
+/*--------------------------
   3. Notify & RCL Notice
---------------------------*/
+----------------------------*/
 .wprecallblock .notify-lk {
     color: #000;
     font-size: 16px;
@@ -156,6 +167,9 @@ span.ruble-symbol {
 /*------------------------
   4. RCL preloader
 --------------------------*/
+body .preloader-parent {
+    position: relative;
+}
 body .rcl_preloader {
     background: rgba(255,255,255,0.6) !important;
     display: block !important;
@@ -174,9 +188,9 @@ body .rcl_preloader {
 /*end*/
 
 
-/*------------------------
+/*------------------
   5. RCL smiles
---------------------------*/
+--------------------*/
 .rcl-smiles {
     clear: both;
     float: right;
@@ -296,7 +310,7 @@ span i.rcli.fa-circle {
 -------------------------------*/
 #rcl-office {
     background: rgba(236, 240, 241, 0.3);
-    box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     color: #333;                    /*BlackTheme*/
     overflow: visible;
     position: relative;
@@ -323,65 +337,49 @@ span i.rcli.fa-circle {
     margin: 0;
     padding: 4px 0;
 }
-#rcl-office select,
-#rcl-office textarea,
-#rcl-office input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
-    border-radius: 0;
-    border: 1px solid #ddd;
-    box-shadow: none;
-    box-sizing: border-box;
-    color: #000;
-    display: inline-block;
-    float: none;
-    font-size: 14px;
-    height: auto;
-    line-height: 1.4;
-    outline: none;
-    padding: 5px 10px;
-}
-#rcl-office input[type="checkbox"],
-#rcl-office input[type="radio"] {
-    box-shadow: none;
-}
-#rcl-overlay {
-    background: rgba(0, 0, 0, 0.7);
-    bottom: 0;
-    display: none;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 999;
-}
-.mass-upload-box {
-    background: rgba(219, 219, 219, 0.3);
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
-    padding: 5px;
-}
-.rcl-dropzone {
-    font-size: 12px;
-    margin-bottom: 10px;
-    overflow: hidden;
-}
-.rcl-dropzone.mass-upload-box small {
-    margin: 0 0 0 5px;
-}
-.mass-upload-box .mass-upload-area {
-    background-color: #ccc;
-    padding: 20px;
-    text-align: center;
-}
-.mass-upload-box hr {
-    margin: 3px;
-}
-.mass-upload-box .rcl-upload-button {
-    display: inline-block;
-}
 .rcl-tab-button .rcl-menu-notice {
-    color: #fff;
-    font-size: 12px;
     line-height: 1;
 }
+#lk-menu,
+#rcl-tabs {
+    overflow: hidden;
+}
+#rcl-office.horizontal-tabs #rcl-tabs {
+    animation-delay: 1s;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-name: fadeIn;
+    opacity: 0;
+}
+#lk-content {
+    margin: 3px;
+    overflow: hidden;
+    position: relative;
+}
+#rcl-office .recall_content_block {
+    background: rgba(255, 255, 255, 0.7);
+    display: none;
+    overflow: hidden;
+    padding: 4px 5px;
+    position: relative;
+}
+#rcl-office .recall_content_block.active {
+    display: block;
+}
+@media screen and (max-width:360px) {
+    #userpic-upload #webcamupload {
+        float: right;
+    }
+    #rcl-office .recall_content_block {
+        padding: 2px;
+    }
+}
+/*end*/
+
+
+/*------------------
+  9. Ballun
+--------------------*/
 .ballun-status {
     max-width: 350px;
 }
@@ -413,28 +411,12 @@ span i.rcli.fa-circle {
     top: -12px;
     width: 0;
 }
-#lk-menu,
-#rcl-tabs {
-    overflow: hidden;
-}
-#rcl-office.horizontal-tabs #rcl-tabs {
-    animation-delay: 1s;
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    animation-name: fadeIn;
-    opacity: 0;
-}
-#lk-content {
-    margin: 3px;
-    overflow: hidden;
-    position: relative;
-}
 /*end*/
 
 
-/*-----------------------------
-  9. WP-Recall buttons
--------------------------------*/
+/*--------------------------
+  10. RCL buttons
+----------------------------*/
 .recall-button i + span {
     margin: 0 0 0 5px;
 }
@@ -464,9 +446,9 @@ input[type="button"] .recall-button {
 /*end*/
 
 
-/*------------------------------------
-  10. WP-Recall buttons states
---------------------------------------*/
+/*--------------------------------
+  11. RCL buttons states
+----------------------------------*/
 a.recall-button:hover,
 a.recall-button:visited,
 span.recall-button:hover,
@@ -499,9 +481,9 @@ a.data-filter.filter-active:hover {
 /*end*/
 
 
-/*----------------------------------------
-  11. WP-Recall buttons adjustments
-------------------------------------------*/
+/*------------------------------------
+  12. RCL buttons adjustments
+--------------------------------------*/
 #lk-menu a {
     display: block;
     float: left;
@@ -533,7 +515,7 @@ a.data-filter.filter-active:hover {
 
 
 /*-----------------------------
-  12. Private office subtabs
+  13. Private office subtabs
 -------------------------------*/
 .rcl-subtab-menu {
     background: #f7f8f8;
@@ -550,9 +532,9 @@ a.data-filter.filter-active:hover {
 /*end*/
 
 
-/*--------------------------------------
-  13. TODO: old submenu
-----------------------------------------*/
+/*----------------------------
+  14. TODO: old submenu
+------------------------------*/
 #rcl-office .rcl-sub-menu {
     background: #f7f8f8;
     margin: 5px 0;
@@ -570,9 +552,9 @@ a.data-filter.filter-active:hover {
 /*end*/
 
 
-/*--------------------------------------
-  14. TODO: data-filters buttons
-----------------------------------------*/
+/*---------------------------------
+  15. TODO: data-filters buttons
+-----------------------------------*/
 .rcl-data-filters {
     margin: 10px 0;
 }
@@ -583,9 +565,9 @@ a.data-filter.filter-active:hover {
 /*end*/
 
 
-/*--------------------------------------
-  15. TODO: upload buttons
-----------------------------------------*/
+/*----------------------------
+  16. TODO: upload buttons
+------------------------------*/
 .rcl-upload-button {
     position: relative;
 }
@@ -602,9 +584,9 @@ a.data-filter.filter-active:hover {
 /*end*/
 
 
-/*------------------
-  16. Search filter
---------------------*/
+/*-------------------
+  17. Search filter
+---------------------*/
 .rcl-search-form {
     clear: both;
     margin-bottom: 10px;
@@ -652,7 +634,7 @@ a.data-filter.filter-active:hover {
 
 
 /*------------------
-  17. Avatar zone
+  18. Avatar zone
 --------------------*/
 #rcl-avatar {
     position: relative;
@@ -692,19 +674,62 @@ a.data-filter.filter-active:hover {
 
 
 /*---------------------------
-  18. RCL Custom fields API
+  19. RCL Custom fields API
 -----------------------------*/
+.rcl-cf-title {
+    font-weight: bold;
+    margin: 0 3px 0 0;
+}
 .rcl-field-input {
-    display: block;
+    width: 100%;
 }
 .rcl-field-core {
     position: relative;
 }
+.rcl-field-input input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.rcl-field-input textarea {
+    background-color: #fff;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    box-sizing: border-box;
+    float: none;
+    font-size: 100%;
+    height: auto;
+    line-height: 1.4;
+    margin: 0;
+    max-width: 100%;
+    outline: 0;
+    padding: 5px 10px;
+    width: 100%;
+}
+.rcl-field-input input:focus:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.rcl-field-input textarea:focus {
+    background-color: #fff;
+    border-color: #c5c5c5;
+    box-shadow: none;
+    color: #000;
+    outline: none;
+}
+.rcl-field-input select {
+    background-color: #fff;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    box-sizing: border-box;
+    float: none;
+    height: auto;
+    line-height: normal;
+    outline: 0;
+    padding: 5px 3px;
+    width: 100%;
+}
 .rcl-field-input .maxlength {
     align-items: center;
-    background-color: #e5e5e5;
+    background-color: #eaeaea;
     border: 1px solid #ccc;
     box-sizing: border-box;
+    cursor: default;
     display: flex;
     font-weight: bold;
     justify-content: center;
@@ -720,16 +745,12 @@ a.data-filter.filter-active:hover {
 .rcl-field-input.type-text-input .maxlength {
     height: 100%;
 }
-.rcl-field-input input[type='text'] {
-    margin: 0;
-}
-.rcl-field-input .file-manage-box .rcli {
-    margin-right: 5px;
-}
 .rcl-field-input .rcl-field-notice {
+    align-items: center;
     clear: both;
     color: #797979;
-    display: block;
+    display: flex;
+    font-size: .85em;
     margin: 5px 0 0;
 }
 .rcl-field-input .rcl-field-notice .rcli {
@@ -738,14 +759,13 @@ a.data-filter.filter-active:hover {
 .type-multiselect-input .hidden {
     display: none !important;
 }
-.type-multiselect-input .fs-wrap {
-    max-width: 400px;
+.type-multiselect-input .fs-wrap,
+.type-multiselect-input .fs-dropdown {
+    max-width: 410px;
     width: 100%;
 }
 .type-multiselect-input .fs-dropdown {
-    box-shadow: 4px 3px 3px 0 #929292;
-    max-width: 400px;
-    width: 100%;
+    box-shadow: 4px 4px 6px -3px #929292;
 }
 .type-multiselect-input .fs-wrap.multiple .fs-option.selected .fs-checkbox i {
     background-color: #888;
@@ -753,73 +773,193 @@ a.data-filter.filter-active:hover {
 .type-dynamic-input .dynamic-values {
     display: block;
 }
-.type-dynamic-input .dynamic-values .dynamic-value {
+.type-dynamic-input .dynamic-value {
     align-items: center;
     display: flex;
-    margin: 0 0 2px;
 }
-.type-dynamic-input .dynamic-values .dynamic-value a {
-    border: none;
+.type-dynamic-input .dynamic-value:not(:last-child) {
+    margin: 0 0 5px;
+}
+.type-dynamic-input .dynamic-value a {
+    background-color: #fafafa;
+    border: 1px solid #ddd !important;
     box-shadow: none;
     color: #797979;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    line-height: 1;
+    margin: 0 0 0 8px;
     min-width: initial;
+    padding: 6px;
+    text-decoration: none;
     vertical-align: middle;
     width: auto;
 }
-.type-dynamic-input .dynamic-values .dynamic-value .rcli {
-    background: #fff;
-    border: 1px solid #ccc;
-    margin: 5px 10px;
-    padding: 5px;
-    vertical-align: middle;
+.type-dynamic-input .dynamic-value a:hover {
+    background-color: #fff;
+    text-decoration: none !important;
 }
-.type-dynamic-input .dynamic-value .fa-minus:hover {
+.type-dynamic-input a:hover .fa-minus {
     color: rgb(229, 57, 53);
 }
-.type-dynamic-input .dynamic-value .fa-plus:hover {
+.type-dynamic-input a:hover .fa-plus {
     color: #008000;
 }
-.type-dynamic-input .dynamic-values .dynamic-value input {
-    width: 78% !important;
+div.rcl-custom-fields .rcl-field-value .fa-upload {
+    margin-right: 5px;
 }
-#register-form-rcl .type-dynamic-input .dynamic-values .dynamic-value {
-    margin-bottom: 0;
+.rcl-field-input .file-field-upload {
+    display: block;
+    font-size: 11px;
+    padding: 5px;
 }
+.rcl-field-input .file-manage-box {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px;
+    width: 100%;
+}
+.rcl-field-input .file-manage-box .rcl-field-value {
+    align-items: center;
+    display: flex;
+    margin: 0 15px 5px 0;
+}
+.rcl-field-input .delete-file-url a {
+    align-items: center;
+    display: flex;
+}
+.rcl-field-input .delete-file-url .rcli {
+    color: rgb(229, 57, 53);
+    font-size: 16px;
+    margin-right: 5px;
+}
+/*end*/
+
+
+/*----------------------------------
+  20. Checkbox & radio stylization
+------------------------------------*/
 .rcl-field-input .rcl-checkbox-box,
 .rcl-field-input .rcl-radio-box {
     display: inline-flex;
     margin-right: 2px;
     position: relative;
 }
-.rcl-cf-title {
-    font-weight: bold;
-    margin: 0 3px 0 0;
+.rcl-field-input input[type="radio"],
+.rcl-field-input input[type="checkbox"] {
+    left: 10px;
+    opacity: 0;
+    position: absolute;
+    top: 10px;
+    z-index: -1;
 }
-div.rcl-custom-fields .rcl-field-value .fa-upload {
-    margin-right: 5px;
+.rcl-field-input .block-label {
+    background-color: #f2f2f2;
+    border: 1px solid #e2e2e2;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1;
+    margin: 4px;
+    padding: 5px 8px 4px 6px;
+    position: relative;
+    vertical-align: middle;
+}
+.rcl-field-input.type-agree-input .block-label {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+.rcl-field-input label.block-label::before {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-sizing: content-box;
+    content: "";
+    display: inline-block;
+    height: 12px;
+    margin: 0 5px 2px 0;
+    padding: 0 2px 4px;
+    text-align: center;
+    vertical-align: middle;
+    width: 12px;
+}
+.rcl-field-input.type-radio-input label::before {
+    border-radius: 50%;
+}
+.rcl-field-input input[type="checkbox"]:checked + label.block-label::before {
+    color: #fff;
+    content: "\f00c";
+    font-family: "rcl-awesome";
+    font-size: 12px;
+    line-height: 1;
+    padding: 2px;
 }
 /*end*/
 
 
-/*-----------------------------
-  19. Private office content
--------------------------------*/
-#rcl-office .recall_content_block {
-    background: rgba(255, 255, 255, 0.7);
-    display: none;
-    overflow: hidden;
-    padding: 4px 5px;
-    position: relative;
+/*---------------------
+  21. Runner & Range
+-----------------------*/
+.rcl-runner,
+.rcl-range {
+    padding: 10px;
 }
-#rcl-office .recall_content_block.active {
-    display: block;
+.rcl-runner .rcl-runner-value,
+.rcl-range .rcl-range-value {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 115px;
+    padding-left: 15px;
+    padding-right: 15px;
+    vertical-align: middle;
+}
+.rcl-runner .rcl-runner-box,
+.rcl-range .rcl-range-box {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
+                0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+    display: inline-block;
+    height: 10px;
+    margin: 0;
+    max-width: 500px;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    width: 100%;
+}
+.rcl-runner .rcl-runner-box .ui-slider-handle,
+.rcl-range .rcl-range-box .ui-slider-handle {
+    background: -webkit-linear-gradient(top, #fff, #ddd);
+    background: linear-gradient(to bottom, #fff, #ddd);
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4),
+                0 8px 6px rgba(0, 0, 0, 0.1);
+    cursor: ew-resize;
+    height: 18px;
+    margin-left: -.6em;
+    position: absolute;
+    top: -4px;
+    -ms-touch-action: none;
+        touch-action: none;
+    width: 18px;
+    z-index: 1;
+}
+.rcl-runner .rcl-runner-box .ui-slider-handle:focus,
+.rcl-range .rcl-range-box .ui-slider-handle:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    outline: none;
 }
 /*end*/
 
 
 /*-----------------------
-  20. RCL pagenavi API
+  22. RCL pagenavi API
 -------------------------*/
 .rcl-navi,
 .rcl-pager {
@@ -860,7 +1000,7 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 
 
 /*-------------------
-  21. Ssi-modal API
+  23. Ssi-modal API
 ---------------------*/
 #ssi-modalWindow {
     animation-duration: 0.5s;
@@ -931,76 +1071,21 @@ body .ssi-modalOuter .ssi-modalTitle {
 /*end*/
 
 
-/*----------------------------------
-  22. Checkbox & radio stylization
-------------------------------------*/
-.block-label {
-    cursor: pointer;
-    display: block;
-    font-weight: normal;
-    margin: 0;
-    position: relative;
-    vertical-align: middle;
+/*-----------------------------------------
+  24. TODO: Gallery & Video Gallery core
+-------------------------------------------*/
+#rcl-popup-content label { /*fast editor*/
+    font-weight: bold;
 }
-.rcl-field-input input[type="radio"],
-.rcl-field-input input[type="checkbox"] {
-    left: 10px;
-    opacity: 0;
-    position: absolute;
-    top: 10px;
-    z-index: -1;
+#rcl-popup-content input[type="text"],
+#rcl-popup-content textarea {
+    background-color: #f5f5f5;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    margin: 5px 0;
+    padding: 5px;
+    width: 100%;
 }
-.rcl-field-input label.block-label::before {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-sizing: content-box;
-    content: "";
-    display: inline-block;
-    height: 13px;
-    margin: 0 5px 2px 0;
-    padding: 0 2px 4px;
-    text-align: center;
-    vertical-align: middle;
-    width: 13px;
-}
-.rcl-field-input.type-radio-input label::before {
-    border-radius: 50%;
-}
-.rcl-field-input input[type="checkbox"]:checked + label.block-label::before {
-    color: #fff;
-    content: "\f00c";
-    font-family: "rcl-awesome";
-    font-size: 12px;
-    line-height: 1;
-    padding: 2px;
-}
-/*end*/
-
-
-/*--------------------------------------
-  23. TODO: media screen old
-----------------------------------------*/
-@media screen and (max-width:360px) {
-    #userpic-upload #webcamupload {
-        float: right;
-    }
-    #rcl-office .recall_content_block {
-        margin: 0;
-    }
-    #rcl-office .recall_content_block {
-        padding: 2px;
-    }
-    #rcl-office .recall_content_block th,
-    #rcl-office .recall_content_block td {
-        padding: 4px 2px;
-    }
-}
-/*end*/
-
-
-/*----------------------------------
-  24. Gallery & Video Gallery core
-------------------------------------*/
 #rcl-popup {
     background: #f8f8f8;
     border-radius: 3px;
@@ -1243,9 +1328,9 @@ body .ssi-modalOuter .ssi-modalTitle {
 /*end*/
 
 
-/*----------------------------------
+/*--------------------
   28. Post bar
-------------------------------------*/
+----------------------*/
 #rcl-post-bar {
     margin: 10px 0;
     text-align: right;
@@ -1275,18 +1360,22 @@ body .ssi-modalOuter .ssi-modalTitle {
 /*end*/
 
 
-/*----------------------------------
-  29. RCL Form & table
-------------------------------------*/
+/*-------------------
+  29. RCL Form
+---------------------*/
 .rcl-form {
     border-collapse: collapse;
     border-spacing: 0;
     border: none;
     box-sizing: border-box;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: normal;
     margin: 0 0 12px;
     text-align: left;
+    width: 100%;
+}
+.rcl-form table {
+    line-height: normal;
     width: 100%;
 }
 .rcl-form tr {
@@ -1294,78 +1383,29 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 .rcl-form th,
 .rcl-form td {
-    border: 1px solid #eee;
+    border: 1px solid #eaeaea;
     box-sizing: border-box;
-    padding: 5px;
+    line-height: normal;
+    padding: 8px;
     text-align: left;
     text-transform: none;                       /*++Twenty14++*/
     vertical-align: middle;
+}
+.rcl-form th:first-child,
+.rcl-form td:first-child {
+    padding-left: 8px;                          /*++Twenty17++*/
 }
 .rcl-form tr th {
     overflow: hidden;
 }
 .rcl-form tr:nth-child(1) th {
     background-color: #f5f5f5;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
-    line-height: 1.4;
-}
-.rcl-form input[type="checkbox"] {
-    float: none;
-    margin: 4px 2px 0;
-    width: 15px;
-}
-.rcl-form input:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-.rcl-form textarea {
-    background-color: #fff;
-    border-radius: 0;
-    border: 1px solid #ddd;
-    box-shadow: none;
-    box-sizing: border-box;
-    font-size: 100%;
-    height: auto;
-    line-height: normal;
-    margin: 0;
-    max-width: 100%;
-    outline: 0;
-    padding: 5px 7px;
-    width: 100%;
-}
-.rcl-form input:focus:not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]),
-.rcl-form textarea:focus {
-    background: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 1px 0 #ddd;
-    color: #000;
-    outline: medium none;
 }
 .rcl-form input[disabled] {
     background-color: #eee;
     opacity: 0.6;
-}
-.rcl-form select {
-    background-color: #fff;
-    border-radius: 0;
-    border: 1px solid #ddd;
-    box-shadow: none;
-    box-sizing: border-box;
-    height: auto;
-    line-height: normal;
-    outline: 0;
-    padding: 5px 7px;
-    width: 100%;
-}
-.rcl-form .block-label {
-    background-color: #f2f2f2;
-    border: 1px solid #e2e2e2;
-    cursor: pointer;
-    display: inline-block;
-    float: left;
-    font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
-    font-size: 12px;
-    line-height: 1;
-    margin: 4px;
-    padding: 5px 8px 4px 6px;
 }
 .rcl-form .block-label input[type="checkbox"] {
     margin: 0 6px 0 0;
@@ -1377,10 +1417,6 @@ body .ssi-modalOuter .ssi-modalTitle {
     font-size: 13px;
     padding: 8px 12px;
     width: auto;
-}
-.rcl-form .required {
-    color: rgb(229, 57, 53);
-    font: bold 15px/1 Verdana,arial;
 }
 .rcl-form label a {
     color: rgb(76, 140, 189);
@@ -1399,31 +1435,6 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 .rcl-form td a:hover i {
     color: rgb(229, 57, 53);
-}
-.rcl-form .file-manage-box {
-    display: block;
-    margin-bottom: 5px;
-    overflow: hidden;
-}
-.rcl-form .file-manage-box .rcli {
-    color: rgb(229, 57, 53);
-    font-size: 16px;
-    margin-right: 5px;
-}
-.rcl-form .file-manage-box .delete-file-url {
-    float: right;
-}
-.rcl-form .file-manage-box .delete-file-url a {
-    display: inline-block;
-}
-.rcl-form .file-field-upload {
-    background: #f4f4f4;
-    display: block;
-    font-size: 11px;
-    padding: 5px;
-}
-.rcl-form .file-field-upload input {
-    width: auto;
 }
 .rcl-form .aligncenter {
     text-align: center;
@@ -1451,11 +1462,10 @@ body .ssi-modalOuter .ssi-modalTitle {
     padding: 7px 10px;
 }
 
-@media screen and (max-width:360px) {
+@media screen and (max-width:375px) {
     .rcl-form tr th {
         -webkit-hyphens: auto;
                 hyphens: auto;
-        max-width: 107px;
         word-wrap: break-word;
     }
     .rcl-form td a {
@@ -1470,66 +1480,9 @@ body .ssi-modalOuter .ssi-modalTitle {
 /*end*/
 
 
-/*----------------------------------
-  30. Runner & Range
-------------------------------------*/
-.rcl-runner,
-.rcl-range {
-    padding: 10px;
-}
-.rcl-runner .rcl-runner-value,
-.rcl-range .rcl-range-value {
-    display: inline-block;
-    font-size: 18px;
-    font-weight: bold;
-    min-width: 115px;
-    padding-left: 15px;
-    padding-right: 15px;
-    vertical-align: middle;
-}
-.rcl-runner .rcl-runner-box,
-.rcl-range .rcl-range-box {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 5px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
-                0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
-    display: inline-block;
-    height: 10px;
-    margin: 0;
-    max-width: 500px;
-    position: relative;
-    text-align: left;
-    vertical-align: middle;
-    width: 100%;
-}
-.rcl-runner .rcl-runner-box .ui-slider-handle,
-.rcl-range .rcl-range-box .ui-slider-handle {
-    background: -webkit-linear-gradient(top, #fff, #ddd);
-    background: linear-gradient(to bottom, #fff, #ddd);
-    border-radius: 50%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4),
-                0 8px 6px rgba(0, 0, 0, 0.1);
-    cursor: ew-resize;
-    height: 18px;
-    margin-left: -.6em;
-    position: absolute;
-    top: -4px;
-    -ms-touch-action: none;
-        touch-action: none;
-    width: 18px;
-    z-index: 1;
-}
-.rcl-runner .rcl-runner-box .ui-slider-handle:focus,
-.rcl-range .rcl-range-box .ui-slider-handle:focus {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-    outline: none;
-}
-/*end*/
-
-
-/*----------------------------------
-  31. RCL Tables API
-------------------------------------*/
+/*-----------------------
+  30. RCL Tables API
+-------------------------*/
 .rcl-table {
     box-sizing: border-box;
     display: flex;
@@ -1538,7 +1491,7 @@ body .ssi-modalOuter .ssi-modalTitle {
     line-height: 1.4;
     word-break: break-word;
     word-wrap: break-word;
-    margin: 20px 0;
+    margin: 1.15em 0;
     -webkit-hyphens: auto;
         -ms-hyphens: auto;
             hyphens: auto;
@@ -1550,14 +1503,14 @@ body .ssi-modalOuter .ssi-modalTitle {
     align-content: stretch;
     align-items: stretch;
     display: flex;
-    overflow: hidden;
 }
 .rcl-table__row-header {
-    background-color: #f5f5f5;
+    background-color: #f2f2f2;
     font-weight: bold;
 }
 .rcl-table__cell {
     align-items: center;
+    box-sizing: border-box;
     display: flex;
     flex-basis: 100%;
     flex-grow: 1;
@@ -1589,35 +1542,26 @@ body .ssi-modalOuter .ssi-modalTitle {
     text-decoration:underline;
 }
 
-.rcl-table__cell.rcl-table__cell-w-5 {flex-basis: 5%;}
-.rcl-table__cell.rcl-table__cell-w-10 {flex-basis: 10%;}
-.rcl-table__cell.rcl-table__cell-w-15 {flex-basis: 15%;}
-.rcl-table__cell.rcl-table__cell-w-20 {flex-basis: 20%;}
-.rcl-table__cell.rcl-table__cell-w-30 {flex-basis: 30%;}
-.rcl-table__cell.rcl-table__cell-w-40 {flex-basis: 40%;}
-.rcl-table__cell.rcl-table__cell-w-50 {flex-basis: 50%;}
-.rcl-table__cell.rcl-table__cell-w-60 {flex-basis: 60%;}
-.rcl-table__cell.rcl-table__cell-w-70 {flex-basis: 70%;}
-.rcl-table__cell.rcl-table__cell-w-80 {flex-basis: 80%;}
-.rcl-table__cell.rcl-table__cell-w-90 {flex-basis: 90%;}
+.rcl-table__cell-w-5 {flex-basis: 5%;}
+.rcl-table__cell-w-10 {flex-basis: 10%;}
+.rcl-table__cell-w-15 {flex-basis: 15%;}
+.rcl-table__cell-w-20 {flex-basis: 20%;}
+.rcl-table__cell-w-25 {flex-basis: 25%;}
+.rcl-table__cell-w-30 {flex-basis: 30%;}
+.rcl-table__cell-w-35 {flex-basis: 35%;}
+.rcl-table__cell-w-40 {flex-basis: 40%;}
+.rcl-table__cell-w-45 {flex-basis: 45%;}
+.rcl-table__cell-w-50 {flex-basis: 50%;}
+.rcl-table__cell-w-55 {flex-basis: 55%;}
+.rcl-table__cell-w-60 {flex-basis: 60%;}
+.rcl-table__cell-w-65 {flex-basis: 65%;}
+.rcl-table__cell-w-70 {flex-basis: 70%;}
+.rcl-table__cell-w-75 {flex-basis: 75%;}
+.rcl-table__cell-w-80 {flex-basis: 80%;}
+.rcl-table__cell-w-85 {flex-basis: 85%;}
+.rcl-table__cell-w-90 {flex-basis: 90%;}
+.rcl-table__cell-w-95 {flex-basis: 95%;}
 
-.rcl-table__not-header .rcl-field-input,
-.rcl-table__not-header .dynamic-values .dynamic-value input,
-.rcl-table__not-header input,
-.rcl-table__not-header textarea {
-    width: 100% !important;
-}
-.rcl-table__not-header .dynamic-values .dynamic-value .rcli {
-    margin-right: 0;
-}
-.rcl-table__not-header input,
-.rcl-table__not-header textarea {
-    background-color: #fff !important;
-    border: 1px solid #ddd;
-    max-width: unset !important;
-    outline: none;
-    padding: .4em .6em;
-}
 .rcl-table__not-header .rcl-table__row {
     padding: .4em 0;
 }
@@ -1659,7 +1603,7 @@ body .ssi-modalOuter .ssi-modalTitle {
         border: 1px solid #e5e5e5;
         background-color: #fafafa;
         display: block;
-        margin: 0 0 .8em;
+        margin: 0 0 1em;
     }
     .rcl-table__not-header .rcl-table__cell:nth-child(1) {
         max-width: none;
@@ -1669,9 +1613,9 @@ body .ssi-modalOuter .ssi-modalTitle {
 /*end*/
 
 
-/*-------------------------------------------
-  32. TODO: old generation
----------------------------------------------*/
+/*---------------------------
+  31. TODO: old generation
+-----------------------------*/
 #rcl-popup.fixed {
     position: fixed;
     top: 80px;
@@ -1694,17 +1638,4 @@ body .ssi-modalOuter .ssi-modalTitle {
     top: 0;
     z-index: -99;
 }
-.rcl-dropzone .get-crop-image,
-.prmess .rcl-upload-button {
-    float:right;
-}
-.rcl-dropzone img,
-.rcl-dropzone .jcrop-holder {
-    display: block;
-    margin: 0 auto;
-}
-.rcl-dropzone.hover {
-    background: rgba(0,0,0,0.5);
-}
 /*end*/
-
