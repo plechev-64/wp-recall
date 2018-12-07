@@ -228,7 +228,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
 
         $options = array();
 
-        if($this->new_slug && $this->meta_key && !$this->is_default_field($field['slug'])){
+        $slug = isset($field['slug'])? $field['slug']: false;
+
+        if($this->new_slug && $this->meta_key && !$this->is_default_field($slug)){
 
             $options[] = array(
                 'type' => 'text',
