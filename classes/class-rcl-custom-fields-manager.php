@@ -407,16 +407,23 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
 
             }
 
-            if($this->field['type'] == 'text' || $this->field['type'] == 'textarea'){
+            if(in_array($this->field['type'], array('tel'))){
+                $options[] = array(
+                    'type' => 'text',
+                    'slug' => 'pattern',
+                    'title' => __('Phone mask','wp-recall'),
+                    'notice' => __('Example: 8\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2} Result: 8(900)123-45-67','wp-recall'),
+                );
+            }
 
-                if($this->field['type'] == 'text'){
+            if(in_array($this->field['type'], array('text', 'textarea'))){
 
+                if(in_array($this->field['type'], array('text'))){
                     $options[] = array(
                         'type' => 'text',
                         'slug' => 'pattern',
                         'title' => __('Pattern','wp-recall')
                     );
-
                 }
 
                 $options[] = array(
@@ -425,7 +432,6 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
                     'title' => __('Maxlength','wp-recall'),
                     'notice' => __('maximum number of symbols per field','wp-recall')
                 );
-
             }
 
             if($this->field['type'] == 'number'){

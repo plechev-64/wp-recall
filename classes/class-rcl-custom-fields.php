@@ -527,7 +527,10 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_tel($field){
-        return '<input type="tel" '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" maxlength="50" value="'.$this->value.'"/>';
+
+        $pattern = (isset($field['pattern']) && $field['pattern'])? 'pattern="'.$field['pattern'].'"': '';
+
+        return '<input type="tel" '.$pattern.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" maxlength="50" value="'.$this->value.'"/>';
     }
 
     function get_type_email($field){
