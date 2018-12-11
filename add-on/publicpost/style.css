@@ -1,5 +1,5 @@
 /* tab=publics */
-.rcl-table__cell {
+#tab-publics .rcl-table__cell {
     min-width: 75px;
 }
 #tab-publics .rcl_author_postlist a:hover {

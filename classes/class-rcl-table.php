@@ -165,7 +165,7 @@ class Rcl_Table {
                     //$attrs['data-field'] = $cellProps['sort'];
                 }else{
                     $attrs['class'][] = 'rcl-table__cell-sort';
-                    $attrs['data-'.$cellProps['sort'].'-value'] = strip_tags($contentCell);
+                    $attrs['data-'.$cellProps['sort'].'-value'] = trim(strip_tags($contentCell));
                 }
             }
 

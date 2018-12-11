@@ -1,5 +1,5 @@
 <?php
-        
+
 //регистрируем вкладку личного кабинета
 function rcl_tab($tab_data,$deprecated_callback=false ,$deprecated_name='',$deprecated_args=false){
     global $rcl_tabs;
@@ -1339,4 +1339,47 @@ function rcl_get_image_gallery($args){
     require_once 'classes/class-rcl-image-gallery.php';
     $gallery = new Rcl_Image_Gallery($args);
     return $gallery->get_gallery();
+}
+
+function rcl_is_gutenberg() {
+    global $post;
+
+    if ( ! is_admin() ) {
+        return false;
+    }
+
+    if ( ! function_exists( 'get_current_screen' ) ) {
+        return false;
+    }
+
+    if ( get_current_screen()->base !== 'post' ) {
+        return false;
+    }
+
+    if ( isset( $_GET['classic-editor'] ) ) {
+        return false;
+    }
+
+    /*if ( ! gutenberg_can_edit_post( $post ) ) {
+            return false;
+    }*/
+
+    // Gutenberg plugin is installed and activated.
+    $gutenberg = ! ( false === has_filter( 'replace_editor', 'gutenberg_init' ) );
+
+    // Block editor since 5.0.
+    $block_editor = version_compare( $GLOBALS['wp_version'], '5.0-beta', '>' );
+
+    if ( ! $gutenberg && ! $block_editor ) {
+        return false;
+    }
+
+    /*if ( self::is_classic_editor_plugin_active() ) {
+        $editor_option       = get_option( 'classic-editor-replace' );
+        $block_editor_active = array( 'no-replace', 'block' );
+
+        return in_array( $editor_option, $block_editor_active, true );
+    }*/
+
+    return true;
 }
