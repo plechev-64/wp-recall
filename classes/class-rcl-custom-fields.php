@@ -181,18 +181,15 @@ class Rcl_Custom_Fields{
         $size = ($field['sizefile'])? $field['sizefile']: 2;
 
         $input .= '<span id="'.$this->slug.'-content" class="file-field-upload">';
+        $input .= '<span onclick="jQuery(\'#'.$this->field_id.'\').val(\'\');" class="file-input-recycle"><i class="rcli fa-recycle"></i></span>';
         $input .= '<input data-size="'.$size.'" '.($extTypes? 'data-ext="'.implode(',',$extTypes).'"': '').' type="file" '.$required.' '.$accept.' name="'.$field['name'].'" '.$this->get_class($field).' id="'.$this->field_id.'" value=""/> ';
 
-        $notice = '(';
+        $input .= '<br>';
 
         if($extTypes)
-            $notice .= '<span class="allowed-types">'.__('Allowed extensions','wp-recall').': '.$field['ext-files'].'</span>. ';
+            $input .= '<span class="allowed-types">'.__('Allowed extensions','wp-recall').': '.$field['ext-files'].'</span>. ';
 
-        $notice .= __('Max size','wp-recall').': '.$size.'MB';
-
-        $notice .= ')';
-
-        $input .= $notice;
+        $input .= __('Max size','wp-recall').': '.$size.'MB';
 
         $input .= '<script type="text/javascript">rcl_init_field_file("'.$this->slug.'");</script>';
         $input .= '</span>';

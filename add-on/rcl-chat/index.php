@@ -115,7 +115,7 @@ function rcl_add_chat_tab(){
         'content'=>array(
             array(
                 'id'=>'private-contacts',
-                'name'=>'Контакты',
+                'name'=> __('Contacts', 'wp-recall'),
                 'icon'=>'fa-book',
                 'callback'=>array(
                     'name'=>'rcl_chat_tab'
@@ -127,7 +127,7 @@ function rcl_add_chat_tab(){
     if(rcl_is_office($user_ID)){
         $tab_data['content'][] = array(
                 'id'=>'important-messages',
-                'name'=>'Важные сообщения',
+                'name'=> __('Important messages', 'wp-recall'),
                 'icon'=>'fa-star',
                 'callback'=>array(
                     'name'=>'rcl_get_tab_user_important'

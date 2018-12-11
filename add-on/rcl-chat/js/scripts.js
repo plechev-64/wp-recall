@@ -73,6 +73,8 @@ function rcl_chat_clear_beat(token){
         if(chat_token != token) return;
             delete rcl_chat_beat[index];
     });
+    
+    console.log('chat beat '+ token +' clear');
 
 }
 

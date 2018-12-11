@@ -745,6 +745,12 @@ a.data-filter.filter-active:hover {
 .rcl-field-input.type-text-input .maxlength {
     height: 100%;
 }
+.rcl-field-input .file-input-recycle {
+    font-size: 14px;
+    margin-right: 5px;
+    cursor: pointer;
+    color: #4c8cbd;
+}
 .rcl-field-input .rcl-field-notice {
     align-items: center;
     clear: both;
@@ -1542,6 +1548,25 @@ body .ssi-modalOuter .ssi-modalTitle {
     text-decoration:underline;
 }
 
+.rcl-table__row-must-sort .rcl-table__cell-current-sort{
+    background: #fff;
+}
+.rcl-table__row-header .rcl-table__cell-current-sort::before{
+    font-family: 'rcl-awesome';
+    position: absolute;
+    right: 5px;
+}
+.rcl-table__row-header .rcl-table__cell-right.rcl-table__cell-current-sort::before{
+    left: 5px;
+    right: auto;
+}
+.rcl-table__row-header .rcl-table__cell-current-sort[data-route="desc"]::before{
+    content: "\f0d7";
+}
+.rcl-table__row-header .rcl-table__cell-current-sort[data-route="asc"]::before{
+    content: "\f0d8";
+}
+
 .rcl-table__cell-w-5 {flex-basis: 5%;}
 .rcl-table__cell-w-10 {flex-basis: 10%;}
 .rcl-table__cell-w-15 {flex-basis: 15%;}
@@ -1593,7 +1618,7 @@ body .ssi-modalOuter .ssi-modalTitle {
     }
     .rcl-table__row-header ~ .rcl-table__row .rcl-table__cell::before {
         color: #B18B3F;
-        content: attr(data-usp-ttitle);
+        content: attr(data-rcl-ttitle);
         flex-basis: 50%;
         flex-shrink: 0;
         padding-right: 10px;

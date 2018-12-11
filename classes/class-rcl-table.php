@@ -153,13 +153,14 @@ class Rcl_Table {
             }
 
             if(isset($cellProps['title']) && $cellProps['title']){
-                $attrs['data-usp-ttitle'] = $cellProps['title'];
+                $attrs['data-rcl-ttitle'] = $cellProps['title'];
             }
 
             if(isset($cellProps['sort']) && $cellProps['sort']){
                 if($place == 'header'){
                     $attrs['class'][] = 'rcl-table__cell-must-sort';
                     $attrs['data-sort'] = $cellProps['sort'];
+                    $attrs['data-route'] = 'desc';
                 }else if($place == 'total'){
                     $attrs['class'][] = 'rcl-table__cell-total';
                     //$attrs['data-field'] = $cellProps['sort'];

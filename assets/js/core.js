@@ -282,83 +282,7 @@ function rcl_remove_datepicker_box(){
 }
 
 function rcl_init_field_file(field_id){
-    
-    var field = jQuery("#"+field_id);
-    var form = field.parents('form');
-    
-    form.attr("enctype","multipart/form-data");
-    
-    form.submit(function(event){
-        
-        var error = false;
-        
-        field.each(function(){
-            
-            var maxsize = jQuery(this).data("size");
-            var fileInput = jQuery(this)[0];
-            var file = fileInput.files[0];
-            var accept = fileInput.accept.split(',');
-            
-            if(!file) return;
-            
-            var filesize = file.size/1024/1024;
-            
-            if(filesize > maxsize){
-                jQuery(this).parent().css("border","1px solid red").css("padding","2px");
-                rcl_preloader_hide();
-                rcl_notice("Размер файла превышен!",'error',5000);
-                error = true;
-                return;
-            }else{
-                jQuery(this).parent().removeAttr("style");
-            }
-            
-            if(accept){
-
-                var fileType = false;
-                
-                if(file.type){
-                
-                    for(var i in accept){
-                        if(accept[i] == file.type){
-                            fileType = true;
-                            return;
-                        }
-                    }
-                
-                }
-                
-                if(!fileType){
-                    
-                    var exts = jQuery(this).data("ext").split(',');
-                    var filename = file.name;
-                    
-                    for(var i in exts){
-                        if(filename.indexOf('.'+exts[i]) + 1) {
-                            fileType = true;
-                            return;
-                        }
-                    }
-                    
-                }
-                
-                if(!fileType){
-                    rcl_preloader_hide();
-                    rcl_notice("Некорректный тип файла!",'error',5000);
-                    error = true;
-                    return;
-                }
-                
-            }
-            
-        });
-        
-        if(error){
-            return false;
-        }
-        
-    });
-    
+    jQuery("#"+field_id).parents('form').attr("enctype","multipart/form-data");
 }
 
 function rcl_init_runner(props){
@@ -561,10 +485,16 @@ function rcl_proccess_ajax_return(result){
                     });
                     
                 }
-
+                
+                if ('onClose' in dialog) {
+                    ssiOptions.onClose = function(m){
+                        window[dialog.onClose[0]].apply(this, dialog.onClose[1]);
+                    };
+                }
+                
                 if(dialog.title)
                     ssiOptions.title = dialog.title;
-
+                
                 ssi_modal.show(ssiOptions);
             
             }
@@ -752,18 +682,29 @@ function rcl_init_table(table_id){
     
     jQuery('#' + table_id).on('click','.rcl-table__cell-must-sort',function(){
         
-        var sortby = jQuery(this).data('sort');
+        jQuery('#' + table_id).find('.rcl-table__cell-must-sort, .rcl-table__cell-sort').removeClass('rcl-table__cell-current-sort');
+        
+        var sortCell = jQuery(this);
+        
+        var sortby = sortCell.data('sort');
+        var route = sortCell.attr('data-route');
+        
+        sortCell.addClass('rcl-table__cell-current-sort');
+        jQuery('#' + table_id).find('[data-'+sortby+'-value]').addClass('rcl-table__cell-current-sort');
         
         var list = jQuery('#' + table_id + ' .rcl-table__row-must-sort');
         
         list.sort(function(a, b){
             var aVal = jQuery(a).find('[data-'+sortby+'-value]').data(sortby+'-value');
             var bVal = jQuery(b).find('[data-'+sortby+'-value]').data(sortby+'-value');
-            if(isNaN(aVal)) 
+            //if(isNaN(aVal)) 
+            if(route == 'asc')
                 return (aVal < bVal) - (aVal > bVal); //по возрастанию
             else 
                 return (aVal > bVal) - (aVal < bVal); //по убыванию
         });
+        
+        sortCell.attr('data-route', (route == 'desc'? 'asc': 'desc'));
         
         jQuery('#' + table_id + ' .rcl-table__row-must-sort').remove();
 
@@ -943,6 +884,125 @@ function RclForm(form){
             
             errorText: function(){
                 return Rcl.errors.number_range;
+            }
+
+        },
+        pattern: {
+            
+            types: ['text', 'tel'],
+            
+            isValid: function(field){
+                
+                var val = field.val();
+                
+                if(!val) return true;
+
+                var pattern = field.attr('pattern');
+                
+                if(!pattern) return true;
+
+                var re = new RegExp(pattern);
+                
+                return re.test(val);
+            },
+            
+            errorText: function(){
+                return Rcl.errors.pattern;
+            }
+
+        },
+        fileMaxSize: {
+            
+            types: ['file'],
+            
+            isValid: function(field){
+                
+                var valid = true;
+                
+                field.each(function(){
+            
+                    var maxsize = jQuery(this).data("size");
+                    var fileInput = jQuery(this)[0];
+                    var file = fileInput.files[0];
+
+                    if(!file) return;
+
+                    var filesize = file.size/1024/1024;
+
+                    if(filesize > maxsize){
+                        valid = false;
+                        return;
+                    }
+
+                });
+                
+                return valid;
+            },
+            
+            errorText: function(){
+                return Rcl.errors.file_max_size;
+            }
+
+        },
+        fileAccept: {
+            
+            types: ['file'],
+            
+            isValid: function(field){
+                
+                var valid = true;
+                
+                field.each(function(){
+
+                    var fileInput = jQuery(this)[0];
+                    var file = fileInput.files[0];
+                    var accept = fileInput.accept.split(',');
+
+                    if(!file) return;
+
+                    if(accept){
+
+                        var fileType = false;
+
+                        if(file.type){
+
+                            for(var i in accept){
+                                if(accept[i] == file.type){
+                                    fileType = true;
+                                    return;
+                                }
+                            }
+
+                        }
+
+                        if(!fileType){
+
+                            var exts = jQuery(this).data("ext").split(',');
+                            var filename = file.name;
+
+                            for(var i in exts){
+                                if(filename.indexOf('.'+exts[i]) + 1) {
+                                    fileType = true;
+                                    return;
+                                }
+                            }
+
+                        }
+
+                        if(!fileType){
+                            valid = false;
+                            return;
+                        }
+
+                    }
+
+                });
+                
+                return valid;
+            },
+            
+            errorText: function(){
+                return Rcl.errors.file_accept;
             }
 
         }
