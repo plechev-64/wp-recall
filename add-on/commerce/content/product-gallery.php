@@ -1,26 +1,35 @@
 <?php
 
 function rcl_get_product_gallery($product_id, $size = 'rcl-product-thumb'){
-    
-    $image_ids = array();
-    
-    if(has_post_thumbnail($product_id)){
-        
-        $image_ids[] = get_post_thumbnail_id($product_id);
-        
-    }
-    
-    $attach_ids = get_post_meta($product_id, 'children_prodimage', 1);
 
-    if ($attach_ids) {
-        
-        $image_ids = array_unique(array_merge($image_ids, explode(',', $attach_ids)));
-        
+    $oldSlider = get_post_meta($product_id, 'recall_slider', 1);
+    $gallery = get_post_meta($product_id, 'rcl_post_gallery', 1);
+
+    if(!$gallery && $oldSlider){
+
+        $gallery = array();
+
+        if(has_post_thumbnail($product_id)){
+
+            $gallery[] = get_post_thumbnail_id($product_id);
+
+        }
+
+        $attach_ids = get_post_meta($product_id, 'children_prodimage', 1);
+
+        if ($attach_ids) {
+
+            $gallery = array_unique(array_merge($image_ids, explode(',', $attach_ids)));
+
+        }
+
     }
-    
+
+    if(!$gallery) return false;
+
     $content = rcl_get_image_gallery(array(
         'id' => 'rcl-product-gallery-'.$product_id,
-        'attach_ids' => $image_ids,
+        'attach_ids' => $gallery,
         'width' => 350,
         'height' => 350,
         'slides' => array(
@@ -35,8 +44,8 @@ function rcl_get_product_gallery($product_id, $size = 'rcl-product-thumb'){
             )
         )
     ));
-    
+
     return $content;
-    
+
 }
 

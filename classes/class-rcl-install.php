@@ -52,15 +52,15 @@ class RCL_Install {
 
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-        dbDelta( self::get_schema() );
+        foreach(self::get_schema() as $shema){
+            dbDelta( $shema );
+        }
     }
 
     private static function get_schema() {
         global $wpdb;
 
         $collate = '';
-
-        $user_action_table = RCL_PREF . 'user_action';
 
         if ( $wpdb->has_cap( 'collation' ) ) {
             if ( ! empty( $wpdb->charset ) ) {
@@ -71,13 +71,23 @@ class RCL_Install {
             }
         }
 
-        return "
-        CREATE TABLE IF NOT EXISTS `". $user_action_table . "` (
-            ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-            user BIGINT(20) UNSIGNED NOT NULL,
-            time_action DATETIME NOT NULL,
-            UNIQUE KEY id (id)
-        ) $collate";
+        return array("
+            CREATE TABLE IF NOT EXISTS `". RCL_PREF . "user_action` (
+                ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                user BIGINT(20) UNSIGNED NOT NULL,
+                time_action DATETIME NOT NULL,
+                UNIQUE KEY id (id)
+            ) $collate",
+            "CREATE TABLE IF NOT EXISTS `". RCL_PREF . "temp_media` (
+                media_id BIGINT(20) UNSIGNED NOT NULL,
+                user_id BIGINT(20) UNSIGNED NOT NULL,
+                session_id VARCHAR(200) NOT NULL,
+                uploader_id VARCHAR(200) NOT NULL,
+                upload_date DATETIME NOT NULL,
+                UNIQUE KEY  media_id (media_id),
+                KEY upload_date (upload_date)
+            ) $collate"
+        );
     }
 
     private static function create_pages() {
@@ -129,7 +139,7 @@ class RCL_Install {
             'publicpost',
             'rcl-chat'
         ));
-        
+
         foreach( $def_addons as $addon ) {
             rcl_activate_addon($addon);
         }
@@ -239,15 +249,15 @@ class RCL_Install {
 
             $rcl_options['view_user_lk_rcl'] = 1;
             $rcl_options['view_recallbar'] = 1;
-            
+
             //подключаем первый попавшийся шаблон ЛК
             $templates = rcl_search_templates();
-            
+
             foreach($templates as $addon_id=>$template){
                 update_option('rcl_active_template',$addon_id);
                 break;
             }
-           
+
             update_option('rcl_global_options',$rcl_options);
 
             //отключаем все пользователям сайта показ админ панели, если включена
@@ -270,10 +280,10 @@ class RCL_Install {
                 foreach($active_addons as $addon=>$src_dir){
                     rcl_activate_addon($addon);
                 }
-            }          
+            }
 
         }
-        
+
         if(!get_option('rtl_standard'))
             update_option('rtl_standard','');
 

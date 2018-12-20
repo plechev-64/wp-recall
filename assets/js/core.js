@@ -798,8 +798,12 @@ function RclForm(form){
                         if(chekObject.types.length && jQuery.inArray( typeField, chekObject.types ) < 0){
                             continue;
                         }
-
+                        
                         var shakeBox = (typeField == 'checkbox')? field.next('label'): field;
+                        
+                        if(chekObject.getShakeBox){
+                            shakeBox = chekObject.getShakeBox(field);
+                        }
 
                         if(!chekObject.isValid(field)){
 
@@ -1000,11 +1004,33 @@ function RclForm(form){
                 
                 return valid;
             },
-            
             errorText: function(){
                 return Rcl.errors.file_accept;
             }
 
+        },
+        requiredUploader: {
+            
+            types: ['file'],
+            
+            isValid: function(field){
+                
+                var uploader_id = field.data('uploader_id');
+                
+                if(!uploader_id) return true;
+                
+                if(!RclUploaders.get(uploader_id).options.required) return true;
+                
+                if(jQuery('#rcl-upload-gallery-' + uploader_id).html()) return true;
+                
+                return false;
+            },
+            errorText: function(){
+                return Rcl.errors.required_uploads;
+            },
+            getShakeBox: function(field){
+                return field.parents('.rcl-uploader-button-box');
+            }
         }
     };
     

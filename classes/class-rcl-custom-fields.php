@@ -552,8 +552,8 @@ class Rcl_Custom_Fields{
     }
 
     function get_type_number($field){
-        $min = isset($field['value_min']) && $field['value_min'] != ''? 'min="'.$field['value_min'].'"': '';
-        $max = isset($field['value_max']) && $field['value_max'] != ''? 'max="'.$field['value_max'].'"': '';
+        $min = isset($field['value_min']) && $field['value_min'] !== ''? 'min="'.$field['value_min'].'"': '';
+        $max = isset($field['value_max']) && $field['value_max'] !== ''? 'max="'.$field['value_max'].'"': '';
         return '<input type="number" '.$min.' '.$max.' '.$this->required.' '.$this->placeholder.' '.$this->get_class($field).' name="'.$field['name'].'" id="'.$this->field_id.'" maxlength="50" value="'.$this->value.'"/>';
     }
 

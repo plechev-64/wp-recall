@@ -5367,7 +5367,7 @@ msgstr "Заполните все обязательные поля"
 
 #: functions/enqueue-scripts.php:178
 msgid "Specify the data in the required format"
-msgstr "Укажите данные в требуемом форумате"
+msgstr "Укажите данные в требуемом формате"
 
 #: functions/enqueue-scripts.php:179
 msgid "Specify a number within the allowed range"

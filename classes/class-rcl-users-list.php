@@ -1,9 +1,7 @@
 <?php
 
-require_once 'class-rcl-users-query.php';
-
 class Rcl_Users_List extends Rcl_Users_Query{
-    
+
     public $id;
     public $template = 'rows';
     public $usergroup = '';
@@ -17,7 +15,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
     public $width;
 
     function __construct($args = array()){
-        
+
         parent::__construct();
 
         $this->init_properties($args);
@@ -31,29 +29,29 @@ class Rcl_Users_List extends Rcl_Users_Query{
         $this->set_query($args);
 
         $this->data = ($this->data)? array_map('trim', explode(',',$this->data)): array();
-        
+
         if(isset($_GET['usergroup']))
             $this->usergroup = $_GET['usergroup'];
-        
+
         if($this->filters){
 
-            if(isset($_GET['users-filter'])) 
+            if(isset($_GET['users-filter']))
                 $this->orderby = $_GET['users-filter'];
 
-            if(isset($_GET['users-order'])) 
+            if(isset($_GET['users-order']))
                 $this->query['order'] = $_GET['users-order'];
-            
+
             add_filter('rcl_users_query',array($this,'add_query_search'));
-        
+
         }
 
         $this->add_uri['users-filter'] = $this->query['order'];
-        
+
         add_filter('rcl_users',array($this,'add_avatar_data'));
 
         if($this->data('description'))
             add_filter('rcl_users',array($this,'add_descriptions'));
-        
+
         if($this->data('profile_fields'))
             add_filter('rcl_users',array($this,'add_profile_fields'));
 
@@ -85,7 +83,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
             add_filter('rcl_users_query',array($this,'add_query_time_action'));
         else
             add_filter('rcl_users',array($this,'add_time_action'));
-        
+
         if($this->only == 'action_users'){
             add_filter('rcl_users_query',array($this,'add_query_only_actions_users'));
         }
@@ -107,7 +105,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
             if(isset($args[$name])) $this->$name = $args[$name];
         }
     }
-    
+
     function setup_userdata($userdata){
         global $rcl_user;
         $rcl_user = (object)$userdata;
@@ -151,16 +149,16 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         return $rqst;
     }
-    
+
     function add_query_only_actions_users($query){
-        
+
         $timeout = rcl_get_option('timeout',10);
         $query['where'][] = "actions.time_action > date_sub('".current_time('mysql')."', interval $timeout minute)";
-        
+
         if($this->orderby != 'time_action'){
             $query['join'][] = "RIGHT JOIN ".RCL_PREF."user_action AS actions ON wp_users.ID = actions.user";
         }
-        
+
         return $query;
     }
 
@@ -175,15 +173,15 @@ class Rcl_Users_List extends Rcl_Users_Query{
             $query['join'][] = "INNER JOIN $wpdb->usermeta AS $n ON wp_users.ID=$n.user_id";
             $query['where'][] = "($n.meta_key='$f[0]' AND $n.meta_value LIKE '%$f[1]%')";
         }
-        
+
         return $query;
     }
-    
+
     function add_profile_fields($users){
         global $wpdb;
 
         $profile_fields = rcl_get_profile_fields();
-        
+
         $profile_fields = apply_filters('rcl_userslist_custom_fields',$profile_fields);
 
         if(!$profile_fields) return $users;
@@ -192,22 +190,22 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         $cf = new Rcl_Custom_Fields();
 
-        $slugs= array(); 
+        $slugs= array();
         $fields = array();
-        
+
         foreach($profile_fields as $custom_field){
             $custom_field = apply_filters('rcl_userslist_custom_field',$custom_field);
             if(!$custom_field) continue;
             if(isset($custom_field['req'])&&$custom_field['req']==1){
-                $fields[] =  $custom_field;   
-                $slugs[] = $custom_field['slug'];   
+                $fields[] =  $custom_field;
+                $slugs[] = $custom_field['slug'];
             }
         }
-        
+
         if(!$fields) return $users;
-        
+
         $ids = $this->get_users_ids($users);
-        
+
         $fielddata = array();
         foreach($fields as $k=>$field){
             $fielddata[$field['slug']]['title'] = $field['title'];
@@ -220,7 +218,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
                 . "WHERE user_id IN (".implode(',',$ids).") AND meta_key IN ('".implode("','",$slugs)."')";
 
         $metas = $wpdb->get_results($query);
- 
+
         $newmetas = array();
         foreach($metas as $k => $meta){
             $newmetas[$meta->ID]['ID'] = $meta->ID;
@@ -237,14 +235,14 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         return $users;
     }
-    
+
     function add_query_user_registered($query){
-        
+
         $query['select'][] = "wp_users.user_registered";
-        
+
         if($this->orderby)
             $query['orderby'] = "wp_users.user_registered";
-        
+
         return $query;
     }
 
@@ -255,7 +253,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
         $query['orderby'] = "actions.time_action";
 
         $query['join'][] = "RIGHT JOIN ".RCL_PREF."user_action AS actions ON wp_users.ID = actions.user";
-        
+
         return $query;
     }
 
@@ -266,7 +264,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
         $ids = $this->get_users_ids($users);
 
         if($ids){
-            
+
             $query = "SELECT time_action, user AS ID "
                 . "FROM ".RCL_PREF."user_action "
                 . "WHERE user IN (".implode(',',$ids).")";
@@ -275,7 +273,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
             if($posts)
                 $users = $this->merge_objects($users,$posts,'time_action');
-            
+
         }
 
         return $users;
@@ -336,7 +334,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
     //добавление данных комментариев после основного запроса
     function add_comments_count($users){
         global $wpdb;
-        
+
         if(!$users) return $users;
 
         $ids = $this->get_users_ids($users);
@@ -360,7 +358,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
 	if(!$users) return $users;
 
-        $ids = $this->get_users_ids($users);        
+        $ids = $this->get_users_ids($users);
 
         $query = "SELECT meta_value AS description, user_id AS ID "
                 . "FROM $wpdb->usermeta "
@@ -373,13 +371,13 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         return $users;
     }
-    
+
     function add_avatar_data($users){
         global $wpdb;
 
 	if(!$users) return $users;
 
-        $ids = $this->get_users_ids($users);        
+        $ids = $this->get_users_ids($users);
 
         $query = "SELECT meta_value AS avatar_data, user_id AS ID "
                 . "FROM $wpdb->usermeta "
@@ -480,7 +478,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
         }
 
         $perm = rcl_format_url($url).$rqst;
-        
+
         $current_filter = (isset($_GET['users-filter']))? $_GET['users-filter']: 'time_action';
 
         $filters = array(
@@ -496,7 +494,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
         $filters = apply_filters('rcl_users_filter',$filters);
 
         $content .= '<div class="rcl-data-filters">'.__('Filter by','wp-recall').': ';
-        
+
         foreach($filters as $key=>$name){
             $content .= '<a class="data-filter recall-button '.rcl_a_active($current_filter,$key).'" href="'.$perm.'users-filter='.$key.'">'.$name.'</a> ';
         }

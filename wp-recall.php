@@ -3,7 +3,7 @@
     Plugin Name: WP-Recall
     Plugin URI: http://codeseller.ru/?p=69
     Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-    Version: 16.17.2
+    Version: 17.0.0
     Author: Plechev Andrey
     Author URI: http://codeseller.ru/
     Text Domain: wp-recall
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '16.17.2';
+	public $version = '17.0.0';
 
         public $child_addons = array();
         public $need_update = false;
@@ -148,11 +148,38 @@ final class WP_Recall {
             require_once 'classes/class-rcl-custom-fields.php';
             require_once 'classes/class-rcl-custom-fields-manager.php';
             require_once 'classes/class-rcl-query.php';
+            require_once 'classes/class-rcl-query-tables.php';
             require_once 'classes/class-rcl-includer.php';
             require_once 'classes/class-rcl-pagenavi.php';
             require_once 'classes/class-rcl-install.php';
             require_once 'classes/class-rcl-log.php';
             require_once 'classes/class-rcl-table.php';
+            require_once 'classes/class-rcl-uploader.php';
+            require_once 'classes/class-rcl-button.php';
+
+            require_once 'classes/fields/class-rcl-field-abstract.php';
+            require_once 'classes/fields/class-rcl-field-agree.php';
+            require_once 'classes/fields/class-rcl-field-checkbox.php';
+            require_once 'classes/fields/class-rcl-field-color.php';
+            require_once 'classes/fields/class-rcl-field-custom.php';
+            require_once 'classes/fields/class-rcl-field-date.php';
+            require_once 'classes/fields/class-rcl-field-dynamic.php';
+            require_once 'classes/fields/class-rcl-field-editor.php';
+            require_once 'classes/fields/class-rcl-field-file.php';
+            require_once 'classes/fields/class-rcl-field-select.php';
+            require_once 'classes/fields/class-rcl-field-multiselect.php';
+            require_once 'classes/fields/class-rcl-field-radio.php';
+            require_once 'classes/fields/class-rcl-field-range.php';
+            require_once 'classes/fields/class-rcl-field-runner.php';
+            require_once 'classes/fields/class-rcl-field-text.php';
+            require_once 'classes/fields/class-rcl-field-tel.php';
+            require_once 'classes/fields/class-rcl-field-number.php';
+            require_once 'classes/fields/class-rcl-field-textarea.php';
+            require_once 'classes/fields/class-rcl-field-uploader.php';
+
+            require_once 'classes/class-rcl-field.php';
+            require_once 'classes/class-rcl-fields.php';
+            require_once 'classes/class-rcl-fields-manager.php';
 
             require_once 'functions/activate.php';
             require_once 'functions/ajax.php';

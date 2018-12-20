@@ -6,12 +6,12 @@ require_once 'class-rcl-history-orders.php';
 
 add_action('admin_init','rcl_commerce_admin_scripts');
 function rcl_commerce_admin_scripts(){
-    
+
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'rcl_commerce_admin_scripts', rcl_addon_url('admin/assets/scripts.js', __FILE__) );
     wp_enqueue_style( 'rcl_commerce_style', rcl_addon_url('style.css', __FILE__) );
     wp_enqueue_style( 'rcl_commerce_admin_style', rcl_addon_url('admin/assets/style.css', __FILE__) );
-    
+
     if(isset($_GET['page']) && $_GET['page'] == 'manage-rmag'){
         rcl_datepicker_scripts();
     }
@@ -37,7 +37,7 @@ function rcl_commerce_page_options($content){
 }
 
 function rcl_commerce_page_orders(){
-    
+
     if(isset($_GET['order-id'])){
         require_once 'pages/order.php';
     }else{
@@ -75,21 +75,21 @@ function rcl_edit_admin_price_product(){
 
     $id_post = intval($_POST['id_post']);
     $price = floatval($_POST['price']);
-    
+
     if(isset($price)){
-        
+
         update_post_meta($id_post,'price-products',$price);
-        
+
         $log['success']= __('The data stored','wp-recall');
-        
+
     }else {
-        
+
         $log['error']= __('Error','wp-recall');
-        
+
     }
-    
+
     wp_send_json($log);
-    
+
 }
 
 add_action('admin_init','rcl_read_exportfile');
@@ -109,46 +109,46 @@ function rcl_read_exportfile(){
         ),
         'meta' => array()
     );
-    
+
     if(isset($_POST['product']['fields'])){
-        
+
         $importData['fields'] = array_merge($importData['fields'],$_POST['product']['fields']);
-        
+
     }
-    
+
     if(isset($_POST['product']['meta'])){
-        
+
         $importData['meta'] = $_POST['product']['meta'];
-        
+
     }
-    
+
     $posts = $wpdb->get_results("SELECT ".implode(',',$importData['fields'])." FROM $wpdb->posts WHERE post_type = 'products' AND post_status!='draft'");
-    
+
     if(!$posts) return false;
-    
+
     $xml = new DomDocument('1.0','utf-8');
     $products = $xml->appendChild($xml->createElement('products'));
-    
+
     foreach($posts as $post){
 
         $termData = array();
         foreach($importData['taxonomies'] as $taxonomy){
             $termData[$taxonomy] = get_the_terms( $post->ID, $taxonomy );
         }
-        
+
         if($importData['meta']){
             $postmeta = $wpdb->get_results("SELECT meta_key,meta_value FROM $wpdb->postmeta WHERE post_id='$post->ID' AND meta_key IN ('".implode("','",$importData['meta'])."')");
-        
+
             $metas = array();
             foreach($postmeta as $meta){
                 $metas[$meta->meta_key] = maybe_unserialize($meta->meta_value);
             }
         }
-        
+
         $product = $products->appendChild($xml->createElement('product'));
-        
+
         foreach($importData as $k => $fields){
-            
+
             if($k == 'fields'){
                 $data = $product->appendChild($xml->createElement($k));
                 foreach($fields as $field){
@@ -159,9 +159,9 @@ function rcl_read_exportfile(){
                 }
 
                 continue;
-            
+
             }
-            
+
             if($k == 'taxonomies'){
                 $data = $product->appendChild($xml->createElement($k));
                 foreach($termData as $taxonomy => $terms){
@@ -173,39 +173,39 @@ function rcl_read_exportfile(){
                 }
 
             }
-            
+
             if($k == 'meta'){
-                
+
                 if(!$fields) continue;
-                
+
                 $meta = $product->appendChild($xml->createElement('meta'));
-                
+
                 foreach($fields as $i => $metadata){
-            
+
                     if(is_numeric($i)){
                         $data = $meta->appendChild($xml->createElement($metadata));
                         $data->appendChild($xml->createTextNode((isset($metas[$metadata])? $metas[$metadata]: '')));
                         continue;
                     }
-                    
+
                     $parent = $meta->appendChild($xml->createElement($i));
-                    
+
                     foreach($metadata as $metaKey){
                         $child = $parent->appendChild($xml->createElement($metaKey));
                         $child->appendChild($xml->createTextNode((isset($metas[$i][$metaKey])? $metas[$i][$metaKey]: '')));
                     }
-                
+
                 }
-                
+
             }
-            
+
         }
-        
+
     }
-    
+
     $filename = 'products.xml';
     $filepath = wp_normalize_path(plugin_dir_path( __FILE__ ).'xml/'.$filename);
-    
+
     $xml->formatOutput = true;
     $xml->save($filepath);
 
@@ -214,120 +214,120 @@ function rcl_read_exportfile(){
     header('Content-Type: text/xml; charset=utf-8');
     readfile($filepath);
     exit;
-    
+
 }
 
 function rcl_import_product($product){
-    
+
     $fields = (array)$product->fields;
-    
+
     $postData = array();
     foreach($fields as $fieldName => $val){
         $postData[$fieldName] = $val;
     }
 
     $postData['post_type'] = 'products';
-    
+
     if($postData['ID']){
         $postID = wp_update_post($postData);
     }else{
         $postData['post_author'] = 1;
         $postID = wp_insert_post($postData);
     }
-    
+
     if(!$postID) return false;
-    
+
     if($product->taxonomies){
         $taxonomies = (array)$product->taxonomies;
         foreach($taxonomies as $tax => $terms){
             wp_set_post_terms( $postID, array_map('trim',explode(',',$terms)), $tax );
         }
     }
-    
+
     $meta = (array)$product->meta;
-    
+
     foreach($meta as $metaKey => $metaValue){
-        
+
         if(is_object($metaValue)) $metaValue = (array)$metaValue;
-        
+
         if($metaValue){
 
             if(is_array($metaValue)){
-                
-                foreach($metaValue as $k=>$value) 
-                    if(is_object($value)) 
+
+                foreach($metaValue as $k=>$value)
+                    if(is_object($value))
                         $metaValue[$k] = array();
-                    
+
             }
-            
+
             update_post_meta($postID, $metaKey, $metaValue);
-            
+
         }else
             delete_post_meta($postID, $metaKey);
-        
+
     }
 
     return $postData['ID']? $postData['post_title']: true;
-    
+
 }
 
 rcl_ajax_action('rcl_ajax_import_products');
 function rcl_ajax_import_products(){
     global $wpdb;
-    
+
     rcl_verify_ajax_nonce();
-    
+
     $path = $_POST['path'];
-    
+
     $xml = simplexml_load_file($path);
-    
+
     if(!$xml){
         wp_send_json(array(
             'error' => __('File not found!', 'wp-recall')
         ));
     }
-    
+
     $status = $_POST['status'];
     $page = $_POST['page'];
     $number = $_POST['number'];
     $count = $_POST['count']? $_POST['count']: count($xml->product); //$_POST['count'];
     $progress = $_POST['progress'];
-    
+
     $offset = ($page-1) * $number;
-    
+
     $result = array(
         'status' => 'work'
     );
 
     switch($status){
         case 'work':
-            
+
             $i = 0;
-            foreach($xml->product as $product){ 
-                
+            foreach($xml->product as $product){
+
                 $i++;
-            
+
                 if($offset && $i <= $offset) continue;
-                
+
                 $postData = rcl_import_product($product);
-                
+
                 $logText = $postData === true? 'Создан новый продукт "'.$product->fields->post_title.'"': 'Обновлены данные "'.$product->fields->post_title.'"';
-                
+
                 $log[] = '<div>'.$i.' '.$logText.'</div>';
-                
+
                 if($i >= $offset + $number) break;
-                
+
             }
 
             $stepName = 'Импортировано '.$i.' из '.$count;
-            
+
             $progress += 100/ceil($count/$number);
 
             $page ++;
 
         break;
     }
-    
+
     if($i >= $count){
         $stepName = 'Процесс импорта завершен '.'Импортировано '.$i.' из '.$count;
         $status = 'end';
@@ -339,18 +339,18 @@ function rcl_ajax_import_products(){
     $result['count'] = $count;
     $result['number'] = $number;
     $result['path'] = $path;
-    
+
     if(isset($progress) && $progress)
         $result['progress'] = $progress;
-    
+
     if(isset($stepName) && $stepName)
         $result['name'] = $stepName;
-    
+
     if(isset($log) && $log)
         $result['log'] = $log;
-    
+
     echo json_encode($result); exit;
-    
+
 }
 
 
@@ -378,18 +378,18 @@ function rcl_get_chart_orders($orders){
 
 add_filter('rcl_custom_field_options','rcl_add_cart_profile_field_option',10,3);
 function rcl_add_cart_profile_field_option($options, $field, $type){
-    
+
     if($type != 'profile') return $options;
-    
+
     $options[] = array(
         'type' => 'radio',
         'slug'=>'order',
         'title'=>__('display at checkout for guests','wp-recall'),
         'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
     );
-    
+
     return $options;
-    
+
 }
 
 add_action('rcl_add_dashboard_metabox', 'rcl_add_commerce_metabox');
@@ -398,13 +398,13 @@ function rcl_add_commerce_metabox($screen){
 }
 
 function rcl_commerce_metabox(){
-    
+
     $orders = rcl_get_orders(array('number'=>5));
-    
+
     if(!$orders){
         echo '<p>'.__('No orders yet','wp-recall').'</p>'; return;
     }
-    
+
     echo '<table class="wp-list-table widefat fixed striped">';
     echo '<tr>'
         . '<th>'.__('Order','wp-recall').'</th>'

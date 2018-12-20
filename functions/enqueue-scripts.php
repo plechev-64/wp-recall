@@ -73,10 +73,12 @@ function rcl_font_awesome_style($fontAwesome = true){
         //wp_deregister_style('font-awesome');
 
     //load fonawesome 4 cdn
-    if($fontAwesome && rcl_get_option('font-awesome',1))
-        wp_enqueue_style( 'font-awesome', 'https://use.fontawesome.com/5ca1160808.css' );
+    //if($fontAwesome && rcl_get_option('font-awesome',1))
+        //wp_enqueue_style( 'font-awesome', 'https://use.fontawesome.com/5ca1160808.css' );
 
     wp_enqueue_style( 'rcl-awesome', RCL_URL.'assets/rcl-awesome/rcl-awesome.min.css' );
+    //wp_enqueue_style( 'rcl-icons', RCL_URL.'assets/icons/style.css' );
+    //wp_enqueue_script( 'rcl-icons', RCL_URL.'assets/icons/icons-load.js', array(), VER_RCL, true );
 
 }
 
@@ -108,6 +110,8 @@ function rcl_frontend_scripts(){
     if( !is_user_logged_in() ){
         rcl_enqueue_style( 'rcl-register-form', RCL_URL.'assets/css/regform.css' );
     }
+
+    wp_enqueue_style( 'rcl-buttons', RCL_URL.'assets/css/buttons.css', VER_RCL );
 
     //если используем recallbar, то подключаем его стили
     if(rcl_get_option('view_recallbar')){
@@ -179,6 +183,7 @@ function rcl_get_localize_data(){
     $data['errors']['number_range'] = __('Specify a number within the allowed range','wp-recall');
     $data['errors']['file_max_size'] = __('File size is exceeded','wp-recall');
     $data['errors']['file_accept'] = __('Invalid file type','wp-recall');
+    $data['errors']['required_uploads'] = __('Загрузите файлы','wp-recall');
 
     return apply_filters('rcl_init_js_variables',$data);
 

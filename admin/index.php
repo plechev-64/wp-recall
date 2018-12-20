@@ -1,5 +1,5 @@
 <?php
- 
+
 require_once "admin-menu.php";
 require_once "add-on-manager.php";
 require_once "templates-manager.php";
@@ -8,6 +8,7 @@ require_once "metaboxes.php";
 add_action('admin_init','rcl_admin_scripts', 10);
 function rcl_admin_scripts(){
     wp_enqueue_style( 'animate-css', RCL_URL.'assets/css/animate-css/animate.min.css' );
+    wp_enqueue_script( 'rcl-fields-manager', RCL_URL.'admin/assets/fields-manager.js' );
 }
 
 add_filter('rcl_custom_field_options','rcl_edit_field_options',10,3);
@@ -423,4 +424,243 @@ function rcl_send_addon_activation_notice($addon_id, $addon_headers){
             )
         )
     );
+}
+
+rcl_ajax_action('rcl_manager_get_new_field', false, false);
+function rcl_manager_get_new_field(){
+
+    $managerProps = (array)json_decode(wp_unslash($_POST['props']));
+
+    $Manager = new Rcl_Fields_Manager($managerProps->manager_id, $managerProps);
+
+    $field_id = 'newField-'.rand(1,10000);
+
+    $Manager->add_field(array(
+        'slug' => $field_id,
+        'type' => $Manager->new_field_type? $Manager->new_field_type: $Manager->types[0],
+        '_new' => true
+    ));
+
+    wp_send_json(array(
+        'content' => $Manager->get_field_manager($field_id)
+    ));
+
+}
+
+rcl_ajax_action('rcl_manager_get_custom_field_options', false, false);
+function rcl_manager_get_custom_field_options(){
+
+    $new_type = $_POST['newType'];
+    $old_type = $_POST['oldType'];
+    $field_id = $_POST['fieldId'];
+
+    $managerProps = (array)json_decode(wp_unslash($_POST['manager']));
+
+    $Manager = new Rcl_Fields_Manager($managerProps['manager_id'],$managerProps);
+
+    //$Manager->setup_fields();
+
+    if(stristr($field_id, 'newField') !== FALSE){
+
+        $Manager->add_field(array(
+            'slug' => $field_id,
+            'type' => $new_type,
+            '_new' => true
+        ));
+
+    }else{
+
+        $Manager->set_field_prop($field_id, 'type', $new_type);
+
+        $Manager->fields[$field_id] = $Manager::setup((array)$Manager->fields[$field_id]);
+
+    }
+
+    $content = $Manager->get_field_options_content($field_id);
+
+    $multiVars = array(
+        'select',
+        'radio',
+        'checkbox',
+        'multiselect'
+    );
+
+    if(in_array($new_type,$multiVars)){
+
+       $content .= $Manager->sortable_dynamic_values_script($field_id);
+
+    }
+
+    wp_send_json(array(
+        'content' => $content
+    ));
+
+}
+
+rcl_ajax_action('rcl_manager_update_fields', false);
+function rcl_manager_update_fields(){
+
+    $manager_id = $_POST['manager_id'];
+    $option_name = $_POST['option_name'];
+
+    $fieldsData = $_POST['fields'];
+    $structure = isset($_POST['structure'])? $_POST['structure']: false;
+
+    $fields = array();
+    $keyFields = array();
+    $changeIds = array();
+    $isset_new = false;
+    foreach($fieldsData as $field_id => $field){
+
+        if(!$field['title']) continue;
+
+        if(isset($field['values'])){
+            //удаляем из массива values пустые значения
+            $values = array();
+            foreach($field['values'] as $k => $v){
+                if($v == '') continue;
+                $values[$k] = $v;
+            }
+            $field['values'] = $values;
+        }
+
+        if(stristr($field_id, 'newField') !== FALSE){
+
+            $isset_new = true;
+
+            $old_id = $field_id;
+
+            if(!$field['id']){
+
+                $field_id = str_replace(array('-',' '),'_',rcl_sanitize_string($field['title']).'-'.rand(1,100));
+
+            }else{
+                $field_id = $field['id'];
+            }
+
+            $changeIds[$old_id] = $field_id;
+
+        }
+
+        $field['slug'] = $field_id;
+
+        $keyFields[$field_id] = 1;
+
+        unset($field['id']);
+
+        $fields[] = $field;
+
+    }
+
+    if($structure){
+
+        $strArray = array(); $area_id = -1;
+
+        foreach($structure as $value){
+
+            if(is_array($value)){
+
+                if(isset($value['group_id'])){
+                    $group_id = $value['group_id'];
+
+                    $strArray[$group_id] = isset($_POST['structure-groups'][$group_id])? $_POST['structure-groups'][$group_id]: array();
+
+                }else if(isset($value['field_id'])){
+                    $strArray[$group_id]['areas'][$area_id]['fields'][] = $value['field_id'];
+                }
+
+            }else{
+                $area_id++;
+                $strArray[$group_id]['areas'][$area_id]['width'] = isset($_POST['structure-areas'][$area_id]['width'])? $_POST['structure-areas'][$area_id]['width']: 0;
+            }
+
+        }
+
+        $endStructure = array();
+
+        foreach($strArray as $group_id => $group){
+
+            if($group['id'] && $group_id != $group['id']){
+                $group_id = $group['id'];
+            }
+
+            $endStructure[$group_id] = $group;
+            $endStructure[$group_id]['areas'] = array();
+
+            foreach($group['areas'] as $area){
+
+                $fieldsArea = array();
+
+                foreach($area['fields'] as $k => $field_id){
+
+                    if(isset($changeIds[$field_id])){
+                        $field_id = $changeIds[$field_id];
+                    }
+
+                    if(!isset($keyFields[$field_id])){
+                        unset($area['fields'][$k]); continue;
+                    }
+
+                    $fieldsArea[] = $field_id;
+
+                }
+
+                $endStructure[$group_id]['areas'][] = array(
+                    'width' => round($area['width'], 0),
+                    'fields' => $fieldsArea
+                );
+
+            }
+
+        }
+
+        $structure = $endStructure;
+
+    }
+
+    update_option($option_name, $fields);
+
+    if($structure)
+        update_site_option( 'rcl_fields_'.$manager_id.'_structure', $structure);
+    else
+        delete_site_option( 'rcl_fields_'.$manager_id.'_structure');
+
+    do_action('rcl_fields_update', $fields, $manager_id);
+
+    $args = array(
+        'success' => __('Settings saved!', 'usp')
+    );
+
+    if($isset_new){
+        $args['reload'] = true;
+    }
+
+    wp_send_json($args);
+
+}
+
+rcl_ajax_action('rcl_manager_get_new_area', false);
+function rcl_manager_get_new_area(){
+
+    $managerProps = (array)json_decode(wp_unslash($_POST['props']));
+
+    $Manager = new Rcl_Fields_Manager('any', $managerProps);
+
+    wp_send_json(array(
+        'content' => $Manager->get_active_area()
+    ));
+
+}
+
+rcl_ajax_action('rcl_manager_get_new_group', false);
+function rcl_manager_get_new_group(){
+
+    $managerProps = (array)json_decode(wp_unslash($_POST['props']));
+
+    $Manager = new Rcl_Fields_Manager('any', $managerProps);
+
+    wp_send_json(array(
+        'content' => $Manager->get_group_areas()
+    ));
+
 }

@@ -1,124 +1,98 @@
 <?php
 
-class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
-    
-    function __construct($typeFields, $args = false) {
-        
-        parent::__construct($typeFields, $args);
+class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager{
 
-    }
-    
-    function init_profile_manager_filters(){
-        add_filter('rcl_default_custom_fields',array($this, 'add_default_profile_fields'));
-        add_filter('rcl_custom_fields_form',array($this, 'add_users_page_option'));
-        add_filter('rcl_custom_field_options', array($this, 'edit_field_options'), 10, 3);
-    }
-    
-    function get_default_profile_fields(){
-        
-        $fields = array();
-        
-        $fields[] = array(
-            'slug' => 'first_name',
-            'title' => __('Firstname','wp-recall'),
-            'type' => 'text'
-        );
+    function __construct() {
 
-        $fields[] = array(
-            'slug' => 'last_name',
-            'title' => __('Surname','wp-recall'),
-            'type' => 'text'
-        );
+        add_filter('rcl_field_options', array($this, 'edit_field_options'), 10, 3);
+        add_filter('rcl_manager_form_fields',array($this, 'add_users_page_option'), 10, 2);
 
-        $fields[] = array(
-            'slug' => 'display_name', 
-            'title' => __('Name to be displayed','wp-recall'),
-            'type' => 'text'
-        );
-
-        $fields[] = array(
-            'slug' => 'user_url',
-            'title' => __('Website','wp-recall'),
-            'type' => 'url'
-        );
-
-        $fields[] = array(
-            'slug' => 'description',
-            'title' => __('Status','wp-recall'),
-            'type' => 'textarea'
-        );
-        
-        $fields[] = array(
-            'slug' => 'rcl_birthday',
-            'title' => __('Birthday','wp-recall'),
-            'type' => 'date'
-        );
-        
-        return apply_filters('rcl_default_profile_fields', $fields);
-        
-    }
-    
-    function add_default_profile_fields($fields){
-        
-        if($defFields = $this->get_default_profile_fields())
-            $fields = array_merge($fields, $defFields);
-        
-        return $fields;
-        
-    }
-
-    function active_fields_box(){
-        
-        $content = $this->manager_form(
-            
-            array(
-        
+        parent::__construct('profile', array(
+            'option_name' => 'rcl_profile_fields',
+            'empty_field' => false,
+            //'structure_edit' => true,
+            'meta_delete' => array(
+                $wpdb->usermeta => 'meta_key'
+            ),
+            'default_fields' => apply_filters('rcl_default_profile_fields', array(
                 array(
+                    'slug' => 'first_name',
+                    'title' => __('Firstname', 'wp-recall'),
+                    'icon' => 'fa-user',
+                    'type' => 'text'
+                ),
+                array(
+                    'slug' => 'last_name',
+                    'title' => __('Surname', 'wp-recall'),
+                    'icon' => 'fa-user',
+                    'type' => 'text'
+                ),
+                array(
+                    'slug' => 'display_name',
+                    'title' => __('Name to be displayed', 'wp-recall'),
+                    'icon' => 'fa-user',
+                    'type' => 'text'
+                ),
+                array(
+                    'slug' => 'user_url',
+                    'title' => __('Website', 'wp-recall'),
+                    'icon' => 'fa-link',
+                    'type' => 'url'
+                ),
+                array(
+                    'slug' => 'description',
+                    'title' => __('Status', 'wp-recall'),
+                    'icon' => 'fa-comment',
+                    'type' => 'textarea'
+                ),
+                array(
+                    'slug' => 'birthday',
+                    'title' => __('Birthday', 'wp-recall'),
+                    'icon' => 'fa-birthday-cake',
+                    'type' => 'date'
+                ))
+            ),
+            'field_options' => apply_filters('rcl_profile_field_options', array(
+                array(
+                    'slug' => 'notice',
                     'type' => 'textarea',
-                    'slug'=>'notice',
-                    'title'=>__('field description','wp-recall')
+                    'title'=>__('field description', 'wp-recall')
                 ),
-
                 array(
+                    'slug' => 'required',
                     'type' => 'radio',
-                    'slug'=>'required',
-                    'title'=>__('required field','wp-recall'),
-                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                    'title'=>__('required field', 'wp-recall'),
+                    'values'=>array(__('No', 'wp-recall'),__('Yes', 'wp-recall'))
                 ),
-
                 array(
+                    'slug' => 'req',
                     'type' => 'radio',
-                    'slug'=>'req',
-                    'title'=>__('show the content to other users','wp-recall'),
-                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                    'title'=>__('show the content to other users', 'wp-recall'),
+                    'values'=>array(__('No', 'wp-recall'),__('Yes', 'wp-recall'))
                 ),
-
                 array(
+                    'slug' => 'admin',
                     'type' => 'radio',
-                    'slug'=>'admin',
-                    'title'=>__('can be changed only by the site administration','wp-recall'),
-                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                    'title'=>__('can be changed only by the site administration', 'wp-recall'),
+                    'values'=>array(__('No', 'wp-recall'),__('Yes', 'wp-recall'))
                 ),
-
                 array(
+                    'slug' => 'filter',
                     'type' => 'radio',
-                    'slug'=>'filter',
-                    'title'=>__('Filter users by this field','wp-recall'),
-                    'values'=>array(__('No','wp-recall'),__('Yes','wp-recall'))
+                    'title'=>__('Filter users by this field', 'wp-recall'),
+                    'values'=>array(__('No', 'wp-recall'),__('Yes', 'wp-recall'))
                 )
+            ))
+        ));
 
-            )
-  
-        );
-        
-        return $content;
-        
+        $this->setup_default_fields();
+
     }
-    
-    function edit_field_options($options, $field, $type){
-        
-        if(!isset($field['slug']) || $type != $this->post_type) return $options;
-        
+
+    function edit_field_options($options, $field, $manager_id){
+
+        if(!$field->id || $manager_id != $this->manager_id) return $options;
+
         $defaultFields = array(
             'first_name',
             'last_name',
@@ -126,46 +100,34 @@ class Rcl_Profile_Fields extends Rcl_Custom_Fields_Manager{
             'url',
             'description'
         );
-        
-        if(in_array($field['slug'],$defaultFields)){
-            
-            foreach($options as $k => $option){
-                
-                if($option['slug'] == 'filter'){
-                    unset($options[$k]);
-                }
-                
-                if($field['slug'] == 'description'){
-                    
-                    if($option['slug'] == 'req'){
-                        unset($options[$k]);
-                    }
-                    
-                }
- 
-            }
-            
+
+        if(in_array($field->id, $defaultFields)){
+            unset($options['filter']);
+            unset($options['req']);
         }
-        
+
         return $options;
-        
+
     }
-    
-    function add_users_page_option($content){
-        
-        $content .= '<h4>'.__('Users page','wp-recall').'</h4>'
-                . '<style>#users_page_rcl{max-width:100%;}</style>'
-                . wp_dropdown_pages( array(
-                    'selected'   => rcl_get_option('users_page_rcl'),
-                    'name'       => 'users_page_rcl',
-                    'show_option_none' => __('Not selected','wp-recall'),
-                    'echo'             => 0 )
+
+    function add_users_page_option($fields, $manager_id){
+
+        $fields['users_page'] = array(
+            'type' => 'custom',
+            'title' => __('Users page', 'wp-recall'),
+            'notice' => __('This page is required to filter users by value of profile fields', 'wp-recall'),
+            'content' => wp_dropdown_pages( array(
+                    'selected'          => rcl_get_option('users_page'),
+                    'name'              => 'users_page',
+                    'show_option_none'  => __('Not selected', 'wp-recall'),
+                    'echo'              => 0
                 )
-                .'<p>'.__('This page is required to filter users by value of profile fields','wp-recall').'</p>';
-        
-        return $content;
-        
+            )
+        );
+
+        return $fields;
+
     }
-    
+
 }
 

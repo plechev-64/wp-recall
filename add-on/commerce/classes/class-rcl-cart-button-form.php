@@ -176,8 +176,6 @@ class Rcl_Cart_Button_Form{
 
         $box_id = rand(0,100);
 
-        $CF = new Rcl_Custom_Fields();
-
         $content = '<div id="cart-box-'.$box_id.'" class="product-variations">';
 
         $content .= '<input type="hidden" name="cart[isset][variations]" value="1">';
@@ -208,11 +206,13 @@ class Rcl_Cart_Button_Form{
 
             $variation['slug'] = 'cart[variations]['.$variation['slug'].']';
 
+            $fieldObject = Rcl_Field::setup($variation);
+
             $content .= '<div class="variation-box">';
 
                 $content .= '<span class="variation-title">'.$variation['title'].'</span>';
 
-                $content .= $CF->get_input($variation);
+                $content .= $fieldObject->get_field_input();
 
             $content .= '</div>';
 

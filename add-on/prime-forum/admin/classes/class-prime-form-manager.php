@@ -1,6 +1,6 @@
 <?php
 
-class Prime_Form_Manager extends Rcl_Custom_Fields_Manager{
+class Prime_Form_Manager extends Rcl_Fields_Manager{
 
     public $group_id;
     public $forum_id;
@@ -15,35 +15,24 @@ class Prime_Form_Manager extends Rcl_Custom_Fields_Manager{
         else
             $form_slug = 'pfm_group_'.$this->group_id;
 
-        parent::__construct($form_slug);
-
-    }
-
-    function active_fields_box(){
-
-        $defaultOptions = array(
-
-            array(
-                'type' => 'textarea',
-                'slug' => 'notice',
-                'title' => __('field description','wp-recall')
-            ),
-
-            array(
-                'type' => 'select',
-                'slug' => 'required',
-                'title' =>__('required field','wp-recall'),
-                'values'  => array(
-                    __('No','wp-recall'),
-                    __('Yes','wp-recall')
+        parent::__construct($form_slug, array(
+            'field_options' => array(
+                array(
+                    'type' => 'textarea',
+                    'slug' => 'notice',
+                    'title' => __('field description','wp-recall')
+                ),
+                array(
+                    'type' => 'radio',
+                    'slug' => 'required',
+                    'title' =>__('required field','wp-recall'),
+                    'values'  => array(
+                        __('No','wp-recall'),
+                        __('Yes','wp-recall')
+                    )
                 )
             )
-
-        );
-
-        $content = $this->manager_form($defaultOptions);
-
-        return $content;
+        ));
 
     }
 
@@ -127,14 +116,6 @@ class Prime_Form_Manager extends Rcl_Custom_Fields_Manager{
             $content .= '<h3>'.$title.'</h3>';
 
         $content .= '</div>';
-
-        return $content;
-
-    }
-
-    function add_content_form($content){
-
-        $content .= '<input type="hidden" name="options[user-edit]" value="1">';
 
         return $content;
 

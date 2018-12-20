@@ -60,8 +60,6 @@ class Rcl_Cart_Constructor{
 
             if($this->fields){
 
-                $CF = new Rcl_Custom_Fields();
-
                 $content .= '<div class="cart-fields-title">'.__('To place an order fill out the form below','wp-recall').'</div>';
 
                 $content .= '<table class="table-fields rcl-form">';
@@ -70,14 +68,14 @@ class Rcl_Cart_Constructor{
 
                     if(!isset($field['value_in_key'])) $field['value_in_key'] = true;
 
-                    $required = ($field['required'] == 1)? '<span class="required">*</span>': '';
+                    $fieldObject = Rcl_Field::setup($field);
 
                     $content .= '<tr class="cart-field">'
                                 .'<td class="field-title">'
-                                    . '<label>'.$CF->get_title($field).' '.$required.'</label>'
+                                    . '<label>'.$fieldObject->get_title().'</label>'
                                 . '</td>'
                                 .'<td class="field-input">'
-                                    .$CF->get_input($field)
+                                    .$fieldObject->get_field_input()
                                 .'</td>'
                                 .'</tr>';
                 }

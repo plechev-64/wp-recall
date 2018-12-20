@@ -1,15 +1,67 @@
 <?php
 
-class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
+class Rcl_Tabs_Manager extends Rcl_Fields_Manager{
 
-    function __construct($areaType, $options = false) {
+    function __construct($areaType) {
 
-        parent::__construct($areaType, $options);
+        parent::__construct($areaType, array(
+            'switch_type' => false,
+            'switch_id' => false,
+            'types' => array(
+                'custom'
+            ),
+            'field_options' => array(
+                array(
+                    'type' => 'radio',
+                    'slug' => 'hidden',
+                    'title' => __('Hidden tab','wp-recall'),
+                    'notice' => __('The tab will be available only by link','wp-recall'),
+                    'values' => array(
+                        __('No','wp-recall'),
+                        __('Yes','wp-recall')
+                    )
+                ),
+                array(
+                    'type' => 'text',
+                    'slug'=>'icon',
+                    'title'=>__('Icon class of  font-awesome','wp-recall'),
+                    'placeholder'=>__('Example, fa-user','wp-recall'),
+                    'notice'=>__('Source','wp-recall').' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.com/</a>'
+                ),
+                array(
+                    'type' => 'select',
+                    'slug'=>'public-tab',
+                    'title'=>__('Tab privacy','wp-recall'),
+                    'values'=>array(
+                        __('Private','wp-recall'),
+                        __('Public','wp-recall')
+                    )
+                ),
+                array(
+                    'type' => 'checkbox',
+                    'slug'=>'supports-tab',
+                    'title'=>__('Support of the functions','wp-recall'),
+                    'values'=>array(
+                        'ajax' => __('ajax-loading','wp-recall'),
+                        'cache' => __('caching','wp-recall'),
+                        'dialog' => __('dialog box','wp-recall')
+                    )
+                ),
+                array(
+                    'type' => 'editor',
+                    'tinymce' => true,
+                    'slug'=>'content',
+                    'title'=>__('Content tab','wp-recall'),
+                    'notice'=>__('supported shortcodes and HTML-code','wp-recall')
+                )
 
+            )
+        ));
+        //print_r($this);
         $this->setup_tabs();
 
-        add_filter('rcl_custom_field_options', array($this, 'edit_tab_options'), 10, 3);
-
+        add_filter('rcl_field_options', array($this, 'edit_tab_options'), 10, 3);
+        //print_r($this);
     }
 
     function form_navi(){
@@ -26,7 +78,7 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
 
             foreach ($areas  as $type => $name ) {
 
-                $class = ($this->post_type == $type)? 'class="current-item"': '';
+                $class = ($this->manager_id == $type)? 'class="current-item"': '';
 
                 $content .= '<li '.$class.'><a href="'.admin_url('admin.php?page=rcl-tabs-manager&area-type='.$type).'">'.$name.'</a></li>';
             }
@@ -34,73 +86,6 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
             $content .= '</ul>';
 
         $content .= '</div>';
-
-        return $content;
-
-    }
-
-    function active_fields_box(){
-
-        $defaultOptions = array(
-
-            array(
-                'type' => 'text',
-                'slug'=>'slug',
-                'title'=>__('Tab ID','wp-recall'),
-                'placeholder'=>__('Latin alphabet and numbers','wp-recall')
-            ),
-
-            array(
-                'type' => 'radio',
-                'slug' => 'hidden',
-                'title' => __('Hidden tab','wp-recall'),
-                'notice' => __('The tab will be available only by link','wp-recall'),
-                'values' => array(
-                    __('No','wp-recall'),
-                    __('Yes','wp-recall')
-                )
-            ),
-
-            array(
-                'type' => 'text',
-                'slug'=>'icon',
-                'title'=>__('Icon class of  font-awesome','wp-recall'),
-                'placeholder'=>__('Example, fa-user','wp-recall'),
-                'notice'=>__('Source','wp-recall').' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.com/</a>'
-            ),
-
-            array(
-                'type' => 'select',
-                'slug'=>'public-tab',
-                'title'=>__('Tab privacy','wp-recall'),
-                'values'=>array(
-                    __('Private','wp-recall'),
-                    __('Public','wp-recall')
-                )
-            ),
-
-            array(
-                'type' => 'checkbox',
-                'slug'=>'supports-tab',
-                'title'=>__('Support of the functions','wp-recall'),
-                'values'=>array(
-                    'ajax' => __('ajax-loading','wp-recall'),
-                    'cache' => __('caching','wp-recall'),
-                    'dialog' => __('dialog box','wp-recall')
-                )
-            ),
-
-            array(
-                'type' => 'editor',
-                'tinymce' => true,
-                'slug'=>'content',
-                'title'=>__('Content tab','wp-recall'),
-                'notice'=>__('supported shortcodes and HTML-code','wp-recall')
-            )
-
-        );
-
-        $content = $this->manager_form($defaultOptions);
 
         return $content;
 
@@ -124,10 +109,10 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
 
             foreach($this->fields as $k => $tab){
 
-                if($this->is_default_tab($tab['slug'])){
-                    $this->fields[$k]['delete'] = false;
+                if($this->is_default_tab($tab->id)){
+                    $tab->set_prop('must_delete', false);
                 }else{
-                    if(isset($tab['default-tab'])){
+                    if(isset($tab->{'default-tab'})){
                         unset($this->fields[$k]);
                     }
                 }
@@ -135,13 +120,15 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
             }
 
             foreach($defaultTabs as $tab){
-                if($this->exist_active_field($tab['slug']))continue;
-                $this->fields[] = $tab;
+                if($this->is_active_field($tab['slug']))continue;
+                $this->add_field($tab);
             }
 
         }else{
 
-            $this->fields = $defaultTabs;
+            foreach($defaultTabs as $tab){
+                $this->add_field($tab);
+            }
 
         }
 
@@ -160,7 +147,7 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
 
             $tabArea = (isset($tab['output']))? $tab['output']: 'menu';
 
-            if('area-'.$tabArea != $this->post_type) continue;
+            if('area-'.$tabArea != $this->manager_id) continue;
 
             $fields[] = array(
                 'type-edit' => false,
@@ -168,6 +155,7 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
                 'delete' => false,
                 'default-tab' => true,
                 'type' => 'custom',
+                'must_delete' => false,
                 'title' => $tab['name'],
                 'icon' => $tab['icon']
             );
@@ -181,35 +169,29 @@ class Rcl_Tabs_Manager extends Rcl_Custom_Fields_Manager{
     function edit_tab_options($options, $field, $type){
         global $rcl_tabs;
 
-        if(!isset($field['slug'])) return $options;
+        if(!$field->slug) return $options;
 
-        if($this->is_default_tab($field['slug'])){
+        if($this->is_default_tab($field->slug)){
 
-            $unsetOptions = array(
-                'public-tab',
-                'supports-tab',
-                'content',
-                'slug'
-            );
+            unset($options['public-tab']);
+            unset($options['supports-tab']);
+            unset($options['content']);
+            unset($options['slug']);
 
-            foreach($options as $k => $option){
+            $options['icon']['placeholder'] = $rcl_tabs[$field->slug]['icon'];
 
-                if(in_array($option['slug'], $unsetOptions)){
-                    unset($options[$k]);
-                }
-
-                if($option['slug'] == 'icon'){
-                    $options[$k]['placeholder'] = $rcl_tabs[$field['slug']]['icon'];
-                }
-
-            }
-
-            $options[] = array(
+            $options['default-tab'] = array(
                 'type' => 'hidden',
                 'slug' => 'default-tab',
                 'value' => 1
             );
 
+        }else{
+           $options['custom-tab'] = array(
+                'type' => 'hidden',
+                'slug' => 'custom-tab',
+                'value' => 1
+            );
         }
 
         return $options;

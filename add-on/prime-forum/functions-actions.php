@@ -543,24 +543,22 @@ function pfm_action_start_post_migrate($post_id){
         'item_id' => $post_id
     );
 
-    $CF = new Rcl_Custom_Fields();
-
     $content = '<div id="manager-migrate" class="rcl-custom-fields-box">';
         $content .= '<form id="manager-migrate-form" method="post">';
 
             foreach($fields as $field){
 
-                $required = ($field['required'] == 1)? '<span class="required">*</span>': '';
+                $fieldObject = Rcl_Field::setup($field);
 
                 $content .= '<div id="field-'.$field['slug'].'" class="form-field rcl-custom-field">';
 
                     if(isset($field['title'])){
                         $content .= '<label>';
-                        $content .= $CF->get_title($field).' '.$required;
+                        $content .= $fieldObject->get_title();
                         $content .= '</label>';
                     }
 
-                    $content .= $CF->get_input($field);
+                    $content .= $fieldObject->get_field_input();
 
                 $content .= '</div>';
             }

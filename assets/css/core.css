@@ -32,6 +32,7 @@
   29. RCL Form
   30. RCL Tables API
   31. TODO: old generation
+  32. manager content
 
 ------------------------*/
 
@@ -839,6 +840,17 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
     color: rgb(229, 57, 53);
     font-size: 16px;
     margin-right: 5px;
+}
+.rcl-custom-fields{
+    
+}
+.rcl-custom-fields .rcl-field{
+    
+}
+.rcl-custom-fields .type-uploader-value{
+    position:relative;
+    overflow:hidden;
+    display:block;
 }
 /*end*/
 
@@ -1664,3 +1676,27 @@ body .ssi-modalOuter .ssi-modalTitle {
     z-index: -99;
 }
 /*end*/
+
+/*
+  32. Manager Content
+*/
+.rcl-content{
+    /*overflow: hidden;*/
+    /*position: relative;*/
+}
+.rcl-content .rcl-content-group{
+    
+}
+.rcl-content .rcl-content-group .group-title{
+    font-weight:bold;
+    font-size:20px;
+}
+.rcl-content .rcl-content-group .group-areas{
+    display:flex;
+}
+.rcl-content .rcl-content-area{
+    width:100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+/**/

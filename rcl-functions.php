@@ -890,15 +890,24 @@ function rcl_update_timeaction_user(){
 
 }
 
-function rcl_get_button($ancor,$url,$args=false){
-    $button = '<a href="'.$url.'" ';
-    if(isset($args['attr'])&&$args['attr']) $button .= $args['attr'].' ';
-    if(isset($args['id'])&&$args['id']) $button .= 'id="'.$args['id'].'" ';
+function rcl_get_button($args, $depr_url = false, $depr_args = false){
+
+
+    if(is_array($args)){
+
+        $bttn = new Rcl_Button($args);
+        return $bttn->get_button();
+
+    }
+
+    $button = '<a href="'.$depr_url.'" ';
+    if(isset($depr_args['attr'])&&$depr_args['attr']) $button .= $depr_args['attr'].' ';
+    if(isset($depr_args['id'])&&$depr_args['id']) $button .= 'id="'.$depr_args['id'].'" ';
     $button .= 'class="recall-button ';
-    if(isset($args['class'])&&$args['class']) $button .= $args['class'];
+    if(isset($depr_args['class'])&&$depr_args['class']) $button .= $depr_args['class'];
     $button .= '">';
-    if(isset($args['icon'])&&$args['icon']) $button .= '<i class="rcli '.$args['icon'].'"></i>';
-    $button .= '<span>'.$ancor.'</span>';
+    if(isset($depr_args['icon'])&&$depr_args['icon']) $button .= '<i class="rcli '.$depr_args['icon'].'"></i>';
+    $button .= '<span>'.$args.'</span>';
     $button .= '</a>';
     return $button;
 }
@@ -1117,6 +1126,16 @@ function rcl_update_profile_fields($user_id, $profileFields = false){
 
                 }
             }
+
+            if($field['type'] == 'uploader' && $value){
+                //удаляем записи из временной библиотеки
+
+                foreach($value as $attach_id){
+                    rcl_delete_temp_media($attach_id);
+                }
+
+            }
+
         }
     }
 
@@ -1382,4 +1401,82 @@ function rcl_is_gutenberg() {
     }*/
 
     return true;
+}
+
+function rcl_is_ajax(){
+    return (defined( 'DOING_AJAX' ) && DOING_AJAX || isset($GLOBALS['wp']->query_vars['rest_route']));
+}
+
+function rcl_add_temp_media($args){
+    global $wpdb, $user_ID;
+
+    $args = wp_parse_args($args, array(
+        'media_id' => '',
+        'user_id' => $user_ID,
+        'uploader_id' => '',
+        'session_id' => $user_ID? '': $_COOKIE['PHPSESSID'],
+        'upload_date' => current_time('mysql')
+    ));
+
+    if(!$args['media_id']) return false;
+
+    if(!$wpdb->insert(RCL_PREF . 'temp_media', $args)) return false;
+
+    do_action('rcl_add_temp_media', $args['media_id']);
+
+    return $args['media_id'];
+}
+
+function rcl_update_temp_media($update, $where){
+    global $wpdb;
+
+    return $wpdb->update(RCL_PREF . 'temp_media', $update, $where);
+
+}
+
+function rcl_delete_temp_media($media_id){
+    global $wpdb;
+
+    return $wpdb->query("DELETE FROM ".RCL_PREF."temp_media WHERE media_id = '$media_id'");
+}
+
+function rcl_delete_temp_media_by_args($args){
+
+    $medias = rcl_get_temp_media($args);
+
+    if(!$medias) return false;
+
+    foreach($medias as $media){
+        rcl_delete_temp_media($media->media_id);
+    }
+
+}
+
+function rcl_get_temp_media($args = false){
+    $Query = new Rcl_Temp_Media();
+    return $Query->get_results($args);
+}
+
+add_action('delete_attachment', 'rcl_delete_attachment_temp_gallery', 10);
+function rcl_delete_attachment_temp_gallery($attachment_id){
+    rcl_delete_temp_media($attachment_id);
+}
+
+add_action('rcl_cron_twicedaily', 'rcl_delete_daily_old_temp_attachments', 10);
+function rcl_delete_daily_old_temp_attachments(){
+
+    $medias = rcl_get_temp_media(array(
+        'date_query' => array(
+            array(
+                'last' => '1 DAY'
+            )
+        )
+    ));
+
+    if(!$medias) return false;
+
+    foreach($medias as $media){
+        wp_delete_attachment($media->media_id, true);
+    }
+
 }

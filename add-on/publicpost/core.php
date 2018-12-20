@@ -1,36 +1,18 @@
 <?php
 
-function rcl_get_custom_post_meta($post_id){
-
-    $get_fields = rcl_get_custom_fields($post_id);
-
-    if($get_fields){
-        $show_custom_field = '';
-        $cf = new Rcl_Custom_Fields();
-        foreach($get_fields as $custom_field){
-            $custom_field = apply_filters('rcl_custom_post_meta',$custom_field);
-            if(!$custom_field||!isset($custom_field['slug'])||!$custom_field['slug']) continue;
-            $p_meta = get_post_meta($post_id,$custom_field['slug'],true);
-            $show_custom_field .= $cf->get_field_value($custom_field,$p_meta);
-        }
-
-        return $show_custom_field;
-    }
-}
-
 function rcl_get_postslist($post_type,$type_name){
     global $user_LK;
-    
-    if (!class_exists('Rcl_Postlist')) 
+
+    if (!class_exists('Rcl_Postlist'))
         include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
-    
+
     $list = new Rcl_Postlist($user_LK,$post_type,$type_name);
-    
+
     return $list->get_postlist_block();
-    
+
 }
 
-function rcl_tab_postform($master_id){    
+function rcl_tab_postform($master_id){
     return do_shortcode('[public-form form_id="'.rcl_get_option('form-lk',1).'"]');
 }
 
@@ -88,15 +70,15 @@ function rcl_get_editor_content($post_content){
     remove_filter('the_content','add_button_bmk_in_content',20);
     remove_filter('the_content','get_notifi_bkms',20);
     remove_filter('the_content','rcl_get_edit_post_button',999);
-    
+
     $content = apply_filters('the_content',$post_content);
 
     return $content;
-    
+
 }
 
 function rcl_is_limit_editing($post_date){
-    
+
     $timelimit = apply_filters('rcl_time_editing',rcl_get_option('time_editing'));
 
     if($timelimit){
@@ -116,38 +98,37 @@ function rcl_get_custom_fields_edit_box($post_id, $post_type = false, $form_id =
         'post_id' => $post_id,
         'form_id' => $form_id
     ));
-    
+
     $fields = $RclForm->get_custom_fields();
-    
+
     if(!$fields) return false;
-    
-    $CF = new Rcl_Custom_Fields();
-    
+
     $content = '<div class="rcl-custom-fields-box">';
 
     foreach($fields as $key => $field){
-        
+
         if($key === 'options' || !isset($field['slug'])) continue;
 
-        $star = ($field['required']==1)? '<span class="required">*</span> ': '';
-        $postmeta = ($post_id)? get_post_meta($post_id,$field['slug'],1):'';
-        
+        $field['value'] = ($post_id)? get_post_meta($post_id,$field['slug'],1):'';
+
+        $fieldObject = Rcl_Field::setup($field);
+
         $content .= '<div class="rcl-custom-field">';
 
-            $content .= '<label>'.$CF->get_title($field).$star.'</label>';
-            
+            $content .= '<label>'.$fieldObject->get_title($field).'</label>';
+
             $content .= '<div class="field-value">';
-                $content .= $CF->get_input($field,$postmeta);
+                $content .= $fieldObject->get_field_input();
             $content .= '</div>';
-            
+
         $content .= '</div>';
-        
+
     }
 
     $content .= '</div>';
-    
+
     return $content;
-    
+
 }
 
 function rcl_update_post_custom_fields($post_id,$id_form=false){
@@ -158,30 +139,25 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
 
     $post = get_post($post_id);
 
-    $formFields = new Rcl_Public_Form_Fields(array(
-        'post_type' => $post->post_type,
+    $formFields = new Rcl_Public_Form_Fields($post->post_type, array(
         'form_id' => $id_form
     ));
-    
+
     $fields = $formFields->get_custom_fields();
 
     if($fields){
 
         $POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-        foreach($fields as $field){
-            
-            $slug = $field['slug'];
-            $value = isset($POST[$slug])? $POST[$slug]: false;
+        foreach($fields as $field_id => $field){
 
-            if($field['type']=='checkbox'){
+            $value = isset($POST[$field_id])? $POST[$field_id]: false;
+
+            if($field->type == 'checkbox'){
                 $vals = array();
-                
-                if(isset($field['field_select']))
-                    $field['values'] = rcl_edit_old_option_fields($field['field_select'], $field['type']);
 
-                $count_field = count($field['values']);
-                
+                $count_field = count($field->values);
+
                 if($value && is_array($value)){
                     foreach($value as $val){
                         for($a=0;$a<$count_field;$a++){
@@ -191,49 +167,60 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
                         }
                     }
                 }
-                
+
                 if($vals){
-                    update_post_meta($post_id, $slug, $vals);
+                    update_post_meta($post_id, $field_id, $vals);
                 }else{
-                    delete_post_meta($post_id, $slug);
+                    delete_post_meta($post_id, $field_id);
                 }
 
-            }else if($field['type']=='file'){
+            }else if($field->type == 'file'){
 
-                $attach_id = rcl_upload_meta_file($field,$post->post_author,$post_id);
-                
-                if($attach_id) 
-                    update_post_meta($post_id, $slug, $attach_id);
+                $attach_id = usp_upload_meta_file($field,$post->post_author,$post_id);
+
+                if($attach_id)
+                    update_post_meta($post_id, $field_id, $attach_id);
 
             }else{
 
                 if($value){
-                    update_post_meta($post_id, $slug, $value);
+                    update_post_meta($post_id, $field_id, $value);
                 }else{
-                    if(get_post_meta($post_id, $slug, 1)) 
-                            delete_post_meta($post_id, $slug);
+                    if(get_post_meta($post_id, $field_id, 1))
+                            delete_post_meta($post_id, $field_id);
                 }
 
             }
+
+            if($field->type == 'uploader' && $value){
+                //удаляем записи из временной библиотеки
+
+                foreach($value as $attach_id){
+                    rcl_delete_temp_media($attach_id);
+                }
+
+            }
+
         }
+
     }
 }
 
 rcl_ajax_action('rcl_save_temp_async_uploaded_thumbnail', true);
 function rcl_save_temp_async_uploaded_thumbnail(){
     rcl_verify_ajax_nonce();
-    
+
     $attachment_id = intval($_POST['attachment_id']);
     $attachment_url = $_POST['attachment_url'];
-    
+
     if(!$attachment_id || !$attachment_url){
         wp_send_json(array(
             'error' => __('Error','wp-recall')
         ));
     }
-    
+
     rcl_update_tempgallery($attachment_id, $attachment_url);
-    
+
     wp_send_json(array(
         'save' => true
     ));
@@ -259,23 +246,23 @@ function rcl_update_tempgallery($attach_id,$attach_url){
 }
 
 function rcl_get_attachment_box($attachment_id, $mime = 'image', $addToClick = true){
-    
+
     if($mime=='image'){
-        
+
         $small_url = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
 
         $image = '<img src="'.$small_url[0].'">';
-        
+
         if($addToClick){
-            
-            if($default = rcl_get_option('default_size_thumb')) 
+
+            if($default = rcl_get_option('default_size_thumb'))
                 $sizes = wp_get_attachment_image_src( $attachment_id, $default );
-            else 
+            else
                 $sizes = $small_url;
-            
+
             $full_url = wp_get_attachment_image_src( $attachment_id, 'full' );
             $act_sizes = wp_constrain_dimensions($full_url[1],$full_url[2],$sizes[1],$sizes[2]);
-            
+
             return '<a onclick="rcl_add_image_in_form(this,\'<a href='.$full_url[0].'><img height='.$act_sizes[1].' width='.$act_sizes[0].' class=aligncenter  src='.$full_url[0].'></a>\');return false;" href="#">'.$image.'</a>';
         }else{
             return $image;
@@ -284,13 +271,13 @@ function rcl_get_attachment_box($attachment_id, $mime = 'image', $addToClick = t
     }else{
 
         $image = wp_get_attachment_image( $attachment_id, array(100,100),true );
-        
+
         if($addToClick){
-            
+
             $_post = get_post( $attachment_id );
-        
+
             $url = wp_get_attachment_url( $attachment_id );
-            
+
             return '<a href="#" onclick="rcl_add_image_in_form(this,\'<a href='.$url.'>'.$_post->post_title.'</a>\');return false;">'.$image.'</a>';
         }else{
             return $image;
@@ -300,14 +287,14 @@ function rcl_get_attachment_box($attachment_id, $mime = 'image', $addToClick = t
 }
 
 function rcl_get_html_attachment($attach_id, $mime_type, $addToClick = true){
-    
+
     $mime = explode('/',$mime_type);
 
     $content = "<li id='attachment-$attach_id' class='post-attachment attachment-$mime[0]' data-mime='$mime[0]' data-attachment-id='$attach_id'>";
     $content .= rcl_button_fast_delete_post($attach_id);
     $content .= sprintf("<label>%s</label>",apply_filters('rcl_post_attachment_html',rcl_get_attachment_box($attach_id,$mime[0], $addToClick),$attach_id,$mime));
     $content .= "</li>";
-            
+
     return $content;
 }
 

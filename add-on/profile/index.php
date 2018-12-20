@@ -70,28 +70,27 @@ function rcl_show_custom_fields_profile($master_id){
 
     $get_fields = rcl_get_profile_fields();
 
-    $show_custom_field = '';
+    $content = '';
 
     if($get_fields){
 
         $get_fields = stripslashes_deep($get_fields);
 
-        $cf = new Rcl_Custom_Fields();
-
-        foreach((array)$get_fields as $custom_field){
-            $custom_field = apply_filters('custom_field_profile',$custom_field);
-            if(!$custom_field) continue;
-            $slug = isset($custom_field['name'])? $custom_field['name']: $custom_field['slug'];
-            if(isset($custom_field['req'])&&$custom_field['req']==1){
-                $meta = get_the_author_meta($slug,$master_id);
-                $show_custom_field .= $cf->get_field_value($custom_field,$meta);
+        foreach((array)$get_fields as $field){
+            $field = apply_filters('custom_field_profile',$field);
+            if(!$field) continue;
+            $slug = isset($field['name'])? $field['name']: $field['slug'];
+            if(isset($field['req'])&&$field['req']==1){
+                $field['value'] = get_the_author_meta($slug,$master_id);
+                $fieldObject = Rcl_Field::setup($field);
+                $content .= $fieldObject->get_field_value(true);
             }
         }
     }
 
-    if(!$show_custom_field) return false;
+    if(!$content) return false;
 
-    return '<div class="show-profile-fields">'.$show_custom_field.'</div>';
+    return '<div class="show-profile-fields">'.$content.'</div>';
 }
 
 if(!is_admin()) add_action('wp','rcl_update_profile_notice');
@@ -188,8 +187,6 @@ function rcl_tab_profile_content($master_id){
     $content = '<h3>'.__('User profile','wp-recall').' '.$userdata->display_name.'</h3>
     <form name="profile" id="your-profile" action="" method="post"  enctype="multipart/form-data">';
 
-    $CF = new Rcl_Custom_Fields();
-
     $profileFields = stripslashes_deep($profileFields);
 
     $hiddens = array();
@@ -205,19 +202,20 @@ function rcl_tab_profile_content($master_id){
             $hiddens[] = $field; continue;
         }
 
-        $value = (isset($userdata->$slug))? $userdata->$slug: false;
+        $fieldObject = Rcl_Field::setup($field);
+
+        $fieldObject->set_prop('value', (isset($userdata->$slug))? $userdata->$slug: false);
 
         if($slug == 'email')
-            $value = get_the_author_meta('email',$user_ID);
+            $fieldObject->set_prop('value', get_the_author_meta('email',$user_ID));
 
         if($field['slug'] != 'show_admin_bar_front' && !isset($field['value_in_key']) )
-            $field['value_in_key'] = true;
+            $fieldObject->set_prop('value_in_key', true);
 
-        $star = (isset($field['required'])&&$field['required']==1)? ' <span class="required">*</span> ': '';
-
-        $label = sprintf('<label>%s%s:</label>',$CF->get_title($field),$star);
-
-        $Table->add_row(array($label, $CF->get_input($field, $value)), array('id'=>array('profile-field-'.$slug)));
+        $Table->add_row(array(
+            $fieldObject->get_title(),
+            $fieldObject->get_field_input()
+        ), array('id'=>array('profile-field-'.$slug)));
 
     }
 

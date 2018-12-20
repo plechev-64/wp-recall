@@ -3,6 +3,65 @@ var rcl_public_form = {
 };
 
 jQuery(document).ready(function($) {
+    
+    if(RclUploaders.isset('thumbnail')){
+        
+        RclUploaders.get('thumbnail').appendInGallery = function(file){
+            if(file['html']){
+                jQuery('#rcl-upload-gallery-' + this.uploader_id).html(file['html']).last().animateCss('flipInX');
+                jQuery('#rcl-upload-gallery-post').append(file['html']);
+                jQuery('#rcl-upload-gallery-post div').last().animateCss('flipInX');
+                jQuery('#post-thumbnail').val(file['id']);
+            }
+        };
+        
+        if(RclUploaders.isset('post')){
+            
+            RclUploaders.get('thumbnail').filterErrors = function(errors, files, uploader){
+                
+                var postUploader = RclUploaders.get('post');
+                
+                var inGalleryNow = jQuery('#rcl-upload-gallery-post .gallery-attachment').length + 1;
+ 
+                if(inGalleryNow > postUploader.options.max_files){
+                    errors.push('Превышено количество загруженных файлов. Макс: ' + postUploader.options.max_files);
+                }
+                
+                return errors;
+            };
+            
+        }
+    
+    }
+
+    $('.rcl-public-form #insert-media-button').click(function(e) {
+        
+        var editor = $(this).data('editor');
+        
+        var parent_id = ((rcl_url_params['rcl-post-edit']))? rcl_url_params['rcl-post-edit']: 0;
+        
+        wp.media.model.settings.post.id = parent_id;
+        
+        wp.media.featuredImage.set = function(thumbnail_id){
+
+            rcl_set_post_thumbnail(thumbnail_id, parent_id);
+    
+        };
+
+        wp.media.editor.open(editor);
+        
+        return false;
+        
+    });
+
+    jQuery('#rcl-delete-post .delete-toggle').click(function() {
+        jQuery(this).next().toggle('fast');
+        return false;
+    });
+
+});
+
+/*jQuery(document).ready(function($) {
 
     $('.rcl-public-form #insert-media-button').click(function(e) {
         
@@ -47,7 +106,7 @@ jQuery(document).ready(function($) {
         else return false;
     });
 
-});
+});*/
 
 rcl_add_action('rcl_init_public_form','rcl_setup_async_upload');
 function rcl_setup_async_upload(){
@@ -504,4 +563,53 @@ function rcl_add_image_in_form(e,content){
     tinyMCE.execCommand("mceInsertContent", false, content);
     
     return false;
+}
+
+function rcl_add_attachment_in_editor(attach_id, e){
+    
+    var image = jQuery(e).data('html');
+    var src  = jQuery(e).data('src');
+    
+    if(src)
+        image = '<a href="'+src+'">'+image+'</a>';
+    
+    var post_type = jQuery(e).parents("form").data("post_type");           
+
+    jQuery("#contentarea-" + post_type).insertAtCaret(image + "&nbsp;");
+    
+    tinyMCE.execCommand("mceInsertContent", false, image);
+    
+    return false;
+}
+
+function rcl_set_post_thumbnail(attach_id, parent_id, e){
+    
+    rcl_preloader_show(jQuery('.gallery-attachment-'+attach_id));
+    
+    rcl_ajax({
+        data: {
+            action: 'rcl_set_post_thumbnail',
+            thumbnail_id: attach_id,
+            parent_id: parent_id
+        }, 
+        success: function(result){
+            jQuery('#rcl-upload-gallery-thumbnail').html(result['html']).animateCss('flipInX');
+            jQuery('#post-thumbnail').val(attach_id);
+        }
+    });
+
+}
+
+function rcl_switch_attachment_in_gallery(attachment_id, e){
+    
+    var button = jQuery('.rcl-switch-gallery-button-' + attachment_id);
+    
+    if(button.children('i').hasClass('fa-toggle-off')){       
+        button.children('input').val(attachment_id);
+    }else{
+        button.children('input').val('');
+    }
+    
+    button.children('i').toggleClass('fa-toggle-off fa-toggle-on');
+    
 }

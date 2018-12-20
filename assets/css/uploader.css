@@ -1,0 +1,61 @@
+.rcl-uploader{
+    margin: 10px 0;
+}
+
+body .rcl-bttn.rcl-uploader-button{
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin: 0 10px 0 0!important;
+}
+.rcl-uploader-button input{
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    cursor: pointer;
+    height: 100%;
+}
+.rcl-uploader .rcl-uploader-button-box{
+    padding: 3px;
+}
+
+.rcl-dropzone{
+    background: #ccc;
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+}
+.rcl-dropzone .dropzone-upload-area{
+    padding: 20px;
+    border: 3px dashed #fff;
+    border-style: dashed;
+}
+
+.rcl-uploader .notice,
+.rcl-uploader-button{
+    vertical-align: middle;
+}
+
+.rcl-upload-gallery{
+    /* display: flex; */
+}
+.rcl-upload-gallery img{
+    vertical-align: middle;
+}
+.rcl-upload-gallery .gallery-attachment{
+    position: relative;
+    margin: 3px;
+    border: 1px solid #eaeaea;
+    width: 110px;
+    display: inline-block;
+}
+.rcl-upload-gallery .attachment-manager{
+    position: absolute;
+}
+body  .rcl-upload-gallery .attachment-manager > a{
+    
+}
+body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico{
+    padding: 5px;
+}
