@@ -25,6 +25,10 @@ class Rcl_Field_Abstract {
     public $input_name;
     public $parent;
     public $rand;
+    public $class;
+    public $required;
+    public $maxlength;
+    public $childrens;
     public $unique_id = false;
     public $value_in_key = null;
     public $must_delete = true;
@@ -32,6 +36,8 @@ class Rcl_Field_Abstract {
     public $_new;
 
     function __construct($args) {
+
+        if(!isset($args['slug'])) return false;
 
         $this->id = $args['slug'];
 
@@ -144,7 +150,7 @@ class Rcl_Field_Abstract {
             $inputField .= '<script>rcl_init_field_maxlength("'.$this->input_id.'");</script>';
         }
 
-        $content .= '<div class="'.implode(' ', $classes).'">'
+        $content = '<div class="'.implode(' ', $classes).'">'
                     . '<div class="rcl-field-core">'
                         . $inputField
                     . '</div>'
@@ -155,7 +161,7 @@ class Rcl_Field_Abstract {
 
     }
 
-    function get_box($args = false){
+    function get_field_html($args = false){
 
         $classes = array('rcl-field', 'rcl-custom-field', 'type-'.$this->type.'-field');
 
@@ -229,12 +235,9 @@ class Rcl_Field_Abstract {
         return 'class="'.implode(' ',$class).'"';
     }
 
-    function get_value($value = false){
+    function get_value(){
 
-        if(!$value)
-            $value = $this->value;
-
-        if(!$value) return false;
+        if(!$this->value) return false;
 
         return $value;
 

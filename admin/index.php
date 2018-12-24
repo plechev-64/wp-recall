@@ -426,77 +426,6 @@ function rcl_send_addon_activation_notice($addon_id, $addon_headers){
     );
 }
 
-rcl_ajax_action('rcl_manager_get_new_field', false, false);
-function rcl_manager_get_new_field(){
-
-    $managerProps = (array)json_decode(wp_unslash($_POST['props']));
-
-    $Manager = new Rcl_Fields_Manager($managerProps->manager_id, $managerProps);
-
-    $field_id = 'newField-'.rand(1,10000);
-
-    $Manager->add_field(array(
-        'slug' => $field_id,
-        'type' => $Manager->new_field_type? $Manager->new_field_type: $Manager->types[0],
-        '_new' => true
-    ));
-
-    wp_send_json(array(
-        'content' => $Manager->get_field_manager($field_id)
-    ));
-
-}
-
-rcl_ajax_action('rcl_manager_get_custom_field_options', false, false);
-function rcl_manager_get_custom_field_options(){
-
-    $new_type = $_POST['newType'];
-    $old_type = $_POST['oldType'];
-    $field_id = $_POST['fieldId'];
-
-    $managerProps = (array)json_decode(wp_unslash($_POST['manager']));
-
-    $Manager = new Rcl_Fields_Manager($managerProps['manager_id'],$managerProps);
-
-    //$Manager->setup_fields();
-
-    if(stristr($field_id, 'newField') !== FALSE){
-
-        $Manager->add_field(array(
-            'slug' => $field_id,
-            'type' => $new_type,
-            '_new' => true
-        ));
-
-    }else{
-
-        $Manager->set_field_prop($field_id, 'type', $new_type);
-
-        $Manager->fields[$field_id] = $Manager::setup((array)$Manager->fields[$field_id]);
-
-    }
-
-    $content = $Manager->get_field_options_content($field_id);
-
-    $multiVars = array(
-        'select',
-        'radio',
-        'checkbox',
-        'multiselect'
-    );
-
-    if(in_array($new_type,$multiVars)){
-
-       $content .= $Manager->sortable_dynamic_values_script($field_id);
-
-    }
-
-    wp_send_json(array(
-        'content' => $content
-    ));
-
-}
-
 rcl_ajax_action('rcl_manager_update_fields', false);
 function rcl_manager_update_fields(){
 
@@ -639,10 +568,84 @@ function rcl_manager_update_fields(){
 
 }
 
+rcl_ajax_action('rcl_manager_get_new_field', false, false);
+function rcl_manager_get_new_field(){
+
+    //$managerProps = (array)json_decode(wp_unslash($_POST['props']));
+    $managerProps = $_POST['props'];
+
+    $Manager = new Rcl_Fields_Manager($managerProps['manager_id'], $managerProps);
+
+    $field_id = 'newField-'.rand(1,10000);
+
+    $Manager->add_field(array(
+        'slug' => $field_id,
+        'type' => $Manager->types[0],
+        '_new' => true
+    ));
+
+    wp_send_json(array(
+        'content' => $Manager->get_field_manager($field_id)
+    ));
+
+}
+
+rcl_ajax_action('rcl_manager_get_custom_field_options', false, false);
+function rcl_manager_get_custom_field_options(){
+
+    $new_type = $_POST['newType'];
+    $old_type = $_POST['oldType'];
+    $field_id = $_POST['fieldId'];
+
+    //$managerProps = (array)json_decode(wp_unslash($_POST['manager']));
+    $managerProps = $_POST['manager'];
+
+    $Manager = new Rcl_Fields_Manager($managerProps['manager_id'],$managerProps);
+
+    //$Manager->setup_fields();
+
+    if(stristr($field_id, 'newField') !== FALSE){
+
+        $Manager->add_field(array(
+            'slug' => $field_id,
+            'type' => $new_type,
+            '_new' => true
+        ));
+
+    }else{
+
+        $Manager->set_field_prop($field_id, 'type', $new_type);
+
+        $Manager->fields[$field_id] = $Manager::setup((array)$Manager->fields[$field_id]);
+
+    }
+
+    $content = $Manager->get_field_options_content($field_id);
+
+    $multiVars = array(
+        'select',
+        'radio',
+        'checkbox',
+        'multiselect'
+    );
+
+    if(in_array($new_type,$multiVars)){
+
+       $content .= $Manager->sortable_dynamic_values_script($field_id);
+
+    }
+
+    wp_send_json(array(
+        'content' => $content
+    ));
+
+}
+
 rcl_ajax_action('rcl_manager_get_new_area', false);
 function rcl_manager_get_new_area(){
 
-    $managerProps = (array)json_decode(wp_unslash($_POST['props']));
+    //$managerProps = (array)json_decode(wp_unslash($_POST['props']));
+    $managerProps = $_POST['props'];
 
     $Manager = new Rcl_Fields_Manager('any', $managerProps);
 
@@ -655,7 +658,8 @@ function rcl_manager_get_new_area(){
 rcl_ajax_action('rcl_manager_get_new_group', false);
 function rcl_manager_get_new_group(){
 
-    $managerProps = (array)json_decode(wp_unslash($_POST['props']));
+    //$managerProps = (array)json_decode(wp_unslash($_POST['props']));
+    $managerProps = $_POST['props'];
 
     $Manager = new Rcl_Fields_Manager('any', $managerProps);
 

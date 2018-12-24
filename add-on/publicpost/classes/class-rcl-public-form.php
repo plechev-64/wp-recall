@@ -56,6 +56,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         if(!$this->form_id)
             $this->form_id = 1;
 
+        add_filter('rcl_custom_fields', array($this, 'init_public_form_fields_filter'), 10);
+
         parent::__construct($this->post_type, array(
             'form_id' => $this->form_id
         ));
@@ -76,15 +78,19 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         if($this->user_can['publish'] && !$user_ID)
             add_filter('rcl_public_form_fields',array($this,'add_guest_fields'), 10);
 
-        $this->fields = $this->get_public_fields();
+        //$this->fields = $this->get_public_fields();
 
         $this->form_object = $this->get_object_form();
 
-        if($this->is_active_field('post_thumbnail'))
-            add_filter('rcl_post_attachment_html','rcl_add_attachment_thumbnail_button', 10, 3);
+        //if($this->is_active_field('post_thumbnail'))
+            //add_filter('rcl_post_attachment_html','rcl_add_attachment_thumbnail_button', 10, 3);
 
 
 
+    }
+
+    function init_public_form_fields_filter($fields){
+        return apply_filters('rcl_public_form_fields', $fields, $this->get_object_form(), $this);
     }
 
     function init_properties($args){
@@ -105,11 +111,11 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
         $dataForm['post_content'] = ($this->post_id)? $this->post->post_content: '';
         $dataForm['post_excerpt'] = ($this->post_id)? $this->post->post_excerpt: '';
         $dataForm['post_title'] = ($this->post_id)? $this->post->post_title: '';
-        $dataForm['file_types'] = 'jpg, png, gif';
+        /*$dataForm['file_types'] = 'jpg, png, gif';
         $dataForm['max_size'] = 2;
-        $dataForm['max_files'] = 10;
+        $dataForm['max_files'] = 10;*/
 
-        foreach($this->fields as $field_id => $field){
+        /*foreach($this->fields as $field_id => $field){
 
             if($field_id == 'post_uploader'){
 
@@ -125,7 +131,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                 break;
             }
 
-        }
+        }*/
 
         $dataForm = (object)$dataForm;
 
@@ -134,7 +140,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
 
     function get_public_fields(){
 
-        return apply_filters('rcl_public_form_fields', $this->fields, $this->get_object_form());
+        return apply_filters('rcl_public_form_fields', $this->fields, $this->get_object_form(), $this);
 
     }
 
@@ -255,7 +261,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
 
     }
 
-    function get_form(){
+    function get_form($args = array()){
         global $user_ID;
 
         if($this->get_errors()){
@@ -371,7 +377,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
 
     }
 
-    function get_field_form($field_id){
+    function get_field_form($field_id, $args = false){
 
         $dataPost = $this->get_object_form();
 
@@ -438,11 +444,12 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
 
                     $postUploder = new Rcl_Uploader_Public_Form(array(
                         'post_parent' => $this->post_id,
-                        'form_id' => $this->form_id,
+                        'form_id' => intval($this->form_id),
                         'post_type' => $this->post_type,
-                        'file_types' => $field->get_prop('file_types'),
-                        'max_size' => $field->get_prop('max_size'),
-                        'max_files' => $field->get_prop('max_files'),
+                        'fix_editor' => ($gallery = $field->get_prop('gallery'))? 'contentarea-'.$this->post_type: false,
+                        'file_types' => ($types = $field->get_prop('file_types'))? $types: array('png','jpg'),
+                        'max_size' => ($maxSize = intval($field->get_prop('max_size')))? $maxSize: 512,
+                        'max_files' => ($maxFiles = intval($field->get_prop('max_files')))? $maxFiles: 10,
                         'required' => intval($field->get_prop('required'))
                     ));
 
@@ -484,9 +491,10 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
 
         $postUploder = new Rcl_Uploader_Post_Thumbnail(array(
             'form_id' => $this->form_id,
+            'fix_editor' => 'contentarea-'.$this->post_type,
             'post_type' => $this->post_type,
             'post_parent' => $this->post_id,
-            'max_size' => $field->get_prop('max_size'),
+            'max_size' => ($maxSize = intval($field->get_prop('max_size')))? $maxSize: 512,
             'required' => intval($field->get_prop('required'))
         ));
 
@@ -892,9 +900,9 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                 . 'post_type:"'.$obj->post_type.'",'
                 . 'post_id:"'.$obj->post_id.'",'
                 . 'post_status:"'.$obj->post_status.'",'
-                . 'file_types:"'.$obj->file_types.'",'
-                . 'max_size:"'.$obj->max_size.'",'
-                . 'max_files:"'.$obj->max_files.'",'
+                //. 'file_types:"'.$obj->file_types.'",'
+                //. 'max_size:"'.$obj->max_size.'",'
+                //. 'max_files:"'.$obj->max_files.'",'
                 . 'form_id:"'.$this->form_id.'"'
             . '});</script>';
 

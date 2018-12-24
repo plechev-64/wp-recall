@@ -19,17 +19,17 @@ class Rcl_Uploader_Public_Form extends Rcl_Uploader{
 
     function __construct($args){
 
-        $this->init_properties($args);
-
-        parent::__construct('post', array(
+        $args = wp_parse_args($args, array(
             'auto_upload' => true,
+            'manager_balloon' => true,
             'crop' => true,
+            'file_types' => 'jpg,png',
             'temp_media' => isset($args['post_parent']) && $args['post_parent']? false: true,
             'dropzone' => true,
             'multiple' => true
         ));
 
-        //wp_enqueue_script( 'avatar-uploader', USP_URL.'/functions/supports/js/uploader-avatar.js',false,true );
+        parent::__construct('post', $args);
 
     }
 
@@ -84,24 +84,6 @@ class Rcl_Uploader_Public_Form extends Rcl_Uploader{
         }
 
         return $this->get_gallery($imagIds);
-
-    }
-
-    function update_temporary_gallery($uploads){
-
-        $user_id = ($this->user_id)? $this->user_id: $_COOKIE['PHPSESSID'];
-
-        $gallery = get_site_option('rcl_temporary_gallery');
-
-        if(!$gallery) $gallery = array();
-
-        foreach($uploads as $upload){
-            $gallery[$user_id][] = $upload['id'];
-        }
-
-        update_site_option('rcl_temporary_gallery', $gallery);
-
-        return $gallery;
 
     }
 

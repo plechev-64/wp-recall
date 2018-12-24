@@ -3,7 +3,8 @@
 class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager{
 
     function __construct() {
-
+        global $wpdb;
+        
         add_filter('rcl_field_options', array($this, 'edit_field_options'), 10, 3);
         add_filter('rcl_manager_form_fields',array($this, 'add_users_page_option'), 10, 2);
 

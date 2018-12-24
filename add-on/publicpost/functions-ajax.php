@@ -9,7 +9,7 @@ function rcl_ajax_delete_post(){
     $post = get_post(intval($_POST['post_id']));
 
     if(!$post){
-        $log['success']=__('Material successfully removed!','wp-recall');
+        //$log['success']=__('Material successfully removed!','wp-recall');
         $log['post_type']='attachment';
     }else{
 
@@ -295,45 +295,8 @@ function rcl_set_post_thumbnail(){
 
 }
 
-add_action('rcl_upload', 'rcl_upload_thumbnail', 10, 2);
-function rcl_upload_thumbnail($uploads, $uploader){
-
-    if($uploader->uploader_id != 'thumbnail' || !isset($uploads[0]['id'])) return false;
-
-    $uploader = new Rcl_Uploader_Post_Thumbnail($uploader);
-
-    $thumbnail_id = $uploads[0]['id'];
-
-    if($uploader->post_parent){
-
-        update_post_meta($uploader->post_parent, '_thumbnail_id', $thumbnail_id);
-
-        wp_update_post(array(
-            'ID' => $thumbnail_id,
-            'post_parent' => $uploader->post_parent
-        ));
-
-    }else{
-
-        rcl_add_temp_media(array(
-            'media_id' => $thumbnail_id,
-            'uploader_id' => $uploader->uploader_id
-        ));
-
-    }
-
-    do_action('rcl_upload_thumbnail', $thumbnail_id, $uploader);
-
-    //$uploads[0]['html'] .= '<input type="hidden" name="post-thumbnail" value="'.$thumbnail_id.'">';
-
-    wp_send_json(array(
-        'uploads' => $uploads,
-        //'success' => __('Изображение успешно загружено!', 'wp-recall')
-    ));
-}
-
 //add_action('rcl_upload', 'rcl_upload_post', 10, 2);
-function rcl_upload_post($uploads, $uploader){
+/*function rcl_upload_post($uploads, $uploader){
 
     if($uploader->uploader_id != 'post') return false;
 
@@ -356,4 +319,4 @@ function rcl_upload_post($uploads, $uploader){
 
     do_action('rcl_upload_post', $uploads, $uploader);
 
-}
+}*/

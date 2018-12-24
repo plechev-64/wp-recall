@@ -347,7 +347,7 @@ class Rcl_Fields extends Rcl_Field{
 
         $content = '<div class="rcl-content-group">';
 
-        if($group['title'])
+        if(isset($group['title']) && $group['title'])
             $content .= '<div class="group-title">'.$group['title'].'</div>';
 
             $content .= '<div class="group-areas">';

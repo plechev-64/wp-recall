@@ -1,6 +1,6 @@
 <?php
 
-function rcl_insert_attachment($attachment,$image,$id_post=false){
+/*function rcl_insert_attachment($attachment,$image,$id_post=false){
     $attach_id = wp_insert_attachment( $attachment, $image['file'], $id_post );
     $attach_data = wp_generate_attachment_metadata( $attach_id, $image['file'] );
     wp_update_attachment_metadata( $attach_id, $attach_data );
@@ -8,9 +8,9 @@ function rcl_insert_attachment($attachment,$image,$id_post=false){
     if(!$id_post) rcl_update_tempgallery($attach_id,$image['url']);
 
     return rcl_get_html_attachment($attach_id,$attachment['post_mime_type']);
-}
+}*/
 
-function rcl_add_attachment_thumbnail_button($content,$attachment_id,$mime){
+/*function rcl_add_attachment_thumbnail_button($content,$attachment_id,$mime){
 
     if($mime[0] != 'image') return $content;
 
@@ -20,9 +20,9 @@ function rcl_add_attachment_thumbnail_button($content,$attachment_id,$mime){
 
     return $content;
 
-}
+}*/
 
-rcl_ajax_action('rcl_imagepost_upload', true);
+/*rcl_ajax_action('rcl_imagepost_upload', true);
 function rcl_imagepost_upload(){
     global $user_ID;
 
@@ -115,4 +115,4 @@ function rcl_imagepost_upload(){
 
     wp_send_json($res);
 
-}
+}*/

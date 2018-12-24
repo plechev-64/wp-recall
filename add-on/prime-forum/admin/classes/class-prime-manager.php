@@ -348,7 +348,7 @@ class PrimeManager extends Rcl_Fields_Manager{
 
     }
 
-    function get_field_manager($field_id){
+    function get_field_manager($field_id, $default = false){
 
         $field = $this->get_field($field_id);
 

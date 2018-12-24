@@ -14,14 +14,16 @@
  */
 
 add_action( 'wp_enqueue_scripts', 'rcl_uploader_scripts', 10);
+add_action( 'admin_init', 'rcl_uploader_scripts', 10);
 function rcl_uploader_scripts(){
     wp_enqueue_style( 'rcl-uploader-style', plugins_url( 'assets/css/uploader.css', dirname( __FILE__ )) );
-    wp_enqueue_script( 'rcl-uploader-scripts', plugins_url( 'assets/js/uploader.js', dirname( __FILE__ ) ), array('jquery'), USP_VERSION );
+    wp_enqueue_script( 'rcl-uploader-scripts', plugins_url( 'assets/js/uploader.js', dirname( __FILE__ ) ), array('jquery') );
 }
 
 class Rcl_Uploader {
 
     public $uploader_id = '';
+    public $fix_editor = false;
     public $required = false;
     public $action = 'rcl_upload';
     public $temp_media = false;
@@ -41,10 +43,15 @@ class Rcl_Uploader {
     public $crop = false;
     public $image_sizes = true;
     public $files = array();
+    public $mode_output = 'grid';
+    public $manager_balloon = false;
+    public $class_name = '';
 
     protected $accept = array('image/*');
 
     function __construct($uploader_id, $args = false){
+
+        rcl_sortable_scripts();
 
         if(!isset($args['user_id'])){
 
@@ -53,6 +60,8 @@ class Rcl_Uploader {
             $args['user_id'] = $user_ID;
 
         }
+
+        $args['class_name'] = get_class($this);
 
         $this->uploader_id = $uploader_id;
 
@@ -227,9 +236,10 @@ class Rcl_Uploader {
 
         }
 
-        $content = '<div id="rcl-upload-gallery-'.$this->uploader_id.'" class="rcl-upload-gallery">';
+        $content = '<div id="rcl-upload-gallery-'.$this->uploader_id.'" class="rcl-upload-gallery mode-'.$this->mode_output.' '.($this->manager_balloon? 'balloon-manager': 'simple-manager').'">';
 
         if($imagIds){
+            //$content .= '<div class="ui-sortable-placeholder"></div>';
             foreach($imagIds as $imagId){
                 $content .= $this->gallery_attachment($imagId);
             }
@@ -245,7 +255,9 @@ class Rcl_Uploader {
 
         if(!get_post_type($attach_id)) return false;
 
-        if(wp_attachment_is_image($attach_id)){
+        $is_image = wp_attachment_is_image($attach_id)? true: false;
+
+        if($is_image){
 
             $image = wp_get_attachment_image( $attach_id, 'thumbnail');
 
@@ -257,11 +269,15 @@ class Rcl_Uploader {
 
         if(!$image) return false;
 
-        $content = '<div class="gallery-attachment gallery-attachment-'.$attach_id.'" id="gallery-'.$this->uploader_id.'-attachment-'.$attach_id.'">';
-
-            $content .= $this->get_attachment_manager($attach_id);
+        $content = '<div class="gallery-attachment gallery-attachment-'.$attach_id.' '.($is_image? 'type-image': 'type-file').'" id="gallery-'.$this->uploader_id.'-attachment-'.$attach_id.'">';
 
             $content .= $image;
+
+            $content .= '<div class="attachment-title">';
+            $content .= basename(get_post_field('guid', $attach_id));
+            $content .= '</div>';
+
+            $content .= $this->get_attachment_manager($attach_id);
 
             if($this->input_attach)
                 $content .= '<input type="hidden" name="'.$this->input_attach.'[]" value="'.$attach_id.'">';
@@ -272,19 +288,64 @@ class Rcl_Uploader {
 
     }
 
+    function add_fix_editor_buttons($items, $attachment_id){
+
+        $isImage = wp_attachment_is_image($attachment_id);
+
+        $fileSrc = 0;
+
+        if($isImage){
+
+            $size = ($default = rcl_get_option('public_form_thumb'))? $default: 'large';
+
+            $fileHtml = wp_get_attachment_image( $attachment_id, $size, false, array('srcset' => ' ') );
+
+            $fullSrc = wp_get_attachment_image_src( $attachment_id, 'full' );
+            $fileSrc = $fullSrc[0];
+
+        }else{
+
+            $_post = get_post( $attachment_id );
+
+            $fileHtml = $_post->post_title;
+
+            $fileSrc = wp_get_attachment_url( $attachment_id );
+
+        }
+
+        $items[] = array(
+            'icon' => 'fa-newspaper-o',
+            'title' => __('Добавить в редактор', 'wp-recall'),
+            'onclick' => 'rcl_add_attachment_in_editor('.$attachment_id.',"'.$this->fix_editor.'",this);return false;',
+            'data' => array(
+                'html' => $fileHtml,
+                'src' => $fileSrc
+            )
+        );
+
+        return $items;
+
+    }
+
     function get_attachment_manager($attach_id){
 
-        $manager_items = apply_filters('rcl_uploader_manager_items', array(
+        $items = array(
             array(
                 'icon' => 'fa-trash',
                 'title' => __('Удалить файл', 'wp-recall'),
                 'onclick' => 'rcl_delete_attachment('.$attach_id.','.$this->post_parent.',this);return false;'
             )
-        ), $attach_id, $this);
+        );
+
+        if($this->fix_editor){
+            $items = $this->add_fix_editor_buttons($items, $attach_id);
+        }
+
+        $manager_items = apply_filters('rcl_uploader_manager_items', $items, $attach_id, $this);
 
         if(!$manager_items) return false;
 
-        $content .= '<div class="attachment-manager">';
+        $content = '<div class="attachment-manager '.($this->manager_balloon? 'rcl-balloon': '').'">';
 
             foreach($manager_items as $item){
                 $item['type'] = 'simple';
@@ -293,6 +354,10 @@ class Rcl_Uploader {
             }
 
         $content .= '</div>';
+
+        if($this->manager_balloon){
+            $content = '<div class="attachment-manager-balloon rcl-ballon-hover"><i class="rcli fa-cogs" aria-hidden="true"></i>'.$content.'</div>';
+        }
 
         return $content;
 
@@ -419,8 +484,8 @@ class Rcl_Uploader {
 
         list($width,$height) = getimagesize($image_src);
 
-        $crop = $_POST['crop_data'];
-        $size = $_POST['image_size'];
+        $crop = isset($_POST['crop_data'])? $_POST['crop_data']: false;
+        $size = isset($_POST['image_size'])? $_POST['image_size']: false;
 
         if(!$crop) return false;
 

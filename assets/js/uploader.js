@@ -160,7 +160,20 @@ function RclUploader(props){
         
         this.input.fileupload(options);
         
+        this.initSortable();
+        
     };
+    
+    this.initSortable = function(){
+        jQuery("#rcl-upload-gallery-" + this.uploader_id).sortable({
+            //connectWith: "#rcl-upload-gallery-" + this.uploader_id,
+            containment: "parent",
+            //handle: ".field-control .control-move",
+            cursor: "move",
+            placeholder: "ui-sortable-placeholder",
+            distance: 5
+        });
+    }
     
     this.processstart = function(e, data){
         
@@ -292,7 +305,8 @@ function RclUploader(props){
     this.appendInGallery = function(file){
         
         if(file['html']){
-            jQuery('#rcl-upload-gallery-' + this.uploader_id).append(file['html']).last().animateCss('flipInX');
+            jQuery('#rcl-upload-gallery-' + this.uploader_id).append(file['html']);
+            jQuery('#rcl-upload-gallery-' + this.uploader_id + ' .gallery-attachment').last().animateCss('flipInX');
         }
     };
     

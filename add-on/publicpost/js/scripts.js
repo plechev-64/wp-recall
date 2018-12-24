@@ -1,6 +1,6 @@
-var rcl_public_form = {
+/*var rcl_public_form = {
     required: new Array()
-};
+};*/
 
 jQuery(document).ready(function($) {
     
@@ -24,7 +24,7 @@ jQuery(document).ready(function($) {
                 var inGalleryNow = jQuery('#rcl-upload-gallery-post .gallery-attachment').length + 1;
  
                 if(inGalleryNow > postUploader.options.max_files){
-                    errors.push('Превышено количество загруженных файлов. Макс: ' + postUploader.options.max_files);
+                    errors.push('В основной галерее максимальное количество файлов. Макс: ' + postUploader.options.max_files);
                 }
                 
                 return errors;
@@ -128,15 +128,15 @@ function rcl_setup_async_upload(){
     
 }
 
-rcl_add_action('rcl_init','rcl_init_click_post_thumbnail');
+/*rcl_add_action('rcl_init','rcl_init_click_post_thumbnail');
 function rcl_init_click_post_thumbnail(){
     jQuery(".rcl-public-form").on('click','.thumb-foto',function(){		
         jQuery(".rcl-public-form .thumb-foto").removeAttr("checked");
         jQuery(this).attr("checked",'checked');			
     });
-}
+}*/
 
-function rcl_get_post_thumbnail_html(thumbnail_id){
+/*function rcl_get_post_thumbnail_html(thumbnail_id){
     
     rcl_preloader_show(jQuery('.rcl-public-form'));
     
@@ -151,14 +151,14 @@ function rcl_get_post_thumbnail_html(thumbnail_id){
         }
     });
     
-}
+}*/
 
-function rcl_remove_post_thumbnail(){
+/*function rcl_remove_post_thumbnail(){
     jQuery('#rcl-thumbnail-post .thumbnail-image').animateCss('flipOutX',function(e){
         jQuery(e).empty();
     });
     jQuery('#rcl-thumbnail-post .thumbnail-id').val('0');
-}
+}*/
 
 function rcl_delete_post(element){
     
@@ -187,7 +187,7 @@ function rcl_delete_post(element){
     return false;
 }
 
-rcl_add_action('rcl_delete_post','rcl_delete_thumbnail_attachment');
+/*rcl_add_action('rcl_delete_post','rcl_delete_thumbnail_attachment');
 function rcl_delete_thumbnail_attachment(data){
     
     if(data['post_type'] != 'attachment') return false;
@@ -200,7 +200,7 @@ function rcl_delete_thumbnail_attachment(data){
             rcl_remove_post_thumbnail();
     }
     
-}
+}*/
 
 function rcl_edit_post(element){	
 
@@ -408,7 +408,7 @@ function rcl_init_public_form(post){
     
     rcl_do_action('rcl_init_public_form',post);
     
-    var post_id = post.post_id;
+    /*var post_id = post.post_id;
     var post_type = post.post_type;
     var ext_types = post.ext_types;
     var size_files = parseInt(post.size_files,10);
@@ -482,10 +482,10 @@ function rcl_init_public_form(post){
             });
             
         }
-    });
+    });*/
 }
 
-function rcl_init_thumbnail_uploader(e,options){
+/*function rcl_init_thumbnail_uploader(e,options){
     
     var form = jQuery(e).parents('form');
     
@@ -552,9 +552,9 @@ function rcl_init_thumbnail_uploader(e,options){
         }
     });
     
-}
+}*/
 
-function rcl_add_image_in_form(e,content){
+/*function rcl_add_image_in_form(e,content){
     
     var post_type = jQuery(e).parents("form").data("post_type");           
 
@@ -563,19 +563,17 @@ function rcl_add_image_in_form(e,content){
     tinyMCE.execCommand("mceInsertContent", false, content);
     
     return false;
-}
+}*/
 
-function rcl_add_attachment_in_editor(attach_id, e){
+function rcl_add_attachment_in_editor(attach_id, editor_id, e){
     
     var image = jQuery(e).data('html');
     var src  = jQuery(e).data('src');
     
     if(src)
         image = '<a href="'+src+'">'+image+'</a>';
-    
-    var post_type = jQuery(e).parents("form").data("post_type");           
 
-    jQuery("#contentarea-" + post_type).insertAtCaret(image + "&nbsp;");
+    jQuery("#" + editor_id).insertAtCaret(image + "&nbsp;");
     
     tinyMCE.execCommand("mceInsertContent", false, image);
     

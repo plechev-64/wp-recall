@@ -20,6 +20,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract{
     public $max_files = 5;
     public $multiple = 0;
     public $dropzone = 0;
+    public $mode_output = 'grid';
 
     function __construct($args) {
         parent::__construct($args);
@@ -82,6 +83,23 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract{
                     __('Включено', 'wp-recall')
                 ),
                 'title' => __('Dropzone', 'wp-recall'),
+            ),
+            array(
+                'slug' => 'mode_output',
+                'default' => $this->mode_output,
+                'type' => 'radio',
+                'values' => array(
+                    'grid' => __('Плитка', 'wp-recall'),
+                    'list' => __('Список', 'wp-recall')
+                ),
+                'title' => __('Режим вывода файлов', 'wp-recall'),
+            ),
+            array(
+                'slug' => 'fix_editor',
+                'default' => $this->fix_editor,
+                'type' => 'text',
+                'title' => __('ID прикрепленного редактора', 'wp-recall'),
+                'notice' => __('Можно закрепить загрузчик за одним из имеющихся текстовых редакторов, указав его ID', 'wp-recall'),
             )
         );
 
@@ -92,8 +110,12 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract{
     function get_input(){
         global $user_ID;
 
+        //if($this->fix_editor)
+            //add_filter('rcl_uploader_manager_items', array($this, 'add_uploader_buttons'), 10, 3);
+
         $uploader = new Rcl_Uploader('field_'.$this->id, array(
-            //'temp_media' => true,
+            'temp_media' => true,
+            'fix_editor' => $this->fix_editor,
             'required' => intval($this->required),
             'user_id' => $user_ID,
             'min_width' => 200,
@@ -106,7 +128,8 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract{
             'file_types' => array_map('trim',explode(',',$this->file_types)),
             'max_files' => $this->max_files,
             'crop' => $this->multiple? false: true,
-            'input_attach' => $this->id
+            'input_attach' => $this->id,
+            'mode_output' => $this->mode_output
             /*'image_sizes' => array(
                 array(
                     'width' => 150,
@@ -123,35 +146,75 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract{
         return $content;
     }
 
+
+
     function get_value() {
 
         if(!$this->value) return false;
 
-        $width = 100;
+        if($this->mode_output == 'grid'){
 
-        $galArgs = array(
-            'id' => 'rcl-gallery-'.$this->id,
-            'attach_ids' => $this->value,
-            //'center_align' => true,
-            //'width' => (count($this->value) < 7)? count($this->value) * 73: 500,
-            'height' => $width,
-            'slides' => array(
-                'slide' => array($width,$width),
-                'full' => 'large'
-            ),
-            'options' => array(
-                '$SlideWidth' => $width,
-                '$SlideSpacing' => 3
-            )
-        );
+            $width = 100;
 
-        if(count($attach_ids) >= 7){
-            $galArgs['navigator'] = array(
-                'arrows' => true
+            $galArgs = array(
+                'id' => 'rcl-gallery-'.$this->id,
+                'attach_ids' => $this->value,
+                //'center_align' => true,
+                //'width' => (count($this->value) < 7)? count($this->value) * 73: 500,
+                'height' => $width,
+                'slides' => array(
+                    'slide' => array($width,$width),
+                    'full' => 'large'
+                ),
+                'options' => array(
+                    '$SlideWidth' => $width,
+                    '$SlideSpacing' => 3
+                )
             );
+
+            if(count($attach_ids) >= 7){
+                $galArgs['navigator'] = array(
+                    'arrows' => true
+                );
+            }
+
+            $content = rcl_get_image_gallery($galArgs);
+
+        }else if($this->mode_output == 'list'){
+
+            $content = '<div class="rcl-upload-gallery mode-list">';
+
+            foreach($this->value as $attach_id){
+
+                if(wp_attachment_is_image($attach_id)){
+
+                    $image = wp_get_attachment_image( $attach_id, array(35, 35));
+
+                }else{
+
+                    $image = wp_get_attachment_image( $attach_id, array(35, 35), true);
+
+                }
+
+                if(!$image) return false;
+
+                $content .= '<div class="gallery-attachment gallery-attachment-'.$attach_id.'">';
+
+                $content .= $image;
+
+                $content .= '<div class="attachment-title">';
+                $content .= '<a href="'.wp_get_attachment_url( $attach_id ).'" target="_blank">'.basename(get_post_field('guid', $attach_id)).'</a>';
+                $content .= '</div>';
+
+                $content .= '</div>';
+
+            }
+
+            $content .= '</div>';
+
         }
 
-        return rcl_get_image_gallery($galArgs);
+        return $content;
 
     }
 

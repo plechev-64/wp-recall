@@ -293,3 +293,9 @@ function rcl_delete_user_account(){
         wp_die(__('Account deletion failed! Go back and try again.','wp-recall'));
     }
 }
+
+add_action('rcl_fields_update', 'rcl_update_users_page_option', 10, 2);
+function rcl_update_users_page_option($fields, $manager_id){
+    if($manager_id != 'profile' || !isset($_POST['users_page'])) return false;
+    rcl_update_option('users_page', $_POST['users_page']);
+}

@@ -23,8 +23,9 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager{
     }
 
     function setup_public_form_fields(){
+        global $wpdb;
 
-        $manager_id = $this->form_id? $this->post_type.'_'.$this->form_id: $this->post_type;
+        $manager_id = ($this->post_type == 'post' && $this->form_id)? $this->post_type.'_'.$this->form_id: $this->post_type;
 
         parent::__construct($manager_id, array(
                 'sortable'      => true,
@@ -163,6 +164,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager{
             'options' => array(
                 array(
                     'slug' => 'file_types',
+                    'default' => 'png, gif, jpg',
                     'type' => 'text',
                     'title' => __('Valid file extensions','wp-recall'),
                     'notice' => __('Separated by comma, for example: jpg, zip, pdf. By default: png, gif, jpg','wp-recall')
@@ -270,7 +272,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager{
 
         }
 
-        $fields = apply_filters('rcl_default_public_form_fields', $fields, $this->post_type);
+        $fields = apply_filters('rcl_default_public_form_fields', $fields, $this->post_type, $this);
 
         return $fields;
 

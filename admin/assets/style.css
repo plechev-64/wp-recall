@@ -666,10 +666,10 @@ div.rcl_preloader i.rcli::before {
     font-size: 12px;
     line-height: normal;
 }
-.rcl-custom-fields-box .rcl-custom-field .fa-info::before {
+.rcl-custom-fields-box .rcl-custom-field .fa-info:not(.rcli)::before {
     content: "\f534";
 }
-.rcl-custom-fields-box .rcl-custom-field i:not(.mce-ico) {
+.rcl-custom-fields-box .rcl-custom-field i:not(.mce-ico):not(.rcli) {
     font-family: dashicons;
     font-size: 20px;
     font-style: normal;
@@ -683,6 +683,7 @@ div.rcl_preloader i.rcli::before {
     color: #ffae19;
     font-size: 14px;
     opacity: 0.8;
+    margin-right: 5px;
 }
 .rcl-custom-fields-box .rcl-custom-field textarea {
     height: 50px;
@@ -1451,6 +1452,10 @@ span.ruble-symbol {
 }
 .rcl-fields-manager .rcl-default-fields .manager-field-settings{
     display:none!important;
+}
+.rcl-fields-manager .rcl-default-fields .manager-field-header input{
+    pointer-events: none;
+    background: #ebebeb;
 }
 .rcl-fields-manager.structure-simple .default-box{
     max-width: 350px;

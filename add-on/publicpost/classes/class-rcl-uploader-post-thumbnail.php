@@ -19,18 +19,17 @@ class Rcl_Uploader_Post_Thumbnail extends Rcl_Uploader{
 
     function __construct($args){
 
-        parent::__construct('thumbnail', array(
+        $args = wp_parse_args($args, array(
             'auto_upload' => false,
-            //'max_files' => 1,
-            //'temp_media' => isset($args['post_parent']) && $args['post_parent']? false: true,
+            'manager_balloon' => true,
             'crop' => true,
             'dropzone' => false,
             'multiple' => false
         ));
 
-        $this->init_properties($args);
+        parent::__construct('thumbnail', $args);
 
-        //wp_enqueue_script( 'avatar-uploader', USP_URL.'/functions/supports/js/uploader-avatar.js',false,true );
+        add_action('rcl_upload', array($this, 'upload_thumbnail'), 10);
 
     }
 
@@ -61,6 +60,35 @@ class Rcl_Uploader_Post_Thumbnail extends Rcl_Uploader{
 
         return $content;
 
+    }
+
+    function upload_thumbnail($uploads){
+
+        $thumbnail_id = $uploads[0]['id'];
+
+        if($this->post_parent){
+
+            update_post_meta($this->post_parent, '_thumbnail_id', $thumbnail_id);
+
+            wp_update_post(array(
+                'ID' => $thumbnail_id,
+                'post_parent' => $this->post_parent
+            ));
+
+        }else{
+
+            rcl_add_temp_media(array(
+                'media_id' => $thumbnail_id,
+                'uploader_id' => $this->uploader_id
+            ));
+
+        }
+
+        do_action('rcl_upload_thumbnail', $thumbnail_id, $this);
+
+        wp_send_json(array(
+            'uploads' => $uploads
+        ));
     }
 
 }

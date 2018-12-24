@@ -412,6 +412,48 @@ span i.rcli.fa-circle {
     top: -12px;
     width: 0;
 }
+.rcl-balloon {
+    position: absolute;
+    background: rgb(255, 255, 255);
+    right: 0;
+    top: calc(100% + 1.5em);
+    z-index: 9;
+    padding: 3px 10px;
+    border: 1px solid rgb(0, 0, 0);
+    display:block;
+    opacity: 0;
+    transform: translate3d(0px, 0px, 0px);
+    transition: all 0.2s ease-in-out 0s;
+    visibility: hidden;
+    border-radius: 3px;
+}
+
+.rcl-balloon::before,
+.rcl-balloon::after{
+    border-width: 0px 10px 10px 10px;
+    border-style: solid;
+    content: "";
+    height: 0;
+    right: 5px;
+    position: absolute;
+    width: 0;
+}
+
+.rcl-balloon::before{  
+    border-color: transparent transparent rgb(0, 0, 0) transparent;
+    top: -11px;
+}
+
+.rcl-balloon::after{
+    border-color: transparent transparent rgb(255, 255, 255) transparent;
+    top: -10px;
+}
+.rcl-ballon-hover:hover .rcl-balloon{
+    cursor: default;
+    opacity: 1;
+    transform: translateY(-18px);
+    visibility: visible;
+}
 /*end*/
 
 

@@ -151,14 +151,20 @@ function rcl_upload(){
 
     $options = (array)json_decode(wp_unslash($_POST['options']));
 
-    $uploader = new Rcl_Uploader($options['uploader_id'], $options);
+    if(!isset($options['class_name']) || !$options['class_name']) exit;
+
+    $className = $options['class_name'];
+
+    if($className == 'Rcl_Uploader')
+        $uploader = new $className($options['uploader_id'], $options);
+    else
+        $uploader = new $className($options);
 
     $files = $uploader->upload();
 
     if($files){
         wp_send_json(array(
-            'uploads' => $files,
-            'success' => __('Файлы успешно загружены!', 'wp-recall')
+            'uploads' => $files
         ));
     }
 

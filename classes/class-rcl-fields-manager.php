@@ -39,6 +39,7 @@ class Rcl_Fields_Manager extends Rcl_Fields{
         'runner',
         'range',
         'uploader',
+        'editor',
         //'custom'
         //'color'
     );
@@ -65,7 +66,9 @@ class Rcl_Fields_Manager extends Rcl_Fields{
             $this->setup_active_fields();
         }*/
 
-        parent::__construct($this->get_active_fields(), $this->get_structure());
+        $fields = apply_filters('rcl_custom_fields', $this->get_active_fields(), $this->manager_id);
+
+        parent::__construct($fields, $this->get_structure());
 
         /*if($this->default_fields){
             $this->setup_default_fields();
@@ -85,7 +88,9 @@ class Rcl_Fields_Manager extends Rcl_Fields{
         $properties = get_class_vars(get_class($this));
 
         foreach ($properties as $name=>$val){
-            if(isset($args[$name])) $this->$name = $args[$name];
+            if(isset($args[$name])){
+                $this->$name = is_bool($args[$name])? (boolean)$args[$name]: $args[$name];
+            }
         }
 
     }
@@ -228,7 +233,7 @@ class Rcl_Fields_Manager extends Rcl_Fields{
                     if($fields = apply_filters('rcl_manager_form_fields', array(), $this->manager_id)){
                         $content .= '<div class="rcl-manager-options">';
                         foreach($fields as $field){
-                            $content .= $this::setup($field)->get_box();
+                            $content .= $this::setup($field)->get_field_html();
                         }
                         $content .= '</div>';
                     }
@@ -262,7 +267,7 @@ class Rcl_Fields_Manager extends Rcl_Fields{
         unset($props['fields']);
         unset($props['default_fields']);
 
-        $content .= "<script>rcl_init_manager_fields(\"".wp_slash(json_encode($props))."\");</script>";
+        $content .= "<script>rcl_init_manager_fields(".json_encode($props).");</script>";
 
         return $content;
     }
@@ -317,7 +322,7 @@ class Rcl_Fields_Manager extends Rcl_Fields{
 
                 $content .= '<div class="rcl-manager-group-options">';
                 foreach($fields as $field){
-                    $content .= $this::setup($field)->get_box();
+                    $content .= $this::setup($field)->get_field_html();
                 }
                 $content .= '</div>';
 
@@ -491,7 +496,7 @@ class Rcl_Fields_Manager extends Rcl_Fields{
             $classes[] = 'must-meta-delete';
         }
 
-        $content .= '<div id="manager-field-'.$field_id.'" class="'.implode(' ', $classes).'" data-type="'.$field->type.'" data-id="'.$field_id.'">';
+        $content = '<div id="manager-field-'.$field_id.'" class="'.implode(' ', $classes).'" data-type="'.$field->type.'" data-id="'.$field_id.'">';
 
         if($this->structure_edit){
             $content .= '<input type="hidden" name="structure[][field_id]" value="'.$field_id.'">';
@@ -542,7 +547,7 @@ class Rcl_Fields_Manager extends Rcl_Fields{
                     'type'=>'text',
                     'placeholder'=>__('Укажите заголовок нового поля', 'wp-recall'),
                     'input_name' => 'fields['.$field_id.'][title]'
-                ))->get_box();
+                ))->get_field_html();
             }else{
                 $content .= $this::setup(array(
                     'slug' => 'title',
@@ -550,7 +555,7 @@ class Rcl_Fields_Manager extends Rcl_Fields{
                     'placeholder'=>__('Укажите заголовок поля', 'wp-recall'),
                     'input_name' => 'fields['.$field_id.'][title]',
                     'value' => $field->title
-                ))->get_box();
+                ))->get_field_html();
                 //$content .= '<span class="field-title">'.$field->title.'</span>';
             }
 
@@ -596,7 +601,7 @@ class Rcl_Fields_Manager extends Rcl_Fields{
         $content = '<div class="field-primary-options">';
 
         foreach($options as $option){
-            $content .= $this::setup($option)->get_box();
+            $content .= $this::setup($option)->get_field_html();
         }
 
         $content .= '</div>';
@@ -612,7 +617,7 @@ class Rcl_Fields_Manager extends Rcl_Fields{
         $content = '<div class="field-secondary-options">';
 
         foreach($options as $option){
-            $content .= $this::setup($option)->get_box();
+            $content .= $this::setup($option)->get_field_html();
         }
 
         $content .= '</div>';
@@ -802,7 +807,8 @@ class Rcl_Fields_Manager extends Rcl_Fields{
             'range'=>__('Range', 'wp-recall'),
             'color'=>__('Color', 'wp-recall'),
             'custom'=>__('Произвольный контент', 'wp-recall'),
-            'uploader'=>__('Файловый загрузчик', 'wp-recall')
+            'uploader'=>__('Файловый загрузчик', 'wp-recall'),
+            'editor'=>__('Текстовый редактор', 'wp-recall')
         );
 
         $typesList = array();

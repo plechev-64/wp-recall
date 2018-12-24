@@ -15,8 +15,10 @@
 class Rcl_Field_Editor extends Rcl_Field_Abstract{
 
     public $tinymce;
+    public $html_editor = 1;
     public $editor_id;
     public $quicktags;
+    public $media_button;
 
     function __construct($args) {
 
@@ -40,11 +42,22 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract{
             ),
             array(
                 'slug' => 'tinymce',
-                'default' => $field->tinymce,
-                'type' => 'checkbox',
+                'type' => 'radio',
                 'title' => __('TinyMCE', 'wp-recall'),
-                'values' => array( 1 => __('Using TinyMCE', 'wp-recall')),
+                'values' => array(
+                    __('Disabled', 'wp-recall'),
+                    __('Using TinyMCE', 'wp-recall')
+                ),
                 'notice' => __('May not load with AJAX', 'wp-recall')
+            ),
+            array(
+                'slug' => 'media_button',
+                'type' => 'radio',
+                'title' => __('Media loader', 'wp-recall'),
+                'values' => array(
+                    __('Disabled', 'wp-recall'),
+                    __('Enabled', 'wp-recall')
+                )
             )
         );
 
@@ -66,7 +79,7 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract{
         $editor_id = 'editor-'.$this->rand;
 
         $data = array( 'wpautop' => 1
-            ,'media_buttons' => false
+            ,'media_buttons' => $this->media_button
             ,'textarea_name' => $this->input_name
             ,'textarea_rows' => 10
             ,'tabindex' => null
@@ -74,7 +87,7 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract{
             ,'editor_class' => 'autosave'
             ,'teeny' => 0
             ,'dfw' => 0
-            ,'tinymce' => $this->tinymce
+            ,'tinymce' => $this->tinymce? true: false
             ,'quicktags' => $this->quicktags? array('buttons'=>$this->quicktags): true
         );
 
