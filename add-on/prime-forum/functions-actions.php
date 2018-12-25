@@ -149,7 +149,7 @@ function pfm_the_post_manager(){
         );
     }
 
-    if(pfm_is_can('post_create') && $PrimeTopic && !$PrimeTopic->topic_closed && !$PrimeTopic->forum_closed){
+    if(pfm_is_can('post_create') && $PrimeTopic && !$PrimeTopic->topic_closed && (!isset($PrimeTopic->forum_closed) || !$PrimeTopic->forum_closed)){
 
         $actions['get_post_excerpt'] = array(
             'name' => __('Quote message','wp-recall'),
@@ -265,30 +265,28 @@ add_action('pfm_after_init_query', 'pfm_init_actions', 30);
 function pfm_init_actions(){
     global $user_ID;
 
-    if(!isset($_REQUEST['pfm-data']) || !isset($_REQUEST['pfm-data']['action'])) return;
+    if(!isset($_REQUEST['pfm-action']) || !isset($_REQUEST['_wpnonce'])) return;
 
-    if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'],'pfm-action')) return;
+    if(!wp_verify_nonce($_REQUEST['_wpnonce'],'pfm-nonce')) return;
 
-    $pfmData = $_REQUEST['pfm-data'];
-
-    $action = $pfmData['action'];
+    $action = $_REQUEST['pfm-action'];
 
     switch($action){
         case 'topic_create': //создание топика
 
-            if(!pfm_is_can('topic_create') || !$pfmData['forum_id']) return false;
+            if(!pfm_is_can('topic_create') || !$_POST['forum_id']) return false;
 
-            if(!$pfmData['post_content']){
+            if(!$_POST['post_content']){
                 wp_die(__('Empty message! Go back and write something.','wp-recall'));
             }
 
             $topic_id = pfm_add_topic(
                 array(
-                    'topic_name' => $pfmData['topic_name'],
-                    'forum_id' => $pfmData['forum_id']
+                    'topic_name' => $_POST['topic_name'],
+                    'forum_id' => $_POST['forum_id']
                 ),
                 array(
-                    'post_content' => $pfmData['post_content']
+                    'post_content' => $_POST['post_content']
                 )
             );
 
@@ -297,35 +295,35 @@ function pfm_init_actions(){
         break;
         /*case 'post_create': //сооздение поста
 
-            if(!pfm_is_can('post_create') || !$pfmData['topic_id']) return false;
+            if(!pfm_is_can('post_create') || !$_POST['topic_id']) return false;
 
-            $topic = pfm_get_topic($pfmData['topic_id']);
+            $topic = pfm_get_topic($_POST['topic_id']);
 
             if($topic->topic_closed) return false;
 
-            if(!$pfmData['post_content']){
+            if(!$_POST['post_content']){
                 wp_die(__('Empty message! Go back and write something.','wp-recall'));
             }
 
             $args = array(
-                'post_content' => $pfmData['post_content'],
-                'topic_id' => $pfmData['topic_id']
+                'post_content' => $_POST['post_content'],
+                'topic_id' => $_POST['topic_id']
             );
 
             if(!$user_ID){
 
-                if(!$pfmData['guest_email'] || !$pfmData['guest_name']) return false;
+                if(!$_POST['guest_email'] || !$_POST['guest_name']) return false;
 
-                $args['guest_email'] = $pfmData['guest_email'];
-                $args['guest_name'] = $pfmData['guest_name'];
+                $args['guest_email'] = $_POST['guest_email'];
+                $args['guest_name'] = $_POST['guest_name'];
             }
 
             $post_id = pfm_add_post($args);
 
             if(pfm_is_can('topic_close')){
-                if(isset($pfmData['close-topic'][0]) && $pfmData['close-topic'][0]){
+                if(isset($_POST['close-topic'][0]) && $_POST['close-topic'][0]){
                     pfm_update_topic(array(
-                        'topic_id' => $pfmData['topic_id'],
+                        'topic_id' => $_POST['topic_id'],
                         'topic_closed' => 1
                     ));
                 }
@@ -336,13 +334,13 @@ function pfm_init_actions(){
         break;*/
         case 'post_edit': //редактирование поста
 
-            if(!pfm_is_can_post_edit($pfmData['post_id']) || !$pfmData['topic_id'] || !$pfmData['post_id']) return false;
+            if(!pfm_is_can_post_edit($_POST['post_id']) || !$_POST['topic_id'] || !$_POST['post_id']) return false;
 
             $post_edit = '';
 
             if(pfm_get_option('reason-edit', 1)){
 
-                $post_edit = maybe_unserialize(pfm_get_post_field($pfmData['post_id'], 'post_edit'));
+                $post_edit = maybe_unserialize(pfm_get_post_field($_POST['post_id'], 'post_edit'));
 
                 $reasonEdit = '';
                 if(isset($_POST['reason_edit']) && $_POST['reason_edit']){
@@ -360,29 +358,29 @@ function pfm_init_actions(){
             }
 
             pfm_update_post(array(
-                'post_content' => $pfmData['post_content'],
-                'post_id' => $pfmData['post_id'],
+                'post_content' => $_POST['post_content'],
+                'post_id' => $_POST['post_id'],
                 'post_edit' => $post_edit
             ));
 
-            wp_redirect(pfm_get_post_permalink($pfmData['post_id'])); exit;
+            wp_redirect(pfm_get_post_permalink($_POST['post_id'])); exit;
 
         break;
 
         case 'topic_from_post_create': //создание топика из поста
 
-            if(!pfm_is_can('post_migrate') || !$pfmData['forum_id']) return false;
+            if(!pfm_is_can('post_migrate') || !$_POST['forum_id']) return false;
 
-            $migratedPost = pfm_get_post($pfmData['post_id']);
+            $migratedPost = pfm_get_post($_POST['post_id']);
 
             $topic_id = pfm_add_topic(array(
-                    'topic_name' => $pfmData['topic_name'],
-                    'forum_id' => $pfmData['forum_id'],
+                    'topic_name' => $_POST['topic_name'],
+                    'forum_id' => $_POST['forum_id'],
                     'user_id' => $migratedPost->user_id
                 )
             );
 
-            if(isset($pfmData['next_posts']) && $pfmData['next_posts']){
+            if(isset($_POST['next_posts']) && $_POST['next_posts']){
 
                 $posts = pfm_get_posts(array(
                     'topic_id' => $migratedPost->topic_id,
@@ -414,38 +412,38 @@ function pfm_init_actions(){
         break;
         case 'topic_migrate': //перенос топика в другой форум
 
-            if(!pfm_is_can('topic_migrate') || !$pfmData['forum_id']) return false;
+            if(!pfm_is_can('topic_migrate') || !$_POST['forum_id']) return false;
 
-            $migratedTopic = pfm_get_topic($pfmData['topic_id']);
+            $migratedTopic = pfm_get_topic($_POST['topic_id']);
 
             pfm_update_topic(array(
-                'topic_id' => $pfmData['topic_id'],
-                'forum_id' => $pfmData['forum_id']
+                'topic_id' => $_POST['topic_id'],
+                'forum_id' => $_POST['forum_id']
             ));
 
             pfm_update_forum_counter($migratedTopic->forum_id);
-            pfm_update_forum_counter($pfmData['forum_id']);
+            pfm_update_forum_counter($_POST['forum_id']);
 
-            do_action('pfm_migrate_topic', $pfmData['topic_id'], $pfmData['forum_id']);
+            do_action('pfm_migrate_topic', $_POST['topic_id'], $_POST['forum_id']);
 
-            wp_redirect(pfm_get_topic_permalink($pfmData['topic_id'])); exit;
+            wp_redirect(pfm_get_topic_permalink($_POST['topic_id'])); exit;
 
         break;
         case 'topic_edit': //изменение заголовка топика
 
-            if(!pfm_is_can_topic_edit($pfmData['topic_id']) || !$pfmData['topic_id']) return false;
+            if(!pfm_is_can_topic_edit($_POST['topic_id']) || !$_POST['topic_id']) return false;
 
             $topic_id = pfm_update_topic(array(
-                'topic_id' => $pfmData['topic_id'],
-                'topic_name' => $pfmData['topic_name']
+                'topic_id' => $_POST['topic_id'],
+                'topic_name' => $_POST['topic_name']
             ));
 
-            wp_redirect(pfm_get_topic_permalink($pfmData['topic_id'])); exit;
+            wp_redirect(pfm_get_topic_permalink($_POST['topic_id'])); exit;
 
         break;
         case 'member_go':
 
-            wp_redirect(pfm_get_forum_permalink($pfmData['forum_id'])); exit;
+            wp_redirect(pfm_get_forum_permalink($_POST['forum_id'])); exit;
 
         break;
     }
@@ -662,11 +660,10 @@ function pfm_action_get_form_topic_create($post_id){
             'values' => array(
                 'post_content' => wp_slash($post->post_content)
             ),
-            'fields' => array(
+            'custom_fields' => array(
                 array(
                     'type' => 'checkbox',
                     'slug' => 'next_posts',
-                    'name' => 'pfm-data[next_posts]',
                     'values' => array(1 => __('Also transfer all subsequent messages','wp-recall'))
                 )
             )
@@ -1106,9 +1103,7 @@ function pfm_action_get_preview($action){
         parse_str($_POST['formdata'], $formdata);
     }
 
-    $pfmData = $formdata['pfm-data'];
-
-    $postContent = wp_unslash($pfmData['post_content']);
+    $postContent = wp_unslash($formdata['post_content']);
 
     if(!$postContent){
 
@@ -1124,12 +1119,13 @@ function pfm_action_get_preview($action){
 
     $postData = array(
         'post_id' => 0,
+        'post_index' => 0,
         'user_id' => $user_ID,
         'post_content' => $postContent,
         'post_date' => current_time('mysql'),
         'display_name' => $user_ID? get_the_author_meta('display_name',$user_ID): '',
-        'guest_name' => !$user_ID? $pfmData['guest_name']: '',
-        'guest_email' => !$user_ID? $pfmData['guest_email']: '',
+        'guest_name' => !$user_ID? $formdata['guest_name']: '',
+        'guest_email' => !$user_ID? $formdata['guest_email']: '',
         'user_registered' => $user_ID? get_the_author_meta('user_registered',$user_ID): ''
     );
 
@@ -1160,41 +1156,39 @@ function pfm_action_post_create(){
         parse_str($_POST['formdata'], $formdata);
     }
 
-    $pfmData = $formdata['pfm-data'];
-
-    if(!pfm_is_can('post_create') || !$pfmData['topic_id']){
+    if(!pfm_is_can('post_create') || !$formdata['topic_id']){
         return array('error' => __('Insufficient rights to publish','wp-recall'));
     }
 
-    $topic = pfm_get_topic($pfmData['topic_id']);
+    $topic = pfm_get_topic($formdata['topic_id']);
 
     if($topic->topic_closed){
         return array('error' => __('Topic closed','wp-recall'));
     }
 
-    if(!$pfmData['post_content']){
+    if(!$formdata['post_content']){
         return array('error' => __('Empty message! Go back and write something.','wp-recall'));
     }
 
-    $lastPost = get_topic_last_post($pfmData['topic_id']);
+    $lastPost = get_topic_last_post($formdata['topic_id']);
 
-    if($lastPost->post_content == wp_unslash($pfmData['post_content'])){
+    if($lastPost->post_content == wp_unslash($formdata['post_content'])){
         return array('error' => __('Repeat the last message!','wp-recall'));
     }
 
     $args = array(
-        'post_content' => $pfmData['post_content'],
-        'topic_id' => $pfmData['topic_id']
+        'post_content' => $formdata['post_content'],
+        'topic_id' => $formdata['topic_id']
     );
 
     if(!$user_ID){
 
-        if(!$pfmData['guest_email'] || !$pfmData['guest_name']){
+        if(!$formdata['guest_email'] || !$formdata['guest_name']){
             return array('error' => __('Error','wp-recall'));
         }
 
-        $args['guest_email'] = $pfmData['guest_email'];
-        $args['guest_name'] = $pfmData['guest_name'];
+        $args['guest_email'] = $formdata['guest_email'];
+        $args['guest_name'] = $formdata['guest_name'];
     }
 
     do_action('pfm_before_add_post', $args);
@@ -1203,9 +1197,9 @@ function pfm_action_post_create(){
 
     if(pfm_is_can('topic_close')){
 
-        if(isset($pfmData['close-topic'][0]) && $pfmData['close-topic'][0]){
+        if(isset($formdata['close-topic'][0]) && $formdata['close-topic'][0]){
 
-            $topicClose = pfm_topic_close($pfmData['topic_id']);
+            $topicClose = pfm_topic_close($formdata['topic_id']);
 
             if($topicClose){
                 return array(
@@ -1228,14 +1222,14 @@ function pfm_action_post_create(){
     $posts = new PrimePosts();
 
     $lastPosts = $posts->get_col(array(
-        'topic_id' => $pfmData['topic_id'],
+        'topic_id' => $formdata['topic_id'],
         'fields' => array('post_id'),
         'orderby' => 'post_id',
         'order' => 'ASC',
         'date_query' => array(
             array(
                 'column' => 'post_date',
-                'value' => $pfmData['form_load'],
+                'value' => $formdata['form_load'],
                 'compare' => '>'
             )
         )
@@ -1250,7 +1244,7 @@ function pfm_action_post_create(){
     }
 
     $result['post_id'] = $post_id;
-    $result['topic_id'] = $pfmData['topic_id'];
+    $result['topic_id'] = $formdata['topic_id'];
     $result['current_url'] = pfm_get_post_permalink($post_id);
     $result['form_load'] = current_time('mysql');
     $result['append'] = '#prime-forum .prime-posts';

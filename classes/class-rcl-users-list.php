@@ -188,15 +188,13 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         $profile_fields = stripslashes_deep($profile_fields);
 
-        $cf = new Rcl_Custom_Fields();
-
         $slugs= array();
         $fields = array();
 
         foreach($profile_fields as $custom_field){
             $custom_field = apply_filters('rcl_userslist_custom_field',$custom_field);
             if(!$custom_field) continue;
-            if(isset($custom_field['req'])&&$custom_field['req']==1){
+            if(isset($custom_field['public_value'])&&$custom_field['public_value']==1){
                 $fields[] =  $custom_field;
                 $slugs[] = $custom_field['slug'];
             }
@@ -206,12 +204,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         $ids = $this->get_users_ids($users);
 
-        $fielddata = array();
-        foreach($fields as $k=>$field){
-            $fielddata[$field['slug']]['title'] = $field['title'];
-            $fielddata[$field['slug']]['type'] = $field['type'];
-            $fielddata[$field['slug']]['filter'] = $field['filter'];
-        }
+        $fieldObjects = new Rcl_Fields($fields);
 
         $query = "SELECT meta_key,meta_value, user_id AS ID "
                 . "FROM $wpdb->usermeta "
@@ -221,18 +214,18 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         $newmetas = array();
         foreach($metas as $k => $meta){
+
+            $fieldObjects->set_field_prop($meta->meta_key, 'value', maybe_unserialize($meta->meta_value));
+
             $newmetas[$meta->ID]['ID'] = $meta->ID;
-            $newmetas[$meta->ID]['profile_fields'][$k]['slug'] = $meta->meta_key;
-            $newmetas[$meta->ID]['profile_fields'][$k]['value'] = maybe_unserialize($meta->meta_value);
-            $newmetas[$meta->ID]['profile_fields'][$k]['title'] = $fielddata[$meta->meta_key]['title'];
-            $newmetas[$meta->ID]['profile_fields'][$k]['type'] = $fielddata[$meta->meta_key]['type'];
-            $newmetas[$meta->ID]['profile_fields'][$k]['filter'] = $fielddata[$meta->meta_key]['filter'];
+            $newmetas[$meta->ID]['profile_fields'][$meta->meta_key] = $fieldObjects->get_field($meta->meta_key);
+
             (object)$newmetas[$meta->ID];
         }
 
         if($newmetas)
             $users = $this->merge_objects($users,$newmetas,'profile_fields');
-
+        
         return $users;
     }
 

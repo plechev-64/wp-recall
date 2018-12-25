@@ -616,8 +616,7 @@ function pfm_ajax_get_manager_item_delete_form(){
         $fields = array(
             array(
                 'type' => 'select',
-                'slug' => 'migrate-group',
-                'input_name' => 'pfm-data[migrate_group]',
+                'slug' => 'migrate_group',
                 'title' => __('New group for child forums','wp-recall'),
                 'notice' => __('If new group is not assigned for child forums, when deleting the selected '
                         . 'group, the forums will also be deleted','wp-recall'),
@@ -625,14 +624,12 @@ function pfm_ajax_get_manager_item_delete_form(){
             ),
             array(
                 'type' => 'hidden',
-                'slug' => 'group-id',
-                'input_name' => 'pfm-data[group_id]',
+                'slug' => 'group_id',
                 'value' => $itemID
             ),
             array(
                 'type' => 'hidden',
-                'slug' => 'action',
-                'input_name' => 'pfm-data[action]',
+                'slug' => 'pfm-action',
                 'value' => 'group_delete'
             )
         );
@@ -658,8 +655,7 @@ function pfm_ajax_get_manager_item_delete_form(){
         $fields = array(
             array(
                 'type' => 'select',
-                'slug' => 'migrate-group',
-                'input_name' => 'pfm-data[migrate_forum]',
+                'slug' => 'migrate_forum',
                 'title' => __('New forum for child topics','wp-recall'),
                 'notice' => __('If new forum is not assigned for child forums, when deleting the selected '
                         . 'forum, the topics will also be deleted','wp-recall'),
@@ -667,14 +663,12 @@ function pfm_ajax_get_manager_item_delete_form(){
             ),
             array(
                 'type' => 'hidden',
-                'slug' => 'group-id',
-                'input_name' => 'pfm-data[forum_id]',
+                'slug' => 'forum_id',
                 'value' => $itemID
             ),
             array(
                 'type' => 'hidden',
-                'slug' => 'action',
-                'input_name' => 'pfm-data[action]',
+                'slug' => 'pfm-action',
                 'value' => 'forum_delete'
             )
         );
@@ -714,7 +708,7 @@ function pfm_get_manager_item_delete_form($fields){
             $content .= '<div class="form-field fields-submit">';
                 $content .= '<input type="submit" class="button-primary" value="'.__('Confirm the deletion','wp-recall').'">';
             $content .= '</div>';
-            $content .= wp_nonce_field('pfm-action','_wpnonce',true,false);
+            $content .= wp_nonce_field('pfm-nonce','_wpnonce',true,false);
         $content .= '</form>';
     $content .= '</div>';
 
@@ -802,13 +796,11 @@ add_action('admin_init','pfm_init_admin_actions');
 function pfm_init_admin_actions(){
     global $user_ID;
 
-    if(!isset($_REQUEST['pfm-data']) || !isset($_REQUEST['pfm-data']['action'])) return;
+    if(!isset($_REQUEST['pfm-action']) || !isset($_REQUEST['_wpnonce'])) return;
 
-    if(!isset($_REQUEST['_wpnonce']) || !wp_verify_nonce($_REQUEST['_wpnonce'],'pfm-action')) return;
+    if(!wp_verify_nonce($_REQUEST['_wpnonce'],'pfm-nonce')) return;
 
-    $pfmData = $_REQUEST['pfm-data'];
-
-    $action = $pfmData['action'];
+    $action = $_REQUEST['pfm-action'];
 
     switch($action){
         case 'group_create': //добавление группы
@@ -832,20 +824,20 @@ function pfm_init_admin_actions(){
         break;
         case 'group_delete': //удаление группы
 
-            if(!$pfmData['group_id']) return false;
+            if(!$_REQUEST['group_id']) return false;
 
-            pfm_delete_group($pfmData['group_id'], $pfmData['migrate_group']);
+            pfm_delete_group($_REQUEST['group_id'], $_REQUEST['migrate_group']);
 
             wp_redirect(admin_url('admin.php?page=pfm-forums')); exit;
 
         break;
         case 'forum_delete': //удаление форума
 
-            if(!$pfmData['forum_id']) return false;
+            if(!$_REQUEST['forum_id']) return false;
 
-            $group = pfm_get_forum($pfmData['forum_id']);
+            $group = pfm_get_forum($_REQUEST['forum_id']);
 
-            pfm_delete_forum($pfmData['forum_id'], $pfmData['migrate_forum']);
+            pfm_delete_forum($_REQUEST['forum_id'], $_REQUEST['migrate_forum']);
 
             wp_redirect(admin_url('admin.php?page=pfm-forums&group-id='.$group->group_id)); exit;
 

@@ -39,6 +39,12 @@ class Rcl_Field_Abstract {
 
         if(!isset($args['slug'])) return false;
 
+        if(isset($args['name']))
+            $args['input_name'] = $args['name'];
+
+        if(isset($args['req']))
+            $args['public_value'] = $args['req'];
+
         $this->id = $args['slug'];
 
         $this->init_properties($args);

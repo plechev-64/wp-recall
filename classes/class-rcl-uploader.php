@@ -13,13 +13,6 @@
  * @author Андрей
  */
 
-add_action( 'wp_enqueue_scripts', 'rcl_uploader_scripts', 10);
-add_action( 'admin_init', 'rcl_uploader_scripts', 10);
-function rcl_uploader_scripts(){
-    wp_enqueue_style( 'rcl-uploader-style', plugins_url( 'assets/css/uploader.css', dirname( __FILE__ )) );
-    wp_enqueue_script( 'rcl-uploader-scripts', plugins_url( 'assets/js/uploader.js', dirname( __FILE__ ) ), array('jquery') );
-}
-
 class Rcl_Uploader {
 
     public $uploader_id = '';
@@ -152,6 +145,9 @@ class Rcl_Uploader {
     }
 
     function get_input(){
+
+        rcl_fileupload_scripts();
+
         return '<input id="rcl-uploader-input-'.$this->uploader_id.'" class="uploader-input" data-uploader_id="'.$this->uploader_id.'" name="'.$this->input_name.'[]" type="file" accept="'.implode(', ', $this->accept).'" '.($this->multiple? 'multiple': '').'>'
             . '<script>rcl_init_uploader('.json_encode($this).');</script>';
     }

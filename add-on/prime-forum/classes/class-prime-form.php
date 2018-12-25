@@ -1,6 +1,6 @@
 <?php
 
-class PrimeForm extends Rcl_Custom_Fields{
+class PrimeForm extends Rcl_Fields{
 
     public $forum_id;
     public $topic_id;
@@ -8,7 +8,7 @@ class PrimeForm extends Rcl_Custom_Fields{
     public $onclick;
     public $action;
     public $submit;
-    public $fields;
+    public $custom_fields;
     public $forum_list = false;
     public $values = array();
     public $exclude_fields = array();
@@ -32,7 +32,11 @@ class PrimeForm extends Rcl_Custom_Fields{
         if($this->post_id)
             add_filter('pfm_form_fields', array($this, 'add_post_field'));
 
-        $this->fields = wp_unslash($this->setup_fields());
+        $fields = $this->get_form_fields();
+
+        parent::__construct($fields);
+
+        //$this->fields = wp_unslash($this->setup_fields());
 
     }
 
@@ -82,7 +86,7 @@ class PrimeForm extends Rcl_Custom_Fields{
 
     }
 
-    function setup_fields(){
+    function get_form_fields(){
         global $user_ID;
 
         $fields = array();
@@ -91,6 +95,7 @@ class PrimeForm extends Rcl_Custom_Fields{
 
             $fields[] = array(
                 'type' => 'custom',
+                'slug' => 'forum_list',
                 'title' => __('Choose forum','wp-recall'),
                 'content' => pfm_get_forums_list()
             );
@@ -102,7 +107,6 @@ class PrimeForm extends Rcl_Custom_Fields{
             $fields[] = array(
                 'type' => 'text',
                 'slug' => 'topic_name',
-                'name' => 'pfm-data[topic_name]',
                 'title' => __('Heading of the topic','wp-recall'),
                 'required' => 1
             );
@@ -114,14 +118,12 @@ class PrimeForm extends Rcl_Custom_Fields{
                 $fields[] = array(
                     'type' => 'text',
                     'slug' => 'guest_name',
-                    'name' => 'pfm-data[guest_name]',
                     'title' => __('Your name','wp-recall'),
                     'required' => 1
                 );
                 $fields[] = array(
                     'type' => 'email',
                     'slug' => 'guest_email',
-                    'name' => 'pfm-data[guest_email]',
                     'title' => __('Your E-mail','wp-recall'),
                     'notice' => __('not published','wp-recall'),
                     'required' => 1
@@ -131,15 +133,14 @@ class PrimeForm extends Rcl_Custom_Fields{
 
         $fields = apply_filters('pfm_form_fields', $fields, $this->action);
 
-        if($this->fields)
-            $fields = array_merge($fields,$this->fields);
+        if($this->custom_fields)
+            $fields = array_merge($fields,$this->custom_fields);
 
         $fields[] = apply_filters('pfm_form_content_field', array(
             'type' => 'editor',
-            'editor-id' => 'action_'.$this->action,
+            'editor_id' => 'editor-action_'.$this->action,
             //'tinymce' => true,
             'slug' => 'post_content',
-            'name' => 'pfm-data[post_content]',
             'title' => __('Message text','wp-recall'),
             'required' => 1,
             'quicktags' => 'strong,img,em,link,code,close,block,del'
@@ -155,6 +156,10 @@ class PrimeForm extends Rcl_Custom_Fields{
 
         }
 
+        foreach($fields as $field){
+            $this->add_field($field['slug'], $field);
+        }
+
         return $fields;
     }
 
@@ -163,7 +168,6 @@ class PrimeForm extends Rcl_Custom_Fields{
         $fields[] = array(
             'type' => 'hidden',
             'slug' => 'forum_id',
-            'name' => 'pfm-data[forum_id]',
             'value' => $this->forum_id
         );
 
@@ -175,7 +179,6 @@ class PrimeForm extends Rcl_Custom_Fields{
         $fields[] = array(
             'type' => 'hidden',
             'slug' => 'topic_id',
-            'name' => 'pfm-data[topic_id]',
             'value' => $this->topic_id
         );
 
@@ -187,7 +190,6 @@ class PrimeForm extends Rcl_Custom_Fields{
         $fields[] = array(
             'type' => 'hidden',
             'slug' => 'post_id',
-            'name' => 'pfm-data[post_id]',
             'value' => $this->post_id
         );
 
@@ -204,21 +206,20 @@ class PrimeForm extends Rcl_Custom_Fields{
                 $content .= apply_filters('pfm_form_top','');
                 $content .= '</div>';
 
-                foreach($this->fields as $field){
+                foreach($this->fields as $field_id => $field){
 
-                    $value = (isset($this->values[$field['slug']]))? $this->values[$field['slug']]: false;
+                    if(!$field->value)
+                        $field->value = (isset($this->values[$field->slug]))? $this->values[$field->slug]: false;
 
-                    $required = (isset($field['required']) && $field['required'] == 1)? '<span class="required">*</span>': '';
+                    $content .= '<div id="field-'.$field->slug.'" class="form-field rcl-option">';
 
-                    $content .= '<div id="field-'.$field['slug'].'" class="form-field rcl-option">';
-
-                        if(isset($field['title'])){
+                        if($field->title){
                             $content .= '<h3 class="field-title">';
-                            $content .= $this->get_title($field).' '.$required;
+                            $content .= $field->get_title();
                             $content .= '</h3>';
                         }
 
-                        $content .= $this->get_input($field,$value);
+                        $content .= $field->get_field_input();
 
                     $content .= '</div>';
 
@@ -251,9 +252,9 @@ class PrimeForm extends Rcl_Custom_Fields{
                 }
 
                 $content .= '</div>';
-                $content .= '<input type="hidden" name="pfm-data[action]" value="'.$this->action.'">';
-                $content .= '<input type="hidden" name="pfm-data[form_load]" value="'.current_time('mysql').'">';
-                $content .= wp_nonce_field('pfm-action','_wpnonce',true,false);
+                $content .= '<input type="hidden" name="pfm-action" value="'.$this->action.'">';
+                $content .= '<input type="hidden" name="form_load" value="'.current_time('mysql').'">';
+                $content .= wp_nonce_field('pfm-nonce','_wpnonce',true,false);
 
             $content .= '</form>';
 

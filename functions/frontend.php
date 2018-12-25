@@ -71,10 +71,10 @@ function rcl_user_meta(){
         if(!isset($rcl_user->profile_fields)) $rcl_user->profile_fields = array();
 
         if($rcl_user->profile_fields){
-            $cf = new Rcl_Custom_Fields();
+
             echo '<div class="user-profile-fields">';
-            foreach($rcl_user->profile_fields as $k=>$field){
-                echo $cf->get_field_value($field,$field['value'],$field['title']);
+            foreach($rcl_user->profile_fields as $field_id => $field){
+                echo $field->get_field_value(true);
             }
             echo '</div>';
         }

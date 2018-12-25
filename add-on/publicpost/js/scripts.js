@@ -306,7 +306,7 @@ function rcl_preview(e){
 
                 ssi_modal.show({
                     sizeClass: 'small',
-                    title: Rcl.local.preview,
+                    title: data.title,
                     className: 'rcl-preview-post',
                     buttons: buttons,
                     content: '<div id="rcl-preview">'+data['content']+'</div>'

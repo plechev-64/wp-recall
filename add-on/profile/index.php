@@ -80,7 +80,7 @@ function rcl_show_custom_fields_profile($master_id){
             $field = apply_filters('custom_field_profile',$field);
             if(!$field) continue;
             $slug = isset($field['name'])? $field['name']: $field['slug'];
-            if(isset($field['req'])&&$field['req']==1){
+            if(isset($field['public_value'])&&$field['public_value']==1){
                 $field['value'] = get_the_author_meta($slug,$master_id);
                 $fieldObject = Rcl_Field::setup($field);
                 $content .= $fieldObject->get_field_value(true);

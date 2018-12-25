@@ -4,7 +4,7 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager{
 
     function __construct() {
         global $wpdb;
-        
+
         add_filter('rcl_field_options', array($this, 'edit_field_options'), 10, 3);
         add_filter('rcl_manager_form_fields',array($this, 'add_users_page_option'), 10, 2);
 
@@ -66,7 +66,7 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager{
                     'values'=>array(__('No', 'wp-recall'),__('Yes', 'wp-recall'))
                 ),
                 array(
-                    'slug' => 'req',
+                    'slug' => 'public_value',
                     'type' => 'radio',
                     'title'=>__('show the content to other users', 'wp-recall'),
                     'values'=>array(__('No', 'wp-recall'),__('Yes', 'wp-recall'))
@@ -104,7 +104,7 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager{
 
         if(in_array($field->id, $defaultFields)){
             unset($options['filter']);
-            unset($options['req']);
+            unset($options['public_value']);
         }
 
         return $options;

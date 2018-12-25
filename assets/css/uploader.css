@@ -107,6 +107,9 @@ body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico{
     bottom: 0;
     width: 100%;
 }
+.rcl-upload-gallery.mode-grid .gallery-attachment img {
+    margin: 0!important;
+}
 .rcl-upload-gallery.mode-grid img{
     
 }

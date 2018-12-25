@@ -86,8 +86,8 @@ class PrimeManager extends Rcl_Fields_Manager{
                 $content .= '<div class="form-field fields-submit">';
                     $content .= '<input type="submit" class="button-primary" value="'.$submit.'">';
                 $content .= '</div>';
-                $content .= '<input type="hidden" name="pfm-data[action]" value="'.$action.'">';
-                $content .= wp_nonce_field('pfm-action','_wpnonce',true,false);
+                $content .= '<input type="hidden" name="pfm-action" value="'.$action.'">';
+                $content .= wp_nonce_field('pfm-nonce','_wpnonce',true,false);
             $content .= '</form>';
         $content .= '</div>';
 

@@ -16,6 +16,11 @@ function rcl_multiselect_scripts(){
     wp_enqueue_script( 'f-select', RCL_URL.'assets/js/fselect/fSelect.js' );
 }
 
+function rcl_uploader_scripts(){
+    wp_enqueue_style( 'rcl-uploader-style', plugins_url( 'assets/css/uploader.css', dirname( __FILE__ )) );
+    wp_enqueue_script( 'rcl-uploader-scripts', plugins_url( 'assets/js/uploader.js', dirname( __FILE__ ) ), array('jquery') );
+}
+
 function rcl_slider_scripts(){
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-core');
@@ -120,6 +125,8 @@ function rcl_frontend_scripts(){
 
     wp_enqueue_script( 'jquery' );
 
+    rcl_uploader_scripts();
+
     if(rcl_is_office()){
         rcl_dialog_scripts();
         if(rcl_is_office($user_ID)){
@@ -195,7 +202,11 @@ function rcl_admin_scrips(){
 
     wp_enqueue_style( 'rcl-admin-style', RCL_URL.'admin/assets/style.css' );
     wp_enqueue_style( 'wp-color-picker' );
+
     wp_enqueue_script( 'jquery' );
+
+    rcl_uploader_scripts();
+
     wp_enqueue_script( 'rcl-core-scripts', RCL_URL.'assets/js/core.js', array('jquery') );
     wp_enqueue_script( 'rcl-admin-scripts', RCL_URL.'admin/assets/scripts.js', array('wp-color-picker'), VER_RCL );
 }

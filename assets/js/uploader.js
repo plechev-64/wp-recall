@@ -306,6 +306,7 @@ function RclUploader(props){
         
         if(file['html']){
             jQuery('#rcl-upload-gallery-' + this.uploader_id).append(file['html']);
+            jQuery('#rcl-gallery-' + this.uploader_id).append(file['html']);
             jQuery('#rcl-upload-gallery-' + this.uploader_id + ' .gallery-attachment').last().animateCss('flipInX');
         }
     };

@@ -65,18 +65,7 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract{
 
     function get_input(){
 
-        /*$editor_id = false;
-
-        if($this->editor_id)
-            $editor_id = $this->editor_id;
-
-        if(!$editor_id)
-            $editor_id = $this->id;
-
-        if(!$editor_id)
-            $editor_id = $this->input_id;*/
-
-        $editor_id = 'editor-'.$this->rand;
+        $editor_id = $this->editor_id? $this->editor_id: 'editor-'.$this->rand;
 
         $data = array( 'wpautop' => 1
             ,'media_buttons' => $this->media_button

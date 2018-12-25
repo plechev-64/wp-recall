@@ -208,9 +208,9 @@ function rcl_preview_post(){
 
     }
 
-    if(rcl_get_option('public_fields') && $customFields = $formFields->get_custom_fields()){
+    if(rcl_get_option('pm_rcl') && $customFields = $formFields->get_custom_fields()){
 
-        $types = rcl_get_option('public_fields_types');
+        $types = rcl_get_option('pm_post_types');
 
         if(!$types || in_array($postdata['post_type'], $types)){
 
@@ -218,12 +218,12 @@ function rcl_preview_post(){
 
             foreach($customFields as $field_id => $field){
                 $field->set_prop('value', isset($_POST[$field_id])? $_POST[$field_id]: false);
-                $fieldsBox .= $field->get_value_box();
+                $fieldsBox .= $field->get_field_value(true);
             }
 
             $fieldsBox .= '</div>';
 
-            if(rcl_get_option('public_fields_place') == 1)
+            if(rcl_get_option('pm_place') == 1)
                 $post_content .= $fieldsBox;
             else
                 $post_content = $fieldsBox . $post_content;
@@ -257,8 +257,6 @@ function rcl_preview_post(){
     $preview .= '<div class="rcl-notice-preview">
                     <p>'.__('If everything is correct – publish it! If not, you can go back to editing.','wp-recall').'</p>
             </div>';
-
-    $log['content'] = $preview;
 
     wp_send_json(array(
         'title' => $postdata['post_title'],
