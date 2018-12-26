@@ -123,6 +123,21 @@ $content = '<h2>'.__('Configure WP-Recall plugin and add-ons','wp-recall').'</h2
                     'default'=>'#4C8CBD'
                 ),
                 array(
+                    'type' => 'color',
+                    'slug'=>'rcl-button-text-color',
+                    'title'=>__('Button text color','wp-recall'),
+                    'default'=>'#fff'
+                ),
+                array(
+                    'type' => 'runner',
+                    'value_min' => 12,
+                    'value_max' => 20,
+                    'value_step' => 1,
+                    'default' => 14,
+                    'slug' => 'rcl-button-font-size',
+                    'title' => __('Button font size','wp-recall').', px'
+                ),
+                array(
                     'type' => 'radio',
                     'slug'=>'font-awesome',
                     'title'=>__('Подключение шрифта Font Awesome','wp-recall'),
