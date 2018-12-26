@@ -1,12 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 /**
  * Description of class-rcl-button
  *
@@ -18,22 +11,24 @@ class Rcl_Button{
     public $onclick;
     public $href = 'javascript:void(0);';
     public $class = array();
-    public $type = 'primary'; //clear, simple, primary
+    public $type = 'primary';       // clear, simple, primary
     public $style;
-    public $icon;
-    public $icon_align = 'left';
-    public $label;
-    public $title;
-    public $counter;
+    public $icon;                   // for example: fa-car
+    public $icon_align = 'left';    // left or right position
+    public $icon_mask;              // 1 - is mask on icon
+    public $label;                  // text on button
+    public $title;                  // title attribute
+    public $counter;                // number
     public $content;
-    public $avatar;
+    public $avatar;                 // avatar button
+    public $avatar_circle;          // round avatar
     public $data;
     public $submit;
-    public $status; //loading, disabled, active
-    public $size;
+    public $status;                 // state of the button: loading, disabled, active
+    public $size = 'standart';      // standart, medium, large, big
     public $attr;
     public $attrs;
-    public $fullwidth;
+    public $fullwidth;              // 1 - is fullwidth button
     public $inset;
 
     function __construct($args){
@@ -50,7 +45,7 @@ class Rcl_Button{
         $properties = get_class_vars(get_class($this));
 
         foreach ($properties as $name=>$val){
-            if(isset($args[$name])) $this->$name = $args[$name];
+            if(isset($args[$name]) & !empty($args[$name])) $this->$name = $args[$name];
         }
 
     }
@@ -99,10 +94,13 @@ class Rcl_Button{
                     $this->class[] = 'rcl-bttn__mod-text-rico-count';
                 }
 
-            }else if ( !$this->counter && !$this->avatar && !$this->label){
+            } else if ( !$this->counter && !$this->avatar && !$this->label){
                 // только иконка
                 $this->class[] = 'rcl-bttn__mod-only-icon';
             }
+
+            if($this->icon_mask)
+                $this->class[] = 'rcl-bttn__ico-mask';
 
         }
 
@@ -119,6 +117,9 @@ class Rcl_Button{
 
         if($this->inset)
             $this->class[] = 'rcl-bttn__inset';
+        
+        if($this->avatar_circle)
+            $this->class[] = 'rcl-bttn__ava_circle';
 
     }
 

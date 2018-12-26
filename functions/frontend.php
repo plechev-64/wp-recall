@@ -270,6 +270,72 @@ function rcl_inline_styles(){
 
 }
 
+// background color button api
+add_filter('rcl_inline_styles', 'rcl_api_button_inline_background', 10, 2);
+function rcl_api_button_inline_background($styles, $rgb){
+    list($r, $g, $b) = $rgb;
+    $background_color = $r.','.$g.','.$b;
+
+    $styles .= '
+        body .rcl-bttn.rcl-bttn__type-primary {
+            background-color: rgb('.$background_color.');
+        }
+        .rcl-bttn.rcl-bttn__type-primary.rcl-bttn__active {
+            background-color: rgba('.$r.', '.$g.', '.$b.', 0.4);
+        }
+        .rcl-bttn.rcl-bttn__type-simple.rcl-bttn__active {
+            box-shadow: 0 -5px 0 -3px rgb('.$r.', '.$g.', '.$b.') inset;
+        }
+    ';
+
+    return $styles;
+}
+
+// color button api
+add_filter('rcl_inline_styles', 'rcl_api_button_inline_color', 10);
+function rcl_api_button_inline_color($styles){
+    $color_button = rcl_get_option('rcl-button-text-color', '#fff');
+
+    $styles .= '
+        body .rcl-bttn.rcl-bttn__type-primary {
+            color: '.$color_button.';
+        }
+    ';
+
+    return $styles;
+}
+
+// size button api
+add_filter('rcl_inline_styles', 'rcl_api_button_inline_size', 10);
+function rcl_api_button_inline_size($styles){
+    $size = rcl_get_option('rcl-button-font-size', '14');
+
+    $styles .= '
+        body .rcl-bttn,
+        .rcl-bttn.rcl-bttn__size-standart {
+            font-size: '.$size.'px;
+        }
+        .rcl-bttn.rcl-bttn__size-medium {
+            font-size: '. 1.16 * $size.'px;
+        }
+        .rcl-bttn__type-clear.rcl-bttn__mod-only-icon.rcl-bttn__size-medium,
+        .rcl-bttn.rcl-bttn__size-large {
+            font-size: '. 1.33 * $size.'px;
+        }
+        .rcl-bttn.rcl-bttn__size-big {
+            font-size: '. 1.5 * $size.'px;
+        }
+        .rcl-bttn__type-clear.rcl-bttn__mod-only-icon.rcl-bttn__size-large {
+            font-size: '. 1.66 * $size.'px;
+        }
+        .rcl-bttn__type-clear.rcl-bttn__mod-only-icon.rcl-bttn__size-big {
+            font-size: '. 2 * $size.'px;
+        }
+    ';
+
+    return $styles;
+}
+
 add_filter('rcl_inline_styles','rcl_default_inline_styles',5,2);
 function rcl_default_inline_styles($styles,$rgb){
 
