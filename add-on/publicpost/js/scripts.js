@@ -404,7 +404,56 @@ function rcl_preview_close(e){
     ssi_modal.close();	
 }
 
+/*var startSubmitBox = 0;
+var startSubmitHeight = 0;
+
+function rcl_public_form_submit_box_init(){
+
+    var publicForm = jQuery('.rcl-public-box');
+    var submitBox = publicForm.find('.submit-public-form');
+
+    var scrollBottom = jQuery(window).scrollTop() + jQuery(window).height();
+
+    if(!startSubmitBox){
+
+        startSubmitHeight = submitBox.outerHeight(true) + 20;
+        
+        if(scrollBottom < submitBox.offset().top + startSubmitHeight){
+            console.log(submitBox.offset().top);
+            startSubmitBox = submitBox.offset().top + startSubmitHeight; 
+            
+            var margin = scrollBottom - (startSubmitBox + startSubmitHeight) + 20;
+            
+            submitBox.attr('style','margin-top:'+margin+'px').addClass("fixed");
+
+        }
+
+    }else{
+
+        if(scrollBottom > startSubmitBox){
+            startSubmitBox = 0; 
+            submitBox.attr('style','margin-top:'+0+'px').removeClass("fixed");
+        }else{
+            
+            var margin = scrollBottom - (startSubmitBox + startSubmitHeight) + 20;
+
+            submitBox.attr('style','margin-top:'+margin+'px');
+            
+        }
+
+    }
+    
+}*/
+
 function rcl_init_public_form(post){
+    
+    /*rcl_public_form_submit_box_init();
+    
+    jQuery(window).scroll(function() {
+
+        rcl_public_form_submit_box_init();
+
+    });*/
     
     rcl_do_action('rcl_init_public_form',post);
     

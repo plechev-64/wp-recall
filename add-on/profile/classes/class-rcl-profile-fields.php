@@ -105,6 +105,8 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager{
         if(in_array($field->id, $defaultFields)){
             unset($options['filter']);
             unset($options['public_value']);
+        }else if(in_array($field->type, array('editor', 'uploader'))){
+            unset($options['filter']);
         }
 
         return $options;
