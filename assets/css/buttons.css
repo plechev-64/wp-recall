@@ -28,10 +28,10 @@ body .rcl-bttn {
     text-decoration: none !important;
     text-transform: none;
     white-space: nowrap;
-    
+
     -webkit-transition: opacity .1s ease,color .1s ease;
             transition: opacity .1s ease,color .1s ease;
-    
+
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
@@ -52,12 +52,12 @@ body .rcl-bttn:not(.rcl-bttn__type-clear):last-child {
 }
 .rcl-bttn:not(.rcl-bttn__type-clear) .rcl-bttn__text,
 .rcl-bttn:not(.rcl-bttn__type-clear) .rcl-bttn__ico-left {
-    padding: .6em .8em;
+    padding: .5em .7em;
 }
 .rcl-bttn:not(.rcl-bttn__type-clear):not(.rcl-bttn__ico-mask) .rcl-bttn__text + .rcl-bttn__ico,
 .rcl-bttn:not(.rcl-bttn__type-clear):not(.rcl-bttn__ico-mask) .rcl-bttn__ico + .rcl-bttn__text,
 .rcl-bttn:not(.rcl-bttn__type-clear):not(.rcl-bttn__ico-mask) .rcl-bttn__ico + .rcl-bttn__count {
-    padding: 0 .8em 0 0;
+    padding: 0 .7em 0 0;
 }
 .rcl-bttn:not(.rcl-bttn__type-clear) .rcl-bttn__text + .rcl-bttn__count {
     align-self: flex-start;
@@ -76,7 +76,7 @@ body .rcl-bttn:not(.rcl-bttn__type-clear):last-child {
     padding: 0;
 }
 .rcl-bttn:not(.rcl-bttn__type-clear) .rcl-bttn__ava + .rcl-bttn__count {
-    padding: 0 .8em;
+    padding: 0 .7em;
 }
 /* END пересекающие стили для 2х кнопок: rcl-bttn__type-simple и rcl-bttn__type-primary */
 
@@ -115,16 +115,16 @@ body .rcl-bttn:not(.rcl-bttn__type-clear):last-child {
 /* END fullwidth */
 
 /* masked icon */
-.rcl-bttn.rcl-bttn__ico-mask .fa,
+.rcl-bttn.rcl-bttn__ico-mask .rcli,
 .rcl-bttn__ico-mask.rcl-bttn__mod-text-rico-count .rcl-bttn__count {
     background-color: rgba(0,0,0,.1);
 }
 .rcl-bttn__ico-mask.rcl-bttn__mod-text-rico .rcl-bttn__ico-right,
 .rcl-bttn__ico-mask.rcl-bttn__mod-text-rico-count .rcl-bttn__count {
-    padding: .6em .8em;
+    padding: .5em .7em;
 }
 .rcl-bttn__ico-mask.rcl-bttn__mod-text-rico-count .rcl-bttn__ico.rcl-bttn__ico-right {
-    padding: .6em 0 .6em .8em;
+    padding: .5em 0 .5em .7em;
 }
 /* END masked icon */
 

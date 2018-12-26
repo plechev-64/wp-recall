@@ -316,11 +316,12 @@ span i.rcli.fa-circle {
     overflow: visible;
     position: relative;
 }
-#rcl-office a:link {
-    border: none;                   /*++Twenty15++*/
-    box-shadow: none;               /*++Twenty16++*/
+/* need alternative. this style is wrong - id break other styles */
+/*#rcl-office a:link {
+    border: none;                   ++Twenty15++
+    box-shadow: none;               ++Twenty16++
     text-decoration: none;
-}
+}*/
 #rcl-office h2 {
     font-size: 22px;
     font-weight: bold;
@@ -439,7 +440,7 @@ span i.rcli.fa-circle {
     width: 0;
 }
 
-.rcl-balloon::before{  
+.rcl-balloon::before{
     border-color: transparent transparent rgb(0, 0, 0) transparent;
     top: -11px;
 }
@@ -884,10 +885,10 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
     margin-right: 5px;
 }
 .rcl-custom-fields{
-    
+
 }
 .rcl-custom-fields .rcl-field{
-    
+
 }
 .rcl-custom-fields .type-uploader-value{
     position:relative;
@@ -1727,7 +1728,7 @@ body .ssi-modalOuter .ssi-modalTitle {
     /*position: relative;*/
 }
 .rcl-content .rcl-content-group{
-    
+
 }
 .rcl-content .rcl-content-group .group-title{
     font-weight:bold;
