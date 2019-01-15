@@ -4,49 +4,49 @@
 add_filter('manage_edit-products_columns', 'rcl_init_product_columns', 10);
 function rcl_init_product_columns( $columns ){
     global $rmag_options;
-    
+
     $out = array();
     foreach($columns as $col=>$name){
-        
+
         if(++$i==2){
             $out['product-thumbnail']   = __('Thumbnail','wp-recall');
         }
-        
+
         if($i==3){
             $out['product-price']       = __('Price','wp-recall');
         }
 
         $out[$col] = $name;
-        
+
     }
-    
+
     $out['product-category']    = __('Category','wp-recall');
 
     return $out;
-    
+
 }
 
 // заполняем колонку данными
 add_filter('manage_products_posts_custom_column', 'rcl_add_data_product_columns', 10, 2);
 function rcl_add_data_product_columns($column_name, $post_id) {
-    
+
     switch($column_name){
-        
-        case 'product-thumbnail': 
-            
+
+        case 'product-thumbnail':
+
             $thumbnail = '';
-            
-            if(get_the_post_thumbnail($post_id,'thumbnail')) 
+
+            if(get_the_post_thumbnail($post_id,'thumbnail'))
                 $thumbnail = get_the_post_thumbnail($post_id, array(70,70));
 
             echo '<div class="thumbnail">'.$thumbnail.'</div>';
-            
+
             break;
-            
-        case 'product-category': 
-            
+
+        case 'product-category':
+
             $terms = get_the_terms( $post_id,'prodcat');
-            
+
             if($terms){
                 $content = array();
                 foreach($terms as $term){
@@ -54,40 +54,40 @@ function rcl_add_data_product_columns($column_name, $post_id) {
                 }
                 echo implode(', ',$content);
             }
-            
+
             break;
-            
-        case 'product-price': 
-            
+
+        case 'product-price':
+
             echo '<input type="text" id="price-product-'.$post_id.'" name="price-product" size="4" value="'.get_post_meta($post_id,'price-products',1).'"> '.rcl_get_current_type_currency($post_id).'
-                <input type="button" class="recall-button edit-price-product" data-product="'.$post_id.'" id="product-'.$post_id.'" value="'.__('OK','wp-recall').'">';
-            
+                <input type="button" class="button edit-price-product" data-product="'.$post_id.'" id="product-'.$post_id.'" value="'.__('OK','wp-recall').'">';
+
             break;
-        
-        case 'product-availability': 
-            
+
+        case 'product-availability':
+
             if(get_post_meta($post_id, 'availability_product', 1)=='empty'){ //если товар цифровой
-                
+
                 echo '<span>'.__('digital goods','wp-recall').'</span>';
-                
+
             }else{
-                
+
                if(!get_post_meta($post_id, 'outsale', 1)){
-                   
+
                     $amount = get_post_meta($post_id,'amount_product',1);
                     $reserve = get_post_meta($post_id,'reserve_product',1);
 
-                    if($amount==0&&$amount!='') 
+                    if($amount==0&&$amount!='')
                        echo '<span style="color:red;">'.__('in stock','wp-recall').'</span> ';
-                    else 
+                    else
                        echo '<span style="color:green;">'.__('in stock','wp-recall').'</span> ';
 
-                    if($amount!=false&&$amount>0) 
+                    if($amount!=false&&$amount>0)
                         echo '<span style="color:green;">'.$amount.'</span>';
-                    else if($amount<=0) 
+                    else if($amount<=0)
                         echo '<span style="color:red;">'.$amount.'</span>' ;
 
-                    if($reserve) 
+                    if($reserve)
                         echo '<br /><span style="color:orange;">'.__('in reserve','wp-recall').' '.$reserve.'</span>';
 
                 }else{
@@ -96,7 +96,7 @@ function rcl_add_data_product_columns($column_name, $post_id) {
 
                 }
             }
-            
+
             break;
     }
 

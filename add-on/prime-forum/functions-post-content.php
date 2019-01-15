@@ -109,7 +109,7 @@ function pfm_filter_allowed_tags($content){
 add_filter('pfm_content_without_code','pfm_filter_urls',11);
 function pfm_filter_urls($content){
 
-    preg_match_all("/(\s|^|])(https?:[_a-zА-Я0-9\/\.%+\-\—#!№?=&]+)/ui", $content, $urls);
+    preg_match_all("/(\s|^|])(https?:[_a-zА-Я0-9\/\.%+\-\—\;#!№?=&]+)/ui", $content, $urls);
 
     if($urls[0]){
 

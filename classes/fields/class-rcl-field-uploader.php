@@ -33,6 +33,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract{
                 'slug' => 'icon',
                 'default' => 'fa-file',
                 'placeholder' => 'fa-file',
+                'class' => 'rcl-iconpicker',
                 'type' => 'text',
                 'title'=>__('Icon class of  font-awesome', 'wp-recall'),
                 'notice'=>__('Source', 'wp-recall').' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.io/</a>'
@@ -90,7 +91,8 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract{
                 'type' => 'radio',
                 'values' => array(
                     'grid' => __('Плитка', 'wp-recall'),
-                    'list' => __('Список', 'wp-recall')
+                    'list' => __('Список', 'wp-recall'),
+                    'gallery' => __('Галлерея', 'wp-recall')
                 ),
                 'title' => __('Режим вывода файлов', 'wp-recall'),
             ),
@@ -182,9 +184,11 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract{
 
         if(!$this->value) return false;
 
-        /*if($this->mode_output == 'grid'){
+        $content = '<div id="rcl-gallery-'.$this->id.'" class="rcl-upload-gallery mode-'.$this->mode_output.'">';
 
-            $width = 100;
+        if($this->mode_output == 'gallery'){
+
+            /*$width = 100;
 
             $galArgs = array(
                 'id' => 'rcl-gallery-'.$this->id,
@@ -208,11 +212,28 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract{
                 );
             }
 
-            $content = rcl_get_image_gallery($galArgs);
+            $content = rcl_get_image_gallery($galArgs);*/
 
-        }else if($this->mode_output == 'list'){*/
+            $content = rcl_get_image_gallery(array(
+                'id' => 'rcl-gallery-'.$this->id,
+                'center_align' => true,
+                'attach_ids' => $this->value,
+                //'width' => 500,
+                'height' => 250,
+                'slides' => array(
+                    'slide' => 'large',
+                    'full' => 'large'
+                ),
+                'navigator' => array(
+                    'thumbnails' => array(
+                        'width' => 50,
+                        'height' => 50,
+                        'arrows' => true
+                    )
+                )
+            ));
 
-            $content = '<div id="rcl-gallery-'.$this->id.'" class="rcl-upload-gallery mode-'.$this->mode_output.'">';
+        }else{
 
             foreach($this->value as $attach_id){
 
@@ -244,9 +265,9 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract{
 
             }
 
-            $content .= '</div>';
+        }
 
-        //}
+        $content .= '</div>';
 
         return $content;
 

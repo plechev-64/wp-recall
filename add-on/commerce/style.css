@@ -52,7 +52,6 @@
     display: flex;
     font-size: 15px;
     justify-content: center;
-    padding: 8px 12px;
 }
 .rcl-cart-box .cart-button .rcli {
     color: inherit;
@@ -603,7 +602,6 @@ body .rcl-product-gallery ul.images-list {
 #rcl-product-box .rcl-cart-box .cart-button a {
     border-radius: 2px;
     font-size: 20px;
-    padding: 10px 14px;
 }
 #rcl-product-box .rcl-cart-box .cart-button .fa-shopping-cart {
     font-size: 22px;

@@ -1,7 +1,7 @@
 <?php
 
 class Rcl_Feed_List extends Rcl_Query{
-    
+
     public $load = 'ajax';
     public $content = 'posts';
     public $filters = 1;
@@ -11,21 +11,21 @@ class Rcl_Feed_List extends Rcl_Query{
 
     function __construct($args = array()){
         global $user_ID;
-        
+
         if(!$args) $args = array();
-        
+
         if(!isset($args['user_feed']))
             $args['user_feed'] = $user_ID;
-        
-        if(isset($_GET['feed-filter'])) 
+
+        if(isset($_GET['feed-filter']))
             $args['content'] = $_GET['feed-filter'];
-        
+
         $args = apply_filters('rcl_feed_args', $args);
 
         $this->init_properties($args);
 
         $this->add_uri['feed-filter'] = $this->content;
-        
+
         do_action('rcl_init_feed_'.$this->content.'_content');
 
         $default_types = array('posts','comments','answers');
@@ -37,7 +37,7 @@ class Rcl_Feed_List extends Rcl_Query{
 
         $this->setup_feed_query($args);
     }
-    
+
     function setup_feed_query($args){
         $this->query = apply_filters('rcl_feed_query',$this->query, $args);
     }
@@ -49,11 +49,11 @@ class Rcl_Feed_List extends Rcl_Query{
             if(isset($args[$name])) $this->$name = $args[$name];
         }
     }
-    
+
     function count_feed(){
         return $this->count();
     }
-    
+
     function get_feed(){
         return $this->get_data();
     }
@@ -65,7 +65,7 @@ class Rcl_Feed_List extends Rcl_Query{
 
     function setup_data($data){
         global $rcl_feed;
-        
+
         $array_feed = array(
             'feed_ID',
             'feed_content',
@@ -80,16 +80,16 @@ class Rcl_Feed_List extends Rcl_Query{
         );
 
         $array_feed = apply_filters('rcl_feed_data',$array_feed,$data);
-        
+
         $array_feed['feed_type'] = $this->content;
 
         $rcl_feed = (object)$array_feed;
-        
+
         return $rcl_feed;
     }
-    
+
     function setup_posts_data($array_feed,$data){
-        
+
         $array_feed = array(
             'feed_ID'=>$data->ID,
             'feed_content'=>$data->post_content,
@@ -102,12 +102,12 @@ class Rcl_Feed_List extends Rcl_Query{
             'feed_permalink'=>get_permalink($data->ID),
             'is_options'=>1
         );
-        
+
         return $array_feed;
     }
-    
+
     function setup_feed_comments_data($array_feed,$data){
-        
+
         $array_feed = array(
             'feed_ID'=>$data->comment_ID,
             'feed_content'=>$data->comment_content,
@@ -119,27 +119,27 @@ class Rcl_Feed_List extends Rcl_Query{
             'feed_excerpt'=>'',
             'feed_permalink'=>''
         );
-        
+
         return $array_feed;
     }
 
     function setup_comments_data($array_feed,$data){
-        
+
         return $this->setup_feed_comments_data($array_feed,$data);
-        
+
     }
-    
+
     function setup_answers_data($array_feed,$data){
-        
+
         return $this->setup_feed_comments_data($array_feed,$data);
-        
+
     }
-    
+
     function setup_posts_query($query, $args){
         global $wpdb;
 
         $feeds = new Rcl_Feed_Query();
-        
+
         //получаем игнорируемых авторов
         $authors_ignor = $feeds->get_col(array(
             'feed_type' => 'author',
@@ -147,31 +147,31 @@ class Rcl_Feed_List extends Rcl_Query{
             'feed_status' => 0,
             'fields' => array('object_id')
         ));
-        
+
         $authors_ignor[] = $this->user_feed;
-        
+
         $authors_feed = array();
-        
+
         $usersFeed1 = $feeds->get_col(array(
             'feed_type' => 'author',
             'user_id' => $this->user_feed,
             'feed_status' => 1,
             'fields' => array('object_id')
         ));
-        
+
         if($usersFeed1){
-        
+
             $usersFeed2 = $feeds->get_col(array(
                 'feed_type' => 'author',
                 'user_id__in' => $usersFeed1,
                 'feed_status' => 1,
                 'fields' => array('object_id')
             ));
-            
+
             $authors_feed = array_unique(array_merge($usersFeed1,$usersFeed2));
-        
+
         }
-        
+
         $defaults = array(
             'table' => array(
                 'name' => $wpdb->posts,
@@ -209,20 +209,20 @@ class Rcl_Feed_List extends Rcl_Query{
                 'post_content'
             )
         );
-        
+
         $args = wp_parse_args( $args, $defaults );
-        
+
         $args = apply_filters('rcl_feed_posts_args',$args,$this->user_feed);
 
         $this->set_query($args);
-        
+
         return apply_filters('rcl_feed_posts_query',$this->query,$this->user_feed);
 
     }
-    
+
     function get_comments_table(){
         global $wpdb;
-        
+
         return array(
             'name' => $wpdb->comments,
             'as' => 'wp_comments',
@@ -241,7 +241,7 @@ class Rcl_Feed_List extends Rcl_Query{
 
     function setup_comments_query($query, $args){
         global $wpdb;
-        
+
         $defaults = array(
             'table' => $this->get_comments_table(),
             'comment_approved' => 1,
@@ -256,14 +256,14 @@ class Rcl_Feed_List extends Rcl_Query{
                 'user_id'
             )
         );
-        
+
         $args = wp_parse_args( $args, $defaults );
-        
+
         $args = apply_filters('rcl_feed_comments_args',$args,$this->user_feed);
 
         $this->set_query($args);
-        
-        $this->query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS rcl_feeds ON wp_comments.user_id=rcl_feeds.object_id"; 
+
+        $this->query['join'][] = "INNER JOIN ".RCL_PREF."feeds AS rcl_feeds ON wp_comments.user_id=rcl_feeds.object_id";
         $this->query['where'][] = "rcl_feeds.feed_type = 'author'";
         $this->query['where'][] = "rcl_feeds.user_id = '$this->user_feed'";
         $this->query['where'][] = "rcl_feeds.feed_status = '1'";
@@ -275,7 +275,7 @@ class Rcl_Feed_List extends Rcl_Query{
 
     function setup_answers_query($query, $args){
         global $wpdb;
-        
+
         $defaults = array(
             'table' => $this->get_comments_table(),
             'comment_approved' => 1,
@@ -291,16 +291,16 @@ class Rcl_Feed_List extends Rcl_Query{
                 'user_id'
             )
         );
-        
+
         $args = wp_parse_args( $args, $defaults );
-        
+
         $args = apply_filters('rcl_feed_answers_args',$args,$this->user_feed);
 
         $this->set_query($args);
-        
+
         $this->query['join'][] = "INNER JOIN $wpdb->comments AS wp_comments2 ON wp_comments.comment_parent = wp_comments2.comment_ID";
         $this->query['where'][] = "wp_comments2.user_id='$this->user_feed'";
-        
+
         return apply_filters('rcl_feed_answers_query',$this->query,$this->user_feed);
 
     }
@@ -342,7 +342,7 @@ class Rcl_Feed_List extends Rcl_Query{
         $s_array = $this->search_request();
 
         $rqst = ($s_array)? implode('&',$s_array).'&' :'';
-        
+
         if($user_LK){
             $url = (isset($_POST['tab_url']))? $_POST['tab_url']: get_author_posts_url($user_LK);
         }else{
@@ -362,7 +362,11 @@ class Rcl_Feed_List extends Rcl_Query{
         $content .= '<div class="rcl-data-filters">';
 
         foreach($filters as $key=>$name){
-            $content .= '<a class="data-filter recall-button '.rcl_a_active($this->content,$key).'" href="'.$perm.'feed-filter='.$key.'">'.$name.'</a> ';
+            $content .= rcl_get_button(array(
+                'label' => $name,
+                'href' => $perm.'feed-filter='.$key,
+                'class' => 'data-filter '.rcl_a_active($this->content,$key)
+            ));
         }
 
         $content .= '</div>';

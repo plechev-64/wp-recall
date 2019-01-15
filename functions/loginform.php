@@ -33,8 +33,16 @@ function rcl_get_authorize_form($type=false,$form=false){
             echo '</div>';
 
             $buttons = array(
-                rcl_get_button(__('To personal account','wp-recall'),$rcl_user_URL,array('icon'=>'fa-home')),
-                rcl_get_button(__('Exit','wp-recall'),wp_logout_url( home_url() ),array('icon'=>'fa-external-link'))
+                rcl_get_button(array(
+                    'label' => __('To personal account','wp-recall'),
+                    'href' => $rcl_user_URL,
+                    'icon' => 'fa-home'
+                )),
+                rcl_get_button(array(
+                    'label' => __('Exit','wp-recall'),
+                    'href' => wp_logout_url( home_url() ),
+                    'icon'=>'fa-external-link'
+                ))
             );
 
             echo rcl_get_primary_widget_buttons($buttons);
@@ -43,27 +51,43 @@ function rcl_get_authorize_form($type=false,$form=false){
 
             $login_form = rcl_get_option('login_form_recall');
 
-            if($login_form==1&&$type!='pageform'){
+            if($login_form == 1 && $type != 'pageform'){
 
                 $redirect_url = rcl_format_url(get_permalink(rcl_get_option('page_login_form_recall')));
 
                 $buttons = array(
-                    rcl_get_button(__('Entry','wp-recall'),$redirect_url.'action-rcl=login',array('icon'=>'fa-sign-in'))
+                    rcl_get_button(array(
+                        'label' => __('Entry','wp-recall'),
+                        'href'  => $redirect_url.'action-rcl=login',
+                        'icon'  =>'fa-sign-in'
+                    ))
                 );
 
                 if($can_register)
-                    $buttons[] = rcl_get_button(__('Registration','wp-recall'),$redirect_url.'action-rcl=register',array('icon'=>'fa-book'));
+                    $buttons[] = rcl_get_button(array(
+                        'label' => __('Registration','wp-recall'),
+                        'href'  => $redirect_url.'action-rcl=register',
+                        'icon'  => 'fa-book'
+                    ));
 
                 echo rcl_get_primary_widget_buttons($buttons);
 
             }else if($login_form==2){
 
                 $buttons = array(
-                    rcl_get_button(__('Entry','wp-recall'),esc_url(wp_login_url('/')),array('icon'=>'fa-sign-in'))
+                    rcl_get_button(array(
+                        'label' => __('Entry','wp-recall'),
+                        'href'  => esc_url(wp_login_url('/')),
+                        'icon'  => 'fa-sign-in'
+                    ))
                 );
 
                 if($can_register)
-                    $buttons[] = rcl_get_button(__('Registration','wp-recall'),esc_url(wp_registration_url()),array('icon'=>'fa-book'));
+                    $buttons[] = rcl_get_button(array(
+                        'label' => __('Registration','wp-recall'),
+                        'href'  => esc_url(wp_registration_url()),
+                        'icon'  => 'fa-book'
+                    ));
 
                 echo rcl_get_primary_widget_buttons($buttons);
 
@@ -82,11 +106,19 @@ function rcl_get_authorize_form($type=false,$form=false){
             }else if(!$login_form){
 
                 $buttons = array(
-                    rcl_get_button(__('Entry','wp-recall'),'#',array('icon'=>'fa-sign-in','class'=>'rcl-login'))
+                    rcl_get_button(array(
+                        'label' => __('Entry','wp-recall'),
+                        'icon'  => 'fa-sign-in',
+                        'class' => 'rcl-login'
+                    ))
                 );
 
                 if($can_register)
-                    $buttons[] = rcl_get_button(__('Registration','wp-recall'),'#',array('icon'=>'fa-book','class'=>'rcl-register'));
+                    $buttons[] = rcl_get_button(array(
+                        'label' => __('Registration','wp-recall'),
+                        'icon'  => 'fa-book',
+                        'class' => 'rcl-register'
+                    ));
 
                 echo rcl_get_primary_widget_buttons($buttons);
 

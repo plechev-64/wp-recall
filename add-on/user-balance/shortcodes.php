@@ -54,7 +54,12 @@ function rcl_form_user_balance($attr=false){
             '<input name=description type=hidden value="'.$description.'">'
         ),
         'notice' => '',
-        'submit' => '<input class="rcl-get-form-pay recall-button" type=submit value="'.__('Submit','wp-recall').'">'
+        'submit' => rcl_get_button(array(
+            'label' => __('Submit','wp-recall'),
+            'submit' => true,
+            'class' => 'rcl-get-form-pay',
+            'fullwidth' => 1
+        ))
     );
 
     if(!is_array($rmag_options['connect_sale'])&&isset($rcl_payments[$rmag_options['connect_sale']])){

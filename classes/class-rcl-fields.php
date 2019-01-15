@@ -265,7 +265,7 @@ class Rcl_Fields extends Rcl_Field{
 
         if(!$field->value) return false;
 
-        $content .= $field->get_value_box($field->value);
+        $content .= $field->get_field_html($field->value);
 
         return $content;
     }
@@ -382,14 +382,14 @@ class Rcl_Fields extends Rcl_Field{
 
     function get_field_form($field_id, $args = false){
 
-        $field = $this->get_field_input($field_id);
+        $field = $this->get_field($field_id);
 
         if(!$field) return false;
 
         if(isset($args['unique_ids']))
             $field->set_prop('unique_id', true);
 
-        $content = $field->get_field_box();
+        $content = $field->get_field_html();
 
         return $content;
     }

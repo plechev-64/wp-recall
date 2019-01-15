@@ -85,7 +85,11 @@ class Rcl_Cart_Constructor{
             }
 
             $content .= '<div class="submit-box">'
-                        . '<a href="#" class="recall-button" onclick="rcl_cart_submit();return false;"><i class="rcli fa-shopping-bag" aria-hidden="true"></i><span>'.__('Checkout','wp-recall').'</span></a>'
+                        . rcl_get_button(array(
+                            'label' => __('Checkout','wp-recall'),
+                            'onclick' => 'rcl_cart_submit();return false;',
+                            'icon' => 'fa-shopping-bag'
+                        ))
                         . '<input type="hidden" name="rcl-commerce-action" value="new-order">'
                     . '</div>';
 

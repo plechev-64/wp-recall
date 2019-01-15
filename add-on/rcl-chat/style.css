@@ -523,10 +523,7 @@ body audio {
     font-size: 14px;
 }
 .rcl-chat .important-manager .important-shift {
-    color: #fff;
-    display: inline-block;
-    font-size: 14px;
-    padding: 6px 15px;
+    
 }
 @media screen and (max-width:800px) {
     #rcl-chat-noread-box .chat-delete-contact {

@@ -48,6 +48,8 @@ class Rcl_Fields_Manager extends Rcl_Fields{
 
         rcl_dialog_scripts();
 
+        rcl_iconpicker();
+
         $this->manager_id = $manager_id;
 
         $this->init_properties($args);
@@ -268,6 +270,7 @@ class Rcl_Fields_Manager extends Rcl_Fields{
         unset($props['default_fields']);
 
         $content .= "<script>rcl_init_manager_fields(".json_encode($props).");</script>";
+        $content .= "<script>jQuery(window).on('load', function() {rcl_init_iconpicker();});</script>";
 
         return $content;
     }

@@ -272,8 +272,6 @@ function rcl_get_order_tabs($rcl_tabs){
         $counter[$order] = $id;
     }
 
-    if(count($counter) < 2) return $rcl_tabs;
-
     ksort($counter);
     $id_first = array_shift($counter);
     $rcl_tabs[$id_first]['first'] = 1;
@@ -788,7 +786,9 @@ function rcl_mail($email, $title, $text, $from = false, $attach = false){
     $text .= '<p><small>-----------------------------------------------------<br/>
     '.__('This letter was created automatically, no need to answer it.','wp-recall').'<br/>
     "'.get_bloginfo('name').'"</small></p>';
-    wp_mail($email, $title, $text, $headers, $attach);
+
+    return wp_mail($email, $title, $text, $headers, $attach);
+
 }
 
 function rcl_multisort_array($array, $key, $type = SORT_ASC, $cmp_func = 'strcmp'){

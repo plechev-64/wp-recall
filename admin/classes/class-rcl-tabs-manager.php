@@ -23,25 +23,26 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager{
                 ),
                 array(
                     'type' => 'text',
-                    'slug'=>'icon',
-                    'title'=>__('Icon class of  font-awesome','wp-recall'),
-                    'placeholder'=>__('Example, fa-user','wp-recall'),
+                    'slug' => 'icon',
+                    'class' => 'rcl-iconpicker',
+                    'title' => __('Icon class of  font-awesome','wp-recall'),
+                    'placeholder' => __('Example, fa-user','wp-recall'),
                     'notice'=>__('Source','wp-recall').' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.com/</a>'
                 ),
                 array(
                     'type' => 'select',
-                    'slug'=>'public-tab',
-                    'title'=>__('Tab privacy','wp-recall'),
-                    'values'=>array(
+                    'slug' => 'public-tab',
+                    'title' => __('Tab privacy','wp-recall'),
+                    'values' => array(
                         __('Private','wp-recall'),
                         __('Public','wp-recall')
                     )
                 ),
                 array(
                     'type' => 'checkbox',
-                    'slug'=>'supports-tab',
-                    'title'=>__('Support of the functions','wp-recall'),
-                    'values'=>array(
+                    'slug' => 'supports-tab',
+                    'title' => __('Support of the functions','wp-recall'),
+                    'values' => array(
                         'ajax' => __('ajax-loading','wp-recall'),
                         'cache' => __('caching','wp-recall'),
                         'dialog' => __('dialog box','wp-recall')
@@ -50,9 +51,9 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager{
                 array(
                     'type' => 'editor',
                     'tinymce' => true,
-                    'slug'=>'content',
-                    'title'=>__('Content tab','wp-recall'),
-                    'notice'=>__('supported shortcodes and HTML-code','wp-recall')
+                    'slug' => 'content',
+                    'title' => __('Content tab','wp-recall'),
+                    'notice' => __('supported shortcodes and HTML-code','wp-recall')
                 )
 
             )

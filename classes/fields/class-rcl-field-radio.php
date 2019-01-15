@@ -65,7 +65,7 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract{
     function get_input(){
 
         if(!$this->values) return false;
-        
+
         $content = '';
 
         if($this->empty_first){
@@ -78,7 +78,7 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract{
         $a = 0;
 
         if(!$this->empty_first && !$this->value)
-            $this->value = ($this->value_in_key)? $field['values'][0]: 0;
+            $this->value = ($this->value_in_key)? $this->values[0]: 0;
 
         foreach($this->values as $k => $value){
 

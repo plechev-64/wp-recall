@@ -240,15 +240,25 @@ function rcl_tab_profile_content($master_id){
 
     $content .= wp_nonce_field( 'update-profile_' . $user_ID,'_wpnonce',true,false ).'
         <div style="text-align:right;">'
-            . '<input type="submit" id="cpsubmit" class="recall-button" value="'.__('Update profile','wp-recall').'" onclick="return rcl_check_profile_form();" name="submit_user_profile" />
+            . rcl_get_button(array(
+                'label' => __('Update profile','wp-recall'),
+                'id' => 'cpsubmit',
+                'onclick' => 'return rcl_check_profile_form()? rcl_submit_form(this): false;'
+            ))
+            . '<input type="hidden" value="1" name="submit_user_profile" />
         </div>
     </form>';
 
     if(rcl_get_option('delete_user_account')){
         $content .= '
-        <form method="post" action="" name="delete_account" onsubmit="return confirm(\''.__('Are you sure? It can’t be restaured!','wp-recall').'\');">
-        '.wp_nonce_field('delete-user-'.$user_ID,'_wpnonce',true,false).'
-        <input type="submit" id="delete_acc" class="recall-button"  value="'.__('Delete your profile','wp-recall').'" name="rcl_delete_user_account"/>
+        <form method="post" action="" name="delete_account">
+        '.wp_nonce_field('delete-user-'.$user_ID,'_wpnonce',true,false)
+        . rcl_get_button(array(
+            'label' => __('Delete your profile','wp-recall'),
+            'id' => 'delete_acc',
+            'onclick' => 'return confirm(\''.__('Are you sure? It can’t be restaured!','wp-recall').'\')? rcl_submit_form(this): false;'
+        ))
+        . '<input type="hidden" value="1" name="rcl_delete_user_account"/>
         </form>';
     }
 

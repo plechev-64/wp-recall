@@ -156,8 +156,12 @@ function rcl_default_search_form($form){
                 <select name="search_field">
                     <option '.selected($search_field,'display_name',false).' value="display_name">'.__('by name','wp-recall').'</option>
                     <option '.selected($search_field,'user_login',false).' value="user_login">'.__('by login','wp-recall').'</option>
-                </select>
-                <input type="submit" class="recall-button" name="search-user" value="'.__('Search','wp-recall').'">
+                </select>'
+                . rcl_get_button(array(
+                    'label' => __('Search','wp-recall'),
+                    'submit' => true
+                ))
+                .'<input type="hidden" name="search-user" value="1">
                 <input type="hidden" name="default-search" value="1">';
 
     if($user_LK && $rcl_tab){
@@ -559,7 +563,12 @@ function rcl_user_black_list_button($office_id){
 
     $title = ($user_block)? __('Unblock','wp-recall'): __('Blacklist','wp-recall');
 
-    $button = rcl_get_button($title,'#',array('class'=>'rcl-manage-blacklist','icon'=>'fa-bug','attr'=>'onclick="rcl_manage_user_black_list(this,'.$office_id.');return false;"'));
+    $button = rcl_get_button(array(
+        'label'      => $title,
+        'class'     => 'rcl-manage-blacklist',
+        'icon'      => 'fa-bug',
+        'onclick'   => 'rcl_manage_user_black_list(this,'.$office_id.');return false;'
+    ));
 
     return $button;
 }
@@ -631,21 +640,12 @@ function rcl_post_bar($content){
 
             $bar .= '<div id="bar-item-'.$id_item.'" class="post-bar-item '.$class.'">';
 
-                $bar .= '<a href="'.$link.'" class="recall-button" '.implode(' ',$attributs).' '.implode(' ',$datas).'>';
-
-                if(isset($item['icon'])):
-                    $bar .= '<i class="rcli '.$item['icon'].'" aria-hidden="true"></i>';
-                endif;
-
-                if(isset($item['label'])):
-                    $bar .= '<span class="item-label">'.$item['label'].'</span>';
-                endif;
-
-                if(isset($item['counter'])):
-                    $bar .= '<span class="item-counter">'.$item['counter'].'</span>';
-                endif;
-
-                $bar .= '</a>';
+            $bar .= rcl_get_button(array(
+                'href' => $link,
+                'label' => isset($item['label'])? $item['label']: false,
+                'icon' => isset($item['icon'])? $item['icon']: false,
+                'counter' => isset($item['counter'])? $item['counter']: false,
+            ));
 
             $bar .= '</div>';
 

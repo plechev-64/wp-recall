@@ -401,7 +401,12 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
                 }
 
                 $content .= '<div class="chat-preloader-file"></div>'
-                    . '<a href="#" class="recall-button chat-submit" onclick="rcl_chat_add_message(this);return false;"><i class="rcli fa-reply"></i> '.__('Send','wp-recall').'</a>'
+                    . rcl_get_button(array(
+                        'label' => __('Send','wp-recall'),
+                        'icon' => 'fa-reply',
+                        'class' => 'chat-submit',
+                        'onclick' => 'rcl_chat_add_message(this);return false;'
+                    ))
                 . '</form>';
 
                 $content .= apply_filters('rcl_chat_after_form', '', $this->chat);
@@ -657,9 +662,11 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query{
         $class = ($this->important)? 'fa-star-half-o': 'fa-star';
 
         $content = '<div class="important-manager">'
-                    . '<a href="#" class="recall-button important-shift" onclick="rcl_chat_important_manager_shift(this,'.$status.');return false;">'
-                        . '<i class="rcli '.$class.'" aria-hidden="true"></i>'
-                    . '</a>'
+                    . rcl_get_button(array(
+                        'icon' => $class,
+                        'class' => 'important-shift',
+                        'onclick' => 'rcl_chat_important_manager_shift(this,'.$status.');return false;'
+                    ))
                 . '</div>';
 
         return $content;

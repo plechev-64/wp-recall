@@ -33,6 +33,9 @@ class Rcl_Button{
 
     function __construct($args){
 
+        if(!isset($args['title']) && isset($args['label']))
+            $args['title'] = $args['label'];
+
         $this->init_properties($args);
 
         $this->setup_class();
@@ -57,7 +60,7 @@ class Rcl_Button{
         $this->attrs['onclick'] = $this->onclick;
         $this->attrs['style'] = $this->style;
         $this->attrs['id'] = $this->id;
-        $this->attrs['class'] = implode(' ', $this->class);
+        $this->attrs['class'] = is_array($this->class)? implode(' ', $this->class): $this->class;
 
         if($this->submit && !$this->onclick){
             $this->attrs['onclick'] = 'rcl_submit_form(this);return false;';
@@ -117,7 +120,7 @@ class Rcl_Button{
 
         if($this->inset)
             $this->class[] = 'rcl-bttn__inset';
-        
+
         if($this->avatar_circle)
             $this->class[] = 'rcl-bttn__ava_circle';
 

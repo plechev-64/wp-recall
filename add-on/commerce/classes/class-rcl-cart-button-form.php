@@ -139,7 +139,14 @@ class Rcl_Cart_Button_Form{
     function cart_button(){
 
         if($this->product_status){
-            $content = '<a href="#" onclick="rcl_add_to_cart(this);return false;" class="recall-button"><i class="rcli fa-shopping-cart" aria-hidden="true"></i><span>'.$this->label.'</span></a>';
+
+            $content = rcl_get_button(array(
+                'label'     => $this->label,
+                'onclick'   => 'rcl_add_to_cart(this);return false;',
+                'icon'      => 'fa-shopping-cart',
+                'class'     => 'rcl-in-to-cart'
+            ));
+
         }else{
             $content = '<span class="recall-button outsale-product"><i class="rcli fa-refresh" aria-hidden="true"></i>'.__('Not available','wp-recall').'</a>';
         }

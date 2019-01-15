@@ -1,14 +1,82 @@
 <?php
 
-function rcl_get_postslist($post_type,$type_name){
-    global $user_LK;
+function rcl_get_postslist($post_type, $type_name = false){
 
-    if (!class_exists('Rcl_Postlist'))
-        include_once RCL_PATH .'add-on/publicpost/rcl_postlist.php';
+    global $user_ID, $user_LK, $post;
 
-    $list = new Rcl_Postlist($user_LK,$post_type,$type_name);
+    $postStatus = array('publish');
 
-    return $list->get_postlist_block();
+    if(rcl_is_office($user_ID)){
+        $postStatus[] = 'trash';
+        $postStatus[] = 'pending';
+        $postStatus[] = 'private';
+        $postStatus[] = 'draft';
+    }
+
+    $args = array(
+	'numberposts' => -1,
+	'orderby'     => 'date',
+	'order'       => 'DESC',
+	'post_type'   => $post_type,
+        'post_status' => $postStatus,
+        'author' => $user_LK,
+	'suppress_filters' => true,
+        'fields' => 'ids'
+    );
+
+    $ids = get_posts($args);
+
+    if(!$ids) return __('Публикаций пока не было', 'wp-recall');
+
+    $perPage = 30;
+
+    $rclnavi = new Rcl_PageNavi($post_type.'-navi', count($ids), array('in_page' => $perPage));
+
+    $args['offset'] = $rclnavi->offset;
+    $args['numberposts'] = $perPage;
+    $args['fields'] = false;
+
+    $posts = get_posts($args);
+
+    if(rcl_get_template_path('posts-list-'.$post_type.'.php',__FILE__))
+        $templateName = 'posts-list-'.$post_type.'.php';
+    else
+        $templateName = 'posts-list.php';
+
+    $content = $rclnavi->pagenavi();
+
+    $content .= '<div class="rcl-posts-list">';
+
+    foreach($posts as $post){ setup_postdata($post);
+
+        $content .= rcl_get_include_template($templateName, __FILE__);
+
+    }
+
+    $content .= '</div>';
+
+    $content .= $rclnavi->pagenavi();
+
+    wp_reset_postdata();
+
+    return $content;
+
+}
+
+function rcl_the_post_status(){
+    global $post;
+
+    $status = '';
+
+    switch($post->post_status){
+        case 'pending': $status = __('to be approved','wp-recall'); break;
+        case 'trash': $status = __('deleted','wp-recall'); break;
+        case 'draft': $status = __('draft','wp-recall'); break;
+        case 'private': $status = __('private','wp-recall'); break;
+        default: $status = __('published','wp-recall');
+    }
+
+    echo $status;
 
 }
 
@@ -173,7 +241,7 @@ function rcl_update_post_custom_fields($post_id,$id_form=false){
 
             }else if($field->type == 'file'){
 
-                $attach_id = usp_upload_meta_file($field,$post->post_author,$post_id);
+                $attach_id = rcl_upload_meta_file($field,$post->post_author,$post_id);
 
                 if($attach_id)
                     update_post_meta($post_id, $field_id, $attach_id);

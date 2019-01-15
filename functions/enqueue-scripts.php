@@ -1,5 +1,10 @@
 <?php
 
+function rcl_iconpicker(){
+    wp_enqueue_style('rcl-iconpicker', RCL_URL.'assets/rcl-awesome/iconpicker/iconpicker.css');
+    wp_enqueue_script('rcl-iconpicker', RCL_URL.'assets/rcl-awesome/iconpicker/iconpicker.js', array('jquery'), VER_RCL);
+}
+
 function rcl_sortable_scripts(){
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script('jquery-ui-sortable');

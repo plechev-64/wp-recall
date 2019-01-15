@@ -20,9 +20,14 @@
                 <?php do_action( 'lostpassword_form' ); ?>
             </div>
             <div class="form-block-rcl">
-                <input type="submit" class="recall-button link-tab-form" name="remember-login" value="<?php _e('Get New Password','wp-recall'); // Получить новый пароль ?>">
+                <?php echo rcl_get_button(array(
+                    'label' => __('Get New Password','wp-recall'),
+                    'submit' => true,
+                    'class' => 'link-tab-form'
+                )); ?>
                 <?php echo wp_nonce_field('remember-key-rcl','_wpnonce',true,false); ?>
                 <input type="hidden" name="redirect_to" value="<?php rcl_referer_url('remember'); ?>">
+                <input type="hidden" name="remember-login" value="1">
             </div>
         </form>
     <?php } ?>

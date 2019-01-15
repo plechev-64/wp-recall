@@ -328,7 +328,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                 'label' => __('Save as Draft','wp-recall'),
                 'class' => array('public-form-button'),
                 'id' => 'rcl-draft-post',
-                'icon' => 'fa-print'
+                'icon' => 'fa-shield'
             ));
 
         if($this->options['preview'])
@@ -337,7 +337,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields{
                 'label' => __('Preview','wp-recall'),
                 'class' => array('public-form-button'),
                 'id' => 'rcl-preview-post',
-                'icon' => 'fa-print'
+                'icon' => 'fa-eye'
             ));
 
         $content .= rcl_get_button(array(

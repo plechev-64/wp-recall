@@ -37,6 +37,7 @@ class Rcl_Field_Select extends Rcl_Field_Abstract{
                 'slug' => 'icon',
                 'default' => 'fa-list',
                 'placeholder' => 'fa-list',
+                'class' => 'rcl-iconpicker',
                 'type' => 'text',
                 'title'=>__('Icon class of  font-awesome', 'wp-recall'),
                 'notice'=>__('Source', 'wp-recall').' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.io/</a>'

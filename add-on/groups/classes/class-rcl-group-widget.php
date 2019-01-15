@@ -167,9 +167,13 @@ class Rcl_Group_Widget {
         }
 
         $content .= '<input type="hidden" name="group-action" value="update-widgets">'
+                . '<input type="hidden" name="group-submit" value="1">'
                 . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false );
 
-        $content .= '<input type="submit" class="recall-button" name="group-submit" value="'.__('Save changes','wp-recall').'">';
+        $content .= rcl_get_button(array(
+            'label' => __('Save changes','wp-recall'),
+            'submit' => true
+        ));
 
         $content .= '</form>';
 

@@ -138,7 +138,7 @@ class PrimeForm extends Rcl_Fields{
 
         $fields[] = apply_filters('pfm_form_content_field', array(
             'type' => 'editor',
-            'editor_id' => 'editor-action_'.$this->action,
+            'editor_id' => 'editor-action_'.$this->action.current_time('timestamp'),
             //'tinymce' => true,
             'slug' => 'post_content',
             'title' => __('Message text','wp-recall'),
@@ -238,17 +238,24 @@ class PrimeForm extends Rcl_Fields{
                 $content .= '<div class="submit-box">';
 
                 if(!defined( 'DOING_AJAX' )){
-                    $content .= '<a href="#" title="'.__('Preview','wp-recall').'" class="recall-button" onclick=\'pfm_ajax_action('.json_encode($args).',this);return false;\'>';
-                    $content .= '<i class="rcli fa-eye" aria-hidden="true"></i> '.__('Preview','wp-recall');
-                    $content .= '</a>';
+                    $content .= rcl_get_button(array(
+                        'label' => __('Preview','wp-recall'),
+                        'icon' => 'fa-eye',
+                        'onclick' => 'pfm_ajax_action('.json_encode($args).',this);return false;'
+                    ));
                 }
 
                 if($this->onclick){
-                    $content .= '<a href="#" title="'.$this->submit.'" class="recall-button" onclick=\''.$this->onclick.'\'>';
-                    $content .= '<i class="rcli fa-check-circle" aria-hidden="true"></i> '.$this->submit;
-                    $content .= '</a>';
+                    $content .= rcl_get_button(array(
+                        'label' => $this->submit,
+                        'icon' => 'fa-check-circle',
+                        'onclick' => $this->onclick
+                    ));
                 }else{
-                    $content .= '<input type="submit" name="Submit" class="recall-button" value="'.$this->submit.'"/>';
+                    $content .= rcl_get_button(array(
+                        'label' => $this->submit,
+                        'submit' => true
+                    ));
                 }
 
                 $content .= '</div>';

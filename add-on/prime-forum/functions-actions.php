@@ -562,9 +562,11 @@ function pfm_action_start_post_migrate($post_id){
             }
 
             $content .= '<div class="form-field fields-submit">';
-                $content .= '<a href="#" title="'.__('Confirm transfer','wp-recall').'" class="recall-button topic-action action-migrate_posts" onclick=\'pfm_ajax_action('.json_encode($args).');return false;\'>';
-                $content .= __('Confirm transfer','wp-recall');
-                $content .= '</a>';
+                $content .= rcl_get_button(array(
+                    'label' => __('Confirm transfer','wp-recall'),
+                    'class' => 'topic-action action-migrate_posts',
+                    'onclick' => 'pfm_ajax_action('.json_encode($args).');return false;'
+                ));
             $content .= '</div>';
 
         $content .= '</form>';

@@ -25,7 +25,7 @@ function rcl_balance_user_admin_content( $custom_column, $column_name, $user_id 
   switch( $column_name ){
     case 'balance_user_recall':
         $custom_column = '<input type="text" class="balanceuser-'.$user_id.'" size="4" value="'.rcl_get_user_balance($user_id).'">'
-            . '<input type="button" class="recall-button edit_balance" id="user-'.$user_id.'" value="Ok">';
+            . '<input type="button" class="button edit_balance" id="user-'.$user_id.'" value="Ok">';
     break;
 
   }
@@ -63,7 +63,7 @@ function rcl_edit_balance_user(){
 
     $user_id = intval($_POST['user']);
     $balance = floatval(str_replace(',','.',$_POST['balance']));
-    
+
     if(!$user_id){
         wp_send_json(array('error'=>__('Balance was not changed','wp-recall')));
     }
@@ -105,10 +105,10 @@ function rcl_payments_page_options() {
 
 function rcl_admin_statistic_cashe(){
   global $Rcl_Payments_History;
-  
+
   $Rcl_Payments_History->prepare_items();
   $sr = ($Rcl_Payments_History->sum)? floor($Rcl_Payments_History->sum/$Rcl_Payments_History->total_items): 0;
-  
+
   echo '</pre><div class="wrap"><h2>'.__('Payment history','wp-recall').'</h2>';
 
   echo '<p>'.__('All payments','wp-recall').': '.$Rcl_Payments_History->total_items.' '.__('for the amount of','wp-recall').' '.$Rcl_Payments_History->sum.' '.rcl_get_primary_currency(1).' ('.__('Average check','wp-recall').': '.$sr.' '.rcl_get_primary_currency(1).')</p>';
@@ -116,17 +116,17 @@ function rcl_admin_statistic_cashe(){
   //echo '<p>Средняя выручка за сутки: '.$day_pay.' '.rcl_get_primary_currency(1).'</p>';
   echo rcl_get_chart_payments($Rcl_Payments_History->items);
    ?>
-    <form method="get"> 
-    <input type="hidden" name="page" value="manage-wpm-cashe">    
+    <form method="get">
+    <input type="hidden" name="page" value="manage-wpm-cashe">
     <?php
-    $Rcl_Payments_History->months_dropdown('rcl_payments'); 
+    $Rcl_Payments_History->months_dropdown('rcl_payments');
     submit_button( __( 'Filter', 'wp-recall' ), 'button', '', false, array('id' => 'search-submit') ); ?>
     </form>
     <form method="post">
-    <input type="hidden" name="page" value="manage-wpm-cashe">    
+    <input type="hidden" name="page" value="manage-wpm-cashe">
     <?php
     $Rcl_Payments_History->search_box( __( 'Search', 'wp-recall' ), 'search_id' );
-    
+
     $Rcl_Payments_History->display(); ?>
   </form>
 </div>

@@ -316,9 +316,10 @@ function rcl_get_order_manager(){
 
     foreach($args as $data){
         $content .= '<span class="manager-item">';
-            $content .= '<a href="'.$data['href'].'" class="recall-button">';
-                $content .= $data['title'];
-            $content .='</a>';
+            $content .= rcl_get_button(array(
+                'href'  => $data['href'],
+                'label' => $data['title']
+            ));
         $content .='</span>';
     }
 

@@ -29,7 +29,7 @@ function rcl_get_rating_column_content( $custom_column, $column_name, $user_id )
     switch( $column_name ){
         case 'user_rating_admin':
           $custom_column = '<input type="text" class="raytinguser-'.$user_id.'" size="4" value="'.rcl_get_user_rating($user_id).'">
-          <input type="button" class="recall-button edit_rayting" id="user-'.$user_id.'" value="'.__('OK','wp-recall').'">';
+          <input type="button" class="button edit_rayting" id="user-'.$user_id.'" value="'.__('OK','wp-recall').'">';
         break;
     }
     return $custom_column;

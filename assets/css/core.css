@@ -568,10 +568,7 @@ a.data-filter.filter-active:hover {
     padding: 10px 10px 5px;
 }
 .rcl-subtab-menu .rcl-subtab-button {
-    display: inline-block;
-    margin-bottom: 5px;
-    margin-right: 5px;
-    padding: 7px;
+
 }
 /*end*/
 
@@ -920,7 +917,6 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
     border: 1px solid #e2e2e2;
     cursor: pointer;
     display: inline-block;
-    float: left;
     font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
     font-size: 12px;
     font-weight: normal;
@@ -1518,9 +1514,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 .rcl-form .submit-box a,
 .rcl-form .submit-box input[type="submit"] {
-    display: inline-block;
-    font-size: 15px;
-    padding: 7px 10px;
+
 }
 
 @media screen and (max-width:375px) {

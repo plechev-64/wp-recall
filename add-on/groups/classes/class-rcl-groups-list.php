@@ -171,9 +171,12 @@ class Rcl_Groups_List extends Rcl_Groups_Query{
             $content ='<div class="rcl-search-form">
                     <form method="get" action="">
                         <div class="rcl-search-form-title">'.__('Search groups','wp-recall').'</div>
-                        <input type="text" name="group-name" value="'.$search_text.'">
-                        <input type="submit" class="recall-button" value="'.__('Search','wp-recall').'">
-                    </form>
+                        <input type="text" name="group-name" value="'.$search_text.'">'
+                        . rcl_get_button(array(
+                            'label' => __('Search','wp-recall'),
+                            'submit' => true
+                        ))
+                    . '</form>
                 </div>';
 
             $content = apply_filters('rcl_groups_search_form',$content);
@@ -210,7 +213,11 @@ class Rcl_Groups_List extends Rcl_Groups_Query{
         $content .= '<div class="rcl-data-filters">'.__('Filter by','wp-recall').': ';
 
         foreach($filters as $key=>$name){
-            $content .= '<a class="data-filter recall-button '.rcl_a_active($this->orderby,$key).'" href="'.$perm.'groups-filter='.$key.'">'.$name.'</a> ';
+            $content .= rcl_get_buttons(array(
+                'label' => $name,
+                'href' => $perm.'groups-filter='.$key,
+                'class' => 'data-filter '.rcl_a_active($this->orderby,$key)
+            ));
         }
 
         $content .= '</div>';

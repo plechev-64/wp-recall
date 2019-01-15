@@ -195,7 +195,7 @@
     font-size: 14px;
     line-height: normal;
     margin: 0 0 10px;
-    padding: 8px 12px;
+    padding: 5px;
     width: auto;
 }
 .rcl-public-box .public-form-button:not(:last-child) {
@@ -393,6 +393,55 @@ h3.pending-message {
 }
 /*end*/
 
+/* new posts list */
+.rcl-posts-list{
+
+}
+.rcl-posts-list .single-post-box{
+    display: flex;
+    margin: 5px 0;
+    padding: 5px 0;
+    border-bottom: 1px solid #eaeaea;
+}
+.rcl-posts-list .post-thumbnail{
+    width: 80px;
+    margin: 0 10px 0 0;
+}
+.rcl-posts-list .post-content{
+    width: 100%;
+}
+.rcl-posts-list .post-title{
+    font-size: 18px;
+    font-weight: bold;
+}
+.rcl-posts-list .post-meta{
+    float: right;
+    font-size: 12px;
+}
+.rcl-posts-list .post-date{
+
+}
+.rcl-posts-list .post-status{
+    background: #ccc;
+    padding: 5px;
+    line-height: 1;
+    display: inline-block;
+    border-radius: 3px;
+}
+.rcl-posts-list .post-status.status-publish{
+    background: #c8ffad;
+}
+.rcl-posts-list .post-status.status-pending{
+    background: #fff89a;
+}
+.rcl-posts-list .post-status.status-trash{
+    background: #ffbdbd;
+}
+.rcl-posts-list .post-excerpt{
+    line-height: 1;
+    font-size: 13px;
+}
+/*end*/
 
 @media screen and (max-width:480px) {
     .rcl-public-box .attachments-post li {

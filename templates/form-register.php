@@ -28,10 +28,13 @@ $f_reg = ($typeform=='register')? 'style="display:block;"': ''; ?>
                 <?php do_action( 'register_form' ); ?>
             </div>
         <div class="form-block-rcl">
-            <input type="submit" class="recall-button" name="submit-register" value="<?php _e('Signup','wp-recall'); // Зарегистрироваться ?>">
-
+            <?php echo rcl_get_button(array(
+                'label' => __('Signup','wp-recall'),
+                'submit' => true
+            )); ?>
             <?php echo wp_nonce_field('register-key-rcl','register_wpnonce',true,false); ?>
             <input type="hidden" name="redirect_to" value="<?php rcl_referer_url('register'); ?>">
+            <input type="hidden" class="recall-button" name="submit-register" value="1">
         </div>
     </form>
 </div>

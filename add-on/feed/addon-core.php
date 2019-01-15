@@ -175,7 +175,15 @@ function rcl_get_feed_author_current_user($author_id){
 
 function rcl_get_feed_callback_link($user_id,$name,$callback){
     return '<div class="callback-link user-link-'.$user_id.'">'
-            .rcl_get_button($name,'#',array('icon'=>'fa-rss','class'=>'feed-callback','attr'=>'data-feed='.$user_id.' data-callback="'.$callback.'" title="'.$name.'"'))
+            .rcl_get_button(array(
+                'icon' => 'fa-rss',
+                'class' => array('feed-callback'),
+                'data' => array(
+                    'feed' => $user_id,
+                    'callback' => $callback
+                ),
+                'label' => $name
+            ))
             .'</div>';
 }
 

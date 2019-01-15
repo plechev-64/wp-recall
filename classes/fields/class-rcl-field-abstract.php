@@ -208,7 +208,7 @@ class Rcl_Field_Abstract {
     }
 
     protected function get_placeholder(){
-        return $this->placeholder? 'placeholder="'.$this->placeholder.'"': '';
+        return $this->placeholder !== ''? 'placeholder="'.$this->placeholder.'"': '';
     }
 
     protected function get_maxlength(){
@@ -257,7 +257,7 @@ class Rcl_Field_Abstract {
 
         $content = '<div class="rcl-field">';
 
-        $content .= $this->get_icon();
+        //$content .= $this->get_icon();
 
         if($title)
             $content .= $this->get_title().': ';

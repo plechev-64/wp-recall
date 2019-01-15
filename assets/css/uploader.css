@@ -38,20 +38,48 @@ body .rcl-bttn.rcl-uploader-button{
 }
 
 .rcl-upload-gallery{
-    /* display: flex; */
+    position: relative;
 }
 .rcl-upload-gallery img{
     vertical-align: top;
     max-width: 100%;
     height: auto;
 }
+.rcl-upload-gallery.simple-manager .attachment-manager{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 .rcl-upload-gallery .gallery-attachment{
     position: relative;
     margin: 3px;
     border: 1px solid #eaeaea;
+    width: 110px;
+    height: 110px;
+    display: inline-block;
+}
+.rcl-upload-gallery .attachment-title{
+    display:none;
+}
+.rcl-upload-gallery .gallery-attachment.type-file{
+    text-align:center;
+}
+.rcl-upload-gallery .gallery-attachment.type-file img{
+    margin-top: 5px;
+}
+.rcl-upload-gallery .gallery-attachment.type-file .attachment-title{
+    display: block;
+    background: #fff;
+    font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.rcl-upload-gallery .gallery-attachment img {
+    margin: 0;
 }
 .rcl-upload-gallery .attachment-manager{
-    
+
 }
 .rcl-upload-gallery .attachment-manager-balloon{
     position: absolute;
@@ -65,68 +93,35 @@ body .rcl-bttn.rcl-uploader-button{
     margin: 3px;
 }
 .rcl-upload-gallery .attachment-manager-balloon .rcl-balloon{
-    
+
 }
 .rcl-upload-gallery .rcl-balloon a{
     display: inline;
 }
 body  .rcl-upload-gallery .attachment-manager > a{
-    
+
 }
 body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico{
     padding: 5px;
 }
-.rcl-upload-gallery.mode-grid{
-    /*display: flex;*/
-    position: relative;
-}
-.rcl-upload-gallery.mode-grid .gallery-attachment{
-    width: 110px;
-    height: 110px;
-    display: inline-block;
-}
-.rcl-upload-gallery.mode-grid.simple-manager .attachment-manager{
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.rcl-upload-gallery.mode-grid .attachment-title{
-    display:none;
-}
-.rcl-upload-gallery.mode-grid .gallery-attachment.type-file{
-    text-align:center;
-}
-.rcl-upload-gallery.mode-grid .gallery-attachment.type-file img{
-    margin-top: 5px;
-}
-.rcl-upload-gallery.mode-grid .gallery-attachment.type-file .attachment-title{
-    display: block;
-    background: #fff;
-    font-size: 12px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-.rcl-upload-gallery.mode-grid .gallery-attachment img {
-    margin: 0!important;
-}
-.rcl-upload-gallery.mode-grid img{
-    
-}
 .rcl-upload-gallery.mode-list{
-    
+
 }
 .rcl-upload-gallery.mode-list .gallery-attachment{
     display: flex;
     align-items: center;
     padding: 5px;
+    width: auto;
+    height: auto;
 }
 .rcl-upload-gallery.mode-list .attachment-manager{
     width: 150px;
     text-align: right;
+    position: static;
 }
 .rcl-upload-gallery.mode-list .attachment-title{
     width: 100%;
+    display: block;
 }
 .rcl-upload-gallery.mode-list img{
     width: 35px;
@@ -139,7 +134,7 @@ body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico{
     border: 3px dotted #eaeaea;
 }
 .rcl-upload-gallery.mode-list .ui-sortable-placeholder{
-    
+
 }
 .rcl-upload-gallery.mode-grid .ui-sortable-placeholder{
     width: 110px;
@@ -150,8 +145,8 @@ body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico{
     z-index: 9999999;
 }
 .rcl-upload-gallery.mode-list .ui-sortable-helper{
-    
+
 }
 .rcl-upload-gallery.mode-grid .ui-sortable-helper{
-    
+
 }

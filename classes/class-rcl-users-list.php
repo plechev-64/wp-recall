@@ -225,7 +225,7 @@ class Rcl_Users_List extends Rcl_Users_Query{
 
         if($newmetas)
             $users = $this->merge_objects($users,$newmetas,'profile_fields');
-        
+
         return $users;
     }
 
@@ -489,7 +489,11 @@ class Rcl_Users_List extends Rcl_Users_Query{
         $content .= '<div class="rcl-data-filters">'.__('Filter by','wp-recall').': ';
 
         foreach($filters as $key=>$name){
-            $content .= '<a class="data-filter recall-button '.rcl_a_active($current_filter,$key).'" href="'.$perm.'users-filter='.$key.'">'.$name.'</a> ';
+            $content .= rcl_get_button(array(
+                'label' => $name,
+                'href' => $perm.'users-filter='.$key,
+                'class' => 'data-filter '.rcl_a_active($current_filter,$key)
+            ));
         }
 
         $content .= '</div>';

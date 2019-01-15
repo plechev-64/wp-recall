@@ -149,10 +149,11 @@ function rcl_get_html_usercount(){
 
     if($rmag_options['connect_sale']!='')
         $usercount .= "<div class='rcl-toggle-form-balance'>"
-                . "<a class='recall-button rcl-toggle-form-link' href='#'>"
-                .__("Top up",'wp-recall')
-                ."</a>
-            </div>
+                . rcl_get_button(array(
+                    'label' => __("Top up",'wp-recall'),
+                    'class' => 'rcl-toggle-form-link'
+                ))
+                ."</div>
             <div class='rcl-form-balance'>
                 ".rcl_form_user_balance(array('idform'=>$id))."
             </div>";

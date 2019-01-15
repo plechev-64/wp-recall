@@ -31,7 +31,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
         extract( $args );
 
         global $rcl_group,$user_ID;
-        
+
         if(!$user_ID||rcl_is_group_can('admin')) return false;
 
         //if($rcl_group->current_user=='banned') return false;
@@ -41,7 +41,11 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
             echo $before;
 
                 echo '<form method="post">'
-                   . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Leave group','wp-recall').'">'
+                    . rcl_get_button(array(
+                        'label' => __('Leave group','wp-recall'),
+                        'submit' => true
+                    ))
+                    . '<input type="hidden" name="group-submit" value="1">'
                     . '<input type="hidden" name="group-action" value="leave">'
                     . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false )
                . '</form>';
@@ -58,7 +62,11 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
                 }else{
                     if($rcl_group->group_status=='open'){
                         echo '<form method="post">'
-                            . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Join group','wp-recall').'">'
+                            . rcl_get_button(array(
+                                'label' => __('Join group','wp-recall'),
+                                'submit' => true
+                            ))
+                            . '<input type="hidden" name="group-submit" value="1">'
                             . '<input type="hidden" name="group-action" value="join">'
                             . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false )
                         . '</form>';
@@ -75,7 +83,11 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
                         }else{
 
                             echo '<form method="post">'
-                                . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Apply for membership','wp-recall').'">'
+                                . rcl_get_button(array(
+                                    'label' => __('Apply for membership','wp-recall'),
+                                    'submit' => true
+                                ))
+                                . '<input type="hidden" name="group-submit" value="1">'
                                 . '<input type="hidden" name="group-action" value="ask">'
                                 . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false )
                             . '</form>';
@@ -264,11 +276,11 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 
     function add_admins_query($query){
         global $rcl_group;
-        
+
         $query['join'][] = "LEFT JOIN ".RCL_PREF."groups_users AS groups_users ON wp_users.ID = groups_users.user_id";
         $query['where'][] = "(groups_users.user_role IN ('admin','moderator') AND groups_users.group_id='$rcl_group->term_id') OR (wp_users.ID='$rcl_group->admin_id')";
         $query['groupby'] = "wp_users.ID";
-        
+
         return $query;
     }
 
@@ -283,7 +295,7 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
         }
 
         add_filter('rcl_users_query',array($this,'add_admins_query'));
-        
+
         return rcl_get_userlist(array('number'=>$number,'template'=>$template,'data'=>$data));
     }
 
@@ -309,7 +321,7 @@ add_action('init','rcl_group_add_posts_widget',10);
 function rcl_group_add_posts_widget(){
 
     if(!rcl_get_option('group-output') && !rcl_get_option('groups_posts_widget')) return false;
-    
+
     rcl_group_register_widget('Group_Posts_Widget');
 }
 
@@ -376,10 +388,10 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
                     )
                 )
             );
-            
+
             $args = apply_filters('rcl_group_pre_get_posts', $args);
 
-            $posts = get_posts($args); 
+            $posts = get_posts($args);
 
             if($posts){ ?>
 
@@ -446,7 +458,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
         <?php } ?>
 
         <?php echo $after;
-           
+
     }
 
     function options($instance){

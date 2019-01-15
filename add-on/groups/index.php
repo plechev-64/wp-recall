@@ -285,7 +285,11 @@ function rcl_tab_groups($type_account = 'user_id'){
                 . '<form method="post">'
                     . '<div class="form-field">'
                         . '<input type="text" required placeholder="'.__('Enter the name of the new group','wp-recall').'" name="rcl_group[name]">'
-                        . '<input type="submit" class="recall-button" name="rcl_group[create]" value="'.__('Create','wp-recall').'">'
+                        . rcl_get_button(array(
+                            'label' => __('Create','wp-recall'),
+                            'submit' => true
+                        ))
+                        . '<input type="hidden" name="rcl_group[create]" value="1">'
                     . '</div>'
                     . wp_nonce_field('rcl-group-create','_wpnonce',true,false)
                 . '</form>'
@@ -497,7 +501,11 @@ function rcl_get_group_options($group_id){
             $content = apply_filters('rcl_group_options',$content);
 
             $content .= '<div class="group-option">'
-                . '<input type="submit" class="recall-button" name="group-submit" value="'.__('Save settings','wp-recall').'">'
+                . rcl_get_button(array(
+                    'label' => __('Save settings','wp-recall'),
+                    'submit' => true
+                ))
+                . '<input type="hidden" name="group-submit" value="1">'
                 . '<input type="hidden" name="group-action" value="update">'
                 . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false )
             . '</div>'
@@ -528,8 +536,22 @@ function rcl_get_group_requests_content($group_id){
 function rcl_add_group_access_button(){
     global $rcl_user;
     echo '<div class="group-request" data-user="'.$rcl_user->ID.'">';
-    echo rcl_get_button(__('Approve request','wp-recall'),'#',array('icon'=>'fa-thumbs-up','class'=>'apply-request','attr'=>'data-request=1'));
-    echo rcl_get_button(__('Reject request','wp-recall'),'#',array('icon'=>'fa-thumbs-down','class'=>'apply-request','attr'=>'data-request=0'));
+    echo rcl_get_button(array(
+            'label' => __('Approve request','wp-recall'),
+            'icon' => 'fa-thumbs-up',
+            'class' => array('apply-request'),
+            'data'=> array(
+                'request' => 1
+            )
+        ));
+    echo rcl_get_button(array(
+            'label' => __('Reject request','wp-recall'),
+            'icon' => 'fa-thumbs-down',
+            'class'=> array('apply-request'),
+            'data'=> array(
+                'request' => 0
+            )
+        ));
     echo '</div>';
 }
 

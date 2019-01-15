@@ -93,10 +93,10 @@ class Rcl_Field_File extends Rcl_Field_Abstract{
 
         if($this->value){
 
-            $input .= $this->get_value_box();
+            $input .= $this->get_field_value();
 
             if(!$this->required)
-                $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="rcli fa-times-circle-o"></i>'.__('delete', 'wp-recall').'</a></span>';
+                $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="rcli fa-times-circle-o"></i> '.__('delete', 'wp-recall').'</a></span>';
 
             $input = '<span class="file-manage-box">'.$input.'</span>';
 
@@ -135,7 +135,7 @@ class Rcl_Field_File extends Rcl_Field_Abstract{
 
         if(!$this->value) return false;
 
-        return '<i class="rcli fa-upload" aria-hidden="true"></i><a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($this->value), 'user-'.$user_ID ).'">'.__('Upload the downloaded file','wp-recall').'</a>';
+        return '<a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($this->value), 'user-'.$user_ID ).'"><i class="rcli fa-upload" aria-hidden="true"></i> '.__('Upload the downloaded file','wp-recall').'</a>';
 
     }
 
