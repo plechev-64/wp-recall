@@ -8,7 +8,7 @@
 
 
 /**
- * Description of class-usp-uploader-avatar
+ * Description of class-rcl-uploader-avatar
  *
  * @author Андрей
  */

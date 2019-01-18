@@ -205,7 +205,9 @@ function rcl_admin_scrips(){
 
     wp_localize_script( 'jquery', 'Rcl', rcl_get_localize_data());
 
+    rcl_enqueue_style( 'rcl-core', RCL_URL.'assets/css/core.css' );
     wp_enqueue_style( 'rcl-admin-style', RCL_URL.'admin/assets/style.css' );
+    wp_enqueue_style( 'rcl-buttons', RCL_URL.'assets/css/buttons.css', VER_RCL );
     wp_enqueue_style( 'wp-color-picker' );
 
     wp_enqueue_script( 'jquery' );

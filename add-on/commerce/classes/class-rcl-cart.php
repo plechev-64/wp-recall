@@ -9,7 +9,7 @@ class Rcl_Cart {
 
     function __construct($args = false) {
         global $rmag_options;
-        
+
         if(isset($rmag_options['basket_page_rmag']))
             $this->cart_url = get_permalink($rmag_options['basket_page_rmag']);
 
@@ -31,10 +31,17 @@ class Rcl_Cart {
 
         if($this->products){
 
-            foreach($this->products as $product){
+            foreach($this->products as $k => $product){
 
-                $this->products_amount += $product->product_amount;
-                $this->order_price += $product->product_amount * $product->product_price;
+                $product_amount = $product->product_amount;
+
+                if($product_amount < 0){
+                    $product_amount = absint($product_amount);
+                    $this->products[$k]->product_amount = $product_amount;
+                }
+
+                $this->products_amount += $product_amount;
+                $this->order_price += $product_amount * $product->product_price;
 
             }
 
@@ -58,7 +65,7 @@ class Rcl_Cart {
 
     function add_product($product_id,$args){
 
-        $qls = (isset($args['quantity']) && $args['quantity'])? $args['quantity']: 1;
+        $qls = isset($args['quantity'])? absint($args['quantity']): false;
         $vars = (isset($args['variations']) && $args['variations'])? $this->add_variations_title($product_id,$args['variations']): false;
 
         $productPrice = new Rcl_Product_Price($product_id);

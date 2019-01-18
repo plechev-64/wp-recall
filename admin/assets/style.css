@@ -254,7 +254,7 @@ div.rcl_preloader i.rcli::before {
 
 
 /* START checkbox stylization */
-.rcl-checkbox-box {
+/*.rcl-checkbox-box {
     background-color: #f5f5f5;
     border: 1px solid #e5e5e5;
     display: inline-block;
@@ -296,7 +296,7 @@ div.rcl_preloader i.rcli::before {
     line-height: normal;
     margin: 0;
     padding: 5px 5px 5px 30px;
-}
+}*/
 /* END checkbox stylization */
 
 
@@ -1174,7 +1174,7 @@ span.ruble-symbol {
 /* Fields Manager */
 
 .rcl-fields-manager{
-    
+
 }
 .rcl-manager-options{
     max-width: 400px;
@@ -1201,7 +1201,7 @@ span.ruble-symbol {
     position: relative;
     vertical-align: top;
     /*width: calc(100% - 20px);*/
-    
+
 }
 .rcl-fields-manager.structure-simple .rcl-manager-box{
     display: inline-block;
@@ -1212,7 +1212,7 @@ span.ruble-symbol {
     min-height: 50px;
 }
 .rcl-fields-manager .rcl-manager-groups{
-    
+
 }
 .rcl-fields-manager .rcl-manager-groups .rcl-manager-group-options{
     /*padding: 10px;*/
@@ -1303,10 +1303,10 @@ span.ruble-symbol {
     padding: 5px 10px;
 }
 .rcl-fields-manager .field-primary-options{
-    
+
 }
 .rcl-fields-manager .field-secondary-options{
-    
+
 }
 
 .rcl-fields-manager .manager-field[data-type="text"] .field-icon::before {
@@ -1508,7 +1508,7 @@ span.ruble-symbol {
     position: relative;
 }
 .rcl-fields-manager.structure-edit .manager-area.ui-resizable{
-    
+
 }
 /*.rcl-fields-manager.structure-edit .manager-area.ui-resizable .ui-resizable-e*/
 .rcl-fields-manager.structure-edit .manager-area.ui-resizable:not(:last-child) .ui-resizable-e
@@ -1533,7 +1533,7 @@ span.ruble-symbol {
     display:none;
 }
 .rcl-fields-manager.structure-edit .resizable-area{
-    
+
 }
 .rcl-fields-manager.structure-edit .resizable-area .area-width-content{
     position: absolute;
@@ -1554,7 +1554,7 @@ span.ruble-symbol {
     padding: 5px;
     background: #fff;
     border: 3px dashed #ccc;
-    
+
 }
 .rcl-fields-manager .manager-area .area-content{
     max-width: 550px;
@@ -1608,7 +1608,7 @@ span.ruble-symbol {
     border-right: 1px solid #ccc;
 }
 .rcl-fields-manager .manager-group > .rcl-areas-manager a{
-    
+
 }
 .rcl-fields-manager .manager-field.settings-edit{
     position: fixed;
@@ -1628,6 +1628,94 @@ span.ruble-symbol {
     box-sizing: border-box;
 }
 /****/
+
+/* new options*/
+.rcl-children-field{
+    display: none;
+}
+.rcl-children-fields.active{
+    display: block;
+}
+.rcl-option-extend-switch{
+    padding: 10px;
+    display: block;
+    border: 1px solid #ccc;
+    background: #fcc;
+    margin-bottom: 20px;
+}
+
+.rcl-options{
+
+}
+
+.rcl-options .extend-options{
+    border-left: 5px solid #ff8181!important;
+    padding: 5px;
+}
+
+.rcl-options.hide-extends-options .extend-options{
+    display: none;
+}
+
+.rcl-options .rcl-menu{
+    width: 250px;
+    float: left;
+}
+.rcl-options .rcl-menu > a{
+    width: 100%;
+    font-size: 16px;
+}
+.rcl-options .rcl-menu > a{
+    padding: 5px 0;
+    display: flex;
+    white-space: unset;
+}
+.rcl-options .rcl-menu a > i{
+
+}
+.rcl-options .rcl-menu .rcl-bttn__active{
+    background: #b6b6b6;
+    color: #fff;
+}
+
+.rcl-options .options-form-boxes{
+    overflow: hidden;
+}
+
+.rcl-options .options-box{
+    padding: 5px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    width: 550px;
+    display: none;
+    overflow-y: auto;
+    max-height: 800px;
+}
+
+.rcl-options .options-box.active{
+    display: block;
+}
+
+.rcl-options .options-group{
+    padding: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.rcl-options .group-title{
+    background: #ccc;
+    display: block;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.rcl-options .rcl-option{
+    margin-bottom: 10px;
+}
+.rcl-options .rcl-option .rcl-field-title{
+    font-weight: bold;
+}
+/*****/
 
 @media screen and (max-width:800px) {
     .rcl-addon-details #ssi-modalWrapper {

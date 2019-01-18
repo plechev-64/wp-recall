@@ -164,7 +164,7 @@ class Rcl_Cart_Button_Form{
         $content = '<span class="quantity-selector">';
 
         $content .= '<a href="#" class="edit-quantity" onclick="rcl_add_product_quantity(this);return false;"><i class="rcli fa-plus" aria-hidden="true"></i></a>';
-        $content .= '<span class="quantity-field"><input type="number" name="cart[quantity]" value="1"></span>';
+        $content .= '<span class="quantity-field"><input type="number" min="0" name="cart[quantity]" value="1"></span>';
         $content .= '<a href="#" class="edit-quantity" onclick="rcl_remove_product_quantity(this);return false;"><i class="rcli fa-minus" aria-hidden="true"></i></a>';
 
         $content .= '</span>';

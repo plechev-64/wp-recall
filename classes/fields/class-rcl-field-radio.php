@@ -84,8 +84,10 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract{
 
             if($this->value_in_key) $k = $value;
 
-            $content .= '<span class="rcl-radio-box">';
-            $content .= '<input type="radio" '.$this->get_required().' '.checked($this->value,$k,false).' '.$this->get_class().' id="'.$this->input_id.'_'.$k.$this->rand.'" name="'.$this->input_name.'" value="'.trim($k).'"> ';
+            $k = trim($k);
+
+            $content .= '<span class="rcl-radio-box" data-value="'.$k.'">';
+            $content .= '<input type="radio" '.$this->get_required().' '.checked($this->value,$k,false).' '.$this->get_class().' id="'.$this->input_id.'_'.$k.$this->rand.'" name="'.$this->input_name.'" value="'.$k.'"> ';
             $content .= '<label class="block-label" for="'.$this->input_id.'_'.$k.$this->rand.'">'.$value.'</label>';
             $content .= '</span>';
 

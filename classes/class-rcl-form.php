@@ -40,6 +40,10 @@ class Rcl_Form extends Rcl_Fields{
                     if(!isset($field->value))
                         $field->value = (isset($this->values[$field->slug]))? $this->values[$field->slug]: null;
 
+                    if($field->type == 'hidden'){
+                        $content .= $field->get_field_input(); continue;
+                    }
+
                     $content .= '<div id="field-'.$field->slug.'" class="form-field field-type-'.$field->slug.' rcl-option">';
 
                         if($field->title){

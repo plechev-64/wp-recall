@@ -34,19 +34,21 @@ function rcl_edit_field_options($options, $field, $type){
 
 function rmag_global_options(){
 
-    $content = ' <div id="recall" class="left-sidebar wrap">
-        <form method="post" action="">
-        '.wp_nonce_field('update-options-rmag','_wpnonce',true,false);
+    require_once RCL_PATH.'admin/classes/class-rcl-options-manager.php';
 
-        $content = apply_filters('admin_options_rmag',$content);
+    $Manager = new Rcl_Options_Manager(array(
+        'option_name' => 'primary-rmag-options',
+        'page_options' => 'manage-wpm-options',
+    ));
 
-        $content .= '<div class="submit-block">
-                <input type="submit" class="rcl-save-button" name="primary-rmag-options" value="'.__('Save settings','wp-recall').'" />
-            </div>
-        </form>
-    </div>';
+    $Manager = apply_filters('rcl_commerce_options', $Manager);
+
+    $content = '<h2>'.__('Настройки Rcl Commerce', 'wp-recall').'</h2>';
+
+    $content .= $Manager->get_content();
 
     echo $content;
+
 }
 
 function rmag_update_options ( ) {
@@ -129,9 +131,8 @@ function rcl_postmeta_update( $post_id ){
 
 rcl_ajax_action('rcl_update_options', false);
 function rcl_update_options(){
-    global $rcl_options;
 
-    if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rcl' ) ){
+    if( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options' ) ){
         wp_send_json(array(
             'error' => __('Error','wp-recall')
         ));
@@ -144,31 +145,15 @@ function rcl_update_options(){
       $v = trim($v);
     });
 
-    if($POST['global']['login_form_recall']==1&&!isset($POST['global']['page_login_form_recall'])){
-        $POST['global']['page_login_form_recall'] = wp_insert_post(array('post_title'=>__('Login and register','wp-recall'),'post_content'=>'[loginform]','post_status'=>'publish','post_author'=>1,'post_type'=>'page','post_name'=>'login-form'));
+    foreach($POST as $option_name => $value){
+
+        if(!is_array($value)) continue;
+
+        $value = apply_filters($option_name.'_pre_update', $value);
+
+        update_option($option_name, $value);
+
     }
-
-    foreach((array)$POST['global'] as $key => $value){
-        $value = apply_filters('rcl_global_option_value',$value,$key);
-        $options[$key] = $value;
-    }
-
-    if(isset($rcl_options['users_page_rcl']))
-        $options['users_page_rcl'] = $rcl_options['users_page_rcl'];
-
-    $options = apply_filters('rcl_pre_update_options', $options);
-
-    update_option('rcl_global_options',$options);
-
-    if(isset($POST['local'])){
-        foreach((array)$POST['local'] as $key => $value){
-            $value = apply_filters('rcl_local_option_value',$value,$key);
-            if($value=='') delete_option($key);
-            else update_option($key,$value);
-        }
-    }
-
-    $rcl_options = $options;
 
     wp_send_json(array(
         'success' => __('Settings saved!','wp-recall')
@@ -557,7 +542,7 @@ function rcl_manager_update_fields(){
     do_action('rcl_fields_update', $fields, $manager_id);
 
     $args = array(
-        'success' => __('Settings saved!', 'usp')
+        'success' => __('Settings saved!', 'rcl')
     );
 
     if($isset_new){

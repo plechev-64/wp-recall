@@ -3,6 +3,7 @@ var rcl_filters = [];
 var rcl_beats = [];
 var rcl_beats_delay = 0;
 var rcl_url_params = rcl_get_value_url_params();
+var rcl_runners = [];
 
 jQuery.fn.extend({
     animateCss: function (animationNameStart,functionEnd) {
@@ -304,6 +305,9 @@ function rcl_init_runner(props){
             box.find('.rcl-runner-field').val( ui.value );
         }
     });
+
+    rcl_runners.push(props);
+
 }
 
 function rcl_init_range(props){
@@ -1030,6 +1034,39 @@ function RclForm(form){
             },
             getShakeBox: function(field){
                 return field.parents('.rcl-uploader-button-box');
+            }
+        },
+        runner: {
+
+            types: ['hidden'],
+
+            isValid: function(field){
+
+                if(!field.hasClass('rcl-runner-field') || !rcl_runners) return true;
+
+                var runnerData;
+                rcl_runners.forEach(function(runner, i){
+
+                    if(runner.id == field.data('idrand')){
+                        runnerData = runner;
+                        return;
+                    }
+
+                });
+
+                var value = field.val();
+
+                if(runnerData.min > value || runnerData.max < value){
+                    return false;
+                }
+
+                return true;
+            },
+            errorText: function(){
+                return Rcl.errors.number_range;
+            },
+            getShakeBox: function(field){
+                return field.parents('.rcl-field-core');
             }
         }
     };

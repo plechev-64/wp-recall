@@ -292,29 +292,3 @@ function rcl_set_post_thumbnail(){
     wp_send_json($result);
 
 }
-
-//add_action('rcl_upload', 'rcl_upload_post', 10, 2);
-/*function rcl_upload_post($uploads, $uploader){
-
-    if($uploader->uploader_id != 'post') return false;
-
-    $uploader = new Rcl_Uploader_Public_Form($uploader);
-
-    if($uploader->post_parent){
-
-        foreach($uploads as $upload){
-
-            $attachData = array(
-                'ID' => $upload['id'],
-                'post_parent' => $uploader->post_parent
-            );
-
-            wp_update_post( $attachData );
-
-        }
-
-    }
-
-    do_action('rcl_upload_post', $uploads, $uploader);
-
-}*/

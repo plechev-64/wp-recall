@@ -3,6 +3,19 @@
 require_once 'class-rcl-payments-history.php';
 require_once 'addon-settings.php';
 
+add_action('admin_init', 'rcl_payments_options_init', 10);
+function rcl_payments_options_init(){
+
+    if(!Rcl_Gateways()->gateways) return false;
+
+    foreach(Rcl_Gateways()->gateways as $gateWayID => $className){
+
+        Rcl_Gateways()->gateway($gateWayID)->options_init();
+
+    }
+
+}
+
 add_action('admin_head','rcl_admin_user_account_scripts');
 function rcl_admin_user_account_scripts(){
     wp_enqueue_script( 'jquery' );

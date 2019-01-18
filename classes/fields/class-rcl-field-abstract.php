@@ -137,6 +137,10 @@ class Rcl_Field_Abstract {
             $this->input_id .= $this->rand;
         }
 
+        if($this->type == 'hidden'){
+            return $this->get_input();
+        }
+
         $classes = array('rcl-field-input', 'type-'.$this->type.'-input', 'rcl-field-'.$this->id);
 
         $callback = 'get_input_'.$this->type;
@@ -168,6 +172,10 @@ class Rcl_Field_Abstract {
     }
 
     function get_field_html($args = false){
+
+        if($this->type == 'hidden'){
+            return $this->get_field_input();
+        }
 
         $classes = array('rcl-field', 'rcl-custom-field', 'type-'.$this->type.'-field');
 

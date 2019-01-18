@@ -727,6 +727,12 @@ a.data-filter.filter-active:hover {
 .rcl-field-core {
     position: relative;
 }
+.rcl-children-field{
+    display: none;
+}
+.rcl-children-fields.active{
+    display: block;
+}
 .rcl-field-input input:not([type="file"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]),
 .rcl-field-input textarea {
     background-color: #fff;
@@ -954,6 +960,10 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
     font-size: 12px;
     line-height: 1;
     padding: 2px;
+}
+.rcl-field-input input[type="checkbox"]:checked + label.block-label::before,
+.rcl-field-input input[type="radio"]:checked + label.block-label::before{
+    background: #4C8CBD;
 }
 /*end*/
 
@@ -1501,7 +1511,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 .rcl-form .form-field .field-title {
     display: block;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     line-height: 1;
     margin-bottom: 5px;

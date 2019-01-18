@@ -68,11 +68,7 @@ function pfm_page_topic_form(){
 
 function pfm_page_options(){
 
-    require_once RCL_PATH.'classes/class-rcl-options.php';
-
-    $opt = new Rcl_Options(__FILE__, 'rcl_pforum_options');
-
-    $PfmOptions = get_option('rcl_pforum_options');
+    require_once RCL_PATH.'admin/classes/class-rcl-options-manager.php';
 
     $pages = get_posts(array(
         'post_type'=>'page',
@@ -90,7 +86,15 @@ function pfm_page_options(){
 
     }
 
-    $options = array(
+    $Manager = new Rcl_Options_Manager(array(
+        'option_name' => 'rcl_pforum_options',
+        'page_options' => 'pfm-menu',
+    ));
+
+    $Manager->add_box('primary', array(
+        'title' => __('General settings', 'rcl'),
+        'icon' => 'fa-cogs'
+    ))->add_group('primary')->add_options(array(
         array(
             'type' => 'select',
             'slug' => 'home-page',
@@ -107,21 +111,7 @@ function pfm_page_options(){
                 __('Primary colours of WP-Recall','wp-recall')
             )
         ),
-        array(
-            'type' => 'select',
-            'slug' => 'view-links',
-            'title' => __('The display of links in messages','wp-recall'),
-            'values' => array(
-                __('Hiding for guests','wp-recall'),
-                __('Show for all','wp-recall')
-            )
-        ),
-        array(
-            'type' => 'textarea',
-            'slug' => 'support-shortcodes',
-            'title' => __('Supported shortcodes','wp-recall'),
-            'notice' => __('Specify the necessary shortcodes to support them in forum messages, each should start from a new line. Specify without brackets, for example: custom-shortcode','wp-recall')
-        ),
+
         array(
             'type' => 'select',
             'slug' => 'view-forums-home',
@@ -175,15 +165,7 @@ function pfm_page_options(){
                 __('Allowed','wp-recall')
             )
         ),
-        array(
-            'type' => 'select',
-            'slug' => 'support-oembed',
-            'title' => __('Support of OEMBED in messages','wp-recall'),
-            'values' => array(
-                __('Forbidden','wp-recall'),
-                __('Allowed','wp-recall')
-            )
-        ),
+
         array(
             'type' => 'select',
             'slug' => 'reason-edit',
@@ -214,6 +196,41 @@ function pfm_page_options(){
             'default' => 100,
             'notice' => __('If the loading of new messages via AJAX is enabled, here we set the maximum number of requests from one user, after which they are terminated, after the publication of a new message requests are resumed','wp-recall')
         ),
+
+    ));
+
+    $Manager->add_box('content', array(
+        'title' => __('Контент форума', 'wp-recall')
+    ))->add_group('content')->add_options(array(
+        array(
+            'type' => 'select',
+            'slug' => 'view-links',
+            'title' => __('The display of links in messages','wp-recall'),
+            'values' => array(
+                __('Hiding for guests','wp-recall'),
+                __('Show for all','wp-recall')
+            )
+        ),
+        array(
+            'type' => 'textarea',
+            'slug' => 'support-shortcodes',
+            'title' => __('Supported shortcodes','wp-recall'),
+            'notice' => __('Specify the necessary shortcodes to support them in forum messages, each should start from a new line. Specify without brackets, for example: custom-shortcode','wp-recall')
+        ),
+        array(
+            'type' => 'select',
+            'slug' => 'support-oembed',
+            'title' => __('Support of OEMBED in messages','wp-recall'),
+            'values' => array(
+                __('Forbidden','wp-recall'),
+                __('Allowed','wp-recall')
+            )
+        ),
+    ));
+
+    $Manager->add_box('templates', array(
+        'title' => __('Шаблоны имен', 'wp-recall')
+    ))->add_group('templates')->add_options(array(
         array(
             'type' => 'custom',
             'title' => __('Templates to form the title tag and name of the page','wp-recall'),
@@ -228,39 +245,45 @@ function pfm_page_options(){
         array(
             'type' => 'text',
             'slug' => 'mask-tag-group',
-            'notice' => __('Title tag in the group of forums','wp-recall'),
+            'title' => __('Title tag in the group of forums','wp-recall'),
             'default' => __('Group of forums','wp-recall').' %GROUPNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-page-group',
-            'notice' => __('Name of the page in the group of forums','wp-recall'),
+            'title' => __('Name of the page in the group of forums','wp-recall'),
             'default' => __('Group of forums','wp-recall').' %GROUPNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-tag-forum',
-            'notice' => __('Title tag on the forum page','wp-recall'),
+            'title' => __('Title tag on the forum page','wp-recall'),
             'default' => __('Forum','wp-recall').' %FORUMNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-page-forum',
-            'notice' => __('Name of the page of the separate forum','wp-recall'),
+            'title' => __('Name of the page of the separate forum','wp-recall'),
             'default' => __('Forum','wp-recall').' %FORUMNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-tag-topic',
-            'notice' => __('Title tag on the topic page','wp-recall'),
+            'title' => __('Title tag on the topic page','wp-recall'),
             'default' => '%TOPICNAME% | '. __('Forum','wp-recall').' %FORUMNAME%'
         ),
         array(
             'type' => 'text',
             'slug' => 'mask-page-topic',
-            'notice' => __('Name of the page of the separate topic','wp-recall'),
+            'title' => __('Name of the page of the separate topic','wp-recall'),
             'default' => '%TOPICNAME%'
         ),
+
+    ));
+
+    $Manager->add_box('notices', array(
+        'title' => __('Уведомления', 'wp-recall')
+    ))->add_group('notices')->add_options(array(
         array(
             'type' => 'select',
             'slug' => 'admin-notes',
@@ -280,44 +303,16 @@ function pfm_page_options(){
             ),
             'notice' => __('The notice sent for each new message in the topic only when the topic`s author is offline','wp-recall')
         )
-    );
+    ));
 
-    $options = apply_filters('pfm_options_array', $options);
+    $Manager = apply_filters('pfm_options', $Manager);
 
-    if($PfmOptions){
-        foreach($options as $k => $option){
+    $content = '<h2>'.__('Настройки форума PrimeForum', 'wp-recall').'</h2>';
 
-            if(isset($option['slug']) && isset($PfmOptions[$option['slug']]))
-                $options[$k]['default'] = $PfmOptions[$option['slug']];
+    $content .= $Manager->get_content();
 
-        }
-    }
+    echo $content;
 
-    ?>
-
-    <h2><?php _e('Settings PrimeForum','wp-recall'); ?></h2>
-
-    <div id="prime-options" class="rcl-form wrap-recall-options" style="display:block;">
-
-        <form method="post" action="options.php">
-
-            <?php echo $opt->options(
-                    false, array(
-                        $opt->options_box(__('General settings','wp-recall'), $options)
-                    )
-                ); ?>
-
-            <p align="right">
-                <input type="submit" name="Submit" class="button button-primary button-large" value="<?php _e('Save','wp-recall'); ?>" />
-            </p>
-            <input type="hidden" name="action" value="update" />
-            <input type="hidden" name="page_options" value="rcl_pforum_options" />
-            <?php wp_nonce_field('update-options'); ?>
-
-        </form>
-
-    </div>
-<?php
 }
 
 add_action('admin_init','pfm_flush_rewrite_rules');

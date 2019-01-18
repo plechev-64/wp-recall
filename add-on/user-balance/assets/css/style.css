@@ -162,3 +162,57 @@
     display: inline-block;
     padding: 10px;
 }
+
+/* new payment form*/
+
+.rcl-payment-form{
+    max-width: 380px;
+}
+.rcl-payment-form .rcl-form{
+    margin: 0;
+}
+.rcl-payment-form .rcl-field-gateway_id{
+
+}
+.rcl-payment-form .rcl-field-gateway_id .rcl-radio-box{
+    display:block;
+    padding: 3px 0 3px 40px;
+    background-size: 35px;
+    background-position: 5px 5px;
+    background-repeat-x: no-repeat;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    background-repeat-y: no-repeat;
+}
+.rcl-payment-form .rcl-field-gateway_id .rcl-radio-box label{
+    display:block;
+    background: none;
+    border: none;
+}
+
+.rcl-payment-button{
+    display:block;
+    padding: 3px 0 3px 40px;
+    background-size: 35px;
+    background-position: 5px center;
+    background-repeat-x: no-repeat;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    background-repeat-y: no-repeat;
+}
+.rcl-payment-button .submit-box{
+    background: none;
+    text-align: left!important;
+    padding: 0;
+    margin: 5px 0;
+}
+body .rcl-payment-button .submit-box a{
+    margin: 0 5px!important;
+    /* background: none!important; */
+    /* color: inherit; */
+    display: block;
+    padding: 5px;
+}
+
+
+/****/

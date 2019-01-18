@@ -194,30 +194,6 @@ function rcl_get_post_custom_fields_box($post_id){
 
 }
 
-/*14.2.0*/
-//очищаем временный массив загруженных изображений к публикациям
-//и удаляем все изображения к неопубликованным записям
-/*add_action('rcl_cron_daily','rcl_clear_temps_gallery',10);
-function rcl_clear_temps_gallery(){
-
-    $temps = get_option('rcl_tempgallery');
-
-    if(!$temps) return false;
-
-    foreach($temps as $user_id=>$usertemps){
-        foreach($usertemps as $temp){
-            $post_id = intval($temp['ID']);
-            if($post_id)
-                wp_delete_post( $post_id );
-        }
-    }
-
-    $temps = array();
-
-    update_option('rcl_tempgallery',$temps);
-
-}*/
-
 function rcl_delete_post(){
     global $user_ID;
 
@@ -462,67 +438,6 @@ function rcl_register_author_post($postdata){
     return $postdata;
 }
 
-//Сохранение данных публикации в редакторе wp-recall
-/*add_action('update_post_rcl','rcl_add_box_content',10,3);
-function rcl_add_box_content($post_id,$postdata,$update){
-
-	if(!isset($_POST['post_content'])||!is_array($_POST['post_content'])) return false;
-
-	$post_content = '';
-	$thumbnail = false;
-
-        $POST = add_magic_quotes($_POST['post_content']);
-
-	foreach($POST as $k=>$contents){
-            foreach($contents as $type=>$content){
-                if($type=='text') $content = strip_tags($content);
-                if($type=='header') $content = sanitize_text_field($content);
-                if($type=='html') $content = str_replace('\'','"',$content);
-
-                if($type=='image'){
-                    $path_media = rcl_path_by_url($content);
-                    $filename = basename($content);
-
-                    $dir_path = RCL_UPLOAD_PATH.'post-media/';
-                    $dir_url = RCL_UPLOAD_URL.'post-media/';
-                    if(!is_dir($dir_path)){
-                            mkdir($dir_path);
-                            chmod($dir_path, 0755);
-                    }
-
-                    $dir_path = RCL_UPLOAD_PATH.'post-media/'.$post_id.'/';
-                    $dir_url = RCL_UPLOAD_URL.'post-media/'.$post_id.'/';
-                    if(!is_dir($dir_path)){
-                            mkdir($dir_path);
-                            chmod($dir_path, 0755);
-                    }
-
-                    if(copy($path_media, $dir_path.$filename)){
-                            unlink($path_media);
-                    }
-
-                    if(!$thumbnail) $thumbnail = $dir_path.$filename;
-
-                    $content = $dir_url.$filename;
-                }
-
-                $post_content .= "[rcl-box type='$type' content='$content']";
-            }
-	}
-
-	if($thumbnail) rcl_add_thumbnail_post($post_id,$thumbnail);
-
-	wp_update_post( array('ID'=> $post_id,'post_content'=> $post_content));
-
-}*/
-
-//удаляем папку с изображениями при удалении поста
-/*add_action('delete_post','rcl_delete_tempdir_attachments');
-function rcl_delete_tempdir_attachments($postid){
-    $dir_path = RCL_UPLOAD_PATH.'post-media/'.$postid;
-    rcl_remove_dir($dir_path);
-}*/
-
 /*deprecated*/
 function rcl_form_field($args){
     $field = new Rcl_Form_Fields();
@@ -579,7 +494,7 @@ function rcl_add_post_uploader_image_buttons($items, $attachment_id, $uploader){
 
         if($field->isset_prop('gallery'))
             $addGallery = $field->get_prop('gallery');
-        
+
     }
 
     /*if($addToClick){

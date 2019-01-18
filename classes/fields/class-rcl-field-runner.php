@@ -78,7 +78,7 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract{
             $content .= '</span>';
 
             $content .= '<div class="rcl-runner-box"></div>';
-            $content .= '<input type="hidden" class="rcl-runner-field" id="'.$this->input_id.'" name="'.$this->input_name.'" value="'.$this->value_min.'">';
+            $content .= '<input type="hidden" class="rcl-runner-field" id="'.$this->input_id.'" data-idrand="'.$this->rand.'" name="'.$this->input_name.'" value="'.$this->value_min.'">';
         $content .= '</div>';
 
         $init = 'rcl_init_runner('.json_encode(array(

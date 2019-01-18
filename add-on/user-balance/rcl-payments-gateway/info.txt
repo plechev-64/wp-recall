@@ -1,0 +1,7 @@
+Name: Rcl Payments Gateway;
+Version: 1.0.0;
+Support Core: 17.0.0;
+ItemID: 0;
+Description: 0;
+Author: Плечев Андрей;
+Author URI: http://codeseller.ru/;
