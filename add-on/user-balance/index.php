@@ -29,7 +29,7 @@ endif;
 
 function rcl_user_account_scripts(){
     rcl_enqueue_style('rcl-user-account',rcl_addon_url('assets/css/style.css', __FILE__));
-    //rcl_enqueue_script( 'rcl-user-account', rcl_addon_url('assets/js/scripts.js', __FILE__) );
+    rcl_enqueue_script( 'rcl-user-account', rcl_addon_url('assets/js/scripts.js', __FILE__) );
 }
 
 add_filter('rcl_init_js_variables','rcl_init_js_account_variables',10);

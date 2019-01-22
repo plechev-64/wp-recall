@@ -8,6 +8,13 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager{
 
     function __construct($post_type, $args = false) {
 
+        /* old support */
+        if(is_array($post_type)){
+            $args = $post_type;
+            $post_type = $args['post_type'];
+        }
+        /**/
+
         $this->post_type = $post_type;
         $this->form_id = (isset($args['form_id']) && $args['form_id'])? $args['form_id']: 1;
         $this->taxonomies = get_object_taxonomies( $this->post_type, 'objects' );

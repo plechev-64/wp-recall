@@ -65,7 +65,7 @@ class Rcl_Cart {
 
     function add_product($product_id,$args){
 
-        $qls = isset($args['quantity'])? absint($args['quantity']): false;
+        $qls = isset($args['quantity']) && $args['quantity']? absint($args['quantity']): 1;
         $vars = (isset($args['variations']) && $args['variations'])? $this->add_variations_title($product_id,$args['variations']): false;
 
         $productPrice = new Rcl_Product_Price($product_id);

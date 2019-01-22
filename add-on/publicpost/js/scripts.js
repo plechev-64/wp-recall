@@ -3,9 +3,9 @@
 };*/
 
 jQuery(document).ready(function($) {
-    
+
     if(RclUploaders.isset('thumbnail')){
-        
+
         RclUploaders.get('thumbnail').appendInGallery = function(file){
             if(file['html']){
                 jQuery('#rcl-upload-gallery-' + this.uploader_id).html(file['html']).last().animateCss('flipInX');
@@ -14,44 +14,44 @@ jQuery(document).ready(function($) {
                 jQuery('#post-thumbnail').val(file['id']);
             }
         };
-        
+
         if(RclUploaders.isset('post')){
-            
+
             RclUploaders.get('thumbnail').filterErrors = function(errors, files, uploader){
-                
+
                 var postUploader = RclUploaders.get('post');
-                
+
                 var inGalleryNow = jQuery('#rcl-upload-gallery-post .gallery-attachment').length + 1;
- 
+
                 if(inGalleryNow > postUploader.options.max_files){
                     errors.push('В основной галерее максимальное количество файлов. Макс: ' + postUploader.options.max_files);
                 }
-                
+
                 return errors;
             };
-            
+
         }
-    
+
     }
 
     $('.rcl-public-form #insert-media-button').click(function(e) {
-        
+
         var editor = $(this).data('editor');
-        
+
         var parent_id = ((rcl_url_params['rcl-post-edit']))? rcl_url_params['rcl-post-edit']: 0;
-        
+
         wp.media.model.settings.post.id = parent_id;
-        
+
         wp.media.featuredImage.set = function(thumbnail_id){
 
             rcl_set_post_thumbnail(thumbnail_id, parent_id);
-    
+
         };
 
         wp.media.editor.open(editor);
-        
+
         return false;
-        
+
     });
 
     jQuery('#rcl-delete-post .delete-toggle').click(function() {
@@ -64,23 +64,23 @@ jQuery(document).ready(function($) {
 /*jQuery(document).ready(function($) {
 
     $('.rcl-public-form #insert-media-button').click(function(e) {
-        
+
         var editor = $(this).data('editor');
-        
+
         var parent_id = ((rcl_url_params['rcl-post-edit']))? rcl_url_params['rcl-post-edit']: 0;
-        
+
         wp.media.model.settings.post.id = parent_id;
-        
+
         wp.media.featuredImage.set = function(thumbnail_id){
 
             rcl_get_post_thumbnail_html(thumbnail_id);
-    
+
         };
 
         wp.media.editor.open(editor);
-        
+
         return false;
-        
+
     });
 
     jQuery('#rcl-delete-post .delete-toggle').click(function() {
@@ -110,9 +110,9 @@ jQuery(document).ready(function($) {
 
 rcl_add_action('rcl_init_public_form','rcl_setup_async_upload');
 function rcl_setup_async_upload(){
-    
+
     if(!wp || !wp.Uploader) return false;
-    
+
     jQuery.extend( wp.Uploader.prototype, {
         success : function( attachment ){
             if(attachment.attributes.uploadedTo) return false;
@@ -125,32 +125,32 @@ function rcl_setup_async_upload(){
             });
         }
     });
-    
+
 }
 
 /*rcl_add_action('rcl_init','rcl_init_click_post_thumbnail');
 function rcl_init_click_post_thumbnail(){
-    jQuery(".rcl-public-form").on('click','.thumb-foto',function(){		
+    jQuery(".rcl-public-form").on('click','.thumb-foto',function(){
         jQuery(".rcl-public-form .thumb-foto").removeAttr("checked");
-        jQuery(this).attr("checked",'checked');			
+        jQuery(this).attr("checked",'checked');
     });
 }*/
 
 /*function rcl_get_post_thumbnail_html(thumbnail_id){
-    
+
     rcl_preloader_show(jQuery('.rcl-public-form'));
-    
+
     rcl_ajax({
         data: {
             action: 'rcl_get_post_thumbnail_html',
             thumbnail_id: thumbnail_id
-        }, 
+        },
         success: function(result){
             jQuery('#rcl-thumbnail-post .thumbnail-image').html(result['thumbnail_image']).animateCss('flipInX');
             jQuery('#rcl-thumbnail-post .thumbnail-id').val(thumbnail_id);
         }
     });
-    
+
 }*/
 
 /*function rcl_remove_post_thumbnail(){
@@ -161,16 +161,16 @@ function rcl_init_click_post_thumbnail(){
 }*/
 
 function rcl_delete_post(element){
-    
+
     rcl_preloader_show(jQuery(element).parents('li'));
-    
+
     var objectData = {
         action: 'rcl_ajax_delete_post',
         post_id: jQuery(element).data('post')
     };
 
     rcl_ajax({
-        data: objectData, 
+        data: objectData,
         success: function(data){
 
             jQuery('#' + data['post_type'] + '-' + objectData.post_id).animateCss('flipOutX',function(e){
@@ -189,30 +189,30 @@ function rcl_delete_post(element){
 
 /*rcl_add_action('rcl_delete_post','rcl_delete_thumbnail_attachment');
 function rcl_delete_thumbnail_attachment(data){
-    
+
     if(data['post_type'] != 'attachment') return false;
-    
+
     if(jQuery('#rcl-thumbnail-post').size()){
-        
+
         var currentThumbId = jQuery('#rcl-thumbnail-post .thumbnail-id').val();
-        
+
         if(currentThumbId == data['post_id'])
             rcl_remove_post_thumbnail();
     }
-    
+
 }*/
 
-function rcl_edit_post(element){	
+function rcl_edit_post(element){
 
     rcl_preloader_show(jQuery('#lk-content'));
-    
+
     rcl_ajax({
         data: {
             action: 'rcl_get_edit_postdata',
             post_id: jQuery(element).data('post')
-        }, 
-        success: function(data){ 
-                                 
+        },
+        success: function(data){
+
             if(data['result']==100){
 
                 ssi_modal.show({
@@ -250,7 +250,7 @@ function rcl_preview(e){
     var post_type = formblock.data('post_type');
 
     if(!rcl_check_required_fields(formblock)) return false;
-    
+
     rcl_preloader_show(formblock);
 
     var iframe = jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html();
@@ -258,11 +258,11 @@ function rcl_preview(e){
         tinyMCE.triggerSave();
         formblock.find('textarea[name="post_content"]').html(iframe);
     }
-    
+
     var button_draft = formblock.find('input[name="button-draft"]').val();
     var button_delete = formblock.find('input[name="button-delete"]').val();
     var button_preview = formblock.find('input[name="button-preview"]').val();
-    
+
     rcl_ajax({
         data: 'action=rcl_preview_post&' + formblock.serialize(),
         error: function(data){
@@ -323,34 +323,37 @@ function rcl_preview(e){
 }
 
 function rcl_save_draft(e){
-    
+
     if(!e) e = jQuery('#rcl-draft-post');
-    
-    if(!rcl_check_publish(e)) return false;
-    
+
+    if(!jQuery(e).parents('form').find('#post_title').val()){
+        rcl_notice(Rcl.errors.empty_draft,'error',10000);
+        return false;
+    }
+
     jQuery(e).after('<input type="hidden" name="save-as-draft" value=1>');
 
     jQuery('form.rcl-public-form').submit();
 }
 
 function rcl_check_publish(e){
-    
+
     var submit = jQuery(e);
     var formblock = submit.parents('form');
-    
+
     if(!rcl_check_required_fields(formblock)) return false;
-    
-    return true; 
+
+    return true;
 }
 
 function rcl_publish(e){
-    
+
     var submit = jQuery(e);
     var formblock = submit.parents('form');
     var post_type = formblock.data('post_type');
 
     if(!rcl_check_required_fields(formblock)) return false;
-    
+
     rcl_preloader_show(formblock);
 
     var iframe = jQuery("#contentarea-"+post_type+"_ifr").contents().find("#tinymce").html();
@@ -365,19 +368,19 @@ function rcl_publish(e){
             rcl_preloader_show(formblock);
             jQuery('form.rcl-public-form').submit();
         }
-    }); 
-    
+    });
+
 }
 
 function rcl_check_required_fields(form){
-    
+
     var rclFormFactory = new RclForm(form);
-    
+
     rclFormFactory.addChekForm('checkCats', {
-        
+
         isValid: function(){
             var valid = true;
-            if(this.form.find('input[name="cats[]"]').length > 0){             
+            if(this.form.find('input[name="cats[]"]').length > 0){
                 if(form.find('input[name="cats[]"]:checked').length == 0){
                     this.shake(form.find( 'input[name="cats[]"]' ));
                     this.addError('checkCats','Укажите рубрику');
@@ -388,11 +391,11 @@ function rcl_check_required_fields(form){
             }
             return valid;
         }
-        
+
     });
-    
+
     return rclFormFactory.validate();
-    
+
 }
 
 function rcl_get_prefiew_content(formblock,iframe){
@@ -401,7 +404,7 @@ function rcl_get_prefiew_content(formblock,iframe){
 }
 
 function rcl_preview_close(e){
-    ssi_modal.close();	
+    ssi_modal.close();
 }
 
 /*var startSubmitBox = 0;
@@ -417,13 +420,13 @@ function rcl_public_form_submit_box_init(){
     if(!startSubmitBox){
 
         startSubmitHeight = submitBox.outerHeight(true) + 20;
-        
+
         if(scrollBottom < submitBox.offset().top + startSubmitHeight){
             console.log(submitBox.offset().top);
-            startSubmitBox = submitBox.offset().top + startSubmitHeight; 
-            
+            startSubmitBox = submitBox.offset().top + startSubmitHeight;
+
             var margin = scrollBottom - (startSubmitBox + startSubmitHeight) + 20;
-            
+
             submitBox.attr('style','margin-top:'+margin+'px').addClass("fixed");
 
         }
@@ -431,51 +434,51 @@ function rcl_public_form_submit_box_init(){
     }else{
 
         if(scrollBottom > startSubmitBox){
-            startSubmitBox = 0; 
+            startSubmitBox = 0;
             submitBox.attr('style','margin-top:'+0+'px').removeClass("fixed");
         }else{
-            
+
             var margin = scrollBottom - (startSubmitBox + startSubmitHeight) + 20;
 
             submitBox.attr('style','margin-top:'+margin+'px');
-            
+
         }
 
     }
-    
+
 }*/
 
 function rcl_init_public_form(post){
-    
+
     /*rcl_public_form_submit_box_init();
-    
+
     jQuery(window).scroll(function() {
 
         rcl_public_form_submit_box_init();
 
     });*/
-    
+
     rcl_do_action('rcl_init_public_form',post);
-    
+
     /*var post_id = post.post_id;
     var post_type = post.post_type;
     var ext_types = post.ext_types;
     var size_files = parseInt(post.size_files,10);
     var max_files = parseInt(post.max_files,10);
     var post_status = 'new';
-    
+
     if(post.post_status)
         post_status = post.post_status;
-    
+
     jQuery('form.rcl-public-form').find(':required').each(function(){
         var i = rcl_public_form.required.length;
         rcl_public_form.required[i] = jQuery(this).attr('name');
     });
 
     var maxsize = size_files*1024*1024;
-    
+
     rcl_add_dropzone('#rcl-public-dropzone-'+post_type);
-    
+
     jQuery('#upload-public-form-'+post_type).fileupload({
         dataType: 'json',
         type: 'POST',
@@ -495,18 +498,18 @@ function rcl_init_public_form(post){
         autoUpload:true,
         send:function (e, data) {
             var error = false;
-            rcl_preloader_show('form.rcl-public-form');                   
-            var cnt_now = jQuery('#temp-files-'+post_type+' li').length;                    
+            rcl_preloader_show('form.rcl-public-form');
+            var cnt_now = jQuery('#temp-files-'+post_type+' li').length;
             jQuery.each(data.files, function (index, file) {
                 cnt_now++;
                 if(cnt_now>max_files){
                     rcl_notice(Rcl.local.allowed_downloads+' '+max_files,'error',10000);
                     error = true;
-                }                       
+                }
                 if(file['size']>maxsize){
-                    rcl_notice(Rcl.local.upload_size_public+' '+size_files+' MB','error',10000);                            
+                    rcl_notice(Rcl.local.upload_size_public+' '+size_files+' MB','error',10000);
                     error = true;
-                }                       
+                }
             });
             if(error){
                 rcl_preloader_hide();
@@ -514,9 +517,9 @@ function rcl_init_public_form(post){
             }
         },
         done: function (e, data) {
-            
+
             rcl_preloader_hide();
-            
+
             jQuery.each(data.result, function (index, file) {
                 if(data.result['error']){
                     rcl_notice(data.result['error'],'error',10000);
@@ -529,22 +532,22 @@ function rcl_init_public_form(post){
                     jQuery('#temp-files-'+post_type+' li').last().animateCss('flipInX');
                 }
             });
-            
+
         }
     });*/
 }
 
 /*function rcl_init_thumbnail_uploader(e,options){
-    
+
     var form = jQuery(e).parents('form');
-    
+
     var post_id = form.data('post_id');
     var post_type = form.data('post_type');
     var ext_types = 'jpg,png,jpeg';
     var maxsize_mb = options.size;
 
     var maxsize = maxsize_mb*1024*1024;
-    
+
     jQuery('#rcl-thumbnail-uploader').fileupload({
         dataType: 'json',
         type: 'POST',
@@ -559,31 +562,31 @@ function rcl_init_public_form(post){
         singleFileUploads:true,
         autoUpload:true,
         send:function (e, data) {
-            
+
             var error = false;
-            
-            rcl_preloader_show('form.rcl-public-form');                   
-                  
+
+            rcl_preloader_show('form.rcl-public-form');
+
             jQuery.each(data.files, function (index, file) {
-                      
+
                 if(file['size']>maxsize){
-                    rcl_notice(Rcl.local.upload_size_public+' '+maxsize_mb+' MB','error',10000);                            
+                    rcl_notice(Rcl.local.upload_size_public+' '+maxsize_mb+' MB','error',10000);
                     error = true;
-                } 
-                
+                }
+
             });
-            
+
             if(error){
                 rcl_preloader_hide();
                 return false;
             }
-            
+
         },
         done: function (e, data) {
             jQuery.each(data.result, function (index, file) {
-                
+
                 rcl_preloader_hide();
-                
+
                 if(data.result['error']){
                     rcl_notice(data.result['error'],'error',10000);
                     return false;
@@ -596,49 +599,49 @@ function rcl_init_public_form(post){
                     jQuery('#rcl-thumbnail-post .thumbnail-id').val(file['attachment_id']);
                 }
             });
-            
-            
+
+
         }
     });
-    
+
 }*/
 
 /*function rcl_add_image_in_form(e,content){
-    
-    var post_type = jQuery(e).parents("form").data("post_type");           
+
+    var post_type = jQuery(e).parents("form").data("post_type");
 
     jQuery("#contentarea-" + post_type).insertAtCaret(content + "&nbsp;");
-    
+
     tinyMCE.execCommand("mceInsertContent", false, content);
-    
+
     return false;
 }*/
 
 function rcl_add_attachment_in_editor(attach_id, editor_id, e){
-    
+
     var image = jQuery(e).data('html');
     var src  = jQuery(e).data('src');
-    
+
     if(src)
         image = '<a href="'+src+'">'+image+'</a>';
 
     jQuery("#" + editor_id).insertAtCaret(image + "&nbsp;");
-    
+
     tinyMCE.execCommand("mceInsertContent", false, image);
-    
+
     return false;
 }
 
 function rcl_set_post_thumbnail(attach_id, parent_id, e){
-    
+
     rcl_preloader_show(jQuery('.gallery-attachment-'+attach_id));
-    
+
     rcl_ajax({
         data: {
             action: 'rcl_set_post_thumbnail',
             thumbnail_id: attach_id,
             parent_id: parent_id
-        }, 
+        },
         success: function(result){
             jQuery('#rcl-upload-gallery-thumbnail').html(result['html']).animateCss('flipInX');
             jQuery('#post-thumbnail').val(attach_id);
@@ -648,15 +651,15 @@ function rcl_set_post_thumbnail(attach_id, parent_id, e){
 }
 
 function rcl_switch_attachment_in_gallery(attachment_id, e){
-    
+
     var button = jQuery('.rcl-switch-gallery-button-' + attachment_id);
-    
-    if(button.children('i').hasClass('fa-toggle-off')){       
+
+    if(button.children('i').hasClass('fa-toggle-off')){
         button.children('input').val(attachment_id);
     }else{
         button.children('input').val('');
     }
-    
+
     button.children('i').toggleClass('fa-toggle-off fa-toggle-on');
-    
+
 }

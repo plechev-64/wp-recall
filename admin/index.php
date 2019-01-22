@@ -11,12 +11,12 @@ function rcl_admin_scripts(){
     wp_enqueue_script( 'rcl-fields-manager', RCL_URL.'admin/assets/fields-manager.js' );
 }
 
-add_filter('rcl_custom_field_options','rcl_edit_field_options',10,3);
+add_filter('rcl_field_options','rcl_edit_field_options',10,3);
 function rcl_edit_field_options($options, $field, $type){
 
     $types = array( 'range', 'runner' );
 
-    if(in_array($field['type'],$types)){
+    if(in_array($field->type,$types)){
 
         foreach($options as $k => $option){
 

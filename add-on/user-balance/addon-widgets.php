@@ -14,14 +14,14 @@ class Rcl_Widget_user_count extends WP_Widget {
     }
 
     function widget( $args, $instance ) {
+
         extract( $args );
 
-        $title = apply_filters('widget_title', $instance['title'] );
         global $user_ID;
 
         if ($user_ID){
             echo $before_widget;
-            if ( $title ) echo $before_title . $title . $after_title;
+            if ( $instance['title'] ) echo $before_title . $instance['title'] . $after_title;
             echo rcl_get_html_usercount();
             echo $after_widget;
         }

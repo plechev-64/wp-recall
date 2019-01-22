@@ -57,6 +57,12 @@ function rcl_update_postdata_excerpt($postdata){
     return $postdata;
 }
 
+add_filter('rcl_init_js_variables','rcl_add_public_errors', 10);
+function rcl_add_public_errors($data){
+    $data['errors']['empty_draft'] = __('Заголовок публикации обязателен', 'wp-recall');
+    return $data;
+}
+
 //формируем галерею записи
 add_filter('the_content','rcl_post_gallery',10);
 function rcl_post_gallery($content){
@@ -310,8 +316,7 @@ function rcl_add_taxonomy_in_postdata($postdata,$data){
 
     if(isset($_POST['cats']) && $_POST['cats']){
 
-        $FormFields = new Rcl_Public_Form_Fields(array(
-            'post_type' => $data->post_type,
+        $FormFields = new Rcl_Public_Form_Fields($data->post_type, array(
             'form_id' => $_POST['form_id']
         ));
 

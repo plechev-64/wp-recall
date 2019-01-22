@@ -1,13 +1,13 @@
-jQuery(function($){   
+jQuery(function($){
     /* Пополняем личный счет пользователя */
     jQuery('body').on('click','.rcl-form-add-user-count .rcl-get-form-pay',function(){
-        
+
         var id = jQuery(this).parents('.rcl-form-add-user-count').attr('id');
-        
+
         rcl_preloader_show('#'+id+' .rcl-form-input');
 
         var dataString = 'action=rcl_add_count_user&' + jQuery('#'+id+' form').serialize();
-        
+
         rcl_ajax({
             data: dataString,
             success: function(data){
@@ -17,9 +17,9 @@ jQuery(function($){
                 }
             }
         });
-        
+
         return false;
-        
+
     });
 
     jQuery('body').on('click','.rcl-widget-balance .rcl-toggle-form-link',function(){
@@ -27,13 +27,13 @@ jQuery(function($){
         jQuery('#'+id+' .rcl-form-balance').slideToggle(200);
         return false;
     });
-    
+
 });
 
 function rcl_pay_order_user_balance(e,data){
 
     rcl_preloader_show(jQuery('.rcl-payment-buttons'));
-    
+
     rcl_ajax({
         data: {
             action: 'rcl_pay_order_user_balance',
@@ -46,5 +46,13 @@ function rcl_pay_order_user_balance(e,data){
     });
 
     return false;
-    
+
+}
+
+function rcl_switch_view_balance_form(e){
+
+    var widget = jQuery(e).parents('.rcl-balance-widget');
+
+    widget.find('.balance-form').slideToggle();
+
 }

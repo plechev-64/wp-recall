@@ -477,6 +477,7 @@ input[type="button"] .recall-button {
     box-shadow: none !important;
     box-sizing: border-box;
     color: #fff;
+    background-color: #0085ba;
     cursor:pointer;
     font-size: 12px;
     font-weight: normal;                    /*++hueman++*/

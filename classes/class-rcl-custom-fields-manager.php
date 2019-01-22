@@ -286,7 +286,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
 
         }
 
-        return apply_filters('rcl_custom_field_constant_options', $options, $field, $this->post_type);
+        return apply_filters('rcl_field_general_options', $options, $field, $this->post_type);
 
     }
 
@@ -456,7 +456,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields{
 
         $options = array_merge($options, $this->defaultOptions);
 
-        return apply_filters('rcl_custom_field_options', $options, $this->field, $this->post_type);
+        return apply_filters('rcl_field_options', $options, $this->field, $this->post_type);
 
     }
 

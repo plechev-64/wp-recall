@@ -1,172 +1,8 @@
-.rcl-widget-balance {
-    max-width: 400px;
-}
-.rcl-usercount {
-    align-items: center;
-    display: flex;
-    font-weight: bold;
-    justify-content: center;
-    margin: 3px 0 8px;
-}
-.rcl-usercount-num {
-    padding: 0 3px;
-}
-.rcl-widget-balance .rcl-toggle-form-balance {
-    text-align: right;
-}
-.rcl-widget-balance .rcl-toggle-form-balance > .rcl-toggle-form-link {
-    color: #fff;
-}
-.rcl-widget-balance .rcl-toggle-form-balance > .rcl-toggle-form-link:hover {
-    color: #eee;
-}
-.rcl-widget-balance .rcl-form-balance {
-    clear: both;
-    display: none;
-}
-.rcl-pay-form,
-.rcl-payment-buttons {
-    position: relative;
-}
-.rcl-form-add-user-count {
-    background: rgba(217, 224, 230, 0.61);
-    border: 2px solid #d9e0e6;
-    box-sizing: border-box;
-    line-height: 1;
-    margin: 20px auto;
-    padding: 30px;
-    position: relative;
-}
-.rcl-form-balance .rcl-form-add-user-count {
-    padding: 5px;
-}
-.rcl-form-add-user-count .form-balance-notice {
-    font-size: 16px;
-    text-align: center;
-}
-.rcl-widget-balance .rcl-form-add-user-count .form-balance-notice {
-    font-size: 13px;
-    margin: 0 0 5px;
-}
-.rcl-form-add-user-count .rcl-form-input {
-    font-size: 16px;
-    text-align: center;
-}
-.rcl-form-add-user-count .rcl-form-input .form-field {
-    display: block;
-    font-size: 16px;
-    text-align: left;
-}
-.rcl-form-add-user-count .rcl-form-input .form-submit {
-    display: block;
-    padding: 10px 0 0;
-    text-align: right;
-}
-.rcl-form-add-user-count .rcl-form-input .value-user-count {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    display: block;
-    height: auto;
-    padding: 5px;
-    text-align: center;
-    vertical-align: bottom;
-    width: 100%;
-}
-.rcl-form-balance .rcl-form-add-user-count .rcl-form-input .rcl-get-form-pay {
-    font-size: 13px;
-    padding: 5px;
-    vertical-align: bottom;
-}
-.rcl-form-balance .rcl-form-add-user-count .rcl-result-box {
-    margin: 10px 0;
-    text-align: center;
-}
-.rcl-form-balance .rcl-form-add-user-count .rcl-result-box form {
-    margin-top: 10px;
-}
-.rcl-pay-button .rcl-connect-submit .recall-button,
-.rcl-form-balance .rcl-form-add-user-count .recall-button {
-    display: inline-block;
-    font-size: 14px;
-    padding: 5px 10px;
-    text-align: center;
-    width: 100%;
-}
-.rcl-form-balance .rcl-form-add-user-count .rcl_preloader {
-    font-size: 60px;
-}
-.rcl-form-balance .rcl-form-add-user-count .rcl_preloader i {
-    margin: -30px 0 0 -30px;
-}
-.rcl-pay-form .rcl-pay-button {
-    background: #fff;
-    border: 1px solid #d6eeff;
-    box-sizing: border-box;
-    display: inline-block;
-    margin: 5px 0;
-    padding: 5px;
-    width: 100%;
-}
-.rcl-pay-form .rcl-pay-button .rcl-connect-submit {
-    background-repeat: no-repeat;
-    background-size: contain;
-    box-sizing: border-box;
-    display: inline-block;
-    padding: 0;
-    width: 100%;
-}
-.rcl-pay-form .rcl-pay-button .rcl-connect-submit i {
-    color: #4c8cbd;
-    display: inline-block;
-    font-size: 46px;
-    left: 8px;
-    margin-right: 10px;
-    margin-top: -23px;
-    position: absolute;
-    top: 50%;
-    vertical-align: middle;
-}
-.rcl-types-connects .rcl-pay-form .rcl-pay-button .rcl-connect-submit {
-    padding: 10px;
-}
-.rcl-types-connects .rcl-pay-form .rcl-pay-button .exist-merchant-icon {
-    padding: 10px 10px 10px 60px;
-}
-.rcl-pay-form .rcl-pay-button .rcl-connect-submit .recall-button {
-    font-size: 14px;
-    margin: 0;
-    padding: 7px 5px;
-}
-.rcl-form-add-user-count .rcl-result-box .rcl-pay-form {
-    margin-top: 20px;
-}
-.rcl-form-add-user-count .form-notice {
-    font-size: 14px;
-}
-.rcl-form-add-user-count .form-notice .thumb-connect {
-    background-size: cover !important;
-    display: inline-block;
-    height: 25px;
-    margin: 5px;
-    vertical-align: middle;
-    width: 25px;
-}
-#rcl-cart-notice .rcl-types-paeers {
-    margin: 0 auto;
-    padding: 10px;
-    text-align: left;
-    width: 300px;
-}
-.rcl-payment-button .recall-button {
-    display: inline-block;
-    padding: 10px;
-}
-
 /* new payment form*/
 
 .rcl-payment-form{
     max-width: 380px;
+    margin: 5px auto;
 }
 .rcl-payment-form .rcl-form{
     margin: 0;
@@ -196,7 +32,6 @@
     background-size: 35px;
     background-position: 5px center;
     background-repeat-x: no-repeat;
-    margin: 5px 0;
     border: 1px solid #ccc;
     background-repeat-y: no-repeat;
 }
@@ -214,5 +49,35 @@ body .rcl-payment-button .submit-box a{
     padding: 5px;
 }
 
+
+/****/
+
+/* balance-widget */
+
+.rcl-balance-widget{
+    max-width: 350px;
+}
+.rcl-balance-widget .balance-amount{
+    text-align: center;
+}
+.rcl-balance-widget .amount-title{
+    display: block;
+    font-weight: bold;
+    text-align: left;
+}
+.rcl-balance-widget .amount-size{
+    font-size: 18px;
+}
+.rcl-balance-widget .update-link{
+    text-decoration: none;
+    border: none;
+    font-size: 13px;
+    vertical-align: middle;
+    margin-left: 15px;
+    color: #4c8cbd;
+}
+.rcl-balance-widget .balance-form{
+    display:none;
+}
 
 /****/

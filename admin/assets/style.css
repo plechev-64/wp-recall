@@ -718,22 +718,28 @@ div.rcl_preloader i.rcli::before {
     top: 4px;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-value input {
-    width: 80%;
+    width: 80%!important;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values a {
     background-color: #f5f5f5;
-    height: 22px;
+    height: 24px;
     padding: 2px;
     position: absolute;
-    top: 4px;
+    top: 2px;
+    right: 33px;
 }
-.rcl-custom-fields-box .rcl-custom-field a .fa-minus::before {
+.rcl-custom-fields-box .rcl-custom-field .dynamic-values a i::before{
+    vertical-align: middle;
+    font-size: 16px;
+    padding: 5px;
+    display: inline-block;
+}
+.rcl-custom-fields-box .rcl-custom-field .dynamic-values a .fa-minus::before {
     color: rgb(229, 57, 53);
-    content: "\f153";
+    vertical-align: middle;
 }
-.rcl-custom-fields-box .rcl-custom-field a .fa-plus::before {
+.rcl-custom-fields-box .rcl-custom-field .dynamic-values a .fa-plus::before {
     color: #008000;
-    content: "\f502";
 }
 .rcl-custom-fields-box .rcl-custom-field .half-width {
     display: inline-block;
@@ -882,11 +888,11 @@ div.rcl_preloader i.rcli::before {
     margin: 3px 5px 3px 0;
 }
 #custom_fields_editor_post .rcl-radio-box label {
-    display: inline-block;
+    /*display: inline-block;
     height: 16px;
     line-height: 16px;
     margin: 0 0 2px;
-    padding: 6px 7px 6px 0;
+    padding: 6px 7px 6px 0;*/
 }
 .rcl-custom-fields-box .type-file-input {
     background-color: #fff;

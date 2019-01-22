@@ -20,26 +20,6 @@ function rcl_apply_filters_area_menu(){
     echo $content;
 }
 
-add_action('rcl_area_top','rcl_apply_filters_area_top',10);
-function rcl_apply_filters_area_top(){
-    echo apply_filters('rcl_content_area_top','');
-}
-
-add_action('rcl_area_details','rcl_apply_filters_area_details',10);
-function rcl_apply_filters_area_details(){
-    echo apply_filters('rcl_content_area_details','');
-}
-
-add_action('rcl_area_actions','rcl_apply_filters_area_actions',10);
-function rcl_apply_filters_area_actions(){
-    echo apply_filters('rcl_content_area_actions','');
-}
-
-add_action('rcl_area_counters','rcl_apply_filters_area_counters',10);
-function rcl_apply_filters_area_counters(){
-    echo apply_filters('rcl_content_area_counters','');
-}
-
 function rcl_user_name(){
     global $rcl_user;
     echo $rcl_user->display_name;
@@ -358,7 +338,7 @@ function rcl_default_inline_styles($styles,$rgb){
     input[type="submit"] .recall-button:hover,
     input[type="button"].recall-button:hover,
     input[type="button"] .recall-button:hover{
-        background: rgb('.$r.', '.$g.', '.$b.');
+        background: rgb('.$r.', '.$g.', '.$b.')!important;
     }
     a.recall-button.active,
     a.recall-button.active:hover,
@@ -366,24 +346,24 @@ function rcl_default_inline_styles($styles,$rgb){
     a.recall-button.filter-active:hover,
     a.data-filter.filter-active,
     a.data-filter.filter-active:hover{
-        background: rgba('.$r.', '.$g.', '.$b.', 0.4);
+        background: rgba('.$r.', '.$g.', '.$b.', 0.4)!important;
     }
     .rcl_preloader i{
-        color:rgb('.$r.','.$g.','.$b.');
+        color:rgb('.$r.','.$g.','.$b.')!important;
     }
     .rcl-user-getails .status-user-rcl::before{
-        border-left-color:rgb('.$r.','.$g.','.$b.');
+        border-left-color:rgb('.$r.','.$g.','.$b.')!important;
     }
     .rows-list .status-user-rcl::before{
-        border-top-color:rgb('.$r.','.$g.','.$b.');
+        border-top-color:rgb('.$r.','.$g.','.$b.')!important;
     }
     .status-user-rcl{
-        border-color:rgb('.$r.','.$g.','.$b.');
+        border-color:rgb('.$r.','.$g.','.$b.')!important;
     }
     .rcl-field-input input[type="checkbox"]:checked + label.block-label::before,
     .rcl-field-input input[type="radio"]:checked + label.block-label::before{
-        background:rgb('.$r.','.$g.','.$b.');
-        border-color:rgb('.$r.','.$g.','.$b.');
+        background:rgb('.$r.','.$g.','.$b.')!important;
+        border-color:rgb('.$r.','.$g.','.$b.')!important;
     }';
 
     return $styles;

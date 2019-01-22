@@ -16,7 +16,7 @@ function rcl_update_page_users(){
 
 }
 
-add_filter('rcl_custom_field_options','rcl_edit_profile_field_options',10,3);
+add_filter('rcl_field_options','rcl_edit_profile_field_options',10,3);
 function rcl_edit_profile_field_options($options, $field, $type){
 
     if($type != 'profile' || !rcl_is_register_open()) return $options;

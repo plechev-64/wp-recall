@@ -79,33 +79,25 @@ function rcl_add_user_balance($money,$user_id,$comment=''){
 }
 
 function rcl_get_html_usercount(){
-    global $user_ID,$rmag_options;
-
-    $id = rand(1,100);
-
-    $usercount = '<div class="rcl-widget-balance" id="rcl-widget-balance-'.$id.'">';
 
     $user_count = rcl_get_user_balance();
-    if(!$user_count) $user_count = 0;
 
-    $usercount .= '<div class="rcl-usercount usercount"><span class="rcl-usercount-num">'.$user_count.'</span>'.rcl_get_primary_currency(1).'</div>';
+    if(!$user_count)
+        $user_count = 0;
 
-    $usercount = apply_filters('count_widget_rcl',$usercount);
+    $content = '<div class="rcl-balance-widget">';
+    $content .= '<div class="balance-amount">';
+    $content .= '<span class="amount-title">'.__('Ваш баланс','wp-recall').':</span>';
+    $content .= '<span class="amount-size">'.$user_count.' '.rcl_get_primary_currency(1).'</span>';
+    $content .= '<a href="#" class="update-link" onclick="rcl_switch_view_balance_form(this);return false;"><i class="rcli fa-plus-circle" aria-hidden="true"></i> '.__('пополнить').'</a>';
+    $content .= '</div>';
+    $content .= '<div class="balance-form">';
+    $content .= rcl_form_user_balance();
+    $content .= '</div>';
+    $content .= '</div>';
 
-    if($rmag_options['connect_sale']!='')
-        $usercount .= "<div class='rcl-toggle-form-balance'>"
-                . rcl_get_button(array(
-                    'label' => __("Top up",'wp-recall'),
-                    'class' => 'rcl-toggle-form-link'
-                ))
-                ."</div>
-            <div class='rcl-form-balance'>
-                ".rcl_form_user_balance(array('idform'=>$id))."
-            </div>";
+    return $content;
 
-    $usercount .= '</div>';
-
-    return $usercount;
 }
 
 function rcl_mail_payment_error($hash=false,$other=false){

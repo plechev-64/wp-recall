@@ -464,7 +464,7 @@ function rcl_get_chart_orders($orders){
     return rcl_get_chart($chartArgs);
 }
 
-add_filter('rcl_custom_field_options','rcl_add_cart_profile_field_option',10,3);
+add_filter('rcl_field_options','rcl_add_cart_profile_field_option',10,3);
 function rcl_add_cart_profile_field_option($options, $field, $type){
 
     if($type != 'profile') return $options;
