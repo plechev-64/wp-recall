@@ -407,56 +407,65 @@ function rcl_preview_close(e){
     ssi_modal.close();
 }
 
-/*var startSubmitBox = 0;
-var startSubmitHeight = 0;
+var rclStartSubmitBox = 0;
+var rclStartSubmitHeight = 0;
 
 function rcl_public_form_submit_box_init(){
 
     var publicForm = jQuery('.rcl-public-box');
     var submitBox = publicForm.find('.submit-public-form');
 
+    var formTop = publicForm.offset().top;
     var scrollBottom = jQuery(window).scrollTop() + jQuery(window).height();
 
-    if(!startSubmitBox){
+    var topPosition = scrollBottom - formTop;
 
-        startSubmitHeight = submitBox.outerHeight(true) + 20;
+    if(!rclStartSubmitBox){
 
-        if(scrollBottom < submitBox.offset().top + startSubmitHeight){
-            console.log(submitBox.offset().top);
-            startSubmitBox = submitBox.offset().top + startSubmitHeight;
+        rclStartSubmitHeight = submitBox.outerHeight() + 10;
 
-            var margin = scrollBottom - (startSubmitBox + startSubmitHeight) + 20;
+        var submitBoxTop = submitBox.offset().top;
 
-            submitBox.attr('style','margin-top:'+margin+'px').addClass("fixed");
+        if(submitBoxTop < scrollBottom) return;
+
+        topPosition -= rclStartSubmitHeight;
+
+        if(scrollBottom < (submitBoxTop + rclStartSubmitHeight)){
+
+            rclStartSubmitBox = submitBoxTop + rclStartSubmitHeight;
+
+            submitBox.attr('style','top:'+topPosition+'px').addClass("fixed");
 
         }
 
     }else{
 
-        if(scrollBottom > startSubmitBox){
-            startSubmitBox = 0;
-            submitBox.attr('style','margin-top:'+0+'px').removeClass("fixed");
+        if(formTop >= scrollBottom) return;
+
+        if(scrollBottom > rclStartSubmitBox){
+            rclStartSubmitBox = 0;
+            submitBox.attr('style','top:'+0+'px').removeClass("fixed");
         }else{
 
-            var margin = scrollBottom - (startSubmitBox + startSubmitHeight) + 20;
+            topPosition -= rclStartSubmitHeight;
 
-            submitBox.attr('style','margin-top:'+margin+'px');
+            submitBox.attr('style','top:'+topPosition+'px');
 
         }
 
     }
 
-}*/
+}
 
 function rcl_init_public_form(post){
 
-    /*rcl_public_form_submit_box_init();
+    rcl_public_form_submit_box_init();
 
     jQuery(window).scroll(function() {
 
         rcl_public_form_submit_box_init();
 
-    });*/
+    });
 
     rcl_do_action('rcl_init_public_form',post);
 

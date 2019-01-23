@@ -188,7 +188,9 @@
     text-align: right;
 }
 .rcl-public-box .submit-public-form.fixed {
-    position:absolute;
+    position: absolute;
+    width: 100%;
+    z-index: 9;
 }
 .rcl-public-box .public-form-button {
     display: inline-block;

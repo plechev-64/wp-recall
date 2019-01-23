@@ -234,7 +234,7 @@ class Rcl_Uploader {
 
         $content = '<div id="rcl-upload-gallery-'.$this->uploader_id.'" class="rcl-upload-gallery mode-'.$this->mode_output.' '.($this->manager_balloon? 'balloon-manager': 'simple-manager').'">';
 
-        if($imagIds){
+        if($imagIds && is_array($imagIds)){
             //$content .= '<div class="ui-sortable-placeholder"></div>';
             foreach($imagIds as $imagId){
                 $content .= $this->gallery_attachment($imagId);
