@@ -3,19 +3,19 @@
 //Выводим категорию товара
 add_filter('the_content','rcl_add_product_category',20);
 function rcl_add_product_category($content){
-    global $post;
-    
-    if($post->post_type != 'products' || doing_filter('get_the_excerpt')) return $content;
-    
-    $product_cat = rcl_get_product_terms($post->ID);
-    
-    return $product_cat.$content;
+	global $post;
+	
+	if($post->post_type != 'products' || doing_filter('get_the_excerpt')) return $content;
+	
+	$product_cat = rcl_get_product_terms($post->ID);
+	
+	return $product_cat.$content;
 }
 
 function rcl_get_product_terms($product_id){
 
-    $content = rcl_get_product_term_list( $product_id, 'prodcat', __('Categories','wp-recall'), 'folder-open' );
-    $content .= rcl_get_product_term_list( $product_id, 'product_tag', __('Tags','wp-recall'), 'tags');
+	$content = rcl_get_product_term_list( $product_id, 'prodcat', __('Categories','wp-recall'), 'folder-open' );
+	$content .= rcl_get_product_term_list( $product_id, 'product_tag', __('Tags','wp-recall'), 'tags');
     
     if(!$content) return false;
     

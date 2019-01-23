@@ -12,14 +12,14 @@ $content .= '<div id="rcl-order">';
 
 $content .= '<div class="order-before-box">';
 
-    $content .= '<span class="title-before-box">'.__('Buyer data','wp-recall').'</span>';
-    
-    $content .= '<div class="content-before-box">';
-    
-    $content .= '<p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$rclOrder->user_id).'</p>';
-    $content .= '<p><b>'.__('E-mail','wp-recall').'</b>: '.get_the_author_meta('email',$rclOrder->user_id).'</p>';
+	$content .= '<span class="title-before-box">'.__('Buyer data','wp-recall').'</span>';
+	
+	$content .= '<div class="content-before-box">';
+	
+	$content .= '<p><b>'.__('Name','wp-recall').'</b>: '.get_the_author_meta('display_name',$rclOrder->user_id).'</p>';
+	$content .= '<p><b>'.__('E-mail','wp-recall').'</b>: '.get_the_author_meta('email',$rclOrder->user_id).'</p>';
 
-    $content .= '</div>';
+	$content .= '</div>';
 
 $content .= '</div>';
 

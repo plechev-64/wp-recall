@@ -18,7 +18,7 @@ body .rcl-bttn {
     box-sizing: border-box;
     cursor: pointer;
     display: inline-flex;
-/*    font-size: 12px;         start size for em - идёт инлайном. т.к. задается через кастомайзер */
+    /*    font-size: 12px;         start size for em - идёт инлайном. т.к. задается через кастомайзер */
     font-weight: normal;
     letter-spacing: normal;
     line-height: 1em;
@@ -30,12 +30,12 @@ body .rcl-bttn {
     white-space: nowrap;
 
     -webkit-transition: opacity .1s ease,color .1s ease;
-            transition: opacity .1s ease,color .1s ease;
+    transition: opacity .1s ease,color .1s ease;
 
     -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-	    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 body :not(.rcl-wrap__wiget) > .rcl-bttn:not(.rcl-bttn__active):hover {
     opacity: 0.8;
@@ -209,20 +209,20 @@ body .rcl-bttn:not(.rcl-bttn__type-clear):last-child {
 }
 .rcl-bttn.rcl-bttn__loading::after {
     -webkit-animation: rcl-bttn-loader .8s linear;
-            animation: rcl-bttn-loader .8s linear;
+    animation: rcl-bttn-loader .8s linear;
     -webkit-animation-iteration-count: infinite;
-            animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
     border-color: #fff transparent transparent;
     transform: rotate(0deg);
 }
 @-webkit-keyframes rcl-bttn-loader {
     to {-webkit-transform:rotate(360deg);
-                transform:rotate(360deg);
+        transform:rotate(360deg);
     }
 }
 @keyframes rcl-bttn-loader {
     to {-webkit-transform:rotate(360deg);
-                transform:rotate(360deg);
+        transform:rotate(360deg);
     }
 }
 /* END loader */
