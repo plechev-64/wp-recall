@@ -264,6 +264,8 @@ function rcl_update_custom_fields(){
         $fields['options'] = $POSTDATA['options'];
     }
 
+	$fields = wp_unslash($fields);
+
     update_option( $_POST['rcl-fields-options']['name-option'], $fields );
 
     do_action('rcl_update_custom_fields', $fields, $POSTDATA);
@@ -417,7 +419,7 @@ function rcl_manager_update_fields(){
     $manager_id = $_POST['manager_id'];
     $option_name = $_POST['option_name'];
 
-    $fieldsData = $_POST['fields'];
+    $fieldsData = wp_unslash($_POST['fields']);
     $structure = isset($_POST['structure'])? $_POST['structure']: false;
 
     $fields = array();
