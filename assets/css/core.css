@@ -288,7 +288,7 @@ span i.rcli.fa-circle {
 	float: left;
 	margin:0 5px 0 0;
 	position: relative;
-	width: 67px;								/*++Twenty16++*/
+	width: 67px; /*++Twenty16++*/
 }
 .panel_lk_recall .author-avatar a {
 	display: inline-block;
@@ -312,16 +312,10 @@ span i.rcli.fa-circle {
 #rcl-office {
 	background: rgba(236, 240, 241, 0.3);
 	box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
-	color: #333;					/*BlackTheme*/
+	color: #333; /*BlackTheme*/
 	overflow: visible;
 	position: relative;
 }
-/* need alternative. this style is wrong - id break other styles */
-/*#rcl-office a:link {
-	border: none;					 ++Twenty15++
-	box-shadow: none;				 ++Twenty16++
-	text-decoration: none;
-}*/
 #rcl-office h2 {
 	font-size: 22px;
 	font-weight: bold;
@@ -391,10 +385,10 @@ span i.rcli.fa-circle {
 	border-style: solid;
 	border-width: 1px;
 	box-sizing: border-box;
-	color: #333;									/*++hueman++*/
+	color: #333; /* ++hueman++ */
 	display: inline-block;
-	font-size: 14px;								/*++hueman++*/
-	line-height: normal;							/*++hueman++*/
+	font-size: 14px; /* ++hueman++ */
+	line-height: normal; /* ++hueman++ */
 	min-width: 50px;
 	padding: 6px 8px;
 	position: relative;
@@ -467,12 +461,12 @@ span i.rcli.fa-circle {
 
 body a.recall-button,
 span.recall-button,
-.recall-button.rcl-upload-button,			 /*input[type="file"]*/
+.recall-button.rcl-upload-button, /* input[type="file"] */
 input[type="submit"].recall-button,
 input[type="submit"] .recall-button,
 input[type="button"].recall-button,
 input[type="button"] .recall-button {
-	border-radius: 0;						 /*++hueman++*/
+	border-radius: 0; /* ++hueman++ */
 	border: none;
 	box-shadow: none !important;
 	box-sizing: border-box;
@@ -480,12 +474,12 @@ input[type="button"] .recall-button {
 	background-color: #0085ba;
 	cursor:pointer;
 	font-size: 12px;
-	font-weight: normal;					/*++hueman++*/
-	letter-spacing: normal;				 /*++Twenty16++*/
+	font-weight: normal; /* ++hueman++ */
+	letter-spacing: normal; /* ++Twenty16++ */
 	line-height:1;
 	padding: 5px 5px;
 	text-decoration: none;
-	text-transform: none;					 /*++Twenty16++*/
+	text-transform: none; /* ++Twenty16++ */
 	white-space: nowrap;
 }
 /*end*/
@@ -515,7 +509,7 @@ a.recall-button.filter-active,
 a.recall-button.filter-active:hover,
 a.data-filter.filter-active,
 a.data-filter.filter-active:hover {
-	box-shadow: none;						 /*++Twenty16++*/
+	box-shadow: none; /* ++Twenty16++ */
 	color: rgb(30, 56, 75);
 	cursor: default;
 	opacity: 1;
@@ -600,9 +594,9 @@ a.data-filter.filter-active:hover {
 .rcl-data-filters {
 	margin: 10px 0;
 }
-.rcl-data-filters a:link {						/*++Twenty15++*/
+.rcl-data-filters a:link { /* ++Twenty15++ */
 	border: none;
-	text-decoration: none;						/*++Twenty14++*/
+	text-decoration: none; /* ++Twenty14++ */
 }
 /*end*/
 
@@ -924,7 +918,7 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 	border: 1px solid #e2e2e2;
 	cursor: pointer;
 	display: inline-block;
-	font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
+	font-family: Verdana,Tahoma,sans-serif; /* если другое семейство - то блоки плывут */
 	font-size: 12px;
 	font-weight: normal;
 	line-height: 1;
@@ -1054,9 +1048,9 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 	box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.4);
 }
 .rcl-navi a:link,
-.rcl-pager .pager-item a:link {						 /*++hueman++ добавил :link для перевеса*/
+.rcl-pager .pager-item a:link { /*++hueman++ добавил :link для перевеса*/
 	background: rgba(243, 243, 243, 0.5);
-	border: none;										 /*++Twenty15++*/
+	border: none; /*++Twenty15++*/
 	box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
 	text-decoration: none;
 }
@@ -1108,7 +1102,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon::after {
 	color: rgb(229, 57, 53);
-	content: "\f00d";									 /* fa-times */
+	content: "\f00d"; /* fa-times */
 	font: 400 30px/30px rcl-awesome;
 	margin: 0 7px 0 0;
 }
@@ -1456,12 +1450,12 @@ body .ssi-modalOuter .ssi-modalTitle {
 	line-height: normal;
 	padding: 8px;
 	text-align: left;
-	text-transform: none;						 /*++Twenty14++*/
+	text-transform: none; /* ++Twenty14++ */
 	vertical-align: middle;
 }
 .rcl-form th:first-child,
 .rcl-form td:first-child {
-	padding-left: 8px;							/*++Twenty17++*/
+	padding-left: 8px; /* ++Twenty17++ */
 }
 .rcl-form tr th {
 	overflow: hidden;
@@ -1553,7 +1547,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
-	font-size: 14px;			/* start size for em */
+	font-size: 14px; /* start size for em */
 	line-height: 1.4;
 	word-break: break-word;
 	word-wrap: break-word;
@@ -1627,25 +1621,63 @@ body .ssi-modalOuter .ssi-modalTitle {
 	content: "\f0d8";
 }
 
-.rcl-table__cell-w-5 {flex-basis: 5%;}
-.rcl-table__cell-w-10 {flex-basis: 10%;}
-.rcl-table__cell-w-15 {flex-basis: 15%;}
-.rcl-table__cell-w-20 {flex-basis: 20%;}
-.rcl-table__cell-w-25 {flex-basis: 25%;}
-.rcl-table__cell-w-30 {flex-basis: 30%;}
-.rcl-table__cell-w-35 {flex-basis: 35%;}
-.rcl-table__cell-w-40 {flex-basis: 40%;}
-.rcl-table__cell-w-45 {flex-basis: 45%;}
-.rcl-table__cell-w-50 {flex-basis: 50%;}
-.rcl-table__cell-w-55 {flex-basis: 55%;}
-.rcl-table__cell-w-60 {flex-basis: 60%;}
-.rcl-table__cell-w-65 {flex-basis: 65%;}
-.rcl-table__cell-w-70 {flex-basis: 70%;}
-.rcl-table__cell-w-75 {flex-basis: 75%;}
-.rcl-table__cell-w-80 {flex-basis: 80%;}
-.rcl-table__cell-w-85 {flex-basis: 85%;}
-.rcl-table__cell-w-90 {flex-basis: 90%;}
-.rcl-table__cell-w-95 {flex-basis: 95%;}
+.rcl-table__cell-w-5 {
+	flex-basis: 5%;
+}
+.rcl-table__cell-w-10 {
+	flex-basis: 10%;
+}
+.rcl-table__cell-w-15 {
+	flex-basis: 15%;
+}
+.rcl-table__cell-w-20 {
+	flex-basis: 20%;
+}
+.rcl-table__cell-w-25 {
+	flex-basis: 25%;
+}
+.rcl-table__cell-w-30 {
+	flex-basis: 30%;
+}
+.rcl-table__cell-w-35 {
+	flex-basis: 35%;
+}
+.rcl-table__cell-w-40 {
+	flex-basis: 40%;
+}
+.rcl-table__cell-w-45 {
+	flex-basis: 45%;
+}
+.rcl-table__cell-w-50 {
+	flex-basis: 50%;
+}
+.rcl-table__cell-w-55 {
+	flex-basis: 55%;
+}
+.rcl-table__cell-w-60 {
+	flex-basis: 60%;
+}
+.rcl-table__cell-w-65 {
+	flex-basis: 65%;
+}
+.rcl-table__cell-w-70 {
+	flex-basis: 70%;
+}
+.rcl-table__cell-w-75 {
+	flex-basis: 75%;
+}
+.rcl-table__cell-w-80 {
+	flex-basis: 80%;
+}
+.rcl-table__cell-w-85 {
+	flex-basis: 85%;
+}
+.rcl-table__cell-w-90 {
+	flex-basis: 90%;
+}
+.rcl-table__cell-w-95 {
+	flex-basis: 95%;
+}
 
 .rcl-table__not-header .rcl-table__row {
 	padding: .4em 0;
@@ -1729,8 +1761,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 	32. Manager Content
 */
 .rcl-content{
-	/*overflow: hidden;*/
-	/*position: relative;*/
+
 }
 .rcl-content .rcl-content-group{
 

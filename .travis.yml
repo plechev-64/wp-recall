@@ -25,6 +25,15 @@ matrix:
     - php: 'nightly'
   allow_failures:
     - php: nightly
+    
+ignore:
+    - ${TRAVIS_BUILD_DIR}/assets/css/animate-css/*
+    - ${TRAVIS_BUILD_DIR}/assets/js/fileupload/*
+    - ${TRAVIS_BUILD_DIR}/assets/js/fselect/*
+    - ${TRAVIS_BUILD_DIR}/assets/js/jssor.slider/*
+    - ${TRAVIS_BUILD_DIR}/assets/js/say-cheese/*
+    - ${TRAVIS_BUILD_DIR}/assets/js/rangyinputs.js
+    - ${TRAVIS_BUILD_DIR}/assets/rcl-awesome/*
 
 cache:
   directories:

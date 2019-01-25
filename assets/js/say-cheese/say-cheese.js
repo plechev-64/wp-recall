@@ -1,4 +1,4 @@
-/*
+/**
  * Say Cheese!
  * Lee Machin, 2012
  * http://leemach.in, http://new-bamboo.co.uk

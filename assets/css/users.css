@@ -11,8 +11,8 @@
 	line-height: 1.4;
 }
 .userlist .user-single a {
-	border: none;									 /*++Twenty15++*/
-	box-shadow: none;								 /*++Twenty16++*/
+	border: none; /* ++Twenty15++ */
+	box-shadow: none; /* ++Twenty16++ */
 	height: auto;
 	margin: 0 0 3px;
 	text-decoration: none;
@@ -47,7 +47,7 @@
 	display: inline-block;
 }
 .userlist .thumb-user a img {
-	border-radius: 0;								 /*++Twenty16++*/
+	border-radius: 0; /* ++Twenty16++ */
 	border: none;
 	box-shadow: none;
 	display: block;
@@ -106,7 +106,6 @@
 	color: #888;
 }
 .userlist.rows-list .user-content-rcl::before { /* обманка на месте аватарки */
-	/*	 background: #000; */ /* Посмотреть позицию */
 	content: "";
 	float: left;
 	height: 70px;

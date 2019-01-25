@@ -2,7 +2,7 @@
 .panel_lk_recall {
 	color:#333;
 	display: block;
-	line-height: 1.5;							 /*++Twenty16++*/
+	line-height: 1.5; /*++Twenty16++*/
 	margin: 0 auto;
 	max-width: 320px;
 	width: 100%;
@@ -15,8 +15,8 @@
 	z-index: 9999;
 }
 div.panel_lk_recall a {
-	border: none;								 /*++Twenty15++*/
-	box-shadow: none;							 /*++Twenty16++*/
+	border: none; /*++Twenty15++*/
+	box-shadow: none; /*++Twenty16++*/
 	text-decoration: none;
 }
 .panel_lk_recall .form-tab-rcl {
@@ -117,7 +117,7 @@ div.panel_lk_recall a {
 	padding: 6px 12px 6px 32px;
 	text-transform: none;
 	width: 100%;
-	-webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;	/*chrome banana fix*/
+	-webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important; /*chrome banana fix*/
 }
 .panel_lk_recall form-tab-rcl .block-label {
 	font-weight: normal;

@@ -107,8 +107,6 @@
 	margin-left: 10px;
 }
 .iconpicker-popover .popover-footer input[type=search].iconpicker-search {
-	/*width:auto;
-		float:left;*/
 	margin-bottom: 12px;
 }
 .iconpicker-popover.popover > .arrow,
@@ -294,12 +292,6 @@
 	font-size: 14px;
 	box-shadow: 0 0 0 1px #dddddd;
 	color: inherit;
-	/*&:nth-child(4n+4) {
-				margin-right: 0;
-		}
-		&:nth-last-child(-n+4) {
-				margin-bottom: 0;
-		}*/
 }
 .iconpicker .iconpicker-item:hover:not(.iconpicker-selected) {
 	background-color: #eeeeee;
