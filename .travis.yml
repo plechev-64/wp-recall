@@ -25,15 +25,6 @@ matrix:
     - php: 'nightly'
   allow_failures:
     - php: nightly
-    
-ignore:
-    - /home/travis/build/plechev-64/wp-recall/assets/css/animate-css/*
-    - /home/travis/build/plechev-64/wp-recall/assets/js/fileupload/*
-    - /home/travis/build/plechev-64/wp-recall/assets/js/fselect/*
-    - /home/travis/build/plechev-64/wp-recall/assets/js/jssor.slider/*
-    - /home/travis/build/plechev-64/wp-recall/assets/js/say-cheese/*
-    - /home/travis/build/plechev-64/wp-recall/assets/js/rangyinputs.js
-    - /home/travis/build/plechev-64/wp-recall/assets/rcl-awesome/*
 
 cache:
   directories:
