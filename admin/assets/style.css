@@ -2,481 +2,481 @@
 body.wp-admin.toplevel_page_manage-rmag h2,
 body.wp-admin[class*="wp-recall-1_page_"] h2,
 body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall page */
-    font-size: 20px;
-    font-weight: 600;
-    line-height: normal;
-    margin: 15px 0;
-    padding: 0;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: normal;
+	margin: 15px 0;
+	padding: 0;
 }
 #rcl-notice {
-    position: fixed;
-    right: 30px;
-    top: 70px;
-    width: 210px;
-    z-index: 999999;
+	position: fixed;
+	right: 30px;
+	top: 70px;
+	width: 210px;
+	z-index: 999999;
 }
 #rcl-notice .notice-window {
-    font-size: 14px;
-    line-height: 1;
-    margin: 5px 0;
-    padding: 8px 2px 8px 10px;
-    word-wrap: break-word;
+	font-size: 14px;
+	line-height: 1;
+	margin: 5px 0;
+	padding: 8px 2px 8px 10px;
+	word-wrap: break-word;
 }
 #rcl-notice .type-error {
-    background-color: rgb(255, 207, 207);
-    border-left: 3px solid red;
-    color: red;
+	background-color: rgb(255, 207, 207);
+	border-left: 3px solid red;
+	color: red;
 }
 #rcl-notice .type-warning {
-    background-color: #fff5ce;
-    border-left: 3px solid #333;
-    color: #333;
+	background-color: #fff5ce;
+	border-left: 3px solid #333;
+	color: #333;
 }
 #rcl-notice .type-success {
-    background-color: #bfffbd;
-    border-left: 3px solid #008000;
-    color: #008000;
+	background-color: #bfffbd;
+	border-left: 3px solid #008000;
+	color: #008000;
 }
 #rcl-notice .notice-window .close-notice {
-    color: inherit;
-    float: right;
-    padding: 0 5px 0 4px;
+	color: inherit;
+	float: right;
+	padding: 0 5px 0 4px;
 }
 .rcl_preloader {
-    background-color: rgba(255, 255, 255, 0.5);
-    display: block;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 99;
+	background-color: rgba(255, 255, 255, 0.5);
+	display: block;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 99;
 }
 .rcl_preloader i {
-    -webkit-animation: adm_rotation 2s infinite linear;
-            animation: adm_rotation 2s infinite linear;
-    color: rgb(76, 140, 189);
-    left: 50%;
-    line-height: 1;
-    margin: -40px 0 0 -40px;
-    position: absolute;
-    top: 50%;
+	-webkit-animation: adm_rotation 2s infinite linear;
+	animation: adm_rotation 2s infinite linear;
+	color: rgb(76, 140, 189);
+	left: 50%;
+	line-height: 1;
+	margin: -40px 0 0 -40px;
+	position: absolute;
+	top: 50%;
 }
 div.rcl_preloader i.rcli::before {
-    content: "\f463";
-    font: 120px/1 dashicons;
+	content: "\f463";
+	font: 120px/1 dashicons;
 }
 .wp-admin .ssi-modalWindow {
-    border: none;
-    border-radius: 0;
-    padding: 0;
+	border: none;
+	border-radius: 0;
+	padding: 0;
 }
 @-webkit-keyframes adm_rotation {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
 }
 @keyframes adm_rotation {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(359deg);
+		transform: rotate(359deg);
+	}
 }
 #recall {
-    position: relative;
+	position: relative;
 }
 .shift-extend-options > label {
-    background-color: #f5c0c0;
-    border: 1px solid #cd9898;
-    display: inline-block;
-    font-size: 14px;
-    padding: 8px;
-    width: 220px;
+	background-color: #f5c0c0;
+	border: 1px solid #cd9898;
+	display: inline-block;
+	font-size: 14px;
+	padding: 8px;
+	width: 220px;
 }
 #recall.left-sidebar form {
-    height: 870px;
+	height: 870px;
 }
 #recall .title-option {
-    background-color: #e6e6e6;
-    border: 1px solid #d4d4d4;
-    cursor: pointer;
-    display: flex;
-    margin: 5px 0 0;
-    padding: 5px 8px;
-    width: 600px;
+	background-color: #e6e6e6;
+	border: 1px solid #d4d4d4;
+	cursor: pointer;
+	display: flex;
+	margin: 5px 0 0;
+	padding: 5px 8px;
+	width: 600px;
 }
 #recall.left-sidebar .title-option {
-    font-size: 16px;
-    transform: translate3d(0px, 0px, 0px);
-    width: 220px;
+	font-size: 16px;
+	transform: translate3d(0px, 0px, 0px);
+	width: 220px;
 }
 #recall.left-sidebar .active {
-    background-color: rgb(76, 140, 189);
-    border: 1px solid #266697;
-    color: #fff;
+	background-color: rgb(76, 140, 189);
+	border: 1px solid #266697;
+	color: #fff;
 }
 #recall .title-option > span {
-    color: rgb(76, 140, 189);
-    margin: 0 5px 0 0;
+	color: rgb(76, 140, 189);
+	margin: 0 5px 0 0;
 }
 #recall .title-option.active > span {
-    color: #fff;
+	color: #fff;
 }
 #recall.left-sidebar .title-option:hover:not(.active) {
-    background-color: #eee;
-    border-left: 3px solid rgb(76, 140, 189);
-    transform: translateX(-2px);
+	background-color: #eee;
+	border-left: 3px solid rgb(76, 140, 189);
+	transform: translateX(-2px);
 }
 .wrap-recall-options {
-    border: 1px solid #ddd;
-    display: none;
-    margin: 0 0 5px;
-    padding: 15px;
+	border: 1px solid #ddd;
+	display: none;
+	margin: 0 0 5px;
+	padding: 15px;
 }
 .left-sidebar .wrap-recall-options {
-    left: 250px;
-    max-height: 800px;
-    max-width: 500px;
-    overflow-y: auto;
-    position: absolute;
-    top: 0;
+	left: 250px;
+	max-height: 800px;
+	max-width: 500px;
+	overflow-y: auto;
+	position: absolute;
+	top: 0;
 }
 .wrap-recall-options .option-block {
-    background-color: #eee;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    margin: 0 0 14px;
-    max-width: 500px;
-    padding: 5px 15px;
+	background-color: #eee;
+	border: 1px solid #ddd;
+	border-radius: 2px;
+	margin: 0 0 14px;
+	max-width: 500px;
+	padding: 5px 15px;
 }
 #rcl-options-form .extend-options {
-    background-color: #f5f5f5;
-    border-left: 2px solid #f8d3d3;
-    margin: 5px 0;
-    padding: 5px 8px;
+	background-color: #f5f5f5;
+	border-left: 2px solid #f8d3d3;
+	margin: 5px 0;
+	padding: 5px 8px;
 }
 .wrap-recall-options .option-block h3 {
-    margin: 10px 0;
-    text-transform: uppercase;
+	margin: 10px 0;
+	text-transform: uppercase;
 }
 .wrap-recall-options .option-block label {
-    display: block;
-    font-weight: bold;
-    margin-top: 5px;
+	display: block;
+	font-weight: bold;
+	margin-top: 5px;
 }
 .wrap-recall-options div.rcl-option label.option-title,
 .wrap-recall-options div.rcl-option .rcl-field-input label {
-    display: inline-block;
+	display: inline-block;
 }
 .wrap-recall-options div.rcl-option .rcl-field-input label {
-    font-weight:normal;
+	font-weight:normal;
 }
 .wrap-recall-options .option-block small {
-    display: block;
+	display: block;
 }
 .wrap-recall-options .option-block select,
 .wrap-recall-options .option-block input[type="text"],
 .wrap-recall-options .option-block input[type="number"] {
-    box-sizing: border-box;
-    height: auto;
-    line-height: normal;
-    margin: 2px 0;
-    padding: 5px;
-    width: 300px;
+	box-sizing: border-box;
+	height: auto;
+	line-height: normal;
+	margin: 2px 0;
+	padding: 5px;
+	width: 300px;
 }
 #rcl-options-form .help-option {
-    display: inline-block;
+	display: inline-block;
 }
 #rcl-options-form .help-option .dashicons {
-    color: rgb(76, 140, 189);
-    cursor: pointer;
-    margin: 0 0 0 4px;
+	color: rgb(76, 140, 189);
+	cursor: pointer;
+	margin: 0 0 0 4px;
 }
 #rcl-options-form .help-option .dashicons:hover {
-    opacity: 0.8;
+	opacity: 0.8;
 }
 .rcl-help-dialog .ui-dialog-titlebar {
-    font-size: 15px;
+	font-size: 15px;
 }
 .rcl-help-dialog .ui-dialog-titlebar-close::before {
-    color: #d32723;
-    font-size: 26px;
+	color: #d32723;
+	font-size: 26px;
 }
 .rcl-help-dialog .ui-dialog-titlebar-close:hover::before {
-    opacity: 0.7;
+	opacity: 0.7;
 }
 .rcl-help-dialog .help-content {
-    font-size: 14px;
+	font-size: 14px;
 }
 .child-select,
 .help-option .help-content,
 .wrap-recall-options .hidden-option {
-    display:none;
+	display:none;
 }
 .wrap-recall-options .option-block input[type="number"] {
-    width: 100px;
+	width: 100px;
 }
 .wrap-recall-options .option-block textarea {
-    height: 80px;
-    width: 100%;
+	height: 80px;
+	width: 100%;
 }
 
 
 /* START bom helper */
 .adm_warn {
-    color: #d32723;
+	color: #d32723;
 }
 .adm_succ {
-    color: #52ae02;
+	color: #52ae02;
 }
 .adm_notice {
-    color: rgba(255, 174, 25, 0.4);
+	color: rgba(255, 174, 25, 0.4);
 }
 .adm_b14 {
-    font: bold 14px Arial,Georgia,Verdana;
+	font: bold 14px Arial,Georgia,Verdana;
 }
 .adm_b16 {
-    font: bold 16px Arial,Georgia,Verdana;
+	font: bold 16px Arial,Georgia,Verdana;
 }
 .adm_b18 {
-    font: bold 18px Arial,Georgia,Verdana;
+	font: bold 18px Arial,Georgia,Verdana;
 }
 /* END bom helper */
 
 
 /* START checkbox stylization */
 /*.rcl-checkbox-box {
-    background-color: #f5f5f5;
-    border: 1px solid #e5e5e5;
-    display: inline-block;
-    line-height: 1;
-    margin: 3px 4px 3px 0;
-    position: relative;
+	background-color: #f5f5f5;
+	border: 1px solid #e5e5e5;
+	display: inline-block;
+	line-height: 1;
+	margin: 3px 4px 3px 0;
+	position: relative;
 }
 .rcl-checkbox-box input[type="checkbox"] {
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
+	opacity: 0;
+	position: absolute;
+	z-index: -1;
 }
 .rcl-checkbox-box input[type="checkbox"]:checked + label.block-label::before {
-    color: rgb(76, 140, 189);
-    content: "\f147";
-    font-family: dashicons;
-    font-size: 22px;
-    left: 3px;
-    position: absolute;
-    top: 4px;
-    z-index: 3;
+	color: rgb(76, 140, 189);
+	content: "\f147";
+	font-family: dashicons;
+	font-size: 22px;
+	left: 3px;
+	position: absolute;
+	top: 4px;
+	z-index: 3;
 }
 .rcl-checkbox-box label.block-label::after {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    content: "";
-    display: block;
-    height: 20px;
-    left: 5px;
-    padding: 0 2px;
-    position: absolute;
-    top: 4px;
-    width: 20px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	content: "";
+	display: block;
+	height: 20px;
+	left: 5px;
+	padding: 0 2px;
+	position: absolute;
+	top: 4px;
+	width: 20px;
 }
 .rcl-checkbox-box label.block-label {
-    display: inline-block;
-    font-weight: normal;
-    line-height: normal;
-    margin: 0;
-    padding: 5px 5px 5px 30px;
+	display: inline-block;
+	font-weight: normal;
+	line-height: normal;
+	margin: 0;
+	padding: 5px 5px 5px 30px;
 }*/
 /* END checkbox stylization */
 
 
 .left-sidebar .submit-block {
-    margin-top: 50px;
-    width: 238px;
+	margin-top: 50px;
+	width: 238px;
 }
 #recall .rcl-save-button {
-    background-color: rgb(76, 140, 189);
-    border-radius: 0;
-    border: none;
-    box-shadow: none;
-    color: #fff;
-    cursor: pointer;
-    float: right;
-    font-size: 16px;
-    height: auto;
-    margin: 0;
-    padding: 5px;
-    text-shadow: none;
-    width: 100%;
+	background-color: rgb(76, 140, 189);
+	border-radius: 0;
+	border: none;
+	box-shadow: none;
+	color: #fff;
+	cursor: pointer;
+	float: right;
+	font-size: 16px;
+	height: auto;
+	margin: 0;
+	padding: 5px;
+	text-shadow: none;
+	width: 100%;
 }
 #recall .rcl-save-button:hover {
-    opacity: 0.9;
+	opacity: 0.9;
 }
 
 
 /* START addon-template page */
 .rcl-admin-service-box {
-    background-color: #f5f5f5;
-    border: 1px solid #e5e5e5;
-    margin: 10px 0;
-    padding: 0 10px 4px;
+	background-color: #f5f5f5;
+	border: 1px solid #e5e5e5;
+	margin: 10px 0;
+	padding: 0 10px 4px;
 }
 .rcl-admin-service-box .install-help {
-    line-height: normal;
-    padding: 0 0 0 22px;
-    position: relative;
+	line-height: normal;
+	padding: 0 0 0 22px;
+	position: relative;
 }
 .rcl-admin-service-box .install-help::before {
-    color: #ffae19;
-    content: "\f534";
-    font-family: dashicons;
-    font-size: 18px;
-    font-style: normal;
-    left: 0;
-    opacity: 0.4;
-    position: absolute;
-    top: 0;
+	color: #ffae19;
+	content: "\f534";
+	font-family: dashicons;
+	font-size: 18px;
+	font-style: normal;
+	left: 0;
+	opacity: 0.4;
+	position: absolute;
+	top: 0;
 }
 .wp-admin input[name="rcl-key"]:not([value=""]) {
-    filter: blur(3px) invert(0.4) opacity(0.3);
-    transition: all 0.15s linear 0s;
+	filter: blur(3px) invert(0.4) opacity(0.3);
+	transition: all 0.15s linear 0s;
 }
 .wp-admin input[name="rcl-key"]:hover:not([value=""]) {
-    filter: none;
+	filter: none;
 }
 /* END addon-template page */
 
 
 .wp-list-table .addon_screen img {
-    width: 200px;
+	width: 200px;
 }
 .wp-list-table .addon_icon img {
-    width: 40px;
+	width: 40px;
 }
 
 
 /* navigation Start */
 .tablenav .tablenav-pages .pagination-links a:hover,
 .tablenav .tablenav-pages .pagination-links a:focus {
-    background-color: rgb(76, 140, 189);
+	background-color: rgb(76, 140, 189);
 }
 .rcl-pager {
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
-    box-sizing: border-box;
-    clear: both;
-    display: inline-block;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 1.4;
-    margin: 10px 0;
-    padding: 6px;
-    text-align: right;
-    width: calc(100% - 2px);
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
+	box-sizing: border-box;
+	clear: both;
+	display: inline-block;
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 1.4;
+	margin: 10px 0;
+	padding: 6px;
+	text-align: right;
+	width: calc(100% - 2px);
 }
 .pager-item.type-current > span,
 .pager-item.type-separator > span {
-    padding: 2px 10px;
+	padding: 2px 10px;
 }
 .rcl-pager .pager-item a {
-    background-color: #f5f5f5;
-    border: 1px solid #e5e5e5;
-    color: rgb(76, 140, 189);
-    display: inline-block;
-    margin: 0 4px;
-    padding: 2px 10px;
-    text-decoration: none;
+	background-color: #f5f5f5;
+	border: 1px solid #e5e5e5;
+	color: rgb(76, 140, 189);
+	display: inline-block;
+	margin: 0 4px;
+	padding: 2px 10px;
+	text-decoration: none;
 }
 .rcl-pager .pager-item a:hover {
-    background-color: #eee;
-    border: 1px solid #d5d5d5;
-    color: #000;
+	background-color: #eee;
+	border: 1px solid #d5d5d5;
+	color: #000;
 }
 /* navigation End */
 
 
 /* START custom field navi */
 .rcl-custom-fields-navi {
-    margin: 10px 10px 10px 0;
-    padding: 10px;
+	margin: 10px 10px 10px 0;
+	padding: 10px;
 }
 .rcl-custom-fields-navi .rcl-types-list {
-    border-bottom: 1px solid #ccc;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+	border-bottom: 1px solid #ccc;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 .rcl-custom-fields-navi .rcl-types-list li {
-    border-color: #ccc #ccc currentcolor;
-    border-style: solid solid none;
-    border-width: 1px 1px medium;
-    display: inline-block;
-    font-size: 14px;
-    line-height: 24px;
-    margin: 0 0 0 0.5em;
+	border-color: #ccc #ccc currentcolor;
+	border-style: solid solid none;
+	border-width: 1px 1px medium;
+	display: inline-block;
+	font-size: 14px;
+	line-height: 24px;
+	margin: 0 0 0 0.5em;
 }
 .rcl-custom-fields-navi li.current-item {
-    border-bottom: 1px solid #f1f1f1;
-    margin-bottom: -1px;
+	border-bottom: 1px solid #f1f1f1;
+	margin-bottom: -1px;
 }
 .rcl-custom-fields-navi .rcl-types-list li a {
-    background-color: #e5e5e5;
-    color: #555;
-    display: inline-block;
-    height: 26px;
-    padding: 5px 12px;
-    text-decoration: none;
+	background-color: #e5e5e5;
+	color: #555;
+	display: inline-block;
+	height: 26px;
+	padding: 5px 12px;
+	text-decoration: none;
 }
 .rcl-custom-fields-navi .rcl-types-list li.current-item a {
-    background-color: #f1f1f1;
-    color: #000;
-    font-weight: bold;
+	background-color: #f1f1f1;
+	color: #000;
+	font-weight: bold;
 }
 .rcl-custom-fields-navi .rcl-types-list li:not(.current-item) a:hover {
-    background-color: #eee;
-    color: #000;
+	background-color: #eee;
+	color: #000;
 }
 .rcl-custom-fields-navi + .rcl-custom-fields-navi .rcl-types-list {
-    padding: 0 30px;
+	padding: 0 30px;
 }
 .rcl-custom-fields-navi i {
-    color: #008000;
-    font: 22px dashicons;
-    margin: 0 3px 0 0;
-    vertical-align: middle;
+	color: #008000;
+	font: 22px dashicons;
+	margin: 0 3px 0 0;
+	vertical-align: middle;
 }
 .wp-admin .rcl-custom-fields-navi .fa-plus::before {
-    content: "\f502";
+	content: "\f502";
 }
 .rcl-custom-fields-navi > p {
-    background-color: #eee;
-    border: 1px solid #ddd;
-    display: inline-block;
-    font-size: 14px;
-    line-height: normal;
-    margin: 0;
-    padding: 10px 30px 10px 40px;
-    position: relative;
+	background-color: #eee;
+	border: 1px solid #ddd;
+	display: inline-block;
+	font-size: 14px;
+	line-height: normal;
+	margin: 0;
+	padding: 10px 30px 10px 40px;
+	position: relative;
 }
 .rcl-custom-fields-navi > p::before {
-    color: #ffae19;
-    content: "\f534";
-    font-family: dashicons;
-    font-size: 30px;
-    left: 5px;
-    opacity: 0.4;
-    position: absolute;
-    top: 4px;
+	color: #ffae19;
+	content: "\f534";
+	font-family: dashicons;
+	font-size: 30px;
+	left: 5px;
+	opacity: 0.4;
+	position: absolute;
+	top: 4px;
 }
 /* END custom field navi */
 
@@ -485,696 +485,696 @@ div.rcl_preloader i.rcli::before {
 
 /* START custom fields box */
 .rcl-custom-fields-box {
-    background-color: #f5f5f5;
-    border: 1px solid #d5d5d5;
-    box-sizing: border-box;
-    display: inline-block;
-    margin: 10px;
-    max-width: 500px;
-    padding: 10px;
-    position: relative;
-    vertical-align: top;
-    width: calc(100% - 20px);
+	background-color: #f5f5f5;
+	border: 1px solid #d5d5d5;
+	box-sizing: border-box;
+	display: inline-block;
+	margin: 10px;
+	max-width: 500px;
+	padding: 10px;
+	position: relative;
+	vertical-align: top;
+	width: calc(100% - 20px);
 }
 .structure-edit .rcl-custom-fields-box {
-    max-width: unset;
+	max-width: unset;
 }
 #profile-page .rcl-custom-fields-box {
-    max-width: 700px;
+	max-width: 700px;
 }
 .rcl-custom-fields-box > h3 {
-    font-size: 18px;
-    margin: 0;
-    padding: 5px 15px;
+	font-size: 18px;
+	margin: 0;
+	padding: 5px 15px;
 }
 .rcl-custom-fields-box .rcl-sortable-fields {
-    min-height: 30px;
-    padding: 0;
+	min-height: 30px;
+	padding: 0;
 }
 .rcl-custom-fields-box .rcl-custom-field {
-    margin-bottom: 10px;
-    position: relative;
+	margin-bottom: 10px;
+	position: relative;
 }
 .rcl-custom-fields-box .rcl-custom-field .field-header {
-    align-items: center;
-    background: #eee linear-gradient(to top, #f5f5f5, #eee);
-    border: 1px solid #ddd;
-    display: flex;
-    overflow: hidden;
-    padding: 5px;
+	align-items: center;
+	background: #eee linear-gradient(to top, #f5f5f5, #eee);
+	border: 1px solid #ddd;
+	display: flex;
+	overflow: hidden;
+	padding: 5px;
 }
 .ui-sortable .rcl-custom-field .field-header {
-    cursor: move;
+	cursor: move;
 }
 .rcl-custom-fields-box .field-header .field-type {
-    background-color: #f6f6f6;
-    border: 1px solid #e5e5e5;
-    color: rgb(76, 140, 189);
-    font-family: dashicons;
-    font-size: 20px;
-    margin-right: 10px;
-    padding: 5px;
+	background-color: #f6f6f6;
+	border: 1px solid #e5e5e5;
+	color: rgb(76, 140, 189);
+	font-family: dashicons;
+	font-size: 20px;
+	margin-right: 10px;
+	padding: 5px;
 }
 .rcl-custom-fields-box [data-type="text"] .field-type::before {
-    content: "\f464";
+	content: "\f464";
 }
 .rcl-custom-fields-box [data-type="textarea"] .field-type::before {
-    content: "\f119";
+	content: "\f119";
 }
 .rcl-custom-fields-box [data-type="select"] .field-type::before {
-    content: "\f203";
+	content: "\f203";
 }
 .rcl-custom-fields-box [data-type="multiselect"] .field-type::before {
-    content: "\f163";
+	content: "\f163";
 }
 .rcl-custom-fields-box [data-type="checkbox"] .field-type::before {
-    content: "\f147";
+	content: "\f147";
 }
 .rcl-custom-fields-box [data-type="radio"] .field-type::before {
-    content: "\f159";
+	content: "\f159";
 }
 .rcl-custom-fields-box [data-type="email"] .field-type::before {
-    content: "\f466";
+	content: "\f466";
 }
 .rcl-custom-fields-box [data-type="tel"] .field-type::before {
-    content: "\f525";
+	content: "\f525";
 }
 .rcl-custom-fields-box [data-type="number"] .field-type::before {
-    content: "123";
-    font-size: 14px;
-    font-weight: bold;
-    vertical-align: super;
+	content: "123";
+	font-size: 14px;
+	font-weight: bold;
+	vertical-align: super;
 }
 .rcl-custom-fields-box [data-type="date"] .field-type::before {
-    content: "\f508";
+	content: "\f508";
 }
 .rcl-custom-fields-box [data-type="time"] .field-type::before {
-    content: "\f469";
+	content: "\f469";
 }
 .rcl-custom-fields-box [data-type="url"] .field-type::before {
-    content: "\f103";
+	content: "\f103";
 }
 .rcl-custom-fields-box [data-type="agree"] .field-type::before {
-    content: "\f491";
+	content: "\f491";
 }
 .rcl-custom-fields-box [data-type="file"] .field-type::before {
-    content: "\f501";
+	content: "\f501";
 }
 .rcl-custom-fields-box [data-type="dynamic"] .field-type::before {
-    content: "\f502";
+	content: "\f502";
 }
 .rcl-custom-fields-box [data-type="editor"] .field-type::before {
-    content: "\f212";
+	content: "\f212";
 }
 .rcl-custom-fields-box [data-type="runner"] .field-type::before {
-    content: "\f229";
+	content: "\f229";
 }
 .rcl-custom-fields-box [data-type="range"] .field-type::before {
-    content: "\f108";
+	content: "\f108";
 }
 .rcl-custom-fields-box [data-type="custom"] .field-type::before {
-    content: "\f111";
+	content: "\f111";
 }
 .rcl-custom-fields-box .field-header .field-title {
-    flex-grow: 1;
-    font-size: 14px;
-    font-weight: bold;
+	flex-grow: 1;
+	font-size: 14px;
+	font-weight: bold;
 }
 .rcl-custom-fields-box .field-header .field-controls {
-    display: flex;
-    font-family: dashicons;
-    justify-content: flex-end;
+	display: flex;
+	font-family: dashicons;
+	justify-content: flex-end;
 }
 .rcl-custom-fields-box .field-header .field-delete::before {
-    color: rgba(229, 57, 53, 0.7);
-    content: "\f158";
+	color: rgba(229, 57, 53, 0.7);
+	content: "\f158";
 }
 .rcl-custom-fields-box .field-header .field-edit::before {
-    color: rgb(76, 140, 189);
-    content: "\f140";
+	color: rgb(76, 140, 189);
+	content: "\f140";
 }
 .rcl-custom-fields-box .field-header .field-controls a:hover {
-    opacity: 0.7;
+	opacity: 0.7;
 }
 .rcl-custom-fields-box .field-header .field-control {
-    font-size: 25px;
-    margin: 0 0 0 3px;
+	font-size: 25px;
+	margin: 0 0 0 3px;
 }
 .rcl-custom-fields-box .rcl-custom-field a {
-    font-style: normal;
-    text-decoration: none;
+	font-style: normal;
+	text-decoration: none;
 }
 .rcl-custom-fields-box .rcl-custom-field .field-settings {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    display: none;
-    margin: 0 0 25px;
-    padding: 5px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	display: none;
+	margin: 0 0 25px;
+	padding: 5px;
 }
 .rcl-custom-fields-box .field-settings .rcl-cf-type-text {
-    background-color: rgba(224, 248, 201, 0.6);
-    color: #555;
-    float: right;
-    margin: -5px -5px 0 0;
-    padding: 5px 10px;
+	background-color: rgba(224, 248, 201, 0.6);
+	color: #555;
+	float: right;
+	margin: -5px -5px 0 0;
+	padding: 5px 10px;
 }
 .rcl-custom-fields-box .rcl-custom-field .option-content {
-    padding: 5px 10px;
+	padding: 5px 10px;
 }
 .rcl-custom-fields-box .rcl-custom-field label:not(.block-label) {
-    display: block;
-    font-weight: bold;
-    margin: 0;
+	display: block;
+	font-weight: bold;
+	margin: 0;
 }
 .rcl-custom-fields-box .rcl-custom-field input,
 .rcl-custom-fields-box .rcl-custom-field select,
 .rcl-custom-fields-box .rcl-custom-field textarea {
-    box-sizing: border-box;
-    width: 100%;
+	box-sizing: border-box;
+	width: 100%;
 }
 .rcl-custom-fields-box .wp-editor-container input {
-    width: auto;
+	width: auto;
 }
 .rcl-custom-fields-box input[type="radio"] {
-    margin: 0 0 0 5px;
-    width: initial;
+	margin: 0 0 0 5px;
+	width: initial;
 }
 .rcl-custom-fields-box .rcl-field-notice {
-    clear: both;
-    color: #777;
-    display: block;
-    font-size: 12px;
-    line-height: normal;
+	clear: both;
+	color: #777;
+	display: block;
+	font-size: 12px;
+	line-height: normal;
 }
 .rcl-custom-fields-box .rcl-custom-field .fa-info:not(.rcli)::before {
-    content: "\f534";
+	content: "\f534";
 }
 .rcl-custom-fields-box .rcl-custom-field i:not(.mce-ico):not(.rcli) {
-    font-family: dashicons;
-    font-size: 20px;
-    font-style: normal;
-    margin: 0 2px;
-    vertical-align: middle;
+	font-family: dashicons;
+	font-size: 20px;
+	font-style: normal;
+	margin: 0 2px;
+	vertical-align: middle;
 }
 .rcl-custom-fields-box .rcl-custom-field i:hover {
-    opacity: 0.7;
+	opacity: 0.7;
 }
 .rcl-custom-fields-box .rcl-field-notice i {
-    color: #ffae19;
-    font-size: 14px;
-    opacity: 0.8;
-    margin-right: 5px;
+	color: #ffae19;
+	font-size: 14px;
+	opacity: 0.8;
+	margin-right: 5px;
 }
 .rcl-custom-fields-box .rcl-custom-field textarea {
-    height: 50px;
+	height: 50px;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values {
-    background-color: #f5f5f5;
-    display: block;
-    padding: 10px;
+	background-color: #f5f5f5;
+	display: block;
+	padding: 10px;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values .dynamic-value,
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values .ui-sortable-placeholder {
-    background-color: #ebebeb;
-    border: 1px solid #dbdbdb;
-    clear: both;
-    display: block;
-    line-height: normal;
-    margin: 3px 0;
-    padding: 2px;
-    position: relative;
+	background-color: #ebebeb;
+	border: 1px solid #dbdbdb;
+	clear: both;
+	display: block;
+	line-height: normal;
+	margin: 3px 0;
+	padding: 2px;
+	position: relative;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values.ui-sortable .dynamic-value::before {
-    background-color: #f5f5f5;
-    color: rgb(76, 140, 189);
-    content: "\f545";
-    cursor: move;
-    font-family: dashicons;
-    font-size: 20px;
-    height: 20px;
-    padding: 3px;
-    position: absolute;
-    right: 4px;
-    top: 4px;
+	background-color: #f5f5f5;
+	color: rgb(76, 140, 189);
+	content: "\f545";
+	cursor: move;
+	font-family: dashicons;
+	font-size: 20px;
+	height: 20px;
+	padding: 3px;
+	position: absolute;
+	right: 4px;
+	top: 4px;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-value input {
-    width: 80%!important;
+	width: 80%!important;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values a {
-    background-color: #f5f5f5;
-    height: 24px;
-    padding: 2px;
-    position: absolute;
-    top: 2px;
-    right: 33px;
+	background-color: #f5f5f5;
+	height: 24px;
+	padding: 2px;
+	position: absolute;
+	top: 2px;
+	right: 33px;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values a i::before{
-    vertical-align: middle;
-    font-size: 16px;
-    padding: 5px;
-    display: inline-block;
+	vertical-align: middle;
+	font-size: 16px;
+	padding: 5px;
+	display: inline-block;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values a .fa-minus::before {
-    color: rgb(229, 57, 53);
-    vertical-align: middle;
+	color: rgb(229, 57, 53);
+	vertical-align: middle;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values a .fa-plus::before {
-    color: #008000;
+	color: #008000;
 }
 .rcl-custom-fields-box .rcl-custom-field .half-width {
-    display: inline-block;
-    float: left;
-    margin: 0 5px 0 0;
-    width: 47%;
+	display: inline-block;
+	float: left;
+	margin: 0 5px 0 0;
+	width: 47%;
 }
 .rcl-custom-fields-box .rcl-custom-field .half-width .option-content {
-    padding: 5px;
+	padding: 5px;
 }
 .rcl-custom-fields-box .new-field .field-header .field-control {
-    float: right;
-    margin-top: 20px;
+	float: right;
+	margin-top: 20px;
 }
 .rcl-custom-fields-box .rcl-custom-field.new-field .field-settings {
-    display: block;
+	display: block;
 }
 .rcl-custom-fields-box .fields-submit input {
-    box-sizing: border-box;
-    margin: 10px 0;
-    width: 100%;
+	box-sizing: border-box;
+	margin: 10px 0;
+	width: 100%;
 }
 .rcl-custom-fields-box .fields-submit .button-secondary {
-    background-color: #e6e6e6;
-    border: 1px solid #d4d4d4;
-    border-radius: 0;
-    box-shadow: none;
-    height: auto;
-    padding: 4px;
+	background-color: #e6e6e6;
+	border: 1px solid #d4d4d4;
+	border-radius: 0;
+	box-shadow: none;
+	height: auto;
+	padding: 4px;
 }
 .rcl-custom-fields-box .fields-submit .button-secondary:hover {
-    background-color: #eee;
-    border-color: #d4d4d4;
+	background-color: #eee;
+	border-color: #d4d4d4;
 }
 .rcl-custom-fields-box .fields-submit .button-primary {
-    background-color: rgb(76, 140, 189);
-    border-radius: 0;
-    border: none;
-    box-shadow: none;
-    font-size: 16px;
-    height: auto;
-    padding: 5px;
-    text-shadow: none;
+	background-color: rgb(76, 140, 189);
+	border-radius: 0;
+	border: none;
+	box-shadow: none;
+	font-size: 16px;
+	height: auto;
+	padding: 5px;
+	text-shadow: none;
 }
 .rcl-custom-fields-box .fields-submit .button-primary:hover {
-    background-color: rgb(76, 140, 189);
-    opacity: 0.9;
+	background-color: rgb(76, 140, 189);
+	opacity: 0.9;
 }
 .rcl-inactive-fields-box {
-    opacity: 0.8;
-    width: 350px;
+	opacity: 0.8;
+	width: 350px;
 }
 .rcl-inactive-fields-box .rcl-custom-field {
-    opacity:0.7;
+	opacity:0.7;
 }
 .rcl-inactive-fields-box .rcl-custom-field .field-control,
 .rcl-inactive-fields-box .rcl-custom-field .field-settings {
-    display: none!important;
+	display: none!important;
 }
 .rcl-custom-fields-box .ui-sortable-placeholder {
-    background: #fff;
-    border: 2px dashed #ccc;
-    box-sizing: border-box;
-    height: 45px;
-    width: 100%;
+	background: #fff;
+	border: 2px dashed #ccc;
+	box-sizing: border-box;
+	height: 45px;
+	width: 100%;
 }
 .rcl-custom-fields-box .rcl-custom-field .dynamic-values .ui-sortable-placeholder {
-    background: #fff;
-    height: 30px;
+	background: #fff;
+	height: 30px;
 }
 .options-custom-field .option-content .option-input .quicktags-toolbar .button-small {
-    border-radius: 1px;
-    height: auto;
-    line-height: normal;
-    margin: 2px 2px 3px;
-    min-height: 24px;
-    min-width: 58px;
-    padding: 4px;
-    text-align: center;
-    width: auto;
+	border-radius: 1px;
+	height: auto;
+	line-height: normal;
+	margin: 2px 2px 3px;
+	min-height: 24px;
+	min-width: 58px;
+	padding: 4px;
+	text-align: center;
+	width: auto;
 }
 .rcl-custom-fields-box .rcl-custom-field .type-editor-input textarea {
-    height: 150px;
+	height: 150px;
 }
 .rcl-field-core {
-    position: relative;
+	position: relative;
 }
 .rcl-field-input.type-text-input .maxlength {
-    height: 100%;
+	height: 100%;
 }
 .rcl-field-input .maxlength {
-    align-items: center;
-    background-color: #e5e5e5;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    display: flex;
-    font-weight: bold;
-    justify-content: center;
-    max-height: 100%;
-    min-width: 30px;
-    padding: 2px 5px;
-    position: absolute;
-    right: 0;
-    text-align: center;
-    top: 0;
-    z-index: 10;
+	align-items: center;
+	background-color: #e5e5e5;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	display: flex;
+	font-weight: bold;
+	justify-content: center;
+	max-height: 100%;
+	min-width: 30px;
+	padding: 2px 5px;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	top: 0;
+	z-index: 10;
 }
 .type-multiselect-input .hidden {
-    display: none!important;
+	display: none!important;
 }
 .type-multiselect-input .fs-wrap {
-    max-width: 400px;
-    width: 100%;
+	max-width: 400px;
+	width: 100%;
 }
 .type-multiselect-input .fs-dropdown {
-    box-shadow: 4px 3px 3px 0 #929292;
-    max-width: 400px;
-    width: 100%;
+	box-shadow: 4px 3px 3px 0 #929292;
+	max-width: 400px;
+	width: 100%;
 }
 .type-multiselect-input .fs-wrap.multiple .fs-option.selected .fs-checkbox i {
-    background-color: #888;
+	background-color: #888;
 }
 /* END custom fields box */
 
 /* START backend publications */
 #custom_fields_editor_post .rcl-custom-field {
-    padding: 5px;
+	padding: 5px;
 }
 #custom_fields_editor_post textarea {
-    height: 90px;
+	height: 90px;
 }
 #custom_fields_editor_post .required {
-    color: rgb(229, 57, 53);
-    font: bold 15px/1 Verdana,arial;
-    margin: 0 3px;
+	color: rgb(229, 57, 53);
+	font: bold 15px/1 Verdana,arial;
+	margin: 0 3px;
 }
 #custom_fields_editor_post .rcl-checkbox-box {
-    background-color: #eee;
-    border: 1px solid #ddd;
+	background-color: #eee;
+	border: 1px solid #ddd;
 }
 #custom_fields_editor_post .rcl-radio-box {
-    background-color: #eee;
-    border: 1px solid #ddd;
-    display: inline-block;
-    line-height: 1;
-    margin: 3px 5px 3px 0;
+	background-color: #eee;
+	border: 1px solid #ddd;
+	display: inline-block;
+	line-height: 1;
+	margin: 3px 5px 3px 0;
 }
 #custom_fields_editor_post .rcl-radio-box label {
-    /*display: inline-block;
-    height: 16px;
-    line-height: 16px;
-    margin: 0 0 2px;
-    padding: 6px 7px 6px 0;*/
+	/*display: inline-block;
+	height: 16px;
+	line-height: 16px;
+	margin: 0 0 2px;
+	padding: 6px 7px 6px 0;*/
 }
 .rcl-custom-fields-box .type-file-input {
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
-    display: block;
-    padding: 10px;
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
+	display: block;
+	padding: 10px;
 }
 .rcl-custom-fields-box .type-file-input .rcl-field-value {
-    margin: 0 15px 0 0;
+	margin: 0 15px 0 0;
 }
 .rcl-custom-fields-box .type-file-input .rcl-field-value .fa-upload::before {
-    content: "\f501";
+	content: "\f501";
 }
 .rcl-custom-fields-box .type-file-input .delete-file-url .fa-times-circle-o::before {
-    color: rgb(229, 57, 53);
-    content: "\f153";
+	color: rgb(229, 57, 53);
+	content: "\f153";
 }
 #custom_fields_editor_post .dynamic-values {
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
 }
 #custom_fields_editor_post .dynamic-values a {
-    right: 4px;
+	right: 4px;
 }
 #custom_fields_editor_post .dynamic-values .dynamic-value input {
-    width: calc(100% - 35px);
+	width: calc(100% - 35px);
 }
 /* END backend publications */
 
 
 /* START backend products publications */
 span.ruble-symbol {
-    font-family: arial,helvetica,sans-serif;
-    font-weight: normal;
-    position: relative;
+	font-family: arial,helvetica,sans-serif;
+	font-weight: normal;
+	position: relative;
 }
 .ruble-symbol span {
-    left: 0;
-    line-height: 1px;
-    position: absolute;
-    top: 55%;
+	left: 0;
+	line-height: 1px;
+	position: absolute;
+	top: 55%;
 }
 /* END backend products publications */
 
 #rcl-reg-form {
-    background: #ffdfdf;
-    margin: 10px 0 20px;
-    padding: 10px;
+	background: #ffdfdf;
+	margin: 10px 0 20px;
+	padding: 10px;
 }
 .rcl-option.children-option {
-    display:none;
+	display:none;
 }
 .rcl-option.option-show {
-    display:block;
+	display:block;
 }
 
 /*бегунок*/
 .rcl-runner,
 .rcl-range {
-    padding: 10px;
+	padding: 10px;
 }
 .rcl-runner .rcl-runner-value,
 .rcl-range .rcl-range-value {
-    display: inline-block;
-    font-size: 18px;
-    font-weight: bold;
-    min-width: 115px;
-    padding-left: 15px;
-    padding-right: 15px;
-    vertical-align: middle;
+	display: inline-block;
+	font-size: 18px;
+	font-weight: bold;
+	min-width: 115px;
+	padding-left: 15px;
+	padding-right: 15px;
+	vertical-align: middle;
 }
 .rcl-runner .rcl-runner-box,
 .rcl-range .rcl-range-box {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 5px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
-                0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
-    display: inline-block;
-    height: 10px;
-    margin: 0;
-    max-width: 500px;
-    position: relative;
-    text-align: left;
-    vertical-align: middle;
-    width: 100%;
+	background: rgba(255, 255, 255, 0.8);
+	border-radius: 5px;
+	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
+		0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+	display: inline-block;
+	height: 10px;
+	margin: 0;
+	max-width: 500px;
+	position: relative;
+	text-align: left;
+	vertical-align: middle;
+	width: 100%;
 }
 .rcl-runner .rcl-runner-box .ui-slider-handle,
 .rcl-range .rcl-range-box .ui-slider-handle {
-    background: -webkit-linear-gradient(top, #fff, #ddd);
-    background: linear-gradient(to bottom, #fff, #ddd);
-    border-radius: 50%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4),
-                0 8px 6px rgba(0, 0, 0, 0.1);
-    cursor: ew-resize;
-    height: 18px;
-    margin-left: -.6em;
-    position: absolute;
-    top: -4px;
-    -ms-touch-action: none;
-    touch-action: none;
-    width: 18px;
-    z-index: 1;
+	background: -webkit-linear-gradient(top, #fff, #ddd);
+	background: linear-gradient(to bottom, #fff, #ddd);
+	border-radius: 50%;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4),
+		0 8px 6px rgba(0, 0, 0, 0.1);
+	cursor: ew-resize;
+	height: 18px;
+	margin-left: -.6em;
+	position: absolute;
+	top: -4px;
+	-ms-touch-action: none;
+	touch-action: none;
+	width: 18px;
+	z-index: 1;
 }
 .rcl-runner .rcl-runner-box .ui-slider-handle:focus,
 .rcl-range .rcl-range-box .ui-slider-handle:focus {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-    outline: none;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+	outline: none;
 }
 .rcl-repository-list .addon-box {
-    overflow:hidden;
-    position:relative;
+	overflow:hidden;
+	position:relative;
 }
 #rcl-addon-details {
-    background: #eaeaea;
-    overflow: hidden;
+	background: #eaeaea;
+	overflow: hidden;
 }
 #rcl-addon-details .details-sidebar {
-    float: right;
-    padding: 10px;
-    width: 200px;
+	float: right;
+	padding: 10px;
+	width: 200px;
 }
 #rcl-addon-details .details-sidebar .addon-thumbnail {
-    margin: 15px 0;
-    text-align: center;
+	margin: 15px 0;
+	text-align: center;
 }
 #rcl-addon-details .details-content {
-    background: #fff;
-    overflow: hidden;
-    padding-right: 10px;
+	background: #fff;
+	overflow: hidden;
+	padding-right: 10px;
 }
 #rcl-addon-details .details-content ul {
-    list-style: disc;
-    padding-left: 20px;
+	list-style: disc;
+	padding-left: 20px;
 }
 #rcl-addon-details .details-content img {
-    max-width: 100%;
+	max-width: 100%;
 }
 #rcl-addon-details .details-content .aligncenter {
-    text-align: center;
+	text-align: center;
 }
 #rcl-addon-details .details-content .alignright {
-    float: none;
-    text-align: right;
+	float: none;
+	text-align: right;
 }
 #rcl-addon-details .details-content .alignleft {
-    float: none;
-    text-align: left;
+	float: none;
+	text-align: left;
 }
 #rcl-addon-details .details-content img.aligncenter {
-    display: block;
-    margin: 10px auto;
+	display: block;
+	margin: 10px auto;
 }
 #rcl-addon-details .details-content img.alignleft {
-    display: block;
-    float: left;
-    margin: 10px 10px 10px 0;
+	display: block;
+	float: left;
+	margin: 10px 10px 10px 0;
 }
 #rcl-addon-details .details-content img.alignright {
-    display: block;
-    float: right;
-    margin: 10px 0 10px 10px;
+	display: block;
+	float: right;
+	margin: 10px 0 10px 10px;
 }
 #rcl-addon-details .details-content .inline-image {
-    display: inline-block !important;
+	display: inline-block !important;
 }
 #rcl-addon-details .details-content pre {
-    background-color: #ffffff;
-    background-image: none !important;
-    border: 2px solid #e3e8ec;
-    color: #1f7ca9 !important;
-    display: block;
-    font-size: inherit;
-    line-height: normal;
-    margin: 10px 0;
-    overflow: auto;
-    padding: 20px 10px 20px 20px !important;
-    position: relative;
-    white-space: pre;
-    word-wrap: normal;
+	background-color: #ffffff;
+	background-image: none !important;
+	border: 2px solid #e3e8ec;
+	color: #1f7ca9 !important;
+	display: block;
+	font-size: inherit;
+	line-height: normal;
+	margin: 10px 0;
+	overflow: auto;
+	padding: 20px 10px 20px 20px !important;
+	position: relative;
+	white-space: pre;
+	word-wrap: normal;
 }
 #rcl-addon-details .details-content iframe {
-    margin: 10px 0;
-    width: 100%;
+	margin: 10px 0;
+	width: 100%;
 }
 #rcl-addon-details .sections-content {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 #rcl-addon-details .sections-content .sections-menu {
-    font-size: 16px;
-    margin-bottom: -1px;
-    padding: 0;
+	font-size: 16px;
+	margin-bottom: -1px;
+	padding: 0;
 }
 #rcl-addon-details .sections-content .sections-menu li {
-    background: #4c8cbd;
-    border-left: 1px solid #4c8cbd;
-    border-right: 1px solid #4c8cbd;
-    border-top: 1px solid #4c8cbd;
-    display: inline-block;
-    margin: 5px 3px 0 0;
-    padding: 5px 12px;
+	background: #4c8cbd;
+	border-left: 1px solid #4c8cbd;
+	border-right: 1px solid #4c8cbd;
+	border-top: 1px solid #4c8cbd;
+	display: inline-block;
+	margin: 5px 3px 0 0;
+	padding: 5px 12px;
 }
 #rcl-addon-details .sections-content .sections-menu li a {
-    color: #fff;
-    text-decoration: none;
+	color: #fff;
+	text-decoration: none;
 }
 #rcl-addon-details .sections-content .sections-menu li.active-section {
-    background: #fff;
+	background: #fff;
 }
 #rcl-addon-details .sections-content .sections-menu li.active-section a {
-    color: #4c8cbd;
+	color: #4c8cbd;
 }
 #rcl-addon-details .sections-content .section-content {
-    border-bottom: 1px solid #4c8cbd;
-    border-left: 1px solid #4c8cbd;
-    border-top: 1px solid #4c8cbd;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-top: 10px;
+	border-bottom: 1px solid #4c8cbd;
+	border-left: 1px solid #4c8cbd;
+	border-top: 1px solid #4c8cbd;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-top: 10px;
 }
 #rcl-addon-details .sections-content .no-active-box {
-    display: none;
+	display: none;
 }
 #rcl-addon-details .sections-content .sub-content-box {
-    padding: 10px 5px;
+	padding: 10px 5px;
 }
 #rcl-addon-details .sections-content .sub-content-box .sub-heading {
-    font-weight: bold;
+	font-weight: bold;
 }
 #rcl-addon-details .sections-content .section-content .section-code {
-    background: rgb(242, 251, 255);
-    border-bottom: 2px solid rgb(175, 230, 255);
-    border-top: 2px solid rgb(175, 230, 255);
-    overflow: auto;
-    padding: 10px;
+	background: rgb(242, 251, 255);
+	border-bottom: 2px solid rgb(175, 230, 255);
+	border-top: 2px solid rgb(175, 230, 255);
+	overflow: auto;
+	padding: 10px;
 }
 .rcl-addon-details #ssi-modalWrapper {
-    height: calc(100vh - 40px);
-    overflow-x: hidden;
-    overflow-y: auto;
+	height: calc(100vh - 40px);
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 .rcl-addon-details #ssi-modalWindow {
-    border-radius: 0;
-    border: none;
-    box-sizing: border-box;
-    padding: 8px;
+	border-radius: 0;
+	border: none;
+	box-sizing: border-box;
+	padding: 8px;
 }
 .rcl-addon-details #ssi-modalTitle {
-    font-style: normal;
+	font-style: normal;
 }
 .rcl-addon-details .ssi-topIcons .ssi-closeIcon {
-    padding: 8px;
-    visibility: hidden;
+	padding: 8px;
+	visibility: hidden;
 }
 .rcl-addon-details .ssi-topIcons .ssi-closeIcon::after {
-    content: "\f335";
-    font: 400 32px/29px dashicons;
-    visibility: visible;
+	content: "\f335";
+	font: 400 32px/29px dashicons;
+	visibility: visible;
 }
 
 /*форма*/
 .rcl-form .form-field {
-    margin: 15px 0;
+	margin: 15px 0;
 }
 .rcl-form .form-field .field-title {
-    display:block;
-    font-size: 18px;
-    font-weight:bold;
-    line-height: 1;
-    margin-bottom: 5px;
+	display:block;
+	font-size: 18px;
+	font-weight:bold;
+	line-height: 1;
+	margin-bottom: 5px;
 }
 .rcl-form .submit-box {
-    background: #eee;
-    border: 1px solid #ddd;
-    overflow: hidden;
-    padding: 5px;
-    text-align: right;
+	background: #eee;
+	border: 1px solid #ddd;
+	overflow: hidden;
+	padding: 5px;
+	text-align: right;
 }
 .rcl-form .submit-box a,
 .rcl-form .submit-box input[type="submit"] {
-    display: inline-block;
-    font-size: 15px;
-    padding: 7px 10px;
+	display: inline-block;
+	font-size: 15px;
+	padding: 7px 10px;
 }
 
 /* Fields Manager */
@@ -1183,130 +1183,130 @@ span.ruble-symbol {
 
 }
 .rcl-manager-options{
-    max-width: 400px;
+	max-width: 400px;
 }
 .rcl-fields-manager.structure-simple{
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: flex-end;
 }
 .rcl-fields-manager .manager-title{
-    font-size: 16px;
-    font-weight: bold;
-    display: block;
-    margin-bottom: 20px;
+	font-size: 16px;
+	font-weight: bold;
+	display: block;
+	margin-bottom: 20px;
 }
 .rcl-fields-manager .rcl-manager-box{
-    background-color: #f5f5f5;
-    border: 1px solid #d5d5d5;
-    box-sizing: border-box;
-    /*display: inline-block;*/
-    margin: 10px;
-    /*max-width: 500px;*/
-    padding: 10px;
-    position: relative;
-    vertical-align: top;
-    /*width: calc(100% - 20px);*/
+	background-color: #f5f5f5;
+	border: 1px solid #d5d5d5;
+	box-sizing: border-box;
+	/*display: inline-block;*/
+	margin: 10px;
+	/*max-width: 500px;*/
+	padding: 10px;
+	position: relative;
+	vertical-align: top;
+	/*width: calc(100% - 20px);*/
 
 }
 .rcl-fields-manager.structure-simple .rcl-manager-box{
-    display: inline-block;
-    max-width: 500px;
-    width: calc(100% - 20px);
+	display: inline-block;
+	max-width: 500px;
+	width: calc(100% - 20px);
 }
 .rcl-fields-manager .fields-box{
-    min-height: 50px;
+	min-height: 50px;
 }
 .rcl-fields-manager .rcl-manager-groups{
 
 }
 .rcl-fields-manager .rcl-manager-groups .rcl-manager-group-options{
-    /*padding: 10px;*/
-    /*max-width: 350px;*/
-    display: flex;
+	/*padding: 10px;*/
+	/*max-width: 350px;*/
+	display: flex;
 }
 .rcl-fields-manager .rcl-manager-groups .rcl-manager-group-options .rcl-field{
-    margin: 5px;
+	margin: 5px;
 }
 .rcl-fields-manager.structure-edit .manager-group{
-    border: 1px solid #ccc;
-    margin: 10px 0 0 0;
-    position:relative;
+	border: 1px solid #ccc;
+	margin: 10px 0 0 0;
+	position:relative;
 }
 .rcl-fields-manager .manager-field{
-    margin: 5px;
-    position: relative;
+	margin: 5px;
+	position: relative;
 }
 .rcl-fields-manager .manager-field-header{
-    align-items: center;
-    background: #eee linear-gradient(to top, #f5f5f5, #eee);
-    border: 1px solid #ddd;
-    display: flex;
-    overflow: hidden;
-    padding: 5px;
+	align-items: center;
+	background: #eee linear-gradient(to top, #f5f5f5, #eee);
+	border: 1px solid #ddd;
+	display: flex;
+	overflow: hidden;
+	padding: 5px;
 }
 .rcl-fields-manager .manager-field-header.ui-sortable-handle{
-    cursor:move;
+	cursor:move;
 }
 .rcl-fields-manager .manager-field-header .rcl-field{
-    margin: 0;
-    width: 100%;
+	margin: 0;
+	width: 100%;
 }
 .rcl-fields-manager .rcl-field .rcl-field-title{
-    font-weight: bold;
+	font-weight: bold;
 }
 .rcl-fields-manager .manager-field-settings{
-    background-color: #fff;
-    border: 1px solid #ddd;
-    margin: 0 0 25px;
-    padding: 5px;
-    display:none;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	margin: 0 0 25px;
+	padding: 5px;
+	display:none;
 }
 .rcl-fields-manager .manager-field-settings.show-settings-field{
-    display:block;
+	display:block;
 }
 .rcl-fields-manager .field-icon{
-    background-color: #f6f6f6;
-    border: 1px solid #e5e5e5;
-    color: rgb(76, 140, 189);
-    font-family: dashicons;
-    font-size: 20px;
-    margin-right: 10px;
-    padding: 5px;
+	background-color: #f6f6f6;
+	border: 1px solid #e5e5e5;
+	color: rgb(76, 140, 189);
+	font-family: dashicons;
+	font-size: 20px;
+	margin-right: 10px;
+	padding: 5px;
 }
 .rcl-fields-manager .field-title{
-    flex-grow: 1;
-    font-size: 14px;
-    font-weight: bold;
+	flex-grow: 1;
+	font-size: 14px;
+	font-weight: bold;
 }
 .rcl-fields-manager .field-control{
-    display: flex;
-    /*font-family: dashicons;*/
-    justify-content: flex-end;
-    font-size: 20px;
+	display: flex;
+	/*font-family: dashicons;*/
+	justify-content: flex-end;
+	font-size: 20px;
 }
 .rcl-fields-manager .field-control a,
 .rcl-fields-manager .field-control span{
-    margin: 0 0 0 10px;
-    text-decoration: none;
+	margin: 0 0 0 10px;
+	text-decoration: none;
 }
 .rcl-fields-manager .control-edit{
-    color: rgb(76, 140, 189);
-    /*content: "\f140";*/
+	color: rgb(76, 140, 189);
+	/*content: "\f140";*/
 }
 .rcl-fields-manager .control-delete{
-    color: rgba(229, 57, 53, 0.7);
-    /*content: "\f158";*/
+	color: rgba(229, 57, 53, 0.7);
+	/*content: "\f158";*/
 }
 .rcl-fields-manager .control-move{
-    font-size: 18px;
+	font-size: 18px;
 }
 .rcl-fields-manager .field-id{
-    background-color: rgba(224, 248, 201, 0.6);
-    color: #555;
-    float: right;
-    margin: -5px -5px 0 0;
-    padding: 5px 10px;
+	background-color: rgba(224, 248, 201, 0.6);
+	color: #555;
+	float: right;
+	margin: -5px -5px 0 0;
+	padding: 5px 10px;
 }
 .rcl-fields-manager .field-primary-options{
 
@@ -1316,202 +1316,202 @@ span.ruble-symbol {
 }
 
 .rcl-fields-manager .manager-field[data-type="text"] .field-icon::before {
-    content: "\f464";
+	content: "\f464";
 }
 .rcl-fields-manager .manager-field[data-type="textarea"] .field-icon::before {
-    content: "\f119";
+	content: "\f119";
 }
 .rcl-fields-manager .manager-field[data-type="select"] .field-icon::before {
-    content: "\f203";
+	content: "\f203";
 }
 .rcl-fields-manager .manager-field[data-type="multiselect"] .field-icon::before {
-    content: "\f163";
+	content: "\f163";
 }
 .rcl-fields-manager .manager-field[data-type="checkbox"] .field-icon::before {
-    content: "\f147";
+	content: "\f147";
 }
 .rcl-fields-manager .manager-field[data-type="radio"] .field-icon::before {
-    content: "\f159";
+	content: "\f159";
 }
 .rcl-fields-manager .manager-field[data-type="email"] .field-icon::before {
-    content: "\f466";
+	content: "\f466";
 }
 .rcl-fields-manager .manager-field[data-type="tel"] .field-icon::before {
-    content: "\f525";
+	content: "\f525";
 }
 .rcl-fields-manager .manager-field[data-type="pussword"] .field-icon::before {
-    content: "\f112";
+	content: "\f112";
 }
 .rcl-fields-manager .manager-field[data-type="number"] .field-icon::before {
-    content: "123";
-    font-size: 14px;
-    font-weight: bold;
-    vertical-align: super;
+	content: "123";
+	font-size: 14px;
+	font-weight: bold;
+	vertical-align: super;
 }
 .rcl-fields-manager .manager-field[data-type="date"] .field-icon::before {
-    content: "\f508";
+	content: "\f508";
 }
 .rcl-fields-manager .manager-field[data-type="time"] .field-icon::before {
-    content: "\f469";
+	content: "\f469";
 }
 .rcl-fields-manager .manager-field[data-type="url"] .field-icon::before {
-    content: "\f103";
+	content: "\f103";
 }
 .rcl-fields-manager .manager-field[data-type="agree"] .field-icon::before {
-    content: "\f491";
+	content: "\f491";
 }
 .rcl-fields-manager .manager-field[data-type="uploader"] .field-icon::before,
 .rcl-fields-manager .manager-field[data-type="file"] .field-icon::before {
-    content: "\f501";
+	content: "\f501";
 }
 .rcl-fields-manager .manager-field[data-type="dynamic"] .field-icon::before {
-    content: "\f502";
+	content: "\f502";
 }
 .rcl-fields-manager .manager-field[data-type="editor"] .field-icon::before {
-    content: "\f212";
+	content: "\f212";
 }
 .rcl-fields-manager .manager-field[data-type="runner"] .field-icon::before {
-    content: "\f229";
+	content: "\f229";
 }
 .rcl-fields-manager .manager-field[data-type="range"] .field-icon::before {
-    content: "\f108";
+	content: "\f108";
 }
 .rcl-fields-manager .manager-field[data-type="custom"] .field-icon::before {
-    content: "\f111";
+	content: "\f111";
 }
 .rcl-fields-manager .ui-sortable-placeholder {
-    background: #ccc;
-    border: 2px dashed #aaa;
-    box-sizing: border-box;
-    height: 40px;
-    width: 100%;
+	background: #ccc;
+	border: 2px dashed #aaa;
+	box-sizing: border-box;
+	height: 40px;
+	width: 100%;
 }
 .rcl-fields-manager .rcl-custom-field .dynamic-values {
-    background-color: #f5f5f5;
-    display: block;
-    padding: 10px;
+	background-color: #f5f5f5;
+	display: block;
+	padding: 10px;
 }
 .rcl-fields-manager .dynamic-values .dynamic-value,
 .rcl-fields-manager .dynamic-values .ui-sortable-placeholder {
-    background-color: #ebebeb;
-    border: 1px solid #dbdbdb;
-    clear: both;
-    display: block;
-    line-height: normal;
-    margin: 3px 0;
-    padding: 2px;
-    position: relative;
+	background-color: #ebebeb;
+	border: 1px solid #dbdbdb;
+	clear: both;
+	display: block;
+	line-height: normal;
+	margin: 3px 0;
+	padding: 2px;
+	position: relative;
 }
 .rcl-fields-manager .dynamic-values.ui-sortable .dynamic-value::before {
-    background-color: #f5f5f5;
-    color: rgb(76, 140, 189);
-    content: "\f545";
-    cursor: move;
-    font-family: dashicons;
-    font-size: 20px;
-    height: 20px;
-    padding: 3px;
-    position: absolute;
-    right: 4px;
-    top: 4px;
+	background-color: #f5f5f5;
+	color: rgb(76, 140, 189);
+	content: "\f545";
+	cursor: move;
+	font-family: dashicons;
+	font-size: 20px;
+	height: 20px;
+	padding: 3px;
+	position: absolute;
+	right: 4px;
+	top: 4px;
 }
 
 .rcl-fields-manager .submit-box input {
-    box-sizing: border-box;
-    width: 100%;
-    margin: 10px 0 0;
+	box-sizing: border-box;
+	width: 100%;
+	margin: 10px 0 0;
 }
 .rcl-fields-manager .submit-box .button-primary {
-    background-color: rgb(76, 140, 189);
-    box-shadow: none;
-    font-size: 16px;
-    height: auto;
-    text-shadow: none;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-image: initial;
-    border-radius: 0px;
-    padding: 5px;
+	background-color: rgb(76, 140, 189);
+	box-shadow: none;
+	font-size: 16px;
+	height: auto;
+	text-shadow: none;
+	border-width: initial;
+	border-style: none;
+	border-color: initial;
+	border-image: initial;
+	border-radius: 0px;
+	padding: 5px;
 }
 .rcl-fields-manager .submit-box .button-secondary {
-    background-color: rgb(230, 230, 230);
-    box-shadow: none;
-    height: auto;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(212, 212, 212);
-    border-image: initial;
-    border-radius: 0px;
-    padding: 4px;
+	background-color: rgb(230, 230, 230);
+	box-shadow: none;
+	height: auto;
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgb(212, 212, 212);
+	border-image: initial;
+	border-radius: 0px;
+	padding: 4px;
 }
 .rcl-fields-manager .submit-box .button-secondary:hover {
-    background-color: rgb(238, 238, 238);
-    border-color: rgb(212, 212, 212);
+	background-color: rgb(238, 238, 238);
+	border-color: rgb(212, 212, 212);
 }
 
 .rcl-fields-manager .rcl-default-fields{
-    padding: 5px;
-    background: #fff;
-    border: 3px dashed #ccc;
-    min-width: 310px;
+	padding: 5px;
+	background: #fff;
+	border: 3px dashed #ccc;
+	min-width: 310px;
 }
 .rcl-fields-manager .rcl-default-fields .manager-field-settings{
-    display:none!important;
+	display:none!important;
 }
 .rcl-fields-manager .rcl-default-fields .manager-field-header input{
-    pointer-events: none;
-    background: #ebebeb;
+	pointer-events: none;
+	background: #ebebeb;
 }
 .rcl-fields-manager.structure-simple .default-box{
-    max-width: 350px;
+	max-width: 350px;
 }
 .rcl-fields-manager.structure-simple .default-box.fixed .rcl-default-fields{
-    position: fixed;
-    top: 30px;
-    z-index: 91;
-    box-shadow: 3px 3px 6px 0px #ccc;
+	position: fixed;
+	top: 30px;
+	z-index: 91;
+	box-shadow: 3px 3px 6px 0px #ccc;
 }
 .rcl-fields-manager.structure-edit .default-box.fixed{
-    position: fixed;
-    top: 21px;
-    z-index: 91;
-    width: calc(100% - 200px);
-    box-shadow: 3px 3px 6px 0px #ccc;
+	position: fixed;
+	top: 21px;
+	z-index: 91;
+	width: calc(100% - 200px);
+	box-shadow: 3px 3px 6px 0px #ccc;
 }
 .rcl-fields-manager.structure-edit .rcl-default-fields .manager-field{
-    display:inline-block;
+	display:inline-block;
 }
 .rcl-fields-manager.structure-edit .rcl-default-fields .ui-sortable-placeholder {
-    display: inline-block;
-    width: auto;
-    min-width: 200px;
-    margin: 5px;
-    vertical-align: bottom;
+	display: inline-block;
+	width: auto;
+	min-width: 200px;
+	margin: 5px;
+	vertical-align: bottom;
 }
 .rcl-fields-manager .rcl-default-fields .field-control a,
 .rcl-fields-manager .rcl-default-fields .field-control span:not(.control-move){
-    display:none;
+	display:none;
 }
 
 .rcl-fields-manager .manager-group-areas{
-    display: flex;
-    justify-content: center;
-    min-height: 100px;
-    background: #fff;
+	display: flex;
+	justify-content: center;
+	min-height: 100px;
+	background: #fff;
 }
 .rcl-fields-manager .manager-area{
-    max-width: 550px;
-    min-width: 250px;
-    width: 100%;
-    padding: 5px;
-    background: #fff;
+	max-width: 550px;
+	min-width: 250px;
+	width: 100%;
+	padding: 5px;
+	background: #fff;
 }
 .rcl-fields-manager.structure-edit .manager-area{
-    margin: 10px;
-    border: 1px solid #ccc;
-    max-width: none;
-    position: relative;
+	margin: 10px;
+	border: 1px solid #ccc;
+	max-width: none;
+	position: relative;
 }
 .rcl-fields-manager.structure-edit .manager-area.ui-resizable{
 
@@ -1519,135 +1519,135 @@ span.ruble-symbol {
 /*.rcl-fields-manager.structure-edit .manager-area.ui-resizable .ui-resizable-e*/
 .rcl-fields-manager.structure-edit .manager-area.ui-resizable:not(:last-child) .ui-resizable-e
 {
-    width: 3px;
-    background: #777777;
-    height: 100%;
-    position: absolute;
-    right: -15px;
-    top: 0;
-    cursor: e-resize;
-    border: 2px dashed;
-    color: #fff;
+	width: 3px;
+	background: #777777;
+	height: 100%;
+	position: absolute;
+	right: -15px;
+	top: 0;
+	cursor: e-resize;
+	border: 2px dashed;
+	color: #fff;
 }
 .rcl-fields-manager.structure-edit .manager-area.ui-sortable-helper .ui-resizable-e{
-    display:none;
+	display:none;
 }
 .rcl-fields-manager.structure-edit .manager-area.ui-sortable-helper{
-    max-width: 550px;
+	max-width: 550px;
 }
 .rcl-fields-manager.structure-edit .area-width-content{
-    display:none;
+	display:none;
 }
 .rcl-fields-manager.structure-edit .resizable-area{
 
 }
 .rcl-fields-manager.structure-edit .resizable-area .area-width-content{
-    position: absolute;
-    z-index: 9;
-    font-size: 50px;
-    font-weight: bold;
-    text-align: center;
-    left: 0;
-    top: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    align-items: center;
-    background: rgba(255,255,255,0.5);
+	position: absolute;
+	z-index: 9;
+	font-size: 50px;
+	font-weight: bold;
+	text-align: center;
+	left: 0;
+	top: 0;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	height: 100%;
+	align-items: center;
+	background: rgba(255,255,255,0.5);
 }
 .rcl-fields-manager .manager-area .fields-box{
-    padding: 5px;
-    background: #fff;
-    border: 3px dashed #ccc;
+	padding: 5px;
+	background: #fff;
+	border: 3px dashed #ccc;
 
 }
 .rcl-fields-manager .manager-area .area-content{
-    max-width: 550px;
-    margin: 0 auto;
+	max-width: 550px;
+	margin: 0 auto;
 }
 .rcl-fields-manager .manager-group-areas > .ui-sortable-area-placeholder {
-    background: #ccc;
-    border: 2px dashed #aaa;
-    box-sizing: border-box;
-    height: 150px;
-    max-width: 550px;
-    width: 100%;
-    margin: 5px;
+	background: #ccc;
+	border: 2px dashed #aaa;
+	box-sizing: border-box;
+	height: 150px;
+	max-width: 550px;
+	width: 100%;
+	margin: 5px;
 }
 .rcl-fields-manager .rcl-active-fields .manager-field.ui-sortable-helper{
-    /*max-width: 400px;*/
+	/*max-width: 400px;*/
 }
 .rcl-fields-manager .rcl-areas-manager{
-    background: #fff;
-    padding: 0px;
-    position: relative;
-    overflow: hidden;
-    font-size: 18px;
-    margin-bottom: 5px;
+	background: #fff;
+	padding: 0px;
+	position: relative;
+	overflow: hidden;
+	font-size: 18px;
+	margin-bottom: 5px;
 }
 .rcl-fields-manager .rcl-areas-manager a{
-    color: #777777;
-    padding: 5px 10px;
-    display: inline-block;
-    line-height: 1;
-    text-decoration: none;
+	color: #777777;
+	padding: 5px 10px;
+	display: inline-block;
+	line-height: 1;
+	text-decoration: none;
 }
 .rcl-fields-manager .rcl-areas-manager .left-align{
-    float: right;
-    padding: 5px;
-    background: #eaeaea;
-    margin-left: 5px;
-    color: #333;
+	float: right;
+	padding: 5px;
+	background: #eaeaea;
+	margin-left: 5px;
+	color: #333;
 }
 .rcl-fields-manager .rcl-areas-manager .area-move{
-    cursor: move;
+	cursor: move;
 }
 .rcl-fields-manager .manager-group > .rcl-areas-manager{
-    position: absolute;
-    /* font-size: 25px; */
-    right: -1px;
-    top: 0;
-    /* background: #e2e2e2; */
-    border-left: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    border-right: 1px solid #ccc;
+	position: absolute;
+	/* font-size: 25px; */
+	right: -1px;
+	top: 0;
+	/* background: #e2e2e2; */
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ccc;
 }
 .rcl-fields-manager .manager-group > .rcl-areas-manager a{
 
 }
 .rcl-fields-manager .manager-field.settings-edit{
-    position: fixed;
-    top: 0;
-    z-index: 999;
-    height: calc(100% - 50px);
-    width: 450px;
-    left: calc(50% - 1225px);
-    background: rgba(0,0,0,.5);
-    padding: 50px 1000px 0px 1000px;
+	position: fixed;
+	top: 0;
+	z-index: 999;
+	height: calc(100% - 50px);
+	width: 450px;
+	left: calc(50% - 1225px);
+	background: rgba(0,0,0,.5);
+	padding: 50px 1000px 0px 1000px;
 }
 .rcl-fields-manager .manager-field.settings-edit .manager-field-settings{
-    display: block;
-    overflow: auto;
-    width: 450px;
-    max-height: 85%;
-    box-sizing: border-box;
+	display: block;
+	overflow: auto;
+	width: 450px;
+	max-height: 85%;
+	box-sizing: border-box;
 }
 /****/
 
 /* new options*/
 .rcl-children-field{
-    display: none;
+	display: none;
 }
 .rcl-children-fields.active{
-    display: block;
+	display: block;
 }
 .rcl-option-extend-switch{
-    padding: 10px;
-    display: block;
-    border: 1px solid #ccc;
-    background: #fcc;
-    margin-bottom: 20px;
+	padding: 10px;
+	display: block;
+	border: 1px solid #ccc;
+	background: #fcc;
+	margin-bottom: 20px;
 }
 
 .rcl-options{
@@ -1655,111 +1655,111 @@ span.ruble-symbol {
 }
 
 .rcl-options .extend-options{
-    border-left: 5px solid #ff8181!important;
-    padding: 5px;
+	border-left: 5px solid #ff8181!important;
+	padding: 5px;
 }
 
 .rcl-options.hide-extends-options .extend-options{
-    display: none;
+	display: none;
 }
 
 .rcl-options .rcl-menu{
-    width: 250px;
-    float: left;
+	width: 250px;
+	float: left;
 }
 .rcl-options .rcl-menu > a{
-    width: 100%;
-    font-size: 16px;
+	width: 100%;
+	font-size: 16px;
 }
 .rcl-options .rcl-menu > a{
-    padding: 5px 0;
-    display: flex;
-    white-space: unset;
+	padding: 5px 0;
+	display: flex;
+	white-space: unset;
 }
 .rcl-options .rcl-menu a > i{
 
 }
 .rcl-options .rcl-menu .rcl-bttn__active{
-    background: #b6b6b6;
-    color: #fff;
+	background: #b6b6b6;
+	color: #fff;
 }
 
 .rcl-options .options-form-boxes{
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .rcl-options .options-box{
-    padding: 5px;
-    margin-left: 10px;
-    border: 1px solid #ccc;
-    width: 550px;
-    display: none;
-    overflow-y: auto;
-    max-height: 800px;
+	padding: 5px;
+	margin-left: 10px;
+	border: 1px solid #ccc;
+	width: 550px;
+	display: none;
+	overflow-y: auto;
+	max-height: 800px;
 }
 
 .rcl-options .options-box.active{
-    display: block;
+	display: block;
 }
 
 .rcl-options .options-group{
-    padding: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
 }
 
 .rcl-options .group-title{
-    background: #ccc;
-    display: block;
-    padding: 10px;
-    font-size: 16px;
-    margin-bottom: 10px;
+	background: #ccc;
+	display: block;
+	padding: 10px;
+	font-size: 16px;
+	margin-bottom: 10px;
 }
 .rcl-options .rcl-option{
-    margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 .rcl-options .rcl-option .rcl-field-title{
-    font-weight: bold;
+	font-weight: bold;
 }
 /*****/
 
 @media screen and (max-width:800px) {
-    .rcl-addon-details #ssi-modalWrapper {
-        margin: 46px auto;
-        width: 95%;
-    }
+	.rcl-addon-details #ssi-modalWrapper {
+		margin: 46px auto;
+		width: 95%;
+	}
 }
 
 @media screen and (max-width:568px) {
-    #recall.left-sidebar .title-option,
-    #recall .shift-extend-options > label {
-        box-sizing: border-box;
-        padding: 10px;
-        width: 100%;
-    }
-    #recall.left-sidebar .wrap-recall-options {
-        position: static;
-        width: auto;
-    }
-    .left-sidebar .submit-block {
-        width: 100%;
-    }
-    .rcl-addon-details #ssi-modalWrapper {
-        margin: 8px auto;
-    }
-    #rcl-addon-details .details-sidebar {
-        display: flex;
-        float: none;
-        width: 100%;
-    }
-    #rcl-addon-details .details-sidebar .addon-thumbnail {
-        display: flex;
-        margin: 0 10px 0 0;
-    }
+	#recall.left-sidebar .title-option,
+	#recall .shift-extend-options > label {
+		box-sizing: border-box;
+		padding: 10px;
+		width: 100%;
+	}
+	#recall.left-sidebar .wrap-recall-options {
+		position: static;
+		width: auto;
+	}
+	.left-sidebar .submit-block {
+		width: 100%;
+	}
+	.rcl-addon-details #ssi-modalWrapper {
+		margin: 8px auto;
+	}
+	#rcl-addon-details .details-sidebar {
+		display: flex;
+		float: none;
+		width: 100%;
+	}
+	#rcl-addon-details .details-sidebar .addon-thumbnail {
+		display: flex;
+		margin: 0 10px 0 0;
+	}
 }
 
 @media screen and (max-width:375px) {
-    .wrap-recall-options .option-block select {
-        max-width: 260px;
-    }
+	.wrap-recall-options .option-block select {
+		max-width: 260px;
+	}
 }

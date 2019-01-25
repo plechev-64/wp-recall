@@ -1,148 +1,148 @@
 .rcl-uploader{
-    margin: 10px 0;
+	margin: 10px 0;
 }
 
 body .rcl-bttn.rcl-uploader-button{
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-    margin: 0 10px 0 0!important;
+	position: relative;
+	overflow: hidden;
+	display: inline-block;
+	margin: 0 10px 0 0!important;
 }
 .rcl-uploader-button input{
-    position: absolute;
-    top: 0;
-    right: 0;
-    opacity: 0;
-    cursor: pointer;
-    height: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	opacity: 0;
+	cursor: pointer;
+	height: 100%;
 }
 .rcl-uploader .rcl-uploader-button-box{
-    padding: 3px;
+	padding: 3px;
 }
 
 .rcl-dropzone{
-    background: #ccc;
-    padding: 15px;
-    text-align: center;
-    font-size: 18px;
+	background: #ccc;
+	padding: 15px;
+	text-align: center;
+	font-size: 18px;
 }
 .rcl-dropzone .dropzone-upload-area{
-    padding: 20px;
-    border: 3px dashed #fff;
-    border-style: dashed;
+	padding: 20px;
+	border: 3px dashed #fff;
+	border-style: dashed;
 }
 
 .rcl-uploader .notice,
 .rcl-uploader-button{
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
 .rcl-upload-gallery{
-    position: relative;
+	position: relative;
 }
 .rcl-upload-gallery img{
-    vertical-align: top;
-    max-width: 100%;
-    height: auto;
+	vertical-align: top;
+	max-width: 100%;
+	height: auto;
 }
 .rcl-upload-gallery.simple-manager .attachment-manager{
-    position: absolute;
-    top: 0;
-    left: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 .rcl-upload-gallery .gallery-attachment{
-    position: relative;
-    margin: 3px;
-    border: 1px solid #eaeaea;
-    width: 110px;
-    height: 110px;
-    display: inline-block;
+	position: relative;
+	margin: 3px;
+	border: 1px solid #eaeaea;
+	width: 110px;
+	height: 110px;
+	display: inline-block;
 }
 .rcl-upload-gallery .attachment-title{
-    display:none;
+	display:none;
 }
 .rcl-upload-gallery .gallery-attachment.type-file{
-    text-align:center;
+	text-align:center;
 }
 .rcl-upload-gallery .gallery-attachment.type-file img{
-    margin-top: 5px;
+	margin-top: 5px;
 }
 .rcl-upload-gallery .gallery-attachment.type-file .attachment-title{
-    display: block;
-    background: #fff;
-    font-size: 12px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+	display: block;
+	background: #fff;
+	font-size: 12px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }
 .rcl-upload-gallery .gallery-attachment img {
-    margin: 0;
+	margin: 0;
 }
 .rcl-upload-gallery .attachment-manager{
 
 }
 .rcl-upload-gallery .attachment-manager-balloon{
-    position: absolute;
-    top: 0;
-    right: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
 }
 .rcl-upload-gallery .attachment-manager-balloon > i{
-    border: 1px solid #ccc;
-    padding: 5px;
-    background: #fff;
-    margin: 3px;
+	border: 1px solid #ccc;
+	padding: 5px;
+	background: #fff;
+	margin: 3px;
 }
 .rcl-upload-gallery .attachment-manager-balloon .rcl-balloon{
 
 }
 .rcl-upload-gallery .rcl-balloon a{
-    display: inline;
+	display: inline;
 }
-body  .rcl-upload-gallery .attachment-manager > a{
+body .rcl-upload-gallery .attachment-manager > a{
 
 }
 body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico{
-    padding: 5px;
+	padding: 5px;
 }
 .rcl-upload-gallery.mode-list{
 
 }
 .rcl-upload-gallery.mode-list .gallery-attachment{
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    width: auto;
-    height: auto;
+	display: flex;
+	align-items: center;
+	padding: 5px;
+	width: auto;
+	height: auto;
 }
 .rcl-upload-gallery.mode-list .attachment-manager{
-    width: 150px;
-    text-align: right;
-    position: static;
+	width: 150px;
+	text-align: right;
+	position: static;
 }
 .rcl-upload-gallery.mode-list .attachment-title{
-    width: 100%;
-    display: block;
+	width: 100%;
+	display: block;
 }
 .rcl-upload-gallery.mode-list img{
-    width: 35px;
-    height: 35px;
-    margin-right: 15px;
+	width: 35px;
+	height: 35px;
+	margin-right: 15px;
 }
 .rcl-upload-gallery .ui-sortable-placeholder{
-    background: #ccc;
-    margin: 3px;
-    border: 3px dotted #eaeaea;
+	background: #ccc;
+	margin: 3px;
+	border: 3px dotted #eaeaea;
 }
 .rcl-upload-gallery.mode-list .ui-sortable-placeholder{
 
 }
 .rcl-upload-gallery.mode-grid .ui-sortable-placeholder{
-    width: 110px;
-    height: 110px;
-    display: inline-block;
+	width: 110px;
+	height: 110px;
+	display: inline-block;
 }
 .rcl-upload-gallery .ui-sortable-helper{
-    z-index: 9999999;
+	z-index: 9999999;
 }
 .rcl-upload-gallery.mode-list .ui-sortable-helper{
 

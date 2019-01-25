@@ -6,392 +6,395 @@
  * and open the template in the editor.
  */
 
-
 /**
  * Description of class-rcl-fields
  *
  * @author Андрей
  */
-class Rcl_Fields extends Rcl_Field{
+class Rcl_Fields extends Rcl_Field {
 
-    public $fields;
-    public $structure = array();
+	public $fields;
+	public $structure = array();
 
-    function __construct($fields = false, $structure = false) {
+	function __construct( $fields = false, $structure = false ) {
 
-        if($structure){
-            $this->structure = $structure;
-        }
+		if ( $structure ) {
+			$this->structure = $structure;
+		}
 
-        if($fields){
-            foreach($fields as $field){
-                if(!isset($field['slug'])) continue;
-                $this->fields[$field['slug']] = is_array($field)? parent::setup($field): $field;
-            }
-        }
+		if ( $fields ) {
+			foreach ( $fields as $field ) {
+				if ( !isset( $field['slug'] ) )
+					continue;
+				$this->fields[$field['slug']] = is_array( $field ) ? parent::setup( $field ) : $field;
+			}
+		}
 
-        $this->setup_structure();
+		$this->setup_structure();
+	}
 
-    }
+	function setup_structure( $force = false ) {
 
-    function setup_structure($force = false){
+		if ( !$this->structure || ($this->structure && !$this->fields) || $force ) {
 
-        if(!$this->structure || ($this->structure && !$this->fields) || $force){
+			$fieldIds = array();
 
-            $fieldIds = array();
+			if ( $this->fields ) {
+				foreach ( $this->fields as $field_id => $field ) {
+					$fieldIds[] = $field_id;
+				}
+			}
 
-            if($this->fields){
-                foreach($this->fields as $field_id => $field){
-                    $fieldIds[] = $field_id;
-                }
-            }
+			$this->structure = array(
+				array(
+					'areas' => array(
+						array(
+							'fields' => $fieldIds
+						)
+					)
+				)
+			);
+		}
+	}
 
-            $this->structure = array(
-                array(
-                    'areas' => array(
-                        array(
-                            'fields' => $fieldIds
-                        )
-                    )
-                )
-            );
+	function get_fields() {
+		return $this->fields;
+	}
 
-        }
+	function add_field( $field_id, $args ) {
+		$this->fields[$field_id] = parent::setup( $args );
+	}
 
-    }
+	function remove_field( $field_id ) {
+		unset( $this->fields[$field_id] );
+	}
 
-    function get_fields(){
-        return $this->fields;
-    }
+	function isset_field( $field_id ) {
+		return isset( $this->fields[$field_id] );
+	}
 
-    function add_field($field_id, $args){
-        $this->fields[$field_id] = parent::setup($args);
-    }
+	function get_field( $field_id ) {
+		return $this->isset_field( $field_id ) ? $this->fields[$field_id] : false;
+	}
 
-    function remove_field($field_id){
-        unset($this->fields[$field_id]);
-    }
+	function set_field_prop( $field_id, $propName, $propValue ) {
 
-    function isset_field($field_id){
-        return isset($this->fields[$field_id]);
-    }
+		$field = $this->get_field( $field_id );
 
-    function get_field($field_id){
-        return $this->isset_field($field_id)? $this->fields[$field_id]: false;
-    }
+		$field->$propName = $propValue;
 
-    function set_field_prop($field_id, $propName, $propValue){
+		$this->fields[$field_id] = $field;
+	}
 
-        $field = $this->get_field($field_id);
+	function isset_field_prop( $field_id, $propName ) {
 
-        $field->$propName = $propValue;
+		$field = $this->get_field( $field_id );
 
-        $this->fields[$field_id]  = $field;
+		if ( !$field )
+			return false;
 
-    }
+		return isset( $field->$propName );
+	}
 
-    function isset_field_prop($field_id, $propName){
+	function get_field_prop( $field_id, $propName ) {
 
-        $field = $this->get_field($field_id);
+		if ( !$this->isset_field_prop( $field_id, $propName ) )
+			return false;
 
-        if(!$field) return false;
+		$field = $this->get_field( $field_id );
 
-        return isset($field->$propName);
+		return $field->$propName;
+	}
 
-    }
+	function exclude( $fieldIds ) {
 
-    function get_field_prop($field_id, $propName){
+		if ( !$this->fields )
+			return false;
 
-        if(!$this->isset_field_prop($field_id, $propName)) return false;
+		$fields = array();
+		foreach ( $this->fields as $field_id => $field ) {
+			if ( in_array( $field_id, $fieldIds ) )
+				continue;
+			$fields[$field_id] = $field;
+		}
 
-        $field = $this->get_field($field_id);
+		$this->fields = $fields;
 
-        return $field->$propName;
+		return $this;
+	}
 
-    }
+	function search( $filters ) {
 
-    function exclude($fieldIds){
+		$fields = array();
 
-        if(!$this->fields) return false;
+		foreach ( $filters as $key => $value ) {
+			$fields = $this->search_by( $key, $value, $fields );
+			if ( !$fields )
+				return false;
+		}
 
-        $fields = array();
-        foreach($this->fields as $field_id => $field){
-            if(in_array($field_id, $fieldIds)) continue;
-            $fields[$field_id] = $field;
-        }
+		return $fields;
+	}
 
-        $this->fields = $fields;
+	function search_by( $key, $value, $fields = false ) {
 
-        return $this;
+		if ( !$fields )
+			$fields = $this->fields;
 
-    }
+		$search = array();
 
-    function search($filters){
+		foreach ( $fields as $field_id => $field ) {
 
-        $fields = array();
+			if ( !$field->isset_prop( $key ) )
+				continue;
 
-        foreach($filters as $key => $value){
-            $fields = $this->search_by($key, $value, $fields);
-            if(!$fields) return false;
-        }
+			if ( is_array( $value ) ) {
 
-        return $fields;
+				if ( !in_array( $field->get_prop( $key ), $value ) )
+					continue;
+			}else {
 
-    }
+				if ( $field->get_prop( $key ) != $value )
+					continue;
+			}
 
-    function search_by($key, $value, $fields = false){
+			$search[$field_id] = $field;
+		}
 
-        if(!$fields)
-            $fields = $this->fields;
+		return $search;
+	}
 
-        $search = array();
+	function add_structure_field( $group_id, $area_id, $fields ) {
 
-        foreach($fields as $field_id => $field){
+		foreach ( $fields as $field_id => $args ) {
+			$this->fields[$field_id]									 = $this::setup_field( $field_id, $args );
+			$this->structure[$group_id]['areas'][$area_id]['fields'][]	 = $field_id;
+		}
+	}
 
-            if(!$field->isset_prop($key)) continue;
+	function add_structure_group( $group_id, $args = false ) {
 
-            if(is_array($value)){
+		$this->structure[$group_id] = wp_parse_args( $args, array(
+			'title' => ''
+			) );
+	}
 
-                if(!in_array($field->get_prop($key), $value)) continue;
+	function get_content() {
 
-            }else{
+		$content = '';
 
-                if($field->get_prop($key) != $value) continue;
+		foreach ( $this->structure as $group_id => $group ) {
+			$content .= $this->get_group( $group );
+		}
 
-            }
+		if ( !$content )
+			return false;
 
-            $search[$field_id] = $field;
+		$content = '<div class="rcl-content preloader-parent">' . $content . '</div>';
 
-        }
+		return $content;
+	}
 
-        return $search;
+	function get_loop() {
 
-    }
+		$content = '';
 
-    function add_structure_field($group_id, $area_id, $fields){
+		foreach ( $this->structure as $group_id => $group ) {
+			$content .= $this->get_group( $group );
+		}
 
-        foreach($fields as $field_id => $args){
-            $this->fields[$field_id] = $this::setup_field($field_id, $args);
-            $this->structure[$group_id]['areas'][$area_id]['fields'][] = $field_id;
-        }
+		return $content;
+	}
 
-    }
+	function get_group( $group ) {
 
-    function add_structure_group($group_id, $args = false){
+		if ( !isset( $group['areas'] ) || !$group['areas'] )
+			return false;
 
-        $this->structure[$group_id] = wp_parse_args($args, array(
-            'title' => ''
-        ));
+		$groupContent = '';
 
-    }
+		foreach ( $group['areas'] as $area ) {
+			$groupContent .= $this->get_area( $area );
+		}
 
-    function get_content(){
+		if ( !$groupContent )
+			return false;
 
-        $content = '';
+		$content = '<div class="rcl-content-group">';
 
-        foreach($this->structure as $group_id => $group){
-            $content .= $this->get_group($group);
-        }
+		if ( $group['title'] )
+			$content .= '<div class="group-title">' . $group['title'] . '</div>';
 
-        if(!$content) return false;
+		$content .= '<div class="group-areas">';
 
-        $content = '<div class="rcl-content preloader-parent">'.$content.'</div>';
+		$content .= $groupContent;
 
-        return $content;
+		$content .= '</div>';
 
-    }
+		$content .= '</div>';
 
-    function get_loop(){
+		return $content;
+	}
 
-        $content = '';
+	function get_area( $area ) {
 
-        foreach($this->structure as $group_id => $group){
-            $content .= $this->get_group($group);
-        }
+		$areaContent = '';
 
-        return $content;
-    }
+		if ( !isset( $area['fields'] ) || !$area['fields'] )
+			return false;
 
-    function get_group($group){
+		foreach ( $area['fields'] as $field_id ) {
+			$areaContent .= $this->get_field_content( $field_id );
+		}
 
-        if(!isset($group['areas']) || !$group['areas']) return false;
+		if ( !$areaContent )
+			return false;
 
-        $groupContent = '';
+		$content = '<div class="rcl-content-area" style="width:' . (isset( $area['width'] ) ? $area['width'] : 100) . '%;">';
+		$content .= $areaContent;
+		$content .= '</div>';
 
-        foreach($group['areas'] as $area){
-            $groupContent .= $this->get_area($area);
-        }
+		return $content;
+	}
 
-        if(!$groupContent) return false;
+	function get_field_content( $field_id ) {
 
-        $content = '<div class="rcl-content-group">';
+		$field = $this->get_field( $field_id );
 
-        if($group['title'])
-            $content .= '<div class="group-title">'.$group['title'].'</div>';
+		if ( !$field->value )
+			return false;
 
-            $content .= '<div class="group-areas">';
+		$content .= $field->get_field_html( $field->value );
 
-            $content .= $groupContent;
+		return $content;
+	}
 
-            $content .= '</div>';
+	function get_form( $args = array() ) {
 
-        $content .= '</div>';
+		$args = wp_parse_args( $args, array(
+			'form_id'	 => '',
+			'unique_ids' => false,
+			'action'	 => '',
+			'method'	 => 'post',
+			'submit'	 => __( 'Сохранить', 'wp-recall' ),
+			'nonce_name' => '_wpnonce',
+			'nonce_key'	 => '',
+			'onclick'	 => '',
+			) );
 
-        return $content;
-    }
+		$content = '<div class="rcl-form preloader-parent">';
 
-    function get_area($area){
+		$content .= '<form ' . ($args['form_id'] ? 'id="' . $args['form_id'] . '"' : '') . ' method="' . $args['method'] . '" action="' . $args['action'] . '">';
 
-        $areaContent = '';
+		$content .= $this->get_content_form( $args );
 
-        if(!isset($area['fields']) || !$area['fields']) return false;
+		$content .= '<div class="submit-box">';
 
-        foreach($area['fields'] as $field_id){
-            $areaContent .= $this->get_field_content($field_id);
-        }
+		$bttnArgs = array(
+			'label'	 => $args['submit'],
+			'icon'	 => 'fa-check-circle'
+		);
 
-        if(!$areaContent) return false;
+		if ( $args['onclick'] ) {
+			$bttnArgs['onclick'] = $args['onclick'];
+		} else {
+			$bttnArgs['submit'] = 1;
+		}
 
-        $content = '<div class="rcl-content-area" style="width:'.(isset($area['width'])? $area['width']: 100).'%;">';
-        $content .= $areaContent;
-        $content .= '</div>';
+		$content .= rcl_get_button( $bttnArgs );
 
-        return $content;
-    }
+		$content .= '</div>';
 
-    function get_field_content($field_id){
+		if ( $args['nonce_key'] )
+			$content .= wp_nonce_field( $args['nonce_key'], $args['nonce_name'], true, false );
 
-        $field = $this->get_field($field_id);
+		$content .= '</form>';
 
-        if(!$field->value) return false;
+		$content .= '</div>';
 
-        $content .= $field->get_field_html($field->value);
+		return $content;
+	}
 
-        return $content;
-    }
+	function get_content_form( $args = false ) {
 
-    function get_form($args = array()){
+		$content = '';
 
-        $args = wp_parse_args($args, array(
-            'form_id' => '',
-            'unique_ids' => false,
-            'action' => '',
-            'method' => 'post',
-            'submit' => __('Сохранить', 'wp-recall'),
-            'nonce_name' => '_wpnonce',
-            'nonce_key' => '',
-            'onclick' => '',
-        ));
+		foreach ( $this->structure as $group_id => $group ) {
+			$content .= $this->get_group_form( $group, $args );
+		}
 
-        $content = '<div class="rcl-form preloader-parent">';
+		if ( !$content )
+			return false;
 
-            $content .= '<form '.($args['form_id']? 'id="'.$args['form_id'].'"': '').' method="'.$args['method'].'" action="'.$args['action'].'">';
+		$content = '<div class="rcl-content preloader-parent">' . $content . '</div>';
 
-            $content .= $this->get_content_form($args);
+		return $content;
+	}
 
-            $content .= '<div class="submit-box">';
+	function get_group_form( $group, $args = false ) {
 
-            $bttnArgs = array(
-                'label' => $args['submit'],
-                'icon' => 'fa-check-circle'
-            );
+		if ( !isset( $group['areas'] ) || !$group['areas'] )
+			return false;
 
-            if($args['onclick']){
-                $bttnArgs['onclick'] = $args['onclick'];
-            }else{
-                $bttnArgs['submit'] = 1;
-            }
+		$groupContent = '';
 
-            $content .= rcl_get_button($bttnArgs);
+		foreach ( $group['areas'] as $area ) {
+			$groupContent .= $this->get_area_form( $area, $args );
+		}
 
-            $content .= '</div>';
+		if ( !$groupContent )
+			return false;
 
-            if($args['nonce_key'])
-                $content .= wp_nonce_field($args['nonce_key'],$args['nonce_name'],true,false);
+		$content = '<div class="rcl-content-group">';
 
-            $content .= '</form>';
+		if ( isset( $group['title'] ) && $group['title'] )
+			$content .= '<div class="group-title">' . $group['title'] . '</div>';
 
-        $content .= '</div>';
+		$content .= '<div class="group-areas">';
 
-        return $content;
+		$content .= $groupContent;
 
-    }
+		$content .= '</div>';
 
-    function get_content_form($args = false){
+		$content .= '</div>';
 
-        $content = '';
+		return $content;
+	}
 
-        foreach($this->structure as $group_id => $group){
-            $content .= $this->get_group_form($group, $args);
-        }
+	function get_area_form( $area, $args = false ) {
 
-        if(!$content) return false;
+		$areaContent = '';
 
-        $content = '<div class="rcl-content preloader-parent">'.$content.'</div>';
+		if ( !isset( $area['fields'] ) || !$area['fields'] )
+			return false;
 
-        return $content;
+		foreach ( $area['fields'] as $field_id ) {
+			$areaContent .= $this->get_field_form( $field_id, $args );
+		}
 
-    }
+		if ( !$areaContent )
+			return false;
 
-    function get_group_form($group, $args = false){
+		$content = '<div class="rcl-content-area" style="width:' . (isset( $area['width'] ) ? $area['width'] : 100) . '%;">';
+		$content .= $areaContent;
+		$content .= '</div>';
 
-        if(!isset($group['areas']) || !$group['areas']) return false;
+		return $content;
+	}
 
-        $groupContent = '';
+	function get_field_form( $field_id, $args = false ) {
 
-        foreach($group['areas'] as $area){
-            $groupContent .= $this->get_area_form($area, $args);
-        }
+		$field = $this->get_field( $field_id );
 
-        if(!$groupContent) return false;
+		if ( !$field )
+			return false;
 
-        $content = '<div class="rcl-content-group">';
+		if ( isset( $args['unique_ids'] ) )
+			$field->set_prop( 'unique_id', true );
 
-        if(isset($group['title']) && $group['title'])
-            $content .= '<div class="group-title">'.$group['title'].'</div>';
+		$content = $field->get_field_html();
 
-            $content .= '<div class="group-areas">';
-
-            $content .= $groupContent;
-
-            $content .= '</div>';
-
-        $content .= '</div>';
-
-        return $content;
-    }
-
-    function get_area_form($area, $args = false){
-
-        $areaContent = '';
-
-        if(!isset($area['fields']) || !$area['fields']) return false;
-
-        foreach($area['fields'] as $field_id){
-            $areaContent .= $this->get_field_form($field_id, $args);
-        }
-
-        if(!$areaContent) return false;
-
-        $content = '<div class="rcl-content-area" style="width:'.(isset($area['width'])? $area['width']: 100).'%;">';
-        $content .= $areaContent;
-        $content .= '</div>';
-
-        return $content;
-    }
-
-    function get_field_form($field_id, $args = false){
-
-        $field = $this->get_field($field_id);
-
-        if(!$field) return false;
-
-        if(isset($args['unique_ids']))
-            $field->set_prop('unique_id', true);
-
-        $content = $field->get_field_html();
-
-        return $content;
-    }
+		return $content;
+	}
 
 }

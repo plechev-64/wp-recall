@@ -1,351 +1,351 @@
 /* блок lk-conteyner start */
 #lk-conteyner {
-    background-color: #e3e3e3;
-    overflow: hidden;
-    position: relative;
+	background-color: #e3e3e3;
+	overflow: hidden;
+	position: relative;
 }
 .lk-sidebar {
-    float: left;
-    line-height: 1;				/*++Twenty16++*/
+	float: left;
+	line-height: 1;				/*++Twenty16++*/
 }
 /* блок lk-conteyner end */
 
 /* START кнопки lite */
 .cab_bttn_lite {
-    float: right;
+	float: right;
 }
 .cab_bttn_lite > span {
-    display: inline-block;
+	display: inline-block;
 }
 .cab_bttn_lite .recall-button {
-    padding: 0;
+	padding: 0;
 }
 .cab_bttn_lite .rcli {
-    display: none;
+	display: none;
 }
 .cab_bttn_lite .rcl-tab-button a > span {
-    color: #ccc;
-    display: table;
-    text-align: center;
+	color: #ccc;
+	display: table;
+	text-align: center;
 }
 .cab_bttn_lite .rcl-tab-button span span {
-    background: transparent;
-    color: #fff;
-    display: table-caption;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 0;
-    text-align: center;
+	background: transparent;
+	color: #fff;
+	display: table-caption;
+	font-size: 20px;
+	font-weight: bold;
+	padding: 0;
+	text-align: center;
 }
 #lk-conteyner .cab_bttn_lite .rcl-tab-button span span > span {
-    display: table;
+	display: table;
 }
 /* END кнопки lite */
 
 /* START upload cover */
 #rcl-office .rcl-cover-icon {
-    background: rgba(0, 0, 0, 0.3);
-    color: #ddd;
-    float: right;
-    font-size: 26px;
-    padding: 4px 7px;
-    z-index: 3;
+	background: rgba(0, 0, 0, 0.3);
+	color: #ddd;
+	float: right;
+	font-size: 26px;
+	padding: 4px 7px;
+	z-index: 3;
 }
 #rcl-office .rcl-cover-icon:hover {
-    color: #eee;
+	color: #eee;
 }
 /* END upload cover */
 
 /* START аватар и элементы управления внутри него */
 #rcl-avatar {
-    box-sizing: border-box;
-    display: inline-block;
-    height: 100%;
+	box-sizing: border-box;
+	display: inline-block;
+	height: 100%;
 }
 #rcl-avatar img {
-    border-radius: 0;
-    display: inline-block;
-    max-height: 100%;
-    max-width: 100%;
+	border-radius: 0;
+	display: inline-block;
+	max-height: 100%;
+	max-width: 100%;
 }
 #rcl-avatar .avatar-icons {
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
 }
 #rcl-avatar .avatar-icons .rcl-avatar-icon {
-    position: absolute;
+	position: absolute;
 }
 #rcl-avatar .avatar-icons .rcl-avatar-icon a {
-    background: rgb(216, 231, 238);
-    color: rgb(229, 57, 53);
-    font-size: 20px;
-    opacity: 0.7;
-    padding: 5px;
+	background: rgb(216, 231, 238);
+	color: rgb(229, 57, 53);
+	font-size: 20px;
+	opacity: 0.7;
+	padding: 5px;
 }
 #rcl-avatar .avatar-icons .rcl-avatar-icon a:hover {
-    opacity: 1;
+	opacity: 1;
 }
 #rcl-avatar .icon-avatar-delete {
-    display: none;
-    right: 0;
-    top: 0;
+	display: none;
+	right: 0;
+	top: 0;
 }
 #rcl-avatar:hover .icon-avatar-delete {
-    display: block
+	display: block
 }
 #rcl-avatar .icon-avatar-upload {
-    bottom: 0;
-    left: 0;
+	bottom: 0;
+	left: 0;
 }
 #rcl-avatar .icon-webcam-upload {
-    bottom: 0;
-    left: 35px;
+	bottom: 0;
+	left: 35px;
 }
 #rcl-avatar .icon-user-info {
-    left: 0;
-    top: 0;
+	left: 0;
+	top: 0;
 }
 /* END аватар и элементы управления внутри него */
 
 /* START cab 15 lite */
 .wprecallblock {
-    display: inline-block;
-    width: 100%;
+	display: inline-block;
+	width: 100%;
 }
 .wprecallblock #lk-conteyner {
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin: 0 auto;
-    max-width: 1280px;
-    min-height: 190px;
-    padding: 0;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	margin: 0 auto;
+	max-width: 1280px;
+	min-height: 190px;
+	padding: 0;
 }
 .wprecallblock .rcli.cab_cover_upl {
-    margin: 0 8px 0 0;
-    padding: 12px 6px 6px;
+	margin: 0 8px 0 0;
+	padding: 12px 6px 6px;
 }
 .cab_lt_line {
-    background: rgba(0, 0, 0, 0.4);
-    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.5);
-    display: table;
-    height: 55px;
-    line-height: 1.4;
-    margin: 105px 0 0;
-    width: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.5);
+	display: table;
+	height: 55px;
+	line-height: 1.4;
+	margin: 105px 0 0;
+	width: 100%;
 }
 .cab_lt_title {
-    display: table-cell;
-    max-width: 450px;
-    padding: 0 5px 0 15px;
-    vertical-align: middle;
+	display: table-cell;
+	max-width: 450px;
+	padding: 0 5px 0 15px;
+	vertical-align: middle;
 }
 .wprecallblock .cab_lt_title h2 {
-    color: #eee;
-    font-size: 24px;
-    line-height: 1.1;
-    padding: 0;
+	color: #eee;
+	font-size: 24px;
+	line-height: 1.1;
+	padding: 0;
 }
 .wprecallblock .rcl-action {
-    color: #ccc;
-    font-size: 13px;
-    margin: 0 0 0 10px;
+	color: #ccc;
+	font-size: 13px;
+	margin: 0 0 0 10px;
 }
 .cab_bttn_lite {
-    display: table-cell;
-    float: none;
-    padding: 0 15px;
-    text-align: right;
-    vertical-align: middle;
+	display: table-cell;
+	float: none;
+	padding: 0 15px;
+	text-align: right;
+	vertical-align: middle;
 }
 .cab_bttn_lite > span {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 #rcl-office .cab_bttn_lite .rcl-tab-button .rcl-menu-notice span {
-    display: inline-block;
+	display: inline-block;
 }
 .cab_lt_sidebar {
-    float: left;
-    width: 190px;
+	float: left;
+	width: 190px;
 }
 .cab_lt_sidebar .lk-sidebar {
-    display: inline-block;
-    line-height: 1.4;
-    margin: 0 0 15px;
+	display: inline-block;
+	line-height: 1.4;
+	margin: 0 0 15px;
 }
 .lk-sidebar .lk-avatar {
-    display: block;
-    height: 190px;
-    width: 190px;
+	display: block;
+	height: 190px;
+	width: 190px;
 }
 .cab_lt_sidebar .cab_usr_info {
-    color: #333;
+	color: #333;
 }
 .cab_lt_sidebar .recall-button,
 .cab_lt_mobile#lk-menu .recall-button {
-    display: flex;
-    font-size: 14px;
-    line-height: 1.1;
-    margin: 3px 0 0;
-    padding: 0;
-    white-space: normal;
-    width: 100%;
+	display: flex;
+	font-size: 14px;
+	line-height: 1.1;
+	margin: 3px 0 0;
+	padding: 0;
+	white-space: normal;
+	width: 100%;
 }
 .cab_lt_sidebar .recall-button:hover {
-    opacity: 1;
-    overflow: hidden;
+	opacity: 1;
+	overflow: hidden;
 }
 .cab_lt_sidebar .recall-button:hover .rcli,
 .cab_lt_sidebar .recall-button:hover span {
-    background: rgba(0, 0, 0, 0.2);
+	background: rgba(0, 0, 0, 0.2);
 }
 .cab_lt_sidebar .recall-button .rcli,
 .cab_lt_mobile#lk-menu .recall-button .rcli {
-    background: rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
-    border-top: 1px solid rgba(0, 0, 0, 0.2);
-    box-sizing: padding-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 32px;
+	background: rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+	border-top: 1px solid rgba(0, 0, 0, 0.2);
+	box-sizing: padding-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 32px;
 }
 .cab_lt_sidebar .recall-button.active:hover .rcli {
-    background: rgba(0, 0, 0, 0.1);
+	background: rgba(0, 0, 0, 0.1);
 }
 .cab_lt_sidebar .recall-button.active:hover span {
-    background: transparent;
+	background: transparent;
 }
 .cab_lt_sidebar .recall-button span,
 .cab_lt_mobile#lk-menu .recall-button span {
-    margin: 0;
-    padding: 10px 5px;
-    width: 100%;
+	margin: 0;
+	padding: 10px 5px;
+	width: 100%;
 }
 .cab_lt_sidebar #lk-menu {
-    width: 190px;
+	width: 190px;
 }
 .cab_lt_sidebar #lk-menu a {
-    display: flex;
-    margin: 0 0 3px;
-    padding: 0;
+	display: flex;
+	margin: 0 0 3px;
+	padding: 0;
 }
 .cab_lt_sidebar #lk-menu span span {
-    padding: 10px 10px 10px 5px;
-    position: relative;
+	padding: 10px 10px 10px 5px;
+	position: relative;
 }
 .cab_lt_sidebar #lk-menu span span::after {
-    content: "\f0da";			/* fa-caret-right */
-    font-family: rcl-awesome;
-    position: absolute;
-    right: 3px;
+	content: "\f0da";			/* fa-caret-right */
+	font-family: rcl-awesome;
+	position: absolute;
+	right: 3px;
 }
 
 /* START мобильные кнопки */
 .wprecallblock .cab_lt_menu {
-    font-size: 30px;
-    height: 40px;
+	font-size: 30px;
+	height: 40px;
 }
 .wprecallblock .cab_lt_menu .rcli {
-    display: table-cell;
-    vertical-align: middle;
+	display: table-cell;
+	vertical-align: middle;
 }
-#lk-menu.st_menu_moved  {
-    background: #fff;
-    border-bottom: 3px solid #fff;
-    border-left: 3px solid #fff;
-    border-right: 3px solid #fff;
-    height: 0;
-    left: -300px;
-    position: absolute;
-    top: 0;
-    visibility: hidden;
-    z-index: 2000;
+#lk-menu.st_menu_moved {
+	background: #fff;
+	border-bottom: 3px solid #fff;
+	border-left: 3px solid #fff;
+	border-right: 3px solid #fff;
+	height: 0;
+	left: -300px;
+	position: absolute;
+	top: 0;
+	visibility: hidden;
+	z-index: 2000;
 }
 #lk-menu.st_menu_moved.cab_lt_mobile {
-    height: auto;
-    left: 0;
-    max-width: 200px;
-    min-width: 150px;
-    top: 0;
-    transition: left 0.25s ease-in-out 0s;
-    visibility: visible;
+	height: auto;
+	left: 0;
+	max-width: 200px;
+	min-width: 150px;
+	top: 0;
+	transition: left 0.25s ease-in-out 0s;
+	visibility: visible;
 }
 /* END мобильные кнопки */
 
 /* START responsive */
 @media screen and (max-width:768px) {
-    .cab_lt_sidebar,
-    .cab_lt_sidebar #lk-menu,
-    .cab_lt_sidebar .lk-sidebar {
-        width: 150px;
-    }
-    .lk-sidebar .lk-avatar {
-        height: 150px;
-        width: 150px;
-    }
+	.cab_lt_sidebar,
+	.cab_lt_sidebar #lk-menu,
+	.cab_lt_sidebar .lk-sidebar {
+		width: 150px;
+	}
+	.lk-sidebar .lk-avatar {
+		height: 150px;
+		width: 150px;
+	}
 }
 @media screen and (max-width:640px) {
-    .cab_lt_line {
-        display: block;
-        height: auto;
-        margin: 80px 0 0;
-    }
-    .cab_lt_title {
-        display: block;
-        max-width: none;
-        width: 100%;
-    }
-    .cab_bttn_lite {
-        display: block;
-        padding: 0 15px 2px;
-    }
+	.cab_lt_line {
+		display: block;
+		height: auto;
+		margin: 80px 0 0;
+	}
+	.cab_lt_title {
+		display: block;
+		max-width: none;
+		width: 100%;
+	}
+	.cab_bttn_lite {
+		display: block;
+		padding: 0 15px 2px;
+	}
 }
 @media screen and (max-width:568px) {
-    .wprecallblock #lk-conteyner {
-        float: right;
-        width: calc(100% - 150px);
-    }
-    .cab_lt_line,
-    .cab_lt_sidebar .lk-sidebar {
-        margin: 0;
-    }
-    .wprecallblock .rcli.cab_cover_upl {
-        margin: 0;
-        padding: 6px;
-        position: absolute;
-        right: 0;
-    }
-    .cab_lt_title {
-        width: calc(100% - 36px);
-    }
-    .wprecallblock .cab_lt_title h2 {
-        font-size: 20px;
-        padding: 7px 0 0;
-    }
-    #rcl-tabs {
-        width: 100%;
-    }
+	.wprecallblock #lk-conteyner {
+		float: right;
+		width: calc(100% - 150px);
+	}
+	.cab_lt_line,
+	.cab_lt_sidebar .lk-sidebar {
+		margin: 0;
+	}
+	.wprecallblock .rcli.cab_cover_upl {
+		margin: 0;
+		padding: 6px;
+		position: absolute;
+		right: 0;
+	}
+	.cab_lt_title {
+		width: calc(100% - 36px);
+	}
+	.wprecallblock .cab_lt_title h2 {
+		font-size: 20px;
+		padding: 7px 0 0;
+	}
+	#rcl-tabs {
+		width: 100%;
+	}
 }
 @media screen and (max-width:480px) {
-    .wprecallblock #lk-conteyner {
-        width: calc(100% - 120px);
-    }
-    .cab_lt_sidebar,
-    .cab_lt_sidebar #lk-menu,
-    .cab_lt_sidebar .lk-sidebar {
-        width: 120px;
-    }
-    .lk-sidebar .lk-avatar {
-        height: 120px;
-        width: 120px;
-    }
-    .cab_lt_sidebar .recall-button span {
-        font-size: 13px;
-        hyphens: auto;
-    }
+	.wprecallblock #lk-conteyner {
+		width: calc(100% - 120px);
+	}
+	.cab_lt_sidebar,
+	.cab_lt_sidebar #lk-menu,
+	.cab_lt_sidebar .lk-sidebar {
+		width: 120px;
+	}
+	.lk-sidebar .lk-avatar {
+		height: 120px;
+		width: 120px;
+	}
+	.cab_lt_sidebar .recall-button span {
+		font-size: 13px;
+		hyphens: auto;
+	}
 }

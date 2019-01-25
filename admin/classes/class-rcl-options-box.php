@@ -1,54 +1,53 @@
 <?php
-class Rcl_Options_Box{
 
-    public $box_id;
-    public $title;
-    public $icon = 'fa-cog';
-    public $groups;
-    public $option_name;
+class Rcl_Options_Box {
 
-    function __construct($box_id, $args, $option_name) {
+	public $box_id;
+	public $title;
+	public $icon = 'fa-cog';
+	public $groups;
+	public $option_name;
 
-        $this->box_id = $box_id;
+	function __construct( $box_id, $args, $option_name ) {
 
-        $this->option_name = $option_name;
-        
-        $this->init_properties($args);
-    }
+		$this->box_id = $box_id;
 
-    function init_properties($args){
+		$this->option_name = $option_name;
 
-        $properties = get_class_vars(get_class($this));
+		$this->init_properties( $args );
+	}
 
-        foreach ($properties as $name=>$val){
-            if(isset($args[$name])) $this->$name = $args[$name];
-        }
+	function init_properties( $args ) {
 
-    }
+		$properties = get_class_vars( get_class( $this ) );
 
-    function add_group($group_id, $args = false){
-        $this->groups[$group_id] = new Rcl_Options_Group($group_id, $args, $this->option_name);
-        return $this->group($group_id);
-    }
+		foreach ( $properties as $name => $val ) {
+			if ( isset( $args[$name] ) )
+				$this->$name = $args[$name];
+		}
+	}
 
-    function group($group_id){
-        return $this->groups[$group_id];
-    }
+	function add_group( $group_id, $args = false ) {
+		$this->groups[$group_id] = new Rcl_Options_Group( $group_id, $args, $this->option_name );
+		return $this->group( $group_id );
+	}
 
-    function get_content(){
+	function group( $group_id ) {
+		return $this->groups[$group_id];
+	}
 
-        $content = '<div id="'.$this->box_id.'-options-box" class="options-box" data-box="'.$this->box_id.'">';
+	function get_content() {
 
-        foreach($this->groups as $group){
+		$content = '<div id="' . $this->box_id . '-options-box" class="options-box" data-box="' . $this->box_id . '">';
 
-            $content .= $group->get_content();
+		foreach ( $this->groups as $group ) {
 
-        }
+			$content .= $group->get_content();
+		}
 
-        $content .= '</div>';
+		$content .= '</div>';
 
-        return $content;
-
-    }
+		return $content;
+	}
 
 }

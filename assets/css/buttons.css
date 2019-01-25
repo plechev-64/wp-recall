@@ -1,245 +1,245 @@
 /**********************
-*                     *
-*   RCL Buttons API   *
-*                     *
+*					 *
+*	 RCL Buttons API	 *
+*					 *
 ***********************
-rcl-bttn__type-clear    - примитивная
-rcl-bttn__type-simple   - простая
-rcl-bttn__type-primary  - реколл-цвет
+rcl-bttn__type-clear	- примитивная
+rcl-bttn__type-simple	 - простая
+rcl-bttn__type-primary	- реколл-цвет
 */
 
 
 /* Общий стиль */
 body .rcl-bttn {
-    align-items: center;
-    border-radius: 0;
-    border: 0 !important;
-    box-shadow: none;
-    box-sizing: border-box;
-    cursor: pointer;
-    display: inline-flex;
-    /*    font-size: 12px;         start size for em - идёт инлайном. т.к. задается через кастомайзер */
-    font-weight: normal;
-    letter-spacing: normal;
-    line-height: 1em;
-    outline: 0;
-    padding: 0;
-    position: relative;
-    text-decoration: none !important;
-    text-transform: none;
-    white-space: nowrap;
+	align-items: center;
+	border-radius: 0;
+	border: 0 !important;
+	box-shadow: none;
+	box-sizing: border-box;
+	cursor: pointer;
+	display: inline-flex;
+	/*	font-size: 12px;		 start size for em - идёт инлайном. т.к. задается через кастомайзер */
+	font-weight: normal;
+	letter-spacing: normal;
+	line-height: 1em;
+	outline: 0;
+	padding: 0;
+	position: relative;
+	text-decoration: none !important;
+	text-transform: none;
+	white-space: nowrap;
 
-    -webkit-transition: opacity .1s ease,color .1s ease;
-    transition: opacity .1s ease,color .1s ease;
+	-webkit-transition: opacity .1s ease,color .1s ease;
+	transition: opacity .1s ease,color .1s ease;
 
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 body :not(.rcl-wrap__wiget) > .rcl-bttn:not(.rcl-bttn__active):hover {
-    opacity: 0.8;
+	opacity: 0.8;
 }
 /* END общий стиль */
 
 /* пересекающие стили для 2х кнопок: rcl-bttn__type-simple и rcl-bttn__type-primary */
 body .rcl-bttn:not(.rcl-bttn__type-clear):not(.rcl-bttn__fullwidth) {
-    margin: 0 .25em .25em 0;
+	margin: 0 .25em .25em 0;
 }
 body .rcl-wrap.rcl-wrap__vertical .rcl-bttn,
 body .rcl-bttn:not(.rcl-bttn__type-clear):last-child {
-    margin-right: 0;
+	margin-right: 0;
 }
 .rcl-bttn:not(.rcl-bttn__type-clear) .rcl-bttn__text,
 .rcl-bttn:not(.rcl-bttn__type-clear) .rcl-bttn__ico-left {
-    padding: .5em .7em;
+	padding: .5em .7em;
 }
 .rcl-bttn:not(.rcl-bttn__type-clear):not(.rcl-bttn__ico-mask) .rcl-bttn__text + .rcl-bttn__ico,
 .rcl-bttn:not(.rcl-bttn__type-clear):not(.rcl-bttn__ico-mask) .rcl-bttn__ico + .rcl-bttn__text,
 .rcl-bttn:not(.rcl-bttn__type-clear):not(.rcl-bttn__ico-mask) .rcl-bttn__ico + .rcl-bttn__count {
-    padding: 0 .7em 0 0;
+	padding: 0 .7em 0 0;
 }
 .rcl-bttn:not(.rcl-bttn__type-clear) .rcl-bttn__text + .rcl-bttn__count {
-    align-self: flex-start;
-    font-size: .85em;
-    margin: .5em .5em 0 -.3em;
+	align-self: flex-start;
+	font-size: .85em;
+	margin: .5em .5em 0 -.3em;
 }
 .rcl-bttn .rcl-bttn__ava img {
-    border-radius: 0;
-    border: 0;
-    box-shadow: none;
-    display: block;
-    float: none;
-    height: auto;
-    margin: 0;
-    max-width: 100%;
-    padding: 0;
+	border-radius: 0;
+	border: 0;
+	box-shadow: none;
+	display: block;
+	float: none;
+	height: auto;
+	margin: 0;
+	max-width: 100%;
+	padding: 0;
 }
 .rcl-bttn:not(.rcl-bttn__type-clear) .rcl-bttn__ava + .rcl-bttn__count {
-    padding: 0 .7em;
+	padding: 0 .7em;
 }
 /* END пересекающие стили для 2х кнопок: rcl-bttn__type-simple и rcl-bttn__type-primary */
 
 
 /* стиль clear */
 :not(.rcl-wrap__wiget) > .rcl-bttn.rcl-bttn__type-clear {
-    margin: 0 1em 0 0;
+	margin: 0 1em 0 0;
 }
 .rcl-bttn__type-clear .rcl-bttn__text + .rcl-bttn__count,
 .rcl-bttn__type-clear i + span,
 .rcl-bttn__type-clear span + i {
-    padding: 0 0 0 .45em;
+	padding: 0 0 0 .45em;
 }
 /* END clear */
 
 /* стиль simple */
 .rcl-bttn.rcl-bttn__type-simple {
-    background-color: #f5f5f5;
-    box-shadow: 0 0 0 1px #e5e5e5 inset;
+	background-color: #f5f5f5;
+	box-shadow: 0 0 0 1px #e5e5e5 inset;
 }
 .rcl-bttn.rcl-bttn__type-simple:hover {
-    background-color: #fafafa;
+	background-color: #fafafa;
 }
 /* END simple */
 
 
 /********************
-    Modificators
+	Modificators
 *********************/
 
 /* fullwidth */
 .rcl-bttn.rcl-bttn__fullwidth:not(.rcl-bttn__type-clear) {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 /* END fullwidth */
 
 /* masked icon */
 .rcl-bttn.rcl-bttn__ico-mask .rcli,
 .rcl-bttn__ico-mask.rcl-bttn__mod-text-rico-count .rcl-bttn__count {
-    background-color: rgba(0,0,0,.1);
+	background-color: rgba(0,0,0,.1);
 }
 .rcl-bttn__ico-mask.rcl-bttn__mod-text-rico .rcl-bttn__ico-right,
 .rcl-bttn__ico-mask.rcl-bttn__mod-text-rico-count .rcl-bttn__count {
-    padding: .5em .7em;
+	padding: .5em .7em;
 }
 .rcl-bttn__ico-mask.rcl-bttn__mod-text-rico-count .rcl-bttn__ico.rcl-bttn__ico-right {
-    padding: .5em 0 .5em .7em;
+	padding: .5em 0 .5em .7em;
 }
 /* END masked icon */
 
 /* wrappers */
 .rcl-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	width: 100%;
 }
 .rcl-wrap.rcl-wrap__right {
-    justify-content: flex-end;
+	justify-content: flex-end;
 }
 .rcl-wrap.rcl-wrap__vertical {
-    flex-direction: column;
-    align-items: flex-start;
+	flex-direction: column;
+	align-items: flex-start;
 }
 .rcl-wrap.rcl-wrap__right.rcl-wrap__vertical {
-    align-content: flex-end;
+	align-content: flex-end;
 }
 /* END wrappers */
 
 /* special wiget list style */
 .rcl-wrap__wiget {
-    flex-direction: column;
+	flex-direction: column;
 }
 .rcl-wrap__wiget .rcl-bttn__type-clear {
-    padding: .45em .6em;
+	padding: .45em .6em;
 }
 .rcl-wrap__wiget .rcl-bttn__type-clear:hover {
-    background-color: rgba(237, 237, 237, 0.6);
-    box-shadow: none;
+	background-color: rgba(237, 237, 237, 0.6);
+	box-shadow: none;
 }
 .rcl-wrap__wiget .rcl-bttn__ava {
-    flex-shrink: 0;
+	flex-shrink: 0;
 }
 .rcl-wrap__wiget .rcl-bttn__text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
 }
 .rcl-wrap__wiget .rcl-bttn__text {
-    margin-left: .3em;
+	margin-left: .3em;
 }
 .rcl-wrap__wiget .rcl-bttn__ava_circle .rcl-bttn__ava img {
-    border-radius: 50%;
+	border-radius: 50%;
 }
 /* END special wiget list style */
 
 
 /********************
-    conditions
+	conditions
 *********************/
 
 /* loader */
 .rcl-bttn.rcl-bttn__loading {
-    color: transparent !important;
-    cursor: default;
-    opacity: 1;
-    pointer-events: none;
+	color: transparent !important;
+	cursor: default;
+	opacity: 1;
+	pointer-events: none;
 }
 .rcl-bttn__loading .rcl-bttn__ava img {
-    opacity: 0;
+	opacity: 0;
 }
 .rcl-bttn.rcl-bttn__loading::before,
 .rcl-bttn.rcl-bttn__loading::after {
-    border-radius: 50%;
-    border-style: solid;
-    border-width: .2em;
-    box-sizing: border-box;
-    content: "";
-    height: 1.4em;
-    left: 50%;
-    margin: -.7em;
-    position: absolute;
-    top: 50%;
-    width: 1.4em;
+	border-radius: 50%;
+	border-style: solid;
+	border-width: .2em;
+	box-sizing: border-box;
+	content: "";
+	height: 1.4em;
+	left: 50%;
+	margin: -.7em;
+	position: absolute;
+	top: 50%;
+	width: 1.4em;
 }
 .rcl-bttn.rcl-bttn__loading::before {
-    border-color: rgba(0,0,0,.15);
+	border-color: rgba(0,0,0,.15);
 }
 .rcl-bttn.rcl-bttn__loading::after {
-    -webkit-animation: rcl-bttn-loader .8s linear;
-    animation: rcl-bttn-loader .8s linear;
-    -webkit-animation-iteration-count: infinite;
-    animation-iteration-count: infinite;
-    border-color: #fff transparent transparent;
-    transform: rotate(0deg);
+	-webkit-animation: rcl-bttn-loader .8s linear;
+	animation: rcl-bttn-loader .8s linear;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	border-color: #fff transparent transparent;
+	transform: rotate(0deg);
 }
 @-webkit-keyframes rcl-bttn-loader {
-    to {-webkit-transform:rotate(360deg);
-        transform:rotate(360deg);
-    }
+	to {-webkit-transform:rotate(360deg);
+		transform:rotate(360deg);
+	}
 }
 @keyframes rcl-bttn-loader {
-    to {-webkit-transform:rotate(360deg);
-        transform:rotate(360deg);
-    }
+	to {-webkit-transform:rotate(360deg);
+		transform:rotate(360deg);
+	}
 }
 /* END loader */
 
 /* condition */
 .rcl-bttn.rcl-bttn__disabled {
-    opacity: .6;
-    pointer-events: none;
+	opacity: .6;
+	pointer-events: none;
 }
 .rcl-bttn.rcl-bttn__type-simple.rcl-bttn__disabled {
-    background-color: transparent;
-    box-shadow: none;
+	background-color: transparent;
+	box-shadow: none;
 }
 .rcl-bttn.rcl-bttn__active {
-    pointer-events: none;
+	pointer-events: none;
 }
 .rcl-bttn.rcl-bttn__type-primary.rcl-bttn__active {
-    color: #333;
+	color: #333;
 }
 /* END condition */

@@ -1,94 +1,90 @@
 <?php
 
-class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields{
+class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields {
+	function __construct( $post_type, $args = false ) {
 
-    function __construct($post_type, $args = false) {
+		parent::__construct( $post_type, $args );
+	}
 
-        parent::__construct($post_type, $args);
+	function form_navi() {
 
-    }
+		$post_types = get_post_types( array(
+			'public'	 => true,
+			'_builtin'	 => false
+			), 'objects' );
 
-    function form_navi(){
+		$types = array( 'post' => __( 'Records', 'wp-recall' ) );
 
-        $post_types = get_post_types(array(
-                'public'   => true,
-                '_builtin' => false
-            ), 'objects');
+		foreach ( $post_types as $post_type ) {
+			$types[$post_type->name] = $post_type->label;
+		}
 
-        $types = array('post' => __('Records','wp-recall'));
+		$content = '<div class="rcl-custom-fields-navi">';
 
-        foreach ($post_types  as $post_type ) {
-            $types[$post_type->name] = $post_type->label;
-        }
+		$content .= '<ul class="rcl-types-list">';
 
-        $content = '<div class="rcl-custom-fields-navi">';
+		foreach ( $types as $type => $name ) {
 
-            $content .= '<ul class="rcl-types-list">';
+			$class = ($this->post_type == $type) ? 'class="current-item"' : '';
 
-            foreach ($types  as $type => $name ) {
+			$content .= '<li ' . $class . '><a href="' . admin_url( 'admin.php?page=manage-public-form&post-type=' . $type ) . '">' . $name . '</a></li>';
+		}
 
-                $class = ($this->post_type == $type)? 'class="current-item"': '';
+		$content .= '</ul>';
 
-                $content .= '<li '.$class.'><a href="'.admin_url('admin.php?page=manage-public-form&post-type='.$type).'">'.$name.'</a></li>';
-            }
+		$content .= '</div>';
 
-            $content .= '</ul>';
+		if ( $this->post_type == 'post' ) {
 
-        $content .= '</div>';
+			global $wpdb;
 
-        if($this->post_type == 'post'){
+			$form_id = false;
 
-            global $wpdb;
+			$postForms = $wpdb->get_col( "SELECT option_name FROM " . $wpdb->options . " WHERE option_name LIKE 'rcl_fields_post_%' ORDER BY option_id ASC" );
 
-            $form_id = false;
+			$content .= '<div class="rcl-custom-fields-navi">';
 
-            $postForms = $wpdb->get_col("SELECT option_name FROM ".$wpdb->options." WHERE option_name LIKE 'rcl_fields_post_%' ORDER BY option_id ASC");
+			$content .= '<ul class="rcl-types-list">';
 
-            $content .= '<div class="rcl-custom-fields-navi">';
+			foreach ( $postForms as $name ) {
+				preg_match( "/rcl_fields_post_(\d)\z/", $name, $matches );
 
-                $content .= '<ul class="rcl-types-list">';
+				if ( !$matches )
+					continue;
 
-                foreach($postForms as $name){
-                    preg_match("/rcl_fields_post_(\d)\z/", $name, $matches);
-                    
-                    if(!$matches) continue;
+				$id = intval( $matches[1] );
 
-                    $id = intval($matches[1]);
+				if ( !$id )
+					continue;
 
-                    if(!$id) continue;
+				$form_id = $id;
 
-                    $form_id = $id;
+				$class = ($this->form_id == $form_id) ? 'class="current-item"' : '';
 
-                    $class = ($this->form_id == $form_id)? 'class="current-item"': '';
+				$content .= '<li ' . $class . '><a href="' . admin_url( 'admin.php?page=manage-public-form&post-type=' . $this->post_type . '&form-id=' . $form_id ) . '">' . __( 'Form', 'wp-recall' ) . ' ID: ' . $form_id . '</a></li>';
+			}
 
-                    $content .= '<li '.$class.'><a href="'.admin_url('admin.php?page=manage-public-form&post-type='.$this->post_type.'&form-id='.$form_id).'">'.__('Form','wp-recall').' ID: '.$form_id.'</a></li>';
-                }
+			$content .= '<li><a class="action-form" href="' . wp_nonce_url( admin_url( 'admin.php?page=manage-public-form&form-action=new-form&form-id=' . ($form_id + 1) ), 'rcl-form-action' ) . '"><i class="rcli fa-plus"></i> ' . __( 'Add form', 'wp-recall' ) . '</a></li>';
 
-                $content .= '<li><a class="action-form" href="'.wp_nonce_url(admin_url('admin.php?page=manage-public-form&form-action=new-form&form-id='.($form_id + 1)),'rcl-form-action').'"><i class="rcli fa-plus"></i> '.__('Add form','wp-recall').'</a></li>';
+			$content .= '</ul>';
 
-                $content .= '</ul>';
+			$content .= '</div>';
 
-            $content .= '</div>';
+			if ( $this->form_id != 1 ) {
 
-            if($this->form_id != 1){
+				$content .= '<div class="rcl-custom-fields-menu">';
 
-                $content .= '<div class="rcl-custom-fields-menu">';
+				$content .= '<ul class="rcl-types-list">';
 
-                    $content .= '<ul class="rcl-types-list">';
+				$content .= '<li><a class="action-form" href="' . wp_nonce_url( admin_url( 'admin.php?page=manage-public-form&form-action=delete-form&form-id=' . $this->form_id ), 'rcl-form-action' ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'wp-recall' ) . '\');"><i class="rcli fa-trash"></i> ' . __( 'Delete form', 'wp-recall' ) . '</a></li>';
 
-                    $content .= '<li><a class="action-form" href="'.wp_nonce_url(admin_url('admin.php?page=manage-public-form&form-action=delete-form&form-id='.$this->form_id),'rcl-form-action').'" onclick="return confirm(\''.__('Are you sure?','wp-recall').'\');"><i class="rcli fa-trash"></i> '.__('Delete form','wp-recall').'</a></li>';
+				$content .= '</ul>';
 
-                    $content .= '</ul>';
+				$content .= '</div>';
+			}
+		}
 
-                $content .= '</div>';
-
-            }
-
-        }
-
-        return $content;
-
-    }
+		return $content;
+	}
 
 }
-

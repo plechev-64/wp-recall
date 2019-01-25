@@ -1,114 +1,110 @@
 <?php
-class Rcl_Options_Group{
 
-    public $group_id;
-    public $title;
-    public $options;
-    public $extend;
-    public $option_values = array();
+class Rcl_Options_Group {
 
-    function __construct($group_id, $args = false, $option_name) {
+	public $group_id;
+	public $title;
+	public $options;
+	public $extend;
+	public $option_values = array();
 
-        $this->group_id = $group_id;
+	function __construct( $group_id, $args = false, $option_name ) {
 
-        $this->option_name = $option_name;
+		$this->group_id = $group_id;
 
-        $this->option_values = get_site_option($this->option_name);
+		$this->option_name = $option_name;
 
-        if($args)
-            $this->init_properties($args);
-    }
+		$this->option_values = get_site_option( $this->option_name );
 
-    function init_properties($args){
+		if ( $args )
+			$this->init_properties( $args );
+	}
 
-        $properties = get_class_vars(get_class($this));
+	function init_properties( $args ) {
 
-        foreach ($properties as $name=>$val){
-            if(isset($args[$name])) $this->$name = $args[$name];
-        }
+		$properties = get_class_vars( get_class( $this ) );
 
-    }
+		foreach ( $properties as $name => $val ) {
+			if ( isset( $args[$name] ) )
+				$this->$name = $args[$name];
+		}
+	}
 
-    function get_value($option, $default = false){
+	function get_value( $option, $default = false ) {
 
-        if(isset($this->option_values[$option])){
-            if($this->option_values[$option] || is_numeric($this->option_values[$option])){
-                return $this->option_values[$option];
-            }
-
-        }
-
-        return $default;
-    }
-
-    function add_options($options){
-
-        $optionValues = get_site_option($this->option_name);
-
-        foreach($options as $option){
-
-            $this->add_option($option);
-
-        }
-
-    }
-
-	function add_option($option){
-
-		$option_id = $option['slug'];
-
-		if(!isset($option['value']))
-			$option['value'] = $this->get_value($option_id, isset($option['default'])? $option['default']: null);
-
-		$option['input_name'] = $this->option_name.'['.$option_id.']';
-
-		$this->options[$option_id] =  Rcl_Option::setup_option($option);
-
-		if(isset($option['childrens'])){
-			foreach($option['childrens'] as $parentValue => $childFields){
-
-				if(!is_array($childFields)) continue;
-
-				foreach($childFields as $childField){
-
-					$childField['parent'] = array(
-						'id' => $option_id,
-						'value' => $parentValue
-					);
-
-					$this->add_option($childField);
-
-				}
+		if ( isset( $this->option_values[$option] ) ) {
+			if ( $this->option_values[$option] || is_numeric( $this->option_values[$option] ) ) {
+				return $this->option_values[$option];
 			}
 		}
 
+		return $default;
 	}
 
-    function get_content(){
+	function add_options( $options ) {
 
-        if(!$this->options) return false;
+		$optionValues = get_site_option( $this->option_name );
 
-        $content = '<div id="'.$this->group_id.'-options-group" class="options-group '.($this->extend? 'extend-options': '').'" data-group="'.$this->group_id.'">';
+		foreach ( $options as $option ) {
 
-        if($this->title)
-            $content .= '<span class="group-title">'.$this->title.'</span>';
+			$this->add_option( $option );
+		}
+	}
 
-        foreach($this->options as $option){
+	function add_option( $option ) {
 
-            $args = array('classes' => array('rcl-option'));
+		$option_id = $option['slug'];
 
-            if($option->extend){
-                $args['classes'][] = 'extend-options';
-            }
+		if ( !isset( $option['value'] ) )
+			$option['value'] = $this->get_value( $option_id, isset( $option['default'] ) ? $option['default'] : null  );
 
-            $content .= $option->get_field_html($args);
+		$option['input_name'] = $this->option_name . '[' . $option_id . ']';
 
-        }
+		$this->options[$option_id] = Rcl_Option::setup_option( $option );
 
-        $content .= '</div>';
+		if ( isset( $option['childrens'] ) ) {
+			foreach ( $option['childrens'] as $parentValue => $childFields ) {
 
-        return $content;
+				if ( !is_array( $childFields ) )
+					continue;
 
-    }
+				foreach ( $childFields as $childField ) {
+
+					$childField['parent'] = array(
+						'id'	 => $option_id,
+						'value'	 => $parentValue
+					);
+
+					$this->add_option( $childField );
+				}
+			}
+		}
+	}
+
+	function get_content() {
+
+		if ( !$this->options )
+			return false;
+
+		$content = '<div id="' . $this->group_id . '-options-group" class="options-group ' . ($this->extend ? 'extend-options' : '') . '" data-group="' . $this->group_id . '">';
+
+		if ( $this->title )
+			$content .= '<span class="group-title">' . $this->title . '</span>';
+
+		foreach ( $this->options as $option ) {
+
+			$args = array( 'classes' => array( 'rcl-option' ) );
+
+			if ( $option->extend ) {
+				$args['classes'][] = 'extend-options';
+			}
+
+			$content .= $option->get_field_html( $args );
+		}
+
+		$content .= '</div>';
+
+		return $content;
+	}
 
 }

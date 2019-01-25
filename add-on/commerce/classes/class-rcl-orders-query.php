@@ -1,13 +1,12 @@
 <?php
 
 class Rcl_Orders_Query extends Rcl_Query {
-	
-	function __construct() { 
+	function __construct() {
 
 		$table = array(
-			'name' => RCL_PREF ."orders",
-			'as' => 'rcl_orders',
-			'cols' => array(
+			'name'	 => RCL_PREF . "orders",
+			'as'	 => 'rcl_orders',
+			'cols'	 => array(
 				'order_id',
 				'user_id',
 				'order_price',
@@ -17,21 +16,19 @@ class Rcl_Orders_Query extends Rcl_Query {
 				'order_status'
 			)
 		);
-		
-		parent::__construct($table);
-		
+
+		parent::__construct( $table );
 	}
 
 }
 
 class Rcl_Order_Items_Query extends Rcl_Query {
-	
-	function __construct() { 
+	function __construct() {
 
 		$table = array(
-			'name' => RCL_PREF ."order_items",
-			'as' => 'rcl_order_items',
-			'cols' => array(
+			'name'	 => RCL_PREF . "order_items",
+			'as'	 => 'rcl_order_items',
+			'cols'	 => array(
 				'order_id',
 				'product_id',
 				'product_price',
@@ -39,10 +36,8 @@ class Rcl_Order_Items_Query extends Rcl_Query {
 				'variations'
 			)
 		);
-		
-		parent::__construct($table);
-		
+
+		parent::__construct( $table );
 	}
 
 }
-

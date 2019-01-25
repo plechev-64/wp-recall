@@ -1,118 +1,118 @@
 /* feed Start */
 #rcl-feed .feed-box {
-    background: rgba(243, 243, 243, 0.2);
-    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
-    box-sizing: border-box;
-    clear: both;
-    margin: 15px 2px;
-    overflow: hidden;
+	background: rgba(243, 243, 243, 0.2);
+	box-shadow: 0 0 1px 1px rgb(243, 243, 243);
+	box-sizing: border-box;
+	clear: both;
+	margin: 15px 2px;
+	overflow: hidden;
 }
 #rcl-feed .feed-box pre,
 #rcl-feed .feed-box code {
-    background: rgb(242, 251, 255);
-    border-bottom: 2px solid rgb(175, 230, 255);
-    border-top: 2px solid rgb(175, 230, 255);
-    padding: 10px;
+	background: rgb(242, 251, 255);
+	border-bottom: 2px solid rgb(175, 230, 255);
+	border-top: 2px solid rgb(175, 230, 255);
+	padding: 10px;
 }
 #rcl-feed .feed-box a {
-    border: none;                                   /*++Twenty15++*/
-    box-shadow: none;                               /*++Twenty16++*/
+	border: none;									 /*++Twenty15++*/
+	box-shadow: none;								 /*++Twenty16++*/
 }
 #rcl-feed .feed-box .feed-header {
-    background: rgba(243, 243, 243, 0.5);
-    font: 16px/1.4 Verdana,arial;
-    padding: 5px;
+	background: rgba(243, 243, 243, 0.5);
+	font: 16px/1.4 Verdana,arial;
+	padding: 5px;
 }
 .feed-header .feed-options {
-    float: right;
-    position: relative;
+	float: right;
+	position: relative;
 }
 .feed-header .feed-options a {
-    color: rgb(30, 56, 75);
+	color: rgb(30, 56, 75);
 }
 .feed-header .feed-options .fa-times {
-    color: #aaa;
-    font-size: 18px;
+	color: #aaa;
+	font-size: 18px;
 }
 .feed-options .fa-times::before {
-    padding: 0;
+	padding: 0;
 }
 .feed-header .feed-options > .rcli:hover + .options-box,
 .feed-header .feed-options .options-box:hover {
-    display:block;
+	display:block;
 }
 .feed-header .feed-options .options-box {
-    background: #fff;
-    box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
-    display: none;
-    overflow: hidden;
-    padding: 10px 15px;
-    position: absolute;
-    right: 0;
-    top: 0;
+	background: #fff;
+	box-shadow: 0 0 1px 2px rgba(219, 219, 219, 0.8);
+	display: none;
+	overflow: hidden;
+	padding: 10px 15px;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
 .feed-options .feed-callback {
-    align-items: center;
-    background: transparent;
-    color: #333;
-    display: flex;
-    font: 14px Georgia,arial;
+	align-items: center;
+	background: transparent;
+	color: #333;
+	display: flex;
+	font: 14px Georgia,arial;
 }
 .feed-options .feed-callback:hover {
-    background: transparent;
-    color: #333;
+	background: transparent;
+	color: #333;
 }
 .feed-options .feed-callback:hover > span {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 #rcl-feed .feed-box .feed-author-avatar {
-    float: left;
-    margin: 0 10px 0 0;
+	float: left;
+	margin: 0 10px 0 0;
 }
 #rcl-feed .feed-box .feed-author-avatar img {
-    border-radius: 0;
-    height: 44px;
-    margin: 0;
-    width: 44px;
+	border-radius: 0;
+	height: 44px;
+	margin: 0;
+	width: 44px;
 }
 #rcl-feed .feed-box .feed-content {
-    padding: 10px;
+	padding: 10px;
 }
 #rcl-feed .feed-box .feed-title {
-    border-bottom: 1px solid rgba(219, 219, 219, 0.6);
-    font: bold 16px/1 Arial;
-    margin: 0 0 10px;
-    padding: 0 0 10px;
+	border-bottom: 1px solid rgba(219, 219, 219, 0.6);
+	font: bold 16px/1 Arial;
+	margin: 0 0 10px;
+	padding: 0 0 10px;
 }
 #feed-preloader {
-    position: relative;
-    height: 100px;
+	position: relative;
+	height: 100px;
 }
 #rcl-feed .feed-box .feed-content-meta {
-    font-size: 12px;
-    margin: 10px 0 0;
-    padding: 0 10px;
+	font-size: 12px;
+	margin: 10px 0 0;
+	padding: 0 10px;
 }
 .userlist .follow-button {
-    margin: 10px 0 5px;
-    text-align: right;
+	margin: 10px 0 5px;
+	text-align: right;
 }
 .follow-button a.recall-button {
-    color: #fff;
+	color: #fff;
 }
 #tab-subscriptions .follow-button,
 #tab-followers .follow-button {
-    margin: 15px 2px 4px;
-    padding: 0;
+	margin: 15px 2px 4px;
+	padding: 0;
 }
 @media screen and (max-width:480px) {
-    .feed-header .feed-options .options-box {
-        max-width: 400px;
-    }
+	.feed-header .feed-options .options-box {
+		max-width: 400px;
+	}
 }
 @media screen and (max-width:360px) {
-    .feed-header .feed-options .options-box {
-        max-width: 290px;
-    }
+	.feed-header .feed-options .options-box {
+		max-width: 290px;
+	}
 }
 /* feed End */

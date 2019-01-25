@@ -1,72 +1,72 @@
 /* RCL Login */
 .panel_lk_recall {
-    color:#333;
-    display: block;
-    line-height: 1.5;                           /*++Twenty16++*/
-    margin: 0 auto;
-    max-width: 320px;
-    width: 100%;
+	color:#333;
+	display: block;
+	line-height: 1.5;							 /*++Twenty16++*/
+	margin: 0 auto;
+	max-width: 320px;
+	width: 100%;
 }
 .panel_lk_recall.floatform {
-    display:none;
-    left: 50%;
-    margin-left: -160px;
-    position: absolute;
-    z-index: 9999;
+	display:none;
+	left: 50%;
+	margin-left: -160px;
+	position: absolute;
+	z-index: 9999;
 }
 div.panel_lk_recall a {
-    border: none;                               /*++Twenty15++*/
-    box-shadow: none;                           /*++Twenty16++*/
-    text-decoration: none;
+	border: none;								 /*++Twenty15++*/
+	box-shadow: none;							 /*++Twenty16++*/
+	text-decoration: none;
 }
 .panel_lk_recall .form-tab-rcl {
-    background: #fff;
-    border-radius: 2px;
-    display: none;
-    font: 16px/26px Verdana,Tahoma,sans-serif;
-    margin: 3px auto;
-    overflow: hidden;
-    width: calc(100% - 2px);
+	background: #fff;
+	border-radius: 2px;
+	display: none;
+	font: 16px/26px Verdana,Tahoma,sans-serif;
+	margin: 3px auto;
+	overflow: hidden;
+	width: calc(100% - 2px);
 }
 .panel_lk_recall.pageform .form-tab-rcl {
-    box-shadow: 0 0 1px 1px #bebebe;
+	box-shadow: 0 0 1px 1px #bebebe;
 }
 .panel_lk_recall.floatform .form-tab-rcl {
-    box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.5);
 }
 .panel_lk_recall .form_head {
-    display: inline-block;
-    overflow: hidden;
-    width: 100%;
+	display: inline-block;
+	overflow: hidden;
+	width: 100%;
 }
 .panel_lk_recall .form-tab-rcl .form_head a {
-    border-bottom: 1px solid #ccc;
-    color: #aaa;
-    display: block;
-    padding: 8px 0;
-    text-align:center;
+	border-bottom: 1px solid #ccc;
+	color: #aaa;
+	display: block;
+	padding: 8px 0;
+	text-align:center;
 }
 .panel_lk_recall .form_reg,
 .panel_lk_recall .form_auth {
-    background: #e6e7e8;
-    color: #666;
-    display: block;
-    float: left;
-    text-align: center;
-    width: 50%;
+	background: #e6e7e8;
+	color: #666;
+	display: block;
+	float: left;
+	text-align: center;
+	width: 50%;
 }
 .panel_lk_recall .form_active {
-    background-color: #fff;
-    padding: 8px 0;
+	background-color: #fff;
+	padding: 8px 0;
 }
 .panel_lk_recall .form-tab-rcl a.link-tab-rcl:hover {
-    color: #555;
+	color: #555;
 }
 .panel_lk_recall .form-block-rcl {
-    clear: both;
-    line-height: 1.4;
-    margin: 0 17px 15px;
-    position: relative;
+	clear: both;
+	line-height: 1.4;
+	margin: 0 17px 15px;
+	position: relative;
 }
 /*end*/
 
@@ -75,131 +75,131 @@ div.panel_lk_recall a {
 .panel_lk_recall .rcl-field-input select,
 .panel_lk_recall .rcl-field-input textarea,
 .panel_lk_recall .rcl-field-input input:not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
-    background-color: #fafafa;
-    display: block;
-    font-size: 15px;
-    font-weight: normal;
-    margin: 5px auto;
-    text-transform: none;
+	background-color: #fafafa;
+	display: block;
+	font-size: 15px;
+	font-weight: normal;
+	margin: 5px auto;
+	text-transform: none;
 }
 .panel_lk_recall .rcl-field-input textarea,
 .panel_lk_recall .rcl-field-input input:not([type="checkbox"]):not([type="radio"]) {
-    -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;
+	-webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;
 }
 .panel_lk_recall .rcl-field-input select:focus,
 .panel_lk_recall .rcl-field-input textarea:focus,
 .panel_lk_recall .rcl-field-input input:focus:not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
-    background-color: #f7f7f7;
-    outline: none;
+	background-color: #f7f7f7;
+	outline: none;
 }
 .panel_lk_recall .rcl-field-input .maxlength {
-    font-size: 13px;
+	font-size: 13px;
 }
 /*end*/
 
 
 /* adjustments */
 .panel_lk_recall .default-field input {
-    background-color: #fafafa;
-    border-radius: 0;
-    border: 1px solid #e5e5e5;
-    box-shadow: none;
-    box-sizing: border-box;
-    display: block;
-    float: none;
-    font-size: 15px;
-    font-weight: normal;
-    height: auto;
-    line-height: 1.4;
-    margin: 5px auto;
-    max-width: 100%;
-    outline: 0;
-    padding: 6px 12px 6px 32px;
-    text-transform: none;
-    width: 100%;
-    -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;  /*chrome banana fix*/
+	background-color: #fafafa;
+	border-radius: 0;
+	border: 1px solid #e5e5e5;
+	box-shadow: none;
+	box-sizing: border-box;
+	display: block;
+	float: none;
+	font-size: 15px;
+	font-weight: normal;
+	height: auto;
+	line-height: 1.4;
+	margin: 5px auto;
+	max-width: 100%;
+	outline: 0;
+	padding: 6px 12px 6px 32px;
+	text-transform: none;
+	width: 100%;
+	-webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;	/*chrome banana fix*/
 }
 .panel_lk_recall form-tab-rcl .block-label {
-    font-weight: normal;
-    text-align:left;
+	font-weight: normal;
+	text-align:left;
 }
 .rcl-loginform label.block-label {
-    background-color: transparent;
-    border: none;
-    font-size: inherit;
-    margin: 4px 10px 4px 0;
-    padding: 0;
-    width: 100%;
+	background-color: transparent;
+	border: none;
+	font-size: inherit;
+	margin: 4px 10px 4px 0;
+	padding: 0;
+	width: 100%;
 }
 /*end*/
 
 
 .panel_lk_recall .form-tab-rcl input[type="submit"] {
-    font-size: 16px;
-    margin: 0;
-    max-width: none;
-    outline: none;
-    padding: 10px;
-    text-transform: uppercase;
-    width: 100%;
+	font-size: 16px;
+	margin: 0;
+	max-width: none;
+	outline: none;
+	padding: 10px;
+	text-transform: uppercase;
+	width: 100%;
 }
 .form-block-rcl.default-field .rcli {
-    color: #538a9a;
-    font-size: 16px;
-    left: 12px;
-    opacity: 0.4;
-    position: absolute;
-    top: 10px;
+	color: #538a9a;
+	font-size: 16px;
+	left: 12px;
+	opacity: 0.4;
+	position: absolute;
+	top: 10px;
 }
 .panel_lk_recall input[type="text"]:focus + .rcli,
 .panel_lk_recall input[type="email"]:focus + .rcli,
 .panel_lk_recall input[type="password"]:focus + .rcli {
-    opacity: 1;
+	opacity: 1;
 }
 .panel_lk_recall .form-block-rcl .required {
-    font-size: 14px;
-    line-height: normal;
-    position: absolute;
-    right: 8px;
-    top: 10px;
+	font-size: 14px;
+	line-height: normal;
+	position: absolute;
+	right: 8px;
+	top: 10px;
 }
 .form-tab-rcl .form-block-rcl a.link-remember-rcl {
-    color: #aaa;
-    float: right;
-    font-size: 12px;
-    margin: 3px 0;
-    padding: 8px 0;
+	color: #aaa;
+	float: right;
+	font-size: 12px;
+	margin: 3px 0;
+	padding: 8px 0;
 }
 .form-block-rcl.form_extend .form-block-rcl {
-    margin: 0 0 15px;
+	margin: 0 0 15px;
 }
 .panel_lk_recall .form-block-rcl label .required {
-    position: inherit;
+	position: inherit;
 }
 .form_rmmbr a {
-    background: #e6e7e8;
-    float: left;
-    text-align: center;
-    width: 50%;
+	background: #e6e7e8;
+	float: left;
+	text-align: center;
+	width: 50%;
 }
 .form_auth,
 .form_head.form_rmmbr a:first-child {
-    border-right: 1px solid #ccc;
-    box-sizing: border-box;
+	border-right: 1px solid #ccc;
+	box-sizing: border-box;
 }
 .form-tab-rcl .form-title {
-    display: block;
-    font-size: 20px;
-    text-align: center;
+	display: block;
+	font-size: 20px;
+	text-align: center;
 }
 .form-block-rcl .login-error,
 .form-block-rcl .login-message,
 .form-block-rcl [class^="strength"] {
-    display: block;
-    font-size: 12px;
-    margin: 8px auto 5px;
-    padding: 8px;
-    text-align: center;
+	display: block;
+	font-size: 12px;
+	margin: 8px auto 5px;
+	padding: 8px;
+	text-align: center;
 }
 .form-block-rcl .strength0 {background:#ccc;width:140px;}
 .form-block-rcl .strength1 {background:#fea6a6;width:140px;}
@@ -210,82 +210,82 @@ div.panel_lk_recall a {
 
 .panel_lk_recall span.login-error a:hover,
 .panel_lk_recall .form-block-rcl label a:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 .panel_lk_recall .form-tab-rcl .login-error {
-    background: #ffcfcf;
+	background: #ffcfcf;
 }
 .panel_lk_recall .form-tab-rcl .login-message {
-    background: #bfffbd;
+	background: #bfffbd;
 }
 /*end*/
 
 
 /* регистрация в wp-login.php */
 #registerform .rcl-field-core {
-    position: relative;
+	position: relative;
 }
 #registerform .maxlength {
-    align-items: center;
-    background-color: #eaeaea;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    cursor: default;
-    display: flex;
-    font-weight: bold;
-    justify-content: center;
-    max-height: 100%;
-    min-width: 30px;
-    padding: 2px 5px;
-    position: absolute;
-    right: 0;
-    text-align: center;
-    top: 0;
-    z-index: 10;
+	align-items: center;
+	background-color: #eaeaea;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	cursor: default;
+	display: flex;
+	font-weight: bold;
+	justify-content: center;
+	max-height: 100%;
+	min-width: 30px;
+	padding: 2px 5px;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	top: 0;
+	z-index: 10;
 }
 #registerform .type-text-input .maxlength {
-    height: 100%;
+	height: 100%;
 }
 #registerform .rcl-field-notice {
-    clear: both;
-    font-size: .85em;
+	clear: both;
+	font-size: .85em;
 }
 #registerform .form-block-rcl .required {
-    color: rgb(229, 57, 53);
-    font: bold 15px/normal Verdana,arial;
-    left: -15px;
-    position: absolute;
-    top: 10px;
+	color: rgb(229, 57, 53);
+	font: bold 15px/normal Verdana,arial;
+	left: -15px;
+	position: absolute;
+	top: 10px;
 }
 #registerform .form-block-rcl label .required {
-    position: inherit;
+	position: inherit;
 }
 #registerform .form-block-rcl {
-    margin-bottom: 15px;
-    position: relative;
+	margin-bottom: 15px;
+	position: relative;
 }
 #registerform .form-block-rcl label {
-    display: block;
-    margin-bottom: 5px;
+	display: block;
+	margin-bottom: 5px;
 }
 #registerform .rcl-checkbox-box,
 #registerform .rcl-radio-box {
-    display: block;
-    padding: 3px 0 0 20px;
+	display: block;
+	padding: 3px 0 0 20px;
 }
 #registerform .rcl-checkbox-box label,
 #registerform .rcl-radio-box label {
-    display: inline-block;
+	display: inline-block;
 }
 #registerform textarea,
 #registerform select,
 #registerform input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]) {
-    font-size: 18px;
-    padding: 5px 10px;
-    width: 100%;
-    margin: 0 auto;
+	font-size: 18px;
+	padding: 5px 10px;
+	width: 100%;
+	margin: 0 auto;
 }
 #registerform #user_email {
-    margin-bottom: 16px;
+	margin-bottom: 16px;
 }
 /*end*/

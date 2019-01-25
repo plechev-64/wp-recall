@@ -1,230 +1,229 @@
 <?php
 
-class Rcl_Groups_List extends Rcl_Groups_Query{
+class Rcl_Groups_List extends Rcl_Groups_Query {
 
-    public $template = 'list';
-    public $filters = 0;
-    public $search_form = 1;
-    public $user_id;
-    public $admin_id;
-    public $orderby = 'name';
-    public $search_name = false;
-    public $add_uri;
+	public $template	 = 'list';
+	public $filters		 = 0;
+	public $search_form	 = 1;
+	public $user_id;
+	public $admin_id;
+	public $orderby		 = 'name';
+	public $search_name	 = false;
+	public $add_uri;
 
-    function __construct($args){
+	function __construct( $args ) {
 
-        parent::__construct();
+		parent::__construct();
 
-        $this->init_properties($args);
+		$this->init_properties( $args );
 
-        $this->set_query($args);
+		$this->set_query( $args );
 
-        $this->setup_termdata();
+		$this->setup_termdata();
 
-        if(isset($_GET['groups-filter'])&&$this->filters)
-            $this->orderby = $_GET['groups-filter'];
+		if ( isset( $_GET['groups-filter'] ) && $this->filters )
+			$this->orderby = $_GET['groups-filter'];
 
-        if(isset($_GET['group-name']))
-            $this->search_name = $_GET['group-name'];
+		if ( isset( $_GET['group-name'] ) )
+			$this->search_name = $_GET['group-name'];
 
-        $this->add_uri['groups-filter'] = $this->orderby;
+		$this->add_uri['groups-filter'] = $this->orderby;
 
-        if($this->search_name)
-            add_filter('rcl_groups_query',array($this,'add_query_search_name'));
+		if ( $this->search_name )
+			add_filter( 'rcl_groups_query', array( $this, 'add_query_search_name' ) );
 
-        if($this->user_id)
-            add_filter('rcl_groups_query',array($this,'add_query_user_id'));
+		if ( $this->user_id )
+			add_filter( 'rcl_groups_query', array( $this, 'add_query_user_id' ) );
 
-        if($this->admin_id)
-            add_filter('rcl_groups_query',array($this,'add_query_admin_id'));
+		if ( $this->admin_id )
+			add_filter( 'rcl_groups_query', array( $this, 'add_query_admin_id' ) );
 
-        if($this->orderby=='posts')
-            add_filter('rcl_groups_query',array($this,'add_query_orderby_posts'));
+		if ( $this->orderby == 'posts' )
+			add_filter( 'rcl_groups_query', array( $this, 'add_query_orderby_posts' ) );
 
-        if($this->orderby=='date')
-            add_filter('rcl_groups_query',array($this,'add_query_orderby_date'));
+		if ( $this->orderby == 'date' )
+			add_filter( 'rcl_groups_query', array( $this, 'add_query_orderby_date' ) );
 
-        if($this->orderby=='name')
-            add_filter('rcl_groups_query',array($this,'add_query_orderby_name'));
+		if ( $this->orderby == 'name' )
+			add_filter( 'rcl_groups_query', array( $this, 'add_query_orderby_name' ) );
 
-        if($this->orderby=='users')
-            add_filter('rcl_groups_query',array($this,'add_query_orderby_users'));
+		if ( $this->orderby == 'users' )
+			add_filter( 'rcl_groups_query', array( $this, 'add_query_orderby_users' ) );
 
-        $this->query = apply_filters('rcl_groups_query',$this->query);
+		$this->query = apply_filters( 'rcl_groups_query', $this->query );
+	}
 
-    }
+	function init_properties( $args ) {
+		$properties = get_class_vars( get_class( $this ) );
 
-    function init_properties($args){
-        $properties = get_class_vars(get_class($this));
+		foreach ( $properties as $name => $val ) {
+			if ( isset( $args[$name] ) )
+				$this->$name = $args[$name];
+		}
+	}
 
-        foreach ($properties as $name=>$val){
-            if(isset($args[$name])) $this->$name = $args[$name];
-        }
-    }
+	function remove_data() {
+		remove_all_filters( 'rcl_groups_query' );
+	}
 
-    function remove_data(){
-        remove_all_filters('rcl_groups_query');
-    }
+	function setup_groupdata( $data ) {
+		global $rcl_group;
+		$rcl_group = ( object ) $data;
+		return $rcl_group;
+	}
 
-    function setup_groupdata($data){
-        global $rcl_group;
-        $rcl_group = (object)$data;
-        return $rcl_group;
-    }
+	function add_query_search_name( $query ) {
+		$query['where'][] = "wp_terms.name LIKE '%$this->search_name%'";
+		return $query;
+	}
 
-    function add_query_search_name($query){
-        $query['where'][] = "wp_terms.name LIKE '%$this->search_name%'";
-        return $query;
-    }
+	function add_query_user_id( $query ) {
 
-    function add_query_user_id($query){
+		$where = "rcl_groups.admin_id='$this->user_id'";
 
-        $where = "rcl_groups.admin_id='$this->user_id'";
+		$users = new Rcl_Groups_Users_Query();
 
-        $users = new Rcl_Groups_Users_Query();
+		$groups_ids = $users->get_col( array(
+			'user_id'	 => $this->user_id,
+			'fields'	 => array( 'group_id' )
+			) );
 
-        $groups_ids = $users->get_col(array(
-            'user_id' => $this->user_id,
-            'fields' => array('group_id')
-        ));
+		if ( $groups_ids )
+			$where = "($where OR rcl_groups.ID IN (" . implode( ',', $groups_ids ) . "))";
 
-        if($groups_ids)
-            $where = "($where OR rcl_groups.ID IN (".implode(',',$groups_ids)."))";
+		$query['where'][] = $where;
 
-        $query['where'][] = $where;
+		return $query;
+	}
 
-        return $query;
-    }
+	function add_query_admin_id( $query ) {
 
-    function add_query_admin_id($query){
+		$query['where'][] = "rcl_groups.admin_id='$this->admin_id'";
 
-        $query['where'][] = "rcl_groups.admin_id='$this->admin_id'";
+		return $query;
+	}
 
-        return $query;
-    }
+	//добавляем выборку данных постов в основной запрос
+	function add_query_orderby_posts( $query ) {
 
-    //добавляем выборку данных постов в основной запрос
-    function add_query_orderby_posts($query){
+		$query['orderby'] = "wp_term_taxonomy.count";
 
-        $query['orderby'] = "wp_term_taxonomy.count";
+		return $query;
+	}
 
-        return $query;
-    }
+	function add_query_orderby_date( $query ) {
 
-    function add_query_orderby_date($query){
+		$query['orderby'] = "wp_terms.term_id";
 
-        $query['orderby'] = "wp_terms.term_id";
+		return $query;
+	}
 
-        return $query;
-    }
+	function add_query_orderby_name( $query ) {
 
-    function add_query_orderby_name($query){
+		$query['orderby'] = "wp_terms.name";
 
-        $query['orderby'] = "wp_terms.name";
+		return $query;
+	}
 
-        return $query;
-    }
+	function add_query_orderby_users( $query ) {
 
-    function add_query_orderby_users($query){
+		$query['orderby'] = "rcl_groups.group_users";
 
-        $query['orderby'] = "rcl_groups.group_users";
+		return $query;
+	}
 
-        return $query;
-    }
+	function search_request() {
+		global $user_LK;
 
-    function search_request(){
-        global $user_LK;
+		$rqst = '';
 
-        $rqst = '';
+		if ( isset( $_GET['group-name'] ) || $user_LK ) {
+			$rqst = array();
+			foreach ( $_GET as $k => $v ) {
+				if ( $k == 'rcl-page' || $k == 'groups-filter' )
+					continue;
+				$rqst[$k] = $k . '=' . $v;
+			}
+		}
 
-        if(isset($_GET['group-name'])||$user_LK){
-            $rqst = array();
-            foreach($_GET as $k=>$v){
-                if($k=='rcl-page'||$k=='groups-filter') continue;
-                $rqst[$k] = $k.'='.$v;
-            }
+		if ( $this->add_uri ) {
+			foreach ( $this->add_uri as $k => $v ) {
+				$rqst[$k] = $k . '=' . $v;
+			}
+		}
 
-        }
+		$rqst = apply_filters( 'rcl_groups_uri', $rqst );
 
-        if($this->add_uri){
-            foreach($this->add_uri as $k=>$v){
-                $rqst[$k] = $k.'='.$v;
-            }
-        }
+		return $rqst;
+	}
 
-        $rqst = apply_filters('rcl_groups_uri',$rqst);
+	function get_filters( $count_groups = false ) {
+		global $post, $active_addons, $user_LK;
 
-        return $rqst;
-    }
+		if ( !$this->filters )
+			return false;
 
-    function get_filters($count_groups = false){
-        global $post,$active_addons,$user_LK;
+		$content = '';
 
-        if(!$this->filters) return false;
+		if ( $this->search_form ) {
 
-        $content = '';
+			$search_text = ((isset( $_GET['group-name'] ))) ? $_GET['group-name'] : '';
 
-        if($this->search_form){
+			$content = '<div class="rcl-search-form">
+					<form method="get" action="">
+						<div class="rcl-search-form-title">' . __( 'Search groups', 'wp-recall' ) . '</div>
+						<input type="text" name="group-name" value="' . $search_text . '">'
+				. rcl_get_button( array(
+					'label'	 => __( 'Search', 'wp-recall' ),
+					'submit' => true
+				) )
+				. '</form>
+				</div>';
 
-            $search_text = ((isset($_GET['group-name'])))? $_GET['group-name']: '';
+			$content = apply_filters( 'rcl_groups_search_form', $content );
+		}
 
-            $content ='<div class="rcl-search-form">
-                    <form method="get" action="">
-                        <div class="rcl-search-form-title">'.__('Search groups','wp-recall').'</div>
-                        <input type="text" name="group-name" value="'.$search_text.'">'
-                        . rcl_get_button(array(
-                            'label' => __('Search','wp-recall'),
-                            'submit' => true
-                        ))
-                    . '</form>
-                </div>';
+		$count_groups = (false !== $count_groups) ? $count_groups : $this->count_groups();
 
-            $content = apply_filters('rcl_groups_search_form',$content);
+		$content .='<h3>' . __( 'Total number of groups', 'wp-recall' ) . ': ' . $count_groups . '</h3>';
 
-        }
+		if ( isset( $this->add_uri['groups-filter'] ) )
+			unset( $this->add_uri['groups-filter'] );
 
-        $count_groups = (false!==$count_groups)? $count_groups: $this->count_groups();
+		$s_array = $this->search_request();
 
-        $content .='<h3>'.__('Total number of groups','wp-recall').': '.$count_groups.'</h3>';
+		$rqst = ($s_array) ? implode( '&', $s_array ) . '&' : '';
 
-        if(isset($this->add_uri['groups-filter'])) unset($this->add_uri['groups-filter']);
+		if ( $user_LK ) {
+			$url = (isset( $_POST['tab_url'] )) ? $_POST['tab_url'] : get_author_posts_url( $user_LK );
+		} else {
+			$url = get_permalink( $post->ID );
+		}
 
-        $s_array = $this->search_request();
+		$perm = rcl_format_url( $url ) . $rqst;
 
-        $rqst = ($s_array)? implode('&',$s_array).'&' :'';
+		$filters = array(
+			'name'	 => __( 'Name', 'wp-recall' ),
+			'date'	 => __( 'Date', 'wp-recall' ),
+			'posts'	 => __( 'Publications', 'wp-recall' ),
+			'users'	 => __( 'Users', 'wp-recall' ),
+		);
 
-        if($user_LK){
-            $url = (isset($_POST['tab_url']))? $_POST['tab_url']: get_author_posts_url($user_LK);
-        }else{
-            $url = get_permalink($post->ID);
-        }
+		$filters = apply_filters( 'rcl_groups_filter', $filters );
 
-        $perm = rcl_format_url($url).$rqst;
+		$content .= '<div class="rcl-data-filters">' . __( 'Filter by', 'wp-recall' ) . ': ';
 
-        $filters = array(
-            'name'       => __('Name','wp-recall'),
-            'date'    => __('Date','wp-recall'),
-            'posts'      => __('Publications','wp-recall'),
-            'users'      => __('Users','wp-recall'),
-        );
+		foreach ( $filters as $key => $name ) {
+			$content .= rcl_get_buttons( array(
+				'label'	 => $name,
+				'href'	 => $perm . 'groups-filter=' . $key,
+				'class'	 => 'data-filter ' . rcl_a_active( $this->orderby, $key )
+				) );
+		}
 
-        $filters = apply_filters('rcl_groups_filter',$filters);
+		$content .= '</div>';
 
-        $content .= '<div class="rcl-data-filters">'.__('Filter by','wp-recall').': ';
-
-        foreach($filters as $key=>$name){
-            $content .= rcl_get_buttons(array(
-                'label' => $name,
-                'href' => $perm.'groups-filter='.$key,
-                'class' => 'data-filter '.rcl_a_active($this->orderby,$key)
-            ));
-        }
-
-        $content .= '</div>';
-
-        return $content;
-
-    }
+		return $content;
+	}
 
 }
-

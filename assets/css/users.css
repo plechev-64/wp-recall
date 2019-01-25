@@ -1,327 +1,327 @@
 /*Список пользователей*/
 /*общие стили*/
 .userlist {
-    clear: both;
-    overflow: hidden;
+	clear: both;
+	overflow: hidden;
 }
 .userlist .user-single {
-    background: rgba(243, 243, 243, 0.3);
-    box-shadow: 0 0 1px 2px rgb(243, 243, 243);
-    box-sizing: border-box;
-    line-height: 1.4;
+	background: rgba(243, 243, 243, 0.3);
+	box-shadow: 0 0 1px 2px rgb(243, 243, 243);
+	box-sizing: border-box;
+	line-height: 1.4;
 }
 .userlist .user-single a {
-    border: none;                                   /*++Twenty15++*/
-    box-shadow: none;                               /*++Twenty16++*/
-    height: auto;
-    margin: 0 0 3px;
-    text-decoration: none;
-    width: 100%;
+	border: none;									 /*++Twenty15++*/
+	box-shadow: none;								 /*++Twenty16++*/
+	height: auto;
+	margin: 0 0 3px;
+	text-decoration: none;
+	width: 100%;
 }
 .userlist .user-single b {
-    font-weight: bold;
-    margin: 0 3px 0 0;
+	font-weight: bold;
+	margin: 0 3px 0 0;
 }
 .userlist .status_author_mess {
-    float: right;
+	float: right;
 }
 .userlist .status_author_mess.online .rcli {
-    color: #89e535;
-    font-size: 16px;
-    line-height: normal;
-    vertical-align: middle;
+	color: #89e535;
+	font-size: 16px;
+	line-height: normal;
+	vertical-align: middle;
 }
 .userlist .status_author_mess.offline {
-    color: #888;
-    font-size: 12px;
-    margin: 4px 0 0;
+	color: #888;
+	font-size: 12px;
+	margin: 4px 0 0;
 }
 .userlist .user-single .thumb-user {
-    box-sizing: border-box;
-    float: left;
-    line-height: 1;
-    margin: 0;
-    position: relative;
+	box-sizing: border-box;
+	float: left;
+	line-height: 1;
+	margin: 0;
+	position: relative;
 }
 .userlist:not(.mini-list) .thumb-user a {
-    display: inline-block;
+	display: inline-block;
 }
 .userlist .thumb-user a img {
-    border-radius: 0;                               /*++Twenty16++*/
-    border: none;
-    box-shadow: none;
-    display: block;
-    float: none;
-    height: auto;
-    margin: 0;
-    max-width: 100%;
-    padding: 0;
-    width: 100%;
+	border-radius: 0;								 /*++Twenty16++*/
+	border: none;
+	box-shadow: none;
+	display: block;
+	float: none;
+	height: auto;
+	margin: 0;
+	max-width: 100%;
+	padding: 0;
+	width: 100%;
 }
 
 /*списком*/
 .userlist.rows-list .user-single {
-    border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    display: block;
-    font-size: 14px;
-    margin: 20px auto;
-    overflow: visible;
-    padding: 0;
-    position: relative;
-    text-align: left;
-    width: 98%;
-    width: calc(100% - 10px);
+	border-radius: 2px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	display: block;
+	font-size: 14px;
+	margin: 20px auto;
+	overflow: visible;
+	padding: 0;
+	position: relative;
+	text-align: left;
+	width: 98%;
+	width: calc(100% - 10px);
 }
 .userlist.rows-list .userlist_top {
-    background: #eee;
-    margin-bottom: 5px;
-    overflow: hidden;
-    padding: 5px 8px 5px 95px;
+	background: #eee;
+	margin-bottom: 5px;
+	overflow: hidden;
+	padding: 5px 8px 5px 95px;
 }
 .userlist.rows-list .userlist_top h3 {
-    clear: none;
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 1.4;
-    margin: 0;
-    padding: 0;
-    text-transform: none;
+	clear: none;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 1.4;
+	margin: 0;
+	padding: 0;
+	text-transform: none;
 }
 .userlist.rows-list .userlist_cntr {
-    display: block;
-    min-height: 70px;
-    width: 100%;
+	display: block;
+	min-height: 70px;
+	width: 100%;
 }
 .userlist.rows-list .thumb-user {
-    background: #eee;
-    left: 0;
-    padding: 5px;
-    position: absolute;
-    top: 0;
-    width: 80px;
+	background: #eee;
+	left: 0;
+	padding: 5px;
+	position: absolute;
+	top: 0;
+	width: 80px;
 }
 .userlist.rows-list .rating-rcl .rating-null {
-    background: transparent;
-    color: #888;
+	background: transparent;
+	color: #888;
 }
 .userlist.rows-list .user-content-rcl::before { /* обманка на месте аватарки */
-/*     background: #000; */ /* Посмотреть позицию */
-    content: "";
-    float: left;
-    height: 70px;
-    margin: 0 5px 5px;
-    width: 70px;
+	/*	 background: #000; */ /* Посмотреть позицию */
+	content: "";
+	float: left;
+	height: 70px;
+	margin: 0 5px 5px;
+	width: 70px;
 }
 .userlist.rows-list .user-content-rcl {
-    margin: 0 0 0 10px;
-    padding: 0 5px 5px 0;
+	margin: 0 0 0 10px;
+	padding: 0 5px 5px 0;
 }
 .userlist.rows-list .user-content-rcl > div:not(.ballun-status),
 .userlist.rows-list .user-content-rcl > span:not(.filter-data) {
-    margin: 2px 0;
-    padding: 0 0 1px;
+	margin: 2px 0;
+	padding: 0 0 1px;
 }
 .userlist.rows-list .user-content-rcl .ballun-status {
-    box-sizing: content-box;
-    display: flex;
-    margin: 0 6px 8px;
-    max-width: none;
+	box-sizing: content-box;
+	display: flex;
+	margin: 0 6px 8px;
+	max-width: none;
 }
 .rows-list .status-user-rcl::before {
-    border-width: 13px 0 0 13px;
-    left: -14px;
-    top: 8px;
+	border-width: 13px 0 0 13px;
+	left: -14px;
+	top: 8px;
 }
 .userlist.rows-list .user-single .filter-data {
-    background: #eee;
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.7);
-    color: #888;
-    display: inline-block;
-    font-size: 12px;
-    line-height: 1;
-    margin: 1px 10px 5px 0;
-    padding: 6px 8px;
+	background: #eee;
+	box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.7);
+	color: #888;
+	display: inline-block;
+	font-size: 12px;
+	line-height: 1;
+	margin: 1px 10px 5px 0;
+	padding: 6px 8px;
 }
 .userlist.rows-list .user-single .filter-data .rcli {
-    margin: 0 5px 0 0;
+	margin: 0 5px 0 0;
 }
 .userlist .user-profile-fields .rcl-custom-fields {
-    clear: none;
-    font-size: 14px;
-    margin: 5px 0;
-    padding: 0 0 3px;
+	clear: none;
+	font-size: 14px;
+	margin: 5px 0;
+	padding: 0 0 3px;
 }
 
 /* вывод аватарками и mini start */
 .userlist.avatars-list .user-single {
-    float: left;
-    margin: 5px 0.5%;
-    padding: 0.7%;
-    width: 13%;
+	float: left;
+	margin: 5px 0.5%;
+	padding: 0.7%;
+	width: 13%;
 }
 .userlist.mini-list .user-single {
-    float: left;
-    margin: 1%;
-    max-width: 55px;
-    padding: 0;
-    width: 18%;
+	float: left;
+	margin: 1%;
+	max-width: 55px;
+	padding: 0;
+	width: 18%;
 }
 .userlist.mini-list .user-single:hover,
 .userlist.avatars-list .user-single:hover {
-    box-shadow: 0 0 2px 2px #ccc;
+	box-shadow: 0 0 2px 2px #ccc;
 }
 .userlist.mini-list .thumb-user,
 .userlist.avatars-list .thumb-user {
-    width:100%
+	width:100%
 }
 .userlist .user-single .thumb-user .status_user {
-    font-family: rcl-awesome,arial,sans-serif;
-    font-size: 16px;
-    position: absolute;
-    right: 5px;
-    top: 5px;
+	font-family: rcl-awesome,arial,sans-serif;
+	font-size: 16px;
+	position: absolute;
+	right: 5px;
+	top: 5px;
 }
 /* вывод аватарками и mini end */
 
 /* Cards */
 .userlist.cards-list .user-single {
-    animation: u_card_fade 800ms cubic-bezier(0.4, 0, 0.2, 1);
-    animation-fill-mode: forwards;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    float: left;
-    font-size: 14px;
-    margin: 2%;
-    overflow: hidden;
-    transform: translate3d(0px, 0px, 0px);
-    transition: box-shadow 0.2s linear 0s;
-    width: 46%;
+	animation: u_card_fade 800ms cubic-bezier(0.4, 0, 0.2, 1);
+	animation-fill-mode: forwards;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	float: left;
+	font-size: 14px;
+	margin: 2%;
+	overflow: hidden;
+	transform: translate3d(0px, 0px, 0px);
+	transition: box-shadow 0.2s linear 0s;
+	width: 46%;
 }
 @keyframes u_card_fade {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 .userlist.cards-list .user-single:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.19), 0 6px 13px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.2s linear 0s;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.19), 0 6px 13px rgba(0, 0, 0, 0.2);
+	transition: box-shadow 0.2s linear 0s;
 }
 .userlist.cards-list .u_card_top {
-    float: left;
-    position: relative;
-    width: 100%;
+	float: left;
+	position: relative;
+	width: 100%;
 }
 .userlist.cards-list .rating-rcl {
-    left: 0;
-    min-width: 30px;
-    opacity: 0.8;
-    position: absolute;
-    top: 0;
-    z-index: 2;
+	left: 0;
+	min-width: 30px;
+	opacity: 0.8;
+	position: absolute;
+	top: 0;
+	z-index: 2;
 }
 .userlist.cards-list .status_author_mess {
-    position: absolute;
-    right: 5px;
-    top: 2px;
-    z-index: 2;
+	position: absolute;
+	right: 5px;
+	top: 2px;
+	z-index: 2;
 }
 .userlist.cards-list .status_author_mess.offline {
-    background: rgba(219, 219, 219, 0.6);
-    color: #555;
-    line-height: 1;
-    margin: 0;
-    padding: 6px 5px;
-    right: 0;
-    top: 0;
+	background: rgba(219, 219, 219, 0.6);
+	color: #555;
+	line-height: 1;
+	margin: 0;
+	padding: 6px 5px;
+	right: 0;
+	top: 0;
 }
 .userlist.cards-list .thumb-user {
-    max-height: 150px;
-    overflow: hidden;
-    width: 100%;
+	max-height: 150px;
+	overflow: hidden;
+	width: 100%;
 }
 .userlist.cards-list a img {
-    margin: calc(-50% + 80px) 0;
-    min-height: 205px;
-    transform: scale(1.05);
+	margin: calc(-50% + 80px) 0;
+	min-height: 205px;
+	transform: scale(1.05);
 }
 .userlist.cards-list .u_card_name {
-    background: rgba(0, 0, 0, 0.4);
-    bottom: 0;
-    box-sizing: border-box;
-    color: #fff;
-    padding: 5px;
-    position: absolute;
-    text-align: center;
-    width: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	bottom: 0;
+	box-sizing: border-box;
+	color: #fff;
+	padding: 5px;
+	position: absolute;
+	text-align: center;
+	width: 100%;
 }
 .u_card_bottom {
-    display: table;
-    width: 100%;
+	display: table;
+	width: 100%;
 }
 .u_card_half:nth-child(2) {
-    border-left: 1px solid #eee;
+	border-left: 1px solid #eee;
 }
 .u_card_half {
-    color: #999;
-    display: table-cell;
-    font-weight: 300;
-    padding: 5px 0;
-    text-align: center;
-    width: 50%;
+	color: #999;
+	display: table-cell;
+	font-weight: 300;
+	padding: 5px 0;
+	text-align: center;
+	width: 50%;
 }
 .u_card_half span {
-    font-size: 30px;
-    line-height: 24px;
+	font-size: 30px;
+	line-height: 24px;
 }
 /* END Cards */
 
 @media screen and (max-width:480px) {
-    .userlist.avatars-list .user-single {
-        padding: 1%;
-        width: 19%;
-    }
-    .userlist .user-single .thumb-user .status_user,
-    .userlist .user-single .thumb-user .status_user .rcli {
-        font-size: 11px;
-    }
-    .userlist.mini-list .user-single {
-        max-width: 64px;
-    }
-    .userlist.cards-list .thumb-user {
-        max-height: 120px;
-    }
-    .u_card_half {
-        font-size: 13px;
-    }
+	.userlist.avatars-list .user-single {
+		padding: 1%;
+		width: 19%;
+	}
+	.userlist .user-single .thumb-user .status_user,
+	.userlist .user-single .thumb-user .status_user .rcli {
+		font-size: 11px;
+	}
+	.userlist.mini-list .user-single {
+		max-width: 64px;
+	}
+	.userlist.cards-list .thumb-user {
+		max-height: 120px;
+	}
+	.u_card_half {
+		font-size: 13px;
+	}
 }
 @media screen and (max-width:375px) {
-    .userlist.rows-list .userlist_top {
-        padding: 5px 8px;
-    }
-    .userlist.rows-list .userlist_cntr {
-        position: relative;
-    }
-    .userlist.rows-list .thumb-user {
-        width: 60px;
-    }
-    .userlist.rows-list .user-content-rcl::before {
-        height: 90px;
-        width: 50px;
-    }
-    .userlist.rows-list .user-single .filter-data {
-        display: block;
-        margin: 8px 0;
-        max-width: 98%;
-    }
-    .userlist.avatars-list .user-single {
-        width: 24%;
-    }
-    .userlist.cards-list .user-single {
-        float: none;
-        margin: 5px auto 20px;
-        width: 94%;
-    }
+	.userlist.rows-list .userlist_top {
+		padding: 5px 8px;
+	}
+	.userlist.rows-list .userlist_cntr {
+		position: relative;
+	}
+	.userlist.rows-list .thumb-user {
+		width: 60px;
+	}
+	.userlist.rows-list .user-content-rcl::before {
+		height: 90px;
+		width: 50px;
+	}
+	.userlist.rows-list .user-single .filter-data {
+		display: block;
+		margin: 8px 0;
+		max-width: 98%;
+	}
+	.userlist.avatars-list .user-single {
+		width: 24%;
+	}
+	.userlist.cards-list .user-single {
+		float: none;
+		margin: 5px auto 20px;
+		width: 94%;
+	}
 }

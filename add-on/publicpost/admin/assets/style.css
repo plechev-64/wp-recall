@@ -1,27 +1,27 @@
 .rcl-custom-fields-menu li {
-    display: inline-block;
-    margin: 0;
+	display: inline-block;
+	margin: 0;
 }
 .rcl-custom-fields-menu a {
-    background-color: #e5e5e5;
-    border: 1px solid #ccc;
-    color: #555;
-    display: flex;
-    margin: 0 0 0 10px;
-    padding: 8px 10px;
-    text-decoration: none;
+	background-color: #e5e5e5;
+	border: 1px solid #ccc;
+	color: #555;
+	display: flex;
+	margin: 0 0 0 10px;
+	padding: 8px 10px;
+	text-decoration: none;
 }
 .rcl-custom-fields-menu a:hover {
-    background-color: #eee;
-    color: #000;
+	background-color: #eee;
+	color: #000;
 }
 .rcl-custom-fields-menu .fa-trash {
-    color: #e53935;
-    font-family: dashicons;
-    font-size: 22px;
-    font-style: normal;
-    margin: 0 5px 0 0;
+	color: #e53935;
+	font-family: dashicons;
+	font-size: 22px;
+	font-style: normal;
+	margin: 0 5px 0 0;
 }
 .rcl-custom-fields-menu .fa-trash:before {
-    content: "\f182";
+	content: "\f182";
 }

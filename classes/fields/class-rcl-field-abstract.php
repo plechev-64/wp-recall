@@ -13,271 +13,271 @@
  */
 class Rcl_Field_Abstract {
 
-    public $id;
-    public $slug;
-    public $type;
-    public $icon;
-    public $title;
-    public $value = null;
-    public $default = null;
-    public $notice;
-    public $input_id;
-    public $input_name;
-    public $parent;
-    public $rand;
-    public $class;
-    public $required;
-    public $maxlength;
-    public $childrens;
-    public $unique_id = false;
-    public $value_in_key = null;
-    public $must_delete = true;
+	public $id;
+	public $slug;
+	public $type;
+	public $icon;
+	public $title;
+	public $value		 = null;
+	public $default		 = null;
+	public $notice;
+	public $input_id;
+	public $input_name;
+	public $parent;
+	public $rand;
+	public $class;
+	public $required;
+	public $maxlength;
+	public $childrens;
+	public $unique_id	 = false;
+	public $value_in_key = null;
+	public $must_delete	 = true;
+	public $_new;
 
-    public $_new;
+	function __construct( $args ) {
 
-    function __construct($args) {
+		if ( !isset( $args['slug'] ) )
+			return false;
 
-        if(!isset($args['slug'])) return false;
+		if ( isset( $args['name'] ) )
+			$args['input_name'] = $args['name'];
 
-        if(isset($args['name']))
-            $args['input_name'] = $args['name'];
+		if ( isset( $args['req'] ) )
+			$args['public_value'] = $args['req'];
 
-        if(isset($args['req']))
-            $args['public_value'] = $args['req'];
+		$this->id = $args['slug'];
 
-        $this->id = $args['slug'];
+		$this->init_properties( $args );
+	}
 
-        $this->init_properties($args);
+	function get_options() {
+		return array();
+	}
 
-    }
+	function init_properties( $args ) {
 
-    function get_options(){
-        return array();
-    }
+		/* $properties = get_class_vars(get_class($this));
 
-    function init_properties($args){
+		  foreach ($properties as $name => $val){
+		  if(isset($args[$name])) $this->$name = $args[$name];
+		  } */
 
-        /*$properties = get_class_vars(get_class($this));
+		foreach ( $args as $key => $val ) {
+			$this->$key = $val;
+		}
 
-        foreach ($properties as $name => $val){
-            if(isset($args[$name])) $this->$name = $args[$name];
-        }*/
+		if ( !isset( $this->value ) && isset( $this->default ) ) {
+			$this->value = $this->default;
+		}
+	}
 
-        foreach($args as $key => $val){
-            $this->$key = $val;
-        }
+	function get_prop( $propName ) {
+		return $this->isset_prop( $propName ) ? $this->$propName : false;
+	}
 
-        if(!isset($this->value) && isset($this->default)){
-            $this->value = $this->default;
-        }
+	function isset_prop( $propName ) {
+		return isset( $this->$propName );
+	}
 
-    }
+	function set_prop( $propName, $value ) {
+		$this->$propName = $value;
+	}
 
-    function get_prop($propName){
-        return $this->isset_prop($propName)? $this->$propName: false;
-    }
+	function get_title() {
 
-    function isset_prop($propName){
-        return isset($this->$propName);
-    }
+		if ( !$this->title )
+			return false;
 
-    function set_prop($propName, $value){
-        $this->$propName = $value;
-    }
+		return '<span class="rcl-field-title">'
+			. $this->title . ($this->required ? ' <span class="required">*</span>' : '')
+			. '</span>';
+	}
 
-    function get_title(){
+	function get_icon() {
 
-        if(!$this->title) return false;
+		if ( !$this->icon )
+			return false;
 
-        return '<span class="rcl-field-title">'
-                    . $this->title .($this->required? ' <span class="required">*</span>': '')
-                . '</span>';
-    }
+		$content = '<span class="rcl-field-icon">';
+		$content .= '<i class="rcli ' . $this->icon . '" aria-hidden="true"></i> ';
+		$content .= '</span>';
 
-    function get_icon(){
+		return $content;
+	}
 
-        if(!$this->icon) return false;
+	function get_notice() {
 
-        $content = '<span class="rcl-field-icon">';
-        $content .= '<i class="rcli '.$this->icon.'" aria-hidden="true"></i> ';
-        $content .= '</span>';
+		if ( !$this->notice )
+			return false;
 
-        return $content;
+		return '<span class="rcl-field-notice">'
+			. '<i class="rcli fa-info" aria-hidden="true"></i>'
+			. $this->notice
+			. '</span>';
+	}
 
-    }
+	function is_new() {
+		return $this->_new;
+	}
 
-    function get_notice(){
+	function get_field_input() {
 
-        if(!$this->notice) return false;
+		if ( !$this->type )
+			return false;
 
-        return '<span class="rcl-field-notice">'
-                . '<i class="rcli fa-info" aria-hidden="true"></i>'
-                    . $this->notice
-                . '</span>';
+		$this->rand = rand( 0, 1000 );
 
-    }
+		if ( !$this->input_name )
+			$this->input_name = $this->id;
 
-    function is_new(){
-        return $this->_new;
-    }
+		if ( !$this->input_id )
+			$this->input_id = $this->id;
 
-    function get_field_input(){
+		if ( $this->unique_id ) {
+			$this->input_id .= $this->rand;
+		}
 
-        if(!$this->type) return false;
+		if ( $this->type == 'hidden' ) {
+			return $this->get_input();
+		}
 
-        $this->rand = rand(0,1000);
+		$classes = array( 'rcl-field-input', 'type-' . $this->type . '-input', 'rcl-field-' . $this->id );
 
-        if(!$this->input_name)
-            $this->input_name = $this->id;
+		$callback = 'get_input_' . $this->type;
 
-        if(!$this->input_id)
-            $this->input_id = $this->id;
+		$inputField = $this->get_input();
 
-        if($this->unique_id){
-            $this->input_id .= $this->rand;
-        }
+		if ( $this->icon ) {
+			//$inputField .= '<i class="rcli '.$this->icon.' field-icon"></i>';
+			//$classes[] = 'have-icon';
+		}
 
-        if($this->type == 'hidden'){
-            return $this->get_input();
-        }
+		if ( !$this->title && $this->required ) {
+			$inputField .= '<span class="required">*</span>';
+		}
 
-        $classes = array('rcl-field-input', 'type-'.$this->type.'-input', 'rcl-field-'.$this->id);
+		if ( $this->maxlength ) {
+			$inputField .= '<script>rcl_init_field_maxlength("' . $this->input_id . '");</script>';
+		}
 
-        $callback = 'get_input_'.$this->type;
+		$content = '<div class="' . implode( ' ', $classes ) . '">'
+			. '<div class="rcl-field-core">'
+			. $inputField
+			. '</div>'
+			. $this->get_notice()
+			. '</div>';
 
-        $inputField = $this->get_input();
+		return $content;
+	}
 
-        if($this->icon){
-            //$inputField .= '<i class="rcli '.$this->icon.' field-icon"></i>';
-            //$classes[] = 'have-icon';
-        }
+	function get_field_html( $args = false ) {
 
-        if(!$this->title && $this->required){
-            $inputField .= '<span class="required">*</span>';
-        }
+		if ( $this->type == 'hidden' ) {
+			return $this->get_field_input();
+		}
 
-        if($this->maxlength){
-            $inputField .= '<script>rcl_init_field_maxlength("'.$this->input_id.'");</script>';
-        }
+		$classes = array( 'rcl-field', 'rcl-custom-field', 'type-' . $this->type . '-field' );
 
-        $content = '<div class="'.implode(' ', $classes).'">'
-                    . '<div class="rcl-field-core">'
-                        . $inputField
-                    . '</div>'
-                    . $this->get_notice()
-                . '</div>';
+		if ( isset( $args['classes'] ) ) {
+			$classes = array_merge( $classes, $args['classes'] );
+		}
 
-        return $content;
+		if ( $this->childrens ) {
+			$classes[] = 'rcl-parent-field';
+		}
 
-    }
+		if ( $this->parent ) {
+			$classes[] = 'rcl-children-field';
+		}
 
-    function get_field_html($args = false){
+		$content = '<div class="' . implode( ' ', $classes ) . '" ' . ($this->parent ? 'data-parent="' . $this->parent['id'] . '" data-parent-value="' . $this->parent['value'] . '"' : '') . '>';
 
-        if($this->type == 'hidden'){
-            return $this->get_field_input();
-        }
+		$content .= $this->get_title();
 
-        $classes = array('rcl-field', 'rcl-custom-field', 'type-'.$this->type.'-field');
+		$content .= $this->get_field_input();
 
-        if(isset($args['classes'])){
-            $classes = array_merge($classes, $args['classes']);
-        }
+		$content .= '</div>';
 
-        if($this->childrens){
-            $classes[] = 'rcl-parent-field';
-        }
+		return $content;
+	}
 
-        if($this->parent){
-            $classes[] = 'rcl-children-field';
-        }
+	function get_childrens() {
+		return $this->childrens;
+	}
 
-        $content = '<div class="'.implode(' ', $classes).'" '.($this->parent? 'data-parent="'.$this->parent['id'].'" data-parent-value="'.$this->parent['value'].'"': '').'>';
+	function isset_childrens() {
+		return $this->childrens ? true : false;
+	}
 
-        $content .= $this->get_title();
+	protected function get_required() {
+		return $this->required ? 'required="required"' : '';
+	}
 
-        $content .= $this->get_field_input();
+	protected function get_placeholder() {
+		return $this->placeholder !== '' ? 'placeholder="' . $this->placeholder . '"' : '';
+	}
 
-        $content .= '</div>';
+	protected function get_maxlength() {
+		return $this->maxlength ? 'maxlength="' . $this->maxlength . '"' : '';
+	}
 
-        return $content;
+	protected function get_pattern() {
+		return $this->pattern ? 'pattern="' . $this->pattern . '"' : '';
+	}
 
-    }
+	protected function get_min() {
+		return $this->value_min !== '' ? 'min="' . $this->value_min . '"' : '';
+	}
 
-    function get_childrens(){
-        return $this->childrens;
-    }
+	protected function get_max() {
+		return $this->value_max !== '' ? 'max="' . $this->value_max . '"' : '';
+	}
 
-    function isset_childrens(){
-        return $this->childrens? true: false;
-    }
+	protected function get_input_id() {
+		return $this->input_id ? 'id="' . $this->input_id . '"' : '';
+	}
 
-    protected function get_required(){
-        return $this->required? 'required="required"': '';
-    }
+	function get_class() {
 
-    protected function get_placeholder(){
-        return $this->placeholder !== ''? 'placeholder="'.$this->placeholder.'"': '';
-    }
+		$class = array( $this->type . '-field' );
 
-    protected function get_maxlength(){
-        return $this->maxlength? 'maxlength="'.$this->maxlength.'"': '';
-    }
+		if ( $this->class )
+			$class[] = $this->class;
 
-    protected function get_pattern(){
-        return $this->pattern? 'pattern="'.$this->pattern.'"': '';
-    }
+		return 'class="' . implode( ' ', $class ) . '"';
+	}
 
-    protected function get_min(){
-        return $this->value_min !== ''? 'min="'.$this->value_min.'"': '';
-    }
+	function get_value() {
 
-    protected function get_max(){
-        return $this->value_max !== ''? 'max="'.$this->value_max.'"': '';
-    }
+		if ( !$this->value )
+			return false;
 
-    protected function get_input_id(){
-        return $this->input_id? 'id="'.$this->input_id.'"': '';
-    }
+		return $value;
+	}
 
-    function get_class(){
+	function get_field_value( $title = false ) {
 
-        $class = array($this->type.'-field');
+		$value = $this->get_value();
 
-        if($this->class)
-            $class[] = $this->class;
+		if ( !$value || !$this->type )
+			return false;
 
-        return 'class="'.implode(' ',$class).'"';
-    }
+		$content = '<div class="rcl-field">';
 
-    function get_value(){
+		//$content .= $this->get_icon();
 
-        if(!$this->value) return false;
+		if ( $title )
+			$content .= $this->get_title() . ': ';
 
-        return $value;
+		$content .= '<span class="rcl-field-value type-' . $this->type . '-value">';
 
-    }
+		$content .= $value;
 
-    function get_field_value($title = false){
+		$content .= '</span>';
 
-        $value = $this->get_value();
+		$content .= '</div>';
 
-        if(!$value || !$this->type) return false;
+		return $content;
+	}
 
-        $content = '<div class="rcl-field">';
-
-        //$content .= $this->get_icon();
-
-        if($title)
-            $content .= $this->get_title().': ';
-
-        $content .= '<span class="rcl-field-value type-'.$this->type.'-value">';
-
-        $content .= $value;
-
-        $content .= '</span>';
-
-        $content .= '</div>';
-
-        return $content;
-    }
 }

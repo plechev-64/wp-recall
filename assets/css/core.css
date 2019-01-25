@@ -318,8 +318,8 @@ span i.rcli.fa-circle {
 }
 /* need alternative. this style is wrong - id break other styles */
 /*#rcl-office a:link {
-	border: none;				   ++Twenty15++
-	box-shadow: none;			   ++Twenty16++
+	border: none;					 ++Twenty15++
+	box-shadow: none;				 ++Twenty16++
 	text-decoration: none;
 }*/
 #rcl-office h2 {
@@ -467,12 +467,12 @@ span i.rcli.fa-circle {
 
 body a.recall-button,
 span.recall-button,
-.recall-button.rcl-upload-button,		   /*input[type="file"]*/
+.recall-button.rcl-upload-button,			 /*input[type="file"]*/
 input[type="submit"].recall-button,
 input[type="submit"] .recall-button,
 input[type="button"].recall-button,
 input[type="button"] .recall-button {
-	border-radius: 0;					   /*++hueman++*/
+	border-radius: 0;						 /*++hueman++*/
 	border: none;
 	box-shadow: none !important;
 	box-sizing: border-box;
@@ -485,7 +485,7 @@ input[type="button"] .recall-button {
 	line-height:1;
 	padding: 5px 5px;
 	text-decoration: none;
-	text-transform: none;				   /*++Twenty16++*/
+	text-transform: none;					 /*++Twenty16++*/
 	white-space: nowrap;
 }
 /*end*/
@@ -515,7 +515,7 @@ a.recall-button.filter-active,
 a.recall-button.filter-active:hover,
 a.data-filter.filter-active,
 a.data-filter.filter-active:hover {
-	box-shadow: none;					   /*++Twenty16++*/
+	box-shadow: none;						 /*++Twenty16++*/
 	color: rgb(30, 56, 75);
 	cursor: default;
 	opacity: 1;
@@ -600,9 +600,9 @@ a.data-filter.filter-active:hover {
 .rcl-data-filters {
 	margin: 10px 0;
 }
-.rcl-data-filters a:link {					  /*++Twenty15++*/
+.rcl-data-filters a:link {						/*++Twenty15++*/
 	border: none;
-	text-decoration: none;					  /*++Twenty14++*/
+	text-decoration: none;						/*++Twenty14++*/
 }
 /*end*/
 
@@ -1056,7 +1056,7 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 .rcl-navi a:link,
 .rcl-pager .pager-item a:link {						 /*++hueman++ добавил :link для перевеса*/
 	background: rgba(243, 243, 243, 0.5);
-	border: none;									   /*++Twenty15++*/
+	border: none;										 /*++Twenty15++*/
 	box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
 	text-decoration: none;
 }
@@ -1108,7 +1108,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon::after {
 	color: rgb(229, 57, 53);
-	content: "\f00d";								   /* fa-times */
+	content: "\f00d";									 /* fa-times */
 	font: 400 30px/30px rcl-awesome;
 	margin: 0 7px 0 0;
 }
@@ -1456,12 +1456,12 @@ body .ssi-modalOuter .ssi-modalTitle {
 	line-height: normal;
 	padding: 8px;
 	text-align: left;
-	text-transform: none;					   /*++Twenty14++*/
+	text-transform: none;						 /*++Twenty14++*/
 	vertical-align: middle;
 }
 .rcl-form th:first-child,
 .rcl-form td:first-child {
-	padding-left: 8px;						  /*++Twenty17++*/
+	padding-left: 8px;							/*++Twenty17++*/
 }
 .rcl-form tr th {
 	overflow: hidden;

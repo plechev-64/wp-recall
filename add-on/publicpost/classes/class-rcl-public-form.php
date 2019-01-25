@@ -422,7 +422,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 						'max_size'		 => ($maxSize		 = intval( $field->get_prop( 'max_size' ) )) ? $maxSize : 512,
 						'max_files'		 => ($maxFiles		 = intval( $field->get_prop( 'max_files' ) )) ? $maxFiles : 10,
 						'required'		 => intval( $field->get_prop( 'required' ) )
-					) );
+						) );
 
 					$contentField = $postUploder->get_form_uploader();
 
@@ -696,19 +696,19 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		$fields = rcl_form_field( $args );
 
 		$fields .= "<script>
-        jQuery(window).on('load', function(){
-            jQuery('#rcl-tags-" . $taxonomy . "').magicSuggest({
-                data: Rcl.ajax_url,
-                dataUrlParams: { action: 'rcl_get_like_tags',taxonomy: '" . $taxonomy . "',ajax_nonce:Rcl.nonce },
-                noSuggestionText: '" . __( "Not found", "rcl-public" ) . "',
-                ajaxConfig: {
-                      xhrFields: {
-                        withCredentials: true,
-                      }
-                }
-            });
-        });
-        </script>";
+		jQuery(window).on('load', function(){
+			jQuery('#rcl-tags-" . $taxonomy . "').magicSuggest({
+				data: Rcl.ajax_url,
+				dataUrlParams: { action: 'rcl_get_like_tags',taxonomy: '" . $taxonomy . "',ajax_nonce:Rcl.nonce },
+				noSuggestionText: '" . __( "Not found", "rcl-public" ) . "',
+				ajaxConfig: {
+					  xhrFields: {
+						withCredentials: true,
+					  }
+				}
+			});
+		});
+		</script>";
 
 		return $fields;
 	}
@@ -774,41 +774,41 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		if ( $this->post->post_author == $user_ID ) {
 
 			$content = '<form method="post" action="" onsubmit="return confirm(\'' . __( 'Are you sure?', 'wp-recall' ) . '\');">
-                        ' . wp_nonce_field( 'rcl-delete-post', '_wpnonce', true, false ) . '
-                        ' . rcl_get_button( array(
+						' . wp_nonce_field( 'rcl-delete-post', '_wpnonce', true, false ) . '
+						' . rcl_get_button( array(
 					'submit' => true,
 					'label'	 => __( 'Delete post', 'wp-recall' ),
 					'class'	 => array( 'delete-post-submit public-form-button' ),
 					'icon'	 => 'fa-trash'
 				) ) . '
-                        <input type="hidden" name="rcl-delete-post" value="1">
-                        <input type="hidden" name="post_id" value="' . $this->post_id . '">'
+						<input type="hidden" name="rcl-delete-post" value="1">
+						<input type="hidden" name="post_id" value="' . $this->post_id . '">'
 				. '</form>';
 		} else {
 
 			$content = '<div id="rcl-delete-post">
-                        ' . rcl_get_button( array(
+						' . rcl_get_button( array(
 					'label'	 => __( 'Delete post', 'wp-recall' ),
 					'class'	 => array( 'public-form-button delete-toggle' ),
 					'icon'	 => 'fa-trash'
 				) ) . '
-                        <div class="delete-form-contayner">
-                            <form action="" method="post"  onsubmit="return confirm(\'' . __( 'Are you sure?', 'wp-recall' ) . '\');">
-                            ' . wp_nonce_field( 'rcl-delete-post', '_wpnonce', true, false ) . '
-                            ' . $this->get_reasons_list() . '
-                            <label>' . __( 'or enter your own', 'wp-recall' ) . '</label>
-                            <textarea required id="reason_content" name="reason_content"></textarea>
-                            <p><input type="checkbox" name="no-reason" onclick="(!document.getElementById(\'reason_content\').getAttribute(\'disabled\')) ? document.getElementById(\'reason_content\').setAttribute(\'disabled\', \'disabled\') : document.getElementById(\'reason_content\').removeAttribute(\'disabled\')" value="1"> ' . __( 'Without notice', 'wp-recall' ) . '</p>
-                            ' . rcl_get_button( array(
+						<div class="delete-form-contayner">
+							<form action="" method="post"  onsubmit="return confirm(\'' . __( 'Are you sure?', 'wp-recall' ) . '\');">
+							' . wp_nonce_field( 'rcl-delete-post', '_wpnonce', true, false ) . '
+							' . $this->get_reasons_list() . '
+							<label>' . __( 'or enter your own', 'wp-recall' ) . '</label>
+							<textarea required id="reason_content" name="reason_content"></textarea>
+							<p><input type="checkbox" name="no-reason" onclick="(!document.getElementById(\'reason_content\').getAttribute(\'disabled\')) ? document.getElementById(\'reason_content\').setAttribute(\'disabled\', \'disabled\') : document.getElementById(\'reason_content\').removeAttribute(\'disabled\')" value="1"> ' . __( 'Without notice', 'wp-recall' ) . '</p>
+							' . rcl_get_button( array(
 					'submit' => true,
 					'label'	 => __( 'Delete post', 'wp-recall' ),
 					'icon'	 => 'fa-trash'
 				) ) . '
-                            <input type="hidden" name="rcl-delete-post" value="1">
-                            <input type="hidden" name="post_id" value="' . $this->post_id . '">
-                            </form>
-                        </div>
-                    </div>';
+							<input type="hidden" name="rcl-delete-post" value="1">
+							<input type="hidden" name="post_id" value="' . $this->post_id . '">
+							</form>
+						</div>
+					</div>';
 		}
 
 		return $content;

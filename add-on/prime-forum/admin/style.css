@@ -1,110 +1,110 @@
 #options-prime-forum.wrap-recall-options {
-    border: none;
-    display: block;
-    padding: 0;
+	border: none;
+	display: block;
+	padding: 0;
 }
 #prime-options {
-    max-width: 550px;
+	max-width: 550px;
 }
 #prime-options h3 {
-    margin: 5px 0;
+	margin: 5px 0;
 }
 #prime-options select {
-    width: 100%;
+	width: 100%;
 }
 #prime-options .rcl-option {
-    margin-bottom: 15px;
+	margin-bottom: 15px;
 }
 #prime-options .rcl-field-notice {
-    font-size: 12px;
+	font-size: 12px;
 }
 #prime-forum-manager .manage-groups {
-    float: left;
-    max-width: 500px;
+	float: left;
+	max-width: 500px;
 }
 #prime-forum-manager .manage-forums {
-    border: 2px solid #4c8cbd;
-    display: block;
-    max-width: 600px;
-    overflow: hidden;
-    width: auto;
+	border: 2px solid #4c8cbd;
+	display: block;
+	max-width: 600px;
+	overflow: hidden;
+	width: auto;
 }
 #prime-forum-manager .manager-form {
-    background: #eaeaea;
-    border: 1px solid #ccc;
-    padding: 10px;
+	background: #eaeaea;
+	border: 1px solid #ccc;
+	padding: 10px;
 }
 #prime-forum-manager .manager-box .form-buttons {
-    text-align: right;
+	text-align: right;
 }
 #prime-forum-manager .manager-box .form-buttons input {
-    width: auto;
+	width: auto;
 }
 #prime-forum-manager .rcl-custom-fields-box .field-controls a {
-    background: #f5f5f5;
-    border: 1px solid #ccc;
-    padding: 5px;
+	background: #f5f5f5;
+	border: 1px solid #ccc;
+	padding: 5px;
 }
 #prime-forum-manager .rcl-custom-fields-box .field-controls .field-trash {
-    color: rgba(229, 57, 53, 0.7);
+	color: rgba(229, 57, 53, 0.7);
 }
 #prime-forum-manager .rcl-custom-fields-box .field-controls .field-edit:before {
-    content: "\f107";
+	content: "\f107";
 }
 #prime-forum-manager .rcl-custom-fields-box .field-controls .field-trash:before {
-    content: "\f182";
+	content: "\f182";
 }
 #prime-forum-manager .rcl-custom-fields-box .field-controls .get-forums:before {
-    content: "\f325";
+	content: "\f325";
 }
 #prime-forum-manager .rcl-custom-fields-box .type-groups:before {
-    content: "\f318";
+	content: "\f318";
 }
 #prime-forum-manager .rcl-custom-fields-box .type-forums:before {
-    content: "\f203";
+	content: "\f203";
 }
 #prime-forum-manager .rcl-custom-fields-box .rcl-custom-field {
-    margin-bottom: 5px;
+	margin-bottom: 5px;
 }
 #prime-forum-manager .rcl-custom-fields-box .active-group .field-header:before {
-    border-color: transparent transparent transparent rgb(76, 140, 189);
-    border-style: solid;
-    border-width: 22px 0 22px 23px;
-    content: "";
-    height: 0;
-    position: absolute;
-    right: -23px;
-    top: 0;
-    width: 0;
+	border-color: transparent transparent transparent rgb(76, 140, 189);
+	border-style: solid;
+	border-width: 22px 0 22px 23px;
+	content: "";
+	height: 0;
+	position: absolute;
+	right: -23px;
+	top: 0;
+	width: 0;
 }
 #prime-forum-manager .rcl-custom-fields-box .active-group .field-header {
-    border: 2px solid rgb(76, 140, 189);
+	border: 2px solid rgb(76, 140, 189);
 }
 #prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .children-box {
-    min-height: 0;
-    margin-left:20px;
-    margin-top: 5px;
+	min-height: 0;
+	margin-left:20px;
+	margin-top: 5px;
 }
 #prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .must-receive {
-    margin:2px 0 2px 20px;
-    min-height: 5px;
-    padding: 5px;
+	margin:2px 0 2px 20px;
+	min-height: 5px;
+	padding: 5px;
 }
 #prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .must-receive .children-box {
-    margin-top: 0;
+	margin-top: 0;
 }
 #prime-forum-manager .rcl-custom-fields-box .rcl-sortable-fields .must-receive .rcl-custom-field {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 #prime-forum-manager .forums-list {
-    position: relative;
+	position: relative;
 }
 #pfm-forums-list .field-header {
-    border-color: #4c8cbd;
+	border-color: #4c8cbd;
 }
 #prime-forum-manager .ui-sortable-helper {
-    box-shadow: 5px 5px 5px #797979;
+	box-shadow: 5px 5px 5px #797979;
 }
 #prime-forum-manager .ui-sortable-helper .field-header {
-    background: #fff;
+	background: #fff;
 }

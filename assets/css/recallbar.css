@@ -1,297 +1,297 @@
 #recallbar {
-    background: rgba(0, 0, 0, 0.85);
-    font-size: 14px;
-    height: 36px;
-    left: 0;
-    line-height: 1;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 99;
+	background: rgba(0, 0, 0, 0.85);
+	font-size: 14px;
+	height: 36px;
+	left: 0;
+	line-height: 1;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 99;
 }
 #recallbar a {
-    color: #e6e6e6;
-    text-decoration: none;
+	color: #e6e6e6;
+	text-decoration: none;
 }
 #recallbar .rcli {
-    color: #e6e6e6;
-    font-size: 30px;
-    line-height: 36px;
-    vertical-align: middle;
-    width: 30px;
+	color: #e6e6e6;
+	font-size: 30px;
+	line-height: 36px;
+	vertical-align: middle;
+	width: 30px;
 }
 #recallbar .rcb_icon:hover .rcli {
-    color: #d4d4d4;
+	color: #d4d4d4;
 }
 #recallbar .rcb_icon {
-    display: inline-block;
-    margin: 0 10px;
-    position: relative;
+	display: inline-block;
+	margin: 0 10px;
+	position: relative;
 }
 #recallbar .rcb_right .rcb_icons,
 #recallbar .rcb_icon a {
-    display: inline-block;
+	display: inline-block;
 }
 #recallbar .rcl-register span,
 #recallbar .rcl-login span {
-    color: #e6e6e6;
-    margin: 0 0 0 7px;
-    vertical-align: middle;
+	color: #e6e6e6;
+	margin: 0 0 0 7px;
+	vertical-align: middle;
 }
 #recallbar .rcb_icon .rcb_hiden {
-    margin: 0 0 0 -43px;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    text-align: center;
-    top: 54px;
-    transform: translate3d(0px, 0px, 0px);
-    transition: opacity 0.2s ease-in-out 0s,
-                visibility 0.2s ease-in-out 0s,
-                transform 0.2s cubic-bezier(0.71, 1.3, 0.77, 1.04) 0s;
-    visibility: hidden;
-    width: 110px;
+	margin: 0 0 0 -43px;
+	opacity: 0;
+	pointer-events: none;
+	position: absolute;
+	text-align: center;
+	top: 54px;
+	transform: translate3d(0px, 0px, 0px);
+	transition: opacity 0.2s ease-in-out 0s,
+		visibility 0.2s ease-in-out 0s,
+		transform 0.2s cubic-bezier(0.71, 1.3, 0.77, 1.04) 0s;
+	visibility: hidden;
+	width: 110px;
 }
 #recallbar .rcb_icon:hover .rcb_hiden,
 #recallbar .rcb_left_menu:hover .rcb_menu,
 #recallbar .rcb_right_menu:hover .pr_sub_menu {
-    cursor: default;
-    opacity: 1;
-    transform: translateY(-18px);
-    visibility: visible;
+	cursor: default;
+	opacity: 1;
+	transform: translateY(-18px);
+	visibility: visible;
 }
 #recallbar .current-menu-item a {
-    background: none;
+	background: none;
 }
 #recallbar .rcb_icon .rcb_hiden span {
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 0 0 3px 3px;
-    color: inherit;
-    display: inline-block;
-    padding: 5px 10px;
+	background: rgba(0, 0, 0, 0.7);
+	border-radius: 0 0 3px 3px;
+	color: inherit;
+	display: inline-block;
+	padding: 5px 10px;
 }
 /* Левая часть */
 #recallbar .rcb_left {
-    float: left;
-    margin: 0 0 0 50px;
+	float: left;
+	margin: 0 0 0 50px;
 }
 /* Меню слева START */
 #recallbar .rcb_left_menu {
-    display: inline-block;
-    padding: 0 10px;
+	display: inline-block;
+	padding: 0 10px;
 }
 #recallbar .rcb_left_menu:hover {
-    color: #d4d4d4;
-    cursor: pointer;
+	color: #d4d4d4;
+	cursor: pointer;
 }
 #recallbar .rcb_menu {
-    background: rgba(0, 0, 0, 0.7);
+	background: rgba(0, 0, 0, 0.7);
 }
 #recallbar .rcb_menu {
-    border-top: 2px solid #e47641;
-    display: block;
-    left: 55px;
-    opacity: 0;
-    position: absolute;
-    top: 54px;
-    transform: translate3d(0px, 0px, 0px);
-    transition: all 0.2s ease-in-out 0s;
-    visibility: hidden;
-    width: 180px;
+	border-top: 2px solid #e47641;
+	display: block;
+	left: 55px;
+	opacity: 0;
+	position: absolute;
+	top: 54px;
+	transform: translate3d(0px, 0px, 0px);
+	transition: all 0.2s ease-in-out 0s;
+	visibility: hidden;
+	width: 180px;
 }
 #recallbar .rcb_menu > .menu {
-    background: inherit;
+	background: inherit;
 }
 #recallbar ul {
-    list-style: none;
-    margin: 0;
-    max-width: 200px;
-    padding: 0;
+	list-style: none;
+	margin: 0;
+	max-width: 200px;
+	padding: 0;
 }
 #recallbar li {
-    list-style: none;
-    padding: 10px;
+	list-style: none;
+	padding: 10px;
 }
 #recallbar .rcb_line:hover,
 #recallbar li:hover,
 #recallbar .current-menu-item {
-    background: rgba(0, 0, 0, 0.3);
+	background: rgba(0, 0, 0, 0.3);
 }
 #recallbar .menu-item-has-children {
-    position: relative;
+	position: relative;
 }
 #recallbar .menu-item-has-children > a::after {
-    color: inherit;
-    content: "\f054"; /* fa-chevron-right */
-    font-family: rcl-awesome;
-    font-size: 11px;
-    pointer-events: none;
-    position: absolute;
-    right: 5px;
-    top: 13px;
+	color: inherit;
+	content: "\f054"; /* fa-chevron-right */
+	font-family: rcl-awesome;
+	font-size: 11px;
+	pointer-events: none;
+	position: absolute;
+	right: 5px;
+	top: 13px;
 }
 #recallbar .sub-menu {
-    background: rgba(0, 0, 0, 0.7);
-    left: 180px;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    transition: all 0.2s ease-in-out 0s;
-    visibility: hidden;
-    width: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	left: 180px;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	transition: all 0.2s ease-in-out 0s;
+	visibility: hidden;
+	width: 100%;
 }
 #recallbar .menu-item-has-children:hover .sub-menu {
-    opacity: 1;
+	opacity: 1;
 }
 /* Меню слева END */
 /* Левая часть END */
 
 /* Правая часть START */
 #recallbar .rcb_right {
-    float: right;
-    margin: 0 50px 0 0;
+	float: right;
+	margin: 0 50px 0 0;
 }
 #recallbar .rcb_nmbr {
-    background: #b2440f;
-    border-radius: 50%;
-    color: #f6f6f6;
-    display: inline-block;
-    font-size: 12px;
-    height: 22px;
-    line-height: 22px;
-    margin: 2px 0 0;
-    text-align: center;
-    vertical-align: top;
-    width: 22px;
+	background: #b2440f;
+	border-radius: 50%;
+	color: #f6f6f6;
+	display: inline-block;
+	font-size: 12px;
+	height: 22px;
+	line-height: 22px;
+	margin: 2px 0 0;
+	text-align: center;
+	vertical-align: top;
+	width: 22px;
 }
 
 /* Меню справа START */
 #recallbar .rcb_right_menu {
-    border-left: 2px solid transparent;
-    box-sizing: unset;
-    float: right;
-    height: 36px;
-    margin: 0 10px 0 30px;
-    position: relative;
-    width: 36px;
+	border-left: 2px solid transparent;
+	box-sizing: unset;
+	float: right;
+	height: 36px;
+	margin: 0 10px 0 30px;
+	position: relative;
+	width: 36px;
 }
 #recallbar .rcb_right_menu:hover {
-    border-left: 2px solid #e47641;
-    cursor: pointer;
+	border-left: 2px solid #e47641;
+	cursor: pointer;
 }
 #recallbar .rcb_right_menu .fa-ellipsis-h {
-    color: #e47641;
-    font-size: 22px;
-    left: 10px;
-    pointer-events: none;
-    position: absolute;
-    top: 14px;
-    z-index: 2;
+	color: #e47641;
+	font-size: 22px;
+	left: 10px;
+	pointer-events: none;
+	position: absolute;
+	top: 14px;
+	z-index: 2;
 }
 #recallbar .rcb_right_menu:hover .fa-ellipsis-h {
-    display: none;
+	display: none;
 }
 #recallbar .rcb_right_menu img {
-    border-radius: 0;
-    border: none;
-    height: 36px;
-    max-width: 36px;
-    width: 36px;
+	border-radius: 0;
+	border: none;
+	height: 36px;
+	max-width: 36px;
+	width: 36px;
 }
 #recallbar .pr_sub_menu {
-    background: rgba(0, 0, 0, 0.7);
-    border-top: 2px solid #e47641;
-    display: block;
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    top: 54px;
-    transform: translate3d(0px, 0px, 0px);
-    transition: all 0.2s ease-in-out 0s;
-    visibility: hidden;
-    width: 200px;
+	background: rgba(0, 0, 0, 0.7);
+	border-top: 2px solid #e47641;
+	display: block;
+	opacity: 0;
+	position: absolute;
+	right: 0;
+	top: 54px;
+	transform: translate3d(0px, 0px, 0px);
+	transition: all 0.2s ease-in-out 0s;
+	visibility: hidden;
+	width: 200px;
 }
 #recallbar .rcb_line {
-    padding: 2px 5px 3px 5px;
+	padding: 2px 5px 3px 5px;
 }
 #recallbar .pr_sub_menu .rcb_line .rcli {
-    color: #c8c8c8;
-    font-size: 22px;
+	color: #c8c8c8;
+	font-size: 22px;
 }
 #recallbar .rcb_line span {
-    margin: 0 0 0 8px;
-    vertical-align: text-top;
+	margin: 0 0 0 8px;
+	vertical-align: text-top;
 }
 #recallbar .pr_sub_menu .rcb_line > a {
-    align-items: center;
-    display: flex;
+	align-items: center;
+	display: flex;
 }
 /* Меню справа END */
 /* Правая часть END */
 @media screen and (max-width:768px) {
-    #recallbar .rcb_right {
-        margin: 0 5px 0 0;
-    }
-    #recallbar .rcb_left {
-        margin: 0 0 0 10px;
-    }
-    #recallbar .rcb_menu {
-        left: 15px;
-    }
-    .rcb_right_menu > a {
-        pointer-events: none;
-    }
+	#recallbar .rcb_right {
+		margin: 0 5px 0 0;
+	}
+	#recallbar .rcb_left {
+		margin: 0 0 0 10px;
+	}
+	#recallbar .rcb_menu {
+		left: 15px;
+	}
+	.rcb_right_menu > a {
+		pointer-events: none;
+	}
 }
 @media screen and (max-width:600px) {
-    #recallbar .rcb_right_menu {
-        margin: 0 5px 0 0;
-    }
-    #recallbar .rcb_icon {
-        margin: 0 4px;
-    }
+	#recallbar .rcb_right_menu {
+		margin: 0 5px 0 0;
+	}
+	#recallbar .rcb_icon {
+		margin: 0 4px;
+	}
 }
 @media screen and (max-width:480px) {
-    #recallbar .my_recallbar .rcli {
-        font-size: 26px;
-        width: 26px;
-    }
-    #recallbar .rcb_right_menu {
-        margin: 0;
-    }
-    #recallbar .rcb_left_menu {
-        padding: 0;
-    }
-    #recallbar .rcb_menu {
-        left: 0;
-    }
-    #recallbar .rcb_left {
-        margin: 0 0 0 4px;
-    }
-    #recallbar .rcli {
-        font-size: 27px;
-    }
-    #recallbar .rcb_nmbr {
-        height: 17px;
-        line-height: 17px;
-        width: 17px;
-    }
+	#recallbar .my_recallbar .rcli {
+		font-size: 26px;
+		width: 26px;
+	}
+	#recallbar .rcb_right_menu {
+		margin: 0;
+	}
+	#recallbar .rcb_left_menu {
+		padding: 0;
+	}
+	#recallbar .rcb_menu {
+		left: 0;
+	}
+	#recallbar .rcb_left {
+		margin: 0 0 0 4px;
+	}
+	#recallbar .rcli {
+		font-size: 27px;
+	}
+	#recallbar .rcb_nmbr {
+		height: 17px;
+		line-height: 17px;
+		width: 17px;
+	}
 }
 @media screen and (max-width:375px) {
-    #recallbar .rcb_icon {
-        margin: 0 2px;
-    }
-    #recallbar .rcb_nmbr {
-        margin: 0 0 0 -10px;
-    }
+	#recallbar .rcb_icon {
+		margin: 0 2px;
+	}
+	#recallbar .rcb_nmbr {
+		margin: 0 0 0 -10px;
+	}
 }
 @media screen and (max-width:360px) {
-    #recallbar .rcb_left,
-    #recallbar .rcb_right {
-        margin: 0;
-    }
+	#recallbar .rcb_left,
+	#recallbar .rcb_right {
+		margin: 0;
+	}
 }
 @media screen and (max-width:360px) {
-    #recallbar .rcb_icon {
-        margin: 0;
-    }
+	#recallbar .rcb_icon {
+		margin: 0;
+	}
 }

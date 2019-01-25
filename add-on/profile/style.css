@@ -1,66 +1,66 @@
 #tab-profile a:link:hover {
-    color: inherit;
+	color: inherit;
 }
 #tab-profile #your-profile h3 {
-    margin: 15px 10px 10px;
+	margin: 15px 10px 10px;
 }
 #tab-profile table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    border: none;
-    display: table;
-    line-height: normal;
-    text-align: left;
-    width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	border: none;
+	display: table;
+	line-height: normal;
+	text-align: left;
+	width: 100%;
 }
 #tab-profile table th,
 #tab-profile table td {
-    border: 1px solid #eee;
+	border: 1px solid #eee;
 }
 #tab-profile table tr th {
-    overflow: hidden;
-    width: 32%;
+	overflow: hidden;
+	width: 32%;
 }
 #tab-profile table td input {
-    background-color: #fff;
-    border-radius: 0;
-    border: 1px solid #ddd;
-    box-shadow: none;
-    box-sizing: border-box;
-    color: #000;
-    display: inline-block;
-    float: none;
-    font-size: 14px;
-    height: auto;
-    line-height: 1.4;
-    max-width: 100%;
-    outline: none;
-    padding: 5px 10px;
-    width: 100%;
+	background-color: #fff;
+	border-radius: 0;
+	border: 1px solid #ddd;
+	box-shadow: none;
+	box-sizing: border-box;
+	color: #000;
+	display: inline-block;
+	float: none;
+	font-size: 14px;
+	height: auto;
+	line-height: 1.4;
+	max-width: 100%;
+	outline: none;
+	padding: 5px 10px;
+	width: 100%;
 }
 #tab-profile table td input:focus {
-    background-color: #fff;
-    border-color: #c5c5c5;
-    box-shadow: none;
-    color: #000;
-    outline: none;
+	background-color: #fff;
+	border-color: #c5c5c5;
+	box-shadow: none;
+	color: #000;
+	outline: none;
 }
 @media screen and (max-width:480px) {
-    #tab-profile tr {
-        background-color: #fafafa;
-        border: 1px solid #eaeaea;
-        box-sizing: border-box;
-        display: inline-block;
-        margin: 0 auto 12px;
-        width: 100%;
-    }
-    #tab-profile table tr th {
-        border: none;
-    }
-    #tab-profile table td {
-        border: none;
-        display: block;
-        padding: 5px 8px 8px;
-        text-align: left;
-    }
+	#tab-profile tr {
+		background-color: #fafafa;
+		border: 1px solid #eaeaea;
+		box-sizing: border-box;
+		display: inline-block;
+		margin: 0 auto 12px;
+		width: 100%;
+	}
+	#tab-profile table tr th {
+		border: none;
+	}
+	#tab-profile table td {
+		border: none;
+		display: block;
+		padding: 5px 8px 8px;
+		text-align: left;
+	}
 }

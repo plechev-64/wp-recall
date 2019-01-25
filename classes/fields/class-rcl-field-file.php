@@ -6,137 +6,132 @@
  * and open the template in the editor.
  */
 
-
 /**
  * Description of class-rcl-custom-field-text
  *
  * @author Андрей
  */
-class Rcl_Field_File extends Rcl_Field_Abstract{
+class Rcl_Field_File extends Rcl_Field_Abstract {
 
-    public $required;
-    public $file_types;
-    public $max_size;
-    public $files;
+	public $required;
+	public $file_types;
+	public $max_size;
+	public $files;
 
-    function __construct($args) {
+	function __construct( $args ) {
 
-        if(isset($args['ext-files']))
-            $args['file_types'] = $args['ext-files'];
+		if ( isset( $args['ext-files'] ) )
+			$args['file_types'] = $args['ext-files'];
 
-        if(isset($args['sizefile']))
-            $args['max_size'] = $args['sizefile'];
+		if ( isset( $args['sizefile'] ) )
+			$args['max_size'] = $args['sizefile'];
 
-        parent::__construct($args);
-    }
+		parent::__construct( $args );
+	}
 
-    function get_options(){
+	function get_options() {
 
-        $options = array(
-             array(
-                'slug' => 'icon',
-                'default' => 'fa-file',
-                'placeholder' => 'fa-file',
-                'type' => 'text',
-                'title'=>__('Icon class of  font-awesome', 'wp-recall'),
-                'notice'=>__('Source', 'wp-recall').' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.io/</a>'
-            ),
-            array(
-                'slug' => 'max_size',
-                'default' => $this->max_size,
-                'type' => 'runner',
-                'unit' => 'Kb',
-                'value_min' => 256,
-                'value_max' => 5120,
-                'value_step' => 256,
-                'default' => 512,
-                'title' => __('File size', 'wp-recall'),
-                'notice' => __('maximum size of uploaded file, KbB (Default - 512)', 'wp-recall')
-            ),
-            array(
-                'slug' => 'file_types',
-                'default' => $this->file_types,
-                'type' => 'text',
-                'title' => __('Allowed file types', 'wp-recall'),
-                'notice' => __('allowed types of files are divided by comma, for example: pdf, zip, jpg', 'wp-recall')
-            )
-        );
+		$options = array(
+			array(
+				'slug'			 => 'icon',
+				'default'		 => 'fa-file',
+				'placeholder'	 => 'fa-file',
+				'type'			 => 'text',
+				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' ),
+				'notice'		 => __( 'Source', 'wp-recall' ) . ' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.io/</a>'
+			),
+			array(
+				'slug'		 => 'max_size',
+				'default'	 => $this->max_size,
+				'type'		 => 'runner',
+				'unit'		 => 'Kb',
+				'value_min'	 => 256,
+				'value_max'	 => 5120,
+				'value_step' => 256,
+				'default'	 => 512,
+				'title'		 => __( 'File size', 'wp-recall' ),
+				'notice'	 => __( 'maximum size of uploaded file, KbB (Default - 512)', 'wp-recall' )
+			),
+			array(
+				'slug'		 => 'file_types',
+				'default'	 => $this->file_types,
+				'type'		 => 'text',
+				'title'		 => __( 'Allowed file types', 'wp-recall' ),
+				'notice'	 => __( 'allowed types of files are divided by comma, for example: pdf, zip, jpg', 'wp-recall' )
+			)
+		);
 
-        return $options;
+		return $options;
+	}
 
-    }
+	function get_input() {
+		global $user_ID;
+		$input = '';
 
-    function get_input(){
-        global $user_ID;
-        $input = '';
+		if ( is_admin() && !rcl_is_ajax() ) {
 
-        if(is_admin() && !rcl_is_ajax()){
+			$post_id = (isset( $_GET['post'] )) ? intval( $_GET['post'] ) : false;
+			$user_id = (isset( $_GET['user_id'] )) ? intval( $_GET['user_id'] ) : false;
 
-            $post_id = (isset($_GET['post']))? intval($_GET['post']): false;
-            $user_id = (isset($_GET['user_id']))? intval($_GET['user_id']): false;
+			$url = admin_url( '?meta=' . $this->id . '&rcl-delete-file=' . base64_encode( $this->value ) );
 
-            $url = admin_url('?meta='.$this->id.'&rcl-delete-file='.base64_encode($this->value));
+			if ( $post_id ) {
+				$url .= '&post_id=' . $post_id;
+			} else if ( $user_id ) {
+				$url .= '&user_id=' . $user_id;
+			} else {
+				$url .= '&user_id=' . $user_ID;
+			}
+		} else {
 
-            if($post_id){
-                $url .= '&post_id='.$post_id;
-            }else if($user_id){
-                $url .= '&user_id='.$user_id;
-            }else{
-                $url .= '&user_id='.$user_ID;
-            }
+			$url = get_bloginfo( 'wpurl' ) . '/?meta=' . $this->id . '&rcl-delete-file=' . base64_encode( $this->value );
+		}
 
-        }else{
+		if ( $this->value ) {
 
-            $url = get_bloginfo('wpurl').'/?meta='.$this->id.'&rcl-delete-file='.base64_encode($this->value);
+			$input .= $this->get_field_value();
 
-        }
+			if ( !$this->required )
+				$input .= '<span class="delete-file-url"><a href="' . wp_nonce_url( $url, 'user-' . $user_ID ) . '"> <i class="rcli fa-times-circle-o"></i> ' . __( 'delete', 'wp-recall' ) . '</a></span>';
 
-        if($this->value){
+			$input = '<span class="file-manage-box">' . $input . '</span>';
+		}
 
-            $input .= $this->get_field_value();
+		$accTypes	 = false;
+		$extTypes	 = $this->file_types ? array_map( 'trim', explode( ',', $this->file_types ) ) : array();
 
-            if(!$this->required)
-                $input .= '<span class="delete-file-url"><a href="'.wp_nonce_url($url, 'user-'.$user_ID ).'"> <i class="rcli fa-times-circle-o"></i> '.__('delete', 'wp-recall').'</a></span>';
+		if ( $extTypes )
+			$accTypes = rcl_get_mime_types( $extTypes );
 
-            $input = '<span class="file-manage-box">'.$input.'</span>';
+		$accept		 = ($accTypes) ? 'accept="' . implode( ',', $accTypes ) . '"' : '';
+		$required	 = (!$this->value) ? $this->get_required() : '';
 
-        }
+		$input .= '<span id="' . $this->id . '-content" class="file-field-upload">';
+		$input .= '<span onclick="jQuery(\'#' . $this->input_id . '\').val(\'\');" class="file-input-recycle"><i class="rcli fa-recycle"></i></span>';
+		$input .= '<input data-size="' . $this->max_size . '" ' . ($extTypes ? 'data-ext="' . implode( ',', $extTypes ) . '"' : '') . ' type="file" ' . $required . ' ' . $accept . ' name="' . $this->input_name . '" ' . $this->get_class() . ' id="' . $this->input_id . '" value=""/> ';
 
-        $accTypes = false;
-        $extTypes = $this->file_types? array_map('trim',explode(',',$this->file_types)): array();
+		$input .= '<br>';
 
-        if($extTypes)
-            $accTypes = rcl_get_mime_types($extTypes);
+		if ( $extTypes )
+			$input .= '<span class="allowed-types">' . __( 'Allowed extensions', 'wp-recall' ) . ': ' . $this->file_types . '</span>. ';
 
-        $accept = ($accTypes)? 'accept="'.implode(',',$accTypes).'"': '';
-        $required = (!$this->value)? $this->get_required(): '';
+		$input .= __( 'Max size', 'wp-recall' ) . ': ' . $this->max_size . 'Kb';
 
-        $input .= '<span id="'.$this->id.'-content" class="file-field-upload">';
-        $input .= '<span onclick="jQuery(\'#'.$this->input_id.'\').val(\'\');" class="file-input-recycle"><i class="rcli fa-recycle"></i></span>';
-        $input .= '<input data-size="'.$this->max_size.'" '.($extTypes? 'data-ext="'.implode(',',$extTypes).'"': '').' type="file" '.$required.' '.$accept.' name="'.$this->input_name.'" '.$this->get_class().' id="'.$this->input_id.'" value=""/> ';
+		$input .= '<script type="text/javascript">rcl_init_field_file("' . $this->id . '");</script>';
+		$input .= '</span>';
 
-        $input .= '<br>';
+		$this->files[$this->id] = $this->max_size;
 
-        if($extTypes)
-            $input .= '<span class="allowed-types">'.__('Allowed extensions', 'wp-recall').': '.$this->file_types.'</span>. ';
+		return $input;
+	}
 
-        $input .= __('Max size', 'wp-recall').': '.$this->max_size.'Kb';
+	function get_value() {
+		global $user_ID;
 
-        $input .= '<script type="text/javascript">rcl_init_field_file("'.$this->id.'");</script>';
-        $input .= '</span>';
+		if ( !$this->value )
+			return false;
 
-        $this->files[$this->id] = $this->max_size;
-
-        return $input;
-    }
-
-    function get_value(){
-        global $user_ID;
-
-        if(!$this->value) return false;
-
-        return '<a href="'.wp_nonce_url(get_bloginfo('wpurl').'/?rcl-download-file='.base64_encode($this->value), 'user-'.$user_ID ).'"><i class="rcli fa-upload" aria-hidden="true"></i> '.__('Upload the downloaded file','wp-recall').'</a>';
-
-    }
+		return '<a href="' . wp_nonce_url( get_bloginfo( 'wpurl' ) . '/?rcl-download-file=' . base64_encode( $this->value ), 'user-' . $user_ID ) . '"><i class="rcli fa-upload" aria-hidden="true"></i> ' . __( 'Upload the downloaded file', 'wp-recall' ) . '</a>';
+	}
 
 }

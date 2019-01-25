@@ -1,703 +1,703 @@
 #prime-forum .prime-manager {
-    text-align: right;
+	text-align: right;
 }
 #prime-forum .prime-manager ul {
-    list-style: none;
-    margin: 15px 0;
-    padding: 0;
+	list-style: none;
+	margin: 15px 0;
+	padding: 0;
 }
 #prime-forum .prime-manager ul li {
-    background: none;
-    display: inline-block;
-    list-style: none;
-    margin: 0 10px;
-    padding: 0;
+	background: none;
+	display: inline-block;
+	list-style: none;
+	margin: 0 10px;
+	padding: 0;
 }
 #prime-forum .prime-manager ul li a {
-    display: inline-block;
-    font-size: 16px;
+	display: inline-block;
+	font-size: 16px;
 }
 #prime-forum .prime-manager.author-manager {
-    border-bottom: 1px solid #eee;
-    margin-bottom: 10px;
-    margin-top: -5px;
-    text-align: left;
-    width: 100%;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 10px;
+	margin-top: -5px;
+	text-align: left;
+	width: 100%;
 }
 #prime-forum .prime-manager.author-manager ul {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 #prime-forum .prime-manager.author-manager ul li {
-    margin: 0;
-    padding: 3px;
+	margin: 0;
+	padding: 3px;
 }
 .prime-forum-header,
 .prime-forum-footer {
-    background-color: #fafafa;
-    border: 1px solid #eee;
-    margin: 5px auto 10px;
-    overflow: hidden;
-    padding: 10px;
+	background-color: #fafafa;
+	border: 1px solid #eee;
+	margin: 5px auto 10px;
+	overflow: hidden;
+	padding: 10px;
 }
 
 /* START prime-breadcrumb */
 #prime-forum .prime-breadcrumbs {
-    display: inline-block;
-    overflow: hidden;
+	display: inline-block;
+	overflow: hidden;
 }
 .prime-breadcrumbs > span::before {
-    color: #aaa;
-    content: "\f105";
-    font-family: rcl-awesome;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0 5px 0 0;
+	color: #aaa;
+	content: "\f105";
+	font-family: rcl-awesome;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0 5px 0 0;
 }
 .prime-breadcrumbs > span {
-    display: block;
+	display: block;
 }
 .prime-breadcrumbs > span:nth-child(2) {
-    margin: 0 0 0 15px;
+	margin: 0 0 0 15px;
 }
 .prime-breadcrumbs > span:nth-child(3) {
-    margin: 0 0 0 30px;
+	margin: 0 0 0 30px;
 }
 .prime-breadcrumbs > span:nth-child(4) {
-    margin: 0 0 0 45px;
+	margin: 0 0 0 45px;
 }
 .prime-breadcrumbs > span:nth-child(5) {
-    margin: 0 0 0 60px;
+	margin: 0 0 0 60px;
 }
 .prime-breadcrumbs > span:nth-child(6) {
-    margin: 0 0 0 75px;
+	margin: 0 0 0 75px;
 }
 /* END prime-breadcrumb */
 
 /* START search */
 #prime-forum .prime-forum-search {
-    float: right;
-    line-height: 1;
-    min-width: 200px;
-    position: relative;
+	float: right;
+	line-height: 1;
+	min-width: 200px;
+	position: relative;
 }
 #prime-forum .prime-forum-search input[type="text"] {
-    background-color: #f5f5f5;
-    border-radius: 0;
-    border: 1px solid #e2e2e2;
-    box-sizing: border-box;
-    color: #959595;
-    height: 38px;
-    margin: 0;
-    outline: none;
-    padding: 7px 0;
-    text-indent: 10px;
-    width: 100%;
-    z-index: 1;
+	background-color: #f5f5f5;
+	border-radius: 0;
+	border: 1px solid #e2e2e2;
+	box-sizing: border-box;
+	color: #959595;
+	height: 38px;
+	margin: 0;
+	outline: none;
+	padding: 7px 0;
+	text-indent: 10px;
+	width: 100%;
+	z-index: 1;
 }
 #prime-forum .prime-forum-search input[type="text"]:focus {
-    background-color: #fff;
+	background-color: #fff;
 }
 #prime-forum .prime-search-button {
-    background-color: transparent;
-    border-color: currentcolor currentcolor currentcolor #d8d8d8;
-    border-image: none;
-    border-style: none none none solid;
-    border-width: medium medium medium 1px;
-    box-shadow: none;
-    color: #959595;
-    cursor: pointer;
-    font-size: 18px;
-    height: 20px;
-    line-height: 18px;
-    margin-top: 9px;
-    padding: 0 0 0 8px;
-    position: absolute;
-    right: 10px;
-    text-shadow: none;
-    top: 0;
-    width: 26px;
-    z-index: 1;
+	background-color: transparent;
+	border-color: currentcolor currentcolor currentcolor #d8d8d8;
+	border-image: none;
+	border-style: none none none solid;
+	border-width: medium medium medium 1px;
+	box-shadow: none;
+	color: #959595;
+	cursor: pointer;
+	font-size: 18px;
+	height: 20px;
+	line-height: 18px;
+	margin-top: 9px;
+	padding: 0 0 0 8px;
+	position: absolute;
+	right: 10px;
+	text-shadow: none;
+	top: 0;
+	width: 26px;
+	z-index: 1;
 }
 #prime-forum .prime-search-button:hover {
-    background: transparent;
-    opacity: 0.8;
+	background: transparent;
+	opacity: 0.8;
 }
 /* END search */
 
 /* START forum forum */
 #prime-forum .prime-forum-content {
-    overflow: hidden;
+	overflow: hidden;
 }
 #prime-forum .prime-parent-box {
-    border-left: 2px solid;
-    margin-bottom: 30px;
-    padding-left: 10px;
+	border-left: 2px solid;
+	margin-bottom: 30px;
+	padding-left: 10px;
 }
 #prime-forum .prime-parent-box .prime-item-label {
-    border-bottom: 2px solid;
-    margin-bottom: 10px;
+	border-bottom: 2px solid;
+	margin-bottom: 10px;
 }
 #prime-forum .prime-parent-box .prime-item-label span {
-    background: #ececec;
-    color: #777;
-    display: inline-block;
-    line-height: 20px;
-    margin-left: 0;
-    margin-right: 0;
-    padding: 3px 10px;
-    position: relative;
+	background: #ececec;
+	color: #777;
+	display: inline-block;
+	line-height: 20px;
+	margin-left: 0;
+	margin-right: 0;
+	padding: 3px 10px;
+	position: relative;
 }
 #prime-forum .prime-parent-box .prime-item-label span::before,
 #prime-forum .prime-parent-box .prime-item-label span::after {
-    border-style: solid;
-    content: "";
-    height: 0;
-    position: absolute;
-    width: 0;
+	border-style: solid;
+	content: "";
+	height: 0;
+	position: absolute;
+	width: 0;
 }
 #prime-forum .prime-parent-box .prime-item-label span::before {
-    border-width: 15px 5px 13px;
-    left: -10px;
-    top: 0;
+	border-width: 15px 5px 13px;
+	left: -10px;
+	top: 0;
 }
 #prime-forum .prime-parent-box .prime-item-label span::after {
-    border-color: transparent transparent #ececec #ececec;
-    border-width: 16px 10px 10px 16px;
-    right: -26px;
-    top: 0;
+	border-color: transparent transparent #ececec #ececec;
+	border-width: 16px 10px 10px 16px;
+	right: -26px;
+	top: 0;
 }
 #prime-forum .prime-parent-box,
 #prime-forum .prime-parent-box .prime-item-label,
 #prime-forum .prime-parent-box .prime-item-label span::before {
-    border-color: #ececec;
+	border-color: #ececec;
 }
 #prime-forum .prime-group-box {
-    margin: 20px 0;
+	margin: 20px 0;
 }
 #prime-forum .prime-forum-item {
-    align-items: center;
-    background-color: #f5f5f5;
-    border: 1px solid #e5e5e5;
-    box-sizing: border-box;
-    display: flex;
-    margin: 10px 0;
-    overflow: hidden;
-    padding: 5px;
-    position:relative;
-    width: 100%;
+	align-items: center;
+	background-color: #f5f5f5;
+	border: 1px solid #e5e5e5;
+	box-sizing: border-box;
+	display: flex;
+	margin: 10px 0;
+	overflow: hidden;
+	padding: 5px;
+	position:relative;
+	width: 100%;
 }
 .prime-forum-item > div {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 #prime-forum .prime-forum-item .rcl-pager {
-    font-size: 12px;
-    font-weight: normal;
-    text-align: left;
+	font-size: 12px;
+	font-weight: normal;
+	text-align: left;
 }
 #prime-forum .prime-forum-item .rcl-pager .pager-item > span,
 #prime-forum .prime-forum-item .rcl-pager .pager-item > a {
-    background: none;
-    margin: 0;
-    padding: 2px 7px;
+	background: none;
+	margin: 0;
+	padding: 2px 7px;
 }
 #prime-forum .prime-forum-item .prime-manager ul {
-    background: rgba(255, 255, 255, 0.8);
-    margin: 0;
-    padding: 4px 2px 2px;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	padding: 4px 2px 2px;
 }
 #prime-forum .prime-forum-item .prime-manager li {
-    margin: 0 5px;
+	margin: 0 5px;
 }
 #prime-forum .prime-forum-item .prime-manager li a {
-    font-size: 13px;
+	font-size: 13px;
 }
 #prime-forum .prime-forum-item .topic-manager {
-    box-shadow: 1px 1px 1px #ccc;
-    display: none;
-    left: 0;
-    position: absolute;
-    top: -2px;
+	box-shadow: 1px 1px 1px #ccc;
+	display: none;
+	left: 0;
+	position: absolute;
+	top: -2px;
 }
 #prime-forum .prime-forum-item:hover .topic-manager {
-    animation-delay:.5s;
-    animation-duration:.5s;
-    animation-fill-mode:both;
-    animation-name: slideInDown;
-    display: block;
+	animation-delay:.5s;
+	animation-duration:.5s;
+	animation-fill-mode:both;
+	animation-name: slideInDown;
+	display: block;
 }
 #prime-forum .prime-group-box .prime-group.view-children-forums {
-    line-height: 1;
-    margin: 0;
-    padding: 0;
+	line-height: 1;
+	margin: 0;
+	padding: 0;
 }
 #prime-forum .prime-forum-icon {
-    color: #d5d5d5;
-    font-size: 30px;
-    padding: 8px;
+	color: #d5d5d5;
+	font-size: 30px;
+	padding: 8px;
 }
 #prime-forum .view-children-forums .prime-forum-icon {
-    display: none;
+	display: none;
 }
 #prime-forum .prime-topic .prime-forum-icon {
-    font-size: 8px;
+	font-size: 8px;
 }
 #prime-forum .prime-forum-title {
-    flex-grow: 1;
-    margin: 5px;
+	flex-grow: 1;
+	margin: 5px;
 }
 #prime-forum .prime-general-title {
-    font-size: 16px;
+	font-size: 16px;
 }
 #prime-forum .view-children-forums .prime-forum-title > div {
-    padding: 3px;
+	padding: 3px;
 }
 #prime-forum .prime-forum-description {
-    color: #777;
-    font-size: 12px;
+	color: #777;
+	font-size: 12px;
 }
 #prime-forum .prime-forum-description:empty {
-    display: none;
+	display: none;
 }
 #prime-forum .prime-forum-topics {
-    align-items: center;
-    align-self: center;
-    border-left: 1px solid #e5e5e5;
-    border-right: 1px solid #e5e5e5;
-    display: flex;
-    flex-direction: column;
-    font-size: 13px;
-    padding: 5px 10px;
+	align-items: center;
+	align-self: center;
+	border-left: 1px solid #e5e5e5;
+	border-right: 1px solid #e5e5e5;
+	display: flex;
+	flex-direction: column;
+	font-size: 13px;
+	padding: 5px 10px;
 }
 #prime-forum .prime-group-box .prime-group .prime-forum-topics {
-    border-right: none;
+	border-right: none;
 }
 #prime-forum .view-children-forums .prime-forum-topics {
-    display: block;
+	display: block;
 }
 #prime-forum .view-children-forums .prime-forum-topics > span {
-    padding: 0 2px;
+	padding: 0 2px;
 }
 #prime-forum .prime-group-box .prime-child-forums .prime-forum {
-    background-color: #fafafa;
-    border-style: none solid solid;
-    margin: 0;
-    padding: 0 0 0 15px;
+	background-color: #fafafa;
+	border-style: none solid solid;
+	margin: 0;
+	padding: 0 0 0 15px;
 }
 #prime-forum .prime-subforums-list {
-    font-size: 12px;
-    margin: 8px 0 4px;
+	font-size: 12px;
+	margin: 8px 0 4px;
 }
 #prime-forum .prime-last-topic {
-    font-size: 12px;
-    max-width: 300px;
-    min-width: 180px;
-    padding: 5px 10px;
-    width: 30%;
+	font-size: 12px;
+	max-width: 300px;
+	min-width: 180px;
+	padding: 5px 10px;
+	width: 30%;
 }
 #prime-forum .prime-last-items {
-    font-size: 12px;
-    padding: 5px 10px;
-    width: 15%;
+	font-size: 12px;
+	padding: 5px 10px;
+	width: 15%;
 }
 #prime-forum .prime-last-items > span {
-    display: block;
+	display: block;
 }
 #prime-forum .prime-forums-list .prime-last-items,
 #prime-forum .prime-subforums-list .prime-last-items {
-    max-width: 400px;
-    min-width: 200px;
-    width: 40%;
+	max-width: 400px;
+	min-width: 200px;
+	width: 40%;
 }
 #prime-forum .prime-topics-list .prime-last-items {
-    max-width: 300px;
-    min-width: 180px;
-    text-align:center;
-    width: 25%;
+	max-width: 300px;
+	min-width: 180px;
+	text-align:center;
+	width: 25%;
 }
 #prime-forum .prime-forum-footer {
-    margin: 10px 0;
+	margin: 10px 0;
 }
 #prime-forum .prime-forum-footer .prime-visitors {
-    font-size: 12px;
-    padding: 5px 0;
+	font-size: 12px;
+	padding: 5px 0;
 }
 #prime-forum .prime-topic-icons {
-    display: flex;
-    padding: 5px;
+	display: flex;
+	padding: 5px;
 }
 #prime-forum .prime-topic-icons .topic-icon {
-    color: #a9a9a9;
-    font-size: 16px;
-    margin: 0 5px;
+	color: #a9a9a9;
+	font-size: 16px;
+	margin: 0 5px;
 }
 #prime-forum .prime-forum-activity {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    font-size: 13px;
-    min-width: 160px;
-    padding: 0 5px 0 10px;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	font-size: 13px;
+	min-width: 160px;
+	padding: 0 5px 0 10px;
 }
 #prime-forum .prime-forum-time-ago {
-    font-size: 11px;
-    margin: 2px 0 0;
+	font-size: 11px;
+	margin: 2px 0 0;
 }
 /* END forum forum */
 
 /* START forum form */
 #prime-topic-form-box {
-    background-color: #f5f5f5;
-    border: 1px solid #e5e5e5;
-    margin: 20px 0;
-    padding: 0 10px;
+	background-color: #f5f5f5;
+	border: 1px solid #e5e5e5;
+	margin: 20px 0;
+	padding: 0 10px;
 }
 #prime-topic-form-box .post-form-bottom {
-    background-color: #efefef;
-    padding: 5px;
-    position: relative;
-    text-align: right;
+	background-color: #efefef;
+	padding: 5px;
+	position: relative;
+	text-align: right;
 }
 #prime-topic-form-box .rcl-smiles {
-    float: none;
+	float: none;
 }
 #prime-topic-form-box .submit-box {
-    margin: 10px 0;
-    text-align: right;
+	margin: 10px 0;
+	text-align: right;
 }
 #prime-topic-form-box .submit-box input {
-    margin: 0;
-    max-width: none;
-    width: auto;
+	margin: 0;
+	max-width: none;
+	width: auto;
 }
 #prime-topic-form-box .submit-box .recall-button {
-    display: inline-block;
-    line-height: 1;
-    margin-left: 10px;
+	display: inline-block;
+	line-height: 1;
+	margin-left: 10px;
 }
 /* END forum form */
 
 /* START postform manager */
 #prime-forum .post-form-manager {
-    background-color: #fff;
-    clear: both;
-    margin: 5px 0;
-    text-align: left;
+	background-color: #fff;
+	clear: both;
+	margin: 5px 0;
+	text-align: left;
 }
 /* END postform manager */
 
 
 #prime-forum .topic-manager {
-    margin: 0 0 15px;
+	margin: 0 0 15px;
 }
 #prime-forum .prime-topic-icons .topic-icon .fa-star,
 #prime-forum .prime-manager ul li a .fa-star-o:hover,
 #prime-forum .prime-manager ul li a .fa-star {
-    color: #ffae19;
+	color: #ffae19;
 }
 #prime-forum .prime-topic-icons .topic-icon .fa-lock,
 #prime-forum .prime-manager ul li a .fa-lock,
 #prime-forum .prime-manager ul li .action-cancel_post_migrate,
 #prime-forum .prime-manager ul li a .fa-trash:hover,
 #prime-forum .prime-manager ul li a .fa-unlock:hover {
-    color: rgb(229, 57, 53);
+	color: rgb(229, 57, 53);
 }
 #prime-forum .rcl-pager {
-    box-shadow: none;
-    font-size: 16px;
-    margin: 0;
-    padding: 0;
-    text-align: right;
+	box-shadow: none;
+	font-size: 16px;
+	margin: 0;
+	padding: 0;
+	text-align: right;
 }
 
 /* START forum topic */
 #prime-forum .prime-topics-header {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
 }
 #prime-forum .topic_count {
-    flex-shrink: 0;
+	flex-shrink: 0;
 }
 #prime-forum .prime-posts {
-    overflow: hidden;
+	overflow: hidden;
 }
 #prime-forum .prime-post {
-    background-color: #fafafa;
-    border: 1px solid #e5e5e5;
-    box-sizing: border-box;
-    display: flex;
-    margin: 10px 0;
-    position: relative;
-    width: 100%;
+	background-color: #fafafa;
+	border: 1px solid #e5e5e5;
+	box-sizing: border-box;
+	display: flex;
+	margin: 10px 0;
+	position: relative;
+	width: 100%;
 }
 #prime-forum .prime-topic-left {
-    align-items: center;
-    border-right: 1px solid #eee;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    max-width: 130px;
-    overflow: hidden;
-    padding: 8px 3px;
-    position: relative;
-    text-align: center;
-    width: 20%;
-    word-wrap: break-word;
+	align-items: center;
+	border-right: 1px solid #eee;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	max-width: 130px;
+	overflow: hidden;
+	padding: 8px 3px;
+	position: relative;
+	text-align: center;
+	width: 20%;
+	word-wrap: break-word;
 }
 #prime-forum .prime-topic-left img {
-    border-radius: 0;
-    border: none;
-    float: none;
-    height: auto;
-    margin: 0;
-    max-width: 100%;
+	border-radius: 0;
+	border: none;
+	float: none;
+	height: auto;
+	margin: 0;
+	max-width: 100%;
 }
 #prime-forum .prime-author-metabox {
-    margin: 10px 0;
-    width: 100%;
+	margin: 10px 0;
+	width: 100%;
 }
 #prime-forum .prime-author-metabox .prime-author-name {
-    font-size: 14px;
-    font-weight: bold;
+	font-size: 14px;
+	font-weight: bold;
 }
 #prime-forum .prime-author-metabox .prime-author-role,
 #prime-forum .prime-author-metabox .prime-author-register,
 #prime-forum .prime-author-metabox .prime-author-topics,
 #prime-forum .prime-author-metabox .prime-author-posts {
-    color: #777;
-    font-size: 12px;
-    margin: 3px 0;
+	color: #777;
+	font-size: 12px;
+	margin: 3px 0;
 }
 #prime-forum .prime-author-metabox .prime-author-topics,
 #prime-forum .prime-author-metabox .prime-author-posts {
-    border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 5px;
+	border-bottom: 1px solid #eee;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 5px;
 }
 #prime-forum .prime-author-metabox .prime-author-role {
-    margin: 10px 0;
+	margin: 10px 0;
 }
 #prime-forum .prime-author-metabox .offline {
-    color: #777;
-    font-size: 12px;
+	color: #777;
+	font-size: 12px;
 }
 #prime-forum .prime-author-metabox .online .fa-circle {
-    font-size: inherit;
+	font-size: inherit;
 }
 #prime-forum .prime-topic-right {
-    display: flex;
-    flex-wrap: wrap;
-    width: calc(100% - 110px);
+	display: flex;
+	flex-wrap: wrap;
+	width: calc(100% - 110px);
 }
 #prime-forum .prime-post-top {
-    align-items: center;
-    align-self: flex-start;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    width: 100%;
+	align-items: center;
+	align-self: flex-start;
+	border-bottom: 1px solid #eee;
+	display: flex;
+	width: 100%;
 }
 #prime-forum .prime-count {
-    align-items: center;
-    display: flex;
-    padding: 5px 10px;
+	align-items: center;
+	display: flex;
+	padding: 5px 10px;
 }
 #prime-forum .prime-count > span {
-    padding: 0 10px 0 0;
+	padding: 0 10px 0 0;
 }
 #prime-forum .prime-date {
-    flex-grow: 1;
-    font-size: 12px;
-    margin: 0 0 0 10px;
+	flex-grow: 1;
+	font-size: 12px;
+	margin: 0 0 0 10px;
 }
 #prime-forum .prime-date .post-date {
-    margin: 0 5px 0 0;
+	margin: 0 5px 0 0;
 }
 #prime-forum .post-manager.prime-manager > ul {
-    margin: 10px 2px;
+	margin: 10px 2px;
 }
 #prime-forum .prime-post-content {
-    box-sizing: border-box;
-    padding: 15px;
-    width: 100%;
-    word-wrap: break-word;
+	box-sizing: border-box;
+	padding: 15px;
+	width: 100%;
+	word-wrap: break-word;
 }
 #prime-forum .prime-post-content img {
-    margin: 10px 0;
+	margin: 10px 0;
 }
 #prime-forum .prime-post-content img.wp-smiley {
-    margin: 0;
+	margin: 0;
 }
 #prime-forum .prime-post-bottom {
-    align-self: flex-end;
-    border-top: 1px solid #eee;
-    padding: 0 5px;
-    width: 100%;
+	align-self: flex-end;
+	border-top: 1px solid #eee;
+	padding: 0 5px;
+	width: 100%;
 }
 /* END forum topic */
 
 /* Dialog */
 .forum-manager-dialog .ssi-modalWrapper .ssi-modalWindow {
-    max-width: 100%;
+	max-width: 100%;
 }
 .forum-manager-dialog .manager-box {
-    margin: 10px auto;
-    position: relative;
+	margin: 10px auto;
+	position: relative;
 }
 .forum-manager-dialog #prime-topic-form-box {
-    margin: 10px 0;
-    min-width: 600px;
-    width: auto;
+	margin: 10px 0;
+	min-width: 600px;
+	width: auto;
 }
 .forum-manager-dialog h3 {
-    color: #000;
-    font-size: 18px;
-    font-weight: normal;
-    line-height: normal;
-    margin: 8px 0;
-    padding: 0;
-    text-transform: none;
+	color: #000;
+	font-size: 18px;
+	font-weight: normal;
+	line-height: normal;
+	margin: 8px 0;
+	padding: 0;
+	text-transform: none;
 }
 #prime-topic-form-box .post-form-bottom:empty {
-    display: none;
+	display: none;
 }
 .forum-manager-dialog #prime-forum .prime-forum-item {
-    max-width: 900px;
+	max-width: 900px;
 }
 /* END Dialog */
 
 /* Notice box */
 .prime-notice {
-    margin: 10px 0;
+	margin: 10px 0;
 }
 .prime-notice .notice-box {
-    padding: 10px;
-    text-align: center;
+	padding: 10px;
+	text-align: center;
 }
 .prime-notice .type-notice {
-    background-color: #fce6db;
+	background-color: #fce6db;
 }
 .prime-notice .type-warning {
-    background: #fff5ce;
+	background: #fff5ce;
 }
 .prime-notice .type-success {
-    background: #e5ffe1;
-    color: #077900;
+	background: #e5ffe1;
+	color: #077900;
 }
 .prime-notice .type-error {
-    background: #ffe1e1;
-    color: #ff0000;
+	background: #ffe1e1;
+	color: #ff0000;
 }
 /**/
 
 /*topic metabox*/
 .prime-topic-metabox {
-    background-color: #f5f5f5;
-    border: 1px solid #e5e5e5;
-    margin: 0 10px 10px 0;
-    padding: 10px;
+	background-color: #f5f5f5;
+	border: 1px solid #e5e5e5;
+	margin: 0 10px 10px 0;
+	padding: 10px;
 }
 /**/
 #manager-migrate .form-field {
-    margin: 10px 0;
+	margin: 10px 0;
 }
 #manager-migrate .fields-submit {
-    text-align: right;
+	text-align: right;
 }
 
 @media screen and (max-width:640px){
-    #prime-forum .prime-forum-activity {
-        min-width: auto;
-    }
-    .forum-manager-dialog #prime-topic-form-box {
-        min-width: 480px;
-    }
+	#prime-forum .prime-forum-activity {
+		min-width: auto;
+	}
+	.forum-manager-dialog #prime-topic-form-box {
+		min-width: 480px;
+	}
 }
 @media screen and (max-width:568px){
-    #prime-forum .prime-group-box .prime-child-forums .prime-forum {
-        padding: 0;
-    }
-    #prime-forum .prime-forum-item {
-        flex-wrap: wrap;
-    }
-    :not(.ssi-modalContent) > #prime-forum .prime-forum-icon {
-        width: 45px;
-    }
-    #prime-forum .prime-forum-title {
-        width: calc(100% - 60px);
-    }
-    #prime-forum .prime-forum-topics {
-        border-left: none;
-    }
-    .ssi-modalContent #prime-forum .prime-forum-title {
-        margin: 10px;
-    }
-    #prime-forum .prime-last-items {
-        flex-grow: 1;
-    }
-    .forum-manager-dialog #prime-forum .prime-forum-activity,
-    #prime-forum.prime-forum-page .prime-forum-topics,
-    #prime-forum.prime-forum-page .prime-forum-activity {
-        border-left: none;
-        width: 50%;
-    }
-    .ssi-modalContent #prime-forum .prime-forum-topics {
-        border-right: none;
-        width: auto;
-    }
-    #prime-forum .prime-forums-list .prime-last-items,
-    .ssi-modalContent #prime-forum .prime-topics-list .prime-last-items {
-        max-width: none;
-        text-align: right;
-    }
-    #prime-forum .prime-topic-left {
-        width: 90px;
-    }
-    #prime-forum .prime-topic-right {
-        width: calc(100% - 90px);
-    }
+	#prime-forum .prime-group-box .prime-child-forums .prime-forum {
+		padding: 0;
+	}
+	#prime-forum .prime-forum-item {
+		flex-wrap: wrap;
+	}
+	:not(.ssi-modalContent) > #prime-forum .prime-forum-icon {
+		width: 45px;
+	}
+	#prime-forum .prime-forum-title {
+		width: calc(100% - 60px);
+	}
+	#prime-forum .prime-forum-topics {
+		border-left: none;
+	}
+	.ssi-modalContent #prime-forum .prime-forum-title {
+		margin: 10px;
+	}
+	#prime-forum .prime-last-items {
+		flex-grow: 1;
+	}
+	.forum-manager-dialog #prime-forum .prime-forum-activity,
+	#prime-forum.prime-forum-page .prime-forum-topics,
+	#prime-forum.prime-forum-page .prime-forum-activity {
+		border-left: none;
+		width: 50%;
+	}
+	.ssi-modalContent #prime-forum .prime-forum-topics {
+		border-right: none;
+		width: auto;
+	}
+	#prime-forum .prime-forums-list .prime-last-items,
+	.ssi-modalContent #prime-forum .prime-topics-list .prime-last-items {
+		max-width: none;
+		text-align: right;
+	}
+	#prime-forum .prime-topic-left {
+		width: 90px;
+	}
+	#prime-forum .prime-topic-right {
+		width: calc(100% - 90px);
+	}
 }
 @media screen and (max-width:480px){
-    .forum-manager-dialog #prime-topic-form-box {
-        min-width: 400px;
-    }
-    #prime-forum .prime-manager {
-        flex-shrink: 0;
-    }
+	.forum-manager-dialog #prime-topic-form-box {
+		min-width: 400px;
+	}
+	#prime-forum .prime-manager {
+		flex-shrink: 0;
+	}
 }
 @media screen and (max-width:414px){
-    #prime-forum .prime-last-topic {
-        display: flex;
-        flex-wrap: wrap;
-        min-width: auto;
-        width: 50%;
-    }
-    .forum-manager-dialog #prime-topic-form-box {
-        min-width: auto;
-    }
-    #prime-forum .prime-forum-search {
-        margin: 5px 0 0;
-        width: 100%;
-    }
-    #prime-forum .prime-post {
-        display: flex;
-        flex-direction: column;
-        margin: 25px 0;
-    }
-    #prime-forum .prime-topic-left {
-        border-bottom: 1px solid #eee;
-        border-right: medium none;
-        margin: 40px 0 0;
-        max-width: none;
-        width: 100%;
-    }
-    #prime-forum .prime-topic-right {
-        width: 100%;
-    }
-    #prime-forum .prime-post-top {
-        position: absolute;
-        top: 0;
-    }
+	#prime-forum .prime-last-topic {
+		display: flex;
+		flex-wrap: wrap;
+		min-width: auto;
+		width: 50%;
+	}
+	.forum-manager-dialog #prime-topic-form-box {
+		min-width: auto;
+	}
+	#prime-forum .prime-forum-search {
+		margin: 5px 0 0;
+		width: 100%;
+	}
+	#prime-forum .prime-post {
+		display: flex;
+		flex-direction: column;
+		margin: 25px 0;
+	}
+	#prime-forum .prime-topic-left {
+		border-bottom: 1px solid #eee;
+		border-right: medium none;
+		margin: 40px 0 0;
+		max-width: none;
+		width: 100%;
+	}
+	#prime-forum .prime-topic-right {
+		width: 100%;
+	}
+	#prime-forum .prime-post-top {
+		position: absolute;
+		top: 0;
+	}
 }

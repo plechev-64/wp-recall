@@ -1,397 +1,397 @@
 /* tab=publics */
 #tab-publics .rcl-table__cell {
-    min-width: 75px;
+	min-width: 75px;
 }
 #tab-publics .rcl_author_postlist a:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 .rcl_author_postlist .rcl-table__row > div:nth-child(3) {
-    min-width: 100px;
+	min-width: 100px;
 }
 .rcl_author_postlist .rcl-table__row:not(.rcl-table__row-header) > div:nth-child(2) {
-    justify-content: space-between;
+	justify-content: space-between;
 }
 .rcl_author_postlist .rating-rcl {
-    hyphens: none;
-    padding: 0 0 0 8px;
-    word-break: normal;
-    word-wrap: normal;
+	hyphens: none;
+	padding: 0 0 0 8px;
+	word-break: normal;
+	word-wrap: normal;
 }
 @media screen and (max-width:768px) {
-    .rcl_author_postlist .rcl-table__row-header ~ .rcl-table__row .rcl-table__cell::before {
-        flex-basis: auto;
-        min-width: 90px;
-    }
-    .rcl_author_postlist .rcl-table__cell > a {
-        flex-grow: 1;
-    }
+	.rcl_author_postlist .rcl-table__row-header ~ .rcl-table__row .rcl-table__cell::before {
+		flex-basis: auto;
+		min-width: 90px;
+	}
+	.rcl_author_postlist .rcl-table__cell > a {
+		flex-grow: 1;
+	}
 }
 /*end*/
 
 
 /* block author */
 #block_author-rcl {
-    background: rgba(243, 243, 243, 0.3);
-    box-shadow: 0 0 1px 1px rgb(243, 243, 243);
-    clear: both;
-    margin: 15px 3px;
-    overflow: hidden;
-    padding: 2px;
+	background: rgba(243, 243, 243, 0.3);
+	box-shadow: 0 0 1px 1px rgb(243, 243, 243);
+	clear: both;
+	margin: 15px 3px;
+	overflow: hidden;
+	padding: 2px;
 }
 #block_author-rcl > h3 {
-    font-size: 18px;
-    letter-spacing: normal;
-    line-height: 1.4;
-    margin: 0;
-    padding: 0 0 5px 5px;
+	font-size: 18px;
+	letter-spacing: normal;
+	line-height: 1.4;
+	margin: 0;
+	padding: 0 0 5px 5px;
 }
 #block_author-rcl .userlist .user-single {
-    background: transparent;
-    box-shadow: none;
-    margin: 0;
+	background: transparent;
+	box-shadow: none;
+	margin: 0;
 }
 /*end*/
 
 
 /* publicpost */
 .rcl-public-box {
-    position: relative;
+	position: relative;
 }
 .rcl-public-box .edit-form-link > a {
-    align-items: center;
-    box-shadow: none !important;
-    display: flex;
-    justify-content: flex-end;
+	align-items: center;
+	box-shadow: none !important;
+	display: flex;
+	justify-content: flex-end;
 }
 .edit-form-link .edit-form-link-title {
-    margin: 0 8px 0 5px;
+	margin: 0 8px 0 5px;
 }
 .rcl-public-box .rcl-service-button {
-    background-color: rgba(30, 56, 75, 0.7);
-    border: none;
-    box-shadow: none;
-    color: rgb(229, 57, 53);
-    cursor: pointer;
-    font-size: 24px;
-    line-height: 1;
-    padding: 6px;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    z-index: 2;
+	background-color: rgba(30, 56, 75, 0.7);
+	border: none;
+	box-shadow: none;
+	color: rgb(229, 57, 53);
+	cursor: pointer;
+	font-size: 24px;
+	line-height: 1;
+	padding: 6px;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	z-index: 2;
 }
 .rcl-public-box .rcl-service-button i:hover {
-    opacity: 0.8;
+	opacity: 0.8;
 }
 .rcl-public-box .rcl-form-field {
-    background-color: #f7f7f7;
-    border: 1px solid #e5e5e5;
-    box-sizing: border-box;
-    margin: 7px 0;
-    padding: 8px;
+	background-color: #f7f7f7;
+	border: 1px solid #e5e5e5;
+	box-sizing: border-box;
+	margin: 7px 0;
+	padding: 8px;
 }
 .rcl-public-box .rcl-form-field > label {
-    display: block;
-    font-size: 18px;
-    line-height: normal;
-    margin: 0 0 3px;
+	display: block;
+	font-size: 18px;
+	line-height: normal;
+	margin: 0 0 3px;
 }
 .rcl-public-box #form-field-post_content .button-small {
-    border-radius: 1px;
-    line-height: 1;
-    margin: 2px 5px 3px 0;
-    padding: 6px 10px;
-    width: auto;
+	border-radius: 1px;
+	line-height: 1;
+	margin: 2px 5px 3px 0;
+	padding: 6px 10px;
+	width: auto;
 }
 #form-field-post_content textarea.wp-editor-area {
-    background-color: #fff;
-    min-height: 300px;
+	background-color: #fff;
+	min-height: 300px;
 }
 .rcl-public-box .rcl-form-field .rcl-terms-select .rcl-field-input {
-    display: inline-block;
-    width: auto;
+	display: inline-block;
+	width: auto;
 }
 .rcl-public-box .rcl-form-field .rcl-terms-select .type-multiselect-input {
-    display: block;
+	display: block;
 }
 .rcl-public-box .rcl-form-field .rcl-terms-select .rcl-tags-list {
-    margin: 0 0 4px;
-    overflow: hidden;
+	margin: 0 0 4px;
+	overflow: hidden;
 }
 .rcl-public-box .rcl-tags-list > .block-label {
-    background: #fff;
-    box-shadow: none;
-    clear: both;
-    cursor: default;
-    display: block;
-    float: none;
-    margin: 0;
-    padding: 10px;
+	background: #fff;
+	box-shadow: none;
+	clear: both;
+	cursor: default;
+	display: block;
+	float: none;
+	margin: 0;
+	padding: 10px;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn {
-    border: 1px solid #ddd;
-    box-shadow: none;
-    line-height: normal;
-    margin-top: 5px;
-    padding: 5px;
+	border: 1px solid #ddd;
+	box-shadow: none;
+	line-height: normal;
+	margin-top: 5px;
+	padding: 5px;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn {
-    margin: 0;
+	margin: 0;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn .ms-sel-item {
-    border-radius: 0;
-    color: #7a7a7a;
-    display: inline-block;
-    float: none;
-    font-size: 14px;
-    margin: 5px;
-    padding: 5px;
+	border-radius: 0;
+	color: #7a7a7a;
+	display: inline-block;
+	float: none;
+	font-size: 14px;
+	margin: 5px;
+	padding: 5px;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn input {
-    background-color: #fafafa;
-    border: 1px solid #ddd;
-    clear: both;
-    display: block;
-    float: none;
-    margin-top: 5px;
-    padding: 5px;
-    width: 100% !important;
+	background-color: #fafafa;
+	border: 1px solid #ddd;
+	clear: both;
+	display: block;
+	float: none;
+	margin-top: 5px;
+	padding: 5px;
+	width: 100% !important;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn .ms-sel-ctn input:focus {
-    background-color: #fff;
-    border-color: #c5c5c5;
+	background-color: #fff;
+	border-color: #c5c5c5;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn .ms-trigger {
-    background: #fff;
-    box-sizing: border-box;
+	background: #fff;
+	box-sizing: border-box;
 }
 .rcl-public-box .rcl-tags-list .ms-ctn .ms-helper {
-    background-color: #ffe2e2;
-    border-radius: 1px;
-    color: red;
-    font-size: 14px;
-    padding: 0 6px;
-    right: 42px;
-    top: 15px;
+	background-color: #ffe2e2;
+	border-radius: 1px;
+	color: red;
+	font-size: 14px;
+	padding: 0 6px;
+	right: 42px;
+	top: 15px;
 }
 .rcl-form-field.maybe-gallery-box {
-    background-color: #f2f2f2;
+	background-color: #f2f2f2;
 }
 .rcl-form-field.maybe-gallery-box .block-label {
-    background-color: transparent;
-    border: none;
-    padding: 0;
+	background-color: transparent;
+	border: none;
+	padding: 0;
 }
 .rcl-public-box .submit-public-form {
-    margin: 10px 0;
-    padding-bottom: 0;
-    text-align: right;
+	margin: 10px 0;
+	padding-bottom: 0;
+	text-align: right;
 }
 .rcl-public-box .submit-public-form.fixed {
-    position: absolute;
-    width: 100%;
-    z-index: 9;
+	position: absolute;
+	width: 100%;
+	z-index: 9;
 }
 .rcl-public-box .public-form-button {
-    display: inline-block;
-    font-size: 14px;
-    line-height: normal;
-    margin: 0 0 10px;
-    padding: 5px;
-    width: auto;
+	display: inline-block;
+	font-size: 14px;
+	line-height: normal;
+	margin: 0 0 10px;
+	padding: 5px;
+	width: auto;
 }
 .rcl-public-box .public-form-button:not(:last-child) {
-    margin-right: 10px;
+	margin-right: 10px;
 }
 .rcl-public-box .public-form-button > i {
-    margin-right: 10px;
+	margin-right: 10px;
 }
 .rcl-public-form .category-list .child-list-category {
-    background: #fff;
-    padding: 5px;
-    margin-left: 10px;
-    margin-bottom: 5px;
+	background: #fff;
+	padding: 5px;
+	margin-left: 10px;
+	margin-bottom: 5px;
 }
 .rcl-public-form .category-list .child-list-category .parent-category {
-    background: #f0f0f0;
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    padding: 5px 8px;
+	background: #f0f0f0;
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+	padding: 5px 8px;
 }
 .rcl-public-form .attachments-post .set-thumbnail-post {
-    display: block;
-    width: 100%;
+	display: block;
+	width: 100%;
 }
 .rcl-public-form .attachments-post .set-thumbnail-post a {
-    color: #fff;
-    display: block;
-    font-size: 14px;
-    font-weight: normal;
-    padding: 4px 5px;
-    text-align: center;
-    white-space: normal;
+	color: #fff;
+	display: block;
+	font-size: 14px;
+	font-weight: normal;
+	padding: 4px 5px;
+	text-align: center;
+	white-space: normal;
 }
 .rcl-public-form .attachments-post .set-thumbnail-post a:hover {
-    text-decoration: none;
+	text-decoration: none;
 }
 #rcl-thumbnail-post {
-    background: #e5e5e5;
-    box-sizing: border-box;
-    max-width: 180px;
-    padding: 10px;
-    text-align: center;
+	background: #e5e5e5;
+	box-sizing: border-box;
+	max-width: 180px;
+	padding: 10px;
+	text-align: center;
 }
 #rcl-thumbnail-post .thumbnail-wrapper {
-    overflow: hidden;
-    position: relative;
+	overflow: hidden;
+	position: relative;
 }
 #rcl-thumbnail-post .thumbnail-image img {
-    width: 100%;
+	width: 100%;
 }
 #rcl-thumbnail-post #rcl-thumbnail-uploader {
-    cursor: pointer;
+	cursor: pointer;
 }
 #rcl-thumbnail-post .delete-post-thumbnail {
-    position: absolute;
-    right: 0;
-    top: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
 }
 
 
-/*  Start */
+/*	Start */
 .rcl-public-box .attachments-post {
-    display: flex;
-    flex-wrap: wrap;
-    list-style: outside none none;
-    margin: 5px 0;
-    overflow: hidden;
-    padding: 0 !important;
-    width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	list-style: outside none none;
+	margin: 5px 0;
+	overflow: hidden;
+	padding: 0 !important;
+	width: 100%;
 }
 .rcl-public-box .attachments-post li {
-    background-color: #e5e5e5;
-    box-sizing: border-box;
-    float: left;
-    list-style: none!important;
-    margin: 5px 0.5%;
-    padding: 5px;
-    position: relative;
-    width: 24%;
+	background-color: #e5e5e5;
+	box-sizing: border-box;
+	float: left;
+	list-style: none!important;
+	margin: 5px 0.5%;
+	padding: 5px;
+	position: relative;
+	width: 24%;
 }
 .rcl-public-box .attachments-post li img {
-    width: 100%;
+	width: 100%;
 }
 .rcl-public-box .attachments-post li img:hover {
-    box-shadow: 0 0 1px 1px rgb(30, 56, 75);
-    opacity: 0.8;
+	box-shadow: 0 0 1px 1px rgb(30, 56, 75);
+	opacity: 0.8;
 }
 .rcl-public-box .attachments-post label span {
-    cursor: pointer;
-    display: inline-flex;
-    font-size: 12px;
+	cursor: pointer;
+	display: inline-flex;
+	font-size: 12px;
 }
 .rcl-public-box .attachments-post label span input {
-    margin: 0 5px 0 0;
+	margin: 0 5px 0 0;
 }
 .ssi-modalOuter.rcl-preview-post .rcl-notice-preview {
-    background: rgba(229, 57, 53, 0.15);
-    display: block;
-    text-align: center;
+	background: rgba(229, 57, 53, 0.15);
+	display: block;
+	text-align: center;
 }
 .ssi-modalOuter.rcl-preview-post .rcl-notice-preview p {
-    color: #000;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0;
-    padding: 10px;
+	color: #000;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0;
+	padding: 10px;
 }
 .ssi-modalOuter.rcl-preview-post a {
-    color: #38b7ee;
+	color: #38b7ee;
 }
 h3.pending-message {
-    background: rgb(255, 207, 207);
-    color: red;
-    font-size: 19px;
-    margin: 0 auto;
-    padding: 5px;
-    text-align: center;
-    width: 70%;
+	background: rgb(255, 207, 207);
+	color: red;
+	font-size: 19px;
+	margin: 0 auto;
+	padding: 5px;
+	text-align: center;
+	width: 70%;
 }
-/*  end */
+/*	end */
 
 
 /*delete-post form*/
 #form-field-delete {
-    overflow: hidden;
-    padding-bottom: 0;
+	overflow: hidden;
+	padding-bottom: 0;
 }
 #rcl-delete-post .delete-form-contayner {
-    background-color: #fafafa;
-    border: 1px solid #ddd;
-    display: none;
-    margin-bottom: 7px;
-    padding: 7px;
+	background-color: #fafafa;
+	border: 1px solid #ddd;
+	display: none;
+	margin-bottom: 7px;
+	padding: 7px;
 }
 #rcl-delete-post label {
-    display: block;
-    font-weight: normal;
-    margin: 5px 10px;
+	display: block;
+	font-weight: normal;
+	margin: 5px 10px;
 }
 #rcl-delete-post .reason-delete {
-    margin: 0 0 8px 10px;
-    padding: 7px;
+	margin: 0 0 8px 10px;
+	padding: 7px;
 }
 #rcl-delete-post textarea {
-    background-color: #fff;
-    border-radius: 0;
-    border: 1px solid #ddd;
-    box-shadow: none;
-    box-sizing: border-box;
-    float: none;
-    font-size: 100%;
-    height: auto;
-    line-height: 1.4;
-    margin: 0 0 10px;
-    max-width: 100%;
-    outline: 0;
-    padding: 5px 10px;
-    width: 100%;
+	background-color: #fff;
+	border-radius: 0;
+	border: 1px solid #ddd;
+	box-shadow: none;
+	box-sizing: border-box;
+	float: none;
+	font-size: 100%;
+	height: auto;
+	line-height: 1.4;
+	margin: 0 0 10px;
+	max-width: 100%;
+	outline: 0;
+	padding: 5px 10px;
+	width: 100%;
 }
 #rcl-delete-post p {
-    margin: 4px;
-    padding: 0;
+	margin: 4px;
+	padding: 0;
 }
 #rcl-delete-post .delete-post-submit {
-    margin: -24px 0 0;
+	margin: -24px 0 0;
 }
 /*end*/
 
 
 /*mass uploader*/
 .mass-upload-box {
-    background: rgba(219, 219, 219, 0.3);
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
-    padding: 5px;
+	background: rgba(219, 219, 219, 0.3);
+	box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.6);
+	padding: 5px;
 }
 .rcl-dropzone {
-    font-size: 12px;
-    margin-bottom: 10px;
-    overflow: hidden;
+	font-size: 12px;
+	margin-bottom: 10px;
+	overflow: hidden;
 }
 .rcl-dropzone.mass-upload-box small {
-    margin: 0 0 0 5px;
+	margin: 0 0 0 5px;
 }
 .mass-upload-box .mass-upload-area {
-    background-color: #ccc;
-    padding: 20px;
-    text-align: center;
+	background-color: #ccc;
+	padding: 20px;
+	text-align: center;
 }
 .mass-upload-box hr {
-    margin: 3px;
+	margin: 3px;
 }
 .mass-upload-box .rcl-upload-button {
-    display: inline-block;
+	display: inline-block;
 }
 /*end*/
 
@@ -400,59 +400,59 @@ h3.pending-message {
 
 }
 .rcl-posts-list .single-post-box{
-    display: flex;
-    margin: 5px 0;
-    padding: 5px 0;
-    border-bottom: 1px solid #eaeaea;
+	display: flex;
+	margin: 5px 0;
+	padding: 5px 0;
+	border-bottom: 1px solid #eaeaea;
 }
 .rcl-posts-list .post-thumbnail{
-    width: 80px;
-    margin: 0 10px 0 0;
+	width: 80px;
+	margin: 0 10px 0 0;
 }
 .rcl-posts-list .post-content{
-    width: 100%;
+	width: 100%;
 }
 .rcl-posts-list .post-title{
-    font-size: 18px;
-    font-weight: bold;
+	font-size: 18px;
+	font-weight: bold;
 }
 .rcl-posts-list .post-meta{
-    float: right;
-    font-size: 12px;
+	float: right;
+	font-size: 12px;
 }
 .rcl-posts-list .post-date{
 
 }
 .rcl-posts-list .post-status{
-    background: #ccc;
-    padding: 5px;
-    line-height: 1;
-    display: inline-block;
-    border-radius: 3px;
+	background: #ccc;
+	padding: 5px;
+	line-height: 1;
+	display: inline-block;
+	border-radius: 3px;
 }
 .rcl-posts-list .post-status.status-publish{
-    background: #c8ffad;
+	background: #c8ffad;
 }
 .rcl-posts-list .post-status.status-pending{
-    background: #fff89a;
+	background: #fff89a;
 }
 .rcl-posts-list .post-status.status-trash{
-    background: #ffbdbd;
+	background: #ffbdbd;
 }
 .rcl-posts-list .post-excerpt{
-    line-height: 1;
-    font-size: 13px;
+	line-height: 1;
+	font-size: 13px;
 }
 /*end*/
 
 @media screen and (max-width:480px) {
-    .rcl-public-box .attachments-post li {
-        width: 31%;
-    }
+	.rcl-public-box .attachments-post li {
+		width: 31%;
+	}
 }
 @media screen and (max-width:375px) {
-    .rcl-public-box .attachments-post li {
-        width: 49%;
-    }
+	.rcl-public-box .attachments-post li {
+		width: 49%;
+	}
 }
 

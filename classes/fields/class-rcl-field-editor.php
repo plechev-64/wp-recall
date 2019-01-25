@@ -6,117 +6,114 @@
  * and open the template in the editor.
  */
 
-
 /**
  * Description of class-rcl-custom-field-text
  *
  * @author Андрей
  */
-class Rcl_Field_Editor extends Rcl_Field_Abstract{
+class Rcl_Field_Editor extends Rcl_Field_Abstract {
 
-    public $tinymce;
-    public $html_editor = 1;
-    public $editor_id;
-    public $quicktags;
-    public $media_button;
+	public $tinymce;
+	public $html_editor = 1;
+	public $editor_id;
+	public $quicktags;
+	public $media_button;
 
-    function __construct($args) {
+	function __construct( $args ) {
 
-        if(isset($args['editor-id']))
-            $args['editor_id'] = $args['editor-id'];
+		if ( isset( $args['editor-id'] ) )
+			$args['editor_id'] = $args['editor-id'];
 
-        parent::__construct($args);
+		parent::__construct( $args );
+	}
 
-    }
+	function get_options() {
 
-    function get_options(){
+		return array(
+			array(
+				'slug'			 => 'icon',
+				'default'		 => 'fa-file-text-o',
+				'placeholder'	 => 'fa-file-text-o',
+				'class'			 => 'rcl-iconpicker',
+				'type'			 => 'text',
+				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' ),
+				'notice'		 => __( 'Source', 'wp-recall' ) . ' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.io/</a>'
+			),
+			array(
+				'slug'	 => 'tinymce',
+				'type'	 => 'radio',
+				'title'	 => __( 'TinyMCE', 'wp-recall' ),
+				'values' => array(
+					__( 'Disabled', 'wp-recall' ),
+					__( 'Using TinyMCE', 'wp-recall' )
+				),
+				'notice' => __( 'May not load with AJAX', 'wp-recall' )
+			),
+			array(
+				'slug'	 => 'media_button',
+				'type'	 => 'radio',
+				'title'	 => __( 'Media loader', 'wp-recall' ),
+				'values' => array(
+					__( 'Disabled', 'wp-recall' ),
+					__( 'Enabled', 'wp-recall' )
+				)
+			)
+		);
+	}
 
-        return array(
-            array(
-                'slug' => 'icon',
-                'default' => 'fa-file-text-o',
-                'placeholder' => 'fa-file-text-o',
-                'class' => 'rcl-iconpicker',
-                'type' => 'text',
-                'title'=>__('Icon class of  font-awesome', 'wp-recall'),
-                'notice'=>__('Source', 'wp-recall').' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.io/</a>'
-            ),
-            array(
-                'slug' => 'tinymce',
-                'type' => 'radio',
-                'title' => __('TinyMCE', 'wp-recall'),
-                'values' => array(
-                    __('Disabled', 'wp-recall'),
-                    __('Using TinyMCE', 'wp-recall')
-                ),
-                'notice' => __('May not load with AJAX', 'wp-recall')
-            ),
-            array(
-                'slug' => 'media_button',
-                'type' => 'radio',
-                'title' => __('Media loader', 'wp-recall'),
-                'values' => array(
-                    __('Disabled', 'wp-recall'),
-                    __('Enabled', 'wp-recall')
-                )
-            )
-        );
+	function get_input() {
 
-    }
+		$editor_id = $this->editor_id ? $this->editor_id : 'editor-' . $this->rand;
 
-    function get_input(){
+		$data = array( 'wpautop'		 => 1
+			, 'media_buttons'	 => $this->media_button
+			, 'textarea_name'	 => $this->input_name
+			, 'textarea_rows'	 => 10
+			, 'tabindex'		 => null
+			, 'editor_css'	 => ''
+			, 'editor_class'	 => 'autosave'
+			, 'teeny'			 => 0
+			, 'dfw'			 => 0
+			, 'tinymce'		 => $this->tinymce ? true : false
+			, 'quicktags'		 => $this->quicktags ? array( 'buttons' => $this->quicktags ) : true
+		);
 
-        $editor_id = $this->editor_id? $this->editor_id: 'editor-'.$this->rand;
+		ob_start();
 
-        $data = array( 'wpautop' => 1
-            ,'media_buttons' => $this->media_button
-            ,'textarea_name' => $this->input_name
-            ,'textarea_rows' => 10
-            ,'tabindex' => null
-            ,'editor_css' => ''
-            ,'editor_class' => 'autosave'
-            ,'teeny' => 0
-            ,'dfw' => 0
-            ,'tinymce' => $this->tinymce? true: false
-            ,'quicktags' => $this->quicktags? array('buttons'=>$this->quicktags): true
-        );
+		wp_editor( $this->value, $editor_id, $data );
 
-        ob_start();
+		if ( rcl_is_ajax() ) {
+			global $wp_scripts, $wp_styles;
 
-        wp_editor( $this->value, $editor_id, $data );
+			$wp_scripts->do_items( array(
+				'quicktags'
+			) );
 
-        if(rcl_is_ajax()){
-            global $wp_scripts, $wp_styles;
+			$wp_styles->do_items( array(
+				'buttons'
+			) );
+		}
 
-            $wp_scripts->do_items(array(
-                'quicktags'
-            ));
+		$content = ob_get_contents();
 
-            $wp_styles->do_items(array(
-                'buttons'
-            ));
-        }
+		if ( rcl_is_ajax() ) {
+			$content .= '<script>rcl_init_ajax_editor("' . $editor_id . '",' . json_encode( array(
+					'tinymce'	 => $this->tinymce,
+					'qt_buttons' => $this->quicktags ? $this->quicktags : false
+				) ) . ');</script>';
+		}
 
-        $content = ob_get_contents();
+		ob_end_clean();
 
-        if(rcl_is_ajax()){
-            $content .= '<script>rcl_init_ajax_editor("'.$editor_id.'",'.json_encode(array(
-                'tinymce' => $this->tinymce,
-                'qt_buttons' => $this->quicktags? $this->quicktags: false
-            )).');</script>';
-        }
+		return $content;
+	}
 
-        ob_end_clean();
+	function get_value() {
 
-        return $content;
-    }
+		if ( !$this->value )
+			return false;
 
-    function get_value(){
-
-        if(!$this->value) return false;
-
-        return nl2br($this->value);
-
-    }
+		return nl2br( $this->value );
+	}
 
 }

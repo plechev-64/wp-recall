@@ -1,319 +1,328 @@
 <?php
+
 /**
  * Description of Rcl_Group
  *
  * @author Андрей
  */
-
 class Rcl_Group_Widget {
 
-    public $widget;
+	public $widget;
 
-    function __construct($args=false){
+	function __construct( $args = false ) {
 
-        if(!$args) return false;
+		if ( !$args )
+			return false;
 
-        $called = get_called_class();
+		$called = get_called_class();
 
-        if($called==__CLASS__) return false;
+		if ( $called == __CLASS__ )
+			return false;
 
-        $args['class'] = $called;
-        $this->widget = $args;
+		$args['class']	 = $called;
+		$this->widget	 = $args;
+	}
 
-    }
+	function register( $widget_class ) {
+		global $rcl_group_widgets;
+		if ( class_exists( $widget_class ) ) {
+			$object				 = new $widget_class();
+			$rcl_group_widgets[] = ( object ) $object->widget;
+		}
+	}
 
-    function register($widget_class){
-        global $rcl_group_widgets;
-        if(class_exists($widget_class)){
-            $object = new $widget_class();
-            $rcl_group_widgets[] = (object)$object->widget;
-        }
-    }
+	function before( $object ) {
 
-    function before($object){
+		if ( !isset( $object->widget_type ) || !$object->widget_type )
+			$object->widget_type = 'normal';
 
-        if(!isset($object->widget_type)||!$object->widget_type) $object->widget_type = 'normal';
+		$before = sprintf( '<div %s class="sidebar-widget ' . $object->widget_type . '-widget">', 'id="' . $object->widget_id . '"' );
 
-        $before = sprintf('<div %s class="sidebar-widget '.$object->widget_type.'-widget">','id="'.$object->widget_id.'"');
+		$title = (isset( $object->widget_options['title'] )) ? $object->widget_options['title'] : $object->widget_title;
 
-        $title = (isset($object->widget_options['title']))? $object->widget_options['title']: $object->widget_title;
+		if ( $title )
+			$before .= '<h3 class="title-widget">' . $title . '</h3>';
 
-        if($title)
-            $before .= '<h3 class="title-widget">'.$title.'</h3>';
+		if ( $object->widget_type == 'hidden' )
+			$before .= '<a href="#" onclick="rcl_more_view(this); return false;" class="manage-hidden-widget">'
+				. '<i class="rcli fa-plus-square-o"></i><span class="rcl-wiget-spoiler-txt">' . __( 'Show all', 'wp-recall' ) . '</span>'
+				. '</a>';
 
-        if($object->widget_type=='hidden')
-            $before .= '<a href="#" onclick="rcl_more_view(this); return false;" class="manage-hidden-widget">'
-                . '<i class="rcli fa-plus-square-o"></i><span class="rcl-wiget-spoiler-txt">'.__('Show all','wp-recall').'</span>'
-                . '</a>';
+		$before .= '<div class="widget-content">';
 
-        $before .= '<div class="widget-content">';
+		return $before;
+	}
 
-        return $before;
-    }
+	function after( $object ) {
+		return '</div></div>';
+	}
 
-    function after($object){
-        return '</div></div>';
-    }
+	function field_name( $id_field ) {
+		return 'data[][widget][' . $this->widget['widget_id'] . '][options][' . $id_field . ']';
+	}
 
-    function field_name($id_field){
-        return 'data[][widget]['.$this->widget['widget_id'].'][options]['.$id_field.']';
-    }
+	function field_value( $field_value ) {
+		return $field_value;
+	}
 
-    function field_value($field_value){
-        return $field_value;
-    }
+	function loop( $place = 'sidebar' ) {
+		global $rcl_group, $rcl_group_widgets, $rcl_group_area;
 
-    function loop($place='sidebar'){
-        global $rcl_group,$rcl_group_widgets,$rcl_group_area;
+		$content = '';
 
-        $content = '';
+		if ( !$rcl_group_widgets )
+			return $content;
 
-        if(!$rcl_group_widgets) return $content;
+		$rcl_group_widgets = apply_filters( 'rcl_group_widgets', $rcl_group_widgets );
 
-        $rcl_group_widgets = apply_filters('rcl_group_widgets',$rcl_group_widgets);
+		$group_widgets	 = rcl_get_group_option( $rcl_group->term_id, 'group_widgets' );
+		$widgets_options = rcl_get_group_option( $rcl_group->term_id, 'widgets_options' );
 
-        $group_widgets = rcl_get_group_option($rcl_group->term_id,'group_widgets');
-        $widgets_options = rcl_get_group_option($rcl_group->term_id,'widgets_options');
+		ob_start();
 
-        ob_start();
+		foreach ( $rcl_group_area as $zone ) {
 
-        foreach($rcl_group_area as $zone){
+			if ( $place != $zone['id'] )
+				continue;
 
-            if($place!=$zone['id']) continue;
+			foreach ( $rcl_group_widgets as $widget ) {
 
-            foreach($rcl_group_widgets as $widget){
+				if ( $place != $widget->widget_place )
+					continue;
 
-                if($place!=$widget->widget_place) continue;
+				$widget->widget_options = $widgets_options[$widget->widget_id];
 
-                $widget->widget_options = $widgets_options[$widget->widget_id];
+				$obj	 = new $widget->class();
+				$method	 = 'widget';
 
-                $obj = new $widget->class();
-                $method = 'widget';
+				$data = array(
+					'before' => $this->before( $widget ),
+					'after'	 => $this->after( $widget )
+				);
 
-                $data = array(
-                    'before'=>$this->before($widget),
-                    'after'=>$this->after($widget)
-                );
+				$obj->$method( $data, $widget->widget_options );
+			}
+		}
 
-                $obj->$method($data,$widget->widget_options);
-            }
+		$content = ob_get_contents();
+		ob_end_clean();
 
-        }
+		return $content;
+	}
 
-        $content = ob_get_contents();
-        ob_end_clean();
+	function manage_widgets( $group_id ) {
+		global $rcl_group_widgets, $rcl_group_area, $user_ID;
 
-        return $content;
-    }
+		$rcl_group_widgets = apply_filters( 'rcl_group_widgets', $rcl_group_widgets );
 
-    function manage_widgets($group_id){
-        global $rcl_group_widgets,$rcl_group_area,$user_ID;
+		$content = '<div id="widgets-options">';
+		$content .= '<form method="post">';
 
-        $rcl_group_widgets = apply_filters('rcl_group_widgets',$rcl_group_widgets);
+		$zones = array();
 
-        $content = '<div id="widgets-options">';
-        $content .= '<form method="post">';
+		if ( $rcl_group_area[0]['id'] != 'unuses' )
+			array_unshift( $rcl_group_area, array( 'id' => 'unuses', 'name' => __( 'Unused', 'wp-recall' ) ) );
 
-        $zones = array();
+		$widgets_options = rcl_get_group_option( $group_id, 'widgets_options' );
 
-        if($rcl_group_area[0]['id']!='unuses')
-            array_unshift($rcl_group_area,array('id'=>'unuses','name'=>__('Unused','wp-recall')));
+		foreach ( $rcl_group_area as $zone ) {
 
-        $widgets_options = rcl_get_group_option($group_id,'widgets_options');
+			$zones[] = '#' . $zone['id'] . '-widgets';
 
-        foreach($rcl_group_area as $zone){
+			$content .= '<div id="' . $zone['id'] . '-zone" class="widgets-zone">';
+			$content .= '<input type="hidden" name="data[][content]" value="' . $zone['id'] . '">';
+			$content .= '<span class="zone-name">' . $zone['name'] . '</span>';
+			$content .= '<ul id="' . $zone['id'] . '-widgets" class="sortable-connected">';
+			foreach ( $rcl_group_widgets as $widget ) {
 
-            $zones[] = '#'.$zone['id'].'-widgets';
+				if ( $widget->widget_place != $zone['id'] )
+					continue;
 
-            $content .= '<div id="'.$zone['id'].'-zone" class="widgets-zone">';
-            $content .= '<input type="hidden" name="data[][content]" value="'.$zone['id'].'">';
-            $content .= '<span class="zone-name">'.$zone['name'].'</span>';
-            $content .= '<ul id="'.$zone['id'].'-widgets" class="sortable-connected">';
-            foreach($rcl_group_widgets as $widget){
+				$options = false;
 
-                if($widget->widget_place!=$zone['id']) continue;
+				$obj					 = new $widget->class();
+				$this->widget			 = $obj->widget;
+				$this->widget['options'] = $widgets_options[$widget->widget_id];
 
-                $options = false;
+				$method = 'options';
+				if ( method_exists( $obj, $method ) ) {
+					ob_start();
+					$obj->$method( $this->widget['options'] );
+					$options = ob_get_contents();
+					ob_end_clean();
+				}
 
-                $obj = new $widget->class();
-                $this->widget = $obj->widget;
-                $this->widget['options'] = $widgets_options[$widget->widget_id];
+				$content .= '<li id="' . $widget->widget_id . '-widget" class="widget-box">';
 
-                $method = 'options';
-                if(method_exists($obj,$method)){
-                    ob_start();
-                    $obj->$method($this->widget['options']);
-                    $options = ob_get_contents();
-                    ob_end_clean();
-                }
+				$content .= '<input type="hidden" name="data[][widget][' . $this->widget['widget_id'] . '][id]" value="' . $widget->widget_id . '">';
 
-                $content .= '<li id="'.$widget->widget_id.'-widget" class="widget-box">';
+				if ( $options )
+					$content .= '<span class="widget-name" onclick="rcl_more_view(this); return false;"><i class="rcli fa-plus-square-o"></i><span class="widget-name-title">' . $widget->widget_title . '</span></span>';
+				else
+					$content .= '<span class="widget-name">' . $widget->widget_title . '</span>';
 
-                $content .= '<input type="hidden" name="data[][widget]['.$this->widget['widget_id'].'][id]" value="'.$widget->widget_id.'">';
+				if ( $options )
+					$content .= '<div class="widget-options" style="display:none;">' . $options . '</div>';
 
-                if($options)
-                    $content .= '<span class="widget-name" onclick="rcl_more_view(this); return false;"><i class="rcli fa-plus-square-o"></i><span class="widget-name-title">'.$widget->widget_title.'</span></span>';
-                else
-                    $content .= '<span class="widget-name">'.$widget->widget_title.'</span>';
+				$content .= '</li>';
+			}
+			$content .= '</ul>';
+			$content .= '</div>';
+		}
 
-                if($options)
-                    $content .= '<div class="widget-options" style="display:none;">'.$options.'</div>';
+		$content .= '<input type="hidden" name="group-action" value="update-widgets">'
+			. '<input type="hidden" name="group-submit" value="1">'
+			. wp_nonce_field( 'group-action-' . $user_ID, '_wpnonce', true, false );
 
-                $content .= '</li>';
+		$content .= rcl_get_button( array(
+			'label'	 => __( 'Save changes', 'wp-recall' ),
+			'submit' => true
+			) );
 
-            }
-            $content .= '</ul>';
-            $content .= '</div>';
-        }
+		$content .= '</form>';
 
-        $content .= '<input type="hidden" name="group-action" value="update-widgets">'
-                . '<input type="hidden" name="group-submit" value="1">'
-                . wp_nonce_field( 'group-action-' . $user_ID,'_wpnonce',true,false );
+		$content .= '</div>'
+			. '<script>
+				jQuery(function() {
+				  jQuery( "' . implode( ',', $zones ) . '" ).sortable({
+					connectWith: ".sortable-connected",
+					placeholder: "ui-state-highlight",
+					distance: 3,
+					cursor: "move",
+					forceHelperSize: true
+				  });
+				});
+				</script>';
 
-        $content .= rcl_get_button(array(
-            'label' => __('Save changes','wp-recall'),
-            'submit' => true
-        ));
+		return $content;
+	}
 
-        $content .= '</form>';
-
-        $content .= '</div>'
-                . '<script>
-                jQuery(function() {
-                  jQuery( "'.implode(',',$zones).'" ).sortable({
-                    connectWith: ".sortable-connected",
-                    placeholder: "ui-state-highlight",
-                    distance: 3,
-                    cursor: "move",
-                    forceHelperSize: true
-                  });
-                });
-                </script>';
-
-        return $content;
-    }
 }
 
-function rcl_group_register_widget($child_class){
-    global $rcl_group_widgets;
-    $widgets = new Rcl_Group_Widget();
-    $widgets->register($child_class);
+function rcl_group_register_widget( $child_class ) {
+	global $rcl_group_widgets;
+	$widgets = new Rcl_Group_Widget();
+	$widgets->register( $child_class );
 }
 
-function rcl_group_area($place = 'sidebar'){
-    global $rcl_group,$rcl_group_widgets;
+function rcl_group_area( $place = 'sidebar' ) {
+	global $rcl_group, $rcl_group_widgets;
 
-    do_action('rcl_group_'.$place.'_area');
+	do_action( 'rcl_group_' . $place . '_area' );
 
-    $widgets = new Rcl_Group_Widget();
-    echo $widgets->loop($place);
+	$widgets = new Rcl_Group_Widget();
+	echo $widgets->loop( $place );
 }
 
-function rcl_get_group_widgets($group_id){
-    $widgets = new Rcl_Group_Widget();
-    return $widgets->manage_widgets($group_id);
+function rcl_get_group_widgets( $group_id ) {
+	$widgets = new Rcl_Group_Widget();
+	return $widgets->manage_widgets( $group_id );
 }
 
-function rcl_update_group_widgets($group_id,$args){
-    global $rcl_group_widgets,$rcl_group_area;
+function rcl_update_group_widgets( $group_id, $args ) {
+	global $rcl_group_widgets, $rcl_group_area;
 
-    $zones = array();
-    $options = array();
-    foreach($args as $widget){
-        if(isset($widget['content'])){
-            $key = $widget['content'];
-            continue;
-        }
+	$zones	 = array();
+	$options = array();
+	foreach ( $args as $widget ) {
+		if ( isset( $widget['content'] ) ) {
+			$key = $widget['content'];
+			continue;
+		}
 
-        foreach($widget['widget'] as $widget_id=>$data){
+		foreach ( $widget['widget'] as $widget_id => $data ) {
 
-            if($data['id']){
-                $zones[$key][] = $widget_id;
-            }
+			if ( $data['id'] ) {
+				$zones[$key][] = $widget_id;
+			}
 
-            if(isset($data['options'])){
-                $optionsData[$widget_id][] = $data['options'];
-            }
+			if ( isset( $data['options'] ) ) {
+				$optionsData[$widget_id][] = $data['options'];
+			}
+		}
+	}
 
-        }
+	if ( $optionsData ) {
+		foreach ( $optionsData as $id_widget => $opts ) {
+			foreach ( $opts as $k => $option ) {
+				foreach ( $option as $key => $val ) {
+					$options[$id_widget][$key] = $val;
+				}
+			}
+		}
+	}
 
-    }
+	if ( $zones )
+		rcl_update_group_option( $group_id, 'group_widgets', $zones );
+	else
+		rcl_delete_group_option( $group_id, 'group_widgets' );
 
-    if($optionsData){
-        foreach($optionsData as $id_widget=>$opts){
-            foreach($opts as $k=>$option){
-                foreach($option as $key=>$val){
-                    $options[$id_widget][$key] = $val;
-                }
-            }
-        }
-    }
-
-    if($zones) rcl_update_group_option($group_id,'group_widgets',$zones);
-    else rcl_delete_group_option($group_id,'group_widgets');
-
-    if($options) rcl_update_group_option($group_id,'widgets_options',$options);
-    else rcl_delete_group_option($group_id,'widgets_options');
+	if ( $options )
+		rcl_update_group_option( $group_id, 'widgets_options', $options );
+	else
+		rcl_delete_group_option( $group_id, 'widgets_options' );
 }
 
-add_filter('rcl_group_widgets','rcl_edit_group_widgets');
-function rcl_edit_group_widgets($widgets){
-    global $rcl_group,$rcl_group_area,$rcl_group_widgets;
+add_filter( 'rcl_group_widgets', 'rcl_edit_group_widgets' );
+function rcl_edit_group_widgets( $widgets ) {
+	global $rcl_group, $rcl_group_area, $rcl_group_widgets;
 
-    $group_widgets = rcl_get_group_option($rcl_group->term_id,'group_widgets');
+	$group_widgets = rcl_get_group_option( $rcl_group->term_id, 'group_widgets' );
 
-    if(!$group_widgets) return $widgets;
+	if ( !$group_widgets )
+		return $widgets;
 
-    //удаляем данные о виджетах в незарегистрированных областях
-    foreach($group_widgets as $area_id=>$ws){
-        if(!rcl_is_group_area($area_id)){
-            unset($group_widgets[$area_id]);
-        }
-    }
+	//удаляем данные о виджетах в незарегистрированных областях
+	foreach ( $group_widgets as $area_id => $ws ) {
+		if ( !rcl_is_group_area( $area_id ) ) {
+			unset( $group_widgets[$area_id] );
+		}
+	}
 
-    array_unshift($rcl_group_area,array('id'=>'unuses','name'=>__('Unused','wp-recall')));
+	array_unshift( $rcl_group_area, array( 'id' => 'unuses', 'name' => __( 'Unused', 'wp-recall' ) ) );
 
-    foreach($rcl_group_area as $zone){
+	foreach ( $rcl_group_area as $zone ) {
 
-        if(!isset($group_widgets[$zone['id']])) continue;
+		if ( !isset( $group_widgets[$zone['id']] ) )
+			continue;
 
-        foreach($widgets as $k=>$widget){
+		foreach ( $widgets as $k => $widget ) {
 
-            $key = array_search($widget->widget_id,$group_widgets[$zone['id']]);
+			$key = array_search( $widget->widget_id, $group_widgets[$zone['id']] );
 
-            if($key!==false){
-                $widget->widget_place = $zone['id'];
-                $NewWidgets[$zone['id']][$key] = $widget;
-            }else{
+			if ( $key !== false ) {
+				$widget->widget_place			 = $zone['id'];
+				$NewWidgets[$zone['id']][$key]	 = $widget;
+			} else {
 
-            }
-        }
+			}
+		}
+	}
 
-    }
+	foreach ( $widgets as $k => $widget ) {
+		$used = false;
+		foreach ( $group_widgets as $content => $data ) {
+			$key	 = array_search( $widget->widget_id, $group_widgets[$content] );
+			if ( $key !== false )
+				$used	 = true;
+		}
+		if ( $used == false ) {
+			$widget->widget_place	 = 'unuses';
+			$NewWidgets['unuses'][]	 = $widget;
+		}
+	}
 
-    foreach($widgets as $k=>$widget){
-        $used=false;
-        foreach($group_widgets as $content=>$data){
-            $key = array_search($widget->widget_id,$group_widgets[$content]);
-            if($key!==false) $used = true;
-        }
-        if($used==false){
-            $widget->widget_place = 'unuses';
-            $NewWidgets['unuses'][] = $widget;
-        }
-    }
+	foreach ( $NewWidgets as $z => $Widgets ) {
+		ksort( $Widgets );
+		$NewWidgets[$z] = $Widgets;
+	}
 
-    foreach($NewWidgets as $z=>$Widgets){
-        ksort($Widgets);
-        $NewWidgets[$z] = $Widgets;
-    }
+	$widgets = array();
+	foreach ( $NewWidgets as $zone => $wdgts ) {
+		foreach ( $wdgts as $widget ) {
+			$widgets[] = $widget;
+		}
+	}
 
-    $widgets = array();
-    foreach($NewWidgets as $zone=>$wdgts){
-        foreach($wdgts as $widget){
-            $widgets[] = $widget;
-        }
-    }
-
-    return $widgets;
+	return $widgets;
 }

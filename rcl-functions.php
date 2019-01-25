@@ -776,8 +776,8 @@ function rcl_get_smiles( $id_area ) {
 	$smiles = '<div class="rcl-smiles" data-area="' . $id_area . '">';
 	$smiles .= '<i class="rcli fa-smile-o" aria-hidden="true"></i>';
 	$smiles .= '<div class="rcl-smiles-list">
-                        <div class="smiles"></div>
-                    </div>';
+						<div class="smiles"></div>
+					</div>';
 	$smiles .= '</div>';
 
 	return $smiles;
@@ -792,8 +792,8 @@ function rcl_mail( $email, $title, $text, $from = false, $attach = false ) {
 	$headers = 'From: ' . $from_name . ' <' . $from_mail . '>' . "\r\n";
 
 	$text .= '<p><small>-----------------------------------------------------<br/>
-    ' . __( 'This letter was created automatically, no need to answer it.', 'wp-recall' ) . '<br/>
-    "' . get_bloginfo( 'name' ) . '"</small></p>';
+	' . __( 'This letter was created automatically, no need to answer it.', 'wp-recall' ) . '<br/>
+	"' . get_bloginfo( 'name' ) . '"</small></p>';
 
 	return wp_mail( $email, $title, $text, $headers, $attach );
 }
@@ -801,7 +801,7 @@ function rcl_mail( $email, $title, $text, $from = false, $attach = false ) {
 function rcl_multisort_array( $array, $key, $type = SORT_ASC, $cmp_func = 'strcmp' ) {
 	$GLOBALS['ARRAY_MULTISORT_KEY_SORT_KEY'] = $key;
 	usort( $array, create_function( '$a, $b', '$k = &$GLOBALS["ARRAY_MULTISORT_KEY_SORT_KEY"];
-        return ' . $cmp_func . '($a[$k], $b[$k]) * ' . ($type == SORT_ASC ? 1 : -1) . ';' ) );
+		return ' . $cmp_func . '($a[$k], $b[$k]) * ' . ($type == SORT_ASC ? 1 : -1) . ';' ) );
 	return $array;
 }
 
@@ -1386,7 +1386,7 @@ function rcl_is_gutenberg() {
 	}
 
 	/* if ( self::is_classic_editor_plugin_active() ) {
-	  $editor_option       = get_option( 'classic-editor-replace' );
+	  $editor_option	   = get_option( 'classic-editor-replace' );
 	  $block_editor_active = array( 'no-replace', 'block' );
 
 	  return in_array( $editor_option, $block_editor_active, true );
