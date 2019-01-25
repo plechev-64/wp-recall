@@ -47,42 +47,42 @@ class Rcl_Options_Group{
 
         foreach($options as $option){
 
-            $option_id = $option['slug'];
-
-            if(!isset($option['value']))
-                $option['value'] = $this->get_value($option_id, isset($option['default'])? $option['default']: null);
-
-            $option['input_name'] = $this->option_name.'['.$option_id.']';
-
-            $this->options[$option_id] =  Rcl_Option::setup_option($option);
-
-            if(isset($option['childrens'])){
-                foreach($option['childrens'] as $parentValue => $childFields){
-
-                    if(!is_array($childFields)) continue;
-
-                    foreach($childFields as $childField){
-
-                        $child_id = $childField['slug'];
-
-                        if(!isset($childField['value']))
-                            $childField['value'] = $this->get_value($child_id, isset($childField['default'])? $childField['default']: null);
-                        $childField['input_name'] = $this->option_name.'['.$child_id.']';
-
-                        $childField['parent'] = array(
-                            'id' => $option_id,
-                            'value' => $parentValue
-                        );
-
-                        $this->options[$child_id] =  Rcl_Option::setup_option($childField);
-
-                    }
-                }
-            }
+            $this->add_option($option);
 
         }
 
     }
+
+	function add_option($option){
+
+		$option_id = $option['slug'];
+
+		if(!isset($option['value']))
+			$option['value'] = $this->get_value($option_id, isset($option['default'])? $option['default']: null);
+
+		$option['input_name'] = $this->option_name.'['.$option_id.']';
+
+		$this->options[$option_id] =  Rcl_Option::setup_option($option);
+
+		if(isset($option['childrens'])){
+			foreach($option['childrens'] as $parentValue => $childFields){
+
+				if(!is_array($childFields)) continue;
+
+				foreach($childFields as $childField){
+
+					$childField['parent'] = array(
+						'id' => $option_id,
+						'value' => $parentValue
+					);
+
+					$this->add_option($childField);
+
+				}
+			}
+		}
+
+	}
 
     function get_content(){
 
