@@ -27,13 +27,13 @@ matrix:
     - php: nightly
     
 ignore:
-    - ${TRAVIS_BUILD_DIR}/assets/css/animate-css/*
-    - ${TRAVIS_BUILD_DIR}/assets/js/fileupload/*
-    - ${TRAVIS_BUILD_DIR}/assets/js/fselect/*
-    - ${TRAVIS_BUILD_DIR}/assets/js/jssor.slider/*
-    - ${TRAVIS_BUILD_DIR}/assets/js/say-cheese/*
-    - ${TRAVIS_BUILD_DIR}/assets/js/rangyinputs.js
-    - ${TRAVIS_BUILD_DIR}/assets/rcl-awesome/*
+    - /home/travis/build/plechev-64/wp-recall/assets/css/animate-css/*
+    - /home/travis/build/plechev-64/wp-recall/assets/js/fileupload/*
+    - /home/travis/build/plechev-64/wp-recall/assets/js/fselect/*
+    - /home/travis/build/plechev-64/wp-recall/assets/js/jssor.slider/*
+    - /home/travis/build/plechev-64/wp-recall/assets/js/say-cheese/*
+    - /home/travis/build/plechev-64/wp-recall/assets/js/rangyinputs.js
+    - /home/travis/build/plechev-64/wp-recall/assets/rcl-awesome/*
 
 cache:
   directories:
