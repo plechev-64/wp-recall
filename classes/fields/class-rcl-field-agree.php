@@ -67,8 +67,8 @@ class Rcl_Field_Agree extends Rcl_Field_Abstract {
 		$text = $this->text_confirm ? $this->text_confirm : __( 'I agree with the text of the agreement', 'wp-recall' );
 
 		$input = '<span class="rcl-checkbox-box">';
-		$input .= '<input type="checkbox" ' . checked( $this->value, 1, false ) . ' ' . $this->get_required() . ' name="' . $this->input_name . '" id="' . $this->input_id . $this->rand . '" value="1"/> '
-			. '<label class="block-label" for="' . $this->input_id . $this->rand . '">' . $text . '</label>';
+		$input .= '<input type="checkbox" ' . checked( $this->value, 1, false ) . ' ' . $this->get_required() . ' name="' . $this->input_name . '" id="' . $this->input_id . $this->rand . '" value="1"/> ';
+		$input .= '<label class="block-label" for="' . $this->input_id . $this->rand . '">' . $text . '</label>';
 		$input .= '</span>';
 
 		return $input;

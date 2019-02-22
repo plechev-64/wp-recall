@@ -84,8 +84,8 @@ function rcl_font_awesome_style( $fontAwesome = true ) {
 	//load fonawesome 4 cdn
 	//if($fontAwesome && rcl_get_option('font-awesome',1))
 	//wp_enqueue_style( 'font-awesome', 'https://use.fontawesome.com/5ca1160808.css' );
-
-	wp_enqueue_style( 'rcl-awesome', RCL_URL . 'assets/rcl-awesome/rcl-awesome.min.css' );
+	//wp_enqueue_style( 'rcl-awesome', RCL_URL . 'assets/rcl-awesome/rcl-awesome.min.css' );
+	wp_enqueue_style( 'rcl-awesome', RCL_URL . 'assets/rcl-awesome/rcl-awesome.css' );
 	//wp_enqueue_style( 'rcl-icons', RCL_URL.'assets/icons/style.css' );
 	//wp_enqueue_script( 'rcl-icons', RCL_URL.'assets/icons/icons-load.js', array(), VER_RCL, true );
 }
@@ -176,7 +176,7 @@ function rcl_get_localize_data() {
 	);
 
 	$data = array(
-		'ajaxurl'	 => admin_url( 'admin-ajax.php' ),
+		'ajax_url'	 => admin_url( 'admin-ajax.php' ),
 		'wpurl'		 => get_bloginfo( 'wpurl' ),
 		'rcl_url'	 => RCL_URL,
 		'user_ID'	 => ( int ) $user_ID,

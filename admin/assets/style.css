@@ -451,12 +451,12 @@ div.rcl_preloader i.rcli::before {
 }
 .rcl-custom-fields-navi i {
 	color: #008000;
-	font: 22px dashicons;
+	/*font: 22px dashicons;*/
 	margin: 0 3px 0 0;
 	vertical-align: middle;
 }
 .wp-admin .rcl-custom-fields-navi .fa-plus::before {
-	content: "\f502";
+	/*content: "\f502";*/
 }
 .rcl-custom-fields-navi > p {
 	background-color: #eee;
@@ -646,7 +646,7 @@ div.rcl_preloader i.rcli::before {
 	font-weight: bold;
 	margin: 0;
 }
-.rcl-custom-fields-box .rcl-custom-field input,
+.rcl-custom-fields-box .rcl-custom-field input:not([type="file"]),
 .rcl-custom-fields-box .rcl-custom-field select,
 .rcl-custom-fields-box .rcl-custom-field textarea {
 	box-sizing: border-box;
@@ -1717,6 +1717,20 @@ span.ruble-symbol {
 }
 .rcl-options .rcl-option{
 	margin-bottom: 10px;
+	position:relative;
+}
+.rcl-options .rcl-field-help{
+	position: absolute;
+    top: 0;
+    right: 0;
+	display: block;
+}
+.rcl-options .rcl-field-help > i{
+	padding: 0 9px;
+    font-size: 16px;
+}
+.rcl-options .rcl-field-help .help-content{
+	min-width: 300px;
 }
 .rcl-options .rcl-option .rcl-field-title{
 	font-weight: bold;

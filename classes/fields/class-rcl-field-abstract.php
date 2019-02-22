@@ -25,6 +25,7 @@ class Rcl_Field_Abstract {
 	public $input_name;
 	public $parent;
 	public $rand;
+	public $help;
 	public $class;
 	public $required;
 	public $maxlength;
@@ -141,9 +142,11 @@ class Rcl_Field_Abstract {
 			return $this->get_input();
 		}
 
-		$classes = array( 'rcl-field-input', 'type-' . $this->type . '-input', 'rcl-field-' . $this->id );
+		$classes = array( 'type-' . $this->type . '-input', 'rcl-field-' . $this->id );
 
-		$callback = 'get_input_' . $this->type;
+		if ( $this->type != 'custom' ) {
+			$classes[] = 'rcl-field-input';
+		}
 
 		$inputField = $this->get_input();
 
@@ -194,9 +197,26 @@ class Rcl_Field_Abstract {
 
 		$content .= $this->get_title();
 
+		$content .= $this->get_help();
+
 		$content .= $this->get_field_input();
 
 		$content .= '</div>';
+
+		return $content;
+	}
+
+	function get_help() {
+
+		if ( !$this->help )
+			return;
+
+		$content = '<span class="rcl-balloon-hover rcl-field-help">';
+		$content .= '<i class="rcli fa-question-circle-o" aria-hidden="true"></i>';
+		$content .= '<span class="rcl-balloon help-content">';
+		$content .= $this->help;
+		$content .= '</span>';
+		$content .= '</span>';
 
 		return $content;
 	}
@@ -267,7 +287,7 @@ class Rcl_Field_Abstract {
 		//$content .= $this->get_icon();
 
 		if ( $title )
-			$content .= $this->get_title() . ': ';
+			$content .= $this->get_title() . '<span class="title-colon">: </span>';
 
 		$content .= '<span class="rcl-field-value type-' . $this->type . '-value">';
 

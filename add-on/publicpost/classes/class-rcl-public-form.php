@@ -44,9 +44,9 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 			$this->post		 = get_post( $this->post_id );
 			$this->post_type = $this->post->post_type;
 
-			if ( $this->post_type == 'post' ) {
-				$this->form_id = get_post_meta( $this->post_id, 'rcl_publicform_id', 1 );
-			}
+			//if ( $this->post_type == 'post' ) {
+			$this->form_id = get_post_meta( $this->post_id, 'publicform-id', 1 );
+			//}
 		}
 
 		if ( !$this->form_id )
@@ -81,6 +81,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 		//if($this->is_active_field('post_thumbnail'))
 		//add_filter('rcl_post_attachment_html','rcl_add_attachment_thumbnail_button', 10, 3);
+
+		do_action( 'rcl_pre_get_public_form', $this );
 	}
 
 	function init_public_form_fields_filter( $fields ) {
@@ -133,11 +135,10 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		return $dataForm;
 	}
 
-	function get_public_fields() {
+	/* function get_public_fields() {
 
-		return apply_filters( 'rcl_public_form_fields', $this->fields, $this->get_object_form(), $this );
-	}
-
+	  return apply_filters( 'rcl_public_form_fields', $this->fields, $this->get_object_form(), $this );
+	  } */
 	function add_guest_fields( $fields ) {
 
 		$guestFields = array(
@@ -430,7 +431,9 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 				}
 			} else {
 
-				$field->set_prop( 'value', ($this->post_id) ? get_post_meta( $this->post_id, $field_id, 1 ) : ''  );
+				if ( !isset( $field->value ) ) {
+					$field->set_prop( 'value', ($this->post_id) ? get_post_meta( $this->post_id, $field_id, 1 ) : null  );
+				}
 
 				$contentField = $field->get_field_input();
 			}
@@ -571,13 +574,11 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		if ( !is_array( $t_args ) || $t_args === false )
 			return false;
 
-		$tags = get_terms( $taxonomy, $t_args );
-
 		$post_tags = ($this->post_id) ? $this->get_tags( $this->post_id, $taxonomy ) : array();
 
 		$content = '<div id="rcl-tags-list-' . $taxonomy . '" class="rcl-tags-list">';
 
-		if ( $tags ) {
+		if ( $t_args['number'] != 0 && $tags = get_terms( $taxonomy, $t_args ) ) {
 
 			$content .= '<span class="rcl-field-input type-checkbox-input">';
 

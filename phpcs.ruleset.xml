@@ -3,13 +3,7 @@
 	<description>A custom set of code standard rules to check for WordPress plugins.</description>
 
 	<exclude-pattern>vendor/*</exclude-pattern>
-	<exclude-pattern>/home/travis/build/plechev-64/wp-recall/assets/css/animate-css/*</exclude-pattern>
-	<exclude-pattern>/home/travis/build/plechev-64/wp-recall/assets/js/fileupload/*</exclude-pattern>
-	<exclude-pattern>/home/travis/build/plechev-64/wp-recall/assets/js/fselect/*</exclude-pattern>
-	<exclude-pattern>/home/travis/build/plechev-64/wp-recall/assets/js/jssor.slider/*</exclude-pattern>
-	<exclude-pattern>/home/travis/build/plechev-64/wp-recall/assets/js/say-cheese/</exclude-pattern>
-	<exclude-pattern>/home/travis/build/plechev-64/wp-recall/assets/js/rangyinputs.js</exclude-pattern>
-	<exclude-pattern>/home/travis/build/plechev-64/wp-recall/assets/rcl-awesome/*</exclude-pattern>
+	<exclude-pattern>assets/*</exclude-pattern>
 
 	<rule ref="WordPress">
 		<exclude name="WordPress.DB.DirectDatabaseQuery" />

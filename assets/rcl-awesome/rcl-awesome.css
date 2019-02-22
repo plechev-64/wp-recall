@@ -15,7 +15,7 @@
 	width: auto;
 	text-align: center;
 	display: inline-block;
-	font-family: 'rcl-awesome';
+	font-family: 'rcl-awesome'!important;
 	speak: none;
 	font-style: normal;
 	font-weight: normal;

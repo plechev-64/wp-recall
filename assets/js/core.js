@@ -569,7 +569,7 @@ function rcl_ajax( prop ) {
 		type: 'POST',
 		data: prop.data,
 		dataType: 'json',
-		url: ( typeof ajaxurl !== 'undefined' ) ? ajaxurl : Rcl.ajaxurl,
+		url: ( typeof ajax_url !== 'undefined' ) ? ajax_url : Rcl.ajax_url,
 		success: function( result, post ) {
 
 			if ( !result ) {
@@ -1052,38 +1052,38 @@ function RclForm( form ) {
 				return field.parents( '.rcl-uploader-button-box' );
 			}
 		},
-		runner: {
-			types: [ 'hidden' ],
-			isValid: function( field ) {
+		/*runner: {
+		 types: [ 'hidden' ],
+		 isValid: function( field ) {
 
-				if ( !field.hasClass( 'rcl-runner-field' ) || !rcl_runners )
-					return true;
+		 if ( !field.hasClass( 'rcl-runner-field' ) || !rcl_runners )
+		 return true;
 
-				var runnerData;
-				rcl_runners.forEach( function( runner, i ) {
+		 var runnerData;
+		 rcl_runners.forEach( function( runner, i ) {
 
-					if ( runner.id == field.data( 'idrand' ) ) {
-						runnerData = runner;
-						return;
-					}
+		 if ( runner.id == field.data( 'idrand' ) ) {
+		 runnerData = runner;
+		 return;
+		 }
 
-				} );
+		 } );
 
-				var value = field.val();
+		 var value = field.val();
 
-				if ( runnerData.min > value || runnerData.max < value ) {
-					return false;
-				}
+		 if ( runnerData.min > value || runnerData.max < value ) {
+		 return false;
+		 }
 
-				return true;
-			},
-			errorText: function() {
-				return Rcl.errors.number_range;
-			},
-			getShakeBox: function( field ) {
-				return field.parents( '.rcl-field-core' );
-			}
-		}
+		 return true;
+		 },
+		 errorText: function() {
+		 return Rcl.errors.number_range;
+		 },
+		 getShakeBox: function( field ) {
+		 return field.parents( '.rcl-field-core' );
+		 }
+		 }*/
 	};
 
 	this.send = function( action, success ) {

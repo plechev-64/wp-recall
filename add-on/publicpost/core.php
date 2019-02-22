@@ -170,7 +170,7 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 				if ( $value && is_array( $value ) ) {
 					foreach ( $value as $val ) {
 						for ( $a = 0; $a < $count_field; $a++ ) {
-							if ( $field['values'][$a] == $val ) {
+							if ( $field->values[$a] == $val ) {
 								$vals[] = $val;
 							}
 						}
@@ -189,6 +189,10 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 				if ( $attach_id )
 					update_post_meta( $post_id, $field_id, $attach_id );
 			}else {
+
+				if ( $field->type == 'editor' ) {
+					$value = isset( $_POST[$field_id] ) ? $_POST[$field_id] : false;
+				}
 
 				if ( $value ) {
 					update_post_meta( $post_id, $field_id, $value );

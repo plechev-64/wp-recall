@@ -432,7 +432,7 @@ function rcl_chat_uploader( token ) {
 	jQuery( '.rcl-chat-uploader input[type="file"]' ).fileupload( {
 		dataType: 'json',
 		type: 'POST',
-		url: Rcl.ajaxurl,
+		url: Rcl.ajax_url,
 		formData: {
 			action: 'rcl_chat_upload',
 			ajax_nonce: Rcl.nonce

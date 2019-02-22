@@ -79,7 +79,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		//if($this->manager_id && !$this->fields)
 		//$this->setup_active_fields();
 		//print_r($this);exit;
-		//do_action('rcl_manager_fields_'.$manager_id, $this);
+		//do_action( 'rcl_fields_manager_' . $manager_id, $this );
 	}
 
 	function init_properties( $args ) {
@@ -304,16 +304,13 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 					'title'		 => __( 'Наименование группы', 'wp-recall' ),
 					'value'		 => $group['title']
 				),
-				/* 'group-type' => array(
-				  'type' => 'radio',
-				  'input_name' => 'structure-groups['.$this->group_id.'][type]',
-				  'title' => __('Тип вывода', 'wp-recall'),
-				  'values' => array(
-				  __('Обычный вывод', 'wp-recall'),
-				  __('Вкладки', 'wp-recall')
-				  ),
-				  'value' => $group['type']
-				  ) */
+				'group-notice'	 => array(
+					'slug'		 => 'group-notice',
+					'type'		 => 'textarea',
+					'input_name' => 'structure-groups[' . $this->group_id . '][notice]',
+					'title'		 => __( 'Пояснение к заполнению', 'wp-recall' ),
+					'value'		 => isset( $group['notice'] ) ? $group['notice'] : ''
+				)
 			);
 
 			$content .= '<div class="rcl-manager-group-options">';

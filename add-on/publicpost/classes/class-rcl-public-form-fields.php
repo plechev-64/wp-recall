@@ -26,12 +26,21 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 		$this->setup_public_form_fields();
 
 		add_filter( 'rcl_field_options', array( $this, 'edit_field_options' ), 10, 3 );
+
+		if ( $customFields = $this->get_custom_fields() ) {
+			foreach ( $customFields as $field_id => $field ) {
+				if ( isset( $field->value_in_key ) )
+					continue;
+
+				$this->get_field( $field_id )->set_prop( 'value_in_key', true );
+			}
+		}
 	}
 
 	function setup_public_form_fields() {
 		global $wpdb;
 
-		$manager_id = ($this->post_type == 'post' && $this->form_id) ? $this->post_type . '_' . $this->form_id : $this->post_type;
+		$manager_id = $this->post_type . '_' . $this->form_id;
 
 		parent::__construct( $manager_id, array(
 			'sortable'			 => true,

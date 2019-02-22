@@ -337,7 +337,7 @@ class Rcl_Uploader {
 		$content .= '</div>';
 
 		if ( $this->manager_balloon ) {
-			$content = '<div class="attachment-manager-balloon rcl-ballon-hover"><i class="rcli fa-cogs" aria-hidden="true"></i>' . $content . '</div>';
+			$content = '<div class="attachment-manager-balloon rcl-balloon-hover"><i class="rcli fa-cogs" aria-hidden="true"></i>' . $content . '</div>';
 		}
 
 		return $content;

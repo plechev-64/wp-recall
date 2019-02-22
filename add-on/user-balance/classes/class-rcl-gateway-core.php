@@ -75,11 +75,11 @@ class Rcl_Gateway_Core {
 		return rcl_get_form( $args );
 	}
 
-	function result() {
+	function result( $data ) {
 		return false;
 	}
 
-	function success() {
+	function success( $data ) {
 		return false;
 	}
 

@@ -214,7 +214,7 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 		$content .= '<div class="rcl-data-filters">' . __( 'Filter by', 'wp-recall' ) . ': ';
 
 		foreach ( $filters as $key => $name ) {
-			$content .= rcl_get_buttons( array(
+			$content .= rcl_get_button( array(
 				'label'	 => $name,
 				'href'	 => $perm . 'groups-filter=' . $key,
 				'class'	 => 'data-filter ' . rcl_a_active( $this->orderby, $key )

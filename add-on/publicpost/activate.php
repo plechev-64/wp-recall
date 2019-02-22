@@ -47,3 +47,17 @@ if ( !isset( $rcl_options['pm_place'] ) )
 	$rcl_options['pm_place'] = 0;
 
 update_option( 'rcl_global_options', $rcl_options );
+
+global $wpdb;
+$post_types = get_post_types( array(
+	'public'	 => true,
+	'_builtin'	 => false
+	), 'objects' );
+
+foreach ( $post_types as $post_type ) {
+
+	if ( get_option( 'rcl_fields_' . $post_type->name ) ) {
+		$wpdb->query( "UPDATE $wpdb->options SET option_name = 'rcl_fields_" . $post_type->name . "_1' WHERE option_name = 'rcl_fields_" . $post_type->name . "'" );
+		$wpdb->query( "UPDATE $wpdb->options SET option_name = 'rcl_fields_" . $post_type->name . "_1_structure' WHERE option_name = 'rcl_fields_" . $post_type->name . "_structure'" );
+	}
+}

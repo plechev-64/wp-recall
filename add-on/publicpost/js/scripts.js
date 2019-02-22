@@ -267,7 +267,7 @@ function rcl_preview( e ) {
 	var button_preview = formblock.find( 'input[name="button-preview"]' ).val();
 
 	rcl_ajax( {
-		data: 'action=rcl_preview_post&' + formblock.serialize(),
+		data: 'action=rcl_preview_post&publish=0&' + formblock.serialize(),
 		error: function( data ) {
 			submit.attr( 'disabled', false ).val( Rcl.local.preview );
 		},
@@ -369,7 +369,7 @@ function rcl_publish( e ) {
 	}
 
 	rcl_ajax( {
-		data: 'action=rcl_preview_post&' + formblock.serialize(),
+		data: 'action=rcl_preview_post&publish=1&' + formblock.serialize(),
 		success: function( data ) {
 			rcl_preloader_show( formblock );
 			jQuery( 'form.rcl-public-form' ).submit();
@@ -499,7 +499,7 @@ function rcl_init_public_form( post ) {
 	 dataType: 'json',
 	 type: 'POST',
 	 dropZone: jQuery('#rcl-public-dropzone-'+post_type),
-	 url: Rcl.ajaxurl,
+	 url: Rcl.ajax_url,
 	 formData:{
 	 action: 'rcl_imagepost_upload',
 	 post_type: post_type,
@@ -567,7 +567,7 @@ function rcl_init_public_form( post ) {
  jQuery('#rcl-thumbnail-uploader').fileupload({
  dataType: 'json',
  type: 'POST',
- url: Rcl.ajaxurl,
+ url: Rcl.ajax_url,
  formData:{
  action: 'rcl_imagepost_upload',
  post_type: post_type,

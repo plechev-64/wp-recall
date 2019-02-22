@@ -118,7 +118,7 @@ function RclUploader( props ) {
 		options = {
 			dataType: 'json',
 			type: 'POST',
-			url: Rcl.ajaxurl,
+			url: Rcl.ajax_url,
 			dropZone: this.options.dropzone ? jQuery( "#rcl-dropzone-" + this.uploader_id ) : false,
 			formData: this.getFormData( uploader ),
 			loadImageMaxFileSize: this.options.max_size * 1024,

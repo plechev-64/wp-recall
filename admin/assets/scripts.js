@@ -145,7 +145,7 @@ jQuery( function( $ ) {
 			type: 'POST',
 			data: dataString,
 			dataType: 'json',
-			url: ajaxurl,
+			url: ajax_url,
 			success: function( data ) {
 				if ( data['success'] == addon ) {
 					$( '#' + addon + '-update .update-message' ).toggleClass( 'updating-message updated-message' ).html( 'Успешно обновлен!' );
@@ -279,7 +279,7 @@ function rcl_update_addon( props, e ) {
 		type: 'POST',
 		data: dataString,
 		dataType: 'json',
-		url: ajaxurl,
+		url: ajax_url,
 		success: function( data ) {
 			if ( data['success'] == props.slug ) {
 				button.addClass( 'button-disabled' ).toggleClass( 'updating-message updated-message' ).html( 'Обновлен!' );

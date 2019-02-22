@@ -182,7 +182,7 @@ function rcl_concat_post_meta( $content ) {
 function rcl_get_post_custom_fields_box( $post_id ) {
 
 	$post_type	 = get_post_type( $post_id );
-	$form_id	 = get_post_meta( $post_id, 'rcl_publicform_id', 1 );
+	$form_id	 = get_post_meta( $post_id, 'publicform-id', 1 );
 
 	$formFields = new Rcl_Public_Form_Fields( $post_type, array(
 		'form_id' => $form_id

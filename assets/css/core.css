@@ -443,7 +443,10 @@ span i.rcli.fa-circle {
 	border-color: transparent transparent rgb(255, 255, 255) transparent;
 	top: -10px;
 }
-.rcl-ballon-hover:hover .rcl-balloon{
+.rcl-balloon-hover{
+	position:relative;
+}
+.rcl-balloon-hover:hover .rcl-balloon{
 	cursor: default;
 	opacity: 1;
 	transform: translateY(-18px);
@@ -926,6 +929,7 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 	padding: 5px 8px 4px 6px;
 	position: relative;
 	vertical-align: middle;
+	width: auto;
 }
 .rcl-field-input.type-agree-input .block-label {
 	background-color: transparent;

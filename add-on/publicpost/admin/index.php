@@ -19,7 +19,7 @@ function rcl_public_form_manager() {
 
 	$shortCode = 'public-form post_type="' . $post_type . '"';
 
-	if ( $post_type == 'post' && $form_id > 1 ) {
+	if ( $form_id > 1 ) {
 		$shortCode .= ' form_id="' . $form_id . '"';
 	}
 
@@ -93,22 +93,29 @@ function rcl_public_form_admin_actions() {
 
 		case 'new-form':
 
-			$newFormId = $_GET['form-id'];
+			$newFormId	 = $_GET['form-id'];
+			$post_type	 = $_GET['post-type'];
 
-			add_option( 'rcl_fields_post_' . $newFormId, array() );
 
-			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=post&form-id=' . $newFormId ) );
+			if ( !get_option( 'rcl_fields_' . $post_type . '_1' ) )
+				add_option( 'rcl_fields_' . $post_type . '_1', array() );
+
+			add_option( 'rcl_fields_' . $post_type . '_' . $newFormId, array() );
+
+			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . $post_type . '&form-id=' . $newFormId ) );
 			exit;
 
 			break;
 
 		case 'delete-form':
 
-			$delFormId = $_GET['form-id'];
+			$delFormId	 = $_GET['form-id'];
+			$post_type	 = $_GET['post-type'];
 
-			delete_option( 'rcl_fields_post_' . $delFormId );
+			delete_option( 'rcl_fields_' . $post_type . '_' . $delFormId );
+			delete_option( 'rcl_fields_' . $post_type . '_' . $delFormId . '_structure' );
 
-			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=post' ) );
+			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . $post_type ) );
 			exit;
 
 			break;

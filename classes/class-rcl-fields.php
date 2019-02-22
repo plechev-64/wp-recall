@@ -23,6 +23,7 @@ class Rcl_Fields extends Rcl_Field {
 		}
 
 		if ( $fields ) {
+
 			foreach ( $fields as $field ) {
 				if ( !isset( $field['slug'] ) )
 					continue;
@@ -54,6 +55,25 @@ class Rcl_Fields extends Rcl_Field {
 					)
 				)
 			);
+		} else if ( $this->fields ) { //добавляем в структуру ничейные поля
+			$structureFields = array();
+
+			foreach ( $this->structure as $group_id => $group ) {
+				if ( !isset( $group['areas'] ) )
+					continue;
+				foreach ( $group['areas'] as $area ) {
+					$structureFields = array_merge( $structureFields, $area['fields'] );
+				}
+			}
+
+			if ( $structureFields ) {
+
+				foreach ( $this->fields as $field_id => $field ) {
+					if ( !in_array( $field_id, $structureFields ) ) {
+						$this->structure['dump-group']['areas'][0]['fields'][] = $field_id;
+					}
+				}
+			}
 		}
 	}
 
@@ -166,9 +186,9 @@ class Rcl_Fields extends Rcl_Field {
 
 	function add_structure_field( $group_id, $area_id, $fields ) {
 
-		foreach ( $fields as $field_id => $args ) {
-			$this->fields[$field_id]									 = $this::setup_field( $field_id, $args );
-			$this->structure[$group_id]['areas'][$area_id]['fields'][]	 = $field_id;
+		foreach ( $fields as $args ) {
+			$this->fields[$args['slug']]								 = $this::setup( $args );
+			$this->structure[$group_id]['areas'][$area_id]['fields'][]	 = $args['slug'];
 		}
 	}
 
@@ -349,6 +369,9 @@ class Rcl_Fields extends Rcl_Field {
 
 		if ( isset( $group['title'] ) && $group['title'] )
 			$content .= '<div class="group-title">' . $group['title'] . '</div>';
+
+		if ( $group['notice'] )
+			$content .= '<div class="group-notice rcl-field-input"><span class="rcl-field-notice"><i class="rcli fa-info" aria-hidden="true"></i> ' . nl2br( $group['notice'] ) . '</span></div>';
 
 		$content .= '<div class="group-areas">';
 

@@ -6,7 +6,7 @@ function rcl_cover_uploader() {
 	jQuery( '#rcl-cover-upload' ).fileupload( {
 		dataType: 'json',
 		type: 'POST',
-		url: Rcl.ajaxurl,
+		url: Rcl.ajax_url,
 		formData: {
 			action: 'rcl_cover_upload',
 			ajax_nonce: Rcl.nonce

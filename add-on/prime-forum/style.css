@@ -84,6 +84,8 @@
 	position: relative;
 	white-space: pre;
 	word-wrap: normal;
+	-moz-tab-size: 4;
+	tab-size: 4;
 }
 #prime-forum code{
 	background-color: rgba(0,0,0,.06);
