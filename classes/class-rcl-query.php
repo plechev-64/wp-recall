@@ -27,7 +27,7 @@ class Rcl_Query {
 
 		$this->args = esc_sql( $args );
 
-		if ( !$this->query['table'] ) {
+		if ( ! $this->query['table'] ) {
 
 			if ( isset( $this->args['table'] ) ) {
 
@@ -50,7 +50,7 @@ class Rcl_Query {
 			$this->set_fields( $this->args['fields'] );
 		} else {
 
-			if ( !$this->query['select'] ) {
+			if ( ! $this->query['select'] ) {
 				$this->query['select'][] = $this->query['table']['as'] . '.*';
 			}
 		}
@@ -80,6 +80,11 @@ class Rcl_Query {
 					} else {
 						$this->query['where'][] = $this->query['table']['as'] . ".$col_name = '" . $this->args[$col_name] . "'";
 					}
+				}
+
+				if ( isset( $this->args[$col_name . '__is'] ) && $this->args[$col_name . '__is'] ) {
+
+					$this->query['where'][] = $this->query['table']['as'] . ".$col_name IS " . $this->args[$col_name . '__is'];
 				}
 
 				if ( isset( $this->args[$col_name . '__in'] ) && ($this->args[$col_name . '__in'] || $this->args[$col_name . '__in'] === 0) ) {
@@ -164,12 +169,12 @@ class Rcl_Query {
 
 	function set_fields( $fields ) {
 
-		if ( !$fields )
+		if ( ! $fields )
 			return false;
 
 		foreach ( $fields as $as => $field ) {
 
-			if ( !in_array( $field, $this->query['table']['cols'] ) )
+			if ( ! in_array( $field, $this->query['table']['cols'] ) )
 				continue;
 
 			$select = $this->query['table']['as'] . '.' . $field;
@@ -185,10 +190,10 @@ class Rcl_Query {
 
 		foreach ( $date_query as $date ) {
 
-			if ( !isset( $date['column'] ) )
+			if ( ! isset( $date['column'] ) )
 				continue;
 
-			if ( !isset( $date['compare'] ) )
+			if ( ! isset( $date['compare'] ) )
 				$date['compare'] = '=';
 
 			if ( $date['compare'] == '=' ) {
@@ -210,7 +215,7 @@ class Rcl_Query {
 				}
 			} else if ( $date['compare'] == 'BETWEEN' ) {
 
-				if ( !isset( $date['value'] ) )
+				if ( ! isset( $date['value'] ) )
 					continue;
 
 				$this->query['where'][] = "(" . $this->query['table']['as'] . "." . $date['column'] . " BETWEEN CAST('" . $date['value'][0] . "' AS DATE) AND CAST('" . $date['value'][1] . "' AS DATE))";
@@ -227,7 +232,7 @@ class Rcl_Query {
 
 			$joinTable = $join['table'];
 
-			if ( !$joinTable )
+			if ( ! $joinTable )
 				continue;
 
 			$joinOn = false;
@@ -239,7 +244,7 @@ class Rcl_Query {
 				}
 			}
 
-			if ( !$joinOn )
+			if ( ! $joinOn )
 				continue;
 
 			$joinType = (isset( $join['join'] )) ? $join['join'] : 'INNER';
@@ -296,7 +301,7 @@ class Rcl_Query {
 
 	function get_sql( $query = false, $method = 'get' ) {
 
-		if ( !$query )
+		if ( ! $query )
 			$query = $this->get_query();
 
 		if ( $method == 'get' )
@@ -459,34 +464,35 @@ class Rcl_Query {
 
 	function count( $args = false, $field_name = false ) {
 
-		global $wpdb;
+		$result = $this->get_operator( 'COUNT', $args, $field_name );
 
-		if ( $args )
-			$this->set_query( $args );
-
-		$field_name = ($field_name) ? $field_name : $this->query['table']['cols'][0];
-
-		$query = $this->get_query();
-
-		unset( $query['select'] );
-		unset( $query['offset'] );
-		unset( $query['orderby'] );
-		unset( $query['order'] );
-		unset( $query['number'] );
-
-		$query['select'] = array( 'COUNT(' . $query['table']['as'] . '.' . $field_name . ')' );
-
-		$sql = $this->get_sql( $query );
-
-		if ( isset( $query['groupby'] ) && $query['groupby'] )
-			$result	 = $wpdb->query( $sql );
-		else
-			$result	 = $wpdb->get_var( $sql );
+		if ( ! $result )
+			$result = 0;
 
 		return $result;
 	}
 
+	function max( $field_name, $args = false ) {
+
+		return $this->get_operator( 'MAX', $args, $field_name );
+	}
+
+	function min( $field_name, $args = false ) {
+
+		return $this->get_operator( 'MIN', $args, $field_name );
+	}
+
 	function sum( $args = false, $field_name = false ) {
+
+		$result = $this->get_operator( 'SUM', $args, $field_name );
+
+		if ( ! $result )
+			$result = 0;
+
+		return $result;
+	}
+
+	function get_operator( $operator, $args = false, $field_name = false ) {
 
 		global $wpdb;
 
@@ -503,7 +509,7 @@ class Rcl_Query {
 		unset( $query['order'] );
 		unset( $query['number'] );
 
-		$query['select'] = array( 'SUM(' . $query['table']['as'] . '.' . $field_name . ')' );
+		$query['select'] = array( $operator . '(' . $query['table']['as'] . '.' . $field_name . ')' );
 
 		$sql = $this->get_sql( $query );
 
@@ -511,9 +517,6 @@ class Rcl_Query {
 			$result	 = $wpdb->query( $sql );
 		else
 			$result	 = $wpdb->get_var( $sql );
-
-		if ( !$result )
-			$result = 0;
 
 		return $result;
 	}
@@ -526,7 +529,7 @@ class Rcl_Query {
 
 		$insert_id = $wpdb->insert_id;
 
-		if ( !$insert_id )
+		if ( ! $insert_id )
 			return false;
 
 		return $insert_id;

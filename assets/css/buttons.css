@@ -13,7 +13,7 @@ rcl-bttn__type-primary	- реколл-цвет
 body .rcl-bttn {
 	align-items: center;
 	border-radius: 0;
-	border: 0 !important;
+	/*border: 0 !important;*/
 	box-shadow: none;
 	box-sizing: border-box;
 	cursor: pointer;

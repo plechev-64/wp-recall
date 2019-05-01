@@ -54,7 +54,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		$this->init_properties( $args );
 
-		if ( !$this->option_name )
+		if ( ! $this->option_name )
 			$this->option_name = 'rcl_fields_' . $this->manager_id;
 
 		if ( $this->sortable )
@@ -95,21 +95,21 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 	function setup_default_fields( $fields = false ) {
 
-		if ( !$fields )
+		if ( ! $fields )
 			$fields = $this->get_default_fields();
 
-		if ( !$fields )
+		if ( ! $fields )
 			return false;
 
 		foreach ( $fields as $field ) {
 
-			if ( !$field )
+			if ( ! $field )
 				continue;
 
 			$default_fields[$field['slug']] = $this::setup( $field );
 			//$this->add_field($field, true);
 
-			if ( !$this->default_box && !$this->is_active_field( $field['slug'] ) )
+			if ( ! $this->default_box && ! $this->is_active_field( $field['slug'] ) )
 				$this->add_field( $field );
 		}
 
@@ -117,7 +117,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$this->default_fields = $default_fields;
 		}
 
-		if ( !$this->fields && $this->default_is_null ) {
+		if ( ! $this->fields && $this->default_is_null ) {
 
 			$this->fields = $this->default_fields;
 
@@ -156,7 +156,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 	}
 
 	function get_structure() {
-		if ( !$this->structure_edit )
+		if ( ! $this->structure_edit )
 			return false;
 		return get_site_option( 'rcl_fields_' . $this->manager_id . '_structure' );
 	}
@@ -190,7 +190,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		$field = $this->get_field( $field_id, $default );
 
-		if ( !$field )
+		if ( ! $field )
 			return false;
 
 		return isset( $field->$propName );
@@ -198,7 +198,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 	function get_field_prop( $field_id, $propName, $default = false ) {
 
-		if ( !$this->isset_field_prop( $field_id, $propName, $default ) )
+		if ( ! $this->isset_field_prop( $field_id, $propName, $default ) )
 			return false;
 
 		$field = $this->get_field( $field_id, $default );
@@ -385,7 +385,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 				if ( isset( $area['fields'] ) && $area['fields'] ) {
 					foreach ( $area['fields'] as $field_id ) {
-						if ( !$this->is_active_field( $field_id ) )
+						if ( ! $this->is_active_field( $field_id ) )
 							continue;
 
 						$content .= $this->get_field_manager( $field_id );
@@ -394,7 +394,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			}else {
 
 				foreach ( $this->fields as $field_id => $field ) {
-					if ( !$this->is_active_field( $field_id ) )
+					if ( ! $this->is_active_field( $field_id ) )
 						continue;
 
 					$content .= $this->get_field_manager( $field_id, false );
@@ -406,7 +406,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		$content .= "<div class=submit-box>";
 
-		if ( $this->create_field && !$this->structure_edit )
+		if ( $this->create_field && ! $this->structure_edit )
 			$content .= "<input type=button onclick='rcl_manager_get_new_field(this);' class='add-field-button button-secondary right' value='+ " . __( 'Add field', 'wp-recall' ) . "'>";
 
 		$content .= "</div>";
@@ -439,7 +439,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 	function get_default_box() {
 
-		if ( !$this->default_fields )
+		if ( ! $this->default_fields )
 			return false;
 
 		$content = '<div class="rcl-default-fields fields-box">';
@@ -495,7 +495,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 	function setup_options( $options, $field_id, $default = false ) {
 
-		if ( !$options )
+		if ( ! $options )
 			return $options;
 
 		$field = $this->get_field( $field_id, $default );
@@ -504,10 +504,10 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 			$option_id = $option['slug'];
 
-			if ( !isset( $option['input_name'] ) )
+			if ( ! isset( $option['input_name'] ) )
 				$options[$k]['input_name'] = 'fields[' . $field_id . '][' . $option['slug'] . ']';
 
-			if ( !isset( $option['value'] ) && isset( $field->$option_id ) )
+			if ( ! isset( $option['value'] ) && isset( $field->$option_id ) )
 				$options[$k]['value'] = $field->$option_id;
 		}
 
@@ -540,7 +540,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		}
 
 		$content .= '<span class="field-control">';
-		if ( $field->must_delete && $this->fields_delete && !$this->is_default_field( $field_id ) && !$field->is_new() ) {
+		if ( $field->must_delete && $this->fields_delete && ! $this->is_default_field( $field_id ) && ! $field->is_new() ) {
 			$content .= '<a href="#" class="control-delete" onclick="rcl_manager_field_delete(this);return false;"><i class="rcli fa-remove" aria-hidden="true"></i></a>';
 		}
 		$content .= '<a href="#" class="control-edit" onclick="rcl_manager_field_switch(this);return false;"><i class="rcli fa-sliders" aria-hidden="true"></i></a>';
@@ -557,7 +557,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		$content = '<div class="manager-field-settings">';
 
-		if ( !$field->is_new() ) {
+		if ( ! $field->is_new() ) {
 			$content .= '<span class="field-id">' . __( 'ID', 'wp-recall' ) . ': ' . $field_id . '</span>';
 		}
 
@@ -574,7 +574,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		$options = $this->get_field_general_options( $field_id, $default );
 
-		if ( !$options )
+		if ( ! $options )
 			return false;
 
 		$content = '<div class="field-primary-options">';
@@ -657,18 +657,6 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		$field = $this->get_field( $field_id, $default );
 
-		$types = array(
-			'select',
-			'multiselect',
-			'checkbox',
-			'agree',
-			'radio',
-			'file',
-			'editor',
-			'runner',
-			'range'
-		);
-
 		$options = $field->get_options();
 
 		if ( $this->field_options ) {
@@ -693,7 +681,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			}
 		}
 
-		if ( !$default && $this->is_default_field( $field_id ) ) {
+		if ( ! $default && $this->is_default_field( $field_id ) ) {
 			//для поля в активной зоне добавляем опции,
 			//которые были определены для дефолтного поля,
 			//если такое есть
@@ -755,37 +743,13 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 	}
 
 	function get_types_list() {
-
-		$types = array(
-			'text'			 => __( 'Text', 'wp-recall' ),
-			'textarea'		 => __( 'Multiline text area', 'wp-recall' ),
-			'select'		 => __( 'Select', 'wp-recall' ),
-			'multiselect'	 => __( 'MultiSelect', 'wp-recall' ),
-			'checkbox'		 => __( 'Checkbox', 'wp-recall' ),
-			'radio'			 => __( 'Radiobutton', 'wp-recall' ),
-			'email'			 => __( 'E-mail', 'wp-recall' ),
-			'tel'			 => __( 'Phone', 'wp-recall' ),
-			'number'		 => __( 'Number', 'wp-recall' ),
-			'date'			 => __( 'Date', 'wp-recall' ),
-			'time'			 => __( 'Time', 'wp-recall' ),
-			'url'			 => __( 'Url', 'wp-recall' ),
-			'agree'			 => __( 'Agreement', 'wp-recall' ),
-			'file'			 => __( 'File', 'wp-recall' ),
-			'dynamic'		 => __( 'Dynamic', 'wp-recall' ),
-			'runner'		 => __( 'Runner', 'wp-recall' ),
-			'range'			 => __( 'Range', 'wp-recall' ),
-			'color'			 => __( 'Color', 'wp-recall' ),
-			'custom'		 => __( 'Произвольный контент', 'wp-recall' ),
-			'uploader'		 => __( 'Файловый загрузчик', 'wp-recall' ),
-			'editor'		 => __( 'Текстовый редактор', 'wp-recall' )
-		);
+		global $wprecall;
 
 		$typesList = array();
-
-		foreach ( $types as $type => $name ) {
-			if ( !in_array( $type, $this->types ) )
+		foreach ( $this->types as $type ) {
+			if ( ! isset( $wprecall->fields[$type] ) )
 				continue;
-			$typesList[$type] = $name;
+			$typesList[$type] = $wprecall->fields[$type]['label'];
 		}
 
 		return $typesList;

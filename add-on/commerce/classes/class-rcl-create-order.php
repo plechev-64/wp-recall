@@ -26,7 +26,7 @@ class Rcl_Create_Order {
 
 		$Cart = new Rcl_Cart();
 
-		if ( !$Cart->products )
+		if ( ! $Cart->products )
 			return false;
 
 		foreach ( $Cart->products as $product ) {
@@ -36,7 +36,6 @@ class Rcl_Create_Order {
 			$product_price = $productPrice->get_price( ( array ) $product->variations );
 
 			$this->order_price += $product_price * $product->product_amount;
-			$this->products_amount += $product->product_amount;
 
 			$this->products[] = array(
 				'product_id'	 => $product->product_id,
@@ -60,7 +59,7 @@ class Rcl_Create_Order {
 
 	function insert_order() {
 
-		if ( !$this->user_id ) {
+		if ( ! $this->user_id ) {
 			$result = $this->register_user();
 			if ( $this->is_error )
 				return $result;
@@ -91,7 +90,7 @@ class Rcl_Create_Order {
 
 		$Cart = new Rcl_Cart_Constructor();
 
-		if ( !$Cart->fields )
+		if ( ! $Cart->fields )
 			return false;
 
 		$order_details = array();
@@ -109,7 +108,7 @@ class Rcl_Create_Order {
 				$value = (isset( $_POST[$field['slug']] )) ? $_POST[$field['slug']] : false;
 			}
 
-			if ( !$value )
+			if ( ! $value )
 				continue;
 
 			$order_details[] = array(
@@ -133,7 +132,7 @@ class Rcl_Create_Order {
 		//если разрешена регистрация покупателя
 		if ( $this->buyer_register ) {
 
-			if ( !$validName || !$isEmail ) {
+			if ( ! $validName || ! $isEmail ) {
 				return $this->error( 'email_invalid', __( 'You have entered an invalid email!', 'wp-recall' ) );
 			}
 
@@ -141,7 +140,7 @@ class Rcl_Create_Order {
 				return $this->error( 'email_used', __( 'This email is already used! If this is your email, then log in and proceed with the order.', 'wp-recall' ) );
 			}
 
-			if ( !$this->user_id ) {
+			if ( ! $this->user_id ) {
 
 				$user_password = wp_generate_password( 12, false );
 
@@ -154,7 +153,7 @@ class Rcl_Create_Order {
 
 				$this->user_id = rcl_insert_user( $this->register_data );
 
-				if ( !$this->user_id ) {
+				if ( ! $this->user_id ) {
 					return $this->error( 'buyer_registered', __( 'An error occurred while registering the buyer!', 'wp-recall' ) );
 				}
 
@@ -162,7 +161,7 @@ class Rcl_Create_Order {
 			}
 		} else {
 
-			if ( !$isEmail || !$validName ) {
+			if ( ! $isEmail || ! $validName ) {
 				return $this->error( 'email_invalid', __( 'You have entered an invalid email!', 'wp-recall' ) );
 			}
 
@@ -188,13 +187,13 @@ class Rcl_Create_Order {
 			}
 		}
 
-		if ( !$this->user_id )
+		if ( ! $this->user_id )
 			return false;
 
 		rcl_update_profile_fields( $this->user_id );
 
 		//Сразу авторизуем пользователя, если не требуется подтверждение почты
-		if ( $this->buyer_register && !rcl_get_option( 'confirm_register_recall' ) ) {
+		if ( $this->buyer_register && ! rcl_get_option( 'confirm_register_recall' ) ) {
 
 			$creds = array(
 				'user_login'	 => $user_email,

@@ -365,15 +365,11 @@ function rcl_unset_postdata_tags( $post_id, $postdata ) {
 
 	if ( !isset( $_POST['tags'] ) ) {
 
-		$obj = get_post_type_object( $postdata['post_type'] );
+		if ( $taxonomies = get_object_taxonomies( $postdata['post_type'], 'objects' ) ) {
 
-		if ( $obj->taxonomies ) {
+			foreach ( $taxonomies as $taxonomy_name => $obj ) {
 
-			foreach ( $obj->taxonomies as $taxonomy_name ) {
-
-				$taxonomy = get_taxonomy( $taxonomy_name );
-
-				if ( $taxonomy->hierarchical )
+				if ( $obj->hierarchical )
 					continue;
 
 				wp_set_object_terms( $post_id, NULL, $taxonomy_name );

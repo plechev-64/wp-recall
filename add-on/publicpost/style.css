@@ -191,6 +191,7 @@
 	position: absolute;
 	width: 100%;
 	z-index: 9;
+    background: #fff0e2;
 }
 .rcl-public-box .public-form-button {
 	display: inline-block;

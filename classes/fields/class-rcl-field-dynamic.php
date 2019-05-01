@@ -50,7 +50,7 @@ class Rcl_Field_Dynamic extends Rcl_Field_Abstract {
 			foreach ( $this->value as $k => $val ) {
 				$content .= '<span class="dynamic-value">';
 				$content .= '<input type="text" ' . $this->get_required() . ' ' . $this->get_placeholder() . ' name="' . $this->input_name . '[]" value="' . $val . '"/>';
-				if ( $cnt == ++$k ) {
+				if ( $cnt == ++ $k ) {
 					$content .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="rcli fa-plus" aria-hidden="true"></i></a>';
 				} else {
 					$content .= '<a href="#" onclick="rcl_remove_dynamic_field(this);return false;"><i class="rcli fa-minus" aria-hidden="true"></i></a>';
@@ -59,7 +59,7 @@ class Rcl_Field_Dynamic extends Rcl_Field_Abstract {
 			}
 		} else {
 			$content .= '<span class="dynamic-value">';
-			$content .= '<input type="text" ' . $this->get_required() . ' ' . $this->get_placeholder() . ' name="' . $this->input_name . '[]" value=""/>';
+			$content .= '<input type="text" ' . $this->get_required() . ' ' . $this->get_placeholder() . ' name="' . $this->input_name . '[]" value="' . $this->default . '"/>';
 			$content .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="rcli fa-plus" aria-hidden="true"></i></a>';
 			$content .= '</span>';
 		}
@@ -71,7 +71,7 @@ class Rcl_Field_Dynamic extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( !$this->value )
+		if ( ! $this->value )
 			return false;
 
 		return implode( ', ', $this->value );

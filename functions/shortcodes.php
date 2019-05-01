@@ -4,8 +4,8 @@ add_shortcode( 'wp-recall', 'rcl_get_shortcode_wp_recall' );
 function rcl_get_shortcode_wp_recall() {
 	global $user_LK;
 
-	if ( !$user_LK ) {
-		return '<h4 class="rcl_cab_guest_message">' . __( 'To use your personal account, please log in or register on this site', 'wp-recall' ) . '</h4>
+	if ( ! $user_LK ) {
+		return '<h4 class="rcl_cab_guest_message">' . __( 'Авторизуйтесь или зарегистрируйтесь на сайте', 'wp-recall' ) . '</h4>
 		<div class="authorize-form-rcl">' . rcl_get_authorize_form() . '</div>';
 	}
 
@@ -29,7 +29,7 @@ function rcl_get_userlist( $atts ) {
 
 	$count_users = false;
 
-	if ( !isset( $atts['number'] ) ) {
+	if ( ! isset( $atts['number'] ) ) {
 
 		$count_users = $users->count();
 
@@ -52,7 +52,7 @@ function rcl_get_userlist( $atts ) {
 
 		$file = $rcl_cache->get_file( $string );
 
-		if ( !$file->need_update ) {
+		if ( ! $file->need_update ) {
 
 			$users->remove_filters();
 
@@ -66,11 +66,11 @@ function rcl_get_userlist( $atts ) {
 
 	$userlist .= '<div class="rcl-userlist">';
 
-	if ( !$usersdata ) {
+	if ( ! $usersdata ) {
 		$userlist .= '<p align="center">' . __( 'Users not found', 'wp-recall' ) . '</p>';
 	} else {
 
-		if ( !isset( $atts['number'] ) && $pagenavi->in_page ) {
+		if ( ! isset( $atts['number'] ) && $pagenavi->in_page ) {
 			$userlist .= $pagenavi->pagenavi();
 		}
 
@@ -85,7 +85,7 @@ function rcl_get_userlist( $atts ) {
 
 		$userlist .= '</div>';
 
-		if ( !isset( $atts['number'] ) && $pagenavi->in_page ) {
+		if ( ! isset( $atts['number'] ) && $pagenavi->in_page ) {
 			$userlist .= $pagenavi->pagenavi();
 		}
 	}
@@ -121,7 +121,7 @@ function rcl_cache_shortcode( $atts, $content = null ) {
 
 			$file = $rcl_cache->get_file( $key );
 
-			if ( !$file->need_update ) {
+			if ( ! $file->need_update ) {
 				return $rcl_cache->get_cache();
 			}
 		}
@@ -153,22 +153,22 @@ function rcl_tab_shortcode( $atts ) {
 		'subtab_id'	 => ''
 			), $atts ) );
 
-	if ( !$user_ID ) {
-		return '<h4 class="rcl_cab_guest_message">' . __( 'To use your personal account, please log in or register on this site', 'wp-recall' ) . '</h4>
+	if ( ! $user_ID ) {
+		return '<h4 class="rcl_cab_guest_message">' . __( 'Авторизуйтесь или зарегистрируйтесь на сайте', 'wp-recall' ) . '</h4>
 		<div class="authorize-form-rcl">' . rcl_get_authorize_form() . '</div>';
 	}
 
 	$tab = rcl_get_tab( $tab_id );
 
-	if ( !$tab_id || !$tab )
+	if ( ! $tab_id || ! $tab )
 		return '<p>' . __( 'Such tab was not found!', 'wp-recall' ) . '</p>';
 
-	if ( !class_exists( 'Rcl_Tab' ) )
+	if ( ! class_exists( 'Rcl_Tab' ) )
 		require_once RCL_PATH . 'classes/class-rcl-tab.php';
 
 	$Rcl_Tab = new Rcl_Tab( $tab );
 
-	if ( !$Rcl_Tab->is_user_access( $user_ID ) )
+	if ( ! $Rcl_Tab->is_user_access( $user_ID ) )
 		return false;
 
 	$content = '<div id="rcl-office" class="wprecallblock" data-account="' . $user_ID . '">';

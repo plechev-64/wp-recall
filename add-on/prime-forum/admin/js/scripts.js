@@ -81,7 +81,7 @@ function pfm_manager_save_sort( typeObject ) {
 		type: "POST",
 		data: dataString,
 		dataType: "json",
-		url: ajax_url,
+		url: ajaxurl,
 		success: function( result ) {
 
 			rcl_preloader_hide();

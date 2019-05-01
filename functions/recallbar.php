@@ -14,7 +14,7 @@ add_action( 'rcl_bar_setup', 'rcl_setup_bar_default_data', 10 );
 function rcl_setup_bar_default_data() {
 	global $rcl_user_URL;
 
-	if ( !is_user_logged_in() )
+	if ( ! is_user_logged_in() )
 		return false;
 
 	rcl_bar_add_menu_item( 'account-link', array(
@@ -37,7 +37,7 @@ function rcl_setup_bar_default_data() {
 add_action( 'rcl_bar_print_icons', 'rcl_print_bar_icons', 10 );
 function rcl_print_bar_icons() {
 	global $rcl_bar;
-	if ( !isset( $rcl_bar['icons'] ) || !$rcl_bar['icons'] )
+	if ( ! isset( $rcl_bar['icons'] ) || ! $rcl_bar['icons'] )
 		return false;
 
 	if ( is_array( $rcl_bar['icons'] ) ) {
@@ -45,7 +45,7 @@ function rcl_print_bar_icons() {
 		$rcl_bar_icons = apply_filters( 'rcl_bar_icons', $rcl_bar['icons'] );
 
 		foreach ( $rcl_bar_icons as $id_icon => $icon ) {
-			if ( !isset( $icon['icon'] ) )
+			if ( ! isset( $icon['icon'] ) )
 				continue;
 
 			$class = (isset( $icon['class'] )) ? $icon['class'] : '';
@@ -86,7 +86,7 @@ function rcl_print_bar_icons() {
 add_action( 'rcl_bar_print_menu', 'rcl_print_bar_right_menu', 10 );
 function rcl_print_bar_right_menu() {
 	global $rcl_bar;
-	if ( !isset( $rcl_bar['menu'] ) || !$rcl_bar['menu'] )
+	if ( ! isset( $rcl_bar['menu'] ) || ! $rcl_bar['menu'] )
 		return false;
 
 	if ( is_array( $rcl_bar['menu'] ) ) {
@@ -94,7 +94,7 @@ function rcl_print_bar_right_menu() {
 		$rcl_bar_menu = apply_filters( 'rcl_bar_menu', $rcl_bar['menu'] );
 
 		foreach ( $rcl_bar_menu as $icon ) {
-			if ( !isset( $icon['url'] ) )
+			if ( ! isset( $icon['url'] ) )
 				continue;
 
 			echo '<div class="rcb_line">';

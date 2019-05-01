@@ -227,9 +227,32 @@ function rcl_notice( text, type, time_close ) {
 }
 
 function rcl_close_notice( e ) {
-	jQuery( e ).animateCss( 'flipOutX', function( e ) {
-		jQuery( e ).hide();
-	} );
+
+	var timeCook = jQuery( e ).data( 'notice_time' );
+
+	if ( timeCook ) {
+
+		var idCook = jQuery( e ).data( 'notice_id' );
+		var block = jQuery( e ).parents( '.rcl-notice' );
+
+		jQuery( block ).animateCss( 'flipOutX', function() {
+			jQuery( block ).remove();
+		} );
+
+		jQuery.cookie( idCook, '1', {
+			expires: timeCook,
+			path: '/'
+		} );
+
+	} else {
+
+		jQuery( e ).animateCss( 'flipOutX', function( e ) {
+			jQuery( e ).hide();
+		} );
+
+	}
+
+	return false;
 }
 
 function rcl_preloader_show( e, size ) {
@@ -479,8 +502,13 @@ function rcl_proccess_ajax_return( result ) {
 
 			if ( dialog.content ) {
 
-				if ( jQuery( '#ssi-modalContent' ).size() )
+				if ( dialog.close == undefined )
+					dialog.close = true;
+
+				if ( jQuery( '#ssi-modalContent' ).size() && String( dialog.close ) == 'true' ) {
+					console.log( dialog.close );
 					ssi_modal.close();
+				}
 
 				var ssiOptions = {
 					className: 'rcl-dialog-tab ' + ( dialog.class ? ' ' + dialog.class : '' ),
@@ -519,9 +547,7 @@ function rcl_proccess_ajax_return( result ) {
 
 				ssi_modal.show( ssiOptions );
 
-			}
-
-			if ( dialog.close ) {
+			} else if ( jQuery( '#ssi-modalContent' ).size() && String( dialog.close ) == 'true' ) {
 				ssi_modal.close();
 			}
 
@@ -742,12 +768,41 @@ function rcl_init_table( table_id ) {
 
 }
 
+function rcl_chek_form_field( e ) {
+
+	var field = jQuery( e );
+
+	var rclFormFactory = new RclForm( field.parents( 'form' ) );
+
+	var result = rclFormFactory.validate( {
+		check_fields: [ field.data( 'slug' ) ]
+	} );
+
+	/*console.log( result );*/
+
+	return result;
+
+}
+
 function RclForm( form ) {
 
 	this.form = form;
 	this.errors = { };
+	this.skip = [ ];
+	this.check_fields = [ ];
 
-	this.validate = function() {
+	this.validate = function( args ) {
+
+		if ( !args )
+			args = { };
+
+		if ( args.skip ) {
+			this.skip = args.skip;
+		}
+
+		if ( args.check_fields ) {
+			this.check_fields = args.check_fields;
+		}
 
 		var valid = true;
 
@@ -811,6 +866,11 @@ function RclForm( form ) {
 				this.form.find( 'input,select,textarea' ).each( function() {
 
 					var field = jQuery( this );
+
+					if ( parent.check_fields && jQuery.inArray( field.data( 'slug' ), parent.check_fields ) < 0 ) {
+						return;
+					}
+
 					var typeField = field.attr( 'type' );
 
 					if ( field.tagName && field.tagName.toLowerCase() == 'textarea' ) {
@@ -818,6 +878,10 @@ function RclForm( form ) {
 					}
 
 					for ( var objKey in parent.checkFields ) {
+
+						if ( parent.skip && jQuery.inArray( objKey, parent.skip ) >= 0 ) {
+							continue;
+						}
 
 						var chekObject = parent.checkFields[objKey];
 
@@ -952,7 +1016,7 @@ function RclForm( form ) {
 					if ( !file )
 						return;
 
-					var filesize = file.size / 1024 / 1024;
+					var filesize = file.size / 1024;
 
 					if ( filesize > maxsize ) {
 						valid = false;
@@ -978,12 +1042,13 @@ function RclForm( form ) {
 
 					var fileInput = jQuery( this )[0];
 					var file = fileInput.files[0];
-					var accept = fileInput.accept.split( ',' );
 
 					if ( !file )
 						return;
 
-					if ( accept ) {
+					if ( fileInput.accept ) {
+
+						var accept = fileInput.accept.split( ',' );
 
 						var fileType = false;
 
@@ -998,7 +1063,7 @@ function RclForm( form ) {
 
 						}
 
-						if ( !fileType ) {
+						if ( !fileType && jQuery( this ).data( "ext" ) ) {
 
 							var exts = jQuery( this ).data( "ext" ).split( ',' );
 							var filename = file.name;

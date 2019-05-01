@@ -2,9 +2,11 @@
 
 class Rcl_Form extends Rcl_Fields {
 
+	public $class		 = '';
 	public $action		 = '';
 	public $method		 = 'post';
 	public $submit;
+	public $submit_args;
 	public $nonce_name	 = '';
 	public $onclick;
 	public $values		 = array();
@@ -30,13 +32,13 @@ class Rcl_Form extends Rcl_Fields {
 
 	function get_form( $args = false ) {
 
-		$content = '<div class="rcl-form preloader-parent">';
+		$content = '<div class="rcl-form preloader-parent' . ($this->class ? ' ' . $this->class : '') . '">';
 
 		$content .= '<form method="' . $this->method . '" action="' . $this->action . '">';
 
 		foreach ( $this->fields as $field_id => $field ) {
 
-			if ( !isset( $field->value ) )
+			if ( ! isset( $field->value ) )
 				$field->value = (isset( $this->values[$field->slug] )) ? $this->values[$field->slug] : null;
 
 			if ( $field->type == 'hidden' ) {
@@ -60,17 +62,17 @@ class Rcl_Form extends Rcl_Fields {
 		$content .= '<div class="submit-box">';
 
 		if ( $this->onclick ) {
-			$content .= rcl_get_button( array(
+			$content .= rcl_get_button( wp_parse_args( $this->submit_args, array(
 				'label'		 => $this->submit,
 				'icon'		 => 'fa-check-circle',
 				'onclick'	 => $this->onclick
-				) );
+				) ) );
 		} else {
-			$content .= rcl_get_button( array(
+			$content .= rcl_get_button( wp_parse_args( $this->submit_args, array(
 				'label'	 => $this->submit,
 				'icon'	 => 'fa-check-circle',
 				'submit' => true
-				) );
+				) ) );
 		}
 
 		$content .= '</div>';

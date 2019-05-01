@@ -19,16 +19,22 @@ class Rcl_Cart_Constructor {
 
 		if ( $this->order_id ) {
 
-			global $rclOrder;
+			global $rclOrder, $user_ID;
 
 			$rclOrder = rcl_get_order( $this->order_id );
 
-			$content .= rcl_get_include_template( 'order.php', __FILE__ );
+			if ( $rclOrder->user_id != $user_ID || ! $rclOrder || empty( $rclOrder ) ) {
+
+				$content .= '<p>' . __( 'Shopping cart is not available', 'wp-recall' ) . '.</p>';
+			} else {
+
+				$content .= rcl_get_include_template( 'order.php', __FILE__ );
+			}
 		} else {
 
 			$Cart = new Rcl_Cart( array( 'cart_products' => $cartProducts ) );
 
-			if ( !$Cart->products_amount ) {
+			if ( ! $Cart->products_amount ) {
 
 				$content .= '<p>' . __( 'Your shopping cart is empty', 'wp-recall' ) . '.</p>';
 			} else {
@@ -60,7 +66,7 @@ class Rcl_Cart_Constructor {
 
 			foreach ( $this->fields as $field ) {
 
-				if ( !isset( $field['value_in_key'] ) )
+				if ( ! isset( $field['value_in_key'] ) )
 					$field['value_in_key'] = true;
 
 				$fieldObject = Rcl_Field::setup( $field );
@@ -97,7 +103,7 @@ class Rcl_Cart_Constructor {
 	function init_fields() {
 		global $user_ID;
 
-		if ( !$user_ID )
+		if ( ! $user_ID )
 			$this->init_guest_fields();
 
 		$fields		 = ($cartFields	 = $this->get_cart_fields()) ? array_merge( $this->fields, $cartFields ) : $this->fields;
@@ -118,7 +124,7 @@ class Rcl_Cart_Constructor {
 			'type'		 => 'text'
 		);
 
-		if ( !$this->exist_field( 'first_name' ) ) {
+		if ( ! $this->exist_field( 'first_name' ) ) {
 
 			$fields[] = array(
 				'title'		 => __( 'Your name', 'wp-recall' ),
@@ -135,14 +141,14 @@ class Rcl_Cart_Constructor {
 
 		$profileFields = rcl_get_profile_fields();
 
-		if ( !$profileFields )
+		if ( ! $profileFields )
 			return false;
 
 		$fields = array();
 
 		foreach ( $profileFields as $field ) {
 
-			if ( !isset( $field['order'] ) || $field['order'] != 1 )
+			if ( ! isset( $field['order'] ) || $field['order'] != 1 )
 				continue;
 
 			$fields[] = $field;
@@ -166,7 +172,7 @@ class Rcl_Cart_Constructor {
 
 		$cartFields = get_option( 'rcl_cart_fields' );
 
-		if ( !$cartFields )
+		if ( ! $cartFields )
 			return false;
 
 		return $cartFields;

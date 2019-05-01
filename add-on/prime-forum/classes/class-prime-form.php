@@ -17,9 +17,9 @@ class PrimeForm extends Rcl_Fields {
 
 		$this->init_properties( $args );
 
-		if ( !$this->action )
+		if ( ! $this->action )
 			$this->action	 = 'topic_create';
-		if ( !$this->submit )
+		if ( ! $this->submit )
 			$this->submit	 = __( 'Create topic', 'wp-recall' );
 
 		if ( $this->forum_id ) {
@@ -110,7 +110,7 @@ class PrimeForm extends Rcl_Fields {
 			);
 		}
 
-		if ( !$user_ID ) {
+		if ( ! $user_ID ) {
 			if ( $this->action == 'post_create' ) {
 				$fields[]	 = array(
 					'type'		 => 'text',
@@ -199,12 +199,12 @@ class PrimeForm extends Rcl_Fields {
 		$content .= '<form id="prime-topic-form" method="post" action="">';
 
 		$content .= '<div class="post-form-top">';
-		$content .= apply_filters( 'pfm_form_top', '' );
+		$content .= apply_filters( 'pfm_form_top', '', $this );
 		$content .= '</div>';
 
 		foreach ( $this->fields as $field_id => $field ) {
 
-			if ( !$field->value )
+			if ( ! $field->value )
 				$field->value = (isset( $this->values[$field->slug] )) ? $this->values[$field->slug] : false;
 
 			$content .= '<div id="field-' . $field->slug . '" class="form-field rcl-option">';
@@ -232,7 +232,7 @@ class PrimeForm extends Rcl_Fields {
 
 		$content .= '<div class="submit-box">';
 
-		if ( !defined( 'DOING_AJAX' ) ) {
+		if ( ! defined( 'DOING_AJAX' ) ) {
 			$content .= rcl_get_button( array(
 				'label'		 => __( 'Preview', 'wp-recall' ),
 				'icon'		 => 'fa-eye',

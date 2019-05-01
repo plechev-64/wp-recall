@@ -34,10 +34,10 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 		$args['return_as'] = ARRAY_A;
 
-		if ( !isset( $args['per_page'] ) )
+		if ( ! isset( $args['per_page'] ) )
 			$args['per_page'] = (isset( $rcl_options['chat']['in_page'] )) ? $rcl_options['chat']['in_page'] : 50;
 
-		if ( !isset( $args['orderby'] ) )
+		if ( ! isset( $args['orderby'] ) )
 			$args['orderby'] = 'message_time';
 
 		$this->init_properties( $args );
@@ -46,26 +46,26 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 		add_filter( 'rcl_chat_message', 'wpautop', 11 );
 
-		if ( !$this->user_id )
+		if ( ! $this->user_id )
 			$this->user_id = $user_ID;
 
-		if ( !$this->office_id )
+		if ( ! $this->office_id )
 			$this->office_id = (isset( $_POST['office_ID'] )) ? $_POST['office_ID'] : 0;
 
-		if ( !$this->max_words )
+		if ( ! $this->max_words )
 			$this->max_words = (isset( $rcl_options['chat']['words'] )) ? $rcl_options['chat']['words'] : 300;
 
-		if ( !$this->chat_room )
+		if ( ! $this->chat_room )
 			return;
 
 		$this->chat_token = rcl_chat_token_encode( $this->chat_room );
 
 		$this->chat = $this->get_chat_data( $this->chat_room );
 
-		if ( !$this->user_write )
+		if ( ! $this->user_write )
 			$this->user_write = (isset( $_POST['chat']['message'] ) && $_POST['chat']['message']) ? 1 : 0;
 
-		if ( !$this->chat ) {
+		if ( ! $this->chat ) {
 			$this->setup_chat();
 		} else {
 			$this->chat_id = $this->chat['chat_id'];
@@ -175,7 +175,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 	function get_user_activity( $user ) {
 
-		if ( !$user->user_id ) {
+		if ( ! $user->user_id ) {
 			return array(
 				'link'	 => '<span>' . __( 'Guest', 'wp-recall' ) . '</span>',
 				'write'	 => 0
@@ -228,7 +228,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 	function setup_chat() {
 
-		if ( !$this->chat_id ) {
+		if ( ! $this->chat_id ) {
 			$this->chat_id = $this->insert_chat( $this->chat_room, $this->chat_status );
 		}
 
@@ -268,7 +268,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 		$message = apply_filters( 'rcl_pre_insert_chat_message', $message );
 
-		if ( !$message ) {
+		if ( ! $message ) {
 			$this->add_error( 'insert_message', __( 'The message was not added', 'wp-recall' ) );
 			return $this->errors();
 		}
@@ -277,7 +277,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 			RCL_PREF . 'chat_messages', $message
 		);
 
-		if ( !$result ) {
+		if ( ! $result ) {
 			$this->add_error( 'insert_message', __( 'The message was not added', 'wp-recall' ) );
 			return $this->errors();
 		}
@@ -301,7 +301,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 			)
 		);
 
-		if ( !$result ) {
+		if ( ! $result ) {
 			$this->add_error( 'insert_chat', __( 'Chat was not created', 'wp-recall' ) );
 			return $this->errors();
 		}
@@ -354,7 +354,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 	function get_form() {
 		global $user_ID;
 
-		if ( !$user_ID ) {
+		if ( ! $user_ID ) {
 			$content = '<div class="chat-notice">'
 				. '<span class="notice-error">' . __( 'To post messages in the chat you need to login', 'wp-recall' ) . '</span>'
 				. '</div>'
@@ -384,7 +384,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 			) );
 
 		$content .= '</div>'
-			. '<textarea maxlength="' . $this->max_words . '" onkeyup="rcl_chat_words_count(event,this);" id="chat-area-' . $this->chat_id . '" name="chat[message]"></textarea>'
+			. '<textarea placeholder="' . __( 'Введите сообщение', 'wp-recall' ) . '" maxlength="' . $this->max_words . '" onkeyup="rcl_chat_words_count(event,this);" id="chat-area-' . $this->chat_id . '" name="chat[message]"></textarea>'
 			. '<span class="words-counter">' . $this->max_words . '</span>';
 
 		if ( $hiddens ) {
@@ -604,11 +604,11 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 	function the_attachment( $attachment_id ) {
 
-		if ( !$post = get_post( $attachment_id ) )
+		if ( ! $post = get_post( $attachment_id ) )
 			return false;
 
 
-		if ( !$file = get_attached_file( $attachment_id ) ) {
+		if ( ! $file = get_attached_file( $attachment_id ) ) {
 			return false;
 		}
 

@@ -36,10 +36,10 @@ function rcl_user_avatar( $size = 50 ) {
 
 function rcl_user_rayting() {
 	global $rcl_user, $rcl_users_set;
-	if ( !rcl_exist_addon( 'rating-system' ) )
+	if ( ! rcl_exist_addon( 'rating-system' ) )
 		return false;
 	if ( false !== array_search( 'rating_total', $rcl_users_set->data ) || isset( $rcl_user->rating_total ) ) {
-		if ( !isset( $rcl_user->rating_total ) )
+		if ( ! isset( $rcl_user->rating_total ) )
 			$rcl_user->rating_total = 0;
 		echo rcl_rating_block( array( 'value' => $rcl_user->rating_total ) );
 	}
@@ -49,7 +49,7 @@ add_action( 'rcl_user_description', 'rcl_user_meta', 30 );
 function rcl_user_meta() {
 	global $rcl_user, $rcl_users_set;
 	if ( false !== array_search( 'profile_fields', $rcl_users_set->data ) || isset( $rcl_user->profile_fields ) ) {
-		if ( !isset( $rcl_user->profile_fields ) )
+		if ( ! isset( $rcl_user->profile_fields ) )
 			$rcl_user->profile_fields = array();
 
 		if ( $rcl_user->profile_fields ) {
@@ -67,7 +67,7 @@ add_action( 'rcl_user_description', 'rcl_user_comments', 20 );
 function rcl_user_comments() {
 	global $rcl_user, $rcl_users_set;
 	if ( false !== array_search( 'comments_count', $rcl_users_set->data ) || isset( $rcl_user->comments_count ) ) {
-		if ( !isset( $rcl_user->comments_count ) )
+		if ( ! isset( $rcl_user->comments_count ) )
 			$rcl_user->comments_count = 0;
 		echo '<span class="filter-data"><i class="rcli fa-comment"></i>' . __( 'Comments', 'wp-recall' ) . ': ' . $rcl_user->comments_count . '</span>';
 	}
@@ -77,7 +77,7 @@ add_action( 'rcl_user_description', 'rcl_user_posts', 20 );
 function rcl_user_posts() {
 	global $rcl_user, $rcl_users_set;
 	if ( false !== array_search( 'posts_count', $rcl_users_set->data ) || isset( $rcl_user->posts_count ) ) {
-		if ( !isset( $rcl_user->posts_count ) )
+		if ( ! isset( $rcl_user->posts_count ) )
 			$rcl_user->posts_count = 0;
 		echo '<span class="filter-data"><i class="rcli fa-file-text-o"></i>' . __( 'Publics', 'wp-recall' ) . ': ' . $rcl_user->posts_count . '</span>';
 	}
@@ -90,7 +90,7 @@ function rcl_user_action( $type = 1 ) {
 
 	switch ( $type ) {
 		case 1: $last_action = rcl_get_useraction( $action );
-			if ( !$last_action )
+			if ( ! $last_action )
 				echo '<span class="status_user online"><i class="rcli fa-circle"></i></span>';
 			else
 				echo '<span class="status_user offline" title="' . __( 'offline', 'wp-recall' ) . ' ' . $last_action . '"><i class="rcli fa-circle"></i></span>';
@@ -116,7 +116,7 @@ add_action( 'rcl_user_description', 'rcl_user_register', 20 );
 function rcl_user_register() {
 	global $rcl_user, $rcl_users_set;
 	if ( false !== array_search( 'user_registered', $rcl_users_set->data ) || isset( $rcl_user->user_registered ) ) {
-		if ( !isset( $rcl_user->user_registered ) )
+		if ( ! isset( $rcl_user->user_registered ) )
 			return false;
 		echo '<span class="filter-data"><i class="rcli fa-calendar-check-o"></i>' . __( 'Registration', 'wp-recall' ) . ': ' . mysql2date( 'd-m-Y', $rcl_user->user_registered ) . '</span>';
 	}
@@ -167,7 +167,7 @@ function rcl_default_search_form( $form ) {
 function rcl_action() {
 	global $rcl_userlk_action;
 	$last_action = rcl_get_useraction( $rcl_userlk_action );
-	$class		 = (!$last_action) ? 'online' : 'offline';
+	$class		 = ( ! $last_action) ? 'online' : 'offline';
 
 	if ( $last_action )
 		$status	 = __( 'offline', 'wp-recall' ) . ' ' . $last_action;
@@ -195,7 +195,7 @@ function rcl_setup_avatar_icons() {
 
 	$icons = rcl_avatar_icons();
 
-	if ( !$icons )
+	if ( ! $icons )
 		return false;
 
 	$html = array();
@@ -259,7 +259,7 @@ function rcl_inline_styles() {
 
 	$styles = apply_filters( 'rcl_inline_styles', '', array( $r, $g, $b ) );
 
-	if ( !$styles )
+	if ( ! $styles )
 		return false;
 
 	// удаляем пробелы, переносы, табуляцию
@@ -310,6 +310,9 @@ function rcl_api_button_inline_size( $styles ) {
 
 	$styles .= '
 		body .rcl-bttn,
+		.rcl-bttn.rcl-bttn__size-small {
+			font-size: ' . 0.86 * $size . 'px;
+		}
 		.rcl-bttn.rcl-bttn__size-standart {
 			font-size: ' . $size . 'px;
 		}
@@ -441,16 +444,16 @@ function rcl_get_time_user_action( $user_id ) {
 function rcl_get_miniaction( $action ) {
 	global $rcl_user;
 
-	if ( !$action )
+	if ( ! $action )
 		$action = rcl_get_time_user_action( $rcl_user->ID );
 
 	$last_action = rcl_get_useraction( $action );
 
-	$class = (!$last_action && $action) ? 'online' : 'offline';
+	$class = ( ! $last_action && $action) ? 'online' : 'offline';
 
 	$content = apply_filters( 'rcl_before_miniaction', '' );
 
-	$content .= (!$last_action && $action) ? '<i class="rcli fa-circle"></i>' : __( 'offline', 'wp-recall' ) . ' ' . $last_action;
+	$content .= ( ! $last_action && $action) ? '<i class="rcli fa-circle"></i>' : __( 'offline', 'wp-recall' ) . ' ' . $last_action;
 
 	$content = sprintf( '<div class="status_author_mess %s">%s</div>', $class, $content );
 
@@ -461,7 +464,7 @@ function rcl_get_miniaction( $action ) {
 add_filter( 'get_comment_author_url', 'rcl_get_link_author_comment', 10 );
 function rcl_get_link_author_comment( $url ) {
 	global $comment;
-	if ( !isset( $comment ) || $comment->user_id == 0 )
+	if ( ! isset( $comment ) || $comment->user_id == 0 )
 		return $url;
 	return get_author_posts_url( $comment->user_id );
 }
@@ -470,7 +473,7 @@ add_action( 'wp_head', 'rcl_hidden_admin_panel' );
 function rcl_hidden_admin_panel() {
 	global $user_ID;
 
-	if ( !$user_ID ) {
+	if ( ! $user_ID ) {
 		return show_admin_bar( false );
 	}
 
@@ -485,7 +488,7 @@ function rcl_hidden_admin_panel() {
 add_action( 'init', 'rcl_banned_user_redirect' );
 function rcl_banned_user_redirect() {
 	global $user_ID;
-	if ( !$user_ID )
+	if ( ! $user_ID )
 		return false;
 	if ( rcl_is_user_role( $user_ID, 'banned' ) )
 		wp_die( __( 'Congratulations! You have been banned.', 'wp-recall' ) );
@@ -509,17 +512,17 @@ function rcl_message_post_moderation( $content ) {
 function rcl_sort_gallery( $attaches, $key, $user_id = false ) {
 	global $user_ID;
 
-	if ( !$attaches )
+	if ( ! $attaches )
 		return false;
-	if ( !$user_id )
+	if ( ! $user_id )
 		$user_id = $user_ID;
 	$cnt	 = count( $attaches );
 	$v		 = $cnt + 10;
 	foreach ( $attaches as $attach ) {
 		$id	 = str_replace( $key . '-' . $user_id . '-', '', $attach->post_name );
-		if ( !is_numeric( $id ) || $id > 100 )
-			$id	 = $v++;
-		if ( !$id )
+		if ( ! is_numeric( $id ) || $id > 100 )
+			$id	 = $v ++;
+		if ( ! $id )
 			$id	 = 0;
 		foreach ( $attach as $k => $att ) {
 			$gallerylist[( int ) $id][$k] = $attach->$k;
@@ -528,13 +531,13 @@ function rcl_sort_gallery( $attaches, $key, $user_id = false ) {
 
 	$b	 = 0;
 	$cnt = count( $gallerylist );
-	for ( $a = 0; $b < $cnt; $a++ ) {
-		if ( !isset( $gallerylist[$a] ) )
+	for ( $a = 0; $b < $cnt; $a ++ ) {
+		if ( ! isset( $gallerylist[$a] ) )
 			continue;
 		$new[$b] = $gallerylist[$a];
-		$b++;
+		$b ++;
 	}
-	for ( $a = $cnt - 1; $a >= 0; $a-- ) {
+	for ( $a = $cnt - 1; $a >= 0; $a -- ) {
 		$news[] = ( object ) $new[$a];
 	}
 
@@ -543,7 +546,7 @@ function rcl_sort_gallery( $attaches, $key, $user_id = false ) {
 
 function rcl_bar_add_icon( $id_icon, $args ) {
 	global $rcl_bar;
-	if ( !rcl_get_option( 'view_recallbar' ) )
+	if ( ! rcl_get_option( 'view_recallbar' ) )
 		return false;
 	$rcl_bar['icons'][$id_icon] = $args;
 	return true;
@@ -551,7 +554,7 @@ function rcl_bar_add_icon( $id_icon, $args ) {
 
 function rcl_bar_add_menu_item( $id_item, $args ) {
 	global $rcl_bar;
-	if ( !rcl_get_option( 'view_recallbar' ) )
+	if ( ! rcl_get_option( 'view_recallbar' ) )
 		return false;
 	$rcl_bar['menu'][$id_item] = $args;
 	return true;
@@ -567,7 +570,7 @@ function rcl_user_black_list_button( $office_id ) {
 
 	$user_block = get_user_meta( $user_ID, 'rcl_black_list:' . $office_id );
 
-	$title = ($user_block) ? __( 'Unblock', 'wp-recall' ) : __( 'Blacklist', 'wp-recall' );
+	$title = ($user_block) ? __( 'Unblock', 'wp-recall' ) : __( 'Заблокировать', 'wp-recall' );
 
 	$button = rcl_get_button( array(
 		'label'		 => $title,
@@ -603,66 +606,43 @@ function rcl_post_bar_setup() {
 
 function rcl_post_bar_add_item( $id_item, $args ) {
 	global $rcl_post_bar;
+
+	if ( isset( $args['url'] ) )
+		$args['href'] = $args['url'];
+
 	$rcl_post_bar['items'][$id_item] = $args;
+
 	return true;
 }
 
-add_action( 'the_content', 'rcl_post_bar', 999 );
+add_filter( 'the_content', 'rcl_post_bar', 999 );
 function rcl_post_bar( $content ) {
 	global $rcl_post_bar;
 
-	if ( !isset( $rcl_post_bar['items'] ) || !$rcl_post_bar['items'] )
+	if ( doing_filter( 'get_the_excerpt' ) || ! is_single() || is_front_page() )
 		return $content;
 
-	if ( is_array( $rcl_post_bar['items'] ) ) {
+	$rcl_bar_items = apply_filters( 'rcl_post_bar_items', $rcl_post_bar['items'] );
 
-		$rcl_bar_items = apply_filters( 'rcl_post_bar_items', $rcl_post_bar['items'] );
+	if ( ! isset( $rcl_bar_items ) || ! $rcl_bar_items )
+		return $content;
 
-		if ( !$rcl_bar_items )
-			return $content;
 
-		$bar = '<div id="rcl-post-bar">';
+	$bar = '<div id="rcl-post-bar">';
 
-		foreach ( $rcl_bar_items as $id_item => $item ) {
+	foreach ( $rcl_bar_items as $id_item => $item ) {
 
-			$class				 = (isset( $item['class'] )) ? $item['class'] : '';
-			$link				 = (isset( $item['url'] )) ? $item['url'] : '#';
-			$attrs['title']		 = (isset( $item['title'] )) ? $item['title'] : $item['label'];
-			$attrs['onclick']	 = (isset( $item['onclick'] )) ? $item['onclick'] : false;
-			$datas				 = array();
-			$attributs			 = array();
+		$bar .= '<div id="bar-item-' . $id_item . '" class="post-bar-item ' . $class . '">';
 
-			if ( isset( $item['data'] ) ) {
-
-				foreach ( $item['data'] as $k => $value ) {
-					if ( !$value )
-						continue;
-					$datas[] = 'data-' . $k . '="' . $value . '"';
-				}
-			}
-
-			foreach ( $attrs as $attr => $value ) {
-				if ( !$value )
-					continue;
-				$attributs[] = $attr . '="' . $value . '"';
-			}
-
-			$bar .= '<div id="bar-item-' . $id_item . '" class="post-bar-item ' . $class . '">';
-
-			$bar .= rcl_get_button( array(
-				'href'		 => $link,
-				'label'		 => isset( $item['label'] ) ? $item['label'] : false,
-				'icon'		 => isset( $item['icon'] ) ? $item['icon'] : false,
-				'counter'	 => isset( $item['counter'] ) ? $item['counter'] : false,
-				) );
-
-			$bar .= '</div>';
-		}
+		$bar .= rcl_get_button( $item );
 
 		$bar .= '</div>';
-
-		$content = $bar . $content;
 	}
+
+	$bar .= '</div>';
+
+	$content = $bar . $content;
+
 
 	return $content;
 }

@@ -46,18 +46,20 @@ class Rcl_Field_File extends Rcl_Field_Abstract {
 				'type'		 => 'runner',
 				'unit'		 => 'Kb',
 				'value_min'	 => 256,
-				'value_max'	 => 5120,
+				'value_max'	 => 51200,
 				'value_step' => 256,
 				'default'	 => 512,
 				'title'		 => __( 'File size', 'wp-recall' ),
 				'notice'	 => __( 'maximum size of uploaded file, KbB (Default - 512)', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'file_types',
-				'default'	 => $this->file_types,
-				'type'		 => 'text',
-				'title'		 => __( 'Allowed file types', 'wp-recall' ),
-				'notice'	 => __( 'allowed types of files are divided by comma, for example: pdf, zip, jpg', 'wp-recall' )
+				'slug'			 => 'file_types',
+				'default'		 => $this->file_types,
+				'type'			 => 'text',
+				'default'		 => 'zip',
+				'placeholder'	 => 'zip',
+				'title'			 => __( 'Allowed file types', 'wp-recall' ),
+				'notice'		 => __( 'Pазрешенные типы файлов разделяются запятой, например: pdf, zip, jpg. По-умолчанию: zip', 'wp-recall' )
 			)
 		);
 
@@ -68,7 +70,7 @@ class Rcl_Field_File extends Rcl_Field_Abstract {
 		global $user_ID;
 		$input = '';
 
-		if ( is_admin() && !rcl_is_ajax() ) {
+		if ( is_admin() && ! rcl_is_ajax() ) {
 
 			$post_id = (isset( $_GET['post'] )) ? intval( $_GET['post'] ) : false;
 			$user_id = (isset( $_GET['user_id'] )) ? intval( $_GET['user_id'] ) : false;
@@ -91,29 +93,29 @@ class Rcl_Field_File extends Rcl_Field_Abstract {
 
 			$input .= $this->get_field_value();
 
-			if ( !$this->required )
+			if ( ! $this->required )
 				$input .= '<span class="delete-file-url"><a href="' . wp_nonce_url( $url, 'user-' . $user_ID ) . '"> <i class="rcli fa-times-circle-o"></i> ' . __( 'delete', 'wp-recall' ) . '</a></span>';
 
 			$input = '<span class="file-manage-box">' . $input . '</span>';
 		}
 
 		$accTypes	 = false;
-		$extTypes	 = $this->file_types ? array_map( 'trim', explode( ',', $this->file_types ) ) : array();
+		$extTypes	 = $this->file_types ? array_map( 'trim', array_unique( explode( ',', $this->file_types ) ) ) : array( 'zip' );
 
 		if ( $extTypes )
-			$accTypes = rcl_get_mime_types( $extTypes );
+			$accTypes = array_unique( rcl_get_mime_types( $extTypes ) );
 
 		$accept		 = ($accTypes) ? 'accept="' . implode( ',', $accTypes ) . '"' : '';
-		$required	 = (!$this->value) ? $this->get_required() : '';
+		$required	 = ( ! $this->value) ? $this->get_required() : '';
 
 		$input .= '<span id="' . $this->id . '-content" class="file-field-upload">';
-		$input .= '<span onclick="jQuery(\'#' . $this->input_id . '\').val(\'\');" class="file-input-recycle"><i class="rcli fa-recycle"></i></span>';
-		$input .= '<input data-size="' . $this->max_size . '" ' . ($extTypes ? 'data-ext="' . implode( ',', $extTypes ) . '"' : '') . ' type="file" ' . $required . ' ' . $accept . ' name="' . $this->input_name . '" ' . $this->get_class() . ' id="' . $this->input_id . '" value=""/> ';
+		$input .= '<span onclick="jQuery(\'#' . $this->input_id . '\').val(\'\');" class="file-input-recycle"><i class="rcli fa-refresh"></i> ' . __( 'Отменить выбор файла', 'wp-recall' ) . '</span>';
+		$input .= '<input data-slug="' . $this->slug . '" data-size="' . $this->max_size . '" ' . ($extTypes ? 'data-ext="' . implode( ',', $extTypes ) . '"' : '') . ' type="file" ' . $required . ' ' . $accept . ' name="' . $this->input_name . '" ' . $this->get_class() . ' id="' . $this->input_id . '" onchange="rcl_chek_form_field(this)" value=""/> ';
 
 		$input .= '<br>';
 
 		if ( $extTypes )
-			$input .= '<span class="allowed-types">' . __( 'Allowed extensions', 'wp-recall' ) . ': ' . $this->file_types . '</span>. ';
+			$input .= '<span class="allowed-types">' . __( 'Allowed extensions', 'wp-recall' ) . ': ' . ($this->file_types ? $this->file_types : 'zip') . '</span>. ';
 
 		$input .= __( 'Max size', 'wp-recall' ) . ': ' . $this->max_size . 'Kb';
 
@@ -128,10 +130,10 @@ class Rcl_Field_File extends Rcl_Field_Abstract {
 	function get_value() {
 		global $user_ID;
 
-		if ( !$this->value )
+		if ( ! $this->value )
 			return false;
 
-		return '<a href="' . wp_nonce_url( get_bloginfo( 'wpurl' ) . '/?rcl-download-file=' . base64_encode( $this->value ), 'user-' . $user_ID ) . '"><i class="rcli fa-upload" aria-hidden="true"></i> ' . __( 'Upload the downloaded file', 'wp-recall' ) . '</a>';
+		return '<a href="' . wp_nonce_url( get_bloginfo( 'wpurl' ) . '/?rcl-download-file=' . base64_encode( $this->value ), 'user-' . $user_ID ) . '"><i class="rcli fa-upload" aria-hidden="true"></i> ' . basename( get_post_field( 'guid', $this->value ) ) . '</a>';
 	}
 
 }

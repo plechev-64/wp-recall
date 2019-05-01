@@ -11,8 +11,8 @@ $f_reg = ($typeform == 'register') ? 'style="display:block;"' : '';
 
 	<div class="form-block-rcl"><?php rcl_notice_form( 'register' ); ?></div>
 
-	<?php $user_login	 = (isset( $_REQUEST['user_login'] )) ? $_REQUEST['user_login'] : ''; ?>
-	<?php $user_email	 = (isset( $_REQUEST['user_email'] )) ? $_REQUEST['user_email'] : ''; ?>
+	<?php $user_login	 = (isset( $_REQUEST['user_login'] )) ? wp_strip_all_tags( $_REQUEST['user_login'], 0 ) : ''; ?>
+	<?php $user_email	 = (isset( $_REQUEST['user_email'] )) ? wp_strip_all_tags( $_REQUEST['user_email'], 0 ) : ''; ?>
 
 	<form action="<?php rcl_form_action( 'register' ); ?>" method="post" enctype="multipart/form-data">
 		<div class="form-block-rcl default-field">

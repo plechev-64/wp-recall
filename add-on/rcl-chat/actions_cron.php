@@ -6,7 +6,7 @@ function rcl_chat_daily_delete_messages() {
 
 	$max = (isset( $rcl_options['chat']['messages_amount'] )) ? $rcl_options['chat']['messages_amount'] : 100;
 
-	if ( !$max )
+	if ( ! $max )
 		return false;
 
 	$chats = $wpdb->get_results(
@@ -22,7 +22,7 @@ function rcl_chat_daily_delete_messages() {
 		. "HAVING COUNT(chat_messages.message_id) > '$max'"
 	);
 
-	if ( !$chats )
+	if ( ! $chats )
 		return false;
 
 	foreach ( $chats as $chat ) {
@@ -42,12 +42,12 @@ function rcl_chat_daily_delete_messages() {
 			. "LIMIT $amount_delete"
 		);
 
-		if ( !$messages )
+		if ( ! $messages )
 			continue;
 
 		foreach ( $messages as $message ) {
 
-			if ( $message->private_key && !$message->message_status )
+			if ( $message->private_key && ! $message->message_status )
 				continue;
 
 			rcl_chat_delete_message( $message->message_id );
@@ -65,7 +65,7 @@ function rcl_chat_delete_unattached_attachments() {
 		. "AND post_excerpt='rcl_chat_attachment:unattached'"
 	);
 
-	if ( !$unattaches )
+	if ( ! $unattaches )
 		return;
 
 	foreach ( $unattaches as $attachment_id )
@@ -80,7 +80,7 @@ function rcl_chat_send_notify_messages() {
 
 	$mess = $wpdb->get_results( "SELECT * FROM " . RCL_PREF . "chat_messages WHERE message_status='0' && private_key!='0' && message_time  > date_sub('" . current_time( 'mysql' ) . "', interval 1 hour)" );
 
-	if ( !$mess )
+	if ( ! $mess )
 		return false;
 
 	$messages = array();

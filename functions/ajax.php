@@ -21,13 +21,13 @@ function rcl_ajax_tab() {
 
 	$tab = rcl_get_tab( $post->tab_id );
 
-	if ( !$tab ) {
+	if ( ! $tab ) {
 		wp_send_json( array( 'error' => __( 'Data of the requested tab was not found.', 'wp-recall' ) ) );
 	}
 
 	$ajax = (in_array( 'ajax', $tab['supports'] ) || in_array( 'dialog', $tab['supports'] )) ? 1 : 0;
 
-	if ( !$ajax ) {
+	if ( ! $ajax ) {
 		wp_send_json( array( 'error' => __( 'Perhaps this add-on does not support ajax loading', 'wp-recall' ) ) );
 	}
 
@@ -35,7 +35,7 @@ function rcl_ajax_tab() {
 
 	$content = rcl_get_tab_content( $post->tab_id, $post->master_id, isset( $post->subtab_id ) ? $post->subtab_id : ''  );
 
-	if ( !$content ) {
+	if ( ! $content ) {
 		wp_send_json( array( 'error' => __( 'Unable to obtain content of the requested tab', 'wp-recall' ) ) );
 	}
 
@@ -88,7 +88,7 @@ function rcl_manage_user_black_list() {
 
 	$user_id = intval( $_POST['user_id'] );
 
-	if ( !$user_id ) {
+	if ( ! $user_id ) {
 		wp_send_json( array(
 			'error' => __( 'Error', 'wp-recall' )
 		) );
@@ -107,7 +107,7 @@ function rcl_manage_user_black_list() {
 	$new_status = $user_block ? 0 : 1;
 
 	wp_send_json( array(
-		'label' => ($new_status) ? __( 'Unblock', 'wp-recall' ) : __( 'Blacklist', 'wp-recall' )
+		'label' => ($new_status) ? __( 'Unblock', 'wp-recall' ) : __( 'Заблокировать', 'wp-recall' )
 	) );
 }
 
@@ -125,12 +125,12 @@ function rcl_get_smiles_ajax() {
 	}
 
 	foreach ( $smilies as $smilie => $emo ) {
-		if ( !$emo )
+		if ( ! $emo )
 			continue;
 		$content[] = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $emo ) );
 	}
 
-	if ( !$content ) {
+	if ( ! $content ) {
 		wp_send_json( array(
 			'error' => __( 'Failed to load emoticons', 'wp-recall' )
 		) );
@@ -148,7 +148,7 @@ function rcl_upload() {
 
 	$options = ( array ) json_decode( wp_unslash( $_POST['options'] ) );
 
-	if ( !isset( $options['class_name'] ) || !$options['class_name'] )
+	if ( ! isset( $options['class_name'] ) || ! $options['class_name'] )
 		exit;
 
 	$className = $options['class_name'];
@@ -177,7 +177,7 @@ function rcl_ajax_delete_attachment() {
 	$attachment_id	 = intval( $_POST['attach_id'] );
 	$post_id		 = intval( $_POST['post_id'] );
 
-	if ( !$attachment_id ) {
+	if ( ! $attachment_id ) {
 		wp_send_json( array(
 			'error' => __( 'Переданы неверные данные!', 'wp-recall' )
 		) );
@@ -185,7 +185,7 @@ function rcl_ajax_delete_attachment() {
 
 	if ( $post_id ) {
 
-		if ( !current_user_can( 'edit_post', $post_id ) ) {
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			wp_send_json( array(
 				'error' => __( 'Вы не можете удалить этот файл!', 'wp-recall' )
 			) );
@@ -198,14 +198,14 @@ function rcl_ajax_delete_attachment() {
 
 		$user_gallery = $gallery[$user_id];
 
-		if ( !$user_ID ) {
-			if ( !$user_gallery || !in_array( $attachment_id, $user_gallery ) ) {
+		if ( ! $user_ID ) {
+			if ( ! $user_gallery || ! in_array( $attachment_id, $user_gallery ) ) {
 				wp_send_json( array(
 					'error' => __( 'Вы не можете удалить этот файл!', 'wp-recall' )
 				) );
 			}
 		} else {
-			if ( !current_user_can( 'edit_post', $attachment_id ) ) {
+			if ( ! current_user_can( 'edit_post', $attachment_id ) ) {
 				wp_send_json( array(
 					'error' => __( 'Вы не можете удалить этот файл!', 'wp-recall' )
 				) );
@@ -230,7 +230,7 @@ function rcl_ajax_delete_attachment() {
 
 	$result = wp_delete_post( $attachment_id );
 
-	if ( !$result ) {
+	if ( ! $result ) {
 
 		/* wp_send_json(array(
 		  'error' => __('Deletion failed!','rcl-public')

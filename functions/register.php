@@ -1,6 +1,6 @@
 <?php
 
-if ( !function_exists( 'wp_send_new_user_notifications' ) ) {
+if ( ! function_exists( 'wp_send_new_user_notifications' ) ) {
 	function wp_send_new_user_notifications( $user_id, $notify = 'both' ) {
 		wp_new_user_notification( $user_id, null, $notify );
 	}
@@ -23,7 +23,7 @@ function rcl_insert_user( $data ) {
 
 	$user_id = wp_insert_user( $userdata );
 
-	if ( !$user_id || is_wp_error( $user_id ) ) {
+	if ( ! $user_id || is_wp_error( $user_id ) ) {
 		return false;
 	}
 
@@ -66,7 +66,7 @@ function rcl_confirm_user_registration() {
 			if ( md5( $user->ID ) != $confirmdata[1] )
 				return false;
 
-			if ( !rcl_is_user_role( $user->ID, 'need-confirm' ) )
+			if ( ! rcl_is_user_role( $user->ID, 'need-confirm' ) )
 				return false;
 
 			$defaultRole = get_option( 'default_role' );
@@ -77,7 +77,7 @@ function rcl_confirm_user_registration() {
 
 			wp_update_user( array( 'ID' => $user->ID, 'role' => $defaultRole ) );
 
-			if ( !rcl_get_time_user_action( $user->ID ) )
+			if ( ! rcl_get_time_user_action( $user->ID ) )
 				$wpdb->insert( RCL_PREF . 'user_action', array( 'user' => $user->ID, 'time_action' => current_time( 'mysql' ) ) );
 
 			do_action( 'rcl_confirm_registration', $user->ID );
@@ -103,7 +103,7 @@ function rcl_confirm_user_registration() {
 add_action( 'init', 'rcl_confirm_user_resistration_activate' );
 function rcl_confirm_user_resistration_activate() {
 
-	if ( !isset( $_GET['rcl-confirmdata'] ) )
+	if ( ! isset( $_GET['rcl-confirmdata'] ) )
 		return false;
 
 	if ( rcl_get_option( 'confirm_register_recall' ) )
@@ -146,7 +146,7 @@ function rcl_get_register_user( $errors ) {
 		foreach ( ( array ) $get_fields as $field ) {
 
 			$field = apply_filters( 'chek_custom_field_regform', $field );
-			if ( !$field )
+			if ( ! $field )
 				continue;
 
 			$slug = $field['slug'];
@@ -159,8 +159,8 @@ function rcl_get_register_user( $errors ) {
 
 					$count_field = count( $field['values'] );
 
-					for ( $a = 0; $a < $count_field; $a++ ) {
-						if ( !isset( $_POST[$slug][$a] ) ) {
+					for ( $a = 0; $a < $count_field; $a ++ ) {
+						if ( ! isset( $_POST[$slug][$a] ) ) {
 							$required = false;
 						} else {
 							$required = true;
@@ -168,17 +168,17 @@ function rcl_get_register_user( $errors ) {
 						}
 					}
 				} else if ( $field['type'] == 'file' ) {
-					if ( !isset( $_FILES[$slug] ) )
+					if ( ! isset( $_FILES[$slug] ) )
 						$required = false;
 				}else {
-					if ( !$_POST[$slug] )
+					if ( ! $_POST[$slug] )
 						$required = false;
 				}
 			}
 		}
 	}
 
-	if ( !$pass || !$email || !$login || !$required ) {
+	if ( ! $pass || ! $email || ! $login || ! $required ) {
 		$wp_errors->add( 'rcl_register_empty', __( 'Fill in the required fields!', 'wp-recall' ) );
 		return $wp_errors;
 	}
@@ -226,7 +226,7 @@ function rcl_get_register_user( $errors ) {
 add_action( 'wp', 'rcl_get_register_user_activate', 10 );
 function rcl_get_register_user_activate() {
 	if ( isset( $_POST['submit-register'] ) ) { //если данные пришли с формы wp-recall
-		if ( !wp_verify_nonce( $_POST['register_wpnonce'], 'register-key-rcl' ) )
+		if ( ! wp_verify_nonce( $_POST['register_wpnonce'], 'register-key-rcl' ) )
 			return false;
 		$email	 = $_POST['user_email'];
 		$login	 = sanitize_user( $_POST['user_login'] );
@@ -273,6 +273,8 @@ function rcl_register_mail( $userdata ) {
 
 	$textmail .= '<p>' . __( 'If it wasn’t you, then just ignore this email', 'wp-recall' ) . '</p>';
 
+	$textmail = apply_filters( 'rcl_register_mail_text', $textmail, $userdata );
+
 	rcl_mail( $userdata['user_email'], $subject, $textmail );
 }
 
@@ -293,7 +295,7 @@ function rcl_notice_form( $form = 'login' ) {
 
 	$wp_error = new WP_Error();
 
-	if ( !empty( $wp_errors ) ) {
+	if ( ! empty( $wp_errors ) ) {
 		$wp_error->errors = $wp_errors->errors;
 	}
 
@@ -313,10 +315,10 @@ function rcl_notice_form( $form = 'login' ) {
 			}
 		}
 
-		if ( !empty( $errors ) ) {
+		if ( ! empty( $errors ) ) {
 			echo '<div class="login-error">' . apply_filters( 'login_errors', $errors ) . "</div>\n";
 		}
-		if ( !empty( $messages ) ) {
+		if ( ! empty( $messages ) ) {
 			echo '<span class="login-message">' . apply_filters( 'login_messages', $messages ) . "</span>\n";
 		}
 	}
@@ -326,7 +328,7 @@ function rcl_notice_form( $form = 'login' ) {
 add_filter( 'rcl_registration_errors', 'rcl_chek_repeat_pass' );
 function rcl_chek_repeat_pass( $errors ) {
 
-	if ( !rcl_get_option( 'repeat_pass' ) )
+	if ( ! rcl_get_option( 'repeat_pass' ) )
 		return false;
 
 	if ( $_POST['user_secondary_pass'] != $_POST['user_pass'] ) {
@@ -385,37 +387,34 @@ function rcl_checkemail_success( $errors ) {
 	return $errors;
 }
 
+function rcl_get_current_url( $typeform = false, $unset = false ) {
+
+	$args = array(
+		'register'			 => false,
+		'login'				 => false,
+		'remember'			 => false,
+		'success'			 => false,
+		'rcl-confirmdata'	 => false
+	);
+
+	//if ( $unset )
+	$args['action-rcl'] = false;
+
+	if ( $typeform == 'remember' ) {
+		$args['remember'] = 'success';
+	} else {
+		$args['action-rcl'] = $typeform;
+	}
+
+	return home_url( add_query_arg( $args ) );
+}
+
 function rcl_referer_url( $typeform = false ) {
 	echo rcl_get_current_url( $typeform );
 }
 
-function rcl_get_current_url( $typeform = false, $urlform = 0 ) {
-	$protocol	 = is_ssl() ? 'https://' : 'http://';
-	$url		 = $protocol . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-
-	if ( false !== strpos( $url, '?action-rcl' ) ) {
-		$matches = '';
-		preg_match_all( '/(?<=http\:\/\/)[A-zА-я0-9\/\.\-\s\ё]*(?=\?action\-rcl)/iu', $url, $matches );
-		$host	 = $matches[0][0];
-	}
-	if ( false !== strpos( $url, '&action-rcl' ) ) {
-		preg_match_all( '/(?<=http\:\/\/)[A-zА-я0-9\/\.\_\-\s\ё]*(&=\&action\-rcl)/iu', $url, $matches );
-		$host = $matches[0][0];
-	}
-	if ( !isset( $host ) || !$host )
-		$host	 = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-	$host	 = $protocol . $host;
-
-	if ( $urlform )
-		$host = rcl_format_url( $host ) . 'action-rcl=' . $typeform;
-
-	if ( $typeform == 'remember' )
-		$host = rcl_format_url( $host ) . 'action-rcl=remember&remember=success';
-	return $host;
-}
-
 function rcl_form_action( $typeform ) {
-	echo rcl_get_current_url( $typeform, 1 );
+	echo rcl_get_current_url( $typeform, true );
 }
 
 //Добавляем фильтр для формы авторизации
@@ -464,7 +463,7 @@ function rcl_password_regform( $content ) {
 add_filter( 'regform_fields_rcl', 'rcl_secondary_password', 10 );
 function rcl_secondary_password( $fields ) {
 
-	if ( !rcl_get_option( 'repeat_pass' ) )
+	if ( ! rcl_get_option( 'repeat_pass' ) )
 		return $fields;
 
 	$fields .= '<div class="form-block-rcl default-field">
@@ -499,10 +498,10 @@ function rcl_custom_fields_regform( $content ) {
 
 		foreach ( $fields as $field ) {
 
-			if ( !isset( $field['register'] ) || $field['register'] != 1 )
+			if ( ! isset( $field['register'] ) || $field['register'] != 1 )
 				continue;
 
-			if ( !isset( $field['value_in_key'] ) )
+			if ( ! isset( $field['value_in_key'] ) )
 				$field['value_in_key'] = true;
 
 			$regFields[] = $field;
@@ -511,13 +510,13 @@ function rcl_custom_fields_regform( $content ) {
 
 	$regFields = apply_filters( 'rcl_register_form_fields', stripslashes_deep( $regFields ) );
 
-	if ( !$regFields )
+	if ( ! $regFields )
 		return $content;
 
 	$fields = new Rcl_Fields( $regFields );
 
 	$hiddens = array();
-	foreach ( $fields as $field_id => $field ) {
+	foreach ( $fields->fields as $field_id => $field ) {
 
 		$field->value = (isset( $_POST[$field->slug] )) ? $_POST[$field->slug] : false;
 

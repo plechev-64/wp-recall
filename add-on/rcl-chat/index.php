@@ -3,7 +3,7 @@
 include_once 'chats-query.php';
 include_once 'core.php';
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_chat_scripts', 10 );
 else:
 	include_once 'addon-options.php';
@@ -34,7 +34,7 @@ add_action( 'rcl_bar_setup', 'rcl_bar_add_chat_icon', 10 );
 function rcl_bar_add_chat_icon() {
 	global $user_ID, $rcl_options;
 
-	if ( !is_user_logged_in() )
+	if ( ! is_user_logged_in() )
 		return false;
 
 	//если выводится панель контактов
@@ -84,7 +84,7 @@ function rcl_chat_add_inline_styles( $styles, $rgb ) {
 		. '.rcl-chat .nth .message-box::before{border-right-color:rgba(' . $r . ',' . $g . ',' . $b . ',0.35);}'
 		. '.rcl-chat .nth .message-box {background:rgba(' . $r . ',' . $g . ',' . $b . ',0.35);}';
 
-	if ( !is_user_logged_in() )
+	if ( ! is_user_logged_in() )
 		return $styles; // гостям дальше не надо
 
 	$panel = rcl_get_option( 'chat' );
@@ -246,7 +246,7 @@ function rcl_get_user_contacts_list( $user_id ) {
 		. "GROUP BY chat_messages.chat_id "
 	);
 
-	if ( !$amount ) {
+	if ( ! $amount ) {
 		return '<p>' . __( 'No contacts yet. Start a chat with another user on his page', 'wp-recall' ) . '</p>';
 	}
 
@@ -269,7 +269,7 @@ function rcl_get_user_contacts_list( $user_id ) {
 
 	foreach ( $messages as $message ) {
 
-		$class = (!$message['message_status']) ? 'noread-message' : '';
+		$class = ( ! $message['message_status']) ? 'noread-message' : '';
 
 		$content .= '<div class="contact-box preloader-parent" data-contact="' . $message['user_id'] . '">';
 		$content .= '<a href="#" title="' . __( 'Delete contact', 'wp-recall' ) . '" onclick="rcl_chat_remove_contact(this,' . $message['chat_id'] . ');return false;" class="chat-remove"><i class="rcli fa-times" aria-hidden="true"></i></a>';
@@ -307,7 +307,7 @@ function rcl_get_tab_user_important( $user_id ) {
 
 	$amount_messages = rcl_chat_count_important_messages( $user_id );
 
-	if ( !$amount_messages ) {
+	if ( ! $amount_messages ) {
 		return '<div class="chat-notice">'
 			. '<span class="notice-error">' . __( 'No important messages yet', 'wp-recall' ) . '</span>'
 			. '</div>';
@@ -358,20 +358,20 @@ add_action( 'wp_footer', 'rcl_get_last_chats_box', 10 );
 function rcl_get_last_chats_box() {
 	global $user_ID, $user_LK, $rcl_options;
 
-	if ( !$user_ID )
+	if ( ! $user_ID )
 		return false;
 
-	if ( !isset( $rcl_options['chat']['contact_panel'] ) || !$rcl_options['chat']['contact_panel'] )
+	if ( ! isset( $rcl_options['chat']['contact_panel'] ) || ! $rcl_options['chat']['contact_panel'] )
 		return false;
 
 	$messages = rcl_get_user_contacts( $user_ID, array( 0, 5 ) );
 
-	if ( !$messages )
+	if ( ! $messages )
 		return false;
 
 	foreach ( $messages as $message ) {
 		$user_id					 = ($message['user_id'] == $user_ID) ? $message['private_key'] : $message['user_id'];
-		$users[$user_id]['status']	 = (!$message['message_status'] && $message['private_key'] == $user_ID) ? 0 : 1;
+		$users[$user_id]['status']	 = ( ! $message['message_status'] && $message['private_key'] == $user_ID) ? 0 : 1;
 		$users[$user_id]['chat_id']	 = $message['chat_id'];
 	}
 
@@ -379,7 +379,7 @@ function rcl_get_last_chats_box() {
 
 	$class = array();
 
-	$class[] = (!isset( $rcl_options['chat']['place_contact_panel'] ) || !$rcl_options['chat']['place_contact_panel']) ? 'right-panel' : 'left-panel';
+	$class[] = ( ! isset( $rcl_options['chat']['place_contact_panel'] ) || ! $rcl_options['chat']['place_contact_panel']) ? 'right-panel' : 'left-panel';
 
 	$class[] = (isset( $_COOKIE['rcl_chat_contact_panel'] ) && $_COOKIE['rcl_chat_contact_panel']) ? '' : 'hidden-contacts';
 
@@ -408,7 +408,7 @@ function rcl_get_last_chats_box() {
 		echo '<span class="rcl-chat-user contact-box" data-contact="' . $user_id . '">';
 		echo '<a class="chat-delete-contact" href="#" title="' . __( 'Delete contact', 'wp-recall' ) . '" onclick="rcl_chat_remove_contact(this,' . $data['chat_id'] . ');return false;"><i class="rcli fa-times" aria-hidden="true"></i></a>';
 		echo '<a href="#" onclick="rcl_get_mini_chat(this,' . $user_id . '); return false;">';
-		if ( !$data['status'] )
+		if ( ! $data['status'] )
 			echo '<i class="rcli fa-commenting" aria-hidden="true"></i>';
 		echo get_avatar( $user_id, 40 );
 		echo '</a>';
@@ -441,6 +441,10 @@ add_action( 'init', 'rcl_chat_disable_oembeds', 9999 );
 add_shortcode( 'rcl-chat', 'rcl_chat_shortcode' );
 function rcl_chat_shortcode( $atts ) {
 	global $user_ID;
+
+	if ( ! isset( $atts['chat_room'] ) || empty( $atts['chat_room'] ) ) {
+		return __( 'Not set attributes: chat_room', 'wp-recall' );
+	}
 
 	$file_upload = (isset( $atts['file_upload'] )) ? $atts['file_upload'] : 0;
 

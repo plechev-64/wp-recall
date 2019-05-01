@@ -330,10 +330,17 @@ function rcl_save_draft( e ) {
 	if ( !e )
 		e = jQuery( '#rcl-draft-post' );
 
-	if ( !jQuery( e ).parents( 'form' ).find( '#post_title' ).val() ) {
+	var form = jQuery( e ).parents( 'form' );
+
+	if ( !form.find( '#post_title' ).val() ) {
 		rcl_notice( Rcl.errors.empty_draft, 'error', 10000 );
 		return false;
 	}
+
+	if ( !rcl_check_required_fields( form, {
+		skip: [ 'required', 'requiredUploader' ]
+	} ) )
+		return false;
 
 	jQuery( e ).after( '<input type="hidden" name="save-as-draft" value=1>' );
 
@@ -378,7 +385,10 @@ function rcl_publish( e ) {
 
 }
 
-function rcl_check_required_fields( form ) {
+function rcl_check_required_fields( form, args ) {
+
+	if ( !args )
+		args = { };
 
 	var rclFormFactory = new RclForm( form );
 
@@ -399,7 +409,7 @@ function rcl_check_required_fields( form ) {
 
 	} );
 
-	return rclFormFactory.validate();
+	return rclFormFactory.validate( args );
 
 }
 

@@ -14,8 +14,8 @@ if ( !$typeform || $typeform == 'sign' )
 
 	<div class="form-block-rcl"><?php rcl_notice_form( 'login' ); ?></div>
 
-	<?php $user_login	 = (isset( $_REQUEST['user_login'] )) ? $_REQUEST['user_login'] : ''; ?>
-	<?php $user_pass	 = (isset( $_REQUEST['user_pass'] )) ? $_REQUEST['user_pass'] : ''; ?>
+	<?php $user_login	 = (isset( $_REQUEST['user_login'] )) ? wp_strip_all_tags( $_REQUEST['user_login'], 0 ) : ''; ?>
+	<?php $user_pass	 = (isset( $_REQUEST['user_pass'] )) ? wp_strip_all_tags( $_REQUEST['user_pass'], 0 ) : ''; ?>
 
 	<form action="<?php rcl_form_action( 'login' ); ?>" method="post">
 		<div class="form-block-rcl default-field">
@@ -46,7 +46,7 @@ if ( !$typeform || $typeform == 'sign' )
 				'class'	 => 'link-tab-form'
 			) );
 			?>
-			<a href="#" class="link-remember-rcl link-tab-rcl "><?php _e( 'Lost your Password', 'wp-recall' ); // Забыли пароль	 ?>?</a>
+			<a href="#" class="link-remember-rcl link-tab-rcl "><?php _e( 'Lost your Password', 'wp-recall' ); // Забыли пароль	  ?>?</a>
 			<?php echo wp_nonce_field( 'login-key-rcl', 'login_wpnonce', true, false ); ?>
 			<input type="hidden" name="redirect_to" value="<?php rcl_referer_url( 'login' ); ?>">
 			<input type="hidden" name="submit-login" value="1">

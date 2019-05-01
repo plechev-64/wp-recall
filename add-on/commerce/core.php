@@ -12,22 +12,22 @@ function rcl_create_order() {
 function rcl_insert_order( $args, $products ) {
 	global $wpdb;
 
-	if ( !isset( $args['order_date'] ) )
+	if ( ! isset( $args['order_date'] ) )
 		$args['order_date'] = current_time( 'mysql' );
 
 	foreach ( $products as $k => $product ) {
 
-		if ( !isset( $product['product_amount'] ) )
+		if ( ! isset( $product['product_amount'] ) )
 			$products[$k]['product_amount'] = 1;
 
-		if ( !isset( $product['product_price'] ) )
+		if ( ! isset( $product['product_price'] ) )
 			$products[$k]['product_price'] = get_post_meta( $product['product_id'], 'price-products', 1 );
 
-		if ( !isset( $product['variations'] ) )
+		if ( ! isset( $product['variations'] ) )
 			$products[$k]['variations'] = '';
 	}
 
-	if ( !isset( $args['order_price'] ) ) {
+	if ( ! isset( $args['order_price'] ) ) {
 
 		$args['order_price'] = 0;
 		foreach ( $products as $product ) {
@@ -35,7 +35,7 @@ function rcl_insert_order( $args, $products ) {
 		}
 	}
 
-	if ( !isset( $args['products_amount'] ) ) {
+	if ( ! isset( $args['products_amount'] ) ) {
 
 		$args['products_amount'] = 0;
 		foreach ( $products as $product ) {
@@ -51,15 +51,17 @@ function rcl_insert_order( $args, $products ) {
 		RCL_PREF . "orders", $args
 	);
 
-	if ( !$result ) {
+	if ( ! $result ) {
 		wp_die( __( 'Error creating order' ) );
 	}
 
 	$order_id = $wpdb->insert_id;
 
 	//на случай миграции данных из старой таблицы
-	if ( !$order_id && isset( $args['order_id'] ) )
+	if ( ! $order_id && isset( $args['order_id'] ) )
 		$order_id = $args['order_id'];
+
+	$products = apply_filters( 'rcl_pre_insert_order_products', $products, $order_id );
 
 	//прикрепляем к заказу товары
 	foreach ( $products as $product ) {
@@ -74,7 +76,7 @@ function rcl_insert_order( $args, $products ) {
 function rcl_insert_order_item( $order_id, $product ) {
 	global $wpdb;
 
-	if ( !isset( $product['variations'] ) )
+	if ( ! isset( $product['variations'] ) )
 		$product['variations'] = '';
 
 	$args = array(
@@ -89,7 +91,7 @@ function rcl_insert_order_item( $order_id, $product ) {
 		RCL_PREF . "order_items", $args
 	);
 
-	if ( !$result )
+	if ( ! $result )
 		return false;
 
 	do_action( 'rcl_insert_order_item', $order_id, $product );
@@ -133,7 +135,7 @@ function rcl_update_status_order( $order_id, $new_status ) {
 function rcl_get_orders( $args = array() ) {
 
 	if ( isset( $args['fields'] ) ) {
-		if ( !in_array( 'order_id', $args['fields'] ) )
+		if ( ! in_array( 'order_id', $args['fields'] ) )
 			$args['fields'][] = 'order_id';
 	}
 
@@ -143,7 +145,7 @@ function rcl_get_orders( $args = array() ) {
 
 	$orders = $ordersQuery->get_results( $args );
 
-	if ( !$orders )
+	if ( ! $orders )
 		return array();
 
 	//указываем для получения товары только из полученных заказов
@@ -162,13 +164,13 @@ function rcl_get_orders( $args = array() ) {
 	$Orders = array();
 	foreach ( $orders as $order ) {
 
-		if ( !isset( $order->order_id ) || !$order->order_id )
+		if ( ! isset( $order->order_id ) || ! $order->order_id )
 			continue;
 
 		$Products = array();
 		foreach ( $products as $product ) {
 
-			if ( !isset( $product->order_id ) || $order->order_id != $product->order_id )
+			if ( ! isset( $product->order_id ) || $order->order_id != $product->order_id )
 				continue;
 
 			unset( $product->order_id );
@@ -197,7 +199,7 @@ function rcl_get_order( $order_id ) {
 		'order_id' => $order_id
 		) );
 
-	if ( !$orders )
+	if ( ! $orders )
 		return array();
 
 	return $orders[0];
@@ -221,7 +223,7 @@ function rcl_get_status_name_order( $status_id ) {
 
 	$sts = rcl_order_statuses();
 
-	if ( !isset( $sts[$status_id] ) )
+	if ( ! isset( $sts[$status_id] ) )
 		return false;
 
 	return $sts[$status_id];
@@ -371,7 +373,7 @@ function rcl_product_variation_list( $variations ) {
 
 function rcl_get_product_variation_list( $variations ) {
 
-	if ( !$variations )
+	if ( ! $variations )
 		return false;
 
 	$content = '<div class="product-variations">';
@@ -423,25 +425,25 @@ function rmag_migration_table_data() {
 		. "INNER JOIN " . RMAG_PREF . "details_orders AS details ON orders.order_id = details.order_id "
 		. "ORDER BY orders.order_id ASC" );
 
-	if ( !$old_orders )
+	if ( ! $old_orders )
 		return false;
 
 	$orders = array();
 	foreach ( $old_orders as $product ) {
 
-		if ( !isset( $orders[$product->order_id]['order_id'] ) )
+		if ( ! isset( $orders[$product->order_id]['order_id'] ) )
 			$orders[$product->order_id]['order_id'] = $product->order_id;
 
-		if ( !isset( $orders[$product->order_id]['order_date'] ) )
+		if ( ! isset( $orders[$product->order_id]['order_date'] ) )
 			$orders[$product->order_id]['order_date'] = $product->order_date;
 
-		if ( !isset( $orders[$product->order_id]['user_id'] ) )
+		if ( ! isset( $orders[$product->order_id]['user_id'] ) )
 			$orders[$product->order_id]['user_id'] = $product->user_id;
 
-		if ( !isset( $orders[$product->order_id]['order_status'] ) )
+		if ( ! isset( $orders[$product->order_id]['order_status'] ) )
 			$orders[$product->order_id]['order_status'] = $product->order_status;
 
-		if ( !isset( $orders[$product->order_id]['details'] ) )
+		if ( ! isset( $orders[$product->order_id]['details'] ) )
 			$orders[$product->order_id]['order_details'] = $product->order_details;
 
 		if ( isset( $orders[$product->order_id]['products_amount'] ) )
@@ -461,7 +463,7 @@ function rmag_migration_table_data() {
 		);
 	}
 
-	if ( !$orders )
+	if ( ! $orders )
 		return false;
 
 	$wpdb->query( "ALTER TABLE `" . RCL_PREF . "orders` CHANGE `order_id` `order_id` BIGINT (20) NOT NULL" );

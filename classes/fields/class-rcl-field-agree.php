@@ -54,6 +54,14 @@ class Rcl_Field_Agree extends Rcl_Field_Abstract {
 		);
 	}
 
+	function get_title() {
+
+		if ( ! $this->title )
+			$this->title = __( 'Соглашение', 'wp-recall' );
+
+		return '<a href="' . $this->url_agreement . '" target="_blank">' . $this->title . ($this->required ? ' <span class="required">*</span>' : '') . '</a>';
+	}
+
 	function get_value() {
 
 		if ( $this->value )

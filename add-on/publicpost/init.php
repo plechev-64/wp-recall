@@ -8,7 +8,7 @@ function rcl_deleted_post_notice() {
 
 add_action( 'init', 'rcl_delete_post_activate' );
 function rcl_delete_post_activate() {
-	if ( isset( $_POST['delete-post-rcl'] ) && wp_verify_nonce( $_POST['_wpnonce'], 'delete-post-rcl' ) ) {
+	if ( isset( $_POST['rcl-delete-post'] ) && wp_verify_nonce( $_POST['_wpnonce'], 'rcl-delete-post' ) ) {
 		add_action( 'wp', 'rcl_delete_post' );
 	}
 }
@@ -40,7 +40,7 @@ add_action( 'init', 'rcl_setup_author_role', 10 );
 function rcl_setup_author_role() {
 	global $current_user;
 
-	if ( !defined( 'DOING_AJAX' ) || !DOING_AJAX )
+	if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
 		return;
 
 	if ( isset( $_REQUEST['post_id'] ) ) {

@@ -33,6 +33,7 @@
 	30. RCL Tables API
 	31. TODO: old generation
 	32. manager content
+	33. RCL Notice
 
 ------------------------*/
 
@@ -421,8 +422,8 @@ span i.rcli.fa-circle {
 	transition: all 0.2s ease-in-out 0s;
 	visibility: hidden;
 	border-radius: 3px;
+	text-align: left;
 }
-
 .rcl-balloon::before,
 .rcl-balloon::after{
 	border-width: 0px 10px 10px 10px;
@@ -451,6 +452,24 @@ span i.rcli.fa-circle {
 	opacity: 1;
 	transform: translateY(-18px);
 	visibility: visible;
+}
+.rcl-balloon.position-top{
+	top:auto;
+	bottom: calc(100% - 1em);
+}
+.rcl-balloon.position-top::before,
+.rcl-balloon.position-top::after{
+	border-width: 10px 10px 0px 10px;
+}
+.rcl-balloon.position-top::before{
+	border-color: rgb(0, 0, 0) transparent transparent transparent;
+	bottom: -11px;
+	top:auto;
+}
+.rcl-balloon.position-top::after{
+	border-color: rgb(255, 255, 255) transparent transparent transparent;
+	bottom: -10px;
+	top:auto;
 }
 /*end*/
 
@@ -963,6 +982,13 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 .rcl-field-input input[type="checkbox"]:checked + label.block-label::before,
 .rcl-field-input input[type="radio"]:checked + label.block-label::before{
 	background: #4C8CBD;
+}
+.rcl-field-input .checkbox-display-block{
+	display: block;
+}
+.rcl-field-input .checkbox-display-block .block-label{
+	border: none;
+	display: block;
 }
 /*end*/
 
@@ -1782,4 +1808,82 @@ body .ssi-modalOuter .ssi-modalTitle {
 	padding: 5px;
 	box-sizing: border-box;
 }
+/**/
+
+/*
+	33. RCL Notice
+*/
+.rcl-notice {
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 1.4;
+    margin: 5px 0;
+    overflow: hidden;
+    padding: 12px 36px;
+    position: relative;
+}
+.rcl-notice .rcl-notice__type-info,
+.rcl-notice .rcl-notice__type-warning{
+    background-color: #fff5ce;
+    color: #7b743f;
+}
+.rcl-notice .rcl-notice__type-info.rcl-notice__border,
+.rcl-notice .rcl-notice__type-warning.rcl-notice__border{
+    border: 1px solid #efe5be;
+}
+.rcl-notice .rcl-notice__type-success {
+    background-color: #e0f8c9;
+    color: #457b3f;
+}
+.rcl-notice .rcl-notice__type-success.rcl-notice__border {
+    border: 1px solid #d0e8b9;
+}
+.rcl-notice .rcl-notice__type-error {
+    background-color: #ffdfe3;
+    color: #a7565f;
+}
+.rcl-notice .rcl-notice__type-error.rcl-notice__border {
+    border: 1px solid #efcfd3;
+}
+.rcl-notice .rcl-notice__type-simple {
+    background-color: #eee;
+    color: #555;
+}
+.rcl-notice .rcl-notice__type-simple.rcl-notice__border {
+    border: 1px solid #ddd;
+}
+.rcl-notice .rcli {
+    color: rgba(0, 0, 0, 0.08);
+    font-size: 52px;
+    left: -10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.rcl-notice .rcl-notice__text {
+    text-align: center;
+}
+.rcl-notice .rcl-notice__title {
+    color: currentColor;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 0 0 5px 5px;
+}
+.rcl-notice .rcl-notice__close {
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 15px;
+    position: absolute;
+    right: 2px;
+    top: 0;
+}
+.rcl-notice .rcl-notice__close:hover {
+    opacity: .7;
+}
+.rcl-notice .rcl-notice__close::before {
+    color: currentColor;
+    content: "\f00d";
+    font-family: rcl-awesome;
+}
+
 /**/

@@ -15,6 +15,7 @@ class Rcl_Field_Checkbox extends Rcl_Field_Abstract {
 
 	public $required;
 	public $values;
+	public $display = 'inline';
 	public $value_in_key;
 
 	function __construct( $args ) {
@@ -45,7 +46,7 @@ class Rcl_Field_Checkbox extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( !$this->value )
+		if ( ! $this->value )
 			return false;
 
 		return implode( ', ', $this->value );
@@ -53,7 +54,7 @@ class Rcl_Field_Checkbox extends Rcl_Field_Abstract {
 
 	function get_input() {
 
-		if ( !$this->values )
+		if ( ! $this->values )
 			return false;
 
 		$currentValues = (is_array( $this->value )) ? $this->value : array();
@@ -69,7 +70,7 @@ class Rcl_Field_Checkbox extends Rcl_Field_Abstract {
 
 			$checked = checked( in_array( $k, $currentValues ), true, false );
 
-			$content .= '<span class="rcl-checkbox-box">';
+			$content .= '<span class="rcl-checkbox-box checkbox-display-' . $this->display . '">';
 			$content .= '<input ' . $this->get_required() . ' ' . $checked . ' id="' . $this->input_id . '_' . $k . $this->rand . '" type="checkbox" ' . $this->get_class() . ' name="' . $this->input_name . '[]" value="' . trim( $k ) . '"> ';
 			$content .= '<label class="block-label" for="' . $this->input_id . '_' . $k . $this->rand . '">';
 			$content .= $value;
