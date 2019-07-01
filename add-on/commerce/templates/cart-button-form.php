@@ -15,7 +15,7 @@
 		echo $Cart_Button->variations_box( $Cart_Button->product_id );
 	?>
 
-	<?php do_action( 'rcl_cart_button_form', $Cart_Button ); ?>
+	<?php do_action( 'rcl_cart_button_form_middle', $Cart_Button ); ?>
 
 	<?php
 	if ( $Cart_Button->output['quantity'] )
