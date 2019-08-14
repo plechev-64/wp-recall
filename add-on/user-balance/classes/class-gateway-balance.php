@@ -15,6 +15,10 @@ class Rcl_Gateway_Balance extends Rcl_Gateway_Core {
 	}
 
 	function get_form( $data ) {
+		global $user_ID;
+
+		if ( ! $user_ID )
+			return;
 
 		$fields = array(
 			array(

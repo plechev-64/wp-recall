@@ -7,7 +7,7 @@ class Rcl_Notice {
 	public $text		 = '';
 	public $icon		 = 'fa-info-circle';
 	public $class		 = '';
-	public $border		 = false;
+	public $border		 = true;
 	public $cookie		 = '';
 	public $cookie_time	 = 30;
 

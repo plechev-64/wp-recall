@@ -15,10 +15,9 @@
 	padding: 3px 0 3px 40px;
 	background-size: 35px;
 	background-position: 5px 5px;
-	background-repeat-x: no-repeat;
+	background-repeat: no-repeat;
 	margin: 5px 0;
 	border: 1px solid #ccc;
-	background-repeat-y: no-repeat;
 }
 .rcl-payment-form .rcl-field-gateway_id .rcl-radio-box label{
 	display:block;
@@ -28,21 +27,20 @@
 
 .rcl-payment-button{
 	display:block;
-	padding: 3px 0 3px 40px;
+	padding: 5px 5px 5px 40px;
 	background-size: 35px;
-	background-position: 5px center;
-	background-repeat-x: no-repeat;
+	background-position: bottom 5px left 3px;
+	background-repeat: no-repeat;
 	border: 1px solid #ccc;
-	background-repeat-y: no-repeat;
 }
 .rcl-payment-button .submit-box{
 	background: none;
 	text-align: left!important;
 	padding: 0;
-	margin: 5px 0;
+	margin: 0;
 }
 body .rcl-payment-button .submit-box a{
-	margin: 0 5px!important;
+	margin: 0!important;
 	/* background: none!important; */
 	/* color: inherit; */
 	display: block;

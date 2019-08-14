@@ -380,14 +380,23 @@ function rcl_manager_get_new_field( e ) {
 
 }
 
-function rcl_manager_update_fields() {
+function rcl_manager_update_fields( newManagerId ) {
+
+	var newManagerId = newManagerId ? newManagerId : 0;
 
 	rcl_preloader_show( jQuery( '.rcl-fields-manager' ) );
 
 	rcl_ajax( {
 		/*rest: {action: 'rcl_update_fields'},*/
-		data: 'action=rcl_manager_update_fields&' + jQuery( '.rcl-fields-manager-form' ).serialize()
+		data: 'action=rcl_manager_update_fields&copy=' + newManagerId + '&' + jQuery( '.rcl-fields-manager-form' ).serialize()
 	} );
+
+	return false;
+}
+
+function rcl_manager_copy_fields( newManagerId ) {
+
+	rcl_manager_update_fields( newManagerId );
 
 	return false;
 }

@@ -5,7 +5,7 @@ require_once 'classes/class-rcl-profile-fields.php';
 if ( is_admin() )
 	require_once 'admin/index.php';
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_profile_scripts', 10 );
 endif;
 function rcl_profile_scripts() {
@@ -47,7 +47,7 @@ add_action( 'rcl_bar_setup', 'rcl_bar_add_profile_link', 10 );
 function rcl_bar_add_profile_link() {
 	global $user_ID;
 
-	if ( !is_user_logged_in() )
+	if ( ! is_user_logged_in() )
 		return false;
 
 	rcl_bar_add_menu_item( 'profile-link', array(
@@ -75,7 +75,7 @@ function rcl_show_custom_fields_profile( $master_id ) {
 
 		foreach ( ( array ) $get_fields as $field ) {
 			$field	 = apply_filters( 'custom_field_profile', $field );
-			if ( !$field )
+			if ( ! $field )
 				continue;
 			$slug	 = isset( $field['name'] ) ? $field['name'] : $field['slug'];
 			if ( isset( $field['public_value'] ) && $field['public_value'] == 1 ) {
@@ -86,13 +86,13 @@ function rcl_show_custom_fields_profile( $master_id ) {
 		}
 	}
 
-	if ( !$content )
+	if ( ! $content )
 		return false;
 
 	return '<div class="show-profile-fields">' . $content . '</div>';
 }
 
-if ( !is_admin() )
+if ( ! is_admin() )
 	add_action( 'wp', 'rcl_update_profile_notice' );
 function rcl_update_profile_notice() {
 	if ( isset( $_GET['updated'] ) )
@@ -104,10 +104,10 @@ add_action( 'wp', 'rcl_edit_profile', 10 );
 function rcl_edit_profile() {
 	global $user_ID;
 
-	if ( !isset( $_POST['submit_user_profile'] ) )
+	if ( ! isset( $_POST['submit_user_profile'] ) )
 		return false;
 
-	if ( !wp_verify_nonce( $_POST['_wpnonce'], 'update-profile_' . $user_ID ) )
+	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'update-profile_' . $user_ID ) )
 		return false;
 
 	rcl_update_profile_fields( $user_ID );
@@ -197,7 +197,7 @@ function rcl_tab_profile_content( $master_id ) {
 
 		$slug = isset( $field['name'] ) ? $field['name'] : $field['slug'];
 
-		if ( !$field || !$slug )
+		if ( ! $field || ! $slug )
 			continue;
 
 		if ( $field['type'] == 'hidden' ) {
@@ -212,7 +212,7 @@ function rcl_tab_profile_content( $master_id ) {
 		if ( $slug == 'email' )
 			$fieldObject->set_prop( 'value', get_the_author_meta( 'email', $user_ID ) );
 
-		if ( $field['slug'] != 'show_admin_bar_front' && !isset( $field['value_in_key'] ) )
+		if ( $field['slug'] != 'show_admin_bar_front' && ! isset( $field['value_in_key'] ) )
 			$fieldObject->set_prop( 'value_in_key', true );
 
 		$Table->add_row( array(
@@ -291,7 +291,7 @@ function rcl_delete_user_account_activate() {
 //Удаляем аккаунт пользователя
 function rcl_delete_user_account() {
 	global $user_ID, $wpdb;
-	if ( !wp_verify_nonce( $_POST['_wpnonce'], 'delete-user-' . $user_ID ) )
+	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'delete-user-' . $user_ID ) )
 		return false;
 
 	require_once(ABSPATH . 'wp-admin/includes/user.php' );
@@ -310,7 +310,7 @@ function rcl_delete_user_account() {
 
 add_action( 'rcl_fields_update', 'rcl_update_users_page_option', 10, 2 );
 function rcl_update_users_page_option( $fields, $manager_id ) {
-	if ( $manager_id != 'profile' || !isset( $_POST['users_page'] ) )
+	if ( $manager_id != 'profile' || ! isset( $_POST['users_page'] ) )
 		return false;
 	rcl_update_option( 'users_page', $_POST['users_page'] );
 }

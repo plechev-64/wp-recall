@@ -138,7 +138,7 @@ function rcl_get_register_user( $errors ) {
 	$email	 = $_POST['user_email'];
 	$login	 = sanitize_user( $_POST['user_login'] );
 
-	$ref = ($_POST['redirect_to']) ? apply_filters( 'url_after_register_rcl', esc_url( $_POST['redirect_to'] ) ) : wp_registration_url();
+	$ref = ($_POST['redirect_to']) ? apply_filters( 'url_after_register_rcl', $_POST['redirect_to'] ) : wp_registration_url();
 
 	$get_fields	 = rcl_get_profile_fields();
 	$required	 = true;
@@ -397,16 +397,13 @@ function rcl_get_current_url( $typeform = false, $unset = false ) {
 		'rcl-confirmdata'	 => false
 	);
 
-	//if ( $unset )
-	$args['action-rcl'] = false;
+	$args['action-rcl'] = $typeform;
 
 	if ( $typeform == 'remember' ) {
 		$args['remember'] = 'success';
-	} else {
-		$args['action-rcl'] = $typeform;
 	}
 
-	return home_url( add_query_arg( $args ) );
+	return add_query_arg( $args );
 }
 
 function rcl_referer_url( $typeform = false ) {

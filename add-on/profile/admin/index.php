@@ -10,7 +10,7 @@ function rcl_profile_admin_menu() {
 add_action( 'rcl_update_custom_fields', 'rcl_update_page_users', 10 );
 function rcl_update_page_users() {
 
-	if ( !isset( $_POST['users_page_rcl'] ) )
+	if ( ! isset( $_POST['users_page_rcl'] ) )
 		return false;
 
 	rcl_update_option( 'users_page_rcl', $_POST['users_page_rcl'] );
@@ -19,7 +19,7 @@ function rcl_update_page_users() {
 add_filter( 'rcl_field_options', 'rcl_edit_profile_field_options', 10, 3 );
 function rcl_edit_profile_field_options( $options, $field, $type ) {
 
-	if ( $type != 'profile' || !rcl_is_register_open() )
+	if ( $type != 'profile' || ! rcl_is_register_open() )
 		return $options;
 
 	$options[] = array(
@@ -53,7 +53,7 @@ add_action( 'personal_options_update', 'rcl_save_profile_fields' );
 add_action( 'edit_user_profile_update', 'rcl_save_profile_fields' );
 function rcl_save_profile_fields( $user_id ) {
 
-	if ( !current_user_can( 'edit_user', $user_id ) )
+	if ( ! current_user_can( 'edit_user', $user_id ) )
 		return false;
 
 	rcl_update_profile_fields( $user_id );
@@ -81,7 +81,7 @@ function rcl_get_custom_fields_profile( $user ) {
 		'user_id'	 => $user->ID
 	);
 
-	$fields = rcl_get_profile_fields( $args );
+	$fields = apply_filters( 'rcl_admin_profile_fields', rcl_get_profile_fields( $args ), $user );
 
 	if ( $fields ) {
 
@@ -96,10 +96,11 @@ function rcl_get_custom_fields_profile( $user ) {
 				continue;
 			}
 
-			if ( !isset( $field['value_in_key'] ) )
+			if ( ! isset( $field['value_in_key'] ) )
 				$field['value_in_key'] = true;
 
-			$field['value'] = get_the_author_meta( $field['slug'], $user->ID );
+			if ( ! isset( $field['value'] ) )
+				$field['value'] = get_the_author_meta( $field['slug'], $user->ID );
 
 			$fieldObject = Rcl_Field::setup( $field );
 

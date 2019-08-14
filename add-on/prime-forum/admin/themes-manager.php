@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists( 'WP_List_Table' ) ) {
+if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
@@ -46,14 +46,14 @@ class Prime_Themes_Manager extends WP_List_Table {
 				foreach ( ( array ) $addons as $namedir ) {
 					$addon_dir	 = $path . '/' . $namedir;
 					$index_src	 = $addon_dir . '/index.php';
-					if ( !is_dir( $addon_dir ) || !file_exists( $index_src ) )
+					if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) )
 						continue;
 					$info_src	 = $addon_dir . '/info.txt';
 					if ( file_exists( $info_src ) ) {
 						$info	 = file( $info_src );
 						$data	 = rcl_parse_addon_info( $info );
 
-						if ( !isset( $data['custom-manager'] ) || $data['custom-manager'] != 'prime-forum' )
+						if ( ! isset( $data['custom-manager'] ) || $data['custom-manager'] != 'prime-forum' )
 							continue;
 
 						if ( isset( $_POST['s'] ) && $_POST['s'] ) {
@@ -154,8 +154,8 @@ class Prime_Themes_Manager extends WP_List_Table {
 	}
 
 	function usort_reorder( $a, $b ) {
-		$orderby = (!empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'addon_name';
-		$order	 = (!empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
+		$orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'addon_name';
+		$order	 = ( ! empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
 		$result	 = strcmp( $a[$orderby], $b[$orderby] );
 		return ( $order === 'asc' ) ? $result : -$result;
 	}
@@ -216,7 +216,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 			. '<div class="update-message notice inline notice-warning notice-alt">'
 			. '<p>'
 			. __( 'New version available', 'wp-recall' ) . ' ' . $this->addon['name'] . ' ' . $this->need_update[$item['ID']]['new-version'] . '. ';
-			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( array( 'slug' => $item['ID'] ) ) . ',this);return false;\' title="' . $this->addon['name'] . '">' . __( 'view information about the version', 'wp-recall' ) . '</a> или';
+			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( array( 'slug' => $item['ID'] ) ) . ',this);return false;\' title="' . $this->addon['name'] . '">' . __( 'view information about the version', 'wp-recall' ) . '</a> ' . __( 'or', 'wp-recall' );
 			echo ' <a class="update-add-on" data-addon="' . $item['ID'] . '" href="#">' . __( 'update automatically', 'wp-recall' ) . '</a>'
 			. '</p>'
 			. '</div>'
@@ -259,7 +259,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 
 			if ( $action == 'connect' ) {
 
-				if ( rcl_exist_addon( get_option( 'rcl_pforum_template' ) ) && !isset( $_GET['redirect'] ) ) {
+				if ( rcl_exist_addon( get_option( 'rcl_pforum_template' ) ) && ! isset( $_GET['redirect'] ) ) {
 					rcl_deactivate_addon( get_option( 'rcl_pforum_template' ) );
 					header( "Location: " . admin_url( 'admin.php?page=pfm-themes&action=' . $action . '&template=' . $addon . '&redirect=1' ), true, 302 );
 					exit;
@@ -267,7 +267,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 
 				$templates = pfm_get_templates();
 
-				if ( !isset( $templates[$addon] ) )
+				if ( ! isset( $templates[$addon] ) )
 					return false;
 
 				$template = $templates[$addon];
@@ -292,7 +292,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 //class
 function pfm_init_upload_template() {
 	if ( isset( $_POST['pfm-install-template-submit'] ) ) {
-		if ( !wp_verify_nonce( $_POST['_wpnonce'], 'install-template-pfm' ) )
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'install-template-pfm' ) )
 			return false;
 		pfm_upload_template();
 	}
@@ -312,7 +312,7 @@ function pfm_upload_template() {
 
 	if ( $res === TRUE ) {
 
-		for ( $i = 0; $i < $zip->numFiles; $i++ ) {
+		for ( $i = 0; $i < $zip->numFiles; $i ++ ) {
 			//echo $zip->getNameIndex($i).'<br>';
 			if ( $i == 0 )
 				$dirzip = $zip->getNameIndex( $i );
@@ -322,7 +322,7 @@ function pfm_upload_template() {
 			}
 		}
 
-		if ( !$info ) {
+		if ( ! $info ) {
 			$zip->close();
 			wp_redirect( admin_url( 'admin.php?page=pfm-themes&update-template=error-info' ) );
 			exit;

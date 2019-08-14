@@ -239,7 +239,10 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		$errorContent = '';
 
 		foreach ( $this->get_errors() as $error ) {
-			$errorContent .= '<p align="center" class="rcl-public-notice">' . $error . '</p>';
+			$errorContent .= rcl_get_notice( array(
+				'type'	 => 'error',
+				'text'	 => $error
+				) );
 		}
 
 		return $errorContent;
@@ -285,7 +288,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 		if ( rcl_check_access_console() ) {
 			$content .= '<div class="edit-form-link">'
-				. '<a target="_blank" href="' . admin_url( 'admin.php?page=manage-public-form&post-type=' ) . $this->post_type . '">'
+				. '<a target="_blank" href="' . admin_url( 'admin.php?page=manage-public-form&post-type=' . $this->post_type . '&form_id=' . $this->form_id ) . '">'
 				. '<i class="rcli fa-list" aria-hidden="true"></i> ' . __( 'Edit this form', 'wp-recall' )
 				. '</a>'
 				. '</div>';

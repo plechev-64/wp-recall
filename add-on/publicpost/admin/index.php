@@ -56,7 +56,7 @@ function custom_fields_list_posteditor_rcl( $post ) {
 
 	$content = rcl_get_custom_fields_edit_box( $post->ID, $post->post_type, $form_id );
 
-	if ( !$content )
+	if ( ! $content )
 		return false;
 
 	echo $content;
@@ -66,13 +66,13 @@ function custom_fields_list_posteditor_rcl( $post ) {
 
 add_action( 'save_post', 'rcl_custom_fields_update', 0 );
 function rcl_custom_fields_update( $post_id ) {
-	if ( !isset( $_POST['custom_fields_nonce_rcl'] ) )
+	if ( ! isset( $_POST['custom_fields_nonce_rcl'] ) )
 		return false;
-	if ( !wp_verify_nonce( $_POST['custom_fields_nonce_rcl'], __FILE__ ) )
+	if ( ! wp_verify_nonce( $_POST['custom_fields_nonce_rcl'], __FILE__ ) )
 		return false;
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 		return false;
-	if ( !current_user_can( 'edit_post', $post_id ) )
+	if ( ! current_user_can( 'edit_post', $post_id ) )
 		return false;
 
 	rcl_update_post_custom_fields( $post_id );
@@ -83,10 +83,10 @@ function rcl_custom_fields_update( $post_id ) {
 add_action( 'admin_init', 'rcl_public_form_admin_actions', 10 );
 function rcl_public_form_admin_actions() {
 
-	if ( !isset( $_GET['page'] ) || $_GET['page'] != 'manage-public-form' )
+	if ( ! isset( $_GET['page'] ) || $_GET['page'] != 'manage-public-form' )
 		return false;
 
-	if ( !isset( $_GET['form-action'] ) || !wp_verify_nonce( $_GET['_wpnonce'], 'rcl-form-action' ) )
+	if ( ! isset( $_GET['form-action'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'rcl-form-action' ) )
 		return false;
 
 	switch ( $_GET['form-action'] ) {
@@ -97,7 +97,7 @@ function rcl_public_form_admin_actions() {
 			$post_type	 = $_GET['post-type'];
 
 
-			if ( !get_option( 'rcl_fields_' . $post_type . '_1' ) )
+			if ( ! get_option( 'rcl_fields_' . $post_type . '_1' ) )
 				add_option( 'rcl_fields_' . $post_type . '_1', array() );
 
 			add_option( 'rcl_fields_' . $post_type . '_' . $newFormId, array() );
@@ -131,7 +131,7 @@ function rcl_publicpost_metabox() {
 
 	$posts = get_posts( array( 'numberposts' => -1, 'post_type' => 'any', 'post_status' => 'pending' ) );
 
-	if ( !$posts ) {
+	if ( ! $posts ) {
 		echo '<p>' . __( 'No posts under moderation', 'wp-recall' ) . '</p>';
 		return;
 	}

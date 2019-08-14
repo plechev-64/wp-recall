@@ -277,6 +277,26 @@ function rcl_get_order_tabs( $rcl_tabs ) {
 		$counter[$order]		 = $id;
 	}
 
+	if ( count( $counter ) == 1 ) {
+
+		foreach ( $counter as $order => $id_tab ) {
+			$rcl_tabs[$id_tab]['first'] = 1;
+			break;
+		}
+
+		return $rcl_tabs;
+	}
+
+	if ( count( $rcl_tabs ) == 1 ) {
+
+		foreach ( $rcl_tabs as $id_tab => $data ) {
+			$rcl_tabs[$id_tab]['first'] = 1;
+			break;
+		}
+
+		return $rcl_tabs;
+	}
+
 	ksort( $counter );
 	$id_first						 = array_shift( $counter );
 	$rcl_tabs[$id_first]['first']	 = 1;
@@ -1330,7 +1350,6 @@ function rcl_filter_custom_tab_usermetas( $content ) {
 
 /* * * */
 function rcl_get_form( $args ) {
-	require_once 'classes/class-rcl-form.php';
 	$Form = new Rcl_Form( $args );
 	return $Form->get_form();
 }

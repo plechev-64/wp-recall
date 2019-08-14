@@ -950,35 +950,7 @@ span.ruble-symbol {
 }
 
 /*бегунок*/
-.rcl-runner,
-.rcl-range {
-	padding: 10px;
-}
-.rcl-runner .rcl-runner-value,
-.rcl-range .rcl-range-value {
-	display: inline-block;
-	font-size: 18px;
-	font-weight: bold;
-	min-width: 115px;
-	padding-left: 15px;
-	padding-right: 15px;
-	vertical-align: middle;
-}
-.rcl-runner .rcl-runner-box,
-.rcl-range .rcl-range-box {
-	background: rgba(255, 255, 255, 0.8);
-	border-radius: 5px;
-	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
-		0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
-	display: inline-block;
-	height: 10px;
-	margin: 0;
-	max-width: 500px;
-	position: relative;
-	text-align: left;
-	vertical-align: middle;
-	width: 100%;
-}
+
 .rcl-runner .rcl-runner-box .ui-slider-handle,
 .rcl-range .rcl-range-box .ui-slider-handle {
 	background: -webkit-linear-gradient(top, #fff, #ddd);

@@ -84,22 +84,22 @@ class PrimeQuery {
 
 	function init_query() {
 
-		if ( !$this->vars )
+		if ( ! $this->vars )
 			$this->setup_vars();
 
 		$this->init_conditions();
 
-		if ( !$this->is_frontpage && !$this->is_search && !$this->is_author ) {
+		if ( ! $this->is_frontpage && ! $this->is_search && ! $this->is_author ) {
 
 			$this->init_queried_object();
 
-			if ( $this->is_group && !$this->object->group_id ) {
+			if ( $this->is_group && ! $this->object->group_id ) {
 
 				$this->errors['notice'][] = __( 'Group not found', 'wp-recall' );
-			} else if ( $this->is_forum && !$this->object->forum_id ) {
+			} else if ( $this->is_forum && ! $this->object->forum_id ) {
 
 				$this->errors['notice'][] = __( 'Forum not found', 'wp-recall' );
-			} else if ( $this->is_topic && !$this->object->topic_id ) {
+			} else if ( $this->is_topic && ! $this->object->topic_id ) {
 
 				$this->errors['notice'][] = __( 'Topic not found', 'wp-recall' );
 			}
@@ -182,7 +182,8 @@ class PrimeQuery {
 
 			$this->number	 = $this->forums_query->number;
 			$this->all_items = $this->forums_query->count( array(
-				'group_id' => $this->object->group_id
+				'group_id'	 => $this->object->group_id,
+				'parent_id'	 => 0
 				) );
 		}
 
@@ -258,7 +259,7 @@ class PrimeQuery {
 
 		$args = $this->get_args_object();
 
-		if ( !$args )
+		if ( ! $args )
 			return false;
 
 		if ( $this->is_group ) {
@@ -328,8 +329,8 @@ class PrimeQuery {
 		} else if ( $this->is_frontpage ) {
 
 			$args = array(
-				'number'	 => $this->number,
-				'offset'	 => $this->offset,
+				'number'	 => -1,
+				//'offset'	 => $this->offset,
 				'order'		 => 'ASC',
 				'orderby'	 => 'group_seq',
 				'join_query' => array(
@@ -476,15 +477,15 @@ class PrimeQuery {
 
 	function setup_forums_data_in_home() {
 
-		if ( !pfm_get_option( 'view-forums-home' ) )
+		if ( ! pfm_get_option( 'view-forums-home' ) )
 			return false;
 
-		if ( !$this->is_frontpage || !$this->groups )
+		if ( ! $this->is_frontpage || ! $this->groups )
 			return false;
 
 		$groups = (pfm_get_option( 'forums-home-list' )) ? array_map( 'trim', explode( ',', pfm_get_option( 'forums-home-list' ) ) ) : false;
 
-		if ( !$groups ) {
+		if ( ! $groups ) {
 			$groups = array();
 			foreach ( $this->groups as $group ) {
 				$groups[] = $group->group_id;
@@ -534,7 +535,7 @@ class PrimeQuery {
 
 	function setup_child_forums() {
 
-		if ( !$this->is_forum )
+		if ( ! $this->is_forum )
 			return false;
 
 		$args = array(
@@ -572,7 +573,7 @@ class PrimeQuery {
 
 	function setup_last_items() {
 
-		if ( !$this->is_topic ) {
+		if ( ! $this->is_topic ) {
 
 			if ( $this->forums ) {
 
@@ -610,7 +611,7 @@ class PrimeQuery {
 
 		$postIdx = $wpdb->get_col( $sql );
 
-		if ( !$postIdx )
+		if ( ! $postIdx )
 			return false;
 
 		$sql = "SELECT "
@@ -647,7 +648,7 @@ class PrimeQuery {
 
 		$postIdx = $wpdb->get_col( $sql );
 
-		if ( !$postIdx )
+		if ( ! $postIdx )
 			return false;
 
 		$sql = "SELECT "
@@ -682,7 +683,7 @@ class PrimeQuery {
 
 		$topicIdx = $wpdb->get_col( $sql );
 
-		if ( !$topicIdx )
+		if ( ! $topicIdx )
 			return false;
 
 		$sql = "SELECT "
@@ -701,7 +702,7 @@ class PrimeQuery {
 
 	function search_forum_last_topic( $forum_id ) {
 
-		if ( !$this->last['topics'] )
+		if ( ! $this->last['topics'] )
 			return false;
 
 		foreach ( $this->last['topics'] as $topic ) {
@@ -714,11 +715,11 @@ class PrimeQuery {
 
 	function search_forum_last_post( $forum_id ) {
 
-		if ( !$this->last['posts'] )
+		if ( ! $this->last['posts'] )
 			return false;
 
 		foreach ( $this->last['posts'] as $post ) {
-			if ( !isset( $post->forum_id ) )
+			if ( ! isset( $post->forum_id ) )
 				continue;
 			if ( $forum_id == $post->forum_id )
 				return $post;
@@ -729,7 +730,7 @@ class PrimeQuery {
 
 	function search_topic_last_post( $topic_id ) {
 
-		if ( !$this->last['posts'] )
+		if ( ! $this->last['posts'] )
 			return false;
 
 		foreach ( $this->last['posts'] as $post ) {
@@ -862,7 +863,7 @@ class PrimeQuery {
 
 	function search_meta_value( $object_id, $object_type, $meta_key ) {
 
-		if ( !$this->meta )
+		if ( ! $this->meta )
 			return false;
 
 		foreach ( $this->meta as $meta ) {
@@ -904,7 +905,7 @@ class PrimeQuery {
 
 		$userIds = array_unique( apply_filters( 'pfm_users', $userIds ) );
 
-		if ( !$userIds )
+		if ( ! $userIds )
 			return false;
 
 		global $wpdb;
@@ -940,7 +941,7 @@ class PrimeQuery {
 
 	function get_user_data( $user_id, $dataName ) {
 
-		if ( !isset( $this->users_data[$user_id] ) )
+		if ( ! isset( $this->users_data[$user_id] ) )
 			return false;
 
 		return (isset( $this->users_data[$user_id]->$dataName )) ? $this->users_data[$user_id]->$dataName : false;

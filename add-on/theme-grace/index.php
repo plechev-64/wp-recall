@@ -1,7 +1,7 @@
 <?php
 
 // подключаем стили
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'lt_style', 10 );
 endif;
 function lt_style() {
@@ -40,9 +40,9 @@ function lt_sidebar_before() {
 	) );
 }
 
-add_action( 'widgets_init', 'lt_sidebar_before' );
+add_action( 'widgets_init', 'lt_sidebar_before', 10 );
 
-add_action( 'rcl_area_before', 'lt_add_sidebar_area_before' );
+add_action( 'rcl_area_before', 'lt_add_sidebar_area_before', 10 );
 function lt_add_sidebar_area_before() {
 	if ( function_exists( 'dynamic_sidebar' ) ) {
 		dynamic_sidebar( 'lt_sidebar_before' );
@@ -61,9 +61,9 @@ function lt_sidebar_after() {
 	) );
 }
 
-add_action( 'widgets_init', 'lt_sidebar_after' );
+add_action( 'widgets_init', 'lt_sidebar_after', 10 );
 
-add_action( 'rcl_area_after', 'lt_add_sidebar_area_after' );
+add_action( 'rcl_area_after', 'lt_add_sidebar_area_after', 10 );
 function lt_add_sidebar_area_after() {
 	if ( function_exists( 'dynamic_sidebar' ) ) {
 		dynamic_sidebar( 'lt_sidebar_after' );
@@ -74,12 +74,12 @@ function lt_add_sidebar_area_after() {
 add_filter( 'rcl_inline_styles', 'rcl_add_cover_inline_styles', 10 );
 function rcl_add_cover_inline_styles( $styles ) {
 
-	if ( !rcl_is_office() )
+	if ( ! rcl_is_office() )
 		return $styles;
 
 	global $user_LK;
 	$cover_url	 = get_user_meta( $user_LK, 'rcl_cover', 1 );
-	if ( !$cover_url )
+	if ( ! $cover_url )
 		$cover_url	 = rcl_addon_url( 'img/default-cover.jpg', __FILE__ );
 	$styles .= '#lk-conteyner{background-image: url(' . $cover_url . ');}';
 	return $styles;

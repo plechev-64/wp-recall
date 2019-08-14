@@ -4,7 +4,7 @@ add_filter( 'page_rewrite_rules', 'pfm_set_rewrite_rules' );
 function pfm_set_rewrite_rules( $rules ) {
 	global $wp_rewrite;
 
-	if ( !pfm_get_option( 'home-page' ) )
+	if ( ! pfm_get_option( 'home-page' ) )
 		return $rules;
 
 	$page		 = get_post( pfm_get_option( 'home-page' ) );
@@ -89,7 +89,7 @@ function pfm_setup_page_title( $title, $post_id ) {
 
 	$post_type = get_post_type( $post_id );
 
-	if ( $post_type == 'nav_menu_item' )
+	if ( $post_type == 'nav_menu_item' || $post_type != 'page' )
 		return $title;
 
 	$pfmTitle = pfm_get_title_page();

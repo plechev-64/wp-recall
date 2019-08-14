@@ -25,7 +25,7 @@ class Rcl_Query {
 
 	function set_query( $args = false ) {
 
-		$this->args = esc_sql( $args );
+		$this->args = wp_unslash( esc_sql( $args ) );
 
 		if ( ! $this->query['table'] ) {
 
@@ -73,7 +73,7 @@ class Rcl_Query {
 
 			foreach ( $this->query['table']['cols'] as $col_name ) {
 
-				if ( isset( $this->args[$col_name] ) ) {
+				if ( isset( $this->args[$col_name] ) && $this->args[$col_name] != '' ) {
 
 					if ( $this->args[$col_name] === 'is_null' ) {
 						$this->query['where'][] = $this->query['table']['as'] . ".$col_name IS NULL";
@@ -97,14 +97,14 @@ class Rcl_Query {
 					$this->query['where'][] = $this->query['table']['as'] . ".$col_name NOT IN (" . $this->get_string_in( $this->args[$col_name . '__not_in'] ) . ")";
 				}
 
-				if ( isset( $this->args[$col_name . '__from'] ) && ($this->args[$col_name . '__from'] || $this->args[$col_name . '__from'] === 0) ) {
+				if ( isset( $this->args[$col_name . '__from'] ) && ($this->args[$col_name . '__from'] || $this->args[$col_name . '__from'] != '') ) {
 
 					$colName = is_numeric( $this->args[$col_name . '__from'] ) ? "CAST(" . $this->query['table']['as'] . ".$col_name AS DECIMAL)" : $this->query['table']['as'] . "." . $col_name;
 
 					$this->query['where'][] = $colName . " >= '" . $this->args[$col_name . '__from'] . "'";
 				}
 
-				if ( isset( $this->args[$col_name . '__to'] ) && ($this->args[$col_name . '__to'] || $this->args[$col_name . '__to'] === 0) ) {
+				if ( isset( $this->args[$col_name . '__to'] ) && ($this->args[$col_name . '__to'] || $this->args[$col_name . '__to'] != '') ) {
 
 					$colName = is_numeric( $this->args[$col_name . '__to'] ) ? "CAST(" . $this->query['table']['as'] . ".$col_name AS DECIMAL)" : $this->query['table']['as'] . "." . $col_name;
 
@@ -113,7 +113,12 @@ class Rcl_Query {
 
 				if ( isset( $this->args[$col_name . '__like'] ) && ($this->args[$col_name . '__like'] || $this->args[$col_name . '__like'] === 0) ) {
 
-					$this->query['where'][] = $col_name . " LIKE '%" . $this->args[$col_name . '__like'] . "%'";
+					$this->query['where'][] = $this->query['table']['as'] . ".$col_name LIKE '%" . $this->args[$col_name . '__like'] . "%'";
+				}
+
+				if ( isset( $this->args[$col_name . '__between'] ) && $this->args[$col_name . '__between'] && is_array( $this->args[$col_name . '__between'] ) ) {
+
+					$this->query['where'][] = "(" . $this->query['table']['as'] . '.' . $col_name . " BETWEEN IFNULL(" . $this->args[$col_name . '__between'][0] . ", 0) AND '" . $this->args[$col_name . '__between'][1] . "')";
 				}
 			}
 
@@ -125,6 +130,11 @@ class Rcl_Query {
 			if ( isset( $this->args['join_query'] ) ) {
 
 				$this->set_join_query( $this->args['join_query'] );
+			}
+
+			if ( isset( $this->args['union_query'] ) ) {
+
+				$this->set_union_query( $this->args['union_query'] );
 			}
 		}
 
@@ -154,6 +164,7 @@ class Rcl_Query {
 			$this->query['order']	 = 'DESC';
 		}
 
+
 		if ( isset( $this->args['number'] ) )
 			$this->query['number'] = $this->args['number'];
 
@@ -162,6 +173,9 @@ class Rcl_Query {
 
 		if ( isset( $this->args['groupby'] ) )
 			$this->query['groupby'] = $this->args['groupby'];
+
+		if ( isset( $this->args['having'] ) )
+			$this->query['having'] = $this->args['having'];
 
 		if ( isset( $this->args['return_as'] ) )
 			$this->query['return_as'] = $this->args['return_as'];
@@ -172,17 +186,52 @@ class Rcl_Query {
 		if ( ! $fields )
 			return false;
 
-		foreach ( $fields as $as => $field ) {
+		foreach ( $fields as $key => $name ) {
 
-			if ( ! in_array( $field, $this->query['table']['cols'] ) )
+			$tableas = $this->query['table']['as'];
+
+			if ( $key === 'custom_query' ) {
+
+				foreach ( $name as $n ) {
+					$this->query['select'][] = $n;
+				}
+
 				continue;
+			}
 
-			$select = $this->query['table']['as'] . '.' . $field;
+			if ( is_string( $name ) && ! in_array( $name, $this->query['table']['cols'] ) ) {
+				continue;
+			}
 
-			if ( is_string( $as ) )
-				$select .= ' AS ' . $as;
+			if ( is_int( $key ) && is_string( $name ) ) {
+				$this->query['select'][] = $tableas . '.' . $name;
+				continue;
+			}
 
-			$this->query['select'][] = $select;
+			if ( is_string( $key ) && is_string( $name ) ) {
+				$this->query['select'][] = $tableas . '.' . $name . ' AS ' . $key;
+				continue;
+			}
+
+			if ( is_string( $key ) && is_array( $name ) ) {
+
+				$fieldname	 = $key;
+				$as			 = $key;
+
+				if ( isset( $name['as'] ) ) {
+					$as = $name['as'];
+				}
+
+				if ( isset( $name['ifnull'] ) ) {
+					$select = 'IFNULL(' . $tableas . '.' . $fieldname . ', ' . $name['ifnull'] . ') ' . $as;
+				} else {
+					$select = $tableas . '.' . $fieldname . ' AS ' . $as;
+				}
+
+
+				$this->query['select'][] = $select;
+				continue;
+			}
 		}
 	}
 
@@ -213,16 +262,49 @@ class Rcl_Query {
 
 					$this->query['where'][] = $this->query['table']['as'] . "." . $date['column'] . " >= DATE_SUB(NOW(), INTERVAL " . $date['last'] . ")";
 				}
+
+				if ( isset( $date['older'] ) ) {
+
+					$this->query['where'][] = $this->query['table']['as'] . "." . $date['column'] . " < DATE_SUB(NOW(), INTERVAL " . $date['last'] . ")";
+				}
 			} else if ( $date['compare'] == 'BETWEEN' ) {
 
-				if ( ! isset( $date['value'] ) )
+				if ( ! isset( $date['value'] ) || ! $date['value'] || ! $date['value'][0] && ! $date['value'][1] )
 					continue;
 
-				$this->query['where'][] = "(" . $this->query['table']['as'] . "." . $date['column'] . " BETWEEN CAST('" . $date['value'][0] . "' AS DATE) AND CAST('" . $date['value'][1] . "' AS DATE))";
-			}else {
+				if ( ! $date['value'][1] ) {
+					$date['value'][1] = current_time( 'mysql' );
+				}
 
-				$this->query['where'][] = $this->query['table']['as'] . "." . $date['column'] . " " . $date['compare'] . " '" . $date['value'] . "'";
+				$this->query['where'][] = "(" . $this->query['table']['as'] . "." . $date['column'] . " BETWEEN CAST('" . $date['value'][0] . "' AS DATE) AND CAST('" . $date['value'][1] . "' AS DATE))";
+			} else {
+
+				if ( isset( $date['interval'] ) ) {
+					$this->query['where'][] = "DATE_SUB(NOW(), INTERVAL " . $date['last'] . ") " . $date['compare'] . " " . $this->query['table']['as'] . "." . $date['column'];
+				} else {
+					$this->query['where'][] = $this->query['table']['as'] . "." . $date['column'] . " " . $date['compare'] . " '" . $date['value'] . "'";
+				}
 			}
+		}
+	}
+
+	function set_union_query( $unions ) {
+
+		foreach ( $unions as $union ) {
+
+			$unionTable = $union['table'];
+
+			if ( ! $unionTable )
+				continue;
+
+			$unionQuery = new Rcl_Query();
+
+			$unionQuery->set_query( $union );
+
+			unset( $unionQuery->query['orderby'] );
+			unset( $unionQuery->query['number'] );
+
+			$this->query['union'][] = $unionQuery->query;
 		}
 	}
 
@@ -337,8 +419,25 @@ class Rcl_Query {
 		if ( $where )
 			$sql[] = "WHERE " . implode( ' ', $where );
 
+		if ( isset( $query['union'] ) ) {
+
+			foreach ( $query['union'] as $unionQuery ) {
+
+				$sql[] = "UNION ALL";
+
+				$Query = new Rcl_Query( $unionQuery['table'] );
+
+				//$Query->set_query( $unionQuery );
+
+				$sql[] = $Query->get_sql( $unionQuery );
+			}
+		}
+
 		if ( isset( $query['groupby'] ) )
 			$sql[] = "GROUP BY " . $query['groupby'];
+
+		if ( isset( $query['having'] ) && $query['having'] )
+			$sql[] = "HAVING " . implode( ' AND ', $query['having'] );
 
 		if ( isset( $query['orderby'] ) ) {
 			if ( is_array( $query['orderby'] ) ) {
@@ -393,20 +492,20 @@ class Rcl_Query {
 		else
 			$data	 = $wpdb->$method( $sql );
 
-		if ( isset( $this->args['unserialise'] ) && $this->args['unserialise'] ) {
+		if ( isset( $this->args['unserialize'] ) && $this->args['unserialize'] ) {
 
-			$unserialise = $this->args['unserialise'];
+			$unserialize = $this->args['unserialize'];
 
 			if ( is_array( $data ) ) {
 				foreach ( $data as $k => $item ) {
 					if ( is_object( $item ) ) {
-						if ( isset( $item->$unserialise ) )
-							$data[$k]->$unserialise = maybe_unserialize( $item->$unserialise );
+						if ( isset( $item->$unserialize ) )
+							$data[$k]->$unserialize = maybe_unserialize( $item->$unserialize );
 					}
 				}
 			}else if ( is_object( $data ) ) {
-				if ( isset( $data->$unserialise ) )
-					$data->$this->args['unserialise'] = maybe_unserialize( $data->$unserialise );
+				if ( isset( $data->$unserialize ) )
+					$data->$unserialize = maybe_unserialize( $data->$unserialize );
 			}
 		}
 
@@ -436,6 +535,10 @@ class Rcl_Query {
 		$result = $this->get_data( 'get_results' );
 
 		$this->reset_query();
+
+		if ( isset( $this->args['get_walker'] ) && $this->args['get_walker'] ) {
+			return new Rcl_Walker( $result );
+		}
 
 		return $result;
 	}
@@ -517,6 +620,8 @@ class Rcl_Query {
 			$result	 = $wpdb->query( $sql );
 		else
 			$result	 = $wpdb->get_var( $sql );
+
+		$this->reset_query();
 
 		return $result;
 	}

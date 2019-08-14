@@ -5,6 +5,7 @@ class Rcl_Form extends Rcl_Fields {
 	public $class		 = '';
 	public $action		 = '';
 	public $method		 = 'post';
+	public $target		 = '';
 	public $submit;
 	public $submit_args;
 	public $nonce_name	 = '';
@@ -34,7 +35,51 @@ class Rcl_Form extends Rcl_Fields {
 
 		$content = '<div class="rcl-form preloader-parent' . ($this->class ? ' ' . $this->class : '') . '">';
 
-		$content .= '<form method="' . $this->method . '" action="' . $this->action . '">';
+		$content .= '<form method="' . $this->method . '" action="' . $this->action . '" target="' . $this->target . '">';
+
+		$content .= $this->get_fields_list();
+
+		$content .= $this->get_submit_box();
+
+		if ( $this->nonce_name )
+			$content .= wp_nonce_field( $this->nonce_name, '_wpnonce', true, false );
+
+		$content .= '</form>';
+
+		$content .= '</div>';
+
+		return $content;
+	}
+
+	function get_submit_box() {
+
+		$content = '<div class="submit-box">';
+
+		if ( $this->onclick ) {
+			$content .= rcl_get_button( wp_parse_args( $this->submit_args, array(
+				'label'		 => $this->submit,
+				'icon'		 => 'fa-check-circle',
+				'onclick'	 => $this->onclick
+				) ) );
+		} else {
+			$content .= rcl_get_button( wp_parse_args( $this->submit_args, array(
+				'label'	 => $this->submit,
+				'icon'	 => 'fa-check-circle',
+				'submit' => true
+				) ) );
+		}
+
+		$content .= '</div>';
+
+		return $content;
+	}
+
+	function get_fields_list() {
+
+		if ( ! $this->fields )
+			return false;
+
+		$content = '';
 
 		foreach ( $this->fields as $field_id => $field ) {
 
@@ -58,31 +103,6 @@ class Rcl_Form extends Rcl_Fields {
 
 			$content .= '</div>';
 		}
-
-		$content .= '<div class="submit-box">';
-
-		if ( $this->onclick ) {
-			$content .= rcl_get_button( wp_parse_args( $this->submit_args, array(
-				'label'		 => $this->submit,
-				'icon'		 => 'fa-check-circle',
-				'onclick'	 => $this->onclick
-				) ) );
-		} else {
-			$content .= rcl_get_button( wp_parse_args( $this->submit_args, array(
-				'label'	 => $this->submit,
-				'icon'	 => 'fa-check-circle',
-				'submit' => true
-				) ) );
-		}
-
-		$content .= '</div>';
-
-		if ( $this->nonce_name )
-			$content .= wp_nonce_field( $this->nonce_name, '_wpnonce', true, false );
-
-		$content .= '</form>';
-
-		$content .= '</div>';
 
 		return $content;
 	}

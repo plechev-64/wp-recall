@@ -11,7 +11,7 @@
 	<div><?php _e( 'In your cart', 'wp-recall' ); ?>:</div>
 	<div class="cart-content">
 		<span class="products-amount">
-			<?php _e( 'Total number of goods', 'wp-recall' ); ?>: <span class="rcl-order-amount"><?php echo $Cart->products_amount; ?></span> шт.
+			<?php _e( 'Total number of goods', 'wp-recall' ); ?>: <span class="rcl-order-amount"><?php echo $Cart->products_amount; ?></span> <?php _e( 'pcs' ); ?>
 		</span>
 		<span class="cart-price">
 			<?php _e( 'Total amount', 'wp-recall' ); ?>: <span class="rcl-order-price"><?php echo $Cart->order_price; ?></span>

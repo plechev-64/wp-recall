@@ -69,7 +69,7 @@ class Rcl_Postlist {
 					) );
 
 				foreach ( ( array ) $rayt_p as $r ) {
-					if ( !isset( $r->object_id ) )
+					if ( ! isset( $r->object_id ) )
 						continue;
 					$ratings[$r->object_id] = $r->rating_total;
 				}
@@ -82,7 +82,11 @@ class Rcl_Postlist {
 
 			wp_reset_postdata();
 		}else {
-			$posts_block = '<p>' . $this->type_name . ' ' . __( 'has not yet been published', 'wp-recall' ) . '</p>';
+
+			$posts_block = rcl_get_notice( array(
+				'type'	 => 'info',
+				'text'	 => $this->type_name . ' ' . __( 'has not yet been published', 'wp-recall' )
+				) );
 		}
 
 		return $posts_block;
@@ -122,7 +126,7 @@ class Rcl_Postlist {
 			}
 		}
 
-		if ( !$count )
+		if ( ! $count )
 			return false;
 
 		$rclnavi = new Rcl_PageNavi( $this->post_type . '-navi', $count, array( 'in_page' => $this->in_page ) );

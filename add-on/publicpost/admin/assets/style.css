@@ -17,11 +17,21 @@
 }
 .rcl-custom-fields-menu .fa-trash {
 	color: #e53935;
-	font-family: dashicons;
+	/*font-family: dashicons;*/
 	font-size: 22px;
 	font-style: normal;
 	margin: 0 5px 0 0;
 }
 .rcl-custom-fields-menu .fa-trash:before {
-	content: "\f182";
+	/*content: "\f182";*/
+}
+.rcl-custom-fields-menu .fa-copy {
+	color: #356be5;
+	/*font-family: dashicons;*/
+	font-size: 22px;
+	font-style: normal;
+	margin: 0 5px 0 0;
+}
+.rcl-custom-fields-menu .fa-copy:before {
+	/*content: "\f105";*/
 }

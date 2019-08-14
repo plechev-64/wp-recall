@@ -26,8 +26,11 @@ function rcl_get_postslist( $post_type, $type_name = false ) {
 
 	$ids = get_posts( $args );
 
-	if ( !$ids )
-		return __( 'Публикаций пока не было', 'wp-recall' );
+	if ( ! $ids )
+		return rcl_get_notice( array(
+			'type'	 => 'info',
+			'text'	 => __( 'Публикаций пока не было', 'wp-recall' )
+			) );;
 
 	$perPage = 30;
 
@@ -112,14 +115,14 @@ function rcl_get_custom_fields_edit_box( $post_id, $post_type = false, $form_id 
 
 	$fields = $RclForm->get_custom_fields();
 
-	if ( !$fields )
+	if ( ! $fields )
 		return false;
 
 	$content = '<div class="rcl-custom-fields-box">';
 
 	foreach ( $fields as $field_id => $field ) {
 
-		if ( !isset( $field->slug ) )
+		if ( ! isset( $field->slug ) )
 			continue;
 
 		$field->value = ($post_id) ? get_post_meta( $post_id, $field->slug, 1 ) : '';
@@ -169,7 +172,7 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 
 				if ( $value && is_array( $value ) ) {
 					foreach ( $value as $val ) {
-						for ( $a = 0; $a < $count_field; $a++ ) {
+						for ( $a = 0; $a < $count_field; $a ++ ) {
 							if ( $field->values[$a] == $val ) {
 								$vals[] = $val;
 							}

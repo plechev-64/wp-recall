@@ -30,7 +30,7 @@ function pfm_page_topic_form() {
 	$group_id	 = (isset( $_GET['group-id'] )) ? intval( $_GET['group-id'] ) : 0;
 	$forum_id	 = (isset( $_GET['forum-id'] )) ? intval( $_GET['forum-id'] ) : 0;
 
-	if ( !$group_id ) {
+	if ( ! $group_id ) {
 
 		$GroupsQuery = new PrimeGroups();
 
@@ -41,7 +41,7 @@ function pfm_page_topic_form() {
 			) );
 	}
 
-	if ( !$group_id ) {
+	if ( ! $group_id ) {
 		echo '<p>' . __( 'The forum is not yet created any groups of forums', 'wp-recall' ) . '.</p>'
 		. '<p>' . __( 'Create a group of forums for managing the form fields of the publication of a topic', 'wp-recall' ) . '.</p>';
 		return;
@@ -194,7 +194,7 @@ function pfm_page_options() {
 	) );
 
 	$Manager->add_box( 'content', array(
-		'title' => __( 'Контент форума', 'wp-recall' )
+		'title' => __( 'Forums`s content', 'wp-recall' )
 	) )->add_group( 'content' )->add_options( array(
 		array(
 			'type'	 => 'select',
@@ -223,7 +223,7 @@ function pfm_page_options() {
 	) );
 
 	$Manager->add_box( 'templates', array(
-		'title' => __( 'Шаблоны имен', 'wp-recall' )
+		'title' => __( 'Name patterns', 'wp-recall' )
 	) )->add_group( 'templates' )->add_options( array(
 		array(
 			'type'		 => 'custom',
@@ -275,7 +275,7 @@ function pfm_page_options() {
 	) );
 
 	$Manager->add_box( 'notices', array(
-		'title' => __( 'Уведомления', 'wp-recall' )
+		'title' => __( 'Notifications', 'wp-recall' )
 	) )->add_group( 'notices' )->add_options( array(
 		array(
 			'type'	 => 'select',
@@ -300,7 +300,7 @@ function pfm_page_options() {
 
 	$Manager = apply_filters( 'pfm_options', $Manager );
 
-	$content = '<h2>' . __( 'Настройки форума PrimeForum', 'wp-recall' ) . '</h2>';
+	$content = '<h2>' . __( 'Forum settings PrimeForum', 'wp-recall' ) . '</h2>';
 
 	$content .= $Manager->get_content();
 
@@ -439,10 +439,10 @@ function pfm_page_themes() {
 	add_action( 'edit_user_profile_update', 'pfm_update_user_role' );
 	function pfm_update_user_role( $user_id ) {
 
-		if ( !current_user_can( 'edit_user', $user_id ) )
+		if ( ! current_user_can( 'edit_user', $user_id ) )
 			return false;
 
-		if ( !isset( $_POST['pfm_role'] ) )
+		if ( ! isset( $_POST['pfm_role'] ) )
 			return false;
 
 		update_user_meta( $user_id, 'pfm_role', $_POST['pfm_role'] );
@@ -694,14 +694,14 @@ function pfm_page_themes() {
 				foreach ( ( array ) $addons as $namedir ) {
 					$addon_dir	 = $path . '/' . $namedir;
 					$index_src	 = $addon_dir . '/index.php';
-					if ( !is_dir( $addon_dir ) || !file_exists( $index_src ) )
+					if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) )
 						continue;
 					$info_src	 = $addon_dir . '/info.txt';
 					if ( file_exists( $info_src ) ) {
 						$info	 = file( $info_src );
 						$data	 = rcl_parse_addon_info( $info );
 
-						if ( !isset( $data['custom-manager'] ) || $data['custom-manager'] != 'prime-forum' )
+						if ( ! isset( $data['custom-manager'] ) || $data['custom-manager'] != 'prime-forum' )
 							continue;
 
 						$add_ons[$namedir]			 = $data;
@@ -733,7 +733,7 @@ function pfm_page_themes() {
 
 		$topics = pfm_get_topics( array( 'number' => 5 ) );
 
-		if ( !$topics ) {
+		if ( ! $topics ) {
 			echo '<p>' . __( 'No topics on the forum yet', 'wp-recall' ) . '</p>';
 			return;
 		}
@@ -759,10 +759,10 @@ function pfm_page_themes() {
 	function pfm_init_admin_actions() {
 		global $user_ID;
 
-		if ( !isset( $_REQUEST['pfm-action'] ) || !isset( $_REQUEST['_wpnonce'] ) )
+		if ( ! isset( $_REQUEST['pfm-action'] ) || ! isset( $_REQUEST['_wpnonce'] ) )
 			return;
 
-		if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'pfm-nonce' ) )
+		if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'pfm-nonce' ) )
 			return;
 
 		$action = $_REQUEST['pfm-action'];
@@ -789,7 +789,7 @@ function pfm_page_themes() {
 				break;
 			case 'group_delete': //удаление группы
 
-				if ( !$_REQUEST['group_id'] )
+				if ( ! $_REQUEST['group_id'] )
 					return false;
 
 				pfm_delete_group( $_REQUEST['group_id'], $_REQUEST['migrate_group'] );
@@ -800,7 +800,7 @@ function pfm_page_themes() {
 				break;
 			case 'forum_delete': //удаление форума
 
-				if ( !$_REQUEST['forum_id'] )
+				if ( ! $_REQUEST['forum_id'] )
 					return false;
 
 				$group = pfm_get_forum( $_REQUEST['forum_id'] );

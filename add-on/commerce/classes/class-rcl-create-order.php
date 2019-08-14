@@ -66,7 +66,7 @@ class Rcl_Create_Order {
 		}
 
 		if ( $this->order_price < 0 ) {
-			return $this->error( 'data_invalid', __( 'Неверные данные заказа!', 'wp-recall' ) );
+			return $this->error( 'data_invalid', __( 'Incorrect details of order!', 'wp-recall' ) );
 		}
 
 		$args = array(

@@ -235,6 +235,8 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 		if ( $this->is_errors() )
 			return $this->errors();
 
+		$this->chat = $this->get_chat_data( $this->chat_room );
+
 		return $this->chat_id;
 	}
 

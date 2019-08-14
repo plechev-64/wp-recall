@@ -72,6 +72,8 @@ function rcl_group_avatar_upload() {
 		wp_send_json( array( 'error' => __( 'Error', 'wp-recall' ) . '!' ) );
 	}
 
+	do_action( 'rcl_group_avatar_upload', $group_id, $imade_id );
+
 	$res['avatar_url']	 = $image['url'];
 	$res['success']		 = __( 'Avatar has been successfully uploaded', 'wp-recall' );
 

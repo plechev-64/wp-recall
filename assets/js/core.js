@@ -353,16 +353,29 @@ function rcl_init_range( props ) {
 		step: parseInt( props.step ),
 		create: function( event, ui ) {
 			var values = box.children( '.rcl-range-box' ).slider( 'values' );
-			box.children( '.rcl-range-value' ).text( values[0] + ' - ' + values[1] );
+			/*if ( props.manual ) {
+			 box.find( '.rcl-range-value input[data-index="0"]' ).text( values[0] );
+			 box.find( '.rcl-range-value input[data-index="1"]' ).text( values[1] );
+			 } else {
+			 box.children( '.rcl-range-value' ).text( values[0] + ' - ' + values[1] );
+			 }*/
+
 			box.children( '.rcl-range-min' ).val( values[0] );
 			box.children( '.rcl-range-max' ).val( values[1] );
 		},
 		slide: function( event, ui ) {
-			box.children( '.rcl-range-value' ).text( ui.values[0] + ' - ' + ui.values[1] );
+			if ( !props.manual )
+				box.children( '.rcl-range-value' ).text( ui.values[0] + ' - ' + ui.values[1] );
 			box.find( '.rcl-range-min' ).val( ui.values[0] );
 			box.find( '.rcl-range-max' ).val( ui.values[1] );
 		}
 	} );
+
+	box.find( '.range-value' ).each( function( i, input ) {
+		jQuery( input ).change( function() {
+			box.children( '.rcl-range-box' ).slider( "values", jQuery( this ).data( "index" ), jQuery( this ).val() );
+		} );
+	} )
 }
 
 function rcl_init_color( id, props ) {
@@ -595,8 +608,12 @@ function rcl_ajax( prop ) {
 		type: 'POST',
 		data: prop.data,
 		dataType: 'json',
+		headers: typeof prop.headers !== 'undefined' ? prop.headers : { },
 		url: ( typeof ajax_url !== 'undefined' ) ? ajax_url : Rcl.ajax_url,
 		success: function( result, post ) {
+
+			if ( prop.response )
+				prop.response( result );
 
 			if ( !result ) {
 				rcl_notice( Rcl.local.error, 'error', 5000 );
@@ -738,34 +755,111 @@ function rcl_init_table( table_id ) {
 
 		var sortCell = jQuery( this );
 
-		var sortby = sortCell.data( 'sort' );
-		var route = sortCell.attr( 'data-route' );
+		var sortby = sortCell.data( 'col' );
+		var order = sortCell.attr( 'data-order' );
 
 		sortCell.addClass( 'rcl-table__cell-current-sort' );
-		jQuery( '#' + table_id ).find( '[data-' + sortby + '-value]' ).addClass( 'rcl-table__cell-current-sort' );
+		jQuery( '#' + table_id ).find( '.rcl-table__cell.col-' + sortby ).addClass( 'rcl-table__cell-current-sort' );
 
 		var list = jQuery( '#' + table_id + ' .rcl-table__row-must-sort' );
 
 		list.sort( function( a, b ) {
-			var aVal = jQuery( a ).find( '[data-' + sortby + '-value]' ).data( sortby + '-value' );
-			var bVal = jQuery( b ).find( '[data-' + sortby + '-value]' ).data( sortby + '-value' );
-			//if(isNaN(aVal))
-			if ( route == 'asc' )
+
+			var aVal = jQuery( a ).children( '.rcl-table__cell.col-' + sortby ).data( 'value' );
+			var bVal = jQuery( b ).children( '.rcl-table__cell.col-' + sortby ).data( 'value' );
+
+			if ( order == 'asc' )
 				return ( aVal < bVal ) - ( aVal > bVal ); //по возрастанию
 			else
 				return ( aVal > bVal ) - ( aVal < bVal ); //по убыванию
 		} );
 
-		sortCell.attr( 'data-route', ( route == 'desc' ? 'asc' : 'desc' ) );
+		sortCell.attr( 'data-order', ( order == 'desc' ? 'asc' : 'desc' ) );
 
 		jQuery( '#' + table_id + ' .rcl-table__row-must-sort' ).remove();
 
 		list.each( function( i, e ) {
-			jQuery( '#' + table_id + ' .rcl-table__row-header' ).after( jQuery( this ) );
+			if ( jQuery( '#' + table_id + ' .rcl-table__row-search' ).length ) {
+				jQuery( '#' + table_id + ' .rcl-table__row-search' ).after( jQuery( this ) );
+			} else {
+				jQuery( '#' + table_id + ' .rcl-table__row-header' ).after( jQuery( this ) );
+			}
 		} );
 
 	} );
 
+}
+
+function rcl_table_search( e, key, submit ) {
+
+	if ( submit ) {
+
+		if ( key == 'Enter' ) {
+			rcl_do_action( 'rcl_pre_submit_search_table', e );
+			jQuery( e ).parents( 'form' ).submit();
+		}
+
+		return;
+
+	}
+
+	var table_id = jQuery( e ).parents( '.rcl-table' ).attr( 'id' );
+
+	var inputs = jQuery( e ).parents( '.rcl-table' ).find( '.rcl-table__row-search input' );
+
+	var search = [ ];
+	inputs.each( function( i, a ) {
+
+		if ( jQuery( a ).val() !== '' ) {
+			search.push( [ jQuery( a ).parent().data( 'rcl-ttitle' ),
+				jQuery( a ).val() ] );
+		}
+
+	} );
+
+	jQuery( '#' + table_id + ' .rcl-table__row-must-sort' ).show();
+
+	if ( !search.length ) {
+		return;
+	}
+
+	var list = jQuery( '#' + table_id + ' .rcl-table__row-must-sort' );
+
+	list.each( function( i, r ) {
+
+		var success = true;
+
+		var cells = jQuery( r ).find( '.rcl-table__cell' );
+
+		cells.each( function( x, c ) {
+
+			search.forEach( function( s ) {
+
+				if ( jQuery( c ).data( 'rcl-ttitle' ) == s[0] ) {
+
+					var value = jQuery( c ).data( 'value' );
+
+					if ( typeof value == 'number' && jQuery( c ).data( 'value' ) != s[1] ||
+						typeof value == 'string' && value.indexOf( s[1] ) < 0 ) {
+						success = false;
+						return;
+					}
+
+				}
+
+			} );
+
+			if ( !success ) {
+				return;
+			}
+
+		} );
+
+		if ( !success ) {
+			jQuery( r ).hide();
+		}
+
+	} );
 }
 
 function rcl_chek_form_field( e ) {
@@ -867,7 +961,7 @@ function RclForm( form ) {
 
 					var field = jQuery( this );
 
-					if ( parent.check_fields && jQuery.inArray( field.data( 'slug' ), parent.check_fields ) < 0 ) {
+					if ( parent.check_fields.length && jQuery.inArray( field.data( 'slug' ), parent.check_fields ) < 0 ) {
 						return;
 					}
 
@@ -877,13 +971,15 @@ function RclForm( form ) {
 						typeField = 'textarea';
 					}
 
-					for ( var objKey in parent.checkFields ) {
+					var checkFields = rcl_apply_filters( 'rcl_form_check_rules', parent.checkFields, parent );
+
+					for ( var objKey in checkFields ) {
 
 						if ( parent.skip && jQuery.inArray( objKey, parent.skip ) >= 0 ) {
 							continue;
 						}
 
-						var chekObject = parent.checkFields[objKey];
+						var chekObject = checkFields[objKey];
 
 						if ( chekObject.types.length && jQuery.inArray( typeField, chekObject.types ) < 0 ) {
 							continue;
@@ -956,6 +1052,7 @@ function RclForm( form ) {
 		numberRange: {
 			types: [ 'number' ],
 			isValid: function( field ) {
+
 				var range = true;
 
 				var val = field.val();
@@ -1151,7 +1248,7 @@ function RclForm( form ) {
 		 }*/
 	};
 
-	this.send = function( action, success ) {
+	this.send = function( action, success, headers ) {
 
 		if ( !this.validate() )
 			return false;
@@ -1164,6 +1261,10 @@ function RclForm( form ) {
 
 		if ( success ) {
 			sendData.success = success;
+		}
+
+		if ( headers ) {
+			sendData.headers = headers;
 		}
 
 		rcl_ajax( sendData );

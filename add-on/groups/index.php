@@ -9,12 +9,12 @@ require_once 'groups-core.php';
 require_once 'shortcodes.php';
 require_once 'groups-widgets.php';
 
-if ( !is_admin() || defined( 'DOING_AJAX' ) )
+if ( ! is_admin() || defined( 'DOING_AJAX' ) )
 	require_once 'groups-public.php';
 
 require_once 'upload-avatar.php';
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_groups_scripts', 10 );
 endif;
 function rcl_groups_scripts() {
@@ -31,7 +31,7 @@ function rcl_init_js_groups_variables( $data ) {
 add_action( 'init', 'rcl_register_rating_group_type' );
 function rcl_register_rating_group_type() {
 
-	if ( !function_exists( 'rcl_register_rating_type' ) )
+	if ( ! function_exists( 'rcl_register_rating_type' ) )
 		return false;
 
 	rcl_register_rating_type( array(
@@ -45,12 +45,12 @@ function rcl_register_rating_group_type() {
 add_filter( 'page_rewrite_rules', 'rcl_group_set_rewrite_rules' );
 function rcl_group_set_rewrite_rules( $rules ) {
 
-	if ( !rcl_get_option( 'group-output' ) )
+	if ( ! rcl_get_option( 'group-output' ) )
 		return $rules;
 
 	$page = get_post( rcl_get_option( 'group-page' ) );
 
-	if ( !$page )
+	if ( ! $page )
 		return $rules;
 
 	$rules[$page->post_name . '/([^/]+)/?$'] = 'index.php?pagename=' . $page->post_name . '&group-id=$matches[1]';
@@ -72,14 +72,14 @@ add_action( 'parse_query', 'rcl_group_add_seo_filters', 10 );
 function rcl_group_add_seo_filters() {
 	global $wp_query;
 
-	if ( !rcl_get_option( 'group-output' ) )
+	if ( ! rcl_get_option( 'group-output' ) )
 		return false;
 
 	$groupPage = rcl_get_option( 'group-page' );
 
 	$isGroupPage = (get_query_var( 'page_id' ) == $groupPage || $wp_query->queried_object_id == $groupPage) ? true : false;
 
-	if ( !$wp_query->is_page || !$isGroupPage )
+	if ( ! $wp_query->is_page || ! $isGroupPage )
 		return false;
 
 	add_filter( 'the_title', 'rcl_group_setup_page_title', 30, 2 );
@@ -101,7 +101,7 @@ function rcl_group_add_seo_filters() {
 function rcl_group_replace_title( $title ) {
 	global $rcl_group;
 
-	if ( !$rcl_group )
+	if ( ! $rcl_group )
 		return $title;
 
 	if ( $rcl_group->name ) {
@@ -123,7 +123,7 @@ function rcl_group_setup_page_title( $title, $post_id ) {
 
 	$forum_page = rcl_get_option( 'group-page', '' );
 
-	if ( $post_type == 'nav_menu_item' || $post_id != $forum_page || !$rcl_group || !in_the_loop() )
+	if ( $post_type == 'nav_menu_item' || $post_id != $forum_page || ! $rcl_group || ! in_the_loop() )
 		return $title;
 
 	$groupName = $rcl_group->name;
@@ -137,7 +137,7 @@ function rcl_group_setup_page_title( $title, $post_id ) {
 function rcl_group_replace_shortlink( $url ) {
 	global $rcl_group;
 
-	if ( !$rcl_group )
+	if ( ! $rcl_group )
 		return $url;
 
 	$groupPage = rcl_get_option( 'group-page' );
@@ -153,7 +153,7 @@ function rcl_group_replace_shortlink( $url ) {
 function rcl_group_replace_canonical_url( $url ) {
 	global $rcl_group;
 
-	if ( !$rcl_group )
+	if ( ! $rcl_group )
 		return $url;
 
 	$groupUrl = rcl_get_group_permalink( $rcl_group->term_id );
@@ -167,7 +167,7 @@ function rcl_group_replace_canonical_url( $url ) {
 function rcl_group_replace_description( $descr ) {
 	global $rcl_group;
 
-	if ( !$rcl_group )
+	if ( ! $rcl_group )
 		return $descr;
 
 	$description = get_term_field( 'description', $rcl_group->term_id, 'groups' );
@@ -183,7 +183,7 @@ function rcl_group_delete_user_in_groups( $user_id ) {
 
 	$groups = rcl_get_groups_users( array( 'user_id' => $user_id, 'number' => -1 ) );
 
-	if ( !$groups )
+	if ( ! $groups )
 		return false;
 
 	foreach ( $groups as $group ) {
@@ -285,6 +285,8 @@ function rcl_tab_groups( $type_account = 'user_id' ) {
 			$public_groups = true;
 		}
 
+		$public_groups = apply_filters( 'rcl_user_can_create_groups', $public_groups );
+
 		if ( $public_groups ) {
 			$content = '<div id="create-group">'
 				. '<form method="post">'
@@ -353,12 +355,12 @@ function rcl_get_link_group_tag( $content ) {
 			$tag		 = $data;
 	}
 
-	if ( !isset( $tag ) || !$tag )
+	if ( ! isset( $tag ) || ! $tag )
 		return $content;
 
 	if ( doing_filter( 'the_excerpt' ) ) {
 
-		if ( !$rcl_group )
+		if ( ! $rcl_group )
 			$rcl_group = rcl_get_group( $group_id );
 
 		if ( $rcl_group->group_status == 'closed' ) {
@@ -366,7 +368,7 @@ function rcl_get_link_group_tag( $content ) {
 
 				$user_status = rcl_get_group_user_status( $user_ID, $rcl_group->term_id );
 
-				if ( !$user_status )
+				if ( ! $user_status )
 					$content = rcl_close_group_post_content();
 			}
 		}
@@ -400,7 +402,7 @@ function rcl_add_namegroup( $content ) {
 
 	$group = rcl_get_group_by_post( $post->ID );
 
-	if ( !$group )
+	if ( ! $group )
 		return $content;
 
 	$group_link = '<p class="post-group-meta"><i class="rcli fa-users rcl-icon"></i><span>' . __( 'Published in group', 'wp-recall' ) . '</span>: <a href="' . rcl_get_group_permalink( $group->term_id ) . '">' . $group->name . '</a></p>';
@@ -417,7 +419,7 @@ function rcl_new_group() {
 	$name_group	 = sanitize_text_field( $_POST['rcl_group']['name'] );
 	$group_id	 = rcl_create_group( array( 'name' => $name_group, 'admin_id' => $user_ID ) );
 
-	if ( !$group_id ) {
+	if ( ! $group_id ) {
 		rcl_notice_text( __( 'Group creation failed', 'wp-recall' ), 'error' );
 	} else {
 		wp_redirect( rcl_get_group_permalink( $group_id ) );
@@ -427,7 +429,7 @@ function rcl_new_group() {
 
 function rcl_init_group_create() {
 	if ( isset( $_POST['rcl_group'] ) ) {
-		if ( !wp_verify_nonce( $_POST['_wpnonce'], 'rcl-group-create' ) )
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'rcl-group-create' ) )
 			return false;
 		add_action( 'wp', 'rcl_new_group' );
 	}
@@ -438,7 +440,7 @@ add_action( 'init', 'rcl_init_group_create' );
 add_filter( 'rcl_group_thumbnail', 'rcl_group_add_thumb_buttons' );
 function rcl_group_add_thumb_buttons( $content ) {
 
-	if ( !rcl_is_group_can( 'admin' ) || rcl_get_option( 'group_avatar_weight', 1024 ) <= 0 )
+	if ( ! rcl_is_group_can( 'admin' ) || rcl_get_option( 'group_avatar_weight', 1024 ) <= 0 )
 		return $content;
 
 	$content .= '<div id="group-avatar-upload">
@@ -454,9 +456,9 @@ add_action( 'wp', 'rcl_group_actions' );
 function rcl_group_actions() {
 	global $user_ID, $rcl_group;
 
-	if ( !isset( $_POST['group-submit'] ) )
+	if ( ! isset( $_POST['group-submit'] ) )
 		return false;
-	if ( !wp_verify_nonce( $_POST['_wpnonce'], 'group-action-' . $user_ID ) )
+	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'group-action-' . $user_ID ) )
 		return false;
 
 	switch ( $_POST['group-action'] ) {
@@ -544,7 +546,7 @@ function rcl_get_group_requests_content( $group_id ) {
 
 	$content = '<h3>' . __( 'Requests for access to the group', 'wp-recall' ) . '</h3>';
 
-	if ( !$requests ) {
+	if ( ! $requests ) {
 		$content .= '<p>' . __( 'No queries', 'wp-recall' ) . '</p>';
 		return $content;
 	}
@@ -618,13 +620,13 @@ function rcl_apply_group_request() {
 
 	$rcl_group = rcl_get_group( $group_id );
 
-	if ( !rcl_is_group_can( 'admin' ) )
+	if ( ! rcl_is_group_can( 'admin' ) )
 		return false;
 
 	$requests	 = rcl_get_group_option( $group_id, 'requests_group_access' );
 	$key		 = array_search( $user_id, $requests );
 
-	if ( !$requests || false === $key )
+	if ( ! $requests || false === $key )
 		return false;
 
 	unset( $requests[$key] );
@@ -665,14 +667,14 @@ function rcl_apply_group_request() {
 add_action( 'pre_get_posts', 'rcl_search_filter_closed_posts', 10 );
 function rcl_search_filter_closed_posts( $query ) {
 
-	if ( !is_admin() && $query->is_main_query() ) {
+	if ( ! is_admin() && $query->is_main_query() ) {
 
 		global $user_ID;
 
 		if ( $query->is_search ) {
 			$groups = rcl_get_closed_groups( $user_ID );
 
-			if ( !$groups )
+			if ( ! $groups )
 				return $query;
 
 			$query->set( 'tax_query', array(

@@ -1,5 +1,13 @@
 <?php
 
+add_filter( 'login_redirect', 'rcl_edit_default_login_redirect', 10, 3 );
+function rcl_edit_default_login_redirect( $redirect_to, $requested_redirect_to, $user ) {
+
+	rcl_update_timeaction_user();
+
+	return rcl_get_authorize_url( $user->ID );
+}
+
 add_filter( 'wp_authenticate_user', 'rcl_chek_user_authenticate', 10 );
 /**
  * проверяем подтверждение емейла, если такая настройка включена
@@ -22,7 +30,7 @@ function rcl_chek_user_authenticate( $user ) {
 /**
  * авторизация пользователя
  */
-function rcl_get_login_user() {
+function rcl_login_user() {
 	global $wp_errors;
 
 	$pass	 = sanitize_text_field( $_POST['user_pass'] );
@@ -32,7 +40,7 @@ function rcl_get_login_user() {
 
 	$wp_errors = new WP_Error();
 
-	if ( !$pass || !$login ) {
+	if ( ! $pass || ! $login ) {
 		$wp_errors->add( 'rcl_login_empty', __( 'Fill in the required fields!', 'wp-recall' ) );
 		return $wp_errors;
 	}
@@ -46,20 +54,19 @@ function rcl_get_login_user() {
 	if ( is_wp_error( $userdata ) ) {
 		$wp_errors = $userdata;
 		return $wp_errors;
-	} else {
-		rcl_update_timeaction_user();
-		wp_redirect( rcl_get_authorize_url( $userdata->ID ) );
-		exit;
 	}
+
+	wp_redirect( apply_filters( 'login_redirect', $url, '', $userdata ) );
+	exit;
 }
 
 //принимаем данные для авторизации пользователя с формы wp-recall
 add_action( 'init', 'rcl_get_login_user_activate' );
 function rcl_get_login_user_activate() {
 	if ( isset( $_POST['submit-login'] ) ) {
-		if ( !wp_verify_nonce( $_POST['login_wpnonce'], 'login-key-rcl' ) )
+		if ( ! wp_verify_nonce( $_POST['login_wpnonce'], 'login-key-rcl' ) )
 			return false;
-		add_action( 'wp', 'rcl_get_login_user' );
+		add_action( 'wp', 'rcl_login_user', 10 );
 	}
 }
 
@@ -80,7 +87,7 @@ function rcl_get_authorize_url( $user_id ) {
 			$redirect	 = rcl_get_option( 'custom_authorize_page' );
 	}
 
-	if ( !$redirect )
+	if ( ! $redirect )
 		$redirect = get_author_posts_url( $user_id );
 
 	return $redirect;
@@ -91,7 +98,7 @@ if ( function_exists( 'limit_login_add_error_message' ) )
 function rcl_limit_login_add_error_message() {
 	global $wp_errors, $limit_login_my_error_shown;
 
-	if ( !should_limit_login_show_msg() || $limit_login_my_error_shown ) {
+	if ( ! should_limit_login_show_msg() || $limit_login_my_error_shown ) {
 		return;
 	}
 

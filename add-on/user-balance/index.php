@@ -1,5 +1,7 @@
 <?php
 
+require_once 'classes/class-rcl-users-balance.php';
+
 require_once 'classes/class-rcl-payment-core.php';
 require_once 'classes/class-rcl-payment-form.php';
 require_once 'classes/class-rcl-payment-process.php';
@@ -22,7 +24,7 @@ require_once "addon-shortcodes.php";
 if ( is_admin() )
 	require_once 'admin/index.php';
 
-if ( !is_admin() ):
+if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_user_account_scripts', 10 );
 endif;
 function rcl_user_account_scripts() {

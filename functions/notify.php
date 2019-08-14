@@ -8,8 +8,11 @@ class Rcl_Notify {
 	}
 
 	function add_notify( $text ) {
-		$text .= '<div class="' . $this->type . '">' . $this->text . '</div>';
-		return $text;
+		return rcl_get_notice( array(
+			'type'	 => $this->type,
+			'text'	 => $this->text
+		) );
+		;
 	}
 
 }

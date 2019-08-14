@@ -15,7 +15,8 @@ function rcl_get_pay_form( $args ) {
 		'amount_min'	 => 1,
 		'amount_max'	 => false,
 		'amount_step'	 => 1,
-		'default'		 => 1
+		'default'		 => 1,
+		'icon'			 => 1
 		) );
 
 	$gateWays = new Rcl_Payment_Form( $args );

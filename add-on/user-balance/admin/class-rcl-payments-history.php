@@ -1,5 +1,5 @@
 <?php
-if ( !class_exists( 'WP_List_Table' ) ) {
+if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
@@ -119,14 +119,14 @@ class Rcl_Payments_History extends WP_List_Table {
 
 		$month_count = count( $months );
 
-		if ( !$month_count || ( 1 == $month_count && 0 == $months[0]->month ) )
+		if ( ! $month_count || ( 1 == $month_count && 0 == $months[0]->month ) )
 			return;
 
 		$m = isset( $_GET['m'] ) ? $_GET['m'] : 0;
 		?>
 		<label for="filter-by-date" class="screen-reader-text"><?php _e( 'Filter by date' ); ?></label>
 		<select name="m" id="filter-by-date">
-			<option<?php selected( $m, 0 ); ?> value="0"><?php _e( 'All dates' ); ?></option>
+			<option <?php selected( $m, 0 ); ?> value="0"><?php _e( 'All dates' ); ?></option>
 			<?php
 			foreach ( $months as $arc_row ) {
 				if ( 0 == $arc_row->year )
@@ -159,7 +159,7 @@ class Rcl_Payments_History extends WP_List_Table {
 			if ( isset( $_REQUEST['payments'] ) ) {
 				$payments	 = $_REQUEST['payments'];
 				$cnt		 = count( $payments );
-				for ( $a = 0; $a < $cnt; $a++ ) {
+				for ( $a = 0; $a < $cnt; $a ++ ) {
 					$id = intval( $payments[$a] );
 					if ( $id )
 						$wpdb->query( $wpdb->prepare( "DELETE FROM " . RMAG_PREF . "pay_results WHERE ID = '%d'", $id ) );

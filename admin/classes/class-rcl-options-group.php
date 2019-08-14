@@ -30,11 +30,19 @@ class Rcl_Options_Group {
 		}
 	}
 
-	function get_value( $option, $default = false ) {
+	function get_value( $option, $default = false, $group = false ) {
 
-		if ( isset( $this->option_values[$option] ) ) {
-			if ( $this->option_values[$option] || is_numeric( $this->option_values[$option] ) ) {
-				return $this->option_values[$option];
+		if ( $group ) {
+			if ( isset( $this->option_values[$group][$option] ) ) {
+				if ( $this->option_values[$group][$option] || is_numeric( $this->option_values[$group][$option] ) ) {
+					return $this->option_values[$group][$option];
+				}
+			}
+		} else {
+			if ( isset( $this->option_values[$option] ) ) {
+				if ( $this->option_values[$option] || is_numeric( $this->option_values[$option] ) ) {
+					return $this->option_values[$option];
+				}
 			}
 		}
 
@@ -53,19 +61,25 @@ class Rcl_Options_Group {
 
 	function add_option( $option ) {
 
-		$option_id = $option['slug'];
+		$option_id	 = $option['slug'];
+		$default	 = isset( $option['default'] ) ? $option['default'] : false;
+		$group		 = isset( $option['group'] ) && $option['group'] ? $option['group'] : false;
 
-		if ( !isset( $option['value'] ) )
-			$option['value'] = $this->get_value( $option_id, isset( $option['default'] ) ? $option['default'] : null  );
+		if ( ! isset( $option['value'] ) )
+			$option['value'] = $this->get_value( $option_id, $default, $group );
 
-		$option['input_name'] = $this->option_name . '[' . $option_id . ']';
+		if ( $group ) {
+			$option['input_name'] = $this->option_name . '[' . $option['group'] . '][' . $option_id . ']';
+		} else {
+			$option['input_name'] = $this->option_name . '[' . $option_id . ']';
+		}
 
 		$this->options[$option_id] = Rcl_Option::setup_option( $option );
 
 		if ( isset( $option['childrens'] ) ) {
 			foreach ( $option['childrens'] as $parentValue => $childFields ) {
 
-				if ( !is_array( $childFields ) )
+				if ( ! is_array( $childFields ) )
 					continue;
 
 				foreach ( $childFields as $childField ) {
@@ -83,7 +97,7 @@ class Rcl_Options_Group {
 
 	function get_content() {
 
-		if ( !$this->options )
+		if ( ! $this->options )
 			return false;
 
 		$content = '<div id="' . $this->group_id . '-options-group" class="options-group ' . ($this->extend ? 'extend-options' : '') . '" data-group="' . $this->group_id . '">';

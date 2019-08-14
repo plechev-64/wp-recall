@@ -13,12 +13,13 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 		$this->forum_groups = pfm_get_groups( array(
 			'order'		 => 'ASC',
-			'orderby'	 => 'group_seq'
+			'orderby'	 => 'group_seq',
+			'number'	 => -1
 			) );
 
 		$this->group_id = isset( $_GET['group-id'] ) ? intval( $_GET['group-id'] ) : 0;
 
-		if ( $this->forum_groups && !$this->group_id ) {
+		if ( $this->forum_groups && ! $this->group_id ) {
 			$this->group_id = $this->forum_groups[0]->group_id;
 		}
 
@@ -50,7 +51,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 		$fields = $this->get_options_forum();
 
-		if ( !$fields )
+		if ( ! $fields )
 			return false;
 
 		$content = $this->get_form_box( $fields, 'forum_create', __( 'Create forum', 'wp-recall' ) );
@@ -122,7 +123,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 	function get_options_forum( $forum = false ) {
 
-		if ( !$this->forum_groups )
+		if ( ! $this->forum_groups )
 			return false;
 
 		$groups = array( '' => __( 'Select the group forum', 'wp-recall' ) );
@@ -195,7 +196,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 	function get_groups_list() {
 
-		if ( !$this->forum_groups )
+		if ( ! $this->forum_groups )
 			return '<p>' . __( 'No groups are created yet', 'wp-recall' ) . '</p>';
 
 		$content = '<div class="groups-list">';
@@ -233,7 +234,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 		$content = '';
 
 		foreach ( $this->fields as $field_id => $field ) {
-			if ( isset( $field_ids ) && !in_array( $field_id, $field_ids ) )
+			if ( isset( $field_ids ) && ! in_array( $field_id, $field_ids ) )
 				continue;
 			$content .= $this->get_field_manager( $field_id );
 		}
@@ -243,7 +244,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 	function get_forums_list() {
 
-		if ( !$this->forums )
+		if ( ! $this->forums )
 			return '<p>' . __( 'Forums were not created yet', 'wp-recall' ) . '</p>';
 
 		$groups = array();

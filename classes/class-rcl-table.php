@@ -25,12 +25,14 @@ class Rcl_Table {
 
 	function __construct( $tableProps = false ) {
 
+		rcl_font_awesome_style();
+
 		$this->init_properties( $tableProps );
 
-		if ( !$this->table_id )
+		if ( ! $this->table_id )
 			$this->table_id = 'rcl-table-' . current_time( 'timestamp' );
 
-		if ( !$this->cols_number )
+		if ( ! $this->cols_number )
 			$this->cols_number = count( $this->cols );
 	}
 
@@ -50,7 +52,7 @@ class Rcl_Table {
 
 		foreach ( $attrs as $name => $value ) {
 
-			if ( !isset( $value ) || $value === '' )
+			if ( ! isset( $value ) || $value === '' )
 				continue;
 
 			if ( is_array( $value ) ) {
@@ -86,7 +88,7 @@ class Rcl_Table {
 			$attrs['class'][] = 'rcl-table__zebra';
 		}
 
-		if ( !isset( $this->cols[0]['title'] ) ) {
+		if ( ! isset( $this->cols[0]['title'] ) ) {
 			$attrs['class'][] = 'rcl-table__not-header';
 		}
 
@@ -129,11 +131,13 @@ class Rcl_Table {
 		return $this->setup_string_attrs( $attrs );
 	}
 
-	function get_cell_attrs( $cellProps = false, $place = false, $contentCell = false ) {
+	function get_cell_attrs( $idcol, $cellProps = false, $place = false, $contentCell = false ) {
 
 		$attrs = array(
-			'class' => array( 'rcl-table__cell' )
+			'class' => array( 'rcl-table__cell', 'col-' . $idcol )
 		);
+
+		$attrs['data-col'] = $idcol;
 
 		if ( $cellProps ) {
 
@@ -149,17 +153,25 @@ class Rcl_Table {
 				$attrs['data-rcl-ttitle'] = $cellProps['title'];
 			}
 
+			$attrs['data-value'] = trim( strip_tags( $contentCell ) );
+
+
 			if ( isset( $cellProps['sort'] ) && $cellProps['sort'] ) {
 				if ( $place == 'header' ) {
+
+					if ( isset( $cellProps['sort']['onclick'] ) ) {
+						$attrs['onclick'] = $cellProps['sort']['onclick'];
+					}
+
 					$attrs['class'][]	 = 'rcl-table__cell-must-sort';
-					$attrs['data-sort']	 = $cellProps['sort'];
-					$attrs['data-route'] = 'desc';
+					//$attrs['data-sort']	 = $cellProps['sort'];
+					$attrs['data-order'] = isset( $cellProps['sort']['order'] ) ? $cellProps['sort']['order'] : 'desc';
 				} else if ( $place == 'total' ) {
 					$attrs['class'][] = 'rcl-table__cell-total';
 					//$attrs['data-field'] = $cellProps['sort'];
 				} else {
-					$attrs['class'][]								 = 'rcl-table__cell-sort';
-					$attrs['data-' . $cellProps['sort'] . '-value']	 = trim( strip_tags( $contentCell ) );
+					$attrs['class'][] = 'rcl-table__cell-sort';
+					//$attrs['data-' . $cellProps['sort'] . '-value']	 = trim( strip_tags( $contentCell ) );
 				}
 			}
 		}
@@ -186,15 +198,24 @@ class Rcl_Table {
 
 		if ( $this->cols ) {
 
-			$titles = array();
+			$titles	 = array();
+			$search	 = array();
+			foreach ( $this->cols as $k => $col ) {
 
-			foreach ( $this->cols as $col ) {
 				if ( isset( $col['title'] ) )
-					$titles[] = $col['title'];
+					$titles[$k] = $col['title'];
+
+				if ( isset( $col['search'] ) && $col['search'] ) {
+					$search[$k] = $col['search'];
+				}
 			}
 
 			if ( $titles ) {
-				$content .= $this->header( $titles );
+				$content .= $this->header_row();
+			}
+
+			if ( $search ) {
+				$content .= $this->search_row();
 			}
 		}
 
@@ -235,7 +256,7 @@ class Rcl_Table {
 
 		$total = ($this->total && is_array( $this->total )) ? $this->total : array();
 
-		if ( !$total ) {
+		if ( ! $total ) {
 
 			foreach ( $this->cols as $k => $col ) {
 				if ( isset( $col['total'] ) )
@@ -260,11 +281,69 @@ class Rcl_Table {
 		return $this->row( $total, $attrs, 'total' );
 	}
 
-	function header( $cells ) {
+	function search_row() {
+
+		$attrs				 = array();
+		$attrs['class'][]	 = 'rcl-table__row';
+		$attrs['class'][]	 = 'rcl-table__row-search';
+
+		$content = '<div ' . $this->setup_string_attrs( $attrs ) . '>';
+
+		foreach ( $this->cols as $idcol => $col ) {
+
+			if ( ! isset( $col['search'] ) || ! $col['search'] )
+				$contentCell = '';
+			else {
+
+				$name	 = isset( $col['search']['name'] ) ? $col['search']['name'] : $idcol;
+				$value	 = isset( $col['search']['value'] ) ? $col['search']['value'] : '';
+
+				if ( ! $value && isset( $_REQUEST[$name] ) && $_REQUEST[$name] ) {
+					$value = $_REQUEST[$name];
+				}
+
+				$submit = isset( $col['search']['submit'] ) ? $col['search']['submit'] : '';
+
+				$onkeyup = 'onkeyup="rcl_table_search(this, event.key, ' . $submit . ');"';
+
+				if ( isset( $col['search']['onkeyup'] ) ) {
+
+					if ( ! $col['search']['onkeyup'] )
+						$onkeyup = '';
+					else
+						$onkeyup = 'onkeyup="' . $col['search']['onkeyup'] . '"';
+				}
+
+				$datescript = '';
+				if ( isset( $col['search']['type'] ) ) {
+
+					if ( $col['search']['type'] == 'date' ) {
+
+						rcl_datepicker_scripts();
+
+						$datescript = 'class="rcl-datepicker" onclick="rcl_show_datepicker(this);" title="' . __( 'Use the format', 'wp-recall' ) . ': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})"';
+					}
+				}
+
+				$contentCell = '<input type="text" ' . $datescript . ' name="' . $name . '" placeholder="' . __( 'Поиск...' ) . '" ' . $onkeyup . ' value="' . $value . '">';
+			}
+
+			$content .= $this->cell( $idcol, $contentCell, $col, 'search' );
+		}
+
+		$content .= '</div>';
+
+		return $content;
+	}
+
+	function header_row() {
 
 		$content = '<div ' . $this->get_header_attrs() . '>';
 
-		$content .= $this->parse_row_cells( $cells, 'header' );
+		foreach ( $this->cols as $idcol => $col ) {
+
+			$content .= $this->cell( $idcol, $col['title'], $col, 'header' );
+		}
 
 		$content .= '</div>';
 
@@ -275,15 +354,17 @@ class Rcl_Table {
 
 		$content = '';
 
-		foreach ( $cells as $k => $contentCell ) {
+		$ncells = array_combine( array_keys( $this->cols ), $cells );
+
+		foreach ( $ncells as $idcol => $contentCell ) {
 
 			$cellProps = false;
 
-			if ( $this->cols && isset( $this->cols[$k] ) ) {
-				$cellProps = $this->cols[$k];
+			if ( $this->cols && isset( $this->cols[$idcol] ) ) {
+				$cellProps = $this->cols[$idcol];
 			}
 
-			$content .= $this->cell( $contentCell, $cellProps, $place );
+			$content .= $this->cell( $idcol, $contentCell, $cellProps, $place );
 		}
 
 		return $content;
@@ -306,10 +387,13 @@ class Rcl_Table {
 		return $content;
 	}
 
-	function cell( $contentCell, $cellProps = false, $place = false ) {
-		if ( !isset( $contentCell ) || $contentCell === '' )
+	function cell( $idcol, $contentCell, $cellProps = false, $place = false ) {
+
+		if ( ! isset( $contentCell ) || $contentCell === '' ) {
 			$contentCell = '-';
-		return '<div ' . $this->get_cell_attrs( $cellProps, $place, $contentCell ) . '>' . $contentCell . '</div>';
+		}
+
+		return '<div ' . $this->get_cell_attrs( $idcol, $cellProps, $place, $contentCell ) . '>' . $contentCell . '</div>';
 	}
 
 }

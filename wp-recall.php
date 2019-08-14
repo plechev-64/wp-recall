@@ -151,6 +151,8 @@ final class WP_Recall {
 		require_once 'classes/class-rcl-table.php';
 		require_once 'classes/class-rcl-uploader.php';
 		require_once 'classes/class-rcl-button.php';
+		require_once 'classes/class-rcl-walker.php';
+		require_once 'classes/class-rcl-pager.php';
 
 		require_once 'classes/fields/class-rcl-field-abstract.php';
 		require_once 'classes/fields/class-rcl-field-agree.php';
@@ -175,6 +177,8 @@ final class WP_Recall {
 		require_once 'classes/class-rcl-field.php';
 		require_once 'classes/class-rcl-fields.php';
 		require_once 'classes/class-rcl-fields-manager.php';
+
+		require_once 'classes/class-rcl-form.php';
 
 		require_once 'functions/activate.php';
 		require_once 'functions/ajax.php';
@@ -358,7 +362,7 @@ final class WP_Recall {
 				'label'	 => __( 'Текстовый редактор', 'wp-recall' ),
 				'class'	 => 'Rcl_Field_Editor'
 			)
-		) );
+			) );
 	}
 
 	function init_frontend_globals() {

@@ -47,14 +47,14 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields {
 		$content .= '<ul class="rcl-types-list">';
 
 		foreach ( $postForms as $name ) {
-			preg_match( "/rcl_fields_" . $this->post_type . "_(\d)\z/", $name, $matches );
+			preg_match( "/rcl_fields_" . $this->post_type . "_(\d+)\z/", $name, $matches );
 
-			if ( !$matches )
+			if ( ! $matches )
 				continue;
 
 			$id = intval( $matches[1] );
 
-			if ( !$id )
+			if ( ! $id )
 				continue;
 
 			$form_id = $id;
@@ -70,19 +70,20 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields {
 
 		$content .= '</div>';
 
+		$content .= '<div class="rcl-custom-fields-menu">';
+
+		$content .= '<ul class="rcl-types-list">';
+
 		if ( $this->form_id != 1 ) {
 
-			$content .= '<div class="rcl-custom-fields-menu">';
-
-			$content .= '<ul class="rcl-types-list">';
-
 			$content .= '<li><a class="action-form" href="' . wp_nonce_url( admin_url( 'admin.php?page=manage-public-form&form-action=delete-form&post-type=' . $this->post_type . '&form-id=' . $this->form_id ), 'rcl-form-action' ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'wp-recall' ) . '\');"><i class="rcli fa-trash"></i> ' . __( 'Delete form', 'wp-recall' ) . '</a></li>';
-
-			$content .= '</ul>';
-
-			$content .= '</div>';
 		}
-		//}
+
+		$content .= '<li><a class="action-form" href="#" onclick="rcl_manager_copy_fields(\'' . $this->post_type . '_' . ($form_id + 1) . '\');"><i class="rcli fa-copy"></i> ' . __( 'Дублировать', 'wp-recall' ) . '</a></li>';
+
+		$content .= '</ul>';
+
+		$content .= '</div>';
 
 		return $content;
 	}

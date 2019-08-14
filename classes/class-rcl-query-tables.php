@@ -22,6 +22,24 @@ class Rcl_Users_Query extends Rcl_Query {
 
 }
 
+class Rcl_User_Action extends Rcl_Query {
+	function __construct() {
+
+		$table = array(
+			'name'	 => RCL_PREF . 'user_action',
+			'as'	 => 'rcl_user_action',
+			'cols'	 => array(
+				'ID',
+				'user_id',
+				'time_action'
+			)
+		);
+
+		parent::__construct( $table );
+	}
+
+}
+
 class Rcl_Temp_Media extends Rcl_Query {
 	function __construct() {
 

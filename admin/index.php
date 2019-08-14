@@ -48,7 +48,7 @@ function rmag_global_options() {
 
 function rmag_update_options() {
 	if ( isset( $_POST['primary-rmag-options'] ) ) {
-		if ( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rmag' ) )
+		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rmag' ) )
 			return false;
 		$_POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
 
@@ -73,7 +73,7 @@ function rmag_update_options() {
 
 add_action( 'init', 'rmag_update_options' );
 function rcl_wp_list_current_action() {
-	if ( isset( $_REQUEST['filter_action'] ) && !empty( $_REQUEST['filter_action'] ) )
+	if ( isset( $_REQUEST['filter_action'] ) && ! empty( $_REQUEST['filter_action'] ) )
 		return false;
 
 	if ( isset( $_REQUEST['action'] ) && -1 != $_REQUEST['action'] )
@@ -111,22 +111,22 @@ function rcl_options_box( $post ) {
 }
 
 function rcl_postmeta_update( $post_id ) {
-	if ( !isset( $_POST['rcl_fields_nonce'] ) )
+	if ( ! isset( $_POST['rcl_fields_nonce'] ) )
 		return false;
-	if ( !wp_verify_nonce( $_POST['rcl_fields_nonce'], __FILE__ ) )
+	if ( ! wp_verify_nonce( $_POST['rcl_fields_nonce'], __FILE__ ) )
 		return false;
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 		return false;
-	if ( !current_user_can( 'edit_post', $post_id ) )
+	if ( ! current_user_can( 'edit_post', $post_id ) )
 		return false;
 
-	if ( !isset( $_POST['wprecall'] ) )
+	if ( ! isset( $_POST['wprecall'] ) )
 		return false;
 
 	$POST = $_POST['wprecall'];
 
 	foreach ( $POST as $key => $value ) {
-		if ( !is_array( $value ) )
+		if ( ! is_array( $value ) )
 			$value = trim( $value );
 		if ( $value == '' )
 			delete_post_meta( $post_id, $key );
@@ -139,7 +139,7 @@ function rcl_postmeta_update( $post_id ) {
 rcl_ajax_action( 'rcl_update_options', false );
 function rcl_update_options() {
 
-	if ( !wp_verify_nonce( $_POST['_wpnonce'], 'update-options' ) ) {
+	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'update-options' ) ) {
 		wp_send_json( array(
 			'error' => __( 'Error', 'wp-recall' )
 		) );
@@ -154,7 +154,7 @@ function rcl_update_options() {
 
 	foreach ( $POST as $option_name => $value ) {
 
-		if ( !is_array( $value ) )
+		if ( ! is_array( $value ) )
 			continue;
 
 		$value = apply_filters( $option_name . '_pre_update', $value );
@@ -176,10 +176,10 @@ add_action( 'admin_init', 'rcl_update_custom_fields', 10 );
 function rcl_update_custom_fields() {
 	global $wpdb;
 
-	if ( !isset( $_POST['rcl_save_custom_fields'] ) )
+	if ( ! isset( $_POST['rcl_save_custom_fields'] ) )
 		return false;
 
-	if ( !wp_verify_nonce( $_POST['_wpnonce'], 'rcl-update-custom-fields' ) )
+	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'rcl-update-custom-fields' ) )
 		return false;
 
 	$fields = array();
@@ -191,7 +191,7 @@ function rcl_update_custom_fields() {
 
 	$POSTDATA = apply_filters( 'rcl_pre_update_custom_fields_options', $_POST );
 
-	if ( !$POSTDATA )
+	if ( ! $POSTDATA )
 		return false;
 
 	if ( isset( $POSTDATA['rcl_deleted_custom_fields'] ) ) {
@@ -214,7 +214,7 @@ function rcl_update_custom_fields() {
 
 		foreach ( $POSTDATA['new-field'] as $optionSlug => $vals ) {
 			$newFields[$nKey] = $vals;
-			$nKey++;
+			$nKey ++;
 		}
 	}
 
@@ -223,9 +223,9 @@ function rcl_update_custom_fields() {
 
 	foreach ( $POSTDATA['fields'] as $k => $slug ) {
 
-		if ( !$slug ) {
+		if ( ! $slug ) {
 
-			if ( !isset( $newFields[$nKey] ) || !$newFields[$nKey]['title'] )
+			if ( ! isset( $newFields[$nKey] ) || ! $newFields[$nKey]['title'] )
 				continue;
 
 			if ( isset( $newFields[$nKey]['slug'] ) && $newFields[$nKey]['slug'] )
@@ -235,10 +235,10 @@ function rcl_update_custom_fields() {
 
 			$field = $newFields[$nKey];
 
-			$nKey++;
+			$nKey ++;
 		}else {
 
-			if ( !isset( $POSTDATA['field'][$slug] ) )
+			if ( ! isset( $POSTDATA['field'][$slug] ) )
 				continue;
 
 			$field = $POSTDATA['field'][$slug];
@@ -412,6 +412,7 @@ function rcl_send_addon_activation_notice( $addon_id, $addon_headers ) {
 rcl_ajax_action( 'rcl_manager_update_fields', false );
 function rcl_manager_update_fields() {
 
+	$copy		 = $_POST['copy'];
 	$manager_id	 = $_POST['manager_id'];
 	$option_name = $_POST['option_name'];
 
@@ -424,7 +425,7 @@ function rcl_manager_update_fields() {
 	$isset_new	 = false;
 	foreach ( $fieldsData as $field_id => $field ) {
 
-		if ( !$field['title'] )
+		if ( ! $field['title'] )
 			continue;
 
 		if ( isset( $field['values'] ) ) {
@@ -444,7 +445,7 @@ function rcl_manager_update_fields() {
 
 			$old_id = $field_id;
 
-			if ( !$field['id'] ) {
+			if ( ! $field['id'] ) {
 
 				$field_id = str_replace( array( '-', ' ' ), '_', rcl_sanitize_string( $field['title'] ) . '-' . rand( 1, 100 ) );
 			} else {
@@ -480,7 +481,7 @@ function rcl_manager_update_fields() {
 					$strArray[$group_id]['areas'][$area_id]['fields'][] = $value['field_id'];
 				}
 			} else {
-				$area_id++;
+				$area_id ++;
 				$strArray[$group_id]['areas'][$area_id]['width'] = isset( $_POST['structure-areas'][$area_id]['width'] ) ? $_POST['structure-areas'][$area_id]['width'] : 0;
 			}
 		}
@@ -506,7 +507,7 @@ function rcl_manager_update_fields() {
 						$field_id = $changeIds[$field_id];
 					}
 
-					if ( !isset( $keyFields[$field_id] ) ) {
+					if ( ! isset( $keyFields[$field_id] ) ) {
 						unset( $area['fields'][$k] );
 						continue;
 					}
@@ -524,7 +525,7 @@ function rcl_manager_update_fields() {
 		$structure = $endStructure;
 	}
 
-	update_option( $option_name, $fields );
+	update_site_option( $option_name, $fields );
 
 	if ( $structure )
 		update_site_option( 'rcl_fields_' . $manager_id . '_structure', $structure );
@@ -538,6 +539,18 @@ function rcl_manager_update_fields() {
 	);
 
 	if ( $isset_new ) {
+		$args['reload'] = true;
+	}
+
+	if ( $copy ) {
+
+		update_site_option( 'rcl_fields_' . $copy, $fields );
+
+		if ( $structure )
+			update_site_option( 'rcl_fields_' . $copy . '_structure', $structure );
+
+		do_action( 'rcl_fields_copy', $fields, $manager_id, $copy );
+
 		$args['reload'] = true;
 	}
 

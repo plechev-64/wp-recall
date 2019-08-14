@@ -20,6 +20,7 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 	public $amount_max	 = false;
 	public $amount_step	 = 1;
 	public $default		 = 1;
+	public $icon		 = 1;
 
 	function __construct( $args = array() ) {
 		global $rmag_options, $user_ID;
@@ -39,23 +40,23 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 		$checkSystems	 = is_array( $rmag_options['connect_sale'] ) ? $rmag_options['connect_sale'] : array( $rmag_options['connect_sale'] );
 		$checkSystems[]	 = 'user_balance';
 
-		if ( !$this->ids ) {
+		if ( ! $this->ids ) {
 
 			$this->ids = $checkSystems;
 		} else {
 
-			if ( !is_array( $this->ids ) )
+			if ( ! is_array( $this->ids ) )
 				$this->ids = array_map( 'trim', explode( ',', $this->ids ) );
 
 			foreach ( $this->ids as $k => $typeConnect ) {
-				if ( !in_array( $typeConnect, $checkSystems ) )
+				if ( ! in_array( $typeConnect, $checkSystems ) )
 					unset( $this->ids[$k] );
 			}
 		}
 
 		if ( $this->ids__not_in ) {
 
-			if ( !is_array( $this->ids__not_in ) )
+			if ( ! is_array( $this->ids__not_in ) )
 				$this->ids__not_in = array_map( 'trim', explode( ',', $this->ids__not_in ) );
 
 			foreach ( $this->ids as $k => $typeConnect ) {
@@ -64,16 +65,16 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 			}
 		}
 
-		if ( !$this->pay_id )
+		if ( ! $this->pay_id )
 			$this->pay_id = current_time( 'timestamp' );
 
-		if ( !$this->currency )
+		if ( ! $this->currency )
 			$this->currency = (isset( $rmag_options['primary_cur'] ) && $rmag_options['primary_cur'] != 'RUB') ? $rmag_options['primary_cur'] : 'RUB';
 
-		if ( !$this->user_id )
+		if ( ! $this->user_id )
 			$this->user_id = $user_ID;
 
-		if ( !$this->description )
+		if ( ! $this->description )
 			$this->description = __( 'Платеж от', 'wp-recall' ) . ' ' . get_the_author_meta( 'user_email', $this->user_id );
 
 		$this->pay_summ = round( str_replace( ',', '.', $this->pay_summ ), 2 );
@@ -89,16 +90,16 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 	function setup_gateways() {
 		global $rcl_gateways;
 
-		if ( !$rcl_gateways )
+		if ( ! $rcl_gateways )
 			return false;
 
-		if ( !$this->ids ) {
+		if ( ! $this->ids ) {
 			$this->gateways = $rcl_gateways;
 		} else {
 
 			foreach ( $rcl_gateways->gateways as $id => $gateWay ) {
 
-				if ( !in_array( $id, $this->ids ) )
+				if ( ! in_array( $id, $this->ids ) )
 					continue;
 
 				$this->gateways[$id] = Rcl_Gateways()->gateway( $id );
@@ -108,7 +109,7 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 
 	function get_form() {
 
-		if ( !$this->gateways )
+		if ( ! $this->gateways )
 			return false;
 
 		$content = '<div class="rcl-payment-forms rcl-payment-buttons">';
@@ -116,11 +117,14 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 		$styles = '';
 		foreach ( $this->gateways as $id => $gateway ) {
 
+			if ( ! $form = $gateway->get_form( $this ) )
+				continue;
+
 			$content .= '<div class="rcl-payment-form rcl-payment-button rcl-payment-form-type-' . $this->pay_type . '" data-gateway-id="' . $id . '">';
-			$content .= $gateway->get_form( $this );
+			$content .= $form;
 			$content .= '</div>';
 
-			if ( $gateway->icon ) {
+			if ( $this->icon && $gateway->icon ) {
 				$styles .= '<style>.rcl-payment-form[data-gateway-id="' . $id . '"]{'
 					. 'background-image:url(' . $gateway->icon . ');'
 					. '}</style>';
@@ -142,7 +146,7 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 				'title'			 => __( 'Сумма платежа', 'wp-recall' ),
 				'required'		 => true,
 				'value_min'		 => $this->amount_min,
-				'value_max'		 => $this->amount_type == 'runner' && !$this->amount_max ? 100 : false,
+				'value_max'		 => $this->amount_type == 'runner' && ! $this->amount_max ? 100 : false,
 				'value_step'	 => $this->amount_step,
 				'placeholder'	 => 0
 			)
