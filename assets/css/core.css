@@ -1600,6 +1600,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 	-webkit-hyphens: auto;
 	-ms-hyphens: auto;
 	hyphens: auto;
+	clear: both;
 }
 .rcl-table__border {
 	border: 1px solid #e5e5e5;
@@ -1849,6 +1850,7 @@ body .ssi-modalOuter .ssi-modalTitle {
     overflow: hidden;
     padding: 12px 36px;
     position: relative;
+	clear: both;
 }
 .rcl-notice.rcl-notice__type-info,
 .rcl-notice.rcl-notice__type-warning{

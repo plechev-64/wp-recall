@@ -302,7 +302,10 @@ class Rcl_Table {
 					$value = $_REQUEST[$name];
 				}
 
-				$submit = isset( $col['search']['submit'] ) ? $col['search']['submit'] : '';
+				$submit = isset( $col['search']['submit'] ) ? $col['search']['submit'] : 0;
+
+				if ( is_string( $submit ) )
+					$submit = '\'' . $submit . '\'';
 
 				$onkeyup = 'onkeyup="rcl_table_search(this, event.key, ' . $submit . ');"';
 

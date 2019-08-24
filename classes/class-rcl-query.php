@@ -138,32 +138,36 @@ class Rcl_Query {
 			}
 		}
 
+		$preOrderBy = $this->query['table']['as'] . '.';
+		if ( isset( $this->query['union'] ) ) {
+			$preOrderBy = '';
+		}
+
 		if ( isset( $this->args['orderby'] ) ) {
 
 			if ( $this->args['orderby'] == 'rand' ) {
-				$this->query['orderby']	 = $this->query['table']['as'] . '.' . $this->query['table']['cols'][0];
+				$this->query['orderby']	 = $preOrderBy . $this->query['table']['cols'][0];
 				$this->query['order']	 = 'RAND()';
 			} else if ( is_array( $this->args['orderby'] ) ) {
 				foreach ( $this->args['orderby'] as $orderby => $order ) {
-					$this->query['orderby'][$this->query['table']['as'] . '.' . $orderby] = $order;
+					$this->query['orderby'][$preOrderBy . $orderby] = $order;
 				}
 			} else {
-				$this->query['orderby']	 = $this->query['table']['as'] . '.' . $this->args['orderby'];
+				$this->query['orderby']	 = $preOrderBy . $this->args['orderby'];
 				$this->query['order']	 = (isset( $this->args['order'] ) && $this->args['order']) ? $this->args['order'] : 'DESC';
 			}
 		} else if ( isset( $this->args['orderby_as_decimal'] ) ) {
 
-			$this->query['orderby']	 = 'CAST(' . $this->query['table']['as'] . '.' . $this->args['orderby_as_decimal'] . ' AS DECIMAL)';
+			$this->query['orderby']	 = 'CAST(' . $preOrderBy . $this->args['orderby_as_decimal'] . ' AS DECIMAL)';
 			$this->query['order']	 = (isset( $this->args['order'] ) && $this->args['order']) ? $this->args['order'] : 'DESC';
 		} else if ( isset( $this->args['order'] ) ) {
 
 			$this->query['order'] = $this->args['order'];
 		} else {
 
-			$this->query['orderby']	 = $this->query['table']['as'] . '.' . $this->query['table']['cols'][0];
+			$this->query['orderby']	 = $preOrderBy . $this->query['table']['cols'][0];
 			$this->query['order']	 = 'DESC';
 		}
-
 
 		if ( isset( $this->args['number'] ) )
 			$this->query['number'] = $this->args['number'];
@@ -611,6 +615,7 @@ class Rcl_Query {
 		unset( $query['orderby'] );
 		unset( $query['order'] );
 		unset( $query['number'] );
+		unset( $query['having'] );
 
 		$query['select'] = array( $operator . '(' . $query['table']['as'] . '.' . $field_name . ')' );
 
@@ -621,7 +626,7 @@ class Rcl_Query {
 		else
 			$result	 = $wpdb->get_var( $sql );
 
-		$this->reset_query();
+		//$this->reset_query();
 
 		return $result;
 	}

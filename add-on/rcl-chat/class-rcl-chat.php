@@ -451,6 +451,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 			krsort( $messages );
 
 			foreach ( $messages as $k => $message ) {
+
 				$content .= $this->get_message_box( $message );
 			}
 

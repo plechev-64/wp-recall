@@ -794,8 +794,11 @@ function rcl_table_search( e, key, submit ) {
 
 	if ( submit ) {
 
-		if ( key == 'Enter' ) {
-			rcl_do_action( 'rcl_pre_submit_search_table', e );
+		if ( typeof submit == 'string' ) {
+
+			return window[submit].call( this, e, key, submit );
+
+		} else if ( key == 'Enter' ) {
 			jQuery( e ).parents( 'form' ).submit();
 		}
 
