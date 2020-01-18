@@ -5,7 +5,7 @@ class Rcl_Notice {
 	public $type		 = 'info'; //simple,info,error
 	public $title		 = '';
 	public $text		 = '';
-	public $icon		 = 'fa-info-circle';
+	public $icon		 = true;
 	public $class		 = '';
 	public $border		 = true;
 	public $cookie		 = '';
@@ -24,7 +24,7 @@ class Rcl_Notice {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) & ! empty( $args[$name] ) )
+			if ( isset( $args[$name] ) )
 				$this->$name = $args[$name];
 		}
 	}
@@ -44,19 +44,21 @@ class Rcl_Notice {
 
 	function setup_icon() {
 
-		if ( $this->icon )
+		if ( ! $this->icon )
 			return;
 
-		switch ( $this->type ) {
-			case 'success':
-				$this->icon	 = 'fa-check-circle';
-				break;
-			case 'warning':
-				$this->icon	 = 'fa-exclamation-circle';
-				break;
-			case 'info':
-				$this->icon	 = 'fa-info-circle';
-				break;
+		if ( ! is_string( $this->icon ) ) {
+			switch ( $this->type ) {
+				case 'success':
+					$this->icon	 = 'fa-check-circle';
+					break;
+				case 'warning':
+					$this->icon	 = 'fa-exclamation-circle';
+					break;
+				case 'info':
+					$this->icon	 = 'fa-info-circle';
+					break;
+			}
 		}
 	}
 
