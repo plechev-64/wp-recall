@@ -1309,15 +1309,7 @@ function rcl_filter_custom_tab_vars( $content ) {
 	if ( ! $matchs )
 		return $content;
 
-	$vars		 = array();
-	$replaces	 = array();
-
-	foreach ( $matchs as $var => $replace ) {
-		$vars[]		 = $var;
-		$replaces[]	 = $replace;
-	}
-
-	return str_replace( $vars, $replaces, $content );
+	return strtr( $content, $matchs );
 }
 
 add_filter( 'rcl_custom_tab_content', 'rcl_filter_custom_tab_usermetas', 5 );
