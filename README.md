@@ -1,4 +1,4 @@
-# Плагин Wp-Recall
+# Плагин WP-Recall
 
 Плагин WordPress для создания личного кабинета пользователя. 
 Плагин расширяет свои возможности за счет подключения различных дополнений. 
@@ -22,7 +22,7 @@
 ---
 
 ## LICENSE
-License:     GPLv2 or later (license.txt)
+License:	 GPLv2 or later (license.txt)
 Copyright 2012 Plechev Andrey <support@codeseller.ru>
 http://codeseller.ru/
 

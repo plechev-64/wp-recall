@@ -1,0 +1,81 @@
+/* new payment form*/
+
+.rcl-payment-form{
+	max-width: 380px;
+	margin: 5px auto;
+}
+.rcl-payment-form .rcl-form{
+	margin: 0;
+}
+.rcl-payment-form .rcl-field-gateway_id{
+
+}
+.rcl-payment-form .rcl-field-gateway_id .rcl-radio-box{
+	display:block;
+	padding: 3px 0 3px 40px;
+	background-size: 35px;
+	background-position: 5px 5px;
+	background-repeat: no-repeat;
+	margin: 5px 0;
+	border: 1px solid #ccc;
+}
+.rcl-payment-form .rcl-field-gateway_id .rcl-radio-box label{
+	display:block;
+	background: none;
+	border: none;
+}
+
+.rcl-payment-button{
+	display:block;
+	padding: 5px 5px 5px 40px;
+	background-size: 35px;
+	background-position: bottom 5px left 3px;
+	background-repeat: no-repeat;
+	border: 1px solid #ccc;
+}
+.rcl-payment-button .submit-box{
+	background: none;
+	text-align: left!important;
+	padding: 0;
+	margin: 0;
+}
+body .rcl-payment-button .submit-box a{
+	margin: 0!important;
+	/* background: none!important; */
+	/* color: inherit; */
+	display: block;
+	padding: 5px;
+}
+
+
+/****/
+
+/* balance-widget */
+
+.rcl-balance-widget{
+	max-width: 350px;
+}
+.rcl-balance-widget .balance-amount{
+	text-align: center;
+}
+.rcl-balance-widget .amount-title{
+	display: block;
+	font-weight: bold;
+	text-align: left;
+}
+.rcl-balance-widget .amount-size{
+	font-size: 18px;
+}
+.rcl-balance-widget .update-link{
+	text-decoration: none;
+	border: none;
+	font-size: 13px;
+	vertical-align: middle;
+	margin-left: 15px;
+	color: #4c8cbd;
+}
+.rcl-balance-widget .balance-form{
+	display:none;
+}
+
+/****/

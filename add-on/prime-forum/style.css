@@ -1,280 +1,280 @@
 #tab-button-prime-forum .fa-sitemap::before { /*stupid Twenty Fourteen fix*/
-    content: "\f0e8";
-    display: inline-block;
+	content: "\f0e8";
+	display: inline-block;
 }
 #prime-forum {
-    font-size: 15px;
-    line-height: normal;
-    position: relative;
+	font-size: 15px;
+	line-height: normal;
+	position: relative;
 }
 #prime-forum a {
-    border: none;
-    box-shadow: none;
-    text-decoration: none;
+	border: none;
+	box-shadow: none;
+	text-decoration: none;
 }
 #prime-forum h3 {
-    color: #000;
-    font-size: 18px;
-    font-weight: normal;
-    line-height: normal;
-    margin: 10px 0 5px;
-    padding: 0;
-    text-transform: none;
+	color: #000;
+	font-size: 18px;
+	font-weight: normal;
+	line-height: normal;
+	margin: 10px 0 5px;
+	padding: 0;
+	text-transform: none;
 }
 #prime-forum p {
-    line-height: normal;
-    margin: 5px 0;
-    padding: 0;
+	line-height: normal;
+	margin: 5px 0;
+	padding: 0;
 }
 #prime-forum blockquote::before {
-    color: #cfd4d8;
-    content: "\f10e";
-    font-family: fontawesome;
-    font-size: 20px;
-    left: 5px;
-    position: absolute;
-    top: 5px;
-    line-height: normal;
-    margin: 0;
-    width: auto;
+	color: #cfd4d8;
+	content: "\f10e";
+	font-family: rcl-awesome;
+	font-size: 20px;
+	left: 5px;
+	line-height: normal;
+	margin: 0;
+	position: absolute;
+	top: 5px;
+	width: auto;
 }
 #prime-forum blockquote {
-    background-color: #f2f2f2;
-    border-bottom: none;
-    border-left: 5px solid #e3e8ec;
-    border-top: none;
-    color: inherit;
-    font-family: inherit;
-    font-size: 14px;
-    font-style: normal;
-    hyphens: auto;
-    line-height: normal;
-    margin: 15px 8px;
-    overflow-wrap: break-word;
-    padding: 20px 10px 15px 30px;
-    position: relative;
-    min-height: initial; 
+	background-color: #f2f2f2;
+	border-bottom: none;
+	border-left: 5px solid #e3e8ec;
+	border-top: none;
+	color: inherit;
+	font-family: inherit;
+	font-size: 14px;
+	font-style: normal;
+	hyphens: auto;
+	line-height: normal;
+	margin: 15px 8px;
+	min-height: initial;
+	overflow-wrap: break-word;
+	padding: 20px 10px 15px 30px;
+	position: relative;
 }
 #prime-forum blockquote p {
-    font-size: initial;
+	font-size: initial;
 }
 #prime-forum pre::before {
-    background-color: transparent;
-    color: #ffae19;
-    content: "\f120";
-    font-family: fontawesome;
-    font-size: 20px;
-    height: auto;
-    left: 10px;
-    line-height: 1;
-    position: absolute;
-    top: 3px;
+	background-color: transparent;
+	color: #ffae19;
+	content: "\f120";
+	font-family: rcl-awesome;
+	font-size: 20px;
+	height: auto;
+	left: 10px;
+	line-height: 1;
+	position: absolute;
+	top: 3px;
 }
 #prime-forum pre{
-    background-color: #ffffff;
-    background-image: none !important;
-    border: 2px solid #e3e8ec;
-    color: #1f7ca9 !important;
-    font-size: inherit;
-    display: block;
-    line-height: normal;
-    margin: 10px 0;
-    overflow: auto;
-    padding: 35px 10px 20px 20px !important;
-    position: relative;
-    white-space: pre;
-    word-wrap: normal;
+	background-color: #fff;
+	background-image: none !important;
+	border: 2px solid #e3e8ec;
+	color: #1f7ca9 !important;
+	display: block;
+	font-size: inherit;
+	line-height: normal;
+	margin: 10px 0;
+	overflow: auto;
+	padding: 35px 10px 20px 20px !important;
+	position: relative;
+	white-space: pre;
+	word-wrap: normal;
+	-moz-tab-size: 4;
+	tab-size: 4;
 }
 #prime-forum code{
-    padding: 0 .3em;
-    background-color: rgba(0,0,0,.06);
-    border: 1px solid rgba(0,0,0,.08);
-    border-top: 0;
-    border-bottom: 0;
-    border-radius: 2px;
+	background-color: rgba(0,0,0,.06);
+	border-bottom: 0;
+	border-radius: 2px;
+	border-top: 0;
+	border: 1px solid rgba(0,0,0,.08);
+	padding: 0 .3em;
 }
-#prime-forum .preloader-box{
-    position:relative;
+#prime-forum .preloader-box {
+	position: relative;
 }
-#prime-forum .prime-spoiler{
-    padding: 5px;
-    border: 1px solid #e5e5e5;
-    clear:both;
+#prime-forum .prime-spoiler {
+	border: 1px solid #e5e5e5;
+	clear: both;
+	padding: 5px;
 }
-#prime-forum .prime-spoiler .prime-spoiler-link{
-    color: #4d78af;
-    display: block;
-    padding: 5px 10px;
-    background: #f1f1f1;
+#prime-forum .prime-spoiler .prime-spoiler-link {
+	background: #f1f1f1;
+	color: #4d78af;
+	display: block;
+	padding: 5px 10px;
 }
-#prime-forum .prime-spoiler .prime-spoiler-content{
-    background: #ffffff;
-    padding: 5px;
-    display: none;
+#prime-forum .prime-spoiler .prime-spoiler-content {
+	background: #fff;
+	display: none;
+	padding: 5px;
 }
-#prime-forum .prime-offtop{
-    padding: 5px;
-    border: 1px solid #e5e5e5;
-    clear:both;
+#prime-forum .prime-offtop {
+	border: 1px solid #e5e5e5;
+	clear: both;
+	padding: 5px;
 }
-#prime-forum .prime-offtop .prime-offtop-title{
-    font-size:12px;
-    display: block;
-    padding: 5px 10px;
-    background: #f1f1f1;
+#prime-forum .prime-offtop .prime-offtop-title {
+	background: #f1f1f1;
+	display: block;
+	font-size: 12px;
+	padding: 5px 10px;
 }
-#prime-forum .prime-offtop .prime-offtop-content{
-    background: #ffffff;
-    padding: 5px;
-    font-size:11px;
+#prime-forum .prime-offtop .prime-offtop-content {
+	background: #fff;
+	font-size: 11px;
+	padding: 5px;
 }
-
 
 /* START quicktags editor */
 #prime-topic-form-box .wp-editor-container {
-    border: none;
+	border: none;
 }
 #prime-topic-form-box .quicktags-toolbar {
-    border: none;
-    padding: 3px 0;
+	border: none;
+	padding: 3px 0;
 }
 #prime-topic-form-box .quicktags-toolbar > span {
-    display: inline-block;
-    position: relative;
+	display: inline-block;
+	position: relative;
 }
-#prime-topic-form-box span[id^="qt_button"] input{
-    height: auto;
-    line-height: 24px;
-    margin: 0 4px 4px 0;
-    opacity: 0;
-    padding: 0;
-    width: 40px;
+#prime-topic-form-box span[id^="qt_button"] input {
+	height: auto;
+	line-height: 24px;
+	margin: 0 4px 4px 0;
+	opacity: 0;
+	padding: 0;
+	width: 40px;
 }
 #prime-topic-form-box .quicktags-toolbar > span::before {
-    border: 1px solid #e5e5e5;
-    box-sizing: border-box;
-    color: #555;
-    font-family: fontawesome;
-    font-size: 17px;
-    left: 0;
-    line-height: 17px;
-    padding: 5px 11px;
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    width: 40px;
-    z-index: 2;
+	border: 1px solid #e5e5e5;
+	box-sizing: border-box;
+	color: #555;
+	font-family: rcl-awesome;
+	font-size: 17px;
+	left: 0;
+	line-height: 17px;
+	padding: 5px 11px;
+	pointer-events: none;
+	position: absolute;
+	top: 0;
+	width: 40px;
+	z-index: 2;
 }
 #prime-topic-form-box .quicktags-toolbar > span:hover::before {
-    border: 1px solid #d5d5d5;
-    color: #000;
+	border: 1px solid #d5d5d5;
+	color: #000;
 }
 #prime-topic-form-box #qt_button_strong::before {
-    content: "\f032";
-    padding-left: 13px;
+	content: "\f032";
+	padding-left: 13px;
 }
 #prime-topic-form-box #qt_button_em::before {
-    content: "\f033";
-    padding-left: 14px;
+	content: "\f033";
+	padding-left: 14px;
 }
 #prime-topic-form-box #qt_button_link::before {
-    content: "\f0c1";
+	content: "\f0c1";
 }
 #prime-topic-form-box #qt_button_block::before {
-    content: "\f10e";
+	content: "\f10e";
 }
 #prime-topic-form-box #qt_button_del::before {
-    content: "\f0cc";
+	content: "\f0cc";
 }
 #prime-topic-form-box #qt_button_pfm_pre::before {
-    content: "\f120";
+	content: "\f120";
 }
 #prime-topic-form-box #qt_button_code::before {
-    content: "\f121";
-    padding-left: 10px;
+	content: "\f121";
+	padding-left: 10px;
 }
 #prime-topic-form-box #qt_button_pfm_offtop::before {
-    content: "\f0f4";
+	content: "\f0f4";
 }
 #prime-topic-form-box #qt_button_pfm_spoiler::before {
-    content: "\f070";
+	content: "\f070";
 }
 #prime-topic-form-box #qt_button_close::before {
-    content: "\f0d0";
+	content: "\f0d0";
 }
 #prime-topic-form-box #qt_button_img::before {
-    content: "\f03e";
+	content: "\f03e";
 }
 #prime-topic-form-box .wp-editor-wrap .wp-editor-area {
-    border: 1px solid #ddd;
-    padding: 8px;
+	border: 1px solid #ddd;
+	padding: 8px;
 }
 #prime-topic-form-box .wp-editor-wrap .wp-editor-area:focus {
-    border-color: #ccc;
+	border-color: #ccc;
 }
 /* END quicktags editor */
 
-
-.prime-last-posts{
-    line-height: 1;
+.prime-last-posts {
+	line-height: 1;
 }
-body .prime-last-posts ul.last-post-list{
-    padding-left:0;
+body .prime-last-posts ul.last-post-list {
+	padding-left: 0;
 }
-.prime-last-posts .last-post-box{
-    overflow: hidden;
-    margin-bottom: 10px;
+.prime-last-posts .last-post-box {
+	margin-bottom: 10px;
+	overflow: hidden;
 }
-.prime-last-posts .last-post-author-avatar{
-    float: left;
-    margin-right: 10px;
+.prime-last-posts .last-post-author-avatar {
+	float: left;
+	margin-right: 10px;
 }
-.prime-last-posts .last-post-title{
-    margin-bottom: 5px;
-    font-weight: bold;
+.prime-last-posts .last-post-title {
+	font-weight: bold;
+	margin-bottom: 5px;
 }
-.prime-last-posts .last-post-content{
-    overflow: hidden;
+.prime-last-posts .last-post-content {
+	overflow: hidden;
 }
 #prime-forum .prime-post.new-post {
-    -webkit-animation: rcl-blink 2s linear both;
-    animation: rcl-blink 2s linear both;
+	-webkit-animation: rcl-blink 2s linear both;
+	animation: rcl-blink 2s linear both;
 }
 /*post edit list*/
 .post-edit-list {
-    border-top: 1px solid #eee;
-    clear: both;
-    color: #777;
-    font-size: 11px;
-    line-height: 1;
-    margin: 15px 0 0;
-    padding: 15px 5px 0 0;
+	border-top: 1px solid #eee;
+	clear: both;
+	color: #777;
+	font-size: 11px;
+	line-height: 1;
+	margin: 15px 0 0;
+	padding: 15px 5px 0 0;
 }
 .post-edit-list .post-edit-title {
-    font-weight: bold;
-    margin-bottom: 4px;
+	font-weight: bold;
+	margin-bottom: 4px;
 }
 .post-edit-list .post-edit-item:not(:last-child) {
-    margin-bottom: 4px;
+	margin-bottom: 4px;
 }
 .post-edit-list .post-edit-item > span {
-    margin-right: 15px;
+	margin-right: 15px;
 }
 #prime-forum .post-separator{
-    display: block;
-    font-size: 12px;
-    border-bottom: 1px solid #ccc;
-    margin: 15px 0 5px 0;
-    text-align: right;
+	border-bottom: 1px solid #ccc;
+	display: block;
+	font-size: 12px;
+	margin: 15px 0 5px 0;
+	text-align: right;
 }
 @media screen and (max-width:640px) {
-    .post-edit-list .post-edit-item:not(:last-child) {
-        margin-bottom: 8px;
-    }
+	.post-edit-list .post-edit-item:not(:last-child) {
+		margin-bottom: 8px;
+	}
 }
 /**/
 @keyframes rcl-blink {
-    50% {
-        background-color: #ffffd7;
-    }
+	50% {
+		background-color: #ffffd7;
+	}
 }

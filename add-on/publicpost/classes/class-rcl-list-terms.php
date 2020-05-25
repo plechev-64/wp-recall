@@ -1,304 +1,292 @@
 <?php
 
-class Rcl_List_Terms{
-	
-    public $taxonomy;
-    public $required;
-    public $terms;
-    public $selected_term;
-    public $datalist;
-    public $post_terms;
-    public $include_terms;
-    public $select_amount;
-    public $type_output;
-    public $first_option;
-	
-    function __construct($taxonomy = false, $type_output = 'select', $required = false){
+class Rcl_List_Terms {
 
-        $this->taxonomy = $taxonomy;
-        $this->type_output = $type_output;
-        $this->required = $required;
+	public $taxonomy;
+	public $required;
+	public $terms;
+	public $selected_term;
+	public $datalist;
+	public $post_terms;
+	public $include_terms;
+	public $select_amount;
+	public $type_output;
+	public $first_option;
 
-    }
-	
-    function get_select_list($terms, $post_terms, $select_amount, $include_terms = false, $type_output = false, $first = false){
-        
-        $this->include_terms = ($include_terms)? $include_terms: false;
+	function __construct( $taxonomy = false, $type_output = 'select', $required = false ) {
 
-        $this->terms = $terms;
-        $this->datalist = $this->setup_data($terms);
-        
-        $this->first_option = ($first)? true: false;
-        $this->post_terms = ($post_terms)? $this->setup_data($post_terms, false): 0;
-        
-        $this->select_amount = $select_amount;
+		$this->taxonomy		 = $taxonomy;
+		$this->type_output	 = $type_output;
+		$this->required		 = $required;
+	}
 
-        if($type_output) 
-            $this->type_output = $type_output;
+	function get_select_list( $terms, $post_terms, $select_amount, $include_terms = false, $type_output = false, $first = false ) {
 
-        $method = 'get_'.$this->type_output;
+		$this->include_terms = ($include_terms) ? $include_terms : false;
 
-        return $this->$method();
+		$this->terms	 = $terms;
+		$this->datalist	 = $this->setup_data( $terms );
 
-    }
-	
-    function get_select(){
+		$this->first_option	 = ($first) ? true : false;
+		$this->post_terms	 = ($post_terms) ? $this->setup_data( $post_terms, false ) : 0;
 
-        $content = '<div class="rcl-terms-select">';
+		$this->select_amount = $select_amount;
 
-        for($a=0;$a<$this->select_amount;$a++){
+		if ( $type_output )
+			$this->type_output = $type_output;
 
-            $this->selected_term = false;
-            
-            $content .= '<div class="category-list rcl-field-input type-select-input">'; 
+		$method = 'get_' . $this->type_output;
 
-            $content .= '<select class="postform" name="cats['.$this->taxonomy.'][]">';
+		return $this->$method();
+	}
 
-            if($a>0||$this->first_option) 
-                $content .= '<option value="">'.__('Not selected','wp-recall').'</option>';			
+	function get_select() {
 
-            $content .= $this->get_options_list();
+		$content = '<div class="rcl-terms-select">';
 
-            $content .= '</select>';
-            
-            $content .= '</div>';
+		for ( $a = 0; $a < $this->select_amount; $a++ ) {
 
-        }
+			$this->selected_term = false;
 
-        $content .= '</div>';
+			$content .= '<div class="category-list rcl-field-input type-select-input">';
 
-        return $content;
-    }
-    
-    function get_multiselect(){
-        
-        rcl_multiselect_scripts();
+			$content .= '<select class="postform" name="cats[' . $this->taxonomy . '][]">';
 
-        $content = '<div class="rcl-terms-select">';
+			if ( $a > 0 || $this->first_option )
+				$content .= '<option value="">' . __( 'Not selected', 'wp-recall' ) . '</option>';
 
-        for($a=0;$a<$this->select_amount;$a++){
+			$content .= $this->get_options_list();
 
-            $this->selected_term = false;
-            
-            $content .= '<div class="category-list rcl-field-input type-multiselect-input">'; 
+			$content .= '</select>';
 
-            $content .= '<select id="taxonomy-field-'.$this->taxonomy.'" class="postform" name="cats['.$this->taxonomy.'][]" multiple>';
+			$content .= '</div>';
+		}
 
-            if($a>0||$this->first_option) 
-                $content .= '<option value="">'.__('Not selected','wp-recall').'</option>';			
+		$content .= '</div>';
 
-            $content .= $this->get_options_list();
+		return $content;
+	}
 
-            $content .= '</select>';
-            
-            $content .= '</div>';
+	function get_multiselect() {
 
-        }
+		rcl_multiselect_scripts();
 
-        $content .= '</div>';
-        
-        $content .= '<script>jQuery(window).on("load", function() {jQuery("#taxonomy-field-'.$this->taxonomy.'").fSelect();});</script>';
+		$content = '<div class="rcl-terms-select">';
 
-        return $content;
-    }
-	
-    function get_checkbox(){
+		for ( $a = 0; $a < $this->select_amount; $a++ ) {
 
-        $content = '<div class="rcl-terms-select">';
+			$this->selected_term = false;
 
-        $content .= '<div class="category-list rcl-field-input type-checkbox-input">'; 
+			$content .= '<div class="category-list rcl-field-input type-multiselect-input">';
 
-        $content .= $this->get_checkbox_list();
+			$content .= '<select id="taxonomy-field-' . $this->taxonomy . '" class="postform" name="cats[' . $this->taxonomy . '][]" multiple>';
 
-        $content .= '</div>';
+			if ( $a > 0 || $this->first_option )
+				$content .= '<option value="">' . __( 'Not selected', 'wp-recall' ) . '</option>';
 
-        $content .= '</div>';
+			$content .= $this->get_options_list();
 
-        return $content;
-    }
-	
-    function setup_data($terms, $forInc = true){
+			$content .= '</select>';
 
-        $newterms = array();
-        foreach($terms as $term){
-            $newterms[$term->term_id] = array(
-                'term_id'=>$term->term_id,
-                'name'=>$term->name,
-                'parent'=>$term->parent
-            );
+			$content .= '</div>';
+		}
 
-        }
+		$content .= '</div>';
 
-        $datalist = array();
-        
-        if($forInc && $this->include_terms){
-            
-            foreach($this->include_terms as $incID){
-            
-                foreach($newterms as $term_id=>$term){
+		$content .= '<script>jQuery(window).on("load", function() {jQuery("#taxonomy-field-' . $this->taxonomy . '").fSelect();});</script>';
 
-                    if($term_id != $incID) continue;
+		return $content;
+	}
 
-                    $datalist[$term_id] = $term;
-                    $datalist[$term_id]['parent'] = 0;
+	function get_checkbox() {
 
-                    $childrens = $this->get_childrens($term_id);
+		$content = '<div class="rcl-terms-select">';
 
-                    if($childrens){
+		$content .= '<div class="category-list rcl-field-input type-checkbox-input">';
 
-                        $datalist[$term_id]['childrens'] = $childrens;
+		$content .= $this->get_checkbox_list();
 
-                        $childs_tree = $this->get_childrens_tree($term_id);
+		$content .= '</div>';
 
-                        if($childs_tree){
+		$content .= '</div>';
 
-                            foreach($childs_tree as $child_id){
+		return $content;
+	}
 
-                                $datalist[$child_id] = $newterms[$child_id];
+	function setup_data( $terms, $forInc = true ) {
 
-                                $childs = $this->get_childrens($child_id);
+		$newterms = array();
+		foreach ( $terms as $term ) {
+			$newterms[$term->term_id] = array(
+				'term_id'	 => $term->term_id,
+				'name'		 => $term->name,
+				'parent'	 => $term->parent
+			);
+		}
 
-                                if($childs){
-                                    $datalist[$child_id]['childrens'] = $childs;
-                                }
-                            }
+		$datalist = array();
 
-                        }
+		if ( $forInc && $this->include_terms ) {
 
-                    }
+			foreach ( $this->include_terms as $incID ) {
 
-                }
-            
-            }
-            
-        }else{
-            
-            foreach($newterms as $term_id=>$term){
+				foreach ( $newterms as $term_id => $term ) {
 
-                $datalist[$term_id] = $term;
+					if ( $term_id != $incID )
+						continue;
 
-                $childrens = $this->get_childrens($term_id,$newterms);
+					$datalist[$term_id]				 = $term;
+					$datalist[$term_id]['parent']	 = 0;
 
-                if($childrens){
-                    $datalist[$term_id]['childrens'] = $childrens;
-                }
-
-            }
-            
-        }
-
-        return $datalist;
-
-    }
-    
-    function get_childrens_tree($term_id){
-        $childrens = $this->get_childrens($term_id);
-        $sub_childrens = $childrens;
-        foreach($childrens as $child_id){
-            $sub_childrens = array_merge($this->get_childrens_tree($child_id),$sub_childrens);
-        }
-        return $sub_childrens;
-    }
-    
-    function get_childrens($term_id){
-        $childs = array();
-        foreach($this->terms as $term){
-            if($term->parent!=$term_id) continue;
-            $childs[] = $term->term_id;
-        }
-        return $childs;
-    }
-	
-    function get_options_list($term_ids = false){
+					$childrens = $this->get_childrens( $term_id );
 
-        $terms_data = ($term_ids)? $this->get_terms_data($term_ids): $this->datalist;
-        
-        if(!$terms_data) return false;
-        
-        $options = array();
+					if ( $childrens ) {
 
-        foreach($terms_data as $term_id=>$term){
+						$datalist[$term_id]['childrens'] = $childrens;
 
-            if($term['parent']) continue;
+						$childs_tree = $this->get_childrens_tree( $term_id );
 
-            if(isset($term['childrens']) && $term['childrens']){
-                $options[] = '<optgroup label="'.$term['name'].'">'.$this->get_options_list($term['childrens']).'</optgroup>';
-                continue;
-            }
-            
-            if($this->post_terms){
+						if ( $childs_tree ) {
 
-                if(!$this->selected_term&&selected(isset($this->post_terms[$term_id]),true,false)){
+							foreach ( $childs_tree as $child_id ) {
 
-                    unset($this->post_terms[$term_id]);
+								$datalist[$child_id] = $newterms[$child_id];
 
-                    $this->selected_term = $term_id;
+								$childs = $this->get_childrens( $child_id );
 
-                }
-            }
+								if ( $childs ) {
+									$datalist[$child_id]['childrens'] = $childs;
+								}
+							}
+						}
+					}
+				}
+			}
+		} else {
 
-            $options[] = '<option '.selected($this->selected_term,$term_id,false).' value="'.$term_id.'">'.$term['name'].'</option>';
+			foreach ( $newterms as $term_id => $term ) {
 
-            if($this->type_output == 'multiselect'){
-                $this->selected_term = false;
-            }
-            
-        }
-        
-        if(!$options) return false;
+				$datalist[$term_id] = $term;
 
-        return implode('',$options);
+				$childrens = $this->get_childrens( $term_id, $newterms );
 
-    }
-	
-    function get_terms_data($term_ids){
-        $terms = array();
-        foreach($term_ids as $term_id){
-            $terms[$term_id] = $this->datalist[$term_id];
-            $terms[$term_id]['parent'] = 0;
-        }
-        return $terms;
-    }
-	
-    function get_checkbox_list($term_ids = false){
+				if ( $childrens ) {
+					$datalist[$term_id]['childrens'] = $childrens;
+				}
+			}
+		}
 
-        $terms_data = ($term_ids)? $this->get_terms_data($term_ids): $this->datalist;
+		return $datalist;
+	}
 
-        foreach($terms_data as $term_id=>$term){
+	function get_childrens_tree( $term_id ) {
+		$childrens		 = $this->get_childrens( $term_id );
+		$sub_childrens	 = $childrens;
+		foreach ( $childrens as $child_id ) {
+			$sub_childrens = array_merge( $this->get_childrens_tree( $child_id ), $sub_childrens );
+		}
+		return $sub_childrens;
+	}
 
-            if($term['parent']) continue;
+	function get_childrens( $term_id ) {
+		$childs = array();
+		foreach ( $this->terms as $term ) {
+			if ( $term->parent != $term_id )
+				continue;
+			$childs[] = $term->term_id;
+		}
+		return $childs;
+	}
 
-            if($term['childrens']){
-                $options[] = '<div class="child-list-category">'
-                            . '<span class="parent-category">'.$term['name'].'</span>'
-                            . $this->get_checkbox_list($term['childrens'])
-                            .'</div>';
-                continue;
-            }
-            
-            $args = array(
-                'type' => 'checkbox',
-                'id' => 'category-'.$term_id,
-                'name' => 'cats['.$this->taxonomy.'][]',
-                'checked' => checked(isset($this->post_terms[$term_id]),true,false),
-                'label' => $term['name'],
-                'value' => $term_id
-            );
+	function get_options_list( $term_ids = false ) {
 
-            if($this->required){                   
-                $args['required'] = true;
-                $args['class'] = 'required-checkbox';
-            }
+		$terms_data = ($term_ids) ? $this->get_terms_data( $term_ids ) : $this->datalist;
 
-            $options[] = rcl_form_field($args);
+		if ( !$terms_data )
+			return false;
 
-        }
-        
-        if(!$options) return false;
+		$options = array();
 
-        return implode('',$options);
+		foreach ( $terms_data as $term_id => $term ) {
 
-    }
+			if ( $term['parent'] )
+				continue;
+
+			if ( isset( $term['childrens'] ) && $term['childrens'] ) {
+				$options[] = '<optgroup label="' . $term['name'] . '">' . $this->get_options_list( $term['childrens'] ) . '</optgroup>';
+				continue;
+			}
+
+			if ( $this->post_terms ) {
+
+				if ( !$this->selected_term && selected( isset( $this->post_terms[$term_id] ), true, false ) ) {
+
+					unset( $this->post_terms[$term_id] );
+
+					$this->selected_term = $term_id;
+				}
+			}
+
+			$options[] = '<option ' . selected( $this->selected_term, $term_id, false ) . ' value="' . $term_id . '">' . $term['name'] . '</option>';
+
+			if ( $this->type_output == 'multiselect' ) {
+				$this->selected_term = false;
+			}
+		}
+
+		if ( !$options )
+			return false;
+
+		return implode( '', $options );
+	}
+
+	function get_terms_data( $term_ids ) {
+		$terms = array();
+		foreach ( $term_ids as $term_id ) {
+			$terms[$term_id]			 = $this->datalist[$term_id];
+			$terms[$term_id]['parent']	 = 0;
+		}
+		return $terms;
+	}
+
+	function get_checkbox_list( $term_ids = false ) {
+
+		$terms_data = ($term_ids) ? $this->get_terms_data( $term_ids ) : $this->datalist;
+
+		foreach ( $terms_data as $term_id => $term ) {
+
+			if ( $term['parent'] )
+				continue;
+
+			if ( $term['childrens'] ) {
+				$options[] = '<div class="child-list-category">'
+					. '<span class="parent-category">' . $term['name'] . '</span>'
+					. $this->get_checkbox_list( $term['childrens'] )
+					. '</div>';
+				continue;
+			}
+
+			$args = array(
+				'type'		 => 'checkbox',
+				'id'		 => 'category-' . $term_id,
+				'name'		 => 'cats[' . $this->taxonomy . '][]',
+				'checked'	 => checked( isset( $this->post_terms[$term_id] ), true, false ),
+				'label'		 => $term['name'],
+				'value'		 => $term_id
+			);
+
+			if ( $this->required ) {
+				$args['required']	 = true;
+				$args['class']		 = 'required-checkbox';
+			}
+
+			$options[] = rcl_form_field( $args );
+		}
+
+		if ( !$options )
+			return false;
+
+		return implode( '', $options );
+	}
 
 }
-

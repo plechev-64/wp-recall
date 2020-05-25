@@ -1,325 +1,313 @@
 <?php
 
-add_action('admin_init', 'rcl_options_products');
+add_action( 'admin_init', 'rcl_options_products' );
 function rcl_options_products() {
-    add_meta_box( 'recall_meta', __('Wp-Recall settings','wp-recall'), 'rcl_options_box', 'products', 'normal', 'high'  );
+	add_meta_box( 'recall_meta', __( 'WP-Recall settings', 'wp-recall' ), 'rcl_options_box', 'products', 'normal', 'high' );
 }
 
-add_action('admin_init', 'rcl_products_fields', 1);
+add_action( 'admin_init', 'rcl_products_fields', 1 );
 function rcl_products_fields() {
-    add_meta_box( 'products_fields', __('Product features','wp-recall'), 'rcl_metabox_products', 'products', 'normal','high' );
+	add_meta_box( 'products_fields', __( 'Product features', 'wp-recall' ), 'rcl_metabox_products', 'products', 'normal', 'high' );
 }
 
-function rcl_metabox_products( $post ){
-    global $rmag_options; 
-    
-    wp_enqueue_script( 'jquery' );
-    wp_enqueue_script('jquery-ui-sortable');
-    
-    $PrVars = new Rcl_Product_Variations(array('product_id'=>$post->ID));
+function rcl_metabox_products( $post ) {
+	global $rmag_options;
 
-    $content = '<div class="rcl-product-meta">';
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'jquery-ui-sortable' );
 
-    $content .= '<label class="meta-title">'.__('Product price','wp-recall').'</label>';
+	$PrVars = new Rcl_Product_Variations( array( 'product_id' => $post->ID ) );
 
-    $content .= '<div class="meta-content">';
+	$content = '<div class="rcl-product-meta">';
 
-        $content .= '<input type="text" name="wprecall[price-products]" value="'.get_post_meta($post->ID,'price-products',1).'"> '.rcl_get_primary_currency(2);
+	$content .= '<label class="meta-title">' . __( 'Product price', 'wp-recall' ) . '</label>';
 
-    $content .= '</div>';
+	$content .= '<div class="meta-content">';
 
-    $content .= '</div>';
-    
-    $content .= '<div class="rcl-product-meta">';
-    
-    $content .= '<label class="meta-title">'.__('Product old price','wp-recall').'</label>';
+	$content .= '<input type="text" name="wprecall[price-products]" value="' . get_post_meta( $post->ID, 'price-products', 1 ) . '"> ' . rcl_get_primary_currency( 2 );
 
-    $content .= '<div class="meta-content">';
+	$content .= '</div>';
 
-        $content .= '<input type="text" name="wprecall[product-oldprice]" value="'.get_post_meta($post->ID,'product-oldprice',1).'"> '.rcl_get_primary_currency(2);
+	$content .= '</div>';
 
-    $content .= '</div>';
+	$content .= '<div class="rcl-product-meta">';
 
-    $content .= '</div>';
-    
-    if($PrVars->variations):
+	$content .= '<label class="meta-title">' . __( 'Product old price', 'wp-recall' ) . '</label>';
 
-        $productVars = $PrVars->get_product_variations();
-        
-        $content .= '<div class="rcl-product-meta">';
+	$content .= '<div class="meta-content">';
 
-        $content .= '<label class="meta-title">'.__('Product variations','wp-recall').'</label>';
+	$content .= '<input type="text" name="wprecall[product-oldprice]" value="' . get_post_meta( $post->ID, 'product-oldprice', 1 ) . '"> ' . rcl_get_primary_currency( 2 );
 
-        $content .= '<div class="meta-content">';
+	$content .= '</div>';
 
-            $content .= '<div class="rcl-variations-list">';
-            
-            foreach($PrVars->variations as $variation){
-                
-                $content .= '<div class="variation-box">';
+	$content .= '</div>';
 
-                    $content .= '<input type="checkbox" class="variation-checkbox" name="product-variations['.$variation['slug'].'][status]" '.checked($PrVars->product_exist_variation($variation['slug']),true,false).' value="1" id="variation-'.$variation['slug'].'"><label class="variation-title" for="variation-'.$variation['slug'].'">'.$variation['title'].'</label>';
-                    
-                    $content .= '<div class="variation-values">';
-                    
-                    if(isset($variation['field_select']))
-                        $variation['values'] = rcl_edit_old_option_fields($variation['field_select'],$variation['type']);
+	if ( $PrVars->variations ):
 
-                    foreach($variation['values'] as $k => $value){
+		$productVars = $PrVars->get_product_variations();
 
-                        $productVal = $PrVars->get_product_variation_value($variation['slug'],$value);
+		$content .= '<div class="rcl-product-meta">';
 
-                        $content .= '<div class="variation-value">';
-                        $content .= '<span class="variation-value-name">'.$value.'</span>';
-                        $content .= '<input type="number" name="product-variations['.$variation['slug'].'][values]['.$k.'][price]" value="'.$productVal['price'].'">';
-                        $content .= '<input type="hidden" name="product-variations['.$variation['slug'].'][values]['.$k.'][name]" value="'.$value.'">';
-                        $content .= '</div>';
-                    }
+		$content .= '<label class="meta-title">' . __( 'Product variations', 'wp-recall' ) . '</label>';
 
-                    $content .= '</div>';
+		$content .= '<div class="meta-content">';
 
-                $content .= '</div>';
-                
-            }
+		$content .= '<div class="rcl-variations-list">';
 
-            $content .= '</div>';
+		foreach ( $PrVars->variations as $variation ) {
 
-        $content .= '</div>';
+			$content .= '<div class="variation-box">';
 
-        $content .= '</div>';
+			$content .= '<input type="checkbox" class="variation-checkbox" name="product-variations[' . $variation['slug'] . '][status]" ' . checked( $PrVars->product_exist_variation( $variation['slug'] ), true, false ) . ' value="1" id="variation-' . $variation['slug'] . '"><label class="variation-title" for="variation-' . $variation['slug'] . '">' . $variation['title'] . '</label>';
 
-    endif;
+			$content .= '<div class="variation-values">';
 
-    $content .= '<div class="rcl-product-meta">';
+			if ( isset( $variation['field_select'] ) )
+				$variation['values'] = rcl_edit_old_option_fields( $variation['field_select'], $variation['type'] );
 
-    $content .= '<div class="meta-content">';
+			foreach ( $variation['values'] as $k => $value ) {
 
-        $content .= '<input type="checkbox" name="wprecall[outsale]" '.checked(get_post_meta($post->ID,'outsale',1),1,false).' value="1"> '.__('Withdraw from sale','wp-recall');
+				$productVal = $PrVars->get_product_variation_value( $variation['slug'], $value );
 
-    $content .= '</div>';
+				$content .= '<div class="variation-value">';
+				$content .= '<span class="variation-value-name">' . $value . '</span>';
+				$content .= '<input type="number" name="product-variations[' . $variation['slug'] . '][values][' . $k . '][price]" value="' . $productVal['price'] . '">';
+				$content .= '<input type="hidden" name="product-variations[' . $variation['slug'] . '][values][' . $k . '][name]" value="' . $value . '">';
+				$content .= '</div>';
+			}
 
-    $content .= '</div>';
+			$content .= '</div>';
 
-    if($rmag_options['sistem_related_products']==1):
+			$content .= '</div>';
+		}
 
-        $related = get_post_meta($post->ID, 'related_products_recall', 1); 
+		$content .= '</div>';
 
-        $rel_prodcat = (isset($related['prodcat']))? $related['prodcat']: '';
-        $rel_product_tag = (isset($related['product_tag']))? $related['product_tag']: '';
+		$content .= '</div>';
 
-        $content .= '<div class="rcl-product-meta">';
+		$content .= '</div>';
 
-        $content .= '<label class="meta-title">'.__('Similar and recommended products','wp-recall').'</label>';
+	endif;
 
-        $content .= '<div class="meta-content">';
+	$content .= '<div class="rcl-product-meta">';
 
-            $args = array(
-                'show_option_none'   => __('Choose a category','wp-recall'),
-                'hide_empty'         => 0,
-                'echo'               => 0,
-                'selected'           => $rel_prodcat,
-                'hierarchical'       => 0,
-                'name'               => 'wprecall[related_products_recall][prodcat]',
-                'id'                 => 'name',
-                'class'              => 'postform',
-                'taxonomy'           => 'prodcat',
-                'hide_if_empty'      => false 
-            );
+	$content .= '<div class="meta-content">';
 
-            $content .= wp_dropdown_categories( $args ).' - '.__('Select a product category','wp-recall');
+	$content .= '<input type="checkbox" name="wprecall[outsale]" ' . checked( get_post_meta( $post->ID, 'outsale', 1 ), 1, false ) . ' value="1"> ' . __( 'Withdraw from sale', 'wp-recall' );
 
-        $content .= '</div>';
+	$content .= '</div>';
 
-        $content .= '<div class="meta-content">';
+	$content .= '</div>';
 
-            $args = array(
-                'show_option_none'   => __('Select a tag','wp-recall'),
-                'hide_empty'         => 0,
-                'echo'               => 0,
-                'selected'           => $rel_product_tag,
-                'hierarchical'       => 0,
-                'name'               => 'wprecall[related_products_recall][product_tag]',
-                'id'                 => 'name',
-                'class'              => 'postform',
-                'taxonomy'           => 'product_tag',
-                'hide_if_empty'      => false 
-            );
+	if ( $rmag_options['sistem_related_products'] == 1 ):
 
-            $content .= wp_dropdown_categories( $args ).' - '.__('select a product tag','wp-recall');
+		$related = get_post_meta( $post->ID, 'related_products_recall', 1 );
 
-        $content .= '</div>';
+		$rel_prodcat	 = (isset( $related['prodcat'] )) ? $related['prodcat'] : '';
+		$rel_product_tag = (isset( $related['product_tag'] )) ? $related['product_tag'] : '';
 
-        $content .= '</div>';
+		$content .= '<div class="rcl-product-meta">';
 
-    endif;
-    
-    $args = array(
-        'numberposts' => -1,
-        'order'=> 'ASC',
-        'post_mime_type' => 'image',
-        'post_parent' => $post->ID,
-        'post_status' => null,
-        'post_type' => 'attachment'
-    );
+		$content .= '<label class="meta-title">' . __( 'Similar and recommended products', 'wp-recall' ) . '</label>';
 
-    $attachments = get_children( $args );
+		$content .= '<div class="meta-content">';
 
-    if($attachments):
-    
-        $content .= '<div class="rcl-product-meta">';
+		$args = array(
+			'show_option_none'	 => __( 'Choose a category', 'wp-recall' ),
+			'hide_empty'		 => 0,
+			'echo'				 => 0,
+			'selected'			 => $rel_prodcat,
+			'hierarchical'		 => 0,
+			'name'				 => 'wprecall[related_products_recall][prodcat]',
+			'id'				 => 'name',
+			'class'				 => 'postform',
+			'taxonomy'			 => 'prodcat',
+			'hide_if_empty'		 => false
+		);
 
-        $content .= '<label class="meta-title">'.__('Images gallery','wp-recall').'</label>';
+		$content .= wp_dropdown_categories( $args ) . ' - ' . __( 'Select a product category', 'wp-recall' );
 
-        $content .= '<div class="meta-content">';
+		$content .= '</div>';
 
-            $gallery = explode(',',get_post_meta($post->ID, 'children_prodimage', 1));
+		$content .= '<div class="meta-content">';
 
-            if($gallery){
+		$args = array(
+			'show_option_none'	 => __( 'Select a tag', 'wp-recall' ),
+			'hide_empty'		 => 0,
+			'echo'				 => 0,
+			'selected'			 => $rel_product_tag,
+			'hierarchical'		 => 0,
+			'name'				 => 'wprecall[related_products_recall][product_tag]',
+			'id'				 => 'name',
+			'class'				 => 'postform',
+			'taxonomy'			 => 'product_tag',
+			'hide_if_empty'		 => false
+		);
 
-                $sort = array();
-                $new_images = array();
+		$content .= wp_dropdown_categories( $args ) . ' - ' . __( 'select a product tag', 'wp-recall' );
 
-                foreach($attachments as $attachment){
+		$content .= '</div>';
 
-                    $k = array_search($attachment->ID,$gallery);
+		$content .= '</div>';
 
-                    if($k !== false){
+	endif;
 
-                        $sort[$k] = $attachment;
+	$args = array(
+		'numberposts'	 => -1,
+		'order'			 => 'ASC',
+		'post_mime_type' => 'image',
+		'post_parent'	 => $post->ID,
+		'post_status'	 => null,
+		'post_type'		 => 'attachment'
+	);
 
-                    }else{
+	$attachments = get_children( $args );
 
-                        $new_images[] = $attachment;
+	if ( $attachments ):
 
-                    }
+		$content .= '<div class="rcl-product-meta">';
 
-                }
+		$content .= '<label class="meta-title">' . __( 'Images gallery', 'wp-recall' ) . '</label>';
 
-                if($new_images){
-                    foreach($new_images as $attachment){
-                        $sort[] = $attachment;
-                    }
-                }
+		$content .= '<div class="meta-content">';
 
+		$gallery = explode( ',', get_post_meta( $post->ID, 'children_prodimage', 1 ) );
 
-                $attachments = $sort;
+		if ( $gallery ) {
 
-                ksort($attachments);
+			$sort		 = array();
+			$new_images	 = array();
 
-            }
+			foreach ( $attachments as $attachment ) {
 
-            $content .= '<div id="rcl-product-gallery">';
+				$k = array_search( $attachment->ID, $gallery );
 
-            foreach($attachments as $attachment){
+				if ( $k !== false ) {
 
-                $content .= '<span class="image-gallery">';
+					$sort[$k] = $attachment;
+				} else {
 
-                $content .= '<label>';
+					$new_images[] = $attachment;
+				}
+			}
 
-                $content .= '<span class="move-box"></span>';
+			if ( $new_images ) {
+				foreach ( $new_images as $attachment ) {
+					$sort[] = $attachment;
+				}
+			}
 
-                $content .= wp_get_attachment_image( $attachment->ID, array(100,100) );
 
-                $content .= '<input type="checkbox" name="children_prodimage[]" '.checked(in_array($attachment->ID,$gallery),true,false).' value="'.$attachment->ID.'">';
+			$attachments = $sort;
 
-                $content .= '</label>';
+			ksort( $attachments );
+		}
 
-                $content .= '</span>';
+		$content .= '<div id="rcl-product-gallery">';
 
-            }
+		foreach ( $attachments as $attachment ) {
 
-            $content .= '</div>';
+			$content .= '<span class="image-gallery">';
 
-            $content .= '<script>
-                jQuery(function(){
-                    jQuery("#rcl-product-gallery").sortable({
-                        connectWith: "#rcl-product-gallery",
-                        containment: "parent",
-                        handle: ".move-box",
-                        cursor: "move",
-                        placeholder: "ui-sortable-placeholder",
-                        distance: 5
-                    });
-                    return false;
-                });
-            </script>';
+			$content .= '<label>';
 
-        $content .= '</div>';
+			$content .= '<span class="move-box"></span>';
 
-        $content .= '</div>';
-    
-    endif;
+			$content .= wp_get_attachment_image( $attachment->ID, array( 100, 100 ) );
 
-    $metaBox = '<div class="rcl-products-metabox">';
-    $metaBox .= apply_filters('rcl_products_custom_fields',$content,$post);
-    $metaBox .= '</div>';
+			$content .= '<input type="checkbox" name="children_prodimage[]" ' . checked( in_array( $attachment->ID, $gallery ), true, false ) . ' value="' . $attachment->ID . '">';
 
-    $metaBox .= '<input type="hidden" name="rcl_commerce_fields_nonce" value="'.wp_create_nonce(__FILE__).'" />';
-    
-    echo $metaBox;
+			$content .= '</label>';
 
+			$content .= '</span>';
+		}
+
+		$content .= '</div>';
+
+		$content .= '<script>
+				jQuery(function(){
+					jQuery("#rcl-product-gallery").sortable({
+						connectWith: "#rcl-product-gallery",
+						containment: "parent",
+						handle: ".move-box",
+						cursor: "move",
+						placeholder: "ui-sortable-placeholder",
+						distance: 5
+					});
+					return false;
+				});
+			</script>';
+
+		$content .= '</div>';
+
+		$content .= '</div>';
+
+	endif;
+
+	$metaBox = '<div class="rcl-products-metabox">';
+	$metaBox .= apply_filters( 'rcl_products_custom_fields', $content, $post );
+	$metaBox .= '</div>';
+
+	$metaBox .= '<input type="hidden" name="rcl_commerce_fields_nonce" value="' . wp_create_nonce( __FILE__ ) . '" />';
+
+	echo $metaBox;
 }
 
-add_action('save_post_products', 'rcl_commerce_fields_update', 10, 3);
-function rcl_commerce_fields_update( $post_id, $post, $update ){
+add_action( 'save_post_products', 'rcl_commerce_fields_update', 10, 3 );
+function rcl_commerce_fields_update( $post_id, $post, $update ) {
 
-    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE  ) 
-        return false;
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		return false;
 
-    if(!isset($_POST['rcl_commerce_fields_nonce'])) 
-        return false;
+	if ( !isset( $_POST['rcl_commerce_fields_nonce'] ) )
+		return false;
 
-    if ( !wp_verify_nonce($_POST['rcl_commerce_fields_nonce'], __FILE__) ) 
-        return false;
+	if ( !wp_verify_nonce( $_POST['rcl_commerce_fields_nonce'], __FILE__ ) )
+		return false;
 
-    if ( !current_user_can('edit_post', $post_id) ) 
-        return false;
-    
-    $POST = $_POST;
+	if ( !current_user_can( 'edit_post', $post_id ) )
+		return false;
 
-    if (!isset($POST['product-variations'])) {
-        
-        delete_post_meta($post_id, 'product-variations');
-        
-    }else{
-        
-        $variations = array();
-        foreach($POST['product-variations'] as $varSlug => $var){
-            
-            if(!isset($var['status']) || !$var['status']) continue;
-            
-            $variations[] = array(
-                'slug' => $varSlug,
-                'values' => $var['values']
-            );
-            
-        }
-        
-        if($variations)
-            update_post_meta($post_id, 'product-variations', $variations);
-        else
-            delete_post_meta($post_id, 'product-variations');
-        
-    }
+	$POST = $_POST;
 
-    if (!isset($POST['wprecall']['outsale'])) {
-        delete_post_meta($post_id, 'outsale');
-    }
+	if ( !isset( $POST['product-variations'] ) ) {
 
-    if (!isset($POST['wprecall']['availability_product'])) {
-        delete_post_meta($post_id, 'availability_product');
-    }
+		delete_post_meta( $post_id, 'product-variations' );
+	} else {
 
-    if( !isset($POST['children_prodimage']) || !$POST['children_prodimage']){
-        
-        delete_post_meta($post_id, 'children_prodimage');
-        
-    }else{
+		$variations = array();
+		foreach ( $POST['product-variations'] as $varSlug => $var ) {
 
-        update_post_meta($post_id, 'children_prodimage', implode(',',array_map('trim', $POST['children_prodimage'])));
-        
-    }
+			if ( !isset( $var['status'] ) || !$var['status'] )
+				continue;
 
-    return $post_id;
+			$variations[] = array(
+				'slug'	 => $varSlug,
+				'values' => $var['values']
+			);
+		}
+
+		if ( $variations )
+			update_post_meta( $post_id, 'product-variations', $variations );
+		else
+			delete_post_meta( $post_id, 'product-variations' );
+	}
+
+	if ( !isset( $POST['wprecall']['outsale'] ) ) {
+		delete_post_meta( $post_id, 'outsale' );
+	}
+
+	if ( !isset( $POST['wprecall']['availability_product'] ) ) {
+		delete_post_meta( $post_id, 'availability_product' );
+	}
+
+	if ( !isset( $POST['children_prodimage'] ) || !$POST['children_prodimage'] ) {
+
+		delete_post_meta( $post_id, 'children_prodimage' );
+	} else {
+
+		update_post_meta( $post_id, 'children_prodimage', implode( ',', array_map( 'trim', $POST['children_prodimage'] ) ) );
+	}
+
+	return $post_id;
 }
-

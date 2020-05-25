@@ -1,380 +1,359 @@
-(function($) {
+( function( $ ) {
 
-    $.fn.fSelect = function(options) {
+	$.fn.fSelect = function( options ) {
 
-        if ('string' === typeof options) {
-            var settings = options;
-        }
-        else {
-            var settings = $.extend({
-                placeholder: 'Выбрать',
-                numDisplayed: 3,
-                overflowText: '{n} выбрано',
-                searchText: 'Поиск',
-                showSearch: true,
-                optionFormatter: false
-            }, options);
-        }
-
-
-        /**
-         * Constructor
-         */
-        function fSelect(select, settings) {
-            this.$select = $(select);
-            this.settings = settings;
-            this.create();
-        }
+		if ( 'string' === typeof options ) {
+			var settings = options;
+		} else {
+			var settings = $.extend( {
+				placeholder: 'Выбрать',
+				numDisplayed: 3,
+				overflowText: '{n} выбрано',
+				searchText: 'Поиск',
+				showSearch: true,
+				optionFormatter: false
+			},
+				options );
+		}
 
 
-        /**
-         * Prototype class
-         */
-        fSelect.prototype = {
-            create: function() {
-                this.settings.multiple = this.$select.is('[multiple]');
-                var multiple = this.settings.multiple ? ' multiple' : '';
-                this.$select.wrap('<div class="fs-wrap' + multiple + '" tabindex="0" />');
-                this.$select.before('<div class="fs-label-wrap"><div class="fs-label">' + this.settings.placeholder + '</div><span class="fs-arrow"></span></div>');
-                this.$select.before('<div class="fs-dropdown hidden"><div class="fs-options"></div></div>');
-                this.$select.addClass('hidden');
-                this.$wrap = this.$select.closest('.fs-wrap');
-                this.$wrap.data('id', window.fSelect.num_items);
-                window.fSelect.num_items++;
-                this.reload();
-            },
-
-            reload: function() {
-                if (this.settings.showSearch) {
-                    var search = '<div class="fs-search"><input type="search" placeholder="' + this.settings.searchText + '" /></div>';
-                    this.$wrap.find('.fs-dropdown').prepend(search);
-                }
-                this.idx = 0;
-                this.optgroup = 0;
-                this.selected = [].concat(this.$select.val());
-                var choices = this.buildOptions(this.$select);
-                this.$wrap.find('.fs-options').html(choices);
-                this.reloadDropdownLabel();
-            },
-
-            destroy: function() {
-                this.$wrap.find('.fs-label-wrap').remove();
-                this.$wrap.find('.fs-dropdown').remove();
-                this.$select.unwrap().removeClass('hidden');
-            },
-
-            buildOptions: function($element) {
-                var $this = this;
-
-                var choices = '';
-                $element.children().each(function(i, el) {
-                    var $el = $(el);
-
-                    if ('optgroup' == $el.prop('nodeName').toLowerCase()) {
-                        choices += '<div class="fs-optgroup-label" data-group="' + $this.optgroup + '">' + $el.prop('label') + '</div>';
-                        choices += $this.buildOptions($el);
-                        $this.optgroup++;
-                    }
-                    else {
-                        var val = $el.prop('value');
-
-                        if (0 < $this.idx || '' != val || ! $this.settings.multiple) {
-                            var disabled = $el.is(':disabled') ? ' disabled' : '';
-                            var selected = -1 < $.inArray(val, $this.selected) ? ' selected' : '';
-                            var group = ' g' + $this.optgroup;
-                            var row = '<div class="fs-option' + selected + disabled + group + '" data-value="' + val + '" data-index="' + $this.idx + '"><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
-
-                            if ('function' === typeof $this.settings.optionFormatter) {
-                                row = $this.settings.optionFormatter(row);
-                            }
-
-                            choices += row;
-                            $this.idx++;
-                        }
-                    }
-                });
-
-                return choices;
-            },
-
-            reloadDropdownLabel: function() {
-                var settings = this.settings;
-                var labelText = [];
-
-                this.$wrap.find('.fs-option.selected').each(function(i, el) {
-                    labelText.push($(el).find('.fs-option-label').text());
-                });
-
-                if (labelText.length < 1) {
-                    labelText = settings.placeholder;
-                }
-                else if (labelText.length > settings.numDisplayed) {
-                    labelText = settings.overflowText.replace('{n}', labelText.length);
-                }
-                else {
-                    labelText = labelText.join(', ');
-                }
-
-                this.$wrap.find('.fs-label').html(labelText);
-                this.$wrap.toggleClass('fs-default', labelText === settings.placeholder);
-                this.$select.change();
-            }
-        }
+		/**
+		 * Constructor
+		 */
+		function fSelect( select, settings ) {
+			this.$select = $( select );
+			this.settings = settings;
+			this.create();
+		}
 
 
-        /**
-         * Loop through each matching element
-         */
-        return this.each(function() {
-            var data = $(this).data('fSelect');
+		/**
+		 * Prototype class
+		 */
+		fSelect.prototype = {
+			create: function() {
+				this.settings.multiple = this.$select.is( '[multiple]' );
+				var multiple = this.settings.multiple ? ' multiple' : '';
+				this.$select.wrap( '<div class="fs-wrap' + multiple + '" tabindex="0" />' );
+				this.$select.before( '<div class="fs-label-wrap"><div class="fs-label">' + this.settings.placeholder + '</div><span class="fs-arrow"></span></div>' );
+				this.$select.before( '<div class="fs-dropdown hidden"><div class="fs-options"></div></div>' );
+				this.$select.addClass( 'hidden' );
+				this.$wrap = this.$select.closest( '.fs-wrap' );
+				this.$wrap.data( 'id', window.fSelect.num_items );
+				window.fSelect.num_items++;
+				this.reload();
+			},
+			reload: function() {
+				if ( this.settings.showSearch ) {
+					var search = '<div class="fs-search"><input type="search" placeholder="' + this.settings.searchText + '" /></div>';
+					this.$wrap.find( '.fs-dropdown' ).prepend( search );
+				}
+				this.idx = 0;
+				this.optgroup = 0;
+				this.selected = [ ].concat( this.$select.val() );
+				var choices = this.buildOptions( this.$select );
+				this.$wrap.find( '.fs-options' ).html( choices );
+				this.reloadDropdownLabel();
+			},
+			destroy: function() {
+				this.$wrap.find( '.fs-label-wrap' ).remove();
+				this.$wrap.find( '.fs-dropdown' ).remove();
+				this.$select.unwrap().removeClass( 'hidden' );
+			},
+			buildOptions: function( $element ) {
+				var $this = this;
 
-            if (!data) {
-                data = new fSelect(this, settings);
-                $(this).data('fSelect', data);
-            }
+				var choices = '';
+				$element.children().each( function( i, el ) {
+					var $el = $( el );
 
-            if ('string' === typeof settings) {
-                data[settings]();
-            }
-        });
-    }
+					if ( 'optgroup' == $el.prop( 'nodeName' ).toLowerCase() ) {
+						choices += '<div class="fs-optgroup-label" data-group="' + $this.optgroup + '">' + $el.prop( 'label' ) + '</div>';
+						choices += $this.buildOptions( $el );
+						$this.optgroup++;
+					} else {
+						var val = $el.prop( 'value' );
+
+						if ( 0 < $this.idx || '' != val || !$this.settings.multiple ) {
+							var disabled = $el.is( ':disabled' ) ? ' disabled' : '';
+							var selected = -1 < $.inArray( val, $this.selected ) ? ' selected' : '';
+							var group = ' g' + $this.optgroup;
+							var row = '<div class="fs-option' + selected + disabled + group + '" data-value="' + val + '" data-index="' + $this.idx + '"><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
+
+							if ( 'function' === typeof $this.settings.optionFormatter ) {
+								row = $this.settings.optionFormatter( row );
+							}
+
+							choices += row;
+							$this.idx++;
+						}
+					}
+				} );
+
+				return choices;
+			},
+			reloadDropdownLabel: function() {
+				var settings = this.settings;
+				var labelText = [ ];
+
+				this.$wrap.find( '.fs-option.selected' ).each( function( i, el ) {
+					labelText.push( $( el ).find( '.fs-option-label' ).text() );
+				} );
+
+				if ( labelText.length < 1 ) {
+					labelText = settings.placeholder;
+				} else if ( labelText.length > settings.numDisplayed ) {
+					labelText = settings.overflowText.replace( '{n}', labelText.length );
+				} else {
+					labelText = labelText.join( ', ' );
+				}
+
+				this.$wrap.find( '.fs-label' ).html( labelText );
+				this.$wrap.toggleClass( 'fs-default', labelText === settings.placeholder );
+				this.$select.change();
+			}
+		}
 
 
-    /**
-     * Events
-     */
-    window.fSelect = {
-        'num_items': 0,
-        'active_id': null,
-        'active_el': null,
-        'last_choice': null,
-        'idx': -1
-    };
+		/**
+		 * Loop through each matching element
+		 */
+		return this.each( function() {
+			var data = $( this ).data( 'fSelect' );
 
-    $(document).on('click', '.fs-option:not(.hidden, .disabled)', function(e) {
-        var $wrap = $(this).closest('.fs-wrap');
-        var do_close = false;
+			if ( !data ) {
+				data = new fSelect( this, settings );
+				$( this ).data( 'fSelect', data );
+			}
 
-        if ($wrap.hasClass('multiple')) {
-            var selected = [];
+			if ( 'string' === typeof settings ) {
+				data[settings]();
+			}
+		} );
+	}
 
-            if (e.shiftKey && null != window.fSelect.last_choice) {
-                var current_choice = parseInt($(this).attr('data-index'));
-                var addOrRemove = ! $(this).hasClass('selected');
-                var min = Math.min(window.fSelect.last_choice, current_choice);
-                var max = Math.max(window.fSelect.last_choice, current_choice);
 
-                for (i = min; i <= max; i++) {
-                    $wrap.find('.fs-option[data-index='+ i +']')
-                        .not('.hidden, .disabled')
-                        .each(function() {
-                            $(this).toggleClass('selected', addOrRemove);
-                        });
-                }
-            }
-            else {
-                window.fSelect.last_choice = parseInt($(this).attr('data-index'));
-                $(this).toggleClass('selected');
-            }
+	/**
+	 * Events
+	 */
+	window.fSelect = {
+		'num_items': 0,
+		'active_id': null,
+		'active_el': null,
+		'last_choice': null,
+		'idx': -1
+	};
 
-            $wrap.find('.fs-option.selected').each(function(i, el) {
-                selected.push($(el).attr('data-value'));
-            });
-        }
-        else {
-            var selected = $(this).attr('data-value');
-            $wrap.find('.fs-option').removeClass('selected');
-            $(this).addClass('selected');
-            do_close = true;
-        }
+	$( document ).on( 'click', '.fs-option:not(.hidden, .disabled)', function( e ) {
+		var $wrap = $( this ).closest( '.fs-wrap' );
+		var do_close = false;
 
-        $wrap.find('select').val(selected);
-        $wrap.find('select').fSelect('reloadDropdownLabel');
+		if ( $wrap.hasClass( 'multiple' ) ) {
+			var selected = [ ];
 
-        $(document).trigger('fs:changed', $wrap);
+			if ( e.shiftKey && null != window.fSelect.last_choice ) {
+				var current_choice = parseInt( $( this ).attr( 'data-index' ) );
+				var addOrRemove = !$( this ).hasClass( 'selected' );
+				var min = Math.min( window.fSelect.last_choice, current_choice );
+				var max = Math.max( window.fSelect.last_choice, current_choice );
 
-        if (do_close) {
-            closeDropdown($wrap);
-        }
-    });
+				for ( i = min; i <= max; i++ ) {
+					$wrap.find( '.fs-option[data-index=' + i + ']' )
+						.not( '.hidden, .disabled' )
+						.each( function() {
+							$( this ).toggleClass( 'selected', addOrRemove );
+						} );
+				}
+			} else {
+				window.fSelect.last_choice = parseInt( $( this ).attr( 'data-index' ) );
+				$( this ).toggleClass( 'selected' );
+			}
 
-    $(document).on('keyup', '.fs-search input', function(e) {
-        if (40 == e.which) {
-            $(this).blur();
-            return;
-        }
+			$wrap.find( '.fs-option.selected' ).each( function( i, el ) {
+				selected.push( $( el ).attr( 'data-value' ) );
+			} );
+		} else {
+			var selected = $( this ).attr( 'data-value' );
+			$wrap.find( '.fs-option' ).removeClass( 'selected' );
+			$( this ).addClass( 'selected' );
+			do_close = true;
+		}
 
-        var $wrap = $(this).closest('.fs-wrap');
-        var matchOperators = /[|\\{}()[\]^$+*?.]/g;
-        var keywords = $(this).val().replace(matchOperators, '\\$&');
+		$wrap.find( 'select' ).val( selected );
+		$wrap.find( 'select' ).fSelect( 'reloadDropdownLabel' );
 
-        $wrap.find('.fs-option, .fs-optgroup-label').removeClass('hidden');
+		$( document ).trigger( 'fs:changed', $wrap );
 
-        if ('' != keywords) {
-            $wrap.find('.fs-option').each(function() {
-                var regex = new RegExp(keywords, 'gi');
-                if (null === $(this).find('.fs-option-label').text().match(regex)) {
-                    $(this).addClass('hidden');
-                }
-            });
+		if ( do_close ) {
+			closeDropdown( $wrap );
+		}
+	} );
 
-            $wrap.find('.fs-optgroup-label').each(function() {
-                var group = $(this).attr('data-group');
-                var num_visible = $(this).closest('.fs-options').find('.fs-option.g' + group + ':not(.hidden)').length;
-                if (num_visible < 1) {
-                    $(this).addClass('hidden');
-                }
-            });
-        }
+	$( document ).on( 'keyup', '.fs-search input', function( e ) {
+		if ( 40 == e.which ) {
+			$( this ).blur();
+			return;
+		}
 
-        setIndexes($wrap);
-    });
+		var $wrap = $( this ).closest( '.fs-wrap' );
+		var matchOperators = /[|\\{}()[\]^$+*?.]/g;
+		var keywords = $( this ).val().replace( matchOperators, '\\$&' );
 
-    $(document).on('click touchstart', function(e) {
-        var $el = $(e.target);
-        var $wrap = $el.closest('.fs-wrap');
+		$wrap.find( '.fs-option, .fs-optgroup-label' ).removeClass( 'hidden' );
 
-        if (0 < $wrap.length) {
+		if ( '' != keywords ) {
+			$wrap.find( '.fs-option' ).each( function() {
+				var regex = new RegExp( keywords, 'gi' );
+				if ( null === $( this ).find( '.fs-option-label' ).text().match( regex ) ) {
+					$( this ).addClass( 'hidden' );
+				}
+			} );
 
-            if ($wrap.data('id') !== window.fSelect.active_id) {
-                closeDropdown();
-            }
+			$wrap.find( '.fs-optgroup-label' ).each( function() {
+				var group = $( this ).attr( 'data-group' );
+				var num_visible = $( this ).closest( '.fs-options' ).find( '.fs-option.g' + group + ':not(.hidden)' ).length;
+				if ( num_visible < 1 ) {
+					$( this ).addClass( 'hidden' );
+				}
+			} );
+		}
 
-            if ($el.hasClass('fs-label') || $el.hasClass('fs-arrow')) {
-                var is_hidden = $wrap.find('.fs-dropdown').hasClass('hidden');
+		setIndexes( $wrap );
+	} );
 
-                if (is_hidden) {
-                    openDropdown($wrap);
-                }
-                else {
-                    closeDropdown($wrap);
-                }
-            }
-        }
+	$( document ).on( 'click touchstart', function( e ) {
+		var $el = $( e.target );
+		var $wrap = $el.closest( '.fs-wrap' );
 
-        else {
-            closeDropdown();
-        }
-    });
+		if ( 0 < $wrap.length ) {
 
-    $(document).on('keydown', function(e) {
-        var $wrap = window.fSelect.active_el;
-        var $target = $(e.target);
+			if ( $wrap.data( 'id' ) !== window.fSelect.active_id ) {
+				closeDropdown();
+			}
 
-        if ($target.hasClass('fs-wrap')) {
-            if (32 == e.which) {
-                $target.find('.fs-label').trigger('click');
-                return;
-            }
-        }
+			if ( $el.hasClass( 'fs-label' ) || $el.hasClass( 'fs-arrow' ) ) {
+				var is_hidden = $wrap.find( '.fs-dropdown' ).hasClass( 'hidden' );
 
-        else if (0 < $target.closest('.fs-search').length) {
-            if (32 == e.which) {
-                return;
-            }
-        }
-        else if (null === $wrap) {
-            return;
-        }
+				if ( is_hidden ) {
+					openDropdown( $wrap );
+				} else {
+					closeDropdown( $wrap );
+				}
+			}
+		} else {
+			closeDropdown();
+		}
+	} );
 
-        if (38 == e.which) {
-            e.preventDefault();
+	$( document ).on( 'keydown', function( e ) {
+		var $wrap = window.fSelect.active_el;
+		var $target = $( e.target );
 
-            $wrap.find('.fs-option.hl').removeClass('hl');
+		if ( $target.hasClass( 'fs-wrap' ) ) {
+			if ( 32 == e.which ) {
+				$target.find( '.fs-label' ).trigger( 'click' );
+				return;
+			}
+		} else if ( 0 < $target.closest( '.fs-search' ).length ) {
+			if ( 32 == e.which ) {
+				return;
+			}
+		} else if ( null === $wrap ) {
+			return;
+		}
 
-            var $current = $wrap.find('.fs-option[data-index=' + window.fSelect.idx + ']');
-            var $prev = $current.prevAll('.fs-option:not(.hidden, .disabled)');
+		if ( 38 == e.which ) {
+			e.preventDefault();
 
-            if ($prev.length > 0) {
-                window.fSelect.idx = parseInt($prev.attr('data-index'));
-                $wrap.find('.fs-option[data-index=' + window.fSelect.idx + ']').addClass('hl');
-                setScroll($wrap);
-            }
-            else {
-                window.fSelect.idx = -1;
-                $wrap.find('.fs-search input').focus();
-            }
-        }
-        else if (40 == e.which) {
-            e.preventDefault();
+			$wrap.find( '.fs-option.hl' ).removeClass( 'hl' );
 
-            var $current = $wrap.find('.fs-option[data-index=' + window.fSelect.idx + ']');
-            if ($current.length < 1) {
-                var $next = $wrap.find('.fs-option:not(.hidden, .disabled):first');
-            }
-            else {
-                var $next = $current.nextAll('.fs-option:not(.hidden, .disabled)');
-            }
+			var $current = $wrap.find( '.fs-option[data-index=' + window.fSelect.idx + ']' );
+			var $prev = $current.prevAll( '.fs-option:not(.hidden, .disabled)' );
 
-            if ($next.length > 0) {
-                window.fSelect.idx = parseInt($next.attr('data-index'));
-                $wrap.find('.fs-option.hl').removeClass('hl');
-                $wrap.find('.fs-option[data-index=' + window.fSelect.idx + ']').addClass('hl');
-                setScroll($wrap);
-            }
-        }
-        else if (32 == e.which || 13 == e.which) {
-            e.preventDefault();
+			if ( $prev.length > 0 ) {
+				window.fSelect.idx = parseInt( $prev.attr( 'data-index' ) );
+				$wrap.find( '.fs-option[data-index=' + window.fSelect.idx + ']' ).addClass( 'hl' );
+				setScroll( $wrap );
+			} else {
+				window.fSelect.idx = -1;
+				$wrap.find( '.fs-search input' ).focus();
+			}
+		} else if ( 40 == e.which ) {
+			e.preventDefault();
 
-            $wrap.find('.fs-option.hl').click();
-        }
-        else if (27 == e.which) {
-            closeDropdown($wrap);
-        }
-    });
+			var $current = $wrap.find( '.fs-option[data-index=' + window.fSelect.idx + ']' );
+			if ( $current.length < 1 ) {
+				var $next = $wrap.find( '.fs-option:not(.hidden, .disabled):first' );
+			} else {
+				var $next = $current.nextAll( '.fs-option:not(.hidden, .disabled)' );
+			}
 
-    function setIndexes($wrap) {
-        $wrap.find('.fs-option.hl').removeClass('hl');
-        $wrap.find('.fs-search input').focus();
-        window.fSelect.idx = -1;
-    }
+			if ( $next.length > 0 ) {
+				window.fSelect.idx = parseInt( $next.attr( 'data-index' ) );
+				$wrap.find( '.fs-option.hl' ).removeClass( 'hl' );
+				$wrap.find( '.fs-option[data-index=' + window.fSelect.idx + ']' ).addClass( 'hl' );
+				setScroll( $wrap );
+			}
+		} else if ( 32 == e.which || 13 == e.which ) {
+			e.preventDefault();
 
-    function setScroll($wrap) {
-        var $container = $wrap.find('.fs-options');
-        var $selected = $wrap.find('.fs-option.hl');
+			$wrap.find( '.fs-option.hl' ).click();
+		} else if ( 27 == e.which ) {
+			closeDropdown( $wrap );
+		}
+	} );
 
-        var itemMin = $selected.offset().top + $container.scrollTop();
-        var itemMax = itemMin + $selected.outerHeight();
-        var containerMin = $container.offset().top + $container.scrollTop();
-        var containerMax = containerMin + $container.outerHeight();
+	function setIndexes( $wrap ) {
+		$wrap.find( '.fs-option.hl' ).removeClass( 'hl' );
+		$wrap.find( '.fs-search input' ).focus();
+		window.fSelect.idx = -1;
+	}
 
-        if (itemMax > containerMax) {
-            var to = $container.scrollTop() + itemMax - containerMax;
-            $container.scrollTop(to);
-        }
-        else if (itemMin < containerMin) {
-            var to = $container.scrollTop() - containerMin - itemMin;
-            $container.scrollTop(to);
-        }
-    }
+	function setScroll( $wrap ) {
+		var $container = $wrap.find( '.fs-options' );
+		var $selected = $wrap.find( '.fs-option.hl' );
 
-    function openDropdown($wrap) {
-        window.fSelect.active_el = $wrap;
-        window.fSelect.active_id = $wrap.data('id');
-        window.fSelect.initial_values = $wrap.find('select').val();
-        $wrap.find('.fs-dropdown').removeClass('hidden');
-        $wrap.addClass('fs-open');
-        setIndexes($wrap);
-    }
+		var itemMin = $selected.offset().top + $container.scrollTop();
+		var itemMax = itemMin + $selected.outerHeight();
+		var containerMin = $container.offset().top + $container.scrollTop();
+		var containerMax = containerMin + $container.outerHeight();
 
-    function closeDropdown($wrap) {
-        if ('undefined' == typeof $wrap && null != window.fSelect.active_el) {
-            $wrap = window.fSelect.active_el;
-        }
-        if ('undefined' !== typeof $wrap) {
-            
-            var initial_values = window.fSelect.initial_values;
-            var current_values = $wrap.find('select').val();
-            if (JSON.stringify(initial_values) != JSON.stringify(current_values)) {
-                $(document).trigger('fs:closed', $wrap);
-            }
-        }
+		if ( itemMax > containerMax ) {
+			var to = $container.scrollTop() + itemMax - containerMax;
+			$container.scrollTop( to );
+		} else if ( itemMin < containerMin ) {
+			var to = $container.scrollTop() - containerMin - itemMin;
+			$container.scrollTop( to );
+		}
+	}
 
-        $('.fs-wrap').removeClass('fs-open');
-        $('.fs-dropdown').addClass('hidden');
-        window.fSelect.active_el = null;
-        window.fSelect.active_id = null;
-        window.fSelect.last_choice = null;
-    }
+	function openDropdown( $wrap ) {
+		window.fSelect.active_el = $wrap;
+		window.fSelect.active_id = $wrap.data( 'id' );
+		window.fSelect.initial_values = $wrap.find( 'select' ).val();
+		$wrap.find( '.fs-dropdown' ).removeClass( 'hidden' );
+		$wrap.addClass( 'fs-open' );
+		setIndexes( $wrap );
+	}
 
-})(jQuery);
+	function closeDropdown( $wrap ) {
+		if ( 'undefined' == typeof $wrap && null != window.fSelect.active_el ) {
+			$wrap = window.fSelect.active_el;
+		}
+		if ( 'undefined' !== typeof $wrap ) {
+
+			var initial_values = window.fSelect.initial_values;
+			var current_values = $wrap.find( 'select' ).val();
+			if ( JSON.stringify( initial_values ) != JSON.stringify( current_values ) ) {
+				$( document ).trigger( 'fs:closed', $wrap );
+			}
+		}
+
+		$( '.fs-wrap' ).removeClass( 'fs-open' );
+		$( '.fs-dropdown' ).addClass( 'hidden' );
+		window.fSelect.active_el = null;
+		window.fSelect.active_id = null;
+		window.fSelect.last_choice = null;
+	}
+
+} )( jQuery );

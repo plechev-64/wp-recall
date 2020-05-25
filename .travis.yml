@@ -1,0 +1,44 @@
+# https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards#using-phpcs-and-wpcs-from-within-your-ide
+sudo: false
+
+language: php
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+
+branches:
+  only:
+    - master
+
+matrix:
+  fast_finish: true
+  include:
+    - php: '5.4'
+    - php: '5.5'
+    - php: '5.6'
+    - php: '7.0'
+    - php: '7.1'
+      env: SNIFF=1
+    - php: '7.2'
+    - php: 'nightly'
+  allow_failures:
+    - php: nightly
+
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+    - node_modules
+
+before_script:
+  - if [[ "$SNIFF" == "1" ]]; then export SNIFFS_DIR=/tmp/sniffs; fi
+  # Install WordPress Coding Standards.
+  - if [[ "$SNIFF" == "1" ]]; then git clone -b master --depth 1 https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $SNIFFS_DIR; fi
+  - if [[ "$SNIFF" == "1" ]]; then composer install -d $SNIFFS_DIR; fi
+  # After CodeSniffer install you should refresh your path.
+  - if [[ "$SNIFF" == "1" ]]; then phpenv rehash; fi
+
+script:
+  - if [[ "$SNIFF" == "1" ]]; then $SNIFFS_DIR/vendor/bin/phpcs -p -s --colors --standard=phpcs.xml .; fi
